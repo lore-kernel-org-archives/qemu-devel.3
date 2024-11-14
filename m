@@ -4,94 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B18CD6A247
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 22:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D48D6A254
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 22:41:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBhua-0003Ol-UG; Thu, 14 Nov 2024 17:02:01 -0500
+	id 1tBiVo-0005Ma-4T; Thu, 14 Nov 2024 17:40:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tBhuZ-0003ON-UN
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:01:59 -0500
-Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tBhuW-0007f1-Fc
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:01:59 -0500
-Received: by mail-qk1-x72c.google.com with SMTP id
- af79cd13be357-7b153047b29so68800685a.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:01:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1731621715; x=1732226515; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IZ2Pu4kJ0nsFYzxGgx50/4JNn2XpzKJ6226m8PzsTU8=;
- b=f8XaRJatrAD5nH24IJu8kD6Z/FrSeedkIHJz0KR9BYrVDwylP8TEjlsPwCEsuvYpvN
- BAVEdOj9YeyaNvn0zMMAdrCKgGX7pKb6eJKrJAITMrIJP5CPkjlpZjCNzL/JRtnFSx67
- Sq/n5fJvy5p4trqhJjuO/8xDfYLvgkRCz8iLfzzwLCllAn8eF1FSx5CFIrFirlqejRlj
- DsoqNA+Rvp104gSQNQv80IExqLFkV3WK5SKnNVIVL9IcSbHeNXk32bhq4mVrlpsNxRoI
- jqDNviAeuUUj9c8tpRqJincCW8sgY6Di82IqoFIps5HOrSO8Re6ijS7X2inkACWUHSvP
- HmQw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tBiVm-0005MC-52
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:40:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tBiVk-0007md-8f
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:40:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731624022;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dG90QAv3+Zc1JlaDfIXyyh81xv3rqztRu7UCVinwi+k=;
+ b=JCvF3fsS3eOPiOCXIw38gSG9rJA9LjQBKxHeLZYRA7WYjeVoCt5B3xteKDtwr5S0wqQ45Y
+ rC0UF66KuU6BgdyKskxT98Vvqu0MaIUTOMifyYJ5J93DOV0qstmuGSGi/BWUkpjRDawXoO
+ HnlRS3Jo6nVedNyfpgUQS8OXycQ2418=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-617-yDeEBcXpOhiQWmFNbM8y_Q-1; Thu, 14 Nov 2024 17:40:20 -0500
+X-MC-Unique: yDeEBcXpOhiQWmFNbM8y_Q-1
+X-Mimecast-MFC-AGG-ID: yDeEBcXpOhiQWmFNbM8y_Q
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-83dff8bc954so118947539f.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:40:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731621715; x=1732226515;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IZ2Pu4kJ0nsFYzxGgx50/4JNn2XpzKJ6226m8PzsTU8=;
- b=sPH8liqZvhT0Jy3FYYzAOGuSoG0aFWJMXXFs8oby/+sjpePtIwzeFJJ44ySu9UqV6R
- e8dDMc3X1iDCjS8oF1oC3CcoKNYyjeWwPlgJ/QJUiKMczo6LHIhohs5NOguhGi4jru34
- 64S4Z0FcF9IzXnXCorGk9oYLE7R2xzfhz9RNWJl1zLYsAXiera/vc3HDto4tRYQ4TNFx
- tC9/PQrSgbFfhX3i4LnP2iObZJ3Ilxuq6Lm+Jk/kcSjJbm8LuodfGR7DKbdmObUvX2Dr
- mRA5e4EKcC1Yccnm88QHzb1sxJateBLzKyImUWcjHoHZWDwOfnairX4fOFx3iMUpVWj9
- N9Qw==
+ d=1e100.net; s=20230601; t=1731624020; x=1732228820;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dG90QAv3+Zc1JlaDfIXyyh81xv3rqztRu7UCVinwi+k=;
+ b=fMOH/847G9vlheEnBIPj/GZncO0NklRQ1JJZ6nR39OIDGPJ6I2qTesj8uOU/5O5S06
+ 2lOPcqynL73ewzkPeH4MBJeAvGbL/QNYFlLImEoYAfknioYOirj5P/pGbQQ537mtbD4R
+ mwSqysjJ/bK5JJzygdjes8RnTd9i09fFeNwW8grjKco/Zndn7WKvUcRt8RMA/q6LUof4
+ 9pjLxOAUysiNvw2sL7g/LC43KZ/d9ixSE3Yc0YQVptZTRy2Td4CqC3mMETgRbA6qP07N
+ 9/eIddEdaZzqNcu21Gs63kIotLQP2aP2+O+/nnnPuOxyatIOw+Pd6XEg8yqs6fPG/+65
+ B+Hg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWbb3P0t+7oltNBDeDYSlKaMPneIgtmNfd5p8nYkptB0PU5VMtHtsuqByzuYl7sYGJSPN+z/3AkpsjZ@nongnu.org
-X-Gm-Message-State: AOJu0YxWicOTbatr0GIfweGQYf9+rLQl0mA/iEUB0B3KQF7fWrBBTJfo
- LYwMxTs2t7QMstJO9OKfwH9PfotPTyLqP8cVdl/1cSnbMOUkesHEKN1xb/8WXV0=
-X-Google-Smtp-Source: AGHT+IHF3yTUAxAwOtgen67mStelkGsCa/A5yQVKBWwW5hrkSOeoR3oJ9UldaZd3Yldhc34iFdLs6g==
-X-Received: by 2002:a05:620a:2495:b0:7ac:9c07:e90 with SMTP id
- af79cd13be357-7b3622c24d2mr53223385a.12.1731621715165; 
- Thu, 14 Nov 2024 14:01:55 -0800 (PST)
-Received: from DY4X0N7X05.bytedance.net ([130.44.212.152])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b35ca308bdsm93742485a.83.2024.11.14.14.01.53
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 14 Nov 2024 14:01:54 -0800 (PST)
-From: Yichen Wang <yichen.wang@bytedance.com>
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- "Shivam Kumar" <shivam.kumar1@nutanix.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- "Yichen Wang" <yichen.wang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH v7 06/12] util/dsa: Implement zero page checking in DSA task.
-Date: Thu, 14 Nov 2024 14:01:26 -0800
-Message-Id: <20241114220132.27399-7-yichen.wang@bytedance.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20241114220132.27399-1-yichen.wang@bytedance.com>
-References: <20241114220132.27399-1-yichen.wang@bytedance.com>
+ AJvYcCVCEIeAlnXucxaiLvM55lxhNtwEujvpXwge9GlYzDz8XgUYkJEC0fXg7FFSthGQ1vPdfCev+VMGqjMv@nongnu.org
+X-Gm-Message-State: AOJu0YyqALbq+8/HoRvtWpDeVDNc9RT6ObU+BJ7FBq8W8TxuElsaFgEp
+ haudLFbpnXq8lTnce1H9ik6dfBQp7iGYR0SNPRnOlqYtooFt9IQJIgyzaHVO6B+/+ziIHz2fjNQ
+ aJWmzKTcYxKFPitX1fWfDPdG88VqAleFcEEtOn43u3KUjqzAr9HOn
+X-Received: by 2002:a05:6e02:2193:b0:39f:53b3:ca63 with SMTP id
+ e9e14a558f8ab-3a747ff8d4dmr5389015ab.3.1731624020068; 
+ Thu, 14 Nov 2024 14:40:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEo0+vhS56LF62r1l7becpsFYvH0Cn7TiYzGW3S/xzP3QYJLMtJo8dL+UanZSVEyPsopWDwqw==
+X-Received: by 2002:a05:6e02:2193:b0:39f:53b3:ca63 with SMTP id
+ e9e14a558f8ab-3a747ff8d4dmr5388855ab.3.1731624019693; 
+ Thu, 14 Nov 2024 14:40:19 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3a74806fc57sm514805ab.16.2024.11.14.14.40.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Nov 2024 14:40:18 -0800 (PST)
+Date: Thu, 14 Nov 2024 17:40:15 -0500
+From: Peter Xu <peterx@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Yong Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Wei Wang <wei.w.wang@intel.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v1 2/2] migration: Do not perform RAMBlock dirty sync
+ during the first iteration
+Message-ID: <ZzZ8Tzw9WV9dHo_R@x1n>
+References: <CAK9dgmak97Uv_RO+WFEb+KLkiuZ5+ibO3bigm3379L4aD55TvA@mail.gmail.com>
+ <43700d36-b9f8-42da-ba72-b0ec6580032d@redhat.com>
+ <CAK9dgmY8BAy4JAj5y-fY_YOpM6b3=86cmckPJZFuk9k=X1TYfQ@mail.gmail.com>
+ <3049bc19-2556-4fbf-9d34-578db523b63b@redhat.com>
+ <ZzTkopUrLGL5iqSv@x1n>
+ <382461ab-d620-4d2e-becd-720daadf3c55@redhat.com>
+ <ZzUIOFPtvHKDJPei@x1n>
+ <8ee7d398-0139-4628-9276-f6a89fa35245@redhat.com>
+ <ZzZPd7Ye09bjUjyR@x1n>
+ <5f04a1dc-ca0a-488b-812e-7cebf393f59f@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
- envelope-from=yichen.wang@bytedance.com; helo=mail-qk1-x72c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5f04a1dc-ca0a-488b-812e-7cebf393f59f@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.69,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,423 +113,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hao Xiang <hao.xiang@linux.dev>
+On Thu, Nov 14, 2024 at 10:16:41PM +0100, David Hildenbrand wrote:
+> On 14.11.24 20:28, Peter Xu wrote:
+> > On Thu, Nov 14, 2024 at 10:02:37AM +0100, David Hildenbrand wrote:
+> > > On 13.11.24 21:12, Peter Xu wrote:
+> > > > On Wed, Nov 13, 2024 at 07:49:44PM +0100, David Hildenbrand wrote:
+> > > > > I think I had precisely that, and I recall you suggested to have it only
+> > > > > after the initial sync. Would work for me, but I'd still like to understand
+> > > > > why essentially none of the "discard" was effective -- all of guest RAM got
+> > > > > touched.
+> > > > 
+> > > > Yes it'll be interesting to know..
+> > > > 
+> > > > One thing I'm wildly guessing is dirty_memory_extend(), so maybe after the
+> > > > ramblock is created nobody yet to clear the "1"s there for each of the
+> > > > client, including DIRTY_MEMORY_MIGRATION.  Then it'll be synced to ramblock
+> > > > bmap only in the initial sync, once for each qemu lifecycle.
+> > > 
+> > > 
+> > > In ram_block_add() we do the
+> > > 
+> > > cpu_physical_memory_set_dirty_range(new_block->offset,
+> > > 				    new_block->used_length,
+> > > 				    DIRTY_CLIENTS_ALL);
+> > > 
+> > > ramblock_dirty_bitmap_clear_discarded_pages()->...->migration_clear_memory_region_dirty_bitmap_range()->migration_clear_memory_region_dirty_bitmap()
+> > > won't end up clearing the bits in the dirty bitmap.
+> > > 
+> > > First I thought because of:
+> > > 
+> > > if (!rb->clear_bmap || !clear_bmap_test_and_clear(rb, page)) {
+> > >      return;
+> > > }
+> > > 
+> > > But then I realized that even memory_region_clear_dirty_bitmap() will not
+> > > clear the ramblock_dirty_bitmap_ bits! It's only concerned about
+> > > listener->log_clear() calls.
+> > > 
+> > > Looking for DIRTY_MEMORY_BLOCK_SIZE users, only
+> > > cpu_physical_memory_sync_dirty_bitmap() and
+> > > cpu_physical_memory_clear_dirty_range() clear them, whereby the latter is
+> > > only used when resizing RAMblocks.
+> > > 
+> > > At first I wondered whether ramblock_dirty_bitmap_clear_discarded_pages()
+> > > should also call cpu_physical_memory_clear_dirty_range(), but then I am not
+> > > so sure if that is really the right approach.
+> > 
+> > That sounds actually reasonable to me so far.. What's the concern in your
+> > mind?
+> 
+> I think what I had in mind was that for the initial bitmap sync, when we set
+> the bmap to all-1s already, we could just clear the whole
+> ramblock_dirty_bitmap_ + KVM ... bitmaps.
+> 
+> So, instead of an "initial sync" we might just want to do an "initial
+> clearing" of all bitmaps.
 
-Create DSA task with operation code DSA_OPCODE_COMPVAL.
-Here we create two types of DSA tasks, a single DSA task and
-a batch DSA task. Batch DSA task reduces task submission overhead
-and hence should be the default option. However, due to the way DSA
-hardware works, a DSA batch task must contain at least two individual
-tasks. There are times we need to submit a single task and hence a
-single DSA task submission is also required.
+Logically most dirty tracking bitmaps should start with all zeros.  KVM old
+kernels are like that; KVM_DIRTY_LOG_INITIALLY_SET is not, but it's a
+separate feature.  I still hope it's pretty common for the rest, e.g. vhost
+should have all zeros in its init bitmap even without initial sync.
 
-Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
-Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
----
- include/qemu/dsa.h |  44 ++++++--
- util/dsa.c         | 254 +++++++++++++++++++++++++++++++++++++++++----
- 2 files changed, 269 insertions(+), 29 deletions(-)
+> 
+> > 
+> > > 
+> > > 
+> > > virtio-balloon() calls qemu_guest_free_page_hint() which calls
+> > > 
+> > > migration_clear_memory_region_dirty_bitmap_range()
+> > > bitmap_clear()
+> > > 
+> > > So it would maybe have the same issue.
+> > 
+> > Should virtio-balloon do the same?
+> 
+> virtio-balloon is more interesting, because I assume here we could run after
+> the "initial clearing" and would want to mark it clean everywhere.
 
-diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
-index d24567f0be..cb407b8b49 100644
---- a/include/qemu/dsa.h
-+++ b/include/qemu/dsa.h
-@@ -16,6 +16,7 @@
- #define QEMU_DSA_H
+Yes, if it does what I mentioned below, IIUC it'll clear all dirty bits
+across the whole stack.  Only the ram_list bitmap is missing.  IIUC it
+could mean it could stop working for at least tcg, as tcg sololy uses
+it.. even with kvm some MRs may use it.  Maybe we want to fix it
+separately.
+
+> 
+> > 
+> > So I suppose the idea here is some module may want to say "we should ignore
+> > these pages in the dirty bitmap", and so far that's only about migration.
+> > 
+> > Then cpu_physical_memory_clear_dirty_range() does look like the right thing
+> > to do, in which case the bmap in ram_list used to be overlooked.. it seems.
+> > 
+> > But of course, cpu_physical_memory_clear_dirty_range() still doesn't cover
+> > the migration bitmap itself, which is ramblock->bmap.  So we'll need to
+> > switch from migration_clear_memory_region_dirty_bitmap() to use things like
+> > cpu_physical_memory_clear_dirty_range(), just to cover ram_list bitmaps.
+> > Then keeping the rb->bmap operations like before..
+> 
+> For virtio-balloon likely yes. Regarding virtio-mem, maybe "initial
+> clearing" + only modifying the rb->bmap when processing discards could work
+> and would even be more efficient.
+> 
+> (but I'm confused because we have way too many bitmaps, and maybe the KVM
+> one could be problematic without an initial sync ... we'd want an initial
+> clearing for that as well ...)
+
+So IMHO most of the bitmaps should be initialized with zeros, not
+ones.. like I mentioned above.
+
+Migration bitmap is special, because it's not about dirty tracking
+capability / reporting but that we know we need to migrate the first round.
+So setting all ones makes sense for migration only, not a reporting
+facility.  While KVM_DIRTY_LOG_INITIALLY_SET existed for its own reasoning
+on speeding up migration starts..
+
+So, now I am thinking whether we should not set all ones in ram_list bitmap
+at all, corresponds to this change:
+
+===8<===
+diff --git a/system/physmem.c b/system/physmem.c
+index dc1db3a384..10966fa68c 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1913,10 +1913,6 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+     ram_list.version++;
+     qemu_mutex_unlock_ramlist();
  
- #include "qapi/error.h"
-+#include "exec/cpu-common.h"
- #include "qemu/thread.h"
- #include "qemu/queue.h"
- 
-@@ -70,10 +71,11 @@ typedef struct QemuDsaBatchTask {
-     QemuDsaTaskStatus status;
-     int batch_size;
-     bool *results;
-+    /* Address of each pages in pages */
-+    ram_addr_t *addr;
-     QSIMPLEQ_ENTRY(QemuDsaBatchTask) entry;
- } QemuDsaBatchTask;
- 
+-    cpu_physical_memory_set_dirty_range(new_block->offset,
+-                                        new_block->used_length,
+-                                        DIRTY_CLIENTS_ALL);
 -
- /**
-  * @brief Initializes DSA devices.
-  *
-@@ -105,8 +107,26 @@ void qemu_dsa_cleanup(void);
-  */
- bool qemu_dsa_is_running(void);
- 
-+/**
-+ * @brief Initializes a buffer zero DSA batch task.
-+ *
-+ * @param batch_size The number of zero page checking tasks in the batch.
-+ * @return A pointer to the zero page checking tasks initialized.
-+ */
-+QemuDsaBatchTask *
-+buffer_zero_batch_task_init(int batch_size);
-+
-+/**
-+ * @brief Performs the proper cleanup on a DSA batch task.
-+ *
-+ * @param task A pointer to the batch task to cleanup.
-+ */
-+void buffer_zero_batch_task_destroy(QemuDsaBatchTask *task);
-+
- #else
- 
-+typedef struct QemuDsaBatchTask {} QemuDsaBatchTask;
-+
- static inline bool qemu_dsa_is_running(void)
- {
-     return false;
-@@ -114,19 +134,27 @@ static inline bool qemu_dsa_is_running(void)
- 
- static inline int qemu_dsa_init(const strList *dsa_parameter, Error **errp)
- {
--    if (dsa_parameter != NULL && strlen(dsa_parameter) != 0) {
--        error_setg(errp, "DSA is not supported.");
--        return -1;
--    }
--
--    return 0;
-+    error_setg(errp, "DSA accelerator is not enabled.");
-+    return -1;
- }
- 
- static inline void qemu_dsa_start(void) {}
- 
- static inline void qemu_dsa_stop(void) {}
- 
--static inline void qemu_dsa_cleanup(void) {}
-+static inline QemuDsaBatchTask *buffer_zero_batch_task_init(int batch_size)
-+{
-+    return NULL;
-+}
-+
-+static inline void buffer_zero_batch_task_destroy(QemuDsaBatchTask *task) {}
-+
-+static inline int
-+buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
-+                              const void **buf, size_t count, size_t len)
-+{
-+    return -1;
-+}
- 
- #endif
- 
-diff --git a/util/dsa.c b/util/dsa.c
-index c3ca71df86..408c163195 100644
---- a/util/dsa.c
-+++ b/util/dsa.c
-@@ -48,6 +48,7 @@ uint32_t max_retry_count;
- static QemuDsaDeviceGroup dsa_group;
- static QemuDsaCompletionThread completion_thread;
- 
-+static void buffer_zero_dsa_completion(void *context);
- 
- /**
-  * @brief This function opens a DSA device's work queue and
-@@ -174,7 +175,6 @@ dsa_device_group_start(QemuDsaDeviceGroup *group)
-  *
-  * @param group A pointer to the DSA device group.
-  */
--__attribute__((unused))
- static void
- dsa_device_group_stop(QemuDsaDeviceGroup *group)
- {
-@@ -210,7 +210,6 @@ dsa_device_group_cleanup(QemuDsaDeviceGroup *group)
-  * @return struct QemuDsaDevice* A pointer to the next available DSA device
-  *         in the group.
-  */
--__attribute__((unused))
- static QemuDsaDevice *
- dsa_device_group_get_next_device(QemuDsaDeviceGroup *group)
- {
-@@ -283,7 +282,6 @@ dsa_task_enqueue(QemuDsaDeviceGroup *group,
-  * @param group A pointer to the DSA device group.
-  * @return QemuDsaBatchTask* The DSA task being dequeued.
-  */
--__attribute__((unused))
- static QemuDsaBatchTask *
- dsa_task_dequeue(QemuDsaDeviceGroup *group)
- {
-@@ -338,22 +336,6 @@ submit_wi_int(void *wq, struct dsa_hw_desc *descriptor)
-     return 0;
- }
- 
--/**
-- * @brief Synchronously submits a DSA work item to the
-- *        device work queue.
-- *
-- * @param wq A pointer to the DSA work queue's device memory.
-- * @param descriptor A pointer to the DSA work item descriptor.
-- *
-- * @return int Zero if successful, non-zero otherwise.
-- */
--__attribute__((unused))
--static int
--submit_wi(void *wq, struct dsa_hw_desc *descriptor)
--{
--    return submit_wi_int(wq, descriptor);
--}
--
- /**
-  * @brief Asynchronously submits a DSA work item to the
-  *        device work queue.
-@@ -362,7 +344,6 @@ submit_wi(void *wq, struct dsa_hw_desc *descriptor)
-  *
-  * @return int Zero if successful, non-zero otherwise.
-  */
--__attribute__((unused))
- static int
- submit_wi_async(QemuDsaBatchTask *task)
- {
-@@ -391,7 +372,6 @@ submit_wi_async(QemuDsaBatchTask *task)
-  *
-  * @return int Zero if successful, non-zero otherwise.
-  */
--__attribute__((unused))
- static int
- submit_batch_wi_async(QemuDsaBatchTask *batch_task)
- {
-@@ -750,3 +730,235 @@ void qemu_dsa_cleanup(void)
-     dsa_device_group_cleanup(&dsa_group);
- }
- 
-+
-+/* Buffer zero comparison DSA task implementations */
-+/* =============================================== */
-+
-+/**
-+ * @brief Sets a buffer zero comparison DSA task.
-+ *
-+ * @param descriptor A pointer to the DSA task descriptor.
-+ * @param buf A pointer to the memory buffer.
-+ * @param len The length of the buffer.
-+ */
-+static void
-+buffer_zero_task_set_int(struct dsa_hw_desc *descriptor,
-+                         const void *buf,
-+                         size_t len)
-+{
-+    struct dsa_completion_record *completion =
-+        (struct dsa_completion_record *)descriptor->completion_addr;
-+
-+    descriptor->xfer_size = len;
-+    descriptor->src_addr = (uintptr_t)buf;
-+    completion->status = 0;
-+    completion->result = 0;
-+}
-+
-+/**
-+ * @brief Resets a buffer zero comparison DSA batch task.
-+ *
-+ * @param task A pointer to the DSA batch task.
-+ */
-+static void
-+buffer_zero_task_reset(QemuDsaBatchTask *task)
-+{
-+    task->completions[0].status = DSA_COMP_NONE;
-+    task->task_type = QEMU_DSA_TASK;
-+    task->status = QEMU_DSA_TASK_READY;
-+}
-+
-+/**
-+ * @brief Resets a buffer zero comparison DSA batch task.
-+ *
-+ * @param task A pointer to the batch task.
-+ * @param count The number of DSA tasks this batch task will contain.
-+ */
-+static void
-+buffer_zero_batch_task_reset(QemuDsaBatchTask *task, size_t count)
-+{
-+    task->batch_completion.status = DSA_COMP_NONE;
-+    task->batch_descriptor.desc_count = count;
-+    task->task_type = QEMU_DSA_BATCH_TASK;
-+    task->status = QEMU_DSA_TASK_READY;
-+}
-+
-+/**
-+ * @brief Sets a buffer zero comparison DSA task.
-+ *
-+ * @param task A pointer to the DSA task.
-+ * @param buf A pointer to the memory buffer.
-+ * @param len The buffer length.
-+ */
-+static void
-+buffer_zero_task_set(QemuDsaBatchTask *task,
-+                     const void *buf,
-+                     size_t len)
-+{
-+    buffer_zero_task_reset(task);
-+    buffer_zero_task_set_int(&task->descriptors[0], buf, len);
-+}
-+
-+/**
-+ * @brief Sets a buffer zero comparison batch task.
-+ *
-+ * @param batch_task A pointer to the batch task.
-+ * @param buf An array of memory buffers.
-+ * @param count The number of buffers in the array.
-+ * @param len The length of the buffers.
-+ */
-+static void
-+buffer_zero_batch_task_set(QemuDsaBatchTask *batch_task,
-+                           const void **buf, size_t count, size_t len)
-+{
-+    assert(count > 0);
-+    assert(count <= batch_task->batch_size);
-+
-+    buffer_zero_batch_task_reset(batch_task, count);
-+    for (int i = 0; i < count; i++) {
-+        buffer_zero_task_set_int(&batch_task->descriptors[i], buf[i], len);
-+    }
-+}
-+
-+/**
-+ * @brief Asychronously perform a buffer zero DSA operation.
-+ *
-+ * @param task A pointer to the batch task structure.
-+ * @param buf A pointer to the memory buffer.
-+ * @param len The length of the memory buffer.
-+ *
-+ * @return int Zero if successful, otherwise an appropriate error code.
-+ */
-+__attribute__((unused))
-+static int
-+buffer_zero_dsa_async(QemuDsaBatchTask *task,
-+                      const void *buf, size_t len)
-+{
-+    buffer_zero_task_set(task, buf, len);
-+
-+    return submit_wi_async(task);
-+}
-+
-+/**
-+ * @brief Sends a memory comparison batch task to a DSA device and wait
-+ *        for completion.
-+ *
-+ * @param batch_task The batch task to be submitted to DSA device.
-+ * @param buf An array of memory buffers to check for zero.
-+ * @param count The number of buffers.
-+ * @param len The buffer length.
-+ */
-+__attribute__((unused))
-+static int
-+buffer_zero_dsa_batch_async(QemuDsaBatchTask *batch_task,
-+                            const void **buf, size_t count, size_t len)
-+{
-+    assert(count <= batch_task->batch_size);
-+    buffer_zero_batch_task_set(batch_task, buf, count, len);
-+
-+    return submit_batch_wi_async(batch_task);
-+}
-+
-+/**
-+ * @brief The completion callback function for buffer zero
-+ *        comparison DSA task completion.
-+ *
-+ * @param context A pointer to the callback context.
-+ */
-+static void
-+buffer_zero_dsa_completion(void *context)
-+{
-+    assert(context != NULL);
-+
-+    QemuDsaBatchTask *task = (QemuDsaBatchTask *)context;
-+    qemu_sem_post(&task->sem_task_complete);
-+}
-+
-+/**
-+ * @brief Wait for the asynchronous DSA task to complete.
-+ *
-+ * @param batch_task A pointer to the buffer zero comparison batch task.
-+ */
-+__attribute__((unused))
-+static void
-+buffer_zero_dsa_wait(QemuDsaBatchTask *batch_task)
-+{
-+    qemu_sem_wait(&batch_task->sem_task_complete);
-+}
-+
-+/**
-+ * @brief Initializes a buffer zero comparison DSA task.
-+ *
-+ * @param descriptor A pointer to the DSA task descriptor.
-+ * @param completion A pointer to the DSA task completion record.
-+ */
-+static void
-+buffer_zero_task_init_int(struct dsa_hw_desc *descriptor,
-+                          struct dsa_completion_record *completion)
-+{
-+    descriptor->opcode = DSA_OPCODE_COMPVAL;
-+    descriptor->flags = IDXD_OP_FLAG_RCR | IDXD_OP_FLAG_CRAV;
-+    descriptor->comp_pattern = (uint64_t)0;
-+    descriptor->completion_addr = (uint64_t)completion;
-+}
-+
-+/**
-+ * @brief Initializes a buffer zero DSA batch task.
-+ *
-+ * @param batch_size The number of zero page checking tasks in the batch.
-+ * @return A pointer to the zero page checking tasks initialized.
-+ */
-+QemuDsaBatchTask *
-+buffer_zero_batch_task_init(int batch_size)
-+{
-+    QemuDsaBatchTask *task = qemu_memalign(64, sizeof(QemuDsaBatchTask));
-+    int descriptors_size = sizeof(*task->descriptors) * batch_size;
-+
-+    memset(task, 0, sizeof(*task));
-+    task->addr = g_new0(ram_addr_t, batch_size);
-+    task->results = g_new0(bool, batch_size);
-+    task->batch_size = batch_size;
-+    task->descriptors =
-+        (struct dsa_hw_desc *)qemu_memalign(64, descriptors_size);
-+    memset(task->descriptors, 0, descriptors_size);
-+    task->completions = (struct dsa_completion_record *)qemu_memalign(
-+        32, sizeof(*task->completions) * batch_size);
-+
-+    task->batch_completion.status = DSA_COMP_NONE;
-+    task->batch_descriptor.completion_addr = (uint64_t)&task->batch_completion;
-+    /* TODO: Ensure that we never send a batch with count <= 1 */
-+    task->batch_descriptor.desc_count = 0;
-+    task->batch_descriptor.opcode = DSA_OPCODE_BATCH;
-+    task->batch_descriptor.flags = IDXD_OP_FLAG_RCR | IDXD_OP_FLAG_CRAV;
-+    task->batch_descriptor.desc_list_addr = (uintptr_t)task->descriptors;
-+    task->status = QEMU_DSA_TASK_READY;
-+    task->group = &dsa_group;
-+    task->device = dsa_device_group_get_next_device(&dsa_group);
-+
-+    for (int i = 0; i < task->batch_size; i++) {
-+        buffer_zero_task_init_int(&task->descriptors[i],
-+                                  &task->completions[i]);
-+    }
-+
-+    qemu_sem_init(&task->sem_task_complete, 0);
-+    task->completion_callback = buffer_zero_dsa_completion;
-+
-+    return task;
-+}
-+
-+/**
-+ * @brief Performs the proper cleanup on a DSA batch task.
-+ *
-+ * @param task A pointer to the batch task to cleanup.
-+ */
-+void
-+buffer_zero_batch_task_destroy(QemuDsaBatchTask *task)
-+{
-+    g_free(task->addr);
-+    g_free(task->results);
-+    qemu_vfree(task->descriptors);
-+    qemu_vfree(task->completions);
-+    task->results = NULL;
-+    qemu_sem_destroy(&task->sem_task_complete);
-+    qemu_vfree(task);
-+}
+     if (new_block->host) {
+         qemu_ram_setup_dump(new_block->host, new_block->max_length);
+         qemu_madvise(new_block->host, new_block->max_length, QEMU_MADV_HUGEPAGE);
+===8<===
+
+I'm guessing whether above could fix the virtio-mem regression after
+Hyman's current patch applied.
+
+Said that, IMHO virtio-mem should still use the same helper just like
+virtio-balloon as I discussed previously, so as to reset bitmap for the
+whole stack (which seems to always be the right thing to do to not miss one
+layer of them)?
+
+Hence: 1 patch to virtio-balloon covering ram_list bitmap (which could be a
+real fix to virtio-balloon on e.g. tcg?); 1 patch to virtio-mem reusing
+that helper of virtio-balloon just as a cleanup to also cover all bitmaps;
+1 patch like above to avoid setting ones at all in ram_list bitmap as
+cleanup; then finally remove the sync() in SETUP, which is this patch.
+IIUC after all these changes applied it'll work for all cases.
+
+Thanks,
+
 -- 
-Yichen Wang
+Peter Xu
 
 
