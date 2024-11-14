@@ -4,130 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4612ED68B07
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3380CD68B09
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBZZC-0003Uw-Q9; Thu, 14 Nov 2024 08:07:22 -0500
+	id 1tBZa1-0003jj-1D; Thu, 14 Nov 2024 08:08:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBZZA-0003UX-Sj
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:07:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBZZ9-00043Z-BN
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:07:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731589637;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cogg4RETQKLp/tA1DHhWDLFGfEICNWMYhlF8tQ0LsZ8=;
- b=fH045nNcZOrx1GvHlyi8HXQd96OuCy5jW2HCUz8wZ2xOfcjlx3SgybubY1RX5p5L0zm0mU
- /tGkRSTuJ5/f7MBGYdK+dDDnfWWCphYknv7vOCpyc+y0ooORuPEBmfFx9hfAPWfzh/9yE9
- +ywqndc6KWJgJ5lnXJaFB1gALWkYHb4=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-135-gRlPNyAoPXyZVm3pKy4mKQ-1; Thu, 14 Nov 2024 08:07:16 -0500
-X-MC-Unique: gRlPNyAoPXyZVm3pKy4mKQ-1
-X-Mimecast-MFC-AGG-ID: gRlPNyAoPXyZVm3pKy4mKQ
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-53da87f2786so343180e87.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 05:07:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tBZZj-0003b5-Vg
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:07:57 -0500
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tBZZf-00049R-GA
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:07:55 -0500
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2fb5fa911aaso9710601fa.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 05:07:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731589669; x=1732194469; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JWMRWYoKOuqB8XMnLbB/aSezhGwd0gHWTPVQDSETIqA=;
+ b=YPFua7VDU7WEFVBjOc3nmNQVnIa5hjtQIR7kJ891vuXRuG+vDsQP0r1F9Fz6rRRspd
+ Qo9eiJWa5MqIjdtxyxIw8ZB2DZjX0IpRqwDmf5j+ge9rfEMOkAbs41yR48y9X61Wo05f
+ LPcID5Nu2JiAQ/wiwjWFQscqwXYYeDgwf/gO3cppJ9eGWZFdf/Ib0F1U1/DNsOfz6wFJ
+ HOA3ma7ZmT2oS3wMRCK+awg9CMubLTVcIDQay3n1SGfQmJ1eQd4MehnzdCvrnwaU62pB
+ NYksgbLSATCrttg5v6BOxPcCtQSjAgaId5BOcKbHT4lFfhrzz6FyIVKg/tb9wft2Fiap
+ 5Stg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731589634; x=1732194434;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cogg4RETQKLp/tA1DHhWDLFGfEICNWMYhlF8tQ0LsZ8=;
- b=DSXR5K8+n/OgBkngYJ92aQjpn3GDyOvAXGA8aA4fD4Gs6lh6SnzYjlV6KnggZQCoGE
- JtLRlwsEqYb9HJLZ2aHARjjoJkExwIgGXw+KZ7bxOl4mkbqrK6vomxR5LKhe+Tu6i/Dp
- ukcGhiYZQNyIErs2vID/H4Xvc74gEISAEG+bdhhgVp6RlOE/FwlOie+dpCvvmWVNKfax
- O0FXfMC6vB+Vr0nWFhuoWk7OXhZ0EjPnlDvPjmwNccMFEvIlYmPrrdziEPAbjS9LYT34
- 37VvDItSpgkLbT0V2wtiV06kTp7hwBpYMwmEcFaK2dhSx3M8TSgJwbw4qt6vUDwuKvTN
- RHVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpStXG/uSJLklcjTC3LOHSiL1Ns7RNr/IwtBe8eBBo4tD1lXE0ZTurGAtHhz0nLIEk+YnnToaKu1Ue@nongnu.org
-X-Gm-Message-State: AOJu0YzqB+jbw5jUAWR89KzhRodQFt6jZKD9KIzsTREIP5tT5xG7yT4J
- qOvUXJAiIjzrJVIB62y6XJ8SriZVPsGOW+ruL56JUMD4p/qSygQvrfvjeSBO4aYtd9Ss0x3R5Ww
- Pw8hnlnW39WctUMTUmCtTIe7EySd4z4YfwQ5N0+U57Cy7wNH5iApJ
-X-Received: by 2002:a05:6512:b0b:b0:53d:a283:f290 with SMTP id
- 2adb3069b0e04-53da5c4dfbcmr1360634e87.31.1731589634601; 
- Thu, 14 Nov 2024 05:07:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEOfrXNOpFDa+2+BdFGjZ9vCnJsYo+iDjx+84I+SFJVL2999ZdobJWKAWEUnnzBm+8cUh8/nQ==
-X-Received: by 2002:a05:6512:b0b:b0:53d:a283:f290 with SMTP id
- 2adb3069b0e04-53da5c4dfbcmr1360612e87.31.1731589634173; 
- Thu, 14 Nov 2024 05:07:14 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.84.243])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3821ae161a5sm1462703f8f.80.2024.11.14.05.07.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 05:07:13 -0800 (PST)
-Message-ID: <3dd4edcd-830f-42da-8f73-968c9b47c6b7@redhat.com>
-Date: Thu, 14 Nov 2024 14:07:12 +0100
+ d=1e100.net; s=20230601; t=1731589669; x=1732194469;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=JWMRWYoKOuqB8XMnLbB/aSezhGwd0gHWTPVQDSETIqA=;
+ b=jOknYnlIAV2p2C8zRXeAyjL6sE8XVkvIe+s+RjQPnwh8HNbRcYqjR2cziI4tsQeVsm
+ HwRGdPutCFJon+reMB/o+XGpDwUNgFKLlYMamLdRCW1xFRZmZhmgo2SdU6cSsenr1qb1
+ TJUPdyHpGU5iqAYUUQR1WoqaTeUuZanPxGkEI38WstKJIIElkBocolppCDwLf58C8MWu
+ 9JkvAybrrs9vFZG0PW1Lrz0aBdroU+0I6I4iyQIpycFrNZ6JF5g5yBVI21ZHnVhc0oTK
+ Zadj23AaTcrvRuRxfPIGujkYPQ5kH+sqtUfJp9tl67H89UZ+3SvNy/J+sCMbqWgjEMTm
+ JaZw==
+X-Gm-Message-State: AOJu0YwORCK1Sa/VcdnEXuf189q4iHFIQlcIt+/Z3wfbjz0kOv9tTGdl
+ Es6GmUfEi4tr6dKFH449DjlfKbpzTdXg0KVmpwubMfsaXIES7J3v0ZWSkif4OaY=
+X-Google-Smtp-Source: AGHT+IFOgO87CsSjvfRfNU2mOzqXJq1vlR88Qu7fL7Xs+XffnFe1mQCBoaFzU9JSVIWEGhOVEOZh2A==
+X-Received: by 2002:a05:651c:b24:b0:2fb:63b5:c0bc with SMTP id
+ 38308e7fff4ca-2ff5900aeeamr17059191fa.3.1731589668997; 
+ Thu, 14 Nov 2024 05:07:48 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20dffba13sm61361066b.95.2024.11.14.05.07.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Nov 2024 05:07:47 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0F5715F867;
+ Thu, 14 Nov 2024 13:07:47 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  manos.pitsidianakis@linaro.org,
+ kwolf@redhat.com,  junjie.mao@hotmail.com,  zhao1.liu@intel.com,
+ qemu-rust@nondevel.org
+Subject: Re: [RFC PATCH 00/11] rust: improved integration with cargo
+In-Reply-To: <20241108180139.117112-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Fri, 8 Nov 2024 19:01:28 +0100")
+References: <20241108180139.117112-1-pbonzini@redhat.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Thu, 14 Nov 2024 13:07:46 +0000
+Message-ID: <87plmyrmjh.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/audio/hda: avoid unnecessary re-open stream on
- reconfiguration
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: mjt@tls.msk.ru, Gerd Hoffmann <kraxel@redhat.com>
-References: <20241105083203.2230983-1-marcandre.lureau@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20241105083203.2230983-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x230.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.69,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,46 +99,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/24 09:32, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Closing and opening a stream too quickly during reconfiguration create
-> issues with Spice.
-> 
-> Note: the issue with Spice has been there before and still is. When the
-> audio stream is recreated, for example when using
-> `out.mixing-engine=false`.
-> 
-> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2639
-> Fixes: 6d6e23361f ("hw/audio/hda: fix memory leak on audio setup")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/audio/hda-codec.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
-> index bc661504cf..b734a5c718 100644
-> --- a/hw/audio/hda-codec.c
-> +++ b/hw/audio/hda-codec.c
-> @@ -502,7 +502,15 @@ static void hda_audio_setup(HDAAudioStream *st)
->       trace_hda_audio_format(st->node->name, st->as.nchannels,
->                              fmt2name[st->as.fmt], st->as.freq);
->   
-> -    hda_close_stream(st->state, st);
-> +    /*
-> +     * Do not hda_close_stream(st->state, st), AUD_open_() handles the logic for
-> +     * fixed_settings, and same format. This helps prevent race issues in Spice
-> +     * server & client code too. (see #2639)
-> +     */
-> +    if (use_timer) {
-> +        timer_free(st->buft);
-> +        st->buft = NULL;
-> +    }
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Looks like we raced on sending a fix.  I don't like freeing and 
-recreating the timer...  all you need is timer_del(), the callback 
-cannot change and the timer can be created close to where st->output is set.
+> While we're not sure where we'll be going in the future, for now
+> using cargo remains an important part of developing QEMU Rust code.
+> This is because cargo is the easiest way to run clippy, rustfmt,
+> rustdoc.  Cargo also allows working with doc tests, though there are
+> pretty much none yet, and provides tools such as "cargo expand".
+>
+> This series aims at improving the integration with cargo and
+> cargo-based tooling.
+>
+> First, while it is currently possible to run cargo on the rust/ directory,
+> but it has the issue that the bindings.rs must be placed by hand in
+> the build directory.  Therefore, this series starts by allowing
+> cargo to "just work" when run in a "meson devenv" environment:
+>
+>     meson devenv -w ../rust cargo clippy --tests
+>     meson devenv -w ../rust cargo fmt
 
-Paolo
+Is this meant to be the rust source root, or the root of the rust
+builddir:
 
+$ meson devenv ../../rust
+
+ERROR: Build data file './meson-private/build.dat' references functions or =
+classes that don't exist. This probably means that it was generated with an=
+ old version of meson. Try running from the source directory meson setup . =
+--wipe
+=F0=9F=95=9913:05:22 alex@draig:qemu.git/builds/rust  on =EE=82=A0 review/r=
+ust-cargo-rfc [$!?] [=F0=9F=94=B4 ERROR]=20
+$ meson devenv rust
+
+ERROR: Build data file './meson-private/build.dat' references functions or =
+classes that don't exist. This probably means that it was generated with an=
+ old version of meson. Try running from the source directory meson setup . =
+--wipe
+=F0=9F=95=9913:05:53 alex@draig:qemu.git/builds/rust  on =EE=82=A0 review/r=
+ust-cargo-rfc [$!?] [=F0=9F=94=B4 ERROR]=20
+
+>
+> If you are going to use cargo repeatedly, invoking just 'meson devenv'
+> will put you in a shell where commands like 'cargo clippy' just work.
+> For simplicity, I am also adding two targets 'make clippy' and 'make
+> rustfmt'.
+>
+> Secondly, one problem with mixing Cargo and meson is having to redo the
+> configuration of "lints" in both sides.  This series standardizes
+> on using Cargo.toml to configure the build, and bringing the flags
+> over to build.ninja with extensions to the existing rustc_args.py script.
+> I admit that these additions to the script are pretty large and therefore
+> I'm open to scrapping the idea.  I tried to organize the changes so that
+> the changes are split over multiple patches.
+>
+> Finally, this series adds a CI job that runs rustfmt, clippy, and
+> rustdoc, including running doctests.
+>
+> Please send comments!
+>
+> Paolo
+>
+> Paolo Bonzini (11):
+>   rust: qemu_api: do not disable lints outside bindgen-generated code
+>   rust: build: move rustc_args.py invocation to individual crates
+>   rust: build: restrict --cfg generation to only required symbols
+>   rust: build: generate warning flags from Cargo.toml
+>   rust: cargo: store desired warning levels in workspace Cargo.toml
+>   rust: build: move strict lints handling to rustc_args.py
+>   rust: fix a couple style issues from clippy
+>   rust: build: establish a baseline of lints across all crates
+>   rust: build: add "make clippy", "make rustfmt"
+>   rust: fix doc test syntax
+>   rust: ci: add job that runs Rust tools
+>
+>  meson.build                                   |  56 +++---
+>  .gitlab-ci.d/buildtest-template.yml           |  14 ++
+>  .gitlab-ci.d/buildtest.yml                    |  14 ++
+>  rust/Cargo.toml                               |  80 ++++++++
+>  rust/hw/char/pl011/Cargo.toml                 |   3 +
+>  rust/hw/char/pl011/src/device.rs              |   6 +-
+>  rust/hw/char/pl011/src/lib.rs                 |  18 +-
+>  rust/hw/char/pl011/src/memory_ops.rs          |   4 +-
+>  rust/meson.build                              |  14 ++
+>  rust/qemu-api-macros/Cargo.toml               |   3 +
+>  rust/qemu-api/.gitignore                      |   2 +-
+>  rust/qemu-api/Cargo.toml                      |   5 +-
+>  rust/qemu-api/build.rs                        |  24 ++-
+>  rust/qemu-api/meson.build                     |   5 +
+>  rust/qemu-api/src/bindings.rs                 |  29 +++
+>  rust/qemu-api/src/lib.rs                      |  22 ---
+>  rust/qemu-api/src/zeroable.rs                 |   6 +-
+>  rust/qemu-api/tests/tests.rs                  |   2 +-
+>  scripts/rust/rustc_args.py                    | 178 ++++++++++++++++--
+>  .../dockerfiles/fedora-rust-nightly.docker    |   4 +
+>  tests/lcitool/refresh                         |   4 +
+>  21 files changed, 391 insertions(+), 102 deletions(-)
+>  create mode 100644 rust/qemu-api/src/bindings.rs
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
