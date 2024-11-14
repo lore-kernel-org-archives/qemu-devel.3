@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199A8D68B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498A4D68B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcIh-0005JV-52; Thu, 14 Nov 2024 11:02:31 -0500
+	id 1tBcNP-00047h-UP; Thu, 14 Nov 2024 11:07:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIN-00052s-1G
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:11 -0500
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1tBcLQ-0001mA-LU
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:27 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIH-0002IS-EI
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:10 -0500
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-7ea7e250c54so586571a12.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:02:03 -0800 (PST)
+ id 1tBcLO-00034C-0S
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:19 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-723db2798caso751484b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:05:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600123; x=1732204923; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600313; x=1732205113; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tAszhXmbZO1yYFyoLknvdTRmxQFGefE5ni84P6772pk=;
- b=ydf2ymps/IarHO5o/GpyAgt3AsjHQd14WE2T7hKQKMT4PM/kaZY6oMKLj4XkMaH8l3
- /lYbpAlYAKdUY2P0HxO6btQPd9WERHnzN929ACbcb5jD+Q3tNpTRkh8u+qXPHDIW+lY/
- lMlnv5g8/HoexYPneOLb14i4AyxSqE3CLfVIvS5tUFTeqfOXWH2pAl5Ip+gk93T3BLMv
- WUDu+DoQWjXc/QDfe7hlWkSFwBbW6RePz59ltv1Nm2nRTg/xiXNTvy5UrPm0oe3QooG8
- YCaw87m2YFo0xOfYYdC/PNJHHg2W7qXwtjMX8WWc8+9BuF7+nBGyetkvOciEX85ypLe3
- DZ9A==
+ :reply-to; bh=nc2uEpCTHuP4WgyDpbnyFTPw+frcLZQWSz4dicwWNic=;
+ b=o0XFkiQmvEzGYalgTWKCceMWsbKFRP8vYi/6a4G+l1Fa/79+7kamd2qdo/kMwuBKMQ
+ aPRJSc0V5/6A8FhUFxHw6twjn+f/AtnIWf4l5Mf39ifOTtSlRmPRuk9n498y61nJQzCV
+ FsQ14Wrh+GajGr+oYl2ewhfsd2O+1A59nHZEloAzSi5rKrDMGwpL+kz3EkXDGPHjqtmt
+ 6cLwiZKBiMFe5BuUsfiYHrrF99hDpxUxwddutaAVEpgRw747n6gwWU4ATYvzM7vMtDU2
+ BwFx0NydBuZOtyKzVnORgqLKtcDCz0+1gm0vmWAXLy97ZIiSummH1n4FV+3B7MUucMas
+ Sodw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600123; x=1732204923;
+ d=1e100.net; s=20230601; t=1731600313; x=1732205113;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tAszhXmbZO1yYFyoLknvdTRmxQFGefE5ni84P6772pk=;
- b=i047K5z0+dH4iunKH45pucYlksl5z1EDJfuVJPSTHrZbpG7hSN8xXE8rSxmkp5Wr52
- kOjYDAXWLhXUEet1/5SxzdyQqaeZ7d3QUE/QoeYFvo1VnByat7Eg6g2VSXW4tHcYant+
- KrtPlkd22PrN/z7JFKDWb7YoZqd87xWt3uRUi0ysrF5Jsy2jzdQoYOaoQT3VeuGaKIhE
- pdjkxj1SKtSFE2fnWnwzNs1D2rM7kYYnOvTMjE3jwm0d3fwCQpJchT08NgQpdIfy3y6y
- PXdKauqPNReHA6aQMh0OLQhQfkYCu5szaVn2XTphsv4mEVy5dSq2WZTFtckjF3yJS3f5
- IrBQ==
-X-Gm-Message-State: AOJu0YwWLGyDfX9nSwlZfA3XlrYpWJzkU8qZp/4ntz/EWBjlVbDzuy6I
- Q4HkskJvlE9GAOOdsCCLIvK3sTDdHPIevSw6+vc3cEj+EPf1KanE0gIzBSBiGwhHt3/QuiGU+KE
- 9
-X-Google-Smtp-Source: AGHT+IEyV/vCAiEEJ8K8TBwPUbaYg4B2DmSZnWhdKc8ort+PrLfvfAeh3rjDBqzYjVZcpVu2Ohs8iQ==
-X-Received: by 2002:a17:90b:2e8e:b0:2e2:f044:caaa with SMTP id
- 98e67ed59e1d1-2ea06a63e77mr3122535a91.37.1731600122925; 
- Thu, 14 Nov 2024 08:02:02 -0800 (PST)
+ bh=nc2uEpCTHuP4WgyDpbnyFTPw+frcLZQWSz4dicwWNic=;
+ b=TY20KlZZGONqyzvMpMMVEfMM0Yso8CsQi/8gYm1Xk0J926iWf/aDOonrf1BxOD/1vg
+ Zv45AZlmil5Q796WYs8sEiCkaD8wITrbgOpWGZ8OTh/G4an2dy2MyQPxZGEqF05K8TwP
+ w8GNpyDjV8q9owYMEjV+PsWmy5y9R3Rb4rdgX/ObtRO3dTFIUQwkgMO89/RkBDRqhsHI
+ PXWWdNA7Jxc9jwM8QC/0X9Hg7p30Cn5XN3HbYHcohzEihEJ6kYmNX55gTnA/cl1K/1BS
+ krKLP+K5QaQwXYnwdQZgdkxP3G6E50ZSY6hy82osrFjxXKp8s8NuWa4/ZpWXjcAyd9W7
+ TY8A==
+X-Gm-Message-State: AOJu0Yz9YbSynId93uwhZ+AcWobXsUZZ77CAHcRB77eFC9nHeXJXiB79
+ Xu4GVGI5LFU4/G0bAxyMso0J8arH2aRrVUO1Ge4a9rdc8bE9t2rnGPIW3+lb6oqRhTcEjbh+RVp
+ i
+X-Google-Smtp-Source: AGHT+IHQRU9f+dWRMqldDHp7M+xVk37euYiBWfVuo+7EeuLplWzUbxFNAjcJ2Wvq4BK4cu6aKsrS3w==
+X-Received: by 2002:a05:6a00:3d01:b0:71e:8046:2728 with SMTP id
+ d2e1a72fcca58-7244a59f534mr15160202b3a.17.1731600313250; 
+ Thu, 14 Nov 2024 08:05:13 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.02.02
+ d2e1a72fcca58-7246a9bab70sm1417926b3a.152.2024.11.14.08.05.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:02:02 -0800 (PST)
+ Thu, 14 Nov 2024 08:05:12 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 35/54] target/avr: Convert to TCGCPUOps.tlb_fill_align
-Date: Thu, 14 Nov 2024 08:01:11 -0800
-Message-ID: <20241114160131.48616-36-richard.henderson@linaro.org>
+Subject: [PATCH v2 45/54] target/rx: Convert to TCGCPUOps.tlb_fill_align
+Date: Thu, 14 Nov 2024 08:01:21 -0800
+Message-ID: <20241114160131.48616-46-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,93 +94,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/avr/cpu.h    |  7 ++++---
- target/avr/cpu.c    |  2 +-
- target/avr/helper.c | 19 ++++++++++++-------
- 3 files changed, 17 insertions(+), 11 deletions(-)
+ target/rx/cpu.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/target/avr/cpu.h b/target/avr/cpu.h
-index 4725535102..cdd3bcd418 100644
---- a/target/avr/cpu.h
-+++ b/target/avr/cpu.h
-@@ -23,6 +23,7 @@
- 
- #include "cpu-qom.h"
- #include "exec/cpu-defs.h"
-+#include "exec/memop.h"
- 
- #ifdef CONFIG_USER_ONLY
- #error "AVR 8-bit does not support user mode"
-@@ -238,9 +239,9 @@ static inline void cpu_set_sreg(CPUAVRState *env, uint8_t sreg)
-     env->sregI = (sreg >> 7) & 0x01;
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index 65a74ce720..c83a582141 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -161,16 +161,19 @@ static void rx_cpu_disas_set_info(CPUState *cpu, disassemble_info *info)
+     info->print_insn = print_insn_rx;
  }
  
--bool avr_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                      MMUAccessType access_type, int mmu_idx,
--                      bool probe, uintptr_t retaddr);
-+bool avr_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
-+                            MMUAccessType access_type, int mmu_idx,
-+                            MemOp memop, int size, bool probe, uintptr_t ra);
- 
- #include "exec/cpu-all.h"
- 
-diff --git a/target/avr/cpu.c b/target/avr/cpu.c
-index 3132842d56..a7fe869396 100644
---- a/target/avr/cpu.c
-+++ b/target/avr/cpu.c
-@@ -211,7 +211,7 @@ static const TCGCPUOps avr_tcg_ops = {
-     .restore_state_to_opc = avr_restore_state_to_opc,
-     .cpu_exec_interrupt = avr_cpu_exec_interrupt,
-     .cpu_exec_halt = avr_cpu_has_work,
--    .tlb_fill = avr_cpu_tlb_fill,
-+    .tlb_fill_align = avr_cpu_tlb_fill_align,
-     .do_interrupt = avr_cpu_do_interrupt,
- };
- 
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index 345708a1b3..a18f11aa9f 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -104,11 +104,11 @@ hwaddr avr_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
-     return addr; /* I assume 1:1 address correspondence */
- }
- 
--bool avr_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                      MMUAccessType access_type, int mmu_idx,
--                      bool probe, uintptr_t retaddr)
-+bool avr_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
-+                            MMUAccessType access_type, int mmu_idx,
-+                            MemOp memop, int size, bool probe, uintptr_t ra)
+-static bool rx_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+-                            MMUAccessType access_type, int mmu_idx,
+-                            bool probe, uintptr_t retaddr)
++static bool rx_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
++                                  vaddr addr, MMUAccessType access_type,
++                                  int mmu_idx, MemOp memop, int size,
++                                  bool probe, uintptr_t retaddr)
  {
--    int prot, page_size = TARGET_PAGE_SIZE;
-+    int prot, lg_page_size = TARGET_PAGE_BITS;
-     uint32_t paddr;
+-    uint32_t address, physical, prot;
++    /* TODO: alignment faults not currently handled. */
  
-     address &= TARGET_PAGE_MASK;
-@@ -141,15 +141,20 @@ bool avr_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-              * to force tlb_fill to be called for the next access.
-              */
-             if (probe) {
--                page_size = 1;
-+                lg_page_size = 0;
-             } else {
-                 cpu_env(cs)->fullacc = 1;
--                cpu_loop_exit_restore(cs, retaddr);
-+                cpu_loop_exit_restore(cs, ra);
-             }
-         }
-     }
- 
--    tlb_set_page(cs, address, paddr, prot, mmu_idx, page_size);
+     /* Linear mapping */
+-    address = physical = addr & TARGET_PAGE_MASK;
+-    prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+-    tlb_set_page(cs, address, physical, prot, mmu_idx, TARGET_PAGE_SIZE);
 +    memset(out, 0, sizeof(*out));
-+    out->phys_addr = paddr;
-+    out->prot = prot;
++    out->phys_addr = addr;
++    out->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++    out->lg_page_size = TARGET_PAGE_BITS;
 +    out->attrs = MEMTXATTRS_UNSPECIFIED;
-+    out->lg_page_size = lg_page_size;
-+
      return true;
  }
  
+@@ -195,7 +198,7 @@ static const TCGCPUOps rx_tcg_ops = {
+     .initialize = rx_translate_init,
+     .synchronize_from_tb = rx_cpu_synchronize_from_tb,
+     .restore_state_to_opc = rx_restore_state_to_opc,
+-    .tlb_fill = rx_cpu_tlb_fill,
++    .tlb_fill_align = rx_cpu_tlb_fill_align,
+ 
+ #ifndef CONFIG_USER_ONLY
+     .cpu_exec_interrupt = rx_cpu_exec_interrupt,
 -- 
 2.43.0
 
