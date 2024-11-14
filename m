@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1101FD6A224
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B13D6A224
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBeVp-0000qQ-A2; Thu, 14 Nov 2024 13:24:14 -0500
+	id 1tBeao-0002Ft-Qy; Thu, 14 Nov 2024 13:29:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBeVa-0000mC-NZ
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:23:58 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tBeal-0002FW-Vw
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:29:20 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBeVZ-0000KX-3m
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:23:58 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-720be27db74so751492b3a.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:23:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tBeak-0000uA-GU
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:29:19 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-71e592d7f6eso672335b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:29:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731608635; x=1732213435; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1731608956; x=1732213756; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pWrlQmqkGFoVZPKM2LGF3oDBVshqqzwKduuS1JkstNA=;
- b=OhK5lBhTK4SGohRKzXjvIbiUKjiABv2GQ7HDtvEl5tKmlHMd8X1OekWNg8DHOP89GH
- 6dtrKA1Qf300VaKa5GPgG+ZfHwgi6nY7ZWYIXh5f8AKnlrj8GHDHCRqPTBNbHJemrj90
- 5l7vUKAHAfGkEAsMNM6ZVy5EdtVXaToorOezXMHBgif36V0m/7lrngS+QvWQR3kLvdhP
- EZKWWL+aiOqx7/fVjFQNCFKF7OEV/9YkedWxb3MND0ZZ1+bl5ommW2AdVo/q0rkGS2Nn
- T27tmvsN8K9m3EJFgITPbFUn/874ZrMSFmspBnGPHcV+jITK71BzlEpsIs/QAC3kayDS
- zj9w==
+ bh=IID2hjTWPAH/vJIgWztozYD6kUD+Ax1e/V0HojZjqpc=;
+ b=CyddusPajU2TX5Jn8OJZseIzuXvYVRSYuJa6M7P55Sbfvy2jczoMTxSfcyCBYzbRlu
+ MsomTcbnA7kILRI4q5ZG7Vx/Xm11FNqqbcYvS/sfw1AbMtWlOvNtm8CuHm99TrkJBerJ
+ +h9Tp8frblgqs2viE4XHxfxXPiGWmEB75rsKi/wkIUkWoTb78fHuUoRQLPIc5SfA37MT
+ QWcg2bIkviy5CDK+/fQczJAo/b9Nlr6WpFdslpofaiguytyr/TUjrF373lvR5H7Fiqz2
+ 0yhRP+SQgYz8/keeDmBWKH/tok3H0by0vvNb0h1y3/+dNI4/wTyy6WyfU8nN+EdIq1Kf
+ UQJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731608635; x=1732213435;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1731608956; x=1732213756;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pWrlQmqkGFoVZPKM2LGF3oDBVshqqzwKduuS1JkstNA=;
- b=ES6SHjjtZg8Eyv65c4dVSxjjukkY5p/1nRCto4y6RTEyGJSizAlwziBtx/b1HqfQda
- f+NZ4khtPJfaPoc+gm+dec6TinBGQkhQbbUZiBFAeGiscr1x7IhaQWOlJ2q/B+2GnM5c
- xcyOwTSOWqVaG+kTtRqr1wBIwT87avDfWK0HnMjjZ7cbhUzzzP8DE+ejUOj+MdpnL3El
- P9H2jIBMQWE8JCJTyzNxflcKOLmhllMd78fFW+ySj3EjpxcCmKwB2BuXZ0edpjZ2ZG0V
- FW7Zu6jXV+rbl9pHAfUi+sIG5jZQvQeqRWiOQtrH8cQwxTo1irnTzM8wha7xipgc4hxh
- iHUQ==
+ bh=IID2hjTWPAH/vJIgWztozYD6kUD+Ax1e/V0HojZjqpc=;
+ b=Lyz/Xke4Vyi8+v4wpWt63c229y3QsuRVm+w+3eavL/G1FdEZFKSgQPmXM0AKXEP8L9
+ uHC4m0+AodV14CTlGECX+c3HbESRw/ZPPPedFo5zTa7L276DtwCT0cNgclPHhEaEO7dZ
+ ohIhEXd/4yK/jlLRBL6GGPUpzQylyXwI6v0KIVl180Iyhtfep5+gHIE/iKfeltmZNuRo
+ y9Hmp9fq1oHfcL2oYGhq2lPBKiz3RYyp/OZnOks9EdqM2OLUOw92Vsi3ryt8TOGjVdWv
+ t31wE3Xsi6Rvsv4WFvUdPC33M5LqP2dzB5dfodk3daax3ugxt9qHt52deeNDkfRtgmh9
+ AB5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdRZfB/ff8Ay3nQthzzieR8BsxXdjaHhIsimtGJhduJEePjH8JCYOOaFJBBAo6P0Pf0EQHD3qmjX3M@nongnu.org
-X-Gm-Message-State: AOJu0Yy+AAebxkYNg8lGDoq6f1hEi/u0NDRNG5Ur3ccaYRQBKpxisW6+
- +agMYhtR7V6/efY6L9vofTCG/so8WtJBjCKnacThaqE5GeT/vKmuxyE8GGThNSs=
-X-Google-Smtp-Source: AGHT+IFaM4tPkOHim3pBzQlGQstO9lIzVCJDZj4sa8QMuEUhTc9wH21LsRXyx0yzd4mGebp4quQW4Q==
-X-Received: by 2002:a05:6a00:190c:b0:724:66cf:163f with SMTP id
- d2e1a72fcca58-72475f97125mr132951b3a.3.1731608635245; 
- Thu, 14 Nov 2024 10:23:55 -0800 (PST)
-Received: from [192.168.0.4] ([71.212.136.242])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7246a6e716esm1550837b3a.59.2024.11.14.10.23.54
+ AJvYcCWKY83lE4I8v2pIGAVGkMdpQ2G3J7vzEJpzeQG0NtfIVsvDrT1csa62iI4csrwmaEItp9pzvFGv0uK2@nongnu.org
+X-Gm-Message-State: AOJu0Yw18xpHUIjdRoLVIVjMNlFI6RewWQO8xIVnP/zewWI8+uxiz2/S
+ m22Vl1e8+Wrf3plwCFcG99mGI4tknpOwqeC1Lpib6LHSaV+IZUFYIp4TAtiuefE=
+X-Google-Smtp-Source: AGHT+IE+h5IqDtpRJy7JkkV68W+B/7Y07OzejDyttKKL2A5dsWJktTohH04gaH+fWor1522/X3Tr9g==
+X-Received: by 2002:a05:6a00:4f86:b0:71e:3b8f:92e with SMTP id
+ d2e1a72fcca58-72469c5e94emr4032671b3a.3.1731608955976; 
+ Thu, 14 Nov 2024 10:29:15 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7246a9a891dsm1607219b3a.127.2024.11.14.10.29.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 10:23:54 -0800 (PST)
-Message-ID: <453e90d6-f8b8-436b-b3a0-45c11fd8e813@linaro.org>
-Date: Thu, 14 Nov 2024 10:23:53 -0800
+ Thu, 14 Nov 2024 10:29:15 -0800 (PST)
+Message-ID: <d46eee5d-ba25-4cbf-be8f-c0df3624a6e4@linaro.org>
+Date: Thu, 14 Nov 2024 10:29:14 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/24] accel/tcg: Include missing
- 'exec/translation-block.h' header
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, 
- Peter Xu <peterx@redhat.com>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-s390x@nongnu.org
-References: <20241114011310.3615-1-philmd@linaro.org>
- <20241114011310.3615-5-philmd@linaro.org>
+Subject: Re: [PATCH v2 28/54] accel/tcg: Introduce tlb_lookup
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241114011310.3615-5-philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20241114160131.48616-1-richard.henderson@linaro.org>
+ <20241114160131.48616-29-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241114160131.48616-29-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,42 +97,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/13/24 17:12, Philippe Mathieu-Daudé wrote:
-> TB compile flags are defined in "exec/translation-block.h".
-> Include it in order to avoid when refactoring:
+On 11/14/24 08:01, Richard Henderson wrote:
+> Unify 3 instances of tlb lookup, through tlb_hit, tlbtree_hit,
+> and tlb_full_align.  Use structures to avoid too many arguments.
 > 
->    accel/tcg/tcg-accel-ops.c:62:36: error: use of undeclared identifier 'CF_CLUSTER_SHIFT'
->       62 |     cflags = cpu->cluster_index << CF_CLUSTER_SHIFT;
->          |                                    ^
->    accel/tcg/tcg-accel-ops.c:64:26: error: use of undeclared identifier 'CF_PARALLEL'
->       64 |     cflags |= parallel ? CF_PARALLEL : 0;
->          |                          ^
->    accel/tcg/tcg-accel-ops.c:65:34: error: use of undeclared identifier 'CF_USE_ICOUNT'
->       65 |     cflags |= icount_enabled() ? CF_USE_ICOUNT : 0;
->          |                                  ^
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/tcg-accel-ops.c | 1 +
->   1 file changed, 1 insertion(+)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This is a great simplification.
 
+> +static void tlb_lookup_nofail(CPUState *cpu, TLBLookupOutput *o,
+> +                              const TLBLookupInput *i)
+> +{
+> +    bool ok = tlb_lookup(cpu, o, i);
+> +    tcg_debug_assert(ok);
 
-r~
+ From the function name, would that be safe to use a normal assert 
+instead? In case we have a weird bug coming in the future, it would 
+expose it more easily.
 
-> 
-> diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-> index 3c19e68a79..22486c5dff 100644
-> --- a/accel/tcg/tcg-accel-ops.c
-> +++ b/accel/tcg/tcg-accel-ops.c
-> @@ -35,6 +35,7 @@
->   #include "exec/exec-all.h"
->   #include "exec/hwaddr.h"
->   #include "exec/tb-flush.h"
-> +#include "exec/translation-block.h"
->   #include "gdbstub/enums.h"
->   
->   #include "hw/core/cpu.h"
+For the rest,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
