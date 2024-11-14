@@ -4,84 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C839D6A228
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 19:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C25D6A221
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 19:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBf15-0004cr-3m; Thu, 14 Nov 2024 13:56:31 -0500
+	id 1tBf5L-0005Zw-80; Thu, 14 Nov 2024 14:00:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBf0c-00037r-6m
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:56:03 -0500
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tBf5H-0005NL-0s
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:00:52 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBf0a-0000RU-2R
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:56:01 -0500
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-71a4210bcfeso568229a34.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:55:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tBf5E-0001Kk-G4
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:00:50 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-210e5369b7dso11646795ad.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 11:00:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731610558; x=1732215358; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1731610847; x=1732215647; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ojb8nBpKVYXjd2u5bC/Ui/48M1Q4AJk+hIp/A4henE0=;
- b=dP6xISoGBCW6q7j7JdtGr9GWjZVqSW80KXAHFRTygi3TGNf6GtEE8+Ce22bPqIcTQ7
- tZEk7QZodlwYDv8zptd7m8ndIhf6RbQlNrVXrOBbFSlC+D0CaYB6/+TOULVImdnnZqhg
- SIYCKht/382S3eA8Tqij/Z0IHhohzIH7SoRGCBeRj1V4Trm9err3ckPW81r7/i3uXng9
- wyAPnbIK0OWp4qX/7NIcct5jw/m4wb5qjLj0bIcnAjwbKb5QQ3iTeUkImM62k0x3kYDG
- Dcnr/XT/5WHJk+4848u8QOYwrp6kfoY4IWsz5f4Shr9G5AWRV/9eNU81QZw3TA+lEcvm
- K6vA==
+ bh=WCF10UJl5PG27w8WAO2jHWY7UVY497UxuwsdECCW7mU=;
+ b=WykTOAUSTLYPuiaLbQU9fBu/l23OL28YSd9eSkVGikOXZcHs2QYQB4V5w6JX+UMdbs
+ SEqV5oaLfSHq4PbfpoHOmn0MpCGAcnAXDq005W5iizpIUvKLY4knAX0Ht0s6mo9T6x6X
+ hv6he3Yl+wVqLvf2pWwxLJ79i2+3vmCpncG0Hw/5iNfAnSGGX1wcELjFujwjbAqhq13P
+ pu/NR6IGmK4jnTtxGQc3JdXEPzRBB4P9OLCbTe+gHiYTV9mjEWRkDRvqBxokF3AUMkHz
+ acr6GlDkx8AEryLVRm5hPs4iStoQnHsaTNcanfEFhBLT5ekfbhIppBLp0HbUJTnuiE/g
+ tyoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731610558; x=1732215358;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1731610847; x=1732215647;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ojb8nBpKVYXjd2u5bC/Ui/48M1Q4AJk+hIp/A4henE0=;
- b=Ny9IbfV+bhD6SDxwLeO0ohvUCWBhFp/JshW7bkIlIFjaZF+ES8QIrmGxe/j6TYqB9J
- 5S8G5Xfq/TYr/dR72fJAHGzf6W7tAee2BU5b9CygOFlETJS/17yJyPFDyzeb3Wfiu5+8
- XSsswK6BHakoic0dPQ+B5liKODehgunIuUkZn0gU+z1Kv/6wEA8SghTaF1qpcQDWti94
- ZcWJ05ma/uI/jJsi0ReZ1M6kYFSO6G3QFvku0ve4/VXkGl+1sGquD9yYsIb3UlhPb1vR
- kl17ahCenHFHQ/GC9Lw+PE7FPbsfQHsVYfSTcnfw4wuxh1Uu0THRC+2FUdsUfmKyAyHe
- 8uXg==
+ bh=WCF10UJl5PG27w8WAO2jHWY7UVY497UxuwsdECCW7mU=;
+ b=r6INht914DtANu3vJtxp9Rq1sgFh6mPfs8DsRbakPYWv0BozyaAClcZyDv9vSAlWIw
+ 5oPze0sY6FgBPq/7woj9N0e5qaRjljsNtdpUNkIJbDu0/rKnoqQpmJ3IeuABpcYOQOuP
+ CUYfITy8XdSoP0HlJLdPb+w217VW6NUfaiumVNT2mq/sBfbytm/atcSbRZ+n6bxQ2s5/
+ KjKue1MTexi+fX36d8Upjqcx4ZDqvovOnPWQP2oGYfcw6HKco0oC9UUPUwuTtWm7p54m
+ 2pC1MdvsznsxD0A6bes4/SiIKQGYhjvGaIFNe74X4fdu13wYP5ZrpPyEXzgWCfdDu4Bw
+ lPPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcDYrvsoPrOdW/QqlQX/xUDzBR8TiTUONi63Ra6Cul0d6CPUZR/YTtvFPBPhRKe/4d2MemPb+brLyI@nongnu.org
-X-Gm-Message-State: AOJu0YwvHD3iU3e07bY06gqKFz1JiGAA2kEKKykAHkJybhw421z+dWqb
- gPIzYi440mSpq1R6JqLgOVJhKPfVh600LOlycJMFsb2yND6/lkkJ2ybKYLqnQ+w=
-X-Google-Smtp-Source: AGHT+IHIgKgf5EkqVgh/R+drOrq+cNBlP7zZ9UbqHl+FvGz/87ZENdhCzL89igDRFMDnVT/fr0VVzw==
-X-Received: by 2002:a05:6830:374c:b0:71a:21c9:cd62 with SMTP id
- 46e09a7af769-71a77979c17mr41871a34.17.1731610558411; 
- Thu, 14 Nov 2024 10:55:58 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f8b39af62esm1275662a12.76.2024.11.14.10.55.57
+ AJvYcCXL5Hnuui6Fbxt7wNSpNAkaj5ynUhvHppeLZ/vAL+2Xyr7ValwvhVwGxxAiMzOzedxGCyNjqroLfK1F@nongnu.org
+X-Gm-Message-State: AOJu0Yyk5YEmp7/J48LMPcCLyU9XqTFuasx99j/pQZl3i2ScS7zomaGR
+ JLwG1s4bDCyWN9f7Om5ZzN5zsyeuhJoT6FnoDfnHa8EOcCRR67ePS+38ysw1gUY=
+X-Google-Smtp-Source: AGHT+IGnHzzYqk+q7/Yv5JN7lqD83FpYqSx/4shcVG1QfnTZYGSwgaOyl2SBchN7ed/snrWOVkfC9A==
+X-Received: by 2002:a17:902:ce90:b0:20c:a175:1942 with SMTP id
+ d9443c01a7336-211c5011492mr45572645ad.24.1731610846935; 
+ Thu, 14 Nov 2024 11:00:46 -0800 (PST)
+Received: from [192.168.0.4] ([71.212.136.242])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-211c7d05dcfsm13642015ad.201.2024.11.14.11.00.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 10:55:58 -0800 (PST)
-Message-ID: <1b6221c7-aa65-49fd-be52-1af422331806@linaro.org>
-Date: Thu, 14 Nov 2024 10:55:57 -0800
+ Thu, 14 Nov 2024 11:00:46 -0800 (PST)
+Message-ID: <6db9d01c-4d1b-4102-b5e9-d8b613234bff@linaro.org>
+Date: Thu, 14 Nov 2024 11:00:44 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 51/54] accel/tcg: Drop TCGCPUOps.tlb_fill
+Subject: Re: [PATCH 09/24] target/arm/mte: Restrict 'exec/ram_addr.h' to
+ system emulation
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, 
+ Peter Xu <peterx@redhat.com>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
+ David Hildenbrand <david@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-s390x@nongnu.org
+References: <20241114011310.3615-1-philmd@linaro.org>
+ <20241114011310.3615-10-philmd@linaro.org>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241114160131.48616-1-richard.henderson@linaro.org>
- <20241114160131.48616-52-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241114160131.48616-52-richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241114011310.3615-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-ot1-x335.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,70 +106,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/14/24 08:01, Richard Henderson wrote:
-> Now that all targets have been converted to tlb_fill_align,
-> remove the tlb_fill hook.
+On 11/13/24 17:12, Philippe Mathieu-Daudé wrote:
+> "exec/ram_addr.h" contains system specific declarations.
+> Restrict its inclusion to sysemu to avoid build errors
+> when refactoring.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   include/hw/core/tcg-cpu-ops.h | 10 ----------
->   accel/tcg/cputlb.c            | 19 ++++---------------
->   2 files changed, 4 insertions(+), 25 deletions(-)
-> 
-> diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
-> index 663efb9133..70cafcc6cd 100644
-> --- a/include/hw/core/tcg-cpu-ops.h
-> +++ b/include/hw/core/tcg-cpu-ops.h
-> @@ -157,16 +157,6 @@ struct TCGCPUOps {
->       bool (*tlb_fill_align)(CPUState *cpu, CPUTLBEntryFull *out, vaddr addr,
->                              MMUAccessType access_type, int mmu_idx,
->                              MemOp memop, int size, bool probe, uintptr_t ra);
-> -    /**
-> -     * @tlb_fill: Handle a softmmu tlb miss
-> -     *
-> -     * If the access is valid, call tlb_set_page and return true;
-> -     * if the access is invalid and probe is true, return false;
-> -     * otherwise raise an exception and do not return.
-> -     */
-> -    bool (*tlb_fill)(CPUState *cpu, vaddr address, int size,
-> -                     MMUAccessType access_type, int mmu_idx,
-> -                     bool probe, uintptr_t retaddr);
->       /**
->        * @do_transaction_failed: Callback for handling failed memory transactions
->        * (ie bus faults or external aborts; not MMU faults)
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 7f63dc3fd8..ec597ed6f5 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -1222,23 +1222,12 @@ static bool tlb_fill_align(CPUState *cpu, vaddr addr, MMUAccessType type,
->                              int mmu_idx, MemOp memop, int size,
->                              bool probe, uintptr_t ra)
->   {
-> -    const TCGCPUOps *ops = cpu->cc->tcg_ops;
->       CPUTLBEntryFull full;
->   
-> -    if (ops->tlb_fill_align) {
-> -        if (ops->tlb_fill_align(cpu, &full, addr, type, mmu_idx,
-> -                                memop, size, probe, ra)) {
-> -            tlb_set_page_full(cpu, mmu_idx, addr, &full);
-> -            return true;
-> -        }
-> -    } else {
-> -        /* Legacy behaviour is alignment before paging. */
-> -        if (addr & ((1u << memop_alignment_bits(memop)) - 1)) {
-> -            ops->do_unaligned_access(cpu, addr, type, mmu_idx, ra);
-> -        }
-> -        if (ops->tlb_fill(cpu, addr, size, type, mmu_idx, probe, ra)) {
-> -            return true;
-> -        }
-> +    if (cpu->cc->tcg_ops->tlb_fill_align(cpu, &full, addr, type, mmu_idx,
-> +                                         memop, size, probe, ra)) {
-> +        tlb_set_page_full(cpu, mmu_idx, addr, &full);
-> +        return true;
->       }
->       assert(probe);
->       return false;
+>   target/arm/tcg/mte_helper.c | 2 ++
+>   1 file changed, 2 insertions(+)
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
