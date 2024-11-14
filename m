@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD90D68B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E04CD68B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:21:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcOQ-0005Jt-2q; Thu, 14 Nov 2024 11:08:26 -0500
+	id 1tBcZu-0000mE-70; Thu, 14 Nov 2024 11:20:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcLQ-0001mB-MG
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:27 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcLO-00036X-9p
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:19 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-71e4e481692so636044b3a.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:05:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600316; x=1732205116; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9nz66+lLu2GQe/uhCiK8Lu0UqaZ0it8xcxl9KTGeICs=;
- b=hrhomyc7oDrtl/T+yrlHVuMTxj2igSBr9po7/BPODnR5tcCrnENEn237BYsdgdYo9Y
- ha1+xKlopP/X/fVvHyNDLK3ixSS2WiPeQwnMCTA95fTD/RLRLJVcHyjhsnsjSz9PCHi9
- 0HGT8foPKd9NGJTLz+itgKrlK60ISSIhDJGWVCcrdozbFw9Dk6VpczFvRpHrCf9Ib7wh
- 1PNernK2LwD0v261CsenbYzJObTAdrYsUp+1U4h4lgmdb+33NQoSvy3Ko3QK5DQxb5SD
- ZFxMYu1rjarSK7HACJCoKiakRhpYOoShylOvDLSAOmpoLVQffUKEDtnyv5YI4W8KqX9M
- B3Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600316; x=1732205116;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9nz66+lLu2GQe/uhCiK8Lu0UqaZ0it8xcxl9KTGeICs=;
- b=fze+oRAmb+b7gyI9CbPuX/9BT5NglE9Vc18VfezpllVwhfwCoC2NGQbhBNTi4zb7dB
- iUf4vqahfndBttfekcEU0o+NavXtCVe75zjCW4ma+REwQaeAvIcUlfr8MFG0jvNgp+gP
- LVxO4eJKcrOCbl46gY5BTXQ5DkfFDga+/VJM/k051oKV0yaH1/4z8wc9M/XqKpL1bp9e
- 8isBHKiqMqJqSMikoynK2+PL16AL+O1VY1ZKIazM1gwRj870r9QvTyYc1klDJUoUdxgA
- A5P/NPCzu2IW6zxgfCZTgFSnjqqSnIMAR4LmRWplWXfM7UYQtTu8G+ICf3N5dNarZuE/
- Qtyw==
-X-Gm-Message-State: AOJu0YzcBP6eZGfhI2qunHunPNxKrrQX/MY7W0vswDBNOztJyTYrk7zm
- oCNO8dFomjmuI80Rd/3GWuEo0vDdR8Pgb5jemVbp2HGnJsDDJNc7xAsgpQs1SMBXM3eqpyy7tTw
- 9
-X-Google-Smtp-Source: AGHT+IF8SLdAKjSr5fcT9yE2AZtutkW+OgOe31Z/tOjbkTvktdkTDUwzv3LOGjNXVzdwBlfCyc5j2g==
-X-Received: by 2002:aa7:88c8:0:b0:71e:f83:5c00 with SMTP id
- d2e1a72fcca58-72469c485bfmr3740544b3a.2.1731600316282; 
- Thu, 14 Nov 2024 08:05:16 -0800 (PST)
-Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7246a9bab70sm1417926b3a.152.2024.11.14.08.05.15
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:05:15 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2 49/54] target/tricore: Convert to TCGCPUOps.tlb_fill_align
-Date: Thu, 14 Nov 2024 08:01:25 -0800
-Message-ID: <20241114160131.48616-50-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
-References: <20241114160131.48616-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1tBcZp-0000lv-Sb; Thu, 14 Nov 2024 11:20:14 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1tBcZm-0000Un-LA; Thu, 14 Nov 2024 11:20:12 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AEEAY0e016593;
+ Thu, 14 Nov 2024 16:20:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=Tk07lILItncrr6sZhJb856zOgOqXmG/lu3ZysekfA
+ q4=; b=RaCgk8uYUbdtKDGkMJReiFPqwIs3cBrA4ggs0XYbeoOFPhKQFQDC0cZae
+ lGf8new8vLQHcZzP3BjpYfQ7n1KPN7XsEd1BYo8ZuNri2SEr0yG/VXNB9op631vS
+ LmI/tAnX1PeW8JycGEoJ7DSV7eSj8lupIi/6qu8uf/Qh/jUX8xYEHcRwZoIJvJf+
+ T4LjRgzWTN1I2XYNSC7pr6qhz3jcBEiGQup0ChHj39sTbvEKS6v4xD6xTacL9+qB
+ wVlzfIuPUHJRlKurS6xTG6rEoi7BBatZbn9qyPCHYA9ySUX4zy5rAt4ayiXvcrFS
+ YTXWY4//T6HeDgCaXAge8EvkYRARA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42wjqrgk64-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 14 Nov 2024 16:20:07 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AE9wf9a017511;
+ Thu, 14 Nov 2024 16:20:07 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42tk2n0mm7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 14 Nov 2024 16:20:07 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4AEGK6wp15991544
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 14 Nov 2024 16:20:06 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EF3525804E;
+ Thu, 14 Nov 2024 16:20:05 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4D19F58056;
+ Thu, 14 Nov 2024 16:20:05 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.61.167.191])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 14 Nov 2024 16:20:05 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
+Subject: [PATCH] pc-bios/s390x: Initialize machine loadparm before probing IPL
+ devices
+Date: Thu, 14 Nov 2024 11:19:52 -0500
+Message-ID: <20241114161952.3508554-1-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: e8YLnXSEAPM2v1epFMoMF_PsBIaO-UCB
+X-Proofpoint-GUID: e8YLnXSEAPM2v1epFMoMF_PsBIaO-UCB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 mlxlogscore=715 suspectscore=0 mlxscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411140125
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,87 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/tricore/cpu.h    |  7 ++++---
- target/tricore/cpu.c    |  2 +-
- target/tricore/helper.c | 19 ++++++++++++-------
- 3 files changed, 17 insertions(+), 11 deletions(-)
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-diff --git a/target/tricore/cpu.h b/target/tricore/cpu.h
-index 220af69fc2..5f141ce8f3 100644
---- a/target/tricore/cpu.h
-+++ b/target/tricore/cpu.h
-@@ -268,8 +268,9 @@ static inline void cpu_get_tb_cpu_state(CPUTriCoreState *env, vaddr *pc,
- #define CPU_RESOLVING_TYPE TYPE_TRICORE_CPU
- 
- /* helpers.c */
--bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                          MMUAccessType access_type, int mmu_idx,
--                          bool probe, uintptr_t retaddr);
-+bool tricore_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-+                                vaddr addr, MMUAccessType access_type,
-+                                int mmu_idx, MemOp memop, int size,
-+                                bool probe, uintptr_t retaddr);
- 
- #endif /* TRICORE_CPU_H */
-diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
-index 1a26171590..29e0b5d129 100644
---- a/target/tricore/cpu.c
-+++ b/target/tricore/cpu.c
-@@ -173,7 +173,7 @@ static const TCGCPUOps tricore_tcg_ops = {
-     .initialize = tricore_tcg_init,
-     .synchronize_from_tb = tricore_cpu_synchronize_from_tb,
-     .restore_state_to_opc = tricore_restore_state_to_opc,
--    .tlb_fill = tricore_cpu_tlb_fill,
-+    .tlb_fill_align = tricore_cpu_tlb_fill_align,
-     .cpu_exec_interrupt = tricore_cpu_exec_interrupt,
-     .cpu_exec_halt = tricore_cpu_has_work,
- };
-diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-index 7014255f77..8c6bf63298 100644
---- a/target/tricore/helper.c
-+++ b/target/tricore/helper.c
-@@ -64,16 +64,19 @@ static void raise_mmu_exception(CPUTriCoreState *env, target_ulong address,
+Commit bb185de423 ("s390x: Add individual loadparm assignment to
+CCW device") allowed boot devices to be assigned a loadparm value independent
+of the machine value, however, when no boot devices are defined, the machine
+loadparm becomes ignored. Therefore, let's check the machine loadparm
+prior to probing the devices.
+
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+---
+ pc-bios/s390-ccw/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index a4d1c05aac..a6cc6d7906 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -191,7 +191,7 @@ static void boot_setup(void)
  {
- }
+     char lpmsg[] = "LOADPARM=[________]\n";
  
--bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                          MMUAccessType rw, int mmu_idx,
--                          bool probe, uintptr_t retaddr)
-+bool tricore_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-+                                vaddr address, MMUAccessType access_type,
-+                                int mmu_idx, MemOp memop, int size,
-+                                bool probe, uintptr_t retaddr)
- {
-     CPUTriCoreState *env = cpu_env(cs);
-     hwaddr physical;
-     int prot;
-     int ret = 0;
-+    int rw = access_type & 1;
-+
-+    /* TODO: alignment faults not currently handled. */
- 
--    rw &= 1;
-     ret = get_physical_address(env, &physical, &prot,
-                                address, rw, mmu_idx);
- 
-@@ -82,9 +85,11 @@ bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                   __func__, address, ret, physical, prot);
- 
-     if (ret == TLBRET_MATCH) {
--        tlb_set_page(cs, address & TARGET_PAGE_MASK,
--                     physical & TARGET_PAGE_MASK, prot | PAGE_EXEC,
--                     mmu_idx, TARGET_PAGE_SIZE);
-+        memset(out, 0, sizeof(*out));
-+        out->phys_addr = physical;
-+        out->prot = prot | PAGE_EXEC;
-+        out->lg_page_size = TARGET_PAGE_BITS;
-+        out->attrs = MEMTXATTRS_UNSPECIFIED;
-         return true;
+-    if (memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
++    if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+         ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
      } else {
-         assert(ret < 0);
+         sclp_get_loadparm_ascii(loadparm_str);
+@@ -315,6 +315,7 @@ void main(void)
+     css_setup();
+     have_iplb = store_iplb(&iplb);
+     if (!have_iplb) {
++        boot_setup();
+         probe_boot_device();
+     }
+ 
 -- 
-2.43.0
+2.45.1
 
 
