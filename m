@@ -4,58 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D32D68B18
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:48:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434A7D68B18
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:52:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBaC2-0000py-Lg; Thu, 14 Nov 2024 08:47:31 -0500
+	id 1tBaGj-0002Ho-Df; Thu, 14 Nov 2024 08:52:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangzhou1@hisilicon.com>)
- id 1tBaBl-0000gu-Io
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:47:21 -0500
-Received: from szxga07-in.huawei.com ([45.249.212.35])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tBaGh-0002Hf-Hn
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:52:19 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangzhou1@hisilicon.com>)
- id 1tBaBi-0006nN-2S
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:47:13 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.163])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4Xq1cL1q3Gz1T4wQ;
- Thu, 14 Nov 2024 21:45:06 +0800 (CST)
-Received: from kwepemd200012.china.huawei.com (unknown [7.221.188.145])
- by mail.maildlp.com (Postfix) with ESMTPS id 49B0418002B;
- Thu, 14 Nov 2024 21:46:58 +0800 (CST)
-Received: from [10.67.121.115] (10.67.121.115) by
- kwepemd200012.china.huawei.com (7.221.188.145) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.34; Thu, 14 Nov 2024 21:46:57 +0800
-Message-ID: <3bd1c8d4-d5bf-75bb-bd22-089ab591f026@hisilicon.com>
-Date: Thu, 14 Nov 2024 21:46:56 +0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tBaGf-0000gr-BO
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:52:19 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8D10EA341F;
+ Thu, 14 Nov 2024 16:52:04 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9950316CF4B;
+ Thu, 14 Nov 2024 16:52:12 +0300 (MSK)
+Message-ID: <c368c0f7-8f9d-4d4a-8ed8-f034f3939c0a@tls.msk.ru>
+Date: Thu, 14 Nov 2024 16:52:12 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: Question about migration on ARM system
-Content-Language: en-US
-To: Marc Zyngier <maz@kernel.org>
-CC: <qemu-devel@nongnu.org>, Shameer Kolothum
- <shameerali.kolothum.thodi@huawei.com>, "Zengtao (B)"
- <prime.zeng@hisilicon.com>
-References: <ac98a734-5de5-e107-6257-0c5fcd2fdfcd@hisilicon.com>
- <864j4avvu9.wl-maz@kernel.org>
-In-Reply-To: <864j4avvu9.wl-maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.121.115]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- kwepemd200012.china.huawei.com (7.221.188.145)
-Received-SPF: pass client-ip=45.249.212.35;
- envelope-from=wangzhou1@hisilicon.com; helo=szxga07-in.huawei.com
-X-Spam_score_int: -52
-X-Spam_score: -5.3
-X-Spam_bar: -----
-X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.115,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] hda-codec: reuse the audio device on format change
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20241114125318.1707590-1-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20241114125318.1707590-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -70,69 +100,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Zhou Wang <wangzhou1@hisilicon.com>
-From:  Zhou Wang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/11/14 20:33, Marc Zyngier wrote:
-> On Thu, 14 Nov 2024 09:03:24 +0000,
-> Zhou Wang <wangzhou1@hisilicon.com> wrote:
->>
->> Hi,
->>
->> I am tring to heterogeneous live migration on ARM64 host. Now I just use
->> below kernel/qemu branch to have a try:
->> https://github.com/hisilicon/kernel-dev/tree/private-v6.11-rc2-hisi-migrn-wip
->> https://github.com/hisilicon/qemu/tree/stable-8.2-kunpeng920-initial-v2
->>
->> Currently guest on GICv4.1 and GICv3 host can do migration successfully. I am
->> not sure that it is expected.
+14.11.2024 15:53, Paolo Bonzini wrote:
+> Commit 6d03242a7e47815ed56687ecd13f683d8da3f2fe fixes a memory leak
+> by calling hda_close_stream() when performing audio setup.  However,
+> hda_close_stream() closes the audio device, which is a change in
+> behavior because AUD_open_*() tries to keep the current device
+> if it's already up and configured properly.
 > 
-> It isn't. Or rather, it shouldn't. Are you reporting a KVM problem or
-> a QEMU problem?
+> Paolo
+> 
+> Paolo Bonzini (2):
+>    Revert "hw/audio/hda: fix memory leak on audio setup"
+>    hw/audio/hda: fix memory leak on audio setup
+> 
+>   hw/audio/hda-codec.c | 41 +++++++++++++++++------------------------
+>   1 file changed, 17 insertions(+), 24 deletions(-)
+Series:
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-I think KVM checks it in vgic_mmio_uaccess_write_v3_misc, however, current qemu
-does not consider GICD_TYPER2 during migration.
+I think this is a better approach for now indeed.
 
-In fact, I am wondering the description about GICD_TYPER2 in GIC spec. It said
-"This register is present only when FEAT_GICv4p1 is implemented", from the view
-of guest, we have a GICv3 device, however, we can see that GICD_TYPER2.nASSGIcap
-is 1.
+The original intention was good, but it looks like we ended
+up not understanding how audio is *supposed* to be used in
+this context, when parameters has to be changed after connection
+has been established - we need to agree with at least the major
+users about how it is supposed to work in the first place.
 
-> 
->>
->> GICv4.1 exports GICD_TYPER2.nASSGIcap and GICD_CTRL.nASSGIreq to guest, so
->> guests(GICv3) on GICv4.1 and GICv3 host will have different state here. So
->> basically a guest on host GICv4.1 will lost state when it move to a host with
->> GICv3.
->>
->> It seems that current mainline qemu does not consider GICD_TYPER2, and guest
->> OS(linux) does not use GICD_TYPER2.nASSGIcap and GICD_CTRL.nASSGIreq(just
->> check cap and set req), so current test has been passed.
-> 
-> Well, the guest won't test that after migration. It doesn't even know
-> it is migrated. But Linux definitely uses it at probe time.
-> 
->>
->> In fact, there was some discussions about this problem:
->> https://lore.kernel.org/kvmarm/20200304203330.4967-21-maz@kernel.org/
->>
->> I am not sure if we should prevent users from doing migration between host
->> GICv3 and GICv4.1?
-> 
-> We should allow the v3->v4.1 path (we can hide the nAS SGIs), but we
-> should not it the other way around.
+Let's restore the status-quo which's been here for over 10
+years and make a minimal fix first, and next let's think how
+it should and can be done, having in mind existing users and
+maybe negotiating the changes with them.
 
-Make sense, in the case of v3->v4.1, source and destination will use SGI
-with an active state.
+It's an interesting issue really, which also shows how various
+parts of the whole picture interacts with each other.
 
-Thanks,
-Zhou
+Marc-André, I found it exciting and enlightening to watch this
+whole thing happening.  And !2639 apparently has been one of
+the hottest qemu issues so far, - I think it's been for good.
 
-> 
-> Thanks,
-> 
-> 	M.
-> 
+Thanks!
+
+/mjt
 
