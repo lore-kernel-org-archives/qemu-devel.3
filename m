@@ -4,207 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F98D6A228
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C2E3D6A224
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBedi-0004fC-CU; Thu, 14 Nov 2024 13:32:22 -0500
+	id 1tBeeI-0005Cp-1Z; Thu, 14 Nov 2024 13:32:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tBedZ-0004eD-Bq
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:32:13 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tBedX-0001qJ-PE
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:32:13 -0500
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AED9QTg018726;
- Thu, 14 Nov 2024 18:32:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=JsZ38eP2BOaJwPJy+bqiXpg3CqW+Plgok9Ez0+9dozw=; b=
- Upzbi9Man8VmplcSXCdXsNbr+IeH0KVCC4aJWrhwdouX6RfCJ7yklOyN9jaHwb9v
- lYi+g8m1Au40vDDbtsFIgoAIPKjUmX+tqidEm/N6+JUabVqlGB4Nuksqtm0PaD6E
- kFGVSsvpQqbq4P/voVbnwk4VOiSEf+dWYis6kwr103RDEDyDS2pkh+m05vO8IcqZ
- f8mnzPLSkyrPbFh+jknPIO4UWlH4p3nQm7yCkEzmtIM0iWRs67UQqTmJT/dobcFa
- pxCuwmwSrPCoMiGzD/mrp/k2qcBzYro/obIy3i3S+M/mZJBpX7OiszDcqp4dAReA
- CelniN99I8hBDVQv/uML1A==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42t0kc20ub-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 14 Nov 2024 18:32:07 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4AEIVwY5005691; Thu, 14 Nov 2024 18:32:05 GMT
-Received: from nam10-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam10lp2048.outbound.protection.outlook.com [104.47.55.48])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 42sx6bk91s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 14 Nov 2024 18:32:05 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=j/GDHs5rxsKgR1f518jQn+8jFX3Yb2r3eCTTtATrLW0lXS/6h6g1uyuVKt+R9CJZvJwo/gEB/YmZEr1nX/F0Ys1POPY5+nxqr3LTPzhj/kWrBcblRpSTRvUhnf+QfOm/CYyDJn86b2cMFM5IaC2tBoDmNGfvKkz9b3Q3XVJLtyKNxk4udkh3AGwcP9nx0sTkiJOr+uAtPGA9j7Cl+rBQlO1HSTuc+GNBzkpGFlGV0fajcmNgEapJ4ZzViiu+RgkcpGl5+fnGb/2KPNVtlVFwhOgq9jdNSoKpghCZmoSvhSXlY79L2JC5m+2GdoRmiyHyLJFoc2CUe2xI1b2Xya8Qdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JsZ38eP2BOaJwPJy+bqiXpg3CqW+Plgok9Ez0+9dozw=;
- b=LbmAiATa9Pz8qi/oHJj2VdCOcYv7pKMClMAoScPmL/dPiUw6jKYjocvmQYWQdFPATlb/ckAFhXTtWLvUdXmU2Tlvw1DwqMVByNRd2Hxn2Cc4zP94C5xQ0juQYmFpB24TN73uAyByR1HsZ58enlUmc6F5jZuA9jCYXcYEN0OfsO8O7MWnsQ7u2ypSPFXBb/YRLgwbUGLtE9Bh9kRe7E3iKsxTPQKFPzjoblewEFsUzGSgIuhEhrJSOZ30fkrmXaomQ+I0EKbc/F9/ROSgxf3S9+WxgeNiMFD2T8C8BgIjbs31LZwF2l8moOf134NW3Nd3JWCpSwbw9s5ZvuSQ4lDiQg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tBeeG-0005A6-HX
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:32:56 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tBeeE-0001ue-Fj
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:32:56 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7f8b37edeb7so805771a12.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:32:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JsZ38eP2BOaJwPJy+bqiXpg3CqW+Plgok9Ez0+9dozw=;
- b=QATM6Mv4Y52YC5qQHITluC4eZkLrS+iL76fKKGUst0Y62v+P9tqzPFogxXLNcX41TR+5AK5YG4Ruk+aqJE/5diJc46aSPuPMl6eO5ukBa8Xec1bz0+MDyhWB1nkaVdrWoIh6fzxCTux4g3TIzVYQymvecHHsZOjeQ/VNnHYTJ5w=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by SA1PR10MB6640.namprd10.prod.outlook.com (2603:10b6:806:2b6::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.18; Thu, 14 Nov
- 2024 18:32:02 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%4]) with mapi id 15.20.8158.013; Thu, 14 Nov 2024
- 18:32:02 +0000
-Message-ID: <9fd2ad89-763f-45dd-af8c-149cded3de0e@oracle.com>
-Date: Thu, 14 Nov 2024 13:31:55 -0500
+ d=linaro.org; s=google; t=1731609173; x=1732213973; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LCqRro3ta5gxij3xvjRkAqVZCClwASQ/5fCiXQPHg8s=;
+ b=RzoyeU42tRF0C/l3gNx07h+32iWQm4jUTGKobnh2md9si/tg06gWPtZpG4EB/uqdl1
+ LpU7vYjpIkT0RkV/xw6gNMVNSWCnIuMjwEGIQDwVyZmCQd2ivzph9nmFOzp6Sz/x97Fy
+ kf0YkM64dP48m+pwuv5Pdb2w53nWAH0pdEeqmQyNJeu6g4t9Ce99uhvNpf67ai33X49l
+ PqGMChL8+bH68Gjn/hPlbEIbEkhinGUsZocWzWVF8JyJNTvTvnMFRrZf2Z/mQzHoCUVj
+ 7nEc/NzFkvuXvUXlRg86GQNM2Hd28b4jb++LZy1fgnrHGPrvG4tb3r6ywA1Y7p0plDIa
+ D6cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731609173; x=1732213973;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LCqRro3ta5gxij3xvjRkAqVZCClwASQ/5fCiXQPHg8s=;
+ b=rf05TQZEzT+3/mZxiY/3K+89oweAvlHt0Me3Jlf1kzWKGv6JaK7qo7oxlz9QGq8k0l
+ 3ThjSI7Zyy/BbiHKIWf6xdDBIDfkpf/FNwYLDbYQhd9Pckx31hCoAy7x+ZYhY1o9MJbt
+ HpttA60z2jpdXitWp6vDYKPoWYfhY7uWAI3tLTriwET0q3cZdQUQtuFg2FQOsllh6Otn
+ aTljOWh9it0QfqVGTnNrJk0GdSsBujXVYF7iYsxBfL5xxdKgZj65UFQfuXk3/BPyAlxa
+ ImkBXccWRMwjRkP0JgYP5U4Pi+jqaM6Ss+lCMu0utWV9g0goqjvEzCBCWhW0trXvxzxQ
+ QC4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU51tXhr05ui79IBTCMt3JfHUp+iKHGT4VglmxNa38efj5lcUS4Bj+o81aEne6efi07wxIQ1G1tf9k+@nongnu.org
+X-Gm-Message-State: AOJu0YxUcPglMhy85rsVjNsHyFrO/bAl/Bgwt4SYAP2JBz62WfOuPpRQ
+ hNtqEKMlo7ZChY5pIuZomtNz3b+lB8jKmgyvErAKFGfyryVFo2u4Qj+C3wlTXuE=
+X-Google-Smtp-Source: AGHT+IF1XVw7UQ+8upvbOhYql61I58HJNLYXljP2ICajEtgXkMQdp17H6zTBZY/9UG/czHoVNNS1Mw==
+X-Received: by 2002:a05:6a20:8412:b0:1d9:386d:9441 with SMTP id
+ adf61e73a8af0-1dc5f8eb321mr14826134637.10.1731609173004; 
+ Thu, 14 Nov 2024 10:32:53 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7f8b39f226bsm1413176a12.86.2024.11.14.10.32.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Nov 2024 10:32:52 -0800 (PST)
+Message-ID: <9bb054fd-40c6-4c44-aa02-52deba8bbc51@linaro.org>
+Date: Thu, 14 Nov 2024 10:32:52 -0800
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 13/16] tests/qtest: defer connection
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
- <1730468875-249970-14-git-send-email-steven.sistare@oracle.com>
- <ZzUuACXDVbhubRqo@x1n>
+Subject: Re: [PATCH v2 31/54] accel/tcg: Always use IntervalTree for code
+ lookups
 Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <ZzUuACXDVbhubRqo@x1n>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20241114160131.48616-1-richard.henderson@linaro.org>
+ <20241114160131.48616-32-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241114160131.48616-32-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0309.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:197::8) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SA1PR10MB6640:EE_
-X-MS-Office365-Filtering-Correlation-Id: e0901af4-69c8-4bc5-4e62-08dd04daa1d8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?a1NBdjNjNW5qTUp1a2ZMcVFOSjRmRVovR0VvRGlnSFJ1aUE0ME5sR3NpbTNE?=
- =?utf-8?B?V1I4M0hXVzAwTmswWFdyV2ZFdDM4T1FjNVRybGZNd1RuMmZZL3JBRlByeE9S?=
- =?utf-8?B?bHpLeWhyK3UveEdYWHl3NFJmczFieE1SZ0N1RUdJL1JTN0xmSlp6UWlnZllJ?=
- =?utf-8?B?MGZZbnFURy9lZE1PQWFCQWVWL2c0UUFZRk05b0U0Rk5xVHl0YlpjUXlmVkNy?=
- =?utf-8?B?UWxuYytrTlN6ZnViU2xoYTNqVW1CczlSK3F5TEQrU1VEbklFVXdEdHQ4ZW1r?=
- =?utf-8?B?VitKTHNLbkkraGFEWmY2ZElMQjhWazRiQXRyQnhaUXBsOXdpd3ZhdFpNdGx1?=
- =?utf-8?B?ang5bFQwRzhsbHdhY0dpclJVVk14cTU4bGhKUDZ2aGNnZTd5Mys5WTgzbEx4?=
- =?utf-8?B?Tk9oL1hOV0EyWHdFTTMzc2s0WXBzNzVUUlhFQ3NoK3pvNTV4bElrb1czS1pQ?=
- =?utf-8?B?NFIzb1ZBeXhPRElYbnVGUEZ4ZXJvRmF0Q25BM3ZHMTVIY3Y0WGJYeVJwc0th?=
- =?utf-8?B?WlUzSnlaZ1B1UkZRemNuZFlkd3RSSnQ5WDg2YzdDSjhrbytqaDZLTEVHQTYw?=
- =?utf-8?B?Y2FpR2hnTWJaMlpxT3JXWU1lTWE4ZDk3bWIxRXVQS3V4SDh5Vld1SnlrTVp3?=
- =?utf-8?B?aTcxMG1QM3grMjdCQkcyM00vVGpjMXgzTFJvTVJZNWN4QlpSSUdaQVh3czlF?=
- =?utf-8?B?QVZEWitGQnJsa3ZPbk5TQ05zbmdmSkQyd05OUUxyNW1tbk5VOTFiNzB4T1Fm?=
- =?utf-8?B?MUJHQUU1czU2MEdVeGZ6WjlQMFpUY3EvaXlPUG1vRFlDcWFIdDI4ZHE5ZFBI?=
- =?utf-8?B?bHFEL1pGWDRwdzA2MVg4Vk51bHpzVmNrZEZUL2d5K3pYRkp3K1ozTGVqOTJs?=
- =?utf-8?B?NmhGRkUrd05TTHJNalJmYWdkdkJZVVBJTjN3VnJVZU40Q3JsUW94Vk16N015?=
- =?utf-8?B?ekNNcXM0cStaQkcvQVVtdFRBS211bnhSRGI0TlJ3THJXNXd1TVFCQ2lEekNE?=
- =?utf-8?B?TmJWR05kbnROdXJUUitZLzBaZGoxdHFVTG1GcDNIN3d5Ukg1eHhRbi9JYXY4?=
- =?utf-8?B?ZE5ZWEdOU0tESFkrT3A5U1ljY1ZMU25iM2c5cktma0ozbnl1NXYvQmUwNWds?=
- =?utf-8?B?RlRUOWJzS2hIZjZTUjd2OUczSXFHSXp6anNCQUhQeVl3ajZJNGpnbTNYRUNP?=
- =?utf-8?B?aXRpdjNtR1pWdXVYbkR3cUxmRWttVGRGem9DbHhhbTRPYzE5c21wRFozb2ph?=
- =?utf-8?B?Ry9WVTlRU0JRV3AvZFVOcnNoSWdHbzYzUHNyZmw4Kzl1TFFDNFFIOFVCbWJt?=
- =?utf-8?B?Q0ZlZGx0YnBpR3VSckFXaGQzTEZ6MkdqL0U1d3VyOXFWb1Q4TFJDc3lGUmFy?=
- =?utf-8?B?N1grYnM1Y3FGbFk0ZGo3d1dmTDl5VnpMQ0lOS2s3TE82VWthUzlHLzErc1do?=
- =?utf-8?B?Q1ZBV1RmWStFMTBDQ2FEdGxTZ3RzeksyR0lrOHQwZ2h6NnplZzdNaGxOK1Ba?=
- =?utf-8?B?YjNpdnFOUjVWTDFVcjlrbjlHT3U1alIrS2szSXRZQ055VjUycVpEeThBdWMx?=
- =?utf-8?B?WlJPNnROck96dTdPMzhHczV5N3B5R3BqSUdjbzR4M2RHNjhYdEVWTllWekZ2?=
- =?utf-8?B?NjBwTWE4NHV3WEVEa1k4MC95cUlhTkkwSEh4Qk5CanpMa0VSODNCRFRxa2lX?=
- =?utf-8?B?RlpTMHJBNVZGK2J2YXQweHhPc00rMmxKTXJLVm1iZzdvSzJLVWkyV3VpZlVC?=
- =?utf-8?Q?1gT9I2EBwrTF66yWX8ebgmpnETecLk+2iZJwGJ4?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OUJjVXJTT082dlhEdDRlcWgveFlNWUprQWYxcnlPTFBXOFFuZmtqSVZuQmpW?=
- =?utf-8?B?VVNHTHFmaXNRaFhFeDY3Q29OYUh5RWNyR3BraUxqU2h5RzZKd1NFVGdNbmFK?=
- =?utf-8?B?MktIcmErYzJadkZTNERoVElDaUttR1EwWHJWSHRpY2hwSnpOaGRKaWZ3UFR6?=
- =?utf-8?B?Qlo3Nm0rVkUybjZUV0FORnBUbWVtNHBPN1FDRDZwa1BQZDlUSFc0dG1sZ1hh?=
- =?utf-8?B?TUxWd1UxTHlLSGhOUTFLSnZGV3RFL1pNMlpaWU1taDlnQmgwcU5nRDZNZTdj?=
- =?utf-8?B?eHY0SUx3dCtLUU5IRndGVUR0ajdJN201Y0l6SWJyeDlXbm0vSkxZS092WUI2?=
- =?utf-8?B?UDBxQzhrMG0ydmViQkVURTh1M3kxL25RRGUyNGpLeFFVem02cWY3Wlhxc2F4?=
- =?utf-8?B?ZTJVaWtMeElzZ3FnS01IeTVxMFBiUWJmelN5WHNaQzBXVHZweTJUTHU0T3BX?=
- =?utf-8?B?aXFaNnIrcWhTWkJUb213MzZGUUxURUdFQmVpUmJLc2tYdG0zVndGT3grNjlI?=
- =?utf-8?B?ZXZUaEk2dUdpSGtraFM2U05NRmVtaXZZdjhYY3RnYVhzNGpwaVVvSEVleXBG?=
- =?utf-8?B?U2hvaHcwUmJhaXBPSlJnMDI2YVl3YUNBeWNSNjNvc2d6MXg3YU5ZL3pZL1JG?=
- =?utf-8?B?OFZQQTdrNCt0RFRWTUNxdGJOL3RGNkFnTGZhWTRzZEx1NkZCS000S1hhYXc1?=
- =?utf-8?B?ZVhhWTJGYTk4YWFLSUJaZWEwRnIvSDBWWU9BOGtCOXErTnBDaEgwWFpBSXdY?=
- =?utf-8?B?d01BZjJJclQxSm5qZWdyS2hocmQ0Ni9rTnp1RkIzZmFsZVF2M1ZCdnFrT3N1?=
- =?utf-8?B?dlZPRWFqVjU3SVZMc01leG1TQUlwa0dHNUFkazJHRnk3YUlpTG9QTWJJa1pn?=
- =?utf-8?B?eXhFQVBWZzZuQndPTTN4N0dWWW1BKzFxUjZTNHdRUDZpT2hMWjRIK2VpZHc0?=
- =?utf-8?B?Z2g1UkZVd2l4TDNyYklRTzZpYkJ3cm54dVRxTFJXdXhCYlRCSGtaLzBQbGZD?=
- =?utf-8?B?U2ROVEZOdDFrVmxROHl3YVY4NmRKbmQzVnpIbE9HSWdLcENsYUFiNFpqQTFi?=
- =?utf-8?B?a1pEVEZlQXhCbElZbnE0R1A4QnRaUVR2QmJVSTBubmswUGVoV1ppRUptTmNu?=
- =?utf-8?B?bVVsMTZ1RXhDUys3NEpKSUpXYkhmdjNkVjM2ekQxanJjSmVrM0dUQnF3dDVk?=
- =?utf-8?B?ZmtnRlVKNzJkUFJOaVRpNzVvaUNwTVlLNUNhRkxRWGZKU0NtYzNmWlozZXM2?=
- =?utf-8?B?UFJJRFAwVkVUc0dVaVNMd2hEZ0hRL0tnS2wrSVRNbXd3ZVVRQXV1Q1JiRFFQ?=
- =?utf-8?B?bXVyd0NyT3l5QXVRc0dwZ2pWRnlrV0JZMDBRcWZUc2xvOGVMSXQvSWZLd3dD?=
- =?utf-8?B?azJncS8xcUhobmJEekFMNHUzZ1JPSE5FVlRaSHhQUHRpUVhWREIyYWJqeWx4?=
- =?utf-8?B?U2srZnpad3orOXlNUm1oaFBaaFpRaysybFRFNkwycE1BTjlwSkd3S3ppL1l2?=
- =?utf-8?B?MjJsOVJMaG5aaG8vZzVZdFU1WkMwUThpTFRlMENPcWtTYmZWemk1NGw1cmoz?=
- =?utf-8?B?ZHNUamdxSFIwSTVFVFh3WU13TVU2dUl6UzRvbHBIbEVua3NKSFVrNVJzR0M2?=
- =?utf-8?B?bGx5bG1qakFQZ0t0NlY0VGdEZ0FQZWt2UEE2dnNDZ2JMSGVlZ004LytMdUpr?=
- =?utf-8?B?NUNLeW0yd01ESXI0cWZBVmhOaGQzNUFNamIyQi9GNFJndHFvMDhvdmtyVzk4?=
- =?utf-8?B?RmdkQi9NUGFWVjVYcUczaForc0sxckxhcDd0YXpGNng0WlhCc1JEVVdpb2lo?=
- =?utf-8?B?a3owR0VBQktFMDM1elBJMDBCc2dDQkkvQVJ2YTN1N2VxMU5HcE9FTzJ6OVg0?=
- =?utf-8?B?MU95WFNRV3J3d2YzR3VUQWtOU0V0b3JYeFpISmlLYmZvZ040enVtNFRzSUM4?=
- =?utf-8?B?bFdlUExmOVlQU1pnaytGT1U4M283S1NYbGJPREVMV0F5ZHdnUlZjOU45WGZS?=
- =?utf-8?B?UHp4MG5TazNaTEt6Mzd0RUVXQUNRemNGNDhZWWZPL0hzR3pFM0tEVm4wRVdt?=
- =?utf-8?B?QzJTZXZnNktHUk9qMzNWMXBOZ0p4cExFWXZhNmg5ZitFVkVaU0tGazlZVjFO?=
- =?utf-8?B?SGFyMDhyN0ZaVkd0QkdKaGVKMlpGcURjSU13MDVoVW1oeXhETUQ1UEVmeXI3?=
- =?utf-8?B?QVE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: h89nNBWX9XZiUy4PMlT3B0PdCvv//EZIcrfYZChHCUrdCxhqo/Im2vwygkXayusJRpTMsXNoPAoOaXMcXzBlXNboLeZWa1tA/T4d7e6UoSPJuXqV8u2F98qNpMAMXMyLTGvW4cRJBl/9wiJnpDF7R6RjQODBSBPKz6eeD/aewKc6Qigyy38IvQd0ZC9MkK/nolavpYsBvqlFMp1sN1z4YaXlx2q8n12Y+mTnTer/+n/FkV2yglHpZHu3mle58ryLVFwuTus8PJXrp7TcjxaVwDFo564Phl+yJJi7B41bPrHtKdE7OmEqK6AnLBbqpvydqRhzcrCpKBw73CV+D8D323wbdnROR7pMnMBYPlm2XwVp8xBhLuQ4e6NlWOuRp5QbOHzjyQpOSdMIqlEWVu+eg6sa3R6KD/ggAe0RZNvLNVo48utvuzHt9LljPTYTGOCBFQ8L6XMObPqBcm6qvuJDksVOqMmrMI2UQ8f0gB0uvcWG1gI0AP3oWn7FpGvZ6p17w9iVGnaDbLC42GBjEdutnnl4/6/HvGRe5LeSBFuj4bHt/jooWsCotQsHhBy7UDdR/94c73kGzjthEfyn/MukHrC+TH/LhUzgfhmJUv7pViY=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e0901af4-69c8-4bc5-4e62-08dd04daa1d8
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2024 18:32:02.3015 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nFg3qs9uQFHxX6LMi5o7919Navh2B89rGRA0La2ryXi3ngPz4t7Kobh3nAG3ui8yzXzxbBaNDfFRuWdQf3igOLISvU40rBDPHh7cG/RpwJI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB6640
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-11-14_05,2024-11-13_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0
- spamscore=0 adultscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2409260000 definitions=main-2411140145
-X-Proofpoint-GUID: RypEcHl7JIz0KneCCCDPh0NNAcrUyTVv
-X-Proofpoint-ORIG-GUID: RypEcHl7JIz0KneCCCDPh0NNAcrUyTVv
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -220,61 +98,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/13/2024 5:53 PM, Peter Xu wrote:
-> On Fri, Nov 01, 2024 at 06:47:52AM -0700, Steve Sistare wrote:
->> +void qtest_connect_deferred(QTestState *s)
->> +{
->> +    g_autofree gchar *socket_path = NULL;
->> +    g_autofree gchar *qmp_socket_path = NULL;
->> +
->> +    socket_path = g_strdup_printf("%s/qtest-%d.sock",
->> +                                  g_get_tmp_dir(), getpid());
->> +    qmp_socket_path = g_strdup_printf("%s/qtest-%d.qmp",
->> +                                      g_get_tmp_dir(), getpid());
->> +
->> +    s->fd = socket_accept(s->sock);
->> +    if (s->fd >= 0) {
->> +        s->qmp_fd = socket_accept(s->qmpsock);
->> +    }
->> +    unlink(socket_path);
->> +    unlink(qmp_socket_path);
+On 11/14/24 08:01, Richard Henderson wrote:
+> Because translation is special, we don't need the speed
+> of the direct-mapped softmmu tlb.  We cache a lookups in
+> DisasContextBase within the translator loop anyway.
 > 
-> Why need to unlink again here if both sock/qmpsock are cached?  I assume we
-> could remove these lines together with above g_strdup_printf()s.
+> Drop the addr_code comparator from CPUTLBEntry.
+> Go directly to the IntervalTree for MMU_INST_FETCH.
+> Derive exec flags from read flags.
 > 
-> Otherwise two paths are leaked anyway (and we may also want to have some
-> macros to represent the paths used in two places).
-
-The original code in qtest_init_internal unlinked before creating the socket, as
-a precaution, and after accepting. I assume the latter for cleanliness.  I
-carried that forward.
-
-I'll define a helper function to eliminate the format string duplication, and
-I'll fix the pre-existing leak.
-
-static char *qtest_socket_path(const char *suffix)
-{
-     return g_strdup_printf("%s/qtest-%d.%s", g_get_tmp_dir(), getpid(), suffix)
-}
-
-qtest_init_internal()
-     g_autofree gchar *socket_path = qtest_socket_path("sock");
-     g_autofree gchar *qmp_socket_path = qtest_socket_path("qmp");
-
-> Maybe we could also clear sock/qmpsock too after use, then check at the
-> entrance to skip qtest_connect_deferred() if already connected.
-
-Will do.
-
-- Steve
-
->> +    g_assert(s->fd >= 0 && s->qmp_fd >= 0);
->>       /* ask endianness of the target */
->> -
->>       s->big_endian = qtest_query_target_endianness(s);
->> -
->> -   return s;
->>   }
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/exec/cpu-all.h    |  3 ++
+>   include/exec/tlb-common.h |  5 ++-
+>   accel/tcg/cputlb.c        | 76 ++++++++++++++++++++++++---------------
+>   3 files changed, 52 insertions(+), 32 deletions(-)
 > 
+> diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+> index 45e6676938..ad160c328a 100644
+> --- a/include/exec/cpu-all.h
+> +++ b/include/exec/cpu-all.h
+> @@ -339,6 +339,9 @@ static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
+>       (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_MMIO \
+>       | TLB_FORCE_SLOW | TLB_DISCARD_WRITE)
+>   
+> +/* Filter read flags to exec flags. */
+> +#define TLB_EXEC_FLAGS_MASK  (TLB_MMIO)
+> +
+>   /*
+>    * Flags stored in CPUTLBEntryFull.slow_flags[x].
+>    * TLB_FORCE_SLOW must be set in CPUTLBEntry.addr_idx[x].
+> diff --git a/include/exec/tlb-common.h b/include/exec/tlb-common.h
+> index 300f9fae67..feaa471299 100644
+> --- a/include/exec/tlb-common.h
+> +++ b/include/exec/tlb-common.h
+> @@ -26,7 +26,6 @@ typedef union CPUTLBEntry {
+>       struct {
+>           uint64_t addr_read;
+>           uint64_t addr_write;
+> -        uint64_t addr_code;
+>           /*
+>            * Addend to virtual address to get host address.  IO accesses
+>            * use the corresponding iotlb value.
+> @@ -35,7 +34,7 @@ typedef union CPUTLBEntry {
+>       };
+>       /*
+>        * Padding to get a power of two size, as well as index
+> -     * access to addr_{read,write,code}.
+> +     * access to addr_{read,write}.
+>        */
+>       uint64_t addr_idx[(1 << CPU_TLB_ENTRY_BITS) / sizeof(uint64_t)];
+>   } CPUTLBEntry;
+> @@ -92,7 +91,7 @@ struct CPUTLBEntryFull {
+>        * Additional tlb flags for use by the slow path. If non-zero,
+>        * the corresponding CPUTLBEntry comparator must have TLB_FORCE_SLOW.
+>        */
+> -    uint8_t slow_flags[MMU_ACCESS_COUNT];
+> +    uint8_t slow_flags[2];
+>   
+>       /*
+>        * Allow target-specific additions to this structure.
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index 981098a6f2..be2ea1bc70 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -114,8 +114,9 @@ static inline uint64_t tlb_read_idx(const CPUTLBEntry *entry,
+>                         MMU_DATA_LOAD * sizeof(uint64_t));
+>       QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_write) !=
+>                         MMU_DATA_STORE * sizeof(uint64_t));
+> -    QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_code) !=
+> -                      MMU_INST_FETCH * sizeof(uint64_t));
+> +
+> +    tcg_debug_assert(access_type == MMU_DATA_LOAD ||
+> +                     access_type == MMU_DATA_STORE);
+>   
+>   #if TARGET_LONG_BITS == 32
+>       /* Use qatomic_read, in case of addr_write; only care about low bits. */
+> @@ -480,8 +481,7 @@ static bool tlb_hit_page_mask_anyprot(CPUTLBEntry *tlb_entry,
+>       mask &= TARGET_PAGE_MASK | TLB_INVALID_MASK;
+>   
+>       return (page == (tlb_entry->addr_read & mask) ||
+> -            page == (tlb_addr_write(tlb_entry) & mask) ||
+> -            page == (tlb_entry->addr_code & mask));
+> +            page == (tlb_addr_write(tlb_entry) & mask));
+>   }
+>   
+>   /* Called with tlb_c.lock held */
+> @@ -1184,9 +1184,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+>       /* Now calculate the new entry */
+>       node->copy.addend = addend - addr_page;
+>   
+> -    tlb_set_compare(full, &node->copy, addr_page, read_flags,
+> -                    MMU_INST_FETCH, prot & PAGE_EXEC);
+> -
+>       if (wp_flags & BP_MEM_READ) {
+>           read_flags |= TLB_WATCHPOINT;
+>       }
+> @@ -1308,22 +1305,30 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
+>       /* Primary lookup in the fast tlb. */
+>       entry = tlbfast_entry(fast, addr);
+>       full = &desc->fulltlb[tlbfast_index(fast, addr)];
+> -    cmp = tlb_read_idx(entry, access_type);
+> -    if (tlb_hit(cmp, addr)) {
+> -        goto found;
+> +    if (access_type != MMU_INST_FETCH) {
+> +        cmp = tlb_read_idx(entry, access_type);
+> +        if (tlb_hit(cmp, addr)) {
+> +            goto found_data;
+> +        }
+>       }
+>   
+>       /* Secondary lookup in the IntervalTree. */
+>       node = tlbtree_lookup_addr(desc, addr);
+>       if (node) {
+> -        cmp = tlb_read_idx(&node->copy, access_type);
+> -        if (tlb_hit(cmp, addr)) {
+> -            /* Install the cached entry. */
+> -            qemu_spin_lock(&cpu->neg.tlb.c.lock);
+> -            copy_tlb_helper_locked(entry, &node->copy);
+> -            qemu_spin_unlock(&cpu->neg.tlb.c.lock);
+> -            *full = node->full;
+> -            goto found;
+> +        if (access_type == MMU_INST_FETCH) {
+> +            if (node->full.prot & PAGE_EXEC) {
+> +                goto found_code;
+> +            }
+> +        } else {
+> +            cmp = tlb_read_idx(&node->copy, access_type);
+> +            if (tlb_hit(cmp, addr)) {
+> +                /* Install the cached entry. */
+> +                qemu_spin_lock(&cpu->neg.tlb.c.lock);
+> +                copy_tlb_helper_locked(entry, &node->copy);
+> +                qemu_spin_unlock(&cpu->neg.tlb.c.lock);
+> +                *full = node->full;
+> +                goto found_data;
+> +            }
+>           }
+>       }
+>   
+> @@ -1333,9 +1338,14 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
+>           tcg_debug_assert(probe);
+>           return false;
+>       }
+> -
+>       o->did_tlb_fill = true;
+>   
+> +    if (access_type == MMU_INST_FETCH) {
+> +        node = tlbtree_lookup_addr(desc, addr);
+> +        tcg_debug_assert(node);
+> +        goto found_code;
+> +    }
+> +
+>       entry = tlbfast_entry(fast, addr);
+>       full = &desc->fulltlb[tlbfast_index(fast, addr)];
+>       cmp = tlb_read_idx(entry, access_type);
+> @@ -1345,14 +1355,29 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
+>        * called tlb_fill_align, so we know that this entry *is* valid.
+>        */
+>       flags &= ~TLB_INVALID_MASK;
+> +    goto found_data;
+> +
+> + found_data:
+> +    flags &= cmp;
+> +    flags |= full->slow_flags[access_type];
+> +    o->flags = flags;
+> +    o->full = *full;
+> +    o->haddr = (void *)((uintptr_t)addr + entry->addend);
+>       goto done;
+>   
+> - found:
+> -    /* Alignment has not been checked by tlb_fill_align. */
+> -    {
+> + found_code:
+> +    o->flags = node->copy.addr_read & TLB_EXEC_FLAGS_MASK;
+> +    o->full = node->full;
+> +    o->haddr = (void *)((uintptr_t)addr + node->copy.addend);
+> +    goto done;
+> +
+> + done:
+> +    if (!o->did_tlb_fill) {
+>           int a_bits = memop_alignment_bits(memop);
+>   
+>           /*
+> +         * Alignment has not been checked by tlb_fill_align.
+> +         *
+>            * The TLB_CHECK_ALIGNED check differs from the normal alignment
+>            * check, in that this is based on the atomicity of the operation.
+>            * The intended use case is the ARM memory type field of each PTE,
+> @@ -1366,13 +1391,6 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
+>               cpu_unaligned_access(cpu, addr, access_type, i->mmu_idx, i->ra);
+>           }
+>       }
+> -
+> - done:
+> -    flags &= cmp;
+> -    flags |= full->slow_flags[access_type];
+> -    o->flags = flags;
+> -    o->full = *full;
+> -    o->haddr = (void *)((uintptr_t)addr + entry->addend);
+>       return true;
+>   }
+>   
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
