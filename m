@@ -4,136 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7244D637D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A863D68B00
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBZ8N-00087F-3x; Thu, 14 Nov 2024 07:39:39 -0500
+	id 1tBZAA-0000Rt-BO; Thu, 14 Nov 2024 07:41:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBZ8I-00085t-Q0
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:39:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tBZA8-0000Rg-7U
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:41:28 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBZ8G-0002OT-8b
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:39:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731587969;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YPSVrJzpRJzvudiys1gNZi22Tlpw5mgbKPwPrZqSdFo=;
- b=PL0rLdwyDWnJ3sq88Hl1Wk5vrNtPn86tXA8RIYXqayxjmRa3GUqpxtMlW/c33PPsvbq8oZ
- CCT1WQfpxR7UgUlH1HBeY+Usq1xuWDryf3NVLQLOJdjlcLe+iHK5ubqj7z7gdwWyvcU3sM
- jPH54sjCRRcfB+mEpJWHhe31ghgn0cQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-CeFY-JMTOVu1JxnQHOnnLw-1; Thu, 14 Nov 2024 07:39:27 -0500
-X-MC-Unique: CeFY-JMTOVu1JxnQHOnnLw-1
-X-Mimecast-MFC-AGG-ID: CeFY-JMTOVu1JxnQHOnnLw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d59ad50f3so311275f8f.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 04:39:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731587966; x=1732192766;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YPSVrJzpRJzvudiys1gNZi22Tlpw5mgbKPwPrZqSdFo=;
- b=e9IPcGl4JqWUpHedK0L3UFLBl4VptHrYDRU+K2kmbcAigLQqGZF5sDA80ms8i5BgS3
- AbhpW7bzEwA0JNhTgF2v4AQsdLUC4xPP44RFen7fumtFYSWxZMPefkXoWPEMWiDlQrj/
- PeFGH4lFxY0k0eys1PT298gydTYTZNqMUEQodr9At4hMf5JC+jXHDFvArUDiXXKIvBk4
- 724pCVQwcyT+TtU8Xbxxv8IvM/urBxKtTQita3PTlwpYYo6MdEYgPTw1gykcgHjlx/8f
- lpnToJ7Gs2oU5dlR7sUcgFL2JP9+2+FJsQcAe2JzO1HAfm233bkuGpFcjGW8o30qJt3e
- VGtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWq0vnR5St9Wu+AtdZrcNk3uJTKcC/HrsGHp/5leyliWjUH9r9m3WUS0JgjhTFTwDpEZHhD9OY+fKWL@nongnu.org
-X-Gm-Message-State: AOJu0Yz5c+38nKjgqwTnIfajcWzA/q1ciDvLAjpg/UbKZIy4qu8NTtnG
- jeofAgmSb7S/i25f0mTKWXDI6K8W0tQVSx8fNZ9iH8tUlVL8ykqxKBnzBr6+ejbQXAkzY28NLC7
- qYxXDXz6uHHBKBFbIDptqgRVdpD7PD242pfHbTm8SQ758nNpfTuEK
-X-Received: by 2002:a5d:598c:0:b0:37d:462a:9bc6 with SMTP id
- ffacd0b85a97d-381f1883d7bmr21385524f8f.36.1731587965845; 
- Thu, 14 Nov 2024 04:39:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFFdRkck6TSRsEgZs4sQt/34l9fLnJd9CRDo05s2+ssq5H9Td7PT2YsUNqB3LTiWiPLf9tGWw==
-X-Received: by 2002:a5d:598c:0:b0:37d:462a:9bc6 with SMTP id
- ffacd0b85a97d-381f1883d7bmr21385506f8f.36.1731587965417; 
- Thu, 14 Nov 2024 04:39:25 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-49-115.web.vodafone.de.
- [109.42.49.115]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3821adbbbb2sm1377537f8f.54.2024.11.14.04.39.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 04:39:24 -0800 (PST)
-Message-ID: <a3d5ecee-3959-4136-a29c-1f7ec36831e3@redhat.com>
-Date: Thu, 14 Nov 2024 13:39:23 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tBZA6-0002ke-DV
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:41:27 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E4DD8A33A7;
+ Thu, 14 Nov 2024 15:41:13 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D977616CE98;
+ Thu, 14 Nov 2024 15:41:21 +0300 (MSK)
+Message-ID: <a3ad589c-26f8-46b9-b3b0-967ad9620768@tls.msk.ru>
+Date: Thu, 14 Nov 2024 15:41:21 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x: Restrict "loadparm" property to devices that
- can be used for booting
-To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Boris Fiuczynski <fiuczy@linux.ibm.com>
-References: <20241113114741.681096-1-thuth@redhat.com>
- <bc1e420a-65c1-4e11-901e-24e55dc2265f@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <bc1e420a-65c1-4e11-901e-24e55dc2265f@linux.ibm.com>
+Subject: Re: [PATCH] target/i386: hyperv: add stub for
+ hyperv_syndbg_query_options
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20241114121555.1697250-1-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20241114121555.1697250-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -151,43 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/11/2024 15.49, Jared Rossi wrote:
-...
-> Hi Thomas,
+14.11.2024 15:15, Paolo Bonzini wrote:
+> Building without CONFIG_HYPERV is currently broken due to a missing
+> symbol 'hyperv_syndbg_query_options'.  Add it to the stubs
+> that exist for that very reasons.
 > 
-> Thanks for putting this fix together.  As we previously discussed, I do agree
-> that my naive implementation of the “loadparm” property at the top-level
-> CcwDevice was not satisfactory, and certainly virtio-gpu and virtio-tablet
-> should not have a “loadparm.”
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+
+Rewviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+
+I'm a bit confused though, - why a stub is "better" than an #ifdef,
+especially in such simple cases?
+
+Restoring the #ifdef around this place fixes the build.
+I understand if the function in question were used in lots of
+places around the code, but here it's not the case.
+
+Another option would be, instead of stubs, to use:
+
+#ifndef CONFIG_SYNDBY
+#define hyperv_syndbg_query_options() 0
+#endif
+
+which will make stubs unnecessary entirely.
+
+> ---
+>   target/i386/kvm/hyperv-stub.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
-> The reason I had not yet submitted a fix is that I’ve gotten some feedback from
-> the Libvirt side that suggests the CcwDevice implementation is not sufficient
-> in general.  Libvirt will require that non-ccw devices (e.g. scsi-hd) also
-> support per-device loadparm.  I do not yet know how to add that type of support
-> and given that we are in hard freeze I’m not sure it is possible now.
-> 
-> Obviously this is not ideal, and I truly do apologize for the confusion.
+> diff --git a/target/i386/kvm/hyperv-stub.c b/target/i386/kvm/hyperv-stub.c
+> index 3263dcf05d3..5836f53c23b 100644
+> --- a/target/i386/kvm/hyperv-stub.c
+> +++ b/target/i386/kvm/hyperv-stub.c
+> @@ -56,3 +56,8 @@ void hyperv_x86_synic_update(X86CPU *cpu)
+>   void hyperv_x86_set_vmbus_recommended_features_enabled(void)
+>   {
+>   }
+> +
+> +uint64_t hyperv_syndbg_query_options(void)
+> +{
+> +    return 0;
+> +}
 
-  Hi Jared,
+Thanks,
 
-yes, that scsi-hd problem is a little bit tricky, since it's common code 
-that we should not "pollute" too much with s390x specific stuff, especially 
-since we're in hard freeze now.
-
-After staring at the code for quite a while, I think one option might be to 
-just add a string "loadparm" property to the SCSI devices, that's just a 
-simple two-line change to the common code. Patch suggestion can be found here:
-
-  https://lore.kernel.org/qemu-devel/20241114122919.973930-1-thuth@redhat.com/
-
-The only disadvantage is that this is now checking for valid characters in 
-the string after the property has already been set, so it cannot prevent the 
-setting of bad characters. But it still prints out an error message later, 
-so I hope that is also still acceptable.
-
-Let me know what you think about it!
-
-  Thanks,
-   Thomas
-
+/mjt
 
