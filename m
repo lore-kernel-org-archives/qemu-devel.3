@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A076D68B34
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F3ED68B33
 	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcM0-00020K-Nk; Thu, 14 Nov 2024 11:06:02 -0500
+	id 1tBcOr-0007kP-K1; Thu, 14 Nov 2024 11:08:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcLJ-0001dy-Rx
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:16 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBcOp-0007Tr-8V
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:08:51 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcLH-000314-QN
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:13 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7240d93fffdso620182b3a.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:05:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBcOn-0003Sd-J8
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:08:51 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4314c4cb752so7063055e9.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:08:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600309; x=1732205109; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4jkf2KaCd4Q7nWGpqdRhWv638MMOGvY55gPInd4iokE=;
- b=b4bQzPKk66Q3c61TVcrRkiOxgH0vHPzwVvItgZSVJ5kLwsN2Vh53vzXtY+WtqFb1M9
- q2DWZc1DQOxM8iECoyo+iU373/1VTKNJP990HvSDM25cPY/nVfBnHdtCEmEF1TBrbpQH
- n+KjXHzk2C/xjXBxEeBZbtcF98Cge4axwnZzZp155yznejwqqermD9bf6gu2cBG25Fk4
- Q6Do57vHmMj5E/ivI1y2Q8O2fISTnGPLRc0uo9VEiR/5bgeu83q5Gno9cJOJVFu3cxL6
- /WEO3X/KKVGEksgwviwHglw5pYxGmqZkk6f9WOrLuRrvZBW3thscqNpC/Xuz00WFcJN9
- uQKw==
+ d=linaro.org; s=google; t=1731600528; x=1732205328; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6qnMo+/4yndqgm6LFUOaM8Yj88pJ25E2DpVCwT7cuCE=;
+ b=W7O1nw9UHD+CnoNru0oz9EYPdbisxk3ll6Klvhu+oDw9+LI4wFqZ62MTwcUpJWRTxi
+ F6sq901lMdf484KzTqvWrQ7kybQ3TiRGpWrArbh4G1M0SVYow2QPbK7q89cHVFndcEDO
+ v9FUAlHLqVXGG4xzDR+ZSVKuNnueIKxPPOLYnvPBbvmgGmNjM9iLzjP173W5sfOfgbbE
+ pwLoxUcew4LUD2TOFNxzmEnGOwVE55NVw1i9u1VcBQ67492EBvJjT8hUAYrcWxwl2xKe
+ CjptfKHGJ5rgtCnRNohLuaoYj18lDa4ra5CGu+KmRVcnDGNzhG1rFQJXfsQc8GWKDrnP
+ AUrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600309; x=1732205109;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4jkf2KaCd4Q7nWGpqdRhWv638MMOGvY55gPInd4iokE=;
- b=blBHoq02kY05FRxdf3zJtsZDCwhZHQaS2g0SjtZ9vCQaxPGR216ejSTm7lTIBthpAX
- 2bYbSGHxas4j4pkHqE9ElTqdTFRHcForx22OtHxRgosVWJQkNeDwt1FWUu2OJI0U1yu2
- zZ4pV4y9rtkYzQtvIW8R1tvrTMNE/cBp6AO/0wuH2FiAFPoyHUNL/JYDTI7YGrNW1VVd
- DoWzisS8SXSvFd7vKPBbCR6ywDZop//TyMWeZk63Vx51h4kbwh+XkTBy/24DPpZnav/j
- QI8FhHjBMI4dmEFK/z5KeEDgNqovN/kXjY61h4oljpWfFMLjwGV6leazaPPzPjgtXo3I
- i7Kg==
-X-Gm-Message-State: AOJu0YyJvxVwC0WozJPlhqRsfmi3pkOWkago2ejffcweWf60Jjv8RDWo
- XNSKV1i/8GNy/o2QZ4mYTkWQbg7c74eY5DUknaOY7fsi1I9vwNTI1VbPiA6sGlmNHfNIldPps+8
- 1
-X-Google-Smtp-Source: AGHT+IFFeIzm6hWAZPY2v/wwoyv/wazNDLdLgnmOTVwADsqlppY7G8NekegJo5pZrItxcmG+MXrgXg==
-X-Received: by 2002:a05:6a00:21ca:b0:71e:6a57:7290 with SMTP id
- d2e1a72fcca58-72457828d9amr9003406b3a.0.1731600309345; 
- Thu, 14 Nov 2024 08:05:09 -0800 (PST)
-Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7246a9bab70sm1417926b3a.152.2024.11.14.08.05.08
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:05:08 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2 40/54] target/microblaze: Convert to
- TCGCPUOps.tlb_fill_align
-Date: Thu, 14 Nov 2024 08:01:16 -0800
-Message-ID: <20241114160131.48616-41-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
-References: <20241114160131.48616-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1731600528; x=1732205328;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6qnMo+/4yndqgm6LFUOaM8Yj88pJ25E2DpVCwT7cuCE=;
+ b=A7NrNJ4VP+9gyNn5+FoaM3dLevIEk+zqMKThk9CtmB1cMI1NnlnzenBo+/hrDBZfM5
+ BACHUzAu5e6blikXlECxIWZfAJ8R2K0fPLMpZEnt6f1kbhht3678YRuhfTNXvNqbbCib
+ 5fCjNTXarGim0qZGyXMTTksMz/1s4jIYAhC07r2FCxl/RIpekJ8D3/e/wIujdvUhkc8t
+ pmcV50w5MTHmp0RYAyG4izlASq+3OCnqOur5p1eYHiylqlO6papwkrcdugORCIEGb+GC
+ c2nq+OT78n/TPonL5NqeFVYcy+I8hzPECmx6OkZiFBkIGpjNC0P4cfDkJsnyoCXMwIuD
+ XEjA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcyQZfSRGhrpO2XOSwG/0htxVR+x+mvQzKzwT+Pg8Qi0fbE66aNGwEGNYGmDRh7Mkt52M3aXh/U02v@nongnu.org
+X-Gm-Message-State: AOJu0YwQIcOYiLsvAQNakNBt+2uSKDoCZHTJM5hu9ixC7DC4SFAXqntP
+ DwjCTogIi/aWlsgeTieSas31mxFRAHoSmVLdN91gQ86x2uUhELMdoq0xHWaDULILfEOhNBhpgfd
+ Q
+X-Google-Smtp-Source: AGHT+IG4yWm9WWZIjHm9y/ewCmEu0IzksgwFE+jFMiHHzk2NCBHJi8zu31oZdfK47vc7ORAlVhiF3Q==
+X-Received: by 2002:a05:600c:1c28:b0:432:7c08:d0ff with SMTP id
+ 5b1f17b1804b1-432d4acfc2emr56751465e9.23.1731600527795; 
+ Thu, 14 Nov 2024 08:08:47 -0800 (PST)
+Received: from [192.168.69.126] ([176.187.209.228])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432da298760sm28304425e9.37.2024.11.14.08.08.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Nov 2024 08:08:47 -0800 (PST)
+Message-ID: <a788197b-9254-46e0-95d0-77214314df57@linaro.org>
+Date: Thu, 14 Nov 2024 17:08:46 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/6] linux-user/arm: Reduce vdso alignment to 4k
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20241112203757.804320-1-richard.henderson@linaro.org>
+ <20241112203757.804320-5-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241112203757.804320-5-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,107 +96,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/microblaze/cpu.h    |  7 +++----
- target/microblaze/cpu.c    |  2 +-
- target/microblaze/helper.c | 33 ++++++++++++++++++++-------------
- 3 files changed, 24 insertions(+), 18 deletions(-)
+On 12/11/24 20:37, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   linux-user/arm/Makefile.vdso |   2 +-
+>   linux-user/arm/vdso-be.so    | Bin 2648 -> 2648 bytes
+>   linux-user/arm/vdso-le.so    | Bin 2648 -> 2648 bytes
+>   3 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-index 3e5a3e5c60..b0eadfd9b1 100644
---- a/target/microblaze/cpu.h
-+++ b/target/microblaze/cpu.h
-@@ -421,10 +421,9 @@ static inline void cpu_get_tb_cpu_state(CPUMBState *env, vaddr *pc,
- }
- 
- #if !defined(CONFIG_USER_ONLY)
--bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                     MMUAccessType access_type, int mmu_idx,
--                     bool probe, uintptr_t retaddr);
--
-+bool mb_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
-+                            MMUAccessType access_type, int mmu_idx,
-+                           MemOp memop, int size, bool probe, uintptr_t ra);
- void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
-                                unsigned size, MMUAccessType access_type,
-                                int mmu_idx, MemTxAttrs attrs,
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index 710eb1146c..212cad2143 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -425,7 +425,7 @@ static const TCGCPUOps mb_tcg_ops = {
-     .restore_state_to_opc = mb_restore_state_to_opc,
- 
- #ifndef CONFIG_USER_ONLY
--    .tlb_fill = mb_cpu_tlb_fill,
-+    .tlb_fill_align = mb_cpu_tlb_fill_align,
-     .cpu_exec_interrupt = mb_cpu_exec_interrupt,
-     .cpu_exec_halt = mb_cpu_has_work,
-     .do_interrupt = mb_cpu_do_interrupt,
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index 5d3259ce31..b6375564b4 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -36,37 +36,44 @@ static bool mb_cpu_access_is_secure(MicroBlazeCPU *cpu,
-     }
- }
- 
--bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                     MMUAccessType access_type, int mmu_idx,
--                     bool probe, uintptr_t retaddr)
-+bool mb_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
-+                           MMUAccessType access_type, int mmu_idx,
-+                           MemOp memop, int size,
-+                           bool probe, uintptr_t retaddr)
- {
-     MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
-     CPUMBState *env = &cpu->env;
-     MicroBlazeMMULookup lu;
-     unsigned int hit;
--    int prot;
--    MemTxAttrs attrs = {};
- 
--    attrs.secure = mb_cpu_access_is_secure(cpu, access_type);
-+    if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
-+        if (probe) {
-+            return false;
-+        }
-+        mb_cpu_do_unaligned_access(cs, address, access_type, mmu_idx, retaddr);
-+    }
-+
-+    memset(out, 0, sizeof(*out));
-+    out->attrs.secure = mb_cpu_access_is_secure(cpu, access_type);
-+    out->lg_page_size = TARGET_PAGE_BITS;
- 
-     if (mmu_idx == MMU_NOMMU_IDX) {
-         /* MMU disabled or not available.  */
--        address &= TARGET_PAGE_MASK;
--        prot = PAGE_RWX;
--        tlb_set_page_with_attrs(cs, address, address, attrs, prot, mmu_idx,
--                                TARGET_PAGE_SIZE);
-+        out->phys_addr = address;
-+        out->prot = PAGE_RWX;
-         return true;
-     }
- 
-     hit = mmu_translate(cpu, &lu, address, access_type, mmu_idx);
-     if (likely(hit)) {
--        uint32_t vaddr = address & TARGET_PAGE_MASK;
-+        uint32_t vaddr = address;
-         uint32_t paddr = lu.paddr + vaddr - lu.vaddr;
- 
-         qemu_log_mask(CPU_LOG_MMU, "MMU map mmu=%d v=%x p=%x prot=%x\n",
-                       mmu_idx, vaddr, paddr, lu.prot);
--        tlb_set_page_with_attrs(cs, vaddr, paddr, attrs, lu.prot, mmu_idx,
--                                TARGET_PAGE_SIZE);
-+
-+        out->phys_addr = paddr;
-+        out->prot = lu.prot;
-         return true;
-     }
- 
--- 
-2.43.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
