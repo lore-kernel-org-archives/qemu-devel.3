@@ -4,92 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D72D68B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 15:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C894D68B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 15:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBbhS-0005ru-Q1; Thu, 14 Nov 2024 10:24:02 -0500
+	id 1tBbvl-0008EJ-Rp; Thu, 14 Nov 2024 10:38:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBbhR-0005r9-7a
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 10:24:01 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBbhO-0001hN-HZ
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 10:24:00 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5cefa22e9d5so817414a12.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 07:23:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731597837; x=1732202637; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Psa2/rvf8Lbi+UL8r1q4T33qhcyAOZrvng/4IgPHqco=;
- b=L7Ng1oIYkKIJ6FCV+cocmg819VWxq0vj/nqxM4O2n8NSivTHqVkUmrByPjZXLDy+qg
- syWKPQJWwibMl/XQZd33F/88HBIiVMnvzj/P6k3fbKAT/3u+GCO1Bw0te+MUE7xbLfeU
- TlSDDE40ESrSDMoVxyhkfb21Ny525HTmmk+cteZif3vMv6y+LugCTeG7Jy0NanaiJ5W0
- L05bw2+ywf8pLCDQrMzzWKpE838vcSQ7EkFMCQV9iRmMSEs/jYJca+lGyhzLI2ty7+OK
- Q7CpdOwHX3AMpaVk/vso/es0A60PrTsb8OFq8AG/c31x8g9yb6RpObNakdUwuzABYFRt
- 0vaw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBbvk-0008E4-Lj
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 10:38:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBbvj-0004ei-7W
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 10:38:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731598724;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=fVCgym5EXeC8LkRqGnMMONgMQR5dMAfeOJ2ZBiHnk3Y=;
+ b=PWV5zY4t7b7TL12PODZz3bivZTCvKax6ejF75Ft4gVB0zMa8hiSsVLfYMfLoKcEwvzJF9r
+ X/m8iSzov2ESx08AAmue5ajoXW2q3wLnlD8dW3qz7qIBfFEkm1NjIkvBX94RAn60HsO97O
+ txTyrvXJ3q1O5dxBQbaHS8sIE5nqEHo=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-584-S-iaLgwmOhOphEbWjSbOdw-1; Thu, 14 Nov 2024 10:38:43 -0500
+X-MC-Unique: S-iaLgwmOhOphEbWjSbOdw-1
+X-Mimecast-MFC-AGG-ID: S-iaLgwmOhOphEbWjSbOdw
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a9ad6d781acso78000066b.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 07:38:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731597837; x=1732202637;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Psa2/rvf8Lbi+UL8r1q4T33qhcyAOZrvng/4IgPHqco=;
- b=fStuWjk0b0GO2r+/tzhz7AzDU4nJVZle7B4CWj8ms4O9Y+sbQgRi31gNejP8h/Yaie
- Bos1Kvv94fV/YzDJryxud28BIu4+1qdk3ZrNGIRi6lvO/Gyi8odIwiPA52EUXRsZqgh8
- EX4gZYldnrd+Trj/lFrVJwZuOD5OBejfnFQdRJPXern8/aH8jRpdQPS3nM80wj/ZHtKV
- 7X1zjYAZoaMvWMIlLR25agY/kZBwHa4/vj5VF1orWZGAYbgXj2m39UKCFfWUX8Hb6gc0
- UUIev/81ZzU49xzqjYw3mtGxskyL7X4GjNoHJSiEE3NeiDswUiAlb4bRXaCBfEUxtmBz
- B0TA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWb3xnaaBw+KEEUagq4vXCkwVcduPDtBDviDr+x9J1aMO4odMGE80ThsVFTvP51L0jbJd7PugCJcvNK@nongnu.org
-X-Gm-Message-State: AOJu0Yw0Ja7w3SiVmFxh0o8FeMMYCPpNYlT7a9LpVQkPKO9N9iKlqVge
- oBBfP8R9jLURDWi7gNkNFBNqsvvzrc3A29mKvBgqWmt82KgB88VbYX5IdMJ5SEg=
-X-Google-Smtp-Source: AGHT+IFFKT+995jjict75ZuqspeB+Rm5nBD/Y9eqEryE1HRq0+Uwt5QGvTOl0uTxZY81UYqEzAsalg==
-X-Received: by 2002:a05:6402:354f:b0:5cf:3d22:6dd9 with SMTP id
- 4fb4d7f45d1cf-5cf3d226e2emr13033518a12.0.1731597836713; 
- Thu, 14 Nov 2024 07:23:56 -0800 (PST)
-Received: from [192.168.69.126] ([176.187.209.228])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cf79b89d67sm660333a12.11.2024.11.14.07.23.54
+ d=1e100.net; s=20230601; t=1731598722; x=1732203522;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fVCgym5EXeC8LkRqGnMMONgMQR5dMAfeOJ2ZBiHnk3Y=;
+ b=WGeW3qb5CgoCjlMxZ7p2uxMzqDE0BlRtvsDXvji7d6beMrArz2uCYH6kR7mA8/3O6e
+ /wJIALytURaIjXwvNKnYZ41Z0LaVoZATyjU48MjduPQKe3Np6dD6gZcID0q9K6RDzuLj
+ 8UR+oQxs4n+ajhgYfHGowV7AMSfHaVhIK1c26SkjMQiCy8IWlBMqYM31ZhwGiFr0N+eS
+ 0sfzUaW+OQXn7EXDMaYiHIKohx6c1q/tFT7+5Ys3H8QsYBzZinBFzUq860VCDNhs8Yip
+ QSDurBlyoifqLEegBvacxlVRUWwGXPo9QshKxk3EiXD94mxtu82jbH6h6nCDtp6CUPF9
+ qsbw==
+X-Gm-Message-State: AOJu0YwvyZ0CFtn1IlQRUUm3T01XhDzSOBdXBeajIOCNq5Cx8q4eLQta
+ xtGbncjjoEEArghX7//iWBjgF5hIV9kIk2m84hJOvlZrQ2C8Kw7UfMr9uZeiK0Bihk+UX/KI4ob
+ konUQ+3QqwQQE+36nacpb00rLODbY6R9d2zRk1C+XIuvxcvDS1Kpk
+X-Received: by 2002:a17:907:3f82:b0:a9a:188f:efd9 with SMTP id
+ a640c23a62f3a-a9eeff43ed9mr2602941766b.29.1731598722015; 
+ Thu, 14 Nov 2024 07:38:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGMQK8Y7I3C0FyiU+BeIQ/UnYwS1u4iqJzHuj9zz/gAVJp02bjityyOT9nYR6nuKVLiiN0mEw==
+X-Received: by 2002:a17:907:3f82:b0:a9a:188f:efd9 with SMTP id
+ a640c23a62f3a-a9eeff43ed9mr2602940266b.29.1731598721628; 
+ Thu, 14 Nov 2024 07:38:41 -0800 (PST)
+Received: from [192.168.1.84] ([93.56.170.251])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-aa20df2664csm75092866b.7.2024.11.14.07.38.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 07:23:56 -0800 (PST)
-Message-ID: <50fac36d-86af-48ce-890a-033887da05e1@linaro.org>
-Date: Thu, 14 Nov 2024 16:23:54 +0100
+ Thu, 14 Nov 2024 07:38:41 -0800 (PST)
+Message-ID: <d2813ee7-6500-4145-b767-37d227747944@redhat.com>
+Date: Thu, 14 Nov 2024 16:38:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/24] exec/translation-block: Include missing
- 'exec/vaddr.h' header
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, 
- Peter Xu <peterx@redhat.com>, qemu-riscv@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-s390x@nongnu.org
-References: <20241114011310.3615-1-philmd@linaro.org>
- <20241114011310.3615-4-philmd@linaro.org>
- <8406e329-5b09-4960-b5b7-baca62d3747c@linaro.org>
+Subject: Re: [RFC PATCH 00/11] rust: improved integration with cargo
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, kwolf@redhat.com,
+ junjie.mao@hotmail.com, zhao1.liu@intel.com, qemu-rust@nondevel.org
+References: <20241108180139.117112-1-pbonzini@redhat.com>
+ <87plmyrmjh.fsf@draig.linaro.org>
+ <CABgObfZT_jYJqKDnTAdrVjr9KdQXjNVEt2eQfDpoqrh6xEnVsQ@mail.gmail.com>
+ <87jzd5suw4.fsf@draig.linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8406e329-5b09-4960-b5b7-baca62d3747c@linaro.org>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <87jzd5suw4.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,62 +144,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/11/24 04:10, Pierrick Bouvier wrote:
-> On 11/13/24 17:12, Philippe Mathieu-Daudé wrote:
->> 'vaddr' is declared in "exec/vaddr.h".
->> Include it in order to avoid when refactoring:
->>
->>    include/exec/translation-block.h:56:5: error: unknown type name 
->> 'vaddr'
->>       56 |     vaddr pc;
->>          |     ^
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/exec/translation-block.h | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/include/exec/translation-block.h 
->> b/include/exec/translation-block.h
->> index a6d1af6e9b..b99afb0077 100644
->> --- a/include/exec/translation-block.h
->> +++ b/include/exec/translation-block.h
->> @@ -9,6 +9,7 @@
->>   #include "qemu/thread.h"
->>   #include "exec/cpu-common.h"
->> +#include "exec/vaddr.h"
->>   #ifdef CONFIG_USER_ONLY
->>   #include "qemu/interval-tree.h"
->>   #endif
+On 11/14/24 16:22, Alex Bennée wrote:
+> ERROR: Build data file './meson-private/build.dat' references functions or classes that don't exist. This probably means that it was generated with an old version of meson. Try running from the source directory meson setup . --wipe
 > 
-> I'm a bit confused by commit message, but it seems that this series has 
-> some commits that will not compile. Is that something acceptable?
+> I also tried a wipe and re-configure but the same thing.
 
-Because commits must be bisect-able, that is not acceptable.
+Ah, nevermind - you must have an older meson installation in /usr.  You 
+have to do pyvenv/bin/meson to pick the right one.  I'll adjust the docs.
 
-I took a lot of care to make this series builable on each step,
-but might have missed something. Can you point me at the
-configuration used and broken patch?
-
-I'll reword the commit description as:
-
----
-'vaddr' type is declared in "exec/vaddr.h".
-"exec/translation-block.h" uses this type without including
-the corresponding header. It works because this header is
-indirectly included, but won't work when the other headers
-are refactored:
-
-   [error]
-
-Explitly include "exec/vaddr.h" to avoid such problem in a
-few commits.
----
-
-Does it clarify?
-
-> If it's ok,
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> 
+Paolo
 
 
