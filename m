@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1EF0D65C6F
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 11:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B67C3D65C6F
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 11:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBXbD-0001th-Hk; Thu, 14 Nov 2024 06:01:19 -0500
+	id 1tBXb8-0001rz-QQ; Thu, 14 Nov 2024 06:01:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBXbC-0001tF-KX
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:01:18 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBXb7-0001rZ-73
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:01:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBXbB-0006vB-06
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:01:18 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBXb5-0006uS-K5
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:01:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731582076;
+ s=mimecast20190719; t=1731582069;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b+0IkxOsPiVhoTY8vn3E5+jloutqv/KmfsE+Oh71/nA=;
- b=FcFvkJYXz9jXY7gW+fRMZqaAJaIB6tMy00tIn1CurtEhdo8sBbs2zpkFlmoEGC04GCaAby
- p7lSeK1uLxhwPdwIztKJDpXbxZyYOjvJivXuDRWUeFrBW1lY/9X8/C2EAQMSl0RhHjmbqu
- nx1+7UxxZ+2UZ/M6J+x2x3e4A2fNDqs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jhn1SCmWq1URH/YAp7J4RIEQcZ2o0LDcpld/Y0q03V0=;
+ b=Iy/RRo9DxyxFq5l+2DWAuOHiuPXLZKfYCcWoTSz6Xb/TICNMtOVYb1XTilIKEwB+iIL8s5
+ dav3DKVZd694Jg4cIET1gowc+DwJcpHHupv7UtMdjBT/cmSaDRb+7o1yVGb80d1Z1L1I+j
+ ZFaGw4/ckrNPjS/7BwTPgllmeEglNcA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-455-HdDEwdYlPRCtW46lWcXqcQ-1; Thu,
- 14 Nov 2024 06:01:12 -0500
-X-MC-Unique: HdDEwdYlPRCtW46lWcXqcQ-1
-X-Mimecast-MFC-AGG-ID: HdDEwdYlPRCtW46lWcXqcQ
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-aaWyvnrMMMCYAYgm-RRxLw-1; Thu,
+ 14 Nov 2024 06:01:06 -0500
+X-MC-Unique: aaWyvnrMMMCYAYgm-RRxLw-1
+X-Mimecast-MFC-AGG-ID: aaWyvnrMMMCYAYgm-RRxLw
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC32619560BE; Thu, 14 Nov 2024 11:01:10 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB2151955F41; Thu, 14 Nov 2024 11:01:04 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.193.143])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E8F019560A3; Thu, 14 Nov 2024 11:01:10 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF459195E480; Thu, 14 Nov 2024 11:01:03 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id D140D18009BB; Thu, 14 Nov 2024 12:01:01 +0100 (CET)
+ id 94C5318009A1; Thu, 14 Nov 2024 12:01:01 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -56,14 +55,13 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 4/5] x86/loader: expose unpatched kernel
-Date: Thu, 14 Nov 2024 12:01:00 +0100
-Message-ID: <20241114110101.44322-5-kraxel@redhat.com>
-In-Reply-To: <20241114110101.44322-1-kraxel@redhat.com>
-References: <20241114110101.44322-1-kraxel@redhat.com>
+Subject: [PULL 0/5] Firmware 20241114 patches
+Date: Thu, 14 Nov 2024 12:00:56 +0100
+Message-ID: <20241114110101.44322-1-kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
@@ -89,33 +87,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new "etc/boot/kernel" fw_cfg file, containing the kernel without
-the setup header patches.  Intended use is booting in UEFI with secure
-boot enabled, where the setup header patching breaks secure boot
-verification.
+The following changes since commit f0a5a31c33a8109061c2493e475c8a2f4d022432:
 
-Needs OVMF changes too to be actually useful.
+  Update version for v9.2.0-rc0 release (2024-11-13 21:44:45 +0000)
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240905141211.1253307-5-kraxel@redhat.com>
----
- hw/i386/x86-common.c | 3 +++
- 1 file changed, 3 insertions(+)
+are available in the Git repository at:
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index d99bef983e37..ac91a3464603 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -960,6 +960,9 @@ void x86_load_linux(X86MachineState *x86ms,
-     sev_load_ctx.setup_data = (char *)setup;
-     sev_load_ctx.setup_size = setup_size;
- 
-+    /* kernel without setup header patches */
-+    fw_cfg_add_file(fw_cfg, "etc/boot/kernel", kernel, kernel_size);
-+
-     if (sev_enabled()) {
-         sev_add_kernel_loader_hashes(&sev_load_ctx, &error_fatal);
-     }
+  https://gitlab.com/kraxel/qemu.git tags/firmware-20241114-pull-request
+
+for you to fetch changes up to 5916a3b20fdbfbfc2f987f1121e945100c8c3cd2:
+
+  x86/loader: add -shim option (2024-11-14 11:55:39 +0100)
+
+----------------------------------------------------------------
+loader: fix efi binary loading via -kernel
+loader: support secure boot verification with direct kernel boot
+
+----------------------------------------------------------------
+
+Gerd Hoffmann (5):
+  vl: fix qemu_validate_options() indention
+  x86/loader: only patch linux kernels
+  x86/loader: read complete kernel
+  x86/loader: expose unpatched kernel
+  x86/loader: add -shim option
+
+ include/hw/boards.h  |  1 +
+ hw/core/machine.c    | 20 ++++++++++++++++++++
+ hw/i386/x86-common.c | 32 ++++++++++++++++++++++++++------
+ system/vl.c          | 25 +++++++++++++++++--------
+ qemu-options.hx      |  7 +++++++
+ 5 files changed, 71 insertions(+), 14 deletions(-)
+
 -- 
 2.47.0
 
