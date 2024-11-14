@@ -4,70 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D5AD68B3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85EF8D68B3C
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:59:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBd9x-00009R-Vn; Thu, 14 Nov 2024 11:57:34 -0500
+	id 1tBdBw-00048i-OL; Thu, 14 Nov 2024 11:59:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tBd9n-0008T3-TX
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:57:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tBd9m-0002c1-3W
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:57:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731603440;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GLF0n6qglRIqtUkQqyx7RdSXVKBg4tQ932ju2zdvhJU=;
- b=bR3qmOCYv5xGfYY027wZbRJCJbxaTU0Wum0zq1b6VLDh1D5IhH/rbeoJKb50APjnOgFfC9
- U8KOeoSAHU1Wq3BZ7zoBimx1MTXzS/8TcCEOdBuJtmBX0MZVmCzOlsT3P5wGrCNvwllJEH
- osycUlXDIH5Jq12i+Xp5y3mOzd0pXEE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-TbRcXxjuM52LUMlLjUmddg-1; Thu,
- 14 Nov 2024 11:57:18 -0500
-X-MC-Unique: TbRcXxjuM52LUMlLjUmddg-1
-X-Mimecast-MFC-AGG-ID: TbRcXxjuM52LUMlLjUmddg
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2601A1956083; Thu, 14 Nov 2024 16:57:17 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.39.192.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 866611955F21; Thu, 14 Nov 2024 16:57:15 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 7/8] qdev-monitor: avoid QemuOpts in QMP device_add
-Date: Thu, 14 Nov 2024 17:56:56 +0100
-Message-ID: <20241114165657.254256-8-kwolf@redhat.com>
-In-Reply-To: <20241114165657.254256-1-kwolf@redhat.com>
-References: <20241114165657.254256-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <paskripkin@gmail.com>)
+ id 1tBdBa-0003mY-Qw; Thu, 14 Nov 2024 11:59:16 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <paskripkin@gmail.com>)
+ id 1tBdBZ-0002lP-9S; Thu, 14 Nov 2024 11:59:14 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-539e4b7409fso786482e87.0; 
+ Thu, 14 Nov 2024 08:59:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731603550; x=1732208350; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OjqNSEAeDqZHUwaEAq62cXj/YVXs2ncKcqAnAF2TK3M=;
+ b=ApNjciHF1H96EaU0+SbiC8Pm7QennBIQbXUOTYWbJqrFkEbwEvvbxh6Nz21H5U+h7A
+ VemdhCaNCbNHgLiyPQJ+kuow6KiKgRjUz6hrjUYwvUrmeOymUGUAfTokeeeJqFo+ygu9
+ wFdE46qdQw1Xe6O6aiD+zr/SckrQaE8eIy+iNjnwbDidTskdQb9pI9Npdh0Ou0ACG+Xq
+ JOoEjMw1d3UJFpaRj24YjlqCh9MzJa5yGHPkCAMzgLJmYOW4IdH2En2EVjW3TsIuMV9N
+ Un3/S7QxePG/xyf0y0cFEGv1aOToVA3ur+EfIaUM2+4gCWWnyDAP71CyeMWmyPosLSMe
+ FGUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731603550; x=1732208350;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OjqNSEAeDqZHUwaEAq62cXj/YVXs2ncKcqAnAF2TK3M=;
+ b=iMTNjSoNTMS7GNMEJ4wml1BOhB4LY7SKE8NkUMm9cDaNXgkUhp5MibIpTgag8I3XPJ
+ zyYRqHZKl69SYxWKRKYJp8vwFeIW3YQwo82V/5sx3Ak+ZSMJ7q1eS+27W1I1JdLBqwTo
+ 8Ca7HOA+JslaPkaZy75Cy1ICq4WbqTqPxfS5IC9bVxFhXxfTwDxw/nibXajiqKgOyHkc
+ 9CWxONQtL5bL+8osb8cx/K4qiKmw+1yjzxyjdUZO1wp6HcRx+pakQlBenfWOYqoi7oaO
+ IVOiRiyocu+0KAzlcnPhL3tkLyXBE0+FUlaLrK3aYTqnY5YU8Dt0S8QJRib4jhX1FVu+
+ UYoQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWpyeaSG96u1ouilesuKcE9is16hxfIdF5XhuNJN4xKJV3o0JR0onA5LU+S6oTWC0vwwR2LuS04jKDN@nongnu.org
+X-Gm-Message-State: AOJu0YwzjOUZTXzUmQ0sCOk5l1PRHL3/F6e9t4g0Qv7j86yZN8cszm+4
+ Bo5vJ6mENk8F/+rgRa2TnO6NK6v0p/7LqTdU87lFrlXm9ql0LAeG
+X-Google-Smtp-Source: AGHT+IG47TayMCK6l/AZ0pwBoivKfYWsYDhm11RjHii9fE03tvtnpnGzrOI4UUXXKJfIhjhOZXNbFg==
+X-Received: by 2002:a05:6512:3da4:b0:53d:a550:1efa with SMTP id
+ 2adb3069b0e04-53da5501f63mr1123684e87.11.1731603549524; 
+ Thu, 14 Nov 2024 08:59:09 -0800 (PST)
+Received: from fedora.. ([2a00:1370:8180:90b:6639:2dc0:6fb5:8401])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-53da64f2a33sm243453e87.16.2024.11.14.08.59.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Nov 2024 08:59:07 -0800 (PST)
+From: Pavel Skripkin <paskripkin@gmail.com>
+To: peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Pavel Skripkin <paskripkin@gmail.com>
+Subject: [PATCH 1/2] arm/ptw: factor out wxn logic to separate functions
+Date: Thu, 14 Nov 2024 19:59:00 +0300
+Message-ID: <20241114165900.6399-1-paskripkin@gmail.com>
+X-Mailer: git-send-email 2.46.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=paskripkin@gmail.com; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,120 +91,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+The next patch will add support for WXN for short descriptor format. To
+prevent code duplication, wxn logic was factored out to separate
+functions.
 
-The QMP device_add monitor command converts the QDict arguments to
-QemuOpts and then back again to QDict. This process only supports scalar
-types. Device properties like virtio-blk-pci's iothread-vq-mapping (an
-array of objects) are silently dropped by qemu_opts_from_qdict() during
-the QemuOpts conversion even though QAPI is capable of validating them.
-As a result, hotplugging virtio-blk-pci devices with the
-iothread-vq-mapping property does not work as expected (the property is
-ignored).
-
-Get rid of the QemuOpts conversion in qmp_device_add() and call
-qdev_device_add_from_qdict() with from_json=true. Using the QMP
-command's QDict arguments directly allows non-scalar properties.
-
-The HMP is also adjusted since qmp_device_add()'s now expects properly
-typed JSON arguments and cannot be used from HMP anymore. Move the code
-that was previously in qmp_device_add() (with QemuOpts conversion and
-from_json=false) into hmp_device_add() so that its behavior is
-unchanged.
-
-This patch changes the behavior of QMP device_add but not HMP
-device_add. QMP clients that sent incorrectly typed device_add QMP
-commands no longer work. This is a breaking change but clients should be
-using the correct types already. See the netdev_add QAPIfication in
-commit db2a380c8457 for similar reasoning and object-add in commit
-9151e59a8b6e. Unlike those commits, we continue to rely on 'gen': false
-for the time being.
-
-Markus helped me figure this out and even provided a draft patch. The
-code ended up very close to what he suggested.
-
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20240827192751.948633-2-stefanha@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
 ---
- system/qdev-monitor.c | 42 ++++++++++++++++++++++++++++--------------
- 1 file changed, 28 insertions(+), 14 deletions(-)
+ target/arm/ptw.c | 41 +++++++++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 18 deletions(-)
 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 4c09b38ffb..03ae610649 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -856,18 +856,9 @@ void hmp_info_qdm(Monitor *mon, const QDict *qdict)
- 
- void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
- {
--    QemuOpts *opts;
-     DeviceState *dev;
- 
--    opts = qemu_opts_from_qdict(qemu_find_opts("device"), qdict, errp);
--    if (!opts) {
--        return;
--    }
--    if (!monitor_cur_is_qmp() && qdev_device_help(opts)) {
--        qemu_opts_del(opts);
--        return;
--    }
--    dev = qdev_device_add(opts, errp);
-+    dev = qdev_device_add_from_qdict(qdict, true, errp);
-     if (!dev) {
-         /*
-          * Drain all pending RCU callbacks. This is done because
-@@ -879,9 +870,6 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
-          * to the user
-          */
-         drain_call_rcu();
--
--        qemu_opts_del(opts);
--        return;
-     }
-     object_unref(OBJECT(dev));
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 9849949508..2a3933adec 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1130,6 +1130,26 @@ do_fault:
+     return true;
  }
-@@ -1018,8 +1006,34 @@ void qmp_device_sync_config(const char *id, Error **errp)
- void hmp_device_add(Monitor *mon, const QDict *qdict)
- {
-     Error *err = NULL;
-+    QemuOpts *opts;
-+    DeviceState *dev;
  
--    qmp_device_add((QDict *)qdict, NULL, &err);
-+    opts = qemu_opts_from_qdict(qemu_find_opts("device"), qdict, &err);
-+    if (!opts) {
-+        goto out;
-+    }
-+    if (qdev_device_help(opts)) {
-+        qemu_opts_del(opts);
-+        return;
-+    }
-+    dev = qdev_device_add(opts, &err);
-+    if (!dev) {
-+        /*
-+         * Drain all pending RCU callbacks. This is done because
-+         * some bus related operations can delay a device removal
-+         * (in this case this can happen if device is added and then
-+         * removed due to a configuration error)
-+         * to a RCU callback, but user might expect that this interface
-+         * will finish its job completely once qmp command returns result
-+         * to the user
-+         */
-+        drain_call_rcu();
++static bool arm_has_wxn(CPUARMState *env)
++{
++    /* TODO have_wxn should be replaced with
++     *   ARM_FEATURE_V8 || (ARM_FEATURE_V7 && ARM_FEATURE_EL2)
++     * when ARM_FEATURE_EL2 starts getting set. For now we assume all LPAE
++     * compatible processors have EL2, which is required for [U]WXN.
++     */
++    return arm_feature(env, ARM_FEATURE_LPAE);
++}
 +
-+        qemu_opts_del(opts);
-+    }
-+    object_unref(dev);
-+out:
-     hmp_handle_error(mon, err);
- }
++static bool arm_wxn_enabled(CPUARMState *env, ARMMMUIdx mmu_idx)
++{
++    return arm_has_wxn(env) && (regime_sctlr(env, mmu_idx) & SCTLR_WXN);
++}
++
++static bool arm_uwxn_enabled(CPUARMState *env, ARMMMUIdx mmu_idx)
++{
++    return arm_has_wxn(env) && (regime_sctlr(env, mmu_idx) & SCTLR_UWXN);
++}
++
+ static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
+                              uint32_t address, MMUAccessType access_type,
+                              GetPhysAddrResult *result, ARMMMUFaultInfo *fi)
+@@ -1370,8 +1390,7 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
+     ARMCPU *cpu = env_archcpu(env);
+     bool is_user = regime_is_user(env, mmu_idx);
+     int prot_rw, user_rw;
+-    bool have_wxn;
+-    int wxn = 0;
++    int wxn = arm_wxn_enabled(env, mmu_idx);
  
+     assert(!regime_is_stage2(mmu_idx));
+ 
+@@ -1432,18 +1451,6 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
+             g_assert_not_reached();
+         }
+     }
+-
+-    /* TODO have_wxn should be replaced with
+-     *   ARM_FEATURE_V8 || (ARM_FEATURE_V7 && ARM_FEATURE_EL2)
+-     * when ARM_FEATURE_EL2 starts getting set. For now we assume all LPAE
+-     * compatible processors have EL2, which is required for [U]WXN.
+-     */
+-    have_wxn = arm_feature(env, ARM_FEATURE_LPAE);
+-
+-    if (have_wxn) {
+-        wxn = regime_sctlr(env, mmu_idx) & SCTLR_WXN;
+-    }
+-
+     if (is_aa64) {
+         if (regime_has_2_ranges(mmu_idx) && !is_user) {
+             xn = pxn || (user_rw & PAGE_WRITE);
+@@ -1455,10 +1462,8 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
+             if (is_user) {
+                 xn = xn || !(user_rw & PAGE_READ);
+             } else {
+-                int uwxn = 0;
+-                if (have_wxn) {
+-                    uwxn = regime_sctlr(env, mmu_idx) & SCTLR_UWXN;
+-                }
++                int uwxn = arm_uwxn_enabled(env, mmu_idx);
++
+                 xn = xn || !(prot_rw & PAGE_READ) || pxn ||
+                      (uwxn && (user_rw & PAGE_WRITE));
+             }
 -- 
-2.47.0
+2.46.0
 
 
