@@ -4,72 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D841D68B0A
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04464D68B09
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:23:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBZdc-0005wi-C3; Thu, 14 Nov 2024 08:11:56 -0500
+	id 1tBZnj-0008QI-Tp; Thu, 14 Nov 2024 08:22:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBZda-0005wW-BR
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:11:54 -0500
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ id 1tBZni-0008Q9-Fo
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:22:22 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBZdY-0004qk-7V
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:11:54 -0500
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2fb3c3d5513so5469141fa.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 05:11:51 -0800 (PST)
+ id 1tBZnf-0006Lc-Qk
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:22:21 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9c28c1ecbso881505a12.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 05:22:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731589910; x=1732194710; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hfjq+nL7BtAaZqLIbSQqn/Jrhwp9S2vnthD48cz0pmM=;
- b=TEDKUVUiNwL2Gv5Kh0FDACfsDdhDf+3javp+fOtV2/BFMrmRTbzfFcsrYwvHkUn8yX
- Q8meO3sa9z46YeZKOt7njECsBlbg2SOnliHiJP0/zvGVtpsZaErNS3zHRWEZgR7gDeWh
- KFN7CXDY+mIH/PtHzbFyPe+m1B2UvLaxGvafBzGOLammIkqzv1l0TA/xT4KFp7vAbsjc
- Dp+kHYUC5Bvh5r5/VYcZZ3g89+m8nwNeJV9VFKjtEZsQFusqeBIbz2r97LzBA/C0+RHN
- 4WVojo1XsR+X1gTMPVSf1GwLRgqVBYaGCHdjLP4PO1NW8tNG2rLK3DxfBHWY06epz4mp
- MrHg==
+ d=linaro.org; s=google; t=1731590538; x=1732195338; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=erd3vfGBLOndPrcv2kD/ZK/Z1S/QldFs3eEeJreH6LM=;
+ b=Z3bNVJHNwug0YJ3+shH3QE0/nMY6u9jNIzddPBaPykr+vGAuWlwXryPqD4ImNPsAil
+ vy2h97GzEzeZ9o5JnyWdf91jCAOGQAVRJLCSC7PkXc+GpEgig1fLdwH/hWmNKxcp0SYs
+ aBFNoWgUOWTMK5bMF+SPNpcf3+5nqlQN0kC0ms8KERm9w65ARPSmILhdlE68TXgpRZ4y
+ eaRZ0MJ7RetCZiRlDtbhB6aYiUP5jKq1KlC8ok/l9RdDJ+U/pe24RirwACZp3oD9+8XQ
+ 5aEw2Urc3zf8156uObwaWwqJM6FVHCU6r3WIDYQuIvgoYf8OzlsTnOlH7aRgBSUINAkb
+ RyWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731589910; x=1732194710;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Hfjq+nL7BtAaZqLIbSQqn/Jrhwp9S2vnthD48cz0pmM=;
- b=e1VstUSPwfIcKFgnAvv8apY6loYXe8rpgJypbPWjP2R1tAtyxdl9Q583Iqs2PLmzfW
- s8JBTR+A7e/Uuu9uiYQNLmvaY8amCRuRjsbPL4WA4vcputsSMrgcA7jpQ7fktjAdqyHg
- vLBk7UUvWLEUHJn4e2S3ssae2oP25vU8bH17n9jOq+D/mmqAF/QYZN1wLNLxjE65Hhah
- yQmHb8ziWLmQ3VKeFO/rwZtfriSpMjndIgdaFZYk13yjmj0BzLIlAO5bLcR266gyeW+H
- 8rr3ep+TajsXefZe3W4AMqxf0k3FB4Jw4j9b+ph5w9un9lVG4+KVcqapbNwTxOww6WnI
- 97Lw==
-X-Gm-Message-State: AOJu0YwZN0iJBuig/mQkHJts2f3DGdGkiNXzwp/51g1h+f9WxTG9bxyV
- LITq62W4vtIjzEYvXbtwj4PcxqmSAaE9zvvVGCTlaSOyzw7myaMOm9BVaj2aQ1+PU6m4mwFsL4z
- m0bTVRzcmeEeVLI3InaKac3xPQwRi6JCocVGaMyeDTLVYuZ8N
-X-Google-Smtp-Source: AGHT+IFuC/di/tAeX/rNiyQUX8bzxlWLrCBavyY83EmU/7Ot8bFqlGeSz5BCv4dmvGQmsNljQpEzqCbKcRdHkbr5kSg=
-X-Received: by 2002:a2e:a582:0:b0:2fb:8c9a:fe37 with SMTP id
- 38308e7fff4ca-2ff4c5c1d7dmr36796171fa.16.1731589910064; Thu, 14 Nov 2024
- 05:11:50 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731590538; x=1732195338;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=erd3vfGBLOndPrcv2kD/ZK/Z1S/QldFs3eEeJreH6LM=;
+ b=pD9i2bWVITc2n6lVDpmtFk+Ky7l79D58aqkw7Di2MDI/rrNdXOAN9ORHTlI4Js35JQ
+ zyXSFHWC988GvdoLTPE5PPLhzZss+yZPxrSCNjmB0NLbrreeySXCFke6p8kPzKEjKxLu
+ +a67J1v5NdwbEPYOGPsIaFUZIzP2agAub/oiLv4n0PoYM9emE6Lz3CQlazJYoMrfCXka
+ ken+K2fqCVg82LFjKv5E+9wWRWJnkV33dKGE4MJWDlkX0WcYyYJe8RRQHR4+Do5Ab59S
+ dX/9iyYhsxzD7v8E0cQ/yuhTBnHEoH9uq7ntgdTsFiJFolHPoqgwjYzkDY5l8FqSsW99
+ 85RQ==
+X-Gm-Message-State: AOJu0YwxfHuyVbHbF9Z5+5fKSEuju0eATMqMtQnL5WAIRFVxEe8aUDXD
+ 8t1QC0/loXz7fYM4RIn70J9++Nw7HGr+woeZ3kjxFxPYeFZA0aazXf6YoBCr3f4KxmNBoxzswm5
+ RlNGJdJVvgoEbjmgdX4Y+dfODOUj5ztnu6K/exgqfNbjlpK7x
+X-Google-Smtp-Source: AGHT+IGI2ezcjvqRifDEOCaaBW6PkR40OG//WgdhieBGPGKNrfYMHRNJrsZu2ipkOPXF7z5jkb0MqxkSQ8uUNO+CUhQ=
+X-Received: by 2002:a05:6402:51ce:b0:5cf:45d4:3f8f with SMTP id
+ 4fb4d7f45d1cf-5cf45d44215mr10656886a12.12.1731590537794; Thu, 14 Nov 2024
+ 05:22:17 -0800 (PST)
 MIME-Version: 1.0
-References: <20241105083203.2230983-1-marcandre.lureau@redhat.com>
- <CAJ+F1C+JTfhgOFw_4oOsOPA-JbYPQh7P7adp2EkOFY_JVpXBvw@mail.gmail.com>
-In-Reply-To: <CAJ+F1C+JTfhgOFw_4oOsOPA-JbYPQh7P7adp2EkOFY_JVpXBvw@mail.gmail.com>
+References: <20241105180205.3074071-1-peter.maydell@linaro.org>
+ <dae49b9c-0d47-4811-bd48-fdd401594609@ilande.co.uk>
+In-Reply-To: <dae49b9c-0d47-4811-bd48-fdd401594609@ilande.co.uk>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 14 Nov 2024 13:11:38 +0000
-Message-ID: <CAFEAcA84euon8uDXOkF3F9BDJC5M7WZhY=QnT0zQ+J_AB=VR5w@mail.gmail.com>
-Subject: Re: [PATCH] hw/audio/hda: avoid unnecessary re-open stream on
- reconfiguration
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, mjt@tls.msk.ru,
- Gerd Hoffmann <kraxel@redhat.com>
+Date: Thu, 14 Nov 2024 13:22:07 +0000
+Message-ID: <CAFEAcA82rYdZduR73CjJr7hYWG7N5e4Dqmx5j1O=3FT_BqboNQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/intc/openpic: Avoid taking address of out-of-bounds
+ array index
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,40 +89,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 14 Nov 2024 at 12:57, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@gmail.com> wrote:
+On Wed, 6 Nov 2024 at 11:58, Mark Cave-Ayland
+<mark.cave-ayland@ilande.co.uk> wrote:
 >
-> Hi Paolo
+> On 05/11/2024 18:02, Peter Maydell wrote:
 >
-> Did you see that patch? What do you say about it?
+> > The clang sanitizer complains about the code in the EOI handling
+> > of openpic_cpu_write_internal():
+> >
+> > UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1 ./build/clang/qemu-system-ppc -M mac99,graphics=off -display none -kernel day15/invaders.elf
+> > ../../hw/intc/openpic.c:1034:16: runtime error: index -1 out of bounds for type 'IRQSource[264]' (aka 'struct IRQSource[264]')
+> > SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/intc/openpic.c:1034:16 in
+> >
+> > This is because we do
+> >    src = &opp->src[n_IRQ];$
+>
+> Extra $ symbol at the end of the line here?
 
-I think Paolo's patch seems like a cleaner fix for
-the leak than this one.
+Yep (cut-n-paste from an editor that marks end-of-lines).
 
-Incidentally, to recap something I said on IRC: it seems
-to me like part of the problem here is that our AUD_*
-API doesn't match up well with what the Spice audio
-backend in QEMU needs. Specifically, the Spice channel
-(if I read the code correctly) always uses a fixed
-sample format and frequency. So even if the guest
-reconfigures the audio device with a different frequency
-there's no need to tear down the Spice audio channel.
+> > when n_IRQ may be -1.  This is in practice harmless because if n_IRQ
+> > is -1 then we don't do anything with the src pointer, but it is
+> > undefined behaviour. (This has been present since this device
+> > was first added to QEMU.)
+> >
+> > Rearrange the code so we only do the array index when n_IRQ is not -1.
+> >
+> > Cc: qemu-stable@nongnu.org
+> > Fixes: e9df014c0b ("Implement embedded IRQ controller for PowerPC 6xx/740 & 75")
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > Arguable whether it's worth the stable backport or not...
+> > ---
+> >   hw/intc/openpic.c | 15 ++++++++-------
+> >   1 file changed, 8 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
+> > index cd3d87768e0..2ead4b9ba00 100644
+> > --- a/hw/intc/openpic.c
+> > +++ b/hw/intc/openpic.c
+> > @@ -1031,13 +1031,14 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
+> >           s_IRQ = IRQ_get_next(opp, &dst->servicing);
+> >           /* Check queued interrupts. */
+> >           n_IRQ = IRQ_get_next(opp, &dst->raised);
+> > -        src = &opp->src[n_IRQ];
+> > -        if (n_IRQ != -1 &&
+> > -            (s_IRQ == -1 ||
+> > -             IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
+> > -            DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
+> > -                    idx, n_IRQ);
+> > -            qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
+> > +        if (n_IRQ != -1) {
+> > +            src = &opp->src[n_IRQ];
+> > +            if (s_IRQ == -1 ||
+> > +                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
+> > +                DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
+> > +                        idx, n_IRQ);
+> > +                qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
+> > +            }
+> >           }
+> >           break;
+> >       default:
+>
+> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Awkwardly, our AUD_ layer APIs provide no way for the hda
-device model to say "this is just a change of the config
-parameters" -- all it can do is AUD_close-then-AUD_open.
-And at the Spice backend layer there's no way to tell
-"this is an AUD_close because we're really finished with
-audio" from "this is an AUD_close that's about to be
-followed by an AUD_open because it's just a config change".
+Thanks. I can take this via target-arm.next, or does anybody
+have a different preference?
 
-Even if the spice client end ought to cope better
-with the server end closing the audio connection, it's
-definitely not ideal to have a close-and-reconnect
-happening multiple times in less than a second
-(which is what you see in one of the logs provided
-in the bug report).
-
-thanks
 -- PMM
 
