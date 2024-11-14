@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC5DD68B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:13:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18AFAD68B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcIf-0005FD-C7; Thu, 14 Nov 2024 11:02:29 -0500
+	id 1tBcQB-0003wB-64; Thu, 14 Nov 2024 11:10:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcID-00050p-Rs
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:05 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1tBcQ0-0003T2-Nn
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:10:06 -0500
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcI4-0002FH-Qk
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:54 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2e2fb304e7dso729060a91.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:51 -0800 (PST)
+ id 1tBcPy-0004IW-Tm
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:10:04 -0500
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-7d4f85766f0so618287a12.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:10:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600110; x=1732204910; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lJHKnfJ9AOt1s0DhksJDYAiN+sOc9T9tuOMIGs7rfV8=;
- b=eHGfoqH87XZL3ZHbSDaWpDHHsUIg9j75KUYhfgnMO6a94XefjKiHjxxismqoUh30dI
- 7ypbwKhnJrwqcg3/slu982nntlvqpBebIE0EaJiMywfdETCO8/285ijCzDTD1SXfKdU7
- AW9iGiPAYb5+GRuNCV0BSuJIcE9EsUBL6+l+4f0x9LXPd719ZLA8od3TGxo1JPI5wkTC
- 4UhRO8ChTWSORpjDQ2iigaVh97CHqvNiHuejG+pcuh6JMwBwBfuN2GsEAdnKxmvDJ93f
- 89pco8hHWafazJrcV/bO/mjR0cm0CNo/fQ7yciyCFuw9dlqmO/7XnRXb2RqWQE8UXSsX
- opyQ==
+ d=linaro.org; s=google; t=1731600601; x=1732205401; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AWAtYvj47Ix5qNW4Emo3QWM6YHTQcss4zfN1Zjyrw/Y=;
+ b=qD3CRLj0jGADxbiOrKZUjwZ+T9pH1EUMJcwdnS8Db0+a6QHCfKfh9YN3G+w7L0PQNg
+ wF9oLNftWlxM8TPhxbWAoIyy5tc9SWLwtcX58y6yueZtucjV/uijtfpU1rhIYSMN6H95
+ RJkZM65i9r+sq2HnFtvsh1cLiBtSCb49kIwort45OTWKagjYSGw0rXZubMgIAElVbr4l
+ Fgw0gJSiWo3AYB2PGKbbWXRfoKNrQ/tp5ogPwoimTB6jai+eKaVpYApn6OpGKGGVGo0w
+ i2NGhqOYeo1/4wxrJ8tiWiLxlb7ZztQVKm/2V9n7rmP0j9JvvRzmiCezj51ntTdGF1Xt
+ rt2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600110; x=1732204910;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lJHKnfJ9AOt1s0DhksJDYAiN+sOc9T9tuOMIGs7rfV8=;
- b=b5hxAgIri/DRzhiY0knkYNVSNnn/GV+46Y0feyGY67JGCWsxrZwBerBOKA547zJ8QY
- 73cLKz0vc2h1fRfZFQ4q6A6gXWPD0xZKA2W74ZdJQag1gXSozib/QPDL11Ke7HNnh7Gk
- J0zZtPaWci56nOlERYRUHXZQ+J7mXiYI4GRSXmDmIf3hfyNF3fXnyyO5mp64PfdjoXkX
- rnW/PcmlFzRXYTnK4wemVZaxt8XB2Rl5RcXu2PgQasGa5zAS/ocS2lUbZdQSRMkQb/Ae
- w3j5Uu0mKgmaiNDmAToKWGymZhZinyhwkN2bS2Ypoat2aaC+bYBA8Cosnee17qEKw7uc
- 2Gow==
-X-Gm-Message-State: AOJu0Yz9fGpgvq9rB8lGIdV+m0gZgbskYF/m696zjhfHXb5RTfMahUlH
- G+Na3/zbBOTiVy0ZSx7MUsshXzI77jQOrkpZohvCCjPzZeVRDaLLZDetXF6ev/Gl3xGWTyzePGw
- 1
-X-Google-Smtp-Source: AGHT+IGsHqXaMfO75Hr/xzzH8lYuJMrFbtExhGPHDG+/XpX/lNz4Zg95GZ2tSIZmtwzMf4aX6NejRg==
-X-Received: by 2002:a17:90b:4a87:b0:2e2:aef9:8f60 with SMTP id
- 98e67ed59e1d1-2e9b14ddb3bmr32406854a91.0.1731600110051; 
- Thu, 14 Nov 2024 08:01:50 -0800 (PST)
-Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.49
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:01:49 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2 21/54] accel/tcg: Delay plugin adjustment in
- probe_access_internal
-Date: Thu, 14 Nov 2024 08:00:57 -0800
-Message-ID: <20241114160131.48616-22-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
-References: <20241114160131.48616-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1731600601; x=1732205401;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AWAtYvj47Ix5qNW4Emo3QWM6YHTQcss4zfN1Zjyrw/Y=;
+ b=eCnJn1rLDJ1oWJabjoofbbEASxZK3gOAQRs+MPPIb7epuEDW2XMnY31UYcYF9cbifT
+ XwigqDowiziIrjXEnH04GCNo51Y8Gz5r7KkOvpWBMKam4aUTj73HwLeA0Nev5UNQdtje
+ d+XLuI/kdlZWxkoeTXQlttivLKBziQjtiDzW/t5a2qDbW3WniKkiostc1z0akWpo5Ww/
+ dxbDYk6cu2OD2InMZrJgiPaHU8yHrCcKDpo6Du8TKWjPekg/faHnZC406BPlfXiHYi1z
+ u0XcbigQ9tJPKZA6ZSK5D8/doiCWO1Zlk1AhGD5Cv3u5EP7rx7NW7er/Bk0RoJq65duJ
+ hmfA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUW/mSBuz98L8yRsQmUvCzVs7TXzhDy9ydA0ynfITHfG3W3DTbqcZlJxTj3cUNaQU/O0FvYF5Wgc/Dd@nongnu.org
+X-Gm-Message-State: AOJu0YylqmOP+uCHP5t3oV0XGLSICHTuIR/bmHKCfQlXdkhOBx3t879D
+ +DWg8+C8BRCC8iAQNPGQ5D8At2UHgT8rYisG9JDqsPZvNrRD/jnVPHG1ZXcGG10=
+X-Google-Smtp-Source: AGHT+IHB9SPUKGaSd0XdWLK4+NjQXRX+88CX4E8NZGxkiAEFobpzf2gaA1L0QO121XQ0zhB5eWOkYQ==
+X-Received: by 2002:a17:90b:4c49:b0:2e2:9522:278f with SMTP id
+ 98e67ed59e1d1-2e9f2d793b8mr7844483a91.32.1731600601110; 
+ Thu, 14 Nov 2024 08:10:01 -0800 (PST)
+Received: from [192.168.0.4] ([71.212.136.242])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ea02495969sm1483293a91.19.2024.11.14.08.10.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Nov 2024 08:10:00 -0800 (PST)
+Message-ID: <bee4999b-902b-43b8-ad12-c8394712b91b@linaro.org>
+Date: Thu, 14 Nov 2024 08:09:59 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 2/2] target/riscv: rvv: improve performance of RISC-V
+ vector loads and stores on large amounts of data.
+To: Paolo Savini <paolo.savini@embecosm.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
+ Max Chou <max.chou@sifive.com>
+References: <20241029194348.59574-1-paolo.savini@embecosm.com>
+ <20241029194348.59574-3-paolo.savini@embecosm.com>
+ <7a046c99-c4e7-4395-8dc9-9139e9bfba06@linaro.org>
+ <96e7601d-14aa-4741-8f6a-ae4a1c397a44@embecosm.com>
+ <54c99505-21ef-422c-a7fe-a2d7dabc3d6c@linaro.org>
+ <6b06b532-c53f-4b5b-b65d-d54d7c746ffc@ventanamicro.com>
+ <230f448b-07f4-413c-9be6-e10a8e55be73@linaro.org>
+ <a9f51b76-1cd7-405f-b4a7-384c7447ff88@embecosm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <a9f51b76-1cd7-405f-b4a7-384c7447ff88@embecosm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,46 +111,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove force_mmio and place the expression into the IF
-expression, behind the short-circuit logic expressions
-that might eliminate its computation.
+On 11/11/24 08:04, Paolo Savini wrote:
+> Hi Richard, Daniel,
+> 
+> This might be a silly question, but why do we need to ensure atomicity when emulating 
+> these guest instructions? I might be wrong but I didn't see an explicit requirement for 
+> the vector instructions to be atomic in the documentation of the RISC-V V extension.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- accel/tcg/cputlb.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+So that it works with threads?
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 3e24529f4f..a4c69bcbf1 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1373,7 +1373,6 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
-     CPUTLBEntry *entry = tlb_entry(cpu, mmu_idx, addr);
-     uint64_t tlb_addr = tlb_read_idx(entry, access_type);
-     int flags = TLB_FLAGS_MASK & ~TLB_FORCE_SLOW;
--    bool force_mmio = check_mem_cbs && cpu_plugin_mem_cbs_enabled(cpu);
-     CPUTLBEntryFull *full;
- 
-     if (!tlb_hit(tlb_addr, addr)) {
-@@ -1404,9 +1403,14 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
-     *pfull = full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-     flags |= full->slow_flags[access_type];
- 
--    /* Fold all "mmio-like" bits into TLB_MMIO.  This is not RAM.  */
--    if (unlikely(flags & ~(TLB_WATCHPOINT | TLB_NOTDIRTY | TLB_CHECK_ALIGNED))
--        || (access_type != MMU_INST_FETCH && force_mmio)) {
-+    /*
-+     * Fold all "mmio-like" bits, and required plugin callbacks, to TLB_MMIO.
-+     * These cannot be treated as RAM.
-+     */
-+    if ((flags & ~(TLB_WATCHPOINT | TLB_NOTDIRTY | TLB_CHECK_ALIGNED))
-+        || (access_type != MMU_INST_FETCH
-+            && check_mem_cbs
-+            && cpu_plugin_mem_cbs_enabled(cpu))) {
-         *phost = NULL;
-         return TLB_MMIO;
-     }
--- 
-2.43.0
+The rvv extension talks about loads and stores to individual elements.  The risc-v integer 
+spec talks about the atomicity of loads and stores.  The rvv extension does not talk about 
+*lowering* atomicity requirements.
+
+
+> Anyway the patches from Max have landed and since one of them already uses memcpy() where 
+> this patch does and achieves a similar performance improvement we should probably drop 
+> this particular patch. I'm wondering whether we should be concerned about atomicity there 
+> too?
+> 
+> https://github.com/qemu/qemu/blob/134b443512825bed401b6e141447b8cdc22d2efe/target/riscv/ 
+> vector_helper.c#L224
+
+It *did* go through review for exactly this. You'll notice that the memcpy path is 
+restricted to esz == 1, i.e. bytes.
+
+
+r~
 
 
