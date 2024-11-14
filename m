@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 828D4D6A226
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF9AD6A221
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:58:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBf0h-0003Dg-EG; Thu, 14 Nov 2024 13:56:08 -0500
+	id 1tBf29-0006No-3l; Thu, 14 Nov 2024 13:57:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBez5-0001PD-Vc
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:54:32 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBf01-00029z-J7
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:55:29 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBeyr-0008LJ-8a
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:54:17 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7ea8c4ce232so955102a12.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:54:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBezy-0000Ic-Em
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:55:24 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5cf84214e9bso686359a12.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:55:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731610452; x=1732215252; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1731610515; x=1732215315; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=naHRC0G10HYV/LAot+bVKo5JuJC7HStS24DE1rq9+UY=;
- b=RErgNxEUrHjCRkxwr8r92p5IQgyVDdgfgmUM11ofUxxYI6yhMzzaH8oXRgPmIbwtb6
- WXuF4+clFMwizi6qrJmmBgkixoymk8fxaysv/oRHJo+w19DBeR+Uxev3fOIkB+o8uXIe
- nqMdCHhLjrRnWgPyfujiy1KFGA2nGqslw6NRt4IadCy+HOlFx9kBGYc32gpWQ5Nw6qCk
- D3urUMsUemSTtRApShFhOyi4GUsEzPhC/SuvJaE9e+BbWwYt1t/E27rBLZZUG71zrfYU
- J3uJdPuFrT2XeIR/NXGj9YdGCYqrA2rK1ncdfZ/4WjKrEVSBKAzBMyk5qgIf5QC4l3uU
- FIgw==
+ bh=w0naVAqBaBhnTo/FtWYOVxr5hQzfywoobRP2hZPRLNs=;
+ b=OZD85ZfsGo3NA18kQ5LDTHjS0+hhR2KkqK3x3qKjjwxNx+4vYXZ6L966+zJfqoShKw
+ ANL5JqzNx39A9J0KWOEO3JBQth8ei9BSLGoIqIU41/Mj4Rk3ApxRXWI2OWWyZKCnTpE+
+ z/Ttmd5chLK7WUCHe0lYtIN7zTotLMdHxt0UQ/c+LFUHeM00t4KXMzzk1lfqvikpo1Xw
+ cFAckYzTRBPSa/0jnT1taCE1xrmB38DbGkOrxUvghqwjUuCcj2/o8aOZeWl4NvdkbboF
+ 29LZSETgLs+FuZo8q/75SPNo2UKUwDHiDZSQljoP5x9tN8XeLlUeHQUMxMzxU75Y9vQ6
+ jbXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731610452; x=1732215252;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1731610515; x=1732215315;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=naHRC0G10HYV/LAot+bVKo5JuJC7HStS24DE1rq9+UY=;
- b=ekggdqI4oyqdLIRiF0S42gc86YmgTSGIjmZeUAbLtxEtUThVA6gpF8Y52u+yiYD3jx
- CivBs/ldh++RORhkXT0Ztpp39eiTogKc4hJFRaAkMAnQVCMYhZoryJ65V0Z8Z0CLnUH9
- gxC5yED4aOzDjIC+99biOtcDMyHCRns4t3dzRm2ZD4VAbwzDk2dI0gQTWpgraH28UdMR
- 9q1KnfFlVXSFhYyijAqYO/dH/MVPH2AHsD0q3N4WDAildifrWsUJgmuRvuAD0mIcwRV0
- SsXksuiBZd90JSqjQs1b9lK1ZB1Bfo2x1eos+QCNdvbJ4t9VXzaB00Ip51d99lOmfj1B
- nspA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCULXtlgUYncoQhOqIT8/Ckyj5aDBEvnd/koqAYcDy9SCjZNfhPp0IDQcMDkdj4THIokaeTq3nZa3j/9@nongnu.org
-X-Gm-Message-State: AOJu0Yw2svU9LhsjD10tk5QTcvyHms69pfLv4RK0mDL3rFJ8oZj1jDNp
- t+rAsUeoNppNx954Mn7idQHsrKcGkMhyS/gh79fvh0zYUhZ8nKbdzDti0dCmE5lHNdQ91ZI5BaV
- wpQptug==
-X-Google-Smtp-Source: AGHT+IHnZM3cYM7EW6vHOcfPCjFmTHr19fkiJKehtWL9xyQ/gZEAYFuf8ygUnLv2bzh/E3c0hHpRhg==
-X-Received: by 2002:a05:6a20:7f93:b0:1db:eb5b:be50 with SMTP id
- adf61e73a8af0-1dc832e4455mr4926515637.4.1731610451730; 
- Thu, 14 Nov 2024 10:54:11 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7246a5ceda0sm1592394b3a.1.2024.11.14.10.54.11
+ bh=w0naVAqBaBhnTo/FtWYOVxr5hQzfywoobRP2hZPRLNs=;
+ b=tXJp5lf+axWREbhTfB26Qr6Dl0Ax9oWy5Lt4inV61X1posGrN306L+rNCExEpmCgLg
+ gZYQvKxOHoexFBtDYCYmS5TgxHDSKDwtNmTSGkNB5YGxDh3OehWcENqhO560j8DIRF7n
+ jblVKFxVlBcnFSOLQyXKBa+0ActJK9GaLkN7TI+kwACeNYq9MYMIpfx7mj0PNYW1F+Lm
+ Uk3zaq6+4EWNLZnETuzr29AQjLbc49l4VNEnY9f+WRVH6w01lhx7wCT03OtGQTvRrZcx
+ Zi3ADkzlNb2XLxOLdmUyiU6wW6sQIn/+a8YIp/XhDEzk/uyUL80eQmlWSDREJYt45f4X
+ 1soQ==
+X-Gm-Message-State: AOJu0Yw5AlCUefqNcf8vzKZIeaPiyea7NogprypZD7jWZsv42+wX9I76
+ TGBVn2e4z3S3o+fqo9baLt8g7wLoDDw9xRKLBCsBVQQUkt2p/guHqHkRl8qbg2I=
+X-Google-Smtp-Source: AGHT+IH9DCL4VEY6XlHhsr9ETN/JO6qiX3alagG6WYIncrj6066l7GvCphN7d/OXf+rv/GKymWKM5w==
+X-Received: by 2002:a05:6402:510f:b0:5ce:af48:c2cc with SMTP id
+ 4fb4d7f45d1cf-5cf0a43fd2cmr22577511a12.27.1731610515326; 
+ Thu, 14 Nov 2024 10:55:15 -0800 (PST)
+Received: from [192.168.69.174] ([176.187.209.228])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5cf8d0958f9sm71652a12.14.2024.11.14.10.55.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 10:54:11 -0800 (PST)
-Message-ID: <b5acf40f-7a5e-4fbe-81f1-5b1aa23d84cd@linaro.org>
-Date: Thu, 14 Nov 2024 10:54:11 -0800
+ Thu, 14 Nov 2024 10:55:14 -0800 (PST)
+Message-ID: <0cf1cdc6-442f-45f8-b1e7-346b236b516a@linaro.org>
+Date: Thu, 14 Nov 2024 19:55:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 45/54] target/rx: Convert to TCGCPUOps.tlb_fill_align
+Subject: Re: [PATCH 00/20] hw/net/xilinx_ethlite: Map RAM buffers as RAM and
+ remove tswap() calls
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Anton Johansson <anjo@rev.ng>,
+ Jason Wang <jasowang@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+References: <20241112181044.92193-1-philmd@linaro.org>
+ <ZzTHj3uHGfc2Z8Dd@zapote>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241114160131.48616-1-richard.henderson@linaro.org>
- <20241114160131.48616-46-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241114160131.48616-46-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZzTHj3uHGfc2Z8Dd@zapote>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,53 +101,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/14/24 08:01, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/rx/cpu.c | 19 +++++++++++--------
->   1 file changed, 11 insertions(+), 8 deletions(-)
+On 13/11/24 15:36, Edgar E. Iglesias wrote:
+> On Tue, Nov 12, 2024 at 07:10:24PM +0100, Philippe Mathieu-Daudé wrote:
+>> This is the result of a long discussion with Edgar (started few
+>> years ago!) and Paolo:
+>> https://lore.kernel.org/qemu-devel/34f6fe2f-06e0-4e2a-a361-2d662f6814b5@redhat.com/
+>> After clarification from Richard on MMIO/RAM accesses, I figured
+>> strengthening the model regions would make things obvious,
+>> eventually allowing to remove the tswap() calls for good.
+>>
+>> This costly series mostly plays around with MemoryRegions.
+>>
+>> The model has a mix of RAM/MMIO in its address range. Currently
+>> they are implemented as a MMIO array of u32. Since the core
+>> memory layer swaps accesses for MMIO, the device implementation
+>> has to swap them back.
+>> In order to avoid that, we'll map the RAM regions as RAM MRs.
+>> First we move each MMIO register to new MMIO regions (RX and TX).
+>> Then what is left are the RAM buffers; we convert them to RAM MRs,
+>> removing the need for tswap() at all.
+>>
+>> Once reviewed, I'll respin my "hw/microblaze: Allow running
+>> cross-endian vCPUs" series based on this.
 > 
-> diff --git a/target/rx/cpu.c b/target/rx/cpu.c
-> index 65a74ce720..c83a582141 100644
-> --- a/target/rx/cpu.c
-> +++ b/target/rx/cpu.c
-> @@ -161,16 +161,19 @@ static void rx_cpu_disas_set_info(CPUState *cpu, disassemble_info *info)
->       info->print_insn = print_insn_rx;
->   }
->   
-> -static bool rx_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-> -                            MMUAccessType access_type, int mmu_idx,
-> -                            bool probe, uintptr_t retaddr)
-> +static bool rx_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-> +                                  vaddr addr, MMUAccessType access_type,
-> +                                  int mmu_idx, MemOp memop, int size,
-> +                                  bool probe, uintptr_t retaddr)
->   {
-> -    uint32_t address, physical, prot;
-> +    /* TODO: alignment faults not currently handled. */
->   
->       /* Linear mapping */
-> -    address = physical = addr & TARGET_PAGE_MASK;
-> -    prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-> -    tlb_set_page(cs, address, physical, prot, mmu_idx, TARGET_PAGE_SIZE);
-> +    memset(out, 0, sizeof(*out));
-> +    out->phys_addr = addr;
-> +    out->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-> +    out->lg_page_size = TARGET_PAGE_BITS;
-> +    out->attrs = MEMTXATTRS_UNSPECIFIED;
->       return true;
->   }
->   
-> @@ -195,7 +198,7 @@ static const TCGCPUOps rx_tcg_ops = {
->       .initialize = rx_translate_init,
->       .synchronize_from_tb = rx_cpu_synchronize_from_tb,
->       .restore_state_to_opc = rx_restore_state_to_opc,
-> -    .tlb_fill = rx_cpu_tlb_fill,
-> +    .tlb_fill_align = rx_cpu_tlb_fill_align,
->   
->   #ifndef CONFIG_USER_ONLY
->       .cpu_exec_interrupt = rx_cpu_exec_interrupt,
+> 
+> Thanks Phil,
+> 
+> This looks good to me. Have you tested this with the Images I provied
+> a while back or some other way?
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I'm running the same functional tests run on CI:
 
+$ make check-functional-microblaze{,el}
+[1/7] Generating qemu-version.h with a custom command (wrapped by meson 
+to capture output)
+[1/7] Generating qemu-version.h with a custom command (wrapped by meson 
+to capture output)
+/Users/philmd/qemu/build/pyvenv/bin/meson test  --no-rebuild -t 1 
+--setup thorough   --print-errorlogs  --suite func-microblazeel  --suite 
+func-microblazeel-thorough
+/Users/philmd/qemu/build/pyvenv/bin/meson test  --no-rebuild -t 1 
+--setup thorough   --print-errorlogs  --suite func-microblaze  --suite 
+func-microblaze-thorough
+1/4 qemu:func-quick+func-microblazeel / 
+func-microblazeel-empty_cpu_model                                     OK 
+              0.18s   1 subtests passed
+1/4 qemu:func-quick+func-microblaze / func-microblaze-empty_cpu_model 
+                                OK              0.18s   1 subtests passed
+2/4 qemu:func-quick+func-microblaze / func-microblaze-version 
+                                OK              0.18s   1 subtests passed
+2/4 qemu:func-quick+func-microblazeel / func-microblazeel-version 
+                                      OK              0.18s   1 subtests 
+passed
+3/4 qemu:func-quick+func-microblaze / func-microblaze-info_usernet 
+                                OK              0.28s   1 subtests passed
+3/4 qemu:func-quick+func-microblazeel / func-microblazeel-info_usernet 
+                                      OK              0.28s   1 subtests 
+passed
+4/4 qemu:func-thorough+func-microblaze-thorough+thorough / 
+func-microblaze-microblaze_s3adsp1800        OK              0.57s   1 
+subtests passed
+
+Ok:                 4
+Expected Fail:      0
+Fail:               0
+Unexpected Pass:    0
+Skipped:            0
+Timeout:            0
+
+Full log written to /Users/philmd/qemu/build/meson-logs/testlog-thorough.txt
+4/4 qemu:func-thorough+func-microblazeel-thorough+thorough / 
+func-microblazeel-microblazeel_s3adsp1800        OK              1.50s 
+1 subtests passed
+
+Ok:                 4
+Expected Fail:      0
+Fail:               0
+Unexpected Pass:    0
+Skipped:            0
+Timeout:            0
+
+Full log written to /Users/philmd/qemu/build/meson-logs/testlog-thorough.txt
+$
 
