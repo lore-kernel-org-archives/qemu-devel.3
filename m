@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC42D68B07
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F29D68B0B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:11:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBZcB-0005EP-6Q; Thu, 14 Nov 2024 08:10:27 -0500
+	id 1tBZdS-0005vn-PW; Thu, 14 Nov 2024 08:11:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tBZc9-0005D6-EW
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:10:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBZdQ-0005vO-Ie
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:11:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tBZc7-0004iR-Q5
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:10:25 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBZdP-0004qL-6K
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:11:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731589822;
+ s=mimecast20190719; t=1731589902;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TNeP4PoI1dPOAUqG+AaLv0MX9k+dBpNJf5ieMxtsMQc=;
- b=JX3S9wgwrnmSj03MVD316rLRJjtjT+JOuv0xhSkUgvDCo6ePNp75oii5a8EyzK7uB88uEY
- oLp1l3B3ZQQP3Y+PnQHLpWA891flkRnfJJ4qKGzkFDQyJvQTXpkHwqDv/hGTM/j4tDZMoi
- /T7Xr005hDwMfyZG3no/M91nGnF1LzU=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4kh64F/XUjp6u/P1AuevFBKMTieTV/SfY3fs2H5/z6k=;
+ b=Vw/2xVbkDGSd+hRk13ak1ThESdHIyUkNsktrq1NqTBuEaf2PfMnPOKZpfq6p7LLStoZccV
+ 1CagvxGTcKznt7VpXR8dgJAohYOBqiKT1FUZ/dA/uQHcsOaodFc7DUNmlGW0gHe4DuqiWI
+ 3LmeqrEd+6JfywlA9WnGJKeZ/JG6Sm4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-4VvnvrjmM3ijiaPSWShiJA-1; Thu, 14 Nov 2024 08:10:18 -0500
-X-MC-Unique: 4VvnvrjmM3ijiaPSWShiJA-1
-X-Mimecast-MFC-AGG-ID: 4VvnvrjmM3ijiaPSWShiJA
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6d35062e1fcso7430316d6.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 05:10:18 -0800 (PST)
+ us-mta-369-WOo_Bw_fPRGMU1taJvPH4g-1; Thu, 14 Nov 2024 08:11:40 -0500
+X-MC-Unique: WOo_Bw_fPRGMU1taJvPH4g-1
+X-Mimecast-MFC-AGG-ID: WOo_Bw_fPRGMU1taJvPH4g
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d45f1e935so364577f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 05:11:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731589818; x=1732194618;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TNeP4PoI1dPOAUqG+AaLv0MX9k+dBpNJf5ieMxtsMQc=;
- b=CkpbyBzNuzwFd47SWDUsPL+ElOgqS91W/nWulwaR9W6kAPv8pL74uRuRUk0fiAF+fv
- hOrK3YHmbojQ4zye5/+jnAMYuhemV9RweQB2YMqQMPgtDD/fRNNiuzQQMOTju9JgPjwz
- qQYjn04rYCAA0InI30mqSSROY62HnimeNec64q7v+vHjsLIe+1FIhNu8WPns6tA01VK5
- Szw/EZQ1GIYEc380NMD1l6FoonxFJAkZW+ES4/011zgNt+P+HtX16ndjgL3RzL6vBnwh
- 5H2kO2+aao/6pWC8wDKd8i4epoG/N6um5Z9uxKBBAWrPA7wzf9n2DVHjv23VpfGX90Xc
- 8fiA==
-X-Gm-Message-State: AOJu0YwvD+/sftZLkm3JZVZ9aTnUPxwDKimV5yHbuZd3mBVoKf2UXmJn
- /JG69bvWY6b9a43HMzARxjEQn14tQi2d+dLPjX3s8+7EfhX0xqssqHpJt4SM+vZag9O4Bov1cqx
- Paf1Qj2axc/RgrLZixlNPiSDqMoR2KXB/6/OJEioA03A+alFJGtMF
-X-Received: by 2002:a05:6214:4607:b0:6cb:d4ed:aa59 with SMTP id
- 6a1803df08f44-6d3edd389eamr22096226d6.4.1731589818247; 
- Thu, 14 Nov 2024 05:10:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNcvZJuVHd/ftba2MpfkJvhehcdiN6f4UBY/570MH85ojraa0idT3RLDoZpeO7q9lDgDn4aA==
-X-Received: by 2002:a05:6214:4607:b0:6cb:d4ed:aa59 with SMTP id
- 6a1803df08f44-6d3edd389eamr22095976d6.4.1731589817838; 
- Thu, 14 Nov 2024 05:10:17 -0800 (PST)
-Received: from sgarzare-redhat (host-79-46-200-129.retail.telecomitalia.it.
- [79.46.200.129]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d3ee8c4274sm5166346d6.75.2024.11.14.05.10.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 05:10:17 -0800 (PST)
-Date: Thu, 14 Nov 2024 14:10:11 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: "Zuo,Boqun" <zuoboqun@baidu.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-Subject: Re: [PATCH] vhost_net: fix assertion triggered by batch of host
- notifiers processing
-Message-ID: <kvbv7hbsloklwcb5zooqgveb2253sf7mil7ykkotgfhcqbtn6c@cnspmyskyeey>
-References: <6e6f624c7a2a489b88dba0a44e6013d1@baidu.com>
+ d=1e100.net; s=20230601; t=1731589899; x=1732194699;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4kh64F/XUjp6u/P1AuevFBKMTieTV/SfY3fs2H5/z6k=;
+ b=erOVXwiEjazchcyn7nmFpF9eSbADFpU5Exc/DdA5Ew46yzbQVrlSkBNJi6SFJeG+RD
+ dzMA3957RJXe1uwtihnjAafp53tF4sSKbsMuPjWfVcrs8e66m1V6pcUN9PeN1EYnJkRg
+ qDTsyPu6w0Hv7xKgkel7qSzym3Jnhccwvk6x3j2UCkN9B+bNE8MzoGgGPLfHTWhDwihq
+ P/XuedH09XIgk1rSJ5Zmp24OZNnrQ8ydIqBtdCSx+6RUcntA5pUApzq33g/ZGqaxHN3j
+ CNWfQ9Pqv8CbmTvZ1mH/GsIdQOKvXBgz7+EcQgm2g+el4k32n57va9muGZrsXy2ipWoi
+ aemw==
+X-Gm-Message-State: AOJu0Yze9Cw011FRK9od0d+6awtZ+UmlLix4p9+YRi3niveQFjkogZYM
+ w2llVRDeIaOiAxBeObCCkyvZY68dD8udgVx2BcbRJ5HeD0g10WXWfQ44SzZCLsCJktP6yuJ2HWx
+ w1HlVX5tm7gsyzCBeSuKXnMlcv1fe27brHg/28L/W9e3zLOghuqfrvbJFiogtFWYCnwMUTgVmKL
+ LOfaqHC+LOHp6ptl/4k1zS8F/sSd8=
+X-Received: by 2002:a5d:5f46:0:b0:382:d79:842c with SMTP id
+ ffacd0b85a97d-38218502c87mr1493095f8f.13.1731589899488; 
+ Thu, 14 Nov 2024 05:11:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFn/KC+1xSTcX2jwZta17AyiQlCKe1HFQ7ZN7LfzlYbzOsrgARJvNQnqmljcHlLaRP9yb9e0oLNWeoadgSVHRU=
+X-Received: by 2002:a5d:5f46:0:b0:382:d79:842c with SMTP id
+ ffacd0b85a97d-38218502c87mr1493072f8f.13.1731589899083; Thu, 14 Nov 2024
+ 05:11:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <6e6f624c7a2a489b88dba0a44e6013d1@baidu.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+References: <20241108180139.117112-1-pbonzini@redhat.com>
+ <87plmyrmjh.fsf@draig.linaro.org>
+In-Reply-To: <87plmyrmjh.fsf@draig.linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 14 Nov 2024 14:11:25 +0100
+Message-ID: <CABgObfZT_jYJqKDnTAdrVjr9KdQXjNVEt2eQfDpoqrh6xEnVsQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 00/11] rust: improved integration with cargo
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, kwolf@redhat.com, 
+ junjie.mao@hotmail.com, zhao1.liu@intel.com, qemu-rust@nondevel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.69,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,134 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 14, 2024 at 11:08:35AM +0000, Zuo,Boqun wrote:
->On Thursday, November 14, 2024 6:54 PM, Stefano Garzarella wrote:
->> >
->> >When the backend of vhost_net restarts during the vm is running,
->> >vhost_net is stopped and started. The virtio_device_grab_ioeventfd()
->> >fucntion in
->> >vhost_net_enable_notifiers() will result in a call to
->> >virtio_bus_set_host_notifier()(assign=false).
->> >
->> >And now virtio_device_grab_ioeventfd() is batched in a single
->> >transaction with virtio_bus_set_host_notifier()(assign=true).
->> >
->> >This triggers the following assertion:
->> >
->> >kvm_mem_ioeventfd_del: error deleting ioeventfd: Bad file descriptor
->> >
->> >This patch moves virtio_device_grab_ioeventfd() out of the batch to fix
->> >this problem.
->> >
->> >Fixes: 6166799f6 ("vhost_net: configure all host notifiers in a single
->> >MR transaction")
->> >Reported-by: Gao Shiyuan <gaoshiyuan@baidu.com>
->> >Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
->> >---
->> > hw/net/vhost_net.c | 31 ++++++++++++++++++++-----------
->> > 1 file changed, 20 insertions(+), 11 deletions(-)
->> >
->> >diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c index
->> >997aab0557..eb3e92ca0d 100644
->> >--- a/hw/net/vhost_net.c
->> >+++ b/hw/net/vhost_net.c
->> >@@ -229,9 +229,24 @@ static int vhost_net_enable_notifiers(VirtIODevice
->> *dev,
->> >     int nvhosts = data_queue_pairs + cvq;
->> >     struct vhost_net *net;
->> >     struct vhost_dev *hdev;
->> >-    int r, i, j;
->> >+    int r, i, j, k;
->> >     NetClientState *peer;
->> >
->> >+    /*
->> >+     * We will pass the notifiers to the kernel, make sure that QEMU
->> >+     * doesn't interfere.
->> >+     */
->> >+    for (i = 0; i < nvhosts; i++) {
->> >+        r = virtio_device_grab_ioeventfd(dev);
->> >+        if (r < 0) {
->> >+            error_report("vhost %d binding does not support host 
->> >notifiers", i);
->> >+            for (k = 0; k < i; k++) {
->> >+                virtio_device_release_ioeventfd(dev);
->> >+            }
->> >+            return r;
->> >+        }
->> >+    }
->> >+
->> >     /*
->> >      * Batch all the host notifiers in a single transaction to avoid
->> >      * quadratic time complexity in address_space_update_ioeventfds().
->> >@@ -247,16 +262,6 @@ static int vhost_net_enable_notifiers(VirtIODevice
->> >*dev,
->> >
->> >         net = get_vhost_net(peer);
->> >         hdev = &net->dev;
->> >-        /*
->> >-         * We will pass the notifiers to the kernel, make sure that QEMU
->> >-         * doesn't interfere.
->> >-         */
->> >-        r = virtio_device_grab_ioeventfd(dev);
->> >-        if (r < 0) {
->> >-            error_report("binding does not support host notifiers");
->> >-            memory_region_transaction_commit();
->> >-            goto fail_nvhosts;
->> >-        }
->> >
->> >         for (j = 0; j < hdev->nvqs; j++) {
->> >             r = virtio_bus_set_host_notifier(VIRTIO_BUS(qbus),
->> >@@ -277,6 +282,10 @@ static int vhost_net_enable_notifiers(VirtIODevice
->> *dev,
->> >     return 0;
->> > fail_nvhosts:
->> >     vhost_net_disable_notifiers_nvhosts(dev, ncs, data_queue_pairs,
->> >i);
->>
->> IIUC this call is disabling notifiers from 0 to `i - 1` ...
->>
->> >+    for (k = i + 1; k < nvhosts; k++) {
->>
->> ... so, should we start from `i`, instead of `i + 1`?
->>
->> Thanks,
->> Stefano
+On Thu, Nov 14, 2024 at 2:07=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
+> > First, while it is currently possible to run cargo on the rust/ directo=
+ry,
+> > it has the issue that the bindings.rs must be placed by hand in
+> > the build directory.  Therefore, this series starts by allowing
+> > cargo to "just work" when run in a "meson devenv" environment:
+> >
+> >     meson devenv -w ../rust cargo clippy --tests
+> >     meson devenv -w ../rust cargo fmt
 >
->The notifier `i` has been released when vhost_net_enable_notifiers() call vhost_dev_disable_notifiers_nvqs():
+> Is this meant to be the rust source root, or the root of the rust
+> builddir:
 >
->        for (j = 0; j < hdev->nvqs; j++) {
->            r = virtio_bus_set_host_notifier(VIRTIO_BUS(qbus),
->                                             hdev->vq_index + j,
->                                             true);
->            if (r < 0) {
->                error_report("vhost %d VQ %d notifier binding failed: %d",
->                              i, j, -r);
->                memory_region_transaction_commit();
->=>            vhost_dev_disable_notifiers_nvqs(hdev, dev, j);
->                goto fail_nvhosts;
->            }
->        }
->
->So we should start from `i+1`...
+> $ meson devenv ../../rust
 
-Ok, I see now.
-That is really hidden, so please describe it in the commit message and 
-also add a comment in the code.
+rust/ in the source directory.  You also need to run "meson devenv"
+from the root of the build directory.
 
-Thanks,
-Stefano
+In practice you can just use "make clippy" or similar.
 
->
->>
->> >+        virtio_device_release_ioeventfd(dev);
->> >+    }
->> >+
->> >     return r;
->> > }
->> >
->> >--
->> >2.42.0.windows.2
->> >
->
+> ERROR: Build data file './meson-private/build.dat' references functions o=
+r classes that don't exist. This probably means that it was generated with =
+an old version of meson. Try running from the source directory meson setup =
+. --wipe
+> =F0=9F=95=9913:05:22 alex@draig:qemu.git/builds/rust  on =EE=82=A0 review=
+/rust-cargo-rfc [$!?] [=F0=9F=94=B4 ERROR]
+> $ meson devenv rust
+
+Your meson-private/ directory is stale.  Any "make" or "ninja" invocation w=
+ill
+fix it.
+
+Paolo
 
 
