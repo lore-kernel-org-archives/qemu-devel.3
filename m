@@ -4,84 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2FBED6A226
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE283D6A226
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBeug-0006Es-58; Thu, 14 Nov 2024 13:49:54 -0500
+	id 1tBewT-00077R-Ev; Thu, 14 Nov 2024 13:51:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBeuf-0006Ei-0b
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:49:53 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBeud-0006km-2T
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:49:52 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-20e6981ca77so12177405ad.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:49:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731610189; x=1732214989; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Zmq7vzIm/HC+LuJD7ybvhlyPB5WkgMpCIfu/FrdCS+0=;
- b=Mr3/Jv+YJsFhQi4yfNvFt7CpYVyuKMc1ZDPw/kehlnnqqova+U74SJUKuQDsJB6h2O
- 8AJpgRBYe56p6tLq33VmYbfWZeB7EqwUnTJnSeGONNXNICX1OmHfNvkh5AmKPAmIWy/M
- gBX+q/Y/988Qgj0xbZb7g6HHCROF4mrcnj+qP/W3P6RfOubdJ/zaKWGsAFQ87U55jAEB
- OmR0YknwXuJWr37TAzsPsSEA9tDkT66STl5ojnn+ML9VfdV7NhqQHnmiVme/MYu1q+Va
- t9AIMjxyX4EITCAcZwt9Yqz/5dNOczzgW0TaWU+8cut4crhMIzzH3/LvFodkdCdbmzN/
- bR4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731610189; x=1732214989;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zmq7vzIm/HC+LuJD7ybvhlyPB5WkgMpCIfu/FrdCS+0=;
- b=fnsFMou9ARwiUUmmPBqNkThNQj2n7ASuKvFL2PrFpJn4smBWeak14sQk7ozXPS9iYV
- Ym8a+1HlIbsUBo8by+yQfU4Hoc8lhPEeQvrLlS4bnosZ+INKwRlaXKoNQ1bYJL9bKIqg
- uTkadi5trI3f9BinlfQBs0j9Sg3//rJjNKz9DKIZ8fc+rwo04RhDWDsqXkq7vyyMKoON
- zrIbHTtHHkpkubUm/2iwg50eeaxFYn/ogUYoNdwekXf+HtRQNZG1x9IphygQmhz3fkzs
- CEMA+Nw2kuopLr5qZ7gOrCOoiQOhUwETGv4B0cDO70FhEeAa/fUsZahWIqefhfW3+juG
- KcUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1i51C8IHDBns+kWpefFsrr2N0vZh/ALaysVtCh2zetbX6SU6U7gnuduJ6IGMmHecmh79z8AkrMnsK@nongnu.org
-X-Gm-Message-State: AOJu0YwZDhk0RbaGlBsh8dDBFZhp/H/1ibSN+bc9IvpNW1SBvIUtIARt
- NlCGkN7ATW4lu3nZ3izqd9RQr2vZo9NL0DsmGYrNZdv2TJOJCoivftzdEcfL/cE=
-X-Google-Smtp-Source: AGHT+IEgcjomS0WCoHN9AdVqaZQzNHsGwbMufAqQy59bVeEaDcwVmfhVNSj2hg4OumjIZKwxOKkTYg==
-X-Received: by 2002:a17:903:1248:b0:211:ebd:e35f with SMTP id
- d9443c01a7336-211b5d28d67mr102231815ad.39.1731610189047; 
- Thu, 14 Nov 2024 10:49:49 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-211c7d0175asm13924825ad.178.2024.11.14.10.49.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 10:49:48 -0800 (PST)
-Message-ID: <057e02e0-eb01-43b2-b48c-602bb84d0989@linaro.org>
-Date: Thu, 14 Nov 2024 10:49:47 -0800
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1tBewR-00076r-5H
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:51:43 -0500
+Received: from mail-dm6nam12on2044.outbound.protection.outlook.com
+ ([40.107.243.44] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1tBewP-00078c-33
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:51:42 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=olXY4GZdnG1CD2gAbJZPqXxybjRt8gYZ6ge81oILvmQJu6rtSbYIqbc2reLIBgUIAz0jdKvw1++i2zNbATeEjMpsUJoTxI/Tg6xI3FMzxj10MTEknpPi3ZR3WuIf8Ux0B5NMK27/2u2H6FAtEtXsK5xDj7tGijSuHmjeIYtM9c6GItAFVXIUMWVh/GkVfRhcEDtp3esgWS/sMuJHQ054hVgAAE6A1K0dcCqzqRsJWabm7wQ6GE4i5q+2u/XLnyThRPcCu2JwAVohqbrXasRB+CVEdT4coFySvbsVxFIkbaxaOtXoSKXQ62lWiCv/akfxYu8EJNUd3nOMOV7L+SuDiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QTLDmDuj3ZTrp1qejXNrTr/+ueGA1Yviiiuyx2tQN6g=;
+ b=XgzbCC646z/wLpITqwPCdwtrhonNFXMcJBP3Xd7DLLG9tVz6T0TbODBJYcT9cS8DhUC0iUiy1zm6DdKiLhiEKAtF+kKdTmtrdd3jM9yPL/a0sCl/77mWrBdUNOryIQOFio9vD5u5sCexzgQEtnYSKVvCpjxGTwKsXuVCX9B/Yqgzm2Fl+HRMPLj+HC6LHFbmZoxpf6cfBfZwbqQYFG6YZPIPR8BzQjJbmO6ZUIZctwtnkgdkPXXsnd8T7osEYk10R+D0OjJbRWP5cygpI3dd1ndenzpjpiaLkw4wl+Pl+7hkftq/cRNVy/c2XkqB7cvt4V2jqN5ynGzj9u+lu5ZGVA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QTLDmDuj3ZTrp1qejXNrTr/+ueGA1Yviiiuyx2tQN6g=;
+ b=welflNLBelJQDv9u8iURdBYR7jeZ2Fz7/e7IChwFUcGNFjgceFkC4wvS8yzL4E5FFjs9ONQ+ozou4nwypRlNQwDDyKMGvLh7mdMEKZC2WcVJp2tJPWRPJ+h2AO1mk9h4MnEtnfIErLq/YCt8jvVtwi8EipYJDeOQZXaOD1HSUg0=
+Received: from BL1PR13CA0007.namprd13.prod.outlook.com (2603:10b6:208:256::12)
+ by PH8PR12MB7111.namprd12.prod.outlook.com (2603:10b6:510:22d::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.17; Thu, 14 Nov
+ 2024 18:46:32 +0000
+Received: from BN3PEPF0000B36D.namprd21.prod.outlook.com
+ (2603:10b6:208:256:cafe::5f) by BL1PR13CA0007.outlook.office365.com
+ (2603:10b6:208:256::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.18 via Frontend
+ Transport; Thu, 14 Nov 2024 18:46:32 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN3PEPF0000B36D.mail.protection.outlook.com (10.167.243.164) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8182.1 via Frontend Transport; Thu, 14 Nov 2024 18:46:31 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 14 Nov
+ 2024 12:46:31 -0600
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 33/54] accel/tcg: Remove CPUTLBDesc.fulltlb
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241114160131.48616-1-richard.henderson@linaro.org>
- <20241114160131.48616-34-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241114160131.48616-34-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 9.2.0-rc0 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 14 Nov 2024 12:46:13 -0600
+Message-ID: <173160997306.3341618.1930137864330082213@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B36D:EE_|PH8PR12MB7111:EE_
+X-MS-Office365-Filtering-Correlation-Id: 76084624-64e6-4d81-bfa2-08dd04dca810
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|36860700013|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Qm5HSVFJamlKS1BlNjJFWGtoaVVjSUs3YXdwWldvcm1SOXNib0Y1VVM0VUlI?=
+ =?utf-8?B?YXBvWEVyWExTR2RsYk9IT1cyWEpXWWhOQzI2VjhHNFpkMUo4R0wxSGZsTXZE?=
+ =?utf-8?B?ZGlLWG0rTXFLbGtYcG1lQjdZd0VPdWNRMFVpd2g2NmEvNnJIeEtOamJHNHhq?=
+ =?utf-8?B?SDAvelRkb2tKenoyeEl2Sll3WUVLWWcwSEdaM2NOY1JPOStWNmtNKzVKNEpa?=
+ =?utf-8?B?UktaSjgwdTJVajdHNy9lWUJWODNiVzNaeUJaLzhXS3hDVkVCNTU1RFpaczI4?=
+ =?utf-8?B?eldaMWhHYVdnNUZxSmZPWkl1bVNCSUZESlkrdlFhMEhkTUNMd0FpVENyNFRV?=
+ =?utf-8?B?Y25TMk1tc2sxb0l1YjhSNXN0RXFkWHg4RUlPSmZVOXZTeTZWWS93NmdEUXBh?=
+ =?utf-8?B?UGx6S3Q1cUVjblFHYUdHUi8vQTJ2YTdsK2VEdmpTczl0R3JUV1YyejNVTG1L?=
+ =?utf-8?B?NnBFTGM0cDRtNmRiK2wrS01EWGJyaHkrcTh1RGp1TUc5WmVKaEVIa3kvUlNn?=
+ =?utf-8?B?L0dZbWxmeTBKT1BWWEtBZWlYejR0enZ1ZE9wQUh0YUx5Z1VhbHd0KzRWTVk0?=
+ =?utf-8?B?QlBoVDE5bGU5dks0OGV3Y0pYMnBpNEU1ZThkeHlHVnEzS00zY3drUCtUd3hy?=
+ =?utf-8?B?VEpieGYza0JVbTNROGdmT1hUV3NXcTQ0VXd5Z3BzRStoVFMyV1hrNDFIRE5q?=
+ =?utf-8?B?U1dWY0pSSlc5UzZQMFBjR0dTaWgvWjQ0Z3BXcFdJcjIwdWF5NGFZSXdWV21Z?=
+ =?utf-8?B?N05RY0s5LzdIMzNMQXhJZEhZYjdXaW1rMmVsU1F5akd2OEhuNFB1aVh3VFMy?=
+ =?utf-8?B?ZkhPcGx1dnRRK2tYVmZHQ0l3a0hEZzJHUHZjRkV4WUZkVEtlR1JaSVVwQjA2?=
+ =?utf-8?B?c2dKbCtmTm9QRUljRVBQV1NZRksweFlBY0g0Y2FwSEhFZVhnakVWRmRTZUZ0?=
+ =?utf-8?B?NzJJY3lxUnhpOHdoRnMvSnhveGliY2Y5eEZIaDVRL1YyTXpwSzdxZXhSdE9Q?=
+ =?utf-8?B?YjZOcG03R1N2UWxQSkczZ25ObDQxdGdoL2dlaXl5cmFLbGZuQVhYQkhCUzhE?=
+ =?utf-8?B?SnU0L3o2QmQrZXBNaDRTaTJscW1LUWN2bkdWZlh5NHZ6NWdzTFV3VXNNZisy?=
+ =?utf-8?B?NGZTSG1EMVJqTE9ETkJQNGZYbkxqN2M3Nm1lODFIbUc3RGJhWjcvRGNQZjVl?=
+ =?utf-8?B?MFVFR3RxeE9tTGxQQUZwVnlFU0hEblRwQXM0V2lNdDRZVlNuZzlyV0xIMG1Q?=
+ =?utf-8?B?N1UwTXpteWIyTUxmeXhlclltOXEyb0JoY0MyMzd2U1pHOTM1c290MHEvampr?=
+ =?utf-8?B?bVdpOUtmVlh0OGU5TVBRbThZU2FQRytnYlJiNUxDOVNWRzZrS0dXYzhXRWpn?=
+ =?utf-8?B?YkRQTlU4eUtRRDdZYTVXa1NIR0YwZUVIZG9KbEZUclZyVW9RMDBJR3hRVXc3?=
+ =?utf-8?B?RkZrbHFOZzlQaStVeXBMTG9TL2NQekxBZjRsUisxZFJoR1pQdDhLaTF4T2hz?=
+ =?utf-8?B?UlE5dzUyQ1RlSnJQSUV6cVRrcXcvSHB5SmlhSDAvUWMrNllSR0R0YWtYZE1t?=
+ =?utf-8?B?cjVMbjVMV0lVaFd2aTBxZXpyQk1jWk5BNXhEcnhvRUxjSGZMQmRsbVBLa01K?=
+ =?utf-8?B?K2VwdEpSRTVFWThYUWhJclQ5cVlpNkFzSGFJaXdKVlVBbkdVR3hTeWhBMTE2?=
+ =?utf-8?B?YWNzVzdmcElJV3FWYm5KSHhDM1NKZDZZWUhqUWZBbXZlL1Ywd0Z1eTJaenVO?=
+ =?utf-8?B?SERaK0F4eXJ0QzR1eXBuOEZBRmFUaWJpRks1RlB4ZFRmdE54NDlTYlR2MHVr?=
+ =?utf-8?Q?MCKBAsnwOX3mraGOLTEf/eI7jH80kwRTK8ba8=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(36860700013)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2024 18:46:31.4839 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76084624-64e6-4d81-bfa2-08dd04dca810
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B36D.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7111
+Received-SPF: permerror client-ip=40.107.243.44;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.69,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,143 +152,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/14/24 08:01, Richard Henderson wrote:
-> This array is now write-only, and may be removed.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/hw/core/cpu.h |  1 -
->   accel/tcg/cputlb.c    | 34 +++++++---------------------------
->   2 files changed, 7 insertions(+), 28 deletions(-)
-> 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 4364ddb1db..5c069f2a00 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -219,7 +219,6 @@ typedef struct CPUTLBDesc {
->       /* maximum number of entries observed in the window */
->       size_t window_max_entries;
->       size_t n_used_entries;
-> -    CPUTLBEntryFull *fulltlb;
->       /* All active tlb entries for this address space. */
->       IntervalTreeRoot iroot;
->   } CPUTLBDesc;
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 3282436752..7f63dc3fd8 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -149,13 +149,6 @@ static inline CPUTLBEntry *tlbfast_entry(CPUTLBDescFast *fast, vaddr addr)
->       return fast->table + tlbfast_index(fast, addr);
->   }
->   
-> -/* Find the TLB index corresponding to the mmu_idx + address pair.  */
-> -static inline uintptr_t tlb_index(CPUState *cpu, uintptr_t mmu_idx,
-> -                                  vaddr addr)
-> -{
-> -    return tlbfast_index(&cpu->neg.tlb.f[mmu_idx], addr);
-> -}
-> -
->   /* Find the TLB entry corresponding to the mmu_idx + address pair.  */
->   static inline CPUTLBEntry *tlb_entry(CPUState *cpu, uintptr_t mmu_idx,
->                                        vaddr addr)
-> @@ -270,22 +263,20 @@ static void tlb_mmu_resize_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast,
->       }
->   
->       g_free(fast->table);
-> -    g_free(desc->fulltlb);
->   
->       tlb_window_reset(desc, now, 0);
->       /* desc->n_used_entries is cleared by the caller */
->       fast->mask = (new_size - 1) << CPU_TLB_ENTRY_BITS;
->       fast->table = g_try_new(CPUTLBEntry, new_size);
-> -    desc->fulltlb = g_try_new(CPUTLBEntryFull, new_size);
->   
->       /*
-> -     * If the allocations fail, try smaller sizes. We just freed some
-> +     * If the allocation fails, try smaller sizes. We just freed some
->        * memory, so going back to half of new_size has a good chance of working.
->        * Increased memory pressure elsewhere in the system might cause the
->        * allocations to fail though, so we progressively reduce the allocation
->        * size, aborting if we cannot even allocate the smallest TLB we support.
->        */
-> -    while (fast->table == NULL || desc->fulltlb == NULL) {
-> +    while (fast->table == NULL) {
->           if (new_size == (1 << CPU_TLB_DYN_MIN_BITS)) {
->               error_report("%s: %s", __func__, strerror(errno));
->               abort();
-> @@ -294,9 +285,7 @@ static void tlb_mmu_resize_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast,
->           fast->mask = (new_size - 1) << CPU_TLB_ENTRY_BITS;
->   
->           g_free(fast->table);
-> -        g_free(desc->fulltlb);
->           fast->table = g_try_new(CPUTLBEntry, new_size);
-> -        desc->fulltlb = g_try_new(CPUTLBEntryFull, new_size);
->       }
->   }
->   
-> @@ -350,7 +339,6 @@ static void tlb_mmu_init(CPUTLBDesc *desc, CPUTLBDescFast *fast, int64_t now)
->       desc->n_used_entries = 0;
->       fast->mask = (n_entries - 1) << CPU_TLB_ENTRY_BITS;
->       fast->table = g_new(CPUTLBEntry, n_entries);
-> -    desc->fulltlb = g_new(CPUTLBEntryFull, n_entries);
->       memset(&desc->iroot, 0, sizeof(desc->iroot));
->       tlb_mmu_flush_locked(desc, fast);
->   }
-> @@ -372,15 +360,9 @@ void tlb_init(CPUState *cpu)
->   
->   void tlb_destroy(CPUState *cpu)
->   {
-> -    int i;
-> -
->       qemu_spin_destroy(&cpu->neg.tlb.c.lock);
-> -    for (i = 0; i < NB_MMU_MODES; i++) {
-> -        CPUTLBDesc *desc = &cpu->neg.tlb.d[i];
-> -        CPUTLBDescFast *fast = &cpu->neg.tlb.f[i];
-> -
-> -        g_free(fast->table);
-> -        g_free(desc->fulltlb);
-> +    for (int i = 0; i < NB_MMU_MODES; i++) {
-> +        g_free(cpu->neg.tlb.f[i].table);
->           interval_tree_free_nodes(&cpu->neg.tlb.d[i].iroot,
->                                    offsetof(CPUTLBEntryTree, itree));
->       }
-> @@ -1061,7 +1043,7 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
->       CPUTLB *tlb = &cpu->neg.tlb;
->       CPUTLBDesc *desc = &tlb->d[mmu_idx];
->       MemoryRegionSection *section;
-> -    unsigned int index, read_flags, write_flags;
-> +    unsigned int read_flags, write_flags;
->       uintptr_t addend;
->       CPUTLBEntry *te;
->       CPUTLBEntryTree *node;
-> @@ -1140,7 +1122,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
->       wp_flags = cpu_watchpoint_address_matches(cpu, addr_page,
->                                                 TARGET_PAGE_SIZE);
->   
-> -    index = tlb_index(cpu, mmu_idx, addr_page);
->       te = tlb_entry(cpu, mmu_idx, addr_page);
->   
->       /*
-> @@ -1179,8 +1160,8 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
->        * subtract here is that of the page base, and not the same as the
->        * vaddr we add back in io_prepare()/get_page_addr_code().
->        */
-> -    desc->fulltlb[index] = *full;
-> -    full = &desc->fulltlb[index];
-> +    node->full = *full;
-> +    full = &node->full;
->       full->xlat_section = iotlb - addr_page;
->       full->phys_addr = paddr_page;
->   
-> @@ -1203,7 +1184,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
->       tlb_set_compare(full, &node->copy, addr_page, write_flags,
->                       MMU_DATA_STORE, prot & PAGE_WRITE);
->   
-> -    node->full = *full;
->       copy_tlb_helper_locked(te, &node->copy);
->       desc->n_used_entries++;
->       qemu_spin_unlock(&tlb->c.lock);
+Hello,
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On behalf of the QEMU Team, I'd like to announce the availability of the
+first release candidate for the QEMU 9.2 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
+  http://download.qemu.org/qemu-9.2.0-rc0.tar.xz
+  http://download.qemu.org/qemu-9.2.0-rc0.tar.xz.sig
+
+You can help improve the quality of the QEMU 9.2 release by testing this
+release and reporting bugs using our GitLab issue tracker:
+
+  https://gitlab.com/qemu-project/qemu/-/milestones/14
+
+The release plan, as well a documented known issues for release
+candidates, are available at:
+
+  http://wiki.qemu.org/Planning/9.2
+
+Please add entries to the ChangeLog for the 9.2 release below:
+
+  http://wiki.qemu.org/ChangeLog/9.2
+
+Thank you to everyone involved!
 
