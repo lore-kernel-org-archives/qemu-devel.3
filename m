@@ -4,91 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18AFAD68B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220F9D68B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcQB-0003wB-64; Thu, 14 Nov 2024 11:10:17 -0500
+	id 1tBcMo-0002Zv-8A; Thu, 14 Nov 2024 11:06:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcQ0-0003T2-Nn
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:10:06 -0500
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1tBcLO-0001gV-85
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:20 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcPy-0004IW-Tm
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:10:04 -0500
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-7d4f85766f0so618287a12.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:10:02 -0800 (PST)
+ id 1tBcLJ-00033L-KB
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:15 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7245a9d0e92so815347b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:05:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600601; x=1732205401; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AWAtYvj47Ix5qNW4Emo3QWM6YHTQcss4zfN1Zjyrw/Y=;
- b=qD3CRLj0jGADxbiOrKZUjwZ+T9pH1EUMJcwdnS8Db0+a6QHCfKfh9YN3G+w7L0PQNg
- wF9oLNftWlxM8TPhxbWAoIyy5tc9SWLwtcX58y6yueZtucjV/uijtfpU1rhIYSMN6H95
- RJkZM65i9r+sq2HnFtvsh1cLiBtSCb49kIwort45OTWKagjYSGw0rXZubMgIAElVbr4l
- Fgw0gJSiWo3AYB2PGKbbWXRfoKNrQ/tp5ogPwoimTB6jai+eKaVpYApn6OpGKGGVGo0w
- i2NGhqOYeo1/4wxrJ8tiWiLxlb7ZztQVKm/2V9n7rmP0j9JvvRzmiCezj51ntTdGF1Xt
- rt2Q==
+ d=linaro.org; s=google; t=1731600312; x=1732205112; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=6ZNcg828iubR7iZKSP5M7BkBGmFtklgKRp8DrOlWIfY=;
+ b=B8dtA3+4K5ZJXvkhImcNeLWJvQnqYnQe/1rnzdw/1QBAUm00pKkKo9NptafVBPtgT7
+ zb0mhc34mFOUMxyla/tSe8Xnic0b9TTew87fWxpCedqtB1moi4x/ZHoSccXv93uByd5f
+ okT5cC5wPiAKi2Y31q78bhzRZ/AN34T5E3znCaw3afZJKhgLh0Zrq2OfGS4W7heCtyC/
+ F/UV/xgJzrsVcOpqsvfZV1k3aInkNkeJpAmcO9AyRHRfvvVwhdBYggJ2tlRZm6yxClf3
+ lR4ODPmhop6gYPJF1Z/WStO/UpgN0gLbycLRLbEYlxnC15Cf6RD60fKskew29CkYA1v+
+ bc7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600601; x=1732205401;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AWAtYvj47Ix5qNW4Emo3QWM6YHTQcss4zfN1Zjyrw/Y=;
- b=eCnJn1rLDJ1oWJabjoofbbEASxZK3gOAQRs+MPPIb7epuEDW2XMnY31UYcYF9cbifT
- XwigqDowiziIrjXEnH04GCNo51Y8Gz5r7KkOvpWBMKam4aUTj73HwLeA0Nev5UNQdtje
- d+XLuI/kdlZWxkoeTXQlttivLKBziQjtiDzW/t5a2qDbW3WniKkiostc1z0akWpo5Ww/
- dxbDYk6cu2OD2InMZrJgiPaHU8yHrCcKDpo6Du8TKWjPekg/faHnZC406BPlfXiHYi1z
- u0XcbigQ9tJPKZA6ZSK5D8/doiCWO1Zlk1AhGD5Cv3u5EP7rx7NW7er/Bk0RoJq65duJ
- hmfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUW/mSBuz98L8yRsQmUvCzVs7TXzhDy9ydA0ynfITHfG3W3DTbqcZlJxTj3cUNaQU/O0FvYF5Wgc/Dd@nongnu.org
-X-Gm-Message-State: AOJu0YylqmOP+uCHP5t3oV0XGLSICHTuIR/bmHKCfQlXdkhOBx3t879D
- +DWg8+C8BRCC8iAQNPGQ5D8At2UHgT8rYisG9JDqsPZvNrRD/jnVPHG1ZXcGG10=
-X-Google-Smtp-Source: AGHT+IHB9SPUKGaSd0XdWLK4+NjQXRX+88CX4E8NZGxkiAEFobpzf2gaA1L0QO121XQ0zhB5eWOkYQ==
-X-Received: by 2002:a17:90b:4c49:b0:2e2:9522:278f with SMTP id
- 98e67ed59e1d1-2e9f2d793b8mr7844483a91.32.1731600601110; 
- Thu, 14 Nov 2024 08:10:01 -0800 (PST)
-Received: from [192.168.0.4] ([71.212.136.242])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea02495969sm1483293a91.19.2024.11.14.08.10.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 08:10:00 -0800 (PST)
-Message-ID: <bee4999b-902b-43b8-ad12-c8394712b91b@linaro.org>
-Date: Thu, 14 Nov 2024 08:09:59 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 2/2] target/riscv: rvv: improve performance of RISC-V
- vector loads and stores on large amounts of data.
-To: Paolo Savini <paolo.savini@embecosm.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Max Chou <max.chou@sifive.com>
-References: <20241029194348.59574-1-paolo.savini@embecosm.com>
- <20241029194348.59574-3-paolo.savini@embecosm.com>
- <7a046c99-c4e7-4395-8dc9-9139e9bfba06@linaro.org>
- <96e7601d-14aa-4741-8f6a-ae4a1c397a44@embecosm.com>
- <54c99505-21ef-422c-a7fe-a2d7dabc3d6c@linaro.org>
- <6b06b532-c53f-4b5b-b65d-d54d7c746ffc@ventanamicro.com>
- <230f448b-07f4-413c-9be6-e10a8e55be73@linaro.org>
- <a9f51b76-1cd7-405f-b4a7-384c7447ff88@embecosm.com>
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1731600312; x=1732205112;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6ZNcg828iubR7iZKSP5M7BkBGmFtklgKRp8DrOlWIfY=;
+ b=Piunb46B5hEswoV/hYsr4rUZMg5oNB996Ga+ZBW+pXLS5hKpuoVqhXbc47aVj/PtuR
+ f7EubWW9wGrE/2Yke9roOT2BNId5QPklz2VH2Pixf21HS2eg56gR3tfYFSL9DS4qnLM+
+ D8v02wRO/CKP6K1gXcll1U+A8+l4ImeGge+lnt94xRSaUXywwhfn2NFuwRSr1tNeLPZ6
+ rN4nyURgKoRLd1KtMvUGzn/mlOPUtpIXvVcDMIL0329Q2cvdvfyjhPYRK+zBJVVZwQdJ
+ UNViBk4QLatY1KQqzQr5gxbNgYxP92wPs2QUzYWRCZnnGt2yCIIsIVhwHtQ6iEyL2SnC
+ L7PQ==
+X-Gm-Message-State: AOJu0Yy9TTqLcC/LGn5g/2xSuTFXfcEgr9n+8aFD8pLHh+rReOXEPuyg
+ IDCbF0qDT/M1OC1SNy1krEfgQrJ188+V/DmZ+queoQDg1Qg3MbrYRz6VZZUUx5gNEK4tPNC5nUJ
+ C
+X-Google-Smtp-Source: AGHT+IG8r4WbMldXia9Btm6/A9nnQQIH7XWeXWgD4MMho9TEz/vY24mIEL+xQy0vGk4oqgrCs/tz/A==
+X-Received: by 2002:a05:6a00:3a06:b0:71e:4c34:e294 with SMTP id
+ d2e1a72fcca58-7245799d47bmr8657997b3a.7.1731600311849; 
+ Thu, 14 Nov 2024 08:05:11 -0800 (PST)
+Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7246a9bab70sm1417926b3a.152.2024.11.14.08.05.11
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Nov 2024 08:05:11 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <a9f51b76-1cd7-405f-b4a7-384c7447ff88@embecosm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+To: qemu-devel@nongnu.org
+Subject: [PATCH v2 43/54] target/ppc: Convert to TCGCPUOps.tlb_fill_align
+Date: Thu, 14 Nov 2024 08:01:19 -0800
+Message-ID: <20241114160131.48616-44-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
+References: <20241114160131.48616-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,32 +92,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/11/24 08:04, Paolo Savini wrote:
-> Hi Richard, Daniel,
-> 
-> This might be a silly question, but why do we need to ensure atomicity when emulating 
-> these guest instructions? I might be wrong but I didn't see an explicit requirement for 
-> the vector instructions to be atomic in the documentation of the RISC-V V extension.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/ppc/internal.h   |  7 ++++---
+ target/ppc/cpu_init.c   |  2 +-
+ target/ppc/mmu_helper.c | 21 ++++++++++++++++-----
+ 3 files changed, 21 insertions(+), 9 deletions(-)
 
-So that it works with threads?
-
-The rvv extension talks about loads and stores to individual elements.  The risc-v integer 
-spec talks about the atomicity of loads and stores.  The rvv extension does not talk about 
-*lowering* atomicity requirements.
-
-
-> Anyway the patches from Max have landed and since one of them already uses memcpy() where 
-> this patch does and achieves a similar performance improvement we should probably drop 
-> this particular patch. I'm wondering whether we should be concerned about atomicity there 
-> too?
-> 
-> https://github.com/qemu/qemu/blob/134b443512825bed401b6e141447b8cdc22d2efe/target/riscv/ 
-> vector_helper.c#L224
-
-It *did* go through review for exactly this. You'll notice that the memcpy path is 
-restricted to esz == 1, i.e. bytes.
-
-
-r~
+diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+index 20fb2ec593..9d132d35a1 100644
+--- a/target/ppc/internal.h
++++ b/target/ppc/internal.h
+@@ -273,9 +273,10 @@ void ppc_cpu_record_sigsegv(CPUState *cs, vaddr addr,
+                             MMUAccessType access_type,
+                             bool maperr, uintptr_t ra);
+ #else
+-bool ppc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+-                      MMUAccessType access_type, int mmu_idx,
+-                      bool probe, uintptr_t retaddr);
++bool ppc_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
++                            vaddr addr, MMUAccessType access_type,
++                            int mmu_idx, MemOp memop, int size,
++                            bool probe, uintptr_t ra);
+ G_NORETURN void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+                                             MMUAccessType access_type, int mmu_idx,
+                                             uintptr_t retaddr);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index efcb80d1c2..387c7ff2da 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7422,7 +7422,7 @@ static const TCGCPUOps ppc_tcg_ops = {
+ #ifdef CONFIG_USER_ONLY
+   .record_sigsegv = ppc_cpu_record_sigsegv,
+ #else
+-  .tlb_fill = ppc_cpu_tlb_fill,
++  .tlb_fill_align = ppc_cpu_tlb_fill_align,
+   .cpu_exec_interrupt = ppc_cpu_exec_interrupt,
+   .cpu_exec_halt = ppc_cpu_has_work,
+   .do_interrupt = ppc_cpu_do_interrupt,
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index b167b37e0a..bf98e0efb0 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -1357,18 +1357,29 @@ void helper_check_tlb_flush_global(CPUPPCState *env)
+ }
+ 
+ 
+-bool ppc_cpu_tlb_fill(CPUState *cs, vaddr eaddr, int size,
+-                      MMUAccessType access_type, int mmu_idx,
+-                      bool probe, uintptr_t retaddr)
++bool ppc_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
++                            vaddr eaddr, MMUAccessType access_type,
++                            int mmu_idx, MemOp memop, int size,
++                            bool probe, uintptr_t retaddr)
+ {
+     PowerPCCPU *cpu = POWERPC_CPU(cs);
+     hwaddr raddr;
+     int page_size, prot;
+ 
++    if (eaddr & ((1 << memop_alignment_bits(memop)) - 1)) {
++        if (probe) {
++            return false;
++        }
++        ppc_cpu_do_unaligned_access(cs, eaddr, access_type, mmu_idx, retaddr);
++    }
++
+     if (ppc_xlate(cpu, eaddr, access_type, &raddr,
+                   &page_size, &prot, mmu_idx, !probe)) {
+-        tlb_set_page(cs, eaddr & TARGET_PAGE_MASK, raddr & TARGET_PAGE_MASK,
+-                     prot, mmu_idx, 1UL << page_size);
++        memset(out, 0, sizeof(*out));
++        out->phys_addr = raddr;
++        out->prot = prot;
++        out->lg_page_size = page_size;
++        out->attrs = MEMTXATTRS_UNSPECIFIED;
+         return true;
+     }
+     if (probe) {
+-- 
+2.43.0
 
 
