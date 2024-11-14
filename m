@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C34C4D68B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E47D68B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:11:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcJR-0006D8-Ff; Thu, 14 Nov 2024 11:03:17 -0500
+	id 1tBcO4-0004kx-4V; Thu, 14 Nov 2024 11:08:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIL-00052Q-LS
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:11 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1tBcLj-0001ww-H8
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:43 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIF-0002HP-JJ
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:07 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2e59746062fso716694a91.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:02:01 -0800 (PST)
+ id 1tBcLg-00039v-Rz
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:39 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-20cdb889222so8296595ad.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:05:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600120; x=1732204920; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600332; x=1732205132; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nRyalkWLpxudzsmNEN2fR4VaSKzFhjYdvFTI7sg4gQs=;
- b=dT31tDmRlMxyUinjWEkJra+TYXFlZ3C6EieVlzwOZUEMG9WnM0xrWr2irVMbzv8lTH
- fmsFyStCAHPNrb63Ou7Qwi6Pk4P+i9ZXCD4t+udscjJJV8jTt9qZyqOPgypT1FdzYMTk
- KH8A7W+0ZPpy8F9srzIerC0Z4MSGLgmkeOCouPHBGXf7i0BUfrUUSVJC0Z6DZ+i/RuMn
- rWjxrWEuLLOaohh2UrHTvPWvhV7AP9t0s9NptpxNeQ0cQltVzbrYQ3RQVHLvUJYIzh8S
- vZ9kIR07tMC4mnuhomKXsPEuC9wXBEo3A7l4Buj+sRKxCtSTwKgiIYZlK2V3CCItGXqT
- uiJA==
+ :reply-to; bh=TEPg1Hj+WyfSzdzbNBp7DHrrLsvR0rYuhsge67okkJI=;
+ b=Z3M0RlbEIVjs2QMJ8IuimdYZ+paVJ59QyL0/DRbXWo+SE5nFvKY5Q4HoCNZ5T1rliA
+ JrbcwMDzcZlf2ED+iLIzUHLvg6cVskMbK1L7uq9Vn5gMO39jzNS1t4/G1ATOrk2vlZt9
+ /cElN6ZYFTr4PoNppiidukIk/YrAuWs9h5eIIJztQ2XtG34LN0vMAawsDTXK0BbmFkC+
+ BDi2u7KoWyNhIfECvO2Ht1oFebW6W7AkkJqiRYpNdgQxOzNIrUqTMIPWKTnBP4gyaFp6
+ w0B7faLsqK34bCA7B0ul09EtBobiHBzstZBR9DKU+mNJx38sSdFQqYKqn6sSk1I41QRA
+ nQrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600120; x=1732204920;
+ d=1e100.net; s=20230601; t=1731600332; x=1732205132;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nRyalkWLpxudzsmNEN2fR4VaSKzFhjYdvFTI7sg4gQs=;
- b=XKIzZV3Aw2UZtZSdS94D3f9F+Nbsblyw8iIdfRrHYBZSX1pgpMxbBto+YuzuemjYeU
- gmZxld0+CE5FauL1VDHsTt0DY0nqI1QBRMHi7CFUo4mCwVCWczZ/EWm5xs2k+nRDZ488
- lJ2cIB1v7mPW//DRZZZhf+mgo+1E7/UigclO7uV+1U01nPRgmtTX4aHyIkp9JVRfyZ2V
- HL54nUHs3+ZYKe1wg/hLqKTEK4hZN9FDPbIDp1jMKY2NOJHJxD6EVoG/yl9RxTi8vRcu
- 1CygqL/zRr+x9YCtVe6ppsIAvI4NUlOEg/AXOOJ+UwNNzZ+QPDwW0RSjr7A742sgNA10
- SVrQ==
-X-Gm-Message-State: AOJu0YwvfXspHGkM7ImfT/phzwot+XYdN1ZppHO6LIbqriHem90Szrq8
- ynILbulQAw/jLB0NDCiG++01x4IAVr13cjSB4C+1uUfb0HZlm7o5vVazUSzi/IpU/0cnHG9nN0k
- z
-X-Google-Smtp-Source: AGHT+IHvW2J974QSn4ulUGCLcikT5osBaZ6b2NsYmusO2gXxa02oGvOJq+SpsgcBtxDPhswQCGnmKA==
-X-Received: by 2002:a17:90b:3503:b0:2d3:d063:bdb6 with SMTP id
- 98e67ed59e1d1-2e9f2c4eee5mr8381820a91.4.1731600115459; 
- Thu, 14 Nov 2024 08:01:55 -0800 (PST)
+ bh=TEPg1Hj+WyfSzdzbNBp7DHrrLsvR0rYuhsge67okkJI=;
+ b=CHktdoFu2acmjo8By3qAmyyMPP+DOlttgZK4CLoQgihfFP3uL0IVgMzeuoj2hRv3Er
+ yQhr/6ZyE3jmDoFzWHYyLthdJ9uX5zNJegYOu7vvmDlNos/bOCPqT2k06Xribv9wlApX
+ xxDcThDcyW2UWZy465EwtC6DFp6hKYtZJG9ya/6d4UMljgVOIzxuWKWzQAR5ihl7MGYY
+ cUa8z03LUslT8W7gASaMllHo1wv5+7BBD1OpANj4rHX2kQS9f/8HCz6YXTQNRsjeBu64
+ 3+WXrXNpjheFGMxqkxEws2bA1IDtYqv2lUB9Hm2kPIJ3LDD1j6X3bu3M+cpCCsijk6Lu
+ 1Kjg==
+X-Gm-Message-State: AOJu0YxpJNHQvHqoe1wxMXofspraiGk11UZZMpRjVBjgWrX4MOU0cFo/
+ W6/sK1pszBAHWUdp6DeZHxway21OfUXnFf+wRLuRRgX2wM10yu8flzt+It/ictdleGT4CfvRswG
+ 1
+X-Google-Smtp-Source: AGHT+IHwD2ZH3nElpu72z9wlCwe5s6d4kK4b2hjowEVGska+Pc3jcr4cK/alUydGLC/WMG1nCq9u7w==
+X-Received: by 2002:a17:902:da87:b0:20b:7be8:8eb9 with SMTP id
+ d9443c01a7336-211b5d5d4c9mr103164115ad.54.1731600331965; 
+ Thu, 14 Nov 2024 08:05:31 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.54
+ d2e1a72fcca58-7246a9bab70sm1417926b3a.152.2024.11.14.08.05.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:01:54 -0800 (PST)
+ Thu, 14 Nov 2024 08:05:31 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 27/54] accel/tcg: Return CPUTLBEntryFull not pointer in
- probe_access_internal
-Date: Thu, 14 Nov 2024 08:01:03 -0800
-Message-ID: <20241114160131.48616-28-richard.henderson@linaro.org>
+Subject: [PATCH v2 54/54] accel/tcg: Return CPUTLBEntryTree from
+ tlb_set_page_full
+Date: Thu, 14 Nov 2024 08:01:30 -0800
+Message-ID: <20241114160131.48616-55-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,167 +93,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Return a copy of the structure, not a pointer.
+Avoid a lookup to find the node that we have just inserted.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 40 ++++++++++++++++++----------------------
- 1 file changed, 18 insertions(+), 22 deletions(-)
+ accel/tcg/cputlb.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
 diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 84e7e633e3..41b2f76cc9 100644
+index 20af48c6c5..6d316e8767 100644
 --- a/accel/tcg/cputlb.c
 +++ b/accel/tcg/cputlb.c
-@@ -1364,7 +1364,7 @@ static void notdirty_write(CPUState *cpu, vaddr mem_vaddr, unsigned size,
- static int probe_access_internal(CPUState *cpu, vaddr addr,
-                                  int fault_size, MMUAccessType access_type,
-                                  int mmu_idx, bool nonfault,
--                                 void **phost, CPUTLBEntryFull **pfull,
-+                                 void **phost, CPUTLBEntryFull *pfull,
-                                  uintptr_t retaddr, bool check_mem_cbs)
+@@ -1037,8 +1037,8 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
+  * Called from TCG-generated code, which is under an RCU read-side
+  * critical section.
+  */
+-static void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+-                              vaddr addr, CPUTLBEntryFull *full)
++static CPUTLBEntryTree *tlb_set_page_full(CPUState *cpu, int mmu_idx,
++                                          vaddr addr, CPUTLBEntryFull *full)
  {
-     uintptr_t index = tlb_index(cpu, mmu_idx, addr);
-@@ -1379,7 +1379,7 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
-                                 0, fault_size, nonfault, retaddr)) {
-                 /* Non-faulting page table read failed.  */
-                 *phost = NULL;
--                *pfull = NULL;
-+                memset(pfull, 0, sizeof(*pfull));
-                 return TLB_INVALID_MASK;
-             }
+     CPUTLB *tlb = &cpu->neg.tlb;
+     CPUTLBDesc *desc = &tlb->d[mmu_idx];
+@@ -1187,6 +1187,8 @@ static void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+     copy_tlb_helper_locked(te, &node->copy);
+     desc->n_used_entries++;
+     qemu_spin_unlock(&tlb->c.lock);
++
++    return node;
+ }
  
-@@ -1398,8 +1398,9 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
+ static inline void cpu_unaligned_access(CPUState *cpu, vaddr addr,
+@@ -1266,18 +1268,14 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
+         tcg_debug_assert(probe);
+         return false;
      }
-     flags &= tlb_addr;
+-    tlb_set_page_full(cpu, i->mmu_idx, addr, &o->full);
++    node = tlb_set_page_full(cpu, i->mmu_idx, addr, &o->full);
+     o->did_tlb_fill = true;
  
--    *pfull = full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-+    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-     flags |= full->slow_flags[access_type];
-+    *pfull = *full;
+     if (access_type == MMU_INST_FETCH) {
+-        node = tlbtree_lookup_addr(desc, addr);
+-        tcg_debug_assert(node);
+         goto found_code;
+     }
  
+-    entry = tlbfast_entry(fast, addr);
+-    cmp = tlb_read_idx(entry, access_type);
+-    node = entry->tree;
++    cmp = tlb_read_idx(&node->copy, access_type);
      /*
-      * Fold all "mmio-like" bits, and required plugin callbacks, to TLB_MMIO.
-@@ -1423,19 +1424,17 @@ int probe_access_full(CPUArchState *env, vaddr addr, int size,
-                       bool nonfault, void **phost, CPUTLBEntryFull *pfull,
-                       uintptr_t retaddr)
- {
--    CPUTLBEntryFull *full;
-     int flags = probe_access_internal(env_cpu(env), addr, size, access_type,
--                                      mmu_idx, nonfault, phost, &full, retaddr,
-+                                      mmu_idx, nonfault, phost, pfull, retaddr,
-                                       true);
- 
-     /* Handle clean RAM pages.  */
-     if (unlikely(flags & TLB_NOTDIRTY)) {
-         int dirtysize = size == 0 ? 1 : size;
--        notdirty_write(env_cpu(env), addr, dirtysize, full, retaddr);
-+        notdirty_write(env_cpu(env), addr, dirtysize, pfull, retaddr);
-         flags &= ~TLB_NOTDIRTY;
-     }
- 
--    *pfull = *full;
-     return flags;
- }
- 
-@@ -1444,25 +1443,22 @@ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
-                           void **phost, CPUTLBEntryFull *pfull)
- {
-     void *discard_phost;
--    CPUTLBEntryFull *full;
-+    CPUTLBEntryFull discard_full;
- 
-     /* privately handle users that don't need full results */
-     phost = phost ? phost : &discard_phost;
-+    pfull = pfull ? pfull : &discard_full;
- 
-     int flags = probe_access_internal(env_cpu(env), addr, size, access_type,
--                                      mmu_idx, true, phost, &full, 0, false);
-+                                      mmu_idx, true, phost, pfull, 0, false);
- 
-     /* Handle clean RAM pages.  */
-     if (unlikely(flags & TLB_NOTDIRTY)) {
-         int dirtysize = size == 0 ? 1 : size;
--        notdirty_write(env_cpu(env), addr, dirtysize, full, 0);
-+        notdirty_write(env_cpu(env), addr, dirtysize, pfull, 0);
-         flags &= ~TLB_NOTDIRTY;
-     }
- 
--    if (pfull) {
--        *pfull = *full;
--    }
--
-     return flags;
- }
- 
-@@ -1470,7 +1466,7 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
-                        MMUAccessType access_type, int mmu_idx,
-                        bool nonfault, void **phost, uintptr_t retaddr)
- {
--    CPUTLBEntryFull *full;
-+    CPUTLBEntryFull full;
-     int flags;
- 
-     g_assert(-(addr | TARGET_PAGE_MASK) >= size);
-@@ -1482,7 +1478,7 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
-     /* Handle clean RAM pages. */
-     if (unlikely(flags & TLB_NOTDIRTY)) {
-         int dirtysize = size == 0 ? 1 : size;
--        notdirty_write(env_cpu(env), addr, dirtysize, full, retaddr);
-+        notdirty_write(env_cpu(env), addr, dirtysize, &full, retaddr);
-         flags &= ~TLB_NOTDIRTY;
-     }
- 
-@@ -1492,7 +1488,7 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
- void *probe_access(CPUArchState *env, vaddr addr, int size,
-                    MMUAccessType access_type, int mmu_idx, uintptr_t retaddr)
- {
--    CPUTLBEntryFull *full;
-+    CPUTLBEntryFull full;
-     void *host;
-     int flags;
- 
-@@ -1513,12 +1509,12 @@ void *probe_access(CPUArchState *env, vaddr addr, int size,
-             int wp_access = (access_type == MMU_DATA_STORE
-                              ? BP_MEM_WRITE : BP_MEM_READ);
-             cpu_check_watchpoint(env_cpu(env), addr, size,
--                                 full->attrs, wp_access, retaddr);
-+                                 full.attrs, wp_access, retaddr);
-         }
- 
-         /* Handle clean RAM pages.  */
-         if (flags & TLB_NOTDIRTY) {
--            notdirty_write(env_cpu(env), addr, size, full, retaddr);
-+            notdirty_write(env_cpu(env), addr, size, &full, retaddr);
-         }
-     }
- 
-@@ -1528,7 +1524,7 @@ void *probe_access(CPUArchState *env, vaddr addr, int size,
- void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
-                         MMUAccessType access_type, int mmu_idx)
- {
--    CPUTLBEntryFull *full;
-+    CPUTLBEntryFull full;
-     void *host;
-     int flags;
- 
-@@ -1552,7 +1548,7 @@ void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
- tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
-                                         void **hostp)
- {
--    CPUTLBEntryFull *full;
-+    CPUTLBEntryFull full;
-     void *p;
- 
-     (void)probe_access_internal(env_cpu(env), addr, 1, MMU_INST_FETCH,
-@@ -1562,7 +1558,7 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
-         return -1;
-     }
- 
--    if (full->lg_page_size < TARGET_PAGE_BITS) {
-+    if (full.lg_page_size < TARGET_PAGE_BITS) {
-         return -1;
-     }
- 
+      * With PAGE_WRITE_INV, we set TLB_INVALID_MASK immediately,
+      * to force the next access through tlb_fill_align.  We've just
 -- 
 2.43.0
 
