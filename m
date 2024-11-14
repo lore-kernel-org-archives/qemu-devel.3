@@ -4,68 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A4CD41D46
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC02D41D46
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBYu0-0002jD-6D; Thu, 14 Nov 2024 07:24:48 -0500
+	id 1tBYvg-0003Y0-4O; Thu, 14 Nov 2024 07:26:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBYty-0002it-Po
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:24:46 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tBYve-0003XK-0X
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:26:30 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBYtw-0006f5-T9
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:24:46 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5cf8593ca4bso132615a12.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 04:24:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tBYvc-0006xx-EC
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:26:29 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7f71f2b1370so365477a12.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 04:26:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731587083; x=1732191883; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=d3Zr56rVpRPBCvSgcoYTySp3vkQbhuoBFeXwsSxaBvo=;
- b=TjCF3re/BGuelBvWShoV55g5A0ocEmdCZw8M8Fz8cb+Bgo0PmMjgCzeoQDm5QtyPkf
- 6kO5ZyEdh1nZfXI91en5UqclRDgufwKSOwBhKx51Hec314HMmiwr75pDdrverwBadLbu
- pCi0rrDtLL1kRsw+H/dbW027yhqCFHqqxYHzar8LIk9zPtMJu6UlNWuh/UX3+QSzpPZ8
- gyGMlwU9scnZAZASHoms/J1pwm60uM/w9yavyNrUkk8DmY7IWPwTdkntmQbHB8s0jCZ4
- 4sfNOV6v8qE56QPsq/hyZysNF9SiNSmfNPJvte0kvvH1ZpD/MZeFL1Bl0VbWPwluFtbI
- 8UWg==
+ d=linaro.org; s=google; t=1731587187; x=1732191987; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6+xLKBDHLhgPMFCSoABBMbJcyE+9GkQP3z+ZLeU8bRc=;
+ b=pPYn5S/iCYow0fzY0kg+5LKob55Md5p7ZZaHbzkeQ4eCk40zLDvzrFj3J+Xeax5UYY
+ ejk/VYRz/GQOGIRtRd9Yf1rb9WfNxTpHFLS8W0270Z2E3DRzeDtQ0w00z3n98AB9i9bB
+ ig7vde1EQGo2498EdnuWjjKplJ2dFXL0jCyryN1FAMbEIeXW3SSDcEwf/K5VfWX4FtPy
+ ck1VeMRbRVTZioc/AmltkD2j6CZLuUHtxD29smRFjKN3Fx3e1JnInWAZ8XU/ewfch37v
+ q2E/IIJYwNp42PwA67tQR4y2KFO0bM0wjv+1rzR7G6RAqh8Mr+D8cudRpLETrtaZJVul
+ Enag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731587083; x=1732191883;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=d3Zr56rVpRPBCvSgcoYTySp3vkQbhuoBFeXwsSxaBvo=;
- b=Kqj10Iqlo2G5WoCRnvm1goDBSoe4RbDA7v2el+A05Rhms4/icucmvFwC9PQpbspHrr
- HzLEde8ifXYXKlJO2U4BGT9Z/6T0PkInASMEFevfoi68l8bj5t1GThWG2fZvKdZnFjhH
- IobuP6xBg7p9uudP9YgxPiIpAgFaVAU9AKu67Gle74yBr7yqTWiATYjC9lAqJdsaSNs/
- SeyZseurwC6tFORbySg8jEskktYqVotZdY4ib3xPU2PfJRkCT2Yh8XjVRtNQ3ozsoyfs
- I3Zq0ix/zsaRLi4YVdpEJG1gbFy1JM6sJfavIsFUk4xJLvUjt5LVWpfUzeI9Ijz8xz5a
- J9Tg==
-X-Gm-Message-State: AOJu0Yxl/quRAnAu+olwyUFC2La/9GMTBGsgM3fliLKVXdnNpFZVi+ci
- kFxvPFxx6HDsXVyjjq39d5RiDsVhmXEdhDtxrL/E4Wq12dCePzqG1yD9eDggM/yrCsyH1Vef5t6
- OZrIcSBiqtgaa0rpa9UMTverI/sW3sFDqkrIqXA==
-X-Google-Smtp-Source: AGHT+IECuEFSLtiHmVmYcfNVlStIWgHV52bsNSOD4Ta+BXjifSck05nBUA/UKUPLOJKZJeWXUishrg9JhuBaarplJNU=
-X-Received: by 2002:a05:6402:1d4d:b0:5cf:74b0:36b1 with SMTP id
- 4fb4d7f45d1cf-5cf77e86514mr1547396a12.7.1731587082528; Thu, 14 Nov 2024
- 04:24:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731587187; x=1732191987;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6+xLKBDHLhgPMFCSoABBMbJcyE+9GkQP3z+ZLeU8bRc=;
+ b=kHBplEUPACfN9N4CdV+wHaOpr/RaOxLHTsWHgdXEX0KfzAcG8hUvps7H16IcJXqDRu
+ v4zs//KsLDgEIRKTPxpGULlanPUhD7riPX3ZLm5SdmMcaZLYX0o0psvp9rbjFSKf6Xd4
+ LFTT+odikM4E3czI9mxbzFNB1uk6TXtJhqE+hfxJqBOTG6jKXd7pQJzkURb2W2TX5Ugw
+ ZUmZqmqj2WN/aNHhP6fQssOjDrrGZZcMK8MqQDCgHNQHbEh/mSPDjtUygbYMN0HaSV+K
+ O22axTOk0JNxFBGvOFRo2XY6iRQ6nuZu+j+Ns3+yJtbM5ONUQaz44TfhSlZuE+YSNO9S
+ YtAw==
+X-Gm-Message-State: AOJu0Yzx05UM1sogikRTvWCBmfedsSQkUotwbhtX/xeo3/xr6dvKbbhR
+ D1i1pBOcHoZkne/6qdY0SqztoRaTaNJBo9s4BqX6Hn9cWsKBN8hVz1qNJIx9CJU=
+X-Google-Smtp-Source: AGHT+IHDmWpkApP4B3ULYH09/OMKOUJNfC0MrRwcXqk4ZOWJBt3o2IJWH2ZP67N+DggbWd0cYlHyDw==
+X-Received: by 2002:a05:6a21:789f:b0:1db:e82e:c802 with SMTP id
+ adf61e73a8af0-1dc5f9a3df7mr12382480637.41.1731587186958; 
+ Thu, 14 Nov 2024 04:26:26 -0800 (PST)
+Received: from [192.168.0.4] ([71.212.136.242])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ea024c06fbsm1181589a91.43.2024.11.14.04.26.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Nov 2024 04:26:26 -0800 (PST)
+Message-ID: <e210893a-e875-497d-9dc0-aabf3fa291d0@linaro.org>
+Date: Thu, 14 Nov 2024 04:26:24 -0800
 MIME-Version: 1.0
-References: <20241112141232.321354-1-richard.henderson@linaro.org>
-In-Reply-To: <20241112141232.321354-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 14 Nov 2024 12:24:31 +0000
-Message-ID: <CAFEAcA_CsWCNKOqNKJe37JRXnOPikLSRq9FyMR+T0sLLkAidLA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH for-9.2] target/arm: Drop user-only special case in
  sve_stN_r
-To: Richard Henderson <richard.henderson@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+References: <20241112141232.321354-1-richard.henderson@linaro.org>
+ <CAFEAcA_CsWCNKOqNKJe37JRXnOPikLSRq9FyMR+T0sLLkAidLA@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA_CsWCNKOqNKJe37JRXnOPikLSRq9FyMR+T0sLLkAidLA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,23 +97,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 12 Nov 2024 at 14:13, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> This path is reachable with plugins enabled, and provoked
-> with run-plugin-catch-syscalls-with-libinline.so.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/sve_helper.c | 4 ----
->  1 file changed, 4 deletions(-)
+On 11/14/24 04:24, Peter Maydell wrote:
+> On Tue, 12 Nov 2024 at 14:13, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> This path is reachable with plugins enabled, and provoked
+>> with run-plugin-catch-syscalls-with-libinline.so.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/arm/tcg/sve_helper.c | 4 ----
+>>   1 file changed, 4 deletions(-)
+> 
+> 
+> Applied to target-arm.next, thanks.
+> 
+> This looked like stable material to me so I've added the
+> cc-stable tag; let me know if you think that's not
+> appropriate.
 
+It does seem good for stable.
 
-Applied to target-arm.next, thanks.
-
-This looked like stable material to me so I've added the
-cc-stable tag; let me know if you think that's not
-appropriate.
-
--- PMM
+r~
 
