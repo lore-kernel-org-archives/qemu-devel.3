@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B8BD68B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66AA6D68B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:08:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcJl-000746-3j; Thu, 14 Nov 2024 11:03:38 -0500
+	id 1tBcHw-0004wN-3X; Thu, 14 Nov 2024 11:01:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIH-00051a-Ly
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:07 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1tBcHq-0004u4-CW
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:38 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcID-0002HH-LR
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:04 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7245a9d0e92so810658b3a.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:59 -0800 (PST)
+ id 1tBcHn-0002Ay-E0
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:38 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2ea09a033e2so583112a91.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600119; x=1732204919; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600094; x=1732204894; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=I5LJCTHDiHg5qibWbzvdQL13bnVE+48Q0Fcqf1mDluc=;
- b=dYKiJJX3bCzbH67y6W29tKuwasvWt4/6uRtdxwZHJotXkdBQoGnpcOHkERSPguVIt6
- oOY23LsnSUFuDIj/rOFvurDemGuZ+vqrebSdUygJUM9BttS3ddrFYvCsAZQn9Rbm8p5P
- GiaWrk7oPdhSEwk14UHFJTOYQlVlUBDOCET4nMB9eVof0T70h7ebSAfaTnyTUzjXrpkh
- MCqGD+nt4PMhLG5Lbmz3GT1hs//ISWM7osLVdGcUpnGju+C6ClKzZwrhtwnhCvGcZ3mq
- yFw60LrizxqRQ2nCvxN8GadFN6GeiLL2t8tbnmPAiEQLD+q0/vB8+Xes+hcR96tBCkBJ
- BDag==
+ :reply-to; bh=EYQWI5p9vUhtvQFXm2oStjAmXC4f4vQZGym/5HmIo8g=;
+ b=s7RNhd0UlvgnjnMgrXc+Tmn4We2rUzhKiYfjM6vrA1hYqOfdOHrnCWQncLYH4/eCk3
+ 5gJvA5Sn/4ZdYU8AQPWcwW5aBJPEJe/Ze3BAJG0uoaPB8v0Y0GCDU+s35f/HT3nztr8C
+ Jz7Nm7oXzT7VO1+j4gYZZNiM3YXJOREV9QuxLeuN1Oi2PLyEOXDA4+JMytlInchE+STE
+ q5Svco8xgzMmAEGOF7qG01Pw0R2iV+GdAd7RrEDljilb0Xw1nI7iDkeh53v5pgqm3Spy
+ 544msGLOlwHHWm4UDsUTHGUkmHB3z+laXdcnaKluVCGYXLjkWIJLvX010soDwMMtGtZv
+ 5lAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600119; x=1732204919;
+ d=1e100.net; s=20230601; t=1731600094; x=1732204894;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I5LJCTHDiHg5qibWbzvdQL13bnVE+48Q0Fcqf1mDluc=;
- b=OlH9SYmA/PZ/uSI5Rx9K0QmrHHM8CmPXUR8QTL54V5ysOC86Qz05YLbj5CFFvCrPOX
- apwGEZQjjAQu0cu44N+W9Fsjv6lpv6Sw134D+UO8MOlRhnsb95LXaXQXBATM0fkLyg5M
- GSRZ2593mHCil4iqdSZF9A0wJ+XorFDzG0bl5HdRWvYNpsm5AJf5TpojTqT68SFy0aqg
- mkD2kL46vwVr6G+n++Wu6qPiZhpVtQ9YY2A9Vyu4w4vd5vIvqIrDDpKXa47/egHKQcYh
- 2u5g0sGryjTGdXSHwkZ7iPct5DhSmPATfpm5BEsgIXrpg+J1h+v7q0CGqO9IxrCawgwF
- fEng==
-X-Gm-Message-State: AOJu0Yztk7NiREMyFle/gW1Rc5ts0YFU1hwmlLZsV9C6hTCHJkEsVdXl
- 5ZaeouLlPhskVT029DL9900TUt5SKScmyT+7fuKWk58E4CkoZ/CcCKXcIyj2VA/6bMP+/Dw3c72
- p
-X-Google-Smtp-Source: AGHT+IFtqNE4fDPhggwOVTT8HUG4faBR+wiHn7so7IBz8pIQxvUeMUYmt4T7rrgnrw3ulxBhRsPVgA==
-X-Received: by 2002:a17:90b:3c12:b0:2e2:b2ce:e41e with SMTP id
- 98e67ed59e1d1-2e9f2c78421mr8571311a91.13.1731600118769; 
- Thu, 14 Nov 2024 08:01:58 -0800 (PST)
+ bh=EYQWI5p9vUhtvQFXm2oStjAmXC4f4vQZGym/5HmIo8g=;
+ b=im3Ro+VjnNIerUYkGPQp9t47Lhg1R31UarTj7xX7K9t5ZB9R6eudyYB622ElNBbc3w
+ lXxG/3ZBiuiLZHcKNwY+LtxCKXzCLPAeIu2OgG93zSk3ZcZkxsqJyLJrqPgFa0b9seZU
+ yUjr/Mk2D7de4rVLnraQtZ5AVGxmxUnU5yyGLQO4bGy2Xxe78q+Q52b6VxO3RN6x3ARA
+ dy65m/TRbjFCKGiFNVALrPZV2dg+sAf51bzVZf+u+6ZspqsE5TZ6+5sreZbwbM5gZgVZ
+ QdgykHGohSFAAeWi95Og80O1R9fm+E7y2EP3hgxTvIA8evHz8axl2X6VgSi3AJkA1ZKz
+ dddg==
+X-Gm-Message-State: AOJu0YwZS9GaP5OQ7D821ItrZrUDtu7j/5u2kulj4WFPGbXfB6NsZeiP
+ EipUBY1a61BnL/CmRgKgbvwPllJCBpsMJ74Y0bdVDkCKSfKwbehriNoszVnNJdUNPGM7OhFTVRd
+ C
+X-Google-Smtp-Source: AGHT+IEqOnDNFY6IiZLjJTkd5LifxiO+3BFrt5gH9BNB8MwjceC5yDdGd+ahC08EIhbp8OS8ApEN3w==
+X-Received: by 2002:a17:90b:4e8d:b0:2e1:a81f:5520 with SMTP id
+ 98e67ed59e1d1-2e9f2c4ef71mr8430900a91.1.1731600093918; 
+ Thu, 14 Nov 2024 08:01:33 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.57
+ 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:01:58 -0800 (PST)
+ Thu, 14 Nov 2024 08:01:33 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 30/54] accel/tcg: Merge mmu_lookup1 into mmu_lookup
-Date: Thu, 14 Nov 2024 08:01:06 -0800
-Message-ID: <20241114160131.48616-31-richard.henderson@linaro.org>
+Subject: [PATCH v2 02/54] accel/tcg: Split out tlbfast_flush_locked
+Date: Thu, 14 Nov 2024 08:00:38 -0800
+Message-ID: <20241114160131.48616-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,122 +92,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reuse most of TLBLookupInput between calls to tlb_lookup.
+We will have a need to flush only the "fast" portion
+of the tlb, allowing re-fill from the "full" portion.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 65 ++++++++++++++++++----------------------------
- 1 file changed, 25 insertions(+), 40 deletions(-)
+ accel/tcg/cputlb.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 8f459be5a8..981098a6f2 100644
+index b76a4eac4e..c1838412e8 100644
 --- a/accel/tcg/cputlb.c
 +++ b/accel/tcg/cputlb.c
-@@ -1695,34 +1695,6 @@ typedef struct MMULookupLocals {
-     int mmu_idx;
- } MMULookupLocals;
+@@ -284,13 +284,18 @@ static void tlb_mmu_resize_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast,
+     }
+ }
  
--/**
-- * mmu_lookup1: translate one page
-- * @cpu: generic cpu state
-- * @data: lookup parameters
-- * @memop: memory operation for the access, or 0
-- * @mmu_idx: virtual address context
-- * @access_type: load/store/code
-- * @ra: return address into tcg generated code, or 0
-- *
-- * Resolve the translation for the one page at @data.addr, filling in
-- * the rest of @data with the results.  If the translation fails,
-- * tlb_fill_align will longjmp out.
-- */
--static void mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
--                        int mmu_idx, MMUAccessType access_type, uintptr_t ra)
--{
--    TLBLookupInput i = {
--        .addr = data->addr,
--        .ra = ra,
--        .access_type = access_type,
--        .memop_probe = memop,
--        .size = data->size,
--        .mmu_idx = mmu_idx,
--    };
--
--    tlb_lookup_nofail(cpu, &data->o, &i);
--}
--
- /**
-  * mmu_watch_or_dirty
-  * @cpu: generic cpu state
-@@ -1769,26 +1741,36 @@ static void mmu_watch_or_dirty(CPUState *cpu, MMULookupPageData *data,
- static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-                        uintptr_t ra, MMUAccessType type, MMULookupLocals *l)
+-static void tlb_mmu_flush_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast)
++static void tlbfast_flush_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast)
  {
-+    MemOp memop = get_memop(oi);
-+    int mmu_idx = get_mmuidx(oi);
-+    TLBLookupInput i = {
-+        .addr = addr,
-+        .ra = ra,
-+        .access_type = type,
-+        .memop_probe = memop,
-+        .size = memop_size(memop),
-+        .mmu_idx = mmu_idx,
-+    };
-     bool crosspage;
-     int flags;
+     desc->n_used_entries = 0;
++    memset(fast->table, -1, sizeof_tlb(fast));
++}
++
++static void tlb_mmu_flush_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast)
++{
++    tlbfast_flush_locked(desc, fast);
+     desc->large_page_addr = -1;
+     desc->large_page_mask = -1;
+     desc->vindex = 0;
+-    memset(fast->table, -1, sizeof_tlb(fast));
+     memset(desc->vtable, -1, sizeof(desc->vtable));
+ }
  
--    l->memop = get_memop(oi);
--    l->mmu_idx = get_mmuidx(oi);
-+    l->memop = memop;
-+    l->mmu_idx = mmu_idx;
- 
--    tcg_debug_assert(l->mmu_idx < NB_MMU_MODES);
-+    tcg_debug_assert(mmu_idx < NB_MMU_MODES);
- 
-     l->page[0].addr = addr;
--    l->page[0].size = memop_size(l->memop);
--    l->page[1].addr = (addr + l->page[0].size - 1) & TARGET_PAGE_MASK;
-+    l->page[0].size = i.size;
-+    l->page[1].addr = (addr + i.size - 1) & TARGET_PAGE_MASK;
-     l->page[1].size = 0;
-     crosspage = (addr ^ l->page[1].addr) & TARGET_PAGE_MASK;
- 
-     if (likely(!crosspage)) {
--        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
-+        tlb_lookup_nofail(cpu, &l->page[0].o, &i);
- 
-         flags = l->page[0].o.flags;
-         if (unlikely(flags & (TLB_WATCHPOINT | TLB_NOTDIRTY))) {
--            mmu_watch_or_dirty(cpu, &l->page[0], type, ra);
-+            mmu_watch_or_dirty(cpu, &l->page[0], i.access_type, i.ra);
-         }
-         if (unlikely(flags & TLB_BSWAP)) {
-             l->memop ^= MO_BSWAP;
-@@ -1796,17 +1778,20 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-     } else {
-         /* Finish compute of page crossing. */
-         int size0 = l->page[1].addr - addr;
--        l->page[1].size = l->page[0].size - size0;
-+        l->page[1].size = i.size - size0;
-         l->page[0].size = size0;
- 
-         /* Lookup both pages, recognizing exceptions from either. */
--        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
--        mmu_lookup1(cpu, &l->page[1], 0, l->mmu_idx, type, ra);
-+        i.size = size0;
-+        tlb_lookup_nofail(cpu, &l->page[0].o, &i);
-+        i.addr = l->page[1].addr;
-+        i.size = l->page[1].size;
-+        tlb_lookup_nofail(cpu, &l->page[1].o, &i);
- 
-         flags = l->page[0].o.flags | l->page[1].o.flags;
-         if (unlikely(flags & (TLB_WATCHPOINT | TLB_NOTDIRTY))) {
--            mmu_watch_or_dirty(cpu, &l->page[0], type, ra);
--            mmu_watch_or_dirty(cpu, &l->page[1], type, ra);
-+            mmu_watch_or_dirty(cpu, &l->page[0], i.access_type, i.ra);
-+            mmu_watch_or_dirty(cpu, &l->page[1], i.access_type, i.ra);
-         }
- 
-         /*
 -- 
 2.43.0
 
