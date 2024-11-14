@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8114CD6A221
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 19:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D743D6A221
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 19:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBfCG-0004gc-Rl; Thu, 14 Nov 2024 14:08:04 -0500
+	id 1tBfJ6-00021n-Lm; Thu, 14 Nov 2024 14:15:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBfCF-0004d9-Ly
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:08:03 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tBfIw-0001w4-D7
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:15:02 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBfCE-0005Z0-1C
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:08:03 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-37d49ffaba6so657654f8f.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 11:08:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tBfIt-0006Lp-S2
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:14:58 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-210e5369b7dso11773485ad.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 11:14:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731611276; x=1732216076; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yTK4l6Ykvzc6k9RKpIP/b45MtLRJEjbQSCPD8FRx8u8=;
- b=ezAM2rTg5pEXstch3YjJO60KdLwSiX4IKSBYMZnZjmiXKIjqJte8+tC/30BlRQpyOs
- dpCGzb3cchV7s/pVFc9Ex+5aH7G+BXLCL5n5YJL45tiSSwHT/gtE6IZ/mEPwMjzvHH2Z
- p/ovp3KAS4Mo+5cP8MRTZjn2VB8w78iLSXBljXe8ZxXtnvUboAutVDRC6c36AqnW2Uyv
- K5zcubeJz1GqDwvGyo3KCDmbu9LngOegJyf/2BqugZZXBi0Mx9B9lYLvEtG2m5N6WgZQ
- WZhGjvVjPlrnji3K8/EgfDnzF9CQSqFChxBU9w5ONKeJ6f3aAqQEYTTPDqusafEH3GCL
- sr1g==
+ d=linaro.org; s=google; t=1731611692; x=1732216492; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9vGHoJxvkCObt0tZ4/jN0rAQH2YUIsNBMsZzPqHJVzs=;
+ b=bXQlGrxUGK3EuOn3l0ITrvXvjGkEdYq2jm/oUvu/cwfBNTcdqomVxoNRsTMaqjJBYc
+ KEleXIItHYlQ3EMwJr4Tu8/yGBBFQ+7NbVV3NLiGosCIPMrzlmJze5LqX2hulUSZzgGY
+ ws2s3iiPyEiXCr8hDCwvKfC9MPVmSOytqVPQMU4F8+uPYd0qM3rJLsOUISQho8PbR0GY
+ +G4Obyf8RMNVfPaiXm4fj+fxQXbuK1QYKzAlsiBmQLEFQGTvMDrac75h0aLo7dIX+fJw
+ a5YCbFzTGvQnWorLSWctWfg/GXHhj0h2J/NoJCxITs6GE9wV3vr3mEyq0pFc6j0vdMYC
+ y6bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731611276; x=1732216076;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yTK4l6Ykvzc6k9RKpIP/b45MtLRJEjbQSCPD8FRx8u8=;
- b=KYaWmWakhT3pbUK5hBqd7RY4/1fGvfYqNk5lABqXf3EMXdNZwG3fUVfF6Uic/aWl05
- u9chlg9wCrwUPYqU3YnBU6SmUAS4lJ2YpDcAAQphHllJqjFdC8ph/mkSp8PvTL0w2g8h
- 2wnR+vnB+zZxFOzFl7OD0F6Y6+nR2mFv+h8Z6EldWvnkwnBnUB4fbehFMB9lAc4tFlV7
- 7Va2LBZQWOIgj7RII19bqF+X5a05x7hRUYvEjB1eufaOX7JhD6nhl7eQSR9Yta8m5D3q
- ej9KeRqV33bfBJH++1la8nQmEDsXwY135Q6qCOhgVojanVRnBsWSM4ki4ttLRFg7Uo2E
- MNrQ==
-X-Gm-Message-State: AOJu0YyQha4tr2C04/E2ZCo9VrMbXTQJqjso+1kLuOwtxJZFvn8kEIsO
- 7sse6/iUNgjhiVCd/OJl/ILFaca3gnfBViHB466xSzVpxjXWbxeYsRUCeHU4KTF2FFf/BCA5rC0
- m
-X-Google-Smtp-Source: AGHT+IFk1fHHYT54q5QtdRl1SYFYT73aOdvrv3217DOEj9nerCJ7kekLMixMzyT41tOHqD7NMee+QQ==
-X-Received: by 2002:a05:6000:1567:b0:374:c17a:55b5 with SMTP id
- ffacd0b85a97d-3820810fdb5mr10354120f8f.14.1731611276643; 
- Thu, 14 Nov 2024 11:07:56 -0800 (PST)
-Received: from localhost.localdomain ([176.187.209.228])
+ d=1e100.net; s=20230601; t=1731611692; x=1732216492;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9vGHoJxvkCObt0tZ4/jN0rAQH2YUIsNBMsZzPqHJVzs=;
+ b=Xb2dE38F3yjsRjxgJONDdbe/sx61P7qvrXrjGQ1+4C1HLjIPw3xKUsBYVctQV+wn6i
+ bf4qtI0Q9XV5yGoTnmYffKV8umxbO3g440vpy+OlqUin6XvldmRugFLhslwhVzB7utBO
+ vm3040u1WJWqhScLowN0amR1CUY/P9UPNibmAobFP3hyxKs4z93OdeSqZqSnhvMO8gBb
+ QFwY/FoZiVM3KY+brnCKS4hKnK1ZxA0y9dG4Nsc3/UfMXA40EvPfsNi7b/VLC670IJH9
+ Kpsqjd3ZTrQzzgwKE0t94980O7/V598wQfqdk2zZ+qwQhXnaMfCytR80qeiB64oNsykx
+ Uufg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXkbFkK45L/QVAcHAcEW4DgZmiG9y0wH3g05UVIBfQxcUKDkNXcfmIfA3JhmVn/77VQmE1GCkMFTmx+@nongnu.org
+X-Gm-Message-State: AOJu0YwY1MP6CRH+lBqZViqfjyFlXOw4BnvBC7hhscGneGoT2d9Ttc+6
+ eG0rHjSRfTIHYplxO78p0/+6bDuOnMPsrgze9obwtzErCZf9uxDvlCvnniLgcpQ=
+X-Google-Smtp-Source: AGHT+IFie00W4vpcKb9KUmD+UtkV/8+ta6XWru8xUyBPA5Mw5K+uYZVUc1eRZo7kvxYHEdEUmgjvzw==
+X-Received: by 2002:a17:902:e74c:b0:20f:5443:9ec1 with SMTP id
+ d9443c01a7336-211c5049a48mr46775265ad.33.1731611692112; 
+ Thu, 14 Nov 2024 11:14:52 -0800 (PST)
+Received: from [192.168.0.4] ([71.212.136.242])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3821ae313a8sm2176218f8f.105.2024.11.14.11.07.53
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 14 Nov 2024 11:07:54 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v2 03/19] hw/net/xilinx_ethlite: Remove unuseful debug logs
-Date: Thu, 14 Nov 2024 20:07:17 +0100
-Message-ID: <20241114190733.33902-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241114190733.33902-1-philmd@linaro.org>
-References: <20241114190733.33902-1-philmd@linaro.org>
+ d9443c01a7336-211c7d01699sm14005425ad.188.2024.11.14.11.14.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Nov 2024 11:14:51 -0800 (PST)
+Message-ID: <fd69acb0-4ec0-4b31-89e3-7f5498f4f7f5@linaro.org>
+Date: Thu, 14 Nov 2024 11:14:49 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/24] exec: Introduce 'user/guest-host.h' header
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, 
+ Peter Xu <peterx@redhat.com>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
+ David Hildenbrand <david@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-s390x@nongnu.org
+References: <20241114011310.3615-1-philmd@linaro.org>
+ <20241114011310.3615-12-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241114011310.3615-12-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,64 +105,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- hw/net/xilinx_ethlite.c | 8 --------
- 1 file changed, 8 deletions(-)
+On 11/13/24 17:12, Philippe Mathieu-Daudé wrote:
+> Extract all declarations related to 'guest from/to host'
+> address translation to a new "user/guest-host.h" header.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   include/exec/cpu-all.h    | 34 +--------------
+>   include/exec/cpu_ldst.h   | 47 +--------------------
+>   include/user/guest-host.h | 87 +++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 89 insertions(+), 79 deletions(-)
+>   create mode 100644 include/user/guest-host.h
 
-diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-index bb330a233f..2b52597f03 100644
---- a/hw/net/xilinx_ethlite.c
-+++ b/hw/net/xilinx_ethlite.c
-@@ -32,7 +32,6 @@
- #include "net/net.h"
- #include "trace.h"
- 
--#define D(x)
- #define R_TX_BUF0     0
- #define R_TX_LEN0     (0x07f4 / 4)
- #define R_TX_GIE0     (0x07f8 / 4)
-@@ -100,7 +99,6 @@ eth_read(void *opaque, hwaddr addr, unsigned int size)
-         case R_RX_CTRL1:
-         case R_RX_CTRL0:
-             r = s->regs[addr];
--            D(qemu_log("%s " HWADDR_FMT_plx "=%x\n", __func__, addr * 4, r));
-             break;
- 
-         default:
-@@ -126,13 +124,10 @@ eth_write(void *opaque, hwaddr addr,
-             if (addr == R_TX_CTRL1)
-                 base = 0x800 / 4;
- 
--            D(qemu_log("%s addr=" HWADDR_FMT_plx " val=%x\n",
--                       __func__, addr * 4, value));
-             if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
-                 qemu_send_packet(qemu_get_queue(s->nic),
-                                  (void *) &s->regs[base],
-                                  s->regs[base + R_TX_LEN0]);
--                D(qemu_log("eth_tx %d\n", s->regs[base + R_TX_LEN0]));
-                 if (s->regs[base + R_TX_CTRL0] & CTRL_I)
-                     eth_pulse_irq(s);
-             } else if ((value & (CTRL_P | CTRL_S)) == (CTRL_P | CTRL_S)) {
-@@ -156,8 +151,6 @@ eth_write(void *opaque, hwaddr addr,
-         case R_TX_LEN0:
-         case R_TX_LEN1:
-         case R_TX_GIE0:
--            D(qemu_log("%s addr=" HWADDR_FMT_plx " val=%x\n",
--                       __func__, addr * 4, value));
-             s->regs[addr] = value;
-             break;
- 
-@@ -203,7 +196,6 @@ static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
-         return -1;
-     }
- 
--    D(qemu_log("%s %zd rxbase=%x\n", __func__, size, rxbase));
-     if (size > (R_MAX - R_RX_BUF0 - rxbase) * 4) {
-         trace_ethlite_pkt_size_too_big(size);
-         return -1;
--- 
-2.45.2
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
