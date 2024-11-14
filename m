@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BF1BD6A247
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 22:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367B6D6A248
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 22:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBhut-0003SP-5h; Thu, 14 Nov 2024 17:02:19 -0500
+	id 1tBhuZ-0003OK-Ut; Thu, 14 Nov 2024 17:02:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tBhun-0003RL-Sm
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:02:14 -0500
+ id 1tBhuU-0003N2-1T
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:01:57 -0500
 Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tBhul-0007h9-Js
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:02:13 -0500
+ id 1tBhuR-0007ec-6B
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:01:52 -0500
 Received: by mail-qk1-x72f.google.com with SMTP id
- af79cd13be357-7b14df8f821so80872485a.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:02:11 -0800 (PST)
+ af79cd13be357-7b15416303aso66569885a.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:01:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1731621731; x=1732226531; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1731621710; x=1732226510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CufjBvzPBvmSNHMmNvk4bj+ZKdXjyb+9rtabtha1IGs=;
- b=L8G/1WUNMrv9DsMbv0mGezvyXDz+S3v3oWBeJ/BfXW0HSIboADIknT2SKaB7CvKBTb
- myX5wXmkOcWzD7uKghEAh8VkCy2VgjQuy5naJPM/yGAtWkt4vAN+x2m8pDp+C67mIqok
- yVE2cIqg7tEDSxGCzNlDiLnwPj1G68lyd6qI4mK41GgyrrEp8Pz3wIX8SVV733Hg1mMB
- 2qkeFn6K/zJMb/8MRsz4i0D9CiFtwZ528q6Uy+aoVenf3yKrhqXfS0Jxo01OgpGeaZMW
- TSSNVjNRSlTSaIwX+n7LyDTxo0XBuGNuKG5TUMpK3pkBWJcTFhGksQvue3dvAHrL8BRR
- CLzA==
+ bh=Y5ccyaMJduIz/3YSCSIg1cp3jQKkuXtEIUcvrNn75vU=;
+ b=CPdyuoQi+n23tr1Hmca76z+juRQXmYQlg6OIIYOk5HCsNaAVW00mWACtk8W0XJ4zyI
+ DOiXkQU/C6vhoG8PHGAKOxRCeyt49DgQHoqoPyDlgrC1/NSP6XdWVNgTTbjajp/xOEbX
+ gQZeiGGevnrWiywohjOoG5lLjV+szuXqF+7twSM6w5mvDOLuRjiLP4ssjVlfOmKSMeFk
+ +cSKBb3mE/ZvkVJEwZVdCp3gJSum1h4O67cshfFGKoysOiTF3PSNdwloYLhTgpxcDwT8
+ b935r5uzzyToHk3DBCnSk/rOL1nwHQ5LF1YWF/F2plliT56e3uf0NyBHeojGLWdHp46n
+ 69vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731621731; x=1732226531;
+ d=1e100.net; s=20230601; t=1731621710; x=1732226510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CufjBvzPBvmSNHMmNvk4bj+ZKdXjyb+9rtabtha1IGs=;
- b=JnTWmdGD6E0lRQ9sl+w0xqsFe+wkTUmDKy3dbsIy70EOgoO2S8kEWygVgmjg6mnYn8
- AZyK/+hxy48E1AdPg6muASk7TVORbQ+Dm64avamk9gdZaRHB6oCzbICryPg8lrPX4Gek
- 2YJVyqKtBwWYv4jJQX0bdlzDwBFpX0licYNsexMhV4FEPApDvXo/iD8HUGGA+pstteAf
- y6akbxQY2DjMxQNONFcYFjXY6pTnR1JQAdQsvhOZOLGopRtREiGfmULSbOUwVPhEUOHY
- U+E3vdD+uDMtUmsOSgBjOzr0oHcTfdV+IV6muydhHC0JWpPyhljiHtZiwTrXYmK+IDf3
- OvDg==
+ bh=Y5ccyaMJduIz/3YSCSIg1cp3jQKkuXtEIUcvrNn75vU=;
+ b=E3Q24WcvI3uc/FoyKgE0Csof2v30d/Y9wY0r9Jn7NUstqaY/ncGVhg274SuYKTIQlX
+ tiqwAYcXVFNxj1ZeDxbAeeifdHkRuMZdz3qiguvx6xFz4ocdzAGHEiLzEGEzfYis1nNC
+ tppKw+5x7lmZUUuk3NOmGk1PDMWaupbgJVS33rxHlvNRWrxeJ5Y1g4Re41DsoEvLN4YD
+ UZ4suaDN5ULSxvlFnFC14Q0fN+6u/xAJMB2QvrJKj5OMaddN1L0QmFIcMzUbzAhXvllm
+ 3JiKeZ2IshSSgRVEO5h71AYLO2BgBEVtWQibZjMT1UObqSNzA9OtaO61U2cWdvuR/uAw
+ RXDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTOrwlpCEOL5WdQac6Q2QC6Qbmh8g6XH5a+yrfoDJLDyk4m7JHw+675PFDoSf6B8s5l8KY+abcr8zO@nongnu.org
-X-Gm-Message-State: AOJu0YydvjDT9WRlQ2xcSy2CogQDcvCWSL/RvPMvRzmuDB5MkH+Gxx2N
- Y0vrU+0uzsE+jXlpnyd0lBqSR+qbsn2EZilPWE6JtDuzBHTpBHt55KNFx1MXOWU=
-X-Google-Smtp-Source: AGHT+IFeOaKBaAqEeCXluB7q8D5x2b2pa1e3UBTWjvKSz0z8lGE6fvRkh+jqvUWHSYbqNFTRkw689g==
-X-Received: by 2002:a05:620a:28c4:b0:7b1:5143:8da1 with SMTP id
- af79cd13be357-7b36236278fmr64689585a.43.1731621730664; 
- Thu, 14 Nov 2024 14:02:10 -0800 (PST)
+ AJvYcCXe7PsjrTN6ytFTRwsAYc45h337XA5lV4TVKPfamhly2dAgaVfRA2ImJM7L2kq7/EA9JjhgVb+KdXge@nongnu.org
+X-Gm-Message-State: AOJu0YyGzX83GKVHryMgU7ctcfWQ7GKuxV8B5JTwpF8X9VUL1twGvUwu
+ XlbNZqOUbHI49Sowz0HFYGXPNgh80FB6izfxLb1e3h0njwT+bTpA3CTg2Lt8rps=
+X-Google-Smtp-Source: AGHT+IHXTWS7/H/Q5aLUpRoBH3tpBsnQkzVRRp3WVjnx+2EhICqd87raHL35N3vSeAxEg94lkKZsZg==
+X-Received: by 2002:a05:6214:5b11:b0:6d3:9292:6ce with SMTP id
+ 6a1803df08f44-6d3fb83ded2mr3582066d6.27.1731621710074; 
+ Thu, 14 Nov 2024 14:01:50 -0800 (PST)
 Received: from DY4X0N7X05.bytedance.net ([130.44.212.152])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b35ca308bdsm93742485a.83.2024.11.14.14.02.08
+ af79cd13be357-7b35ca308bdsm93742485a.83.2024.11.14.14.01.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 14 Nov 2024 14:02:10 -0800 (PST)
+ Thu, 14 Nov 2024 14:01:49 -0800 (PST)
 From: Yichen Wang <yichen.wang@bytedance.com>
 To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -74,9 +74,9 @@ Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
  "Shivam Kumar" <shivam.kumar1@nutanix.com>,
  "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
  "Yichen Wang" <yichen.wang@bytedance.com>
-Subject: [PATCH v7 12/12] migration/doc: Add DSA zero page detection doc
-Date: Thu, 14 Nov 2024 14:01:32 -0800
-Message-Id: <20241114220132.27399-13-yichen.wang@bytedance.com>
+Subject: [PATCH v7 04/12] util/dsa: Implement DSA task enqueue and dequeue.
+Date: Thu, 14 Nov 2024 14:01:24 -0800
+Message-Id: <20241114220132.27399-5-yichen.wang@bytedance.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20241114220132.27399-1-yichen.wang@bytedance.com>
 References: <20241114220132.27399-1-yichen.wang@bytedance.com>
@@ -106,321 +106,300 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yuan Liu <yuan1.liu@intel.com>
+From: Hao Xiang <hao.xiang@linux.dev>
 
-Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+* Use a safe thread queue for DSA task enqueue/dequeue.
+* Implement DSA task submission.
+* Implement DSA batch task submission.
+
+Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
 Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
 ---
- .../migration/dsa-zero-page-detection.rst     | 290 ++++++++++++++++++
- docs/devel/migration/features.rst             |   1 +
- 2 files changed, 291 insertions(+)
- create mode 100644 docs/devel/migration/dsa-zero-page-detection.rst
+ include/qemu/dsa.h |  29 +++++++
+ util/dsa.c         | 202 ++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 230 insertions(+), 1 deletion(-)
 
-diff --git a/docs/devel/migration/dsa-zero-page-detection.rst b/docs/devel/migration/dsa-zero-page-detection.rst
-new file mode 100644
-index 0000000000..1279fcdd99
---- /dev/null
-+++ b/docs/devel/migration/dsa-zero-page-detection.rst
-@@ -0,0 +1,290 @@
-+=============================
-+DSA-Based Zero Page Detection
-+=============================
-+Intel Data Streaming Accelerator(``DSA``) is introduced in Intel's 4th
-+generation Xeon server, aka Sapphire Rapids(``SPR``). One of the things
-+DSA can do is to offload memory comparison workload from CPU to DSA accelerator
-+hardware.
-+
-+The main advantages of using DSA to accelerate zero pages detection include
-+
-+1. Reduces CPU usage in multifd live migration workflow across all use cases.
-+
-+2. Reduces migration total time in some use cases.
-+
-+
-+DSA-Based Zero Page Detection Introduction
-+==========================================
-+
-+::
-+
-+
-+  +----------------+       +------------------+
-+  | MultiFD Thread |       |accel-config tool |
-+  +-+--------+-----+       +--------+---------+
-+    |        |                      |
-+    |        |  Open DSA            | Setup DSA
-+    |        |  Work Queues         | Resources
-+    |        |       +-----+-----+  |
-+    |        +------>|idxd driver|<-+
-+    |                +-----+-----+
-+    |                      |
-+    |                      |
-+    |                +-----+-----+
-+    +----------------+DSA Devices|
-+      Submit jobs    +-----------+
-+      via enqcmd
-+
-+
-+DSA Introduction
-+----------------
-+Intel Data Streaming Accelerator (DSA) is a high-performance data copy and
-+transformation accelerator that is integrated in Intel Xeon processors,
-+targeted for optimizing streaming data movement and transformation operations
-+common with applications for high-performance storage, networking, persistent
-+memory, and various data processing applications.
-+
-+For more ``DSA`` introduction, please refer to `DSA Introduction
-+<https://www.intel.com/content/www/us/en/products/docs/accelerator-engines/data-streaming-accelerator.html>`_
-+
-+For ``DSA`` specification, please refer to `DSA Specification
-+<https://cdrdv2-public.intel.com/671116/341204-intel-data-streaming-accelerator-spec.pdf>`_
-+
-+For ``DSA`` user guide, please refer to `DSA User Guide
-+<https://www.intel.com/content/www/us/en/content-details/759709/intel-data-streaming-accelerator-user-guide.html>`_
-+
-+DSA Device Management
-+---------------------
-+
-+The number of ``DSA`` devices will vary depending on the Xeon product model.
-+On a ``SPR`` server, there can be a maximum of 8 ``DSA`` devices, with up to
-+4 devices per socket.
-+
-+By default, all ``DSA`` devices are disabled and need to be configured and
-+enabled by users manually.
-+
-+Check the number of devices through the following command
-+
-+.. code-block:: shell
-+
-+  #lspci -d 8086:0b25
-+  6a:01.0 System peripheral: Intel Corporation Device 0b25
-+  6f:01.0 System peripheral: Intel Corporation Device 0b25
-+  74:01.0 System peripheral: Intel Corporation Device 0b25
-+  79:01.0 System peripheral: Intel Corporation Device 0b25
-+  e7:01.0 System peripheral: Intel Corporation Device 0b25
-+  ec:01.0 System peripheral: Intel Corporation Device 0b25
-+  f1:01.0 System peripheral: Intel Corporation Device 0b25
-+  f6:01.0 System peripheral: Intel Corporation Device 0b25
-+
-+
-+DSA Device Configuration And Enabling
-+-------------------------------------
-+
-+The ``accel-config`` tool is used to enable ``DSA`` devices and configure
-+``DSA`` hardware resources(work queues and engines). One ``DSA`` device
-+has 8 work queues and 4 processing engines, multiple engines can be assigned
-+to a work queue via ``group`` attribute.
-+
-+For ``accel-config`` installation, please refer to `accel-config installation
-+<https://github.com/intel/idxd-config>`_
-+
-+One example of configuring and enabling an ``DSA`` device.
-+
-+.. code-block:: shell
-+
-+  #accel-config config-engine dsa0/engine0.0 -g 0
-+  #accel-config config-engine dsa0/engine0.1 -g 0
-+  #accel-config config-engine dsa0/engine0.2 -g 0
-+  #accel-config config-engine dsa0/engine0.3 -g 0
-+  #accel-config config-wq dsa0/wq0.0 -g 0 -s 128 -p 10 -b 1 -t 128 -m shared -y user -n app1 -d user
-+  #accel-config enable-device dsa0
-+  #accel-config enable-wq dsa0/wq0.0
-+
-+- The ``DSA`` device index is 0, use ``ls -lh /sys/bus/dsa/devices/dsa*``
-+  command to query the ``DSA`` device index.
-+
-+- 4 engines and 1 work queue are configured in group 0, so that all zero-page
-+  detection jobs submitted to this work queue can be processed by all engines
-+  simultaneously.
-+
-+- Set work queue attributes including the work mode, work queue size and so on.
-+
-+- Enable the ``dsa0`` device and work queue ``dsa0/wq0.0``
-+
-+.. note::
-+
-+   1. ``DSA`` device driver is Intel Data Accelerator Driver (idxd), it is
-+      recommended that the minimum version of Linux kernel is 5.18.
-+
-+   2. Only ``DSA`` shared work queue mode is supported, it needs to add
-+      ``"intel_iommu=on,sm_on"`` parameter to kernel command line.
-+
-+For more detailed configuration, please refer to `DSA Configuration Samples
-+<https://github.com/intel/idxd-config/tree/stable/Documentation/accfg>`_
-+
-+
-+Performances
-+============
-+We use two Intel 4th generation Xeon servers for testing.
-+
-+::
-+
-+    Architecture:        x86_64
-+    CPU(s):              192
-+    Thread(s) per core:  2
-+    Core(s) per socket:  48
-+    Socket(s):           2
-+    NUMA node(s):        2
-+    Vendor ID:           GenuineIntel
-+    CPU family:          6
-+    Model:               143
-+    Model name:          Intel(R) Xeon(R) Platinum 8457C
-+    Stepping:            8
-+    CPU MHz:             2538.624
-+    CPU max MHz:         3800.0000
-+    CPU min MHz:         800.0000
-+
-+We perform multifd live migration with below setup:
-+
-+1. VM has 100GB memory.
-+
-+2. Use the new migration option multifd-set-normal-page-ratio to control the
-+   total size of the payload sent over the network.
-+
-+3. Use 8 multifd channels.
-+
-+4. Use tcp for live migration.
-+
-+5. Use CPU to perform zero page checking as the baseline.
-+
-+6. Use one DSA device to offload zero page checking to compare with the baseline.
-+
-+7. Use "perf sched record" and "perf sched timehist" to analyze CPU usage.
-+
-+
-+A) Scenario 1: 50% (50GB) normal pages on an 100GB vm
-+-----------------------------------------------------
-+
-+::
-+
-+	CPU usage
-+
-+	|---------------|---------------|---------------|---------------|
-+	|		|comm		|runtime(msec)	|totaltime(msec)|
-+	|---------------|---------------|---------------|---------------|
-+	|Baseline	|live_migration	|5657.58	|		|
-+	|		|multifdsend_0	|3931.563	|		|
-+	|		|multifdsend_1	|4405.273	|		|
-+	|		|multifdsend_2	|3941.968	|		|
-+	|		|multifdsend_3	|5032.975	|		|
-+	|		|multifdsend_4	|4533.865	|		|
-+	|		|multifdsend_5	|4530.461	|		|
-+	|		|multifdsend_6	|5171.916	|		|
-+	|		|multifdsend_7	|4722.769	|41922		|
-+	|---------------|---------------|---------------|---------------|
-+	|DSA		|live_migration	|6129.168	|		|
-+	|		|multifdsend_0	|2954.717	|		|
-+	|		|multifdsend_1	|2766.359	|		|
-+	|		|multifdsend_2	|2853.519	|		|
-+	|		|multifdsend_3	|2740.717	|		|
-+	|		|multifdsend_4	|2824.169	|		|
-+	|		|multifdsend_5	|2966.908	|		|
-+	|		|multifdsend_6	|2611.137	|		|
-+	|		|multifdsend_7	|3114.732	|		|
-+	|		|dsa_completion	|3612.564	|32568		|
-+	|---------------|---------------|---------------|---------------|
-+
-+Baseline total runtime is calculated by adding up all multifdsend_X
-+and live_migration threads runtime. DSA offloading total runtime is
-+calculated by adding up all multifdsend_X, live_migration and
-+dsa_completion threads runtime. 41922 msec VS 32568 msec runtime and
-+that is 23% total CPU usage savings.
-+
-+::
-+
-+	Latency
-+	|---------------|---------------|---------------|---------------|---------------|---------------|
-+	|		|total time	|down time	|throughput	|transferred-ram|total-ram	|
-+	|---------------|---------------|---------------|---------------|---------------|---------------|
-+	|Baseline	|10343 ms	|161 ms		|41007.00 mbps	|51583797 kb	|102400520 kb	|
-+	|---------------|---------------|---------------|---------------|-------------------------------|
-+	|DSA offload	|9535 ms	|135 ms		|46554.40 mbps	|53947545 kb	|102400520 kb	|
-+	|---------------|---------------|---------------|---------------|---------------|---------------|
-+
-+Total time is 8% faster and down time is 16% faster.
-+
-+
-+B) Scenario 2: 100% (100GB) zero pages on an 100GB vm
-+-----------------------------------------------------
-+
-+::
-+
-+	CPU usage
-+	|---------------|---------------|---------------|---------------|
-+	|		|comm		|runtime(msec)	|totaltime(msec)|
-+	|---------------|---------------|---------------|---------------|
-+	|Baseline	|live_migration	|4860.718	|		|
-+	|	 	|multifdsend_0	|748.875	|		|
-+	|		|multifdsend_1	|898.498	|		|
-+	|		|multifdsend_2	|787.456	|		|
-+	|		|multifdsend_3	|764.537	|		|
-+	|		|multifdsend_4	|785.687	|		|
-+	|		|multifdsend_5	|756.941	|		|
-+	|		|multifdsend_6	|774.084	|		|
-+	|		|multifdsend_7	|782.900	|11154		|
-+	|---------------|---------------|-------------------------------|
-+	|DSA offloading	|live_migration	|3846.976	|		|
-+	|		|multifdsend_0	|191.880	|		|
-+	|		|multifdsend_1	|166.331	|		|
-+	|		|multifdsend_2	|168.528	|		|
-+	|		|multifdsend_3	|197.831	|		|
-+	|		|multifdsend_4	|169.580	|		|
-+	|		|multifdsend_5	|167.984	|		|
-+	|		|multifdsend_6	|198.042	|		|
-+	|		|multifdsend_7	|170.624	|		|
-+	|		|dsa_completion	|3428.669	|8700		|
-+	|---------------|---------------|---------------|---------------|
-+
-+Baseline total runtime is 11154 msec and DSA offloading total runtime is
-+8700 msec. That is 22% CPU savings.
-+
-+::
-+
-+	Latency
-+	|--------------------------------------------------------------------------------------------|
-+	|		|total time	|down time	|throughput	|transferred-ram|total-ram   |
-+	|---------------|---------------|---------------|---------------|---------------|------------|
-+	|Baseline	|4867 ms	|20 ms		|1.51 mbps	|565 kb		|102400520 kb|
-+	|---------------|---------------|---------------|---------------|----------------------------|
-+	|DSA offload	|3888 ms	|18 ms		|1.89 mbps	|565 kb		|102400520 kb|
-+	|---------------|---------------|---------------|---------------|---------------|------------|
-+
-+Total time 20% faster and down time 10% faster.
-+
-+
-+How To Use DSA In Migration
-+===========================
-+
-+The migration parameter ``accel-path`` is used to specify the resource
-+allocation for DSA. After the user configures
-+``zero-page-detection=dsa-accel``, one or more DSA work queues need to be
-+specified for migration.
-+
-+The following example shows two DSA work queues for zero page detection
-+
-+.. code-block:: shell
-+
-+   migrate_set_parameter zero-page-detection=dsa-accel
-+   migrate_set_parameter accel-path=dsa:/dev/dsa/wq0.0 dsa:/dev/dsa/wq1.0
-+
-+.. note::
-+
-+  Accessing DSA resources requires ``sudo`` command or ``root`` privileges
-+  by default. Administrators can modify the DSA device node ownership
-+  so that QEMU can use DSA with specified user permissions.
-+
-+  For example:
-+
-+  #chown -R qemu /dev/dsa
-+
-diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
-index 8f431d52f9..ea2893d80f 100644
---- a/docs/devel/migration/features.rst
-+++ b/docs/devel/migration/features.rst
-@@ -15,3 +15,4 @@ Migration has plenty of features to support different use cases.
-    qpl-compression
-    uadk-compression
-    qatzip-compression
-+   dsa-zero-page-detection
+diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+index 71686af28f..04ee8924ab 100644
+--- a/include/qemu/dsa.h
++++ b/include/qemu/dsa.h
+@@ -27,6 +27,17 @@
+ #include <linux/idxd.h>
+ #include "x86intrin.h"
+ 
++typedef enum QemuDsaTaskType {
++    QEMU_DSA_TASK = 0,
++    QEMU_DSA_BATCH_TASK
++} QemuDsaTaskType;
++
++typedef enum QemuDsaTaskStatus {
++    QEMU_DSA_TASK_READY = 0,
++    QEMU_DSA_TASK_PROCESSING,
++    QEMU_DSA_TASK_COMPLETION
++} QemuDsaTaskStatus;
++
+ typedef struct {
+     void *work_queue;
+ } QemuDsaDevice;
+@@ -44,6 +55,24 @@ typedef struct {
+     QemuDsaTaskQueue task_queue;
+ } QemuDsaDeviceGroup;
+ 
++typedef void (*qemu_dsa_completion_fn)(void *);
++
++typedef struct QemuDsaBatchTask {
++    struct dsa_hw_desc batch_descriptor;
++    struct dsa_hw_desc *descriptors;
++    struct dsa_completion_record batch_completion __attribute__((aligned(32)));
++    struct dsa_completion_record *completions;
++    QemuDsaDeviceGroup *group;
++    QemuDsaDevice *device;
++    qemu_dsa_completion_fn completion_callback;
++    QemuSemaphore sem_task_complete;
++    QemuDsaTaskType task_type;
++    QemuDsaTaskStatus status;
++    int batch_size;
++    QSIMPLEQ_ENTRY(QemuDsaBatchTask) entry;
++} QemuDsaBatchTask;
++
++
+ /**
+  * @brief Initializes DSA devices.
+  *
+diff --git a/util/dsa.c b/util/dsa.c
+index 79dab5d62c..b55fa599f0 100644
+--- a/util/dsa.c
++++ b/util/dsa.c
+@@ -31,6 +31,7 @@
+ #include "x86intrin.h"
+ 
+ #define DSA_WQ_PORTAL_SIZE 4096
++#define DSA_WQ_DEPTH 128
+ #define MAX_DSA_DEVICES 16
+ 
+ uint32_t max_retry_count;
+@@ -210,6 +211,198 @@ dsa_device_group_get_next_device(QemuDsaDeviceGroup *group)
+     return &group->dsa_devices[current];
+ }
+ 
++/**
++ * @brief Empties out the DSA task queue.
++ *
++ * @param group A pointer to the DSA device group.
++ */
++static void
++dsa_empty_task_queue(QemuDsaDeviceGroup *group)
++{
++    qemu_mutex_lock(&group->task_queue_lock);
++    QemuDsaTaskQueue *task_queue = &group->task_queue;
++    while (!QSIMPLEQ_EMPTY(task_queue)) {
++        QSIMPLEQ_REMOVE_HEAD(task_queue, entry);
++    }
++    qemu_mutex_unlock(&group->task_queue_lock);
++}
++
++/**
++ * @brief Adds a task to the DSA task queue.
++ *
++ * @param group A pointer to the DSA device group.
++ * @param task A pointer to the DSA task to enqueue.
++ *
++ * @return int Zero if successful, otherwise a proper error code.
++ */
++static int
++dsa_task_enqueue(QemuDsaDeviceGroup *group,
++                 QemuDsaBatchTask *task)
++{
++    bool notify = false;
++
++    qemu_mutex_lock(&group->task_queue_lock);
++
++    if (!group->running) {
++        error_report("DSA: Tried to queue task to stopped device queue.");
++        qemu_mutex_unlock(&group->task_queue_lock);
++        return -1;
++    }
++
++    /* The queue is empty. This enqueue operation is a 0->1 transition. */
++    if (QSIMPLEQ_EMPTY(&group->task_queue)) {
++        notify = true;
++    }
++
++    QSIMPLEQ_INSERT_TAIL(&group->task_queue, task, entry);
++
++    /* We need to notify the waiter for 0->1 transitions. */
++    if (notify) {
++        qemu_cond_signal(&group->task_queue_cond);
++    }
++
++    qemu_mutex_unlock(&group->task_queue_lock);
++
++    return 0;
++}
++
++/**
++ * @brief Takes a DSA task out of the task queue.
++ *
++ * @param group A pointer to the DSA device group.
++ * @return QemuDsaBatchTask* The DSA task being dequeued.
++ */
++__attribute__((unused))
++static QemuDsaBatchTask *
++dsa_task_dequeue(QemuDsaDeviceGroup *group)
++{
++    QemuDsaBatchTask *task = NULL;
++
++    qemu_mutex_lock(&group->task_queue_lock);
++
++    while (true) {
++        if (!group->running) {
++            goto exit;
++        }
++        task = QSIMPLEQ_FIRST(&group->task_queue);
++        if (task != NULL) {
++            break;
++        }
++        qemu_cond_wait(&group->task_queue_cond, &group->task_queue_lock);
++    }
++
++    QSIMPLEQ_REMOVE_HEAD(&group->task_queue, entry);
++
++exit:
++    qemu_mutex_unlock(&group->task_queue_lock);
++    return task;
++}
++
++/**
++ * @brief Submits a DSA work item to the device work queue.
++ *
++ * @param wq A pointer to the DSA work queue's device memory.
++ * @param descriptor A pointer to the DSA work item descriptor.
++ *
++ * @return Zero if successful, non-zero otherwise.
++ */
++static int
++submit_wi_int(void *wq, struct dsa_hw_desc *descriptor)
++{
++    uint32_t retry = 0;
++
++    _mm_sfence();
++
++    while (true) {
++        if (_enqcmd(wq, descriptor) == 0) {
++            break;
++        }
++        retry++;
++        if (retry > max_retry_count) {
++            error_report("Submit work retry %u times.", retry);
++            return -1;
++        }
++    }
++
++    return 0;
++}
++
++/**
++ * @brief Synchronously submits a DSA work item to the
++ *        device work queue.
++ *
++ * @param wq A pointer to the DSA work queue's device memory.
++ * @param descriptor A pointer to the DSA work item descriptor.
++ *
++ * @return int Zero if successful, non-zero otherwise.
++ */
++__attribute__((unused))
++static int
++submit_wi(void *wq, struct dsa_hw_desc *descriptor)
++{
++    return submit_wi_int(wq, descriptor);
++}
++
++/**
++ * @brief Asynchronously submits a DSA work item to the
++ *        device work queue.
++ *
++ * @param task A pointer to the task.
++ *
++ * @return int Zero if successful, non-zero otherwise.
++ */
++__attribute__((unused))
++static int
++submit_wi_async(QemuDsaBatchTask *task)
++{
++    QemuDsaDeviceGroup *device_group = task->group;
++    QemuDsaDevice *device_instance = task->device;
++    int ret;
++
++    assert(task->task_type == QEMU_DSA_TASK);
++
++    task->status = QEMU_DSA_TASK_PROCESSING;
++
++    ret = submit_wi_int(device_instance->work_queue,
++                        &task->descriptors[0]);
++    if (ret != 0) {
++        return ret;
++    }
++
++    return dsa_task_enqueue(device_group, task);
++}
++
++/**
++ * @brief Asynchronously submits a DSA batch work item to the
++ *        device work queue.
++ *
++ * @param batch_task A pointer to the batch task.
++ *
++ * @return int Zero if successful, non-zero otherwise.
++ */
++__attribute__((unused))
++static int
++submit_batch_wi_async(QemuDsaBatchTask *batch_task)
++{
++    QemuDsaDeviceGroup *device_group = batch_task->group;
++    QemuDsaDevice *device_instance = batch_task->device;
++    int ret;
++
++    assert(batch_task->task_type == QEMU_DSA_BATCH_TASK);
++    assert(batch_task->batch_descriptor.desc_count <= batch_task->batch_size);
++    assert(batch_task->status == QEMU_DSA_TASK_READY);
++
++    batch_task->status = QEMU_DSA_TASK_PROCESSING;
++
++    ret = submit_wi_int(device_instance->work_queue,
++                        &batch_task->batch_descriptor);
++    if (ret != 0) {
++        return ret;
++    }
++
++    return dsa_task_enqueue(device_group, batch_task);
++}
++
+ /**
+  * @brief Check if DSA is running.
+  *
+@@ -223,7 +416,12 @@ bool qemu_dsa_is_running(void)
+ static void
+ dsa_globals_init(void)
+ {
+-    max_retry_count = UINT32_MAX;
++    /*
++     * This value follows a reference example by Intel. The POLL_RETRY_MAX is
++     * defined to 10000, so here we used the max WQ depth * 100 for the the max
++     * polling retry count.
++     */
++    max_retry_count = DSA_WQ_DEPTH * 100;
+ }
+ 
+ /**
+@@ -266,6 +464,8 @@ void qemu_dsa_stop(void)
+     if (!group->running) {
+         return;
+     }
++
++    dsa_empty_task_queue(group);
+ }
+ 
+ /**
 -- 
 Yichen Wang
 
