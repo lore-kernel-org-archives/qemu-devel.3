@@ -4,71 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36DD5D65C74
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 11:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 978F7D65C7B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 11:30:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBXnL-0008JC-Qe; Thu, 14 Nov 2024 06:13:51 -0500
+	id 1tBY2M-0001Om-HY; Thu, 14 Nov 2024 06:29:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBXnL-0008J1-5T
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:13:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tBY2K-0001OR-Sq; Thu, 14 Nov 2024 06:29:20 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBXnJ-0002Ae-IF
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:13:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731582828;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rd9TfXx4AVSdw8dcZSg0NDdVDwa30ZWHJYtmHZBD2DE=;
- b=g4RTTo/hANEC+aI9CLj8at3g7MDvPwGpH/PHhvoqUtcBI95jzECWCvfamF+98Gv0ZnlFtF
- dsNcvcFgsRPYf3NnhXOGJXMAST2ofQe6hWm5jSamwvwIde7KLgbdFwZBRQkLBzrA2CDXHi
- 7PHOfud/fz7HmgQwDbH2cVdmZ7rU5zc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-531-G-8sv0TGO82SnBMOPjcPNA-1; Thu,
- 14 Nov 2024 06:13:47 -0500
-X-MC-Unique: G-8sv0TGO82SnBMOPjcPNA-1
-X-Mimecast-MFC-AGG-ID: G-8sv0TGO82SnBMOPjcPNA
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5846D195604F; Thu, 14 Nov 2024 11:13:46 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.193.143])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1BDBB1956054; Thu, 14 Nov 2024 11:13:46 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id E74B018009A1; Thu, 14 Nov 2024 12:13:43 +0100 (CET)
-Date: Thu, 14 Nov 2024 12:13:43 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] edk2: update submodule to edk2-stable202408.01
-Message-ID: <m6k4oa4fnx3cm36iu3n2plewrftomdjts5ht4vmr6dlxdsm6zp@7sbnkmos7ezd>
-References: <20241111100701.2620020-1-kraxel@redhat.com>
- <CAFEAcA83zip4PnAxjQp-Qiquwzqf=cVwRmxsKGeyAXvqwzg=qw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tBY2J-0005x7-96; Thu, 14 Nov 2024 06:29:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=W3AI7IS9qrTP42Lc1laGrFqKyvmg4qp8sIK1zuixVsY=; b=ZA9lXTc8WuKUS766F/thIQhNz/
+ YW1PZb0rf1rHHvO/OMYBtYBgladQK3eu3nBR3rmDDGk9yrGIdtFFsCFZ7VlPh0REPt5pqpPyDiTcH
+ 24QNYsNNDm3fTvDdAPHyEb2EZsN4f6KLC1lTw2lSuknp3KZoFPF0gJz9iX1Si9LWg2lepVgoFgz+3
+ D861cGZIsgzcCfRqRpHpzRwhC+aH91Hcd87EF/IAN55u4ZsnP5zeq0az48vibwv8+gB1YMMI0YIZB
+ X0qDi1r9gB6PQ5EKcmZCsCvJSc0cvh+5MZ3qVJx4Fv42m80spNenh4lWZVw8cOOSOPl++ytT7l4aW
+ rHNrSMbJBg+wMc1+qAQiCK01ZhGHTqByo6cFqbhczsRDb6siq0Q4YKF/WC8PI95BVaHQ3KHK8Ffqp
+ skGz29MDAZW2CVRguXepNnT0ObRtQi9Q5rRSDylWJvpN4zWFb1L6tJ5n8UcNRJzIVB0GDD6MAZL6j
+ liehM/grkdsB8Jj0aCr+YSOJRThWmi+jGZSuY/mLGbvwq6ESZO88I2h1EEie50W5WBnTIw+NxlII/
+ pXpV5XID28BVYuQRD8sg43LEvB4x0Wy5m+grqqxOuJ137VN9Joppt8/Voi7gQgsU4oMNQtr115tFB
+ KfEDfpmUqEKd/VGrMZjYGsVdFTj36MKSHk5KYcUYc=;
+Received: from [2a00:23c4:8bb8:f600:5ed9:3847:b293:b96]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tBY1o-0002lv-Er; Thu, 14 Nov 2024 11:28:52 +0000
+Message-ID: <2b8a7ab4-3295-4b9a-b383-5be680e9d5df@ilande.co.uk>
+Date: Thu, 14 Nov 2024 11:29:07 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA83zip4PnAxjQp-Qiquwzqf=cVwRmxsKGeyAXvqwzg=qw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.738,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org
+References: <20241114104653.963812-1-thuth@redhat.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20241114104653.963812-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:5ed9:3847:b293:b96
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] hw/misc/mos6522: Fix bad class definition of the MOS6522
+ device
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,44 +103,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 13, 2024 at 03:57:58PM +0000, Peter Maydell wrote:
-> On Mon, 11 Nov 2024 at 10:07, Gerd Hoffmann <kraxel@redhat.com> wrote:
-> >
-> > Updates the subhook submodule to point to a edk2 mirror repo.
-> > Fixes recursive cloning of the edk2 submodule.
-> >
-> > Cc: Peter Maydell <peter.maydell@linaro.org>
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2660
-> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> > ---
-> >  roms/edk2 | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/roms/edk2 b/roms/edk2
-> > index b158dad150bf..4dfdca63a934 160000
-> > --- a/roms/edk2
-> > +++ b/roms/edk2
-> > @@ -1 +1 @@
-> > -Subproject commit b158dad150bf02879668f72ce306445250838201
-> > +Subproject commit 4dfdca63a93497203f197ec98ba20e2327e4afe4
-> > --
-> > 2.47.0
+On 14/11/2024 10:46, Thomas Huth wrote:
+
+> When compiling QEMU with --enable-cfi, the "q800" m68k machine
+> currently crashes very early, when the q800_machine_init() function
+> tries to wire the interrupts of the "via1" device.
+> This happens because TYPE_MOS6522_Q800_VIA1 is supposed to be a
+> proper SysBus device, but its parent (TYPE_MOS6522) has a mistake
+> in its class definition where it is only derived from DeviceClass,
+> and not from SysBusDeviceClass, so we end up in funny memory access
+> issues here. Using the right class hierarchy for the MOS6522 device
+> fixes the problem.
 > 
-> Shouldn't this also come with an update of the binaries?
-> I know that in this case there's not supposed to be any
-> change to the edk sources, but I kind of expected that the
-> process of "update the edk submodule" ought to be
-> standardised to the extent that it would produce new
-> binary blobs to match the submodule bump.
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2675
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   include/hw/misc/mos6522.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/misc/mos6522.h b/include/hw/misc/mos6522.h
+> index fba45668ab..920871a598 100644
+> --- a/include/hw/misc/mos6522.h
+> +++ b/include/hw/misc/mos6522.h
+> @@ -154,7 +154,7 @@ struct MOS6522State {
+>   OBJECT_DECLARE_TYPE(MOS6522State, MOS6522DeviceClass, MOS6522)
+>   
+>   struct MOS6522DeviceClass {
+> -    DeviceClass parent_class;
+> +    SysBusDeviceClass parent_class;
+>   
+>       ResettablePhases parent_phases;
+>       void (*portB_write)(MOS6522State *dev);
 
-That is an exception.  This adds only one commit, which changes the
-'subhook' submodule URL to point to a different location (a mirror repo
-in the tianocore project).  So it doesn't carry any actual code changes.
+Ooof. I suspect I started using DeviceClass first before switching to 
+SysBusDeviceClass later to implement reset functionality. Anyhow the patch looks 
+good: thanks Thomas!
 
-But it is needed if you want do a local build (without already having a
-'subhook' submodule clone) because the old repo location is gone ...
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-take care,
-  Gerd
+
+ATB,
+
+Mark.
 
 
