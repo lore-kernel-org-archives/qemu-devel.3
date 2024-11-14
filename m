@@ -4,96 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60FF0D6A25B
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 23:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68338D6A25B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 23:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBizG-0000gk-H9; Thu, 14 Nov 2024 18:10:54 -0500
+	id 1tBjIu-0003FY-IN; Thu, 14 Nov 2024 18:31:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tBizF-0000g7-Gd
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 18:10:53 -0500
-Received: from dormouse.elm.relay.mailchannels.net ([23.83.212.50])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1tBjIs-0003F4-33; Thu, 14 Nov 2024 18:31:10 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tBizD-0006pk-SG
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 18:10:53 -0500
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 68A151A4959;
- Thu, 14 Nov 2024 23:10:47 +0000 (UTC)
-Received: from pdx1-sub0-mail-a231.dreamhost.com
- (trex-7.trex.outbound.svc.cluster.local [100.111.111.109])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id F1CC11A43FF;
- Thu, 14 Nov 2024 23:10:46 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1731625847; a=rsa-sha256;
- cv=none;
- b=+VbI76W7hvvIwewryBvctvTTByiNGemPhe+UwEk4ey6KlKh4pOdlMxC0o/NjTI1XGUAw3L
- KRFLbE4/3qhgYoE1K+KQhM+SrEz/KMXcOCpTtBfTfmKzEabn3N1qb5IqQ1KtvOeLtnjkRx
- eabPbbUswMcS32l21U2KQ+fhhQa7Djc9+6DPrSIh0K9jrXtSP6DtCA2atc9Eh8UnoHXRb6
- ZnD6fS/aJ6LmOtP6hReYBZN8MqC0dCEo0D1BQP+9dKY1xspToJjM89SMAOwPbxZJoNut3Z
- wIXLJZJSd0p9QGhqVpKMm7Q1QMuiJB+fEeUEceNKtP41ULpoKMV73wtz6UCvjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1731625847;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:dkim-signature;
- bh=v20ebj1ekECUvmjvyhu34jk+Llqt4A+KlSko9aHCEzw=;
- b=Z63wo8Wi3rJYUP28+fik7wf9BWS5WO6bANyj2baF0jRZwQyUBbbG3aoBYV7iiFnamENg47
- 9XJJw1S3MIImYoYPdsHiuOnyJ9BPC++5dymE0yeSlfrvTZrwsQG9R2ICdgo7hzWQkd4wc5
- VaVZyhv07hl+KSCuOqUSqT2ldYRob3oIRJaSYC/izMZZSDKI0NIq/LyQmKRVb8IXN/ItAe
- HvgRnciyOGnLTLPv9QBlr1cP1wSr3K9Kdr2DXUc2HIyNcsauKE1CuMf+3krR3C/cCuH0xd
- Lb1QAMkUuSQM8QB02THXR4faL0+gE+T92skJNVAeEegjqPOMGRlsqs7Yq250KA==
-ARC-Authentication-Results: i=1; rspamd-645676964-w689r;
- auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
-X-MailChannels-Auth-Id: dreamhost
-X-Ski-Illegal: 0c366b7d6051d806_1731625847229_200874031
-X-MC-Loop-Signature: 1731625847229:3360123726
-X-MC-Ingress-Time: 1731625847228
-Received: from pdx1-sub0-mail-a231.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.111.111.109 (trex/7.0.2); Thu, 14 Nov 2024 23:10:47 +0000
-Received: from [172.22.7.54] (unknown [198.232.126.195])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: rob@landley.net)
- by pdx1-sub0-mail-a231.dreamhost.com (Postfix) with ESMTPSA id 4XqG923Ggqz3R; 
- Thu, 14 Nov 2024 15:10:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
- s=dreamhost; t=1731625846;
- bh=NO6cvgyy5FnJVhPlSrHIdMUL654kkw32kcfKhh6Agjk=;
- h=Date:To:From:Subject:Content-Type:Content-Transfer-Encoding;
- b=OD4eXTznLKcFkxuRM83gUd8Cd1eSUUJKlSTfE6tOrOfYAIzRwgHOVHcrk5JCrfMGg
- 9tZxfYne5o/63zxnrYFTlEtaazPtMnTtBxdyWavHpnKQgfd5BVsMDth1399cTg0/wv
- M3p34KO3lwUqmG1Yvpy50HCReJQS+FKUlJFo6lqgZ25/zsFjQSD7LECSR2g5sQSG4l
- aLv1KztHS9HcF9gQB+glQsDM3yi5+HWd79DBzK+6+ejZyr1PXjHVOz0eGjoIi130td
- PhtF2KGlHTDO2OZx1bSaDaXCgveJ22P5SRvHz0xCBy0Pu9YseI9Kf4nsjCczjdXKN6
- p5xeLheigkkBA==
-Message-ID: <86871f60-983e-4172-a6e6-1bd4b1e4e5c0@landley.net>
-Date: Thu, 14 Nov 2024 17:10:45 -0600
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1tBjIj-0003Hw-TS; Thu, 14 Nov 2024 18:31:08 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AEMeSQ1012648;
+ Thu, 14 Nov 2024 23:30:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=dehG7V
+ Uc4jFEMsMF1aco/E3l4ant4JgVCJQbD6Wlchk=; b=tfsSVkaVzCgl+AuAxf9mI5
+ 0oS3fqx9+726DJsUG6IXKiDPEhlKsdUDGSr2ky2EyRiLOk5Wjyj8r6QOhyKj0A7v
+ e9GeVkIIKHdyiy9RbGuZtAYNVYqsEQuh6loYIzO8yuiuOz+p46kUQEVqjWYgrQdd
+ USuDO4NhtSDY43Ifkhp45G/B/JV7Fml1lWN/MnKBj9w3algnIE+tmqbnP9+/JOHQ
+ ES/e5V+miqYolPVpqg/ZcWv5CTw1gcxhkvRnBnhCuTdoSjec+nXqGD3Ob6ARDGzP
+ G7DGFc/yRG4QLy4r+XUbx9IBz2OxXk6/NfA1nDSbmczQ/s3sxAsYIEuqCUMgF66g
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42wt6w84hj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 14 Nov 2024 23:30:55 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AEJmxOi017527;
+ Thu, 14 Nov 2024 23:30:54 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42tk2n1aat-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 14 Nov 2024 23:30:54 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4AENUrJQ47841678
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 14 Nov 2024 23:30:53 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6C6BC58059;
+ Thu, 14 Nov 2024 23:30:53 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6BA5058053;
+ Thu, 14 Nov 2024 23:30:52 +0000 (GMT)
+Received: from [9.61.167.191] (unknown [9.61.167.191])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 14 Nov 2024 23:30:52 +0000 (GMT)
+Message-ID: <31889800-47fc-4ee0-8016-58a9d82b2719@linux.ibm.com>
+Date: Thu, 14 Nov 2024 18:30:51 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw: Add "loadparm" property to scsi disk devices for
+ booting on s390x
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Boris Fiuczynski <fiuczy@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Eric Farman <farman@linux.ibm.com>
+References: <20241114122919.973930-1-thuth@redhat.com>
+ <9e7cb217-a33e-48aa-b030-efb991ca33f3@linux.ibm.com>
+ <f0315077-eb61-4134-b81a-7d33906c6d31@redhat.com>
 Content-Language: en-US
-To: qemu-devel@nongnu.org, pbonzini@redhat.com,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-From: Rob Landley <rob@landley.net>
-Subject: "make clean" after "git pull" runs configure before cleaning.
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <f0315077-eb61-4134-b81a-7d33906c6d31@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=23.83.212.50; envelope-from=rob@landley.net;
- helo=dormouse.elm.relay.mailchannels.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: ajm8X54Qze_ecVHhLW0zeV7rtW3lSUuI
+X-Proofpoint-GUID: ajm8X54Qze_ecVHhLW0zeV7rtW3lSUuI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ malwarescore=0 mlxscore=0 adultscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=908 lowpriorityscore=0 clxscore=1015 phishscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411140182
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.69,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -111,32 +115,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apparently because:
 
-../meson.build:1:0: ERROR: Meson version is 0.59.3 but project requires 
- >=1.5.0
-A full log can be found at 
-/home/landley/qemu/qemu/build/meson-logs/meson-log.txt
-/home/landley/qemu/qemu/build/pyvenv/bin/meson setup --reconfigure 
-/home/landley/qemu/qemu
-WARNING: Regenerating configuration from scratch.
-Reason: Coredata file 
-'/home/landley/qemu/qemu/build/meson-private/coredata.dat' references 
-functions or classes that don't exist. This probably means that it was 
-generated with an old version of meson.
-DEPRECATION: "pkgconfig" entry is deprecated and should be replaced by 
-"pkg-config"
 
-(And then 30 screens more data...)
+On 11/14/24 12:47 PM, Thomas Huth wrote:
+> On 14/11/2024 16.55, Jared Rossi wrote:
+>>
+>>
+>> On 11/14/24 7:29 AM, Thomas Huth wrote:
+>>> While adding the new flexible boot order feature on s390x recently,
+>>> we missed to add the "loadparm" property to the scsi-hd and scsi-cd
+>>> devices. This property is required on s390x to pass the information
+>>> to the boot loader about which kernel should be started or whether
+>>> the boot menu should be shown. But even more serious: The missing
+>>> property is now causing trouble with the corresponding libvirt patches
+>>> that assume that the "loadparm" property is either settable for all
+>>> bootable devices (when the "boot order" feature is implemented in
+>>> QEMU), or none (meaning the behaviour of older QEMUs that only allowed
+>>> one "loadparm" at the machine level). To fix this broken situation,
+>>> let's implement the "loadparm" property for the SCSI devices, too.
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   NB: Unlike the ccw_device_set_loadparm() logic that we use for CCW
+>>>       devices, I've decided to use a string property for the "loadparm"
+>>>       in the SCSI devices to avoid spoiling the common code with too 
+>>> much
+>>>       s390x logic. So the check for valid characters is now done 
+>>> after the
+>>>       property has been set, i.e. we only print out an error instead of
+>>>       forbidding the setting (like we do it with the CCW devices), 
+>>> which
+>>>       is IMHO still perfectly acceptable. Or are there other opinions?
+>>
+>> I wasn't able to think of a way to abuse passing invalid characters, 
+>> but I did
+>> find two additional differences about the string approach:
+>>
+>> a) it is not possible to override the machine loadparm by assigning 
+>> an empty
+>>   string (loadparm="") to the device
+>
+> Agreed, that's a (small) problem. There does not seem to be a way to 
+> distinguish between "property has not been set" and "property has been 
+> set to a string with zero length" with object_property_get_str() ...
+>
+>> I don't think that the inability to pass the empty string is a 
+>> significant
+>> problem because passing a single space will have the same effect.
+>
+> That sounds like a good work-around, indeed.
+>
+> > b) it is possible to assign a loadparm value to a non-boot device
+> >
+>> Assigning a loadparm to a non-boot device generally does nothing, but 
+>> in the
+>> case of device probing (i.e. no boot devices assigned at all), the 
+>> device with
+>> the loadparm assigned could be selected for IPL, but it will not use the
+>> assigned loadparm (because no IPLB was generated for the device). 
+>> This check is
+>> normally handled by ccw_device_set_loadparm(), but I'm not sure if 
+>> there is a
+>> way to do the validation without having a setter function for the 
+>> property.
+>
+> Hmmm, that could be confusing for the users, indeed. But maybe it 
+> would be sufficient
+> to properly document that loadparm is only working for devices with a 
+> bootindex?
+> What do you think?
+>
+> By the way, the loadparm section in docs/system/s390x/bootdevices.rst 
+> looks like it should get an update, too ... if you have some spare 
+> minutes, could you maybe look at it?
+>
 
-Seems a _bit_ awkward to do that (and potentially fail on a random new 
-dependency) just to delete it all again?
+Yes, I suppose I would agree that documenting the behavior is sufficient 
+in this case.  I will update bootdevices.rst to include per-device 
+loadparm support and also indicate that that per-device loadparm values 
+are only used for devices that have an assigned bootindex.
 
-And I dunno what it's saying about the meson version, "aptitude show 
-meson" in my devuan daedalus ("debian bookworm" fork) says version 
-1.0.1-5 which is nowhere near 0.59.3 or 1.5.0?  QEMU built fine with it 
-last week, and after yet another ./configure it seems to be chugging 
-along building the new -rc0 tag for the moment...
+Thanks,
+     Jared Rossi
 
-Rob
+
 
