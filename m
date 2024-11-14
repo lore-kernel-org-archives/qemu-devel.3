@@ -4,70 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5163BD68B00
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0209CD68B05
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBZHF-0001yF-HG; Thu, 14 Nov 2024 07:48:49 -0500
+	id 1tBZKc-0002lK-8F; Thu, 14 Nov 2024 07:52:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tBZH9-0001xw-I6
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:48:43 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBZKa-0002ks-7o
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:52:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tBZH6-0004Sc-8y
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:48:42 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBZKY-0005Nq-Sj
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:52:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731588518;
+ s=mimecast20190719; t=1731588732;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/oTcNx3w/U8IBQhXGQ/Wdt0vBn93j/WgCeLMVqtN6GM=;
- b=W0jDd1sca0AWBIqV40burxNHjqqjXf9o9eQdErmfGXYjOCAIwaxgzYiT36vb1h3TwDrZyZ
- 4b0lt0aG3Gdv6iQIPq/ELXDvbsdYPnRcmcW2iikj+uJpVbM7yp/aHrZnkzEB5shzTLbtUl
- q4zlfXa5JmD+Kd/z+tNbkXrgduNfZK4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-30-sEY5j2XyMxWQTt96ksYfsw-1; Thu,
- 14 Nov 2024 07:48:32 -0500
-X-MC-Unique: sEY5j2XyMxWQTt96ksYfsw-1
-X-Mimecast-MFC-AGG-ID: sEY5j2XyMxWQTt96ksYfsw
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B2C61956080; Thu, 14 Nov 2024 12:48:31 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.95])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E6AB51956054; Thu, 14 Nov 2024 12:48:30 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D691821E6A28; Thu, 14 Nov 2024 13:48:28 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Michael Roth
- <michael.roth@amd.com>,
- Markus Armbruster <armbru@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v2 4/4] qapi: expose all schema features to code
-In-Reply-To: <20241018101724.1221152-5-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 18 Oct 2024 11:17:24
- +0100")
-References: <20241018101724.1221152-1-berrange@redhat.com>
- <20241018101724.1221152-5-berrange@redhat.com>
-Date: Thu, 14 Nov 2024 13:48:28 +0100
-Message-ID: <87r07ec76r.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=aT/818/NH+4B5CZIyuGyhQaZ+iiZP1QDba/KUKzV1eQ=;
+ b=TaK0ssFktACfDbc0rLuULEPTtyBWa6dUSI/YUcQigwF//7kNCIINJwqe2WOp6jaV682k7l
+ EBQbwYVpQH76tSMXiMYPZAu5iMwQwcBBhQjowwbZjVDIN1ckXtTppjpZntJBsMsuH0A1bG
+ OPMMt4s611uKWmN2nzl62jTEvH1Hc/4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-368-3rri7GqGMzSaI8EBKjCJQQ-1; Thu, 14 Nov 2024 07:52:09 -0500
+X-MC-Unique: 3rri7GqGMzSaI8EBKjCJQQ-1
+X-Mimecast-MFC-AGG-ID: 3rri7GqGMzSaI8EBKjCJQQ
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4315f48bd70so4519285e9.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 04:52:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731588728; x=1732193528;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aT/818/NH+4B5CZIyuGyhQaZ+iiZP1QDba/KUKzV1eQ=;
+ b=qDOYJ0MvQifRc8fNaCqTFWkpaGHXf3quXxJEHKvokGUP+27XokJ+tzpj/2rgbjK/aw
+ VU08d4yI8kWAdJDzGLY+20iAblUs9GeAsRGpXzw4jtZQIcpyYPss6CNL6qDNgCp4XqMK
+ KCApUViLg9MM9IaZq3iid3A3zjtgeuC+fEXuDzAc2ylaGDJflccbuRBfAALGl8X2aQh8
+ nmEWh/VJ0tzqfg8ONQJFW5FqeQ4yU9LQKlmo4wlajwMlXFncQiLY8RlRxG4KmLFPhVG3
+ 8XUscB66d9SS+kkCHv+kk5svj6mE7oJwiolBWzzNi4AcQAiuaMErLhcMfAiAfgntohg6
+ 81aQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQI+eipEHXk5enhu1jM29a+Ynsv5QwL563zJMDsO3TC7iRS01LCs5ntINjRD3YH0dI2e31pJd5ZUv8@nongnu.org
+X-Gm-Message-State: AOJu0YzI9YfPwC+xVsGNWyHVuPUizxa9leELkF+Em86hls1CSmQfI68J
+ xbFFF0hv3+g/+TPNxDS9rODvc7HTI8gEaowhfwe3otjwzSew0JV6p7DiJp89uDrnGQTqEqu52+S
+ wjkoqIRoc3o+bvEmn/xjpapZ3rKsnt4tJZat33Prt+lA+ubLvOIy8
+X-Received: by 2002:a5d:64af:0:b0:381:f443:21b9 with SMTP id
+ ffacd0b85a97d-3820df5bca3mr5311215f8f.3.1731588727936; 
+ Thu, 14 Nov 2024 04:52:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFOXFTA9cCec/K0PsyMkBp5kkJPj+9tSXpLfiHfJrrUi6xiViMzNqtoS0M+4jFCr7VtOJQ9oQ==
+X-Received: by 2002:a5d:64af:0:b0:381:f443:21b9 with SMTP id
+ ffacd0b85a97d-3820df5bca3mr5311196f8f.3.1731588727524; 
+ Thu, 14 Nov 2024 04:52:07 -0800 (PST)
+Received: from [192.168.10.3] ([151.49.84.243])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-3821ae3102asm1397396f8f.93.2024.11.14.04.52.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Nov 2024 04:52:06 -0800 (PST)
+Message-ID: <b51fce7c-b4eb-4cb4-8f55-d721dc07ca8a@redhat.com>
+Date: Thu, 14 Nov 2024 13:52:05 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: hyperv: add stub for
+ hyperv_syndbg_query_options
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+References: <20241114121555.1697250-1-pbonzini@redhat.com>
+ <a3ad589c-26f8-46b9-b3b0-967ad9620768@tls.msk.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <a3ad589c-26f8-46b9-b3b0-967ad9620768@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -92,487 +144,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 11/14/24 13:41, Michael Tokarev wrote:
+> 14.11.2024 15:15, Paolo Bonzini wrote:
+>> Building without CONFIG_HYPERV is currently broken due to a missing
+>> symbol 'hyperv_syndbg_query_options'.  Add it to the stubs
+>> that exist for that very reasons.
+>>
+>> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> 
+> Rewviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+> 
+> I'm a bit confused though, - why a stub is "better" than an #ifdef,
+> especially in such simple cases?
 
-> This replaces use of the constants from the QapiSpecialFeatures
-> enum, with constants from the auto-generate QapiFeatures enum
-> in qapi-features.h
->
-> The 'deprecated' and 'unstable' features still have a little bit of
-> special handling, being force defined to be the 1st + 2nd features
-> in the enum, regardless of whether they're used in the schema. This
-> retains compatibility with common code that references the features
-> via the QapiSpecialFeatures constants.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  meson.build              |  1 +
->  scripts/qapi/commands.py |  1 +
->  scripts/qapi/features.py | 62 ++++++++++++++++++++++++++++++++++++++++
->  scripts/qapi/gen.py      |  4 +--
->  scripts/qapi/main.py     |  2 ++
->  scripts/qapi/schema.py   | 19 +++++++++++-
->  scripts/qapi/types.py    |  6 ++--
->  scripts/qapi/visit.py    |  3 +-
->  8 files changed, 92 insertions(+), 6 deletions(-)
->  create mode 100644 scripts/qapi/features.py
->
-> diff --git a/meson.build b/meson.build
-> index d26690ce20..b9d58be66f 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3332,6 +3332,7 @@ qapi_gen_depends =3D [ meson.current_source_dir() /=
- 'scripts/qapi/__init__.py',
->                       meson.current_source_dir() / 'scripts/qapi/schema.p=
-y',
->                       meson.current_source_dir() / 'scripts/qapi/source.p=
-y',
->                       meson.current_source_dir() / 'scripts/qapi/types.py=
-',
-> +                     meson.current_source_dir() / 'scripts/qapi/features=
-.py',
->                       meson.current_source_dir() / 'scripts/qapi/visit.py=
-',
->                       meson.current_source_dir() / 'scripts/qapi-gen.py'
->  ]
-> diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
-> index d629d2d97e..bf88bfc442 100644
-> --- a/scripts/qapi/commands.py
-> +++ b/scripts/qapi/commands.py
-> @@ -355,6 +355,7 @@ def visit_begin(self, schema: QAPISchema) -> None:
->  #include "qemu/osdep.h"
->  #include "%(prefix)sqapi-commands.h"
->  #include "%(prefix)sqapi-init-commands.h"
-> +#include "%(prefix)sqapi-features.h"
->=20=20
->  void %(c_prefix)sqmp_init_marshal(QmpCommandList *cmds)
->  {
-> diff --git a/scripts/qapi/features.py b/scripts/qapi/features.py
-> new file mode 100644
-> index 0000000000..dc10c7cea0
-> --- /dev/null
-> +++ b/scripts/qapi/features.py
-> @@ -0,0 +1,62 @@
-> +"""
-> +QAPI types generator
-
-QAPI features generator
-
-> +
-> +Copyright 2024 Red Hat
-> +
-> +This work is licensed under the terms of the GNU GPL, version 2.
-> +# See the COPYING file in the top-level directory.
-> +"""
-> +
-> +from typing import List, Optional
-
-pylint gripes
-
-    scripts/qapi/features.py:10:0: W0611: Unused List imported from typing =
-(unused-
-    import)
-    scripts/qapi/features.py:10:0: W0611: Unused Optional imported from typ=
-ing (unused-import)
-
-> +
-> +from .common import c_enum_const, mcgen, c_name
-
-    scripts/qapi/features.py:12:0: W0611: Unused mcgen imported from common=
- (unused-import)
-
-> +from .gen import QAPISchemaMonolithicCVisitor
-> +from .schema import (
-> +    QAPISchema,
-> +    QAPISchemaFeature,
-> +)
-> +from .source import QAPISourceInfo
-
-    scripts/qapi/features.py:18:0: W0611: Unused QAPISourceInfo imported fr=
-om source (unused-import)
-
-> +
-> +
-> +class QAPISchemaGenFeatureVisitor(QAPISchemaMonolithicCVisitor):
-> +
-> +    def __init__(self, prefix: str):
-> +        super().__init__(
-> +            prefix, 'qapi-features',
-> +            ' * Schema-defined QAPI features',
-> +            __doc__)
-> +
-> +        self.features =3D {}
-
-mypy gripes
-
-    scripts/qapi/features.py:29: error: Need type annotation for "features"=
- (hint: "features: Dict[<type>, <type>] =3D ...")  [var-annotated]
-
-Elsewhere, we avoid rummaging in QAPISchema's innards by defining
-suitable visit.  If that's too much trouble for you now, I can take this
-as is an clean up on top.
-
-> +
-> +    def visit_begin(self, schema: QAPISchema):
-
-mypy gripes
-
-    scripts/qapi/features.py:31: error: Function is missing a return type a=
-nnotation  [no-untyped-def]
-
-> +        self.features =3D schema._feature_dict
-
-pylint gripes
-
-    scripts/qapi/features.py:32:24: W0212: Access to a protected member _fe=
-ature_dict of a client class (protected-access)
-
-> +
-> +    def visit_end(self) -> None:
-> +        features =3D [
-> +            self.features[f]
-> +            for f in QAPISchemaFeature.SPECIAL_NAMES
-> +        ]
-> +
-> +        features.extend(
-> +            sorted(
-> +                filter(lambda f: not f.is_special(),
-> +                       self.features.values()),
-> +                key=3Dlambda f: f.name)
-> +        )
-
-@features is schema._feature_dict.values() sorted by name in a certain
-way, namely first the .SPECIAL_NAMES in order, then all the others in
-alphabetical order.
-
-Why you do this is not immediately obvious.  I guess it's to make the
-generated enum a compatible extension of enum QapiSpecialFeature.  That
-one exists for use by schema-independent support code such
-compat_policy_input_ok() and qobject_output_policy_skip().
-
-I further guess you sort the non-special features just to make the
-generated code easier for humans to navigate.
-
-Correct?
-
-> +
-> +        self._genh.add("typedef enum {\n")
-> +        for f in features:
-> +            self._genh.add(f"    {c_enum_const('qapi_feature', f.name)}")
-> +            if f.name in QAPISchemaFeature.SPECIAL_NAMES:
-> +                self._genh.add(f" =3D {c_enum_const('qapi', f.name)},\n"=
- )
-
-pycodestyle gripes
-
-    scripts/qapi/features.py:51:71: E202 whitespace before ')'
-
-> +            else:
-> +                self._genh.add(",\n")
-> +
-> +        self._genh.add("} " + c_name('QapiFeature') + ";\n")
-> +
-
-pycodestyle gripes
-
-    scripts/qapi/features.py:57:1: E302 expected 2 blank lines, found 1
-
-This part generates a C enum.  It's similar to gen_enum() from types.py,
-except we work with a list of QAPISchemaFeature here, and a list of
-QAPISchemaEnumMember there.
-
-To reuse gen_enum() here, we'd have to make up a member list, like we do
-in events.py for enum QAPIEvent.
-
-> +def gen_features(schema: QAPISchema,
-> +                 output_dir: str,
-> +                 prefix: str) -> None:
-> +    vis =3D QAPISchemaGenFeatureVisitor(prefix)
-> +    schema.visit(vis)
-> +    vis.write(output_dir)
-> diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
-> index aba1a982f6..6ef603941c 100644
-> --- a/scripts/qapi/gen.py
-> +++ b/scripts/qapi/gen.py
-> @@ -42,8 +42,8 @@
->=20=20
->=20=20
->  def gen_features(features: Sequence[QAPISchemaFeature]) -> str:
-> -    features =3D [f"1u << {c_enum_const('qapi', feat.name)}"
-> -                        for feat in features if feat.is_special()]
-> +    features =3D [f"1u << {c_enum_const('qapi_feature', feat.name)}"
-> +                        for feat in features]
->      return ' | '.join(features) or '0'
->=20=20
->=20=20
-> diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
-> index 316736b6a2..2b9a2c0c02 100644
-> --- a/scripts/qapi/main.py
-> +++ b/scripts/qapi/main.py
-> @@ -18,6 +18,7 @@
->  from .introspect import gen_introspect
->  from .schema import QAPISchema
->  from .types import gen_types
-> +from .features import gen_features
->  from .visit import gen_visit
->=20=20
->=20=20
-> @@ -49,6 +50,7 @@ def generate(schema_file: str,
->=20=20
->      schema =3D QAPISchema(schema_file)
->      gen_types(schema, output_dir, prefix, builtins)
-> +    gen_features(schema, output_dir, prefix)
->      gen_visit(schema, output_dir, prefix, builtins)
->      gen_commands(schema, output_dir, prefix, gen_tracing)
->      gen_events(schema, output_dir, prefix)
-> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-> index e97c978d38..5e14b1829b 100644
-> --- a/scripts/qapi/schema.py
-> +++ b/scripts/qapi/schema.py
-> @@ -933,8 +933,11 @@ def connect_doc(self, doc: Optional[QAPIDoc]) -> Non=
-e:
->  class QAPISchemaFeature(QAPISchemaMember):
->      role =3D 'feature'
->=20=20
-> +    # Features which are standardized across all schemas
-> +    SPECIAL_NAMES =3D ['deprecated', 'unstable']
-> +
->      def is_special(self) -> bool:
-> -        return self.name in ('deprecated', 'unstable')
-> +        return self.name in QAPISchemaFeature.SPECIAL_NAMES
->=20=20
->=20=20
->  class QAPISchemaObjectTypeMember(QAPISchemaMember):
-> @@ -1138,6 +1141,11 @@ def __init__(self, fname: str):
->          self._entity_list: List[QAPISchemaEntity] =3D []
->          self._entity_dict: Dict[str, QAPISchemaDefinition] =3D {}
->          self._module_dict: Dict[str, QAPISchemaModule] =3D OrderedDict()
-> +        self._feature_dict: Dict[str, QAPISchemaFeature] =3D {}
-> +
-> +        for f in QAPISchemaFeature.SPECIAL_NAMES:
-> +            self._feature_dict[f] =3D QAPISchemaFeature(f, "special feat=
-ure")
-
-mypy gripes
-
-    scripts/qapi/schema.py:1147: error: Argument 2 to "QAPISchemaFeature" h=
-as incompatible type "str"; expected "Optional[QAPISourceInfo]"  [arg-type]
-
-We commonly use None as info value for built-in stuff, and that's why
-it's Optional[QAPISourceInfo], not just QAPISourceInfo.
-
-But do we really need to make up some QAPISchemaFeature?  Hmm.  The
-appended patch dumbs down ._feature_dict to a set.
-
-> +
->          self._schema_dir =3D os.path.dirname(fname)
->          self._make_module(QAPISchemaModule.BUILTIN_MODULE_NAME)
->          self._make_module(fname)
-> @@ -1258,6 +1266,15 @@ def _make_features(
->      ) -> List[QAPISchemaFeature]:
->          if features is None:
->              return []
-> +
-> +        for f in features:
-> +            feat =3D QAPISchemaFeature(f['name'], info)
-> +            if feat.name not in self._feature_dict:
-> +                if len(self._feature_dict) =3D=3D 64:
-> +                    raise Exception("Maximum of 64 schema features is pe=
-rmitted")
-
-The limit is an implementation restriction.  Okay, we can lift it when
-it bites us.
-
-However, the reporting is less than nice:
-
-    $ python scripts/qapi-gen.py -o $$ tests/qapi-schema/features-too-many.=
-json=20
-    Traceback (most recent call last):
-      File "/work/armbru/qemu/scripts/qapi-gen.py", line 19, in <module>
-        sys.exit(main.main())
-                 ^^^^^^^^^^^
-      File "/work/armbru/qemu/scripts/qapi/main.py", line 96, in main
-        generate(args.schema,
-      File "/work/armbru/qemu/scripts/qapi/main.py", line 51, in generate
-        schema =3D QAPISchema(schema_file)
-                 ^^^^^^^^^^^^^^^^^^^^^^^
-      File "/work/armbru/qemu/scripts/qapi/schema.py", line 1155, in __init=
-__
-        self._def_exprs(exprs)
-      File "/work/armbru/qemu/scripts/qapi/schema.py", line 1482, in _def_e=
-xprs
-        self._def_struct_type(expr)
-      File "/work/armbru/qemu/scripts/qapi/schema.py", line 1377, in _def_s=
-truct_type
-        features =3D self._make_features(expr.get('features'), info)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-      File "/work/armbru/qemu/scripts/qapi/schema.py", line 1274, in _make_=
-features
-        raise Exception("Maximum of 64 schema features is permitted")
-    Exception: Maximum of 64 schema features is permitted
-
-
-
-> +
-> +                self._feature_dict[feat.name] =3D feat
-> +
->          return [QAPISchemaFeature(f['name'], info,
->                                    QAPISchemaIfCond(f.get('if')))
->                  for f in features]
-> diff --git a/scripts/qapi/types.py b/scripts/qapi/types.py
-> index ade6b7a3d7..7618d3eb6f 100644
-> --- a/scripts/qapi/types.py
-> +++ b/scripts/qapi/types.py
-> @@ -308,11 +308,13 @@ def _begin_user_module(self, name: str) -> None:
->  #include "qapi/dealloc-visitor.h"
->  #include "%(types)s.h"
->  #include "%(visit)s.h"
-> +#include "%(prefix)sqapi-features.h"
->  ''',
-> -                                      types=3Dtypes, visit=3Dvisit))
-> +                                      types=3Dtypes, visit=3Dvisit, pref=
-ix=3Dself._prefix))
-
-Long line, easy to break:
-
-                                         types=3Dtypes, visit=3Dvisit,
-                                         prefix=3Dself._prefix))
-
->          self._genh.preamble_add(mcgen('''
->  #include "qapi/qapi-builtin-types.h"
-> -'''))
-> +''',
-> +                                      prefix=3Dself._prefix))
->=20=20
->      def visit_begin(self, schema: QAPISchema) -> None:
->          # gen_object() is recursive, ensure it doesn't visit the empty t=
-ype
-> diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
-> index 8dbf4ef1c3..2d678c281d 100644
-> --- a/scripts/qapi/visit.py
-> +++ b/scripts/qapi/visit.py
-> @@ -360,8 +360,9 @@ def _begin_user_module(self, name: str) -> None:
->  #include "qemu/osdep.h"
->  #include "qapi/error.h"
->  #include "%(visit)s.h"
-> +#include "%(prefix)sqapi-features.h"
->  ''',
-> -                                      visit=3Dvisit))
-> +                                      visit=3Dvisit, prefix=3Dself._pref=
-ix))
->          self._genh.preamble_add(mcgen('''
->  #include "qapi/qapi-builtin-visit.h"
->  #include "%(types)s.h"
-
-
-diff --git a/scripts/qapi/features.py b/scripts/qapi/features.py
-index dc10c7cea0..3662c1e568 100644
---- a/scripts/qapi/features.py
-+++ b/scripts/qapi/features.py
-@@ -7,7 +7,7 @@
- # See the COPYING file in the top-level directory.
- """
-=20
--from typing import List, Optional
-+from typing import List, Optional, Set
-=20
- from .common import c_enum_const, mcgen, c_name
- from .gen import QAPISchemaMonolithicCVisitor
-@@ -26,29 +26,25 @@ def __init__(self, prefix: str):
-             ' * Schema-defined QAPI features',
-             __doc__)
-=20
--        self.features =3D {}
-+        self.features: Set['str']
-=20
--    def visit_begin(self, schema: QAPISchema):
--        self.features =3D schema._feature_dict
-+    def visit_begin(self, schema: QAPISchema) -> None:
-+        self.features =3D schema._features
-=20
-     def visit_end(self) -> None:
--        features =3D [
--            self.features[f]
--            for f in QAPISchemaFeature.SPECIAL_NAMES
--        ]
-+        features =3D QAPISchemaFeature.SPECIAL_NAMES.copy()
-=20
-         features.extend(
-             sorted(
--                filter(lambda f: not f.is_special(),
--                       self.features.values()),
--                key=3Dlambda f: f.name)
-+                filter(lambda f: f not in QAPISchemaFeature.SPECIAL_NAMES,
-+                       self.features))
-         )
-=20
-         self._genh.add("typedef enum {\n")
-         for f in features:
--            self._genh.add(f"    {c_enum_const('qapi_feature', f.name)}")
--            if f.name in QAPISchemaFeature.SPECIAL_NAMES:
--                self._genh.add(f" =3D {c_enum_const('qapi', f.name)},\n" )
-+            self._genh.add(f"    {c_enum_const('qapi_feature', f)}")
-+            if f in QAPISchemaFeature.SPECIAL_NAMES:
-+                self._genh.add(f" =3D {c_enum_const('qapi', f)},\n" )
-             else:
-                 self._genh.add(",\n")
-=20
-diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
-index 6ef603941c..3fb84d36c2 100644
---- a/scripts/qapi/gen.py
-+++ b/scripts/qapi/gen.py
-@@ -42,9 +42,9 @@
-=20
-=20
- def gen_features(features: Sequence[QAPISchemaFeature]) -> str:
--    features =3D [f"1u << {c_enum_const('qapi_feature', feat.name)}"
-+    feats =3D [f"1u << {c_enum_const('qapi_feature', feat.name)}"
-                         for feat in features]
--    return ' | '.join(features) or '0'
-+    return ' | '.join(feats) or '0'
-=20
-=20
- class QAPIGen:
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index 5e14b1829b..dd71cbc8b7 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -28,6 +28,7 @@
-     Dict,
-     List,
-     Optional,
-+    Set,
-     Union,
-     cast,
- )
-@@ -1141,10 +1142,7 @@ def __init__(self, fname: str):
-         self._entity_list: List[QAPISchemaEntity] =3D []
-         self._entity_dict: Dict[str, QAPISchemaDefinition] =3D {}
-         self._module_dict: Dict[str, QAPISchemaModule] =3D OrderedDict()
--        self._feature_dict: Dict[str, QAPISchemaFeature] =3D {}
--
--        for f in QAPISchemaFeature.SPECIAL_NAMES:
--            self._feature_dict[f] =3D QAPISchemaFeature(f, "special featur=
-e")
-+        self._features: Set[str] =3D set(QAPISchemaFeature.SPECIAL_NAMES)
-=20
-         self._schema_dir =3D os.path.dirname(fname)
-         self._make_module(QAPISchemaModule.BUILTIN_MODULE_NAME)
-@@ -1269,11 +1267,11 @@ def _make_features(
-=20
-         for f in features:
-             feat =3D QAPISchemaFeature(f['name'], info)
--            if feat.name not in self._feature_dict:
--                if len(self._feature_dict) =3D=3D 64:
-+            if feat.name not in self._features:
-+                if len(self._features) =3D=3D 64:
-                     raise Exception("Maximum of 64 schema features is perm=
-itted")
-=20
--                self._feature_dict[feat.name] =3D feat
-+                self._features.add(feat.name)
-=20
-         return [QAPISchemaFeature(f['name'], info,
-                                   QAPISchemaIfCond(f.get('if')))
+To be honest the #ifdef was the first thing I did (#ef
+> Restoring the #ifdef around this place fixes the build.
+> I understand if the function in question were used in lots of
+> places around the code, but here it's not the case.
+> 
+> Another option would be, instead of stubs, to use:
+> 
+> #ifndef CONFIG_SYNDBY
+> #define hyperv_syndbg_query_options() 0
+> #endif
+> 
+> which will make stubs unnecessary entirely.
+> 
+>> ---
+>>   target/i386/kvm/hyperv-stub.c | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/target/i386/kvm/hyperv-stub.c b/target/i386/kvm/hyperv- 
+>> stub.c
+>> index 3263dcf05d3..5836f53c23b 100644
+>> --- a/target/i386/kvm/hyperv-stub.c
+>> +++ b/target/i386/kvm/hyperv-stub.c
+>> @@ -56,3 +56,8 @@ void hyperv_x86_synic_update(X86CPU *cpu)
+>>   void hyperv_x86_set_vmbus_recommended_features_enabled(void)
+>>   {
+>>   }
+>> +
+>> +uint64_t hyperv_syndbg_query_options(void)
+>> +{
+>> +    return 0;
+>> +}
+> 
+> Thanks,
+> 
+> /mjt
+> 
+> 
 
 
