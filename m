@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3380CD68B09
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC42D68B07
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:10:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBZa1-0003jj-1D; Thu, 14 Nov 2024 08:08:13 -0500
+	id 1tBZcB-0005EP-6Q; Thu, 14 Nov 2024 08:10:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tBZZj-0003b5-Vg
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:07:57 -0500
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tBZZf-00049R-GA
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:07:55 -0500
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2fb5fa911aaso9710601fa.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 05:07:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731589669; x=1732194469; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JWMRWYoKOuqB8XMnLbB/aSezhGwd0gHWTPVQDSETIqA=;
- b=YPFua7VDU7WEFVBjOc3nmNQVnIa5hjtQIR7kJ891vuXRuG+vDsQP0r1F9Fz6rRRspd
- Qo9eiJWa5MqIjdtxyxIw8ZB2DZjX0IpRqwDmf5j+ge9rfEMOkAbs41yR48y9X61Wo05f
- LPcID5Nu2JiAQ/wiwjWFQscqwXYYeDgwf/gO3cppJ9eGWZFdf/Ib0F1U1/DNsOfz6wFJ
- HOA3ma7ZmT2oS3wMRCK+awg9CMubLTVcIDQay3n1SGfQmJ1eQd4MehnzdCvrnwaU62pB
- NYksgbLSATCrttg5v6BOxPcCtQSjAgaId5BOcKbHT4lFfhrzz6FyIVKg/tb9wft2Fiap
- 5Stg==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tBZc9-0005D6-EW
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:10:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1tBZc7-0004iR-Q5
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:10:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731589822;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TNeP4PoI1dPOAUqG+AaLv0MX9k+dBpNJf5ieMxtsMQc=;
+ b=JX3S9wgwrnmSj03MVD316rLRJjtjT+JOuv0xhSkUgvDCo6ePNp75oii5a8EyzK7uB88uEY
+ oLp1l3B3ZQQP3Y+PnQHLpWA891flkRnfJJ4qKGzkFDQyJvQTXpkHwqDv/hGTM/j4tDZMoi
+ /T7Xr005hDwMfyZG3no/M91nGnF1LzU=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-614-4VvnvrjmM3ijiaPSWShiJA-1; Thu, 14 Nov 2024 08:10:18 -0500
+X-MC-Unique: 4VvnvrjmM3ijiaPSWShiJA-1
+X-Mimecast-MFC-AGG-ID: 4VvnvrjmM3ijiaPSWShiJA
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6d35062e1fcso7430316d6.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 05:10:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731589669; x=1732194469;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JWMRWYoKOuqB8XMnLbB/aSezhGwd0gHWTPVQDSETIqA=;
- b=jOknYnlIAV2p2C8zRXeAyjL6sE8XVkvIe+s+RjQPnwh8HNbRcYqjR2cziI4tsQeVsm
- HwRGdPutCFJon+reMB/o+XGpDwUNgFKLlYMamLdRCW1xFRZmZhmgo2SdU6cSsenr1qb1
- TJUPdyHpGU5iqAYUUQR1WoqaTeUuZanPxGkEI38WstKJIIElkBocolppCDwLf58C8MWu
- 9JkvAybrrs9vFZG0PW1Lrz0aBdroU+0I6I4iyQIpycFrNZ6JF5g5yBVI21ZHnVhc0oTK
- Zadj23AaTcrvRuRxfPIGujkYPQ5kH+sqtUfJp9tl67H89UZ+3SvNy/J+sCMbqWgjEMTm
- JaZw==
-X-Gm-Message-State: AOJu0YwORCK1Sa/VcdnEXuf189q4iHFIQlcIt+/Z3wfbjz0kOv9tTGdl
- Es6GmUfEi4tr6dKFH449DjlfKbpzTdXg0KVmpwubMfsaXIES7J3v0ZWSkif4OaY=
-X-Google-Smtp-Source: AGHT+IFOgO87CsSjvfRfNU2mOzqXJq1vlR88Qu7fL7Xs+XffnFe1mQCBoaFzU9JSVIWEGhOVEOZh2A==
-X-Received: by 2002:a05:651c:b24:b0:2fb:63b5:c0bc with SMTP id
- 38308e7fff4ca-2ff5900aeeamr17059191fa.3.1731589668997; 
- Thu, 14 Nov 2024 05:07:48 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20dffba13sm61361066b.95.2024.11.14.05.07.47
+ d=1e100.net; s=20230601; t=1731589818; x=1732194618;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TNeP4PoI1dPOAUqG+AaLv0MX9k+dBpNJf5ieMxtsMQc=;
+ b=CkpbyBzNuzwFd47SWDUsPL+ElOgqS91W/nWulwaR9W6kAPv8pL74uRuRUk0fiAF+fv
+ hOrK3YHmbojQ4zye5/+jnAMYuhemV9RweQB2YMqQMPgtDD/fRNNiuzQQMOTju9JgPjwz
+ qQYjn04rYCAA0InI30mqSSROY62HnimeNec64q7v+vHjsLIe+1FIhNu8WPns6tA01VK5
+ Szw/EZQ1GIYEc380NMD1l6FoonxFJAkZW+ES4/011zgNt+P+HtX16ndjgL3RzL6vBnwh
+ 5H2kO2+aao/6pWC8wDKd8i4epoG/N6um5Z9uxKBBAWrPA7wzf9n2DVHjv23VpfGX90Xc
+ 8fiA==
+X-Gm-Message-State: AOJu0YwvD+/sftZLkm3JZVZ9aTnUPxwDKimV5yHbuZd3mBVoKf2UXmJn
+ /JG69bvWY6b9a43HMzARxjEQn14tQi2d+dLPjX3s8+7EfhX0xqssqHpJt4SM+vZag9O4Bov1cqx
+ Paf1Qj2axc/RgrLZixlNPiSDqMoR2KXB/6/OJEioA03A+alFJGtMF
+X-Received: by 2002:a05:6214:4607:b0:6cb:d4ed:aa59 with SMTP id
+ 6a1803df08f44-6d3edd389eamr22096226d6.4.1731589818247; 
+ Thu, 14 Nov 2024 05:10:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHNcvZJuVHd/ftba2MpfkJvhehcdiN6f4UBY/570MH85ojraa0idT3RLDoZpeO7q9lDgDn4aA==
+X-Received: by 2002:a05:6214:4607:b0:6cb:d4ed:aa59 with SMTP id
+ 6a1803df08f44-6d3edd389eamr22095976d6.4.1731589817838; 
+ Thu, 14 Nov 2024 05:10:17 -0800 (PST)
+Received: from sgarzare-redhat (host-79-46-200-129.retail.telecomitalia.it.
+ [79.46.200.129]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d3ee8c4274sm5166346d6.75.2024.11.14.05.10.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 05:07:47 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0F5715F867;
- Thu, 14 Nov 2024 13:07:47 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  manos.pitsidianakis@linaro.org,
- kwolf@redhat.com,  junjie.mao@hotmail.com,  zhao1.liu@intel.com,
- qemu-rust@nondevel.org
-Subject: Re: [RFC PATCH 00/11] rust: improved integration with cargo
-In-Reply-To: <20241108180139.117112-1-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Fri, 8 Nov 2024 19:01:28 +0100")
-References: <20241108180139.117112-1-pbonzini@redhat.com>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Thu, 14 Nov 2024 13:07:46 +0000
-Message-ID: <87plmyrmjh.fsf@draig.linaro.org>
+ Thu, 14 Nov 2024 05:10:17 -0800 (PST)
+Date: Thu, 14 Nov 2024 14:10:11 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: "Zuo,Boqun" <zuoboqun@baidu.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ "Gao,Shiyuan" <gaoshiyuan@baidu.com>
+Subject: Re: [PATCH] vhost_net: fix assertion triggered by batch of host
+ notifiers processing
+Message-ID: <kvbv7hbsloklwcb5zooqgveb2253sf7mil7ykkotgfhcqbtn6c@cnspmyskyeey>
+References: <6e6f624c7a2a489b88dba0a44e6013d1@baidu.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <6e6f624c7a2a489b88dba0a44e6013d1@baidu.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,104 +104,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Thu, Nov 14, 2024 at 11:08:35AM +0000, Zuo,Boqun wrote:
+>On Thursday, November 14, 2024 6:54 PM, Stefano Garzarella wrote:
+>> >
+>> >When the backend of vhost_net restarts during the vm is running,
+>> >vhost_net is stopped and started. The virtio_device_grab_ioeventfd()
+>> >fucntion in
+>> >vhost_net_enable_notifiers() will result in a call to
+>> >virtio_bus_set_host_notifier()(assign=false).
+>> >
+>> >And now virtio_device_grab_ioeventfd() is batched in a single
+>> >transaction with virtio_bus_set_host_notifier()(assign=true).
+>> >
+>> >This triggers the following assertion:
+>> >
+>> >kvm_mem_ioeventfd_del: error deleting ioeventfd: Bad file descriptor
+>> >
+>> >This patch moves virtio_device_grab_ioeventfd() out of the batch to fix
+>> >this problem.
+>> >
+>> >Fixes: 6166799f6 ("vhost_net: configure all host notifiers in a single
+>> >MR transaction")
+>> >Reported-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+>> >Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
+>> >---
+>> > hw/net/vhost_net.c | 31 ++++++++++++++++++++-----------
+>> > 1 file changed, 20 insertions(+), 11 deletions(-)
+>> >
+>> >diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c index
+>> >997aab0557..eb3e92ca0d 100644
+>> >--- a/hw/net/vhost_net.c
+>> >+++ b/hw/net/vhost_net.c
+>> >@@ -229,9 +229,24 @@ static int vhost_net_enable_notifiers(VirtIODevice
+>> *dev,
+>> >     int nvhosts = data_queue_pairs + cvq;
+>> >     struct vhost_net *net;
+>> >     struct vhost_dev *hdev;
+>> >-    int r, i, j;
+>> >+    int r, i, j, k;
+>> >     NetClientState *peer;
+>> >
+>> >+    /*
+>> >+     * We will pass the notifiers to the kernel, make sure that QEMU
+>> >+     * doesn't interfere.
+>> >+     */
+>> >+    for (i = 0; i < nvhosts; i++) {
+>> >+        r = virtio_device_grab_ioeventfd(dev);
+>> >+        if (r < 0) {
+>> >+            error_report("vhost %d binding does not support host 
+>> >notifiers", i);
+>> >+            for (k = 0; k < i; k++) {
+>> >+                virtio_device_release_ioeventfd(dev);
+>> >+            }
+>> >+            return r;
+>> >+        }
+>> >+    }
+>> >+
+>> >     /*
+>> >      * Batch all the host notifiers in a single transaction to avoid
+>> >      * quadratic time complexity in address_space_update_ioeventfds().
+>> >@@ -247,16 +262,6 @@ static int vhost_net_enable_notifiers(VirtIODevice
+>> >*dev,
+>> >
+>> >         net = get_vhost_net(peer);
+>> >         hdev = &net->dev;
+>> >-        /*
+>> >-         * We will pass the notifiers to the kernel, make sure that QEMU
+>> >-         * doesn't interfere.
+>> >-         */
+>> >-        r = virtio_device_grab_ioeventfd(dev);
+>> >-        if (r < 0) {
+>> >-            error_report("binding does not support host notifiers");
+>> >-            memory_region_transaction_commit();
+>> >-            goto fail_nvhosts;
+>> >-        }
+>> >
+>> >         for (j = 0; j < hdev->nvqs; j++) {
+>> >             r = virtio_bus_set_host_notifier(VIRTIO_BUS(qbus),
+>> >@@ -277,6 +282,10 @@ static int vhost_net_enable_notifiers(VirtIODevice
+>> *dev,
+>> >     return 0;
+>> > fail_nvhosts:
+>> >     vhost_net_disable_notifiers_nvhosts(dev, ncs, data_queue_pairs,
+>> >i);
+>>
+>> IIUC this call is disabling notifiers from 0 to `i - 1` ...
+>>
+>> >+    for (k = i + 1; k < nvhosts; k++) {
+>>
+>> ... so, should we start from `i`, instead of `i + 1`?
+>>
+>> Thanks,
+>> Stefano
+>
+>The notifier `i` has been released when vhost_net_enable_notifiers() call vhost_dev_disable_notifiers_nvqs():
+>
+>        for (j = 0; j < hdev->nvqs; j++) {
+>            r = virtio_bus_set_host_notifier(VIRTIO_BUS(qbus),
+>                                             hdev->vq_index + j,
+>                                             true);
+>            if (r < 0) {
+>                error_report("vhost %d VQ %d notifier binding failed: %d",
+>                              i, j, -r);
+>                memory_region_transaction_commit();
+>=>            vhost_dev_disable_notifiers_nvqs(hdev, dev, j);
+>                goto fail_nvhosts;
+>            }
+>        }
+>
+>So we should start from `i+1`...
 
-> While we're not sure where we'll be going in the future, for now
-> using cargo remains an important part of developing QEMU Rust code.
-> This is because cargo is the easiest way to run clippy, rustfmt,
-> rustdoc.  Cargo also allows working with doc tests, though there are
-> pretty much none yet, and provides tools such as "cargo expand".
->
-> This series aims at improving the integration with cargo and
-> cargo-based tooling.
->
-> First, while it is currently possible to run cargo on the rust/ directory,
-> but it has the issue that the bindings.rs must be placed by hand in
-> the build directory.  Therefore, this series starts by allowing
-> cargo to "just work" when run in a "meson devenv" environment:
->
->     meson devenv -w ../rust cargo clippy --tests
->     meson devenv -w ../rust cargo fmt
+Ok, I see now.
+That is really hidden, so please describe it in the commit message and 
+also add a comment in the code.
 
-Is this meant to be the rust source root, or the root of the rust
-builddir:
-
-$ meson devenv ../../rust
-
-ERROR: Build data file './meson-private/build.dat' references functions or =
-classes that don't exist. This probably means that it was generated with an=
- old version of meson. Try running from the source directory meson setup . =
---wipe
-=F0=9F=95=9913:05:22 alex@draig:qemu.git/builds/rust  on =EE=82=A0 review/r=
-ust-cargo-rfc [$!?] [=F0=9F=94=B4 ERROR]=20
-$ meson devenv rust
-
-ERROR: Build data file './meson-private/build.dat' references functions or =
-classes that don't exist. This probably means that it was generated with an=
- old version of meson. Try running from the source directory meson setup . =
---wipe
-=F0=9F=95=9913:05:53 alex@draig:qemu.git/builds/rust  on =EE=82=A0 review/r=
-ust-cargo-rfc [$!?] [=F0=9F=94=B4 ERROR]=20
+Thanks,
+Stefano
 
 >
-> If you are going to use cargo repeatedly, invoking just 'meson devenv'
-> will put you in a shell where commands like 'cargo clippy' just work.
-> For simplicity, I am also adding two targets 'make clippy' and 'make
-> rustfmt'.
+>>
+>> >+        virtio_device_release_ioeventfd(dev);
+>> >+    }
+>> >+
+>> >     return r;
+>> > }
+>> >
+>> >--
+>> >2.42.0.windows.2
+>> >
 >
-> Secondly, one problem with mixing Cargo and meson is having to redo the
-> configuration of "lints" in both sides.  This series standardizes
-> on using Cargo.toml to configure the build, and bringing the flags
-> over to build.ninja with extensions to the existing rustc_args.py script.
-> I admit that these additions to the script are pretty large and therefore
-> I'm open to scrapping the idea.  I tried to organize the changes so that
-> the changes are split over multiple patches.
->
-> Finally, this series adds a CI job that runs rustfmt, clippy, and
-> rustdoc, including running doctests.
->
-> Please send comments!
->
-> Paolo
->
-> Paolo Bonzini (11):
->   rust: qemu_api: do not disable lints outside bindgen-generated code
->   rust: build: move rustc_args.py invocation to individual crates
->   rust: build: restrict --cfg generation to only required symbols
->   rust: build: generate warning flags from Cargo.toml
->   rust: cargo: store desired warning levels in workspace Cargo.toml
->   rust: build: move strict lints handling to rustc_args.py
->   rust: fix a couple style issues from clippy
->   rust: build: establish a baseline of lints across all crates
->   rust: build: add "make clippy", "make rustfmt"
->   rust: fix doc test syntax
->   rust: ci: add job that runs Rust tools
->
->  meson.build                                   |  56 +++---
->  .gitlab-ci.d/buildtest-template.yml           |  14 ++
->  .gitlab-ci.d/buildtest.yml                    |  14 ++
->  rust/Cargo.toml                               |  80 ++++++++
->  rust/hw/char/pl011/Cargo.toml                 |   3 +
->  rust/hw/char/pl011/src/device.rs              |   6 +-
->  rust/hw/char/pl011/src/lib.rs                 |  18 +-
->  rust/hw/char/pl011/src/memory_ops.rs          |   4 +-
->  rust/meson.build                              |  14 ++
->  rust/qemu-api-macros/Cargo.toml               |   3 +
->  rust/qemu-api/.gitignore                      |   2 +-
->  rust/qemu-api/Cargo.toml                      |   5 +-
->  rust/qemu-api/build.rs                        |  24 ++-
->  rust/qemu-api/meson.build                     |   5 +
->  rust/qemu-api/src/bindings.rs                 |  29 +++
->  rust/qemu-api/src/lib.rs                      |  22 ---
->  rust/qemu-api/src/zeroable.rs                 |   6 +-
->  rust/qemu-api/tests/tests.rs                  |   2 +-
->  scripts/rust/rustc_args.py                    | 178 ++++++++++++++++--
->  .../dockerfiles/fedora-rust-nightly.docker    |   4 +
->  tests/lcitool/refresh                         |   4 +
->  21 files changed, 391 insertions(+), 102 deletions(-)
->  create mode 100644 rust/qemu-api/src/bindings.rs
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
