@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D48D7D68B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A1E8D68B35
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcIf-0005GS-Kb; Thu, 14 Nov 2024 11:02:29 -0500
+	id 1tBcNN-0003zo-G5; Thu, 14 Nov 2024 11:07:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcI5-0004zw-2m
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:56 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1tBcLj-0001wv-Ew
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:43 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcI0-0002DZ-TS
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:51 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-72467c35ddeso751977b3a.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:44 -0800 (PST)
+ id 1tBcLd-00039n-ND
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:39 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-20cdb889222so8296375ad.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:05:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600103; x=1732204903; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600331; x=1732205131; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=E4pmRCXWy/4R+SRD3ehMnfQVgg8YaLPMO4JGcA4dSk8=;
- b=YU3qMoSb8fhIO3z6Bi1giY3GVMyh1JkLCYDKBz+q7RKVqMUph72B4i9dKVieXWCG3T
- X+h0p8QEFDPufOSNQLftQsKLVJUp2sP1Bk0xlQy+qMGy0ZZCrAJ7/YTNA+UmkgPllAMP
- iRMmZFb3PpgCEBw2IMizmVWEEoUbf3zbDuzpiK7Hy48v9RzfIWQCr0XAr9UYd2T+cbR4
- kLgCkWnDMUIsExNDhio15v3PiQiavti8qVYivnf3sZsWcYTs8bqHHb5lqhcPVAiSY6Ru
- 91aQbE74zfF+8yVscdG4pOj00Hy3y0NqRdINa12EnmQWjoP+chG73ANwHHaZIQLCuhDV
- pSNw==
+ :reply-to; bh=kszkBxHzd0i3pHfwTrRD6LMnpSdmBjH+8x+WNocCo4c=;
+ b=JaYBhne0qGJs/FNxFWMqbHW0IPxJpAkOqHv0C0W4DlHd9nO2lzjhq/wsRypJFhvemb
+ swIth7Wn8+MtjZ1v1yt/vRMV4abzkO7CHZxf6J2XuD6mDgiZF43ojEwIQoiisKy/IV2z
+ 03EefWumcoJSsJ5PmMimbl+PFw59yW6KOp6mDh2SBf8y1+2yT9bI4xiAQi0Co/ObrePK
+ UCxzTuBoANmKjl10U5r7Q61fKcFCECHiX/XMZwoBS+S4LNvjFRN1SWIRuuWO5MBzsKhz
+ VtwYHb9w5oP1pwdrVqrm8UGH/mPWsJZcr++t4dIX1g5rZNhiR31fYLxuI9NB/INOCZqe
+ EUZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600103; x=1732204903;
+ d=1e100.net; s=20230601; t=1731600331; x=1732205131;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E4pmRCXWy/4R+SRD3ehMnfQVgg8YaLPMO4JGcA4dSk8=;
- b=JOZZBgXFmrwuebcdg2ZtO80j5RD/BpZcAvkEUiihD4fJChU96rK7ukDyaB8mbNjw0T
- qxT8FJyfukYFGXB9PQI8nEN/9/zOKjQJZvTQh13eLpGtxW7me6DVuBA5Ovo1iVunarAw
- DFtbXGV6jBWmHoD8AR6mlikgU6MriYwhXp3HnYIKXHGxmNsKmnetSoksLAblgfGWHVtu
- UHD7Gnb9cqXCMDfj0k6Tvb9ActGNB49yblvw2rFWm+0QCjg6W/31ZYJ5j1L4BoOzReMI
- 1J/TD0QRywL8VLo/pOhGqHO0XJHA2EjdJHg+BdhFjZpfs5RrmVJUyDoVY+fJVPurlWfL
- 0KlQ==
-X-Gm-Message-State: AOJu0Yy8cdsVMb0mWohnPiKP+kBRx972qF5yqKbWJx0gv03yWYXCEpe6
- ccB9VQX2Zl8DYjhj7lOpnk9vd87sQErzFKC7OtZ9gXGJXyTp2jf40PzAGMSiOl5h3U1Lmwy0Itx
- +
-X-Google-Smtp-Source: AGHT+IF7pTcW6gix9jbZ5CedeOcwDTDFruBmXkucISr2+sP4bwHmeWtl2vtFqCqf4Lx5c+cZETU5RQ==
-X-Received: by 2002:a17:90b:2801:b0:2e0:8780:ecb with SMTP id
- 98e67ed59e1d1-2e9fe649b2amr5717448a91.12.1731600103088; 
- Thu, 14 Nov 2024 08:01:43 -0800 (PST)
+ bh=kszkBxHzd0i3pHfwTrRD6LMnpSdmBjH+8x+WNocCo4c=;
+ b=ExDG3kBgesUxCeNgiOXiINGZHyDefJ6FgeuV6ITG6qxujwGhuj9zLCMUW222lLyce9
+ lzNnW3ZnPUmY7tPw/BO84muF2C1kgJlMZlclgaUF87h9cqZU2d8HzX3TSoxz8ZD+vE6n
+ KrmExvhbxD2aNqz8TvqkNenCesfB94Fx15Ny9JPRoKsE4/4jDMEVRduxgEF1hMImOOGd
+ 5RGSsbGbDXS7AhyPMqb1/icxtXoGuGNH2tDx5JwsIGMaZOxsMP2LR2yoarqq6Fd/DFvL
+ TJab+CZv8zmd7kMHdYt+1uxP5OZulkk1DRyE1M1i42iz1+O3JCOX3n5Wlo1dKeY03FGT
+ PhQQ==
+X-Gm-Message-State: AOJu0YzQBHDBUH+CBOvUYsX4S3t0BveOsWSTf907SYd+IrxHbSsqYF8b
+ 0+/9RNA5Ys9FenLtLwdyT7lCncRr0c/oLL30+rb+soelHWSEON7m9fy5udBynJo9Go2j87h/+rc
+ w
+X-Google-Smtp-Source: AGHT+IHfV2PmkvW1JQisvwXqKrg1ceGhBQyVkQZzMtmDKkNczdk132iVVqRFoO6F0xVqEilcj9oFCA==
+X-Received: by 2002:a17:902:d4d1:b0:210:fce4:11ec with SMTP id
+ d9443c01a7336-211b5bcc223mr100430365ad.1.1731600330998; 
+ Thu, 14 Nov 2024 08:05:30 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.42
+ d2e1a72fcca58-7246a9bab70sm1417926b3a.152.2024.11.14.08.05.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:01:42 -0800 (PST)
+ Thu, 14 Nov 2024 08:05:30 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 14/54] accel/tcg: Process IntervalTree entries in
- tlb_set_dirty
-Date: Thu, 14 Nov 2024 08:00:50 -0800
-Message-ID: <20241114160131.48616-15-richard.henderson@linaro.org>
+Subject: [PATCH v2 53/54] accel/tcg: Merge tlb_fill_align into callers
+Date: Thu, 14 Nov 2024 08:01:29 -0800
+Message-ID: <20241114160131.48616-54-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,42 +92,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the addr_write copy within an interval tree node.
+In tlb_lookup, we still call tlb_set_page_full.
+In atomic_mmu_lookup, we're expecting noreturn.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ accel/tcg/cputlb.c | 31 ++++++-------------------------
+ 1 file changed, 6 insertions(+), 25 deletions(-)
 
 diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 0c9f834cbe..eb85e96ee2 100644
+index 3d731b8f3d..20af48c6c5 100644
 --- a/accel/tcg/cputlb.c
 +++ b/accel/tcg/cputlb.c
-@@ -1049,13 +1049,18 @@ static void tlb_set_dirty(CPUState *cpu, vaddr addr)
-     addr &= TARGET_PAGE_MASK;
-     qemu_spin_lock(&cpu->neg.tlb.c.lock);
-     for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
--        tlb_set_dirty1_locked(tlb_entry(cpu, mmu_idx, addr), addr);
--    }
-+        CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
-+        CPUTLBEntryTree *node;
+@@ -1189,27 +1189,6 @@ static void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+     qemu_spin_unlock(&tlb->c.lock);
+ }
  
--    for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
--        int k;
--        for (k = 0; k < CPU_VTLB_SIZE; k++) {
--            tlb_set_dirty1_locked(&cpu->neg.tlb.d[mmu_idx].vtable[k], addr);
-+        tlb_set_dirty1_locked(tlb_entry(cpu, mmu_idx, addr), addr);
-+
-+        for (int k = 0; k < CPU_VTLB_SIZE; k++) {
-+            tlb_set_dirty1_locked(&desc->vtable[k], addr);
-+        }
-+
-+        node = tlbtree_lookup_addr(desc, addr);
-+        if (node) {
-+            tlb_set_dirty1_locked(&node->copy, addr);
-         }
+-/*
+- * Note: tlb_fill_align() can trigger a resize of the TLB.
+- * This means that all of the caller's prior references to the TLB table
+- * (e.g. CPUTLBEntry pointers) must be discarded and looked up again
+- * (e.g. via tlb_entry()).
+- */
+-static bool tlb_fill_align(CPUState *cpu, vaddr addr, MMUAccessType type,
+-                           int mmu_idx, MemOp memop, int size,
+-                           bool probe, uintptr_t ra)
+-{
+-    CPUTLBEntryFull full;
+-
+-    if (cpu->cc->tcg_ops->tlb_fill_align(cpu, &full, addr, type, mmu_idx,
+-                                         memop, size, probe, ra)) {
+-        tlb_set_page_full(cpu, mmu_idx, addr, &full);
+-        return true;
+-    }
+-    assert(probe);
+-    return false;
+-}
+-
+ static inline void cpu_unaligned_access(CPUState *cpu, vaddr addr,
+                                         MMUAccessType access_type,
+                                         int mmu_idx, uintptr_t retaddr)
+@@ -1281,11 +1260,13 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
      }
-     qemu_spin_unlock(&cpu->neg.tlb.c.lock);
+ 
+     /* Finally, query the target hook. */
+-    if (!tlb_fill_align(cpu, addr, access_type, i->mmu_idx,
+-                        memop, i->size, probe, i->ra)) {
++    if (!cpu->cc->tcg_ops->tlb_fill_align(cpu, &o->full, addr, access_type,
++                                          i->mmu_idx, memop, i->size,
++                                          probe, i->ra)) {
+         tcg_debug_assert(probe);
+         return false;
+     }
++    tlb_set_page_full(cpu, i->mmu_idx, addr, &o->full);
+     o->did_tlb_fill = true;
+ 
+     if (access_type == MMU_INST_FETCH) {
+@@ -1794,8 +1775,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+      * We have just verified that the page is writable.
+      */
+     if (unlikely(!(o.full.prot & PAGE_READ))) {
+-        tlb_fill_align(cpu, addr, MMU_DATA_LOAD, i.mmu_idx,
+-                       0, i.size, false, i.ra);
++        cpu->cc->tcg_ops->tlb_fill_align(cpu, &o.full, addr, MMU_DATA_LOAD,
++                                         i.mmu_idx, 0, i.size, false, i.ra);
+         /*
+          * Since we don't support reads and writes to different
+          * addresses, and we do have the proper page loaded for
 -- 
 2.43.0
 
