@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C731D637D6
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 01:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D20D2D637CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 01:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBORM-00080w-Q4; Wed, 13 Nov 2024 20:14:32 -0500
+	id 1tBOT3-0002Rz-NX; Wed, 13 Nov 2024 20:16:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBORK-0007yw-QT
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 20:14:30 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBOSO-0001lR-9z
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 20:15:36 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBORI-00025Z-7p
- for qemu-devel@nongnu.org; Wed, 13 Nov 2024 20:14:30 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-37d50fad249so77988f8f.1
- for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 17:14:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBOSL-0002e4-J2
+ for qemu-devel@nongnu.org; Wed, 13 Nov 2024 20:15:36 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-37ed3bd6114so67741f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 13 Nov 2024 17:15:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731546866; x=1732151666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731546932; x=1732151732; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OzDo0drcf+l9FI9MFOgWksxtiPTKy7V4t/YiPF1FVxo=;
- b=xDaKBRynSr8JeDchNRXFzlr5P4Up95Wdv+eHiQ9jC66t08D5310uyNgC4Omw+ZX61O
- BGz6AH0v6qQjF5lEfA/lc2fMYunHf+AK370mDhqDvhPPqUUO/50hw7HncwkOgFI9fsVU
- M6GxGA3GvrGBDmaG0SkkV4/TZGbsc7HKRYIFw7bbej5PY5sPFmdkA03vDUGt+FczBi4j
- YhMO4jiUyYhm3MhZiOu2+AyRJ3jCwoMNz/iWStLyRif5riDAGZX6xi6UYNJy+LjzvKbr
- 1I5cQcoIDTlwrnhjaYYP1ynjrt8zMUW6dtYkRY+C+owL188HVT5CERjoCX89sRvLKJCj
- Ng0w==
+ bh=qrrkoTna7tufOe6qwJFGaLdax+anmf+pXIEo/rEb9w0=;
+ b=dZgLNgcozHtPt4OyJKjftjLFhPYewJeExpfQDlOrz7AETafJP1JvCVIA7gSjs8+orw
+ MuMg7VDLfYT3WlEdCZLSWeYUvorA7PUHax7ZHcK9BgTomoDhcVjHGPLV3yXyMeEXTklL
+ XF9CdEKKYWnVY84NBEXkq3WQXmL+CEDoQSoSqYIUf4wVGyWNpnm2UztTzLb9Qp37dV0r
+ Pjh7aVWQakr0v3qxnBN1Az8ySiQfru9e3xAXCBVHMkFzmp+CT6LO5/tQysO8s0mucpTz
+ umlrfLWkMrFMorRIh3b3/Y9QAyNMpuO8tExWOGUxZlnlesjXXZRx5liLoOCs77qGQwSu
+ 0nOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731546866; x=1732151666;
+ d=1e100.net; s=20230601; t=1731546932; x=1732151732;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OzDo0drcf+l9FI9MFOgWksxtiPTKy7V4t/YiPF1FVxo=;
- b=WPEbSPbTcnYtH8d33WOQtaQBP5AHQawTTTHorFyDnTElwlaC0W2gJm/Mq+jJGHwBnu
- BeXSBXzTgSYTvqjT/nFOVTtFjGWDrt94KvhD+aSAAWHePQGQ2bU2a9EC1N4tyI6v9CGY
- WVO/wwDvb5ROQNdjvLZSVTtcHnPr4U+Mz4/nXMeBCCYNgJlcCeggZc0nev593QR7kKc8
- 63yCVHkKew99YwOQT6KTlU8VkbYp6mojFbXkJTSWoPuvZUZQ7kUOADgEUVwamBtyod4K
- 2vgBOjgiB8GoCgqDA4+J7cEVUjlwkaP4FJhp/2NOiJwRmTuzPVDhpi4XINddlFebrRl2
- itXw==
+ bh=qrrkoTna7tufOe6qwJFGaLdax+anmf+pXIEo/rEb9w0=;
+ b=Sd68eoSZk7aKjHiZdxC/PBtjYuiOFO5O1X5q0prDchHv52N4RnY/5Jym1W7qZpRgXr
+ BaXmfyvlkXV/3+HMJiGcZ759meQD5CGor5ko9eJ+g/uC+n2T5Gd7TyZipK/bSDtDnTPm
+ dHe6M/AkV5M/pNNgAqkiNcGuyr21N964N891vWs95A3mGxOtiE/3mRgMIELbHWat9DKE
+ v7Mhe5qddDIBnU+sFkxD/9ItOA+Z/7xhQjP2iKUzu3e1CT8fyqkrVonooCxirJNh5Yva
+ s6yfHxcAuEajKUD19hpuuKtfKGbV0gsmGRM0Jp1CvJhEuyhVgp+S+lngHbVb2x8u+wyH
+ yZ2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1VafjC4i8R4/zVaptcJRJdps+S5CvF3YSKbWFAEpMD5wzoPq95WFML3MWUhJN+34nu0AT8nof03QY@nongnu.org
-X-Gm-Message-State: AOJu0YzO2LacJdYRGcgYBteLe7CVTzeet8NFzIyJ9w98M0ffbdeaVogf
- gW8rs2rZUnzzwROBWS6qTSbe/JmCfd9+03YwyOv2DKNLoLyri0ntM9Vl0Qv02Uk=
-X-Google-Smtp-Source: AGHT+IGRAvO0UPawK2zfcCGO//9i8AmO6U7NK1zJgE+Z8dy6kuyS/IdN4ms2Ng8UXNa65KniwwxN/Q==
-X-Received: by 2002:a05:6000:401f:b0:37d:3e00:9a9b with SMTP id
- ffacd0b85a97d-381f186cafbmr19128225f8f.20.1731546865946; 
- Wed, 13 Nov 2024 17:14:25 -0800 (PST)
+ AJvYcCVFUcSP1Vvdt2QsZe/OsSozwHBeEyaaavDOCDpJxmVty1ksHuYZ6Wqmx4m0nKOf8gAM3tSdBuaIum/q@nongnu.org
+X-Gm-Message-State: AOJu0YwT7I5B/Pw3PVoLwbfnXLkD5xl8d962afYp7HUQvIg6yYTRAjsA
+ ErNT/WkV8sTU20Nd1xpAqhbNs3BxHZ1ZD7WbsxFPS8o1x2L4O93euj34/yM8GMU=
+X-Google-Smtp-Source: AGHT+IHuhhAiEzkVHTWofBhBqgpOXZdBh/rWL7IMEM1ux8mz49czPs5z3Ayh4M4BEC57KqIzUKPO9A==
+X-Received: by 2002:a05:6000:186c:b0:381:cfea:2818 with SMTP id
+ ffacd0b85a97d-3821851cc75mr155127f8f.30.1731546931624; 
+ Wed, 13 Nov 2024 17:15:31 -0800 (PST)
 Received: from localhost.localdomain ([176.187.209.238])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-381ed970f68sm19860449f8f.11.2024.11.13.17.14.23
+ 5b1f17b1804b1-432dac0ae51sm1409755e9.34.2024.11.13.17.15.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 13 Nov 2024 17:14:25 -0800 (PST)
+ Wed, 13 Nov 2024 17:15:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -70,18 +70,17 @@ Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 08/24] linux-user/aarch64/mte: Include missing
- 'user/abitypes.h' header
-Date: Thu, 14 Nov 2024 02:12:53 +0100
-Message-ID: <20241114011310.3615-9-philmd@linaro.org>
+Subject: [PATCH 17/24] exec: Declare tlb_set_page() in 'exec/cputlb.h'
+Date: Thu, 14 Nov 2024 02:13:02 +0100
+Message-ID: <20241114011310.3615-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241114011310.3615-1-philmd@linaro.org>
 References: <20241114011310.3615-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,32 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-abi_long type is defined in "user/abitypes.h".
-Include it in order to avoid when refactoring:
-
-  linux-user/aarch64/mte_user_helper.h:30:42: error: unknown type name ‘abi_long’; did you mean ‘u_long’?
-     30 | void arm_set_mte_tcf0(CPUArchState *env, abi_long value);
-        |                                          ^~~~~~~~
-        |                                          u_long
+Move CPU TLB related methods to "exec/cputlb.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- linux-user/aarch64/mte_user_helper.h | 2 ++
- 1 file changed, 2 insertions(+)
+ include/exec/cputlb.h   | 11 +++++++++++
+ include/exec/exec-all.h |  9 ---------
+ 2 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
-index 8685e5175a..0c53abda22 100644
---- a/linux-user/aarch64/mte_user_helper.h
-+++ b/linux-user/aarch64/mte_user_helper.h
-@@ -9,6 +9,8 @@
- #ifndef AARCH64_MTE_USER_HELPER_H
- #define AARCH64_MTE USER_HELPER_H
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index ae4798a017..9075d94ec5 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -108,4 +108,15 @@ void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
+                              hwaddr paddr, MemTxAttrs attrs,
+                              int prot, int mmu_idx, vaddr size);
  
-+#include "user/abitypes.h"
++/**
++ * tlb_set_page:
++ *
++ * This function is equivalent to calling tlb_set_page_with_attrs()
++ * with an @attrs argument of MEMTXATTRS_UNSPECIFIED. It's provided
++ * as a convenience for CPUs which don't use memory transaction attributes.
++ */
++void tlb_set_page(CPUState *cpu, vaddr addr,
++                  hwaddr paddr, int prot,
++                  int mmu_idx, vaddr size);
 +
- #ifndef PR_MTE_TCF_SHIFT
- # define PR_MTE_TCF_SHIFT       1
- # define PR_MTE_TCF_NONE        (0UL << PR_MTE_TCF_SHIFT)
+ #endif
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 2b314d658b..2e58540005 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -174,15 +174,6 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+                                                uint16_t idxmap,
+                                                unsigned bits);
+ 
+-/* tlb_set_page:
+- *
+- * This function is equivalent to calling tlb_set_page_with_attrs()
+- * with an @attrs argument of MEMTXATTRS_UNSPECIFIED. It's provided
+- * as a convenience for CPUs which don't use memory transaction attributes.
+- */
+-void tlb_set_page(CPUState *cpu, vaddr addr,
+-                  hwaddr paddr, int prot,
+-                  int mmu_idx, vaddr size);
+ #else
+ static inline void tlb_flush_page(CPUState *cpu, vaddr addr)
+ {
 -- 
 2.45.2
 
