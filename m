@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6EE7D68B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199A8D68B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:10:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcNP-00047j-Jd; Thu, 14 Nov 2024 11:07:25 -0500
+	id 1tBcIh-0005JV-52; Thu, 14 Nov 2024 11:02:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcLQ-0001mC-MS
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:27 -0500
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1tBcIN-00052s-1G
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:11 -0500
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcLL-00033h-Qo
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:19 -0500
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-7e9e38dd5f1so674386a12.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:05:13 -0800 (PST)
+ id 1tBcIH-0002IS-EI
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:10 -0500
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-7ea7e250c54so586571a12.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:02:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600312; x=1732205112; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600123; x=1732204923; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PvazYVJMP5GcUwBS2MCJUYaWeFV3enL9YDBstfMYOoA=;
- b=eezgv9/Ws6bo1OcLC9OrFR8jGQBTmgBUKeB1CdpdcD6wpPen0NQBzpaPkS3eK5VtXe
- QfCyac/31cFN/uV4BuTU1szEnIDZ4uZ3LGEQ7C6I3SQPnKOU5k1h/8sio0aFWxHT1ntK
- YWZbe3oHzrWUkD0z8hhvEZYjOPULlC00TcaoaCu/Nuk2YX+O4La2rZuGM7/ZoR6dwcLg
- 4iafvvi3aFRz9PoH/Td3L8lVaqwCyvWU1rUqdBxLHb1diMZK4+W8WmRJnXgyUTSdTDF9
- 3QaO34r3/ywfMAw3wxQ38u6oJYlD2mvmTSbaeErm7Foeucak66P0FhrED+Q93ZJvzCQw
- uUrg==
+ :reply-to; bh=tAszhXmbZO1yYFyoLknvdTRmxQFGefE5ni84P6772pk=;
+ b=ydf2ymps/IarHO5o/GpyAgt3AsjHQd14WE2T7hKQKMT4PM/kaZY6oMKLj4XkMaH8l3
+ /lYbpAlYAKdUY2P0HxO6btQPd9WERHnzN929ACbcb5jD+Q3tNpTRkh8u+qXPHDIW+lY/
+ lMlnv5g8/HoexYPneOLb14i4AyxSqE3CLfVIvS5tUFTeqfOXWH2pAl5Ip+gk93T3BLMv
+ WUDu+DoQWjXc/QDfe7hlWkSFwBbW6RePz59ltv1Nm2nRTg/xiXNTvy5UrPm0oe3QooG8
+ YCaw87m2YFo0xOfYYdC/PNJHHg2W7qXwtjMX8WWc8+9BuF7+nBGyetkvOciEX85ypLe3
+ DZ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600312; x=1732205112;
+ d=1e100.net; s=20230601; t=1731600123; x=1732204923;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PvazYVJMP5GcUwBS2MCJUYaWeFV3enL9YDBstfMYOoA=;
- b=B6L6JpLSsd3zNzIgwj6KUBbVsHGnP+5hQSUHf3qExwO+ZgoH9J0M/xwfczqGTZ0uP+
- w5L2baH9Z2LqJXki7PDiIeO/9UasDkiDPgUDCj07lX58+MgbFv0CRXSbV1xsgACouZBJ
- UCJ08T6Q5mGw14hr5YG2/6ScByWUzna5gT2XDArml3RuBKzGcId25Aige00MAd7/5apz
- rcbnSQF99E6lcz29TGtvkLhC9o1F+Pfyq1WAG0TFOqJ0r2SPtOiML+qDrRrLpRXsNK47
- fk6v6XsnXmAfvt4EpPJzzQZGhVHOqm5xD9PWUnYK/Ul8LzHYRRbfUTSE7GbJAbLlbOZQ
- AWSg==
-X-Gm-Message-State: AOJu0Yz96jk2V6KVhlEeJjMlCNIacCTDNA84eYMbC+RE1uXon3deDTF3
- nkXMwU4N4aghNb6KdVqy7FcpDfvaCCSBRRvBxmC0Vl0zeGD+S6NtZBKhPjg6kWmD+3NifhLqDgU
- 8
-X-Google-Smtp-Source: AGHT+IHRRECedHgC8UA8c0cg98zU4ej6leJ/NcHYkkXVAzng1uypKrz9H9pIVnN1g0TWsoz6F1d0KQ==
-X-Received: by 2002:a05:6a20:4325:b0:1d6:fb1b:d07a with SMTP id
- adf61e73a8af0-1dc22b57f1dmr30731144637.31.1731600312512; 
- Thu, 14 Nov 2024 08:05:12 -0800 (PST)
+ bh=tAszhXmbZO1yYFyoLknvdTRmxQFGefE5ni84P6772pk=;
+ b=i047K5z0+dH4iunKH45pucYlksl5z1EDJfuVJPSTHrZbpG7hSN8xXE8rSxmkp5Wr52
+ kOjYDAXWLhXUEet1/5SxzdyQqaeZ7d3QUE/QoeYFvo1VnByat7Eg6g2VSXW4tHcYant+
+ KrtPlkd22PrN/z7JFKDWb7YoZqd87xWt3uRUi0ysrF5Jsy2jzdQoYOaoQT3VeuGaKIhE
+ pdjkxj1SKtSFE2fnWnwzNs1D2rM7kYYnOvTMjE3jwm0d3fwCQpJchT08NgQpdIfy3y6y
+ PXdKauqPNReHA6aQMh0OLQhQfkYCu5szaVn2XTphsv4mEVy5dSq2WZTFtckjF3yJS3f5
+ IrBQ==
+X-Gm-Message-State: AOJu0YwWLGyDfX9nSwlZfA3XlrYpWJzkU8qZp/4ntz/EWBjlVbDzuy6I
+ Q4HkskJvlE9GAOOdsCCLIvK3sTDdHPIevSw6+vc3cEj+EPf1KanE0gIzBSBiGwhHt3/QuiGU+KE
+ 9
+X-Google-Smtp-Source: AGHT+IEyV/vCAiEEJ8K8TBwPUbaYg4B2DmSZnWhdKc8ort+PrLfvfAeh3rjDBqzYjVZcpVu2Ohs8iQ==
+X-Received: by 2002:a17:90b:2e8e:b0:2e2:f044:caaa with SMTP id
+ 98e67ed59e1d1-2ea06a63e77mr3122535a91.37.1731600122925; 
+ Thu, 14 Nov 2024 08:02:02 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7246a9bab70sm1417926b3a.152.2024.11.14.08.05.11
+ 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.02.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:05:12 -0800 (PST)
+ Thu, 14 Nov 2024 08:02:02 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 44/54] target/riscv: Convert to TCGCPUOps.tlb_fill_align
-Date: Thu, 14 Nov 2024 08:01:20 -0800
-Message-ID: <20241114160131.48616-45-richard.henderson@linaro.org>
+Subject: [PATCH v2 35/54] target/avr: Convert to TCGCPUOps.tlb_fill_align
+Date: Thu, 14 Nov 2024 08:01:11 -0800
+Message-ID: <20241114160131.48616-36-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,97 +94,93 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu.h         |  8 +++++---
- target/riscv/cpu_helper.c  | 22 +++++++++++++++++-----
- target/riscv/tcg/tcg-cpu.c |  2 +-
- 3 files changed, 23 insertions(+), 9 deletions(-)
+ target/avr/cpu.h    |  7 ++++---
+ target/avr/cpu.c    |  2 +-
+ target/avr/helper.c | 19 ++++++++++++-------
+ 3 files changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 284b112821..f97c4f3410 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -25,6 +25,7 @@
- #include "hw/qdev-properties.h"
+diff --git a/target/avr/cpu.h b/target/avr/cpu.h
+index 4725535102..cdd3bcd418 100644
+--- a/target/avr/cpu.h
++++ b/target/avr/cpu.h
+@@ -23,6 +23,7 @@
+ 
+ #include "cpu-qom.h"
  #include "exec/cpu-defs.h"
- #include "exec/gdbstub.h"
 +#include "exec/memop.h"
- #include "qemu/cpu-float.h"
- #include "qom/object.h"
- #include "qemu/int128.h"
-@@ -563,9 +564,10 @@ bool cpu_get_bcfien(CPURISCVState *env);
- G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-                                                MMUAccessType access_type,
-                                                int mmu_idx, uintptr_t retaddr);
--bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                        MMUAccessType access_type, int mmu_idx,
--                        bool probe, uintptr_t retaddr);
-+bool riscv_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-+                              vaddr addr, MMUAccessType access_type,
-+                              int mmu_idx, MemOp memop, int size,
-+                              bool probe, uintptr_t ra);
- char *riscv_isa_string(RISCVCPU *cpu);
- int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
- bool riscv_cpu_option_set(const char *optname);
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 0a3ead69ea..edb2edfc55 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1429,9 +1429,10 @@ static void pmu_tlb_fill_incr_ctr(RISCVCPU *cpu, MMUAccessType access_type)
-     riscv_pmu_incr_ctr(cpu, pmu_event_type);
+ 
+ #ifdef CONFIG_USER_ONLY
+ #error "AVR 8-bit does not support user mode"
+@@ -238,9 +239,9 @@ static inline void cpu_set_sreg(CPUAVRState *env, uint8_t sreg)
+     env->sregI = (sreg >> 7) & 0x01;
  }
  
--bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                        MMUAccessType access_type, int mmu_idx,
--                        bool probe, uintptr_t retaddr)
-+bool riscv_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-+                              vaddr address, MMUAccessType access_type,
-+                              int mmu_idx, MemOp memop, int size,
-+                              bool probe, uintptr_t retaddr)
- {
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
-@@ -1452,6 +1453,14 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     qemu_log_mask(CPU_LOG_MMU, "%s ad %" VADDR_PRIx " rw %d mmu_idx %d\n",
-                   __func__, address, access_type, mmu_idx);
+-bool avr_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+-                      MMUAccessType access_type, int mmu_idx,
+-                      bool probe, uintptr_t retaddr);
++bool avr_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
++                            MMUAccessType access_type, int mmu_idx,
++                            MemOp memop, int size, bool probe, uintptr_t ra);
  
-+    if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
-+        if (probe) {
-+            return false;
-+        }
-+        riscv_cpu_do_unaligned_access(cs, address, access_type,
-+                                      mmu_idx, retaddr);
-+    }
-+
-     pmu_tlb_fill_incr_ctr(cpu, access_type);
-     if (two_stage_lookup) {
-         /* Two stage lookup */
-@@ -1544,8 +1553,11 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ #include "exec/cpu-all.h"
+ 
+diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+index 3132842d56..a7fe869396 100644
+--- a/target/avr/cpu.c
++++ b/target/avr/cpu.c
+@@ -211,7 +211,7 @@ static const TCGCPUOps avr_tcg_ops = {
+     .restore_state_to_opc = avr_restore_state_to_opc,
+     .cpu_exec_interrupt = avr_cpu_exec_interrupt,
+     .cpu_exec_halt = avr_cpu_has_work,
+-    .tlb_fill = avr_cpu_tlb_fill,
++    .tlb_fill_align = avr_cpu_tlb_fill_align,
+     .do_interrupt = avr_cpu_do_interrupt,
+ };
+ 
+diff --git a/target/avr/helper.c b/target/avr/helper.c
+index 345708a1b3..a18f11aa9f 100644
+--- a/target/avr/helper.c
++++ b/target/avr/helper.c
+@@ -104,11 +104,11 @@ hwaddr avr_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+     return addr; /* I assume 1:1 address correspondence */
+ }
+ 
+-bool avr_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+-                      MMUAccessType access_type, int mmu_idx,
+-                      bool probe, uintptr_t retaddr)
++bool avr_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
++                            MMUAccessType access_type, int mmu_idx,
++                            MemOp memop, int size, bool probe, uintptr_t ra)
+ {
+-    int prot, page_size = TARGET_PAGE_SIZE;
++    int prot, lg_page_size = TARGET_PAGE_BITS;
+     uint32_t paddr;
+ 
+     address &= TARGET_PAGE_MASK;
+@@ -141,15 +141,20 @@ bool avr_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+              * to force tlb_fill to be called for the next access.
+              */
+             if (probe) {
+-                page_size = 1;
++                lg_page_size = 0;
+             } else {
+                 cpu_env(cs)->fullacc = 1;
+-                cpu_loop_exit_restore(cs, retaddr);
++                cpu_loop_exit_restore(cs, ra);
+             }
+         }
      }
  
-     if (ret == TRANSLATE_SUCCESS) {
--        tlb_set_page(cs, address & ~(tlb_size - 1), pa & ~(tlb_size - 1),
--                     prot, mmu_idx, tlb_size);
-+        memset(out, 0, sizeof(*out));
-+        out->phys_addr = pa;
-+        out->prot = prot;
-+        out->lg_page_size = ctz64(tlb_size);
-+        out->attrs = MEMTXATTRS_UNSPECIFIED;
-         return true;
-     } else if (probe) {
-         return false;
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index c62c221696..f3b436bb86 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -138,7 +138,7 @@ static const TCGCPUOps riscv_tcg_ops = {
-     .restore_state_to_opc = riscv_restore_state_to_opc,
+-    tlb_set_page(cs, address, paddr, prot, mmu_idx, page_size);
++    memset(out, 0, sizeof(*out));
++    out->phys_addr = paddr;
++    out->prot = prot;
++    out->attrs = MEMTXATTRS_UNSPECIFIED;
++    out->lg_page_size = lg_page_size;
++
+     return true;
+ }
  
- #ifndef CONFIG_USER_ONLY
--    .tlb_fill = riscv_cpu_tlb_fill,
-+    .tlb_fill_align = riscv_cpu_tlb_fill_align,
-     .cpu_exec_interrupt = riscv_cpu_exec_interrupt,
-     .cpu_exec_halt = riscv_cpu_has_work,
-     .do_interrupt = riscv_cpu_do_interrupt,
 -- 
 2.43.0
 
