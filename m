@@ -4,61 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4482FD65C63
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 09:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D87D65C68
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 09:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBW9N-0007ZZ-NK; Thu, 14 Nov 2024 04:28:29 -0500
+	id 1tBWTD-0002Oc-01; Thu, 14 Nov 2024 04:48:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1tBW9J-0007ZG-3x
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 04:28:25 -0500
-Received: from forward101a.mail.yandex.net ([178.154.239.84])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tBWT5-0002Nq-7b; Thu, 14 Nov 2024 04:48:51 -0500
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1tBW9G-00049e-Rx
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 04:28:24 -0500
-Received: from mail-nwsmtp-smtp-production-main-84.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-production-main-84.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c15:2e15:0:640:bcf8:0])
- by forward101a.mail.yandex.net (Yandex) with ESMTPS id 2FC1160E33;
- Thu, 14 Nov 2024 12:28:14 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-84.vla.yp-c.yandex.net
- (smtp/Yandex) with ESMTPSA id CSIlutPOkeA0-GDZxKeCw; 
- Thu, 14 Nov 2024 12:28:13 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
- t=1731576493; bh=+fimC/mOFq4BgxpMhbp3ybLTs7sM1PXm3o65T/2kStA=;
- h=Date:In-Reply-To:Cc:To:From:Subject:Message-ID;
- b=VUOx/+oWEsBOc4qq/DLoNkukkJmutJC3ectu+CNU1McxdYlgcOMBVrcVqdNgPc6qG
- CYxoezU8dpAoZniTveNZ4qsaPH6YrFoOKHYiMyHuzUSQe5FaaFyaOAk/krjQvVxiJv
- D7YcgCeIhAddT5IwQ5jCCsfz6RRFXc0qpVVR90lM=
-Authentication-Results: mail-nwsmtp-smtp-production-main-84.vla.yp-c.yandex.net;
- dkim=pass header.i=@maquefel.me
-Message-ID: <2932b992b411497ccd3bbbb717621473e06a96b7.camel@maquefel.me>
-Subject: Re: [PATCH v17 00/16] TCG code quality tracking
-From: Nikita Shubin <nikita.shubin@maquefel.me>
-To: richard.henderson@linaro.org
-Cc: fei2.wu@intel.com, qemu-devel@nongnu.org, "Vanderson M. do Rosario"
- <vandersonmr2@gmail.com>
-Date: Thu, 14 Nov 2024 12:28:12 +0300
-In-Reply-To: <20231003183058.1639121-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.2 
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tBWT3-0000F8-50; Thu, 14 Nov 2024 04:48:50 -0500
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 14 Nov
+ 2024 17:48:39 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Thu, 14 Nov 2024 17:48:39 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Bin Meng <bmeng.cn@gmail.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v3 0/3] Introduce a new Write Protected pin inverted property
+Date: Thu, 14 Nov 2024 17:48:36 +0800
+Message-ID: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Received-SPF: pass client-ip=178.154.239.84;
- envelope-from=nikita.shubin@maquefel.me; helo=forward101a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,23 +61,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Richard and Vanderson !
+change from v1:
+1. Support RTC for AST2700.
+2. Support SDHCI write protected pin inverted for AST2500 and AST2600.
+3. Introduce Capabilities Register 2 for SD slot 0 and 1.
+4. Support create flash devices via command line for AST1030.
 
-Any news on this series ? It's been 26 spins already (yep i am counting
-Vanderson series also).
+change from v2:
+replace wp-invert with wp-inverted and fix review issues.
 
-While it's a really great idea in general, it also has great
-educational purpose.
+change from v3:
+1. add reviewer suggestion about wp_inverted comment
+2. AST2500 EVB does not need to set wp-inverted property of sdhci model 
+   https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm/boot/dts/aspeed/aspeed-ast2500-evb.dts#L110
 
-I've rebased v17 on the top of current master branch, but maybe we can
-hope for another spin ? Especially with graphs, which are missing in
-latest series.
+Jamin Lin (3):
+  hw/sd/sdhci: Fix coding style
+  hw/sd/sdhci: Introduce a new Write Protected pin inverted property
+  hw/arm/aspeed: Invert sdhci write protected pin for AST2600 EVB
 
----
-Yours,
+ hw/arm/aspeed.c         |  7 +++++
+ hw/sd/sdhci.c           | 70 ++++++++++++++++++++++++++++-------------
+ include/hw/arm/aspeed.h |  1 +
+ include/hw/sd/sdhci.h   |  5 +++
+ 4 files changed, 61 insertions(+), 22 deletions(-)
 
-Nikita Shubin
+-- 
+2.34.1
+
 
