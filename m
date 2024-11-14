@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99DD0D68B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2BD7D68B34
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcJ8-0005m8-Ui; Thu, 14 Nov 2024 11:02:59 -0500
+	id 1tBcJY-0006ik-TP; Thu, 14 Nov 2024 11:03:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIO-00053N-II
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:13 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1tBcIJ-000527-PF
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:09 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIJ-0002Gz-D8
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:12 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2ea0c38f0fdso444987a91.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:55 -0800 (PST)
+ id 1tBcID-0002HL-LI
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:05 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2e9ff7a778cso766594a91.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:02:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600115; x=1732204915; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600120; x=1732204920; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KiD2QRw11IfiGIBgEwLODrTbmi4491+hXDJh5Wff0xY=;
- b=hzZjhiJ7yxmab5kHBwn7TxHmvcC3MJ4lvsZzDr0MoD7RVgdTDxEwTqL9bsOSKUuXvl
- ZCv/91/sMpkvPSbZHDda2IvpmQOM5/gt1NZHwTMHko/ea0J/R4S0dV1FAg/q3n+GBQoz
- a1UUckLCduoSfQVSh568ARFqUoL1pC+jp0PxCKSOOF7K4kIj61N0stRpWWA/HNE8hD7m
- rHegTpfWZ7uy43ZzM5mQD2troZo8n1OZ2c8jy/y+dyYoYFKLBx/ZyRi9VMf/y2rUK+h0
- rbxkUauOPWi1TAe385zaZrpcQG3mV28VsonbiJWTyRwh9S1G9RcGSWvf5s8jNaX5xgDR
- soHA==
+ :reply-to; bh=gRqWI+rp5TQr50PN/dQhc9ynBvziyOUstyxN8uI5DJA=;
+ b=zOXir8AT4W9R7vUhOk9GOfjuHugytrZOF2H3G0mB4JM15HGAk1KvkGilEzziqSNI/Y
+ jZwrK8l7MBVNar1h8zwjMyzLQeaK1a8b7qlCeOU8H6oRpR26PliTEg2u+jTwxZ0h8NOC
+ MalEWlBOOAAfx8fAcszj4lJjt9WentAUU5pEygvtbxejChXANTUCOD+Tm8sEepWVoLQj
+ G/ikxU27HRtkHtADcKGW1rgGfxqNOeO80V2v0O0WXpLkjkWCM8RR7NT6t1ecxxoSLxEq
+ 7S75rlm9JpYPNorQ18End7xqgsB0p54eBYFBiPZTvHI/FYiuWT3J+GY1DcTjXEcnJQan
+ dcUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600115; x=1732204915;
+ d=1e100.net; s=20230601; t=1731600120; x=1732204920;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KiD2QRw11IfiGIBgEwLODrTbmi4491+hXDJh5Wff0xY=;
- b=dkFsENO8rHXvYLm4AyAvadq9gz1lYSOL8i7ZiJ5zls94AZHlItijDHMFC3XQearmh9
- utnVgLvgZ9EBRm0ztMFZJ00XaRwrZYfJ5Sh3tH3IwaA0+UZZrNByzx5276IwuUcdqJmH
- 5JZZ+F3wBeL8RLhMnFMWcD+EMiKXESCbaP4j3bcb+KW44rKEqiMWFcl9w77vz9oVyKNt
- 5YCfa1sdUdIhgvwPKT5ph+A9alG45kTS9VFmV7DdHM449S/gYNiiozN5mKY36fPl5uuc
- TN72kKMHTDPSv6EbOhwU9omnVfisUkBG65RI0ZdbBZfhty5LtNtp6ctHc9+ZK0sMtHIB
- Jtiw==
-X-Gm-Message-State: AOJu0YyNtvtHamoCEgWjiJMNl0h0vNpKNSP/msx1uWgfxDXih6C+WQii
- lvOf96GxYqhehU5mw590zKqKLnVI89gghgJf3BhlrbGrCM0+jq5bWeoqFAkKsNeqNAZp91nMmu7
- 1
-X-Google-Smtp-Source: AGHT+IEwAnamhG6Wsz49aAe8amyREuM4MSSY0/Enh1wOpOfXJdOfDELR22yWAUTA0birea61vPeX8A==
-X-Received: by 2002:a17:90a:d2cc:b0:2e9:c902:d53 with SMTP id
- 98e67ed59e1d1-2e9c9020e26mr22441031a91.14.1731600114497; 
- Thu, 14 Nov 2024 08:01:54 -0800 (PST)
+ bh=gRqWI+rp5TQr50PN/dQhc9ynBvziyOUstyxN8uI5DJA=;
+ b=ms+abNZT2Im/R2D2fV5fPNp+BnASk1mQHAmsJ0uOD7Fpw5dgLQohqEFhBGRxWMhkBw
+ OZQ3VD8KGvKfbe4u44qNkETyD4hKX1BhstPGSfTi6zvD39x2hzfGlsFqYLHXy417rCr8
+ /nKR3aL0uOmQ3st0yySRsHp4N3NfkSXC7jSi0bBbfkGqjVvh+zuFJaWE6H1cCEAf91mG
+ 1FY0GawSRpZmpN86G4fprF3vzXUhlLlmZffFHSGVp9CZj4A9kIT140yD+AtLwbl/36N2
+ w33uunjOG7ZWJiPtWikn2HXORjz65aGD1f8yUZemlpzvbmAuTN4Zk2wR6mVxZ2DDW6/A
+ 7T3A==
+X-Gm-Message-State: AOJu0Yxmc7qQSod1KHH4Wf+ttsiAdDy/ZaHxUYb9q0WUGRzWNKi45Z+y
+ GrEle56I0sBsyalhT7/eqG47NYTL6nBntxVgSQhErR64GbaVbqNwUNZNnNqOtDhw3HzizXVlKom
+ /
+X-Google-Smtp-Source: AGHT+IFJ5BI//ltdBDttI/6INQQy1I3mSJ5gcLja933v+C+AcspAAagD/nkkOznE3BryN8lA/sIrqA==
+X-Received: by 2002:a17:90b:3503:b0:2e9:3056:71dd with SMTP id
+ 98e67ed59e1d1-2e9fe62dd8cmr6507773a91.7.1731600119527; 
+ Thu, 14 Nov 2024 08:01:59 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.53
+ 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:01:53 -0800 (PST)
+ Thu, 14 Nov 2024 08:01:59 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 26/54] accel/tcg: Return CPUTLBEntryFull not pointer in
- probe_access_full
-Date: Thu, 14 Nov 2024 08:01:02 -0800
-Message-ID: <20241114160131.48616-27-richard.henderson@linaro.org>
+Subject: [PATCH v2 31/54] accel/tcg: Always use IntervalTree for code lookups
+Date: Thu, 14 Nov 2024 08:01:07 -0800
+Message-ID: <20241114160131.48616-32-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,171 +92,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Return a copy of the structure, not a pointer.
+Because translation is special, we don't need the speed
+of the direct-mapped softmmu tlb.  We cache a lookups in
+DisasContextBase within the translator loop anyway.
+
+Drop the addr_code comparator from CPUTLBEntry.
+Go directly to the IntervalTree for MMU_INST_FETCH.
+Derive exec flags from read flags.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/exec-all.h     |  6 +-----
- accel/tcg/cputlb.c          |  8 +++++---
- target/arm/tcg/helper-a64.c |  4 ++--
- target/arm/tcg/mte_helper.c | 15 ++++++---------
- target/arm/tcg/sve_helper.c |  6 +++---
- 5 files changed, 17 insertions(+), 22 deletions(-)
+ include/exec/cpu-all.h    |  3 ++
+ include/exec/tlb-common.h |  5 ++-
+ accel/tcg/cputlb.c        | 76 ++++++++++++++++++++++++---------------
+ 3 files changed, 52 insertions(+), 32 deletions(-)
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index df7d0b5ad0..69bdb77584 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -365,10 +365,6 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
-  * probe_access_full:
-  * Like probe_access_flags, except also return into @pfull.
-  *
-- * The CPUTLBEntryFull structure returned via @pfull is transient
-- * and must be consumed or copied immediately, before any further
-- * access or changes to TLB @mmu_idx.
-- *
-  * This function will not fault if @nonfault is set, but will
-  * return TLB_INVALID_MASK if the page is not mapped, or is not
-  * accessible with @access_type.
-@@ -379,7 +375,7 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
- int probe_access_full(CPUArchState *env, vaddr addr, int size,
-                       MMUAccessType access_type, int mmu_idx,
-                       bool nonfault, void **phost,
--                      CPUTLBEntryFull **pfull, uintptr_t retaddr);
-+                      CPUTLBEntryFull *pfull, uintptr_t retaddr);
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index 45e6676938..ad160c328a 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -339,6 +339,9 @@ static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
+     (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_MMIO \
+     | TLB_FORCE_SLOW | TLB_DISCARD_WRITE)
  
- /**
-  * probe_access_full_mmu:
++/* Filter read flags to exec flags. */
++#define TLB_EXEC_FLAGS_MASK  (TLB_MMIO)
++
+ /*
+  * Flags stored in CPUTLBEntryFull.slow_flags[x].
+  * TLB_FORCE_SLOW must be set in CPUTLBEntry.addr_idx[x].
+diff --git a/include/exec/tlb-common.h b/include/exec/tlb-common.h
+index 300f9fae67..feaa471299 100644
+--- a/include/exec/tlb-common.h
++++ b/include/exec/tlb-common.h
+@@ -26,7 +26,6 @@ typedef union CPUTLBEntry {
+     struct {
+         uint64_t addr_read;
+         uint64_t addr_write;
+-        uint64_t addr_code;
+         /*
+          * Addend to virtual address to get host address.  IO accesses
+          * use the corresponding iotlb value.
+@@ -35,7 +34,7 @@ typedef union CPUTLBEntry {
+     };
+     /*
+      * Padding to get a power of two size, as well as index
+-     * access to addr_{read,write,code}.
++     * access to addr_{read,write}.
+      */
+     uint64_t addr_idx[(1 << CPU_TLB_ENTRY_BITS) / sizeof(uint64_t)];
+ } CPUTLBEntry;
+@@ -92,7 +91,7 @@ struct CPUTLBEntryFull {
+      * Additional tlb flags for use by the slow path. If non-zero,
+      * the corresponding CPUTLBEntry comparator must have TLB_FORCE_SLOW.
+      */
+-    uint8_t slow_flags[MMU_ACCESS_COUNT];
++    uint8_t slow_flags[2];
+ 
+     /*
+      * Allow target-specific additions to this structure.
 diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 81135524eb..84e7e633e3 100644
+index 981098a6f2..be2ea1bc70 100644
 --- a/accel/tcg/cputlb.c
 +++ b/accel/tcg/cputlb.c
-@@ -1420,20 +1420,22 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
+@@ -114,8 +114,9 @@ static inline uint64_t tlb_read_idx(const CPUTLBEntry *entry,
+                       MMU_DATA_LOAD * sizeof(uint64_t));
+     QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_write) !=
+                       MMU_DATA_STORE * sizeof(uint64_t));
+-    QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_code) !=
+-                      MMU_INST_FETCH * sizeof(uint64_t));
++
++    tcg_debug_assert(access_type == MMU_DATA_LOAD ||
++                     access_type == MMU_DATA_STORE);
  
- int probe_access_full(CPUArchState *env, vaddr addr, int size,
-                       MMUAccessType access_type, int mmu_idx,
--                      bool nonfault, void **phost, CPUTLBEntryFull **pfull,
-+                      bool nonfault, void **phost, CPUTLBEntryFull *pfull,
-                       uintptr_t retaddr)
- {
-+    CPUTLBEntryFull *full;
-     int flags = probe_access_internal(env_cpu(env), addr, size, access_type,
--                                      mmu_idx, nonfault, phost, pfull, retaddr,
-+                                      mmu_idx, nonfault, phost, &full, retaddr,
-                                       true);
+ #if TARGET_LONG_BITS == 32
+     /* Use qatomic_read, in case of addr_write; only care about low bits. */
+@@ -480,8 +481,7 @@ static bool tlb_hit_page_mask_anyprot(CPUTLBEntry *tlb_entry,
+     mask &= TARGET_PAGE_MASK | TLB_INVALID_MASK;
  
-     /* Handle clean RAM pages.  */
-     if (unlikely(flags & TLB_NOTDIRTY)) {
-         int dirtysize = size == 0 ? 1 : size;
--        notdirty_write(env_cpu(env), addr, dirtysize, *pfull, retaddr);
-+        notdirty_write(env_cpu(env), addr, dirtysize, full, retaddr);
-         flags &= ~TLB_NOTDIRTY;
-     }
- 
-+    *pfull = *full;
-     return flags;
+     return (page == (tlb_entry->addr_read & mask) ||
+-            page == (tlb_addr_write(tlb_entry) & mask) ||
+-            page == (tlb_entry->addr_code & mask));
++            page == (tlb_addr_write(tlb_entry) & mask));
  }
  
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 8f42a28d07..783864d6db 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -1883,14 +1883,14 @@ static bool is_guarded_page(CPUARMState *env, target_ulong addr, uintptr_t ra)
- #ifdef CONFIG_USER_ONLY
-     return page_get_flags(addr) & PAGE_BTI;
- #else
--    CPUTLBEntryFull *full;
-+    CPUTLBEntryFull full;
-     void *host;
-     int mmu_idx = cpu_mmu_index(env_cpu(env), true);
-     int flags = probe_access_full(env, addr, 0, MMU_INST_FETCH, mmu_idx,
-                                   false, &host, &full, ra);
+ /* Called with tlb_c.lock held */
+@@ -1184,9 +1184,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+     /* Now calculate the new entry */
+     node->copy.addend = addend - addr_page;
  
-     assert(!(flags & TLB_INVALID_MASK));
--    return full->extra.arm.guarded;
-+    return full.extra.arm.guarded;
- #endif
- }
- 
-diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index 9d2ba287ee..870b2875af 100644
---- a/target/arm/tcg/mte_helper.c
-+++ b/target/arm/tcg/mte_helper.c
-@@ -83,8 +83,7 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-                       TARGET_PAGE_BITS - LOG2_TAG_GRANULE - 1);
-     return tags + index;
- #else
--    CPUTLBEntryFull *full;
--    MemTxAttrs attrs;
-+    CPUTLBEntryFull full;
-     int in_page, flags;
-     hwaddr ptr_paddr, tag_paddr, xlat;
-     MemoryRegion *mr;
-@@ -110,7 +109,7 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-     assert(!(flags & TLB_INVALID_MASK));
- 
-     /* If the virtual page MemAttr != Tagged, access unchecked. */
--    if (full->extra.arm.pte_attrs != 0xf0) {
-+    if (full.extra.arm.pte_attrs != 0xf0) {
-         return NULL;
+-    tlb_set_compare(full, &node->copy, addr_page, read_flags,
+-                    MMU_INST_FETCH, prot & PAGE_EXEC);
+-
+     if (wp_flags & BP_MEM_READ) {
+         read_flags |= TLB_WATCHPOINT;
+     }
+@@ -1308,22 +1305,30 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
+     /* Primary lookup in the fast tlb. */
+     entry = tlbfast_entry(fast, addr);
+     full = &desc->fulltlb[tlbfast_index(fast, addr)];
+-    cmp = tlb_read_idx(entry, access_type);
+-    if (tlb_hit(cmp, addr)) {
+-        goto found;
++    if (access_type != MMU_INST_FETCH) {
++        cmp = tlb_read_idx(entry, access_type);
++        if (tlb_hit(cmp, addr)) {
++            goto found_data;
++        }
      }
  
-@@ -129,9 +128,7 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-      * Remember these values across the second lookup below,
-      * which may invalidate this pointer via tlb resize.
+     /* Secondary lookup in the IntervalTree. */
+     node = tlbtree_lookup_addr(desc, addr);
+     if (node) {
+-        cmp = tlb_read_idx(&node->copy, access_type);
+-        if (tlb_hit(cmp, addr)) {
+-            /* Install the cached entry. */
+-            qemu_spin_lock(&cpu->neg.tlb.c.lock);
+-            copy_tlb_helper_locked(entry, &node->copy);
+-            qemu_spin_unlock(&cpu->neg.tlb.c.lock);
+-            *full = node->full;
+-            goto found;
++        if (access_type == MMU_INST_FETCH) {
++            if (node->full.prot & PAGE_EXEC) {
++                goto found_code;
++            }
++        } else {
++            cmp = tlb_read_idx(&node->copy, access_type);
++            if (tlb_hit(cmp, addr)) {
++                /* Install the cached entry. */
++                qemu_spin_lock(&cpu->neg.tlb.c.lock);
++                copy_tlb_helper_locked(entry, &node->copy);
++                qemu_spin_unlock(&cpu->neg.tlb.c.lock);
++                *full = node->full;
++                goto found_data;
++            }
+         }
+     }
+ 
+@@ -1333,9 +1338,14 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
+         tcg_debug_assert(probe);
+         return false;
+     }
+-
+     o->did_tlb_fill = true;
+ 
++    if (access_type == MMU_INST_FETCH) {
++        node = tlbtree_lookup_addr(desc, addr);
++        tcg_debug_assert(node);
++        goto found_code;
++    }
++
+     entry = tlbfast_entry(fast, addr);
+     full = &desc->fulltlb[tlbfast_index(fast, addr)];
+     cmp = tlb_read_idx(entry, access_type);
+@@ -1345,14 +1355,29 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
+      * called tlb_fill_align, so we know that this entry *is* valid.
       */
--    ptr_paddr = full->phys_addr | (ptr & ~TARGET_PAGE_MASK);
--    attrs = full->attrs;
--    full = NULL;
-+    ptr_paddr = full.phys_addr | (ptr & ~TARGET_PAGE_MASK);
+     flags &= ~TLB_INVALID_MASK;
++    goto found_data;
++
++ found_data:
++    flags &= cmp;
++    flags |= full->slow_flags[access_type];
++    o->flags = flags;
++    o->full = *full;
++    o->haddr = (void *)((uintptr_t)addr + entry->addend);
+     goto done;
  
-     /*
-      * The Normal memory access can extend to the next page.  E.g. a single
-@@ -150,17 +147,17 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-     if (!probe && unlikely(flags & TLB_WATCHPOINT)) {
-         int wp = ptr_access == MMU_DATA_LOAD ? BP_MEM_READ : BP_MEM_WRITE;
-         assert(ra != 0);
--        cpu_check_watchpoint(env_cpu(env), ptr, ptr_size, attrs, wp, ra);
-+        cpu_check_watchpoint(env_cpu(env), ptr, ptr_size, full.attrs, wp, ra);
+- found:
+-    /* Alignment has not been checked by tlb_fill_align. */
+-    {
++ found_code:
++    o->flags = node->copy.addr_read & TLB_EXEC_FLAGS_MASK;
++    o->full = node->full;
++    o->haddr = (void *)((uintptr_t)addr + node->copy.addend);
++    goto done;
++
++ done:
++    if (!o->did_tlb_fill) {
+         int a_bits = memop_alignment_bits(memop);
+ 
+         /*
++         * Alignment has not been checked by tlb_fill_align.
++         *
+          * The TLB_CHECK_ALIGNED check differs from the normal alignment
+          * check, in that this is based on the atomicity of the operation.
+          * The intended use case is the ARM memory type field of each PTE,
+@@ -1366,13 +1391,6 @@ static bool tlb_lookup(CPUState *cpu, TLBLookupOutput *o,
+             cpu_unaligned_access(cpu, addr, access_type, i->mmu_idx, i->ra);
+         }
      }
+-
+- done:
+-    flags &= cmp;
+-    flags |= full->slow_flags[access_type];
+-    o->flags = flags;
+-    o->full = *full;
+-    o->haddr = (void *)((uintptr_t)addr + entry->addend);
+     return true;
+ }
  
-     /* Convert to the physical address in tag space.  */
-     tag_paddr = ptr_paddr >> (LOG2_TAG_GRANULE + 1);
- 
-     /* Look up the address in tag space. */
--    tag_asi = attrs.secure ? ARMASIdx_TagS : ARMASIdx_TagNS;
-+    tag_asi = full.attrs.secure ? ARMASIdx_TagS : ARMASIdx_TagNS;
-     tag_as = cpu_get_address_space(env_cpu(env), tag_asi);
-     mr = address_space_translate(tag_as, tag_paddr, &xlat, NULL,
--                                 tag_access == MMU_DATA_STORE, attrs);
-+                                 tag_access == MMU_DATA_STORE, full.attrs);
- 
-     /*
-      * Note that @mr will never be NULL.  If there is nothing in the address
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index f1ee0e060f..dad0d5e518 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -5357,7 +5357,7 @@ bool sve_probe_page(SVEHostPage *info, bool nofault, CPUARMState *env,
-     flags = probe_access_flags(env, addr, 0, access_type, mmu_idx, nofault,
-                                &info->host, retaddr);
- #else
--    CPUTLBEntryFull *full;
-+    CPUTLBEntryFull full;
-     flags = probe_access_full(env, addr, 0, access_type, mmu_idx, nofault,
-                               &info->host, &full, retaddr);
- #endif
-@@ -5373,8 +5373,8 @@ bool sve_probe_page(SVEHostPage *info, bool nofault, CPUARMState *env,
-     /* Require both ANON and MTE; see allocation_tag_mem(). */
-     info->tagged = (flags & PAGE_ANON) && (flags & PAGE_MTE);
- #else
--    info->attrs = full->attrs;
--    info->tagged = full->extra.arm.pte_attrs == 0xf0;
-+    info->attrs = full.attrs;
-+    info->tagged = full.extra.arm.pte_attrs == 0xf0;
- #endif
- 
-     /* Ensure that info->host[] is relative to addr, not addr + mem_off. */
 -- 
 2.43.0
 
