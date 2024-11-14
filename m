@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30C3D65C56
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 07:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD39ED65C56
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 07:36:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBUKY-0007x3-0L; Thu, 14 Nov 2024 02:31:54 -0500
+	id 1tBUP1-0000ir-Mq; Thu, 14 Nov 2024 02:36:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=qUE+=SJ=kaod.org=clg@ozlabs.org>)
- id 1tBUKR-0007wN-Gm; Thu, 14 Nov 2024 02:31:47 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1tBUP0-0000iY-1k; Thu, 14 Nov 2024 02:36:30 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=qUE+=SJ=kaod.org=clg@ozlabs.org>)
- id 1tBUKP-0000Pq-F9; Thu, 14 Nov 2024 02:31:47 -0500
+ id 1tBUOx-0001ZZ-SA; Thu, 14 Nov 2024 02:36:29 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XpsKH10ykz4wxx;
- Thu, 14 Nov 2024 18:31:31 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XpsQq3ygFz4wyh;
+ Thu, 14 Nov 2024 18:36:19 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XpsKB2kxPz4wb1;
- Thu, 14 Nov 2024 18:31:25 +1100 (AEDT)
-Message-ID: <3e74f358-6ae2-499d-b016-f2819de4fecd@kaod.org>
-Date: Thu, 14 Nov 2024 08:31:24 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XpsQk6zJkz4wcy;
+ Thu, 14 Nov 2024 18:36:14 +1100 (AEDT)
+Message-ID: <01d12ff8-a570-4876-af0b-add3bccd12ae@kaod.org>
+Date: Thu, 14 Nov 2024 08:36:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] Introduce a new Write Protected pin inverted
- property
+Subject: Re: [PATCH v2 2/3] hw/sd/sdhci: Introduce a new Write Protected pin
+ inverted property
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,10 +41,9 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Bin Meng <bmeng.cn@gmail.com>, "open list:ASPEED BMCs"
  <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- Yunlin Tang <yunlin.tang@aspeedtech.com>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
 References: <20241104032104.2784183-1-jamin_lin@aspeedtech.com>
- <SI2PR06MB504180AF88657AD3846E0A4AFC5B2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <20241104032104.2784183-3-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,17 +88,16 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI2PR06MB504180AF88657AD3846E0A4AFC5B2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+In-Reply-To: <20241104032104.2784183-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=qUE+=SJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,42 +114,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin,
-
-On 11/14/24 06:32, Jamin Lin wrote:
-> Hi Cedric, Andrew
+On 11/4/24 04:21, Jamin Lin wrote:
+> The Write Protect pin of SDHCI model is default active low to match the SDHCI
+> spec. So, write enable the bit 19 should be 1 and write protected the bit 19
+> should be 0 at the Present State Register (0x24). However, some boards are
+> design Write Protected pin active high. In other words, write enable the bit 19
+> should be 0 and write protected the bit 19 should be 1 at the
+> Present State Register (0x24). To support it, introduces a new "wp-inverted"
+> property and set it false by default.
 > 
->> Subject: [PATCH v2 0/3] Introduce a new Write Protected pin inverted property
->>
->> change from v1:
->> 1. Support RTC for AST2700.
->> 2. Support SDHCI write protected pin inverted for AST2500 and AST2600.
->> 3. Introduce Capabilities Register 2 for SD slot 0 and 1.
->> 4. Support create flash devices via command line for AST1030.
->>
->> change from v2:
->> replace wp-invert with wp-inverted and fix review issues.
->>
->> Jamin Lin (3):
->>    hw/sd/sdhci: Fix coding style
->>    hw/sd/sdhci: Introduce a new Write Protected pin inverted property
->>    hw/arm/aspeed: Invert sdhci write protected pin for AST2600 and
->>      AST2500 EVBs
->>
->>   hw/arm/aspeed.c         |  8 +++++
->>   hw/sd/sdhci.c           | 70 ++++++++++++++++++++++++++++-------------
->>   include/hw/arm/aspeed.h |  1 +
->>   include/hw/sd/sdhci.h   |  5 +++
->>   4 files changed, 62 insertions(+), 22 deletions(-)
->>
-> 
-> Could you please help to review this patch series?
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-We would need an Ack from the sd maintainer on patch 2. Then,
-I can apply on the aspeed queue. That's material for QEMU 10.0.
+Acked-by: Cédric Le Goater <clg@redhat.com>
+
+> ---
+>   hw/sd/sdhci.c         | 6 ++++++
+>   include/hw/sd/sdhci.h | 5 +++++
+>   2 files changed, 11 insertions(+)
+> 
+> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+> index db7d547156..c675543873 100644
+> --- a/hw/sd/sdhci.c
+> +++ b/hw/sd/sdhci.c
+> @@ -275,6 +275,10 @@ static void sdhci_set_readonly(DeviceState *dev, bool level)
+>   {
+>       SDHCIState *s = (SDHCIState *)dev;
+>   
+> +    if (s->wp_inverted) {
+> +        level = !level;
+> +    }
+> +
+>       if (level) {
+>           s->prnsts &= ~SDHC_WRITE_PROTECT;
+>       } else {
+> @@ -1551,6 +1555,8 @@ static Property sdhci_sysbus_properties[] = {
+>                        false),
+>       DEFINE_PROP_LINK("dma", SDHCIState,
+>                        dma_mr, TYPE_MEMORY_REGION, MemoryRegion *),
+> +    DEFINE_PROP_BOOL("wp-inverted", SDHCIState,
+> +                     wp_inverted, false),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+>   
+> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+> index 6cd2822f1d..25ad9ed778 100644
+> --- a/include/hw/sd/sdhci.h
+> +++ b/include/hw/sd/sdhci.h
+> @@ -100,6 +100,11 @@ struct SDHCIState {
+>       uint8_t sd_spec_version;
+>       uint8_t uhs_mode;
+>       uint8_t vendor;        /* For vendor specific functionality */
+> +    /*
+> +     * Write Protect pin default active low for detecting SD card
+> +     * to be protected. Set wp_inverted to true inverted the signal.
+
+In case you respin, may be you could change the last sentence to :
+"Set wp_inverted to invert the signal."
+
 
 Thanks,
 
 C.
+
+
+> +     */
+> +    bool wp_inverted;
+>   };
+>   typedef struct SDHCIState SDHCIState;
+>   
 
 
