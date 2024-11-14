@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2918BD6A226
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D71AED6A226
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBf2m-0007Xv-00; Thu, 14 Nov 2024 13:58:16 -0500
+	id 1tBf0o-0003c8-2p; Thu, 14 Nov 2024 13:56:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBf1G-0005Fl-16
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:56:44 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1tBez9-0001QO-6s
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:54:34 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBf1E-0000cU-8l
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:56:41 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-71e681bc315so720397b3a.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:56:39 -0800 (PST)
+ id 1tBez5-0008Nb-FT
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:54:30 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-20c803787abso8551405ad.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:54:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731610599; x=1732215399; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731610464; x=1732215264; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CPbqcu8B2Th5H5BKQW1oRo6VOtmSpMQrOMtDuPqo3Gs=;
- b=wmNjk/foKjf5/endoh7TsR8m9p7jNfKl6/BJgsmKMKCm49YLwXV4pSr5NPPeR5RfvB
- 2+gzFMKCfCM7bnUxOQqTSlCSoR6SBYeLba2X7HyZGSWRxKkeUcI4qsQlTuupfSctK5Ht
- wcGWFEi9bb5N3a+RsaSdC1BYYCvBS1hE5kKxXiXbr5pFZWMNbTTgAYFgMvghpzrcJY8p
- 8k7OoothhgSluL3pFtCiqef4edQ4nyNhBdx5bBytA7byVNPVw7pfWYnWblsoF7/Cu7O7
- WHP2wx8HMU2chrhyD8AfrSEf/mlBnKrJGWsZS4p4iD0JAPKWJt9doYMLWlo1mmNA5oeM
- Bzng==
+ bh=/bDOebwew2Gb9DXhur3Q6IwVhhGzXoKJ8q74cyMGczk=;
+ b=KYAgiD91tYgyk4VoBnFyM3ayh2x6+248rVnfGAO7gFsU6OSDluPWmzGVMourP8X6wx
+ UIGGK5sKAKnH2kfm8VDELeqDmrJoH0yiNLsuNgLH4+/xchT7XcFeSf720m3xml04t05z
+ kEfPoFcrKsBV/tjK6SmpXXvaUMSoWoe9Z6mLzCj1X3ZOESf7geHTAM6ileTI2Ijt7p9E
+ fUQoO7uhtl+yhM/8WlVq9D9+bZZRTEAAMgsipQMsrl6MxnUn4gut1Qfr/7+DrOPZq1+6
+ jpbHTJmLOs4fx6mToRcK6oEmBn5PSo7mLi0vEzTAuQu+EXcp8otp6NlXpw2ToD4rqvLV
+ SzwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731610599; x=1732215399;
+ d=1e100.net; s=20230601; t=1731610464; x=1732215264;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CPbqcu8B2Th5H5BKQW1oRo6VOtmSpMQrOMtDuPqo3Gs=;
- b=fy6TYATuXLN9Kg++GQ59wdUK/o3OykFIVkKlzr1SLsradpLG/EAtAyy3XltgTdKIQl
- T35TwopuoFRbr+je7WLd6C9TfkNQcUwyQvJqpXqCRQLjnPIQzRtro6Co3mYRW6qekH4y
- TXAGo661PWGK/kX0XM/qF/YaSa9EZRkLMwY17ENlMJkZohQUP9vB0NPwz9eyNuMXva4a
- 6jjI5PzDl1Q/Wjz4U5g0iEunFA0im+cLJuFsm7dgI7Ny/dEsB7iPwJU418+2fW3Fgk7c
- qTpHF5kx0bONENOnYg6tU6O8hpOwm85GMeztniDm4VlWh0WqEwITJIM/C5Vx0udI5hZ7
- G4sw==
+ bh=/bDOebwew2Gb9DXhur3Q6IwVhhGzXoKJ8q74cyMGczk=;
+ b=s1QamB7uE6EzbZUjvBoANOZQObS+hkx+VuWUZ3NATMUxWuv2kQZYo7mUJXGZFqZscJ
+ S7mUp17i8S4FOBBbNAPpDRqYm4DZ0H/KKzmvUjByJnLU4U+gd8bwQvbYzIzTydYwKWf1
+ EdVT6YlUjzGVVeUfZUSrh2kZGYvoKApAGswe3ssXe1CYXd9c1VHV9p5APvu1C1EVUOg7
+ 1QWrkYmGUdXfPEYn6FZ3KJs5+ku0K3YCKahUXUQfZmcmSmiG3iXlT4yVIZhkcVwDILOm
+ VcXeavrz/GN/FvE3aKWYt/CDLUB5djcAMvlNaPoUoFoo/H2UJve1OG4vz5j8mzrhWJCz
+ KxHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnAisQJSZpQOFAhPnrkEfvg0gMLoWESrCRxag/4DK5P+bbHGjTjNQm3wgmyMWxSmfq6vdDM+Hf4LYg@nongnu.org
-X-Gm-Message-State: AOJu0Yyprcdc0Nb6wFey+uUHEhmz3pk/VXlkTjnd72G+yaHvSZnx9Mdr
- 0+WdlQ4QI6d/s7JzxUIJYpUpewS63QWbhO6pJvFWeECu9cpfS7C7m03mddYHxxo=
-X-Google-Smtp-Source: AGHT+IEmVD+OQxqkg6C0sAaceAhZmJhT4bvTEuw8VYbgf4CH2cI615K9YWSH/jG8Tll+1r2olNiA/Q==
-X-Received: by 2002:a05:6a00:4fd5:b0:71e:7f08:492c with SMTP id
- d2e1a72fcca58-72475f97182mr259562b3a.1.1731610598505; 
- Thu, 14 Nov 2024 10:56:38 -0800 (PST)
+ AJvYcCW9C4nSn/3UyT+7Tn+f8AmA+/sarbh1z3EWCrS56ambu/OBCmfpcMHMlrpzg6AmqOyUmsFBKknW1J4w@nongnu.org
+X-Gm-Message-State: AOJu0YzZlr568n245BCfI6M3yOzaI0vNTlOSAjllMiVIinmtSu5Meor+
+ R27rDG1ypuGrOnwczLo0k6+aH9u5s04Ybxk2IZI/DJTVZVXZk4/vr8m1AVRFTO4=
+X-Google-Smtp-Source: AGHT+IEF/fueQmEGqkg7d0Z2L13zjIFCKczydoKiU2Tp6LiV5OYY2tgdjDIfIRUxPDQ7y0qO6i4dPA==
+X-Received: by 2002:a17:903:228d:b0:20b:a409:329 with SMTP id
+ d9443c01a7336-211c0f0a592mr62521585ad.5.1731610463720; 
+ Thu, 14 Nov 2024 10:54:23 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7246a9a89b5sm1622826b3a.103.2024.11.14.10.56.37
+ d9443c01a7336-211c7c49d7bsm13981345ad.72.2024.11.14.10.54.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 10:56:38 -0800 (PST)
-Message-ID: <18e38d35-6646-44c4-aea5-c219c20cf2f3@linaro.org>
-Date: Thu, 14 Nov 2024 10:56:37 -0800
+ Thu, 14 Nov 2024 10:54:23 -0800 (PST)
+Message-ID: <22d4d563-7625-463c-92a3-c30fd99b4e4e@linaro.org>
+Date: Thu, 14 Nov 2024 10:54:23 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 52/54] accel/tcg: Unexport tlb_set_page*
+Subject: Re: [PATCH v2 47/54] target/sh4: Convert to TCGCPUOps.tlb_fill_align
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
- <20241114160131.48616-53-richard.henderson@linaro.org>
+ <20241114160131.48616-48-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241114160131.48616-53-richard.henderson@linaro.org>
+In-Reply-To: <20241114160131.48616-48-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,130 +98,96 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/14/24 08:01, Richard Henderson wrote:
-> The new tlb_fill_align hook returns page data via structure
-> rather than by function call, so we can make tlb_set_page_full
-> be local to cputlb.c.  There are no users of tlb_set_page
-> or tlb_set_page_with_attrs, so those can be eliminated.
-> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/exec-all.h | 57 -----------------------------------------
->   accel/tcg/cputlb.c      | 27 ++-----------------
->   2 files changed, 2 insertions(+), 82 deletions(-)
+>   target/sh4/cpu.h    |  8 +++++---
+>   target/sh4/cpu.c    |  2 +-
+>   target/sh4/helper.c | 24 +++++++++++++++++-------
+>   3 files changed, 23 insertions(+), 11 deletions(-)
 > 
-> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-> index 69bdb77584..b65fc547bd 100644
-> --- a/include/exec/exec-all.h
-> +++ b/include/exec/exec-all.h
-> @@ -184,63 +184,6 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
->                                                  vaddr len,
->                                                  uint16_t idxmap,
->                                                  unsigned bits);
-> -
-> -/**
-> - * tlb_set_page_full:
-> - * @cpu: CPU context
-> - * @mmu_idx: mmu index of the tlb to modify
-> - * @addr: virtual address of the entry to add
-> - * @full: the details of the tlb entry
-> - *
-> - * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
-> - * @full must be filled, except for xlat_section, and constitute
-> - * the complete description of the translated page.
-> - *
-> - * This is generally called by the target tlb_fill function after
-> - * having performed a successful page table walk to find the physical
-> - * address and attributes for the translation.
-> - *
-> - * At most one entry for a given virtual address is permitted. Only a
-> - * single TARGET_PAGE_SIZE region is mapped; @full->lg_page_size is only
-> - * used by tlb_flush_page.
-> - */
-> -void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
-> -                       CPUTLBEntryFull *full);
-> -
-> -/**
-> - * tlb_set_page_with_attrs:
-> - * @cpu: CPU to add this TLB entry for
-> - * @addr: virtual address of page to add entry for
-> - * @paddr: physical address of the page
-> - * @attrs: memory transaction attributes
-> - * @prot: access permissions (PAGE_READ/PAGE_WRITE/PAGE_EXEC bits)
-> - * @mmu_idx: MMU index to insert TLB entry for
-> - * @size: size of the page in bytes
-> - *
-> - * Add an entry to this CPU's TLB (a mapping from virtual address
-> - * @addr to physical address @paddr) with the specified memory
-> - * transaction attributes. This is generally called by the target CPU
-> - * specific code after it has been called through the tlb_fill()
-> - * entry point and performed a successful page table walk to find
-> - * the physical address and attributes for the virtual address
-> - * which provoked the TLB miss.
-> - *
-> - * At most one entry for a given virtual address is permitted. Only a
-> - * single TARGET_PAGE_SIZE region is mapped; the supplied @size is only
-> - * used by tlb_flush_page.
-> - */
-> -void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
-> -                             hwaddr paddr, MemTxAttrs attrs,
-> -                             int prot, int mmu_idx, vaddr size);
-> -/* tlb_set_page:
-> - *
-> - * This function is equivalent to calling tlb_set_page_with_attrs()
-> - * with an @attrs argument of MEMTXATTRS_UNSPECIFIED. It's provided
-> - * as a convenience for CPUs which don't use memory transaction attributes.
-> - */
-> -void tlb_set_page(CPUState *cpu, vaddr addr,
-> -                  hwaddr paddr, int prot,
-> -                  int mmu_idx, vaddr size);
->   #else
->   static inline void tlb_init(CPUState *cpu)
->   {
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index ec597ed6f5..3d731b8f3d 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -1037,8 +1037,8 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
->    * Called from TCG-generated code, which is under an RCU read-side
->    * critical section.
->    */
-> -void tlb_set_page_full(CPUState *cpu, int mmu_idx,
-> -                       vaddr addr, CPUTLBEntryFull *full)
-> +static void tlb_set_page_full(CPUState *cpu, int mmu_idx,
-> +                              vaddr addr, CPUTLBEntryFull *full)
->   {
->       CPUTLB *tlb = &cpu->neg.tlb;
->       CPUTLBDesc *desc = &tlb->d[mmu_idx];
-> @@ -1189,29 +1189,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
->       qemu_spin_unlock(&tlb->c.lock);
+> diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+> index d928bcf006..161efdefcf 100644
+> --- a/target/sh4/cpu.h
+> +++ b/target/sh4/cpu.h
+> @@ -22,6 +22,7 @@
+>   
+>   #include "cpu-qom.h"
+>   #include "exec/cpu-defs.h"
+> +#include "exec/memop.h"
+>   #include "qemu/cpu-float.h"
+>   
+>   /* CPU Subtypes */
+> @@ -251,9 +252,10 @@ void sh4_translate_init(void);
+>   
+>   #if !defined(CONFIG_USER_ONLY)
+>   hwaddr superh_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+> -bool superh_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+> -                         MMUAccessType access_type, int mmu_idx,
+> -                         bool probe, uintptr_t retaddr);
+> +bool superh_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
+> +                               vaddr addr, MMUAccessType access_type,
+> +                               int mmu_idx, MemOp memop, int size,
+> +                               bool probe, uintptr_t retaddr);
+>   void superh_cpu_do_interrupt(CPUState *cpu);
+>   bool superh_cpu_exec_interrupt(CPUState *cpu, int int_req);
+>   void cpu_sh4_invalidate_tlb(CPUSH4State *s);
+> diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+> index 8f07261dcf..8ca8b90e3c 100644
+> --- a/target/sh4/cpu.c
+> +++ b/target/sh4/cpu.c
+> @@ -252,7 +252,7 @@ static const TCGCPUOps superh_tcg_ops = {
+>       .restore_state_to_opc = superh_restore_state_to_opc,
+>   
+>   #ifndef CONFIG_USER_ONLY
+> -    .tlb_fill = superh_cpu_tlb_fill,
+> +    .tlb_fill_align = superh_cpu_tlb_fill_align,
+>       .cpu_exec_interrupt = superh_cpu_exec_interrupt,
+>       .cpu_exec_halt = superh_cpu_has_work,
+>       .do_interrupt = superh_cpu_do_interrupt,
+> diff --git a/target/sh4/helper.c b/target/sh4/helper.c
+> index 9659c69550..543ac1b843 100644
+> --- a/target/sh4/helper.c
+> +++ b/target/sh4/helper.c
+> @@ -792,22 +792,32 @@ bool superh_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+>       return false;
 >   }
 >   
-> -void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
-> -                             hwaddr paddr, MemTxAttrs attrs, int prot,
-> -                             int mmu_idx, uint64_t size)
-> -{
-> -    CPUTLBEntryFull full = {
-> -        .phys_addr = paddr,
-> -        .attrs = attrs,
-> -        .prot = prot,
-> -        .lg_page_size = ctz64(size)
-> -    };
+> -bool superh_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+> -                         MMUAccessType access_type, int mmu_idx,
+> -                         bool probe, uintptr_t retaddr)
+> +bool superh_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
+> +                               vaddr address, MMUAccessType access_type,
+> +                               int mmu_idx, MemOp memop, int size,
+> +                               bool probe, uintptr_t retaddr)
+>   {
+>       CPUSH4State *env = cpu_env(cs);
+>       int ret;
 > -
-> -    assert(is_power_of_2(size));
-> -    tlb_set_page_full(cpu, mmu_idx, addr, &full);
-> -}
-> -
-> -void tlb_set_page(CPUState *cpu, vaddr addr,
-> -                  hwaddr paddr, int prot,
-> -                  int mmu_idx, uint64_t size)
-> -{
-> -    tlb_set_page_with_attrs(cpu, addr, paddr, MEMTXATTRS_UNSPECIFIED,
-> -                            prot, mmu_idx, size);
-> -}
-> -
->   /*
->    * Note: tlb_fill_align() can trigger a resize of the TLB.
->    * This means that all of the caller's prior references to the TLB table
+>       target_ulong physical;
+>       int prot;
+>   
+> +    if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
+> +        if (probe) {
+> +            return false;
+> +        }
+> +        superh_cpu_do_unaligned_access(cs, address, access_type,
+> +                                       mmu_idx, retaddr);
+> +    }
+> +
+>       ret = get_physical_address(env, &physical, &prot, address, access_type);
+>   
+>       if (ret == MMU_OK) {
+> -        address &= TARGET_PAGE_MASK;
+> -        physical &= TARGET_PAGE_MASK;
+> -        tlb_set_page(cs, address, physical, prot, mmu_idx, TARGET_PAGE_SIZE);
+> +        memset(out, 0, sizeof(*out));
+> +        out->phys_addr = physical;
+> +        out->prot = prot;
+> +        out->lg_page_size = TARGET_PAGE_BITS;
+> +        out->attrs = MEMTXATTRS_UNSPECIFIED;
+>           return true;
+>       }
+>       if (probe) {
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
