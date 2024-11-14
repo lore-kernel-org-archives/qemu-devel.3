@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A96D6A226
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0094D6A22A
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:56:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBf0m-0003O6-Ja; Thu, 14 Nov 2024 13:56:12 -0500
+	id 1tBeyn-0000xV-Jf; Thu, 14 Nov 2024 13:54:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBezN-0001ZS-U5
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:54:52 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1tBeyl-0000pm-7Q
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:54:07 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBezE-0008Q3-Er
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:54:39 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7f12ba78072so798518a12.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:54:33 -0800 (PST)
+ id 1tBeyY-0007p2-Gx
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:54:06 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-72061bfec2dso726789b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:53:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731610472; x=1732215272; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731610432; x=1732215232; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RGS72YEF8J8rfAgIqQbA3X2/cWpgXHmuuEO3D5wNClM=;
- b=iRIThU/3enmlakCvjn1U+B65l0DLqXr9eREYCv8UORdCYEkF+4/M1RfRx2L7K22Lu6
- 8EDHvKBB1njlpjtgzo3pfXaa/JPwlqTF6gEHXAvNyM4uCs+xGA7i6FZRt/KcDBBIGDN3
- jQEeOhQ2s18FbMOZpqOtvcLWnF7xrARidBERSDgr7SQO3DqcqCDVV/dsM4gsvZY0Bt7t
- DOUJtNdZjy2+FRwXwCIQ2RGc0+Yfhh9bVtOtdoAPRJz/sl2cb/1/n7RHZ7kMkXa8W+iP
- mMlwOxaCRdDcl9qTey/zuvizkgI0+iJ/cHbq5nJDcNijO3T9DPdC0gC3RHJPFpyB6twW
- M0QA==
+ bh=G1lhs1qpXUqWJm6ZOUt+OeEyAF4LT3tdcSBWH0PlA40=;
+ b=TRNAooVNGF+iNsoOlbXjROn8leAFEioTtsK2dOe0klLkFu4ph7VtnwNFOCmIdmXidX
+ 6X2uYcTvAzuWd9cyjVztlrkLEBSIksTq8QhHnR6+X3qwqddBvS5Qrh09mNxe39YGvP6h
+ xpgLnzYX/Goaafzx+EAp+3EwnW8SUx8w/LelqoI8u7fbCTfr5Tk4fpb/1LBmVd5KFw9y
+ WoN/iNCas8PmI+0eAD5DLfzNgtE/ZA00X+1mRmEtygmnJD4Nu66wYkfn07IL5FFnb86M
+ TVkhIX6Yu66kVBnDoV3LsGsyIhbWNrbcCJ1cMQ7Il12tXltXJNCajbB2pHHz7vV9khDg
+ lAkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731610472; x=1732215272;
+ d=1e100.net; s=20230601; t=1731610432; x=1732215232;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RGS72YEF8J8rfAgIqQbA3X2/cWpgXHmuuEO3D5wNClM=;
- b=PuuV2HUgyr1JML6apTnZIjLOWo2R1MxqfVhfjHpZYu+DQhaxSe1RluEI+rTHlk1wu+
- 9PdZQoJbgfDuQdL9+aMuqo1JKenbVfcidtJEUhCjLALmDeizLMbwpHtW1uNKAKy9W+U+
- LJ3xmodrQPu+LNF7+CkjyObuKEFjNM7BDbkeboRmlJM7MkgWdU0GrldQz9qcbAyfkRlB
- GQoorOtsFmfN/WluNx0Pad3cYQdKCnjJQ0Sc0DsyZ7FjqMfK9ih1uGISKSJnWniha/9e
- JkqcAYdm2S0WLxKeq0YbkLNxmnWt7Za3IRIH5ERi74ZMNe0UjQ3EWk4XAG0n9bB+oqgL
- muMw==
+ bh=G1lhs1qpXUqWJm6ZOUt+OeEyAF4LT3tdcSBWH0PlA40=;
+ b=WqmvhFDAXj3fh/YGseSnGkIndFfO8TnAVUA2sMHuMg7KtAN9Gi36F3wI81F4aAl3eV
+ BTx76hMkzCyIYyxUHdE94fGQ9cB/sCz5lrfshMBphjUjwSMuYaOciASO8Ta661+A9V/n
+ owAhbjeY+JBrxekMF4dDa1s4ZAgDvhLrpXea6BvazV/l/RaaCSk93nJSZE1KNXRaac2w
+ TTrtSshHR4FuZkTKb9YgmpJecLGY3na6Nwa2BRRZUSVF4FzDPOM1lTYDybGH045He/m/
+ NqI3ztyQjGAwnO1rxOAb6rNV3cF56W+BIcsKutEbgU8dzSWOadwjkBgS/6G+g3TKlfMD
+ vlhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXH5oUG6GovZ8njZ8DtlsKPRyX7GW3sF9YxNlOcD6rjtFQ601k24KxgU3Fxi6ediFEoaPXLiOynr1ea@nongnu.org
-X-Gm-Message-State: AOJu0YyZx7ZFu9/rit1g0qpp2PDmsiLSM5G4hFg3H7sE7eSEkffVl2bh
- 6HPajSUlTV9Mf5c0x++3HA4mjBLu/hb0J2dvKT5boXUd72rvKKDeBaxHmhMYgY4=
-X-Google-Smtp-Source: AGHT+IFXoShFHqBYZ4fuhORDQsEjqs808nLltfX3nms3kKWSPPfpFpaj9DVBndvzxD1tVUTZkVA3Cg==
-X-Received: by 2002:a05:6a20:258e:b0:1dc:792f:d274 with SMTP id
- adf61e73a8af0-1dc792fd5d2mr7387008637.17.1731610472154; 
- Thu, 14 Nov 2024 10:54:32 -0800 (PST)
+ AJvYcCXeWtZqLyOhvF7m5do2rhD/hf7GcAQGnX61xKUToNiDHu51hj5VnRDFAWnuFVd/KbXmHXrTb9K9KYYy@nongnu.org
+X-Gm-Message-State: AOJu0YxsKr6WCVMwvT2vSCENio/72Hxm+rFxbRArk8JXXleoZSEfG9eL
+ wHgM80CUDA5WbCj5gJfpBwdFPZgNroHr2XiK/+e7Qjc1xH6pwZtf/5j0O0Vn/fOrPQ2arYC40ij
+ lLj/MZQ==
+X-Google-Smtp-Source: AGHT+IElj5AMsokpdsh8YY2IDvUX00X19LehbFp5MWrSJyJaBsS+d9IsXDN3j6pP43hx4q5stcafeg==
+X-Received: by 2002:a05:6a00:1ca6:b0:724:6bac:1003 with SMTP id
+ d2e1a72fcca58-7246bac1753mr3523620b3a.24.1731610432502; 
+ Thu, 14 Nov 2024 10:53:52 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7246a9bbb17sm1590345b3a.168.2024.11.14.10.54.31
+ d2e1a72fcca58-7246a5ceda0sm1592394b3a.1.2024.11.14.10.53.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 10:54:31 -0800 (PST)
-Message-ID: <b62678d5-59e2-44aa-a09a-5fc3960e20c1@linaro.org>
-Date: Thu, 14 Nov 2024 10:54:31 -0800
+ Thu, 14 Nov 2024 10:53:52 -0800 (PST)
+Message-ID: <13f3a3c0-f7a2-433e-8f8b-ca4db4e498ad@linaro.org>
+Date: Thu, 14 Nov 2024 10:53:51 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 48/54] target/sparc: Convert to TCGCPUOps.tlb_fill_align
+Subject: Re: [PATCH v2 41/54] target/mips: Convert to TCGCPUOps.tlb_fill_align
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
- <20241114160131.48616-49-richard.henderson@linaro.org>
+ <20241114160131.48616-42-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241114160131.48616-49-richard.henderson@linaro.org>
+In-Reply-To: <20241114160131.48616-42-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,144 +101,101 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 11/14/24 08:01, Richard Henderson wrote:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/sparc/cpu.h        |  8 ++++---
->   target/sparc/cpu.c        |  2 +-
->   target/sparc/mmu_helper.c | 44 +++++++++++++++++++++++++--------------
->   3 files changed, 34 insertions(+), 20 deletions(-)
+>   target/mips/tcg/tcg-internal.h      |  6 +++---
+>   target/mips/cpu.c                   |  2 +-
+>   target/mips/tcg/sysemu/tlb_helper.c | 29 ++++++++++++++++++++---------
+>   3 files changed, 24 insertions(+), 13 deletions(-)
 > 
-> diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-> index f517e5a383..4c8927e9fa 100644
-> --- a/target/sparc/cpu.h
-> +++ b/target/sparc/cpu.h
-> @@ -4,6 +4,7 @@
->   #include "qemu/bswap.h"
->   #include "cpu-qom.h"
->   #include "exec/cpu-defs.h"
-> +#include "exec/memop.h"
->   #include "qemu/cpu-float.h"
+> diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
+> index aef032c48d..f4b00354af 100644
+> --- a/target/mips/tcg/tcg-internal.h
+> +++ b/target/mips/tcg/tcg-internal.h
+> @@ -61,9 +61,9 @@ void mips_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+>                                       MemTxResult response, uintptr_t retaddr);
+>   void cpu_mips_tlb_flush(CPUMIPSState *env);
 >   
->   #if !defined(TARGET_SPARC64)
-> @@ -596,9 +597,10 @@ G_NORETURN void cpu_raise_exception_ra(CPUSPARCState *, int, uintptr_t);
->   void cpu_sparc_set_id(CPUSPARCState *env, unsigned int cpu);
->   void sparc_cpu_list(void);
->   /* mmu_helper.c */
-> -bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-> -                        MMUAccessType access_type, int mmu_idx,
-> -                        bool probe, uintptr_t retaddr);
-> +bool sparc_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-> +                              vaddr addr, MMUAccessType access_type,
-> +                              int mmu_idx, MemOp memop, int size,
-> +                              bool probe, uintptr_t retaddr);
->   target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev);
->   void dump_mmu(CPUSPARCState *env);
+> -bool mips_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+> -                       MMUAccessType access_type, int mmu_idx,
+> -                       bool probe, uintptr_t retaddr);
+> +bool mips_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
+> +                             MMUAccessType access_type, int mmu_idx,
+> +                             MemOp memop, int size, bool probe, uintptr_t ra);
 >   
-> diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-> index dd7af86de7..57ae53bd71 100644
-> --- a/target/sparc/cpu.c
-> +++ b/target/sparc/cpu.c
-> @@ -932,7 +932,7 @@ static const TCGCPUOps sparc_tcg_ops = {
->       .restore_state_to_opc = sparc_restore_state_to_opc,
+>   void mips_semihosting(CPUMIPSState *env);
 >   
->   #ifndef CONFIG_USER_ONLY
-> -    .tlb_fill = sparc_cpu_tlb_fill,
-> +    .tlb_fill_align = sparc_cpu_tlb_fill_align,
->       .cpu_exec_interrupt = sparc_cpu_exec_interrupt,
->       .cpu_exec_halt = sparc_cpu_has_work,
->       .do_interrupt = sparc_cpu_do_interrupt,
-> diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-> index 9ff06026b8..32766a37d6 100644
-> --- a/target/sparc/mmu_helper.c
-> +++ b/target/sparc/mmu_helper.c
-> @@ -203,12 +203,12 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+> diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+> index d0a43b6d5c..3a453c9285 100644
+> --- a/target/mips/cpu.c
+> +++ b/target/mips/cpu.c
+> @@ -556,7 +556,7 @@ static const TCGCPUOps mips_tcg_ops = {
+>       .restore_state_to_opc = mips_restore_state_to_opc,
+>   
+>   #if !defined(CONFIG_USER_ONLY)
+> -    .tlb_fill = mips_cpu_tlb_fill,
+> +    .tlb_fill_align = mips_cpu_tlb_fill_align,
+>       .cpu_exec_interrupt = mips_cpu_exec_interrupt,
+>       .cpu_exec_halt = mips_cpu_has_work,
+>       .do_interrupt = mips_cpu_do_interrupt,
+> diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
+> index e98bb95951..ac76396525 100644
+> --- a/target/mips/tcg/sysemu/tlb_helper.c
+> +++ b/target/mips/tcg/sysemu/tlb_helper.c
+> @@ -904,15 +904,28 @@ refill:
 >   }
+>   #endif
 >   
->   /* Perform address translation */
-> -bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-> -                        MMUAccessType access_type, int mmu_idx,
-> -                        bool probe, uintptr_t retaddr)
-> +bool sparc_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-> +                              vaddr address, MMUAccessType access_type,
-> +                              int mmu_idx, MemOp memop, int size,
-> +                              bool probe, uintptr_t retaddr)
+> -bool mips_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+> -                       MMUAccessType access_type, int mmu_idx,
+> -                       bool probe, uintptr_t retaddr)
+> +bool mips_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
+> +                             MMUAccessType access_type, int mmu_idx,
+> +                             MemOp memop, int size,
+> +                             bool probe, uintptr_t retaddr)
 >   {
->       CPUSPARCState *env = cpu_env(cs);
-> -    CPUTLBEntryFull full = {};
->       target_ulong vaddr;
->       int error_code = 0, access_index;
->   
-> @@ -220,16 +220,21 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->        */
->       assert(!probe);
->   
-> +    if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
-> +        sparc_cpu_do_unaligned_access(cs, address, access_type,
-> +                                      mmu_idx, retaddr);
-> +    }
-> +
-> +    memset(out, 0, sizeof(*out));
->       address &= TARGET_PAGE_MASK;
-> -    error_code = get_physical_address(env, &full, &access_index,
-> +    error_code = get_physical_address(env, out, &access_index,
->                                         address, access_type, mmu_idx);
->       vaddr = address;
->       if (likely(error_code == 0)) {
->           qemu_log_mask(CPU_LOG_MMU,
->                         "Translate at %" VADDR_PRIx " -> "
->                         HWADDR_FMT_plx ", vaddr " TARGET_FMT_lx "\n",
-> -                      address, full.phys_addr, vaddr);
-> -        tlb_set_page_full(cs, mmu_idx, vaddr, &full);
-> +                      address, out->phys_addr, vaddr);
->           return true;
->       }
->   
-> @@ -244,8 +249,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->              permissions. If no mapping is available, redirect accesses to
->              neverland. Fake/overridden mappings will be flushed when
->              switching to normal mode. */
-> -        full.prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-> -        tlb_set_page_full(cs, mmu_idx, vaddr, &full);
-> +        out->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
->           return true;
->       } else {
->           if (access_type == MMU_INST_FETCH) {
-> @@ -754,22 +758,30 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
->   }
->   
->   /* Perform address translation */
-> -bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-> -                        MMUAccessType access_type, int mmu_idx,
-> -                        bool probe, uintptr_t retaddr)
-> +bool sparc_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-> +                              vaddr address, MMUAccessType access_type,
-> +                              int mmu_idx, MemOp memop, int size,
-> +                              bool probe, uintptr_t retaddr)
->   {
->       CPUSPARCState *env = cpu_env(cs);
-> -    CPUTLBEntryFull full = {};
->       int error_code = 0, access_index;
+>       CPUMIPSState *env = cpu_env(cs);
+>       hwaddr physical;
+>       int prot;
+>       int ret = TLBRET_BADADDR;
 >   
 > +    if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
 > +        if (probe) {
 > +            return false;
 > +        }
-> +        sparc_cpu_do_unaligned_access(cs, address, access_type,
-> +                                      mmu_idx, retaddr);
+> +        mips_cpu_do_unaligned_access(cs, address, access_type,
+> +                                     mmu_idx, retaddr);
 > +    }
 > +
 > +    memset(out, 0, sizeof(*out));
->       address &= TARGET_PAGE_MASK;
-> -    error_code = get_physical_address(env, &full, &access_index,
-> +    error_code = get_physical_address(env, out, &access_index,
->                                         address, access_type, mmu_idx);
->       if (likely(error_code == 0)) {
-> -        trace_mmu_helper_mmu_fault(address, full.phys_addr, mmu_idx, env->tl,
-> +        trace_mmu_helper_mmu_fault(address, out->phys_addr, mmu_idx, env->tl,
->                                      env->dmmu.mmu_primary_context,
->                                      env->dmmu.mmu_secondary_context);
-> -        tlb_set_page_full(cs, mmu_idx, address, &full);
+> +    out->attrs = MEMTXATTRS_UNSPECIFIED;
+> +    out->lg_page_size = TARGET_PAGE_BITS;
+> +
+>       /* data access */
+>       /* XXX: put correct access by using cpu_restore_state() correctly */
+>       ret = get_physical_address(env, &physical, &prot, address,
+> @@ -930,9 +943,8 @@ bool mips_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>           break;
+>       }
+>       if (ret == TLBRET_MATCH) {
+> -        tlb_set_page(cs, address & TARGET_PAGE_MASK,
+> -                     physical & TARGET_PAGE_MASK, prot,
+> -                     mmu_idx, TARGET_PAGE_SIZE);
+> +        out->phys_addr = physical;
+> +        out->prot = prot;
 >           return true;
 >       }
->       if (probe) {
+>   #if !defined(TARGET_MIPS64)
+> @@ -948,9 +960,8 @@ bool mips_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>               ret = get_physical_address(env, &physical, &prot, address,
+>                                          access_type, mmu_idx);
+>               if (ret == TLBRET_MATCH) {
+> -                tlb_set_page(cs, address & TARGET_PAGE_MASK,
+> -                             physical & TARGET_PAGE_MASK, prot,
+> -                             mmu_idx, TARGET_PAGE_SIZE);
+> +                out->phys_addr = physical;
+> +                out->prot = prot;
+>                   return true;
+>               }
+>           }
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
