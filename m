@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A40C1D6A228
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 19:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB52D6A228
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 19:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBf7i-0008G1-6W; Thu, 14 Nov 2024 14:03:22 -0500
+	id 1tBf95-0000ps-Vh; Thu, 14 Nov 2024 14:04:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBf7f-0008EA-Iu
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:03:19 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBf8r-0000nW-S7
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:04:42 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBf7d-0002RB-CY
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:03:19 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-7ea76a12c32so802333a12.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 11:03:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBf8h-0004oM-P4
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 14:04:26 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-aa2099efdc3so208133666b.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 11:04:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731610996; x=1732215796; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731611062; x=1732215862; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Rih358wJwMiZGOQCVS2076aLPZOXo/1Z1k5jdI90a6U=;
- b=DdEYrT4+83fX3mpgOX/g0O0Ak8eCT6qxS/6DS9cf5/H9moZf0VPoJjNvhoAfrDb3S1
- JonEDO6LLJbf402sl4M58BOQU/owspPDXzbFZbEW/Sa4r0rxEhY/nqFOiBoD+8Gx+Krn
- wprqGB3X+KPKkphzHoh4srb1c/BVxvOKN49i4xb+otjoHusB8x3hHkG8q1d66ques31s
- T3z8irqxZ7Qmu8YzhlGlr2vQvE2kLCh+2uZW3ks13ERC6rXaR8n4Kpiqq4FDuGnOZtGb
- t/F8AG8waDv5wybY6UDLlNi4sowT+80CKkIMN+BFDljtBGMJOYkMKxtdc0+6E+Jm6C2G
- Zvcw==
+ bh=7wLJ5bGe8PhcA5s4MkR8F5MzptCMjqAp4jO9kLmFUCA=;
+ b=QZvf4m9+k88hxmD/7jKCc23oux7lGJLS0JAPA3Am4efV8GaDnc71iyOAdAcXJkKEpA
+ zcjy2CRfh6PYeWW8WSNgVvJQHmFhj/BdS2B2HebZaX8Sp+oHkgQgqCzNAdCFAxUfiaw/
+ YF8s+h4ZZhXiki6fdEwcojPjyauxfKYiVvc/Vlp0E988ZYQAAVa9kE9o2tyirQmdXExS
+ YZceP8DkplaQ6N7CoPmmC6hjoe9zR8XN2IErdMSatR0cO5KWTPQcdj4huuj2aCFLS15u
+ VN76dCb9vWzkfgB8ly17OnC3qxS29V3wmJyNJK91nj8WPc4H4UKYAN+LxeIMTXupSv1M
+ hgHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731610996; x=1732215796;
+ d=1e100.net; s=20230601; t=1731611062; x=1732215862;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Rih358wJwMiZGOQCVS2076aLPZOXo/1Z1k5jdI90a6U=;
- b=o64feZxFsb12e7MuN6o05zT+Ciy/w8NgYmWq7wlj23l8Mtiwa4WE0i4UvoizkPaZtq
- sfxAP+EYNEdCGXfFFeTz+DOHNammBTGG13Nfnz3fxuql6zkkcS1nN1Ft34RfnSTjcqk2
- QHzURM4F+ak2avcqr9dTfwueeT8SauwFtUYQoDcJmkwCFaXBtjTdh82Qratas0tx4X2K
- c3/+RPybcM8IbuQfcF6oXkwuvRqTZaVdJDVMKk9g0ydn7AM1c2OF3zorjQN2nvxm70HJ
- 20tFIkS7+MIHi4YpVf8POU599NhbeaiFI02mmUIkMBshN6owAhXO4MWPbJf+afSQCN6X
- LgFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVBdYAzIuSlU1n2XZ/BHQXnmaZlUeTvyM9wBiGC3a9XWYHXP997R7ioByfiIA+yveXNyFv/cJzxWrhq@nongnu.org
-X-Gm-Message-State: AOJu0YzreNWsN+4Kg+k4eGw6KaHP7AGQaTt9N1A+ZyG0BGRhKg5wXwDt
- 7gqaQofqncx/BAxDmwuvsa/258IUrsuSbeMDmZ+Ez/ejdT+bRkYEK6h2uF9VkxI=
-X-Google-Smtp-Source: AGHT+IFMZlfLlYP7zrEa9dB05YZT7+BppqP7DMQmFHS+WzGkV8dx/owwo9Gyp6pIZRCLVjxGUXGpCQ==
-X-Received: by 2002:a17:90b:3eca:b0:2e2:c421:894b with SMTP id
- 98e67ed59e1d1-2ea154f7474mr5808a91.14.1731610995788; 
- Thu, 14 Nov 2024 11:03:15 -0800 (PST)
-Received: from [192.168.0.4] ([71.212.136.242])
+ bh=7wLJ5bGe8PhcA5s4MkR8F5MzptCMjqAp4jO9kLmFUCA=;
+ b=rbnqHl51B98mc1ZY2vxivIjrFij4qndUNZn9Lu0ZYMuAT0SUk6SscciKCh49aHhkan
+ BwW6ic0dwPD5fcHE1GUbwKekJYE1zg7BHY6qZIPpNymhbDOG3ubkGNFDnvEMoRhhBuxm
+ 70BZayXHwkvIjWemgco9oqRtJokGolxg+e1oW9iQRfjNiwMlHdReq2byamj0IFn0xngh
+ SYmOwggovOOJ4q5KPD/zTb7wuLM+sd7RW0KPEcQEndfbi41yDYRnxYWyToOCA3+OA+Al
+ 6IaTbPoBZUj+eaWPHAobR5Apdtx8JVpTC4G28unqUE9GA9VuolO1KJHeo+4bIw/Plwl5
+ lAQQ==
+X-Gm-Message-State: AOJu0Yy8xoHNHkmSQyPG8JWP0tiqBgIk7hg1+WmB+MQy2RyW+Lium5PF
+ o6TdTeEMps2pXIkiM7wYAIyfXtzztga8bvNx0bmddElzjJprUKnRADirKefCPjA=
+X-Google-Smtp-Source: AGHT+IHUUH3+mJVweYuJa8JXmFrF6sxDcV4hGYS629ungZmAus8XcXlvvnyKgbE8XcLBynOQZBQB2Q==
+X-Received: by 2002:a17:907:2d92:b0:a9e:65a1:fdac with SMTP id
+ a640c23a62f3a-aa48185cacdmr21369566b.7.1731611062107; 
+ Thu, 14 Nov 2024 11:04:22 -0800 (PST)
+Received: from [192.168.69.174] ([176.187.209.228])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea06ef71a6sm1533266a91.8.2024.11.14.11.03.15
+ a640c23a62f3a-aa20df51ab1sm91362166b.57.2024.11.14.11.04.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 11:03:15 -0800 (PST)
-Message-ID: <e7fc7e52-6bea-41f3-8369-6b8e5285a71f@linaro.org>
-Date: Thu, 14 Nov 2024 11:03:13 -0800
+ Thu, 14 Nov 2024 11:04:21 -0800 (PST)
+Message-ID: <61989b7a-2dd2-4582-98ae-a78182c0b88c@linaro.org>
+Date: Thu, 14 Nov 2024 20:04:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/24] target/arm/cpu: Restrict cpu_untagged_addr() to
- user emulation
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, 
- Peter Xu <peterx@redhat.com>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-s390x@nongnu.org
-References: <20241114011310.3615-1-philmd@linaro.org>
- <20241114011310.3615-11-philmd@linaro.org>
+Subject: Re: [PATCH 08/20] hw/net/xilinx_ethlite: Add addr_to_port_index()
+ helper
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Anton Johansson <anjo@rev.ng>,
+ Jason Wang <jasowang@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+References: <20241112181044.92193-1-philmd@linaro.org>
+ <20241112181044.92193-9-philmd@linaro.org> <ZzTEjun3kd5_wckb@zapote>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241114011310.3615-11-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZzTEjun3kd5_wckb@zapote>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,42 +101,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/13/24 17:12, Philippe Mathieu-Daudé wrote:
-> Move the #endif guard where it belongs to restrict
-> the cpu_untagged_addr() implementation to user
-> emulation.
+On 13/11/24 15:23, Edgar E. Iglesias wrote:
+> On Tue, Nov 12, 2024 at 07:10:32PM +0100, Philippe Mathieu-Daudé wrote:
+>> For a particular physical address within the EthLite MMIO range,
+>> addr_to_port_index() returns which port is accessed.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/net/xilinx_ethlite.c | 10 +++++++++-
+>>   1 file changed, 9 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
+>> index 20919b4f54..fe91891310 100644
+>> --- a/hw/net/xilinx_ethlite.c
+>> +++ b/hw/net/xilinx_ethlite.c
+>> @@ -24,6 +24,7 @@
+>>   
+>>   #include "qemu/osdep.h"
+>>   #include "qemu/module.h"
+>> +#include "qemu/bitops.h"
+>>   #include "qom/object.h"
+>>   #include "qapi/error.h"
+>>   #include "exec/tswap.h"
+>> @@ -86,6 +87,12 @@ static inline void eth_pulse_irq(XlnxXpsEthLite *s)
+>>       }
+>>   }
+>>   
+>> +__attribute__((unused))
+>> +static unsigned addr_to_port_index(hwaddr addr)
+>> +{
+>> +    return extract64(addr, 11, 1);
+>> +}
+>> +
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/arm/cpu.h | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+> Shouldn't you add addr_to_port_index in the following patch and avoid
+> the temporary unused attribute?
+
+OK.
+
 > 
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index d86e641280..12b8466542 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -3355,8 +3355,8 @@ extern const uint64_t pred_esz_masks[5];
->   #define TAG_GRANULE      (1 << LOG2_TAG_GRANULE)
->   
->   #ifdef CONFIG_USER_ONLY
-> +
->   #define TARGET_PAGE_DATA_SIZE (TARGET_PAGE_SIZE >> (LOG2_TAG_GRANULE + 1))
-> -#endif
->   
->   #ifdef TARGET_TAGGED_ADDRESSES
->   /**
-> @@ -3382,6 +3382,7 @@ static inline target_ulong cpu_untagged_addr(CPUState *cs, target_ulong x)
->       }
->       return x;
->   }
-> -#endif
-> +#endif /* TARGET_TAGGED_ADDRESSES */
-> +#endif /* CONFIG_USER_ONLY */
->   
->   #endif
+>>   static uint64_t
+>>   eth_read(void *opaque, hwaddr addr, unsigned int size)
+>>   {
+>> @@ -190,7 +197,8 @@ static bool eth_can_rx(NetClientState *nc)
+>>   static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
+>>   {
+>>       XlnxXpsEthLite *s = qemu_get_nic_opaque(nc);
+>> -    unsigned int rxbase = s->port_index * (0x800 / 4);
+>> +    unsigned int port_index = s->port_index;
+>> +    unsigned int rxbase = port_index * (0x800 / 4);
+> 
+> 
+> Hmm, AFAICT s->port_index is an unsigned int, what is the purpose of this change?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Likely a rebase mistake, this belongs to the next patch indeed.
 
-
-r~
 
