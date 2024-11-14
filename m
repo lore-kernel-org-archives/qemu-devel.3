@@ -4,131 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C894D68B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 15:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD787D68B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 15:45:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBbvl-0008EJ-Rp; Thu, 14 Nov 2024 10:38:49 -0500
+	id 1tBc1j-0001Wt-Jr; Thu, 14 Nov 2024 10:44:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBbvk-0008E4-Lj
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 10:38:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBbvj-0004ei-7W
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 10:38:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731598724;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fVCgym5EXeC8LkRqGnMMONgMQR5dMAfeOJ2ZBiHnk3Y=;
- b=PWV5zY4t7b7TL12PODZz3bivZTCvKax6ejF75Ft4gVB0zMa8hiSsVLfYMfLoKcEwvzJF9r
- X/m8iSzov2ESx08AAmue5ajoXW2q3wLnlD8dW3qz7qIBfFEkm1NjIkvBX94RAn60HsO97O
- txTyrvXJ3q1O5dxBQbaHS8sIE5nqEHo=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-S-iaLgwmOhOphEbWjSbOdw-1; Thu, 14 Nov 2024 10:38:43 -0500
-X-MC-Unique: S-iaLgwmOhOphEbWjSbOdw-1
-X-Mimecast-MFC-AGG-ID: S-iaLgwmOhOphEbWjSbOdw
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a9ad6d781acso78000066b.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 07:38:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tBc1h-0001WS-Vw
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 10:44:58 -0500
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tBc1f-0007o0-OZ
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 10:44:57 -0500
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2fb5740a03bso8151161fa.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 07:44:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731599093; x=1732203893; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=GkhNWkpl50ktEuRk+CafywAeOJJnevTAjIQ40ac28BU=;
+ b=IPblGl/tuIT8ywLOmhKZCO5QEhGGmYMEG8s1+6Hrve+/gB77GhevEM31YTItTB3b9G
+ QAv17RXtICJfZ1nM2d1U+g+ChMCYt9CnsBUbvSuAbHn+67TYElxkoCXEq0aq4jQq88Ab
+ x4SMHebuRsDlfGSPXw4Bu/yY2m9rhQ102SnaDi2skDkLRjkMeEKZlRSllP+MBqv4q1Ty
+ T9de8u/aSji8Jas2wB5VI5P5s791VoFCaFp6sJg88+Vvm7fHHnY15egUFZtvwEhjHsPB
+ yC5PpDwgh6DgK83kCcljZ2R3aqv4A16Vn4yQUR3Ifg8+dh8XbM7ClmQaTA9fBYPuUNIA
+ yaLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731598722; x=1732203522;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1731599093; x=1732203893;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fVCgym5EXeC8LkRqGnMMONgMQR5dMAfeOJ2ZBiHnk3Y=;
- b=WGeW3qb5CgoCjlMxZ7p2uxMzqDE0BlRtvsDXvji7d6beMrArz2uCYH6kR7mA8/3O6e
- /wJIALytURaIjXwvNKnYZ41Z0LaVoZATyjU48MjduPQKe3Np6dD6gZcID0q9K6RDzuLj
- 8UR+oQxs4n+ajhgYfHGowV7AMSfHaVhIK1c26SkjMQiCy8IWlBMqYM31ZhwGiFr0N+eS
- 0sfzUaW+OQXn7EXDMaYiHIKohx6c1q/tFT7+5Ys3H8QsYBzZinBFzUq860VCDNhs8Yip
- QSDurBlyoifqLEegBvacxlVRUWwGXPo9QshKxk3EiXD94mxtu82jbH6h6nCDtp6CUPF9
- qsbw==
-X-Gm-Message-State: AOJu0YwvyZ0CFtn1IlQRUUm3T01XhDzSOBdXBeajIOCNq5Cx8q4eLQta
- xtGbncjjoEEArghX7//iWBjgF5hIV9kIk2m84hJOvlZrQ2C8Kw7UfMr9uZeiK0Bihk+UX/KI4ob
- konUQ+3QqwQQE+36nacpb00rLODbY6R9d2zRk1C+XIuvxcvDS1Kpk
-X-Received: by 2002:a17:907:3f82:b0:a9a:188f:efd9 with SMTP id
- a640c23a62f3a-a9eeff43ed9mr2602941766b.29.1731598722015; 
- Thu, 14 Nov 2024 07:38:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGMQK8Y7I3C0FyiU+BeIQ/UnYwS1u4iqJzHuj9zz/gAVJp02bjityyOT9nYR6nuKVLiiN0mEw==
-X-Received: by 2002:a17:907:3f82:b0:a9a:188f:efd9 with SMTP id
- a640c23a62f3a-a9eeff43ed9mr2602940266b.29.1731598721628; 
- Thu, 14 Nov 2024 07:38:41 -0800 (PST)
-Received: from [192.168.1.84] ([93.56.170.251])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-aa20df2664csm75092866b.7.2024.11.14.07.38.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 07:38:41 -0800 (PST)
-Message-ID: <d2813ee7-6500-4145-b767-37d227747944@redhat.com>
-Date: Thu, 14 Nov 2024 16:38:39 +0100
+ bh=GkhNWkpl50ktEuRk+CafywAeOJJnevTAjIQ40ac28BU=;
+ b=t3FqGreKcS+l63bhmi9SJq7FgJzTbYglsZfmG/loB8wV0JI8+aWIGMrnBlUXbei7+O
+ iH7UswNFcVp/UerUtAcvWYvmexdws95tZcKSgu/oTiNWOL4q+hu+4UKMNyVcIHVYM2LD
+ gdeKCZO7md9zKQUgtnba8olJnAjxrfI4MW3U+ei9xIPCSWyc0i+wGDzKF7oU3raufVp8
+ 9GuJVUbLbn6zPRU/F5A+T4L2WhMUX4wDf/0egE6NhR3v+ddTpAdTKgsRFiUPL3lyoHtX
+ 9gJgzLU5RTKYJub90j1KVwRIaxJDfYEMycY7M9L3o/2Gc1P0CVbXtVFotOCzEK4BfLr+
+ AvKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVY2geQARvwcyhyKc9g5k1/9VcnoAv6sAM20O7pdBKPumyJZ3pJY48Zy/NfriUuAbrdzXXB700dVOT0@nongnu.org
+X-Gm-Message-State: AOJu0YwXltIGgDXl2LJGzR6JjEuqrVJxyaXQ/89xq6nH8/9S3dKBev/D
+ XM5puIl40rPITyn2LSobzwC6RnKBA9FiBmW+LO5hrJaicOzSSwkdSUJikGknUouc+7SnO2ZTbVl
+ CjTBJq5sc+gXwUgvRRidR6/zbAeJ03DBNCpAEDg==
+X-Google-Smtp-Source: AGHT+IGWg38u++Iun/youHmT7OXtuhqQzvkqvbeU3yLkWOtsRw903njcHqvRRNFmz/mD0O4qwB83QRZpX2F1leaRUbc=
+X-Received: by 2002:a2e:a912:0:b0:2ff:191d:f077 with SMTP id
+ 38308e7fff4ca-2ff425b142amr64742961fa.0.1731599093108; Thu, 14 Nov 2024
+ 07:44:53 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/11] rust: improved integration with cargo
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, kwolf@redhat.com,
- junjie.mao@hotmail.com, zhao1.liu@intel.com, qemu-rust@nondevel.org
-References: <20241108180139.117112-1-pbonzini@redhat.com>
- <87plmyrmjh.fsf@draig.linaro.org>
- <CABgObfZT_jYJqKDnTAdrVjr9KdQXjNVEt2eQfDpoqrh6xEnVsQ@mail.gmail.com>
- <87jzd5suw4.fsf@draig.linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <87jzd5suw4.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20241025101959.601048-1-eric.auger@redhat.com>
+ <20241025101959.601048-19-eric.auger@redhat.com> <ZxuX4i9NjVRizB72@redhat.com>
+ <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
+ <Zxub7ol4p8P_sWF8@redhat.com>
+ <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
+ <Zx-9WxXkmkMuGIlQ@redhat.com>
+ <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
+ <Zx_EGxj2aqc_2-kY@redhat.com>
+ <63c232c2-a325-48d6-8ed4-753a7c6e3b4e@redhat.com>
+ <87ikstn8sc.fsf@redhat.com>
+In-Reply-To: <87ikstn8sc.fsf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 14 Nov 2024 15:44:42 +0000
+Message-ID: <CAFEAcA_RGWq_ydkKCZGZ8Cn6g3_KSXu_K9bBC2u5g8=uBaJUUg@mail.gmail.com>
+Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: eric.auger@redhat.com,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ kvmarm@lists.linux.dev, richard.henderson@linaro.org, alex.bennee@linaro.org, 
+ maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com, 
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, abologna@redhat.com, 
+ jdenemar@redhat.com, shahuang@redhat.com, mark.rutland@arm.com, 
+ philmd@linaro.org, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,14 +105,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/14/24 16:22, Alex Bennée wrote:
-> ERROR: Build data file './meson-private/build.dat' references functions or classes that don't exist. This probably means that it was generated with an old version of meson. Try running from the source directory meson setup . --wipe
-> 
-> I also tried a wipe and re-configure but the same thing.
+On Mon, 11 Nov 2024 at 14:29, Cornelia Huck <cohuck@redhat.com> wrote:
+> That leaves some headscratchers (at least for me.) E.g. FEAT_UINJ, which
+> is optional from v9.5, and mandatory from v9.6, but where I'm unsure how
+> we'd discover it, especially as we do not have a way to discover the
+> architecture extensions.
 
-Ah, nevermind - you must have an older meson installation in /usr.  You 
-have to do pyvenv/bin/meson to pick the right one.  I'll adjust the docs.
+I think that's just an accidental omission from the FEAT_UINJ
+documentation. There's a UINJ field in ID_AA64PFR2_EL1 which
+tells you whether FEAT_UINJ is implemented:
 
-Paolo
+https://developer.arm.com/documentation/109697/2024_09/Feature-descriptions/The-Armv9-6-architecture-extension
 
+> I'm also not sure if I understand FEAT_CHK, which is listed as
+> optional from v8.0 and mandatory from v9.4, but every aarch64 cpu is
+> supposed to be compliant, because CHKFEAT might be a NOP (and this is
+> only supposed to check for FEAT_GCS? Yes, I'm confused.)
+
+CHKFEAT is there for cases where software (especially EL0 software)
+might need a fast cross-OS-portable way to detect whether a feature
+is present and enabled -- for instance if you want the compiler
+to emit a function prologue sequence that includes "do XYZ if
+GCS is on". CHKFEAT is in the hint area of the encoding space,
+so for any CPU that pre-dates FEAT_CHK it will do nothing (which is
+how "no features detectable with CHKFEAT are present" is indicated:
+if you look at what CHKFEAT actually does it has a definition that
+isn't how you'd naturally implement a feature-detect unless you
+needed to make NOP mean no-features-present.)
+
+Currently FEAT_GCS is the only feature where it has been deemed
+necessary to provide this kind of is-it-enabled detection, but some
+future features might also use the CHKFEAT mechanism.
+
+If you're a piece of system software wanting to see if FEAT_GCS
+is present you would use ID_AA64PFR1_EL1.GCS. (In particular, if
+you're an OS then until you have enabled GCS for yourself via
+GCSCR_EL1, CHKFEAT will tell you "not enabled", so you first need
+to look at the ID register to see if the GCSCR_EL1 register is
+there at all...)
+
+thanks
+-- PMM
 
