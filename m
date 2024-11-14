@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 558EFD6A224
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 17:59:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E5D8D6A221
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBe74-0006U8-4p; Thu, 14 Nov 2024 12:58:38 -0500
+	id 1tBe8L-0007Rc-J2; Thu, 14 Nov 2024 12:59:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBe6z-0006Sv-RN
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 12:58:34 -0500
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ id 1tBe8G-0007R8-Cn
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 12:59:52 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBe6y-0001na-Ch
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 12:58:33 -0500
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-5ebc9bda8c8so462201eaf.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 09:58:31 -0800 (PST)
+ id 1tBe8E-0002Bm-R0
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 12:59:52 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2e2dc61bc41so758252a91.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 09:59:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731607110; x=1732211910; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731607189; x=1732211989; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BQFaD4qKSsRLcPddvXBcBcyrmQBGfMWW7+vJuj10OOM=;
- b=XUNpXs85B7VYMUxPjJ0IOmB4Uq61F/QhaNTQU+ATTjJNbbjPWrEiPr4fFE0pF55Kfx
- jnlFfBEkJ/L5ms1uuPkti4HxafOleXqSrJCazcYtnPYswW7+GkLNJqgb36JPnbCCpiM9
- TRHlC2mal+fWUF90NPGMGx6ZPtUl4Fuo0c0jn2pMTJLiwdeG1HICRnW4WwD+MocbOZp4
- XAZfqg1L+20dMZGthZmtiqEU8KrnV72YviHCJ8u8ZLQ6ZwJg6P9H0u3tKgt0kUp6aGS9
- X/nSDp+if2XZ5qx8jcyPgx0+4uu61/Wo9p3X6x1dTjcs0iTCCithTPenIurUJkMezT9p
- AiiA==
+ bh=gDUCd09/i0qDkPVwFFg+c61szBJf4fAZ41YxmIC+P1Q=;
+ b=bYvr+NUF62++X+NFUMKOHf8/++ApwFQv8uDbC497Xyr0pIue2Y9mASBEHS9YoU9TS/
+ 0srO5BCz6x4fV9Pl7Ez7aJB/BbkMDJhHbgewUG1dSSPVN4uu4Lko/nSKhB+IVXE07H2U
+ Bo6+FWjixHgJAvWupejcjgohXmu1EJnrgMl/7RLbOqTkX17JoYGhinWbSTok3naaGKZy
+ eu2aEIq1gFa+WBY5My/S2w5C0xyGPA5XQ/DOIsYdimm0nDfNmeVhQbJToD4XjaC4WaZv
+ YjbbHFYUwaBwWWx4OiA1Z7zUWnv1ec3jYgeMxro7tV7+D7ocH8FTF/B1xtJaWwh4EIBY
+ VLbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731607110; x=1732211910;
+ d=1e100.net; s=20230601; t=1731607189; x=1732211989;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BQFaD4qKSsRLcPddvXBcBcyrmQBGfMWW7+vJuj10OOM=;
- b=BVphB7TUJEs2XrAmcKTClzS4AaH/d+D2rbGXf8Durv2GhVfTwmfR1Wweq2wJK9vkA+
- kesCWku04Y4v7Qs7uXRZAgCFG/VUA+KaF5Oszu2oT5PkClhfwarXEI2dZZ3R7IWW6do0
- wFJc4PDpMvNV6+yiAF0q3lP9kQg7VH4NpyGF9BVQv39UCeW2dqY60jg7jiBJihW+6VLv
- row+oeUbxbxjBbzud19eIAipzF+H44u2vJyePvOQkQATwvJE7S5DGsn88pODkFOWJ+6C
- RYinKR7mVtIY9TO1jBruZ7/KR/5MRx/dOQimzKrI9wTuCfG9fCPThe8Bk+9FpZmoswXn
- PoXw==
+ bh=gDUCd09/i0qDkPVwFFg+c61szBJf4fAZ41YxmIC+P1Q=;
+ b=U3wNJqpIlgQcj5TbE6xuw9tkpMz0Xa1bxljKfRMX5GF7+ryrX3JiPIMl6SRA0+JxXv
+ p721I8OVJjz03ftmwIgOXOPPoNQ0iS7IJ7/U3fle/n6l2YeAhrCL2FLGEp0jVaii9QLE
+ uRElsOn0PT8QoMNUeZMlSpBg2RXuAEhcVf201ozGkVFfEOnyMVJg+ve4UM+uS9YUOzWD
+ mMvE81biotnev/3fMo0upjipb0GeVhxkppI633fXwlSVP8B/OYW11ON2ZMexLKr7Peyn
+ T755gvQ5tAQ0XW07dFPyUIJcPyst75LXKvcJXPCi+QzpQ1X4DyWjFAk9kyhhtZkaiZIi
+ tQfw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLvkr964nQmbdaM8bEJvgGHkq7hbcCWoGWUSOcpH+oikOVqkuMClcVVBAAxV5q9RjiYh8WwYrMV5W9@nongnu.org
-X-Gm-Message-State: AOJu0YyLXMkAcyvr8Mnxuk27aLYjVwIqmnqhe7sdD6KyYDW7v5WLp8Cb
- FP8FBZOQqfu0i1b2rIxiH8tND92FSBcgvCL0jSIn/hxJXavMe4JVPB6wcD1OSXM=
-X-Google-Smtp-Source: AGHT+IFx5XPMzVIgfWHPNHunJA/E85GpFVHBWKvsZHE0qdvAq9lqMG3zhkUVi/x/WjM7vDFiGoUMZA==
-X-Received: by 2002:a05:6830:6481:b0:715:4a9c:a7f2 with SMTP id
- 46e09a7af769-71a6e600cb1mr3053572a34.24.1731607108676; 
- Thu, 14 Nov 2024 09:58:28 -0800 (PST)
+ AJvYcCXWUZx9IoEUiq6KE4SWjSo6JjcskcHdKkwI+dlJz3x5KGTZ+vRhe2Tx671OxJoE2Y7i4v6n3H4+87H2@nongnu.org
+X-Gm-Message-State: AOJu0YzDq4liNrFk5pKx7gAlKm/5Jfejag4hEpjI/VrKLIr4uqFDFvsz
+ H7YSzSlc5VFBPizTPK89d3W8/uuquTvO4vSL2D9VBGq61Q7WFdWdwDLpIrSEKJc=
+X-Google-Smtp-Source: AGHT+IG+O7Za2vHwnuTF8J9X3YJcEyfEfeLQTEmRFrVVVRaEVFZlqpw9rWc31Cy+Wt0QojDDQlBVow==
+X-Received: by 2002:a17:90b:4f42:b0:2e2:d3f6:6efc with SMTP id
+ 98e67ed59e1d1-2ea0639e436mr3057122a91.28.1731607189419; 
+ Thu, 14 Nov 2024 09:59:49 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f8b37f6555sm1386917a12.44.2024.11.14.09.58.27
+ 98e67ed59e1d1-2ea024a4f7esm1582346a91.29.2024.11.14.09.59.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 09:58:28 -0800 (PST)
-Message-ID: <a9ad20a5-854a-4238-9044-f2ed056d8469@linaro.org>
-Date: Thu, 14 Nov 2024 09:58:27 -0800
+ Thu, 14 Nov 2024 09:59:48 -0800 (PST)
+Message-ID: <9fd8543a-1a8e-4000-9688-7303cb290dcc@linaro.org>
+Date: Thu, 14 Nov 2024 09:59:48 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/54] accel/tcg: Flush entire tlb when a masked range
- wraps
+Subject: Re: [PATCH v2 09/54] accel/tcg: Add IntervalTreeRoot to CPUTLBDesc
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
- <20241114160131.48616-9-richard.henderson@linaro.org>
+ <20241114160131.48616-10-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241114160131.48616-9-richard.henderson@linaro.org>
+In-Reply-To: <20241114160131.48616-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-oo1-xc31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,47 +100,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 11/14/24 08:00, Richard Henderson wrote:
-> We expect masked address spaces to be quite large, e.g. 56 bits
-> for AArch64 top-byte-ignore mode.  We do not expect addr+len to
-> wrap around, but it is possible with AArch64 guest flush range
-> instructions.
-> 
-> Convert this unlikely case to a full tlb flush.  This can simplify
-> the subroutines actually performing the range flush.
+> Add the data structures for tracking softmmu pages via
+> a balanced interval tree.  So far, only initialize and
+> destroy the data structure.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/cputlb.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
+>   include/hw/core/cpu.h |  3 +++
+>   accel/tcg/cputlb.c    | 11 +++++++++++
+>   2 files changed, 14 insertions(+)
 > 
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index db8a6fbc6e..1ebc999a73 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -35,6 +35,7 @@
+>   #include "qemu/queue.h"
+>   #include "qemu/lockcnt.h"
+>   #include "qemu/thread.h"
+> +#include "qemu/interval-tree.h"
+>   #include "qom/object.h"
+>   
+>   typedef int (*WriteCoreDumpFunction)(const void *buf, size_t size,
+> @@ -290,6 +291,8 @@ typedef struct CPUTLBDesc {
+>       CPUTLBEntry vtable[CPU_VTLB_SIZE];
+>       CPUTLBEntryFull vfulltlb[CPU_VTLB_SIZE];
+>       CPUTLBEntryFull *fulltlb;
+> +    /* All active tlb entries for this address space. */
+> +    IntervalTreeRoot iroot;
+>   } CPUTLBDesc;
+>   
+>   /*
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 5510f40333..31c45a6213 100644
+> index 31c45a6213..aa51fc1d26 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -802,6 +802,11 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
->           tlb_flush_page_by_mmuidx(cpu, addr, idxmap);
->           return;
->       }
-> +    /* If addr+len wraps in len bits, fall back to full flush. */
-> +    if (bits < TARGET_LONG_BITS && ((addr ^ (addr + len - 1)) >> bits)) {
-> +        tlb_flush_by_mmuidx(cpu, idxmap);
-> +        return;
-> +    }
+> @@ -89,6 +89,13 @@ QEMU_BUILD_BUG_ON(sizeof(vaddr) > sizeof(run_on_cpu_data));
+>   QEMU_BUILD_BUG_ON(NB_MMU_MODES > 16);
+>   #define ALL_MMUIDX_BITS ((1 << NB_MMU_MODES) - 1)
 >   
->       /* This should already be page aligned */
->       d.addr = addr & TARGET_PAGE_MASK;
-> @@ -838,6 +843,11 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
->           tlb_flush_page_by_mmuidx_all_cpus_synced(src_cpu, addr, idxmap);
->           return;
->       }
-> +    /* If addr+len wraps in len bits, fall back to full flush. */
-> +    if (bits < TARGET_LONG_BITS && ((addr ^ (addr + len - 1)) >> bits)) {
-> +        tlb_flush_by_mmuidx_all_cpus_synced(src_cpu, idxmap);
-> +        return;
-> +    }
+> +/* Extra data required to manage CPUTLBEntryFull within an interval tree. */
+> +typedef struct CPUTLBEntryTree {
+> +    IntervalTreeNode itree;
+> +    CPUTLBEntry copy;
+> +    CPUTLBEntryFull full;
+> +} CPUTLBEntryTree;
+> +
+>   static inline size_t tlb_n_entries(CPUTLBDescFast *fast)
+>   {
+>       return (fast->mask >> CPU_TLB_ENTRY_BITS) + 1;
+> @@ -305,6 +312,7 @@ static void tlb_mmu_flush_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast)
+>       desc->large_page_mask = -1;
+>       desc->vindex = 0;
+>       memset(desc->vtable, -1, sizeof(desc->vtable));
+> +    interval_tree_free_nodes(&desc->iroot, offsetof(CPUTLBEntryTree, itree));
+>   }
 >   
->       /* This should already be page aligned */
->       d.addr = addr & TARGET_PAGE_MASK;
+>   static void tlb_flush_one_mmuidx_locked(CPUState *cpu, int mmu_idx,
+> @@ -326,6 +334,7 @@ static void tlb_mmu_init(CPUTLBDesc *desc, CPUTLBDescFast *fast, int64_t now)
+>       fast->mask = (n_entries - 1) << CPU_TLB_ENTRY_BITS;
+>       fast->table = g_new(CPUTLBEntry, n_entries);
+>       desc->fulltlb = g_new(CPUTLBEntryFull, n_entries);
+> +    memset(&desc->iroot, 0, sizeof(desc->iroot));
+>       tlb_mmu_flush_locked(desc, fast);
+>   }
+>   
+> @@ -365,6 +374,8 @@ void tlb_destroy(CPUState *cpu)
+>   
+>           g_free(fast->table);
+>           g_free(desc->fulltlb);
+> +        interval_tree_free_nodes(&cpu->neg.tlb.d[i].iroot,
+> +                                 offsetof(CPUTLBEntryTree, itree));
+>       }
+>   }
+>   
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
