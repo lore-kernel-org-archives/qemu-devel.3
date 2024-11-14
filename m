@@ -4,90 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 978F7D65C7B
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 11:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8503D65C7B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 11:33:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBY2M-0001Om-HY; Thu, 14 Nov 2024 06:29:22 -0500
+	id 1tBY6H-0002NZ-0w; Thu, 14 Nov 2024 06:33:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tBY2K-0001OR-Sq; Thu, 14 Nov 2024 06:29:20 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBY6F-0002NJ-9Z
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:33:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tBY2J-0005x7-96; Thu, 14 Nov 2024 06:29:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=W3AI7IS9qrTP42Lc1laGrFqKyvmg4qp8sIK1zuixVsY=; b=ZA9lXTc8WuKUS766F/thIQhNz/
- YW1PZb0rf1rHHvO/OMYBtYBgladQK3eu3nBR3rmDDGk9yrGIdtFFsCFZ7VlPh0REPt5pqpPyDiTcH
- 24QNYsNNDm3fTvDdAPHyEb2EZsN4f6KLC1lTw2lSuknp3KZoFPF0gJz9iX1Si9LWg2lepVgoFgz+3
- D861cGZIsgzcCfRqRpHpzRwhC+aH91Hcd87EF/IAN55u4ZsnP5zeq0az48vibwv8+gB1YMMI0YIZB
- X0qDi1r9gB6PQ5EKcmZCsCvJSc0cvh+5MZ3qVJx4Fv42m80spNenh4lWZVw8cOOSOPl++ytT7l4aW
- rHNrSMbJBg+wMc1+qAQiCK01ZhGHTqByo6cFqbhczsRDb6siq0Q4YKF/WC8PI95BVaHQ3KHK8Ffqp
- skGz29MDAZW2CVRguXepNnT0ObRtQi9Q5rRSDylWJvpN4zWFb1L6tJ5n8UcNRJzIVB0GDD6MAZL6j
- liehM/grkdsB8Jj0aCr+YSOJRThWmi+jGZSuY/mLGbvwq6ESZO88I2h1EEie50W5WBnTIw+NxlII/
- pXpV5XID28BVYuQRD8sg43LEvB4x0Wy5m+grqqxOuJ137VN9Joppt8/Voi7gQgsU4oMNQtr115tFB
- KfEDfpmUqEKd/VGrMZjYGsVdFTj36MKSHk5KYcUYc=;
-Received: from [2a00:23c4:8bb8:f600:5ed9:3847:b293:b96]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tBY1o-0002lv-Er; Thu, 14 Nov 2024 11:28:52 +0000
-Message-ID: <2b8a7ab4-3295-4b9a-b383-5be680e9d5df@ilande.co.uk>
-Date: Thu, 14 Nov 2024 11:29:07 +0000
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tBY6D-000828-Nn
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 06:33:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731583999;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DAa6kIvY2dz6toBl8wQ2GnqV4GhMoN8dBZFEX4sP6fk=;
+ b=EodiF3V6/3TSPFrYfCiqCSkypHmFvV5wtsy+ZSo3pr1hQvChf74wSRocYPx/mOeoN1hNS3
+ 2U6GRr7f3D39TZpSZGJJylOVLeDsSsJCYY0uW2DCelTISgF56QroO6Uc4RAQY0j1MX/PJp
+ PzNtNYTExC7c6Po6skNz1NIT7IERgEM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-J_VPWZHdMZCe7BrHwD2pRg-1; Thu,
+ 14 Nov 2024 06:33:15 -0500
+X-MC-Unique: J_VPWZHdMZCe7BrHwD2pRg-1
+X-Mimecast-MFC-AGG-ID: J_VPWZHdMZCe7BrHwD2pRg
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2983119560AE; Thu, 14 Nov 2024 11:33:13 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.193.143])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 570BC19560A3; Thu, 14 Nov 2024 11:33:12 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 1BF0D18009A1; Thu, 14 Nov 2024 12:33:10 +0100 (CET)
+Date: Thu, 14 Nov 2024 12:33:10 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PULL 0/5] Firmware 20241114 patches
+Message-ID: <2svr2cmjdyjkbvjkc5jecfpa2xxzea4luuq5ecm7v6i7ubbrf6@7two2tspqqyj>
+References: <20241114110101.44322-1-kraxel@redhat.com>
+ <ZzXak8gl-IksvLkQ@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org
-References: <20241114104653.963812-1-thuth@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20241114104653.963812-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:f600:5ed9:3847:b293:b96
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] hw/misc/mos6522: Fix bad class definition of the MOS6522
- device
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZzXak8gl-IksvLkQ@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.119,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.738,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,47 +92,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/11/2024 10:46, Thomas Huth wrote:
-
-> When compiling QEMU with --enable-cfi, the "q800" m68k machine
-> currently crashes very early, when the q800_machine_init() function
-> tries to wire the interrupts of the "via1" device.
-> This happens because TYPE_MOS6522_Q800_VIA1 is supposed to be a
-> proper SysBus device, but its parent (TYPE_MOS6522) has a mistake
-> in its class definition where it is only derived from DeviceClass,
-> and not from SysBusDeviceClass, so we end up in funny memory access
-> issues here. Using the right class hierarchy for the MOS6522 device
-> fixes the problem.
+On Thu, Nov 14, 2024 at 11:10:11AM +0000, Daniel P. Berrangé wrote:
+> On Thu, Nov 14, 2024 at 12:00:56PM +0100, Gerd Hoffmann wrote:
+> > The following changes since commit f0a5a31c33a8109061c2493e475c8a2f4d022432:
+> > 
+> >   Update version for v9.2.0-rc0 release (2024-11-13 21:44:45 +0000)
+> > 
+> > are available in the Git repository at:
+> > 
+> >   https://gitlab.com/kraxel/qemu.git tags/firmware-20241114-pull-request
+> > 
+> > for you to fetch changes up to 5916a3b20fdbfbfc2f987f1121e945100c8c3cd2:
+> > 
+> >   x86/loader: add -shim option (2024-11-14 11:55:39 +0100)
+> > 
+> > ----------------------------------------------------------------
+> > loader: fix efi binary loading via -kernel
+> > loader: support secure boot verification with direct kernel boot
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2675
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   include/hw/misc/mos6522.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/misc/mos6522.h b/include/hw/misc/mos6522.h
-> index fba45668ab..920871a598 100644
-> --- a/include/hw/misc/mos6522.h
-> +++ b/include/hw/misc/mos6522.h
-> @@ -154,7 +154,7 @@ struct MOS6522State {
->   OBJECT_DECLARE_TYPE(MOS6522State, MOS6522DeviceClass, MOS6522)
->   
->   struct MOS6522DeviceClass {
-> -    DeviceClass parent_class;
-> +    SysBusDeviceClass parent_class;
->   
->       ResettablePhases parent_phases;
->       void (*portB_write)(MOS6522State *dev);
+> Hard feature freeze was two days ago, so I would have thought
+> the new secure boot feature should wait until 10.0 cycle ?
 
-Ooof. I suspect I started using DeviceClass first before switching to 
-SysBusDeviceClass later to implement reset functionality. Anyhow the patch looks 
-good: thanks Thomas!
+Patches have been posted back in September.  This PR is a bit late
+because I was offline in October, and also because I didn't realize we
+are in freeze already due to being active mostly in edk2 these days.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+So, if an exception is out if question I'll have to wait until 10.0
+opens I guess ...
 
+> Their commits say they depend on new OVMF features and we've
+> not updated the OVMF binaries in this cycle, so do we even
+> have the OVMF feature needed for this to work[1] ?
 
-ATB,
+Nope.  I have a branch ready.  The plan is to submit that once the qemu
+changes are accepted.  edk2 is in freeze too, so this will not make the
+edk2 2024-11 stable tag.  If all goes well it'll land in 2025-02, which
+we should be able to put into qemu 10.0
 
-Mark.
+take care,
+  Gerd
 
 
