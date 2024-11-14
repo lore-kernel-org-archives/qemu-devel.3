@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB116D68B29
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 14:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB6ED68B2B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 14:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBasM-00052b-Q3; Thu, 14 Nov 2024 09:31:21 -0500
+	id 1tBawQ-0007VI-VB; Thu, 14 Nov 2024 09:35:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tBas4-00051o-6i
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 09:30:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tBas2-0003cA-Iq
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 09:30:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731594652;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2xrroYDtpTjOaNH22XBwF4DMaPxukbbPAhKBZfMOEjE=;
- b=ecUcp1BJfgisZ3XrbdgMRcrMvoHq2Oc2owumv4Vaz1nS6ubAbtw3+3y47Zt2Ccx+RqiVBM
- /PQxKFjSd2nGEao6GSLwOqsHMHPz5RIjqvPDag4U7VzDloFDxdwjp++DrS/HdWXwE5CDKZ
- SMOuGZPrRM+IhagBd2ZlGgumKvjOT7g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-kOXz5DJEO1eFKm3RvX2SKQ-1; Thu,
- 14 Nov 2024 09:30:51 -0500
-X-MC-Unique: kOXz5DJEO1eFKm3RvX2SKQ-1
-X-Mimecast-MFC-AGG-ID: kOXz5DJEO1eFKm3RvX2SKQ
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C6E61956077
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:30:50 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.95])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C28FD19560A3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:30:49 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7271A21E6A28; Thu, 14 Nov 2024 15:30:47 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 01/31] include: move include/qapi/qmp/ to
- include/qobject/
-In-Reply-To: <20241017113344.883424-2-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 17 Oct 2024 12:33:13
- +0100")
-References: <20241017113344.883424-1-berrange@redhat.com>
- <20241017113344.883424-2-berrange@redhat.com>
-Date: Thu, 14 Nov 2024 15:30:47 +0100
-Message-ID: <87bjyhdh0o.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBawO-0007Tr-QM
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 09:35:25 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBawH-000583-Vg
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 09:35:23 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5cedea84d77so1010010a12.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 06:35:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731594916; x=1732199716; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=v5qlJ+m4KZwPAkGIRTIMA1mUf2/wA0DGqiDePTHl+3Q=;
+ b=qs2fURy2CtEC83meramJr9EjxT8rmiFl2UvJrwDy+jDpZJ7gZidGUBaFtvhtiVpOlY
+ Mv7CWTdik8FdmBA1+kUpd9UN54uQrKOYgcfpPqJ1Q5vv6BNw74QBkTKSlb1+U1lTNyiu
+ MSxUOTXTGVC6O1+4/DJ1wdF++ktNDZbl+omfpTo9HDrrhVMtDqN3z28oJUQQfR0TKuc/
+ 4DJTyb8Grd+OrWtQIZXSLfxCf9/Ll1t8AR01o+DRiH1798EoS7MfSUVfTsnBVW1evmY5
+ MbrrznnOk9k1rmgiwlzHVzEY61M65RE9UntJ2FrY5S3chCs5VE4gQMFrt0gTQoE+SpMs
+ 7rvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731594916; x=1732199716;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=v5qlJ+m4KZwPAkGIRTIMA1mUf2/wA0DGqiDePTHl+3Q=;
+ b=DxCEV2xIEwiWebxguDesyOJKj8m/2YAVuBMIGuqpmi93j5nnY3Dsm8IihpFiCDdfsu
+ UN04pw7W/xBfCj0e88N/SDotWe9a3gn1UFKPvM2q0MLnlZBxrTE04qxKF6AaJ8mQSyYa
+ k85P4hgJp15UqhpKUdoGqmCKOEkkiyGo1syxRkDgq6Mm+DxsHkkx1jF83IH5MPfJYgfs
+ GeLOODy6iwgwUKphJjs7fvUB5rqZQob/P6ksEvvLpCDsZP5klOcjqeh99fHklG1v9J/R
+ YtYSfSLJuQBfqCKn0aC7Kb0kc1VeME7x64mKOpWrnopbmQcHyzFkOjCOcQE7VyRV7OFJ
+ 4g7w==
+X-Gm-Message-State: AOJu0YyN3H0Wn1qRufW1MnuQ46Pos1Tm+PB3w2WeemANrDzmPeVBt9nl
+ iApaHQGUIvKGb3+HfIpnuGeCgG1mZ//uymsoLf8+D4NYjjGG5sonqOrDfd4xjU9rUzSjqaEGQAb
+ f
+X-Google-Smtp-Source: AGHT+IHj+SX/0CaG57mtK4ohddIQtBVE+6NEaw4fcSUB31tis5RWtg+2FXoXkJ2apaQPcvbfjkh33g==
+X-Received: by 2002:a17:906:9c82:b0:a9e:2e72:f8f4 with SMTP id
+ a640c23a62f3a-aa1f8041e19mr660525566b.1.1731594916017; 
+ Thu, 14 Nov 2024 06:35:16 -0800 (PST)
+Received: from [192.168.69.174] ([176.187.209.228])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20e003fcfsm69999566b.128.2024.11.14.06.35.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Nov 2024 06:35:15 -0800 (PST)
+Message-ID: <7b8586e7-137d-44b3-bff8-307b81bea17d@linaro.org>
+Date: Thu, 14 Nov 2024 15:35:14 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/intc/openpic: Avoid taking address of out-of-bounds
+ array index
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org
+References: <20241105180205.3074071-1-peter.maydell@linaro.org>
+ <dae49b9c-0d47-4811-bd48-fdd401594609@ilande.co.uk>
+ <CAFEAcA82rYdZduR73CjJr7hYWG7N5e4Dqmx5j1O=3FT_BqboNQ@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA82rYdZduR73CjJr7hYWG7N5e4Dqmx5j1O=3FT_BqboNQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,72 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 14/11/24 13:22, Peter Maydell wrote:
+> On Wed, 6 Nov 2024 at 11:58, Mark Cave-Ayland
+> <mark.cave-ayland@ilande.co.uk> wrote:
+>>
+>> On 05/11/2024 18:02, Peter Maydell wrote:
+>>
+>>> The clang sanitizer complains about the code in the EOI handling
+>>> of openpic_cpu_write_internal():
+>>>
+>>> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1 ./build/clang/qemu-system-ppc -M mac99,graphics=off -display none -kernel day15/invaders.elf
+>>> ../../hw/intc/openpic.c:1034:16: runtime error: index -1 out of bounds for type 'IRQSource[264]' (aka 'struct IRQSource[264]')
+>>> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/intc/openpic.c:1034:16 in
+>>>
+>>> This is because we do
+>>>     src = &opp->src[n_IRQ];$
+>>
+>> Extra $ symbol at the end of the line here?
+> 
+> Yep (cut-n-paste from an editor that marks end-of-lines).
+> 
+>>> when n_IRQ may be -1.  This is in practice harmless because if n_IRQ
+>>> is -1 then we don't do anything with the src pointer, but it is
+>>> undefined behaviour. (This has been present since this device
+>>> was first added to QEMU.)
+>>>
+>>> Rearrange the code so we only do the array index when n_IRQ is not -1.
+>>>
+>>> Cc: qemu-stable@nongnu.org
+>>> Fixes: e9df014c0b ("Implement embedded IRQ controller for PowerPC 6xx/740 & 75")
+>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>> ---
+>>> Arguable whether it's worth the stable backport or not...
+>>> ---
+>>>    hw/intc/openpic.c | 15 ++++++++-------
+>>>    1 file changed, 8 insertions(+), 7 deletions(-)
 
-> The general expectation is that header files should follow the same
-> file/path naming scheme as the corresponding source file. There are
-> various historical exceptions to this practice in QEMU, with one of
-> the most notable being the include/qapi/qmp/ directory. Most of the
-> headers there correspond to source files in qobject/.
->
-> This patch corrects that inconsistency by creating include/qobject/.
-> The only outlier is include/qapi/qmp/dispatch.h which gets renamed
-> to include/qapi/qmp-registry.h.
->
-> To allow the code to continue to build, symlinks are temporarily
-> added in $QEMU/qapi/qmp/ to point to the new location. They will
-> be removed in a later commit.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-[...]
+>> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> 
+> Thanks. I can take this via target-arm.next, or does anybody
+> have a different preference?
 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index c21d6a2f9e..656482b2a4 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3153,8 +3153,6 @@ S: Supported
->  F: qapi/
->  X: qapi/*.json
->  F: include/qapi/
-> -X: include/qapi/qmp/
-> -F: include/qapi/qmp/dispatch.h
+I had it tagged for my next hw-misc PR but was busy focused on
+other things so haven't taken the time for it yet. Better you
+take it, thanks!
 
-This tried to have add just include/qapi/qmp/dispatch.h from this
-subdirectory.  It didn't work:
-
-    $ scripts/get_maintainer.pl -f include/qapi/qmp/dispatch.h=20
-    get_maintainer.pl: No maintainers found, printing recent contributors.
-    get_maintainer.pl: Do not blindly cc: them on patches!  Use common sens=
-e.
-
-    qemu-devel@nongnu.org (open list:All patches CC here)
-
-The patch moved and renames the header to include/qapi/qmp-registry.h,
-which also fixes attribution:
-
-    $ scripts/get_maintainer.pl -f include/qapi/qmp-registry.h=20
-    Markus Armbruster <armbru@redhat.com> (supporter:QAPI)
-    Michael Roth <michael.roth@amd.com> (supporter:QAPI)
-    qemu-devel@nongnu.org (open list:All patches CC here)
-
-Mentioning this in the commit message wouldn't hurt.  Not worth a
-respin.
-
->  F: tests/qapi-schema/
->  F: tests/unit/test-*-visitor.c
->  F: tests/unit/test-qapi-*.c
-> @@ -3178,8 +3176,7 @@ QObject
->  M: Markus Armbruster <armbru@redhat.com>
->  S: Supported
->  F: qobject/
-> -F: include/qapi/qmp/
-> -X: include/qapi/qmp/dispatch.h
-> +F: include/qobject/
->  F: scripts/coccinelle/qobject.cocci
->  F: tests/unit/check-qdict.c
->  F: tests/unit/check-qjson.c
-
-[...]
-
+Phil.
 
