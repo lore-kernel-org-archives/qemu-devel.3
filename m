@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D87D65C68
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 09:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8584D65C68
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 09:49:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBWTD-0002Oc-01; Thu, 14 Nov 2024 04:48:59 -0500
+	id 1tBWTM-0002QZ-HA; Thu, 14 Nov 2024 04:49:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tBWT5-0002Nq-7b; Thu, 14 Nov 2024 04:48:51 -0500
+ id 1tBWTI-0002Ph-M3; Thu, 14 Nov 2024 04:49:04 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tBWT3-0000F8-50; Thu, 14 Nov 2024 04:48:50 -0500
+ id 1tBWT6-0000F8-SN; Thu, 14 Nov 2024 04:48:54 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 14 Nov
- 2024 17:48:39 +0800
+ 2024 17:48:40 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 14 Nov 2024 17:48:39 +0800
+ Transport; Thu, 14 Nov 2024 17:48:40 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,11 +33,14 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v3 0/3] Introduce a new Write Protected pin inverted property
-Date: Thu, 14 Nov 2024 17:48:36 +0800
-Message-ID: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v3 1/3] hw/sd/sdhci: Fix coding style
+Date: Thu, 14 Nov 2024 17:48:37 +0800
+Message-ID: <20241114094839.4128404-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
+References: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
@@ -66,31 +69,178 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-change from v1:
-1. Support RTC for AST2700.
-2. Support SDHCI write protected pin inverted for AST2500 and AST2600.
-3. Introduce Capabilities Register 2 for SD slot 0 and 1.
-4. Support create flash devices via command line for AST1030.
+Fix coding style issues from checkpatch.pl
 
-change from v2:
-replace wp-invert with wp-inverted and fix review issues.
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/sd/sdhci.c | 64 +++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 42 insertions(+), 22 deletions(-)
 
-change from v3:
-1. add reviewer suggestion about wp_inverted comment
-2. AST2500 EVB does not need to set wp-inverted property of sdhci model 
-   https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm/boot/dts/aspeed/aspeed-ast2500-evb.dts#L110
-
-Jamin Lin (3):
-  hw/sd/sdhci: Fix coding style
-  hw/sd/sdhci: Introduce a new Write Protected pin inverted property
-  hw/arm/aspeed: Invert sdhci write protected pin for AST2600 EVB
-
- hw/arm/aspeed.c         |  7 +++++
- hw/sd/sdhci.c           | 70 ++++++++++++++++++++++++++++-------------
- include/hw/arm/aspeed.h |  1 +
- include/hw/sd/sdhci.h   |  5 +++
- 4 files changed, 61 insertions(+), 22 deletions(-)
-
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index dbe5c2340c..37875c02c3 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -233,7 +233,7 @@ static void sdhci_raise_insertion_irq(void *opaque)
+ 
+     if (s->norintsts & SDHC_NIS_REMOVE) {
+         timer_mod(s->insert_timer,
+-                       qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + SDHC_INSERTION_DELAY);
++                qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + SDHC_INSERTION_DELAY);
+     } else {
+         s->prnsts = 0x1ff0000;
+         if (s->norintstsen & SDHC_NISEN_INSERT) {
+@@ -251,7 +251,7 @@ static void sdhci_set_inserted(DeviceState *dev, bool level)
+     if ((s->norintsts & SDHC_NIS_REMOVE) && level) {
+         /* Give target some time to notice card ejection */
+         timer_mod(s->insert_timer,
+-                       qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + SDHC_INSERTION_DELAY);
++                qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + SDHC_INSERTION_DELAY);
+     } else {
+         if (level) {
+             s->prnsts = 0x1ff0000;
+@@ -289,9 +289,11 @@ static void sdhci_reset(SDHCIState *s)
+     timer_del(s->insert_timer);
+     timer_del(s->transfer_timer);
+ 
+-    /* Set all registers to 0. Capabilities/Version registers are not cleared
++    /*
++     * Set all registers to 0. Capabilities/Version registers are not cleared
+      * and assumed to always preserve their value, given to them during
+-     * initialization */
++     * initialization
++     */
+     memset(&s->sdmasysad, 0, (uintptr_t)&s->capareg - (uintptr_t)&s->sdmasysad);
+ 
+     /* Reset other state based on current card insertion/readonly status */
+@@ -305,7 +307,8 @@ static void sdhci_reset(SDHCIState *s)
+ 
+ static void sdhci_poweron_reset(DeviceState *dev)
+ {
+-    /* QOM (ie power-on) reset. This is identical to reset
++    /*
++     * QOM (ie power-on) reset. This is identical to reset
+      * commanded via device register apart from handling of the
+      * 'pending insert on powerup' quirk.
+      */
+@@ -445,8 +448,10 @@ static void sdhci_read_block_from_card(SDHCIState *s)
+         s->prnsts &= ~SDHC_DAT_LINE_ACTIVE;
+     }
+ 
+-    /* If stop at block gap request was set and it's not the last block of
+-     * data - generate Block Event interrupt */
++    /*
++     * If stop at block gap request was set and it's not the last block of
++     * data - generate Block Event interrupt
++     */
+     if (s->stopped_state == sdhc_gap_read && (s->trnmod & SDHC_TRNS_MULTI) &&
+             s->blkcnt != 1)    {
+         s->prnsts &= ~SDHC_DAT_LINE_ACTIVE;
+@@ -548,8 +553,10 @@ static void sdhci_write_block_to_card(SDHCIState *s)
+     sdhci_update_irq(s);
+ }
+ 
+-/* Write @size bytes of @value data to host controller @s Buffer Data Port
+- * register */
++/*
++ * Write @size bytes of @value data to host controller @s Buffer Data Port
++ * register
++ */
+ static void sdhci_write_dataport(SDHCIState *s, uint32_t value, unsigned size)
+ {
+     unsigned i;
+@@ -594,9 +601,11 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+         return;
+     }
+ 
+-    /* XXX: Some sd/mmc drivers (for example, u-boot-slp) do not account for
++    /*
++     * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not account for
+      * possible stop at page boundary if initial address is not page aligned,
+-     * allow them to work properly */
++     * allow them to work properly
++     */
+     if ((s->sdmasysad % boundary_chk) == 0) {
+         page_aligned = true;
+     }
+@@ -702,7 +711,8 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+         dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
+                         MEMTXATTRS_UNSPECIFIED);
+         adma2 = le64_to_cpu(adma2);
+-        /* The spec does not specify endianness of descriptor table.
++        /*
++         * The spec does not specify endianness of descriptor table.
+          * We currently assume that it is LE.
+          */
+         dscr->addr = (hwaddr)extract64(adma2, 32, 32) & ~0x3ull;
+@@ -977,8 +987,10 @@ static bool sdhci_can_issue_command(SDHCIState *s)
+     return true;
+ }
+ 
+-/* The Buffer Data Port register must be accessed in sequential and
+- * continuous manner */
++/*
++ * The Buffer Data Port register must be accessed in sequential and
++ * continuous manner
++ */
+ static inline bool
+ sdhci_buff_access_is_sequential(SDHCIState *s, unsigned byte_num)
+ {
+@@ -1206,8 +1218,10 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+         MASKED_WRITE(s->argument, mask, value);
+         break;
+     case SDHC_TRNMOD:
+-        /* DMA can be enabled only if it is supported as indicated by
+-         * capabilities register */
++        /*
++         * DMA can be enabled only if it is supported as indicated by
++         * capabilities register
++         */
+         if (!(s->capareg & R_SDHC_CAPAB_SDMA_MASK)) {
+             value &= ~SDHC_TRNS_DMA;
+         }
+@@ -1279,8 +1293,10 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+         } else {
+             s->norintsts &= ~SDHC_NIS_ERR;
+         }
+-        /* Quirk for Raspberry Pi: pending card insert interrupt
+-         * appears when first enabled after power on */
++        /*
++         * Quirk for Raspberry Pi: pending card insert interrupt
++         * appears when first enabled after power on
++         */
+         if ((s->norintstsen & SDHC_NISEN_INSERT) && s->pending_insert_state) {
+             assert(s->pending_insert_quirk);
+             s->norintsts |= SDHC_NIS_INSERT;
+@@ -1396,8 +1412,10 @@ void sdhci_initfn(SDHCIState *s)
+ {
+     qbus_init(&s->sdbus, sizeof(s->sdbus), TYPE_SDHCI_BUS, DEVICE(s), "sd-bus");
+ 
+-    s->insert_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, sdhci_raise_insertion_irq, s);
+-    s->transfer_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, sdhci_data_transfer, s);
++    s->insert_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                   sdhci_raise_insertion_irq, s);
++    s->transfer_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                     sdhci_data_transfer, s);
+ 
+     s->io_ops = &sdhci_mmio_le_ops;
+ }
+@@ -1445,11 +1463,13 @@ void sdhci_common_realize(SDHCIState *s, Error **errp)
+ 
+ void sdhci_common_unrealize(SDHCIState *s)
+ {
+-    /* This function is expected to be called only once for each class:
++    /*
++     * This function is expected to be called only once for each class:
+      * - SysBus:    via DeviceClass->unrealize(),
+      * - PCI:       via PCIDeviceClass->exit().
+      * However to avoid double-free and/or use-after-free we still nullify
+-     * this variable (better safe than sorry!). */
++     * this variable (better safe than sorry!).
++     */
+     g_free(s->fifo_buffer);
+     s->fifo_buffer = NULL;
+ }
 -- 
 2.34.1
 
