@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C732BD6A221
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA31CD6A221
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 18:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBeJJ-0001Bs-6P; Thu, 14 Nov 2024 13:11:17 -0500
+	id 1tBeJr-0001iu-28; Thu, 14 Nov 2024 13:11:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBeJH-0001BX-4W
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:11:15 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1tBeJp-0001fG-UP
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:11:49 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tBeJF-0004IC-N5
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:11:14 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7ee4c57b037so738001a12.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:11:13 -0800 (PST)
+ id 1tBeJm-0004KL-Cq
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 13:11:49 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-21145812538so8129025ad.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 10:11:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731607872; x=1732212672; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731607905; x=1732212705; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ea/KZy4pMUypZfCAI/+M5qKcDT4H53YHmMVaAGp96JM=;
- b=tW2CU1pW/pAXyrgPlmE8c5PcA0PteUlFOV7+I4NcLOdsK0NBi+jX+Uf9dqY2VKNbNp
- bNbXUUFhxtstYAJ8bbbSnq+DSOq/9ekNDo2OtY1NiqcX/ntzm0uTGwv/6lqUj9z87GpE
- t1XBLvdD0E/yDz9y5aiGgtfTM8aDH21lyoGR9+CreANED8jtm/VxYihRqmjLZDwAX50U
- 39UJzHK98t+6MDK/btINmrFdBmyEL/J/g/Z++DneNUfvQM4lFkbz+VFg5+5W3otcK+Uj
- uRXabKrZxFBVHdAhESDAEot8A4AVVf3QWVZtTn80ZcWmkzyCXeyV1N3KqVNow0SSnBx5
- U7jA==
+ bh=Xg9pp8l/CyoaDyEoVwZdRsPnDZAApdSZc+1so0odPb4=;
+ b=cgovHSB4Ivyk2vrfzIm3Tlpw701lr2jqH93EUNjVRxL8jd+saC/gNn019nJz7IeJ+C
+ RYCg/sNh95ykXHG7FKvxPNN7Um9+fiJsJWf6D6f3CT0WI4O02GXM+AP8NnVmdwdKyQqd
+ ppUUpuP+qtRvCYflElKxf2kGdy2Do+0HLpQFJkj0rH7QYAnj4lsMzki7xpcRkMkaWv/6
+ /4y6e95KDjblziRP3GH1jj0ayKC0QbTLjDjvibLIrskzbiAnL7qnKCTjmnnJZbz8xDu8
+ jwjyIKUhnn06SO+L+pWRPMFt9ze2o9wuKzFIRuccssWlkMGUqEXtUyhMvNUcT+Eoc1XV
+ q40g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731607872; x=1732212672;
+ d=1e100.net; s=20230601; t=1731607905; x=1732212705;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ea/KZy4pMUypZfCAI/+M5qKcDT4H53YHmMVaAGp96JM=;
- b=wpb/mKQ7bd0m+zsA1EOqak/fp9H4/LqhUeHlDGbgjgEaNVFgmtkcDnD/OiucH1/se7
- 1erIRaN3X2SMOpuPA6rQ1L0xTMV04TZPwcIJDA+4RU8IoSctDaBXHVyDXTsF2qX7MHsI
- on/maC7Q0Izg52bqZ743sJ2YiBEn5EvWaEJlYVP/NomyZ2ychDmRYNe+lkIn8wGW+f0v
- YmzYKsiCe1y/SsM51UfaeBHYOaOgSWY4SB8clH/q57S2Vd+zAvHJTISCCn3EEoAwgpgs
- KjvVqyjB1sJF/JQGAGHKMTXFqBgzmfLgFLJa455BfE4KwNh2CYjKvENb+8s/oYYwvrRi
- snbw==
+ bh=Xg9pp8l/CyoaDyEoVwZdRsPnDZAApdSZc+1so0odPb4=;
+ b=hEAS+h4u2bNfMadFMUKzWkGRhnPFCZf4mtd+s1RHEEoHXBGRGp2Wd2iD1SXdLe4YdJ
+ F6iv/jtbQ90t0K4RMuPcmHuEsDm6wNuQiBDtUD2mBBH3XVjkoumSYBAY0U/HjJo4ZYaw
+ e2RqW73KN+2rEb/fGjxJZ5uiSO7qqDyl+JyZncEA79m0KMOqCG3e6HgtimgGmwuIbHte
+ PxY2zMXUWYbtH55k/zQt2FuyKGKzNNlfSlLHeJYEN2GPR+y2dpHrCmFQtlOB3JJw3yC+
+ BhYQKtYtz7NXCfc1gNRQyUqk26zz6jVVRcTAm47YkmXp2AZTx6697GjS5en7TLIjxx3M
+ G8PA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2+XwYX4dT/LII+GV8yUTACILGfsz0hiEF+mNy+87YO8yCmlYnvPDRZ98CDVBKx2cqmreJ2YV7F1UV@nongnu.org
-X-Gm-Message-State: AOJu0YxUROFd9K+TVj1A0R9OOLiJneEJgS1AveAIJPgfGtDIN6zJp9/M
- S/83Jl/fJzUq46isiCilI8mI8DoGQzOQO4Uo4vcyoffbvXZB6zZcmVMzIT1F4BwLJknG/3ZAS0j
- jMAOVLQ==
-X-Google-Smtp-Source: AGHT+IHCnCv2GVUp8Qh0cxKZqm7Zui0QlYfBNFnEzIPgn/vG0Qz09Kh1pXOPfuB/Yn+SE6JF4VpG3Q==
-X-Received: by 2002:a05:6a21:6d92:b0:1db:e3c7:9975 with SMTP id
- adf61e73a8af0-1dc833a9104mr4439026637.15.1731607872115; 
- Thu, 14 Nov 2024 10:11:12 -0800 (PST)
+ AJvYcCXVPyWDAWqVzolixUfdwqv/d6KRjPTTJBmJN0VzYh5ajbc2fKIRxDT3lKGs3wYlcv9ruF3bUzdNjJo7@nongnu.org
+X-Gm-Message-State: AOJu0YxRVJI77tWQ6FVnv9dXWu6fgm7CJl+M6ZgO2SxVlnyJq5ClsRP7
+ OZuJaNk14710clVWxAJYMGrs4y8lqDp124cY7cNHgPPnYcSBfpNxzabAWoAG+9r/guqzoDZzCD/
+ lnGWOjw==
+X-Google-Smtp-Source: AGHT+IHdMMyIWxvvLNI6uCxDJGLMaQuIxdAu0yn1k37KTNxy11jECM2s/J0BZ1WXxFbhRqFoG9KfqQ==
+X-Received: by 2002:a17:903:41cf:b0:20b:ab4b:544a with SMTP id
+ d9443c01a7336-21183d683dcmr347171075ad.43.1731607904598; 
+ Thu, 14 Nov 2024 10:11:44 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f8b3976801sm1406287a12.56.2024.11.14.10.11.11
+ d9443c01a7336-211c7d03bc9sm13612325ad.198.2024.11.14.10.11.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 10:11:11 -0800 (PST)
-Message-ID: <c22708b5-994c-4b7a-9350-a7366d6a4312@linaro.org>
-Date: Thu, 14 Nov 2024 10:11:11 -0800
+ Thu, 14 Nov 2024 10:11:44 -0800 (PST)
+Message-ID: <3a42485b-8020-437f-a2bd-e64f31ccf531@linaro.org>
+Date: Thu, 14 Nov 2024 10:11:43 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 24/54] accel/tcg: Preserve tlb flags in tlb_set_compare
+Subject: Re: [PATCH v2 25/54] accel/tcg: Return CPUTLBEntryFull not pointer in
+ probe_access_full_mmu
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
- <20241114160131.48616-25-richard.henderson@linaro.org>
+ <20241114160131.48616-26-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241114160131.48616-25-richard.henderson@linaro.org>
+In-Reply-To: <20241114160131.48616-26-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,49 +100,129 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/14/24 08:01, Richard Henderson wrote:
-> Before, if !enable, we squashed the entire address comparator to -1.
-> This works because TLB_INVALID_MASK is set.  It seemed natural, because
-> the tlb is cleared with memset of 0xff.
-> 
-> With this patch, we retain all of the other TLB_* bits even when
-> the page is not enabled.  This works because TLB_INVALID_MASK is set.
-> This will be used in a subsequent patch; the addr_read comparator
-> contains the flags for pages that are executable but not readable.
+> Return a copy of the structure, not a pointer.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/cputlb.c | 16 +++++++---------
->   1 file changed, 7 insertions(+), 9 deletions(-)
+>   include/exec/exec-all.h              |  2 +-
+>   accel/tcg/cputlb.c                   | 13 ++++++++-----
+>   target/arm/ptw.c                     | 10 +++++-----
+>   target/i386/tcg/sysemu/excp_helper.c |  8 ++++----
+>   4 files changed, 18 insertions(+), 15 deletions(-)
 > 
+> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+> index 2e4c4cc4b4..df7d0b5ad0 100644
+> --- a/include/exec/exec-all.h
+> +++ b/include/exec/exec-all.h
+> @@ -393,7 +393,7 @@ int probe_access_full(CPUArchState *env, vaddr addr, int size,
+>    */
+>   int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+>                             MMUAccessType access_type, int mmu_idx,
+> -                          void **phost, CPUTLBEntryFull **pfull);
+> +                          void **phost, CPUTLBEntryFull *pfull);
+>   
+>   #endif /* !CONFIG_USER_ONLY */
+>   #endif /* CONFIG_TCG */
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index ae3a99eb47..585f4171cc 100644
+> index 585f4171cc..81135524eb 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -1032,15 +1032,13 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
->                                      vaddr address, int flags,
->                                      MMUAccessType access_type, bool enable)
+> @@ -1439,25 +1439,28 @@ int probe_access_full(CPUArchState *env, vaddr addr, int size,
+>   
+>   int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+>                             MMUAccessType access_type, int mmu_idx,
+> -                          void **phost, CPUTLBEntryFull **pfull)
+> +                          void **phost, CPUTLBEntryFull *pfull)
 >   {
-> -    if (enable) {
-> -        address |= flags & TLB_FLAGS_MASK;
-> -        flags &= TLB_SLOW_FLAGS_MASK;
-> -        if (flags) {
-> -            address |= TLB_FORCE_SLOW;
-> -        }
-> -    } else {
-> -        address = -1;
-> -        flags = 0;
-> +    if (!enable) {
-> +        address = TLB_INVALID_MASK;
-> +    }
-> +    address |= flags & TLB_FLAGS_MASK;
-> +    flags &= TLB_SLOW_FLAGS_MASK;
-> +    if (flags) {
-> +        address |= TLB_FORCE_SLOW;
+>       void *discard_phost;
+> -    CPUTLBEntryFull *discard_tlb;
+> +    CPUTLBEntryFull *full;
+>   
+>       /* privately handle users that don't need full results */
+>       phost = phost ? phost : &discard_phost;
+> -    pfull = pfull ? pfull : &discard_tlb;
+>   
+>       int flags = probe_access_internal(env_cpu(env), addr, size, access_type,
+> -                                      mmu_idx, true, phost, pfull, 0, false);
+> +                                      mmu_idx, true, phost, &full, 0, false);
+>   
+>       /* Handle clean RAM pages.  */
+>       if (unlikely(flags & TLB_NOTDIRTY)) {
+>           int dirtysize = size == 0 ? 1 : size;
+> -        notdirty_write(env_cpu(env), addr, dirtysize, *pfull, 0);
+> +        notdirty_write(env_cpu(env), addr, dirtysize, full, 0);
+>           flags &= ~TLB_NOTDIRTY;
 >       }
->       ent->addr_idx[access_type] = address;
->       full->slow_flags[access_type] = flags;
+>   
+> +    if (pfull) {
+> +        *pfull = *full;
+> +    }
+> +
+>       return flags;
+>   }
+>   
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index 9849949508..3ae5f524de 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -592,7 +592,7 @@ static bool S1_ptw_translate(CPUARMState *env, S1Translate *ptw,
+>           ptw->out_space = s2.f.attrs.space;
+>       } else {
+>   #ifdef CONFIG_TCG
+> -        CPUTLBEntryFull *full;
+> +        CPUTLBEntryFull full;
+>           int flags;
+>   
+>           env->tlb_fi = fi;
+> @@ -604,10 +604,10 @@ static bool S1_ptw_translate(CPUARMState *env, S1Translate *ptw,
+>           if (unlikely(flags & TLB_INVALID_MASK)) {
+>               goto fail;
+>           }
+> -        ptw->out_phys = full->phys_addr | (addr & ~TARGET_PAGE_MASK);
+> -        ptw->out_rw = full->prot & PAGE_WRITE;
+> -        pte_attrs = full->extra.arm.pte_attrs;
+> -        ptw->out_space = full->attrs.space;
+> +        ptw->out_phys = full.phys_addr | (addr & ~TARGET_PAGE_MASK);
+> +        ptw->out_rw = full.prot & PAGE_WRITE;
+> +        pte_attrs = full.extra.arm.pte_attrs;
+> +        ptw->out_space = full.attrs.space;
+>   #else
+>           g_assert_not_reached();
+>   #endif
+> diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+> index 02d3486421..168ff8e5f3 100644
+> --- a/target/i386/tcg/sysemu/excp_helper.c
+> +++ b/target/i386/tcg/sysemu/excp_helper.c
+> @@ -436,7 +436,7 @@ do_check_protect_pse36:
+>        * addresses) using the address with the A20 bit set.
+>        */
+>       if (in->ptw_idx == MMU_NESTED_IDX) {
+> -        CPUTLBEntryFull *full;
+> +        CPUTLBEntryFull full;
+>           int flags, nested_page_size;
+>   
+>           flags = probe_access_full_mmu(env, paddr, 0, access_type,
+> @@ -451,7 +451,7 @@ do_check_protect_pse36:
+>           }
+>   
+>           /* Merge stage1 & stage2 protection bits. */
+> -        prot &= full->prot;
+> +        prot &= full.prot;
+>   
+>           /* Re-verify resulting protection. */
+>           if ((prot & (1 << access_type)) == 0) {
+> @@ -459,8 +459,8 @@ do_check_protect_pse36:
+>           }
+>   
+>           /* Merge stage1 & stage2 addresses to final physical address. */
+> -        nested_page_size = 1 << full->lg_page_size;
+> -        paddr = (full->phys_addr & ~(nested_page_size - 1))
+> +        nested_page_size = 1 << full.lg_page_size;
+> +        paddr = (full.phys_addr & ~(nested_page_size - 1))
+>                 | (paddr & (nested_page_size - 1));
+>   
+>           /*
 
-Good that you extracted that from original patch, it's much more clear now.
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
