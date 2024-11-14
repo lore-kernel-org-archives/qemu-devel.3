@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB6ED68B2B
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 14:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE4AD68B29
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 14:36:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBawQ-0007VI-VB; Thu, 14 Nov 2024 09:35:27 -0500
+	id 1tBaxY-0008Lt-DT; Thu, 14 Nov 2024 09:36:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBawO-0007Tr-QM
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 09:35:25 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBaxU-0008LJ-Ri
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 09:36:32 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBawH-000583-Vg
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 09:35:23 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5cedea84d77so1010010a12.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 06:35:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBaxS-0005GQ-Ur
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 09:36:32 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5cf7567f369so929084a12.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 06:36:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731594916; x=1732199716; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731594989; x=1732199789; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=v5qlJ+m4KZwPAkGIRTIMA1mUf2/wA0DGqiDePTHl+3Q=;
- b=qs2fURy2CtEC83meramJr9EjxT8rmiFl2UvJrwDy+jDpZJ7gZidGUBaFtvhtiVpOlY
- Mv7CWTdik8FdmBA1+kUpd9UN54uQrKOYgcfpPqJ1Q5vv6BNw74QBkTKSlb1+U1lTNyiu
- MSxUOTXTGVC6O1+4/DJ1wdF++ktNDZbl+omfpTo9HDrrhVMtDqN3z28oJUQQfR0TKuc/
- 4DJTyb8Grd+OrWtQIZXSLfxCf9/Ll1t8AR01o+DRiH1798EoS7MfSUVfTsnBVW1evmY5
- MbrrznnOk9k1rmgiwlzHVzEY61M65RE9UntJ2FrY5S3chCs5VE4gQMFrt0gTQoE+SpMs
- 7rvQ==
+ bh=DCJJiXIBzUsncYN3q3FtbPCRu4Meq0TnfF39Y258hRg=;
+ b=BsHLxY9WXCtRz483gYSk2wshhEwRiyU0vOoK+xSdTqzbibCf3wTK7PdLMoI5WRrVbc
+ ox5wcYD52rdB+W65P5lrrgJt+lNXqAGBHyZpFjhR01EeODsZ4BSWLnxo9BS1wuBvIrI7
+ 37oP/Nvd668IR08ZJKiJ4f/hjvEGEqATjVdqFzjE0nejPaEfUhpkZexljZ08A9Ue+FD6
+ 3V/0bvPajImWVkJ/fGGu5cBq/xRvUjazJOrQlVJOP3zzDiUIxm0HzxdBva5gNZngBUHO
+ dLSywPyW5PgE4sar3IpVNpR0QA9ZxsndRbANtNLhmxQnH5ARjdE6hot01UF4ATCzs2Ix
+ V27A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731594916; x=1732199716;
+ d=1e100.net; s=20230601; t=1731594989; x=1732199789;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=v5qlJ+m4KZwPAkGIRTIMA1mUf2/wA0DGqiDePTHl+3Q=;
- b=DxCEV2xIEwiWebxguDesyOJKj8m/2YAVuBMIGuqpmi93j5nnY3Dsm8IihpFiCDdfsu
- UN04pw7W/xBfCj0e88N/SDotWe9a3gn1UFKPvM2q0MLnlZBxrTE04qxKF6AaJ8mQSyYa
- k85P4hgJp15UqhpKUdoGqmCKOEkkiyGo1syxRkDgq6Mm+DxsHkkx1jF83IH5MPfJYgfs
- GeLOODy6iwgwUKphJjs7fvUB5rqZQob/P6ksEvvLpCDsZP5klOcjqeh99fHklG1v9J/R
- YtYSfSLJuQBfqCKn0aC7Kb0kc1VeME7x64mKOpWrnopbmQcHyzFkOjCOcQE7VyRV7OFJ
- 4g7w==
-X-Gm-Message-State: AOJu0YyN3H0Wn1qRufW1MnuQ46Pos1Tm+PB3w2WeemANrDzmPeVBt9nl
- iApaHQGUIvKGb3+HfIpnuGeCgG1mZ//uymsoLf8+D4NYjjGG5sonqOrDfd4xjU9rUzSjqaEGQAb
- f
-X-Google-Smtp-Source: AGHT+IHj+SX/0CaG57mtK4ohddIQtBVE+6NEaw4fcSUB31tis5RWtg+2FXoXkJ2apaQPcvbfjkh33g==
-X-Received: by 2002:a17:906:9c82:b0:a9e:2e72:f8f4 with SMTP id
- a640c23a62f3a-aa1f8041e19mr660525566b.1.1731594916017; 
- Thu, 14 Nov 2024 06:35:16 -0800 (PST)
+ bh=DCJJiXIBzUsncYN3q3FtbPCRu4Meq0TnfF39Y258hRg=;
+ b=Mwkf9cZ1wYTw1o48laIm7xZFNl6KxIhgdTi8qCj0sKkWRlx+KQ/hCG80O8oPzYdUth
+ cXUAEq+12mjHg8ydfr2eBV9ocowlAeEy+RPyjpi/KkevCn4jbv5f9CsFN03QXfCPyX+F
+ oFo57qdtv9Cm4qEYnknX3rVxkMvZoK90qOIzPy3Y54fAfumvrn9FFdwoLwwYI6XZUNNl
+ DE0NnrvQNZ8HLshKFWiz0nVrx7IW93x8Cvwnx1AAD8K99fgxh9VM40CH4KSYV7/2dEuD
+ 6KdxmxzuYDAViOmMcqekoASlCOHppoY06p1BG80h96AGjp7N3ijjQN7U/Xn/3FAw4C6o
+ 99MA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX+BaARtS1II3upBRxrCNLQb2Iz+sczAXilDTFdj/UFqJOYMFJOTkgTRo2h4TFmO46THiUghxM2QwHm@nongnu.org
+X-Gm-Message-State: AOJu0YwMFLzTAmKop8GsiqXLhAIv/ArppVO7MVx5UwqpG3PanMWWliEX
+ hboahLZJ9ucJTgnj9ng1O+1MNJPYxWUy0Kvgzi5Zheik91csjHP0BShNuMgMWSRTNsLxDJxG9zd
+ S
+X-Google-Smtp-Source: AGHT+IFsoU3AKTX21EhD+tTAoyK6SKP3m0HjWvOfP2Ogm/iQa53qvbZuBancIBU7KNUX4lyo4ExyLA==
+X-Received: by 2002:a17:906:99c4:b0:a99:caf5:c897 with SMTP id
+ a640c23a62f3a-aa1f805886emr673074566b.20.1731594989148; 
+ Thu, 14 Nov 2024 06:36:29 -0800 (PST)
 Received: from [192.168.69.174] ([176.187.209.228])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20e003fcfsm69999566b.128.2024.11.14.06.35.14
+ a640c23a62f3a-aa20e043552sm69861766b.149.2024.11.14.06.36.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 06:35:15 -0800 (PST)
-Message-ID: <7b8586e7-137d-44b3-bff8-307b81bea17d@linaro.org>
-Date: Thu, 14 Nov 2024 15:35:14 +0100
+ Thu, 14 Nov 2024 06:36:28 -0800 (PST)
+Message-ID: <177d6006-001d-4393-9996-8ceb9dd563b6@linaro.org>
+Date: Thu, 14 Nov 2024 15:36:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/intc/openpic: Avoid taking address of out-of-bounds
- array index
-To: Peter Maydell <peter.maydell@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org
-References: <20241105180205.3074071-1-peter.maydell@linaro.org>
- <dae49b9c-0d47-4811-bd48-fdd401594609@ilande.co.uk>
- <CAFEAcA82rYdZduR73CjJr7hYWG7N5e4Dqmx5j1O=3FT_BqboNQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] net: mark struct ip_header as QEMU_PACKED
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Yuri Benditovich <ybendito@redhat.com>
+References: <20241114141619.806652-1-peter.maydell@linaro.org>
+ <20241114141619.806652-3-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA82rYdZduR73CjJr7hYWG7N5e4Dqmx5j1O=3FT_BqboNQ@mail.gmail.com>
+In-Reply-To: <20241114141619.806652-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,51 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/11/24 13:22, Peter Maydell wrote:
-> On Wed, 6 Nov 2024 at 11:58, Mark Cave-Ayland
-> <mark.cave-ayland@ilande.co.uk> wrote:
->>
->> On 05/11/2024 18:02, Peter Maydell wrote:
->>
->>> The clang sanitizer complains about the code in the EOI handling
->>> of openpic_cpu_write_internal():
->>>
->>> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1 ./build/clang/qemu-system-ppc -M mac99,graphics=off -display none -kernel day15/invaders.elf
->>> ../../hw/intc/openpic.c:1034:16: runtime error: index -1 out of bounds for type 'IRQSource[264]' (aka 'struct IRQSource[264]')
->>> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/intc/openpic.c:1034:16 in
->>>
->>> This is because we do
->>>     src = &opp->src[n_IRQ];$
->>
->> Extra $ symbol at the end of the line here?
+On 14/11/24 14:16, Peter Maydell wrote:
+> The ip_header is not actually guaranteed to be aligned. We attempt to
+> deal with this in some places such as net_checksum_calculate() by
+> using stw_be_p and so on to access the fields, but this is not
+> sufficient to be correct, because even accessing a byte member
+> within an unaligned struct is undefined behaviour. The clang
+> sanitizer will emit warnings like these if net_checksum_calculate()
+> is called:
 > 
-> Yep (cut-n-paste from an editor that marks end-of-lines).
+>       Stopping network: ../../net/checksum.c:106:9: runtime error: member access within misaligned address 0x556aad9b502e for type 'struct ip_header', which requires 4 byte alignment
+>      0x556aad9b502e: note: pointer points here
+>       34 56 08 00 45 00  01 48 a5 09 40 00 40 11  7c 8b 0a 00 02 0f 0a 00  02 02 00 44 00 43 01 34  19 56
+>                   ^
+>      SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../net/checksum.c:106:9 in
+>      ../../net/checksum.c:106:9: runtime error: load of misaligned address 0x556aad9b502e for type 'uint8_t' (aka 'unsigned char'), which requires 4 byte alignment
+>      0x556aad9b502e: note: pointer points here
+>       34 56 08 00 45 00  01 48 a5 09 40 00 40 11  7c 8b 0a 00 02 0f 0a 00  02 02 00 44 00 43 01 34  19 56
+>                   ^
 > 
->>> when n_IRQ may be -1.  This is in practice harmless because if n_IRQ
->>> is -1 then we don't do anything with the src pointer, but it is
->>> undefined behaviour. (This has been present since this device
->>> was first added to QEMU.)
->>>
->>> Rearrange the code so we only do the array index when n_IRQ is not -1.
->>>
->>> Cc: qemu-stable@nongnu.org
->>> Fixes: e9df014c0b ("Implement embedded IRQ controller for PowerPC 6xx/740 & 75")
->>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>> ---
->>> Arguable whether it's worth the stable backport or not...
->>> ---
->>>    hw/intc/openpic.c | 15 ++++++++-------
->>>    1 file changed, 8 insertions(+), 7 deletions(-)
-
-
->> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Fix this by marking the ip_header struct as QEMU_PACKED, so that
+> the compiler knows that it might be unaligned and will generate
+> the right code for accessing fields.
 > 
-> Thanks. I can take this via target-arm.next, or does anybody
-> have a different preference?
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/net/eth.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-I had it tagged for my next hw-misc PR but was busy focused on
-other things so haven't taken the time for it yet. Better you
-take it, thanks!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Phil.
+Should this series be tagged for qemu-stable@?
 
