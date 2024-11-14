@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2E4D6A247
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 22:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE411D6A248
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 22:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBhub-0003Om-1f; Thu, 14 Nov 2024 17:02:01 -0500
+	id 1tBhut-0003SS-5j; Thu, 14 Nov 2024 17:02:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tBhuQ-0003Mn-Fx
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:01:54 -0500
-Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
+ id 1tBhuk-0003Qh-MG
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:02:10 -0500
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tBhuO-0007e2-H4
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:01:50 -0500
-Received: by mail-qk1-x733.google.com with SMTP id
- af79cd13be357-7b14554468fso69367785a.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:01:48 -0800 (PST)
+ id 1tBhuj-0007gr-1g
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:02:10 -0500
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-7b13ff3141aso72509885a.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:02:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1731621707; x=1732226507; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1731621728; x=1732226528; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Zycd3hKEsTNJl0uSME9pJLVf1urG5elY3XBlARnUxHY=;
- b=KL7/MhGMoEuuXiW450fvsHxoT7+f8yq9pIZGiuXIaq46MFA/u7o4leWKuxBSEPQDFx
- G/gYfrPFleRmTjejEeONsMP38Rq1fE7VsXMFHgEmcnFLi/MjeZHymNPFwmHHqTLZPPDd
- fo0EkXigao5+h5t0i0OHamOOOF/Imj1TA8stOzoyz+gtnJyVjPnQDhrXtKwiIO4BRX+i
- w5/92icrC/v1NQ0pMEl0MIq0rXPFOH5RFd+MM4HsMp+oRV82+TMQEf7O6A8MJr0LjYl9
- IhzbpGD+YLE3K1mq3mC908TwnRMhZNd7m13HsXoMfESMC6SBOGnCRjv/nS+KakApXtdP
- yGvA==
+ bh=OxaPcDi0GvROdbHCP2XrpVAr3pG96W88atG3C9gr0r0=;
+ b=FtLTfvvsoPIGg/50MCaXAV9JT1ssP+pFDVd/3EQzJ2QzA+3GEcx0mTc+J2wcENZ2Sr
+ AoXVN41zANHEpHVhc+YZl7XBYvDIiDHxyKTs1OzTXPdoNpI3ttJcypAOWlpv88m+8YgM
+ HXl1umOUKYBXvvKQQMe2sJoLNTI0AygxPHrWfkFoRyQyTiqrUHTA3wqi8YSKgc8ozPga
+ 6X91sTL+b8wX1kFEUsWm9b1apZPj/auXdon4h2vssJUreqT1IT+lxkwlsHiDebcmZp+e
+ 2viSSjgZeQ+f+/y/ss5JssLetL5JX+Eg/yfWC/kAwNRYxY9uGz8DJdY00vzbuP7qd8kD
+ ckPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731621707; x=1732226507;
+ d=1e100.net; s=20230601; t=1731621728; x=1732226528;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Zycd3hKEsTNJl0uSME9pJLVf1urG5elY3XBlARnUxHY=;
- b=mEmpCq1PirGI3eJuQA4S+6St0ySJqgvk9kOdaL4SwzP4U1lUw0cY+HOl7CFlcwphqm
- sGWd28At4gb/kY1GIEG2dFg5jLK2YZC8mo5MjYNzW7Rr0Q6mQKejnnoS1Q7PODkbBDvX
- XdNU2Bv0Nj1EvVKoaLUdPBAZaG+E8B3Jb8Cm6yHwWoL9RNyWhU1tyMKpCXsVpotsXwxM
- jNNld3+E/b+sWpesmGgXNniYjtHjp8gzVbHd2ldxVndf4wYlwoshnEWWeZg/zv8vCgmg
- HBG2/Zvu/4blbBFJr6IaCKUnagLoUNGk9Rftz6RBk2kDxCGYMNXkTbAaIORDvnVM94Lt
- qPNw==
+ bh=OxaPcDi0GvROdbHCP2XrpVAr3pG96W88atG3C9gr0r0=;
+ b=jRZTFps5Narvr3yW8dson65TeNIx6EWPleOkgywPkxUvc2jaGA1B2EDJOx3jqfPUgq
+ UwY3F6CHYnV5wWJpn56f2FHLChOyNEFjkNZVeMT4ugL6mhUJdoDnuH3uV/4Si+EkPScZ
+ 731kC+273Cl4WY0SZPGai6V83o3ZtwbC1LathLClYFpta5V0VO/toFBPxp66BADrDAac
+ gkU1tWHKtpD3rcgaeNQKGArFMA8WsuRQvYl1b4ZmpxzF01DMV0qfsh8sMd7cZjw9NHpg
+ Bdvyjj3hynecLqwG8YAqoLBaN67n4KQV77leBXWbv7BLzgSTPuOfNXxVrdXf3RMluQAT
+ UIpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUws6kP5xTuBPY9wKQSL7vW29IqOw86KNM7Z9OTQ/h9n9BFNPuCjdi7zxBXNM4QsJ3rXD5PNh3Qmqg6@nongnu.org
-X-Gm-Message-State: AOJu0Yx+zDf95Z/gsLvI0se9ximWRCr6UixKNluQiue00DC2lOuwmP0Y
- pXDudf2C/wwagnKPnvNFpP7t8DjkNBSpQTIuDWnZhh/e311vH18N8jA18WvEO1c=
-X-Google-Smtp-Source: AGHT+IEkXqVAN9tFShn/9XDLrj3tncsyMxUVy+GTC0oaUE5g4pEwOrR+XYXTc9fq+Nm1Dj43s0prDg==
-X-Received: by 2002:a05:620a:4487:b0:7a9:b883:68c2 with SMTP id
- af79cd13be357-7b36234330fmr65347585a.48.1731621707414; 
- Thu, 14 Nov 2024 14:01:47 -0800 (PST)
+ AJvYcCVeXdY2jGv17eYdL0JZtBe7zMZVBf9d/soV+SWjiQ0pg3xQUUUT+GT3k6tDYvRTh+/55OboX4Jn2w2v@nongnu.org
+X-Gm-Message-State: AOJu0Yzhgx/a1ZLyCNreU+wJw3usO9KTiEfIa4GIAvpTfvM4CJwAyr59
+ 5UJXUkjJz+FZbdRZduDeJK2elLqUny7QxmJSrJwqHvg4G/2BcoDSUXnYWekQiVo=
+X-Google-Smtp-Source: AGHT+IE1flOo8GUuiBFeSBKTr2iYCSF0phHR9gfIh8/Ngv56jyN7hKPftARShzppOjSZ6PmsvTnO7w==
+X-Received: by 2002:a05:620a:1a28:b0:7b1:52a0:48eb with SMTP id
+ af79cd13be357-7b3622b5e03mr67182685a.22.1731621728057; 
+ Thu, 14 Nov 2024 14:02:08 -0800 (PST)
 Received: from DY4X0N7X05.bytedance.net ([130.44.212.152])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b35ca308bdsm93742485a.83.2024.11.14.14.01.45
+ af79cd13be357-7b35ca308bdsm93742485a.83.2024.11.14.14.02.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 14 Nov 2024 14:01:47 -0800 (PST)
+ Thu, 14 Nov 2024 14:02:07 -0800 (PST)
 From: Yichen Wang <yichen.wang@bytedance.com>
 To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -75,16 +75,17 @@ Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
  "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
  "Yichen Wang" <yichen.wang@bytedance.com>,
  Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH v7 03/12] util/dsa: Implement DSA device start and stop logic.
-Date: Thu, 14 Nov 2024 14:01:23 -0800
-Message-Id: <20241114220132.27399-4-yichen.wang@bytedance.com>
+Subject: [PATCH v7 11/12] migration/multifd: Add integration tests for multifd
+ with Intel DSA offloading.
+Date: Thu, 14 Nov 2024 14:01:31 -0800
+Message-Id: <20241114220132.27399-12-yichen.wang@bytedance.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20241114220132.27399-1-yichen.wang@bytedance.com>
 References: <20241114220132.27399-1-yichen.wang@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
- envelope-from=yichen.wang@bytedance.com; helo=mail-qk1-x733.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=yichen.wang@bytedance.com; helo=mail-qk1-x72c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,430 +110,144 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hao Xiang <hao.xiang@linux.dev>
 
-* DSA device open and close.
-* DSA group contains multiple DSA devices.
-* DSA group configure/start/stop/clean.
+* Add test case to start and complete multifd live migration with DSA
+offloading enabled.
+* Add test case to start and cancel multifd live migration with DSA
+offloading enabled.
 
-Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
 Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
+Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
 Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
 ---
- include/qemu/dsa.h | 103 +++++++++++++++++
- util/dsa.c         | 280 +++++++++++++++++++++++++++++++++++++++++++++
- util/meson.build   |   3 +
- 3 files changed, 386 insertions(+)
- create mode 100644 include/qemu/dsa.h
- create mode 100644 util/dsa.c
+ tests/qtest/migration-test.c | 80 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 79 insertions(+), 1 deletion(-)
 
-diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
-new file mode 100644
-index 0000000000..71686af28f
---- /dev/null
-+++ b/include/qemu/dsa.h
-@@ -0,0 +1,103 @@
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index e6a2803e71..cd551ce70c 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -611,6 +611,12 @@ typedef struct {
+     bool suspend_me;
+ } MigrateStart;
+ 
 +/*
-+ * Interface for using Intel Data Streaming Accelerator to offload certain
-+ * background operations.
-+ *
-+ * Copyright (C) Bytedance Ltd.
-+ *
-+ * Authors:
-+ *  Hao Xiang <hao.xiang@bytedance.com>
-+ *  Yichen Wang <yichen.wang@bytedance.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
++ * It requires separate steps to configure and enable DSA device.
++ * This test assumes that the configuration is done already.
 + */
++static const char *dsa_dev_path_p = "['dsa:/dev/dsa/wq4.0']";
 +
-+#ifndef QEMU_DSA_H
-+#define QEMU_DSA_H
+ /*
+  * A hook that runs after the src and dst QEMUs have been
+  * created, but before the migration is started. This can
+@@ -3262,7 +3268,7 @@ static void test_multifd_tcp_tls_x509_reject_anon_client(void)
+  *
+  *  And see that it works
+  */
+-static void test_multifd_tcp_cancel(void)
++static void test_multifd_tcp_cancel_common(bool use_dsa)
+ {
+     MigrateStart args = {
+         .hide_stderr = true,
+@@ -3282,6 +3288,11 @@ static void test_multifd_tcp_cancel(void)
+     migrate_set_capability(from, "multifd", true);
+     migrate_set_capability(to, "multifd", true);
+ 
++    if (use_dsa) {
++        migrate_set_parameter_str(from, "zero-page-detection", "dsa-accel");
++        migrate_set_parameter_str(from, "accel-path", dsa_dev_path_p);
++    }
 +
-+#include "qapi/error.h"
-+#include "qemu/thread.h"
-+#include "qemu/queue.h"
+     /* Start incoming migration from the 1st socket */
+     migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
+ 
+@@ -3340,6 +3351,49 @@ static void test_multifd_tcp_cancel(void)
+     test_migrate_end(from, to2, true);
+ }
+ 
++/*
++ * This test does:
++ *  source               target
++ *                       migrate_incoming
++ *     migrate
++ *     migrate_cancel
++ *                       launch another target
++ *     migrate
++ *
++ *  And see that it works
++ */
++static void test_multifd_tcp_cancel(void)
++{
++    test_multifd_tcp_cancel_common(false);
++}
 +
 +#ifdef CONFIG_DSA_OPT
 +
-+#pragma GCC push_options
-+#pragma GCC target("enqcmd")
-+
-+#include <linux/idxd.h>
-+#include "x86intrin.h"
-+
-+typedef struct {
-+    void *work_queue;
-+} QemuDsaDevice;
-+
-+typedef QSIMPLEQ_HEAD(QemuDsaTaskQueue, QemuDsaBatchTask) QemuDsaTaskQueue;
-+
-+typedef struct {
-+    QemuDsaDevice *dsa_devices;
-+    int num_dsa_devices;
-+    /* The index of the next DSA device to be used. */
-+    uint32_t device_allocator_index;
-+    bool running;
-+    QemuMutex task_queue_lock;
-+    QemuCond task_queue_cond;
-+    QemuDsaTaskQueue task_queue;
-+} QemuDsaDeviceGroup;
-+
-+/**
-+ * @brief Initializes DSA devices.
-+ *
-+ * @param dsa_parameter A list of DSA device path from migration parameter.
-+ *
-+ * @return int Zero if successful, otherwise non zero.
-+ */
-+int qemu_dsa_init(const strList *dsa_parameter, Error **errp);
-+
-+/**
-+ * @brief Start logic to enable using DSA.
-+ */
-+void qemu_dsa_start(void);
-+
-+/**
-+ * @brief Stop the device group and the completion thread.
-+ */
-+void qemu_dsa_stop(void);
-+
-+/**
-+ * @brief Clean up system resources created for DSA offloading.
-+ */
-+void qemu_dsa_cleanup(void);
-+
-+/**
-+ * @brief Check if DSA is running.
-+ *
-+ * @return True if DSA is running, otherwise false.
-+ */
-+bool qemu_dsa_is_running(void);
-+
-+#else
-+
-+static inline bool qemu_dsa_is_running(void)
++static void *test_migrate_precopy_tcp_multifd_start_dsa(QTestState *from,
++                                                        QTestState *to)
 +{
-+    return false;
++    migrate_set_parameter_str(from, "zero-page-detection", "dsa-accel");
++    migrate_set_parameter_str(from, "accel-path", dsa_dev_path_p);
++    return test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
 +}
 +
-+static inline int qemu_dsa_init(const strList *dsa_parameter, Error **errp)
++static void test_multifd_tcp_zero_page_dsa(void)
 +{
-+    if (dsa_parameter != NULL && strlen(dsa_parameter) != 0) {
-+        error_setg(errp, "DSA is not supported.");
++    MigrateCommon args = {
++        .listen_uri = "defer",
++        .start_hook = test_migrate_precopy_tcp_multifd_start_dsa,
++    };
++
++    test_precopy_common(&args);
++}
++
++static void test_multifd_tcp_cancel_dsa(void)
++{
++    test_multifd_tcp_cancel_common(true);
++}
++
++#endif
++
+ static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
+ {
+     qtest_qmp_assert_success(who,
+@@ -3767,6 +3821,20 @@ static bool kvm_dirty_ring_supported(void)
+ #endif
+ }
+ 
++#ifdef CONFIG_DSA_OPT
++static const char *dsa_dev_path = "/dev/dsa/wq4.0";
++static int test_dsa_setup(void)
++{
++    int fd;
++    fd = open(dsa_dev_path, O_RDWR);
++    if (fd < 0) {
 +        return -1;
 +    }
-+
++    close(fd);
 +    return 0;
 +}
-+
-+static inline void qemu_dsa_start(void) {}
-+
-+static inline void qemu_dsa_stop(void) {}
-+
-+static inline void qemu_dsa_cleanup(void) {}
-+
 +#endif
 +
+ int main(int argc, char **argv)
+ {
+     bool has_kvm, has_tcg;
+@@ -3979,6 +4047,16 @@ int main(int argc, char **argv)
+                        test_multifd_tcp_zero_page_legacy);
+     migration_test_add("/migration/multifd/tcp/plain/zero-page/none",
+                        test_multifd_tcp_no_zero_page);
++
++#ifdef CONFIG_DSA_OPT
++    if (g_str_equal(arch, "x86_64") && test_dsa_setup() == 0) {
++        migration_test_add("/migration/multifd/tcp/plain/zero-page/dsa",
++                       test_multifd_tcp_zero_page_dsa);
++        migration_test_add("/migration/multifd/tcp/plain/cancel/dsa",
++                       test_multifd_tcp_cancel_dsa);
++    }
 +#endif
-diff --git a/util/dsa.c b/util/dsa.c
-new file mode 100644
-index 0000000000..79dab5d62c
---- /dev/null
-+++ b/util/dsa.c
-@@ -0,0 +1,280 @@
-+/*
-+ * Use Intel Data Streaming Accelerator to offload certain background
-+ * operations.
-+ *
-+ * Copyright (C) Bytedance Ltd.
-+ *
-+ * Authors:
-+ *  Hao Xiang <hao.xiang@bytedance.com>
-+ *  Bryan Zhang <bryan.zhang@bytedance.com>
-+ *  Yichen Wang <yichen.wang@bytedance.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
 +
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/queue.h"
-+#include "qemu/memalign.h"
-+#include "qemu/lockable.h"
-+#include "qemu/cutils.h"
-+#include "qemu/dsa.h"
-+#include "qemu/bswap.h"
-+#include "qemu/error-report.h"
-+#include "qemu/rcu.h"
-+
-+#pragma GCC push_options
-+#pragma GCC target("enqcmd")
-+
-+#include <linux/idxd.h>
-+#include "x86intrin.h"
-+
-+#define DSA_WQ_PORTAL_SIZE 4096
-+#define MAX_DSA_DEVICES 16
-+
-+uint32_t max_retry_count;
-+static QemuDsaDeviceGroup dsa_group;
-+
-+
-+/**
-+ * @brief This function opens a DSA device's work queue and
-+ *        maps the DSA device memory into the current process.
-+ *
-+ * @param dsa_wq_path A pointer to the DSA device work queue's file path.
-+ * @return A pointer to the mapped memory, or MAP_FAILED on failure.
-+ */
-+static void *
-+map_dsa_device(const char *dsa_wq_path)
-+{
-+    void *dsa_device;
-+    int fd;
-+
-+    fd = open(dsa_wq_path, O_RDWR);
-+    if (fd < 0) {
-+        error_report("Open %s failed with errno = %d.",
-+                dsa_wq_path, errno);
-+        return MAP_FAILED;
-+    }
-+    dsa_device = mmap(NULL, DSA_WQ_PORTAL_SIZE, PROT_WRITE,
-+                      MAP_SHARED | MAP_POPULATE, fd, 0);
-+    close(fd);
-+    if (dsa_device == MAP_FAILED) {
-+        error_report("mmap failed with errno = %d.", errno);
-+        return MAP_FAILED;
-+    }
-+    return dsa_device;
-+}
-+
-+/**
-+ * @brief Initializes a DSA device structure.
-+ *
-+ * @param instance A pointer to the DSA device.
-+ * @param work_queue A pointer to the DSA work queue.
-+ */
-+static void
-+dsa_device_init(QemuDsaDevice *instance,
-+                void *dsa_work_queue)
-+{
-+    instance->work_queue = dsa_work_queue;
-+}
-+
-+/**
-+ * @brief Cleans up a DSA device structure.
-+ *
-+ * @param instance A pointer to the DSA device to cleanup.
-+ */
-+static void
-+dsa_device_cleanup(QemuDsaDevice *instance)
-+{
-+    if (instance->work_queue != MAP_FAILED) {
-+        munmap(instance->work_queue, DSA_WQ_PORTAL_SIZE);
-+    }
-+}
-+
-+/**
-+ * @brief Initializes a DSA device group.
-+ *
-+ * @param group A pointer to the DSA device group.
-+ * @param dsa_parameter A list of DSA device path from are separated by space
-+ * character migration parameter. Multiple DSA device path.
-+ *
-+ * @return Zero if successful, non-zero otherwise.
-+ */
-+static int
-+dsa_device_group_init(QemuDsaDeviceGroup *group,
-+                      const strList *dsa_parameter,
-+                      Error **errp)
-+{
-+    if (dsa_parameter == NULL) {
-+        error_setg(errp, "dsa device path is not supplied.");
-+        return -1;
-+    }
-+
-+    int ret = 0;
-+    const char *dsa_path[MAX_DSA_DEVICES];
-+    int num_dsa_devices = 0;
-+
-+    while (dsa_parameter) {
-+        dsa_path[num_dsa_devices++] = dsa_parameter->value;
-+        if (num_dsa_devices == MAX_DSA_DEVICES) {
-+            break;
-+        }
-+        dsa_parameter = dsa_parameter->next;
-+    }
-+
-+    group->dsa_devices =
-+        g_new0(QemuDsaDevice, num_dsa_devices);
-+    group->num_dsa_devices = num_dsa_devices;
-+    group->device_allocator_index = 0;
-+
-+    group->running = false;
-+    qemu_mutex_init(&group->task_queue_lock);
-+    qemu_cond_init(&group->task_queue_cond);
-+    QSIMPLEQ_INIT(&group->task_queue);
-+
-+    void *dsa_wq = MAP_FAILED;
-+    for (int i = 0; i < num_dsa_devices; i++) {
-+        dsa_wq = map_dsa_device(dsa_path[i]);
-+        if (dsa_wq == MAP_FAILED) {
-+            error_setg(errp, "map_dsa_device failed MAP_FAILED.");
-+            ret = -1;
-+        }
-+        dsa_device_init(&group->dsa_devices[i], dsa_wq);
-+    }
-+
-+    return ret;
-+}
-+
-+/**
-+ * @brief Starts a DSA device group.
-+ *
-+ * @param group A pointer to the DSA device group.
-+ */
-+static void
-+dsa_device_group_start(QemuDsaDeviceGroup *group)
-+{
-+    group->running = true;
-+}
-+
-+/**
-+ * @brief Stops a DSA device group.
-+ *
-+ * @param group A pointer to the DSA device group.
-+ */
-+__attribute__((unused))
-+static void
-+dsa_device_group_stop(QemuDsaDeviceGroup *group)
-+{
-+    group->running = false;
-+}
-+
-+/**
-+ * @brief Cleans up a DSA device group.
-+ *
-+ * @param group A pointer to the DSA device group.
-+ */
-+static void
-+dsa_device_group_cleanup(QemuDsaDeviceGroup *group)
-+{
-+    if (!group->dsa_devices) {
-+        return;
-+    }
-+    for (int i = 0; i < group->num_dsa_devices; i++) {
-+        dsa_device_cleanup(&group->dsa_devices[i]);
-+    }
-+    g_free(group->dsa_devices);
-+    group->dsa_devices = NULL;
-+
-+    qemu_mutex_destroy(&group->task_queue_lock);
-+    qemu_cond_destroy(&group->task_queue_cond);
-+}
-+
-+/**
-+ * @brief Returns the next available DSA device in the group.
-+ *
-+ * @param group A pointer to the DSA device group.
-+ *
-+ * @return struct QemuDsaDevice* A pointer to the next available DSA device
-+ *         in the group.
-+ */
-+__attribute__((unused))
-+static QemuDsaDevice *
-+dsa_device_group_get_next_device(QemuDsaDeviceGroup *group)
-+{
-+    if (group->num_dsa_devices == 0) {
-+        return NULL;
-+    }
-+    uint32_t current = qatomic_fetch_inc(&group->device_allocator_index);
-+    current %= group->num_dsa_devices;
-+    return &group->dsa_devices[current];
-+}
-+
-+/**
-+ * @brief Check if DSA is running.
-+ *
-+ * @return True if DSA is running, otherwise false.
-+ */
-+bool qemu_dsa_is_running(void)
-+{
-+    return false;
-+}
-+
-+static void
-+dsa_globals_init(void)
-+{
-+    max_retry_count = UINT32_MAX;
-+}
-+
-+/**
-+ * @brief Initializes DSA devices.
-+ *
-+ * @param dsa_parameter A list of DSA device path from migration parameter.
-+ *
-+ * @return int Zero if successful, otherwise non zero.
-+ */
-+int qemu_dsa_init(const strList *dsa_parameter, Error **errp)
-+{
-+    dsa_globals_init();
-+
-+    return dsa_device_group_init(&dsa_group, dsa_parameter, errp);
-+}
-+
-+/**
-+ * @brief Start logic to enable using DSA.
-+ *
-+ */
-+void qemu_dsa_start(void)
-+{
-+    if (dsa_group.num_dsa_devices == 0) {
-+        return;
-+    }
-+    if (dsa_group.running) {
-+        return;
-+    }
-+    dsa_device_group_start(&dsa_group);
-+}
-+
-+/**
-+ * @brief Stop the device group and the completion thread.
-+ *
-+ */
-+void qemu_dsa_stop(void)
-+{
-+    QemuDsaDeviceGroup *group = &dsa_group;
-+
-+    if (!group->running) {
-+        return;
-+    }
-+}
-+
-+/**
-+ * @brief Clean up system resources created for DSA offloading.
-+ *
-+ */
-+void qemu_dsa_cleanup(void)
-+{
-+    qemu_dsa_stop();
-+    dsa_device_group_cleanup(&dsa_group);
-+}
-+
-diff --git a/util/meson.build b/util/meson.build
-index 5d8bef9891..5ec2158f9e 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -123,6 +123,9 @@ if cpu == 'aarch64'
-   util_ss.add(files('cpuinfo-aarch64.c'))
- elif cpu in ['x86', 'x86_64']
-   util_ss.add(files('cpuinfo-i386.c'))
-+  if config_host_data.get('CONFIG_DSA_OPT')
-+    util_ss.add(files('dsa.c'))
-+  endif
- elif cpu == 'loongarch64'
-   util_ss.add(files('cpuinfo-loongarch.c'))
- elif cpu in ['ppc', 'ppc64']
+     migration_test_add("/migration/multifd/tcp/plain/cancel",
+                        test_multifd_tcp_cancel);
+     migration_test_add("/migration/multifd/tcp/plain/zlib",
 -- 
 Yichen Wang
 
