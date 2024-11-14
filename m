@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 409D8D6A221
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 20:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94DD8D6A22C
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 20:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBgac-0007bx-Nf; Thu, 14 Nov 2024 15:37:18 -0500
+	id 1tBgaq-0007ez-Cc; Thu, 14 Nov 2024 15:37:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tBgaR-0007Wq-OE
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 15:37:09 -0500
-Received: from mail-sn1nam02on20611.outbound.protection.outlook.com
- ([2a01:111:f403:2406::611]
- helo=NAM02-SN1-obe.outbound.protection.outlook.com)
+ id 1tBgai-0007eA-TK
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 15:37:24 -0500
+Received: from mail-dm6nam10on20623.outbound.protection.outlook.com
+ ([2a01:111:f403:2413::623]
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1tBgaO-0001m6-Am
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 15:37:05 -0500
+ id 1tBgag-0001mx-HU
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 15:37:24 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sJbiAadD1YgxpfN904GHsb8O4iHjB2sVd9J4FeklsTuN0mX3elGBn2Ln0Jt1FiUN8J5DkspN5WEc76KpnQD7ytjshqXK/k/5ToaaixwMv5cCd++UH728MbhY2QYg74apj9ZMLJz8hTX3ml9sCML49kyvY4JkmsUzmDL7nHqkm+vIBlzMwc0KWMRyxHAYmsFX3nI/kq6R575dQd263q1R3KvH1ORheryNbVLce5CgPkYqrQ5T0rnY2Jjk6XKCp8hPD8wFbiqHtCKe6xpyqAK/jldvQ017TmiosBa18Sy9//lYThWCYu0GibtO69CrysR4hypgWzEIT1nf+dKiT7Hr4w==
+ b=XiWf4/ZP8c3jDBuxGS3AzJLz6350gvuiEWw6I7YvCoPuzMt39r5fUGUtK8BmVseU2yWjEiPoXz8UKqInSFdWyf7Hna5adA8ZQ2NVA/7cV+m13GdU7V91S0ky0shwPRjBLu8j/JpjPDaDyMBBcHlJbT6JjoqAeHn5meAWDIeYPotou0YiMXJuY3r+DwxVZrtRpXouIp+NArK8Eh/yHS2cXAZBME36tqWesXXq7u8ZRlt/ZND2KK0XybPd3dW/KJtDYrRJ88IBRST7n8Sz5nAejhDXJgORlcVdrZQDNC3oqFxF4CLbbtu/6BiwqnKd8yrjJYvSOSIYb0KDfX/HOlEKhw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KEcinZ9flLyZTr//gLMdTQcANxNQX3YMcAMHPxvaAMc=;
- b=NAoLgiIDOYxgfVNkVI78P/5mxusAl1a5SJTm8B2dn/DN8QsdKvTSxYX5eudlns5tdInvWpmB/78+r+N8NZUpjBcWWvhPQiQMvDB/cA0BmAacb4scTRwR8G9peIDSXT+OCswza112G/d8hLFF9s0yEJ7lnxcpVc1kSxwqWKii5HCvpYy59LhGdwFjzRUJPnPvnH2nqopIGjvDokozIHvFzo4U2Pz+FAGnUVAJp5ctFiSwHz9qxVUzqv3CXXpOPb7gbls2mYXVexTYnoINCyCBP4UZR7en9g1UHEIlIzPv87O8ia2IfxTn4dbcLgns1kkR7lB9xu/a/rn6j0mEydetDQ==
+ bh=CAS2GIiFdwPhEw47XkJUVk4kdgQ5vv57fwT8KP/qQcs=;
+ b=tPQv029k41UKHNrJ+EyToaKF5c82GzMDs6iJGUmyK2+zotpZ6j/Gv+POftJI4tw9D6oo1PeFSh7wqZ4Pcu0A17S9LiERlkik77g2tO6OCU7kVe5T+stZ+xXm3DeMHjuXexkUp2idAAxgmtMU+MMlkZuwlPYB4E0eMi33up9GMSbPPjV1PC4sOYyZL03VHKJCIQxIqAntz9yRnNvcaOrIQAad5KwpBl1ORqzYBynxYQYDT/HW09toe6ZjJQlnHboFUg9WvAW7fCSMy1yoYiy/NtpOEsOWesS537yhBQCaGQZzFRuzU7AFKbPRz/qVgnPKCgoXAjaVPEdgo3hBbdOaHQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KEcinZ9flLyZTr//gLMdTQcANxNQX3YMcAMHPxvaAMc=;
- b=nfHKm2z4qUtlURLubE0VT6b1eNjRWuAG6EYmgZgdVPvYxecLRh0SN6irFFIPpAuhkBl6SfAXdnffcYjQBI5ec9K4RK1/PPj4oy+RR0T7m2QkFmP1YQaJ5Pwu3dyNomUzKg8tda+2/jSydNxR8o7dB1yS2kMj6X7lPN9VyyVNG8g=
-Received: from BL1PR13CA0161.namprd13.prod.outlook.com (2603:10b6:208:2bd::16)
- by MN2PR12MB4286.namprd12.prod.outlook.com (2603:10b6:208:199::22)
+ bh=CAS2GIiFdwPhEw47XkJUVk4kdgQ5vv57fwT8KP/qQcs=;
+ b=VvFSZDn26nxu+6LQgEBK8scc/Z7JUYqB9D7MNX8oe1lVG+gzvOefikeFQjLQsxsPkmd76N6+O/yBYwkqWyGxQLFV3XwtH4jtwIGWadvI5Jaiheu+0ozfoJULeh7PSx7mMf5ZrfpxANHifL9GBE9uzntUqyKhyBNOOZHHUsa8ADU=
+Received: from BL1PR13CA0174.namprd13.prod.outlook.com (2603:10b6:208:2bd::29)
+ by CY8PR12MB7538.namprd12.prod.outlook.com (2603:10b6:930:95::21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.19; Thu, 14 Nov
- 2024 20:36:59 +0000
+ 2024 20:37:13 +0000
 Received: from BN2PEPF000055DD.namprd21.prod.outlook.com
- (2603:10b6:208:2bd:cafe::53) by BL1PR13CA0161.outlook.office365.com
- (2603:10b6:208:2bd::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.18 via Frontend
- Transport; Thu, 14 Nov 2024 20:36:58 +0000
+ (2603:10b6:208:2bd:cafe::e8) by BL1PR13CA0174.outlook.office365.com
+ (2603:10b6:208:2bd::29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.16 via Frontend
+ Transport; Thu, 14 Nov 2024 20:37:12 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -56,19 +56,19 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
  BN2PEPF000055DD.mail.protection.outlook.com (10.167.245.7) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8182.1 via Frontend Transport; Thu, 14 Nov 2024 20:36:58 +0000
+ 15.20.8182.1 via Frontend Transport; Thu, 14 Nov 2024 20:37:12 +0000
 Received: from bmoger-ubuntu.amd.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 14 Nov
- 2024 14:36:58 -0600
+ 2024 14:37:12 -0600
 From: Babu Moger <babu.moger@amd.com>
 To: <pbonzini@redhat.com>
 CC: <davydov-max@yandex-team.ru>, <qemu-devel@nongnu.org>,
  <kvm@vger.kernel.org>
-Subject: [PATCH v4 3/5] target/i386: Update EPYC-Milan CPU model for Cache
- property, RAS, SVM feature bits
-Date: Thu, 14 Nov 2024 14:36:30 -0600
-Message-ID: <dd94f3911697dde1cb17a9ac959ef4e972556611.1731616198.git.babu.moger@amd.com>
+Subject: [PATCH v4 5/5] target/i386: Update EPYC-Genoa for Cache property,
+ perfmon-v2, RAS and SVM feature bits
+Date: Thu, 14 Nov 2024 14:36:32 -0600
+Message-ID: <e8b7c6a7c9b8cbcb3c614c8bcf76a124f262b047.1731616198.git.babu.moger@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1731616198.git.babu.moger@amd.com>
 References: <cover.1731616198.git.babu.moger@amd.com>
@@ -80,53 +80,53 @@ X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000055DD:EE_|MN2PR12MB4286:EE_
-X-MS-Office365-Filtering-Correlation-Id: fb7adeea-09f5-479e-9778-08dd04ec164d
+X-MS-TrafficTypeDiagnostic: BN2PEPF000055DD:EE_|CY8PR12MB7538:EE_
+X-MS-Office365-Filtering-Correlation-Id: d846ff2d-2d50-416f-ec89-08dd04ec1e83
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|376014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?JjX3zUVbWIjy7bNGa1MuLChMJ1yF7gm+/5TiG3oyKiAPm+EKcVwM9oYudLfQ?=
- =?us-ascii?Q?V0mJyASaInBI+YNMNJRyjKVEYVcnxSoD8tMj65DxZesNaoa3/JaSypN8VR/B?=
- =?us-ascii?Q?r7B1wG5UbdgHGeM4dWVXLbHOf+qkLi79fWgOGKf6EijpigPq9JtLJ9pWJvMo?=
- =?us-ascii?Q?Kg1hXn0LBg+hr+tIHdYaGgm56bt/BaC98cne832BczYFK1BFbgWnWEcFBdcW?=
- =?us-ascii?Q?aqy14hYbqrKlXWnhsETYYR1R6w4EI8KO0VGvpknb3tUDST/bosutITlALunV?=
- =?us-ascii?Q?foZoOoHaBdGkk9X+oVfNk55KSix25sYkysWYIIW6dGt6lydyrT2pQqI1Xqqt?=
- =?us-ascii?Q?k/56v5SsvKt3lHFl1e2aGepYvv6D1saznniW30gNq3yt7xb7bTqH4yXaddds?=
- =?us-ascii?Q?n4HPwgn4a5Th5uTHv6MK+zDqfBft1c3zW2C4x6lAwJ/PYJJqzUmNJCUVwQV3?=
- =?us-ascii?Q?R9/rypkEVUVpjMeVG7ZJa4sk1M7vmL26HPnH0ovLVjmHSAbl/mrA4GzEJw9J?=
- =?us-ascii?Q?cF8FkO+Hx82zLcIJ6NOBorxEZRd5kt8/Aie4csGUs8Rk6uy2Lr9d8h1XB7Lf?=
- =?us-ascii?Q?P+qaGy47Xc+NZu18B6lWGJA3NxeCO3wKlX31QruDLzFOrHtlP7DPvjoMn5B7?=
- =?us-ascii?Q?6fK4K2tm8UHnFrA3D4vMt+4ZJw/iOYzt9ZLZO3/0teavgWRb9s9M8AvJvoys?=
- =?us-ascii?Q?It3Vfu6kmK8PyqeJuB+E51OYLdqn7FsqnIWD+otUsKQD1urIltMFCO2Vl1cT?=
- =?us-ascii?Q?1IMO2VVNUxc0POT0ezVfJeMJm/Kf9HBRW3gZYqde+TZtrmTzJVtdlOLIbv1N?=
- =?us-ascii?Q?B6vXm++HKwC0NwbUxP4mzYCYjGhKDPliG4vaKBUMGfKgaWYAHOHWZSXbZzHP?=
- =?us-ascii?Q?pWgdTFm09fVDMibrRX0AaQ/+bIqOFiAB1Nmq8TVuWEYKTV8OYP0Eo4WvttHD?=
- =?us-ascii?Q?EOLIqQpmpQuXrFbMCYO3nO/1cKadtH19TQMMj7Ik+92YUFaKkXgBtweo2BQc?=
- =?us-ascii?Q?aOFEObJB+GIHUmrh699WUIub5R1BN77kQerHUs4rKfaT1C8nOOGy9Z1IXDIr?=
- =?us-ascii?Q?Djpk6NsIkSAmjDxOsM3xqN7iXrv/6lXnT2iz/LbVO/Nk0/NLyK+m5hVZ4lhR?=
- =?us-ascii?Q?xqH5kQ+HVGvvtdHWNfMRz3TnDolA5bI6+P/PNvuPyYeWlac0zSv9hcwMzwZc?=
- =?us-ascii?Q?nXwXyaA8S1Cq20HjiCyHfBme/cg4p/L3Sokbg8xXmdZ6TQligG54vduD2tQ7?=
- =?us-ascii?Q?wfgryj30/x0sco9/QsS2ViIoGNR+nelp4+C6mROhwT2vXksPtz9BO8kWxZvY?=
- =?us-ascii?Q?FW3Ve0FuMPPe5El9bGXanQHw8oGXwQLGoR0scfCaCYNtIBqVP0MnfrTAuK86?=
- =?us-ascii?Q?HcRBKbIA9u72AjboQNP3UDObtLmp5E9hvsih+GgwnhAwrRTLaQ=3D=3D?=
+ ARA:13230040|376014|82310400026|1800799024|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?EDPrg/2EeTDoIw0ZmDAkAEp97z0j4PYYLTNzwVsPhAygPs25h4D/8ocJyFfl?=
+ =?us-ascii?Q?CGXDFecM96wTLrvEiIKYZT6ZXTcZsm2JvkkBEjoaNFPhRDrvaV5yalUkdF/i?=
+ =?us-ascii?Q?i6fHQjSMtGX5dVfHYZEEH/JichES+fUAs41n4ei0uUV87p2hhR+zGcusUekS?=
+ =?us-ascii?Q?CjkWN+dgEub0N2t44GZtBkn71Fwx3RkLkmpC1zvxFG428AH0VI/WPOBdEqky?=
+ =?us-ascii?Q?yZMV0AIQFpyR2HyRdfAnVxZ2i2YzA5QN40vvrHXHF6WqanVS291rqshjQ89O?=
+ =?us-ascii?Q?jTNoYf/ezmFOaCoXedIaoSw//p5dRLvdeb+mg07NSGIcl+0vcI1OzVniHXGX?=
+ =?us-ascii?Q?tPHszQFNnfUaDNY28UiJ0OfeGmyHCtfl4PUbviUuUDgPKQXdYAb255fxvpqs?=
+ =?us-ascii?Q?pKB4hJtKOxGPJAa+c6l7nLsQE2XTKo4bpdsq6390qni7QfHXHqa41ardEa0U?=
+ =?us-ascii?Q?PWrGx554uidoHDD40a1cUDHR9siyLSc3LbigExai+QEnvodu5uUM/WhrcDcR?=
+ =?us-ascii?Q?47dCQeP7WYkYiFSngQevAlODZp9deCM1f2tKrM3mko6WWtgcZ1BW5Pmm3QVn?=
+ =?us-ascii?Q?tNP6V9+v+u7BLHpuTxTTUw3XI5t8UfjQoOdxU3I9c3aNaVVvugwMqm1P6Fci?=
+ =?us-ascii?Q?NMXQRUtZtBb7QvGSOtBsjt9OtEMylVai+m5bu+NdUmV0LoUSKDqvEeyK7l6B?=
+ =?us-ascii?Q?fA9yBWHppRReksyrQgkalm/enmTtO3hQIdu/UMiRtKwnKXYZPX4Ac8txDci3?=
+ =?us-ascii?Q?Xevd3EzR3sUe+1LoRMGsQTYd8dgA+xEvvd+Fq7CkHx4yKQHBxb13c9Ivs7D1?=
+ =?us-ascii?Q?XoU2HADPQBrDD5NRPRwZ5V+f0aZC75mKV9ZuHoA/8zs0Xx3ffM5gqq9s01lU?=
+ =?us-ascii?Q?S8RRu8pbe1C64+X63yB7gXWSmBnQuY2UhUSGuTv17G1TP5n0TCddny5BXG9m?=
+ =?us-ascii?Q?1cG3TN4boG+wieV9vthrNjZ1RedC9SbEwv7mb3OFMbJSV7JgD2aVhI4aBoWH?=
+ =?us-ascii?Q?QwzVea2/2tOyHO1HLdiuBYj53fVQhlQqE5QrxptJVVnRGcqqdjMaRFEZxCQu?=
+ =?us-ascii?Q?Jt4/ex6IG+rjTSTnLcvNL27QL0gMQtpgJNEB4XDszMgkXayqfVGjG/ozsHB/?=
+ =?us-ascii?Q?FA/ksJ0zQee1ss9Nn9/ST6p71CpqDgHd18S0SnzOCUz/sTK3pNW8ZV3n+XOS?=
+ =?us-ascii?Q?gkhXeGwWGZSHepCYNYn6Ra3r7hefdITLGDH6h4+X6Sf0IKI6QQd6DwaNsKPi?=
+ =?us-ascii?Q?uX7h1jsWJEiwa2b1W95urkW91Baqd0Du/C3c05dgf5oviPOxfwVJWeceZT8B?=
+ =?us-ascii?Q?E8R85UBnURhODmvJGE2wSKue27TwKZmJS8iDk+Y8mnEuJ5iwnGiHdVWtPqZG?=
+ =?us-ascii?Q?zEt58ZX4q9BF1B8jNMJ5kwygsfuc8dB6VV3bIPbtWFxHktTX3w=3D=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(376014)(82310400026); DIR:OUT;
+ SFS:(13230040)(376014)(82310400026)(1800799024)(36860700013); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2024 20:36:58.8785 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fb7adeea-09f5-479e-9778-08dd04ec164d
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2024 20:37:12.6566 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d846ff2d-2d50-416f-ec89-08dd04ec1e83
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000055DD.namprd21.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4286
-Received-SPF: permerror client-ip=2a01:111:f403:2406::611;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7538
+Received-SPF: permerror client-ip=2a01:111:f403:2413::623;
  envelope-from=Babu.Moger@amd.com;
- helo=NAM02-SN1-obe.outbound.protection.outlook.com
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -160,34 +160,41 @@ L3.no_invd_sharing should be true.
 
 Fix these cache properties.
 
-Also add the missing RAS and SVM features bits on AMD EPYC-Milan model.
+Also add the missing RAS and SVM features bits on AMD EPYC-Genoa model.
 The SVM feature bits are used in nested guests.
 
-succor          : Software uncorrectable error containment and recovery capability.
-overflow-recov  : MCA overflow recovery support.
-lbrv            : LBR virtualization
-tsc-scale       : MSR based TSC rate control
-vmcb-clean      : VMCB clean bits
-flushbyasid     : Flush by ASID
-pause-filter    : Pause intercept filter
-pfthreshold     : PAUSE filter threshold
-v-vmsave-vmload : Virtualized VMLOAD and VMSAVE
-vgif            : Virtualized GIF
+perfmon-v2     : Allow guests to make use of the PerfMonV2 features.
+succor         : Software uncorrectable error containment and recovery capability.
+overflow-recov : MCA overflow recovery support.
+lbrv           : LBR virtualization
+tsc-scale      : MSR based TSC rate control
+vmcb-clean     : VMCB clean bits
+flushbyasid    : Flush by ASID
+pause-filter   : Pause intercept filter
+pfthreshold    : PAUSE filter threshold
+v-vmsave-vmload: Virtualized VMLOAD and VMSAVE
+vgif           : Virtualized GIF
+fs-gs-base-ns  : WRMSR to {FS,GS,KERNEL_GS}_BASE is non-serializing
 
+The feature details are available in APM listed below [1].
+[1] AMD64 Architecture Programmer's Manual Volume 2: System Programming
+Publication # 24593 Revision 3.41.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537
 Signed-off-by: Babu Moger <babu.moger@amd.com>
 ---
- target/i386/cpu.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
+ target/i386/cpu.c | 78 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 78 insertions(+)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c21b232e75..4a4e9b81d8 100644
+index 107ecd2bde..1d241fcd13 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -2505,6 +2505,60 @@ static const CPUCaches epyc_milan_v2_cache_info = {
+@@ -2613,6 +2613,59 @@ static const CPUCaches epyc_genoa_cache_info = {
      },
  };
  
-+static const CPUCaches epyc_milan_v3_cache_info = {
++static const CPUCaches epyc_genoa_v2_cache_info = {
 +    .l1d_cache = &(CPUCacheInfo) {
 +        .type = DATA_CACHE,
 +        .level = 1,
@@ -215,11 +222,11 @@ index c21b232e75..4a4e9b81d8 100644
 +    .l2_cache = &(CPUCacheInfo) {
 +        .type = UNIFIED_CACHE,
 +        .level = 2,
-+        .size = 512 * KiB,
++        .size = 1 * MiB,
 +        .line_size = 64,
 +        .associativity = 8,
 +        .partitions = 1,
-+        .sets = 1024,
++        .sets = 2048,
 +        .lines_per_tag = 1,
 +        .self_init = true,
 +        .inclusive = true,
@@ -240,16 +247,17 @@ index c21b232e75..4a4e9b81d8 100644
 +        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
 +    },
 +};
-+
- static const CPUCaches epyc_genoa_cache_info = {
-     .l1d_cache = &(CPUCacheInfo) {
-         .type = DATA_CACHE,
-@@ -5412,6 +5466,25 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                 },
-                 .cache_info = &epyc_milan_v2_cache_info
-             },
+ /* The following VMX features are not supported by KVM and are left out in the
+  * CPU definitions:
+  *
+@@ -5559,6 +5612,31 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+         .xlevel = 0x80000022,
+         .model_id = "AMD EPYC-Genoa Processor",
+         .cache_info = &epyc_genoa_cache_info,
++        .versions = (X86CPUVersionDefinition[]) {
++            { .version = 1 },
 +            {
-+                .version = 3,
++                .version = 2,
 +                .props = (PropValue[]) {
 +                    { "overflow-recov", "on" },
 +                    { "succor", "on" },
@@ -261,15 +269,19 @@ index c21b232e75..4a4e9b81d8 100644
 +                    { "pfthreshold", "on" },
 +                    { "v-vmsave-vmload", "on" },
 +                    { "vgif", "on" },
++                    { "fs-gs-base-ns", "on" },
++                    { "perfmon-v2", "on" },
 +                    { "model-id",
-+                      "AMD EPYC-Milan-v3 Processor" },
++                      "AMD EPYC-Genoa-v2 Processor" },
 +                    { /* end of list */ }
 +                },
-+                .cache_info = &epyc_milan_v3_cache_info
++                .cache_info = &epyc_genoa_v2_cache_info
 +            },
-             { /* end of list */ }
-         }
++            { /* end of list */ }
++        }
      },
+ };
+ 
 -- 
 2.34.1
 
