@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D785D68B33
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1A87D68B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcHx-0004xA-CD; Thu, 14 Nov 2024 11:01:45 -0500
+	id 1tBcIR-00055D-Ex; Thu, 14 Nov 2024 11:02:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcHr-0004ub-Qk
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:41 -0500
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1tBcI3-0004z7-MT
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:51 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcHp-0002BG-8s
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:39 -0500
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-7e6cbf6cd1dso549443a12.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:36 -0800 (PST)
+ id 1tBcI0-0002EC-OV
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:50 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2e91403950dso648078a91.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600095; x=1732204895; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600107; x=1732204907; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MqnKReoBjQRrcKu52BeUjvV/aI8mQFMQp+BRc29T3cQ=;
- b=KghsZxvg5cjQ/bwK7bamKa4G8kvhTtArlXw4bi7UU7OWbWMWDNsfEIPwYO5JheIkJL
- JPYTtpo/LSkaIFgp0Y3UTn5U+fFFqquyJBcKOh9gFBJ196lNXGoX5PbAzi+LSMD5byy3
- ZanistM46CNIkIJz6psfJ4pmZaDHOXw1FssDRY/PaEFOi5tUiZ5YE8fiuVIbPYlmaURr
- 1twVE+rYyI9OltaqPfthMexlBNdPDdJNQkBJEk2PjXPY7tbnx2eSKOa6s3tgFjrTutQw
- GrONHuyDFGrwho20qHqfRYv0epqYs7tYpAh1wdY7QCl5eeYY13Vx8RuUvJ5LOhD0Bft0
- NEvw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=aH/YSb9/f+Pg6UolkLA4sQEI53j6GiG7lP5Aqm9cSsA=;
+ b=RT+Kl5faUclTlmPrp/awEHRtcu/yrF983B7fB5+W83ioqoDb0x3OvNFbBwlv1NoWXX
+ 9ShF4/255jkvHPeDVYkEuKj0e9qUpMmhm9FDSuFeN5OEzTRI+QdDT+Ak5CxFbXw1/EEU
+ d/qQz2yIFWDm+xW2z7b/F9LLLBkSROXsFFGdkmImo//GibhkqV7wz34Y1qWqnC5+ccM1
+ OYgW/NLI7HXXZek/++/5vBdW1WoH3V5CoDIxX1YR85jLcJaEiwNaGoiTZMswaI0uGvpi
+ EQ9yuNOoSU2b1ZURL8k/CyNAY5PwKxX+5Pn+TgzTWEIrHqNZ33tfVnrjBjLnchFTAlpn
+ m4LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600095; x=1732204895;
+ d=1e100.net; s=20230601; t=1731600107; x=1732204907;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MqnKReoBjQRrcKu52BeUjvV/aI8mQFMQp+BRc29T3cQ=;
- b=DqxwvDbzh2vLagOpTApuWr3LwxnSHIT14m7c1lmO67VgBEhzz+kgr6WLm6TS8toZ+y
- BBTnauonTb3IloaBsWBaxX58INFk1juvENfIfdPurfOP+whMt1Lgzxg0+fge067dV+7z
- CkdQHSQz/bxa9gTPF7DE5RprQqKQimMI3aXNKJjj+2MAnFVNzQ6rzn1DpXpomqxiAaOB
- tDuSONZf8qVEJxkSYDxdDjZnWGnaadS8C6Fj2d065tOfABPUwmGWfqd7DcX1I+Ch5l9s
- 6mRsNfAF11MjXMYbnVxXQFEt/auS+1Wez33eMlii6ibS6hanwoj20goPdCqopCIkJFrs
- 6l0A==
-X-Gm-Message-State: AOJu0Yz90LmY4+cVqUeVDLhJpq9gHk3jfRGTSCkZW32rlCctsgukUO9R
- DLnIBJJNOGHZ4WLLysUCkOSNI8EgW5xsVwOZK4/79WKzv3b9TWDkTAiesTRo3K9yxZd5d5x/FdR
- E
-X-Google-Smtp-Source: AGHT+IFoQto2KZJ9KfoG6yGpxSDOUHwph0+XFkztELwNnaAm8ESL0lU+tqb8FitL8JoOLXVb4ZFkAw==
-X-Received: by 2002:a17:90b:4cc1:b0:2d8:e7db:9996 with SMTP id
- 98e67ed59e1d1-2e9e4add8c1mr13447495a91.13.1731600095486; 
- Thu, 14 Nov 2024 08:01:35 -0800 (PST)
+ bh=aH/YSb9/f+Pg6UolkLA4sQEI53j6GiG7lP5Aqm9cSsA=;
+ b=cdOaYb/L1VRnmID6WixNuSPUPfSu++Fz+JIQhxbqmVaxDjnMNm3q9ORfVamUj3YJNG
+ fUxU/bmGHycyAtAftYJgLIkXfipN8GqGmAf4qFAKXKXc5AK9abChiK6yAp6q6T7HUYh3
+ FpQDUtdjmPPZyeejtIB4eO2/Agyvm9JStnmgSwDiRiyLAxn0z0qgSxeNmEUE24Q1xPUs
+ hJmsoptEgFHnHrQzC/xVIUjk5yAq8Er8ZMf6WNnPHxDNC+4IWisiSdMny7jNVBtQMBxC
+ jm/L++eCRKr6E89/9OV0J9KxG96afLSC9ZAU8ynOHAhf4z1UbSSAtaw+lG+rLMyUKqQM
+ 1nJA==
+X-Gm-Message-State: AOJu0YwCHPhRr/PO78ub7QJhsbKi7yAsT+mk/6JkKeblOYTNpAf2rgCg
+ 5eXmbUUMT73Xrx4+7KH7n7RZstJ4dtEL1S0wo/lfUbEKqFG5NrpMeLCEFn1dqp+0Ghy45+3Hukl
+ H
+X-Google-Smtp-Source: AGHT+IGO50T2+G3nh2qLqmoY9c/fFez6dpmtOhk4e1eGoW34d3YRYyRV916fAdqex1sAC1p3l4DIKA==
+X-Received: by 2002:a17:90b:4c06:b0:2e2:cd11:c9b with SMTP id
+ 98e67ed59e1d1-2e9b16eb849mr30900909a91.3.1731600106566; 
+ Thu, 14 Nov 2024 08:01:46 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.34
+ 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.45
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:01:35 -0800 (PST)
+ Thu, 14 Nov 2024 08:01:46 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 04/54] accel/tcg: Split out tlbfast_flush_range_locked
-Date: Thu, 14 Nov 2024 08:00:40 -0800
-Message-ID: <20241114160131.48616-5-richard.henderson@linaro.org>
+Subject: [PATCH v2 19/54] accel/tcg: Remove tlb_n_used_entries_inc
+Date: Thu, 14 Nov 2024 08:00:55 -0800
+Message-ID: <20241114160131.48616-20-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,125 +92,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While this may at present be overly complicated for use
-by single page flushes, do so with the expectation that
-this will eventually allow simplification of large pages.
+Expand the function into its only caller, using the
+existing CPUTLBDesc local pointer.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 66 +++++++++++++++++++++++-----------------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+ accel/tcg/cputlb.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index e37af24525..46fa0ae802 100644
+index 8caa8c0f1d..3e24529f4f 100644
 --- a/accel/tcg/cputlb.c
 +++ b/accel/tcg/cputlb.c
-@@ -493,11 +493,6 @@ static bool tlb_flush_entry_mask_locked(CPUTLBEntry *tlb_entry,
-     return false;
+@@ -354,11 +354,6 @@ static void tlb_mmu_init(CPUTLBDesc *desc, CPUTLBDescFast *fast, int64_t now)
+     tlb_mmu_flush_locked(desc, fast);
  }
  
--static inline bool tlb_flush_entry_locked(CPUTLBEntry *tlb_entry, vaddr page)
+-static inline void tlb_n_used_entries_inc(CPUState *cpu, uintptr_t mmu_idx)
 -{
--    return tlb_flush_entry_mask_locked(tlb_entry, page, -1);
+-    cpu->neg.tlb.d[mmu_idx].n_used_entries++;
 -}
 -
- /* Called with tlb_c.lock held */
- static void tlb_flush_vtlb_page_mask_locked(CPUState *cpu, int mmu_idx,
-                                             vaddr page,
-@@ -520,10 +515,37 @@ static inline void tlb_flush_vtlb_page_locked(CPUState *cpu, int mmu_idx,
-     tlb_flush_vtlb_page_mask_locked(cpu, mmu_idx, page, -1);
- }
- 
-+static void tlbfast_flush_range_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast,
-+                                       vaddr addr, vaddr len, vaddr mask)
-+{
-+    /*
-+     * If @mask is smaller than the tlb size, there may be multiple entries
-+     * within the TLB; for now, just flush the entire TLB.
-+     * Otherwise all addresses that match under @mask hit the same TLB entry.
-+     *
-+     * If @len is larger than the tlb size, then it will take longer to
-+     * test all of the entries in the TLB than it will to flush it all.
-+     */
-+    if (mask < fast->mask || len > fast->mask) {
-+        tlbfast_flush_locked(desc, fast);
-+        return;
-+    }
-+
-+    for (vaddr i = 0; i < len; i += TARGET_PAGE_SIZE) {
-+        vaddr page = addr + i;
-+        CPUTLBEntry *entry = tlbfast_entry(fast, page);
-+
-+        if (tlb_flush_entry_mask_locked(entry, page, mask)) {
-+            desc->n_used_entries--;
-+        }
-+    }
-+}
-+
- static void tlb_flush_page_locked(CPUState *cpu, int midx, vaddr page)
+ void tlb_init(CPUState *cpu)
  {
--    vaddr lp_addr = cpu->neg.tlb.d[midx].large_page_addr;
--    vaddr lp_mask = cpu->neg.tlb.d[midx].large_page_mask;
-+    CPUTLBDesc *desc = &cpu->neg.tlb.d[midx];
-+    vaddr lp_addr = desc->large_page_addr;
-+    vaddr lp_mask = desc->large_page_mask;
+     int64_t now = get_clock_realtime();
+@@ -1211,7 +1206,7 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
  
-     /* Check if we need to flush due to large pages.  */
-     if ((page & lp_mask) == lp_addr) {
-@@ -532,9 +554,8 @@ static void tlb_flush_page_locked(CPUState *cpu, int midx, vaddr page)
-                   midx, lp_addr, lp_mask);
-         tlb_flush_one_mmuidx_locked(cpu, midx, get_clock_realtime());
-     } else {
--        if (tlb_flush_entry_locked(tlb_entry(cpu, midx, page), page)) {
--            tlb_n_used_entries_dec(cpu, midx);
--        }
-+        tlbfast_flush_range_locked(desc, &cpu->neg.tlb.f[midx],
-+                                   page, TARGET_PAGE_SIZE, -1);
-         tlb_flush_vtlb_page_locked(cpu, midx, page);
-     }
+     node->full = *full;
+     copy_tlb_helper_locked(te, &node->copy);
+-    tlb_n_used_entries_inc(cpu, mmu_idx);
++    desc->n_used_entries++;
+     qemu_spin_unlock(&tlb->c.lock);
  }
-@@ -689,24 +710,6 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
-     CPUTLBDescFast *f = &cpu->neg.tlb.f[midx];
-     vaddr mask = MAKE_64BIT_MASK(0, bits);
  
--    /*
--     * If @bits is smaller than the tlb size, there may be multiple entries
--     * within the TLB; otherwise all addresses that match under @mask hit
--     * the same TLB entry.
--     * TODO: Perhaps allow bits to be a few bits less than the size.
--     * For now, just flush the entire TLB.
--     *
--     * If @len is larger than the tlb size, then it will take longer to
--     * test all of the entries in the TLB than it will to flush it all.
--     */
--    if (mask < f->mask || len > f->mask) {
--        tlb_debug("forcing full flush midx %d ("
--                  "%016" VADDR_PRIx "/%016" VADDR_PRIx "+%016" VADDR_PRIx ")\n",
--                  midx, addr, mask, len);
--        tlb_flush_one_mmuidx_locked(cpu, midx, get_clock_realtime());
--        return;
--    }
--
-     /*
-      * Check if we need to flush due to large pages.
-      * Because large_page_mask contains all 1's from the msb,
-@@ -720,13 +723,10 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
-         return;
-     }
- 
-+    tlbfast_flush_range_locked(d, f, addr, len, mask);
-+
-     for (vaddr i = 0; i < len; i += TARGET_PAGE_SIZE) {
-         vaddr page = addr + i;
--        CPUTLBEntry *entry = tlb_entry(cpu, midx, page);
--
--        if (tlb_flush_entry_mask_locked(entry, page, mask)) {
--            tlb_n_used_entries_dec(cpu, midx);
--        }
-         tlb_flush_vtlb_page_mask_locked(cpu, midx, page, mask);
-     }
- }
 -- 
 2.43.0
 
