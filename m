@@ -4,87 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2BB4D41D46
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A4CD41D46
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:25:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBYlr-0001cL-Cc; Thu, 14 Nov 2024 07:16:23 -0500
+	id 1tBYu0-0002jD-6D; Thu, 14 Nov 2024 07:24:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBYld-0001bI-Vl
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:16:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBYlZ-0003lD-13
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:16:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731586561;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=JnPuj/Ao84HNRM35VmPWv8XIuBS/8IHZBk2XRpc9GSo=;
- b=UYJl/EaB984LvXCNplpO4byE9S7ynkQZv41pbr4pPVjIRTrEwVtNrpVYLJIbNUTTxVOPVr
- X7DepR1tZELdcHqTOMURNHQaUeM+wBMtuQ1m9PYZ7Hy9eG0NuDbgWzeZis5qD5cNP/XNOX
- xfEckWAX8uz0HmjZLyKelNxp4YBIa7c=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-2qET0l3JNc-BfW6jzkKhqQ-1; Thu, 14 Nov 2024 07:15:59 -0500
-X-MC-Unique: 2qET0l3JNc-BfW6jzkKhqQ-1
-X-Mimecast-MFC-AGG-ID: 2qET0l3JNc-BfW6jzkKhqQ
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-432d8843783so4380295e9.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 04:15:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tBYty-0002it-Po
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:24:46 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tBYtw-0006f5-T9
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:24:46 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5cf8593ca4bso132615a12.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 04:24:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731587083; x=1732191883; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=d3Zr56rVpRPBCvSgcoYTySp3vkQbhuoBFeXwsSxaBvo=;
+ b=TjCF3re/BGuelBvWShoV55g5A0ocEmdCZw8M8Fz8cb+Bgo0PmMjgCzeoQDm5QtyPkf
+ 6kO5ZyEdh1nZfXI91en5UqclRDgufwKSOwBhKx51Hec314HMmiwr75pDdrverwBadLbu
+ pCi0rrDtLL1kRsw+H/dbW027yhqCFHqqxYHzar8LIk9zPtMJu6UlNWuh/UX3+QSzpPZ8
+ gyGMlwU9scnZAZASHoms/J1pwm60uM/w9yavyNrUkk8DmY7IWPwTdkntmQbHB8s0jCZ4
+ 4sfNOV6v8qE56QPsq/hyZysNF9SiNSmfNPJvte0kvvH1ZpD/MZeFL1Bl0VbWPwluFtbI
+ 8UWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731586557; x=1732191357;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1731587083; x=1732191883;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JnPuj/Ao84HNRM35VmPWv8XIuBS/8IHZBk2XRpc9GSo=;
- b=dnsQxKexpJIUKGmc2bOPf7WgRfnXSR5o+SlTj2dL7ttvxQ4upIu8uQdwxy8zH3TxbO
- hZ+g2ZUHTHSGr4lot8082VTznpQSpXPJEXfin3kspcdOaOXHgsJVHuaHzEtmk5rf488i
- 2n3d27IG8cA4sACmnPgisOtAqLgoJfeCU2ReN71O//UgTykpVgbY+GGoq7/s6ARUuNwX
- rJv1RmUnVyxp2n7gv0ydDyKJCI/QFYd6VLuLwL3wiqsyy6X5Qsq01v28HBF8N8kawtCC
- JsHmnPRKceHifsOpZJWxlJ4mKspliWFuKKidYrlMKUNI9brGH10HFrnzutPFE+Gx0V06
- XgSQ==
-X-Gm-Message-State: AOJu0YxsCcsgH+CXAyVCmP2Ht4ahdhRL+7nqLe0ZaqQ134NNet5di+tL
- zPrSdiF3iDNRFfPdWKrex0uZxuUUcmbQU9R6m5FayALQ9DD7DY1LOzktxshdzpZxoGcxxCEbliR
- JQMOOGk28EeO1tRZsC/R+P8UT9IDicpeAsbCvpsofoG01hkEkwpQbSNIfQZy0gDd8Vs4IH0+ZTt
- i28y9LX1UGB1CXP/ieVRHRb8dzHqPptgPArEI32h8=
-X-Received: by 2002:a05:600c:a384:b0:431:1868:417f with SMTP id
- 5b1f17b1804b1-432d2730ce1mr87167865e9.17.1731586557279; 
- Thu, 14 Nov 2024 04:15:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHiIYQqCgDRL1vOFT8fWhrLCGDN6nrS1BlflxQo2oDP48F4DqtdfxLVijegiyTI14Gx9Q8Mgg==
-X-Received: by 2002:a05:600c:a384:b0:431:1868:417f with SMTP id
- 5b1f17b1804b1-432d2730ce1mr87167595e9.17.1731586556890; 
- Thu, 14 Nov 2024 04:15:56 -0800 (PST)
-Received: from [192.168.10.47] ([151.49.84.243])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432da27fe68sm22333395e9.24.2024.11.14.04.15.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 04:15:56 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH] target/i386: hyperv: add stub for hyperv_syndbg_query_options
-Date: Thu, 14 Nov 2024 13:15:55 +0100
-Message-ID: <20241114121555.1697250-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
+ bh=d3Zr56rVpRPBCvSgcoYTySp3vkQbhuoBFeXwsSxaBvo=;
+ b=Kqj10Iqlo2G5WoCRnvm1goDBSoe4RbDA7v2el+A05Rhms4/icucmvFwC9PQpbspHrr
+ HzLEde8ifXYXKlJO2U4BGT9Z/6T0PkInASMEFevfoi68l8bj5t1GThWG2fZvKdZnFjhH
+ IobuP6xBg7p9uudP9YgxPiIpAgFaVAU9AKu67Gle74yBr7yqTWiATYjC9lAqJdsaSNs/
+ SeyZseurwC6tFORbySg8jEskktYqVotZdY4ib3xPU2PfJRkCT2Yh8XjVRtNQ3ozsoyfs
+ I3Zq0ix/zsaRLi4YVdpEJG1gbFy1JM6sJfavIsFUk4xJLvUjt5LVWpfUzeI9Ijz8xz5a
+ J9Tg==
+X-Gm-Message-State: AOJu0Yxl/quRAnAu+olwyUFC2La/9GMTBGsgM3fliLKVXdnNpFZVi+ci
+ kFxvPFxx6HDsXVyjjq39d5RiDsVhmXEdhDtxrL/E4Wq12dCePzqG1yD9eDggM/yrCsyH1Vef5t6
+ OZrIcSBiqtgaa0rpa9UMTverI/sW3sFDqkrIqXA==
+X-Google-Smtp-Source: AGHT+IECuEFSLtiHmVmYcfNVlStIWgHV52bsNSOD4Ta+BXjifSck05nBUA/UKUPLOJKZJeWXUishrg9JhuBaarplJNU=
+X-Received: by 2002:a05:6402:1d4d:b0:5cf:74b0:36b1 with SMTP id
+ 4fb4d7f45d1cf-5cf77e86514mr1547396a12.7.1731587082528; Thu, 14 Nov 2024
+ 04:24:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20241112141232.321354-1-richard.henderson@linaro.org>
+In-Reply-To: <20241112141232.321354-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 14 Nov 2024 12:24:31 +0000
+Message-ID: <CAFEAcA_CsWCNKOqNKJe37JRXnOPikLSRq9FyMR+T0sLLkAidLA@mail.gmail.com>
+Subject: Re: [PATCH for-9.2] target/arm: Drop user-only special case in
+ sve_stN_r
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,30 +88,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Building without CONFIG_HYPERV is currently broken due to a missing
-symbol 'hyperv_syndbg_query_options'.  Add it to the stubs
-that exist for that very reasons.
+On Tue, 12 Nov 2024 at 14:13, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> This path is reachable with plugins enabled, and provoked
+> with run-plugin-catch-syscalls-with-libinline.so.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/sve_helper.c | 4 ----
+>  1 file changed, 4 deletions(-)
 
-Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/kvm/hyperv-stub.c | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/target/i386/kvm/hyperv-stub.c b/target/i386/kvm/hyperv-stub.c
-index 3263dcf05d3..5836f53c23b 100644
---- a/target/i386/kvm/hyperv-stub.c
-+++ b/target/i386/kvm/hyperv-stub.c
-@@ -56,3 +56,8 @@ void hyperv_x86_synic_update(X86CPU *cpu)
- void hyperv_x86_set_vmbus_recommended_features_enabled(void)
- {
- }
-+
-+uint64_t hyperv_syndbg_query_options(void)
-+{
-+    return 0;
-+}
--- 
-2.47.0
+Applied to target-arm.next, thanks.
 
+This looked like stable material to me so I've added the
+cc-stable tag; let me know if you think that's not
+appropriate.
+
+-- PMM
 
