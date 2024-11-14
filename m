@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BDF3D68B34
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E12D68B33
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcJI-0005yJ-RT; Thu, 14 Nov 2024 11:03:09 -0500
+	id 1tBcIT-000562-Ix; Thu, 14 Nov 2024 11:02:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIR-00055R-Ef
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:16 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1tBcIL-00052V-MH
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:11 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIL-0002Is-Ac
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:13 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7ee020ec76dso610587a12.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:02:06 -0800 (PST)
+ id 1tBcIE-0002Gq-Gp
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:06 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7240d93fffdso616485b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600125; x=1732204925; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600114; x=1732204914; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=SAnTQwSzdXGj8FtiG366nzj4chRAQvpTBuCvSfGJDoU=;
- b=f2cqVK+DI9DALgZuOtT/cFVU4OxXZ0XIe0VoWGVw+clCRil6WifIuy6mJXoWELClLw
- oRAXH30gtoxx3moWoiwlmL4MkZHVd/bWeKbGkcbC8Da1VAbmxc6udw5W2r1cdY4usINA
- dYepNbMiGYsFEDgm4SBQDD0TutyhPFsnwkPn+EPSNAvdkQ/KtTstTTEUQ2CEbiquIdLq
- QmpkLHj1qUoqDlu8Y3apntpIfSIppUk0D//c1OXIEd9IQukcx9E/2P7TibBS7z6WmwVg
- rBg6Xxu0Wm7PrExKmncgWDHV18FggRAjPgqwocSnac+vTblVV647fmsy4rhDPuGt5xna
- Rx2Q==
+ :reply-to; bh=9Yssv0jEMu3znLJwX6X9mSGXOOpGLG/4PsoO3zzU/j8=;
+ b=XgsI8Y7WRvgNkYvNbvQCseP/ZqUaN/ZNKMN+yGY+OsZ/MzUt+7bDRWnntY5ueT3fSl
+ czls36G4ttsu70Tj5JjKxcqJrEvYlN5GMcYuo0nsRzM9Y01ng5K5byZRHN5cxYgWg3rq
+ rONvu/YuteAC+Owmxbfq8MPrX/mpvLWFX1el/39quU+fRrW+p3EjM2C+5W42RwbdvUmk
+ 8JcgwAi5OJ5pKZiVBuhMr3ZYnx7CrhyaIrCcIgU4W6MqzXHONDf29uJpqFqggJJNse5y
+ gHo5y6DMlkdYNXT1s9ZZ2Fn4XvuyEDk1pujFKufhycvUuntZNiJZO1jR+h41fu6I3/91
+ GoCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600125; x=1732204925;
+ d=1e100.net; s=20230601; t=1731600114; x=1732204914;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SAnTQwSzdXGj8FtiG366nzj4chRAQvpTBuCvSfGJDoU=;
- b=q/ytjOIvuHz9Cd9nGg7A6YGcvpJcC23VEVeLUMGRmYR1cxsaLLY27TXNPsfNG70+E8
- sLshzWsEJ0n68Tq/NdFw/ZignkVYGawzgnoQ38alfp78I42ricOYdzGhM7ZbBZGudKWJ
- yawdJwvxK0pZQUwnbUYSzvNtLri8p8tXRAGM2VGTKkAL9agEnKWHhwqzI7M/TgAbHE5U
- coqNILimxKkbp0EDXF1xgD5VzGEl1DYaMj4QHeYfnQkalWrvsGIUOImwKORDm7JWS9ao
- jLJOeMQrkwPxXNCTY+B5Ej/KI/xnCc1gQY6p3R6QYP/sGIWU1ogBX0TeKp3RlTUuxX8R
- //Wg==
-X-Gm-Message-State: AOJu0YzmvcFZkqoDoa/UWlkTB85GMzCPkBECNjT4Jpki9QIg28z+V5cB
- lJxZKSpDKEI9H+kjZCBjrGwMiojXmfl0soZWNZRXX1nA+oUargOA6oHYvxgtsMdCzFVq7LQV6qV
- 2
-X-Google-Smtp-Source: AGHT+IEF5h1yU/MTIq/579zafoCKA9obeHgknNJhdyCc70CyiIPZtnW4cbtX0pAochofmI5hUNHq7w==
-X-Received: by 2002:a17:90b:3ec5:b0:2e2:8472:c350 with SMTP id
- 98e67ed59e1d1-2e9b173dd4cmr34193452a91.17.1731600125199; 
- Thu, 14 Nov 2024 08:02:05 -0800 (PST)
+ bh=9Yssv0jEMu3znLJwX6X9mSGXOOpGLG/4PsoO3zzU/j8=;
+ b=co25rNHQr1XaxeRXWBYd45Um+dOR64O/KXwyo49KbNYzfKoh42/gkzLm57su9ZXcPL
+ H2njF7lSTfPJf3muY1cENcXtHoR2816TaCLINlejVEqm5HlavEibgU0fGxRVjoAed85v
+ 8+z4oB4rbODzhMvVty8FjUho2VpVTqhG7sdyUdzDIU8FB8oJXTJ+QPFWNVB2FRAyZjeE
+ pn3HWwDB/teg7ITlRjLxqV3uPNxnwluhRmLx1i/OhWaCfWlpiPx8C3WoErIWupc6+2A2
+ 2vBdNAmuuMS6NKONMjTc/biOHCv4tVntejktEf3z+xMOkBmRd3AxCzawN7P78Qi7XPlK
+ kppA==
+X-Gm-Message-State: AOJu0YzpjUI/KqBc4okCBBNXIu0JABvOyUH1+5ZCVk97+ie7YAEWfEKi
+ qNAW+SngYKGQy2uicIiMRvbgYmIVlX48qDSSOoPKvfRnYbhw0cmSxeH+c9rYhvJyDHzA1xouwE8
+ b
+X-Google-Smtp-Source: AGHT+IFLdAAVJWloFL406nCZNpvgcVG5gYnNaGTp0OhtyT1eS3AqjXuJsSo+9xeXXm45DxgMRFh9vQ==
+X-Received: by 2002:a17:90b:51c4:b0:2e2:ffb0:89f6 with SMTP id
+ 98e67ed59e1d1-2e9f2c78416mr9734707a91.15.1731600113640; 
+ Thu, 14 Nov 2024 08:01:53 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.02.04
+ 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:02:04 -0800 (PST)
+ Thu, 14 Nov 2024 08:01:53 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 37/54] target/loongarch: Convert to TCGCPUOps.tlb_fill_align
-Date: Thu, 14 Nov 2024 08:01:13 -0800
-Message-ID: <20241114160131.48616-38-richard.henderson@linaro.org>
+Subject: [PATCH v2 25/54] accel/tcg: Return CPUTLBEntryFull not pointer in
+ probe_access_full_mmu
+Date: Thu, 14 Nov 2024 08:01:01 -0800
+Message-ID: <20241114160131.48616-26-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,82 +93,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Return a copy of the structure, not a pointer.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/loongarch/internals.h      |  7 ++++---
- target/loongarch/cpu.c            |  2 +-
- target/loongarch/tcg/tlb_helper.c | 17 +++++++++++------
- 3 files changed, 16 insertions(+), 10 deletions(-)
+ include/exec/exec-all.h              |  2 +-
+ accel/tcg/cputlb.c                   | 13 ++++++++-----
+ target/arm/ptw.c                     | 10 +++++-----
+ target/i386/tcg/sysemu/excp_helper.c |  8 ++++----
+ 4 files changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index 1a02427627..a9f73f27b2 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -60,9 +60,10 @@ int get_physical_address(CPULoongArchState *env, hwaddr *physical,
- hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 2e4c4cc4b4..df7d0b5ad0 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -393,7 +393,7 @@ int probe_access_full(CPUArchState *env, vaddr addr, int size,
+  */
+ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+                           MMUAccessType access_type, int mmu_idx,
+-                          void **phost, CPUTLBEntryFull **pfull);
++                          void **phost, CPUTLBEntryFull *pfull);
  
- #ifdef CONFIG_TCG
--bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                            MMUAccessType access_type, int mmu_idx,
--                            bool probe, uintptr_t retaddr);
-+bool loongarch_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-+                                  vaddr addr, MMUAccessType access_type,
-+                                  int mmu_idx, MemOp memop, int size,
-+                                  bool probe, uintptr_t ra);
- #endif
  #endif /* !CONFIG_USER_ONLY */
+ #endif /* CONFIG_TCG */
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 585f4171cc..81135524eb 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1439,25 +1439,28 @@ int probe_access_full(CPUArchState *env, vaddr addr, int size,
  
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 57cc4f314b..47d69f1788 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -798,7 +798,7 @@ static const TCGCPUOps loongarch_tcg_ops = {
-     .restore_state_to_opc = loongarch_restore_state_to_opc,
+ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+                           MMUAccessType access_type, int mmu_idx,
+-                          void **phost, CPUTLBEntryFull **pfull)
++                          void **phost, CPUTLBEntryFull *pfull)
+ {
+     void *discard_phost;
+-    CPUTLBEntryFull *discard_tlb;
++    CPUTLBEntryFull *full;
  
- #ifndef CONFIG_USER_ONLY
--    .tlb_fill = loongarch_cpu_tlb_fill,
-+    .tlb_fill_align = loongarch_cpu_tlb_fill_align,
-     .cpu_exec_interrupt = loongarch_cpu_exec_interrupt,
-     .cpu_exec_halt = loongarch_cpu_has_work,
-     .do_interrupt = loongarch_cpu_do_interrupt,
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 97f38fc391..94d5df08a4 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -474,9 +474,10 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
-     tlb_flush(env_cpu(env));
+     /* privately handle users that don't need full results */
+     phost = phost ? phost : &discard_phost;
+-    pfull = pfull ? pfull : &discard_tlb;
+ 
+     int flags = probe_access_internal(env_cpu(env), addr, size, access_type,
+-                                      mmu_idx, true, phost, pfull, 0, false);
++                                      mmu_idx, true, phost, &full, 0, false);
+ 
+     /* Handle clean RAM pages.  */
+     if (unlikely(flags & TLB_NOTDIRTY)) {
+         int dirtysize = size == 0 ? 1 : size;
+-        notdirty_write(env_cpu(env), addr, dirtysize, *pfull, 0);
++        notdirty_write(env_cpu(env), addr, dirtysize, full, 0);
+         flags &= ~TLB_NOTDIRTY;
+     }
+ 
++    if (pfull) {
++        *pfull = *full;
++    }
++
+     return flags;
  }
  
--bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                            MMUAccessType access_type, int mmu_idx,
--                            bool probe, uintptr_t retaddr)
-+bool loongarch_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out,
-+                                  vaddr address, MMUAccessType access_type,
-+                                  int mmu_idx, MemOp memop, int size,
-+                                  bool probe, uintptr_t retaddr)
- {
-     CPULoongArchState *env = cpu_env(cs);
-     hwaddr physical;
-@@ -488,12 +489,16 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                                access_type, mmu_idx);
- 
-     if (ret == TLBRET_MATCH) {
--        tlb_set_page(cs, address & TARGET_PAGE_MASK,
--                     physical & TARGET_PAGE_MASK, prot,
--                     mmu_idx, TARGET_PAGE_SIZE);
-         qemu_log_mask(CPU_LOG_MMU,
-                       "%s address=%" VADDR_PRIx " physical " HWADDR_FMT_plx
-                       " prot %d\n", __func__, address, physical, prot);
-+
-+        memset(out, 0, sizeof(*out));
-+        out->phys_addr = physical;
-+        out->prot = prot;
-+        out->attrs = MEMTXATTRS_UNSPECIFIED;
-+        out->lg_page_size = TARGET_PAGE_BITS;
-+
-         return true;
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 9849949508..3ae5f524de 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -592,7 +592,7 @@ static bool S1_ptw_translate(CPUARMState *env, S1Translate *ptw,
+         ptw->out_space = s2.f.attrs.space;
      } else {
-         qemu_log_mask(CPU_LOG_MMU,
+ #ifdef CONFIG_TCG
+-        CPUTLBEntryFull *full;
++        CPUTLBEntryFull full;
+         int flags;
+ 
+         env->tlb_fi = fi;
+@@ -604,10 +604,10 @@ static bool S1_ptw_translate(CPUARMState *env, S1Translate *ptw,
+         if (unlikely(flags & TLB_INVALID_MASK)) {
+             goto fail;
+         }
+-        ptw->out_phys = full->phys_addr | (addr & ~TARGET_PAGE_MASK);
+-        ptw->out_rw = full->prot & PAGE_WRITE;
+-        pte_attrs = full->extra.arm.pte_attrs;
+-        ptw->out_space = full->attrs.space;
++        ptw->out_phys = full.phys_addr | (addr & ~TARGET_PAGE_MASK);
++        ptw->out_rw = full.prot & PAGE_WRITE;
++        pte_attrs = full.extra.arm.pte_attrs;
++        ptw->out_space = full.attrs.space;
+ #else
+         g_assert_not_reached();
+ #endif
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 02d3486421..168ff8e5f3 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -436,7 +436,7 @@ do_check_protect_pse36:
+      * addresses) using the address with the A20 bit set.
+      */
+     if (in->ptw_idx == MMU_NESTED_IDX) {
+-        CPUTLBEntryFull *full;
++        CPUTLBEntryFull full;
+         int flags, nested_page_size;
+ 
+         flags = probe_access_full_mmu(env, paddr, 0, access_type,
+@@ -451,7 +451,7 @@ do_check_protect_pse36:
+         }
+ 
+         /* Merge stage1 & stage2 protection bits. */
+-        prot &= full->prot;
++        prot &= full.prot;
+ 
+         /* Re-verify resulting protection. */
+         if ((prot & (1 << access_type)) == 0) {
+@@ -459,8 +459,8 @@ do_check_protect_pse36:
+         }
+ 
+         /* Merge stage1 & stage2 addresses to final physical address. */
+-        nested_page_size = 1 << full->lg_page_size;
+-        paddr = (full->phys_addr & ~(nested_page_size - 1))
++        nested_page_size = 1 << full.lg_page_size;
++        paddr = (full.phys_addr & ~(nested_page_size - 1))
+               | (paddr & (nested_page_size - 1));
+ 
+         /*
 -- 
 2.43.0
 
