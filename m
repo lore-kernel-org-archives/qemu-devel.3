@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6E54D65C49
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:29:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56AEAD65C49
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 12:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBYye-0005FZ-A2; Thu, 14 Nov 2024 07:29:36 -0500
+	id 1tBZ2Y-0006FT-Ey; Thu, 14 Nov 2024 07:33:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBYyc-0005F7-L2
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:29:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>) id 1tBZ2U-0006FF-2d
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:33:34 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBYya-0000UD-Fx
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:29:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731587370;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=3TH6mDnXUqAuws1+l4fGU4hpm3/dP/un2yTL87oPv1I=;
- b=gc6ANNh4fgRZrSUatLt/GnXD6c/kkZbQ+guxDIocGhz84gqQDU62xyA6wkQrfUff+1lQ8c
- ZnSwtegp1QXyqfgpH5P7VYrTdTFvQO/5m7xuO0dPP7yS5f7mBGtlwFcZpqIU1JS3oZ/bf9
- TP5pzmQYEP0U5GcQmn9TNf4J5fKq0FY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-xvEoNnGpMu-4Lw60RJryRQ-1; Thu,
- 14 Nov 2024 07:29:27 -0500
-X-MC-Unique: xvEoNnGpMu-4Lw60RJryRQ-1
-X-Mimecast-MFC-AGG-ID: xvEoNnGpMu-4Lw60RJryRQ
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B63E61955E8D; Thu, 14 Nov 2024 12:29:24 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.59])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4D0601956089; Thu, 14 Nov 2024 12:29:20 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
- Boris Fiuczynski <fiuczy@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Fam Zheng <fam@euphon.net>, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH] hw: Add "loadparm" property to scsi disk devices for booting
- on s390x
-Date: Thu, 14 Nov 2024 13:29:19 +0100
-Message-ID: <20241114122919.973930-1-thuth@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>) id 1tBZ2S-0001aB-Cd
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 07:33:33 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id B7AB95C3F3D;
+ Thu, 14 Nov 2024 12:32:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF46DC4CECD;
+ Thu, 14 Nov 2024 12:33:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1731587602;
+ bh=YwY3k+ntZ0/HCQXqKl7NxMZiJ26bQcS2mI1ABe72Y9I=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=YHXc9huuMR6anJRexfDBoh9AqIjKMr4NXdFWWAxGTaKi/rp716oeEL567BZ6vb3vJ
+ R4rTm4IfYXWzq8delzkHLk5+6QtjbiRRc+qqxGXNeyP03J1VijAyvKWrSphgVWcYdc
+ 3F1JnLcKLMuzE54kgoUxrL2L4nB96QyPttBD6Ly4+zJWujyraXtdajBYWzLkDtUQRf
+ kL70smRiur54wbS/FaTCZpNn8NgMCS/NxLZ3+pnHF6eGf6Jzvzxs96sjqIWYArxXjm
+ m928JlMEExafJYNV4v6JVgf9TzoBNkaho2fS0oj+pTp50tPmNeE4V+vZL6F/8ZEoOU
+ p0TQCDhF70SYQ==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1tBZ2G-00CpfB-DO;
+ Thu, 14 Nov 2024 12:33:20 +0000
+Date: Thu, 14 Nov 2024 12:33:18 +0000
+Message-ID: <864j4avvu9.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Zhou Wang <wangzhou1@hisilicon.com>
+Cc: <qemu-devel@nongnu.org>,
+ Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ "Zengtao (B)" <prime.zeng@hisilicon.com>
+Subject: Re: Question about migration on ARM system
+In-Reply-To: <ac98a734-5de5-e107-6257-0c5fcd2fdfcd@hisilicon.com>
+References: <ac98a734-5de5-e107-6257-0c5fcd2fdfcd@hisilicon.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: wangzhou1@hisilicon.com, qemu-devel@nongnu.org,
+ shameerali.kolothum.thodi@huawei.com, prime.zeng@hisilicon.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=maz@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.69,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,110 +84,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While adding the new flexible boot order feature on s390x recently,
-we missed to add the "loadparm" property to the scsi-hd and scsi-cd
-devices. This property is required on s390x to pass the information
-to the boot loader about which kernel should be started or whether
-the boot menu should be shown. But even more serious: The missing
-property is now causing trouble with the corresponding libvirt patches
-that assume that the "loadparm" property is either settable for all
-bootable devices (when the "boot order" feature is implemented in
-QEMU), or none (meaning the behaviour of older QEMUs that only allowed
-one "loadparm" at the machine level). To fix this broken situation,
-let's implement the "loadparm" property for the SCSI devices, too.
+On Thu, 14 Nov 2024 09:03:24 +0000,
+Zhou Wang <wangzhou1@hisilicon.com> wrote:
+> 
+> Hi,
+> 
+> I am tring to heterogeneous live migration on ARM64 host. Now I just use
+> below kernel/qemu branch to have a try:
+> https://github.com/hisilicon/kernel-dev/tree/private-v6.11-rc2-hisi-migrn-wip
+> https://github.com/hisilicon/qemu/tree/stable-8.2-kunpeng920-initial-v2
+> 
+> Currently guest on GICv4.1 and GICv3 host can do migration successfully. I am
+> not sure that it is expected.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- NB: Unlike the ccw_device_set_loadparm() logic that we use for CCW
-     devices, I've decided to use a string property for the "loadparm"
-     in the SCSI devices to avoid spoiling the common code with too much
-     s390x logic. So the check for valid characters is now done after the
-     property has been set, i.e. we only print out an error instead of
-     forbidding the setting (like we do it with the CCW devices), which
-     is IMHO still perfectly acceptable. Or are there other opinions?
+It isn't. Or rather, it shouldn't. Are you reporting a KVM problem or
+a QEMU problem?
 
- hw/s390x/ipl.c      | 22 +++++++++++++++++++---
- hw/scsi/scsi-disk.c |  2 ++
- 2 files changed, 21 insertions(+), 3 deletions(-)
+> 
+> GICv4.1 exports GICD_TYPER2.nASSGIcap and GICD_CTRL.nASSGIreq to guest, so
+> guests(GICv3) on GICv4.1 and GICv3 host will have different state here. So
+> basically a guest on host GICv4.1 will lost state when it move to a host with
+> GICv3.
+> 
+> It seems that current mainline qemu does not consider GICD_TYPER2, and guest
+> OS(linux) does not use GICD_TYPER2.nASSGIcap and GICD_CTRL.nASSGIreq(just
+> check cap and set req), so current test has been passed.
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index dc02b0fdda..c902b562cb 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -416,12 +416,10 @@ static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
-     return chain_addr;
- }
- 
--void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
-+static void s390_sanitize_loadparm(uint8_t *loadparm, char *str, Error **errp)
- {
-     int i;
- 
--    /* Initialize the loadparm with spaces */
--    memset(loadparm, ' ', LOADPARM_LEN);
-     for (i = 0; i < LOADPARM_LEN && str[i]; i++) {
-         uint8_t c = qemu_toupper(str[i]); /* mimic HMC */
- 
-@@ -435,6 +433,13 @@ void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
-     }
- }
- 
-+void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
-+{
-+    /* Initialize the loadparm with spaces */
-+    memset(loadparm, ' ', LOADPARM_LEN);
-+    s390_sanitize_loadparm(loadparm, str, errp);
-+}
-+
- void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
- {
-     int i;
-@@ -452,6 +457,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-     SCSIDevice *sd;
-     int devtype;
-     uint8_t *lp;
-+    g_autofree void *scsi_lp = NULL;
- 
-     /*
-      * Currently allow IPL only from CCW devices.
-@@ -463,6 +469,16 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-         switch (devtype) {
-         case CCW_DEVTYPE_SCSI:
-             sd = SCSI_DEVICE(dev_st);
-+            scsi_lp = object_property_get_str(OBJECT(sd), "loadparm", NULL);
-+            if (scsi_lp && strlen(scsi_lp) > 0) {
-+                Error *errp = NULL;
-+                s390_sanitize_loadparm(scsi_lp, scsi_lp, &errp);
-+                if (errp) {
-+                    error_report_err(errp);
-+                } else {
-+                    lp = scsi_lp;
-+                }
-+            }
-             iplb->len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
-             iplb->blk0_len =
-                 cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN - S390_IPLB_HEADER_LEN);
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index cb222da7a5..c1fa02883d 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -111,6 +111,7 @@ struct SCSIDiskState {
-     char *vendor;
-     char *product;
-     char *device_id;
-+    char *loadparm;
-     bool tray_open;
-     bool tray_locked;
-     /*
-@@ -3165,6 +3166,7 @@ static const TypeInfo scsi_disk_base_info = {
-     DEFINE_PROP_STRING("vendor", SCSIDiskState, vendor),                \
-     DEFINE_PROP_STRING("product", SCSIDiskState, product),              \
-     DEFINE_PROP_STRING("device_id", SCSIDiskState, device_id),          \
-+    DEFINE_PROP_STRING("loadparm", SCSIDiskState, loadparm),            \
-     DEFINE_PROP_BOOL("migrate-emulated-scsi-request", SCSIDiskState, migrate_emulated_scsi_request, true)
- 
- 
+Well, the guest won't test that after migration. It doesn't even know
+it is migrated. But Linux definitely uses it at probe time.
+
+> 
+> In fact, there was some discussions about this problem:
+> https://lore.kernel.org/kvmarm/20200304203330.4967-21-maz@kernel.org/
+> 
+> I am not sure if we should prevent users from doing migration between host
+> GICv3 and GICv4.1?
+
+We should allow the v3->v4.1 path (we can hide the nAS SGIs), but we
+should not it the other way around.
+
+Thanks,
+
+	M.
+
 -- 
-2.47.0
-
+Without deviation from the norm, progress is not possible.
 
