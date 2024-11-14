@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208F0D68B35
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A076D68B34
 	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcI4-0004zJ-5H; Thu, 14 Nov 2024 11:01:52 -0500
+	id 1tBcM0-00020K-Nk; Thu, 14 Nov 2024 11:06:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcI0-0004xk-Nr
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:49 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1tBcLJ-0001dy-Rx
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:16 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcHu-0002Cq-3h
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:43 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-2e2ed2230d8so712292a91.0
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:41 -0800 (PST)
+ id 1tBcLH-000314-QN
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:05:13 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7240d93fffdso620182b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:05:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600101; x=1732204901; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600309; x=1732205109; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hz/db0U//GrGJtv1TKp+9GNtVl8RODviEX3vH3DtlZo=;
- b=NLYWol+PQJdmkmF5vaOCTGF7mRWl+RO+T2Dab1p0wSSkr1fp67aHstLPHcIx7v69xH
- 0lOaShaXZlkuDs3h1nZETORfxvCAhqUAJgbb2a+4V2PMVjNCCZSTltys1+LB022Pr+mo
- YNQy3Q8h1BWEHQvtlb901uvrLX53DichaK4BaMqfetxA4Ppd8JXHJLQeePn8FAF8bTNz
- sdlsn71KrA+TAmMSoQWpKZ7B1F9TC2K4SSUy0LM997DR+XmJjuKvpJZ526ckGltBK2w7
- Okg0S37BhQX0OK0j3bnK67JsgX/jd8bynazgK2j9IqNrNqS4V7FRpkwK1obmDwE6urTS
- hqaA==
+ :reply-to; bh=4jkf2KaCd4Q7nWGpqdRhWv638MMOGvY55gPInd4iokE=;
+ b=b4bQzPKk66Q3c61TVcrRkiOxgH0vHPzwVvItgZSVJ5kLwsN2Vh53vzXtY+WtqFb1M9
+ q2DWZc1DQOxM8iECoyo+iU373/1VTKNJP990HvSDM25cPY/nVfBnHdtCEmEF1TBrbpQH
+ n+KjXHzk2C/xjXBxEeBZbtcF98Cge4axwnZzZp155yznejwqqermD9bf6gu2cBG25Fk4
+ Q6Do57vHmMj5E/ivI1y2Q8O2fISTnGPLRc0uo9VEiR/5bgeu83q5Gno9cJOJVFu3cxL6
+ /WEO3X/KKVGEksgwviwHglw5pYxGmqZkk6f9WOrLuRrvZBW3thscqNpC/Xuz00WFcJN9
+ uQKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600101; x=1732204901;
+ d=1e100.net; s=20230601; t=1731600309; x=1732205109;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hz/db0U//GrGJtv1TKp+9GNtVl8RODviEX3vH3DtlZo=;
- b=Ga4/0EamY5VPjlxJ6CSNPYzW+umBLYpYrZbEZULKRYPNA4SwYxxu9YrxtiiYvqDn6x
- kNvbLhqMGIGQrYl7mlqTwdX2YnXEuGIwjCR48ws39vtZoYecGGG9DQ8XleT6laTGC+y7
- E0KTbriLskLTaTAsTfBrKFQiv7pEe8dAFCT3aLV2Z2zE+ak0JIaGi1hUQAZFurxA6BN1
- CWle/pJ9dS+iw12jOoCWs2GiqMk3ytjqSyzR+f0hIt26pRSTBjD44uBmM+Ck0WJ/lOsI
- rbWETlnY+otOT/o6TJkt9YKOQG0bEGCPKa/nLN+Ynp62K4nIP7FGg73N4uTd/hvVwjnc
- HhSA==
-X-Gm-Message-State: AOJu0YyUJ9X91t/7vSFTHuonTj5ZLuyvKwaHNY1PfwwCorDi7wAYAS46
- gEDXqAVVboj2jbaLlBX3+82Z2CY4gDu27hE6REHesc307CA8aACOlhQ7w0GRJLZz6KD80Tn5TmX
- l
-X-Google-Smtp-Source: AGHT+IHcXVH3KaUHtQLFLDkMwOtcHGIrmarOlz54PW7Z4JpmceQuSWMN25JiJlrSZXxhUbG4TyrWBQ==
-X-Received: by 2002:a17:90b:4c03:b0:2c8:65cf:e820 with SMTP id
- 98e67ed59e1d1-2ea06346505mr2754826a91.2.1731600100692; 
- Thu, 14 Nov 2024 08:01:40 -0800 (PST)
+ bh=4jkf2KaCd4Q7nWGpqdRhWv638MMOGvY55gPInd4iokE=;
+ b=blBHoq02kY05FRxdf3zJtsZDCwhZHQaS2g0SjtZ9vCQaxPGR216ejSTm7lTIBthpAX
+ 2bYbSGHxas4j4pkHqE9ElTqdTFRHcForx22OtHxRgosVWJQkNeDwt1FWUu2OJI0U1yu2
+ zZ4pV4y9rtkYzQtvIW8R1tvrTMNE/cBp6AO/0wuH2FiAFPoyHUNL/JYDTI7YGrNW1VVd
+ DoWzisS8SXSvFd7vKPBbCR6ywDZop//TyMWeZk63Vx51h4kbwh+XkTBy/24DPpZnav/j
+ QI8FhHjBMI4dmEFK/z5KeEDgNqovN/kXjY61h4oljpWfFMLjwGV6leazaPPzPjgtXo3I
+ i7Kg==
+X-Gm-Message-State: AOJu0YyJvxVwC0WozJPlhqRsfmi3pkOWkago2ejffcweWf60Jjv8RDWo
+ XNSKV1i/8GNy/o2QZ4mYTkWQbg7c74eY5DUknaOY7fsi1I9vwNTI1VbPiA6sGlmNHfNIldPps+8
+ 1
+X-Google-Smtp-Source: AGHT+IFFeIzm6hWAZPY2v/wwoyv/wazNDLdLgnmOTVwADsqlppY7G8NekegJo5pZrItxcmG+MXrgXg==
+X-Received: by 2002:a05:6a00:21ca:b0:71e:6a57:7290 with SMTP id
+ d2e1a72fcca58-72457828d9amr9003406b3a.0.1731600309345; 
+ Thu, 14 Nov 2024 08:05:09 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.40
+ d2e1a72fcca58-7246a9bab70sm1417926b3a.152.2024.11.14.08.05.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:01:40 -0800 (PST)
+ Thu, 14 Nov 2024 08:05:08 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 11/54] accel/tcg: Remove IntervalTree entry in
- tlb_flush_page_locked
-Date: Thu, 14 Nov 2024 08:00:47 -0800
-Message-ID: <20241114160131.48616-12-richard.henderson@linaro.org>
+Subject: [PATCH v2 40/54] target/microblaze: Convert to
+ TCGCPUOps.tlb_fill_align
+Date: Thu, 14 Nov 2024 08:01:16 -0800
+Message-ID: <20241114160131.48616-41-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,46 +93,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Flush a page from the IntervalTree cache.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ target/microblaze/cpu.h    |  7 +++----
+ target/microblaze/cpu.c    |  2 +-
+ target/microblaze/helper.c | 33 ++++++++++++++++++++-------------
+ 3 files changed, 24 insertions(+), 18 deletions(-)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index ea6a5177de..d532d69083 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -568,6 +568,7 @@ static void tlb_flush_page_locked(CPUState *cpu, int midx, vaddr page)
-     CPUTLBDesc *desc = &cpu->neg.tlb.d[midx];
-     vaddr lp_addr = desc->large_page_addr;
-     vaddr lp_mask = desc->large_page_mask;
-+    CPUTLBEntryTree *node;
+diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+index 3e5a3e5c60..b0eadfd9b1 100644
+--- a/target/microblaze/cpu.h
++++ b/target/microblaze/cpu.h
+@@ -421,10 +421,9 @@ static inline void cpu_get_tb_cpu_state(CPUMBState *env, vaddr *pc,
+ }
  
-     /* Check if we need to flush due to large pages.  */
-     if ((page & lp_mask) == lp_addr) {
-@@ -575,10 +576,17 @@ static void tlb_flush_page_locked(CPUState *cpu, int midx, vaddr page)
-                   VADDR_PRIx "/%016" VADDR_PRIx ")\n",
-                   midx, lp_addr, lp_mask);
-         tlb_flush_one_mmuidx_locked(cpu, midx, get_clock_realtime());
--    } else {
--        tlbfast_flush_range_locked(desc, &cpu->neg.tlb.f[midx],
--                                   page, TARGET_PAGE_SIZE, -1);
--        tlb_flush_vtlb_page_locked(cpu, midx, page);
-+        return;
-+    }
-+
-+    tlbfast_flush_range_locked(desc, &cpu->neg.tlb.f[midx],
-+                               page, TARGET_PAGE_SIZE, -1);
-+    tlb_flush_vtlb_page_locked(cpu, midx, page);
-+
-+    node = tlbtree_lookup_addr(desc, page);
-+    if (node) {
-+        interval_tree_remove(&node->itree, &desc->iroot);
-+        g_free(node);
+ #if !defined(CONFIG_USER_ONLY)
+-bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+-                     MMUAccessType access_type, int mmu_idx,
+-                     bool probe, uintptr_t retaddr);
+-
++bool mb_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
++                            MMUAccessType access_type, int mmu_idx,
++                           MemOp memop, int size, bool probe, uintptr_t ra);
+ void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+                                unsigned size, MMUAccessType access_type,
+                                int mmu_idx, MemTxAttrs attrs,
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index 710eb1146c..212cad2143 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -425,7 +425,7 @@ static const TCGCPUOps mb_tcg_ops = {
+     .restore_state_to_opc = mb_restore_state_to_opc,
+ 
+ #ifndef CONFIG_USER_ONLY
+-    .tlb_fill = mb_cpu_tlb_fill,
++    .tlb_fill_align = mb_cpu_tlb_fill_align,
+     .cpu_exec_interrupt = mb_cpu_exec_interrupt,
+     .cpu_exec_halt = mb_cpu_has_work,
+     .do_interrupt = mb_cpu_do_interrupt,
+diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
+index 5d3259ce31..b6375564b4 100644
+--- a/target/microblaze/helper.c
++++ b/target/microblaze/helper.c
+@@ -36,37 +36,44 @@ static bool mb_cpu_access_is_secure(MicroBlazeCPU *cpu,
      }
  }
+ 
+-bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+-                     MMUAccessType access_type, int mmu_idx,
+-                     bool probe, uintptr_t retaddr)
++bool mb_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
++                           MMUAccessType access_type, int mmu_idx,
++                           MemOp memop, int size,
++                           bool probe, uintptr_t retaddr)
+ {
+     MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+     CPUMBState *env = &cpu->env;
+     MicroBlazeMMULookup lu;
+     unsigned int hit;
+-    int prot;
+-    MemTxAttrs attrs = {};
+ 
+-    attrs.secure = mb_cpu_access_is_secure(cpu, access_type);
++    if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
++        if (probe) {
++            return false;
++        }
++        mb_cpu_do_unaligned_access(cs, address, access_type, mmu_idx, retaddr);
++    }
++
++    memset(out, 0, sizeof(*out));
++    out->attrs.secure = mb_cpu_access_is_secure(cpu, access_type);
++    out->lg_page_size = TARGET_PAGE_BITS;
+ 
+     if (mmu_idx == MMU_NOMMU_IDX) {
+         /* MMU disabled or not available.  */
+-        address &= TARGET_PAGE_MASK;
+-        prot = PAGE_RWX;
+-        tlb_set_page_with_attrs(cs, address, address, attrs, prot, mmu_idx,
+-                                TARGET_PAGE_SIZE);
++        out->phys_addr = address;
++        out->prot = PAGE_RWX;
+         return true;
+     }
+ 
+     hit = mmu_translate(cpu, &lu, address, access_type, mmu_idx);
+     if (likely(hit)) {
+-        uint32_t vaddr = address & TARGET_PAGE_MASK;
++        uint32_t vaddr = address;
+         uint32_t paddr = lu.paddr + vaddr - lu.vaddr;
+ 
+         qemu_log_mask(CPU_LOG_MMU, "MMU map mmu=%d v=%x p=%x prot=%x\n",
+                       mmu_idx, vaddr, paddr, lu.prot);
+-        tlb_set_page_with_attrs(cs, vaddr, paddr, attrs, lu.prot, mmu_idx,
+-                                TARGET_PAGE_SIZE);
++
++        out->phys_addr = paddr;
++        out->prot = lu.prot;
+         return true;
+     }
  
 -- 
 2.43.0
