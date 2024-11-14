@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BC0D68B33
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B952D68B35
 	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 16:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBcJ8-0005mB-UJ; Thu, 14 Nov 2024 11:02:58 -0500
+	id 1tBcHz-0004xb-8M; Thu, 14 Nov 2024 11:01:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIO-00053P-O5
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:13 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1tBcHt-0004uf-17
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:41 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBcIL-0002Ic-AU
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:02:12 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2e9b55b83d2so651264a91.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:02:05 -0800 (PST)
+ id 1tBcHr-0002Bo-Cd
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 11:01:40 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-720be27db27so664200b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 08:01:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731600124; x=1732204924; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731600098; x=1732204898; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QF7xEZ+McMkBHbikVqFxssmRyGZDCQmLdpfkAwqKmS0=;
- b=akE++NJmTcdv3IZB59T9YFINNNU5WjK+2XnnuVSRAg2E5qf0OsmBuaAhQHC4HuhzeB
- vbciDnrkhNJPQUzpXWL3osYaMm572kJE1Iadkx0K5DOmFnYaP6LFXtefx5v7mdqZRbkI
- wC0qEDzlFXRNou30JDcPOCB+AN+w0Nsf+rbmS+zEshbLKueCKR/HH5BYW5phfzHEykC7
- tnyFvOgePg3S+KzvK50fyjHSjrvohxIRjihTkamtFcBTwXaTyn7jGhjm0qhuCRG8fVQQ
- Bkm83tL4ezwYYv9S+VFEQnWKZ3UomAclmR79pRmGmSV/DK9Cjyj68Oh4fptltITof029
- IwLw==
+ :reply-to; bh=V73iy9O4QBEVFd3/BQLHjhP35QEkGTMYrTHTqx+CnQ4=;
+ b=uEz9pAdQIWtQJ/jtFaIUuz24sY/RuCsfLygWC3BZ9i3ClJtnz73XrdlP9to5sb0usy
+ OK16vRHVfjx8YuFl5P/sj7iQtL6ZqnwskyMeb4WbYd52C4gKr7JCOLWk4zlon+9FWAmc
+ HmhNbzON9JGuSIMEGdkTZdMl9Gjhxw+6z3GZNVD/fgF+SmxBTQzJclYOY++avxrCA03/
+ KzIoVKKIIhVJTGrAxNJuojWfjLepzvpHF3RMxn9I5HU77JpU1OPCK/VAZErmITyuOSBk
+ DRSDYbnKxFqb7DI4ulnAUbAVb4td6KyDJXMz6eSPzgpxQqmPl7OdFYQyJP3oy4unZK+h
+ lIlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731600124; x=1732204924;
+ d=1e100.net; s=20230601; t=1731600098; x=1732204898;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QF7xEZ+McMkBHbikVqFxssmRyGZDCQmLdpfkAwqKmS0=;
- b=PiBDb+ulxvJYSFqliUCOdG7Ms9UdoocKnZF7ZuDN0aqz7fUbux191E1DfydmYVIkgo
- WrmG8XJrqmpD7yDBhE7dDhtwBcwXm3GTQCVkQhK1iENMdCtnw3lARRIdmH3NFjDWO4hA
- LJgOd6jJfcEb6vk4f/tEWe0yu/3pjoGrQhpsJ7rX96/C0oIBR4Yz9Lqy9sTaUdyMaqLb
- BFPhU+0U6+qYQ9RiEj5cNUQAHeDlX87csYb0TPPxeCTBjR7/OXBRVmdLNRiqQcsgcBn6
- sjgg41kHvF6vRAQqA6Oe5FcrqHDcr9+yqd6rKsdYKGFN02PR2ZCJvqqAkdhS2leBT2B9
- CByQ==
-X-Gm-Message-State: AOJu0YzLA0gGlGpvkbWC2ylU8tSFCa8bdRRQnYV2CuTgPg4vaUKz6y4z
- 4Q3C7kus7aD67+vHoGz3HJQ0qRUDKpmNgZ3MPv+ltsUxdG72hcyv1i8RD/GVAKbyL251gsvLHiM
- t
-X-Google-Smtp-Source: AGHT+IH0C7SLi7d1YnIk4aDAQmiGhzzuP6i5coFmCgfbh1Y/MtJ+bvLwoXl0pz1rmNshi3q9u326SQ==
-X-Received: by 2002:a17:90b:5444:b0:2e2:e597:6cdc with SMTP id
- 98e67ed59e1d1-2e9f2c906c0mr7877746a91.22.1731600123715; 
- Thu, 14 Nov 2024 08:02:03 -0800 (PST)
+ bh=V73iy9O4QBEVFd3/BQLHjhP35QEkGTMYrTHTqx+CnQ4=;
+ b=Q66DAFcSZNOnkBw1LU9O4TxsTD8zoaKNT4gEWlZutnZnAfBA7L0deLnf+mcHePpcvK
+ Td9sagCTfA01QosV5AZ6EnOR7GREzq0X6+w5qjcWcT+hZdxUDsN5F8xy8gw4YETZgy6q
+ QrQSAVgUyVzNON+YfMqQdSBj5OyK+Dvkk8er/E7+piZPN/upXbyRIrlmT5zlVIB4LQTr
+ bEatAnbTXjc3C9TPQ5VrYRYvjnz9eNzMb9fsnBE0AO7867qnuSRqxhfxEGHMelpMZphY
+ aOoBBDY/Ycp/2+MCNI03gxFPXNSXVFdDg7TcG8PRuFfvvZhofqUILLh154M6wuxmDISL
+ 3CnA==
+X-Gm-Message-State: AOJu0Yx4+45c6HxY3xWugbBKjepv5SqguF0IRnIUOgD3FZZu2lfyOEb/
+ 9dUOTj/U3f8tpGH2d1ZbDrKr4alYgelbTk5LMBEE02CTAiWj55FK2mkkrFQILgZcbhlBVhwHHid
+ 6
+X-Google-Smtp-Source: AGHT+IEYJK6UI4uKpmyyEECf0Os2bmLmCvDMldRXOxy4zA6Mj2Q3YhnggVlrohFXIGgZpzUqWYNX4Q==
+X-Received: by 2002:a17:90b:28c7:b0:2e2:8d33:f79d with SMTP id
+ 98e67ed59e1d1-2e9e4bea639mr13502716a91.19.1731600097744; 
+ Thu, 14 Nov 2024 08:01:37 -0800 (PST)
 Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.02.03
+ 98e67ed59e1d1-2ea024ec723sm1484438a91.46.2024.11.14.08.01.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 08:02:03 -0800 (PST)
+ Thu, 14 Nov 2024 08:01:37 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 36/54] target/i386: Convert to TCGCPUOps.tlb_fill_align
-Date: Thu, 14 Nov 2024 08:01:12 -0800
-Message-ID: <20241114160131.48616-37-richard.henderson@linaro.org>
+Subject: [PATCH v2 07/54] accel/tcg: Assert bits in range in
+ tlb_flush_range_by_mmuidx*
+Date: Thu, 14 Nov 2024 08:00:43 -0800
+Message-ID: <20241114160131.48616-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241114160131.48616-1-richard.henderson@linaro.org>
 References: <20241114160131.48616-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,89 +93,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The only target that does not use TARGET_LONG_BITS is Arm, which
+only reduces bits based on TBI.  There is no point in handling
+odd combinations of parameters.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/tcg/helper-tcg.h         |  6 +++---
- target/i386/tcg/sysemu/excp_helper.c | 28 ++++++++++++++++------------
- target/i386/tcg/tcg-cpu.c            |  2 +-
- 3 files changed, 20 insertions(+), 16 deletions(-)
+ accel/tcg/cputlb.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-index 696d6ef016..b2164f41e6 100644
---- a/target/i386/tcg/helper-tcg.h
-+++ b/target/i386/tcg/helper-tcg.h
-@@ -79,9 +79,9 @@ void x86_cpu_record_sigsegv(CPUState *cs, vaddr addr,
- void x86_cpu_record_sigbus(CPUState *cs, vaddr addr,
-                            MMUAccessType access_type, uintptr_t ra);
- #else
--bool x86_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                      MMUAccessType access_type, int mmu_idx,
--                      bool probe, uintptr_t retaddr);
-+bool x86_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
-+                            MMUAccessType access_type, int mmu_idx,
-+                            MemOp memop, int size, bool probe, uintptr_t ra);
- G_NORETURN void x86_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
-                                             MMUAccessType access_type,
-                                             int mmu_idx, uintptr_t retaddr);
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 168ff8e5f3..d23d28fef5 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -601,25 +601,29 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-     return true;
- }
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 1346a26d90..5510f40333 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -792,20 +792,16 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
  
--bool x86_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
--                      MMUAccessType access_type, int mmu_idx,
--                      bool probe, uintptr_t retaddr)
-+bool x86_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *full, vaddr addr,
-+                            MMUAccessType access_type, int mmu_idx,
-+                            MemOp memop, int size, bool probe,
-+                            uintptr_t retaddr)
- {
-     CPUX86State *env = cpu_env(cs);
-     TranslateResult out;
-     TranslateFault err;
+     assert_cpu_is_self(cpu);
+     assert(len != 0);
++    assert(bits > TARGET_PAGE_BITS && bits <= TARGET_LONG_BITS);
  
-+    if (addr & ((1 << memop_alignment_bits(memop)) - 1)) {
-+        if (probe) {
-+            return false;
-+        }
-+        x86_cpu_do_unaligned_access(cs, addr, access_type, mmu_idx, retaddr);
-+    }
-+
-     if (get_physical_address(env, addr, access_type, mmu_idx, &out, &err,
-                              retaddr)) {
--        /*
--         * Even if 4MB pages, we map only one 4KB page in the cache to
--         * avoid filling it too fast.
--         */
--        assert(out.prot & (1 << access_type));
--        tlb_set_page_with_attrs(cs, addr & TARGET_PAGE_MASK,
--                                out.paddr & TARGET_PAGE_MASK,
--                                cpu_get_mem_attrs(env),
--                                out.prot, mmu_idx, out.page_size);
-+        memset(full, 0, sizeof(*full));
-+        full->phys_addr = out.paddr;
-+        full->prot = out.prot;
-+        full->lg_page_size = ctz32(out.page_size);
-+        full->attrs = cpu_get_mem_attrs(env);
-         return true;
+     /*
+      * If all bits are significant, and len is small,
+      * this devolves to tlb_flush_page.
+      */
+-    if (bits >= TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
++    if (bits == TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
+         tlb_flush_page_by_mmuidx(cpu, addr, idxmap);
+         return;
      }
+-    /* If no page bits are significant, this devolves to tlb_flush. */
+-    if (bits < TARGET_PAGE_BITS) {
+-        tlb_flush_by_mmuidx(cpu, idxmap);
+-        return;
+-    }
  
-diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-index cca19cd40e..6fce6227c7 100644
---- a/target/i386/tcg/tcg-cpu.c
-+++ b/target/i386/tcg/tcg-cpu.c
-@@ -117,7 +117,7 @@ static const TCGCPUOps x86_tcg_ops = {
-     .record_sigsegv = x86_cpu_record_sigsegv,
-     .record_sigbus = x86_cpu_record_sigbus,
- #else
--    .tlb_fill = x86_cpu_tlb_fill,
-+    .tlb_fill_align = x86_cpu_tlb_fill_align,
-     .do_interrupt = x86_cpu_do_interrupt,
-     .cpu_exec_halt = x86_cpu_exec_halt,
-     .cpu_exec_interrupt = x86_cpu_exec_interrupt,
+     /* This should already be page aligned */
+     d.addr = addr & TARGET_PAGE_MASK;
+@@ -832,20 +828,16 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+     CPUState *dst_cpu;
+ 
+     assert(len != 0);
++    assert(bits > TARGET_PAGE_BITS && bits <= TARGET_LONG_BITS);
+ 
+     /*
+      * If all bits are significant, and len is small,
+      * this devolves to tlb_flush_page.
+      */
+-    if (bits >= TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
++    if (bits == TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
+         tlb_flush_page_by_mmuidx_all_cpus_synced(src_cpu, addr, idxmap);
+         return;
+     }
+-    /* If no page bits are significant, this devolves to tlb_flush. */
+-    if (bits < TARGET_PAGE_BITS) {
+-        tlb_flush_by_mmuidx_all_cpus_synced(src_cpu, idxmap);
+-        return;
+-    }
+ 
+     /* This should already be page aligned */
+     d.addr = addr & TARGET_PAGE_MASK;
 -- 
 2.43.0
 
