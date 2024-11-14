@@ -4,100 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D48D6A254
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 22:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B36F6D6A255
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 22:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBiVo-0005Ma-4T; Thu, 14 Nov 2024 17:40:28 -0500
+	id 1tBiYx-00063z-7g; Thu, 14 Nov 2024 17:43:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tBiVm-0005MC-52
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:40:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tBiVk-0007md-8f
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:40:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731624022;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dG90QAv3+Zc1JlaDfIXyyh81xv3rqztRu7UCVinwi+k=;
- b=JCvF3fsS3eOPiOCXIw38gSG9rJA9LjQBKxHeLZYRA7WYjeVoCt5B3xteKDtwr5S0wqQ45Y
- rC0UF66KuU6BgdyKskxT98Vvqu0MaIUTOMifyYJ5J93DOV0qstmuGSGi/BWUkpjRDawXoO
- HnlRS3Jo6nVedNyfpgUQS8OXycQ2418=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-yDeEBcXpOhiQWmFNbM8y_Q-1; Thu, 14 Nov 2024 17:40:20 -0500
-X-MC-Unique: yDeEBcXpOhiQWmFNbM8y_Q-1
-X-Mimecast-MFC-AGG-ID: yDeEBcXpOhiQWmFNbM8y_Q
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-83dff8bc954so118947539f.1
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:40:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBiYw-00063g-54
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:43:42 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBiYu-00081D-2o
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:43:41 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a9a0c7abaa6so141180866b.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:43:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731624217; x=1732229017; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3dmN4K+AXFCuWdm/78nDnzAE0l1Q+L1Whi+FzalH3pI=;
+ b=OXZW4aYt1Sncna3s4zt3X3l/+1L8qixXaXXMl1uoou5cvF0vFlCs70L3ewxdCwsO4F
+ WdTdchNqhrFKrT61XoxyEJgwRlKXDD2k52Q3mQC6FDPy05hIG0gHfd9PCpYbEvJaNxs7
+ 0JAYbjJxjjG48syPcvRvyhqVCvyutTn7NplTIWrd3wH3KGPEFxpWvHI6cqwqEDtmHKdN
+ FE4/KRmUIgtwzo7N4SJZEEfy1BPfE+4z3rHdrWn+wQjo8xNLaotGMIrAIcsl+1FAe9ax
+ w7cUj7XNhPX5nAcIEx4NYOEOV5CTwuX3sp9CHPHRHtcdDjL45UNOevF5qfs/Hd1WwEkQ
+ WDAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731624020; x=1732228820;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dG90QAv3+Zc1JlaDfIXyyh81xv3rqztRu7UCVinwi+k=;
- b=fMOH/847G9vlheEnBIPj/GZncO0NklRQ1JJZ6nR39OIDGPJ6I2qTesj8uOU/5O5S06
- 2lOPcqynL73ewzkPeH4MBJeAvGbL/QNYFlLImEoYAfknioYOirj5P/pGbQQ537mtbD4R
- mwSqysjJ/bK5JJzygdjes8RnTd9i09fFeNwW8grjKco/Zndn7WKvUcRt8RMA/q6LUof4
- 9pjLxOAUysiNvw2sL7g/LC43KZ/d9ixSE3Yc0YQVptZTRy2Td4CqC3mMETgRbA6qP07N
- 9/eIddEdaZzqNcu21Gs63kIotLQP2aP2+O+/nnnPuOxyatIOw+Pd6XEg8yqs6fPG/+65
- B+Hg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCEIeAlnXucxaiLvM55lxhNtwEujvpXwge9GlYzDz8XgUYkJEC0fXg7FFSthGQ1vPdfCev+VMGqjMv@nongnu.org
-X-Gm-Message-State: AOJu0YyqALbq+8/HoRvtWpDeVDNc9RT6ObU+BJ7FBq8W8TxuElsaFgEp
- haudLFbpnXq8lTnce1H9ik6dfBQp7iGYR0SNPRnOlqYtooFt9IQJIgyzaHVO6B+/+ziIHz2fjNQ
- aJWmzKTcYxKFPitX1fWfDPdG88VqAleFcEEtOn43u3KUjqzAr9HOn
-X-Received: by 2002:a05:6e02:2193:b0:39f:53b3:ca63 with SMTP id
- e9e14a558f8ab-3a747ff8d4dmr5389015ab.3.1731624020068; 
- Thu, 14 Nov 2024 14:40:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEo0+vhS56LF62r1l7becpsFYvH0Cn7TiYzGW3S/xzP3QYJLMtJo8dL+UanZSVEyPsopWDwqw==
-X-Received: by 2002:a05:6e02:2193:b0:39f:53b3:ca63 with SMTP id
- e9e14a558f8ab-3a747ff8d4dmr5388855ab.3.1731624019693; 
- Thu, 14 Nov 2024 14:40:19 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3a74806fc57sm514805ab.16.2024.11.14.14.40.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Nov 2024 14:40:18 -0800 (PST)
-Date: Thu, 14 Nov 2024 17:40:15 -0500
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Yong Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Wei Wang <wei.w.wang@intel.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v1 2/2] migration: Do not perform RAMBlock dirty sync
- during the first iteration
-Message-ID: <ZzZ8Tzw9WV9dHo_R@x1n>
-References: <CAK9dgmak97Uv_RO+WFEb+KLkiuZ5+ibO3bigm3379L4aD55TvA@mail.gmail.com>
- <43700d36-b9f8-42da-ba72-b0ec6580032d@redhat.com>
- <CAK9dgmY8BAy4JAj5y-fY_YOpM6b3=86cmckPJZFuk9k=X1TYfQ@mail.gmail.com>
- <3049bc19-2556-4fbf-9d34-578db523b63b@redhat.com>
- <ZzTkopUrLGL5iqSv@x1n>
- <382461ab-d620-4d2e-becd-720daadf3c55@redhat.com>
- <ZzUIOFPtvHKDJPei@x1n>
- <8ee7d398-0139-4628-9276-f6a89fa35245@redhat.com>
- <ZzZPd7Ye09bjUjyR@x1n>
- <5f04a1dc-ca0a-488b-812e-7cebf393f59f@redhat.com>
+ d=1e100.net; s=20230601; t=1731624217; x=1732229017;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3dmN4K+AXFCuWdm/78nDnzAE0l1Q+L1Whi+FzalH3pI=;
+ b=OL8Zcz1cAADa4BvzmlT4Oj39Rd5SYr1Ue6D9etsHomaHUopRr8+Xzg8jPzYsFk2IDS
+ CJlmxX3XTTfRmTZUAJejk4DgVEuALTKG5ZbX71pCVlJUqtuQjjPqGc3FoIq95lpR0ekn
+ VSjPquENYW44abcjBf9qkY/qKqAuGXkflZiKKybdEEj3zfwDNW6ZCL9H63I7ACJQ5HQ9
+ uHjTEPIf4BR30872GYuUp7QTrHRVWmSH2aXEJ/TlleFQ+N4en4j3Zmtgpz9CaQZ6iUs4
+ rBvRbvTH0o0lW1jEpukLytiTM1NiPLk5FFIypQrwqmwXCsezzUSoxXY4AnHow61fEEGv
+ SAyg==
+X-Gm-Message-State: AOJu0YxfsDDoaChXhVnNzjkMU7M7Q6y34Dm6gmcyW0Y4L0whx/Cqk3Hi
+ hbubeljl9dHqiGVQhAKZP4IETWsZd4DGvkEpKWo7rB8baa9xQGlUr46inrSBb9g=
+X-Google-Smtp-Source: AGHT+IHTcw94hOcbXFWf8FK7Y3VEoJ4AQ9SaQal8xODUQ83l1MWQGglBSQrJVBnjNuJRqT/OrcFaEQ==
+X-Received: by 2002:a17:907:1c8e:b0:a9a:c57f:964f with SMTP id
+ a640c23a62f3a-aa483421690mr30343866b.16.1731624217001; 
+ Thu, 14 Nov 2024 14:43:37 -0800 (PST)
+Received: from [192.168.69.126] ([176.187.209.228])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20df26fc4sm109472466b.12.2024.11.14.14.43.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Nov 2024 14:43:36 -0800 (PST)
+Message-ID: <1625bc6b-8951-414c-88c0-62061289fdb5@linaro.org>
+Date: Thu, 14 Nov 2024 23:43:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5f04a1dc-ca0a-488b-812e-7cebf393f59f@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/19] hw/intc/xilinx_intc: Only expect big-endian accesses
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, devel@lists.libvirt.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michal Simek <michal.simek@amd.com>, Luc Michel <luc@lmichel.fr>
+References: <20241105130431.22564-1-philmd@linaro.org>
+ <20241105130431.22564-10-philmd@linaro.org> <ZyqletOJvt3nD_L4@zapote>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZyqletOJvt3nD_L4@zapote>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.69,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,159 +101,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 14, 2024 at 10:16:41PM +0100, David Hildenbrand wrote:
-> On 14.11.24 20:28, Peter Xu wrote:
-> > On Thu, Nov 14, 2024 at 10:02:37AM +0100, David Hildenbrand wrote:
-> > > On 13.11.24 21:12, Peter Xu wrote:
-> > > > On Wed, Nov 13, 2024 at 07:49:44PM +0100, David Hildenbrand wrote:
-> > > > > I think I had precisely that, and I recall you suggested to have it only
-> > > > > after the initial sync. Would work for me, but I'd still like to understand
-> > > > > why essentially none of the "discard" was effective -- all of guest RAM got
-> > > > > touched.
-> > > > 
-> > > > Yes it'll be interesting to know..
-> > > > 
-> > > > One thing I'm wildly guessing is dirty_memory_extend(), so maybe after the
-> > > > ramblock is created nobody yet to clear the "1"s there for each of the
-> > > > client, including DIRTY_MEMORY_MIGRATION.  Then it'll be synced to ramblock
-> > > > bmap only in the initial sync, once for each qemu lifecycle.
-> > > 
-> > > 
-> > > In ram_block_add() we do the
-> > > 
-> > > cpu_physical_memory_set_dirty_range(new_block->offset,
-> > > 				    new_block->used_length,
-> > > 				    DIRTY_CLIENTS_ALL);
-> > > 
-> > > ramblock_dirty_bitmap_clear_discarded_pages()->...->migration_clear_memory_region_dirty_bitmap_range()->migration_clear_memory_region_dirty_bitmap()
-> > > won't end up clearing the bits in the dirty bitmap.
-> > > 
-> > > First I thought because of:
-> > > 
-> > > if (!rb->clear_bmap || !clear_bmap_test_and_clear(rb, page)) {
-> > >      return;
-> > > }
-> > > 
-> > > But then I realized that even memory_region_clear_dirty_bitmap() will not
-> > > clear the ramblock_dirty_bitmap_ bits! It's only concerned about
-> > > listener->log_clear() calls.
-> > > 
-> > > Looking for DIRTY_MEMORY_BLOCK_SIZE users, only
-> > > cpu_physical_memory_sync_dirty_bitmap() and
-> > > cpu_physical_memory_clear_dirty_range() clear them, whereby the latter is
-> > > only used when resizing RAMblocks.
-> > > 
-> > > At first I wondered whether ramblock_dirty_bitmap_clear_discarded_pages()
-> > > should also call cpu_physical_memory_clear_dirty_range(), but then I am not
-> > > so sure if that is really the right approach.
-> > 
-> > That sounds actually reasonable to me so far.. What's the concern in your
-> > mind?
++Michal for Linux driver
+
+On 5/11/24 23:08, Edgar E. Iglesias wrote:
+> On Tue, Nov 05, 2024 at 02:04:21PM +0100, Philippe Mathieu-Daudé wrote:
+>> Per the datasheet (reference added in file header, p.9)
+>> 'Programming Model' -> 'Register Data Types and Organization':
+>>
+>>      "The XPS INTC registers are read as big-endian data"
 > 
-> I think what I had in mind was that for the initial bitmap sync, when we set
-> the bmap to all-1s already, we could just clear the whole
-> ramblock_dirty_bitmap_ + KVM ... bitmaps.
+> Hi Phil,
 > 
-> So, instead of an "initial sync" we might just want to do an "initial
-> clearing" of all bitmaps.
+> Some of these devices exist in both big and little endian versions.
+> So far we've reused the same model by using DEVICE_NATIVE_ENDIAN.
+> 
+> Here's the little endian version:
+> https://docs.amd.com/v/u/en-US/ds747_axi_intc
 
-Logically most dirty tracking bitmaps should start with all zeros.  KVM old
-kernels are like that; KVM_DIRTY_LOG_INITIALLY_SET is not, but it's a
-separate feature.  I still hope it's pretty common for the rest, e.g. vhost
-should have all zeros in its init bitmap even without initial sync.
+This model is specified as:
+
+- https://docs.amd.com/v/u/en-US/xps_intc
+   LogiCORE IP XPS Interrupt Controller (v2.01a)
+   DS572 April 19, 2010
+
+Spec is from 2010, you added it in 2009:
+
+   commit 17628bc642260df3a07b9df8b8a9ca7da2e7e87c
+   Author: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+   Date:   Wed May 20 20:11:30 2009 +0200
+
+       xilinx: Add interrupt controller.
+
+The spec is explicit:
+
+   "The XPS INTC registers are read as big-endian data"
+
+
+The other model you mention is:
+
+- https://docs.amd.com/v/u/en-US/ds747_axi_intc
+   LogiCORE IP AXI INTC (v1.04a)
+   DS747 June 19, 2013
+
+The spec is more recent than your addition, and contains
+the Interrupt Vector Address Register (IVAR) which is not
+present in our model.
+
+
+Indeed the latter seems to extend the former, but they are
+not the same and we need some work to model the latter.
+
+The endianness explicit for each model (and is not listed
+in the "IP Configurable Design Parameters" tables).
+
+
+That said, let's look at Linux use. Driver was added in:
+
+   commit eedbdab99fffb8ed71cac75a722088b8ace2583c
+   Author: Michal Simek <monstr@monstr.eu>
+   Date:   Fri Mar 27 14:25:49 2009 +0100
+
+       microblaze_v8: Interrupt handling and timer support
+
+Using explicit big-endian API:
+
+   +void __init init_IRQ(void)
+   +{
+   ...
+   +       /*
+   +        * Disable all external interrupts until they are
+   +        * explicity requested.
+   +        */
+   +       out_be32(intc_baseaddr + IER, 0);
+   +
+   +       /* Acknowledge any pending interrupts just in case. */
+   +       out_be32(intc_baseaddr + IAR, 0xffffffff);
+   +
+   +       /* Turn on the Master Enable. */
+   +       out_be32(intc_baseaddr + MER, MER_HIE | MER_ME);
+
+Then the driver became clever in:
+
+   commit 1aa1243c339d4c902c0f9c1ced45742729a86e6a
+   Author: Michal Simek <michal.simek@amd.com>
+   Date:   Mon Feb 24 14:56:32 2014 +0100
+
+       microblaze: Make intc driver endian aware
+
+       Detect endianess directly on the hardware and use
+       ioread/iowrite functions.
+
+   +static void intc_write32(u32 val, void __iomem *addr)
+   +{
+   +       iowrite32(val, addr);
+   +}
+   +
+   +static void intc_write32_be(u32 val, void __iomem *addr)
+   +{
+   +       iowrite32be(val, addr);
+   +}
+
+@@ -140,17 +163,25 @@ static int __init xilinx_intc_of_init(struct 
+device_node *intc,
+
+   +       write_fn = intc_write32;
+   +       read_fn = intc_read32;
+   +
+           /*
+            * Disable all external interrupts until they are
+            * explicity requested.
+            */
+   -       out_be32(intc_baseaddr + IER, 0);
+   +       write_fn(0, intc_baseaddr + IER);
+
+           /* Acknowledge any pending interrupts just in case. */
+   -       out_be32(intc_baseaddr + IAR, 0xffffffff);
+   +       write_fn(0xffffffff, intc_baseaddr + IAR);
+
+           /* Turn on the Master Enable. */
+   -       out_be32(intc_baseaddr + MER, MER_HIE | MER_ME);
+   +       write_fn(MER_HIE | MER_ME, intc_baseaddr + MER);
+   +       if (!(read_fn(intc_baseaddr + MER) & (MER_HIE | MER_ME))) {
+   +               write_fn = intc_write32_be;
+   +               read_fn = intc_read32_be;
+   +               write_fn(MER_HIE | MER_ME, intc_baseaddr + MER);
+   +       }
+
+Interestingly little endianness became the default, although
+the driver detect it on init.
+
+This is from 2014, maybe to work with the "LogiCORE IP AXI INTC"
+you mentioned, which spec date is 2013.
+
+
+Indeed when forcing different endianness [*], the Linux kernel used
+in our tests (tests/functional/test_microblaze*) does the check
+and ends up using the correct INTC endianness:
+
+LE CPU, LE INTC model
+pic_write addr=8 val=0
+pic_write addr=c val=ffffffff
+pic_write addr=1c val=3           <- LE
+pic_read 1c=3
+pic_write addr=c val=1
+pic_write addr=10 val=1
+pic_read 18=0
+
+LE CPU, BE INTC model
+pic_write addr=8 val=0
+pic_write addr=c val=ffffffff
+pic_write addr=1c val=3000000     <- LE test
+pic_read 1c=0
+pic_write addr=1c val=3           <- BE
+pic_write addr=c val=1
+pic_write addr=10 val=1
+pic_read 18=0
+
+BE CPU, BE INTC model
+pic_write addr=8 val=0
+pic_write addr=c val=ffffffff
+pic_write addr=1c val=3000000     <- LE test
+pic_read 1c=0
+pic_write addr=1c val=3           <- BE
+pic_write addr=c val=1
+pic_write addr=10 val=1
+pic_read 18=0
+
+BE CPU, LE INTC model
+pic_write addr=8 val=0
+pic_write addr=c val=ffffffff
+pic_write addr=1c val=3           <- LE
+pic_read 1c=3
+pic_write addr=c val=1
+pic_write addr=10 val=1
+pic_read 18=0
+
+
+IMHO this patch behavior is correct. Besides, I don't expect
+firmwares to be as clever as Linux.
+
+> Can we have add property to select the endianess?
+> For the Xilinx use-cases I think it may be a good idea to default it
+> to little endian and have the big-endian machines explicitly set it.
+
+What you suggested is implemented in v3:
+https://lore.kernel.org/qemu-devel/20241108154317.12129-4-philmd@linaro.org/
+but after the analysis, I wonder if it isn't safer to not
+make the endianness configurable, but expose as 2 models:
+- xlnx,xps_intc (2010) in BE
+- xlnx,axi_intc (2013) in LE
 
 > 
-> > 
-> > > 
-> > > 
-> > > virtio-balloon() calls qemu_guest_free_page_hint() which calls
-> > > 
-> > > migration_clear_memory_region_dirty_bitmap_range()
-> > > bitmap_clear()
-> > > 
-> > > So it would maybe have the same issue.
-> > 
-> > Should virtio-balloon do the same?
+> Cheers,
+> Edgar
 > 
-> virtio-balloon is more interesting, because I assume here we could run after
-> the "initial clearing" and would want to mark it clean everywhere.
-
-Yes, if it does what I mentioned below, IIUC it'll clear all dirty bits
-across the whole stack.  Only the ram_list bitmap is missing.  IIUC it
-could mean it could stop working for at least tcg, as tcg sololy uses
-it.. even with kvm some MRs may use it.  Maybe we want to fix it
-separately.
-
 > 
-> > 
-> > So I suppose the idea here is some module may want to say "we should ignore
-> > these pages in the dirty bitmap", and so far that's only about migration.
-> > 
-> > Then cpu_physical_memory_clear_dirty_range() does look like the right thing
-> > to do, in which case the bmap in ram_list used to be overlooked.. it seems.
-> > 
-> > But of course, cpu_physical_memory_clear_dirty_range() still doesn't cover
-> > the migration bitmap itself, which is ramblock->bmap.  So we'll need to
-> > switch from migration_clear_memory_region_dirty_bitmap() to use things like
-> > cpu_physical_memory_clear_dirty_range(), just to cover ram_list bitmaps.
-> > Then keeping the rb->bmap operations like before..
-> 
-> For virtio-balloon likely yes. Regarding virtio-mem, maybe "initial
-> clearing" + only modifying the rb->bmap when processing discards could work
-> and would even be more efficient.
-> 
-> (but I'm confused because we have way too many bitmaps, and maybe the KVM
-> one could be problematic without an initial sync ... we'd want an initial
-> clearing for that as well ...)
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/intc/xilinx_intc.c | 13 ++++++++++++-
+>>   1 file changed, 12 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
+>> index 1762b34564e..71f743a1f14 100644
+>> --- a/hw/intc/xilinx_intc.c
+>> +++ b/hw/intc/xilinx_intc.c
+>> @@ -3,6 +3,9 @@
+>>    *
+>>    * Copyright (c) 2009 Edgar E. Iglesias.
+>>    *
+>> + * https://docs.amd.com/v/u/en-US/xps_intc
+>> + * DS572: LogiCORE IP XPS Interrupt Controller (v2.01a)
+>> + *
+>>    * Permission is hereby granted, free of charge, to any person obtaining a copy
+>>    * of this software and associated documentation files (the "Software"), to deal
+>>    * in the Software without restriction, including without limitation the rights
+>> @@ -143,12 +146,20 @@ static void pic_write(void *opaque, hwaddr addr,
+>>   static const MemoryRegionOps pic_ops = {
+>>       .read = pic_read,
+>>       .write = pic_write,
+>> -    .endianness = DEVICE_NATIVE_ENDIAN,
+>> +    /* The XPS INTC registers are read as big-endian data. */
+>> +    .endianness = DEVICE_BIG_ENDIAN,
+>>       .impl = {
+>>           .min_access_size = 4,
+>>           .max_access_size = 4,
+>>       },
+>>       .valid = {
+>> +        /*
+>> +         * All XPS INTC registers are accessed through the PLB interface.
+>> +         * The base address for these registers is provided by the
+>> +         * configuration parameter, C_BASEADDR. Each register is 32 bits
+>> +         * although some bits may be unused and is accessed on a 4-byte
+>> +         * boundary offset from the base address.
+>> +         */
+>>           .min_access_size = 4,
+>>           .max_access_size = 4,
+>>       },
+>> -- 
+>> 2.45.2
+>>
 
-So IMHO most of the bitmaps should be initialized with zeros, not
-ones.. like I mentioned above.
+[*] diff used:
 
-Migration bitmap is special, because it's not about dirty tracking
-capability / reporting but that we know we need to migrate the first round.
-So setting all ones makes sense for migration only, not a reporting
-facility.  While KVM_DIRTY_LOG_INITIALLY_SET existed for its own reasoning
-on speeding up migration starts..
+-- >8 --
+@@ -32,7 +45,7 @@
+diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
+index fc55c8afca..883ec685f4 100644
+--- a/hw/intc/xilinx_intc.c
++++ b/hw/intc/xilinx_intc.c
+  #include "hw/qdev-properties.h"
+  #include "qom/object.h"
 
-So, now I am thinking whether we should not set all ones in ram_list bitmap
-at all, corresponds to this change:
+-#define D(x)
++#define D(x) x
 
-===8<===
-diff --git a/system/physmem.c b/system/physmem.c
-index dc1db3a384..10966fa68c 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1913,10 +1913,6 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     ram_list.version++;
-     qemu_mutex_unlock_ramlist();
- 
--    cpu_physical_memory_set_dirty_range(new_block->offset,
--                                        new_block->used_length,
--                                        DIRTY_CLIENTS_ALL);
--
-     if (new_block->host) {
-         qemu_ram_setup_dump(new_block->host, new_block->max_length);
-         qemu_madvise(new_block->host, new_block->max_length, QEMU_MADV_HUGEPAGE);
-===8<===
+  #define R_ISR       0
+  #define R_IPR       1
+@@ -105,7 +122,7 @@ static uint64_t pic_read(void *opaque, hwaddr addr, 
+unsigned int size)
+              break;
 
-I'm guessing whether above could fix the virtio-mem regression after
-Hyman's current patch applied.
+      }
+-    D(printf("%s %x=%x\n", __func__, addr * 4, r));
++    D(printf("%s %llx=%x\n", __func__, addr * 4, r));
+      return r;
+  }
 
-Said that, IMHO virtio-mem should still use the same helper just like
-virtio-balloon as I discussed previously, so as to reset bitmap for the
-whole stack (which seems to always be the right thing to do to not miss one
-layer of them)?
+@@ -116,7 +133,7 @@ static void pic_write(void *opaque, hwaddr addr,
+      uint32_t value = val64;
 
-Hence: 1 patch to virtio-balloon covering ram_list bitmap (which could be a
-real fix to virtio-balloon on e.g. tcg?); 1 patch to virtio-mem reusing
-that helper of virtio-balloon just as a cleanup to also cover all bitmaps;
-1 patch like above to avoid setting ones at all in ram_list bitmap as
-cleanup; then finally remove the sync() in SETUP, which is this patch.
-IIUC after all these changes applied it'll work for all cases.
-
-Thanks,
-
--- 
-Peter Xu
-
+      addr >>= 2;
+-    D(qemu_log("%s addr=%x val=%x\n", __func__, addr * 4, value));
++    D(printf("%s addr=%llx val=%x\n", __func__, addr * 4, value));
+      switch (addr)
+      {
+          case R_IAR:
+---
 
