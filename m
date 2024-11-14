@@ -4,149 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37F89D6A22D
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 21:17:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE8F3D6A247
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 22:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBhD3-0003kZ-P7; Thu, 14 Nov 2024 16:17:02 -0500
+	id 1tBhue-0003Pv-7Z; Thu, 14 Nov 2024 17:02:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tBhCx-0003hu-07
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 16:16:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tBhCs-00032U-IF
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 16:16:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731619007;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NOcg5Pa9HP5/MUtcPiaIbcda4XgvaKhd5+dgrDmaFus=;
- b=CekjMUGMl5WcBs1d3H8NEU5mil/Oi5JmwHxb0JOZKv8eDG27Vg20zyNqGjjbl2bOFaL1Rw
- ny4tZhCqYTYSCjrQjkdJGv6iWQtXRcX4HcWJO6UzO2qE8NTjoJnW1NwWgbFzqzHDNPzcZe
- q8lrD74xa3Pe5waZrC7fIuywQEQMFwQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-fgbaFaQFPKS691jIbb8lSA-1; Thu, 14 Nov 2024 16:16:46 -0500
-X-MC-Unique: fgbaFaQFPKS691jIbb8lSA-1
-X-Mimecast-MFC-AGG-ID: fgbaFaQFPKS691jIbb8lSA
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4316e350d6aso7416485e9.3
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 13:16:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
+ id 1tBhub-0003On-3n
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:02:01 -0500
+Received: from mail-qk1-x72a.google.com ([2607:f8b0:4864:20::72a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
+ id 1tBhuY-0007f9-Vs
+ for qemu-devel@nongnu.org; Thu, 14 Nov 2024 17:02:00 -0500
+Received: by mail-qk1-x72a.google.com with SMTP id
+ af79cd13be357-7b35b1eb7e3so92388085a.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 14:01:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1731621718; x=1732226518; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PXb0xU9EUeq/o2lDkxhUbldwZ6kS44ZWhCyxS7PxJXE=;
+ b=c63hHOxwTHLaumgEG/sCcY55cDhvcmRUXtwWq8mFZ2guXwN0rj72nLT5+AjvFo1DR6
+ liogt+vJ6QagPhRClVglr7TtOdFQt922ItIaziI/LWfSSWD8NC5o8qg+oiMYephmx/1e
+ c/AFV3aA/dSnZAcMBureCsH8gNCQZEGnUG/8XOm2X6tRd0Pv24CcPQNLahoBhwGFUREX
+ e21MxV8IE4EqgNBHXKJIQ9nWac5N3fsabPKPOhmuR06g/8ovnpJgSwMFose+BD8sPc5J
+ voDnE5EWLtNBicPNUIYlenvYGXgpMccB3nmhAU735iTRd8vAuqfaJ5z2Sq88d3xl9Rgv
+ TMAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731619005; x=1732223805;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=NOcg5Pa9HP5/MUtcPiaIbcda4XgvaKhd5+dgrDmaFus=;
- b=xOH52larGOCCxtlvGsu2bTchRzJu9OaZFRvF1UXoIunsatnIro13THMCrhH+WuWuZD
- Gbqp4+pBMcm7QY4dYnuUNUGemJ3m9mIctfHw6g2kkRYFKX6I9xe4Nek/xsM7WThGII0W
- g5pTCBhGD3ryFLqn1MmSE2Ej66vvpy2+aumTy/jZ/NxJrOHLtTKmhByCPOOdGFhxBs9C
- KXhimnIGTdu7EtFp7x3HVRrv7EcUI8WUngSbpobaQnw3VIZJOQflcVyrQV3t76qZ7bnD
- 8HShEywXjQ8eWfRmljRK+IkbtgTjpEFemzCxwZzlJLh/RDJCAHCTucukJEC8pUEL+QWN
- 9ebw==
+ d=1e100.net; s=20230601; t=1731621718; x=1732226518;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PXb0xU9EUeq/o2lDkxhUbldwZ6kS44ZWhCyxS7PxJXE=;
+ b=eMwpn8ws1q+XS69UvSxDQ62UqyzBPOtxchspxY03j7vjBvNhChHYIopSoJxgkvtxS7
+ VnWH50LSoOUUvmD81xAV/J8eIk1x1yN7GmAR8hfi8H9Z8REcGgmFL/vLCEhf1cTK8+50
+ thb9SYlJMQcDv25+EiaQDWtEss8FCbXu9JXMMct9hQWdbbxJknXEkX0FptTmAAJUlkRx
+ M1Iwh6nD3JX1mW1AmsImMwOdBoWUd1jMQnEO8Xcvvd8EQrFN4DDgZYlNKByW3gp89D6U
+ 8JBqhuCDyj99u4p+cQ6QYDQlGb/5/13Pal+X0K/N7Yieu8XO4hOB0bUhM3aCxwfgHxHn
+ ZsaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWx1h+BPe0ZUvxzdLuCu1kMWmn1PBaJVCJKtUkb/TAe7+2eowuHcuTH97U0e0y/nF8Tg8t28ozcl6Gi@nongnu.org
-X-Gm-Message-State: AOJu0YxFjOjLgorEEN4v4emUEF1deQ6dcsTm5e/rtlcQBfDBcL7BT5o7
- CxXMlplQ+SZp/+ozhQPjX+QJkylay6lEXz1hJ4TvV7YR4v7mgG3QvH5Yj7Dl6KJLAUXpRyWaJJ4
- aiCdgpAbwamlJC1XuXizRThCBiB44yq8jiHxg8OWxTW+4Lkdrcta4FIRfyi9q
-X-Received: by 2002:a05:600c:1e05:b0:431:57e5:b245 with SMTP id
- 5b1f17b1804b1-432df77a838mr1485075e9.23.1731619004884; 
- Thu, 14 Nov 2024 13:16:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFt5ikqFgbu7iAi/GLHd4aTHyexVLKoLaCjryBGCdi3hTWA8ksaB9Os1DMq+KUGRp5DOa/2dw==
-X-Received: by 2002:a05:600c:1e05:b0:431:57e5:b245 with SMTP id
- 5b1f17b1804b1-432df77a838mr1484965e9.23.1731619004491; 
- Thu, 14 Nov 2024 13:16:44 -0800 (PST)
-Received: from ?IPV6:2003:cb:c715:6600:a077:c7da:3362:6896?
- (p200300cbc7156600a077c7da33626896.dip0.t-ipconnect.de.
- [2003:cb:c715:6600:a077:c7da:3362:6896])
+ AJvYcCXC/VRSsbQbJo7Rv6UWEFfjQ8HD/QYhJyUNNs71b2PpF3ggbJWdpw20+B2kMf4gubkjlUjYAQ6prCBX@nongnu.org
+X-Gm-Message-State: AOJu0YxBAOC+zGKAs9QCnJ8OCnjdbSzl4GTSZ+okN9MdWPE7O0qse54n
+ HDE5j8Rltwwcdwr5Anu8Wqe3kpSTfvpWXOWATN6wsLY82iYAvXmm1JXgk4chxHA=
+X-Google-Smtp-Source: AGHT+IFO9VfUPozhH419UUIWb1LRxPAAycLA7wFFCgRtEPRe9H6hvAZyTv+TzzpqlCOEIJuglaqLjw==
+X-Received: by 2002:a05:620a:1923:b0:7ac:b197:4037 with SMTP id
+ af79cd13be357-7b361fd5530mr117640885a.18.1731621717886; 
+ Thu, 14 Nov 2024 14:01:57 -0800 (PST)
+Received: from DY4X0N7X05.bytedance.net ([130.44.212.152])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dab721d7sm33653205e9.9.2024.11.14.13.16.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 13:16:43 -0800 (PST)
-Message-ID: <5f04a1dc-ca0a-488b-812e-7cebf393f59f@redhat.com>
-Date: Thu, 14 Nov 2024 22:16:41 +0100
+ af79cd13be357-7b35ca308bdsm93742485a.83.2024.11.14.14.01.55
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 14 Nov 2024 14:01:57 -0800 (PST)
+From: Yichen Wang <yichen.wang@bytedance.com>
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ "Shivam Kumar" <shivam.kumar1@nutanix.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
+ "Yichen Wang" <yichen.wang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: [PATCH v7 07/12] util/dsa: Implement DSA task asynchronous submission
+ and wait for completion.
+Date: Thu, 14 Nov 2024 14:01:27 -0800
+Message-Id: <20241114220132.27399-8-yichen.wang@bytedance.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20241114220132.27399-1-yichen.wang@bytedance.com>
+References: <20241114220132.27399-1-yichen.wang@bytedance.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] migration: Do not perform RAMBlock dirty sync
- during the first iteration
-To: Peter Xu <peterx@redhat.com>
-Cc: Yong Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Wei Wang <wei.w.wang@intel.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-References: <c25abae360ac204321acc5010a745a8e594f24bd.1731128180.git.yong.huang@smartx.com>
- <b2e42ed6-d514-46c9-993c-e7ae6384592f@redhat.com>
- <CAK9dgmak97Uv_RO+WFEb+KLkiuZ5+ibO3bigm3379L4aD55TvA@mail.gmail.com>
- <43700d36-b9f8-42da-ba72-b0ec6580032d@redhat.com>
- <CAK9dgmY8BAy4JAj5y-fY_YOpM6b3=86cmckPJZFuk9k=X1TYfQ@mail.gmail.com>
- <3049bc19-2556-4fbf-9d34-578db523b63b@redhat.com> <ZzTkopUrLGL5iqSv@x1n>
- <382461ab-d620-4d2e-becd-720daadf3c55@redhat.com> <ZzUIOFPtvHKDJPei@x1n>
- <8ee7d398-0139-4628-9276-f6a89fa35245@redhat.com> <ZzZPd7Ye09bjUjyR@x1n>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <ZzZPd7Ye09bjUjyR@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72a;
+ envelope-from=yichen.wang@bytedance.com; helo=mail-qk1-x72a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,100 +108,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.11.24 20:28, Peter Xu wrote:
-> On Thu, Nov 14, 2024 at 10:02:37AM +0100, David Hildenbrand wrote:
->> On 13.11.24 21:12, Peter Xu wrote:
->>> On Wed, Nov 13, 2024 at 07:49:44PM +0100, David Hildenbrand wrote:
->>>> I think I had precisely that, and I recall you suggested to have it only
->>>> after the initial sync. Would work for me, but I'd still like to understand
->>>> why essentially none of the "discard" was effective -- all of guest RAM got
->>>> touched.
->>>
->>> Yes it'll be interesting to know..
->>>
->>> One thing I'm wildly guessing is dirty_memory_extend(), so maybe after the
->>> ramblock is created nobody yet to clear the "1"s there for each of the
->>> client, including DIRTY_MEMORY_MIGRATION.  Then it'll be synced to ramblock
->>> bmap only in the initial sync, once for each qemu lifecycle.
->>
->>
->> In ram_block_add() we do the
->>
->> cpu_physical_memory_set_dirty_range(new_block->offset,
->> 				    new_block->used_length,
->> 				    DIRTY_CLIENTS_ALL);
->>
->> ramblock_dirty_bitmap_clear_discarded_pages()->...->migration_clear_memory_region_dirty_bitmap_range()->migration_clear_memory_region_dirty_bitmap()
->> won't end up clearing the bits in the dirty bitmap.
->>
->> First I thought because of:
->>
->> if (!rb->clear_bmap || !clear_bmap_test_and_clear(rb, page)) {
->>      return;
->> }
->>
->> But then I realized that even memory_region_clear_dirty_bitmap() will not
->> clear the ramblock_dirty_bitmap_ bits! It's only concerned about
->> listener->log_clear() calls.
->>
->> Looking for DIRTY_MEMORY_BLOCK_SIZE users, only
->> cpu_physical_memory_sync_dirty_bitmap() and
->> cpu_physical_memory_clear_dirty_range() clear them, whereby the latter is
->> only used when resizing RAMblocks.
->>
->> At first I wondered whether ramblock_dirty_bitmap_clear_discarded_pages()
->> should also call cpu_physical_memory_clear_dirty_range(), but then I am not
->> so sure if that is really the right approach.
-> 
-> That sounds actually reasonable to me so far.. What's the concern in your
-> mind?
+From: Hao Xiang <hao.xiang@linux.dev>
 
-I think what I had in mind was that for the initial bitmap sync, when we 
-set the bmap to all-1s already, we could just clear the whole 
-ramblock_dirty_bitmap_ + KVM ... bitmaps.
+* Add a DSA task completion callback.
+* DSA completion thread will call the tasks's completion callback
+on every task/batch task completion.
+* DSA submission path to wait for completion.
+* Implement CPU fallback if DSA is not able to complete the task.
 
-So, instead of an "initial sync" we might just want to do an "initial 
-clearing" of all bitmaps.
+Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
+Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+---
+ include/qemu/dsa.h |  14 +++++
+ util/dsa.c         | 125 +++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 135 insertions(+), 4 deletions(-)
 
-> 
->>
->>
->> virtio-balloon() calls qemu_guest_free_page_hint() which calls
->>
->> migration_clear_memory_region_dirty_bitmap_range()
->> bitmap_clear()
->>
->> So it would maybe have the same issue.
-> 
-> Should virtio-balloon do the same?
-
-virtio-balloon is more interesting, because I assume here we could run 
-after the "initial clearing" and would want to mark it clean everywhere.
-
-> 
-> So I suppose the idea here is some module may want to say "we should ignore
-> these pages in the dirty bitmap", and so far that's only about migration.
-> 
-> Then cpu_physical_memory_clear_dirty_range() does look like the right thing
-> to do, in which case the bmap in ram_list used to be overlooked.. it seems.
-> 
-> But of course, cpu_physical_memory_clear_dirty_range() still doesn't cover
-> the migration bitmap itself, which is ramblock->bmap.  So we'll need to
-> switch from migration_clear_memory_region_dirty_bitmap() to use things like
-> cpu_physical_memory_clear_dirty_range(), just to cover ram_list bitmaps.
-> Then keeping the rb->bmap operations like before..
-
-For virtio-balloon likely yes. Regarding virtio-mem, maybe "initial 
-clearing" + only modifying the rb->bmap when processing discards could 
-work and would even be more efficient.
-
-(but I'm confused because we have way too many bitmaps, and maybe the 
-KVM one could be problematic without an initial sync ... we'd want an 
-initial clearing for that as well ...)
-
+diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+index cb407b8b49..8284804a32 100644
+--- a/include/qemu/dsa.h
++++ b/include/qemu/dsa.h
+@@ -123,6 +123,20 @@ buffer_zero_batch_task_init(int batch_size);
+  */
+ void buffer_zero_batch_task_destroy(QemuDsaBatchTask *task);
+ 
++/**
++ * @brief Performs buffer zero comparison on a DSA batch task synchronously.
++ *
++ * @param batch_task A pointer to the batch task.
++ * @param buf An array of memory buffers.
++ * @param count The number of buffers in the array.
++ * @param len The buffer length.
++ *
++ * @return Zero if successful, otherwise non-zero.
++ */
++int
++buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
++                              const void **buf, size_t count, size_t len);
++
+ #else
+ 
+ typedef struct QemuDsaBatchTask {} QemuDsaBatchTask;
+diff --git a/util/dsa.c b/util/dsa.c
+index 408c163195..50f53ec24b 100644
+--- a/util/dsa.c
++++ b/util/dsa.c
+@@ -433,6 +433,42 @@ poll_completion(struct dsa_completion_record *completion,
+     return 0;
+ }
+ 
++/**
++ * @brief Helper function to use CPU to complete a single
++ *        zero page checking task.
++ *
++ * @param completion A pointer to a DSA task completion record.
++ * @param descriptor A pointer to a DSA task descriptor.
++ * @param result A pointer to the result of a zero page checking.
++ */
++static void
++task_cpu_fallback_int(struct dsa_completion_record *completion,
++                      struct dsa_hw_desc *descriptor, bool *result)
++{
++    const uint8_t *buf;
++    size_t len;
++
++    if (completion->status == DSA_COMP_SUCCESS) {
++        return;
++    }
++
++    /*
++     * DSA was able to partially complete the operation. Check the
++     * result. If we already know this is not a zero page, we can
++     * return now.
++     */
++    if (completion->bytes_completed != 0 && completion->result != 0) {
++        *result = false;
++        return;
++    }
++
++    /* Let's fallback to use CPU to complete it. */
++    buf = (const uint8_t *)descriptor->src_addr;
++    len = descriptor->xfer_size;
++    *result = buffer_is_zero(buf + completion->bytes_completed,
++                             len - completion->bytes_completed);
++}
++
+ /**
+  * @brief Complete a single DSA task in the batch task.
+  *
+@@ -561,7 +597,7 @@ dsa_completion_loop(void *opaque)
+         (QemuDsaCompletionThread *)opaque;
+     QemuDsaBatchTask *batch_task;
+     QemuDsaDeviceGroup *group = thread_context->group;
+-    int ret;
++    int ret = 0;
+ 
+     rcu_register_thread();
+ 
+@@ -829,7 +865,6 @@ buffer_zero_batch_task_set(QemuDsaBatchTask *batch_task,
+  *
+  * @return int Zero if successful, otherwise an appropriate error code.
+  */
+-__attribute__((unused))
+ static int
+ buffer_zero_dsa_async(QemuDsaBatchTask *task,
+                       const void *buf, size_t len)
+@@ -848,7 +883,6 @@ buffer_zero_dsa_async(QemuDsaBatchTask *task,
+  * @param count The number of buffers.
+  * @param len The buffer length.
+  */
+-__attribute__((unused))
+ static int
+ buffer_zero_dsa_batch_async(QemuDsaBatchTask *batch_task,
+                             const void **buf, size_t count, size_t len)
+@@ -879,13 +913,61 @@ buffer_zero_dsa_completion(void *context)
+  *
+  * @param batch_task A pointer to the buffer zero comparison batch task.
+  */
+-__attribute__((unused))
+ static void
+ buffer_zero_dsa_wait(QemuDsaBatchTask *batch_task)
+ {
+     qemu_sem_wait(&batch_task->sem_task_complete);
+ }
+ 
++/**
++ * @brief Use CPU to complete the zero page checking task if DSA
++ *        is not able to complete it.
++ *
++ * @param batch_task A pointer to the batch task.
++ */
++static void
++buffer_zero_cpu_fallback(QemuDsaBatchTask *batch_task)
++{
++    if (batch_task->task_type == QEMU_DSA_TASK) {
++        if (batch_task->completions[0].status == DSA_COMP_SUCCESS) {
++            return;
++        }
++        task_cpu_fallback_int(&batch_task->completions[0],
++                              &batch_task->descriptors[0],
++                              &batch_task->results[0]);
++    } else if (batch_task->task_type == QEMU_DSA_BATCH_TASK) {
++        struct dsa_completion_record *batch_completion =
++            &batch_task->batch_completion;
++        struct dsa_completion_record *completion;
++        uint8_t status;
++        bool *results = batch_task->results;
++        uint32_t count = batch_task->batch_descriptor.desc_count;
++
++        /* DSA is able to complete the entire batch task. */
++        if (batch_completion->status == DSA_COMP_SUCCESS) {
++            assert(count == batch_completion->bytes_completed);
++            return;
++        }
++
++        /*
++         * DSA encounters some error and is not able to complete
++         * the entire batch task. Use CPU fallback.
++         */
++        for (int i = 0; i < count; i++) {
++
++            completion = &batch_task->completions[i];
++            status = completion->status;
++
++            assert(status == DSA_COMP_SUCCESS ||
++                status == DSA_COMP_PAGE_FAULT_NOBOF);
++
++            task_cpu_fallback_int(completion,
++                                  &batch_task->descriptors[i],
++                                  &results[i]);
++        }
++    }
++}
++
+ /**
+  * @brief Initializes a buffer zero comparison DSA task.
+  *
+@@ -962,3 +1044,38 @@ buffer_zero_batch_task_destroy(QemuDsaBatchTask *task)
+     qemu_sem_destroy(&task->sem_task_complete);
+     qemu_vfree(task);
+ }
++
++/**
++ * @brief Performs buffer zero comparison on a DSA batch task synchronously.
++ *
++ * @param batch_task A pointer to the batch task.
++ * @param buf An array of memory buffers.
++ * @param count The number of buffers in the array.
++ * @param len The buffer length.
++ *
++ * @return Zero if successful, otherwise non-zero.
++ */
++int
++buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
++                              const void **buf, size_t count, size_t len)
++{
++    if (count <= 0 || count > batch_task->batch_size) {
++        return -1;
++    }
++
++    assert(batch_task != NULL);
++    assert(len != 0);
++    assert(buf != NULL);
++
++    if (count == 1) {
++        /* DSA doesn't take batch operation with only 1 task. */
++        buffer_zero_dsa_async(batch_task, buf[0], len);
++    } else {
++        buffer_zero_dsa_batch_async(batch_task, buf, count, len);
++    }
++
++    buffer_zero_dsa_wait(batch_task);
++    buffer_zero_cpu_fallback(batch_task);
++
++    return 0;
++}
 -- 
-Cheers,
-
-David / dhildenb
+Yichen Wang
 
 
