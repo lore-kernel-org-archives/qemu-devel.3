@@ -4,102 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4291D68B12
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C54DD68B12
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Nov 2024 13:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBZsL-0001kf-4Z; Thu, 14 Nov 2024 08:27:09 -0500
+	id 1tBZsg-0001pN-9z; Thu, 14 Nov 2024 08:27:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBZsJ-0001jm-3p
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:27:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tBZsd-0001oe-I9; Thu, 14 Nov 2024 08:27:27 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBZsH-0007Os-Eh
- for qemu-devel@nongnu.org; Thu, 14 Nov 2024 08:27:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731590824;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vKmNwUQm6N8OZ4WFnBjPn/L9WzpJEfMJhrvQsiWkang=;
- b=DyP1OOypu80o3fUOok7pJ1U1webhGUKJj72n4jsopHbl5aQrTA4dQbVQ+B0v4LANZF+lR0
- rUNCHHc9KNxW1Ke+9GE0v4vjaCfMMGhRNSN6gyv21xkg8rOWVyl5QefJGYACWwup70ViGZ
- QJDX4Pdj1kbT6FCd9HZzKT/J0pl5tNQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-qc1s1znXPAehGj2tP5E44g-1; Thu, 14 Nov 2024 08:27:03 -0500
-X-MC-Unique: qc1s1znXPAehGj2tP5E44g-1
-X-Mimecast-MFC-AGG-ID: qc1s1znXPAehGj2tP5E44g
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d56061a4cso370888f8f.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 05:27:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731590822; x=1732195622;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vKmNwUQm6N8OZ4WFnBjPn/L9WzpJEfMJhrvQsiWkang=;
- b=Y+M6ckj9x9sWg9m3Ezy2ifTfL3W6p42tqKnSgS+j93gUdfdUPW0MsIymu5zjzSe5FQ
- IEFv58Nis9u+OcQV/5QaKeDK/v9inuCKDJ/P9Sb+tA6uYDSPhKw1EABSLSOIBeSw6QlB
- AySjE1IQEM7G7ijtcu7dXzWSr4DVXuHqUfkULaoouycA7vJS4yPcnouwFZh38zwhMYZ+
- pn8BS3Lsg7zjTlXQaDQ0RH5HI3kth+3xGapEf54MnIkEaeBtlySOPl/YYu4WNqewZvaQ
- km0gzgzGcAx6BYUzXdhaGexnrnY3G3zfb5CELws5OCDoUQzNGUhdTo9MLXEQVX8JoKXh
- hVNg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX7yFvSxp69rT81fPVj8RamCgt3OxLuwTPhVuEXJ8AEnMHhSKyibkP9B4fsfXrbiqqh3ttgtFENH7lA@nongnu.org
-X-Gm-Message-State: AOJu0YyRPZxS2cXBHDMeQoBGGuhbM7uqfb1WKd9zy/v9k4xwjSjhKTLj
- c9imymgnyQ25idRGyxUKhxOEhO1Vj2d7LR6GKXhe/ZQQ37W60JGj/gZ78yRhbj0tM0Q0m0p9uzu
- OchiEsySTVkLc1OygH59hwVbpiO426KdoIFHTiO+FJ1c2loVawMnfNTI9NeX8p051MPMk9AzW+7
- /BruO34d3QzPz8U0R5Ehg5bcIEfDs=
-X-Received: by 2002:a05:6000:1567:b0:374:c17a:55b5 with SMTP id
- ffacd0b85a97d-3820810fdb5mr9327343f8f.14.1731590822096; 
- Thu, 14 Nov 2024 05:27:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF1tO9NFPBCq8KEX3IMOfL0txo+saZQ64eLCfz1SWhqaRTqA46/k/L5IMs1FYU3ex4uzBfEZoNnm4Q0DhdLEng=
-X-Received: by 2002:a05:6000:1567:b0:374:c17a:55b5 with SMTP id
- ffacd0b85a97d-3820810fdb5mr9327293f8f.14.1731590821354; Thu, 14 Nov 2024
- 05:27:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tBZsb-000813-5S; Thu, 14 Nov 2024 08:27:27 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xq1852nW1z6K67D;
+ Thu, 14 Nov 2024 21:24:05 +0800 (CST)
+Received: from frapeml100007.china.huawei.com (unknown [7.182.85.133])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0793C140257;
+ Thu, 14 Nov 2024 21:27:18 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100007.china.huawei.com (7.182.85.133) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 14 Nov 2024 14:27:17 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Thu, 14 Nov 2024 14:27:17 +0100
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [RFC PATCH 2/5] hw/arm/smmuv3: Add initial support for SMMUv3
+ Nested device
+Thread-Topic: [RFC PATCH 2/5] hw/arm/smmuv3: Add initial support for SMMUv3
+ Nested device
+Thread-Index: AQHbMeWSJ83HnnIr30KCqoK78hZMsLK1adCAgAEJZ8D///pdgIAAXtkg
+Date: Thu, 14 Nov 2024 13:27:17 +0000
+Message-ID: <32c27b0eba83476e99abf1e68ae127e3@huawei.com>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <20241108125242.60136-3-shameerali.kolothum.thodi@huawei.com>
+ <00e8a5d6-c926-44bb-8d11-dab4ddc4820d@redhat.com>
+ <7a3b6dcb5db349f5a7e718784ef46c97@huawei.com>
+ <991e3963-245e-41af-b128-431520c7d4e3@redhat.com>
+In-Reply-To: <991e3963-245e-41af-b128-431520c7d4e3@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20241113142343.40832-1-phil@philjordan.eu>
- <20241113142343.40832-2-phil@philjordan.eu>
- <c0983059-ab11-4bc5-ab60-c5b23d1c290e@redhat.com>
- <CAGCz3vv+5y=YGqZaXnGkVj0zA9fX-n3BOZyuPQC+dRMKN8VJZw@mail.gmail.com>
-In-Reply-To: <CAGCz3vv+5y=YGqZaXnGkVj0zA9fX-n3BOZyuPQC+dRMKN8VJZw@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 14 Nov 2024 14:26:48 +0100
-Message-ID: <CABgObfat1JwiBFNKHK6wwMkW5kgaqZfKJa=rW_9VvEdMWJR75A@mail.gmail.com>
-Subject: Re: [PATCH v10 01/15] ui & main loop: Redesign of system-specific
- main thread event handling
-To: Phil Dennis-Jordan <lists@philjordan.eu>
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
- agraf@csgraf.de, 
- peter.maydell@linaro.org, rad@semihalf.com, quic_llindhol@quicinc.com, 
- stefanha@redhat.com, mst@redhat.com, slp@redhat.com, 
- richard.henderson@linaro.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
- gaosong@loongson.cn, jiaxun.yang@flygoat.com, chenhuacai@kernel.org, 
- kwolf@redhat.com, hreitz@redhat.com, philmd@linaro.org, shorne@gmail.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com, 
- akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org, 
- qemu-riscv@nongnu.org, balaton@eik.bme.hu
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.69,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.69, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,79 +82,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 14, 2024 at 11:32=E2=80=AFAM Phil Dennis-Jordan <lists@philjord=
-an.eu> wrote:
->> I checked what GTK+ does and, either way, you have to create another
->> thread: timers are handled with a CFRunLoopTimer, but file descriptors
->> are polled in a separate thread and sent to the main thread with a
->> single CFRunLoopSource.  It's a bit nicer that the main thread is in
->> charge, but it's more complex and probably slower too.
->
->
-> Just to clarify: is this supposed to be happening inside the GTK+ library=
- itself? i.e. GTK should spawn its own thread to poll file descriptors that=
- are owned by GTK? (As opposed to the file descriptors used by QEMU's own e=
-vent loop - what on Linux are eventfds, but on macOS I think are just pipes=
-*.)
-
-It's what I saw in the GTK+ source code.
-
-https://gitlab.gnome.org/GNOME/gtk/-/blob/main/gdk/macos/gdkmacoseventsourc=
-e.c?ref_type=3Dheads
-
-> This doesn't describe what I'm seeing when I run with -display gtk on mac=
-OS. There's no extra thread created. There's a dock icon, but it's non-inte=
-ractive ("Application not responding"), there aren't any menus, and there's=
- no window. QEMU's own simulation is running in the background - I can reac=
-h a guest via the network. So I guess there's some function in GTK we're su=
-pposed to be calling that will make it crank the native event loop on macOS=
-, but this isn't being done?
-
-In theory it should work, with the event source added as soon as GTK+
-is started... aha!
-
-We do not use the GMainContext's poll_func, we use qemu_poll_ns.
-That's the missing part: GDK replaces the poll_func with one that
-calls nextEventMatchingMask:
-
-https://gitlab.gnome.org/GNOME/gtk/-/blame/main/gdk/macos/gdkmacoseventsour=
-ce.c?ref_type=3Dheads#L767
-
-There could be more issues, but I think for now it's better to block
-the GTK+ UI under macOS.
-
-[...]
-
->> As long as it's clear that any handlers that go through the CFRunLoop
->> run outside the BQL, as is already the case for the Cocoa UI, I see no
->> problem with this approach.
->
-> I'm not entirely sure what you're getting at here, to be honest. The UI t=
-hread can definitely not assume to be holding the BQL all the time; we'd ha=
-ve to treat it more like an AIOContext. It could pave the way towards putti=
-ng the display and UI subsystems on their own AIOContext or AIOContext-like=
--thing, rather than hogging the BQL for expensive image operations.
-
-Don't worry, I was mostly talking to myself... The UI thread, and more
-specifically any handlers that are called from CFRunLoop instead of
-QEMU's main loop, will have to use mutexes or bql_lock()/bql_unlock(),
-like ui/cocoa.m already does.
-
-In other words, code that interacts with Apple's paravirtualized
-graphics needs to know if it runs from the CFRunLoop or from
-qemu_main().
-
-> (*By the sound of it, Win32 has an all-UI-calls-on-one-thread requirement=
- as well which we may be violating to some degree via the GTK and/or SDL ba=
-ckends as well; my adventures with Win32 are almost 20 years back now so I'=
-m a bit out of the loop there.)
-
-Hmm, no I don't remember anything like that for Windows but it's also
-been many years for me.
-
-Paolo
-
+SGkgRXJpYywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBFcmljIEF1
+Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+IFNlbnQ6IFRodXJzZGF5LCBOb3ZlbWJlciAx
+NCwgMjAyNCA4OjQyIEFNDQo+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+IDxzaGFt
+ZWVyYWxpLmtvbG90aHVtLnRob2RpQGh1YXdlaS5jb20+OyBxZW11LWFybUBub25nbnUub3JnOw0K
+PiBxZW11LWRldmVsQG5vbmdudS5vcmcNCj4gQ2M6IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsg
+amdnQG52aWRpYS5jb207IG5pY29saW5jQG52aWRpYS5jb207DQo+IGRkdXRpbGVAcmVkaGF0LmNv
+bTsgTGludXhhcm0gPGxpbnV4YXJtQGh1YXdlaS5jb20+OyBXYW5nemhvdSAoQikNCj4gPHdhbmd6
+aG91MUBoaXNpbGljb24uY29tPjsgamlhbmdrdW5rdW4gPGppYW5na3Vua3VuQGh1YXdlaS5jb20+
+Ow0KPiBKb25hdGhhbiBDYW1lcm9uIDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+Ow0KPiB6
+aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZw0KPiBTdWJqZWN0OiBSZTogW1JGQyBQQVRDSCAyLzVdIGh3
+L2FybS9zbW11djM6IEFkZCBpbml0aWFsIHN1cHBvcnQgZm9yDQo+IFNNTVV2MyBOZXN0ZWQgZGV2
+aWNlDQoNCg0KPiA+PiB3aHkgZGlkIHlvdSBjaG9vc2Ugbm90IHVzaW5nIHRoZSBQTEFURk9STSBC
+VVMgaW5mcmEgd2hpY2ggZG9lcyB0aGF0DQo+ID4+IGtpbmQgb2YgYmluZGluZyBhdXRvbWF0aWNh
+bGx5IChhbHNvIGl0IHByb3Zpc2lvbnMgZm9yIGRlZGljYXRlZCBNTUlPcw0KPiBhbmQNCj4gPj4g
+SVJRcykuIEF0IGxlYXN0IHlvdSB3b3VsZCBuZWVkIHRvIGp1c3RpZnkgaW4gdGhlIGNvbW1pdCBt
+c2cgSSB0aGluaw0KPiA+IEJlY2F1c2UgSSB3YXMgbm90ICBzdXJlIGhvdyB0byBkbyB0aGlzIGJp
+bmRpbmcgb3RoZXJ3aXNlLiBJIGNvdWxkbid0IGZpbmQNCj4gPiBhbnkgc3VjaCBwcmVjZWRlbmNl
+ICBmb3IgYSAgZHluYW1pYyBwbGF0Zm9ybSBidXMgZGV2IGJpbmRpbmcNCj4gPiBNTUlPcy9JUlFz
+KE1heSBiZSBJIGRpZG4ndCBsb29rIGhhcmQpLiBJIG1lbnRpb25lZCBpdCBpbiBjb3ZlciBsZXR0
+ZXIuDQo+ID4NCj4gPiBDb3VsZCB5b3UgcGxlYXNlIGdpdmUgbWUgc29tZSBwb2ludGVycy9leGFt
+cGxlIGZvciB0aGlzPyBJIHdpbGwgYWxzbw0KPiA+IHRha2UgYW5vdGhlciBsb29rLg0KPiB2Zmlv
+IHBsYXRmb3JtIHVzZXJzIHN1Y2ggYXV0b21hdGljIGJpbmRpbmcgKGhvd2V2ZXIgeW91IG11c3Qg
+Y2hlY2sgdGhhdA0KPiB2ZmlvIHBsYXRmb3JtIGJ1cyBtbWlvIGFuZCBpcnEgc3BhY2UgaXMgbGFy
+Z2UgZW5vdWdoIGZvciB5b3VyIG5lZWRzKS4NCj4gDQo+IHRoZSBiaW5kaW5nIGlzIHRyYW5zcGFy
+ZW50bHkgaGFuZGxlZCBieQ0KPiDCoMKgwqAgaWYgKHZtcy0+cGxhdGZvcm1fYnVzX2Rldikgew0K
+PiDCoMKgwqDCoMKgwqDCoCBpZiAoZGV2aWNlX2lzX2R5bmFtaWNfc3lzYnVzKG1jLCBkZXYpKSB7
+DQo+IA0KPiBwbGF0Zm9ybV9idXNfbGlua19kZXZpY2UoUExBVEZPUk1fQlVTX0RFVklDRSh2bXMt
+DQo+ID5wbGF0Zm9ybV9idXNfZGV2KSwNCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFNZU19CVVNfREVWSUNF
+KGRldikpOw0KPiDCoMKgwqDCoMKgwqDCoCB9DQo+IMKgwqDCoCB9DQoNCkFoLi5JIHNlZS4gSSBt
+aXNzZWQgdGhhdCBpdCBkb2VzIHRoYXQgdHJhbnNwYXJlbnRseS4gIEFuZCB1c2UgDQpwbGF0Zm9y
+bV9idXNfZ2V0X21taW9fYWRkcigpIGZvciByZXRyaWV2aW5nIGl0IGZvciBBQ1BJL0RUIHNpbWls
+YXIgdG8gd2hhdCBUUE0NCmRldmljZSBpcyBkb2luZy4NCg0KU28gd2UgZG9uJ3QgbmVlZCBzcGVj
+aWZpYyBlbnRyaWVzIGZvciB0aGlzIGRldmljZSBpbiBtZW1tYXAvaXJxbWFwLg0KDQpJIHdpbGwg
+Z2l2ZSBpdCBhIHRyeS4NCg0KVGhhbmtzLA0KU2hhbWVlci4NCg0KDQo=
 
