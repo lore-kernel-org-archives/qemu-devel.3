@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFA7D68BC6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCCDD68BC8
 	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 15:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBy8c-0002FB-1n; Fri, 15 Nov 2024 10:21:34 -0500
+	id 1tBy8C-0001nN-1M; Fri, 15 Nov 2024 10:21:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBy8Y-0002E5-R0
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:21:30 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBy89-0001nD-W6
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:21:06 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBy8X-00047N-9q
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:21:30 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4315c1c7392so17230905e9.1
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 07:21:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBy87-00043e-MT
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:21:05 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4315df7b43fso16214175e9.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 07:21:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731684083; x=1732288883; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731684061; x=1732288861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m4OKJRqPnTe7YcrvpW1zRARrSn3+9ueaSfuhvBrykFc=;
- b=Q+ImcEyYKSQEeyJW7bHwgOl5q//FN01StOW1m7rk2yzNYgk4n0p5XZ/BEw/za9QwOH
- HW/iS1YjUNNr1ehRqyGSwnK3+Cn6NQM4EC9NXVYjyvzTxVXI9vEEgmv6QgGIRLIx6DF+
- wY3mfXa1/Li7ztsV3KGNhOgmckCkba3hxTn6hEdrgQ2iCjCb1m1RGywrUAa2EAhA+uJr
- glDHvdfuZQ3kC19RF+TCJNE9x6kfBXCREtq353/GKIomJO6bzg2Y6qu9qYVwZPRls/RD
- jDTZR9GCkcHEqo18LsqbX0jF+liDw/HAJCdTcpC7WZO+OcaqsNzb+/7TINr6PXU7un8h
- S+NQ==
+ bh=ZHhL6wb85s4vVZ9BFDdlVsTHRSAYWS3+Ku4UPdQPugs=;
+ b=kwQghvE43+ZoRdzJTiKU8xE0miAcJaXEO0apx7YYj66PN0B3Zhm+Ajn0geIZIGdyAX
+ dWekkX5+xj0wnXUt8XSvBdH7BHKa//s5AXkPUFQa//AphWcyfoe2ebtyx7t6p8JTw7lK
+ LyVU0WzXchJYc0rnZDmDmzgj3/2gGPxnUu5xB3sK0DjE/ndsnO9B+V5mqR+g0yOYhFJ/
+ JXoTV+RjEnm8mQmdK1q0cl/Uj/JiaRtPtrejjPR2curnpW5gkzd2xzySgfAw4QvRKXFN
+ BB9GNtQzW/75aBSqYHGpBAf8wADo81CqaxLY1U1expkcTIJAqCFOcuicxZ3BjrlPnYl5
+ Tllw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731684083; x=1732288883;
+ d=1e100.net; s=20230601; t=1731684061; x=1732288861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=m4OKJRqPnTe7YcrvpW1zRARrSn3+9ueaSfuhvBrykFc=;
- b=SFZ5fau38EnYPnrHsOP416QkSZg426EJm48An9zMxSUwsHVXc2pg6FuoMQvoVcMG8p
- L+l/VVseF43S+ee4I1c057DogXZKt7xrhdpcEysuHSq0Ct2j9L7StC45he4siGBbg3uw
- YQpZTRq4uPSNLZXIo58GBzElZEjq5TS2oHWSYkyDZPFw8099x3ieBTCOf2OUoO8GppaS
- O/L/U6obhmi/vKE1r2teRCtnmk9PjwLKKEV3g+vViXm9ohauATgJDBSdluvkeCCRwnlB
- zJUOtDaZAyjIz45h7f3WR47dURDxDG6SLZYUVj/XgmvFFLgothgGkdaQeoBn9vFB5i1r
- ibXQ==
-X-Gm-Message-State: AOJu0YyZu9HHUDyLV2GpinIolU7DjvInZ2351lYAxektW80soAkrZ1qO
- 2CxfCkh6fNkPnozb8KbmFN3/X3weE391ruANuMx/vQCVfWwO4ZM3mcQ0obVHMaQM5gJV64lweVY
- a
-X-Google-Smtp-Source: AGHT+IFLmrRv17ZtP4qeMoM5Wo/o9YHjBBpOCOeUtURfLycwsVqGyY+eb8PJNx5XJXZ93tYmySadTw==
-X-Received: by 2002:a05:600c:3c9a:b0:431:5465:807b with SMTP id
- 5b1f17b1804b1-432df793de8mr22303915e9.32.1731684081208; 
- Fri, 15 Nov 2024 07:21:21 -0800 (PST)
+ bh=ZHhL6wb85s4vVZ9BFDdlVsTHRSAYWS3+Ku4UPdQPugs=;
+ b=ai8sWhkaQCm+JgUlPT/so9PNIIHnLyawcfOxhW6md38deWPb9WnnXkc49ZEYHpFR0H
+ PQuFjXlc6j263i7th4yKZ0xlRkaHIKPlVXiB8czMrOd66qP8QQeF0xzlte3bkJ+BgIVy
+ Q7nm6Pet0B1iClArzOj1W3JSbpdU1pOam9JizQ1cGPjw3EpGI41cnpcPsUZyothJ18Ik
+ q/yBsUUGYNP3TXZC4R8qq8+QPlRRZjwQssM519VltRykDDeA50qNXN+qoBb2rST0kx2e
+ 6hlTBzdHEH+Zne07wHPoUdRDa4WTNw0qDu4XiF/znmzuH8fubLJVFT/7BLH7mKg5AAua
+ 1v0g==
+X-Gm-Message-State: AOJu0Yy9INRXZcC1GweCOhjgdqapyiF2N+hWVpHkP3z4eC/BcxV3C04a
+ ZXXU+TDertlrAgIIUi0RB3c0EdIMTvc4aypnHe9rpxBhoQ4yyhnL/8mxPBZsQpOFa5gUSVxH9zZ
+ 5
+X-Google-Smtp-Source: AGHT+IFcZqtj0nrYajCPzZ2ZxHFcoOHUpsn12FX+AoPttX2uVp/ShhRLVZMmFwr0HU4t65Eh76cQ9g==
+X-Received: by 2002:a05:600c:1382:b0:431:5d4f:73a3 with SMTP id
+ 5b1f17b1804b1-432df74f0d4mr23861875e9.18.1731684060699; 
+ Fri, 15 Nov 2024 07:21:00 -0800 (PST)
 Received: from localhost.localdomain ([176.187.214.209])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dab80582sm57070575e9.19.2024.11.15.07.21.20
+ 5b1f17b1804b1-432dab721d7sm58337185e9.9.2024.11.15.07.20.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Nov 2024 07:21:20 -0800 (PST)
+ Fri, 15 Nov 2024 07:21:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 05/10] accel/tcg: Move cpu_unwind_state_data() declaration
-Date: Fri, 15 Nov 2024 16:20:48 +0100
-Message-ID: <20241115152053.66442-6-philmd@linaro.org>
+Subject: [PATCH 01/10] target/mips: Drop left-over comment about Jazz machine
+Date: Fri, 15 Nov 2024 16:20:44 +0100
+Message-ID: <20241115152053.66442-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241115152053.66442-1-philmd@linaro.org>
 References: <20241115152053.66442-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,62 +94,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpu_unwind_state_data() is specific to TCG accelerator,
-move it to "exec/translate-all.h".
+Commit 3803b6b427 ("target/mips: Fold jazz behaviour into
+mips_cpu_do_transaction_failed") removed update on TCGCPUOps
+and commit 119065574d ("hw/core: Constify TCGCPUOps") made
+it const. Remove the now irrelevant comment.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/cpu-common.h    | 13 -------------
- include/exec/translate-all.h | 12 ++++++++++++
- 2 files changed, 12 insertions(+), 13 deletions(-)
+ target/mips/cpu.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 638dc806a5..b36fbf2a39 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -193,19 +193,6 @@ void tcg_cflags_set(CPUState *cpu, uint32_t flags);
- /* current cflags for hashing/comparison */
- uint32_t curr_cflags(CPUState *cpu);
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index d0a43b6d5c..7c6f438e5d 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -546,10 +546,6 @@ static Property mips_cpu_properties[] = {
  
--/**
-- * cpu_unwind_state_data:
-- * @cpu: the cpu context
-- * @host_pc: the host pc within the translation
-- * @data: output data
-- *
-- * Attempt to load the the unwind state for a host pc occurring in
-- * translated code.  If @host_pc is not in translated code, the
-- * function returns false; otherwise @data is loaded.
-- * This is the same unwind info as given to restore_state_to_opc.
+ #ifdef CONFIG_TCG
+ #include "hw/core/tcg-cpu-ops.h"
+-/*
+- * NB: cannot be const, as some elements are changed for specific
+- * mips hardware (see hw/mips/jazz.c).
 - */
--bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
--
- /**
-  * cpu_restore_state:
-  * @cpu: the cpu context
-diff --git a/include/exec/translate-all.h b/include/exec/translate-all.h
-index 85c9460c7c..f06cfedd52 100644
---- a/include/exec/translate-all.h
-+++ b/include/exec/translate-all.h
-@@ -21,6 +21,18 @@
- 
- #include "exec/exec-all.h"
- 
-+/**
-+ * cpu_unwind_state_data:
-+ * @cpu: the cpu context
-+ * @host_pc: the host pc within the translation
-+ * @data: output data
-+ *
-+ * Attempt to load the the unwind state for a host pc occurring in
-+ * translated code.  If @host_pc is not in translated code, the
-+ * function returns false; otherwise @data is loaded.
-+ * This is the same unwind info as given to restore_state_to_opc.
-+ */
-+bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
- 
- /* translate-all.c */
- void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
+ static const TCGCPUOps mips_tcg_ops = {
+     .initialize = mips_tcg_init,
+     .synchronize_from_tb = mips_cpu_synchronize_from_tb,
 -- 
 2.45.2
 
