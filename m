@@ -4,100 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2950AD6DDD2
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 05:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF00CD6DDD7
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 06:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBoVN-0003ev-Bs; Fri, 15 Nov 2024 00:04:25 -0500
+	id 1tBph6-00052X-8F; Fri, 15 Nov 2024 01:20:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tBoVJ-0003eY-9v; Fri, 15 Nov 2024 00:04:21 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBpgx-000528-T7
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 01:20:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tBoVH-0005om-53; Fri, 15 Nov 2024 00:04:20 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AF0jpsa000685;
- Fri, 15 Nov 2024 05:04:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=kc2ZRv
- eXoKLxZdhET8xG7q1o6vYUC5qE1INPXTV12+M=; b=tn5vqlmvpA2ZtIRgKGxeok
- XwHgMDyU1tn7cAeGGIQow3fnt2aYIRH/Ng7Ic21+UGun3ZTrS8FFLxd4W1x/BAey
- cIszCjeGhg80l63j26uCsKUMdDrpfr2Z5SVnbcdrkeLTAwiEI/Lxq9sj1HjgwJkD
- WzfyDgvpmkxZv548llRABVQr5Ip8VDMq5HiZgimswA/F1AfwTIwJoiPJoiTKteOS
- /aEXys5+5yl3UcI80LfmYrymCVCHjfTb+qrq53Berv1PGq6bJQhe9LzBAggBEkud
- gRMcX3p3fLloCRVJFEul5XRxS4hN5m2rZH9j8tnmU5URB1b6IQMjXLEdENZHiVMg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42wren1psk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Nov 2024 05:04:11 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AF3ZDEO029721;
- Fri, 15 Nov 2024 05:03:47 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42tkjmpgt7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Nov 2024 05:03:47 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4AF53jIu41157110
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Nov 2024 05:03:46 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DCD9F58059;
- Fri, 15 Nov 2024 05:03:45 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC4DE58058;
- Fri, 15 Nov 2024 05:03:44 +0000 (GMT)
-Received: from [9.61.112.252] (unknown [9.61.112.252])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 15 Nov 2024 05:03:44 +0000 (GMT)
-Message-ID: <49ccaeee-b811-4daf-99e7-4245303d611b@linux.ibm.com>
-Date: Fri, 15 Nov 2024 00:03:43 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBpgu-0002ad-9V
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 01:20:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731651618;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=EaCqrRB3RmKEG3X1AgjHjHMDce/A3DUOvx1K9jwbsMw=;
+ b=Wx02dfq+JqFbxzu8jHGuXaCOj/+Kt3RLdUHHshLSX5cy15TvbiHIEbl/RE/yJDtlI1Fa1E
+ BECBTKyTXB/QnsCWaZgq+sIWnKIQGpMxwvQtNVb62j6/69XXQbPqLqcSxHOEvwuKcLfohf
+ /bzv6+FaCA6z+wAUrEQPgCerYMEUebw=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-584-dl_BIR-hNn6OeF_hzJ-eLg-1; Fri, 15 Nov 2024 01:20:12 -0500
+X-MC-Unique: dl_BIR-hNn6OeF_hzJ-eLg-1
+X-Mimecast-MFC-AGG-ID: dl_BIR-hNn6OeF_hzJ-eLg
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-460b71eb996so17899511cf.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 22:20:12 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731651612; x=1732256412;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EaCqrRB3RmKEG3X1AgjHjHMDce/A3DUOvx1K9jwbsMw=;
+ b=jl1dQDtRR1Q3fz3jT/gQbD3o9v5fmEpWgpjElQB65EtplYEVxbl2B4+MUVg4zSkEA5
+ IkJGphL6tAV+bAyiTDq/xJEVG1RZ+EkAAX7exJnVUihSCL6+bpput0Wc/CBFDULUKi9c
+ xJS5eUsqQfLkYvYIOoYgc89xX0OjVEkKsMkGyNvJaH3dVwPtnDN1Klw9DhcGs7suTEO4
+ GPx5vQUTbQ81nEVaWFL6LJrD1ZLzmvL56592nShzRWyQ4OWDutxpt9nXeB8RkgOpZxpI
+ RMOtCSXUo7GqMZulDqLCFoC5otdbz7tJnMeG9JI3ePgg6floHVfFolWxM7V0xX6ZSBiZ
+ 6BpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUT5dma7biq7/iY4evF9lpyer70NZqHZxwWHedAM9iDv3a64+rTSxjKuf+JhL5n6LfA4X78Mqvh85Cz@nongnu.org
+X-Gm-Message-State: AOJu0YwbvVNVO5Kf/4YJ/L8w2mGj1L7KfxvqHUIW3QtvTxex4lng1y9o
+ 2lg4O1wX4jhTZxrYlUXSIEiQ0iHAGWJzhxoliQKrQkmcoPi9+pz4GHmXDs+riA6/bcWKmoskeQ6
+ Xj20AV4hESdfOuGIVPJGf1p6Yiu7YqOzDggwP90TMhy1LL8DSz0HH
+X-Received: by 2002:a05:622a:1c10:b0:462:d816:4dd2 with SMTP id
+ d75a77b69052e-46363ec0a16mr22432651cf.49.1731651612483; 
+ Thu, 14 Nov 2024 22:20:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHL7oIVxteZt0mpU0wheDWqOwbqXqii9NQUnu4aXBu6EuyANKHd2NgvBGA0162F/WBzpvTiPQ==
+X-Received: by 2002:a05:622a:1c10:b0:462:d816:4dd2 with SMTP id
+ d75a77b69052e-46363ec0a16mr22432411cf.49.1731651612114; 
+ Thu, 14 Nov 2024 22:20:12 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-49-115.web.vodafone.de.
+ [109.42.49.115]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4635ab5d3dbsm15280381cf.75.2024.11.14.22.20.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Nov 2024 22:20:11 -0800 (PST)
+Message-ID: <dc3b5d9e-a744-45a8-bd29-40bd3a744b0d@redhat.com>
+Date: Fri, 15 Nov 2024 07:20:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw: Add "loadparm" property to scsi disk devices for
- booting on s390x
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Boris Fiuczynski <fiuczy@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Fam Zheng <fam@euphon.net>, Eric Farman <farman@linux.ibm.com>
-References: <20241114122919.973930-1-thuth@redhat.com>
+Subject: Re: [PATCH] pc-bios/s390x: Initialize machine loadparm before probing
+ IPL devices
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com
+References: <20241114161952.3508554-1-jrossi@linux.ibm.com>
 Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20241114122919.973930-1-thuth@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241114161952.3508554-1-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ai-XUDE0FshGaha7M3WQ8PtxVzN2KoEJ
-X-Proofpoint-ORIG-GUID: ai-XUDE0FshGaha7M3WQ8PtxVzN2KoEJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- malwarescore=0 suspectscore=0 priorityscore=1501 mlxscore=0 spamscore=0
- mlxlogscore=999 phishscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411150041
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,115 +148,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With documentation of per-device loadparm behavior during device probing
-similar to suggestion here:
-  https://lore.kernel.org/qemu-devel/20241115002742.3576842-1-jrossi@linux.ibm.com/
-
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-
-On 11/14/24 7:29 AM, Thomas Huth wrote:
-> While adding the new flexible boot order feature on s390x recently,
-> we missed to add the "loadparm" property to the scsi-hd and scsi-cd
-> devices. This property is required on s390x to pass the information
-> to the boot loader about which kernel should be started or whether
-> the boot menu should be shown. But even more serious: The missing
-> property is now causing trouble with the corresponding libvirt patches
-> that assume that the "loadparm" property is either settable for all
-> bootable devices (when the "boot order" feature is implemented in
-> QEMU), or none (meaning the behaviour of older QEMUs that only allowed
-> one "loadparm" at the machine level). To fix this broken situation,
-> let's implement the "loadparm" property for the SCSI devices, too.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On 14/11/2024 17.19, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Commit bb185de423 ("s390x: Add individual loadparm assignment to
+> CCW device") allowed boot devices to be assigned a loadparm value independent
+> of the machine value, however, when no boot devices are defined, the machine
+> loadparm becomes ignored. Therefore, let's check the machine loadparm
+> prior to probing the devices.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->   NB: Unlike the ccw_device_set_loadparm() logic that we use for CCW
->       devices, I've decided to use a string property for the "loadparm"
->       in the SCSI devices to avoid spoiling the common code with too much
->       s390x logic. So the check for valid characters is now done after the
->       property has been set, i.e. we only print out an error instead of
->       forbidding the setting (like we do it with the CCW devices), which
->       is IMHO still perfectly acceptable. Or are there other opinions?
->
->   hw/s390x/ipl.c      | 22 +++++++++++++++++++---
->   hw/scsi/scsi-disk.c |  2 ++
->   2 files changed, 21 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index dc02b0fdda..c902b562cb 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -416,12 +416,10 @@ static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
->       return chain_addr;
->   }
->   
-> -void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
-> +static void s390_sanitize_loadparm(uint8_t *loadparm, char *str, Error **errp)
+>   pc-bios/s390-ccw/main.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index a4d1c05aac..a6cc6d7906 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -191,7 +191,7 @@ static void boot_setup(void)
 >   {
->       int i;
+>       char lpmsg[] = "LOADPARM=[________]\n";
 >   
-> -    /* Initialize the loadparm with spaces */
-> -    memset(loadparm, ' ', LOADPARM_LEN);
->       for (i = 0; i < LOADPARM_LEN && str[i]; i++) {
->           uint8_t c = qemu_toupper(str[i]); /* mimic HMC */
->   
-> @@ -435,6 +433,13 @@ void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
+> -    if (memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+> +    if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+>           ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
+>       } else {
+>           sclp_get_loadparm_ascii(loadparm_str);
+> @@ -315,6 +315,7 @@ void main(void)
+>       css_setup();
+>       have_iplb = store_iplb(&iplb);
+>       if (!have_iplb) {
+> +        boot_setup();
+>           probe_boot_device();
 >       }
->   }
 >   
-> +void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
-> +{
-> +    /* Initialize the loadparm with spaces */
-> +    memset(loadparm, ' ', LOADPARM_LEN);
-> +    s390_sanitize_loadparm(loadparm, str, errp);
-> +}
-> +
->   void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
->   {
->       int i;
-> @@ -452,6 +457,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->       SCSIDevice *sd;
->       int devtype;
->       uint8_t *lp;
-> +    g_autofree void *scsi_lp = NULL;
->   
->       /*
->        * Currently allow IPL only from CCW devices.
-> @@ -463,6 +469,16 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->           switch (devtype) {
->           case CCW_DEVTYPE_SCSI:
->               sd = SCSI_DEVICE(dev_st);
-> +            scsi_lp = object_property_get_str(OBJECT(sd), "loadparm", NULL);
-> +            if (scsi_lp && strlen(scsi_lp) > 0) {
-> +                Error *errp = NULL;
-> +                s390_sanitize_loadparm(scsi_lp, scsi_lp, &errp);
-> +                if (errp) {
-> +                    error_report_err(errp);
-> +                } else {
-> +                    lp = scsi_lp;
-> +                }
-> +            }
->               iplb->len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
->               iplb->blk0_len =
->                   cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN - S390_IPLB_HEADER_LEN);
-> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-> index cb222da7a5..c1fa02883d 100644
-> --- a/hw/scsi/scsi-disk.c
-> +++ b/hw/scsi/scsi-disk.c
-> @@ -111,6 +111,7 @@ struct SCSIDiskState {
->       char *vendor;
->       char *product;
->       char *device_id;
-> +    char *loadparm;
->       bool tray_open;
->       bool tray_locked;
->       /*
-> @@ -3165,6 +3166,7 @@ static const TypeInfo scsi_disk_base_info = {
->       DEFINE_PROP_STRING("vendor", SCSIDiskState, vendor),                \
->       DEFINE_PROP_STRING("product", SCSIDiskState, product),              \
->       DEFINE_PROP_STRING("device_id", SCSIDiskState, device_id),          \
-> +    DEFINE_PROP_STRING("loadparm", SCSIDiskState, loadparm),            \
->       DEFINE_PROP_BOOL("migrate-emulated-scsi-request", SCSIDiskState, migrate_emulated_scsi_request, true)
->   
->   
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
