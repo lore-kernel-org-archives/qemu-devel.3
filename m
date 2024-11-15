@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A332D68BCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8397D68BCD
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tC04b-00041W-HK; Fri, 15 Nov 2024 12:25:33 -0500
+	id 1tC04k-00043B-1V; Fri, 15 Nov 2024 12:25:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tC04Z-00040v-VF
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:32 -0500
+ id 1tC04f-00042f-I2
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tC04Y-0001VY-1c
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:31 -0500
+ id 1tC04d-0001WJ-NF
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731691527;
+ s=mimecast20190719; t=1731691534;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=oFZPejj6MxCF//zJW39Q22oWnHIj1PZf4Dv6EFnqtTw=;
- b=evBTbDTvpTtL+TkbW7N5sEhqLvNpT70ZOrp2944F6KpN8Rq3fnSf4JXGhyiROfZOzoqFB0
- Bt1du+DeIZ+fC6Mbk2nYWK+Z9J80NFdS8F16LzXz/UmXQZrHDYBUf6p/YUUPoryzvTU4vr
- FDwr8NR0C2ML1Qfj0slTM1yDnxi10ik=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cgD9ehYu1Tjdp6JJALrItoKNs/50PojM5Ut2/ekClU8=;
+ b=W1nCyjgS9Antc71kDz0lU183T+/DKFw15E10OM5ciltLAW8EMjlCrxvXKITL1luD/0E8eQ
+ CnQHKUHPrf9X97MyQHAePxwEO7PKVWd/m9fuAvQIyWI7LNgdUJ8O9wpzb7jwpwW2acexrH
+ muwvVnTpckcWXKWRrIqmvWJLXTHOWmM=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-PVvQxx_XNmmTUs0zk4Xn8A-1; Fri,
- 15 Nov 2024 12:25:26 -0500
-X-MC-Unique: PVvQxx_XNmmTUs0zk4Xn8A-1
-X-Mimecast-MFC-AGG-ID: PVvQxx_XNmmTUs0zk4Xn8A
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-dJgSnjdRNA-3jkhsTJWWgA-1; Fri,
+ 15 Nov 2024 12:25:33 -0500
+X-MC-Unique: dJgSnjdRNA-3jkhsTJWWgA-1
+X-Mimecast-MFC-AGG-ID: dJgSnjdRNA-3jkhsTJWWgA
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 490E01955F3B
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 17:25:25 +0000 (UTC)
+ id A30211955F42
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 17:25:32 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.102])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 34DF73003B71; Fri, 15 Nov 2024 17:25:22 +0000 (UTC)
+ id D4AD13003B74; Fri, 15 Nov 2024 17:25:30 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 0/9] Require error handling for dynamically created objects
-Date: Fri, 15 Nov 2024 17:25:12 +0000
-Message-ID: <20241115172521.504102-1-berrange@redhat.com>
+Subject: [PATCH v3 3/9] qom: allow failure of object_new_with_class
+Date: Fri, 15 Nov 2024 17:25:15 +0000
+Message-ID: <20241115172521.504102-4-berrange@redhat.com>
+In-Reply-To: <20241115172521.504102-1-berrange@redhat.com>
+References: <20241115172521.504102-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
@@ -84,157 +87,279 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-NB, this series is targetting 10.0, NOT for 9.2 freeze.
+Since object_new_with_class() accepts a non-const parameter for
+the class, callers should be prepared for failures from unexpected
+input. Add an Error parameter for this and make callers check.
+If the caller does not already have an Error parameter, it is
+satisfactory to use &error_abort if the class parameter choice is
+not driven by untrusted user input.
 
-With code like
+This conversion allows removal of any object_class_is_abstract()
+checks immediately before object_new_with_class().
 
-    Object *obj = object_new(TYPE_BLAH)
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ accel/accel-user.c               |  4 +++-
+ include/qom/object.h             |  9 +++++++--
+ net/net.c                        |  3 ++-
+ qom/object.c                     |  4 ++--
+ qom/object_interfaces.c          |  7 +++----
+ qom/qom-qmp-cmds.c               | 11 ++++++-----
+ system/vl.c                      |  6 ++++--
+ target/i386/cpu-apic.c           |  8 +++++++-
+ target/i386/cpu-sysemu.c         | 11 ++++++++---
+ target/i386/cpu.c                |  4 ++--
+ target/s390x/cpu_models_sysemu.c |  7 +++++--
+ 11 files changed, 49 insertions(+), 25 deletions(-)
 
-the caller can be pretty confident that they will successfully create
-an object instance of TYPE_BLAH. They know exactly what type has been
-requested, so it passing an abstract type for example, it is a clear
-programmer error that they'll get an assertion failure.
-
-Conversely with code like
-
-   void somefunc(const char *typename) {
-      Object * obj = object_new(typename)
-      ...
-   }
-
-all bets are off, because the call of object_new() knows nothing
-about what 'typename' resolves to. It could easily be an abstract
-type. As a result, many code paths have added a manual check ahead
-of time
-
-   if (object_class_is_abstract(typename)) {
-      error_setg(errp, ....)
-   }
-
-...except for where we forget to do this, such as qdev_new().
-
-Overall 'object_new' is a bad design because it is inherantly
-unsafe to call with unvalidated typenames.
-
-This problem is made worse by the proposal to introduce the idea
-of 'singleton' classes[1].
-
-Thus, this series suggests a way to improve safety at build
-time. The core idea is to allow 'object_new' to continue to be
-used *if-and-only-if* given a static, const string, because that
-scenario indicates the caller is aware of what type they are
-creating at build time.
-
-A new 'object_new_dynamic' method is proposed for cases where
-the typename is dynamically chosen at runtime. This method has
-an "Error **errp" parameter, which can report when an abstract
-type is created, leaving the assert()s only for scenarios which
-are unambiguous programmer errors.
-
-With a little macro magic, we guarantee a compile error is
-generated if 'object_new' is called with a dynamic type, forcing
-all potentially unsafe code over to object_new_dynamic.
-
-This is more tractable than adding 'Error **errp' to 'object_new'
-as only a handful of places use a dynamic type name.
-
-With this series, my objections to Peter Xu's singleton series[1]
-would be largely nullified.
-
-[1] https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05524.html
-
-Changed in v3:
-
- * Remove qdev_try_new/isa_try_new/usb_try_new entirely
- * Fix use of obj_free
-
-Changed in v2:
-
- * Removed "RFC" tag
- * Converted code in all non-x86_64 targets
- * Converted qdev_new to same pattern as object_new
- * Ensured test suites work now
-
-Daniel P. Berrangé (9):
-  hw: eliminate qdev_try_new, isa_try_new & usb_try_new
-  qom: refactor checking abstract property when creating instances
-  qom: allow failure of object_new_with_class
-  qom: introduce object_new_dynamic()
-  convert code to object_new_dynamic() where appropriate
-  qom: enforce use of static, const string with object_new()
-  qom: introduce qdev_new_dynamic()
-  convert code to qdev_new_dynamic() where appropriate
-  hw: enforce use of static, const string with qdev_new()
-
- accel/accel-user.c                    |  4 ++-
- chardev/char.c                        |  6 +++-
- hw/arm/aspeed.c                       |  6 ++--
- hw/arm/exynos4210.c                   |  3 +-
- hw/arm/highbank.c                     |  2 +-
- hw/arm/integratorcp.c                 |  2 +-
- hw/arm/mps3r.c                        |  3 +-
- hw/arm/npcm7xx_boards.c               |  2 +-
- hw/arm/realview.c                     |  3 +-
- hw/arm/sbsa-ref.c                     |  7 ++--
- hw/arm/versatilepb.c                  |  2 +-
- hw/arm/vexpress.c                     |  4 +--
- hw/arm/virt.c                         | 10 +++---
- hw/arm/xilinx_zynq.c                  |  3 +-
- hw/audio/soundhw.c                    |  2 +-
- hw/block/xen-block.c                  |  7 +++-
- hw/core/bus.c                         |  2 +-
- hw/core/cpu-common.c                  |  2 +-
- hw/core/qdev.c                        | 13 +++-----
- hw/core/sysbus.c                      |  2 +-
- hw/i2c/core.c                         |  2 +-
- hw/i386/pc.c                          | 22 ++++++------
- hw/i386/x86-common.c                  |  5 ++-
- hw/i386/xen/xen-pvh.c                 |  2 +-
- hw/intc/xics.c                        |  5 ++-
- hw/isa/isa-bus.c                      |  7 +---
- hw/mips/cps.c                         |  3 +-
- hw/pci-host/pnv_phb.c                 |  5 ++-
- hw/pci/pci.c                          |  2 +-
- hw/ppc/e500.c                         |  2 +-
- hw/ppc/pnv.c                          |  6 ++--
- hw/ppc/pnv_core.c                     |  5 ++-
- hw/ppc/spapr.c                        |  2 +-
- hw/ppc/spapr_cpu_core.c               |  5 ++-
- hw/ppc/spapr_drc.c                    |  2 +-
- hw/s390x/s390-pci-bus.c               |  6 +---
- hw/s390x/s390-virtio-ccw.c            | 10 ++++--
- hw/scsi/scsi-bus.c                    |  5 ++-
- hw/sparc/leon3.c                      |  2 +-
- hw/sparc/sun4m.c                      |  2 +-
- hw/sparc64/sparc64.c                  |  2 +-
- hw/ssi/ssi.c                          |  2 +-
- hw/usb/bus.c                          |  6 ++--
- hw/vfio/common.c                      |  6 +++-
- hw/vfio/container.c                   |  7 +++-
- include/hw/isa/isa.h                  |  1 -
- include/hw/net/ne2000-isa.h           | 16 ++++-----
- include/hw/qdev-core.h                | 41 ++++++++++++++++++-----
- include/hw/usb.h                      |  7 +---
- include/qom/object.h                  | 48 +++++++++++++++++++++++++--
- net/net.c                             |  7 ++--
- qom/object.c                          | 44 +++++++++++++++++-------
- qom/object_interfaces.c               |  7 ++--
- qom/qom-qmp-cmds.c                    | 16 +++++----
- system/qdev-monitor.c                 |  5 ++-
- system/vl.c                           |  6 ++--
- target/arm/arm-qmp-cmds.c             |  5 ++-
- target/i386/cpu-apic.c                |  8 ++++-
- target/i386/cpu-sysemu.c              | 11 ++++--
- target/i386/cpu.c                     |  4 +--
- target/loongarch/loongarch-qmp-cmds.c |  5 ++-
- target/mips/cpu.c                     |  2 +-
- target/riscv/riscv-qmp-cmds.c         |  5 ++-
- target/s390x/cpu_models_sysemu.c      |  7 ++--
- target/xtensa/cpu.c                   |  2 +-
- tests/unit/check-qom-interface.c      |  3 +-
- tests/unit/test-smp-parse.c           | 20 +++++------
- 67 files changed, 312 insertions(+), 166 deletions(-)
-
+diff --git a/accel/accel-user.c b/accel/accel-user.c
+index 22b6a1a1a8..df673ec0e4 100644
+--- a/accel/accel-user.c
++++ b/accel/accel-user.c
+@@ -9,6 +9,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/accel.h"
++#include "qapi/error.h"
+ 
+ AccelState *current_accel(void)
+ {
+@@ -18,7 +19,8 @@ AccelState *current_accel(void)
+         AccelClass *ac = accel_find("tcg");
+ 
+         g_assert(ac != NULL);
+-        accel = ACCEL(object_new_with_class(OBJECT_CLASS(ac)));
++        accel = ACCEL(object_new_with_class(OBJECT_CLASS(ac),
++                                            &error_abort));
+     }
+     return accel;
+ }
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 43c135984a..11ee472719 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -606,14 +606,19 @@ struct InterfaceClass
+ /**
+  * object_new_with_class:
+  * @klass: The class to instantiate.
++ * @errp: pointer to be filled with error details on failure
+  *
+  * This function will initialize a new object using heap allocated memory.
+  * The returned object has a reference count of 1, and will be freed when
+  * the last reference is dropped.
+  *
+- * Returns: The newly allocated and instantiated object.
++ * If an instance of @klass is not permitted to be instantiated, an
++ * error will be raised. This can happen if @klass is abstract.
++ *
++ * Returns: The newly allocated and instantiated object, or NULL
++ * on error.
+  */
+-Object *object_new_with_class(ObjectClass *klass);
++Object *object_new_with_class(ObjectClass *klass, Error **errp);
+ 
+ /**
+  * object_new:
+diff --git a/net/net.c b/net/net.c
+index 7ef6885876..fbbfe602a4 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -948,7 +948,8 @@ GPtrArray *qemu_get_nic_models(const char *device_type)
+              * create this property during instance_init, so we have to create
+              * a temporary instance here to be able to check it.
+              */
+-            Object *obj = object_new_with_class(OBJECT_CLASS(dc));
++            Object *obj = object_new_with_class(OBJECT_CLASS(dc),
++                                                &error_abort);
+             if (object_property_find(obj, "netdev")) {
+                 g_ptr_array_add(nic_models, (gpointer)name);
+             }
+diff --git a/qom/object.c b/qom/object.c
+index 9632a894ee..ad5b3b9582 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -794,9 +794,9 @@ static Object *object_new_with_type(Type type, Error **errp)
+     return obj;
+ }
+ 
+-Object *object_new_with_class(ObjectClass *klass)
++Object *object_new_with_class(ObjectClass *klass, Error **errp)
+ {
+-    return object_new_with_type(klass->type, &error_abort);
++    return object_new_with_type(klass->type, errp);
+ }
+ 
+ Object *object_new(const char *typename)
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index 1a6f29c053..967b906755 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -102,13 +102,12 @@ Object *user_creatable_add_type(const char *type, const char *id,
+         return NULL;
+     }
+ 
+-    if (object_class_is_abstract(klass)) {
+-        error_setg(errp, "object type '%s' is abstract", type);
++    assert(qdict);
++    obj = object_new_with_class(klass, errp);
++    if (!obj) {
+         return NULL;
+     }
+ 
+-    assert(qdict);
+-    obj = object_new_with_class(klass);
+     object_set_properties_from_qdict(obj, qdict, v, &local_err);
+     if (local_err) {
+         goto out;
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index 46e4562300..4a8e269fef 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -134,14 +134,15 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
+         return NULL;
+     }
+ 
+-    if (!object_class_dynamic_cast(klass, TYPE_DEVICE)
+-        || object_class_is_abstract(klass)) {
+-        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "typename",
+-                   "a non-abstract device type");
++    if (!object_class_dynamic_cast(klass, TYPE_DEVICE)) {
++        error_setg(errp, "Object '%s' is not a device type", typename);
+         return NULL;
+     }
+ 
+-    obj = object_new_with_class(klass);
++    obj = object_new_with_class(klass, errp);
++    if (!obj) {
++        return NULL;
++    }
+ 
+     object_property_iter_init(&iter, obj);
+     while ((prop = object_property_iter_next(&iter))) {
+diff --git a/system/vl.c b/system/vl.c
+index d217b3d64d..f4eec7f35c 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2117,7 +2117,8 @@ static void qemu_create_machine(QDict *qdict)
+     MachineClass *machine_class = select_machine(qdict, &error_fatal);
+     object_set_machine_compat_props(machine_class->compat_props);
+ 
+-    current_machine = MACHINE(object_new_with_class(OBJECT_CLASS(machine_class)));
++    current_machine = MACHINE(object_new_with_class(OBJECT_CLASS(machine_class),
++                                                    &error_fatal));
+     object_property_add_child(object_get_root(), "machine",
+                               OBJECT(current_machine));
+     object_property_add_child(container_get(OBJECT(current_machine),
+@@ -2327,7 +2328,8 @@ static int do_configure_accelerator(void *opaque, QemuOpts *opts, Error **errp)
+         }
+         goto bad;
+     }
+-    accel = ACCEL(object_new_with_class(OBJECT_CLASS(ac)));
++    accel = ACCEL(object_new_with_class(OBJECT_CLASS(ac),
++                                        &error_fatal));
+     object_apply_compat_props(OBJECT(accel));
+     qemu_opt_foreach(opts, accelerator_set_property,
+                      accel,
+diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
+index d397ec94dc..8a518c50c7 100644
+--- a/target/i386/cpu-apic.c
++++ b/target/i386/cpu-apic.c
+@@ -43,12 +43,18 @@ void x86_cpu_apic_create(X86CPU *cpu, Error **errp)
+ {
+     APICCommonState *apic;
+     APICCommonClass *apic_class = apic_get_class(errp);
++    Object *apicobj;
+ 
+     if (!apic_class) {
+         return;
+     }
+ 
+-    cpu->apic_state = DEVICE(object_new_with_class(OBJECT_CLASS(apic_class)));
++    apicobj = object_new_with_class(OBJECT_CLASS(apic_class),
++                                    errp);
++    if (!apicobj) {
++        return;
++    }
++    cpu->apic_state = DEVICE(apicobj);
+     object_property_add_child(OBJECT(cpu), "lapic",
+                               OBJECT(cpu->apic_state));
+     object_unref(OBJECT(cpu->apic_state));
+diff --git a/target/i386/cpu-sysemu.c b/target/i386/cpu-sysemu.c
+index 227ac021f6..612ff09e57 100644
+--- a/target/i386/cpu-sysemu.c
++++ b/target/i386/cpu-sysemu.c
+@@ -156,15 +156,20 @@ static X86CPU *x86_cpu_from_model(const char *model, QObject *props,
+ {
+     X86CPU *xc = NULL;
+     X86CPUClass *xcc;
++    Object *xcobj;
+     Error *err = NULL;
+ 
+     xcc = X86_CPU_CLASS(cpu_class_by_name(TYPE_X86_CPU, model));
+     if (xcc == NULL) {
+-        error_setg(&err, "CPU model '%s' not found", model);
+-        goto out;
++        error_setg(errp, "CPU model '%s' not found", model);
++        return NULL;
+     }
+ 
+-    xc = X86_CPU(object_new_with_class(OBJECT_CLASS(xcc)));
++    xcobj = object_new_with_class(OBJECT_CLASS(xcc), errp);
++    if (!xcobj) {
++        return NULL;
++    }
++    xc = X86_CPU(xcobj);
+     if (props) {
+         object_apply_props(OBJECT(xc), props, props_arg_name, &err);
+         if (err) {
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 3725dbbc4b..d4315df29f 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -5973,7 +5973,7 @@ static GSList *get_sorted_cpu_model_list(void)
+ 
+ static char *x86_cpu_class_get_model_id(X86CPUClass *xc)
+ {
+-    Object *obj = object_new_with_class(OBJECT_CLASS(xc));
++    Object *obj = object_new_with_class(OBJECT_CLASS(xc), &error_abort);
+     char *r = object_property_get_str(obj, "model-id", &error_abort);
+     object_unref(obj);
+     return r;
+@@ -6071,7 +6071,7 @@ static void x86_cpu_class_check_missing_features(X86CPUClass *xcc,
+         return;
+     }
+ 
+-    xc = X86_CPU(object_new_with_class(OBJECT_CLASS(xcc)));
++    xc = X86_CPU(object_new_with_class(OBJECT_CLASS(xcc), &error_abort));
+ 
+     x86_cpu_expand_features(xc, &err);
+     if (err) {
+diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
+index f6df691b66..7fe3093056 100644
+--- a/target/s390x/cpu_models_sysemu.c
++++ b/target/s390x/cpu_models_sysemu.c
+@@ -69,7 +69,7 @@ static void create_cpu_model_list(ObjectClass *klass, void *opaque)
+     if (cpu_list_data->model) {
+         Object *obj;
+         S390CPU *sc;
+-        obj = object_new_with_class(klass);
++        obj = object_new_with_class(klass, &error_abort);
+         sc = S390_CPU(obj);
+         if (sc->model) {
+             info->has_unavailable_features = true;
+@@ -116,7 +116,10 @@ static void cpu_model_from_info(S390CPUModel *model, const CpuModelInfo *info,
+         error_setg(errp, "The CPU definition '%s' requires KVM", info->name);
+         return;
+     }
+-    obj = object_new_with_class(oc);
++    obj = object_new_with_class(oc, errp);
++    if (!obj) {
++        return;
++    }
+     cpu = S390_CPU(obj);
+ 
+     if (!cpu->model) {
 -- 
 2.46.0
 
