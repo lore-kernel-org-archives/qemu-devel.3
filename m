@@ -4,64 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C0E0D68BC6
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 16:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD71ED68BCB
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 16:04:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBynO-00048u-JP; Fri, 15 Nov 2024 11:03:42 -0500
+	id 1tBynj-0004Eq-No; Fri, 15 Nov 2024 11:04:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <31nA3ZwYKCtUIFHL587FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--roqueh.bounces.google.com>)
- id 1tBynM-00048G-52
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:03:40 -0500
-Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
+ <35HA3ZwYKCuMWTVZJMLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--roqueh.bounces.google.com>)
+ id 1tBynX-0004C4-GF
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:03:52 -0500
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <31nA3ZwYKCtUIFHL587FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--roqueh.bounces.google.com>)
- id 1tBynK-0003jm-Db
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:03:39 -0500
-Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-e3808cc775bso3601486276.1
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 08:03:35 -0800 (PST)
+ <35HA3ZwYKCuMWTVZJMLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--roqueh.bounces.google.com>)
+ id 1tBynV-000437-U3
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:03:51 -0500
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-6ee3fc1090cso27005017b3.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 08:03:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1731686614; x=1732291414; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=1Jao6wFY8gON0NOG+NANqTtWcVC5+rnyn6sEoCRpZUA=;
- b=pOBlZSJjZ0BVU7V1uFDnRBHhSabAavTSyFfy/cYNmP3CoTbacsjAussDedwoZ0lTEq
- 18UA16diUB9XT2jyDlbNzK2vqpZOUcrLg73UXP1DSJ3bgTsQOdpkHc9IG0iaynKzVBQC
- G+g6t2MGOWFgdJMY9avZG4Bk9eyvRl1RqWZw6SVrkTZK6lzEqPKa9VFaqj6qNh6dsnwg
- zwOrRguAQFVDyDk2KdWj53RMGOnZl9AiFXbrKjYuakKO1JnzfnLY0j3tauGGYmGSW3ry
- y57Wt28a0d+HMOp9rsMxbWFUqgXQA0SiNytQnNgdXlkOIa21Y1o/6pdR9oVyqDx+sN62
- OdbQ==
+ d=google.com; s=20230601; t=1731686628; x=1732291428; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=HYD6Oh0snMVDE5n3YbBrC3LNYted9IIM3hf4WZIwNL0=;
+ b=zohZPZKnNTrQAHnADcLT4Gwtuika1F0DtHV40zSXw2qhTHwYQd6p4Ivr4Dd69kWgG6
+ vpU/aRTahD1jcwg9hstK5QQU10RkphuB+IOdBNfb0+pvC/QGzqu6ebjBTSMxBkpZ2FtD
+ LxHvGvUwqYZVbDL2jGbgWW5yynaF/gQoaBMivVGd6ZubWN4R6yadBq3q83lX63sasa4T
+ hUSpAGY6FW7qTWqghTlcf6zAN/IVnfbxdMV1QrNbks3bo89EQwPPsDWc1WWNnOagLOts
+ rupNCbsj3J3sXvyb+IqPwPlwx9oSzQK3QuFUYodaDsZrRmZDz6+KOq/GNIaJjWQ3IhXm
+ P8OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731686614; x=1732291414;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1Jao6wFY8gON0NOG+NANqTtWcVC5+rnyn6sEoCRpZUA=;
- b=QaGCWGg3iyGhQ7nsYnsGbRI8c0+Mw2JZ/VdwgwoCldZSum6dChVcD5s7D5xMVs9Lya
- qNhxx6/Ml68xeXg7kwA/l7rzB3TLiO+s9dxHehywjq/ZZcWA3xfz+GBmskxfxMWsDHSq
- aQ0c0m5e0KEvuZzfl6HJsDxPlP/TMCLb7u5w2Rtwuqt7GnIY8uIvPEbF6dYik+f+j3Nt
- jP5vOWXFN5R/4f8Cr+233bMiYwnCum9ccpuXWxMNcvu5iejmxfkrzPxOnW2NLg25mdCt
- HHGFmXv5cIXJ/NpnFnyzZGu2QMJz0h106EtPg9S21rfpQ+6UZirAiLk6CV3+kmrb28Gi
- 5YTw==
-X-Gm-Message-State: AOJu0YzRs7i8cb9zNs6hsgdrXkCEi63JPZgaqT1XoOnEfrWABCommTIC
- DpVzRJRSnMUrtroRAg3E6G1R4/78fTIp9xLXHQ3/9TlIzvURSRySuvH9GEaZXHvbuyJA4iWjShA
- cCg==
-X-Google-Smtp-Source: AGHT+IFGh0BzK4WA1jBwf6vz3UTxl1Hm0leOpmd6C0Tpqe6lMHyV0c957etRVD2xQSSkCGwb8fmMqcoIDjg=
+ d=1e100.net; s=20230601; t=1731686628; x=1732291428;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HYD6Oh0snMVDE5n3YbBrC3LNYted9IIM3hf4WZIwNL0=;
+ b=YHpK/pQ3WSMS+kIvflAFb1aLF3dA/yNndkft87GI4y2XoqEQQg+AeQIhnQwxRYeYFV
+ fWtsBSoFyg0hGwV/BR0NJnHZ3R9B5Plj2PZM3YlKV9GWj/Ccems7P0Tedq2Q10B99buR
+ TTCyxcXbXivRHEsB1F/08UvhIrJghVA+8CYgymFT//ek+dXbiu4czU+nvf/mf/UQNsF3
+ 1GD4fM5xVncqR6gSy6rdvI0RaMsgKAh8uznm+1M3ryecbFBRpfpM7RhAv46FcpNw6M+0
+ OAMjCOqq9Zw5uklpZj31Vzmev5BQ1sIOwKIpkhQ+CqXB4H9AAcDQ7Lebm/bIB2E7eIAR
+ iPXg==
+X-Gm-Message-State: AOJu0Yxe6xTAtpmLn8eS7l1dK5fHlAZZlK83nm0WDPnaaPIznVePLyyi
+ XYvJPs/jm/+6+DX7cPW1q+6ebai0ClF/xHfeMf2s4GNsu90NWjsFo3TaZasm54d9bBmeMg7VKcC
+ vTQ==
+X-Google-Smtp-Source: AGHT+IFtjkCgsR2+WT9YlhmXa7Cs/SRJlB4vLF2ZYynZQTd40HXQBwwNZYH4gis+tkLpM6dKdOt3xZ0ePBA=
 X-Received: from roqueh.c.googlers.com ([fda3:e722:ac3:cc00:4e:3bc9:ac1c:1ab])
- (user=roqueh job=sendgmr) by 2002:a25:886:0:b0:e2e:3328:7a00 with
- SMTP id
- 3f1490d57ef6-e3825d4d1a9mr200320276.3.1731686614700; Fri, 15 Nov 2024
- 08:03:34 -0800 (PST)
-Date: Fri, 15 Nov 2024 16:03:23 +0000
+ (user=roqueh job=sendgmr) by 2002:a05:690c:9003:b0:6ee:3f39:493e
+ with SMTP id
+ 00721157ae682-6ee3f394c55mr592627b3.5.1731686628131; Fri, 15 Nov 2024
+ 08:03:48 -0800 (PST)
+Date: Fri, 15 Nov 2024 16:03:27 +0000
+In-Reply-To: <20241115160328.1650269-1-roqueh@google.com>
 Mime-Version: 1.0
+References: <20241115160328.1650269-1-roqueh@google.com>
 X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
-Message-ID: <20241115160328.1650269-1-roqueh@google.com>
-Subject: [PATCH 0/5] Make WDOGCONTROL.INTEN the counter enable of the CMSDK
- APB Watchdog
+Message-ID: <20241115160328.1650269-5-roqueh@google.com>
+Subject: [PATCH 4/5] tests/qtest/cmsdk-apb-watchdog-test: Don't abort on
+ assertion failure
 From: Roque Arcudia Hernandez <roqueh@google.com>
 To: peter.maydell@linaro.org, farosas@suse.de, lvivier@redhat.com, 
  slongfield@google.com, komlodi@google.com, pbonzini@redhat.com, 
@@ -69,9 +71,9 @@ To: peter.maydell@linaro.org, farosas@suse.de, lvivier@redhat.com,
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
  Roque Arcudia Hernandez <roqueh@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=31nA3ZwYKCtUIFHL587FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--roqueh.bounces.google.com;
- helo=mail-yb1-xb4a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=35HA3ZwYKCuMWTVZJMLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--roqueh.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -94,52 +96,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patchset tries to address an issue where the watchdog
-counter was running as soon as the device is out of reset. This
-created a few problems with the firmware under test. It was pointed
-out that the firmware under test was already working on an emulator
-using the real RTL. Further review showed that the WDOGCONTROL.INTEN
-is also expected to be the counter enable as it is defined in this
-page from ARM:
+Currently the watchdog test has a behavior in which the first test
+assertion that fails will make the test abort making it impossible to
+see the result of other tests:
 
-https://developer.arm.com/documentation/ddi0479/d/apb-components/apb-watchdog/programmers-model?lang=en
+ # ERROR:../tests/qtest/cmsdk-apb-watchdog-test.c:87:test_watchdog:
+ assertion failed ...
+ Bail out!
+ Aborted
 
-     |       | Enable the interrupt event, WDOGINT. Set to 1 to
-     |       | enable the counter and the interrupt, or to 0 to
- [0] | INTEN | disable the counter and interrupt. Reloads the
-     |       | counter from the value in WDOGLOAD when the interrupt
-     |       | is enabled, after previously being disabled.
+Changing the behavior in order to let the test finish other tests and
+report the ones that pass and fail:
 
-The second half of the patch is focused on adding tests for this
-behavior. It was required to modify the test to be able to run some
-test cases in the MPS2 since the the stellaris machine had 2 issues:
+ # ERROR:../tests/qtest/cmsdk-apb-watchdog-test.c:101:test_watchdog:
+ assertion failed ...
+ not ok 1 /arm/cmsdk-apb-watchdog/watchdog
 
-  - The stellaris machine did not run the counter out of reset
-    because of the way it is reset. The function
-    ssys_calculate_system_clock is not called until the reset phase
-    stellaris_sys_reset_hold which is after the watchdog executes its
-    reset, so the watchdog would not start the counter due to the
-    clock not being set up at the time of reset.
+Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
+---
+ tests/qtest/cmsdk-apb-watchdog-test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-  - The Stellaris machine uses a derived watchdog and not the
-    original CMSDK one which has a special behavior where it cannot
-    be stopped.
-
-The MPS2 machine on the other hand uses the standard CMSDK watchdog
-and could expose the problems we were dealing with.
-
-Roque Arcudia Hernandez (5):
-  hw/watchdog/cmsdk_apb_watchdog: Fix broken link
-  hw/watchdog/cmsdk_apb_watchdog: Fix INTEN issues
-  tests/qtest/cmsdk-apb-watchdog-test: Parameterize tests
-  tests/qtest/cmsdk-apb-watchdog-test: Don't abort on assertion failure
-  tests/qtest/cmsdk-apb-watchdog-test: Test INTEN as counter enable
-
- hw/watchdog/cmsdk-apb-watchdog.c      |  38 ++-
- tests/qtest/cmsdk-apb-watchdog-test.c | 328 +++++++++++++++++++++++---
- tests/qtest/meson.build               |   3 +-
- 3 files changed, 329 insertions(+), 40 deletions(-)
-
+diff --git a/tests/qtest/cmsdk-apb-watchdog-test.c b/tests/qtest/cmsdk-apb-watchdog-test.c
+index bdf6cfa256..fe535a553c 100644
+--- a/tests/qtest/cmsdk-apb-watchdog-test.c
++++ b/tests/qtest/cmsdk-apb-watchdog-test.c
+@@ -164,6 +164,7 @@ int main(int argc, char **argv)
+     int r;
+ 
+     g_test_init(&argc, &argv, NULL);
++    g_test_set_nonfatal_assertions();
+ 
+     if (qtest_has_machine(machine_info[MACHINE_LM3S811EVB].machine)) {
+         qtest_add_data_func("/cmsdk-apb-watchdog/watchdog",
 -- 
 2.47.0.338.g60cca15819-goog
 
