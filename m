@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DBCD68BCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA62BD68BCD
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBzur-0008Al-0L; Fri, 15 Nov 2024 12:15:29 -0500
+	id 1tBzx3-0000yz-R8; Fri, 15 Nov 2024 12:17:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBzun-0008AF-Nj
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:15:25 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tBzx1-0000yh-EG
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:17:43 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tBzum-0007tA-6i
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:15:25 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-20cd76c513cso19370695ad.3
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 09:15:23 -0800 (PST)
+ id 1tBzwz-0008Sq-TE
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:17:43 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-7ede82dbb63so1186578a12.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 09:17:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731690922; x=1732295722; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731691060; x=1732295860; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/hqt+YVGvat5alUVLTbvfZAYGB7Ef99osaEXwCyy0hM=;
- b=xURctRauzZKDC3AwTJNbkOVIzgNMDmUQ7uyFQstcM1sfMjLyl3QA1STV9eKE3A1W1f
- rooXJZpQDByHp+rq3DPbyw26+96zYoqDfUhc+NKY8yHRlA0zRm6WNgR45jhdQRV5Upz6
- TwORkD8VbHSQ2L3/p1SMuXzfg/GZTZchOs/1adHtON5GQQ8mMjfALeB5D+hs9RaGyGUp
- KK1W+GQxRCF0VZJUMlBz8e9XumDw40dgUF/1AFYuHg+/zLNi8OkHjuJVPBCgA1cFfgVz
- Gq10Eo9Pvyx4HWznhNSAMGqOHbwZsNYIZpE6vtnPU8VOQd4Ic13i4z5nfelZ2bgxhbcB
- JWlw==
+ bh=tkqwAD+3lB2H2OZqewErfCghuhQDyvH53CEeqv2+Ff4=;
+ b=swbHlW4ia1Pv9aXF5yZmf+7VBLhmYhuy2F7fKEYyq9txDGZY3t6594nKwcmaHcXGud
+ NVo4uUV+XHJwCDBirJZdxZXRyvscB7OoeiBwDEudfz8BwqdP8vRWFSX+bDWmheSqGzC7
+ lLMfBUBNVmcpPnMbaqXLlOP8C8a40/xNyE4/5SNQHBQ+t8wZ75v2TUP6O9JrfYdFedBF
+ mk6pe/8311J7jm4Nt5PbGJxPn5EGT+naGzmVNR9jHlx8sA9Vj4mzVUCwSq6xLYHlWvAK
+ PwBoF/sifoSK5KSnQ4/edYc4FD7RbtZ2kC8t+26kweLW6jap4t7C3LYHc4pEZTkbFop5
+ 66Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731690922; x=1732295722;
+ d=1e100.net; s=20230601; t=1731691060; x=1732295860;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/hqt+YVGvat5alUVLTbvfZAYGB7Ef99osaEXwCyy0hM=;
- b=lK3AN/8UKMWhEmSOz8b2RWMXqwOWX9Z0ctpckbJqzt8AnZz1bALJXvHc8ijN4Kok74
- ZlxSWTt9KpMceaSy3zNU9/uvCjs86WIZKoSsOqEwPA2skLOfBo3SKfxr1J5qJPLk7phZ
- g0UjuOzwr+7ZNqFp35iCz9u+0EsdKmPSJj3hidmvGX2Av9r4fJ1/D9lmXc1oknn7BkJJ
- GmVk6Jxi+3+gC0ZEWKztGJiRfxnbcl/mZ6NCN596GAEqRBsqFKLcTrnc53QChE8/uqzR
- I3kElfXvI8OhOgYcQ6ckb/KsW10xgMD6QEXhLO4sqgSmYebpYQyx4D43JQdgzt5hQxG3
- /+rw==
+ bh=tkqwAD+3lB2H2OZqewErfCghuhQDyvH53CEeqv2+Ff4=;
+ b=YiQ/31H2SM/CN1iwhY/izepWQbFtNsjUbKWL+BUTKhrBqkf43IEtx5wVTF6XvM12Rg
+ VVoTpgRk04iGSRu24UvaVb4K4KVKy6eynjVJb8vErzCIQVq+IQnU33U/ez2/KxXIoguA
+ Q1I7LUVcPC1tCk3bS8+SVshVZZSi0ccBydVveXC3Oo+MI+jvJF4Y5iUuGym1C9LAlmnK
+ dumBg8FJ6Qq1ApyeiMcmGXq0gwpwdM/jvAtkwgtboq+bjkZU+JJXy6rRLIgSC9XK61Xj
+ LFL/Kz5ARUHjZGp+lVbYJdYQksQoPrX1d11Paq4N9DZ/zQiDw7iUZxu/iZP3eCZa3h0e
+ 8Nhg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9pVmZkvj6sBQ4Ik43Hij/Gl5QVFlTXJBUaaRvHc+OaJ4ZnuLNZ8IJgOgO7ulWK2qScsy35XTrvxPY@nongnu.org
-X-Gm-Message-State: AOJu0Yx6XzFUSrE2/SOWgMKS2ib69KLgwkSEJy5bNeq/aGK8vEGCKluH
- H81yj006CENP2CroSZ/xOSBwucZhP32FJ/eTGsqyI0aqkzjNhK1TUJpu9YphnJhWCYoKX1/SuYM
- 0
-X-Google-Smtp-Source: AGHT+IELOEtR3PjYe37L/yjW7XBh8535DCBnQAHq2dCX2TvMTTvTINU0TPhQSzE+KDA9GBMMfpW3nA==
-X-Received: by 2002:a17:902:f68c:b0:20c:ecca:432b with SMTP id
- d9443c01a7336-211d0ebc52amr45346435ad.35.1731690922637; 
- Fri, 15 Nov 2024 09:15:22 -0800 (PST)
+ AJvYcCXm2XeaHr3Ndp2jcklSJP22imfITCnnqGxmUvzbXehsqi1RPFUWPPWgdyBLiowJ04OoCuOU92HEqZSR@nongnu.org
+X-Gm-Message-State: AOJu0Yzm3PH+GJ+ovNXApkC+iwiOqJULLtKpIwC6aqTIwHMCjZ/DLkag
+ Zn12Rvp+8F1NVTBcOEhqyJ6BvaY5xxi9gNVFxzcZtkhML33mdN9r1APMXkKtXM4=
+X-Google-Smtp-Source: AGHT+IFKJqorvT4Z8Tx55mciNpegd9MqQRXXjbBY7QdR0b5QAavISXXwH0G68yjRGDp77tWUEGMcXQ==
+X-Received: by 2002:a05:6a20:2444:b0:1db:e536:158e with SMTP id
+ adf61e73a8af0-1dc90b47e50mr4887625637.22.1731691060185; 
+ Fri, 15 Nov 2024 09:17:40 -0800 (PST)
 Received: from [192.168.0.4] ([71.212.136.242])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-211d0dc4cc9sm14691055ad.46.2024.11.15.09.15.22
+ 41be03b00d2f7-7f8c1c31df6sm1530409a12.31.2024.11.15.09.17.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Nov 2024 09:15:22 -0800 (PST)
-Message-ID: <9d443426-9f7c-46cf-bca3-8c4d83f2fa8c@linaro.org>
-Date: Fri, 15 Nov 2024 09:15:20 -0800
+ Fri, 15 Nov 2024 09:17:39 -0800 (PST)
+Message-ID: <67387cbc-13d3-4536-9250-4d6285364a0f@linaro.org>
+Date: Fri, 15 Nov 2024 09:17:38 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] target/loongarch: Declare
- loongarch_cpu_dump_state() locally
+Subject: Re: [PATCH 03/10] target/sparc: Move sparc_restore_state_to_opc() to
+ cpu.c
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20241115152053.66442-1-philmd@linaro.org>
- <20241115152053.66442-3-philmd@linaro.org>
+ <20241115152053.66442-4-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241115152053.66442-3-philmd@linaro.org>
+In-Reply-To: <20241115152053.66442-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,16 +100,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/15/24 07:20, Philippe Mathieu-Daudé wrote:
-> loongarch_cpu_dump_state() is not used outside of cpu.c,
-> no need to expose its prototype.
+> Most targets define their restore_state_to_opc() handler in cpu.c.
+> In order to keep SPARC aligned, move sparc_restore_state_to_opc()
+> from translate.c to cpu.c.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/loongarch/internals.h | 2 --
->   target/loongarch/cpu.c       | 2 +-
->   2 files changed, 1 insertion(+), 3 deletions(-)
+>   target/sparc/cpu.h       | 11 ++++++++---
+>   target/sparc/cpu.c       | 23 +++++++++++++++++++++++
+>   target/sparc/translate.c | 32 --------------------------------
+>   3 files changed, 31 insertions(+), 35 deletions(-)
+> 
+> diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+> index f517e5a383..bcb3566a92 100644
+> --- a/target/sparc/cpu.h
+> +++ b/target/sparc/cpu.h
+> @@ -607,12 +607,17 @@ int sparc_cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>                                 uint8_t *buf, int len, bool is_write);
+>   #endif
+>   
+> +/* Dynamic PC, must exit to main loop. */
+> +#define DYNAMIC_PC         1
+> +/* Dynamic PC, one of two values according to jump_pc[T2]. */
+> +#define JUMP_PC            2
+> +/* Dynamic PC, may lookup next TB. */
+> +#define DYNAMIC_PC_LOOKUP  3
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Keep these out of cpu.h.
+But frankly, moving the sparc_restore_state_to_opc to an "internal.h" kind of header is 
+just as effective and keeps all of the private-to-translate.c things contained.
+
+> +
+> +#define DISAS_EXIT  DISAS_TARGET_0
+
+Definitely shouldn't be moved.
+
 
 r~
 
