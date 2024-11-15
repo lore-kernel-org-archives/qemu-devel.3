@@ -4,69 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2E40D68BCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1643ED68BCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tC0U7-0001EE-Vy; Fri, 15 Nov 2024 12:51:56 -0500
+	id 1tC0WR-0002Fk-50; Fri, 15 Nov 2024 12:54:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tC0U6-0001Dm-5g
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:51:54 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tC0WP-0002FR-Mf
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:54:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tC0U4-0004sP-9T
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:51:53 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tC0WO-00056R-Co
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:54:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731693110;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1731693255;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4jhQ6O+o41XPwOme3pTXfLpNB+afbauh+i7kVd7SWBE=;
- b=Gi83AIy9BPSH9/epC4wIaFxT6ab1KMapPNDGqpQMcMsNMNgJByIGKXeDZh4CWESJTXX3d3
- FXNwpGmqqlNa1xidlXUeKRN9dOd2v1waoslfAqN8r5bs+lgOWriyPdTQgJHZqByeZwyd3Y
- tntJheUCLBrASl8cxzyKlqZrt/NI8Hs=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-8cwfiOHIM-u9yEGchZjrlQ-1; Fri,
- 15 Nov 2024 12:51:49 -0500
-X-MC-Unique: 8cwfiOHIM-u9yEGchZjrlQ-1
-X-Mimecast-MFC-AGG-ID: 8cwfiOHIM-u9yEGchZjrlQ
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 698E51955EE8
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 17:51:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.102])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89B8A3003B71; Fri, 15 Nov 2024 17:51:47 +0000 (UTC)
-Date: Fri, 15 Nov 2024 17:51:44 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 01/31] include: move include/qapi/qmp/ to
- include/qobject/
-Message-ID: <ZzeKMC9v5AwFmeYM@redhat.com>
-References: <20241017113344.883424-1-berrange@redhat.com>
- <20241017113344.883424-2-berrange@redhat.com>
- <87bjyhdh0o.fsf@pond.sub.org>
+ bh=ddoR2CX3izn+ln5p7zqyfo1EvpSDqIUCq4zxwNZ+i5o=;
+ b=fQFmfCHVt9+/9FB5ve5bdjAgSm27QrXNbvDSakx4Ui+mBQE/b9IH/WbnuejYyDZSm8nAoB
+ AymWrXdOzR8qzGYiuMkUl90UWHsO62YzLlgSfJPP/6UvSFHveIx2aKGsxnPB9DqOeCv4w5
+ gwzvYh550PYE7NIhVDC0vi0t41BH4Ds=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-193-vk5l4FiqNOKJ6sBduYkXnQ-1; Fri, 15 Nov 2024 12:54:14 -0500
+X-MC-Unique: vk5l4FiqNOKJ6sBduYkXnQ-1
+X-Mimecast-MFC-AGG-ID: vk5l4FiqNOKJ6sBduYkXnQ
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-83abef51173so203620539f.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 09:54:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731693253; x=1732298053;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ddoR2CX3izn+ln5p7zqyfo1EvpSDqIUCq4zxwNZ+i5o=;
+ b=jfQXTT9uy3CBOylhBT8cQUFetyn9fEB2SO6hldSuj39HvRFdSoYI5cT5gUzc0XlEbe
+ ccxmuONK2mMm9DAUgEL1bJdLoaG9C15WDV/TtUkelkUg8LgFuErMnNMyH49iIxig4Qu0
+ 9uk0j3aQNiTfrkDaaYqI5zPrd6vph2ea5lopiSs4XEOj5epvxfcM24arjZJpiqjnSEk2
+ 5WcHPXVBCmIQx2ksCVyEilS4h5B+5hL4RKEmqvE6nl175NEB+Qi9+wlud1nIhDJRGjil
+ lFvz38YOPwxzGhKRWmXnFwwK3urJfZRP4C0vAbof+kf1SIGuxCfGUnmX7hfRcThV/80G
+ rqxA==
+X-Gm-Message-State: AOJu0YxqilXRf6yjMztBmSIu7VvHv9VJHEKsIFS+e7/TVNCPanQElL7t
+ SFkZ6Uj2+Y2Py+VXGZJpRs0qkNRZ1ZX4XpVO+BSMz2kj3SVRISVRm1mPvx1ypIRdRHqrN/90CYM
+ loFgU0d+uOh1IHtycyTR6GJ7/UWsUea9FuJxJb3UiT97cIRiLVbjj
+X-Received: by 2002:a05:6602:1486:b0:83a:97e7:8bcf with SMTP id
+ ca18e2360f4ac-83e6c12ffffmr411153039f.11.1731693253697; 
+ Fri, 15 Nov 2024 09:54:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHcwSrxtWshUIrxKrX1+pvZP5zDX4NywYDi8CSSDbZxsmJZQPINiH9gySVBkvCZguo197l7wQ==
+X-Received: by 2002:a05:6602:1486:b0:83a:97e7:8bcf with SMTP id
+ ca18e2360f4ac-83e6c12ffffmr411150839f.11.1731693253383; 
+ Fri, 15 Nov 2024 09:54:13 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e0756f5f8esm443357173.161.2024.11.15.09.54.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Nov 2024 09:54:12 -0800 (PST)
+Date: Fri, 15 Nov 2024 12:54:10 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v3 1/9] hw: eliminate qdev_try_new, isa_try_new &
+ usb_try_new
+Message-ID: <ZzeKwvuYPRfjaP-X@x1n>
+References: <20241115172521.504102-1-berrange@redhat.com>
+ <20241115172521.504102-2-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87bjyhdh0o.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <20241115172521.504102-2-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -88,70 +101,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 14, 2024 at 03:30:47PM +0100, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > The general expectation is that header files should follow the same
-> > file/path naming scheme as the corresponding source file. There are
-> > various historical exceptions to this practice in QEMU, with one of
-> > the most notable being the include/qapi/qmp/ directory. Most of the
-> > headers there correspond to source files in qobject/.
-> >
-> > This patch corrects that inconsistency by creating include/qobject/.
-> > The only outlier is include/qapi/qmp/dispatch.h which gets renamed
-> > to include/qapi/qmp-registry.h.
-> >
-> > To allow the code to continue to build, symlinks are temporarily
-> > added in $QEMU/qapi/qmp/ to point to the new location. They will
-> > be removed in a later commit.
-> >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> [...]
-> 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index c21d6a2f9e..656482b2a4 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -3153,8 +3153,6 @@ S: Supported
-> >  F: qapi/
-> >  X: qapi/*.json
-> >  F: include/qapi/
-> > -X: include/qapi/qmp/
-> > -F: include/qapi/qmp/dispatch.h
-> 
-> This tried to have add just include/qapi/qmp/dispatch.h from this
-> subdirectory.  It didn't work:
-> 
->     $ scripts/get_maintainer.pl -f include/qapi/qmp/dispatch.h 
->     get_maintainer.pl: No maintainers found, printing recent contributors.
->     get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
-> 
->     qemu-devel@nongnu.org (open list:All patches CC here)
-> 
-> The patch moved and renames the header to include/qapi/qmp-registry.h,
-> which also fixes attribution:
-> 
->     $ scripts/get_maintainer.pl -f include/qapi/qmp-registry.h 
->     Markus Armbruster <armbru@redhat.com> (supporter:QAPI)
->     Michael Roth <michael.roth@amd.com> (supporter:QAPI)
->     qemu-devel@nongnu.org (open list:All patches CC here)
-> 
-> Mentioning this in the commit message wouldn't hurt.  Not worth a
-> respin.
+On Fri, Nov 15, 2024 at 05:25:13PM +0000, Daniel P. Berrangé wrote:
+> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+> index 40b2567aa7..558f17d3ba 100644
+> --- a/hw/s390x/s390-pci-bus.c
+> +++ b/hw/s390x/s390-pci-bus.c
+> @@ -922,11 +922,7 @@ static S390PCIBusDevice *s390_pci_device_new(S390pciState *s,
+>      Error *local_err = NULL;
+>      DeviceState *dev;
+>  
+> -    dev = qdev_try_new(TYPE_S390_PCI_DEVICE);
+> -    if (!dev) {
+> -        error_setg(errp, "zPCI device could not be created");
+> -        return NULL;
+> -    }
+> +    dev = qdev_new(TYPE_S390_PCI_DEVICE);
 
-I didn't even realize I had fixed such a bug :-) Feel free to add
-to the commit message if you choose to queue this series.
+This one used to allow failures, but now it asserts.  Especially, see:
 
-With regards,
-Daniel
+b6e67ecc7b ("s390x/pci: properly fail if the zPCI device cannot be created")
+
+Would it be safer to use module_object_class_by_name() too here?
+
+All the rest changes look sane.
+
+>  
+>      if (!object_property_set_str(OBJECT(dev), "target", target, &local_err)) {
+>          object_unparent(OBJECT(dev));
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
