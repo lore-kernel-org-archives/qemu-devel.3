@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4D3D68BC6
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 15:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16394D68BC6
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 15:22:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBy8K-0001oX-E8; Fri, 15 Nov 2024 10:21:16 -0500
+	id 1tBy8A-0001n1-3W; Fri, 15 Nov 2024 10:21:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBy8J-0001oM-DC
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:21:15 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBy86-0001md-9d
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:21:03 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBy8H-00045H-QW
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:21:15 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4314fa33a35so15834675e9.1
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 07:21:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tBy82-00043J-Ck
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:21:00 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4314b316495so6761275e9.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 07:20:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731684071; x=1732288871; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LzsaTbH/TKzp8tqs/UlH1bp9VqSjjTrJOViR/Wph0HQ=;
- b=SSD8KP13PVIm5XMoKG/p7LRjIqGP3pT9fqdQ/xNTpYWlW63kQxSwdBMIVd30QPix/u
- 9E68mf5o0r1nwz86983LC9mHBr0Cl18v4J5U7cBKeJEONXOK5GWF09xFK9skTf7x/S3v
- Y72Hn6+CoPM7FNIwpv7D6IKtN3p3epT5rT1Dk7ULi0vRtE/TI611+9Q1dOWXa3zK44X1
- d3XEc5S5DpJQyugPDvIbdTmTb35AsH942oH5w5gXwkilxsuNLEOB1lvYooN1+Ui8ztEs
- eDBoXNAwy9aNtOlnp7BdYi03ZNsJ6FKtQCWfpXlbKWmkczsCQf9z0PTv64yV98UTMUS5
- FoPA==
+ d=linaro.org; s=google; t=1731684055; x=1732288855; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2oVIoGN5+KTiuTHFLsyY+4yDft6p5jyzLihrKyZIft8=;
+ b=tLeeiGU6uhNpyupeJOrIifXpX/nl4bCp9ukjJk0UDuoNhGLRUb0LWNbHg3ErmUb2J7
+ 2ivVQC97BmEdziLjC1Hj3ILFglzbZ1JVkFNMIzvjnUzj8CP91q0OHqVl/3wAtmoK0a9l
+ D6uUZNLpkyDYsPdFYablv92kTu4Xu/PNYw84/gKJCHHTKcKPGH28GlwTVr9uqx16D103
+ ri2rvvlagJuttvPVGNq5EYfTe+kEXas/kFMp8ZQ2+f/pu9Crv+ZtYMxT6Gm5rWDoUR4Y
+ KaF9FsRiVNo9gAWGnpTxupFCRGWejMpKWye+V/0JuDUvN+FLH2FQSLqGxi8/00oBHPAg
+ WM1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731684071; x=1732288871;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LzsaTbH/TKzp8tqs/UlH1bp9VqSjjTrJOViR/Wph0HQ=;
- b=az9Sz/++sJpukaoCBHzW15QBihKwrMP3FXb33GSpQLRNUN9abjmXBa3OXRbXSJRtrP
- mrOV5SiHzLdlt3vsLkjps5ZeQIynk5+Tq2d9VBApcpOSJ0Jl4WGccbxqiScjp0pNSGiY
- OrVNOj0DYxrB8Jvrko2JaHs2/8icWL1C2mb7sblwhqEMyiz8p90TaluLG9Hwn4gdsQ+n
- 7LmbPImsHRf/vQIxOHa5aUYPKC5NlLFNd8QsiQpXvpQ9ZU0Uu382W/mPaf9sMoSCX0pC
- sxQm3PxvtyZR3ytpJb3w6tyABfj5OHkG9gsHg+wfkskZAe47fcdtL9yov02WFeVBFTVb
- 7Oug==
-X-Gm-Message-State: AOJu0Yytw5jQnKgBsr26sinlzcMxJIA6Wcf9ytjmm3KvYpUSsQeH+udb
- QmBsrDhQCJY9YwPgK8IfkCExcEPHXHLFbkK2IW5tn6V1f3AyZR5pGX0XKAH7Li+tDWfK3U1qZs7
- y
-X-Google-Smtp-Source: AGHT+IF3yC99cTCgXvfRbDp7cGVEg27uPQx9XuZipM7vsZvLqMT12uoo+ojpjZ8Virl5ejx+xIh1FA==
-X-Received: by 2002:a05:600c:4595:b0:42c:b80e:5e50 with SMTP id
- 5b1f17b1804b1-432df67991emr26832545e9.0.1731684070978; 
- Fri, 15 Nov 2024 07:21:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731684055; x=1732288855;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2oVIoGN5+KTiuTHFLsyY+4yDft6p5jyzLihrKyZIft8=;
+ b=hQAJ+NdzD2hkZSbYlmezD8G/G4+T6fsN/B/RjcKmD6qw8A6LWGIc5u9aCGHTH+oHiT
+ QhiiGQ/JfRCgVrfedu0Zqu+aLcLRtz4Hx4tHkaDD4kAnvGW77I2F0C+YqjkyKvYduZO7
+ hujQiZhjQS1210dOFRt2zqTUT6x+/i3GTvfMHqLMkjsh4fdWxK3u0GTYd1BgDi8sPTX9
+ FSibPB0Y0hmwLWcY/nZZe5n0UWH74sEe3V79h/ctvitgx/5iRhThL466SrLszhlzWK40
+ RNIYG8DdYiaYKfZeX+9k+hk5Qo76ooktyPGDGHMwWiIiaQ17QJZVi7KkzdTWFw+QlHPj
+ +wmw==
+X-Gm-Message-State: AOJu0YwhmYFBCgofjHJe5/ietKlJp/3nOMeASBrtpwJR0+3cWOazRRwF
+ Q3dkviP+R+XfCO1YWpgbM9yp3R9kkdUDEArnFJl600GmEeo51X2mo1FRUqkwOR9AxBc4Ht1hIFf
+ +
+X-Google-Smtp-Source: AGHT+IGZ+D0kW+eVIuhsTpoVZxTfbxtiFRj4jDVOjwh9wZcIaOH2iCbuqeg3ffOOW5+k9VW0/3U+SA==
+X-Received: by 2002:a05:600c:4693:b0:431:55af:a22f with SMTP id
+ 5b1f17b1804b1-432df72c9e7mr26704305e9.13.1731684055592; 
+ Fri, 15 Nov 2024 07:20:55 -0800 (PST)
 Received: from localhost.localdomain ([176.187.214.209])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dac0ae45sm57136675e9.30.2024.11.15.07.21.09
+ 5b1f17b1804b1-432dab7878esm57379325e9.14.2024.11.15.07.20.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Nov 2024 07:21:10 -0800 (PST)
+ Fri, 15 Nov 2024 07:20:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 03/10] target/sparc: Move sparc_restore_state_to_opc() to cpu.c
-Date: Fri, 15 Nov 2024 16:20:46 +0100
-Message-ID: <20241115152053.66442-4-philmd@linaro.org>
+Subject: [PATCH 00/10] accel/tcg: API prototype cleanups
+Date: Fri, 15 Nov 2024 16:20:43 +0100
+Message-ID: <20241115152053.66442-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241115152053.66442-1-philmd@linaro.org>
-References: <20241115152053.66442-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,124 +91,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most targets define their restore_state_to_opc() handler in cpu.c.
-In order to keep SPARC aligned, move sparc_restore_state_to_opc()
-from translate.c to cpu.c.
+Preparatory cleanup patches extracted to bigger series which
+rename TCG frontend functions to avoid name clash when linking
+multiple target into the same binary.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/sparc/cpu.h       | 11 ++++++++---
- target/sparc/cpu.c       | 23 +++++++++++++++++++++++
- target/sparc/translate.c | 32 --------------------------------
- 3 files changed, 31 insertions(+), 35 deletions(-)
+Worth to remove few QOM cast boilerplate, per diff-stat:
 
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index f517e5a383..bcb3566a92 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -607,12 +607,17 @@ int sparc_cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-                               uint8_t *buf, int len, bool is_write);
- #endif
- 
-+/* Dynamic PC, must exit to main loop. */
-+#define DYNAMIC_PC         1
-+/* Dynamic PC, one of two values according to jump_pc[T2]. */
-+#define JUMP_PC            2
-+/* Dynamic PC, may lookup next TB. */
-+#define DYNAMIC_PC_LOOKUP  3
-+
-+#define DISAS_EXIT  DISAS_TARGET_0
- 
- /* translate.c */
- void sparc_tcg_init(void);
--void sparc_restore_state_to_opc(CPUState *cs,
--                                const TranslationBlock *tb,
--                                const uint64_t *data);
- 
- /* fop_helper.c */
- target_ulong cpu_get_fsr(CPUSPARCState *);
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index dd7af86de7..59db8c8472 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -713,6 +713,29 @@ static void sparc_cpu_synchronize_from_tb(CPUState *cs,
-     cpu->env.npc = tb->cs_base;
- }
- 
-+static void sparc_restore_state_to_opc(CPUState *cs,
-+                                       const TranslationBlock *tb,
-+                                       const uint64_t *data)
-+{
-+    CPUSPARCState *env = cpu_env(cs);
-+    target_ulong pc = data[0];
-+    target_ulong npc = data[1];
-+
-+    env->pc = pc;
-+    if (npc == DYNAMIC_PC) {
-+        /* dynamic NPC: already stored */
-+    } else if (npc & JUMP_PC) {
-+        /* jump PC: use 'cond' and the jump targets of the translation */
-+        if (env->cond) {
-+            env->npc = npc & ~3;
-+        } else {
-+            env->npc = pc + 4;
-+        }
-+    } else {
-+        env->npc = npc;
-+    }
-+}
-+
- static bool sparc_cpu_has_work(CPUState *cs)
- {
-     return (cs->interrupt_request & CPU_INTERRUPT_HARD) &&
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index cdd0a95c03..9942e78412 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -101,15 +101,6 @@
- # define MAXTL_MASK                             0
- #endif
- 
--/* Dynamic PC, must exit to main loop. */
--#define DYNAMIC_PC         1
--/* Dynamic PC, one of two values according to jump_pc[T2]. */
--#define JUMP_PC            2
--/* Dynamic PC, may lookup next TB. */
--#define DYNAMIC_PC_LOOKUP  3
--
--#define DISAS_EXIT  DISAS_TARGET_0
--
- /* global register indexes */
- static TCGv_ptr cpu_regwptr;
- static TCGv cpu_pc, cpu_npc;
-@@ -5881,26 +5872,3 @@ void sparc_tcg_init(void)
-                                          gregnames[i]);
-     }
- }
--
--void sparc_restore_state_to_opc(CPUState *cs,
--                                const TranslationBlock *tb,
--                                const uint64_t *data)
--{
--    CPUSPARCState *env = cpu_env(cs);
--    target_ulong pc = data[0];
--    target_ulong npc = data[1];
--
--    env->pc = pc;
--    if (npc == DYNAMIC_PC) {
--        /* dynamic NPC: already stored */
--    } else if (npc & JUMP_PC) {
--        /* jump PC: use 'cond' and the jump targets of the translation */
--        if (env->cond) {
--            env->npc = npc & ~3;
--        } else {
--            env->npc = pc + 4;
--        }
--    } else {
--        env->npc = npc;
--    }
--}
+ 64 files changed, 230 insertions(+), 355 deletions(-)
+                   ---                ^^^
+
+Philippe Mathieu-Daudé (10):
+  target/mips: Drop left-over comment about Jazz machine
+  target/loongarch: Declare loongarch_cpu_dump_state() locally
+  target/sparc: Move sparc_restore_state_to_opc() to cpu.c
+  accel/tcg: Ensure frontends define restore_state_to_opc handler
+  accel/tcg: Move cpu_unwind_state_data() declaration
+  accel/tcg: Remove cpu_unwind_state_data() unused CPUState argument
+  accel/tcg: Reduce log_pc() declaration scope
+  hw/core/cpu: Pass CPUArchState to set/get_pc() handlers
+  hw/core/cpu: Pass CPUArchState to restore_state_to_opc() handler
+  hw/core/cpu: Pass CPUArchState to cpu_dump_state() handler
+
+ accel/tcg/internal-target.h    | 10 ---------
+ include/exec/cpu-common.h      | 13 ------------
+ include/exec/translate-all.h   | 11 ++++++++++
+ include/hw/core/cpu.h          |  8 +++----
+ include/hw/core/tcg-cpu-ops.h  |  2 +-
+ target/alpha/cpu.h             |  2 +-
+ target/arm/internals.h         |  2 +-
+ target/hppa/cpu.h              |  2 +-
+ target/i386/cpu.h              |  2 +-
+ target/loongarch/internals.h   |  2 --
+ target/m68k/cpu.h              |  2 +-
+ target/microblaze/cpu.h        |  2 +-
+ target/mips/tcg/tcg-internal.h |  2 +-
+ target/openrisc/cpu.h          |  2 +-
+ target/ppc/cpu.h               |  2 +-
+ target/rx/cpu.h                |  2 +-
+ target/s390x/s390x-internal.h  |  4 ++--
+ target/sh4/cpu.h               |  2 +-
+ target/sparc/cpu.h             | 11 +++++++---
+ target/tricore/cpu.h           |  2 +-
+ target/xtensa/cpu.h            |  2 +-
+ accel/tcg/cpu-exec.c           | 25 +++++++++++++++++-----
+ accel/tcg/translate-all.c      |  6 +++---
+ hw/core/cpu-common.c           |  2 +-
+ hw/core/generic-loader.c       |  2 +-
+ target/alpha/cpu.c             | 10 +++------
+ target/alpha/helper.c          |  3 +--
+ target/arm/cpu.c               | 28 ++++++++----------------
+ target/avr/cpu.c               | 19 ++++++-----------
+ target/hexagon/cpu.c           | 21 +++++++-----------
+ target/hppa/cpu.c              | 18 ++++++----------
+ target/hppa/helper.c           |  3 +--
+ target/hppa/int_helper.c       |  2 +-
+ target/hppa/sys_helper.c       |  6 ++----
+ target/i386/cpu-dump.c         |  5 ++---
+ target/i386/cpu.c              | 12 ++++-------
+ target/i386/helper.c           |  3 ++-
+ target/i386/tcg/tcg-cpu.c      |  4 +---
+ target/loongarch/cpu.c         | 15 ++++++-------
+ target/m68k/cpu.c              | 19 ++++++-----------
+ target/m68k/translate.c        |  3 +--
+ target/microblaze/cpu.c        | 22 +++++++------------
+ target/microblaze/translate.c  |  3 +--
+ target/mips/cpu.c              | 17 +++++----------
+ target/mips/tcg/translate.c    |  4 +---
+ target/openrisc/cpu.c          | 24 ++++++++-------------
+ target/openrisc/sys_helper.c   |  7 +++---
+ target/openrisc/translate.c    |  3 +--
+ target/ppc/cpu_init.c          | 23 +++++++-------------
+ target/riscv/cpu.c             | 16 ++++----------
+ target/riscv/tcg/tcg-cpu.c     |  4 +---
+ target/rx/cpu.c                | 18 ++++++----------
+ target/rx/translate.c          |  3 +--
+ target/s390x/cpu-dump.c        |  3 +--
+ target/s390x/cpu.c             | 12 ++++-------
+ target/s390x/tcg/translate.c   |  3 +--
+ target/sh4/cpu.c               | 20 ++++++-----------
+ target/sh4/translate.c         |  3 +--
+ target/sparc/cpu.c             | 39 ++++++++++++++++++++++++----------
+ target/sparc/translate.c       | 32 ----------------------------
+ target/tricore/cpu.c           | 12 +++++------
+ target/tricore/translate.c     |  3 +--
+ target/xtensa/cpu.c            | 18 ++++++----------
+ target/xtensa/translate.c      |  3 +--
+ 64 files changed, 230 insertions(+), 355 deletions(-)
+
 -- 
 2.45.2
 
