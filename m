@@ -4,79 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3950ED68BCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA3D2D68BCD
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:15:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBzo7-0006q7-7B; Fri, 15 Nov 2024 12:08:31 -0500
+	id 1tBzuL-000835-KO; Fri, 15 Nov 2024 12:14:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBzo0-0006pd-Fg
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:08:24 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tBzuJ-00082q-Lx
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:14:56 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBznt-0006NK-Hk
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:08:22 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5cf8ef104a8so1367054a12.2
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 09:08:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tBzuF-0007cU-TU
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:14:53 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-211c1bd70f6so17143945ad.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 09:14:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731690495; x=1732295295; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xEztyymN/5RLgE6ZfeIG0HjojZRRmBc3K3JhZw7fk1U=;
- b=tNP4BpI2IJIrGxspm1+tEkZ93Dtf2WBqaIR9XAPTmL9vsNL4XsGohGdU9r7Ngg3ZOl
- L3JQh3U8kBsO0EW0riPaf6F6RmRkpMVUPrH87g4BAkj04zJKU6hggLUbRTGuV4fNmY2U
- lNbttIiRXPOzU0X1G16o2CQ7jfBy9YY41/jwqvpuoZZpas2PNK6v3+RWr+NM8GE6mNQS
- x876F3otKeZ7cPcNAFHCpYvWKpjg4JKSWT3dvShwSVho9HJcUDVxTRikZLPHMXDfoBDn
- Ekn1JD988N9JeNkzwPpYn3ZWx3igDz2OTz7DnT8inrzHlHg+OKRR2WChAv6+FPKnABE7
- Yjdg==
+ d=linaro.org; s=google; t=1731690890; x=1732295690; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=S0hV1H1Pa1V2z8tB206ORc0kQTkJ1XgZ5f2CeC4qScU=;
+ b=TB0nF0tRnTGT8e9mcwNNL7CSaewpxr7+Dx0g9gi1IOyAVIo8CKNRSui42xAL4L/3yB
+ RLLDphLkRW8Lgl2ECETRj5a0dJmvAy9METwGPXs/MJD9I3/p9pep18FpyyY1Oc9a1R79
+ 9Wo2R7oC/EpamhDi2/CUkVyGeM3YslqV96z/lYRfGWF2qscp6gNOP/nIjkQwvvi55Is6
+ yw8sSe5SVUjSQFpApIYzYLh1wCu4piR+a8UNg71e1NQdUQieW0zaXDnRlxunixAzeL5W
+ D2Z0aSA0ERT+qXKTPqCngjA2EnhzQklicZkf/M4DlikdpWoHIWM62cvYpRrV5TFghu49
+ q6Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731690495; x=1732295295;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xEztyymN/5RLgE6ZfeIG0HjojZRRmBc3K3JhZw7fk1U=;
- b=mDWrUFgNCgYylbp2tIMxRnEHP23uideY4eWdkNFH+8EBlkMQazuaX8IDgfXbXMKqSQ
- rTzLGmDoI0fGdIF3PGLK42qijtYvrNrzt2j+aW/1tzblYUPtljdgVQQjRbHo/aCXUWMy
- yRpxr5c992DAaKixgjIMiv+HgYsfE55rQ5+f5/apg62ixJ9TCepmNoyE4H/57Fg7oaPp
- hAcW+DuFdJuYQ8LrcHmvFlgMiLjYrOlpJFUDkYvG3uEB67S0APINz3jcYAlJZcNP6Mq6
- 17eaudvPUvC7nk3MM/EXzGc9hV7bU60+c785ybejWgbq7/cSgfvlmBjFzw7TO5XbVTYt
- zrkA==
+ d=1e100.net; s=20230601; t=1731690890; x=1732295690;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=S0hV1H1Pa1V2z8tB206ORc0kQTkJ1XgZ5f2CeC4qScU=;
+ b=ESRm2ZfDbwDVBJZeU4/DyXj5mbGqS/VRbUWGks2eDwqMxWGgeIwSQnq+okWwdFr7Po
+ tXBO1BSxTvtlPwdt+J0wXW0OvdmfNqgdlMX6uky3F7yTfyhg7rDzcbBZe8KGc9fQ9VvK
+ gPRFSbFEoAH2TfI8i7XpG7Hd3SE4KWfV142D0GhbXlpDu7X9uoH3b9FLlUwJc54MJVSY
+ NXNtkS7E18xP0hvwRAOiRqPF+9Px+mcjY7Db778BbhWHFDIRBE2hFuiYSR5+z47/Mnt5
+ Nkwo1j96XgpCPgVR4NRg+5+2aP8c8aiiCGs9AGSS+nOW0SAiLsx8lHYw3J0NzNPAJAzX
+ F5EQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYcR6ojpOxkMMgEAmErrmx6u0As+zChvR5uxy9XeqLbh5lPsHh8m7D85t9tZqwrHxpNVLHQra9Dj20@nongnu.org
-X-Gm-Message-State: AOJu0Yx+Pe0pOeK+70g3VZLNJ9hAT2+FJcWho4OjtS9C4qn/6bvn8qiQ
- xSjRr9zMPPlJqdhxQtDRXH+zetujjqXEtf2jP2DpDQfQW2rhBeiZOh892ZAH3v8T5VmJDuWMXl2
- fbpo7ak531LaQ6hge47jNw9iHmRqoTEjmAkajRbeRBX5LmTVQ
-X-Google-Smtp-Source: AGHT+IGsX+TleTeQJyVRSKKWhfoKSR07jmELEJUPT4hCnVyutNMJSL3+FszO7yayxV5FdsjynAN+jB5bCTjZLJm65OQ=
-X-Received: by 2002:a05:6402:358b:b0:5cf:9039:84cc with SMTP id
- 4fb4d7f45d1cf-5cf903987d8mr1966324a12.1.1731690495578; Fri, 15 Nov 2024
- 09:08:15 -0800 (PST)
+ AJvYcCX0ynayO9hHpJam/KqhXVx3BGZJqViMtz4WhJFAQWCfi9Ma3U3TQuV1jJFwWNh0kuAhHPrsb+rN0PEU@nongnu.org
+X-Gm-Message-State: AOJu0YxyJzHPh+K7xzLFadJfzbEOnazNqU7xH5PvJeAvHcwmwITJMNdG
+ o4qGl1PDBCWuTxhQ/H5a7Ra2qIQ9pOa34mPcttbB15+ImYN9ynh/seMMBaLgP0P6LxQf5tJtj8u
+ N
+X-Google-Smtp-Source: AGHT+IHxFo/lrDnfBQYMNLV6blF6OtoNmh1LMUr0nHBO5z+Nkt9+fVsmT5fF6jjTipjVqVOmlStT7A==
+X-Received: by 2002:a17:903:228d:b0:20b:a409:329 with SMTP id
+ d9443c01a7336-211c0f0a592mr118962765ad.5.1731690889947; 
+ Fri, 15 Nov 2024 09:14:49 -0800 (PST)
+Received: from [192.168.0.4] ([71.212.136.242])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72477120a13sm1648067b3a.60.2024.11.15.09.14.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 Nov 2024 09:14:49 -0800 (PST)
+Message-ID: <df17e565-0463-42f7-8f43-2def86ffd39a@linaro.org>
+Date: Fri, 15 Nov 2024 09:14:47 -0800
 MIME-Version: 1.0
-References: <20241114165900.6399-1-paskripkin@gmail.com>
- <20241114165953.6894-1-paskripkin@gmail.com>
- <CAFEAcA9i+YmGj5tznoc9FQkDQKqN4vx_0grOjh_ZFGyj-aPgng@mail.gmail.com>
- <6303c5ee-e6f9-48f7-9cd4-f78680c2e785@gmail.com>
-In-Reply-To: <6303c5ee-e6f9-48f7-9cd4-f78680c2e785@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Nov 2024 17:08:04 +0000
-Message-ID: <CAFEAcA8cLSXYAcEjE97RucH1fz+Y4sB2_e53apVf8HZGzf2q=Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm/ptw: respect sctlr.{u}wxn in get_phys_addr_v6
-To: Pavel Skripkin <paskripkin@gmail.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/10] target/mips: Drop left-over comment about Jazz
+ machine
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20241115152053.66442-1-philmd@linaro.org>
+ <20241115152053.66442-2-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241115152053.66442-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,44 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 15 Nov 2024 at 16:54, Pavel Skripkin <paskripkin@gmail.com> wrote:
->
-> Hi Peter,
->
-> Peter Maydell <peter.maydell@linaro.org> says:
-> > On Thu, 14 Nov 2024 at 16:59, Pavel Skripkin <paskripkin@gmail.com> wrote:
-> >>
-> >> get_phys_addr_v6() is used for decoding armv7's short descriptor format.
-> >> Based on ARM ARM AArch32.S1SDHasPermissionsFault(), WXN should be
-> >> respected in !LPAE mode as well.
-> >>
-> >> Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
-> >> ---
-> >>  target/arm/ptw.c | 11 +++++++++++
-> >>  1 file changed, 11 insertions(+)
-> >
-> > Instead of this, would it be possible to have get_phys_addr_v6()
-> > call get_S1prot() (replacing most of the existing open-coded
-> > handling of PAN, simple vs classing AP model, etc) ? I haven't
-> > looked at the fine detail, so we might need to tweak get_S1prot()
-> > if it's missing logic that only matters in the short-descriptor
-> > case, but I think that would be better than having two places
-> > that need updating for new architectural features.
-> >
->
-> I also thought about that, but suspected there was a reason it was not
-> used at the first place.
+On 11/15/24 07:20, Philippe Mathieu-Daudé wrote:
+> Commit 3803b6b427 ("target/mips: Fold jazz behaviour into
+> mips_cpu_do_transaction_failed") removed update on TCGCPUOps
+> and commit 119065574d ("hw/core: Constify TCGCPUOps") made
+> it const. Remove the now irrelevant comment.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/mips/cpu.c | 4 ----
+>   1 file changed, 4 deletions(-)
+> 
+> diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+> index d0a43b6d5c..7c6f438e5d 100644
+> --- a/target/mips/cpu.c
+> +++ b/target/mips/cpu.c
+> @@ -546,10 +546,6 @@ static Property mips_cpu_properties[] = {
+>   
+>   #ifdef CONFIG_TCG
+>   #include "hw/core/tcg-cpu-ops.h"
+> -/*
+> - * NB: cannot be const, as some elements are changed for specific
+> - * mips hardware (see hw/mips/jazz.c).
+> - */
+>   static const TCGCPUOps mips_tcg_ops = {
+>       .initialize = mips_tcg_init,
+>       .synchronize_from_tb = mips_cpu_synchronize_from_tb,
 
-I think it's likely purely for historical reasons. The
-short-descriptor handling code is older, and has
-had to change less to accommodate new architectural
-features. When we originally created get_S1prot()
-we were doing it as a refactoring to deal with
-increasing complexity in the previously open-coded
-handling of access bits in get_phys_addr_lpae() and
-I don't think we really thought much about the possibility
-of code-sharing with the short-descriptor codepath.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-thanks
--- PMM
+r~
 
