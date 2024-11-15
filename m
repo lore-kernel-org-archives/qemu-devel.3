@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD068D68BCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2908CD68BCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tC064-0007Ip-ID; Fri, 15 Nov 2024 12:27:05 -0500
+	id 1tC0Cn-00054h-9z; Fri, 15 Nov 2024 12:34:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tC05v-00076M-Dt
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:26:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tC05t-0001dU-8P
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:26:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731691611;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ot7Dr2IBF2Q9/oMfsnzhAlSiXcYHXH2GDgp6wP3SdPM=;
- b=UDNPQ52DdR+740bDqWm/u7x3jYWM29CTjZc7IQrk7GBAA2OFZuIwp2kif4YsF/uP6SV8PG
- tEmUQEp6cpvioqXOR7SB4mOKSaAFxB0VZKcpHw1+dMxwylFqTPcN9eXPTFVmrRjmqY+Scp
- SYFx2VbwKQfc/VVHVAZmML5/UpgpnXc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-685-cmYzDuC7OSyUsc58X3dJRQ-1; Fri,
- 15 Nov 2024 12:26:50 -0500
-X-MC-Unique: cmYzDuC7OSyUsc58X3dJRQ-1
-X-Mimecast-MFC-AGG-ID: cmYzDuC7OSyUsc58X3dJRQ
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 384BC1936164
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 17:26:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.102])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DFAC3003B71; Fri, 15 Nov 2024 17:26:45 +0000 (UTC)
-Date: Fri, 15 Nov 2024 17:26:42 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 6/8] qom: introduce qdev_new_dynamic()
-Message-ID: <ZzeEUgv0npL4IfFn@redhat.com>
-References: <20241111155555.90091-1-berrange@redhat.com>
- <20241111155555.90091-7-berrange@redhat.com> <ZzZh2GHJm1L-mq5D@x1n>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tC0Cl-00054G-9C
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:33:59 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tC0Cj-0002W3-NZ
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:33:59 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5cefa22e9d5so2326513a12.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 09:33:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731692035; x=1732296835; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e0PA7SXM7Hdt7q7y4slXT17KRI24/od2RXZ4c8SxZk8=;
+ b=ZNJByGvYkJK+LKXow1Ev/BovIHonNnwV+GzHZDhoSgomBbVAFcpTsTLdCP1jK7WJEp
+ J50EmLj6j6hvdRpIpKpzfKLlENxx7aO7Zg5MGdWvyeGSIN7B+Z+ehUfy201Ywb2NL7hG
+ nCeHBlKXm3uu814kQYMPRFguLMpO0AapUF6H6wCARmjO+kS2A3lGp573GnYGyU6IJx70
+ tS6N/+KNF8GW6FB9lmPtYsYDyLEsErOECXxKAMXyVcDT+jhKaF+QmZcY1E/Mkr5TcwYs
+ fld2JojufrXJN4N+tlc5Ac4ikIMwdXsbx3ErQeLAKlaev7jq+/4Qz/zpvECPe0+2ks3S
+ YlOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731692035; x=1732296835;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=e0PA7SXM7Hdt7q7y4slXT17KRI24/od2RXZ4c8SxZk8=;
+ b=fqr9bL6+COgLbZgt6H1COrTevawXVJGv+0OdtRzQ+/c6EMWzL7YYeYqZO+WGnj/d2V
+ S9pAIcuyX+6BcuKrSUhwpeDv6/c/GvObgxHNjjr/owkWXEcXuXgGaWswPQXvBgaQ8tpK
+ NoU5PhJHv1kpX6ZRFkPR5fYOkIGoK6dUvFCefk/KnsAklBL83g9Z+dQVx6+lqFbOEw8/
+ /3sGdQGsC2Fjin5FUpkG2GkQ1R7WwfYyHzPuZpIvGJer0NZzucOS5hPQRnbu4MfoqVA5
+ IRxOnuKaAFzZtS4YNU+YX+sxpv3PcgptMWSRCwobDws/4bUEqw/OHdv6bJZGcJFaSccT
+ g8zQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUxTzRERumdgoZFbYT5dqXWURju2pMV5kySZPc9CMiXkXUKunPtUPRReiLRA+mtElJaANgS8OPkNMjX@nongnu.org
+X-Gm-Message-State: AOJu0Yy0gLEvmYV6uagwoXD2NCrNrvCxvWXk6Wx3sREutAD3/a9Kgi5P
+ VBfSmGpSnjQIIL4iIoToeVPqtVtR/N+bicGVlNyQonenzTp7/NnhPaBDhA7nDI1XY6dFLjjn+i4
+ RjyugfsdANQtH5VCEYFkdcOxC9Xb2Drhl2qGhKw==
+X-Google-Smtp-Source: AGHT+IEx9Uz0HD9h7iVOfgH+b+YmNiTQuxGr8Pr8by9Lj2+aSIJnz3TYnPgUpEEASKDpGRC4cUaTgXVHH8qm5UtDxKo=
+X-Received: by 2002:a05:6402:1d50:b0:5cf:45d4:3f8f with SMTP id
+ 4fb4d7f45d1cf-5cf8fc396d2mr2464739a12.12.1731692035419; Fri, 15 Nov 2024
+ 09:33:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZzZh2GHJm1L-mq5D@x1n>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+References: <20241115152053.66442-1-philmd@linaro.org>
+ <20241115152053.66442-7-philmd@linaro.org>
+ <9796cc60-5efb-4a2d-9437-4832a6c43edf@linaro.org>
+In-Reply-To: <9796cc60-5efb-4a2d-9437-4832a6c43edf@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 15 Nov 2024 17:33:44 +0000
+Message-ID: <CAFEAcA95k0yX+jns13qx0j+u0aJUjYpaqyDX-y-Cd8xQ4Z9kUA@mail.gmail.com>
+Subject: Re: [PATCH 06/10] accel/tcg: Remove cpu_unwind_state_data() unused
+ CPUState argument
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.12,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.658,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,42 +92,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 14, 2024 at 03:47:20PM -0500, Peter Xu wrote:
-> On Mon, Nov 11, 2024 at 03:55:53PM +0000, Daniel P. Berrangé wrote:
-> > qdev_new() has a failure scenario where it will assert() if given
-> > an abstract type. Callers which are creating qdevs based on user
-> > input, or unknown/untrusted type names, must manually check the
-> > result of qdev_class_is_abstract() before calling qdev_new()
-> > to propagate an Error, instead of asserting.
-> > 
-> > Introduce a qdev_new_dynamic() method which is a counterpart to
-> > qdev_new() that directly returns an Error, instead of asserting.
-> > This new method is to be used where the typename is specified
-> > dynamically by code separate from the immediate caller.
-> > 
-> > Do likewise with qdev_try_new_dynamic() as a counterpart to
-> > qdev_try_new().
-> 
-> Since at it, would it make sense to simply replace qdev_try_new() with
-> qdev_new_dynamic(), assuming it plays similar role of "it can fail" version
-> of qdev_new()?
+On Fri, 15 Nov 2024 at 17:24, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 11/15/24 07:20, Philippe Mathieu-Daud=C3=A9 wrote:
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > ---
+> >   include/exec/translate-all.h | 3 +--
+> >   accel/tcg/translate-all.c    | 2 +-
+> >   target/i386/helper.c         | 3 ++-
+> >   target/openrisc/sys_helper.c | 7 +++----
+> >   4 files changed, 7 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/include/exec/translate-all.h b/include/exec/translate-all.=
+h
+> > index f06cfedd52..9303318953 100644
+> > --- a/include/exec/translate-all.h
+> > +++ b/include/exec/translate-all.h
+> > @@ -23,7 +23,6 @@
+> >
+> >   /**
+> >    * cpu_unwind_state_data:
+> > - * @cpu: the cpu context
+> >    * @host_pc: the host pc within the translation
+> >    * @data: output data
+> >    *
+> > @@ -32,7 +31,7 @@
+> >    * function returns false; otherwise @data is loaded.
+> >    * This is the same unwind info as given to restore_state_to_opc.
+> >    */
+> > -bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t =
+*data);
+> > +bool cpu_unwind_state_data(uintptr_t host_pc, uint64_t *data);
+>
+> Hmm.  I wonder if it should be called "cpu_*" at all then?
+> Worth renaming to "tcg_*" or something?
 
-That is tricky as callers of qdev_try_new have to distinguish between
-expected failures and unexpected failures.
+Yes, it's odd, isn't it?
 
-That said you made me look at the usage patterns and I concluded these
-xxx_try_new() methods are a bad design for other reasons, so I have
-simply eliminated them entirely in v3.
+What's the plan for this function in a multi-target
+emulation world? At the moment it (or functions it
+calls) uses TARGET_INSN_START_WORDS which is a
+target-CPU-type-specific value. If in the future we're
+going to want it instead to look that up as e.g. some
+property of the CPU class then maybe we should keep
+passing it the CPU pointer? Or would we instead say
+that we'll define TARGET_INSN_START_WORDS as the worst
+case for any target, since it's always between 1 and 3,
+so it doesn't waste that much space if we have a couple
+of extra sleb128 zero values for targets that don't need
+all 3 words?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
