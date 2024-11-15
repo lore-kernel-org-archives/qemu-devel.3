@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE091D68BCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 16:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B012D68BCD
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 16:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBzMY-0005ih-MI; Fri, 15 Nov 2024 11:40:02 -0500
+	id 1tBzND-0006BF-7X; Fri, 15 Nov 2024 11:40:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBzMV-0005ha-E1
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:39:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tBzN7-00069s-BV
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:40:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBzMO-0001rY-K1
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:39:58 -0500
+ id 1tBzN5-0002IH-JW
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:40:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731688790;
+ s=mimecast20190719; t=1731688834;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=/r5jLQNPT+C2nD8yyF5aXUNK/EZ2/lpZRMe/xFoyW4E=;
- b=J2g3JpJaOHEJiup3UAciVqC/7DvCXsR0ptaLxIXvDrOblNnVW8ljjbOixAJhiUe59z0S1D
- UYVRNUTL3APlY3RcEMseezt29oVazJwL1Ka/beBZd2CwQRFxr7RGYXFJMN3B3l5I/bEXsm
- DDSSJ6Kb5XnRyQnyQwg5zoaqd8UnBxs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q0jH9GG4Y9DVdkqF6zGXUYSm5Vmv2IR3Nw21G/qghzM=;
+ b=XEZzG78UR/GBztJBa12hl4YzDU1wkqSpTr665Diog+DMG9UN53FAnR9w+xzCk7y9gBoQFN
+ AtDWzAgY+kn+tBhc8LiYff7unstpPND8dPiLjTuTOWdkBa38ZVqfindPd3bPvs55CofGt8
+ nSYXaE77nhDwu0VZDwRBynCkuK2/JGc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-0H84XH-pN9mlhi8HmnaeXA-1; Fri, 15 Nov 2024 11:39:48 -0500
-X-MC-Unique: 0H84XH-pN9mlhi8HmnaeXA-1
-X-Mimecast-MFC-AGG-ID: 0H84XH-pN9mlhi8HmnaeXA
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37d4854fa0eso1263864f8f.2
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 08:39:47 -0800 (PST)
+ us-mta-657-KCK9K-OVMpSnh7tqZv_bnA-1; Fri, 15 Nov 2024 11:40:33 -0500
+X-MC-Unique: KCK9K-OVMpSnh7tqZv_bnA-1
+X-Mimecast-MFC-AGG-ID: KCK9K-OVMpSnh7tqZv_bnA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43159603c92so13679235e9.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 08:40:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731688786; x=1732293586;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/r5jLQNPT+C2nD8yyF5aXUNK/EZ2/lpZRMe/xFoyW4E=;
- b=b8+ZieOMKZfFutlR472hEe4kDWG0sbMQfC8j2WVICnuNqug0SarkbdNRBkPDtxgOSr
- CxJewLAcLudRCqThfDh54dA2bM3aKRepq6T3W20GOED/laMO28S/d6Dl5vhoZcheKQek
- YS/l5SfoZZkhlWykW/N4jyqZ7mKJ6grhb21WT5kQFUg9GjlfjvzA8jvhGFg5vkC3pnJG
- cAiMVjW+ROpCXFKBfHwxpydqN6WvhspYLdENc6mXyPcX1rpwX22713XrXNU6blbTU0hv
- CDD0MKPzXrJHXZQX9E+oJt4dSLVgj7VFaj7OWgs7vJa5ByWj4CkA/c799TkwZlfP3bWA
- 0ZlA==
-X-Gm-Message-State: AOJu0Yw1bz0BeEMQf0y0D99LUBG/xtI+fmxuS4dLw1pXAG8d+9BKpKeF
- 9Rq0A0ZO3uYt44V8PhfyNSkwbRqOudp6SgTIazg58l3+TjlE1fAEzzifebBUzieMcgsU8XI5jrU
- 6ZeQMUDXgOGWcWLdv4u2ynoQNQ9swvJK0ioUi2wwf1bDMzm87E1jdhGEYZOPLC7o8dvXhIobl1C
- Q2q4Gyl9KBYIfrgWNQQkknVexcbi/SIxSO84OMUsc=
-X-Received: by 2002:a5d:64cc:0:b0:382:2f62:bd4b with SMTP id
- ffacd0b85a97d-3822f62bfa3mr1042751f8f.33.1731688786448; 
- Fri, 15 Nov 2024 08:39:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGcrcGr6Jh5rvbV+yZHF73tRycDumJwtfyF+CxlzU+IYCrY419wqFkGXSgulM27EXj96jKmvA==
-X-Received: by 2002:a5d:64cc:0:b0:382:2f62:bd4b with SMTP id
- ffacd0b85a97d-3822f62bfa3mr1042723f8f.33.1731688785811; 
- Fri, 15 Nov 2024 08:39:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731688827; x=1732293627;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=q0jH9GG4Y9DVdkqF6zGXUYSm5Vmv2IR3Nw21G/qghzM=;
+ b=eBu8XMfvEm3hiwHdsnw+bZEj9wsEB0jaQGKloBBjCc2/qzZISpM7OWSmh/0ZFSo9DP
+ j4ieHMqf82WIlZnlCgVy/yfjI93Q8GewFJIAqz/XCj0Ci2lmgYIXRnYZYk9wmQUWAoRh
+ VG9nDB7IlhON7TtZnVPK9I7w3fbVvqwlYKqxG/W3ETOVVAqGOGkEVKUprpe5cNG6GOYP
+ oVUm0ceqQd+KWYZhIFgabsBsJs1HtcQ0sBK8/yF1uJ/q940P/dSUJv4IJK4nqHwbGqt0
+ Nntf1EyWziX4rTg1aT2bHRr2SHTAjqn848a4rVEYOWlMcjO+d+e8VqnbhXAiE1U3Ib4I
+ sr7Q==
+X-Gm-Message-State: AOJu0YxFzeirfvh8zpEmD6fa8Gg21wDpexeMXTTj6ki1ZRP/LLVtwWme
+ Pf+1FqwAEDCJU9kR/DoEjNQM9saRsldeBfKX71LqmAopwBwDTJxuI2mdpmnfuIImkL3DUZZCYMC
+ r9geNtGqConoik8Yv9fsj4pTrXMys//XxNcDee9c/Vr8uDVkGcAQXrssx3UoRgPUVUHa7/adR0W
+ /hjAqd/3h6K86njBFXd5FsIT7PZBUGoGDb0TJl+CY=
+X-Received: by 2002:a05:600c:c08:b0:432:7c08:d121 with SMTP id
+ 5b1f17b1804b1-432df741a8bmr31015985e9.12.1731688827310; 
+ Fri, 15 Nov 2024 08:40:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFBKskmKUgKodxYS6R/cBZhBf0NpqATQwq/de+/8v91CxLYcSq5FmIQyXdc0P7L+2GmjRASdA==
+X-Received: by 2002:a05:600c:c08:b0:432:7c08:d121 with SMTP id
+ 5b1f17b1804b1-432df741a8bmr31015755e9.12.1731688826890; 
+ Fri, 15 Nov 2024 08:40:26 -0800 (PST)
 Received: from [192.168.10.3] ([151.49.84.243])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3821e073e0asm4289208f8f.30.2024.11.15.08.39.45
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-3821ae31083sm4767995f8f.103.2024.11.15.08.40.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Nov 2024 08:39:45 -0800 (PST)
+ Fri, 15 Nov 2024 08:40:26 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 00/12] rust: improved integration with cargo
-Date: Fri, 15 Nov 2024 17:39:32 +0100
-Message-ID: <20241115163944.1917393-1-pbonzini@redhat.com>
+Cc: qemu-rust@nongnu.org, berrange@redhat.com, junjie.mao@hotmail.com,
+ manos.pitsidianakis@linaro.org, kwolf@redhat.com
+Subject: [PATCH 01/12] rust: apply --cfg MESON to all crates
+Date: Fri, 15 Nov 2024 17:40:14 +0100
+Message-ID: <20241115164025.1917618-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241115163944.1917393-1-pbonzini@redhat.com>
+References: <20241115163944.1917393-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.12,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.12,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.658,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,121 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While we're not sure where we'll be going in the future, for now
-using cargo remains an important part of developing QEMU Rust code.
-This is because cargo is the easiest way to run clippy, rustfmt,
-rustdoc.  Cargo also allows working with doc tests, though there are
-pretty much none yet, and provides tools such as "cargo expand".
+We might have more uses for --cfg MESON, even though right now it's only
+qemu-api that has generated files.  Since we're going to add more flags
+to the add_project_arguments calls for Rust, it makes sense to also add
+--cfg MESON everywhere.
 
-This series aims at improving the integration with cargo and
-cargo-based tooling, including rust-analyzer.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build               | 7 ++++---
+ rust/qemu-api/meson.build | 2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-First, while it is currently possible to run cargo on the rust/
-directory, this has the issue that the bindings.rs must be placed by hand
-in the source tree.  Therefore, this series starts by allowing cargo to
-"just work" when run in a "meson devenv" environment:
-
-    pyvenv/bin/meson devenv -w ../rust cargo clippy --tests
-    pyvenv/bin/meson devenv -w ../rust cargo fmt
-
-If you are going to use cargo repeatedly, invoking just
-
-    pyvenv/bin/meson devenv
-
-will put you in a shell where commands like 'cargo clippy' just work.
-For simplicity, I am also adding targets 'make clippy', 'make rustfmt',
-'make rustdoc'.
-
-Secondly, one problem with mixing Cargo and meson is having to redo the
-configuration of "lints" in both sides.  This series standardizes
-on using Cargo.toml to configure the build, and bringing the flags
-over to build.ninja with extensions to the existing rustc_args.py script.
-The RFC didn't have any objection but also no enthusiastic approval,
-so once more if the additions to the script seem to be too large I'm
-open to scrapping the idea.  I organizes the changes so that the changes
-are split over multiple patches, but it does not make much sense to
-only keep some of them.
-
-Finally, this series adds a CI job that runs rustfmt, clippy, and
-rustdoc.
-
-I checked that you can point rust-analyzer at the sources, by adding
-MESON_BUILD_ROOT in the rust-analyzer.cargo.extraEnv setting, too.  I'm
-not sure if there's a better way.  We need to document all this somewhere
-but Manos said he's working on documentation, so I'll let him post what
-he has and possibly integrate it later.
+diff --git a/meson.build b/meson.build
+index e0b880e4e13..a6172524287 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3422,10 +3422,11 @@ if have_rust
+   # is safe; https://github.com/rust-lang/rust/pull/54675 says that
+   # passing -nodefaultlibs to the linker "was more ideological to
+   # start with than anything".
+-  add_project_arguments(rustc_args + ['-C', 'default-linker-libraries'],
++  add_project_arguments(rustc_args +
++      ['--cfg', 'MESON', '-C', 'default-linker-libraries'],
+       native: false, language: 'rust')
+-
+-  add_project_arguments(rustc_args, native: true, language: 'rust')
++  add_project_arguments(rustc_args + ['--cfg', 'MESON'],
++      native: true, language: 'rust')
+ endif
  
-Compared to the RFC there are a smattering of fixes in meson.build,
-slightly different set of lints (for example ptr_constness_cast has
-issues with 1.63.0) and the changes to support rust-analyzer.
-
-Also, doctests for now are not supported.  Building and running them with
-"rustdoc" is not hard, but there are some complications because they are
-integration tests for all intents and purposes; and therefore they need
-linker options to include non-Rust build products.  For now "cargo test
---doc" works, but that's not going to remain the case when for example
-QOM doctests are added.  However it should be possible with some effort
-to build them with Meson just like rust-qemu-api-integration, and run
-them normally from "make check".
-
-Paolo
-
-RFC->v1:
-new patch 1
-patch 2: new commit message
-         use symlink in OUT_DIR as suggested by Junjie
-patch 3: mention that rustc_args may be needed for other crates in the future
-patch 6: change unexpected_cfgs to deny
-         allow running rustc_args.py with --workspace and without Cargo.toml
-patch 8: adjust commit message
-         better fix for ptr_constness_cast in rust/hw/char/pl011/src/device.rs
-patch 9: add should_implement_trait and shadow_unrelated
-         drop ptr_cast_constness until 1.65.0
-patch 10: make cargo optional
-          add rustdoc per rust/qemu-api/README.md
-patch 12: move to static_checks.yml, remove doctests
-
-
-Paolo Bonzini (12):
-  rust: apply --cfg MESON to all crates
-  rust: allow using build-root bindings.rs from cargo
-  rust: build: move rustc_args.py invocation to qemu-api crate
-  rust: build: restrict --cfg generation to only required symbols
-  rust: build: generate lint flags from Cargo.toml
-  rust: cargo: store desired warning levels in workspace Cargo.toml
-  rust: build: move strict lints handling to rustc_args.py
-  rust: fix a couple style issues from clippy
-  rust: build: establish a baseline of lints across all crates
-  rust: build: add "make clippy", "make rustfmt", "make rustdoc"
-  rust: ci: add job that runs Rust tools
-  rust: fix doc test syntax
-
- meson.build                                   |  57 +++---
- .gitlab-ci.d/static_checks.yml                |  23 +++
- rust/Cargo.toml                               |  79 ++++++++
- rust/hw/char/pl011/.gitignore                 |   2 -
- rust/hw/char/pl011/Cargo.toml                 |   3 +
- rust/hw/char/pl011/src/device.rs              |   8 +-
- rust/hw/char/pl011/src/lib.rs                 |  19 +-
- rust/hw/char/pl011/src/memory_ops.rs          |   4 +-
- rust/meson.build                              |  22 +++
- rust/qemu-api-macros/Cargo.toml               |   3 +
- rust/qemu-api/.gitignore                      |   2 +-
- rust/qemu-api/Cargo.toml                      |   5 +-
- rust/qemu-api/README.md                       |  10 +-
- rust/qemu-api/build.rs                        |  39 +++-
- rust/qemu-api/meson.build                     |   6 +-
- rust/qemu-api/src/bindings.rs                 |  29 +++
- rust/qemu-api/src/lib.rs                      |  22 ---
- rust/qemu-api/src/zeroable.rs                 |   6 +-
- rust/qemu-api/tests/tests.rs                  |   2 +-
- scripts/rust/rustc_args.py                    | 181 ++++++++++++++++--
- .../dockerfiles/fedora-rust-nightly.docker    |   4 +
- tests/lcitool/refresh                         |   4 +
- 22 files changed, 419 insertions(+), 111 deletions(-)
- delete mode 100644 rust/hw/char/pl011/.gitignore
- create mode 100644 rust/qemu-api/src/bindings.rs
-
+ hxtool = find_program('scripts/hxtool')
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 6f637af7b1b..cad9ac4844e 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -1,4 +1,4 @@
+-_qemu_api_cfg = ['--cfg', 'MESON']
++_qemu_api_cfg = []
+ # _qemu_api_cfg += ['--cfg', 'feature="allocator"']
+ if rustc.version().version_compare('>=1.77.0')
+   _qemu_api_cfg += ['--cfg', 'has_offset_of']
 -- 
 2.47.0
 
