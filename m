@@ -4,70 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E77A8D68BCF
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 20:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B17D68BD5
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 20:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tC2kW-0001pW-V9; Fri, 15 Nov 2024 15:17:00 -0500
+	id 1tC3PH-0007Z2-CV; Fri, 15 Nov 2024 15:59:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tC2kV-0001p8-4K
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 15:16:59 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tC3P9-0007WA-SF
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 15:59:00 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tC2kT-0008Fs-Hl
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 15:16:58 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5cedf5fe237so2632768a12.3
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 12:16:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tC3P8-0004Nk-Gc
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 15:58:59 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2ea304ce809so49816a91.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 12:58:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731701815; x=1732306615; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0DZ736icizDSiNlqE5YudJECLdTkNwJS11uCyrvNjz0=;
- b=h0qH4rJZBK1d4t3jW0nrhDN5S2OUCV9tpWgQlS/6Pt3No5QxLKcsJLw/Mf9wGL3fXK
- R6AcyromUXwlpaEJKdxpa4Q1+m/2aTligGJ8pWAH/lQcx9cSeOD60Jk5IESdD0rpK+dd
- qVccbeVNC/asGlAXNd0ZfbZbCxLw46e5y0g74pnweStabCKmOyR1yaGLVk+OsKjKWLy5
- sKd/oqejFU3zraoHaZm6Wzq1VcyVYzS1JKDWZCxSJXt5sd2XTtX0NEWWFCisdwvtBu1Y
- Dc3/dMfFNkznuvBjz2Lx10yaj8/wUwz2YIbVX7n+ZKOmvTafpDEh6gnIK+6fNK8wFCHE
- w4tQ==
+ d=linaro.org; s=google; t=1731704337; x=1732309137; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Frvdm/WDiTHhmyZ4u8I9chbK5/V3/lvbxAdiykuEOlI=;
+ b=mLZRT+AvDuNcrYjJpudvwvtTpwvlFIcHAZDVrpKUb+7qIjVbOl7JSemLTJOju/P9tN
+ zSMj56h4YnOmGcx8HpYh7idJ3rf3fx8KOsVR3SH73Wh5Pgp/lmmQP+2oVM6a5i0z4aH/
+ nT5RZAa0IfM4AnVEvJOxIh9j3XdomLaXqYuJFidFgTtNIzXCtyxWsAMyZVnUjGdW8GBW
+ ri+hjA86HfGm6Yea3Gk3zLKOnpBzU8fjl1lV8rBBqBrE9iF/HpVMirMX9RJS+8fNfY+n
+ DVRQN9PL178WMOXjHgumA22LSxPG/FfY1TAKTPeovFZSp9Xu2xr6FUodGC9jmhxsuG7H
+ xb4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731701815; x=1732306615;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0DZ736icizDSiNlqE5YudJECLdTkNwJS11uCyrvNjz0=;
- b=SWse/KIcgVBkopTKvUAPRg01YcfLBmsoDblsxxKaTWdFaqlx4fdlXoSRuB/4DW377i
- vefQ+3u3TOVMtXMEAGyS7w/uOAKltrH7LsbCtH4J4xImcn52f1oX9COZPGEwxBig1c99
- +DiArKlGedzCzSOxo5ATY4zvBOrvAQtethuNdheSEk2RZPwi3EuDCPG5+rq1G+6Vh+rc
- NMvtPsJumMQEyKXfwb95XOxrUfDyibyZJz0imjd62ms0J6QHvI7SqR30yWWpDQZzEuU5
- epvgBr2gipw1AIInd6Ghx6dVJCnUiYMbEonKy3afn1f3tr4uVFg4Byiy+jTpfGgcB3HK
- RG6g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVS0AeaZNODNEwlM7nKM1ORUm1+srXkvLs4Wu+twyjvgN6HBtC2dELy1X4fDhG7ptXPQnF9NULdzomk@nongnu.org
-X-Gm-Message-State: AOJu0Yzf1jdaIyf8VMKSxqe2iIGWVcLdtPHFxVvApBTY3v89yvB7yZg9
- o7o6CK6dtfChC85Wh9GcDpdeCybnR0CwQh4kksEUga30Nr0KL1SLE+Nxo/kPLbxpNT7zDTf0jME
- kT7ymA+lXXiXwd61UD4fg2+ymJFYOImZkLiIG9A==
-X-Google-Smtp-Source: AGHT+IGbvtxCO1hdEUdh6bL3O1ZUZgv+DRaP2UelWtxP1e2a5bZVGnr3H55ndXEjrE+18Fr+P+UYxKtwEXAta9/H8Vo=
-X-Received: by 2002:a05:6402:2706:b0:5cf:924f:996d with SMTP id
- 4fb4d7f45d1cf-5cf924fa1dfmr2053645a12.7.1731701815280; Fri, 15 Nov 2024
- 12:16:55 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731704337; x=1732309137;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Frvdm/WDiTHhmyZ4u8I9chbK5/V3/lvbxAdiykuEOlI=;
+ b=dgVSGzpISYWZnI2Npbk9HokIhCOMA0TwipVppkAVrn4amA8BujEisPXFXisEkmm2EZ
+ ehTBkrWH/1iplt5st2974fRfMJq05obavAhXUQWKCEqqbX1sNhcsfK2RV4mX4lpq9fqt
+ Y0MBxc3N6rP5kL9KFvJnw+GYq0p+FMasp2gJi82launiUA9EI5+Ba+ZZcFGOSlXxq+ex
+ lXRYiruM8hzdeBs6gDONMfcyNHFYUsvzf4cLaf8oHMyB/BcFzqMxvGTlU1K5WsCM9VfB
+ GsFvD2cJnx5jwfuLvQqKUr5HAEFxdyucrG72Q24r8w8XRCLY7Iz4riIix/NIdLwOm7cH
+ 3O1A==
+X-Gm-Message-State: AOJu0YyjumnoGr7lGMONBx+grUFPF3qqy30J/fI8I3vugUSHaoip2U1l
+ wVSSTED6Bo1ua1uSpjbpZ985MGUMlY6SPsGew+Gs0l1gfSPM+4n4OkhN9hayW/GsRPM2P5R8SGw
+ Y
+X-Google-Smtp-Source: AGHT+IEqp1Lclgwrc244i6QUJND32vQ7ajxzU868H7LQpYhXicxnbxAaNcO/iPK4M+vGtEZTVtrc0A==
+X-Received: by 2002:a17:90b:4f4b:b0:2e2:e159:8f7b with SMTP id
+ 98e67ed59e1d1-2ea154b5732mr4978132a91.3.1731704337045; 
+ Fri, 15 Nov 2024 12:58:57 -0800 (PST)
+Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ea024a49a8sm3362274a91.23.2024.11.15.12.58.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Nov 2024 12:58:56 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 06/14] cpu: ensure we don't call start_exclusive from cpu_exec
+Date: Fri, 15 Nov 2024 12:58:41 -0800
+Message-ID: <20241115205849.266094-7-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241115205849.266094-1-richard.henderson@linaro.org>
+References: <20241115205849.266094-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20241114165657.254256-1-kwolf@redhat.com>
-In-Reply-To: <20241114165657.254256-1-kwolf@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Nov 2024 20:16:44 +0000
-Message-ID: <CAFEAcA-y2K74jbPwPwrCo=OfCn_eJpGskX5KVivAMxzQXLThrw@mail.gmail.com>
-Subject: Re: [PULL 0/8] Block layer patches
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,69 +95,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 14 Nov 2024 at 16:58, Kevin Wolf <kwolf@redhat.com> wrote:
->
-> The following changes since commit f0a5a31c33a8109061c2493e475c8a2f4d022432:
->
->   Update version for v9.2.0-rc0 release (2024-11-13 21:44:45 +0000)
->
-> are available in the Git repository at:
->
->   https://repo.or.cz/qemu/kevin.git tags/for-upstream
->
-> for you to fetch changes up to 378a645b2f6125b1bdbd1fae3e8f30452d5b5934:
->
->   vl: use qmp_device_add() in qemu_create_cli_devices() (2024-11-14 17:55:51 +0100)
->
-> ----------------------------------------------------------------
-> Block layer patches
->
-> - Fix qmp_device_add() to not throw non-scalar options away (fixes
->   iothread-vq-mapping being silently ignored in device_add)
-> - iotests: Fix mypy failure
-> - parallels: Avoid potential integer overflow
-> - Fix crash in migration_is_running()
->
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Hi; this seems to cause an error for the avocado test
-tests/avocado/hotplug_blk.py:HotPlug.test
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241025175857.2554252-3-pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ cpu-common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-https://gitlab.com/qemu-project/qemu/-/jobs/8387009365
-https://gitlab.com/qemu-project/qemu/-/jobs/8387009383
+diff --git a/cpu-common.c b/cpu-common.c
+index 6b262233a3..0d607bbe49 100644
+--- a/cpu-common.c
++++ b/cpu-common.c
+@@ -194,6 +194,9 @@ void start_exclusive(void)
+     CPUState *other_cpu;
+     int running_cpus;
+ 
++    /* Ensure we are not running, or start_exclusive will be blocked. */
++    g_assert(!current_cpu->running);
++
+     if (current_cpu->exclusive_context_count) {
+         current_cpu->exclusive_context_count++;
+         return;
+-- 
+2.43.0
 
-(12/51) tests/avocado/hotplug_blk.py:HotPlug.test: STARTED
-(12/51) tests/avocado/hotplug_blk.py:HotPlug.test: ERROR: Could not
-perform graceful shutdown (17.16 s)
-
-If you dig through the build artefacts you can find the debug log:
-https://qemu-project.gitlab.io/-/qemu/-/jobs/8387009383/artifacts/build/tests/results/latest/test-results/12-tests_avocado_hotplug_blk.py_HotPlug.test/debug.log
-
-and it seems like the test sends a device_add command over
-QMP and the result is that QEMU dies with an assertion failure.
-The relevant device_add is
-
-[stdlog]   "execute": "device_add",
-[stdlog]   "arguments": {
-[stdlog]     "driver": "virtio-blk-pci",
-[stdlog]     "drive": "disk",
-[stdlog]     "id": "virtio-disk0",
-[stdlog]     "bus": "pci.1",
-[stdlog]     "addr": 1
-[stdlog]   },
-[stdlog]   "id": "__qmp#00002"
-[stdlog] }
-
-Avocado helpfully hides the assertion message under a rock
-in a different log file:
-https://qemu-project.gitlab.io/-/qemu/-/jobs/8387009383/artifacts/build/tests/results/latest/test-results/12-tests_avocado_hotplug_blk.py_HotPlug.test/7f00b63ed810.log
-
-qemu-system-x86_64: ../qapi/qobject-input-visitor.c:143:
-qobject_input_try_get_object: Assertion `removed' failed.
-
-
-I'm guessing this is Stefan's patches since they touch
-the device_add path.
-
-thanks
--- PMM
 
