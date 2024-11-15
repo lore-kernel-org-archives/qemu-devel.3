@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EFD1D6DDD7
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 06:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86068D6DDD7
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 06:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBplU-0005o8-Oi; Fri, 15 Nov 2024 01:25:08 -0500
+	id 1tBpsI-0006rt-62; Fri, 15 Nov 2024 01:32:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBplN-0005nZ-40
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 01:25:03 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBpsG-0006rg-65
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 01:32:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBplK-0003Ky-AX
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 01:25:00 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tBpsE-0004lh-IM
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 01:32:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731651897;
+ s=mimecast20190719; t=1731652325;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nkzU3zyQ22UqfGmgDB0OMeTbGX61iAecEEZ+zqQrrFE=;
- b=W68vBBvwAIFuf1tmjuLVNyQ79mGvK3q2095u1lcVpPqTEQ2RKTl0TflxSH+n2B8XnFX5r8
- JlYvbvL7LhI5ndnyPmVWgHCM809S/8l/BzfVXtNjaMSvgSTgNim/7gAiqbp1LsDB8DFQSp
- 4Iid1NVIwqJGVSvkTNC42eVK9VjcBXU=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=N9KqYcUXvEhmp5rv66FRqom7FwsygkngudKGIxsVQLE=;
+ b=X5aYA+yPguC2VpC52t78IUi98NLzuv5ojQAOJrJOKocRXxdPr1NkVRF7p8WiDnaGMZp/BF
+ mtPMBO4yHIriaQ8Jj2dVI5MA8zVm0a3sRzOi3htr6v7Qw5yBkzZ56yks3rvPIB/FyDQDP5
+ exz68T2HFGRh/gRu2X/4XoSonOQCP7M=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-jNbevSMGNkae9KyuM8TSsA-1; Fri, 15 Nov 2024 01:24:53 -0500
-X-MC-Unique: jNbevSMGNkae9KyuM8TSsA-1
-X-Mimecast-MFC-AGG-ID: jNbevSMGNkae9KyuM8TSsA
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b14fc05206so174126785a.2
- for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 22:24:52 -0800 (PST)
+ us-mta-668-0HSCkefAMcO4WI3ksdVJ-Q-1; Fri, 15 Nov 2024 01:30:40 -0500
+X-MC-Unique: 0HSCkefAMcO4WI3ksdVJ-Q-1
+X-Mimecast-MFC-AGG-ID: 0HSCkefAMcO4WI3ksdVJ-Q
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6cbd2cb2f78so25480106d6.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Nov 2024 22:30:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731651892; x=1732256692;
+ d=1e100.net; s=20230601; t=1731652239; x=1732257039;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nkzU3zyQ22UqfGmgDB0OMeTbGX61iAecEEZ+zqQrrFE=;
- b=io5NGgzE6YTL/YG7Gi+5ekYzrqUeYGi/YIVCOanZzfbe/XJ5Vc6ZsfmesjG+MunWel
- eF7QWQ1iOqo6mc6baCtoIY1FxZEocNbjZzUk9IcOXGt9geJmRfrykR5PdYsHcZKbSIoy
- vIkWZGodibz8MraXnOFKwx1IzoxR1o45s+Wcc9wwXcs0x6bj7uJjUUAyddEI4Yc3yQyA
- TumOwFUlnobc8eh9byw6yRq5zMCf9EsIGtbf4Bi6t2Lv45i4crd+u7ufV/2Zjw43coh7
- QTDH2C5QOaHtTubLo1+YwTGxVaQ7ZYidk5rnbmgPrPGAsj5eRurmWuF+Zr3bBFaJUYe1
- q/6w==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=N9KqYcUXvEhmp5rv66FRqom7FwsygkngudKGIxsVQLE=;
+ b=NWzRX//nB6a7WAXP8+T92hHTzie6ZPR1Q0hgWCISLQGiNeKUxYHPQZIT8AOR29tlxW
+ l5zVcYEox6TIe/BwrXZ5oKEcr0DKxC560GOQ04CJyGHVnNm1U5oEl+zZ0rtuYGncdgQs
+ KWu5xPVIRORweZPmrPGTsWxzX9lMVjbcDHoogQ0HCS1ygMUwQ4FREwlwVsS2Okh9TMYd
+ UMccYcKp13aQoBaqC3opkO4x2Hx/rHHPj4S6cRRRoiRCUNUVqL+8RE/dZA8UTvNiMENL
+ gjWBvQBj6JtfG/fG1z8LmFoFn5FCE7ad8ogyFeQSAKpFt0hfPcoYSJzmadRncaFpBESy
+ zaCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKBh7WSTrpGeZA8HlCzmJYvE+J8MeZRrAlqnMqBrU3DYkh+3VsyxlJn9PQxp/hQsDVbo2wCErtK4dS@nongnu.org
-X-Gm-Message-State: AOJu0YytleYoFsCGeK3wheequy7xyQ5oxXkSIB6rlSTyoqBTa+xXylIZ
- OMaecZU1UTF3pou1BHMC3wxPuT7UJ89OyKEL94tG7fd5+bnZ63vawwFQL0bo/REJRjT+GGLT3ON
- 8LeljAawIGr3FL/BTnYT6o2ahF7/WqX1AOj36IeiZIYv0sNUY1G4f
-X-Received: by 2002:a05:620a:4588:b0:7b1:3b5e:4b50 with SMTP id
- af79cd13be357-7b3622d2c70mr188158685a.19.1731651892517; 
- Thu, 14 Nov 2024 22:24:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHRkuEGRHInQe2NuArp7cfOwx+Y6Za8z9Y8iuRw4S++5BZLKdtc/Ridv2aKlUxIigKZt+DA1w==
-X-Received: by 2002:a05:620a:4588:b0:7b1:3b5e:4b50 with SMTP id
- af79cd13be357-7b3622d2c70mr188157685a.19.1731651892152; 
- Thu, 14 Nov 2024 22:24:52 -0800 (PST)
+ AJvYcCXrpEcnMECOmKk6FY8uEQFfsd9Ghi5/pvTXTPFiOLBpLOF/anxCXTFuEuojkX2j6hfpXBz5colqlOKC@nongnu.org
+X-Gm-Message-State: AOJu0Yz/U2eggIFEd0cvhrPu84d3y62nkphXEoNbKENFV1tBIG5B1p8h
+ ZExejAWiNATs4SNZPrryUFXjnoSVz/LHMoMtjJtJUhc+EKBNyUy5deKWC/s87WOy2b2pa5wqIef
+ dV3EHjewuXh5zneTUZwh5TPVrEgD/nHnoSm51yJl5aTH3fu9jc62B
+X-Received: by 2002:a05:6214:4d84:b0:6d3:eb38:c128 with SMTP id
+ 6a1803df08f44-6d3eb38c5f5mr90681376d6.16.1731652239497; 
+ Thu, 14 Nov 2024 22:30:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFas0sU3SeT1CmYCin2tG4CxmThP8yPwCMLIdsEQXUZLNPJeup8//JH+Ed//fsBAuT64kb9Rg==
+X-Received: by 2002:a05:6214:4d84:b0:6d3:eb38:c128 with SMTP id
+ 6a1803df08f44-6d3eb38c5f5mr90681176d6.16.1731652239178; 
+ Thu, 14 Nov 2024 22:30:39 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-49-115.web.vodafone.de.
  [109.42.49.115]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b35ca2f7a3sm128914785a.82.2024.11.14.22.24.50
+ af79cd13be357-7b35ca842fcsm129574985a.127.2024.11.14.22.30.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Nov 2024 22:24:51 -0800 (PST)
-Message-ID: <51aea464-19dc-4129-b8f5-86ed7eb419ba@redhat.com>
-Date: Fri, 15 Nov 2024 07:24:47 +0100
+ Thu, 14 Nov 2024 22:30:38 -0800 (PST)
+Message-ID: <0e9b5272-2aa9-41a4-b0bb-43f0c89751e7@redhat.com>
+Date: Fri, 15 Nov 2024 07:30:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/system/s390x/bootdevices: Update loadparm
- documentation
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-References: <20241115002742.3576842-1-jrossi@linux.ibm.com>
+Subject: Re: [PATCH] hw: Add "loadparm" property to scsi disk devices for
+ booting on s390x
+To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
+ Boris Fiuczynski <fiuczy@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Eric Farman <farman@linux.ibm.com>
+References: <20241114122919.973930-1-thuth@redhat.com>
+ <9e7cb217-a33e-48aa-b030-efb991ca33f3@linux.ibm.com>
+ <f0315077-eb61-4134-b81a-7d33906c6d31@redhat.com>
+ <31889800-47fc-4ee0-8016-58a9d82b2719@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -118,9 +126,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241115002742.3576842-1-jrossi@linux.ibm.com>
+In-Reply-To: <31889800-47fc-4ee0-8016-58a9d82b2719@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -146,49 +154,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/11/2024 01.27, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On 15/11/2024 00.30, Jared Rossi wrote:
 > 
-> Update documentation to include per-device loadparm support.
 > 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   docs/system/s390x/bootdevices.rst | 24 +++++++++++++++++++++++-
->   1 file changed, 23 insertions(+), 1 deletion(-)
+> On 11/14/24 12:47 PM, Thomas Huth wrote:
+>> On 14/11/2024 16.55, Jared Rossi wrote:
+>>>
+>>>
+>>> On 11/14/24 7:29 AM, Thomas Huth wrote:
+>>>> While adding the new flexible boot order feature on s390x recently,
+>>>> we missed to add the "loadparm" property to the scsi-hd and scsi-cd
+>>>> devices. This property is required on s390x to pass the information
+>>>> to the boot loader about which kernel should be started or whether
+>>>> the boot menu should be shown. But even more serious: The missing
+>>>> property is now causing trouble with the corresponding libvirt patches
+>>>> that assume that the "loadparm" property is either settable for all
+>>>> bootable devices (when the "boot order" feature is implemented in
+>>>> QEMU), or none (meaning the behaviour of older QEMUs that only allowed
+>>>> one "loadparm" at the machine level). To fix this broken situation,
+>>>> let's implement the "loadparm" property for the SCSI devices, too.
+>>>>
+>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>> ---
+>>>>   NB: Unlike the ccw_device_set_loadparm() logic that we use for CCW
+>>>>       devices, I've decided to use a string property for the "loadparm"
+>>>>       in the SCSI devices to avoid spoiling the common code with too much
+>>>>       s390x logic. So the check for valid characters is now done after the
+>>>>       property has been set, i.e. we only print out an error instead of
+>>>>       forbidding the setting (like we do it with the CCW devices), which
+>>>>       is IMHO still perfectly acceptable. Or are there other opinions?
+>>>
+>>> I wasn't able to think of a way to abuse passing invalid characters, but 
+>>> I did
+>>> find two additional differences about the string approach:
+>>>
+>>> a) it is not possible to override the machine loadparm by assigning an empty
+>>>   string (loadparm="") to the device
+>>
+>> Agreed, that's a (small) problem. There does not seem to be a way to 
+>> distinguish between "property has not been set" and "property has been set 
+>> to a string with zero length" with object_property_get_str() ...
+>>
+>>> I don't think that the inability to pass the empty string is a significant
+>>> problem because passing a single space will have the same effect.
+>>
+>> That sounds like a good work-around, indeed.
+>>
+>> > b) it is possible to assign a loadparm value to a non-boot device
+>> >
+>>> Assigning a loadparm to a non-boot device generally does nothing, but in the
+>>> case of device probing (i.e. no boot devices assigned at all), the device 
+>>> with
+>>> the loadparm assigned could be selected for IPL, but it will not use the
+>>> assigned loadparm (because no IPLB was generated for the device). This 
+>>> check is
+>>> normally handled by ccw_device_set_loadparm(), but I'm not sure if there 
+>>> is a
+>>> way to do the validation without having a setter function for the property.
+>>
+>> Hmmm, that could be confusing for the users, indeed. But maybe it would be 
+>> sufficient
+>> to properly document that loadparm is only working for devices with a 
+>> bootindex?
+>> What do you think?
+>>
+>> By the way, the loadparm section in docs/system/s390x/bootdevices.rst 
+>> looks like it should get an update, too ... if you have some spare 
+>> minutes, could you maybe look at it?
+>>
 > 
-> diff --git a/docs/system/s390x/bootdevices.rst b/docs/system/s390x/bootdevices.rst
-> index 1a1a764c1c..ecb22de04a 100644
-> --- a/docs/system/s390x/bootdevices.rst
-> +++ b/docs/system/s390x/bootdevices.rst
-> @@ -79,7 +79,29 @@ The second way to use this parameter is to use a number in the range from 0
->   to 31. The numbers that can be used here correspond to the numbers that are
->   shown when using the ``PROMPT`` option, and the s390-ccw bios will then try
->   to automatically boot the kernel that is associated with the given number.
-> -Note that ``0`` can be used to boot the default entry.
-> +Note that ``0`` can be used to boot the default entry. If the machine
-> +``loadparm`` is not assigned a value, then the default entry is used.
-> +
-> +By default, the machine ``loadparm`` applies to all boot devices. If multiple
-> +devices are assigned a ``bootindex`` and the ``loadparm`` is to be different
-> +between them, an independent ``loadparm`` may be assigned on a per-device basis.
-> +
-> +An example guest using per-device ``loadparm``::
-> +
-> +  qemu-system-s390x -drive if=none,id=dr1,file=primary.qcow2 \
-> +                   -device virtio-blk,drive=dr1,bootindex=1 \
-> +                   -drive if=none,id=dr2,file=secondary.qcow2 \
-> +                   -device virtio-blk,drive=dr2,bootindex=2,loadparm=3
-> +
-> +In this case, the primary boot device will attempt to IPL using the default
-> +entry (because no ``loadparm`` is specified for this device or for the
-> +machine). If that device fails to boot, the secondary device will attempt to
-> +IPL using entry number 3.
-> +
-> +If a ``loadparm`` is specified on both the machine and a device, the per-device
-> +value will superseded the machine value.  Per-device ``loadparm`` values are
-> +only used for devices with an assigned ``bootindex``. The machine ``loadparm``
-> +is used when attempting to boot without a ``bootindex``.
+> Yes, I suppose I would agree that documenting the behavior is sufficient in 
+> this case.  I will update bootdevices.rst to include per-device loadparm 
+> support and also indicate that that per-device loadparm values are only used 
+> for devices that have an assigned bootindex.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Ok, great! Sounds like we have a passable solution for QEMU 9.2. We still 
+can refine the loadparm handling of the scsi devices in future QEMU 
+releases, but this will now at least solve the present problem that Boris 
+reported from the libvirt side.
+
+  Thomas
 
 
