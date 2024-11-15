@@ -4,87 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E67D68BD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 21:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84819D68BDA
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 22:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tC484-0005Q4-Sa; Fri, 15 Nov 2024 16:45:24 -0500
+	id 1tC4YU-0000qn-B5; Fri, 15 Nov 2024 17:12:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tC482-0005Nz-Oj
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 16:45:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tC4YS-0000qP-Vy; Fri, 15 Nov 2024 17:12:41 -0500
+Received: from mail-dm6nam12on20604.outbound.protection.outlook.com
+ ([2a01:111:f403:2417::604]
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tC481-00027U-1q
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 16:45:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731707118;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pqdeOc/wVROCK5wO3ebyjrlUgVgaL/ZrTcY/U/uAvX8=;
- b=UTtl6zbD/5WjXBSkgPf9vZYIO2p7I7n5Jg3iKuz4cEJN5p92Opy6dEE9PifF27oSOPOyve
- DWCCr63m3OFPa4vwES+gHoAtlp1II5/d2nxH0Szyak/D0dDuYdhq9RfGDweckfskASrY9w
- aHRWjkUWqNtt50+viOBXjDfNYcl4MxU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-599-YLjww7vuNRaLypeFLpVaxA-1; Fri, 15 Nov 2024 16:45:16 -0500
-X-MC-Unique: YLjww7vuNRaLypeFLpVaxA-1
-X-Mimecast-MFC-AGG-ID: YLjww7vuNRaLypeFLpVaxA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d589138a9so1223201f8f.1
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 13:45:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731707115; x=1732311915;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pqdeOc/wVROCK5wO3ebyjrlUgVgaL/ZrTcY/U/uAvX8=;
- b=BeWSKx4f/nUJQR/0LDencbzk+GqdKrm/x+oAMdTTOy54SL+gHSAnAQthIdPFag9347
- B/kpx1ujCJQArvVOA7ja6mz7lj06AHA37LcjDhodPyqVQhKsur3ZLpZCQgu7unreG3Dc
- P827I52BGLmYZbQ9aBJTK5J5SeylX0n+hxJ3vokxFNSaowA8TFejujq74Ud7q73iDNOj
- 9DWCgeREy+t5qK4PDOyrx9eIKYOGYf0gzby/67m9D1VLUOj8IwrboW63SfAcronAuy9e
- ShuvDvaRoed/mGjyhsY7433OB8mQOUawXGX6BFua11d/PezSfkMJaGLpZYNXX79TwZaz
- a5WA==
-X-Gm-Message-State: AOJu0Yx/9z8wRPSo4OO3BASc1ggwpsUHmXLXqHNmWstMgPSXG1ecTMcg
- Vo1SvxXqZGLTXnOA88MiN1wQBwgpil0g+xgm0/xK2wjqmD+NktQBKqRuzRCLLhC3KLRWyx353Ke
- w3Yu8RKOUGiDoOwVbXdotLYQEeBqD4Q1Olzlzn8kpKVw3tcWMZ3EsCqwhFD/T6QT/K5Vo3poml6
- 7Ib/CCODMJTeXKmFnIzguiam3XNpc=
-X-Received: by 2002:a5d:64ce:0:b0:382:31db:d61 with SMTP id
- ffacd0b85a97d-38231db0d84mr1093054f8f.38.1731707115024; 
- Fri, 15 Nov 2024 13:45:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG4cMQTEVdx/+KX2bMAxK0G25P5l+9UY2JcDfZd4dhtt4Db2ltmjG03dyt9UXhvwFVSzZ+6tgvaM0YkEDWsxvI=
-X-Received: by 2002:a5d:64ce:0:b0:382:31db:d61 with SMTP id
- ffacd0b85a97d-38231db0d84mr1093045f8f.38.1731707114700; Fri, 15 Nov 2024
- 13:45:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tC4YQ-00079M-3n; Fri, 15 Nov 2024 17:12:40 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wa4bGiJ2F6W/n0nu6twfBEI4r1LkkFH2hDoBWw6xYOUh99/jfGfdj3Nh0gHnoAVhrY+C8y4JATFlGJZ9b62LTrp1+mez8YdmVAct5rqbLy6ok7XI193m1xWjZzQUf5zZ7BlLuZ6G/U6mcgqimiaJ9wMT4VHNYJGXJN8dDwbOg214iVeRUoZ+1zHGs2S7cxRbsffxL8H5OOui3nZc6AA2wI5Mt3NrjUbUDbgqVHrRMZ9StHcpL5rtWGge+WcTkp+RNk940dq8Blff1Eq33VOsg24H5jXVHqfpVMBMOgiRSwQE/l2h3UfI80cNktYrPRLsoECeHjpu0eQjA2D39NeFog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JCKdkj34elrzrch45Y0A03++SfE04vRhJ88Oah2C+3s=;
+ b=ZdHQdCCvLbbc4jTGcBQNtAsXNsvtUVft5nRQYFHVgFotBnM7hB4uRBl/aEbdrl8VrKHwx4EFw40XJ5pio8uJuQiWm8Yx4Sg98MjgNY02g4TX+87JlewzSa5vYqz5bKrA3LGL5MWMqzKBk6fPQmLxSqxT0h4BZPUCjmJczCk+ZriTfTXkbkFjf8UUeSVfpEJFXduFU9niIo+uW0Tf3PdMcOPqmKCajQ70kH6YBvkCL677PdTAlGfLq9Ssch5BO5YgvIOZ+j1wkZ9LJiXqFshPwaByorANHUn2xPZYyATHQxMS8foYo96f+MZ7dfDoWpI+kQHGpQpNdHgfnbzIiW8lpg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JCKdkj34elrzrch45Y0A03++SfE04vRhJ88Oah2C+3s=;
+ b=oA9EMJ8n4HS9R2CXUFCWEGMjO759gdsIUnOxJPJOSiJJwvoVgZR5oMXkDkQfp+94XWjRhbA3nZfUiKbDPqBITexNUDuYhRp7wRxPLkxz+E7fwMCJma6XSBCROZWD8sFasq4VPDwxU8oqrFKRbGZCH9jusQ4xcyfpFUSik8g8aJPWLMpiILJW9C1hKJ9+N6Gkdl2Bj4DpZEP2YyW0AeSTOXqyLB7MIwd0JpnVur1mnn83oiVfhn5BnUDpsmnVtCh1mhZ/m1m7/xHw8ZJLvwVuohKvU1jlsLiUBiRMosdmZVGCLjCxRZ6fpVSuG5yJ/gexUj622BswzDvB29xGCUtZmg==
+Received: from BYAPR06CA0014.namprd06.prod.outlook.com (2603:10b6:a03:d4::27)
+ by DM4PR12MB6591.namprd12.prod.outlook.com (2603:10b6:8:8e::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.20; Fri, 15 Nov
+ 2024 22:12:31 +0000
+Received: from MWH0EPF000A6732.namprd04.prod.outlook.com
+ (2603:10b6:a03:d4:cafe::d) by BYAPR06CA0014.outlook.office365.com
+ (2603:10b6:a03:d4::27) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.17 via Frontend
+ Transport; Fri, 15 Nov 2024 22:12:30 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ MWH0EPF000A6732.mail.protection.outlook.com (10.167.249.24) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8158.14 via Frontend Transport; Fri, 15 Nov 2024 22:12:30 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 15 Nov
+ 2024 14:12:23 -0800
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Fri, 15 Nov 2024 14:12:23 -0800
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Fri, 15 Nov 2024 14:12:22 -0800
+Date: Fri, 15 Nov 2024 14:12:21 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>
+CC: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: Re: [RFC PATCH 5/5] hw/arm/virt-acpi-build: Add IORT RMR regions to
+ handle MSI nested binding
+Message-ID: <ZzfHRZlt4v6Hp7wf@Asurada-Nvidia>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <20241108125242.60136-6-shameerali.kolothum.thodi@huawei.com>
+ <ZzTwZWXp0dIZB3E4@Asurada-Nvidia>
+ <cf0d88bc649344a4b396575cc58394ac@huawei.com>
+ <a30e5df1-3dcc-48c9-b632-861dbeee7886@redhat.com>
 MIME-Version: 1.0
-References: <86871f60-983e-4172-a6e6-1bd4b1e4e5c0@landley.net>
- <8f168636-3468-4dc7-9de2-a5958df97c2d@redhat.com>
- <a3778af5-5f69-4a6c-b24a-a72b35b88a01@landley.net>
-In-Reply-To: <a3778af5-5f69-4a6c-b24a-a72b35b88a01@landley.net>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 15 Nov 2024 22:45:00 +0100
-Message-ID: <CABgObfY1kkQqC5M7ytDGL3rYGdqQuaW7Luig1iFL0JAmmD213A@mail.gmail.com>
-Subject: Re: "make clean" after "git pull" runs configure before cleaning.
-To: Rob Landley <rob@landley.net>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000006d5dcc0626fa7bd6"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <a30e5df1-3dcc-48c9-b632-861dbeee7886@redhat.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A6732:EE_|DM4PR12MB6591:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9023cc3b-34e7-4a79-0444-08dd05c29932
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700013|376014|7416014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Hl4fT+dIik56+pQYDMkj0LUKHV82NG4CaxNPToCm59/gH7+xAmX6EIonCIu+?=
+ =?us-ascii?Q?2DUm+1JiuWAys0I/Xm5Mbk9V5+qYoES3SdkuVq7bW9P4pNAbSDHwPCuvapU0?=
+ =?us-ascii?Q?TslpUorNmCpohdylT8uktoU5QxqNlqZgfvLZJoQem0F7yOem351lhqNr04pY?=
+ =?us-ascii?Q?cgdOp0/8zhLDQTXmiR+ANt3lu558y+TBLI2VWvxXOgAhIR3fkvCRsQUYlfk2?=
+ =?us-ascii?Q?qe+KQrDmKarW2q1d0Ani7RKHGRCssbLMRcCnGg3Jcacfkxst+AUdaXBkXYn6?=
+ =?us-ascii?Q?26r8bjev25/threAb7gFAPDcZ8/FJx8iOhTU6AZJgd4fNf1wTDPRDbsvsbp6?=
+ =?us-ascii?Q?puRxwal8Z15KE+m3eGxlUKDaNRhl07y36Pw1Ia1iB2wHjxtlQDV10O7oSCIM?=
+ =?us-ascii?Q?0sPjFG1Dl0R8syPRKtZwMY1xoSRR7T7C/Cj/Q2ZTui8fcqYTDhwIyJBrrJ8l?=
+ =?us-ascii?Q?uhUXnAcYO13rfKa3C7IBT6Fj32u59KHG5Dy100YwY7Dk2fgXDVeDeTe8fY1Z?=
+ =?us-ascii?Q?jpwWnW9faWyIGjgDAfVUFPUEuMCHhVec3t0zgxPmvTH9JhB6HxYQgJDKvg+s?=
+ =?us-ascii?Q?1EGzLZl38n/mY9MBHjAaX9jvskH4Hfhy/ju4f6s9wttjDpfvxSHZtMdiR2Yv?=
+ =?us-ascii?Q?zajaLcTC+8/he4ik6j/SsxKpw0L6yeeu/+mUjQ4vP9XQlpGXftlMLRsKOMff?=
+ =?us-ascii?Q?ZT0ll8towZGGAZpQygx21juYoXqfyuGFitm1elwGdoVdSSdNBuECZUrW6mGs?=
+ =?us-ascii?Q?zsd5jBtpVwLLrXUdedEGfFyAU6zPZqiqGnTAVJzSaC9NcttUkD0BpIkqd0hd?=
+ =?us-ascii?Q?opJY+Zt+GiNDDKQA94vK9La/VzzmO+BUTZCIp4oSp8l0KUDHToNmlOwNQbLH?=
+ =?us-ascii?Q?TgAJlI2rZA5rtYFMpC1yNmEpj7zLNAuwaPSn0uNq3HQvNnWLINbQDQVVecRN?=
+ =?us-ascii?Q?fEmoxaBY+h9NjORw776Rk9dUWdNp9EXIHCtWvmymIU8TwVETHZnz5e/TySjk?=
+ =?us-ascii?Q?LBRfbnxdJVAH/5Ehy0hFeNPy5VKq82ztVaUWNSDFq+JDVbAkirNex9ws8jD1?=
+ =?us-ascii?Q?CHC50SNfq4rabTNG2uJDPBYWQrQpydVg8W9oKhwlj+tujx7hbgp2flUUGmTK?=
+ =?us-ascii?Q?lBvEZrdNSdPspaPr6uWaJdi0j09kDqoTUs+IH30L9/3WUhEjhLhnr8BOkytT?=
+ =?us-ascii?Q?3y860P4SBU/2k8Kn8UoFN1WyUgDJi0w1OzYDXvteLKnjVEOcSueZcyxBTpFc?=
+ =?us-ascii?Q?+BFSTm4k0VVV8meeHjAZY1688cBVb7gSVRY2c+nCOp9pCk7aNVRPRny3zRhL?=
+ =?us-ascii?Q?nAtNqxoOq39nUOPQ7cMQZ64T94Fpmm1OsAVJKJVMe/UtKcO+Tmq53E54r/Xv?=
+ =?us-ascii?Q?+KmshqzL9TwQ6bf6Vtgt4oBIGuOf36ItHncsIe10M7VEdrJEQw=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(376014)(7416014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Nov 2024 22:12:30.7839 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9023cc3b-34e7-4a79-0444-08dd05c29932
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6732.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6591
+Received-SPF: softfail client-ip=2a01:111:f403:2417::604;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.12,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.12,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.658,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,167 +163,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006d5dcc0626fa7bd6
-Content-Type: text/plain; charset="UTF-8"
-
-Il ven 15 nov 2024, 22:15 Rob Landley <rob@landley.net> ha scritto:
-
-> On 11/14/24 17:33, Paolo Bonzini wrote:
-> > On 11/15/24 00:10, Rob Landley wrote:
-> >> Seems a _bit_ awkward to do that (and potentially fail on a random new
-> >> dependency) just to delete it all again?
+On Thu, Nov 14, 2024 at 11:41:58AM +0100, Eric Auger wrote:
+> Hi Shameer,
+> 
+> On 11/14/24 09:48, Shameerali Kolothum Thodi wrote:
 > >
-> > That's just how Make works.
->
-> Linux and busybox and so on use make, and I've never seen "make clean"
-> trigger a "make defconfig" there.
->
+> >> -----Original Message-----
+> >> From: Nicolin Chen <nicolinc@nvidia.com>
+> >> Sent: Wednesday, November 13, 2024 6:31 PM
+> >> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> >> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> >> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
+> >> ddutile@redhat.com; Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
+> >> <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
+> >> Jonathan Cameron <jonathan.cameron@huawei.com>;
+> >> zhangfei.gao@linaro.org
+> >> Subject: Re: [RFC PATCH 5/5] hw/arm/virt-acpi-build: Add IORT RMR regions
+> >> to handle MSI nested binding
+> >>
+> >> On Fri, Nov 08, 2024 at 12:52:42PM +0000, Shameer Kolothum wrote:
+> >>> From: Eric Auger <eric.auger@redhat.com>
+> >>>
+> >>> To handle SMMUv3 nested stage support it is practical to expose the
+> >>> guest with reserved memory regions (RMRs) covering the IOVAs used by
+> >>> the host kernel to map physical MSI doorbells.
+> >> There has been an ongoing solution for MSI alternative:
+> >> https://lore.kernel.org/kvm/cover.1731130093.git.nicolinc@nvidia.com/
+> >>
+> >> So, I think we should keep this patch out of this series, instead put it on top
+> >> of the testing branch.
+> > Yes. I think then we can support DT solution as well. 
+> >
+> > On that MSI RFC above, have you seen Eric's earlier/initial proposal to bind the Guest MSI in
+> > nested cases. IIRC, it was providing an IOCTL and then creating a mapping in the host.
+> >
+> > I think this is the latest on that.
+> > https://lore.kernel.org/linux-iommu/20210411114659.15051-4-eric.auger@redhat.com/
+> yes this is the latest before I stopped my VFIO integration efforts.
+> >
+> > But not sure, why we then moved to RMR approach. Eric?
+> 
+> This was indeed the 1st integration approach. Using RMR instead was
+> suggested by Jean-Philippe and I considered it as simpler (because we
+> needed the SET_MSI_BINDING iotcl) so I changed the approach.
 
-Yeah, they don't have a separate (and lengthy) configure phase. But they
-might invoke some rules in a more hidden way if something changes in
-scripts/. I don't know, Kbuild is black magic.
+Oh, I didn't realized Eric had this..
 
-(Or do you mean "Make" is different from "gmake" the way "kbuild" is
-> different from "make" and you distinguish your build system from the
-> make command by capitalizing it?
+Now, Robin wanted it back (in iommufd though), against the RMR :-/
 
-
-No, I meant "any implementation of the POSIX utility".
-
-> If it finds that Makefile is old, it first
-> > regenerates Makefile and only then looks at the target.
->
-> I'm pretty sure the make command doesn't internally know how to run the
-> configure script, the Makefile would have to include plumbing to make
-> that decision
-
-
-It does, the chain is config-host.mak <- configure. The special processing
-of Makefiles extends to all includes ("all Makefiles" in the GNU manual).
-
-and it at least LOOKS like it's trying not to in the top level Makefile
-> line 336:
->
->    # Don't try to regenerate Makefile or configure
->    # We don't generate any of them
->    Makefile: ;
->    configure: ;
->
-
-Makefile and configure are not generated but other included files are. Most
-likely the one you're hitting is config-host.mak..
-
-I note that if you run "make clean" twice in a row, it doesn't re-run
-> configure in between. It's only when a stale target exists, which seems
-> to involve dependencies making a decision.
-
-
-... and the second time, it is not stale anymore.
-
-(The file NOT existing doesn't trigger action, but the file being "old"
-> does.)
->
-
-config-host.mak is only cleaned by distclean, not clean.
-
-So it's an artifact of the way you're using make, and hard to fix then?
->
-
-Maybe not too hard, I suppose one could strip the includes if make goals
-are only of the form %clean.
-
-Paolo
-
-*shrug* I'd use 'git clean -fdx' instead but I'm not sure how that
-> interacts with multiple submodules.
->
-
---0000000000006d5dcc0626fa7bd6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il ven 15 nov 2024, 22:15 Rob Landley &lt;<a href=3D"m=
-ailto:rob@landley.net">rob@landley.net</a>&gt; ha scritto:<br></div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">On 11/14/24 17:33, Paolo Bonzini=
- wrote:<br>
-&gt; On 11/15/24 00:10, Rob Landley wrote:<br>
-&gt;&gt; Seems a _bit_ awkward to do that (and potentially fail on a random=
- new <br>
-&gt;&gt; dependency) just to delete it all again?<br>
-&gt; <br>
-&gt; That&#39;s just how Make works.<br>
-<br>
-Linux and busybox and so on use make, and I&#39;ve never seen &quot;make cl=
-ean&quot; <br>
-trigger a &quot;make defconfig&quot; there.<br></blockquote></div></div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">Yeah, they don&#39;t have a sepa=
-rate (and lengthy) configure phase. But they might invoke some rules in a m=
-ore hidden way if something changes in scripts/. I don&#39;t know, Kbuild i=
-s black magic.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div clas=
-s=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">(Or do =
-you mean &quot;Make&quot; is different from &quot;gmake&quot; the way &quot=
-;kbuild&quot; is <br>
-different from &quot;make&quot; and you distinguish your build system from =
-the <br>
-make command by capitalizing it?</blockquote></div></div><div dir=3D"auto">=
-<br></div><div dir=3D"auto">No, I meant &quot;any implementation of the POS=
-IX utility&quot;.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div c=
-lass=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">&gt;=
- If it finds that Makefile is old, it first <br>
-&gt; regenerates Makefile and only then looks at the target.<br>
-<br>
-I&#39;m pretty sure the make command doesn&#39;t internally know how to run=
- the <br>
-configure script, the Makefile would have to include plumbing to make <br>
-that decision</blockquote></div></div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">It does, the chain is config-host.mak &lt;- configure. The specia=
-l processing of Makefiles extends to all includes (&quot;all Makefiles&quot=
-; in the GNU manual).</div><div dir=3D"auto"><br></div><div dir=3D"auto"><d=
-iv class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-and it at least LOOKS like it&#39;s trying not to in the top level Makefile=
- line 336:<br>
-<br>
-=C2=A0 =C2=A0# Don&#39;t try to regenerate Makefile or configure<br>
-=C2=A0 =C2=A0# We don&#39;t generate any of them<br>
-=C2=A0 =C2=A0Makefile: ;<br>
-=C2=A0 =C2=A0configure: ;<br></blockquote></div></div><div dir=3D"auto"><br=
-></div><div dir=3D"auto">Makefile and configure are not generated but other=
- included files are. Most likely the one you&#39;re hitting is config-host.=
-mak..</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmai=
-l_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-I note that if you run &quot;make clean&quot; twice in a row, it doesn&#39;=
-t re-run <br>
-configure in between. It&#39;s only when a stale target exists, which seems=
- <br>
-to involve dependencies making a decision.</blockquote></div></div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">... and the second time, it is not st=
-ale anymore.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=
-=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">(The fil=
-e NOT existing doesn&#39;t trigger action, but the file being &quot;old&quo=
-t; does.)<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">config-host.mak is only cleaned by distclean, not clean.</div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">So it&#39;s an artifact of the=
- way you&#39;re using make, and hard to fix then?<br></blockquote></div></d=
-iv><div dir=3D"auto"><br></div><div dir=3D"auto">Maybe not too hard, I supp=
-ose one could strip the includes if make goals are only of the form %clean.=
-</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"=
-auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex">
-*shrug* I&#39;d use &#39;git clean -fdx&#39; instead but I&#39;m not sure h=
-ow that <br>
-interacts with multiple submodules.<br>
-</blockquote></div></div></div>
-
---0000000000006d5dcc0626fa7bd6--
-
+Nicolin
 
