@@ -4,80 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 461B5D68BCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15FB4D68BCD
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:25:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tC02w-0003Hy-Tb; Fri, 15 Nov 2024 12:23:50 -0500
+	id 1tC04P-0003zG-Oi; Fri, 15 Nov 2024 12:25:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tC02v-0003Ho-BS
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:23:49 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tC04O-0003yz-VD
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:20 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tC02t-0001DP-M7
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:23:49 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-20cb47387ceso23835695ad.1
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 09:23:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tC04M-0001UW-GL
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:20 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3822ba3cdbcso366188f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 09:25:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731691425; x=1732296225; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nN2un+7U4XmEz/KtFnSp9k/HddZ0Tgp3yyTcAGlxvow=;
- b=SBB3aLYxQrpYOpbYN6+7xLAHq1xT+Sj3TBhbHmYdjQ8cTXd9q3FAoJJuzmGvj+nxTW
- u5xsvCLIb4owZq4jrmEjgdFxoofTzyDzP7ysrqVXuBYjY4WG9zeeH9Qgdn7x0EyEbcbr
- CS8svetOj1OwaTAvuCzXxhqZS6C0s2ItvjFzP4wtrDbLzfOu5DI3N4xJoIYfkPlT+IxZ
- +Q30fzdgeA3du9UgMB9Q5S/uqwISH9tbl2OuBzvvg4bEkpQ1pPers7VkCFi9IeEdSTFR
- VOz1LjnY6MzvDouN0/0BWSi5pmAlEyX7Hivmwn0g5TGaE6/QrgO9Za0oIjWP4Z6taexx
- 73cQ==
+ d=linaro.org; s=google; t=1731691517; x=1732296317; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7Y0AMU/ttgRURqOnN0XPhkHG3hk3G+OF7iF0mZeXnJQ=;
+ b=n8STFGwn/3EbTsIFfPrxlCpGz3g2Cab4bihNWvoGpv2uklYj6TLxsPptNw+iAnAyBc
+ VgDVrSfv1oA/T1TgSnUR46yjqJ57jQaERu4+QkHroQen07PhgmsSBDQ0daBbqEy7JaPv
+ ecGjZotU4cs3k7OIatfDNOm4esgSeguzRpFTUPpldtmlyJUiagk7EoGfb8pHRzeJ3Ci8
+ 3pTFHtrB/XJbgK3H40xJzLYI1CnkVPty3qVvJ35ed74Zzj2L0YQWU6QNdMzTCsYFdvWB
+ BOAujlDl/b4epOtOzobvb3KFFJNCibiyLx6SVfxvZjdbCHUbPeXkUUKdDyul1t9yqCh8
+ ANWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731691425; x=1732296225;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nN2un+7U4XmEz/KtFnSp9k/HddZ0Tgp3yyTcAGlxvow=;
- b=r5U4ycSILFGifziGM2x1XlGo2frqvYXwboBBY7sde9jyhXPaGmcMebjzz3d9MKPgIc
- xdOx8vxSHcAxc7k+MSG5JaPWihcJvtjQgdahRvvGyjIB4mztV/TR1Dxy2m81Ti+1XMFr
- VimjzPuHXbpKivGvjM616IkLhxxdDjOrrFdMk2s1Igd3NRV0d6HgqKsFcfR3aRV7amXm
- qi/iqgweCOxjdY/g7uCVPeaZrOFb/3Mli89jG8H6Jelg4x0Ze99rHkaLExcpbVk/Ntwv
- jLtih8SCxuMu9gYV8DaRnXZklJdmKxva3dV2R4hzM/iXCsma2Il63Ki6CiZ5cwnk6MhP
- MonQ==
+ d=1e100.net; s=20230601; t=1731691517; x=1732296317;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7Y0AMU/ttgRURqOnN0XPhkHG3hk3G+OF7iF0mZeXnJQ=;
+ b=VLlil8B0m1/1nylhpZItTqj/12nEzNAF5orTmOr3jgdZe+QDUKtDrlq7CupHffo5lb
+ ppNOFr4OBJIOQ3RiNSuuKkFs1tNPuI32rcrWAwqYfXuiSGod8G5M1Q0KpFlKuafJgs2H
+ UZdSG/lrHy05e+Z2mLSwunr1sArh9ZXGO71dCTOQZhvsc8K2IzwD/dPIM8hirAur1/I4
+ e71QIDSxCcRa+nQBdSVJrCL0mfy+W30XspjRqpuE0ionk1pl3rmmVfLdKkB9JXqH2gTJ
+ FQ7dPTcLqjupHXzbHV27jNGbdnipUbyd6ipajs+v8+B941XhmA1uwsAjhvEN7YCNnuTm
+ K5/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyyhS3akUJcmYT1ZDquoC1Uoa0UEWp3GQ8wzFn5mdM7c9OCUtp+0goneu/1Lrul6u3QLMfdymTMhzC@nongnu.org
-X-Gm-Message-State: AOJu0YwcuYlW2GaogzSLd2nT2n2qRo27tuwfHDhOtVjMTo2xcpsLVKot
- nrNuqpbKkDVgRnQs2GDoeGttog3FA0jEiKO8fipfyv864WwPLtCkPzdPFSQA9HPlhF+jvklYUPz
- q
-X-Google-Smtp-Source: AGHT+IEe405LgwaUa+tgzHJc73qRXgxkokumYt+OZJpVKzTVTV4iEqYqOPat+CHfoDdZ+25yGHPOgg==
-X-Received: by 2002:a05:6a20:2595:b0:1dc:3c58:ee78 with SMTP id
- adf61e73a8af0-1dc90b47f37mr4476618637.18.1731691425677; 
- Fri, 15 Nov 2024 09:23:45 -0800 (PST)
-Received: from [192.168.0.4] ([71.212.136.242])
+ AJvYcCV78VMakTVoSqg2LtgjqLmNi6jiKrNGKPxOCnw0kd9i4L8YNQZcr78wy0GR6CEoofP48oTqxyFETm//@nongnu.org
+X-Gm-Message-State: AOJu0Yxlg32PSAPs7rZozN9nZKb+K25Q/X4hrK9zOAg04KcsxMtgoQUt
+ 1Bl85/D9hdVIIHTqsMMYp16t+FKroKt5jFzvDEQT7ovMl9m121+FV6CNP7m93cQ=
+X-Google-Smtp-Source: AGHT+IH9HnPAv5KKrsgFmQTe4yqyqyb78yONAyEmtd66mmIKkV71Oe6N98HEpriHgLuG1vBAsfbhlg==
+X-Received: by 2002:a05:6000:1884:b0:37d:9476:45f6 with SMTP id
+ ffacd0b85a97d-38225901ed5mr2721510f8f.7.1731691516759; 
+ Fri, 15 Nov 2024 09:25:16 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7247711ce4bsm1582951b3a.47.2024.11.15.09.23.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Nov 2024 09:23:45 -0800 (PST)
-Message-ID: <9796cc60-5efb-4a2d-9437-4832a6c43edf@linaro.org>
-Date: Fri, 15 Nov 2024 09:23:43 -0800
+ ffacd0b85a97d-3821ae3128bsm4815080f8f.102.2024.11.15.09.25.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Nov 2024 09:25:16 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] tcg: Allow top bit of SIMD_DATA_BITS to be set in simd_desc()
+Date: Fri, 15 Nov 2024 17:25:15 +0000
+Message-Id: <20241115172515.1229393-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] accel/tcg: Remove cpu_unwind_state_data() unused
- CPUState argument
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20241115152053.66442-1-philmd@linaro.org>
- <20241115152053.66442-7-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241115152053.66442-7-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,40 +93,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/15/24 07:20, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/exec/translate-all.h | 3 +--
->   accel/tcg/translate-all.c    | 2 +-
->   target/i386/helper.c         | 3 ++-
->   target/openrisc/sys_helper.c | 7 +++----
->   4 files changed, 7 insertions(+), 8 deletions(-)
-> 
-> diff --git a/include/exec/translate-all.h b/include/exec/translate-all.h
-> index f06cfedd52..9303318953 100644
-> --- a/include/exec/translate-all.h
-> +++ b/include/exec/translate-all.h
-> @@ -23,7 +23,6 @@
->   
->   /**
->    * cpu_unwind_state_data:
-> - * @cpu: the cpu context
->    * @host_pc: the host pc within the translation
->    * @data: output data
->    *
-> @@ -32,7 +31,7 @@
->    * function returns false; otherwise @data is loaded.
->    * This is the same unwind info as given to restore_state_to_opc.
->    */
-> -bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
-> +bool cpu_unwind_state_data(uintptr_t host_pc, uint64_t *data);
+In simd_desc() we create a SIMD descriptor from various pieces
+including an arbitrary data value from the caller.  We try to
+sanitize these to make sure everything will fit: the 'data' value
+needs to fit in the SIMD_DATA_BITS (== 22) sized field.  However we
+do that sanitizing with:
+   tcg_debug_assert(data == sextract32(data, 0, SIMD_DATA_BITS));
 
-Hmm.  I wonder if it should be called "cpu_*" at all then?
-Worth renaming to "tcg_*" or something?
+This works for the case where the data is supposed to be considered
+as a signed integer (which can then be returned via simd_data()).
+However, some callers want to treat the data value as unsigned.
 
-Anyway,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Specifically, for the Arm SVE operations, make_svemte_desc()
+assembles a data value as a collection of fields, and it needs to use
+all 22 bits.  Currently if MTE is enabled then its MTEDESC SIZEM1
+field may have the most significant bit set, and then it will trip
+this assertion.
 
+Loosen the assertion so that we only check that the data value will
+fit into the field in some way, either as a signed or as an unsigned
+value.  This means we will fail to detect some kinds of bug in the
+callers, but we won't spuriously assert for intentional use of the
+data field as unsigned.
 
-r~
+Cc: qemu-stable@nongnu.org
+Fixes: db432672dc50e ("tcg: Add generic vector expanders")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2601
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tcg/tcg-op-gvec.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+index 78ee1ced80f..97e4df221a4 100644
+--- a/tcg/tcg-op-gvec.c
++++ b/tcg/tcg-op-gvec.c
+@@ -88,7 +88,20 @@ uint32_t simd_desc(uint32_t oprsz, uint32_t maxsz, int32_t data)
+     uint32_t desc = 0;
+ 
+     check_size_align(oprsz, maxsz, 0);
+-    tcg_debug_assert(data == sextract32(data, 0, SIMD_DATA_BITS));
++
++    /*
++     * We want to check that 'data' will fit into SIMD_DATA_BITS.
++     * However, some callers want to treat the data as a signed
++     * value (which they can later get back with simd_data())
++     * and some want to treat it as an unsigned value.
++     * So here we assert only that the data will fit into the
++     * field in at least one way. This means that some invalid
++     * values from the caller will not be detected, e.g. if the
++     * caller wants to handle the value as a signed integer but
++     * incorrectly passes us 1 << (SIMD_DATA_BITS - 1).
++     */
++    tcg_debug_assert(data == sextract32(data, 0, SIMD_DATA_BITS) ||
++                     data == extract32(data, 0, SIMD_DATA_BITS));
+ 
+     oprsz = (oprsz / 8) - 1;
+     maxsz = (maxsz / 8) - 1;
+-- 
+2.34.1
+
 
