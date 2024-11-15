@@ -4,71 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB21D68BCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCDE4D68BC8
 	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 15:41:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tByQb-0002J4-QU; Fri, 15 Nov 2024 10:40:09 -0500
+	id 1tByQa-0002Ik-Qr; Fri, 15 Nov 2024 10:40:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tByQa-0002IR-Ev
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tByQa-0002HG-13
  for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:40:08 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tByQY-0008Qq-S3
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:40:08 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a9a977d6cc7so132183066b.3
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 07:40:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tByQY-0008Os-Ch
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:40:07 -0500
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2fb51e00c05so32664061fa.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 07:40:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731685205; x=1732290005; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jqfWi++rl3hUmZxn6nytbfYNM7OV2L7ofeIN9m8YA/w=;
- b=jIu8vf/gh/PH1yK7ITkZV1FXUdlIweUBPKQY56wi2K6lD4mI6gspIK2Iv7tXNjByug
- 0RgFfgwDB+S8nHveve71Mw3miqBkxXVaDxXATHpHIKvb7gifKdm6ZvrhQ+ZsjRpq3uy0
- nmmqj7zsTiSO7BGnwDYXjHVDDHhljj4J0QRKUrhmAJxgymeA7wHXpuXvjuTNwEhi2HXo
- YpAq5hffszU57GDBsl6sbuYTqHiL2IbIxlhqW7rfdwgx9zbrGf/yKjpRzk/KLoKPa+dJ
- 5saMTYTiw1yZNcFSfHdwCbtAQfDcg82Lzzssp5SE8JE7iRiNROB3ZvMNJdQNJv2mu3ar
- sdow==
+ d=linaro.org; s=google; t=1731685199; x=1732289999; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QhTFRcx85wE8fb22sEvb1aiaYbywPGbGhYYO1rv3drs=;
+ b=FPEuEO0+K2LbQELAo5jjEceDPDL5d25T9iN/NMfQY6d3qWNj5VVdipOlSe9OrUVTDA
+ 9/o77M73qn1sKdHKE6Yh1DmTBgUWVqn+FOwaFoZVorOfrjlSaUSGTPAsHwMBhg3Hmjjb
+ YUhm9duye2Eh4r3F6JKPf9PafH8HgEtAuqV9f9jtcWSiPKQzOvWi27jMAeNrL1JIlFi8
+ lj3iT0sHw9EUUurgtnvCQGzD/oFnVw5O1RiPwA6k62t29aB2HdwIWt3WaFheIYoCN/P+
+ m9c3N4qi5F7Fccj9JQ2awpkdgll6dZy15ac5bDFo8YwdMa+ucuUl4MsGAggNff55MREh
+ FexQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731685205; x=1732290005;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jqfWi++rl3hUmZxn6nytbfYNM7OV2L7ofeIN9m8YA/w=;
- b=QXS3a/2WfmHKOir0qKz/VLlBO0gg9/3kWAgpudCMqmAO/jObLIw8sO7NeyGKb6B067
- 6LKvfHOsOyNx1eM7JeIkhJJD+m6EG39djxJtm8FFnNlAWhcGJrFGc/Uh592sbYJOi5VL
- DShH6/qbL1vpN4ZEoJf3mwTVObrV8i+DZ089ebgvVKjJwL07x5aYqVOkWiDBZu+CsHei
- p/8RaIoZ9WKs3/8Pe29WNmWFKJoACK4/w7CQbKykYSPuBE/ceUN77jWwh8EHaPCPtOS8
- owv3zwch+J/DuUIgqnmsT5UfHeJasXxB/2XtEUcyCi2h3tStva+jeTqaQZygt5WfAZbO
- yG4A==
-X-Gm-Message-State: AOJu0YwY+bDmYHCvguchV7UHGU06JnwOQZhHl0njYd5T9b/ds2oyap2t
- ef+9g3GfAg3F+MiFklqGWwm/ZafxbbsQ36iYR67XybJcAO3wfd/sLXjf5PqN+fYy+7suhUQv3BA
- ts+f7CH4oFfmsN4HLdvgEIJX0yGT2amawILLEgw==
-X-Google-Smtp-Source: AGHT+IFoFiuEWll6pWsX0Nf/f3qccARchQmm6gBo28hnSuflt+SbWrXoEyKNZz6nTUKYQayKn8hOlYM3LpO+dbDpfnk=
-X-Received: by 2002:a05:6402:908:b0:5cf:45be:2569 with SMTP id
- 4fb4d7f45d1cf-5cf8fd2ccbdmr3029855a12.21.1731685205029; Fri, 15 Nov 2024
- 07:40:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731685199; x=1732289999;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QhTFRcx85wE8fb22sEvb1aiaYbywPGbGhYYO1rv3drs=;
+ b=A/Sbdtv/DRJqkP0lTfseOXKjBQ+BzXnM/4tZ+wZjEJJhWAuIN0j4KeqzbmGMcxG9AX
+ kGWUOevovxYknHCSj6+/YVevxKvhTxBuU14LRV3QfATnZJ4rcMjckvMocIjSvVFuo1De
+ +BjQNHtnDmSyAdE38LnfazNnrt+4b/C0pmrCQC7X9K36t7EAtuFicle6iiDjuy5hHsHb
+ OKHo1SLgW11QvsNIa/lihYX+FxrIVOwu5sSY0R5wuckAPxyD1nzSDx5qBXfgB7WmqUZN
+ q7bMVgq/lFUFd3veGRuGAF0TieQdxDLqk0z5s7anaizsl+yjxSkwM+aqsdNGWdlz/Kqh
+ ZUpA==
+X-Gm-Message-State: AOJu0YyRlIvy788/CW2s//caWzuseAVACI8laRIa5B/eApzt2fXvf35E
+ h7ljKethcWofRy6bzM8NCrRSyBhvDDVVaoOYXVJd3t0rj+HZDT7m0Be2t2A/hg3lo7kz2ws2O65
+ C
+X-Google-Smtp-Source: AGHT+IHl6GkVdEMD0pwoM3BkvTp/s0spMkM+Gn1mBVHazdxcJ1GPkbBj3c6pqEbMVaTvlZ3JQNnY6Q==
+X-Received: by 2002:a05:651c:154c:b0:2ff:5645:121f with SMTP id
+ 38308e7fff4ca-2ff606fdbbbmr29819151fa.40.1731685198776; 
+ Fri, 15 Nov 2024 07:39:58 -0800 (PST)
+Received: from [192.168.69.174] ([176.187.214.209])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20dffd7e7sm189513266b.119.2024.11.15.07.39.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 Nov 2024 07:39:57 -0800 (PST)
+Message-ID: <09687c31-cc47-4166-9b5a-09308c8dff24@linaro.org>
+Date: Fri, 15 Nov 2024 16:39:56 +0100
 MIME-Version: 1.0
-References: <20241115152053.66442-1-philmd@linaro.org>
- <20241115152053.66442-2-philmd@linaro.org>
-In-Reply-To: <20241115152053.66442-2-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Nov 2024 15:39:54 +0000
-Message-ID: <CAFEAcA98_8h5Kg_J7c5U79OqCWfKgqkCLHrDg7rd4n93xBEk0A@mail.gmail.com>
-Subject: Re: [PATCH 01/10] target/mips: Drop left-over comment about Jazz
- machine
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x635.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] target/mips: Convert Octeon LX instructions to
+ decodetree
+To: qemu-devel@nongnu.org, Pavel Dovgalyuk <pavel.dovgalyuk@ispras.ru>
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20241111222936.59869-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241111222936.59869-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,19 +96,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 15 Nov 2024 at 15:21, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Commit 3803b6b427 ("target/mips: Fold jazz behaviour into
-> mips_cpu_do_transaction_failed") removed update on TCGCPUOps
-> and commit 119065574d ("hw/core: Constify TCGCPUOps") made
-> it const. Remove the now irrelevant comment.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
+On 11/11/24 22:29, Philippe Mathieu-Daudé wrote:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Philippe Mathieu-Daudé (3):
+>    target/mips: Extract gen_base_index_addr() helper
+>    target/mips: Extract generic gen_lx() helper
+>    target/mips: Convert Octeon LX instructions to decodetree
 
-thanks
--- PMM
+Thanks, series queued to mips-next tree.
 
