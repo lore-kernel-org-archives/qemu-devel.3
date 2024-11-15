@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6636CD68BC6
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 16:05:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47AD0D68BC6
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 16:21:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBynT-0004AS-WF; Fri, 15 Nov 2024 11:03:48 -0500
+	id 1tBz3P-0002UZ-Lt; Fri, 15 Nov 2024 11:20:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <33nA3ZwYKCt0QNPTDGFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--roqueh.bounces.google.com>)
- id 1tBynQ-00049X-PB
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:03:45 -0500
-Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tBz3O-0002TF-Cz
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:20:14 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <33nA3ZwYKCt0QNPTDGFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--roqueh.bounces.google.com>)
- id 1tBynP-00040x-8X
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:03:44 -0500
-Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-e381f9e1395so2648391276.3
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 08:03:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tBz3G-0006he-Jj
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 11:20:13 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5cefa22e9d5so2236472a12.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 08:20:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1731686622; x=1732291422; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=HYr7dkbjOM3DhMWGJi0XHGtksaAWQFJUXcJyP4tJoMU=;
- b=MxfYrLR7Fj6HQ8ItFqA+yYZvGb473tJSXJv/+5upqp0CYSlZdlQeaYybSEhR3E6xon
- 4Foq3KDQpG3OF/CYju318Yagbj7IpKvRNmWvUevSMixm8IsWPcTen0fJiT6GMkFJO62i
- X6e2VX5mZaBFMC7PwEQ4N9EgiCt7eWS31uIi7r2K9rUpV8rGHgKpCz8boVFvCXb74n1n
- n2xj+5t9bWagnMeYpSUiJQrybmV56DvYa0VyDEGyjka3SjvrHh5xqISVHK2df8qoETud
- MKmThUwlSBWGUZ+OSaHq2dkNPuILQaci0OM1iI5ypZx7YTA1fLZt4CBFFbxiCUaeSj4t
- IWOw==
+ d=linaro.org; s=google; t=1731687603; x=1732292403; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hi3IYa1oiebpItviUFMRjKe37lDdfcXpu3Iq6daonLs=;
+ b=j4PQFTmY/NaIyFlcD239nrF6EiSrJBVzmeJsUsM0oM3yslW7UqLRtNARqJX6cdCzzN
+ wHOCODg5d08VqPbpUwIW0axaBPnlihYbrOFm5EXGfgmDC15TxNp154mK7P9xYXfMvfT9
+ ooyKsjG3pU8CiHrXJlQrrjpgmUkabsTs4BDVP7OQb9y7v8hXQoCwnWl7f9GsCrCYQUei
+ /Fc4RdsrRjcLTdaxikZYJNDwcz1b4n6QdNGFDZUAYBTX2nCjZsunyhUrLGlKmtpD+p5F
+ Zcv688XS5SQ+gSDkCP0DteqW/ctSGTvMGAk1s7GSTLDa672zsWM2NwczeqiwsyaXG3A3
+ G+Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731686622; x=1732291422;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HYr7dkbjOM3DhMWGJi0XHGtksaAWQFJUXcJyP4tJoMU=;
- b=AXGJSLQ9zyoKzetjLjwK0U8Z1lB/3OYSciSBTsTF5QjS0DCRoRmeIS+NN6Yhg1wi2z
- UoF18nuzQLuc76O9+/uXbT+oqz+0t/xdz85RrXhzvonEB5LpBgGzd9mqkow7SArq+ae/
- dA699roNB4AN/IK9EhiO/pvPn1zoxHUNiLqr22qha2IWu2sD7hnE92jFKxnWGOzhjDBu
- FLE8AruQetkwwrdOy17WKk1ar2m9JamU0LMYJ5GvxTqTjshtxzSLzluYDTNiMl7nzuHi
- KtMk3wwY7EdKxJ6TkxhqnILdbC/yw4+QcHQTvwQeZhYiXBzadFS3SL/tV4/Z5yWsg6B/
- Urcw==
-X-Gm-Message-State: AOJu0YyX98wGE31S5J9yYZXCP/eK2VQ+M62IG+gvKrJwx2EARFeeTuYa
- V4lx4bMJg0NoyTZcX5ah85a3ORa61sRuPg3AbvuYbnMErJ9a/43YUfgDN82MTlPCgtQvxs6YThE
- EMQ==
-X-Google-Smtp-Source: AGHT+IFAtteKGzbsxn7wEW/AZvhVZkag2wL/KsZoSf44v9m5j4DQzTGeTKHamCAz4aMV3IOr2XkH/iE+rQU=
-X-Received: from roqueh.c.googlers.com ([fda3:e722:ac3:cc00:4e:3bc9:ac1c:1ab])
- (user=roqueh job=sendgmr) by 2002:a25:53c1:0:b0:e30:b93a:b3e4 with
- SMTP id
- 3f1490d57ef6-e382614aae1mr129379276.4.1731686622044; Fri, 15 Nov 2024
- 08:03:42 -0800 (PST)
-Date: Fri, 15 Nov 2024 16:03:25 +0000
-In-Reply-To: <20241115160328.1650269-1-roqueh@google.com>
-Mime-Version: 1.0
-References: <20241115160328.1650269-1-roqueh@google.com>
-X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
-Message-ID: <20241115160328.1650269-3-roqueh@google.com>
-Subject: [PATCH 2/5] hw/watchdog/cmsdk_apb_watchdog: Fix INTEN issues
-From: Roque Arcudia Hernandez <roqueh@google.com>
-To: peter.maydell@linaro.org, farosas@suse.de, lvivier@redhat.com, 
- slongfield@google.com, komlodi@google.com, pbonzini@redhat.com, 
- venture@google.com
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Roque Arcudia Hernandez <roqueh@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=33nA3ZwYKCt0QNPTDGFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--roqueh.bounces.google.com;
- helo=mail-yb1-xb4a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1731687603; x=1732292403;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hi3IYa1oiebpItviUFMRjKe37lDdfcXpu3Iq6daonLs=;
+ b=ZV80+PkfDs9QeJeg6YKDVN7GOKZtQQp7XLa134NdyzYW8yFkHzVqB7Yw6aazO6HDDL
+ C31ezvHqJrwwqLVtOvDDCHXr5m0WT/guRy8wx1ZDJBu2XAkhX3wIwzZUWVOHuGytH8l0
+ LatM+cZEODXyKCl+MSu+ODJjzJJ3eeqrqhOJSXyMyHiKJrVlTr1hbkcul6+S8vlrH1oT
+ LTD63jSGlqFRCEoDIpKPXCg1Rvp5jxdxU5nzhhBwe/P0I5kXtuSLwpIv/PKO9cNXiaAW
+ y2NAtnpyG2Jb7F8YEFytcx+Vl6AQHK7lysFuofeEafj4Qut6OH6fqt5KfxbA2jLisVKl
+ WBEQ==
+X-Gm-Message-State: AOJu0YzIahx3ORum+zls3BKKzq3+X+ENOfzm8RQF3u+Q2QX4FdPn5MxP
+ 1g1r/gIc6F/yXXAh115kQ0exJUSPNtf0LpfEEt4NyiIw5AQLIE14+YtXYjPYHYddYTrn6lCArlu
+ y
+X-Google-Smtp-Source: AGHT+IFr/imrEzVAd48SzRZ2iZRFWKpMvRL2CwlMOpIn2vrZ4zzGLNKdWeAXHNKQJuwrSLZTVe+DVA==
+X-Received: by 2002:a17:907:7ba3:b0:a9e:45e6:42cb with SMTP id
+ a640c23a62f3a-aa4834263aemr308562166b.18.1731687603240; 
+ Fri, 15 Nov 2024 08:20:03 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20df571a1sm192364866b.80.2024.11.15.08.20.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Nov 2024 08:20:02 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A5A515F75D;
+ Fri, 15 Nov 2024 16:20:01 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] docs: explicitly permit a "commonly known identity"
+ with SoB
+In-Reply-To: <20241021190939.1482466-1-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Mon, 21 Oct 2024 20:09:39
+ +0100")
+References: <20241021190939.1482466-1-berrange@redhat.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Fri, 15 Nov 2024 16:20:01 +0000
+Message-ID: <87iksoqxji.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,98 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current watchdog is free running out of reset, this combined with the
-fact that current implementation also ensures the counter is running
-when programing WDOGLOAD creates issues when the firmware defer the
-programing of WDOGCONTROL.INTEN much later after WDOGLOAD. Arm
-Programmer's Model documentation states that INTEN is also the
-counter enable:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> INTEN
+> The docs for submitting a patch describe using your "Real Name" with
+> the Signed-off-by line. Although somewhat ambiguous, this has often
+> been interpreted to mean someone's legal name.
 >
-> Enable the interrupt event, WDOGINT. Set HIGH to enable the counter
-> and the interrupt, or LOW to disable the counter and interrupt.
-> Reloads the counter from the value in WDOGLOAD when the interrupt
-> is enabled, after previously being disabled.
+<snip>
+>
+> [1] Raised in many contexts at many times, but a decent overall summary
+>     can be read at https://drewdevault.com/2023/10/31/On-real-names.html
+> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/co=
+mmit/?id=3Dd4563201f33a022fc0353033d9dfeb1606a88330
+> [3] https://github.com/cncf/foundation/blob/659fd32c86dc/dco-guidelines.md
+> [4] Excluding the rare GPG key signing parties for regular maintainers
 
-Source of the time of writing:
+Seem reasonable to me:
 
-https://developer.arm.com/documentation/ddi0479/d/apb-components/apb-watchdog/programmers-model
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-Reviewed-by: Stephen Longfield <slongfield@google.com>
-Reviewed-by: Joe Komlodi <komlodi@google.com>
----
- hw/watchdog/cmsdk-apb-watchdog.c | 34 +++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
-
-diff --git a/hw/watchdog/cmsdk-apb-watchdog.c b/hw/watchdog/cmsdk-apb-watchdog.c
-index e4d25a25f7..ed5ff4257c 100644
---- a/hw/watchdog/cmsdk-apb-watchdog.c
-+++ b/hw/watchdog/cmsdk-apb-watchdog.c
-@@ -196,16 +196,13 @@ static void cmsdk_apb_watchdog_write(void *opaque, hwaddr offset,
- 
-     switch (offset) {
-     case A_WDOGLOAD:
--        /*
--         * Reset the load value and the current count, and make sure
--         * we're counting.
--         */
-+        /* Reset the load value and the current count. */
-         ptimer_transaction_begin(s->timer);
-         ptimer_set_limit(s->timer, value, 1);
--        ptimer_run(s->timer, 0);
-         ptimer_transaction_commit(s->timer);
-         break;
--    case A_WDOGCONTROL:
-+    case A_WDOGCONTROL: {
-+        uint32_t prev_control = s->control;
-         if (s->is_luminary && 0 != (R_WDOGCONTROL_INTEN_MASK & s->control)) {
-             /*
-              * The Luminary version of this device ignores writes to
-@@ -215,8 +212,25 @@ static void cmsdk_apb_watchdog_write(void *opaque, hwaddr offset,
-             break;
-         }
-         s->control = value & R_WDOGCONTROL_VALID_MASK;
-+        if (R_WDOGCONTROL_INTEN_MASK & (s->control ^ prev_control)) {
-+            ptimer_transaction_begin(s->timer);
-+            if (R_WDOGCONTROL_INTEN_MASK & s->control) {
-+                /*
-+                 * Set HIGH to enable the counter and the interrupt. Reloads
-+                 * the counter from the value in WDOGLOAD when the interrupt
-+                 * is enabled, after previously being disabled.
-+                 */
-+                ptimer_set_count(s->timer, ptimer_get_limit(s->timer));
-+                ptimer_run(s->timer, 0);
-+            } else {
-+                /* Or LOW to disable the counter and interrupt. */
-+                ptimer_stop(s->timer);
-+            }
-+            ptimer_transaction_commit(s->timer);
-+        }
-         cmsdk_apb_watchdog_update(s);
-         break;
-+    }
-     case A_WDOGINTCLR:
-         s->intstatus = 0;
-         ptimer_transaction_begin(s->timer);
-@@ -305,8 +319,14 @@ static void cmsdk_apb_watchdog_reset(DeviceState *dev)
-     s->resetstatus = 0;
-     /* Set the limit and the count */
-     ptimer_transaction_begin(s->timer);
-+    /*
-+     * We need to stop the ptimer before setting its limit reset value. If the
-+     * order is the opposite when the code executes the stop after setting a new
-+     * limit it may want to recalculate the count based on the current time (if
-+     * the timer was currently running) and it won't get the proper reset value.
-+     */
-+    ptimer_stop(s->timer);
-     ptimer_set_limit(s->timer, 0xffffffff, 1);
--    ptimer_run(s->timer, 0);
-     ptimer_transaction_commit(s->timer);
- }
- 
--- 
-2.47.0.338.g60cca15819-goog
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
