@@ -4,80 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15FB4D68BCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A332D68BCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 17:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tC04P-0003zG-Oi; Fri, 15 Nov 2024 12:25:21 -0500
+	id 1tC04b-00041W-HK; Fri, 15 Nov 2024 12:25:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tC04O-0003yz-VD
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:20 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tC04M-0001UW-GL
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:20 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3822ba3cdbcso366188f8f.0
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 09:25:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731691517; x=1732296317; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=7Y0AMU/ttgRURqOnN0XPhkHG3hk3G+OF7iF0mZeXnJQ=;
- b=n8STFGwn/3EbTsIFfPrxlCpGz3g2Cab4bihNWvoGpv2uklYj6TLxsPptNw+iAnAyBc
- VgDVrSfv1oA/T1TgSnUR46yjqJ57jQaERu4+QkHroQen07PhgmsSBDQ0daBbqEy7JaPv
- ecGjZotU4cs3k7OIatfDNOm4esgSeguzRpFTUPpldtmlyJUiagk7EoGfb8pHRzeJ3Ci8
- 3pTFHtrB/XJbgK3H40xJzLYI1CnkVPty3qVvJ35ed74Zzj2L0YQWU6QNdMzTCsYFdvWB
- BOAujlDl/b4epOtOzobvb3KFFJNCibiyLx6SVfxvZjdbCHUbPeXkUUKdDyul1t9yqCh8
- ANWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731691517; x=1732296317;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7Y0AMU/ttgRURqOnN0XPhkHG3hk3G+OF7iF0mZeXnJQ=;
- b=VLlil8B0m1/1nylhpZItTqj/12nEzNAF5orTmOr3jgdZe+QDUKtDrlq7CupHffo5lb
- ppNOFr4OBJIOQ3RiNSuuKkFs1tNPuI32rcrWAwqYfXuiSGod8G5M1Q0KpFlKuafJgs2H
- UZdSG/lrHy05e+Z2mLSwunr1sArh9ZXGO71dCTOQZhvsc8K2IzwD/dPIM8hirAur1/I4
- e71QIDSxCcRa+nQBdSVJrCL0mfy+W30XspjRqpuE0ionk1pl3rmmVfLdKkB9JXqH2gTJ
- FQ7dPTcLqjupHXzbHV27jNGbdnipUbyd6ipajs+v8+B941XhmA1uwsAjhvEN7YCNnuTm
- K5/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV78VMakTVoSqg2LtgjqLmNi6jiKrNGKPxOCnw0kd9i4L8YNQZcr78wy0GR6CEoofP48oTqxyFETm//@nongnu.org
-X-Gm-Message-State: AOJu0Yxlg32PSAPs7rZozN9nZKb+K25Q/X4hrK9zOAg04KcsxMtgoQUt
- 1Bl85/D9hdVIIHTqsMMYp16t+FKroKt5jFzvDEQT7ovMl9m121+FV6CNP7m93cQ=
-X-Google-Smtp-Source: AGHT+IH9HnPAv5KKrsgFmQTe4yqyqyb78yONAyEmtd66mmIKkV71Oe6N98HEpriHgLuG1vBAsfbhlg==
-X-Received: by 2002:a05:6000:1884:b0:37d:9476:45f6 with SMTP id
- ffacd0b85a97d-38225901ed5mr2721510f8f.7.1731691516759; 
- Fri, 15 Nov 2024 09:25:16 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3821ae3128bsm4815080f8f.102.2024.11.15.09.25.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Nov 2024 09:25:16 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] tcg: Allow top bit of SIMD_DATA_BITS to be set in simd_desc()
-Date: Fri, 15 Nov 2024 17:25:15 +0000
-Message-Id: <20241115172515.1229393-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tC04Z-00040v-VF
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tC04Y-0001VY-1c
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 12:25:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731691527;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oFZPejj6MxCF//zJW39Q22oWnHIj1PZf4Dv6EFnqtTw=;
+ b=evBTbDTvpTtL+TkbW7N5sEhqLvNpT70ZOrp2944F6KpN8Rq3fnSf4JXGhyiROfZOzoqFB0
+ Bt1du+DeIZ+fC6Mbk2nYWK+Z9J80NFdS8F16LzXz/UmXQZrHDYBUf6p/YUUPoryzvTU4vr
+ FDwr8NR0C2ML1Qfj0slTM1yDnxi10ik=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-PVvQxx_XNmmTUs0zk4Xn8A-1; Fri,
+ 15 Nov 2024 12:25:26 -0500
+X-MC-Unique: PVvQxx_XNmmTUs0zk4Xn8A-1
+X-Mimecast-MFC-AGG-ID: PVvQxx_XNmmTUs0zk4Xn8A
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 490E01955F3B
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 17:25:25 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.102])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 34DF73003B71; Fri, 15 Nov 2024 17:25:22 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 0/9] Require error handling for dynamically created objects
+Date: Fri, 15 Nov 2024 17:25:12 +0000
+Message-ID: <20241115172521.504102-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.12,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.658,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,64 +84,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In simd_desc() we create a SIMD descriptor from various pieces
-including an arbitrary data value from the caller.  We try to
-sanitize these to make sure everything will fit: the 'data' value
-needs to fit in the SIMD_DATA_BITS (== 22) sized field.  However we
-do that sanitizing with:
-   tcg_debug_assert(data == sextract32(data, 0, SIMD_DATA_BITS));
+NB, this series is targetting 10.0, NOT for 9.2 freeze.
 
-This works for the case where the data is supposed to be considered
-as a signed integer (which can then be returned via simd_data()).
-However, some callers want to treat the data value as unsigned.
+With code like
 
-Specifically, for the Arm SVE operations, make_svemte_desc()
-assembles a data value as a collection of fields, and it needs to use
-all 22 bits.  Currently if MTE is enabled then its MTEDESC SIZEM1
-field may have the most significant bit set, and then it will trip
-this assertion.
+    Object *obj = object_new(TYPE_BLAH)
 
-Loosen the assertion so that we only check that the data value will
-fit into the field in some way, either as a signed or as an unsigned
-value.  This means we will fail to detect some kinds of bug in the
-callers, but we won't spuriously assert for intentional use of the
-data field as unsigned.
+the caller can be pretty confident that they will successfully create
+an object instance of TYPE_BLAH. They know exactly what type has been
+requested, so it passing an abstract type for example, it is a clear
+programmer error that they'll get an assertion failure.
 
-Cc: qemu-stable@nongnu.org
-Fixes: db432672dc50e ("tcg: Add generic vector expanders")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2601
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- tcg/tcg-op-gvec.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+Conversely with code like
 
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index 78ee1ced80f..97e4df221a4 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -88,7 +88,20 @@ uint32_t simd_desc(uint32_t oprsz, uint32_t maxsz, int32_t data)
-     uint32_t desc = 0;
- 
-     check_size_align(oprsz, maxsz, 0);
--    tcg_debug_assert(data == sextract32(data, 0, SIMD_DATA_BITS));
-+
-+    /*
-+     * We want to check that 'data' will fit into SIMD_DATA_BITS.
-+     * However, some callers want to treat the data as a signed
-+     * value (which they can later get back with simd_data())
-+     * and some want to treat it as an unsigned value.
-+     * So here we assert only that the data will fit into the
-+     * field in at least one way. This means that some invalid
-+     * values from the caller will not be detected, e.g. if the
-+     * caller wants to handle the value as a signed integer but
-+     * incorrectly passes us 1 << (SIMD_DATA_BITS - 1).
-+     */
-+    tcg_debug_assert(data == sextract32(data, 0, SIMD_DATA_BITS) ||
-+                     data == extract32(data, 0, SIMD_DATA_BITS));
- 
-     oprsz = (oprsz / 8) - 1;
-     maxsz = (maxsz / 8) - 1;
+   void somefunc(const char *typename) {
+      Object * obj = object_new(typename)
+      ...
+   }
+
+all bets are off, because the call of object_new() knows nothing
+about what 'typename' resolves to. It could easily be an abstract
+type. As a result, many code paths have added a manual check ahead
+of time
+
+   if (object_class_is_abstract(typename)) {
+      error_setg(errp, ....)
+   }
+
+...except for where we forget to do this, such as qdev_new().
+
+Overall 'object_new' is a bad design because it is inherantly
+unsafe to call with unvalidated typenames.
+
+This problem is made worse by the proposal to introduce the idea
+of 'singleton' classes[1].
+
+Thus, this series suggests a way to improve safety at build
+time. The core idea is to allow 'object_new' to continue to be
+used *if-and-only-if* given a static, const string, because that
+scenario indicates the caller is aware of what type they are
+creating at build time.
+
+A new 'object_new_dynamic' method is proposed for cases where
+the typename is dynamically chosen at runtime. This method has
+an "Error **errp" parameter, which can report when an abstract
+type is created, leaving the assert()s only for scenarios which
+are unambiguous programmer errors.
+
+With a little macro magic, we guarantee a compile error is
+generated if 'object_new' is called with a dynamic type, forcing
+all potentially unsafe code over to object_new_dynamic.
+
+This is more tractable than adding 'Error **errp' to 'object_new'
+as only a handful of places use a dynamic type name.
+
+With this series, my objections to Peter Xu's singleton series[1]
+would be largely nullified.
+
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05524.html
+
+Changed in v3:
+
+ * Remove qdev_try_new/isa_try_new/usb_try_new entirely
+ * Fix use of obj_free
+
+Changed in v2:
+
+ * Removed "RFC" tag
+ * Converted code in all non-x86_64 targets
+ * Converted qdev_new to same pattern as object_new
+ * Ensured test suites work now
+
+Daniel P. Berrangé (9):
+  hw: eliminate qdev_try_new, isa_try_new & usb_try_new
+  qom: refactor checking abstract property when creating instances
+  qom: allow failure of object_new_with_class
+  qom: introduce object_new_dynamic()
+  convert code to object_new_dynamic() where appropriate
+  qom: enforce use of static, const string with object_new()
+  qom: introduce qdev_new_dynamic()
+  convert code to qdev_new_dynamic() where appropriate
+  hw: enforce use of static, const string with qdev_new()
+
+ accel/accel-user.c                    |  4 ++-
+ chardev/char.c                        |  6 +++-
+ hw/arm/aspeed.c                       |  6 ++--
+ hw/arm/exynos4210.c                   |  3 +-
+ hw/arm/highbank.c                     |  2 +-
+ hw/arm/integratorcp.c                 |  2 +-
+ hw/arm/mps3r.c                        |  3 +-
+ hw/arm/npcm7xx_boards.c               |  2 +-
+ hw/arm/realview.c                     |  3 +-
+ hw/arm/sbsa-ref.c                     |  7 ++--
+ hw/arm/versatilepb.c                  |  2 +-
+ hw/arm/vexpress.c                     |  4 +--
+ hw/arm/virt.c                         | 10 +++---
+ hw/arm/xilinx_zynq.c                  |  3 +-
+ hw/audio/soundhw.c                    |  2 +-
+ hw/block/xen-block.c                  |  7 +++-
+ hw/core/bus.c                         |  2 +-
+ hw/core/cpu-common.c                  |  2 +-
+ hw/core/qdev.c                        | 13 +++-----
+ hw/core/sysbus.c                      |  2 +-
+ hw/i2c/core.c                         |  2 +-
+ hw/i386/pc.c                          | 22 ++++++------
+ hw/i386/x86-common.c                  |  5 ++-
+ hw/i386/xen/xen-pvh.c                 |  2 +-
+ hw/intc/xics.c                        |  5 ++-
+ hw/isa/isa-bus.c                      |  7 +---
+ hw/mips/cps.c                         |  3 +-
+ hw/pci-host/pnv_phb.c                 |  5 ++-
+ hw/pci/pci.c                          |  2 +-
+ hw/ppc/e500.c                         |  2 +-
+ hw/ppc/pnv.c                          |  6 ++--
+ hw/ppc/pnv_core.c                     |  5 ++-
+ hw/ppc/spapr.c                        |  2 +-
+ hw/ppc/spapr_cpu_core.c               |  5 ++-
+ hw/ppc/spapr_drc.c                    |  2 +-
+ hw/s390x/s390-pci-bus.c               |  6 +---
+ hw/s390x/s390-virtio-ccw.c            | 10 ++++--
+ hw/scsi/scsi-bus.c                    |  5 ++-
+ hw/sparc/leon3.c                      |  2 +-
+ hw/sparc/sun4m.c                      |  2 +-
+ hw/sparc64/sparc64.c                  |  2 +-
+ hw/ssi/ssi.c                          |  2 +-
+ hw/usb/bus.c                          |  6 ++--
+ hw/vfio/common.c                      |  6 +++-
+ hw/vfio/container.c                   |  7 +++-
+ include/hw/isa/isa.h                  |  1 -
+ include/hw/net/ne2000-isa.h           | 16 ++++-----
+ include/hw/qdev-core.h                | 41 ++++++++++++++++++-----
+ include/hw/usb.h                      |  7 +---
+ include/qom/object.h                  | 48 +++++++++++++++++++++++++--
+ net/net.c                             |  7 ++--
+ qom/object.c                          | 44 +++++++++++++++++-------
+ qom/object_interfaces.c               |  7 ++--
+ qom/qom-qmp-cmds.c                    | 16 +++++----
+ system/qdev-monitor.c                 |  5 ++-
+ system/vl.c                           |  6 ++--
+ target/arm/arm-qmp-cmds.c             |  5 ++-
+ target/i386/cpu-apic.c                |  8 ++++-
+ target/i386/cpu-sysemu.c              | 11 ++++--
+ target/i386/cpu.c                     |  4 +--
+ target/loongarch/loongarch-qmp-cmds.c |  5 ++-
+ target/mips/cpu.c                     |  2 +-
+ target/riscv/riscv-qmp-cmds.c         |  5 ++-
+ target/s390x/cpu_models_sysemu.c      |  7 ++--
+ target/xtensa/cpu.c                   |  2 +-
+ tests/unit/check-qom-interface.c      |  3 +-
+ tests/unit/test-smp-parse.c           | 20 +++++------
+ 67 files changed, 312 insertions(+), 166 deletions(-)
+
 -- 
-2.34.1
+2.46.0
 
 
