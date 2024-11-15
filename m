@@ -4,197 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACCF5D6DDE2
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 07:46:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E72AAD6DDDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 07:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBr1U-0003hr-2g; Fri, 15 Nov 2024 02:45:44 -0500
+	id 1tBr3b-0004C5-B3; Fri, 15 Nov 2024 02:47:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tBr1R-0003he-3U
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 02:45:41 -0500
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tBr3M-0004Ar-By
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 02:47:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tBr1J-0001zI-OU
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 02:45:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1731656734; x=1763192734;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=vmKF1LBhq65Ki/xGRJz3EJpKAgfxpV9prVfeEwTK0hk=;
- b=GWenyqjwRce2Myf7n/9X5FwEmbOgHw4skyXiQympLBE+No5EhenhfcGy
- /tSE7c/RiUw4Gt02T330pVtwrX+H4nvEe8g3/o1Ro9rrlLtiGGKfDSr54
- MVFr0dg363TWRYiADJAsbEi8mUq5tQB4CtETFwjTYp1giaNQGtkdo6P0B
- ie8oCg5e/E3uwUjbhuid8OkSNeQAzL7fMMH4/+ho1X8UhL+q1FzlH0Liy
- B6g/6/+q9UDrMTO1BXrV4Aw7FwihikDeBs5VcmXOfpnlzz8rpEt98nd8y
- M73cDFHulfMeVvY90tJihQI6XS+9xrt06kGOzARmq9+7KMJ300H0hMcBc Q==;
-X-CSE-ConnectionGUID: UZ0YkdwGSr6thYC2fgCCgQ==
-X-CSE-MsgGUID: xUz7yL0VR/mKKdpT+8Amkw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11256"; a="43049338"
-X-IronPort-AV: E=Sophos;i="6.12,156,1728975600"; d="scan'208";a="43049338"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Nov 2024 23:45:29 -0800
-X-CSE-ConnectionGUID: oesMB8w2R+aHfy7bSnqZFA==
-X-CSE-MsgGUID: X/QdbnoUS1eUEK6viG4BWA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,156,1728975600"; d="scan'208";a="93549563"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by orviesa004.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 14 Nov 2024 23:45:26 -0800
-Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Thu, 14 Nov 2024 23:45:25 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Thu, 14 Nov 2024 23:45:25 -0800
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.170)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 14 Nov 2024 23:45:18 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fDAvcvCPSs4G37bknQqN0EMcRn+Ty/ofZbo/zmIAMgxclwEskgVD1b+ZvQonvgiEJJK0kr4Q5BVKSldnUvQMxujd96IMnRdVGdI3cfz84wl+B1WTo826hhX/yZIqOWiU0yFuW2IA4xhbF25JUPlYw36eAefDPX0PbuKtnNWBWJIlTajJjsgMxrNoW2Q84myyyDc8RJO13ooqR7GNPjEUSXBDdEPE0MEVTbRDBVzysero6h3eDRJ19g++0O4MMNmNfM2VVFKT5mcS/kdIEPGkp9zCH6Qko5TiaMeXGxM9dyLQ1yOCxegs/f7dLo2disarhRC6jHvEXG/vDSjG5tTDaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vmKF1LBhq65Ki/xGRJz3EJpKAgfxpV9prVfeEwTK0hk=;
- b=oeaw95UZPbImPYrDe8WbCsap9ySOPdCV4yDAR+uuoG+jZxjTqfiuVnhxTAGdeXF2jNjg6+4okkcLEp4XAMBE1VqPk+GmxABiqucxRMHn41ZDNF5QkQNwMZIo+iGhvW/gZSFHbKE8CUKQW/iSq/aGNn4eTnAqTt+vvTskVLiBN17TKyuFTzVNXDIZDOFEukk6fPLmvjymCa204qd6LVpvzBXW8Mnkx/SyLjr0swnTXfSTCh66Vx6YPkbCDqTST4AM5blN/+vMcLIRe7cqLmj/p7MV2EYYaslXLBqip7vco1LHv0PI0qHv6uJ8W5pxxDJOzPR+mexe66Le+QtTyxorqA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by DS0PR11MB7336.namprd11.prod.outlook.com (2603:10b6:8:11f::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.17; Fri, 15 Nov
- 2024 07:45:16 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%5]) with mapi id 15.20.8158.013; Fri, 15 Nov 2024
- 07:45:15 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Alex Williamson <alex.williamson@redhat.com>, Eric Auger
- <eric.auger@redhat.com>
-Subject: RE: [PATCH for-9.2] vfio/container: Fix container object destruction
-Thread-Topic: [PATCH for-9.2] vfio/container: Fix container object destruction
-Thread-Index: AQHbNysX+ypCnLQNDUOhChbMRoVeLbK39Jdg
-Date: Fri, 15 Nov 2024 07:45:15 +0000
-Message-ID: <SJ0PR11MB6744AD5AFD0059797909646592242@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20241115065240.2198493-1-clg@redhat.com>
-In-Reply-To: <20241115065240.2198493-1-clg@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DS0PR11MB7336:EE_
-x-ms-office365-filtering-correlation-id: ab33b009-bc22-4996-c256-08dd054971bf
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info: =?utf-8?B?Tkg5Rm95MlNGVXdMd2JOczArOGxBMlN1VU8zb0pqRkplTlpnREVkREhZMEMx?=
- =?utf-8?B?VWRKQWlZdUpUZHZiVTBDK1hlMVBER2lJV2t2OFFRNm5TSFNhU054QkxpVlA1?=
- =?utf-8?B?dFRidzVTYjhSY3BIV1J0b3RqVFF1b2srWFZiKzBtYjgzbkxBUXAvVU0wTlR6?=
- =?utf-8?B?UXJjWmE2V0h5UFZOc29nTTBvZFd0UXpOVEVVaU9VZDRWWjJnS2ZkaWpKUkM5?=
- =?utf-8?B?U1hUdVpYVVdCckMyVkhBakdXSUc2TE9BeU9nWGxwUlY1Vm91UzN4WVNXUEN3?=
- =?utf-8?B?dlNqNmJGc0gwOXk4RUJRWG9oeXdrTjdjMHZMTFZKNGVlcit6cHlmdy9BMGx5?=
- =?utf-8?B?cjRKbVlkYkdldWs3dmlCZmFsRFVOd01vekpXRGtUc0pMcjhCaFFUSmhxNGJx?=
- =?utf-8?B?endaY1lsaTB2Tng0cDJSS2ExRzhuSnlHOW5aUm8wMFF6MVhRQTRSb0ZKU1Zj?=
- =?utf-8?B?U1J5RytMc0FaV0MySmUrNElxUEZiL0lBY2Z5Ri8yeHpZMHpyb0V0dWFQdkpp?=
- =?utf-8?B?R01HaUt1amg2a1dqM3AxaVBYMXNIc25BRTBNb0RpWE1laDF0NldNWlhmRS9x?=
- =?utf-8?B?NzE2OGFmYkJuWTkxZEVLdEdydUFUV0c3WFhzR1k2WlRZZ2hlNUNZOEpoOEIz?=
- =?utf-8?B?MnVwb1dBQnJGbzkveFhNSWJkU0VIRVhzczZSY0x6RWxnUjhTMTMxUXF6ZUZu?=
- =?utf-8?B?WHBSSHdxUlJlbTJsNjJYZ0tqTGVBOG1JL3BVditoMmRWd3BFQWxLeDFDNm5H?=
- =?utf-8?B?a3I3VHZpNVN4dnBlNzlvOTRDWGprUVV4ZkVlYmx5TVpJMTFQR1lPZjF1R2Q3?=
- =?utf-8?B?TkxaSFBsWXVQN0xrWERSdDk2aC9JSXNzejRoREowMGt3a1BLVlR4a3EweUww?=
- =?utf-8?B?bFNMTWc0eFZkNWxiQXhsNzlrditUeWx3TnFNa0F5dDB3d09GM2lOVEkvUkY1?=
- =?utf-8?B?QWw5Z1lZY3NINjJTNlk2UEtxR0pxbWZTQ0ZWUklPdVNsK2ZwUXR2UFVEUkx1?=
- =?utf-8?B?Wm9obW1jODRNQjZCTFJ3VFZVNjNENFc4bEQrVVl4THhXb3ovNFk3aXU4S2xL?=
- =?utf-8?B?eWVPc2NhaTFiWW5reTdCNXNzQmVnellPZERYU1RjeGR2b2hoT3d0NTJ2WEJr?=
- =?utf-8?B?aGRoVWZVeURHTlArYlBjMGE5UThQQWNWVDFleFN0RDhDSWw5cjFYcDFhZzRB?=
- =?utf-8?B?d2pNQk03U1E2cnArQ1ZpSDdsZ3FrVk9NWGhlTHlMRmNHTW4xbGZpd0pjQ0Ux?=
- =?utf-8?B?OXFJVzF2TGZaODBKRndrQ01HdkZtazhrekJnYzdkQjQ3LzFhMGwyVmhsZmll?=
- =?utf-8?B?RU00YzkyMFE5a09VMmZzblUyQnZSeVQ2REJNbFlmdFdvaFVwZmxaV0FzdGlV?=
- =?utf-8?B?bEFoSG9MMDFNM2lIdjlQZkRRaWx1YWMzVFE5V0g3cngzS0JHMFJFeTlrdkov?=
- =?utf-8?B?U1E4bUJncWI5b1dsTDIrZkhPdGRQNDhHUEozSzhxOVQ4SkpQajhYbWtmQmdK?=
- =?utf-8?B?K1VweVJHM3JsREc3TkpVSWY3NXBxRjVGVFYwZnFMUUZJOFVvWVJVNkRuSFBl?=
- =?utf-8?B?elBaUGVDUW9nc3hrdnIxT0kzc0RrMnpFZUtpbGdiTUVRVTNjTVBLU1hKQnEz?=
- =?utf-8?B?dnplM2dYV0pJRmsrYTRjODBVY3ExdVU1RFhYOTdhY2c4UE12TTVxSWlrM1Br?=
- =?utf-8?B?Q21nbFlFZFpXTWhtTDVvelRrUlR0TzhHdWNHYkl3MWRCUGJTU0Y4SERhR2kv?=
- =?utf-8?B?dUNzdTBZbXVITnFWMTc3OERpSkRPRENlZ3Z5MlQxcHRKeU8vdmpJajcxL0tx?=
- =?utf-8?Q?J2bGM/YoOuj5rpOqKT/txQRxMb0A8rLMNkOJY=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dHRVNUNJV2hEbm9ya3h1cENzMFhybEh2aWkxd084YmlXQVlBaFYrYmgrR3Zz?=
- =?utf-8?B?Y0VyR2VxdmpqRTAzTTJ3dmg5dU5DOXNKU0VocUtnUytJNWVaaUdsVU5TSEpK?=
- =?utf-8?B?UFdSTjdQeFdNaG1jRTcyMEZUM09HQkRFNUs2NWpOVVJLcHU5bWE2ZU1scWlx?=
- =?utf-8?B?aXB6NWtaeTFld2NhTzRQL3YyYXg0U01NL2tjTk1wUks2TVBVWFNhcUwvUktX?=
- =?utf-8?B?UXhEOVdFK0daYThBT3dEbUtiTDEvTE5pVXpGYVl5V1BSVjdwc1lZakQ5UEhK?=
- =?utf-8?B?c3pJaHdVa1lPNjJyVUp1cjYxYkJwL0pYN3prKzlOM2lqcG1pRGg2TFUvWDQz?=
- =?utf-8?B?a1RibU5aVEtETG5xS0J0bDZxVi91VjZhY2RwWW1xSlk4TGtRSHNLaFNwNng3?=
- =?utf-8?B?TWtXVlYydFhtL081NGFwTkFleVAzUG13VVErVk43QkJGMUZjMXpMWXUxc1VB?=
- =?utf-8?B?SnZKSnlRTWhLVjJVOHhrZ1dUL0FaK1R2b0dmMHV1TTFzYm9za2Qybm51QTlF?=
- =?utf-8?B?QmhQd2ZDT2JqN0xub1k3eWpkemFZRU5CSkFueHJrYkRvT0dyR25COUs4akMr?=
- =?utf-8?B?dGttSXNML1B3N1hrMXRFMWZENzhjZFBwcU9PQ25nSkk4WjVtdDBWL01lY1hW?=
- =?utf-8?B?Tlo1TWMrUzZDdUdqakZua3pVMXhFNXVMY0Y5clJBM2l5dFZXOFJhWmwxeXEy?=
- =?utf-8?B?SVBZL0RLZnBUUzk5UEJLa0k4aUpKRGZxN1hEaDh2SGFLNDdRTGZZTE5maGQ4?=
- =?utf-8?B?WGZtT2lIMGFHWS94ZDMwRDIwRVVZdWxpT3pNcUFXUTZtaTZscnhBbGZjdE1K?=
- =?utf-8?B?cGJ6YnhXM1pQYjNIK0VJQVg3L3pKSmN0RHJQbDJvaFlsWVFQNzJxd2RlQkZp?=
- =?utf-8?B?QUZDcFBnS2djLzFiUTA2Qzc1VlhGTVpFRlNPVXZiSnFqYi94VkEwQmFORUR0?=
- =?utf-8?B?NS90L2RjU3VwV01WRnBJRWFPNWx4QjNTU05YOUIxWDJuSEJpTWVwS3hGTDgw?=
- =?utf-8?B?VjlURE9vdGFJVFZGSGtZVlpnSVdKeUdXYXZ5ZEQvVUlCazJzdFhHZ2VrY0w3?=
- =?utf-8?B?RGZJd3RmcWFDa2NPc3BDR0k2RWdhQ0xpRVcxeUluUWNWS2JNcU5QTUZqdytH?=
- =?utf-8?B?bW5maEMvQW1MMUJMSUY5NldVZjloajdPWHZjOFZvaFM1dC9TYTZ2ZFVQV09Q?=
- =?utf-8?B?TDBHaU5neldqVkJaNStZR2JmclRZSzAzZm9WOVlOUC90bWhVL1pkZUNiQ2Rx?=
- =?utf-8?B?aXNqejA1NkZ2ZlB4Qzc3U0tNWldwTGM2RTJlcWhyV09RK2lBVDRjSjdPdExm?=
- =?utf-8?B?RjJpZHNhMERQMlZBMXRxeTJ6TG5KbkU1RmRSZU5UWDk3cDNsRUlTbnpDSjIz?=
- =?utf-8?B?aXZWc0d3RS9BVUJ4L1hPUGgxNkpQckR3OHhqYkFrRm1OQjdQN2FRemNPQjk1?=
- =?utf-8?B?aXkyYmtSNlRqTnVaV1lnMmZOakVIQ3pMTGdPNjFYWTh6Qys2MENtemN1TzVM?=
- =?utf-8?B?Zm0wYjU0SmNFODNHS1A0ZDFSaDBTZ0tpaUovMXMvdWdKdU9NTVlTbVY0SXNQ?=
- =?utf-8?B?UUZEdUI0VWs5NDMvOEJHLzYweXgzeVBtb0swNmlQY0JVKzJpRmMyU1ZOcndY?=
- =?utf-8?B?TXlHampDN1pPUVVxYWkyWU9wVTJoQ01OSExRNXRCU1R5VHlQTUl0cHk3MFdx?=
- =?utf-8?B?UnhmaWkydmdwTHJGNVp6S1pTdUZSRjVQek9Ba095RWVrMHFnNzRHbEkvQnVS?=
- =?utf-8?B?YjNPdkhYK2lZZWdoV0o2d1BLMWp1NkJRa1RFY3p2MVJoeUZiUkozaFZvbERC?=
- =?utf-8?B?VGthcDErZTVVWWUxZm83RDIzYkdXZERrSnA3bDJHMmVZN3BoNHRjMGJzOWM4?=
- =?utf-8?B?WHA3SUdVeGVXdHhLYU5PRzl3RWhPWmRLTEhkeCtrUFYreHRXaGVDd3NhZ1BZ?=
- =?utf-8?B?THlibFgzN04yR0UrN0hOZU52am5oVm11QmpRcmx0WFp3eng4Y2tEc1ZHakZP?=
- =?utf-8?B?ZXIzcFFhaEpBWnZ5cHRYb29QcmdNd0ltcmVESHJIVTFPUVpYM3hSb200em90?=
- =?utf-8?B?NlBPdFFyWHBxdGx1Tk5SbzdoSkR5MGlpck1ubHdod2RUaVlOc2MraTlCYjNP?=
- =?utf-8?Q?jSixxC9lVwMQUkyEt05Ed4Zhe?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tBr3I-0002Iu-JR
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 02:47:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731656855;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KxkizwtCFE5oCT7Qglw1hTQ81AMwNKWWaXQtsWop3Js=;
+ b=Tt5zEjWyShZi6Amj6h+VHppsHZ+T1KkTn8ZK1fm0bosuyIMMnB62/Bx9FU3hpSsSNpfbbM
+ kRx40XOAL2XLmUwEgqZKQwHhwKnkiV1YN8r1hDBbDfeZbia7g34Z8JTKcpaIsJZa8FANse
+ 5/SaWkpwbxqeceMeb+ClH3K8f/qoo8w=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-eVqOWCk3Mn6hrFHiSbSbzQ-1; Fri,
+ 15 Nov 2024 02:47:29 -0500
+X-MC-Unique: eVqOWCk3Mn6hrFHiSbSbzQ-1
+X-Mimecast-MFC-AGG-ID: eVqOWCk3Mn6hrFHiSbSbzQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 01CA41903466; Fri, 15 Nov 2024 07:47:24 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.95])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 77D4F1955F3C; Fri, 15 Nov 2024 07:47:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2CA4421E6A28; Fri, 15 Nov 2024 08:47:20 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Michael Roth
+ <michael.roth@amd.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v2 4/4] qapi: expose all schema features to code
+In-Reply-To: <ZzX6MXYTh97lzWZh@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 14 Nov 2024 13:25:05 +0000")
+References: <20241018101724.1221152-1-berrange@redhat.com>
+ <20241018101724.1221152-5-berrange@redhat.com>
+ <87r07ec76r.fsf@pond.sub.org> <ZzX6MXYTh97lzWZh@redhat.com>
+Date: Fri, 15 Nov 2024 08:47:20 +0100
+Message-ID: <87o72h9bw7.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ab33b009-bc22-4996-c256-08dd054971bf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Nov 2024 07:45:15.5238 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3KXgKLU866oaEk+rxKDbKONiyuWxoW/J+bLcj0c44j4MNEJXtsnK9FJL0EblI6o/YBMNQhDpz8yeOtsMrh1Yn4/dSCQ3dFd4IhWqpGh208Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7336
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -210,44 +92,334 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYywNCg0KPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogQ8OpZHJp
-YyBMZSBHb2F0ZXIgPGNsZ0ByZWRoYXQuY29tPg0KPlNlbnQ6IEZyaWRheSwgTm92ZW1iZXIgMTUs
-IDIwMjQgMjo1MyBQTQ0KPlN1YmplY3Q6IFtQQVRDSCBmb3ItOS4yXSB2ZmlvL2NvbnRhaW5lcjog
-Rml4IGNvbnRhaW5lciBvYmplY3QgZGVzdHJ1Y3Rpb24NCj4NCj5XaGVuIGNvbW1pdCA5NmI3YWY0
-Mzg4YjMgaW50b2R1Y2VkIGEgLmluc3RhbmNlX2ZpbmFsaXplKCkgaGFuZGxlciwNCj5pdCBkaWQg
-bm90IHRha2UgaW50byBhY2NvdW50IHRoYXQgdGhlIGNvbnRhaW5lciB3YXMgbm90IG5lY2Vzc2Fy
-aWx5DQo+aW5zZXJ0ZWQgaW50byB0aGUgY29udGFpbmVyIGxpc3Qgb2YgdGhlIGFkZHJlc3Mgc3Bh
-Y2UuIEhlbmNlLCBpZg0KPnRoZSBjb250YWluZXIgb2JqZWN0IGlzIGRlc3Ryb3llZCwgYnkgY2Fs
-bGluZyBvYmplY3RfdW5yZWYoKSBmb3INCj5leGFtcGxlLCBiZWZvcmUgdmZpb19hZGRyZXNzX3Nw
-YWNlX2luc2VydCgpIGlzIGNhbGxlZCwgUUVNVSBtYXkNCj5jcmFzaCB3aGVuIHJlbW92aW5nIHRo
-ZSBjb250YWluZXIgZnJvbSB0aGUgbGlzdCBhcyBkb25lIGluDQo+dmZpb19jb250YWluZXJfaW5z
-dGFuY2VfZmluYWxpemUoKS4gVGhpcyB3YXMgc2VlbiB3aXRoIGFuIFNFVi1TTlANCj5ndWVzdCBm
-b3Igd2hpY2ggZGlzY2FyZGluZyBvZiBSQU0gZmFpbHMuDQo+DQo+VG8gcmVzb2x2ZSB0aGlzIGlz
-c3VlLCBpbnNlcnQgdGhlIGNvbnRhaW5lciBvYmplY3QgaW50byB0aGUgYWRkcmVzcw0KPnNwYWNl
-J3MgY29udGFpbmVyIGxpc3QgZWFybGllciwganVzdCBhZnRlciBpdCBpcyBjcmVhdGVkLg0KDQpJ
-dCBsb29rcyB3ZSBzdGlsbCBoYXZlIGlzc3VlIGlmIGNyZWF0ZSBhIGNvbnRhaW5lciB0aGVuIHJl
-bGVhc2UgaXQgcmlnaHQgYXdheT8NCklmIHRoYXQncyB0cnVlLCBJIHdvdWxkIHN1Z2dlc3QgdG8g
-YWxzbyB1c2UgUUxJU1RfU0FGRV9SRU1PVkUgZm9yDQpRTElTVF9SRU1PVkUoYmNvbnRhaW5lciwg
-bmV4dCkgYmVzaWRlcyB0aGlzIGNoYW5nZS4NCg0KVGhhbmtzDQpaaGVuemhvbmcNCg0KPg0KPkNj
-OiBaaGVuemhvbmcgRHVhbiA8emhlbnpob25nLmR1YW5AaW50ZWwuY29tPg0KPkNjOiBFcmljIEF1
-Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+Rml4ZXM6IDk2YjdhZjQzODhiMyAoInZmaW8v
-Y29udGFpbmVyOiBNb3ZlIHZmaW9fY29udGFpbmVyX2Rlc3Ryb3koKSB0byBhbg0KPmluc3RhbmNl
-X2ZpbmFsaXplKCkgaGFuZGxlciIpDQo+U2lnbmVkLW9mZi1ieTogQ8OpZHJpYyBMZSBHb2F0ZXIg
-PGNsZ0ByZWRoYXQuY29tPg0KPi0tLQ0KPiBody92ZmlvL2NvbnRhaW5lci5jIHwgNCArKy0tDQo+
-IDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+DQo+ZGlm
-ZiAtLWdpdCBhL2h3L3ZmaW8vY29udGFpbmVyLmMgYi9ody92ZmlvL2NvbnRhaW5lci5jDQo+aW5k
-ZXgNCj45Y2NkYjYzOWFjODRmODg1ZGE0MGVhY2U4YTAwNTlmMzk3Mjk1NjE5Li5iNDI0NjY3MDFi
-ZjEzODE4YjUzODQ4M2VjNA0KPmMxNDNjZTZmODNjNTk4IDEwMDY0NA0KPi0tLSBhL2h3L3ZmaW8v
-Y29udGFpbmVyLmMNCj4rKysgYi9ody92ZmlvL2NvbnRhaW5lci5jDQo+QEAgLTYxOCw2ICs2MTgs
-OCBAQCBzdGF0aWMgYm9vbCB2ZmlvX2Nvbm5lY3RfY29udGFpbmVyKFZGSU9Hcm91cCAqZ3JvdXAs
-DQo+QWRkcmVzc1NwYWNlICphcywNCj4gICAgIH0NCj4gICAgIGJjb250YWluZXIgPSAmY29udGFp
-bmVyLT5iY29udGFpbmVyOw0KPg0KPisgICAgdmZpb19hZGRyZXNzX3NwYWNlX2luc2VydChzcGFj
-ZSwgYmNvbnRhaW5lcik7DQo+Kw0KPiAgICAgaWYgKCF2ZmlvX2Nwcl9yZWdpc3Rlcl9jb250YWlu
-ZXIoYmNvbnRhaW5lciwgZXJycCkpIHsNCj4gICAgICAgICBnb3RvIGZyZWVfY29udGFpbmVyX2V4
-aXQ7DQo+ICAgICB9DQo+QEAgLTYzNyw4ICs2MzksNiBAQCBzdGF0aWMgYm9vbCB2ZmlvX2Nvbm5l
-Y3RfY29udGFpbmVyKFZGSU9Hcm91cCAqZ3JvdXAsDQo+QWRkcmVzc1NwYWNlICphcywNCj4NCj4g
-ICAgIHZmaW9fa3ZtX2RldmljZV9hZGRfZ3JvdXAoZ3JvdXApOw0KPg0KPi0gICAgdmZpb19hZGRy
-ZXNzX3NwYWNlX2luc2VydChzcGFjZSwgYmNvbnRhaW5lcik7DQo+LQ0KPiAgICAgZ3JvdXAtPmNv
-bnRhaW5lciA9IGNvbnRhaW5lcjsNCj4gICAgIFFMSVNUX0lOU0VSVF9IRUFEKCZjb250YWluZXIt
-Pmdyb3VwX2xpc3QsIGdyb3VwLCBjb250YWluZXJfbmV4dCk7DQo+DQo+LS0NCj4yLjQ3LjANCg0K
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+
+> On Thu, Nov 14, 2024 at 01:48:28PM +0100, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > This replaces use of the constants from the QapiSpecialFeatures
+>> > enum, with constants from the auto-generate QapiFeatures enum
+>> > in qapi-features.h
+>> >
+>> > The 'deprecated' and 'unstable' features still have a little bit of
+>> > special handling, being force defined to be the 1st + 2nd features
+>> > in the enum, regardless of whether they're used in the schema. This
+>> > retains compatibility with common code that references the features
+>> > via the QapiSpecialFeatures constants.
+>> >
+>> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> > ---
+>> >  meson.build              |  1 +
+>> >  scripts/qapi/commands.py |  1 +
+>> >  scripts/qapi/features.py | 62 ++++++++++++++++++++++++++++++++++++++++
+>> >  scripts/qapi/gen.py      |  4 +--
+>> >  scripts/qapi/main.py     |  2 ++
+>> >  scripts/qapi/schema.py   | 19 +++++++++++-
+>> >  scripts/qapi/types.py    |  6 ++--
+>> >  scripts/qapi/visit.py    |  3 +-
+>> >  8 files changed, 92 insertions(+), 6 deletions(-)
+>> >  create mode 100644 scripts/qapi/features.py
+>> >
+>> > diff --git a/meson.build b/meson.build
+>> > index d26690ce20..b9d58be66f 100644
+>> > --- a/meson.build
+>> > +++ b/meson.build
+>> > @@ -3332,6 +3332,7 @@ qapi_gen_depends =3D [ meson.current_source_dir(=
+) / 'scripts/qapi/__init__.py',
+>> >                       meson.current_source_dir() / 'scripts/qapi/schem=
+a.py',
+>> >                       meson.current_source_dir() / 'scripts/qapi/sourc=
+e.py',
+>> >                       meson.current_source_dir() / 'scripts/qapi/types=
+.py',
+>> > +                     meson.current_source_dir() / 'scripts/qapi/featu=
+res.py',
+>> >                       meson.current_source_dir() / 'scripts/qapi/visit=
+.py',
+>> >                       meson.current_source_dir() / 'scripts/qapi-gen.p=
+y'
+>> >  ]
+>> > diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
+>> > index d629d2d97e..bf88bfc442 100644
+>> > --- a/scripts/qapi/commands.py
+>> > +++ b/scripts/qapi/commands.py
+>> > @@ -355,6 +355,7 @@ def visit_begin(self, schema: QAPISchema) -> None:
+>> >  #include "qemu/osdep.h"
+>> >  #include "%(prefix)sqapi-commands.h"
+>> >  #include "%(prefix)sqapi-init-commands.h"
+>> > +#include "%(prefix)sqapi-features.h"
+>> >=20=20
+>> >  void %(c_prefix)sqmp_init_marshal(QmpCommandList *cmds)
+>> >  {
+>> > diff --git a/scripts/qapi/features.py b/scripts/qapi/features.py
+>> > new file mode 100644
+>> > index 0000000000..dc10c7cea0
+>> > --- /dev/null
+>> > +++ b/scripts/qapi/features.py
+>> > @@ -0,0 +1,62 @@
+>> > +"""
+>> > +QAPI types generator
+>>=20
+>> QAPI features generator
+>>=20
+>> > +
+>> > +Copyright 2024 Red Hat
+>> > +
+>> > +This work is licensed under the terms of the GNU GPL, version 2.
+>> > +# See the COPYING file in the top-level directory.
+>> > +"""
+>> > +
+>> > +from typing import List, Optional
+>>=20
+>> pylint gripes
+>
+> Sigh, I really wish we had pylint/mypy/pycodestyle being run as
+> part of 'make check' by default. I don't like making the mistake
+> of sending patches which fail extra non-default checks maintainers
+> need compliance with.
+
+We've made some progress towards running these checkers, but we're not
+there, yet.
+
+>>     scripts/qapi/features.py:10:0: W0611: Unused List imported from typi=
+ng (unused-
+>>     import)
+>>     scripts/qapi/features.py:10:0: W0611: Unused Optional imported from =
+typing (unused-import)
+>>=20
+>> > +
+>> > +from .common import c_enum_const, mcgen, c_name
+>>=20
+>>     scripts/qapi/features.py:12:0: W0611: Unused mcgen imported from com=
+mon (unused-import)
+>>=20
+>> > +from .gen import QAPISchemaMonolithicCVisitor
+>> > +from .schema import (
+>> > +    QAPISchema,
+>> > +    QAPISchemaFeature,
+>> > +)
+>> > +from .source import QAPISourceInfo
+>>=20
+>>     scripts/qapi/features.py:18:0: W0611: Unused QAPISourceInfo imported=
+ from source (unused-import)
+>>=20
+>> > +
+>> > +
+>> > +class QAPISchemaGenFeatureVisitor(QAPISchemaMonolithicCVisitor):
+>> > +
+>> > +    def __init__(self, prefix: str):
+>> > +        super().__init__(
+>> > +            prefix, 'qapi-features',
+>> > +            ' * Schema-defined QAPI features',
+>> > +            __doc__)
+>> > +
+>> > +        self.features =3D {}
+>>=20
+>> mypy gripes
+>>=20
+>>     scripts/qapi/features.py:29: error: Need type annotation for "featur=
+es" (hint: "features: Dict[<type>, <type>] =3D ...")  [var-annotated]
+>>=20
+>> Elsewhere, we avoid rummaging in QAPISchema's innards by defining
+>> suitable visit.  If that's too much trouble for you now, I can take this
+>> as is an clean up on top.
+>>=20
+>> > +
+>> > +    def visit_begin(self, schema: QAPISchema):
+>>=20
+>> mypy gripes
+>>=20
+>>     scripts/qapi/features.py:31: error: Function is missing a return typ=
+e annotation  [no-untyped-def]
+>>=20
+>> > +        self.features =3D schema._feature_dict
+>>=20
+>> pylint gripes
+>>=20
+>>     scripts/qapi/features.py:32:24: W0212: Access to a protected member =
+_feature_dict of a client class (protected-access)
+>>=20
+>> > +
+>> > +    def visit_end(self) -> None:
+>> > +        features =3D [
+>> > +            self.features[f]
+>> > +            for f in QAPISchemaFeature.SPECIAL_NAMES
+>> > +        ]
+>> > +
+>> > +        features.extend(
+>> > +            sorted(
+>> > +                filter(lambda f: not f.is_special(),
+>> > +                       self.features.values()),
+>> > +                key=3Dlambda f: f.name)
+>> > +        )
+>>=20
+>> @features is schema._feature_dict.values() sorted by name in a certain
+>> way, namely first the .SPECIAL_NAMES in order, then all the others in
+>> alphabetical order.
+>>=20
+>> Why you do this is not immediately obvious.  I guess it's to make the
+>> generated enum a compatible extension of enum QapiSpecialFeature.  That
+>> one exists for use by schema-independent support code such
+>> compat_policy_input_ok() and qobject_output_policy_skip().
+>
+> Yes, I wanted the overlapping enums vaules to match.
+
+Needs a comment.
+
+>> I further guess you sort the non-special features just to make the
+>> generated code easier for humans to navigate.
+>>=20
+>> Correct?
+>
+> The remaining sort was just to give a predictable stable output,
+> should QAPI usage of features be reordered.
+
+We don't do that for enum QAPIEvent, and it hasn't inconvenienced us as
+far as I can tell.  No big deal, I just like consistency.
+
+>> > +
+>> > +        self._genh.add("typedef enum {\n")
+>> > +        for f in features:
+>> > +            self._genh.add(f"    {c_enum_const('qapi_feature', f.name=
+)}")
+>> > +            if f.name in QAPISchemaFeature.SPECIAL_NAMES:
+>> > +                self._genh.add(f" =3D {c_enum_const('qapi', f.name)},=
+\n" )
+>>=20
+>> pycodestyle gripes
+>>=20
+>>     scripts/qapi/features.py:51:71: E202 whitespace before ')'
+>>=20
+>> > +            else:
+>> > +                self._genh.add(",\n")
+>> > +
+>> > +        self._genh.add("} " + c_name('QapiFeature') + ";\n")
+>> > +
+>>=20
+>> pycodestyle gripes
+>>=20
+>>     scripts/qapi/features.py:57:1: E302 expected 2 blank lines, found 1
+>>=20
+>> This part generates a C enum.  It's similar to gen_enum() from types.py,
+>> except we work with a list of QAPISchemaFeature here, and a list of
+>> QAPISchemaEnumMember there.
+>>=20
+>> To reuse gen_enum() here, we'd have to make up a member list, like we do
+>> in events.py for enum QAPIEvent.
+>
+> I'll have a look at that.
+
+Reuse it only if it's easy for you.  We can always improve on top.
+
+>> > diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+>> > index e97c978d38..5e14b1829b 100644
+>> > --- a/scripts/qapi/schema.py
+>> > +++ b/scripts/qapi/schema.py
+>> > @@ -933,8 +933,11 @@ def connect_doc(self, doc: Optional[QAPIDoc]) -> =
+None:
+>> >  class QAPISchemaFeature(QAPISchemaMember):
+>> >      role =3D 'feature'
+>> >=20=20
+>> > +    # Features which are standardized across all schemas
+>> > +    SPECIAL_NAMES =3D ['deprecated', 'unstable']
+>> > +
+>> >      def is_special(self) -> bool:
+>> > -        return self.name in ('deprecated', 'unstable')
+>> > +        return self.name in QAPISchemaFeature.SPECIAL_NAMES
+>> >=20=20
+>> >=20=20
+>> >  class QAPISchemaObjectTypeMember(QAPISchemaMember):
+>> > @@ -1138,6 +1141,11 @@ def __init__(self, fname: str):
+>> >          self._entity_list: List[QAPISchemaEntity] =3D []
+>> >          self._entity_dict: Dict[str, QAPISchemaDefinition] =3D {}
+>> >          self._module_dict: Dict[str, QAPISchemaModule] =3D OrderedDic=
+t()
+>> > +        self._feature_dict: Dict[str, QAPISchemaFeature] =3D {}
+>> > +
+>> > +        for f in QAPISchemaFeature.SPECIAL_NAMES:
+>> > +            self._feature_dict[f] =3D QAPISchemaFeature(f, "special f=
+eature")
+>>=20
+>> mypy gripes
+>>=20
+>>     scripts/qapi/schema.py:1147: error: Argument 2 to "QAPISchemaFeature=
+" has incompatible type "str"; expected "Optional[QAPISourceInfo]"  [arg-ty=
+pe]
+>>=20
+>> We commonly use None as info value for built-in stuff, and that's why
+>> it's Optional[QAPISourceInfo], not just QAPISourceInfo.
+>
+> Yeah, not sure what I was thinking here, looking again I
+> should have passed "None"
+>
+>> But do we really need to make up some QAPISchemaFeature?  Hmm.  The
+>> appended patch dumbs down ._feature_dict to a set.
+
+See below for a possible reason to keep .feature_dict.
+
+> I was following the same pattern as self._entity_dict and
+> self._module_dict, rather than dumbing down to the bare
+> minimum needed by my current use case. I don't mind which
+> strategy we take.
+
+.entity_dict maps the name to the one entity.  Likewise .module_dict.
+.feature_dict, however, maps it to the first of possibly many.  That's
+not wrong, just peculiar and possibly less than obvious to readers who
+aren't familiar with how we represent features internally.  Worth a
+comment?
+
+>> > +
+>> >          self._schema_dir =3D os.path.dirname(fname)
+>> >          self._make_module(QAPISchemaModule.BUILTIN_MODULE_NAME)
+>> >          self._make_module(fname)
+>> > @@ -1258,6 +1266,15 @@ def _make_features(
+>> >      ) -> List[QAPISchemaFeature]:
+>> >          if features is None:
+>> >              return []
+>> > +
+>> > +        for f in features:
+>> > +            feat =3D QAPISchemaFeature(f['name'], info)
+>> > +            if feat.name not in self._feature_dict:
+>> > +                if len(self._feature_dict) =3D=3D 64:
+>> > +                    raise Exception("Maximum of 64 schema features is=
+ permitted")
+>>=20
+>> The limit is an implementation restriction.  Okay, we can lift it when
+>> it bites us.
+>>=20
+>> However, the reporting is less than nice:
+>>=20
+>>     $ python scripts/qapi-gen.py -o $$ tests/qapi-schema/features-too-ma=
+ny.json=20
+>>     Traceback (most recent call last):
+>>       File "/work/armbru/qemu/scripts/qapi-gen.py", line 19, in <module>
+>>         sys.exit(main.main())
+>>                  ^^^^^^^^^^^
+>>       File "/work/armbru/qemu/scripts/qapi/main.py", line 96, in main
+>>         generate(args.schema,
+>>       File "/work/armbru/qemu/scripts/qapi/main.py", line 51, in generate
+>>         schema =3D QAPISchema(schema_file)
+>>                  ^^^^^^^^^^^^^^^^^^^^^^^
+>>       File "/work/armbru/qemu/scripts/qapi/schema.py", line 1155, in __i=
+nit__
+>>         self._def_exprs(exprs)
+>>       File "/work/armbru/qemu/scripts/qapi/schema.py", line 1482, in _de=
+f_exprs
+>>         self._def_struct_type(expr)
+>>       File "/work/armbru/qemu/scripts/qapi/schema.py", line 1377, in _de=
+f_struct_type
+>>         features =3D self._make_features(expr.get('features'), info)
+>>                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>       File "/work/armbru/qemu/scripts/qapi/schema.py", line 1274, in _ma=
+ke_features
+>>         raise Exception("Maximum of 64 schema features is permitted")
+>>     Exception: Maximum of 64 schema features is permitted
+>
+> Is there any better way to approach this error reporting ?
+
+Raise QAPISemError in .check().
+
+Hmm, then you need a QAPISourceInfo to pass.  .feature_dict will give
+you one: the .info of the feature added last.
+
 
