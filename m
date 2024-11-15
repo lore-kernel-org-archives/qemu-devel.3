@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CACECD6DDED
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 11:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D432D6DDF2
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 11:44:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBug6-0003Th-Fh; Fri, 15 Nov 2024 06:39:54 -0500
+	id 1tBuk8-0004MC-J8; Fri, 15 Nov 2024 06:44:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBug3-0003TC-UP
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:39:51 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tBuk6-0004Lp-64
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:44:02 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBug2-0002Vw-IT
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:39:51 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5cf9ce5356eso159279a12.2
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 03:39:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tBuk4-0003LG-MM
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:44:01 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a9f1c590ecdso110346066b.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 03:44:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731670789; x=1732275589; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Kii2YWywKauC3hB7pN5JC1zMPV7lHRwolEY6ItFdkqE=;
- b=RHnDpC9pjGduP0T358VwRdYltfkcIM3R0Xtq4C/7o+/vxb/CT54RoAFXA8QIbnGpNJ
- 8d2FBkMvIbuNFvTPrSf/WYPY6fvCh2jzrJawu+ni1lkT61y47d9j4bNL1Cv44A0ZKd41
- H1jT21x5Ex7R0DP0NGo8kPojtBno6N/7Juf1zL0RocN1ZSt1Hrt0/URNLHtStZYTcS98
- Ovmx6oSRjQB+JYvtwUvXcV+fiLjS98kXD3qJROPe1cc/lIi0/0aRG/RDs/rhrvy7iE11
- esblD9ihtgA0z4dbO4smLXpt19I/0QvIfAo9E2d9tDyuPNHJf7qS0uL0jhx2kiKXyJAR
- ZTsA==
+ d=linaro.org; s=google; t=1731671039; x=1732275839; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jzLMQA6JoF/Ji/PtuNH+Az1Yh/GPvJA4ZXT4HICFe28=;
+ b=LF3+UH1BdZlEUPrpIAu2Y6N6x0KJ/2o8Mfis/PNzLZ3TOdCLJRVP6ST9c2SW7Sodpg
+ mD6+vOILbAA5/BJKQcXLUXc9HD6oSK4AmW/TbYdEO0IaaTK5DYaZ8/41y05sx8YUcGEi
+ jKXb00I2QcO9oFVbAzteX5LZAslPYuJRtvM1Fxm52qYqv+CkhGtxshewmgaDVfSd3VQI
+ JhMy4I2mHeZRdwOOh2GdjbNt9WTsSSDelYyc2yX5Mv4JvDkrylsGtEzPhEV0M/aEZmqW
+ /UxQc9zxqz8mFhzRbiRorCVWKVb58AFoDYELrNkwWPyh6/Cm6VwOD57rZ52Yer6NNKLF
+ Uk8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731670789; x=1732275589;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Kii2YWywKauC3hB7pN5JC1zMPV7lHRwolEY6ItFdkqE=;
- b=LWlVDujS5H78JprtK+86u7XI9cma52qzw74t9cxM7zbWeZyl4zHnuomZytubkiLqVB
- wHL1CsdDc+kD3wzz0m2uJMRRCLOYq5a4b+2XKV2R8hPyNqCZ/8+QT+rkOP61S80TS7TA
- evPi8n5rd3GSlMGHJBs4ydmCXdukRSXq8ybUDaOXozRtfhMb/ozFDhTtMSd/4xPh0SfN
- Q+IsZP2EsZe2hO2ZOO/LrZ0ipfIy1joTuK/b7uZpq3lPZawoJfb9G1L7Bc7Sr9EQYfO9
- irX4FXZfIJ4Zkv7xvYCqscB5JIFM4l0DKripmtd5brigD/R3PdqZEGapNzD6Yco79wAa
- z2/g==
+ d=1e100.net; s=20230601; t=1731671039; x=1732275839;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=jzLMQA6JoF/Ji/PtuNH+Az1Yh/GPvJA4ZXT4HICFe28=;
+ b=mUJ3Kbp+oazsFDHWtSHF50sywt1Q514WtXcb8Y4hVwSJ+6+MsSlf7R/HFIw7CW4lNi
+ 6GtwvWHRGT5Lhkt87MCbVp1uSxBXk2l/wu/CcIbB1huJK9Lyt+gByy4k7ZJGUNrecuP5
+ CUeqy9v4Lxi9zkAYJTmqg+UDfWwyzCTLYwTu4xMahZyzzSL8eRNYGjlTfjLxS39TgVrI
+ sqAV84zoTj6OTv1khz7l4C5jzLno+ER1HNfgdwxYun9SGrfULqc+VbjJnsb2aFZkMnFA
+ xJWZZOg5c4TKU7gz4QI7lIrnMkX48zEzwMyjnovjFCVlbz535l+ZV0ysiepjFFjOLwFN
+ Zi/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGsBjUHZot1nDWqHf0V4TljcOLdiudDMPR0lhwXc9ELSPgc3sarjFy2raTH5VRHgg3IR6uYLKZOMHh@nongnu.org
-X-Gm-Message-State: AOJu0YzqAnDBSBH/aFLxzM7zzZ/nOgQbrlAh89Quv7fut3iJdxEyGnfy
- g8AWIEL08l7QbgHdlGdeVoyyfV9UmvjTqaMOipSpyAQofkoluqvotBA3oD31UjoJEX9n0lvlfDZ
- RfGF3RgYC7i/0VT84B/7X+gyXNUJEPK3tKWgILg==
-X-Google-Smtp-Source: AGHT+IE3nzWYtsi8SGiOtQRGdzxhJ5vlYneG9A+Upp4f4a7bRMD50HSpE/iX0Xwsi/wMZEjPzIBuEoLTsxg9G08wY00=
-X-Received: by 2002:a05:6402:34c1:b0:5c9:8a75:a707 with SMTP id
- 4fb4d7f45d1cf-5cf8fc13cafmr1561816a12.2.1731670788921; Fri, 15 Nov 2024
- 03:39:48 -0800 (PST)
+ AJvYcCV2CLiKGhoMa6n/xfxwfC69mi03KM1n7HA+Z2rX6PBhSxOprpdjfSuCpst4QEwyyc8LsXyVYHmMvyoP@nongnu.org
+X-Gm-Message-State: AOJu0YwbUTzR+Jf591aDWPtxCYaiV9mWGyJMozqTuFmUPtb3atguybJw
+ fj1y3XSqrg7p/difkjgbNUWArNtrT4t70so+Dsujl1oqmkJIqWEZeSn6IeeFZhM=
+X-Google-Smtp-Source: AGHT+IED6VJc8WRmSsOrBtKo7CLrmLZn7wjfa2Qwn3WV4mTXZggT+S2vg2fMzr0y68wMNg9q9sSM5A==
+X-Received: by 2002:a17:907:981:b0:a99:f779:ae0c with SMTP id
+ a640c23a62f3a-aa483450acbmr218612866b.25.1731671038863; 
+ Fri, 15 Nov 2024 03:43:58 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20e0869cdsm170740966b.192.2024.11.15.03.43.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Nov 2024 03:43:58 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1FD6A5F844;
+ Fri, 15 Nov 2024 11:43:57 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH for-10.0 v2 00/54] accel/tcg: Convert victim tlb to
+ IntervalTree
+In-Reply-To: <970a751f-bae2-46b1-86d3-3bc97132f21e@linaro.org> (Pierrick
+ Bouvier's message of "Thu, 14 Nov 2024 13:05:47 -0800")
+References: <20241114160131.48616-1-richard.henderson@linaro.org>
+ <eaa2ecf4-74ce-49e1-846e-8f0c9c16d1af@linaro.org>
+ <fea58b9b-9fad-4729-9f29-2f05d636d004@linaro.org>
+ <970a751f-bae2-46b1-86d3-3bc97132f21e@linaro.org>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Fri, 15 Nov 2024 11:43:57 +0000
+Message-ID: <87ttc8rabm.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20241023000147.34035-1-iii@linux.ibm.com>
- <20241023000147.34035-3-iii@linux.ibm.com>
-In-Reply-To: <20241023000147.34035-3-iii@linux.ibm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Nov 2024 11:39:38 +0000
-Message-ID: <CAFEAcA9pG=_KqNZxxQMDFCJ7JTVL3wfgsN09d2dCVy667zvyyA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] tests/tcg/s390x: Add the floating-point
- multiply-and-add test
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,27 +103,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Oct 2024 at 01:02, Ilya Leoshkevich <iii@linux.ibm.com> wrote:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+
+> On 11/14/24 12:58, Richard Henderson wrote:
+>> On 11/14/24 11:56, Pierrick Bouvier wrote:
+>>> I tested this change by booting a debian x86_64 image, it works as expe=
+cted.
+>>>
+>>> I noticed that this change does not come for free (64s before, 82s afte=
+r - 1.3x). Is that
+>>> acceptable?
+>> Well, no.  But I didn't notice any change during boot tests.  I used hyp=
+erfine over 'make
+>> check-functional'.
+>> I would only expect benefits to be seen during longer lived vm's,
+>> since a boot test
+>> doesn't run applications long enough to see tlb entries accumulate.  I h=
+ave not attempted
+>> to create a reproducible test for that so far.
+>>=20
 >
-> Add a test to prevent regressions.
-> Share some useful pieces with the vfminmax test.
-> Remove the duplicates from the floating point class values.
+> I didn't use check-functional neither.
+> I used a vanilla debian bookworm install, with a modified
+> /etc/rc.local calling poweroff, and ran 3 times with/without change
+> with turbo disabled on my cpu.
+
+If you want to really stress the VM handling you should use stress-ng to
+exercise page faulting and recovery. Wrap it up in a systemd unit for a
+reproducible test:
+
+  cat /etc/systemd/system/benchmark-stress-ng.service=20
+  # A benchmark target
+  #
+  # This shutsdown once the boot has completed
+
+  [Unit]
+  Description=3DDefault
+  Requires=3Dbasic.target
+  After=3Dbasic.target
+  AllowIsolate=3Dyes
+
+  [Service]
+  Type=3Doneshot
+  ExecStart=3Dstress-ng --perf --iomix 4 --vm 2 --timeout 10s
+  ExecStartPost=3D/sbin/poweroff
+
+  [Install]
+  WantedBy=3Dmulti-user.target
+
+and then call with something like:
+
+  -append "root=3D/dev/sda2 console=3DttyAMA0 systemd.unit=3Dbenchmark-stre=
+ss-ng.service"
+
 >
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->  tests/tcg/s390x/Makefile.target |   5 +-
->  tests/tcg/s390x/float.h         | 104 ++++++++++++++
->  tests/tcg/s390x/fma.c           | 233 ++++++++++++++++++++++++++++++++
->  tests/tcg/s390x/vfminmax.c      | 223 +++++++++++-------------------
->  4 files changed, 420 insertions(+), 145 deletions(-)
->  create mode 100644 tests/tcg/s390x/float.h
->  create mode 100644 tests/tcg/s390x/fma.c
+>> r~
 
-I haven't looked at this very closely, but it's only test
-code, so
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
