@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7406D68BCF
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 18:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33ED7D68BCF
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 19:22:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tC1RG-0004B5-UP; Fri, 15 Nov 2024 13:53:02 -0500
+	id 1tC1sv-0001zG-Dj; Fri, 15 Nov 2024 14:21:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tC1RE-0004Ae-Qf
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 13:53:00 -0500
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tC1ss-0001yz-Vw
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 14:21:35 -0500
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tC1RD-0005e7-3X
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 13:53:00 -0500
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2fb50e84ec7so17540201fa.1
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 10:52:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tC1sq-0000i8-5t
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 14:21:34 -0500
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-53d9ff92ee9so2608807e87.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 11:21:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731696777; x=1732301577; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=POlGhVqbKLcRAaF7e6O2qVZOHv77YRD5dBH4fjc3JhE=;
- b=xfdjrOu4TnXGPfely9rfR5sZNNDsV0FbLK0RIP8uDobF52gYEZz/455iQnV5FiNTfP
- vmfIyFt44EPgZUlRAqzxDQLHeymDtD8P61JW7m9WdfiZcUzl0XtSYdIZ7063D4V2Qv/l
- TH3uUMhkcy8cWuFsXEX6Hw7Copcmg+nUO6L3zY0uhqMx66p/l6JWhPFOorntSUVH5ATP
- KM8S1JrqDnvWTa4rKOYIy2dIzSfeTxF+KHm37M60sJu0mRfO/tSzyMsa3cjh1Vgzt2Vf
- TN5/GaZG3hJiKjXGirKHl+4k2wkYoo8VwL2V8WRJ3MTPuHFnPft91nl3j/M3GHj5KKTm
- I57Q==
+ d=gmail.com; s=20230601; t=1731698485; x=1732303285; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Nbh6o5ubGKdV6+0lnf2i9/yJv83sBr2g1cSrTtoTLk4=;
+ b=m4zchphoAbr7I/Z85VxAySKtFiVeN74v2PM9vwrFN0jBnk7EhAM8deMkE+6tpJHLRM
+ x48VQROl6EZvESqy8JjjNIoGkroKhErMbXA76BXyAWWQwceFVsitbMijKOUZ3x2xlpT3
+ AGma7rgnZD/RJewKZcyh/Z0jjO73Nrk8yP+Ck/cIChKBISrKfAv3m/2M69MPWkARyEJY
+ PajLB7cG/bFIu88ivo19FS+CIKH2YELpdiV6M+eiNwSpuXhwaz08bQLaBreoT2OL1q/1
+ 0m9jLu8r2fYOko+hjjJ5nroip+BB1balb1AQ4UELlE+/FrZbOEriPUfGssII4FJCj0lG
+ h6sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731696777; x=1732301577;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=POlGhVqbKLcRAaF7e6O2qVZOHv77YRD5dBH4fjc3JhE=;
- b=e3j4l6sD4I3MhWObWGfgSFoXdu5o3sDWBdUO59whz8mLDt61I2gRH9I40jvk2sxfZj
- jhF7kn01y8R3fbCcwemmH6iuKHyXaLEIwHTaRKCN336hWC1/teES4kiV58xm/QEcQ5PU
- L/UN82FDyNH4EuPkClBebYtPEFKLRkEJVKfXOTPa+H2UbFb+JOnOc6BCQJZ6UEedkrky
- oJMBg2yUt2y+e7FEHeP7zLV1SNeW+kOkXFIu6VGJzU40q8awNXOp6m07QckRQcHYzdVr
- p3dI4jPX5G6NwTvncuRcltAJVTr9DijZHz0KJ0a3HMOqfhYwgspHqFJ1twfcOjcwvwql
- MxPg==
-X-Gm-Message-State: AOJu0YzXdEJri1C1CuDqoEK03quh1ejub5cZtfUxROIFISoK5K9BwpQM
- DGz+6g4aiADz/eI+94za50qI4FT/aQKigD8eYjrHLdUGIo2Ja+VwBN0l5WixzrdYNFVAfXumPXT
- HdltNAj0ZWG/NHM3lVa5XRNcH184O7xaDQYbjcg==
-X-Google-Smtp-Source: AGHT+IEZ27rzlY88V8UGEq+a0EupL6b5LiuWpP4qGtCClt/XnpHIDoBqtEd/CSuzqa9l8c9QpvHLdIM0FsQNptB32vo=
-X-Received: by 2002:a05:651c:b0e:b0:2fb:2b5d:215d with SMTP id
- 38308e7fff4ca-2ff60920855mr20295611fa.7.1731696776601; Fri, 15 Nov 2024
- 10:52:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731698485; x=1732303285;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Nbh6o5ubGKdV6+0lnf2i9/yJv83sBr2g1cSrTtoTLk4=;
+ b=L2B4nvLbOqeir2EUfKAUJbewZo5qKDY/iQQHlAAFbhSUWnyNkTPXUvOXusSK0MgotD
+ iv2ZZpm2uj1cu/JEw4OOu5AsNBs3qAcG/lh9gDkZoGaPAyjvl1WuKIdcgnAcaH8QUiG2
+ UvlKmZWn8C9NhsybgA2qx1MXf7oZ1WUGBrKZGgPDjOaCXex51D3f129dgETVxPfwUF3v
+ LDUEVN6wXR/lscidagFbix5ELoG8hTCG5y4DyLfdBaqXBP4ALO9CiBKY6jMPsjMP8s9f
+ TMnr4TPY/PxVUBth85NPlBe1otI2qCYqJLoRyfUfbCGGYL/7cOqfLyXKRhAVjr40rtec
+ NASg==
+X-Gm-Message-State: AOJu0YxZRbKG+ER7qh1RHV6kFzWsFVYrEMUbT3QzDIZrYHqYLHln8MvL
+ IhnV4XmPTR/hpAkTj3Fsy1CGwWkyRJ8S63jtwJADK+PbfJScZRBlGenqZpi6oUUDgQrELINYtXF
+ dmQ+I2pAZvr+jGR8O93BWnvWwR1g=
+X-Google-Smtp-Source: AGHT+IFtc2342zuHqQUv+uUBo7eUN2IOn5qlABIdUnA4VxkUcZPuaPkwzYyyUPDtaaa6Bb3iE1kSvaXw/GJNnwfylvI=
+X-Received: by 2002:a05:6512:3d27:b0:52c:dc97:45d1 with SMTP id
+ 2adb3069b0e04-53dab290654mr2105765e87.10.1731698484313; Fri, 15 Nov 2024
+ 11:21:24 -0800 (PST)
 MIME-Version: 1.0
-References: <20241113201631.2920541-1-peterx@redhat.com>
-In-Reply-To: <20241113201631.2920541-1-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Nov 2024 18:52:45 +0000
-Message-ID: <CAFEAcA_94tL5e_HDFb2gxEnc-35xL-ZEd-73d5WqPxCx6ep5Kw@mail.gmail.com>
-Subject: Re: [PULL 0/2] Migration 20241113 patches
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+References: <ZzXV-KyYLa-7yNdV@redhat.com>
+ <CAJSP0QUkfSO3uXPjZCxNfCfVwwWBBy6u5a=PjqqnMZSxE95YpA@mail.gmail.com>
+ <ZzcMQeHfBTm2iEsc@redhat.com>
+In-Reply-To: <ZzcMQeHfBTm2iEsc@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Fri, 15 Nov 2024 14:21:12 -0500
+Message-ID: <CAJSP0QVPiibdfs1YsYMe0Mk-DX-Xy7f+utG=W4eSpBkdzaodGg@mail.gmail.com>
+Subject: Re: QEMU wiki theme table of contents changes
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=stefanha@gmail.com; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,33 +92,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 13 Nov 2024 at 20:16, Peter Xu <peterx@redhat.com> wrote:
+On Fri, 15 Nov 2024 at 03:54, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> The following changes since commit f0cfd067867668870931c9411d96cd518564b7a8:
+> On Thu, Nov 14, 2024 at 02:04:35PM -0500, Stefan Hajnoczi wrote:
+> > On Thu, 14 Nov 2024 at 05:51, Daniel P. Berrang=C3=A9 <berrange@redhat.=
+com> wrote:
+> > >
+> > > Looking at
+> > >
+> > >   https://wiki.qemu.org/ChangeLog/9.2
+> > >
+> > > I'm thinking that I'm sure there used to be a table of contents prese=
+nt
+> > > at the top of pages, but none is to be seen..... until I eventually
+> > > discover that there's a bare noticable, fully collapsed ToC in the le=
+ft
+> > > hand nav panel below all the general wiki nav links, partially off th=
+e
+> > > bottom of the page :-(
+> > >
+> > > If going to https://wiki.qemu.org/Special:Preferences, "Appearance" a=
+nd
+> > > selecting "Vector legacy (2010)" as the "Skin" instad of "Vector (202=
+2)"
+> > > then the full ToC re-appears at the top of page in the main body cont=
+ent.
+> > >
+> > > I'm presuming this style change was triggered by a software upgrade t=
+hat
+> > > was done on the wiki at some point.
+> > >
+> > > IMHO this is quite a significant visual/usability regression.
+> > >
+> > > On wikipedia, they do have the same theme, with ToC in the left hand
+> > > panel, but their ToC is expanded by default, and there's no other gen=
+eral
+> > > navigation in the left hand panel that's displacing the ToC off the b=
+ottom
+> > > of the page. That is fairly effective as a layout.
+> > >
+> > > We can do something to the QEMU skin to improve this ? Swapping order
+> > > of the ToC & general nav blocks in the left hand panel would be a
+> > > improvement, as well making it expand at least 1 further level by
+> > > default.
+> > >
+> > > If we're going to have background colour set for the general nav bloc=
+k,
+> > > we should also probably do similar for the ToC nav block to make it
+> > > visually stand out to the same degree.
+> >
+> > Yes, that sounds good. The quickest would be for you to:
+> > 1. Run https://hub.docker.com/_/mediawiki/ in a container on your machi=
+ne.
+> > 2. Adjust the theme CSS until you are happy.
+> > 3. Send me the tweaks and I will apply them to wiki.qemu.org.
 >
->   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-11-09 12:34:01 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/peterx/qemu.git tags/migration-20241113-pull-request
->
-> for you to fetch changes up to 0926c002c7c71749a781de13f28b0481e029d323:
->
->   migration: fix-possible-int-overflow (2024-11-13 13:02:46 -0500)
->
-> ----------------------------------------------------------------
-> Migration pull request for 9.2-rc1
->
-> - Dmitry's small patch to quiesce a warning in possible uint32_t overflow
-> - Peter's fix on a recent regression to iotests (and potentially elsewhere)
->
-> ----------------------------------------------------------------
+> Is the current QEMU mediawiki code (or just theme) published anywhere
+> that I can base work off ?
 
+The QEMU wiki runs from the vanilla mediawiki 1.39 container image.
+The Vector (2022) theme comes with Mediawiki and there are no
+QEMU-specific customizations.
 
-Applied, thanks.
+You can get the same look with the vanilla Mediawiki container image
+with the following in LocalSettings.php:
+$wgDefaultSkin =3D "vector-2022";
+wfLoadSkin('Vector');
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+Sorry I am not able to fix this quickly myself. I don't have much
+Mediawiki knowledge but if you tell me what to do we can certainly
+customize QEMU's wiki.
 
--- PMM
+Stefan
 
