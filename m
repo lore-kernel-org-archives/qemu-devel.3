@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9076BD6DDED
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 11:37:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CACECD6DDED
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 11:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBucR-0002l8-D1; Fri, 15 Nov 2024 06:36:07 -0500
+	id 1tBug6-0003Th-Fh; Fri, 15 Nov 2024 06:39:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBucP-0002iv-N3
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:36:05 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1tBug3-0003TC-UP
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:39:51 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tBucH-0002DG-Hl
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:36:00 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c9693dc739so2388468a12.3
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 03:35:56 -0800 (PST)
+ id 1tBug2-0002Vw-IT
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:39:51 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5cf9ce5356eso159279a12.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 03:39:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731670554; x=1732275354; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731670789; x=1732275589; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tjxWCAQ7tL0VCYC07+J4VybS8cYzfmiCOEW4VumHzx4=;
- b=TEm50CX5nmQadwD2YSFv1Cr0EK4akMJuOlT0MX7v0IX2DW61eywcGwTm6yoPMayuQ4
- 3SavXcaxMBiNNJXazIV5s8q8x9uIg4iItrB/A6eHGsJXzFnPdO5S/AagvioCfQOgRmVn
- bkTPhga5sf/C/xWSTeHJeFpeTkML9a+/KeDc8U/P4hmQt92rGgXAqJHtDVd7mfl+tLdH
- msO/0jocYtZ/K6WcL2ry3e4+NaOGMDqlNkipFwpSE32zac3mSWpMGxglG3Nyrrx836X0
- um4PqhG9pbXJ55AqrhXDNRRlsJKiU1JHQ71tU/PUXCl2N9QunkJFILvJcnn2oBbzxDGQ
- hxqA==
+ bh=Kii2YWywKauC3hB7pN5JC1zMPV7lHRwolEY6ItFdkqE=;
+ b=RHnDpC9pjGduP0T358VwRdYltfkcIM3R0Xtq4C/7o+/vxb/CT54RoAFXA8QIbnGpNJ
+ 8d2FBkMvIbuNFvTPrSf/WYPY6fvCh2jzrJawu+ni1lkT61y47d9j4bNL1Cv44A0ZKd41
+ H1jT21x5Ex7R0DP0NGo8kPojtBno6N/7Juf1zL0RocN1ZSt1Hrt0/URNLHtStZYTcS98
+ Ovmx6oSRjQB+JYvtwUvXcV+fiLjS98kXD3qJROPe1cc/lIi0/0aRG/RDs/rhrvy7iE11
+ esblD9ihtgA0z4dbO4smLXpt19I/0QvIfAo9E2d9tDyuPNHJf7qS0uL0jhx2kiKXyJAR
+ ZTsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731670554; x=1732275354;
+ d=1e100.net; s=20230601; t=1731670789; x=1732275589;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=tjxWCAQ7tL0VCYC07+J4VybS8cYzfmiCOEW4VumHzx4=;
- b=mqpHxH9LICUoPXq+t00F2Pw8ciirFbWCY0adp4bWCtK44sZWDSdqUZ+F5NjqUWei5I
- 6j/5uHHac/jUWtCBoQA72Wivh5oyZpM6i5dZFh8EQ3MBNjAsbKCsmKSydyXBCJr41fy5
- KXrAFhysBeUgvIxg7jaFskFKODSiaTl2wa+SGWjlp7RSqhF6fZg8ITa4YjuPbJei5hG5
- Gxouug+kjpGmYMKcdEfPTAUK4I5EZf0rqgTfyYQ2zcBG21ypnzxbr4s76tWyqSWQibER
- UkMMzTxqlRx85nrlt5Q8d0zlTLdCn1jjnFinL/QR3hi2T58BvpEy8YqE7N24XB/oY3Rb
- lCpQ==
+ bh=Kii2YWywKauC3hB7pN5JC1zMPV7lHRwolEY6ItFdkqE=;
+ b=LWlVDujS5H78JprtK+86u7XI9cma52qzw74t9cxM7zbWeZyl4zHnuomZytubkiLqVB
+ wHL1CsdDc+kD3wzz0m2uJMRRCLOYq5a4b+2XKV2R8hPyNqCZ/8+QT+rkOP61S80TS7TA
+ evPi8n5rd3GSlMGHJBs4ydmCXdukRSXq8ybUDaOXozRtfhMb/ozFDhTtMSd/4xPh0SfN
+ Q+IsZP2EsZe2hO2ZOO/LrZ0ipfIy1joTuK/b7uZpq3lPZawoJfb9G1L7Bc7Sr9EQYfO9
+ irX4FXZfIJ4Zkv7xvYCqscB5JIFM4l0DKripmtd5brigD/R3PdqZEGapNzD6Yco79wAa
+ z2/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUIbploC48iJwVpTNNePx9lhyZEUni+0Ho46A6DrcgBEyZ1YeevsFBGormdLl5MjAY6LD/snLOleqls@nongnu.org
-X-Gm-Message-State: AOJu0YyMibCwMdsDo79m2zfHZnUtgySjL+Q3SC09mE+xvw1hDhmuWBiv
- GXcA63UY3USjJa7kAkRaRrlBgbCVvJRr6m84xqPYsshDG/+sUtED0Gm9ZgCrsAWInOCM8C03u4k
- PekLCreyf17jV3P06WA17v3PvaVEKSurmX1nfDQ==
-X-Google-Smtp-Source: AGHT+IHnybV07eZMGeRGUOWXHMquvslvm84jbgc9Atw2Ows/hliCvUZgysxtDoAhELIxrhzeunzcA6Ap3Nijq54eloI=
-X-Received: by 2002:a05:6402:1941:b0:5cf:9c92:f803 with SMTP id
- 4fb4d7f45d1cf-5cf9c92fb7emr443706a12.30.1731670554489; Fri, 15 Nov 2024
- 03:35:54 -0800 (PST)
+ AJvYcCXGsBjUHZot1nDWqHf0V4TljcOLdiudDMPR0lhwXc9ELSPgc3sarjFy2raTH5VRHgg3IR6uYLKZOMHh@nongnu.org
+X-Gm-Message-State: AOJu0YzqAnDBSBH/aFLxzM7zzZ/nOgQbrlAh89Quv7fut3iJdxEyGnfy
+ g8AWIEL08l7QbgHdlGdeVoyyfV9UmvjTqaMOipSpyAQofkoluqvotBA3oD31UjoJEX9n0lvlfDZ
+ RfGF3RgYC7i/0VT84B/7X+gyXNUJEPK3tKWgILg==
+X-Google-Smtp-Source: AGHT+IE3nzWYtsi8SGiOtQRGdzxhJ5vlYneG9A+Upp4f4a7bRMD50HSpE/iX0Xwsi/wMZEjPzIBuEoLTsxg9G08wY00=
+X-Received: by 2002:a05:6402:34c1:b0:5c9:8a75:a707 with SMTP id
+ 4fb4d7f45d1cf-5cf8fc13cafmr1561816a12.2.1731670788921; Fri, 15 Nov 2024
+ 03:39:48 -0800 (PST)
 MIME-Version: 1.0
 References: <20241023000147.34035-1-iii@linux.ibm.com>
- <20241023000147.34035-2-iii@linux.ibm.com>
-In-Reply-To: <20241023000147.34035-2-iii@linux.ibm.com>
+ <20241023000147.34035-3-iii@linux.ibm.com>
+In-Reply-To: <20241023000147.34035-3-iii@linux.ibm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Nov 2024 11:35:43 +0000
-Message-ID: <CAFEAcA_-b1-j5hjsE6nx2HsXP=eYt66WqHPUGkw_h7Tp-N2JxQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] target/s390x: Fix the floating-point multiply-and-add
- NaN rules
+Date: Fri, 15 Nov 2024 11:39:38 +0000
+Message-ID: <CAFEAcA9pG=_KqNZxxQMDFCJ7JTVL3wfgsN09d2dCVy667zvyyA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tests/tcg/s390x: Add the floating-point
+ multiply-and-add test
 To: Ilya Leoshkevich <iii@linux.ibm.com>
 Cc: Aurelien Jarno <aurelien@aurel32.net>,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
@@ -71,15 +71,15 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>,
  David Hildenbrand <david@redhat.com>, 
  Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,11 +97,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 23 Oct 2024 at 01:02, Ilya Leoshkevich <iii@linux.ibm.com> wrote:
 >
-> Order the helper arguments to match the Principles of Operation.
-> Implement the "Results: MULTIPLY AND ADD" table in pickNaNMulAdd().
+> Add a test to prevent regressions.
+> Share some useful pieces with the vfminmax test.
+> Remove the duplicates from the floating point class values.
 >
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>  tests/tcg/s390x/Makefile.target |   5 +-
+>  tests/tcg/s390x/float.h         | 104 ++++++++++++++
+>  tests/tcg/s390x/fma.c           | 233 ++++++++++++++++++++++++++++++++
+>  tests/tcg/s390x/vfminmax.c      | 223 +++++++++++-------------------
+>  4 files changed, 420 insertions(+), 145 deletions(-)
+>  create mode 100644 tests/tcg/s390x/float.h
+>  create mode 100644 tests/tcg/s390x/fma.c
+
+I haven't looked at this very closely, but it's only test
+code, so
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
