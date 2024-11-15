@@ -4,90 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D432D6DDF2
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 11:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 401F2D6DDF2
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 11:49:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBuk8-0004MC-J8; Fri, 15 Nov 2024 06:44:04 -0500
+	id 1tBupT-0005FE-7o; Fri, 15 Nov 2024 06:49:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tBuk6-0004Lp-64
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:44:02 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tBuk4-0003LG-MM
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:44:01 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a9f1c590ecdso110346066b.1
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 03:44:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731671039; x=1732275839; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jzLMQA6JoF/Ji/PtuNH+Az1Yh/GPvJA4ZXT4HICFe28=;
- b=LF3+UH1BdZlEUPrpIAu2Y6N6x0KJ/2o8Mfis/PNzLZ3TOdCLJRVP6ST9c2SW7Sodpg
- mD6+vOILbAA5/BJKQcXLUXc9HD6oSK4AmW/TbYdEO0IaaTK5DYaZ8/41y05sx8YUcGEi
- jKXb00I2QcO9oFVbAzteX5LZAslPYuJRtvM1Fxm52qYqv+CkhGtxshewmgaDVfSd3VQI
- JhMy4I2mHeZRdwOOh2GdjbNt9WTsSSDelYyc2yX5Mv4JvDkrylsGtEzPhEV0M/aEZmqW
- /UxQc9zxqz8mFhzRbiRorCVWKVb58AFoDYELrNkwWPyh6/Cm6VwOD57rZ52Yer6NNKLF
- Uk8g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBupS-0005F5-5M
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:49:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tBupQ-00049W-Pu
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 06:49:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731671369;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=R7baADe/SUCoyjRTjAD3nC8YeSM55GDpaxcArsGEWGw=;
+ b=bh4TX4MpWOk4MH6Hv7K6RMKlqxlQXJfS2CHks6zI7Bw+5K645T9L94x+zeFCATLpfObBwe
+ XWHzPCGBY4cwJcRLh4uxiLmnlQNaEN9jxiN3QeCZimNj+/rdRwP9t/HF6FWj7TjCccW7PD
+ a1CvELc6Q/lASX/D5hv2rjnyjFbKdnA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-619-UHKRBaWXMqSluowj0xxbCg-1; Fri, 15 Nov 2024 06:49:28 -0500
+X-MC-Unique: UHKRBaWXMqSluowj0xxbCg-1
+X-Mimecast-MFC-AGG-ID: UHKRBaWXMqSluowj0xxbCg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43164f21063so11222935e9.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 03:49:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731671039; x=1732275839;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jzLMQA6JoF/Ji/PtuNH+Az1Yh/GPvJA4ZXT4HICFe28=;
- b=mUJ3Kbp+oazsFDHWtSHF50sywt1Q514WtXcb8Y4hVwSJ+6+MsSlf7R/HFIw7CW4lNi
- 6GtwvWHRGT5Lhkt87MCbVp1uSxBXk2l/wu/CcIbB1huJK9Lyt+gByy4k7ZJGUNrecuP5
- CUeqy9v4Lxi9zkAYJTmqg+UDfWwyzCTLYwTu4xMahZyzzSL8eRNYGjlTfjLxS39TgVrI
- sqAV84zoTj6OTv1khz7l4C5jzLno+ER1HNfgdwxYun9SGrfULqc+VbjJnsb2aFZkMnFA
- xJWZZOg5c4TKU7gz4QI7lIrnMkX48zEzwMyjnovjFCVlbz535l+ZV0ysiepjFFjOLwFN
- Zi/A==
+ d=1e100.net; s=20230601; t=1731671367; x=1732276167;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=R7baADe/SUCoyjRTjAD3nC8YeSM55GDpaxcArsGEWGw=;
+ b=ezvkCbrDlO6TsYrhixktVrg5YRYnEuDnMFdUUSDmxIac0RGGFCFn2I19td+dFe5ObV
+ 1arK8GAB/NlGtRxdgEumtnMU2zxHZdYhhGlnnxM5M7l40G80aBLd6LWu19gdStQ1uMHq
+ +IB3HEx8+BPFNh6gr+IdYt3sEI4et6kGZzyg/Nxd+gkerhZDsEAmmIljaCL/CiuCfUsV
+ rs/wGh9oME3KpcnixruCONmICwJ3FCfxe/37Jx013DzfR/lK9ayn+msfzFupjxh/00im
+ xuysPJ6K+ydE0qCSaqxtoK0kUqDFwbcbLli7tSfUwRcNhaSGad0FKthCCRZrFHpcVofZ
+ 2RHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2CLiKGhoMa6n/xfxwfC69mi03KM1n7HA+Z2rX6PBhSxOprpdjfSuCpst4QEwyyc8LsXyVYHmMvyoP@nongnu.org
-X-Gm-Message-State: AOJu0YwbUTzR+Jf591aDWPtxCYaiV9mWGyJMozqTuFmUPtb3atguybJw
- fj1y3XSqrg7p/difkjgbNUWArNtrT4t70so+Dsujl1oqmkJIqWEZeSn6IeeFZhM=
-X-Google-Smtp-Source: AGHT+IED6VJc8WRmSsOrBtKo7CLrmLZn7wjfa2Qwn3WV4mTXZggT+S2vg2fMzr0y68wMNg9q9sSM5A==
-X-Received: by 2002:a17:907:981:b0:a99:f779:ae0c with SMTP id
- a640c23a62f3a-aa483450acbmr218612866b.25.1731671038863; 
- Fri, 15 Nov 2024 03:43:58 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20e0869cdsm170740966b.192.2024.11.15.03.43.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Nov 2024 03:43:58 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1FD6A5F844;
- Fri, 15 Nov 2024 11:43:57 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH for-10.0 v2 00/54] accel/tcg: Convert victim tlb to
- IntervalTree
-In-Reply-To: <970a751f-bae2-46b1-86d3-3bc97132f21e@linaro.org> (Pierrick
- Bouvier's message of "Thu, 14 Nov 2024 13:05:47 -0800")
-References: <20241114160131.48616-1-richard.henderson@linaro.org>
- <eaa2ecf4-74ce-49e1-846e-8f0c9c16d1af@linaro.org>
- <fea58b9b-9fad-4729-9f29-2f05d636d004@linaro.org>
- <970a751f-bae2-46b1-86d3-3bc97132f21e@linaro.org>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Fri, 15 Nov 2024 11:43:57 +0000
-Message-ID: <87ttc8rabm.fsf@draig.linaro.org>
+ AJvYcCWsD6a2bW53muJdWAOUQPgCzl870TCT5m08daXk/J+4RNX3Jx6eJiTH15QkSQ3q/tCD3WKFTdGAvN/J@nongnu.org
+X-Gm-Message-State: AOJu0Yyh5iY5U0+BpIhmmUujBvHS8dClqIuhZzcg35EFeqh16m24z3wa
+ kXD7gOuKbkjJFarRl/0VMoJ0vK9kp+aln2LwoKoqm+K5Qdoyn+4wq6jMeuFaee8ZfNidolYvCun
+ gqlbnUU7jxY+MMQ7Zjkc16lXk+El5Guvox44eKqscFYVs6vEzvG/j71IdfFJOrTdPD2JXDmnbyA
+ ttsmOjUK5aLugzsfZ8AvEVrdyk1Lo=
+X-Received: by 2002:a5d:47a6:0:b0:382:22f4:777c with SMTP id
+ ffacd0b85a97d-38225a05b99mr1826102f8f.24.1731671367337; 
+ Fri, 15 Nov 2024 03:49:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHkWouosBQ326L+O4x/HanFvKVV+4fCHXwxLi5Oh3vLna9k5wkcZLmtkoGYcoNj9fsMLwj4+Sz1Bbtsu4o/Yuk=
+X-Received: by 2002:a5d:47a6:0:b0:382:22f4:777c with SMTP id
+ ffacd0b85a97d-38225a05b99mr1826087f8f.24.1731671367021; Fri, 15 Nov 2024
+ 03:49:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20241114122919.973930-1-thuth@redhat.com>
+ <9e7cb217-a33e-48aa-b030-efb991ca33f3@linux.ibm.com>
+ <f0315077-eb61-4134-b81a-7d33906c6d31@redhat.com>
+ <31889800-47fc-4ee0-8016-58a9d82b2719@linux.ibm.com>
+ <0e9b5272-2aa9-41a4-b0bb-43f0c89751e7@redhat.com>
+In-Reply-To: <0e9b5272-2aa9-41a4-b0bb-43f0c89751e7@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 15 Nov 2024 12:49:13 +0100
+Message-ID: <CABgObfZ5VqJUd9+HvoRkBqeg=pMo_WaZDop_jiRnrCz=gfTRfw@mail.gmail.com>
+Subject: Re: [PATCH] hw: Add "loadparm" property to scsi disk devices for
+ booting on s390x
+To: Thomas Huth <thuth@redhat.com>
+Cc: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org, 
+ Boris Fiuczynski <fiuczy@linux.ibm.com>, qemu-s390x@nongnu.org, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Fam Zheng <fam@euphon.net>, Eric Farman <farman@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.122,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.69,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,63 +109,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On Fri, Nov 15, 2024 at 7:30=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
+e:
+> Ok, great! Sounds like we have a passable solution for QEMU 9.2. We still
+> can refine the loadparm handling of the scsi devices in future QEMU
+> releases, but this will now at least solve the present problem that Boris
+> reported from the libvirt side.
 
-> On 11/14/24 12:58, Richard Henderson wrote:
->> On 11/14/24 11:56, Pierrick Bouvier wrote:
->>> I tested this change by booting a debian x86_64 image, it works as expe=
-cted.
->>>
->>> I noticed that this change does not come for free (64s before, 82s afte=
-r - 1.3x). Is that
->>> acceptable?
->> Well, no.  But I didn't notice any change during boot tests.  I used hyp=
-erfine over 'make
->> check-functional'.
->> I would only expect benefits to be seen during longer lived vm's,
->> since a boot test
->> doesn't run applications long enough to see tlb entries accumulate.  I h=
-ave not attempted
->> to create a reproducible test for that so far.
->>=20
->
-> I didn't use check-functional neither.
-> I used a vanilla debian bookworm install, with a modified
-> /etc/rc.local calling poweroff, and ran 3 times with/without change
-> with turbo disabled on my cpu.
+Please put in the release notes that in the future loadparm might be
+limited to s390 emulators... Not sure how, but we'll come up with
+something.
 
-If you want to really stress the VM handling you should use stress-ng to
-exercise page faulting and recovery. Wrap it up in a systemd unit for a
-reproducible test:
+Paolo
 
-  cat /etc/systemd/system/benchmark-stress-ng.service=20
-  # A benchmark target
-  #
-  # This shutsdown once the boot has completed
-
-  [Unit]
-  Description=3DDefault
-  Requires=3Dbasic.target
-  After=3Dbasic.target
-  AllowIsolate=3Dyes
-
-  [Service]
-  Type=3Doneshot
-  ExecStart=3Dstress-ng --perf --iomix 4 --vm 2 --timeout 10s
-  ExecStartPost=3D/sbin/poweroff
-
-  [Install]
-  WantedBy=3Dmulti-user.target
-
-and then call with something like:
-
-  -append "root=3D/dev/sda2 console=3DttyAMA0 systemd.unit=3Dbenchmark-stre=
-ss-ng.service"
-
->
->> r~
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
