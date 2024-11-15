@@ -4,129 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B363ED68BC8
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 15:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 669BBD68BC6
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Nov 2024 15:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tBy6I-0000Di-GJ; Fri, 15 Nov 2024 10:19:10 -0500
+	id 1tBy74-0000gq-LN; Fri, 15 Nov 2024 10:19:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBy6G-0000Au-1k
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:19:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tBy6D-0003Y9-J3
- for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:19:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731683943;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7u4b808Y+q2C3vbV9o9jWUtktAaTT4hUHtVeMg0WlMk=;
- b=fFJ3L622qmjqt3uUC4ffg736lm1xkYbBcY+FP0wcfrL9rijU3V8SsUlsORUcNtM8sO9GP1
- pu6cPD41Vek4jK71KThGYQ7O6pT/mHGKJiBbIpGIbipnfweqwkOD073ayM3AAb7nDnUab8
- Ey1wMphM6ZIsqYM7lD/z1U9/Pf2cy70=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-5U_ACZsmMqufJ_3eC4LxgQ-1; Fri, 15 Nov 2024 10:17:49 -0500
-X-MC-Unique: 5U_ACZsmMqufJ_3eC4LxgQ-1
-X-Mimecast-MFC-AGG-ID: 5U_ACZsmMqufJ_3eC4LxgQ
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4314f1e0f2bso13097765e9.1
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 07:17:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tBy72-0000gN-JT
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:19:56 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tBy70-0003cQ-Fm
+ for qemu-devel@nongnu.org; Fri, 15 Nov 2024 10:19:56 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5cacb76e924so2956311a12.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 07:19:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731683992; x=1732288792; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rLE5RhDMWOzzjcuKhyzIBM+Cr2nvJ31Gyh45omcf6kA=;
+ b=fTZBJx4v+flT6dsAB87zuoxOFB3cyi+Eh0ZZYF+0kaPHLXS8r8SVDaQNFloMUeqygp
+ 3hrp4lfReLej43erW1tzo+3Ip0m4NiijONwGYuOju1oQC8HP7YhRN57DaWQ9vJGTcSoo
+ URRSv9Q8+rRwJbauH5UANSzXBklf5snZsrZ+XXz2P19m/EGoDXVpzoIvWdTNxbEbbMmH
+ OsZ/RhvNBgQPltm4ekBQwM52xMnK6BybXFQKw34Kf/bM2fN31btaL56KovHc/zPg4Fe3
+ Wqe+tTGdy9TAuMvQkLaZoCFz8KLk9kpccZkYikq82A/t7IkKYs/UwTV1ZFftJoPnlvJ0
+ M1qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731683868; x=1732288668;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7u4b808Y+q2C3vbV9o9jWUtktAaTT4hUHtVeMg0WlMk=;
- b=RNT3qu+Tg1oz7KEGJr9Apuw9xB2dOTF3soTKGATgeaMp2cGR5x6tPEuU0pRj38gJgT
- VGpQeQmnIwnLjysVd0bPSTpqmOOCGLI7JN+pjFpRSJIQOlWPae9jLy74iLy1WC1Z7RX4
- LHllI4OKpIc2m812YjnfVymrwabGVYJkNJIZJ2l/UoJJYRaBIBeJje0if/6GqCei7GTR
- Ayn49NcwPgHag16dPZoO7z60Pliai9Rs/LQ9HzyCuNybFehv2bEJWjm6ybD8QyKT6X/3
- 70d/yEw7RqM4AGddx6yCROcMiC6gQiF4NeQz5nw9XpM/VFPxW9y9aP6NJs54rubJB5/3
- IBMw==
-X-Gm-Message-State: AOJu0YwhH5h/Lul+1gMEb6Eci/mJb5mZoVU1Y+T62RUa2zDy3RYdp0xe
- zbMBQZHprttQexGeaMGVKdXkGhukgPmvhAalABnra55LHM9uvwxGVTaeML0A7od9MiT4xESF0Sx
- Fos0uc878WoeXVTkrgvUluRnt+pNTm0FEDkcEf41D72DG3E8OYBhZ
-X-Received: by 2002:a05:600c:510b:b0:430:563a:b20a with SMTP id
- 5b1f17b1804b1-432df72a7c3mr24953355e9.11.1731683868278; 
- Fri, 15 Nov 2024 07:17:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFJyW/wRgcoD+m/LxSBpIb7QClcDaRYX3AOUXRqPkkGzdAxqND/D2YNIzacylIHi8Pqk3ImMw==
-X-Received: by 2002:a05:600c:510b:b0:430:563a:b20a with SMTP id
- 5b1f17b1804b1-432df72a7c3mr24953145e9.11.1731683867851; 
- Fri, 15 Nov 2024 07:17:47 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.84.243])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-432dac1d85fsm56179425e9.36.2024.11.15.07.17.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Nov 2024 07:17:47 -0800 (PST)
-Message-ID: <8c43d658-5099-4a56-a095-fdd839de3c7d@redhat.com>
-Date: Fri, 15 Nov 2024 16:17:43 +0100
+ d=1e100.net; s=20230601; t=1731683992; x=1732288792;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rLE5RhDMWOzzjcuKhyzIBM+Cr2nvJ31Gyh45omcf6kA=;
+ b=Ez1mpexemVR2GqvavJQSPVDok728OCKtLyFRJvfVM1tn31CzR6taSztmgubV4/m876
+ dkOEgZ8Qp4dzZR9JjQxNCfU6nujd5NAuutRzQdkR4P9kGKuYtv30dOy0kDfjKeJEU8NC
+ DdWraDzlGKmaCM6e1L8lcUVhi1pigOue2Hl5/5NdOpWxdsW+qWQThGdhRXdIRl/2A/7W
+ xl7qx7dYP2zMguXqWZbVni938ieQ89kGwvK/LWOsTOazr2vh3ffmBhJ4QQE1Ure/61+9
+ Q9esZcl3Tl4kvZ0xJpZsDntwWCQcqclYQ+PD/BI0exy77Kw/ZrK0IqhxXj2w4YteGX8S
+ 9qIQ==
+X-Gm-Message-State: AOJu0YxOdyIPIoKBqHSFSpKcfXvB2O/ihLDGZSfzh8I605R0Xv6FIW+2
+ H7vkvWPSGFstZdb9rEbxPvJSNLLY+AewEftPIfy4t6K6piD59Bsfvl2jmJF8+iY8eJcowRAUMuF
+ c6OxOuev7drsI5c9GCxUreipff2B+5g5Y1oeEVA==
+X-Google-Smtp-Source: AGHT+IGoKE0NT9vy79hUld8kawTOUnaSCtI94X2i2WFEqWKpN3L1YHQT8KSVCxBHbLyOxO033HeucpjVek709wIY0hc=
+X-Received: by 2002:a05:6402:2352:b0:5cf:40f8:aa1d with SMTP id
+ 4fb4d7f45d1cf-5cf8fc5d81cmr2567826a12.16.1731683991787; Fri, 15 Nov 2024
+ 07:19:51 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] configure: Use -ef to compare paths
-To: Thomas Huth <thuth@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>, 
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, devel@daynix.com, Eric Blake <eblake@redhat.com>
-References: <20241111-p-v1-1-001006c68b7e@daynix.com>
- <1bbab4b1-ab02-4544-b9e0-814947b2b888@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <1bbab4b1-ab02-4544-b9e0-814947b2b888@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20241021190939.1482466-1-berrange@redhat.com>
+In-Reply-To: <20241021190939.1482466-1-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 15 Nov 2024 15:19:40 +0000
+Message-ID: <CAFEAcA894Mi+WnpHKb=0odOSo4_K9GZnVQeBJjLW5HxSiYfRJw@mail.gmail.com>
+Subject: Re: [PATCH] docs: explicitly permit a "commonly known identity" with
+ SoB
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.12,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,46 +94,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/11/24 08:50, Thomas Huth wrote:
-> On 11/11/2024 08.19, Akihiko Odaki wrote:
->> configure checks if it is executed in the source directory by comparing
->> the literal paths, but there may be multiple representations of a
->> directory due to symbolic links. Use the -ef operator to tell if they
->> point to the same directory.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   configure | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/configure b/configure
->> index aa7aae70fa1b..853fa0b81f70 100755
->> --- a/configure
->> +++ b/configure
->> @@ -13,7 +13,7 @@ export CCACHE_RECACHE=yes
->>   # make source path absolute
->>   source_path=$(cd "$(dirname -- "$0")"; pwd)
->> -if test "$PWD" = "$source_path"
->> +if test "$PWD" -ef "$source_path"
->>   then
->>       echo "Using './build' as the directory for build output"
-> 
-> Looking at https://pubs.opengroup.org/onlinepubs/9699919799/utilities/ 
-> test.html it sounds like "-ef" is not part of all posix compliant 
-> shells? Did you check whether it is working with all of our destination 
-> host types?
+On Mon, 21 Oct 2024 at 20:10, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> The docs for submitting a patch describe using your "Real Name" with
+> the Signed-off-by line. Although somewhat ambiguous, this has often
+> been interpreted to mean someone's legal name.
+>
+> In recent times, there's been a general push back[1] against the notion
+> that use of Signed-off-by in a project automatically requires / implies
+> the use of legal ("real") names and greater awareness of the downsides.
+>
+> Full discussion of the problems of such policies is beyond the scope of
+> this commit message, but at a high level they are liable to marginalize,
+> disadvantage, and potentially result in harm, to contributors.
+>
+> TL;DR: there are compelling reasons for a person to choose distinct
+> identities in different contexts & a decision to override that choice
+> should not be taken lightly.
+>
+> A number of key projects have responded to the issues raised by making
+> it clear that a contributor is free to determine the identity used in
+> SoB lines:
+>
+>  * Linux has clarified[2] that they merely expect use of the
+>    contributor's "known identity", removing the previous explicit
+>    rejection of pseudonyms.
+>
+>  * CNCF has clarified[3] that the real name is simply the identity
+>    the contributor chooses to use in the context of the community
+>    and does not have to be a legal name, nor birth name, nor appear
+>    on any government ID.
+>
+> Since we have no intention of ever routinely checking any form of ID
+> documents for contributors[4], realistically we have no way of knowing
+> anything about the name they are using, except through chance, or
+> through the contributor volunteering the information. IOW, we almost
+> certainly already have people using pseudonyms for contributions.
+>
+> This proposes to accept that reality and eliminate unnecessary friction,
+> by following Linux & the CNCF in merely asking that a contributors'
+> commonly known identity, of their choosing, be used with the SoB line.
 
-dash has it (https://www.man7.org/linux/man-pages/man1/dash.1.html), and 
-it looks like it's only really ancient Solaris shells that do not.
+This all makes sense to me -- we've never really had our own
+independent take on the DCO, we just followed what the kernel did.
 
-OpenBSD has it in ksh 
-(https://cvsweb.openbsd.org/src/bin/ksh/c_test.c?rev=1.28).
+I have cc'd people listed in MAINTAINERS under "project policy"
+and the more active members of the Leadership Committee to
+bring it to a slightly wider circle of attention.
 
-NetBSD has it in test(1) and seems to use the same sources for the shell 
-(https://github.com/NetBSD/src/blob/trunk/bin/sh/Makefile#L53).
+Unless there are any objections over the course of the next week,
+I think we should commit this change, so it has my
 
-So I'm queuing the patch.
+Acked-by: Peter Maydell <peter.maydell@linaro.org>
 
-Paolo
 
+> [1] Raised in many contexts at many times, but a decent overall summary
+>     can be read at https://drewdevault.com/2023/10/31/On-real-names.html
+> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/co=
+mmit/?id=3Dd4563201f33a022fc0353033d9dfeb1606a88330
+> [3] https://github.com/cncf/foundation/blob/659fd32c86dc/dco-guidelines.m=
+d
+> [4] Excluding the rare GPG key signing parties for regular maintainers
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  .gitlab-ci.d/check-dco.py         | 5 ++++-
+>  docs/devel/submitting-a-patch.rst | 7 ++++++-
+>  2 files changed, 10 insertions(+), 2 deletions(-)
+>
+> diff --git a/.gitlab-ci.d/check-dco.py b/.gitlab-ci.d/check-dco.py
+> index 632c8bcce8..6a06afffe5 100755
+> --- a/.gitlab-ci.d/check-dco.py
+> +++ b/.gitlab-ci.d/check-dco.py
+> @@ -79,7 +79,10 @@
+>
+>  To indicate acceptance of the DCO every commit must have a tag
+>
+> -  Signed-off-by: REAL NAME <EMAIL>
+> +  Signed-off-by: YOUR NAME <EMAIL>
+> +
+> +where "YOUR NAME" is your commonly known identity in the context
+> +of the community.
+>
+>  This can be achieved by passing the "-s" flag to the "git commit" comman=
+d.
+>
+> diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-=
+patch.rst
+> index 83e9092b8c..10b062eec2 100644
+> --- a/docs/devel/submitting-a-patch.rst
+> +++ b/docs/devel/submitting-a-patch.rst
+> @@ -18,7 +18,7 @@ one-shot fix, the bare minimum we ask is that:
+>
+>     * - Check
+>       - Reason
+> -   * - Patches contain Signed-off-by: Real Name <author@email>
+> +   * - Patches contain Signed-off-by: Your Name <author@email>
+>       - States you are legally able to contribute the code. See :ref:`pat=
+ch_emails_must_include_a_signed_off_by_line`
+>     * - Sent as patch emails to ``qemu-devel@nongnu.org``
+>       - The project uses an email list based workflow. See :ref:`submitti=
+ng_your_patches`
+> @@ -335,6 +335,11 @@ include a "From:" line in the body of the email (dif=
+ferent from your
+>  envelope From:) that will give credit to the correct author; but again,
+>  that author's Signed-off-by: line is mandatory, with the same spelling.
+>
+> +The name used with "Signed-off-by" does not need to be your legal name,
+> +nor birth name, nor appear on any government ID. It is the identity you
+> +choose to be known by in the community, but should not be anonymous,
+> +nor misrepresent whom you are.
+
+Grammar nit: should be "who".
+
+> +
+>  There are various tooling options for automatically adding these tags
+>  include using ``git commit -s`` or ``git format-patch -s``. For more
+>  information see `SubmittingPatches 1.12
+> --
+
+thanks
+-- PMM
 
