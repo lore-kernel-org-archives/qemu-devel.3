@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC97D68BE1
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 Nov 2024 05:40:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC4CD68BD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 Nov 2024 10:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCBWn-00061i-H4; Sat, 16 Nov 2024 00:39:25 -0500
+	id 1tCGDe-0007bj-Qq; Sat, 16 Nov 2024 05:39:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tCBWl-00061Y-HQ
- for qemu-devel@nongnu.org; Sat, 16 Nov 2024 00:39:23 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tCGDc-0007bV-KL
+ for qemu-devel@nongnu.org; Sat, 16 Nov 2024 05:39:56 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tCBWk-0004ey-4S
- for qemu-devel@nongnu.org; Sat, 16 Nov 2024 00:39:23 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-20cf6eea3c0so26119655ad.0
- for <qemu-devel@nongnu.org>; Fri, 15 Nov 2024 21:39:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tCGDb-0006GE-1P
+ for qemu-devel@nongnu.org; Sat, 16 Nov 2024 05:39:56 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5cb15b84544so431687a12.2
+ for <qemu-devel@nongnu.org>; Sat, 16 Nov 2024 02:39:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731735560; x=1732340360; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=1lZiCiZf87Qs/9fUS6Yc1O4ZeocfPecUDBI/qiCE46c=;
- b=tD7Ec0fcRV8QF1O+1bsGm+lTv8VLIV1h9hAqjfIKEaK7ZbF1HIJw2fueqItmryx8v4
- rLuuRAGRKpwj4yPA1ul3BspgzHmPIiaEOpo+NhwYbjs+c7Nh/OmFxUGTxSouw07oPuhl
- rIBLP22WB7xMz4mAj3EQZ49B2jp27guCfRCQPPZfCHU2yNf/2ioLDTnPeUd0I+GWocoz
- senwRmPTnSGhHYHn0i83sQ2Z1R3YEl01EDMSnzf/y/GABbWP0kS014bm9uiZF/TBWRZ7
- 3F4dvdxOu9UBAfE9pxsjNI0BtAl/bsrSmuQg/YKQSuYKITkn9IGbylba6WS443aluIT6
- okIw==
+ d=linaro.org; s=google; t=1731753593; x=1732358393; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wWJ0XcE4hl0R6xbdeo0xX0SnVB8ocXp3kpc6KuLJJvY=;
+ b=LxF8XdcP4KS/uXPdJFgtllMLNik5vnjW14h0XKP+meYiF0yrbJm2YLTztETULvzYlo
+ 7RRqhRs07fB7cX4hTPpkCpXSo9MrQ9HhqolBaM7SvsotZxh4uRCkiMZgkI5YbXR19jBW
+ GFXOnqoVYBJvg6+DlkGFt/jU8VcVS3HYe9HSqn8DHdrKqRtqj05GUT8fuMnZb0AGEpdO
+ EnarvIZqQS0KP8H21mwNmQnIKBHUzk7EI4SWikFXrGEuzjN8T6+/TmX61whJtqfj05yn
+ MFB3hOqXR7KGElxGdN+Q79MxnDozdzRh7Eex5rUdf9qwFbc9vmzDt0B5FXaa70qBJT+b
+ YmNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731735560; x=1732340360;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1lZiCiZf87Qs/9fUS6Yc1O4ZeocfPecUDBI/qiCE46c=;
- b=kF9ZSgX9YgZ2FH6r2qYixxA1vj8VA472vA71XH7Q48wdOpRAj4X+ynLkl8HC9LbbZp
- hV0QjX8bqgkcEpyapJZ7z6047yYMRCzcxWvCFaVLvHGYiyXca3ZM7+2HGgR6jKUZEMKP
- Snv4QG1DU377qXrmz6qUrIKFzS4Y+7TdwoJ0qvFmDYfdC6UIvGsebSwExG9jbdWeaBrg
- rF1cCo4JvPtqoAj8rMa6Wx5OwI+SW1VwtmeXn7SE3DSusXHAh2fwj6wLX9sDuKOgfU6a
- pL6H5iU06kMZjWYOw9w6+kSOyOzXExMMN7DEib/XtY95jXRZanRWF1LrX2OAbitMZ3Dv
- eqkQ==
-X-Gm-Message-State: AOJu0Yy43keL35G3bjm/Snf8zWJT5k1cta4ktvzifVmVC4oes83FJHVF
- K6wOYyXEyNculgU5I1BVlR9RFEudr1cbQbNk114aXXV61ZD3UzU8Arn4Q47gJGtn0Tv0GYOLWvr
- O
-X-Google-Smtp-Source: AGHT+IHLeiFKZntwx11lhayR7ZIaUh1KQUF4dtKKjjP+DLyM5VSLwWN8NwuYOEi9YnlBtfTBRWuyJg==
-X-Received: by 2002:a17:903:285:b0:20c:c1bc:2253 with SMTP id
- d9443c01a7336-211d0d861c9mr87360235ad.32.1731735559871; 
- Fri, 15 Nov 2024 21:39:19 -0800 (PST)
-Received: from stoup.. ([71.212.136.242]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72477120aa5sm2280879b3a.79.2024.11.15.21.39.19
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Nov 2024 21:39:19 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH RISU] risugen/aarch64: SMULH and UMULH require ra == 31
-Date: Fri, 15 Nov 2024 21:39:18 -0800
-Message-ID: <20241116053918.420404-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1731753593; x=1732358393;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wWJ0XcE4hl0R6xbdeo0xX0SnVB8ocXp3kpc6KuLJJvY=;
+ b=dtFMjFG9RqUvkYUIhaKx32qAZaXRdKDzSwM9c51wmJiaPnVASKXdKwxDt76Kh8UTc7
+ VnVe345ucfp9xH9yMkSVaDaStIX3Yh7PyKhPlVDmWczE9VP0Q1bGylZMv+UgYN4MCf28
+ wYmdWMN4N9n5FEbDoeO7TraNDvTszl3C8J/ICFApxsAP7vBLszubt0BwfXFYSOtS9w3a
+ zSEKj+Q+VFhv0J0MeGxVwCGZ14h9qx4OETKCh4tACOs6mL6YKyRFA5YoqHfFp1DpS7zt
+ 8t3qxNPbzC1wjY0v0RLVqZOPMOhRJMti/I1/IWjh1zB0SZ5vLms5bBcsQcNUk1qqLaAA
+ 6njQ==
+X-Gm-Message-State: AOJu0YyPl6/rsJmAzsPafEQ2yWR4viNLTJtftR+E1GgE0l85Y4CafLi0
+ QhMh0AvnHc+YLAC9Mxud/uVJQHKSpyKJjWMSEZZ6m+BEJN2SxP/DyROQTYKLnS+YPmVsHyJLVr0
+ njzcUyLXb432XXH+mjjMMJgDBsXzuI11FWRAJMw==
+X-Google-Smtp-Source: AGHT+IG7bTTAb1ZzLx8ACKNvZWl+JPn71V32Nj7HUtvphLOJidvVEFSqWWap7G1MRdP3CdYJGtkst5+OIKrHDZHwQbM=
+X-Received: by 2002:a05:6402:84f:b0:5ce:fa13:2630 with SMTP id
+ 4fb4d7f45d1cf-5cf8fd655aamr3765101a12.33.1731753593086; Sat, 16 Nov 2024
+ 02:39:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+References: <20241115205849.266094-1-richard.henderson@linaro.org>
+In-Reply-To: <20241115205849.266094-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 16 Nov 2024 10:39:42 +0000
+Message-ID: <CAFEAcA-Og4proAP_LR60B__V-KvSLLaNwE5xO=mF8Qi+W1jPdQ@mail.gmail.com>
+Subject: Re: [PULL 00/14] tcg + linux-user patch queue
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,37 +87,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not generate ra other than 31, as it is UNPREDICTABLE
-whether the instruction will trap as invalid.
+On Fri, 15 Nov 2024 at 20:59, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> The following changes since commit f0a5a31c33a8109061c2493e475c8a2f4d022432:
+>
+>   Update version for v9.2.0-rc0 release (2024-11-13 21:44:45 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20241115
+>
+> for you to fetch changes up to a020e0a807a6e34890d1f2ca02e49f814fd0b64f:
+>
+>   tcg: Allow top bit of SIMD_DATA_BITS to be set in simd_desc() (2024-11-15 12:51:27 -0800)
+>
+> ----------------------------------------------------------------
+> cpu: ensure we don't call start_exclusive from cpu_exec
+> tcg: Allow top bit of SIMD_DATA_BITS to be set in simd_desc()
+> accel/tcg: Fix user-only probe_access_internal plugin check
+> linux-user: Fix setreuid and setregid to use direct syscalls
+> linux-user: Tolerate CONFIG_LSM_MMAP_MIN_ADDR
+> linux-user: Honor elf alignment when placing images
+> linux-user/*: Reduce vdso alignment to 4k
+> linux-user/arm: Select vdso for be8 and be32 modes
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- aarch64.risu | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This asserts on the user-mode tcg tests:
 
-diff --git a/aarch64.risu b/aarch64.risu
-index 8f08cd0..87d9c72 100644
---- a/aarch64.risu
-+++ b/aarch64.risu
-@@ -1887,7 +1887,7 @@ SMSUBL A64 1 00 11011 001 rm:5 1 ra:5 rn:5 rd:5 \
- 
- SMNEGL A64 1 00 11011 001 rm:5 1 11111 rn:5 rd:5
- 
--SMULH A64 1 00 11011 010 rm:5 0 ra:5 rn:5 rd:5
-+SMULH A64 1 00 11011 010 rm:5 0 11111 rn:5 rd:5
- 
- UMADDL A64 1 00 11011 101 rm:5 0 ra:5 rn:5 rd:5 \
- !constraints { $ra != 31; }
-@@ -1899,7 +1899,7 @@ UMSUBL A64 1 00 11011 101 rm:5 1 ra:5 rn:5 rd:5 \
- 
- UMNEGL A64 1 00 11011 101 rm:5 1 11111 rn:5 rd:5
- 
--UMULH A64 1 00 11011 110 rm:5 0 ra:5 rn:5 rd:5
-+UMULH A64 1 00 11011 110 rm:5 0 11111 rn:5 rd:5
- 
- # - Logical (shifted register)
- # 31|30 29| 28 27 26 25 24 |23 22| 21| 20    16 15      10 9    5 4    0
--- 
-2.43.0
+https://gitlab.com/qemu-project/qemu/-/jobs/8388145379
+https://gitlab.com/qemu-project/qemu/-/jobs/8388145391
 
+TEST catch-syscalls-with-libinline.so on aarch64
+**
+ERROR:../target/arm/tcg/sve_helper.c:6321:sve_stN_r: code should not be reached
+timeout: the monitored command dumped core
+Aborted
+make[1]: *** [Makefile:185:
+run-plugin-catch-syscalls-with-libinline.so] Error 134
+
+Does this need "target/arm: Drop user-only special case in sve_stN_r"
+now? (I'd picked that up into target-arm.next but feel free to slot it
+in here if something in this series depends on it.)
+
+thanks
+-- PMM
 
