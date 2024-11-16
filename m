@@ -4,72 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC4CD68BD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 Nov 2024 10:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1154ED68BC9
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 Nov 2024 13:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCGDe-0007bj-Qq; Sat, 16 Nov 2024 05:39:58 -0500
+	id 1tCITZ-0008W1-B1; Sat, 16 Nov 2024 08:04:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tCGDc-0007bV-KL
- for qemu-devel@nongnu.org; Sat, 16 Nov 2024 05:39:56 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1tCITY-0008VW-5J
+ for qemu-devel@nongnu.org; Sat, 16 Nov 2024 08:04:32 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tCGDb-0006GE-1P
- for qemu-devel@nongnu.org; Sat, 16 Nov 2024 05:39:56 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5cb15b84544so431687a12.2
- for <qemu-devel@nongnu.org>; Sat, 16 Nov 2024 02:39:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1tCITW-0007fD-8S
+ for qemu-devel@nongnu.org; Sat, 16 Nov 2024 08:04:31 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7242f559a9fso2758545b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 16 Nov 2024 05:04:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731753593; x=1732358393; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wWJ0XcE4hl0R6xbdeo0xX0SnVB8ocXp3kpc6KuLJJvY=;
- b=LxF8XdcP4KS/uXPdJFgtllMLNik5vnjW14h0XKP+meYiF0yrbJm2YLTztETULvzYlo
- 7RRqhRs07fB7cX4hTPpkCpXSo9MrQ9HhqolBaM7SvsotZxh4uRCkiMZgkI5YbXR19jBW
- GFXOnqoVYBJvg6+DlkGFt/jU8VcVS3HYe9HSqn8DHdrKqRtqj05GUT8fuMnZb0AGEpdO
- EnarvIZqQS0KP8H21mwNmQnIKBHUzk7EI4SWikFXrGEuzjN8T6+/TmX61whJtqfj05yn
- MFB3hOqXR7KGElxGdN+Q79MxnDozdzRh7Eex5rUdf9qwFbc9vmzDt0B5FXaa70qBJT+b
- YmNg==
+ d=gmail.com; s=20230601; t=1731762268; x=1732367068; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=JrB4xR7NrOxza1Ts14L8SnYo82Kbim+uMMw6HugfaQY=;
+ b=WNkE24d8qp5T7YRImN2NLGG+RhKsLJXG13Hd8mSBSu2BavJTjrYI2BKX4HrsWo+/cd
+ Yaw9ZNdNWcCp8gFhVXByXB5ahofZIycK/0itTV/hQqqGL3S8i6zKro2qK7xNuTdjZWP0
+ vLiXqN7YDHtPubMEa+sYQr8+4u1b6quW4ClKOCEFnyKBHZMgyct2Wokl/01OGQQCwJnV
+ bTFVC8hREVf8Zfzq+ZKQhQ63CdXe+wN20cWzihOSO/Mp7BOxkDchVv5HfdQfUIdohiri
+ V6lHw/D3n93L9vUR+j3YcwRAL5GDwghCZHklOkwBqb9L9i4jnL6cITl4QebvCzXcCKoP
+ xQ0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731753593; x=1732358393;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wWJ0XcE4hl0R6xbdeo0xX0SnVB8ocXp3kpc6KuLJJvY=;
- b=dtFMjFG9RqUvkYUIhaKx32qAZaXRdKDzSwM9c51wmJiaPnVASKXdKwxDt76Kh8UTc7
- VnVe345ucfp9xH9yMkSVaDaStIX3Yh7PyKhPlVDmWczE9VP0Q1bGylZMv+UgYN4MCf28
- wYmdWMN4N9n5FEbDoeO7TraNDvTszl3C8J/ICFApxsAP7vBLszubt0BwfXFYSOtS9w3a
- zSEKj+Q+VFhv0J0MeGxVwCGZ14h9qx4OETKCh4tACOs6mL6YKyRFA5YoqHfFp1DpS7zt
- 8t3qxNPbzC1wjY0v0RLVqZOPMOhRJMti/I1/IWjh1zB0SZ5vLms5bBcsQcNUk1qqLaAA
- 6njQ==
-X-Gm-Message-State: AOJu0YyPl6/rsJmAzsPafEQ2yWR4viNLTJtftR+E1GgE0l85Y4CafLi0
- QhMh0AvnHc+YLAC9Mxud/uVJQHKSpyKJjWMSEZZ6m+BEJN2SxP/DyROQTYKLnS+YPmVsHyJLVr0
- njzcUyLXb432XXH+mjjMMJgDBsXzuI11FWRAJMw==
-X-Google-Smtp-Source: AGHT+IG7bTTAb1ZzLx8ACKNvZWl+JPn71V32Nj7HUtvphLOJidvVEFSqWWap7G1MRdP3CdYJGtkst5+OIKrHDZHwQbM=
-X-Received: by 2002:a05:6402:84f:b0:5ce:fa13:2630 with SMTP id
- 4fb4d7f45d1cf-5cf8fd655aamr3765101a12.33.1731753593086; Sat, 16 Nov 2024
- 02:39:53 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731762268; x=1732367068;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JrB4xR7NrOxza1Ts14L8SnYo82Kbim+uMMw6HugfaQY=;
+ b=iaGvs8mPfzV6w0dyoDsGmp2bkaah2bUCuwq8jff0sFoIZeVFf0KeIo49w5IJcjR/Sk
+ CDb7c9YZ8yvA/eM+bzQY0oLIWM2KUXe/P4jPwn16U3WemwfExmBj5zAJPK+/HwqJ4pR9
+ 4c2DWxRSCDmY7jyIn2vSoYw/PFBD2wTCG/oCW0ftBdZtv6pn5mqiniCMF0mDYknIeIjz
+ lkuXl4pMWSx8NueCpZoK5uR3SJ6GhCadsLUqYw+NcHyNsvwPYfLnwakT1rFmkAeL9ge1
+ ILZQHARRm8DecuKaYKckAmVCOWIOO6rch9+QHNE+nOKRwLA/OzKT5Gij2IYg6ylisv97
+ NsKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV6seBOF5vZLAcS7oZV4F1xhZSbZ+OtUWkFgapA6HmYXVASn9eOtGu9psmXNFrlasMOdyXY5iQrB3VM@nongnu.org
+X-Gm-Message-State: AOJu0Yyyl3FYslKx1aXuUvsVwoYF6x6MGKnc274zDB/APEbPCaiJSNZn
+ Hc82eMwXeZZv2gjDeQseYeBcrVL4PbsnNo+XqZD1ci3wGjEQBXei
+X-Google-Smtp-Source: AGHT+IHdav85v1ZSu+7ERedV6cEizJiQnsNpTFPkTT3wIgXnrqlwD4KF9VmCUeL5mS9JPTFTMo3yyg==
+X-Received: by 2002:a05:6a00:4b4f:b0:71e:79a9:ec47 with SMTP id
+ d2e1a72fcca58-72476b96825mr8657519b3a.6.1731762268069; 
+ Sat, 16 Nov 2024 05:04:28 -0800 (PST)
+Received: from [192.168.1.8] ([223.233.87.157])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7248305a356sm1804799b3a.34.2024.11.16.05.04.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 16 Nov 2024 05:04:27 -0800 (PST)
+Message-ID: <dae3a8a4-b60e-44db-9224-af3258c1e339@gmail.com>
+Date: Sat, 16 Nov 2024 18:34:22 +0530
 MIME-Version: 1.0
-References: <20241115205849.266094-1-richard.henderson@linaro.org>
-In-Reply-To: <20241115205849.266094-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 16 Nov 2024 10:39:42 +0000
-Message-ID: <CAFEAcA-Og4proAP_LR60B__V-KvSLLaNwE5xO=mF8Qi+W1jPdQ@mail.gmail.com>
-Subject: Re: [PULL 00/14] tcg + linux-user patch queue
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vdpa: Support setting vring_base for packed svq
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: eperezma@redhat.com, sgarzare@redhat.com, qemu-devel@nongnu.org,
+ Sahil Siddiq <sahilcdq@proton.me>
+References: <20241104162124.49867-1-sahilcdq@proton.me>
+ <20241114015754-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Sahil Siddiq <icegambit91@gmail.com>
+Autocrypt: addr=icegambit91@gmail.com; keydata=
+ xsDNBGcgaYEBDADpKUSKbchLCMdCuZGkuF50/7BiraKc8Ch+mk4T+2+E2/6qXAkalvCkFoqx
+ 3/sa35rconZAFzB/r19e7i3UajIQjATvENrGxqe/IFqcJxo2Jr1HQBwCrsmlQoUCilSC6nDi
+ ejcEIAFytJORDkCcZwLXPjdf5/4pbqVAW5823LB5j5F0TqHAnGY1RhS2V1eBPdRqjAA3xecT
+ zTmLHlkqAXgM2DOot1KbycedZSieCwEykTXMaLC0/3Gyo2Cp1WTWOIyD0hsXpLyFioV4FaX2
+ Lm+z45Zc4PoNXeC6+l4PdDxixs+saAbadknP+9omwlb+PkMd3esq2wkowTwTJVJK8FCCNTo5
+ 2OArA/ddxcyXY25JHN7vzGooFNW6Bb9YV+lbX6y95ytE3KcAmid73tQrcjlebIpgNAvOMyyZ
+ BgQJY0HSu3DGNZuKtbNM3iTl82TFj7MVgkEffgF83N6XyBqDztIz2lN47/q5wyRi3jda9NDt
+ geI+Nv145HjulO7bI3NT048AEQEAAc0kU2FoaWwgU2lkZGlxIDxpY2VnYW1iaXQ5MUBnbWFp
+ bC5jb20+wsENBBMBCAA3FiEERtYfQYWFu+uAZjYrrzGlXdb6f1cFAmcgaYEFCQWjmoACGwME
+ CwkIBwUVCAkKCwUWAgMBAAAKCRCvMaVd1vp/V/nnC/9KnNIr4a3JW3E/snxv1+XIyUmHBDLn
+ PKBmLDYxO9RJe1xKo/sNmLEno4c8G1F/y12TLV086cpBYGKkE8mPMBABqxuiPG8srwoKc2HW
+ bvoC2Zfeu/WeQ0YqeI9ZEwRhsDGQZ7vc8PnKnEUaPZn6iWW4GeX7dXWeGNrK0wU2B04l2d+M
+ FIKaoPHk8w5Ff++QNcn0YRkm//nYlukHUrMxhNcuc18jaLLftOh7BH/4EbKtTN75KAFePQBi
+ I2CbuC41fchTt12QrPB3yz1GKfudsEMLFHBNeComJNnuolPOq0YSyuKdRO8Jubn5ZqWQeTwj
+ XbG7wTonDc8xe46irOhz36VcjsjSY+PYhVZSeDWeDUZgpaJkBjQDDodIN2eoMwVEyUByos9H
+ mKrqrpBMmylOspAZzqjb5FtOqM0BCxQINdKKiMwRelSb6pHYCrbS0XzpwDUEpp7RWCbHgg+6
+ Ot72kQCEFxj2LzX9VxF24GGQy9inlUfN51IV04klSibtBuuz/NbOwM0EZyBpgQEMAJelVX4k
+ CtCxD4Ji3FQ8LZs22z7VoUvqIb7Gj2lNvhPeijlqqBkSMIgnSCLxlH4ahqKnEV58IrfVriV0
+ 92zb94Az2nl0r+bZYfvev1qCcVIYxk+pYYcRl5qPXX8XGalrkcBBWmkgTSwzNK9rV4850iVI
+ hsJNel49qen9JwiFYMSKa2MYgdYSbeuuwXwUp0ZHeVFc5RnPK2wxws1xcnsdb9hRXs2UeTEE
+ 0klG3HuXqJ96DzKrCieKHLjs330h+16gDWAFZSEoT7Mh3HFGI2dscVuBstQNgnwUMnsJv8jx
+ c005CfLCjCBnJEhMd2/QFuLwCZv4IdoghKwYw18e61UbX2bFovo9dduD527pD4sFqi7U7ofv
+ aO3yf+ulL6jiKypGvnbiBP3KY3aKxx6pHHH3aDc9eOqCUgrtS3+xt1du4+qxrYqEnrywFoJy
+ 5zqSzbnTTjFpdTbY5SS52fIOktLlAKzEg6V9hkg2r08hC3/L4NVj6I4tsGZlqb2neRlHFmCr
+ bQARAQABwsD8BBgBCAAmFiEERtYfQYWFu+uAZjYrrzGlXdb6f1cFAmcgaYIFCQWjmoACGwwA
+ CgkQrzGlXdb6f1fDIgwAmpB7eL3XNSx3F+gbmksOPMqCU5rEswRedjEt6tBzFTXhdNFfhZTb
+ vCddUNePZnzddgxAnDBcTqI1jx6Go6Hkti/mxJqXSczMYBsImD/lEm47axsADvpnNaEM+tmu
+ m/cMKfpILUpy2Ey7CKXUA1vpzYeUD29EQWi0fxM0arplrVt/uzUdFRFQRn2hCqeDLBLONX1F
+ Adq+re6M0dhKl4a2+erzZRIXh3vIGiDmpJEGrajrhqEnMXFp6toSiMGian94m8H3NT6rB64E
+ JmdHgyjXADFbn2G5Mb6Pwa8KnnK1kYcZ+Pwu9LfMXfgI01Sh/k01hjUVmnpYep4nHUfwXA8r
+ kn6WekD80DYbAfKyFAXQCO/nclZ82RNmJbDRi3AeMFrxKi6KgdGCp1Izhj9USaMOVqcuV2p0
+ Rsoq+sFqWOKaHWnQHCM9RkynQVqrgUaSawEbGlCP1KIhVmjfjVsmsCaKkUb9T6VeO+ZNe+Pn
+ rPgMe6IIvn24UuW2f6fIt0AaqOWq
+In-Reply-To: <20241114015754-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=icegambit91@gmail.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,48 +135,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 15 Nov 2024 at 20:59, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> The following changes since commit f0a5a31c33a8109061c2493e475c8a2f4d022432:
->
->   Update version for v9.2.0-rc0 release (2024-11-13 21:44:45 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20241115
->
-> for you to fetch changes up to a020e0a807a6e34890d1f2ca02e49f814fd0b64f:
->
->   tcg: Allow top bit of SIMD_DATA_BITS to be set in simd_desc() (2024-11-15 12:51:27 -0800)
->
-> ----------------------------------------------------------------
-> cpu: ensure we don't call start_exclusive from cpu_exec
-> tcg: Allow top bit of SIMD_DATA_BITS to be set in simd_desc()
-> accel/tcg: Fix user-only probe_access_internal plugin check
-> linux-user: Fix setreuid and setregid to use direct syscalls
-> linux-user: Tolerate CONFIG_LSM_MMAP_MIN_ADDR
-> linux-user: Honor elf alignment when placing images
-> linux-user/*: Reduce vdso alignment to 4k
-> linux-user/arm: Select vdso for be8 and be32 modes
+Hi,
 
-This asserts on the user-mode tcg tests:
+On 11/14/24 12:28 PM, Michael S. Tsirkin wrote:
+> On Mon, Nov 04, 2024 at 09:51:24PM +0530, Sahil Siddiq wrote:
+>> Linux commit v5.14-rc1~30^2~8 enabled the vp_vdpa driver to set the
+>> vq state to the device's initial state. This works differently for
+>> split and packed vqs.
+>>
+>> With shadow virtqueues enabled, vhost-vdpa sets the vring base using
+>> the VHOST_SET_VRING_BASE ioctl. The payload (vhost_vring_state)
+>> differs for split and packed vqs. The implementation in QEMU currently
+>> uses the payload required for split vqs (i.e., the num field of
+>> vhost_vring_state is set to 0). The kernel throws EOPNOTSUPP when this
+>> payload is used with packed vqs.
+>>
+>> This patch sets the num field in the payload appropriately so vhost-vdpa
+>> (with the vp_vdpa driver) can use packed svqs.
+>>
+>> Link: https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05106.html
+>> Link: https://lore.kernel.org/r/20210602021536.39525-4-jasowang@redhat.com
+>> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+> 
+> Looks like a feature, not a bugfix to me, so I guess - next release?
+> 
 
-https://gitlab.com/qemu-project/qemu/-/jobs/8388145379
-https://gitlab.com/qemu-project/qemu/-/jobs/8388145391
+Right. Also, based on the discussion in the reviews [1], it's been decided
+to consider this patch for release when the patches to add support for
+packed svqs [2] are also ready.
 
-TEST catch-syscalls-with-libinline.so on aarch64
-**
-ERROR:../target/arm/tcg/sve_helper.c:6321:sve_stN_r: code should not be reached
-timeout: the monitored command dumped core
-Aborted
-make[1]: *** [Makefile:185:
-run-plugin-catch-syscalls-with-libinline.so] Error 134
+I'll resend this patch with the other patches.
 
-Does this need "target/arm: Drop user-only special case in sve_stN_r"
-now? (I'd picked that up into target-arm.next but feel free to slot it
-in here if something in this series depends on it.)
+Thanks,
+Sahil
 
-thanks
--- PMM
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2024-11/msg01432.html
+[2] https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtqueue
+
 
