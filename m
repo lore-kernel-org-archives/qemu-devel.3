@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8239CD10F28
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 19:24:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3906FD10F28
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 19:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCkq6-0002gL-SY; Sun, 17 Nov 2024 14:21:42 -0500
+	id 1tCkqn-00032u-BI; Sun, 17 Nov 2024 14:22:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tCkq5-0002gD-9F
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:21:41 -0500
+ id 1tCkqj-0002wf-Pf
+ for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:22:21 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tCkq2-0005sT-1K
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:21:41 -0500
+ id 1tCkqh-0005vj-I2
+ for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:22:21 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tCkpy-00000002GTX-1tPD; Sun, 17 Nov 2024 20:21:34 +0100
+ id 1tCkqd-00000002GUx-2phQ; Sun, 17 Nov 2024 20:22:15 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3 05/24] migration: Add MIG_CMD_SWITCHOVER_START and its load
- handler
-Date: Sun, 17 Nov 2024 20:20:00 +0100
-Message-ID: <624309a8e37f7779336bd5c0573d24f155b2ed41.1731773021.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v3 13/24] migration/multifd: Device state transfer support -
+ send side
+Date: Sun, 17 Nov 2024 20:20:08 +0100
+Message-ID: <dbff60e022ada2f072300559bd24d9e0939be21a.1731773021.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1731773021.git.maciej.szmigiero@oracle.com>
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
@@ -68,308 +68,388 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This QEMU_VM_COMMAND sub-command and its switchover_start SaveVMHandler is
-used to mark the switchover point in main migration stream.
-
-It can be used to inform the destination that all pre-switchover main
-migration stream data has been sent/received so it can start to process
-post-switchover data that it might have received via other migration
-channels like the multifd ones.
-
-Add also the relevant MigrationState bit stream compatibility property and
-its hw_compat entry.
+A new function multifd_queue_device_state() is provided for device to queue
+its state for transmission via a multifd channel.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/core/machine.c                  |  1 +
- include/migration/client-options.h |  4 +++
- include/migration/register.h       | 12 +++++++++
- migration/colo.c                   |  3 +++
- migration/migration-hmp-cmds.c     |  2 ++
- migration/migration.c              |  3 +++
- migration/migration.h              |  2 ++
- migration/options.c                |  9 +++++++
- migration/savevm.c                 | 39 ++++++++++++++++++++++++++++++
- migration/savevm.h                 |  1 +
- migration/trace-events             |  1 +
- scripts/analyze-migration.py       | 11 +++++++++
- 12 files changed, 88 insertions(+)
+ include/migration/misc.h         |   4 ++
+ migration/meson.build            |   1 +
+ migration/multifd-device-state.c | 106 +++++++++++++++++++++++++++++++
+ migration/multifd-nocomp.c       |  11 +++-
+ migration/multifd.c              |  43 +++++++++++--
+ migration/multifd.h              |  24 ++++---
+ 6 files changed, 173 insertions(+), 16 deletions(-)
+ create mode 100644 migration/multifd-device-state.c
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index a35c4a8faecb..ed8d39fd769f 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -38,6 +38,7 @@
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index c92ca018ab3b..118e205bbcc6 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -109,4 +109,8 @@ bool migration_incoming_postcopy_advised(void);
+ /* True if background snapshot is active */
+ bool migration_in_bg_snapshot(void);
  
- GlobalProperty hw_compat_9_1[] = {
-     { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
-+    { "migration", "send-switchover-start", "off"},
- };
- const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
- 
-diff --git a/include/migration/client-options.h b/include/migration/client-options.h
-index 59f4b55cf4f7..289c9d776221 100644
---- a/include/migration/client-options.h
-+++ b/include/migration/client-options.h
-@@ -10,6 +10,10 @@
- #ifndef QEMU_MIGRATION_CLIENT_OPTIONS_H
- #define QEMU_MIGRATION_CLIENT_OPTIONS_H
- 
++/* migration/multifd-device-state.c */
++bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
++                                char *data, size_t len);
 +
-+/* properties */
-+bool migrate_send_switchover_start(void);
+ #endif
+diff --git a/migration/meson.build b/migration/meson.build
+index d53cf3417ab8..9788c47bb56e 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -22,6 +22,7 @@ system_ss.add(files(
+   'migration-hmp-cmds.c',
+   'migration.c',
+   'multifd.c',
++  'multifd-device-state.c',
+   'multifd-nocomp.c',
+   'multifd-zlib.c',
+   'multifd-zero-page.c',
+diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
+new file mode 100644
+index 000000000000..7741a64fbd4d
+--- /dev/null
++++ b/migration/multifd-device-state.c
+@@ -0,0 +1,106 @@
++/*
++ * Multifd device state migration
++ *
++ * Copyright (C) 2024 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
 +
- /* capabilities */
- 
- bool migrate_background_snapshot(void);
-diff --git a/include/migration/register.h b/include/migration/register.h
-index 0b0292738320..ff0faf5f68c8 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -279,6 +279,18 @@ typedef struct SaveVMHandlers {
-      * otherwise
-      */
-     bool (*switchover_ack_needed)(void *opaque);
++#include "qemu/osdep.h"
++#include "qemu/lockable.h"
++#include "migration/misc.h"
++#include "multifd.h"
 +
-+    /**
-+     * @switchover_start
-+     *
-+     * Notifies that the switchover has started. Called only on
-+     * the destination.
-+     *
-+     * @opaque: data pointer passed to register_savevm_live()
-+     *
-+     * Returns zero to indicate success and negative for error
-+     */
-+    int (*switchover_start)(void *opaque);
- } SaveVMHandlers;
- 
- /**
-diff --git a/migration/colo.c b/migration/colo.c
-index 9590f281d0f1..a75c2c41b464 100644
---- a/migration/colo.c
-+++ b/migration/colo.c
-@@ -452,6 +452,9 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
-         bql_unlock();
-         goto out;
-     }
++static QemuMutex queue_job_mutex;
 +
-+    qemu_savevm_maybe_send_switchover_start(s->to_dst_file);
++static MultiFDSendData *device_state_send;
 +
-     /* Note: device state is saved into buffer */
-     ret = qemu_save_device_state(fb);
- 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 20d1a6e21948..59d0c48a3e0d 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -46,6 +46,8 @@ static void migration_global_dump(Monitor *mon)
-                    ms->send_configuration ? "on" : "off");
-     monitor_printf(mon, "send-section-footer: %s\n",
-                    ms->send_section_footer ? "on" : "off");
-+    monitor_printf(mon, "send-switchover-start: %s\n",
-+                   ms->send_switchover_start ? "on" : "off");
-     monitor_printf(mon, "clear-bitmap-shift: %u\n",
-                    ms->clear_bitmap_shift);
++size_t multifd_device_state_payload_size(void)
++{
++    return sizeof(MultiFDDeviceState_t);
++}
++
++void multifd_device_state_send_setup(void)
++{
++    qemu_mutex_init(&queue_job_mutex);
++
++    device_state_send = multifd_send_data_alloc();
++}
++
++void multifd_device_state_clear(MultiFDDeviceState_t *device_state)
++{
++    g_clear_pointer(&device_state->idstr, g_free);
++    g_clear_pointer(&device_state->buf, g_free);
++}
++
++void multifd_device_state_send_cleanup(void)
++{
++    g_clear_pointer(&device_state_send, multifd_send_data_free);
++
++    qemu_mutex_destroy(&queue_job_mutex);
++}
++
++static void multifd_device_state_fill_packet(MultiFDSendParams *p)
++{
++    MultiFDDeviceState_t *device_state = &p->data->u.device_state;
++    MultiFDPacketDeviceState_t *packet = p->packet_device_state;
++
++    packet->hdr.flags = cpu_to_be32(p->flags);
++    strncpy(packet->idstr, device_state->idstr, sizeof(packet->idstr));
++    packet->instance_id = cpu_to_be32(device_state->instance_id);
++    packet->next_packet_size = cpu_to_be32(p->next_packet_size);
++}
++
++static void multifd_prepare_header_device_state(MultiFDSendParams *p)
++{
++    p->iov[0].iov_len = sizeof(*p->packet_device_state);
++    p->iov[0].iov_base = p->packet_device_state;
++    p->iovs_num++;
++}
++
++void multifd_device_state_send_prepare(MultiFDSendParams *p)
++{
++    MultiFDDeviceState_t *device_state = &p->data->u.device_state;
++
++    assert(multifd_payload_device_state(p->data));
++
++    multifd_prepare_header_device_state(p);
++
++    assert(!(p->flags & MULTIFD_FLAG_SYNC));
++
++    p->next_packet_size = device_state->buf_len;
++    if (p->next_packet_size > 0) {
++        p->iov[p->iovs_num].iov_base = device_state->buf;
++        p->iov[p->iovs_num].iov_len = p->next_packet_size;
++        p->iovs_num++;
++    }
++
++    p->flags |= MULTIFD_FLAG_NOCOMP | MULTIFD_FLAG_DEVICE_STATE;
++
++    multifd_device_state_fill_packet(p);
++}
++
++bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
++                                char *data, size_t len)
++{
++    /* Device state submissions can come from multiple threads */
++    QEMU_LOCK_GUARD(&queue_job_mutex);
++    MultiFDDeviceState_t *device_state;
++
++    assert(multifd_payload_empty(device_state_send));
++
++    multifd_set_payload_type(device_state_send, MULTIFD_PAYLOAD_DEVICE_STATE);
++    device_state = &device_state_send->u.device_state;
++    device_state->idstr = g_strdup(idstr);
++    device_state->instance_id = instance_id;
++    device_state->buf = g_memdup2(data, len);
++    device_state->buf_len = len;
++
++    if (!multifd_send(&device_state_send)) {
++        multifd_send_data_clear(device_state_send);
++        return false;
++    }
++
++    return true;
++}
+diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+index fa0fd0289eca..23564ce9aea9 100644
+--- a/migration/multifd-nocomp.c
++++ b/migration/multifd-nocomp.c
+@@ -84,6 +84,13 @@ static void multifd_nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
+     return;
  }
-diff --git a/migration/migration.c b/migration/migration.c
-index 8c5bd0a75c85..2e9d6d5087d7 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2543,6 +2543,8 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     }
-     restart_block = true;
  
-+    qemu_savevm_maybe_send_switchover_start(ms->to_dst_file);
++static void multifd_ram_prepare_header(MultiFDSendParams *p)
++{
++    p->iov[0].iov_len = p->packet_len;
++    p->iov[0].iov_base = p->packet;
++    p->iovs_num++;
++}
 +
+ static void multifd_send_prepare_iovs(MultiFDSendParams *p)
+ {
+     MultiFDPages_t *pages = &p->data->u.ram;
+@@ -117,7 +124,7 @@ static int multifd_nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+          * Only !zerocopy needs the header in IOV; zerocopy will
+          * send it separately.
+          */
+-        multifd_send_prepare_header(p);
++        multifd_ram_prepare_header(p);
+     }
+ 
+     multifd_send_prepare_iovs(p);
+@@ -368,7 +375,7 @@ bool multifd_send_prepare_common(MultiFDSendParams *p)
+         return false;
+     }
+ 
+-    multifd_send_prepare_header(p);
++    multifd_ram_prepare_header(p);
+ 
+     return true;
+ }
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 730acf55cfad..56419af417cc 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -12,6 +12,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/cutils.h"
++#include "qemu/iov.h"
+ #include "qemu/rcu.h"
+ #include "exec/target_page.h"
+ #include "sysemu/sysemu.h"
+@@ -19,6 +20,7 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "file.h"
++#include "migration/misc.h"
+ #include "migration.h"
+ #include "migration-stats.h"
+ #include "savevm.h"
+@@ -111,7 +113,9 @@ MultiFDSendData *multifd_send_data_alloc(void)
+      * added to the union in the future are larger than
+      * (MultiFDPages_t + flex array).
+      */
+-    max_payload_size = MAX(multifd_ram_payload_size(), sizeof(MultiFDPayload));
++    max_payload_size = MAX(multifd_ram_payload_size(),
++                           multifd_device_state_payload_size());
++    max_payload_size = MAX(max_payload_size, sizeof(MultiFDPayload));
+ 
      /*
-      * Cause any non-postcopiable, but iterative devices to
-      * send out their final data.
-@@ -2742,6 +2744,7 @@ static int migration_completion_precopy(MigrationState *s,
-      */
-     s->block_inactive = !migrate_colo();
-     migration_rate_set(RATE_LIMIT_DISABLED);
-+    qemu_savevm_maybe_send_switchover_start(s->to_dst_file);
-     ret = qemu_savevm_state_complete_precopy(s->to_dst_file, false,
-                                              s->block_inactive);
- out_unlock:
-diff --git a/migration/migration.h b/migration/migration.h
-index 0956e9274b2c..2a18349cfec2 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -403,6 +403,8 @@ struct MigrationState {
-     bool send_configuration;
-     /* Whether we send section footer during migration */
-     bool send_section_footer;
-+    /* Whether we send switchover start notification during migration */
-+    bool send_switchover_start;
- 
-     /* Needed by postcopy-pause state */
-     QemuSemaphore postcopy_pause_sem;
-diff --git a/migration/options.c b/migration/options.c
-index ad8d6989a807..f916c8ed4e09 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -92,6 +92,8 @@ Property migration_properties[] = {
-                      send_configuration, true),
-     DEFINE_PROP_BOOL("send-section-footer", MigrationState,
-                      send_section_footer, true),
-+    DEFINE_PROP_BOOL("send-switchover-start", MigrationState,
-+                     send_switchover_start, true),
-     DEFINE_PROP_BOOL("multifd-flush-after-each-section", MigrationState,
-                       multifd_flush_after_each_section, false),
-     DEFINE_PROP_UINT8("x-clear-bitmap-shift", MigrationState,
-@@ -206,6 +208,13 @@ bool migrate_auto_converge(void)
-     return s->capabilities[MIGRATION_CAPABILITY_AUTO_CONVERGE];
- }
- 
-+bool migrate_send_switchover_start(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+
-+    return s->send_switchover_start;
-+}
-+
- bool migrate_background_snapshot(void)
- {
-     MigrationState *s = migrate_get_current();
-diff --git a/migration/savevm.c b/migration/savevm.c
-index f4e4876f7202..a254c38edcca 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -90,6 +90,7 @@ enum qemu_vm_cmd {
-     MIG_CMD_ENABLE_COLO,       /* Enable COLO */
-     MIG_CMD_POSTCOPY_RESUME,   /* resume postcopy on dest */
-     MIG_CMD_RECV_BITMAP,       /* Request for recved bitmap on dst */
-+    MIG_CMD_SWITCHOVER_START,  /* Switchover start notification */
-     MIG_CMD_MAX
- };
- 
-@@ -109,6 +110,7 @@ static struct mig_cmd_args {
-     [MIG_CMD_POSTCOPY_RESUME]  = { .len =  0, .name = "POSTCOPY_RESUME" },
-     [MIG_CMD_PACKAGED]         = { .len =  4, .name = "PACKAGED" },
-     [MIG_CMD_RECV_BITMAP]      = { .len = -1, .name = "RECV_BITMAP" },
-+    [MIG_CMD_SWITCHOVER_START] = { .len =  0, .name = "SWITCHOVER_START" },
-     [MIG_CMD_MAX]              = { .len = -1, .name = "MAX" },
- };
- 
-@@ -1201,6 +1203,19 @@ void qemu_savevm_send_recv_bitmap(QEMUFile *f, char *block_name)
-     qemu_savevm_command_send(f, MIG_CMD_RECV_BITMAP, len + 1, (uint8_t *)buf);
- }
- 
-+static void qemu_savevm_send_switchover_start(QEMUFile *f)
-+{
-+    trace_savevm_send_switchover_start();
-+    qemu_savevm_command_send(f, MIG_CMD_SWITCHOVER_START, 0, NULL);
-+}
-+
-+void qemu_savevm_maybe_send_switchover_start(QEMUFile *f)
-+{
-+    if (migrate_send_switchover_start()) {
-+        qemu_savevm_send_switchover_start(f);
-+    }
-+}
-+
- bool qemu_savevm_state_blocked(Error **errp)
- {
-     SaveStateEntry *se;
-@@ -1713,6 +1728,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
- 
-     ret = qemu_file_get_error(f);
-     if (ret == 0) {
-+        qemu_savevm_maybe_send_switchover_start(f);
-         qemu_savevm_state_complete_precopy(f, false, false);
-         ret = qemu_file_get_error(f);
-     }
-@@ -2413,6 +2429,26 @@ static int loadvm_process_enable_colo(MigrationIncomingState *mis)
-     return ret;
- }
- 
-+static int loadvm_postcopy_handle_switchover_start(void)
-+{
-+    SaveStateEntry *se;
-+
-+    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-+        int ret;
-+
-+        if (!se->ops || !se->ops->switchover_start) {
-+            continue;
-+        }
-+
-+        ret = se->ops->switchover_start(se->opaque);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
-+
-+    return 0;
-+}
-+
- /*
-  * Process an incoming 'QEMU_VM_COMMAND'
-  * 0           just a normal return
-@@ -2511,6 +2547,9 @@ static int loadvm_process_command(QEMUFile *f)
- 
-     case MIG_CMD_ENABLE_COLO:
-         return loadvm_process_enable_colo(mis);
-+
-+    case MIG_CMD_SWITCHOVER_START:
-+        return loadvm_postcopy_handle_switchover_start();
+      * Account for any holes the compiler might insert. We can't pack
+@@ -130,6 +134,9 @@ void multifd_send_data_clear(MultiFDSendData *data)
      }
  
-     return 0;
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 9ec96a995c93..4d402723bc3c 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -53,6 +53,7 @@ void qemu_savevm_send_postcopy_listen(QEMUFile *f);
- void qemu_savevm_send_postcopy_run(QEMUFile *f);
- void qemu_savevm_send_postcopy_resume(QEMUFile *f);
- void qemu_savevm_send_recv_bitmap(QEMUFile *f, char *block_name);
-+void qemu_savevm_maybe_send_switchover_start(QEMUFile *f);
+     switch (data->type) {
++    case MULTIFD_PAYLOAD_DEVICE_STATE:
++        multifd_device_state_clear(&data->u.device_state);
++        break;
+     default:
+         /* Nothing to do */
+         break;
+@@ -232,6 +239,7 @@ static int multifd_recv_initial_packet(QIOChannel *c, Error **errp)
+     return msg.id;
+ }
  
- void qemu_savevm_send_postcopy_ram_discard(QEMUFile *f, const char *name,
-                                            uint16_t len,
-diff --git a/migration/trace-events b/migration/trace-events
-index bb0e0cc6dcfe..551f5af0740f 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -39,6 +39,7 @@ savevm_send_postcopy_run(void) ""
- savevm_send_postcopy_resume(void) ""
- savevm_send_colo_enable(void) ""
- savevm_send_recv_bitmap(char *name) "%s"
-+savevm_send_switchover_start(void) ""
- savevm_state_setup(void) ""
- savevm_state_resume_prepare(void) ""
- savevm_state_header(void) ""
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index 8a254a5b6a2e..a4d4042584c0 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -564,7 +564,9 @@ class MigrationDump(object):
-     QEMU_VM_SUBSECTION    = 0x05
-     QEMU_VM_VMDESCRIPTION = 0x06
-     QEMU_VM_CONFIGURATION = 0x07
-+    QEMU_VM_COMMAND       = 0x08
-     QEMU_VM_SECTION_FOOTER= 0x7e
-+    QEMU_MIG_CMD_SWITCHOVER_START = 0x0b
++/* Fills a RAM multifd packet */
+ void multifd_send_fill_packet(MultiFDSendParams *p)
+ {
+     MultiFDPacket_t *packet = p->packet;
+@@ -524,6 +532,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+     p->name = NULL;
+     g_clear_pointer(&p->data, multifd_send_data_free);
+     p->packet_len = 0;
++    g_clear_pointer(&p->packet_device_state, g_free);
+     g_free(p->packet);
+     p->packet = NULL;
+     multifd_send_state->ops->send_cleanup(p, errp);
+@@ -536,6 +545,7 @@ static void multifd_send_cleanup_state(void)
+ {
+     file_cleanup_outgoing_migration();
+     socket_cleanup_outgoing_migration();
++    multifd_device_state_send_cleanup();
+     qemu_sem_destroy(&multifd_send_state->channels_created);
+     qemu_sem_destroy(&multifd_send_state->channels_ready);
+     qemu_mutex_destroy(&multifd_send_state->multifd_send_mutex);
+@@ -662,16 +672,33 @@ static void *multifd_send_thread(void *opaque)
+          * qatomic_store_release() in multifd_send().
+          */
+         if (qatomic_load_acquire(&p->pending_job)) {
++            bool is_device_state = multifd_payload_device_state(p->data);
++            size_t total_size;
++
+             p->flags = 0;
+             p->iovs_num = 0;
+             assert(!multifd_payload_empty(p->data));
  
-     def __init__(self, filename):
-         self.section_classes = {
-@@ -626,6 +628,15 @@ def read(self, desc_only = False, dump_memory = False, write_memory = False):
-             elif section_type == self.QEMU_VM_SECTION_PART or section_type == self.QEMU_VM_SECTION_END:
-                 section_id = file.read32()
-                 self.sections[section_id].read()
-+            elif section_type == self.QEMU_VM_COMMAND:
-+                command_type = file.read16()
-+                command_data_len = file.read16()
-+                if command_type != self.QEMU_MIG_CMD_SWITCHOVER_START:
-+                    raise Exception("Unknown QEMU_VM_COMMAND: %x" %
-+                                    (command_type))
-+                if command_data_len != 0:
-+                    raise Exception("Invalid SWITCHOVER_START length: %x" %
-+                                    (command_data_len))
-             elif section_type == self.QEMU_VM_SECTION_FOOTER:
-                 read_section_id = file.read32()
-                 if read_section_id != section_id:
+-            ret = multifd_send_state->ops->send_prepare(p, &local_err);
+-            if (ret != 0) {
+-                break;
++            if (is_device_state) {
++                multifd_device_state_send_prepare(p);
++
++                total_size = iov_size(p->iov, p->iovs_num);
++            } else {
++                ret = multifd_send_state->ops->send_prepare(p, &local_err);
++                if (ret != 0) {
++                    break;
++                }
++
++                /*
++                 * Can't just always measure IOVs since these do not include
++                 * packet header in the zerocopy RAM case.
++                 */
++                total_size = (uint64_t)p->next_packet_size + p->packet_len;
+             }
+ 
+             if (migrate_mapped_ram()) {
++                assert(!is_device_state);
++
+                 ret = file_write_ramblock_iov(p->c, p->iov, p->iovs_num,
+                                               &p->data->u.ram, &local_err);
+             } else {
+@@ -684,8 +711,7 @@ static void *multifd_send_thread(void *opaque)
+                 break;
+             }
+ 
+-            stat64_add(&mig_stats.multifd_bytes,
+-                       (uint64_t)p->next_packet_size + p->packet_len);
++            stat64_add(&mig_stats.multifd_bytes, total_size);
+ 
+             p->next_packet_size = 0;
+             multifd_send_data_clear(p->data);
+@@ -903,6 +929,9 @@ bool multifd_send_setup(void)
+             p->packet_len = sizeof(MultiFDPacket_t)
+                           + sizeof(uint64_t) * page_count;
+             p->packet = g_malloc0(p->packet_len);
++            p->packet_device_state = g_malloc0(sizeof(*p->packet_device_state));
++            p->packet_device_state->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
++            p->packet_device_state->hdr.version = cpu_to_be32(MULTIFD_VERSION);
+         }
+         p->name = g_strdup_printf(MIGRATION_THREAD_SRC_MULTIFD, i);
+         p->write_flags = 0;
+@@ -938,6 +967,8 @@ bool multifd_send_setup(void)
+         assert(p->iov);
+     }
+ 
++    multifd_device_state_send_setup();
++
+     return true;
+ 
+ err:
+diff --git a/migration/multifd.h b/migration/multifd.h
+index d2f1d0d74da7..dec7d9404434 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -121,10 +121,12 @@ typedef struct {
+ typedef enum {
+     MULTIFD_PAYLOAD_NONE,
+     MULTIFD_PAYLOAD_RAM,
++    MULTIFD_PAYLOAD_DEVICE_STATE,
+ } MultiFDPayloadType;
+ 
+ typedef union MultiFDPayload {
+     MultiFDPages_t ram;
++    MultiFDDeviceState_t device_state;
+ } MultiFDPayload;
+ 
+ struct MultiFDSendData {
+@@ -137,6 +139,11 @@ static inline bool multifd_payload_empty(MultiFDSendData *data)
+     return data->type == MULTIFD_PAYLOAD_NONE;
+ }
+ 
++static inline bool multifd_payload_device_state(MultiFDSendData *data)
++{
++    return data->type == MULTIFD_PAYLOAD_DEVICE_STATE;
++}
++
+ static inline void multifd_set_payload_type(MultiFDSendData *data,
+                                             MultiFDPayloadType type)
+ {
+@@ -188,8 +195,9 @@ typedef struct {
+ 
+     /* thread local variables. No locking required */
+ 
+-    /* pointer to the packet */
++    /* pointers to the possible packet types */
+     MultiFDPacket_t *packet;
++    MultiFDPacketDeviceState_t *packet_device_state;
+     /* size of the next packet that contains pages */
+     uint32_t next_packet_size;
+     /* packets sent through this channel */
+@@ -346,13 +354,6 @@ bool multifd_send_prepare_common(MultiFDSendParams *p);
+ void multifd_send_zero_page_detect(MultiFDSendParams *p);
+ void multifd_recv_zero_page_process(MultiFDRecvParams *p);
+ 
+-static inline void multifd_send_prepare_header(MultiFDSendParams *p)
+-{
+-    p->iov[0].iov_len = p->packet_len;
+-    p->iov[0].iov_base = p->packet;
+-    p->iovs_num++;
+-}
+-
+ void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc);
+ bool multifd_send(MultiFDSendData **send_data);
+ MultiFDSendData *multifd_send_data_alloc(void);
+@@ -375,4 +376,11 @@ int multifd_ram_flush_and_sync(void);
+ size_t multifd_ram_payload_size(void);
+ void multifd_ram_fill_packet(MultiFDSendParams *p);
+ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
++
++size_t multifd_device_state_payload_size(void);
++void multifd_device_state_send_setup(void);
++void multifd_device_state_clear(MultiFDDeviceState_t *device_state);
++void multifd_device_state_send_cleanup(void);
++void multifd_device_state_send_prepare(MultiFDSendParams *p);
++
+ #endif
 
