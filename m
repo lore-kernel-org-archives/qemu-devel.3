@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A5ABD10F26
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 19:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 098DDD10F28
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 19:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCkpx-0002es-O0; Sun, 17 Nov 2024 14:21:33 -0500
+	id 1tCkqs-0003Sd-Ud; Sun, 17 Nov 2024 14:22:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tCkpq-0002dw-WD
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:21:28 -0500
+ id 1tCkqq-0003HO-24
+ for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:22:28 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tCkpo-0005q0-RQ
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:21:26 -0500
+ id 1tCkqn-0005w9-3Y
+ for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:22:27 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tCkpY-00000002GSf-3Bhz; Sun, 17 Nov 2024 20:21:08 +0100
+ id 1tCkqi-00000002GVB-3S6p; Sun, 17 Nov 2024 20:22:20 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,12 +33,13 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: =?UTF-8?q?=5BPATCH=20v3=2000/24=5D=20Multifd=20=F0=9F=94=80=20device=20state=20transfer=20support=20with=20VFIO=20consumer?=
-Date: Sun, 17 Nov 2024 20:19:55 +0100
-Message-ID: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v3 14/24] migration/multifd: Make MultiFDSendData a struct
+Date: Sun, 17 Nov 2024 20:20:09 +0100
+Message-ID: <90a4097cce137a99a913566c46ff736fd36e7d25.1731773021.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
@@ -64,178 +65,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+From: Peter Xu <peterx@redhat.com>
 
-This is an updated v3 patch series of the v2 series located here:
-https://lore.kernel.org/qemu-devel/cover.1724701542.git.maciej.szmigiero@oracle.com/
+The newly introduced device state buffer can be used for either storing
+VFIO's read() raw data, but already also possible to store generic device
+states.  After noticing that device states may not easily provide a max
+buffer size (also the fact that RAM MultiFDPages_t after all also want to
+have flexibility on managing offset[] array), it may not be a good idea to
+stick with union on MultiFDSendData.. as it won't play well with such
+flexibility.
 
-Changes from v2:
-* Reworked the non-AIO (generic) thread pool to use Glib's GThreadPool
-instead of making the current QEMU AIO thread pool generic.
+Switch MultiFDSendData to a struct.
 
-* Added QEMU_VM_COMMAND MIG_CMD_SWITCHOVER_START sub-command to the
-migration bit stream protocol via migration compatibility flag.
-Used this new bit stream sub-command to achieve barrier between main
-migration channel device state data and multifd device state data instead
-of introducing save_live_complete_precopy_{begin,end} handlers for that as
-the previous patch set version did,
+It won't consume a lot more space in reality, after all the real buffers
+were already dynamically allocated, so it's so far only about the two
+structs (pages, device_state) that will be duplicated, but they're small.
 
-* Added a new migration core thread pool of optional load threads and used
-it to implement VFIO load thread instead of introducing load_finish handler
-as the previous patch set version did.
+With this, we can remove the pretty hard to understand alloc size logic.
+Because now we can allocate offset[] together with the SendData, and
+properly free it when the SendData is freed.
 
-* Made VFIO device config state load operation happen from that device load
-thread instead of from (now gone) load_finish handler that did such load on
-the main migration thread.
-In the future this may allow pushing BQL deeper into the device config
-state load operation internals and so doing more of it in parallel.
+Signed-off-by: Peter Xu <peterx@redhat.com>
+[MSS: Make sure to clear possible device state payload before freeing
+MultiFDSendData, remove placeholders for other patches not included]
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+---
+ migration/multifd-device-state.c |  5 -----
+ migration/multifd-nocomp.c       | 13 ++++++-------
+ migration/multifd.c              | 25 +++++++------------------
+ migration/multifd.h              | 14 +++++++++-----
+ 4 files changed, 22 insertions(+), 35 deletions(-)
 
-* Switched multifd_send() to using a serializing mutex for thread safety
-instead of atomics as suggested by Peter since this seems to not cause
-any performance regression while being simpler.
-
-* Added two patches improving SaveVMHandlers documentation: one documenting
-the BQL behavior of load SaveVMHandlers, another one explaining
-{load,save}_cleanup handlers semantics.
-
-* Added Peter's proposed patch making MultiFDSendData a struct from
-https://lore.kernel.org/qemu-devel/ZuCickYhs3nf2ERC@x1n/
-Other two patches from that message bring no performance benefits so they
-were skipped (as discussed in that e-mail thread).
-
-* Switched x-migration-multifd-transfer VFIO property to tri-state (On,
-Off, Auto), with Auto being now the default value.
-This means hat VFIO device state transfer via multifd channels is
-automatically attempted in configurations that otherwise support it.
-Note that in this patch set version (in contrast with the previous version)
-x-migration-multifd-transfer setting is meaningful both on source AND
-destination QEMU.
-
-* Fixed a race condition with respect to the final multifd channel SYNC
-packet sent by the RAM transfer code.
-
-* Made VFIO's bytes_transferred counter atomic since it is accessed from
-multiple threads (thanks Avihai for spotting it).
-
-* Fixed an issue where VFIO device config sender QEMUFile wouldn't be
-closed in some error conditions, switched to QEMUFile g_autoptr() automatic
-memory management there to avoid such bugs in the future (also thanks
-to Avihai for spotting the issue).
-
-* Many, MANY small changes, like renamed functions, added review tags,
-locks annotations, code formatting, split out changes into separate
-commits, etc.
-
-* Redid benchmarks.
-
-========================================================================
-
-Benchmark results:
-These are 25th percentile of downtime results from 70-100 back-and-forth
-live migrations with the same VM config (guest wasn't restarted during
-these migrations).
-
-Previous benchmarks reported the lowest downtime results ("0th percentile")
-instead but these were subject to variation due to often being one of
-outliers.
-
-The used setup for bechmarking was the same as the RFC version of patch set
-used.
-
-
-Results with 6 multifd channels:
-            4 VFs   2 VFs    1 VF
-Disabled: 1900 ms  859 ms  487 ms
-Enabled:  1095 ms  556 ms  366 ms 
-
-Results with 4 VFs but varied multifd channel count:
-             6 ch     8 ch    15 ch
-Enabled:  1095 ms  1104 ms  1125 ms 
-
-
-Important note:
-4 VF benchmarks were done with commit 5504a8126115
-("KVM: Dynamic sized kvm memslots array") and its revert-dependencies
-reverted since this seems to improve performance in this VM config if the
-multifd transfer is enabled: the downtime performance with this commit
-present is 1141 ms enabled / 1730 ms disabled.
-
-Smaller VF counts actually do seem to benefit from this commit, so it's
-likely that in the future adding some kind of a memslot pre-allocation
-bit stream message might make sense to avoid this downtime regression for
-4 VF configs (and likely higher VF count too).
-
-========================================================================
-
-This series is obviously targeting post QEMU 9.2 release by now
-(AFAIK called 10.0).
-
-Will need to be changed to use hw_compat_10_0 once these become available.
-
-========================================================================
-
-Maciej S. Szmigiero (23):
-  migration: Clarify that {load,save}_cleanup handlers can run without
-    setup
-  thread-pool: Remove thread_pool_submit() function
-  thread-pool: Rename AIO pool functions to *_aio() and data types to
-    *Aio
-  thread-pool: Implement generic (non-AIO) pool support
-  migration: Add MIG_CMD_SWITCHOVER_START and its load handler
-  migration: Add qemu_loadvm_load_state_buffer() and its handler
-  migration: Document the BQL behavior of load SaveVMHandlers
-  migration: Add thread pool of optional load threads
-  migration/multifd: Split packet into header and RAM data
-  migration/multifd: Device state transfer support - receive side
-  migration/multifd: Make multifd_send() thread safe
-  migration/multifd: Add an explicit MultiFDSendData destructor
-  migration/multifd: Device state transfer support - send side
-  migration/multifd: Add migration_has_device_state_support()
-  migration/multifd: Send final SYNC only after device state is complete
-  migration: Add save_live_complete_precopy_thread handler
-  vfio/migration: Don't run load cleanup if load setup didn't run
-  vfio/migration: Add x-migration-multifd-transfer VFIO property
-  vfio/migration: Add load_device_config_state_start trace event
-  vfio/migration: Convert bytes_transferred counter to atomic
-  vfio/migration: Multifd device state transfer support - receive side
-  migration/qemu-file: Define g_autoptr() cleanup function for QEMUFile
-  vfio/migration: Multifd device state transfer support - send side
-
-Peter Xu (1):
-  migration/multifd: Make MultiFDSendData a struct
-
- hw/core/machine.c                  |   2 +
- hw/vfio/migration.c                | 588 ++++++++++++++++++++++++++++-
- hw/vfio/pci.c                      |  11 +
- hw/vfio/trace-events               |  11 +-
- include/block/aio.h                |   8 +-
- include/block/thread-pool.h        |  20 +-
- include/hw/vfio/vfio-common.h      |  21 ++
- include/migration/client-options.h |   4 +
- include/migration/misc.h           |  16 +
- include/migration/register.h       |  67 +++-
- include/qemu/typedefs.h            |   5 +
- migration/colo.c                   |   3 +
- migration/meson.build              |   1 +
- migration/migration-hmp-cmds.c     |   2 +
- migration/migration.c              |   3 +
- migration/migration.h              |   2 +
- migration/multifd-device-state.c   | 193 ++++++++++
- migration/multifd-nocomp.c         |  45 ++-
- migration/multifd.c                | 228 +++++++++--
- migration/multifd.h                |  73 +++-
- migration/options.c                |   9 +
- migration/qemu-file.h              |   2 +
- migration/ram.c                    |  10 +-
- migration/savevm.c                 | 183 ++++++++-
- migration/savevm.h                 |   4 +
- migration/trace-events             |   1 +
- scripts/analyze-migration.py       |  11 +
- tests/unit/test-thread-pool.c      |   2 +-
- util/async.c                       |   6 +-
- util/thread-pool.c                 | 174 +++++++--
- util/trace-events                  |   6 +-
- 31 files changed, 1586 insertions(+), 125 deletions(-)
- create mode 100644 migration/multifd-device-state.c
-
+diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
+index 7741a64fbd4d..8cf5a6c2668c 100644
+--- a/migration/multifd-device-state.c
++++ b/migration/multifd-device-state.c
+@@ -16,11 +16,6 @@ static QemuMutex queue_job_mutex;
+ 
+ static MultiFDSendData *device_state_send;
+ 
+-size_t multifd_device_state_payload_size(void)
+-{
+-    return sizeof(MultiFDDeviceState_t);
+-}
+-
+ void multifd_device_state_send_setup(void)
+ {
+     qemu_mutex_init(&queue_job_mutex);
+diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+index 23564ce9aea9..90c0927b9bcb 100644
+--- a/migration/multifd-nocomp.c
++++ b/migration/multifd-nocomp.c
+@@ -23,15 +23,14 @@
+ 
+ static MultiFDSendData *multifd_ram_send;
+ 
+-size_t multifd_ram_payload_size(void)
++void multifd_ram_payload_alloc(MultiFDPages_t *pages)
+ {
+-    uint32_t n = multifd_ram_page_count();
++    pages->offset = g_new0(ram_addr_t, multifd_ram_page_count());
++}
+ 
+-    /*
+-     * We keep an array of page offsets at the end of MultiFDPages_t,
+-     * add space for it in the allocation.
+-     */
+-    return sizeof(MultiFDPages_t) + n * sizeof(ram_addr_t);
++void multifd_ram_payload_free(MultiFDPages_t *pages)
++{
++    g_clear_pointer(&pages->offset, g_free);
+ }
+ 
+ void multifd_ram_save_setup(void)
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 56419af417cc..4b03253f739e 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -105,26 +105,12 @@ struct {
+ 
+ MultiFDSendData *multifd_send_data_alloc(void)
+ {
+-    size_t max_payload_size, size_minus_payload;
++    MultiFDSendData *new = g_new0(MultiFDSendData, 1);
+ 
+-    /*
+-     * MultiFDPages_t has a flexible array at the end, account for it
+-     * when allocating MultiFDSendData. Use max() in case other types
+-     * added to the union in the future are larger than
+-     * (MultiFDPages_t + flex array).
+-     */
+-    max_payload_size = MAX(multifd_ram_payload_size(),
+-                           multifd_device_state_payload_size());
+-    max_payload_size = MAX(max_payload_size, sizeof(MultiFDPayload));
+-
+-    /*
+-     * Account for any holes the compiler might insert. We can't pack
+-     * the structure because that misaligns the members and triggers
+-     * Waddress-of-packed-member.
+-     */
+-    size_minus_payload = sizeof(MultiFDSendData) - sizeof(MultiFDPayload);
++    multifd_ram_payload_alloc(&new->u.ram);
++    /* Device state allocates its payload on-demand */
+ 
+-    return g_malloc0(size_minus_payload + max_payload_size);
++    return new;
+ }
+ 
+ void multifd_send_data_clear(MultiFDSendData *data)
+@@ -151,8 +137,11 @@ void multifd_send_data_free(MultiFDSendData *data)
+         return;
+     }
+ 
++    /* This also free's device state payload */
+     multifd_send_data_clear(data);
+ 
++    multifd_ram_payload_free(&data->u.ram);
++
+     g_free(data);
+ }
+ 
+diff --git a/migration/multifd.h b/migration/multifd.h
+index dec7d9404434..05ddfb4bf119 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -99,9 +99,13 @@ typedef struct {
+     uint32_t num;
+     /* number of normal pages */
+     uint32_t normal_num;
++    /*
++     * Pointer to the ramblock.  NOTE: it's caller's responsibility to make
++     * sure the pointer is always valid!
++     */
+     RAMBlock *block;
+-    /* offset of each page */
+-    ram_addr_t offset[];
++    /* offset array of each page, managed by multifd */
++    ram_addr_t *offset;
+ } MultiFDPages_t;
+ 
+ struct MultiFDRecvData {
+@@ -124,7 +128,7 @@ typedef enum {
+     MULTIFD_PAYLOAD_DEVICE_STATE,
+ } MultiFDPayloadType;
+ 
+-typedef union MultiFDPayload {
++typedef struct MultiFDPayload {
+     MultiFDPages_t ram;
+     MultiFDDeviceState_t device_state;
+ } MultiFDPayload;
+@@ -373,11 +377,11 @@ static inline uint32_t multifd_ram_page_count(void)
+ void multifd_ram_save_setup(void);
+ void multifd_ram_save_cleanup(void);
+ int multifd_ram_flush_and_sync(void);
+-size_t multifd_ram_payload_size(void);
++void multifd_ram_payload_alloc(MultiFDPages_t *pages);
++void multifd_ram_payload_free(MultiFDPages_t *pages);
+ void multifd_ram_fill_packet(MultiFDSendParams *p);
+ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
+ 
+-size_t multifd_device_state_payload_size(void);
+ void multifd_device_state_send_setup(void);
+ void multifd_device_state_clear(MultiFDDeviceState_t *device_state);
+ void multifd_device_state_send_cleanup(void);
 
