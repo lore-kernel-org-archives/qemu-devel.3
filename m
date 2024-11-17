@@ -4,94 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FB8D68BF9
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 11:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD343D68BF9
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 13:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCdGj-0006np-TS; Sun, 17 Nov 2024 06:16:41 -0500
+	id 1tCffU-00065A-Qg; Sun, 17 Nov 2024 08:50:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tCdGi-0006nH-49
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 06:16:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tCdGg-00041d-BB
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 06:16:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731842196;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Akw0Jpsvyllf2/gLpC1tMXDGBC/KDHr+UbcU6YPA/WU=;
- b=O/+gHumIlbHaqnLjDJ33rDWKRjfZ6jVj5WahaQflEPOv1YV1SpvbNpX9kA0rNC2mfPN19Z
- TrFS5afVnDVz7kpl7Bifgl8u3xPMWWxBC7o6vWw9ig73SdxdU/LQXucf84ajC22wka6lav
- /jPtWlLyZCO5kZxzhzDrP9VzsQWy0qI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-VO3iHsSfOeWG3hPv7zcsaw-1; Sun, 17 Nov 2024 06:16:32 -0500
-X-MC-Unique: VO3iHsSfOeWG3hPv7zcsaw-1
-X-Mimecast-MFC-AGG-ID: VO3iHsSfOeWG3hPv7zcsaw
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-382440c1f83so98591f8f.1
- for <qemu-devel@nongnu.org>; Sun, 17 Nov 2024 03:16:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <paskripkin@gmail.com>)
+ id 1tCffS-00064K-3s; Sun, 17 Nov 2024 08:50:22 -0500
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <paskripkin@gmail.com>)
+ id 1tCffQ-0002HK-HX; Sun, 17 Nov 2024 08:50:21 -0500
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2fb561f273eso31862121fa.2; 
+ Sun, 17 Nov 2024 05:50:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731851418; x=1732456218; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gjWfFSgM5KEzdl52FE7hGAgllBGqgBXace3aPtnBxZo=;
+ b=N3HudcZLrV456Wbgpl0lsX3JIcV8znvXZIrr5issKus75Ocg7fIpmeDVPpx1/R+fEv
+ GvkHi8NA6Jg2olwArSd5OMPUxijw6GrG0bLY1aRiqEVfOtJsuPkqoEPdO0b8Xxg12bdn
+ gy6nt8wlkv3D0e/soZySdw0rFyYvaSCfj+jX9gUUuwrBmwlyWzVV9lPF6A4N7Xa7kuL6
+ wjmqwx3d5wgI6mM1wMvoMQOBdX1/G5B3LRN+sPL7mlhXdp0/NnZyRc6O/XijQNlS98BA
+ DbTZyE4U/ukglXN+rGNXu3dQlLTO0LaOVMEgc0jsuI46J8J1nb9bl0djGQ4P7hOvQABo
+ jp1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731842191; x=1732446991;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Akw0Jpsvyllf2/gLpC1tMXDGBC/KDHr+UbcU6YPA/WU=;
- b=jTyzhT46eln+F8tpbZUaPpgkPXWaYbrn8M1d8keihrkQhkjnXTlajw8NU3PLEtfpOm
- YjE2KQMgIZtFOJiKdb13ujKV5oAtOblkjRP9qWKcNKiYIFpZHAl8mZRs8tOylAvc8BIF
- kOfuVjI19ba1mDGO3Gh74QmZGJz9DnV1O2yRVaNoEkmoiVOFnr3hD9vLURBLx3gZbhvq
- PcpH3deLOltjxSuAhyvw1A/FNW5xooleyuyTaK6A5j4tCHi63YmmwpP9l8TjnbGBqaaj
- 8NeGfBkymqTlB1zcZhWOCFqFN47ioMmil+tAeWmBG3e1i6bPyZUg9YDZo/x7vEepFsOp
- dP0w==
+ d=1e100.net; s=20230601; t=1731851418; x=1732456218;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gjWfFSgM5KEzdl52FE7hGAgllBGqgBXace3aPtnBxZo=;
+ b=tT5SSoegc4hdxSaubiamTBRhOrowJE2K8p+QGibvX2fNJzykO0RB+8BTqmy19a4WwW
+ EoFVNzo6F/AZWKbNZoEZH5UjUvcciviQg/AoC/lFZ18j6uqS0vevgkBmAPD9VK9T+z20
+ 4XAviISTDxl4Is3NHeA1l9by0dJzg4qQYsmsuwCZXxSNqOdaxFJYsTu9T3VthjNCH5oh
+ RJxHYGSn48TAC0KFKeO2SPTF1/Xmk7psazM0hSTCjpBRnlkri2eBWEyYelt6R5YkZAHi
+ 2cfjmGN6uu5BRasHL09+DGCD9nwxkMtE79Y5x1TOvS5WvyBwiArRYXirPStjALVCdJpa
+ 2ohg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUt+vTPRL5V5kO2TRqj/vBKXvJve2Q5FV+sAf6UDdO1L/4IbxHvsvJiz/ZmkaDhmIAX/GixGwiMVAWV@nongnu.org
-X-Gm-Message-State: AOJu0YzlAJn8+zANXZa8nitDBOr6PqtyVXaf2tV1Fc+n1WSgpJ4NsxkA
- v30LOsy6N9EQqDj1yXU5AC/Fr48TNgybAzY5hCuPDn3dpglWW2xsizeS+TiF5Nb+1GmiQdk64XL
- U5GnMmQU662T3Il4jodc8N5ZMjm8mqAbU2k5rxgFM0Fc+p9/ayl30qQgqgVpwvVZPF2rvhqhTt1
- JChWNvFxTJ2gUIH5qGfiBQMglCEwI=
-X-Received: by 2002:a5d:59a2:0:b0:37d:47ef:17d0 with SMTP id
- ffacd0b85a97d-38224f861c6mr7780334f8f.13.1731842190816; 
- Sun, 17 Nov 2024 03:16:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEsq/Rt+FvkdfdzUjIPzwKKJw2/70evih/TGHOMIubDLE9+WyIiWflyt489kYjOz4x8v5efk+1Ld9aK48Z8VNo=
-X-Received: by 2002:a5d:59a2:0:b0:37d:47ef:17d0 with SMTP id
- ffacd0b85a97d-38224f861c6mr7780320f8f.13.1731842190516; Sun, 17 Nov 2024
- 03:16:30 -0800 (PST)
+ AJvYcCUGz8LInRRJSsAfMoVsPq1Fwefb631U/jVTIcrio3sMMT6zNUhzsEsT9I4gVUhw5iNtM+LAXlP9OK7x@nongnu.org
+X-Gm-Message-State: AOJu0YwsutGohUUYZEkNRar1l8CtM10aLQ3b+z/BLtaP3PEUPd69wT2j
+ 6IcoOY/3IDG7BqXMiXBnR8td/+frQr3S/zWeVIAUDw6Ib63EUbAr
+X-Google-Smtp-Source: AGHT+IFQXdDxrZNmVVDFFBqOD/FsCCK/L8uB284vQqOV9NdOt1ewm0VFgfc3fFyLWRPrzq+bZVMPew==
+X-Received: by 2002:a2e:b896:0:b0:2fb:403c:268b with SMTP id
+ 38308e7fff4ca-2ff606fd49fmr42420011fa.34.1731851417825; 
+ Sun, 17 Nov 2024 05:50:17 -0800 (PST)
+Received: from fedora.. ([2a00:1370:8180:90b:d00f:257f:ffb:ac70])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-2ff698515e6sm6229361fa.25.2024.11.17.05.50.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 17 Nov 2024 05:50:15 -0800 (PST)
+From: Pavel Skripkin <paskripkin@gmail.com>
+To: peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Pavel Skripkin <paskripkin@gmail.com>
+Subject: [PATCH v2 1/2] arm/ptw: make get_S1prot accept decoded AP
+Date: Sun, 17 Nov 2024 08:50:10 -0500
+Message-ID: <20241117135010.37410-1-paskripkin@gmail.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241117134931.37249-1-paskripkin@gmail.com>
+References: <20241117134931.37249-1-paskripkin@gmail.com>
 MIME-Version: 1.0
-References: <20241116221757.3501603-1-manos.pitsidianakis@linaro.org>
- <CAFEAcA9m7EnMX+=T0TL2R_NCJqaPUPCUcoYzAo4P2oRUZbM6Kg@mail.gmail.com>
- <CAAjaMXZE+KKJnvcMpmpaH+dmO7MQVmJm7pD+i1yo_5Wb9-ERcQ@mail.gmail.com>
-In-Reply-To: <CAAjaMXZE+KKJnvcMpmpaH+dmO7MQVmJm7pD+i1yo_5Wb9-ERcQ@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sun, 17 Nov 2024 12:16:16 +0100
-Message-ID: <CABgObfadfaohQNf5AheVAUSL5G8i9+zeTOwXRPhOwC_6NpTvmQ@mail.gmail.com>
-Subject: Re: [PATCH v2] rust/pl011: Fix DeviceID reads
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- "open list:ARM SMMU <qemu-arm@nongnu.org>, " <qemu-devel@nongnu.org>,
- "open list:ARM SMMU" <qemu-arm@nongnu.org>, qemu-rust@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000092c2d5062719ee65"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=paskripkin@gmail.com; helo=mail-lj1-x229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.121,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.696,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,92 +94,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000092c2d5062719ee65
-Content-Type: text/plain; charset="UTF-8"
+AP in armv7 short descriptor mode has 3 bits and also domain, which
+makes it incompatible with other arm schemas.
 
-Il dom 17 nov 2024, 11:21 Manos Pitsidianakis <
-manos.pitsidianakis@linaro.org> ha scritto:
+To make it possible to share get_S1prot between armv8, armv7 long
+format, armv7 short format and armv6 it's easier to make caller
+decode AP.
 
-> This seems extremely verbose and rather obscures the fact that these
->> registers are a set of adjacent simple ID registers, compared to
->> the previous code which defined them as an array of values.
->
->
-> One could abstract them with declarative macros to reduce the line count.
-> WDYT about that approach?
->
+Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
+---
+ target/arm/ptw.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-No, this is just overcomplicating things. Like Peter said, just use arrays.
-Copying from the V1 review for reference:
-
-     const UART_PCELL_ID: [u8; 4] = [0x0d, 0xf0, 0x05, 0xb1];
-     const ARM_UART_PERIPH_ID: [u8; 4] = [0x11, 0x10, 0x14, 0x00];
-     const LUMINARY_UART_PERIPH_ID: [u8; 4] = [0x11, 0x00, 0x18, 0x01];
-
-     /// Value of `UARTPeriphID0` through `UARTPeriphID3` registers
-     const fn uart_periph_id(&self, idx: usize) -> u8 {
-         match self {
-             Self::Arm => ARM_UART_PERIPH_ID,
-             Self::Luminary => LUMINARY_UART_PERIPH_ID,
-         }[idx]
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 9849949508..50eed0f811 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1357,25 +1357,24 @@ static int get_S2prot(CPUARMState *env, int s2ap, int xn, bool s1_is_el0)
+  * @env:     CPUARMState
+  * @mmu_idx: MMU index indicating required translation regime
+  * @is_aa64: TRUE if AArch64
+- * @ap:      The 2-bit simple AP (AP[2:1])
++ * @user_rw: Translated AP for user access
++ * @prot_rw: Translated AP for privileged access
+  * @xn:      XN (execute-never) bit
+  * @pxn:     PXN (privileged execute-never) bit
+  * @in_pa:   The original input pa space
+  * @out_pa:  The output pa space, modified by NSTable, NS, and NSE
+  */
+ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
+-                      int ap, int xn, int pxn,
++                      int user_rw, int prot_rw, int xn, int pxn,
+                       ARMSecuritySpace in_pa, ARMSecuritySpace out_pa)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+     bool is_user = regime_is_user(env, mmu_idx);
+-    int prot_rw, user_rw;
+     bool have_wxn;
+     int wxn = 0;
+ 
+     assert(!regime_is_stage2(mmu_idx));
+ 
+-    user_rw = simple_ap_to_rw_prot_is_user(ap, true);
+     if (is_user) {
+         prot_rw = user_rw;
+     } else {
+@@ -1393,8 +1392,6 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
+                    regime_is_pan(env, mmu_idx) &&
+                    (regime_sctlr(env, mmu_idx) & SCTLR_EPAN) && !xn) {
+             prot_rw = 0;
+-        } else {
+-            prot_rw = simple_ap_to_rw_prot_is_user(ap, false);
+         }
      }
-
-     /// Value of `UARTPCellID0` through `UARTPCellID3` registers
-     const fn uart_pcell_id(idx: usize) -> u8 {
-         Self::UART_PCELL_ID[idx]
-     }
-
-Paolo
-
->
-
---00000000000092c2d5062719ee65
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><br><br><div class=3D"gmail_quote" dir=3D"auto"><div dir=
-=3D"ltr" class=3D"gmail_attr">Il dom 17 nov 2024, 11:21 Manos Pitsidianakis=
- &lt;<a href=3D"mailto:manos.pitsidianakis@linaro.org">manos.pitsidianakis@=
-linaro.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
-ding-left:1ex"><div dir=3D"auto"><div><div class=3D"gmail_quote"><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">This seems extremely verbose and ra=
-ther obscures the fact that these<br>
-registers are a set of adjacent simple ID registers, compared to<br>
-the previous code which defined them as an array of values.</blockquote></d=
-iv></div><div dir=3D"auto"><br></div><div dir=3D"auto">One could abstract t=
-hem with declarative macros to reduce the line count. WDYT about that appro=
-ach?</div></div></blockquote></div><div dir=3D"auto"><br></div><div dir=3D"=
-auto"><div dir=3D"auto">No, this is just overcomplicating things. Like Pete=
-r said, just use arrays. Copying from the V1 review for reference:</div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0const UART_P=
-CELL_ID: [u8; 4] =3D [0x0d, 0xf0, 0x05, 0xb1];</div><div dir=3D"auto">=C2=
-=A0 =C2=A0 =C2=A0const ARM_UART_PERIPH_ID: [u8; 4] =3D [0x11, 0x10, 0x14, 0=
-x00];</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0const LUMINARY_UART_PERIPH=
-_ID: [u8; 4] =3D [0x11, 0x00, 0x18, 0x01];</div><div dir=3D"auto"><br></div=
-><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0/// Value of `UARTPeriphID0` through=
- `UARTPeriphID3` registers</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0const=
- fn uart_periph_id(&amp;self, idx: usize) -&gt; u8 {</div><div dir=3D"auto"=
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0match self {</div><div dir=3D"auto">=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Self::Arm =3D&gt; ARM_UART_PER=
-IPH_ID,</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0Self::Luminary =3D&gt; LUMINARY_UART_PERIPH_ID,</div><div dir=3D"auto=
-">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}[idx]</div><div dir=3D"auto">=C2=A0 =
-=C2=A0 =C2=A0}</div><div dir=3D"auto"><br></div><div dir=3D"auto">=C2=A0 =
-=C2=A0 =C2=A0/// Value of `UARTPCellID0` through `UARTPCellID3` registers</=
-div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0const fn uart_pcell_id(idx: usize=
-) -&gt; u8 {</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Self:=
-:UART_PCELL_ID[idx]</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0}</div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div><div class=3D"gma=
-il_quote" dir=3D"auto"><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><d=
-iv dir=3D"auto"><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex">
-</blockquote></div></div></div>
-</blockquote></div></div>
-
---00000000000092c2d5062719ee65--
+ 
+@@ -2044,6 +2041,8 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+         int nse, ns = extract32(attrs, 5, 1);
+         uint8_t attrindx;
+         uint64_t mair;
++        int ap_usr = simple_ap_to_rw_prot_is_user(ap, true);
++        int ap_priv = simple_ap_to_rw_prot_is_user(ap, false);
+ 
+         switch (out_space) {
+         case ARMSS_Root:
+@@ -2114,7 +2113,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+          * Note that we modified ptw->in_space earlier for NSTable, but
+          * result->f.attrs retains a copy of the original security space.
+          */
+-        result->f.prot = get_S1prot(env, mmu_idx, aarch64, ap, xn, pxn,
++        result->f.prot = get_S1prot(env, mmu_idx, aarch64, ap_usr, ap_priv, xn, pxn,
+                                     result->f.attrs.space, out_space);
+ 
+         /* Index into MAIR registers for cache attributes */
+-- 
+2.46.0
 
 
