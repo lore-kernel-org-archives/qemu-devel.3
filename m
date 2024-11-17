@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD343D68BF9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDFCBD68BFA
 	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 13:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCffU-00065A-Qg; Sun, 17 Nov 2024 08:50:25 -0500
+	id 1tCffA-0005xm-H9; Sun, 17 Nov 2024 08:50:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <paskripkin@gmail.com>)
- id 1tCffS-00064K-3s; Sun, 17 Nov 2024 08:50:22 -0500
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ id 1tCff8-0005xC-Fq; Sun, 17 Nov 2024 08:50:02 -0500
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <paskripkin@gmail.com>)
- id 1tCffQ-0002HK-HX; Sun, 17 Nov 2024 08:50:21 -0500
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2fb561f273eso31862121fa.2; 
- Sun, 17 Nov 2024 05:50:19 -0800 (PST)
+ id 1tCff6-00023e-L8; Sun, 17 Nov 2024 08:50:02 -0500
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-53a007743e7so2395566e87.1; 
+ Sun, 17 Nov 2024 05:49:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731851418; x=1732456218; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gjWfFSgM5KEzdl52FE7hGAgllBGqgBXace3aPtnBxZo=;
- b=N3HudcZLrV456Wbgpl0lsX3JIcV8znvXZIrr5issKus75Ocg7fIpmeDVPpx1/R+fEv
- GvkHi8NA6Jg2olwArSd5OMPUxijw6GrG0bLY1aRiqEVfOtJsuPkqoEPdO0b8Xxg12bdn
- gy6nt8wlkv3D0e/soZySdw0rFyYvaSCfj+jX9gUUuwrBmwlyWzVV9lPF6A4N7Xa7kuL6
- wjmqwx3d5wgI6mM1wMvoMQOBdX1/G5B3LRN+sPL7mlhXdp0/NnZyRc6O/XijQNlS98BA
- DbTZyE4U/ukglXN+rGNXu3dQlLTO0LaOVMEgc0jsuI46J8J1nb9bl0djGQ4P7hOvQABo
- jp1Q==
+ d=gmail.com; s=20230601; t=1731851398; x=1732456198; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hQmuiHYA/hhqCVxwD2C2oGlSh3k9WVXtPYarRqLv9pk=;
+ b=h2z0t/m+xSGLlqCaqMGS7toS4YcD+iZI6G2UCq1xgtnZazMotEL1RoCyRoeUWpPAl0
+ hAIOdCk50XK+1coaGuiOUK2aUWW8/pZON4zL+NMmfcBWyjgKN38EBC7Je7c3uS3taIne
+ +NFLWChm2Lsx4/SvH93QW7eddKDoa9l5KUTJbQRh0IsswTbuZ10VoQzDOrxweQWvj3oy
+ ardsC1u/qWacFHKA6VnXky0oUUlFaJMaZlQVUXtTDxzKKfYz9c1JNt6t6g67AmKnXJFm
+ i9RoH9bsko2J8lXb1qMr4nulnynUYD3H55Ntr5DkFGKou4XmbZOOOfa+t/tSIaNAqEMm
+ kz/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731851418; x=1732456218;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gjWfFSgM5KEzdl52FE7hGAgllBGqgBXace3aPtnBxZo=;
- b=tT5SSoegc4hdxSaubiamTBRhOrowJE2K8p+QGibvX2fNJzykO0RB+8BTqmy19a4WwW
- EoFVNzo6F/AZWKbNZoEZH5UjUvcciviQg/AoC/lFZ18j6uqS0vevgkBmAPD9VK9T+z20
- 4XAviISTDxl4Is3NHeA1l9by0dJzg4qQYsmsuwCZXxSNqOdaxFJYsTu9T3VthjNCH5oh
- RJxHYGSn48TAC0KFKeO2SPTF1/Xmk7psazM0hSTCjpBRnlkri2eBWEyYelt6R5YkZAHi
- 2cfjmGN6uu5BRasHL09+DGCD9nwxkMtE79Y5x1TOvS5WvyBwiArRYXirPStjALVCdJpa
- 2ohg==
+ d=1e100.net; s=20230601; t=1731851398; x=1732456198;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hQmuiHYA/hhqCVxwD2C2oGlSh3k9WVXtPYarRqLv9pk=;
+ b=FaO0Zrr0p2PWqv5MQlvNLEplE4CsQH9cAseqSuRZJ/fcx3hkVu4vToc8b2DfPxJx84
+ Q3b9qAvXe4SeVRWgSCicXORYm34sRpbvtBghR4uMLzxdXNc2Wv8j+QBJnzKeRuPdyPGg
+ xDTciaC1cceSY+ufoLnu3MDhCNIUMYW9N6BQ8TFdDUiEj/0ggDm/ijyvns5m9LYQOBct
+ /RBtBe9yx/0oT/bQHwnURHCG6kiT/uX2pwFNGy00SjW6EBPqDxfVuCye0o1yPASASBAe
+ PTF/DNIvZEmzibGo8sLIzCahZ4QlWKW1K+F4O9kySIz4tqMm/MzzAFPJJsmNu2yQJT42
+ v13A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGz8LInRRJSsAfMoVsPq1Fwefb631U/jVTIcrio3sMMT6zNUhzsEsT9I4gVUhw5iNtM+LAXlP9OK7x@nongnu.org
-X-Gm-Message-State: AOJu0YwsutGohUUYZEkNRar1l8CtM10aLQ3b+z/BLtaP3PEUPd69wT2j
- 6IcoOY/3IDG7BqXMiXBnR8td/+frQr3S/zWeVIAUDw6Ib63EUbAr
-X-Google-Smtp-Source: AGHT+IFQXdDxrZNmVVDFFBqOD/FsCCK/L8uB284vQqOV9NdOt1ewm0VFgfc3fFyLWRPrzq+bZVMPew==
-X-Received: by 2002:a2e:b896:0:b0:2fb:403c:268b with SMTP id
- 38308e7fff4ca-2ff606fd49fmr42420011fa.34.1731851417825; 
- Sun, 17 Nov 2024 05:50:17 -0800 (PST)
+ AJvYcCX3lhiGmssnYukIo6fklcXr3sbHvMKeHyeKmIk1L0gpeACRfvN38XPMLopm4/VhXltIOWskJaurc7wH@nongnu.org
+X-Gm-Message-State: AOJu0Yxb8cdzmMIqUbJCbOh6HHViF4pcauxrPGiuEiiJNUOIDryZx0e+
+ pvgxggazqlrgRdkEkcyk7s05vA/4liULnhVJMeY3pz1R2FykHt4U
+X-Google-Smtp-Source: AGHT+IG8bAXlQGZ09lY6rFQBWSaJ626CCMZE8+P3QwOyrbeA6VelsTHBBwiCsn5Tk2drxnDPnfojeg==
+X-Received: by 2002:a05:6512:3989:b0:539:ddf1:ac6f with SMTP id
+ 2adb3069b0e04-53dab3bf70dmr3419722e87.46.1731851397467; 
+ Sun, 17 Nov 2024 05:49:57 -0800 (PST)
 Received: from fedora.. ([2a00:1370:8180:90b:d00f:257f:ffb:ac70])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2ff698515e6sm6229361fa.25.2024.11.17.05.50.13
+ 2adb3069b0e04-53da654e33bsm1285366e87.276.2024.11.17.05.49.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 Nov 2024 05:50:15 -0800 (PST)
+ Sun, 17 Nov 2024 05:49:56 -0800 (PST)
 From: Pavel Skripkin <paskripkin@gmail.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
  Pavel Skripkin <paskripkin@gmail.com>
-Subject: [PATCH v2 1/2] arm/ptw: make get_S1prot accept decoded AP
-Date: Sun, 17 Nov 2024 08:50:10 -0500
-Message-ID: <20241117135010.37410-1-paskripkin@gmail.com>
+Subject: [PATCH v2 0/2] arm/ptw: fix missing sctlr.{u}wxn
+Date: Sun, 17 Nov 2024 08:49:31 -0500
+Message-ID: <20241117134931.37249-1-paskripkin@gmail.com>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241117134931.37249-1-paskripkin@gmail.com>
-References: <20241117134931.37249-1-paskripkin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=paskripkin@gmail.com; helo=mail-lj1-x229.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=paskripkin@gmail.com; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,78 +91,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AP in armv7 short descriptor mode has 3 bits and also domain, which
-makes it incompatible with other arm schemas.
+We observed failing WXN tests in our OS which we tracked down to missing
+WXN handling in qemu.
 
-To make it possible to share get_S1prot between armv8, armv7 long
-format, armv7 short format and armv6 it's easier to make caller
-decode AP.
+The problem was in that short descriptor format walker did not respect WXN
+bit. To fix it, make it possible to call get_S1prot() from
+get_phys_addr_v6().
 
-Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
----
- target/arm/ptw.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+Tested localy that all permission-related tests in our OS passed on
+following platforms:
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 9849949508..50eed0f811 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1357,25 +1357,24 @@ static int get_S2prot(CPUARMState *env, int s2ap, int xn, bool s1_is_el0)
-  * @env:     CPUARMState
-  * @mmu_idx: MMU index indicating required translation regime
-  * @is_aa64: TRUE if AArch64
-- * @ap:      The 2-bit simple AP (AP[2:1])
-+ * @user_rw: Translated AP for user access
-+ * @prot_rw: Translated AP for privileged access
-  * @xn:      XN (execute-never) bit
-  * @pxn:     PXN (privileged execute-never) bit
-  * @in_pa:   The original input pa space
-  * @out_pa:  The output pa space, modified by NSTable, NS, and NSE
-  */
- static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
--                      int ap, int xn, int pxn,
-+                      int user_rw, int prot_rw, int xn, int pxn,
-                       ARMSecuritySpace in_pa, ARMSecuritySpace out_pa)
- {
-     ARMCPU *cpu = env_archcpu(env);
-     bool is_user = regime_is_user(env, mmu_idx);
--    int prot_rw, user_rw;
-     bool have_wxn;
-     int wxn = 0;
- 
-     assert(!regime_is_stage2(mmu_idx));
- 
--    user_rw = simple_ap_to_rw_prot_is_user(ap, true);
-     if (is_user) {
-         prot_rw = user_rw;
-     } else {
-@@ -1393,8 +1392,6 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
-                    regime_is_pan(env, mmu_idx) &&
-                    (regime_sctlr(env, mmu_idx) & SCTLR_EPAN) && !xn) {
-             prot_rw = 0;
--        } else {
--            prot_rw = simple_ap_to_rw_prot_is_user(ap, false);
-         }
-     }
- 
-@@ -2044,6 +2041,8 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-         int nse, ns = extract32(attrs, 5, 1);
-         uint8_t attrindx;
-         uint64_t mair;
-+        int ap_usr = simple_ap_to_rw_prot_is_user(ap, true);
-+        int ap_priv = simple_ap_to_rw_prot_is_user(ap, false);
- 
-         switch (out_space) {
-         case ARMSS_Root:
-@@ -2114,7 +2113,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-          * Note that we modified ptw->in_space earlier for NSTable, but
-          * result->f.attrs retains a copy of the original security space.
-          */
--        result->f.prot = get_S1prot(env, mmu_idx, aarch64, ap, xn, pxn,
-+        result->f.prot = get_S1prot(env, mmu_idx, aarch64, ap_usr, ap_priv, xn, pxn,
-                                     result->f.attrs.space, out_space);
- 
-         /* Index into MAIR registers for cache attributes */
+- arm64-virt
+- arm-vexpress (v7)
+- arm-virt     (v7)
+
+Changes from v1:
+  - Fix style errors
+  - Add cover letter
+  - Use get_S1prot() instead of open-coded checks
+
+v1: https://lore.kernel.org/qemu-devel/20241114165900.6399-1-paskripkin@gmail.com/
+
+Pavel Skripkin (2):
+  arm/ptw: make get_S1prot accept decoded AP
+  arm/ptw: use get_S1prot in get_phys_addr_v6
+
+ target/arm/ptw.c | 54 +++++++++++++++++++++---------------------------
+ 1 file changed, 24 insertions(+), 30 deletions(-)
+
 -- 
 2.46.0
 
