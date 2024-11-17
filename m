@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A78D10F38
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 23:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AF0DD10F3A
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 23:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCoGO-0008Ee-3Y; Sun, 17 Nov 2024 18:01:04 -0500
+	id 1tCoGO-0008Eu-St; Sun, 17 Nov 2024 18:01:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1tCoCp-0007gs-L8
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 17:57:23 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1tCoCt-0007hP-VV
+ for qemu-devel@nongnu.org; Sun, 17 Nov 2024 17:57:27 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1tCoCn-0002rx-WC
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 17:57:23 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4314c4cb752so21914835e9.2
- for <qemu-devel@nongnu.org>; Sun, 17 Nov 2024 14:57:21 -0800 (PST)
+ id 1tCoCs-0002sm-Am
+ for qemu-devel@nongnu.org; Sun, 17 Nov 2024 17:57:27 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-431481433bdso21905635e9.3
+ for <qemu-devel@nongnu.org>; Sun, 17 Nov 2024 14:57:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731884240; x=1732489040; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731884245; x=1732489045; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=18E/3zGs9HMVV32crijwYqItWb76EfGhA7NDcdf18zI=;
- b=ZY2ie++C3qDnao3snaSM/v2tuJBRVuMbnSmBk1zEzfJDZ1dCt6w8slSzUU0UIlJPWO
- MPiXGGVd6LFnl8phdRrKj+WWnRCSpll/7nqflIovwkQzB4Ks6R0YTZKQUI6adkGhQ3do
- GHdzAg3GC07Tj66uTSOCEdXiLgSMpZW2j025ejBU7wYzxZh7981BsKUfNjvU3neqrNWl
- J+vVxKYp8O1LKqiTxgYwuB54cxLPASWTRAhYrGN241ZAsXGzUZtvo4OFMta+y40JcAh2
- d1+n6kLNUWLTObD7eKNfQaoVEh7MTuLOiS4G8jhJL0ZSS6Ah7S/uLI2t7CJ3wDyl0S/0
- E9OA==
+ bh=BU5iYSnAuyrEV5xBAp7OTGDZ08INsgWhPSSF/a6akAU=;
+ b=WQTne9XwSo7DZZwjnjucP43sDDM8T/nhyMmwY/xW9XV8C0WHEY9VVG8lcRakCysj4M
+ RdvV8M9gJxVrJNn4VtTDnVZVD4l6KYZ7zPOPHIM1TXX1Yd44Ixwe5D1j+5PS1nZDr9Xj
+ afjS+XBAbmrs74DSwnMFq/wzoUKBYF8fNFjWa7/vLYoTNe5yDj+nqKag2L8qmZ3HVLYR
+ 3YC+57gppHH/4WfJyGzGRXn1+07RxSxgP2H9DOcpIzJa9yGE98E4iS3HiY/hevCV+UNs
+ afZF/BDSfj6HohIshemASgnjjdgfdkYOzG9gQn7ASN8n2n1LLDSD/IAGHxMQlmlus54d
+ GS8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731884240; x=1732489040;
+ d=1e100.net; s=20230601; t=1731884245; x=1732489045;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=18E/3zGs9HMVV32crijwYqItWb76EfGhA7NDcdf18zI=;
- b=C7Ze6E75CIjnOjIJMzmpiN3FrucmrZwdQl/D9dumNcm3GTknwSdQ5MHA1YYpF8pvpp
- fpPQWbaK2L2pBExLi4Ic9mJ2P4LR6ybLuinbRNwo++CkdaQpI8pqSxg8oHh274zvgeO0
- DlNR0AAXn9U14YLQ3djfFF4PKEiaa6b9KEEFbjumHv2vKMt2CN16egZv9Nkfd4LPQMvC
- wfVEK4VhTYVHzmec2huP+wP6cIj9Pdl/O2Z7koc2VxDJpuZvQZD3gwoegxL/9iTR2TLD
- Oh97N1hViOQaf163eWNc1oD4b90kYB0dt3OCiRVo5zZ3g5lBKrgrs3G8wtdlJMwyIhb8
- gkvw==
-X-Gm-Message-State: AOJu0Yw87o+SzNRIYLPMZe3zO+zUKNyzICsN7KYGc93tc4AQHpST/+BH
- FfHuV5TjpcuvVfFK6XQkQtP97MMDwL/UNeaDxujjGMW5rvRPFxGv+el7HqVqXuclnQ==
-X-Google-Smtp-Source: AGHT+IHLc6Sm+j9iQX+jKzbrHRuFIBpPEfgrjZQYK0sgcCONCFBIN1qTQNe5lmRmmMZCPooj8R7N+A==
-X-Received: by 2002:a05:6000:186e:b0:382:442c:2c54 with SMTP id
- ffacd0b85a97d-382442c2f00mr1758432f8f.28.1731884240294; 
- Sun, 17 Nov 2024 14:57:20 -0800 (PST)
+ bh=BU5iYSnAuyrEV5xBAp7OTGDZ08INsgWhPSSF/a6akAU=;
+ b=aFJzYpRWDVZWSAIkrAK+RhlxDy7HSdQ2Yquc1kLkTxOHGMFfVXYuxuj2ergHM9x58m
+ zo5dfZ/E0nRMDkodaG2mPqz1wTCG3IN0CEcQd3DJQbBlxYuUyo96yEO4Bn/EbtdaZ5nQ
+ fQAPsbqI+G6AQZmTm5M89jcTnCPnG/EI/kwvcykoFj2J+JAv+BreRWzWiM8MkqwKUGP6
+ sEL19JfmN9H1yUdkSINZy8SRFaRHx7TaTvwOiLY0rQSwycuwtNyXw6Se9PX0j/mT5QGB
+ lojwZnhFU4+TwCa1iktpGi1VQ2/Yp/kxUKFuvAs/0i2AUJJBYIngUY4hYHc8PRYlrYhq
+ lOPg==
+X-Gm-Message-State: AOJu0YwUjcp8GZFu4AiCTd452xzdAUtNPBCVxp7dIKQ8YxCPsbrlfOkV
+ tZH1tvG3fysR0L4thpnm8I3TwoFDtSJDrAw6JpAz1C3rNkpbbgkcLpmKClmwHdolUw==
+X-Google-Smtp-Source: AGHT+IFyzJm/bt66HHsHbHfXenoObKKWxM0MX5r7suUHYUC0pfk57muyRcLSEXpPWH3LMZypCPL6Wg==
+X-Received: by 2002:a05:600c:4e08:b0:431:1512:743b with SMTP id
+ 5b1f17b1804b1-432df78b038mr74724205e9.21.1731884244870; 
+ Sun, 17 Nov 2024 14:57:24 -0800 (PST)
 Received: from asus-xubuntu.. ([82.78.167.190])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432da2800absm136351505e9.25.2024.11.17.14.57.18
+ 5b1f17b1804b1-432da2800absm136351505e9.25.2024.11.17.14.57.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 Nov 2024 14:57:19 -0800 (PST)
+ Sun, 17 Nov 2024 14:57:24 -0800 (PST)
 From: "=?UTF-8?q?Ioan-Cristian=20C=C3=8ERSTEA?="
  <jean.christian.cirstea@gmail.com>
 X-Google-Original-From: =?UTF-8?q?Ioan-Cristian=20C=C3=8ERSTEA?=
@@ -65,17 +65,17 @@ X-Google-Original-From: =?UTF-8?q?Ioan-Cristian=20C=C3=8ERSTEA?=
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Ioan-Cristian=20C=C3=8ERSTEA?=
  <ioan-cristian.cirstea@tutanota.com>
-Subject: [PATCH 2/7] [BCM2835 AUX 2/7] Add basic support for CNTL register
-Date: Mon, 18 Nov 2024 00:56:38 +0200
-Message-Id: <20241117225643.768322-2-ioan-cristian.cirstea@tutanota.com>
+Subject: [PATCH 5/7] [BCM2835 AUX 5/7] Suffix constants
+Date: Mon, 18 Nov 2024 00:56:41 +0200
+Message-Id: <20241117225643.768322-5-ioan-cristian.cirstea@tutanota.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241117225643.768322-1-ioan-cristian.cirstea@tutanota.com>
 References: <20241117225643.768322-1-ioan-cristian.cirstea@tutanota.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=jean.christian.cirstea@gmail.com; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=jean.christian.cirstea@gmail.com; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,156 +99,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit allows software to enable/disable both the receiver and the
-transmitter through the CNTL register.
+The constants defined through the preprocessor must be unsigned. Also,
+unsigned integer constants are consistent across different bases (see
+section 6.4.4.1 of the C99 standard draft).
 
 Signed-off-by: Ioan-Cristian CÎRSTEA <ioan-cristian.cirstea@tutanota.com>
 ---
- hw/char/bcm2835_aux.c         | 50 +++++++++++++++++++++++++++++------
- include/hw/char/bcm2835_aux.h |  3 ++-
- 2 files changed, 44 insertions(+), 9 deletions(-)
+ hw/char/bcm2835_aux.c | 52 +++++++++++++++++++++----------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
 diff --git a/hw/char/bcm2835_aux.c b/hw/char/bcm2835_aux.c
-index 540cb30872..ebc7f5ade5 100644
+index 266d0dfdc7..e887076d9b 100644
 --- a/hw/char/bcm2835_aux.c
 +++ b/hw/char/bcm2835_aux.c
-@@ -29,6 +29,7 @@
- #include "qemu/log.h"
+@@ -30,49 +30,49 @@
  #include "qemu/module.h"
  
-+/* TODO: These constants need to be unsigned */
- #define AUX_IRQ         0x0
- #define AUX_ENABLES     0x4
- #define AUX_MU_IO_REG   0x40
-@@ -43,10 +44,17 @@
- #define AUX_MU_STAT_REG 0x64
- #define AUX_MU_BAUD_REG 0x68
+ /* TODO: These constants need to be unsigned */
+-#define AUX_IRQ         0x0
+-#define AUX_ENABLES     0x4
+-#define AUX_MU_IO_REG   0x40
+-#define AUX_MU_IER_REG  0x44
+-#define AUX_MU_IIR_REG  0x48
+-#define AUX_MU_LCR_REG  0x4c
+-#define AUX_MU_MCR_REG  0x50
+-#define AUX_MU_LSR_REG  0x54
+-#define AUX_MU_MSR_REG  0x58
+-#define AUX_MU_SCRATCH  0x5c
+-#define AUX_MU_CNTL_REG 0x60
+-#define AUX_MU_STAT_REG 0x64
+-#define AUX_MU_BAUD_REG 0x68
++#define AUX_IRQ         0x0U
++#define AUX_ENABLES     0x4U
++#define AUX_MU_IO_REG   0x40U
++#define AUX_MU_IER_REG  0x44U
++#define AUX_MU_IIR_REG  0x48U
++#define AUX_MU_LCR_REG  0x4cU
++#define AUX_MU_MCR_REG  0x50U
++#define AUX_MU_LSR_REG  0x54U
++#define AUX_MU_MSR_REG  0x58U
++#define AUX_MU_SCRATCH  0x5cU
++#define AUX_MU_CNTL_REG 0x60U
++#define AUX_MU_STAT_REG 0x64U
++#define AUX_MU_BAUD_REG 0x68U
  
-+/* Register masks */
-+#define MASK_AUX_MU_CNTL_REG 0x3
-+
- /* bits in IER/IIR registers */
- #define RX_INT  0x1
- #define TX_INT  0x2
+ /* Register masks */
+-#define MASK_AUX_MU_CNTL_REG 0x3
++#define MASK_AUX_MU_CNTL_REG 0x3U
+ /* Mask for TX-related bits */
+-#define MASK_AUX_MU_STAT_REG_TX 0xF00032A
++#define MASK_AUX_MU_STAT_REG_TX 0xF00032AU
+ /*
+  * Mask for RX-related bits.
+  * XXX: It does not include receiver IDLE and receiver overrun for now.
+  */
+-#define MASK_AUX_MU_STAT_REG_RX 0xF0001
++#define MASK_AUX_MU_STAT_REG_RX 0xF0001U
  
-+/* bits in CNTL register */
-+#define RX_ENABLE 0x1
-+#define TX_ENABLE 0x2
-+
+ /* bits in IER register */
+-#define IER_RX_IRQ_ENABLE  0x1
+-#define IER_TX_IRQ_ENABLE  0x2
++#define IER_RX_IRQ_ENABLE  0x1U
++#define IER_TX_IRQ_ENABLE  0x2U
+ 
+ /* bits in IIR register */
+-#define IIR_IRQ_NOT_PEND 0x1
+-#define IIR_TX_EMPTY 0x2
+-#define IIR_RX_VALID 0x4
++#define IIR_IRQ_NOT_PEND 0x1U
++#define IIR_TX_EMPTY 0x2U
++#define IIR_RX_VALID 0x4U
+ 
+ /* bits in CNTL register */
+-#define CNTL_RX_ENABLE 0x1
+-#define CNTL_TX_ENABLE 0x2
++#define CNTL_RX_ENABLE 0x1U
++#define CNTL_TX_ENABLE 0x2U
+ 
+ /* bits in STAT register */
+-#define STAT_TRANSMITTER_DONE 0x200
++#define STAT_TRANSMITTER_DONE 0x200U
+ 
  /* FIFOs length */
- #define BCM2835_AUX_RX_FIFO_LEN 8
- #define BCM2835_AUX_TX_FIOF_LEN 8
-@@ -72,13 +80,27 @@ static void bcm2835_aux_update(BCM2835AuxState *s)
-     qemu_set_irq(s->irq, s->iir != 0);
- }
+-#define BCM2835_AUX_RX_FIFO_LEN 8
+-#define BCM2835_AUX_TX_FIFO_LEN 8
++#define BCM2835_AUX_RX_FIFO_LEN 8U
++#define BCM2835_AUX_TX_FIFO_LEN 8U
  
-+static bool bcm2835_aux_is_tx_enabled(BCM2835AuxState *s)
-+{
-+    return (s->cntl & TX_ENABLE) != 0;
-+}
-+
-+static bool bcm2835_aux_is_rx_enabled(BCM2835AuxState *s)
-+{
-+    return (s->cntl & RX_ENABLE) != 0;
-+}
-+
- static uint64_t bcm2835_aux_read(void *opaque, hwaddr offset, unsigned size)
- {
-     BCM2835AuxState *s = opaque;
-     Fifo8 *rx_fifo = &s->rx_fifo;
-     const bool is_rx_fifo_not_empty = !fifo8_is_empty(rx_fifo);
-     const uint32_t rx_fifo_fill_level = fifo8_num_used(rx_fifo);
--    uint32_t c = 0, res;
-+    /*
-+     * 0xFF trashes terminal output, so device driver bugs can be found quickly
-+     * in case the RX_FIFO is read while empty
-+     */
-+    uint32_t c = 0xFF, res;
- 
-     switch (offset) {
-     case AUX_IRQ:
-@@ -140,7 +162,7 @@ static uint64_t bcm2835_aux_read(void *opaque, hwaddr offset, unsigned size)
-         return 0;
- 
-     case AUX_MU_CNTL_REG:
--        return 0x3; /* tx, rx enabled */
-+        return s->cntl;
- 
-     case AUX_MU_STAT_REG:
-         res = 0x30e; /* space in the output buffer, empty tx fifo, idle tx/rx */
-@@ -183,7 +205,9 @@ static void bcm2835_aux_write(void *opaque, hwaddr offset, uint64_t value,
-         ch = value;
-         /* XXX this blocks entire thread. Rewrite to use
-          * qemu_chr_fe_write and background I/O callbacks */
--        qemu_chr_fe_write_all(&s->chr, &ch, 1);
-+        if (bcm2835_aux_is_tx_enabled(s)) {
-+            qemu_chr_fe_write_all(&s->chr, &ch, 1);
-+        }
-         break;
- 
-     case AUX_MU_IER_REG:
-@@ -211,7 +235,12 @@ static void bcm2835_aux_write(void *opaque, hwaddr offset, uint64_t value,
-         break;
- 
-     case AUX_MU_CNTL_REG:
--        qemu_log_mask(LOG_UNIMP, "%s: AUX_MU_CNTL_REG unsupported\n", __func__);
-+        if (value & ~MASK_AUX_MU_CNTL_REG) {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "%s: auto flow control not supported\n",
-+                          __func__);
-+        }
-+        s->cntl = value & MASK_AUX_MU_CNTL_REG;
-         break;
- 
-     case AUX_MU_BAUD_REG:
-@@ -233,7 +262,7 @@ static int bcm2835_aux_can_receive(void *opaque)
-     return !fifo8_is_full(&s->rx_fifo);
- }
- 
--static void bcm2835_aux_put_fifo(void *opaque, uint8_t value)
-+static void bcm2835_aux_put_fifo(BCM2835AuxState *s, uint8_t value)
- {
-     BCM2835AuxState *s = opaque;
-     Fifo8 *rx_fifo = &s->rx_fifo;
-@@ -246,7 +275,11 @@ static void bcm2835_aux_put_fifo(void *opaque, uint8_t value)
- 
- static void bcm2835_aux_receive(void *opaque, const uint8_t *buf, int size)
- {
--    bcm2835_aux_put_fifo(opaque, *buf);
-+    BCM2835AuxState *s = opaque;
-+
-+    if (bcm2835_aux_is_rx_enabled(s)) {
-+        bcm2835_aux_put_fifo(opaque, *buf);
-+    }
- }
- 
- static const MemoryRegionOps bcm2835_aux_ops = {
-@@ -266,8 +299,9 @@ static const VMStateDescription vmstate_bcm2835_aux = {
-     .fields = (const VMStateField[]) {
-         VMSTATE_FIFO8(rx_fifo, BCM2835AuxState),
-         VMSTATE_FIFO8(_tx_fifo, BCM2835AuxState),
--        VMSTATE_UINT8(ier, BCM2835AuxState),
--        VMSTATE_UINT8(iir, BCM2835AuxState),
-+        VMSTATE_UINT32(ier, BCM2835AuxState),
-+        VMSTATE_UINT32(iir, BCM2835AuxState),
-+        VMSTATE_UINT32(cntl, BCM2835AuxState),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/include/hw/char/bcm2835_aux.h b/include/hw/char/bcm2835_aux.h
-index cb1a824994..feaedc9e2f 100644
---- a/include/hw/char/bcm2835_aux.h
-+++ b/include/hw/char/bcm2835_aux.h
-@@ -29,7 +29,8 @@ struct BCM2835AuxState {
-     Fifo8 rx_fifo;
-     /* Unused for now */
-     Fifo8 _tx_fifo;
--    uint8_t ier, iir;
-+    /* Registers */
-+    uint32_t ier, iir, cntl;
- };
- 
- #endif
+ #define log_guest_error(fmt, ...) \
+     qemu_log_mask(LOG_GUEST_ERROR, \
 -- 
 2.34.1
 
