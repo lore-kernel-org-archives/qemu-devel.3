@@ -4,34 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7862D68BE2
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 03:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC05D68BDD
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 03:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCWAT-0002Qd-IM; Sat, 16 Nov 2024 22:41:45 -0500
+	id 1tCWIA-0003Rb-Q5; Sat, 16 Nov 2024 22:49:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tCWAS-0002QT-FX
- for qemu-devel@nongnu.org; Sat, 16 Nov 2024 22:41:44 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tCWI9-0003RO-9o
+ for qemu-devel@nongnu.org; Sat, 16 Nov 2024 22:49:41 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tCWAP-0008V2-8h
- for qemu-devel@nongnu.org; Sat, 16 Nov 2024 22:41:43 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tCWI6-0001k2-GU
+ for qemu-devel@nongnu.org; Sat, 16 Nov 2024 22:49:40 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 99903A3F5D;
- Sun, 17 Nov 2024 06:41:12 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 55408A3F60;
+ Sun, 17 Nov 2024 06:49:22 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 84394171EB6;
- Sun, 17 Nov 2024 06:41:24 +0300 (MSK)
-Message-ID: <f3baa53f-42e0-4a3b-aa15-469df31e1b71@tls.msk.ru>
-Date: Sun, 17 Nov 2024 06:41:24 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3D2B1171EBC;
+ Sun, 17 Nov 2024 06:49:34 +0300 (MSK)
+Message-ID: <6bf88d71-e3a1-4143-b770-34e9bafb892b@tls.msk.ru>
+Date: Sun, 17 Nov 2024 06:49:34 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] linux-user: Honor elf alignment when placing images
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241112203757.804320-1-richard.henderson@linaro.org>
- <20241112203757.804320-2-richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 1/2] target/i386: fix hang when using slow path for
+ ptw_setl
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20241025175857.2554252-1-pierrick.bouvier@linaro.org>
+ <20241025175857.2554252-2-pierrick.bouvier@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -77,7 +81,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241112203757.804320-2-richard.henderson@linaro.org>
+In-Reply-To: <20241025175857.2554252-2-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -103,33 +107,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-12.11.2024 23:37, Richard Henderson wrote:
-> Most binaries don't actually depend on more than page alignment,
-> but any binary can request it.  Not honoring this was a bug.
+25.10.2024 20:58, Pierrick Bouvier wrote:
+> When instrumenting memory accesses for plugin, we force memory accesses
+> to use the slow path for mmu [1]. This create a situation where we end
+> up calling ptw_setl_slow. This was fixed recently in [2] but the issue
+> still could appear out of plugins use case.
 > 
-> This became obvious when gdb reported
+> Since this function gets called during a cpu_exec, start_exclusive then
+> hangs. This exclusive section was introduced initially for security
+> reasons [3].
 > 
->      Failed to read a valid object file image from memory
+> I suspect this code path was never triggered, because ptw_setl_slow
+> would always be called transitively from cpu_exec, resulting in a hang.
 > 
-> when examining some vdso which are marked as needing more
-> than page alignment.
+> [1] https://gitlab.com/qemu-project/qemu/-/commit/6d03226b42247b68ab2f0b3663e0f624335a4055
+> [2] https://gitlab.com/qemu-project/qemu/-/commit/115ade42d50144c15b74368d32dc734ea277d853
+> [3] https://gitlab.com/qemu-project/qemu/-/issues/279
+> 
+> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2566
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Should we pick this one up for stable series too (and maybe a
-subsequent cleanup)?
+[1] is in 8.2.x. [2] is in 9.2.tobe, and marked as should be picked up
+for stable (I picked it up for 8.2.x, 9.0.x and 9.1.x).
 
-And/or maybe all the alignment reducing patches for vdsos?
+Shouldn't this one be picked up for stable too, as an addition fix
+ontop of [2]?  Or is it not important? (I guess since it's reported
+in our issue tracker, it is problematic for someone already).
 
-One or the other is apparently needed, but I'm not sure how
-really problematic this issue is.  And you didn't Cc stable
-here for a reason, I guess :)
+I picked this one up for 8.2, 9.0 and 9.1 stable series -- please
+let me know if I should not.
 
-For now I picked up the alignment change for arm vdso due to
-a subsequent change there (be8 & be32 split).  What's left
-looks.. lonely :)
-
-What do you think?
+Also, what about the 2/2 in this series, "cpu: ensure we don't call
+start_exclusive from cpu_exec", which is 779f30a01af8566780cefc8639505b758950afb3
+in master now?
 
 Thanks,
 
 /mjt
+
+>   target/i386/tcg/sysemu/excp_helper.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+> index da187c8792a..ddc51e3e0b8 100644
+> --- a/target/i386/tcg/sysemu/excp_helper.c
+> +++ b/target/i386/tcg/sysemu/excp_helper.c
+> @@ -107,6 +107,10 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
+>   {
+>       uint32_t cmp;
+>   
+> +    CPUState *cpu = env_cpu(in->env);
+> +    /* We are in cpu_exec, and start_exclusive can't be called directly.*/
+> +    g_assert(cpu->running);
+> +    cpu_exec_end(cpu);
+>       /* Does x86 really perform a rmw cycle on mmio for ptw? */
+>       start_exclusive();
+>       cmp = cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
+> @@ -114,6 +118,7 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
+>           cpu_stl_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
+>       }
+>       end_exclusive();
+> +    cpu_exec_start(cpu);
+>       return cmp == old;
+>   }
+>   
+
+
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
