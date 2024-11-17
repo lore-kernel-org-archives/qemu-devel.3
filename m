@@ -4,53 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 098DDD10F28
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 19:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ECA7D10F3A
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Nov 2024 23:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCkqs-0003Sd-Ud; Sun, 17 Nov 2024 14:22:31 -0500
+	id 1tCoGH-0008D9-T4; Sun, 17 Nov 2024 18:00:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tCkqq-0003HO-24
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:22:28 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tCkqn-0005w9-3Y
- for qemu-devel@nongnu.org; Sun, 17 Nov 2024 14:22:27 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tCkqi-00000002GVB-3S6p; Sun, 17 Nov 2024 20:22:20 +0100
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Peter Xu <peterx@redhat.com>,
-	Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3 14/24] migration/multifd: Make MultiFDSendData a struct
-Date: Sun, 17 Nov 2024 20:20:09 +0100
-Message-ID: <90a4097cce137a99a913566c46ff736fd36e7d25.1731773021.git.maciej.szmigiero@oracle.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <cover.1731773021.git.maciej.szmigiero@oracle.com>
-References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
+ id 1tCoCw-0007iX-9m
+ for qemu-devel@nongnu.org; Sun, 17 Nov 2024 17:57:30 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
+ id 1tCoCu-0002tG-NL
+ for qemu-devel@nongnu.org; Sun, 17 Nov 2024 17:57:30 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43161c0068bso11661425e9.1
+ for <qemu-devel@nongnu.org>; Sun, 17 Nov 2024 14:57:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731884247; x=1732489047; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zOg4Uf9LmZCDp34QTwcMrfKO0WCHbSBpZDm8O0Hzx0A=;
+ b=fh+MLzusEFYM7Eq3cyjcHjbI/Nwxt+Pld2kin2eNYdCT3zqPNFqfQIQcAuPX7A9v/y
+ l85ybr11oI9py/D8n+0VmrH3Sz21mAGS80Lw2QQRnY+4XgVYDaAfFLhqaWNn6MnWAGRj
+ 0wsnV1YGt+6Mgw/+lEJ/8L2s+VtTKsEMeimUF3mdAk/ymqsVajNSVvXi8lSsPU9wYJs1
+ 5tASmXJvipde5GTn39ESXryIv/OGasQDDVI7MWu/LWw2k7jzqJWvjLlH+/qpGUA8qVE5
+ eYCT8f15W7VaDtLsYv55f+WmqxplLdur99hAuw8lSGmlFVUnGXiQMnJsGaeQMC8YT0Ai
+ Qa0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731884247; x=1732489047;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zOg4Uf9LmZCDp34QTwcMrfKO0WCHbSBpZDm8O0Hzx0A=;
+ b=NVVEoybGhpSd+5ooG0oCOQoDCqfu/Ry2dRlFlQfS13clOiTxPQ6FkyAv38B80TfrjM
+ mGNBUFePjFgKOd7UZSUO7CwpDmMc3067Fcn/EYL8qmOx39L2B2Ubtpt/L8bNtiVggqs5
+ b+2xDxbr5mK3qfypI65zYhyR6/KuD2bKmY32YdkruYX1agaO6KWq+3OJzVI7FgGcq0Pa
+ wIwLXBVDIWuLH2PkjBKzsn2bI29QwRC1enBBlmzqa4MMoanxdM+b5Jm9QfizmLKhMSjD
+ N29HqfLtU42D7Bskh3KypY7LuML8T8yCiYRPtU/ZJoksLBAMwQ9YP73+PkWcmjRToxRw
+ LDJQ==
+X-Gm-Message-State: AOJu0YzqnHunpDr8iq0CLApMoP7m05/KC58X+uslKezjYP+5irMEC4Ti
+ uyO+pthnw3M/X+DG4olcpQg30bYQjUKnd5/NZ8oeDSLfBjHvpHHe96D1b3aErmH1kg==
+X-Google-Smtp-Source: AGHT+IF4Hxm68QnBptJuwowUfHAoqP/jHKPZsuVqasgx4hRyj5frtBnt7j7vKc8KFK0GEzDvSA5C6Q==
+X-Received: by 2002:a05:6000:2ca:b0:382:43ee:9f70 with SMTP id
+ ffacd0b85a97d-38243eea2b2mr1734246f8f.22.1731884247275; 
+ Sun, 17 Nov 2024 14:57:27 -0800 (PST)
+Received: from asus-xubuntu.. ([82.78.167.190])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432da2800absm136351505e9.25.2024.11.17.14.57.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 17 Nov 2024 14:57:26 -0800 (PST)
+From: "=?UTF-8?q?Ioan-Cristian=20C=C3=8ERSTEA?="
+ <jean.christian.cirstea@gmail.com>
+X-Google-Original-From: =?UTF-8?q?Ioan-Cristian=20C=C3=8ERSTEA?=
+ <ioan-cristian.cirstea@tutanota.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Ioan-Cristian=20C=C3=8ERSTEA?=
+ <ioan-cristian.cirstea@tutanota.com>
+Subject: [PATCH 7/7] [BCM2835 AUX 7/7] STAT OVERRUN & IDLE
+Date: Mon, 18 Nov 2024 00:56:43 +0200
+Message-Id: <20241117225643.768322-7-ioan-cristian.cirstea@tutanota.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241117225643.768322-1-ioan-cristian.cirstea@tutanota.com>
+References: <20241117225643.768322-1-ioan-cristian.cirstea@tutanota.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=jean.christian.cirstea@gmail.com; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SUBJ_ALL_CAPS=0.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 17 Nov 2024 18:00:54 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,167 +99,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+This commit implements the required logic for receiver overrun and idle
+bitfields in the STAT register. Currently, the receiver is always
+reported as idle.
 
-The newly introduced device state buffer can be used for either storing
-VFIO's read() raw data, but already also possible to store generic device
-states.  After noticing that device states may not easily provide a max
-buffer size (also the fact that RAM MultiFDPages_t after all also want to
-have flexibility on managing offset[] array), it may not be a good idea to
-stick with union on MultiFDSendData.. as it won't play well with such
-flexibility.
-
-Switch MultiFDSendData to a struct.
-
-It won't consume a lot more space in reality, after all the real buffers
-were already dynamically allocated, so it's so far only about the two
-structs (pages, device_state) that will be duplicated, but they're small.
-
-With this, we can remove the pretty hard to understand alloc size logic.
-Because now we can allocate offset[] together with the SendData, and
-properly free it when the SendData is freed.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
-[MSS: Make sure to clear possible device state payload before freeing
-MultiFDSendData, remove placeholders for other patches not included]
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Signed-off-by: Ioan-Cristian CÎRSTEA <ioan-cristian.cirstea@tutanota.com>
 ---
- migration/multifd-device-state.c |  5 -----
- migration/multifd-nocomp.c       | 13 ++++++-------
- migration/multifd.c              | 25 +++++++------------------
- migration/multifd.h              | 14 +++++++++-----
- 4 files changed, 22 insertions(+), 35 deletions(-)
+ hw/char/bcm2835_aux.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
-index 7741a64fbd4d..8cf5a6c2668c 100644
---- a/migration/multifd-device-state.c
-+++ b/migration/multifd-device-state.c
-@@ -16,11 +16,6 @@ static QemuMutex queue_job_mutex;
+diff --git a/hw/char/bcm2835_aux.c b/hw/char/bcm2835_aux.c
+index 577d9a9be3..c9bce7d7d3 100644
+--- a/hw/char/bcm2835_aux.c
++++ b/hw/char/bcm2835_aux.c
+@@ -29,7 +29,6 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
  
- static MultiFDSendData *device_state_send;
+-/* TODO: These constants need to be unsigned */
+ #define AUX_IRQ         0x0U
+ #define AUX_ENABLES     0x4U
+ #define AUX_MU_IO_REG   0x40U
+@@ -50,11 +49,8 @@
  
--size_t multifd_device_state_payload_size(void)
--{
--    return sizeof(MultiFDDeviceState_t);
--}
--
- void multifd_device_state_send_setup(void)
+ /* Mask for TX-related bits */
+ #define MASK_AUX_MU_STAT_REG_TX 0xF00032AU
+-/*
+- * Mask for RX-related bits.
+- * XXX: It does not include receiver IDLE and receiver overrun for now.
+- */
+-#define MASK_AUX_MU_STAT_REG_RX 0xF0001U
++/* Mask for RX-related bits */
++#define MASK_AUX_MU_STAT_REG_RX 0xF0015U
+ 
+ /* Mask for TX-related bits */
+ #define MASK_AUX_MU_LSR_REG_TX 0x60U
+@@ -70,6 +66,7 @@
+ 
+ /* bits in LSR register */
+ #define LSR_OVERRUN 0x2U
++#define LSR_OVERRUN_OFFSET 0x1U
+ 
+ /* bits in CNTL register */
+ #define CNTL_RX_ENABLE 0x1U
+@@ -77,6 +74,8 @@
+ 
+ /* bits in STAT register */
+ #define STAT_TRANSMITTER_DONE 0x200U
++#define STAT_OVERRUN 0x10U
++#define STAT_RECEIVER_IDLE 0x4U
+ 
+ /* FIFOs length */
+ #define BCM2835_AUX_RX_FIFO_LEN 8U
+@@ -90,12 +89,12 @@
+                   ##__VA_ARGS__ \
+                   )
+ 
+-static void bcm2835_aux_clear_overrun_bits(BCM2835AuxState *s)
++static void bcm2835_aux_clear_overrun_bit(BCM2835AuxState *s)
  {
-     qemu_mutex_init(&queue_job_mutex);
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index 23564ce9aea9..90c0927b9bcb 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -23,15 +23,14 @@
- 
- static MultiFDSendData *multifd_ram_send;
- 
--size_t multifd_ram_payload_size(void)
-+void multifd_ram_payload_alloc(MultiFDPages_t *pages)
- {
--    uint32_t n = multifd_ram_page_count();
-+    pages->offset = g_new0(ram_addr_t, multifd_ram_page_count());
-+}
- 
--    /*
--     * We keep an array of page offsets at the end of MultiFDPages_t,
--     * add space for it in the allocation.
--     */
--    return sizeof(MultiFDPages_t) + n * sizeof(ram_addr_t);
-+void multifd_ram_payload_free(MultiFDPages_t *pages)
-+{
-+    g_clear_pointer(&pages->offset, g_free);
+     s->lsr &= ~LSR_OVERRUN;
  }
  
- void multifd_ram_save_setup(void)
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 56419af417cc..4b03253f739e 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -105,26 +105,12 @@ struct {
- 
- MultiFDSendData *multifd_send_data_alloc(void)
+-static void bcm2835_aux_set_overrun_bits(BCM2835AuxState *s)
++static void bcm2835_aux_set_overrun_bit(BCM2835AuxState *s)
  {
--    size_t max_payload_size, size_minus_payload;
-+    MultiFDSendData *new = g_new0(MultiFDSendData, 1);
+     s->lsr |= LSR_OVERRUN;
+ }
+@@ -134,10 +133,17 @@ static void bcm2835_aux_rx_stat_update(BCM2835AuxState *s)
+ {
+     Fifo8 *rx_fifo = &s->rx_fifo;
+     const bool rx_symbol_available = !fifo8_is_empty(rx_fifo);
++    const bool rx_overrun = (s->lsr & LSR_OVERRUN) >> LSR_OVERRUN_OFFSET;
+     const uint32_t rx_fifo_level = fifo8_num_used(rx_fifo);
  
--    /*
--     * MultiFDPages_t has a flexible array at the end, account for it
--     * when allocating MultiFDSendData. Use max() in case other types
--     * added to the union in the future are larger than
--     * (MultiFDPages_t + flex array).
--     */
--    max_payload_size = MAX(multifd_ram_payload_size(),
--                           multifd_device_state_payload_size());
--    max_payload_size = MAX(max_payload_size, sizeof(MultiFDPayload));
--
--    /*
--     * Account for any holes the compiler might insert. We can't pack
--     * the structure because that misaligns the members and triggers
--     * Waddress-of-packed-member.
--     */
--    size_minus_payload = sizeof(MultiFDSendData) - sizeof(MultiFDPayload);
-+    multifd_ram_payload_alloc(&new->u.ram);
-+    /* Device state allocates its payload on-demand */
- 
--    return g_malloc0(size_minus_payload + max_payload_size);
-+    return new;
+     s->stat &= ~MASK_AUX_MU_STAT_REG_RX;
++    /*
++     * Receiver overrun bit is set separately in bcm2835_aux_set_overrun_bit
++     * Receiver is always marked as idle.
++     */
+     s->stat |= (rx_fifo_level << 16) |
++               (rx_overrun << 4) |
++               STAT_RECEIVER_IDLE |
+                (rx_symbol_available << 0);
  }
  
- void multifd_send_data_clear(MultiFDSendData *data)
-@@ -151,8 +137,11 @@ void multifd_send_data_free(MultiFDSendData *data)
-         return;
+@@ -340,7 +346,7 @@ static uint64_t bcm2835_aux_read(void *opaque, hwaddr offset, unsigned size)
+     case AUX_MU_LSR_REG:
+         res = s->lsr;
+         /* Overrun bit is self-clearing */
+-        bcm2835_aux_clear_overrun_bits(s);
++        bcm2835_aux_clear_overrun_bit(s);
+         return res;
+ 
+     case AUX_MU_MSR_REG:
+@@ -441,7 +447,7 @@ static int bcm2835_aux_can_receive(void *opaque)
+     const bool is_rx_enabled = bcm2835_aux_is_rx_enabled(s);
+ 
+     if (is_rx_fifo_full && is_rx_enabled) {
+-        bcm2835_aux_set_overrun_bits(s);
++        bcm2835_aux_set_overrun_bit(s);
      }
  
-+    /* This also free's device state payload */
-     multifd_send_data_clear(data);
- 
-+    multifd_ram_payload_free(&data->u.ram);
-+
-     g_free(data);
- }
- 
-diff --git a/migration/multifd.h b/migration/multifd.h
-index dec7d9404434..05ddfb4bf119 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -99,9 +99,13 @@ typedef struct {
-     uint32_t num;
-     /* number of normal pages */
-     uint32_t normal_num;
-+    /*
-+     * Pointer to the ramblock.  NOTE: it's caller's responsibility to make
-+     * sure the pointer is always valid!
-+     */
-     RAMBlock *block;
--    /* offset of each page */
--    ram_addr_t offset[];
-+    /* offset array of each page, managed by multifd */
-+    ram_addr_t *offset;
- } MultiFDPages_t;
- 
- struct MultiFDRecvData {
-@@ -124,7 +128,7 @@ typedef enum {
-     MULTIFD_PAYLOAD_DEVICE_STATE,
- } MultiFDPayloadType;
- 
--typedef union MultiFDPayload {
-+typedef struct MultiFDPayload {
-     MultiFDPages_t ram;
-     MultiFDDeviceState_t device_state;
- } MultiFDPayload;
-@@ -373,11 +377,11 @@ static inline uint32_t multifd_ram_page_count(void)
- void multifd_ram_save_setup(void);
- void multifd_ram_save_cleanup(void);
- int multifd_ram_flush_and_sync(void);
--size_t multifd_ram_payload_size(void);
-+void multifd_ram_payload_alloc(MultiFDPages_t *pages);
-+void multifd_ram_payload_free(MultiFDPages_t *pages);
- void multifd_ram_fill_packet(MultiFDSendParams *p);
- int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
- 
--size_t multifd_device_state_payload_size(void);
- void multifd_device_state_send_setup(void);
- void multifd_device_state_clear(MultiFDDeviceState_t *device_state);
- void multifd_device_state_send_cleanup(void);
+     return !is_rx_fifo_full;
+-- 
+2.34.1
+
 
