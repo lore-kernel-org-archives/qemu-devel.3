@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E31D591B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 20:54:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A9DD591B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 21:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD8kb-0005fb-2H; Mon, 18 Nov 2024 15:53:37 -0500
+	id 1tD8sD-0008Og-GD; Mon, 18 Nov 2024 16:01:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD8kP-0005du-R1
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:53:27 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD8s8-0008O0-4X
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 16:01:24 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD8kO-0003ik-Bn
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:53:25 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5ceb03aadb1so4692701a12.0
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 12:52:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD8s5-0004YG-W0
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 16:01:23 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43193678216so1488375e9.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 13:01:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731963177; x=1732567977; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731963679; x=1732568479; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ibrJewJda6kzpIcXZBnn1V6BypHenJzxRUpQo2ZfYoU=;
- b=oO8IyGGvHiyC/IZRA/duTJi1F0mdVRYRZkzUGjhvJrptyCTxYHGVKuMHjhlLF9/0tF
- Prqn6aeI0AlADY+/GFt8to1crKiX4x+ILYvHM55zdXKB3wgPjTYKh9qNDX1NUV7wwcOf
- 2w0tvngdeT5/XSke6NuCl8pyXAeG7gbqU6cq55N9T0eCyHPyEB49QHkxczGyXMueth17
- Lh4h8CxaiHcppcrEokfvytak6hF9XMc1cmTnykYilg832TQWymN71dfto/ZRPOeNpv2A
- kkwxe2x3ZS/ngWzOYqwLK1ivsK7zEu56+2Z5LDZlWJQ3KVTgL82a9m9A5Gh/3IE/8oo2
- 8uuQ==
+ bh=Wg+MEQtWiOOkqZ/ig3DhuzJIeaFSbDL7WmQiMbcryuE=;
+ b=fgfL5XJli6VvszeP59hIKw271dkJvh/e5Dph7AFEifelk2exj7LJINAdjLof2ix6+M
+ 4golgy/41slKHfSAAqd5Ps0Y52Zcm2eDRxb8d/Yehj+mJlBST6JrouIF0AZxKd4LmMK7
+ TNgZjyA76TW/ykwS1D+i0WEE1miTjzMR8a3ZsIv1VpJjLW1o7LHBIsQgi4SM9T2YdX/c
+ WwPBDgQaZHg0aT+W6vQ8ROQ61g9Bgx6KuMDJipaXJpVDV27qTYs5Sqc7vWNK4tPzdkwB
+ MhsB5L/RK3YD0E2jW8qxCGsUcDoNfB1c/m6V6/t6s+5F1QTvOZWe0mmrMP6Jnp7xc1SS
+ TiFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731963177; x=1732567977;
+ d=1e100.net; s=20230601; t=1731963679; x=1732568479;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ibrJewJda6kzpIcXZBnn1V6BypHenJzxRUpQo2ZfYoU=;
- b=vq2o8WSG6urOla7uy4b+3oExkBE9FJ4oAURjB1KO0WLa0CovDxIcLQ4YPFlu//hvQq
- Nz9gQqRxMuUqVeDkF9Pr3LRqhVR6YHEb2X9JLs5eKmG1tWBWxKoWO5rJe+MVE2ITM0x5
- LYm66EPeppxTlxBPLPyN8E8cQw2JG+77cmDD5zxjqyR4PCL6kWRXiRXoGT1gN2LFDrHm
- JC+2PB++8eLguyFryMSvQu/9Vz9v8URvWSSs1JfbCSm+YSRy0I5rexUiCKtAjP2Krb0p
- pPIF5JcXvNh+n2e4C9A8qbKfvKu3S7SxUmHhfgYhmlW6LPXHiqnBhB0Mwc64MmStU8aR
- wr7g==
+ bh=Wg+MEQtWiOOkqZ/ig3DhuzJIeaFSbDL7WmQiMbcryuE=;
+ b=nPH+VD+h+CYgjC8WXZ6dZEdt5hpGLsH6J7Ji2YljwkATwpFiz/msKH2/yOnJaMhmqZ
+ JNWV3uc2FTtEmLZ/0Yb7SbqH7UeghxunSHh9iEMBmgtzrsvGbu6fmpM6GiK7vHwzPKDY
+ zeD87yITUzfHlHzUMZ8+ZPL9kDKAtt0mh0vVzP19Ga0OGrHgGxJOcyYqMiyoTxo/U/q4
+ ljP2JhIVS1mGZoG2Iqx4QDKiADfm5FAZoj+L/t/8ava4yD97yAcf2DL4HFkAhPK3PaHN
+ eRypQdQ988uXLpvwIreyFZuvtuaLLxORFP6cB1hmMu5kT1H1mLS2826ZGtUYGAvFE7ZY
+ +0/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUeJkgni+0+l4FA2BERY9pj7WWbkhYjmLrYdLN9VvwvRQxzwx8uSl/sNwqUmq6pmswRckKM+0D9aQLp@nongnu.org
-X-Gm-Message-State: AOJu0YwLvlnc0DTuHwN6LT5CqNNryg0lYzae77TOwFZIjPvnEcztzYsn
- 5HcMfK8FyUGb6OR8SFuzTljpujiiDrKE8QMK/lxN6wD+6QMw5cVTPRCxmlVU+fpGAqO5jlJoHpn
- A
-X-Google-Smtp-Source: AGHT+IFF2B3sJtOdYonmUzPQcSBTMXFAnbagLxOER8LBPzenCpjDPueQpkiKUFKmUXelhijZSUUYMg==
-X-Received: by 2002:a17:907:7f8a:b0:a9a:e91:68c5 with SMTP id
- a640c23a62f3a-aa483454536mr1147034066b.33.1731963176796; 
- Mon, 18 Nov 2024 12:52:56 -0800 (PST)
+ AJvYcCXxZYG586H7A9Xbk1qlcI2m1AiqaX6fS5MeWlm7zq++aDugRfKgl1Vyq6qNZ2NQ5bAgsz7M7ov2WrxE@nongnu.org
+X-Gm-Message-State: AOJu0YwSlfUQrX3W8DQmpzkr1vU8fhZpDJ5pdNXRdrt++f/WTggyWz6U
+ TlWXym1NlT2lgE4RManpimt3D0m1eiTbxHVzel6Fnlm+vt8KnjSg0r22+/kzNOo5jL8kt1Rq5Dl
+ n
+X-Google-Smtp-Source: AGHT+IG8pCCrIPDqUR6rAmp9nsGfqgKy0NGO1hDQNZ2YgIUKjoZMk9J+8GJ7SO6Xq3qrKwaBSZIzJQ==
+X-Received: by 2002:a05:6000:1543:b0:382:228b:4c34 with SMTP id
+ ffacd0b85a97d-382258f0863mr11606802f8f.2.1731963679607; 
+ Mon, 18 Nov 2024 13:01:19 -0800 (PST)
 Received: from [192.168.69.146] ([176.187.198.1])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20e08af75sm578025366b.202.2024.11.18.12.52.55
+ ffacd0b85a97d-3822ed2bc9esm10070251f8f.6.2024.11.18.13.01.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Nov 2024 12:52:56 -0800 (PST)
-Message-ID: <0f60c592-3fe3-4275-a65d-ddaa3b735cd9@linaro.org>
-Date: Mon, 18 Nov 2024 21:52:54 +0100
+ Mon, 18 Nov 2024 13:01:18 -0800 (PST)
+Message-ID: <a31c41d5-4301-43a3-a8f9-e7d5d262b025@linaro.org>
+Date: Mon, 18 Nov 2024 22:01:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/loongarch: fix alignment error in tci.
-To: guoguangyao <guoguangyao18@mails.ucas.ac.cn>, qemu-devel@nongnu.org
-Cc: gaosong@loongson.cn
-References: <20241118133243.291769-1-guoguangyao18@mails.ucas.ac.cn>
+Subject: Re: [PATCH 0/3] hw/intc/loongarch_extioi: Fix undefined behaviour
+ with bit array APIs
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20241108135514.4006953-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241118133243.291769-1-guoguangyao18@mails.ucas.ac.cn>
+In-Reply-To: <20241108135514.4006953-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,16 +98,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/11/24 14:32, guoguangyao wrote:
-> Add alignment and check for fpr in
-> CPUArchState, fix alignment error in
-> tcg interpreter when executing LASX.
-> 
-> Signed-off-by: guoguangyao <guoguangyao18@mails.ucas.ac.cn>
-> ---
->   target/loongarch/cpu.h | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+On 8/11/24 14:55, Peter Maydell wrote:
 
+> Peter Maydell (3):
+>    bitops.h: Define bit operations on 'uint32_t' arrays
+>    hw/intc/arm_gicv3: Use bitops.h uint32_t bit array functions
+>    hw/intc/loongarch_extioi: Use set_bit32() and clear_bit32() for s->isr
+
+Series:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
