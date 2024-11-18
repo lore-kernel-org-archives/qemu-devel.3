@@ -4,57 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C7BD43FEE
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 08:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4911ED43FF7
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 09:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCxKV-0004Lk-UJ; Mon, 18 Nov 2024 03:41:55 -0500
+	id 1tCxjP-0001Jy-TO; Mon, 18 Nov 2024 04:07:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daoudlamalmi@pm.me>)
- id 1tCuaB-00036Z-1N
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 00:45:57 -0500
-Received: from mail-40134.protonmail.ch ([185.70.40.134])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tCxiv-0001IG-4C
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 04:07:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daoudlamalmi@pm.me>)
- id 1tCua8-0006gL-Qq
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 00:45:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
- s=protonmail3; t=1731908745; x=1732167945;
- bh=stqlWgQgInhHASze49xjgsF8+Ns3jQ3GoRU4AkPjMcw=;
- h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
- List-Unsubscribe:List-Unsubscribe-Post;
- b=Bnn+vKBzXj1BLP+xT9/rEXGs1GPSGuDiMrKA1Oipklobk5Ub4ECzd+JKsVZAtSlYn
- jeLz1hAfHF7irbtLMrjW0WiCmZgp3ITWgMresbbGpegIEVdvBjw0Wj9oONP1hfQElW
- jBPkB6bSwLfCdeWSKGbZvgcUjDcoCaixitBCmMkCBiQorK0lpuIUpCgJJOR8eaI3VK
- iplNNNGtuXSwRr7LjnCdWwwxEQ8u2tIx0CwiXre36hs+TO/FLwwRo1F0GRlUM1XnnN
- IWqqytesmb8y4bqKjGh85oDcUjYJADJsha4NCi6PEAN5tUa/yRaGOM2C5Ixisui1BC
- KML2NnvBnR8VQ==
-Date: Mon, 18 Nov 2024 05:45:41 +0000
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: MPC5553/MPC5554 Emulation (information request)
-Message-ID: <kvndhk2oZokSDFW29-5pef8r1zmug70mTlHmrKT99LrvOaAflAeBV-vD6I6BAiAkHavpsN23lKJ6mN4Bd7UYFDe2tgbSegrXYVK6p-tR5F4=@pm.me>
-Feedback-ID: 123214895:user:proton
-X-Pm-Message-ID: cd35a153071f3bf303255e40702d674edd98a4dd
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tCxis-00080s-38
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 04:07:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731920825;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=DMEvXMTLZihxgHtCgp1xwUhel2LFnhiFqaEseM0PGiI=;
+ b=UQt8AhjtPG5Sb37EYKycZTDtcfkIGTJNUiWwivh0KItmoZTVr51RUCOUqTszQKFaD0DlP9
+ N4NGOVZH38iVBQVNd2X5HbRCVIDg3FjGauDNdgKCUj6ay7reOyDzQAYCMhdCgktT4aDIWc
+ IepHlk7tQTrkRsUBMiFP0GlJyfX8oMs=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-027C0W-aPAWKCtl3bYEM5A-1; Mon,
+ 18 Nov 2024 04:06:59 -0500
+X-MC-Unique: 027C0W-aPAWKCtl3bYEM5A-1
+X-Mimecast-MFC-AGG-ID: 027C0W-aPAWKCtl3bYEM5A
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D25CD1955BCF; Mon, 18 Nov 2024 09:06:55 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.9])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 332571956089; Mon, 18 Nov 2024 09:06:50 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?Jan=20L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH] docs: aspeed: Reorganize the "Boot options" section
+Date: Mon, 18 Nov 2024 10:06:48 +0100
+Message-ID: <20241118090648.187720-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg=pgp-sha512;
- boundary="------f8c8c4c65c6b1f3ba45302bd436eec672b0dd6d02b2d9d3340a3ba4b5634a7cd";
- charset=utf-8
-Received-SPF: pass client-ip=185.70.40.134; envelope-from=daoudlamalmi@pm.me;
- helo=mail-40134.protonmail.ch
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 18 Nov 2024 03:41:44 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,122 +84,158 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Daoud LAMALMI <daoudlamalmi@pm.me>
-From:  Daoud LAMALMI via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------f8c8c4c65c6b1f3ba45302bd436eec672b0dd6d02b2d9d3340a3ba4b5634a7cd
-Content-Type: multipart/mixed;boundary=---------------------d0e10408bb929648c2fa48dd152afe89
+Add subsubsections for possible boot methods and introduce a new
+section on eMMC boot support for the ast2600-evb and rainier-emmc
+machines, boot partitions assumptions and limitations.
 
------------------------d0e10408bb929648c2fa48dd152afe89
-Content-Type: multipart/alternative;boundary=---------------------dbd6039b9557699868def7bcbaaa1617
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ docs/system/arm/aspeed.rst | 99 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 86 insertions(+), 13 deletions(-)
 
------------------------dbd6039b9557699868def7bcbaaa1617
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
-
-Goal
-----
-
-I'd like to know if it is planned for QEMU to be able to emulate the MPC55=
-53/MPC5554 microcontrollers.
-
-Technical details
------------------
-
-I know that the e200z6 processor can already be emulated. I don't know how=
- much work is needed to emulate those microcontrollers fully based on the =
-work that has already been done.
-
-Additional information
-----------------------
-
-If it is not planned, I'll most likely start educating myself on this proj=
-ect to try and patch it in as it's a need that is quite important for me. =
-I'll try not to waste your time and read as much as I can about your guide=
-lines. Would you advise me against trying to do this? I'd like to know how=
- hard you think this will be.
-
-DISCLAIMER : I am still very much a newbie in embedded systems, I'm only i=
-n the first year of my master's degree in embedded systems.
-
-Sent with Proton Mail secure email.
------------------------dbd6039b9557699868def7bcbaaa1617
-Content-Type: multipart/related;boundary=---------------------d39bbbeede525ceee9202b9e04235c53
-
------------------------d39bbbeede525ceee9202b9e04235c53
-Content-Type: text/html;charset=utf-8
-Content-Transfer-Encoding: base64
-
-PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0
-cHg7Ij48ZGl2IGRhdGEtdGVzdGlkPSJnZm0tY29udGVudCI+PGgyIGRpcj0iYXV0byIgZGF0YS1z
-b3VyY2Vwb3M9IjE3OjEtMTc6NyI+R29hbDwvaDI+PHAgZGlyPSJhdXRvIiBkYXRhLXNvdXJjZXBv
-cz0iMTk6MS0xOToxMDIiPkknZCBsaWtlIHRvIGtub3cgaWYgaXQgaXMgcGxhbm5lZCBmb3IgUUVN
-VSB0byBiZSBhYmxlIHRvIGVtdWxhdGUgdGhlIE1QQzU1NTMvTVBDNTU1NCBtaWNyb2NvbnRyb2xs
-ZXJzLjwvcD48aDIgZGlyPSJhdXRvIiBkYXRhLXNvdXJjZXBvcz0iMjE6MS0yMToyMCI+PGE+PC9h
-PlRlY2huaWNhbCBkZXRhaWxzPC9oMj48cCBkaXI9ImF1dG8iIGRhdGEtc291cmNlcG9zPSIyMzox
-LTI0OjEyMiI+SSBrbm93IHRoYXQgdGhlIGUyMDB6NiBwcm9jZXNzb3IgY2FuIGFscmVhZHkgYmUg
-ZW11bGF0ZWQuCkkgZG9uJ3Qga25vdyBob3cgbXVjaCB3b3JrIGlzIG5lZWRlZCB0byBlbXVsYXRl
-IHRob3NlIG1pY3JvY29udHJvbGxlcnMgZnVsbHkgYmFzZWQgb24gdGhlIHdvcmsgdGhhdCBoYXMg
-YWxyZWFkeSBiZWVuIGRvbmUuPC9wPjxoMiBkaXI9ImF1dG8iIGRhdGEtc291cmNlcG9zPSIyNjox
-LTI2OjI1Ij48YT48L2E+QWRkaXRpb25hbCBpbmZvcm1hdGlvbjwvaDI+PHAgZGlyPSJhdXRvIiBk
-YXRhLXNvdXJjZXBvcz0iMjg6MS0zMTo0OSI+SWYgaXQgaXMgbm90IHBsYW5uZWQsIEknbGwgbW9z
-dCBsaWtlbHkgc3RhcnQgZWR1Y2F0aW5nIG15c2VsZiBvbiB0aGlzIHByb2plY3QgdG8gdHJ5IGFu
-ZCBwYXRjaCBpdCBpbiBhcyBpdCdzIGEgbmVlZCB0aGF0IGlzIHF1aXRlIGltcG9ydGFudCBmb3Ig
-bWUuCkknbGwgdHJ5IG5vdCB0byB3YXN0ZSB5b3VyIHRpbWUgYW5kIHJlYWQgYXMgbXVjaCBhcyBJ
-IGNhbiBhYm91dCB5b3VyIGd1aWRlbGluZXMuCldvdWxkIHlvdSBhZHZpc2UgbWUgYWdhaW5zdCB0
-cnlpbmcgdG8gZG8gdGhpcz8KSSdkIGxpa2UgdG8ga25vdyBob3cgaGFyZCB5b3UgdGhpbmsgdGhp
-cyB3aWxsIGJlLjwvcD48cCBkaXI9ImF1dG8iIGRhdGEtc291cmNlcG9zPSIzMzoxLTMzOjEzMyI+
-RElTQ0xBSU1FUiA6IEkgYW0gc3RpbGwgdmVyeSBtdWNoIGEgbmV3YmllIGluIGVtYmVkZGVkIHN5
-c3RlbXMsIEknbSBvbmx5IGluIHRoZSBmaXJzdCB5ZWFyIG9mIG15IG1hc3RlcidzIGRlZ3JlZSBp
-biBlbWJlZGRlZCBzeXN0ZW1zLjwvcD48L2Rpdj48L2Rpdj4KPGRpdiBzdHlsZT0iZm9udC1mYW1p
-bHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0cHg7IiBjbGFzcz0icHJvdG9ubWFp
-bF9zaWduYXR1cmVfYmxvY2siPgogICAgPGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVf
-YmxvY2stdXNlciBwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1lbXB0eSI+CgogICAgICAgICAg
-ICA8L2Rpdj4KCiAgICAgICAgICAgIDxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Js
-b2NrLXByb3RvbiI+CiAgICAgICAgU2VudCB3aXRoIDxhIGhyZWY9Imh0dHBzOi8vcHJvdG9uLm1l
-L21haWwvaG9tZSIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9yZWZlcnJlciBub2ZvbGxvdyBub29w
-ZW5lciI+UHJvdG9uIE1haWw8L2E+IHNlY3VyZSBlbWFpbC4KICAgIDwvZGl2Pgo8L2Rpdj4K
------------------------d39bbbeede525ceee9202b9e04235c53--
-
------------------------dbd6039b9557699868def7bcbaaa1617--
-
------------------------d0e10408bb929648c2fa48dd152afe89
-Content-Type: application/pgp-keys; filename="publickey - daoudlamalmi@pm.me - 0xFA411EFC.asc"; name="publickey - daoudlamalmi@pm.me - 0xFA411EFC.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - daoudlamalmi@pm.me - 0xFA411EFC.asc"; name="publickey - daoudlamalmi@pm.me - 0xFA411EFC.asc"
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnhDeUJCWUpLd1lCQkFI
-YVJ3OEJBUWRBbXREU25mZHVwNFBjTndqK2hJZ0VYVWxDTGh0N3VuWVMKOUVJYUMxcTczYXJOSjJS
-aGIzVmtiR0Z0WVd4dGFVQndiUzV0WlNBOFpHRnZkV1JzWVcxaGJHMXBRSEJ0CkxtMWxQc0tNQkJB
-V0NnQStCWUpuRUxJRUJBc0pCd2dKa0VMamtMTURsYmxDQXhVSUNnUVdBQUlCQWhrQgpBcHNEQWg0
-QkZpRUUra0VlL0hMTStNN1VPZlU2UXVPUXN3T1Z1VUlBQUQ2a0FQNDk3TmhwaTlPYURYSHkKekRa
-b3lyNVpsSVRLbTFJS3loMW1RVllxenltWk5nRUE1aFJtc2tGOXZoMnVQWTVtU1lHMzg4ODVVTUZY
-Cjd2bWlnd0NEVFRBRFJnTE9PQVJuRUxJRUVnb3JCZ0VFQVpkVkFRVUJBUWRBM3RBem1zTTB4OGp6
-SEFVKwpKNjYwTVd0RnN2UVkzbFBmK3hiblUvVE1RUllEQVFnSHduZ0VHQllLQUNvRmdtY1FzZ1FK
-a0VMamtMTUQKbGJsQ0Fwc01GaUVFK2tFZS9ITE0rTTdVT2ZVNlF1T1Fzd09WdVVJQUFLWTRBUURD
-SHdLQkVzTWpROU5mCm1MWWphOXk1RDV5VTkzYW04aVNnOVY5M3NPZGQrZ0VBbXpNUGcrY0ZFRU5X
-emFJTTkvTjMrWTBnK1N0RwpuV1o3WW4zNnBGajhtZ3c9Cj1ISXlKCi0tLS0tRU5EIFBHUCBQVUJM
-SUMgS0VZIEJMT0NLLS0tLS0K
------------------------d0e10408bb929648c2fa48dd152afe89--
-
---------f8c8c4c65c6b1f3ba45302bd436eec672b0dd6d02b2d9d3340a3ba4b5634a7cd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wnUEARYKACcFgmc61GwJkELjkLMDlblCFiEE+kEe/HLM+M7UOfU6QuOQswOV
-uUIAADHFAQCSJW5FsLUJBCjWYoluShj8zQ+GBi9SoYz8lw/gpMCHIwD/TsOb
-VlGAjEeHKldB0WTSSfUNZqZrbnaa1hWyL/kiYgk=
-=k32l
------END PGP SIGNATURE-----
-
-
---------f8c8c4c65c6b1f3ba45302bd436eec672b0dd6d02b2d9d3340a3ba4b5634a7cd--
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index cd02832a1cda..ab66ea6268fc 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -104,6 +104,9 @@ or directly from the ASPEED Forked OpenBMC GitHub release repository :
+ 
+    https://github.com/AspeedTech-BMC/openbmc/releases
+ 
++Booting from a kernel image
++^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
+ To boot a kernel directly from a Linux build tree:
+ 
+ .. code-block:: bash
+@@ -113,16 +116,10 @@ To boot a kernel directly from a Linux build tree:
+         -dtb arch/arm/boot/dts/aspeed-ast2600-evb.dtb \
+         -initrd rootfs.cpio
+ 
+-To boot the machine from the flash image, use an MTD drive :
+-
+-.. code-block:: bash
+-
+-  $ qemu-system-arm -M romulus-bmc -nic user \
+-	-drive file=obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd -nographic
++Booting from a flash image
++^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+-Options specific to Aspeed machines are :
+-
+- * ``boot-emmc`` to set or unset boot from eMMC (AST2600).
++The machine options specific to Aspeed to boot from a flash image are :
+ 
+  * ``execute-in-place`` which emulates the boot from the CE0 flash
+    device by using the FMC controller to load the instructions, and
+@@ -133,10 +130,12 @@ Options specific to Aspeed machines are :
+ 
+  * ``spi-model`` to change the default SPI Flash model.
+ 
+- * ``bmc-console`` to change the default console device. Most of the
+-   machines use the ``UART5`` device for a boot console, which is
+-   mapped on ``/dev/ttyS4`` under Linux, but it is not always the
+-   case.
++To boot the machine from the flash image, use an MTD drive :
++
++.. code-block:: bash
++
++  $ qemu-system-arm -M romulus-bmc -nic user \
++	-drive file=obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd -nographic
+ 
+ To use other flash models, for instance a different FMC chip and a
+ bigger (64M) SPI for the ``ast2500-evb`` machine, run :
+@@ -168,6 +167,78 @@ In that case, the machine boots fetching instructions from the FMC0
+ device. It is slower to start but closer to what HW does. Using the
+ machine option ``execute-in-place`` has a similar effect.
+ 
++Booting from an eMMC image
++^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The machine options specific to Aspeed machines to boot from an eMMC
++image are :
++
++ * ``boot-emmc`` to set or unset boot from eMMC (AST2600).
++
++Only the ``ast2600-evb`` and ``rainier-emmc`` machines have support to
++boot from an eMMC device. In this case, the machine assumes that the
++eMMC image includes special boot partitions. Such an image can be
++built this way :
++
++.. code-block:: bash
++
++   $ dd if=/dev/zero of=mmc-bootarea.img count=2 bs=1M
++   $ dd if=u-boot-spl.bin of=mmc-bootarea.img conv=notrunc
++   $ dd if=u-boot.bin of=mmc-bootarea.img conv=notrunc count=64 bs=1K
++   $ cat mmc-bootarea.img obmc-phosphor-image.wic > mmc.img
++   $ truncate --size 16GB mmc.img
++
++Boot the machine ``rainier-emmc`` with :
++
++.. code-block:: bash
++
++   $ qemu-system-arm -M rainier-bmc \
++         -drive file=mmc.img,format=raw,if=sd,index=2 \
++         -nographic
++
++The ``boot-emmc`` option can be set or unset, to change the default
++boot mode of machine: SPI or eMMC. This can be useful to boot the
++``ast2600-evb`` machine from an eMMC device (default being SPI) or to
++boot the ``rainier-bmc`` machine from a flash device (default being
++eMMC).
++
++As an example, here is how to to boot the ``rainier-bmc`` machine from
++the flash device with ``boot-emmc=false`` and let the machine use an
++eMMC image :
++
++.. code-block:: bash
++
++   $ qemu-system-arm -M rainier-bmc,boot-emmc=false \
++        -drive file=flash.img,format=raw,if=mtd \
++        -drive file=mmc.img,format=raw,if=sd,index=2 \
++        -nographic
++
++It should be noted that in this case the eMMC device must not have
++boot partitions, otherwise the contents will not be accessible to the
++machine.  This limitation is due to the use of the ``-drive``
++interface.
++
++Ideally, one should be able to define the eMMC device and the
++associated backend directly on the command line, such as :
++
++.. code-block:: bash
++
++   -blockdev node-name=emmc0,driver=file,filename=mmc.img \
++   -device emmc,bus=sdhci-bus.2,drive=emmc0,boot-partition-size=1048576,boot-config=8
++
++This is not yet supported (as of QEMU-10.0). Work is needed to
++refactor the sdhci bus model.
++
++Other booting options
++^^^^^^^^^^^^^^^^^^^^^
++
++Other machine options specific to Aspeed machines are :
++
++ * ``bmc-console`` to change the default console device. Most of the
++   machines use the ``UART5`` device for a boot console, which is
++   mapped on ``/dev/ttyS4`` under Linux, but it is not always the
++   case.
++
+ To change the boot console and use device ``UART3`` (``/dev/ttyS2``
+ under Linux), use :
+ 
+@@ -175,6 +246,8 @@ under Linux), use :
+ 
+   -M ast2500-evb,bmc-console=uart3
+ 
++Booting the ast2700-evb machine
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+ Boot the AST2700 machine from the flash image, use an MTD drive :
+ 
+-- 
+2.47.0
 
 
