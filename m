@@ -4,79 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D4FFD4920C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 10:57:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3769CD49209
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 10:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCzR5-0002cB-9u; Mon, 18 Nov 2024 05:56:51 -0500
+	id 1tCzSF-0003Bo-By; Mon, 18 Nov 2024 05:58:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tCzR2-0002bg-Ct
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:56:48 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tCzS9-0003Bc-Vb
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:57:58 -0500
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tCzR0-0004rn-Ox
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:56:48 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-aa1f73966a5so396842766b.2
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 02:56:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tCzS7-0004uB-Pi
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:57:57 -0500
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-53da07b78dfso3300434e87.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 02:57:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731927405; x=1732532205; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wgbpPqyJ37eXI4U9cjLKsKq9PUDJgdylzUDJzUHlhPc=;
- b=HH7RI9iCk58QuAtY1Oj1lfoaZZL3OteRSD+qCm1x3N2eWivWmlmMMjARRljkiXoqxw
- /dd8306M2/TI/znzUSCU9FcY+U4eSq+z3936WalckhGI4OBrAS+7FCIDQ59YMUy7yDS1
- ns7uCf0yIOC3aaM3eI0Cy9VS9yWw54E4hBN5YJL3mv6bpDVBVnvY/asAkx36+I4gdPUb
- mADruXpcnfPzi4w8ZW/7iD5bEOcN6+gFxnm47u1O/W4gGhcKQczwkXCOR8no/BUg9vlk
- ygEjg1bqfmfGEUjT2Yx6JV2JtCo0A7EHAMk4TDdQmRJg8hSSTjJSeKzdKsHrpoH0j2U4
- ryDQ==
+ d=linaro.org; s=google; t=1731927467; x=1732532267; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=SX2C9BYjJRD4I1GC8MQzbRgOuagmYMpjR0bMyfICG6M=;
+ b=bkrInQAcFF/IqAJE1oWPF62w6BuKp3EsuFLkBshezwkRaYL7ltrSZeEbT6mhNSysd9
+ saokUyIL/x21Iu2SFDJzP8DHLBFwFEh0Y2Ww34oLqi8oN2XkNOQIsE8tiHyAYsBZxpzZ
+ 0+5xZcMbV98VhMfeplom9QGUbAJ5eX3pmyDA6tkimquMpTE7wYTxBwC9vFc/Q0Ukb1oI
+ B0+3IyziBuJR+JXuN0lTALPu3caE6pto1yJqWmLTe5sj3WlLp51N+cH+YNcUv81CjzdK
+ cxlW4cBOkUbipVK2GRUJKGZKVjVhmWUDFY+IY24aEtqPAuoAD45qYSz/JJdVRddBuT4P
+ 0PkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731927405; x=1732532205;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wgbpPqyJ37eXI4U9cjLKsKq9PUDJgdylzUDJzUHlhPc=;
- b=hh/RJ15GCJtsTrOBEXMYeRfCZKkkKeRxgOoACCVxCtpzMGxU1d2Gn9sxL+qscl+fRI
- 49gp+YtcrAB4tXKaIF//BGfLmZjSGV/wPUICM4+IIEh8uRDi8egDhchzKzfV55eE4R3e
- mb7h6Qv6B+lddhcMoOIHOwGxIGypUlHRIF+vnkVsenNJLRavmg/HDP/E3OGauo2ZmIBg
- cduVQgMDgDRfe2LdkvnmF/9hHDNCbuMojnE29It7FpicN1/uC6X/4KuoGWh30nkgYrt8
- 8m/1vxF7jx1jajUr81kLRFv7HZqQKwbWjQOh+12wFtLzZEwmHZomRrgJF1UYNw2l8v4b
- kKuA==
-X-Gm-Message-State: AOJu0YzXhECbc0drQbyGmjb2WzjUyNosi3ZY+VQKO8Sep8XZoCTAka5W
- rEp6pJgftkjnLD44SplaHn60NGetkNYGXrriehytKU2xzeeoyVugxCSMLwKlj5M=
-X-Google-Smtp-Source: AGHT+IG/TA3UOkLU2Qn3B+5GvnJEn9ylZ1RfrQ3TvHoJoJirrxv2E71PadeXF6RZcQ/WRbsXzexbYw==
-X-Received: by 2002:a17:907:6ea4:b0:a99:762f:b298 with SMTP id
- a640c23a62f3a-aa483525e24mr996157766b.41.1731927404802; 
- Mon, 18 Nov 2024 02:56:44 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20df50cfesm534435766b.66.2024.11.18.02.56.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Nov 2024 02:56:43 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B7BB15F7C6;
- Mon, 18 Nov 2024 10:56:42 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-rust@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH] MAINTAINERS: CC rust/ patches to qemu-rust list
-In-Reply-To: <20241109-update-maintainers-file-rust-v1-1-f4daba6f782f@linaro.org>
- (Manos Pitsidianakis's message of "Sat, 09 Nov 2024 21:29:36 +0200")
-References: <20241109-update-maintainers-file-rust-v1-1-f4daba6f782f@linaro.org>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Mon, 18 Nov 2024 10:56:42 +0000
-Message-ID: <87h684u7x1.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1731927467; x=1732532267;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SX2C9BYjJRD4I1GC8MQzbRgOuagmYMpjR0bMyfICG6M=;
+ b=BiA2IdX1FU23hVI6SrE8tuFU+0/ojPcEb1Q4A7ZN/NsLgI+ZdX2qgQP3XdwCOjn2jb
+ b0AtR1zHMRZQpMyDBPHSI0JChKlIVAMmXr0XeF5rqpEXdDqiZMXwAKEV5fVq4VsEinQK
+ ensAUu5V0ZC0j1C6ZJGAMp5Loqv5CxrUoRp51ofBSQRHqAJneMMeCzcoy27INxIh/02A
+ rSrnrQ0LZofg8ZACIpkiiNXbgG2Knb42JRbct+SOEDIo6ytv7eZ2jYbyh35/r+ST+6l5
+ EJY6ZjRM3mlecV3XQ8rlt60ebQPCRNi91HIDcHUY/JuCideiX212tUXzNrGgxiNsjlu0
+ gy+A==
+X-Gm-Message-State: AOJu0YwAc97GdNBMfFIR+vqOaQxpwqFzhMQ7yIdYEd5g3dH/4456f9LM
+ wHmdiWV9BItKV4sidvfSv/IyJxYMrLE7WRF7naCGpEMpMbZR1DbgY06Q5Bu3EoScPS7zzYQJ+w2
+ 73nMhHhRut9emyB6H2ztNMIP2nfLZqN+5WXMzTCK/HEWlT2CA
+X-Google-Smtp-Source: AGHT+IGn7vj0EQb6Bp/rAf0Iw0jcQHU6xVLOZvRxU9Xiqm9tMgdhpmT22CAKlLh2OwaBLSPR5G/8KeAR69+tB/vWQaM=
+X-Received: by 2002:a05:651c:1b05:b0:2ff:4ce0:d268 with SMTP id
+ 38308e7fff4ca-2ff6064e25fmr50654901fa.2.1731927467103; Mon, 18 Nov 2024
+ 02:57:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 18 Nov 2024 10:57:36 +0000
+Message-ID: <CAFEAcA8hHMj0718haB_uZhE-LQF4W9PYrL-na0iznp4ueDsq7g@mail.gmail.com>
+Subject: tests/functional is eating disk space
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,56 +84,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+I just ran out of disk space on my dev machine, because:
 
-> As of CAFEAcA-ZQuyGTtG-vhRTEwpz0L4cpimNxkKix45Yw6gVHXozRQ@mail.gmail.com
-> we have a new topical mailing list like qemu-block, qemu-arm, qemu-ppc
-> etc but for Rust related patches. Add a new MAINTAINERS entry to touch
-> all files under rust/ subdirectory and additionally add it to previous
-> rust related entries.
+$ du -h build/clang/tests/functional/
+[...]
+11G     build/clang/tests/functional/
 
-Queued to maintainer/for-9.2 with tweak suggested by PMD to commit
-message.
+The new functional tests seem to be eating disk space.
 
->
-> See also:
-> https://lore.kernel.org/qemu-devel/CAFEAcA-ZQuyGTtG-vhRTEwpz0L4cpimNxkKix=
-45Yw6gVHXozRQ@mail.gmail.com/
->
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->  MAINTAINERS | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 095420f8b0..373176e445 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3338,6 +3338,10 @@ F: rust/qemu-api
->  F: rust/qemu-api-macros
->  F: rust/rustfmt.toml
->=20=20
-> +Rust-related patches CC here
-> +L: qemu-rust@nongnu.org
-> +F: rust/
-> +
->  SLIRP
->  M: Samuel Thibault <samuel.thibault@ens-lyon.org>
->  S: Maintained
-> @@ -4241,6 +4245,7 @@ F: docs/devel/docs.rst
->=20=20
->  Rust build system integration
->  M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> +L: qemu-rust@nongnu.org
->  S: Maintained
->  F: scripts/rust/
->  F: rust/.gitignore
->
-> ---
-> base-commit: 134b443512825bed401b6e141447b8cdc22d2efe
-> change-id: 20241109-update-maintainers-file-rust-5cbd97b7b11a
+Even the build tree I have that's just arm targets is 7.1GB.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Could you have a look at what's happening here? I seem to recall
+we had a period where the old avocado tests also just ate disk
+space over time as you ran them on the same build tree, until
+we fixed them...
+
+thanks
+-- PMM
 
