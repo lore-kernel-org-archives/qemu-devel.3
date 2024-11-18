@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57301D49212
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 12:50:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB66D49219
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 12:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD1AA-0003Pw-O3; Mon, 18 Nov 2024 07:47:30 -0500
+	id 1tD1CG-0000UT-D4; Mon, 18 Nov 2024 07:49:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD1A9-0003Mt-EV
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:47:29 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tD1CA-0008TF-CO
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:49:35 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD1A7-0005PW-VK
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:47:29 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4314c4cb752so26875775e9.2
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 04:47:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tD1C8-0005Vw-Dz
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:49:33 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5cfaeed515bso2341345a12.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 04:49:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731934045; x=1732538845; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/ttdwyIWnlE0XcHxa21WmzaMS4O1MZxffEe5jLcx9RE=;
- b=XIOrZcikEyo//fXKLMdc/8TV6ZB289n+ijbbARZmvjBY8HLl9cWGgfqA8MqpUGge+d
- 3E7Dnx44UIEtcYgKLLjDf5LkVq+mcfM/0hrJ6jMjZwD1womkQcTvYi9zCz3/X24ldNE6
- W5mrMgMA+G2TRJpw9zX2pu5JGnZS4vBMXg6zgwulRSHQO6dec2PJPGd8kAJnHH/ygtT/
- VG1bUgbfQk6f/J/CGYBCPdapHGbNr6W3dCF4/t5Oy2LHrHDZD/qhaLZMnW/czhi4uOOn
- YdsQO6wWCdQSrbvRUf1hOznBSVpTPviLL5SP4/BIYxEdlyEDUbQpGeFcV8IMtJQ3mG3g
- n6zg==
+ d=linaro.org; s=google; t=1731934170; x=1732538970; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5tuYhTk5xkX+QAPB8w45QhCG/O6PqvROoWvuT7r7h18=;
+ b=K/+qv7TFbptJLUXMEFmCbcro1IfAaVOw81Y+oTqTUu1CsrXsPi7vTQbFgmbJBiD88L
+ JwdFsgAPpZ/I/2qQIRUhfAoyhNeCyOD+KXfPCoc0D1VqAXBE1OMHN8Uld/YJR2FHgw9a
+ 4UR5aQO3BeanC9EXsRuUy1+vVQ0eUsCrVbJfzHSYICqJayhrNkd8Sikm+LzwaNA0Sl4W
+ BXorodpoCosTMtCrkHwI6yjatEOcIRpZZJKM5E7+ZNVbbkTUVc4wFQutt1x5L8hqS2Gy
+ /7ZkYZslrQGyXAhl4ZuOSGnJIOPrFL9abaSNuCU0/+dUQqA0OEcI8jKhmUvwnQL5sVy4
+ Z5Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731934045; x=1732538845;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/ttdwyIWnlE0XcHxa21WmzaMS4O1MZxffEe5jLcx9RE=;
- b=gXf15XR05s6fXwYmJr+d0m9URI93OIL8tPUz5jxWGU5Kv+ItdzqLujkF8ZztNMs99R
- LES5KL53WCfF40NLjoA1CrUZX6Zu5Hytp5waggdl1DwlH8kK7Ga38V6E7MJLM6ILx/G7
- GoUER7IbYJ5ye4fCAW5pKBA3CZrhmCF2sPGCEJF3L3mVigxuw3QAOUEyduQatBmiRlb8
- 6diMy7cAmSAx765y04h9ox3b1KYAScmWQlUibpgNjThN5+wnuPV3MIWWTsQnLhDBhTw3
- Y+e5p/Isdb4JfydyxA27Xv+L+LW909S5LZepss+uN1UZD3P2mGVAS8+vF53bifDCokJS
- noxA==
-X-Gm-Message-State: AOJu0Yz8BkFLBUgJiG3d+TELKOKjJ1sPP/dLBn/9IVX+osBGTR8Znqsn
- mMtcLYDW54qzE9bqSKBlJL5KsbrQaq26pu/Nv2V4n8tNh9v3OnK3K1yOShU3RItuJDp0btwIuU0
- n
-X-Google-Smtp-Source: AGHT+IFhVzV7qI53Z++fgv2tXiSftzwzfLkHf8Iy3AmOVyNgXGf5NzN9vnaU5OeQMCi1RODmFKSX+g==
-X-Received: by 2002:a05:600c:1908:b0:431:52da:9d67 with SMTP id
- 5b1f17b1804b1-432df7178f9mr114301385e9.3.1731934045442; 
- Mon, 18 Nov 2024 04:47:25 -0800 (PST)
-Received: from localhost.localdomain ([176.187.198.1])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dab78783sm154194365e9.12.2024.11.18.04.47.24
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 18 Nov 2024 04:47:24 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Guenter Roeck <linux@roeck-us.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 07/15] usb-hub: Fix handling port power control messages
-Date: Mon, 18 Nov 2024 13:46:34 +0100
-Message-ID: <20241118124643.6958-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241118124643.6958-1-philmd@linaro.org>
-References: <20241118124643.6958-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1731934170; x=1732538970;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5tuYhTk5xkX+QAPB8w45QhCG/O6PqvROoWvuT7r7h18=;
+ b=L5HLafT/Kkup75fsWMZyJ6q27Zrud7VOqUxBEaAsfQpSNCsVOj/qP+xPGOXRSbWLi6
+ fI7mvXNn4Mbu+dn5nI0tcSXsQ3go3VuNm8xQW4k+QQjB13NhbZ7JOUllP57KaxNNJfvg
+ K4ANrBmQ+wePjRwpEBctFyFnFEW/WggWPFa9to8KPVwHleob+8JiUj/LKvba3A1i7W/a
+ qKJy1k3WjPBld1BPi4hm1hEoccuIN1k/88yU60kUnSiBxmuWVyahiog3SPXl9kxTYVcH
+ sziMy3pKLQql/bI815BWNXxWwAhMAK3JKzcBEW/zMZZCHiF/tofl2uuIAyTBQ33PhN52
+ tq2g==
+X-Gm-Message-State: AOJu0Yx7XtY3/bJiUGhU5SekPmLsG+Vr197ESfQwItObrh2r49A2TeNx
+ fRpyDjN0AMDgRetdZ6eeF1ezQZhHm1slc/O4qeSwOVdegowdwwUtcGQqjgd3fCw5DAfCY9Jn6mN
+ Fl1i/VBowLdcPHR5zsGIqi2hbLfBDzGmzxMk2HQ==
+X-Google-Smtp-Source: AGHT+IEWTd8szsynmIYLrxnBZzSZXsWpg88XlIlNddT0FMdyVWXiIkZaLwAnvzO+paIS/GuDL87W3IwuY8ncs2UM7vo=
+X-Received: by 2002:a05:6402:5206:b0:5cf:6093:9377 with SMTP id
+ 4fb4d7f45d1cf-5cf8fd32361mr8960012a12.23.1731934170628; Mon, 18 Nov 2024
+ 04:49:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+References: <CAFEAcA8hHMj0718haB_uZhE-LQF4W9PYrL-na0iznp4ueDsq7g@mail.gmail.com>
+ <15635bd3-97fa-4c11-9427-c615d1b57dd1@redhat.com>
+In-Reply-To: <15635bd3-97fa-4c11-9427-c615d1b57dd1@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 18 Nov 2024 12:49:19 +0000
+Message-ID: <CAFEAcA91Kb4foyXJ3hcbqKXkHKae12yO=HcFYSUCFKS0AEG+oQ@mail.gmail.com>
+Subject: Re: tests/functional is eating disk space
+To: Thomas Huth <thuth@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,34 +90,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
+On Mon, 18 Nov 2024 at 12:10, Thomas Huth <thuth@redhat.com> wrote:
+>
+> On 18/11/2024 11.57, Peter Maydell wrote:
+> > I just ran out of disk space on my dev machine, because:
+> >
+> > $ du -h build/clang/tests/functional/
+> > [...]
+> > 11G     build/clang/tests/functional/
+>
+> That's indeed a lot. I only got 6.9G in my build tree for all targets ... I
+> guess there are some stale files lying around, so as a temporary mitigation,
+> just try to delete that folder (it should get recreated the next time you
+> run the tests).
+>
+> > The new functional tests seem to be eating disk space.
+> >
+> > Even the build tree I have that's just arm targets is 7.1GB.
+> >
+> > Could you have a look at what's happening here?
+>
+> I am aware of the problem and got it on my TODO list already... I think we
+> best should set the "workdir" to a temporary folder that we can remove once
+> the test has finished, that will automatically delete all binary assets that
+> the test created during its runtime.
 
-The ClearPortFeature control message fails for PORT_POWER because there
-is no break; at the end of the case statement, causing it to fall through
-to the failure handler. Add the missing break; to solve the problem.
+Can we provide some kind of option for "keep the temporary
+data" too? That's sometimes handy when you want to manually
+run the QEMU command the test used as part of debugging
+a failing test.
 
-Fixes: 1cc403eb21 ("usb-hub: emulate per port power switching")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241112170152.217664-11-linux@roeck-us.net>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/usb/dev-hub.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
-index 06e9537d03..2c3640c705 100644
---- a/hw/usb/dev-hub.c
-+++ b/hw/usb/dev-hub.c
-@@ -479,6 +479,7 @@ static void usb_hub_handle_control(USBDevice *dev, USBPacket *p,
-                     usb_hub_port_clear(port, PORT_STAT_SUSPEND);
-                     port->wPortChange = 0;
-                 }
-+                break;
-             default:
-                 goto fail;
-             }
--- 
-2.45.2
-
+thanks
+-- PMM
 
