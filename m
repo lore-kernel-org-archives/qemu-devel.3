@@ -4,103 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA76DD49205
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2756DD4920A
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 10:16:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCymt-0005MQ-Oo; Mon, 18 Nov 2024 05:15:21 -0500
+	id 1tCymt-0005MP-Ni; Mon, 18 Nov 2024 05:15:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tCyml-0005KH-0c; Mon, 18 Nov 2024 05:15:11 -0500
+ id 1tCyml-0005KK-Bj; Mon, 18 Nov 2024 05:15:11 -0500
 Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tCymj-0008JJ-0E; Mon, 18 Nov 2024 05:15:10 -0500
+ id 1tCymi-0008Iz-VP; Mon, 18 Nov 2024 05:15:11 -0500
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal
  [10.202.2.46])
- by mailfout.stl.internal (Postfix) with ESMTP id D84AE114019B;
- Mon, 18 Nov 2024 05:15:06 -0500 (EST)
+ by mailfout.stl.internal (Postfix) with ESMTP id 0F00011400E9;
+ Mon, 18 Nov 2024 05:15:05 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Mon, 18 Nov 2024 05:15:07 -0500
+ by phl-compute-06.internal (MEProxy); Mon, 18 Nov 2024 05:15:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1731924906; x=1732011306; bh=eoIJIsnvFSmFZxfkto+eSSz3zEqn6zFD
- 3WOe+enxcsk=; b=AbI5Eh5gsxlXDeeJxVLVe8MqoKTBLKSlM2F347mvpNLAtDMS
- g0aBQjUOYn2IdGXY6vj9bmun2xzoDnqqiMNPWfSG1twKdPa2Hz1PEG8M+twbQ8NB
- L9KgvhmWnsUThvEV8yE1dtbPoTthnSbCbCOh2AA65Ewi2Txwu0sdXlCXp9fVsUCd
- N87r8dF0Yx0bkNdOqfV6CvRHwLzWd373E+LeBiiTIWoc3aYqnbMZxghLWie+6NV2
- U/MZAQy9YrCvUy0C1/9GFChuu8S2yAjnOoNDug0pKOwC5yjja5wTWlCqkjisBVBN
- 5LixriF+Yxhc4tK51d/4fmESEzSY4n1Z+Qj4MA==
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm2; t=1731924904; x=
+ 1732011304; bh=QCcCScG8xrwxU1vMkhV8Jl2p0cgNLnyS7IHhI1EgjOA=; b=q
+ 9xAJmJNn3FZUSSQI2OOaQpNraPWGGZLQXvWn/VxYkAjNsKEzosqoanDe9QZeMXfL
+ GvQSHY6mgkSN6af2SwapGFXlvZBmzpTYyOg3GLHTyNwZtGTmFGj9oEcdjMK5CKfK
+ mBi1ZVDPVcyXyRoEmRQwVUJeSfB+e1xoEfkCsK72a0J8LcPMhSsONq0XJ2U1RQVq
+ caTXux5ikueV38MOJefOmULip2v8JbJDMLZjp4q5C8L923xGhrNselRyxgRqxhMn
+ G9/zjLMJidOEGJjop9tRtvaLklgu9Sd28jDK71Lf3YgHKw1YBGFdEA6h0wWNX1cQ
+ t0jh+dyCAGe9mYZtRhdxA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731924906; x=
- 1732011306; bh=eoIJIsnvFSmFZxfkto+eSSz3zEqn6zFD3WOe+enxcsk=; b=N
- vTVA9TvHGCI7Il99oiyx1jQC9Yzt4u6Kdp+PQp8dTbWwEmvDDmgR6Sqa+FlxbEfx
- yutUu2ZofJBEhbGrR031JLsGmjzWeaS2opAPdnfvr4kHtJPVYFrNR2SG/8ps4EV+
- r7AeVwCa9rHluWOelfSM5ooZ5ZoxWf0Alg5fIwY4mwvKhgVgiiq7XTD4rLObRNjl
- wXDXmpzPke2ugbHqQCT3Mq18wg7qrl/Z1tgGv96H3h/wtnMsmAPlRMu2Vl6naV7k
- YoX6aVoTseJ7Hem7Oymzmy+zgs27QgGwZTLaJr3S8YLZauCRKqDqUAzeGozY5HOH
- XTq3rtk0oqT5mNwBzsagA==
-X-ME-Sender: <xms:qhM7Z4iy5SJy01N4_TntCmNlzRFZBarokUdr2DxEsWIUBirX9fxFuQ>
- <xme:qhM7ZxBQiQfDKwiAe9ybggo6YRSd2Gi1SwfVqEp4OOeXsEbC8WPkBBgFjGnR9M2eT
- 8OOaDMV_3wVyM-4RFA>
-X-ME-Received: <xmr:qhM7ZwHPhTlLaemNA-jLPc1LqYmYboPdKNsHGt5c5Ik3kBiGPmeeroFRPfFUxUWp8qms1WryZ7AznWP0TmOuZQ>
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; t=1731924904; x=1732011304; bh=QCcCScG8xrwxU1vMkhV8Jl2p0cgN
+ LnyS7IHhI1EgjOA=; b=F7HO+x/KeqchJ2l51WQwfPqE6GRpxW8mT9ODA9U/sHpI
+ cxHqAsNNhDmulQAPvTzusS84PVfc2GdJIor5qtsJnmOro7/DSaAj5RVlpUpuGDR0
+ vo/SaYjkqqJIB+UO39wFB3/fr3DwfQbuHxYB+jyHYEgBIphEpcckP8dgZCsVcWqM
+ tFgy+W78bhLfvG3f4LJ0rNg+NLj4Rtsf865RaWRI+ohBOer15WIpNwCGbChOu45W
+ RJ56ZkeEvAJoSy44IDJXpCh8S6UO4VUOlAnnKI60lWf3IV8jIukoHztHLAmtvjX7
+ ZDD7sArwxLKAmYWL71dAV0PWa2NjxKWsAcTQeZLreA==
+X-ME-Sender: <xms:pxM7Z4BY6FmRx0RU4f0M2B0X740VNmo6dUGYyK-ccHU1hXR49ABwzA>
+ <xme:pxM7Z6jKZuXKXcN4VHAYOECK4YFkTXRVN2c6E_Mjv5ZHQEWz9FBCbuh_LAF-9PJzd
+ PfJWK7FECiD2DeOh_g>
+X-ME-Received: <xmr:pxM7Z7mRF4G1Yons1Lb9x1njya6KYDSJInv4tObz7PIvVUM76t9wwW5drcPID6rGIB3cPgSpUpSMVkNOL02_Uw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedtgdduvdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
  tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
- hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
- ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
- gukheqnecuggftrfgrthhtvghrnhepkeeivddtueehffefuddtleefkefhiedttdduveeg
- gfffieetveffhfehgfeghfffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
- ohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepfhhoshhsseguvghfmhgrtg
- hrohdrihhtpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtphht
- thhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvg
- hmuhdqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhgsuhhstghhsehk
- vghrnhgvlhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurd
- horhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhm
-X-ME-Proxy: <xmx:qhM7Z5R1w62M2tgJNQ7hOYJJ8EZy0GoyauBK6NyPa7mYTfUzvM8QwQ>
- <xmx:qhM7Z1zMj5DnGT-W5EKqNXiTEtMzB3KXEsgKpVrPlK2YZbXaJACdWQ>
- <xmx:qhM7Z35Hi2zoHq0FhSL5nD9psmhZaw8f81RB5eCoiDvyWf8a7qXQew>
- <xmx:qhM7Zyw2TvhH4Wiqgv03U-cJ2fpb7hwN7lopTzrKfPvFG-CbsaO4Yw>
- <xmx:qhM7Z0z-JjatHYWclbAjEUqcX9aJAMYkosOB7Pi-Y9wrAPC7TVHhPeM9>
+ hsucdlqddutddtmdenucfjughrpefhufffkfggtgfgvfevofesthejredtredtjeenucfh
+ rhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
+ eqnecuggftrfgrthhtvghrnhepvdffhfehfeefuefgheehudelleeijeeuudfftdduvedt
+ gfehhfdtfffgveekueefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+ hilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohep
+ jedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghroh
+ drihhtpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtphhtthho
+ pehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuh
+ dqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhgsuhhstghhsehkvghr
+ nhgvlhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorh
+ hgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhm
+X-ME-Proxy: <xmx:pxM7Z-ytZC0Tigz7_KR93NdMXCAjeWZrxOtrpIGEimPhiood9VF55g>
+ <xmx:pxM7Z9TZ8wF957tBn6qrKFlgxbCehyUmC9nwEovH7q-Y12c7cN-kyA>
+ <xmx:pxM7Z5bT3hLYV6yMcG6MnffjFwvxs_9vRY4yE1wHo1Y-m3scwj6lAg>
+ <xmx:pxM7Z2Rs3s-EVnKg_38VTc1sHvTwHYCDKz5BfLMXz_76ngNBAirMTQ>
+ <xmx:qBM7Z-ROONM9oh0vQOur5ZcoTeYTHOnrnn1kPCVWUrYzWeKc0DPgPXuo>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 05:15:05 -0500 (EST)
+ 18 Nov 2024 05:15:02 -0500 (EST)
 From: Klaus Jensen <its@irrelevant.dk>
-Date: Mon, 18 Nov 2024 11:14:17 +0100
-Subject: [PATCH for-9.2 1/4] hw/nvme: fix msix_uninit with exclusive bar
+Subject: [PATCH for-9.2 0/4] fixes for hw/nvme
+Date: Mon, 18 Nov 2024 11:14:16 +0100
+Message-Id: <20241118-nvme-fixes-v1-0-02d107dbdcc0@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241118-nvme-fixes-v1-1-02d107dbdcc0@samsung.com>
-References: <20241118-nvme-fixes-v1-0-02d107dbdcc0@samsung.com>
-In-Reply-To: <20241118-nvme-fixes-v1-0-02d107dbdcc0@samsung.com>
+X-B4-Tracking: v=1; b=H4sIAHgTO2cC/x2LMQqAMBAEvyJXe2JiCvUrYiG60StMJAERgn/3c
+ LphdgtlJEGmsSqUcEuWGFRMXdF6LGEHy6ZOtrXOKBzuE+zlQWbTdr2Hc3D9Qnq4Ev6g+4l8TDw
+ 0lub3/QDe1XSuZQAAAA==
+X-Change-ID: 20241111-nvme-fixes-1038fe44e48a
 To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
  Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org, 
  qemu-devel@nongnu.org
 Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1120; i=k.jensen@samsung.com; 
- h=from:subject:message-id;
- bh=luAZmVRl988Fk2UCy4nTP3G7adYdvITDIx52Hx/vg+M=; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=647; i=k.jensen@samsung.com;
+ h=from:subject:message-id; bh=MD4MSANoF3QQq0OaQB4n5++JHTwlMKarWBGjw0fzgqM=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
- zFQRGVrQnl5WmlBR2M3RTZUaHFKYzZRcnRWV1BDWnNlby9sQVVDCjFtdjllS3gxNTUwd3JkNFVG
- UlIrZzRrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKbk94T2t
- BQW9KRUUzaHJ6RnRUdzNwTEtzSUFMSUs4QWZ0ME9pTGh4bzhRazI3RWxhWXVqK2JLdnpNaE14bw
- pNZnhIRjV6TFJjRXNNVTB0cHZTYUpaMnF5UktmQ2FzdGtETFB0OUtPb2MvNWdjK1lmZk9TSlhuN
- 0tFQW9qVC9jClY3Rlg0ZCtxZVR1Uk1saUQ1bGY1V1B3QWk5OW15M01pVzV6MzB5dGEzRjdWQWtN
- WkswYVBBNkU1S0dkTy9aNTcKcHVzV1FLazNOUG9CUzlPRGM3eGpkZjkvM2xwNVpscnRKNGxJSit
- KZTd5OGFDUmgwTlJyUWt4S2pUZGVmUDNnVAoxd0QyNldlVE9lZGhvbVVFQzlXT2NGN3JlQVNocW
- F2OWF3Z0pMVGIwdmJCODFoOVhZaVpsWHV1d3ZMcmVOWkFsCkxNMVlQVDZkZGpsSWp6U1Q0MTF0d
- FpKNy8vZlRGbDlXV3JNU2wwUzQ3TlZ6Z2hacFRLZW9wS1pVCj04cGgzCi0tLS0tRU5EIFBHUCBN
+ zFQRGVrQnl5WmlBR2M3RTZSZi92NEtmK2hUcGJlc2M0eEpSanBtCnVLNm8vKy9HelJtOTZWY1I0
+ RCt5dklrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKbk94T2t
+ BQW9KRUUzaHJ6RnRUdzNwdEs4SC8zVktuTlFKOFJWUjZDSEtRU0RaZnl1SXJ2czRRSnppZ3V1bg
+ plSFBvZ3p3VlB1WXhiUENYUC96c1JTMUpWV1FncnZ0RHMvZndIVmdpanNDWUNRU0NUK3NVVS8rU
+ k1xc2g3M0FsCmZWMGt5WU1uMzNJZCt6cHZwTmxpL2dsUzl6Z2VzUDlXUnhaY3owdlhPM1VLUTM2
+ dWdyQVJMNXhKeHlTaDRVNXQKTUhqeU5CRVQvdVVEKzF0WU92Y2FjZUZ6VEtyay83Rk14YVRpUFB
+ neWpZVFlTOGFWKzlINzhoQW9lUVhzZ29CUwpaaFhIMDZuTFAzVS8xK2NPVVFQNkx6T3k0L3pYUD
+ N2a09xTVhDdmZHZDRFb0xKZGRPemlRekJmalQvb3N3S2hLCnVaY04wSlljVDFqdjNHSVZFZ3V6N
+ W5GcEI0a1NsZXgxTlFHM1oyREVKNlZjNFpwZDRmWVNWS3dTCj10N3VvCi0tLS0tRU5EIFBHUCBN
  RVNTQUdFLS0tLS0K
 X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
  fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
@@ -129,40 +129,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+A set of misc fixes related to SR-IOV compliance and MSI-X.
 
-Commit fa905f65c554 introduced a machine compatibility parameter to
-enable an exclusive bar for msix. It failed to account for this when
-cleaning up. Make sure that if an exclusive bar is enabled, we use the
-proper cleanup routine.
-
-Cc: qemu-stable@nongnu.org
-Fixes: fa905f65c554 ("hw/nvme: add machine compatibility parameter to enable msix exclusive bar")
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Klaus Jensen (4):
+      hw/nvme: fix msix_uninit with exclusive bar
+      hw/nvme: fix use/unuse of msix vectors
+      hw/nvme: SR-IOV VFs must hardwire pci interrupt pin register to zero
+      hw/nvme: take a reference on the subsystem on vf realization
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 69bce20f6692b48ae162ad948b1a3eef31d69ebd..13898d58278ed2155d45a9120fc07ea60bc64a32 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8904,7 +8904,12 @@ static void nvme_exit(PCIDevice *pci_dev)
-         pcie_sriov_pf_exit(pci_dev);
-     }
- 
--    msix_uninit(pci_dev, &n->bar0, &n->bar0);
-+    if (n->params.msix_exclusive_bar && !pci_is_vf(pci_dev)) {
-+        msix_uninit_exclusive_bar(pci_dev);
-+    } else {
-+        msix_uninit(pci_dev, &n->bar0, &n->bar0);
-+    }
-+
-     memory_region_del_subregion(&n->bar0, &n->iomem);
- }
- 
+ hw/nvme/ctrl.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
+---
+base-commit: abb1565d3d863cf210f18f70c4a42b0f39b8ccdb
+change-id: 20241111-nvme-fixes-1038fe44e48a
 
+Best regards,
 -- 
-2.45.2
+Klaus Jensen <k.jensen@samsung.com>
 
 
