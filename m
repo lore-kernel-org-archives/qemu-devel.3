@@ -4,68 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6EFCD4921D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 14:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B59D4921D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 14:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD2s9-0006K0-1Q; Mon, 18 Nov 2024 09:37:01 -0500
+	id 1tD2vR-0007Nd-H5; Mon, 18 Nov 2024 09:40:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1tD2s7-0006Jc-9t
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 09:36:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1tD2s5-0005ZF-Un
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 09:36:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731940617;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=iiZ6qBQqN25G4itkQvdFae9EYfnugmegO1Dc0rTRFTw=;
- b=I5hJ5DFEaT8rxF13yxUCj7VudCvz0yLkqSxCfgnmP9ze4GLEB8fbZPu0aZT1MfyWYyCAYq
- QHxsiOD2WHKeVyNn8Gn96lTY9uC/lnywekYXWI19vmtX1slxxj8ZA5sAWGoRGCsfQCRCc+
- v4109tOTgVqK8T9uyIbsg9PJSQL7GHk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-bPZjI485O4Of6To5WU6lnw-1; Mon,
- 18 Nov 2024 09:36:54 -0500
-X-MC-Unique: bPZjI485O4Of6To5WU6lnw-1
-X-Mimecast-MFC-AGG-ID: bPZjI485O4Of6To5WU6lnw
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75966193316F; Mon, 18 Nov 2024 14:36:52 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.39.194.228])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CBBDA1956089; Mon, 18 Nov 2024 14:36:47 +0000 (UTC)
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
-To: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v2] vpc: Read images exported from Azure correctly
-Date: Mon, 18 Nov 2024 15:36:46 +0100
-Message-ID: <20241118143646.33377-1-vkuznets@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD2vP-0007NQ-UC
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 09:40:24 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD2vO-0005x5-1B
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 09:40:23 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3823cae4be1so1251551f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 06:40:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731940820; x=1732545620; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GNC6wZ5Nr5C7+3a+WXbJMNymIZufbd5J9IyOeYxpTFk=;
+ b=rHJI3FfHPM4qyaJ8027zzlqY5+FjpiA6qTM6k0BQ3+i1Z2sKNjk6Kdzh+SnVmArJX4
+ B1z1QvhRbWsQRiN56npgHG1mvKWcgwxGQ+rFYkdMQJANj4n3I+aHVP9TuzIu/F6tbHR+
+ bjwpKOVIdtZjW7AcKaiQc9rLhXxLoqc8scEw3GlN8ghWUmGP55Dh3DLfhunaOwWD7hDl
+ 837g988FBGLT4rIg8UkM6rS1Yz8+V/j+rh/E9Fms0ccFl6gWjzRqzfAEdn7i8FQ2Ms2b
+ LfQ9LNCuIZxSeXT2OCtTkcBFKdSb5rZRklz1kKvPBPN4A0v9KXx2ZymWoOugINniXWNw
+ 87mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731940820; x=1732545620;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GNC6wZ5Nr5C7+3a+WXbJMNymIZufbd5J9IyOeYxpTFk=;
+ b=IZNfkSv+kLV+4iCELQpm29V1GxqBTWZ9RH6z6fodiaElnPEVyOcbQ5inwzzyzJEDpk
+ vLOtAIlnCR8VAaf2OeZXyFjjMn30bn0aPElBpnAoOgjiwDxIAtZz9bjCQOdz0SSE2sSh
+ cwy2iXHKUCnXZ4ZVJjNNt/4CpoL5rGw56WkjRpU7WEZ/ax+C22wo4PNqSeE0qFEB08OE
+ NNq3tITcFcppaiFXNRJQaaCkbL/2Ltqp4ecYvj6mR7cIn3LVVLu7VkyYlgGzM5F+Bs0S
+ 8OpnRTUCzSbLY7wca9G/T2zlNP0RJBAH59JvLLtZ/aA0EoaSPFeyvEtas+SOneOzAx9c
+ 3E0A==
+X-Gm-Message-State: AOJu0YxnbUIFQGWwatq0gZP+CUqdEdG+0GHfZgeNv3tizopMAaz2HycN
+ 8LjeS4q2BSiy1DicSlJPMjNPjn5KVm0aquByd1m9CmwTGBxas/YWpJFcdzO3xU432cr9e0Kwewr
+ o
+X-Google-Smtp-Source: AGHT+IGfMEtXK9hHqUraRysMmq8R/OdaCwQnzzGKTQ+naqmQz7/q4DaRPDmsr7VJ2z73HXbzpjZPmA==
+X-Received: by 2002:a5d:5f81:0:b0:382:4378:462a with SMTP id
+ ffacd0b85a97d-382437849famr3920182f8f.24.1731940820201; 
+ Mon, 18 Nov 2024 06:40:20 -0800 (PST)
+Received: from [192.168.69.197] ([176.187.198.1])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38245e95925sm3782919f8f.111.2024.11.18.06.40.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Nov 2024 06:40:19 -0800 (PST)
+Message-ID: <dfe2511b-6486-4ffe-aca2-3810ce758dd3@linaro.org>
+Date: Mon, 18 Nov 2024 15:40:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.2] hw/avr/arduino: Check for CPU types in
+ machine_run_board_init()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>,
+ Michael Rolnik <mrolnik@gmail.com>, Iris Artin <iris@artins.org>
+References: <20241118130109.7838-1-philmd@linaro.org>
+ <CAFEAcA9YQcseyQ3Csf3T99xRfbmvgetkTPZYO22_QE4SZpis-w@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA9YQcseyQ3Csf3T99xRfbmvgetkTPZYO22_QE4SZpis-w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=vkuznets@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,52 +97,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It was found that 'qemu-nbd' is not able to work with some disk images
-exported from Azure. Looking at the 512b footer (which contains VPC
-metadata):
+On 18/11/24 13:07, Peter Maydell wrote:
+> On Mon, 18 Nov 2024 at 13:02, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Leverage the common code introduced in commit c9cf636d48 ("machine:
+>> Add a valid_cpu_types property") to check for the single valid CPU
+>> type. This allows reporting an error for invalid CPUs:
+>>
+>>    $ qemu-system-avr -M 2009 -cpu avr51-avr-cpu
+>>    qemu-system-avr: Invalid CPU model: avr51
+>>    The only valid type is: avr5
+> 
+> This is a nice user-convenience feature, but why for 9.2?
+> We haven't bothered to error-check the user specified CPU
+> before, and we still don't on many (non-avr) board types.
 
-00000000  63 6f 6e 65 63 74 69 78  00 00 00 02 00 01 00 00  |conectix........|
-00000010  ff ff ff ff ff ff ff ff  2e c7 9b 96 77 61 00 00  |............wa..|
-00000020  00 07 00 00 57 69 32 6b  00 00 00 01 40 00 00 00  |....Wi2k....@...|
-00000030  00 00 00 01 40 00 00 00  28 a2 10 3f 00 00 00 02  |....@...(..?....|
-00000040  ff ff e7 47 8c 54 df 94  bd 35 71 4c 94 5f e5 44  |...G.T...5qL._.D|
-00000050  44 53 92 1a 00 00 00 00  00 00 00 00 00 00 00 00  |DS..............|
-00000060  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-
-we can see that Azure uses a different 'Creator application' --
-'wa\0\0' (offset 0x1c, likely reads as 'Windows Azure') and QEMU uses this
-field to determine how it can get image size. Apparently, Azure uses 'new'
-method, just like Hyper-V.
-
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
----
-Alternatively, we can probably make 'current_size' the default and only use
-CHS for 'vpc '/'qemu'.
----
- block/vpc.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/block/vpc.c b/block/vpc.c
-index d95a204612b7..b67798697c15 100644
---- a/block/vpc.c
-+++ b/block/vpc.c
-@@ -321,6 +321,7 @@ static int vpc_open(BlockDriverState *bs, QDict *options, int flags,
-      *      'qemu'  :  CHS              QEMU (uses disk geometry)
-      *      'qem2'  :  current_size     QEMU (uses current_size)
-      *      'win '  :  current_size     Hyper-V
-+     *      'wa\0\0':  current_size     Azure
-      *      'd2v '  :  current_size     Disk2vhd
-      *      'tap\0' :  current_size     XenServer
-      *      'CTXS'  :  current_size     XenConverter
-@@ -330,6 +331,7 @@ static int vpc_open(BlockDriverState *bs, QDict *options, int flags,
-      *  that have CHS geometry of the maximum size.
-      */
-     use_chs = (!!strncmp(footer->creator_app, "win ", 4) &&
-+               !!memcmp(footer->creator_app, "wa\0", 4) &&
-                !!strncmp(footer->creator_app, "qem2", 4) &&
-                !!strncmp(footer->creator_app, "d2v ", 4) &&
-                !!strncmp(footer->creator_app, "CTXS", 4) &&
--- 
-2.47.0
-
+OK to postpone for 10.0 then.
 
