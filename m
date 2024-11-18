@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFFED60CE7
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 22:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88653D60CE7
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 22:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDA0J-0002dS-6o; Mon, 18 Nov 2024 17:13:55 -0500
+	id 1tDA0G-0002c6-EX; Mon, 18 Nov 2024 17:13:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDA08-0002ak-42
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 17:13:45 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDA0D-0002bQ-GF
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 17:13:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDA06-0006aL-Qv
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 17:13:43 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDA0B-0006b5-BB
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 17:13:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731968021;
+ s=mimecast20190719; t=1731968026;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2EHmLep7AvvNAIAY6Sg1hRRUPZ6LsfZnIsPCnbrbppo=;
- b=FeEa4n4cyIoLTlhVZMm+uGBHtv95Szn1yjD0FH6O6ZZDMbewhTmgPIZM7WiMHafPmXicdO
- NltOUNW7SaHe3er4fNB2ac8lcAyzo4Wq4SYFMA48qd0mLlnzcoQPfX1rXX0cniSA0pqiq3
- QHpiKXS0nCOrFiEVSUIT19ixSxbct/Q=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nXzfw9o4nT7WUK2zu/6zAHs2gJrz7J7+TmVnzn6XJeY=;
+ b=d5MJCAACqs3cVn1fHndOx1DVn/CtG4rLwFaY3wO1XQIEBf4/09GEpb3HomwautjtkTmrb3
+ EwJuBBgVgUzSxNzzme2Lwoc3kjSwMvkECseX4Sa9yKfQP37luHnUGU09CAzQ8U5UNHt+lT
+ 5/qQ3dKbAnIf3mRL5FJamwoKiBvBJP8=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-YqvWvPcaMYGmrd26rwB2Pw-1; Mon, 18 Nov 2024 17:13:38 -0500
-X-MC-Unique: YqvWvPcaMYGmrd26rwB2Pw-1
-X-Mimecast-MFC-AGG-ID: YqvWvPcaMYGmrd26rwB2Pw
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-83aac7e7fd7so35179039f.0
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 14:13:38 -0800 (PST)
+ us-mta-669-P7z2U-miP3SzZiYGt3dLaA-1; Mon, 18 Nov 2024 17:13:44 -0500
+X-MC-Unique: P7z2U-miP3SzZiYGt3dLaA-1
+X-Mimecast-MFC-AGG-ID: P7z2U-miP3SzZiYGt3dLaA
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-83aa904b231so368088139f.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 14:13:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731968017; x=1732572817;
+ d=1e100.net; s=20230601; t=1731968023; x=1732572823;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2EHmLep7AvvNAIAY6Sg1hRRUPZ6LsfZnIsPCnbrbppo=;
- b=XYLiqSaXpUvdhOEfqIZrFfQnc+ju5hxJra2wyInHeqSp8VPY5pp9+yv/LBoBkb8UNZ
- vP2nfD8SkBQNTbIWLIChBDUhrBhxxx9AUMyD4MG+vcHuDzyS0IzpFSyU52MWDW1bTg4S
- F/t1L8GvZLwDzHWdFHHe0EHkhQ0oHEOCWolRMP/7TOC6TmKCCfK/y7SMZeB7V7v7n4zr
- rlR/175cqw/ypdRRASDMwdNujg5Z74HYvxkEL1zfTclEZ8Z7hBjzo6FV3vyyBIRXHzR4
- zsSRJWHrDWOMrsr8IUsrHEM/2RIdmXbUz77ZufsooZNvY/MrmY9Q+ybtYvl83mVCr6by
- OqAA==
-X-Gm-Message-State: AOJu0Yy0goDCkG9I28dufIiP/pha1ncRijjJuzTiWag/l4vBbxs+n1+B
- mJL+JeFpcrbj23Ji8pJk4PqAOgq2AiE0ctM8Eknvig8X9KhICnuVVg0CHCTOe84rLWP933Nfmx+
- F00KngwlxA1kRiBOtn+UE5ZrzIKm0vmtfxUPgmJ7nKV9Re6LxywO7dtKmp1AbVSARlP5xZRPyWG
- ohi52puxbU9d1UW9pSaLrqZqTucB05YnUbNQ==
-X-Received: by 2002:a05:6602:1614:b0:83a:7a19:1de0 with SMTP id
- ca18e2360f4ac-83e6c315b31mr1564262139f.14.1731968016941; 
- Mon, 18 Nov 2024 14:13:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IERO8LOitZwbeG1gxaBWkXVlM5XNlNIDQQQlXAdQAhUOCkwaoHaHeYqeMVK80KGuSFvCKB+Gw==
-X-Received: by 2002:a05:6602:1614:b0:83a:7a19:1de0 with SMTP id
- ca18e2360f4ac-83e6c315b31mr1564258939f.14.1731968016637; 
- Mon, 18 Nov 2024 14:13:36 -0800 (PST)
+ bh=nXzfw9o4nT7WUK2zu/6zAHs2gJrz7J7+TmVnzn6XJeY=;
+ b=w70aVvaNoblgxHFimMZIXNfjLTA4rV1rv4rztPP0JcAcVK9GCSGJjJSSqLZ/ROH8jY
+ XgFofSBcr8lC+wFbmVBkBHoxGfcn48/NEFpP5yLGvmqbEWVbXt7efT+L+XpBSAA+se/J
+ iMRbEQRT6w0OPw+6qyp8hLrgjnP74gH4LxtCdTr01R9RbkdcEALWNivTdzdSAemYYwpR
+ nahxanSfjYzGmc3zBHlSzpS2iuHYVdq7syc+VJ1aV5ZLw29MmtgNGb+DFW3lU6mentGY
+ ZER9Lzu36t2CHLCpIlqvxhx6lITmxU7HQkg3E2y4sUg74BxVTJG3JpzxWIlHq2+N9E/a
+ r1ig==
+X-Gm-Message-State: AOJu0Yy/b4S8ttBsE/Agl0UMpuRvFLbq1nBKe4fCDyzUe1ja8Crgd3lZ
+ qeF7qcueXT3lu9nyVp1AdlxV4MvafAA1EhdCBuFnTdE/s8YU77rA6dM98EzGHt25KihOgQs9Iva
+ 8ONDJ7bQpjaRydxcjEzLaNKt8q5vdGH0nQ3ohz4uExHb59tg+5qZfKVAKFx+Yg+jxShWLEAM0Xg
+ tuRimMz32mEZhfVw40t+nkRTqD6d1IBM+X6g==
+X-Received: by 2002:a05:6602:3403:b0:83a:b52b:5cb5 with SMTP id
+ ca18e2360f4ac-83e6c08a89emr1487552739f.5.1731968022706; 
+ Mon, 18 Nov 2024 14:13:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFA7MEJQ/DGJhF7+S9e34svPxUSv0zqWUNK/n6ePKLJkeb/aFkdoDjcHze7TbqvrdjYe7CSuQ==
+X-Received: by 2002:a05:6602:3403:b0:83a:b52b:5cb5 with SMTP id
+ ca18e2360f4ac-83e6c08a89emr1487549439f.5.1731968022358; 
+ Mon, 18 Nov 2024 14:13:42 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e06d6e7fd9sm2298599173.9.2024.11.18.14.13.34
+ 8926c6da1cb9f-4e06d6e7fd9sm2298599173.9.2024.11.18.14.13.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Nov 2024 14:13:36 -0800 (PST)
+ Mon, 18 Nov 2024 14:13:41 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -74,11 +74,11 @@ Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Bharat Bhushan <r65777@freescale.com>,
- qemu-ppc@nongnu.org
-Subject: [PATCH 2/5] ppc/e500: Avoid abuse of container_get()
-Date: Mon, 18 Nov 2024 17:13:27 -0500
-Message-ID: <20241118221330.3480246-3-peterx@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5/5] qom: Make container_get() strict to always walk or return
+ container
+Date: Mon, 18 Nov 2024 17:13:30 -0500
+Message-ID: <20241118221330.3480246-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241118221330.3480246-1-peterx@redhat.com>
 References: <20241118221330.3480246-1-peterx@redhat.com>
@@ -93,7 +93,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,33 +109,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-container_get() is going to become strict on not allowing to return a
-non-container.
+When used incorrectly, container_get() can silently create containers even
+if the caller may not intend to do so.  Add a rich document describing the
+helper, as container_get() should only be used in path lookups.
 
-Switch the e500 user to use object_resolve_path_component() explicitly.
+Add one object_dynamic_cast() check to make sure whatever objects the
+helper walks will be a container object (including the one to be returned).
+It is a programming error otherwise, hence assert that.
 
-Cc: Bharat Bhushan <r65777@freescale.com>
-Cc: qemu-ppc@nongnu.org
+It may make container_get() tiny slower than before, but the hope is the
+change is neglictable, as object_class_dynamic_cast() has a fast path just
+for similar leaf use case.
+
+Link: https://lore.kernel.org/r/87pln6ds8q.fsf@pond.sub.org
+Suggested-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/pci-host/ppce500.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ qom/container.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
-index b70631045a..65233b9e3f 100644
---- a/hw/pci-host/ppce500.c
-+++ b/hw/pci-host/ppce500.c
-@@ -418,8 +418,8 @@ static const VMStateDescription vmstate_ppce500_pci = {
- static void e500_pcihost_bridge_realize(PCIDevice *d, Error **errp)
- {
-     PPCE500PCIBridgeState *b = PPC_E500_PCI_BRIDGE(d);
--    PPCE500CCSRState *ccsr = CCSR(container_get(qdev_get_machine(),
--                                  "/e500-ccsr"));
-+    PPCE500CCSRState *ccsr = CCSR(
-+        object_resolve_path_component(qdev_get_machine(), "e500-ccsr"));
+diff --git a/qom/container.c b/qom/container.c
+index cfec92a944..ff6e35f837 100644
+--- a/qom/container.c
++++ b/qom/container.c
+@@ -24,6 +24,20 @@ static void container_register_types(void)
+     type_register_static(&container_info);
+ }
  
-     memory_region_init_alias(&b->bar0, OBJECT(ccsr), "e500-pci-bar0", &ccsr->ccsr_space,
-                              0, int128_get64(ccsr->ccsr_space.size));
++/**
++ * container_get(): Get the container object under specific path
++ *
++ * @root: The root path object to start walking from.  When starting from
++ *        root, one can pass in object_get_root().
++ * @path: The sub-path to lookup, must be an non-empty string starts with "/".
++ *
++ * Returns: The container object specified by @path.
++ *
++ * NOTE: the function may impplicitly create internal containers when the
++ * whole path is not yet created.  It's the caller's responsibility to make
++ * sure the path specified is always used as object containers, rather than
++ * any other type of objects.
++ */
+ Object *container_get(Object *root, const char *path)
+ {
+     Object *obj, *child;
+@@ -31,6 +45,7 @@ Object *container_get(Object *root, const char *path)
+     int i;
+ 
+     parts = g_strsplit(path, "/", 0);
++    /* "path" must be an non-empty string starting with "/" */
+     assert(parts != NULL && parts[0] != NULL && !parts[0][0]);
+     obj = root;
+ 
+@@ -40,6 +55,12 @@ Object *container_get(Object *root, const char *path)
+             child = object_new(TYPE_CONTAINER);
+             object_property_add_child(obj, parts[i], child);
+             object_unref(child);
++        } else {
++            /*
++             * Each object within the path must be a container object
++             * itself, including the object to be returned.
++             */
++            assert(object_dynamic_cast(child, TYPE_CONTAINER));
+         }
+     }
+ 
 -- 
 2.45.0
 
