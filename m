@@ -4,85 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05042D49209
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 11:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9168AD4920F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 11:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCzW7-0003zY-B8; Mon, 18 Nov 2024 06:02:03 -0500
+	id 1tCzyM-0008Ej-Vn; Mon, 18 Nov 2024 06:31:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tCzW4-0003z9-BA
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 06:02:00 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tCzW2-0005IP-Lg
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 06:02:00 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a9f1c590ecdso533557766b.1
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 03:01:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731927716; x=1732532516; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6mWA2zHau7ZF85E+4uoNKja344YN+StSZiierbNNxE8=;
- b=Iu8z1jYp7Rgd7YeIg+GgQov3L70JbSYx/ONfT5S6yaxar7ktaLF9ZUgJvVWh9OZ3RB
- 8e5KGK5mf3TyiAxWrufrWYELBiQavkRdve96dpUf4SNr/sQhGf3VW8074NaQ8Bgqw0GX
- PFxDdxRsAJ1xWje6+LEhQjt3nCDBvdIS40+L8k3uOblXNZEaWhFNqqEwBf44tH9SGWSL
- SOaPPGeKP1vCBasWSKkKgEX2sFN55xkDJ/3TKSLU7Uk8AnD8beyH9bZq+l+ZKRxoi2F0
- klJVhi21eUFMR95W5SDdTlR0i0lusMg5NB6+fzX3rcrLMfHCWOjOXFqA7vuPdP06znsn
- IkFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731927716; x=1732532516;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6mWA2zHau7ZF85E+4uoNKja344YN+StSZiierbNNxE8=;
- b=W9+glBEvyoFiJQVBkcQoGQxpK+lLiXjIFCSr+fHIGuJX9xhmVRUZasQBogfCYPe8kn
- txDWxEghJPr/TFdXiTw6Alb2NvhbtUzKK0DaGNFq+WXbd+49JJJLWtariXiFk3MmCI4N
- 3TtRdJusojrokcq06BhLKz338ATJv8kE4GpzuZZSKHBQJozllC+OYDrT4Z3nFCBCqnxW
- 5jGwYcp2SyJOSW/K3Td9NJzqrT5D2sImREI0Iy6HF7YUK55lMpFKmG/EhUdg9gIJ0j3j
- VmSAxLN2bvq0PaNg+O0EqvJOOJdI0AYKrs03acmRjiRaKfPMhPAYvVnnEbLYGFemIN1X
- 1kcw==
-X-Gm-Message-State: AOJu0YwnaS4XnBRCw6GI6IF9IT0TVprDPSK/I9llyhhNO8KDtx2ZaM4Z
- C9vgx36fQfKaqS7oZm+VYud/2dydGvGjNv/JJ47CGVPhKcnUmcU/41JoVOvr+03wPQ/ltI+pxjx
- 1
-X-Google-Smtp-Source: AGHT+IFMJAxUB1jWUszJVSKsk3obRL4F67eJrcJ8lSNeCbgdcRAJgtmgSM1/qsdCjVSn8W+xlXGEQA==
-X-Received: by 2002:a17:907:2d8e:b0:aa4:777d:7394 with SMTP id
- a640c23a62f3a-aa4833ec1f0mr1074812066b.11.1731927716447; 
- Mon, 18 Nov 2024 03:01:56 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20e043316sm526114566b.135.2024.11.18.03.01.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Nov 2024 03:01:55 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 04CE95F7C6;
- Mon, 18 Nov 2024 11:01:55 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 0/2] virtio-gpu: coverity fixes
-In-Reply-To: <20241114085241-mutt-send-email-mst@kernel.org> (Michael S.
- Tsirkin's message of "Thu, 14 Nov 2024 08:52:54 -0500")
-References: <20241111230040.68470-1-alex.bennee@linaro.org>
- <20241114085241-mutt-send-email-mst@kernel.org>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Mon, 18 Nov 2024 11:01:54 +0000
-Message-ID: <87bjycu7od.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1tCzyK-0008EB-Mh; Mon, 18 Nov 2024 06:31:12 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1tCzyI-0000Y8-FC; Mon, 18 Nov 2024 06:31:12 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI02mSu023438;
+ Mon, 18 Nov 2024 11:31:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Uw7W47
+ f5n8nN3iLZh+fae9KyPVJRFNehhxAlAScyJUE=; b=qQuHHBBL3dgb6mJsRTCbAc
+ qQgFr43BY89Ew2xR7hHZGVgL7nf0Ma8wak/vSw0W9CaWfbb+a2IbHI0HO0nfoEAz
+ VVaJVf2gOuR4MvT08SXOHOIHop6iZcbAsEeenq8tKiYCYNCfPQJHUmBJJ6nJx041
+ YFAdk7wZXK124xiQy4Jys3nfVjOsqhRR6H8E/NdqBhz7ZBP44t2pnh4Nsks3eaKJ
+ nFzwJ8Z9CTww/ic4MfGVgLSAwZit5a2zTEGprtv4ig9xqdkGvOYHj7n5hmf1cYMJ
+ qnkDqtL+f9Zh4F3l3hbSbVMswTV76vVPnT8v7mnp7W+1P/jhgAKlG+EwMhrow19Q
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xhtjh2gq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Nov 2024 11:31:05 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI4Fx3S013699;
+ Mon, 18 Nov 2024 11:31:04 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42y7xjjdpu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Nov 2024 11:31:04 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4AIBV1kL19726790
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Nov 2024 11:31:01 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E92F920043;
+ Mon, 18 Nov 2024 11:31:00 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C5B9120040;
+ Mon, 18 Nov 2024 11:31:00 +0000 (GMT)
+Received: from [9.152.224.204] (unknown [9.152.224.204])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 18 Nov 2024 11:31:00 +0000 (GMT)
+Message-ID: <b9a00d2f-c9a0-43c3-bda1-ebb2d13811d5@linux.ibm.com>
+Date: Mon, 18 Nov 2024 12:31:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 01/14] s390x/cpumodel: add msa10 subfunctions
+To: Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com
+References: <20241112155420.42042-1-brueckner@linux.ibm.com>
+ <20241112155420.42042-2-brueckner@linux.ibm.com>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <20241112155420.42042-2-brueckner@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 4NMe8z5e1to2tOkpS8_8H2JEktqsAqWG
+X-Proofpoint-GUID: 4NMe8z5e1to2tOkpS8_8H2JEktqsAqWG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 mlxlogscore=651
+ clxscore=1011 malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411180096
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,38 +110,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Am 12.11.24 um 16:54 schrieb Hendrik Brueckner:
+> MSA10 introduces new AES XTS subfunctions.
+> 
+> Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 
-> On Mon, Nov 11, 2024 at 11:00:38PM +0000, Alex Benn=C3=A9e wrote:
->> v2,
->>=20
->> Fixes after Dimitry's review.
->
->
-> You should CC Gerd.
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-Since 2f8cd5a9b6 (MAINTAINERS: drop virtio-gpu maintainership)
-virtio-gpu is currently orphaned for maintainers. I've been reaching out
-to various teams with GPU experience (including Dimitry) to see if we
-can find a replacement maintainer. For now I'm happy to test and
-upstream odd fixes.
-
->
->> Alex.
->>=20
->> Alex Benn=C3=A9e (2):
->>   hw/display: factor out the scanout blob to fb conversion
->>   hw/display: check frame buffer can hold blob
->>=20
->>  include/hw/virtio/virtio-gpu.h | 15 +++++++++
->>  hw/display/virtio-gpu-virgl.c  | 22 +------------
->>  hw/display/virtio-gpu.c        | 59 +++++++++++++++++++++-------------
->>  3 files changed, 52 insertions(+), 44 deletions(-)
->>=20
->> --=20
->> 2.39.5
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> ---
+>   target/s390x/cpu_features.c         |  2 ++
+>   target/s390x/cpu_features_def.h.inc |  6 ++++++
+>   target/s390x/cpu_models.c           |  4 ++++
+>   target/s390x/gen-features.c         | 20 ++++++++++++++++++++
+>   4 files changed, 32 insertions(+)
+[..]
 
