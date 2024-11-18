@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44313D591AE
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A51ED591AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD7X8-0006a9-9r; Mon, 18 Nov 2024 14:35:38 -0500
+	id 1tD7XX-0006hW-Tl; Mon, 18 Nov 2024 14:36:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7X0-0006Xg-It; Mon, 18 Nov 2024 14:35:33 -0500
+ id 1tD7XM-0006f9-3a; Mon, 18 Nov 2024 14:35:53 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7Wy-0002fd-Nh; Mon, 18 Nov 2024 14:35:30 -0500
+ id 1tD7XD-0002iB-30; Mon, 18 Nov 2024 14:35:44 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5DA48A54DE;
+ by isrv.corpit.ru (Postfix) with ESMTP id CCB1EA54E7;
  Mon, 18 Nov 2024 22:35:17 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CED8A17359C;
- Mon, 18 Nov 2024 22:35:20 +0300 (MSK)
-Received: (nullmailer pid 2312673 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4C6F41735A4;
+ Mon, 18 Nov 2024 22:35:21 +0300 (MSK)
+Received: (nullmailer pid 2312698 invoked by uid 1000);
  Mon, 18 Nov 2024 19:35:20 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@kernel.org>,
- Helge Deller <deller@gmx.de>, Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 50/61] linux-user: Fix setreuid and setregid to use
- direct syscalls
-Date: Mon, 18 Nov 2024 22:35:05 +0300
-Message-Id: <20241118193520.2312620-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 58/61] contrib/plugins: add compat for g_memdup2
+Date: Mon, 18 Nov 2024 22:35:13 +0300
+Message-Id: <20241118193520.2312620-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,82 +64,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@kernel.org>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-The commit fd6f7798ac30 ("linux-user: Use direct syscalls for setuid(),
-etc") added direct syscall wrappers for setuid(), setgid(), etc since the
-system calls have different semantics than the libc functions.
+We were premature if bumping this because some of our builds are still
+on older glibs. Just copy the compat handler for now and we can remove
+it later.
 
-Add and use the corresponding wrappers for setreuid and setregid which
-were missed in that commit.
-
-This fixes the build of the debian package of the uid_wrapper library
-(https://cwrap.org/uid_wrapper.html) when running linux-user.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <Zyo2jMKqq8hG8Pkz@p100>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 8491026a08b417b2d4070f7c373dcb43134c5312)
+Fixes: ee293103b0 (plugins: update lockstep to use g_memdup2)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2161
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240729144414.830369-14-alex.bennee@linaro.org>
+(cherry picked from commit 44e794896759236885f6d30d1f6b9b8b76355d52)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2681 in 8.2.x
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e178366093..2a4137fc22 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -7203,12 +7203,24 @@ static inline int tswapid(int id)
- #else
- #define __NR_sys_setgroups __NR_setgroups
- #endif
-+#ifdef __NR_sys_setreuid32
-+#define __NR_sys_setreuid __NR_setreuid32
-+#else
-+#define __NR_sys_setreuid __NR_setreuid
-+#endif
-+#ifdef __NR_sys_setregid32
-+#define __NR_sys_setregid __NR_setregid32
-+#else
-+#define __NR_sys_setregid __NR_setregid
-+#endif
+diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
+index 237543b43a..0c6f060183 100644
+--- a/contrib/plugins/lockstep.c
++++ b/contrib/plugins/lockstep.c
+@@ -100,6 +100,31 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     plugin_cleanup(id);
+ }
  
- _syscall1(int, sys_setuid, uid_t, uid)
- _syscall1(int, sys_setgid, gid_t, gid)
- _syscall3(int, sys_setresuid, uid_t, ruid, uid_t, euid, uid_t, suid)
- _syscall3(int, sys_setresgid, gid_t, rgid, gid_t, egid, gid_t, sgid)
- _syscall2(int, sys_setgroups, int, size, gid_t *, grouplist)
-+_syscall2(int, sys_setreuid, uid_t, ruid, uid_t, euid);
-+_syscall2(int, sys_setregid, gid_t, rgid, gid_t, egid);
- 
- void syscall_init(void)
++/*
++ * g_memdup has been deprecated in Glib since 2.68 and
++ * will complain about it if you try to use it. However until
++ * glib_req_ver for QEMU is bumped we make a copy of the glib-compat
++ * handler.
++ */
++static inline gpointer g_memdup2_qemu(gconstpointer mem, gsize byte_size)
++{
++#if GLIB_CHECK_VERSION(2, 68, 0)
++    return g_memdup2(mem, byte_size);
++#else
++    gpointer new_mem;
++
++    if (mem && byte_size != 0) {
++        new_mem = g_malloc(byte_size);
++        memcpy(new_mem, mem, byte_size);
++    } else {
++        new_mem = NULL;
++    }
++
++    return new_mem;
++#endif
++}
++#define g_memdup2(m, s) g_memdup2_qemu(m, s)
++
+ static void report_divergance(ExecState *us, ExecState *them)
  {
-@@ -11738,9 +11750,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return get_errno(high2lowgid(getegid()));
- #endif
-     case TARGET_NR_setreuid:
--        return get_errno(setreuid(low2highuid(arg1), low2highuid(arg2)));
-+        return get_errno(sys_setreuid(low2highuid(arg1), low2highuid(arg2)));
-     case TARGET_NR_setregid:
--        return get_errno(setregid(low2highgid(arg1), low2highgid(arg2)));
-+        return get_errno(sys_setregid(low2highgid(arg1), low2highgid(arg2)));
-     case TARGET_NR_getgroups:
-         { /* the same code as for TARGET_NR_getgroups32 */
-             int gidsetsize = arg1;
-@@ -12070,11 +12082,11 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #endif
- #ifdef TARGET_NR_setreuid32
-     case TARGET_NR_setreuid32:
--        return get_errno(setreuid(arg1, arg2));
-+        return get_errno(sys_setreuid(arg1, arg2));
- #endif
- #ifdef TARGET_NR_setregid32
-     case TARGET_NR_setregid32:
--        return get_errno(setregid(arg1, arg2));
-+        return get_errno(sys_setregid(arg1, arg2));
- #endif
- #ifdef TARGET_NR_getgroups32
-     case TARGET_NR_getgroups32:
+     DivergeState divrec = { log, 0 };
 -- 
 2.39.5
 
