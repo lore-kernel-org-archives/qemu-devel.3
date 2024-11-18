@@ -4,142 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03E99D591A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 18:55:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5BFFD591AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD6tc-0001yl-OV; Mon, 18 Nov 2024 13:54:48 -0500
+	id 1tD7X4-0006YH-Nq; Mon, 18 Nov 2024 14:35:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tD6tX-0001xB-Aq; Mon, 18 Nov 2024 13:54:43 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1tD6tV-00065U-BJ; Mon, 18 Nov 2024 13:54:42 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-723f37dd76cso2881347b3a.0; 
- Mon, 18 Nov 2024 10:54:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731956069; x=1732560869; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=MjsKJSukVigop6pJP0dBWpuy66wgsNT50af8ecR8dCE=;
- b=k3wG0Th7whiV4tEvxPTUPoAzLgWGlI5nqhEvvDNTyfnNpnQ5FvqVG6LNppMH7FGrSD
- IkJ9ihqeCjtXxx1EJq/YAUDER7N36DHXo51wgwhFar/yzwiv0iBQv+96GbIRaM5FajTZ
- npXaFZj7o4PFe/qgLIRbXddXSookxe3pdopqVXB6yyhg3GxByXrHbjp0S7TcV+nOyhon
- 5boI51njfALj4wHXeRyqIYdaudfJfk5Ugdm2jYzgrMmumAuaE3XBa0Nk9xxaItvy5Ram
- DhDmv2G6SJEbfAvU608Cl8rvF1+B4Wi8X8GLSzA9l3aRB5WWdY0zkv4FycJLIoeoX571
- yVFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731956069; x=1732560869;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MjsKJSukVigop6pJP0dBWpuy66wgsNT50af8ecR8dCE=;
- b=lfzaERbvK6FJLL0/Q9KhyELX1rAVBl/SbTCWICn7ryqTXHfT2NgN40okM8B36hyJdM
- jSbOq3ywZPIvOYx25fv/9Kv6hOZES8BjsmCh8dDSAj/p4xdvx329wr4WATTdIG0kgBZ5
- y3fmGMvrFQ6d6besqY04h9fpPXVxhMmmwx768z6kGf48Aqw311TuEa4dMqfJjpncanPo
- mto9i6Xs74rzoXROUyRYwaYFoq+OiCF/TCZH2i4rQ+fk6/pSPiFlDbqNtLFvecOMzHZD
- YzGsWI7JTeBOapdkoM3xe0at6w40gCh9P7gtRAJzBFOtFsvrA969NDvVxZ958KkcpxgH
- RsYw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUyCRmov1wYYAMAfXGRwKK44LbM4oS5wpEJO5jXKdEltlgxKQwn8V1GGQzzqwtZ7QYfu4D2xJQuZQ==@nongnu.org,
- AJvYcCWqo/ZTzzquqsAC3Lyfgwga0FgedDVEf2L3pgO2Vp9mgOMc7w2GsB3UNnJQidzYKluW5ASuZJu+gWkd6A==@nongnu.org
-X-Gm-Message-State: AOJu0YzKTPbyZpqUy83D2vOl4MWyO8kKn2aplf3USHtitXNeRqlhWOsm
- p44pUfDf1RREeyVD6JVDhx9y8CHMUIXGPrViQkXC6Gsj4ATEXfD8
-X-Google-Smtp-Source: AGHT+IGjThWo5h2gXY1xdCC1Rr2dgIpMflD00782aghDY9+wCAN9he2rGcZad9v/CrmT8wixVF6ghQ==
-X-Received: by 2002:a05:6a00:181b:b0:724:6704:734e with SMTP id
- d2e1a72fcca58-72476bb0a0cmr20667977b3a.13.1731956069416; 
- Mon, 18 Nov 2024 10:54:29 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
- ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724771e1c93sm6744299b3a.144.2024.11.18.10.54.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Nov 2024 10:54:28 -0800 (PST)
-Message-ID: <c5b0aa4c-770a-47ed-a179-d3b4b9aa16cb@roeck-us.net>
-Date: Mon, 18 Nov 2024 10:54:26 -0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tD7Wx-0006X2-Og; Mon, 18 Nov 2024 14:35:27 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tD7Wv-0002f9-BE; Mon, 18 Nov 2024 14:35:27 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 409C8A54DC;
+ Mon, 18 Nov 2024 22:35:17 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id B199617359A;
+ Mon, 18 Nov 2024 22:35:20 +0300 (MSK)
+Received: (nullmailer pid 2312665 invoked by uid 1000);
+ Mon, 18 Nov 2024 19:35:20 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 v2 00/61] Patch Round-up for stable 8.2.8,
+ freeze on 2024-11-18
+Date: Mon, 18 Nov 2024 22:35:03 +0300
+Message-Id: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND PATCH 10/10] usb-hub: Fix handling port power control
- messages
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- BALATON Zoltan <balaton@eik.bme.hu>, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org
-References: <20241112170152.217664-1-linux@roeck-us.net>
- <20241112170152.217664-11-linux@roeck-us.net>
- <08224ca3-5c31-41c5-8041-30e686fe33b1@tls.msk.ru>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <08224ca3-5c31-41c5-8041-30e686fe33b1@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=groeck7@gmail.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,42 +60,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/18/24 08:37, Michael Tokarev wrote:
-> 12.11.2024 20:01, Guenter Roeck wrote:
->> The ClearPortFeature control message fails for PORT_POWER because there
->> is no break; at the end of the case statement, causing it to fall through
->> to the failure handler. Add the missing break; to solve the problem.
->>
->> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
->> ---
->> Change from RFC:
->>      New patch
->>
->>   hw/usb/dev-hub.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
->> index 4da91d151c..2872c6712a 100644
->> --- a/hw/usb/dev-hub.c
->> +++ b/hw/usb/dev-hub.c
->> @@ -532,6 +532,7 @@ static void usb_hub_handle_control(USBDevice *dev, USBPacket *p,
->>                       usb_hub_port_clear(port, PORT_STAT_SUSPEND);
->>                       port->wPortChange = 0;
->>                   }
->> +                break;
->>               default:
->>                   goto fail;
->>               }
-> 
-> This is wonderful :)
-> 
-> Picking this up for stable series, though it looks like this is
-> a very minor issue in practice?
-> 
+The following patches are queued for QEMU stable v8.2.8:
 
-I can't tell, really. It is just something I stumbled over while testing
-the patch series I had submitted.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2
 
-Guenter
+Patch freeze is 2024-11-18 (today), and the release is planned for 2024-11-20:
 
+  https://wiki.qemu.org/Planning/8.2
+
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01* d8d5ca40048b Fea.Wang:
+   softmmu/physmem.c: Keep transaction attribute in address_space_map()
+02* 8676007eff04 Peter Maydell:
+   target/arm: Correct ID_AA64ISAR1_EL1 value for neoverse-v1
+03* 9d8d5a5b9078 TANG Tiancheng:
+   tcg: Fix iteration step in 32-bit gvec operation
+04* 8bded2e73e80 Fabiano Rosas:
+   target/ppc: Fix lxvx/stxvx facility check
+05* 6475155d5192 Fiona Ebner:
+   block/reqlist: allow adding overlapping requests
+06* 67d762e716a7 Ard Biesheuvel:
+   target/arm: Avoid target_ulong for physical address lookups
+07* 3e964275d65b Alexander Bulekov:
+   fuzz: disable leak-detection for oss-fuzz builds
+08* c60473d29254 Alex Bennée:
+   testing: bump mips64el cross to bookworm and fix package list
+09* a9ee641bd46f Philippe Mathieu-Daudé:
+   linux-user/flatload: Take mmap_lock in load_flt_binary()
+10* 2884596f5f38 Richard Henderson:
+   linux-user: Fix parse_elf_properties GNU0_MAGIC check
+11* 4cabcb89b101 Richard Henderson:
+   tcg/ppc: Use TCG_REG_TMP2 for scratch tcg_out_qemu_st
+12* 3213da7b9539 Richard Henderson:
+   tcg/ppc: Use TCG_REG_TMP2 for scratch index in prepare_host_addr
+13* 352cc9f300d8 Richard Henderson:
+   target/m68k: Always return a temporary from gen_lea_mode
+14* 3db74afec3ca Alexandra Diupina:
+   hw/intc/arm_gicv3_cpuif: Add cast to match the documentation
+15* f27206ceedbe Marc-André Lureau:
+   hw/audio/hda: free timer on exit
+16* 330ef31deb2e Marc-André Lureau:
+   ui/win32: fix potential use-after-free with dbus shared memory
+17* 5504a8126115 Peter Xu:
+   KVM: Dynamic sized kvm memslots array
+18* d9280ea31747 Stefan Berger:
+   tests: Wait for migration completion on destination QEMU to avoid failures
+19* d60bd080e783 Peter Maydell:
+   tests/qemu-iotests/211.out: Update to expect MapEntry 'compressed' field
+20* 04bbc3ee52b3 Kevin Wolf:
+   raw-format: Fix error message for invalid offset/size
+21* a7cfd751fb26 Richard Henderson:
+   tcg: Reset data_gen_ptr correctly
+22* b56617bbcb47 Alexander Graf:
+   target/i386: Walk NPT in guest real mode
+23* 115ade42d501 Richard Henderson:
+   target/i386: Use probe_access_full_mmu in ptw_translate
+24* bbd5630a75e7 Ilya Leoshkevich:
+   linux-user: Emulate /proc/self/maps under mmap_lock
+25* 8704132805cf Ilya Leoshkevich:
+   linux-user/ppc: Fix sigmask endianness issue in sigreturn
+26* 3b5948f808e3 Avihai Horon:
+   vfio/migration: Report only stop-copy size in vfio_state_pending_exact()
+27* 97f116f9c6fd Alex Bennée:
+   gitlab: make check-[dco|patch] a little more verbose
+28* 24be5341fbee Pierrick Bouvier:
+   dockerfiles: fix default targets for debian-loongarch-cross
+29* e29bc931e169 Stefan Weil:
+   Fix calculation of minimum in colo_compare_tcp
+30* 1f37280b37db Daniel P. Berrangé:
+   net: fix build when libbpf is disabled, but libxdp is enabled
+31* 75fe36b4e8a9 Bernhard Beschow:
+   net/tap-win32: Fix gcc 14 format truncation errors
+32* 1505b651fdbd Peter Maydell:
+   target/arm: Don't assert in regime_is_user() for E10 mmuidx values
+33* bab209af3503 Ido Plat:
+   target/arm: Fix arithmetic underflow in SETM instruction
+34* 5a60026cad4e Evgenii Prokopiev:
+   target/riscv/csr.c: Fix an access to VXSAT
+35* 929e4277c128 TANG Tiancheng:
+   target/riscv: Correct SXL return value for RV32 in RV64 QEMU
+36* a84be2baa9ec Sergey Makarov:
+   hw/intc: Don't clear pending bits on IRQ lowering
+37* f8c1f36a2e3d Rob Bradford:
+   target/riscv: Set vtype.vill on CPU reset
+38* 0678e9f29c23 Anup Patel:
+   hw/intc/riscv_aplic: Fix in_clrip[x] read emulation
+39* 2ae6cca1d338 Yong-Xuan Wang:
+   hw/intc/riscv_aplic: Check and update pending when write sourcecfg
+40* d201a127e164 Daniel Henrique Barboza:
+   target/riscv/kvm: set 'aia_mode' to default in error path
+41* fd16cfb2995e Daniel Henrique Barboza:
+   target/riscv/kvm: clarify how 'riscv-aia' default works
+42* c128d39edeff Anton Blanchard:
+   target/riscv: Fix vcompress with rvv_ta_all_1s
+43* c9b8a13a8841 Ilya Leoshkevich:
+   target/ppc: Set ctx->opcode for decode_insn32()
+44* 0324d236d291 Nicholas Piggin:
+   target/ppc: Fix mtDPDES targeting SMT siblings
+45* e6b2fa1b81ac Peter Maydell:
+   target/arm: Fix SVE SDOT/UDOT/USDOT (4-way, indexed)
+46* 37dfcba1a049 Hanna Czenczek:
+   migration: Ensure vmstate_save() sets errp
+47* 9529aa6bb4d1 Klaus Jensen:
+   hw/nvme: fix handling of over-committed queues
+48* 042b4ebfd229 Christian Schoenebeck:
+   9pfs: fix crash on 'Treaddir' request
+49 8fa11a4df344 Alexander Graf:
+   target/i386: Fix legacy page table walk
+50 8491026a08b4 Helge Deller:
+   linux-user: Fix setreuid and setregid to use direct syscalls
+51 f27550804688 Richard Henderson:
+   target/arm: Drop user-only special case in sve_stN_r
+52 2a339fee4506 Richard Henderson:
+   accel/tcg: Fix user-only probe_access_internal plugin check
+53 fb7f3572b111 Ilya Leoshkevich:
+   linux-user: Tolerate CONFIG_LSM_MMAP_MIN_ADDR
+54 f7150b215139 Richard Henderson:
+   linux-user/arm: Reduce vdso alignment to 4k
+55 95c9e2209cc0 Richard Henderson:
+   linux-user/arm: Select vdso for be8 and be32 modes
+56 8377e3fb854d Peter Maydell:
+   tcg: Allow top bit of SIMD_DATA_BITS to be set in simd_desc()
+57 7ba055b49b74 Pierrick Bouvier:
+   target/i386: fix hang when using slow path for ptw_setl
+58 44e794896759 Alex Bennée:
+   contrib/plugins: add compat for g_memdup2
+59 c3d7c18b0d61 Thomas Huth:
+   hw/misc/mos6522: Fix bad class definition of the MOS6522 device
+60 626b39006d2f Paolo Bonzini:
+   hw/audio/hda: fix memory leak on audio setup
+61 b2cc69997924 Guenter Roeck:
+   usb-hub: Fix handling port power control messages
+
+(commit(s) marked with * were in previous series and are not resent)
 
