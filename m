@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 987F4D49212
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 12:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941B9D49218
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 12:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD13d-0007Cm-4t; Mon, 18 Nov 2024 07:40:45 -0500
+	id 1tD13q-0007aN-A3; Mon, 18 Nov 2024 07:40:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD13R-0007Ay-RI
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:40:33 -0500
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD13Q-0004PQ-68
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:40:33 -0500
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2fb5be4381dso38152891fa.2
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 04:40:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731933630; x=1732538430; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vrrBpQ8Kpr8m3E9Zz4Q+QkaIEy4fbssbjT9rl1j42Yc=;
- b=HOarN7C3tLYEsk4209SZJlrwkjKQPImtGBsFXvcnetRnKw+cGMg9MSGdNSaaJy3PEH
- v9XLA426lS1Sc5ktVZJ7IlzRjO5LKaI21P3zij1sUbJM8MCxm4b4kdAfsrgj/D0ZxrWK
- vpn7pIXSpqoZHs6gcRPmBNzpKw4izHybCWsVHP4VXknO2MRpaDATv9BI5JxQ5IsyTnp8
- IgFEOHoqmkF0ZrBTVira5wdVpExY04AHX77OFVEH7L8A6NAxTbRU1wranxeWLszs0M1t
- ql7wEqOyUH2lhXpJ6HBfxEqr2qzq4JAnI/7VlUukHDHJTeqSsqR6AH2JrukXspVYetT+
- 50Jw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tD13n-0007Wm-99
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:40:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tD13l-0004Rb-1r
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:40:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731933648;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+Ca0cxM3UlWVse/L3ofROZ5zzW/nq8lsxvLIZ+MdO/Y=;
+ b=X5XlH7p1zO7xzSes3cs/r3fwUhyyofcGE+lyxwCNIHzywRi2JX1WnfgIgngRzL5TySsHld
+ tUAQWLHGazDVU+EvCTdd9BJoNjFGZ7WFlQPlCB2Zq5MY2vIN7UYnRf1mujm4sNh2MS60qe
+ M4QdVkEQtpETTtOhqiar0CnvkZAWqPI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-154-8yB_Y87oPzKCkplO-WjyaA-1; Mon, 18 Nov 2024 07:40:47 -0500
+X-MC-Unique: 8yB_Y87oPzKCkplO-WjyaA-1
+X-Mimecast-MFC-AGG-ID: 8yB_Y87oPzKCkplO-WjyaA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-431604a3b47so29680285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 04:40:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731933630; x=1732538430;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vrrBpQ8Kpr8m3E9Zz4Q+QkaIEy4fbssbjT9rl1j42Yc=;
- b=UYa2iHQqT4lJHT5x93eEBv5Ln2/9VXY+No0b9oVHvmp338PpOFRC28HT3LqzQSb08Q
- Xr+NK3OFBCNwO1jYmccTeJ2pjv+7gyx1RvaPJfE+Qx+FkV/4WRH+W6kipYS4CRkyoCEO
- jpnmkqTucnSi6O63qEZPGqWr5MVpTUYrJw693cDB2iDUq16VZaFJadqZ/hAK88/eLM/S
- 9FaUAb1/edjQRUKIHlHRi/LMrKd2FUobHG92RlY8ri9p79sd+M9nxfgu05kpuDIqnGkA
- 5AmlfFHRa0Lc+b0XVLIQE9IhzdVcQl5De5BCBIFMZ3cA72Cc/GfjPXA7w7EZjjAD6WVG
- ElPg==
+ d=1e100.net; s=20230601; t=1731933646; x=1732538446;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+Ca0cxM3UlWVse/L3ofROZ5zzW/nq8lsxvLIZ+MdO/Y=;
+ b=CmVWlmJklmNfuXHaol0ux8Zbhf0RmTOUn5lwqwmaES973R0w8tBignlFd8XDe0twtb
+ WCRbecGshWsA7zP1oOGZ5Ggrm0FkE32zm3XOqH9r5wGRPcQC/gjX2z9uerdWqs3jc6Pk
+ jb5TxKf/C1+CyFfRvz1ay+7aOetzGwcpqd/xFZ0NCnldxmWKZCXDtVYQapH8Ugsl8XoB
+ kf3Ofhtp2UAxEcFZ6DcohzKieTOzQW7F2br/VxaZlHyKFIyPsZ08PjGZUuQwfagiAWhz
+ qdKGEN1/0EVzwf5Xf3xyo00kjjkADe4eLB+yErknvbtf2KqqVGYa2p9u7y2yLxBIg4Kj
+ HfMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXw7YLL8pAXWr6KsAV/hgu8BtxZgUfLQHYa/Xvyhia1mCtZt5ROB4vzLFMxxbkg55DSfljdv2wQ+bUv@nongnu.org
-X-Gm-Message-State: AOJu0YyozLCdittzkxyuSWVIssb9uIta6tdqQBzbaeGM2D/jwp8iaYTi
- xeTi0VEcOhTlniVIvFolcf2mnWqUaIWhpgVI7OkCFq0PsYlLHfUyqFEl7oEbjbg=
-X-Google-Smtp-Source: AGHT+IGhE7k2sTc3sg2FZDvDw7KfJZT/RRJweTAZYmpRqx6/ty76f9hSKxlu+OvZFHaJo4cTm4rREA==
-X-Received: by 2002:a05:651c:1514:b0:2ff:7d27:8069 with SMTP id
- 38308e7fff4ca-2ff7d27821bmr12027561fa.14.1731933630379; 
- Mon, 18 Nov 2024 04:40:30 -0800 (PST)
-Received: from [192.168.69.197] ([176.187.198.1])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20df271b7sm533723566b.41.2024.11.18.04.40.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Nov 2024 04:40:29 -0800 (PST)
-Message-ID: <aafe4d02-0b09-4b63-988a-c0ccfbdfc5bc@linaro.org>
-Date: Mon, 18 Nov 2024 13:40:28 +0100
+ AJvYcCV/rp3XGZl5idUbf6h1hCAS5ZAW9bl6oj8yuxxQMcGcSmXua90ArPVjyBYHAmmk2l/uZmFd48hI4yPq@nongnu.org
+X-Gm-Message-State: AOJu0YzzqZYq0fvDDTRkc+CGLDA2ZO5jO4uiUN4/DYpWvL7h0APbRm7S
+ 7+pX9+9yLW5dF5sTPPb7FUXsRWRiy4Kx+8T//PDqIPzH4OcWJWDgJuwgOhXn/6GK8jwFtkPA+OX
+ lAPt51/v00tUYohafxHAWd8CtyIjfP2BMaTQ3yLgugXuXvpzOSIqxVMBgw0huUmRD1BXUzbd2/z
+ MBTDXs1fSoLYLmUcxcz+i8uWV3fg8=
+X-Received: by 2002:a05:600c:a4c:b0:42c:a580:71cf with SMTP id
+ 5b1f17b1804b1-432df78f0f9mr115423435e9.30.1731933645643; 
+ Mon, 18 Nov 2024 04:40:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGY31iOEOJwmH+GNU27tX4BuZTrW5dS++r1GU9Qd5XcWwkBSRwiBKIO45Bdr1fpps5/KsEGA6HVab1+k/qUOjk=
+X-Received: by 2002:a05:600c:a4c:b0:42c:a580:71cf with SMTP id
+ 5b1f17b1804b1-432df78f0f9mr115423175e9.30.1731933645387; Mon, 18 Nov 2024
+ 04:40:45 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] net: Make ip_header struct QEMU_PACKED
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Yuri Benditovich <ybendito@redhat.com>
-References: <20241114141619.806652-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241114141619.806652-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241117161039.3758840-1-manos.pitsidianakis@linaro.org>
+ <875xoku5vd.fsf@draig.linaro.org>
+In-Reply-To: <875xoku5vd.fsf@draig.linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 18 Nov 2024 13:40:33 +0100
+Message-ID: <CABgObfaVs-3aXKXtQRLDbzCL56gbimWZoMchYi5G+QGu8r0AxA@mail.gmail.com>
+Subject: Re: [PATCH v3] rust/pl011: Fix DeviceID reads
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, qemu-rust@nongnu.org, 
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,11 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/11/24 14:16, Peter Maydell wrote:
+On Mon, Nov 18, 2024 at 12:41=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
+> This is a nice improvement in conciseness over the separate legs removed =
+bellow.
+>
+> > +                eprintln!("write bad offset {offset} at RO register {d=
+ev_id:?} value {value}");
+> > +            }
+>
+> Is a binding for qemu_log and friends on the todo list?
 
-> Peter Maydell (2):
->    hw/net/virtio-net.c: Don't assume IP length field is aligned
->    net: mark struct ip_header as QEMU_PACKED
+Yes, see https://lore.kernel.org/qemu-devel/20241024-rust-round-2-v1-10-051=
+e7a25b978@linaro.org/
+and my concerns at
+https://lore.kernel.org/qemu-devel/e8e55772-906b-42cb-a744-031e6ae65f16@red=
+hat.com/.
 
-Series queued to hw-misc, thanks.
+More reviews are welcome; in general, we should define a convention
+for Rust functions and constants (is it okay to rename constants in
+the Rust bindings if their C name is ugly? should functions keep or
+lose the "qemu_*" prefixes?).
+
+The corresponding patch to move from "eprintln!" to the logging
+functions is at
+https://lore.kernel.org/qemu-devel/20241024-rust-round-2-v1-11-051e7a25b978=
+@linaro.org/.
+
+Paolo
+
 
