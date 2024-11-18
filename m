@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD5ED591A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5633AD591AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD5gq-0008Td-TF; Mon, 18 Nov 2024 12:37:32 -0500
+	id 1tD5gs-0000OV-T2; Mon, 18 Nov 2024 12:37:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gJ-0008B5-9O
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:00 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gY-0008HE-Ka
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gG-0004lp-Gd
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:36:58 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gX-0004oy-79
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731951415;
+ s=mimecast20190719; t=1731951432;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e8ZOrdpB+ECk3Jgi1cOPWcA2xDFMmyVZMqYQcUknafY=;
- b=f1mrVVJuIVOXStUjpLmOzNtogYrIXbhYp4NJZUoO9oTV3DdwVxUWKs4m95X2GCCiD2g0Mt
- mXfhRf2bwbSW8XVUg7ukPCTlg8gHkXZ6/Wk/XkwdJOoFPNgX5N4Cnvr90LHC8ov+wQiYCE
- 4kkdkvPyV9UZ+uCaZpvEtSnzEn8rX2U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gvIQT+2w9sGeDTdWfjHcBkeWv2HdmhwOO1mmaSB0vpc=;
+ b=e0i7dc2BOngbedqwfJzZqdOt4AZ0fD+a8Y6DdyotKSl5ijXDzeOWxyeTaDSAUNietiBwxY
+ F5WxMxA6lv6PlUO1WHEGjbPK6hAFbytSpDXiFQl3nLL4upWeM3YpPKk5HffqmUkVm8NJHl
+ W0px1GukiMrr4LuTXT6zVJ87RciJe9s=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-402-Lu48QJ2cPkqQemdfajHgIg-1; Mon,
- 18 Nov 2024 12:36:54 -0500
-X-MC-Unique: Lu48QJ2cPkqQemdfajHgIg-1
-X-Mimecast-MFC-AGG-ID: Lu48QJ2cPkqQemdfajHgIg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-rb-GO3UKPi2ZklGQk_VHWw-1; Mon,
+ 18 Nov 2024 12:37:09 -0500
+X-MC-Unique: rb-GO3UKPi2ZklGQk_VHWw-1
+X-Mimecast-MFC-AGG-ID: rb-GO3UKPi2ZklGQk_VHWw
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 55DE219560AA; Mon, 18 Nov 2024 17:36:53 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3681B1977327; Mon, 18 Nov 2024 17:37:06 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A81C219560A3; Mon, 18 Nov 2024 17:36:49 +0000 (UTC)
+ id CD2ED195E48B; Mon, 18 Nov 2024 17:37:03 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Boris Fiuczynski <fiuczy@linux.ibm.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PULL 05/12] docs/system/bootindex: Make it clear that s390x can also
- boot from virtio-net
-Date: Mon, 18 Nov 2024 18:36:27 +0100
-Message-ID: <20241118173634.473532-6-thuth@redhat.com>
+ Jared Rossi <jrossi@linux.ibm.com>
+Subject: [PULL 10/12] pc-bios/s390-ccw: Re-initialize receive queue index
+ before each boot attempt
+Date: Mon, 18 Nov 2024 18:36:32 +0100
+Message-ID: <20241118173634.473532-11-thuth@redhat.com>
 In-Reply-To: <20241118173634.473532-1-thuth@redhat.com>
 References: <20241118173634.473532-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,31 +83,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let's make it clear that s390x can also boot from virtio-net, to avoid
-that people think that s390x can only boot from disk devices.
+Now that we can boot from multiple boot devices, we have to make sure
+to reinitialize static variables like rx_last_idx to avoid that they
+contain garbage data during the second boot attempt (which can lead to
+crashes when the code tries to access the wrong ring data).
 
-Reported-by: Boris Fiuczynski <fiuczy@linux.ibm.com>
-Message-ID: <20241111105506.264640-1-thuth@redhat.com>
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-Reviewed-by: Boris Fiuczynski <fiuczy@linux.ibm.com>
+Message-ID: <20241111131120.317796-1-thuth@redhat.com>
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/system/bootindex.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pc-bios/s390-ccw/virtio-net.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/docs/system/bootindex.rst b/docs/system/bootindex.rst
-index 988f7b3beb..5e1b33ee22 100644
---- a/docs/system/bootindex.rst
-+++ b/docs/system/bootindex.rst
-@@ -53,7 +53,7 @@ booting.  For instance, the x86 PC BIOS boot specification allows only one
- disk to be bootable.  If boot from disk fails for some reason, the x86 BIOS
- won't retry booting from other disk.  It can still try to boot from
- floppy or net, though. In the case of s390x BIOS, the BIOS will try up to
--8 total devices, any number of which may be disks.
-+8 total devices, any number of which may be disks or virtio-net devices.
+diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
+index f9854a22c3..578c89d0c5 100644
+--- a/pc-bios/s390-ccw/virtio-net.c
++++ b/pc-bios/s390-ccw/virtio-net.c
+@@ -51,6 +51,8 @@ int virtio_net_init(void *mac_addr)
+     void *buf;
+     int i;
  
- Sometimes, firmware cannot map the device path QEMU wants firmware to
- boot from to a boot method.  It doesn't happen for devices the firmware
++    rx_last_idx = 0;
++
+     vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
+     virtio_setup_ccw(vdev);
+ 
 -- 
 2.47.0
 
