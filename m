@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B79D591B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 20:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3770D591B1
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 20:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD8Yu-0001V8-5B; Mon, 18 Nov 2024 15:41:32 -0500
+	id 1tD8Yt-0001V0-FZ; Mon, 18 Nov 2024 15:41:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tD8Ys-0001UO-F9
+ id 1tD8Yr-0001U7-WB
  for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:41:30 -0500
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tD8Yq-0002O1-Jm
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:41:30 -0500
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-539f84907caso265056e87.3
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 12:41:28 -0800 (PST)
+ id 1tD8Yp-0002Nh-69
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:41:29 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a9ed7d8d4e0so392625466b.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 12:41:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731962487; x=1732567287; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731962485; x=1732567285; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XDyffl07CJF0M0DGgKE69bB4AQSjff6CC/++zS6LNmU=;
- b=MucceMWXFDWRSYZOnucRAck6l8QQvibJJ9vF7WySamtuecX2B5f2AJpJMd/F9qyKIX
- Ad5QHNhnT8cTKavDTk2UuphaZg28iZC7nhAdZouxh6RAPY0jd8HQ9kFarhsOn0NaFLqv
- uXuVZMjBd9RJQppf6fs5Io8nvQKdIu+Q4GOn0f7WVZhwxBFgLS+l2CdTxeJ0p82Fx5Kj
- tKZaKHNOD8CH3Z0KCmM8F4x/xke+m3rWqdP4jEYt3Q3YFblD974wKbR2i6njktLm5NGC
- cwkNTm/A+uscEs/7KPYkMgUrg7hlZz+d299wdsD1wdLJ4uucpRfxK62YCfkga5GzNVOI
- 53DA==
+ bh=QUG5srLGbOrkRmSwQBWBypd2vcAod2ucdDn5wmB1EIo=;
+ b=KmJ/eriRwfiHvuYuMIb2s1HuIlU0gPpQJU4wTzabn42v5TH+COoC7LIZPmYEqdaHbZ
+ kGFkAys5gvn9Fb0LI9a6RmiLo2NDlDlEeTCiXqmHQxGiDFVplRFnn38sc4hii+5AvE/e
+ AjMb7726SAI9qNLY93pUXcKAjV0ICv1/EFcYCHwpImRkAD21imkqNRoIopauriwu1Q5Q
+ 5gQxjDQdGyK7J5Wet+Mss2He7BZ5Qqjo2p8UWvQWJOWI+vH3dPZrM9GRgjIVAutNgZJ8
+ VjBlJwbnMy9VFHEJ8BOFcO7lhuRNVT7sc1oOId/a3p+IZs/ZednJsLr/u+Oc1f6QLcyZ
+ Xn2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731962487; x=1732567287;
+ d=1e100.net; s=20230601; t=1731962485; x=1732567285;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XDyffl07CJF0M0DGgKE69bB4AQSjff6CC/++zS6LNmU=;
- b=SHT+qU93NyJsl/3JPzLdJUdJ+lnVJ4ThHb5rQdepwh4uGiZe5qmhGOuiTTAzPxKUGp
- Oym7+TMljOElpBPKPnEp2CR0zp9NxJKPSjplQUnRLiwOVYoTOMdzL1v0SyYQn7d51OWk
- 9DN/IzdWraDEJ5LfjAjpEnBKBG7iT9/5O/oHggX+gzFkccZuFU4M5UIOjRlLvGhLPVxs
- 9qg+l5wQ+JWWtoKd0Ea+i5+EhNss2/T2uWwWUJpBDpoXmsRnz3+4xXbCSsgvO42mV9tR
- jEecYGocjWoH7StAJdffbm20IoE6mlJnkXiMzk2gEW4vcqlL87itpkGrqTDHV9QYw2Rk
- +GBg==
-X-Gm-Message-State: AOJu0YyOeDW43YFQJTyK2TqIjy1QGmi8qPRY56TI2rX6+8z/Vz+M6oEh
- ijTp6JwrrOeCPvJ9Hpn0/fidKlZWd7Tjh6iD8xxbzlCYUOuz1DlB3ovGr4nrttg=
-X-Google-Smtp-Source: AGHT+IGGITJkspTspF+mpmMFEAsIYJYpwV43fOSBhBs4gaavK8jRBBNvjIgMbOxxTUO2WMUB3/hNEA==
-X-Received: by 2002:a05:6512:3ba1:b0:53b:1f90:576f with SMTP id
- 2adb3069b0e04-53dab2a6022mr6181408e87.22.1731962486821; 
- Mon, 18 Nov 2024 12:41:26 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cf79bb3a0asm5061085a12.39.2024.11.18.12.41.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=QUG5srLGbOrkRmSwQBWBypd2vcAod2ucdDn5wmB1EIo=;
+ b=iBkgqs6n3LNRjEVuGSJuxS4g0CUDz0ds+XgSg9zNQxEUIwWdeJ2GG+SgieA0fCcpR7
+ MSqHbWF9MW55KIhA9RChGigP3280eAyXhmqN7uJQk+/nn8a/RhAxhqtRihaHnBB88JMX
+ RZNDcAjgW1xN2tCgJJF7yjVQCHxt2YyhHD6dHmmrSNXDT7wUPlAILQjqoUejq35p9mBb
+ HQDXiqiOeZC8l4BqD1PpA3bZqwglNprRi2PPzA7PcQgTlIbVpCJcuSjDoISNP31W7mAI
+ RE8Jy5KHit4hCpiqaQVrwAk8v3YodhSRaoH51bYIVTUvuhMIcGCgdWkYM95wcOCGvI8+
+ c70w==
+X-Gm-Message-State: AOJu0YyOUX/RpjUPgTMsvVmD6PqTipx/EoM2b52rkY206Cpg9d/puTWJ
+ PlHQ/clDAqL09Zc7VT54zRRgyWVO/jCsWXAJ21IEkLB+pSDtaP4Z8xAepXhXveE=
+X-Google-Smtp-Source: AGHT+IEKhYYQG+6IYcN7WCUXjVfxvXcQTuG/swUYF/HaN2yXO3AMY9tCRX9IK//ahbi12jnqVO2/kQ==
+X-Received: by 2002:a17:906:fe08:b0:a9a:85b5:2aba with SMTP id
+ a640c23a62f3a-aa48341f3bamr1329130266b.21.1731962485227; 
  Mon, 18 Nov 2024 12:41:25 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20e048f12sm573462566b.173.2024.11.18.12.41.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Nov 2024 12:41:24 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4C2505F915;
+ by draig.lan (Postfix) with ESMTP id 7B9E25F95C;
  Mon, 18 Nov 2024 20:41:23 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 2/4] MAINTAINERS: CC rust/ patches to qemu-rust list
-Date: Mon, 18 Nov 2024 20:41:21 +0000
-Message-Id: <20241118204123.3083310-3-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PULL 4/4] hw/display: check frame buffer can hold blob
+Date: Mon, 18 Nov 2024 20:41:23 +0000
+Message-Id: <20241118204123.3083310-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241118204123.3083310-1-alex.bennee@linaro.org>
 References: <20241118204123.3083310-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,43 +98,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Coverity reports (CID 1564769, 1564770) that we potentially overflow
+by doing some 32x32 multiplies for something that ends up in a 64 bit
+value. Fix this by first using stride for all lines and casting input
+to uint64_t to ensure a 64 bit multiply is used.
 
-As of Nov 2024 [1], we have a new topical mailing list for Rust
-related patches. Add a new MAINTAINERS entry to touch all files under
-rust/ subdirectory and additionally add it to previous rust related
-entries.
-
-[1] https://lore.kernel.org/qemu-devel/CAFEAcA-ZQuyGTtG-vhRTEwpz0L4cpimNxkKix45Yw6gVHXozRQ@mail.gmail.com
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-Id: <20241109-update-maintainers-file-rust-v1-1-f4daba6f782f@linaro.org>
-[AJB: tweak commit msg]
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20241111230040.68470-3-alex.bennee@linaro.org>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 095420f8b0..373176e445 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3338,6 +3338,10 @@ F: rust/qemu-api
- F: rust/qemu-api-macros
- F: rust/rustfmt.toml
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 924eb8737e..8c977beebd 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -340,7 +340,7 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+  * blob_size: size of scanout blob data
+  *
+  * This will check we have enough space for the frame taking into
+- * account that stride for all but the last line.
++ * account that stride.
+  *
+  * Returns true on success, otherwise logs guest error and returns false
+  */
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index e7ca8fd1cf..7d22d03bbf 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -742,8 +742,7 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+     fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
  
-+Rust-related patches CC here
-+L: qemu-rust@nongnu.org
-+F: rust/
-+
- SLIRP
- M: Samuel Thibault <samuel.thibault@ens-lyon.org>
- S: Maintained
-@@ -4241,6 +4245,7 @@ F: docs/devel/docs.rst
+     fbend = fb->offset;
+-    fbend += fb->stride * (ss->r.height - 1);
+-    fbend += fb->bytes_pp * ss->r.width;
++    fbend += (uint64_t) fb->stride * ss->r.height;
  
- Rust build system integration
- M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+L: qemu-rust@nongnu.org
- S: Maintained
- F: scripts/rust/
- F: rust/.gitignore
+     if (fbend > blob_size) {
+         qemu_log_mask(LOG_GUEST_ERROR,
 -- 
 2.39.5
 
