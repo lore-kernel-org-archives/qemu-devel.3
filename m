@@ -4,76 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5341AD4922A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 14:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 828A9D4921D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 14:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD2ot-0004gd-Qd; Mon, 18 Nov 2024 09:33:40 -0500
+	id 1tD2py-0005SM-4p; Mon, 18 Nov 2024 09:34:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tD2oh-0004gD-7A
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 09:33:28 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tD2oe-000564-Ig
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 09:33:26 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5cfbaf3d88dso1075621a12.3
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 06:33:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731940402; x=1732545202; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UqoysXGXqWPZP3TqtzIfCBLOET9Mwkb7OGrsM9AglmU=;
- b=EKXHv6Vtr4TgYnk1zTiJ/CRVZ427fRjkXZHGcuK5SGQ07Im6bke4SVuslKGrc4ewLH
- rfXytVJ0pLkDzAbif6+vTghI3cZVttrb9PU3q71jhGkrIbDi5BM/uULCJIVke0AZHFJm
- AeuoB9z2htbjD2IxQAQ0ziWVEEZUYhj1sYmiYDYXeXErGqt0lvFpZnJgQlgis3koR3mG
- XBFv1a3G1UWlUjouwHzOszPdPNgvqbEpUn6a28RwxE2+23n8xZpnpWPwzu0ltBPreBqX
- vtsHP40TU18AWKH3tOAVYRXcrROIlQFFLM4S+vgpAoQhQLIhVIHfBIOJeo2IT/zJsw3o
- aBeQ==
+ (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
+ id 1tD2pu-0005RT-Db
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 09:34:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
+ id 1tD2ps-0005BE-6R
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 09:34:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731940477;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rJcSaygYCaOVbPI8laGJRMJxxbQVGyyW+tjRprJHMTg=;
+ b=EhdN2yEV51mDeFR4bnnF1lSLHiHjr0N+7KPrcGF+Vv7r6c2AUQ3IwebEjIG2pgGk68JXfr
+ SgYCsy5t55F0ChNfbLbnzUGzhOcCxyEllHCgN4IGdrdTPwaQFIbolvMugz6HRUQ8V9qTyP
+ 45t42rDrfhgDMal4esOHe1mQ0MvYlsA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-304-cQmaYpT_OXOFmGLvWcFfQQ-1; Mon, 18 Nov 2024 09:34:32 -0500
+X-MC-Unique: cQmaYpT_OXOFmGLvWcFfQQ-1
+X-Mimecast-MFC-AGG-ID: cQmaYpT_OXOFmGLvWcFfQQ
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38243a4ba7cso719840f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 06:34:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731940402; x=1732545202;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UqoysXGXqWPZP3TqtzIfCBLOET9Mwkb7OGrsM9AglmU=;
- b=VTPnvoldSv7TGlyRtSiN8lpdMMFGj6KEGPlUuOVjCR8lyyzqWXG2MMnO9tiNvP+rOj
- 7+GT+UqDMfL9FEFz2+lz2DCwdxLRJ0325/mL1xUpudcdz4mbMEXFFaTwmyMfPth6GhRd
- aISe7zONvEdKJA8xf71MFCAUrr6bM8laiEA2kTbvouFMEAdRQCYFSVwEJDprm7aj7VgJ
- ZbS6pIZcvf2ZleRysse7dbbfhaoS1GTvaF5CEMoF3tOicXPb+CsWViC9MjDoNoYwh+yX
- TP3ba0+RyJdgpSlNbQMihUT04rqezvbjH4onG16IWjiUiZsruuSHvceKV88yrnuWYusM
- luHQ==
-X-Gm-Message-State: AOJu0YyiMFqPOzJHdCGI2fbrRruyqMe+ZuXhqlYOgkakjJyWCA31usrf
- 9Za37qGtBhgQfi5ajZhOgqlHKUgAmuODLl/GjrUpMl/JE4FNtsbCBpNrY6WqIeMRqSyQYsd9Nnl
- QgQzLZJ64Gyvw0YuCZqsoW3KE5kzwp2uxo6Y16Q==
-X-Google-Smtp-Source: AGHT+IFHVh8zdc4QfDgl+dgxh4biz9AdUTxjA+9Jsl5htUIKcCdFz3fj9RIv9qcJosZwTMGnunOGOEbbOZhy18gk9i0=
-X-Received: by 2002:a05:6402:1d50:b0:5cf:11cc:91d3 with SMTP id
- 4fb4d7f45d1cf-5cf8fca1c0cmr13538138a12.9.1731940401958; Mon, 18 Nov 2024
- 06:33:21 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731940471; x=1732545271;
+ h=mime-version:message-id:date:references:in-reply-to:subject:to:from
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rJcSaygYCaOVbPI8laGJRMJxxbQVGyyW+tjRprJHMTg=;
+ b=RZKNdSdaorGIilGPhBVtKTa34jTIUDY3uLfxeqcJoKzFPwxuQMSldsRTIJq1AHSREb
+ MxOpDyFaJvhaY5GIGbvj8iak2JjpP6stNOVj24ieOCJwwjw+W24iAYFMehBQGOZv0HnP
+ T+rbNqrcglfXSghHTbzBhzgrNT3TNKKxTdXYQOfScYksTGzln/SB5O4KlL3MgfNSj08J
+ qGp6/rk9FC1MTsO6OB+frMWLjamDz4OSJeEAgkWs+3mci7qjkuohUVEqKEjzTcqBXOlJ
+ Bo5MIGmZq7L3jF5C5/u1a9hPetc7PRH8fBVdxYoW/ivvF4FszWC14qQgx/xdJ0WikEYG
+ OxTg==
+X-Gm-Message-State: AOJu0YwMl/RfBiBay23vFVhwan9sB/U/IXpjUwFdF4bNT0/nS5VmbEAK
+ Qh9nZZtrPNQAQY1qhI+ySwpGvFMpEkyRnyXruPNUJKxdw8X+Fz0zpM/tJVLCuOTqQuIqqShz3hu
+ PAPwZH9otHXYvxD20t7a3H1eYBqVP4SsKh64zwM+nqHK6oOdCy2So
+X-Received: by 2002:a05:6000:184d:b0:382:4493:ff8f with SMTP id
+ ffacd0b85a97d-38244940411mr4105599f8f.43.1731940471683; 
+ Mon, 18 Nov 2024 06:34:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE3HrzXrQwhODNNwWdRkdJOeqm1wcNgLA1QU7bpvybYBtVkjL7uBkUVDWQW2Y4jGlIt5h4G9g==
+X-Received: by 2002:a05:6000:184d:b0:382:4493:ff8f with SMTP id
+ ffacd0b85a97d-38244940411mr4105578f8f.43.1731940471243; 
+ Mon, 18 Nov 2024 06:34:31 -0800 (PST)
+Received: from fedora (nat-pool-rom-u.redhat.com. [149.6.22.211])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38233b5c3b3sm7772000f8f.19.2024.11.18.06.34.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Nov 2024 06:34:30 -0800 (PST)
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
+To: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
+ <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH] vpc: Read images exported from Azure correctly
+In-Reply-To: <20241114141045.374575-1-vkuznets@redhat.com>
+References: <20241114141045.374575-1-vkuznets@redhat.com>
+Date: Mon, 18 Nov 2024 15:34:29 +0100
+Message-ID: <87a5dwr4p6.fsf@redhat.com>
 MIME-Version: 1.0
-References: <20241118083737.174219-1-clg@redhat.com>
-In-Reply-To: <20241118083737.174219-1-clg@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 18 Nov 2024 14:33:11 +0000
-Message-ID: <CAFEAcA-KjMBp+au+P-GXUGQshPsrKkM3njTr1vxYqn81rktE2A@mail.gmail.com>
-Subject: Re: [PULL 0/3] vfio queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=vkuznets@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,36 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Nov 2024 at 08:38, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
-> The following changes since commit abb1565d3d863cf210f18f70c4a42b0f39b8cc=
-db:
->
->   Merge tag 'pull-tcg-20241116' of https://gitlab.com/rth7680/qemu into s=
-taging (2024-11-16 18:16:46 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/legoater/qemu/ tags/pull-vfio-20241118
->
-> for you to fetch changes up to ebbf7c60bbd1ceedf9faf962e428ceda2388c248:
->
->   vfio/container: Fix container object destruction (2024-11-18 08:40:06 +=
-0100)
->
-> ----------------------------------------------------------------
-> vfio queue:
->
-> * Fixed IGD support
-> * Fixed QEMU crash when passing through devices in SEV-SNP guests
->
-> ----------------------------------------------------------------
+Vitaly Kuznetsov <vkuznets@redhat.com> writes:
 
+> It was found that 'qemu-nbd' is not able to work with some disk images
+> exported from Azure. Looking at the 512b footer (which contains VPC
+> metadata):
+>
+> 00000000  63 6f 6e 65 63 74 69 78  00 00 00 02 00 01 00 00  |conectix........|
+> 00000010  ff ff ff ff ff ff ff ff  2e c7 9b 96 77 61 00 00  |............wa..|
+> 00000020  00 07 00 00 57 69 32 6b  00 00 00 01 40 00 00 00  |....Wi2k....@...|
+> 00000030  00 00 00 01 40 00 00 00  28 a2 10 3f 00 00 00 02  |....@...(..?....|
+> 00000040  ff ff e7 47 8c 54 df 94  bd 35 71 4c 94 5f e5 44  |...G.T...5qL._.D|
+> 00000050  44 53 92 1a 00 00 00 00  00 00 00 00 00 00 00 00  |DS..............|
+> 00000060  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+>
+> we can see that Azure uses a different 'Creator application' --
+> 'wa\0\0' (offset 0x1c, likely reads as 'Windows Azure') and QEMU uses this
+> field to determine how it can get image size. Apparently, Azure uses 'new'
+> method, just like Hyper-V.
+>
+> Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+> ---
+> Alternatively, we can probably make 'current_size' the default and only use
+> CHS for 'vpc '/'qemu'.
+> ---
+>  block/vpc.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/block/vpc.c b/block/vpc.c
+> index d95a204612b7..da8662402d00 100644
+> --- a/block/vpc.c
+> +++ b/block/vpc.c
+> @@ -321,6 +321,7 @@ static int vpc_open(BlockDriverState *bs, QDict *options, int flags,
+>       *      'qemu'  :  CHS              QEMU (uses disk geometry)
+>       *      'qem2'  :  current_size     QEMU (uses current_size)
+>       *      'win '  :  current_size     Hyper-V
+> +     *      'wa\0\0':  current_size     Azure
+>       *      'd2v '  :  current_size     Disk2vhd
+>       *      'tap\0' :  current_size     XenServer
+>       *      'CTXS'  :  current_size     XenConverter
+> @@ -330,6 +331,7 @@ static int vpc_open(BlockDriverState *bs, QDict *options, int flags,
+>       *  that have CHS geometry of the maximum size.
+>       */
+>      use_chs = (!!strncmp(footer->creator_app, "win ", 4) &&
+> +               !!strncmp(footer->creator_app, "wa", 4) &&
 
-Applied, thanks.
+Stupid me forgot how strncmp() works wrt '\0' bytes, I think we're
+better off doing plain memcmp() instead. I'll send v2.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+>                 !!strncmp(footer->creator_app, "qem2", 4) &&
+>                 !!strncmp(footer->creator_app, "d2v ", 4) &&
+>                 !!strncmp(footer->creator_app, "CTXS", 4) &&
 
--- PMM
+-- 
+Vitaly
+
 
