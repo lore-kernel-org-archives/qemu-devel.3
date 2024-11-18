@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04954D49209
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 10:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75114D49209
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 10:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCzLE-0008FU-SE; Mon, 18 Nov 2024 05:50:48 -0500
+	id 1tCzOJ-0001Wj-7j; Mon, 18 Nov 2024 05:53:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tCzLC-0008Ep-OE
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:50:47 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tCzOG-0001Vt-Ry
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:53:56 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tCzL8-0003s7-NK
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:50:46 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5cfbeed072dso1619808a12.3
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 02:50:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tCzOF-0004B0-84
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:53:56 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4314fa33a35so33209585e9.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 02:53:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731927041; x=1732531841; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BjIpXdJcBnpkIS3y/7dWnS6mu/+GbemIYhKA507spWE=;
- b=eBnXvJL2R4shg7+5pvh2TyGjr7mxM9b5gBDyTAWycnwhXL1ic7l1F2bcvYmZl3S2YS
- Rj895uJ/zGbq7RhftzDINfuLVmeLqKNY9IEbSJ46+tmPlfR4jjwJ07ceYuHLKeET+ZEE
- I3npZT8IXFBS0cEaEF7dFKOiVQ/2jJssZ93vUE7MD4Qb4Bc1C2NIp4sAew1ymxi7pTnV
- jfqQTEUz6A1w6DNZrB00JJDhBN0nctcqdPn7fvky11ts94Q63vMEe3WaYdG/wA1S0DVY
- iLZGqQXyt55l+D6hwDo5YXFlCO/naZiA5N5+rRgd3+1exlc7UCJmRzqSi46+4PfA66VF
- nwcw==
+ d=linaro.org; s=google; t=1731927233; x=1732532033; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ocx/TqUHiEzN1U7B1X4Kr/ZMMCZrseWcPqKqcBy+IBs=;
+ b=IMtvMjnJDNo37eLvQxCjXWRWiuJkPi89Ct6ujJCGx7nm0gbeQUjAcy2jC6idu1tqAk
+ W2S9TVSwv8HjInD7y/Hb4qv+hRvbWraZ/1zt1awlpLVdoHxYQvQ6LPeFbDL9ZvckMpu9
+ VQr7BcH40joPHTNYrUrGYlDnYuJ2dGpXlYc1cqKsokGu+A5O2rM7lNYWMRymDDHQehr6
+ fHX7aSwMg8dS1pcReA9ug7uBbK0Qle47P906pNqIM4ffny5WFd34Kae9UFN0UeZV364Y
+ /klE7XNz1/B9saC7u7h0c+K7n1nQrwkA1H1tNZgaEFZ3S/Cq2XIBE8qhR/0dsK0LlOTc
+ 2GRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731927041; x=1732531841;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BjIpXdJcBnpkIS3y/7dWnS6mu/+GbemIYhKA507spWE=;
- b=fPJgNoDF5G5dv5nHvmURf0rLtb9qtI5KI9m2MD8fB9gZU7qLDEbyAyIfW9vCt9R6Tg
- 5/Vh3qWy2/Y8PKy8DvsVL+EAp4bdWU8AaLH9AMLXSXIFSWwOtsXBpyXQI4dzs6f/r7lA
- tUhArk9TYtgwzaO3FhZcQPS/fvXwPYsI4S/nx5GIOmYqshypVUzyHB4gv9xvsHjtZN94
- SDKyL/yjRzdip+Yl14jmC5+yaa4eGeBTYWoFBYQHZqwv6EMf3vv+w7845uJQGssuaH3W
- lbLLCOO+pqbdcBGTbc+AHDO7pmhMY2S5n+blCuaM47Vog+wcW9aapVsQntxjNJCFmq8H
- VP+w==
-X-Gm-Message-State: AOJu0Ywkwwp4kG1dbj8krKOxsIDEIMZe2KfwLO0TEOEZjjBmD/toE2eU
- DFHZKOOe1WGbAimC6mxgIbjQkuDLm/ei42VdSrPTcZi1eqFVm31jLYMeRv7fNeMVgs8uQCxqy7L
- JDvF1dMuodrdSV170lQVOns3QN7imKBAA+p7pUaT0BYnQsCIB
-X-Google-Smtp-Source: AGHT+IEv6A5mnReyVvgYkk39UzYi65h+56drGt3VasWtTJRaKY7AJsbZnRSBVocGd0y/z7unLOXJ69XHf0/s/fyGc5I=
-X-Received: by 2002:a05:6402:13d5:b0:5cf:85d:843e with SMTP id
- 4fb4d7f45d1cf-5cf8fc54192mr8540296a12.4.1731927040846; Mon, 18 Nov 2024
- 02:50:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731927233; x=1732532033;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ocx/TqUHiEzN1U7B1X4Kr/ZMMCZrseWcPqKqcBy+IBs=;
+ b=YlG5ZOck60miBTmY/dvrymYQEmArxJCHadlAvH+I7ujerkNoYMY30VsKDxA9wW6WQb
+ SAs9qMFWP2eOFA8S3nt7W85WuPT3WdoHoKAWHj/4K989u79yv1Lz0VfEXL4R9YrAvWvi
+ MqlmiXCF+H9YxBsy1lFhMk8gDeGvI254S/vFg6xSRKJ3E5JtbUL+he0mfPl+Isp88Z54
+ HDPTOHzUPyfvdgZbJLfHo9pbkzlEOIzyI6+ee3tAg7aJEYza3M6FrVf5buFu8uDiYvO6
+ EXAw+meR/iOBwVb3/WGouIk8gFr7ibYz5SNo16eRa6ytMrMhbitQZjCBlcDwZloR2Tdc
+ FyLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQV8Z46jJIS+8Iftfpmyo3cvc/ubx8OFXqxqSqHtC4dgwhRn/N683rZG1aPLxlXgA6+/Bqxe0/usYp@nongnu.org
+X-Gm-Message-State: AOJu0Yz1prWfA1BkAGmLlhW7Z/3PXeheLYF17FzB9N+8l/j+iPi5jHiI
+ +tYgEr0+oDch5qSN6A/6DzXBcGVnXtxGCItlYrKeTECAVHhD3Og5QXFMgQjNpLsKKRHWWi9/MxN
+ K
+X-Google-Smtp-Source: AGHT+IEh0WlLuMitf2xx0e/vGG7iMbzu1BCgPQCK4lhS+cqFQYYUQqns4FEI0INZ3I7H6p7j7q/8YQ==
+X-Received: by 2002:a05:6000:79d:b0:37c:ddab:a626 with SMTP id
+ ffacd0b85a97d-382258f7197mr9145621f8f.7.1731927233381; 
+ Mon, 18 Nov 2024 02:53:53 -0800 (PST)
+Received: from [192.168.69.197] ([176.187.198.1])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38249ed88d8sm1543741f8f.48.2024.11.18.02.53.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Nov 2024 02:53:52 -0800 (PST)
+Message-ID: <84975169-3c87-42c8-96e3-7ae724cc4692@linaro.org>
+Date: Mon, 18 Nov 2024 11:53:51 +0100
 MIME-Version: 1.0
-References: <20241108135514.4006953-1-peter.maydell@linaro.org>
-In-Reply-To: <20241108135514.4006953-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 18 Nov 2024 10:50:29 +0000
-Message-ID: <CAFEAcA8Cjdg=SbXb9icdrOJgSxiUk3xt=C78Kb=dtJzeSh4QTw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] hw/intc/loongarch_extioi: Fix undefined behaviour
- with bit array APIs
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-arm <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: avr5 not found in qemu-avr 9.1.1 on macOS
+To: Iris Artin <iris@artins.org>, Gavin Shan <gshan@redhat.com>
+References: <401F6B10-2316-42B4-BFAA-863E9B2B8F87@artins.org>
+Content-Language: en-US
+Cc: qemu-discuss@nongnu.org, QEMU Developers <qemu-devel@nongnu.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <401F6B10-2316-42B4-BFAA-863E9B2B8F87@artins.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,71 +96,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Any chance of a review on patches 1 and 2 here? (I guess I should
-have cc'd qemu-arm on this, since patch 2 is for GICv3.)
+Hi Iris,
 
-thanks
--- PMM
+Thanks for this bug report.
 
-On Fri, 8 Nov 2024 at 13:55, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> The primary aim of this series is to fix some undefined behaviour in
-> loongarch_extioi which you can see if you run the functional test
-> loongarch64-virt with a QEMU built with the clang undefined-behaviour
-> sanitizer:
->
-> include/qemu/bitops.h:41:5: runtime error: store to misaligned address 0x555559745d9c for type 'unsigned long', which requires 8 byte alignment
-> 0x555559745d9c: note: pointer points here
->   ff ff ff ff 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
->               ^
->     #0 0x555556fb81c4 in set_bit include/qemu/bitops.h:41:9
->     #1 0x555556fb81c4 in extioi_setirq hw/intc/loongarch_extioi.c:65:9
->     #2 0x555556fb6e90 in pch_pic_irq_handler hw/intc/loongarch_pch_pic.c:75:5
->     #3 0x555556710265 in serial_ioport_write hw/char/serial.c
->
-> The underlying cause of this is a mismatch between our bit array APIs
-> in bitops.h and what QEMU devices tend to want. The bit array APIs are
-> historically based on those from the Linux kernel; they work with
-> underlying storage that is an array of 'unsigned long'. This is fine
-> for the kernel, but awkward for QEMU devices because the 'unsigned
-> long' type varies in size between hosts. That means that you can't use
-> it for a data structure that needs to be migrated between devices and
-> it's awkward for devices where the bit array is visible to the guest
-> (e.g. via a set of registers).
->
-> In the Arm GICv3 device I worked around this mismatch by implementing
-> a set of local functions which were like the bitops.h APIs but used a
-> uint32_t array. The loongarch_extioi code attempts to use the stock
-> bitops.h functions by casting the uint32_t* to an unsigned long* when
-> calling them. This doesn't work for two reasons:
->  * the alignment of uint32_t is less than that of unsigned long,
->    so the pointer isn't guaranteed to be sufficiently aligned;
->    this is the cause of the sanitizer UB error
->  * on a big-endian host we will get the wrong results because the
->    two halves of the unsigned long will be the opposite way round
->
-> In this series I fix this by creating new functions set_bit32(),
-> clear_bit32(), etc in bitops.h which are like the existing ones but
-> work with a bit array whose underlying storage is a uint32_t array.
-> Then we can use these both in the GICv3 (where this is just a
-> cleanup) and in loongarch_extioi (where it fixes the bug).
->
-> (There are other uses of set_bit() in the loongarch_extioi code but
-> I have left those alone because they define the bitmaps as
-> arrays of unsigned long so they are at least consistent. I do
-> wonder if it's really OK not to migrate those bitmaps, though.)
->
-> thanks
-> -- PMM
->
-> Peter Maydell (3):
->   bitops.h: Define bit operations on 'uint32_t' arrays
->   hw/intc/arm_gicv3: Use bitops.h uint32_t bit array functions
->   hw/intc/loongarch_extioi: Use set_bit32() and clear_bit32() for s->isr
->
->  include/hw/intc/arm_gicv3_common.h |  54 +++------
->  include/qemu/bitmap.h              |   8 ++
->  include/qemu/bitops.h              | 172 ++++++++++++++++++++++++++++-
->  hw/intc/loongarch_extioi.c         |  11 +-
->  4 files changed, 194 insertions(+), 51 deletions(-)
+On 17/11/24 02:51, Iris Artin wrote:
+> $ brew install qemu
+> Warning: qemu 9.1.1 is already installed and up-to-date.
+> $ qemu-system-avr -version
+> QEMU emulator version 9.1.1
+> Copyright (c) 2003-2024 Fabrice Bellard and the QEMU Project developers
+> $ qemu-system-avr -machine 2009 -cpu help
+> Available CPUs:
+>    avr5
+>    avr51
+>    avr6
+> $ qemu-system-avr -machine 2009 -cpu avr5
+> qemu-system-avr: unable to find CPU model 'avr5'
+> 
+> What am I missing? Thanks!
+
+Gavin, this seems related to your commit:
+
+commit 7db8f7e895bff8b2eac08dfbc977d22a5a9fff36
+Author: Gavin Shan <gshan@redhat.com>
+Date:   Wed Nov 15 09:56:06 2023 +1000
+
+     target/avr: Use generic cpu_list()
+
+     Before it's applied:
+
+     [gshan@gshan q]$ ./build/qemu-system-avr -cpu ?
+     avr5-avr-cpu
+     avr51-avr-cpu
+     avr6-avr-cpu
+
+     After it's applied:
+
+     [gshan@gshan q]$ ./build/qemu-system-avr -cpu ?
+     Available CPUs:
+       avr5
+       avr51
+       avr6
+
+FYI this works:
+
+$ qemu-system-avr -M 2009 -cpu avr5-avr-cpu
+-> OK
+
+Could you have a look?
+
+Thanks,
+
+Phil.
 
