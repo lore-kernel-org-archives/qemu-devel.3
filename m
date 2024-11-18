@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 565FCD4920C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 11:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05042D49209
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 11:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCzVl-0003yA-7s; Mon, 18 Nov 2024 06:01:41 -0500
+	id 1tCzW7-0003zY-B8; Mon, 18 Nov 2024 06:02:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tCzVd-0003xH-Rb
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 06:01:35 -0500
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tCzW4-0003z9-BA
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 06:02:00 -0500
 Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tCzVb-0005H9-73
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 06:01:32 -0500
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tCzW2-0005IP-Lg
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 06:02:00 -0500
 Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a9a977d6cc7so171289166b.3
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 03:01:30 -0800 (PST)
+ a640c23a62f3a-a9f1c590ecdso533557766b.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 03:01:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731927689; x=1732532489; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1731927716; x=1732532516; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h+A2WmAOSm5CSFV5k/PxFQuxZqU5UrjQlYj2eC5Xi8g=;
- b=MDWy+UwW8hP1qwhnJtK3szzBBNha7esO6DT/HRH8paMdI38zrFIsc1Dyy+ccBSD7fH
- oAQguBJey5mBGJc4arnYnAhKke7ULxZegMRaA4/HTo1bA1sN/xSzlArsnk4JRqIFI+yH
- o0+FT2D/DMEuZe3wXajdAw2MMXAewfKGBMnvY013f/+yZ80L0HQEWXQuHAAU4UdHct4U
- 6fFoHUBdTXCXpidSrFHwJTbJ4KEUlr9OLOY8NH4yAN/9KTNkPzcHWUq8sVEPL8DpTe/C
- 9cKghJiABk6x/cYI9hHyEaYG1xWH3JTZMzrUUosEwbrFj/HZD1VG+3piRB1AS94iL6K8
- JtIQ==
+ bh=6mWA2zHau7ZF85E+4uoNKja344YN+StSZiierbNNxE8=;
+ b=Iu8z1jYp7Rgd7YeIg+GgQov3L70JbSYx/ONfT5S6yaxar7ktaLF9ZUgJvVWh9OZ3RB
+ 8e5KGK5mf3TyiAxWrufrWYELBiQavkRdve96dpUf4SNr/sQhGf3VW8074NaQ8Bgqw0GX
+ PFxDdxRsAJ1xWje6+LEhQjt3nCDBvdIS40+L8k3uOblXNZEaWhFNqqEwBf44tH9SGWSL
+ SOaPPGeKP1vCBasWSKkKgEX2sFN55xkDJ/3TKSLU7Uk8AnD8beyH9bZq+l+ZKRxoi2F0
+ klJVhi21eUFMR95W5SDdTlR0i0lusMg5NB6+fzX3rcrLMfHCWOjOXFqA7vuPdP06znsn
+ IkFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731927689; x=1732532489;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=h+A2WmAOSm5CSFV5k/PxFQuxZqU5UrjQlYj2eC5Xi8g=;
- b=qLi/76yiOVx+O1y5JRH9N9fEuEm9dl+jy1W2fM0WNreve4f+N3/rsySkUnrxP1J1+Q
- 2wnVDWha2bOFjH0SMwNzFbIy/nvLgb25Yg+/oRkWWAxpQ13F7uRWQ6gulIOPjgygeWDj
- EFTBNdiTnAl1zVrKCESBE8b72rAdpwaMgV8ZRx3U0ivnPF+MAXaboOhED65x8FF2cnTx
- IY4dWN57MewGfwpU0T90Qfyk6rvZv1hrrRhwTR6lcevpONBn0QHjFXSM7MFXsElqi8UN
- ux4Y1cqdywf383d7OpHkhnqWPrdi0RwawfcVrCJz7S/mx0lmit8RpizxQEDVW9/fHYS3
- 95Lg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNyG9xEmkZdYY2lC5UAYJM6ftKQXcnHjpoY5Dt1yCVLQ4ljMPsazompuRpJOWG/cphZ6KYRp7UjZxz@nongnu.org
-X-Gm-Message-State: AOJu0YyLf+953td8Av8AI32Vbgysk8kHoKsEQ7D6N7BBsk6pdHDzTJ5k
- 2r3uRSYrj0zuwXzJyXhoOXFOfFropJezFNz0TYIUmD3rdIm6Pk0DygKp2eF1vEzxK8oFtajTtZW
- XT2+QEPoK//bqWfY212fYhEoNZcaqZBQOABQ1tA==
-X-Google-Smtp-Source: AGHT+IEppW6Uq/DWBc+4O5rf2M6AaB/0rv/a3bI9xKaVuE5XSwpkQxIfylaJp+TQJKYevTz1GLCJRWcoQLpK2hSEe8U=
-X-Received: by 2002:a05:6402:2794:b0:5cf:66d1:f97a with SMTP id
- 4fb4d7f45d1cf-5cf8fcc6f29mr15718930a12.15.1731927688636; Mon, 18 Nov 2024
- 03:01:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731927716; x=1732532516;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6mWA2zHau7ZF85E+4uoNKja344YN+StSZiierbNNxE8=;
+ b=W9+glBEvyoFiJQVBkcQoGQxpK+lLiXjIFCSr+fHIGuJX9xhmVRUZasQBogfCYPe8kn
+ txDWxEghJPr/TFdXiTw6Alb2NvhbtUzKK0DaGNFq+WXbd+49JJJLWtariXiFk3MmCI4N
+ 3TtRdJusojrokcq06BhLKz338ATJv8kE4GpzuZZSKHBQJozllC+OYDrT4Z3nFCBCqnxW
+ 5jGwYcp2SyJOSW/K3Td9NJzqrT5D2sImREI0Iy6HF7YUK55lMpFKmG/EhUdg9gIJ0j3j
+ VmSAxLN2bvq0PaNg+O0EqvJOOJdI0AYKrs03acmRjiRaKfPMhPAYvVnnEbLYGFemIN1X
+ 1kcw==
+X-Gm-Message-State: AOJu0YwnaS4XnBRCw6GI6IF9IT0TVprDPSK/I9llyhhNO8KDtx2ZaM4Z
+ C9vgx36fQfKaqS7oZm+VYud/2dydGvGjNv/JJ47CGVPhKcnUmcU/41JoVOvr+03wPQ/ltI+pxjx
+ 1
+X-Google-Smtp-Source: AGHT+IFMJAxUB1jWUszJVSKsk3obRL4F67eJrcJ8lSNeCbgdcRAJgtmgSM1/qsdCjVSn8W+xlXGEQA==
+X-Received: by 2002:a17:907:2d8e:b0:aa4:777d:7394 with SMTP id
+ a640c23a62f3a-aa4833ec1f0mr1074812066b.11.1731927716447; 
+ Mon, 18 Nov 2024 03:01:56 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20e043316sm526114566b.135.2024.11.18.03.01.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Nov 2024 03:01:55 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 04CE95F7C6;
+ Mon, 18 Nov 2024 11:01:55 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 0/2] virtio-gpu: coverity fixes
+In-Reply-To: <20241114085241-mutt-send-email-mst@kernel.org> (Michael S.
+ Tsirkin's message of "Thu, 14 Nov 2024 08:52:54 -0500")
+References: <20241111230040.68470-1-alex.bennee@linaro.org>
+ <20241114085241-mutt-send-email-mst@kernel.org>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Mon, 18 Nov 2024 11:01:54 +0000
+Message-ID: <87bjycu7od.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <401F6B10-2316-42B4-BFAA-863E9B2B8F87@artins.org>
- <84975169-3c87-42c8-96e3-7ae724cc4692@linaro.org>
-In-Reply-To: <84975169-3c87-42c8-96e3-7ae724cc4692@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 18 Nov 2024 11:01:17 +0000
-Message-ID: <CAFEAcA-pBf2HywiWmAUSZ05a4bK0+5ovtS=K7ggXZ6pHRe8L6g@mail.gmail.com>
-Subject: Re: avr5 not found in qemu-avr 9.1.1 on macOS
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Iris Artin <iris@artins.org>, Gavin Shan <gshan@redhat.com>,
- qemu-discuss@nongnu.org, QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62c.google.com
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,65 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Nov 2024 at 10:54, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Hi Iris,
->
-> Thanks for this bug report.
->
-> On 17/11/24 02:51, Iris Artin wrote:
-> > $ brew install qemu
-> > Warning: qemu 9.1.1 is already installed and up-to-date.
-> > $ qemu-system-avr -version
-> > QEMU emulator version 9.1.1
-> > Copyright (c) 2003-2024 Fabrice Bellard and the QEMU Project developers
-> > $ qemu-system-avr -machine 2009 -cpu help
-> > Available CPUs:
-> >    avr5
-> >    avr51
-> >    avr6
-> > $ qemu-system-avr -machine 2009 -cpu avr5
-> > qemu-system-avr: unable to find CPU model 'avr5'
-> >
-> > What am I missing? Thanks!
->
-> Gavin, this seems related to your commit:
->
-> commit 7db8f7e895bff8b2eac08dfbc977d22a5a9fff36
-> Author: Gavin Shan <gshan@redhat.com>
-> Date:   Wed Nov 15 09:56:06 2023 +1000
->
->      target/avr: Use generic cpu_list()
->
->      Before it's applied:
->
->      [gshan@gshan q]$ ./build/qemu-system-avr -cpu ?
->      avr5-avr-cpu
->      avr51-avr-cpu
->      avr6-avr-cpu
->
->      After it's applied:
->
->      [gshan@gshan q]$ ./build/qemu-system-avr -cpu ?
->      Available CPUs:
->        avr5
->        avr51
->        avr6
->
-> FYI this works:
->
-> $ qemu-system-avr -M 2009 -cpu avr5-avr-cpu
-> -> OK
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-I think the new help output is correct (in the sense that it's
-what we intend it to say), and the place we want to get to here
-is that -cpu accepts the correct "avr5" name. (We should probably for
-back-compat have it also accept the long-form names I guess.)
+> On Mon, Nov 11, 2024 at 11:00:38PM +0000, Alex Benn=C3=A9e wrote:
+>> v2,
+>>=20
+>> Fixes after Dimitry's review.
+>
+>
+> You should CC Gerd.
 
-We don't require "-cpu cortex-a15-arm-cpu" for arm targets,
-for instance.
+Since 2f8cd5a9b6 (MAINTAINERS: drop virtio-gpu maintainership)
+virtio-gpu is currently orphaned for maintainers. I've been reaching out
+to various teams with GPU experience (including Dimitry) to see if we
+can find a replacement maintainer. For now I'm happy to test and
+upstream odd fixes.
 
-thanks
--- PMM
+>
+>> Alex.
+>>=20
+>> Alex Benn=C3=A9e (2):
+>>   hw/display: factor out the scanout blob to fb conversion
+>>   hw/display: check frame buffer can hold blob
+>>=20
+>>  include/hw/virtio/virtio-gpu.h | 15 +++++++++
+>>  hw/display/virtio-gpu-virgl.c  | 22 +------------
+>>  hw/display/virtio-gpu.c        | 59 +++++++++++++++++++++-------------
+>>  3 files changed, 52 insertions(+), 44 deletions(-)
+>>=20
+>> --=20
+>> 2.39.5
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
