@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C67D591AD
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44313D591AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:36:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD7XA-0006bA-1p; Mon, 18 Nov 2024 14:35:40 -0500
+	id 1tD7X8-0006a9-9r; Mon, 18 Nov 2024 14:35:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7X7-0006Zi-K8; Mon, 18 Nov 2024 14:35:37 -0500
+ id 1tD7X0-0006Xg-It; Mon, 18 Nov 2024 14:35:33 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7X5-0002gq-Q1; Mon, 18 Nov 2024 14:35:37 -0500
+ id 1tD7Wy-0002fd-Nh; Mon, 18 Nov 2024 14:35:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 872DDA54E1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5DA48A54DE;
  Mon, 18 Nov 2024 22:35:17 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 06D1017359F;
- Mon, 18 Nov 2024 22:35:21 +0300 (MSK)
-Received: (nullmailer pid 2312682 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id CED8A17359C;
+ Mon, 18 Nov 2024 22:35:20 +0300 (MSK)
+Received: (nullmailer pid 2312673 invoked by uid 1000);
  Mon, 18 Nov 2024 19:35:20 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 53/61] linux-user: Tolerate CONFIG_LSM_MMAP_MIN_ADDR
-Date: Mon, 18 Nov 2024 22:35:08 +0300
-Message-Id: <20241118193520.2312620-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@kernel.org>,
+ Helge Deller <deller@gmx.de>, Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 50/61] linux-user: Fix setreuid and setregid to use
+ direct syscalls
+Date: Mon, 18 Nov 2024 22:35:05 +0300
+Message-Id: <20241118193520.2312620-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
@@ -62,46 +63,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Helge Deller <deller@kernel.org>
 
-Running qemu-i386 on a system running with SELinux in enforcing mode
-(more precisely: s390x trixie container on Fedora 40) fails with:
+The commit fd6f7798ac30 ("linux-user: Use direct syscalls for setuid(),
+etc") added direct syscall wrappers for setuid(), setgid(), etc since the
+system calls have different semantics than the libc functions.
 
-    qemu-i386: tests/tcg/i386-linux-user/sigreturn-sigmask: Unable to find a guest_base to satisfy all guest address mapping requirements
-      00000000-ffffffff
+Add and use the corresponding wrappers for setreuid and setregid which
+were missed in that commit.
 
-The reason is that main() determines mmap_min_addr from
-/proc/sys/vm/mmap_min_addr, but SELinux additionally defines
-CONFIG_LSM_MMAP_MIN_ADDR, which is normally larger: 32K or 64K, but,
-in general, can be anything. There is no portable way to query its
-value: /boot/config, /proc/config and /proc/config.gz are distro- and
-environment-specific.
-
-Once the identity map fails, the magnitude of guest_base does not
-matter, so fix by starting the search from 1M or 1G.
+This fixes the build of the debian package of the uid_wrapper library
+(https://cwrap.org/uid_wrapper.html) when running linux-user.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2598
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20241023002558.34589-1-iii@linux.ibm.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <Zyo2jMKqq8hG8Pkz@p100>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit fb7f3572b111ffb6c2dd2c7f6c5b4dc57dd8a3f5)
+(cherry picked from commit 8491026a08b417b2d4070f7c373dcb43134c5312)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index d11842cb94..a79f915c37 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -2980,7 +2980,7 @@ static uintptr_t pgb_try_itree(const PGBAddrs *ga, uintptr_t base,
- static uintptr_t pgb_find_itree(const PGBAddrs *ga, IntervalTreeRoot *root,
-                                 uintptr_t align, uintptr_t brk)
- {
--    uintptr_t last = mmap_min_addr;
-+    uintptr_t last = sizeof(uintptr_t) == 4 ? MiB : GiB;
-     uintptr_t base, skip;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index e178366093..2a4137fc22 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -7203,12 +7203,24 @@ static inline int tswapid(int id)
+ #else
+ #define __NR_sys_setgroups __NR_setgroups
+ #endif
++#ifdef __NR_sys_setreuid32
++#define __NR_sys_setreuid __NR_setreuid32
++#else
++#define __NR_sys_setreuid __NR_setreuid
++#endif
++#ifdef __NR_sys_setregid32
++#define __NR_sys_setregid __NR_setregid32
++#else
++#define __NR_sys_setregid __NR_setregid
++#endif
  
-     while (true) {
+ _syscall1(int, sys_setuid, uid_t, uid)
+ _syscall1(int, sys_setgid, gid_t, gid)
+ _syscall3(int, sys_setresuid, uid_t, ruid, uid_t, euid, uid_t, suid)
+ _syscall3(int, sys_setresgid, gid_t, rgid, gid_t, egid, gid_t, sgid)
+ _syscall2(int, sys_setgroups, int, size, gid_t *, grouplist)
++_syscall2(int, sys_setreuid, uid_t, ruid, uid_t, euid);
++_syscall2(int, sys_setregid, gid_t, rgid, gid_t, egid);
+ 
+ void syscall_init(void)
+ {
+@@ -11738,9 +11750,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return get_errno(high2lowgid(getegid()));
+ #endif
+     case TARGET_NR_setreuid:
+-        return get_errno(setreuid(low2highuid(arg1), low2highuid(arg2)));
++        return get_errno(sys_setreuid(low2highuid(arg1), low2highuid(arg2)));
+     case TARGET_NR_setregid:
+-        return get_errno(setregid(low2highgid(arg1), low2highgid(arg2)));
++        return get_errno(sys_setregid(low2highgid(arg1), low2highgid(arg2)));
+     case TARGET_NR_getgroups:
+         { /* the same code as for TARGET_NR_getgroups32 */
+             int gidsetsize = arg1;
+@@ -12070,11 +12082,11 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+ #endif
+ #ifdef TARGET_NR_setreuid32
+     case TARGET_NR_setreuid32:
+-        return get_errno(setreuid(arg1, arg2));
++        return get_errno(sys_setreuid(arg1, arg2));
+ #endif
+ #ifdef TARGET_NR_setregid32
+     case TARGET_NR_setregid32:
+-        return get_errno(setregid(arg1, arg2));
++        return get_errno(sys_setregid(arg1, arg2));
+ #endif
+ #ifdef TARGET_NR_getgroups32
+     case TARGET_NR_getgroups32:
 -- 
 2.39.5
 
