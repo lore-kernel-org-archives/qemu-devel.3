@@ -4,114 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7468FD43FF5
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 09:16:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C91D49205
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 09:44:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCxrN-0002pJ-8b; Mon, 18 Nov 2024 04:15:53 -0500
+	id 1tCyIf-0006jq-KL; Mon, 18 Nov 2024 04:44:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=CkxU=SN=kaod.org=clg@ozlabs.org>)
- id 1tCxqD-0002fC-7U; Mon, 18 Nov 2024 04:14:41 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=CkxU=SN=kaod.org=clg@ozlabs.org>)
- id 1tCxq9-0000cE-NF; Mon, 18 Nov 2024 04:14:40 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XsMQ10p99z4xg6;
- Mon, 18 Nov 2024 20:14:17 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XsMPx2wsRz4xfs;
- Mon, 18 Nov 2024 20:14:13 +1100 (AEDT)
-Message-ID: <7c8658ef-e61b-4a46-91cf-6dc26e78158c@kaod.org>
-Date: Mon, 18 Nov 2024 10:14:11 +0100
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tCyII-0006ia-J1
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 04:43:43 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tCyIH-00045i-1E
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 04:43:42 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4316a44d1bbso23197405e9.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 01:43:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731923017; x=1732527817; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+6MNrKpnwZ+tRHw+0OXWmFxzgLcDpPI0LeFZvBG2a64=;
+ b=ZKfuoQlJoldZ/XMXgKe9P20zmKA3Kaqo4gqvKXQ/EafUpmcro/ayrVRsKTXR6b305T
+ JtpVGb9L9+Y4QKBBkQf4tHTNdXdmbbOR1GHHcMpwpIxwEwVCaMHeD/k8tSxEQnx+jlnb
+ WinAhTDf+O12UcIwHw5DCKVfd05k4RsBp0Z+fOg3clFKNI8vk9rR7q9tsHfl5obwjuPT
+ CkmdTwbXxtKankKZclJVNlQrFJpyZ2i75WPUS7+H/nKwRcp1xmUq5fPeG2duruQtg5c/
+ qsqk3TVv53YeTCP8svu3elGDylk7kqPxgU8JsN0yw6biADW8gDj69a+Ot44t9nPB7ns3
+ /Tdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731923017; x=1732527817;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+6MNrKpnwZ+tRHw+0OXWmFxzgLcDpPI0LeFZvBG2a64=;
+ b=QvjaClCL1IB9gB9dA2lTfUc6jsCe28OUTz00aOrmHzTO0dv4+A/g/KN3Ex3RT5c/Vh
+ mGXHn6+yNoWbe39L1O95HjzPBRz03jiNLA+14oRmbW8kMmtfG5t/Zg8n5Zt0/fAR7x7d
+ RUmbFZFVOuZspavDk6ppqCfAIqa9sGMeMsK8F5FGiTBtn5462JvMhYmOBtuT44isOjqX
+ o9f3/imsH4GHcO7aUdmLSKp5ipUsaoJyt4gweDHT3aiZOBylwgXSjlqGJpTXwRUhSPMh
+ iq65ucdacaLiAX4Peui6BqhaST/0guCgQpuB3l7M43MWFBZJPT+6vF41Y03pOUDQam52
+ L3GA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVzh/81F5v6dmn0GFtBLcmAA7CImBk5aFYh31kEdHE1+qXqZWaU2A736X0ilV032BG48USqSraH8Y0C@nongnu.org
+X-Gm-Message-State: AOJu0Yw5n/L4c8tG4vyhyq1izHgyG4kH2J/ZKZLPlNlvsAijX8telWIO
+ LwTQJ4YCU7YYlTenkmzC7DpDRW+oekvSTk5vGeipal2Qu82/f5jXNyJfr53uov4=
+X-Google-Smtp-Source: AGHT+IErSBM8nq53K2BRYq/44o2/9KWXjEe2MfXL1j7D/JGjPbaQKYEAklhhqXeXYUV5MWpyRNytow==
+X-Received: by 2002:a05:600c:1f94:b0:42c:bd27:4c12 with SMTP id
+ 5b1f17b1804b1-432df72c661mr113330875e9.10.1731923017006; 
+ Mon, 18 Nov 2024 01:43:37 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432dab7206csm147855595e9.7.2024.11.18.01.43.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Nov 2024 01:43:36 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A8C5E5F7C6;
+ Mon, 18 Nov 2024 09:43:35 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Junjie Mao <junjie.mao@hotmail.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  Peter Maydell
+ <peter.maydell@linaro.org>
+Subject: Re: [PATCH] rust/pl011: Fix range checks for device ID accesses
+In-Reply-To: <SY0P300MB102644C4AC34A3AAD75DC4D5955C2@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ (Junjie Mao's message of "Thu, 7 Nov 2024 14:13:07 +0800")
+References: <SY0P300MB102644C4AC34A3AAD75DC4D5955C2@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Mon, 18 Nov 2024 09:43:35 +0000
+Message-ID: <87seroubaw.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Subject: Re: backing storage for eMMC boot partitions
-To: =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Guenter Roeck <linux@roeck-us.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
- <thuth@redhat.com>, Joel Stanley <joel@jms.id.au>,
- qemu-block <qemu-block@nongnu.org>
-References: <20241017163247.711244-1-peter.maydell@linaro.org>
- <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
- <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
- <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
- <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
- <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
- <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
- <53cbb597-e7f2-4742-bf85-928c704ddbcf@linaro.org>
- <443f1b0c-8184-4bf4-9f68-c23d7de3bc36@roeck-us.net>
- <1bce4c22-9281-44c5-8acb-860881dc271c@kaod.org>
- <c27fbed6-596e-4ce7-a6ca-6d12d7205e99@roeck-us.net>
- <86fa6e68-5861-4d4d-941f-95b278074eb6@kaod.org>
- <1c917e4a-de50-45b9-ac9c-eb04d51401a2@roeck-us.net>
- <00997cca-6f4a-4b99-9616-2af6a25cd4fb@kaod.org>
- <4246f82b-597c-4a5d-9a55-18a584e7d8c7@roeck-us.net>
- <670fa7bf052d8f292f9bd25c330c8d7bdba02770.camel@pengutronix.de>
- <b6641b83-33dc-46f8-b61b-fbdb9ab9bc40@roeck-us.net>
- <9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=CkxU=SN=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,106 +101,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Junjie Mao <junjie.mao@hotmail.com> writes:
 
-[ ... ]
-
->> also boots from the emmc controller. How do I provide the
->> bus and bus index ? "bus=sdhci-bus.2" doesn't work for me.
->> There is "sd-bus", but it does not have an index.
-
-Yes. Changes are required in the sdhci model and in the boards using it.
-
-> I've not really understood how to assemble more complex setups using
-> qemu's commandline when the board already creates some of the devices.
-
-Yes. That's a "problem" to fix for emmc/sd devices. They should only
-be created when defaults_enabled(), just like the flash devices.
-
-> Perhaps Cédric can explain how the different boot options are
-> configured for aspeed?
-
-See https://qemu.readthedocs.io/en/v9.1.0/system/arm/aspeed.html#boot-options
-and the avocado/functional tests for examples.
-
-The eMMC case is missing from the docs. Here is a proposal :
-
-   https://lore.kernel.org/qemu-devel/20241118090648.187720-1-clg@redhat.com/
-
-Thanks,
-
-C.
-
-
-> 
-> I see three cases:
-> 1. specify the blockdev driver and options in the simple case where the
-> board already creates the SD or eMMC device
-> 2. specify some custom options for the eMMC
-> 3. create a custom eMMC config on a generic machine via sdhci-pci
-> 
-> 
-> Case 1 is probably most common. The user has chosen a board and just
-> wants to boot a rootfs image and doesn't care about boot partitions or
-> anything else eMMC-specific.
-> 
-> 
-> Some users may want to emulate an eMMC with boot partitions, as that
-> allows them to emulate their physical boards more closely (case 2).
-> Note that eMMC boot partitions are usually *not* used for storing a
-> Linux kernel, but for the bootloader (including things like u-boot, TF-
-> A, OP-TEE, ...). The ROM-code on many SoCs supports loading directly
-> from eMMC boot partitions. One of the two boot partitions can be
-> activated with an atomic eMMC EXT CSD register write, allowing atomic
-> bootloader updates. I think this case was the motivation for Cédric's
-> eea55625df83 ("aspeed: Introduce a AspeedSoCClass 'boot_from_emmc'
-> handler").
+> The peripheral and PrimeCell identification registers of pl011 are locate=
+d at
+> offset 0xFE0 - 0xFFC. To check if a read falls to such registers, the C
+> implementation checks if the offset-shifted-by-2 (not the offset itself) =
+is in
+> the range 0x3F8 - 0x3FF.
 >
-> 
-> These users are likely fine with assembling a backing file consisting
-> of e.g.
-> - bootloader image (boot0) @ offset 0MiB
-> - empty space for bootloader updates (boot1) @ offset 1MiB
-> - partitioned disk image (rootfs, ...) @ offset 2MiB
-> to get the same setup as their real hardware.
-> 
-> 
-> Case 3 is what I want to use the eMMC emulator for: Test eMMC-specific
-> functionality in Linux userspace, specifically the boot partition
-> update backend for RAUC, in a CI setup. To improve performance and
-> because we don't need to emulate any specific board for CI, we use an
-> x86 guest (q35). As it has PCIe, the easiest way to add the necessary
-> eMMC emulation is to use sdhci-pci. That was the motivation behind my
-> patch "hw/sd/sdcard: Allow user creation of eMMCs" [1].
-> 
-> For that case, having one backing file for boot partitions + main area
-> is fine as well.
-> 
-> 
-> If we wanted more flexibility via separate backing files per eMMC
-> partitions, it might work similar to NVMe Namespaces [2]. For me, that
-> seems like a lot of complexity a very niche case like eMMC boot
-> partitions.
-> 
-> 
-> Potential future features such as more eMMC data partitions, RPMB
-> support or separate backing files could be support in QEMU by new eMCC
-> device options or even additional devices (following the NVMe
-> approach), without breaking backwards compatibility.
-> 
-> So it seems to me, that Cédric's approach of enabling boot partitions
-> in hw/arm/aspeed.c only when configured to boot from them via the "hw-
-> strap1" property should solve cases 1 and 2 without introducing
-> backwards compatibility issues. Case 3 has explicit configuration (if a
-> boot partition is emulated), so shouldn't be a problem either.
-> 
-> 
-> Thanks,
-> Jan
-> 
-> [1] https://lore.kernel.org/qemu-devel/20241015135649.4189256-1-jlu@pengutronix.de/T/
-> [2] https://qemu-project.gitlab.io/qemu/system/devices/nvme.html#additional-namespaces
-> 
+> Use the same check in the Rust implementation.
+>
+> This fixes the timeout of the following avocado tests:
+>
+>   * tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_virt
+>   * tests/avocado/replay_kernel.py:ReplayKernelNormal.test_arm_virt
+>   * tests/avocado/replay_kernel.py:ReplayKernelNormal.test_arm_vexpressa9
+>
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Junjie Mao <junjie.mao@hotmail.com>
 
+This certainly fixes the avocado failures.
 
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+> ---
+>  rust/hw/char/pl011/src/device.rs | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/de=
+vice.rs
+> index 2a85960b81..476cacc844 100644
+> --- a/rust/hw/char/pl011/src/device.rs
+> +++ b/rust/hw/char/pl011/src/device.rs
+> @@ -182,7 +182,7 @@ pub fn read(&mut self, offset: hwaddr, _size: c_uint)=
+ -> std::ops::ControlFlow<u
+>          use RegisterOffset::*;
+>=20=20
+>          std::ops::ControlFlow::Break(match RegisterOffset::try_from(offs=
+et) {
+> -            Err(v) if (0x3f8..0x400).contains(&v) =3D> {
+> +            Err(v) if (0x3f8..0x400).contains(&(v >> 2)) =3D> {
+>                  u64::from(self.device_id[(offset - 0xfe0) >> 2])
+>              }
+>              Err(_) =3D> {
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
