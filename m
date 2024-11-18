@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A470D10F41
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 03:14:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 703C3D10F5C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 06:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCsD9-000416-96; Sun, 17 Nov 2024 22:14:00 -0500
+	id 1tCuv7-0005CA-LG; Mon, 18 Nov 2024 01:07:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tCsD5-0003u5-1x; Sun, 17 Nov 2024 22:13:55 -0500
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ id 1tCuv5-0005Be-JE; Mon, 18 Nov 2024 01:07:31 -0500
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tCsD0-0001Ry-AZ; Sun, 17 Nov 2024 22:13:54 -0500
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-50d34db4edeso2710784e0c.0; 
- Sun, 17 Nov 2024 19:13:45 -0800 (PST)
+ id 1tCuv3-0001Yx-Bs; Mon, 18 Nov 2024 01:07:31 -0500
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-8570010ee2dso330927241.3; 
+ Sun, 17 Nov 2024 22:07:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731899624; x=1732504424; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731910048; x=1732514848; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cRvXACT1A8U5IIpje577+iohndssfbU2e/gKAxIR2S0=;
- b=QCN+nx4wJ+z608Xfoy8NF8Ojo2y1RiArpS5PWgQvcjEfi2nTc3E7fFE5IQVKAt3elV
- 85/BgzY9cWKLC4OsQsHMGO/AcMPONYvPKDuqNAoWZLlIgvnxjdE94Z15G/FJ4DOTlm9h
- uHkK75o0IuojRkPg7vCwDLv2mvIgpJjnpyBUwJKixqilZcM9AzqqQ1lgOf/3DtB4u5eP
- Pcv0+eNH2VajiZ23lJ4lUUiPMflGxNQT/1gjAOCgTPp/qmK5YmmG+O64jFO5RF+y89SU
- pjhP7HFvvmgzz10v5hQ9ghAwVWDHwBLSlcSwq5NYra6P17pKC8FExcAbqXY0P1WqP+H2
- j/Tw==
+ bh=ngNag3eoCi8FnQLZNql68gAivP7Qbmbfo+1kjotEQXE=;
+ b=YAYnlLE1rzU6gF2lV8VTVmnQF6fodtLXs+umWPb0EODnCucJh5T9uS+7IVe91uPZGT
+ IaR+cT1Pop1tgnk3+l62hbZpJPEL+DhPm8HZKGfmS8s5rGSw/nPfUMp8+0nYc5+rQMj7
+ zR/eVyr0mwklmGk4vg1j52ZJ9ImhikQmCt55RuhGZgoffgOTGEVPveTSka8tEKbGUrQg
+ J7XzXp5o9LzSWHKWIl/hYwhlHvudpZp8kULMyo7u4PiIhizyg1IexP5NOY3yhGYi5KZq
+ DEDEvivESvbh7QFUmqkXvEkUoIP6Ca7FUi0ea5eZpjSQDbOb6RbyqVR9fdtJ0EYWgA71
+ VRhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731899624; x=1732504424;
+ d=1e100.net; s=20230601; t=1731910048; x=1732514848;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cRvXACT1A8U5IIpje577+iohndssfbU2e/gKAxIR2S0=;
- b=taP+9d1lruPb2GCh+6JDgkkcuM1KA9ngsZXRMUMztRutbza53LsXgFfsJGEKQz/LEs
- mJazb23bcKu/+D8Qz7Bug/aSCY8bs9vhwhBGkaLhbeaZZjlMn/qKCmqd9nzpXLIkotZP
- V1G2r87F/U40RFfoUtRinlm+pNN289Q1hMzCwsVNnA5cTroFNN9wkhoMxu41j0K0XG27
- L+2Lzes3w4FjjHoh6iMJarU6ewqoRe2IX/3V5Aub8ggIYHWLuPi3hkbuVb5msiSdE+YN
- rvhEE23PSHwcdtqTkNqhCF6TX5zJKF7ZKMep5xBmb/F0/qscR3lZhuo+fI8KtPyz2ORr
- KzCQ==
+ bh=ngNag3eoCi8FnQLZNql68gAivP7Qbmbfo+1kjotEQXE=;
+ b=oS+ROVGun5+Ao8HIqWEs5MV0rhuvVfzt46Wr58kRZ+6IYLXAw5TEhMkmp+IaoENmoN
+ MzkL7wa7HF5Bl3aToeTaSAdcpdZcyuyEaX/OyOHejd0z6CqWoJV3EJLZKBM1eUDzEkKy
+ Q6y9i3/hf+wj3Lqvxp/AmQi6fvsIqwxB+KMtJzqT8dUbCFPWts3aiC+6ZpyQGDZujM5O
+ jiluRYWT7EjhVGYLz9LVWc0nqrXS4n9/XgHCKEwMZprEmUoLcvw1Z2T9UyU/hTy6Z1Fa
+ BxWqc3vKcVPwSJlN2gEoXp6Jh82ilTGzVgfKRh/tEBw7UL+GH/8O4SHkTMfz4l+8GySF
+ kfcA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYsbZ0xRsQ8Z1S+GX/3akALsEmHXv3CXYfpzRd3TRu8htDi5VUuyHtieyyg8DZRyM5HnkRtWenhpk9@nongnu.org
-X-Gm-Message-State: AOJu0YyBvyPms270ilHDLoghxY42CHBXHaIBY204+17uNY6kH8inWpC0
- dJhC+mJ/pH4FsagnCbdU1vE+uh44kgO0jSHTC8loCLZQ2u114GpD95rrXkaJ3LQa6+/SNBGU5DB
- oWqmrs6lX9MZCl3JZtzf4Bb9ZBUQ=
-X-Google-Smtp-Source: AGHT+IGSHW6RBDUY3kxs7TzwDUDMPXdYDV/cFaPs78rPPItN7eFD4+mxoMINBSf2zCGFugN1vcumfn0HCZW8GC2Avxc=
-X-Received: by 2002:a05:6122:c9a:b0:50c:eb10:9792 with SMTP id
- 71dfb90a1353d-514781fdf6bmr7075530e0c.4.1731899624590; Sun, 17 Nov 2024
- 19:13:44 -0800 (PST)
+ AJvYcCUQal3iNGUs7KPdSWu0JaahEi0ABRzFclfMMNeCXuf2eeceE3Nt1CFZgEEdxzV01OJJeK1w91O7SBD6@nongnu.org
+X-Gm-Message-State: AOJu0YxI1KUMKY90WYSpxlStu0CdAW9BxsKaCVlPLTGAW8sPkYuTSxQL
+ L4uMhljPH2fjLOdo8UQfj8j9sCz3RsYbRFesP18SPYsC8dR/geg/nY1mNd9Ji6Tl1V8FwSr3hGj
+ Nz/n5cXcA+ptyj6iesamKlKAuC0U=
+X-Google-Smtp-Source: AGHT+IErUYVC7Mn4NROODXCZ34JMY8rEa6nsQMpw84WsiSuK33mpWrNjgV1X60ckcyHvjkreWYqoKt562CVb+4NKMik=
+X-Received: by 2002:a05:6102:c4c:b0:4a4:7928:637c with SMTP id
+ ada2fe7eead31-4ad62b48232mr8254501137.8.1731910047786; Sun, 17 Nov 2024
+ 22:07:27 -0800 (PST)
 MIME-Version: 1.0
-References: <20241021030358.12454-1-frank.chang@sifive.com>
- <20241021030358.12454-3-frank.chang@sifive.com>
-In-Reply-To: <20241021030358.12454-3-frank.chang@sifive.com>
+References: <20241104174328.383212-1-sai.pavan.boddu@amd.com>
+In-Reply-To: <20241104174328.383212-1-sai.pavan.boddu@amd.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 18 Nov 2024 13:13:18 +1000
-Message-ID: <CAKmqyKM=umHQqh=zYbyR8UZbTbnmNXE33pm=UV2bbffF48_Okw@mail.gmail.com>
-Subject: Re: [PATCH v8 2/5] target/riscv: Handle Smrnmi interrupt and exception
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>,
+Date: Mon, 18 Nov 2024 16:07:01 +1000
+Message-ID: <CAKmqyKPQ8RaUe71pLftF52+Q=oHCP98rxgfF4kiOOP9bXM7XuQ@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/riscv: Add Microblaze V generic board
+To: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
- Tommy Wu <tommy.wu@sifive.com>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Michal Simek <michal.simek@amd.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,347 +96,400 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 21, 2024 at 1:06=E2=80=AFPM <frank.chang@sifive.com> wrote:
+On Tue, Nov 5, 2024 at 3:43=E2=80=AFAM Sai Pavan Boddu <sai.pavan.boddu@amd=
+.com> wrote:
 >
-> From: Tommy Wu <tommy.wu@sifive.com>
+> Add a basic board with interrupt controller (intc), timer, serial
+> (uartlite), small memory called LMB@0 (128kB) and DDR@0x80000000
+> (configured via command line eg. -m 2g).
+> This is basic configuration which matches HW generated out of AMD Vivado
+> (design tools). But initial configuration is going beyond what it is
+> configured by default because validation should be done on other
+> configurations too. That's why wire also additional uart16500, axi
+> ethernet(with axi dma).
+> GPIOs, i2c and qspi is also listed for completeness.
 >
-> Because the RNMI interrupt trap handler address is implementation defined=
-.
-> We add the 'rnmi-interrupt-vector' and 'rnmi-exception-vector' as the pro=
-perty
-> of the harts. It=E2=80=99s very easy for users to set the address based o=
-n their
-> expectation. This patch also adds the functionality to handle the RNMI si=
-gnals.
+> IRQ map is: (addr)
+> 0 - timer (0x41c00000)
+> 1 - uartlite (0x40600000)
+> 2 - i2c (0x40800000)
+> 3 - qspi (0x44a00000)
+> 4 - uart16550 (0x44a10000)
+> 5 - emaclite (0x40e00000)
+> 6 - timer2 (0x41c10000)
+> 7 - axi emac (0x40c00000)
+> 8 - axi dma (0x41e00000)
+> 9 - axi dma
+> 10 - gpio (0x40000000)
+> 11 - gpio2 (0x40010000)
+> 12 - gpio3 (0x40020000)
 >
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
+> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+> Signed-off-by: Michal Simek <michal.simek@amd.com>
+> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 > ---
->  hw/riscv/riscv_hart.c         | 18 ++++++++
->  include/hw/riscv/riscv_hart.h |  4 ++
->  target/riscv/cpu.c            | 11 +++++
->  target/riscv/cpu.h            |  6 +++
->  target/riscv/cpu_bits.h       | 12 +++++
->  target/riscv/cpu_helper.c     | 82 ++++++++++++++++++++++++++++++++---
->  6 files changed, 128 insertions(+), 5 deletions(-)
+> Changes for V2:
+>     Make changes to support -cpu switch
+>     Remove setting of default board
+>     Include doc to toctree
+>     Remove setting of 'imac' extensions as they are available by
+>     default.
+> Chages for V3:
+>     Replace virt with generic
+>     Update doc with supported riscv extensions
+>     Change base CPU to TYPE_RISCV_CPU_BASE
 >
-> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-> index 613ea2aaa0..b7d73f7a82 100644
-> --- a/hw/riscv/riscv_hart.c
-> +++ b/hw/riscv/riscv_hart.c
-> @@ -33,6 +33,12 @@ static Property riscv_harts_props[] =3D {
->      DEFINE_PROP_STRING("cpu-type", RISCVHartArrayState, cpu_type),
->      DEFINE_PROP_UINT64("resetvec", RISCVHartArrayState, resetvec,
->                         DEFAULT_RSTVEC),
-> +    DEFINE_PROP_ARRAY("rnmi-interrupt-vector", RISCVHartArrayState,
-> +                      num_rnmi_irqvec, rnmi_irqvec, qdev_prop_uint64,
-> +                      uint64_t),
-> +    DEFINE_PROP_ARRAY("rnmi-exception-vector", RISCVHartArrayState,
-> +                      num_rnmi_excpvec, rnmi_excpvec, qdev_prop_uint64,
-> +                      uint64_t),
-
-These will need some documentation somewhere, it's not really clear
-from the names what these do.
-
->      DEFINE_PROP_END_OF_LIST(),
->  };
 >
-> @@ -47,6 +53,18 @@ static bool riscv_hart_realize(RISCVHartArrayState *s,=
- int idx,
->  {
->      object_initialize_child(OBJECT(s), "harts[*]", &s->harts[idx], cpu_t=
-ype);
->      qdev_prop_set_uint64(DEVICE(&s->harts[idx]), "resetvec", s->resetvec=
-);
-> +    if (s->harts[idx].cfg.ext_smrnmi) {
-> +        if (s->rnmi_irqvec) {
-> +            qdev_prop_set_uint64(DEVICE(&s->harts[idx]),
-> +                                 "rnmi-interrupt-vector",
-> +                                 s->rnmi_irqvec[idx]);
-> +        }
-> +        if (s->rnmi_excpvec) {
-> +            qdev_prop_set_uint64(DEVICE(&s->harts[idx]),
-> +                                 "rnmi-exception-vector",
-> +                                 s->rnmi_excpvec[idx]);
-> +        }
-> +    }
+>  MAINTAINERS                                |   6 +
+>  docs/system/riscv/microblaze-v-generic.rst |  45 +++++
+>  docs/system/target-riscv.rst               |   1 +
+>  hw/riscv/microblaze-v-generic.c            | 182 +++++++++++++++++++++
+>  hw/riscv/Kconfig                           |   8 +
+>  hw/riscv/meson.build                       |   1 +
+>  6 files changed, 243 insertions(+)
+>  create mode 100644 docs/system/riscv/microblaze-v-generic.rst
+>  create mode 100644 hw/riscv/microblaze-v-generic.c
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 03741d41e58..9830a46d819 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1290,6 +1290,12 @@ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+>  S: Maintained
+>  F: hw/microblaze/petalogix_ml605_mmu.c
+>
+> +AMD Microblaze-V Generic Board
+> +M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+> +S: Maintained
+> +F: hw/riscv/microblaze-v-generic.c
+> +F: docs/system/riscv/microblaze-v-generic.rst
 
-We should probably warn the user if we are ignoring the values that
-they specified because the extension isn't enabled
+This should be with the other RISC-V machines
+
+> +
+>  MIPS Machines
+>  -------------
+>  Overall MIPS Machines
+> diff --git a/docs/system/riscv/microblaze-v-generic.rst b/docs/system/ris=
+cv/microblaze-v-generic.rst
+> new file mode 100644
+> index 00000000000..71e9e655f66
+> --- /dev/null
+> +++ b/docs/system/riscv/microblaze-v-generic.rst
+> @@ -0,0 +1,45 @@
+> +Microblaze-V generic board (``amd-microblaze-v-generic``)
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+> +The AMD MicroBlaze=E2=84=A2 V processor is a soft-core RISC-V processor =
+IP for AMD adaptive SoCs and FPGAs.
+> +The MicroBlaze V processor is based on a 32-bit / 64-bit RISC-V instruct=
+ion set architecture (ISA)
+> +and its fully hardware compatible with the classic MicroBlaze processor.
+
+I'm not sure "fully hardware compatible" is the right thing to say
+here as it's a different ISA.
+
+Maybe just say that it works with the existing Microblaze IP
+
+> +
+> +More details here:
+> +https://docs.amd.com/r/en-US/ug1629-microblaze-v-user-guide/MicroBlaze-V=
+-Architecture
+> +
+> +The microblaze-v generic board in QEMU has following supported devices
+
+The supported devices should probably be listed here
+
+> +
+> +Implemented CPU cores:
+> +
+> +1 RISCV core
+> +    * RV32I base integer instruction set
+
+Maybe just say RV32I/RV64I and drop the configurable part later on
+
+> +    * "Zicsr" Control and Status register instructions
+> +    * "Zifencei" instruction-fetch
+> +    * Configurable features:
+> +      - RV64I Base Integer Instruction Set
+> +      - Extensions supported: M, A, C, F, Zba, Zbb, Zbc, Zbs
+
+Is this configurable?
+
+> +
+> +Implemented devices:
+> +
+> +    - timer
+> +    - uartlite
+> +    - uart16550
+> +    - emaclite
+> +    - timer2
+> +    - axi emac
+> +    - axi dma
+> +
+> +Running
+> +"""""""
+> +Running U-boot
+> +
+> +.. code-block:: bash
+> +
+> +
+> +   $ qemu-system-riscv32 -M amd-microblaze-v-generic \
+> +     -display none \
+> +     -device loader,addr=3D0x80000000,file=3Du-boot-spl.bin,cpu-num=3D0 =
+\
+> +     -device loader,addr=3D0x80200000,file=3Du-boot.img \
+> +     -serial mon:stdio \
+> +     -device loader,addr=3D0x83000000,file=3Dsystem.dtb \
+> +     -m 2g
+
+Are there any details on where these images come from?
 
 Alistair
 
->      s->harts[idx].env.mhartid =3D s->hartid_base + idx;
->      qemu_register_reset(riscv_harts_cpu_reset, &s->harts[idx]);
->      return qdev_realize(DEVICE(&s->harts[idx]), NULL, errp);
-> diff --git a/include/hw/riscv/riscv_hart.h b/include/hw/riscv/riscv_hart.=
-h
-> index 912b4a2682..a6ed73a195 100644
-> --- a/include/hw/riscv/riscv_hart.h
-> +++ b/include/hw/riscv/riscv_hart.h
-> @@ -38,6 +38,10 @@ struct RISCVHartArrayState {
->      uint32_t hartid_base;
->      char *cpu_type;
->      uint64_t resetvec;
-> +    uint32_t num_rnmi_irqvec;
-> +    uint64_t *rnmi_irqvec;
-> +    uint32_t num_rnmi_excpvec;
-> +    uint64_t *rnmi_excpvec;
->      RISCVCPU *harts;
->  };
+> diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
+> index ba195f1518a..95457af130b 100644
+> --- a/docs/system/target-riscv.rst
+> +++ b/docs/system/target-riscv.rst
+> @@ -66,6 +66,7 @@ undocumented; you can get a complete list by running
+>  .. toctree::
+>     :maxdepth: 1
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 2a78cd639b..5ce6ed31ec 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1297,6 +1297,11 @@ static void riscv_cpu_set_irq(void *opaque, int ir=
-q, int level)
->          g_assert_not_reached();
->      }
->  }
+> +   riscv/microblaze-v-generic
+>     riscv/microchip-icicle-kit
+>     riscv/shakti-c
+>     riscv/sifive_u
+> diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-gene=
+ric.c
+> new file mode 100644
+> index 00000000000..93d648f902b
+> --- /dev/null
+> +++ b/hw/riscv/microblaze-v-generic.c
+> @@ -0,0 +1,182 @@
+> +/*
+> + * QEMU model of Microblaze V generic board.
+> + *
+> + * based on hw/microblaze/petalogix_ml605_mmu.c
+> + *
+> + * Copyright (c) 2011 Michal Simek <monstr@monstr.eu>
+> + * Copyright (c) 2011 PetaLogix
+> + * Copyright (c) 2009 Edgar E. Iglesias.
+> + * Copyright (C) 2024, Advanced Micro Devices, Inc.
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * Written by Sai Pavan Boddu <sai.pavan.boddu@amd.com
+> + *     and by Michal Simek <michal.simek@amd.com>.
+> + */
 > +
-> +static void riscv_cpu_set_nmi(void *opaque, int irq, int level)
+> +#include "qemu/osdep.h"
+> +#include "qemu/units.h"
+> +#include "qapi/error.h"
+> +#include "cpu.h"
+> +#include "hw/sysbus.h"
+> +#include "sysemu/sysemu.h"
+> +#include "net/net.h"
+> +#include "hw/boards.h"
+> +#include "hw/char/serial-mm.h"
+> +#include "exec/address-spaces.h"
+> +#include "hw/char/xilinx_uartlite.h"
+> +#include "hw/misc/unimp.h"
+> +
+> +#define LMB_BRAM_SIZE (128 * KiB)
+> +#define MEMORY_BASEADDR 0x80000000
+> +#define INTC_BASEADDR 0x41200000
+> +#define TIMER_BASEADDR 0x41c00000
+> +#define TIMER_BASEADDR2 0x41c10000
+> +#define UARTLITE_BASEADDR 0x40600000
+> +#define ETHLITE_BASEADDR 0x40e00000
+> +#define UART16550_BASEADDR 0x44a10000
+> +#define AXIENET_BASEADDR 0x40c00000
+> +#define AXIDMA_BASEADDR 0x41e00000
+> +#define GPIO_BASEADDR 0x40000000
+> +#define GPIO_BASEADDR2 0x40010000
+> +#define GPIO_BASEADDR3 0x40020000
+> +#define I2C_BASEADDR 0x40800000
+> +#define QSPI_BASEADDR 0x44a00000
+> +
+> +#define TIMER_IRQ           0
+> +#define UARTLITE_IRQ        1
+> +#define UART16550_IRQ       4
+> +#define ETHLITE_IRQ         5
+> +#define TIMER_IRQ2          6
+> +#define AXIENET_IRQ         7
+> +#define AXIDMA_IRQ1         8
+> +#define AXIDMA_IRQ0         9
+> +
+> +static void mb_v_generic_init(MachineState *machine)
 > +{
-> +    riscv_cpu_set_rnmi(RISCV_CPU(opaque), irq, level);
-> +}
->  #endif /* CONFIG_USER_ONLY */
->
->  static bool riscv_cpu_is_dynamic(Object *cpu_obj)
-> @@ -1320,6 +1325,8 @@ static void riscv_cpu_init(Object *obj)
->  #ifndef CONFIG_USER_ONLY
->      qdev_init_gpio_in(DEVICE(obj), riscv_cpu_set_irq,
->                        IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX);
-> +    qdev_init_gpio_in_named(DEVICE(cpu), riscv_cpu_set_nmi,
-> +                            "riscv.cpu.rnmi", RNMI_MAX);
->  #endif /* CONFIG_USER_ONLY */
->
->      general_user_opts =3D g_hash_table_new(g_str_hash, g_str_equal);
-> @@ -2670,6 +2677,10 @@ static Property riscv_cpu_properties[] =3D {
->
->  #ifndef CONFIG_USER_ONLY
->      DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVE=
-C),
-> +    DEFINE_PROP_UINT64("rnmi-interrupt-vector", RISCVCPU, env.rnmi_irqve=
-c,
-> +                       DEFAULT_RNMI_IRQVEC),
-> +    DEFINE_PROP_UINT64("rnmi-exception-vector", RISCVCPU, env.rnmi_excpv=
-ec,
-> +                       DEFAULT_RNMI_EXCPVEC),
->  #endif
->
->      DEFINE_PROP_BOOL("short-isa-string", RISCVCPU, cfg.short_isa_string,=
- false),
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index a63a29744c..8b2a863c50 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -472,6 +472,11 @@ struct CPUArchState {
->      uint64_t kvm_timer_state;
->      uint64_t kvm_timer_frequency;
->  #endif /* CONFIG_KVM */
+> +    ram_addr_t ram_size =3D machine->ram_size;
+> +    DeviceState *dev, *dma, *eth0;
+> +    Object *ds, *cs;
+> +    int i;
+> +    RISCVCPU *cpu;
+> +    hwaddr ddr_base =3D MEMORY_BASEADDR;
+> +    MemoryRegion *phys_lmb_bram =3D g_new(MemoryRegion, 1);
+> +    MemoryRegion *phys_ram =3D g_new(MemoryRegion, 1);
+> +    qemu_irq irq[32];
+> +    MemoryRegion *sysmem =3D get_system_memory();
 > +
-> +    /* RNMI */
-> +    target_ulong rnmip;
-> +    uint64_t rnmi_irqvec;
-> +    uint64_t rnmi_excpvec;
->  };
->
->  /*
-> @@ -568,6 +573,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *en=
-v);
->  int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
->  uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask,
->                                uint64_t value);
-> +void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level);
->  void riscv_cpu_interrupt(CPURISCVState *env);
->  #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip valu=
-e */
->  void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index 7e3f629356..6df2cbc2be 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -662,6 +662,12 @@ typedef enum {
->  /* Default Reset Vector address */
->  #define DEFAULT_RSTVEC      0x1000
->
-> +/* Default RNMI Interrupt Vector address */
-> +#define DEFAULT_RNMI_IRQVEC     0x0
+> +    cpu =3D RISCV_CPU(object_new(machine->cpu_type));
+> +    qdev_realize(DEVICE(cpu), NULL, &error_abort);
+> +    /* Attach emulated BRAM through the LMB.  */
+> +    memory_region_init_ram(phys_lmb_bram, NULL,
+> +                           "mb_v.lmb_bram", LMB_BRAM_SIZE,
+> +                           &error_fatal);
+> +    memory_region_add_subregion(sysmem, 0x00000000, phys_lmb_bram);
 > +
-> +/* Default RNMI Exception Vector address */
-> +#define DEFAULT_RNMI_EXCPVEC    0x0
+> +    memory_region_init_ram(phys_ram, NULL, "mb_v.ram",
+> +                           ram_size, &error_fatal);
+> +    memory_region_add_subregion(sysmem, ddr_base, phys_ram);
 > +
->  /* Exception causes */
->  typedef enum RISCVException {
->      RISCV_EXCP_NONE =3D -1, /* sentinel value */
-> @@ -711,6 +717,9 @@ typedef enum RISCVException {
->  /* -1 is due to bit zero of hgeip and hgeie being ROZ. */
->  #define IRQ_LOCAL_GUEST_MAX                (TARGET_LONG_BITS - 1)
->
-> +/* RNMI causes */
-> +#define RNMI_MAX                           16
-> +
->  /* mip masks */
->  #define MIP_USIP                           (1 << IRQ_U_SOFT)
->  #define MIP_SSIP                           (1 << IRQ_S_SOFT)
-> @@ -942,6 +951,9 @@ typedef enum RISCVException {
->  #define MHPMEVENT_IDX_MASK                 0xFFFFF
->  #define MHPMEVENT_SSCOF_RESVD              16
->
-> +/* RISC-V-specific interrupt pending bits. */
-> +#define CPU_INTERRUPT_RNMI                 CPU_INTERRUPT_TGT_EXT_0
-> +
->  /* JVT CSR bits */
->  #define JVT_MODE                           0x3F
->  #define JVT_BASE                           (~0x3F)
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 203c0a92ab..977bf97c16 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -434,6 +434,18 @@ static int riscv_cpu_local_irq_pending(CPURISCVState=
- *env)
->      uint64_t vsbits, irq_delegated;
->      int virq;
->
-> +    /* Priority: RNMI > Other interrupt. */
-> +    if (riscv_cpu_cfg(env)->ext_smrnmi) {
-> +        /* If mnstatus.NMIE =3D=3D 0, all interrupts are disabled. */
-> +        if (!get_field(env->mnstatus, MNSTATUS_NMIE)) {
-> +            return RISCV_EXCP_NONE;
-> +        }
-> +
-> +        if (env->rnmip) {
-> +            return ctz64(env->rnmip); /* since non-zero */
-> +        }
+> +    dev =3D qdev_new("xlnx.xps-intc");
+> +    qdev_prop_set_uint32(dev, "kind-of-intr",
+> +                         1 << UARTLITE_IRQ);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, INTC_BASEADDR);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
+> +                       qdev_get_gpio_in(DEVICE(cpu), 11));
+> +    for (i =3D 0; i < 32; i++) {
+> +        irq[i] =3D qdev_get_gpio_in(dev, i);
 > +    }
 > +
->      /* Determine interrupt enable state of all privilege modes */
->      if (env->virt_enabled) {
->          mie =3D 1;
-> @@ -496,7 +508,9 @@ static int riscv_cpu_local_irq_pending(CPURISCVState =
-*env)
->
->  bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
->  {
-> -    if (interrupt_request & CPU_INTERRUPT_HARD) {
-> +    uint32_t mask =3D CPU_INTERRUPT_HARD | CPU_INTERRUPT_RNMI;
+> +    /* Uartlite */
+> +    dev =3D qdev_new(TYPE_XILINX_UARTLITE);
+> +    qdev_prop_set_chr(dev, "chardev", serial_hd(0));
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, UARTLITE_BASEADDR);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[UARTLITE_IRQ]);
 > +
-> +    if (interrupt_request & mask) {
->          RISCVCPU *cpu =3D RISCV_CPU(cs);
->          CPURISCVState *env =3D &cpu->env;
->          int interruptno =3D riscv_cpu_local_irq_pending(env);
-> @@ -619,6 +633,30 @@ void riscv_cpu_set_geilen(CPURISCVState *env, target=
-_ulong geilen)
->      env->geilen =3D geilen;
->  }
->
-> +void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level)
+> +    /* Full uart */
+> +    serial_mm_init(sysmem, UART16550_BASEADDR + 0x1000, 2,
+> +                   irq[UART16550_IRQ], 115200, serial_hd(1),
+> +                   DEVICE_LITTLE_ENDIAN);
+> +
+> +    /* 2 timers at irq 0 @ 100 Mhz.  */
+> +    dev =3D qdev_new("xlnx.xps-timer");
+> +    qdev_prop_set_uint32(dev, "one-timer-only", 0);
+> +    qdev_prop_set_uint32(dev, "clock-frequency", 100000000);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ]);
+> +
+> +    /* 2 timers at irq 3 @ 100 Mhz.  */
+> +    dev =3D qdev_new("xlnx.xps-timer");
+> +    qdev_prop_set_uint32(dev, "one-timer-only", 0);
+> +    qdev_prop_set_uint32(dev, "clock-frequency", 100000000);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR2);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ2]);
+> +
+> +    /* Emaclite */
+> +    dev =3D qdev_new("xlnx.xps-ethernetlite");
+> +    qemu_configure_nic_device(dev, true, NULL);
+> +    qdev_prop_set_uint32(dev, "tx-ping-pong", 0);
+> +    qdev_prop_set_uint32(dev, "rx-ping-pong", 0);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, ETHLITE_BASEADDR);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[ETHLITE_IRQ]);
+> +
+> +    /* axi ethernet and dma initialization. */
+> +    eth0 =3D qdev_new("xlnx.axi-ethernet");
+> +    dma =3D qdev_new("xlnx.axi-dma");
+> +
+> +    /* FIXME: attach to the sysbus instead */
+> +    object_property_add_child(qdev_get_machine(), "xilinx-eth", OBJECT(e=
+th0));
+> +    object_property_add_child(qdev_get_machine(), "xilinx-dma", OBJECT(d=
+ma));
+> +
+> +    ds =3D object_property_get_link(OBJECT(dma),
+> +                                  "axistream-connected-target", NULL);
+> +    cs =3D object_property_get_link(OBJECT(dma),
+> +                                  "axistream-control-connected-target", =
+NULL);
+> +    qemu_configure_nic_device(eth0, true, NULL);
+> +    qdev_prop_set_uint32(eth0, "rxmem", 0x1000);
+> +    qdev_prop_set_uint32(eth0, "txmem", 0x1000);
+> +    object_property_set_link(OBJECT(eth0), "axistream-connected", ds,
+> +                             &error_abort);
+> +    object_property_set_link(OBJECT(eth0), "axistream-control-connected"=
+, cs,
+> +                             &error_abort);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(eth0), &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(eth0), 0, AXIENET_BASEADDR);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(eth0), 0, irq[AXIENET_IRQ]);
+> +
+> +    ds =3D object_property_get_link(OBJECT(eth0),
+> +                                  "axistream-connected-target", NULL);
+> +    cs =3D object_property_get_link(OBJECT(eth0),
+> +                                  "axistream-control-connected-target", =
+NULL);
+> +    qdev_prop_set_uint32(dma, "freqhz", 100000000);
+> +    object_property_set_link(OBJECT(dma), "axistream-connected", ds,
+> +                             &error_abort);
+> +    object_property_set_link(OBJECT(dma), "axistream-control-connected",=
+ cs,
+> +                             &error_abort);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dma), &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dma), 0, AXIDMA_BASEADDR);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dma), 0, irq[AXIDMA_IRQ0]);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dma), 1, irq[AXIDMA_IRQ1]);
+> +
+> +    /* unimplemented devices */
+> +    create_unimplemented_device("gpio", GPIO_BASEADDR, 0x10000);
+> +    create_unimplemented_device("gpio2", GPIO_BASEADDR2, 0x10000);
+> +    create_unimplemented_device("gpio3", GPIO_BASEADDR3, 0x10000);
+> +    create_unimplemented_device("i2c", I2C_BASEADDR, 0x10000);
+> +    create_unimplemented_device("qspi", QSPI_BASEADDR, 0x10000);
+> +}
+> +
+> +static void mb_v_generic_machine_init(MachineClass *mc)
 > +{
-> +    CPURISCVState *env =3D &cpu->env;
-> +    CPUState *cs =3D CPU(cpu);
-> +    bool release_lock =3D false;
-> +
-> +    if (!bql_locked()) {
-> +        release_lock =3D true;
-> +        bql_lock();
-> +    }
-> +
-> +    if (level) {
-> +        env->rnmip |=3D 1 << irq;
-> +        cpu_interrupt(cs, CPU_INTERRUPT_RNMI);
-> +    } else {
-> +        env->rnmip &=3D ~(1 << irq);
-> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_RNMI);
-> +    }
-> +
-> +    if (release_lock) {
-> +        bql_unlock();
-> +    }
+> +    mc->desc =3D "AMD Microblaze-V generic platform";
+> +    mc->init =3D mb_v_generic_init;
+> +    mc->min_cpus =3D 1;
+> +    mc->max_cpus =3D 1;
+> +    mc->default_cpu_type =3D TYPE_RISCV_CPU_BASE;
+> +    mc->default_cpus =3D 1;
 > +}
 > +
->  int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts)
->  {
->      CPURISCVState *env =3D &cpu->env;
-> @@ -1661,6 +1699,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->      bool virt =3D env->virt_enabled;
->      bool write_gva =3D false;
->      uint64_t s;
-> +    int mode;
+> +DEFINE_MACHINE("amd-microblaze-v-generic", mb_v_generic_machine_init)
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index 2e88467c4ab..e6a0ac1fa1d 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -25,6 +25,14 @@ config MICROCHIP_PFSOC
+>      select SIFIVE_PLIC
+>      select UNIMP
 >
->      /*
->       * cs->exception is 32-bits wide unlike mcause which is XLEN-bits wi=
-de
-> @@ -1679,6 +1718,23 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->      target_ulong mtval2 =3D 0;
->      int sxlen =3D 0;
->      int mxlen =3D 0;
-> +    bool nnmi_excep =3D false;
+> +config MICROBLAZE_V
+> +    bool
+> +    default y
+> +    depends on RISCV32 || RISCV64
+> +    select XILINX
+> +    select XILINX_AXI
+> +    select XILINX_ETHLITE
 > +
-> +    if (cpu->cfg.ext_smrnmi && env->rnmip && async) {
-> +        env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_NMIE, false)=
-;
-> +        env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_MNPV,
-> +                                  env->virt_enabled);
-> +        env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_MNPP,
-> +                                  env->priv);
-> +        env->mncause =3D cause | ((target_ulong)1U << (TARGET_LONG_BITS =
-- 1));
-> +        env->mnepc =3D env->pc;
-> +        env->pc =3D env->rnmi_irqvec;
-> +
-> +        /* Trapping to M mode, virt is disabled */
-> +        riscv_cpu_set_mode(env, PRV_M, false);
-> +
-> +        return;
-> +    }
+>  config OPENTITAN
+>      bool
+>      default y
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index adbef8a9b2d..140bcb55d64 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -11,5 +11,6 @@ riscv_ss.add(when: 'CONFIG_SPIKE', if_true: files('spik=
+e.c'))
+>  riscv_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_p=
+fsoc.c'))
+>  riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+>  riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files('riscv-iommu.c',=
+ 'riscv-iommu-pci.c'))
+> +riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-g=
+eneric.c'))
 >
->      if (!async) {
->          /* set tval to badaddr for traps with address information */
-> @@ -1766,8 +1822,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->                    __func__, env->mhartid, async, cause, env->pc, tval,
->                    riscv_cpu_get_trap_name(cause, async));
->
-> -    if (env->priv <=3D PRV_S && cause < 64 &&
-> -        (((deleg >> cause) & 1) || s_injected || vs_injected)) {
-> +    mode =3D env->priv <=3D PRV_S && cause < 64 &&
-> +        (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : =
-PRV_M;
-> +
-> +    if (mode =3D=3D PRV_S) {
->          /* handle the trap in S-mode */
->          if (riscv_has_ext(env, RVH)) {
->              uint64_t hdeleg =3D async ? env->hideleg : env->hedeleg;
-> @@ -1845,8 +1903,22 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->          env->mtval =3D tval;
->          env->mtval2 =3D mtval2;
->          env->mtinst =3D tinst;
-> -        env->pc =3D (env->mtvec >> 2 << 2) +
-> -                  ((async && (env->mtvec & 3) =3D=3D 1) ? cause * 4 : 0)=
-;
-> +
-> +        /*
-> +         * If the hart encounters an exception while executing in M-mode=
-,
-> +         * with the mnstatus.NMIE bit clear, the program counter is set =
-to
-> +         * the RNMI exception trap handler address.
-> +         */
-> +        nnmi_excep =3D cpu->cfg.ext_smrnmi &&
-> +                     !get_field(env->mnstatus, MNSTATUS_NMIE) &&
-> +                     !async;
-> +
-> +        if (nnmi_excep) {
-> +            env->pc =3D env->rnmi_excpvec;
-> +        } else {
-> +            env->pc =3D (env->mtvec >> 2 << 2) +
-> +                      ((async && (env->mtvec & 3) =3D=3D 1) ? cause * 4 =
-: 0);
-> +        }
->          riscv_cpu_set_mode(env, PRV_M, virt);
->      }
->
+>  hw_arch +=3D {'riscv': riscv_ss}
 > --
-> 2.43.2
->
+> 2.34.1
 >
 
