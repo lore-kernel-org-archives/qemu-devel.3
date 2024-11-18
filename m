@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A51ED591AE
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78296D591AD
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD7XX-0006hW-Tl; Mon, 18 Nov 2024 14:36:04 -0500
+	id 1tD7XV-0006hK-Je; Mon, 18 Nov 2024 14:36:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7XM-0006f9-3a; Mon, 18 Nov 2024 14:35:53 -0500
+ id 1tD7XQ-0006fh-2m; Mon, 18 Nov 2024 14:35:56 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7XD-0002iB-30; Mon, 18 Nov 2024 14:35:44 -0500
+ id 1tD7XN-0002ih-EK; Mon, 18 Nov 2024 14:35:55 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CCB1EA54E7;
+ by isrv.corpit.ru (Postfix) with ESMTP id DBE21A54E8;
  Mon, 18 Nov 2024 22:35:17 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4C6F41735A4;
+ by tsrv.corpit.ru (Postfix) with SMTP id 5A4241735A5;
  Mon, 18 Nov 2024 22:35:21 +0300 (MSK)
-Received: (nullmailer pid 2312698 invoked by uid 1000);
+Received: (nullmailer pid 2312702 invoked by uid 1000);
  Mon, 18 Nov 2024 19:35:20 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 58/61] contrib/plugins: add compat for g_memdup2
-Date: Mon, 18 Nov 2024 22:35:13 +0300
-Message-Id: <20241118193520.2312620-10-mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 59/61] hw/misc/mos6522: Fix bad class definition of the
+ MOS6522 device
+Date: Mon, 18 Nov 2024 22:35:14 +0300
+Message-Id: <20241118193520.2312620-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
@@ -64,57 +65,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-We were premature if bumping this because some of our builds are still
-on older glibs. Just copy the compat handler for now and we can remove
-it later.
+When compiling QEMU with --enable-cfi, the "q800" m68k machine
+currently crashes very early, when the q800_machine_init() function
+tries to wire the interrupts of the "via1" device.
+This happens because TYPE_MOS6522_Q800_VIA1 is supposed to be a
+proper SysBus device, but its parent (TYPE_MOS6522) has a mistake
+in its class definition where it is only derived from DeviceClass,
+and not from SysBusDeviceClass, so we end up in funny memory access
+issues here. Using the right class hierarchy for the MOS6522 device
+fixes the problem.
 
-Fixes: ee293103b0 (plugins: update lockstep to use g_memdup2)
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2161
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2675
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Fixes: 51f233ec92 ("misc: introduce new mos6522 VIA device")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240729144414.830369-14-alex.bennee@linaro.org>
-(cherry picked from commit 44e794896759236885f6d30d1f6b9b8b76355d52)
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-ID: <20241114104653.963812-1-thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit c3d7c18b0d616cf7fb3c1f325503e1462307209d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2681 in 8.2.x
 
-diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
-index 237543b43a..0c6f060183 100644
---- a/contrib/plugins/lockstep.c
-+++ b/contrib/plugins/lockstep.c
-@@ -100,6 +100,31 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     plugin_cleanup(id);
- }
+diff --git a/include/hw/misc/mos6522.h b/include/hw/misc/mos6522.h
+index fba45668ab..920871a598 100644
+--- a/include/hw/misc/mos6522.h
++++ b/include/hw/misc/mos6522.h
+@@ -154,7 +154,7 @@ struct MOS6522State {
+ OBJECT_DECLARE_TYPE(MOS6522State, MOS6522DeviceClass, MOS6522)
  
-+/*
-+ * g_memdup has been deprecated in Glib since 2.68 and
-+ * will complain about it if you try to use it. However until
-+ * glib_req_ver for QEMU is bumped we make a copy of the glib-compat
-+ * handler.
-+ */
-+static inline gpointer g_memdup2_qemu(gconstpointer mem, gsize byte_size)
-+{
-+#if GLIB_CHECK_VERSION(2, 68, 0)
-+    return g_memdup2(mem, byte_size);
-+#else
-+    gpointer new_mem;
-+
-+    if (mem && byte_size != 0) {
-+        new_mem = g_malloc(byte_size);
-+        memcpy(new_mem, mem, byte_size);
-+    } else {
-+        new_mem = NULL;
-+    }
-+
-+    return new_mem;
-+#endif
-+}
-+#define g_memdup2(m, s) g_memdup2_qemu(m, s)
-+
- static void report_divergance(ExecState *us, ExecState *them)
- {
-     DivergeState divrec = { log, 0 };
+ struct MOS6522DeviceClass {
+-    DeviceClass parent_class;
++    SysBusDeviceClass parent_class;
+ 
+     ResettablePhases parent_phases;
+     void (*portB_write)(MOS6522State *dev);
 -- 
 2.39.5
 
