@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE606D4921B
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A743DD4921C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD1TP-00015P-CF; Mon, 18 Nov 2024 08:07:23 -0500
+	id 1tD1WT-0002AU-BU; Mon, 18 Nov 2024 08:10:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tD1TL-00014w-Oc
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:07:19 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1tD1WO-0002A9-FL
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:10:30 -0500
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tD1TJ-0008Q0-45
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:07:18 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5cfabc686c8so2475720a12.0
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 05:07:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1tD1WL-0000ci-RV
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:10:27 -0500
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-50d2d300718so738069e0c.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 05:10:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731935235; x=1732540035; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wnoKZdP8ZOAbTlJw/gV9H5tFfyw8/I2cE+JsQzi3yaI=;
- b=s/hZt94NclZIv/+vaXl5TWaVQQlMnks56e/5PIcVjR7qt7FDGId94FheMFFczR0nS2
- MRVf5eBe/pcBXoqNQaYbvQo5orDCznhhcNjx1F4qSI29Pdn0p0sZdC5c7f9X+JDHe56g
- kPEOCXjyB67t12yjqAdTDirPIZOF7UMquKiXfyp7l+5vWDwaHjMryuQjJ7MmkD94Wvx7
- BadDZJ1mFXrC+dbRTzx/5hn0UMpwOQRus/HWGRbXHOE9sLtuZSpe060DV/eyzhTWuqTo
- qPBDPHoPa6N8WMXkXbhxuBMKB8LdaIV5VNumQqOd7YIosP8KlB9svPLnJbTCE0QVmXHK
- Cl6g==
+ d=gmail.com; s=20230601; t=1731935418; x=1732540218; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=H7Sitr+3eeGJGfcF9aUyXpNi5h0jkU2kroAcdRC0FNE=;
+ b=hO42cGCGMA4yNh/Kzh0oDVhnvpJVrc5FBq1NIHq5dGuJus3YqLeeC4y7CAc9et2ThR
+ O3AbeZQBGO4RAfrv3PM07PsqLwcaDthRUodFusT15PEc4ZMKAtWTxGlZn02R3G1+1lWq
+ eyDbwLS95zFss+NxwinsCN594HoT91ugbQLScmwO/uFnw7lljF3AA7ge7ONYMbpf+tIM
+ PHA2EAXqH20S7mrkY2HqD+z4QSj5804VCtYBuB/ZXGVDOmP2K6SP0rdrfUuWvrv+gy7L
+ twv4I6SbHV5FS9FHCT6JMIbhtHvg5D5spx5HZbAKVsx1ikYZYuVK5NFz12gbCHDJbu+h
+ tjvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731935235; x=1732540035;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wnoKZdP8ZOAbTlJw/gV9H5tFfyw8/I2cE+JsQzi3yaI=;
- b=xFisLHL+oXV+L7GBrH/0ekqn0Yy+pJJpwvlGfEmric5wakr4MVkpBPKpm04/JO7KH9
- QDyEjWEniYCxo9dhrIuSdi4g0NfD26bcWFYn2UKSBBiRHz/w5877rjMcIZQL2Tkskjr2
- XG5gU1N/WGA3i/nTP0pfab4GHsOPw0ymH8cjQh9mVOU5muxqfzPxgJbVtOMYO2d4UZPq
- qGCVvfKTgTK3s4y7groDBc+yE6yzSVhHlvFNiJcW2EkzYqXRy3ZmpVLCSklDmEIaVGK4
- 7mILkkHieY4T6CwPN9DnLcyzF8cDGRk2P3tOu3H0HmLc3TcriaTqbTJx9fB/2bTwRPDY
- QVyQ==
-X-Gm-Message-State: AOJu0YyTRuXrTOm3AY4WVVxRGl17WOmx2QEGHBd6RJIxOsEyXRy4/XdC
- iZEsI4S0jLvobY2VyUv9uSfAkU2CsYKHYpNW82S0rvipDn/XretK4sEuEKhOvi5Byto8Z3Z0IEL
- /SIAqXf2SzZ+OBAzHxmLo++GP0o4KlrSrFOW51A==
-X-Google-Smtp-Source: AGHT+IGfrfK/jJaqRdqnEUr4njcxZoLWlAxCQyGwMCH8l8uAvbrJiHnFWKUo2oH6k33/FcMOBC8UzpQVHvfcnWe1sdE=
-X-Received: by 2002:a05:6402:280e:b0:5cf:3f61:23ae with SMTP id
- 4fb4d7f45d1cf-5cf8fbfe62emr11137590a12.3.1731935235269; Mon, 18 Nov 2024
- 05:07:15 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731935418; x=1732540218;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=H7Sitr+3eeGJGfcF9aUyXpNi5h0jkU2kroAcdRC0FNE=;
+ b=UVKW/3g7txVwureXplhO1p1zvBYqtk55W3ieJb+SUwkKNqXF3J/uxRQZIOsDAN8/SL
+ Km+XFdOYPKjRIpz+0l9/Tbkml17SGljc0WBizOsYnscoDgkF9mzI8nTEewrFdgMqmHdf
+ frrUecVVfyKdAXX9WcbBFUOSdj7zE9HDRfpo40WCn+T3LKJiSWTeD2mM56feuR6Jkznf
+ NhEBgDI6Dqd14iFiHnTHJfUkmzLbyEix9SyIeeySB+Sff7mqrrS32Hf97Z+4vkfJspTX
+ 13Q3sMOwvhOMQcoht9MzyedORTM51RHIPyb0qr9dheNSzpG9mWBacnAmzJDGnp8EIWV+
+ 7fjg==
+X-Gm-Message-State: AOJu0YzflVlPZnIKX2JyBPjOTfRUxn/n72UfkgC/J/sDyPfIc623sYoq
+ mZLj9OSPrhjBmBVHtp5ciaSbFwnkT/ajpEe7V7w2wt9v6J1Ho9Y+8NP5qFG4CQUEdjK62PH4pzZ
+ nT+kAeLoVH6NFztN5batubjuFkuwQpw==
+X-Google-Smtp-Source: AGHT+IEmuj71Y8QN0eP8jUTDYa1KrifrfLD9W9p7zluofOZl2wH3TYj7rtAPjGVkkxksLTtj8CK3GxucQj8kYom9gx4=
+X-Received: by 2002:a05:6122:1d92:b0:50c:99da:4f70 with SMTP id
+ 71dfb90a1353d-51477e7dbb8mr9774676e0c.2.1731935418336; Mon, 18 Nov 2024
+ 05:10:18 -0800 (PST)
 MIME-Version: 1.0
-References: <20241118130109.7838-1-philmd@linaro.org>
-In-Reply-To: <20241118130109.7838-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 18 Nov 2024 13:07:04 +0000
-Message-ID: <CAFEAcA9YQcseyQ3Csf3T99xRfbmvgetkTPZYO22_QE4SZpis-w@mail.gmail.com>
-Subject: Re: [PATCH-for-9.2] hw/avr/arduino: Check for CPU types in
- machine_run_board_init()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>, 
- Michael Rolnik <mrolnik@gmail.com>, Iris Artin <iris@artins.org>
+References: <20241109122844.24057-1-dorjoychy111@gmail.com>
+In-Reply-To: <20241109122844.24057-1-dorjoychy111@gmail.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Mon, 18 Nov 2024 19:10:24 +0600
+Message-ID: <CAFfO_h7QxmXNGv2DM900hUvN7GG+WRTq6774it4VLq6FzmS6Aw@mail.gmail.com>
+Subject: Re: [PATCH] docs/nitro-enclave: Fix terminal commands formatting
+To: qemu-devel@nongnu.org
+Cc: graf@amazon.com, pbonzini@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa30.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, PYZOR_CHECK=1.392,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,21 +88,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Nov 2024 at 13:02, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Leverage the common code introduced in commit c9cf636d48 ("machine:
-> Add a valid_cpu_types property") to check for the single valid CPU
-> type. This allows reporting an error for invalid CPUs:
->
->   $ qemu-system-avr -M 2009 -cpu avr51-avr-cpu
->   qemu-system-avr: Invalid CPU model: avr51
->   The only valid type is: avr5
+Ping.
 
-This is a nice user-convenience feature, but why for 9.2?
-We haven't bothered to error-check the user specified CPU
-before, and we still don't on many (non-avr) board types.
-
-thanks
--- PMM
+Regards,
+Dorjoy
 
