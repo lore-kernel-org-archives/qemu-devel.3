@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 306D3D49207
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CCCD49207
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:22:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD4VA-0007RB-Gc; Mon, 18 Nov 2024 11:21:24 -0500
+	id 1tD4VT-0007Sn-9c; Mon, 18 Nov 2024 11:21:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tD4V9-0007R0-8Q
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:21:23 -0500
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ id 1tD4VS-0007Sc-0i
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:21:42 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tD4V7-0002ee-Hq
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:21:23 -0500
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-53da2140769so2231388e87.3
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 08:21:20 -0800 (PST)
+ id 1tD4VQ-0002gO-9w
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:21:41 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5cfa9979cd1so3844716a12.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 08:21:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731946879; x=1732551679; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=08+ikrcWxwZkDrScwoy6KNhNKlIS0dnOfcTx0vsmBXo=;
- b=CDRqnr5qzRrq91IyGQZz+pbe+AUBivKLYUgnEYaN/ltDqlULYKcnGYkUfcf/kTBeRN
- b8Um+5F3XDXgeFqJLBRHJkerZNntfVRIbQdLSkE0Sqcv/R85+PHGA4b/5VO3QiIWossW
- g5UcmLTRPvIOEtWAsk+fWt9eexkj0TblFp+vR/hRWe7GIB80Al001yLUXcKQynkHN28V
- nIrGREi/YjxkDaCMXkWaZcn5002/zrG7OAKJHEU7Sm8HutDlVjqjXSEzV2Wz5IKSGmVz
- +Y5/XIVsCqBWf7ebJ8z2VPtJMXDhZVBxDrE9ZUVXzKzOrJj7FylFpj9Jq1aLAsTE7SSV
- Zb3Q==
+ d=linaro.org; s=google; t=1731946898; x=1732551698; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7UUkR2GzToY03cpQGomfP8vp5af2lC/Je1w8P399As4=;
+ b=jGL/hNZFAUm9S+OAupUWWv+0C5nCGwYRRWg01p5EhNT0kqDDKYxPE3yriEJCM7PTSz
+ WiwvIEH+lS9qmLNCbQq5tWmUSexuc/jO6+NqiJ0ciN1+5h0V2ufs5bR7Xwzt/hXqFlJj
+ YpynZOwWLBnMjzv9/+Wqo8LrlstqkDnNPyO7YROaRTasSjEr0JnAGG0wbbNT8hzc3Ell
+ JaFILoyBzu2ZoW5Z5zs5FHyc93K/ZncnLLumBhj+UoXmcZhMuTj+XOpExj/1bFf3yZAL
+ RJix6lW8ZwJ6RR68XG4uijaImZq49IKuTS76+W06ttB4KS/ZcUCNfB0f1fGj+TL+3Oc6
+ e29g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731946879; x=1732551679;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=08+ikrcWxwZkDrScwoy6KNhNKlIS0dnOfcTx0vsmBXo=;
- b=PXaOaAhAWeWLVZtRvz6y6zxhU6VgvbUD+T/EzLb2UB7dTzA/zqHdilDyet/0imWVp9
- WI/bc7BPo4HlS22zuxNLtuxd9eLMk9sZ+7Fc80IvTo3TUHWWsPWq81zoRywvnnOB6WOa
- 32g5U1rucSZOemavcO/7ve5yh1oY3i0glWzXvBcTEr4VVMouHVS5TIcKMC2mcgcnEx1V
- ExAh65dbp1dvkcA3mZlu3//kgU7OVLpbXxLcY3buWGaLGo5Hib4nuPzQmf7lJ9FSCzQp
- kgmN7dy1eNwTqzCbP4gtbQ8UsTOzRte5yXhCUFMsXgAcz8xREuifyZs2LxT3u08Dsrlj
- q3Yw==
-X-Gm-Message-State: AOJu0YwrFjqUf2GDTCeLhRMAE7Ot8thUDobHWKg1dVPbNai4bhSDPPYW
- anGzfm9zNjO9BNHJ8C7QBZZbWEtcRMRdQ9QH9Q7aW4bkOVlMSLVFrkqLmEC1FsCxtZG+iN1doI4
- crmYII0MZO06fF3UHRRQ2yfwizqKjXVRJnKKzYQ==
-X-Google-Smtp-Source: AGHT+IF9+uvXjxdQvc5ROGEmRfgx6Wyl3PVATfUny6gUFpO2iLUF2qPnvXMUAC+SA9VxIDxMqoy8WsNJWHnUJdT3fik=
-X-Received: by 2002:a05:6512:239f:b0:536:9f02:17b4 with SMTP id
- 2adb3069b0e04-53dab2b3c51mr4666523e87.40.1731946879040; Mon, 18 Nov 2024
- 08:21:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1731946898; x=1732551698;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7UUkR2GzToY03cpQGomfP8vp5af2lC/Je1w8P399As4=;
+ b=VKIgIbRVmjByo1aDGBZCuzknsWMm2bv/n6I7Xr/8AoSZreEDj9Ts3GuEQzJLeV0a5c
+ u7IO5uplkw5VbAvoDLl42R/M3q+NSXjIJxtKlrzU+vtUQfp9JCYBFeTtZ6wuUPZvUZV3
+ m4ewrRhyZsH4pVoiBoEsWtT0ddRa/mmn3X6VJVlkj2m/grNOmym+vH/TtRZAkURRtzKf
+ HswYFuwNOLN7EueS5owFI0ItzT1Ojrs5bEl6276BiXUldRjuPu5LKOOsPgFzLsndUfPQ
+ qqw95DvdYJFRljJNw8wkhT23QSAdTFQXLEUKZDW4CyKQrTOLI1PmpYPZz1Rx0Xquku8G
+ 1TTg==
+X-Gm-Message-State: AOJu0YykDq4hnoySnyiuM4o8M9NQj5PxvKyTW6xrKAbp+yyisPbvzyNM
+ drPXJyoJSgpaRqpmZXSd9L6O6nSlIBC7/zYBrGuizDILlogSgSdLqd2lMI3zjDkamd1SG61QuoS
+ CWfNI9LBtGHOUu8qzeO/oMWACxBC3zNOAGOzIEg==
+X-Google-Smtp-Source: AGHT+IF42jiC53wiWUrQLxv/Le+/RFFcXIuWdFW2Yr1pZoHXfB70wU/psttRlrlfZAncVNHAE4tH4wOFx2MXUZ2jVGA=
+X-Received: by 2002:a05:6402:1d51:b0:5cf:84c:b7bf with SMTP id
+ 4fb4d7f45d1cf-5cf8e0201d6mr12629894a12.15.1731946897774; Mon, 18 Nov 2024
+ 08:21:37 -0800 (PST)
 MIME-Version: 1.0
-References: <20241118124643.6958-1-philmd@linaro.org>
-In-Reply-To: <20241118124643.6958-1-philmd@linaro.org>
+References: <20241118134253.2071319-1-pbonzini@redhat.com>
+In-Reply-To: <20241118134253.2071319-1-pbonzini@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 18 Nov 2024 16:21:08 +0000
-Message-ID: <CAFEAcA9PZOZwC8ZjcQwzTpXSDJxr9OfhptrMEj5WJEHgXRGDOw@mail.gmail.com>
-Subject: Re: [PULL 00/15] Misc HW patches for 2024-11-18
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Mon, 18 Nov 2024 16:21:26 +0000
+Message-ID: <CAFEAcA9qavOHXaDBJjUvf_xvZ=LEG-tZ1OABoXFWNU8O397POA@mail.gmail.com>
+Subject: Re: [PULL 0/2] two tiny patches for the next QEMU 9.2 rc
+To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,28 +87,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Nov 2024 at 12:47, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Mon, 18 Nov 2024 at 13:43, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> The following changes since commit abb1565d3d863cf210f18f70c4a42b0f39b8cc=
-db:
+> The following changes since commit f0cfd067867668870931c9411d96cd518564b7a8:
 >
->   Merge tag 'pull-tcg-20241116' of https://gitlab.com/rth7680/qemu into s=
-taging (2024-11-16 18:16:46 +0000)
+>   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-11-09 12:34:01 +0000)
 >
 > are available in the Git repository at:
 >
->   https://github.com/philmd/qemu.git tags/hw-misc-20241118
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
 >
-> for you to fetch changes up to b6db70bc0a9e53e7aa04cc940db1ddbee17fa700:
+> for you to fetch changes up to ebcf886d88e0fcae322d063b28846d20b23b5321:
 >
->   hw/watchdog/cmsdk_apb_watchdog: Fix broken link (2024-11-18 13:45:45 +0=
-100)
->
-> ----------------------------------------------------------------
-> Misc HW fixes
+>   configure: Use -ef to compare paths (2024-11-18 13:44:54 +0100)
 >
 > ----------------------------------------------------------------
+> * target/i386: fix compilation without CONFIG_HYPERV
+> * configure: improve check for execution in the source directory
+>
 
 
 Applied, thanks.
