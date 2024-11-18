@@ -4,62 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EEEDD49222
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ACEAD49222
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD1uu-0006lc-0u; Mon, 18 Nov 2024 08:35:48 -0500
+	id 1tD1wp-0007ew-8J; Mon, 18 Nov 2024 08:37:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guoguangyao18@mails.ucas.ac.cn>)
- id 1tD1uo-0006l6-2e
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:35:42 -0500
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <guoguangyao18@mails.ucas.ac.cn>)
- id 1tD1ug-0004Jc-K2
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:35:40 -0500
-Received: from localhost.localdomain (unknown [159.226.43.4])
- by APP-01 (Coremail) with SMTP id qwCowADHzHx1QjtndjLSAw--.81S2;
- Mon, 18 Nov 2024 21:35:14 +0800 (CST)
-From: guoguangyao <guoguangyao18@mails.ucas.ac.cn>
-To: qemu-devel@nongnu.org
-Cc: gaosong@loongson.cn,
-	guoguangyao <guoguangyao18@mails.ucas.ac.cn>
-Subject: [PATCH] target/loongarch: fix alignment error in tci.
-Date: Mon, 18 Nov 2024 21:32:43 +0800
-Message-Id: <20241118133243.291769-1-guoguangyao18@mails.ucas.ac.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1tD1wc-0007eI-Et; Mon, 18 Nov 2024 08:37:37 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1tD1wZ-0004Zx-3w; Mon, 18 Nov 2024 08:37:32 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI92mgG026207;
+ Mon, 18 Nov 2024 13:37:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=5JNFD5
+ 1VP8B3hzEdKasNETb+EDOg/VMBnYPX1cO24eI=; b=CElXxFt2Gv1ZOZV6h/0AYq
+ 6lz5DAJJLHcWogjpTN36WxCwTyMrM5djlgGneJSigrcyrivZsWERjIoPJP1QVxMi
+ Wub/sEr2ovLFoNWy/0C1ze2RYqTQ8E3DOXqh3q5FeRC/vhQoxeGj6ZRdusj2wOu+
+ mqeBgeQVbpz6ngDDjLEK6QjkemnwII/cu4zlY2wTG+CI7FwaV2jDl9MWArw9hyVe
+ 113xniTLEzkErLdHqUwV9WdesB/UAv2AOdaRYQjL31C8kEJYd/HS92qPHu2V1bOu
+ G5tJBCj3jtfX3WLIkntkLLH0YUc6sxw/rRHd77UD+ebOK2gcLIghw7L7rz+86/Wg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xgtt1v4c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Nov 2024 13:37:29 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI4DHYw024623;
+ Mon, 18 Nov 2024 13:37:28 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42y8e1ahgp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Nov 2024 13:37:28 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4AIDbPhq26280212
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Nov 2024 13:37:25 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3FD0920043;
+ Mon, 18 Nov 2024 13:37:25 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 06DFD20040;
+ Mon, 18 Nov 2024 13:37:25 +0000 (GMT)
+Received: from [9.152.224.204] (unknown [9.152.224.204])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 18 Nov 2024 13:37:24 +0000 (GMT)
+Message-ID: <367d5fdc-254f-4c9b-b201-255326bc0fdf@linux.ibm.com>
+Date: Mon, 18 Nov 2024 14:37:24 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowADHzHx1QjtndjLSAw--.81S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Wr13JF4kZFy5AFy5Gw4UJwb_yoWfuFb_Wa
- 47Gr1Dur48uF1Ivw47t34rJw15GF48GF1YkFWkXws5Kr98XrZxZwsrtwnxAw1j9F4xZr43
- AFsFvr9xCryayjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUb48FF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG
- 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
- A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
- Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s
- 1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
- w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r4UJVWxJr
- 1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IE
- rcIFxwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14
- v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkG
- c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4U
- MIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7VUb7DG7UUUU
- U==
-X-Originating-IP: [159.226.43.4]
-X-CM-SenderInfo: 5jxrw35dqj5trrryqzpdlo2hpxfd2hldfou0/
-Received-SPF: pass client-ip=159.226.251.21;
- envelope-from=guoguangyao18@mails.ucas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 03/14] s390x/cpumodel: add msa12 changes
+To: Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com
+References: <20241112155420.42042-1-brueckner@linux.ibm.com>
+ <20241112155420.42042-4-brueckner@linux.ibm.com>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <20241112155420.42042-4-brueckner@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: rPtVDHNHg5-hUOtgxZFB4cIpPDhwGqNM
+X-Proofpoint-ORIG-GUID: rPtVDHNHg5-hUOtgxZFB4cIpPDhwGqNM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0
+ mlxscore=0 malwarescore=0 mlxlogscore=999 adultscore=0 priorityscore=1501
+ bulkscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411180112
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,37 +110,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add alignment and check for fpr in
-CPUArchState, fix alignment error in
-tcg interpreter when executing LASX.
+Am 12.11.24 um 16:54 schrieb Hendrik Brueckner:
+> MSA12 changes the KIMD/KLMD instruction format for SHA3/SHAKE.
+> 
+> Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 
-Signed-off-by: guoguangyao <guoguangyao18@mails.ucas.ac.cn>
----
- target/loongarch/cpu.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 86c86c6c95..f955f9f618 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -302,7 +302,7 @@ typedef struct CPUArchState {
-     uint64_t gpr[32];
-     uint64_t pc;
- 
--    fpr_t fpr[32];
-+    fpr_t fpr[32] QEMU_ALIGNED(16);
-     bool cf[8];
-     uint32_t fcsr0;
-     lbt_t  lbt;
-@@ -487,6 +487,7 @@ static inline void cpu_get_tb_cpu_state(CPULoongArchState *env, vaddr *pc,
- 
- #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
- 
-+QEMU_BUILD_BUG_ON((offsetof(CPULoongArchState, fpr[0]) & (15)) != 0);
- void loongarch_cpu_post_init(Object *obj);
- 
- #endif /* LOONGARCH_CPU_H */
--- 
-2.34.1
+> ---
+>   target/s390x/cpu_features_def.h.inc | 1 +
+>   target/s390x/gen-features.c         | 8 ++++++++
+>   2 files changed, 9 insertions(+)
+> 
+> diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
+> index 15ea51fc54..2e5dc96984 100644
+> --- a/target/s390x/cpu_features_def.h.inc
+> +++ b/target/s390x/cpu_features_def.h.inc
+> @@ -90,6 +90,7 @@ DEF_FEAT(EDAT_2, "edat2", STFL, 78, "Enhanced-DAT facility 2")
+>   DEF_FEAT(DFP_PACKED_CONVERSION, "dfppc", STFL, 80, "Decimal-floating-point packed-conversion facility")
+>   DEF_FEAT(PPA15, "ppa15", STFL, 81, "PPA15 is installed")
+>   DEF_FEAT(BPB, "bpb", STFL, 82, "Branch prediction blocking")
+> +DEF_FEAT(MSA_EXT_12, "msa12-base", STFL, 86, "Message-security-assist-extension-12 facility (excluding subfunctions)")
+>   DEF_FEAT(VECTOR, "vx", STFL, 129, "Vector facility")
+>   DEF_FEAT(INSTRUCTION_EXEC_PROT, "iep", STFL, 130, "Instruction-execution-protection facility")
+>   DEF_FEAT(SIDE_EFFECT_ACCESS_ESOP2, "sea_esop2", STFL, 131, "Side-effect-access facility and Enhanced-suppression-on-protection facility 2")
+> diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+> index d6305f945a..ab9ad51d5e 100644
+> --- a/target/s390x/gen-features.c
+> +++ b/target/s390x/gen-features.c
+> @@ -270,6 +270,9 @@
+>       S390_FEAT_PCKMO_HMAC_512, \
+>       S390_FEAT_PCKMO_HMAC_1024
+>   
+> +#define S390_FEAT_GROUP_MSA_EXT_12 \
+> +    S390_FEAT_MSA_EXT_12
+> +
+>   #define S390_FEAT_GROUP_ENH_SORT \
+>       S390_FEAT_ESORT_BASE, \
+>       S390_FEAT_SORTL_SFLR, \
+> @@ -339,6 +342,10 @@ static uint16_t group_MSA_EXT_11[] = {
+>       S390_FEAT_GROUP_MSA_EXT_11,
+>   };
+>   
+> +static uint16_t group_MSA_EXT_12[] = {
+> +    S390_FEAT_GROUP_MSA_EXT_12,
+> +};
+> +
+>   static uint16_t group_MSA_EXT_9_PCKMO[] = {
+>       S390_FEAT_GROUP_MSA_EXT_9_PCKMO,
+>   };
+> @@ -902,6 +909,7 @@ static FeatGroupDefSpec FeatGroupDef[] = {
+>       FEAT_GROUP_INITIALIZER(MSA_EXT_10_PCKMO),
+>       FEAT_GROUP_INITIALIZER(MSA_EXT_11),
+>       FEAT_GROUP_INITIALIZER(MSA_EXT_11_PCKMO),
+> +    FEAT_GROUP_INITIALIZER(MSA_EXT_12),
+>       FEAT_GROUP_INITIALIZER(MULTIPLE_EPOCH_PTFF),
+>       FEAT_GROUP_INITIALIZER(ENH_SORT),
+>       FEAT_GROUP_INITIALIZER(DEFLATE_CONVERSION),
 
+As an optional enhancement we could add a dependency to MSA6 in check_consistency but certainly not important.
 
