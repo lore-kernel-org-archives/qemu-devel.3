@@ -4,70 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F102AD591A3
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6533D591A8
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD5FV-0005Ei-Pr; Mon, 18 Nov 2024 12:09:18 -0500
+	id 1tD5JF-0006s1-Cv; Mon, 18 Nov 2024 12:13:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tD5FM-0005Dm-8t
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:09:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1tD5JD-0006rH-AM; Mon, 18 Nov 2024 12:13:07 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tD5FI-00016S-Jc
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:09:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731949742;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mhlfkqHNgFnvBvTvJRurhkfyCkSNmYtYqezFcT5vvS0=;
- b=aUSViXXeNgjcvBpO4YEhHOP2wfsc39HEb7vAZNd0d7QLzsMLdIItTYlCNYp9EIcAogISk7
- ZKV/PQ5S3CcuuZncZEfRW6Qc7u2oSpFytrBIzNaLxrsP3XK0Qk5oNNJGw5/v7/ol36F/rt
- 7grqe99Sly78YFsH5WSIRaj35cQYdFA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-8tfY0km6NMiu1gtBelk-WA-1; Mon,
- 18 Nov 2024 12:08:58 -0500
-X-MC-Unique: 8tfY0km6NMiu1gtBelk-WA-1
-X-Mimecast-MFC-AGG-ID: 8tfY0km6NMiu1gtBelk-WA
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4E3C19560BD; Mon, 18 Nov 2024 17:08:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.76])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A45130001A0; Mon, 18 Nov 2024 17:08:54 +0000 (UTC)
-Date: Mon, 18 Nov 2024 11:08:51 -0600
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, kwolf@redhat.com, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH] nbd-server: Silence server warnings on port probes
-Message-ID: <j7bbrsft54ay6dckd4x7q3nokwrukyy2uspnjafjnd2rj34zey@xrzfihu5qbux>
-References: <20241115195638.1132007-2-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1tD5J6-0001jv-Rf; Mon, 18 Nov 2024 12:13:07 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI9mUeO010230;
+ Mon, 18 Nov 2024 17:12:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=lWGH73
+ +KUGYE5EQdR/XuPb2W511JrewYkQTN2Ivse0Q=; b=nzIEJqIOhuKLqijuHNiIVm
+ AXXGm4p2rSPbxLzhrlQ0ueaId42cK62MNGc7VWniQmyG+QEiPQUInqoreV081R8E
+ N9pBxgCTyVitUFJHnDX5reyMWs5ki21f+ARmCYMt2EqfRG1thxJNx3N3HK3SPyNL
+ eD7IJqgp8xKggrppShIbsIL/CCzVFo3owmBs3LpPo4nxWrMkbdQbAeaHB3ImEX7S
+ 1DKMWPdNtLnpAbZdZZv1OcYmIAGu+Ovk6gMLH+mDW5QYNkATHGLsu/gv4W+qDaf6
+ tXXahoKoxMACFvzvQ6SqPxYmTR60CpaGAMN+VW9tTjE8y3WkVc3BzN/M85WA5tuQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xjw7ues4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Nov 2024 17:12:54 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AIF1UA4012123;
+ Mon, 18 Nov 2024 17:12:53 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42y7xjjwba-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Nov 2024 17:12:53 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4AIHCnlT57606458
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Nov 2024 17:12:49 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9712020043;
+ Mon, 18 Nov 2024 17:12:49 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 31DFD20040;
+ Mon, 18 Nov 2024 17:12:49 +0000 (GMT)
+Received: from [9.179.15.234] (unknown [9.179.15.234])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 18 Nov 2024 17:12:49 +0000 (GMT)
+Message-ID: <152401ec-84c2-43f6-a349-cdf5589b9a12@linux.ibm.com>
+Date: Mon, 18 Nov 2024 18:12:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241115195638.1132007-2-eblake@redhat.com>
-User-Agent: NeoMutt/20241002
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw: Add "loadparm" property to scsi disk devices for
+ booting on s390x
+To: Jared Rossi <jrossi@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-devel@nongnu.org, Boris Fiuczynski <fiuczy@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-s390x@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Eric Farman <farman@linux.ibm.com>
+References: <20241115141202.1877294-1-thuth@redhat.com>
+ <ee20d61c-88a9-480f-be64-084f737ee976@linux.ibm.com>
+ <1d225ce4-a74e-4d55-85b7-6f7015cfb288@linux.ibm.com>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <1d225ce4-a74e-4d55-85b7-6f7015cfb288@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: U67QCfN72mLGOHuo-zijg-pHhHYLmQ0p
+X-Proofpoint-ORIG-GUID: U67QCfN72mLGOHuo-zijg-pHhHYLmQ0p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0
+ adultscore=0 priorityscore=1501 bulkscore=0 malwarescore=0 phishscore=0
+ lowpriorityscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411180141
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,44 +114,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 15, 2024 at 01:55:53PM -0600, Eric Blake wrote:
-> While testing the use of qemu-nbd in a Pod of a Kubernetes cluster, I
-> got LOTS of log messages of the forms:
-> 
-> qemu-nbd: option negotiation failed: Failed to read flags: Unexpected end-of-file before all data were read
-> qemu-nbd: option negotiation failed: Failed to read flags: Unable to read from socket: Connection reset by peer
-> 
-> While it is nice to warn about clients that aren't following protocol
-> (in case it helps diagnosing bugs in those clients), a mere port probe
-> (where the client never write()s any bytes, and where we might even
-> hit EPIPE in trying to send our greeting to the client) is NOT
-> abnormal, but merely serves to pollute the log.  And Kubernetes
-> _really_ likes to do port probes to determine whether a given Pod is
-> up and running.
-> 
-> Easy ways to demonstrate the above port probes:
-> $ qemu-nbd -r -f raw path/to/file &
-> $ nc localhost 10809 </dev/null
-> $ bash -c 'exec </dev/tcp/localhost/10809'
-> $ kill $!
-> 
-> Silence the noise by not capturing errors until after our first
-> successful read() from a client.
-> 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
->  nbd/server.c | 26 +++++++++++++++++---------
->  1 file changed, 17 insertions(+), 9 deletions(-)
+Am 18.11.24 um 16:53 schrieb Jared Rossi:
+> Loadparm set with boot index works properly and I confirmed the getter/setter are working as well.
 
-In testing this as a potential candidate for -rc1, I'm seeing iotests
-failures in `./check 094 119 -nbd` both pre- and post-patch.
-Bisecting now to see if I can find where those tests started
-regressing (looks like a timing change; a "return" line is swapping
-place with a SHUTDOWN event line in the QMP output).
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+So this is a Tested-by: then?
+> 
+> On 11/18/24 10:29 AM, Jared Rossi wrote:
+>> Looks OK to me.
+>>
+>> Reviewed-by Jared Rossi <jrossi@linux.ibm.com>
+>>
+>> On 11/15/24 9:12 AM, Thomas Huth wrote:
+>>> While adding the new flexible boot order feature on s390x recently,
+>>> we missed to add the "loadparm" property to the scsi-hd and scsi-cd
+>>> devices. This property is required on s390x to pass the information
+>>> to the boot loader about which kernel should be started or whether
+>>> the boot menu should be shown. But even more serious: The missing
+>>> property is now causing trouble with the corresponding libvirt patches
+>>> that assume that the "loadparm" property is either settable for all
+>>> bootable devices (when the "boot order" feature is implemented in
+>>> QEMU), or none (meaning the behaviour of older QEMUs that only allowed
+>>> one "loadparm" at the machine level). To fix this broken situation,
+>>> let's implement the "loadparm" property in for the SCSI devices, too.
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   v2:
+>>>   - Only add the property when running with the s390x target
+>>>     (checked via the arch_type variable during runtime)
+>>>   - Check bootindex property before setting the loadparm property
+>>>   - Call the sanitize function before setting the property, so we
+>>>     can now immediately reject bad properties for the scsi devices,
+>>>     too (had to move the sanitize function to the common code in
+>>>     qdev-properties-system.c for this)
+>>>
+>>>   include/hw/qdev-properties-system.h |  3 ++
+>>>   hw/core/qdev-properties-system.c    | 26 +++++++++++++++++
+>>>   hw/s390x/ipl.c                      | 19 ++++---------
+>>>   hw/scsi/scsi-disk.c                 | 43 +++++++++++++++++++++++++++++
+>>>   4 files changed, 78 insertions(+), 13 deletions(-)
+>>>
+>>> [snip...]
+> 
 
