@@ -4,85 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A9DD591B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 21:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB43D591B8
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 21:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD8sD-0008Og-GD; Mon, 18 Nov 2024 16:01:29 -0500
+	id 1tD8zJ-0001rR-1j; Mon, 18 Nov 2024 16:08:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD8s8-0008O0-4X
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 16:01:24 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD8s5-0004YG-W0
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 16:01:23 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43193678216so1488375e9.0
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 13:01:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731963679; x=1732568479; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Wg+MEQtWiOOkqZ/ig3DhuzJIeaFSbDL7WmQiMbcryuE=;
- b=fgfL5XJli6VvszeP59hIKw271dkJvh/e5Dph7AFEifelk2exj7LJINAdjLof2ix6+M
- 4golgy/41slKHfSAAqd5Ps0Y52Zcm2eDRxb8d/Yehj+mJlBST6JrouIF0AZxKd4LmMK7
- TNgZjyA76TW/ykwS1D+i0WEE1miTjzMR8a3ZsIv1VpJjLW1o7LHBIsQgi4SM9T2YdX/c
- WwPBDgQaZHg0aT+W6vQ8ROQ61g9Bgx6KuMDJipaXJpVDV27qTYs5Sqc7vWNK4tPzdkwB
- MhsB5L/RK3YD0E2jW8qxCGsUcDoNfB1c/m6V6/t6s+5F1QTvOZWe0mmrMP6Jnp7xc1SS
- TiFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731963679; x=1732568479;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Wg+MEQtWiOOkqZ/ig3DhuzJIeaFSbDL7WmQiMbcryuE=;
- b=nPH+VD+h+CYgjC8WXZ6dZEdt5hpGLsH6J7Ji2YljwkATwpFiz/msKH2/yOnJaMhmqZ
- JNWV3uc2FTtEmLZ/0Yb7SbqH7UeghxunSHh9iEMBmgtzrsvGbu6fmpM6GiK7vHwzPKDY
- zeD87yITUzfHlHzUMZ8+ZPL9kDKAtt0mh0vVzP19Ga0OGrHgGxJOcyYqMiyoTxo/U/q4
- ljP2JhIVS1mGZoG2Iqx4QDKiADfm5FAZoj+L/t/8ava4yD97yAcf2DL4HFkAhPK3PaHN
- eRypQdQ988uXLpvwIreyFZuvtuaLLxORFP6cB1hmMu5kT1H1mLS2826ZGtUYGAvFE7ZY
- +0/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxZYG586H7A9Xbk1qlcI2m1AiqaX6fS5MeWlm7zq++aDugRfKgl1Vyq6qNZ2NQ5bAgsz7M7ov2WrxE@nongnu.org
-X-Gm-Message-State: AOJu0YwSlfUQrX3W8DQmpzkr1vU8fhZpDJ5pdNXRdrt++f/WTggyWz6U
- TlWXym1NlT2lgE4RManpimt3D0m1eiTbxHVzel6Fnlm+vt8KnjSg0r22+/kzNOo5jL8kt1Rq5Dl
- n
-X-Google-Smtp-Source: AGHT+IG8pCCrIPDqUR6rAmp9nsGfqgKy0NGO1hDQNZ2YgIUKjoZMk9J+8GJ7SO6Xq3qrKwaBSZIzJQ==
-X-Received: by 2002:a05:6000:1543:b0:382:228b:4c34 with SMTP id
- ffacd0b85a97d-382258f0863mr11606802f8f.2.1731963679607; 
- Mon, 18 Nov 2024 13:01:19 -0800 (PST)
-Received: from [192.168.69.146] ([176.187.198.1])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3822ed2bc9esm10070251f8f.6.2024.11.18.13.01.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Nov 2024 13:01:18 -0800 (PST)
-Message-ID: <a31c41d5-4301-43a3-a8f9-e7d5d262b025@linaro.org>
-Date: Mon, 18 Nov 2024 22:01:16 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tD8zB-0001p2-67; Mon, 18 Nov 2024 16:08:41 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tD8z8-0005LD-Uq; Mon, 18 Nov 2024 16:08:40 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4707CA5607;
+ Tue, 19 Nov 2024 00:08:31 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id D33E0173620;
+ Tue, 19 Nov 2024 00:08:34 +0300 (MSK)
+Received: (nullmailer pid 2366096 invoked by uid 1000);
+ Mon, 18 Nov 2024 21:08:34 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Alexander Graf <graf@amazon.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 58/71] target/i386: Fix legacy page table walk
+Date: Tue, 19 Nov 2024 00:08:15 +0300
+Message-Id: <20241118210834.2366046-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <qemu-stable-9.0.4-20241118223714@cover.tls.msk.ru>
+References: <qemu-stable-9.0.4-20241118223714@cover.tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] hw/intc/loongarch_extioi: Fix undefined behaviour
- with bit array APIs
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20241108135514.4006953-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241108135514.4006953-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,14 +62,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/11/24 14:55, Peter Maydell wrote:
+From: Alexander Graf <graf@amazon.com>
 
-> Peter Maydell (3):
->    bitops.h: Define bit operations on 'uint32_t' arrays
->    hw/intc/arm_gicv3: Use bitops.h uint32_t bit array functions
->    hw/intc/loongarch_extioi: Use set_bit32() and clear_bit32() for s->isr
+Commit b56617bbcb4 ("target/i386: Walk NPT in guest real mode") added
+logic to run the page table walker even in real mode if we are in NPT
+mode.  That function then determined whether real mode or paging is
+active based on whether the pg_mode variable was 0.
 
-Series:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Unfortunately pg_mode is 0 in two situations:
+
+  1) Paging is disabled (real mode)
+  2) Paging is in 2-level paging mode (32bit without PAE)
+
+That means the walker now assumed that 2-level paging mode was real
+mode, breaking NetBSD as well as Windows XP.
+
+To fix that, this patch adds a new PG flag to pg_mode which indicates
+whether paging is active at all and uses that to determine whether we
+are in real mode or not.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2654
+Fixes: b56617bbcb4 ("target/i386: Walk NPT in guest real mode")
+Fixes: 58dc0a07a2b (commit b56617bbcb4 in stable-9.0.x series)
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Reported-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Link: https://lore.kernel.org/r/20241106154329.67218-1-graf@amazon.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 8fa11a4df344f58375eb26b3b65004345f21ef37)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 6b05738079..7d8d31a50e 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -339,6 +339,7 @@ typedef enum X86Seg {
+ #define PG_MODE_PKE      (1 << 17)
+ #define PG_MODE_PKS      (1 << 18)
+ #define PG_MODE_SMEP     (1 << 19)
++#define PG_MODE_PG       (1 << 20)
+ 
+ #define MCG_CTL_P       (1ULL<<8)   /* MCG_CAP register available */
+ #define MCG_SER_P       (1ULL<<24) /* MCA recovery/new status bits */
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 34ccabd8ce..113e93d565 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -30,7 +30,7 @@
+ 
+ int get_pg_mode(CPUX86State *env)
+ {
+-    int pg_mode = 0;
++    int pg_mode = PG_MODE_PG;
+     if (!(env->cr[0] & CR0_PG_MASK)) {
+         return 0;
+     }
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 31c5032ace..bdf7b0df42 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -297,7 +297,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+         /* combine pde and pte nx, user and rw protections */
+         ptep &= pte ^ PG_NX_MASK;
+         page_size = 4096;
+-    } else if (pg_mode) {
++    } else if (pg_mode & PG_MODE_PG) {
+         /*
+          * Page table level 2
+          */
+-- 
+2.39.5
 
 
