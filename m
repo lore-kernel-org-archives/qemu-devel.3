@@ -4,74 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E1CD49219
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 12:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1198D49219
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:02:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD1JC-00064z-Bt; Mon, 18 Nov 2024 07:56:50 -0500
+	id 1tD1Nk-0007HM-1d; Mon, 18 Nov 2024 08:01:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tD1JA-00064q-IF
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:56:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tD1J8-0006Rf-QJ
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:56:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731934605;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=VgkenlmULVdGdrT4VQihxvXhbzkXBBhT7y2mGskpSN4=;
- b=cv8zrhctb3VkMSTvJdmZyqS23Lypgu8lWLWpM+swWhl4ZaBIfulzSneq4+MT2uuWe9W1GI
- 8nY/WRHrfRzF+1UNdDeB5G2urDC8BIz5njzoqABVm+iGJRjx8xPsH9uQQGwvcl2O8CSSSq
- Gvbmic8hEzugDZM9dGrBHsxZIh/Zhko=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-v5PbqxljNVqmuemY581dvA-1; Mon,
- 18 Nov 2024 07:56:43 -0500
-X-MC-Unique: v5PbqxljNVqmuemY581dvA-1
-X-Mimecast-MFC-AGG-ID: v5PbqxljNVqmuemY581dvA
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17FDE1955D4D; Mon, 18 Nov 2024 12:56:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.133])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C34A19560A3; Mon, 18 Nov 2024 12:56:40 +0000 (UTC)
-Date: Mon, 18 Nov 2024 12:56:36 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: tests/functional is eating disk space
-Message-ID: <Zzs5hKLic2XU4FBc@redhat.com>
-References: <CAFEAcA8hHMj0718haB_uZhE-LQF4W9PYrL-na0iznp4ueDsq7g@mail.gmail.com>
- <15635bd3-97fa-4c11-9427-c615d1b57dd1@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD1NV-0007EO-SH
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:01:20 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD1NU-00071z-2Z
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:01:17 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-38230ed9baeso1672643f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 05:01:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731934872; x=1732539672; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gTRgv2swMMRQLOEh0jdwrtgy201rtzP+J8h2YvJfYEw=;
+ b=I5VuzzaP9ybIllvJXyf3/FDYTbAKnP8l/m3g1pYa0HBZl240BEV5dsO9qdW4LH8ybH
+ 0ZuW1f5IXRrBXhKa/kKlgHYiTVSOiHtNpRNr/98dPdAnTUaSBD/B5BXY7ovBJck3GG1x
+ R60UlJ4rFUSQ2ajBMfeg8suuwnr6JhMTtwyNRiqT7H90aQ5BH3g8DGjZ7B/Vn53reurr
+ Bhvufyn/sn6STZTyGJ3E87uvet4j+tOgQcUD3lJmAcRcIBktjhIr65JWu0xdvXvz1hR4
+ swAOjNb4rkCvurFD+ZmLsbaQtxAJbIgVsVXVBqiB74t/fn+i8VLmULcudQ0x3Sg/a/Vq
+ Ob4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731934872; x=1732539672;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gTRgv2swMMRQLOEh0jdwrtgy201rtzP+J8h2YvJfYEw=;
+ b=wB+pC7v7Ltih5sMSIhUXZecuNTAF7SjOWprpE4h9nLPu+rP3yuEFw/6pFSXAvgs0cm
+ hnYVeLowNtd055yALOQNy1wWfTyLl0YBoaldGnJCXmxBVgpxuYg0RdBfi+BZmwSjpInm
+ eEoBRXLB4NF7nohx9fXcb/64WOgDUlwYRQoLWwBaf0wck37bfwEByN+PTC+ccaGzpNlf
+ 2nDaPSzwrv1UKrnIXpRSnIniK527L+Smhl5dB/Cpcck6Y+dJqSLdnab4yhNIVOHfoVwe
+ iQ5jWbY8sahUP++R5iU+xIBP18CRnn4swrgEsNYOBiOlHmoAdrxr9jg3//NHtO9+J1f6
+ nShw==
+X-Gm-Message-State: AOJu0Yz8+S7Mtry2bUe7ZyTU+SjQ3btsG5NMnQxxS1oNRKhSu/89iL17
+ +tf3usJnwe1oNhTUaYJh7XbZ9/7JySnGI/YZb1p+RB3v5uPn3ViUUPNSFusgeHkErwAwxVAcKzx
+ 3
+X-Google-Smtp-Source: AGHT+IGZP3cwR15Elcgtrn+x/Zn035cI3RQ5T5U3eSZrmGNSKSZyqHxK2RNp6bfluEAXkux3f5rWlA==
+X-Received: by 2002:a5d:598e:0:b0:37c:cee0:96e6 with SMTP id
+ ffacd0b85a97d-38225a0d457mr11458759f8f.27.1731934871672; 
+ Mon, 18 Nov 2024 05:01:11 -0800 (PST)
+Received: from localhost.localdomain ([176.187.198.1])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3821ae161d8sm13025177f8f.78.2024.11.18.05.01.10
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 18 Nov 2024 05:01:11 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Gavin Shan <gshan@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>, Iris Artin <iris@artins.org>
+Subject: [PATCH-for-9.2] hw/avr/arduino: Check for CPU types in
+ machine_run_board_init()
+Date: Mon, 18 Nov 2024 14:01:09 +0100
+Message-ID: <20241118130109.7838-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <15635bd3-97fa-4c11-9427-c615d1b57dd1@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,69 +90,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 18, 2024 at 01:10:14PM +0100, Thomas Huth wrote:
-> On 18/11/2024 11.57, Peter Maydell wrote:
-> > I just ran out of disk space on my dev machine, because:
-> > 
-> > $ du -h build/clang/tests/functional/
-> > [...]
-> > 11G     build/clang/tests/functional/
-> 
-> That's indeed a lot. I only got 6.9G in my build tree for all targets ... I
-> guess there are some stale files lying around, so as a temporary mitigation,
-> just try to delete that folder (it should get recreated the next time you
-> run the tests).
-> 
-> > The new functional tests seem to be eating disk space.
-> > 
-> > Even the build tree I have that's just arm targets is 7.1GB.
-> > 
-> > Could you have a look at what's happening here?
-> 
-> I am aware of the problem and got it on my TODO list already... I think we
-> best should set the "workdir" to a temporary folder that we can remove once
-> the test has finished, that will automatically delete all binary assets that
-> the test created during its runtime.
+Leverage the common code introduced in commit c9cf636d48 ("machine:
+Add a valid_cpu_types property") to check for the single valid CPU
+type. This allows reporting an error for invalid CPUs:
 
-workdir also stores the logs currently, which we want to preserve, but we
-can just move assets to a sub-tree instead. Something approx like this:
+  $ qemu-system-avr -M 2009 -cpu avr51-avr-cpu
+  qemu-system-avr: Invalid CPU model: avr51
+  The only valid type is: avr5
 
-@@ -40,11 +42,11 @@ def setUp(self, bin_prefix):
-         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
-         self.arch = self.qemu_bin.split('-')[-1]
- 
--        self.workdir = os.path.join(BUILD_DIR, 'tests/functional', self.arch,
--                                    self.id())
--        os.makedirs(self.workdir, exist_ok=True)
-+        self.outputdir = Path(BUILD_DIR, 'tests', 'functional', self.arch, self.id())
-+        self.workdir = Path(self.outputdir, 'scratch')
-+        self.workdir.mkdir(parents=True, exist_ok=True)
- 
--        self.logdir = self.workdir
-+        self.logdir = self.outputdir
-         self.log_filename = os.path.join(self.logdir, 'base.log')
-         self.log = logging.getLogger('qemu-test')
-         self.log.setLevel(logging.DEBUG)
-@@ -56,6 +58,8 @@ def setUp(self, bin_prefix):
-         self.log.addHandler(self._log_fh)
- 
-     def tearDown(self):
-+        if not "QEMU_TEST_SKIP_RMTREE" in os.environ:
-+            shutil.rmtree(self.workdir)
-         self.log.removeHandler(self._log_fh)
- 
-     def main():
+Reported-by: Iris Artin <iris@artins.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/avr/arduino.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-
-With regards,
-Daniel
+diff --git a/hw/avr/arduino.c b/hw/avr/arduino.c
+index 48ef478346..a8da2728f0 100644
+--- a/hw/avr/arduino.c
++++ b/hw/avr/arduino.c
+@@ -71,6 +71,10 @@ static void arduino_machine_class_init(ObjectClass *oc, void *data)
+ 
+ static void arduino_duemilanove_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        AVR_CPU_TYPE_NAME("avr5"),
++        NULL
++    };
+     MachineClass *mc = MACHINE_CLASS(oc);
+     ArduinoMachineClass *amc = ARDUINO_MACHINE_CLASS(oc);
+ 
+@@ -80,12 +84,17 @@ static void arduino_duemilanove_class_init(ObjectClass *oc, void *data)
+      */
+     mc->desc        = "Arduino Duemilanove (ATmega168)",
+     mc->alias       = "2009";
++    mc->valid_cpu_types = valid_cpu_types;
+     amc->mcu_type   = TYPE_ATMEGA168_MCU;
+     amc->xtal_hz    = 16 * 1000 * 1000;
+ };
+ 
+ static void arduino_uno_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        AVR_CPU_TYPE_NAME("avr5"),
++        NULL
++    };
+     MachineClass *mc = MACHINE_CLASS(oc);
+     ArduinoMachineClass *amc = ARDUINO_MACHINE_CLASS(oc);
+ 
+@@ -95,12 +104,17 @@ static void arduino_uno_class_init(ObjectClass *oc, void *data)
+      */
+     mc->desc        = "Arduino UNO (ATmega328P)";
+     mc->alias       = "uno";
++    mc->valid_cpu_types = valid_cpu_types;
+     amc->mcu_type   = TYPE_ATMEGA328_MCU;
+     amc->xtal_hz    = 16 * 1000 * 1000;
+ };
+ 
+ static void arduino_mega_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        AVR_CPU_TYPE_NAME("avr51"),
++        NULL
++    };
+     MachineClass *mc = MACHINE_CLASS(oc);
+     ArduinoMachineClass *amc = ARDUINO_MACHINE_CLASS(oc);
+ 
+@@ -110,12 +124,17 @@ static void arduino_mega_class_init(ObjectClass *oc, void *data)
+      */
+     mc->desc        = "Arduino Mega (ATmega1280)";
+     mc->alias       = "mega";
++    mc->valid_cpu_types = valid_cpu_types;
+     amc->mcu_type   = TYPE_ATMEGA1280_MCU;
+     amc->xtal_hz    = 16 * 1000 * 1000;
+ };
+ 
+ static void arduino_mega2560_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        AVR_CPU_TYPE_NAME("avr6"),
++        NULL
++    };
+     MachineClass *mc = MACHINE_CLASS(oc);
+     ArduinoMachineClass *amc = ARDUINO_MACHINE_CLASS(oc);
+ 
+@@ -125,6 +144,7 @@ static void arduino_mega2560_class_init(ObjectClass *oc, void *data)
+      */
+     mc->desc        = "Arduino Mega 2560 (ATmega2560)";
+     mc->alias       = "mega2560";
++    mc->valid_cpu_types = valid_cpu_types;
+     amc->mcu_type   = TYPE_ATMEGA2560_MCU;
+     amc->xtal_hz    = 16 * 1000 * 1000; /* CSTCE16M0V53-R0 */
+ };
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.2
 
 
