@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78296D591AD
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 558E3D591AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD7XV-0006hK-Je; Mon, 18 Nov 2024 14:36:01 -0500
+	id 1tD7Xq-0007ER-24; Mon, 18 Nov 2024 14:36:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7XQ-0006fh-2m; Mon, 18 Nov 2024 14:35:56 -0500
+ id 1tD7Xn-0007BZ-39; Mon, 18 Nov 2024 14:36:19 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7XN-0002ih-EK; Mon, 18 Nov 2024 14:35:55 -0500
+ id 1tD7Xl-0002jG-EQ; Mon, 18 Nov 2024 14:36:18 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DBE21A54E8;
- Mon, 18 Nov 2024 22:35:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 051A5A54EA;
+ Mon, 18 Nov 2024 22:35:18 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5A4241735A5;
+ by tsrv.corpit.ru (Postfix) with SMTP id 781881735A7;
  Mon, 18 Nov 2024 22:35:21 +0300 (MSK)
-Received: (nullmailer pid 2312702 invoked by uid 1000);
+Received: (nullmailer pid 2312708 invoked by uid 1000);
  Mon, 18 Nov 2024 19:35:20 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Guenter Roeck <linux@roeck-us.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.8 59/61] hw/misc/mos6522: Fix bad class definition of the
- MOS6522 device
-Date: Mon, 18 Nov 2024 22:35:14 +0300
-Message-Id: <20241118193520.2312620-11-mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 61/61] usb-hub: Fix handling port power control messages
+Date: Mon, 18 Nov 2024 22:35:16 +0300
+Message-Id: <20241118193520.2312620-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
@@ -65,41 +63,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-When compiling QEMU with --enable-cfi, the "q800" m68k machine
-currently crashes very early, when the q800_machine_init() function
-tries to wire the interrupts of the "via1" device.
-This happens because TYPE_MOS6522_Q800_VIA1 is supposed to be a
-proper SysBus device, but its parent (TYPE_MOS6522) has a mistake
-in its class definition where it is only derived from DeviceClass,
-and not from SysBusDeviceClass, so we end up in funny memory access
-issues here. Using the right class hierarchy for the MOS6522 device
-fixes the problem.
+The ClearPortFeature control message fails for PORT_POWER because there
+is no break; at the end of the case statement, causing it to fall through
+to the failure handler. Add the missing break; to solve the problem.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2675
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Fixes: 51f233ec92 ("misc: introduce new mos6522 VIA device")
+Fixes: 1cc403eb21 ("usb-hub: emulate per port power switching")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-ID: <20241114104653.963812-1-thuth@redhat.com>
+Message-ID: <20241112170152.217664-11-linux@roeck-us.net>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit c3d7c18b0d616cf7fb3c1f325503e1462307209d)
+(cherry picked from commit b2cc69997924b651c0c6f4037782e25f2e438715)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/misc/mos6522.h b/include/hw/misc/mos6522.h
-index fba45668ab..920871a598 100644
---- a/include/hw/misc/mos6522.h
-+++ b/include/hw/misc/mos6522.h
-@@ -154,7 +154,7 @@ struct MOS6522State {
- OBJECT_DECLARE_TYPE(MOS6522State, MOS6522DeviceClass, MOS6522)
- 
- struct MOS6522DeviceClass {
--    DeviceClass parent_class;
-+    SysBusDeviceClass parent_class;
- 
-     ResettablePhases parent_phases;
-     void (*portB_write)(MOS6522State *dev);
+diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
+index 5703e0e826..7b3cfa2c1b 100644
+--- a/hw/usb/dev-hub.c
++++ b/hw/usb/dev-hub.c
+@@ -479,6 +479,7 @@ static void usb_hub_handle_control(USBDevice *dev, USBPacket *p,
+                     usb_hub_port_clear(port, PORT_STAT_SUSPEND);
+                     port->wPortChange = 0;
+                 }
++                break;
+             default:
+                 goto fail;
+             }
 -- 
 2.39.5
 
