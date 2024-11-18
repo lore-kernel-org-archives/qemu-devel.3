@@ -4,101 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC6FD591A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D36D591A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD5et-0007Me-Kx; Mon, 18 Nov 2024 12:35:31 -0500
+	id 1tD5gN-0008BS-ML; Mon, 18 Nov 2024 12:37:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tD5er-0007LA-AW; Mon, 18 Nov 2024 12:35:29 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gE-00086v-0k
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:36:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tD5ep-0004c6-Ho; Mon, 18 Nov 2024 12:35:29 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AIBmGGa014619;
- Mon, 18 Nov 2024 17:35:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qEIsRb
- oNK6hkkPZECeF23vXTxFBBFGzxZ2wXwclCTOA=; b=nix4VAYqZTjwIX6QcVoSm1
- 6u7VCeXaxUCqvxrEbHoPvUfD0YdUXelJ+XGGWwJ7cXOd8JoymUyyhped7zucLFIc
- PY1zZ71FakqgZq750PW7UBGlEKv3JAESrOZG6Le+9hY2JFL5qRrdjBbqTi/2WRy2
- qsqZizlIK0/hKAtLdx4ahcAh5uRruXYE3/z80fXR4JMBSoeqtR8CW/D7U5SW/Moy
- YKsJDGshJosJHoNXDDIYjGMfM4DX8SS9oZcvSBX85rhqte5IbtkFINbDz8AHiqed
- +CN6ycR6ZY9IllQxQnK3BIBkJFWi/c0faUO48My27MFlDpLhjV16+e0wpE+sdAXw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xyu1h7rp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Nov 2024 17:35:21 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AIHA4DX000591;
- Mon, 18 Nov 2024 17:35:20 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42y77kp77w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Nov 2024 17:35:20 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4AIHZJLE46596370
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 18 Nov 2024 17:35:19 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4EAF958056;
- Mon, 18 Nov 2024 17:35:19 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B417158052;
- Mon, 18 Nov 2024 17:35:18 +0000 (GMT)
-Received: from [9.61.180.239] (unknown [9.61.180.239])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 18 Nov 2024 17:35:18 +0000 (GMT)
-Message-ID: <45177122-dbb5-4ce1-ad9a-b7a3a0f6bfa1@linux.ibm.com>
-Date: Mon, 18 Nov 2024 12:35:18 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gA-0004l2-Vd
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:36:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1731951410;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=H1oAM7+G8hP522IIcHKt9nDTBIQsnQJ1LZDLK4aS8yc=;
+ b=bGwd7+PacSvFyW6hJrcxxAbWGqYdjd5zkUHIK4c6aXRlCQDMPVpGPsEtOGGzEqX3Yt+gqT
+ L83C7jSruYEE6/AlGEafdXGkLMFKU59ppj9mRs/VjUZFb199T/KT70drlM7hJFIsiJgvtz
+ aFgJgUgUMJygfm52C16umzext6efvSM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-Xt7xdmAmOfC3SBptSoC3mQ-1; Mon,
+ 18 Nov 2024 12:36:40 -0500
+X-MC-Unique: Xt7xdmAmOfC3SBptSoC3mQ-1
+X-Mimecast-MFC-AGG-ID: Xt7xdmAmOfC3SBptSoC3mQ
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B8DD419560A3; Mon, 18 Nov 2024 17:36:37 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.53])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 76D4319560A3; Mon, 18 Nov 2024 17:36:36 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 00/12] s390x and misc patches for QEMU 9.2-rc1
+Date: Mon, 18 Nov 2024 18:36:22 +0100
+Message-ID: <20241118173634.473532-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw: Add "loadparm" property to scsi disk devices for
- booting on s390x
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Boris Fiuczynski <fiuczy@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-s390x@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Fam Zheng <fam@euphon.net>, Eric Farman <farman@linux.ibm.com>
-References: <20241115141202.1877294-1-thuth@redhat.com>
- <ee20d61c-88a9-480f-be64-084f737ee976@linux.ibm.com>
- <1d225ce4-a74e-4d55-85b7-6f7015cfb288@linux.ibm.com>
- <152401ec-84c2-43f6-a349-cdf5589b9a12@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <152401ec-84c2-43f6-a349-cdf5589b9a12@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: qcm8yF8dr0TNaQb4Gm_WxGStSmLmx5OK
-X-Proofpoint-ORIG-GUID: qcm8yF8dr0TNaQb4Gm_WxGStSmLmx5OK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- lowpriorityscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- bulkscore=0 spamscore=0 mlxlogscore=963 adultscore=0 mlxscore=0
- clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411180145
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,58 +79,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+ Hi Peter!
 
+The following changes since commit abb1565d3d863cf210f18f70c4a42b0f39b8ccdb:
 
-On 11/18/24 12:12 PM, Christian Borntraeger wrote:
-> Am 18.11.24 um 16:53 schrieb Jared Rossi:
->> Loadparm set with boot index works properly and I confirmed the 
->> getter/setter are working as well.
->
-> So this is a Tested-by: then?
+  Merge tag 'pull-tcg-20241116' of https://gitlab.com/rth7680/qemu into staging (2024-11-16 18:16:46 +0000)
 
-Yes.
+are available in the Git repository at:
 
-Tested-by Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by Jared Rossi <jrossi@linux.ibm.com>
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-11-18
 
->>
->> On 11/18/24 10:29 AM, Jared Rossi wrote:
->>> Looks OK to me.
->>>
->>> Reviewed-by Jared Rossi <jrossi@linux.ibm.com>
->>>
->>> On 11/15/24 9:12 AM, Thomas Huth wrote:
->>>> While adding the new flexible boot order feature on s390x recently,
->>>> we missed to add the "loadparm" property to the scsi-hd and scsi-cd
->>>> devices. This property is required on s390x to pass the information
->>>> to the boot loader about which kernel should be started or whether
->>>> the boot menu should be shown. But even more serious: The missing
->>>> property is now causing trouble with the corresponding libvirt patches
->>>> that assume that the "loadparm" property is either settable for all
->>>> bootable devices (when the "boot order" feature is implemented in
->>>> QEMU), or none (meaning the behaviour of older QEMUs that only allowed
->>>> one "loadparm" at the machine level). To fix this broken situation,
->>>> let's implement the "loadparm" property in for the SCSI devices, too.
->>>>
->>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>> ---
->>>>   v2:
->>>>   - Only add the property when running with the s390x target
->>>>     (checked via the arch_type variable during runtime)
->>>>   - Check bootindex property before setting the loadparm property
->>>>   - Call the sanitize function before setting the property, so we
->>>>     can now immediately reject bad properties for the scsi devices,
->>>>     too (had to move the sanitize function to the common code in
->>>>     qdev-properties-system.c for this)
->>>>
->>>>   include/hw/qdev-properties-system.h |  3 ++
->>>>   hw/core/qdev-properties-system.c    | 26 +++++++++++++++++
->>>>   hw/s390x/ipl.c                      | 19 ++++---------
->>>>   hw/scsi/scsi-disk.c                 | 43 
->>>> +++++++++++++++++++++++++++++
->>>>   4 files changed, 78 insertions(+), 13 deletions(-)
->>>>
->>>> [snip...]
->>
+for you to fetch changes up to 4483d98ab82671165276026b09287053328c94d4:
+
+  .gitlab-ci.d: Raise timeout on cross-accel build jobs to 60m (2024-11-18 17:14:35 +0100)
+
+----------------------------------------------------------------
+* Fixes & doc updates for the new "boot order" s390x bios feature
+* Provide a "loadparm" property for scsi-hd & scsi-cd devices on s390x
+  (required for the "boot order" feature)
+* Fix the floating-point multiply-and-add NaN rules on s390x
+* Raise timeout on cross-accel build jobs to 60m
+
+----------------------------------------------------------------
+Ilya Leoshkevich (2):
+      target/s390x: Fix the floating-point multiply-and-add NaN rules
+      tests/tcg/s390x: Add the floating-point multiply-and-add test
+
+Jared Rossi (3):
+      docs/system/s390x/bootdevices: Update loadparm documentation
+      pc-bios/s390x: Initialize cdrom type to false for each IPL device
+      pc-bios/s390x: Initialize machine loadparm before probing IPL devices
+
+Peter Maydell (1):
+      .gitlab-ci.d: Raise timeout on cross-accel build jobs to 60m
+
+Roque Arcudia Hernandez (1):
+      hw/usb: Use __attribute__((packed)) vs __packed
+
+Thomas Huth (5):
+      docs/system/bootindex: Make it clear that s390x can also boot from virtio-net
+      hw/s390x: Restrict "loadparm" property to devices that can be used for booting
+      hw: Add "loadparm" property to scsi disk devices for booting on s390x
+      pc-bios/s390-ccw: Re-initialize receive queue index before each boot attempt
+      pc-bios: Update the s390 bios images with the recent fixes
+
+ docs/system/bootindex.rst            |   2 +-
+ docs/system/s390x/bootdevices.rst    |  24 +++-
+ hw/s390x/ccw-device.h                |   5 +
+ include/hw/qdev-properties-system.h  |   3 +
+ include/hw/usb/dwc2-regs.h           |   2 +-
+ tests/tcg/s390x/float.h              | 104 ++++++++++++++++
+ hw/core/qdev-properties-system.c     |  26 ++++
+ hw/s390x/ccw-device.c                |   4 +-
+ hw/s390x/ipl.c                       |  19 +--
+ hw/s390x/virtio-ccw-blk.c            |   1 +
+ hw/s390x/virtio-ccw-net.c            |   1 +
+ hw/scsi/scsi-disk.c                  |  43 +++++++
+ hw/vfio/ccw.c                        |   1 +
+ pc-bios/s390-ccw/main.c              |   4 +-
+ pc-bios/s390-ccw/virtio-net.c        |   2 +
+ target/s390x/tcg/fpu_helper.c        |   8 +-
+ target/s390x/tcg/vec_fpu_helper.c    |  12 +-
+ tests/tcg/s390x/fma.c                | 233 +++++++++++++++++++++++++++++++++++
+ tests/tcg/s390x/vfminmax.c           | 223 ++++++++++++---------------------
+ fpu/softfloat-specialize.c.inc       |  19 +++
+ .gitlab-ci.d/crossbuild-template.yml |   2 +-
+ pc-bios/s390-ccw.img                 | Bin 79608 -> 79608 bytes
+ tests/tcg/s390x/Makefile.target      |   5 +-
+ 23 files changed, 567 insertions(+), 176 deletions(-)
+ create mode 100644 tests/tcg/s390x/float.h
+ create mode 100644 tests/tcg/s390x/fma.c
 
 
