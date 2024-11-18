@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FEA4D591B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 20:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E31D591B3
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 20:54:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD8Yu-0001VA-LH; Mon, 18 Nov 2024 15:41:32 -0500
+	id 1tD8kb-0005fb-2H; Mon, 18 Nov 2024 15:53:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tD8Ys-0001UF-7Z
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:41:30 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD8kP-0005du-R1
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:53:27 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tD8Yq-0002O3-Ja
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:41:29 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5cefc36c5d4so3549829a12.0
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 12:41:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD8kO-0003ik-Bn
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:53:25 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5ceb03aadb1so4692701a12.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 12:52:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731962487; x=1732567287; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=T3Jmnxh/DpdyG00jy7Wcdnj5y4BPl3ldQ3b2JlRIXWs=;
- b=LBTPh2aOWzbCee9VPWrgAV2vEi2XlQRCfrklNSY/Opz23A791P95Q2C4WBOZv58nPE
- /ulbq2lmr45dvqCJJe/bFYv8PsxgTwIOOSPtrDT6OGysRlq8ygtlZs//3Fne82jkynFW
- LwZKUeJJRwgXK62gOxWBspATTg0GRTI5GAbRuMK60NbIN7jewdqk1qSFFFbDg4SE+jh4
- sZxV8qzqbOvQ2BxV7BRfetZiQIweH7+l5GSrxIipEZKPWboh+N8oIivErKgXWml54l/f
- Lo3mF2f0lOwoC8YEhk5yIlTddTuYBIjTnEGvDzvtrBEEh0LnyO/WTbPqO0bMByNQVo0R
- ltNw==
+ d=linaro.org; s=google; t=1731963177; x=1732567977; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ibrJewJda6kzpIcXZBnn1V6BypHenJzxRUpQo2ZfYoU=;
+ b=oO8IyGGvHiyC/IZRA/duTJi1F0mdVRYRZkzUGjhvJrptyCTxYHGVKuMHjhlLF9/0tF
+ Prqn6aeI0AlADY+/GFt8to1crKiX4x+ILYvHM55zdXKB3wgPjTYKh9qNDX1NUV7wwcOf
+ 2w0tvngdeT5/XSke6NuCl8pyXAeG7gbqU6cq55N9T0eCyHPyEB49QHkxczGyXMueth17
+ Lh4h8CxaiHcppcrEokfvytak6hF9XMc1cmTnykYilg832TQWymN71dfto/ZRPOeNpv2A
+ kkwxe2x3ZS/ngWzOYqwLK1ivsK7zEu56+2Z5LDZlWJQ3KVTgL82a9m9A5Gh/3IE/8oo2
+ 8uuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731962487; x=1732567287;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=T3Jmnxh/DpdyG00jy7Wcdnj5y4BPl3ldQ3b2JlRIXWs=;
- b=wwK7+NbemDYRFiktXwvpGkHOQkAOeBQvqZAWId3Hn+utESzLhWAFyYSB0LZVPUcQl2
- RTPtwjY75a0sK3zq5crHlAbYODt0+AXE3bSshGMr+OfZZJ6ntL52qah1wtDOQM8kswAv
- lu+z/ARB+Hm1Y6AO62Uv2y2x16F+HvMmbwzD7VmBY+ODQLeW2G0oHsIMEtp9FqE5JhN8
- 9/bEJFUtIn7EO4qSxMdFDGBSarbsdnTi+XNSRspyi5u+5HHN8xrvXji9IxT0e8NuDjyl
- ToV+68tJ8/LR1eydIsiogkZo1/ynGCY85td4VNo9j8vXBa3DHVpXDC2XdsLqO8ze9342
- 7gLw==
-X-Gm-Message-State: AOJu0YyErnG+IL1cT8sjfyFAyauBQQnCJQTfXmyGwDJRAK/sKvmrnvnW
- h6+8yY5l4srhyIUMKA29uIEJWkgTz0UAtHAFDEANoqNGLw8bL7cuAN1vT9Z0W2ZLvlp6hmi1fjo
- 0
-X-Google-Smtp-Source: AGHT+IFW7k5us/tm2Dl7A6I52NfSav2nd9/VyGhxXm89nvkcwJ51VF3Yo261v/Aq0vuZBtY9DV1AOA==
-X-Received: by 2002:a17:907:60d1:b0:a99:5773:3612 with SMTP id
- a640c23a62f3a-aa48347e824mr1450545066b.36.1731962487150; 
- Mon, 18 Nov 2024 12:41:27 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20e08161csm571294266b.178.2024.11.18.12.41.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Nov 2024 12:41:25 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1E97F5F8C1;
- Mon, 18 Nov 2024 20:41:23 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL for 9.2 0/4] updates (virtio-gpu, gdbstub testing, MAINTAINERS)
-Date: Mon, 18 Nov 2024 20:41:19 +0000
-Message-Id: <20241118204123.3083310-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ d=1e100.net; s=20230601; t=1731963177; x=1732567977;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ibrJewJda6kzpIcXZBnn1V6BypHenJzxRUpQo2ZfYoU=;
+ b=vq2o8WSG6urOla7uy4b+3oExkBE9FJ4oAURjB1KO0WLa0CovDxIcLQ4YPFlu//hvQq
+ Nz9gQqRxMuUqVeDkF9Pr3LRqhVR6YHEb2X9JLs5eKmG1tWBWxKoWO5rJe+MVE2ITM0x5
+ LYm66EPeppxTlxBPLPyN8E8cQw2JG+77cmDD5zxjqyR4PCL6kWRXiRXoGT1gN2LFDrHm
+ JC+2PB++8eLguyFryMSvQu/9Vz9v8URvWSSs1JfbCSm+YSRy0I5rexUiCKtAjP2Krb0p
+ pPIF5JcXvNh+n2e4C9A8qbKfvKu3S7SxUmHhfgYhmlW6LPXHiqnBhB0Mwc64MmStU8aR
+ wr7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUeJkgni+0+l4FA2BERY9pj7WWbkhYjmLrYdLN9VvwvRQxzwx8uSl/sNwqUmq6pmswRckKM+0D9aQLp@nongnu.org
+X-Gm-Message-State: AOJu0YwLvlnc0DTuHwN6LT5CqNNryg0lYzae77TOwFZIjPvnEcztzYsn
+ 5HcMfK8FyUGb6OR8SFuzTljpujiiDrKE8QMK/lxN6wD+6QMw5cVTPRCxmlVU+fpGAqO5jlJoHpn
+ A
+X-Google-Smtp-Source: AGHT+IFF2B3sJtOdYonmUzPQcSBTMXFAnbagLxOER8LBPzenCpjDPueQpkiKUFKmUXelhijZSUUYMg==
+X-Received: by 2002:a17:907:7f8a:b0:a9a:e91:68c5 with SMTP id
+ a640c23a62f3a-aa483454536mr1147034066b.33.1731963176796; 
+ Mon, 18 Nov 2024 12:52:56 -0800 (PST)
+Received: from [192.168.69.146] ([176.187.198.1])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20e08af75sm578025366b.202.2024.11.18.12.52.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Nov 2024 12:52:56 -0800 (PST)
+Message-ID: <0f60c592-3fe3-4275-a65d-ddaa3b735cd9@linaro.org>
+Date: Mon, 18 Nov 2024 21:52:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/loongarch: fix alignment error in tci.
+To: guoguangyao <guoguangyao18@mails.ucas.ac.cn>, qemu-devel@nongnu.org
+Cc: gaosong@loongson.cn
+References: <20241118133243.291769-1-guoguangyao18@mails.ucas.ac.cn>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241118133243.291769-1-guoguangyao18@mails.ucas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,47 +96,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 0fbc798e4f51d6d2bc05f4965b0eae74ba204471:
+On 18/11/24 14:32, guoguangyao wrote:
+> Add alignment and check for fpr in
+> CPUArchState, fix alignment error in
+> tcg interpreter when executing LASX.
+> 
+> Signed-off-by: guoguangyao <guoguangyao18@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/cpu.h | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-  Merge tag 'pull-vfio-20241118' of https://github.com/legoater/qemu into staging (2024-11-18 10:04:04 +0000)
-
-are available in the Git repository at:
-
-  https://gitlab.com/stsquad/qemu.git tags/pull-9.2-rc-updates-181124-1
-
-for you to fetch changes up to d6902d7022ba1405a991c94a99b37259d0a6d3a7:
-
-  hw/display: check frame buffer can hold blob (2024-11-18 15:54:48 +0000)
-
-----------------------------------------------------------------
-Misc fixes for 9.2
-
-  - fix remaining gdbstub test cases to exit cleanly
-  - update MAINTAINERS with qemu-rust mailing list details
-  - re-factor virtio-gpu and fix coverity warnings
-
-----------------------------------------------------------------
-Alex Bennée (2):
-      hw/display: factor out the scanout blob to fb conversion
-      hw/display: check frame buffer can hold blob
-
-Ilya Leoshkevich (1):
-      tests/tcg: Stop using exit() in the gdbstub testcases
-
-Manos Pitsidianakis (1):
-      MAINTAINERS: CC rust/ patches to qemu-rust list
-
- MAINTAINERS                                       |  5 ++
- include/hw/virtio/virtio-gpu.h                    | 15 ++++++
- hw/display/virtio-gpu-virgl.c                     | 22 +--------
- hw/display/virtio-gpu.c                           | 59 ++++++++++++++---------
- tests/guest-debug/test_gdbstub.py                 | 14 ++++--
- tests/tcg/multiarch/gdbstub/interrupt.py          |  4 +-
- tests/tcg/multiarch/gdbstub/prot-none.py          |  4 +-
- tests/tcg/multiarch/gdbstub/test-proc-mappings.py |  4 +-
- 8 files changed, 73 insertions(+), 54 deletions(-)
-
--- 
-2.39.5
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
