@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A416D591A9
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 18:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE00ED591AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 18:09:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD69I-0004b2-0X; Mon, 18 Nov 2024 13:06:56 -0500
+	id 1tD69a-0004el-Cs; Mon, 18 Nov 2024 13:07:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD697-0004YX-AU; Mon, 18 Nov 2024 13:06:45 -0500
+ id 1tD69I-0004bz-79; Mon, 18 Nov 2024 13:06:56 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD691-0008QH-Q6; Mon, 18 Nov 2024 13:06:42 -0500
+ id 1tD69G-0008Rp-Db; Mon, 18 Nov 2024 13:06:55 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 23FAAA5480;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6D5DFA5485;
  Mon, 18 Nov 2024 21:06:31 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 7D655173519;
+ by tsrv.corpit.ru (Postfix) with SMTP id C7F8B17351E;
  Mon, 18 Nov 2024 21:06:34 +0300 (MSK)
-Received: (nullmailer pid 2302447 invoked by uid 1000);
+Received: (nullmailer pid 2302462 invoked by uid 1000);
  Mon, 18 Nov 2024 18:06:34 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexander Graf <graf@amazon.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 33/39] target/i386: Fix legacy page table walk
-Date: Mon, 18 Nov 2024 21:06:21 +0300
-Message-Id: <20241118180634.2302410-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [Stable-7.2.15 38/39] hw/audio/hda: fix memory leak on audio setup
+Date: Mon, 18 Nov 2024 21:06:26 +0300
+Message-Id: <20241118180634.2302410-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.15-20241118210517@cover.tls.msk.ru>
 References: <qemu-stable-7.2.15-20241118210517@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,74 +63,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <graf@amazon.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Commit b56617bbcb4 ("target/i386: Walk NPT in guest real mode") added
-logic to run the page table walker even in real mode if we are in NPT
-mode.  That function then determined whether real mode or paging is
-active based on whether the pg_mode variable was 0.
+When SET_STREAM_FORMAT is called, the st->buft timer is overwritten, thus
+causing a memory leak.  This was originally fixed in commit 816139ae6a5
+("hw/audio/hda: fix memory leak on audio setup", 2024-11-14) but that
+caused the audio to break in SPICE.
 
-Unfortunately pg_mode is 0 in two situations:
+Fortunately, a simpler fix is possible.  The timer only needs to be
+reset, because the callback is always the same (st->output is set at
+realize time in hda_audio_init); call to timer_new_ns overkill.  Replace
+it with timer_del and only initialize the timer once; for simplicity,
+do it even if use_timer is false.
 
-  1) Paging is disabled (real mode)
-  2) Paging is in 2-level paging mode (32bit without PAE)
-
-That means the walker now assumed that 2-level paging mode was real
-mode, breaking NetBSD as well as Windows XP.
-
-To fix that, this patch adds a new PG flag to pg_mode which indicates
-whether paging is active at all and uses that to determine whether we
-are in real mode or not.
+An even simpler fix would be to free the old time in hda_audio_setup().
+However, it seems better to place the initialization of the timer close
+to that of st->ouput.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2654
-Fixes: b56617bbcb4 ("target/i386: Walk NPT in guest real mode")
-Fixes: 253c0a06e03 (commit b56617bbcb4 in stable-7.2.x series)
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Reported-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Link: https://lore.kernel.org/r/20241106154329.67218-1-graf@amazon.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 8fa11a4df344f58375eb26b3b65004345f21ef37)
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-ID: <20241114125318.1707590-3-pbonzini@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 626b39006d2f9b1378a04cb88a2187bb852cb055)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 326649ca99..59c39fe527 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -336,6 +336,7 @@ typedef enum X86Seg {
- #define PG_MODE_PKE      (1 << 17)
- #define PG_MODE_PKS      (1 << 18)
- #define PG_MODE_SMEP     (1 << 19)
-+#define PG_MODE_PG       (1 << 20)
- 
- #define MCG_CTL_P       (1ULL<<8)   /* MCG_CAP register available */
- #define MCG_SER_P       (1ULL<<24) /* MCA recovery/new status bits */
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 539189b4d1..1fa334a743 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -30,7 +30,7 @@
- 
- int get_pg_mode(CPUX86State *env)
- {
--    int pg_mode = 0;
-+    int pg_mode = PG_MODE_PG;
-     if (!(env->cr[0] & CR0_PG_MASK)) {
-         return 0;
-     }
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index a52a5b417e..9e9e02e1ad 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -296,7 +296,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         /* combine pde and pte nx, user and rw protections */
-         ptep &= pte ^ PG_NX_MASK;
-         page_size = 4096;
--    } else if (pg_mode) {
-+    } else if (pg_mode & PG_MODE_PG) {
-         /*
-          * Page table level 2
-          */
+diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
+index ce64b84f4e..5c75a3a59a 100644
+--- a/hw/audio/hda-codec.c
++++ b/hw/audio/hda-codec.c
+@@ -488,8 +488,7 @@ static void hda_audio_setup(HDAAudioStream *st)
+     if (st->output) {
+         if (use_timer) {
+             cb = hda_audio_output_cb;
+-            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+-                                    hda_audio_output_timer, st);
++            timer_del(st->buft);
+         } else {
+             cb = hda_audio_compat_output_cb;
+         }
+@@ -498,8 +497,7 @@ static void hda_audio_setup(HDAAudioStream *st)
+     } else {
+         if (use_timer) {
+             cb = hda_audio_input_cb;
+-            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+-                                    hda_audio_input_timer, st);
++            timer_del(st->buft);
+         } else {
+             cb = hda_audio_compat_input_cb;
+         }
+@@ -722,8 +720,12 @@ static int hda_audio_init(HDACodecDevice *hda, const struct desc_codec *desc)
+                 st->gain_right = QEMU_HDA_AMP_STEPS;
+                 st->compat_bpos = sizeof(st->compat_buf);
+                 st->output = true;
++                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                        hda_audio_output_timer, st);
+             } else {
+                 st->output = false;
++                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                        hda_audio_input_timer, st);
+             }
+             st->format = AC_FMT_TYPE_PCM | AC_FMT_BITS_16 |
+                 (1 << AC_FMT_CHAN_SHIFT);
+@@ -747,9 +749,7 @@ static void hda_audio_exit(HDACodecDevice *hda)
+         if (st->node == NULL) {
+             continue;
+         }
+-        if (a->use_timer) {
+-            timer_free(st->buft);
+-        }
++        timer_free(st->buft);
+         if (st->output) {
+             AUD_close_out(&a->card, st->voice.out);
+         } else {
 -- 
 2.39.5
 
