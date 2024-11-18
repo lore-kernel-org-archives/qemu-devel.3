@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13878D49212
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 12:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FACED49219
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 12:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD1BX-00065g-ME; Mon, 18 Nov 2024 07:48:55 -0500
+	id 1tD1BU-0005dA-38; Mon, 18 Nov 2024 07:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD1Ac-0004Ei-J6
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:48:03 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD1B2-0004XV-Se
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:48:30 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD1AZ-0005RM-Rg
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:47:57 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43155abaf0bso18088605e9.0
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 04:47:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD1Aw-0005SC-Gw
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:48:21 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43169902057so34282065e9.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 04:48:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731934074; x=1732538874; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731934091; x=1732538891; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mZY2UZXl5ISTHGaCx/dhRxaaExiBOZqSteLaMzypVhw=;
- b=DIFQkBvb/zfEc8LqPrxIsMwrQ9ML3uAgym/lKlLqr9/X+2LUC+48CYera6qe3nUlxv
- CHlnzKnYEol93M3/qmh+83fBKD5pFSDLGWniYwxuGWZVpkZ69leQ2plIUbzlHn0F53kP
- HKoiFpZsqLVbZ1U0YUDvNYFJnZHQYnIFZhcWNWAxhoUifxvmttlCmOTTgdLdoGAatTvA
- eJSvwQ4newl2v/icdnr7KTy1cPxiSyasTUid8snan0Kct6sNA67Xs4FigK4SPDac6Z9D
- kc5X3hJkBUkyCzjfA7of/LIiG/xjw+Gj6ViotMFm1xdHRuBl5LSzt0Ao3LiC6NbaqzOl
- rRKw==
+ bh=vThzEj5/0y6fC/Z7sKZAT6Xu5p270O8pYo+gkBmXMu4=;
+ b=CMgsvkmcUHQOQpyONJGDbpx7VB6ieLu1c1mlxekPa6hhqDtUXHczDW3QxRyIF5Qi9f
+ jbQ4CA0G6BbYMLLI4J65+o8w5zjx6LWfRgS0fxdOqVoVYZ4zBTCJtpus5vCdmcrf4kel
+ Y2vbDtDPFDRMK6QpPSl67WtEtuT8YFootBSePWreDTaUqCOO7/G+tVrnXfZozh8VsXZE
+ tGo+kyQasU+OOeLKQPqty/F3J1KceF5NJizGrEy28IauWBsyH+NdQUh52P3/Ve+lD12N
+ DQ4XOGgIWTzf13v0mWBU5mO5ih4xxA4YiB40H/rpj7+J4ShGU62VmemyGn1zEn9WwCRo
+ 4hRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731934074; x=1732538874;
+ d=1e100.net; s=20230601; t=1731934091; x=1732538891;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mZY2UZXl5ISTHGaCx/dhRxaaExiBOZqSteLaMzypVhw=;
- b=Kj6O1PVqJs9bmNgYrqYx97ewK/Ov3CS96I0aijQgdPddFEzGL2gK6+sUU03B+br29A
- o6kggVA01M4DpgY/DaROFyIm4rhVDevWX1ixFCXmz3LUlEXs4aBesH4ChrubDGqsJH6b
- jNmk5kcqMqOeOHBSQFHdVwJJfAP/UFyjJ3Xk/d5lrKXBaN9E0Nmy0NUTSQJkkpAkIqhv
- 21IaixSIfOgob7WPZuL7y5CJ04cJiMoMItjsW1q1ifbpJaidd1xkxXIIrpB6H2xflE1F
- o6ZJ8NhLs8cpLh10pu9GcJzr/hXubd1wkL8KJWBDOQyDwxQaWSufr+eVa/tgsQxDJlFu
- hD2Q==
-X-Gm-Message-State: AOJu0YwiQiOoNp6v1V2dxY3wXN/32WaMMbTkCyEH6tSM6bf64rFJ9zOo
- 5ZDlt1ZQERwCvLPMpMv2Ep19bzmWgbWHSFBnBM7hH95BU0QjBg9eViso1gqB5mGO8PVDtr3sqXL
- J
-X-Google-Smtp-Source: AGHT+IFWseHO7AxXi8DCnPAmK/DSPyYuGVEk+4RungkkyCu1GUZjKkq1wwr2n3Hq66WurevDi7G4Eg==
-X-Received: by 2002:a05:600c:3143:b0:431:9397:9ace with SMTP id
- 5b1f17b1804b1-432df7411b0mr120048115e9.10.1731934074124; 
- Mon, 18 Nov 2024 04:47:54 -0800 (PST)
+ bh=vThzEj5/0y6fC/Z7sKZAT6Xu5p270O8pYo+gkBmXMu4=;
+ b=f+QkbXda942P6/mD+3J97BmTt/8sh2rY3uYfXdeHJCrWOK4kA+tpFeZJ66tE5NWA24
+ QaPBYEKElsf0K2VbAO1cZO/+hBP8ryBPKtXSxpfhFAGc8p+AmEgWGy3btQSGG1wk2iyp
+ 3DPQ0ZvL4sg05571GSicB/tmrTWaRV9CJqvP0Lk9zm6poHmYs+IoacqQN9u4lR9cYmRu
+ I0r6IVtFFXsZjIQGjSa55oP2FSZPFeqL0WQxgpIoS4jufues2r22SBdMf1G6CnW/VXEZ
+ 1U9ERBvR/ioyaDmZ7na/RJF3JDWapmhc0B9jPwzdWjGnzwns6dR6E99BSEmKD6gtFMVN
+ 59JA==
+X-Gm-Message-State: AOJu0Yw0w/KU+68ZznIUyBLCUU2tsMH1HjChh0AZensCIX5yVpfeRCI1
+ Ke1YRqVlsaPrWbMsi5ct4DbMYmGPdPL1ASBo5+EQLSPaV9QfA0jff9nBum5aoqfm1AV3LjaRlLk
+ y
+X-Google-Smtp-Source: AGHT+IH/Qpx9anm36693kePwO9l3q51HFtofTN2RTonKp8PeJDRuNCQXSnvTuS8pimYG6bn+95KU6Q==
+X-Received: by 2002:a05:6000:2c6:b0:382:1c58:5787 with SMTP id
+ ffacd0b85a97d-38225a89fe4mr11523224f8f.46.1731934090708; 
+ Mon, 18 Nov 2024 04:48:10 -0800 (PST)
 Received: from localhost.localdomain ([176.187.198.1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432da28cad9sm158081935e9.32.2024.11.18.04.47.52
+ ffacd0b85a97d-382371a5646sm7362071f8f.0.2024.11.18.04.48.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 18 Nov 2024 04:47:53 -0800 (PST)
+ Mon, 18 Nov 2024 04:48:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>,
+Cc: Roque Arcudia Hernandez <roqueh@google.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 12/15] hw/audio/hda: fix memory leak on audio setup
-Date: Mon, 18 Nov 2024 13:46:39 +0100
-Message-ID: <20241118124643.6958-13-philmd@linaro.org>
+Subject: [PULL 15/15] hw/watchdog/cmsdk_apb_watchdog: Fix broken link
+Date: Mon, 18 Nov 2024 13:46:42 +0100
+Message-ID: <20241118124643.6958-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241118124643.6958-1-philmd@linaro.org>
 References: <20241118124643.6958-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,80 +94,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Roque Arcudia Hernandez <roqueh@google.com>
 
-When SET_STREAM_FORMAT is called, the st->buft timer is overwritten, thus
-causing a memory leak.  This was originally fixed in commit 816139ae6a5
-("hw/audio/hda: fix memory leak on audio setup", 2024-11-14) but that
-caused the audio to break in SPICE.
+The patch changes the comments to point to the latest Design Kit
+Technical Reference Manual.
 
-Fortunately, a simpler fix is possible.  The timer only needs to be
-reset, because the callback is always the same (st->output is set at
-realize time in hda_audio_init); call to timer_new_ns overkill.  Replace
-it with timer_del and only initialize the timer once; for simplicity,
-do it even if use_timer is false.
-
-An even simpler fix would be to free the old time in hda_audio_setup().
-However, it seems better to place the initialization of the timer close
-to that of st->ouput.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20241114125318.1707590-3-pbonzini@redhat.com>
+Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241115160328.1650269-2-roqueh@google.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/audio/hda-codec.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ hw/watchdog/cmsdk-apb-watchdog.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
-index 74c0292284..c340a9481d 100644
---- a/hw/audio/hda-codec.c
-+++ b/hw/audio/hda-codec.c
-@@ -487,8 +487,7 @@ static void hda_audio_setup(HDAAudioStream *st)
-     if (st->output) {
-         if (use_timer) {
-             cb = hda_audio_output_cb;
--            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                    hda_audio_output_timer, st);
-+            timer_del(st->buft);
-         } else {
-             cb = hda_audio_compat_output_cb;
-         }
-@@ -497,8 +496,7 @@ static void hda_audio_setup(HDAAudioStream *st)
-     } else {
-         if (use_timer) {
-             cb = hda_audio_input_cb;
--            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                    hda_audio_input_timer, st);
-+            timer_del(st->buft);
-         } else {
-             cb = hda_audio_compat_input_cb;
-         }
-@@ -726,8 +724,12 @@ static void hda_audio_init(HDACodecDevice *hda,
-                 st->gain_right = QEMU_HDA_AMP_STEPS;
-                 st->compat_bpos = sizeof(st->compat_buf);
-                 st->output = true;
-+                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                        hda_audio_output_timer, st);
-             } else {
-                 st->output = false;
-+                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                        hda_audio_input_timer, st);
-             }
-             st->format = AC_FMT_TYPE_PCM | AC_FMT_BITS_16 |
-                 (1 << AC_FMT_CHAN_SHIFT);
-@@ -750,9 +752,7 @@ static void hda_audio_exit(HDACodecDevice *hda)
-         if (st->node == NULL) {
-             continue;
-         }
--        if (a->use_timer) {
--            timer_free(st->buft);
--        }
-+        timer_free(st->buft);
-         if (st->output) {
-             AUD_close_out(&a->card, st->voice.out);
-         } else {
+diff --git a/hw/watchdog/cmsdk-apb-watchdog.c b/hw/watchdog/cmsdk-apb-watchdog.c
+index 7ad46f9410..e4d25a25f7 100644
+--- a/hw/watchdog/cmsdk-apb-watchdog.c
++++ b/hw/watchdog/cmsdk-apb-watchdog.c
+@@ -12,8 +12,8 @@
+ /*
+  * This is a model of the "APB watchdog" which is part of the Cortex-M
+  * System Design Kit (CMSDK) and documented in the Cortex-M System
+- * Design Kit Technical Reference Manual (ARM DDI0479C):
+- * https://developer.arm.com/products/system-design/system-design-kits/cortex-m-system-design-kit
++ * Design Kit Technical Reference Manual (ARM DDI0479):
++ * https://developer.arm.com/documentation/ddi0479/
+  *
+  * We also support the variant of this device found in the TI
+  * Stellaris/Luminary boards and documented in:
 -- 
 2.45.2
 
