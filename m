@@ -4,41 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0AFAD591AD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7800CD591AC
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 18:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD69F-0004aT-68; Mon, 18 Nov 2024 13:06:53 -0500
+	id 1tD69B-0004Z7-7w; Mon, 18 Nov 2024 13:06:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD69C-0004ZY-97; Mon, 18 Nov 2024 13:06:50 -0500
+ id 1tD697-0004YW-AF; Mon, 18 Nov 2024 13:06:45 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD698-0008Qo-NZ; Mon, 18 Nov 2024 13:06:49 -0500
+ id 1tD690-0008Q6-4H; Mon, 18 Nov 2024 13:06:41 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 34B3EA5481;
+ by isrv.corpit.ru (Postfix) with ESMTP id 170DCA547F;
  Mon, 18 Nov 2024 21:06:31 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8CC4717351A;
+ by tsrv.corpit.ru (Postfix) with SMTP id 6651A173518;
  Mon, 18 Nov 2024 21:06:34 +0300 (MSK)
-Received: (nullmailer pid 2302450 invoked by uid 1000);
+Received: (nullmailer pid 2302442 invoked by uid 1000);
  Mon, 18 Nov 2024 18:06:34 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@kernel.org>,
- Helge Deller <deller@gmx.de>, Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.15 34/39] linux-user: Fix setreuid and setregid to use
- direct syscalls
-Date: Mon, 18 Nov 2024 21:06:22 +0300
-Message-Id: <20241118180634.2302410-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.15 v2 00/39] Patch Round-up for stable 7.2.15,
+ freeze on 2024-11-18
+Date: Mon, 18 Nov 2024 21:06:20 +0300
+Message-Id: <qemu-stable-7.2.15-20241118210517@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.15-20241118210517@cover.tls.msk.ru>
-References: <qemu-stable-7.2.15-20241118210517@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,83 +60,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@kernel.org>
+The following patches are queued for QEMU stable v7.2.15:
 
-The commit fd6f7798ac30 ("linux-user: Use direct syscalls for setuid(),
-etc") added direct syscall wrappers for setuid(), setgid(), etc since the
-system calls have different semantics than the libc functions.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
-Add and use the corresponding wrappers for setreuid and setregid which
-were missed in that commit.
+Patch freeze is 2024-11-18 (today), and the release is planned for 2024-11-20:
 
-This fixes the build of the debian package of the uid_wrapper library
-(https://cwrap.org/uid_wrapper.html) when running linux-user.
+  https://wiki.qemu.org/Planning/7.2
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <Zyo2jMKqq8hG8Pkz@p100>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 8491026a08b417b2d4070f7c373dcb43134c5312)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 53c46ae951..236076e647 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -7233,12 +7233,24 @@ static inline int tswapid(int id)
- #else
- #define __NR_sys_setgroups __NR_setgroups
- #endif
-+#ifdef __NR_sys_setreuid32
-+#define __NR_sys_setreuid __NR_setreuid32
-+#else
-+#define __NR_sys_setreuid __NR_setreuid
-+#endif
-+#ifdef __NR_sys_setregid32
-+#define __NR_sys_setregid __NR_setregid32
-+#else
-+#define __NR_sys_setregid __NR_setregid
-+#endif
- 
- _syscall1(int, sys_setuid, uid_t, uid)
- _syscall1(int, sys_setgid, gid_t, gid)
- _syscall3(int, sys_setresuid, uid_t, ruid, uid_t, euid, uid_t, suid)
- _syscall3(int, sys_setresgid, gid_t, rgid, gid_t, egid, gid_t, sgid)
- _syscall2(int, sys_setgroups, int, size, gid_t *, grouplist)
-+_syscall2(int, sys_setreuid, uid_t, ruid, uid_t, euid);
-+_syscall2(int, sys_setregid, gid_t, rgid, gid_t, egid);
- 
- void syscall_init(void)
- {
-@@ -11399,9 +11411,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return get_errno(high2lowgid(getegid()));
- #endif
-     case TARGET_NR_setreuid:
--        return get_errno(setreuid(low2highuid(arg1), low2highuid(arg2)));
-+        return get_errno(sys_setreuid(low2highuid(arg1), low2highuid(arg2)));
-     case TARGET_NR_setregid:
--        return get_errno(setregid(low2highgid(arg1), low2highgid(arg2)));
-+        return get_errno(sys_setregid(low2highgid(arg1), low2highgid(arg2)));
-     case TARGET_NR_getgroups:
-         {
-             int gidsetsize = arg1;
-@@ -11731,11 +11743,11 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #endif
- #ifdef TARGET_NR_setreuid32
-     case TARGET_NR_setreuid32:
--        return get_errno(setreuid(arg1, arg2));
-+        return get_errno(sys_setreuid(arg1, arg2));
- #endif
- #ifdef TARGET_NR_setregid32
-     case TARGET_NR_setregid32:
--        return get_errno(setregid(arg1, arg2));
-+        return get_errno(sys_setregid(arg1, arg2));
- #endif
- #ifdef TARGET_NR_getgroups32
-     case TARGET_NR_getgroups32:
--- 
-2.39.5
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
 
+Thanks!
+
+/mjt
+
+--------------------------------------
+01* d8d5ca40048b Fea.Wang:
+   softmmu/physmem.c: Keep transaction attribute in address_space_map()
+02* 8bded2e73e80 Fabiano Rosas:
+   target/ppc: Fix lxvx/stxvx facility check
+03* 6475155d5192 Fiona Ebner:
+   block/reqlist: allow adding overlapping requests
+04* 3e964275d65b Alexander Bulekov:
+   fuzz: disable leak-detection for oss-fuzz builds
+05* e6d8e5e6e366 Paolo Bonzini:
+   tracetool: avoid invalid escape in Python string
+06* a9ee641bd46f Philippe Mathieu-Daudé:
+   linux-user/flatload: Take mmap_lock in load_flt_binary()
+07* 2884596f5f38 Richard Henderson:
+   linux-user: Fix parse_elf_properties GNU0_MAGIC check
+08* 9472083e642b Stefano Garzarella:
+   scsi: fetch unit attention when creating the request
+09* 3db74afec3ca Alexandra Diupina:
+   hw/intc/arm_gicv3_cpuif: Add cast to match the documentation
+10* f27206ceedbe Marc-André Lureau:
+   hw/audio/hda: free timer on exit
+11* 5504a8126115 Peter Xu:
+   KVM: Dynamic sized kvm memslots array
+12* d9280ea31747 Stefan Berger:
+   tests: Wait for migration completion on destination QEMU to avoid failures
+13* 04bbc3ee52b3 Kevin Wolf:
+   raw-format: Fix error message for invalid offset/size
+14* a7cfd751fb26 Richard Henderson:
+   tcg: Reset data_gen_ptr correctly
+15* 987b63f24afe Peter Maydell:
+   target/i386: Avoid unreachable variable declaration in mmu_translate()
+16* b56617bbcb47 Alexander Graf:
+   target/i386: Walk NPT in guest real mode
+17* 8704132805cf Ilya Leoshkevich:
+   linux-user/ppc: Fix sigmask endianness issue in sigreturn
+18* 97f116f9c6fd Alex Bennée:
+   gitlab: make check-[dco|patch] a little more verbose
+19* e29bc931e169 Stefan Weil:
+   Fix calculation of minimum in colo_compare_tcp
+20* 75fe36b4e8a9 Bernhard Beschow:
+   net/tap-win32: Fix gcc 14 format truncation errors
+21* 1505b651fdbd Peter Maydell:
+   target/arm: Don't assert in regime_is_user() for E10 mmuidx values
+22* 5a60026cad4e Evgenii Prokopiev:
+   target/riscv/csr.c: Fix an access to VXSAT
+23* 929e4277c128 TANG Tiancheng:
+   target/riscv: Correct SXL return value for RV32 in RV64 QEMU
+24* a84be2baa9ec Sergey Makarov:
+   hw/intc: Don't clear pending bits on IRQ lowering
+25* f8c1f36a2e3d Rob Bradford:
+   target/riscv: Set vtype.vill on CPU reset
+26* 0678e9f29c23 Anup Patel:
+   hw/intc/riscv_aplic: Fix in_clrip[x] read emulation
+27* 2ae6cca1d338 Yong-Xuan Wang:
+   hw/intc/riscv_aplic: Check and update pending when write sourcecfg
+28* c128d39edeff Anton Blanchard:
+   target/riscv: Fix vcompress with rvv_ta_all_1s
+29* c9b8a13a8841 Ilya Leoshkevich:
+   target/ppc: Set ctx->opcode for decode_insn32()
+30* e6b2fa1b81ac Peter Maydell:
+   target/arm: Fix SVE SDOT/UDOT/USDOT (4-way, indexed)
+31* 9529aa6bb4d1 Klaus Jensen:
+   hw/nvme: fix handling of over-committed queues
+32* 042b4ebfd229 Christian Schoenebeck:
+   9pfs: fix crash on 'Treaddir' request
+33 8fa11a4df344 Alexander Graf:
+   target/i386: Fix legacy page table walk
+34 8491026a08b4 Helge Deller:
+   linux-user: Fix setreuid and setregid to use direct syscalls
+35 f27550804688 Richard Henderson:
+   target/arm: Drop user-only special case in sve_stN_r
+36 8377e3fb854d Peter Maydell:
+   tcg: Allow top bit of SIMD_DATA_BITS to be set in simd_desc()
+37 c3d7c18b0d61 Thomas Huth:
+   hw/misc/mos6522: Fix bad class definition of the MOS6522 device
+38 626b39006d2f Paolo Bonzini:
+   hw/audio/hda: fix memory leak on audio setup
+39 b2cc69997924 Guenter Roeck:
+   usb-hub: Fix handling port power control messages
+
+(commit(s) marked with * were in previous series and are not resent)
 
