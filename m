@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5FDD49205
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 10:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F98D49209
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 10:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCz0V-0002CL-Pi; Mon, 18 Nov 2024 05:29:23 -0500
+	id 1tCz1q-0002s6-6m; Mon, 18 Nov 2024 05:30:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tCz0T-0002Br-7r
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:29:21 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tCz1k-0002qc-SE
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:30:42 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tCz0R-0001Lm-Ni
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:29:21 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43155abaf0bso16824215e9.0
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 02:29:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tCz1j-0001dP-4a
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:30:40 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4315e9e9642so23722245e9.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 02:30:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731925756; x=1732530556; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731925837; x=1732530637; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WXRCwCF/VmZ/rAZs82ftWfkBwfd+507ASeIJBUnFO5M=;
- b=lOUTN7e2AkADi3b4sU2H8lUmWGE1WZDuf84wlltjuUHkfQX6CkPA/XcKW8oiUXeuCT
- Dm3Vm4Jh0C5emVXvjjrb6ad75WXclSX82i1IlzocXVON/BEjN0j0nOBh3w60RlVZfk4a
- 658MSQOYMtVPKPESQFL6KGNg+o599IFovyu6jDoN6uZS66HFTWZ6UsYJPgwuBuooLE4L
- 3Hi7T6fLklJrF9wkWiROX4FU4tosaLlU6uni7WjKUFLeg0YPoby2/TuJvabWlZegT3pW
- j/Ocv6yVzSE4+yNQjTs8YUle8mECH0iBPUJ7nHWmfTU0biUGbUYF5T4IynLfn5YlCUaR
- A8BQ==
+ bh=GfCwnFHBDBs9mhA0RO1FRVb8TdiDBm39bTKS+hetZfI=;
+ b=lFiIcRDNbDPIDDtOi32a1q4aJewrzZXVFQuPXDeZ6Ssbl/J2tJ8WVDrJoTj9FKP9RB
+ Sf+PGP/z50ky+GnjzUq2lne6tfsOWIQuhS1WWzGqSUp1q/8oOQ3nDJ00sgi6VZM+YCUu
+ zULNTcfbEXzw39tRy8YFPH6xDIEpzod2IMS+bd20X9+BoVyTU/bdyrfb+Cw7naxMmPDe
+ uwgi7XeQbqGQdiyicfwRfPq4H59v60CyDPj+TezQad0cy3xZGtDAaqmPpmSYdJL8Y58f
+ R8M7jXg/QP0JUGasbA7VQ2+aWzph03dVNd/pHDmeNDHMMLkToemBHkfRVqEMbJHG+vtf
+ ClWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731925756; x=1732530556;
+ d=1e100.net; s=20230601; t=1731925837; x=1732530637;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WXRCwCF/VmZ/rAZs82ftWfkBwfd+507ASeIJBUnFO5M=;
- b=dI6GdyMOI2zqnrQuKAZHqnJ/e8btBnGyzLFsIBGXZUEeZkF2GVdGAh3kgsEEUY7oeL
- dAC0iKDN9FLrXyPRrWRHCJyy+QV95ooSHwHfer2la0MgXKg3wNlzpq9rUylS6Q8wCAXy
- 0Xyl3Fx21mZNwujG1ZuIY47JVwO7C2EWmVoUmkgv0KXnJo4wCr2Xl6lJf264AKUOeJMF
- i6WEg8g2817rm1pzuLw6wrqvN7n1OLyZ694xntRPNZqQIZletYGAsg5lKJ/4T1cX2gMD
- 2oeMPxOnv/B0mIxzT0JMV+kV0j+7yJv6Gd9mx9DnQKABRSxeBCrwetIbrFgJ3g2xZyJZ
- UHHw==
+ bh=GfCwnFHBDBs9mhA0RO1FRVb8TdiDBm39bTKS+hetZfI=;
+ b=ryBPUPYYw2e7sT4Dq7y5lofhY18BZUP9clyV/cjMKqs0PTV3gUtLRFPg8C9Q6pfxaH
+ mM2GqwPYuTZGuNvWXsZ8bqVHsMQzeMCvsLoVR7GS+t26cW0J9cAxFQQtZl8u4QIhON8y
+ X0nZxr5QTKnmCDUbG9YJhjT3ya52U+IpxWeov2YjDu8DZOp/6mCb1WZNAdHQQUe1A74f
+ vID3jFFEXdi395gUjFdnDOf4ofNlsZS6UZextZX5Kto+vgm16wkt7yBhOexPASnlTGRX
+ hIK4KcxAkZCs4kQD4tS5NZtkWl0emzKbPPG2Hfn3WeYchi3jqKZ/geVyat+YSr4G8gL8
+ KJPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwQjuvcaYcyB9W1vVdMX9SHnhcmmTWYoNrEcLp6KswyRhBCx1z6xIK1qWxXoAZiVUEvCaBr+IHWxNs@nongnu.org
-X-Gm-Message-State: AOJu0Yz4hHqs4XcO71w+MMAnE0rlyvbc7Gt9ONAGiHeNGCJCimPvdN+x
- r/iHDbtDCSPXlB7cQAEeoAifFcmGlPjkdeOFd7bwE5haqfKnsh8ivnvZHE7rGNE=
-X-Google-Smtp-Source: AGHT+IGArsRRkQ+ubAbBFiNiWUYYRHp3kEhcO2qGz1YnIsFw8QOK81z2DjgmXCuRhfdo8nOQl74kdg==
-X-Received: by 2002:a05:600c:524b:b0:431:586e:7e7 with SMTP id
- 5b1f17b1804b1-432df7203bamr82007195e9.1.1731925756411; 
- Mon, 18 Nov 2024 02:29:16 -0800 (PST)
+ AJvYcCUndf1x2tz97puZs3LBlqbrrB2NCypktz6TbLBt4axeCMHxRXMQvHdxH5ENmmubYAroVatNPRA0SCIS@nongnu.org
+X-Gm-Message-State: AOJu0YwKyRWpnAnsgN9gODi6zv2x3KWFzE0NV8rIda8s9rf4I0tuFRGY
+ m18nXViOeZn7KTN3lEMOMXzCsLRW2WtIv49nx/vPXs7E3FUxeGegsX7W4Xpj2rrJA83RSncickJ
+ r
+X-Google-Smtp-Source: AGHT+IGDl7hTAMzyz0l/DZg7pI9Slsphi2T5VHzrZEXeNDGQjzxLJ7OEYAlZ/pNjTA+YcRJloZxCFQ==
+X-Received: by 2002:a05:6000:1886:b0:382:32cd:8c1c with SMTP id
+ ffacd0b85a97d-38232cd8e79mr6436071f8f.47.1731925837006; 
+ Mon, 18 Nov 2024 02:30:37 -0800 (PST)
 Received: from [192.168.69.197] ([176.187.198.1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432da298c81sm156463465e9.39.2024.11.18.02.29.15
+ ffacd0b85a97d-38247e034d2sm2522931f8f.110.2024.11.18.02.30.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Nov 2024 02:29:15 -0800 (PST)
-Message-ID: <ba8a9ce8-c941-4d41-8c8c-7ea936d42e80@linaro.org>
-Date: Mon, 18 Nov 2024 11:29:14 +0100
+ Mon, 18 Nov 2024 02:30:36 -0800 (PST)
+Message-ID: <1738dcc8-630b-48ff-965e-d73b766f2ea6@linaro.org>
+Date: Mon, 18 Nov 2024 11:30:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] tests/qtest: Use qtest_system_reset() instead of
- open-coded versions
+Subject: Re: [PATCH 1/3] tests/qtest: Add qtest_system_reset() utility function
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Roque Arcudia Hernandez <roqueh@google.com>
 References: <20241115165041.1148095-1-peter.maydell@linaro.org>
- <20241115165041.1148095-3-peter.maydell@linaro.org>
+ <20241115165041.1148095-2-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241115165041.1148095-3-peter.maydell@linaro.org>
+In-Reply-To: <20241115165041.1148095-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,24 +100,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/11/24 16:50, Peter Maydell wrote:
-> Use the qtest_system_reset() function in various tests that were
-> previously open-coding the system-reset. Note that in several
-> cases this fixes a bug where the test did not wait for the RESET
-> QMP event before continuing.
+> We have several qtest tests which want to reset the QEMU under test
+> during the course of testing something.  They currently generally
+> have their own functions to do this, which work by sending a
+> "system_reset" QMP command.  However, "system_reset" only requests a
+> reset, and many of the tests which send the QMP command forget the
+> "and then wait for the QMP RESET event" part which is needed to
+> ensure that the reset has completed.
+> 
+> Provide a qtest_system_reset() function in libqtest so that
+> we don't need to reimplement this in multiple different tests.
+> 
+> A few tests (for example device hotplug related tests) want to
+> perform the reset command and then wait for some other event that is
+> produced during the reset sequence.  For them we provide
+> qtest_system_reset_nowait() so they can clearly indicate that they
+> are deliberately not waiting for the RESET event.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> I can split this patch up if people prefer, but for test code
-> and given the size of the diffstat it didn't seem worthwhile.
-> ---
->   tests/qtest/bios-tables-test.c      |  4 ++--
->   tests/qtest/boot-order-test.c       |  7 +------
->   tests/qtest/hd-geo-test.c           |  9 +--------
->   tests/qtest/q35-test.c              | 12 ++----------
->   tests/qtest/qos-test.c              |  3 +--
->   tests/qtest/stm32l4x5_gpio-test.c   | 10 +---------
->   tests/qtest/stm32l4x5_syscfg-test.c | 12 ++----------
->   7 files changed, 10 insertions(+), 47 deletions(-)
+>   tests/qtest/libqtest.h | 25 +++++++++++++++++++++++++
+>   tests/qtest/libqtest.c | 16 ++++++++++++++++
+>   2 files changed, 41 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
