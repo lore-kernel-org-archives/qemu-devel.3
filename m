@@ -4,70 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A0ED591AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3993AD591A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:39:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD5gs-0000JC-0R; Mon, 18 Nov 2024 12:37:34 -0500
+	id 1tD5gu-0000X5-Cx; Mon, 18 Nov 2024 12:37:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gR-0008Fo-0Y
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gk-0008SY-4M
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gP-0004mo-GE
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:06 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gh-0004tU-F6
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731951424;
+ s=mimecast20190719; t=1731951442;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LIFQ3iIfQ6WGQ+3ewFMhClo7IyMsvlGjJ+aMfrpuFkE=;
- b=aUxn45Sh+JmPL7Z5XNIziuTfxEObeKUe7NwmuMZFhRpK0DmmpEl9b8GnJoSf8oWmRZv3yS
- dZPhceunkGwcsMHKW9K2QxLClX01R1EVdpmTCXa2kEEatY/nyB0FT9K9fpACtImBuW2PQ5
- hFH1IZ2UTk4jy3GSy6ttnGX+N09UfJQ=
+ bh=g/nRngikM8XwlZ3uc1cXGcgJ7UePav7UZ6qewh34zPI=;
+ b=XvxrcYO5bvWCh+bA+ij1htLSR/p11z84Jn0CrbLsMVfKv60u4+T5REl8Z4IITAsaWdu+XX
+ 7jy07s7XFxinnoLyFqIOIB6lcZgYxNOeoU+HTFMnFyIhdMVT0s63EVlAXWGOnUFIX9lHnT
+ +VpBqIt4ZsKjJV+Da4u4pcUznj0shaI=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-8-Qii9qrMnSkhsU8jo8v2w-1; Mon,
- 18 Nov 2024 12:37:02 -0500
-X-MC-Unique: 8-Qii9qrMnSkhsU8jo8v2w-1
-X-Mimecast-MFC-AGG-ID: 8-Qii9qrMnSkhsU8jo8v2w
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-7gN5xAeePxOAii7t3Hk-jA-1; Mon,
+ 18 Nov 2024 12:37:16 -0500
+X-MC-Unique: 7gN5xAeePxOAii7t3Hk-jA-1
+X-Mimecast-MFC-AGG-ID: 7gN5xAeePxOAii7t3Hk-jA
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E72C1955F42; Mon, 18 Nov 2024 17:36:56 +0000 (UTC)
+ id BB8F7192E27A; Mon, 18 Nov 2024 17:37:09 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 183FE19560A3; Mon, 18 Nov 2024 17:36:53 +0000 (UTC)
+ id 567E4196AFD6; Mon, 18 Nov 2024 17:37:08 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jared Rossi <jrossi@linux.ibm.com>
-Subject: [PULL 06/12] hw/s390x: Restrict "loadparm" property to devices that
- can be used for booting
-Date: Mon, 18 Nov 2024 18:36:28 +0100
-Message-ID: <20241118173634.473532-7-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 12/12] .gitlab-ci.d: Raise timeout on cross-accel build jobs to
+ 60m
+Date: Mon, 18 Nov 2024 18:36:34 +0100
+Message-ID: <20241118173634.473532-13-thuth@redhat.com>
 In-Reply-To: <20241118173634.473532-1-thuth@redhat.com>
 References: <20241118173634.473532-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,99 +82,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit bb185de423 ("s390x: Add individual loadparm assignment to
-CCW device") added a "loadparm" property to all CCW devices. This
-was a little bit unfortunate, since this property is only useful
-for devices that can be used for booting, but certainly it is not
-useful for devices like virtio-gpu or virtio-tablet.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Thus let's restrict the property to CCW devices that we can boot from
-(i.e. virtio-block, virtio-net and vfio-ccw devices).
+The current 30 minute timeout on the cross_accel_build_job template
+is a bit low: sometimes if the k8s runners are running slow the
+can hit it, for example this cross-arm64-xen-only job hit the
+30 minute timeout while still not quite finished with the compile:
+https://gitlab.com/qemu-project/qemu/-/jobs/8401277985
 
-Message-ID: <20241113114741.681096-1-thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+This is partly a "runner performance can be unpredictable" issue:
+https://gitlab.com/qemu-project/qemu/-/jobs/8391726482
+is the same job from just a day earlier and it finished in
+16 minutes. But we already have build jobs that are higher
+timeouts than 30 minutes, so we have headroom to raise the
+timeout here to something we're less likely to hit on a slow
+runner.
+
+Bump the cross_accel_build_job timeout to 60 mins.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20241118153226.1524542-1-peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/s390x/ccw-device.h     | 5 +++++
- hw/s390x/ccw-device.c     | 4 +---
- hw/s390x/virtio-ccw-blk.c | 1 +
- hw/s390x/virtio-ccw-net.c | 1 +
- hw/vfio/ccw.c             | 1 +
- 5 files changed, 9 insertions(+), 3 deletions(-)
+ .gitlab-ci.d/crossbuild-template.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/s390x/ccw-device.h b/hw/s390x/ccw-device.h
-index 1e1737c0f3..4439feb140 100644
---- a/hw/s390x/ccw-device.h
-+++ b/hw/s390x/ccw-device.h
-@@ -51,4 +51,9 @@ static inline CcwDevice *to_ccw_dev_fast(DeviceState *d)
- 
- OBJECT_DECLARE_TYPE(CcwDevice, CCWDeviceClass, CCW_DEVICE)
- 
-+extern const PropertyInfo ccw_loadparm;
-+
-+#define DEFINE_PROP_CCW_LOADPARM(_n, _s, _f) \
-+    DEFINE_PROP(_n, _s, _f, ccw_loadparm, typeof(uint8_t[8]))
-+
- #endif
-diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
-index 230cc09e03..30f2fb486f 100644
---- a/hw/s390x/ccw-device.c
-+++ b/hw/s390x/ccw-device.c
-@@ -73,7 +73,7 @@ static void ccw_device_set_loadparm(Object *obj, Visitor *v,
-     s390_ipl_fmt_loadparm(dev->loadparm, val, errp);
- }
- 
--static const PropertyInfo ccw_loadparm = {
-+const PropertyInfo ccw_loadparm = {
-     .name  = "ccw_loadparm",
-     .description = "Up to 8 chars in set of [A-Za-z0-9. ] to pass"
-             " to the guest loader/kernel",
-@@ -85,8 +85,6 @@ static Property ccw_device_properties[] = {
-     DEFINE_PROP_CSS_DEV_ID("devno", CcwDevice, devno),
-     DEFINE_PROP_CSS_DEV_ID_RO("dev_id", CcwDevice, dev_id),
-     DEFINE_PROP_CSS_DEV_ID_RO("subch_id", CcwDevice, subch_id),
--    DEFINE_PROP("loadparm", CcwDevice, loadparm, ccw_loadparm,
--            typeof(uint8_t[8])),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/s390x/virtio-ccw-blk.c b/hw/s390x/virtio-ccw-blk.c
-index 8e0e58b77d..2364432c6e 100644
---- a/hw/s390x/virtio-ccw-blk.c
-+++ b/hw/s390x/virtio-ccw-blk.c
-@@ -48,6 +48,7 @@ static Property virtio_ccw_blk_properties[] = {
-                     VIRTIO_CCW_FLAG_USE_IOEVENTFD_BIT, true),
-     DEFINE_PROP_UINT32("max_revision", VirtioCcwDevice, max_rev,
-                        VIRTIO_CCW_MAX_REV),
-+    DEFINE_PROP_CCW_LOADPARM("loadparm", CcwDevice, loadparm),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/s390x/virtio-ccw-net.c b/hw/s390x/virtio-ccw-net.c
-index 484e617659..a4a3f65c7e 100644
---- a/hw/s390x/virtio-ccw-net.c
-+++ b/hw/s390x/virtio-ccw-net.c
-@@ -51,6 +51,7 @@ static Property virtio_ccw_net_properties[] = {
-                     VIRTIO_CCW_FLAG_USE_IOEVENTFD_BIT, true),
-     DEFINE_PROP_UINT32("max_revision", VirtioCcwDevice, max_rev,
-                        VIRTIO_CCW_MAX_REV),
-+    DEFINE_PROP_CCW_LOADPARM("loadparm", CcwDevice, loadparm),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 24703c814a..c1cd7736cd 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -662,6 +662,7 @@ static Property vfio_ccw_properties[] = {
-     DEFINE_PROP_LINK("iommufd", VFIOCCWDevice, vdev.iommufd,
-                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
- #endif
-+    DEFINE_PROP_CCW_LOADPARM("loadparm", CcwDevice, loadparm),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
+diff --git a/.gitlab-ci.d/crossbuild-template.yml b/.gitlab-ci.d/crossbuild-template.yml
+index 45a9810355..303943f818 100644
+--- a/.gitlab-ci.d/crossbuild-template.yml
++++ b/.gitlab-ci.d/crossbuild-template.yml
+@@ -57,7 +57,7 @@
+   extends: .base_job_template
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+-  timeout: 30m
++  timeout: 60m
+   cache:
+     paths:
+       - ccache/
 -- 
 2.47.0
 
