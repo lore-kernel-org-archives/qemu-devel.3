@@ -4,93 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF3C8D49208
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFCC2D49205
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 10:03:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCyb2-0000vf-QM; Mon, 18 Nov 2024 05:03:05 -0500
+	id 1tCyas-0000uZ-Ax; Mon, 18 Nov 2024 05:02:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tCyaD-0000qJ-3K
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:02:15 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tCyaP-0000rV-35
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:02:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tCya9-0006cs-JU
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:02:12 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tCyaN-0006ds-4N
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 05:02:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731924126;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1731924142;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8+cHbmttZqXAaMqsoD4PN/ATDMDNlBpVDagaXg0yE3A=;
- b=UvwLyzZDbIaIF+lifzuYbCh4nHY15DMXUbPr9zkQVybj+6ROxhZ5UriEkEV9a6Xj15jt7g
- zGK+JdAcEEMDWydDAEIZF6izp0FjvL4lmuGmQTZzyBmb1jpJuGQPHzkhwIfKMzHqsXRINu
- gJmC7eMXkyNqLLan4wszNN3RjceLA1E=
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
- [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=s+R5g1PAfqpGXGIdR6eEznFcm+OAepstd1mieiSuNAU=;
+ b=HWPATtNEIwONtM00fQtt8zhwdfltDTiCMEa9fJ+lYv/GJ7Y01ny0rDUdStTWGQRYwRN4J9
+ Zwg7OE4J/foPI4kYuWUu+6NsxB0+cdWgRbj1h/u7N8tiogBm1OC3mWwrgMdoqCzn7CqKeP
+ 0+TDCE/rBneR5YE8QhL/EJczyZ43lUE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-6n8e4lFQPt-3MXCwbMi3WQ-1; Mon, 18 Nov 2024 05:02:05 -0500
-X-MC-Unique: 6n8e4lFQPt-3MXCwbMi3WQ-1
-X-Mimecast-MFC-AGG-ID: 6n8e4lFQPt-3MXCwbMi3WQ
-Received: by mail-ot1-f70.google.com with SMTP id
- 46e09a7af769-7181285c746so2143775a34.3
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 02:02:05 -0800 (PST)
+ us-mta-328-OusAtOHEMk-9e_3JsAYjjA-1; Mon, 18 Nov 2024 05:02:20 -0500
+X-MC-Unique: OusAtOHEMk-9e_3JsAYjjA-1
+X-Mimecast-MFC-AGG-ID: OusAtOHEMk-9e_3JsAYjjA
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4315d98a75fso32040265e9.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 02:02:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731924125; x=1732528925;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
+ d=1e100.net; s=20230601; t=1731924139; x=1732528939;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8+cHbmttZqXAaMqsoD4PN/ATDMDNlBpVDagaXg0yE3A=;
- b=B8uAjUA20gQBKo0/vxavToQ96ju4+cixFC+XU3AHKG2wHO4pwJ3OVEpN4Pxzc5NVhJ
- j/TPxr1LC5mTctdwI6jdiTed0A6UoGlDzpawWX5YYFEQs8cuhe7tpsjziOqbKa/w7GoA
- XHoq0Vo4xQTuipaFwhY08NMwUQSn6EtWd16ue4SuUi5u8xeOrd7zaBABIvioyrEjYTAq
- 0vGpag7p8ykXsIaWtP2AVd8JEmmOy8OU3UDPZnf1rKM8wKEMT4567rOXnMOB2rnEPJHZ
- sjOAR0mEaQaojmYQ6IEwWPXAcBk3QIKss6EiPX13Dvb3UCeh8fvmmplxLVwTCEXqLJBz
- GlZA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUK65iKSdLTswLA5fgRub3/WZQxr1BMTfdYHx96tc9Wz0UuCutq4ecezXi1yK92qResmorUDN0KKENc@nongnu.org
-X-Gm-Message-State: AOJu0Yx4pgU36QLLItcU7/99PfXcmwQvY8F0lq1CqUeqodiKSUFBXe2+
- 3Vhc3FmSorMLLyk/UQOkH37vqmg5NXItRoQPE4FdifFBTWVr2bRr6wPE2E6bEEohiHT3NurGr2z
- j6eKeyCIEJuo7R5iOWE84C1HVx3toQu9Ey4WBBHGr0oHZ4Fiog9fY
-X-Received: by 2002:a05:6830:6582:b0:718:5bed:3596 with SMTP id
- 46e09a7af769-71a77987cfbmr7810997a34.15.1731924124854; 
- Mon, 18 Nov 2024 02:02:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGgnE+krKflDKodw/siJlHoey7WZZPWQutlF9OO3aUNLjJDD5yTTvmPuABZSZTNVX8a1JfkHw==
-X-Received: by 2002:a05:6830:6582:b0:718:5bed:3596 with SMTP id
- 46e09a7af769-71a77987cfbmr7810970a34.15.1731924124445; 
- Mon, 18 Nov 2024 02:02:04 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4635a9f23besm56046481cf.30.2024.11.18.02.02.00
+ bh=s+R5g1PAfqpGXGIdR6eEznFcm+OAepstd1mieiSuNAU=;
+ b=I776VVEfIEyZpu7zeC64MU8MwZqYWm0UBmvR2cWCFtqwy3sIkw8gkcZwi1z9YvxyI1
+ g3OK1og/4Q79v2F5deYluxmsUxBKbezzlOi0O7hJoutkAzc4ZGlhfWw6Ni392Nx+hpYb
+ ZUMuB4specjvzTYFIt8SZxn4AJSN9ZO+5zD4w/PldMqJweRXxHYMz2641rVFI4jA5HDQ
+ lgmTbBbNXZb91aQB8o2ARolm2DwDKku9b/vX94HURsRN2JBNAPlRgfw6vcMWfeDxiI5x
+ TomgafqUbXYWeQxZJuTXzn6t+QCaoixSBCHo8DEFI5ciE8QZXXnvp/HH5RInNmIF8dzr
+ dT0g==
+X-Gm-Message-State: AOJu0Yzcke2svQvepMnj/NSVoNTOd+AD1zUPxDHNJWI8mEDh+pj5U4ur
+ GA9GQGIuvTZ1yiGX+ThzD74jkWZLT+lxsRx0grPX6BwEEpOYJsFSkflrc4Ctst9vQBXggdDivG5
+ nJKSfQUzUmMyRWxacwZsIjjJ/x8fLY7EV/pdnryGFNys0RBYEeY3WRzliG4tw1RDPN5fOgfE1Al
+ UTPJR4w9F5DRaSD5WpIhR1u9/utS+eY/+w
+X-Received: by 2002:a05:600c:348c:b0:42c:bc22:e074 with SMTP id
+ 5b1f17b1804b1-432df7906f0mr91097175e9.29.1731924138777; 
+ Mon, 18 Nov 2024 02:02:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEBUWvzU3Cl8W61ns+2QTn9VNlHHiGIqVTmfznQOuS7yxL6rgG4JU0QjWw+2Voi/6L9AS9bjA==
+X-Received: by 2002:a05:600c:348c:b0:42c:bc22:e074 with SMTP id
+ 5b1f17b1804b1-432df7906f0mr91096705e9.29.1731924138239; 
+ Mon, 18 Nov 2024 02:02:18 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-49-115.web.vodafone.de.
+ [109.42.49.115]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432da2946a3sm151443075e9.35.2024.11.18.02.02.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Nov 2024 02:02:03 -0800 (PST)
-Message-ID: <1dcea5ca-806f-4f51-8b13-faf5d62eb086@redhat.com>
-Date: Mon, 18 Nov 2024 11:01:59 +0100
+ Mon, 18 Nov 2024 02:02:17 -0800 (PST)
+Message-ID: <eec8187b-eb57-4cb3-a845-45084ef48eb7@redhat.com>
+Date: Mon, 18 Nov 2024 11:02:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
- SMMU nodes
+Subject: Re: [PATCH v2] hw: Add "loadparm" property to scsi disk devices for
+ booting on s390x
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
+ Boris Fiuczynski <fiuczy@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Eric Farman <farman@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20241115141202.1877294-1-thuth@redhat.com>
 Content-Language: en-US
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, linuxarm@huawei.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <20241108125242.60136-5-shameerali.kolothum.thodi@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20241108125242.60136-5-shameerali.kolothum.thodi@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241115141202.1877294-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -111,147 +151,223 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
-
-On 11/8/24 13:52, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> Now that we can have multiple user-creatable smmuv3-nested
-> devices, each associated with different pci buses, update
-> IORT ID mappings accordingly.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+On 15/11/2024 15.12, Thomas Huth wrote:
+> While adding the new flexible boot order feature on s390x recently,
+> we missed to add the "loadparm" property to the scsi-hd and scsi-cd
+> devices. This property is required on s390x to pass the information
+> to the boot loader about which kernel should be started or whether
+> the boot menu should be shown. But even more serious: The missing
+> property is now causing trouble with the corresponding libvirt patches
+> that assume that the "loadparm" property is either settable for all
+> bootable devices (when the "boot order" feature is implemented in
+> QEMU), or none (meaning the behaviour of older QEMUs that only allowed
+> one "loadparm" at the machine level). To fix this broken situation,
+> let's implement the "loadparm" property in for the SCSI devices, too.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  hw/arm/virt-acpi-build.c | 34 ++++++++++++++++++++++++----------
->  include/hw/arm/virt.h    |  6 ++++++
->  2 files changed, 30 insertions(+), 10 deletions(-)
->
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index e10cad86dd..ec4cdfb2d7 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -276,8 +276,10 @@ static void
->  build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->  {
->      int i, nb_nodes, rc_mapping_count;
-> -    size_t node_size, smmu_offset = 0;
-> +    size_t node_size, *smmu_offset;
->      AcpiIortIdMapping *idmap;
-> +    hwaddr base;
-> +    int irq, num_smmus = 0;
->      uint32_t id = 0;
->      GArray *smmu_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
->      GArray *its_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
-> @@ -287,7 +289,21 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      /* Table 2 The IORT */
->      acpi_table_begin(&table, table_data);
->  
-> -    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
-> +    if (vms->smmu_nested_count) {
-> +        irq = vms->irqmap[VIRT_SMMU_NESTED] + ARM_SPI_BASE;
-> +        base = vms->memmap[VIRT_SMMU_NESTED].base;
-> +        num_smmus = vms->smmu_nested_count;
-> +    } else if (virt_has_smmuv3(vms)) {
-> +        irq = vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
-> +        base = vms->memmap[VIRT_SMMU].base;
-> +        num_smmus = 1;
+>   v2:
+>   - Only add the property when running with the s390x target
+>     (checked via the arch_type variable during runtime)
+>   - Check bootindex property before setting the loadparm property
+>   - Call the sanitize function before setting the property, so we
+>     can now immediately reject bad properties for the scsi devices,
+>     too (had to move the sanitize function to the common code in
+>     qdev-properties-system.c for this)
+> 
+>   include/hw/qdev-properties-system.h |  3 ++
+>   hw/core/qdev-properties-system.c    | 26 +++++++++++++++++
+>   hw/s390x/ipl.c                      | 19 ++++---------
+>   hw/scsi/scsi-disk.c                 | 43 +++++++++++++++++++++++++++++
+>   4 files changed, 78 insertions(+), 13 deletions(-)
+
+If there are no objections, I'll pick this up for my pull request for QEMU 
+9.2-rc1.
+
+  Thomas
+
+
+> diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
+> index cdcc63056e..7ec37f6316 100644
+> --- a/include/hw/qdev-properties-system.h
+> +++ b/include/hw/qdev-properties-system.h
+> @@ -3,6 +3,9 @@
+>   
+>   #include "hw/qdev-properties.h"
+>   
+> +bool qdev_prop_sanitize_s390x_loadparm(uint8_t *loadparm, const char *str,
+> +                                       Error **errp);
+> +
+>   extern const PropertyInfo qdev_prop_chr;
+>   extern const PropertyInfo qdev_prop_macaddr;
+>   extern const PropertyInfo qdev_prop_reserved_region;
+> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+> index 35deef05f3..a61c5ee6dd 100644
+> --- a/hw/core/qdev-properties-system.c
+> +++ b/hw/core/qdev-properties-system.c
+> @@ -58,6 +58,32 @@ static bool check_prop_still_unset(Object *obj, const char *name,
+>       return false;
+>   }
+>   
+> +bool qdev_prop_sanitize_s390x_loadparm(uint8_t *loadparm, const char *str,
+> +                                       Error **errp)
+> +{
+> +    int i, len;
+> +
+> +    len = strlen(str);
+> +    if (len > 8) {
+> +        error_setg(errp, "'loadparm' can only contain up to 8 characters");
+> +        return false;
 > +    }
 > +
-> +    smmu_offset = g_new0(size_t, num_smmus);
-> +    nb_nodes = 2; /* RC, ITS */
-> +    nb_nodes += num_smmus; /* SMMU nodes */
+> +    for (i = 0; i < len; i++) {
+> +        uint8_t c = qemu_toupper(str[i]); /* mimic HMC */
 > +
-> +    if (virt_has_smmuv3(vms)) {
->          AcpiIortIdMapping next_range = {0};
->  
->          object_child_foreach_recursive(object_get_root(),
-> @@ -317,10 +333,8 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->              g_array_append_val(its_idmaps, next_range);
->          }
->  
-> -        nb_nodes = 3; /* RC, ITS, SMMUv3 */
->          rc_mapping_count = smmu_idmaps->len + its_idmaps->len;
->      } else {
-> -        nb_nodes = 2; /* RC, ITS */
->          rc_mapping_count = 1;
->      }
->      /* Number of IORT Nodes */
-> @@ -342,10 +356,9 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      /* GIC ITS Identifier Array */
->      build_append_int_noprefix(table_data, 0 /* MADT translation_id */, 4);
->  
-> -    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
-> -        int irq =  vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
-> +    for (i = 0; i < num_smmus; i++) {
-> +        smmu_offset[i] = table_data->len - table.table_offset;
->  
-I would have expected changes in the smmu idmap has well. If a given
-SMMU instance now protects a given bus hierarchy shouldn't it be
-reflected in a differentiated SMMU idmap for each of them (RID subset of
-SMMU->pci-bus mapping to a specific IORT SMMU node)? How is it done
-currently?
-
-Thanks
-
-Eric
-> -        smmu_offset = table_data->len - table.table_offset;
->          /* Table 9 SMMUv3 Format */
->          build_append_int_noprefix(table_data, 4 /* SMMUv3 */, 1); /* Type */
->          node_size =  SMMU_V3_ENTRY_SIZE + ID_MAPPING_ENTRY_SIZE;
-> @@ -356,7 +369,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          /* Reference to ID Array */
->          build_append_int_noprefix(table_data, SMMU_V3_ENTRY_SIZE, 4);
->          /* Base address */
-> -        build_append_int_noprefix(table_data, vms->memmap[VIRT_SMMU].base, 8);
-> +        build_append_int_noprefix(table_data, base + (i * SMMU_IO_LEN), 8);
->          /* Flags */
->          build_append_int_noprefix(table_data, 1 /* COHACC Override */, 4);
->          build_append_int_noprefix(table_data, 0, 4); /* Reserved */
-> @@ -367,6 +380,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          build_append_int_noprefix(table_data, irq + 1, 4); /* PRI */
->          build_append_int_noprefix(table_data, irq + 3, 4); /* GERR */
->          build_append_int_noprefix(table_data, irq + 2, 4); /* Sync */
-> +        irq += NUM_SMMU_IRQS;
->          build_append_int_noprefix(table_data, 0, 4); /* Proximity domain */
->          /* DeviceID mapping index (ignored since interrupts are GSIV based) */
->          build_append_int_noprefix(table_data, 0, 4);
-> @@ -405,7 +419,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      build_append_int_noprefix(table_data, 0, 3); /* Reserved */
->  
->      /* Output Reference */
-> -    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
-> +    if (virt_has_smmuv3(vms)) {
->          AcpiIortIdMapping *range;
->  
->          /* translated RIDs connect to SMMUv3 node: RC -> SMMUv3 -> ITS */
-> @@ -413,7 +427,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->              range = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
->              /* output IORT node is the smmuv3 node */
->              build_iort_id_mapping(table_data, range->input_base,
-> -                                  range->id_count, smmu_offset);
-> +                                  range->id_count, smmu_offset[i]);
->          }
->  
->          /* bypassed RIDs connect to ITS group node directly: RC -> ITS */
-> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-> index 50e47a4ef3..304ab134ae 100644
-> --- a/include/hw/arm/virt.h
-> +++ b/include/hw/arm/virt.h
-> @@ -219,4 +219,10 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
->              vms->highmem_redists) ? 2 : 1;
->  }
->  
-> +static inline bool virt_has_smmuv3(const VirtMachineState *vms)
+> +        if (qemu_isalnum(c) || c == '.' || c == ' ') {
+> +            loadparm[i] = c;
+> +        } else {
+> +            error_setg(errp,
+> +                       "invalid character in 'loadparm': '%c' (ASCII 0x%02x)",
+> +                       c, c);
+> +            return false;
+> +        }
+> +    }
+> +
+> +    return true;
+> +}
+>   
+>   /* --- drive --- */
+>   
+> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+> index dc02b0fdda..30734661ad 100644
+> --- a/hw/s390x/ipl.c
+> +++ b/hw/s390x/ipl.c
+> @@ -418,21 +418,9 @@ static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
+>   
+>   void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
+>   {
+> -    int i;
+> -
+>       /* Initialize the loadparm with spaces */
+>       memset(loadparm, ' ', LOADPARM_LEN);
+> -    for (i = 0; i < LOADPARM_LEN && str[i]; i++) {
+> -        uint8_t c = qemu_toupper(str[i]); /* mimic HMC */
+> -
+> -        if (qemu_isalnum(c) || c == '.' || c == ' ') {
+> -            loadparm[i] = c;
+> -        } else {
+> -            error_setg(errp, "LOADPARM: invalid character '%c' (ASCII 0x%02x)",
+> -                       c, c);
+> -            return;
+> -        }
+> -    }
+> +    qdev_prop_sanitize_s390x_loadparm(loadparm, str, errp);
+>   }
+>   
+>   void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
+> @@ -452,6 +440,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>       SCSIDevice *sd;
+>       int devtype;
+>       uint8_t *lp;
+> +    g_autofree void *scsi_lp = NULL;
+>   
+>       /*
+>        * Currently allow IPL only from CCW devices.
+> @@ -463,6 +452,10 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>           switch (devtype) {
+>           case CCW_DEVTYPE_SCSI:
+>               sd = SCSI_DEVICE(dev_st);
+> +            scsi_lp = object_property_get_str(OBJECT(sd), "loadparm", NULL);
+> +            if (scsi_lp && strlen(scsi_lp) > 0) {
+> +                lp = scsi_lp;
+> +            }
+>               iplb->len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
+>               iplb->blk0_len =
+>                   cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN - S390_IPLB_HEADER_LEN);
+> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+> index cb222da7a5..8e553487d5 100644
+> --- a/hw/scsi/scsi-disk.c
+> +++ b/hw/scsi/scsi-disk.c
+> @@ -32,6 +32,7 @@
+>   #include "migration/vmstate.h"
+>   #include "hw/scsi/emulation.h"
+>   #include "scsi/constants.h"
+> +#include "sysemu/arch_init.h"
+>   #include "sysemu/block-backend.h"
+>   #include "sysemu/blockdev.h"
+>   #include "hw/block/block.h"
+> @@ -111,6 +112,7 @@ struct SCSIDiskState {
+>       char *vendor;
+>       char *product;
+>       char *device_id;
+> +    char *loadparm;     /* only for s390x */
+>       bool tray_open;
+>       bool tray_locked;
+>       /*
+> @@ -3135,6 +3137,43 @@ BlockAIOCB *scsi_dma_writev(int64_t offset, QEMUIOVector *iov,
+>       return blk_aio_pwritev(s->qdev.conf.blk, offset, iov, 0, cb, cb_opaque);
+>   }
+>   
+> +static char *scsi_property_get_loadparm(Object *obj, Error **errp)
 > +{
-> +    return vms->iommu == VIRT_IOMMU_SMMUV3 ||
-> +           vms->iommu == VIRT_IOMMU_SMMUV3_NESTED;
+> +    return g_strdup(SCSI_DISK_BASE(obj)->loadparm);
 > +}
 > +
->  #endif /* QEMU_ARM_VIRT_H */
+> +static void scsi_property_set_loadparm(Object *obj, const char *value,
+> +                                       Error **errp)
+> +{
+> +    void *lp_str;
+> +
+> +    if (object_property_get_int(obj, "bootindex", NULL) < 0) {
+> +        error_setg(errp, "'loadparm' is only valid for boot devices");
+> +        return;
+> +    }
+> +
+> +    lp_str = g_malloc0(strlen(value));
+> +    if (!qdev_prop_sanitize_s390x_loadparm(lp_str, value, errp)) {
+> +        g_free(lp_str);
+> +        return;
+> +    }
+> +    SCSI_DISK_BASE(obj)->loadparm = lp_str;
+> +}
+> +
+> +static void scsi_property_add_specifics(DeviceClass *dc)
+> +{
+> +    ObjectClass *oc = OBJECT_CLASS(dc);
+> +
+> +    /* The loadparm property is only supported on s390x */
+> +    if (arch_type & QEMU_ARCH_S390X) {
+> +        object_class_property_add_str(oc, "loadparm",
+> +                                      scsi_property_get_loadparm,
+> +                                      scsi_property_set_loadparm);
+> +        object_class_property_set_description(oc, "loadparm",
+> +                                              "load parameter (s390x only)");
+> +    }
+> +}
+> +
+>   static void scsi_disk_base_class_initfn(ObjectClass *klass, void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+> @@ -3218,6 +3257,8 @@ static void scsi_hd_class_initfn(ObjectClass *klass, void *data)
+>       dc->desc = "virtual SCSI disk";
+>       device_class_set_props(dc, scsi_hd_properties);
+>       dc->vmsd  = &vmstate_scsi_disk_state;
+> +
+> +    scsi_property_add_specifics(dc);
+>   }
+>   
+>   static const TypeInfo scsi_hd_info = {
+> @@ -3258,6 +3299,8 @@ static void scsi_cd_class_initfn(ObjectClass *klass, void *data)
+>       dc->desc = "virtual SCSI CD-ROM";
+>       device_class_set_props(dc, scsi_cd_properties);
+>       dc->vmsd  = &vmstate_scsi_disk_state;
+> +
+> +    scsi_property_add_specifics(dc);
+>   }
+>   
+>   static const TypeInfo scsi_cd_info = {
 
 
