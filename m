@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C1F4D591AA
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:38:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82EAD591AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD5gv-0000bl-8e; Mon, 18 Nov 2024 12:37:37 -0500
+	id 1tD5gt-0000T5-UW; Mon, 18 Nov 2024 12:37:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5ga-0008Hi-7k
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gX-0008H1-Nu
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gY-0004qJ-GC
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:15 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gW-0004ot-At
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731951433;
+ s=mimecast20190719; t=1731951431;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YnECL1oMu75MemisnEJ7sBQ9uK/sxW5ymL9eBjvWFcY=;
- b=hqTUTs4zkM6X8Pjrg7zwbNMAoq1Rz5YHvYhVLwGoaAfwwdFJDySOK7RItZb5zI12ffzwTj
- InTHTKzrL5Pd666OWgdzOS5xfhYM93VZsXHaamJFz345GCFnNWIG9n0KKw6HR0Mu0pqO1H
- cQPXJNqEgX05WoiPnnDhV2aF/ggqjN0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TX7LOrpygOiAL+IAvnD6KS3fiwJAom3MdueypHbDqfU=;
+ b=ig3f0oDWQEUf5ChVqVUCGbvwszBO6y/2/ulMWxm6iz1tv1vxdT6DCg4/tZ+fCYsVL36DQE
+ A8ExJGBS0id1NLEf4Zy0z8Q3YODWHjUA+5Dg1Sswd3kRXKn9mENO/u/NJQK3BG0+3MqrrW
+ Dmn7MdUutGp3gpH5DMCFu9t7F+b4rsU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-n7hq9Kt8O2ehM0YBFKUutQ-1; Mon,
- 18 Nov 2024 12:37:00 -0500
-X-MC-Unique: n7hq9Kt8O2ehM0YBFKUutQ-1
-X-Mimecast-MFC-AGG-ID: n7hq9Kt8O2ehM0YBFKUutQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-OjNk8Mg0PGSju6YsAOWmew-1; Mon,
+ 18 Nov 2024 12:37:05 -0500
+X-MC-Unique: OjNk8Mg0PGSju6YsAOWmew-1
+X-Mimecast-MFC-AGG-ID: OjNk8Mg0PGSju6YsAOWmew
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C94B197904C; Mon, 18 Nov 2024 17:36:58 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 763551936125; Mon, 18 Nov 2024 17:37:03 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2CB67195DF81; Mon, 18 Nov 2024 17:36:56 +0000 (UTC)
+ id 97D7C195E481; Mon, 18 Nov 2024 17:37:01 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 07/12] hw: Add "loadparm" property to scsi disk devices for
- booting on s390x
-Date: Mon, 18 Nov 2024 18:36:29 +0100
-Message-ID: <20241118173634.473532-8-thuth@redhat.com>
+ Jared Rossi <jrossi@linux.ibm.com>
+Subject: [PULL 09/12] pc-bios/s390x: Initialize machine loadparm before
+ probing IPL devices
+Date: Mon, 18 Nov 2024 18:36:31 +0100
+Message-ID: <20241118173634.473532-10-thuth@redhat.com>
 In-Reply-To: <20241118173634.473532-1-thuth@redhat.com>
 References: <20241118173634.473532-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,207 +83,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While adding the new flexible boot order feature on s390x recently,
-we missed to add the "loadparm" property to the scsi-hd and scsi-cd
-devices. This property is required on s390x to pass the information
-to the boot loader about which kernel should be started or whether
-the boot menu should be shown. But even more serious: The missing
-property is now causing trouble with the corresponding libvirt patches
-that assume that the "loadparm" property is either settable for all
-bootable devices (when the "boot order" feature is implemented in
-QEMU), or none (meaning the behaviour of older QEMUs that only allowed
-one "loadparm" at the machine level). To fix this broken situation,
-let's implement the "loadparm" property in for the SCSI devices, too.
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-Message-ID: <20241115141202.1877294-1-thuth@redhat.com>
-Acked-by: Eric Farman <farman@linux.ibm.com>
+Commit bb185de423 ("s390x: Add individual loadparm assignment to
+CCW device") allowed boot devices to be assigned a loadparm value independent
+of the machine value, however, when no boot devices are defined, the machine
+loadparm becomes ignored. Therefore, let's check the machine loadparm
+prior to probing the devices.
+
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20241114161952.3508554-1-jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/qdev-properties-system.h |  3 ++
- hw/core/qdev-properties-system.c    | 26 +++++++++++++++++
- hw/s390x/ipl.c                      | 19 ++++---------
- hw/scsi/scsi-disk.c                 | 43 +++++++++++++++++++++++++++++
- 4 files changed, 78 insertions(+), 13 deletions(-)
+ pc-bios/s390-ccw/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
-index cdcc63056e..7ec37f6316 100644
---- a/include/hw/qdev-properties-system.h
-+++ b/include/hw/qdev-properties-system.h
-@@ -3,6 +3,9 @@
- 
- #include "hw/qdev-properties.h"
- 
-+bool qdev_prop_sanitize_s390x_loadparm(uint8_t *loadparm, const char *str,
-+                                       Error **errp);
-+
- extern const PropertyInfo qdev_prop_chr;
- extern const PropertyInfo qdev_prop_macaddr;
- extern const PropertyInfo qdev_prop_reserved_region;
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 35deef05f3..a61c5ee6dd 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -58,6 +58,32 @@ static bool check_prop_still_unset(Object *obj, const char *name,
-     return false;
- }
- 
-+bool qdev_prop_sanitize_s390x_loadparm(uint8_t *loadparm, const char *str,
-+                                       Error **errp)
-+{
-+    int i, len;
-+
-+    len = strlen(str);
-+    if (len > 8) {
-+        error_setg(errp, "'loadparm' can only contain up to 8 characters");
-+        return false;
-+    }
-+
-+    for (i = 0; i < len; i++) {
-+        uint8_t c = qemu_toupper(str[i]); /* mimic HMC */
-+
-+        if (qemu_isalnum(c) || c == '.' || c == ' ') {
-+            loadparm[i] = c;
-+        } else {
-+            error_setg(errp,
-+                       "invalid character in 'loadparm': '%c' (ASCII 0x%02x)",
-+                       c, c);
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
- 
- /* --- drive --- */
- 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index dc02b0fdda..30734661ad 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -418,21 +418,9 @@ static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
- 
- void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 7509755e36..76bf743900 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -191,7 +191,7 @@ static void boot_setup(void)
  {
--    int i;
--
-     /* Initialize the loadparm with spaces */
-     memset(loadparm, ' ', LOADPARM_LEN);
--    for (i = 0; i < LOADPARM_LEN && str[i]; i++) {
--        uint8_t c = qemu_toupper(str[i]); /* mimic HMC */
--
--        if (qemu_isalnum(c) || c == '.' || c == ' ') {
--            loadparm[i] = c;
--        } else {
--            error_setg(errp, "LOADPARM: invalid character '%c' (ASCII 0x%02x)",
--                       c, c);
--            return;
--        }
--    }
-+    qdev_prop_sanitize_s390x_loadparm(loadparm, str, errp);
- }
+     char lpmsg[] = "LOADPARM=[________]\n";
  
- void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
-@@ -452,6 +440,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-     SCSIDevice *sd;
-     int devtype;
-     uint8_t *lp;
-+    g_autofree void *scsi_lp = NULL;
+-    if (memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
++    if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+         ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
+     } else {
+         sclp_get_loadparm_ascii(loadparm_str);
+@@ -316,6 +316,7 @@ void main(void)
+     css_setup();
+     have_iplb = store_iplb(&iplb);
+     if (!have_iplb) {
++        boot_setup();
+         probe_boot_device();
+     }
  
-     /*
-      * Currently allow IPL only from CCW devices.
-@@ -463,6 +452,10 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-         switch (devtype) {
-         case CCW_DEVTYPE_SCSI:
-             sd = SCSI_DEVICE(dev_st);
-+            scsi_lp = object_property_get_str(OBJECT(sd), "loadparm", NULL);
-+            if (scsi_lp && strlen(scsi_lp) > 0) {
-+                lp = scsi_lp;
-+            }
-             iplb->len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
-             iplb->blk0_len =
-                 cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN - S390_IPLB_HEADER_LEN);
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index cb222da7a5..8e553487d5 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -32,6 +32,7 @@
- #include "migration/vmstate.h"
- #include "hw/scsi/emulation.h"
- #include "scsi/constants.h"
-+#include "sysemu/arch_init.h"
- #include "sysemu/block-backend.h"
- #include "sysemu/blockdev.h"
- #include "hw/block/block.h"
-@@ -111,6 +112,7 @@ struct SCSIDiskState {
-     char *vendor;
-     char *product;
-     char *device_id;
-+    char *loadparm;     /* only for s390x */
-     bool tray_open;
-     bool tray_locked;
-     /*
-@@ -3135,6 +3137,43 @@ BlockAIOCB *scsi_dma_writev(int64_t offset, QEMUIOVector *iov,
-     return blk_aio_pwritev(s->qdev.conf.blk, offset, iov, 0, cb, cb_opaque);
- }
- 
-+static char *scsi_property_get_loadparm(Object *obj, Error **errp)
-+{
-+    return g_strdup(SCSI_DISK_BASE(obj)->loadparm);
-+}
-+
-+static void scsi_property_set_loadparm(Object *obj, const char *value,
-+                                       Error **errp)
-+{
-+    void *lp_str;
-+
-+    if (object_property_get_int(obj, "bootindex", NULL) < 0) {
-+        error_setg(errp, "'loadparm' is only valid for boot devices");
-+        return;
-+    }
-+
-+    lp_str = g_malloc0(strlen(value));
-+    if (!qdev_prop_sanitize_s390x_loadparm(lp_str, value, errp)) {
-+        g_free(lp_str);
-+        return;
-+    }
-+    SCSI_DISK_BASE(obj)->loadparm = lp_str;
-+}
-+
-+static void scsi_property_add_specifics(DeviceClass *dc)
-+{
-+    ObjectClass *oc = OBJECT_CLASS(dc);
-+
-+    /* The loadparm property is only supported on s390x */
-+    if (arch_type & QEMU_ARCH_S390X) {
-+        object_class_property_add_str(oc, "loadparm",
-+                                      scsi_property_get_loadparm,
-+                                      scsi_property_set_loadparm);
-+        object_class_property_set_description(oc, "loadparm",
-+                                              "load parameter (s390x only)");
-+    }
-+}
-+
- static void scsi_disk_base_class_initfn(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -3218,6 +3257,8 @@ static void scsi_hd_class_initfn(ObjectClass *klass, void *data)
-     dc->desc = "virtual SCSI disk";
-     device_class_set_props(dc, scsi_hd_properties);
-     dc->vmsd  = &vmstate_scsi_disk_state;
-+
-+    scsi_property_add_specifics(dc);
- }
- 
- static const TypeInfo scsi_hd_info = {
-@@ -3258,6 +3299,8 @@ static void scsi_cd_class_initfn(ObjectClass *klass, void *data)
-     dc->desc = "virtual SCSI CD-ROM";
-     device_class_set_props(dc, scsi_cd_properties);
-     dc->vmsd  = &vmstate_scsi_disk_state;
-+
-+    scsi_property_add_specifics(dc);
- }
- 
- static const TypeInfo scsi_cd_info = {
 -- 
 2.47.0
 
