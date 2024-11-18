@@ -4,70 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC11D4921E
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09057D4921E
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:13:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD1Xy-0002mL-4G; Mon, 18 Nov 2024 08:12:06 -0500
+	id 1tD1Yw-0003LA-Ny; Mon, 18 Nov 2024 08:13:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1tD1Xw-0002ly-5P
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:12:04 -0500
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ id 1tD1Yr-0003Kw-Py
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:13:03 -0500
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1tD1Xu-0000ne-HW
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:12:03 -0500
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-514b8bb231aso140850e0c.3
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 05:12:01 -0800 (PST)
+ id 1tD1Yp-0000s1-DX
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:13:00 -0500
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-514bb6953f4so19959e0c.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 05:12:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731935521; x=1732540321; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731935578; x=1732540378; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8lVpavY7Sh1GsnO0ir6JvMhixef7IJsNtsjqhmk3Grs=;
- b=bvLVjVN9RlTrZfrQ3aoiLCH9MFJF8Rj7pmGe2bfqb1H/4duBva6oHavAlkWvH0YSFa
- WT1iQmmdCUtpqJ66eMELxDM/pnYM8H9bt0MMLDvf+uag8G5KiOMZ19RsrCds9HqSMKEw
- VQgKqvuUwKX0/CAtEmfsoM4vFDSQJHX2ZA54S7TxXgfxEtGMQx33trN8Sr5Td8OLHYzn
- 7QmrT89AIoP6C5xnQJqSA1RFgDv2o94U0MNp0S5iSa7FKXeTuNzZ3s6rIIBaJAGcy0mi
- l7wUBMLleAjbf6DYbUwfDwWIGlAD+tXs+GmxhZ/pEqt0hAjVmrrA2ecOr2YWsDbcxPWu
- ygAw==
+ bh=cxY6fZIZ/MgvPb7LwvIRSC9rB6mQzxRqG3NwIYp5njk=;
+ b=mJPjNrkcatS9qLwzkvsijtxfGbbEnvTeYqZnMHG5FsQKXT8Cb0RBFMOICItLq0iQb2
+ YXT5j0v9g61R1hauuF20Z90iBXe7Y5XhIAJF61bFzH4T2DbeaVIEFy1ECUu63inpM1fF
+ To+VjLp4g9KXDH3xqdliSNNzcBgJ4pKl6SxBCNVM9CTjImQganS5tmEttt5LAfLhvhO1
+ UluCNtL4CtjP96BgGOxC6KmPvBBz37WfzokMstGoNVfYkH/Gx8cv5z8+f8sI+U9aqg0F
+ N33mx0et5OeI5xKsSM/VlcTrcVBTT+mpVVjSkM62tbzTJxgHwrKUdAi7v/ctsfc4KX3h
+ F1fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731935521; x=1732540321;
+ d=1e100.net; s=20230601; t=1731935578; x=1732540378;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8lVpavY7Sh1GsnO0ir6JvMhixef7IJsNtsjqhmk3Grs=;
- b=PZMcoCvecLK4BO+CT+/7mO64SiiivQAnhuOkZVit+yrP115fXvZciMPIRIbac0VKUp
- edTqz4vGJfhmCgYDTDOOyFncKNdjQl81q9meG/WGqSN3JZwCiKrfhpfWEeIzATc1ccfy
- AYkI45jHfnGQTEubU1HoPq+E9de7dLUOQQPI+Y41hZoy1jwxP6eKmNYuX18nvQ+LUNJb
- OZzXNIcNRluGx7KfoE2kNdUlWkXvDPhT2zDeHwLnYog6zX0CrTStQYvF9Qcg/NRO2MgY
- RUs5JklE6wGbUHDBivPKUbJtRecaiDUXoMwz3fQ8tJOLm/IIYCb309CSGTM4NfI9MHUX
- XjZw==
-X-Gm-Message-State: AOJu0YzF+uzz8K62wohYNY2MGg8mZoO4zB7fW2QVxF+iAhf8NOd95h9G
- sGpSH8zKkdjMrmnuz4a34u5aHy/S5HabG5GIelqZnATalTW3fI30ehnkqtTd5b+FoQvR2n4xPoV
- 3hb+i5hxASvv3/cFgWH8zvQfAczo=
-X-Google-Smtp-Source: AGHT+IGq04qSnUD0kXCeot7uSP7HFRvYVxc4UfO0NQI+vKNfws5PTST2Bc6ZAET4/F8AFJ3NfMyQ76y66Y0GVN8mSTM=
-X-Received: by 2002:a05:6122:789:b0:50d:85c8:af3e with SMTP id
- 71dfb90a1353d-51477eeb37dmr10551415e0c.3.1731935521196; Mon, 18 Nov 2024
- 05:12:01 -0800 (PST)
+ bh=cxY6fZIZ/MgvPb7LwvIRSC9rB6mQzxRqG3NwIYp5njk=;
+ b=KC2kVqRKVh+8j6LDOANSp86CXpgc9JBLGSNShDYVTc+9X8ASYG5YqnhhT/PZ7kzRhA
+ H4EaTL6qt0AtOQsKtWYjOeMWNQzZ/I3Dic9wJQcj+anYIn63xZ7a1QNZ1cM37++F+8/G
+ kWBipwwqbJNS7fyQeHMXMMd1cLywmLO7Du72WyWNF+QsOJtrM9EYt+qf6xOgN13jr1Qx
+ EMSv0Zdx5ictFhwMkzy0RDHScBySkztO5vml1pjS+3EOOc78RHqcq8c+U0o3WASvnjy7
+ K8aUH/rk9FDjwm5leLwbajBA6LMRhXcGzUgLlGD0IrtaCA+LkYz2X28O142C6vp8q6Tp
+ 4UzA==
+X-Gm-Message-State: AOJu0YwZK4QhfyYbavJrfdJ/VKXOo+odOFc5Rwo511f5FrGK6Kd3Njnd
+ P/0paduDS+tIf94iwZSG89PH0e6OPlfIq9tCYzI4oAWz+t8Z7k2r7t4ysQMgcRH0Px1KFO3MygJ
+ OWnCFqgBY7ZQCcPAyBl95plPFKUDdaA==
+X-Google-Smtp-Source: AGHT+IENLkhhFfv23mg1qEHyuvLQkwanQAQ2ZPyYrfbilgJuoVQhYp9OA6fwR3Ads40tKH5eUsRk+CT1G8JAhvVycdw=
+X-Received: by 2002:a05:6122:2015:b0:50d:5095:f02b with SMTP id
+ 71dfb90a1353d-5147829aef6mr10538428e0c.0.1731935578084; Mon, 18 Nov 2024
+ 05:12:58 -0800 (PST)
 MIME-Version: 1.0
-References: <20241109123208.24281-1-dorjoychy111@gmail.com>
- <44fbe3d8-509c-47ad-b764-5c8016980bfe@amazon.com>
- <CAFfO_h5LHsgng5itQTEO30SUT_jn02Pdi-0uYvyZCgRPJfcueA@mail.gmail.com>
- <2970cc68-a34c-4751-b4a3-d7fac416d7d3@amazon.com>
-In-Reply-To: <2970cc68-a34c-4751-b4a3-d7fac416d7d3@amazon.com>
+References: <20241109123039.24180-1-dorjoychy111@gmail.com>
+In-Reply-To: <20241109123039.24180-1-dorjoychy111@gmail.com>
 From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Mon, 18 Nov 2024 19:12:06 +0600
-Message-ID: <CAFfO_h47fHYfiU9vgU61UT+jSnv9YCO8jTy+hB77+AQc+NZ7+w@mail.gmail.com>
-Subject: Re: [PATCH] device/virtio-nsm: Support string data for extendPCR
-To: Alexander Graf <graf@amazon.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 18 Nov 2024 19:13:03 +0600
+Message-ID: <CAFfO_h7Gmq9vQYOXB255c4jWK3KUEF0xro53i0qior5XQhqbNQ@mail.gmail.com>
+Subject: Re: [PATCH] eif: Use stateful qcrypto apis
+To: qemu-devel@nongnu.org
+Cc: graf@amazon.com, pbonzini@redhat.com, berrange@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa2b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,7 +90,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Ping.
 
-This is a small one that needs review.
+This is also a smaller one that needs to be reviewed.
 
 Regards,
 Dorjoy
