@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE87D4920F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 12:38:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 765A3D49212
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 12:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD118-00040f-4I; Mon, 18 Nov 2024 07:38:10 -0500
+	id 1tD11k-0004fP-Lm; Mon, 18 Nov 2024 07:38:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD114-00040J-8C
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:38:07 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD11h-0004ad-4d
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:38:46 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD112-000403-Jx
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:38:05 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-432d9b8558aso23582945e9.0
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 04:38:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tD11d-00041c-Sq
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 07:38:44 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-382325b0508so1476578f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 04:38:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731933482; x=1732538282; darn=nongnu.org;
+ d=linaro.org; s=google; t=1731933520; x=1732538320; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pYLZ6AW86wi9PWbPBF/87Q2a7NF7pQ3IdyaYdUoxTiM=;
- b=EkIc1ZXNE/ilT2O2YEsDcFz4gL7dTAc+s9PSasaTGTaDmgWgzDtwYxIh24WPuG/2t9
- LgJp4jMiXbtfBbufJLU/PUn8AC/Thd1mr/9Hs4kNmvc1+O4vp4qZRlIX/lNFPomLGS0P
- oyIMU0EzJqLduLnPp7qSkmFLEVCX6WYSgypXlD7ikWtzZSnTFmokx95EDqaLboaHf1eN
- Tazp43dIU3CKeozD8JYe6c2J0feAlmT7ttGUPiCAAKfhdjOyky/A/z4fSRNtu70U3TsX
- gl6w1HG3T0ZXYz6SfL4b1TTjOcql0nllOid/xbY8GsIEwYVE7ufp1e+vrv0zlEKGJw3S
- p2EQ==
+ bh=C1FD9QnL0UtPU//v+ntexYMaYyrPe1nPOrTuXV4cgiU=;
+ b=Rh8FUcsByfxF/5AJj1A87CXNqDEjK4EUuIvTb8aveKeuYVkYpsbjaP8bWJuJjErjtF
+ 6PIvqxectQodNXKIMAVGNV3EUlpYpGS2vlYN7ASEy6F2z5K9CPHhXowT6a86tDv0Aarj
+ SFYblYCpVtXUAfLWxb2vayb+xijV2E3eX9c0MIUq6XOcLz3crSwo0ns0c5R/BOrYojyd
+ 0Np4Xa2p+v05bcrhzdVn0AMOeOs8y9bFNRaR6g4f3kt98zHIY0+xA9sicvXx1p5L1IM3
+ nk8sbD/vR2zOwpC1pdwAvt971JeiJaQGKD7Qh58b/hKxTK/u73pQp6gtdFz5OnuN12wk
+ AKKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731933482; x=1732538282;
+ d=1e100.net; s=20230601; t=1731933520; x=1732538320;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pYLZ6AW86wi9PWbPBF/87Q2a7NF7pQ3IdyaYdUoxTiM=;
- b=eRL4MW53pcfK7El0tT07a1/thC3vxbpv+8IBLI7/Ix/ln3vVyLWCkNpToipd0cjCwY
- 31g7fhJrsUhu+0V2BK8f+xQV9Rx+3uyjQe/qAWAuzmX26maGOorRMtGw1bfJwuhrimXJ
- Jan1jn7iTY4sPWBX0RJbHemPFBbawzzV1uMBqL3XKKBuvkeBA/BlBvOUXEw0kRaSfum9
- WG4oSSt5xC1vWAnjvd2WEtY+pWHMK3Lyd5YWtQXaGO67ct2e5VVZnYpEt/D88wuE5AT6
- jQxBtqD7iJmWrN9hrrIQbhvPekIRRqxdOg9zV44BIAcCDqNZXANzuAp9okLZQ1qG3Yk9
- UYWQ==
+ bh=C1FD9QnL0UtPU//v+ntexYMaYyrPe1nPOrTuXV4cgiU=;
+ b=YqteZPS+IrquiBMR+4sg/2KFRviqZqjR5/UMM2pGjZMC94cN0dX1xqK2Y6SFQVXzwp
+ e+5fJyKPrzK87HOwdnhFdEQpeoXAaXTqvC065U0M7l0yUgkD8PL9jO6whXlx/VFQVrgD
+ h7dZZQ5Nu1HOKWX5cW2RdwjyYDvCAXiLehcljP/jDbsyefTdKW3yWYy0jvXKbiFJRAob
+ ZY11+7jsE9NxEC0istn6x3wJUP+Za2tgKPamwB2QRmjEDVKJ7OsnJe++yy/Y3mTeyvT8
+ 7s3bMz2+vk1v+bAwpCF9/EH2KXv7rESY2btYUkZ7oVZUgGKMI+A9oa6I8V2yE0cFfNS1
+ Ekgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLYmDvaNDRZ+OMTaxNuic2cPtdNmI8gaY5/g7fSx2QkSD3vNMCgSyJh4BzfHhBQRgFZU2s9pZvsIEc@nongnu.org
-X-Gm-Message-State: AOJu0YyynqLNppVwu1ZxiMFs3XTsJb7QIF3WllYYgendTbYZAJMMXSwz
- uq797WQoBjVkOtEHnz8tho21BncXUNk1RMOUuNacQWHRYXoYW5xLynFDbnfvxQ4=
-X-Google-Smtp-Source: AGHT+IHo24F1xC5XNHUqeBEBUQbov8cdBiarTct8UBkBYp2SVWjFDQDRPxEyYyfUaMxJ3sfdJqvRgg==
-X-Received: by 2002:a05:600c:4fcf:b0:431:4a82:97f2 with SMTP id
- 5b1f17b1804b1-432d973f949mr140571005e9.6.1731933482080; 
- Mon, 18 Nov 2024 04:38:02 -0800 (PST)
+ AJvYcCXRLQ/yRgX4R+3AZs+Pj+jFK3CCg45aL7SWJhghDAeLKs6pkh1gQaKYw1NCq1MHSoo51PoGWkYXOeYE@nongnu.org
+X-Gm-Message-State: AOJu0YxGV6CJwh5ffx3CDTnytfmdGk0h9wJcRJ7wVoXVh03JxgGxzVlI
+ viCpdOadFF5pCVAEqSgcguVbUDTqRkvX/PLw7EtznDMW2S4aQvsjrV2tNaRhsAQ=
+X-Google-Smtp-Source: AGHT+IEvmjNSpw75uC6KjawHL8sv68pklt0oVar/JC/1Ow+F7N53DuLbGa6xURUHCX9XVRUK9HsTYg==
+X-Received: by 2002:a5d:5f94:0:b0:382:4b83:d4c0 with SMTP id
+ ffacd0b85a97d-3824b83d615mr74044f8f.3.1731933520179; 
+ Mon, 18 Nov 2024 04:38:40 -0800 (PST)
 Received: from [192.168.69.197] ([176.187.198.1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dac1f409sm152500025e9.37.2024.11.18.04.38.00
+ ffacd0b85a97d-3824aad691csm945517f8f.1.2024.11.18.04.38.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Nov 2024 04:38:01 -0800 (PST)
-Message-ID: <f353b35d-7f3a-47b5-bbbb-97634bece10d@linaro.org>
-Date: Mon, 18 Nov 2024 13:37:59 +0100
+ Mon, 18 Nov 2024 04:38:39 -0800 (PST)
+Message-ID: <109b2266-90e3-492b-a562-7b2884c24433@linaro.org>
+Date: Mon, 18 Nov 2024 13:38:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/elfboot: allocate "header" in heap
-To: slp@redhat.com, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20241108230314.1980-1-slp@redhat.com>
+Subject: Re: [PATCH] hw/misc/mos6522: Fix bad class definition of the MOS6522
+ device
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-ppc@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ qemu-stable@nongnu.org
+References: <20241114104653.963812-1-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241108230314.1980-1-slp@redhat.com>
+In-Reply-To: <20241114104653.963812-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,21 +98,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/11/24 23:03, slp@redhat.com wrote:
-> From: Sergio Lopez <slp@redhat.com>
+On 14/11/24 10:46, Thomas Huth wrote:
+> When compiling QEMU with --enable-cfi, the "q800" m68k machine
+> currently crashes very early, when the q800_machine_init() function
+> tries to wire the interrupts of the "via1" device.
+> This happens because TYPE_MOS6522_Q800_VIA1 is supposed to be a
+> proper SysBus device, but its parent (TYPE_MOS6522) has a mistake
+> in its class definition where it is only derived from DeviceClass,
+> and not from SysBusDeviceClass, so we end up in funny memory access
+> issues here. Using the right class hierarchy for the MOS6522 device
+> fixes the problem.
 > 
-> In x86_load_linux(), we were using a stack-allocated array as data for
-> fw_cfg_add_bytes(). Since the latter just takes a reference to the
-> pointer instead of copying the data, it can happen that the contents
-> have been overridden by the time the guest attempts to access them.
-> 
-> Instead of using the stack-allocated array, allocate some memory from
-> the heap, copy the contents of the array, and use it for fw_cfg.
-> 
-> Signed-off-by: Sergio Lopez <slp@redhat.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2675
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   hw/i386/x86-common.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+>   include/hw/misc/mos6522.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Patch queued to hw-misc, thanks.
 
