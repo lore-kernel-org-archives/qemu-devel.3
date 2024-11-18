@@ -4,46 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F85BD591A3
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B350D591A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:42:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD4kl-0004bg-TX; Mon, 18 Nov 2024 11:37:32 -0500
+	id 1tD4p7-00064p-1U; Mon, 18 Nov 2024 11:42:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD4kk-0004a2-5j; Mon, 18 Nov 2024 11:37:30 -0500
+ id 1tD4p2-00064R-79; Mon, 18 Nov 2024 11:41:56 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD4ki-0005ee-A1; Mon, 18 Nov 2024 11:37:29 -0500
+ id 1tD4p0-0006J0-00; Mon, 18 Nov 2024 11:41:55 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F10DDA52A2;
- Mon, 18 Nov 2024 19:37:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 54A89A52AA;
+ Mon, 18 Nov 2024 19:41:48 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 24DE41734A7;
- Mon, 18 Nov 2024 19:37:22 +0300 (MSK)
-Message-ID: <08224ca3-5c31-41c5-8041-30e686fe33b1@tls.msk.ru>
-Date: Mon, 18 Nov 2024 19:37:22 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 93E201734AE;
+ Mon, 18 Nov 2024 19:41:51 +0300 (MSK)
+Message-ID: <b5492473-fae6-4ef6-8bc8-aa3d89290aa0@tls.msk.ru>
+Date: Mon, 18 Nov 2024 19:41:51 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND PATCH 10/10] usb-hub: Fix handling port power control
- messages
-To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- BALATON Zoltan <balaton@eik.bme.hu>, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org
-References: <20241112170152.217664-1-linux@roeck-us.net>
- <20241112170152.217664-11-linux@roeck-us.net>
+Subject: Re: [PULL 3/3] vfio/container: Fix container object destruction
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
+References: <20241118083737.174219-1-clg@redhat.com>
+ <20241118083737.174219-4-clg@redhat.com>
+ <a5d6aa4c-14dd-4974-b993-af30c12b32de@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,9 +79,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241112170152.217664-11-linux@roeck-us.net>
+In-Reply-To: <a5d6aa4c-14dd-4974-b993-af30c12b32de@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -115,38 +105,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-12.11.2024 20:01, Guenter Roeck wrote:
-> The ClearPortFeature control message fails for PORT_POWER because there
-> is no break; at the end of the case statement, causing it to fall through
-> to the failure handler. Add the missing break; to solve the problem.
+18.11.2024 18:02, Cédric Le Goater wrote:
+> Michael,
 > 
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-> ---
-> Change from RFC:
->      New patch
+> On 11/18/24 09:37, Cédric Le Goater wrote:
+>> When commit 96b7af4388b3 intoduced a .instance_finalize() handler,
+>> it did not take into account that the container was not necessarily
+>> inserted into the container list of the address space. Hence, if
+>> the container object is destroyed, by calling object_unref() for
+>> example, before vfio_address_space_insert() is called, QEMU may
+>> crash when removing the container from the list as done in
+>> vfio_container_instance_finalize(). This was seen with an SEV-SNP
+>> guest for which discarding of RAM fails.
+>>
+>> To resolve this issue, use the safe version of QLIST_REMOVE().
+>>
+>> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> Cc: Eric Auger <eric.auger@redhat.com>
+>> Fixes: 96b7af4388b3 ("vfio/container: Move vfio_container_destroy() to an instance_finalize() handler")
+>> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > 
->   hw/usb/dev-hub.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
-> index 4da91d151c..2872c6712a 100644
-> --- a/hw/usb/dev-hub.c
-> +++ b/hw/usb/dev-hub.c
-> @@ -532,6 +532,7 @@ static void usb_hub_handle_control(USBDevice *dev, USBPacket *p,
->                       usb_hub_port_clear(port, PORT_STAT_SUSPEND);
->                       port->wPortChange = 0;
->                   }
-> +                break;
->               default:
->                   goto fail;
->               }
-
-This is wonderful :)
-
-Picking this up for stable series, though it looks like this is
-a very minor issue in practice?
-
-Thanks,
+> This is 9.1 material.
+Thank you for letting me know, queued up!
 
 /mjt
 
