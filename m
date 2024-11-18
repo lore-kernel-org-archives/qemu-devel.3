@@ -4,132 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B00FD591A1
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F85BD591A3
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD4c1-00029W-GB; Mon, 18 Nov 2024 11:28:29 -0500
+	id 1tD4kl-0004bg-TX; Mon, 18 Nov 2024 11:37:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <PratikRajesh.Sampat@amd.com>)
- id 1tD4OT-0006a0-1F; Mon, 18 Nov 2024 11:14:29 -0500
-Received: from mail-dm3nam02on20628.outbound.protection.outlook.com
- ([2a01:111:f403:2405::628]
- helo=NAM02-DM3-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tD4kk-0004a2-5j; Mon, 18 Nov 2024 11:37:30 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <PratikRajesh.Sampat@amd.com>)
- id 1tD4OQ-0001YF-JD; Mon, 18 Nov 2024 11:14:28 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Y4qaeLga1L4f9Czc3BNsWXSFZG2GFJ9+FapdKs7vmpOiwBMFd2QhfJ8qXcI8ksU6Okg8/WyN9VzGD9MKmtYlx2JFEj4O3lZVQL+e5aa38/aunQLKFJucjrQAFqDOAQ/M9G+wGslxil38S7cEPT1RQ8ZFAurs+neIlKyGv1enn70Atx2gS1FGPguA0jGlq4DXuOBZSjnTws7MsdGy7UBj5wwvOsJsGKByjTPuWyY4F979PgrxKM65mZEQxyw5TYejCFVdk6VtJvXI6A8TsriVFasU03/+Y/6NuViywY0BLlFVgPxCTBRdeSHsKAyFXltB49lb1ptEpozHnLIo35w5zg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=joDLwmcY3/TI0PX0GGnpVSHPJ5jxrW1CZS6PEww/TNo=;
- b=B5WcG3fJg5Cux4uAPZxlBx8MnO2IFjAAAU5f541rM75iMq4UoPw1grjLas7kOXJpkiWC0snjIbjYp+gd+Rw81pa4r4NPh2GNUtJ9tEDJ6NUI7IjMs3MgpC5itRKa7lzbql3jYS69pbwWxy/6gbNSLVedFrvtqtWrn9AN7OUNNgRuZAj+xmF64NH0fftZ5Bvqka05v2eAwqzswbziLYFC90xlQ5xbSHL6O8jM0q2DtqQR3nWgImrru7j55uJYJeZpx4QJywJwwq4CATBrGFVZ9Ow+Cle0MsGg/Huu7Ch7X77YQaBPGFJeKNXaxB5fRC+2yZcyLWOT9pz7c9w0s9ttyQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.12) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=joDLwmcY3/TI0PX0GGnpVSHPJ5jxrW1CZS6PEww/TNo=;
- b=AXqreWlDzRg64brA+jZxJlNxjGDFUJb5zFtWT9s5kumfkDWMz82USMUPkRz/eJsKg8TP86k6eVXFDhTUUdjADYL9GgMf6vlH/HYCVmkxa7XhGixXSelYmaJ8iC1yREhHknyADGoVrRj40f9WWluFHztEwfgtXlgNIhi7mjG+Vn4=
-Received: from MW4PR03CA0338.namprd03.prod.outlook.com (2603:10b6:303:dc::13)
- by MW6PR12MB8662.namprd12.prod.outlook.com (2603:10b6:303:243::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.20; Mon, 18 Nov
- 2024 16:14:17 +0000
-Received: from SJ1PEPF00002317.namprd03.prod.outlook.com
- (2603:10b6:303:dc:cafe::99) by MW4PR03CA0338.outlook.office365.com
- (2603:10b6:303:dc::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.23 via Frontend
- Transport; Mon, 18 Nov 2024 16:14:17 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.12)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.12 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.12; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.12) by
- SJ1PEPF00002317.mail.protection.outlook.com (10.167.242.171) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8158.14 via Frontend Transport; Mon, 18 Nov 2024 16:14:17 +0000
-Received: from AUSPRSAMPAT.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 18 Nov
- 2024 10:14:16 -0600
-From: "Pratik R. Sampat" <pratikrajesh.sampat@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <qemu-trivial@nongnu.org>, <philmd@linaro.org>, <kraxel@redhat.com>,
- <pratikrajesh.sampat@amd.com>
-Subject: [PATCH] pc-bios: Add amd-sev-es to edk2 json
-Date: Mon, 18 Nov 2024 10:14:05 -0600
-Message-ID: <20241118161405.208437-1-pratikrajesh.sampat@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tD4ki-0005ee-A1; Mon, 18 Nov 2024 11:37:29 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id F10DDA52A2;
+ Mon, 18 Nov 2024 19:37:18 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 24DE41734A7;
+ Mon, 18 Nov 2024 19:37:22 +0300 (MSK)
+Message-ID: <08224ca3-5c31-41c5-8041-30e686fe33b1@tls.msk.ru>
+Date: Mon, 18 Nov 2024 19:37:22 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RESEND PATCH 10/10] usb-hub: Fix handling port power control
+ messages
+To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ BALATON Zoltan <balaton@eik.bme.hu>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org
+References: <20241112170152.217664-1-linux@roeck-us.net>
+ <20241112170152.217664-11-linux@roeck-us.net>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20241112170152.217664-11-linux@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00002317:EE_|MW6PR12MB8662:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5991a94b-29ae-4efe-1a6d-08dd07ec0d38
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?cVvxPUsxJpLQYbsHv+ht1j/bZJy8h17asp18U67RybmEG17yT1Q42+c9kekt?=
- =?us-ascii?Q?rtGJHdN1+u2D98c5kmyBgNBr+a9tetIxCf3c2foSHUGRrFMTaOxlM5gEccFe?=
- =?us-ascii?Q?xR+TLasP4TJoJkRMnCRt9Zocm5dEhAcHo5GNcgM0ZHYfb9l3yk418oQUJrcV?=
- =?us-ascii?Q?jc8WZF2g2tse8MRm+wAT6pZ7TP3XKRD7lyeRp6nLs0WrL7XfFGad3kZdK4s1?=
- =?us-ascii?Q?XBdKJ8GGSb+jX5ee+42xZBEdxO4HNVu/DQCdLTwOwOF5A1OTHVWOYsqEZd/7?=
- =?us-ascii?Q?T7JN+XFax/SVeAQVw80brald6CDyUoobE/6dmksRS9C7rrrwalamPnBTYeYW?=
- =?us-ascii?Q?z3XTF0tRwIdn2pPOleKOmrAQggNw/WLO3yrL3Bb9I25lPlLJBuupIDprXfNP?=
- =?us-ascii?Q?yZcHDKvM6XXTGTbcwlhA8J2tIY6Brv80p/rldtAepV41OiqvM9nsWXjQlZOP?=
- =?us-ascii?Q?xvWVfdUZZuMoPoNOC8ElPAUBSwpFFhYS9f0JG7/70ZFkYjYaFou27F37c2uh?=
- =?us-ascii?Q?vtPlN735Od6snZ9h6h0QNYwz+5cXMcgybG7BkN2Z5v69zsVO2xE1IEkuYXIX?=
- =?us-ascii?Q?z1GJwRCDJ2wz8W9OZpMStpBDX2CawpyaeESybdkdNDSbgzpqAG24U8FGsSWj?=
- =?us-ascii?Q?7wqwkTMXto0yhC4hO6AOmHwY9BXfUWxe1hoNoTwL8OPG1SxbkGi3fQQfO3k0?=
- =?us-ascii?Q?Zdm7P1YaqAYQs8HSkySzqeyaGodlP6pheGXgik9DmbDg0pGVxUq7uLeB6+US?=
- =?us-ascii?Q?Y68YQWqZLxYglxTFxIM5nWsiE4kQKXyNZhVpH1eOE0+ye1ExL348aQVNh98N?=
- =?us-ascii?Q?f9JOVQkfJxgHAz62sxWgODIoHXKzS003nAyp4uzDwwIs9wciEfKIjf84KrL3?=
- =?us-ascii?Q?NOkol9o/ao+rfuE2W22nk2bgOhe9OOJ8sHnKtbMpxL3ti1KzKIj4tTbbBjEG?=
- =?us-ascii?Q?ZKWsYq/HnV4xwHYJ2KNd+wtvYtg2Du2e7ieAhlPxDQsEo6wF9+iqCDb/LQKH?=
- =?us-ascii?Q?/UO4N7CuXmcWtmojWdAGyz6Gvq6pnJjGWKl8lkRqUQwn8KfkjKJLFO6d0zKg?=
- =?us-ascii?Q?6EBA+28PAjYw1O+rzquKWairKg5ALUNgZdoDVhOVA7kBLBYQgKfyoUdzHC26?=
- =?us-ascii?Q?qABNdhM3Jed/IWAeRBuE0qGkXv3gr8gLModP8fGT4zPbLZr0gaYoCPqtACqg?=
- =?us-ascii?Q?cYVtijLukSz0JetbT/g77PCLPkKSzT5aAaqeDGGl3+gQj+5C0Sp01wLTqXWA?=
- =?us-ascii?Q?NNyN3I2A6VOubIsX1C4IIX5UTfdN4Uh1ZLu4j7BEv682KA+JssCmZnRjz+Ew?=
- =?us-ascii?Q?hlOHK90kQwjc6AUJNldpw5vgF4qIkQVMpIyQ0GbY2vb6x+FDvnwDiPX4gv5w?=
- =?us-ascii?Q?XTRbgkmqV2moOUQnKLKyQSPTHM4h/rxdjeMEye35i61Sbq63tw=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.12; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:atlvpn-bp.amd.com; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2024 16:14:17.0372 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5991a94b-29ae-4efe-1a6d-08dd07ec0d38
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.12];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002317.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8662
-Received-SPF: permerror client-ip=2a01:111:f403:2405::628;
- envelope-from=PratikRajesh.Sampat@amd.com;
- helo=NAM02-DM3-obe.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 18 Nov 2024 11:28:25 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -144,30 +115,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the default BIOS being compatible with amd-sev-es add the feature
-to the json to indicate it's support
+12.11.2024 20:01, Guenter Roeck wrote:
+> The ClearPortFeature control message fails for PORT_POWER because there
+> is no break; at the end of the case statement, causing it to fall through
+> to the failure handler. Add the missing break; to solve the problem.
+> 
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+> ---
+> Change from RFC:
+>      New patch
+> 
+>   hw/usb/dev-hub.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
+> index 4da91d151c..2872c6712a 100644
+> --- a/hw/usb/dev-hub.c
+> +++ b/hw/usb/dev-hub.c
+> @@ -532,6 +532,7 @@ static void usb_hub_handle_control(USBDevice *dev, USBPacket *p,
+>                       usb_hub_port_clear(port, PORT_STAT_SUSPEND);
+>                       port->wPortChange = 0;
+>                   }
+> +                break;
+>               default:
+>                   goto fail;
+>               }
 
-Signed-off-by: Pratik R. Sampat <pratikrajesh.sampat@amd.com>
----
-Re-sending this patch as I had missed CC'ing the folks from the
-get_maintainer script the first time around.
----
- pc-bios/descriptors/60-edk2-x86_64.json | 1 +
- 1 file changed, 1 insertion(+)
+This is wonderful :)
 
-diff --git a/pc-bios/descriptors/60-edk2-x86_64.json b/pc-bios/descriptors/60-edk2-x86_64.json
-index 968cb65cf9..4599c63f14 100644
---- a/pc-bios/descriptors/60-edk2-x86_64.json
-+++ b/pc-bios/descriptors/60-edk2-x86_64.json
-@@ -26,6 +26,7 @@
-     "features": [
-         "acpi-s3",
-         "amd-sev",
-+        "amd-sev-es",
-         "verbose-dynamic"
-     ],
-     "tags": [
--- 
-2.34.1
+Picking this up for stable series, though it looks like this is
+a very minor issue in practice?
 
+Thanks,
+
+/mjt
 
