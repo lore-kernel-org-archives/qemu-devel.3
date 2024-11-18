@@ -4,49 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 584D9D4920F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 11:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 032A1D49211
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 11:45:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD0AL-0005Kc-CG; Mon, 18 Nov 2024 06:43:37 -0500
+	id 1tD0Bm-0005xu-GY; Mon, 18 Nov 2024 06:45:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tD0AJ-0005KS-KA
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 06:43:35 -0500
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tD0Be-0005wr-1u; Mon, 18 Nov 2024 06:44:59 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tD0AH-000399-F1
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 06:43:35 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XsQgW4Rhnz6K9Jj;
- Mon, 18 Nov 2024 19:41:11 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id C99621409EA;
- Mon, 18 Nov 2024 19:43:22 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 18 Nov
- 2024 12:43:22 +0100
-Date: Mon, 18 Nov 2024 11:43:20 +0000
-To: Gao Shiyuan via <qemu-devel@nongnu.org>
-CC: Gao Shiyuan <gaoshiyuan@baidu.com>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <mst@redhat.com>, <zhao1.liu@intel.com>
-Subject: Re: [PATCH 1/1] pcie-root-port: Fast PCIe root ports for new machine
-Message-ID: <20241118114320.00002d12@huawei.com>
-In-Reply-To: <20241117143917.41403-1-gaoshiyuan@baidu.com>
-References: <20241117143917.41403-1-gaoshiyuan@baidu.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tD0Bb-0003CL-PC; Mon, 18 Nov 2024 06:44:57 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XsQlH0VqBz6LD8Y;
+ Mon, 18 Nov 2024 19:44:27 +0800 (CST)
+Received: from frapeml500005.china.huawei.com (unknown [7.182.85.13])
+ by mail.maildlp.com (Postfix) with ESMTPS id 717651403A1;
+ Mon, 18 Nov 2024 19:44:46 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500005.china.huawei.com (7.182.85.13) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 18 Nov 2024 12:44:46 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Mon, 18 Nov 2024 12:44:46 +0100
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
+ SMMU nodes
+Thread-Topic: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
+ SMMU nodes
+Thread-Index: AQHbMd3CYnIzOIz3QUan4PDL8HOdprK8zVGAgAAjLhA=
+Date: Mon, 18 Nov 2024 11:44:46 +0000
+Message-ID: <efb9fb7fb0f04d92b7776cdbc474585d@huawei.com>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <20241108125242.60136-5-shameerali.kolothum.thodi@huawei.com>
+ <1dcea5ca-806f-4f51-8b13-faf5d62eb086@redhat.com>
+In-Reply-To: <1dcea5ca-806f-4f51-8b13-faf5d62eb086@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- frapeml500008.china.huawei.com (7.182.85.71)
 Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -66,113 +80,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 17 Nov 2024 22:39:17 +0800
-Gao Shiyuan via <qemu-devel@nongnu.org> wrote:
-
-> Some hardware devices now support PCIe 5.0, so change the default
-> speed of the PCIe root port on new machine types.
-> 
-> For passthrough Nvidia H20, this will be able to increase the h2d/d2h
-> bandwidth ~17%.
-
-I'm curious.  Why are you seeing the perf improvement?
-
-Maybe my mental model is wrong, but I though we just faked these
-registers so there should be no actual change of the link speed
-just a change in what the guest sees.   Is the driver using this
-information to tune something else?
-
-I recently added support for the equivalent to CXL port emulation
-to support performance characteristic discovery but so far I think
-that's only informational for userspace software rather than affecting
-hardware usage directly.
-
-Jonathan
-
-> 
-> Origin:
-> [CUDA Bandwidth Test] - Starting...
-> Running on...
-> 
->  Device 0: NVIDIA H20
->  Quick Mode
-> 
->  Host to Device Bandwidth, 1 Device(s)
->  PINNED Memory Transfers
->    Transfer Size (Bytes)    Bandwidth(MB/s)
->    33554432            45915.4
-> 
->  Device to Host Bandwidth, 1 Device(s)
->  PINNED Memory Transfers
->    Transfer Size (Bytes)    Bandwidth(MB/s)
->    33554432            45980.3
-> 
->  Device to Device Bandwidth, 1 Device(s)
->  PINNED Memory Transfers
->    Transfer Size (Bytes)    Bandwidth(MB/s)
->    33554432            1842886.8
-> 
-> Result = PASS
-> 
-> With this patch:
-> [CUDA Bandwidth Test] - Starting...
-> Running on...
-> 
->  Device 0: NVIDIA H20
->  Quick Mode
-> 
->  Host to Device Bandwidth, 1 Device(s)
->  PINNED Memory Transfers
->    Transfer Size (Bytes)	Bandwidth(MB/s)
->    33554432			53682.0
-> 
->  Device to Host Bandwidth, 1 Device(s)
->  PINNED Memory Transfers
->    Transfer Size (Bytes)	Bandwidth(MB/s)
->    33554432			53766.0
-> 
->  Device to Device Bandwidth, 1 Device(s)
->  PINNED Memory Transfers
->    Transfer Size (Bytes)	Bandwidth(MB/s)
->    33554432			1842555.1
-> 
-> Result = PASS
-> 
-> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-> ---
->  hw/core/machine.c                  | 1 +
->  hw/pci-bridge/gen_pcie_root_port.c | 2 +-
->  2 files changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index a35c4a8fae..afef55626d 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -38,6 +38,7 @@
->  
->  GlobalProperty hw_compat_9_1[] = {
->      { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
-> +    { "pcie-root-port", "x-speed", "16" },
->  };
->  const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
->  
-> diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
-> index 784507c826..c24ce1f2d1 100644
-> --- a/hw/pci-bridge/gen_pcie_root_port.c
-> +++ b/hw/pci-bridge/gen_pcie_root_port.c
-> @@ -142,7 +142,7 @@ static Property gen_rp_props[] = {
->      DEFINE_PROP_SIZE("pref64-reserve", GenPCIERootPort,
->                       res_reserve.mem_pref_64, -1),
->      DEFINE_PROP_PCIE_LINK_SPEED("x-speed", PCIESlot,
-> -                                speed, PCIE_LINK_SPEED_16),
-> +                                speed, PCIE_LINK_SPEED_32),
->      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
->                                  width, PCIE_LINK_WIDTH_32),
->      DEFINE_PROP_END_OF_LIST()
-
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
+Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiBNb25kYXksIE5vdmVtYmVyIDE4LCAyMDI0IDEw
+OjAyIEFNDQo+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+IDxzaGFtZWVyYWxpLmtv
+bG90aHVtLnRob2RpQGh1YXdlaS5jb20+OyBxZW11LWFybUBub25nbnUub3JnOw0KPiBxZW11LWRl
+dmVsQG5vbmdudS5vcmcNCj4gQ2M6IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsgamdnQG52aWRp
+YS5jb207IG5pY29saW5jQG52aWRpYS5jb207DQo+IGRkdXRpbGVAcmVkaGF0LmNvbTsgTGludXhh
+cm0gPGxpbnV4YXJtQGh1YXdlaS5jb20+OyBXYW5nemhvdSAoQikNCj4gPHdhbmd6aG91MUBoaXNp
+bGljb24uY29tPjsgamlhbmdrdW5rdW4gPGppYW5na3Vua3VuQGh1YXdlaS5jb20+Ow0KPiBKb25h
+dGhhbiBDYW1lcm9uIDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+Ow0KPiB6aGFuZ2ZlaS5n
+YW9AbGluYXJvLm9yZw0KPiBTdWJqZWN0OiBSZTogW1JGQyBQQVRDSCA0LzVdIGh3L2FybS92aXJ0
+LWFjcGktYnVpbGQ6IEJ1aWxkIElPUlQgd2l0aA0KPiBtdWx0aXBsZSBTTU1VIG5vZGVzDQo+IA0K
+DQo+ID4gICAgICAvKiBOdW1iZXIgb2YgSU9SVCBOb2RlcyAqLw0KPiA+IEBAIC0zNDIsMTAgKzM1
+Niw5IEBAIGJ1aWxkX2lvcnQoR0FycmF5ICp0YWJsZV9kYXRhLCBCSU9TTGlua2VyDQo+ICpsaW5r
+ZXIsIFZpcnRNYWNoaW5lU3RhdGUgKnZtcykNCj4gPiAgICAgIC8qIEdJQyBJVFMgSWRlbnRpZmll
+ciBBcnJheSAqLw0KPiA+ICAgICAgYnVpbGRfYXBwZW5kX2ludF9ub3ByZWZpeCh0YWJsZV9kYXRh
+LCAwIC8qIE1BRFQgdHJhbnNsYXRpb25faWQgKi8sDQo+IDQpOw0KPiA+DQo+ID4gLSAgICBpZiAo
+dm1zLT5pb21tdSA9PSBWSVJUX0lPTU1VX1NNTVVWMykgew0KPiA+IC0gICAgICAgIGludCBpcnEg
+PSAgdm1zLT5pcnFtYXBbVklSVF9TTU1VXSArIEFSTV9TUElfQkFTRTsNCj4gPiArICAgIGZvciAo
+aSA9IDA7IGkgPCBudW1fc21tdXM7IGkrKykgew0KPiA+ICsgICAgICAgIHNtbXVfb2Zmc2V0W2ld
+ID0gdGFibGVfZGF0YS0+bGVuIC0gdGFibGUudGFibGVfb2Zmc2V0Ow0KPiA+DQo+IEkgd291bGQg
+aGF2ZSBleHBlY3RlZCBjaGFuZ2VzIGluIHRoZSBzbW11IGlkbWFwIGhhcyB3ZWxsLiBJZiBhIGdp
+dmVuDQo+IFNNTVUgaW5zdGFuY2Ugbm93IHByb3RlY3RzIGEgZ2l2ZW4gYnVzIGhpZXJhcmNoeSBz
+aG91bGRuJ3QgaXQgYmUNCj4gcmVmbGVjdGVkIGluIGEgZGlmZmVyZW50aWF0ZWQgU01NVSBpZG1h
+cCBmb3IgZWFjaCBvZiB0aGVtIChSSUQgc3Vic2V0IG9mDQo+IFNNTVUtPnBjaS1idXMgbWFwcGlu
+ZyB0byBhIHNwZWNpZmljIElPUlQgU01NVSBub2RlKT8gSG93IGlzIGl0IGRvbmUNCj4gY3VycmVu
+dGx5Pw0KDQpJIHRob3VnaHQgdGhhdCBzbW11X2lkbWFwcyB3aWxsIGJlIGhhbmRsZWQgYnkgdGhp
+cyA/DQoNCm9iamVjdF9jaGlsZF9mb3JlYWNoX3JlY3Vyc2l2ZShvYmplY3RfZ2V0X3Jvb3QoKSwN
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlvcnRfaG9zdF9icmlkZ2Vz
+LCBzbW11X2lkbWFwcyk7DQoNCkJ1dCBpdCBpcyBwb3NzaWJsZSB0aGF0LCB0aGVyZSBpcyBhIGJ1
+ZyBpbiB0aGlzIElPUlQgZ2VuZXJhdGlvbiBoZXJlIGFzIEkgYW0gbm90DQphYmxlIHRvIGhvdCBh
+ZGQgIGRldmljZXMuIEl0IGxvb2tzIGxpa2UgdGhlIHBjaWVocCBpbnRlcnJ1cHQgaXMgbm90IGdl
+bmVyYXRlZC9yZWNlaXZlZA0KZm9yIHNvbWUgcmVhc29uLiBOaWNvbGluWzBdIGlzIHN1c3BlY3Rp
+bmcgdGhlIG1pbi9tYXggYnVzIHJhbmdlIGluDQppb3J0X2hvc3RfYnJpZGdlcygpIG1heSBub3Qg
+bGVhdmUgZW5vdWdoIHJhbmdlcyBmb3IgaG90IGFkZCBsYXRlci4NCg0KQ29sZCBwbHVnZ2luZyBk
+ZXZpY2VzIHRvIGRpZmZlcmVudCBTTU1VdjMvcGNpZS1weGIgc2VlbXMgdG8gYmUgYWxyaWdodC4N
+Cg0KSSB3aWxsIGRlYnVnIHRoYXQgc29vbi4NCg0KVGhhbmtzLA0KU2hhbWVlcg0KWzBdIGh0dHBz
+Oi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvWnpQZDFGJTJGVUEyTUtNYndsQEFzdXJhZGEt
+TnZpZGlhLw0KDQoNCg==
 
