@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7592D10F3A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 01:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29BC4D10F3D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 01:18:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCqO8-000188-KJ; Sun, 17 Nov 2024 20:17:12 -0500
+	id 1tCqO9-00018H-Fe; Sun, 17 Nov 2024 20:17:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tCqO5-00016h-6e
+ id 1tCqO5-00016j-7A
  for qemu-devel@nongnu.org; Sun, 17 Nov 2024 20:17:09 -0500
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tCqO1-0006Sz-W4
+ id 1tCqO3-0006TM-8p
  for qemu-devel@nongnu.org; Sun, 17 Nov 2024 20:17:08 -0500
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7eab7622b61so2771900a12.1
- for <qemu-devel@nongnu.org>; Sun, 17 Nov 2024 17:17:05 -0800 (PST)
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-71e681bc315so2492911b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 17 Nov 2024 17:17:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1731892624; x=1732497424;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1731892625; x=1732497425;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yrPlHuJWuEh2kYh2wmPqEvV/twWv5OmoI09hlzoiKIo=;
- b=z0SmBjR8fbWh/uvUtxcorLiYrlFB6VrSze01w0Qo0xOTZcYQJCNijg96B9zsn5nra4
- Af5pwGtwnFm6AfiBOteAcuNJbISJNV51k7Pai0e/G3nxV4hLjGG3iFxaweV6sjGil0Uv
- hnO5SujT8FAPbpMiKc4KCJVU+Ay1HNxYYwdbR91xH61wgOi/11EEM7lvGpH5W66DmAg1
- vbdMCdTCHRU7Ni+XNW2IDoIUH9fESw2YS/IMts3JT1p/mxwKSW/7dt0ozl+y042GcQ0h
- UvOaU2ic4CkJ5XhJouAcAmM+ZSh3W61s8JuPLCaHwbKRLbwfyPPsO4BWZgqGTR/DnmTe
- OdWg==
+ :reply-to; bh=SEyv/JMi1h0in8ejfM1kkgKutMVZo5JCMdeeMywtp8c=;
+ b=ZB90m6PDeYelcHRyRakR7n5QpQeGexwr7S2EshMcZijN+UAC/+D/ITYXyX+QjxFshJ
+ 2eLi+nZQ/8GzxrhfsbIlJIdOIGE/m1qsV/LihHywCsZWQAMIfdNA+pP6GOwgW6SsOf4s
+ mEEd4MfU1g7Yc5AtTNpZ5pGugiKkDJhDHAugkIPQl9MujYeo4jvUWfG4K7i483o4Oyqk
+ mIAS6cCf0xZyKxSw8DCCa4sJgZj6OV0HMAfGmh67lVAXJNIe+sYhjvG/d9710jL+bQqk
+ EfMMl7G0nhjpdIIS84gXztZKiGHw6O5x3NYcZy0xJVuH+Oj81sGGMrsU2G8mVdH8Wu3P
+ RSOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731892624; x=1732497424;
+ d=1e100.net; s=20230601; t=1731892625; x=1732497425;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yrPlHuJWuEh2kYh2wmPqEvV/twWv5OmoI09hlzoiKIo=;
- b=cF02YXkaGTqffJzhOVOSCHUa5G2RER+9QTERYpK8hZ/Alguf1S9JUSiO5bgqBEEq2s
- dhXV8Z3B1Lli1esQonfibT6i5/H6EN10CFPF/Ui+JAq04x0UpisKkVpHEQgXJPGIt67X
- 8YSJxgRONbPLvHtDR3Wewm+ISsWJL1O193x80jKxt+QFKMqYrCKuyoNRvb0109YSJ/oU
- fRDuC2DXX9ep89ApbqCMLTYftZOBaNW0mGBEy8GTIPxXB9k83JtHovmtBXUx7tqkmZXd
- 4F54UT4nNMHVuqwP77lytA0qeCCm6NikgXZS0XvecmuR/REFO7IWhgBnvpRctDLYqiqp
- yFqA==
+ bh=SEyv/JMi1h0in8ejfM1kkgKutMVZo5JCMdeeMywtp8c=;
+ b=Dfuai/TKgrfdti5PQ/KvjqlPTUGW7f9FTRvfw/Y8P1j2mPhh8p1oE71eBrujlWsUHo
+ V7sswuvzTKZOC3EMdIJZyfkItW7pwStgffUx4N8HfqcQXycxMlIwt301YwGv83Ay8wMp
+ rfuZhFmMupBuR2x7neNpJK0QFlta1fnX8W4rakwXdjbG6qDqQdpF/YXVhqIC0l/yfYqA
+ 6xvoDhxUtJI4QfnKvyXUTvykkVjb8yYJJ4Tjfvk/4m28F4xdFeGhdHPHA6M+XSPEOkVX
+ D8HzWol68UJEYV52faqZAmH+Lw6wMqja1OLFjdlxWv9ykGgWdqxk+h/+2kBhmL9jauN4
+ 5r/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+MSU4dRys++dMLCFbZu6YY16wU2EWIO9FBv1C1L29Q5s7Qkcn/kx6Ca4pONMLQGgLjRkdt8rMVy7k@nongnu.org
-X-Gm-Message-State: AOJu0Yyj9TjkB5MmymKFXhkJq2vK0truRTRow7FJwITz/69JK3stTvMQ
- GYk3791GmLy8h1nbb+jQZgKP0mrYnJB8fdZbOiwRukrNdyIi4qO0KN2Cl6LmoWv5a/fKWLwX53N
- 7
-X-Google-Smtp-Source: AGHT+IFyERO+IUJIVSzfZa8WYRSNfEUTdjWCNkqi7kcwkLxLeu7cg9FaBIjdgNDOuKXHmKJBtp9VVA==
-X-Received: by 2002:a05:6a20:2449:b0:1d8:a29b:8f6f with SMTP id
- adf61e73a8af0-1dc90b1cc5emr14277789637.16.1731892624095; 
- Sun, 17 Nov 2024 17:17:04 -0800 (PST)
+ AJvYcCXISGo2et2hf8doMngcZq9RTrHoI03ue2UrqB9IFsj1V2yrRKppTOjBUAN72gPSHNstpifUzRAFM2OO@nongnu.org
+X-Gm-Message-State: AOJu0Yw95Lo+U71NSATtaEG+3yJRmETGCgXmLLBvc+BAjMxsXUyqZAQJ
+ xqc2Tl8dPraaR5Lca5NI19kZRDQ9Ttbfqxyqori3TTd6Hdj6joqtpVW+Mk+bRsK/kAGjg1brZp/
+ F
+X-Google-Smtp-Source: AGHT+IHiGvopjh8ap5uF2MeEehXd+gFOzW5stRQNg5GamEVC4fjVVY1EXhLbuEaDvU/YDOeY0SGF7A==
+X-Received: by 2002:a05:6a00:3bf4:b0:724:6804:d663 with SMTP id
+ d2e1a72fcca58-7246804d6ddmr20017440b3a.1.1731892625309; 
+ Sun, 17 Nov 2024 17:17:05 -0800 (PST)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724771e8b75sm5134024b3a.147.2024.11.17.17.17.03
+ d2e1a72fcca58-724771e8b75sm5134024b3a.147.2024.11.17.17.17.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 Nov 2024 17:17:03 -0800 (PST)
+ Sun, 17 Nov 2024 17:17:05 -0800 (PST)
 From: Atish Patra <atishp@rivosinc.com>
-Date: Sun, 17 Nov 2024 17:15:58 -0800
-Subject: [PATCH v3 10/11] target/riscv: Add implied rule for counter
- delegation extensions
+Date: Sun, 17 Nov 2024 17:15:59 -0800
+Subject: [PATCH v3 11/11] target/riscv: Add configuration for S[m|s]csrind,
+ Smcdeleg/Ssccfg
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241117-counter_delegation-v3-10-476d6f36e3c8@rivosinc.com>
+Message-Id: <20241117-counter_delegation-v3-11-476d6f36e3c8@rivosinc.com>
 References: <20241117-counter_delegation-v3-0-476d6f36e3c8@rivosinc.com>
 In-Reply-To: <20241117-counter_delegation-v3-0-476d6f36e3c8@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
@@ -76,14 +76,14 @@ Cc: kaiwenxue1@gmail.com, Atish Patra <atishp@rivosinc.com>,
  palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=atishp@rivosinc.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=atishp@rivosinc.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,50 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The counter delegation/configuration extensions depend on the following
-extensions.
+Add configuration options so that they can be enabled/disabld from
+qemu commandline.
 
-1. Smcdeleg - To enable counter delegation from M to S
-2. S[m|s]csrind - To enable indirect access CSRs
-
-Add an implied rule so that these extensions are enabled by default
-if the sscfg extension is enabled.
-
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Atish Patra <atishp@rivosinc.com>
 ---
- target/riscv/cpu.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ target/riscv/cpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 82edd28e2e1d..410ca2e3a666 100644
+index 410ca2e3a666..2a4f285a974f 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -2642,6 +2642,16 @@ static RISCVCPUImpliedExtsRule ZVKSG_IMPLIED = {
-     },
- };
- 
-+static RISCVCPUImpliedExtsRule SSCFG_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_ssccfg),
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_smcsrind), CPU_CFG_OFFSET(ext_sscsrind),
-+        CPU_CFG_OFFSET(ext_smcdeleg),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
- RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
-     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
-     &RVM_IMPLIED, &RVV_IMPLIED, NULL
-@@ -2659,7 +2669,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     &ZVE64X_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
-     &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
-     &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
--    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED,
-+    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
-     NULL
- };
- 
+@@ -1477,6 +1477,10 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     /* Defaults for standard extensions */
+     MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
+     MULTI_EXT_CFG_BOOL("smcntrpmf", ext_smcntrpmf, false),
++    MULTI_EXT_CFG_BOOL("smcsrind", ext_smcsrind, false),
++    MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
++    MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
++    MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
+     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+     MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
+     MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
 
 -- 
 2.34.1
