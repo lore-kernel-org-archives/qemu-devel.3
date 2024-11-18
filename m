@@ -4,73 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D086D591B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:59:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81478D591B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 20:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD7st-0004fn-LY; Mon, 18 Nov 2024 14:58:07 -0500
+	id 1tD8Ys-0001U9-62; Mon, 18 Nov 2024 15:41:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tD7sr-0004fd-K6
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 14:58:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tD7sl-0005Mt-Qe
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 14:58:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731959877;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=I+8+4wQtocpBqccWOBpFJbP0H/jKg+Q7O1ioCwGV6OU=;
- b=BboQ6Kjx7U8rInlgBjk05QtvIgCGIaPpZOoH8Frrn6Votu4aRkYxn+YXAQPXXuIVfiYff8
- eqS04nIlwTLZgg3eUjl3BS8lyyNsT5j/CNjLEsEs44VpD/bTK5V19x2tupWPEgCZVvCJZe
- 9nOdu/kv6gJoMsQ2G7T2+C++W/lp8VQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-191-hmYL05v7NuOFtIiVNGArNw-1; Mon,
- 18 Nov 2024 14:57:53 -0500
-X-MC-Unique: hmYL05v7NuOFtIiVNGArNw-1
-X-Mimecast-MFC-AGG-ID: hmYL05v7NuOFtIiVNGArNw
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B65B71955BD2; Mon, 18 Nov 2024 19:57:49 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.133])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 148CF1955F49; Mon, 18 Nov 2024 19:57:47 +0000 (UTC)
-Date: Mon, 18 Nov 2024 19:57:44 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: [PULL 6/7] hw/loongarch: virt: pass random seed to fdt
-Message-ID: <ZzucOBWZJYeUVi3V@redhat.com>
-References: <20240912125132.268802-1-gaosong@loongson.cn>
- <20240912125132.268802-7-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tD8Yq-0001Tq-F1
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:41:28 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tD8Yo-0002NO-Hi
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 15:41:28 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5cfcb7183deso2202391a12.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 12:41:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1731962484; x=1732567284; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eHplRik/YcnR60UB43A7Gp9H2sYINST0OAHvGPPuMSA=;
+ b=acvYzKnbD+BXmYCUeI1WBKGIMbq0Bwzf7Yc3d8JtV1raLgYx97VNXeOpWj6JiJaYeH
+ C7b/dcbuYBGfOtfgPFTV+WrRpvA6CCBBzKgpABzUYIj8t7RhQZISRmrHtAL7lGmT72JS
+ bYa0bWvBBSsKMUK7C+K8D9DxDLfOVWkq9sT5pzdzc0oqDnFVcuMuUuSD+k+xT648TB2k
+ gBzVA1HRx+bqVYDmPu5e5grGaC2NYRXn/OTo/mh4P6M7guc2X12fJO/E5LhpzUfOcFFW
+ pO7ldWovVvyriHR3MexccP91y2ZLDfqFeJQ90LKlUDRur/N67vMqpj3kP/byHfr5LN9x
+ +WGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731962484; x=1732567284;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eHplRik/YcnR60UB43A7Gp9H2sYINST0OAHvGPPuMSA=;
+ b=UR86IOkPYbggMCVLPkwEZCXKvmrSop6QJ3AVbD1zMUkmsPUaxTCs4bz6grrQFNucTg
+ GIo/7SDwKkcK/U8S7RCHUGVqqgBCIyv5nWxCkOjjXYood2Qe6mRk1LvVXNhLNCElxRjH
+ InH57YTvey8dCojyANedNQDyLUFQe5x/EGek4g6vud9t5wTPhZIlv9ysk+9/3dIt2JjK
+ 5GPHJRguoDuI1Bx+KG3WW/ZVrYpbfnFwxx14oE4GA7NFA+wU0er09iw1lKpRXuSMPfVa
+ VDK01L1pWFg7P4idexJV9QMQRoV39BWBxZLP/GNIHABbSkL89UnQH7jOMizFwuQjSCoZ
+ DM5g==
+X-Gm-Message-State: AOJu0Yxi8mLAXXplyJ0f8Nh2R7BfDH8b6kCM975Ry5+elWuNJojfMFPP
+ i4kd/FrjQ4sDeop0raXktVj7R9lfqvxgtIlNfubIYi16/uMAgyffAtKHuhaDbeo=
+X-Google-Smtp-Source: AGHT+IHSZTPpMD1xwncPVNmStBGMBG/0LbJF37QW2VIFds0Bat3Vr/oKbEdnHgtRKiu0KWTRsRGQQA==
+X-Received: by 2002:a17:906:4fcb:b0:a9e:eee8:4947 with SMTP id
+ a640c23a62f3a-aa4c7e256fbmr67195166b.9.1731962484533; 
+ Mon, 18 Nov 2024 12:41:24 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20df56b1esm574306066b.71.2024.11.18.12.41.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Nov 2024 12:41:24 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 37DDB5F8E9;
+ Mon, 18 Nov 2024 20:41:23 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 1/4] tests/tcg: Stop using exit() in the gdbstub testcases
+Date: Mon, 18 Nov 2024 20:41:20 +0000
+Message-Id: <20241118204123.3083310-2-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241118204123.3083310-1-alex.bennee@linaro.org>
+References: <20241118204123.3083310-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240912125132.268802-7-gaosong@loongson.cn>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,96 +96,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Song / Jason,
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-We're seeing non-deterministic hangs in our functional test
-suite 'tests/functional/test_loongarch64_virt.py' and my
-attempt at git bisect is blaming this commit.
+GDB 15 does not like exit() anymore:
 
-With this applied, perhaps 1 time in 10, the test case hangs,
-with zero serial port output from EDK2 emitted
+    (gdb) python exit(0)
+    Python Exception <class 'SystemExit'>: 0
+    Error occurred in Python: 0
 
-  https://gitlab.com/qemu-project/qemu/-/issues/2686
+Use the GDB's own exit command, like it's already done in a couple
+places, everywhere. This is the same fix as commit 93a3048dcf45
+("tests: Gently exit from GDB when tests complete"), but applied to
+more places.
 
-I'm not seeing an obvious flaw in this commit's code, so I'm
-wondering if it has accidentally tickled some other subtle
-pre-existing bug elsewhere. Some general problem with FDT
-handling on loongarch64 perhaps ?
+Acked-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20241022113939.19989-1-iii@linux.ibm.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-On Thu, Sep 12, 2024 at 08:51:31PM +0800, Song Gao wrote:
-> From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-> 
-> If the FDT contains /chosen/rng-seed, then the Linux RNG will use it to
-> initialize early. Set this using the usual guest random number
-> generation function.
-> 
-> This is the same procedure that's done in b91b6b5a2c ("hw/microblaze:
-> pass random seed to fdt"), e4b4f0b71c ("hw/riscv: virt: pass random seed
-> to fdt"), c6fe3e6b4c ("hw/openrisc: virt: pass random seed to fdt"),
-> 67f7e426e5 ("hw/i386: pass RNG seed via setup_data entry"), c287941a4d
-> ("hw/rx: pass random seed to fdt"), 5e19cc68fb ("hw/mips: boston: pass
-> random seed to fdt"), 6b23a67916 ("hw/nios2: virt: pass random seed to fdt")
-> c4b075318e ("hw/ppc: pass random seed to fdt"), and 5242876f37
-> ("hw/arm/virt: dt: add rng-seed property").
-> 
-> These earlier commits later were amended to rerandomize the RNG seed on
-> snapshot load, but the LoongArch code somehow already does that, despite
-> not having this patch here, presumably due to some lucky copy and
-> pasting.
-> 
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-> Reviewed-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20240905153316.2038769-1-Jason@zx2c4.com>
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->  hw/loongarch/virt.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 76dd29a391..81b1f9486f 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -48,6 +48,7 @@
->  #include "hw/block/flash.h"
->  #include "hw/virtio/virtio-iommu.h"
->  #include "qemu/error-report.h"
-> +#include "qemu/guest-random.h"
->  
->  static bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
->  {
-> @@ -303,6 +304,7 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
->  static void create_fdt(LoongArchVirtMachineState *lvms)
->  {
->      MachineState *ms = MACHINE(lvms);
-> +    uint8_t rng_seed[32];
->  
->      ms->fdt = create_device_tree(&lvms->fdt_size);
->      if (!ms->fdt) {
-> @@ -316,6 +318,10 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
->      qemu_fdt_setprop_cell(ms->fdt, "/", "#address-cells", 0x2);
->      qemu_fdt_setprop_cell(ms->fdt, "/", "#size-cells", 0x2);
->      qemu_fdt_add_subnode(ms->fdt, "/chosen");
-> +
-> +    /* Pass seed to RNG */
-> +    qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
-> +    qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed", rng_seed, sizeof(rng_seed));
->  }
->  
->  static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
-> -- 
-> 2.34.1
-> 
-> 
-
-With regards,
-Daniel
+diff --git a/tests/guest-debug/test_gdbstub.py b/tests/guest-debug/test_gdbstub.py
+index a715c0e3f5..4f08089e6a 100644
+--- a/tests/guest-debug/test_gdbstub.py
++++ b/tests/guest-debug/test_gdbstub.py
+@@ -10,10 +10,16 @@
+ 
+ fail_count = 0
+ 
++
++def gdb_exit(status):
++    gdb.execute(f"exit {status}")
++
++
+ class arg_parser(argparse.ArgumentParser):
+     def exit(self, status=None, message=""):
+         print("Wrong GDB script test argument! " + message)
+-        gdb.execute("exit 1")
++        gdb_exit(1)
++
+ 
+ def report(cond, msg):
+     """Report success/fail of a test"""
+@@ -38,11 +44,11 @@ def main(test, expected_arch=None):
+                    "connected to {}".format(expected_arch))
+     except (gdb.error, AttributeError):
+         print("SKIP: not connected")
+-        exit(0)
++        gdb_exit(0)
+ 
+     if gdb.parse_and_eval("$pc") == 0:
+         print("SKIP: PC not set")
+-        exit(0)
++        gdb_exit(0)
+ 
+     try:
+         test()
+@@ -62,4 +68,4 @@ def main(test, expected_arch=None):
+         pass
+ 
+     print("All tests complete: {} failures".format(fail_count))
+-    gdb.execute(f"exit {fail_count}")
++    gdb_exit(fail_count)
+diff --git a/tests/tcg/multiarch/gdbstub/interrupt.py b/tests/tcg/multiarch/gdbstub/interrupt.py
+index 90a45b5140..2d5654d154 100644
+--- a/tests/tcg/multiarch/gdbstub/interrupt.py
++++ b/tests/tcg/multiarch/gdbstub/interrupt.py
+@@ -8,7 +8,7 @@
+ #
+ 
+ import gdb
+-from test_gdbstub import main, report
++from test_gdbstub import gdb_exit, main, report
+ 
+ 
+ def check_interrupt(thread):
+@@ -49,7 +49,7 @@ def run_test():
+     """
+     if len(gdb.selected_inferior().threads()) == 1:
+         print("SKIP: set to run on a single thread")
+-        exit(0)
++        gdb_exit(0)
+ 
+     gdb.execute("set scheduler-locking on")
+     for thread in gdb.selected_inferior().threads():
+diff --git a/tests/tcg/multiarch/gdbstub/prot-none.py b/tests/tcg/multiarch/gdbstub/prot-none.py
+index 7e264589cb..51082a30e4 100644
+--- a/tests/tcg/multiarch/gdbstub/prot-none.py
++++ b/tests/tcg/multiarch/gdbstub/prot-none.py
+@@ -5,7 +5,7 @@
+ SPDX-License-Identifier: GPL-2.0-or-later
+ """
+ import ctypes
+-from test_gdbstub import main, report
++from test_gdbstub import gdb_exit, main, report
+ 
+ 
+ def probe_proc_self_mem():
+@@ -22,7 +22,7 @@ def run_test():
+     """Run through the tests one by one"""
+     if not probe_proc_self_mem():
+         print("SKIP: /proc/self/mem is not usable")
+-        exit(0)
++        gdb_exit(0)
+     gdb.Breakpoint("break_here")
+     gdb.execute("continue")
+     val = gdb.parse_and_eval("*(char[2] *)q").string()
+diff --git a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
+index 0f687f3284..6eb6ebf7b1 100644
+--- a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
++++ b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
+@@ -3,7 +3,7 @@
+ This runs as a sourced script (via -x, via run-test.py)."""
+ from __future__ import print_function
+ import gdb
+-from test_gdbstub import main, report
++from test_gdbstub import gdb_exit, main, report
+ 
+ 
+ def run_test():
+@@ -12,7 +12,7 @@ def run_test():
+         # m68k GDB supports only GDB_OSABI_SVR4, but GDB_OSABI_LINUX is
+         # required for the info proc support (see set_gdbarch_info_proc()).
+         print("SKIP: m68k GDB does not support GDB_OSABI_LINUX")
+-        exit(0)
++        gdb_exit(0)
+     mappings = gdb.execute("info proc mappings", False, True)
+     report(isinstance(mappings, str), "Fetched the mappings from the inferior")
+     # Broken with host page size > guest page size
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.39.5
 
 
