@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7439CD591AA
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11A02D591AA
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 17:37:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD5gO-0008CS-9K; Mon, 18 Nov 2024 12:37:04 -0500
+	id 1tD5gc-0008Gr-L5; Mon, 18 Nov 2024 12:37:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gE-00086w-0w
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:36:54 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gF-0008Aq-N2
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:37:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gA-0004kq-VC
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:36:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tD5gD-0004lJ-VZ
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 12:36:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731951409;
+ s=mimecast20190719; t=1731951413;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U8ZF0tTQdZBir3IuexxqkPFkW2BBc2tfjP1VYb1K6jU=;
- b=JvIJO6TfnbIBWuyyLTGL8HWtgAgNe5UYtUOICEJkpgTLNDN0JjIHRG4o8mAJB/C4INFi0Y
- KkzRTjoXAOn+aGX/oXhkzUAX7fVs3un/yxuEL+eltO3wQ4uZn3l/iNQeskCrV83i8/b/Wg
- gJy1A4iDZdEWLkdFGDWLDulRygLrK0k=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VJhFIt+Avk9efs65XYYhBIvWur/LnUUbkyjdszyi2Io=;
+ b=bEffYB6EjRnDZvCTkOHv2kqSpkbeu0lWOsJzY3P41UNfyAJWbZNGtljJxTlMtLIv46/8bi
+ M2xef+DtmzPWBDNVwP4CabaREwbLXQjFy/4/wFoNMi6Vbx1IAGLvSvVV0qqzK0nW2D1aQE
+ XuQxqdOMZDb0wjwBfvX/rZIwzziasl0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-iAStWBGjNlCsKg_7jD0_LQ-1; Mon,
- 18 Nov 2024 12:36:45 -0500
-X-MC-Unique: iAStWBGjNlCsKg_7jD0_LQ-1
-X-Mimecast-MFC-AGG-ID: iAStWBGjNlCsKg_7jD0_LQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-sFgwC8BXOD6ouafXXwan7w-1; Mon,
+ 18 Nov 2024 12:36:50 -0500
+X-MC-Unique: sFgwC8BXOD6ouafXXwan7w-1
+X-Mimecast-MFC-AGG-ID: sFgwC8BXOD6ouafXXwan7w
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61ACC1955D4D; Mon, 18 Nov 2024 17:36:43 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA9B2195608B; Mon, 18 Nov 2024 17:36:48 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C9A69195DF81; Mon, 18 Nov 2024 17:36:41 +0000 (UTC)
+ id 3E5E919560A3; Mon, 18 Nov 2024 17:36:46 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 02/12] target/s390x: Fix the floating-point multiply-and-add
- NaN rules
-Date: Mon, 18 Nov 2024 18:36:24 +0100
-Message-ID: <20241118173634.473532-3-thuth@redhat.com>
+ Jared Rossi <jrossi@linux.ibm.com>
+Subject: [PULL 04/12] docs/system/s390x/bootdevices: Update loadparm
+ documentation
+Date: Mon, 18 Nov 2024 18:36:26 +0100
+Message-ID: <20241118173634.473532-5-thuth@redhat.com>
 In-Reply-To: <20241118173634.473532-1-thuth@redhat.com>
 References: <20241118173634.473532-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,129 +83,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-Order the helper arguments to match the Principles of Operation.
-Implement the "Results: MULTIPLY AND ADD" table in pickNaNMulAdd().
+Update documentation to include per-device loadparm support.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20241023000147.34035-2-iii@linux.ibm.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20241115002742.3576842-1-jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/tcg/fpu_helper.c     |  8 ++++----
- target/s390x/tcg/vec_fpu_helper.c | 12 ++++++------
- fpu/softfloat-specialize.c.inc    | 19 +++++++++++++++++++
- 3 files changed, 29 insertions(+), 10 deletions(-)
+ docs/system/s390x/bootdevices.rst | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
-index d8bd5748fa..5041c13962 100644
---- a/target/s390x/tcg/fpu_helper.c
-+++ b/target/s390x/tcg/fpu_helper.c
-@@ -780,7 +780,7 @@ uint32_t HELPER(kxb)(CPUS390XState *env, Int128 a, Int128 b)
- uint64_t HELPER(maeb)(CPUS390XState *env, uint64_t f1,
-                       uint64_t f2, uint64_t f3)
- {
--    float32 ret = float32_muladd(f2, f3, f1, 0, &env->fpu_status);
-+    float32 ret = float32_muladd(f3, f2, f1, 0, &env->fpu_status);
-     handle_exceptions(env, false, GETPC());
-     return ret;
- }
-@@ -789,7 +789,7 @@ uint64_t HELPER(maeb)(CPUS390XState *env, uint64_t f1,
- uint64_t HELPER(madb)(CPUS390XState *env, uint64_t f1,
-                       uint64_t f2, uint64_t f3)
- {
--    float64 ret = float64_muladd(f2, f3, f1, 0, &env->fpu_status);
-+    float64 ret = float64_muladd(f3, f2, f1, 0, &env->fpu_status);
-     handle_exceptions(env, false, GETPC());
-     return ret;
- }
-@@ -798,7 +798,7 @@ uint64_t HELPER(madb)(CPUS390XState *env, uint64_t f1,
- uint64_t HELPER(mseb)(CPUS390XState *env, uint64_t f1,
-                       uint64_t f2, uint64_t f3)
- {
--    float32 ret = float32_muladd(f2, f3, f1, float_muladd_negate_c,
-+    float32 ret = float32_muladd(f3, f2, f1, float_muladd_negate_c,
-                                  &env->fpu_status);
-     handle_exceptions(env, false, GETPC());
-     return ret;
-@@ -808,7 +808,7 @@ uint64_t HELPER(mseb)(CPUS390XState *env, uint64_t f1,
- uint64_t HELPER(msdb)(CPUS390XState *env, uint64_t f1,
-                       uint64_t f2, uint64_t f3)
- {
--    float64 ret = float64_muladd(f2, f3, f1, float_muladd_negate_c,
-+    float64 ret = float64_muladd(f3, f2, f1, float_muladd_negate_c,
-                                  &env->fpu_status);
-     handle_exceptions(env, false, GETPC());
-     return ret;
-diff --git a/target/s390x/tcg/vec_fpu_helper.c b/target/s390x/tcg/vec_fpu_helper.c
-index 75cf605b9f..1bbaa82fe8 100644
---- a/target/s390x/tcg/vec_fpu_helper.c
-+++ b/target/s390x/tcg/vec_fpu_helper.c
-@@ -621,8 +621,8 @@ static void vfma32(S390Vector *v1, const S390Vector *v2, const S390Vector *v3,
-     int i;
- 
-     for (i = 0; i < 4; i++) {
--        const float32 a = s390_vec_read_float32(v2, i);
--        const float32 b = s390_vec_read_float32(v3, i);
-+        const float32 a = s390_vec_read_float32(v3, i);
-+        const float32 b = s390_vec_read_float32(v2, i);
-         const float32 c = s390_vec_read_float32(v4, i);
-         float32 ret = float32_muladd(a, b, c, flags, &env->fpu_status);
- 
-@@ -645,8 +645,8 @@ static void vfma64(S390Vector *v1, const S390Vector *v2, const S390Vector *v3,
-     int i;
- 
-     for (i = 0; i < 2; i++) {
--        const float64 a = s390_vec_read_float64(v2, i);
--        const float64 b = s390_vec_read_float64(v3, i);
-+        const float64 a = s390_vec_read_float64(v3, i);
-+        const float64 b = s390_vec_read_float64(v2, i);
-         const float64 c = s390_vec_read_float64(v4, i);
-         const float64 ret = float64_muladd(a, b, c, flags, &env->fpu_status);
- 
-@@ -664,8 +664,8 @@ static void vfma128(S390Vector *v1, const S390Vector *v2, const S390Vector *v3,
-                     const S390Vector *v4, CPUS390XState *env, bool s, int flags,
-                     uintptr_t retaddr)
- {
--    const float128 a = s390_vec_read_float128(v2);
--    const float128 b = s390_vec_read_float128(v3);
-+    const float128 a = s390_vec_read_float128(v3);
-+    const float128 b = s390_vec_read_float128(v2);
-     const float128 c = s390_vec_read_float128(v4);
-     uint8_t vxc, vec_exc = 0;
-     float128 ret;
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index b5a3208050..9bca03c4ae 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -597,6 +597,25 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
-         float_raise(float_flag_invalid | float_flag_invalid_imz, status);
-     }
-     return 3; /* default NaN */
-+#elif defined(TARGET_S390X)
-+    if (infzero) {
-+        float_raise(float_flag_invalid | float_flag_invalid_imz, status);
-+        return 3;
-+    }
+diff --git a/docs/system/s390x/bootdevices.rst b/docs/system/s390x/bootdevices.rst
+index 1a1a764c1c..97b3914785 100644
+--- a/docs/system/s390x/bootdevices.rst
++++ b/docs/system/s390x/bootdevices.rst
+@@ -79,7 +79,29 @@ The second way to use this parameter is to use a number in the range from 0
+ to 31. The numbers that can be used here correspond to the numbers that are
+ shown when using the ``PROMPT`` option, and the s390-ccw bios will then try
+ to automatically boot the kernel that is associated with the given number.
+-Note that ``0`` can be used to boot the default entry.
++Note that ``0`` can be used to boot the default entry. If the machine
++``loadparm`` is not assigned a value, then the default entry is used.
 +
-+    if (is_snan(a_cls)) {
-+        return 0;
-+    } else if (is_snan(b_cls)) {
-+        return 1;
-+    } else if (is_snan(c_cls)) {
-+        return 2;
-+    } else if (is_qnan(a_cls)) {
-+        return 0;
-+    } else if (is_qnan(b_cls)) {
-+        return 1;
-+    } else {
-+        return 2;
-+    }
- #elif defined(TARGET_SPARC)
-     /* For (inf,0,nan) return c. */
-     if (infzero) {
++By default, the machine ``loadparm`` applies to all boot devices. If multiple
++devices are assigned a ``bootindex`` and the ``loadparm`` is to be different
++between them, an independent ``loadparm`` may be assigned on a per-device basis.
++
++An example guest using per-device ``loadparm``::
++
++  qemu-system-s390x -drive if=none,id=dr1,file=primary.qcow2 \
++                   -device virtio-blk,drive=dr1,bootindex=1 \
++                   -drive if=none,id=dr2,file=secondary.qcow2 \
++                   -device virtio-blk,drive=dr2,bootindex=2,loadparm=3
++
++In this case, the primary boot device will attempt to IPL using the default
++entry (because no ``loadparm`` is specified for this device or for the
++machine). If that device fails to boot, the secondary device will attempt to
++IPL using entry number 3.
++
++If a ``loadparm`` is specified on both the machine and a device, the per-device
++value will superseded the machine value.  Per-device ``loadparm`` values are
++only used for devices with an assigned ``bootindex``. The machine ``loadparm``
++is used when attempting to boot without a ``bootindex``.
+ 
+ 
+ Booting from a network device
 -- 
 2.47.0
 
