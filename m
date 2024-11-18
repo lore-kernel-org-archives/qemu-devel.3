@@ -4,108 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E21AD49223
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C9FD49221
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:56:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD24p-0002Zb-4X; Mon, 18 Nov 2024 08:46:03 -0500
+	id 1tD2Dh-0006O3-2o; Mon, 18 Nov 2024 08:55:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tD24l-0002YR-Ar
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:46:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1tD2De-0006LI-Rg; Mon, 18 Nov 2024 08:55:11 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tD24j-00065s-2M
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:45:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731937555;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4aXRwMuXZA9xXLR2PBwNDTi0Od7kPErzY7NzN0KuU8c=;
- b=CdaiS87yhbnITTF/7Mwg58rOXWzu3dSRUbHaJ6K0Xl0PrfBWw3ndGc47m2J4BJFpWQMmZ8
- BkVvSOwQfcJQXMeQ8+wzREw/GgUuv9bGmwqQRbNtAwueRGGTcCj0S58Tr98BlXyzxHeGsc
- sp64bFfIbFgL+PEsEVQmN2/P/NYALDA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-97-dtac_isaM76n2VomqzLwKA-1; Mon, 18 Nov 2024 08:45:54 -0500
-X-MC-Unique: dtac_isaM76n2VomqzLwKA-1
-X-Mimecast-MFC-AGG-ID: dtac_isaM76n2VomqzLwKA
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4316655b2f1so20566155e9.0
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 05:45:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731937553; x=1732542353;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4aXRwMuXZA9xXLR2PBwNDTi0Od7kPErzY7NzN0KuU8c=;
- b=uwAOAk0iZUS93DdufeeLcO7+HMW5KszjLnTcHA1M8mtHd+K0dzSpwNHaFjksu/K7ST
- ZsGmqWtOoQoyR9l9iIOJ2ijE5InoPvNAzMRsFYv+BlQ4UgomtbVj9U1T9i+E1dK3I0h2
- UREWjdLvvkQKR6loByOEHLoR4+iCRWQEWcootdh1tUUthBrTsuBinxHbxnw5Ouu3X6Ao
- Om0i7iXfSBJAyntSa5i5934ZT7zsNu4XHYFOIAaZwQJdlHTdPFg9YGp0BEL5QtSL8Dy9
- dfa09TYGV65tFkNv3TWcVLG0R6URiNyYd8j5Ro2IySQUzNe2ZjubgPJXxdOuv7sa0W5g
- Iy3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXIONqmpJpEJj4CSAthlJrMIM4e2V3IaNPUMLAEsdEUFdXGhA/fiCgHKTWM4pyMphm/VtYfKK/Yp5VH@nongnu.org
-X-Gm-Message-State: AOJu0YwOOBml7CxKkHrN23fZySRficBbjfkqbp5FAtUDXPFvN64rD3mz
- O3Hu3rPlDrFeJcz9RUFXq9rzYopw5ge/pYomZDJKv0HIJ+tl55/XuJyZR5zGVdwUSQk/QZFhOjD
- B71Uv4kxuKos0UEu5f/wQH/fGR4GDErKCEZ/BY4af8yLWSFg/3CV/
-X-Received: by 2002:a05:600c:5492:b0:431:5d89:646e with SMTP id
- 5b1f17b1804b1-432df792df0mr91996335e9.32.1731937552982; 
- Mon, 18 Nov 2024 05:45:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHSyR4PH6PDcQ5QSVAmQRRQvdKh8qidN9xp1DJ13iZ2La9UZItbGi6K8nL5Ftpie0twUE2yXA==
-X-Received: by 2002:a05:600c:5492:b0:431:5d89:646e with SMTP id
- 5b1f17b1804b1-432df792df0mr91995995e9.32.1731937552676; 
- Mon, 18 Nov 2024 05:45:52 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432da28b76fsm163395515e9.28.2024.11.18.05.45.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Nov 2024 05:45:52 -0800 (PST)
-Message-ID: <48bb0455-7c2e-4cc6-aa15-ebe4311d8430@redhat.com>
-Date: Mon, 18 Nov 2024 14:45:50 +0100
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1tD2Dd-0007LZ-7V; Mon, 18 Nov 2024 08:55:10 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AI17nJp008300;
+ Mon, 18 Nov 2024 13:54:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=9aJUxO
+ OdvycMOVxpUdOskBesQZ+2QMH7mdMx0zjex1s=; b=Njtr2TnovZ6gh3V+qlsyyU
+ nfbZ4MG0wPrb1SWbxeRcDeQ0A3jdD+0uUtNCDMV9P4pHW6uNu9EpmTBBagdNVPx6
+ UOz2IlA/feSAjxDH87SDkEV9DkWJNx1/hmJWZNB11py35/fOeryNWJPpTgqLtxIL
+ kuH5iQeMkq4dQIMhjbw98pqR4wHezPbaMwlU1r6vgBk9UsuQ5LHUHtglggv7Ug7r
+ gn5i1TxgSY4uD63UZX1DabLwWTpfd8e/F53sEWSpnMPmQcKsmQuvmEUijEJkMzau
+ aIi4QqMx5LfPJeUFRutFCIIY38kNeNvt0+20iMwIPXpbRXJa4SSQnJhAdrfi8zYg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xgtt1xue-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Nov 2024 13:54:55 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AICvYpa030962;
+ Mon, 18 Nov 2024 13:54:54 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42y63y4s40-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Nov 2024 13:54:54 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4AIDsraT60227860
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Nov 2024 13:54:53 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EFD4258052;
+ Mon, 18 Nov 2024 13:54:52 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AADA858068;
+ Mon, 18 Nov 2024 13:54:51 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.67.149.170]) by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 18 Nov 2024 13:54:51 +0000 (GMT)
+Message-ID: <fc42668540e23ebb275e6e0418e862f91c5a3cca.camel@linux.ibm.com>
+Subject: Re: [PATCH v2] hw: Add "loadparm" property to scsi disk devices for
+ booting on s390x
+From: Eric Farman <farman@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, Jared Rossi
+ <jrossi@linux.ibm.com>, Boris Fiuczynski <fiuczy@linux.ibm.com>, Paolo
+ Bonzini <pbonzini@redhat.com>
+Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Peter Maydell <peter.maydell@linaro.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>
+Date: Mon, 18 Nov 2024 08:54:51 -0500
+In-Reply-To: <eec8187b-eb57-4cb3-a845-45084ef48eb7@redhat.com>
+References: <20241115141202.1877294-1-thuth@redhat.com>
+ <eec8187b-eb57-4cb3-a845-45084ef48eb7@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
- SMMU nodes
-Content-Language: en-US
-To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
- jiangkunkun <jiangkunkun@huawei.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <20241108125242.60136-5-shameerali.kolothum.thodi@huawei.com>
- <1dcea5ca-806f-4f51-8b13-faf5d62eb086@redhat.com>
- <efb9fb7fb0f04d92b7776cdbc474585d@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <efb9fb7fb0f04d92b7776cdbc474585d@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 3C0Q_Y31i4VqpMrpCXR5cChgISZlCs1u
+X-Proofpoint-ORIG-GUID: 3C0Q_Y31i4VqpMrpCXR5cChgISZlCs1u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 phishscore=0
+ mlxscore=0 malwarescore=0 mlxlogscore=917 adultscore=0 priorityscore=1501
+ bulkscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2411180112
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,74 +113,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On Mon, 2024-11-18 at 11:02 +0100, Thomas Huth wrote:
+> On 15/11/2024 15.12, Thomas Huth wrote:
+> > While adding the new flexible boot order feature on s390x recently,
+> > we missed to add the "loadparm" property to the scsi-hd and scsi-cd
+> > devices. This property is required on s390x to pass the information
+> > to the boot loader about which kernel should be started or whether
+> > the boot menu should be shown. But even more serious: The missing
+> > property is now causing trouble with the corresponding libvirt patches
+> > that assume that the "loadparm" property is either settable for all
+> > bootable devices (when the "boot order" feature is implemented in
+> > QEMU), or none (meaning the behaviour of older QEMUs that only allowed
+> > one "loadparm" at the machine level). To fix this broken situation,
+> > let's implement the "loadparm" property in for the SCSI devices, too.
+> >=20
+> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > ---
+> >   v2:
+> >   - Only add the property when running with the s390x target
+> >     (checked via the arch_type variable during runtime)
+> >   - Check bootindex property before setting the loadparm property
+> >   - Call the sanitize function before setting the property, so we
+> >     can now immediately reject bad properties for the scsi devices,
+> >     too (had to move the sanitize function to the common code in
+> >     qdev-properties-system.c for this)
+> >=20
+> >   include/hw/qdev-properties-system.h |  3 ++
+> >   hw/core/qdev-properties-system.c    | 26 +++++++++++++++++
+> >   hw/s390x/ipl.c                      | 19 ++++---------
+> >   hw/scsi/scsi-disk.c                 | 43 ++++++++++++++++++++++++++++=
++
+> >   4 files changed, 78 insertions(+), 13 deletions(-)
+>=20
+> If there are no objections, I'll pick this up for my pull request for QEM=
+U=20
+> 9.2-rc1.
 
-On 11/18/24 12:44, Shameerali Kolothum Thodi wrote:
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: Monday, November 18, 2024 10:02 AM
->> To: Shameerali Kolothum Thodi
->> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
->> qemu-devel@nongnu.org
->> Cc: peter.maydell@linaro.org; jgg@nvidia.com; nicolinc@nvidia.com;
->> ddutile@redhat.com; Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
->> <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
->> Jonathan Cameron <jonathan.cameron@huawei.com>;
->> zhangfei.gao@linaro.org
->> Subject: Re: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with
->> multiple SMMU nodes
->>
->>>      /* Number of IORT Nodes */
->>> @@ -342,10 +356,9 @@ build_iort(GArray *table_data, BIOSLinker
->> *linker, VirtMachineState *vms)
->>>      /* GIC ITS Identifier Array */
->>>      build_append_int_noprefix(table_data, 0 /* MADT translation_id */,
->> 4);
->>> -    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
->>> -        int irq =  vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
->>> +    for (i = 0; i < num_smmus; i++) {
->>> +        smmu_offset[i] = table_data->len - table.table_offset;
->>>
->> I would have expected changes in the smmu idmap has well. If a given
->> SMMU instance now protects a given bus hierarchy shouldn't it be
->> reflected in a differentiated SMMU idmap for each of them (RID subset of
->> SMMU->pci-bus mapping to a specific IORT SMMU node)? How is it done
->> currently?
-> I thought that smmu_idmaps will be handled by this ?
->
-> object_child_foreach_recursive(object_get_root(),
->                                        iort_host_bridges, smmu_idmaps);
-to me this traverses the qemu object hierarchy to find all host bridges
-and for each of them builds an idmap array (smmu_idmaps mapping this RC
-RID range to this SMMU). But to me those idmaps will be assigned to
-*all* SMMU insteaces leading to a wong IORT description because all
-SMMUs will be protecting all devices. You shall only retain idmaps which
-correspond to the pci_bus a given vSMMU is attached to. Then each SMMU
-will protect a distinct PCIe subtree which does not seem the case today.
-At least that's my current understanding.
+Hi Thomas,
 
-Eric
+Jared was out Friday so I'm hoping he can give it a look over today, but no=
+ objections from me:
 
-
->
-> But it is possible that, there is a bug in this IORT generation here as I am not
-> able to hot add  devices. It looks like the pciehp interrupt is not generated/received
-> for some reason. Nicolin[0] is suspecting the min/max bus range in
-> iort_host_bridges() may not leave enough ranges for hot add later.
->
-> Cold plugging devices to different SMMUv3/pcie-pxb seems to be alright.
->
-> I will debug that soon.
->
-> Thanks,
-> Shameer
-> [0] https://lore.kernel.org/qemu-devel/ZzPd1F%2FUA2MKMbwl@Asurada-Nvidia/
->
->
-
+Acked-by: Eric Farman <farman@linux.ibm.com>
 
