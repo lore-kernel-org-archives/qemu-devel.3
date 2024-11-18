@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34940D591B3
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 21:11:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17550D591B7
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 21:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD90E-00033y-97; Mon, 18 Nov 2024 16:09:46 -0500
+	id 1tD907-0002jA-71; Mon, 18 Nov 2024 16:09:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD8zT-0001w0-Ao; Mon, 18 Nov 2024 16:08:59 -0500
+ id 1tD8zQ-0001uz-24; Mon, 18 Nov 2024 16:08:56 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD8zR-0005PS-Cz; Mon, 18 Nov 2024 16:08:58 -0500
+ id 1tD8zO-0005Ok-3z; Mon, 18 Nov 2024 16:08:55 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C44B7A5610;
+ by isrv.corpit.ru (Postfix) with ESMTP id A9670A560E;
  Tue, 19 Nov 2024 00:08:31 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5D939173629;
+ by tsrv.corpit.ru (Postfix) with SMTP id 417E9173627;
  Tue, 19 Nov 2024 00:08:35 +0300 (MSK)
-Received: (nullmailer pid 2366125 invoked by uid 1000);
+Received: (nullmailer pid 2366118 invoked by uid 1000);
  Mon, 18 Nov 2024 21:08:34 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.4 67/71] target/i386: fix hang when using slow path for
- ptw_setl
-Date: Tue, 19 Nov 2024 00:08:24 +0300
-Message-Id: <20241118210834.2366046-10-mjt@tls.msk.ru>
+Subject: [Stable-9.0.4 65/71] linux-user/arm: Select vdso for be8 and be32
+ modes
+Date: Tue, 19 Nov 2024 00:08:22 +0300
+Message-Id: <20241118210834.2366046-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.0.4-20241118223714@cover.tls.msk.ru>
 References: <qemu-stable-9.0.4-20241118223714@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,57 +64,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-When instrumenting memory accesses for plugin, we force memory accesses
-to use the slow path for mmu [1]. This create a situation where we end
-up calling ptw_setl_slow. This was fixed recently in [2] but the issue
-still could appear out of plugins use case.
+In be8 mode, instructions are little-endian.
+In be32 mode, instructions are big-endian.
 
-Since this function gets called during a cpu_exec, start_exclusive then
-hangs. This exclusive section was introduced initially for security
-reasons [3].
-
-I suspect this code path was never triggered, because ptw_setl_slow
-would always be called transitively from cpu_exec, resulting in a hang.
-
-[1] https://gitlab.com/qemu-project/qemu/-/commit/6d03226b42247b68ab2f0b3663e0f624335a4055
-[2] https://gitlab.com/qemu-project/qemu/-/commit/115ade42d50144c15b74368d32dc734ea277d853
-[2] https://gitlab.com/qemu-project/qemu/-/commit/88442869cf709f885a9c09fad00b96f802d58ffe in 9.0.x series
-[3] https://gitlab.com/qemu-project/qemu/-/issues/279
-
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2566
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20241025175857.2554252-2-pierrick.bouvier@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2333
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 7ba055b49b74c4d2f4a338c5198485bdff373fb1)
+(cherry picked from commit 95c9e2209cc09453cfd49e91321df254ccbf466f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: mention [2] in 9.0.x series)
 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index bdf7b0df42..44b1b2ded6 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -106,6 +106,10 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
- {
-     uint32_t cmp;
+diff --git a/linux-user/arm/Makefile.vdso b/linux-user/arm/Makefile.vdso
+index 8a24b0e534..ede489e236 100644
+--- a/linux-user/arm/Makefile.vdso
++++ b/linux-user/arm/Makefile.vdso
+@@ -3,15 +3,18 @@ include $(BUILD_DIR)/tests/tcg/arm-linux-user/config-target.mak
+ SUBDIR = $(SRC_PATH)/linux-user/arm
+ VPATH += $(SUBDIR)
  
-+    CPUState *cpu = env_cpu(in->env);
-+    /* We are in cpu_exec, and start_exclusive can't be called directly.*/
-+    g_assert(cpu->running);
-+    cpu_exec_end(cpu);
-     /* Does x86 really perform a rmw cycle on mmio for ptw? */
-     start_exclusive();
-     cmp = cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
-@@ -113,6 +117,7 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
-         cpu_stl_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
-     }
-     end_exclusive();
-+    cpu_exec_start(cpu);
-     return cmp == old;
+-all: $(SUBDIR)/vdso-be.so $(SUBDIR)/vdso-le.so
++all: $(SUBDIR)/vdso-be8.so $(SUBDIR)/vdso-be32.so $(SUBDIR)/vdso-le.so
+ 
+ # Adding -use-blx disables unneeded interworking without actually using blx.
+ LDFLAGS = -nostdlib -shared -Wl,-use-blx -Wl,-z,max-page-size=4096 \
+ 	  -Wl,-h,linux-vdso.so.1 -Wl,--build-id=sha1 \
+ 	  -Wl,--hash-style=both -Wl,-T,$(SUBDIR)/vdso.ld
+ 
+-$(SUBDIR)/vdso-be.so: vdso.S vdso.ld vdso-asmoffset.h
+-	$(CC) -o $@ $(LDFLAGS) -mbig-endian $<
++$(SUBDIR)/vdso-be8.so: vdso.S vdso.ld vdso-asmoffset.h
++	$(CC) -o $@ $(LDFLAGS) -mbig-endian -mbe8 $<
++
++$(SUBDIR)/vdso-be32.so: vdso.S vdso.ld vdso-asmoffset.h
++	$(CC) -o $@ $(LDFLAGS) -mbig-endian -mbe32 $<
+ 
+ $(SUBDIR)/vdso-le.so: vdso.S vdso.ld vdso-asmoffset.h
+ 	$(CC) -o $@ $(LDFLAGS) -mlittle-endian $<
+diff --git a/linux-user/arm/meson.build b/linux-user/arm/meson.build
+index c4bb9af5b8..348ffb810d 100644
+--- a/linux-user/arm/meson.build
++++ b/linux-user/arm/meson.build
+@@ -10,10 +10,17 @@ syscall_nr_generators += {
+ # is always true as far as source_set.apply() is concerned.  Always build
+ # both header files and include the right one via #if.
+ 
+-vdso_be_inc = gen_vdso.process('vdso-be.so',
+-                               extra_args: ['-s', 'sigreturn_codes'])
++vdso_be8_inc = gen_vdso.process('vdso-be8.so',
++                               extra_args: ['-s', 'sigreturn_codes',
++                                            '-p', 'vdso_be8'])
++
++vdso_be32_inc = gen_vdso.process('vdso-be32.so',
++                               extra_args: ['-s', 'sigreturn_codes',
++                                            '-p', 'vdso_be32'])
+ 
+ vdso_le_inc = gen_vdso.process('vdso-le.so',
+                                extra_args: ['-s', 'sigreturn_codes'])
+ 
+-linux_user_ss.add(when: 'TARGET_ARM', if_true: [vdso_be_inc, vdso_le_inc])
++linux_user_ss.add(when: 'TARGET_ARM', if_true: [
++    vdso_be8_inc, vdso_be32_inc, vdso_le_inc
++])
+diff --git a/linux-user/arm/vdso-be32.so b/linux-user/arm/vdso-be32.so
+new file mode 100755
+index 0000000000..b896d3d545
+Binary files /dev/null and b/linux-user/arm/vdso-be32.so differ
+diff --git a/linux-user/arm/vdso-be.so b/linux-user/arm/vdso-be8.so
+similarity index 95%
+rename from linux-user/arm/vdso-be.so
+rename to linux-user/arm/vdso-be8.so
+index bed02804a4..784b7bdb2a 100755
+Binary files a/linux-user/arm/vdso-be.so and b/linux-user/arm/vdso-be8.so differ
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 42185cc111..28d5d52d0f 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -656,6 +656,23 @@ static const char *get_elf_platform(void)
+ #undef END
  }
  
++#if TARGET_BIG_ENDIAN
++#include "elf.h"
++#include "vdso-be8.c.inc"
++#include "vdso-be32.c.inc"
++
++static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
++{
++    return (EF_ARM_EABI_VERSION(elf_flags) >= EF_ARM_EABI_VER4
++            && (elf_flags & EF_ARM_BE8)
++            ? &vdso_be8_image_info
++            : &vdso_be32_image_info);
++}
++#define vdso_image_info vdso_image_info
++#else
++# define VDSO_HEADER  "vdso-le.c.inc"
++#endif
++
+ #else
+ /* 64 bit ARM definitions */
+ 
+@@ -955,14 +972,14 @@ const char *elf_hwcap2_str(uint32_t bit)
+ 
+ #undef GET_FEATURE_ID
+ 
+-#endif /* not TARGET_AARCH64 */
+-
+ #if TARGET_BIG_ENDIAN
+ # define VDSO_HEADER  "vdso-be.c.inc"
+ #else
+ # define VDSO_HEADER  "vdso-le.c.inc"
+ #endif
+ 
++#endif /* not TARGET_AARCH64 */
++
+ #endif /* TARGET_ARM */
+ 
+ #ifdef TARGET_SPARC
+@@ -3592,12 +3609,14 @@ static void load_elf_interp(const char *filename, struct image_info *info,
+     load_elf_image(filename, &src, info, &ehdr, NULL);
+ }
+ 
++#ifndef vdso_image_info
+ #ifdef VDSO_HEADER
+ #include VDSO_HEADER
+-#define  vdso_image_info()  &vdso_image_info
++#define  vdso_image_info(flags)  &vdso_image_info
+ #else
+-#define  vdso_image_info()  NULL
+-#endif
++#define  vdso_image_info(flags)  NULL
++#endif /* VDSO_HEADER */
++#endif /* vdso_image_info */
+ 
+ static void load_elf_vdso(struct image_info *info, const VdsoImageInfo *vdso)
+ {
+@@ -3928,7 +3947,7 @@ int load_elf_binary(struct linux_binprm *bprm, struct image_info *info)
+      * Load a vdso if available, which will amongst other things contain the
+      * signal trampolines.  Otherwise, allocate a separate page for them.
+      */
+-    const VdsoImageInfo *vdso = vdso_image_info();
++    const VdsoImageInfo *vdso = vdso_image_info(info->elf_flags);
+     if (vdso) {
+         load_elf_vdso(&vdso_info, vdso);
+         info->vdso = vdso_info.load_bias;
 -- 
 2.39.5
 
