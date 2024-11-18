@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A743DD4921C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC11D4921E
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 13:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD1WT-0002AU-BU; Mon, 18 Nov 2024 08:10:33 -0500
+	id 1tD1Xy-0002mL-4G; Mon, 18 Nov 2024 08:12:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1tD1WO-0002A9-FL
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:10:30 -0500
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ id 1tD1Xw-0002ly-5P
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:12:04 -0500
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1tD1WL-0000ci-RV
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:10:27 -0500
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-50d2d300718so738069e0c.1
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 05:10:19 -0800 (PST)
+ id 1tD1Xu-0000ne-HW
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 08:12:03 -0500
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-514b8bb231aso140850e0c.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 05:12:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731935418; x=1732540218; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731935521; x=1732540321; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=H7Sitr+3eeGJGfcF9aUyXpNi5h0jkU2kroAcdRC0FNE=;
- b=hO42cGCGMA4yNh/Kzh0oDVhnvpJVrc5FBq1NIHq5dGuJus3YqLeeC4y7CAc9et2ThR
- O3AbeZQBGO4RAfrv3PM07PsqLwcaDthRUodFusT15PEc4ZMKAtWTxGlZn02R3G1+1lWq
- eyDbwLS95zFss+NxwinsCN594HoT91ugbQLScmwO/uFnw7lljF3AA7ge7ONYMbpf+tIM
- PHA2EAXqH20S7mrkY2HqD+z4QSj5804VCtYBuB/ZXGVDOmP2K6SP0rdrfUuWvrv+gy7L
- twv4I6SbHV5FS9FHCT6JMIbhtHvg5D5spx5HZbAKVsx1ikYZYuVK5NFz12gbCHDJbu+h
- tjvw==
+ bh=8lVpavY7Sh1GsnO0ir6JvMhixef7IJsNtsjqhmk3Grs=;
+ b=bvLVjVN9RlTrZfrQ3aoiLCH9MFJF8Rj7pmGe2bfqb1H/4duBva6oHavAlkWvH0YSFa
+ WT1iQmmdCUtpqJ66eMELxDM/pnYM8H9bt0MMLDvf+uag8G5KiOMZ19RsrCds9HqSMKEw
+ VQgKqvuUwKX0/CAtEmfsoM4vFDSQJHX2ZA54S7TxXgfxEtGMQx33trN8Sr5Td8OLHYzn
+ 7QmrT89AIoP6C5xnQJqSA1RFgDv2o94U0MNp0S5iSa7FKXeTuNzZ3s6rIIBaJAGcy0mi
+ l7wUBMLleAjbf6DYbUwfDwWIGlAD+tXs+GmxhZ/pEqt0hAjVmrrA2ecOr2YWsDbcxPWu
+ ygAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731935418; x=1732540218;
+ d=1e100.net; s=20230601; t=1731935521; x=1732540321;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=H7Sitr+3eeGJGfcF9aUyXpNi5h0jkU2kroAcdRC0FNE=;
- b=UVKW/3g7txVwureXplhO1p1zvBYqtk55W3ieJb+SUwkKNqXF3J/uxRQZIOsDAN8/SL
- Km+XFdOYPKjRIpz+0l9/Tbkml17SGljc0WBizOsYnscoDgkF9mzI8nTEewrFdgMqmHdf
- frrUecVVfyKdAXX9WcbBFUOSdj7zE9HDRfpo40WCn+T3LKJiSWTeD2mM56feuR6Jkznf
- NhEBgDI6Dqd14iFiHnTHJfUkmzLbyEix9SyIeeySB+Sff7mqrrS32Hf97Z+4vkfJspTX
- 13Q3sMOwvhOMQcoht9MzyedORTM51RHIPyb0qr9dheNSzpG9mWBacnAmzJDGnp8EIWV+
- 7fjg==
-X-Gm-Message-State: AOJu0YzflVlPZnIKX2JyBPjOTfRUxn/n72UfkgC/J/sDyPfIc623sYoq
- mZLj9OSPrhjBmBVHtp5ciaSbFwnkT/ajpEe7V7w2wt9v6J1Ho9Y+8NP5qFG4CQUEdjK62PH4pzZ
- nT+kAeLoVH6NFztN5batubjuFkuwQpw==
-X-Google-Smtp-Source: AGHT+IEmuj71Y8QN0eP8jUTDYa1KrifrfLD9W9p7zluofOZl2wH3TYj7rtAPjGVkkxksLTtj8CK3GxucQj8kYom9gx4=
-X-Received: by 2002:a05:6122:1d92:b0:50c:99da:4f70 with SMTP id
- 71dfb90a1353d-51477e7dbb8mr9774676e0c.2.1731935418336; Mon, 18 Nov 2024
- 05:10:18 -0800 (PST)
+ bh=8lVpavY7Sh1GsnO0ir6JvMhixef7IJsNtsjqhmk3Grs=;
+ b=PZMcoCvecLK4BO+CT+/7mO64SiiivQAnhuOkZVit+yrP115fXvZciMPIRIbac0VKUp
+ edTqz4vGJfhmCgYDTDOOyFncKNdjQl81q9meG/WGqSN3JZwCiKrfhpfWEeIzATc1ccfy
+ AYkI45jHfnGQTEubU1HoPq+E9de7dLUOQQPI+Y41hZoy1jwxP6eKmNYuX18nvQ+LUNJb
+ OZzXNIcNRluGx7KfoE2kNdUlWkXvDPhT2zDeHwLnYog6zX0CrTStQYvF9Qcg/NRO2MgY
+ RUs5JklE6wGbUHDBivPKUbJtRecaiDUXoMwz3fQ8tJOLm/IIYCb309CSGTM4NfI9MHUX
+ XjZw==
+X-Gm-Message-State: AOJu0YzF+uzz8K62wohYNY2MGg8mZoO4zB7fW2QVxF+iAhf8NOd95h9G
+ sGpSH8zKkdjMrmnuz4a34u5aHy/S5HabG5GIelqZnATalTW3fI30ehnkqtTd5b+FoQvR2n4xPoV
+ 3hb+i5hxASvv3/cFgWH8zvQfAczo=
+X-Google-Smtp-Source: AGHT+IGq04qSnUD0kXCeot7uSP7HFRvYVxc4UfO0NQI+vKNfws5PTST2Bc6ZAET4/F8AFJ3NfMyQ76y66Y0GVN8mSTM=
+X-Received: by 2002:a05:6122:789:b0:50d:85c8:af3e with SMTP id
+ 71dfb90a1353d-51477eeb37dmr10551415e0c.3.1731935521196; Mon, 18 Nov 2024
+ 05:12:01 -0800 (PST)
 MIME-Version: 1.0
-References: <20241109122844.24057-1-dorjoychy111@gmail.com>
-In-Reply-To: <20241109122844.24057-1-dorjoychy111@gmail.com>
+References: <20241109123208.24281-1-dorjoychy111@gmail.com>
+ <44fbe3d8-509c-47ad-b764-5c8016980bfe@amazon.com>
+ <CAFfO_h5LHsgng5itQTEO30SUT_jn02Pdi-0uYvyZCgRPJfcueA@mail.gmail.com>
+ <2970cc68-a34c-4751-b4a3-d7fac416d7d3@amazon.com>
+In-Reply-To: <2970cc68-a34c-4751-b4a3-d7fac416d7d3@amazon.com>
 From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Mon, 18 Nov 2024 19:10:24 +0600
-Message-ID: <CAFfO_h7QxmXNGv2DM900hUvN7GG+WRTq6774it4VLq6FzmS6Aw@mail.gmail.com>
-Subject: Re: [PATCH] docs/nitro-enclave: Fix terminal commands formatting
-To: qemu-devel@nongnu.org
-Cc: graf@amazon.com, pbonzini@redhat.com
+Date: Mon, 18 Nov 2024 19:12:06 +0600
+Message-ID: <CAFfO_h47fHYfiU9vgU61UT+jSnv9YCO8jTy+hB77+AQc+NZ7+w@mail.gmail.com>
+Subject: Re: [PATCH] device/virtio-nsm: Support string data for extendPCR
+To: Alexander Graf <graf@amazon.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa30.google.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, PYZOR_CHECK=1.392,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,6 +92,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Ping.
+
+This is a small one that needs review.
 
 Regards,
 Dorjoy
