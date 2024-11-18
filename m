@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88653D60CE7
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 22:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC83D60CE7
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 22:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDA0G-0002c6-EX; Mon, 18 Nov 2024 17:13:53 -0500
+	id 1tDA0H-0002ca-Gs; Mon, 18 Nov 2024 17:13:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDA0D-0002bQ-GF
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 17:13:49 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDA08-0002ap-96
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 17:13:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDA0B-0006b5-BB
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 17:13:48 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDA06-0006a9-Qi
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 17:13:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731968026;
+ s=mimecast20190719; t=1731968021;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nXzfw9o4nT7WUK2zu/6zAHs2gJrz7J7+TmVnzn6XJeY=;
- b=d5MJCAACqs3cVn1fHndOx1DVn/CtG4rLwFaY3wO1XQIEBf4/09GEpb3HomwautjtkTmrb3
- EwJuBBgVgUzSxNzzme2Lwoc3kjSwMvkECseX4Sa9yKfQP37luHnUGU09CAzQ8U5UNHt+lT
- 5/qQ3dKbAnIf3mRL5FJamwoKiBvBJP8=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cZKkIwjXMhfrstNwcJpim0+ZzeendomwDPK3S0mS1Ds=;
+ b=KFJ3O7TsKKTL5GLTvg3PG3YVGHXLc13Qu58NLYct6sKk/KaefHUFXL0uardIlASnhnru0W
+ YnOY5VvrGHi3Q/5QGKeWjR6sUPWyNzfyQsykjSZiU9yqL2OG64XKbiGGj1jpnI1LIP9b29
+ NSoKtu/8vEBmQgBzPw16AJt/ODZdDKo=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-P7z2U-miP3SzZiYGt3dLaA-1; Mon, 18 Nov 2024 17:13:44 -0500
-X-MC-Unique: P7z2U-miP3SzZiYGt3dLaA-1
-X-Mimecast-MFC-AGG-ID: P7z2U-miP3SzZiYGt3dLaA
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-83aa904b231so368088139f.1
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 14:13:44 -0800 (PST)
+ us-mta-623-72EtpsCAMny7D4Clk7ZMSA-1; Mon, 18 Nov 2024 17:13:40 -0500
+X-MC-Unique: 72EtpsCAMny7D4Clk7ZMSA-1
+X-Mimecast-MFC-AGG-ID: 72EtpsCAMny7D4Clk7ZMSA
+Received: by mail-io1-f71.google.com with SMTP id
+ ca18e2360f4ac-83acaa1f819so34427839f.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 14:13:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731968023; x=1732572823;
+ d=1e100.net; s=20230601; t=1731968019; x=1732572819;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nXzfw9o4nT7WUK2zu/6zAHs2gJrz7J7+TmVnzn6XJeY=;
- b=w70aVvaNoblgxHFimMZIXNfjLTA4rV1rv4rztPP0JcAcVK9GCSGJjJSSqLZ/ROH8jY
- XgFofSBcr8lC+wFbmVBkBHoxGfcn48/NEFpP5yLGvmqbEWVbXt7efT+L+XpBSAA+se/J
- iMRbEQRT6w0OPw+6qyp8hLrgjnP74gH4LxtCdTr01R9RbkdcEALWNivTdzdSAemYYwpR
- nahxanSfjYzGmc3zBHlSzpS2iuHYVdq7syc+VJ1aV5ZLw29MmtgNGb+DFW3lU6mentGY
- ZER9Lzu36t2CHLCpIlqvxhx6lITmxU7HQkg3E2y4sUg74BxVTJG3JpzxWIlHq2+N9E/a
- r1ig==
-X-Gm-Message-State: AOJu0Yy/b4S8ttBsE/Agl0UMpuRvFLbq1nBKe4fCDyzUe1ja8Crgd3lZ
- qeF7qcueXT3lu9nyVp1AdlxV4MvafAA1EhdCBuFnTdE/s8YU77rA6dM98EzGHt25KihOgQs9Iva
- 8ONDJ7bQpjaRydxcjEzLaNKt8q5vdGH0nQ3ohz4uExHb59tg+5qZfKVAKFx+Yg+jxShWLEAM0Xg
- tuRimMz32mEZhfVw40t+nkRTqD6d1IBM+X6g==
-X-Received: by 2002:a05:6602:3403:b0:83a:b52b:5cb5 with SMTP id
- ca18e2360f4ac-83e6c08a89emr1487552739f.5.1731968022706; 
- Mon, 18 Nov 2024 14:13:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFA7MEJQ/DGJhF7+S9e34svPxUSv0zqWUNK/n6ePKLJkeb/aFkdoDjcHze7TbqvrdjYe7CSuQ==
-X-Received: by 2002:a05:6602:3403:b0:83a:b52b:5cb5 with SMTP id
- ca18e2360f4ac-83e6c08a89emr1487549439f.5.1731968022358; 
- Mon, 18 Nov 2024 14:13:42 -0800 (PST)
+ bh=cZKkIwjXMhfrstNwcJpim0+ZzeendomwDPK3S0mS1Ds=;
+ b=D61uJ/Mgw4kT7/4hi9vwNUVckwOR+D/m6dIDzBuKBIAHVLbFZrgQQkVHP3aGbO8ajA
+ JRJc/Ihci4bsheo4d+eQnGgkd/KihSeEro+IeoizsPv2fF7W/4XwWzZ/LrXrZSnS7zrR
+ vZ3Z8tzxPXoshrA4psdzet9W+jwRrCgO4pPfFxF1nHqoXdtGtcG2CEXNVHikQ15hdxqc
+ ywjWWDFCDPm/VOqpeyrZ/sQlKyXas0xXt6Xi61Bybbo21bUfbSd3XXIRLaVkdGhuddBA
+ ZUoBxK2KFF1JJ3u/YW0RQyL80AhBvue4/aKXkweRb5cN9GCx15SBLc0BhMCyWdRn+CAf
+ eJ9Q==
+X-Gm-Message-State: AOJu0YzXFJyZu4lgijJ6GzB7R+zyZ2YfgU7O596/6OczNLmBSzu4QUFu
+ fUwwZGhMkbajeowH4a0Ets2X8oR0CJD2n8SrYg9wyWzXRIsObjfEqyurKHRxFY/C2dkLQgRjDo6
+ HE+lECH7Se078y0gYZtaO3X0Im/HEtLczMHkL6tfCMZ8qBWS97srAan/NwwLXeiUA5kYsweOFS+
+ NPNbdFzGONu2YcVaU6neUIVoSeZObVOx1mSw==
+X-Received: by 2002:a05:6602:140b:b0:82a:2a67:9429 with SMTP id
+ ca18e2360f4ac-83e6c2769a9mr1428673339f.5.1731968019059; 
+ Mon, 18 Nov 2024 14:13:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHHj5nCsTmeS8gUs5fyoGl0mMlhiXeuHMQ9rPbQUbR7m5YXVG1fBsFXz7tNpxK62x5m9xXjeQ==
+X-Received: by 2002:a05:6602:140b:b0:82a:2a67:9429 with SMTP id
+ ca18e2360f4ac-83e6c2769a9mr1428670439f.5.1731968018702; 
+ Mon, 18 Nov 2024 14:13:38 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e06d6e7fd9sm2298599173.9.2024.11.18.14.13.40
+ 8926c6da1cb9f-4e06d6e7fd9sm2298599173.9.2024.11.18.14.13.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Nov 2024 14:13:41 -0800 (PST)
+ Mon, 18 Nov 2024 14:13:37 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -75,10 +75,9 @@ Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5/5] qom: Make container_get() strict to always walk or return
- container
-Date: Mon, 18 Nov 2024 17:13:30 -0500
-Message-ID: <20241118221330.3480246-6-peterx@redhat.com>
+Subject: [PATCH 3/5] qdev: Make device_set_realized() always safe in tests
+Date: Mon, 18 Nov 2024 17:13:28 -0500
+Message-ID: <20241118221330.3480246-4-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241118221330.3480246-1-peterx@redhat.com>
 References: <20241118221330.3480246-1-peterx@redhat.com>
@@ -109,71 +108,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When used incorrectly, container_get() can silently create containers even
-if the caller may not intend to do so.  Add a rich document describing the
-helper, as container_get() should only be used in path lookups.
+Currently, a device can be realized even before machine is created, but
+only in one of QEMU's qtest, test-global-qdev-props.c.
 
-Add one object_dynamic_cast() check to make sure whatever objects the
-helper walks will be a container object (including the one to be returned).
-It is a programming error otherwise, hence assert that.
+Right now, the test_static_prop_subprocess() test (which creates one simple
+object without machine created) will internally make "/machine" to be a
+container, which may not be expected when developing the test.
 
-It may make container_get() tiny slower than before, but the hope is the
-change is neglictable, as object_class_dynamic_cast() has a fast path just
-for similar leaf use case.
+Now explicitly support that case when there's no real "/machine" object
+around, then unattached devices will be put under root ("/") rather than
+"/machine".  Mostly only for this single test case, or for any future test
+cases when some device needs to be realized before the machine is present.
 
-Link: https://lore.kernel.org/r/87pln6ds8q.fsf@pond.sub.org
-Suggested-by: Markus Armbruster <armbru@redhat.com>
+This shouldn't affect anything else when QEMU runs as an emulator, as that
+always relies on a real machine being created before realizing any devices.
+It's because if "/machine" is wrongly created as a container, it'll fail
+QEMU very soon later on qemu_create_machine() trying to create the real
+machine, conflicting with the "/machine" container.
+
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- qom/container.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ hw/core/qdev.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/qom/container.c b/qom/container.c
-index cfec92a944..ff6e35f837 100644
---- a/qom/container.c
-+++ b/qom/container.c
-@@ -24,6 +24,20 @@ static void container_register_types(void)
-     type_register_static(&container_info);
- }
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index 5f13111b77..eff297e584 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -475,9 +475,17 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
  
-+/**
-+ * container_get(): Get the container object under specific path
-+ *
-+ * @root: The root path object to start walking from.  When starting from
-+ *        root, one can pass in object_get_root().
-+ * @path: The sub-path to lookup, must be an non-empty string starts with "/".
-+ *
-+ * Returns: The container object specified by @path.
-+ *
-+ * NOTE: the function may impplicitly create internal containers when the
-+ * whole path is not yet created.  It's the caller's responsibility to make
-+ * sure the path specified is always used as object containers, rather than
-+ * any other type of objects.
-+ */
- Object *container_get(Object *root, const char *path)
- {
-     Object *obj, *child;
-@@ -31,6 +45,7 @@ Object *container_get(Object *root, const char *path)
-     int i;
+         if (!obj->parent) {
+             gchar *name = g_strdup_printf("device[%d]", unattached_count++);
++            Object *root = qdev_get_machine();
  
-     parts = g_strsplit(path, "/", 0);
-+    /* "path" must be an non-empty string starting with "/" */
-     assert(parts != NULL && parts[0] != NULL && !parts[0][0]);
-     obj = root;
- 
-@@ -40,6 +55,12 @@ Object *container_get(Object *root, const char *path)
-             child = object_new(TYPE_CONTAINER);
-             object_property_add_child(obj, parts[i], child);
-             object_unref(child);
-+        } else {
+-            object_property_add_child(container_get(qdev_get_machine(),
+-                                                    "/unattached"),
 +            /*
-+             * Each object within the path must be a container object
-+             * itself, including the object to be returned.
++             * We could have qdev test cases trying to realize() a device
++             * without machine created.  In that case we use the root.
 +             */
-+            assert(object_dynamic_cast(child, TYPE_CONTAINER));
-         }
-     }
- 
++            if (!root) {
++                root = object_get_root();
++            }
++
++            object_property_add_child(container_get(root, "/unattached"),
+                                       name, obj);
+             unattached_parent = true;
+             g_free(name);
 -- 
 2.45.0
 
