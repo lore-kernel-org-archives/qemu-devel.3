@@ -4,129 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAD0D4922E
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 15:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 392D4D49231
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 15:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD3HT-0004WI-Ry; Mon, 18 Nov 2024 10:03:13 -0500
+	id 1tD3Qk-0007gY-PV; Mon, 18 Nov 2024 10:12:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tD3Gs-0004Mn-5a
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 10:02:36 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tD3Qk-0007gO-3P
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 10:12:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tD3Gp-0000kU-M7
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 10:02:33 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tD3Qi-0002qD-48
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 10:12:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731942149;
+ s=mimecast20190719; t=1731942761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=diqMhQg9p4vidNQSVXYVtj2vFvHr/GIzVnIXl6LNQFI=;
- b=FCNHoiD4WgyfZ5Qisxt4W30J1YQkJT0V2HOZDXJiA7Qn03BdrOGfeTi3neavKvcGUpBgdQ
- ydp3oub2A0V9foPNYW3XHG9ex8tmsFxI+O/xAun/w8tn/ZExHYiBLQClbJav87zcV01WMF
- ovI1MTODk5LnFvCQs6gFQhKL4ZaCzlU=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-Kd3VkhGyPjSnO6hPUs8ONw-1; Mon, 18 Nov 2024 10:02:27 -0500
-X-MC-Unique: Kd3VkhGyPjSnO6hPUs8ONw-1
-X-Mimecast-MFC-AGG-ID: Kd3VkhGyPjSnO6hPUs8ONw
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6d41c83041dso23458906d6.3
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 07:02:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731942146; x=1732546946;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=diqMhQg9p4vidNQSVXYVtj2vFvHr/GIzVnIXl6LNQFI=;
- b=iHBnisz3/XJBmjmOjuTcNz7bUvG5Kyq2iXQA7b0hZlmYKQpMMWXQhORqdrwIZQpcIX
- fBnQ1crtSYkOeJMNrUJPP6k/GXBkaWXzqW8LmMaRnNjETEncvQodK+RuGYCd5cq1fZYz
- dm5dF316cAixUbvXLVrU+TWtUEY3pB0Qg6lWzig39nJ62cO7vJRmaYCaGytcuevTmGwB
- h3EJabGe5Q9+1woKd/uj7UWT39fpdstkG/iFjvRDe57ajenZoPdaQNPYUIUfbQkIrazg
- PKh2XbEn2LG1qO9AtN54uuTC63bpawLIBVH6jtv7oGmjeopeRPpdx3oPsc1xGaGOqUNe
- eOOg==
-X-Gm-Message-State: AOJu0YxiXVNMk8LlOo3aBy2g+AKVmj/Dgp2kCwarguJrGqxsGAXMBPeN
- z9x5aitJ4ib5nBMjkth4ujcwJO9MqAjDxtvNcQizdvB4bD2qfPQ3exXzcZD/tELwy7FlejBV1Q+
- 1qOo4GOBvsJYVTT0nh+qMA7mBgVDhycV1HbJqMMNISjN+17yoVn/ZDo98BgIfXUYy+HKQSx+0BT
- rKGFl76B6u7fcOdhD+bXz0Jqy0/WpgXg==
-X-Received: by 2002:a05:6214:570e:b0:6d3:e95e:4882 with SMTP id
- 6a1803df08f44-6d3fb9cd3c8mr187091176d6.49.1731942146075; 
- Mon, 18 Nov 2024 07:02:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF3UHM4diHh+8i62/Jpn2Jl2d1izWpWbQEqmwA0P1YlWaRiUSse6FR9tBxLFdMZ/s/UY0Az8g==
-X-Received: by 2002:a05:6214:570e:b0:6d3:e95e:4882 with SMTP id
- 6a1803df08f44-6d3fb9cd3c8mr187090636d6.49.1731942145707; 
- Mon, 18 Nov 2024 07:02:25 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d40ddd0c7dsm36741566d6.124.2024.11.18.07.02.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Nov 2024 07:02:25 -0800 (PST)
-Message-ID: <a5d6aa4c-14dd-4974-b993-af30c12b32de@redhat.com>
-Date: Mon, 18 Nov 2024 16:02:23 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 3/3] vfio/container: Fix container object destruction
+ in-reply-to:in-reply-to:references:references;
+ bh=91bDsXGibs4V0p1WGe00JPcTn9dCGmR0LcE5tgvzZGo=;
+ b=hIQDhKMSdDbOJhD+96eJaJgtGP1FMFCAmr5OUDxNPhIUlFbjNJnlGkwEwnLPKNZRMLFHcm
+ ABmcJ7ko6Sn5jqXYZVzOI3xfi3QjcjS28z5h9T7wyw+FUtV5TtYpE99W6jl64uqYgIu1nr
+ B/evl6Btdx7YpraR2ac5QTJZ/aXUfgU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-V7vkQfESMNuZGxqBIopKMQ-1; Mon,
+ 18 Nov 2024 10:12:39 -0500
+X-MC-Unique: V7vkQfESMNuZGxqBIopKMQ-1
+X-Mimecast-MFC-AGG-ID: V7vkQfESMNuZGxqBIopKMQ
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7C270193E894; Mon, 18 Nov 2024 15:12:38 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.95])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C879B195E483; Mon, 18 Nov 2024 15:12:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C2A1D21E692E; Mon, 18 Nov 2024 16:12:35 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, Eric Auger
- <eric.auger@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-References: <20241118083737.174219-1-clg@redhat.com>
- <20241118083737.174219-4-clg@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241118083737.174219-4-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: berrange@redhat.com,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v3 2/2] qapi: Move and rename qapi/qmp/dispatch.h to
+ qapi/qmp-registry.h
+Date: Mon, 18 Nov 2024 16:12:35 +0100
+Message-ID: <20241118151235.2665921-3-armbru@redhat.com>
+In-Reply-To: <20241118151235.2665921-1-armbru@redhat.com>
+References: <20241118151235.2665921-1-armbru@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -151,30 +86,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael,
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-On 11/18/24 09:37, Cédric Le Goater wrote:
-> When commit 96b7af4388b3 intoduced a .instance_finalize() handler,
-> it did not take into account that the container was not necessarily
-> inserted into the container list of the address space. Hence, if
-> the container object is destroyed, by calling object_unref() for
-> example, before vfio_address_space_insert() is called, QEMU may
-> crash when removing the container from the list as done in
-> vfio_container_instance_finalize(). This was seen with an SEV-SNP
-> guest for which discarding of RAM fails.
-> 
-> To resolve this issue, use the safe version of QLIST_REMOVE().
-> 
-> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Cc: Eric Auger <eric.auger@redhat.com>
-> Fixes: 96b7af4388b3 ("vfio/container: Move vfio_container_destroy() to an instance_finalize() handler")
-> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+The general expectation is that header files should follow the same
+file/path naming scheme as the corresponding source file. There are
+various historical exceptions to this practice in QEMU, with one of
+the most notable being the include/qapi/qmp/ directory.
 
-This is 9.1 material.
+include/qapi/qmp/dispatch.h corresponds mostly to qapi/qmp-registry.c.
+Move and rename it to include/qapi/qmp-registry.h.
 
-Thanks,
+Now just qerror.h is left in include/qapi/qmp/.  Since it's deprecated
+& (slowly) getting eliminated anyway, it isn't worth moving.
 
-C.
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ docs/devel/qapi-code-gen.rst                    | 2 +-
+ include/qapi/{qmp/dispatch.h => qmp-registry.h} | 0
+ monitor/monitor-internal.h                      | 2 +-
+ qga/guest-agent-core.h                          | 2 +-
+ qapi/qmp-dispatch.c                             | 2 +-
+ qapi/qmp-registry.c                             | 2 +-
+ stubs/qmp-command-available.c                   | 2 +-
+ stubs/qmp-quit.c                                | 2 +-
+ system/qdev-monitor.c                           | 2 +-
+ scripts/qapi/commands.py                        | 2 +-
+ 10 files changed, 9 insertions(+), 9 deletions(-)
+ rename include/qapi/{qmp/dispatch.h => qmp-registry.h} (100%)
+
+diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
+index 90d1dfa16c..ea26b8b473 100644
+--- a/docs/devel/qapi-code-gen.rst
++++ b/docs/devel/qapi-code-gen.rst
+@@ -1854,7 +1854,7 @@ Example::
+     #ifndef EXAMPLE_QAPI_INIT_COMMANDS_H
+     #define EXAMPLE_QAPI_INIT_COMMANDS_H
+ 
+-    #include "qapi/qmp/dispatch.h"
++    #include "qapi/qmp-registry.h"
+ 
+     void example_qmp_init_marshal(QmpCommandList *cmds);
+ 
+diff --git a/include/qapi/qmp/dispatch.h b/include/qapi/qmp-registry.h
+similarity index 100%
+rename from include/qapi/qmp/dispatch.h
+rename to include/qapi/qmp-registry.h
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 797e89a999..efce002334 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -28,7 +28,7 @@
+ #include "chardev/char-fe.h"
+ #include "monitor/monitor.h"
+ #include "qapi/qapi-types-control.h"
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
+ #include "qobject/json-parser.h"
+ #include "qemu/readline.h"
+ #include "sysemu/iothread.h"
+diff --git a/qga/guest-agent-core.h b/qga/guest-agent-core.h
+index b4e7c52c61..a536d07d0d 100644
+--- a/qga/guest-agent-core.h
++++ b/qga/guest-agent-core.h
+@@ -13,7 +13,7 @@
+ #ifndef GUEST_AGENT_CORE_H
+ #define GUEST_AGENT_CORE_H
+ 
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
+ #include "qga-qapi-types.h"
+ 
+ #define QGA_READ_COUNT_DEFAULT 4096
+diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+index e24ba9f0b6..fa95fcceac 100644
+--- a/qapi/qmp-dispatch.c
++++ b/qapi/qmp-dispatch.c
+@@ -16,7 +16,7 @@
+ #include "block/aio.h"
+ #include "qapi/compat-policy.h"
+ #include "qapi/error.h"
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
+ #include "qobject/qdict.h"
+ #include "qobject/qjson.h"
+ #include "qapi/qobject-input-visitor.h"
+diff --git a/qapi/qmp-registry.c b/qapi/qmp-registry.c
+index 485bc5e6fc..ac989074ed 100644
+--- a/qapi/qmp-registry.c
++++ b/qapi/qmp-registry.c
+@@ -13,7 +13,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
+ 
+ void qmp_register_command(QmpCommandList *cmds, const char *name,
+                           QmpCommandFunc *fn, QmpCommandOptions options,
+diff --git a/stubs/qmp-command-available.c b/stubs/qmp-command-available.c
+index 46540af7bf..8851faced1 100644
+--- a/stubs/qmp-command-available.c
++++ b/stubs/qmp-command-available.c
+@@ -1,5 +1,5 @@
+ #include "qemu/osdep.h"
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
+ 
+ bool qmp_command_available(const QmpCommand *cmd, Error **errp)
+ {
+diff --git a/stubs/qmp-quit.c b/stubs/qmp-quit.c
+index a3ff47f7bd..8fb523e905 100644
+--- a/stubs/qmp-quit.c
++++ b/stubs/qmp-quit.c
+@@ -1,6 +1,6 @@
+ #include "qemu/osdep.h"
+ #include "qapi/qapi-commands-control.h"
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
+ 
+ void qmp_quit(Error **errp)
+ {
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index ae4c786930..f0fff8f607 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -26,7 +26,7 @@
+ #include "sysemu/runstate.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-qdev.h"
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
+ #include "qobject/qdict.h"
+ #include "qapi/qmp/qerror.h"
+ #include "qobject/qstring.h"
+diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
+index f0aa13b5cf..74f341b2c7 100644
+--- a/scripts/qapi/commands.py
++++ b/scripts/qapi/commands.py
+@@ -346,7 +346,7 @@ def _begin_user_module(self, name: str) -> None:
+     def visit_begin(self, schema: QAPISchema) -> None:
+         self._add_module('./init', ' * QAPI Commands initialization')
+         self._genh.add(mcgen('''
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
+ 
+ void %(c_prefix)sqmp_init_marshal(QmpCommandList *cmds);
+ ''',
+-- 
+2.46.0
 
 
