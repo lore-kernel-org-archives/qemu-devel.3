@@ -4,74 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4911ED43FF7
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 09:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7468FD43FF5
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 09:16:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tCxjP-0001Jy-TO; Mon, 18 Nov 2024 04:07:41 -0500
+	id 1tCxrN-0002pJ-8b; Mon, 18 Nov 2024 04:15:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tCxiv-0001IG-4C
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 04:07:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=CkxU=SN=kaod.org=clg@ozlabs.org>)
+ id 1tCxqD-0002fC-7U; Mon, 18 Nov 2024 04:14:41 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tCxis-00080s-38
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 04:07:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731920825;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=DMEvXMTLZihxgHtCgp1xwUhel2LFnhiFqaEseM0PGiI=;
- b=UQt8AhjtPG5Sb37EYKycZTDtcfkIGTJNUiWwivh0KItmoZTVr51RUCOUqTszQKFaD0DlP9
- N4NGOVZH38iVBQVNd2X5HbRCVIDg3FjGauDNdgKCUj6ay7reOyDzQAYCMhdCgktT4aDIWc
- IepHlk7tQTrkRsUBMiFP0GlJyfX8oMs=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-027C0W-aPAWKCtl3bYEM5A-1; Mon,
- 18 Nov 2024 04:06:59 -0500
-X-MC-Unique: 027C0W-aPAWKCtl3bYEM5A-1
-X-Mimecast-MFC-AGG-ID: 027C0W-aPAWKCtl3bYEM5A
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (Exim 4.90_1) (envelope-from <SRS0=CkxU=SN=kaod.org=clg@ozlabs.org>)
+ id 1tCxq9-0000cE-NF; Mon, 18 Nov 2024 04:14:40 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XsMQ10p99z4xg6;
+ Mon, 18 Nov 2024 20:14:17 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D25CD1955BCF; Mon, 18 Nov 2024 09:06:55 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.9])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 332571956089; Mon, 18 Nov 2024 09:06:50 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Jan=20L=C3=BCbbe?= <jlu@pengutronix.de>,
- Guenter Roeck <linux@roeck-us.net>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] docs: aspeed: Reorganize the "Boot options" section
-Date: Mon, 18 Nov 2024 10:06:48 +0100
-Message-ID: <20241118090648.187720-1-clg@redhat.com>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XsMPx2wsRz4xfs;
+ Mon, 18 Nov 2024 20:14:13 +1100 (AEDT)
+Message-ID: <7c8658ef-e61b-4a46-91cf-6dc26e78158c@kaod.org>
+Date: Mon, 18 Nov 2024 10:14:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Subject: Re: backing storage for eMMC boot partitions
+To: =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
+ <thuth@redhat.com>, Joel Stanley <joel@jms.id.au>,
+ qemu-block <qemu-block@nongnu.org>
+References: <20241017163247.711244-1-peter.maydell@linaro.org>
+ <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
+ <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
+ <07664ec3-6b46-4b27-9d8c-9e2ff34c9dbe@kaod.org>
+ <600baa43c3dd3547338934717cfb57c5e12b0d23.camel@pengutronix.de>
+ <84c32f2d-7d9a-4e5a-8b67-1f954dd493f6@roeck-us.net>
+ <b67f302a11a679c3fdb02318eb9ef0be559d14ce.camel@pengutronix.de>
+ <53cbb597-e7f2-4742-bf85-928c704ddbcf@linaro.org>
+ <443f1b0c-8184-4bf4-9f68-c23d7de3bc36@roeck-us.net>
+ <1bce4c22-9281-44c5-8acb-860881dc271c@kaod.org>
+ <c27fbed6-596e-4ce7-a6ca-6d12d7205e99@roeck-us.net>
+ <86fa6e68-5861-4d4d-941f-95b278074eb6@kaod.org>
+ <1c917e4a-de50-45b9-ac9c-eb04d51401a2@roeck-us.net>
+ <00997cca-6f4a-4b99-9616-2af6a25cd4fb@kaod.org>
+ <4246f82b-597c-4a5d-9a55-18a584e7d8c7@roeck-us.net>
+ <670fa7bf052d8f292f9bd25c330c8d7bdba02770.camel@pengutronix.de>
+ <b6641b83-33dc-46f8-b61b-fbdb9ab9bc40@roeck-us.net>
+ <9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=CkxU=SN=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,155 +127,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add subsubsections for possible boot methods and introduce a new
-section on eMMC boot support for the ast2600-evb and rainier-emmc
-machines, boot partitions assumptions and limitations.
+Hello,
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- docs/system/arm/aspeed.rst | 99 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 86 insertions(+), 13 deletions(-)
+[ ... ]
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index cd02832a1cda..ab66ea6268fc 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -104,6 +104,9 @@ or directly from the ASPEED Forked OpenBMC GitHub release repository :
- 
-    https://github.com/AspeedTech-BMC/openbmc/releases
- 
-+Booting from a kernel image
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
- To boot a kernel directly from a Linux build tree:
- 
- .. code-block:: bash
-@@ -113,16 +116,10 @@ To boot a kernel directly from a Linux build tree:
-         -dtb arch/arm/boot/dts/aspeed-ast2600-evb.dtb \
-         -initrd rootfs.cpio
- 
--To boot the machine from the flash image, use an MTD drive :
--
--.. code-block:: bash
--
--  $ qemu-system-arm -M romulus-bmc -nic user \
--	-drive file=obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd -nographic
-+Booting from a flash image
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
--Options specific to Aspeed machines are :
--
-- * ``boot-emmc`` to set or unset boot from eMMC (AST2600).
-+The machine options specific to Aspeed to boot from a flash image are :
- 
-  * ``execute-in-place`` which emulates the boot from the CE0 flash
-    device by using the FMC controller to load the instructions, and
-@@ -133,10 +130,12 @@ Options specific to Aspeed machines are :
- 
-  * ``spi-model`` to change the default SPI Flash model.
- 
-- * ``bmc-console`` to change the default console device. Most of the
--   machines use the ``UART5`` device for a boot console, which is
--   mapped on ``/dev/ttyS4`` under Linux, but it is not always the
--   case.
-+To boot the machine from the flash image, use an MTD drive :
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -M romulus-bmc -nic user \
-+	-drive file=obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd -nographic
- 
- To use other flash models, for instance a different FMC chip and a
- bigger (64M) SPI for the ``ast2500-evb`` machine, run :
-@@ -168,6 +167,78 @@ In that case, the machine boots fetching instructions from the FMC0
- device. It is slower to start but closer to what HW does. Using the
- machine option ``execute-in-place`` has a similar effect.
- 
-+Booting from an eMMC image
-+^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The machine options specific to Aspeed machines to boot from an eMMC
-+image are :
-+
-+ * ``boot-emmc`` to set or unset boot from eMMC (AST2600).
-+
-+Only the ``ast2600-evb`` and ``rainier-emmc`` machines have support to
-+boot from an eMMC device. In this case, the machine assumes that the
-+eMMC image includes special boot partitions. Such an image can be
-+built this way :
-+
-+.. code-block:: bash
-+
-+   $ dd if=/dev/zero of=mmc-bootarea.img count=2 bs=1M
-+   $ dd if=u-boot-spl.bin of=mmc-bootarea.img conv=notrunc
-+   $ dd if=u-boot.bin of=mmc-bootarea.img conv=notrunc count=64 bs=1K
-+   $ cat mmc-bootarea.img obmc-phosphor-image.wic > mmc.img
-+   $ truncate --size 16GB mmc.img
-+
-+Boot the machine ``rainier-emmc`` with :
-+
-+.. code-block:: bash
-+
-+   $ qemu-system-arm -M rainier-bmc \
-+         -drive file=mmc.img,format=raw,if=sd,index=2 \
-+         -nographic
-+
-+The ``boot-emmc`` option can be set or unset, to change the default
-+boot mode of machine: SPI or eMMC. This can be useful to boot the
-+``ast2600-evb`` machine from an eMMC device (default being SPI) or to
-+boot the ``rainier-bmc`` machine from a flash device (default being
-+eMMC).
-+
-+As an example, here is how to to boot the ``rainier-bmc`` machine from
-+the flash device with ``boot-emmc=false`` and let the machine use an
-+eMMC image :
-+
-+.. code-block:: bash
-+
-+   $ qemu-system-arm -M rainier-bmc,boot-emmc=false \
-+        -drive file=flash.img,format=raw,if=mtd \
-+        -drive file=mmc.img,format=raw,if=sd,index=2 \
-+        -nographic
-+
-+It should be noted that in this case the eMMC device must not have
-+boot partitions, otherwise the contents will not be accessible to the
-+machine.  This limitation is due to the use of the ``-drive``
-+interface.
-+
-+Ideally, one should be able to define the eMMC device and the
-+associated backend directly on the command line, such as :
-+
-+.. code-block:: bash
-+
-+   -blockdev node-name=emmc0,driver=file,filename=mmc.img \
-+   -device emmc,bus=sdhci-bus.2,drive=emmc0,boot-partition-size=1048576,boot-config=8
-+
-+This is not yet supported (as of QEMU-10.0). Work is needed to
-+refactor the sdhci bus model.
-+
-+Other booting options
-+^^^^^^^^^^^^^^^^^^^^^
-+
-+Other machine options specific to Aspeed machines are :
-+
-+ * ``bmc-console`` to change the default console device. Most of the
-+   machines use the ``UART5`` device for a boot console, which is
-+   mapped on ``/dev/ttyS4`` under Linux, but it is not always the
-+   case.
-+
- To change the boot console and use device ``UART3`` (``/dev/ttyS2``
- under Linux), use :
- 
-@@ -175,6 +246,8 @@ under Linux), use :
- 
-   -M ast2500-evb,bmc-console=uart3
- 
-+Booting the ast2700-evb machine
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
- Boot the AST2700 machine from the flash image, use an MTD drive :
- 
--- 
-2.47.0
+>> also boots from the emmc controller. How do I provide the
+>> bus and bus index ? "bus=sdhci-bus.2" doesn't work for me.
+>> There is "sd-bus", but it does not have an index.
+
+Yes. Changes are required in the sdhci model and in the boards using it.
+
+> I've not really understood how to assemble more complex setups using
+> qemu's commandline when the board already creates some of the devices.
+
+Yes. That's a "problem" to fix for emmc/sd devices. They should only
+be created when defaults_enabled(), just like the flash devices.
+
+> Perhaps Cédric can explain how the different boot options are
+> configured for aspeed?
+
+See https://qemu.readthedocs.io/en/v9.1.0/system/arm/aspeed.html#boot-options
+and the avocado/functional tests for examples.
+
+The eMMC case is missing from the docs. Here is a proposal :
+
+   https://lore.kernel.org/qemu-devel/20241118090648.187720-1-clg@redhat.com/
+
+Thanks,
+
+C.
+
+
+> 
+> I see three cases:
+> 1. specify the blockdev driver and options in the simple case where the
+> board already creates the SD or eMMC device
+> 2. specify some custom options for the eMMC
+> 3. create a custom eMMC config on a generic machine via sdhci-pci
+> 
+> 
+> Case 1 is probably most common. The user has chosen a board and just
+> wants to boot a rootfs image and doesn't care about boot partitions or
+> anything else eMMC-specific.
+> 
+> 
+> Some users may want to emulate an eMMC with boot partitions, as that
+> allows them to emulate their physical boards more closely (case 2).
+> Note that eMMC boot partitions are usually *not* used for storing a
+> Linux kernel, but for the bootloader (including things like u-boot, TF-
+> A, OP-TEE, ...). The ROM-code on many SoCs supports loading directly
+> from eMMC boot partitions. One of the two boot partitions can be
+> activated with an atomic eMMC EXT CSD register write, allowing atomic
+> bootloader updates. I think this case was the motivation for Cédric's
+> eea55625df83 ("aspeed: Introduce a AspeedSoCClass 'boot_from_emmc'
+> handler").
+>
+> 
+> These users are likely fine with assembling a backing file consisting
+> of e.g.
+> - bootloader image (boot0) @ offset 0MiB
+> - empty space for bootloader updates (boot1) @ offset 1MiB
+> - partitioned disk image (rootfs, ...) @ offset 2MiB
+> to get the same setup as their real hardware.
+> 
+> 
+> Case 3 is what I want to use the eMMC emulator for: Test eMMC-specific
+> functionality in Linux userspace, specifically the boot partition
+> update backend for RAUC, in a CI setup. To improve performance and
+> because we don't need to emulate any specific board for CI, we use an
+> x86 guest (q35). As it has PCIe, the easiest way to add the necessary
+> eMMC emulation is to use sdhci-pci. That was the motivation behind my
+> patch "hw/sd/sdcard: Allow user creation of eMMCs" [1].
+> 
+> For that case, having one backing file for boot partitions + main area
+> is fine as well.
+> 
+> 
+> If we wanted more flexibility via separate backing files per eMMC
+> partitions, it might work similar to NVMe Namespaces [2]. For me, that
+> seems like a lot of complexity a very niche case like eMMC boot
+> partitions.
+> 
+> 
+> Potential future features such as more eMMC data partitions, RPMB
+> support or separate backing files could be support in QEMU by new eMCC
+> device options or even additional devices (following the NVMe
+> approach), without breaking backwards compatibility.
+> 
+> So it seems to me, that Cédric's approach of enabling boot partitions
+> in hw/arm/aspeed.c only when configured to boot from them via the "hw-
+> strap1" property should solve cases 1 and 2 without introducing
+> backwards compatibility issues. Case 3 has explicit configuration (if a
+> boot partition is emulated), so shouldn't be a problem either.
+> 
+> 
+> Thanks,
+> Jan
+> 
+> [1] https://lore.kernel.org/qemu-devel/20241015135649.4189256-1-jlu@pengutronix.de/T/
+> [2] https://qemu-project.gitlab.io/qemu/system/devices/nvme.html#additional-namespaces
+> 
+
 
 
