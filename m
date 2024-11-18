@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7DDCD591A3
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7215CD591A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD4r0-0006yZ-1t; Mon, 18 Nov 2024 11:43:58 -0500
+	id 1tD4ye-00089l-Il; Mon, 18 Nov 2024 11:51:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tD4qx-0006yP-VO
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:43:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tD4yb-00089G-0l
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:51:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tD4qv-0006Tx-GE
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:43:55 -0500
+ id 1tD4yX-0007jJ-IM
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:51:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1731948231;
+ s=mimecast20190719; t=1731948703;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VTofHqPJ8HIB8ldhKv8zMhl/Tm+3DOezoYK+Pk8J7QE=;
- b=CBzchgUNvW9dDv4Eo9h0+wdR1DBau58dtyJAPyOIHITOoqcopQr8LW+xihaCnNHyIl6PyU
- OiqJARXAAIDUJ1AfwhuoGvMnQJMy2AfudJCDHjaJ7dToHcv8YpRHl2Cboi1r9Spac/z3FE
- JjCpgkyQqSq+Wfb8CpqazZGodW6SYUo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cnSWK1e0/v4RdDaAfGdPQZ2JUZ376QSKq7MHCgv8MbM=;
+ b=X3azwdjb52aXLY2iNjsPz0vXgVvDdtBktthhGRz1dHcAR99U6ZX+ZDqIA3VCatfkFGmdsR
+ FM01weBHMT37/u33LAyUPWSjgWY8Jq+7/R9eJuKgWyt47nY1j7T6iiTNqRwfhh0mLwyUFL
+ BkwabPlMQ6Eo/B2WcKXq8WhWWkUzY1Y=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-54--NvaYZ5WM6aDs01UidrV5Q-1; Mon, 18 Nov 2024 11:43:49 -0500
-X-MC-Unique: -NvaYZ5WM6aDs01UidrV5Q-1
-X-Mimecast-MFC-AGG-ID: -NvaYZ5WM6aDs01UidrV5Q
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4314c6ca114so24116375e9.1
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 08:43:49 -0800 (PST)
+ us-mta-83-RleqlidlPo-O2yrifiUN-w-1; Mon, 18 Nov 2024 11:51:42 -0500
+X-MC-Unique: RleqlidlPo-O2yrifiUN-w-1
+X-Mimecast-MFC-AGG-ID: RleqlidlPo-O2yrifiUN-w
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43157e3521dso16170485e9.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 08:51:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731948227; x=1732553027;
+ d=1e100.net; s=20230601; t=1731948701; x=1732553501;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VTofHqPJ8HIB8ldhKv8zMhl/Tm+3DOezoYK+Pk8J7QE=;
- b=lunPBkIwPAAWLkOwFBPbfuJVCzyHs+/JDsrJn1GZ5k09Qt4wT5eJ7LC4nTCttUQ1I9
- ZsFAw0LLLWzm2/VBa/7qpuYW8bq3ECQ8QWQON6L4oMJoU3ePN1Kp67ChswHsCOCKP8c7
- nrDXIvFXA/8RQLZUaV+igSfTl1LOvvqibGEqD8GZgw1gTDF/CpjztSeSJSff85mF8uYd
- AX3zOM2tD7ig0BzhV3w4wXoLr0+th6UTsHXI5+amJysmweL9q8YkwW0c5s3mCZtnblCa
- uPKbYRgOocNzGEobnJ1x7SEw6c9D/U/omkpCZlzIVrGB9r4SSljOrGYsfRMOQfjYz/qA
- Slow==
+ bh=cnSWK1e0/v4RdDaAfGdPQZ2JUZ376QSKq7MHCgv8MbM=;
+ b=fx1pc2Der1gt4BHLZxWKB3b1Lw5WDaSFqllO2mmCeJmAlwAFVV2rzAVhEKJ3c0N1r7
+ Sgf3/dvvRbCokdsHkLriabOCZsB7h1xMbQvIxpln4eipg0F/r/7ocv57Tf/OO9tY4arS
+ fR8rfynduJG1FB4Iq0aFD/aaVYKsU0RJrVt/HqtVs+egvpR6aAhFK2LXenuqnGQ1IhzJ
+ haPa6VaK4GVpkay/IZET4xziv9lN5v7YOE2s/653uTwnjay7BsAa2XPjFUTmM4/Kqx+O
+ bZTIl1V9pMX8dLFZemYcm9YkObXqrFclo8/veRj7bQddiC9L5sz46OI0CCmZMemrw+fR
+ Xi8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsNttt0i25EYJHH8tmscmXFeQC52nof4EYFYhLPSiaSgAbCPTEskz2Z/iyVOc0oAeuacHCiXiCMkSD@nongnu.org
-X-Gm-Message-State: AOJu0YxerDIsRCndDaaaCYQKhRzKsW9/9qBbMH6wakxjZ2cvKDDwGNGi
- gR4hc+dQedjCtzGifYm+Ti1JSKv2YXda6DUsWSApTy+eQmqzmQx4i40MxZRUw2Gi/Tuqu1qxiJ4
- GSAM114L/RbIu5JGc9wxRcV4n5y55XCCOpC3rVs4a7yieuuCzkdbqOtCyLG7Q
-X-Received: by 2002:a05:600c:1911:b0:432:d797:4071 with SMTP id
- 5b1f17b1804b1-432df790785mr95135515e9.32.1731948227625; 
- Mon, 18 Nov 2024 08:43:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEpofT01CNDuorq8xB5mhsMM9OySOE4WWgdPLIon/DtID1yI/+Hzwnh9mjlXIRr8vZxytXPpw==
-X-Received: by 2002:a05:600c:1911:b0:432:d797:4071 with SMTP id
- 5b1f17b1804b1-432df790785mr95135325e9.32.1731948227232; 
- Mon, 18 Nov 2024 08:43:47 -0800 (PST)
+ AJvYcCVcxIB9jgLoJEBG5S6mSHsxKGSojOT6a7oKVKOjzdDifDDeHQzS2SwuGGugmghK3NrRXEakZcMcoqaI@nongnu.org
+X-Gm-Message-State: AOJu0YzvLSTCIYUtK2Y+0igOdz+BuUVQDdHQ+AJT/lZn+CO57uZLk0yF
+ lT2gJLl9AJef3p5YY6rjcyiPCo8V0I4TYMM2rWYOTfykS+3f2q9nnHHaSGWuDuvbTTn2PYT44ky
+ Mz3YttMFTkaRWam4v/HUiuVXNio/iYe5cEXtzVbwR4/SMKuZuZ3IE
+X-Received: by 2002:a05:600c:5021:b0:426:6308:e2f0 with SMTP id
+ 5b1f17b1804b1-432df78788amr99134175e9.26.1731948701353; 
+ Mon, 18 Nov 2024 08:51:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHVq23Vv6ipFtOIQZS6GsG1VjSdXv7u+GYzH+r9U3pZSKEIiCxKguaU7xhmExFBXTlCXcMrsA==
+X-Received: by 2002:a05:600c:5021:b0:426:6308:e2f0 with SMTP id
+ 5b1f17b1804b1-432df78788amr99133625e9.26.1731948700808; 
+ Mon, 18 Nov 2024 08:51:40 -0800 (PST)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dab788e1sm160340815e9.15.2024.11.18.08.43.46
+ 5b1f17b1804b1-432dac0aef0sm164972725e9.28.2024.11.18.08.51.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Nov 2024 08:43:46 -0800 (PST)
-Date: Mon, 18 Nov 2024 17:43:46 +0100
+ Mon, 18 Nov 2024 08:51:40 -0800 (PST)
+Date: Mon, 18 Nov 2024 17:51:39 +0100
 From: Igor Mammedov <imammedo@redhat.com>
 To: Bibo Mao <maobibo@loongson.cn>
 Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 3/6] hw/loongarch/virt: Add generic function to init
- interrupt pin of CPU
-Message-ID: <20241118174346.23b6d2ee@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20241112021738.1952851-4-maobibo@loongson.cn>
+Subject: Re: [PATCH v4 5/6] hw/loongarch/virt: Update the ACPI table for
+ hotplug cpu
+Message-ID: <20241118175139.510424ad@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20241112021738.1952851-6-maobibo@loongson.cn>
 References: <20241112021738.1952851-1-maobibo@loongson.cn>
- <20241112021738.1952851-4-maobibo@loongson.cn>
+ <20241112021738.1952851-6-maobibo@loongson.cn>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,198 +109,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 12 Nov 2024 10:17:35 +0800
+On Tue, 12 Nov 2024 10:17:37 +0800
 Bibo Mao <maobibo@loongson.cn> wrote:
 
-> Here generic function virt_init_cpu_irq() is added to init interrupt
-> pin of CPU object, IPI and extioi interrupt controllers are connected
-> to interrupt pin of CPU object.
+> On LoongArch virt machine, ACPI GED hardware is used for CPU hotplug
+> handler, here CPU hotplug support feature is added based on GED handler,
+> also CPU scan and reject method is added about CPU device in DSDT table.
 > 
-> The generic function can be used to both cold-plug and hot-plug CPUs.
-
-this patch is heavily depends on cpu_index and specific order CPUs
-are created.
-
-> 
+> Co-developed-by: Xianglai Li <lixianglai@loongson.cn>
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->  hw/loongarch/virt.c         | 78 ++++++++++++++++++++++++-------------
->  include/hw/loongarch/virt.h |  2 +
->  2 files changed, 53 insertions(+), 27 deletions(-)
+>  hw/loongarch/Kconfig        |  1 +
+>  hw/loongarch/acpi-build.c   | 35 +++++++++++++++++++++++++++++++++--
+>  hw/loongarch/virt.c         | 10 ++++++++++
+>  include/hw/loongarch/virt.h |  1 +
+>  4 files changed, 45 insertions(+), 2 deletions(-)
 > 
+> diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
+> index fe1c6feac1..bb2838b7b5 100644
+> --- a/hw/loongarch/Kconfig
+> +++ b/hw/loongarch/Kconfig
+> @@ -17,6 +17,7 @@ config LOONGARCH_VIRT
+>      select LOONGARCH_EXTIOI
+>      select LS7A_RTC
+>      select SMBIOS
+> +    select ACPI_CPU_HOTPLUG
+>      select ACPI_PCI
+>      select ACPI_HW_REDUCED
+>      select FW_CFG_DMA
+> diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+> index 50709bda0f..c220edec68 100644
+> --- a/hw/loongarch/acpi-build.c
+> +++ b/hw/loongarch/acpi-build.c
+> @@ -47,6 +47,22 @@
+>  #define ACPI_BUILD_DPRINTF(fmt, ...)
+>  #endif
+>  
+> +static void virt_madt_cpu_entry(int uid,
+> +                                const CPUArchIdList *apic_ids,
+> +                                GArray *entry, bool force_enabled)
+> +{
+> +    uint32_t flags, apic_id = apic_ids->cpus[uid].arch_id;
+> +
+> +    flags = apic_ids->cpus[uid].cpu || force_enabled ? 1 /* Enabled */ : 0;
+> +
+> +    /* Rev 1.0b, Table 5-13 Processor Local APIC Structure */
+> +    build_append_int_noprefix(entry, 0, 1);       /* Type */
+> +    build_append_int_noprefix(entry, 8, 1);       /* Length */
+> +    build_append_int_noprefix(entry, uid, 1);     /* ACPI Processor ID */
+> +    build_append_int_noprefix(entry, apic_id, 1); /* APIC ID */
+
+is it really APIC ID or just copy paste mistake from x86?
+
+
+> +    build_append_int_noprefix(entry, flags, 4); /* Flags */
+> +}
+> +
+>  /* build FADT */
+>  static void init_common_fadt_data(AcpiFadtData *data)
+>  {
+> @@ -123,15 +139,17 @@ build_madt(GArray *table_data, BIOSLinker *linker,
+>      build_append_int_noprefix(table_data, 1 /* PCAT_COMPAT */, 4); /* Flags */
+>  
+>      for (i = 0; i < arch_ids->len; i++) {
+> +        uint32_t flags;
+> +
+>          /* Processor Core Interrupt Controller Structure */
+>          arch_id = arch_ids->cpus[i].arch_id;
+> -
+> +        flags   = arch_ids->cpus[i].cpu ? 1 : 0;
+>          build_append_int_noprefix(table_data, 17, 1);    /* Type */
+>          build_append_int_noprefix(table_data, 15, 1);    /* Length */
+>          build_append_int_noprefix(table_data, 1, 1);     /* Version */
+>          build_append_int_noprefix(table_data, i, 4);     /* ACPI Processor ID */
+>          build_append_int_noprefix(table_data, arch_id, 4); /* Core ID */
+> -        build_append_int_noprefix(table_data, 1, 4);     /* Flags */
+> +        build_append_int_noprefix(table_data, flags, 4); /* Flags */
+>      }
+>  
+>      /* Extend I/O Interrupt Controller Structure */
+> @@ -334,6 +352,7 @@ build_la_ged_aml(Aml *dsdt, MachineState *machine)
+>  {
+>      uint32_t event;
+>      LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(machine);
+> +    CPUHotplugFeatures opts;
+>  
+>      build_ged_aml(dsdt, "\\_SB."GED_DEVICE,
+>                    HOTPLUG_HANDLER(lvms->acpi_ged),
+> @@ -346,6 +365,18 @@ build_la_ged_aml(Aml *dsdt, MachineState *machine)
+>                                   AML_SYSTEM_MEMORY,
+>                                   VIRT_GED_MEM_ADDR);
+>      }
+> +
+> +    if (event & ACPI_GED_CPU_HOTPLUG_EVT) {
+> +        opts.acpi_1_compatible = false;
+> +        opts.has_legacy_cphp = false;
+> +        opts.fw_unplugs_cpu = false;
+> +        opts.smi_path = NULL;
+> +
+> +        build_cpus_aml(dsdt, machine, opts, virt_madt_cpu_entry,
+> +                       VIRT_GED_CPUHP_ADDR, "\\_SB",
+> +                       AML_GED_EVT_CPU_SCAN_METHOD, AML_SYSTEM_MEMORY);
+> +    }
+> +
+>      acpi_dsdt_add_power_button(dsdt);
+>  }
+>  
 > diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index b6b616d278..621380e2b3 100644
+> index 0e0c6c202b..b49b15c0f6 100644
 > --- a/hw/loongarch/virt.c
 > +++ b/hw/loongarch/virt.c
-> @@ -58,6 +58,20 @@ static bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
->      return true;
->  }
->  
-> +static CPUState *virt_get_cpu(MachineState *ms, int index)
-> +{
-> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
-> +    const CPUArchIdList *possible_cpus;
-> +
-> +    /* Init CPUs */
-> +    possible_cpus = mc->possible_cpu_arch_ids(ms);
-> +    if (index < 0 || index >= possible_cpus->len) {
-> +        return NULL;
-> +    }
-> +
-> +    return possible_cpus->cpus[index].cpu;
-> +}
-
-instead of adding this helper I'd suggest to try reusing
-virt_find_cpu_slot() added in previous patch.
-
-> +
->  static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
->                                void *opaque, Error **errp)
+> @@ -666,11 +666,17 @@ static DeviceState *create_acpi_ged(DeviceState *pch_pic,
 >  {
-> @@ -365,7 +379,7 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
->  static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
->  {
->      int num;
-> -    const MachineState *ms = MACHINE(lvms);
-> +    MachineState *ms = MACHINE(lvms);
->      int smp_cpus = ms->smp.cpus;
->  
->      qemu_fdt_add_subnode(ms->fdt, "/cpus");
-> @@ -375,7 +389,7 @@ static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
->      /* cpu nodes */
->      for (num = smp_cpus - 1; num >= 0; num--) {
-
-loops based on smp_cpus become broken as soon as you have
- '-smp x, -device your-cpu,...
-since it doesn't take in account '-device' created CPUs.
-You likely need to replace such loops to iterate over possible_cpus
-(in a separate patch please)
-  
->          char *nodename = g_strdup_printf("/cpus/cpu@%d", num);
-> -        LoongArchCPU *cpu = LOONGARCH_CPU(qemu_get_cpu(num));
-> +        LoongArchCPU *cpu = LOONGARCH_CPU(virt_get_cpu(ms, num));
->          CPUState *cs = CPU(cpu);
->  
->          qemu_fdt_add_subnode(ms->fdt, nodename);
-> @@ -783,16 +797,42 @@ static void virt_devices_init(DeviceState *pch_pic,
->      lvms->platform_bus_dev = create_platform_bus(pch_pic);
->  }
->  
-> +static void virt_init_cpu_irq(MachineState *ms, CPUState *cs)
-> +{
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-> +    CPULoongArchState *env;
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
-> +    int pin;
-> +
-> +    if (!lvms->ipi || !lvms->extioi) {
-> +        return;
-> +    }
-> +
-> +    env = &(cpu->env);
-> +    env->address_space_iocsr = &lvms->as_iocsr;
-> +    env->ipistate = lvms->ipi;
-> +    /* connect ipi irq to cpu irq, logic cpu index used here */
-> +    qdev_connect_gpio_out(lvms->ipi, cs->cpu_index,
-I'd try to avoid using cpu_index (basically internal CPU detail) when
-wiring components together. It would be better to implement this the way
-the real hw does it.
-
-
-> +                              qdev_get_gpio_in(DEVICE(cs), IRQ_IPI));
-> +
-> +    /*
-> +     * connect ext irq to the cpu irq
-> +     * cpu_pin[9:2] <= intc_pin[7:0]
-> +     */
-> +    for (pin = 0; pin < LS3A_INTC_IP; pin++) {
-> +        qdev_connect_gpio_out(lvms->extioi, cs->cpu_index * LS3A_INTC_IP + pin,
-> +                              qdev_get_gpio_in(DEVICE(cs), pin + 2));
-> +    }
-> +}
-> +
->  static void virt_irq_init(LoongArchVirtMachineState *lvms)
->  {
+>      DeviceState *dev;
 >      MachineState *ms = MACHINE(lvms);
-> -    DeviceState *pch_pic, *pch_msi, *cpudev;
-> +    DeviceState *pch_pic, *pch_msi;
->      DeviceState *ipi, *extioi;
->      SysBusDevice *d;
-> -    LoongArchCPU *lacpu;
-> -    CPULoongArchState *env;
->      CPUState *cpu_state;
-> -    int cpu, pin, i, start, num;
-> +    int cpu, i, start, num;
->      uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle, pch_msi_phandle;
+> +    MachineClass *mc = MACHINE_GET_CLASS(lvms);
+>      uint32_t event = ACPI_GED_PWR_DOWN_EVT;
 >  
->      /*
-> @@ -843,6 +883,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
->      ipi = qdev_new(TYPE_LOONGARCH_IPI);
->      qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.cpus);
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
-> +    lvms->ipi = ipi;
->  
->      /* IPI iocsr memory region */
->      memory_region_add_subregion(&lvms->system_iocsr, SMP_IPI_MAILBOX,
-> @@ -853,18 +894,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
->      /* Add cpu interrupt-controller */
->      fdt_add_cpuic_node(lvms, &cpuintc_phandle);
->  
-> -    for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
-> -        cpu_state = qemu_get_cpu(cpu);
-> -        cpudev = DEVICE(cpu_state);
-> -        lacpu = LOONGARCH_CPU(cpu_state);
-> -        env = &(lacpu->env);
-> -        env->address_space_iocsr = &lvms->as_iocsr;
-> -
-> -        /* connect ipi irq to cpu irq */
-> -        qdev_connect_gpio_out(ipi, cpu, qdev_get_gpio_in(cpudev, IRQ_IPI));
-> -        env->ipistate = ipi;
-> -    }
-> -
->      /* Create EXTIOI device */
->      extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
->      qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
-> @@ -872,6 +901,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
->          qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
+>      if (ms->ram_slots) {
+>          event |= ACPI_GED_MEM_HOTPLUG_EVT;
 >      }
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
-> +    lvms->extioi = extioi;
->      memory_region_add_subregion(&lvms->system_iocsr, APIC_BASE,
->                      sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 0));
->      if (virt_is_veiointc_enabled(lvms)) {
-> @@ -879,16 +909,10 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
->                      sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 1));
->      }
+> +
+> +    if (mc->has_hotpluggable_cpus) {
+> +        event |= ACPI_GED_CPU_HOTPLUG_EVT;
+> +    }
+> +
+>      dev = qdev_new(TYPE_ACPI_GED);
+>      qdev_prop_set_uint32(dev, "ged-event", event);
+>      sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> @@ -682,6 +688,10 @@ static DeviceState *create_acpi_ged(DeviceState *pch_pic,
+>      /* ged regs used for reset and power down */
+>      sysbus_mmio_map(SYS_BUS_DEVICE(dev), 2, VIRT_GED_REG_ADDR);
 >  
-> -    /*
-> -     * connect ext irq to the cpu irq
-> -     * cpu_pin[9:2] <= intc_pin[7:0]
-> -     */
-> +    /* Connect irq to cpu, including ipi and extioi irqchip */
->      for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
-> -        cpudev = DEVICE(qemu_get_cpu(cpu));
-> -        for (pin = 0; pin < LS3A_INTC_IP; pin++) {
-> -            qdev_connect_gpio_out(extioi, (cpu * 8 + pin),
-> -                                  qdev_get_gpio_in(cpudev, pin + 2));
-> -        }
-> +        cpu_state = virt_get_cpu(ms, cpu);
-> +        virt_init_cpu_irq(ms, cpu_state);
->      }
->  
->      /* Add Extend I/O Interrupt Controller node */
+> +    if (mc->has_hotpluggable_cpus) {
+> +        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 3, VIRT_GED_CPUHP_ADDR);
+> +    }
+> +
+>      sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
+>                         qdev_get_gpio_in(pch_pic, VIRT_SCI_IRQ - VIRT_GSI_BASE));
+>      return dev;
 > diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> index 9ba47793ef..260e6bd7cf 100644
+> index 260e6bd7cf..79a85723c9 100644
 > --- a/include/hw/loongarch/virt.h
 > +++ b/include/hw/loongarch/virt.h
-> @@ -60,6 +60,8 @@ struct LoongArchVirtMachineState {
->      MemoryRegion iocsr_mem;
->      AddressSpace as_iocsr;
->      struct loongarch_boot_info bootinfo;
-> +    DeviceState *ipi;
-> +    DeviceState *extioi;
->  };
+> @@ -30,6 +30,7 @@
+>  #define VIRT_GED_EVT_ADDR       0x100e0000
+>  #define VIRT_GED_MEM_ADDR       (VIRT_GED_EVT_ADDR + ACPI_GED_EVT_SEL_LEN)
+>  #define VIRT_GED_REG_ADDR       (VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO_LEN)
+> +#define VIRT_GED_CPUHP_ADDR     (VIRT_GED_REG_ADDR + ACPI_GED_REG_COUNT)
 >  
->  #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
+>  #define COMMAND_LINE_SIZE       512
+>  
 
 
