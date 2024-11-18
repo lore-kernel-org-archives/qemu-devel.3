@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CCCD49207
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C97D4400A
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 16:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD4VT-0007Sn-9c; Mon, 18 Nov 2024 11:21:43 -0500
+	id 1tD4YF-0000XU-J1; Mon, 18 Nov 2024 11:24:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tD4VS-0007Sc-0i
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:21:42 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tD4VQ-0002gO-9w
- for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:21:41 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5cfa9979cd1so3844716a12.1
- for <qemu-devel@nongnu.org>; Mon, 18 Nov 2024 08:21:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1731946898; x=1732551698; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7UUkR2GzToY03cpQGomfP8vp5af2lC/Je1w8P399As4=;
- b=jGL/hNZFAUm9S+OAupUWWv+0C5nCGwYRRWg01p5EhNT0kqDDKYxPE3yriEJCM7PTSz
- WiwvIEH+lS9qmLNCbQq5tWmUSexuc/jO6+NqiJ0ciN1+5h0V2ufs5bR7Xwzt/hXqFlJj
- YpynZOwWLBnMjzv9/+Wqo8LrlstqkDnNPyO7YROaRTasSjEr0JnAGG0wbbNT8hzc3Ell
- JaFILoyBzu2ZoW5Z5zs5FHyc93K/ZncnLLumBhj+UoXmcZhMuTj+XOpExj/1bFf3yZAL
- RJix6lW8ZwJ6RR68XG4uijaImZq49IKuTS76+W06ttB4KS/ZcUCNfB0f1fGj+TL+3Oc6
- e29g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731946898; x=1732551698;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7UUkR2GzToY03cpQGomfP8vp5af2lC/Je1w8P399As4=;
- b=VKIgIbRVmjByo1aDGBZCuzknsWMm2bv/n6I7Xr/8AoSZreEDj9Ts3GuEQzJLeV0a5c
- u7IO5uplkw5VbAvoDLl42R/M3q+NSXjIJxtKlrzU+vtUQfp9JCYBFeTtZ6wuUPZvUZV3
- m4ewrRhyZsH4pVoiBoEsWtT0ddRa/mmn3X6VJVlkj2m/grNOmym+vH/TtRZAkURRtzKf
- HswYFuwNOLN7EueS5owFI0ItzT1Ojrs5bEl6276BiXUldRjuPu5LKOOsPgFzLsndUfPQ
- qqw95DvdYJFRljJNw8wkhT23QSAdTFQXLEUKZDW4CyKQrTOLI1PmpYPZz1Rx0Xquku8G
- 1TTg==
-X-Gm-Message-State: AOJu0YykDq4hnoySnyiuM4o8M9NQj5PxvKyTW6xrKAbp+yyisPbvzyNM
- drPXJyoJSgpaRqpmZXSd9L6O6nSlIBC7/zYBrGuizDILlogSgSdLqd2lMI3zjDkamd1SG61QuoS
- CWfNI9LBtGHOUu8qzeO/oMWACxBC3zNOAGOzIEg==
-X-Google-Smtp-Source: AGHT+IF42jiC53wiWUrQLxv/Le+/RFFcXIuWdFW2Yr1pZoHXfB70wU/psttRlrlfZAncVNHAE4tH4wOFx2MXUZ2jVGA=
-X-Received: by 2002:a05:6402:1d51:b0:5cf:84c:b7bf with SMTP id
- 4fb4d7f45d1cf-5cf8e0201d6mr12629894a12.15.1731946897774; Mon, 18 Nov 2024
- 08:21:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tD4Y5-0000WL-L8
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:24:25 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1tD4Y3-0002vF-4t
+ for qemu-devel@nongnu.org; Mon, 18 Nov 2024 11:24:24 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1731947051; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=YLQCVjuBmD8QDasDnZ/XM4VG6tMt/jWMm4MVwWwLKQsHnT09OnIKuZXWDfkgu07oUi8Kf2yeZ4oW8U1BzMKHLoxHMrfoTS/NJ8qmApwBAINCitKZP1itBO1CqCbGSJV1OCJGVeeA8HbV/CKt10KZLFrMvAaiBIicpTAMHCwP4yI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1731947051;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=GiqXzAVIC74Ts4HzRULTv77Sds77o4CkKHetI+jViU4=; 
+ b=QOQpTIi+hgiikWQgX0wl/Sqe6Qmsd9rhS9qI7J7uqcVwY6d0hnjp7lM3csbadBeomGgElVoqCKEon4CM1KSu9Gsjq7afKhENE54HU+hf6DMnaXUHWsQpj9tuW/oFMtmvszBgC3M8F1PWxzy+uQ/cNGqIrfNb8o/eHMlRGQojs1A=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1731947051; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=GiqXzAVIC74Ts4HzRULTv77Sds77o4CkKHetI+jViU4=;
+ b=IP75Yg9O5q/R9gT6hahekCQF0CuYOyA4z3vWzGBvWy6l+GiSCT2l+STQNvLbAmiE
+ nVNYgsRjfeZZCelc/4ujVIos14kDy1DyXl8yzGI2YlzrG2kj1wQJGn4Zd0gk1+rWtFd
+ +B1HQx9sL4NHQ4kZCS0VaWVd6mYVJP23fAhazOOg=
+Received: by mx.zohomail.com with SMTPS id 1731947049329245.67443580649194;
+ Mon, 18 Nov 2024 08:24:09 -0800 (PST)
+Message-ID: <1984069f-6deb-44d5-b3e9-0312ffcc3a1c@collabora.com>
+Date: Mon, 18 Nov 2024 19:24:05 +0300
 MIME-Version: 1.0
-References: <20241118134253.2071319-1-pbonzini@redhat.com>
-In-Reply-To: <20241118134253.2071319-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 18 Nov 2024 16:21:26 +0000
-Message-ID: <CAFEAcA9qavOHXaDBJjUvf_xvZ=LEG-tZ1OABoXFWNU8O397POA@mail.gmail.com>
-Subject: Re: [PULL 0/2] two tiny patches for the next QEMU 9.2 rc
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] ui/sdl2: Don't disable scanout when display is
+ refreshed
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+References: <20241006234353.3201037-1-dmitry.osipenko@collabora.com>
+ <20241006234353.3201037-2-dmitry.osipenko@collabora.com>
+ <6ae662db-fba6-43a5-8be9-8de01dd4f476@daynix.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <6ae662db-fba6-43a5-8be9-8de01dd4f476@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,30 +88,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Nov 2024 at 13:43, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> The following changes since commit f0cfd067867668870931c9411d96cd518564b7a8:
->
->   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-11-09 12:34:01 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/bonzini/qemu.git tags/for-upstream
->
-> for you to fetch changes up to ebcf886d88e0fcae322d063b28846d20b23b5321:
->
->   configure: Use -ef to compare paths (2024-11-18 13:44:54 +0100)
->
-> ----------------------------------------------------------------
-> * target/i386: fix compilation without CONFIG_HYPERV
-> * configure: improve check for execution in the source directory
->
+On 10/7/24 21:15, Akihiko Odaki wrote:
+> On 2024/10/07 8:43, Dmitry Osipenko wrote:
+>> Display refreshment is invoked by a timer and it erroneously disables
+>> the active scanout if it happens to be invoked after scanout has been
+>> enabled. This offending scanout-disable race condition with a timer
+>> can be easily hit when Qemu runs with a disabled vsync by using SDL or
+>> GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
+>> content shouldn't disable the active display. Fix it by keeping the
+>> scanout's state unchanged when display is redrawn.
+>>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> 
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> 
+>> ---
+>>   ui/sdl2-gl.c | 1 -
+>>   1 file changed, 1 deletion(-)
 
+Is anyone willing to apply this patchset? Maybe Alex? Thanks in advance!
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
-
--- PMM
+-- 
+Best regards,
+Dmitry
 
