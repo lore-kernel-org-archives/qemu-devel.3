@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E44BD591AD
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD25DD591B0
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Nov 2024 19:38:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tD7Xb-0006sB-Qo; Mon, 18 Nov 2024 14:36:07 -0500
+	id 1tD7XQ-0006fi-7L; Mon, 18 Nov 2024 14:35:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7XQ-0006fg-2n; Mon, 18 Nov 2024 14:35:56 -0500
+ id 1tD7XM-0006fA-3v; Mon, 18 Nov 2024 14:35:53 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tD7XN-0002ii-ED; Mon, 18 Nov 2024 14:35:54 -0500
+ id 1tD7XC-0002i3-KE; Mon, 18 Nov 2024 14:35:44 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EA831A54E9;
+ by isrv.corpit.ru (Postfix) with ESMTP id BF0D4A54E6;
  Mon, 18 Nov 2024 22:35:17 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 69FA31735A6;
+ by tsrv.corpit.ru (Postfix) with SMTP id 3EBC91735A3;
  Mon, 18 Nov 2024 22:35:21 +0300 (MSK)
-Received: (nullmailer pid 2312705 invoked by uid 1000);
+Received: (nullmailer pid 2312695 invoked by uid 1000);
  Mon, 18 Nov 2024 19:35:20 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [Stable-8.2.8 60/61] hw/audio/hda: fix memory leak on audio setup
-Date: Mon, 18 Nov 2024 22:35:15 +0300
-Message-Id: <20241118193520.2312620-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.8 57/61] target/i386: fix hang when using slow path for
+ ptw_setl
+Date: Mon, 18 Nov 2024 22:35:12 +0300
+Message-Id: <20241118193520.2312620-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
 References: <qemu-stable-8.2.8-20241118211929@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,79 +63,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-When SET_STREAM_FORMAT is called, the st->buft timer is overwritten, thus
-causing a memory leak.  This was originally fixed in commit 816139ae6a5
-("hw/audio/hda: fix memory leak on audio setup", 2024-11-14) but that
-caused the audio to break in SPICE.
+When instrumenting memory accesses for plugin, we force memory accesses
+to use the slow path for mmu [1]. This create a situation where we end
+up calling ptw_setl_slow. This was fixed recently in [2] but the issue
+still could appear out of plugins use case.
 
-Fortunately, a simpler fix is possible.  The timer only needs to be
-reset, because the callback is always the same (st->output is set at
-realize time in hda_audio_init); call to timer_new_ns overkill.  Replace
-it with timer_del and only initialize the timer once; for simplicity,
-do it even if use_timer is false.
+Since this function gets called during a cpu_exec, start_exclusive then
+hangs. This exclusive section was introduced initially for security
+reasons [3].
 
-An even simpler fix would be to free the old time in hda_audio_setup().
-However, it seems better to place the initialization of the timer close
-to that of st->ouput.
+I suspect this code path was never triggered, because ptw_setl_slow
+would always be called transitively from cpu_exec, resulting in a hang.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20241114125318.1707590-3-pbonzini@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 626b39006d2f9b1378a04cb88a2187bb852cb055)
+[1] https://gitlab.com/qemu-project/qemu/-/commit/6d03226b42247b68ab2f0b3663e0f624335a4055
+[2] https://gitlab.com/qemu-project/qemu/-/commit/115ade42d50144c15b74368d32dc734ea277d853
+[2] https://gitlab.com/qemu-project/qemu/-/commit/9a96406787afcc9960fbe8791892c78311d6971f in 8.2.x series
+[3] https://gitlab.com/qemu-project/qemu/-/issues/279
+
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2566
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20241025175857.2554252-2-pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 7ba055b49b74c4d2f4a338c5198485bdff373fb1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: mention [2] in 8.2.x series)
 
-diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
-index 19f401cabe..ac908e56c6 100644
---- a/hw/audio/hda-codec.c
-+++ b/hw/audio/hda-codec.c
-@@ -487,8 +487,7 @@ static void hda_audio_setup(HDAAudioStream *st)
-     if (st->output) {
-         if (use_timer) {
-             cb = hda_audio_output_cb;
--            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                    hda_audio_output_timer, st);
-+            timer_del(st->buft);
-         } else {
-             cb = hda_audio_compat_output_cb;
-         }
-@@ -497,8 +496,7 @@ static void hda_audio_setup(HDAAudioStream *st)
-     } else {
-         if (use_timer) {
-             cb = hda_audio_input_cb;
--            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                    hda_audio_input_timer, st);
-+            timer_del(st->buft);
-         } else {
-             cb = hda_audio_compat_input_cb;
-         }
-@@ -726,8 +724,12 @@ static void hda_audio_init(HDACodecDevice *hda,
-                 st->gain_right = QEMU_HDA_AMP_STEPS;
-                 st->compat_bpos = sizeof(st->compat_buf);
-                 st->output = true;
-+                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                        hda_audio_output_timer, st);
-             } else {
-                 st->output = false;
-+                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                        hda_audio_input_timer, st);
-             }
-             st->format = AC_FMT_TYPE_PCM | AC_FMT_BITS_16 |
-                 (1 << AC_FMT_CHAN_SHIFT);
-@@ -750,9 +752,7 @@ static void hda_audio_exit(HDACodecDevice *hda)
-         if (st->node == NULL) {
-             continue;
-         }
--        if (a->use_timer) {
--            timer_free(st->buft);
--        }
-+        timer_free(st->buft);
-         if (st->output) {
-             AUD_close_out(&a->card, st->voice.out);
-         } else {
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index bdf7b0df42..44b1b2ded6 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -106,6 +106,10 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
+ {
+     uint32_t cmp;
+ 
++    CPUState *cpu = env_cpu(in->env);
++    /* We are in cpu_exec, and start_exclusive can't be called directly.*/
++    g_assert(cpu->running);
++    cpu_exec_end(cpu);
+     /* Does x86 really perform a rmw cycle on mmio for ptw? */
+     start_exclusive();
+     cmp = cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
+@@ -113,6 +117,7 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
+         cpu_stl_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
+     }
+     end_exclusive();
++    cpu_exec_start(cpu);
+     return cmp == old;
+ }
+ 
 -- 
 2.39.5
 
