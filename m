@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 333FDD44161
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE4ACD44162
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDOys-0003Q4-VZ; Tue, 19 Nov 2024 09:13:26 -0500
+	id 1tDP8h-0005vq-2o; Tue, 19 Nov 2024 09:23:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tDOyq-0003Pe-Vn
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:13:24 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tDP8d-0005tr-3w
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:31 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tDOyp-0003rU-Dz
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:13:24 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5cfaa02c716so1177096a12.3
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:13:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tDP8b-0006DQ-2h
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:30 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-431ac30d379so8980845e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732025601; x=1732630401; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Jx41v9BGhl28go6eSkoYYRKJ1NuKjbZRTpl+oEAlBlM=;
- b=mVrKoUgxIMvL5sk1mxs5SkUVq5SVJDvCTzHvzU5I54hRLE07dEIDTf2EUGAPVB+658
- G13fPVnov4hM9DP7IePUCJYJmW8fENBOsHHjtOhMezWN6hIzVE96Rwky/dIVHAuIVuKm
- mw/mCT4rCJRmxNRoTQmSB9VJoBKCd6Ud75dRugnJj49D0g2gq158qNkgV7la59JDVwkk
- M+MGkxls1dhUI3nuJw0nsPG1Y1dgRqGLNkXMAM3QX4aF1jpYFT6A1TDSKG3AA2md3jPM
- 61iVAWlrjSRHzTuAYgkZc89/gjZmgmG8DIO5krMPFBAgqbVUK8nDjJv/lFMVMfVpGoi6
- BNeQ==
+ d=linaro.org; s=google; t=1732026207; x=1732631007; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=CmWCC2CxsP9hklr4mLV7JuMCZSWJOJa4bduw2FlH0m0=;
+ b=O+T6XMA+oZj35LH2NdxZFje1ZcIABOmMG6jYzCOTBAKQhkJri+8YuHqLK2Ivx++q2A
+ +VhMGSPhOaL6PGhnJc5BCk+5Fo/o5hltxMy3FnpGenM4YOJRyZ1NV6vwPztbaDEgErwJ
+ u+R2NE63KdhRBDC7GwLSB94D9qN0cSZM8iIKDNfQQFE1cb88hyXZiXPKXwqbbI7k+bvh
+ lLpoZF/n6k7iQqHeoSuhw6ZMmD/lx7B/CwlyL6G7gIBlCpmaIqQDsyC5iAxJJbZRZqtD
+ po6iqrJOQORdYB3b74F8nA2F4wHQprtexbuYFonAiZntpMQFVRY4DjEYBbeM3LMMF6Hf
+ ttjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732025601; x=1732630401;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Jx41v9BGhl28go6eSkoYYRKJ1NuKjbZRTpl+oEAlBlM=;
- b=TEBZVwkB5UjCfUG1DInMOGaKphMk7PVBsUpwuKcxVx/PAgYWi5mfw33xIxLwGBNlm1
- ZJxbZk3nWERyioD9Qfv0Qoch5B+D8LZu2T/ocOVuHoDwmVWMU+9+CV0b44+pDI5pIRft
- xIRx8ECVPWYKbN7G8qdhBWiHVzMtoP/kbIb8UvVbw6csJdbZZRlPLp4ib5YeQ1Zz88S9
- SSvebwdFLAVMYZPYxfLr2ak7PeUG+JKRq2hGMcWe8TrZxUShXwpn3ouRAIh2GXuC2+8N
- 4wl9mgpwMe/rzG5kU/IZWA48IzPQCotZkgL/xqJMmGigCDVrcOJnmZ0nJX7k/K7Fz3rX
- JZBQ==
-X-Gm-Message-State: AOJu0YwIyJMh81/8riPyb7uNYxVlGSfvOIaL4tPHABjWhiJXnKj44mE5
- 8cEJEKvAk03OCh0rzLLtes35uJ47Vz7yJLIiKZaEjh759zmK+hqbLvDuDw/nErY=
-X-Google-Smtp-Source: AGHT+IFuWqqJ/gtrOjoGY57WRIWH6GlP3VXgJiN11BsQBU22TzM4HKp7YiD2giVO0ETA6L/lzLGTKQ==
-X-Received: by 2002:a05:6402:2693:b0:5cf:68f4:e2db with SMTP id
- 4fb4d7f45d1cf-5cf8fc17c47mr12004689a12.9.1732025600651; 
- Tue, 19 Nov 2024 06:13:20 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cf79c0ac7fsm5781300a12.55.2024.11.19.06.13.19
+ d=1e100.net; s=20230601; t=1732026207; x=1732631007;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CmWCC2CxsP9hklr4mLV7JuMCZSWJOJa4bduw2FlH0m0=;
+ b=Dr3GtYm37ixmD9Ss6f6DJNw+V6504vQBIb5mJctAyD0R9amhBCWHQ5o/BppKR71gWa
+ 16r1bGMaE4OE3olyP+YsmzDGuRy3viZi96iiJU25DzFB7Q4xpz9nyq5L0cneQcDIVsI7
+ GBxRNxaPy7MV7LEOFGsAmYfb9RozbbaKHuS7oc10xbEEJ/oIyzM95hZbDJ1Jfz4vf06/
+ LY0Hu7CsBjLEArhY31MKR5FeKZrjl8Rwc78vn18CwMfqMrLN9L4VQSZEpNFtEn9oLYEX
+ 1wbWqDu3HC9V51SbWolmQI+PFC3FZhe7j23gc1gQvx7FEx1Mz+YOByRYi6q94gPr4vbu
+ I8uA==
+X-Gm-Message-State: AOJu0Yzvca8t9xK7Ke5fGFF6arJRMTMhYw+K6gslehOzrNPTDXX6iqvn
+ 0WkdBifWeboCu20PNgYVmtHEuWYrSGm6tFfgYbNA/1c+TeSs4zXCfQnhjBkxra+qumJ/IXdsEVP
+ o
+X-Google-Smtp-Source: AGHT+IFVkSFBdagkbMkIdkJt7TivPxUZWPTHenKjQcZMDtQBfGRQj3VT4qu5zxKkgjzbnmWWADoz8g==
+X-Received: by 2002:a05:600c:444f:b0:42c:b905:2bf9 with SMTP id
+ 5b1f17b1804b1-432df74eb09mr159873445e9.16.1732026207556; 
+ Tue, 19 Nov 2024 06:23:27 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.27
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 06:13:20 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 58E3E5F769;
- Tue, 19 Nov 2024 14:13:19 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Mahmoud Mandour <ma.mandourr@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>,  Cleber Rosa <crosa@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v4 0/3] plugins: generate list of symbols automatically
-In-Reply-To: <20241112212622.3590693-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Tue, 12 Nov 2024 13:26:19 -0800")
-References: <20241112212622.3590693-1-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Tue, 19 Nov 2024 14:13:19 +0000
-Message-ID: <87wmgzpb0g.fsf@draig.linaro.org>
+ Tue, 19 Nov 2024 06:23:27 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 09/15] arm/ptw: Honour WXN/UWXN and SIF in short-format
+ descriptors
+Date: Tue, 19 Nov 2024 14:23:15 +0000
+Message-Id: <20241119142321.1853732-10-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241119142321.1853732-1-peter.maydell@linaro.org>
+References: <20241119142321.1853732-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,46 +94,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+From: Pavel Skripkin <paskripkin@gmail.com>
 
-> Now that meson build for plugins was merged, we can cleanup another part =
-with
-> the symbols file.
-> It has to be kept in sync between the header (qemu-plugin.h) and the symb=
-ols
-> file. This has proved to be error prone and tedious.
->
-> We solve this by generating this list from header directly using a python
-> script. Dependencies are triggered correctly, and the file is regenerated=
- if the
-> header is modified, as expected.
->
-> v4:
-> fix second patch to apply cleanly on master (was applied from a previous =
-series
-> to enable windows clang build before).
+Currently the handling of page protection in the short-format
+descriptor is open-coded. This means that we forgot to update
+it to handle some newer architectural features, including:
+ * handling of SCTLR.{UWXN,WXN}
+ * handling of SCR.SIF
 
-Queued to plugins/next, thanks.
+Make the short-format descriptor code call the same get_S1prot()
+that we already use for the LPAE descriptor format. This makes
+the code simpler and means it now correctly honours the WXN/UWXN
+and SIF bits.
 
-I'm not sure if it meets the criteria for 9.2 post freeze although it
-seems pretty safe from looking at it.
+Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
+Message-id: 20241118152537.45277-1-paskripkin@gmail.com
+[PMM: fixed a couple of checkpatch nits, tweaked commit message]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/ptw.c | 55 +++++++++++++++++++++---------------------------
+ 1 file changed, 24 insertions(+), 31 deletions(-)
 
->
-> Pierrick Bouvier (3):
->   plugins: add missing export for qemu_plugin_num_vcpus
->   plugins: detect qemu plugin API symbols from header
->   plugins: eradicate qemu-plugins.symbols static file
->
->  MAINTAINERS                    |  1 +
->  include/qemu/qemu-plugin.h     |  1 +
->  plugins/meson.build            | 12 +++++--
->  plugins/qemu-plugins.symbols   | 59 ----------------------------------
->  scripts/qemu-plugin-symbols.py | 45 ++++++++++++++++++++++++++
->  5 files changed, 56 insertions(+), 62 deletions(-)
->  delete mode 100644 plugins/qemu-plugins.symbols
->  create mode 100755 scripts/qemu-plugin-symbols.py
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index b132910c401..64bb6878a48 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -85,6 +85,10 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
+                               GetPhysAddrResult *result,
+                               ARMMMUFaultInfo *fi);
+ 
++static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
++                      int user_rw, int prot_rw, int xn, int pxn,
++                      ARMSecuritySpace in_pa, ARMSecuritySpace out_pa);
++
+ /* This mapping is common between ID_AA64MMFR0.PARANGE and TCR_ELx.{I}PS. */
+ static const uint8_t pamax_map[] = {
+     [0] = 32,
+@@ -1148,7 +1152,7 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
+     hwaddr phys_addr;
+     uint32_t dacr;
+     bool ns;
+-    int user_prot;
++    ARMSecuritySpace out_space;
+ 
+     /* Pagetable walk.  */
+     /* Lookup l1 descriptor.  */
+@@ -1240,16 +1244,19 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
+             g_assert_not_reached();
+         }
+     }
++    out_space = ptw->in_space;
++    if (ns) {
++        /*
++         * The NS bit will (as required by the architecture) have no effect if
++         * the CPU doesn't support TZ or this is a non-secure translation
++         * regime, because the output space will already be non-secure.
++         */
++        out_space = ARMSS_NonSecure;
++    }
+     if (domain_prot == 3) {
+         result->f.prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+     } else {
+-        if (pxn && !regime_is_user(env, mmu_idx)) {
+-            xn = 1;
+-        }
+-        if (xn && access_type == MMU_INST_FETCH) {
+-            fi->type = ARMFault_Permission;
+-            goto do_fault;
+-        }
++        int user_rw, prot_rw;
+ 
+         if (arm_feature(env, ARM_FEATURE_V6K) &&
+                 (regime_sctlr(env, mmu_idx) & SCTLR_AFE)) {
+@@ -1259,37 +1266,23 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
+                 fi->type = ARMFault_AccessFlag;
+                 goto do_fault;
+             }
+-            result->f.prot = simple_ap_to_rw_prot(env, mmu_idx, ap >> 1);
+-            user_prot = simple_ap_to_rw_prot_is_user(ap >> 1, 1);
++            prot_rw = simple_ap_to_rw_prot(env, mmu_idx, ap >> 1);
++            user_rw = simple_ap_to_rw_prot_is_user(ap >> 1, 1);
+         } else {
+-            result->f.prot = ap_to_rw_prot(env, mmu_idx, ap, domain_prot);
+-            user_prot = ap_to_rw_prot_is_user(env, mmu_idx, ap, domain_prot, 1);
+-        }
+-        if (result->f.prot && !xn) {
+-            result->f.prot |= PAGE_EXEC;
++            prot_rw = ap_to_rw_prot(env, mmu_idx, ap, domain_prot);
++            user_rw = ap_to_rw_prot_is_user(env, mmu_idx, ap, domain_prot, 1);
+         }
++
++        result->f.prot = get_S1prot(env, mmu_idx, false, user_rw, prot_rw,
++                                    xn, pxn, result->f.attrs.space, out_space);
+         if (!(result->f.prot & (1 << access_type))) {
+             /* Access permission fault.  */
+             fi->type = ARMFault_Permission;
+             goto do_fault;
+         }
+-        if (regime_is_pan(env, mmu_idx) &&
+-            !regime_is_user(env, mmu_idx) &&
+-            user_prot &&
+-            access_type != MMU_INST_FETCH) {
+-            /* Privileged Access Never fault */
+-            fi->type = ARMFault_Permission;
+-            goto do_fault;
+-        }
+-    }
+-    if (ns) {
+-        /* The NS bit will (as required by the architecture) have no effect if
+-         * the CPU doesn't support TZ or this is a non-secure translation
+-         * regime, because the attribute will already be non-secure.
+-         */
+-        result->f.attrs.secure = false;
+-        result->f.attrs.space = ARMSS_NonSecure;
+     }
++    result->f.attrs.space = out_space;
++    result->f.attrs.secure = arm_space_is_secure(out_space);
+     result->f.phys_addr = phys_addr;
+     return false;
+ do_fault:
+-- 
+2.34.1
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
