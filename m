@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9426D62068
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 16:56:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B190D591A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 17:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDRW4-0006YI-Sk; Tue, 19 Nov 2024 11:55:53 -0500
+	id 1tDRib-0003QM-Py; Tue, 19 Nov 2024 12:08:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tDRVx-0006Vg-Jx
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:55:47 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDRia-0003Q3-84
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:08:48 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tDRVv-00061O-Ch
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:55:45 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7ae3d7222d4so3582314a12.3
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 08:55:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDRiY-0000ZE-Rs
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:08:48 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-aa20944ce8cso1017199266b.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 09:08:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732035338; x=1732640138; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1732036124; x=1732640924; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NSnW+Kri/kanWHeCTIghDBDlzmrEcu9zDmYU34nx1vs=;
- b=oueQ9AL1jzQ/kILCxOt20j55kBTTW1KWpeBPILmlbeKw6+sXtDyRmNDgCPYuFgD5zV
- AzrNzwQjOPRJ6OBs4VlB10mwbtuRDOSd4Un3y0mr3b58Iacrqlyzp7eMXK764B092S41
- CDQa9Xep4tyxaWNzdDCHJxP5rtuN+QCydgE85airc0ABplxdbycALfNeI2SkbQv8Fzcl
- uTb3dj4Pojpt7U7pbLVste2uebbTphL9Bi7ulYNghbINq1hEgQ8E0f2fAxCS2ZSsZRh2
- 2AxUtY8FvxnLt0UL+fzaaNh5BfKRX9hu/ipm69CKCs+N6oMY0F1sFM3GfJSJNgXZfP9K
- 0JOQ==
+ bh=UFP5FAdUDeZzepfTiBkyXn3t4a1Mu/xz6rvilz3UgJw=;
+ b=gUsn4JQE/iiuiYK5W1JCd4NKpbhd2gykpqkwyzLeXzamwGAbRNgYRdvNoKPRuG8Gzf
+ yCs/0UfOiT3xaswGRATIIm6c+HO4TUNth/t8mDdforH2oJKBdhBFV0zWu513Xwusaeea
+ 4oqmXVKX1N7wm+AMzlM+ArVY6uaUyPFMZeNLx/tWxK3OVUrx5HepEjAFmwcxb3FgYEVV
+ xEwBffph+pRLeOyqyHXk6EtqvNtk9OkR9z7jJ6QBSOriP8ePI/spripmJ5VrITxxQnRx
+ gyc2BDNLqbNLsuG9nFxPpitIbhGTGVfcZ+h9Vo8pVi++jAaQA22FXV5BgHVUyawT4K/D
+ eplQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732035338; x=1732640138;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1732036124; x=1732640924;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NSnW+Kri/kanWHeCTIghDBDlzmrEcu9zDmYU34nx1vs=;
- b=HXRdzIcSrPbQEPgbEOBb7zV+nup6bSEyMDU+u+AfXpbNFT/BuO8iWH1GVxqU9MRv3P
- MylK94VV7IrQYMUUdt9MXKoyoAiLCr77eiDYP/OW0ICcMktL8fcnVzzBGNryKY3w7XwS
- 8NvFSnOd/SnMyrRk8L8o6J7c0qj3I/TyOSIixpU7VUid71dYF7ING+Tm8izS2X67jmkp
- stTOUHFnfLNzx1MLN2pee0DsGko/wpWF0Mjh0RthivLHvX9SGwP+L1oMN4Wdt/AY2f0a
- oPe5igk/ZHAAYyYNQRdtDMqUhKk9LVVnKZ9rw/BBtaZ6wZyYaRaN10MWpcMAraKGYsTV
- qp1g==
-X-Gm-Message-State: AOJu0YwoeLLt+ToVAdloWix7MJyLnWvRrohivybWotpk6vLNQVgWOo4L
- b0Z7IO/NwY2mq6/c+Ny6cabxogk+Q92r4/w3xSeuWtB+xr1JMUiQhu8PEr/2yu0=
-X-Google-Smtp-Source: AGHT+IEo9Gyldwd8zVNXwwsPWA5ahdbPngHTUWiSJyziS69prW8XIMUS0jTCbVpVW+KR+zTLuTQLhg==
-X-Received: by 2002:a05:6a20:3d82:b0:1db:9280:6d1f with SMTP id
- adf61e73a8af0-1dc909be805mr25602294637.0.1732035337713; 
- Tue, 19 Nov 2024 08:55:37 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f8c1c172d1sm7998533a12.16.2024.11.19.08.55.36
+ bh=UFP5FAdUDeZzepfTiBkyXn3t4a1Mu/xz6rvilz3UgJw=;
+ b=NsCRXzoUb2nq6drMtaVb0PcCtcb/ABVVoYftJjlaO5kkMrSiRZ7zyaUqEaq2tmbApU
+ 23o0O0YwpJtm5rXnQLDoUATADYGupe8K5JZZEBCtNFag82xRvjrTyeFJhUVBsqrF0h0i
+ +2cC39fD5ggdUBwJjKsl4DiOSxnE0u4n29/SwG1HuCJQs48QfBJVBDG3UWoTV+7niAe2
+ ns39SYXGSgPhGgu5QASd6doUcOroSEWP2jluWV6lkUjENzoeAlLY3mFFD+1tGKxXzn5R
+ vSrfDNLVb0UUbDthORqgtOf3mctK2HZbHq911B3r+VtqHKCcuJ6iPpDdSHRiAt5U5Y01
+ QpeA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWVi6m8czThNhnOHuEQl6czXC+xRn/sGw9AkO2uSvy59UD4cOwWmPjIcxq+4sBM9UMArtujF7zSNgdy@nongnu.org
+X-Gm-Message-State: AOJu0YyTtbioaTkXIcalyJt+e5OXCZH7o5CfaQZaxQW4i6Xp4sFc+Zsk
+ 1DtNAJ6y+G86Sd/MTm8fNwtYi3L3lmdugHov1LuLGGbWbWYtFZadL5zr1g49wW0=
+X-Google-Smtp-Source: AGHT+IG7DwQQVyg5Pb+QzmDsJ8H6pJjzAJrPmphSqs2fpYUpNTn8dm1jxCDde32Wk1Kr8P9PPsJRVQ==
+X-Received: by 2002:a17:907:e25c:b0:a9e:85f8:2a3a with SMTP id
+ a640c23a62f3a-aa4c7dff462mr372842266b.2.1732036123748; 
+ Tue, 19 Nov 2024 09:08:43 -0800 (PST)
+Received: from [192.168.69.197] (sto95-h01-176-184-18-155.dsl.sta.abo.bbox.fr.
+ [176.184.18.155]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20e045143sm673191066b.136.2024.11.19.09.08.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Nov 2024 08:55:37 -0800 (PST)
-Message-ID: <618dded9-1380-4f3e-9a5d-f42b4540b798@linaro.org>
-Date: Tue, 19 Nov 2024 08:55:36 -0800
+ Tue, 19 Nov 2024 09:08:43 -0800 (PST)
+Message-ID: <092e853c-15e5-4003-9a48-ee3ac9200598@linaro.org>
+Date: Tue, 19 Nov 2024 18:08:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] plugins: generate list of symbols automatically
+Subject: Re: [PATCH 01/15] tests/functional: fix mips64el test to honour
+ workdir
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241119150519.1123365-1-berrange@redhat.com>
+ <20241119150519.1123365-2-berrange@redhat.com>
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Cleber Rosa <crosa@redhat.com>,
- John Snow <jsnow@redhat.com>
-References: <20241112212622.3590693-1-pierrick.bouvier@linaro.org>
- <87wmgzpb0g.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87wmgzpb0g.fsf@draig.linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241119150519.1123365-2-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,39 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTEvMTkvMjQgMDY6MTMsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gUGllcnJpY2sgQm91
-dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPiB3cml0ZXM6DQo+IA0KPj4gTm93
-IHRoYXQgbWVzb24gYnVpbGQgZm9yIHBsdWdpbnMgd2FzIG1lcmdlZCwgd2UgY2FuIGNsZWFu
-dXAgYW5vdGhlciBwYXJ0IHdpdGgNCj4+IHRoZSBzeW1ib2xzIGZpbGUuDQo+PiBJdCBoYXMg
-dG8gYmUga2VwdCBpbiBzeW5jIGJldHdlZW4gdGhlIGhlYWRlciAocWVtdS1wbHVnaW4uaCkg
-YW5kIHRoZSBzeW1ib2xzDQo+PiBmaWxlLiBUaGlzIGhhcyBwcm92ZWQgdG8gYmUgZXJyb3Ig
-cHJvbmUgYW5kIHRlZGlvdXMuDQo+Pg0KPj4gV2Ugc29sdmUgdGhpcyBieSBnZW5lcmF0aW5n
-IHRoaXMgbGlzdCBmcm9tIGhlYWRlciBkaXJlY3RseSB1c2luZyBhIHB5dGhvbg0KPj4gc2Ny
-aXB0LiBEZXBlbmRlbmNpZXMgYXJlIHRyaWdnZXJlZCBjb3JyZWN0bHksIGFuZCB0aGUgZmls
-ZSBpcyByZWdlbmVyYXRlZCBpZiB0aGUNCj4+IGhlYWRlciBpcyBtb2RpZmllZCwgYXMgZXhw
-ZWN0ZWQuDQo+Pg0KPj4gdjQ6DQo+PiBmaXggc2Vjb25kIHBhdGNoIHRvIGFwcGx5IGNsZWFu
-bHkgb24gbWFzdGVyICh3YXMgYXBwbGllZCBmcm9tIGEgcHJldmlvdXMgc2VyaWVzDQo+PiB0
-byBlbmFibGUgd2luZG93cyBjbGFuZyBidWlsZCBiZWZvcmUpLg0KPiANCj4gUXVldWVkIHRv
-IHBsdWdpbnMvbmV4dCwgdGhhbmtzLg0KPiANCj4gSSdtIG5vdCBzdXJlIGlmIGl0IG1lZXRz
-IHRoZSBjcml0ZXJpYSBmb3IgOS4yIHBvc3QgZnJlZXplIGFsdGhvdWdoIGl0DQo+IHNlZW1z
-IHByZXR0eSBzYWZlIGZyb20gbG9va2luZyBhdCBpdC4NCj4gDQoNCkl0IGlzIG5vdCBjaGFu
-Z2luZyBvciBpbnRyb2R1Y2luZyBhIG5ldyBmZWF0dXJlLCBhbmQgY2FuIGJlIHNlZW4gYXMg
-Y29kZSANCmZpeC4gSSB0ZXN0ZWQgdGhhdCBpdCBidWlsdCBvbiBNYWNPUywgV2luZG93cyBh
-bmQgTGludXggKGluY2x1ZGluZyANCmV4ZWN1dGluZyBhIHBsdWdpbikgc28gaXQgc2hvdWxk
-IGJlIHNhZmUgdG8gaW50ZWdyYXRlIGl0Lg0KDQpObyB3b3JyaWVzIGlmIHlvdSBwcmVmZXIg
-dG8gd2FpdCwganVzdCB3YW50ZWQgdG8gbWFrZSBzdXJlIGl0J3MgaW4gDQpiZWZvcmUgYW55
-IG5ldyBwbHVnaW5zIEFQSSBpcyBpbnRyb2R1Y2VkIDopDQoNCj4+DQo+PiBQaWVycmljayBC
-b3V2aWVyICgzKToNCj4+ICAgIHBsdWdpbnM6IGFkZCBtaXNzaW5nIGV4cG9ydCBmb3IgcWVt
-dV9wbHVnaW5fbnVtX3ZjcHVzDQo+PiAgICBwbHVnaW5zOiBkZXRlY3QgcWVtdSBwbHVnaW4g
-QVBJIHN5bWJvbHMgZnJvbSBoZWFkZXINCj4+ICAgIHBsdWdpbnM6IGVyYWRpY2F0ZSBxZW11
-LXBsdWdpbnMuc3ltYm9scyBzdGF0aWMgZmlsZQ0KPj4NCj4+ICAgTUFJTlRBSU5FUlMgICAg
-ICAgICAgICAgICAgICAgIHwgIDEgKw0KPj4gICBpbmNsdWRlL3FlbXUvcWVtdS1wbHVnaW4u
-aCAgICAgfCAgMSArDQo+PiAgIHBsdWdpbnMvbWVzb24uYnVpbGQgICAgICAgICAgICB8IDEy
-ICsrKysrLS0NCj4+ICAgcGx1Z2lucy9xZW11LXBsdWdpbnMuc3ltYm9scyAgIHwgNTkgLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPj4gICBzY3JpcHRzL3FlbXUtcGx1
-Z2luLXN5bWJvbHMucHkgfCA0NSArKysrKysrKysrKysrKysrKysrKysrKysrKw0KPj4gICA1
-IGZpbGVzIGNoYW5nZWQsIDU2IGluc2VydGlvbnMoKyksIDYyIGRlbGV0aW9ucygtKQ0KPj4g
-ICBkZWxldGUgbW9kZSAxMDA2NDQgcGx1Z2lucy9xZW11LXBsdWdpbnMuc3ltYm9scw0KPj4g
-ICBjcmVhdGUgbW9kZSAxMDA3NTUgc2NyaXB0cy9xZW11LXBsdWdpbi1zeW1ib2xzLnB5DQo+
-IA0K
+On 19/11/24 16:05, Daniel P. Berrangé wrote:
+> The missing directory separator resulted in the kernel file being
+> created 1 level higher than expected.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/functional/test_mips64el_malta.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
+> index 6c6355b131..24ebcdb9c1 100755
+> --- a/tests/functional/test_mips64el_malta.py
+> +++ b/tests/functional/test_mips64el_malta.py
+> @@ -129,7 +129,7 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
+>           screendump_path = os.path.join(self.workdir, 'screendump.pbm')
+>   
+>           kernel_path_gz = self.ASSET_KERNEL_4_7_0.fetch()
+> -        kernel_path = self.workdir + "vmlinux"
+> +        kernel_path = self.workdir + "/vmlinux"
+
+Safer is to use os.path.join(), anyway:
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+>           gzip_uncompress(kernel_path_gz, kernel_path)
+>   
+>           tuxlogo_path = self.ASSET_TUXLOGO.fetch()
+
 
