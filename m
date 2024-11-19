@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77CBED60D05
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 01:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052A9D60D05
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 01:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDCqi-0004KM-4w; Mon, 18 Nov 2024 20:16:12 -0500
+	id 1tDCsP-00056i-MF; Mon, 18 Nov 2024 20:17:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDCqe-0004K2-BH; Mon, 18 Nov 2024 20:16:08 -0500
-Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ id 1tDCsN-00055x-8s; Mon, 18 Nov 2024 20:17:55 -0500
+Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDCqc-0003W0-Nb; Mon, 18 Nov 2024 20:16:08 -0500
-Received: by mail-vk1-xa34.google.com with SMTP id
- 71dfb90a1353d-50fc0345155so3720249e0c.1; 
- Mon, 18 Nov 2024 17:16:05 -0800 (PST)
+ id 1tDCsL-0003Zz-J8; Mon, 18 Nov 2024 20:17:55 -0500
+Received: by mail-vk1-xa36.google.com with SMTP id
+ 71dfb90a1353d-5139cd01814so170943e0c.0; 
+ Mon, 18 Nov 2024 17:17:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731978964; x=1732583764; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731979072; x=1732583872; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vU3XjETc+r9iseHa32XfHTVSPi3ZWP6DLLAErVQQHko=;
- b=MaWjGzbZ4CCWi4h8ndydGm5lTMh/xobot3zlX+RnMnmn9tW+Vf02hfifKTellWRhtf
- FTUY30v66Gn2LPz/eFCBRVhxKyEFVBsAJFzkN5v7NS9PBTEA4ZFhqCP0PdfMN9kJKPln
- nj8Qi1izAdlUNwIYVy2UvgZ6RhUM2s4k3auWcceqE/Y71Qe62DYHpFvhAoLVpg7bBSh+
- G5wYWmbIaKJ3UrV2eP7YjkszPHSRgNUWCTvFmUXXrVbOKlYmwGBxowNPE7FC4J5+GWtv
- FcyrO42b6KUmMmSKFzNScPkXQXrGX6XwdOQTnM9NpMArF0Geb0Ou/L9ZjfkGZ54j3u36
- DU8w==
+ bh=ETPuDfp4+qKnMAnwy5QW57rWJiIu9lvPi1Nj5PKfhC0=;
+ b=BeJhbuScdGG17Eu4RdCA6LDpBet8xAvHH/d3iCelLD1iyHj7/qd6N0Z9v7hCcXl9vj
+ IkQaFlAXUiyIzPyhkWJ2uTBOSQicHPEc0ABi6w97I3tfPjwj2Wl1VVysgTYYOP7raZIb
+ Zx+eAGsJEZWxSeRdDakYlCZ3BFQIz2dG8gXHXqAapxa1tvupzXUcbdAZ9MzPWhHWT7tK
+ o33x0FD73pye1J45IPGtmcwbfj7vfxcix7L7PddBXvvTzR+GRWy5uGTAokGbU25p08Ym
+ 3SEbs6erKFlB20gZFRQnone+Q3r8tUNEFlPRZ1qnGNyKIBEYnhVawvrUeEphNFVVrXgb
+ zQzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731978964; x=1732583764;
+ d=1e100.net; s=20230601; t=1731979072; x=1732583872;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vU3XjETc+r9iseHa32XfHTVSPi3ZWP6DLLAErVQQHko=;
- b=R90zD88PzHiAzKKShhRkM/7NjQlEm3SIWDclexO03SVZbWDbjabVkcNGqQu1bh9uKH
- nw8nX2w+H6/KTvB499ckssXa/F/DvQp1uE2N+9aL0wnSFCVAJTmvDz+7oHFAs7S1r8CG
- 20duZfZMyM36taIl4Ldr8bzXOao+BvrQ4noXSQ+sst96m24ZBCBEMVbiW/iVGjcaHnhO
- TV/KTA4U2Kv89tq4C/zNS5Xb3+3gI/u52asiSynoxLOGOnfKmcgKhJ8+9uSGUbcIckVz
- ROf7eTAUxGN+I7pEXHlcn4PeAgB8cCASqEQzz+JcVtNdhlbI6ckQqZ0+h4FlNMzTa/QC
- K3Mg==
+ bh=ETPuDfp4+qKnMAnwy5QW57rWJiIu9lvPi1Nj5PKfhC0=;
+ b=dzD8bBTU8s8fhtNZwcLc4pKdNmxKj+ZcN2iGhatWqmluS6lgbXpiIAq85YkNUJiXQ/
+ Fu3+HGYh1BY2OfjY7AXfnT31BxZAciF+Wx2wubvB15T3i5kqHcoCfGMkSgKmJx0CyJfN
+ 7a8uj0Z2KZt727JWbqcw77YHyXkz+9ncirQbGPNwUvrgXRL7bKa1Nx2h8xxKmhckf2V0
+ ay8FddZg8ghrD/i+EiTCoA0I4lEP2+FhNRui+TVC917T5IrqfxRBAfdLijqj+KgohUBn
+ 5YGMwF/Pl+0OQjyPmwCHEFH6r9XMssKbtEA2Vyk6bnJ2q6gUc9g2ger/sMQFbznhUYiJ
+ 0ZWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYq670yB/MiQHogbYl2mpt6dGmajKeVEoBdR8snwu5w3wNANf4M+DoczNjHyQft/EgCAGZNNizgEdm@nongnu.org
-X-Gm-Message-State: AOJu0Yx72r0pBqhhvF7iGGUigH8iweqmb6Oe8xN5ZLPznpeaZ5l3PAuR
- ufTogzYq86vKDEBEwEOCrPfroQmY4ouhXSaqEulIqm7S8fohKqWtSYiy0TMeuCyxK+XawEsgfJ0
- 9o3KvkorK1X/0Dg0pZZTkjDUmDdQ=
-X-Google-Smtp-Source: AGHT+IG3VSKmZSJsiUHjrLb2Hckx2HvdKCx11mvPpiNhOEUee2QOPxe9/+ESBDvAAwVY6itFVkuKiehrBcl7IdaURkU=
-X-Received: by 2002:a05:6122:328e:b0:510:6b24:c2ca with SMTP id
- 71dfb90a1353d-514be0ec48fmr1751133e0c.3.1731978964287; Mon, 18 Nov 2024
- 17:16:04 -0800 (PST)
+ AJvYcCWOcFz2EQqG6e1LtD4rWYVvEHe5wdKOzcC6ERCo6y51+Wpx2h71L9IoTjhrFtKNXf8cI0pXn6s6Ja30@nongnu.org
+X-Gm-Message-State: AOJu0Yz5zTK4fnxABiA3G+vnhkS6thVreauyGgxmY7wa6ipKqHouWVds
+ NHx8/7y3rIuSIfT3wIwq0oOJhnfEK5aeTYeu1YrksTOUdApV0WGfx0yM+bRrQRgqiWte5xf7jPp
+ 2dxNLMiZpAXM/A9AdZxIsVOqy+kU=
+X-Google-Smtp-Source: AGHT+IFH61fQW/8NdQVHQYAD/olk+GjS9RGeTOPuLfAYI7zzoyuvkg0SNdWkdZyLoEr2hFXops3LApT6Soi3zALeVrY=
+X-Received: by 2002:a05:6122:2027:b0:50d:83e1:94fb with SMTP id
+ 71dfb90a1353d-514786d4cfemr11261818e0c.12.1731979071753; Mon, 18 Nov 2024
+ 17:17:51 -0800 (PST)
 MIME-Version: 1.0
-References: <20241114065617.25133-1-jason.chien@sifive.com>
-In-Reply-To: <20241114065617.25133-1-jason.chien@sifive.com>
+References: <20241029085349.30412-1-yongxuan.wang@sifive.com>
+In-Reply-To: <20241029085349.30412-1-yongxuan.wang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 Nov 2024 11:15:38 +1000
-Message-ID: <CAKmqyKPejvg+22WQXpMw=q+x5WNNuA_Sz7=VOrr25JbDZkDL-w@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/riscv/riscv-iommu.c: Correct the validness check of
- iova
-To: Jason Chien <jason.chien@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+Date: Tue, 19 Nov 2024 11:17:24 +1000
+Message-ID: <CAKmqyKNgfcqnoQkn+jUo_tyDEk4RQATsWGLDYkDOQTNax5vZsQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] hw/intc/riscv_aplic: Fix APLIC in_clrip and
+ clripnum write emulation
+To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
+ vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
@@ -71,8 +72,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,36 +97,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 14, 2024 at 4:57=E2=80=AFPM Jason Chien <jason.chien@sifive.com=
-> wrote:
+On Tue, Oct 29, 2024 at 6:54=E2=80=AFPM Yong-Xuan Wang <yongxuan.wang@sifiv=
+e.com> wrote:
 >
-> From RISCV IOMMU spec section 2.1.3:
-> When SXL is 1, the following rules apply:
-> - If the first-stage is not Bare, then a page fault corresponding to the
-> original access type occurs if the IOVA has bits beyond bit 31 set to 1.
-> - If the second-stage is not Bare, then a guest page fault corresponding
-> to the original access type occurs if the incoming GPA has bits beyond bi=
-t
-> 33 set to 1.
+> In the section "4.7 Precise effects on interrupt-pending bits"
+> of the RISC-V AIA specification defines that:
 >
-> From RISCV IOMMU spec section 2.3 step 17:
-> Use the process specified in Section "Two-Stage Address Translation" of
-> the RISC-V Privileged specification to determine the GPA accessed by the
-> transaction.
+> "If the source mode is Level1 or Level0 and the interrupt domain
+> is configured in MSI delivery mode (domaincfg.DM =3D 1):
+> The pending bit is cleared whenever the rectified input value is
+> low, when the interrupt is forwarded by MSI, or by a relevant
+> write to an in_clrip register or to clripnum."
 >
-> From RISCV IOMMU spec section 2.3 step 19:
-> Use the second-stage address translation process specified in Section
-> "Two-Stage Address Translation" of the RISC-V Privileged specification
-> to translate the GPA A to determine the SPA accessed by the transaction.
+> Update the riscv_aplic_set_pending() to match the spec.
 >
-> This commit adds the iova check with the following rules:
-> - For Sv32, Sv32x4, Sv39x4, Sv48x4 and Sv57x4, the iova must be zero
-> extended.
-> - For Sv39, Sv48 and Sv57, the iova must be signed extended with most
-> significant bit.
->
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Fixes: bf31cf06eb ("hw/intc/riscv_aplic: Fix setipnum_le write emulation =
+for APLIC MSI-mode")
+> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
 Thanks!
 
@@ -134,47 +122,45 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
->  hw/riscv/riscv-iommu.c | 23 ++++++++++++++++++++---
->  1 file changed, 20 insertions(+), 3 deletions(-)
+> v2:
+> - add fixes tag (Daniel)
+> - follow the suggestion from https://lore.kernel.org/kvm/CAAhSdy3NmwbHY9Q=
+ef9LUeXfr0iE7wC-u0d_fHzC47PXk-MzmRg@mail.gmail.com/
+>   (Anup)
+> ---
+>  hw/intc/riscv_aplic.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index bbc95425b3..ff9deefe37 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -392,9 +392,26 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s,=
- RISCVIOMMUContext *ctx,
+> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+> index 4a262c82f078..74c82a841101 100644
+> --- a/hw/intc/riscv_aplic.c
+> +++ b/hw/intc/riscv_aplic.c
+> @@ -248,9 +248,12 @@ static void riscv_aplic_set_pending(RISCVAPLICState =
+*aplic,
 >
->          /* Address range check before first level lookup */
->          if (!sc[pass].step) {
-> -            const uint64_t va_mask =3D (1ULL << (va_skip + va_bits)) - 1=
-;
-> -            if ((addr & va_mask) !=3D addr) {
-> -                return RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED;
-> +            const uint64_t va_len =3D va_skip + va_bits;
-> +            const uint64_t va_mask =3D (1ULL << va_len) - 1;
-> +
-> +            if (pass =3D=3D S_STAGE && va_len > 32) {
-> +                target_ulong mask, masked_msbs;
-> +
-> +                mask =3D (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
-> +                masked_msbs =3D (addr >> (va_len - 1)) & mask;
-> +
-> +                if (masked_msbs !=3D 0 && masked_msbs !=3D mask) {
-> +                    return (iotlb->perm & IOMMU_WO) ?
-> +                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S :
-> +                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S;
-> +                }
-> +            } else {
-> +                if ((addr & va_mask) !=3D addr) {
-> +                    return (iotlb->perm & IOMMU_WO) ?
-> +                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
-> +                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
-> +                }
->              }
+>      if ((sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
+>          (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW)) {
+> -        if (!aplic->msimode || (aplic->msimode && !pending)) {
+> +        if (!aplic->msimode) {
+>              return;
 >          }
+> +        if (aplic->msimode && !pending) {
+> +            goto noskip_write_pending;
+> +        }
+>          if ((aplic->state[irq] & APLIC_ISTATE_INPUT) &&
+>              (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW)) {
+>              return;
+> @@ -261,6 +264,7 @@ static void riscv_aplic_set_pending(RISCVAPLICState *=
+aplic,
+>          }
+>      }
+>
+> +noskip_write_pending:
+>      riscv_aplic_set_pending_raw(aplic, irq, pending);
+>  }
 >
 > --
-> 2.43.2
+> 2.17.1
 >
 >
 
