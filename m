@@ -4,76 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE05AD62067
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E4DD60D1B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDLBA-00005N-Q7; Tue, 19 Nov 2024 05:09:52 -0500
+	id 1tDLKE-0001D4-9V; Tue, 19 Nov 2024 05:19:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLB8-00004x-Fk
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:09:50 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLB6-0007kN-Gv
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:09:50 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5cfaa02c716so865631a12.3
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:09:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732010986; x=1732615786; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=RHBe2V/k1UtOYq7C2OHkUZ8XpdfMUyTmE9JBBn6vRt4=;
- b=OweVqnrDVviSREESrN6yW26E6yuVs6GXpzUSkwOKdCLGcWTboqa3la/ieLbCgTzmSd
- 4cdixwSGip3XaS6ZC5pfjZ/0lJQGWRZKQlKO5oe7vGiRoyvpA3qoHFzbiHGIx0Wf19qz
- 1VK3zqwhh3GbU5OU1GiiFr2xnyJL9+HRgMGqIVUfXSzMqgfxVNyX0I8DzgQ5nkoqaKDu
- YuTGdIFcnS2Zb75Wg9gYt4EzFrVTasB0lIkU10QpSNgKaTLeFUSrm4loLZm0I9JAlhRP
- wmg4jktJXWe6hxFhvKyuSWDeXxZkpb+0dEcBD2AREx/WfVzLUv+0+5nIVHjEih279xxe
- mm1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732010986; x=1732615786;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RHBe2V/k1UtOYq7C2OHkUZ8XpdfMUyTmE9JBBn6vRt4=;
- b=e3FuwYCYPiYVeEEzXqpKW8DuMXV5XJ74l3MbC8Pz9IxBcQtWzbXSosKt5tFvv1pOKb
- sVmrKv7Y1QgVofhlZe9E9loW3g4SXXoItk/jAu5d8rUDKy58PpaGBwEA8UDEXNvHfG0K
- czI0hzznz+Jno3zx+a2Z/6hYS8qh/6mJ5yi7zaukaYVoN4UQemjBjAMLKPbdeKAXUi5h
- TFriC4mKf4jGJ2FLGVQweIH9KvAY/AQF6utgXOHdWnDUxOcTb9wV6kmUpHwnPzcJhQvT
- p/T1PLSBRH4NV1S07RUtGuON7hVtNXErjC1kimYmsNvFM4JxzbqI034qfN8NPOsDLA4H
- smRw==
-X-Gm-Message-State: AOJu0YwCyuRpDwZ0qXeTPZY9K02Kq46rlbRcYqDoBZM790Vjsl4f/NUz
- yNSt+cr9Am74WY1ubUL+nit35o/yRcAlVy0SKEGYEWWUbnvz8JKGyv3Dv26Snn12iZ2BOaBEXYm
- cbCBZb4+16QM095kbRmd0Sz5JkPb9bCiE5GpmJA==
-X-Google-Smtp-Source: AGHT+IF5e/E5rJSiQ0Kpfolaj0GUOE3FlWlnGYa2Wd/qUsCe4+eauP7SFsWPZy8Lq3VptKDKk7Av/TQbeXXFp3yiKEg=
-X-Received: by 2002:a05:6402:5241:b0:5cf:ca30:fd3c with SMTP id
- 4fb4d7f45d1cf-5cfca31035dmr6437091a12.28.1732010986326; Tue, 19 Nov 2024
- 02:09:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tDLKC-0001CX-Dr
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:19:12 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tDLK9-0000fG-AX
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:19:12 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxQK0XZjxnImFCAA--.25793S3;
+ Tue, 19 Nov 2024 18:19:04 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxHEcUZjxnLjZdAA--.28031S3;
+ Tue, 19 Nov 2024 18:19:03 +0800 (CST)
+Subject: Re: [PATCH v4 6/6] hw/loongarch/virt: Enable cpu hotplug feature on
+ virt machine
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+References: <20241112021738.1952851-1-maobibo@loongson.cn>
+ <20241112021738.1952851-7-maobibo@loongson.cn>
+ <20241118180306.6b8019c4@imammedo.users.ipa.redhat.com>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <2ecae20c-d354-5cb7-0972-f0fdc2c568c2@loongson.cn>
+Date: Tue, 19 Nov 2024 18:18:27 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <51442716-467b-46c2-b2f7-8ffdeeca320e@linaro.org>
-In-Reply-To: <51442716-467b-46c2-b2f7-8ffdeeca320e@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Nov 2024 10:09:34 +0000
-Message-ID: <CAFEAcA_eL+F572fZpFW2+Tz6xx5Mx5ux-axe3HR_fEf43_GLRA@mail.gmail.com>
-Subject: Re: Status of some Arm features
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20241118180306.6b8019c4@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxHEcUZjxnLjZdAA--.28031S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Jw1kXw4kWFy5ArW3tr48Xwc_yoWxCw4rpr
+ WUA3Wq9r1UAFnFv3ySqF1Ygr1Fyr18Gay7WrZFyF13Z3Wqkr95JF1Ykw4YgFs3u34vqF40
+ 93Z8AFsF9F42gFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUB2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07
+ AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWU
+ AVWUtwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI4
+ 8JMxk0xIA0c2IEe2xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+ Jr0_Gr1l4IxYO2xFxVAFwI0_Jrv_JF1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8Gjc
+ xK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0
+ cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8V
+ AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E
+ 14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU2uc_DUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.492,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,35 +86,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Nov 2024 at 23:33, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
-> I'm currently reviewing the QEMU Arm documentation, and I have a
-> question about the status of following features:
->
-> 8.0:
-> - FEAT_DoubleLock, Double Lock
 
-This is actually an "anti-feature" :-)  It is optional from v8.0
-and it must not be implemented from v9.0. We implement the handling
-of it based on the DOUBLELOCK fields in ID_AA64DFR0 and DBGDEVID
-(so it does the right thing on older named CPU types) and don't
-advertise it in "max".
 
-> 8.2:
-> - FEAT_ASMv8p2, Armv8.2 changes to the A64 ISA (bfc and rev64 instructions)
+On 2024/11/19 上午1:03, Igor Mammedov wrote:
+> On Tue, 12 Nov 2024 10:17:38 +0800
+> Bibo Mao <maobibo@loongson.cn> wrote:
+> 
+>> On virt machine, enable CPU hotplug feature has_hotpluggable_cpus. For
+>> hot-added CPUs, there is socket-id/core-id/thread-id property set,
+>> arch_id can be caculated from these properties. So that cpu slot can be
+>> searched from its arch_id.
+>>
+>> Also change num-cpu property of extioi and ipi from smp.cpus to
+>> smp.max_cpus
+>>
+>> Co-developed-by: Xianglai Li <lixianglai@loongson.cn>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   hw/loongarch/virt.c | 68 +++++++++++++++++++++++++++++++++++++++------
+>>   1 file changed, 59 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index b49b15c0f6..5f81673368 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -890,7 +890,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>   
+>>       /* Create IPI device */
+>>       ipi = qdev_new(TYPE_LOONGARCH_IPI);
+>> -    qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.cpus);
+>> +    qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.max_cpus);
+>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
+>>       lvms->ipi = ipi;
+>>   
+>> @@ -905,7 +905,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>   
+>>       /* Create EXTIOI device */
+>>       extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
+>> -    qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
+>> +    qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.max_cpus);
+>>       if (virt_is_veiointc_enabled(lvms)) {
+>>           qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
+>>       }
+>> @@ -1369,11 +1369,15 @@ static void virt_get_topo_from_index(MachineState *ms,
+>>   }
+>>   
+>>   /* Find cpu slot in machine->possible_cpus by arch_id */
+>> -static CPUArchId *virt_find_cpu_slot(MachineState *ms, int arch_id)
+>> +static CPUArchId *virt_find_cpu_slot(MachineState *ms, int arch_id, int *index)
+>>   {
+>>       int n;
+>>       for (n = 0; n < ms->possible_cpus->len; n++) {
+>>           if (ms->possible_cpus->cpus[n].arch_id == arch_id) {
+>> +            if (index) {
+>> +                *index = n;
+>> +            }
+>> +
+>>               return &ms->possible_cpus->cpus[n];
+>>           }
+>>       }
+>> @@ -1386,10 +1390,12 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
+>>   {
+>>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
+>>       MachineState *ms = MACHINE(OBJECT(hotplug_dev));
+>> +    CPUState *cs = CPU(dev);
+>>       LoongArchCPU *cpu = LOONGARCH_CPU(dev);
+>>       CPUArchId *cpu_slot;
+>>       Error *local_err = NULL;
+>> -    int arch_id;
+>> +    LoongArchCPUTopo topo;
+>> +    int arch_id, index;
+>>   
+>>       /* sanity check the cpu */
+>>       if (!object_dynamic_cast(OBJECT(cpu), ms->cpu_type)) {
+>> @@ -1408,12 +1414,45 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
+>>        }
+>>   
+>>       if (cpu->phy_id == UNSET_PHY_ID) {
+> 
+>> -        error_setg(&local_err, "CPU hotplug not supported");
+>> -        goto out;
+>> +        if ((cpu->thread_id < 0) || (cpu->thread_id >= ms->smp.threads)) {
+>> +            error_setg(&local_err,
+>> +                       "Invalid thread-id %u specified, must be in range 1:%u",
+>> +                       cpu->thread_id, ms->smp.threads - 1);
+>> +            goto out;
+>> +        }
+>> +
+>> +        if ((cpu->core_id < 0) || (cpu->core_id >= ms->smp.cores)) {
+>> +            error_setg(&local_err,
+>> +                       "Invalid core-id %u specified, must be in range 1:%u",
+>> +                       cpu->core_id, ms->smp.cores - 1);
+>> +            goto out;
+>> +        }
+>> +
+>> +        if ((cpu->socket_id < 0) || (cpu->socket_id >= ms->smp.sockets)) {
+>> +            error_setg(&local_err,
+>> +                       "Invalid socket-id %u specified, must be in range 1:%u",
+>> +                       cpu->socket_id, ms->smp.sockets - 1);
+>> +            goto out;
+>> +        }
+>> +
+>> +        topo.socket_id = cpu->socket_id;
+>> +        topo.core_id = cpu->core_id;
+>> +        topo.thread_id = cpu->thread_id;
+>> +        arch_id =  virt_get_arch_id_from_topo(ms, &topo);
+>> +        cpu_slot = virt_find_cpu_slot(ms, arch_id, &index);
+>> +        if (CPU(cpu_slot->cpu)) {
+>> +            error_setg(&local_err,
+>> +                       "cpu(id%d=%d:%d:%d) with arch-id %" PRIu64 " exists",
+>> +                       cs->cpu_index, cpu->socket_id, cpu->core_id,
+>> +                       cpu->thread_id, cpu_slot->arch_id);
+>> +            goto out;
+>> +        }
+>> +        cpu->phy_id = arch_id;
+>> +        cs->cpu_index = index;
+> this whole branch applies to cold-plugged CPUs as well, especially
+> if both (hot/cold plugged CPUs are getting wired with help of pre_plug)
+> So this hunk should be introduced somewhere earlier in series,
+> and than I'd likely won't need (cpu->phy_id == UNSET_PHY_ID) check to begin with.
+> 
+> the only difference vs cold-plug would be need to call acpi_ged plug handler,
+> like you are dong below in virt_cpu_plug
+Sure, will check acpi_ged plug handler for cold-plug/hot-plug CPU.
 
-This isn't a feature for CPU implementations; it's a feature for
-assemblers and disassemblers, which have to recognize BFC and
-REV64 mnemonics as being ways to write special-case flavours
-of the BFM and REV instructions.
+> 
+>>       } else {
+>>           /* For cold-add cpu, find cpu slot from arch_id */
+>>           arch_id = cpu->phy_id;
+>> -        cpu_slot = virt_find_cpu_slot(ms, arch_id);
+>> +        cpu_slot = virt_find_cpu_slot(ms, arch_id, NULL);
+>>       }
+>>   
+>>       numa_cpu_pre_plug(cpu_slot, dev, &local_err);
+>> @@ -1468,7 +1507,7 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
+>>           return;
+>>       }
+>>   
+>> -    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+>> +    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id, NULL);
+>>       cpu_slot->cpu = NULL;
+>>       return;
+>>   }
+>> @@ -1477,14 +1516,24 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
+>>                                   DeviceState *dev, Error **errp)
+>>   {
+>>       CPUArchId *cpu_slot;
+>> +    Error *local_err = NULL;
+>>       LoongArchCPU *cpu = LOONGARCH_CPU(dev);
+>>       MachineState *ms = MACHINE(hotplug_dev);
+>>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
+>>   
+>>       /* Connect irq to cpu, including ipi and extioi irqchip */
+>>       virt_init_cpu_irq(ms, CPU(cpu));
+>> -    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+>> +    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id, NULL);
+>>       cpu_slot->cpu = CPU(dev);
+>> +
+>> +    if (lvms->acpi_ged) {
+> Why do you need check, can machine be created without acpi_ged?
+There is no NULL check with macro HOTPLUG_HANDLER() for cold-plug cpu.
+Now machine is created with acpi_ged always, in later will add noapic 
+option support.
 
-> 8.4:
-> - FEAT_CNTSC, Generic Counter Scaling (hw/timer/sse-counter.c)
+Regards
+Bibo Mao
 
-This is optional, and we don't implement it yet. (There's an
-open ticket for it in Linaro JIRA at
-https://linaro.atlassian.net/browse/QEMU-309 )
+> 
+>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &local_err);
+>> +        if (local_err) {
+>> +            error_propagate(errp, local_err);
+>> +            return;
+>> +        }
+>> +    }
+>> +
+>>       return;
+>>   }
+>>   
+>> @@ -1667,6 +1716,7 @@ static void virt_class_init(ObjectClass *oc, void *data)
+>>       mc->numa_mem_supported = true;
+>>       mc->auto_enable_numa_with_memhp = true;
+>>       mc->auto_enable_numa_with_memdev = true;
+>> +    mc->has_hotpluggable_cpus = true;
+>>       mc->get_hotplug_handler = virt_get_hotplug_handler;
+>>       mc->default_nic = "virtio-net-pci";
+>>       hc->plug = virt_device_plug_cb;
 
-thanks
--- PMM
 
