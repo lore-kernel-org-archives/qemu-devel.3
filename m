@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C317D44161
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F27FD44161
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDP8i-0005wH-LT; Tue, 19 Nov 2024 09:23:36 -0500
+	id 1tDP8d-0005tx-Av; Tue, 19 Nov 2024 09:23:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8f-0005vG-HT
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:33 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1tDP8b-0005qI-7t
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:29 -0500
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8e-0006Em-05
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:33 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-431616c23b5so31836215e9.0
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:31 -0800 (PST)
+ id 1tDP8Z-0006Cv-Og
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:28 -0500
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-53da5a27771so3897616e87.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732026210; x=1732631010; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732026206; x=1732631006; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sgmkEh/mAYEEOBGITS2M+Q2muX4d/fOxHqnXuvoWYiU=;
- b=JHIaIC79/9Id0urll+seoq/Ihz7NwgJDA7sY26LyCIMq+3iRSAAkHXM/XrncUo0wvt
- hv0OpN66eVW5Qa1efJTj/tYEcfYveIs+W9yz2OIUASAqOro9o6r6tW/HgwoB84znOCZ8
- QWWGHwvaL32FI3/ld3Y3h/XNmyBVea+PdyH34TPjvGsZKzzqJ2NJfDOLqd7xnhamqRZG
- 8EF/MRiUsDrbn0pR+5yv3K4FnByiKP8rWbohR3IHWxj2HVhS1NR9qLfHi+TQNAvAkgHt
- npA9TFujGkpXA4pvDJqIoNjhRazZHqU1KgR+W1VDVWDh9xrhAuWCiGUqEtA56Pve+4Rc
- F4gg==
+ :reply-to; bh=AGiVDYi9O6WZWdbRqNxBFFuEiOPsRuegrKV304JLi/k=;
+ b=ODE8uFxcgYfNWH+Mc+y6tESMr2Pbmb4LHD2yEomBDPBrDGF1Jxar6nUhw0E4CRSzFc
+ H86tbAB9AgiR03c99M77avdk+ZGjx4VyrsLOZPLSKix0SRzaRxpA6VCgrLR51kqecFO9
+ +D9Q4NamntnX/7i8av6s27FNsKzY8Zzqzrp/g/1KS8jCxKPS8sXI1/6dX/XTtRod1Uz+
+ IuGO7IIsFpE00U1TbBQHYs2fa08s16kZWdPN89JKs3UcYLex/npbygxddXAXmcBj38w+
+ aib51TZP66WR0mCBV5RpedWfng2Hr8+IMPRsKESzEL2FU5Gc0bdIiHYZnvmp7kJUNMHF
+ 43VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732026210; x=1732631010;
+ d=1e100.net; s=20230601; t=1732026206; x=1732631006;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sgmkEh/mAYEEOBGITS2M+Q2muX4d/fOxHqnXuvoWYiU=;
- b=gi+jKTgiPTxEUboin+r23O9C6fDeUd23VRLpuvm4SjXiBKrXHYuuSFqFrffUHuk9tO
- Bh7aHSKWGS9a4UoN51eCE7gImJ6+JmGGRSwBEVWOO6nFJdFuHYQXzTo+ddwTpR4gny/b
- hMw0dIwF70xp6J4fmAIaLP3lF+kndCSH5fs4Ybu0z3VqiMMEer3cFHzG7Z99jZVPI1f6
- UEwprbB5DmGAs1PA23RI1l//A1vcozIemJCpfaDhH3Um+jWWR/aiDutPivW3fJsb1EXL
- p95H1VFyOh0tK5rEnde4GIiiEqNrGEmEyCeN9co23MH6b+72w0R6zjF/SFQUla+xBZhr
- a2TA==
-X-Gm-Message-State: AOJu0YyVOSIi9iNTKp2jIHqBs+qD1JfSX0IqM/3W9/N25qfL+z2Dh8FY
- o34CchKpn4qY8q0hV6G3cvRDnhwFNAfiVgIFAQlaeL5E8EM9+5GA2/uDmWJ0kLEau2UaMS23atf
- Y
-X-Google-Smtp-Source: AGHT+IEztSF0TjdpCC5Qc86mcR3iY3hDNya1kKspPC7PAC5Z239FScG6nOgDAyDPMmg2eGhYNygqQw==
-X-Received: by 2002:a05:600c:3d8d:b0:431:4fbd:f571 with SMTP id
- 5b1f17b1804b1-432f57dfa69mr29987525e9.13.1732026210649; 
- Tue, 19 Nov 2024 06:23:30 -0800 (PST)
+ bh=AGiVDYi9O6WZWdbRqNxBFFuEiOPsRuegrKV304JLi/k=;
+ b=MxMveghrlVwd34GEFRy4Z/gKJ2r/CpVIr1Uno1WTNc+UgEN4LaZSz5Ng4VruICcZ6U
+ SqVGfo5w4/GQjRXRzBkqj4DhdjqqNL2/WUfqcGE74dM37td2xbKUa7fLdlnVR12A/s6p
+ oAszxShxg/wJLpWM8zBGaVbt5OWKoJViAtYRhO+lHYUbTCSDh0gDnpzd21BQyDwsPB9a
+ LhUmRaXFCm8eYf0aMrxEdsv98aendfcmcXLZZ21Y6g7Vx3UewSKQ2/VHGvoNJojrz6XW
+ rjRbQEDCoyPBD0eh4oRkr9L8gEhNTb7wLBNhSJEWrr1YGrDky2Wei4hgP7mH0X+OxFUp
+ uKeA==
+X-Gm-Message-State: AOJu0Yx7JYeXxpteH+N4TyWm6F4RQzrSnTwiFi18bOda+oww8Z8cnxSM
+ 5yDm1ynG6kO9qcvDYhamGaJi6fauxECC8kVi8+rvkBd9CUVvUQhqQC9CRwAETDm5BGVnrdobrQD
+ f
+X-Google-Smtp-Source: AGHT+IFQqsnPfp71jGwPWzAfIL7OWX0uYYPTw5ESl2PEQwl4RVwk3fb3FMJOs/ZKq7TL3fA9CL4UeQ==
+X-Received: by 2002:a05:6512:3a8a:b0:53d:a283:f290 with SMTP id
+ 2adb3069b0e04-53dab2a65d6mr7777331e87.31.1732026205883; 
+ Tue, 19 Nov 2024 06:23:25 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.30
+ 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 06:23:30 -0800 (PST)
+ Tue, 19 Nov 2024 06:23:25 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/15] target/arm/hvf: Add trace.h header
-Date: Tue, 19 Nov 2024 14:23:20 +0000
-Message-Id: <20241119142321.1853732-15-peter.maydell@linaro.org>
+Subject: [PULL 06/15] tests/qtest/cmsdk-apb-watchdog-test: Don't abort on
+ assertion failure
+Date: Tue, 19 Nov 2024 14:23:12 +0000
+Message-Id: <20241119142321.1853732-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241119142321.1853732-1-peter.maydell@linaro.org>
 References: <20241119142321.1853732-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,47 +94,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation for trace events says that every subdirectory which
-has trace events should have a trace.h header, whose only content is
-an include of the trace/trace-<subdir>.h file.
+From: Roque Arcudia Hernandez <roqueh@google.com>
 
-When we added the trace events in target/arm/hvf/ we forgot to create
-this file and instead hvf.c directly includes
-trace/trace-target_arm_hvf.h.
+Currently the watchdog test has a behavior in which the first test
+assertion that fails will make the test abort making it impossible to
+see the result of other tests:
 
-Create the standard trace.h file to bring this into line with the
-convention.
+ # ERROR:../tests/qtest/cmsdk-apb-watchdog-test.c:87:test_watchdog:
+ assertion failed ...
+ Bail out!
+ Aborted
 
+Changing the behavior in order to let the test finish other tests and
+report the ones that pass and fail:
+
+ # ERROR:../tests/qtest/cmsdk-apb-watchdog-test.c:101:test_watchdog:
+ assertion failed ...
+ not ok 1 /arm/cmsdk-apb-watchdog/watchdog
+
+Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
+Message-id: 20241115160328.1650269-5-roqueh@google.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241108162909.4080314-3-peter.maydell@linaro.org
 ---
- target/arm/hvf/trace.h | 1 +
- target/arm/hvf/hvf.c   | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
- create mode 100644 target/arm/hvf/trace.h
+ tests/qtest/cmsdk-apb-watchdog-test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/hvf/trace.h b/target/arm/hvf/trace.h
-new file mode 100644
-index 00000000000..04a19c1d752
---- /dev/null
-+++ b/target/arm/hvf/trace.h
-@@ -0,0 +1 @@
-+#include "trace/trace-target_arm_hvf.h"
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 6cea483d422..ca7ea92774a 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -31,7 +31,7 @@
- #include "target/arm/internals.h"
- #include "target/arm/multiprocessing.h"
- #include "target/arm/gtimer.h"
--#include "trace/trace-target_arm_hvf.h"
-+#include "trace.h"
- #include "migration/vmstate.h"
+diff --git a/tests/qtest/cmsdk-apb-watchdog-test.c b/tests/qtest/cmsdk-apb-watchdog-test.c
+index bdf6cfa2566..fe535a553cc 100644
+--- a/tests/qtest/cmsdk-apb-watchdog-test.c
++++ b/tests/qtest/cmsdk-apb-watchdog-test.c
+@@ -164,6 +164,7 @@ int main(int argc, char **argv)
+     int r;
  
- #include "gdbstub/enums.h"
+     g_test_init(&argc, &argv, NULL);
++    g_test_set_nonfatal_assertions();
+ 
+     if (qtest_has_machine(machine_info[MACHINE_LM3S811EVB].machine)) {
+         qtest_add_data_func("/cmsdk-apb-watchdog/watchdog",
 -- 
 2.34.1
 
