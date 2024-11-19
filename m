@@ -4,84 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A654AD4417D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 16:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA5DD4417D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 16:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDQqy-0002v9-E9; Tue, 19 Nov 2024 11:13:24 -0500
+	id 1tDQtv-0004bD-Cc; Tue, 19 Nov 2024 11:16:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDQqx-0002uw-8m
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:13:23 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDQqs-0006jw-VI
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:13:22 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-aa20c733e92so630327166b.0
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 08:13:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732032796; x=1732637596; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=NEO9y/2dXb2rglF5UQ2YE4C9JjX85T2tA6iOF/v6Xl4=;
- b=zj3cxHKDupIbnlbHpYkMREoRrYF58NpgAcNgXVRh6EMvo8rIz4+8ZlJyoojCfyosQS
- xJY1Xt4X67uBSPzR53An1klojMmBZyRb2WLzghdWUC4Nh37N6GmQ1PjAfGZeJY7rXzL8
- wvbNW3b/2obUzXhOaoLuc+9Izt03wrDXE3gcrPXLoVrqtIc8ENcMHK4vyneisnKKxNor
- A14YM1dupRhhffvGKkHDAPU37D4T9kTliFljGl5icPM44h/1NbhgILvVmU46YZt8Oyq9
- MBlUOqaMyv7+QNJHZr6QAv3NLPShkTaBZIInm9nQ4GsibB2HbTqzKHCFy23umSI2QLr3
- v8pA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tDQtq-0004am-V5
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:16:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tDQtn-0007XE-SN
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:16:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732032978;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=jr8A5OhLeUImsufY13ebeYtDiLA7KiH4JfzHe8BSGjw=;
+ b=bLLDyyLVrDeqgP+ZgKQZldEY02Imkc6H6A1B6lSTJapyx+OsjjmlmWd2yRd8cWm+EVVBdc
+ IL/qO5lBtGt33SEpWHuANLueOnhJ6Z8SnbuLfdGUQ1zEWGs6G6Mjlly8dwHXWlxFj2h5iX
+ 9beicVmRuOPWs+m/DEe7I94+mu1LoUs=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-528-oR0f72NLM-2VGrGre5KmLA-1; Tue, 19 Nov 2024 11:16:16 -0500
+X-MC-Unique: oR0f72NLM-2VGrGre5KmLA-1
+X-Mimecast-MFC-AGG-ID: oR0f72NLM-2VGrGre5KmLA
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43157e3521dso24821135e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 08:16:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732032796; x=1732637596;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1732032975; x=1732637775;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NEO9y/2dXb2rglF5UQ2YE4C9JjX85T2tA6iOF/v6Xl4=;
- b=I7HtptX47gzmIbDxBWeiej7okDmtKCvGmLvYZjn7eAof9+SnsIzvv6RYA3LZ9z/8ys
- 3NhOgJ8HPcWX1iRS6/aRG5Uk4zlJsYuwx8gCA1bvKu5gdd5KpJg5Cc+zBB8J2gRnA9kz
- g+Zh7zgX9B4J3EiNLB5RzCL1/M6QoIzsaoGXf6iANgIyNB6H+s8c7eDK+L4bxEO4IwEx
- aJXFos1aIXH+uUHs0NX92+xQb2TTqO9erof3VjbbJJ3scLSYdzx8hqYhtNVwJ34Ydu5H
- wVZljdMg+hu46PiClhzqswCJOQVC+0MgpW+VK4VDORmpw2vhh0kxxUmxqxB9aUZTbpiv
- hPog==
-X-Gm-Message-State: AOJu0YwIVAYX3LjGvWXn8YZZbNOR81YsUJfLz7RDPMCVjDk6yBsh61c8
- vNma8ce1VjNNqV18wRK/iFH7RJPPXGf7/lXCdtIMHXPEGps6m2OXJoY1r8ip+tChXPX5qThGOFL
- Msh8=
-X-Google-Smtp-Source: AGHT+IHxj4hukCSlum/LdZFSyiMKeYw9qRQcGapWL7qf4TUxWyQbpkZMK3PWuYuH2wdsn8vC3s2i9g==
-X-Received: by 2002:a17:907:80e:b0:a9a:eca:f7c4 with SMTP id
- a640c23a62f3a-aa48354cd95mr1346055566b.54.1732032795877; 
- Tue, 19 Nov 2024 08:13:15 -0800 (PST)
-Received: from localhost.localdomain
- (sto95-h01-176-184-18-155.dsl.sta.abo.bbox.fr. [176.184.18.155])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20dfffdb0sm672187866b.125.2024.11.19.08.13.14
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 19 Nov 2024 08:13:15 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH] docs: Add roadmap for heterogeneous emulation
-Date: Tue, 19 Nov 2024 17:13:12 +0100
-Message-ID: <20241119161312.41346-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ bh=jr8A5OhLeUImsufY13ebeYtDiLA7KiH4JfzHe8BSGjw=;
+ b=pN09gRmoEfLiTuuUftzahpo/UheTMFvaWapwy1hl1P3ESBnsI6D3ry69e88wzvCH23
+ QRfuYAAOXOoYrfFKd7qG3fppCEkPaPs48baZNu6JlZthS10fCS+G9ItW42Fktypa7qV8
+ LbVu/NtciTieRdChEXitASvuPwajTE4qh2Gy7bBzGpJ+43BL4EmWfhkrX1eezj/c/gDm
+ f+tx+B8J9Uf8lyBOcCWldZDMBx+P06CpX+84dAdIKb57Cj7bbAuj4h0dHL/nvrY9DIpI
+ qRjpKJpm3AW0TIQg7DiG5QMfnUoRclbGgu1nQEetqc6tQRhgLYU5otnzit+H+fm8Id4x
+ Nnew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU66c7EAgZxjr298i53SSRhnk+Xqor45aDMj4SFEX62LAbtW/nSOVYOsshMNDKBbpW/bAHro/8KvFKF@nongnu.org
+X-Gm-Message-State: AOJu0YzpKX4j2UvEgrpiW+ec0Zjtq0zJyxI5Et5OatIk556c6oozWI95
+ bIMSSk7nKot5uUt/YF5imNA1bYLS7gIPlNyrdS1DWRiE2pz+7xkOMt4mRXNLt26H0gOUWEnUrjt
+ pAsDSsOzqnQqRSH0PB3RSoW4aALQfA2p0nS+GQgRyr5+rdPNI+ayP
+X-Received: by 2002:a05:600c:474e:b0:431:518a:683b with SMTP id
+ 5b1f17b1804b1-432df74f2c1mr137211475e9.18.1732032974902; 
+ Tue, 19 Nov 2024 08:16:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG9ggTtlr9rSuVSREhCODZFnFp/ko3XIFitLfzO9fASBuvXY2DZ5LpOF0YwV21so3Nu0c4LVQ==
+X-Received: by 2002:a05:600c:474e:b0:431:518a:683b with SMTP id
+ 5b1f17b1804b1-432df74f2c1mr137211155e9.18.1732032974382; 
+ Tue, 19 Nov 2024 08:16:14 -0800 (PST)
+Received: from [192.168.10.3] ([151.49.84.243])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-432dab80ad9sm194840765e9.25.2024.11.19.08.16.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Nov 2024 08:16:13 -0800 (PST)
+Message-ID: <c471b22c-1b50-47c6-9b67-a9853545b041@redhat.com>
+Date: Tue, 19 Nov 2024 17:16:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qdev: Fix set_pci_devfn() to visit option only once
+To: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, armbru@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, qemu-stable@nongnu.org
+References: <20241119120353.57812-1-kwolf@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20241119120353.57812-1-kwolf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,921 +143,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This document tries to document the steps required to:
+On 11/19/24 13:03, Kevin Wolf wrote:
+> pci_devfn properties accept either a string or an integer as input. To
+> implement this, set_pci_devfn() first tries to visit the option as a
+> string, and if that fails, it visits it as an integer instead. While the
+> QemuOpts visitor happens to accept this, it is invalid according to the
+> visitor interface. QObject input visitors run into an assertion failure
+> when this is done.
+> 
+> QObject input visitors are used with the JSON syntax version of -device
+> on the command line:
+> 
+> $ ./qemu-system-x86_64 -enable-kvm -M q35 -device pcie-pci-bridge,id=pci.1,bus=pcie.0 -blockdev null-co,node-name=disk -device '{ "driver": "virtio-blk-pci", "drive": "disk", "id": "virtio-disk0", "bus": "pci.1", "addr": 1 }'
+> qemu-system-x86_64: ../qapi/qobject-input-visitor.c:143: QObject *qobject_input_try_get_object(QObjectInputVisitor *, const char *, _Bool): Assertion `removed' failed.
+> 
+> The proper way to accept both strings and integers is using the
+> alternate mechanism, which tells us the type of the input before it's
+> visited. With this information, we can directly visit it as the right
+> type.
+> 
+> This fixes set_pci_devfn() by using the alternate mechanism.
 
- - Have a single binary to run system emulations
- - Emulate different architectures in the same process
- - Have QEMU assemble dynamic machines at runtime
+Indeed, set_pci_devfn() predates alternates.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-This is the document that was discussed at the KVM forum 2024 BoF.
-Since then I did some changes but I figured it'd be better to
-post the discussed doc first then comment the changes on the list.
----
- docs/devel/heterogeneous-emulation-roadmap.md | 892 ++++++++++++++++++
- 1 file changed, 892 insertions(+)
- create mode 100644 docs/devel/heterogeneous-emulation-roadmap.md
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
 
-diff --git a/docs/devel/heterogeneous-emulation-roadmap.md b/docs/devel/heterogeneous-emulation-roadmap.md
-new file mode 100644
-index 0000000000..6377b02559
---- /dev/null
-+++ b/docs/devel/heterogeneous-emulation-roadmap.md
-@@ -0,0 +1,892 @@
-+# Toward a Heterogeneous QEMU
-+
-+## Introduction
-+
-+This document outlines a comprehensive roadmap for enhancing the
-+modularity, scalability, and multi-architecture support of QEMU.
-+The goal is to address several long-standing architectural issues
-+that hinder QEMU’s ability to emulate multiple architectures
-+concurrently, paving the way toward dynamic machine creation and
-+improved user experiences.
-+
-+QEMU’s original design focuses on the efficient emulation of a
-+single target architecture per binary, with a single TCG context
-+handling architecture-specific code generation and execution.
-+However, as the demand for more flexible and scalable emulation
-+grows, several limitations of this design have become evident.
-+These include reliance on global variables, target-specific static
-+definitions, tightly coupled APIs across different subsystems, and
-+the need for manual intervention when building or configuring
-+machine models.
-+
-+The proposed roadmap introduces a series of incremental changes
-+aimed at addressing these limitations and achieving the following
-+long-term goals:
-+
-+1. **Improved Modularity and Code Reusability**: Refactor QEMU's
-+   subsystems to eliminate global variables and reduce the coupling
-+   between hardware models and target-specific implementations.
-+   This will involve creating clearer API boundaries and separating
-+   hardware and target-specific code into distinct, reusable
-+   modules.
-+
-+2. **Support for Multi-Architecture Emulation**: Enable QEMU to
-+   emulate multiple target architectures concurrently within a
-+   single binary by modularizing the TCG frontends and decoupling
-+   architecture-specific code from the core emulation logic.
-+
-+3. **Simplification of QEMU's Core Components**: Streamline the
-+   startup sequence, refactor the command-line interface (CLI), and
-+   modularize the device models and subsystems to improve
-+   maintainability and extensibility. This effort will also focus
-+   on reducing redundancy and boilerplate code in the machine
-+   creation process.
-+
-+4. **Human vs. Machine Configuration**: Recognize the divergent
-+   needs between human users and management applications (machines)
-+   in configuring QEMU. Propose a separation of concerns where a
-+   new binary could focus on machine-oriented expressiveness while
-+   providing a simpler, more intuitive frontend for human users.
-+
-+5. **Dynamic Machine Creation and Configuration**: Transition from
-+   statically built machine models to a dynamic, data-driven
-+   configuration system, where new machine types can be composed at
-+   runtime using declarative templates. This will reduce the
-+   complexity of adding new machines and allow for greater
-+   flexibility in system configuration.
-+
-+The roadmap is divided into multiple phases, each addressing a
-+specific set of problems and dependencies in QEMU’s current
-+architecture.
-+
-+This document serves as a reference for contributors. It aims to
-+provide a clear path forward, along with the necessary steps and
-+dependencies required to implement the proposed changes.
-+
-+## Background and Motivation
-+
-+### Issues with Loadable Modules
-+
-+QEMU's support for loadable modules has deficiencies:
-+
-+- **Error Handling**: Modules that fail to load due to missing
-+  dependencies can cause QEMU to exit unexpectedly, especially
-+  during hot-plug operations. The module API needs to be
-+  strengthened to propagate errors and must not exit the main
-+  process. Proper error handling mechanisms are essential to
-+  prevent crashes and improve stability.
-+
-+- **Platform Parity**: Currently, QEMU's support for loadable
-+  modules is not consistent across all platforms. In particular,
-+  DSO module loading needs to be implemented on Windows to achieve
-+  feature parity with other operating systems.
-+
-+- **Introspection Challenges**: Functions that list or load modules
-+  may not handle errors gracefully, leading to incomplete
-+  information and unpredictable behavior. Users may not be aware of
-+  whether a module is compiled-in or loadable, leading to
-+  confusion.
-+
-+### Problems with Singletons and Global Symbols
-+
-+Global variables and singletons hinder the ability to:
-+
-+- **Support Multi-Architecture Binaries**: The use of global
-+  variables (or singletons) causes conflicts when multiple
-+  architectures are emulated concurrently. A frontend expects the
-+  global variable to be accessed only by itself, but when using
-+  multiple frontends concurrently, multiple frontends could access
-+  the same variable, causing unexpected side effects.
-+
-+- **Modularize Code**: Singletons prevent instantiating multiple
-+  instances of certain components, limiting flexibility. Symbol
-+  conflicts and shared globals cause linking issues and
-+  unpredictable behavior in heterogeneous machines.
-+
-+### Inconsistent QOM Object Life Cycle
-+
-+The lack of a unified life cycle model for QOM objects complicates
-+configuration and management:
-+
-+- **Different Life Cycles**: Devices, user-creatable objects, and
-+  other components have varying life cycles and state transitions.
-+  Without a consistent model, it's difficult to determine when and
-+  how objects should be configured and realized, especially in a
-+  dynamic environment.
-+
-+- **Configuration Challenges**: Managing object states and
-+  transitions is difficult without a clear life cycle model. This
-+  inconsistency leads to complex and error-prone configuration
-+  processes.
-+
-+### Challenges with Initial Configuration
-+
-+QEMU's current configuration mechanisms present challenges for
-+both management applications and human users:
-+
-+- **Management Applications**: Require a stable and simple CLI to
-+  bootstrap QMP (QEMU Machine Protocol) for monitoring and initial
-+  configuration. However, they are forced to perform non-trivial
-+  initial configurations via the CLI, which is not ideal.
-+
-+- **Human Users**: Prefer simple, consistent CLI and configuration
-+  files. They struggle with the complexity and inconsistency of the
-+  modern low-level configurations, leading to frustration and
-+  errors.
-+
-+### Limitations of Static Machine Definitions
-+
-+Machines in QEMU are defined statically in C code, requiring
-+recompilation for any changes. This approach lacks flexibility and
-+makes it difficult to:
-+
-+- **Enable Dynamic Machine Creation**: Allow users and management
-+  applications to define and configure machines at runtime without
-+  modifying source code.
-+
-+### Need for Early Availability of QMP
-+
-+QMP becomes available late in the startup sequence, limiting its
-+usefulness for initial configuration. An integrated solution is
-+needed to make QMP available earlier, enabling:
-+
-+- **Dynamic Configuration via QMP**: Allow management applications
-+  to perform arbitrary configurations before any machine components
-+  are initialized.
-+
-+- **Simplified Bootstrapping**: Provide a minimal CLI that is
-+  stable and sufficient to start QMP for further configuration.
-+
-+### Deficiencies in the Configuration Interface
-+
-+QOM's object configuration interface has limitations:
-+
-+- **Dynamic Properties**: Properties can be added or removed
-+  dynamically, leading to a configuration interface that changes at
-+  runtime.
-+
-+- **Introspection Limitations**: Weak and often undocumented type
-+  information makes it challenging to design a robust and
-+  user-friendly configuration interface.
-+
-+### Cross-Directory API Calls and Target-Specific Device Models
-+
-+- **Cross-Directory API Calls**: Problematic calls between `hw/`
-+  and `target/` directories blur separation and complicate
-+  modularization. Unfortunately, we have API calls from one
-+  directory to another. For example, `hw/xtensa/pic_cpu.c` calls
-+  target `xtensa_runstall()`, and `target/xtensa/exc_helper.c`
-+  calls `check_interrupts()` in `hw/xtensa/pic_cpu.c`.
-+
-+- **Target-Specific Device Models in `hw/`**: Placing
-+  target-specific models in `hw/` leads to dependencies that hinder
-+  modularization. When a device model is target-specific (like the
-+  ARM NVIC), it is pointless to expose it in `hw/`. Moving it to
-+  `target/arm/hw/` could simplify the `hw/` <-> `target/` access
-+  problem.
-+
-+### Device Models and Buses
-+
-+- **Singleton Buses**: The expectation of a single system bus
-+  (sysbus) doesn't scale for heterogeneous machines requiring
-+  multiple buses. Currently, a machine expects a single sysbus and
-+  at most a single ISA bus. This doesn't scale since heterogeneous
-+  machines might use multiple distinct buses.
-+
-+- **Bus Ownership Model**: The current ownership model doesn't
-+  support buses shared by multiple controllers. Currently, a bus
-+  model is "QOM owned" by a single device controller model. This
-+  doesn't scale when a bus is shared by two controllers since we
-+  can only have a single QOM owner.
-+
-+### Page Size and Target-Specific Definitions
-+
-+- **Static Definitions**: Target-specific static definitions need
-+  to be converted to runtime variables to support multiple
-+  architectures. For example, definitions such as
-+  `TARGET_LONG_BITS`, `TARGET_PAGE_MASK`, `TARGET_PAGE_BITS`,
-+  `TCG_GUEST_DEFAULT_MO`, `NB_MMU_MODES`,
-+  `TARGET_PHYS_ADDR_SPACE_BITS`, and
-+  `TARGET_VIRT_ADDR_SPACE_BITS` need to be changed to runtime ones.
-+
-+- **Variable Page Sizes**: The current use of a single
-+  `TargetPageBits` structure is insufficient for variable page
-+  sizes across architectures. We cannot use a single
-+  `TargetPageBits` structure anymore for variable page sizes; we
-+  need to make this structure per vCPU.
-+
-+### Global Headers and `NEED_CPU_H` Definition
-+
-+- **Header Contamination**: Too many global headers are
-+  'contaminated' with the `NEED_CPU_H` definition, which forces the
-+  header to become target specific. This complicates modularization
-+  and code reuse.
-+
-+## Identified Problems
-+
-+### Problem 1: Loadable Modules and Error Handling
-+
-+**Current Challenges:**
-+
-+The current implementation of loadable modules in QEMU has several
-+deficiencies, particularly in error handling. When a module fails
-+to load due to missing dependencies, QEMU may exit unexpectedly,
-+which can be especially problematic during hot-plug operations.
-+Additionally, the introspection mechanisms may not list all
-+available types if modules fail to load silently.
-+
-+**Proposed Solutions:**
-+
-+1. **Enhance Error Handling for Loadable Modules:**
-+
-+   - Improve the module loading API to handle failures gracefully
-+     without crashing the main process. This includes strengthening
-+     the module API to propagate errors properly and avoid
-+     unexpected exits.
-+   - Ensure that introspection commands like `qom-list-types`
-+     provide accurate information, even in the presence of loadable
-+     modules.
-+   - Modify the module API to propagate errors properly and avoid
-+     unexpected exits.
-+
-+2. **Implement DSO Module Loading on Windows:**
-+
-+   - Add feature parity for DSO module support on Windows OS to
-+     ensure consistent behavior across platforms.
-+
-+3. **Testing and Stability:**
-+
-+   - Implement thorough testing to ensure that the changes do not
-+     introduce new issues or regressions, particularly in the
-+     context of module loading and hot-plugging.
-+
-+### Problem 2: Singletons and Global Symbols
-+
-+**Current Challenges:**
-+
-+Global variables and singletons in QEMU's codebase pose challenges
-+for multi-architecture support. These elements can lead to
-+conflicts and unpredictable behavior, especially when trying to
-+link multiple targets into a single binary or manage heterogeneous
-+machines.
-+
-+**Proposed Solutions:**
-+
-+1. **Enumerate and Isolate Global Variables and Singletons:**
-+
-+   - Identify all global variables and singletons that need to be
-+     isolated. Refactor the codebase to eliminate singletons and
-+     reduce reliance on global symbols, particularly in areas where
-+     multiple architectures are involved.
-+   - This change is essential for enabling concurrent
-+     multi-architecture emulation and supporting dynamic machine
-+     creation.
-+
-+2. **Modify Function Prototypes and Structures:**
-+
-+   - Change methods and structures that are currently
-+     target-specific to be target-agnostic. For example, functions
-+     like `tcg_gen_code()` and structures like `TranslationBlock`
-+     and `TCGContext` should become target-agnostic.
-+
-+### Problem 3: Target-Specific Static Definitions
-+
-+**Current Challenges:**
-+
-+Target-specific static definitions prevent the code from being
-+flexible enough to handle multiple architectures simultaneously.
-+Definitions like `TARGET_LONG_BITS`, `TARGET_PAGE_MASK`, and others
-+are statically defined and cannot vary at runtime.
-+
-+**Proposed Solutions:**
-+
-+1. **Convert Static Definitions to Runtime Variables:**
-+
-+   - Change target-specific static definitions to runtime variables
-+     or structure fields. For instance:
-+
-+     - Convert `TCG_GUEST_DEFAULT_MO` definition to an
-+       `ArchAccelClass` field.
-+     - Convert `TARGET_PHYS_ADDR_SPACE_BITS` and
-+       `TARGET_VIRT_ADDR_SPACE_BITS` definitions to `CPUClass`
-+       fields.
-+     - Convert `TARGET_PAGE_BITS_MIN` definition to a `CPUClass`
-+       field.
-+     - Convert `TARGET_LONG_BITS` definition to a `CPUClass`
-+       helper function.
-+     - Convert `TARGET_PAGE_*` definitions to runtime variables.
-+
-+2. **Support Variable Page Sizes:**
-+
-+   - Convert all MTTCG-enabled targets to use
-+     `TARGET_PAGE_BITS_VARY`. Since multiple vCPUs can share the
-+     same accelerator and page sizes, better would be to have a set
-+     of compatible vCPUs share the same accelerator context.
-+
-+### Problem 4: TCG Frontend and Code Generation
-+
-+**Current Challenges:**
-+
-+Functions like `tcg_gen_code()` are too target-specific and need to
-+be made target-agnostic. The TCG frontend is built multiple times
-+for different endianness and word sizes, leading to redundancy.
-+
-+**Proposed Solutions:**
-+
-+1. **Make TCG Code Target-Agnostic:**
-+
-+   - Refactor `tb_gen_code()` and `tcg_gen_code()` functions to be
-+     target-agnostic, keeping `gen_intermediate_code()`
-+     target-specific.
-+   - Ensure that TCG frontends leverage the `MemOp` argument to be
-+     built once, reducing redundancy.
-+
-+2. **Modularize TCG Frontends:**
-+
-+   - Build the TCG frontend for each architecture as a library
-+     (e.g., `libtcg-$ARCH.so`). Such a library should be
-+     exclusively composed of compilation units in `target/$ARCH`,
-+     possibly including `target/$arch/hw/` specific hardware models.
-+   - Modularize the set of TCG frontends for all targets.
-+
-+### Problem 5: Cross-Directory API Calls and Target-Specific Device Models
-+
-+**Current Challenges:**
-+
-+Problematic API calls between `hw/` and `target/` directories blur
-+separation and complicate modularization. Target-specific device
-+models placed in `hw/` lead to dependencies that hinder
-+modularization.
-+
-+**Proposed Solutions:**
-+
-+1. **Enforce API Separation:**
-+
-+   - Remove non-QDev API calls from `target/` to `hw/` (and
-+     vice-versa), restricting to QOM, QDev, IRQ, and Clock APIs.
-+   - Enforce a clearer API separation to avoid direct calls and
-+     enable both `hw/` and `target/` components to be built as
-+     modules.
-+
-+2. **Move Target-Specific Device Models:**
-+
-+   - When a device model is target-specific, move it from `hw/` to
-+     `target/$ARCH/hw/`. This simplifies the `hw/` <-> `target/`
-+     access problem and reduces dependencies.
-+
-+### Problem 6: Device Models and Buses
-+
-+**Current Challenges:**
-+
-+The current bus models and APIs assume singleton buses and device
-+ownership by a single controller, which doesn't scale for
-+heterogeneous machines that require multiple buses and shared
-+ownership.
-+
-+**Proposed Solutions:**
-+
-+1. **Rework Bus Models and Ownership:**
-+
-+   - Remove device ownership on multi-controller buses, making the
-+     single owner the `MachineState`. This allows buses to be
-+     accessed by multiple controller models without ownership
-+     conflicts.
-+
-+2. **Make Bus Parameters Explicit:**
-+
-+   - Modify APIs to make the bus parameter explicit, so devices can
-+     be accessed on any bus. This removes the reliance on singleton
-+     buses and allows for multiple distinct buses in heterogeneous
-+     machines.
-+
-+3. **Remove Singleton Buses:**
-+
-+   - Remove the `ISA_BUS` singleton and replace ISA bus-dependent
-+     devices with stubs to simplify proof of concept.
-+
-+### Problem 7: Lack of a Clear QOM Object Life Cycle
-+
-+**Current Challenges:**
-+
-+QOM lacks a unified and well-defined life cycle model, leading to
-+inconsistencies and complexity in managing object states during
-+configuration.
-+
-+**Proposed Solutions:**
-+
-+1. **Clarify QDev Methods and Lifecycle:**
-+
-+   - Clarify which QDev methods belong to the QOM layer, such as
-+     'realize'. Define a unified life cycle model that can be
-+     applied across all object types in QOM, ensuring predictable
-+     transitions between states.
-+
-+2. **Add a "Wiring" Phase:**
-+
-+   - Add an extra "wiring" phase in the QDev state machine to link
-+     parts together. This is essential when composing complex
-+     device models from smaller parts and when devices need to
-+     reference each other before realization.
-+
-+3. **Merge SysBus Methods into QDev:**
-+
-+   - Merge most of the `SysBus` methods into the more generic QDev
-+     layer: named GPIO and MemoryRegion. This unification simplifies
-+     the device model and reduces redundancy.
-+
-+### Problem 8: Deficiencies in QOM's Object Configuration Interface
-+
-+**Current Challenges:**
-+
-+The current QOM object configuration interface is dynamic and often
-+unintuitive, with properties being added or removed during runtime.
-+This leads to a complex and sometimes error-prone configuration
-+process, particularly when trying to achieve a declarative
-+configuration style.
-+
-+**Proposed Solutions:**
-+
-+1. **Integrate Configuration into QAPI:**
-+
-+   - Use static QAPI-based QOM properties to provide a more
-+     standardized, introspectable, and documented approach to
-+     object configuration. Restrict dynamic read-write properties
-+     to debugging and introspection.
-+
-+2. **Make Config Properties Read-Only After Realization:**
-+
-+   - Ensure that configuration properties are read-only after the
-+     device is realized. This simplifies the configuration
-+     interface and enforces consistency.
-+
-+3. **Differentiate Property Types:**
-+
-+   - Distinguish between static properties (set during creation)
-+     and dynamic properties (modifiable at runtime), simplifying
-+     the configuration process.
-+
-+### Problem 9: Initial Configuration & CLI Challenges
-+
-+**Current Challenges:**
-+
-+The current CLI is cumbersome and unintuitive, making it difficult
-+for both human users and management applications to configure
-+machines efficiently. Human users often prefer simpler, legacy-
-+style configurations but are sometimes forced to engage with low-
-+level, detailed configurations when dealing with specific features,
-+leading to a frustrating user experience. Management applications,
-+on the other hand, require a more expressive and detailed
-+configuration system, further complicating the situation.
-+
-+**Proposed Solutions:**
-+
-+1. **Split Human vs. Machine Data:**
-+
-+   - Propose a clean separation between human-friendly and machine-
-+     oriented configurations. Extract or factor out the CLI API
-+     (human-facing), keeping the minimum needed to start a QMP
-+     interface (machine-facing).
-+
-+2. **Simplify the QEMU Startup Sequence:**
-+
-+   - Rework the QEMU startup code to greatly simplify it. This
-+     involves simplifying CLI limitations (e.g. where command line
-+     order matters) and eventually moving towards data-driven machine
-+     configurations.
-+
-+3. **Make All Devices User-Creatable:**
-+
-+   - Eventually, all devices will become user-creatable, allowing
-+     for more flexible and dynamic machine configurations. Audit
-+     the effect on the final Realize phase in
-+     `qdev_machine_creation_done()`. Restrict UserCreatable API
-+     to backends.
-+
-+## Roadmap
-+
-+The roadmap is structured into phases, each building upon the
-+previous and allowing for parallel work where feasible. Time
-+estimates are provided for each task, assuming a dedicated
-+development team.
-+
-+### Phase 0: Preparatory Work (Estimated Duration: 2 Months)
-+
-+**Objective**: Establish a foundation for multi-architecture
-+support and improve module handling.
-+
-+1. **Enhance Module Loading API** (3 Weeks)
-+
-+   - Modify the module loading API to handle failures gracefully
-+     without crashing the main process. This includes strengthening
-+     the module API to propagate errors properly and avoid
-+     unexpected exits.
-+
-+2. **Implement DSO Module Loading on Windows** (2 Weeks)
-+
-+   - Add feature parity for DSO module support on Windows OS. This
-+     ensures that QEMU's module loading capabilities are consistent
-+     across platforms, enabling broader adoption and testing of
-+     modular components on Windows systems.
-+
-+3. **Deprecate Non-QOM Code** (2 Weeks)
-+
-+   - Introduce runtime warnings for the use of non-QOM code to
-+     encourage migration to QOM-compliant implementations.
-+     Explicitly deprecate non-QOM code, guiding developers towards
-+     the modern object model.
-+
-+### Phase 1: Enable Heterogeneous Emulation (Estimated Duration: 6 Months)
-+
-+**Objective**: Modify the core infrastructure to support multiple
-+architectures concurrently.
-+
-+1. **Enumerate and Isolate Global Variables and Singletons** (6
-+   Weeks)
-+
-+   - Identify all global variables and singletons that have to be
-+     isolated. Refactor the codebase to eliminate or encapsulate
-+     them to prevent conflicts when multiple architectures are
-+     emulated concurrently.
-+
-+2. **Resolve Function Name Clashes** (2 Weeks)
-+
-+   - Implement dispatch mechanisms for target-specific functions.
-+     For functions that have the same name across targets, create
-+     generic function names that dispatch to the proper target
-+     handler using the vCPU to discriminate which architecture
-+     handler to call.
-+
-+3. **Rework QMP Handlers for Multi-Architecture** (3 Weeks)
-+
-+    - Modify QMP target-specific handlers to handle multiple
-+      architectures gracefully. Alter QMP introspection as needed,
-+      so previously not implemented methods are now dispatched and,
-+      if not available for a particular target, return appropriate
-+      error messages like "Not Available".
-+
-+4. **Make TCG Code Target-Agnostic** (6 Weeks)
-+
-+   - Refactor `tb_gen_code()` and `tcg_gen_code()` functions to be
-+     target-agnostic, keeping `gen_intermediate_code()`
-+     target-specific. Ensure that `TranslationBlock` and
-+     `TCGContext` structures become target-agnostic.
-+
-+5. **Convert Static Definitions to Runtime Variables** (6 Weeks)
-+
-+   - Change target-specific static definitions to runtime variables
-+     or structure fields. For instance:
-+
-+     - Convert `TCG_GUEST_DEFAULT_MO` definition to an
-+       `ArchAccelClass` field.
-+     - Convert `TARGET_PHYS_ADDR_SPACE_BITS` and
-+       `TARGET_VIRT_ADDR_SPACE_BITS` definitions to `CPUClass`
-+       fields.
-+     - Convert `TARGET_PAGE_BITS_MIN` definition to a `CPUClass`
-+       field.
-+     - Convert `TARGET_LONG_BITS` definition to a `CPUClass`
-+       helper function.
-+     - Convert `TARGET_PAGE_*` definitions to runtime variables.
-+
-+6. **Support Variable Page Sizes** (3 Weeks)
-+
-+   - Convert all MTTCG-enabled targets to use
-+     `TARGET_PAGE_BITS_VARY`. Since multiple vCPUs can share the
-+     same accelerator and page sizes, create a set of compatible
-+     vCPUs that share the same accelerator context.
-+
-+7. **Compile `accel/tcg/` System Once** (2 Weeks)
-+
-+   - Modify the build system to compile the TCG accelerator system
-+     only once, making it target-agnostic and shared across
-+     architectures.
-+
-+8. **Modularize TCG Frontends** (4 Weeks)
-+
-+   - Build TCG frontends as separate modules (e.g.,
-+     `libtcg-$ARCH.so`). Such a library should be exclusively
-+     composed of compilation units in `target/$ARCH`. Modularize
-+     the set of TCG frontends for all targets.
-+
-+9. **Introduce `AccelCpuCluster` Concept** (5 Weeks)
-+
-+   - Implement `AccelCpuCluster` to group similar vCPUs that share
-+     the same accelerator (TCG) state. This allows for efficient
-+     handling of vCPUs with common properties.
-+
-+10. **Make `SoftFloat` context configuratble at runtime** (4 Weeks)
-+
-+   - Convert per-target static definitions of SoftFloat context to
-+     runtime ones, possibly allowing re-use between vCPUs.
-+
-+11. **Convert Non-MTTCG Targets** (4 Weeks)
-+
-+   - Extend the previous steps to include non-MTTCG targets,
-+     ensuring that all targets can benefit from the new
-+     architecture.
-+
-+12. **Make SoftFloat code target-agnostic** (2 Weeks)
-+
-+   - Convert per-target static configurations to a runtime configurable
-+     context.
-+
-+### Phase 2: Hardware Cleanups and API Separation (Estimated Duration: 3 Months)
-+
-+**Objective**: Refine hardware models and APIs to support
-+modularization and multi-architecture support.
-+
-+1. **Reduce `NEED_CPU_H` in Headers** (2 Weeks)
-+
-+    - Split headers containing `NEED_CPU_H` into target-specific
-+      and target-agnostic ones. Use the `-common.h` suffix for
-+      target-agnostic headers and `-target.h` for target-specific
-+      ones.
-+
-+2. **Eliminate Randomness in QOM Paths** (2 Weeks)
-+
-+   - Remove auto-incremented IDs and random numbers in device QOM
-+     paths to keep the composition tree reproducible. Ensure that
-+     devices have stable and predictable QOM paths.
-+
-+3. **Clarify QOM/QDev Methods and Lifecycle** (4 Weeks)
-+
-+   - Clarify which QDev methods belong to the QOM layer, such as
-+     'realize'. Define a unified life cycle model for QOM objects.
-+     This includes adding an extra "wiring" phase in the QDev state
-+     machine to link parts together.
-+
-+4. **Move Target-Specific Code from `hw/` to `target/hw/`** (3
-+   Weeks)
-+
-+   - When a device model is target-specific, move it from `hw/` to
-+     `target/$ARCH/hw/`. This simplifies the `hw/` <-> `target/`
-+     access problem and reduces dependencies.
-+
-+5. **Enforce API Separation Between `hw/` and `target/`** (4 Weeks)
-+
-+   - Remove non-QDev API calls from `target/` to `hw/` (and
-+     vice-versa), restricting to QOM, QDev, IRQ, and Clock APIs.
-+     Enforce a clearer API separation to avoid direct calls and
-+     enable both `hw/` and `target/` components to be built as
-+     modules.
-+
-+6. **Restrict Use of Global CPU Variables in `hw/`** (4 Weeks)
-+
-+   - Prohibit the use of global CPU variables like `current_cpu`
-+     and `first_cpu` in hardware code (`hw/`). Instead, use
-+     `CpuCluster[]` or pass explicit references. This prevents
-+     casting errors and architecture-specific assumptions in common
-+     code.
-+
-+7. **Merge SysBus Methods into QDev** (3 Weeks)
-+
-+   - Merge most of the `SysBus` methods into the more generic QDev
-+     layer, starting with GPIO. This unification simplifies the
-+     device model and reduces redundancy.
-+
-+8. **Remove `ISA_BUS` Singleton** (4 Weeks)
-+
-+   - Remove the `ISA_BUS` singleton. Replace ISA bus-dependent
-+     devices with stubs or rework them to not rely on the singleton,
-+     simplifying the bus model.
-+
-+9. **Optimize QOM Cast Macros** (2 Weeks)
-+
-+    - Reduce and optimize the use of QOM cast macros in non-API
-+      code and callbacks to improve performance and maintainability.
-+
-+10. **Consider Power/Clock/Reset Tree API** (1 Week)
-+
-+    - Brainstorm whether a Power/Clock/Reset tree API is needed,
-+      which could be helpful later with device composition.
-+
-+### Phase 3: Unify Binaries and Simplify Machine Modes (Estimated Duration: 2 Months)
-+
-+**Objective**: Move towards a single QEMU binary supporting
-+multiple architectures and modes.
-+
-+1. **Rework Bus Models and Ownership** (4 Weeks)
-+
-+   - Remove device ownership on multi-controller buses, making the
-+     single owner the `MachineState`. Modify bus APIs to make the
-+     bus parameter explicit, allowing devices to be accessed on any
-+     bus.
-+
-+2. **Eliminate `qdev_get_machine()` Usage** (5 Weeks)
-+
-+   - Refactor code to remove reliance on `qdev_get_machine()`.
-+     Fields in `MachineState` that are target-specific (e.g.,
-+     `dtb`, `kernel`, `initrd`, `NumaState`, `CpuTopology`) should
-+     become per-vCPU or per cluster.
-+
-+3. **Add Machine Property for Mode Selection** (2 Weeks)
-+
-+   - Add a machine property to specify whether to start in 32-bit
-+     or 64-bit mode and forward the property down to devices. This
-+     allows for flexible configuration of machines that can operate
-+     in different modes.
-+
-+4. **Unify Word Size Support** (4 Weeks)
-+
-+   - Modify the build system to produce a single binary supporting
-+     both 32-bit and 64-bit architectures, unifying word size
-+     support.
-+
-+5. **Unify Endianness Support** (4 Weeks)
-+
-+   - Similarly, unify endianness support to produce a single binary
-+     capable of handling both big-endian and little-endian
-+     architectures.
-+
-+6. **Investigate GDB Stub Restrictions** (2 Weeks)
-+
-+   - Investigate any restrictions in the GDB stub that may prevent
-+     multi-architecture support or affect debugging capabilities.
-+
-+7. **Disallow Unattached QOM Devices** (2 Weeks)
-+
-+   - Do not allow unattached QOM devices. Ensure that all devices
-+     are part of the composition tree, eliminating the
-+     `/machine/unattached/` orphanage problem.
-+
-+8. **Remove Target-Specific QMP and Monitor Commands** (2 Weeks)
-+
-+   - Remove target-specific QMP and monitor commands to provide a
-+     consistent interface across architectures.
-+
-+### Phase 4: Prepare for Declarative Machine Configuration (Estimated Duration: 3 Months)
-+
-+**Objective**: Lay the groundwork for dynamic, data-driven machine
-+configurations.
-+
-+1. **Static QAPI-Based QOM Properties** (8 Weeks)
-+
-+   - Integrate the configuration interface into the QAPI schema
-+     using static QAPI-based QOM properties. Restrict dynamic
-+     read-write properties to debugging and introspection. Make
-+     configuration properties read-only after realization.
-+
-+2. **Clarify Machine Phases Enum** (2 Weeks)
-+
-+   - Clarify and extend the Machine Phases enum. Determine if a
-+     `PHASE_MACHINE_HARDWARE_WIRED` is needed before
-+     `PHASE_MACHINE_INITIALIZED` to be able to wire cyclic IRQs.
-+
-+3. **Simplify QEMU Startup Sequence** (12 Weeks)
-+
-+   - Rework the QEMU startup code to greatly simplify it. Extract
-+     or factor out the CLI API (human-facing), keeping the minimum
-+     needed to start a QMP interface (machine-facing).
-+
-+4. **Enhance QOM Object Registration and Filtering** (3 Weeks)
-+
-+   - Register all QOM objects at startup with appropriate
-+     filtering. Implement functionality to list devices filtered
-+     per machine. Handle cases where devices are only available in
-+     certain modes or architectures.
-+
-+5. **Merge `UserCreatable` with QOM** (2 Weeks)
-+
-+   - Integrate the `UserCreatable` class into QOM for streamlined
-+     object creation. If eventually all devices can be created by
-+     QMP when building a machine, all devices thus inherit the
-+     `UserCreatable` class.
-+
-+6. **Early Availability of QMP** (4 Weeks)
-+
-+   - Make QMP available earlier in the startup sequence for initial
-+     configuration. Provide a minimal CLI that is stable and
-+     sufficient to start QMP for further configuration.
-+
-+### Phase 5: Implement Dynamic Machines (Estimated Duration: 4 Months)
-+
-+**Objective**: Enable the creation of machines dynamically at
-+runtime using a declarative approach.
-+
-+1. **Develop Declarative Language or DSL** (12 Weeks)
-+
-+   - Create a Domain-Specific Language (DSL) or use existing
-+     formats to describe machine configurations. Devices are
-+     expressed as DSL, enabling composable machines.
-+
-+2. **Refactor Machine Creation Process** (8 Weeks)
-+
-+   - Rewrite the machine initialization code to consume declarative
-+     configurations. Transition from statically built machine
-+     models to a dynamic, data-driven configuration system.
-+
-+3. **Simplify and Modularize Startup Code** (4 Weeks)
-+
-+   - Streamline the startup sequence to accommodate dynamic
-+     machine creation. Simplify the QEMU startup sequence, focusing
-+     on modularity and flexibility.
-+
-+4. **Provide Simplified Configuration Profiles** (3 Weeks)
-+
-+   - Introduce predefined machine profiles for common use cases
-+     (e.g., `q35-minimal.cfg`, `q35-recommended.cfg`,
-+     `q35-simple.cfg`). Allow users to select a configuration that
-+     best fits their scenario without needing to fine-tune every
-+     parameter.
-+
-+5. **Address Migration Compatibility** (4 Weeks)
-+
-+   - Ensure that data-driven machine definitions support migration
-+     compatibility. Handle the "sensible defaults" problem by
-+     providing default settings for RAM size, CPU model, etc.
-+
-+6. **Acknowledge and Plan for New Challenges** (Ongoing)
-+
-+   - Recognize and address new challenges arising from the
-+     transition to data-driven machines, such as managing the QOM
-+     object life cycle, handling complex device compositions, and
-+     ensuring performance and stability.
-+
-+### Phase 6: Enhance User Experience for Human Users (Estimated Duration: 2 Months)
-+
-+**Objective**: Provide a user-friendly interface and configuration
-+profiles for human users.
-+
-+1. **Develop Human-Focused Frontend** (4 Weeks)
-+
-+   - Create a frontend that abstracts complexity and provides a
-+     simple CLI for human users. Recognize the divergent needs
-+     between human users and management applications, and offer a
-+     solution that caters to both.
-+
-+2. **Implement Simplified Configuration Profiles** (3 Weeks)
-+
-+   - Offer predefined profiles (e.g., minimal, recommended,
-+     simple) for different use cases. Allow users to easily select
-+     configurations without dealing with low-level details.
-+
-+3. **Documentation and User Guides** (2 Weeks)
-+
-+   - Provide comprehensive documentation to assist users in
-+     transitioning to the new interface. Include examples and
-+     guides for common tasks.
-+
-+4. **Feedback and Iteration** (Ongoing)
-+
-+   - Gather user feedback and iteratively improve the frontend and
-+     profiles. Ensure that the solution meets the needs of the
-+     community.
-+
-+### Total Estimated Duration: Approximately 20 Months
-+
-+**Note**: These time estimates are approximate and may vary based
-+on the size of the development team, complexity of tasks, and
-+unforeseen challenges.
-+
-+## Conclusion
-+
-+By addressing the identified problems through this structured
-+roadmap, QEMU can evolve into a more modular, flexible, and user-
-+friendly platform capable of concurrent multi-architecture
-+emulation. The proposed changes will enable dynamic machine
-+creation, improve code maintainability, and enhance the user
-+experience for both management applications and human users.
-+
-+Implementing this roadmap requires coordinated effort and
-+collaboration among the development community. While new challenges
-+will undoubtedly arise, the long-term benefits of a more adaptable
-+and future-proof QEMU far outweigh the initial complexities.
--- 
-2.45.2
+Paolo
+
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>   hw/core/qdev-properties-system.c | 54 +++++++++++++++++++++-----------
+>   1 file changed, 36 insertions(+), 18 deletions(-)
+> 
+> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+> index 35deef05f3..91d3ff4719 100644
+> --- a/hw/core/qdev-properties-system.c
+> +++ b/hw/core/qdev-properties-system.c
+> @@ -790,39 +790,57 @@ static void set_pci_devfn(Object *obj, Visitor *v, const char *name,
+>                             void *opaque, Error **errp)
+>   {
+>       Property *prop = opaque;
+> +    GenericAlternate *alt;
+>       int32_t value, *ptr = object_field_prop_ptr(obj, prop);
+>       unsigned int slot, fn, n;
+> -    char *str;
+> +    g_autofree char *str = NULL;
+> +
+> +    if (!visit_start_alternate(v, name, &alt, sizeof(*alt), errp)) {
+> +        return;
+> +    }
+> +
+> +    switch (alt->type) {
+> +    case QTYPE_QSTRING:
+> +        if (!visit_type_str(v, name, &str, errp)) {
+> +            goto out;
+> +        }
+>   
+> -    if (!visit_type_str(v, name, &str, NULL)) {
+> +        if (sscanf(str, "%x.%x%n", &slot, &fn, &n) != 2) {
+> +            fn = 0;
+> +            if (sscanf(str, "%x%n", &slot, &n) != 1) {
+> +                goto invalid;
+> +            }
+> +        }
+> +        if (str[n] != '\0' || fn > 7 || slot > 31) {
+> +            goto invalid;
+> +        }
+> +        *ptr = slot << 3 | fn;
+> +        break;
+> +
+> +    case QTYPE_QNUM:
+>           if (!visit_type_int32(v, name, &value, errp)) {
+> -            return;
+> +            goto out;
+>           }
+>           if (value < -1 || value > 255) {
+>               error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
+>                          name ? name : "null", "a value between -1 and 255");
+> -            return;
+> +            goto out;
+>           }
+>           *ptr = value;
+> -        return;
+> -    }
+> +        break;
+>   
+> -    if (sscanf(str, "%x.%x%n", &slot, &fn, &n) != 2) {
+> -        fn = 0;
+> -        if (sscanf(str, "%x%n", &slot, &n) != 1) {
+> -            goto invalid;
+> -        }
+> -    }
+> -    if (str[n] != '\0' || fn > 7 || slot > 31) {
+> -        goto invalid;
+> +    default:
+> +        error_setg(errp, "Invalid parameter type for '%s', expected int or str",
+> +                   name ? name : "null");
+> +        goto out;
+>       }
+> -    *ptr = slot << 3 | fn;
+> -    g_free(str);
+> -    return;
+> +
+> +    goto out;
+>   
+>   invalid:
+>       error_set_from_qdev_prop_error(errp, EINVAL, obj, name, str);
+> -    g_free(str);
+> +out:
+> +    visit_end_alternate(v, (void **) &alt);
+>   }
+>   
+>   static int print_pci_devfn(Object *obj, Property *prop, char *dest,
 
 
