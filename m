@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FE0D6C2A1
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 21:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75AFED6C2AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 21:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDW0u-0003E0-7Z; Tue, 19 Nov 2024 16:44:00 -0500
+	id 1tDW5m-0004Ln-5V; Tue, 19 Nov 2024 16:49:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDW0s-0003Dq-23
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 16:43:58 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDW5k-0004Ld-Co
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 16:49:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDW0q-00077b-KL
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 16:43:57 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDW5i-0008AU-Nw
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 16:49:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732052634;
+ s=mimecast20190719; t=1732052936;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uVezol9pwCcqfuuYstYfOML9hc0oQOxR4eJ3RTFXvw4=;
- b=APPOVMS6QBo96iuxcCjBGlJMb/V4TW1xrtRoFfcCywYeeG6HsfFPnXblwWu1md0v4B/hK2
- 6ckm92Q6LxYeOflwFFtZ9/t7UfZAOpmvHrZi8E/yPVS3zWRwTeGh/i3dGZxFETJRX709iH
- Iereu//jWg+hg3WYRRS0rF30kuFrg0I=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Bbr7liDdvwU5HJ4Sl9bpASRIgTMTC4BozFoNgT5Arlo=;
+ b=ik3GFOcZqndBRO7vxMck/wb9pn2KBTU2Tfb2vJRM9YNbkY/CN0tAh1aPggw0iff7sWJC6f
+ 8GObqpyyD0rBYRmRysHPmsH3PQ1tQ2i44/HZYK0oatsfZYklaiDVZ4AOwk/LsjmitEp3ea
+ yvlJRzpusOxODBQ9DpED5yhGKznGZlw=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-691-yCWL9nSUMzGTzCmBTxgLhg-1; Tue, 19 Nov 2024 16:43:53 -0500
-X-MC-Unique: yCWL9nSUMzGTzCmBTxgLhg-1
-X-Mimecast-MFC-AGG-ID: yCWL9nSUMzGTzCmBTxgLhg
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-460ca856886so19879471cf.1
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 13:43:53 -0800 (PST)
+ us-mta-25-HBCYWG2ANvigt63bliNQNA-1; Tue, 19 Nov 2024 16:48:53 -0500
+X-MC-Unique: HBCYWG2ANvigt63bliNQNA-1
+X-Mimecast-MFC-AGG-ID: HBCYWG2ANvigt63bliNQNA
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7b35b1e7ecaso41764285a.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 13:48:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732052632; x=1732657432;
+ d=1e100.net; s=20230601; t=1732052933; x=1732657733;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uVezol9pwCcqfuuYstYfOML9hc0oQOxR4eJ3RTFXvw4=;
- b=tjp2g9F2ESoIoG0qNp8zfU3jTPqiJeyzplZL5BMN9aFV0VRE9rcFP6hHNcwKXHlpFT
- N02xbON0xCAXc61OyAaBCW3G4zlm4IRoPperEv/FfVdA6hWfTatRSbZR/5x2YsfKoIkz
- RRAVlilj7NS56OLV03S9tyrTpvu17QyXjYxCfHdAoxIlm1T6zF6bLaIz9QBH0bWZhTNZ
- cNTDWCNt2CaQKuV3XhyNIynsh4KS0bqdbT5bzCKjkiEokjIKFp5Fg7xxgsOqfP1NF8Nl
- oGNaYFPXNCBigFTvkZ1dWstPmx9Rf3Yu4eIqPWW/IeMCOki4mzZY3oCTZRSrnooNvYTl
- 5ttw==
-X-Gm-Message-State: AOJu0YxYKizDDNaT8Y8NFwQxaH9oPLnY1o4B/pWLLpsu/pjSpOnvvPFi
- xImWFSjZDidJZsfBcmVsEE3+6qmMFPOWg34fHd3WloyzDSb6EolT4XdIAUuXdWN6pMnfS3vK6gz
- 6u5aB3+SNJkh8WYFSQj+7V7hPY0kt/nMQ/igCLHY7l/sxo3eozJqOOxIG590K
-X-Received: by 2002:a05:622a:261a:b0:461:22f0:4f83 with SMTP id
- d75a77b69052e-4647965f936mr3158151cf.43.1732052632677; 
- Tue, 19 Nov 2024 13:43:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGv5puoS0pogw0rg/ChymdU4T1wdqmbpHuPBEojJ5h8FKR2B27u7frMGHW7jHFzK5l4YR5Nhg==
-X-Received: by 2002:a05:622a:261a:b0:461:22f0:4f83 with SMTP id
- d75a77b69052e-4647965f936mr3157941cf.43.1732052632374; 
- Tue, 19 Nov 2024 13:43:52 -0800 (PST)
+ bh=Bbr7liDdvwU5HJ4Sl9bpASRIgTMTC4BozFoNgT5Arlo=;
+ b=OVUxzK8DdmczjUb5Z5pIvMIQf1mdNOlZJfM9akb1PzM5MlLDRvx4DuQ0UDfHOtporV
+ JLFh8TCtgbUwv43NCy0yb7PvbCRumJmvgMKIgPvBWWt6ms9aLCpO9ScAcHQzCimJNiJs
+ wIOSdWOyhKRffj3rYsqSYf2lOO61OSMm7s/GGZ6W+M7hNNJz1XKsGIatxuKNTQZgmZBF
+ /evZxvlPrhv0pwow7vFKJ3Sq59iz8roflTXTJaPKUGWWqqMps934njFbanCGeiAyNZTK
+ ptc+oNCGV6g9VPlAzM/JizHFtVxqlNGNvsWH6cDTqq+BKjx2fasWu26oDBE4unGlZDQ7
+ wkRQ==
+X-Gm-Message-State: AOJu0Yx0WFeRMD+ciuP4JN00MxSiqg/y/tclsy1WNWg+a/c0QPQS2Exp
+ 8kk1cPmsLnCdbqZj0lquLAoawXA6MmBtNPPwe/p6Qn0V/pb2Uf2U+D8+8zAGJ7TFeu34fBGJyDO
+ ucCJlSRKfA9vTgqtgDqr1gaUxb3qVjwznMY1fqWv0wv4U8AF6Q7PK
+X-Received: by 2002:a05:620a:400d:b0:7b1:3ff2:697a with SMTP id
+ af79cd13be357-7b41e415e55mr121685285a.17.1732052932706; 
+ Tue, 19 Nov 2024 13:48:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGwgKYQFadXjwqGRFrcwdkLzcs9XY7ZxpLMZcnOPFb49UpuWjdPL+BzFYT4+8ZKsCzeOzSEng==
+X-Received: by 2002:a05:620a:400d:b0:7b1:3ff2:697a with SMTP id
+ af79cd13be357-7b41e415e55mr121682385a.17.1732052932397; 
+ Tue, 19 Nov 2024 13:48:52 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4646a63f979sm992751cf.67.2024.11.19.13.43.50
+ af79cd13be357-7b485251000sm6466485a.126.2024.11.19.13.48.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 13:43:51 -0800 (PST)
-Date: Tue, 19 Nov 2024 16:43:48 -0500
+ Tue, 19 Nov 2024 13:48:51 -0800 (PST)
+Date: Tue, 19 Nov 2024 16:48:49 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 5/5] qom: Make container_get() strict to always walk or
- return container
-Message-ID: <Zz0GlJAYOzWrrOcC@x1n>
-References: <20241118221330.3480246-1-peterx@redhat.com>
- <20241118221330.3480246-6-peterx@redhat.com> <ZzvIZ4EL92hEk4wC@x1n>
- <CABgObfamYxtgX7SubOd8OvA5w70xQ5uesJ1TuPoTK9onVO+58w@mail.gmail.com>
- <Zzzv32xlLAH4O5Ig@x1n>
- <CABgObfaKrOvfhK5KfoxOOXOyZXeEz33VkvDeE=5wwtq3Ep=QdQ@mail.gmail.com>
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V3 11/16] migration: cpr-transfer mode
+Message-ID: <Zz0HwfIDucF7yssl@x1n>
+References: <ZzUg9w0Kvfuleuxk@x1n>
+ <51967cb2-05ec-485b-a639-8ff58d565604@oracle.com>
+ <ZzZJvTldpe3D4EO5@x1n>
+ <c53feba3-d448-4494-8dbf-0725a2dd8dba@oracle.com>
+ <ZzzyOJT_mDh37_Py@x1n>
+ <c56ffc81-b065-4dd0-ab06-eb79912dcaf7@oracle.com>
+ <Zzz6NVoJss4JdEHh@x1n>
+ <8c56ac9c-c86a-48c1-9172-8f014220c37d@oracle.com>
+ <Zz0DJ3RB-bVofkmo@x1n>
+ <5860c0d6-98d2-4f52-8a0a-e161a6205ba7@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABgObfaKrOvfhK5KfoxOOXOyZXeEz33VkvDeE=5wwtq3Ep=QdQ@mail.gmail.com>
+In-Reply-To: <5860c0d6-98d2-4f52-8a0a-e161a6205ba7@oracle.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -112,44 +115,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 19, 2024 at 09:30:09PM +0100, Paolo Bonzini wrote:
-> >
-> > Do we have known places that we care a lot on object[_class]_dynamic_cast()
-> > performance?
+On Tue, Nov 19, 2024 at 04:41:07PM -0500, Steven Sistare wrote:
+> On 11/19/2024 4:29 PM, Peter Xu wrote:
+> > On Tue, Nov 19, 2024 at 04:03:08PM -0500, Steven Sistare wrote:
+> > > On 11/19/2024 3:51 PM, Peter Xu wrote:
+> > > > On Tue, Nov 19, 2024 at 03:32:55PM -0500, Steven Sistare wrote:
+> > > > > This begs the question, should we allow channels to be specified in hmp migrate
+> > > > > commands and for -incoming, in a very simple way?  Like with a prefix naming
+> > > > > the channel.  And eliminate the -cpr-uri argument. Examples:
+> > > > > 
+> > > > > (qemu) migrate -d main:tcp:0:44444,cpr:unix:cpr.sock
+> > > > > 
+> > > > > qemu -incoming main:tcp:0:44444,cpr:unix:cpr.sock
+> > > > > qemu -incoming main:defer,cpr:unix:cpr.sock
+> > > > 
+> > > > IMHO keeping the old syntax working would still be nice to not break
+> > > > scripts.
+> > > 
+> > > The channel tag would be optional, so backwards compatible.  Its unambiguous
+> > > as long as the channel names are not also protocol names.
+> > 
+> > Ah that's ok then.  Or maybe use "="?
+> > 
+> >    "main=XXX,cpr=XXX"
+> > 
+> > Then if no "=" it's the old?
 > 
-> The easiest way to check is probably to print the type of every successful
-> object_dynamic_cast and object_class_dynamic_cast. I suspect the result
-> will be virtio-blk-device and/or scsi-hd, but maybe those already do an
-> unsafe cast (pointer type cast) instead of object_dynamic_cast.
-
-Yes, it sounds more reasonable to me to optimize specific call sites so far
-rather than provides something generic..  Though it could still be a
-generic API so that devices can opt-in.  Maybe still not as fast as an
-unsafe cast, though.. I think I'll leave that to block experts when it may
-needs some good measurements.
-
+> Sure, that works.
 > 
-> I can give it some measurement if there is, otherwise I'm
-> > guessing whatever changes could fall into the noise.
+> > > > I was thinking we could simply add one more parameter for taking
+> > > > cpr uri, like:
+> > > > 
+> > > >       {
+> > > >           .name       = "migrate",
+> > > >           .args_type  = "detach:-d,resume:-r,uri:s,cpr:s?",
+> > > >           .params     = "[-d] [-r] uri [cpr_uri]",
+> > > >           .help       = "migrate to URI (using -d to not wait for completion)"
+> > > > 		      "\n\t\t\t -r to resume a paused postcopy migration",
+> > > > 		      "\n\t\t\t Setup cpr_uri to migrate with cpr-transfer",
+> > > >           .cmd        = hmp_migrate,
+> > > >       },
+> > > 
+> > > That's fine.
+> > > 
+> > > I do like the incoming syntax, though, instead of -cpr-uri.  What do you think?
+> > 
+> > That'll definitely be lovely if possible, though would any monitor be alive
+> > at all before taking a cpr stream, with this series alone?  I thought you
+> > dropped the precreate, then QEMU isn't able to run the monitor loop until
+> > cpr-uri is loaded.
 > 
+> No monitor or precreate changes.  I would parse -incoming, extract and use the cpr
+> channel early, and use the main channel later as usual.  It's just a different way of
+> specifying cpr-uri.  I like it because the specification language is more consistent,
+> referring to a "cpr channel" both on the outgoing and incoming side:
 > 
-> Yes, probably. At most you can identify if there any heavy places out of
-> the 34000 calls, and see if they can use an unsafe cast.
+>   This mode requires a second migration channel named "cpr", included in
+>   the channel arguments of the migrate command on the outgoing side, and
+>   in the QEMU -incoming parameter on the incoming side.  The channel must
+>   be a type, such as unix socket, that supports SCM_RIGHTS.
 
-I can still trivially do this.
-
-I traced qemu using bpf and interestingly in my case close to half (over
-10000+) of the calls are about ahci_irq_lower() from different higher level
-stack (yeah I used IDE in my setup.. with a split irqchi..), where it has:
-
-    PCIDevice *pci_dev = (PCIDevice *) object_dynamic_cast(OBJECT(dev_state),
-                                                           TYPE_PCI_DEVICE);
-
-So IIUC that can be open to a unsafe cast too, but considering IDE is ODD
-FIXES stage, I'm not sure if I should send a patch at all.  However I
-copied John regardless.
-
-Thanks,
+Ah, that's ok at least to me.  I hope defer could still work (for Libvirt),
+though.  Probably something like main=defer,cpr=XXX.
 
 -- 
 Peter Xu
