@@ -4,75 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE7DD6206A
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CFED62072
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDLUc-0002ui-Jh; Tue, 19 Nov 2024 05:29:58 -0500
+	id 1tDLa1-0003yv-1H; Tue, 19 Nov 2024 05:35:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLUV-0002tD-VM
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:29:53 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1tDLZy-0003yI-Vh
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:35:31 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLUU-0002Mj-4w
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:29:51 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5cef772621eso6738714a12.3
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:29:49 -0800 (PST)
+ id 1tDLZx-0003Ej-4U
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:35:30 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5cfa9979cd1so5310420a12.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:35:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732012188; x=1732616988; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732012527; x=1732617327; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=31S/gPBx567OTdkVGKSNuBJlJHg1VUWDKIvZRCSBvUE=;
- b=nIRKKUQSex8AV5fxBMl+ixAwzQEKcVaxE6x2cw/i3dk6RfLSk8sjdNNiz8oLIaPx/S
- jbOIEfNPkUSW7qOXkplr0arB0XULZgCIf+BEH4y6QSI7Yri2Ct0UUny6GfxYv7+pYOx/
- lC7OXyWq+4tqwAQZARiUK142EYNIxtQ/Wr0aUcoCL5HdWW/cJ8v+T6pTxRw7D+Hd55GR
- PWHHv8mci3+d3CsRmcGQki1/hJqLvYUt4FMaaKZRjOR1IUQSr3WIGHXNpIz6tNrFdmjx
- 3ggG93unneUOqpkYQbDDIMCQ+6jP3vuOY+J2GLwNe4RRZiFr3LhdgkanrtH+T+AsgQxE
- p5iQ==
+ bh=H5SvD9grBLI3ASmPzyX6YG/cg8wlR0s7tnPel2kT7V4=;
+ b=mHTx6AdfcGCzp8Tgm30/cDGU0UqV2mBGETw3unPxT8jcKgk0gKk0RaiXSY+VHG/Ah1
+ KKIqcV0+kPMh6Od0D3Zw1zwgRh6YCa/wYFa14IbDZaMMcaUrjrfXS1z5q9xf9ayDonkO
+ nILeEN4JWx4vjPRwBbZ8IHRLLoGXw2wQAGOsuSYoBxEtMT4zMXyK+gT5SP1Pirusrv3F
+ 0RXPgx6MZMD3bR11xA9eU9IB+sARLlTCMEXjjaLayoZKY3YKPvyO0Mr80CAyjoLIB4Y8
+ 2nVZBLzkOoDb05/NNB0alKUVB1zPf6UpTpH12xT2qfP54hnDVu32VMSARBSXDy3vAt0X
+ jukA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732012188; x=1732616988;
+ d=1e100.net; s=20230601; t=1732012527; x=1732617327;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=31S/gPBx567OTdkVGKSNuBJlJHg1VUWDKIvZRCSBvUE=;
- b=XrkVnOsyjsRjBRoI2cvOfwQyYUSzEf2JBfg1tjmiSFMzZ6xzHq00LrQaACnI/5SBG0
- r2Dt8vZWGx+nB9TSGffwuXDlJEQ/U/sA2BXN3owWaXT0SD/JFwzGdZZhRJBrJjHcUpbD
- BwM1JY1ItpjjrRk6q1gnes81syoL6VUoCba61j1aD04RuC/a98/6w22R/yidVLDiDLuC
- 7GtLnta9mILf98WhpFIiHoe2jT6X/og2+ow+JHgqa81INztbq14GC1Rzy+K9V5GUEwyT
- t4ElhqzSD8bWF8nc32CUqM2LWYmy/7MqOsDMt71FyfjYKddVeD3083Q900dzR//ZNBqk
- IasA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9LT9WzvJSr2ivcpEO4WBwLbFSb8Yl/RKuupeDeDLmColjG5VeWlb2opA8am3f+PtISLe89qRdc5B5@nongnu.org
-X-Gm-Message-State: AOJu0YyZLCtcjl179tOvL3kbj2MBYc03u2ffYDSJo7UGF2a4VZGuZtQW
- 2iUiJWFKmZhe+L19D6H5JECDWiMtKFs8A5cNgUtOlbN0RQFjgWzXr0ZQG/HngZM0T97JcK7n0Ld
- UXHdVZ+49Mm3hJYdINUAYmYNknw8fDrMAYap0e1di5MvvSnNy
-X-Google-Smtp-Source: AGHT+IE3cd65j30foB32REYXvQozf/FvgH1lcQ1k1kLG8OesyYWp3zHd0mLUTN6ja1EV/rdPfqHUHa/Ulh3TEnHC7uU=
-X-Received: by 2002:a05:6402:40d2:b0:5cf:ddc5:b6e with SMTP id
- 4fb4d7f45d1cf-5cfddc50e50mr2095705a12.1.1732012187768; Tue, 19 Nov 2024
- 02:29:47 -0800 (PST)
+ bh=H5SvD9grBLI3ASmPzyX6YG/cg8wlR0s7tnPel2kT7V4=;
+ b=hW8B2Rygg2YiM7vlwrpRXxfdi1vbyA+Fl2xsNTmJMiqfOR/6JoGlRMgxzIEN1YgXQc
+ 2SOJUfqFUy87ZRhmYsHwEzPGuHiaFqJz5JZpU6CiDF1hC+eyKsdtIUX3L3iB0A25G6TO
+ 6B0aKXA1VsTZnBiYC8sd5pia2vr5v06mBz7cxoDp4lbg68cwpOLKoBPOZuFhuOzCSqVH
+ rnw83j/Hn8k4XQAA01DNCyuU68UQFWxXgQ1XaLHlIyHjwDkeaOVGtJRqtJbCVRK1yut3
+ 6RVCX3UlhAAuYhzd106p9brnCRjsOhmsNALnhjzAnWslBdC70MWM/DqP9KEq0EHYTfMK
+ 3WGA==
+X-Gm-Message-State: AOJu0Yzgjyu41YH5D1W/18nQs+NS8qYZ8wXm4ClbfMgcMDk8SQIRW5tO
+ 6LW1CqZvU2jkIZSelYHtDpHqUhzd9pYULNcXJ+mDUMrabjrE/Q3UT6KKiUl3SJKkGcXf9xgV5U0
+ 8u9gLKxrHH0/duG5Nnc14WDYL8oeiMpObDXW7kLEtE/K1O/8D
+X-Google-Smtp-Source: AGHT+IGlzF3z9cEpSKtMW68IdBv1lEBhbFARQFkFNHygRkITGely0vi5KXomp0I/9/T9IHXvP87udJcLaYMzNvNKDmM=
+X-Received: by 2002:a05:6402:50d3:b0:5cf:bece:5037 with SMTP id
+ 4fb4d7f45d1cf-5cfde5cbb20mr2636317a12.4.1732012526731; Tue, 19 Nov 2024
+ 02:35:26 -0800 (PST)
 MIME-Version: 1.0
-References: <20241118021820.4928-1-joel@jms.id.au>
- <CAFEAcA9tPhbjnJ6XjMcZq6iWS4i1BdrTB+=391L5UgaVSMkCLQ@mail.gmail.com>
- <CACPK8XeFP+fmws+tcG-qgz1WXyKAtMicpfcgDG-pd_jp8PLXwQ@mail.gmail.com>
-In-Reply-To: <CACPK8XeFP+fmws+tcG-qgz1WXyKAtMicpfcgDG-pd_jp8PLXwQ@mail.gmail.com>
+References: <20241118173634.473532-1-thuth@redhat.com>
+In-Reply-To: <20241118173634.473532-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Nov 2024 10:29:36 +0000
-Message-ID: <CAFEAcA_+YvS7zTuosAxK8zMgBTD01SRheAat7WbHsfLHCCFGcA@mail.gmail.com>
-Subject: Re: [PATCH] hw/aspeed: Correct minimum access size for all models
-To: Joel Stanley <joel@jms.id.au>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- BMC-SW@aspeedtech.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Tue, 19 Nov 2024 10:35:15 +0000
+Message-ID: <CAFEAcA96c4sxoerS4yzgPr_Eb99qN_F=zCSB9N6eFMZNJznCLA@mail.gmail.com>
+Subject: Re: [PULL 00/12] s390x and misc patches for QEMU 9.2-rc1
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,71 +87,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 Nov 2024 at 02:53, Joel Stanley <joel@jms.id.au> wrote:
+On Mon, 18 Nov 2024 at 17:36, Thomas Huth <thuth@redhat.com> wrote:
 >
-> On Mon, 18 Nov 2024 at 20:40, Peter Maydell <peter.maydell@linaro.org> wrote:
-> > Have you reviewed all the device read/write function
-> > implementations for these devices to check whether
-> > (a) changing the .valid value does the right thing, or
+>  Hi Peter!
 >
-> I read the implementation of the read/write memory ops and I believe
-> it does the right thing. We want devices to accept reads that are of
-> any size, instead of returning an error.
+> The following changes since commit abb1565d3d863cf210f18f70c4a42b0f39b8ccdb:
 >
-> > (b) whether there are cases where we should instead
-> > be updating the implementation and setting the .impl
-> > min access size ?
+>   Merge tag 'pull-tcg-20241116' of https://gitlab.com/rth7680/qemu into staging (2024-11-16 18:16:46 +0000)
 >
-> Reading the documentation for impl vs valid, we definitely want to set
-> valid to 1. There should be no machine check when performing byte
-> reads.
+> are available in the Git repository at:
 >
-> I don't think we want to change .impl.min from the default of 1.
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-11-18
 >
-> I'm not sure if I've missed something that you're trying to point out.
-> Are there gotchas about setting valid.min=1 that I should know about?
+> for you to fetch changes up to 4483d98ab82671165276026b09287053328c94d4:
+>
+>   .gitlab-ci.d: Raise timeout on cross-accel build jobs to 60m (2024-11-18 17:14:35 +0100)
+>
+> ----------------------------------------------------------------
+> * Fixes & doc updates for the new "boot order" s390x bios feature
+> * Provide a "loadparm" property for scsi-hd & scsi-cd devices on s390x
+>   (required for the "boot order" feature)
+> * Fix the floating-point multiply-and-add NaN rules on s390x
+> * Raise timeout on cross-accel build jobs to 60m
 
-The "gotcha" is that the memory system's implementation of the
-size 1 and 2 reads when .impl.min is 4 and .valid.min is 1
-(as for instance with aspeed_apb2opb_ops after this patch)
-is "read 4 bytes, return the relevant portion"
-and the implementation of size 1 and 2 writes is "pad the
-small value with zeroes at either end appropriately so it is
-4 bytes and write that". That is often the right thing for
-the required behaviour of the device registers, but it is
-also quite common that it is the wrong behaviour. For instance
-for some devices the write of a byte is supposed to only modify
-that byte, and leave the other bytes of a 4-byte register alone.
-Or if the device has bit-clears-on-read behaviour for a register
-then the default handling will incorrectly do that for bits
-that the guest didn't actually read.
 
-Conversely if the device leaves the .impl.min at its default 1
-and moves .valid.min from 4 to 1 (as with eg ftgmac100_ops)
-the device will now be called for byte reads and writes at any
-address in its range. If a write to, say, byte 3 of a 32-bit
-register is supposed to update bits [31:24], that won't happen
-unless the write function is changed (usually if there's a switch
-on offset the write to something that's not at a multiple-of-4
-will end up in the default "log an error" code path).
+Applied, thanks.
 
-What this adds up to is that it's a bit misleading to have
-a single patch which changes the minimum access size for lots
-of devices at once, because for each device you need to look
-at QEMU's implementation of the read and write functions
-together with the spec of the device, and confirm that the
-right way to implement "byte writes are supported" for this
-particular device is to change .valid.min, and that you don't
-also need to make changes to the read or write function code
-at the same time or adjust .impl.min. Putting them all in one
-patch with no discussion in the commit message of the device
-behaviour and implementation was just a bit of a yellow flag
-to me that maybe this complexity wasn't considered.
-
-If we get this wrong for one of these devices, it's also likely
-to be rather easier to bisect the problem if bisection
-can track it down to "we made this change to aspeed_timer"
-rather than "we made this change to a dozen devices all at once".
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
 -- PMM
 
