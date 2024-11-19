@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07076D44163
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F2C6D44162
 	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:25:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDP8c-0005tO-O4; Tue, 19 Nov 2024 09:23:30 -0500
+	id 1tDP8b-0005q6-6n; Tue, 19 Nov 2024 09:23:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8Z-0005pT-L0
+ id 1tDP8Z-0005pK-FK
  for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:27 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8X-0006CV-Ur
+ id 1tDP8X-0006CB-9T
  for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:27 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4314fa33a35so46381325e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:25 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43167ff0f91so39259445e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732026204; x=1732631004; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732026203; x=1732631003; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iAX2ZgBrM6JHivHnb791/gNLlFdNQx34cY3TYAYpz00=;
- b=ODM2t56t8W5rAD2qnandcjmRU3Y+KJWKIzKziXruDWnja3zgmysdl3XObYPA1AMAG3
- ZIZ6WiYHnZcSjw0Q+wUmlJBdYLexQXCe0wlCNBN7bT+iynkKtlHqOMA6tGxaPqf2GPLh
- f6eYJ7O71qkujzBNogbiqOLORrSqy5P5/GGosioWlPbk9ZrUxpnAFPx8xmrtjNRSspRj
- 1ZwJKNsx04X8hgWLkAcABXbhsaxiZX61kAkzc2LKVnPr43alKXxjSrMvFUoYSiXX+si0
- 4NNOjgm3YdJDqX442ou0TQOk9EfE8CLmzBNQMuBnWPD21C1pgBOVYXwk37xxUzpGlgxT
- 4lbQ==
+ :reply-to; bh=Uf4u1FQII+EcRWfJ9x1uUFpYR7e3NkroR87Xx7eXM1M=;
+ b=amB41AV/u2T3TP4oyevnnMvuWWdsKBJLndE01rvlDvpciPLw/vEwMeXG1QHXYEGbtC
+ FvW7Eufw1xTkTz7xeh2/34YWWJbU+j+nRfeiLC40x/DrZM1c4Qk3e3vHZj5v6HBxXjlt
+ qZF/PTDQvWD5dabnshNFLRNssjCuFeN5ekCTUYDsDINDFt1hywjhIOXvsu4yGXRsXyHU
+ sXeKgMKhS/YGkcX8noVl/WgRKGmE8tXQyHZKMedamvRVZRUpM9Go95znuNqBqwXhqkj6
+ YHUyVgmx4dMdtTDcGKW4aun+519N2x8fcIaQBT7N9RSyzAvy5TsJe2q7ny6End1uHZUD
+ CqAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732026204; x=1732631004;
+ d=1e100.net; s=20230601; t=1732026203; x=1732631003;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iAX2ZgBrM6JHivHnb791/gNLlFdNQx34cY3TYAYpz00=;
- b=HDkwTzPgGMgiaz6GiXZdAM8xKAY1j6VMdTTHSPy8dpwSp65zZEPNt41LCJRMiZ3kOK
- /LM1/FPLnwPpZmmboJScfGKtldmPBtGbjEUaxz7vn1Fn40UlJp8mojnd+VMCWk26ex/V
- azTnDTvXQ+uIHr1pYW6bNJI+4KI5ZMnFp++VHII7RkYqmhx8X06zqdEX/DeWX5/tkMzu
- FdnaSeh0mZJtyvN7nrBeXVHZpstKMZ5jRwHqJnn2qnbGsQC6cL/6xsjs4CQrtgM9FMpJ
- QMeBdpQBlvqK37LZ8sIJP4LbFt1z2u7pxWmGrVuTavnCZlHwQR2oRoKfujCv7dDGeueH
- Ak1g==
-X-Gm-Message-State: AOJu0Yy/5sdk3WzvxcU971NdtFycqXLlLN+TeZoZr7vCLMHR9iH5ib/D
- ULAjQ1N7CajXMEhgc/Utpyo2CspGYu9hJIeL+KiJLaz1nKhMmiiK7OeC6StBxSh4drvwZelVAGM
- O
-X-Google-Smtp-Source: AGHT+IG39YeLMAUDJLekD6viGZHHOScJrG02lOOpx9WX2fDbjYV3RX5idPOYlwnO0kGJWC0THbtAog==
-X-Received: by 2002:a05:600c:1d92:b0:431:2b66:44f7 with SMTP id
- 5b1f17b1804b1-432df798fbcmr144701975e9.31.1732026204395; 
- Tue, 19 Nov 2024 06:23:24 -0800 (PST)
+ bh=Uf4u1FQII+EcRWfJ9x1uUFpYR7e3NkroR87Xx7eXM1M=;
+ b=bRNtluvcHV5DB7pJMlkn7CTgynJjy0KWezsMaHJ5bM5WElrDYfio2INuBTOAKuK2ZU
+ QaaPCNlOWiPC+1sCylzOSeXH3zM6dR75MQIGt6AZtd+vqF5pIefZaEVhirJcxlwTvhm9
+ 4Lp9JA48PcQgTmLYknBTbczLodmcy+XoV6s9qSd6/eKqnmd9RZQJEjqLWnYobNgCTmOI
+ oMydEF8mkc7ZFVR0EwJGOz4p5DKEevv693DxsZFHZSQMm4GlT5+ZXqoF6gqhCLADcgmC
+ 75cdO7Sod0NIXEKFGJqmkQorSLZQ/+rg1dkncx7XXcBYdMW/zyZpqb5FoAXEUiqRK+fR
+ yjJQ==
+X-Gm-Message-State: AOJu0YwFUqHG5RqAHPq1RLQnST0glA1oPnoeSjiBPpVm685a6rQcYiaH
+ HsBc5gx4MdMDNq/m35LNsQfsWK2p0niUclUvxzUTeFMudr8p5groS1AU5V9ZFB49GHBiRoQVSMO
+ M
+X-Google-Smtp-Source: AGHT+IEiW2dYC8JTrIAAGIkBUY6xCyqcj3IIIDaT6lWA0Ne3nUmin7D09uHAJ4uFtSYk5wtGacPvpw==
+X-Received: by 2002:a5d:59a6:0:b0:382:503f:a323 with SMTP id
+ ffacd0b85a97d-382503fa505mr1478473f8f.19.1732026203335; 
+ Tue, 19 Nov 2024 06:23:23 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.24
+ 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 06:23:24 -0800 (PST)
+ Tue, 19 Nov 2024 06:23:23 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/15] hw/intc/openpic: Avoid taking address of out-of-bounds
- array index
-Date: Tue, 19 Nov 2024 14:23:09 +0000
-Message-Id: <20241119142321.1853732-4-peter.maydell@linaro.org>
+Subject: [PULL 01/15] hw/timer/exynos4210_mct: fix possible int overflow
+Date: Tue, 19 Nov 2024 14:23:07 +0000
+Message-Id: <20241119142321.1853732-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241119142321.1853732-1-peter.maydell@linaro.org>
 References: <20241119142321.1853732-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,58 +93,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The clang sanitizer complains about the code in the EOI handling
-of openpic_cpu_write_internal():
+From: Dmitry Frolov <frolov@swemel.ru>
 
-UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1 ./build/clang/qemu-system-ppc -M mac99,graphics=off -display none -kernel day15/invaders.elf
-../../hw/intc/openpic.c:1034:16: runtime error: index -1 out of bounds for type 'IRQSource[264]' (aka 'struct IRQSource[264]')
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/intc/openpic.c:1034:16 in
+The product "icnto * s->tcntb" may overflow uint32_t.
 
-This is because we do
-  src = &opp->src[n_IRQ];
-when n_IRQ may be -1.  This is in practice harmless because if n_IRQ
-is -1 then we don't do anything with the src pointer, but it is
-undefined behaviour. (This has been present since this device
-was first added to QEMU.)
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Rearrange the code so we only do the array index when n_IRQ is not -1.
-
-Cc: qemu-stable@nongnu.org
-Fixes: e9df014c0b ("Implement embedded IRQ controller for PowerPC 6xx/740 & 75")
+Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+Message-id: 20241106083801.219578-2-frolov@swemel.ru
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-id: 20241105180205.3074071-1-peter.maydell@linaro.org
 ---
- hw/intc/openpic.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ hw/timer/exynos4210_mct.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
-index cd3d87768e0..2ead4b9ba00 100644
---- a/hw/intc/openpic.c
-+++ b/hw/intc/openpic.c
-@@ -1031,13 +1031,14 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
-         s_IRQ = IRQ_get_next(opp, &dst->servicing);
-         /* Check queued interrupts. */
-         n_IRQ = IRQ_get_next(opp, &dst->raised);
--        src = &opp->src[n_IRQ];
--        if (n_IRQ != -1 &&
--            (s_IRQ == -1 ||
--             IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
--            DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
--                    idx, n_IRQ);
--            qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
-+        if (n_IRQ != -1) {
-+            src = &opp->src[n_IRQ];
-+            if (s_IRQ == -1 ||
-+                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
-+                DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
-+                        idx, n_IRQ);
-+                qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
-+            }
+diff --git a/hw/timer/exynos4210_mct.c b/hw/timer/exynos4210_mct.c
+index e807fe2de90..5c6e139b202 100644
+--- a/hw/timer/exynos4210_mct.c
++++ b/hw/timer/exynos4210_mct.c
+@@ -815,7 +815,7 @@ static uint32_t exynos4210_ltick_cnt_get_cnto(struct tick_timer *s)
+         /* Both are counting */
+         icnto = remain / s->tcntb;
+         if (icnto) {
+-            tcnto = remain % (icnto * s->tcntb);
++            tcnto = remain % ((uint64_t)icnto * s->tcntb);
+         } else {
+             tcnto = remain % s->tcntb;
          }
-         break;
-     default:
 -- 
 2.34.1
 
