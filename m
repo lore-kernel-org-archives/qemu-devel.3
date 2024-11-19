@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7807FD60D0A
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 01:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E47D60D0B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 02:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDDEf-00023b-7E; Mon, 18 Nov 2024 20:41:00 -0500
+	id 1tDDfP-0004h2-61; Mon, 18 Nov 2024 21:08:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDDEZ-00023C-Gf; Mon, 18 Nov 2024 20:40:52 -0500
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tDDfN-0004gL-IS; Mon, 18 Nov 2024 21:08:33 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDDEX-0005y5-FY; Mon, 18 Nov 2024 20:40:51 -0500
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-5101c527611so1027105e0c.3; 
- Mon, 18 Nov 2024 17:40:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tDDfK-0000uk-F8; Mon, 18 Nov 2024 21:08:33 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7242f559a9fso426734b3a.1; 
+ Mon, 18 Nov 2024 18:08:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731980447; x=1732585247; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1731982108; x=1732586908; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IQJQmnMjPYZa8E6bHKXXdof5RhZURvhEX9YsP/Elh7A=;
- b=a81CF2yEbpS/LLNQQ849bT5oTeY7e1QraZBqRdaqiyWCCPufH4v28vELcjUciqlhyi
- QgU6y9RkDyHO/be0M/+v63ION6YhvtV5s2wbNyKYSD36Km9bE+VTL3R6WMqyeQ+naT/K
- 3xU/F5xQUEf1lkH+0blB3fqVsgZHhlE4bY0DAXCd5Hqk7GfUxDKecfzAUnOzaxWiwnI6
- 2NYpAipeKImezofnWzrR8ObI7uq0h0nEhFFH/oViTmSjxWDZBd5qh9xqZcovfU2RMGPw
- co3rSdEISDK2nNm1dQI6J5JEcn7ZJIABEonDaH+xJRuUc2rP3bA4y3NL28Hfunedgq0y
- KC5A==
+ bh=h5s8AQVT15HW+qaQl3DYYSVQl/jyAzKMzRvCE6cCvAY=;
+ b=QFvzkEZQZ1vncAnEYmotqu8HFCkfFBc0FqpMK9I/t2ixkK8dcUCgiodT7f8IH6lYF5
+ 4pMEM4HVmOCBlqiioDk+BhcmUffZE0TsjJV4ZgSn9U9Jdqk3t1crjIT4kQ4X2JluVzPH
+ DXNroHkrWfMRThxKy1o7Pss/ByoeyMg4OM6uN4L+VlIu/KXMQ/a9HFuk8cZMk6Bbp4GK
+ RfuB5CdUJWrQEvG3wk/5BTZ/BPUJ7q+D9AD65giy6j3d3seeYYhr0BPYcqAmFdKmIvze
+ pLzgQF8Oy38iXoXB6iF+dqY93liySpVJzdeZUD6JUH/akxH76MOMkTRAH8y03GCoSsaM
+ Dhcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731980447; x=1732585247;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IQJQmnMjPYZa8E6bHKXXdof5RhZURvhEX9YsP/Elh7A=;
- b=vxLyZ3tL1oG6npP3ryVjxyI1LCJwXOZ7pdP/THs8iKBkxGWtH9XpYL4JG0/ZDoOhFs
- UUTemCG+qkAwbOmVYQPYBsOlMAniHR/RPraBqla5QnoPXZ9U1j2E6CG4IIBYIs/9fO0v
- dMDQMxC2TN3tD5IANKjTsW51cwulQol4DfFJeozoK4EkcyD+dul6/oHFyWj1hvsAgQbp
- D38uGnIJBuFXBGPMuZHvdlaR9Cz2yMSY7br46fOWE2QuO8qFMI4nd8eymPxkXJ3EuGH8
- C2itZSf8ZkuXEkzKYzwBfsu/g9WDh21G2WH+UMyxszxE1frjTl5h58Xy3bed0sVwht33
- PuZA==
+ d=1e100.net; s=20230601; t=1731982108; x=1732586908;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=h5s8AQVT15HW+qaQl3DYYSVQl/jyAzKMzRvCE6cCvAY=;
+ b=h1/hQJY7w4A9iazC8PaKiyeXz3D+TtYdqZsTp1qePvhfDxpUt/VVPgopJtn7JxAGDG
+ uKdqKgvpdVo5fkdZi6gTcpzAJbzx6qO8qZDP9i9d/W0m7F7bP6cmdLQqw7eeVSijtzWC
+ 5TwgnuXYFdffGF02ttDKVveL3nmCnxugkUI6xvxX9VZ/weMPfyWAQhxuIz7oZnyXjE6I
+ ymngtKa7AS12Z/XARxQhQTvE5IV6s5SV6Lq8LWzyFLuxLlDFFj9n5Q8HMaSgeg7AJTH6
+ AkmQE+MLzoxt6iw+f7MYZI+8AXoUmpYt/osDFAwPK7Ref2/A6zn+lk5xWyoSf0KM3Qyf
+ w6gA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxXw1u8pRU/iY2shZDdqL83CjuF40l/wlDGKd8wZ/gyBf9qRYtZXay0uA9dVh8qinq2ue57aXXac9A@nongnu.org
-X-Gm-Message-State: AOJu0Yy26rz93B7jradg6SFdUJ84zwfnS96W/8GKSul3O1q26GuMsrcB
- aKieWBlgTPUvQC3lQA48mE2S7zAwuKrXtANzD6hn49HEr8jq0vP8+OT/S0UT3PK4bH1RK75sDN5
- vZQEiVL3nxnX40dGmiZcYlyj+2+s=
-X-Google-Smtp-Source: AGHT+IFISVn7unMaA297S8Ghz0awRCDK9/Q7/OhSOkLQFrwejDZ/HB1SE6v91bNtkkAvbxtJoJnOdoo+T8Fcqk8e6bY=
-X-Received: by 2002:a05:6102:3594:b0:4ad:4976:292 with SMTP id
- ada2fe7eead31-4ad62baede8mr10398943137.9.1731980447599; Mon, 18 Nov 2024
- 17:40:47 -0800 (PST)
-MIME-Version: 1.0
-References: <20241106133407.604587-1-dbarboza@ventanamicro.com>
- <20241106133407.604587-5-dbarboza@ventanamicro.com>
-In-Reply-To: <20241106133407.604587-5-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 Nov 2024 11:40:21 +1000
-Message-ID: <CAKmqyKOhZQRYfRPtW2ej1EWWVF6+o9TxSCriXSQSacocvc3VeQ@mail.gmail.com>
-Subject: Re: [PATCH for-10.0 4/7] hw/riscv/virt: Add IOMMU as platform device
- if the option is set
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, Sunil V L <sunilvl@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCVwxhM3hxpjk5fluQRtVckH3wWmPT9oIGk8SdBPNw7D8BFKc4wpS3JjVeSiUGVthmEaheTqYB8Kcrzy@nongnu.org
+X-Gm-Message-State: AOJu0YycFbuNr3YfbQMpjak8Ve89r/iM1Gf6R4bdTrdQjS28QvC9AQ0H
+ tMC75rEO3QBMyXTcHYYwgMzXkgUKmeH0kZ/OP9jpW21ccer2bcuD
+X-Google-Smtp-Source: AGHT+IHnsY2ejUaAbXXi0hIXl0QkpSuhTE+wrBR+tau1puKON02vR3U5EVuswZ+as4jxbZIXFyR21A==
+X-Received: by 2002:a17:90a:e703:b0:2ea:5e0c:2853 with SMTP id
+ 98e67ed59e1d1-2ea5e1b739bmr8709257a91.4.1731982107617; 
+ Mon, 18 Nov 2024 18:08:27 -0800 (PST)
+Received: from localhost (124-171-72-210.tpgi.com.au. [124.171.72.210])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ea06f1c6c9sm8248432a91.22.2024.11.18.18.08.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Nov 2024 18:08:26 -0800 (PST)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 19 Nov 2024 12:08:19 +1000
+Message-Id: <D5PSEW94BJB5.KTCIM3LO579K@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, <clg@kaod.org>, <fbarrat@linux.ibm.com>,
+ <milesg@linux.ibm.com>, <danielhb413@gmail.com>,
+ <david@gibson.dropbear.id.au>, <harshpb@linux.ibm.com>, <thuth@redhat.com>,
+ <lvivier@redhat.com>, <pbonzini@redhat.com>
+Subject: Re: [PATCH 02/14] ppc/xive2: Add grouping level to notification
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.18.2
+References: <20241015211329.21113-1-kowal@linux.ibm.com>
+ <20241015211329.21113-3-kowal@linux.ibm.com>
+In-Reply-To: <20241015211329.21113-3-kowal@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,307 +98,433 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 11:36=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Wed Oct 16, 2024 at 7:13 AM AEST, Michael Kowal wrote:
+> From: Frederic Barrat <fbarrat@linux.ibm.com>
 >
-> From: Sunil V L <sunilvl@ventanamicro.com>
+> The NSR has a (so far unused) grouping level field. When a interrupt
+> is presented, that field tells the hypervisor or OS if the interrupt
+> is for an individual VP or for a VP-group/crowd. This patch reworks
+> the presentation API to allow to set/unset the level when
+> raising/accepting an interrupt.
 >
-> Add a new machine option called 'iommu-sys' that enables a
-> riscv-iommu-sys platform device for the 'virt' machine. The option is
-> default 'off'.
+> It also renames xive_tctx_ipb_update() to xive_tctx_pipr_update() as
+> the IPB is only used for VP-specific target, whereas the PIPR always
+> needs to be updated.
 >
-> The device will use IRQs 36 to 39.
->
-> We will not support both riscv-iommu-sys and riscv-iommu-pci devices in
-> the same board in this first implementation. If a riscv-iommu-pci device
-> is added in the command line we will disable the riscv-iommu-sys device.
->
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
+> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 > ---
->  hw/riscv/virt.c          | 104 ++++++++++++++++++++++++++++++++++++++-
->  include/hw/riscv/iommu.h |   2 +
->  include/hw/riscv/virt.h  |   6 ++-
->  3 files changed, 109 insertions(+), 3 deletions(-)
+>  include/hw/ppc/xive.h      | 19 +++++++-
+>  include/hw/ppc/xive_regs.h | 20 +++++++--
+>  hw/intc/xive.c             | 90 +++++++++++++++++++++++---------------
+>  hw/intc/xive2.c            | 18 ++++----
+>  hw/intc/trace-events       |  2 +-
+>  5 files changed, 100 insertions(+), 49 deletions(-)
 >
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 45a8c4f819..23d1380b86 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -33,6 +33,7 @@
->  #include "target/riscv/pmu.h"
->  #include "hw/riscv/riscv_hart.h"
->  #include "hw/riscv/iommu.h"
-> +#include "hw/riscv/riscv-iommu-bits.h"
->  #include "hw/riscv/virt.h"
->  #include "hw/riscv/boot.h"
->  #include "hw/riscv/numa.h"
-> @@ -76,6 +77,7 @@ static const MemMapEntry virt_memmap[] =3D {
->      [VIRT_CLINT] =3D        {  0x2000000,       0x10000 },
->      [VIRT_ACLINT_SSWI] =3D  {  0x2F00000,        0x4000 },
->      [VIRT_PCIE_PIO] =3D     {  0x3000000,       0x10000 },
-> +    [VIRT_IOMMU_SYS] =3D    {  0x3010000,        0x1000 },
->      [VIRT_PLATFORM_BUS] =3D {  0x4000000,     0x2000000 },
->      [VIRT_PLIC] =3D         {  0xc000000, VIRT_PLIC_SIZE(VIRT_CPUS_MAX *=
- 2) },
->      [VIRT_APLIC_M] =3D      {  0xc000000, APLIC_SIZE(VIRT_CPUS_MAX) },
-> @@ -853,7 +855,8 @@ static void create_fdt_virtio(RISCVVirtState *s, cons=
-t MemMapEntry *memmap,
->
->  static void create_fdt_pcie(RISCVVirtState *s, const MemMapEntry *memmap=
-,
->                              uint32_t irq_pcie_phandle,
-> -                            uint32_t msi_pcie_phandle)
-> +                            uint32_t msi_pcie_phandle,
-> +                            uint32_t iommu_sys_phandle)
->  {
->      g_autofree char *name =3D NULL;
->      MachineState *ms =3D MACHINE(s);
-> @@ -887,6 +890,12 @@ static void create_fdt_pcie(RISCVVirtState *s, const=
- MemMapEntry *memmap,
->          2, virt_high_pcie_memmap.base,
->          2, virt_high_pcie_memmap.base, 2, virt_high_pcie_memmap.size);
->
-> +    if (virt_is_iommu_sys_enabled(s)) {
-> +        qemu_fdt_setprop_cells(ms->fdt, name, "iommu-map",
-> +                               0, iommu_sys_phandle, 0, 0, 0,
-> +                               iommu_sys_phandle, 0, 0xffff);
-> +    }
-> +
->      create_pcie_irq_map(s, ms->fdt, name, irq_pcie_phandle);
+> diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+> index 31242f0406..27ef6c1a17 100644
+> --- a/include/hw/ppc/xive.h
+> +++ b/include/hw/ppc/xive.h
+> @@ -510,6 +510,21 @@ static inline uint8_t xive_priority_to_ipb(uint8_t p=
+riority)
+>          0 : 1 << (XIVE_PRIORITY_MAX - priority);
 >  }
->
-> @@ -1033,6 +1042,44 @@ static void create_fdt_virtio_iommu(RISCVVirtState=
- *s, uint16_t bdf)
->                             bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf=
-);
->  }
->
-> +static void create_fdt_iommu_sys(RISCVVirtState *s, uint32_t irq_chip,
-> +                                 uint32_t *iommu_sys_phandle)
+> =20
+> +static inline uint8_t xive_priority_to_pipr(uint8_t priority)
 > +{
-> +    const char comp[] =3D "riscv,iommu";
-> +    void *fdt =3D MACHINE(s)->fdt;
-> +    uint32_t iommu_phandle;
-> +    g_autofree char *iommu_node =3D NULL;
-> +    hwaddr addr =3D s->memmap[VIRT_IOMMU_SYS].base;
-> +    hwaddr size =3D s->memmap[VIRT_IOMMU_SYS].size;
-> +    uint32_t iommu_irq_map[RISCV_IOMMU_INTR_COUNT] =3D {
-> +        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_CQ,
-> +        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_FQ,
-> +        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_PM,
-> +        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_PQ,
-> +    };
+> +    return priority > XIVE_PRIORITY_MAX ? 0xFF : priority;
+> +}
 > +
-> +    iommu_node =3D g_strdup_printf("/soc/iommu@%x",
-> +                               (unsigned int) s->memmap[VIRT_IOMMU_SYS].=
-base);
-> +    iommu_phandle =3D qemu_fdt_alloc_phandle(fdt);
-> +    qemu_fdt_add_subnode(fdt, iommu_node);
+> +/*
+> + * Convert an Interrupt Pending Buffer (IPB) register to a Pending
+> + * Interrupt Priority Register (PIPR), which contains the priority of
+> + * the most favored pending notification.
+> + */
+> +static inline uint8_t xive_ipb_to_pipr(uint8_t ibp)
+> +{
+> +    return ibp ? clz32((uint32_t)ibp << 24) : 0xff;
+> +}
 > +
-> +    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
-> +    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
-> +    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
-> +
-> +    qemu_fdt_setprop_cells(fdt, iommu_node, "reg",
-> +                           addr >> 32, addr, size >> 32, size);
-> +    qemu_fdt_setprop_cell(fdt, iommu_node, "interrupt-parent", irq_chip)=
+>  /*
+>   * XIVE Thread Interrupt Management Aera (TIMA)
+>   *
+> @@ -532,8 +547,10 @@ void xive_tctx_pic_print_info(XiveTCTX *tctx, GStrin=
+g *buf);
+>  Object *xive_tctx_create(Object *cpu, XivePresenter *xptr, Error **errp)=
 ;
-> +
-> +    qemu_fdt_setprop_cells(fdt, iommu_node, "interrupts",
-> +        iommu_irq_map[0], FDT_IRQ_TYPE_EDGE_LOW,
-> +        iommu_irq_map[1], FDT_IRQ_TYPE_EDGE_LOW,
-> +        iommu_irq_map[2], FDT_IRQ_TYPE_EDGE_LOW,
-> +        iommu_irq_map[3], FDT_IRQ_TYPE_EDGE_LOW);
-> +
-> +    *iommu_sys_phandle =3D iommu_phandle;
-> +}
-> +
->  static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
+>  void xive_tctx_reset(XiveTCTX *tctx);
+>  void xive_tctx_destroy(XiveTCTX *tctx);
+> -void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb);
+> +void xive_tctx_pipr_update(XiveTCTX *tctx, uint8_t ring, uint8_t priorit=
+y,
+> +                           uint8_t group_level);
+>  void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring);
+> +void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring, uint8_t group_level)=
+;
+> =20
+>  /*
+>   * KVM XIVE device helpers
+> diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
+> index 326327fc79..b455728c9c 100644
+> --- a/include/hw/ppc/xive_regs.h
+> +++ b/include/hw/ppc/xive_regs.h
+> @@ -146,7 +146,14 @@
+>  #define TM_SPC_PULL_PHYS_CTX_OL 0xc38   /* Pull phys ctx to odd cache li=
+ne    */
+>  /* XXX more... */
+> =20
+> -/* NSR fields for the various QW ack types */
+> +/*
+> + * NSR fields for the various QW ack types
+> + *
+> + * P10 has an extra bit in QW3 for the group level instead of the
+> + * reserved 'i' bit. Since it is not used and we don't support group
+> + * interrupts on P9, we use the P10 definition for the group level so
+> + * that we can have common macros for the NSR
+> + */
+>  #define TM_QW0_NSR_EB           PPC_BIT8(0)
+>  #define TM_QW1_NSR_EO           PPC_BIT8(0)
+>  #define TM_QW3_NSR_HE           PPC_BITMASK8(0, 1)
+> @@ -154,8 +161,15 @@
+>  #define  TM_QW3_NSR_HE_POOL     1
+>  #define  TM_QW3_NSR_HE_PHYS     2
+>  #define  TM_QW3_NSR_HE_LSI      3
+> -#define TM_QW3_NSR_I            PPC_BIT8(2)
+> -#define TM_QW3_NSR_GRP_LVL      PPC_BIT8(3, 7)
+> +#define TM_NSR_GRP_LVL          PPC_BITMASK8(2, 7)
+> +/*
+> + * On P10, the format of the 6-bit group level is: 2 bits for the
+> + * crowd size and 4 bits for the group size. Since group/crowd size is
+> + * always a power of 2, we encode the log. For example, group_level=3D4
+> + * means crowd size =3D 0 and group size =3D 16 (2^4)
+> + * Same encoding is used in the NVP and NVGC structures for
+> + * PGoFirst and PGoNext fields
+> + */
+> =20
+>  /*
+>   * EAS (Event Assignment Structure)
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index efcb63e8aa..bacf518fa6 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -27,16 +27,6 @@
+>   * XIVE Thread Interrupt Management context
+>   */
+> =20
+> -/*
+> - * Convert an Interrupt Pending Buffer (IPB) register to a Pending
+> - * Interrupt Priority Register (PIPR), which contains the priority of
+> - * the most favored pending notification.
+> - */
+> -static uint8_t ipb_to_pipr(uint8_t ibp)
+> -{
+> -    return ibp ? clz32((uint32_t)ibp << 24) : 0xff;
+> -}
+> -
+>  static uint8_t exception_mask(uint8_t ring)
 >  {
->      const char comp[] =3D "riscv,pci-iommu";
-> @@ -1061,6 +1108,7 @@ static void finalize_fdt(RISCVVirtState *s)
+>      switch (ring) {
+> @@ -87,10 +77,17 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint=
+8_t ring)
+> =20
+>          regs[TM_CPPR] =3D cppr;
+> =20
+> -        /* Reset the pending buffer bit */
+> -        alt_regs[TM_IPB] &=3D ~xive_priority_to_ipb(cppr);
+> +        /*
+> +         * If the interrupt was for a specific VP, reset the pending
+> +         * buffer bit, otherwise clear the logical server indicator
+> +         */
+> +        if (regs[TM_NSR] & TM_NSR_GRP_LVL) {
+> +            regs[TM_NSR] &=3D ~TM_NSR_GRP_LVL;
+> +        } else {
+> +            alt_regs[TM_IPB] &=3D ~xive_priority_to_ipb(cppr);
+> +        }
+> =20
+> -        /* Drop Exception bit */
+> +        /* Drop the exception bit */
+>          regs[TM_NSR] &=3D ~mask;
+
+NSR can just be set to 0 directly instead of clearing masks.
+
+> =20
+>          trace_xive_tctx_accept(tctx->cs->cpu_index, alt_ring,
+> @@ -101,7 +98,7 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8=
+_t ring)
+>      return ((uint64_t)nsr << 8) | regs[TM_CPPR];
+>  }
+> =20
+> -static void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring)
+> +void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring, uint8_t group_level)
 >  {
->      uint32_t phandle =3D 1, irq_mmio_phandle =3D 1, msi_pcie_phandle =3D=
- 1;
->      uint32_t irq_pcie_phandle =3D 1, irq_virtio_phandle =3D 1;
-> +    uint32_t iommu_sys_phandle =3D 1;
->
->      create_fdt_sockets(s, virt_memmap, &phandle, &irq_mmio_phandle,
->                         &irq_pcie_phandle, &irq_virtio_phandle,
-> @@ -1068,7 +1116,11 @@ static void finalize_fdt(RISCVVirtState *s)
->
->      create_fdt_virtio(s, virt_memmap, irq_virtio_phandle);
->
-> -    create_fdt_pcie(s, virt_memmap, irq_pcie_phandle, msi_pcie_phandle);
-> +    if (virt_is_iommu_sys_enabled(s)) {
-> +        create_fdt_iommu_sys(s, irq_mmio_phandle, &iommu_sys_phandle);
+>      /* HV_POOL ring uses HV_PHYS NSR, CPPR and PIPR registers */
+>      uint8_t alt_ring =3D (ring =3D=3D TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS :=
+ ring;
+> @@ -111,13 +108,13 @@ static void xive_tctx_notify(XiveTCTX *tctx, uint8_=
+t ring)
+>      if (alt_regs[TM_PIPR] < alt_regs[TM_CPPR]) {
+>          switch (ring) {
+>          case TM_QW1_OS:
+> -            regs[TM_NSR] |=3D TM_QW1_NSR_EO;
+> +            regs[TM_NSR] =3D TM_QW1_NSR_EO | (group_level & 0x3F);
+>              break;
+>          case TM_QW2_HV_POOL:
+> -            alt_regs[TM_NSR] =3D (TM_QW3_NSR_HE_POOL << 6);
+> +            alt_regs[TM_NSR] =3D (TM_QW3_NSR_HE_POOL << 6) | (group_leve=
+l & 0x3F);
+>              break;
+>          case TM_QW3_HV_PHYS:
+> -            regs[TM_NSR] |=3D (TM_QW3_NSR_HE_PHYS << 6);
+> +            regs[TM_NSR] =3D (TM_QW3_NSR_HE_PHYS << 6) | (group_level & =
+0x3F);
+>              break;
+>          default:
+>              g_assert_not_reached();
+
+
+The big difference between presenting group and VP directed is that
+VP can just be queued up in IPB, whereas group can not be, and must
+be redistributed before they are precluded by a different interrupt.
+So I wonder if we should assert if there is an existing group interrupt
+in NSR being overwritten at this point.
+
+Also should we be masking the group level here? Maybe just assert the
+top 2 bits are clear, otherwise something has gone wrong if this is
+chopping off bits here.
+
+> @@ -159,7 +156,7 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_=
+t ring, uint8_t cppr)
+>       * Recompute the PIPR based on local pending interrupts.  The PHYS
+>       * ring must take the minimum of both the PHYS and POOL PIPR values.
+>       */
+> -    pipr_min =3D ipb_to_pipr(regs[TM_IPB]);
+> +    pipr_min =3D xive_ipb_to_pipr(regs[TM_IPB]);
+>      ring_min =3D ring;
+> =20
+>      /* PHYS updates also depend on POOL values */
+> @@ -169,7 +166,7 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_=
+t ring, uint8_t cppr)
+>          /* POOL values only matter if POOL ctx is valid */
+>          if (pool_regs[TM_WORD2] & 0x80) {
+> =20
+> -            uint8_t pool_pipr =3D ipb_to_pipr(pool_regs[TM_IPB]);
+> +            uint8_t pool_pipr =3D xive_ipb_to_pipr(pool_regs[TM_IPB]);
+> =20
+>              /*
+>               * Determine highest priority interrupt and
+
+Moving this function and changing ipb->pipr (before adding group) could
+be split into its own patch, since the mechanical changes seem to be
+the biggest part, would make the group change simpler to see.
+
+> @@ -185,17 +182,27 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint=
+8_t ring, uint8_t cppr)
+>      regs[TM_PIPR] =3D pipr_min;
+> =20
+>      /* CPPR has changed, check if we need to raise a pending exception *=
+/
+> -    xive_tctx_notify(tctx, ring_min);
+> +    xive_tctx_notify(tctx, ring_min, 0);
+>  }
+> =20
+> -void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb)
+> -{
+> +void xive_tctx_pipr_update(XiveTCTX *tctx, uint8_t ring, uint8_t priorit=
+y,
+> +                           uint8_t group_level)
+> + {
+> +    /* HV_POOL ring uses HV_PHYS NSR, CPPR and PIPR registers */
+> +    uint8_t alt_ring =3D (ring =3D=3D TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS :=
+ ring;
+> +    uint8_t *alt_regs =3D &tctx->regs[alt_ring];
+>      uint8_t *regs =3D &tctx->regs[ring];
+> =20
+> -    regs[TM_IPB] |=3D ipb;
+> -    regs[TM_PIPR] =3D ipb_to_pipr(regs[TM_IPB]);
+> -    xive_tctx_notify(tctx, ring);
+> -}
+> +    if (group_level =3D=3D 0) {
+> +        /* VP-specific */
+> +        regs[TM_IPB] |=3D xive_priority_to_ipb(priority);
+> +        alt_regs[TM_PIPR] =3D xive_ipb_to_pipr(regs[TM_IPB]);
+> +    } else {
+> +        /* VP-group */
+> +        alt_regs[TM_PIPR] =3D xive_priority_to_pipr(priority);
 > +    }
-> +    create_fdt_pcie(s, virt_memmap, irq_pcie_phandle, msi_pcie_phandle,
-> +                    iommu_sys_phandle);
->
->      create_fdt_reset(s, virt_memmap, &phandle);
->
-> @@ -1650,6 +1702,22 @@ static void virt_machine_init(MachineState *machin=
-e)
->          create_fdt(s, memmap);
->      }
->
-> +    if (virt_is_iommu_sys_enabled(s)) {
-> +        DeviceState *iommu_sys =3D qdev_new(TYPE_RISCV_IOMMU_SYS);
-> +
-> +        object_property_set_uint(OBJECT(iommu_sys), "addr",
-> +                                 s->memmap[VIRT_IOMMU_SYS].base,
-> +                                 &error_fatal);
-> +        object_property_set_uint(OBJECT(iommu_sys), "base-irq",
-> +                                 IOMMU_SYS_IRQ,
-> +                                 &error_fatal);
-> +        object_property_set_link(OBJECT(iommu_sys), "irqchip",
-> +                                 OBJECT(mmio_irqchip),
-> +                                 &error_fatal);
-> +
-> +        sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal=
-);
-> +    }
-> +
->      s->machine_done.notify =3D virt_machine_done;
->      qemu_add_machine_init_done_notifier(&s->machine_done);
+> +    xive_tctx_notify(tctx, ring, group_level);
+> + }
+> =20
+>  /*
+>   * XIVE Thread Interrupt Management Area (TIMA)
+> @@ -411,13 +418,13 @@ static void xive_tm_set_os_lgs(XivePresenter *xptr,=
+ XiveTCTX *tctx,
 >  }
-> @@ -1663,6 +1731,7 @@ static void virt_machine_instance_init(Object *obj)
->      s->oem_id =3D g_strndup(ACPI_BUILD_APPNAME6, 6);
->      s->oem_table_id =3D g_strndup(ACPI_BUILD_APPNAME8, 8);
->      s->acpi =3D ON_OFF_AUTO_AUTO;
-> +    s->iommu_sys =3D ON_OFF_AUTO_AUTO;
->  }
->
->  static char *virt_get_aia_guests(Object *obj, Error **errp)
-> @@ -1735,6 +1804,28 @@ static void virt_set_aclint(Object *obj, bool valu=
-e, Error **errp)
->      s->have_aclint =3D value;
->  }
->
-> +bool virt_is_iommu_sys_enabled(RISCVVirtState *s)
-> +{
-> +    return s->iommu_sys =3D=3D ON_OFF_AUTO_ON;
-> +}
-> +
-> +static void virt_get_iommu_sys(Object *obj, Visitor *v, const char *name=
-,
-> +                               void *opaque, Error **errp)
-> +{
-> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> +    OnOffAuto iommu_sys =3D s->iommu_sys;
-> +
-> +    visit_type_OnOffAuto(v, name, &iommu_sys, errp);
-> +}
-> +
-> +static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name=
-,
-> +                               void *opaque, Error **errp)
-> +{
-> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> +
-> +    visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
-> +}
-> +
->  bool virt_is_acpi_enabled(RISCVVirtState *s)
+> =20
+>  /*
+> - * Adjust the IPB to allow a CPU to process event queues of other
+> + * Adjust the PIPR to allow a CPU to process event queues of other
+>   * priorities during one physical interrupt cycle.
+>   */
+>  static void xive_tm_set_os_pending(XivePresenter *xptr, XiveTCTX *tctx,
+>                                     hwaddr offset, uint64_t value, unsign=
+ed size)
 >  {
->      return s->acpi !=3D ON_OFF_AUTO_OFF;
-> @@ -1761,10 +1852,12 @@ static HotplugHandler *virt_machine_get_hotplug_h=
-andler(MachineState *machine,
->                                                          DeviceState *dev=
-)
+> -    xive_tctx_ipb_update(tctx, TM_QW1_OS, xive_priority_to_ipb(value & 0=
+xff));
+> +    xive_tctx_pipr_update(tctx, TM_QW1_OS, value & 0xff, 0);
+>  }
+> =20
+>  static void xive_os_cam_decode(uint32_t cam, uint8_t *nvt_blk,
+> @@ -495,16 +502,20 @@ static void xive_tctx_need_resend(XiveRouter *xrtr,=
+ XiveTCTX *tctx,
+>          /* Reset the NVT value */
+>          nvt.w4 =3D xive_set_field32(NVT_W4_IPB, nvt.w4, 0);
+>          xive_router_write_nvt(xrtr, nvt_blk, nvt_idx, &nvt, 4);
+> -    }
+> +
+> +        uint8_t *regs =3D &tctx->regs[TM_QW1_OS];
+> +        regs[TM_IPB] |=3D ipb;
+> +}
+> +
+
+Whitespace damage here?
+
+>      /*
+> -     * Always call xive_tctx_ipb_update(). Even if there were no
+> +     * Always call xive_tctx_pipr_update(). Even if there were no
+>       * escalation triggered, there could be a pending interrupt which
+>       * was saved when the context was pulled and that we need to take
+>       * into account by recalculating the PIPR (which is not
+>       * saved/restored).
+>       * It will also raise the External interrupt signal if needed.
+>       */
+> -    xive_tctx_ipb_update(tctx, TM_QW1_OS, ipb);
+> +    xive_tctx_pipr_update(tctx, TM_QW1_OS, 0xFF, 0); /* fxb */
+
+I don't understand what's going on here. Why not ipb_to_pipr(ipb)?
+
+>  }
+> =20
+>  /*
+> @@ -841,9 +852,9 @@ void xive_tctx_reset(XiveTCTX *tctx)
+>       * CPPR is first set.
+>       */
+>      tctx->regs[TM_QW1_OS + TM_PIPR] =3D
+> -        ipb_to_pipr(tctx->regs[TM_QW1_OS + TM_IPB]);
+> +        xive_ipb_to_pipr(tctx->regs[TM_QW1_OS + TM_IPB]);
+>      tctx->regs[TM_QW3_HV_PHYS + TM_PIPR] =3D
+> -        ipb_to_pipr(tctx->regs[TM_QW3_HV_PHYS + TM_IPB]);
+> +        xive_ipb_to_pipr(tctx->regs[TM_QW3_HV_PHYS + TM_IPB]);
+>  }
+> =20
+>  static void xive_tctx_realize(DeviceState *dev, Error **errp)
+> @@ -1660,6 +1671,12 @@ static uint32_t xive_tctx_hw_cam_line(XivePresente=
+r *xptr, XiveTCTX *tctx)
+>      return xive_nvt_cam_line(blk, 1 << 7 | (pir & 0x7f));
+>  }
+> =20
+> +static uint8_t xive_get_group_level(uint32_t nvp_index)
+> +{
+> +    /* FIXME add crowd encoding */
+> +    return ctz32(~nvp_index) + 1;
+> +}
+> +
+>  /*
+>   * The thread context register words are in big-endian format.
+>   */
+> @@ -1745,6 +1762,7 @@ bool xive_presenter_notify(XiveFabric *xfb, uint8_t=
+ format,
 >  {
->      MachineClass *mc =3D MACHINE_GET_CLASS(machine);
-> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(machine);
->
->      if (device_is_dynamic_sysbus(mc, dev) ||
->          object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
->          object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
-> +        s->iommu_sys =3D ON_OFF_AUTO_OFF;
->          return HOTPLUG_HANDLER(machine);
+>      XiveFabricClass *xfc =3D XIVE_FABRIC_GET_CLASS(xfb);
+>      XiveTCTXMatch match =3D { .tctx =3D NULL, .ring =3D 0 };
+> +    uint8_t group_level;
+>      int count;
+> =20
+>      /*
+> @@ -1758,9 +1776,9 @@ bool xive_presenter_notify(XiveFabric *xfb, uint8_t=
+ format,
+> =20
+>      /* handle CPU exception delivery */
+>      if (count) {
+> -        trace_xive_presenter_notify(nvt_blk, nvt_idx, match.ring);
+> -        xive_tctx_ipb_update(match.tctx, match.ring,
+> -                             xive_priority_to_ipb(priority));
+> +        group_level =3D cam_ignore ? xive_get_group_level(nvt_idx) : 0;
+> +        trace_xive_presenter_notify(nvt_blk, nvt_idx, match.ring, group_=
+level);
+> +        xive_tctx_pipr_update(match.tctx, match.ring, priority, group_le=
+vel);
 >      }
->
-> @@ -1791,6 +1884,7 @@ static void virt_machine_device_plug_cb(HotplugHand=
-ler *hotplug_dev,
->
->      if (object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
->          create_fdt_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
-> +        s->iommu_sys =3D ON_OFF_AUTO_OFF;
+> =20
+>      return !!count;
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index 4adc3b6950..db372f4b30 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -564,8 +564,10 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr=
+, XiveTCTX *tctx,
+>                                     uint8_t nvp_blk, uint32_t nvp_idx,
+>                                     bool do_restore)
+>  {
+> +    uint8_t ipb, backlog_level;
+> +    uint8_t backlog_prio;
+> +    uint8_t *regs =3D &tctx->regs[TM_QW1_OS];
+>      Xive2Nvp nvp;
+> -    uint8_t ipb;
+
+Put the uint8_ts all on the same line or keep them all on different
+lines?
+
+Thanks,
+Nick
+
+> =20
+>      /*
+>       * Grab the associated thread interrupt context registers in the
+> @@ -594,15 +596,15 @@ static void xive2_tctx_need_resend(Xive2Router *xrt=
+r, XiveTCTX *tctx,
+>          nvp.w2 =3D xive_set_field32(NVP2_W2_IPB, nvp.w2, 0);
+>          xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
 >      }
->  }
->
-> @@ -1853,6 +1947,12 @@ static void virt_machine_class_init(ObjectClass *o=
-c, void *data)
->                                NULL, NULL);
->      object_class_property_set_description(oc, "acpi",
->                                            "Enable ACPI");
+> +    regs[TM_IPB] =3D ipb;
+> +    backlog_prio =3D xive_ipb_to_pipr(ipb);
+> +    backlog_level =3D 0;
 > +
-> +    object_class_property_add(oc, "iommu-sys", "OnOffAuto",
-> +                              virt_get_iommu_sys, virt_set_iommu_sys,
-> +                              NULL, NULL);
-> +    object_class_property_set_description(oc, "iommu-sys",
-> +                                          "Enable IOMMU platform device"=
-);
+>      /*
+> -     * Always call xive_tctx_ipb_update(). Even if there were no
+> -     * escalation triggered, there could be a pending interrupt which
+> -     * was saved when the context was pulled and that we need to take
+> -     * into account by recalculating the PIPR (which is not
+> -     * saved/restored).
+> -     * It will also raise the External interrupt signal if needed.
+> +     * Compute the PIPR based on the restored state.
+> +     * It will raise the External interrupt signal if needed.
+>       */
+> -    xive_tctx_ipb_update(tctx, TM_QW1_OS, ipb);
+> +    xive_tctx_pipr_update(tctx, TM_QW1_OS, backlog_prio, backlog_level);
 >  }
->
->  static const TypeInfo virt_machine_typeinfo =3D {
-> diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
-> index fc20808553..8a8acfc3f0 100644
-> --- a/include/hw/riscv/iommu.h
-> +++ b/include/hw/riscv/iommu.h
-> @@ -37,4 +37,6 @@ typedef struct RISCVIOMMUStatePci RISCVIOMMUStatePci;
->  OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStateSys, RISCV_IOMMU_SYS)
->  typedef struct RISCVIOMMUStateSys RISCVIOMMUStateSys;
->
-> +#define FDT_IRQ_TYPE_EDGE_LOW 1
-> +
->  #endif
-> diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> index c0dc41ff9a..48a14bea2e 100644
-> --- a/include/hw/riscv/virt.h
-> +++ b/include/hw/riscv/virt.h
-> @@ -62,6 +62,7 @@ struct RISCVVirtState {
->      OnOffAuto acpi;
->      const MemMapEntry *memmap;
->      struct GPEXHost *gpex_host;
-> +    OnOffAuto iommu_sys;
->  };
->
->  enum {
-> @@ -84,7 +85,8 @@ enum {
->      VIRT_PCIE_MMIO,
->      VIRT_PCIE_PIO,
->      VIRT_PLATFORM_BUS,
-> -    VIRT_PCIE_ECAM
-> +    VIRT_PCIE_ECAM,
-> +    VIRT_IOMMU_SYS,
->  };
->
->  enum {
-> @@ -93,6 +95,7 @@ enum {
->      VIRTIO_IRQ =3D 1, /* 1 to 8 */
->      VIRTIO_COUNT =3D 8,
->      PCIE_IRQ =3D 0x20, /* 32 to 35 */
-> +    IOMMU_SYS_IRQ =3D 0x24, /* 36-39 */
->      VIRT_PLATFORM_BUS_IRQ =3D 64, /* 64 to 95 */
->  };
->
-> @@ -129,6 +132,7 @@ enum {
->                                   1 + FDT_APLIC_INT_CELLS)
->
->  bool virt_is_acpi_enabled(RISCVVirtState *s);
-> +bool virt_is_iommu_sys_enabled(RISCVVirtState *s);
->  void virt_acpi_setup(RISCVVirtState *vms);
->  uint32_t imsic_num_bits(uint32_t count);
->
-> --
-> 2.45.2
->
->
+> =20
+>  /*
+> diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+> index 3dcf147198..7435728c51 100644
+> --- a/hw/intc/trace-events
+> +++ b/hw/intc/trace-events
+> @@ -282,7 +282,7 @@ xive_router_end_notify(uint8_t end_blk, uint32_t end_=
+idx, uint32_t end_data) "EN
+>  xive_router_end_escalate(uint8_t end_blk, uint32_t end_idx, uint8_t esc_=
+blk, uint32_t esc_idx, uint32_t end_data) "END 0x%02x/0x%04x -> escalate EN=
+D 0x%02x/0x%04x data 0x%08x"
+>  xive_tctx_tm_write(uint32_t index, uint64_t offset, unsigned int size, u=
+int64_t value) "target=3D%d @0x%"PRIx64" sz=3D%d val=3D0x%" PRIx64
+>  xive_tctx_tm_read(uint32_t index, uint64_t offset, unsigned int size, ui=
+nt64_t value) "target=3D%d @0x%"PRIx64" sz=3D%d val=3D0x%" PRIx64
+> -xive_presenter_notify(uint8_t nvt_blk, uint32_t nvt_idx, uint8_t ring) "=
+found NVT 0x%x/0x%x ring=3D0x%x"
+> +xive_presenter_notify(uint8_t nvt_blk, uint32_t nvt_idx, uint8_t ring, u=
+int8_t group_level) "found NVT 0x%x/0x%x ring=3D0x%x group_level=3D%d"
+>  xive_end_source_read(uint8_t end_blk, uint32_t end_idx, uint64_t addr) "=
+END 0x%x/0x%x @0x%"PRIx64
+> =20
+>  # pnv_xive.c
+
 
