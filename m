@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF36D60D0B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 02:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DC2D60D09
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 02:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDDnq-0006nG-Ln; Mon, 18 Nov 2024 21:17:18 -0500
+	id 1tDDob-0007Mb-It; Mon, 18 Nov 2024 21:18:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDDno-0006mo-RE; Mon, 18 Nov 2024 21:17:17 -0500
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
+ id 1tDDoa-0007M7-AC; Mon, 18 Nov 2024 21:18:04 -0500
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDDnm-0001rO-Vz; Mon, 18 Nov 2024 21:17:16 -0500
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-514589ac56dso1283436e0c.0; 
- Mon, 18 Nov 2024 18:17:14 -0800 (PST)
+ id 1tDDoY-0001wx-K1; Mon, 18 Nov 2024 21:18:04 -0500
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-8570543feaaso174761241.2; 
+ Mon, 18 Nov 2024 18:18:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731982633; x=1732587433; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731982681; x=1732587481; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aEBhBJfHlNKcP8lByG25KgB4lVyRtjB4I28rAwSLLU8=;
- b=iC+87z/5zHE6Jcno5SGqxxt8LQhr1bUeVtcGFLbWHmqLChDCGRhv+gF+nVEeW39VtN
- h9dk4ZXlV31J11VOVrDWa3Na3RMwfTvSXkfbXnx3fcqyg/YFpj+ePkNr/8KP4UyD2708
- mshQBECzknhJ8X28ZX30xNsqVHfHnz/pIsbhBXSpclAZnoV0OShITKu/oX55Fyl79Nnw
- iORt7c7KGTKOq7RdH5WdPKNoj4qIfbZk5BAd2M+b7IvpXIZzQR1fwGdpcQyVNNuh/3LK
- +A0tH8JkShpWA+J/fE5uEKYvDt2wUzaDm4Q6Z4nav8RvtsmhDdq+P5/DWd+E+QN+Pbj9
- r7OQ==
+ bh=q5uG8pi4qHCg5dp1cKoICpX006whs+vSrbL8C7f4tRI=;
+ b=SgLtnAdIcuuzCr3X239TJGw1KO17meRK/4kCHLcHUK8VZ8x4C0symEJZx+rnsp1LYY
+ 8eytD4xaVb7snqFkWTeB7d/9Oa/smHWmLz9B0xWmpmafkqgO59Nvfct0D3OPaITrZC7g
+ 7GvlkTvJF9EuutN8cHzDVQnHl0hXMrcFQRgn54biUnawbF3BusYhiK6ef0EP6Q74EEae
+ oz7m3KyCIErbUMN+yXlHEpODy1Ci7WS7Q43wVbsHlH3j+VPcSGuHIfwGZ0jFBf5XW1tt
+ xQO8Uw/CqDanVulhOh1RBzsMfbqXk/7z3srFAgURtvaapPXvMdEyNRFACavAFQkaiSSc
+ lgMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731982633; x=1732587433;
+ d=1e100.net; s=20230601; t=1731982681; x=1732587481;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aEBhBJfHlNKcP8lByG25KgB4lVyRtjB4I28rAwSLLU8=;
- b=ZTa50ldl2vz6iptUtQPp1trPSsaVR0OkchqxqQGYTpUlzgXXZh8RXeIk8prLxH89ch
- yDECfPBYREIc7q5/mZXGSKjglxJA1wiEyoIh8PkKsPyiPwPj66XxN/QeKylGYgzn4aY4
- CSv96PiemMLkM865vq4BeUSh0UD4AVSuRV2nuYeIhBG01awLHkNkDfkb/cAivzFM4877
- r13qGPDj9TpfhtoSkxF7o3uvxnNdfySEtac+5QdBdFnas7oAcEQs7xGOqrccB6VKPdqP
- mHby54EMEVmiZehUQJKQ0QQANGOfGhtxSyWb9/Qogk7yUW/b/UuscweAvdUqUyNs2GHk
- Wy+w==
+ bh=q5uG8pi4qHCg5dp1cKoICpX006whs+vSrbL8C7f4tRI=;
+ b=lpe25YnGN85Ph7agHBggwIKaazrJEIyWAjYp9f5KErNvJDr3k5KDXj9ylZsx+IwQoT
+ MmQPSnCDH3CKbBbeHocm6TmpxaofYkqdzoZyixCkzgb1vRAUmA8OqRStRzoTuzL/3bBY
+ wPeGseMRlicqwgqTS3JD5o7H0Zv03qq4et8YTgyZJao0kKrEy6eIqTiSwi/QCdqtnnZV
+ /cJZwdlQx5c2pk0vbQnBShnYFSrMG+qViNApVuTpOz4JipLFyeQ4AE0plbezaLKkBJfO
+ prFsK6/jLwMvlQQIxfiJN3DHvp1MchgNvolMGBNOnl3xoRUKMORbbhW7oIBwgvt+5uIO
+ 5waQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVM9DKo1MqRP460aGz+etUo0AMioRq8Q5th1L5LQ2X7XeHXmSHWgWi+OFFD6SjSzBcpeYs3q+3Rg5Wf@nongnu.org
-X-Gm-Message-State: AOJu0Yw5lxjtJ6dlUpWVAGYhSPYL1ZqWGfVaUFsQViSOHgkITbN+SJ1p
- gIZTvkPlWg7zXpxlQbt4KNcfqjbOwXtcmILCWHKX3IstLdyQ7C10NRV2T++LvhZu0YLhrGGq4BJ
- dWjTXwJvU9xlcVq5YOteXTYJScN4=
-X-Google-Smtp-Source: AGHT+IGbw7woWi4+gVNSVTbS9dyH7G1EjQZHhmMf0XeND7EaD5MAehs8SosofE72CIbaAsW/55n6o9/YUi1p7nbmTh4=
-X-Received: by 2002:a05:6122:3d0d:b0:50d:918d:4da1 with SMTP id
- 71dfb90a1353d-51477ee3893mr14343849e0c.3.1731982633594; Mon, 18 Nov 2024
- 18:17:13 -0800 (PST)
+ AJvYcCWQ/yqPZWnqhxJB5cWSlzcG4YePvDDZYsZ1eMQkInuXLpxxIUX3OrxUWt5HJTSiIPWmiIkDyQxsyPqQ@nongnu.org
+X-Gm-Message-State: AOJu0Yw3Flq5amyNBKxzpON6Lox0ENBVHkM2wab4H/lD5Jy3Det5Yer7
+ r8uXVeMFBShGO1JhmOG/kwx6+CWF9tfGQhc0QSSIrzuhgaxP1VV2RaQl1YskiZXfjlY19IGh7JI
+ v2HfRt1zhxyWsl6I93fHbGVMZyTo=
+X-Google-Smtp-Source: AGHT+IHvr5W2qZKXf+XqQmQOGQ6cd7bC5v09+iRdETgTLOsjtC87xyB2W2wxBU780JEU2KbDaMondSUHnTpfv7v8x+4=
+X-Received: by 2002:a05:6102:3f04:b0:4a5:b0d3:cbbe with SMTP id
+ ada2fe7eead31-4ad630186a3mr13465842137.1.1731982681097; Mon, 18 Nov 2024
+ 18:18:01 -0800 (PST)
 MIME-Version: 1.0
 References: <20241106133407.604587-1-dbarboza@ventanamicro.com>
- <20241106133407.604587-7-dbarboza@ventanamicro.com>
-In-Reply-To: <20241106133407.604587-7-dbarboza@ventanamicro.com>
+ <20241106133407.604587-8-dbarboza@ventanamicro.com>
+In-Reply-To: <20241106133407.604587-8-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 Nov 2024 12:16:47 +1000
-Message-ID: <CAKmqyKOuNuu0CKjxNUMViKFGnsCkNqLQQEtS1=6Jewq6Cqmd9w@mail.gmail.com>
-Subject: Re: [PATCH for-10.0 6/7] hw/riscv/riscv-iommu: implement reset
- protocol
+Date: Tue, 19 Nov 2024 12:17:35 +1000
+Message-ID: <CAKmqyKPg8RibBZ_jOvcp1o5zgPk20YvszgusznFubTZUw3RKbQ@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 7/7] docs/specs: add riscv-iommu-sys information
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,214 +96,106 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Nov 6, 2024 at 11:35=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Add a riscv_iommu_reset() helper in the base emulation code that
-> implements the expected reset behavior as defined by the riscv-iommu
-> spec.
->
-> Devices can then use this helper in their own reset callbacks.
->
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  hw/riscv/riscv-iommu-pci.c | 20 ++++++++++++++++++++
->  hw/riscv/riscv-iommu-sys.c | 20 ++++++++++++++++++++
->  hw/riscv/riscv-iommu.c     | 35 +++++++++++++++++++++++++++++++++++
->  hw/riscv/riscv-iommu.h     |  1 +
->  hw/riscv/trace-events      |  2 ++
->  include/hw/riscv/iommu.h   |  6 ++++--
->  6 files changed, 82 insertions(+), 2 deletions(-)
+>  docs/specs/riscv-iommu.rst | 30 +++++++++++++++++++++++++++---
+>  docs/system/riscv/virt.rst | 10 ++++++++++
+>  2 files changed, 37 insertions(+), 3 deletions(-)
 >
-> diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
-> index 4ce9bf6b78..51226c4877 100644
-> --- a/hw/riscv/riscv-iommu-pci.c
-> +++ b/hw/riscv/riscv-iommu-pci.c
-> @@ -31,6 +31,7 @@
->  #include "cpu_bits.h"
->  #include "riscv-iommu.h"
->  #include "riscv-iommu-bits.h"
-> +#include "trace.h"
+> diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
+> index 463f4cffb6..b1538c9ead 100644
+> --- a/docs/specs/riscv-iommu.rst
+> +++ b/docs/specs/riscv-iommu.rst
+> @@ -6,9 +6,9 @@ RISC-V IOMMU support for RISC-V machines
+>  QEMU implements a RISC-V IOMMU emulation based on the RISC-V IOMMU spec
+>  version 1.0 `iommu1.0`_.
 >
->  /* RISC-V IOMMU PCI Device Emulation */
->  #define RISCV_PCI_CLASS_SYSTEM_IOMMU     0x0806
-> @@ -66,6 +67,12 @@ typedef struct RISCVIOMMUStatePci {
->      RISCVIOMMUState  iommu;   /* common IOMMU state */
->  } RISCVIOMMUStatePci;
+> -The emulation includes a PCI reference device, riscv-iommu-pci, that QEM=
+U
+> -RISC-V boards can use.  The 'virt' RISC-V machine is compatible with thi=
+s
+> -device.
+> +The emulation includes a PCI reference device (riscv-iommu-pci) and a pl=
+atform
+> +bus device (riscv-iommu-sys) that QEMU RISC-V boards can use.  The 'virt=
+'
+> +RISC-V machine is compatible with both devices.
 >
-> +struct RISCVIOMMUPciClass {
-> +    /*< public >*/
-> +    DeviceRealize parent_realize;
-> +    ResettablePhases parent_phases;
-> +};
-> +
->  /* interrupt delivery callback */
->  static void riscv_iommu_pci_notify(RISCVIOMMUState *iommu, unsigned vect=
-or)
->  {
-> @@ -167,10 +174,23 @@ static Property riscv_iommu_pci_properties[] =3D {
->      DEFINE_PROP_END_OF_LIST(),
->  };
+>  riscv-iommu-pci reference device
+>  --------------------------------
+> @@ -83,6 +83,30 @@ Several options are available to control the capabilit=
+ies of the device, namely:
+>  - "s-stage": enable s-stage support
+>  - "g-stage": enable g-stage support
 >
-> +static void riscv_iommu_pci_reset_hold(Object *obj, ResetType type)
-> +{
-> +    RISCVIOMMUStatePci *pci =3D RISCV_IOMMU_PCI(obj);
-> +    RISCVIOMMUState *iommu =3D &pci->iommu;
+> +riscv-iommu-sys device
+> +----------------------
 > +
-> +    riscv_iommu_reset(iommu);
+> +This device implements the RISC-V IOMMU emulation as a platform bus devi=
+ce that
+> +RISC-V boards can use.
 > +
-> +    trace_riscv_iommu_pci_reset_hold(type);
-> +}
+> +For the 'virt' board the device is disabled by default.  To enable it us=
+e the
+> +'iommu-sys' machine option:
 > +
->  static void riscv_iommu_pci_class_init(ObjectClass *klass, void *data)
->  {
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->      PCIDeviceClass *k =3D PCI_DEVICE_CLASS(klass);
-> +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
+> +.. code-block:: bash
 > +
-> +    rc->phases.hold =3D riscv_iommu_pci_reset_hold;
+> +  $ qemu-system-riscv64 -M virt,iommu-sys=3Don (...)
+> +
+> +There is no options to configure the capabilities of this device in the =
+'virt'
+> +board using the QEMU command line.  The device is configured with the fo=
+llowing
+> +riscv-iommu options:
+> +
+> +- "ioatc-limit": default value (2Mb)
+> +- "intremap": enabled
+> +- "ats": enabled
+> +- "off": on (DMA disabled)
+> +- "s-stage": enabled
+> +- "g-stage": enabled
+> +
+>  .. _iommu1.0: https://github.com/riscv-non-isa/riscv-iommu/releases/down=
+load/v1.0/riscv-iommu.pdf
 >
->      k->realize =3D riscv_iommu_pci_realize;
->      k->exit =3D riscv_iommu_pci_exit;
-> diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
-> index a0ef67a20b..605979a0ac 100644
-> --- a/hw/riscv/riscv-iommu-sys.c
-> +++ b/hw/riscv/riscv-iommu-sys.c
-> @@ -54,6 +54,12 @@ struct RISCVIOMMUStateSys {
->      uint8_t *msix_pba;
->  };
+>  .. _linux-v8: https://lore.kernel.org/linux-riscv/cover.1718388908.git.t=
+jeznach@rivosinc.com/
+> diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+> index 8e9a2e4dda..537aac0340 100644
+> --- a/docs/system/riscv/virt.rst
+> +++ b/docs/system/riscv/virt.rst
+> @@ -94,6 +94,12 @@ command line:
 >
-> +struct RISCVIOMMUSysClass {
-> +    /*< public >*/
-> +    DeviceRealize parent_realize;
-> +    ResettablePhases parent_phases;
-> +};
-> +
->  static uint64_t msix_table_mmio_read(void *opaque, hwaddr addr,
->                                       unsigned size)
->  {
-> @@ -212,9 +218,23 @@ static Property riscv_iommu_sys_properties[] =3D {
->      DEFINE_PROP_END_OF_LIST(),
->  };
+>    $ qemu-system-riscv64 -M virt -device riscv-iommu-pci (...)
 >
-> +static void riscv_iommu_sys_reset_hold(Object *obj, ResetType type)
-> +{
-> +    RISCVIOMMUStateSys *sys =3D RISCV_IOMMU_SYS(obj);
-> +    RISCVIOMMUState *iommu =3D &sys->iommu;
+> +It also has support for the riscv-iommu-sys platform device:
 > +
-> +    riscv_iommu_reset(iommu);
+> +.. code-block:: bash
 > +
-> +    trace_riscv_iommu_sys_reset_hold(type);
-> +}
+> +  $ qemu-system-riscv64 -M virt,iommu-sys=3Don (...)
 > +
->  static void riscv_iommu_sys_class_init(ObjectClass *klass, void *data)
->  {
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
-> +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
-> +
-> +    rc->phases.hold =3D riscv_iommu_sys_reset_hold;
-> +
->      dc->realize =3D riscv_iommu_sys_realize;
->      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
->      device_class_set_props(dc, riscv_iommu_sys_properties);
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 239f83f5bd..cf2019d6aa 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2228,6 +2228,41 @@ static void riscv_iommu_unrealize(DeviceState *dev=
-)
->      g_hash_table_unref(s->ctx_cache);
->  }
+>  Refer to :ref:`riscv-iommu` for more information on how the RISC-V IOMMU=
+ support
+>  works.
 >
-> +void riscv_iommu_reset(RISCVIOMMUState *s)
-> +{
-> +    uint32_t reg_clr;
-> +    int ddtp_mode;
-> +
-> +    /*
-> +     * Clear DDTP while setting DDTP_mode back to user
-> +     * initial setting.
-> +     */
-> +    ddtp_mode =3D s->enable_off ?
-> +                RISCV_IOMMU_DDTP_MODE_OFF : RISCV_IOMMU_DDTP_MODE_BARE;
-> +    s->ddtp =3D set_field(0, RISCV_IOMMU_DDTP_MODE, ddtp_mode);
-> +    riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_DDTP, s->ddtp);
-> +
-> +    reg_clr =3D RISCV_IOMMU_CQCSR_CQEN | RISCV_IOMMU_CQCSR_CIE |
-> +              RISCV_IOMMU_CQCSR_CQON | RISCV_IOMMU_CQCSR_BUSY;
-> +    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR, 0, reg_clr);
-> +
-> +    reg_clr =3D RISCV_IOMMU_FQCSR_FQEN | RISCV_IOMMU_FQCSR_FIE |
-> +              RISCV_IOMMU_FQCSR_FQON | RISCV_IOMMU_FQCSR_BUSY;
-> +    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_FQCSR, 0, reg_clr);
-> +
-> +    reg_clr =3D RISCV_IOMMU_PQCSR_PQEN | RISCV_IOMMU_PQCSR_PIE |
-> +              RISCV_IOMMU_PQCSR_PQON | RISCV_IOMMU_PQCSR_BUSY;
-> +    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_PQCSR, 0, reg_clr);
-> +
-> +    riscv_iommu_reg_mod64(s, RISCV_IOMMU_REG_TR_REQ_CTL, 0,
-> +                          RISCV_IOMMU_TR_REQ_CTL_GO_BUSY);
-> +
-> +    riscv_iommu_reg_set32(s, RISCV_IOMMU_REG_IPSR, 0);
-> +
-> +    g_hash_table_remove_all(s->ctx_cache);
-> +    g_hash_table_remove_all(s->iot_cache);
-> +}
-> +
->  static Property riscv_iommu_properties[] =3D {
->      DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
->          RISCV_IOMMU_SPEC_DOT_VER),
-> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-> index f9f2827808..9424989df4 100644
-> --- a/hw/riscv/riscv-iommu.h
-> +++ b/hw/riscv/riscv-iommu.h
-> @@ -89,6 +89,7 @@ struct RISCVIOMMUState {
->  void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
->           Error **errp);
->  void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mo=
-de);
-> +void riscv_iommu_reset(RISCVIOMMUState *s);
+> @@ -129,6 +135,10 @@ The following machine-specific options are supported=
+:
+>    having AIA IMSIC (i.e. "aia=3Daplic-imsic" selected). When not specifi=
+ed,
+>    the default number of per-HART VS-level AIA IMSIC pages is 0.
 >
->  /* private helpers */
->
-> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
-> index 94facbb8b1..aaa2c0eb94 100644
-> --- a/hw/riscv/trace-events
-> +++ b/hw/riscv/trace-events
-> @@ -17,3 +17,5 @@ riscv_iommu_ats_inval(const char *id) "%s: dev-iotlb in=
-validate"
->  riscv_iommu_ats_prgr(const char *id) "%s: dev-iotlb page request group r=
-esponse"
->  riscv_iommu_sys_irq_sent(uint32_t vector) "IRQ sent to vector %u"
->  riscv_iommu_sys_msi_sent(uint32_t vector, uint64_t msi_addr, uint32_t ms=
-i_data, uint32_t result) "MSI sent to vector %u msi_addr 0x%lx msi_data 0x%=
-x result %u"
-> +riscv_iommu_sys_reset_hold(int reset_type) "reset type %d"
-> +riscv_iommu_pci_reset_hold(int reset_type) "reset type %d"
-> diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
-> index 8a8acfc3f0..b03339d75c 100644
-> --- a/include/hw/riscv/iommu.h
-> +++ b/include/hw/riscv/iommu.h
-> @@ -30,12 +30,14 @@ typedef struct RISCVIOMMUState RISCVIOMMUState;
->  typedef struct RISCVIOMMUSpace RISCVIOMMUSpace;
->
->  #define TYPE_RISCV_IOMMU_PCI "riscv-iommu-pci"
-> -OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStatePci, RISCV_IOMMU_PCI)
-> +OBJECT_DECLARE_TYPE(RISCVIOMMUStatePci, RISCVIOMMUPciClass, RISCV_IOMMU_=
-PCI)
->  typedef struct RISCVIOMMUStatePci RISCVIOMMUStatePci;
-> +typedef struct RISCVIOMMUPciClass RISCVIOMMUPciClass;
->
->  #define TYPE_RISCV_IOMMU_SYS "riscv-iommu-device"
-> -OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStateSys, RISCV_IOMMU_SYS)
-> +OBJECT_DECLARE_TYPE(RISCVIOMMUStateSys, RISCVIOMMUSysClass, RISCV_IOMMU_=
-SYS)
->  typedef struct RISCVIOMMUStateSys RISCVIOMMUStateSys;
-> +typedef struct RISCVIOMMUSysClass RISCVIOMMUSysClass;
->
->  #define FDT_IRQ_TYPE_EDGE_LOW 1
+> +- iommu-sys=3D[on|off]
+> +
+> +  Enables the riscv-iommu-sys platform device. Defaults to 'off'.
+> +
+>  Running Linux kernel
+>  --------------------
 >
 > --
 > 2.45.2
