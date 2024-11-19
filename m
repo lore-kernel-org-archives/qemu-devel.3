@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B744AD4921C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B53D4921C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:08:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDHLx-000162-DS; Tue, 19 Nov 2024 01:04:45 -0500
+	id 1tDHMV-0002WO-27; Tue, 19 Nov 2024 01:05:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHLt-00012Z-DD; Tue, 19 Nov 2024 01:04:41 -0500
+ id 1tDHMT-0002Q4-Dl; Tue, 19 Nov 2024 01:05:17 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHLr-0004eJ-5m; Tue, 19 Nov 2024 01:04:41 -0500
+ id 1tDHMR-0004wT-N9; Tue, 19 Nov 2024 01:05:17 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D04A4A6264;
- Tue, 19 Nov 2024 09:04:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6943BA626F;
+ Tue, 19 Nov 2024 09:04:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 042E91738DA;
+ by tsrv.corpit.ru (Postfix) with SMTP id 9147A1738E4;
  Tue, 19 Nov 2024 09:04:19 +0300 (MSK)
-Received: (nullmailer pid 2368938 invoked by uid 1000);
+Received: (nullmailer pid 2368969 invoked by uid 1000);
  Tue, 19 Nov 2024 06:04:18 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 62/72] accel/tcg: Fix user-only probe_access_internal
- plugin check
-Date: Tue, 19 Nov 2024 09:04:03 +0300
-Message-Id: <20241119060418.2368866-5-mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 72/72] usb-hub: Fix handling port power control messages
+Date: Tue, 19 Nov 2024 09:04:13 +0300
+Message-Id: <20241119060418.2368866-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
@@ -64,33 +63,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-The acc_flag check for write should have been against PAGE_WRITE_ORG,
-not PAGE_WRITE.  But it is better to combine two acc_flag checks
-to a single check against access_type.  This matches the system code
-in cputlb.c.
+The ClearPortFeature control message fails for PORT_POWER because there
+is no break; at the end of the case statement, causing it to fall through
+to the failure handler. Add the missing break; to solve the problem.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2647
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: 20241111145002.144995-1-richard.henderson@linaro.org
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit 2a339fee450638b512c5122281cb5ab49331cfb8)
+Fixes: 1cc403eb21 ("usb-hub: emulate per port power switching")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241112170152.217664-11-linux@roeck-us.net>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit b2cc69997924b651c0c6f4037782e25f2e438715)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 7ddc47b0ba..4c269daf7d 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -805,7 +805,7 @@ static int probe_access_internal(CPUArchState *env, vaddr addr,
-     if (guest_addr_valid_untagged(addr)) {
-         int page_flags = page_get_flags(addr);
-         if (page_flags & acc_flag) {
--            if ((acc_flag == PAGE_READ || acc_flag == PAGE_WRITE)
-+            if (access_type != MMU_INST_FETCH
-                 && cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
-                 return TLB_MMIO;
+diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
+index 06e9537d03..2c3640c705 100644
+--- a/hw/usb/dev-hub.c
++++ b/hw/usb/dev-hub.c
+@@ -479,6 +479,7 @@ static void usb_hub_handle_control(USBDevice *dev, USBPacket *p,
+                     usb_hub_port_clear(port, PORT_STAT_SUSPEND);
+                     port->wPortChange = 0;
+                 }
++                break;
+             default:
+                 goto fail;
              }
 -- 
 2.39.5
