@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D368D6C288
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 18:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF0BD6C28C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 19:19:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDTMl-000872-11; Tue, 19 Nov 2024 13:54:23 -0500
+	id 1tDTjD-0002mb-MI; Tue, 19 Nov 2024 14:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDTMj-00086Y-Dy
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 13:54:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDTMh-0008SR-CM
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 13:54:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732042457;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vgipdxjAZ7chzaI9zQ6kPFiLXEWcywxyyZvA9x0BLZc=;
- b=AZZpGertd6oMhrEh1OElhfpSpYNPeN6JL94c44f+bnVTQeE3kA5UwJK1FqGAg+f4QWNOt6
- Fw3Uc2QYbX6csdZGwKphOusMI/p9e26FE5Rq5FRdjbAMAmoqII32M/IGpsr6FJ8aGf5I5a
- pU80kKZOEzin2UzBVsxx1yOwII69IE8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-cj4BUcckNcWcgrFoHLw15Q-1; Tue,
- 19 Nov 2024 13:54:14 -0500
-X-MC-Unique: cj4BUcckNcWcgrFoHLw15Q-1
-X-Mimecast-MFC-AGG-ID: cj4BUcckNcWcgrFoHLw15Q
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 117B61955F43; Tue, 19 Nov 2024 18:54:12 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.110])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4C5A19560A3; Tue, 19 Nov 2024 18:54:08 +0000 (UTC)
-Date: Tue, 19 Nov 2024 18:54:05 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH 13/15] tests/functional: rewrite console handling to be
- bytewise
-Message-ID: <ZzzezVVCYEJV4uVg@redhat.com>
-References: <20241119150519.1123365-1-berrange@redhat.com>
- <20241119150519.1123365-14-berrange@redhat.com>
- <beb4abeb-299a-4d4a-a253-3e65a41edcc9@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tDTjB-0002lq-NQ
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 14:17:33 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tDTj9-0007g4-3J
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 14:17:33 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-724a96f188cso1632314b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 11:17:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1732043849; x=1732648649; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=et/XKpCq8FfunkNiTWjfwypcxxKP1J2/i2fCKASeod0=;
+ b=eYpnRiErAWqKtqmVd4BnnoWJstZDA1Wp6jeCbJXMRK3bdmF/W/Nj32XgV3bAZlv9eg
+ iKvN75W8RpTtzu5EE+3t7wKbnSQLfV5RA9gNYmlCCqFeseKbNY5KXm1qc4M6U6CNb4+c
+ YBs8Cq4vPShEcnub5KRNqWc1fdLx0fjaCsYZE5vTh19eS5SFuQbot895ZcJf++ku9YS0
+ F0nrAk4dqaPjXmZR3Y21sW1dzQZy3Pjm0OxYRYtKimHCgnPl4cmySofIOaAsOlYslFHg
+ OnOj2u3SAJB+8aPGNtbGYqnaHL1OOb/XBn+2f5ABA4JjUeopFtbCiTIKH8BfhczbMphp
+ e5WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732043849; x=1732648649;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=et/XKpCq8FfunkNiTWjfwypcxxKP1J2/i2fCKASeod0=;
+ b=PpReuYw/pz9i2QY6lTB5JqCNUCPDwM1KSbjE5z17lNBvPHbmwR37E0PKXqiF2db5FR
+ VzxGpghIqIFsnQFvvi81VxtQEeQENSSV+21ClV/IIfqBIJLiFNI5D82SqfvM0Hb3YrSO
+ r0gzxUNlv3K+3uy4+LWJbvP5ib6yuT1rOQXA0GCe1/Impwjj8NzuDXKfLNsDa/0Gtpei
+ l97gq3FypSW0hkiMeDGPGvvuCkHAL9alJGMbgSOfdac5L1gkn6lNoNdxlTHbNpMd2aou
+ VYwF1TQWKtZLgRIGkVz28FGb+5JMR/pV5yaWzJw/YOWjLlBzoszDpFLlTqz77ADHr0Fu
+ Be5w==
+X-Gm-Message-State: AOJu0YwGquZE6ZjVbFBFtz8bumZFZGN20FG2GSw3SxXQ8DXbt+5go5oI
+ RLgjz4srQfBCC/P9ZWNx5yGBELk8uZJ+/I7embS84M6tbuKwjg/dS5r/8KTKI1i+CC2SvLa25Of
+ x
+X-Google-Smtp-Source: AGHT+IF2aBWtd8Mn1XU+YpwStt3yD/YqROSZx9NvYOIy5/mwcuqTEPhkDoMwFnzD3m0tbc8+T7QHNg==
+X-Received: by 2002:a17:902:e5c9:b0:20b:ce88:1b9d with SMTP id
+ d9443c01a7336-211d0ec0544mr221588405ad.45.1732043849548; 
+ Tue, 19 Nov 2024 11:17:29 -0800 (PST)
+Received: from grind.dc1.ventanamicro.com ([187.101.65.72])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-724beeb82f2sm24271b3a.35.2024.11.19.11.17.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Nov 2024 11:17:29 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH for-10.0 v2 6/8] hw/intc/riscv_aplic: add kvm_msicfgaddr for
+ split mode aplic-imsic
+Date: Tue, 19 Nov 2024 16:17:04 -0300
+Message-ID: <20241119191706.718860-7-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241119191706.718860-1-dbarboza@ventanamicro.com>
+References: <20241119191706.718860-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <beb4abeb-299a-4d4a-a253-3e65a41edcc9@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,165 +94,168 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 19, 2024 at 06:11:10PM +0100, Paolo Bonzini wrote:
-> On 11/19/24 16:05, Daniel P. Berrangé wrote:
-> > The console interaction that waits for predicted strings uses
-> > readline(), and thus is only capable of waiting for strings
-> > that are followed by a newline.
-> > 
-> > This is inconvenient when needing to match on some things,
-> > particularly login prompts, or shell prompts, causing tests
-> > to use time.sleep(...) instead, which is unreliable.
-> > 
-> > Switch to reading the console 1 byte at a time, comparing
-> > against the success/failure messages until we see a match,
-> > regardless of whether a newline is encountered.
-> > 
-> > The success/failure comparisons are done with the python bytes
-> > type, rather than strings, to avoid the problem of needing to
-> > decode partially received multibyte utf8 characters.
-> > 
-> > Heavily inspired by a patch proposed by Cédric, but written
-> > again to work in bytes, rather than strings.
-> > 
-> > Co-developed-by: Cédric Le Goater <clg@redhat.com>
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   tests/functional/qemu_test/cmd.py | 63 +++++++++++++++++++++++--------
-> >   1 file changed, 48 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-> > index 76a48064cd..91267a087f 100644
-> > --- a/tests/functional/qemu_test/cmd.py
-> > +++ b/tests/functional/qemu_test/cmd.py
-> > @@ -78,15 +78,58 @@ def run_cmd(args):
-> >   def is_readable_executable_file(path):
-> >       return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
-> > +def _console_readline(test, vm, success, failure):
-> > +    msg = bytes([])
-> > +    done = False
-> > +    while True:
-> > +        c = vm.console_socket.recv(1)
-> > +        if c is None:
-> > +            done = True
-> > +            test.fail(
-> > +                f"EOF in console, expected '{success}'")
-> > +            break
-> > +        msg += c
-> > +
-> > +        if success is None or success in msg:
-> 
-> As an optimization, you could use msg.endswith(success) and
-> msg.endswith(failure), which would avoid the most blatant cases of O(n^2)
-> behavior.
-> 
-> More important, I think "if success is None" should not be here, because it
-> will exit after one char.  Instead...
-> 
-> > +            done = True
-> > +            break
-> > +        if failure and failure in msg:
-> > +            done = True
-> > +            vm.console_socket.close()
-> > +            test.fail(
-> > +                f"'{failure}' found in console, expected '{success}'")
-> > +
-> > +        if c == b'\n':
-> 
-> Here you can put
-> 
->                done = success is None
+The last step to enable KVM AIA aplic-imsic with irqchip in split mode
+is to deal with how MSIs are going to be sent. In our current design we
+don't allow an APLIC controller to send MSIs unless it's on m-mode. And
+we also do not allow Supervisor MSI address configuration via the
+'smsiaddrcfg' and 'smsiaddrcfgh' registers unless it's also a m-mode
+APLIC controller.
 
-Hmmm, this can only be a problem if "success" is None, and
-"failure" is not None, and although the old code would
-technically work in that case, I think it is actually an
-unknown/invalid usage scenario.
+Add a new RISCVACPLICState attribute called 'kvm_msicfgaddr'. This
+attribute represents the base configuration address for MSIs, in our
+case the base addr of the IMSIC controller. This attribute is being set
+only when running irqchip_split() mode with aia=aplic-imsic.
 
-If BOTH "success" and "failure" are None, this method won't
-be called at all. It is valid for "failure" to be none, but
-I don't think it makes semantic sense for "success" to also
-be None, while have "failure" be non-None.
+During riscv_aplic_msi_send() we'll check if the attribute was set to
+skip the check for a m-mode APLIC controller and to change the resulting
+MSI addr by adding kvm_msicfgaddr right before address_space_stl_le().
 
-So I'm inclined to say we declare 'success' to be mandatory
-and validate that in the caller. eg
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/intc/riscv_aplic.c         | 42 +++++++++++++++++++++++++++--------
+ hw/riscv/virt.c               |  6 ++++-
+ include/hw/intc/riscv_aplic.h |  6 +++++
+ 3 files changed, 44 insertions(+), 10 deletions(-)
 
- assert send_string is not None or success_message is not None
-
-
-and then remove this "success is None" check from
-_console_readline.
-
-> 
-> Paolo
-> 
-> > +            break
-> > +
-> > +    console_logger = logging.getLogger('console')
-> > +    try:
-> > +        console_logger.debug(msg.decode().strip())
-> > +    except:
-> > +        console_logger.debug(msg)
-> > +
-> > +    return done
-> > +
-> >   def _console_interaction(test, success_message, failure_message,
-> >                            send_string, keep_sending=False, vm=None):
-> >       assert not keep_sending or send_string
-> >       if vm is None:
-> >           vm = test.vm
-> > -    console = vm.console_file
-> > -    console_logger = logging.getLogger('console')
-> > +
-> >       test.log.debug(f"Console interaction success:'{success_message}' " +
-> >                      f"failure:'{failure_message}' send:'{send_string}'")
-> > +
-> > +    # We'll process console in bytes, to avoid having to
-> > +    # deal with unicode decode errors from receiving
-> > +    # partial utf8 byte sequences
-> > +    success_message_b = None
-> > +    if success_message is not None:
-> > +        success_message_b = success_message.encode()
-> > +
-> > +    failure_message_b = None
-> > +    if failure_message is not None:
-> > +        failure_message_b = failure_message.encode()
-> > +
-> >       while True:
-> >           if send_string:
-> >               vm.console_socket.sendall(send_string.encode())
-> > @@ -99,20 +142,10 @@ def _console_interaction(test, success_message, failure_message,
-> >                   break
-> >               continue
-> > -        try:
-> > -            msg = console.readline().decode().strip()
-> > -        except UnicodeDecodeError:
-> > -            msg = None
-> > -        if not msg:
-> > -            continue
-> > -        console_logger.debug(msg)
-> > -        if success_message is None or success_message in msg:
-> > +        if _console_readline(test, vm,
-> > +                             success_message_b,
-> > +                             failure_message_b):
-> >               break
-> > -        if failure_message and failure_message in msg:
-> > -            console.close()
-> > -            fail = 'Failure message found in console: "%s". Expected: "%s"' % \
-> > -                    (failure_message, success_message)
-> > -            test.fail(fail)
-> >   def interrupt_interactive_console_until_pattern(test, success_message,
-> >                                                   failure_message=None,
-> 
-
-With regards,
-Daniel
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index 0696e20ddf..4de458e395 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -177,6 +177,16 @@ bool riscv_use_emulated_aplic(bool msimode)
+ #endif
+ }
+ 
++void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr)
++{
++#ifdef CONFIG_KVM
++    if (riscv_use_emulated_aplic(aplic->msimode)) {
++        aplic->kvm_msicfgaddr = extract64(addr, 0, 32);
++        aplic->kvm_msicfgaddrH = extract64(addr, 32, 32);
++    }
++#endif
++}
++
+ static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
+                                           uint32_t irq)
+ {
+@@ -377,13 +387,16 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
+     uint32_t lhxs, lhxw, hhxs, hhxw, group_idx, msicfgaddr, msicfgaddrH;
+ 
+     aplic_m = aplic;
+-    while (aplic_m && !aplic_m->mmode) {
+-        aplic_m = aplic_m->parent;
+-    }
+-    if (!aplic_m) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: m-level APLIC not found\n",
+-                      __func__);
+-        return;
++
++    if (!aplic->kvm_splitmode) {
++        while (aplic_m && !aplic_m->mmode) {
++            aplic_m = aplic_m->parent;
++        }
++        if (!aplic_m) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: m-level APLIC not found\n",
++                          __func__);
++            return;
++        }
+     }
+ 
+     if (aplic->mmode) {
+@@ -415,6 +428,11 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
+     addr |= (uint64_t)(guest_idx & APLIC_xMSICFGADDR_PPN_HART(lhxs));
+     addr <<= APLIC_xMSICFGADDR_PPN_SHIFT;
+ 
++    if (aplic->kvm_splitmode) {
++        addr |= aplic->kvm_msicfgaddr;
++        addr |= ((uint64_t)aplic->kvm_msicfgaddrH << 32);
++    }
++
+     address_space_stl_le(&address_space_memory, addr,
+                          eiid, MEMTXATTRS_UNSPECIFIED, &result);
+     if (result != MEMTX_OK) {
+@@ -888,6 +906,10 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
+         memory_region_init_io(&aplic->mmio, OBJECT(dev), &riscv_aplic_ops,
+                               aplic, TYPE_RISCV_APLIC, aplic->aperture_size);
+         sysbus_init_mmio(SYS_BUS_DEVICE(dev), &aplic->mmio);
++
++        if (kvm_enabled()) {
++            aplic->kvm_splitmode = true;
++        }
+     }
+ 
+     /*
+@@ -935,8 +957,8 @@ static Property riscv_aplic_properties[] = {
+ 
+ static const VMStateDescription vmstate_riscv_aplic = {
+     .name = "riscv_aplic",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
+             VMSTATE_UINT32(domaincfg, RISCVAPLICState),
+             VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
+@@ -944,6 +966,8 @@ static const VMStateDescription vmstate_riscv_aplic = {
+             VMSTATE_UINT32(smsicfgaddr, RISCVAPLICState),
+             VMSTATE_UINT32(smsicfgaddrH, RISCVAPLICState),
+             VMSTATE_UINT32(genmsi, RISCVAPLICState),
++            VMSTATE_UINT32(kvm_msicfgaddr, RISCVAPLICState),
++            VMSTATE_UINT32(kvm_msicfgaddrH, RISCVAPLICState),
+             VMSTATE_VARRAY_UINT32(sourcecfg, RISCVAPLICState,
+                                   num_irqs, 0,
+                                   vmstate_info_uint32, uint32_t),
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index a954ca2104..ee223f86ec 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1246,7 +1246,7 @@ static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
+                                     int base_hartid, int hart_count)
+ {
+     int i;
+-    hwaddr addr;
++    hwaddr addr = 0;
+     uint32_t guest_bits;
+     DeviceState *aplic_s = NULL;
+     DeviceState *aplic_m = NULL;
+@@ -1296,6 +1296,10 @@ static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
+                                  VIRT_IRQCHIP_NUM_PRIO_BITS,
+                                  msimode, false, aplic_m);
+ 
++    if (kvm_enabled() && msimode) {
++        riscv_aplic_set_kvm_msicfgaddr(RISCV_APLIC(aplic_s), addr);
++    }
++
+     return kvm_enabled() ? aplic_s : aplic_m;
+ }
+ 
+diff --git a/include/hw/intc/riscv_aplic.h b/include/hw/intc/riscv_aplic.h
+index 74ae5d87b5..489b9133c2 100644
+--- a/include/hw/intc/riscv_aplic.h
++++ b/include/hw/intc/riscv_aplic.h
+@@ -68,11 +68,17 @@ struct RISCVAPLICState {
+     uint32_t num_irqs;
+     bool msimode;
+     bool mmode;
++
++    /* To support KVM aia=aplic-imsic with irqchip split mode */
++    bool kvm_splitmode;
++    uint32_t kvm_msicfgaddr;
++    uint32_t kvm_msicfgaddrH;
+ };
+ 
+ void riscv_aplic_add_child(DeviceState *parent, DeviceState *child);
+ bool riscv_is_kvm_aia_aplic_imsic(bool msimode);
+ bool riscv_use_emulated_aplic(bool msimode);
++void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr);
+ 
+ DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
+     uint32_t hartid_base, uint32_t num_harts, uint32_t num_sources,
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.0
 
 
