@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D00D62060
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8BE3D62060
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:04:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDL5B-0004vX-Qk; Tue, 19 Nov 2024 05:03:41 -0500
+	id 1tDL5E-0004w8-9m; Tue, 19 Nov 2024 05:03:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDL58-0004v6-L1
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:03:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDL55-00073x-Sh
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:03:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732010614;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=+2WfRg8Dh13SOa3rwlqa6ItDiMr6SUZcHXcYex2L5Hk=;
- b=UjxO5bthXaq7Ac8yeuBt8xfm9pO9J59VJLx9dObIjDt0rotcvyB3wMV2UFI3rxd6Z3V7ma
- SRbslsl6N9rFnPgcsL4XtPZtplAzPnEFu5x+0p0qSuY0yh1GC1uEi4eeRujS9T0xuv+c0i
- b2T4NonGEcd/TKJGs4gI9dtJSmbImsk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-jTw4AIadOzirXuGeupyBbg-1; Tue,
- 19 Nov 2024 05:03:30 -0500
-X-MC-Unique: jTw4AIadOzirXuGeupyBbg-1
-X-Mimecast-MFC-AGG-ID: jTw4AIadOzirXuGeupyBbg
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9402919560AF; Tue, 19 Nov 2024 10:03:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.110])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FBCE1956086; Tue, 19 Nov 2024 10:03:25 +0000 (UTC)
-Date: Tue, 19 Nov 2024 10:03:22 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 5/5] qom: Make container_get() strict to always walk or
- return container
-Message-ID: <ZzxianGKK71p0yA1@redhat.com>
-References: <20241118221330.3480246-1-peterx@redhat.com>
- <20241118221330.3480246-6-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tDL5B-0004vM-44
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:03:41 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tDL57-00073t-FG
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:03:40 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxyuFzYjxnkl5CAA--.1183S3;
+ Tue, 19 Nov 2024 18:03:31 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBx_uBvYjxnXzJdAA--.5715S3;
+ Tue, 19 Nov 2024 18:03:31 +0800 (CST)
+Subject: Re: [PATCH v4 3/6] hw/loongarch/virt: Add generic function to init
+ interrupt pin of CPU
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+References: <20241112021738.1952851-1-maobibo@loongson.cn>
+ <20241112021738.1952851-4-maobibo@loongson.cn>
+ <20241118174346.23b6d2ee@imammedo.users.ipa.redhat.com>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <b3a86101-faab-3db2-e049-d77ecf0cc27e@loongson.cn>
+Date: Tue, 19 Nov 2024 18:02:54 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241118221330.3480246-6-peterx@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+In-Reply-To: <20241118174346.23b6d2ee@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBx_uBvYjxnXzJdAA--.5715S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxKr4UCry5XF4UZr17AFWUtrc_yoW3Wr1xpF
+ W8CanYkw4UJF93WwsFg3WUuFnYvrsaka42gw4akFySkF1qkryrCryDAw4Ykay8C3ykXF10
+ v3WkXFW7XFnrA3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jO
+ F4_UUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.492,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,125 +83,219 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 18, 2024 at 05:13:30PM -0500, Peter Xu wrote:
-> When used incorrectly, container_get() can silently create containers even
-> if the caller may not intend to do so.  Add a rich document describing the
-> helper, as container_get() should only be used in path lookups.
+
+
+On 2024/11/19 上午12:43, Igor Mammedov wrote:
+> On Tue, 12 Nov 2024 10:17:35 +0800
+> Bibo Mao <maobibo@loongson.cn> wrote:
 > 
-> Add one object_dynamic_cast() check to make sure whatever objects the
-> helper walks will be a container object (including the one to be returned).
-> It is a programming error otherwise, hence assert that.
+>> Here generic function virt_init_cpu_irq() is added to init interrupt
+>> pin of CPU object, IPI and extioi interrupt controllers are connected
+>> to interrupt pin of CPU object.
+>>
+>> The generic function can be used to both cold-plug and hot-plug CPUs.
 > 
-> It may make container_get() tiny slower than before, but the hope is the
-> change is neglictable, as object_class_dynamic_cast() has a fast path just
-> for similar leaf use case.
+> this patch is heavily depends on cpu_index and specific order CPUs
+> are created.
+yes, that is actually one problem with heavy dependency, I will try to 
+remove the dependency.
 > 
-> Link: https://lore.kernel.org/r/87pln6ds8q.fsf@pond.sub.org
-> Suggested-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  qom/container.c | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   hw/loongarch/virt.c         | 78 ++++++++++++++++++++++++-------------
+>>   include/hw/loongarch/virt.h |  2 +
+>>   2 files changed, 53 insertions(+), 27 deletions(-)
+>>
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index b6b616d278..621380e2b3 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -58,6 +58,20 @@ static bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+>>       return true;
+>>   }
+>>   
+>> +static CPUState *virt_get_cpu(MachineState *ms, int index)
+>> +{
+>> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+>> +    const CPUArchIdList *possible_cpus;
+>> +
+>> +    /* Init CPUs */
+>> +    possible_cpus = mc->possible_cpu_arch_ids(ms);
+>> +    if (index < 0 || index >= possible_cpus->len) {
+>> +        return NULL;
+>> +    }
+>> +
+>> +    return possible_cpus->cpus[index].cpu;
+>> +}
 > 
-> diff --git a/qom/container.c b/qom/container.c
-> index cfec92a944..ff6e35f837 100644
-> --- a/qom/container.c
-> +++ b/qom/container.c
-> @@ -24,6 +24,20 @@ static void container_register_types(void)
->      type_register_static(&container_info);
->  }
->  
-> +/**
-> + * container_get(): Get the container object under specific path
-> + *
-> + * @root: The root path object to start walking from.  When starting from
-> + *        root, one can pass in object_get_root().
-> + * @path: The sub-path to lookup, must be an non-empty string starts with "/".
-> + *
-> + * Returns: The container object specified by @path.
-> + *
-> + * NOTE: the function may impplicitly create internal containers when the
-> + * whole path is not yet created.  It's the caller's responsibility to make
-> + * sure the path specified is always used as object containers, rather than
-> + * any other type of objects.
-> + */
-
-The docs are a welcome addition, but at the same time the docs won't get
-read most of the time.
-
-With this in mind, IMHO, it is a conceptually *terrible* design for us to
-have a method called "get" which magically *creates* stuff as a side-effect
-of its calling. We'd be well served by fixing that design problem.
-
-If I look in the code at what calls we have to container_get, and more
-specifically what "path" values we pass, there are not actually that many:
-
-  /objects
-  /chardevs
-  /unattached
-  /machine
-  /peripheral
-  /peripheral-anon
-  /backend
-  /dr-connector
-  
-
-Ignoring the last one, those other 7 containers are things we expect
-to exist in *every* system emulator.
-
-Second, every single one of them is a single level deep. IOW, the for()
-loop in container_get is effectively pointless.
-
-We can fix this by having a single method:
-
- void container_create_builtin(Object *root)
-
-which creates the 7 built-in standard containers we expect
-everywhere, with open coded object_new + add_child calls. 
-
-Then all current users of container_get() can switch over
-to object_resolve_path, and container_get() can be eliminated.
-
-The 'dr-connector' creation can just be open-coded using
-object_new() in the spapr code.
-
->  Object *container_get(Object *root, const char *path)
->  {
->      Object *obj, *child;
-> @@ -31,6 +45,7 @@ Object *container_get(Object *root, const char *path)
->      int i;
->  
->      parts = g_strsplit(path, "/", 0);
-> +    /* "path" must be an non-empty string starting with "/" */
->      assert(parts != NULL && parts[0] != NULL && !parts[0][0]);
->      obj = root;
->  
-> @@ -40,6 +55,12 @@ Object *container_get(Object *root, const char *path)
->              child = object_new(TYPE_CONTAINER);
->              object_property_add_child(obj, parts[i], child);
->              object_unref(child);
-> +        } else {
-> +            /*
-> +             * Each object within the path must be a container object
-> +             * itself, including the object to be returned.
-> +             */
-> +            assert(object_dynamic_cast(child, TYPE_CONTAINER));
->          }
->      }
->  
-> -- 
-> 2.45.0
+> instead of adding this helper I'd suggest to try reusing
+> virt_find_cpu_slot() added in previous patch.
 > 
+>> +
+>>   static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
+>>                                 void *opaque, Error **errp)
+>>   {
+>> @@ -365,7 +379,7 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
+>>   static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
+>>   {
+>>       int num;
+>> -    const MachineState *ms = MACHINE(lvms);
+>> +    MachineState *ms = MACHINE(lvms);
+>>       int smp_cpus = ms->smp.cpus;
+>>   
+>>       qemu_fdt_add_subnode(ms->fdt, "/cpus");
+>> @@ -375,7 +389,7 @@ static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
+>>       /* cpu nodes */
+>>       for (num = smp_cpus - 1; num >= 0; num--) {
+> 
+> loops based on smp_cpus become broken as soon as you have
+>   '-smp x, -device your-cpu,...
+> since it doesn't take in account '-device' created CPUs.
+> You likely need to replace such loops to iterate over possible_cpus
+> (in a separate patch please)
+yes, will do. possible_cpus can be used and virt_get_cpu() is unnecessary.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Interesting, I never create cpu like the method like this, will try this.
+'-smp x, -device your-cpu,...'
+>    
+>>           char *nodename = g_strdup_printf("/cpus/cpu@%d", num);
+>> -        LoongArchCPU *cpu = LOONGARCH_CPU(qemu_get_cpu(num));
+>> +        LoongArchCPU *cpu = LOONGARCH_CPU(virt_get_cpu(ms, num));
+>>           CPUState *cs = CPU(cpu);
+>>   
+>>           qemu_fdt_add_subnode(ms->fdt, nodename);
+>> @@ -783,16 +797,42 @@ static void virt_devices_init(DeviceState *pch_pic,
+>>       lvms->platform_bus_dev = create_platform_bus(pch_pic);
+>>   }
+>>   
+>> +static void virt_init_cpu_irq(MachineState *ms, CPUState *cs)
+>> +{
+>> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+>> +    CPULoongArchState *env;
+>> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+>> +    int pin;
+>> +
+>> +    if (!lvms->ipi || !lvms->extioi) {
+>> +        return;
+>> +    }
+>> +
+>> +    env = &(cpu->env);
+>> +    env->address_space_iocsr = &lvms->as_iocsr;
+>> +    env->ipistate = lvms->ipi;
+>> +    /* connect ipi irq to cpu irq, logic cpu index used here */
+>> +    qdev_connect_gpio_out(lvms->ipi, cs->cpu_index,
+> I'd try to avoid using cpu_index (basically internal CPU detail) when
+> wiring components together. It would be better to implement this the way
+> the real hw does it.
+yes, will try to remove this and ipi device realize funciton. When ipi 
+device is created, it will search possible_cpus and connect to interrupt 
+pin of supported CPU.
+
+The real hw is same with Interrupt Pin method :(, and there is no 
+apic-bus or Processor System Bus like x86.
+
+Regards
+Bibo Mao
+> 
+> 
+>> +                              qdev_get_gpio_in(DEVICE(cs), IRQ_IPI));
+>> +
+>> +    /*
+>> +     * connect ext irq to the cpu irq
+>> +     * cpu_pin[9:2] <= intc_pin[7:0]
+>> +     */
+>> +    for (pin = 0; pin < LS3A_INTC_IP; pin++) {
+>> +        qdev_connect_gpio_out(lvms->extioi, cs->cpu_index * LS3A_INTC_IP + pin,
+>> +                              qdev_get_gpio_in(DEVICE(cs), pin + 2));
+>> +    }
+>> +}
+>> +
+>>   static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>   {
+>>       MachineState *ms = MACHINE(lvms);
+>> -    DeviceState *pch_pic, *pch_msi, *cpudev;
+>> +    DeviceState *pch_pic, *pch_msi;
+>>       DeviceState *ipi, *extioi;
+>>       SysBusDevice *d;
+>> -    LoongArchCPU *lacpu;
+>> -    CPULoongArchState *env;
+>>       CPUState *cpu_state;
+>> -    int cpu, pin, i, start, num;
+>> +    int cpu, i, start, num;
+>>       uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle, pch_msi_phandle;
+>>   
+>>       /*
+>> @@ -843,6 +883,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>       ipi = qdev_new(TYPE_LOONGARCH_IPI);
+>>       qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.cpus);
+>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
+>> +    lvms->ipi = ipi;
+>>   
+>>       /* IPI iocsr memory region */
+>>       memory_region_add_subregion(&lvms->system_iocsr, SMP_IPI_MAILBOX,
+>> @@ -853,18 +894,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>       /* Add cpu interrupt-controller */
+>>       fdt_add_cpuic_node(lvms, &cpuintc_phandle);
+>>   
+>> -    for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
+>> -        cpu_state = qemu_get_cpu(cpu);
+>> -        cpudev = DEVICE(cpu_state);
+>> -        lacpu = LOONGARCH_CPU(cpu_state);
+>> -        env = &(lacpu->env);
+>> -        env->address_space_iocsr = &lvms->as_iocsr;
+>> -
+>> -        /* connect ipi irq to cpu irq */
+>> -        qdev_connect_gpio_out(ipi, cpu, qdev_get_gpio_in(cpudev, IRQ_IPI));
+>> -        env->ipistate = ipi;
+>> -    }
+>> -
+>>       /* Create EXTIOI device */
+>>       extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
+>>       qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
+>> @@ -872,6 +901,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>           qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
+>>       }
+>>       sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
+>> +    lvms->extioi = extioi;
+>>       memory_region_add_subregion(&lvms->system_iocsr, APIC_BASE,
+>>                       sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 0));
+>>       if (virt_is_veiointc_enabled(lvms)) {
+>> @@ -879,16 +909,10 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>                       sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 1));
+>>       }
+>>   
+>> -    /*
+>> -     * connect ext irq to the cpu irq
+>> -     * cpu_pin[9:2] <= intc_pin[7:0]
+>> -     */
+>> +    /* Connect irq to cpu, including ipi and extioi irqchip */
+>>       for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
+>> -        cpudev = DEVICE(qemu_get_cpu(cpu));
+>> -        for (pin = 0; pin < LS3A_INTC_IP; pin++) {
+>> -            qdev_connect_gpio_out(extioi, (cpu * 8 + pin),
+>> -                                  qdev_get_gpio_in(cpudev, pin + 2));
+>> -        }
+>> +        cpu_state = virt_get_cpu(ms, cpu);
+>> +        virt_init_cpu_irq(ms, cpu_state);
+>>       }
+>>   
+>>       /* Add Extend I/O Interrupt Controller node */
+>> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+>> index 9ba47793ef..260e6bd7cf 100644
+>> --- a/include/hw/loongarch/virt.h
+>> +++ b/include/hw/loongarch/virt.h
+>> @@ -60,6 +60,8 @@ struct LoongArchVirtMachineState {
+>>       MemoryRegion iocsr_mem;
+>>       AddressSpace as_iocsr;
+>>       struct loongarch_boot_info bootinfo;
+>> +    DeviceState *ipi;
+>> +    DeviceState *extioi;
+>>   };
+>>   
+>>   #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
 
 
