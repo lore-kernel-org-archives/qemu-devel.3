@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7B6ED4416E
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 15:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A09D2D44172
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 15:06:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDPnZ-0005te-R8; Tue, 19 Nov 2024 10:05:51 -0500
+	id 1tDPo9-0006HH-Fr; Tue, 19 Nov 2024 10:06:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDPnU-0005ob-7P
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:45 -0500
+ id 1tDPnz-00066a-GL
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:06:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDPnS-0003gh-R0
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:43 -0500
+ id 1tDPnw-0003n5-PB
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:06:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732028742;
+ s=mimecast20190719; t=1732028772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6HjkfIz7V3MLf9hlQGbdwpkUqrMkLTBQZOC3UbcGioc=;
- b=BzR35QSaHUHV3Enb+xBaS76ZdbCgvS1HVNQIFwSD6XC2y1rMIjUWvNsUEnv2Fu2WzjVfwa
- KEUjCZy+LnBJ1himjdoB2lSt8jrLLUi2sppmrcHxQYSI+jfztVZZxwGANHpvf3iR5H/eAR
- fDg+cbmW9aOFxhE6w4EbUFxQSjcDy7E=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Eyu0cn5FzdzceEuW+fkqD+07mIuDQMfs25zDJjNsjtg=;
+ b=A3C0mllupf4f/IY4IUiiBUINh87AGUezcO4/PZBOM5/xE5wsWU95dLEQM7SxtPiGPKqqoQ
+ 7F43yOcsdsU3wmC0hCPBTkPWbTFPr1wzGCuXveD0baU9tXWBYU/bvdxuwPV1NMiSwbovav
+ 0xKDpe1XXnX6x9EYGRuKIFXMKuZlBcU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-250-ookZ2uu9MQqrrjOjfANXcQ-1; Tue,
- 19 Nov 2024 10:05:37 -0500
-X-MC-Unique: ookZ2uu9MQqrrjOjfANXcQ-1
-X-Mimecast-MFC-AGG-ID: ookZ2uu9MQqrrjOjfANXcQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-McuGO2pfP7CL0FB3QUOxcg-1; Tue,
+ 19 Nov 2024 10:06:10 -0500
+X-MC-Unique: McuGO2pfP7CL0FB3QUOxcg-1
+X-Mimecast-MFC-AGG-ID: McuGO2pfP7CL0FB3QUOxcg
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E3ABA1953961; Tue, 19 Nov 2024 15:05:35 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA9651955F3E; Tue, 19 Nov 2024 15:06:09 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.110])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 62B4719560A3; Tue, 19 Nov 2024 15:05:33 +0000 (UTC)
+ id 2C6D719560A3; Tue, 19 Nov 2024 15:06:06 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
@@ -54,9 +54,10 @@ Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 04/15] tests/functional: remove todo wrt avocado.utils.wait_for
-Date: Tue, 19 Nov 2024 15:05:08 +0000
-Message-ID: <20241119150519.1123365-5-berrange@redhat.com>
+Subject: [PATCH 15/15] tests/functional: add a QMP backdoor for debugging
+ stalled tests
+Date: Tue, 19 Nov 2024 15:05:19 +0000
+Message-ID: <20241119150519.1123365-16-berrange@redhat.com>
 In-Reply-To: <20241119150519.1123365-1-berrange@redhat.com>
 References: <20241119150519.1123365-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,28 +89,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're not using avocado anymore, so while the TODO item is still
-relevant, suggesting use of avocado.utils is not.
+Support the QEMU_TEST_QMP_BACKDOOR=backdoor.sock env variable as a
+way to get a QMP backdoor for debugging a stalled QEMU test. Most
+typically this would be used if running the tests directly:
+
+ $ QEMU_TEST_QMP_BACKDOOR=backdoor.sock \
+   QEMU_TEST_QEMU_BINARY=./build/qemu-system-arm \
+   PYTHONPATH=./python \
+   ./tests/functional/test_arm_tuxrun.py
+
+And then, when the test stalls, in a second shell run:
+
+ $ ./scripts/qmp/qmp-shell backdoor.sock
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/test_m68k_nextcube.py | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ docs/devel/testing/functional.rst      | 10 ++++++++++
+ tests/functional/qemu_test/testcase.py |  7 +++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/tests/functional/test_m68k_nextcube.py b/tests/functional/test_m68k_nextcube.py
-index 89385a134a..0124622c40 100755
---- a/tests/functional/test_m68k_nextcube.py
-+++ b/tests/functional/test_m68k_nextcube.py
-@@ -37,8 +37,7 @@ def check_bootrom_framebuffer(self, screenshot_path):
-         self.vm.launch()
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index 6b5d0c5b98..b8ad7b0bf7 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -176,6 +176,16 @@ primarily depend on the value of the ``qemu_bin`` class attribute.
+ If it is not explicitly set by the test code, its default value will
+ be the result the QEMU_TEST_QEMU_BINARY environment variable.
  
-         self.log.info('VM launched, waiting for display')
--        # TODO: Use avocado.utils.wait.wait_for to catch the
--        #       'displaysurface_create 1120x832' trace-event.
-+        # TODO: wait for the 'displaysurface_create 1120x832' trace-event.
-         time.sleep(2)
++Debugging hung QEMU
++^^^^^^^^^^^^^^^^^^^
++
++When test cases go wrong it may be helpful to debug a stalled QEMU
++process. While the QEMUMachine class owns the primary QMP monitor
++socket, it is possible to request a second QMP monitor be created
++by setting the ``QEMU_TEST_QMP_BACKDOOR`` env variable to refer
++to a UNIX socket name. The ``qmp-shell`` command can then be
++attached to the stalled QEMU to examine its live state.
++
+ Attribute reference
+ -------------------
  
-         self.vm.cmd('human-monitor-command',
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index e2a329c3e5..eb889a5bae 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -175,6 +175,13 @@ def _new_vm(self, name, *args):
+                          log_dir=self.logdir)
+         self.log.debug('QEMUMachine "%s" created', name)
+         self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
++
++        if "QEMU_TEST_QMP_BACKDOOR" in os.environ:
++            path = os.environ["QEMU_TEST_QMP_BACKDOOR"]
++            vm.add_args("-chardev",
++                        f"socket,id=backdoor,path={path},server=on,wait=off",
++                        "-mon", "chardev=backdoor,mode=control")
++
+         if args:
+             vm.add_args(*args)
+         return vm
 -- 
 2.46.0
 
