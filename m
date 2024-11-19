@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A3DD44167
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 15:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996DDD44162
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 15:08:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDPnk-0005xl-9o; Tue, 19 Nov 2024 10:06:00 -0500
+	id 1tDPnn-00060n-6V; Tue, 19 Nov 2024 10:06:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDPnb-0005uP-0q
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:51 -0500
+ id 1tDPnf-0005vz-IL
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDPnZ-0003jT-CU
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:50 -0500
+ id 1tDPnd-0003k4-CD
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732028748;
+ s=mimecast20190719; t=1732028752;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r8gyOHf35XX4TDNvnuZNUVMGe/idCR5wEtsU5xYTmH4=;
- b=R+eXmp3gtAYDQ6kpmnq+6nF7CFBX3NdqOxUII3kzhLY/cXXkQABxWqQTB1RBYh7dCSpdM4
- rwumMxSIqMYPqYzxzgGEyNaPB3JrYtoiAaJsv643mJJuZzYOGGejOkyWa/WGP504Fowi6u
- 5TKNrLTFxxNGWLHyth3qW1enu4+Iqdk=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=mpQSBVmEKA0YchuFKMeQpzWQy9TzwDXdTqUn1SW8rgM=;
+ b=Jz+leoN6vGhOAPZ+HWc35VxSK943ZTLu3+cAgDzrTOTIoZciVof36iUvaWjpuphIKCyXoT
+ pWmBm5Kh3Ao4hYZfY7VtCv04LJpJNPjAB3NI4z7xYN3R04txLIA6VweDYC9YgeuEcinTmW
+ BtT369wjxLpF5AAVAtcG6H6Rvu2eijQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-694sOc_hPpW7vcLUNAUmew-1; Tue,
- 19 Nov 2024 10:05:44 -0500
-X-MC-Unique: 694sOc_hPpW7vcLUNAUmew-1
-X-Mimecast-MFC-AGG-ID: 694sOc_hPpW7vcLUNAUmew
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-M98W3FevOE2abGHUGtWi_g-1; Tue,
+ 19 Nov 2024 10:05:49 -0500
+X-MC-Unique: M98W3FevOE2abGHUGtWi_g-1
+X-Mimecast-MFC-AGG-ID: M98W3FevOE2abGHUGtWi_g
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9AB041953958; Tue, 19 Nov 2024 15:05:42 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A2511955F3C; Tue, 19 Nov 2024 15:05:48 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.110])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4346B19560A3; Tue, 19 Nov 2024 15:05:39 +0000 (UTC)
+ id 3295A19560A3; Tue, 19 Nov 2024 15:05:45 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
@@ -54,10 +54,9 @@ Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 06/15] tests/functional: remove obsolete reference to avocado
- bug
-Date: Tue, 19 Nov 2024 15:05:10 +0000
-Message-ID: <20241119150519.1123365-7-berrange@redhat.com>
+Subject: [PATCH 08/15] tests/functional: honour self.workdir in ACPI bits tests
+Date: Tue, 19 Nov 2024 15:05:12 +0000
+Message-ID: <20241119150519.1123365-9-berrange@redhat.com>
 In-Reply-To: <20241119150519.1123365-1-berrange@redhat.com>
 References: <20241119150519.1123365-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -89,26 +88,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Historical bugs in avocado related to zstd support are not relevant to
-the code now that it uses QEMU's native test harness.
+The ACPI bits test sets up its own private temporary directory into it
+creates scratch files. This is justified by a suggestion that we need
+to be able to preserve the scratch files. We have the ability to
+preserve the scratch dir with our functional harness, so there's no
+reason to diverge from standard practice in file placement.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/tuxruntest.py | 1 -
- 1 file changed, 1 deletion(-)
+ tests/functional/test_acpi_bits.py | 44 +++++++++---------------------
+ 1 file changed, 13 insertions(+), 31 deletions(-)
 
-diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
-index f05aa96ad7..ed2b238c92 100644
---- a/tests/functional/qemu_test/tuxruntest.py
-+++ b/tests/functional/qemu_test/tuxruntest.py
-@@ -39,7 +39,6 @@ def setUp(self):
-         super().setUp()
+diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_acpi_bits.py
+index 6a7758c576..8774a79312 100755
+--- a/tests/functional/test_acpi_bits.py
++++ b/tests/functional/test_acpi_bits.py
+@@ -150,7 +150,6 @@ class AcpiBitsTest(QemuBaseTest): #pylint: disable=too-many-instance-attributes
+     def __init__(self, *args, **kwargs):
+         super().__init__(*args, **kwargs)
+         self._vm = None
+-        self._workDir = None
+         self._baseDir = None
  
-         # We need zstd for all the tuxrun tests
--        # See https://github.com/avocado-framework/avocado/issues/5609
-         (has_zstd, msg) = has_cmd('zstd')
-         if has_zstd is False:
-             self.skipTest(msg)
+         self._debugcon_addr = '0x403'
+@@ -169,7 +168,7 @@ def copy_bits_config(self):
+         config_file = 'bits-cfg.txt'
+         bits_config_dir = os.path.join(self._baseDir, 'acpi-bits',
+                                        'bits-config')
+-        target_config_dir = os.path.join(self._workDir,
++        target_config_dir = os.path.join(self.workdir,
+                                          'bits-%d' %self.BITS_INTERNAL_VER,
+                                          'boot')
+         self.assertTrue(os.path.exists(bits_config_dir))
+@@ -186,7 +185,7 @@ def copy_test_scripts(self):
+ 
+         bits_test_dir = os.path.join(self._baseDir, 'acpi-bits',
+                                      'bits-tests')
+-        target_test_dir = os.path.join(self._workDir,
++        target_test_dir = os.path.join(self.workdir,
+                                        'bits-%d' %self.BITS_INTERNAL_VER,
+                                        'boot', 'python')
+ 
+@@ -224,8 +223,8 @@ def fix_mkrescue(self, mkrescue):
+             the directory where we have extracted our pre-built bits grub
+             tarball.
+         """
+-        grub_x86_64_mods = os.path.join(self._workDir, 'grub-inst-x86_64-efi')
+-        grub_i386_mods = os.path.join(self._workDir, 'grub-inst')
++        grub_x86_64_mods = os.path.join(self.workdir, 'grub-inst-x86_64-efi')
++        grub_i386_mods = os.path.join(self.workdir, 'grub-inst')
+ 
+         self.assertTrue(os.path.exists(grub_x86_64_mods))
+         self.assertTrue(os.path.exists(grub_i386_mods))
+@@ -246,11 +245,11 @@ def generate_bits_iso(self):
+         """ Uses grub-mkrescue to generate a fresh bits iso with the python
+             test scripts
+         """
+-        bits_dir = os.path.join(self._workDir,
++        bits_dir = os.path.join(self.workdir,
+                                 'bits-%d' %self.BITS_INTERNAL_VER)
+-        iso_file = os.path.join(self._workDir,
++        iso_file = os.path.join(self.workdir,
+                                 'bits-%d.iso' %self.BITS_INTERNAL_VER)
+-        mkrescue_script = os.path.join(self._workDir,
++        mkrescue_script = os.path.join(self.workdir,
+                                        'grub-inst-x86_64-efi', 'bin',
+                                        'grub-mkrescue')
+ 
+@@ -289,17 +288,7 @@ def setUp(self): # pylint: disable=arguments-differ
+ 
+         self._baseDir = Path(__file__).parent
+ 
+-        # workdir could also be avocado's own workdir in self.workdir.
+-        # At present, I prefer to maintain my own temporary working
+-        # directory. It gives us more control over the generated bits
+-        # log files and also for debugging, we may chose not to remove
+-        # this working directory so that the logs and iso can be
+-        # inspected manually and archived if needed.
+-        self._workDir = tempfile.mkdtemp(prefix='acpi-bits-',
+-                                         suffix='.tmp')
+-        self.logger.info('working dir: %s', self._workDir)
+-
+-        prebuiltDir = os.path.join(self._workDir, 'prebuilt')
++        prebuiltDir = os.path.join(self.workdir, 'prebuilt')
+         if not os.path.isdir(prebuiltDir):
+             os.mkdir(prebuiltDir, mode=0o775)
+ 
+@@ -320,10 +309,10 @@ def setUp(self): # pylint: disable=arguments-differ
+ 
+         # extract the bits software in the temp working directory
+         with zipfile.ZipFile(bits_zip_file, 'r') as zref:
+-            zref.extractall(self._workDir)
++            zref.extractall(self.workdir)
+ 
+         with tarfile.open(grub_tar_file, 'r', encoding='utf-8') as tarball:
+-            tarball.extractall(self._workDir)
++            tarball.extractall(self.workdir)
+ 
+         self.copy_test_scripts()
+         self.copy_bits_config()
+@@ -333,7 +322,7 @@ def parse_log(self):
+         """parse the log generated by running bits tests and
+            check for failures.
+         """
+-        debugconf = os.path.join(self._workDir, self._debugcon_log)
++        debugconf = os.path.join(self.workdir, self._debugcon_log)
+         log = ""
+         with open(debugconf, 'r', encoding='utf-8') as filehandle:
+             log = filehandle.read()
+@@ -359,25 +348,18 @@ def tearDown(self):
+         """
+         if self._vm:
+             self.assertFalse(not self._vm.is_running)
+-        if not os.getenv('BITS_DEBUG') and self._workDir:
+-            self.logger.info('removing the work directory %s', self._workDir)
+-            shutil.rmtree(self._workDir)
+-        else:
+-            self.logger.info('not removing the work directory %s ' \
+-                             'as BITS_DEBUG is ' \
+-                             'passed in the environment', self._workDir)
+         super().tearDown()
+ 
+     def test_acpi_smbios_bits(self):
+         """The main test case implementation."""
+ 
+-        iso_file = os.path.join(self._workDir,
++        iso_file = os.path.join(self.workdir,
+                                 'bits-%d.iso' %self.BITS_INTERNAL_VER)
+ 
+         self.assertTrue(os.access(iso_file, os.R_OK))
+ 
+         self._vm = QEMUBitsMachine(binary=self.qemu_bin,
+-                                   base_temp_dir=self._workDir,
++                                   base_temp_dir=self.workdir,
+                                    debugcon_log=self._debugcon_log,
+                                    debugcon_addr=self._debugcon_addr)
+ 
 -- 
 2.46.0
 
