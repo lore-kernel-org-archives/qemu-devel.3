@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9594D591A6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEB9D591C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDHLy-00017V-Tp; Tue, 19 Nov 2024 01:04:47 -0500
+	id 1tDHMU-0002Td-EI; Tue, 19 Nov 2024 01:05:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHLu-00013j-3R; Tue, 19 Nov 2024 01:04:42 -0500
+ id 1tDHMR-0002Fm-C2; Tue, 19 Nov 2024 01:05:15 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHLs-0004eZ-Aq; Tue, 19 Nov 2024 01:04:41 -0500
+ id 1tDHMP-0004w3-NX; Tue, 19 Nov 2024 01:05:15 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DDE57A6265;
- Tue, 19 Nov 2024 09:04:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B915A626E;
+ Tue, 19 Nov 2024 09:04:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 120491738DB;
+ by tsrv.corpit.ru (Postfix) with SMTP id 82F641738E3;
  Tue, 19 Nov 2024 09:04:19 +0300 (MSK)
-Received: (nullmailer pid 2368941 invoked by uid 1000);
+Received: (nullmailer pid 2368966 invoked by uid 1000);
  Tue, 19 Nov 2024 06:04:18 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 63/72] linux-user: Tolerate CONFIG_LSM_MMAP_MIN_ADDR
-Date: Tue, 19 Nov 2024 09:04:04 +0300
-Message-Id: <20241119060418.2368866-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [Stable-9.1.2 71/72] hw/audio/hda: fix memory leak on audio setup
+Date: Tue, 19 Nov 2024 09:04:12 +0300
+Message-Id: <20241119060418.2368866-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,46 +63,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Running qemu-i386 on a system running with SELinux in enforcing mode
-(more precisely: s390x trixie container on Fedora 40) fails with:
+When SET_STREAM_FORMAT is called, the st->buft timer is overwritten, thus
+causing a memory leak.  This was originally fixed in commit 816139ae6a5
+("hw/audio/hda: fix memory leak on audio setup", 2024-11-14) but that
+caused the audio to break in SPICE.
 
-    qemu-i386: tests/tcg/i386-linux-user/sigreturn-sigmask: Unable to find a guest_base to satisfy all guest address mapping requirements
-      00000000-ffffffff
+Fortunately, a simpler fix is possible.  The timer only needs to be
+reset, because the callback is always the same (st->output is set at
+realize time in hda_audio_init); call to timer_new_ns overkill.  Replace
+it with timer_del and only initialize the timer once; for simplicity,
+do it even if use_timer is false.
 
-The reason is that main() determines mmap_min_addr from
-/proc/sys/vm/mmap_min_addr, but SELinux additionally defines
-CONFIG_LSM_MMAP_MIN_ADDR, which is normally larger: 32K or 64K, but,
-in general, can be anything. There is no portable way to query its
-value: /boot/config, /proc/config and /proc/config.gz are distro- and
-environment-specific.
-
-Once the identity map fails, the magnitude of guest_base does not
-matter, so fix by starting the search from 1M or 1G.
+An even simpler fix would be to free the old time in hda_audio_setup().
+However, it seems better to place the initialization of the timer close
+to that of st->ouput.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2598
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20241023002558.34589-1-iii@linux.ibm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit fb7f3572b111ffb6c2dd2c7f6c5b4dc57dd8a3f5)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-ID: <20241114125318.1707590-3-pbonzini@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 626b39006d2f9b1378a04cb88a2187bb852cb055)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0b1c230b1c..3b8db721e2 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -2913,7 +2913,7 @@ static uintptr_t pgb_try_itree(const PGBAddrs *ga, uintptr_t base,
- static uintptr_t pgb_find_itree(const PGBAddrs *ga, IntervalTreeRoot *root,
-                                 uintptr_t align, uintptr_t brk)
- {
--    uintptr_t last = mmap_min_addr;
-+    uintptr_t last = sizeof(uintptr_t) == 4 ? MiB : GiB;
-     uintptr_t base, skip;
- 
-     while (true) {
+diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
+index ee3d0a7dec..407d670d82 100644
+--- a/hw/audio/hda-codec.c
++++ b/hw/audio/hda-codec.c
+@@ -487,8 +487,7 @@ static void hda_audio_setup(HDAAudioStream *st)
+     if (st->output) {
+         if (use_timer) {
+             cb = hda_audio_output_cb;
+-            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+-                                    hda_audio_output_timer, st);
++            timer_del(st->buft);
+         } else {
+             cb = hda_audio_compat_output_cb;
+         }
+@@ -497,8 +496,7 @@ static void hda_audio_setup(HDAAudioStream *st)
+     } else {
+         if (use_timer) {
+             cb = hda_audio_input_cb;
+-            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+-                                    hda_audio_input_timer, st);
++            timer_del(st->buft);
+         } else {
+             cb = hda_audio_compat_input_cb;
+         }
+@@ -726,8 +724,12 @@ static void hda_audio_init(HDACodecDevice *hda,
+                 st->gain_right = QEMU_HDA_AMP_STEPS;
+                 st->compat_bpos = sizeof(st->compat_buf);
+                 st->output = true;
++                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                        hda_audio_output_timer, st);
+             } else {
+                 st->output = false;
++                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                        hda_audio_input_timer, st);
+             }
+             st->format = AC_FMT_TYPE_PCM | AC_FMT_BITS_16 |
+                 (1 << AC_FMT_CHAN_SHIFT);
+@@ -750,9 +752,7 @@ static void hda_audio_exit(HDACodecDevice *hda)
+         if (st->node == NULL) {
+             continue;
+         }
+-        if (a->use_timer) {
+-            timer_free(st->buft);
+-        }
++        timer_free(st->buft);
+         if (st->output) {
+             AUD_close_out(&a->card, st->voice.out);
+         } else {
 -- 
 2.39.5
 
