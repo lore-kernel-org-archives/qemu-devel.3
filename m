@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996DDD44162
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 15:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B8BBD44167
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 15:08:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDPnn-00060n-6V; Tue, 19 Nov 2024 10:06:03 -0500
+	id 1tDPnj-0005w1-0e; Tue, 19 Nov 2024 10:05:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDPnf-0005vz-IL
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:57 -0500
+ id 1tDPnW-0005q0-98
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDPnd-0003k4-CD
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:54 -0500
+ id 1tDPnT-0003gr-Ks
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732028752;
+ s=mimecast20190719; t=1732028742;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mpQSBVmEKA0YchuFKMeQpzWQy9TzwDXdTqUn1SW8rgM=;
- b=Jz+leoN6vGhOAPZ+HWc35VxSK943ZTLu3+cAgDzrTOTIoZciVof36iUvaWjpuphIKCyXoT
- pWmBm5Kh3Ao4hYZfY7VtCv04LJpJNPjAB3NI4z7xYN3R04txLIA6VweDYC9YgeuEcinTmW
- BtT369wjxLpF5AAVAtcG6H6Rvu2eijQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=czEcijtwICqLMRcliVOE5Hsoj3anBl2/8MHBzdaCxGo=;
+ b=ebfIpqaEYV+gjH2WcH5fSC8FfJr87taFLwAuiR2zfbBwuSbW82L5FWTtf0exgvmfhSaoG7
+ bSnDby7tWLH2vxNYwiVjtq6VDSI5GW/a06iTcbK5/a1GvF4F2V+IA1WfzSNmnf5t09mVRs
+ enMdNym/gCy7bSmpgBuTz9suDlFjyFs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-M98W3FevOE2abGHUGtWi_g-1; Tue,
- 19 Nov 2024 10:05:49 -0500
-X-MC-Unique: M98W3FevOE2abGHUGtWi_g-1
-X-Mimecast-MFC-AGG-ID: M98W3FevOE2abGHUGtWi_g
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-28-HrWIauT8Oz2r6bf7k7wJXw-1; Tue,
+ 19 Nov 2024 10:05:40 -0500
+X-MC-Unique: HrWIauT8Oz2r6bf7k7wJXw-1
+X-Mimecast-MFC-AGG-ID: HrWIauT8Oz2r6bf7k7wJXw
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A2511955F3C; Tue, 19 Nov 2024 15:05:48 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1BBF195608B; Tue, 19 Nov 2024 15:05:39 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.110])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3295A19560A3; Tue, 19 Nov 2024 15:05:45 +0000 (UTC)
+ id 48E3A19560A3; Tue, 19 Nov 2024 15:05:36 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
@@ -54,9 +54,9 @@ Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 08/15] tests/functional: honour self.workdir in ACPI bits tests
-Date: Tue, 19 Nov 2024 15:05:12 +0000
-Message-ID: <20241119150519.1123365-9-berrange@redhat.com>
+Subject: [PATCH 05/15] tests/functional: remove leftover :avocado: tags
+Date: Tue, 19 Nov 2024 15:05:09 +0000
+Message-ID: <20241119150519.1123365-6-berrange@redhat.com>
 In-Reply-To: <20241119150519.1123365-1-berrange@redhat.com>
 References: <20241119150519.1123365-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,142 +88,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ACPI bits test sets up its own private temporary directory into it
-creates scratch files. This is justified by a suggestion that we need
-to be able to preserve the scratch files. We have the ability to
-preserve the scratch dir with our functional harness, so there's no
-reason to diverge from standard practice in file placement.
+These tags are not honoured under the new functional test harness.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/test_acpi_bits.py | 44 +++++++++---------------------
- 1 file changed, 13 insertions(+), 31 deletions(-)
+ tests/functional/test_arm_bpim2u.py   | 20 --------------------
+ tests/functional/test_arm_orangepi.py | 27 ---------------------------
+ 2 files changed, 47 deletions(-)
 
-diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_acpi_bits.py
-index 6a7758c576..8774a79312 100755
---- a/tests/functional/test_acpi_bits.py
-+++ b/tests/functional/test_acpi_bits.py
-@@ -150,7 +150,6 @@ class AcpiBitsTest(QemuBaseTest): #pylint: disable=too-many-instance-attributes
-     def __init__(self, *args, **kwargs):
-         super().__init__(*args, **kwargs)
-         self._vm = None
--        self._workDir = None
-         self._baseDir = None
+diff --git a/tests/functional/test_arm_bpim2u.py b/tests/functional/test_arm_bpim2u.py
+index 2f9fa145e3..35ea58d46c 100755
+--- a/tests/functional/test_arm_bpim2u.py
++++ b/tests/functional/test_arm_bpim2u.py
+@@ -37,11 +37,6 @@ class BananaPiMachine(LinuxKernelTest):
+         '5b41b4e11423e562c6011640f9a7cd3bdd0a3d42b83430f7caa70a432e6cd82c')
  
-         self._debugcon_addr = '0x403'
-@@ -169,7 +168,7 @@ def copy_bits_config(self):
-         config_file = 'bits-cfg.txt'
-         bits_config_dir = os.path.join(self._baseDir, 'acpi-bits',
-                                        'bits-config')
--        target_config_dir = os.path.join(self._workDir,
-+        target_config_dir = os.path.join(self.workdir,
-                                          'bits-%d' %self.BITS_INTERNAL_VER,
-                                          'boot')
-         self.assertTrue(os.path.exists(bits_config_dir))
-@@ -186,7 +185,7 @@ def copy_test_scripts(self):
+     def test_arm_bpim2u(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:bpim2u
+-        :avocado: tags=accel:tcg
+-        """
+         self.set_machine('bpim2u')
+         deb_path = self.ASSET_DEB.fetch()
+         kernel_path = self.extract_from_deb(deb_path,
+@@ -64,11 +59,6 @@ def test_arm_bpim2u(self):
+         os.remove(dtb_path)
  
-         bits_test_dir = os.path.join(self._baseDir, 'acpi-bits',
-                                      'bits-tests')
--        target_test_dir = os.path.join(self._workDir,
-+        target_test_dir = os.path.join(self.workdir,
-                                        'bits-%d' %self.BITS_INTERNAL_VER,
-                                        'boot', 'python')
+     def test_arm_bpim2u_initrd(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=accel:tcg
+-        :avocado: tags=machine:bpim2u
+-        """
+         self.set_machine('bpim2u')
+         deb_path = self.ASSET_DEB.fetch()
+         kernel_path = self.extract_from_deb(deb_path,
+@@ -105,11 +95,6 @@ def test_arm_bpim2u_initrd(self):
+         os.remove(initrd_path)
  
-@@ -224,8 +223,8 @@ def fix_mkrescue(self, mkrescue):
-             the directory where we have extracted our pre-built bits grub
-             tarball.
-         """
--        grub_x86_64_mods = os.path.join(self._workDir, 'grub-inst-x86_64-efi')
--        grub_i386_mods = os.path.join(self._workDir, 'grub-inst')
-+        grub_x86_64_mods = os.path.join(self.workdir, 'grub-inst-x86_64-efi')
-+        grub_i386_mods = os.path.join(self.workdir, 'grub-inst')
+     def test_arm_bpim2u_gmac(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:bpim2u
+-        :avocado: tags=device:sd
+-        """
+         self.set_machine('bpim2u')
+         self.require_netdev('user')
  
-         self.assertTrue(os.path.exists(grub_x86_64_mods))
-         self.assertTrue(os.path.exists(grub_i386_mods))
-@@ -246,11 +245,11 @@ def generate_bits_iso(self):
-         """ Uses grub-mkrescue to generate a fresh bits iso with the python
-             test scripts
-         """
--        bits_dir = os.path.join(self._workDir,
-+        bits_dir = os.path.join(self.workdir,
-                                 'bits-%d' %self.BITS_INTERNAL_VER)
--        iso_file = os.path.join(self._workDir,
-+        iso_file = os.path.join(self.workdir,
-                                 'bits-%d.iso' %self.BITS_INTERNAL_VER)
--        mkrescue_script = os.path.join(self._workDir,
-+        mkrescue_script = os.path.join(self.workdir,
-                                        'grub-inst-x86_64-efi', 'bin',
-                                        'grub-mkrescue')
+@@ -160,11 +145,6 @@ def test_arm_bpim2u_gmac(self):
  
-@@ -289,17 +288,7 @@ def setUp(self): # pylint: disable=arguments-differ
+     @skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
+     def test_arm_bpim2u_openwrt_22_03_3(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:bpim2u
+-        :avocado: tags=device:sd
+-        """
+         self.set_machine('bpim2u')
+         # This test download a 8.9 MiB compressed image and expand it
+         # to 127 MiB.
+diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/test_arm_orangepi.py
+index d2ed5fcc82..6d57223a03 100755
+--- a/tests/functional/test_arm_orangepi.py
++++ b/tests/functional/test_arm_orangepi.py
+@@ -49,11 +49,6 @@ class BananaPiMachine(LinuxKernelTest):
+         '20d3e07dc057e15c12452620e90ecab2047f0f7940d9cba8182ebc795927177f')
  
-         self._baseDir = Path(__file__).parent
+     def test_arm_orangepi(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:orangepi-pc
+-        :avocado: tags=accel:tcg
+-        """
+         self.set_machine('orangepi-pc')
+         deb_path = self.ASSET_DEB.fetch()
+         kernel_path = self.extract_from_deb(deb_path,
+@@ -75,11 +70,6 @@ def test_arm_orangepi(self):
+         os.remove(dtb_path)
  
--        # workdir could also be avocado's own workdir in self.workdir.
--        # At present, I prefer to maintain my own temporary working
--        # directory. It gives us more control over the generated bits
--        # log files and also for debugging, we may chose not to remove
--        # this working directory so that the logs and iso can be
--        # inspected manually and archived if needed.
--        self._workDir = tempfile.mkdtemp(prefix='acpi-bits-',
--                                         suffix='.tmp')
--        self.logger.info('working dir: %s', self._workDir)
--
--        prebuiltDir = os.path.join(self._workDir, 'prebuilt')
-+        prebuiltDir = os.path.join(self.workdir, 'prebuilt')
-         if not os.path.isdir(prebuiltDir):
-             os.mkdir(prebuiltDir, mode=0o775)
+     def test_arm_orangepi_initrd(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=accel:tcg
+-        :avocado: tags=machine:orangepi-pc
+-        """
+         self.set_machine('orangepi-pc')
+         deb_path = self.ASSET_DEB.fetch()
+         kernel_path = self.extract_from_deb(deb_path,
+@@ -115,12 +105,6 @@ def test_arm_orangepi_initrd(self):
+         os.remove(initrd_path)
  
-@@ -320,10 +309,10 @@ def setUp(self): # pylint: disable=arguments-differ
+     def test_arm_orangepi_sd(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=accel:tcg
+-        :avocado: tags=machine:orangepi-pc
+-        :avocado: tags=device:sd
+-        """
+         self.set_machine('orangepi-pc')
+         self.require_netdev('user')
+         deb_path = self.ASSET_DEB.fetch()
+@@ -167,11 +151,6 @@ def test_arm_orangepi_sd(self):
  
-         # extract the bits software in the temp working directory
-         with zipfile.ZipFile(bits_zip_file, 'r') as zref:
--            zref.extractall(self._workDir)
-+            zref.extractall(self.workdir)
+     @skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
+     def test_arm_orangepi_armbian(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:orangepi-pc
+-        :avocado: tags=device:sd
+-        """
+         self.set_machine('orangepi-pc')
+         # This test download a 275 MiB compressed image and expand it
+         # to 1036 MiB, but the underlying filesystem is 1552 MiB...
+@@ -208,12 +187,6 @@ def test_arm_orangepi_armbian(self):
  
-         with tarfile.open(grub_tar_file, 'r', encoding='utf-8') as tarball:
--            tarball.extractall(self._workDir)
-+            tarball.extractall(self.workdir)
- 
-         self.copy_test_scripts()
-         self.copy_bits_config()
-@@ -333,7 +322,7 @@ def parse_log(self):
-         """parse the log generated by running bits tests and
-            check for failures.
-         """
--        debugconf = os.path.join(self._workDir, self._debugcon_log)
-+        debugconf = os.path.join(self.workdir, self._debugcon_log)
-         log = ""
-         with open(debugconf, 'r', encoding='utf-8') as filehandle:
-             log = filehandle.read()
-@@ -359,25 +348,18 @@ def tearDown(self):
-         """
-         if self._vm:
-             self.assertFalse(not self._vm.is_running)
--        if not os.getenv('BITS_DEBUG') and self._workDir:
--            self.logger.info('removing the work directory %s', self._workDir)
--            shutil.rmtree(self._workDir)
--        else:
--            self.logger.info('not removing the work directory %s ' \
--                             'as BITS_DEBUG is ' \
--                             'passed in the environment', self._workDir)
-         super().tearDown()
- 
-     def test_acpi_smbios_bits(self):
-         """The main test case implementation."""
- 
--        iso_file = os.path.join(self._workDir,
-+        iso_file = os.path.join(self.workdir,
-                                 'bits-%d.iso' %self.BITS_INTERNAL_VER)
- 
-         self.assertTrue(os.access(iso_file, os.R_OK))
- 
-         self._vm = QEMUBitsMachine(binary=self.qemu_bin,
--                                   base_temp_dir=self._workDir,
-+                                   base_temp_dir=self.workdir,
-                                    debugcon_log=self._debugcon_log,
-                                    debugcon_addr=self._debugcon_addr)
- 
+     @skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
+     def test_arm_orangepi_uboot_netbsd9(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:orangepi-pc
+-        :avocado: tags=device:sd
+-        :avocado: tags=os:netbsd
+-        """
+         self.set_machine('orangepi-pc')
+         # This test download a 304MB compressed image and expand it to 2GB
+         deb_path = self.ASSET_UBOOT.fetch()
 -- 
 2.46.0
 
