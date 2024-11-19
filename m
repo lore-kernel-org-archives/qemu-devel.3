@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32168D44164
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:25:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E90D44163
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDP8d-0005uO-SZ; Tue, 19 Nov 2024 09:23:31 -0500
+	id 1tDP8g-0005vX-FG; Tue, 19 Nov 2024 09:23:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8b-0005qp-LE
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:29 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1tDP8Z-0005pc-QX
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:27 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8Z-0006Cj-1c
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:29 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3823194a879so2438011f8f.0
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:26 -0800 (PST)
+ id 1tDP8X-0006CJ-JS
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:27 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-382442b7d9aso899235f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732026205; x=1732631005; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732026204; x=1732631004; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7Bp1jQcPnnxsGePAZailTgK43QTJpcLNz0TBWeIGdlE=;
- b=ygZf7+nQPjYEEk3aBHEmU3/UenbkK+oIOC34kzqsmt4Y3Y++z/PciC2Ig/jn1X4gZh
- NzdOI2x9aBkLzUTxDzKx8BCuoUJvEq9QscaSplbifVIccFPHH3acjNOhH1Suu2lyhvUf
- yNsr31vFvXnOk0S2iIBa/MWHphobL0IH/5yaMmlowVEq2iKgy3oIzlnGjzxA/1UnMm8r
- 5DlNi8FPX4pX5Hz/OPqAn/WFvwxto/Ub+VX46KZYkzjDCJ/WbEBPRNqXO2s5NNXEWM0t
- mw9L6dogwXKVQPf8FsaTRUdup2IBzAAVFQV0TTina/EprlPaqLzb8STadfpNe8NPgXie
- /mYg==
+ :reply-to; bh=HY8iA1JcrinboJKdqzd9q3NbVD25Sy0Ej7yrNivMt5k=;
+ b=HHMfho9esUe8CT0+P19NuGahjWwMZEgi6NHoJYyl/SVTguS0w1ulQIOLQAf0GI1Z7w
+ FRdkclvJs4QJoz1Ax/7K4AoGwWErRYZPdrZIWll4Oq3CIJ2kLp2mrsjkqICQAp1mjHZr
+ 0WlvczHRU/U0M3Z/WY6Ou2wUv0+9a3PI0z8kX3xlaJy3Zx+bSLr4SfnNTFHgJmfIrN0O
+ U2F6Feq6xbvHPV3o9lqNAh9ZTuD+cHohF0qOpsZ2qQ5DEcigGgwQQrnR26xRAEYtHkRC
+ H/rubweyJ+27SGziYj/kWIxmEVwpBQpjy8I+a8rH3T8X7zkphqtCh9AQNLECtUQYCOFf
+ EwIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732026205; x=1732631005;
+ d=1e100.net; s=20230601; t=1732026204; x=1732631004;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7Bp1jQcPnnxsGePAZailTgK43QTJpcLNz0TBWeIGdlE=;
- b=Og1Lxsa8dyjcYR/PQ/FVG0ZgvWuaBOXokkGzQbq+AdRqIS7MpLDxSVci7cDb7zPrLx
- VH3GlzeCtSkoUillvNa9dTF7WU0SzsQCaIwQS+RJ2fGfcI7KtoZttB1r2ryfEUpXwZTD
- QJjXZ9ZkM0hSkIEKXvGRlIcog5rIdfaVn0RQyycaVzzmtf8cOJ3EtWrWnnRdXqaO7XLL
- BS0tQQ7UxYsWLN3xkvspPk7qk0Zl2V2bEVL2up+SaIiOHWIz+aRZDrMxJHw82hjF26Sj
- Hcx9Eus0Fpj88krk308H1oXMzzLI+kffwMoAGdN0JKBU96nL1QIe57gZM3szIX221dMa
- EaBw==
-X-Gm-Message-State: AOJu0Yx4RdTE9Y2teBdF/KlxPyXINmT5n3+l48bQEATHmw4Z4v/SZHvL
- lVe/+6or95tbIjTQI7GphslKLLb+vDR2xpIrQs4XxeypgswbBYDxNohZJbm8SDebLWfIqXKX8sI
- /
-X-Google-Smtp-Source: AGHT+IF/CekAug2HSZL/GWDrXrwm91lmXwQMHeJq2THkcTsE35L5dYqDepWOaPhBKRzJ6BKUkCIz4w==
-X-Received: by 2002:a05:6000:2a4:b0:382:22d6:1ce8 with SMTP id
- ffacd0b85a97d-3822590bb0emr12732442f8f.22.1732026205389; 
- Tue, 19 Nov 2024 06:23:25 -0800 (PST)
+ bh=HY8iA1JcrinboJKdqzd9q3NbVD25Sy0Ej7yrNivMt5k=;
+ b=sAeZenrdGytl3LJOm0W7nx052QGPjytNf8cqjXH0LqQsOpK9SNVD4g+y0++80uZEGc
+ eP0Bif9mtqaQAAt3rVNcqmwDVc5BU/NQghWnFLxlbpCBk4URIueq+qwMIATvA8fH1rjq
+ B1SNthu5QCcsDQe25+xcpFANBXkqEWHH3FQq82s/pdaEubfYrFL63zaawhSvbhQ8ZKBM
+ iQ2MXPDrCPeGpx2XlXPAIluLW3dMgonLEUOckR0hi+xWho64DDESXjVIBsAK5AyHDO6j
+ oNxGFI1BY+AwlbaHN1J9o+ifonczlr2M5aQCByGkVst8P6aL/d6+0UbtOVVPODB0F/eW
+ l/xg==
+X-Gm-Message-State: AOJu0Yzh6Db/RXC1+zcQJmcOLiMBSdtApq9FWg4mAae0YzSnxJRrDf0J
+ J3WBWcATEYk1rwMrtTk7c/GfP1U6d6Cvp+gV1+BUiQVcoFuIhAJbnnCdpcVPN8ZDvWFsX9hreh+
+ M
+X-Google-Smtp-Source: AGHT+IHqlwZ02qKumhmUI2qgE8+bDP9/6ebFr+VPui01Go7nsTUvsDRBtYHtsxKluPtTXx7DMR5BFA==
+X-Received: by 2002:a05:6000:381:b0:382:4f4e:1cb6 with SMTP id
+ ffacd0b85a97d-3824f4e21c2mr1626634f8f.28.1732026203921; 
+ Tue, 19 Nov 2024 06:23:23 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.25
+ 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 06:23:25 -0800 (PST)
+ Tue, 19 Nov 2024 06:23:23 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/15] tests/qtest/cmsdk-apb-watchdog-test: Parameterize tests
-Date: Tue, 19 Nov 2024 14:23:11 +0000
-Message-Id: <20241119142321.1853732-6-peter.maydell@linaro.org>
+Subject: [PULL 02/15] hw/net/rocker/rocker_of_dpa.c: Remove superfluous error
+ check
+Date: Tue, 19 Nov 2024 14:23:08 +0000
+Message-Id: <20241119142321.1853732-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241119142321.1853732-1-peter.maydell@linaro.org>
 References: <20241119142321.1853732-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,213 +95,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Roque Arcudia Hernandez <roqueh@google.com>
+From: Rodrigo Dias Correa <r@drigo.nl>
 
-Currently the CMSDK APB watchdog tests target an specialized version
-of the device (luminaris using the lm3s811evb machine) that prevents
-the development of tests for the more generic device documented in:
+of_dpa_cmd_add_acl_ip() is called from a single place, and despite the
+fact that it always returns ROCKER_OK, its return value is still checked
+by the caller.
 
-https://developer.arm.com/documentation/ddi0479/d/apb-components/apb-watchdog/programmers-model
+Change of_dpa_cmd_add_acl_ip() to return void and remove the superfluous
+check from of_dpa_cmd_add_acl().
 
-This patch allows the execution of the watchdog tests in an MPS2
-machine (when applicable) which uses the generic version of the CMSDK
-APB watchdog.
-
-Finally the rules for compiling the test have to change because it is
-possible not to have CONFIG_STELLARIS (required for the lm3s811evb
-machine) while still having CONFIG_CMSDK_APB_WATCHDOG and the test
-will fail. Due to the addition of the MPS2 machine CONFIG_MPS2
-becomes also a dependency for the test compilation.
-
-Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-Reviewed-by: Stephen Longfield <slongfield@google.com>
-Message-id: 20241115160328.1650269-4-roqueh@google.com
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2471
+Signed-off-by: Rodrigo Dias Correa <r@drigo.nl>
+Reviewed-by: Ján Tomko <jtomko@redhat.com>
+Message-id: 20241114075051.404284-1-r@drigo.nl
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/cmsdk-apb-watchdog-test.c | 114 +++++++++++++++++++-------
- tests/qtest/meson.build               |   3 +-
- 2 files changed, 85 insertions(+), 32 deletions(-)
+ hw/net/rocker/rocker_of_dpa.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/tests/qtest/cmsdk-apb-watchdog-test.c b/tests/qtest/cmsdk-apb-watchdog-test.c
-index 00b5dbbc812..bdf6cfa2566 100644
---- a/tests/qtest/cmsdk-apb-watchdog-test.c
-+++ b/tests/qtest/cmsdk-apb-watchdog-test.c
-@@ -15,14 +15,12 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "exec/hwaddr.h"
- #include "qemu/bitops.h"
- #include "libqtest-single.h"
- 
--/*
-- * lm3s811evb watchdog; at board startup this runs at 200MHz / 16 == 12.5MHz,
-- * which is 80ns per tick.
-- */
- #define WDOG_BASE 0x40000000
-+#define WDOG_BASE_MPS2 0x40008000
- 
- #define WDOGLOAD 0
- #define WDOGVALUE 4
-@@ -37,39 +35,87 @@
- #define SYSDIV_SHIFT 23
- #define SYSDIV_LENGTH 4
- 
--static void test_watchdog(void)
--{
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGRIS), ==, 0);
-+#define WDOGLOAD_DEFAULT 0xFFFFFFFF
-+#define WDOGVALUE_DEFAULT 0xFFFFFFFF
- 
--    writel(WDOG_BASE + WDOGCONTROL, 1);
--    writel(WDOG_BASE + WDOGLOAD, 1000);
-+typedef struct CMSDKAPBWatchdogTestArgs {
-+    int64_t tick;
-+    hwaddr wdog_base;
-+    const char *machine;
-+} CMSDKAPBWatchdogTestArgs;
-+
-+enum {
-+    MACHINE_LM3S811EVB,
-+    MACHINE_MPS2_AN385,
-+};
-+
-+/*
-+ * lm3s811evb watchdog; at board startup this runs at 200MHz / 16 == 12.5MHz,
-+ * which is 80ns per tick.
-+ *
-+ * IoTKit/ARMSSE dualtimer; driven at 25MHz in mps2-an385, so 40ns per tick
-+ */
-+static const CMSDKAPBWatchdogTestArgs machine_info[] = {
-+    [MACHINE_LM3S811EVB] = {
-+        .tick = 80,
-+        .wdog_base = WDOG_BASE,
-+        .machine = "lm3s811evb",
-+    },
-+    [MACHINE_MPS2_AN385] = {
-+        .tick = 40,
-+        .wdog_base = WDOG_BASE_MPS2,
-+        .machine = "mps2-an385",
-+    },
-+};
-+
-+static void test_watchdog(const void *ptr)
-+{
-+    const CMSDKAPBWatchdogTestArgs *args = ptr;
-+    hwaddr wdog_base = args->wdog_base;
-+    int64_t tick = args->tick;
-+    g_autofree gchar *cmdline = g_strdup_printf("-machine %s", args->machine);
-+    qtest_start(cmdline);
-+
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 0);
-+
-+    writel(wdog_base + WDOGCONTROL, 1);
-+    writel(wdog_base + WDOGLOAD, 1000);
- 
-     /* Step to just past the 500th tick */
--    clock_step(500 * 80 + 1);
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGRIS), ==, 0);
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGVALUE), ==, 500);
-+    clock_step(500 * tick + 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 0);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 500);
- 
-     /* Just past the 1000th tick: timer should have fired */
--    clock_step(500 * 80);
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGRIS), ==, 1);
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGVALUE), ==, 0);
-+    clock_step(500 * tick);
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 0);
- 
-     /* VALUE reloads at following tick */
--    clock_step(80);
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGVALUE), ==, 1000);
-+    clock_step(tick);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 1000);
- 
-     /* Writing any value to WDOGINTCLR clears the interrupt and reloads */
--    clock_step(500 * 80);
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGVALUE), ==, 500);
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGRIS), ==, 1);
--    writel(WDOG_BASE + WDOGINTCLR, 0);
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGVALUE), ==, 1000);
--    g_assert_cmpuint(readl(WDOG_BASE + WDOGRIS), ==, 0);
-+    clock_step(500 * tick);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 500);
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 1);
-+    writel(wdog_base + WDOGINTCLR, 0);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 1000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 0);
-+
-+    qtest_end();
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 5e16056be66..3378f63110b 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -1635,8 +1635,8 @@ static int of_dpa_cmd_add_multicast_routing(OfDpaFlow *flow,
+     return ROCKER_OK;
  }
  
--static void test_clock_change(void)
-+/*
-+ * This test can only be executed in the stellaris board since it relies on a
-+ * component of the board to change the clocking parameters of the watchdog.
-+ */
-+static void test_clock_change(const void *ptr)
+-static int of_dpa_cmd_add_acl_ip(OfDpaFlowKey *key, OfDpaFlowKey *mask,
+-                                 RockerTlv **flow_tlvs)
++static void of_dpa_cmd_add_acl_ip(OfDpaFlowKey *key, OfDpaFlowKey *mask,
++                                  RockerTlv **flow_tlvs)
  {
-     uint32_t rcc;
-+    const CMSDKAPBWatchdogTestArgs *args = ptr;
-+    g_autofree gchar *cmdline = g_strdup_printf("-machine %s", args->machine);
-+    qtest_start(cmdline);
+     key->width = FLOW_KEY_WIDTH(ip.tos);
  
-     /*
-      * Test that writing to the stellaris board's RCC register to
-@@ -109,6 +155,8 @@ static void test_clock_change(void)
-     writel(WDOG_BASE + WDOGINTCLR, 0);
-     g_assert_cmpuint(readl(WDOG_BASE + WDOGVALUE), ==, 1000);
-     g_assert_cmpuint(readl(WDOG_BASE + WDOGRIS), ==, 0);
-+
-+    qtest_end();
+@@ -1669,8 +1669,6 @@ static int of_dpa_cmd_add_acl_ip(OfDpaFlowKey *key, OfDpaFlowKey *mask,
+         mask->ip.tos |=
+             rocker_tlv_get_u8(flow_tlvs[ROCKER_TLV_OF_DPA_IP_ECN_MASK]) << 6;
+     }
+-
+-    return ROCKER_OK;
  }
  
- int main(int argc, char **argv)
-@@ -117,15 +165,19 @@ int main(int argc, char **argv)
+ static int of_dpa_cmd_add_acl(OfDpaFlow *flow, RockerTlv **flow_tlvs)
+@@ -1689,7 +1687,6 @@ static int of_dpa_cmd_add_acl(OfDpaFlow *flow, RockerTlv **flow_tlvs)
+         ACL_MODE_ANY_VLAN,
+         ACL_MODE_ANY_TENANT,
+     } mode = ACL_MODE_UNKNOWN;
+-    int err = ROCKER_OK;
  
-     g_test_init(&argc, &argv, NULL);
+     if (!flow_tlvs[ROCKER_TLV_OF_DPA_IN_PPORT] ||
+         !flow_tlvs[ROCKER_TLV_OF_DPA_ETHERTYPE]) {
+@@ -1776,14 +1773,10 @@ static int of_dpa_cmd_add_acl(OfDpaFlow *flow, RockerTlv **flow_tlvs)
+     switch (ntohs(key->eth.type)) {
+     case 0x0800:
+     case 0x86dd:
+-        err = of_dpa_cmd_add_acl_ip(key, mask, flow_tlvs);
++        of_dpa_cmd_add_acl_ip(key, mask, flow_tlvs);
+         break;
+     }
  
--    qtest_start("-machine lm3s811evb");
+-    if (err) {
+-        return err;
+-    }
 -
--    qtest_add_func("/cmsdk-apb-watchdog/watchdog", test_watchdog);
--    qtest_add_func("/cmsdk-apb-watchdog/watchdog_clock_change",
--                   test_clock_change);
-+    if (qtest_has_machine(machine_info[MACHINE_LM3S811EVB].machine)) {
-+        qtest_add_data_func("/cmsdk-apb-watchdog/watchdog",
-+                            &machine_info[MACHINE_LM3S811EVB], test_watchdog);
-+        qtest_add_data_func("/cmsdk-apb-watchdog/watchdog_clock_change",
-+                            &machine_info[MACHINE_LM3S811EVB],
-+                            test_clock_change);
-+    }
-+    if (qtest_has_machine(machine_info[MACHINE_MPS2_AN385].machine)) {
-+        qtest_add_data_func("/cmsdk-apb-watchdog/watchdog_mps2",
-+                            &machine_info[MACHINE_MPS2_AN385], test_watchdog);
-+    }
- 
-     r = g_test_run();
- 
--    qtest_end();
--
-     return r;
- }
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index aa93e984187..f2f35367ae7 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -227,7 +227,8 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-dualtimer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-timer-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_CMSDK_APB_WATCHDOG') ? ['cmsdk-apb-watchdog-test'] : []) + \
-+  (config_all_devices.has_key('CONFIG_STELLARIS') or
-+   config_all_devices.has_key('CONFIG_MPS2') ? ['cmsdk-apb-watchdog-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_PFLASH_CFI02') and
-    config_all_devices.has_key('CONFIG_MUSICPAL') ? ['pflash-cfi02-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed : []) + \
+     if (flow_tlvs[ROCKER_TLV_OF_DPA_GROUP_ID]) {
+         action->write.group_id =
+             rocker_tlv_get_le32(flow_tlvs[ROCKER_TLV_OF_DPA_GROUP_ID]);
 -- 
 2.34.1
 
