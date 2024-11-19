@@ -4,71 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0612D60079
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 08:13:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B50D6007E
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 08:18:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDJMU-0000oR-K4; Tue, 19 Nov 2024 03:13:26 -0500
+	id 1tDJQn-0001km-IQ; Tue, 19 Nov 2024 03:17:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tDJMS-0000nv-0W
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 03:13:24 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tDJMM-00080X-D5
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 03:13:22 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxieCYSDxnhENCAA--.64234S3;
- Tue, 19 Nov 2024 16:13:12 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMDxfUeXSDxnYBVdAA--.27691S3;
- Tue, 19 Nov 2024 16:13:12 +0800 (CST)
-Subject: Re: [PATCH v4 1/6] hw/loongarch/virt: Add CPU topology support
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-References: <20241112021738.1952851-1-maobibo@loongson.cn>
- <20241112021738.1952851-2-maobibo@loongson.cn>
- <20241118171029.5a9ed8bd@imammedo.users.ipa.redhat.com>
- <20241118172239.4057d3e0@imammedo.users.ipa.redhat.com>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <48c00a30-265f-4f55-be27-15ef288d699f@loongson.cn>
-Date: Tue, 19 Nov 2024 16:12:37 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tDJQl-0001kG-IL
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 03:17:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tDJQj-0000RL-Cg
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 03:17:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732004267;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+zjyO/ZAFSLWpzWsLEwOawT5J5qw9RFsT6JMYjgspwY=;
+ b=KzfGys3HBcPRKCEJhW86w+dvXDoDTIGPKd1kip50qQQv4l/0VE3Xf2C2w7wruTfFkizZOx
+ q+b+WtpSx36v3DNJOIB75YY2XFqC4pbfzKJgg3RC/lCh8OQgbtNOmK0hgapysNNV3aIxje
+ HaOw7gYErbqvXIbdJkp22+zcIjXORU4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-497-BxYlpX_tMByAn6kM8_MeaA-1; Tue, 19 Nov 2024 03:17:45 -0500
+X-MC-Unique: BxYlpX_tMByAn6kM8_MeaA-1
+X-Mimecast-MFC-AGG-ID: BxYlpX_tMByAn6kM8_MeaA
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3822ebe9321so2228637f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 00:17:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732004264; x=1732609064;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+zjyO/ZAFSLWpzWsLEwOawT5J5qw9RFsT6JMYjgspwY=;
+ b=houSDsXYOo64YU25D1JGggccn/wn7JtFg2k0upKLsGMU7dKqhoIOW1WePGOdxJ/NsE
+ y5HL4rq9sXYZe51lQkn9VRO+vwq+5cET6Udw7uw/PtCZ7UqSv8W4REkeMsCHl32gdBrR
+ nC8Ez0iKOJfebfm47slTku+ncatx00Qw0WmJjmhZv6gmgRSmVs9pIrbY+JuoSEQOz+Ya
+ t3iTaTFFy6IrXPW2ho0lUs7NPw+LsjkWMaS/GzsXSDfWt/q2ZS1A1P4nrSg1xBRGtiyZ
+ jS9cicIv+9UnFWnwd2E9t7BOfF3SiQ6xa/r/KCo1rNhpSuMdhMmdw5epwdtQVQ0fpQv0
+ QaBQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnMCycUaH90W2BtA6OgXrqJIvOTQZDDYHd4rFIp35P4aSZ+KbUxdhWvnVTmDVn4ep20xs+2BtYUlVk@nongnu.org
+X-Gm-Message-State: AOJu0Yws41wY6tkT9ZZEQ7FtEELy9nE6wZP9YEHPGa5FE5a7pLN/2Lff
+ 8iTmynFyHyiJWPHP3LKqFABpqwnamuIicyJBtBwK0NbA1X4Pc8Lbr1G+oZvm/M7o3K2jtPl594P
+ vWExSCLGx9tjOv0y3riY4oQgFOkNfqIMyoDqkjCAOjihkCOzxM+Ry
+X-Received: by 2002:a05:6000:1846:b0:382:49f9:74bc with SMTP id
+ ffacd0b85a97d-38249f977cbmr4134816f8f.41.1732004264362; 
+ Tue, 19 Nov 2024 00:17:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG4KpdWuWhbWjriFNCn37+OpacMtZDX4WGY+o7K6VKE8Ch0bq0cTiqI0L9VUE3INAVWF8E+Aw==
+X-Received: by 2002:a05:6000:1846:b0:382:49f9:74bc with SMTP id
+ ffacd0b85a97d-38249f977cbmr4134793f8f.41.1732004264016; 
+ Tue, 19 Nov 2024 00:17:44 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3824b28ef5fsm3164566f8f.5.2024.11.19.00.17.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Nov 2024 00:17:43 -0800 (PST)
+Message-ID: <95d39240-f2e2-4427-a822-380e22783279@redhat.com>
+Date: Tue, 19 Nov 2024 09:17:39 +0100
 MIME-Version: 1.0
-In-Reply-To: <20241118172239.4057d3e0@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxfUeXSDxnYBVdAA--.27691S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWfJw1kXrW3tr45Jw4kCrW8Xwc_yoWkCw17pr
- WjkF4ayw1UXr93Zw4ag3WYgF1ktr1Ig3WxX3WxKa1Sk3Wqgr13Jr18trZ09F4ku3yUJF1j
- qr48GFy3ZFyYqFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
- vfC2KfnxnUUI43ZEXa7IU8vD73UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.492,
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Mostafa Saleh <smostafa@google.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Gunthorpe <jgg@nvidia.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
+ Andrea Bolognani <abologna@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Zhangfei Gao <zhangfei.gao@linaro.org>,
+ "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "arighi@nvidia.com" <arighi@nvidia.com>, "ianm@nvidia.com"
+ <ianm@nvidia.com>, "jan@nvidia.com" <jan@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>, Don Dutile <ddutile@redhat.com>
+References: <ZyRUcGKKS6NbIV5O@Asurada-Nvidia>
+ <1845a6b8-5214-4379-85f4-3d36b61059dd@redhat.com>
+ <Zy0jiPItu8A3wNTL@Asurada-Nvidia>
+ <e36a1c1c-c880-4c64-82f9-34d55a04bd00@redhat.com>
+ <SJ0PR11MB67448860487317755CCCF76192202@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <SJ0PR11MB67448860487317755CCCF76192202@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,324 +124,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Zhenzhong,
 
-
-On 2024/11/19 上午12:22, Igor Mammedov wrote:
-> On Mon, 18 Nov 2024 17:10:29 +0100
-> Igor Mammedov <imammedo@redhat.com> wrote:
-> 
->> On Tue, 12 Nov 2024 10:17:33 +0800
->> Bibo Mao <maobibo@loongson.cn> wrote:
+On 11/19/24 08:07, Duan, Zhenzhong wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: Tuesday, November 19, 2024 2:00 AM
+>> Subject: Re: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
 >>
->>> Add topological relationships for Loongarch VCPU and initialize
->>> topology member variables. Also physical cpu id calculation
->>> method comes from its topo information.
-> 
-> hmm,
-> 
-> maybe split patch on 3 parts,
-> 
-> * initialize topo in possible CPUs
-> * add topo properties to CPU
-> * modify main cpu creation loop
->    (I'd reorder that after 2/6, so you'd have pre_plug handler in
->      place to move code to)
-> 
-Sure, will do in this way.
-
-Regards
-Bibo Mao
+>> Hi Nicolin,
+>>
+>> On 11/7/24 21:31, Nicolin Chen wrote:
+>>> Hi Eric,
 >>>
->>> Co-developed-by: Xianglai Li <lixianglai@loongson.cn>
->>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>> ---
->>>   docs/system/loongarch/virt.rst | 31 +++++++++++++++
->>>   hw/loongarch/virt.c            | 73 ++++++++++++++++++++++++++++------
->>>   target/loongarch/cpu.c         | 12 ++++++
->>>   target/loongarch/cpu.h         | 16 ++++++++
->>>   4 files changed, 119 insertions(+), 13 deletions(-)
+>>> On Thu, Nov 07, 2024 at 12:11:05PM +0100, Eric Auger wrote:
+>>>> On 11/1/24 05:09, Nicolin Chen wrote:
+>>>>> Hi,
+>>>>>
+>>>>> This is a continued discussion following previous month's:
+>>>>> https://lore.kernel.org/qemu-devel/Zvr%2Fbf7KgLN1cjOl@Asurada-Nvidia/
+>>>>>
+>>>>> Kernel changes are getting closer to merge, as Jason's planning to
+>>>>> take vIOMMU series and smmuv3_nesting series into the iommufd tree:
+>>>>> https://lore.kernel.org/all/cover.1730313494.git.nicolinc@nvidia.com/
+>>>>> https://lore.kernel.org/all/cover.1730313494.git.nicolinc@nvidia.com/
+>>>>> https://lore.kernel.org/all/0-v4-9e99b76f3518+3a8-
+>> smmuv3_nesting_jgg@nvidia.com/
+>>>>> So, I think it's probably a good time to align with each others and
+>>>>> talk about kicking off some QEMU upstream work in the month ahead.
+>>>>>
+>>>>> @Shameer,
+>>>>> Do you have some update on the pluggable smmuv3 module?
+>>>>>
+>>>>> Updates on my side:
+>>>>> 1) I have kept uAPI updated to the latest version and verified too.
+>>>>>    There should be some polishing changes depending on how the basic
+>>>>>    nesting infrastructure would look like from Intel/Duan's work.
+>>>>> 2) I got some help from NVIDIA folks for the libvirt task. And they
+>>>>>    have done some drafting and are now verifying the PCI topology
+>>>>>    with "iommu=none".
+>>>>>
+>>>>> Once the pluggable smmuv3 module is ready to test, we will make some
+>>>>> change to libvirt for that and drop the auto-assigning patches from
+>>>>> the VIRT code, so as to converge for a libvirt+QEMU test.
+>>>>>
+>>>>> FWIW, Robin requested a different solution for MSI mapping [1], v.s.
+>>>>> the RMR one that we have been using since Eric's work. I drafted a
+>>>>> few VFIO/IOMMUFD patches for that, yet paused for getting the vIOMMU
+>>>>> series merged to this kernel cycle. I plan to continue in Nov/Dec.
+>>>>> So, for the near term we will continue with the RMR solution, until
+>>>>> we have something solid later.
+>>>>>
+>>>>> [1] https://lore.kernel.org/linux-iommu/ZrVN05VylFq8lK4q@Asurada-Nvidia/
+>>>> At Red Hat we may find some cycles to resume working on the QEMU
+>>>> integration. Please can you sketch some tasks we could carry out in
+>>>> coordination with you and Shameer? Adding Don in the loop.
+>>> That is great!
 >>>
->>> diff --git a/docs/system/loongarch/virt.rst b/docs/system/loongarch/virt.rst
->>> index 172fba079e..8daf60785f 100644
->>> --- a/docs/system/loongarch/virt.rst
->>> +++ b/docs/system/loongarch/virt.rst
->>> @@ -28,6 +28,37 @@ The ``qemu-system-loongarch64`` provides emulation for virt
->>>   machine. You can specify the machine type ``virt`` and
->>>   cpu type ``la464``.
->>>   
->>> +CPU Topology
->>> +------------
->>> +
->>> +The ``LA464`` type CPUs have the concept of Socket Core and Thread.
->>> +
->>> +For example:
->>> +
->>> +``-smp 1,maxcpus=M,sockets=S,cores=C,threads=T``
->>> +
->>> +The above parameters indicate that the machine has a maximum of ``M`` vCPUs and
->>> +``S`` sockets, each socket has ``C`` cores, each core has ``T`` threads,
->>> +and each thread corresponds to a vCPU.
->>> +
->>> +Then ``M`` ``S`` ``C`` ``T`` has the following relationship:
->>> +
->>> +``M = S * C * T``
->>> +
->>> +In the CPU topology relationship, When we know the ``socket_id`` ``core_id``
->>> +and ``thread_id`` of the CPU, we can calculate its ``arch_id``:
->>> +
->>> +``arch_id = (socket_id * S) + (core_id * C) + (thread_id * T)``
+>>> So, given that Shameer is working on pluggable module part and we
+>>> have folks working on libvirt. I think the only big thing here is
+>>> the SMMUv3 series itself. Please refer to the changes in the link:
+>>>  - cover-letter: Add HW accelerated nesting support for arm SMMUv3
+>>>  - https://github.com/nicolinc/qemu/commits/wip/for_smmuv3_nesting-v4/
+>> Looking at your branch I see the following series (marked with cover-letter)
+>> *
 >>
->> Is there a spec or some other reference where all of this is described?
->> (or is that a made up just for QEMU?)
+>>  *
 >>
+>>    cover-letter: Add RMR WAR for MSI mappings (based on former RMR flat
+>>    mapping and not related to *[PATCH RFCv1 0/7] vfio: Allow userspace
+>>    to specify the address for each MSI vector
+>>    <https://lore.kernel.org/kvm/cover.1731130093.git.nicolinc@nvidia.com/#r>
+>>    I guess)*
 >>
->>> +
->>> +Similarly, when we know the ``arch_id`` of the CPU,
->>> +we can also get its ``socket_id`` ``core_id`` and ``thread_id``:
->>> +
->>> +``socket_id = arch_id / (C * T)``
->>> +
->>> +``core_id = (arch_id / T) % C``
->>> +
->>> +``thread_id = arch_id % T``
->>> +
->>>   Boot options
->>>   ------------
->>>   
->>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->>> index 9a635d1d3d..1ed5130edf 100644
->>> --- a/hw/loongarch/virt.c
->>> +++ b/hw/loongarch/virt.c
->>> @@ -1143,9 +1143,9 @@ static void virt_init(MachineState *machine)
->>>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(machine);
->>>       int i;
->>>       hwaddr base, size, ram_size = machine->ram_size;
->>> -    const CPUArchIdList *possible_cpus;
->>>       MachineClass *mc = MACHINE_GET_CLASS(machine);
->>>       CPUState *cpu;
->>> +    Object *cpuobj;
->>>   
->>>       if (!cpu_model) {
->>>           cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
->>> @@ -1163,13 +1163,30 @@ static void virt_init(MachineState *machine)
->>>       memory_region_add_subregion(&lvms->system_iocsr, 0, &lvms->iocsr_mem);
->>>   
->>>       /* Init CPUs */
->>> -    possible_cpus = mc->possible_cpu_arch_ids(machine);
->> I'd keep this, and use below, it makes line shorter
+>>  *
 >>
+>>    cover-letter: hw/arm/virt: Add multiple nested SMMUs (Nicolin ->
+>>    Shameer)
 >>
->>> -    for (i = 0; i < possible_cpus->len; i++) {
->>> -        cpu = cpu_create(machine->cpu_type);
->>> +    mc->possible_cpu_arch_ids(machine);
->>> +    for (i = 0; i < machine->smp.cpus; i++) {
->>> +        cpuobj = object_new(machine->cpu_type);
->>> +        if (cpuobj == NULL) {
->>> +            error_report("Fail to create object with type %s ",
->>> +                         machine->cpu_type);
->>> +            exit(EXIT_FAILURE);
->>> +        }
->>> +
->>> +        cpu = CPU(cpuobj);
+>>  *
 >>
->>>           cpu->cpu_index = i;
->> this probably should be in _pre_plug handler,
->> also see
->> (a15d2728a9aa pc: Init CPUState->cpu_index with index in possible_cpus[])
->> for why x86 does it.
+>>    cover-letter: Add HW accelerated nesting support for arm SMMUv3
+>>    (Nicolin)
 >>
->>>           machine->possible_cpus->cpus[i].cpu = cpu;
->>> -        lacpu = LOONGARCH_CPU(cpu);
->>> +        lacpu = LOONGARCH_CPU(cpuobj);
+>>  *
 >>
->>>           lacpu->phy_id = machine->possible_cpus->cpus[i].arch_id;
->> Given above is derived from topo data set below, I'd move above above
->> to pre_plug time, and calculate/set it there based on topo data.
->> There is no point in setting both at the same place.
+>>    cover-letter: Add VIOMMU infrastructure support (Nicolin)
 >>
->>> +        object_property_set_int(cpuobj, "socket-id",
->>> +                                machine->possible_cpus->cpus[i].props.socket_id,
->>> +                                NULL);
->>> +        object_property_set_int(cpuobj, "core-id",
->>> +                                machine->possible_cpus->cpus[i].props.core_id,
->>> +                                NULL);
->>> +        object_property_set_int(cpuobj, "thread-id",
->>> +                                machine->possible_cpus->cpus[i].props.thread_id,
->>> +                                NULL);
->>> +        qdev_realize_and_unref(DEVICE(cpuobj), NULL, &error_fatal);
->>>       }
->>>       fdt_add_cpu_nodes(lvms);
->>>       fdt_add_memory_nodes(machine);
->>> @@ -1286,6 +1303,35 @@ static void virt_initfn(Object *obj)
->>>       virt_flash_create(lvms);
->>>   }
->>>   
->>> +static int virt_get_arch_id_from_topo(MachineState *ms, LoongArchCPUTopo *topo)
->>> +{
->>> +    int arch_id, sock_vcpu_num, core_vcpu_num;
->>> +
->>> +    /*
->>> +     * calculate total logical cpus across socket/core/thread.
->>> +     * For more information on how to calculate the arch_id,
->>> +     * you can refer to the CPU Topology chapter of the
->>> +     * docs/system/loongarch/virt.rst document.
->>> +     */
->>> +    sock_vcpu_num = topo->socket_id * (ms->smp.threads * ms->smp.cores);
->>> +    core_vcpu_num = topo->core_id * ms->smp.threads;
->>> +
->>> +    /* get vcpu-id(logical cpu index) for this vcpu from this topology */
->>> +    arch_id = (sock_vcpu_num + core_vcpu_num) + topo->thread_id;
->>> +
->>> +    assert(arch_id >= 0 && arch_id < ms->possible_cpus->len);
->>> +
->>> +    return arch_id;
->>> +}
->>> +
->>> +static void virt_get_topo_from_index(MachineState *ms,
->>> +                                     LoongArchCPUTopo *topo, int index)
->>> +{
->>> +    topo->socket_id = index / (ms->smp.cores * ms->smp.threads);
->>> +    topo->core_id = index / ms->smp.threads % ms->smp.cores;
->>> +    topo->thread_id = index % ms->smp.threads;
->>> +}
->>> +
->>>   static bool memhp_type_supported(DeviceState *dev)
->>>   {
->>>       /* we only support pc dimm now */
->>> @@ -1385,8 +1431,9 @@ static HotplugHandler *virt_get_hotplug_handler(MachineState *machine,
->>>   
->>>   static const CPUArchIdList *virt_possible_cpu_arch_ids(MachineState *ms)
->>>   {
->>> -    int n;
->>> +    int n, arch_id;
->>>       unsigned int max_cpus = ms->smp.max_cpus;
->>> +    LoongArchCPUTopo topo;
->>>   
->>>       if (ms->possible_cpus) {
->>>           assert(ms->possible_cpus->len == max_cpus);
->>> @@ -1397,17 +1444,17 @@ static const CPUArchIdList *virt_possible_cpu_arch_ids(MachineState *ms)
->>>                                     sizeof(CPUArchId) * max_cpus);
->>>       ms->possible_cpus->len = max_cpus;
->>>       for (n = 0; n < ms->possible_cpus->len; n++) {
->>> +        virt_get_topo_from_index(ms, &topo, n);
->>> +        arch_id = virt_get_arch_id_from_topo(ms, &topo);
->>> +        ms->possible_cpus->cpus[n].vcpus_count = 1;
->>>           ms->possible_cpus->cpus[n].type = ms->cpu_type;
->>> -        ms->possible_cpus->cpus[n].arch_id = n;
->>> -
->>> +        ms->possible_cpus->cpus[n].arch_id = arch_id;
->>>           ms->possible_cpus->cpus[n].props.has_socket_id = true;
->>> -        ms->possible_cpus->cpus[n].props.socket_id  =
->>> -                                   n / (ms->smp.cores * ms->smp.threads);
->>> +        ms->possible_cpus->cpus[n].props.socket_id = topo.socket_id;
->>>           ms->possible_cpus->cpus[n].props.has_core_id = true;
->>> -        ms->possible_cpus->cpus[n].props.core_id =
->>> -                                   n / ms->smp.threads % ms->smp.cores;
->>> +        ms->possible_cpus->cpus[n].props.core_id = topo.core_id;
->>>           ms->possible_cpus->cpus[n].props.has_thread_id = true;
->>> -        ms->possible_cpus->cpus[n].props.thread_id = n % ms->smp.threads;
->>> +        ms->possible_cpus->cpus[n].props.thread_id = topo.thread_id;
->>>       }
->>>       return ms->possible_cpus;
->>>   }
->>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>> index 57cc4f314b..a99e22094e 100644
->>> --- a/target/loongarch/cpu.c
->>> +++ b/target/loongarch/cpu.c
->>> @@ -16,6 +16,7 @@
->>>   #include "kvm/kvm_loongarch.h"
->>>   #include "exec/exec-all.h"
->>>   #include "cpu.h"
->>> +#include "hw/qdev-properties.h"
->>>   #include "internals.h"
->>>   #include "fpu/softfloat-helpers.h"
->>>   #include "cpu-csr.h"
->>> @@ -725,6 +726,7 @@ static void loongarch_cpu_init(Object *obj)
->>>       timer_init_ns(&cpu->timer, QEMU_CLOCK_VIRTUAL,
->>>                     &loongarch_constant_timer_cb, cpu);
->>>   #endif
->>> +    cpu->phy_id = UNSET_PHY_ID;
->>>   #endif
->>>   }
->>>   
->>> @@ -823,6 +825,14 @@ static int64_t loongarch_cpu_get_arch_id(CPUState *cs)
->>>   }
->>>   #endif
->>>   
->>> +static Property loongarch_cpu_properties[] = {
->>> +    DEFINE_PROP_INT32("socket-id", LoongArchCPU, socket_id, 0),
->>> +    DEFINE_PROP_INT32("core-id", LoongArchCPU, core_id, 0),
->>> +    DEFINE_PROP_INT32("thread-id", LoongArchCPU, thread_id, 0),
->>> +    DEFINE_PROP_INT32("node-id", LoongArchCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
->>> +    DEFINE_PROP_END_OF_LIST()
->>> +};
->>> +
->>>   static void loongarch_cpu_class_init(ObjectClass *c, void *data)
->>>   {
->>>       LoongArchCPUClass *lacc = LOONGARCH_CPU_CLASS(c);
->>> @@ -830,6 +840,7 @@ static void loongarch_cpu_class_init(ObjectClass *c, void *data)
->>>       DeviceClass *dc = DEVICE_CLASS(c);
->>>       ResettableClass *rc = RESETTABLE_CLASS(c);
->>>   
->>> +    device_class_set_props(dc, loongarch_cpu_properties);
->>>       device_class_set_parent_realize(dc, loongarch_cpu_realizefn,
->>>                                       &lacc->parent_realize);
->>>       resettable_class_set_parent_phases(rc, NULL, loongarch_cpu_reset_hold, NULL,
->>> @@ -854,6 +865,7 @@ static void loongarch_cpu_class_init(ObjectClass *c, void *data)
->>>   #ifdef CONFIG_TCG
->>>       cc->tcg_ops = &loongarch_tcg_ops;
->>>   #endif
->>> +    dc->user_creatable = true;
->>>   }
->>>   
->>>   static const gchar *loongarch32_gdb_arch_name(CPUState *cs)
->>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->>> index 86c86c6c95..7472df0521 100644
->>> --- a/target/loongarch/cpu.h
->>> +++ b/target/loongarch/cpu.h
->>> @@ -19,6 +19,12 @@
->>>   #include "cpu-csr.h"
->>>   #include "cpu-qom.h"
->>>   
->>> +/*
->>> + * CPU can't have 0xFFFFFFFF physical ID, use that value to distinguish
->>> + * that physical ID hasn't been set yet
+>>  *
 >>
->> pointer to CPU spec/doc here would be nice to have
+>>    cover-letter: intel_iommu: Enable stage-1 translation for
+>>    passthrough device (Zhenzhong)
 >>
->>> + */
->>> +#define UNSET_PHY_ID 0xFFFFFFFF
->>> +
->>>   #define IOCSRF_TEMP             0
->>>   #define IOCSRF_NODECNT          1
->>>   #define IOCSRF_MSI              2
->>> @@ -390,6 +396,12 @@ typedef struct CPUArchState {
->>>   #endif
->>>   } CPULoongArchState;
->>>   
->>> +typedef struct LoongArchCPUTopo {
->>> +    int32_t socket_id;  /* socket-id of this VCPU */
->>> +    int32_t core_id;    /* core-id of this VCPU */
->>> +    int32_t thread_id;  /* thread-id of this VCPU */
->>> +} LoongArchCPUTopo;
->>> +
->>>   /**
->>>    * LoongArchCPU:
->>>    * @env: #CPULoongArchState
->>> @@ -404,6 +416,10 @@ struct ArchCPU {
->>>       uint32_t  phy_id;
->>>       OnOffAuto lbt;
->>>       OnOffAuto pmu;
->>> +    int32_t socket_id;  /* socket-id of this VCPU */
->>> +    int32_t core_id;    /* core-id of this VCPU */
->>> +    int32_t thread_id;  /* thread-id of this VCPU */
->>> +    int32_t node_id;    /* NUMA node of this VCPU */
->>>   
->>>       /* 'compatible' string for this CPU for Linux device trees */
->>>       const char *dtb_compatible;
+>>  *
 >>
+>>    cover-letter: intel_iommu: Enable stage-1 translation for emulated
+>>    device (Zhenzhong)
+>>
+>> The last one is covered by *[PATCH v5 00/20] intel_iommu: Enable stage-1
+>> translation for emulated device
+>> <https://lore.kernel.org/all/20241111083457.2090664-1-
+>> zhenzhong.duan@intel.com/#r>
+>> *
+>>
+>> *I see there is a reference to *"Enable stage-1 translation for
+>> passthrough device" series but has it been posted for review? Adding
+>> Zhenzhong in copy.
+> There is an RFCv1 posted upstream which is a combination of
+> " intel_iommu: Enable stage-1 translation for emulated device" and
+> " intel_iommu: Enable stage-1 translation for passthrough device".
+> Link: https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02740.html
+>
+> If you means the split version, not sent yet. Plan it after the series about
+> emulated device is accepted.
+OK thank you very much for the link and confirmation.
+
+Eric
+>
+> Thanks
+> Zhenzhong
+>
 
 
