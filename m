@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F205AD591A6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E515ED591A6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:05:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDHLp-0000sD-VA; Tue, 19 Nov 2024 01:04:38 -0500
+	id 1tDHMS-0002Hn-EX; Tue, 19 Nov 2024 01:05:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHLn-0000jq-3Z; Tue, 19 Nov 2024 01:04:35 -0500
+ id 1tDHMQ-0002Dk-9N; Tue, 19 Nov 2024 01:05:14 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHLk-0004cR-Rq; Tue, 19 Nov 2024 01:04:34 -0500
+ id 1tDHMO-0004vQ-37; Tue, 19 Nov 2024 01:05:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A4FADA6261;
- Tue, 19 Nov 2024 09:04:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4D460A626D;
+ Tue, 19 Nov 2024 09:04:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CBBBB1738D7;
- Tue, 19 Nov 2024 09:04:18 +0300 (MSK)
-Received: (nullmailer pid 2368929 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 7534E1738E2;
+ Tue, 19 Nov 2024 09:04:19 +0300 (MSK)
+Received: (nullmailer pid 2368963 invoked by uid 1000);
  Tue, 19 Nov 2024 06:04:18 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 59/72] hw/i386/pc: Don't try to init PCI NICs if there
- is no PCI bus
-Date: Tue, 19 Nov 2024 09:04:00 +0300
-Message-Id: <20241119060418.2368866-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [Stable-9.1.2 70/72] Revert "hw/audio/hda: fix memory leak on audio
+ setup"
+Date: Tue, 19 Nov 2024 09:04:11 +0300
+Message-Id: <20241119060418.2368866-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,48 +64,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The 'isapc' machine type has no PCI bus, but pc_nic_init() still
-calls pci_init_nic_devices() passing it a NULL bus pointer.  This
-causes the clang sanitizer to complain:
+This reverts commit 6d03242a7e47815ed56687ecd13f683d8da3f2fe,
+which causes SPICE audio to break.  While arguably this is a SPICE bug,
+it is possible to fix the leak in a less heavy-handed way.
 
-$ ./build/clang/qemu-system-i386 -M isapc
-../../hw/pci/pci.c:1866:39: runtime error: member access within null pointer of type 'PCIBus' (aka 'struct PCIBus')
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/pci/pci.c:1866:39 in
-
-This is because pci_init_nic_devices() does
- &bus->qbus
-which is undefined behaviour on a NULL pointer even though we're not
-actually dereferencing the pointer. (We don't actually crash as
-a result, so if you aren't running a sanitizer build then there
-are no user-visible effects.)
-
-Make pc_nic_init() avoid trying to initialize PCI NICs on a non-PCI
-system.
-
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2639
 Cc: qemu-stable@nongnu.org
-Fixes: 8d39f9ba14d64 ("hw/i386/pc: use qemu_get_nic_info() and pci_init_nic_devices()")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/r/20241105171813.3031969-1-peter.maydell@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit bd0e501e1a4813fa36a4cf9842aaf430323a03c3)
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-ID: <20241114125318.1707590-2-pbonzini@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit e125d9835b89545b09c0367404dcf69f18ae6de1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 7779c88a91..a527c0df0a 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1245,7 +1245,9 @@ void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
+diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
+index 4373565371..ee3d0a7dec 100644
+--- a/hw/audio/hda-codec.c
++++ b/hw/audio/hda-codec.c
+@@ -472,24 +472,6 @@ static void hda_audio_set_amp(HDAAudioStream *st)
      }
+ }
  
-     /* Anything remaining should be a PCI NIC */
--    pci_init_nic_devices(pci_bus, mc->default_nic);
-+    if (pci_bus) {
-+        pci_init_nic_devices(pci_bus, mc->default_nic);
-+    }
+-static void hda_close_stream(HDAAudioState *a, HDAAudioStream *st)
+-{
+-    if (st->node == NULL) {
+-        return;
+-    }
+-    if (a->use_timer) {
+-        timer_free(st->buft);
+-        st->buft = NULL;
+-    }
+-    if (st->output) {
+-        AUD_close_out(&a->card, st->voice.out);
+-        st->voice.out = NULL;
+-    } else {
+-        AUD_close_in(&a->card, st->voice.in);
+-        st->voice.in = NULL;
+-    }
+-}
+-
+ static void hda_audio_setup(HDAAudioStream *st)
+ {
+     bool use_timer = st->state->use_timer;
+@@ -502,7 +484,6 @@ static void hda_audio_setup(HDAAudioStream *st)
+     trace_hda_audio_format(st->node->name, st->as.nchannels,
+                            fmt2name[st->as.fmt], st->as.freq);
  
-     rom_reset_order_override();
+-    hda_close_stream(st->state, st);
+     if (st->output) {
+         if (use_timer) {
+             cb = hda_audio_output_cb;
+@@ -760,11 +741,23 @@ static void hda_audio_init(HDACodecDevice *hda,
+ static void hda_audio_exit(HDACodecDevice *hda)
+ {
+     HDAAudioState *a = HDA_AUDIO(hda);
++    HDAAudioStream *st;
+     int i;
+ 
+     dprint(a, 1, "%s\n", __func__);
+     for (i = 0; i < ARRAY_SIZE(a->st); i++) {
+-        hda_close_stream(a, a->st + i);
++        st = a->st + i;
++        if (st->node == NULL) {
++            continue;
++        }
++        if (a->use_timer) {
++            timer_free(st->buft);
++        }
++        if (st->output) {
++            AUD_close_out(&a->card, st->voice.out);
++        } else {
++            AUD_close_in(&a->card, st->voice.in);
++        }
+     }
+     AUD_remove_card(&a->card);
  }
 -- 
 2.39.5
