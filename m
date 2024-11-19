@@ -4,76 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052A9D60D05
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 01:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C70CD60D06
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 01:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDCsP-00056i-MF; Mon, 18 Nov 2024 20:17:57 -0500
+	id 1tDCwm-0006E0-KM; Mon, 18 Nov 2024 20:22:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDCsN-00055x-8s; Mon, 18 Nov 2024 20:17:55 -0500
-Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
+ id 1tDCwk-0006Dp-J0; Mon, 18 Nov 2024 20:22:26 -0500
+Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDCsL-0003Zz-J8; Mon, 18 Nov 2024 20:17:55 -0500
-Received: by mail-vk1-xa36.google.com with SMTP id
- 71dfb90a1353d-5139cd01814so170943e0c.0; 
- Mon, 18 Nov 2024 17:17:52 -0800 (PST)
+ id 1tDCwg-00042x-W5; Mon, 18 Nov 2024 20:22:25 -0500
+Received: by mail-vk1-xa2a.google.com with SMTP id
+ 71dfb90a1353d-5139cd0032cso1544793e0c.2; 
+ Mon, 18 Nov 2024 17:22:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731979072; x=1732583872; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731979341; x=1732584141; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ETPuDfp4+qKnMAnwy5QW57rWJiIu9lvPi1Nj5PKfhC0=;
- b=BeJhbuScdGG17Eu4RdCA6LDpBet8xAvHH/d3iCelLD1iyHj7/qd6N0Z9v7hCcXl9vj
- IkQaFlAXUiyIzPyhkWJ2uTBOSQicHPEc0ABi6w97I3tfPjwj2Wl1VVysgTYYOP7raZIb
- Zx+eAGsJEZWxSeRdDakYlCZ3BFQIz2dG8gXHXqAapxa1tvupzXUcbdAZ9MzPWhHWT7tK
- o33x0FD73pye1J45IPGtmcwbfj7vfxcix7L7PddBXvvTzR+GRWy5uGTAokGbU25p08Ym
- 3SEbs6erKFlB20gZFRQnone+Q3r8tUNEFlPRZ1qnGNyKIBEYnhVawvrUeEphNFVVrXgb
- zQzQ==
+ bh=oSUxYEcsdJymGJRb3JtZ/g6XJGuEiJRC9f9A+rXGNQs=;
+ b=lg9P18cLj/YT781MR1Lw6Lq4Qvz5PZvOe39FEtMkGkJk8+4Q8wm2uy/1tX//N3xQbG
+ GDK+PEowGKFHADiNm3XaLtzTHEbwIaZTqRK3uEJQZSmuvgBpyIlLzq35wK9jQM/eLvgp
+ BwesQatpy9tHRqHz0R/Kdl1TefHFpXkl6fa8K4jfskmS/09XYj1bGdbuZxdJ/bHKf/gN
+ brkqKw8J6HsI432PoFD4i6rE5iJJRGRVspKOVMT8ZLTqUH9L7xUD722TBqVpZHrnPbon
+ Q9dqS58/cEVvmbQoRghCgYFu9L16MZ96jbAWNoXLubw8bUu1I5RF4zXp6Ic8DDlIv9IX
+ IFRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731979072; x=1732583872;
+ d=1e100.net; s=20230601; t=1731979341; x=1732584141;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ETPuDfp4+qKnMAnwy5QW57rWJiIu9lvPi1Nj5PKfhC0=;
- b=dzD8bBTU8s8fhtNZwcLc4pKdNmxKj+ZcN2iGhatWqmluS6lgbXpiIAq85YkNUJiXQ/
- Fu3+HGYh1BY2OfjY7AXfnT31BxZAciF+Wx2wubvB15T3i5kqHcoCfGMkSgKmJx0CyJfN
- 7a8uj0Z2KZt727JWbqcw77YHyXkz+9ncirQbGPNwUvrgXRL7bKa1Nx2h8xxKmhckf2V0
- ay8FddZg8ghrD/i+EiTCoA0I4lEP2+FhNRui+TVC917T5IrqfxRBAfdLijqj+KgohUBn
- 5YGMwF/Pl+0OQjyPmwCHEFH6r9XMssKbtEA2Vyk6bnJ2q6gUc9g2ger/sMQFbznhUYiJ
- 0ZWA==
+ bh=oSUxYEcsdJymGJRb3JtZ/g6XJGuEiJRC9f9A+rXGNQs=;
+ b=k7q8sGJQkmXhb0xEzqZM5upF3BkpVYd89D1Bb2uRnbMZydNUQwbZEWOSdrLwF25NqY
+ SHW0jG2wZdDPzB5MDOlJS2CbG+8xiSiwVyWK+NLFm+fiFZbOingqAozq0AYrP+ziLedY
+ Hu8xnvxoA6RUoSFy4G2dG2dPNAEaHr7yzAhRB7H7FnwtoXhbthQzygC5LH9SuAokQNTa
+ +3Ra6lHH2Ee4Xyymn6Ebk6QytgB6Pswb8Oc8fvppa+KHZuQuNpIxkzEw6Gx7unkwsRjS
+ pZ+//zpPnIe+1BP6Ic4CjS82Q//+EvAkz1litxFAbdnfGOSoBAJQqXR6wOosJb0PsQ1Y
+ iOLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWOcFz2EQqG6e1LtD4rWYVvEHe5wdKOzcC6ERCo6y51+Wpx2h71L9IoTjhrFtKNXf8cI0pXn6s6Ja30@nongnu.org
-X-Gm-Message-State: AOJu0Yz5zTK4fnxABiA3G+vnhkS6thVreauyGgxmY7wa6ipKqHouWVds
- NHx8/7y3rIuSIfT3wIwq0oOJhnfEK5aeTYeu1YrksTOUdApV0WGfx0yM+bRrQRgqiWte5xf7jPp
- 2dxNLMiZpAXM/A9AdZxIsVOqy+kU=
-X-Google-Smtp-Source: AGHT+IFH61fQW/8NdQVHQYAD/olk+GjS9RGeTOPuLfAYI7zzoyuvkg0SNdWkdZyLoEr2hFXops3LApT6Soi3zALeVrY=
-X-Received: by 2002:a05:6122:2027:b0:50d:83e1:94fb with SMTP id
- 71dfb90a1353d-514786d4cfemr11261818e0c.12.1731979071753; Mon, 18 Nov 2024
- 17:17:51 -0800 (PST)
+ AJvYcCW5U5iWfnhInW236N2SfXpqVojwR5a99x+oYoszc/jRqnhSoXDihezEjljKDl6vcOuw/66Z9y5uyJsU@nongnu.org
+X-Gm-Message-State: AOJu0YxSOvGLUpa9ORJ0F1++J98SxUi5pbShwJpAcRyza/CmFk6PVz8C
+ j0jVFTcHFOyVifOGTX1zxMFZ0Qby1GOhNadSOoFWuoH4EgQxSHKt0xu2OjzUwYL7pua3K+mt/zF
+ Ay+WBK/P/ZLgX2NQRcXDevIkY4AE=
+X-Google-Smtp-Source: AGHT+IEL8RjJwFa0r2rLh2m790tLK2LhDBsrut7yEGOx2OyYhHGe1oK9TwmQI3iqVLAKW3uL9UbuzizVOQ1Ny8NIdFw=
+X-Received: by 2002:a05:6122:1d07:b0:50d:66e1:826c with SMTP id
+ 71dfb90a1353d-514781e023bmr14484488e0c.11.1731979340893; Mon, 18 Nov 2024
+ 17:22:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20241029085349.30412-1-yongxuan.wang@sifive.com>
-In-Reply-To: <20241029085349.30412-1-yongxuan.wang@sifive.com>
+References: <20241106133407.604587-1-dbarboza@ventanamicro.com>
+ <20241106133407.604587-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20241106133407.604587-2-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 Nov 2024 11:17:24 +1000
-Message-ID: <CAKmqyKNgfcqnoQkn+jUo_tyDEk4RQATsWGLDYkDOQTNax5vZsQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] hw/intc/riscv_aplic: Fix APLIC in_clrip and
- clripnum write emulation
-To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
- vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Tue, 19 Nov 2024 11:21:54 +1000
+Message-ID: <CAKmqyKMgsqdSf7gSGAL=ctcDiBN2Ltzt4sCE6SUswtxzx8q88g@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 1/7] hw/riscv/riscv-iommu.c: add
+ riscv_iommu_instance_init()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,70 +94,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 29, 2024 at 6:54=E2=80=AFPM Yong-Xuan Wang <yongxuan.wang@sifiv=
-e.com> wrote:
+On Wed, Nov 6, 2024 at 11:38=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> In the section "4.7 Precise effects on interrupt-pending bits"
-> of the RISC-V AIA specification defines that:
+> Move all the static initializion of the device to an init() function,
+> leaving only the dynamic initialization to be done during realize.
 >
-> "If the source mode is Level1 or Level0 and the interrupt domain
-> is configured in MSI delivery mode (domaincfg.DM =3D 1):
-> The pending bit is cleared whenever the rectified input value is
-> low, when the interrupt is forwarded by MSI, or by a relevant
-> write to an in_clrip register or to clripnum."
+> With this change s->cap is initialized with RISCV_IOMMU_CAP_DBG during
+> init(), and realize() will increment s->cap with the extra caps.
 >
-> Update the riscv_aplic_set_pending() to match the spec.
+> This will allow callers to add IOMMU capabilities before the
+> realization.
 >
-> Fixes: bf31cf06eb ("hw/intc/riscv_aplic: Fix setipnum_le write emulation =
-for APLIC MSI-mode")
-> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
-> v2:
-> - add fixes tag (Daniel)
-> - follow the suggestion from https://lore.kernel.org/kvm/CAAhSdy3NmwbHY9Q=
-ef9LUeXfr0iE7wC-u0d_fHzC47PXk-MzmRg@mail.gmail.com/
->   (Anup)
-> ---
->  hw/intc/riscv_aplic.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  hw/riscv/riscv-iommu.c | 71 +++++++++++++++++++++++-------------------
+>  1 file changed, 39 insertions(+), 32 deletions(-)
 >
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 4a262c82f078..74c82a841101 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -248,9 +248,12 @@ static void riscv_aplic_set_pending(RISCVAPLICState =
-*aplic,
->
->      if ((sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
->          (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW)) {
-> -        if (!aplic->msimode || (aplic->msimode && !pending)) {
-> +        if (!aplic->msimode) {
->              return;
->          }
-> +        if (aplic->msimode && !pending) {
-> +            goto noskip_write_pending;
-> +        }
->          if ((aplic->state[irq] & APLIC_ISTATE_INPUT) &&
->              (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW)) {
->              return;
-> @@ -261,6 +264,7 @@ static void riscv_aplic_set_pending(RISCVAPLICState *=
-aplic,
->          }
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index feb650549a..1893584028 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -2096,11 +2096,48 @@ static const MemoryRegionOps riscv_iommu_trap_ops=
+ =3D {
 >      }
+>  };
 >
-> +noskip_write_pending:
->      riscv_aplic_set_pending_raw(aplic, irq, pending);
+> +static void riscv_iommu_instance_init(Object *obj)
+> +{
+> +    RISCVIOMMUState *s =3D RISCV_IOMMU(obj);
+> +
+> +    /* Enable translation debug interface */
+> +    s->cap =3D RISCV_IOMMU_CAP_DBG;
+> +
+> +    /* Report QEMU target physical address space limits */
+> +    s->cap =3D set_field(s->cap, RISCV_IOMMU_CAP_PAS,
+> +                       TARGET_PHYS_ADDR_SPACE_BITS);
+> +
+> +    /* TODO: method to report supported PID bits */
+> +    s->pid_bits =3D 8; /* restricted to size of MemTxAttrs.pid */
+> +    s->cap |=3D RISCV_IOMMU_CAP_PD8;
+> +
+> +    /* register storage */
+> +    s->regs_rw =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
+> +    s->regs_ro =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
+> +    s->regs_wc =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
+> +
+> +     /* Mark all registers read-only */
+> +    memset(s->regs_ro, 0xff, RISCV_IOMMU_REG_SIZE);
+> +
+> +    /* Device translation context cache */
+> +    s->ctx_cache =3D g_hash_table_new_full(riscv_iommu_ctx_hash,
+> +                                         riscv_iommu_ctx_equal,
+> +                                         g_free, NULL);
+> +
+> +    s->iot_cache =3D g_hash_table_new_full(riscv_iommu_iot_hash,
+> +                                         riscv_iommu_iot_equal,
+> +                                         g_free, NULL);
+> +
+> +    s->iommus.le_next =3D NULL;
+> +    s->iommus.le_prev =3D NULL;
+> +    QLIST_INIT(&s->spaces);
+> +}
+> +
+>  static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+>  {
+>      RISCVIOMMUState *s =3D RISCV_IOMMU(dev);
+>
+> -    s->cap =3D s->version & RISCV_IOMMU_CAP_VERSION;
+> +    s->cap |=3D s->version & RISCV_IOMMU_CAP_VERSION;
+>      if (s->enable_msi) {
+>          s->cap |=3D RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
+>      }
+> @@ -2115,29 +2152,11 @@ static void riscv_iommu_realize(DeviceState *dev,=
+ Error **errp)
+>          s->cap |=3D RISCV_IOMMU_CAP_SV32X4 | RISCV_IOMMU_CAP_SV39X4 |
+>                    RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
+>      }
+> -    /* Enable translation debug interface */
+> -    s->cap |=3D RISCV_IOMMU_CAP_DBG;
+> -
+> -    /* Report QEMU target physical address space limits */
+> -    s->cap =3D set_field(s->cap, RISCV_IOMMU_CAP_PAS,
+> -                       TARGET_PHYS_ADDR_SPACE_BITS);
+> -
+> -    /* TODO: method to report supported PID bits */
+> -    s->pid_bits =3D 8; /* restricted to size of MemTxAttrs.pid */
+> -    s->cap |=3D RISCV_IOMMU_CAP_PD8;
+>
+>      /* Out-of-reset translation mode: OFF (DMA disabled) BARE (passthrou=
+gh) */
+>      s->ddtp =3D set_field(0, RISCV_IOMMU_DDTP_MODE, s->enable_off ?
+>                          RISCV_IOMMU_DDTP_MODE_OFF : RISCV_IOMMU_DDTP_MOD=
+E_BARE);
+>
+> -    /* register storage */
+> -    s->regs_rw =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
+> -    s->regs_ro =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
+> -    s->regs_wc =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
+> -
+> -     /* Mark all registers read-only */
+> -    memset(s->regs_ro, 0xff, RISCV_IOMMU_REG_SIZE);
+> -
+>      /*
+>       * Register complete MMIO space, including MSI/PBA registers.
+>       * Note, PCIDevice implementation will add overlapping MR for MSI/PB=
+A,
+> @@ -2195,19 +2214,6 @@ static void riscv_iommu_realize(DeviceState *dev, =
+Error **errp)
+>      memory_region_init_io(&s->trap_mr, OBJECT(dev), &riscv_iommu_trap_op=
+s, s,
+>              "riscv-iommu-trap", ~0ULL);
+>      address_space_init(&s->trap_as, &s->trap_mr, "riscv-iommu-trap-as");
+> -
+> -    /* Device translation context cache */
+> -    s->ctx_cache =3D g_hash_table_new_full(riscv_iommu_ctx_hash,
+> -                                         riscv_iommu_ctx_equal,
+> -                                         g_free, NULL);
+> -
+> -    s->iot_cache =3D g_hash_table_new_full(riscv_iommu_iot_hash,
+> -                                         riscv_iommu_iot_equal,
+> -                                         g_free, NULL);
+> -
+> -    s->iommus.le_next =3D NULL;
+> -    s->iommus.le_prev =3D NULL;
+> -    QLIST_INIT(&s->spaces);
 >  }
 >
+>  static void riscv_iommu_unrealize(DeviceState *dev)
+> @@ -2249,6 +2255,7 @@ static const TypeInfo riscv_iommu_info =3D {
+>      .name =3D TYPE_RISCV_IOMMU,
+>      .parent =3D TYPE_DEVICE,
+>      .instance_size =3D sizeof(RISCVIOMMUState),
+> +    .instance_init =3D riscv_iommu_instance_init,
+>      .class_init =3D riscv_iommu_class_init,
+>  };
+>
 > --
-> 2.17.1
+> 2.45.2
 >
 >
 
