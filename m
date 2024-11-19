@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292CAD591A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 16:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B390D591A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 16:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDRG7-0002Bx-SF; Tue, 19 Nov 2024 11:39:24 -0500
+	id 1tDRT9-0005K2-MA; Tue, 19 Nov 2024 11:52:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tDRG6-0002Bf-5T
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:39:22 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tDRT7-0005Jj-MG
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:52:49 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tDRG4-0003D3-Mm
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:39:21 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5cfbeed072dso3850320a12.3
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 08:39:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tDRT5-0005Uf-3h
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 11:52:48 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-7f8cc29aaf2so833905a12.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 08:52:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732034359; x=1732639159; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=t6D9TS0nGljTO5XNuf2sVGSDhbxQ6NUF+WSqFo6smIw=;
- b=cCrvLQMhV0fQwb6QpvYykUUsqUhSvzdNOCicvgAE4Rz0nyWcr8ZPLtDpIzR/LgsIbU
- oFP7fuGW7ysKZO5C+3Twuf1D/RWJhiCSJxWyMQ5mlQtSMXdzELHdmlWYVzCzPPpeGTbp
- 82pKN43H9ERt3C2CYJoCTHKpR9sdcPF1hBv76WoVzjy9lyICOWzd1/E7K75Mdf8tQRd6
- A1aSAo56g97siRricXj4DydrYNfBH36KTVWN4kxUNrGbv0HozUkmv9KXo+HrogoOvBRn
- YDAgRPSAMb2LPy0qTBgosJopwp1bDTzOlFXjqXcFE/HhvED6Y7xnPL7o1QxnVwTwiE9R
- 5hbw==
+ d=linaro.org; s=google; t=1732035165; x=1732639965; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zXdNvFtyTDNpD60Tzhit+smLCSixf4jDFkhigWgSGRY=;
+ b=RU24KaC3E5sEt84Ll3f81s1xZV3T5OkQNd16MRQWA8Gbjyak2FV0O1N2DqJBs6bbl/
+ F0uM95bv8nj68p9VQBWeTUIfXGNiT9jWSp08RG+hTbmM6yx0JXB2yicXqBNwsBsAX24I
+ jA/Z2LMw0C/aYF4gRNHAd2OuZWGjZk08H/550RyV0z/OXtCSYaDc5CRzi+gMvd3EHCzF
+ +jhH3aoeT/9CPIEvcPg6jQkXXaDGFWC/WQfJUHGj2AkFyPMB52PajStqbYXzGdpBTcj6
+ /aM3AIhnG6dElv2XqeCVrLHGibJgSoq01NrgsuX63j08XSqp/S9M06CCtanQ48pXqWPV
+ u+1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732034359; x=1732639159;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=t6D9TS0nGljTO5XNuf2sVGSDhbxQ6NUF+WSqFo6smIw=;
- b=rtLdtJhBvSCSosPDNZ8r+nHHPJsZk7WoWBLw8HRw7+8r6oHJ5BIbFuWYLV/bHrBQ7w
- 8r8C/dwN8yamML5NJ0NLAGTtAblRfYQbZGorB8cGnrxsUvI+pwgKFd9lSTqdanVporyZ
- QZJrG1bxbHaoJC6ttjQJOBanV64wfULnD96ceV6POkE1OfEYTmg4NHMkGYvX4cvCKvob
- G7KYpXwF5cDzDqI8wxZKjhdTN/Fl0V4ZtHoNeWqvignaeuehEsLf3IU45uGK6m7abTob
- COBhVnUtaIha7IKvPTWjA2UbVYv5DTCCanqEcztitrA7RwCnNui41CdjE9nzNXcmtRfW
- /WRw==
-X-Gm-Message-State: AOJu0YzkP2e/2lgV7NGJBGr1wSDNBE/EnnHjLll8K1gZawHHvuLoHb/W
- PRvN/7Pri0oNAUiHXuLG5n5o4Tvfpxt/g5IfJe5hpL1PtbdNh3jce+Lu1WCjsQk=
-X-Google-Smtp-Source: AGHT+IGjkw7F+N3z/HspWjzjxFMnBZZNI52bzluIVexIVOIg2NGxRrSHRXDrznL6BwTLfDtgh0zRtQ==
-X-Received: by 2002:a05:6402:908:b0:5cf:4687:b816 with SMTP id
- 4fb4d7f45d1cf-5cf8fd49c50mr12866745a12.31.1732034358834; 
- Tue, 19 Nov 2024 08:39:18 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20dffd7e7sm665101466b.119.2024.11.19.08.39.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 08:39:18 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id ADB405F716;
- Tue, 19 Nov 2024 16:39:17 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Ani Sinha
- <anisinha@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 06/15] tests/functional: remove obsolete reference to
- avocado bug
-In-Reply-To: <20241119150519.1123365-7-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 19 Nov 2024 15:05:10
- +0000")
-References: <20241119150519.1123365-1-berrange@redhat.com>
- <20241119150519.1123365-7-berrange@redhat.com>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Tue, 19 Nov 2024 16:39:17 +0000
-Message-ID: <87sernnpoq.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1732035165; x=1732639965;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zXdNvFtyTDNpD60Tzhit+smLCSixf4jDFkhigWgSGRY=;
+ b=J+/t2xwHxNTovneYfyvvN6VG9dG6yit5VwecWq4Dz6CarhBw6ODrtxjlWlqtVrh9vy
+ MxB5qhrXmE0GAmQ6ojILHnbcF7OyClBZ+Mli7RiHTKHk2IZa8m9v1T+LedpNLf9V8jcO
+ eZOmLg9u2rv1F147LkGUxKbcVHbxoDr9SIFFRbOTtc0DWN+VUNNw7yeFJuS01uDeytMc
+ T0aU1qNkosiPd7pxDFdzYcI3peBitJNigQBQtl0jC3q6mUPD30NnSuHIgBMRZtGVDXd4
+ giGKEWJM0pJfhbxTdwaSi0PowJjdScmQ6YV+nf4mSygmtnyUR+M/SdNR8BtLoCj98LSG
+ MraQ==
+X-Gm-Message-State: AOJu0YwaWV5mgf4UaTjaCHLvLI7i9BmWydRVGCH325qRsYizWM87di+/
+ xZiel7DREuLOkiPkaxnn+OP9nhkrJCnz7e4prxMH7LO3sA48b3wPBIeb7jrOVgTmCs/5tORgO/N
+ Tw4g=
+X-Google-Smtp-Source: AGHT+IF/qu1J9VAHWBnjWeMVGyjxlNf7Kfl3lAh+tqmkfLOgfebgjKKumBF7+DMAzqZsAyTQRPzFhQ==
+X-Received: by 2002:a05:6a20:258f:b0:1d9:2408:aa4c with SMTP id
+ adf61e73a8af0-1dc90b5679bmr21680244637.23.1732035164890; 
+ Tue, 19 Nov 2024 08:52:44 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-724771c08f6sm8601067b3a.127.2024.11.19.08.52.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Nov 2024 08:52:44 -0800 (PST)
+Message-ID: <33af12d7-9269-4c21-96d4-aa76becd0f09@linaro.org>
+Date: Tue, 19 Nov 2024 08:52:43 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Status of some Arm features
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <51442716-467b-46c2-b2f7-8ffdeeca320e@linaro.org>
+ <CAFEAcA_eL+F572fZpFW2+Tz6xx5Mx5ux-axe3HR_fEf43_GLRA@mail.gmail.com>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA_eL+F572fZpFW2+Tz6xx5Mx5ux-axe3HR_fEf43_GLRA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,16 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> Historical bugs in avocado related to zstd support are not relevant to
-> the code now that it uses QEMU's native test harness.
+On 11/19/24 02:09, Peter Maydell wrote:
+> On Mon, 18 Nov 2024 at 23:33, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>> I'm currently reviewing the QEMU Arm documentation, and I have a
+>> question about the status of following features:
+>>
+>> 8.0:
+>> - FEAT_DoubleLock, Double Lock
+> 
+> This is actually an "anti-feature" :-)  It is optional from v8.0
+> and it must not be implemented from v9.0. We implement the handling
+> of it based on the DOUBLELOCK fields in ID_AA64DFR0 and DBGDEVID
+> (so it does the right thing on older named CPU types) and don't
+> advertise it in "max".
 >
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Despite this singularity on versions implementation, should we list that 
+in our documentation?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+>> 8.2:
+>> - FEAT_ASMv8p2, Armv8.2 changes to the A64 ISA (bfc and rev64 instructions)
+> 
+> This isn't a feature for CPU implementations; it's a feature for
+> assemblers and disassemblers, which have to recognize BFC and
+> REV64 mnemonics as being ways to write special-case flavours
+> of the BFM and REV instructions.
+> 
+
+Reading the feature description [1] or the A-profile manual:
+FEAT_ASMv8p2 introduces the BFC instruction to the A64 instruction set 
+as an alias of BFM. It also requires that the BFC instruction and the 
+A64 pseudo-instruction REV64 are implemented by assemblers.
+
+I understand it's both introducing the BFC instructions *and also* 
+ensure that BFC and REV64 are implemented by assemblers.
+Is my interpretation wrong?
+
+[1] 
+https://developer.arm.com/documentation/109697/2024_09/Feature-descriptions/The-Armv8-2-architecture-extension
+
+It seems to be the only feature (through all versions >= 8.0) that 
+describes something this way, so I'm a bit puzzled about.
+
+>> 8.4:
+>> - FEAT_CNTSC, Generic Counter Scaling (hw/timer/sse-counter.c)
+> 
+> This is optional, and we don't implement it yet. (There's an
+> open ticket for it in Linaro JIRA at
+> https://linaro.atlassian.net/browse/QEMU-309 )
+> 
+
+Ok. For my personal knowledge, does the implementation in 
+hw/timer/sse-counter.c is related to it?
+
+> thanks
+> -- PMM
+
+Thanks,
+Pierrick
 
