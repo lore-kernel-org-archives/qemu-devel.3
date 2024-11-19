@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBDC2D44162
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 15:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C26D0D44167
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 15:09:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDPo5-0006Bu-Mp; Tue, 19 Nov 2024 10:06:22 -0500
+	id 1tDPnT-0005mA-L0; Tue, 19 Nov 2024 10:05:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDPnu-00063d-1F
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:06:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tDPnQ-0005jX-Ih
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tDPns-0003m8-9p
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:06:09 -0500
+ id 1tDPnP-0003gA-29
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 10:05:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732028767;
+ s=mimecast20190719; t=1732028738;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aqtmXPrHCd5t584qGNMT8PaUQPkcPG7TWxttjVlkJI0=;
- b=iYSThqGhjsZPuTqcCLYht0ckSDD9u2kNhZxpTJnjfTzf1F0rvxbzYF3tD2RRHVsruJlBh4
- 6sN8eVYvvMyvIIQgEWfIs/7m1ZOSKrXg4yez9qkKkHhQhuWWvXe+qIi+h1+aLoRkJJq0j3
- F1EPRHFFfCkHuTY8xOhe6ayjHetu8es=
+ bh=B2lxy2lq0R8mXsbS7AtbFcVFuswhiZYcx09bEedRGO8=;
+ b=FerL49XCUNlsC0E2NRXt/LR3OuvgCL0VhN/bZXuFVv6Cf92nZV8XGb3e8w/h0yGtyQWABb
+ +hQLDmEDkEZrfFaZTNlBRzN6w/gXGz5NZ4REAhtRODQXtAbSy36IS42G50QTZZ5h3bDXPM
+ uWaJwSAMaiPq4YKfEyz1709fpFDnCYw=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-t34iqQQtMB2ye5UH5gVCzA-1; Tue,
- 19 Nov 2024 10:06:04 -0500
-X-MC-Unique: t34iqQQtMB2ye5UH5gVCzA-1
-X-Mimecast-MFC-AGG-ID: t34iqQQtMB2ye5UH5gVCzA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-3kP7mMYbMcG23wopYga1fw-1; Tue,
+ 19 Nov 2024 10:05:30 -0500
+X-MC-Unique: 3kP7mMYbMcG23wopYga1fw-1
+X-Mimecast-MFC-AGG-ID: 3kP7mMYbMcG23wopYga1fw
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 723EC1953942; Tue, 19 Nov 2024 15:06:03 +0000 (UTC)
+ id 66BA119540F0; Tue, 19 Nov 2024 15:05:29 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.110])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 35ACE195DF81; Tue, 19 Nov 2024 15:05:59 +0000 (UTC)
+ id CCC5D19560A3; Tue, 19 Nov 2024 15:05:26 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 13/15] tests/functional: rewrite console handling to be
- bytewise
-Date: Tue, 19 Nov 2024 15:05:17 +0000
-Message-ID: <20241119150519.1123365-14-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 02/15] tests/functional: automatically clean up scratch files
+ after tests
+Date: Tue, 19 Nov 2024 15:05:06 +0000
+Message-ID: <20241119150519.1123365-3-berrange@redhat.com>
 In-Reply-To: <20241119150519.1123365-1-berrange@redhat.com>
 References: <20241119150519.1123365-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,120 +89,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The console interaction that waits for predicted strings uses
-readline(), and thus is only capable of waiting for strings
-that are followed by a newline.
+The build/tests/functional subdirectories are consuming huge amounts
+of disk space.
 
-This is inconvenient when needing to match on some things,
-particularly login prompts, or shell prompts, causing tests
-to use time.sleep(...) instead, which is unreliable.
+Split the location for scratch files into a 'scratch' sub-directory,
+separate from log files, and delete it upon completion of each test.
+The new env variable QEMU_TEST_KEEP_SCRATCH can be set to preserve
+this scratch dir for debugging access if required.
 
-Switch to reading the console 1 byte at a time, comparing
-against the success/failure messages until we see a match,
-regardless of whether a newline is encountered.
-
-The success/failure comparisons are done with the python bytes
-type, rather than strings, to avoid the problem of needing to
-decode partially received multibyte utf8 characters.
-
-Heavily inspired by a patch proposed by Cédric, but written
-again to work in bytes, rather than strings.
-
-Co-developed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/cmd.py | 63 +++++++++++++++++++++++--------
- 1 file changed, 48 insertions(+), 15 deletions(-)
+ docs/devel/testing/functional.rst      |  6 ++++++
+ tests/functional/qemu_test/testcase.py | 14 +++++++++-----
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-index 76a48064cd..91267a087f 100644
---- a/tests/functional/qemu_test/cmd.py
-+++ b/tests/functional/qemu_test/cmd.py
-@@ -78,15 +78,58 @@ def run_cmd(args):
- def is_readable_executable_file(path):
-     return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index bf6f1bb81e..6b5d0c5b98 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -65,6 +65,12 @@ to the QEMU binary that should be used for the test, for example::
+   $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
+   $ python3 ../tests/functional/test_file.py
  
-+def _console_readline(test, vm, success, failure):
-+    msg = bytes([])
-+    done = False
-+    while True:
-+        c = vm.console_socket.recv(1)
-+        if c is None:
-+            done = True
-+            test.fail(
-+                f"EOF in console, expected '{success}'")
-+            break
-+        msg += c
++The test framework will automatically purge any scratch files created during
++the tests. If needing to debug a failed test, it is possible to keep these
++files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=1``` as an env
++variable.  Any preserved files will be deleted the next time the test is run
++without this variable set.
 +
-+        if success is None or success in msg:
-+            done = True
-+            break
-+        if failure and failure in msg:
-+            done = True
-+            vm.console_socket.close()
-+            test.fail(
-+                f"'{failure}' found in console, expected '{success}'")
-+
-+        if c == b'\n':
-+            break
-+
-+    console_logger = logging.getLogger('console')
-+    try:
-+        console_logger.debug(msg.decode().strip())
-+    except:
-+        console_logger.debug(msg)
-+
-+    return done
-+
- def _console_interaction(test, success_message, failure_message,
-                          send_string, keep_sending=False, vm=None):
-     assert not keep_sending or send_string
-     if vm is None:
-         vm = test.vm
--    console = vm.console_file
--    console_logger = logging.getLogger('console')
-+
-     test.log.debug(f"Console interaction success:'{success_message}' " +
-                    f"failure:'{failure_message}' send:'{send_string}'")
-+
-+    # We'll process console in bytes, to avoid having to
-+    # deal with unicode decode errors from receiving
-+    # partial utf8 byte sequences
-+    success_message_b = None
-+    if success_message is not None:
-+        success_message_b = success_message.encode()
-+
-+    failure_message_b = None
-+    if failure_message is not None:
-+        failure_message_b = failure_message.encode()
-+
-     while True:
-         if send_string:
-             vm.console_socket.sendall(send_string.encode())
-@@ -99,20 +142,10 @@ def _console_interaction(test, success_message, failure_message,
-                 break
-             continue
+ Overview
+ --------
  
--        try:
--            msg = console.readline().decode().strip()
--        except UnicodeDecodeError:
--            msg = None
--        if not msg:
--            continue
--        console_logger.debug(msg)
--        if success_message is None or success_message in msg:
-+        if _console_readline(test, vm,
-+                             success_message_b,
-+                             failure_message_b):
-             break
--        if failure_message and failure_message in msg:
--            console.close()
--            fail = 'Failure message found in console: "%s". Expected: "%s"' % \
--                    (failure_message, success_message)
--            test.fail(fail)
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 411978b5ef..b9418e2ac0 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -13,8 +13,9 @@
  
- def interrupt_interactive_console_until_pattern(test, success_message,
-                                                 failure_message=None,
+ import logging
+ import os
+-import subprocess
+ import pycotap
++import shutil
++import subprocess
+ import sys
+ import unittest
+ import uuid
+@@ -40,11 +41,12 @@ def setUp(self, bin_prefix):
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+         self.arch = self.qemu_bin.split('-')[-1]
+ 
+-        self.workdir = os.path.join(BUILD_DIR, 'tests/functional', self.arch,
+-                                    self.id())
++        self.outputdir = os.path.join(BUILD_DIR, 'tests', 'functional',
++                                      self.arch, self.id())
++        self.workdir = os.path.join(self.outputdir, 'scratch')
+         os.makedirs(self.workdir, exist_ok=True)
+ 
+-        self.logdir = self.workdir
++        self.logdir = self.outputdir
+         self.log_filename = os.path.join(self.logdir, 'base.log')
+         self.log = logging.getLogger('qemu-test')
+         self.log.setLevel(logging.DEBUG)
+@@ -56,6 +58,8 @@ def setUp(self, bin_prefix):
+         self.log.addHandler(self._log_fh)
+ 
+     def tearDown(self):
++        if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
++            shutil.rmtree(self.workdir)
+         self.log.removeHandler(self._log_fh)
+ 
+     def main():
+@@ -108,7 +112,7 @@ def setUp(self):
+ 
+         console_log = logging.getLogger('console')
+         console_log.setLevel(logging.DEBUG)
+-        self.console_log_name = os.path.join(self.workdir, 'console.log')
++        self.console_log_name = os.path.join(self.logdir, 'console.log')
+         self._console_log_fh = logging.FileHandler(self.console_log_name,
+                                                    mode='w')
+         self._console_log_fh.setLevel(logging.DEBUG)
 -- 
 2.46.0
 
