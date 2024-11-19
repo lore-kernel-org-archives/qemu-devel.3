@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A10ADD62077
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 17:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3205ED62073
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 17:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDRje-0003s0-IG; Tue, 19 Nov 2024 12:09:54 -0500
+	id 1tDRkp-0005NV-AY; Tue, 19 Nov 2024 12:11:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tDRjd-0003oi-As
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:09:53 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1tDRkl-0005MD-Q1
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:11:03 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tDRja-0000gk-As
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:09:53 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a9e8522c10bso915111866b.1
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 09:09:49 -0800 (PST)
+ id 1tDRkk-000143-7S
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:11:03 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-aa4b439c5e8so421575766b.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 09:11:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732036188; x=1732640988; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732036259; x=1732641059; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7plZDG8qCbNPeD92WJKa+5AzrWCbVHRFbpqUwZgc0VA=;
- b=Mec4KP3gcvmSy2TdS2ZhTtbm33HK2MOVaDX6H0C21VF5oWbdoiuLlivuWL9bGtlra2
- LBF2po2y0Zvpf4N8RzN6yACCDkL4VyXCa9zYFvKYJXBFZlkZibpbTHTGx3XByFrd2JxR
- M7187JwlF7VLks6ezWi285wDGQ4ksdjvY8otwacmpvW40CQae5OR4wPinTSRJK3+KcbU
- CN/eV4qpqD2lThkxO3x5CIJusY7gjwgFL/60NWR1dwf8/vMyUY4fjIW3KkBVkXsZBNQt
- bRzMNSKwKvE5H3gJO9MRfVQwhH+ok2ftY0OsDRvObalONQtOBxswAKqaw7GIgNMIwrqv
- 93gw==
+ bh=eosHa1R5FC10h07Q97gcOp5AetdoMSmREyTHgWERDFI=;
+ b=Go1isor6oMcT9JnH3XsMFsS66uEjl61qxvMI78jR5YkADLYqjEYjU8kLDB45zc59pn
+ KFvIu0Dh1Jdog4pqDCo/2uWL6TUJd38Uh3Oi27dC8oV28XnmeS5RpNID+Q4fjCCoYbvL
+ PUxtG/WwKlckkP2njOoxOieARe3j30JqbO0HwpPYhhJ2S/QJKkZ6/AiBVnTgnmHkAfPR
+ 9pal/mSBh7omcWZ/wn1IIw9zvJKO0NZijd5Pq2oRc2VbhseIFC2FwBuZTDHKo/N4urDl
+ Swm1Uc8a5Pa4dfe06a7OgByAaZhXVzuIWrObBkqvVYwiio5uX9d+Ue2vLopQCqe42z4W
+ N1Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732036188; x=1732640988;
+ d=1e100.net; s=20230601; t=1732036259; x=1732641059;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7plZDG8qCbNPeD92WJKa+5AzrWCbVHRFbpqUwZgc0VA=;
- b=qDL5ljTAFNeohK18HawcfKDskc827GDrBo3nKI4ogbaAg4M7udC9ZkUJDFtCJmEAcN
- SXUyItE7WIuo4HO400S773p5rC97piYnjW+Tgg4bnhCUNaz3ThEgbfDBrXv09u0kLKDK
- rwLzzmsn+t0+R+2DhDwBBzaI8nUl6FJvAFRb+dY//kYR+qWpB7JzUWc8nBYzUM0068U6
- nEaMuJ4KIb2Mq+cstg6qT2DPf/TmKsA08KUtUhaAyH3xZhrm6R0iG8dB76km/mAJGQ8S
- PNxM/5NvP7hAI5b8QlzwxeG+ooTIY3Q5yPCCYSr1fko+iXmAEHSkxP8K9hznCYrpTAxn
- cJwA==
-X-Gm-Message-State: AOJu0Yykcopm9nlMwvHICY7kh5CEKISLOcGYrLKAuYXRdsD6HHwDcGka
- z5hG8wjaTqdJQPA7t89lapNiS1Vtsm/+/lOSXKyTlFJxCkfgeKH+5jdzmxc3wOM=
-X-Google-Smtp-Source: AGHT+IFMfaZkTlY8YzjG275XKKaNGxXMHLxjtQsOulPnCSEfgobP2FAz9hqK0L63mG8tk+Y5zuafZA==
-X-Received: by 2002:a17:906:d54c:b0:a9e:b5d0:4714 with SMTP id
- a640c23a62f3a-aa4c7e4cca4mr357359666b.21.1732036188632; 
- Tue, 19 Nov 2024 09:09:48 -0800 (PST)
+ bh=eosHa1R5FC10h07Q97gcOp5AetdoMSmREyTHgWERDFI=;
+ b=UTMUc4F3XTGB1Bkhc+4nB91rcpFQgmwqzsl0GBHOgBQLim9rFXFYxwobCQSzVWgj+j
+ xCeB+nnAhs1L6pEpCvLuM6CDWETftSZNhQFxIVCUYRamiv+VDq67YvJ+l00zNilUaq8b
+ qRbqe0nB44/Tez/TtElmNHIB9a8jM9m3lhO1I4QNn0c3SjfO2QIjYDTwir7pHxS427ot
+ LCIzVQXlx0oh7Lk0gFYzzA+p+dDLlP3o8WG54RUBzzwnsILUn4tFtQ192OAok7+U5yJJ
+ VvS98lQpd8P61opHEqGsvvFJdyrhhsUUYFt3tvKWkglOgKp0YlBBKO+HYy2vWOpt0x5V
+ UlHw==
+X-Gm-Message-State: AOJu0YzvOcs45iCIOU2VGQxwnVQBRtyLty2uY+Ign1H5JDUbDiiCdUXr
+ mHhDymKhcXH/cVKz2SzKkBASkTE/m5NWFrHpijZ6DExNzBNr1XIKQinARBgbj2Y=
+X-Google-Smtp-Source: AGHT+IFrEvkVNaljVDej/ftic64sUlQdGWzZ8re8jldkd8CWMSsko80FKQCVVDNfsSZYoDq4jlvzXA==
+X-Received: by 2002:a17:907:9281:b0:a9a:673f:4dcc with SMTP id
+ a640c23a62f3a-aa483422ef9mr1559430166b.22.1732036259632; 
+ Tue, 19 Nov 2024 09:10:59 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20e08162asm679830866b.180.2024.11.19.09.09.47
+ a640c23a62f3a-aa20df515f7sm679843666b.65.2024.11.19.09.10.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 09:09:47 -0800 (PST)
+ Tue, 19 Nov 2024 09:10:59 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0A5215F716;
- Tue, 19 Nov 2024 17:09:47 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 743535F716;
+ Tue, 19 Nov 2024 17:10:58 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Ani Sinha
  <anisinha@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 08/15] tests/functional: honour self.workdir in ACPI
- bits tests
-In-Reply-To: <20241119150519.1123365-9-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 19 Nov 2024 15:05:12
+Subject: Re: [PATCH 09/15] tests/functional: put QEMUMachine logs in
+ testcase log directory
+In-Reply-To: <20241119150519.1123365-10-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 19 Nov 2024 15:05:13
  +0000")
 References: <20241119150519.1123365-1-berrange@redhat.com>
- <20241119150519.1123365-9-berrange@redhat.com>
+ <20241119150519.1123365-10-berrange@redhat.com>
 User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Tue, 19 Nov 2024 17:09:46 +0000
-Message-ID: <87mshvno9x.fsf@draig.linaro.org>
+Date: Tue, 19 Nov 2024 17:10:58 +0000
+Message-ID: <87h683no7x.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,11 +104,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> The ACPI bits test sets up its own private temporary directory into it
-> creates scratch files. This is justified by a suggestion that we need
-> to be able to preserve the scratch files. We have the ability to
-> preserve the scratch dir with our functional harness, so there's no
-> reason to diverge from standard practice in file placement.
+> We are not passing the 'log_dir' parameter to QEMUMachine, so the
+> QEMU stdout/err logs are being placed in a temp directory and thus
+> deleted after execution. This makes them inaccessible as gitlab
+> CI artifacts.
+>
+> Pass the testcase log directory path into QEMUMachine to make the
+> logs persistent.
 >
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
