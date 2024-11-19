@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD55D591A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 17:09:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A10ADD62077
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 17:10:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDRj6-0003U0-OL; Tue, 19 Nov 2024 12:09:20 -0500
+	id 1tDRje-0003s0-IG; Tue, 19 Nov 2024 12:09:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDRj4-0003SY-SH
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:09:18 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tDRjd-0003oi-As
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:09:53 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDRj3-0000cQ-8x
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:09:18 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a9ed49ec0f1so962048666b.1
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 09:09:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tDRja-0000gk-As
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:09:53 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a9e8522c10bso915111866b.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 09:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732036155; x=1732640955; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=p19r39ektixfFALqTjGI1mHhoTWX/SA7jrPAMjGfnfM=;
- b=iYPy8xKmgdVlooS73LdqXQcnlAbfpnilqiWkmWoaJjEIOdMQW+CsPXwlYUTZ2DIvqi
- bfiiZlm15e/Wm/FsrI9xuUwEwdD59jePVsOZQu1EchpVJ8r8OBA1JH2KjVc6xNyvO3Or
- 3jHmm4fELGm5ecy7FHpNwzt9Ap6a7gNa45qAEf/06ZuOXlxny925kgkQxsQj5RRd4LBD
- 3peQ0DzsIbmxIxMdEyb0rnCRCZWbw63tKH53M+HKAnq2l7TsUJBeu+aBt9es/Lx1RZuV
- W02ng62EathBa8y4y/LNf019nlFphPrIQmj3UdSMr1zGu01dl8ucrkkaEhsVSjOhDQ+d
- LeXw==
+ d=linaro.org; s=google; t=1732036188; x=1732640988; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7plZDG8qCbNPeD92WJKa+5AzrWCbVHRFbpqUwZgc0VA=;
+ b=Mec4KP3gcvmSy2TdS2ZhTtbm33HK2MOVaDX6H0C21VF5oWbdoiuLlivuWL9bGtlra2
+ LBF2po2y0Zvpf4N8RzN6yACCDkL4VyXCa9zYFvKYJXBFZlkZibpbTHTGx3XByFrd2JxR
+ M7187JwlF7VLks6ezWi285wDGQ4ksdjvY8otwacmpvW40CQae5OR4wPinTSRJK3+KcbU
+ CN/eV4qpqD2lThkxO3x5CIJusY7gjwgFL/60NWR1dwf8/vMyUY4fjIW3KkBVkXsZBNQt
+ bRzMNSKwKvE5H3gJO9MRfVQwhH+ok2ftY0OsDRvObalONQtOBxswAKqaw7GIgNMIwrqv
+ 93gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732036155; x=1732640955;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p19r39ektixfFALqTjGI1mHhoTWX/SA7jrPAMjGfnfM=;
- b=haUH9yn36FuA7GB/sNnIIrpkBizVymOpYc2KdHEdcBc2oIoRnPFhuMTOMcWFXYMmOA
- KRDQos/EIzmdGucBvup4VLFn8Pl9nBm+ODh04hY6kAbN5qvqBlXHExzb2JxfxKDHZjiS
- WQPL/QH9jOhfDFqSxGSItpt7Da/Wg/1ms4P8TL8Y5PaUGAOuHEDWAW7npoAkkrBHjsYk
- n0wo5o52xCVNRPE1baXE6Rr5/wd+MwukhZLvu2X81+jb2UyCAa8/qbU6DLUwSt9pU+uS
- sXCDJ9tcUJFEyK+AHLYo6/ABQe8O1HDu/Pc8pbWCHzn19QYmfdm1KZ8cTkPMIJAM2OqF
- KwIw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2stmPAbmTw7YYTHs13hPCC2jrbS+U01KXF3KWTSNh9thKN4eFXS+mdgSeoNs7GG02TTvLE7fuy6AN@nongnu.org
-X-Gm-Message-State: AOJu0Yw7HmmRwpP2JjOe9vZtKBbBh/7vh/Hf6Gda0FvHaMeDPo62ukTs
- 6dDproHgo07BnywsoaMFU1WbgO8V9PX5iK23sg2wDT1p7oRGvBJgBcPRqx/px5E=
-X-Google-Smtp-Source: AGHT+IGoVunaSshlDkTL/NxwIjKU09OjYIoH+0L6TGHHvxhpp5i8kCguxxGF48b4dLftTOl82u+//Q==
-X-Received: by 2002:a17:907:9303:b0:a9e:d417:c725 with SMTP id
- a640c23a62f3a-aa4833e8fe9mr1770624066b.3.1732036155255; 
- Tue, 19 Nov 2024 09:09:15 -0800 (PST)
-Received: from [192.168.69.197] (sto95-h01-176-184-18-155.dsl.sta.abo.bbox.fr.
- [176.184.18.155]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20dfffcf6sm676794966b.108.2024.11.19.09.09.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Nov 2024 09:09:14 -0800 (PST)
-Message-ID: <17eba843-bee9-4555-b56c-b4e6baf2073e@linaro.org>
-Date: Tue, 19 Nov 2024 18:09:13 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/15] tests/functional: remove "AVOCADO" from env
- variable name
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1732036188; x=1732640988;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7plZDG8qCbNPeD92WJKa+5AzrWCbVHRFbpqUwZgc0VA=;
+ b=qDL5ljTAFNeohK18HawcfKDskc827GDrBo3nKI4ogbaAg4M7udC9ZkUJDFtCJmEAcN
+ SXUyItE7WIuo4HO400S773p5rC97piYnjW+Tgg4bnhCUNaz3ThEgbfDBrXv09u0kLKDK
+ rwLzzmsn+t0+R+2DhDwBBzaI8nUl6FJvAFRb+dY//kYR+qWpB7JzUWc8nBYzUM0068U6
+ nEaMuJ4KIb2Mq+cstg6qT2DPf/TmKsA08KUtUhaAyH3xZhrm6R0iG8dB76km/mAJGQ8S
+ PNxM/5NvP7hAI5b8QlzwxeG+ooTIY3Q5yPCCYSr1fko+iXmAEHSkxP8K9hznCYrpTAxn
+ cJwA==
+X-Gm-Message-State: AOJu0Yykcopm9nlMwvHICY7kh5CEKISLOcGYrLKAuYXRdsD6HHwDcGka
+ z5hG8wjaTqdJQPA7t89lapNiS1Vtsm/+/lOSXKyTlFJxCkfgeKH+5jdzmxc3wOM=
+X-Google-Smtp-Source: AGHT+IFMfaZkTlY8YzjG275XKKaNGxXMHLxjtQsOulPnCSEfgobP2FAz9hqK0L63mG8tk+Y5zuafZA==
+X-Received: by 2002:a17:906:d54c:b0:a9e:b5d0:4714 with SMTP id
+ a640c23a62f3a-aa4c7e4cca4mr357359666b.21.1732036188632; 
+ Tue, 19 Nov 2024 09:09:48 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20e08162asm679830866b.180.2024.11.19.09.09.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Nov 2024 09:09:47 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0A5215F716;
+ Tue, 19 Nov 2024 17:09:47 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 08/15] tests/functional: honour self.workdir in ACPI
+ bits tests
+In-Reply-To: <20241119150519.1123365-9-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 19 Nov 2024 15:05:12
+ +0000")
 References: <20241119150519.1123365-1-berrange@redhat.com>
- <20241119150519.1123365-4-berrange@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241119150519.1123365-4-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+ <20241119150519.1123365-9-berrange@redhat.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Tue, 19 Nov 2024 17:09:46 +0000
+Message-ID: <87mshvno9x.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,16 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/11/24 16:05, Daniel P. Berrangé wrote:
-> This env variable is a debugging flag to save screendumps in the
-> mips64el malta tests.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/test_mips64el_malta.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> The ACPI bits test sets up its own private temporary directory into it
+> creates scratch files. This is justified by a suggestion that we need
+> to be able to preserve the scratch files. We have the ability to
+> preserve the scratch dir with our functional harness, so there's no
+> reason to diverge from standard practice in file placement.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
