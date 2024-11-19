@@ -4,136 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1A69D62073
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 17:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1913D62077
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 17:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDRl6-0005UP-A2; Tue, 19 Nov 2024 12:11:24 -0500
+	id 1tDRo5-0007cn-SD; Tue, 19 Nov 2024 12:14:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tDRl4-0005U1-JX
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:11:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tDRl2-0001A1-TJ
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:11:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732036278;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sa7oz+Mf7B+3XHkzeC7VS7bGvLdgsKj2/t50biZy4aA=;
- b=Ms9YDKFrBjHnCNhlSu6w1iOtiL7AA2t4Oznsrd8IcI4q2NysOgk+1SlsXckrFtc0kYijX9
- eFOf3du1PbcOvzf5kZpj+s8I3dcrcfPq3Zb+jdMJaDwa9CufxZuvU5CCN52yaMBDRgOg7g
- wd5B+ygYcpQSqmRAO3/vEbRX9pldWCg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-204-G3OfTvfpMySbWFP56SGzfg-1; Tue, 19 Nov 2024 12:11:15 -0500
-X-MC-Unique: G3OfTvfpMySbWFP56SGzfg-1
-X-Mimecast-MFC-AGG-ID: G3OfTvfpMySbWFP56SGzfg
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3823527eb9dso1909952f8f.1
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 09:11:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tDRo1-0007cf-Ej
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:14:26 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tDRnx-0001fo-Gr
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 12:14:23 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5cfcd99846fso2867774a12.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 09:14:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732036459; x=1732641259; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Hiryb1KkcV7nkBd7H0i0x5zejyIdN2CBvhNcucf0Dc8=;
+ b=s0LgUJQaSR9PY3tkO/oH71CvzECMupLjA+1czPeNot8gNGu/v2jVbQfHCF2G0SD1af
+ 5UXhz2kGKnm96RGuUws/M3mGp1KTn5qU71ZIHeyPZtnfLjPmQ+Kx5aSfCHbLXy6ZYDJg
+ nx//HuEUZS4ABtOQcJNOvzp91OmK/+/FyNk6iF0R6khPZEOEQQHkvvHhs28V19iimJAi
+ QbMecW2G9ncr/YsPQOiC4DxBVsXr79Gf16Up+HQeb9pzhGEq1/KE3zPAQAFt8EjCQ40M
+ SQh62R0fLWmRtOSQqb3Y8y9oiL0Ttwoi8Aoj9TUFdft4xzmsdrgHEcGIld3B8rYjLtHO
+ i7XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732036274; x=1732641074;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1732036459; x=1732641259;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sa7oz+Mf7B+3XHkzeC7VS7bGvLdgsKj2/t50biZy4aA=;
- b=xBA9KqmR4aznpsi2ffVOfY7UumFMch+mzsdglwObiUCYNgzOVhuWPaX6YZ2ndZXR0C
- NbLL3xQ0qp9PfiEFd6owRvSh2qnR2oGVW9U9GIxF/dilm/P8fzDx4I1etO/G+BC5N0Fy
- Kxzx0v/jlbmICGycB0b5niTetI+VBJ6N87Wi21yZ+K6tF0vDk0UZobJEYn6lGo0Rt8p8
- 6KE6cXXf+Lkk2Of6f56KY34McqWdnz11jtxOvVWMyau8re83mIzua2JoIxhKKlNano/4
- J3wRUWTxW7xZ9Iv6njOS/fg5q3Frd7S28wjmL+PJKmyaMU116ocbcYAXV4GMMML69l0e
- tBXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV2eKept9T0NMslGYIWSWAAjsdAtenFD2xi0igPCY1UqIclrQzU0Q4Ipl6WRq90Lr/i7gSDyhRErQKh@nongnu.org
-X-Gm-Message-State: AOJu0YzA8M1YsrcYF+ubaDfKFrCOTKYh89mgyhJr+XB7ZJecWLgRehHr
- RZZdo1yQKN71RPXdpKAb/rGXd73XvN8WDtFU73o6nck3T+0qMy8eop7OQfInZcqo2bgNVamEA2o
- eP6bvQTsXK4wp5Y00ZeKb/Et4hVvDqEgSrvPsDGjIfHJ25Q2dC21t
-X-Received: by 2002:a5d:5988:0:b0:37c:cc67:8b1f with SMTP id
- ffacd0b85a97d-38225aaef32mr15021561f8f.48.1732036273975; 
- Tue, 19 Nov 2024 09:11:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEKhRwpbimetE6JMLm1zUf50wrPrzg9kywV5ZSp8wdw6k5CQw7cxniDnd2eJxE8rjdk+3D8Nw==
-X-Received: by 2002:a5d:5988:0:b0:37c:cc67:8b1f with SMTP id
- ffacd0b85a97d-38225aaef32mr15021545f8f.48.1732036273678; 
- Tue, 19 Nov 2024 09:11:13 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.84.243])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38232cde8dasm11424843f8f.103.2024.11.19.09.11.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Nov 2024 09:11:13 -0800 (PST)
-Message-ID: <beb4abeb-299a-4d4a-a253-3e65a41edcc9@redhat.com>
-Date: Tue, 19 Nov 2024 18:11:10 +0100
+ bh=Hiryb1KkcV7nkBd7H0i0x5zejyIdN2CBvhNcucf0Dc8=;
+ b=aYlnPQsjqXbTq6BzQmC5fCa6TGOxOWeRskp4nSZDl4AwncJtwISR1y5cwqlVnpO5bK
+ Wj2V/mO6APIJH53bfjZwYiXk3o+c7TaEpKwEB0rMHtFMSj4CnsMrfoh8EYZRJeWEDEwv
+ 7u+HF3OK79M2puJcOrEfcbpVX5b/jb70c1uzXdJ1CdGZRpK/c2G8QR8iZN+3MTNOLK3Q
+ TmB+tYl75BofvkCCbkwXgaiRexTLFODz5msiaZV++fDAHQWEGRVyDoPXnsSodqNRrNhr
+ dcpwtmgfvzzBTLi/iEAGzSMNjJMsx42e1y9YzhQH5+swsMICkz5/iN1tK4rq9kbCHJV5
+ EV6w==
+X-Gm-Message-State: AOJu0Yy/BRpuBeS+Aw8QBgXr+dgzw0JOrSUQeaA4VyGmFhUkT1zcy4x3
+ simNO191C6f0mTv1T64XXlOS/3+WIxnzdJweamxFtZ2lsjpKLMGu3FIdJ1x3+J3eQWA1SbEPbQL
+ mrIouKMJ+xLQKRipNmIUJygHHQbrbh6TczQsxfg==
+X-Google-Smtp-Source: AGHT+IEoftZMle06NWJQaTrTQU4iDSMSM7phayrypYeRmD90HKP7X0Yui5T3OvmxHtDR0A4V083R21ZMj67BIcHnqbM=
+X-Received: by 2002:a05:6402:35c1:b0:5cf:d1b5:1b91 with SMTP id
+ 4fb4d7f45d1cf-5cfd1b51bc4mr4825864a12.15.1732036458594; Tue, 19 Nov 2024
+ 09:14:18 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/15] tests/functional: rewrite console handling to be
- bytewise
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20241119150519.1123365-1-berrange@redhat.com>
- <20241119150519.1123365-14-berrange@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20241119150519.1123365-14-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <51442716-467b-46c2-b2f7-8ffdeeca320e@linaro.org>
+ <CAFEAcA_eL+F572fZpFW2+Tz6xx5Mx5ux-axe3HR_fEf43_GLRA@mail.gmail.com>
+ <33af12d7-9269-4c21-96d4-aa76becd0f09@linaro.org>
+In-Reply-To: <33af12d7-9269-4c21-96d4-aa76becd0f09@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 19 Nov 2024 17:14:07 +0000
+Message-ID: <CAFEAcA9YGBxGTOXT0F3eCAVD+pqEa-kLY94GtFKHU31reSb=rQ@mail.gmail.com>
+Subject: Re: Status of some Arm features
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,135 +91,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/19/24 16:05, Daniel P. Berrangé wrote:
-> The console interaction that waits for predicted strings uses
-> readline(), and thus is only capable of waiting for strings
-> that are followed by a newline.
-> 
-> This is inconvenient when needing to match on some things,
-> particularly login prompts, or shell prompts, causing tests
-> to use time.sleep(...) instead, which is unreliable.
-> 
-> Switch to reading the console 1 byte at a time, comparing
-> against the success/failure messages until we see a match,
-> regardless of whether a newline is encountered.
-> 
-> The success/failure comparisons are done with the python bytes
-> type, rather than strings, to avoid the problem of needing to
-> decode partially received multibyte utf8 characters.
-> 
-> Heavily inspired by a patch proposed by Cédric, but written
-> again to work in bytes, rather than strings.
-> 
-> Co-developed-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/cmd.py | 63 +++++++++++++++++++++++--------
->   1 file changed, 48 insertions(+), 15 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-> index 76a48064cd..91267a087f 100644
-> --- a/tests/functional/qemu_test/cmd.py
-> +++ b/tests/functional/qemu_test/cmd.py
-> @@ -78,15 +78,58 @@ def run_cmd(args):
->   def is_readable_executable_file(path):
->       return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
->   
-> +def _console_readline(test, vm, success, failure):
-> +    msg = bytes([])
-> +    done = False
-> +    while True:
-> +        c = vm.console_socket.recv(1)
-> +        if c is None:
-> +            done = True
-> +            test.fail(
-> +                f"EOF in console, expected '{success}'")
-> +            break
-> +        msg += c
-> +
-> +        if success is None or success in msg:
+On Tue, 19 Nov 2024 at 16:52, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 11/19/24 02:09, Peter Maydell wrote:
+> > On Mon, 18 Nov 2024 at 23:33, Pierrick Bouvier
+> > <pierrick.bouvier@linaro.org> wrote:
+> >> I'm currently reviewing the QEMU Arm documentation, and I have a
+> >> question about the status of following features:
+> >>
+> >> 8.0:
+> >> - FEAT_DoubleLock, Double Lock
+> >
+> > This is actually an "anti-feature" :-)  It is optional from v8.0
+> > and it must not be implemented from v9.0. We implement the handling
+> > of it based on the DOUBLELOCK fields in ID_AA64DFR0 and DBGDEVID
+> > (so it does the right thing on older named CPU types) and don't
+> > advertise it in "max".
+> >
+>
+> Despite this singularity on versions implementation, should we list that
+> in our documentation?
 
-As an optimization, you could use msg.endswith(success) and 
-msg.endswith(failure), which would avoid the most blatant cases of 
-O(n^2) behavior.
+Yeah, I think we reasonably could.
 
-More important, I think "if success is None" should not be here, because 
-it will exit after one char.  Instead...
+> >> 8.2:
+> >> - FEAT_ASMv8p2, Armv8.2 changes to the A64 ISA (bfc and rev64 instructions)
+> >
+> > This isn't a feature for CPU implementations; it's a feature for
+> > assemblers and disassemblers, which have to recognize BFC and
+> > REV64 mnemonics as being ways to write special-case flavours
+> > of the BFM and REV instructions.
+> >
+>
+> Reading the feature description [1] or the A-profile manual:
+> FEAT_ASMv8p2 introduces the BFC instruction to the A64 instruction set
+> as an alias of BFM. It also requires that the BFC instruction and the
+> A64 pseudo-instruction REV64 are implemented by assemblers.
+>
+> I understand it's both introducing the BFC instructions *and also*
+> ensure that BFC and REV64 are implemented by assemblers.
+> Is my interpretation wrong?
 
-> +            done = True
-> +            break
-> +        if failure and failure in msg:
-> +            done = True
-> +            vm.console_socket.close()
-> +            test.fail(
-> +                f"'{failure}' found in console, expected '{success}'")
-> +
-> +        if c == b'\n':
+For an implementation, there is no BFC instruction. If you look
+at the Arm ARM entry for BFC, it says "This instruction is an alias
+of the BFM instruction", which means it exists only for
+assemblers and disassemblers and assembly authors.
+(And if you look at the BFM instruction, there is no subset of the
+encoding that is gated on any feature; so there is no extra
+behaviour of BFM that got added here.)
 
-Here you can put
+These "alias" instructions are there to make the assembly be
+a bit easier to read. The only unusual thing about this alias
+is that it wasn't in the architecture right from the start,
+which I think is why it got a FEAT_ name: to flag up that
+if you're writing asm or if you're an assembler author then
+you need to do something here. But if you're creating an
+implementation of a CPU, then there's nothing to do, because
+you already implemented the handling of BFM as part of ARMv8.0.
 
-                done = success is None
+For an example of an alias that was present from v8.0, look
+at "MOV (to/from SP)". This is an "ADD (immediate)" instruction
+under the hood, but you can write it in assembly source as
+"MOV SP, Xn", and the assembler will put in the same bit pattern
+as if you'd written "ADD SP, Xn, #0". In QEMU (or in a hardware
+implementation) we don't need to do anything for "MOV SP, Xn",
+because our implementation of "ADD (imm)" will catch it.
 
-Paolo
+> >> 8.4:
+> >> - FEAT_CNTSC, Generic Counter Scaling (hw/timer/sse-counter.c)
+> >
+> > This is optional, and we don't implement it yet. (There's an
+> > open ticket for it in Linaro JIRA at
+> > https://linaro.atlassian.net/browse/QEMU-309 )
+> >
+>
+> Ok. For my personal knowledge, does the implementation in
+> hw/timer/sse-counter.c is related to it?
 
-> +            break
-> +
-> +    console_logger = logging.getLogger('console')
-> +    try:
-> +        console_logger.debug(msg.decode().strip())
-> +    except:
-> +        console_logger.debug(msg)
-> +
-> +    return done
-> +
->   def _console_interaction(test, success_message, failure_message,
->                            send_string, keep_sending=False, vm=None):
->       assert not keep_sending or send_string
->       if vm is None:
->           vm = test.vm
-> -    console = vm.console_file
-> -    console_logger = logging.getLogger('console')
-> +
->       test.log.debug(f"Console interaction success:'{success_message}' " +
->                      f"failure:'{failure_message}' send:'{send_string}'")
-> +
-> +    # We'll process console in bytes, to avoid having to
-> +    # deal with unicode decode errors from receiving
-> +    # partial utf8 byte sequences
-> +    success_message_b = None
-> +    if success_message is not None:
-> +        success_message_b = success_message.encode()
-> +
-> +    failure_message_b = None
-> +    if failure_message is not None:
-> +        failure_message_b = failure_message.encode()
-> +
->       while True:
->           if send_string:
->               vm.console_socket.sendall(send_string.encode())
-> @@ -99,20 +142,10 @@ def _console_interaction(test, success_message, failure_message,
->                   break
->               continue
->   
-> -        try:
-> -            msg = console.readline().decode().strip()
-> -        except UnicodeDecodeError:
-> -            msg = None
-> -        if not msg:
-> -            continue
-> -        console_logger.debug(msg)
-> -        if success_message is None or success_message in msg:
-> +        if _console_readline(test, vm,
-> +                             success_message_b,
-> +                             failure_message_b):
->               break
-> -        if failure_message and failure_message in msg:
-> -            console.close()
-> -            fail = 'Failure message found in console: "%s". Expected: "%s"' % \
-> -                    (failure_message, success_message)
-> -            test.fail(fail)
->   
->   def interrupt_interactive_console_until_pattern(test, success_message,
->                                                   failure_message=None,
+I elaborated a bit on that in my other email -- they're
+doing a similar thing, but sse-counter.c is M-profile.
 
+-- PMM
 
