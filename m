@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927EED44161
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07076D44163
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:25:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDP8k-0005xo-9P; Tue, 19 Nov 2024 09:23:38 -0500
+	id 1tDP8c-0005tO-O4; Tue, 19 Nov 2024 09:23:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8g-0005vb-Ks
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:34 -0500
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ id 1tDP8Z-0005pT-L0
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:27 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8f-0006Ew-13
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:34 -0500
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2ff64e5d31bso10607191fa.0
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:32 -0800 (PST)
+ id 1tDP8X-0006CV-Ur
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:27 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4314fa33a35so46381325e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732026211; x=1732631011; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732026204; x=1732631004; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=RzMX04CUUuh+Xk+AH/1AGddH04IQDU5JSslwP2URJ/o=;
- b=qeYmDOEc7ejATPqx8Z2uIolzsAaO8pwGap4GLwgqurxuxTbYpDyqWM2Es7+ZzSmYey
- TOQEeF/gwjVr7/WwJ0QSHjj6cHAevwFII52GzANWyUCefhaatu6DvW3Efjptcjnu95hT
- u8lbijgRIMvEegwNjSjaAUC3YL1gh11XQZbU7Lfhm3F6VAew5rAKH476B/08bM8GlJAV
- ju9nuf7JuBZqMMiFsGBBPVPrvPmPNXH1dwOA+6n6XkqqTl+v+CJfVjEz8iuZ3Z/D1lb2
- ul4upaRzBMOLdX+jAekMdrt/OAxGbm7moIGKuJJGFr0fulmzqHn2IMYLy33F8q5ohZZK
- d4jw==
+ :reply-to; bh=iAX2ZgBrM6JHivHnb791/gNLlFdNQx34cY3TYAYpz00=;
+ b=ODM2t56t8W5rAD2qnandcjmRU3Y+KJWKIzKziXruDWnja3zgmysdl3XObYPA1AMAG3
+ ZIZ6WiYHnZcSjw0Q+wUmlJBdYLexQXCe0wlCNBN7bT+iynkKtlHqOMA6tGxaPqf2GPLh
+ f6eYJ7O71qkujzBNogbiqOLORrSqy5P5/GGosioWlPbk9ZrUxpnAFPx8xmrtjNRSspRj
+ 1ZwJKNsx04X8hgWLkAcABXbhsaxiZX61kAkzc2LKVnPr43alKXxjSrMvFUoYSiXX+si0
+ 4NNOjgm3YdJDqX442ou0TQOk9EfE8CLmzBNQMuBnWPD21C1pgBOVYXwk37xxUzpGlgxT
+ 4lbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732026211; x=1732631011;
+ d=1e100.net; s=20230601; t=1732026204; x=1732631004;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RzMX04CUUuh+Xk+AH/1AGddH04IQDU5JSslwP2URJ/o=;
- b=eJeI5XuyjfibFt4o006nFH6hGOEIZGhueuKu8k+9x7LQ6wg7i1+euS7gIT2DUSW3mc
- MjHsLBamml9qBjPtRjIJUjdsZ2PVAnferiOmuttbXEcbuPQzEdU03fZn/mNvc4CLQMr/
- p8QQb9wtdNmjlHaionA4MKWy8XTOjq827h9OoA9LQEa27/vvUD2I7vri8OQIDYAu+OS3
- 7F7V4JUHGA/5l6cWXiLn/vVYtdCh1wH0M8Rjl9bOtYhPIPtrbyJ2SGEprDGE7h9H5/dD
- M2XIZI89J53A0A5XtiypRM+VVSEcIAAnWa+fYTQemaLP/Pq3DVSOvgXB8Xn5OMoTODSm
- Vc/g==
-X-Gm-Message-State: AOJu0YwjSVNS3RdYOML8nU2yFBtNI2nzvtnipTBYimwMSMW+WEo1YtAf
- VCpiCln5f+SBXn/0Xfs9lf3YKYqVF/Ci2gtWctYLOWu6XX5aMeumXwRQgGE3fFqQ3FKNgA+gwqs
- U
-X-Google-Smtp-Source: AGHT+IEItgd53g80BFWTfVdXFqaz8GKCYkQ/4NvlXSD67hWelK1/ulc9orJGzn5e8pQ1NJBITuonFw==
-X-Received: by 2002:a05:6512:2316:b0:53b:20a1:1c4a with SMTP id
- 2adb3069b0e04-53dab3b99c6mr6962141e87.42.1732026211081; 
- Tue, 19 Nov 2024 06:23:31 -0800 (PST)
+ bh=iAX2ZgBrM6JHivHnb791/gNLlFdNQx34cY3TYAYpz00=;
+ b=HDkwTzPgGMgiaz6GiXZdAM8xKAY1j6VMdTTHSPy8dpwSp65zZEPNt41LCJRMiZ3kOK
+ /LM1/FPLnwPpZmmboJScfGKtldmPBtGbjEUaxz7vn1Fn40UlJp8mojnd+VMCWk26ex/V
+ azTnDTvXQ+uIHr1pYW6bNJI+4KI5ZMnFp++VHII7RkYqmhx8X06zqdEX/DeWX5/tkMzu
+ FdnaSeh0mZJtyvN7nrBeXVHZpstKMZ5jRwHqJnn2qnbGsQC6cL/6xsjs4CQrtgM9FMpJ
+ QMeBdpQBlvqK37LZ8sIJP4LbFt1z2u7pxWmGrVuTavnCZlHwQR2oRoKfujCv7dDGeueH
+ Ak1g==
+X-Gm-Message-State: AOJu0Yy/5sdk3WzvxcU971NdtFycqXLlLN+TeZoZr7vCLMHR9iH5ib/D
+ ULAjQ1N7CajXMEhgc/Utpyo2CspGYu9hJIeL+KiJLaz1nKhMmiiK7OeC6StBxSh4drvwZelVAGM
+ O
+X-Google-Smtp-Source: AGHT+IG39YeLMAUDJLekD6viGZHHOScJrG02lOOpx9WX2fDbjYV3RX5idPOYlwnO0kGJWC0THbtAog==
+X-Received: by 2002:a05:600c:1d92:b0:431:2b66:44f7 with SMTP id
+ 5b1f17b1804b1-432df798fbcmr144701975e9.31.1732026204395; 
+ Tue, 19 Nov 2024 06:23:24 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.30
+ 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 06:23:30 -0800 (PST)
+ Tue, 19 Nov 2024 06:23:24 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/15] trace: Don't include trace-root.h in control.c or
- control-target.c
-Date: Tue, 19 Nov 2024 14:23:21 +0000
-Message-Id: <20241119142321.1853732-16-peter.maydell@linaro.org>
+Subject: [PULL 03/15] hw/intc/openpic: Avoid taking address of out-of-bounds
+ array index
+Date: Tue, 19 Nov 2024 14:23:09 +0000
+Message-Id: <20241119142321.1853732-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241119142321.1853732-1-peter.maydell@linaro.org>
 References: <20241119142321.1853732-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,45 +94,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The trace-root.h file has the definitions of trace events for
-the top-level trace-events file (i.e. for those events which are
-used in source files in the root of the source tree). There's
-no particular need for trace/control.c or trace/control-target.c
-to include this.
+The clang sanitizer complains about the code in the EOI handling
+of openpic_cpu_write_internal():
 
+UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1 ./build/clang/qemu-system-ppc -M mac99,graphics=off -display none -kernel day15/invaders.elf
+../../hw/intc/openpic.c:1034:16: runtime error: index -1 out of bounds for type 'IRQSource[264]' (aka 'struct IRQSource[264]')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/intc/openpic.c:1034:16 in
+
+This is because we do
+  src = &opp->src[n_IRQ];
+when n_IRQ may be -1.  This is in practice harmless because if n_IRQ
+is -1 then we don't do anything with the src pointer, but it is
+undefined behaviour. (This has been present since this device
+was first added to QEMU.)
+
+Rearrange the code so we only do the array index when n_IRQ is not -1.
+
+Cc: qemu-stable@nongnu.org
+Fixes: e9df014c0b ("Implement embedded IRQ controller for PowerPC 6xx/740 & 75")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241108162909.4080314-4-peter.maydell@linaro.org
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-id: 20241105180205.3074071-1-peter.maydell@linaro.org
 ---
- trace/control-target.c | 1 -
- trace/control.c        | 1 -
- 2 files changed, 2 deletions(-)
+ hw/intc/openpic.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/trace/control-target.c b/trace/control-target.c
-index 97f21e476d2..d58e84f6dd8 100644
---- a/trace/control-target.c
-+++ b/trace/control-target.c
-@@ -10,7 +10,6 @@
- #include "qemu/osdep.h"
- #include "qemu/lockable.h"
- #include "cpu.h"
--#include "trace/trace-root.h"
- #include "trace/control.h"
- 
- 
-diff --git a/trace/control.c b/trace/control.c
-index ef107829ac0..1c8c50064af 100644
---- a/trace/control.c
-+++ b/trace/control.c
-@@ -27,7 +27,6 @@
- #include "qemu/error-report.h"
- #include "qemu/config-file.h"
- #include "monitor/monitor.h"
--#include "trace/trace-root.h"
- 
- int trace_events_enabled_count;
- 
+diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
+index cd3d87768e0..2ead4b9ba00 100644
+--- a/hw/intc/openpic.c
++++ b/hw/intc/openpic.c
+@@ -1031,13 +1031,14 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
+         s_IRQ = IRQ_get_next(opp, &dst->servicing);
+         /* Check queued interrupts. */
+         n_IRQ = IRQ_get_next(opp, &dst->raised);
+-        src = &opp->src[n_IRQ];
+-        if (n_IRQ != -1 &&
+-            (s_IRQ == -1 ||
+-             IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
+-            DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
+-                    idx, n_IRQ);
+-            qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
++        if (n_IRQ != -1) {
++            src = &opp->src[n_IRQ];
++            if (s_IRQ == -1 ||
++                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
++                DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
++                        idx, n_IRQ);
++                qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
++            }
+         }
+         break;
+     default:
 -- 
 2.34.1
 
