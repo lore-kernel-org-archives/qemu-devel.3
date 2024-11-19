@@ -4,64 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 282BBD6C29E
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 21:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58538D6C29B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 21:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDVio-0005u6-10; Tue, 19 Nov 2024 16:25:18 -0500
+	id 1tDVnp-00080g-GN; Tue, 19 Nov 2024 16:30:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tDVij-0005r8-CX
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 16:25:15 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDVnn-00080U-Kt
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 16:30:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tDVih-0006U9-6e
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 16:25:12 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDVnl-000289-Ra
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 16:30:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732051509;
+ s=mimecast20190719; t=1732051823;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nWJgXK22QFfPAT9nvth4vKwj1JgJzCmTeODQYnqWMhQ=;
- b=PcqiOC4Q8hnySi4SscPEGxnl9QqfW3ILeffzg8lCElsD+sgpSbdBn+ZCQv+g2FnAB6aCWq
- b1wT//2bXcqsKKLJzYrgHzOb85Q24TJf9pf0DuXyAKhbVSkXWYu7FK+9pccxY5cEvfRccG
- hNbLqyIOqDlIPex1Z3hWCULI9l+OGCo=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-SbuWeLSjOLGY3O7e9Oe_Rg-1; Tue,
- 19 Nov 2024 16:25:05 -0500
-X-MC-Unique: SbuWeLSjOLGY3O7e9Oe_Rg-1
-X-Mimecast-MFC-AGG-ID: SbuWeLSjOLGY3O7e9Oe_Rg
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D78319541BE; Tue, 19 Nov 2024 21:25:03 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.59])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 23F3B19560A3; Tue, 19 Nov 2024 21:25:00 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jan Luebbe <jlu@pengutronix.de>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PULL 1/1] docs: aspeed: Reorganize the "Boot options" section
-Date: Tue, 19 Nov 2024 22:24:56 +0100
-Message-ID: <20241119212456.873660-2-clg@redhat.com>
-In-Reply-To: <20241119212456.873660-1-clg@redhat.com>
-References: <20241119212456.873660-1-clg@redhat.com>
+ bh=/gXii4Hr7D9nfMDBWFbyQQbUxihgNHkfw0zJHjWProw=;
+ b=YUcaSrWPmGr7tGJjxw1lhWRD9VR3hDKT2SRbH/qa8q2ajBVQHH3HhE8bop5IM4a5ciQhPv
+ 5jEg+BJZQKST13EQ8Wf2iNm9MTMufmeFsYpnZk3bZRn1goo35nXtcRETMR63dA7OP+hT8v
+ vNt5erAyjuf/KT6x9k+N2O+OgtKzBhs=
+Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
+ [209.85.221.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-510-QHl_u3NfPtC_3DbBglO45A-1; Tue, 19 Nov 2024 16:29:15 -0500
+X-MC-Unique: QHl_u3NfPtC_3DbBglO45A-1
+X-Mimecast-MFC-AGG-ID: QHl_u3NfPtC_3DbBglO45A
+Received: by mail-vk1-f198.google.com with SMTP id
+ 71dfb90a1353d-50d83a838b3so2307818e0c.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 13:29:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732051755; x=1732656555;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/gXii4Hr7D9nfMDBWFbyQQbUxihgNHkfw0zJHjWProw=;
+ b=INVo3UtBpm8iyd77Q8EStPepmDH2l4wgxuZdNgNQfhj0rVqclJCOf0Dfe7lm35dN/c
+ E9Tew8Xh6oIwqbz2ubC+9KK1OQsUgJFT7QMHq2BwH14rt4ND52JAivXfgUVssW2ByXzf
+ Aayrr1qIuLvgVxrMVhUhE3eMpsMmrbFt7F1NVbzUyiTeyl8l34eYNTFM+5zTHvMqJnhE
+ yW1PVYhRoUEYjbvY3rCl8kZX4VBSr18QLMH/rSVkEYAkWoIVZYMeRL2LCBwGx+Rd5fta
+ iUg35DK7mAKlpVLVj+1xCBPK5DsELA5DRe2Rd7Ku/keyaNgJf0cWRIKr/VBJfLL1QVIs
+ SIew==
+X-Gm-Message-State: AOJu0YyJT3svn3WB7gni934VEw5Krm+IWgvoKxbghkvx7WhgyHvHjW00
+ GtTIVQ0GO27U8wFRE4s25ox02QNBcq06KGdqOLQqLxuoNzUWXmbdkSFKIfQZk6ZtqwLCiu2d5Rd
+ 3C+0LGlC2QuK4EbB9OvzWxjcXHIidjyKdUZZmhSEu8htrE4ROdoo9
+X-Received: by 2002:a05:6122:17a9:b0:50d:2317:5b61 with SMTP id
+ 71dfb90a1353d-514cf8ba80bmr476722e0c.6.1732051755085; 
+ Tue, 19 Nov 2024 13:29:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFE3KK8iC5xeJi6XhDgD/vOzLghdHNcrWy/eO4lEMEkWA7XyNaiLLDEzpVV09iCK5RndLGufw==
+X-Received: by 2002:a05:6122:17a9:b0:50d:2317:5b61 with SMTP id
+ 71dfb90a1353d-514cf8ba80bmr476707e0c.6.1732051754770; 
+ Tue, 19 Nov 2024 13:29:14 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d4380f44bcsm979026d6.69.2024.11.19.13.29.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Nov 2024 13:29:13 -0800 (PST)
+Date: Tue, 19 Nov 2024 16:29:11 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V3 11/16] migration: cpr-transfer mode
+Message-ID: <Zz0DJ3RB-bVofkmo@x1n>
+References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
+ <1730468875-249970-12-git-send-email-steven.sistare@oracle.com>
+ <ZzUg9w0Kvfuleuxk@x1n>
+ <51967cb2-05ec-485b-a639-8ff58d565604@oracle.com>
+ <ZzZJvTldpe3D4EO5@x1n>
+ <c53feba3-d448-4494-8dbf-0725a2dd8dba@oracle.com>
+ <ZzzyOJT_mDh37_Py@x1n>
+ <c56ffc81-b065-4dd0-ab06-eb79912dcaf7@oracle.com>
+ <Zzz6NVoJss4JdEHh@x1n>
+ <8c56ac9c-c86a-48c1-9172-8f014220c37d@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8c56ac9c-c86a-48c1-9172-8f014220c37d@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -86,158 +115,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add subsubsections for possible boot methods and introduce a new
-section on eMMC boot support for the ast2600-evb and rainier-emmc
-machines, boot partitions assumptions and limitations.
+On Tue, Nov 19, 2024 at 04:03:08PM -0500, Steven Sistare wrote:
+> On 11/19/2024 3:51 PM, Peter Xu wrote:
+> > On Tue, Nov 19, 2024 at 03:32:55PM -0500, Steven Sistare wrote:
+> > > This begs the question, should we allow channels to be specified in hmp migrate
+> > > commands and for -incoming, in a very simple way?  Like with a prefix naming
+> > > the channel.  And eliminate the -cpr-uri argument. Examples:
+> > > 
+> > > (qemu) migrate -d main:tcp:0:44444,cpr:unix:cpr.sock
+> > > 
+> > > qemu -incoming main:tcp:0:44444,cpr:unix:cpr.sock
+> > > qemu -incoming main:defer,cpr:unix:cpr.sock
+> > 
+> > IMHO keeping the old syntax working would still be nice to not break
+> > scripts.
+> 
+> The channel tag would be optional, so backwards compatible.  Its unambiguous
+> as long as the channel names are not also protocol names.
 
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Jan Luebbe <jlu@pengutronix.de>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- docs/system/arm/aspeed.rst | 99 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 86 insertions(+), 13 deletions(-)
+Ah that's ok then.  Or maybe use "="?
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 63910d382feb..2e9ba12f7ae8 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -105,6 +105,9 @@ or directly from the ASPEED Forked OpenBMC GitHub release repository :
- 
-    https://github.com/AspeedTech-BMC/openbmc/releases
- 
-+Booting from a kernel image
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
- To boot a kernel directly from a Linux build tree:
- 
- .. code-block:: bash
-@@ -114,16 +117,10 @@ To boot a kernel directly from a Linux build tree:
-         -dtb arch/arm/boot/dts/aspeed-ast2600-evb.dtb \
-         -initrd rootfs.cpio
- 
--To boot the machine from the flash image, use an MTD drive :
--
--.. code-block:: bash
--
--  $ qemu-system-arm -M romulus-bmc -nic user \
--	-drive file=obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd -nographic
-+Booting from a flash image
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
--Options specific to Aspeed machines are :
--
-- * ``boot-emmc`` to set or unset boot from eMMC (AST2600).
-+The machine options specific to Aspeed to boot from a flash image are :
- 
-  * ``execute-in-place`` which emulates the boot from the CE0 flash
-    device by using the FMC controller to load the instructions, and
-@@ -134,10 +131,12 @@ Options specific to Aspeed machines are :
- 
-  * ``spi-model`` to change the default SPI Flash model.
- 
-- * ``bmc-console`` to change the default console device. Most of the
--   machines use the ``UART5`` device for a boot console, which is
--   mapped on ``/dev/ttyS4`` under Linux, but it is not always the
--   case.
-+To boot the machine from the flash image, use an MTD drive :
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -M romulus-bmc -nic user \
-+	-drive file=obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd -nographic
- 
- To use other flash models, for instance a different FMC chip and a
- bigger (64M) SPI for the ``ast2500-evb`` machine, run :
-@@ -169,6 +168,78 @@ In that case, the machine boots fetching instructions from the FMC0
- device. It is slower to start but closer to what HW does. Using the
- machine option ``execute-in-place`` has a similar effect.
- 
-+Booting from an eMMC image
-+^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The machine options specific to Aspeed machines to boot from an eMMC
-+image are :
-+
-+ * ``boot-emmc`` to set or unset boot from eMMC (AST2600).
-+
-+Only the ``ast2600-evb`` and ``rainier-emmc`` machines have support to
-+boot from an eMMC device. In this case, the machine assumes that the
-+eMMC image includes special boot partitions. Such an image can be
-+built this way :
-+
-+.. code-block:: bash
-+
-+   $ dd if=/dev/zero of=mmc-bootarea.img count=2 bs=1M
-+   $ dd if=u-boot-spl.bin of=mmc-bootarea.img conv=notrunc
-+   $ dd if=u-boot.bin of=mmc-bootarea.img conv=notrunc count=64 bs=1K
-+   $ cat mmc-bootarea.img obmc-phosphor-image.wic > mmc.img
-+   $ truncate --size 16GB mmc.img
-+
-+Boot the machine ``rainier-emmc`` with :
-+
-+.. code-block:: bash
-+
-+   $ qemu-system-arm -M rainier-bmc \
-+         -drive file=mmc.img,format=raw,if=sd,index=2 \
-+         -nographic
-+
-+The ``boot-emmc`` option can be set or unset, to change the default
-+boot mode of machine: SPI or eMMC. This can be useful to boot the
-+``ast2600-evb`` machine from an eMMC device (default being SPI) or to
-+boot the ``rainier-bmc`` machine from a flash device (default being
-+eMMC).
-+
-+As an example, here is how to to boot the ``rainier-bmc`` machine from
-+the flash device with ``boot-emmc=false`` and let the machine use an
-+eMMC image :
-+
-+.. code-block:: bash
-+
-+   $ qemu-system-arm -M rainier-bmc,boot-emmc=false \
-+        -drive file=flash.img,format=raw,if=mtd \
-+        -drive file=mmc.img,format=raw,if=sd,index=2 \
-+        -nographic
-+
-+It should be noted that in this case the eMMC device must not have
-+boot partitions, otherwise the contents will not be accessible to the
-+machine.  This limitation is due to the use of the ``-drive``
-+interface.
-+
-+Ideally, one should be able to define the eMMC device and the
-+associated backend directly on the command line, such as :
-+
-+.. code-block:: bash
-+
-+   -blockdev node-name=emmc0,driver=file,filename=mmc.img \
-+   -device emmc,bus=sdhci-bus.2,drive=emmc0,boot-partition-size=1048576,boot-config=8
-+
-+This is not yet supported (as of QEMU-10.0). Work is needed to
-+refactor the sdhci bus model.
-+
-+Other booting options
-+^^^^^^^^^^^^^^^^^^^^^
-+
-+Other machine options specific to Aspeed machines are :
-+
-+ * ``bmc-console`` to change the default console device. Most of the
-+   machines use the ``UART5`` device for a boot console, which is
-+   mapped on ``/dev/ttyS4`` under Linux, but it is not always the
-+   case.
-+
- To change the boot console and use device ``UART3`` (``/dev/ttyS2``
- under Linux), use :
- 
-@@ -176,6 +247,8 @@ under Linux), use :
- 
-   -M ast2500-evb,bmc-console=uart3
- 
-+Booting the ast2700-evb machine
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
- Boot the AST2700 machine from the flash image, use an MTD drive :
- 
+  "main=XXX,cpr=XXX"
+
+Then if no "=" it's the old?
+
+> 
+> > I was thinking we could simply add one more parameter for taking
+> > cpr uri, like:
+> > 
+> >      {
+> >          .name       = "migrate",
+> >          .args_type  = "detach:-d,resume:-r,uri:s,cpr:s?",
+> >          .params     = "[-d] [-r] uri [cpr_uri]",
+> >          .help       = "migrate to URI (using -d to not wait for completion)"
+> > 		      "\n\t\t\t -r to resume a paused postcopy migration",
+> > 		      "\n\t\t\t Setup cpr_uri to migrate with cpr-transfer",
+> >          .cmd        = hmp_migrate,
+> >      },
+> 
+> That's fine.
+> 
+> I do like the incoming syntax, though, instead of -cpr-uri.  What do you think?
+
+That'll definitely be lovely if possible, though would any monitor be alive
+at all before taking a cpr stream, with this series alone?  I thought you
+dropped the precreate, then QEMU isn't able to run the monitor loop until
+cpr-uri is loaded.
+
 -- 
-2.47.0
+Peter Xu
 
 
