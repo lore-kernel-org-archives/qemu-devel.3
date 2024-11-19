@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CFED62072
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947CDD62072
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDLa1-0003yv-1H; Tue, 19 Nov 2024 05:35:33 -0500
+	id 1tDLaH-00045C-1X; Tue, 19 Nov 2024 05:35:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLZy-0003yI-Vh
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:35:31 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1tDLaE-00044V-Ch
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:35:46 -0500
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLZx-0003Ej-4U
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:35:30 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5cfa9979cd1so5310420a12.1
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:35:28 -0800 (PST)
+ id 1tDLaC-0003Fb-Pm
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:35:46 -0500
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2fb51f39394so8163381fa.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:35:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732012527; x=1732617327; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732012538; x=1732617338; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=H5SvD9grBLI3ASmPzyX6YG/cg8wlR0s7tnPel2kT7V4=;
- b=mHTx6AdfcGCzp8Tgm30/cDGU0UqV2mBGETw3unPxT8jcKgk0gKk0RaiXSY+VHG/Ah1
- KKIqcV0+kPMh6Od0D3Zw1zwgRh6YCa/wYFa14IbDZaMMcaUrjrfXS1z5q9xf9ayDonkO
- nILeEN4JWx4vjPRwBbZ8IHRLLoGXw2wQAGOsuSYoBxEtMT4zMXyK+gT5SP1Pirusrv3F
- 0RXPgx6MZMD3bR11xA9eU9IB+sARLlTCMEXjjaLayoZKY3YKPvyO0Mr80CAyjoLIB4Y8
- 2nVZBLzkOoDb05/NNB0alKUVB1zPf6UpTpH12xT2qfP54hnDVu32VMSARBSXDy3vAt0X
- jukA==
+ bh=16rnG3iWNwgDJp/bIhG1Pd+2PUC7GzJVZrCyS8BlbjA=;
+ b=RfWuMGlpwL9zA6S0I67XqBf/b7sEqf1yWuADQhffbKyyiXL/qfjmgzPZe4/TrOJy2t
+ BOLp8Dd2YXGaUBl7y4r8A/in7/5Sa22I/WHlHg4xU1EtRh4Cvd9aioB6cfACTo2i/rMN
+ G/gKLsW5BIAeN8i3B9s6Jhae2/hYF5rOgK7MzmhCnVQsvlRlvzeyoEbM7SshbrNGzc2Z
+ Ym9/46OEgglQQqdv93mciSem856AHNjdqYgqkDZzUkjLiTvXecnjw57+MLar0a450Z2G
+ kJMRrL8xgdyFbHZCb9zWkm78Sh4WTuul2/AFnsPhYYc4X474Ce9CpmxRWhbBudTB7PFk
+ ACfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732012527; x=1732617327;
+ d=1e100.net; s=20230601; t=1732012538; x=1732617338;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=H5SvD9grBLI3ASmPzyX6YG/cg8wlR0s7tnPel2kT7V4=;
- b=hW8B2Rygg2YiM7vlwrpRXxfdi1vbyA+Fl2xsNTmJMiqfOR/6JoGlRMgxzIEN1YgXQc
- 2SOJUfqFUy87ZRhmYsHwEzPGuHiaFqJz5JZpU6CiDF1hC+eyKsdtIUX3L3iB0A25G6TO
- 6B0aKXA1VsTZnBiYC8sd5pia2vr5v06mBz7cxoDp4lbg68cwpOLKoBPOZuFhuOzCSqVH
- rnw83j/Hn8k4XQAA01DNCyuU68UQFWxXgQ1XaLHlIyHjwDkeaOVGtJRqtJbCVRK1yut3
- 6RVCX3UlhAAuYhzd106p9brnCRjsOhmsNALnhjzAnWslBdC70MWM/DqP9KEq0EHYTfMK
- 3WGA==
-X-Gm-Message-State: AOJu0Yzgjyu41YH5D1W/18nQs+NS8qYZ8wXm4ClbfMgcMDk8SQIRW5tO
- 6LW1CqZvU2jkIZSelYHtDpHqUhzd9pYULNcXJ+mDUMrabjrE/Q3UT6KKiUl3SJKkGcXf9xgV5U0
- 8u9gLKxrHH0/duG5Nnc14WDYL8oeiMpObDXW7kLEtE/K1O/8D
-X-Google-Smtp-Source: AGHT+IGlzF3z9cEpSKtMW68IdBv1lEBhbFARQFkFNHygRkITGely0vi5KXomp0I/9/T9IHXvP87udJcLaYMzNvNKDmM=
-X-Received: by 2002:a05:6402:50d3:b0:5cf:bece:5037 with SMTP id
- 4fb4d7f45d1cf-5cfde5cbb20mr2636317a12.4.1732012526731; Tue, 19 Nov 2024
- 02:35:26 -0800 (PST)
+ bh=16rnG3iWNwgDJp/bIhG1Pd+2PUC7GzJVZrCyS8BlbjA=;
+ b=txtq/nwbDgHbQGnjRuP+Cje6P1hx3N032BeateMviQqddxZemboe716CdMZtKc/N0b
+ 16c+Q51//nNnnmkOkNj01JeIP0g0Gah9KaM9rzYT2zUTjqK7qd4Mh7rZpuJbuqohnvlN
+ CuP+1srPMRhxaInB14L/OeyECxxVMeMY2R28WippGDHVTm5m5LsDHuWofJaYeZ9MuyRU
+ YoUqqpgKP62KY2UisSe3SYsP0Vn9Kl50oWRhQo05PCDCvevaTnmP2CeLt6368UunhbXz
+ ObE4PJcmU/5ip7pJJyfLbUprw5NcAiSrpJOtqi9MGXB/boEd7hjG+6jpG1/DUOVkwoZx
+ WzYQ==
+X-Gm-Message-State: AOJu0YxT9OGrssE4e4jdyXG7U7tsx4xfaAnYPgkmoXSp4Z2Foea2r6oA
+ BoYwsUWE3dV49/hEQbdLJaqjJbvGtxI1Ns79jLStii4enovwlMdQ6rdzSCPiTSRyIAHKCST6KUh
+ VE4B8vhGEoQn3hgVfAPcI5TNB9tRdsBqwIu1CKg==
+X-Google-Smtp-Source: AGHT+IE7caqnznxwJMDuHoGyQIRmamaPvZpgyXKuXnL39/v9kPvqfcB/WxnHGQfTGUT0L/bU9cbwPA7FhzpQvXKElmI=
+X-Received: by 2002:a2e:a58c:0:b0:2fb:599a:a8e9 with SMTP id
+ 38308e7fff4ca-2ff609121ecmr55199411fa.15.1732012537967; Tue, 19 Nov 2024
+ 02:35:37 -0800 (PST)
 MIME-Version: 1.0
-References: <20241118173634.473532-1-thuth@redhat.com>
-In-Reply-To: <20241118173634.473532-1-thuth@redhat.com>
+References: <20241118193627.1826228-3-eblake@redhat.com>
+In-Reply-To: <20241118193627.1826228-3-eblake@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Nov 2024 10:35:15 +0000
-Message-ID: <CAFEAcA96c4sxoerS4yzgPr_Eb99qN_F=zCSB9N6eFMZNJznCLA@mail.gmail.com>
-Subject: Re: [PULL 00/12] s390x and misc patches for QEMU 9.2-rc1
-To: Thomas Huth <thuth@redhat.com>
+Date: Tue, 19 Nov 2024 10:35:26 +0000
+Message-ID: <CAFEAcA96g-PObvHZ55eE_ztvZ3ATahcG-HUk5iBQ2p_RM-2-UA@mail.gmail.com>
+Subject: Re: [PULL for -rc1 0/1] NBD patches for 2024-11-18
+To: Eric Blake <eblake@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,9 +87,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Nov 2024 at 17:36, Thomas Huth <thuth@redhat.com> wrote:
->
->  Hi Peter!
+On Mon, 18 Nov 2024 at 19:38, Eric Blake <eblake@redhat.com> wrote:
 >
 > The following changes since commit abb1565d3d863cf210f18f70c4a42b0f39b8ccdb:
 >
@@ -97,18 +95,18 @@ On Mon, 18 Nov 2024 at 17:36, Thomas Huth <thuth@redhat.com> wrote:
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-11-18
+>   https://repo.or.cz/qemu/ericb.git tags/pull-nbd-2024-11-18
 >
-> for you to fetch changes up to 4483d98ab82671165276026b09287053328c94d4:
+> for you to fetch changes up to efd3dda312129b91986f85976afbda58d40f757f:
 >
->   .gitlab-ci.d: Raise timeout on cross-accel build jobs to 60m (2024-11-18 17:14:35 +0100)
+>   nbd-server: Silence server warnings on port probes (2024-11-18 09:06:17 -0600)
 >
 > ----------------------------------------------------------------
-> * Fixes & doc updates for the new "boot order" s390x bios feature
-> * Provide a "loadparm" property for scsi-hd & scsi-cd devices on s390x
->   (required for the "boot order" feature)
-> * Fix the floating-point multiply-and-add NaN rules on s390x
-> * Raise timeout on cross-accel build jobs to 60m
+> NBD patches for 2024-11-18
+>
+> - Eric Blake: Silence qemu-nbd on harmless client port probes
+>
+> ----------------------------------------------------------------
 
 
 Applied, thanks.
