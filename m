@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DC2D60D09
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 02:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349E8D60D0C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 02:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDDob-0007Mb-It; Mon, 18 Nov 2024 21:18:05 -0500
+	id 1tDE2F-0000S7-RJ; Mon, 18 Nov 2024 21:32:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDDoa-0007M7-AC; Mon, 18 Nov 2024 21:18:04 -0500
-Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tDE2D-0000RQ-Kc; Mon, 18 Nov 2024 21:32:09 -0500
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDDoY-0001wx-K1; Mon, 18 Nov 2024 21:18:04 -0500
-Received: by mail-ua1-x933.google.com with SMTP id
- a1e0cc1a2514c-8570543feaaso174761241.2; 
- Mon, 18 Nov 2024 18:18:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tDE2C-0003Df-1y; Mon, 18 Nov 2024 21:32:09 -0500
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7ed9c16f687so3090568a12.0; 
+ Mon, 18 Nov 2024 18:32:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731982681; x=1732587481; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1731983526; x=1732588326; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q5uG8pi4qHCg5dp1cKoICpX006whs+vSrbL8C7f4tRI=;
- b=SgLtnAdIcuuzCr3X239TJGw1KO17meRK/4kCHLcHUK8VZ8x4C0symEJZx+rnsp1LYY
- 8eytD4xaVb7snqFkWTeB7d/9Oa/smHWmLz9B0xWmpmafkqgO59Nvfct0D3OPaITrZC7g
- 7GvlkTvJF9EuutN8cHzDVQnHl0hXMrcFQRgn54biUnawbF3BusYhiK6ef0EP6Q74EEae
- oz7m3KyCIErbUMN+yXlHEpODy1Ci7WS7Q43wVbsHlH3j+VPcSGuHIfwGZ0jFBf5XW1tt
- xQO8Uw/CqDanVulhOh1RBzsMfbqXk/7z3srFAgURtvaapPXvMdEyNRFACavAFQkaiSSc
- lgMA==
+ bh=XXffGWPbwRZvY8gvudf5PzB2IWccqHhsLcPtqdhVsSY=;
+ b=J5Kh33cgkv4A5Jdql/jipZN0al7q3bqruJwgooz7A3zGQTE4UylEbSAMdVcuY5laRr
+ osSBPXnJbd/tus77Fis6Ax+LBCFGWK4Gs4aywiKjUhZ/jR89y6eM9wH0tGNuovjnoEls
+ DWSNJVU0J9XmUV0pUP+CTHd3p5+PjUS6FRsDuZEhtWISB4tNtKcFQ7kakuoRFy9kiQwQ
+ 9mycBnhbSh8CkEDt83yDwFIXBRwt9disg0oo7KqOFQXWBO4EMIPvuCNqx59ytjPo8oFt
+ f+DHDoGEjz3N1dErSDa+8/g3TU2VgeePnxXNuBqakx4m65g4MtXx0OB/d7v8jS5QCB86
+ z5Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731982681; x=1732587481;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=q5uG8pi4qHCg5dp1cKoICpX006whs+vSrbL8C7f4tRI=;
- b=lpe25YnGN85Ph7agHBggwIKaazrJEIyWAjYp9f5KErNvJDr3k5KDXj9ylZsx+IwQoT
- MmQPSnCDH3CKbBbeHocm6TmpxaofYkqdzoZyixCkzgb1vRAUmA8OqRStRzoTuzL/3bBY
- wPeGseMRlicqwgqTS3JD5o7H0Zv03qq4et8YTgyZJao0kKrEy6eIqTiSwi/QCdqtnnZV
- /cJZwdlQx5c2pk0vbQnBShnYFSrMG+qViNApVuTpOz4JipLFyeQ4AE0plbezaLKkBJfO
- prFsK6/jLwMvlQQIxfiJN3DHvp1MchgNvolMGBNOnl3xoRUKMORbbhW7oIBwgvt+5uIO
- 5waQ==
+ d=1e100.net; s=20230601; t=1731983526; x=1732588326;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=XXffGWPbwRZvY8gvudf5PzB2IWccqHhsLcPtqdhVsSY=;
+ b=WHQBrpPBjcQKR/vaj9vypeIAGxw2dDVrJBGWjVpBi5ZmSdsDFzo/NqeMmKc+1qE7AN
+ CdwrazrVOpa2Xo0nWjRRSYiLwH/loD9k2zfSkV17QI4wz6pgfvG+6Hk6zDPVBixHOf+p
+ yGNeEKjDw2xkdp5+tixKotyQ/nxY49sprGNSE2An/Mvq9kkgHjJet1736od7g2gGvvYk
+ xXEomzBRDl7GxyAvQP2yLRLfK+doWWAx/9bF+/Zfjmm6OfRnQVmkKPA3UcvUdv0BxX8A
+ mm6wSKvZHu6BH0fbQ0owo0mu0FgXAwZgOuRCmuWr6gPLlkJ2ts5rQQE3CIQ2rlUKIAOO
+ fyEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQ/yqPZWnqhxJB5cWSlzcG4YePvDDZYsZ1eMQkInuXLpxxIUX3OrxUWt5HJTSiIPWmiIkDyQxsyPqQ@nongnu.org
-X-Gm-Message-State: AOJu0Yw3Flq5amyNBKxzpON6Lox0ENBVHkM2wab4H/lD5Jy3Det5Yer7
- r8uXVeMFBShGO1JhmOG/kwx6+CWF9tfGQhc0QSSIrzuhgaxP1VV2RaQl1YskiZXfjlY19IGh7JI
- v2HfRt1zhxyWsl6I93fHbGVMZyTo=
-X-Google-Smtp-Source: AGHT+IHvr5W2qZKXf+XqQmQOGQ6cd7bC5v09+iRdETgTLOsjtC87xyB2W2wxBU780JEU2KbDaMondSUHnTpfv7v8x+4=
-X-Received: by 2002:a05:6102:3f04:b0:4a5:b0d3:cbbe with SMTP id
- ada2fe7eead31-4ad630186a3mr13465842137.1.1731982681097; Mon, 18 Nov 2024
- 18:18:01 -0800 (PST)
-MIME-Version: 1.0
-References: <20241106133407.604587-1-dbarboza@ventanamicro.com>
- <20241106133407.604587-8-dbarboza@ventanamicro.com>
-In-Reply-To: <20241106133407.604587-8-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 Nov 2024 12:17:35 +1000
-Message-ID: <CAKmqyKPg8RibBZ_jOvcp1o5zgPk20YvszgusznFubTZUw3RKbQ@mail.gmail.com>
-Subject: Re: [PATCH for-10.0 7/7] docs/specs: add riscv-iommu-sys information
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCXxMSEWroIpz5OdsPmitlTaLxkGOFpcd5kutGjbS1iHpXO7zKwnG5pRVGAyMHlCmOinnwosdhXYZu6p@nongnu.org
+X-Gm-Message-State: AOJu0YzkAKRUBgjUOua3cJSnWSKXzQnOkq4GHCFhogiRPsbpYJGIBHGb
+ ueP7D2yA/SqdUANdvbZlUZfDhNWuCw7j41n7Af7xyvbHFH9rvPgG
+X-Google-Smtp-Source: AGHT+IGXRG8TiSaI4fOwRhdpFHXiNUnT3tCrD9v0KLhueVxlXIyGkgjigUX8T8so+FY9WePWXWIoFg==
+X-Received: by 2002:a05:6a21:3291:b0:1dc:c433:144b with SMTP id
+ adf61e73a8af0-1dcc433158bmr606345637.27.1731983525872; 
+ Mon, 18 Nov 2024 18:32:05 -0800 (PST)
+Received: from localhost (124-171-72-210.tpgi.com.au. [124.171.72.210])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-724771e18bbsm6936008b3a.135.2024.11.18.18.32.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Nov 2024 18:32:05 -0800 (PST)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 19 Nov 2024 12:31:59 +1000
+Message-Id: <D5PSX0JIIGY8.3CPW5U4P5H5C9@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, <clg@kaod.org>, <fbarrat@linux.ibm.com>,
+ <milesg@linux.ibm.com>, <danielhb413@gmail.com>,
+ <david@gibson.dropbear.id.au>, <harshpb@linux.ibm.com>, <thuth@redhat.com>,
+ <lvivier@redhat.com>, <pbonzini@redhat.com>
+Subject: Re: [PATCH 11/14] pnv/xive: Only support crowd size of 0, 2, 4 and 16
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.18.2
+References: <20241015211329.21113-1-kowal@linux.ibm.com>
+ <20241015211329.21113-12-kowal@linux.ibm.com>
+In-Reply-To: <20241015211329.21113-12-kowal@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,112 +98,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 11:35=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Wed Oct 16, 2024 at 7:13 AM AEST, Michael Kowal wrote:
+> From: Glenn Miles <milesg@linux.vnet.ibm.com>
 >
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> XIVE crowd sizes are encoded into a 2-bit field as follows:
+>   0: 0b00
+>   2: 0b01
+>   4: 0b10
+>  16: 0b11
+>
+> A crowd size of 8 is not supported.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Squash this into patch 9 as a fix? xive2_pgofnext() is introduced in
+patch 10, but that's not enough to worry about changing the comment.
 
-Alistair
+Thanks,
+Nick
 
+>
+> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 > ---
->  docs/specs/riscv-iommu.rst | 30 +++++++++++++++++++++++++++---
->  docs/system/riscv/virt.rst | 10 ++++++++++
->  2 files changed, 37 insertions(+), 3 deletions(-)
+>  hw/intc/xive.c | 21 ++++++++++++++++++++-
+>  1 file changed, 20 insertions(+), 1 deletion(-)
 >
-> diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
-> index 463f4cffb6..b1538c9ead 100644
-> --- a/docs/specs/riscv-iommu.rst
-> +++ b/docs/specs/riscv-iommu.rst
-> @@ -6,9 +6,9 @@ RISC-V IOMMU support for RISC-V machines
->  QEMU implements a RISC-V IOMMU emulation based on the RISC-V IOMMU spec
->  version 1.0 `iommu1.0`_.
->
-> -The emulation includes a PCI reference device, riscv-iommu-pci, that QEM=
-U
-> -RISC-V boards can use.  The 'virt' RISC-V machine is compatible with thi=
-s
-> -device.
-> +The emulation includes a PCI reference device (riscv-iommu-pci) and a pl=
-atform
-> +bus device (riscv-iommu-sys) that QEMU RISC-V boards can use.  The 'virt=
-'
-> +RISC-V machine is compatible with both devices.
->
->  riscv-iommu-pci reference device
->  --------------------------------
-> @@ -83,6 +83,30 @@ Several options are available to control the capabilit=
-ies of the device, namely:
->  - "s-stage": enable s-stage support
->  - "g-stage": enable g-stage support
->
-> +riscv-iommu-sys device
-> +----------------------
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index d5fbd9bbd8..565f0243bd 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -1687,7 +1687,26 @@ static uint8_t xive_get_group_level(bool crowd, bo=
+ol ignore,
+>      uint8_t level =3D 0;
+> =20
+>      if (crowd) {
+> -        level =3D ((ctz32(~nvp_blk) + 1) & 0b11) << 4;
+> +        /* crowd level is bit position of first 0 from the right in nvp_=
+blk */
+> +        level =3D ctz32(~nvp_blk) + 1;
 > +
-> +This device implements the RISC-V IOMMU emulation as a platform bus devi=
-ce that
-> +RISC-V boards can use.
+> +        /*
+> +         * Supported crowd sizes are 2^1, 2^2, and 2^4. 2^3 is not suppo=
+rted.
+> +         * HW will encode level 4 as the value 3.  See xive2_pgofnext().
+> +         */
+> +        switch (level) {
+> +        case 1:
+> +        case 2:
+> +            break;
+> +        case 4:
+> +            level =3D 3;
+> +            break;
+> +        default:
+> +            g_assert_not_reached();
+> +        }
 > +
-> +For the 'virt' board the device is disabled by default.  To enable it us=
-e the
-> +'iommu-sys' machine option:
-> +
-> +.. code-block:: bash
-> +
-> +  $ qemu-system-riscv64 -M virt,iommu-sys=3Don (...)
-> +
-> +There is no options to configure the capabilities of this device in the =
-'virt'
-> +board using the QEMU command line.  The device is configured with the fo=
-llowing
-> +riscv-iommu options:
-> +
-> +- "ioatc-limit": default value (2Mb)
-> +- "intremap": enabled
-> +- "ats": enabled
-> +- "off": on (DMA disabled)
-> +- "s-stage": enabled
-> +- "g-stage": enabled
-> +
->  .. _iommu1.0: https://github.com/riscv-non-isa/riscv-iommu/releases/down=
-load/v1.0/riscv-iommu.pdf
->
->  .. _linux-v8: https://lore.kernel.org/linux-riscv/cover.1718388908.git.t=
-jeznach@rivosinc.com/
-> diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-> index 8e9a2e4dda..537aac0340 100644
-> --- a/docs/system/riscv/virt.rst
-> +++ b/docs/system/riscv/virt.rst
-> @@ -94,6 +94,12 @@ command line:
->
->    $ qemu-system-riscv64 -M virt -device riscv-iommu-pci (...)
->
-> +It also has support for the riscv-iommu-sys platform device:
-> +
-> +.. code-block:: bash
-> +
-> +  $ qemu-system-riscv64 -M virt,iommu-sys=3Don (...)
-> +
->  Refer to :ref:`riscv-iommu` for more information on how the RISC-V IOMMU=
- support
->  works.
->
-> @@ -129,6 +135,10 @@ The following machine-specific options are supported=
-:
->    having AIA IMSIC (i.e. "aia=3Daplic-imsic" selected). When not specifi=
-ed,
->    the default number of per-HART VS-level AIA IMSIC pages is 0.
->
-> +- iommu-sys=3D[on|off]
-> +
-> +  Enables the riscv-iommu-sys platform device. Defaults to 'off'.
-> +
->  Running Linux kernel
->  --------------------
->
-> --
-> 2.45.2
->
->
+> +        /* Crowd level bits reside in upper 2 bits of the 6 bit group le=
+vel */
+> +        level <<=3D 4;
+>      }
+>      if (ignore) {
+>          level |=3D (ctz32(~nvp_index) + 1) & 0b1111;
+
 
