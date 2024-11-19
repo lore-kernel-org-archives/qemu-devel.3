@@ -4,67 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947CDD62072
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9C58D6206A
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDLaH-00045C-1X; Tue, 19 Nov 2024 05:35:49 -0500
+	id 1tDLed-0005w3-96; Tue, 19 Nov 2024 05:40:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLaE-00044V-Ch
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:35:46 -0500
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tDLeZ-0005ub-Dr
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:40:15 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLaC-0003Fb-Pm
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:35:46 -0500
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2fb51f39394so8163381fa.2
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:35:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tDLeX-0004Aq-HA
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:40:15 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a9e71401844so520582666b.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:40:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732012538; x=1732617338; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=16rnG3iWNwgDJp/bIhG1Pd+2PUC7GzJVZrCyS8BlbjA=;
- b=RfWuMGlpwL9zA6S0I67XqBf/b7sEqf1yWuADQhffbKyyiXL/qfjmgzPZe4/TrOJy2t
- BOLp8Dd2YXGaUBl7y4r8A/in7/5Sa22I/WHlHg4xU1EtRh4Cvd9aioB6cfACTo2i/rMN
- G/gKLsW5BIAeN8i3B9s6Jhae2/hYF5rOgK7MzmhCnVQsvlRlvzeyoEbM7SshbrNGzc2Z
- Ym9/46OEgglQQqdv93mciSem856AHNjdqYgqkDZzUkjLiTvXecnjw57+MLar0a450Z2G
- kJMRrL8xgdyFbHZCb9zWkm78Sh4WTuul2/AFnsPhYYc4X474Ce9CpmxRWhbBudTB7PFk
- ACfw==
+ d=linaro.org; s=google; t=1732012811; x=1732617611; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=THtpbfJdln95maIr7ixA/yr0koffmRe+qHEjDjkjA8c=;
+ b=VNViNZBviop+5BkiJRAV3hMWG6bMv1PFHDOqdoJihmrW7gmA2BmmagCxoI4yFl2tKh
+ G+nFiNKgdLgalBTb63NXsAirA4jB3KuxfzMGFkLFU3Ctwq7XSqsXpI2rdkwPyd2SfHuQ
+ 9A7eZBhhYdIZ2+TP37GDzaaeFjXjFXPLetw+pBpifrfcER3GGjOsqmnZ1jrGAMGdM7ia
+ 0yT8InT+vku/ZVBa3jUxlG6+O4wV4owl4hSGip0CivmnJSQg6AcuURITPOiEPvQzucGb
+ KyAPnKR6F2rp1UOa3ZbhkaJNf/seKYyM0K4k6y+udbrrxXWqCUh4LJxBPKKf/4tng0Bp
+ z28Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732012538; x=1732617338;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1732012811; x=1732617611;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=16rnG3iWNwgDJp/bIhG1Pd+2PUC7GzJVZrCyS8BlbjA=;
- b=txtq/nwbDgHbQGnjRuP+Cje6P1hx3N032BeateMviQqddxZemboe716CdMZtKc/N0b
- 16c+Q51//nNnnmkOkNj01JeIP0g0Gah9KaM9rzYT2zUTjqK7qd4Mh7rZpuJbuqohnvlN
- CuP+1srPMRhxaInB14L/OeyECxxVMeMY2R28WippGDHVTm5m5LsDHuWofJaYeZ9MuyRU
- YoUqqpgKP62KY2UisSe3SYsP0Vn9Kl50oWRhQo05PCDCvevaTnmP2CeLt6368UunhbXz
- ObE4PJcmU/5ip7pJJyfLbUprw5NcAiSrpJOtqi9MGXB/boEd7hjG+6jpG1/DUOVkwoZx
- WzYQ==
-X-Gm-Message-State: AOJu0YxT9OGrssE4e4jdyXG7U7tsx4xfaAnYPgkmoXSp4Z2Foea2r6oA
- BoYwsUWE3dV49/hEQbdLJaqjJbvGtxI1Ns79jLStii4enovwlMdQ6rdzSCPiTSRyIAHKCST6KUh
- VE4B8vhGEoQn3hgVfAPcI5TNB9tRdsBqwIu1CKg==
-X-Google-Smtp-Source: AGHT+IE7caqnznxwJMDuHoGyQIRmamaPvZpgyXKuXnL39/v9kPvqfcB/WxnHGQfTGUT0L/bU9cbwPA7FhzpQvXKElmI=
-X-Received: by 2002:a2e:a58c:0:b0:2fb:599a:a8e9 with SMTP id
- 38308e7fff4ca-2ff609121ecmr55199411fa.15.1732012537967; Tue, 19 Nov 2024
- 02:35:37 -0800 (PST)
+ bh=THtpbfJdln95maIr7ixA/yr0koffmRe+qHEjDjkjA8c=;
+ b=COQ2bo2Rf5CxNKYB/FxlaO+g3VavaKw8/ry5bJxBdlfKklroVV4/P+UluFL2HwZJW3
+ Ilm+wUEB0G4IbmGsf3IV+9e/1IT1F0WEWdIrlx9HSEQrrXhOI9lBcXjQvc429VAGfkov
+ Jm00Q9/A5m0DUFK7t4mF2uBBOIcifIHcky660rd9kKvA3JBIYUg9CpXolQarAHdkLgIQ
+ VaOXKz1OVc5PgEyC5+1BL6vIzUtV5+6mdhmKO1syd4zNcES0hlhNcmOpnpzbO2imdBHA
+ +3LfgTAUDeeLXftSJ76HFOIf6RsUk0uEU7Ry/tfloYDxD4777rvGNrxfaIxweB4hIC//
+ sntg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTeYtZuZ9oZ9w7E0kq2U51KUEVUoqOxj/Uxo3+Z8CPwUee/8ErDBRUsZyNla5Ts+oFBLM5/gcUaKwG@nongnu.org
+X-Gm-Message-State: AOJu0YyTvsniFWZgb4wX8tD61XflF7vkBXjlIptyVSsJzcdYf6WptBiy
+ UVoZxUnWOtkBconea1viTb0faSQKKFkV0Uyv+pCUXn2n7apH77X9Os6+fz6STtE=
+X-Google-Smtp-Source: AGHT+IG0lQcj0gAaodVVWuBBo0NDzm1D1vtzciBlmBFGIGoFGj580jCq0HIZquTD3Mr1ulBx9UIiVw==
+X-Received: by 2002:a17:906:c081:b0:a9a:c03:ebc8 with SMTP id
+ a640c23a62f3a-aa4a2d0a3d1mr710289766b.37.1732012811506; 
+ Tue, 19 Nov 2024 02:40:11 -0800 (PST)
+Received: from [192.168.210.26] (83.11.2.232.ipv4.supernova.orange.pl.
+ [83.11.2.232]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa20e0016a7sm636826466b.116.2024.11.19.02.40.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Nov 2024 02:40:11 -0800 (PST)
+Message-ID: <58dbb4ef-62d3-445e-b891-04a9027d63d8@linaro.org>
+Date: Tue, 19 Nov 2024 11:40:08 +0100
 MIME-Version: 1.0
-References: <20241118193627.1826228-3-eblake@redhat.com>
-In-Reply-To: <20241118193627.1826228-3-eblake@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Nov 2024 10:35:26 +0000
-Message-ID: <CAFEAcA96g-PObvHZ55eE_ztvZ3ATahcG-HUk5iBQ2p_RM-2-UA@mail.gmail.com>
-Subject: Re: [PULL for -rc1 0/1] NBD patches for 2024-11-18
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] docs/devel: add b4 for patch retrieval
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Andrew Melnychenko <andrew@daynix.com>, Jason Wang <jasowang@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, alex.bennee@linaro.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-arm@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
+ manos.pitsidianakis@linaro.org, qemu-block@nongnu.org,
+ Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk
+ <kkostiuk@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, gustavo.romero@linaro.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241118172357.475281-1-pierrick.bouvier@linaro.org>
+ <20241118172357.475281-4-pierrick.bouvier@linaro.org>
+ <ZzxXAtuRowg8hp9u@redhat.com>
+ <47831adc-26f7-4633-a371-975c97e8dae7@linaro.org>
+ <ZzxjciUGNIVoUuVC@redhat.com>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB
+Organization: Linaro
+In-Reply-To: <ZzxjciUGNIVoUuVC@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,32 +116,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Nov 2024 at 19:38, Eric Blake <eblake@redhat.com> wrote:
->
-> The following changes since commit abb1565d3d863cf210f18f70c4a42b0f39b8ccdb:
->
->   Merge tag 'pull-tcg-20241116' of https://gitlab.com/rth7680/qemu into staging (2024-11-16 18:16:46 +0000)
->
-> are available in the Git repository at:
->
->   https://repo.or.cz/qemu/ericb.git tags/pull-nbd-2024-11-18
->
-> for you to fetch changes up to efd3dda312129b91986f85976afbda58d40f757f:
->
->   nbd-server: Silence server warnings on port probes (2024-11-18 09:06:17 -0600)
->
-> ----------------------------------------------------------------
-> NBD patches for 2024-11-18
->
-> - Eric Blake: Silence qemu-nbd on harmless client port probes
->
-> ----------------------------------------------------------------
+W dniu 19.11.2024 o 11:07, Daniel P. Berrangé pisze:
+> On Tue, Nov 19, 2024 at 10:56:36AM +0100, Marcin Juszkiewicz wrote:
+>> W dniu 19.11.2024 o 10:14, Daniel P. Berrangé pisze:
+>>
+>>>> +    b4 shazam $msg-id
+>>>
+>>> I'm wondering how b4 knows where to find the mails for $msg-id  for QEMU ?
+>>
+>> It goes for https://lore.kernel.org/qemu-devel/$msg-id by default or checks
+>> b4.midmask in git config.
+> 
+> How does it figure out to look at  '/qemu-devel/' by default  ?
 
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
-
--- PMM
+Sorry, was wrong. It goes to https://lore.kernel.org/$msg-id as this is 
+enough to get mail.
 
