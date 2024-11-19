@@ -4,80 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C04FD44163
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B286D44166
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:42:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDP8h-0005vo-2H; Tue, 19 Nov 2024 09:23:35 -0500
+	id 1tDPQB-0000dI-Uf; Tue, 19 Nov 2024 09:41:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8b-0005q8-09
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:29 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8Y-0006Cb-L4
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:28 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4315eac969aso31784465e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732026205; x=1732631005; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9cLsADc/b1nvOdEt6B14trzuyDptUS5PDXoA87jXxAM=;
- b=afnQIQZ0xzkMevTPNgiP6t25LxDr9iKee5HqOB5wwQsto3YAjkpRlEBjoT4HqKWhyg
- OInxwBS1IEUzxU99g+AmvnhATukGXBsAJqaCeSeMIUOBmeFtHUmX5eOiwrZs43VlE5ak
- y+RgaTRP1KgeYu+s/z8xNukzAZG+AQycUhvc/lqMdSbJe79HeRdBY1bDFaR1zjhWIXKh
- FaC1JKJ/suuB+IIyoRo5qqJsx3b6QeRSaE4DGBSJr9V2iH7oK4Ky/AT62K7kQ/e2b8jd
- XECOWjyUSJRZxXADN1UqXjegN36fdYA1qFMsKkKZPpdB89mTcMM67bRtPyrFlpEZrYHk
- N7RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732026205; x=1732631005;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9cLsADc/b1nvOdEt6B14trzuyDptUS5PDXoA87jXxAM=;
- b=H1IIFyqtFOTqHo3qcQRxVKhbSHWY1LwC6UWjJWH3S6dZBcee8QX72brb0/kkDcTBtY
- qDA0wvgFEmCzqD0jCCW/aULCUu1UU6KV4+CQBZlq7i6lrFbwtCypff55MU2JtJNiWpV1
- moTkV3FokXJ5IYalwYoD18NyczAU6/V8AV69clHqPqHoG9v22uUKcqLbUSHOXQofDBWp
- ycral1T585ngLIhKkquqyGJ/kKX7vtHqTFUAShZfP7ShzXYJBMVscGNYIq/8YwWhtSQ1
- idod5eJbnQsgsGIyhevYjT6RSw91U7ggSAAI3a9r6uAcwrLvarQpv7Zz65riXFx3Eetn
- I34w==
-X-Gm-Message-State: AOJu0Yz3vOozBWhS105Ah1Nj8nr4V+Hs46XX4K/jRNk57pfl7W6ZeN7/
- AXOZJH9POp2VyThlRlkqkEmPax11LvpmO1LU/L7wop+JWa9THYBLymb+CPG4ClVVU9waISgPyFy
- 3
-X-Google-Smtp-Source: AGHT+IHesRT4o1EZVc1LRGcsuNpJHifcmtaQGWG/rpdNDZnIX83xiXMy5OULwAdUjJVcLtZ99buYpw==
-X-Received: by 2002:a05:600c:58cb:b0:431:15f1:421d with SMTP id
- 5b1f17b1804b1-432f57fba53mr29815185e9.16.1732026204917; 
- Tue, 19 Nov 2024 06:23:24 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.24
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 06:23:24 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 04/15] hw/watchdog/cmsdk_apb_watchdog: Fix INTEN issues
-Date: Tue, 19 Nov 2024 14:23:10 +0000
-Message-Id: <20241119142321.1853732-5-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241119142321.1853732-1-peter.maydell@linaro.org>
-References: <20241119142321.1853732-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tDPQA-0000cz-NJ
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:41:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tDPQ8-0008Vl-Qp
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:41:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732027295;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pc+DGeWLQorbNHYCd7hQSPgPKYFtB1a8xNf86uQdqcs=;
+ b=aci5XLMpzewMq8XwQStlKYhSvvLYQU36jB37v7jmykiN3ZB7SISoWUd3WqrX+LNKsQ9DAR
+ +lHgU4Q3c8VqeJL3KpXUwhmp3Y5XxurKb6+Z1Umbx1YUQE19blYzEcO2q48cxrE9NqZNNo
+ Smkhizb1e5fANQRKtEGsDaPvPJ93ohU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-346-xn14I3SJPXyoOIZongxUTg-1; Tue,
+ 19 Nov 2024 09:41:27 -0500
+X-MC-Unique: xn14I3SJPXyoOIZongxUTg-1
+X-Mimecast-MFC-AGG-ID: xn14I3SJPXyoOIZongxUTg
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C824E19776D3; Tue, 19 Nov 2024 14:41:24 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.26])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7986430001A0; Tue, 19 Nov 2024 14:41:22 +0000 (UTC)
+Date: Tue, 19 Nov 2024 09:41:21 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PULL 0/8] Block layer patches
+Message-ID: <20241119144121.GB340853@fedora>
+References: <20241114165657.254256-1-kwolf@redhat.com>
+ <CAFEAcA-y2K74jbPwPwrCo=OfCn_eJpGskX5KVivAMxzQXLThrw@mail.gmail.com>
+ <Zzx1prDqo3vPsIvN@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="2R1mfccESY7rA8Ph"
+Content-Disposition: inline
+In-Reply-To: <Zzx1prDqo3vPsIvN@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,103 +87,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Roque Arcudia Hernandez <roqueh@google.com>
 
-Current watchdog is free running out of reset, this combined with the
-fact that current implementation also ensures the counter is running
-when programing WDOGLOAD creates issues when the firmware defer the
-programing of WDOGCONTROL.INTEN much later after WDOGLOAD. Arm
-Programmer's Model documentation states that INTEN is also the
-counter enable:
+--2R1mfccESY7rA8Ph
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> INTEN
->
-> Enable the interrupt event, WDOGINT. Set HIGH to enable the counter
-> and the interrupt, or LOW to disable the counter and interrupt.
-> Reloads the counter from the value in WDOGLOAD when the interrupt
-> is enabled, after previously being disabled.
+On Tue, Nov 19, 2024 at 12:25:26PM +0100, Kevin Wolf wrote:
+> Am 15.11.2024 um 21:16 hat Peter Maydell geschrieben:
+> > On Thu, 14 Nov 2024 at 16:58, Kevin Wolf <kwolf@redhat.com> wrote:
+> > >
+> > > The following changes since commit f0a5a31c33a8109061c2493e475c8a2f4d=
+022432:
+> > >
+> > >   Update version for v9.2.0-rc0 release (2024-11-13 21:44:45 +0000)
+> > >
+> > > are available in the Git repository at:
+> > >
+> > >   https://repo.or.cz/qemu/kevin.git tags/for-upstream
+> > >
+> > > for you to fetch changes up to 378a645b2f6125b1bdbd1fae3e8f30452d5b59=
+34:
+> > >
+> > >   vl: use qmp_device_add() in qemu_create_cli_devices() (2024-11-14 1=
+7:55:51 +0100)
+> > >
+> > > ----------------------------------------------------------------
+> > > Block layer patches
+> > >
+> > > - Fix qmp_device_add() to not throw non-scalar options away (fixes
+> > >   iothread-vq-mapping being silently ignored in device_add)
+> > > - iotests: Fix mypy failure
+> > > - parallels: Avoid potential integer overflow
+> > > - Fix crash in migration_is_running()
+> > >
+> >=20
+> > Hi; this seems to cause an error for the avocado test
+> > tests/avocado/hotplug_blk.py:HotPlug.test
+> >=20
+> > https://gitlab.com/qemu-project/qemu/-/jobs/8387009365
+> > https://gitlab.com/qemu-project/qemu/-/jobs/8387009383
+> >=20
+> > (12/51) tests/avocado/hotplug_blk.py:HotPlug.test: STARTED
+> > (12/51) tests/avocado/hotplug_blk.py:HotPlug.test: ERROR: Could not
+> > perform graceful shutdown (17.16 s)
+> >=20
+> > If you dig through the build artefacts you can find the debug log:
+> > https://qemu-project.gitlab.io/-/qemu/-/jobs/8387009383/artifacts/build=
+/tests/results/latest/test-results/12-tests_avocado_hotplug_blk.py_HotPlug.=
+test/debug.log
+> >=20
+> > and it seems like the test sends a device_add command over
+> > QMP and the result is that QEMU dies with an assertion failure.
+> > The relevant device_add is
+> >=20
+> > [stdlog]   "execute": "device_add",
+> > [stdlog]   "arguments": {
+> > [stdlog]     "driver": "virtio-blk-pci",
+> > [stdlog]     "drive": "disk",
+> > [stdlog]     "id": "virtio-disk0",
+> > [stdlog]     "bus": "pci.1",
+> > [stdlog]     "addr": 1
+> > [stdlog]   },
+> > [stdlog]   "id": "__qmp#00002"
+> > [stdlog] }
+> >=20
+> > Avocado helpfully hides the assertion message under a rock
+> > in a different log file:
+> > https://qemu-project.gitlab.io/-/qemu/-/jobs/8387009383/artifacts/build=
+/tests/results/latest/test-results/12-tests_avocado_hotplug_blk.py_HotPlug.=
+test/7f00b63ed810.log
+> >=20
+> > qemu-system-x86_64: ../qapi/qobject-input-visitor.c:143:
+> > qobject_input_try_get_object: Assertion `removed' failed.
+> >=20
+> >=20
+> > I'm guessing this is Stefan's patches since they touch
+> > the device_add path.
+>=20
+> Yes, this is Stefan's patches exposing a preexisting bug on a new code
+> path. You can already trigger the same bug on the command line with git
+> master:
+>=20
+> $ ./qemu-system-x86_64 -blockdev null-co,node-name=3Ddisk -device '{ "dri=
+ver": "virtio-blk-pci", "drive": "disk", "id": "virtio-disk0", "addr": 1 }'
+> qemu-system-x86_64: ../qapi/qobject-input-visitor.c:143: QObject *qobject=
+_input_try_get_object(QObjectInputVisitor *, const char *, _Bool): Assertio=
+n `removed' failed.
+>=20
+> The problem is that set_pci_devfn() visits the same field twice, which
+> is not allowed. Apparently the QemuOpts visitor accepts it anyway, but
+> the QObject one doesn't. I'll write a patch to use the proper alternate
+> mechanism instead, that should fix it.
 
-Source of the time of writing:
+Thank you, Kevin!
 
-https://developer.arm.com/documentation/ddi0479/d/apb-components/apb-watchdog/programmers-model
+Stefan
 
-Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-Reviewed-by: Stephen Longfield <slongfield@google.com>
-Reviewed-by: Joe Komlodi <komlodi@google.com>
-Message-id: 20241115160328.1650269-3-roqueh@google.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/watchdog/cmsdk-apb-watchdog.c | 34 +++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
+>=20
+> Kevin
+>=20
 
-diff --git a/hw/watchdog/cmsdk-apb-watchdog.c b/hw/watchdog/cmsdk-apb-watchdog.c
-index e4d25a25f7a..ed5ff4257c1 100644
---- a/hw/watchdog/cmsdk-apb-watchdog.c
-+++ b/hw/watchdog/cmsdk-apb-watchdog.c
-@@ -196,16 +196,13 @@ static void cmsdk_apb_watchdog_write(void *opaque, hwaddr offset,
- 
-     switch (offset) {
-     case A_WDOGLOAD:
--        /*
--         * Reset the load value and the current count, and make sure
--         * we're counting.
--         */
-+        /* Reset the load value and the current count. */
-         ptimer_transaction_begin(s->timer);
-         ptimer_set_limit(s->timer, value, 1);
--        ptimer_run(s->timer, 0);
-         ptimer_transaction_commit(s->timer);
-         break;
--    case A_WDOGCONTROL:
-+    case A_WDOGCONTROL: {
-+        uint32_t prev_control = s->control;
-         if (s->is_luminary && 0 != (R_WDOGCONTROL_INTEN_MASK & s->control)) {
-             /*
-              * The Luminary version of this device ignores writes to
-@@ -215,8 +212,25 @@ static void cmsdk_apb_watchdog_write(void *opaque, hwaddr offset,
-             break;
-         }
-         s->control = value & R_WDOGCONTROL_VALID_MASK;
-+        if (R_WDOGCONTROL_INTEN_MASK & (s->control ^ prev_control)) {
-+            ptimer_transaction_begin(s->timer);
-+            if (R_WDOGCONTROL_INTEN_MASK & s->control) {
-+                /*
-+                 * Set HIGH to enable the counter and the interrupt. Reloads
-+                 * the counter from the value in WDOGLOAD when the interrupt
-+                 * is enabled, after previously being disabled.
-+                 */
-+                ptimer_set_count(s->timer, ptimer_get_limit(s->timer));
-+                ptimer_run(s->timer, 0);
-+            } else {
-+                /* Or LOW to disable the counter and interrupt. */
-+                ptimer_stop(s->timer);
-+            }
-+            ptimer_transaction_commit(s->timer);
-+        }
-         cmsdk_apb_watchdog_update(s);
-         break;
-+    }
-     case A_WDOGINTCLR:
-         s->intstatus = 0;
-         ptimer_transaction_begin(s->timer);
-@@ -305,8 +319,14 @@ static void cmsdk_apb_watchdog_reset(DeviceState *dev)
-     s->resetstatus = 0;
-     /* Set the limit and the count */
-     ptimer_transaction_begin(s->timer);
-+    /*
-+     * We need to stop the ptimer before setting its limit reset value. If the
-+     * order is the opposite when the code executes the stop after setting a new
-+     * limit it may want to recalculate the count based on the current time (if
-+     * the timer was currently running) and it won't get the proper reset value.
-+     */
-+    ptimer_stop(s->timer);
-     ptimer_set_limit(s->timer, 0xffffffff, 1);
--    ptimer_run(s->timer, 0);
-     ptimer_transaction_commit(s->timer);
- }
- 
--- 
-2.34.1
+--2R1mfccESY7rA8Ph
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmc8o5EACgkQnKSrs4Gr
+c8gKXAf/TBh8eKVdpyyyRKCfQ1pKPLRJahgF67Vg4aBpy8GHoL2PIZNqh40LwktW
+vjiblhbcrTubmkTyKXcoyYDWFJ7b4thnfP3bkflFco0H8daOyrglZiEoa+R5hIMe
+es8bCJWLGraCtLTr4Pmd6FTfc69iQHP0NoT7JKxfvGw9P2IF3X4f0YMMZYc459AL
+1Nc66ClUUDuPKtA1WfVhtCoSI+8TXHsRNY1s+ayyM3ouOb0p+qakKAGl+oEFLG8c
+701L1Oy6//bQE+VGK3vdSJ/DmUCTTV55jwz59ufjMFwpw8n5odeMMV0Dq7M4EoWY
+qUf7MgqCe6IV4/A/E/0lHRaSIU03YQ==
+=mr6x
+-----END PGP SIGNATURE-----
+
+--2R1mfccESY7rA8Ph--
 
 
