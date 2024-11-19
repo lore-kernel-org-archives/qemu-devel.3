@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C70CD60D06
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 01:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C678D60D06
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 01:24:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDCwm-0006E0-KM; Mon, 18 Nov 2024 20:22:29 -0500
+	id 1tDCyL-0006yN-LN; Mon, 18 Nov 2024 20:24:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDCwk-0006Dp-J0; Mon, 18 Nov 2024 20:22:26 -0500
-Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
+ id 1tDCyJ-0006y2-B4; Mon, 18 Nov 2024 20:24:03 -0500
+Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tDCwg-00042x-W5; Mon, 18 Nov 2024 20:22:25 -0500
-Received: by mail-vk1-xa2a.google.com with SMTP id
- 71dfb90a1353d-5139cd0032cso1544793e0c.2; 
- Mon, 18 Nov 2024 17:22:21 -0800 (PST)
+ id 1tDCyH-00046v-Q6; Mon, 18 Nov 2024 20:24:03 -0500
+Received: by mail-ua1-x931.google.com with SMTP id
+ a1e0cc1a2514c-85700f9cdd6so871953241.1; 
+ Mon, 18 Nov 2024 17:24:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731979341; x=1732584141; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1731979439; x=1732584239; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oSUxYEcsdJymGJRb3JtZ/g6XJGuEiJRC9f9A+rXGNQs=;
- b=lg9P18cLj/YT781MR1Lw6Lq4Qvz5PZvOe39FEtMkGkJk8+4Q8wm2uy/1tX//N3xQbG
- GDK+PEowGKFHADiNm3XaLtzTHEbwIaZTqRK3uEJQZSmuvgBpyIlLzq35wK9jQM/eLvgp
- BwesQatpy9tHRqHz0R/Kdl1TefHFpXkl6fa8K4jfskmS/09XYj1bGdbuZxdJ/bHKf/gN
- brkqKw8J6HsI432PoFD4i6rE5iJJRGRVspKOVMT8ZLTqUH9L7xUD722TBqVpZHrnPbon
- Q9dqS58/cEVvmbQoRghCgYFu9L16MZ96jbAWNoXLubw8bUu1I5RF4zXp6Ic8DDlIv9IX
- IFRg==
+ bh=2IG6fw4P3agJH7Dqw1tukwMfCrX3ZhdsPN/fn7Hsylo=;
+ b=BOe/FryJw38Y2Kwy9T8EaLxPnW22FMm+SDqkrNarBtrnnkUBVEAIqs4ucW3nBvSapB
+ 2+Eri6Y1TVO5kvI0jAE2IX4OTLB60IWPAkimx8TEyw8AVoQXo21IB/umCUzKzl8AVt4q
+ h13gmrb4XNHeedQsg+eQeOaiUTE3q3/gzf0SAN6x2iDrJ9jzAEVV2ClwFNTEFg49F6Cz
+ ZiSWBumECqivQ8H+d1FJfIqU9/dxVMb3779oMxCag0q0ipDz+31xRMBrgHtuMZ6xdhzL
+ oC9AyrhjYiZP+fpMBT32u90hLc86vIOXKlWRJZn/ADq6mrd3+2SS+QCwZIAVkVQRIgCu
+ Y08A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731979341; x=1732584141;
+ d=1e100.net; s=20230601; t=1731979439; x=1732584239;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oSUxYEcsdJymGJRb3JtZ/g6XJGuEiJRC9f9A+rXGNQs=;
- b=k7q8sGJQkmXhb0xEzqZM5upF3BkpVYd89D1Bb2uRnbMZydNUQwbZEWOSdrLwF25NqY
- SHW0jG2wZdDPzB5MDOlJS2CbG+8xiSiwVyWK+NLFm+fiFZbOingqAozq0AYrP+ziLedY
- Hu8xnvxoA6RUoSFy4G2dG2dPNAEaHr7yzAhRB7H7FnwtoXhbthQzygC5LH9SuAokQNTa
- +3Ra6lHH2Ee4Xyymn6Ebk6QytgB6Pswb8Oc8fvppa+KHZuQuNpIxkzEw6Gx7unkwsRjS
- pZ+//zpPnIe+1BP6Ic4CjS82Q//+EvAkz1litxFAbdnfGOSoBAJQqXR6wOosJb0PsQ1Y
- iOLg==
+ bh=2IG6fw4P3agJH7Dqw1tukwMfCrX3ZhdsPN/fn7Hsylo=;
+ b=SgNxxyiKPihdqmKwKWfAxYok8G6+0uHQbi5ix+phFV12BmmFuKpCtTbt0UawQ0EYZw
+ 86u4PLQYheV9xai74V7gtYqetXSvIJT3+Il6FNzFfrj/FfBbzeq5plTxqlB/vuxOtXp4
+ wJxL9Ksg7XVJHUT4D0UV2TNGLyyxIsuRgRSm3VJKQol1oomlZESQZ/0BcAhGTKqtbIBn
+ qCS7Sxa06Zr/jkl1aTZH37IkqJANkc5GPSSsowHMqSRs1ib/WiySlEKGl2P1vjzgWWad
+ iHRmhpMLAkKdbrKEvA2k7HVsi147+O7j2Ei1gFTu9d5QhI4oKl49xexE7SSXp+ffAkre
+ orJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5U5iWfnhInW236N2SfXpqVojwR5a99x+oYoszc/jRqnhSoXDihezEjljKDl6vcOuw/66Z9y5uyJsU@nongnu.org
-X-Gm-Message-State: AOJu0YxSOvGLUpa9ORJ0F1++J98SxUi5pbShwJpAcRyza/CmFk6PVz8C
- j0jVFTcHFOyVifOGTX1zxMFZ0Qby1GOhNadSOoFWuoH4EgQxSHKt0xu2OjzUwYL7pua3K+mt/zF
- Ay+WBK/P/ZLgX2NQRcXDevIkY4AE=
-X-Google-Smtp-Source: AGHT+IEL8RjJwFa0r2rLh2m790tLK2LhDBsrut7yEGOx2OyYhHGe1oK9TwmQI3iqVLAKW3uL9UbuzizVOQ1Ny8NIdFw=
-X-Received: by 2002:a05:6122:1d07:b0:50d:66e1:826c with SMTP id
- 71dfb90a1353d-514781e023bmr14484488e0c.11.1731979340893; Mon, 18 Nov 2024
- 17:22:20 -0800 (PST)
+ AJvYcCXBd/9Pq37/IsJNWcCutEdN6ybxhYh2PZSfOBoKrNOg7xvSpoTAEC6vV+FX8IXUcomi0U9tmVKkub9o@nongnu.org
+X-Gm-Message-State: AOJu0YwcTlxLbJMhSZPD/Ce64uNQ0qZFpuneON7rVd9n31oIrtlaqAGG
+ etpLolc8GuMUZB1tVH53Gox15i2OrbdklRxcmgFQoOr+mchgeYckFJus/vJ7KaaRuKbvFySJQb7
+ 6KmHx7X+dHga2er+nGWYmM9mxYP0=
+X-Google-Smtp-Source: AGHT+IGdoEYwWWwrtUCPuuMZRSVO0ahkuD7mFvVXL9MBHaCqKxD+Yj3LOndalDoMtLUZYMFWUmDxDSKsPAbEkzmLcsc=
+X-Received: by 2002:a05:6102:3e93:b0:498:c4e5:bc4f with SMTP id
+ ada2fe7eead31-4ad62d18edemr13079219137.17.1731979439627; Mon, 18 Nov 2024
+ 17:23:59 -0800 (PST)
 MIME-Version: 1.0
 References: <20241106133407.604587-1-dbarboza@ventanamicro.com>
- <20241106133407.604587-2-dbarboza@ventanamicro.com>
-In-Reply-To: <20241106133407.604587-2-dbarboza@ventanamicro.com>
+ <20241106133407.604587-3-dbarboza@ventanamicro.com>
+In-Reply-To: <20241106133407.604587-3-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 Nov 2024 11:21:54 +1000
-Message-ID: <CAKmqyKMgsqdSf7gSGAL=ctcDiBN2Ltzt4sCE6SUswtxzx8q88g@mail.gmail.com>
-Subject: Re: [PATCH for-10.0 1/7] hw/riscv/riscv-iommu.c: add
- riscv_iommu_instance_init()
+Date: Tue, 19 Nov 2024 11:23:33 +1000
+Message-ID: <CAKmqyKN2oizNFrqqyz-_zDqfS3=P1fWVhK8cX-619ej0am9=TA@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 2/7] hw/riscv/riscv-iommu: parametrize CAP.IGS
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,17 +93,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 6, 2024 at 11:38=E2=80=AFPM Daniel Henrique Barboza
+On Wed, Nov 6, 2024 at 11:36=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Move all the static initializion of the device to an init() function,
-> leaving only the dynamic initialization to be done during realize.
+> Interrupt Generation Support (IGS) is a capability that is tied to the
+> interrupt deliver mechanism, not with the core IOMMU emulation. We
+> should allow device implementations to set IGS as they wish.
 >
-> With this change s->cap is initialized with RISCV_IOMMU_CAP_DBG during
-> init(), and realize() will increment s->cap with the extra caps.
->
-> This will allow callers to add IOMMU capabilities before the
-> realization.
+> A new helper is added to make it easier for device impls to set IGS. Use
+> it in our existing IOMMU device (riscv-iommu-pci) to set
+> RISCV_IOMMU_CAPS_IGS_MSI.
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
@@ -113,127 +111,81 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/riscv-iommu.c | 71 +++++++++++++++++++++++-------------------
->  1 file changed, 39 insertions(+), 32 deletions(-)
+>  hw/riscv/riscv-iommu-bits.h | 6 ++++++
+>  hw/riscv/riscv-iommu-pci.c  | 1 +
+>  hw/riscv/riscv-iommu.c      | 5 +++++
+>  hw/riscv/riscv-iommu.h      | 4 ++++
+>  4 files changed, 16 insertions(+)
 >
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index feb650549a..1893584028 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2096,11 +2096,48 @@ static const MemoryRegionOps riscv_iommu_trap_ops=
- =3D {
->      }
->  };
+> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
+> index 6359ae0353..485f36b9c9 100644
+> --- a/hw/riscv/riscv-iommu-bits.h
+> +++ b/hw/riscv/riscv-iommu-bits.h
+> @@ -88,6 +88,12 @@ struct riscv_iommu_pq_record {
+>  #define RISCV_IOMMU_CAP_PD17            BIT_ULL(39)
+>  #define RISCV_IOMMU_CAP_PD20            BIT_ULL(40)
 >
-> +static void riscv_iommu_instance_init(Object *obj)
-> +{
-> +    RISCVIOMMUState *s =3D RISCV_IOMMU(obj);
+> +enum riscv_iommu_igs_modes {
+> +    RISCV_IOMMU_CAP_IGS_MSI =3D 0,
+> +    RISCV_IOMMU_CAP_IGS_WSI,
+> +    RISCV_IOMMU_CAP_IGS_BOTH
+> +};
 > +
-> +    /* Enable translation debug interface */
-> +    s->cap =3D RISCV_IOMMU_CAP_DBG;
-> +
-> +    /* Report QEMU target physical address space limits */
-> +    s->cap =3D set_field(s->cap, RISCV_IOMMU_CAP_PAS,
-> +                       TARGET_PHYS_ADDR_SPACE_BITS);
-> +
-> +    /* TODO: method to report supported PID bits */
-> +    s->pid_bits =3D 8; /* restricted to size of MemTxAttrs.pid */
-> +    s->cap |=3D RISCV_IOMMU_CAP_PD8;
-> +
-> +    /* register storage */
-> +    s->regs_rw =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
-> +    s->regs_ro =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
-> +    s->regs_wc =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
-> +
-> +     /* Mark all registers read-only */
-> +    memset(s->regs_ro, 0xff, RISCV_IOMMU_REG_SIZE);
-> +
-> +    /* Device translation context cache */
-> +    s->ctx_cache =3D g_hash_table_new_full(riscv_iommu_ctx_hash,
-> +                                         riscv_iommu_ctx_equal,
-> +                                         g_free, NULL);
-> +
-> +    s->iot_cache =3D g_hash_table_new_full(riscv_iommu_iot_hash,
-> +                                         riscv_iommu_iot_equal,
-> +                                         g_free, NULL);
-> +
-> +    s->iommus.le_next =3D NULL;
-> +    s->iommus.le_prev =3D NULL;
-> +    QLIST_INIT(&s->spaces);
-> +}
-> +
->  static void riscv_iommu_realize(DeviceState *dev, Error **errp)
->  {
->      RISCVIOMMUState *s =3D RISCV_IOMMU(dev);
+>  /* 5.4 Features control register (32bits) */
+>  #define RISCV_IOMMU_REG_FCTL            0x0008
+>  #define RISCV_IOMMU_FCTL_BE             BIT(0)
+> diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+> index a42242532d..4ce9bf6b78 100644
+> --- a/hw/riscv/riscv-iommu-pci.c
+> +++ b/hw/riscv/riscv-iommu-pci.c
+> @@ -155,6 +155,7 @@ static void riscv_iommu_pci_init(Object *obj)
+>      qdev_alias_all_properties(DEVICE(iommu), obj);
 >
-> -    s->cap =3D s->version & RISCV_IOMMU_CAP_VERSION;
-> +    s->cap |=3D s->version & RISCV_IOMMU_CAP_VERSION;
->      if (s->enable_msi) {
->          s->cap |=3D RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
->      }
-> @@ -2115,29 +2152,11 @@ static void riscv_iommu_realize(DeviceState *dev,=
- Error **errp)
->          s->cap |=3D RISCV_IOMMU_CAP_SV32X4 | RISCV_IOMMU_CAP_SV39X4 |
->                    RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
->      }
-> -    /* Enable translation debug interface */
-> -    s->cap |=3D RISCV_IOMMU_CAP_DBG;
-> -
-> -    /* Report QEMU target physical address space limits */
-> -    s->cap =3D set_field(s->cap, RISCV_IOMMU_CAP_PAS,
-> -                       TARGET_PHYS_ADDR_SPACE_BITS);
-> -
-> -    /* TODO: method to report supported PID bits */
-> -    s->pid_bits =3D 8; /* restricted to size of MemTxAttrs.pid */
-> -    s->cap |=3D RISCV_IOMMU_CAP_PD8;
->
->      /* Out-of-reset translation mode: OFF (DMA disabled) BARE (passthrou=
-gh) */
->      s->ddtp =3D set_field(0, RISCV_IOMMU_DDTP_MODE, s->enable_off ?
->                          RISCV_IOMMU_DDTP_MODE_OFF : RISCV_IOMMU_DDTP_MOD=
-E_BARE);
->
-> -    /* register storage */
-> -    s->regs_rw =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
-> -    s->regs_ro =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
-> -    s->regs_wc =3D g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
-> -
-> -     /* Mark all registers read-only */
-> -    memset(s->regs_ro, 0xff, RISCV_IOMMU_REG_SIZE);
-> -
->      /*
->       * Register complete MMIO space, including MSI/PBA registers.
->       * Note, PCIDevice implementation will add overlapping MR for MSI/PB=
-A,
-> @@ -2195,19 +2214,6 @@ static void riscv_iommu_realize(DeviceState *dev, =
-Error **errp)
->      memory_region_init_io(&s->trap_mr, OBJECT(dev), &riscv_iommu_trap_op=
-s, s,
->              "riscv-iommu-trap", ~0ULL);
->      address_space_init(&s->trap_as, &s->trap_mr, "riscv-iommu-trap-as");
-> -
-> -    /* Device translation context cache */
-> -    s->ctx_cache =3D g_hash_table_new_full(riscv_iommu_ctx_hash,
-> -                                         riscv_iommu_ctx_equal,
-> -                                         g_free, NULL);
-> -
-> -    s->iot_cache =3D g_hash_table_new_full(riscv_iommu_iot_hash,
-> -                                         riscv_iommu_iot_equal,
-> -                                         g_free, NULL);
-> -
-> -    s->iommus.le_next =3D NULL;
-> -    s->iommus.le_prev =3D NULL;
-> -    QLIST_INIT(&s->spaces);
+>      iommu->icvec_avail_vectors =3D RISCV_IOMMU_PCI_ICVEC_VECTORS;
+> +    riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_MSI);
 >  }
 >
->  static void riscv_iommu_unrealize(DeviceState *dev)
-> @@ -2249,6 +2255,7 @@ static const TypeInfo riscv_iommu_info =3D {
->      .name =3D TYPE_RISCV_IOMMU,
->      .parent =3D TYPE_DEVICE,
->      .instance_size =3D sizeof(RISCVIOMMUState),
-> +    .instance_init =3D riscv_iommu_instance_init,
->      .class_init =3D riscv_iommu_class_init,
+>  static Property riscv_iommu_pci_properties[] =3D {
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 1893584028..d95b4b95d8 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -2096,6 +2096,11 @@ static const MemoryRegionOps riscv_iommu_trap_ops =
+=3D {
+>      }
 >  };
+>
+> +void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mo=
+de)
+> +{
+> +    s->cap =3D set_field(s->cap, RISCV_IOMMU_CAP_IGS, mode);
+> +}
+> +
+>  static void riscv_iommu_instance_init(Object *obj)
+>  {
+>      RISCVIOMMUState *s =3D RISCV_IOMMU(obj);
+> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> index da3f03440c..f9f2827808 100644
+> --- a/hw/riscv/riscv-iommu.h
+> +++ b/hw/riscv/riscv-iommu.h
+> @@ -21,6 +21,9 @@
+>
+>  #include "qom/object.h"
+>  #include "hw/riscv/iommu.h"
+> +#include "hw/riscv/riscv-iommu-bits.h"
+> +
+> +typedef enum riscv_iommu_igs_modes riscv_iommu_igs_mode;
+>
+>  struct RISCVIOMMUState {
+>      /*< private >*/
+> @@ -85,6 +88,7 @@ struct RISCVIOMMUState {
+>
+>  void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
+>           Error **errp);
+> +void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mo=
+de);
+>
+>  /* private helpers */
 >
 > --
 > 2.45.2
