@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0799CD44161
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C04FD44163
 	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 14:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDP8h-0005vt-71; Tue, 19 Nov 2024 09:23:35 -0500
+	id 1tDP8h-0005vo-2H; Tue, 19 Nov 2024 09:23:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8c-0005sj-Ci
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:30 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1tDP8b-0005q8-09
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:29 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDP8a-0006D1-2l
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:30 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43158625112so30503295e9.3
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:27 -0800 (PST)
+ id 1tDP8Y-0006Cb-L4
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 09:23:28 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4315eac969aso31784465e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 06:23:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732026206; x=1732631006; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732026205; x=1732631005; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Sdn+fHZSuW869Y/sZVE+aCL+8h470EXCSMBPbW6o5fA=;
- b=Axo7xINgEzl/1c6O2bU/HxBLKiU9/VM2rVzreNSOZFIxeNBCjQF2tXrC04WJJY7IqQ
- cxt4eW54hYfQGDc9yeC/wCpMOadcIMR5DOeQirx4Jg1PUyQpVhs/eSRF3BVNJ7M6GlCh
- uujGR3UQDYSwE2tyHbw0DpOG2yX9GnexE2TgslOQdAZx8glmu1a7Kl4ElKNy4zK/nEw/
- NUIjf0PQgNB55+75+Q2x+POWhetWp1H21RMU8TuPr662ELlKLwmgDX6Eec2vrhNdjRue
- 2XhCzu5nvrBWzzW1tnfw7X9+7uPS6JnBRAH3Z+YKcZv3j/WzeiVMvAm4hw6G8sa0Dc5z
- mgUQ==
+ :reply-to; bh=9cLsADc/b1nvOdEt6B14trzuyDptUS5PDXoA87jXxAM=;
+ b=afnQIQZ0xzkMevTPNgiP6t25LxDr9iKee5HqOB5wwQsto3YAjkpRlEBjoT4HqKWhyg
+ OInxwBS1IEUzxU99g+AmvnhATukGXBsAJqaCeSeMIUOBmeFtHUmX5eOiwrZs43VlE5ak
+ y+RgaTRP1KgeYu+s/z8xNukzAZG+AQycUhvc/lqMdSbJe79HeRdBY1bDFaR1zjhWIXKh
+ FaC1JKJ/suuB+IIyoRo5qqJsx3b6QeRSaE4DGBSJr9V2iH7oK4Ky/AT62K7kQ/e2b8jd
+ XECOWjyUSJRZxXADN1UqXjegN36fdYA1qFMsKkKZPpdB89mTcMM67bRtPyrFlpEZrYHk
+ N7RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732026206; x=1732631006;
+ d=1e100.net; s=20230601; t=1732026205; x=1732631005;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Sdn+fHZSuW869Y/sZVE+aCL+8h470EXCSMBPbW6o5fA=;
- b=MQVJgGloN/MSgxtXU7PlAb8qXFAdZrMloJakFzHiVPmE57AIlZHnLS0YDx9DfLb+3+
- 6qMeDW4H8AoItgggo6Mc7fpv0OkTJvZVQSP8UQdhHOJHCnpq0ULmeNYWb7B9GaB+wG0V
- p0gaqCzzm+FB7SgbWXZ6PhYOiwaGZTQmiPN0RVIIhPfnpWURv7gAVbF6m+QCp7QLbbHx
- B5OhlvZJyY2SM3tnCWmyQRwL/Srf2kRZuvB3vrAEDuX7XOnzI3gids2DuGP9etltCEvp
- r9NReOF1KpCfXHAQ1fyDZ2GTIW+dfhODSo2ITCn7M3aikZcgyBPciW3UDAQ0R34lFTOh
- Ld0Q==
-X-Gm-Message-State: AOJu0Yz0ANcGDGeKCsmMZzJI/HUS3xRygAvBiCoM+Cjx2btMq9cJ3URS
- yHoBONi8LVn00g57adnbj5N3fzR4UUNWnDJETifzKxvu2SDDJAvqH9I6fPLJunhGvH7MUgvzYIG
- A
-X-Google-Smtp-Source: AGHT+IGMW1NWkZpZx/bm22TpGK3J4Bn4HejKt7cIh4dy6NenDlv3KFx1pXA/oBikVMci33agj9jVCw==
-X-Received: by 2002:a05:600c:5487:b0:431:44fe:fd9f with SMTP id
- 5b1f17b1804b1-432df78a529mr120535315e9.23.1732026206495; 
- Tue, 19 Nov 2024 06:23:26 -0800 (PST)
+ bh=9cLsADc/b1nvOdEt6B14trzuyDptUS5PDXoA87jXxAM=;
+ b=H1IIFyqtFOTqHo3qcQRxVKhbSHWY1LwC6UWjJWH3S6dZBcee8QX72brb0/kkDcTBtY
+ qDA0wvgFEmCzqD0jCCW/aULCUu1UU6KV4+CQBZlq7i6lrFbwtCypff55MU2JtJNiWpV1
+ moTkV3FokXJ5IYalwYoD18NyczAU6/V8AV69clHqPqHoG9v22uUKcqLbUSHOXQofDBWp
+ ycral1T585ngLIhKkquqyGJ/kKX7vtHqTFUAShZfP7ShzXYJBMVscGNYIq/8YwWhtSQ1
+ idod5eJbnQsgsGIyhevYjT6RSw91U7ggSAAI3a9r6uAcwrLvarQpv7Zz65riXFx3Eetn
+ I34w==
+X-Gm-Message-State: AOJu0Yz3vOozBWhS105Ah1Nj8nr4V+Hs46XX4K/jRNk57pfl7W6ZeN7/
+ AXOZJH9POp2VyThlRlkqkEmPax11LvpmO1LU/L7wop+JWa9THYBLymb+CPG4ClVVU9waISgPyFy
+ 3
+X-Google-Smtp-Source: AGHT+IHesRT4o1EZVc1LRGcsuNpJHifcmtaQGWG/rpdNDZnIX83xiXMy5OULwAdUjJVcLtZ99buYpw==
+X-Received: by 2002:a05:600c:58cb:b0:431:15f1:421d with SMTP id
+ 5b1f17b1804b1-432f57fba53mr29815185e9.16.1732026204917; 
+ Tue, 19 Nov 2024 06:23:24 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.26
+ 5b1f17b1804b1-432dac21a15sm193049985e9.38.2024.11.19.06.23.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 06:23:26 -0800 (PST)
+ Tue, 19 Nov 2024 06:23:24 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/15] tests/qtest/cmsdk-apb-watchdog-test: Test INTEN as
- counter enable
-Date: Tue, 19 Nov 2024 14:23:13 +0000
-Message-Id: <20241119142321.1853732-8-peter.maydell@linaro.org>
+Subject: [PULL 04/15] hw/watchdog/cmsdk_apb_watchdog: Fix INTEN issues
+Date: Tue, 19 Nov 2024 14:23:10 +0000
+Message-Id: <20241119142321.1853732-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241119142321.1853732-1-peter.maydell@linaro.org>
 References: <20241119142321.1853732-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,271 +95,100 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Roque Arcudia Hernandez <roqueh@google.com>
 
-The following tests focus on making sure the counter is not running
-out of reset and the proper use of INTEN as the counter enable. As
-described in:
+Current watchdog is free running out of reset, this combined with the
+fact that current implementation also ensures the counter is running
+when programing WDOGLOAD creates issues when the firmware defer the
+programing of WDOGCONTROL.INTEN much later after WDOGLOAD. Arm
+Programmer's Model documentation states that INTEN is also the
+counter enable:
+
+> INTEN
+>
+> Enable the interrupt event, WDOGINT. Set HIGH to enable the counter
+> and the interrupt, or LOW to disable the counter and interrupt.
+> Reloads the counter from the value in WDOGLOAD when the interrupt
+> is enabled, after previously being disabled.
+
+Source of the time of writing:
 
 https://developer.arm.com/documentation/ddi0479/d/apb-components/apb-watchdog/programmers-model
 
-The new tests have to target an MPS2 machine because the original
-machine used by the test (stellaris) has a variation of the
-cmsdk_apb_watchdog that locks INTEN when it is programmed to 1. The
-stellaris machine also does not reproduce the problem of the counter
-running out of cold reset due to the way the clocks are initialized.
-
 Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
 Reviewed-by: Stephen Longfield <slongfield@google.com>
-Message-id: 20241115160328.1650269-6-roqueh@google.com
+Reviewed-by: Joe Komlodi <komlodi@google.com>
+Message-id: 20241115160328.1650269-3-roqueh@google.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/cmsdk-apb-watchdog-test.c | 215 ++++++++++++++++++++++++++
- 1 file changed, 215 insertions(+)
+ hw/watchdog/cmsdk-apb-watchdog.c | 34 +++++++++++++++++++++++++-------
+ 1 file changed, 27 insertions(+), 7 deletions(-)
 
-diff --git a/tests/qtest/cmsdk-apb-watchdog-test.c b/tests/qtest/cmsdk-apb-watchdog-test.c
-index fe535a553cc..53538f98c99 100644
---- a/tests/qtest/cmsdk-apb-watchdog-test.c
-+++ b/tests/qtest/cmsdk-apb-watchdog-test.c
-@@ -68,6 +68,16 @@ static const CMSDKAPBWatchdogTestArgs machine_info[] = {
-     },
- };
+diff --git a/hw/watchdog/cmsdk-apb-watchdog.c b/hw/watchdog/cmsdk-apb-watchdog.c
+index e4d25a25f7a..ed5ff4257c1 100644
+--- a/hw/watchdog/cmsdk-apb-watchdog.c
++++ b/hw/watchdog/cmsdk-apb-watchdog.c
+@@ -196,16 +196,13 @@ static void cmsdk_apb_watchdog_write(void *opaque, hwaddr offset,
  
-+static void system_reset(QTestState *qtest)
-+{
-+    QDict *resp;
-+
-+    resp = qtest_qmp(qtest, "{'execute': 'system_reset'}");
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+    qtest_qmp_eventwait(qtest, "RESET");
-+}
-+
- static void test_watchdog(const void *ptr)
- {
-     const CMSDKAPBWatchdogTestArgs *args = ptr;
-@@ -159,6 +169,199 @@ static void test_clock_change(const void *ptr)
-     qtest_end();
+     switch (offset) {
+     case A_WDOGLOAD:
+-        /*
+-         * Reset the load value and the current count, and make sure
+-         * we're counting.
+-         */
++        /* Reset the load value and the current count. */
+         ptimer_transaction_begin(s->timer);
+         ptimer_set_limit(s->timer, value, 1);
+-        ptimer_run(s->timer, 0);
+         ptimer_transaction_commit(s->timer);
+         break;
+-    case A_WDOGCONTROL:
++    case A_WDOGCONTROL: {
++        uint32_t prev_control = s->control;
+         if (s->is_luminary && 0 != (R_WDOGCONTROL_INTEN_MASK & s->control)) {
+             /*
+              * The Luminary version of this device ignores writes to
+@@ -215,8 +212,25 @@ static void cmsdk_apb_watchdog_write(void *opaque, hwaddr offset,
+             break;
+         }
+         s->control = value & R_WDOGCONTROL_VALID_MASK;
++        if (R_WDOGCONTROL_INTEN_MASK & (s->control ^ prev_control)) {
++            ptimer_transaction_begin(s->timer);
++            if (R_WDOGCONTROL_INTEN_MASK & s->control) {
++                /*
++                 * Set HIGH to enable the counter and the interrupt. Reloads
++                 * the counter from the value in WDOGLOAD when the interrupt
++                 * is enabled, after previously being disabled.
++                 */
++                ptimer_set_count(s->timer, ptimer_get_limit(s->timer));
++                ptimer_run(s->timer, 0);
++            } else {
++                /* Or LOW to disable the counter and interrupt. */
++                ptimer_stop(s->timer);
++            }
++            ptimer_transaction_commit(s->timer);
++        }
+         cmsdk_apb_watchdog_update(s);
+         break;
++    }
+     case A_WDOGINTCLR:
+         s->intstatus = 0;
+         ptimer_transaction_begin(s->timer);
+@@ -305,8 +319,14 @@ static void cmsdk_apb_watchdog_reset(DeviceState *dev)
+     s->resetstatus = 0;
+     /* Set the limit and the count */
+     ptimer_transaction_begin(s->timer);
++    /*
++     * We need to stop the ptimer before setting its limit reset value. If the
++     * order is the opposite when the code executes the stop after setting a new
++     * limit it may want to recalculate the count based on the current time (if
++     * the timer was currently running) and it won't get the proper reset value.
++     */
++    ptimer_stop(s->timer);
+     ptimer_set_limit(s->timer, 0xffffffff, 1);
+-    ptimer_run(s->timer, 0);
+     ptimer_transaction_commit(s->timer);
  }
  
-+/* Tests the counter is not running after reset. */
-+static void test_watchdog_reset(const void *ptr)
-+{
-+    const CMSDKAPBWatchdogTestArgs *args = ptr;
-+    hwaddr wdog_base = args->wdog_base;
-+    int64_t tick = args->tick;
-+    g_autofree gchar *cmdline = g_strdup_printf("-machine %s", args->machine);
-+    qtest_start(cmdline);
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 0);
-+
-+    g_assert_cmphex(readl(wdog_base + WDOGLOAD), ==, WDOGLOAD_DEFAULT);
-+    g_assert_cmphex(readl(wdog_base + WDOGVALUE), ==, WDOGVALUE_DEFAULT);
-+
-+    g_assert_cmphex(readl(wdog_base + WDOGCONTROL), ==, 0);
-+
-+    /*
-+     * The counter should not be running if WDOGCONTROL.INTEN has not been set,
-+     * as it is the case after a cold reset.
-+     */
-+    clock_step(15 * tick + 1);
-+    g_assert_cmphex(readl(wdog_base + WDOGLOAD), ==, WDOGLOAD_DEFAULT);
-+    g_assert_cmphex(readl(wdog_base + WDOGVALUE), ==, WDOGVALUE_DEFAULT);
-+
-+    /* Let the counter run before reset */
-+    writel(wdog_base + WDOGLOAD, 3000);
-+    writel(wdog_base + WDOGCONTROL, 1);
-+
-+    /* Verify it is running */
-+    clock_step(1000 * tick + 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 3000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 2000);
-+
-+    system_reset(global_qtest);
-+
-+    /* Check defaults after reset */
-+    g_assert_cmphex(readl(wdog_base + WDOGLOAD), ==, WDOGLOAD_DEFAULT);
-+    g_assert_cmphex(readl(wdog_base + WDOGVALUE), ==, WDOGVALUE_DEFAULT);
-+
-+    /* The counter should not be running after reset. */
-+    clock_step(1000 * tick + 1);
-+    g_assert_cmphex(readl(wdog_base + WDOGLOAD), ==, WDOGLOAD_DEFAULT);
-+    g_assert_cmphex(readl(wdog_base + WDOGVALUE), ==, WDOGVALUE_DEFAULT);
-+
-+    qtest_end();
-+}
-+
-+/*
-+ * Tests inten works as the counter enable based on this description:
-+ *
-+ * Enable the interrupt event, WDOGINT. Set HIGH to enable the counter and the
-+ * interrupt, or LOW to disable the counter and interrupt. Reloads the counter
-+ * from the value in WDOGLOAD when the interrupt is enabled, after previously
-+ * being disabled.
-+ */
-+static void test_watchdog_inten(const void *ptr)
-+{
-+    const CMSDKAPBWatchdogTestArgs *args = ptr;
-+    hwaddr wdog_base = args->wdog_base;
-+    int64_t tick = args->tick;
-+    g_autofree gchar *cmdline = g_strdup_printf("-machine %s", args->machine);
-+    qtest_start(cmdline);
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 0);
-+
-+    g_assert_cmphex(readl(wdog_base + WDOGLOAD), ==, WDOGLOAD_DEFAULT);
-+    g_assert_cmphex(readl(wdog_base + WDOGVALUE), ==, WDOGVALUE_DEFAULT);
-+
-+    /*
-+     * When WDOGLOAD is written to, the count is immediately restarted from the
-+     * new value.
-+     *
-+     * Note: the counter should not be running as long as WDOGCONTROL.INTEN is
-+     * not set
-+     */
-+    writel(wdog_base + WDOGLOAD, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 4000);
-+    clock_step(500 * tick + 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 4000);
-+
-+    /* Set HIGH WDOGCONTROL.INTEN to enable the counter and the interrupt */
-+    writel(wdog_base + WDOGCONTROL, 1);
-+    clock_step(500 * tick + 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 3500);
-+
-+    /* or LOW to disable the counter and interrupt. */
-+    writel(wdog_base + WDOGCONTROL, 0);
-+    clock_step(100 * tick);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 3500);
-+
-+    /*
-+     * Reloads the counter from the value in WDOGLOAD when the interrupt is
-+     * enabled, after previously being disabled.
-+     */
-+    writel(wdog_base + WDOGCONTROL, 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 4000);
-+
-+    /* Test counter is still on */
-+    clock_step(50 * tick + 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 3950);
-+
-+    /*
-+     * When WDOGLOAD is written to, the count is immediately restarted from the
-+     * new value.
-+     *
-+     * Note: the counter should be running since WDOGCONTROL.INTEN is set
-+     */
-+    writel(wdog_base + WDOGLOAD, 5000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 5000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 5000);
-+    clock_step(4999 * tick + 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 5000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 0);
-+
-+    /* Finally disable and check the conditions don't change */
-+    writel(wdog_base + WDOGCONTROL, 0);
-+    clock_step(10 * tick);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 5000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 0);
-+
-+    qtest_end();
-+}
-+
-+/*
-+ * Tests the following custom behavior:
-+ *
-+ * The Luminary version of this device ignores writes to this register after the
-+ * guest has enabled interrupts (so they can only be disabled again via reset).
-+ */
-+static void test_watchdog_inten_luminary(const void *ptr)
-+{
-+    const CMSDKAPBWatchdogTestArgs *args = ptr;
-+    hwaddr wdog_base = args->wdog_base;
-+    int64_t tick = args->tick;
-+    g_autofree gchar *cmdline = g_strdup_printf("-machine %s", args->machine);
-+    qtest_start(cmdline);
-+    g_assert_cmpuint(readl(wdog_base + WDOGRIS), ==, 0);
-+
-+    g_assert_cmphex(readl(wdog_base + WDOGLOAD), ==, WDOGLOAD_DEFAULT);
-+    g_assert_cmphex(readl(wdog_base + WDOGVALUE), ==, WDOGVALUE_DEFAULT);
-+
-+    /*
-+     * When WDOGLOAD is written to, the count is immediately restarted from the
-+     * new value.
-+     *
-+     * Note: the counter should not be running as long as WDOGCONTROL.INTEN is
-+     * not set
-+     */
-+    writel(wdog_base + WDOGLOAD, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 4000);
-+    clock_step(500 * tick + 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 4000);
-+
-+    /* Set HIGH WDOGCONTROL.INTEN to enable the counter and the interrupt */
-+    writel(wdog_base + WDOGCONTROL, 1);
-+    clock_step(500 * tick + 1);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 3500);
-+
-+    /*
-+     * The Luminary version of this device ignores writes to this register after
-+     * the guest has enabled interrupts
-+     */
-+    writel(wdog_base + WDOGCONTROL, 0);
-+    clock_step(100 * tick);
-+    g_assert_cmpuint(readl(wdog_base + WDOGLOAD), ==, 4000);
-+    g_assert_cmpuint(readl(wdog_base + WDOGVALUE), ==, 3400);
-+    g_assert_cmphex(readl(wdog_base + WDOGCONTROL), ==, 0x1);
-+
-+    /* They can only be disabled again via reset */
-+    system_reset(global_qtest);
-+
-+    /* Check defaults after reset */
-+    g_assert_cmphex(readl(wdog_base + WDOGLOAD), ==, WDOGLOAD_DEFAULT);
-+    g_assert_cmphex(readl(wdog_base + WDOGVALUE), ==, WDOGVALUE_DEFAULT);
-+    g_assert_cmphex(readl(wdog_base + WDOGCONTROL), ==, 0);
-+
-+    /* The counter should not be running after reset. */
-+    clock_step(1000 * tick + 1);
-+    g_assert_cmphex(readl(wdog_base + WDOGLOAD), ==, WDOGLOAD_DEFAULT);
-+    g_assert_cmphex(readl(wdog_base + WDOGVALUE), ==, WDOGVALUE_DEFAULT);
-+
-+    qtest_end();
-+}
-+
- int main(int argc, char **argv)
- {
-     int r;
-@@ -172,10 +375,22 @@ int main(int argc, char **argv)
-         qtest_add_data_func("/cmsdk-apb-watchdog/watchdog_clock_change",
-                             &machine_info[MACHINE_LM3S811EVB],
-                             test_clock_change);
-+        qtest_add_data_func("/cmsdk-apb-watchdog/watchdog_reset",
-+                            &machine_info[MACHINE_LM3S811EVB],
-+                            test_watchdog_reset);
-+        qtest_add_data_func("/cmsdk-apb-watchdog/watchdog_inten_luminary",
-+                            &machine_info[MACHINE_LM3S811EVB],
-+                            test_watchdog_inten_luminary);
-     }
-     if (qtest_has_machine(machine_info[MACHINE_MPS2_AN385].machine)) {
-         qtest_add_data_func("/cmsdk-apb-watchdog/watchdog_mps2",
-                             &machine_info[MACHINE_MPS2_AN385], test_watchdog);
-+        qtest_add_data_func("/cmsdk-apb-watchdog/watchdog_reset_mps2",
-+                            &machine_info[MACHINE_MPS2_AN385],
-+                            test_watchdog_reset);
-+        qtest_add_data_func("/cmsdk-apb-watchdog/watchdog_inten",
-+                            &machine_info[MACHINE_MPS2_AN385],
-+                            test_watchdog_inten);
-     }
- 
-     r = g_test_run();
 -- 
 2.34.1
 
