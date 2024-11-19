@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C02BD4921C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D647D4921C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDHM3-0001Aj-Py; Tue, 19 Nov 2024 01:04:52 -0500
+	id 1tDHMP-00025l-97; Tue, 19 Nov 2024 01:05:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHM0-00018y-QK; Tue, 19 Nov 2024 01:04:48 -0500
+ id 1tDHMM-0001rw-Gp; Tue, 19 Nov 2024 01:05:10 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHLz-0004gE-0r; Tue, 19 Nov 2024 01:04:48 -0500
+ id 1tDHMK-0004gc-P5; Tue, 19 Nov 2024 01:05:10 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 21C63A626A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 30E83A626B;
  Tue, 19 Nov 2024 09:04:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 49D461738DF;
+ by tsrv.corpit.ru (Postfix) with SMTP id 579C11738E0;
  Tue, 19 Nov 2024 09:04:19 +0300 (MSK)
-Received: (nullmailer pid 2368954 invoked by uid 1000);
+Received: (nullmailer pid 2368957 invoked by uid 1000);
  Tue, 19 Nov 2024 06:04:18 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.2 67/72] target/i386: fix hang when using slow path for
- ptw_setl
-Date: Tue, 19 Nov 2024 09:04:08 +0300
-Message-Id: <20241119060418.2368866-10-mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 68/72] vfio/container: Fix container object destruction
+Date: Tue, 19 Nov 2024 09:04:09 +0300
+Message-Id: <20241119060418.2368866-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,57 +64,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Cédric Le Goater <clg@redhat.com>
 
-When instrumenting memory accesses for plugin, we force memory accesses
-to use the slow path for mmu [1]. This create a situation where we end
-up calling ptw_setl_slow. This was fixed recently in [2] but the issue
-still could appear out of plugins use case.
+When commit 96b7af4388b3 intoduced a .instance_finalize() handler,
+it did not take into account that the container was not necessarily
+inserted into the container list of the address space. Hence, if
+the container object is destroyed, by calling object_unref() for
+example, before vfio_address_space_insert() is called, QEMU may
+crash when removing the container from the list as done in
+vfio_container_instance_finalize(). This was seen with an SEV-SNP
+guest for which discarding of RAM fails.
 
-Since this function gets called during a cpu_exec, start_exclusive then
-hangs. This exclusive section was introduced initially for security
-reasons [3].
+To resolve this issue, use the safe version of QLIST_REMOVE().
 
-I suspect this code path was never triggered, because ptw_setl_slow
-would always be called transitively from cpu_exec, resulting in a hang.
-
-[1] https://gitlab.com/qemu-project/qemu/-/commit/6d03226b42247b68ab2f0b3663e0f624335a4055
-[2] https://gitlab.com/qemu-project/qemu/-/commit/115ade42d50144c15b74368d32dc734ea277d853
-[2] https://gitlab.com/qemu-project/qemu/-/commit/3a41aa8226bdaa709121515faea6e0e5ad1efa39 in 9.1.x series
-[3] https://gitlab.com/qemu-project/qemu/-/issues/279
-
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2566
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20241025175857.2554252-2-pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 7ba055b49b74c4d2f4a338c5198485bdff373fb1)
+Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: Eric Auger <eric.auger@redhat.com>
+Fixes: 96b7af4388b3 ("vfio/container: Move vfio_container_destroy() to an instance_finalize() handler")
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit ebbf7c60bbd1ceedf9faf962e428ceda2388c248)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: mention [2] in 9.1.x series)
 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index da732c2ca8..b812a9a97b 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -107,6 +107,10 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
- {
-     uint32_t cmp;
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 809b157674..6f86c37d97 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -103,7 +103,7 @@ static void vfio_container_instance_finalize(Object *obj)
+     VFIOContainerBase *bcontainer = VFIO_IOMMU(obj);
+     VFIOGuestIOMMU *giommu, *tmp;
  
-+    CPUState *cpu = env_cpu(in->env);
-+    /* We are in cpu_exec, and start_exclusive can't be called directly.*/
-+    g_assert(cpu->running);
-+    cpu_exec_end(cpu);
-     /* Does x86 really perform a rmw cycle on mmio for ptw? */
-     start_exclusive();
-     cmp = cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
-@@ -114,6 +118,7 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
-         cpu_stl_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
-     }
-     end_exclusive();
-+    cpu_exec_start(cpu);
-     return cmp == old;
- }
+-    QLIST_REMOVE(bcontainer, next);
++    QLIST_SAFE_REMOVE(bcontainer, next);
  
+     QLIST_FOREACH_SAFE(giommu, &bcontainer->giommu_list, giommu_next, tmp) {
+         memory_region_unregister_iommu_notifier(
 -- 
 2.39.5
 
