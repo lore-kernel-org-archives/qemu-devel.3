@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEB9D591C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39EAED4921C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 06:07:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDHMU-0002Td-EI; Tue, 19 Nov 2024 01:05:18 -0500
+	id 1tDHM2-0001AK-Cn; Tue, 19 Nov 2024 01:04:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHMR-0002Fm-C2; Tue, 19 Nov 2024 01:05:15 -0500
+ id 1tDHLw-00015s-9y; Tue, 19 Nov 2024 01:04:44 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tDHMP-0004w3-NX; Tue, 19 Nov 2024 01:05:15 -0500
+ id 1tDHLu-0004f3-ON; Tue, 19 Nov 2024 01:04:44 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B915A626E;
- Tue, 19 Nov 2024 09:04:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EB92FA6267;
+ Tue, 19 Nov 2024 09:04:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 82F641738E3;
+ by tsrv.corpit.ru (Postfix) with SMTP id 1FA221738DC;
  Tue, 19 Nov 2024 09:04:19 +0300 (MSK)
-Received: (nullmailer pid 2368966 invoked by uid 1000);
+Received: (nullmailer pid 2368944 invoked by uid 1000);
  Tue, 19 Nov 2024 06:04:18 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [Stable-9.1.2 71/72] hw/audio/hda: fix memory leak on audio setup
-Date: Tue, 19 Nov 2024 09:04:12 +0300
-Message-Id: <20241119060418.2368866-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.2 64/72] linux-user/arm: Reduce vdso alignment to 4k
+Date: Tue, 19 Nov 2024 09:04:05 +0300
+Message-Id: <20241119060418.2368866-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
 References: <qemu-stable-9.1.2-20241118224223@cover.tls.msk.ru>
@@ -63,79 +63,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-When SET_STREAM_FORMAT is called, the st->buft timer is overwritten, thus
-causing a memory leak.  This was originally fixed in commit 816139ae6a5
-("hw/audio/hda: fix memory leak on audio setup", 2024-11-14) but that
-caused the audio to break in SPICE.
+Reduce vdso alignment to minimum page size.
 
-Fortunately, a simpler fix is possible.  The timer only needs to be
-reset, because the callback is always the same (st->output is set at
-realize time in hda_audio_init); call to timer_new_ns overkill.  Replace
-it with timer_del and only initialize the timer once; for simplicity,
-do it even if use_timer is false.
-
-An even simpler fix would be to free the old time in hda_audio_setup().
-However, it seems better to place the initialization of the timer close
-to that of st->ouput.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20241114125318.1707590-3-pbonzini@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 626b39006d2f9b1378a04cb88a2187bb852cb055)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit f7150b2151398c9274686d06c2c1e24618aa4cd6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
-index ee3d0a7dec..407d670d82 100644
---- a/hw/audio/hda-codec.c
-+++ b/hw/audio/hda-codec.c
-@@ -487,8 +487,7 @@ static void hda_audio_setup(HDAAudioStream *st)
-     if (st->output) {
-         if (use_timer) {
-             cb = hda_audio_output_cb;
--            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                    hda_audio_output_timer, st);
-+            timer_del(st->buft);
-         } else {
-             cb = hda_audio_compat_output_cb;
-         }
-@@ -497,8 +496,7 @@ static void hda_audio_setup(HDAAudioStream *st)
-     } else {
-         if (use_timer) {
-             cb = hda_audio_input_cb;
--            st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                    hda_audio_input_timer, st);
-+            timer_del(st->buft);
-         } else {
-             cb = hda_audio_compat_input_cb;
-         }
-@@ -726,8 +724,12 @@ static void hda_audio_init(HDACodecDevice *hda,
-                 st->gain_right = QEMU_HDA_AMP_STEPS;
-                 st->compat_bpos = sizeof(st->compat_buf);
-                 st->output = true;
-+                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                        hda_audio_output_timer, st);
-             } else {
-                 st->output = false;
-+                st->buft = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                        hda_audio_input_timer, st);
-             }
-             st->format = AC_FMT_TYPE_PCM | AC_FMT_BITS_16 |
-                 (1 << AC_FMT_CHAN_SHIFT);
-@@ -750,9 +752,7 @@ static void hda_audio_exit(HDACodecDevice *hda)
-         if (st->node == NULL) {
-             continue;
-         }
--        if (a->use_timer) {
--            timer_free(st->buft);
--        }
-+        timer_free(st->buft);
-         if (st->output) {
-             AUD_close_out(&a->card, st->voice.out);
-         } else {
+diff --git a/linux-user/arm/Makefile.vdso b/linux-user/arm/Makefile.vdso
+index 2d098a5748..8a24b0e534 100644
+--- a/linux-user/arm/Makefile.vdso
++++ b/linux-user/arm/Makefile.vdso
+@@ -6,7 +6,7 @@ VPATH += $(SUBDIR)
+ all: $(SUBDIR)/vdso-be.so $(SUBDIR)/vdso-le.so
+ 
+ # Adding -use-blx disables unneeded interworking without actually using blx.
+-LDFLAGS = -nostdlib -shared -Wl,-use-blx \
++LDFLAGS = -nostdlib -shared -Wl,-use-blx -Wl,-z,max-page-size=4096 \
+ 	  -Wl,-h,linux-vdso.so.1 -Wl,--build-id=sha1 \
+ 	  -Wl,--hash-style=both -Wl,-T,$(SUBDIR)/vdso.ld
+ 
+diff --git a/linux-user/arm/vdso-be.so b/linux-user/arm/vdso-be.so
+index 69cafbb956..bed02804a4 100755
+Binary files a/linux-user/arm/vdso-be.so and b/linux-user/arm/vdso-be.so differ
+diff --git a/linux-user/arm/vdso-le.so b/linux-user/arm/vdso-le.so
+index ad05a12518..38d3d51047 100755
+Binary files a/linux-user/arm/vdso-le.so and b/linux-user/arm/vdso-le.so differ
 -- 
 2.39.5
 
