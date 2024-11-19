@@ -4,77 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E676FD44141
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69206D44140
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 11:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDLsD-0007cp-Mu; Tue, 19 Nov 2024 05:54:21 -0500
+	id 1tDM5v-0001bX-4J; Tue, 19 Nov 2024 06:08:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLsC-0007cT-2B
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:54:20 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tDM5i-0001Zn-Ot
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 06:08:20 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tDLsA-0005ic-7s
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:54:19 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5cfc19065ffso873524a12.3
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:54:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tDM5g-0007fs-NG
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 06:08:18 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4315f24a6bbso6536365e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 03:08:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732013656; x=1732618456; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NXsqw6tNanTm5ecOz9lyMVAlyFpfeZ/RJ3zJ22UZAks=;
- b=cDvguUfvzbisg4S8S5s/lY3ml+E38586I2kWejgrGjhFb4suO8aKs+PuR2Brz6jpmD
- mDPJhDcUGyjUP/WQH6bUN28sU/6HNOzjFtf3+Z4npDxU9C/hYlGZZfLfM5YfePUJnPSh
- MieyYjoBeV4yO7m8+SJPkKLEEhSYTIFXN0XZI3sTlU3vVzeF0YEcYdpKeNV44uOk5WNf
- MfSu1UQOx7RM8CTR21ZJssTTQeHhWPf6PQpPyR8qAsaCP1reHTXHepFqTACHhVCJNBgr
- 2l6mv2pGV9OzN4b/Klzdh0MmvERNgFNWASGdx24R7g2BLD9xaTeysIPKO1eqqWfJ9ZAz
- QawA==
+ d=linaro.org; s=google; t=1732014494; x=1732619294; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OA35qGKA1PYzW1hCJKI3KnfR1onBpi5o5r+SH8+tXqc=;
+ b=EODDklE5h0GskRn2qvfh8oxKBh1/2jUBSG7svXf9UvQ2U2uwEijmb8e+CSW6ZpiCB0
+ 8BsrtqOSFFXQchEziKuKOq2PDEtSPwImgxKAaNTyohKoGe/066k/FgLDxPF/xstNhzlS
+ SW3G4dZDIMwlzH3BcZibDGPLqD27RgD37EKOgB0gZblsqzhmehOVsicKUXQHVnKgk3Fw
+ EeiHe5demYFwIscGXS2MQsImUNcS8yCyrygp/milPqkVQqeV7Z2CSEPtvvQFFKOmtjUc
+ wmTqKoR4ex283aDED5IWYEZmabCvKZdrZCfUKSah5pjWbVYLk35ll7FpYlD+7w9QT0gN
+ ANLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732013656; x=1732618456;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NXsqw6tNanTm5ecOz9lyMVAlyFpfeZ/RJ3zJ22UZAks=;
- b=OKNM4AvHQ5/epIeaqMht/9XoM++bOgTo7CNx7zy9P/pbU7WWySeqyB9y7NhuCY+fEZ
- 9akD6haI9J3UFMiL4q5f9PXuP6RtByLKGXOgYqz8zImX24bJLc3tNN7/YVrMXon9ZDKF
- j28OdE1mqYIcn/q6RE9Bgt8/gHc36+pjNmtTUiXUR7dzk7tbq52C5M/GGpiu+8/FEYsF
- n6buwtuNrKNHac/DaUk7lm8KnpJhB5mR+M9qUnDl8JgSl1iXvyieipma5X+A+bWWwlEW
- y8nuVJ6b92Nmbf7fkOQ+0MEtQ4XFGT5uPBVqV1po8EOLCx1jFD+yawWvlsH8w6ZTckMq
- 2rtA==
-X-Gm-Message-State: AOJu0Yzr4f2dHcu5cutdcQ9F4+UvbdZpMxGnzkVxy7+f9YPCUlx8uqFc
- x5igIDqqMa/COlwQgvaCfQJJ0xeP6EglylhcjQ+xtRarIHFLFVr1phJnG3wyTYxGPugCwC5+wEY
- iQ3bQNXQGvLAUFLLArMejDRNPnOYTqX+ER/SVfno4e3rUmyyx
-X-Google-Smtp-Source: AGHT+IGqB1mSAnZ+IleZ77oEsCK+PzqFvPZwQSMQb+wlvYKcP74C3JVl+uEO5KmTkEJZ4yWj0SnEw/JSydpDN7zUZzs=
-X-Received: by 2002:a05:6402:358e:b0:5cf:a1c1:527e with SMTP id
- 4fb4d7f45d1cf-5cfa1c1571cmr10408262a12.8.1732013655902; Tue, 19 Nov 2024
- 02:54:15 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732014494; x=1732619294;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OA35qGKA1PYzW1hCJKI3KnfR1onBpi5o5r+SH8+tXqc=;
+ b=ErvGY6oUblTtbiO2gdp40tboL5ItOQtNhfQbiJAdQJzaHKg4aWkj8F1FB/sgXkCq0N
+ zx4Z3SC8sXGvxQmR5qAQG89rCU51KI6gcG1u9h34fheIH3OItFCSSAvo+Aft5+EUXAWc
+ c+ZuAQKHs01cYB5vu0HhxsJjuQQdRIH00bMsPTPdnYqDhLHY6LCnS60cjgTicdD7o9jL
+ x1CHtKPoJvHHdp8MzE8Z3KN8tvv6opS+SmcIaLnwaDqA/pOIiYxfA4BhifTrz3aHePun
+ ARt04aGg3VFlgkZs3Zq9baBHMvUcV+xhZBzxJMMBCflm+QdG/WlA9oU3qsNCrjcavbZx
+ 95jg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXP8G0FOdIybPD0bb/uriJI2S5Qayxcz78iIkwlUihRjVYthDHO3glwjGMUHVRAl3mmHPG2BMC8+3dn@nongnu.org
+X-Gm-Message-State: AOJu0YzOHezlRpGb7R7DUN8x65l6c550Hm0deD1pcYSXqm5s2sM+Qn93
+ EHH/W+QnQsK/37OlMfY1Zj73OL9AC+rNRIzJVovezs+A8cGnv2nnmTZVgcAdLEU=
+X-Google-Smtp-Source: AGHT+IEvWSu3BfW3W4izliFBePqCFdRYU6H342434LUMxGIcALTN7IweDb/pCbvZDJptP+Y3VjlEZA==
+X-Received: by 2002:a05:600c:4e8b:b0:431:4f29:4a98 with SMTP id
+ 5b1f17b1804b1-432df77c605mr126318945e9.20.1732014494208; 
+ Tue, 19 Nov 2024 03:08:14 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-432dab788a2sm187715225e9.11.2024.11.19.03.08.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Nov 2024 03:08:13 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E380F5F769;
+ Tue, 19 Nov 2024 11:08:12 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Richard
+ Henderson
+ <richard.henderson@linaro.org>,  Andrew Melnychenko <andrew@daynix.com>,
+ Jason Wang <jasowang@redhat.com>,  Thomas Huth <thuth@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Fabiano Rosas
+ <farosas@suse.de>,  Kevin Wolf <kwolf@redhat.com>,  Markus Armbruster
+ <armbru@redhat.com>,  Eric Blake <eblake@redhat.com>,
+ qemu-arm@nongnu.org,  Yuri Benditovich <yuri.benditovich@daynix.com>,
+ manos.pitsidianakis@linaro.org,  qemu-block@nongnu.org,  Michael Roth
+ <michael.roth@amd.com>,  Konstantin Kostiuk <kkostiuk@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Peter Xu <peterx@redhat.com>,
+ gustavo.romero@linaro.org,  Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 4/7] docs/devel: add information on how to setup build
+ environments
+In-Reply-To: <ZzxZRwXAIlMt6SNA@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 19 Nov 2024 09:24:23 +0000")
+References: <20241118172357.475281-1-pierrick.bouvier@linaro.org>
+ <20241118172357.475281-5-pierrick.bouvier@linaro.org>
+ <ZzxZRwXAIlMt6SNA@redhat.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Tue, 19 Nov 2024 11:08:12 +0000
+Message-ID: <87mshvqy5f.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <51442716-467b-46c2-b2f7-8ffdeeca320e@linaro.org>
- <CAFEAcA_eL+F572fZpFW2+Tz6xx5Mx5ux-axe3HR_fEf43_GLRA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_eL+F572fZpFW2+Tz6xx5Mx5ux-axe3HR_fEf43_GLRA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Nov 2024 10:54:04 +0000
-Message-ID: <CAFEAcA_nBH0E6-0rnsMj6sGo+2i23kk59LJwoRyASaee3P=6+w@mail.gmail.com>
-Subject: Re: Status of some Arm features
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,48 +115,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 Nov 2024 at 10:09, Peter Maydell <peter.maydell@linaro.org> wrote:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+
+> On Mon, Nov 18, 2024 at 09:23:54AM -0800, Pierrick Bouvier wrote:
+>> MacOS and Linux are straightforward, but Windows needs a bit more
+>> details.
+>>=20
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>  docs/about/build-platforms.rst   |   4 +-
+>>  docs/devel/build-environment.rst | 114 +++++++++++++++++++++++++++++++
+>>  docs/devel/index-build.rst       |   1 +
+>>  3 files changed, 118 insertions(+), 1 deletion(-)
+>>  create mode 100644 docs/devel/build-environment.rst
+>>=20
+<snip>
+>> +Fedora
+>> +++++++
+>> +
+>> +::
+>> +
+>> +    sudo dnf update && sudo dnf builddep qemu
+>> +
+>> +Debian/Ubuntu
+>> ++++++++++++++
+>> +
+>> +You first need to enable `Sources List <https://wiki.debian.org/Sources=
+List>`_.
+>> +Then, use apt to install dependencies:
+>> +
+>> +::
+>> +
+>> +    sudo apt update && sudo apt build-dep qemu
+>> +
+>> +MacOS
+>> +-----
+>> +
+>> +You first need to install `Homebrew <https://brew.sh/>`_. Then, use it =
+to
+>> +install dependencies:
+>> +
+>> +::
+>> +
+>> +    brew update && brew install $(brew deps --include-build qemu)
 >
-> On Mon, 18 Nov 2024 at 23:33, Pierrick Bouvier wrote:
-> > 8.4:
-> > - FEAT_CNTSC, Generic Counter Scaling (hw/timer/sse-counter.c)
 >
-> This is optional, and we don't implement it yet. (There's an
-> open ticket for it in Linaro JIRA at
-> https://linaro.atlassian.net/browse/QEMU-309 )
+> The downside in recommending the 'build dep' approach is that it misses
+> out on deps that have been newly introduced in qemu.git, since whatever
+> old version of QEMU the distros are shipping.  It also misses deps for
+> any features the distro vendor has decided to exclude.
+>
+> Can we put a caveat describing this limitation at the top, so that users
+> have pointer if things don't quite go the way we expected.
 
-Oh, and I didn't notice you mentioning sse-counter.c here.
-That source file is for an M-profile device, which performs
-a similar function to but is not the same as the A-profile
-memory-mapped counter which FEAT_CNTSC is an extension for.
+At a recent QEMU workshop I presented I pointed to lcitool as a way to
+list the minimal dependencies QEMU needs:
 
-The A-profile memory-mapped counter is technically architecturally
-required but in practice none of the guest software we're
-running on the board models we implement cares about it.
+  ./tests/lcitool/libvirt-ci/bin/lcitool variables -f yaml debian-12 ./test=
+s/lcitool/projects/qemu-minimal.yml
 
-We don't model the A-profile memory mapped counter, because
-so far we haven't had a real need to. Modelling this is not
-completely trivial, because in a system with the memory
-mapped architectural counter/timer modules, all the CPU
-generic timers (accessed via system registers) are supposed
-to take their source of time from the memory-mapped
-counter (and so for instance if you write to the memory mapped
-counter to stop it from counting then the CPU generic timers
-also must stop counting). So you need something similar to
-what I implemented in sse-counter.c where it provides an
-interface that other timer devices can use to consume its
-count (sse_counter_register_consumer(), sse_counter_for_timestamp(),
-sse_counter_tick_to_time() -- these are used by the M-profile
-hw/timer/sse-timer).
+It wouldn't be the hardest thing to extend lcitool to generate a pkg
+install line instead of a list. Although I notice it fails with the full
+set of dependancies:
 
-I do actually have a hacked-together prototype of this for
-A-profile that I did for something a while back, but it's not
-really in a state to be able to post upstream currently
-(I just did the bits I needed and didn't really finish it
-out or test it very much). So if we need this (e.g. if
-we decide it makes sense to implement in the sbsa-ref
-board) we could do it. But there doesn't really seem to
-be any requirement to do this work right now.
+  =E2=9C=97  ./tests/lcitool/libvirt-ci/bin/lcitool -d tests/lcitool variab=
+les -f shell debian-12 ./tests/lcitool/projects/qemu.yml
+  Package generic name resolution error: Package libcbor not present in map=
+pings
 
--- PMM
+I note there is already an "install" action but I'm wary of what it does.
+
+>
+>> +
+>> +Windows
+>> +-------
+>> +
+>> +You first need to install `MSYS2 <https://www.msys2.org/>`_.
+>> +MSYS2 offers `different environments <https://www.msys2.org/docs/enviro=
+nments/>`_.
+>> +x86_64 environments are based on GCC, while aarch64 is based on Clang.
+>> +
+>> +We recommend to use MINGW64 for windows-x86_64 and CLANGARM64 for windo=
+ws-aarch64
+>> +(only available on windows-aarch64 hosts).
+>
+> Does CLANGARM64 really work with QEMU ?   We go out of our way to actively
+> block the use of CLang for Windows because of its lack of support for
+> 'gcc_struct' attributes, so I would have expected it to fail
+>
+>> +
+>> +Then, you can open a windows shell, and enter msys2 env using:
+>> +
+>> +::
+>> +
+>> +    c:/msys64/msys2_shell.cmd -defterm -here -no-start -mingw64
+>> +    # Replace -ucrt64 by -clangarm64 or -ucrt64 for other environments.
+>> +
+>> +MSYS2 package manager does not offer a built-in way to install build
+>> +dependencies. You can start with this list of packages using pacman:
+>> +
+>
+> With regards,
+> Daniel
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
