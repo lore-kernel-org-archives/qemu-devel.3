@@ -4,96 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9C58D6206A
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E676FD44141
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Nov 2024 10:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDLed-0005w3-96; Tue, 19 Nov 2024 05:40:21 -0500
+	id 1tDLsD-0007cp-Mu; Tue, 19 Nov 2024 05:54:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1tDLeZ-0005ub-Dr
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:40:15 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tDLsC-0007cT-2B
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:54:20 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1tDLeX-0004Aq-HA
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:40:15 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a9e71401844so520582666b.3
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:40:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tDLsA-0005ic-7s
+ for qemu-devel@nongnu.org; Tue, 19 Nov 2024 05:54:19 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5cfc19065ffso873524a12.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 02:54:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732012811; x=1732617611; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=THtpbfJdln95maIr7ixA/yr0koffmRe+qHEjDjkjA8c=;
- b=VNViNZBviop+5BkiJRAV3hMWG6bMv1PFHDOqdoJihmrW7gmA2BmmagCxoI4yFl2tKh
- G+nFiNKgdLgalBTb63NXsAirA4jB3KuxfzMGFkLFU3Ctwq7XSqsXpI2rdkwPyd2SfHuQ
- 9A7eZBhhYdIZ2+TP37GDzaaeFjXjFXPLetw+pBpifrfcER3GGjOsqmnZ1jrGAMGdM7ia
- 0yT8InT+vku/ZVBa3jUxlG6+O4wV4owl4hSGip0CivmnJSQg6AcuURITPOiEPvQzucGb
- KyAPnKR6F2rp1UOa3ZbhkaJNf/seKYyM0K4k6y+udbrrxXWqCUh4LJxBPKKf/4tng0Bp
- z28Q==
+ d=linaro.org; s=google; t=1732013656; x=1732618456; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NXsqw6tNanTm5ecOz9lyMVAlyFpfeZ/RJ3zJ22UZAks=;
+ b=cDvguUfvzbisg4S8S5s/lY3ml+E38586I2kWejgrGjhFb4suO8aKs+PuR2Brz6jpmD
+ mDPJhDcUGyjUP/WQH6bUN28sU/6HNOzjFtf3+Z4npDxU9C/hYlGZZfLfM5YfePUJnPSh
+ MieyYjoBeV4yO7m8+SJPkKLEEhSYTIFXN0XZI3sTlU3vVzeF0YEcYdpKeNV44uOk5WNf
+ MfSu1UQOx7RM8CTR21ZJssTTQeHhWPf6PQpPyR8qAsaCP1reHTXHepFqTACHhVCJNBgr
+ 2l6mv2pGV9OzN4b/Klzdh0MmvERNgFNWASGdx24R7g2BLD9xaTeysIPKO1eqqWfJ9ZAz
+ QawA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732012811; x=1732617611;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1732013656; x=1732618456;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=THtpbfJdln95maIr7ixA/yr0koffmRe+qHEjDjkjA8c=;
- b=COQ2bo2Rf5CxNKYB/FxlaO+g3VavaKw8/ry5bJxBdlfKklroVV4/P+UluFL2HwZJW3
- Ilm+wUEB0G4IbmGsf3IV+9e/1IT1F0WEWdIrlx9HSEQrrXhOI9lBcXjQvc429VAGfkov
- Jm00Q9/A5m0DUFK7t4mF2uBBOIcifIHcky660rd9kKvA3JBIYUg9CpXolQarAHdkLgIQ
- VaOXKz1OVc5PgEyC5+1BL6vIzUtV5+6mdhmKO1syd4zNcES0hlhNcmOpnpzbO2imdBHA
- +3LfgTAUDeeLXftSJ76HFOIf6RsUk0uEU7Ry/tfloYDxD4777rvGNrxfaIxweB4hIC//
- sntg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVTeYtZuZ9oZ9w7E0kq2U51KUEVUoqOxj/Uxo3+Z8CPwUee/8ErDBRUsZyNla5Ts+oFBLM5/gcUaKwG@nongnu.org
-X-Gm-Message-State: AOJu0YyTvsniFWZgb4wX8tD61XflF7vkBXjlIptyVSsJzcdYf6WptBiy
- UVoZxUnWOtkBconea1viTb0faSQKKFkV0Uyv+pCUXn2n7apH77X9Os6+fz6STtE=
-X-Google-Smtp-Source: AGHT+IG0lQcj0gAaodVVWuBBo0NDzm1D1vtzciBlmBFGIGoFGj580jCq0HIZquTD3Mr1ulBx9UIiVw==
-X-Received: by 2002:a17:906:c081:b0:a9a:c03:ebc8 with SMTP id
- a640c23a62f3a-aa4a2d0a3d1mr710289766b.37.1732012811506; 
- Tue, 19 Nov 2024 02:40:11 -0800 (PST)
-Received: from [192.168.210.26] (83.11.2.232.ipv4.supernova.orange.pl.
- [83.11.2.232]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa20e0016a7sm636826466b.116.2024.11.19.02.40.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Nov 2024 02:40:11 -0800 (PST)
-Message-ID: <58dbb4ef-62d3-445e-b891-04a9027d63d8@linaro.org>
-Date: Tue, 19 Nov 2024 11:40:08 +0100
+ bh=NXsqw6tNanTm5ecOz9lyMVAlyFpfeZ/RJ3zJ22UZAks=;
+ b=OKNM4AvHQ5/epIeaqMht/9XoM++bOgTo7CNx7zy9P/pbU7WWySeqyB9y7NhuCY+fEZ
+ 9akD6haI9J3UFMiL4q5f9PXuP6RtByLKGXOgYqz8zImX24bJLc3tNN7/YVrMXon9ZDKF
+ j28OdE1mqYIcn/q6RE9Bgt8/gHc36+pjNmtTUiXUR7dzk7tbq52C5M/GGpiu+8/FEYsF
+ n6buwtuNrKNHac/DaUk7lm8KnpJhB5mR+M9qUnDl8JgSl1iXvyieipma5X+A+bWWwlEW
+ y8nuVJ6b92Nmbf7fkOQ+0MEtQ4XFGT5uPBVqV1po8EOLCx1jFD+yawWvlsH8w6ZTckMq
+ 2rtA==
+X-Gm-Message-State: AOJu0Yzr4f2dHcu5cutdcQ9F4+UvbdZpMxGnzkVxy7+f9YPCUlx8uqFc
+ x5igIDqqMa/COlwQgvaCfQJJ0xeP6EglylhcjQ+xtRarIHFLFVr1phJnG3wyTYxGPugCwC5+wEY
+ iQ3bQNXQGvLAUFLLArMejDRNPnOYTqX+ER/SVfno4e3rUmyyx
+X-Google-Smtp-Source: AGHT+IGqB1mSAnZ+IleZ77oEsCK+PzqFvPZwQSMQb+wlvYKcP74C3JVl+uEO5KmTkEJZ4yWj0SnEw/JSydpDN7zUZzs=
+X-Received: by 2002:a05:6402:358e:b0:5cf:a1c1:527e with SMTP id
+ 4fb4d7f45d1cf-5cfa1c1571cmr10408262a12.8.1732013655902; Tue, 19 Nov 2024
+ 02:54:15 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] docs/devel: add b4 for patch retrieval
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Andrew Melnychenko <andrew@daynix.com>, Jason Wang <jasowang@redhat.com>,
- Thomas Huth <thuth@redhat.com>, alex.bennee@linaro.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-arm@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
- manos.pitsidianakis@linaro.org, qemu-block@nongnu.org,
- Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk
- <kkostiuk@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, gustavo.romero@linaro.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20241118172357.475281-1-pierrick.bouvier@linaro.org>
- <20241118172357.475281-4-pierrick.bouvier@linaro.org>
- <ZzxXAtuRowg8hp9u@redhat.com>
- <47831adc-26f7-4633-a371-975c97e8dae7@linaro.org>
- <ZzxjciUGNIVoUuVC@redhat.com>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Language: pl-PL, en-GB
-Organization: Linaro
-In-Reply-To: <ZzxjciUGNIVoUuVC@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x631.google.com
+References: <51442716-467b-46c2-b2f7-8ffdeeca320e@linaro.org>
+ <CAFEAcA_eL+F572fZpFW2+Tz6xx5Mx5ux-axe3HR_fEf43_GLRA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_eL+F572fZpFW2+Tz6xx5Mx5ux-axe3HR_fEf43_GLRA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 19 Nov 2024 10:54:04 +0000
+Message-ID: <CAFEAcA_nBH0E6-0rnsMj6sGo+2i23kk59LJwoRyASaee3P=6+w@mail.gmail.com>
+Subject: Re: Status of some Arm features
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,19 +90,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 19.11.2024 o 11:07, Daniel P. Berrangé pisze:
-> On Tue, Nov 19, 2024 at 10:56:36AM +0100, Marcin Juszkiewicz wrote:
->> W dniu 19.11.2024 o 10:14, Daniel P. Berrangé pisze:
->>
->>>> +    b4 shazam $msg-id
->>>
->>> I'm wondering how b4 knows where to find the mails for $msg-id  for QEMU ?
->>
->> It goes for https://lore.kernel.org/qemu-devel/$msg-id by default or checks
->> b4.midmask in git config.
-> 
-> How does it figure out to look at  '/qemu-devel/' by default  ?
+On Tue, 19 Nov 2024 at 10:09, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Mon, 18 Nov 2024 at 23:33, Pierrick Bouvier wrote:
+> > 8.4:
+> > - FEAT_CNTSC, Generic Counter Scaling (hw/timer/sse-counter.c)
+>
+> This is optional, and we don't implement it yet. (There's an
+> open ticket for it in Linaro JIRA at
+> https://linaro.atlassian.net/browse/QEMU-309 )
 
-Sorry, was wrong. It goes to https://lore.kernel.org/$msg-id as this is 
-enough to get mail.
+Oh, and I didn't notice you mentioning sse-counter.c here.
+That source file is for an M-profile device, which performs
+a similar function to but is not the same as the A-profile
+memory-mapped counter which FEAT_CNTSC is an extension for.
+
+The A-profile memory-mapped counter is technically architecturally
+required but in practice none of the guest software we're
+running on the board models we implement cares about it.
+
+We don't model the A-profile memory mapped counter, because
+so far we haven't had a real need to. Modelling this is not
+completely trivial, because in a system with the memory
+mapped architectural counter/timer modules, all the CPU
+generic timers (accessed via system registers) are supposed
+to take their source of time from the memory-mapped
+counter (and so for instance if you write to the memory mapped
+counter to stop it from counting then the CPU generic timers
+also must stop counting). So you need something similar to
+what I implemented in sse-counter.c where it provides an
+interface that other timer devices can use to consume its
+count (sse_counter_register_consumer(), sse_counter_for_timestamp(),
+sse_counter_tick_to_time() -- these are used by the M-profile
+hw/timer/sse-timer).
+
+I do actually have a hacked-together prototype of this for
+A-profile that I did for something a while back, but it's not
+really in a state to be able to post upstream currently
+(I just did the bits I needed and didn't really finish it
+out or test it very much). So if we need this (e.g. if
+we decide it makes sense to implement in the sbsa-ref
+board) we could do it. But there doesn't really seem to
+be any requirement to do this work right now.
+
+-- PMM
 
