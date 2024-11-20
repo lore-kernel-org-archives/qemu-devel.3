@@ -4,101 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DFC2D711C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 16:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9476D711C0
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 16:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDnVF-0006oI-Cl; Wed, 20 Nov 2024 11:24:29 -0500
+	id 1tDnX7-0008BG-KR; Wed, 20 Nov 2024 11:26:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDnVE-0006oA-ER
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 11:24:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tDnX4-00088N-Ft; Wed, 20 Nov 2024 11:26:22 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDnVC-0002M5-P7
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 11:24:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732119864;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vFUyPlC6+S58/HKyFxh7eumsaWPLVUkGyl/BpVkjCQI=;
- b=W3MRmz6OiV5FqjSR3xFgXvnx3uXLslrCPGt8d42ixYyL8sylxEgvIg6qhX3WVltKNNRegX
- jexjW60ANjSFYGf/9pQEQHfU4ETQLGPqF5Y+a/MwuxI7Yi6CP+FUC7KSJgdKya3lHjYjqB
- K/duT+pQI1+emVRb3vKCHsVnNFRDNZk=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-Zou-ri6rN7Srcc0nZBus9g-1; Wed, 20 Nov 2024 11:24:23 -0500
-X-MC-Unique: Zou-ri6rN7Srcc0nZBus9g-1
-X-Mimecast-MFC-AGG-ID: Zou-ri6rN7Srcc0nZBus9g
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-83ac3fe1cf4so439109839f.3
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 08:24:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732119862; x=1732724662;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vFUyPlC6+S58/HKyFxh7eumsaWPLVUkGyl/BpVkjCQI=;
- b=DK44wx013Sv7B1e0psn7yHj5IGDgd/0ngQbQtwQH1VEuyH2WTKFIOzeB5QAny+T1wi
- tbnZj7XNEegRqAIi4j/6XMO8eyQs/UNwl5vDTA0UufYwclJ9o8IgcZpV2IhyRv03bFG1
- XH1y+SmCgjpLFu6zdPyvKq1zges8AE+8zXUKJ+1UNjDzi21+D0sd3X+8FNUQDasejkKN
- ibRKg+BAxJjGcOc7ilzAlnfzcq78y1RqAwYCbuA7Rc5mh+TU2uBiz7uqbgktKViKP/RO
- 4oyCUVqJ/YVktPWhpjGARVO/OmCyMJ+ktD0mop2DHF9IPJq+/mNov86oSobZhpKJaWj7
- D0SA==
-X-Gm-Message-State: AOJu0YwHVhhvaJhERsgyRuZOJXq/1p9Li80RUfr9Ksb1NtVr1dRnxjhJ
- CZA7VPvaoBhG8Eo7NhQHb8DktM56EUA2c0gubteiFWfWt1Bx57AD5VgeKI6ZmwGrLP8oL+OoV/3
- qacIJtSzpvYBYThSGNlDSziaFZo7Q8jQ08HN1NwBO7/7HYziOCUCw2IstNfEP
-X-Received: by 2002:a05:6602:6016:b0:835:4b2a:e52b with SMTP id
- ca18e2360f4ac-83eb604a057mr392278739f.10.1732119862415; 
- Wed, 20 Nov 2024 08:24:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGygoN3ILiJJuWpbyZfAtqfis0sI1r2EgKjG6P4+x1X/UFbek4c+PA7QsxkzKtq9aVf1zWWrA==
-X-Received: by 2002:a05:6602:6016:b0:835:4b2a:e52b with SMTP id
- ca18e2360f4ac-83eb604a057mr392276739f.10.1732119862119; 
- Wed, 20 Nov 2024 08:24:22 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e06d707aeasm3307237173.52.2024.11.20.08.24.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Nov 2024 08:24:21 -0800 (PST)
-Date: Wed, 20 Nov 2024 11:24:19 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 5/5] qom: Make container_get() strict to always walk or
- return container
-Message-ID: <Zz4NM0MKErNHZcs_@x1n>
-References: <20241118221330.3480246-1-peterx@redhat.com>
- <20241118221330.3480246-6-peterx@redhat.com> <ZzvIZ4EL92hEk4wC@x1n>
- <CABgObfamYxtgX7SubOd8OvA5w70xQ5uesJ1TuPoTK9onVO+58w@mail.gmail.com>
- <Zzzv32xlLAH4O5Ig@x1n>
- <CABgObfaKrOvfhK5KfoxOOXOyZXeEz33VkvDeE=5wwtq3Ep=QdQ@mail.gmail.com>
- <Zz0GlJAYOzWrrOcC@x1n>
- <CABgObfbXuiqw01mzVLZEgw-o_tdbf83QzYugq7oL4g7TFVV_yg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tDnX2-0002q7-5k; Wed, 20 Nov 2024 11:26:22 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xtmrt33HLz6K5xS;
+ Thu, 21 Nov 2024 00:23:58 +0800 (CST)
+Received: from frapeml100006.china.huawei.com (unknown [7.182.85.201])
+ by mail.maildlp.com (Postfix) with ESMTPS id D4A701402C7;
+ Thu, 21 Nov 2024 00:26:15 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100006.china.huawei.com (7.182.85.201) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 20 Nov 2024 17:26:15 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 20 Nov 2024 17:26:15 +0100
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
+ SMMU nodes
+Thread-Topic: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
+ SMMU nodes
+Thread-Index: AQHbMd3CYnIzOIz3QUan4PDL8HOdprK8zVGAgAAjLhCAABtdAIAAIywQgAAmhYCAAus70IAAGD4AgAAU00A=
+Date: Wed, 20 Nov 2024 16:26:15 +0000
+Message-ID: <e13f2e9c0a6341e8b25b7945bc7bf413@huawei.com>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <20241108125242.60136-5-shameerali.kolothum.thodi@huawei.com>
+ <1dcea5ca-806f-4f51-8b13-faf5d62eb086@redhat.com>
+ <efb9fb7fb0f04d92b7776cdbc474585d@huawei.com>
+ <48bb0455-7c2e-4cc6-aa15-ebe4311d8430@redhat.com>
+ <0803ec1a010a46b9811543e1044c3176@huawei.com>
+ <aafc5fba-8d68-4796-a846-265362e7acac@redhat.com>
+ <30ff8ac9ee9b4012aa6962c86ac06375@huawei.com>
+ <41a67d4e-f7b8-4586-8d52-c32df400b675@redhat.com>
+In-Reply-To: <41a67d4e-f7b8-4586-8d52-c32df400b675@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABgObfbXuiqw01mzVLZEgw-o_tdbf83QzYugq7oL4g7TFVV_yg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,87 +86,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 20, 2024 at 12:45:19PM +0100, Paolo Bonzini wrote:
-> Il mar 19 nov 2024, 22:43 Peter Xu <peterx@redhat.com> ha scritto:
-> 
-> > > The easiest way to check is probably to print the type of every
-> > successful
-> > > object_dynamic_cast and object_class_dynamic_cast. I suspect the result
-> > > will be virtio-blk-device and/or scsi-hd, but maybe those already do an
-> > > unsafe cast (pointer type cast) instead of object_dynamic_cast.
-> >
-> > Yes, it sounds more reasonable to me to optimize specific call sites so far
-> > rather than provides something generic.
-> 
-> Though it could still be a
-> > generic API so that devices can opt-in.
-> 
-> 
-> One of the things that I am excited about for Rust is checking at compile
-> time whether a cast is to a superclass, which makes it safe automatically.
-
-I see.  However looks like it doesn't easily apply to the ahci example
-below, where it could conditionally fail the cast (and where I got it
-wrong..)?
-
-> 
-> > I can give it some measurement if there is, otherwise I'm
-> > > > guessing whatever changes could fall into the noise.
-> > >
-> > >
-> > > Yes, probably. At most you can identify if there any heavy places out of
-> > > the 34000 calls, and see if they can use an unsafe cast.
-> >
-> > I can still trivially do this.
-> >
-> > I traced qemu using bpf
-> 
-> 
-> Nice! I want to know more. :))
-
-I also only learned it yesterday, where I only used to use k*probes
-previously. :-) That's:
-
-$ cat qemu.bpf
-uprobe:/home/peterx/git/qemu/bin/qemu-system-x86_64:object_class_dynamic_cast
-{
-        @out[ustack()]++;
-}
-$ sudo bpftrace --usdt-file-activation ./qemu.bpf
-
-> 
-> > and interestingly in my case close to half (over
-> > 10000+) of the calls are about ahci_irq_lower() from different higher level
-> > stack (yeah I used IDE in my setup.. with a split irqchi..), where it has:
-> >
-> >     PCIDevice *pci_dev = (PCIDevice *)
-> > object_dynamic_cast(OBJECT(dev_state),
-> >
-> >  TYPE_PCI_DEVICE);
-> >
-> > So IIUC that can be open to a unsafe cast too
-> 
-> 
-> Hmm no it can't because there's also sysbus AHCI. The fix would be to add
-> an AHCIClass and make irq toggling into a method there
-
-Yep, I overlooked the lines of code later.. :(
-
-> 
-> but considering IDE is ODD FIXES stage, I'm not sure if I should send a
-> > patch at all.  However I copied John regardless.
-> >
-> 
-> Well, MAINTAINERS only says the kind of work that the maintainer is doing,
-> you can always do more. However it seems like not a small amount, so maybe
-> adding a comment is enough if somebody else wants to do it?
-
-Can do.
-
--- 
-Peter Xu
-
+SGkgRXJpYywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBFcmljIEF1
+Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+IFNlbnQ6IFdlZG5lc2RheSwgTm92ZW1iZXIg
+MjAsIDIwMjQgNDoxMSBQTQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaQ0KPiA8c2hh
+bWVlcmFsaS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPjsgcWVtdS1hcm1Abm9uZ251Lm9yZzsN
+Cj4gcWVtdS1kZXZlbEBub25nbnUub3JnDQo+IENjOiBwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7
+IGpnZ0BudmlkaWEuY29tOyBuaWNvbGluY0BudmlkaWEuY29tOw0KPiBkZHV0aWxlQHJlZGhhdC5j
+b207IExpbnV4YXJtIDxsaW51eGFybUBodWF3ZWkuY29tPjsgV2FuZ3pob3UgKEIpDQo+IDx3YW5n
+emhvdTFAaGlzaWxpY29uLmNvbT47IGppYW5na3Vua3VuIDxqaWFuZ2t1bmt1bkBodWF3ZWkuY29t
+PjsNCj4gSm9uYXRoYW4gQ2FtZXJvbiA8am9uYXRoYW4uY2FtZXJvbkBodWF3ZWkuY29tPjsNCj4g
+emhhbmdmZWkuZ2FvQGxpbmFyby5vcmcNCj4gU3ViamVjdDogUmU6IFtSRkMgUEFUQ0ggNC81XSBo
+dy9hcm0vdmlydC1hY3BpLWJ1aWxkOiBCdWlsZCBJT1JUIHdpdGgNCj4gbXVsdGlwbGUgU01NVSBu
+b2Rlcw0KPiANCj4gSGkgU2hhbWVlciwNCj4gDQo+IE9uIDExLzIwLzI0IDE1OjE2LCBTaGFtZWVy
+YWxpIEtvbG90aHVtIFRob2RpIHdyb3RlOg0KPiA+DQo+ID4+IC0tLS0tT3JpZ2luYWwgTWVzc2Fn
+ZS0tLS0tDQo+ID4+IEZyb206IEVyaWMgQXVnZXIgPGVyaWMuYXVnZXJAcmVkaGF0LmNvbT4NCj4g
+Pj4gU2VudDogTW9uZGF5LCBOb3ZlbWJlciAxOCwgMjAyNCA2OjEwIFBNDQo+ID4+IFRvOiBTaGFt
+ZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+ID4+IDxzaGFtZWVyYWxpLmtvbG90aHVtLnRob2RpQGh1
+YXdlaS5jb20+OyBxZW11LWFybUBub25nbnUub3JnOw0KPiA+PiBxZW11LWRldmVsQG5vbmdudS5v
+cmcNCj4gPj4gQ2M6IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsgamdnQG52aWRpYS5jb207IG5p
+Y29saW5jQG52aWRpYS5jb207DQo+ID4+IGRkdXRpbGVAcmVkaGF0LmNvbTsgTGludXhhcm0gPGxp
+bnV4YXJtQGh1YXdlaS5jb20+OyBXYW5nemhvdSAoQikNCj4gPj4gPHdhbmd6aG91MUBoaXNpbGlj
+b24uY29tPjsgamlhbmdrdW5rdW4gPGppYW5na3Vua3VuQGh1YXdlaS5jb20+Ow0KPiA+PiBKb25h
+dGhhbiBDYW1lcm9uIDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+Ow0KPiA+PiB6aGFuZ2Zl
+aS5nYW9AbGluYXJvLm9yZw0KPiA+PiBTdWJqZWN0OiBSZTogW1JGQyBQQVRDSCA0LzVdIGh3L2Fy
+bS92aXJ0LWFjcGktYnVpbGQ6IEJ1aWxkIElPUlQgd2l0aA0KPiA+PiBtdWx0aXBsZSBTTU1VIG5v
+ZGVzDQo+ID4gWy4uLl0NCj4gPg0KPiA+Pj4gSSB0aGluayB0aGUgYWJvdmUgd29uJ3QgYWZmZWN0
+IHRoZSBiYXNpYyBjYXNlIHdoZXJlIEkgaGF2ZSBvbmx5IG9uZQ0KPiA+Pj4gcGNpZS1weGIvU01N
+VXYzLiBCdXQgZXZlbiBpbiB0aGF0IGNhc2UgaG90IGFkZCBzZWVtcyBub3Qgd29ya2luZy4NCj4g
+Pj4+DQo+ID4+PiBJIHRyaWVkIGhhY2tpbmcgdGhlIG1pbi9tYXggcmFuZ2VzIGFzIHN1c3BlY3Rl
+ZCBieSBOaWNvbGluLiBCdXQgc3RpbGwgbm90DQo+ID4+IGVub3VnaCB0bw0KPiA+Pj4gZ2V0IGl0
+IHdvcmtpbmcuICBEbyB5b3UgaGF2ZSBhbnkgaGludCBvbiB3aHkgdGhlIGhvdCBhZGQoZGVzY3Jp
+YmVkDQo+ID4+IGJlbG93KSBpcyBub3QNCj4gPj4+IHdvcmtpbmc/DQo+ID4+IEh1bSB0aG91Z2h0
+IHRoZSBkdXBsaWNhdGUgaWRtYXAgY291bGQgYmUgdGhlIGNhdXNlLiBPdGhlcndpc2UgSSBoYXZl
+DQo+IG5vDQo+ID4+IGNsdWUuIEkgd291bGQgYWR2aWNlIHRvIGZpeCBpdCBmaXJzdC4NCj4gPiBJ
+IHRoaW5rIEkgaGF2ZSBhbiBpZGVhIHdoeSB0aGUgaG90IGFkZCB3YXMgbm90IHdvcmtpbmcuDQo+
+ID4NCj4gPiBXaGVuIHdlIGhhdmUgdGhlIFBDSWUgdG9wb2xvZ3kgYXMgc29tZXRoaW5nIGxpa2Ug
+YmVsb3csDQo+ID4NCj4gPiAtZGV2aWNlIHB4Yi1wY2llLGlkPXBjaWUuMSxidXNfbnI9OCxidXM9
+cGNpZS4wIFwNCj4gPiAtZGV2aWNlIHBjaWUtcm9vdC1wb3J0LGlkPXBjaWUucG9ydDEsYnVzPXBj
+aWUuMSxjaGFzc2lzPTEgXA0KPiA+IC1kZXZpY2UgcGNpZS1yb290LXBvcnQsaWQ9cGNpZS5wb3J0
+MixidXM9cGNpZS4xLGNoYXNzaXM9MiBcDQo+ID4gLWRldmljZSBhcm0tc21tdXYzLW5lc3RlZCxp
+ZD1zbW11djEscGNpLWJ1cz1wY2llLjEgXA0KPiA+IC4uLg0KPiA+DQo+ID4gVGhlIGN1cnJlbnQg
+SU9SVCBnZW5lcmF0aW9uIGluY2x1ZGVzIHRoZSBwY2llLXJvb3QtcG9ydCBkZXYgaWRzIGFsc28N
+Cj4gPiBpbiB0aGUgU01NVXYzIG5vZGUgaWRtYXBzLg0KPiA+DQo+ID4gSGVuY2UsIHdoZW4gR3Vl
+c3Qga2VybmVsIGxvYWRzLCBwY2llcG9ydCBpcyBhbHNvIGJlaGluZCB0aGUgU01NVXYzLg0KPiA+
+DQo+ID4gWyAgICAxLjQ2NjY3MF0gcGNpZXBvcnQgMDAwMDo2NDowMC4wOiBBZGRpbmcgdG8gaW9t
+bXUgZ3JvdXAgMQ0KPiA+IC4uLg0KPiA+IFsgICAgMS40NDgyMDVdIHBjaWVwb3J0IDAwMDA6NjQ6
+MDEuMDogQWRkaW5nIHRvIGlvbW11IGdyb3VwIDINCj4gDQo+IEJ1dCBpdCBzaG91bGQgYmUgdGhl
+IHNhbWUgd2l0aG91dCBtdWx0aS1pbnN0YW50aWF0aW9uLCBubz8gSSB3b3VsZCBoYXZlDQo+IGV4
+cGVjdGVkIHRoaXMgYXMgbm9ybWFsLiBIYXMgeW91IHRlc3RlZCBob3QtcGx1ZyB3aXRob3V0IHRo
+ZSBzZXJpZXMNCj4gbGF0ZXJseT8gRG8geW91IGhhdmUgdGhlIHNhbWUgcGI/DQoNClRoYXQgaXMg
+YSBnb29kIHF1ZXN0aW9uLiBJIHdpbGwgZ2l2ZSBpdCBhIHRyeSBzb29uIGFuZCB1cGRhdGUuDQoN
+ClRoYW5rcywNClNoYW1lZXIuDQo=
 
