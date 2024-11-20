@@ -4,93 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A619D44171
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 09:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90331D44171
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 09:39:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDgu4-0005Sn-Ee; Wed, 20 Nov 2024 04:21:40 -0500
+	id 1tDhAL-00081V-Di; Wed, 20 Nov 2024 04:38:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDgu1-0005Ol-Jk
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 04:21:38 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDgtz-0006zq-Tz
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 04:21:37 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5cec9609303so2310437a12.1
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 01:21:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732094494; x=1732699294; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oum+sd/6X3GD5axRrx9WNHXoGD6W///ubAsVBe+Sg3o=;
- b=CSRsMqLj8jRbfkgoC4XYzTmK1e3x0kqhu7hZrbIL8/bOCB4FlEg948nWndwkfBW+m1
- ozY9q64Wsc5BL5d4VX4Cr0Uokd+0ynq+FpuswVWs+iPjawBb+pk68lZUQrh1Ucelz21H
- 6heo2sU4xzLwBNZ0zFYVB4WWJJU6Cc+dMBIThsLjD1eb6Un3mZ9T+yKdop+AZYABxZsk
- p5uuO4QeKiuQ8WQQtW0bFu1v6zohbLbvBf6xD//csTt57q9NL6mipoMJrRtp2LaMP0UU
- KmhJiPe7tj1JUWb+MCa/N27+TdU1KmWNTuz1MI9BpjzH4kH9N4AKcigK/ZjtR560DmMQ
- vdKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732094494; x=1732699294;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oum+sd/6X3GD5axRrx9WNHXoGD6W///ubAsVBe+Sg3o=;
- b=ep9cbenW6Q3L7gooetAl3ZoUgyh3PAudK0Q+qoxC7ceCyC4rhsX7RTYadJd7cwn2Yk
- M2pgfjxHAjwDcjKk7Hi/pLMy4ykIL9OUj1dSIAU4HrAJ26o47X5rttu5cFDqLWzRRnJK
- i7irJffZptdpB4cZdhbfMCA/v37MiR2TWgJux+PJohDJpkGH3bxmJjHXN4zfmEwqOu5B
- DjF9hzp5QCMN5wTB1mSNbhlT8Qec0EgrQQDoIyfgTXKb+ceD+71n1jSijuHuuGGqJjwj
- /4fcnidNWHSlY3Pxn3iNnoZKQzYNiXCCo+Qq09kO2kTgytqbpOy9nKgd0p+ToIURYdOK
- BTUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV04XHddjj9d5RPDZcaqSdFKaMIjcjA1Rxh593UoQUgtek4I4RwYnRJQsMwNGnzdvysKckRBJxzUl9t@nongnu.org
-X-Gm-Message-State: AOJu0YzxK2afLQrbrne28ZO9UYyi8hPOTAms07gwDfJmxsG7NWs6fAEd
- hg+IF2KB7aP7pFEP1b4CYUI/iLYEaQ0kxdt5vUiLOdpRCLPaLTtP4bYC+cR8H9Q=
-X-Gm-Gg: ASbGncszpcFCcm3PQlNK0dQcEAEVL+aEMKWvoaoGZ6BkmH0MQWYes6hAB6mzBQpyGcD
- tQQIZ2nfcBDBEI9PLhEIfJY0FsIgFi9lXbZ1ScEWBFky3x+Z4pCSakZ7ApedjBINHmNr4+QJNJ/
- pZL2ICqnRkpVgRkHz9GDEvqfSeZixjXHTHcJ71NVodAw2/BKPZbu93tvO2AFTLYw1GRf6bMq2fI
- 39euz3kECW2pIb7c/EB4ddpClgkeR0HhMGgEMVtFzL5uhlBi2MPXOy+wEw2d9cp
-X-Google-Smtp-Source: AGHT+IGSPFklgiQ57YNbh0kiVHv8XVkv5OPXgrFCAWrCIpgF/71D+lxuGq3wOCY0GUq6snv3fj/cIA==
-X-Received: by 2002:a17:907:320c:b0:a9a:2afc:e4e3 with SMTP id
- a640c23a62f3a-aa4dd7386d3mr164108966b.50.1732094493953; 
- Wed, 20 Nov 2024 01:21:33 -0800 (PST)
-Received: from [192.168.69.146] ([176.187.208.27])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cff44eff15sm596006a12.35.2024.11.20.01.21.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Nov 2024 01:21:33 -0800 (PST)
-Message-ID: <e8a3d37e-508e-45f1-99bf-b5ed14f5981f@linaro.org>
-Date: Wed, 20 Nov 2024 10:21:31 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tDhAJ-000816-Ej
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 04:38:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tDhAH-00041k-Ks
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 04:38:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732095503;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=fZrImjEDk9x0Vg9FIldThZ8P2z5Iai8/bcbQRjENZ6k=;
+ b=bMKANmbinWuVKdz3ujGQ44Ye4Q+WHrVngz49PIKQZYJb7r6W1tsH7YLNk8fTZG4tL/aZju
+ WqX1jNNYsALNNz+wd4vH3c7H2Fl8mgWEVgy36bAVY3BXwgS+CniaJ4TSA1bUpM8lBcOLxb
+ DVrkxUSd1KQb4vRJZV+2TAJaq4Rgx2A=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-DRPHrZ9qOyS1UNUjOarG2A-1; Wed,
+ 20 Nov 2024 04:38:19 -0500
+X-MC-Unique: DRPHrZ9qOyS1UNUjOarG2A-1
+X-Mimecast-MFC-AGG-ID: DRPHrZ9qOyS1UNUjOarG2A
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 522B3195419F; Wed, 20 Nov 2024 09:38:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.50])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6527030000DF; Wed, 20 Nov 2024 09:38:13 +0000 (UTC)
+Date: Wed, 20 Nov 2024 09:38:09 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V3 11/16] migration: cpr-transfer mode
+Message-ID: <Zz2uAWLAhaf2TQ01@redhat.com>
+References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
+ <1730468875-249970-12-git-send-email-steven.sistare@oracle.com>
+ <ZzUg9w0Kvfuleuxk@x1n>
+ <51967cb2-05ec-485b-a639-8ff58d565604@oracle.com>
+ <ZzZJvTldpe3D4EO5@x1n>
+ <c53feba3-d448-4494-8dbf-0725a2dd8dba@oracle.com>
+ <ZzzyOJT_mDh37_Py@x1n>
+ <c56ffc81-b065-4dd0-ab06-eb79912dcaf7@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/scsi/scsi-disk: Avoid buffer overrun parsing
- 'loadparam'
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, David Hildenbrand <david@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>
-References: <20241120085300.49866-1-philmd@linaro.org>
- <20241120085300.49866-3-philmd@linaro.org>
- <64087716-e9f8-4016-859d-974173d21dbd@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <64087716-e9f8-4016-859d-974173d21dbd@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c56ffc81-b065-4dd0-ab06-eb79912dcaf7@oracle.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,45 +93,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/11/24 10:10, Paolo Bonzini wrote:
-> On 11/20/24 09:53, Philippe Mathieu-Daudé wrote:
->> @@ -112,7 +113,7 @@ struct SCSIDiskState {
->>       char *vendor;
->>       char *product;
->>       char *device_id;
->> -    char *loadparm;     /* only for s390x */
->> +    char loadparm[LOADPARM_LEN]; /* only for s390x */
+On Tue, Nov 19, 2024 at 03:32:55PM -0500, Steven Sistare wrote:
+> On 11/19/2024 3:16 PM, Peter Xu wrote:
+> > On Tue, Nov 19, 2024 at 02:50:40PM -0500, Steven Sistare wrote:
+> > > On 11/14/2024 2:04 PM, Peter Xu wrote:
+> > > > On Thu, Nov 14, 2024 at 01:36:00PM -0500, Steven Sistare wrote:
+> > > > > On 11/13/2024 4:58 PM, Peter Xu wrote:
+> > > > > > On Fri, Nov 01, 2024 at 06:47:50AM -0700, Steve Sistare wrote:
+> > > > > > > Add the cpr-transfer migration mode.  Usage:
+> > > > > > >      qemu-system-$arch -machine anon-alloc=memfd ...
+> > > > > > > 
+> > > > > > >      start new QEMU with "-incoming <uri-1> -cpr-uri <uri-2>"
+> > > > > > > 
+> > > > > > >      Issue commands to old QEMU:
+> > > > > > >      migrate_set_parameter mode cpr-transfer
+> > > > > > >      migrate_set_parameter cpr-uri <uri-2>
+> > > > > > >      migrate -d <uri-1>
+> > > > > > 
+> > > > > > QMP command "migrate" already allows taking MigrationChannel lists, cpr can
+> > > > > > be the 2nd supported channel besides "main".
+> > > > > > 
+> > > > > > I apologize on only noticing this until now.. I wished the incoming side
+> > > > > > can do the same already (which also takes 'MigrationChannel') if monitors
+> > > > > > init can be moved earlier, and if precreate worked out.  If not, we should
+> > > > > > still consider doing that on source, because cpr-uri isn't usable on dest
+> > > > > > anyway.. so they need to be treated separately even now.
+> > > > > > 
+> > > > > > Then after we make the monitor code run earlier in the future we could
+> > > > > > introduce that to incoming side too, obsoleting -cpr-uri there.
+> > > > > 
+> > > > > I have already been shot down on precreate and monitors init, so we are
+> > > > > left with specifying a "cpr" channel on the outgoing side, and -cpr-uri
+> > > > > on the incoming side.  That will confuse users, will require more implementation
+> > > > > and specification work than you perhaps realize to explain this to users,
+> > > > 
+> > > > What is the specification work?  Can you elaborate?
+> > > > 
+> > > > > and only gets us halfway to your desired end point of specifying everything
+> > > > > using channels.  I don't like that plan!
+> > > > > 
+> > > > > If we ever get the ability to open the monitor early, then we can implement
+> > > > > a complete and clean solution using channels and declare the other options
+> > > > > obsolete.
+> > > > 
+> > > > The sender side doesn't need to wait for destination side to be ready?
+> > > > Dest side isn't a reason to me on how we should make sender side work if
+> > > > they're totally separate anyway.  Dest requires -cpr-uri because we don't
+> > > > yet have a choice.
+> > > > 
+> > > > Is the only concern about code changes?  I'm expecting this change is far
+> > > > less controversial comparing to many others in this series, even if I
+> > > > confess that may still contain some diff. They should hopefully be
+> > > > straightforward, unlike many of the changes elsewhere in the series.
+> > > > 
+> > > > If you prefer not writting that patch, I am OK, and I can write one patch
+> > > > on top of your series after it lands if that is OK for you. I still want to
+> > > > have this there when release 10.0 if I didn't misunderstood anything, so
+> > > > I'll be able to remove cpr-uri directly in that patch too.
+> > > 
+> > > I made the changes:
+> > >    * implementation
+> > >    * documentation in CPR.rst and QAPI
+> > >    * convert sample code in CPR.rst, commit messages, and cover letter to QMP,
+> > >      because a channel cannot be specified using HMP.
+> > 
+> > Yeah we can leave HMP as of now; it can easily be added on top with
+> > existing helpers like migrate_uri_parse().
 > 
-> You would need a +1 here because of
+> This begs the question, should we allow channels to be specified in hmp migrate
+> commands and for -incoming, in a very simple way?  Like with a prefix naming
+> the channel.  And eliminate the -cpr-uri argument. Examples:
 > 
-> static char *scsi_property_get_loadparm(Object *obj, Error **errp)
-> {
->      return g_strdup(SCSI_DISK_BASE(obj)->loadparm);
-> }
+> (qemu) migrate -d main:tcp:0:44444,cpr:unix:cpr.sock
 > 
-> expecting NUL-termination as well.
-> 
->> -    lp_str = g_malloc0(strlen(value));
-> 
-> I have sent a pull request that simply adds the +1 here, also because...
-> 
->> -    if (!qdev_prop_sanitize_s390x_loadparm(lp_str, value, errp)) {
->> -        g_free(lp_str);
->> -        return;
->> -    }
->> -    SCSI_DISK_BASE(obj)->loadparm = lp_str;
->> +    qdev_prop_sanitize_s390x_loadparm(SCSI_DISK_BASE(obj)->loadparm, 
->> value, errp);
-> 
-> ... this would overwrite SCSI_DISK_BASE(obj)->loadparm in case of error. 
->   Note how the code is setting loadparm only after a successful 
-> qdev_prop_sanitize_s390x_loadparm.  That's not a problem in practice, 
-> because failing to set a property is usually fatal, but not good style 
-> either.
+> qemu -incoming main:tcp:0:44444,cpr:unix:cpr.sock
+> qemu -incoming main:defer,cpr:unix:cpr.sock
 
-I guess I was not well awake :) Please disregard this patch.
+As a general rule, if you ever find yourself asking "should we add more
+magic parsing logic" to the command line argv, the answer should always
+be 'no'.
+
+Any command line args where we need to have more expressive formatting
+are getting converted to accept JSON syntax, backed by QAPI modelling.
+We were anticipating that '-incoming' should ideally end up deprecated
+except for the plain "defer" option, on the expectation that any non-
+trivial use of migration needs HMP/QMP regardless. If there's a vaild
+use case for something other than 'defer', then we need to QAPI-ify
+-incoming with JSON syntax IMHO.
+
+Yes, there's still the question of HMP, but personally I'm fine with
+leaving feature gaps in HMP and expecting people to use QMP. HMP shares
+all the same flaws as our old approach to the CLI, of needing to invent
+arbitrary magic syntaxes which has proved to be an undesirble path to
+take in general. I see HMP as being there for the 80% common / simple
+cases, and if you need to go beyond that, then QMP is there for you.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
