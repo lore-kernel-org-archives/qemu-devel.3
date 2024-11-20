@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4527D6E2A6
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 03:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F41D6E2B2
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 05:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDbPG-0000jN-5U; Tue, 19 Nov 2024 22:29:30 -0500
+	id 1tDcrQ-00011T-4w; Wed, 20 Nov 2024 00:02:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tDbPF-0000jC-AC
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 22:29:29 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tDcrN-00010a-L6; Wed, 20 Nov 2024 00:02:37 -0500
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tDbPC-0005ge-7E
- for qemu-devel@nongnu.org; Tue, 19 Nov 2024 22:29:29 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5cece886771so830404a12.0
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 19:29:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tDcrL-0004zS-Uw; Wed, 20 Nov 2024 00:02:37 -0500
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-5146695d946so349537e0c.1; 
+ Tue, 19 Nov 2024 21:02:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1732073363; x=1732678163; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=d9FNDMZWhBR7aH0tswUouILGmKCRyN4WQaWMicQZgY0=;
- b=MZBNorHDkadNgjfD0YvZ6YH4jOpejCmUYfPbQSD8lWNJGDhi7DUA0yFPCoSvgwiPHE
- URvTQxeLc87Lz88jTKo5jgtgy1dMj8xP0eg/X8k2kQKmDQ/GOAKXt7FCK8CjQ4R9iLRS
- OKkHS8k2lmktwfaTBG0pGz532t5n7N8L5NXisL0x9qg4xTCaIGkuA8DW5y5xGwikF0Ge
- AMJe5drbsMODKDmKAgeZIbKfydUFvbesS3sSfzUR3Ia/E7ZFtzdsV6Pui0mgRSDcBFk5
- 6L3zHnhe3IFLpDi1tcAcs/hr/XfNIOmVvuHUlY//tSMhTnijQ0hzrsr0tw2Xx/QHW9oe
- YWNw==
+ d=gmail.com; s=20230601; t=1732078953; x=1732683753; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=T87UIYq+6zTmn1WnrFMcCyx2vI6o1NHCSD51WBsFOQs=;
+ b=Mt8uK7nBTo+LdIfRS1YbfUZlVeQi2n21Sn4WtxwKlKN6zFTxkErDljBSk5P8Nyf8Ye
+ IeydC2AWzyR9YZo5qv6POux7F9yzbcv1xRxGmPKO1P46f9J71T6TJbUtdJQFmv6o/maZ
+ LANS7mNiW1MPuaVE/cZmk38h/pB+RcRELN7sPRQcj8lcZa07kq1DGDKdMo93iFzjDZiq
+ VKJESJIQlhCMkoHoxZn2j+m1A7tn/saW5Z+AKsOJUZPLeiG2QsZ3lY86Lm3D56JEpPiH
+ 3A9maM6VUMgBaXz0JFADvG112dblovpiGMmXlDlCzIzTyHGyEDl6fvLavkfzvboq/Jc5
+ +ikA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732073363; x=1732678163;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=d9FNDMZWhBR7aH0tswUouILGmKCRyN4WQaWMicQZgY0=;
- b=vVaKTVzKgVriiPkdgXamu1Zd00XHCf6WNhX/UHS2mSzgBYIAPnGdX8agauqRbQsIXX
- uAYMVG24dZs8jEpkI8dkUGly7fj0oveLwhLV6xADAOV1p8WKcxHiX8G+bigSVIt8r4Mc
- NC09Qln1BbXJLlM616xnBnz6IVkodejhqjYvej4nPFlnjLB1E3AayBQNDwrxuSZN61Y6
- CTUY45M4HaPMsLwby61qSPZwJN/3U0KYFH7+ivqFitpk3YXZGfPkOC9EGJGIulYFvw6D
- 4SGSYlaK4/E8Tm5J7K6YKYLn5RLDnzGtbN8AOWBrLheS7vPvBjd8vUEymrepae+XTyY0
- vlfg==
-X-Gm-Message-State: AOJu0YxgCZKUZBKJH2suboOzZcWtjforTXCw7v1JsQYLx42gDucjwjIY
- P97Vnob8v4Fj5IZJ0TTT4pFFwNeklds/kUh6d0SaZyfLm2uT5G7ldE4ZwBPb4HujrTyHFcBEi1W
- LlzIsnVhRWPiBf6PBCaqgbSnq4NYnYMxSDfeQ4A==
-X-Google-Smtp-Source: AGHT+IEA7L6m4l0kVkTl8sUapnZ0caOUjWf5FTlxN4Afi6ySDc+hX6ZkN7VoZmv8vo8gkGxw7vIC5NSOeHqvKu74qn8=
-X-Received: by 2002:a05:6402:2747:b0:5cf:71ba:fc79 with SMTP id
- 4fb4d7f45d1cf-5cff3a0106dmr1433160a12.10.1732073363000; Tue, 19 Nov 2024
- 19:29:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732078953; x=1732683753;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=T87UIYq+6zTmn1WnrFMcCyx2vI6o1NHCSD51WBsFOQs=;
+ b=TSahOznwe3KtzHXc6fMHNvpjAuc+pVPjd7gXhZ2dKukxFXi9aYKNl65SFcWiIDxded
+ UPTuVi6RQI1yQNBVnoJq8INy6nAmhbqtB1zjmxFpjLz+IyFG76anw2bW51C5uQrnSFB/
+ XhozzyBgledHfdZ1zg6CF9spK6KyIJCdSbXKsfMV3ZiT0dYaTchje7XI9GJ1oNzBHpKl
+ K9NXPXVbbLs9rfoWUNo9FTZQOb32MioUTkyz+kcJR57BVJy6NNn4o489koJKu1DXN+m6
+ oreA6zRDNkYq1G/XLDTWLLTvJM2PFx1WWFNLKCvpQZ+4LHbXZCVWQxEGeObvduMQtytZ
+ yWfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWeIfOIZn0IZdmvQsBfXo2EQyvWavo+W/t5dnVUgAMZ4e/00p6w2RVoJAPJNYoFmzLXB7lLRHvSIeDV@nongnu.org
+X-Gm-Message-State: AOJu0Yz2NVRHVD25V76GCTOOQwtLH71+jw/GCG56mDkvEqzk9uUR08VY
+ CLmcGi7ct5i1/m977up2OH/VWOqtr7R+R0OwUFzpuqVJMgW85RuO69vX0HRtzn07boH3AycTgWv
+ ABcTmGUIVojKdn+YjHwRcMEZLQcc=
+X-Google-Smtp-Source: AGHT+IHmL4WRRKL0d3kHNemQQDn8Y+CvG4YuVpVcbW5Z7hkZWXbDJWyYENGBm12s9uCK+XLqXLiA5lkWc3NPZyLljOM=
+X-Received: by 2002:a05:6122:d87:b0:50d:5095:f01c with SMTP id
+ 71dfb90a1353d-514cf08da18mr1368454e0c.7.1732078953139; Tue, 19 Nov 2024
+ 21:02:33 -0800 (PST)
 MIME-Version: 1.0
-References: <20241021030358.12454-1-frank.chang@sifive.com>
- <20241021030358.12454-3-frank.chang@sifive.com>
- <CAKmqyKM=umHQqh=zYbyR8UZbTbnmNXE33pm=UV2bbffF48_Okw@mail.gmail.com>
-In-Reply-To: <CAKmqyKM=umHQqh=zYbyR8UZbTbnmNXE33pm=UV2bbffF48_Okw@mail.gmail.com>
-From: Frank Chang <frank.chang@sifive.com>
-Date: Wed, 20 Nov 2024 11:29:11 +0800
-Message-ID: <CAE_xrPj8qeEOPmit_m7VnmT8p036Q7VD0TRS_4Jj-2LfQk2wOQ@mail.gmail.com>
-Subject: Re: [PATCH v8 2/5] target/riscv: Handle Smrnmi interrupt and exception
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+References: <20241114091332.108811-1-cleger@rivosinc.com>
+ <20241114091332.108811-2-cleger@rivosinc.com>
+ <CAKmqyKO+v0AyvTER4a3JMzEN=b+NSa=BYdULt6=cGmmj46b_Jw@mail.gmail.com>
+ <7c88eba0-c010-4aef-ad57-ede292129aff@rivosinc.com>
+In-Reply-To: <7c88eba0-c010-4aef-ad57-ede292129aff@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 20 Nov 2024 15:02:07 +1000
+Message-ID: <CAKmqyKMH_YAgomy325ZmpGCNkDMrb5pwJU9GBgNicFAsAc0J6A@mail.gmail.com>
+Subject: Re: [PATCH v5 1/9] target/riscv: fix henvcfg potentially containing
+ stale bits
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
- Tommy Wu <tommy.wu@sifive.com>
-Content-Type: multipart/alternative; boundary="00000000000086e88506274fc16f"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=frank.chang@sifive.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>, 
+ Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,839 +99,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000086e88506274fc16f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Nov 19, 2024 at 9:27=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger@riv=
+osinc.com> wrote:
+>
+>
+>
+> On 19/11/2024 05:16, Alistair Francis wrote:
+> > On Thu, Nov 14, 2024 at 7:14=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger=
+@rivosinc.com> wrote:
+> >>
+> >> With the current implementation, if we had the current scenario:
+> >> - set bit x in menvcfg
+> >> - set bit x in henvcfg
+> >> - clear bit x in menvcfg
+> >> then, the internal variable env->henvcfg would still contain bit x due
+> >> to both a wrong menvcfg mask used in write_henvcfg() as well as a
+> >> missing update of henvcfg upon menvcfg update.
+> >> This can lead to some wrong interpretation of the context. In order to
+> >> update henvcfg upon menvcfg writing, call write_henvcfg() after writin=
+g
+> >> menvcfg and fix the mask computation used in write_henvcfg() that is
+> >> used to mesk env->menvcfg value (which could still lead to some stale
+> >> bits). The same mechanism is also applied for henvcfgh writing.
+> >>
+> >> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <cleger@rivosinc.com>
+> >> ---
+> >>  target/riscv/csr.c | 40 +++++++++++++++++++++++++++++++++++-----
+> >>  1 file changed, 35 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> >> index b84b436151..73ac4d5449 100644
+> >> --- a/target/riscv/csr.c
+> >> +++ b/target/riscv/csr.c
+> >> @@ -2345,6 +2345,8 @@ static RISCVException read_menvcfg(CPURISCVState=
+ *env, int csrno,
+> >>      return RISCV_EXCP_NONE;
+> >>  }
+> >>
+> >> +static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+> >> +                                    target_ulong val);
+> >>  static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+> >>                                      target_ulong val)
+> >>  {
+> >> @@ -2357,6 +2359,7 @@ static RISCVException write_menvcfg(CPURISCVStat=
+e *env, int csrno,
+> >>                  (cfg->ext_svadu ? MENVCFG_ADUE : 0);
+> >>      }
+> >>      env->menvcfg =3D (env->menvcfg & ~mask) | (val & mask);
+> >> +    write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
+> >>
+> >>      return RISCV_EXCP_NONE;
+> >>  }
+> >> @@ -2368,6 +2371,8 @@ static RISCVException read_menvcfgh(CPURISCVStat=
+e *env, int csrno,
+> >>      return RISCV_EXCP_NONE;
+> >>  }
+> >>
+> >> +static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
+> >> +                                    target_ulong val);
+> >>  static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
+> >>                                       target_ulong val)
+> >>  {
+> >> @@ -2378,6 +2383,7 @@ static RISCVException write_menvcfgh(CPURISCVSta=
+te *env, int csrno,
+> >>      uint64_t valh =3D (uint64_t)val << 32;
+> >>
+> >>      env->menvcfg =3D (env->menvcfg & ~mask) | (valh & mask);
+> >> +    write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
+> >>
+> >>      return RISCV_EXCP_NONE;
+> >>  }
+> >> @@ -2435,6 +2441,7 @@ static RISCVException write_henvcfg(CPURISCVStat=
+e *env, int csrno,
+> >>                                      target_ulong val)
+> >>  {
+> >>      uint64_t mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | H=
+ENVCFG_CBZE;
+> >> +    uint64_t henvcfg_mask =3D mask, menvcfg_mask;
+> >>      RISCVException ret;
+> >>
+> >>      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+> >> @@ -2443,10 +2450,24 @@ static RISCVException write_henvcfg(CPURISCVSt=
+ate *env, int csrno,
+> >>      }
+> >>
+> >>      if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
+> >> -        mask |=3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENV=
+CFG_ADUE);
+> >> +        /*
+> >> +         * Since henvcfg depends on a menvcfg subset, we want to clea=
+r all the
+> >> +         * menvcfg supported feature (whatever their state is) before=
+ enabling
+> >> +         * some new one using the provided value. Not doing so would =
+result in
+> >> +         * keeping stale menvcfg bits in henvcfg value if a bit was e=
+nabled in
+> >> +         * menvcfg and then disabled before updating henvcfg for inst=
+ance.
+> >> +         */
+> >> +        menvcfg_mask =3D HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE;
+> >> +        mask |=3D env->menvcfg & menvcfg_mask;
+> >> +        henvcfg_mask |=3D menvcfg_mask;
+> >>      }
+> >>
+> >> -    env->henvcfg =3D (env->henvcfg & ~mask) | (val & mask);
+> >> +    /*
+> >> +     * 'henvcfg_mask' contains all supported bits (both in henvcfg an=
+d menvcfg
+> >> +     * common bits) and 'mask' contains henvcfg exclusive bits as wel=
+l as
+> >> +     * menvcfg enabled bits only.
+> >> +     */
+> >> +    env->henvcfg =3D (env->henvcfg & ~henvcfg_mask) | (val & mask);
+> >
+> > Won't `env->henvcfg & ~henvcfg_mask` still contain the stale data?
+> > `henvcfg_mask` isn't based on the current value of `env->menvcfg`
+>
+> Hey Alistair,
+>
+> That's the point, env->henvcfg is cleared with henvcfg_mask which
+> contains the set of HENVCFG_* and MENVCFG_* "raw" bits so that the new
+> value that is written does not contain any menvcfg stale bits. "mask"
+> however is actually masked with menvcfg value to ensure the new bits
+> that are going to be written won't contain any incoherent bits.
 
-On Mon, Nov 18, 2024 at 11:13=E2=80=AFAM Alistair Francis <alistair23@gmail=
-.com>
-wrote:
+I'm not sure I follow...
 
-> On Mon, Oct 21, 2024 at 1:06=E2=80=AFPM <frank.chang@sifive.com> wrote:
-> >
-> > From: Tommy Wu <tommy.wu@sifive.com>
-> >
-> > Because the RNMI interrupt trap handler address is implementation
-> defined.
-> > We add the 'rnmi-interrupt-vector' and 'rnmi-exception-vector' as the
-> property
-> > of the harts. It=E2=80=99s very easy for users to set the address based=
- on their
-> > expectation. This patch also adds the functionality to handle the RNMI
-> signals.
-> >
-> > Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> > Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
-> > ---
-> >  hw/riscv/riscv_hart.c         | 18 ++++++++
-> >  include/hw/riscv/riscv_hart.h |  4 ++
-> >  target/riscv/cpu.c            | 11 +++++
-> >  target/riscv/cpu.h            |  6 +++
-> >  target/riscv/cpu_bits.h       | 12 +++++
-> >  target/riscv/cpu_helper.c     | 82 ++++++++++++++++++++++++++++++++---
-> >  6 files changed, 128 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-> > index 613ea2aaa0..b7d73f7a82 100644
-> > --- a/hw/riscv/riscv_hart.c
-> > +++ b/hw/riscv/riscv_hart.c
-> > @@ -33,6 +33,12 @@ static Property riscv_harts_props[] =3D {
-> >      DEFINE_PROP_STRING("cpu-type", RISCVHartArrayState, cpu_type),
-> >      DEFINE_PROP_UINT64("resetvec", RISCVHartArrayState, resetvec,
-> >                         DEFAULT_RSTVEC),
-> > +    DEFINE_PROP_ARRAY("rnmi-interrupt-vector", RISCVHartArrayState,
-> > +                      num_rnmi_irqvec, rnmi_irqvec, qdev_prop_uint64,
-> > +                      uint64_t),
-> > +    DEFINE_PROP_ARRAY("rnmi-exception-vector", RISCVHartArrayState,
-> > +                      num_rnmi_excpvec, rnmi_excpvec, qdev_prop_uint64=
-,
-> > +                      uint64_t),
->
-> These will need some documentation somewhere, it's not really clear
-> from the names what these do.
->
+The commit message says:
 
-Hi Alistair,
+"""
+- set bit x in menvcfg
+- set bit x in henvcfg
+- clear bit x in menvcfg
+"""
 
-Thanks for the suggestion, I will add more comment to describe the purposes
-of these new properties.
+Which to me means henvcfg should be cleared when a bit in menvcfg is
+cleared. But env->henvcfg is instead cleared based on `henvcfg_mask`
+which isn't affected by menvcfg.
 
+So clearing a bit in menvcfg will only not allow a bit to be set, but
+not clear any existing bits
+
+Alistair
 
 >
-> >      DEFINE_PROP_END_OF_LIST(),
-> >  };
-> >
-> > @@ -47,6 +53,18 @@ static bool riscv_hart_realize(RISCVHartArrayState
-> *s, int idx,
-> >  {
-> >      object_initialize_child(OBJECT(s), "harts[*]", &s->harts[idx],
-> cpu_type);
-> >      qdev_prop_set_uint64(DEVICE(&s->harts[idx]), "resetvec",
-> s->resetvec);
-> > +    if (s->harts[idx].cfg.ext_smrnmi) {
-> > +        if (s->rnmi_irqvec) {
-> > +            qdev_prop_set_uint64(DEVICE(&s->harts[idx]),
-> > +                                 "rnmi-interrupt-vector",
-> > +                                 s->rnmi_irqvec[idx]);
-> > +        }
-> > +        if (s->rnmi_excpvec) {
-> > +            qdev_prop_set_uint64(DEVICE(&s->harts[idx]),
-> > +                                 "rnmi-exception-vector",
-> > +                                 s->rnmi_excpvec[idx]);
-> > +        }
-> > +    }
+> I guess this still needs a few more explanations if that is not clear
+> enough, sorry for that.
 >
-> We should probably warn the user if we are ignoring the values that
-> they specified because the extension isn't enabled
+> Thanks,
 >
-
-I think we could probably remove if (s->rnmi_irqvec) check as it's still
-possible
-that people define their RNMI interrupt and exception handler at address:
-0x0,
-and we don't have a way to distinguish them from the default values (0x0).
-
-Regards,
-Frank Chang
-
-
->
-> Alistair
->
-> >      s->harts[idx].env.mhartid =3D s->hartid_base + idx;
-> >      qemu_register_reset(riscv_harts_cpu_reset, &s->harts[idx]);
-> >      return qdev_realize(DEVICE(&s->harts[idx]), NULL, errp);
-> > diff --git a/include/hw/riscv/riscv_hart.h
-> b/include/hw/riscv/riscv_hart.h
-> > index 912b4a2682..a6ed73a195 100644
-> > --- a/include/hw/riscv/riscv_hart.h
-> > +++ b/include/hw/riscv/riscv_hart.h
-> > @@ -38,6 +38,10 @@ struct RISCVHartArrayState {
-> >      uint32_t hartid_base;
-> >      char *cpu_type;
-> >      uint64_t resetvec;
-> > +    uint32_t num_rnmi_irqvec;
-> > +    uint64_t *rnmi_irqvec;
-> > +    uint32_t num_rnmi_excpvec;
-> > +    uint64_t *rnmi_excpvec;
-> >      RISCVCPU *harts;
-> >  };
+> Cl=C3=A9ment
 > >
-> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > index 2a78cd639b..5ce6ed31ec 100644
-> > --- a/target/riscv/cpu.c
-> > +++ b/target/riscv/cpu.c
-> > @@ -1297,6 +1297,11 @@ static void riscv_cpu_set_irq(void *opaque, int
-> irq, int level)
-> >          g_assert_not_reached();
-> >      }
-> >  }
-> > +
-> > +static void riscv_cpu_set_nmi(void *opaque, int irq, int level)
-> > +{
-> > +    riscv_cpu_set_rnmi(RISCV_CPU(opaque), irq, level);
-> > +}
-> >  #endif /* CONFIG_USER_ONLY */
-> >
-> >  static bool riscv_cpu_is_dynamic(Object *cpu_obj)
-> > @@ -1320,6 +1325,8 @@ static void riscv_cpu_init(Object *obj)
-> >  #ifndef CONFIG_USER_ONLY
-> >      qdev_init_gpio_in(DEVICE(obj), riscv_cpu_set_irq,
-> >                        IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX);
-> > +    qdev_init_gpio_in_named(DEVICE(cpu), riscv_cpu_set_nmi,
-> > +                            "riscv.cpu.rnmi", RNMI_MAX);
-> >  #endif /* CONFIG_USER_ONLY */
-> >
-> >      general_user_opts =3D g_hash_table_new(g_str_hash, g_str_equal);
-> > @@ -2670,6 +2677,10 @@ static Property riscv_cpu_properties[] =3D {
-> >
-> >  #ifndef CONFIG_USER_ONLY
-> >      DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec,
-> DEFAULT_RSTVEC),
-> > +    DEFINE_PROP_UINT64("rnmi-interrupt-vector", RISCVCPU,
-> env.rnmi_irqvec,
-> > +                       DEFAULT_RNMI_IRQVEC),
-> > +    DEFINE_PROP_UINT64("rnmi-exception-vector", RISCVCPU,
-> env.rnmi_excpvec,
-> > +                       DEFAULT_RNMI_EXCPVEC),
-> >  #endif
-> >
-> >      DEFINE_PROP_BOOL("short-isa-string", RISCVCPU,
-> cfg.short_isa_string, false),
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index a63a29744c..8b2a863c50 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -472,6 +472,11 @@ struct CPUArchState {
-> >      uint64_t kvm_timer_state;
-> >      uint64_t kvm_timer_frequency;
-> >  #endif /* CONFIG_KVM */
-> > +
-> > +    /* RNMI */
-> > +    target_ulong rnmip;
-> > +    uint64_t rnmi_irqvec;
-> > +    uint64_t rnmi_excpvec;
-> >  };
-> >
-> >  /*
-> > @@ -568,6 +573,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState
-> *env);
-> >  int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
-> >  uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask,
-> >                                uint64_t value);
-> > +void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level);
-> >  void riscv_cpu_interrupt(CPURISCVState *env);
-> >  #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip
-> value */
-> >  void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *=
-),
-> > diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> > index 7e3f629356..6df2cbc2be 100644
-> > --- a/target/riscv/cpu_bits.h
-> > +++ b/target/riscv/cpu_bits.h
-> > @@ -662,6 +662,12 @@ typedef enum {
-> >  /* Default Reset Vector address */
-> >  #define DEFAULT_RSTVEC      0x1000
-> >
-> > +/* Default RNMI Interrupt Vector address */
-> > +#define DEFAULT_RNMI_IRQVEC     0x0
-> > +
-> > +/* Default RNMI Exception Vector address */
-> > +#define DEFAULT_RNMI_EXCPVEC    0x0
-> > +
-> >  /* Exception causes */
-> >  typedef enum RISCVException {
-> >      RISCV_EXCP_NONE =3D -1, /* sentinel value */
-> > @@ -711,6 +717,9 @@ typedef enum RISCVException {
-> >  /* -1 is due to bit zero of hgeip and hgeie being ROZ. */
-> >  #define IRQ_LOCAL_GUEST_MAX                (TARGET_LONG_BITS - 1)
-> >
-> > +/* RNMI causes */
-> > +#define RNMI_MAX                           16
-> > +
-> >  /* mip masks */
-> >  #define MIP_USIP                           (1 << IRQ_U_SOFT)
-> >  #define MIP_SSIP                           (1 << IRQ_S_SOFT)
-> > @@ -942,6 +951,9 @@ typedef enum RISCVException {
-> >  #define MHPMEVENT_IDX_MASK                 0xFFFFF
-> >  #define MHPMEVENT_SSCOF_RESVD              16
-> >
-> > +/* RISC-V-specific interrupt pending bits. */
-> > +#define CPU_INTERRUPT_RNMI                 CPU_INTERRUPT_TGT_EXT_0
-> > +
-> >  /* JVT CSR bits */
-> >  #define JVT_MODE                           0x3F
-> >  #define JVT_BASE                           (~0x3F)
-> > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> > index 203c0a92ab..977bf97c16 100644
-> > --- a/target/riscv/cpu_helper.c
-> > +++ b/target/riscv/cpu_helper.c
-> > @@ -434,6 +434,18 @@ static int
-> riscv_cpu_local_irq_pending(CPURISCVState *env)
-> >      uint64_t vsbits, irq_delegated;
-> >      int virq;
-> >
-> > +    /* Priority: RNMI > Other interrupt. */
-> > +    if (riscv_cpu_cfg(env)->ext_smrnmi) {
-> > +        /* If mnstatus.NMIE =3D=3D 0, all interrupts are disabled. */
-> > +        if (!get_field(env->mnstatus, MNSTATUS_NMIE)) {
-> > +            return RISCV_EXCP_NONE;
-> > +        }
-> > +
-> > +        if (env->rnmip) {
-> > +            return ctz64(env->rnmip); /* since non-zero */
-> > +        }
-> > +    }
-> > +
-> >      /* Determine interrupt enable state of all privilege modes */
-> >      if (env->virt_enabled) {
-> >          mie =3D 1;
-> > @@ -496,7 +508,9 @@ static int riscv_cpu_local_irq_pending(CPURISCVStat=
-e
-> *env)
-> >
-> >  bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-> >  {
-> > -    if (interrupt_request & CPU_INTERRUPT_HARD) {
-> > +    uint32_t mask =3D CPU_INTERRUPT_HARD | CPU_INTERRUPT_RNMI;
-> > +
-> > +    if (interrupt_request & mask) {
-> >          RISCVCPU *cpu =3D RISCV_CPU(cs);
-> >          CPURISCVState *env =3D &cpu->env;
-> >          int interruptno =3D riscv_cpu_local_irq_pending(env);
-> > @@ -619,6 +633,30 @@ void riscv_cpu_set_geilen(CPURISCVState *env,
-> target_ulong geilen)
-> >      env->geilen =3D geilen;
-> >  }
-> >
-> > +void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level)
-> > +{
-> > +    CPURISCVState *env =3D &cpu->env;
-> > +    CPUState *cs =3D CPU(cpu);
-> > +    bool release_lock =3D false;
-> > +
-> > +    if (!bql_locked()) {
-> > +        release_lock =3D true;
-> > +        bql_lock();
-> > +    }
-> > +
-> > +    if (level) {
-> > +        env->rnmip |=3D 1 << irq;
-> > +        cpu_interrupt(cs, CPU_INTERRUPT_RNMI);
-> > +    } else {
-> > +        env->rnmip &=3D ~(1 << irq);
-> > +        cpu_reset_interrupt(cs, CPU_INTERRUPT_RNMI);
-> > +    }
-> > +
-> > +    if (release_lock) {
-> > +        bql_unlock();
-> > +    }
-> > +}
-> > +
-> >  int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts)
-> >  {
-> >      CPURISCVState *env =3D &cpu->env;
-> > @@ -1661,6 +1699,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-> >      bool virt =3D env->virt_enabled;
-> >      bool write_gva =3D false;
-> >      uint64_t s;
-> > +    int mode;
-> >
-> >      /*
-> >       * cs->exception is 32-bits wide unlike mcause which is XLEN-bits
-> wide
-> > @@ -1679,6 +1718,23 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-> >      target_ulong mtval2 =3D 0;
-> >      int sxlen =3D 0;
-> >      int mxlen =3D 0;
-> > +    bool nnmi_excep =3D false;
-> > +
-> > +    if (cpu->cfg.ext_smrnmi && env->rnmip && async) {
-> > +        env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_NMIE, fals=
-e);
-> > +        env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_MNPV,
-> > +                                  env->virt_enabled);
-> > +        env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_MNPP,
-> > +                                  env->priv);
-> > +        env->mncause =3D cause | ((target_ulong)1U << (TARGET_LONG_BIT=
-S -
-> 1));
-> > +        env->mnepc =3D env->pc;
-> > +        env->pc =3D env->rnmi_irqvec;
-> > +
-> > +        /* Trapping to M mode, virt is disabled */
-> > +        riscv_cpu_set_mode(env, PRV_M, false);
-> > +
-> > +        return;
-> > +    }
-> >
-> >      if (!async) {
-> >          /* set tval to badaddr for traps with address information */
-> > @@ -1766,8 +1822,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-> >                    __func__, env->mhartid, async, cause, env->pc, tval,
-> >                    riscv_cpu_get_trap_name(cause, async));
-> >
-> > -    if (env->priv <=3D PRV_S && cause < 64 &&
-> > -        (((deleg >> cause) & 1) || s_injected || vs_injected)) {
-> > +    mode =3D env->priv <=3D PRV_S && cause < 64 &&
-> > +        (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S =
-:
-> PRV_M;
-> > +
-> > +    if (mode =3D=3D PRV_S) {
-> >          /* handle the trap in S-mode */
-> >          if (riscv_has_ext(env, RVH)) {
-> >              uint64_t hdeleg =3D async ? env->hideleg : env->hedeleg;
-> > @@ -1845,8 +1903,22 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-> >          env->mtval =3D tval;
-> >          env->mtval2 =3D mtval2;
-> >          env->mtinst =3D tinst;
-> > -        env->pc =3D (env->mtvec >> 2 << 2) +
-> > -                  ((async && (env->mtvec & 3) =3D=3D 1) ? cause * 4 : =
-0);
-> > +
-> > +        /*
-> > +         * If the hart encounters an exception while executing in
-> M-mode,
-> > +         * with the mnstatus.NMIE bit clear, the program counter is se=
-t
-> to
-> > +         * the RNMI exception trap handler address.
-> > +         */
-> > +        nnmi_excep =3D cpu->cfg.ext_smrnmi &&
-> > +                     !get_field(env->mnstatus, MNSTATUS_NMIE) &&
-> > +                     !async;
-> > +
-> > +        if (nnmi_excep) {
-> > +            env->pc =3D env->rnmi_excpvec;
-> > +        } else {
-> > +            env->pc =3D (env->mtvec >> 2 << 2) +
-> > +                      ((async && (env->mtvec & 3) =3D=3D 1) ? cause * =
-4 :
-> 0);
-> > +        }
-> >          riscv_cpu_set_mode(env, PRV_M, virt);
-> >      }
-> >
-> > --
-> > 2.43.2
-> >
-> >
->
-
---00000000000086e88506274fc16f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">On Mon, Nov 18, 2024 at 11:13=E2=80=AFAM =
-Alistair Francis &lt;<a href=3D"mailto:alistair23@gmail.com">alistair23@gma=
-il.com</a>&gt; wrote:</div><div class=3D"gmail_quote"><blockquote class=3D"=
-gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex">On Mon, Oct 21, 2024 at 1:06=E2=80=AFPM &lt;<a=
- href=3D"mailto:frank.chang@sifive.com" target=3D"_blank">frank.chang@sifiv=
-e.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; From: Tommy Wu &lt;<a href=3D"mailto:tommy.wu@sifive.com" target=3D"_b=
-lank">tommy.wu@sifive.com</a>&gt;<br>
-&gt;<br>
-&gt; Because the RNMI interrupt trap handler address is implementation defi=
-ned.<br>
-&gt; We add the &#39;rnmi-interrupt-vector&#39; and &#39;rnmi-exception-vec=
-tor&#39; as the property<br>
-&gt; of the harts. It=E2=80=99s very easy for users to set the address base=
-d on their<br>
-&gt; expectation. This patch also adds the functionality to handle the RNMI=
- signals.<br>
-&gt;<br>
-&gt; Signed-off-by: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.co=
-m" target=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
-&gt; Signed-off-by: Tommy Wu &lt;<a href=3D"mailto:tommy.wu@sifive.com" tar=
-get=3D"_blank">tommy.wu@sifive.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/riscv/riscv_hart.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 18 ++++=
-++++<br>
-&gt;=C2=A0 include/hw/riscv/riscv_hart.h |=C2=A0 4 ++<br>
-&gt;=C2=A0 target/riscv/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 11=
- +++++<br>
-&gt;=C2=A0 target/riscv/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=
-=A0 6 +++<br>
-&gt;=C2=A0 target/riscv/cpu_bits.h=C2=A0 =C2=A0 =C2=A0 =C2=A0| 12 +++++<br>
-&gt;=C2=A0 target/riscv/cpu_helper.c=C2=A0 =C2=A0 =C2=A0| 82 ++++++++++++++=
-++++++++++++++++++---<br>
-&gt;=C2=A0 6 files changed, 128 insertions(+), 5 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c<br>
-&gt; index 613ea2aaa0..b7d73f7a82 100644<br>
-&gt; --- a/hw/riscv/riscv_hart.c<br>
-&gt; +++ b/hw/riscv/riscv_hart.c<br>
-&gt; @@ -33,6 +33,12 @@ static Property riscv_harts_props[] =3D {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DEFINE_PROP_STRING(&quot;cpu-type&quot;, RISCVHart=
-ArrayState, cpu_type),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DEFINE_PROP_UINT64(&quot;resetvec&quot;, RISCVHart=
-ArrayState, resetvec,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0DEFAULT_RSTVEC),<br>
-&gt; +=C2=A0 =C2=A0 DEFINE_PROP_ARRAY(&quot;rnmi-interrupt-vector&quot;, RI=
-SCVHartArrayState,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 num_rnmi_irqvec, rnmi_irqvec, qdev_prop_uint64,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 uint64_t),<br>
-&gt; +=C2=A0 =C2=A0 DEFINE_PROP_ARRAY(&quot;rnmi-exception-vector&quot;, RI=
-SCVHartArrayState,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 num_rnmi_excpvec, rnmi_excpvec, qdev_prop_uint64,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 uint64_t),<br>
-<br>
-These will need some documentation somewhere, it&#39;s not really clear<br>
-from the names what these do.<br></blockquote><div><br></div><div>Hi Alista=
-ir,</div><div><br></div><div>Thanks for the suggestion, I will add more com=
-ment to describe the purposes</div><div>of these new properties.</div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DEFINE_PROP_END_OF_LIST(),<br>
-&gt;=C2=A0 };<br>
-&gt;<br>
-&gt; @@ -47,6 +53,18 @@ static bool riscv_hart_realize(RISCVHartArrayState =
-*s, int idx,<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 object_initialize_child(OBJECT(s), &quot;harts[*]&=
-quot;, &amp;s-&gt;harts[idx], cpu_type);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qdev_prop_set_uint64(DEVICE(&amp;s-&gt;harts[idx])=
-, &quot;resetvec&quot;, s-&gt;resetvec);<br>
-&gt; +=C2=A0 =C2=A0 if (s-&gt;harts[idx].cfg.ext_smrnmi) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (s-&gt;rnmi_irqvec) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qdev_prop_set_uint64(DEVICE=
-(&amp;s-&gt;harts[idx]),<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;rnmi-interrupt-vecto=
-r&quot;,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;rnmi_irqvec[idx]);<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (s-&gt;rnmi_excpvec) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qdev_prop_set_uint64(DEVICE=
-(&amp;s-&gt;harts[idx]),<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;rnmi-exception-vecto=
-r&quot;,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;rnmi_excpvec[idx]);<=
-br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-<br>
-We should probably warn the user if we are ignoring the values that<br>
-they specified because the extension isn&#39;t enabled<br></blockquote><div=
-><br></div><div>I think we could probably=C2=A0remove if (s-&gt;rnmi_irqvec=
-) check as it&#39;s still possible</div><div>that people define their RNMI =
-interrupt and exception handler at address: 0x0,</div><div>and we don&#39;t=
- have a way to distinguish them from the default values (0x0).</div><div><b=
-r></div><div>Regards,</div><div>Frank Chang</div><div>=C2=A0</div><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex">
-<br>
-Alistair<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 s-&gt;harts[idx].env.mhartid =3D s-&gt;hartid_base=
- + idx;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qemu_register_reset(riscv_harts_cpu_reset, &amp;s-=
-&gt;harts[idx]);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 return qdev_realize(DEVICE(&amp;s-&gt;harts[idx]),=
- NULL, errp);<br>
-&gt; diff --git a/include/hw/riscv/riscv_hart.h b/include/hw/riscv/riscv_ha=
-rt.h<br>
-&gt; index 912b4a2682..a6ed73a195 100644<br>
-&gt; --- a/include/hw/riscv/riscv_hart.h<br>
-&gt; +++ b/include/hw/riscv/riscv_hart.h<br>
-&gt; @@ -38,6 +38,10 @@ struct RISCVHartArrayState {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint32_t hartid_base;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 char *cpu_type;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint64_t resetvec;<br>
-&gt; +=C2=A0 =C2=A0 uint32_t num_rnmi_irqvec;<br>
-&gt; +=C2=A0 =C2=A0 uint64_t *rnmi_irqvec;<br>
-&gt; +=C2=A0 =C2=A0 uint32_t num_rnmi_excpvec;<br>
-&gt; +=C2=A0 =C2=A0 uint64_t *rnmi_excpvec;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 RISCVCPU *harts;<br>
-&gt;=C2=A0 };<br>
-&gt;<br>
-&gt; diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c<br>
-&gt; index 2a78cd639b..5ce6ed31ec 100644<br>
-&gt; --- a/target/riscv/cpu.c<br>
-&gt; +++ b/target/riscv/cpu.c<br>
-&gt; @@ -1297,6 +1297,11 @@ static void riscv_cpu_set_irq(void *opaque, int=
- irq, int level)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert_not_reached();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 }<br>
-&gt; +<br>
-&gt; +static void riscv_cpu_set_nmi(void *opaque, int irq, int level)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 riscv_cpu_set_rnmi(RISCV_CPU(opaque), irq, level);<br>
-&gt; +}<br>
-&gt;=C2=A0 #endif /* CONFIG_USER_ONLY */<br>
-&gt;<br>
-&gt;=C2=A0 static bool riscv_cpu_is_dynamic(Object *cpu_obj)<br>
-&gt; @@ -1320,6 +1325,8 @@ static void riscv_cpu_init(Object *obj)<br>
-&gt;=C2=A0 #ifndef CONFIG_USER_ONLY<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qdev_init_gpio_in(DEVICE(obj), riscv_cpu_set_irq,<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX);<br>
-&gt; +=C2=A0 =C2=A0 qdev_init_gpio_in_named(DEVICE(cpu), riscv_cpu_set_nmi,=
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;riscv.cpu.rnmi&quot;, RNMI_MAX);<br>
-&gt;=C2=A0 #endif /* CONFIG_USER_ONLY */<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 general_user_opts =3D g_hash_table_new(g_str_hash,=
- g_str_equal);<br>
-&gt; @@ -2670,6 +2677,10 @@ static Property riscv_cpu_properties[] =3D {<br=
->
-&gt;<br>
-&gt;=C2=A0 #ifndef CONFIG_USER_ONLY<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DEFINE_PROP_UINT64(&quot;resetvec&quot;, RISCVCPU,=
- env.resetvec, DEFAULT_RSTVEC),<br>
-&gt; +=C2=A0 =C2=A0 DEFINE_PROP_UINT64(&quot;rnmi-interrupt-vector&quot;, R=
-ISCVCPU, env.rnmi_irqvec,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0DEFAULT_RNMI_IRQVEC),<br>
-&gt; +=C2=A0 =C2=A0 DEFINE_PROP_UINT64(&quot;rnmi-exception-vector&quot;, R=
-ISCVCPU, env.rnmi_excpvec,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0DEFAULT_RNMI_EXCPVEC),<br>
-&gt;=C2=A0 #endif<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DEFINE_PROP_BOOL(&quot;short-isa-string&quot;, RIS=
-CVCPU, cfg.short_isa_string, false),<br>
-&gt; diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h<br>
-&gt; index a63a29744c..8b2a863c50 100644<br>
-&gt; --- a/target/riscv/cpu.h<br>
-&gt; +++ b/target/riscv/cpu.h<br>
-&gt; @@ -472,6 +472,11 @@ struct CPUArchState {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint64_t kvm_timer_state;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint64_t kvm_timer_frequency;<br>
-&gt;=C2=A0 #endif /* CONFIG_KVM */<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /* RNMI */<br>
-&gt; +=C2=A0 =C2=A0 target_ulong rnmip;<br>
-&gt; +=C2=A0 =C2=A0 uint64_t rnmi_irqvec;<br>
-&gt; +=C2=A0 =C2=A0 uint64_t rnmi_excpvec;<br>
-&gt;=C2=A0 };<br>
-&gt;<br>
-&gt;=C2=A0 /*<br>
-&gt; @@ -568,6 +573,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState =
-*env);<br>
-&gt;=C2=A0 int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupt=
-s);<br>
-&gt;=C2=A0 uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask,=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t value);<br>
-&gt; +void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level);<br>
-&gt;=C2=A0 void riscv_cpu_interrupt(CPURISCVState *env);<br>
-&gt;=C2=A0 #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_=
-mip value */<br>
-&gt;=C2=A0 void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(=
-void *),<br>
-&gt; diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h<br>
-&gt; index 7e3f629356..6df2cbc2be 100644<br>
-&gt; --- a/target/riscv/cpu_bits.h<br>
-&gt; +++ b/target/riscv/cpu_bits.h<br>
-&gt; @@ -662,6 +662,12 @@ typedef enum {<br>
-&gt;=C2=A0 /* Default Reset Vector address */<br>
-&gt;=C2=A0 #define DEFAULT_RSTVEC=C2=A0 =C2=A0 =C2=A0 0x1000<br>
-&gt;<br>
-&gt; +/* Default RNMI Interrupt Vector address */<br>
-&gt; +#define DEFAULT_RNMI_IRQVEC=C2=A0 =C2=A0 =C2=A00x0<br>
-&gt; +<br>
-&gt; +/* Default RNMI Exception Vector address */<br>
-&gt; +#define DEFAULT_RNMI_EXCPVEC=C2=A0 =C2=A0 0x0<br>
-&gt; +<br>
-&gt;=C2=A0 /* Exception causes */<br>
-&gt;=C2=A0 typedef enum RISCVException {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 RISCV_EXCP_NONE =3D -1, /* sentinel value */<br>
-&gt; @@ -711,6 +717,9 @@ typedef enum RISCVException {<br>
-&gt;=C2=A0 /* -1 is due to bit zero of hgeip and hgeie being ROZ. */<br>
-&gt;=C2=A0 #define IRQ_LOCAL_GUEST_MAX=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 (TARGET_LONG_BITS - 1)<br>
-&gt;<br>
-&gt; +/* RNMI causes */<br>
-&gt; +#define RNMI_MAX=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A016<br>
-&gt; +<br>
-&gt;=C2=A0 /* mip masks */<br>
-&gt;=C2=A0 #define MIP_USIP=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(1 &lt;&lt; IRQ_U_SOFT)<br=
->
-&gt;=C2=A0 #define MIP_SSIP=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(1 &lt;&lt; IRQ_S_SOFT)<br=
->
-&gt; @@ -942,6 +951,9 @@ typedef enum RISCVException {<br>
-&gt;=C2=A0 #define MHPMEVENT_IDX_MASK=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A00xFFFFF<br>
-&gt;=C2=A0 #define MHPMEVENT_SSCOF_RESVD=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 16<br>
-&gt;<br>
-&gt; +/* RISC-V-specific interrupt pending bits. */<br>
-&gt; +#define CPU_INTERRUPT_RNMI=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0CPU_INTERRUPT_TGT_EXT_0<br>
-&gt; +<br>
-&gt;=C2=A0 /* JVT CSR bits */<br>
-&gt;=C2=A0 #define JVT_MODE=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x3F<br>
-&gt;=C2=A0 #define JVT_BASE=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(~0x3F)<br>
-&gt; diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c<br>
-&gt; index 203c0a92ab..977bf97c16 100644<br>
-&gt; --- a/target/riscv/cpu_helper.c<br>
-&gt; +++ b/target/riscv/cpu_helper.c<br>
-&gt; @@ -434,6 +434,18 @@ static int riscv_cpu_local_irq_pending(CPURISCVSt=
-ate *env)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint64_t vsbits, irq_delegated;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 int virq;<br>
-&gt;<br>
-&gt; +=C2=A0 =C2=A0 /* Priority: RNMI &gt; Other interrupt. */<br>
-&gt; +=C2=A0 =C2=A0 if (riscv_cpu_cfg(env)-&gt;ext_smrnmi) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* If mnstatus.NMIE =3D=3D 0, all interru=
-pts are disabled. */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!get_field(env-&gt;mnstatus, MNSTATUS=
-_NMIE)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return RISCV_EXCP_NONE;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (env-&gt;rnmip) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return ctz64(env-&gt;rnmip)=
-; /* since non-zero */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 /* Determine interrupt enable state of all privile=
-ge modes */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (env-&gt;virt_enabled) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mie =3D 1;<br>
-&gt; @@ -496,7 +508,9 @@ static int riscv_cpu_local_irq_pending(CPURISCVSta=
-te *env)<br>
-&gt;<br>
-&gt;=C2=A0 bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_reques=
-t)<br>
-&gt;=C2=A0 {<br>
-&gt; -=C2=A0 =C2=A0 if (interrupt_request &amp; CPU_INTERRUPT_HARD) {<br>
-&gt; +=C2=A0 =C2=A0 uint32_t mask =3D CPU_INTERRUPT_HARD | CPU_INTERRUPT_RN=
-MI;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (interrupt_request &amp; mask) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 RISCVCPU *cpu =3D RISCV_CPU(cs);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CPURISCVState *env =3D &amp;cpu-&gt;=
-env;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int interruptno =3D riscv_cpu_local_=
-irq_pending(env);<br>
-&gt; @@ -619,6 +633,30 @@ void riscv_cpu_set_geilen(CPURISCVState *env, tar=
-get_ulong geilen)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 env-&gt;geilen =3D geilen;<br>
-&gt;=C2=A0 }<br>
-&gt;<br>
-&gt; +void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 CPURISCVState *env =3D &amp;cpu-&gt;env;<br>
-&gt; +=C2=A0 =C2=A0 CPUState *cs =3D CPU(cpu);<br>
-&gt; +=C2=A0 =C2=A0 bool release_lock =3D false;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!bql_locked()) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 release_lock =3D true;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 bql_lock();<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (level) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;rnmip |=3D 1 &lt;&lt; irq;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_interrupt(cs, CPU_INTERRUPT_RNMI);<br=
->
-&gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;rnmip &amp;=3D ~(1 &lt;&lt; irq);=
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_reset_interrupt(cs, CPU_INTERRUPT_RNM=
-I);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (release_lock) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 bql_unlock();<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +}<br>
-&gt; +<br>
-&gt;=C2=A0 int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupt=
-s)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 CPURISCVState *env =3D &amp;cpu-&gt;env;<br>
-&gt; @@ -1661,6 +1699,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bool virt =3D env-&gt;virt_enabled;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bool write_gva =3D false;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint64_t s;<br>
-&gt; +=C2=A0 =C2=A0 int mode;<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* cs-&gt;exception is 32-bits wide unlike mc=
-ause which is XLEN-bits wide<br>
-&gt; @@ -1679,6 +1718,23 @@ void riscv_cpu_do_interrupt(CPUState *cs)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 target_ulong mtval2 =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 int sxlen =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 int mxlen =3D 0;<br>
-&gt; +=C2=A0 =C2=A0 bool nnmi_excep =3D false;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (cpu-&gt;cfg.ext_smrnmi &amp;&amp; env-&gt;rnmip &am=
-p;&amp; async) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mnstatus =3D set_field(env-&gt;mn=
-status, MNSTATUS_NMIE, false);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mnstatus =3D set_field(env-&gt;mn=
-status, MNSTATUS_MNPV,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;virt_enabled);<br=
->
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mnstatus =3D set_field(env-&gt;mn=
-status, MNSTATUS_MNPP,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;priv);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mncause =3D cause | ((target_ulon=
-g)1U &lt;&lt; (TARGET_LONG_BITS - 1));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mnepc =3D env-&gt;pc;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;pc =3D env-&gt;rnmi_irqvec;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Trapping to M mode, virt is disabled *=
-/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 riscv_cpu_set_mode(env, PRV_M, false);<br=
->
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (!async) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* set tval to badaddr for traps wit=
-h address information */<br>
-&gt; @@ -1766,8 +1822,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 _=
-_func__, env-&gt;mhartid, async, cause, env-&gt;pc, tval,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 r=
-iscv_cpu_get_trap_name(cause, async));<br>
-&gt;<br>
-&gt; -=C2=A0 =C2=A0 if (env-&gt;priv &lt;=3D PRV_S &amp;&amp; cause &lt; 64=
- &amp;&amp;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 (((deleg &gt;&gt; cause) &amp; 1) || s_in=
-jected || vs_injected)) {<br>
-&gt; +=C2=A0 =C2=A0 mode =3D env-&gt;priv &lt;=3D PRV_S &amp;&amp; cause &l=
-t; 64 &amp;&amp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 (((deleg &gt;&gt; cause) &amp; 1) || s_in=
-jected || vs_injected) ? PRV_S : PRV_M;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (mode =3D=3D PRV_S) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* handle the trap in S-mode */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (riscv_has_ext(env, RVH)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t hdeleg =3D as=
-ync ? env-&gt;hideleg : env-&gt;hedeleg;<br>
-&gt; @@ -1845,8 +1903,22 @@ void riscv_cpu_do_interrupt(CPUState *cs)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mtval =3D tval;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mtval2 =3D mtval2;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mtinst =3D tinst;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;pc =3D (env-&gt;mtvec &gt;&gt; 2 =
-&lt;&lt; 2) +<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ((asyn=
-c &amp;&amp; (env-&gt;mtvec &amp; 3) =3D=3D 1) ? cause * 4 : 0);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* If the hart encounters an excepti=
-on while executing in M-mode,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* with the mnstatus.NMIE bit clear,=
- the program counter is set to<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* the RNMI exception trap handler a=
-ddress.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 nnmi_excep =3D cpu-&gt;cfg.ext_smrnmi &am=
-p;&amp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0!get_field(env-&gt;mnstatus, MNSTATUS_NMIE) &amp;&amp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0!async;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (nnmi_excep) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;pc =3D env-&gt;rnmi=
-_excpvec;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;pc =3D (env-&gt;mtv=
-ec &gt;&gt; 2 &lt;&lt; 2) +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 ((async &amp;&amp; (env-&gt;mtvec &amp; 3) =3D=3D 1) ? cause * 4 : =
-0);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 riscv_cpu_set_mode(env, PRV_M, virt)=
-;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;<br>
-&gt; --<br>
-&gt; 2.43.2<br>
-&gt;<br>
-&gt;<br>
-</blockquote></div></div>
-
---00000000000086e88506274fc16f--
+> > Alistair
 
