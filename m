@@ -4,80 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4089ED63938
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 13:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8218D63939
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 13:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDkWx-0007p9-UJ; Wed, 20 Nov 2024 08:14:03 -0500
+	id 1tDkce-0000qn-0i; Wed, 20 Nov 2024 08:19:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDkWu-0007om-TA
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 08:14:01 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tDkcb-0000q1-TS
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 08:19:53 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tDkWt-000623-5E
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 08:14:00 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-382296631f1so1439705f8f.3
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 05:13:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tDkca-00085I-8A
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 08:19:53 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5cef772621eso8644355a12.3
+ for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 05:19:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732108436; x=1732713236; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eC9lggUC6qfyEGbLNEAp7diuvO0tVr8dq7kz+aSp/xU=;
- b=HUnf5J8uXNMKZiZNS31G3DnqC+58I9HuxhdsfSniRWjYIw/lNeg9pM8nQ3oVYLFWsT
- 7xbUZ0mAX1DtFGPmLTOfYvBm3DRevoRo6yn8YsIEJ6hEr6f3dpXhm5yXMY+JamL8kYhu
- vi4a4s4DvZ5IKmTtgSVkReyd1wt7z9i0s9xUzrcxH3Ts11Mg4EiDw5SMLsFy3rPBcrr3
- 1jmwv6BoDAUROmSKG1RI9J4nD2IYfMYMClJN0gXwV+prFR9Ts8CIVHHs6YrA9jgA7Rk9
- K+PCL5H8uGMxjcJNMVRUgjvVRCChr4RUHWQ8Se6U9sjWsOiHz3+/uOxHZ0kb+U3phcvE
- fuIw==
+ d=linaro.org; s=google; t=1732108790; x=1732713590; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=znWE5xJUoLsvveVy1LDnHfTbc4eDwLFD7E9DL5cBHUs=;
+ b=FfHT/UaAILCgtpw4usUbskzyLukA0GXNx+sRRsYaXB/cbiiizc2cacp1lIvHcRo0az
+ oZ/1BiyaSvkQqeXluFW1Moi18agS+zunn9FIDUSNJEA72a/lPuq+jJLhXOBSp7LoGSk8
+ EUWGQGBIotnqI9hC54Cym74OOYKg1l2nM5yQFj9Gr/DkrfyYzwLL6HKaFrgrNsecRymF
+ aDuGcR1pPTBgjp8Inz9nJLsnWOYATNzZ3ipXqxXSjAK0nBRsG85fQ9l485MR1FoiXNer
+ MxCtRDbDv9TkDLr+XaabOWf0PIdMnC2qIyPa05f7IMrSaLYGE7pIKs96akNO4Y8ucjYB
+ iw4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732108436; x=1732713236;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eC9lggUC6qfyEGbLNEAp7diuvO0tVr8dq7kz+aSp/xU=;
- b=XB90DfDeRE0n/93DzHa0RdYkLFfUWB0n5Z9p1R6IWv0wgrBmpyTBXFBrzQnocYWF3B
- 1w9UUzlkX2mzPY/3dhRF22dENvUdyaLks3Ro3fbenUf2aLWsHp4hCuzamPSPwNzXOTYk
- /6VCuB9FB6yG0Ce0b9dHpgIuzIg+VzOZpS5jwvALnQISsqL4/ZFSxPi5cqZy6E08YjQ1
- EGEghoW+D5xxB4rf5fz2lC679Ef2IAOLsnCXvqiEiaEME8nEwU+IXJObQoS6gH1oII/Y
- WjsPE2/Kqo0k4aVX1ENHBbrmLp4tKQL0mfgyivjxDjTuy178v5y1xsKVM1k4kYvomvig
- EB7A==
-X-Gm-Message-State: AOJu0YxTahGaAvq9rOq68xkq28AmEoYEwycrEsW3YQzZ5c2pZI9yk387
- F4yDP2PHqJmwITiC+oQiVZ0af+vh6yIa7GvjXdzzWKg8f22LcBwvlQqPURCxLbE=
-X-Gm-Gg: ASbGncvvkNBK3wjlQycoxFXgn8v+zRXZvmsT8GbXo3E7ituO+hQkqUkmTpQmOezHSLp
- Jnt8azgc9yaIGZfWrd2RXDAI5YvSSMCGqbM0o3NL1Ai8Wn3KHFJ6ISnhIxNsVOziTTD4FrcI5SS
- JL1BW4S6fE1ysRY91/cf/NOikighnwVcxRLvyjaS/6rv6WveQe5jbd9L9l4xTLwgs8+EB41I9FU
- Y3NVkX1N6eJIjapReom5MiL2z2jKUnQMYoznw3JRg6J5UyiJzK4/9Ka7sFwE4Me
-X-Google-Smtp-Source: AGHT+IF+LsiIL9+814Fjimjv6vvsKT3JRcjW6GA/FeFj3GlHrizD/5p6Bc6b4Bysv50oR4MRoWZaSA==
-X-Received: by 2002:a5d:6c63:0:b0:382:2492:3218 with SMTP id
- ffacd0b85a97d-38254b17467mr2036678f8f.47.1732108436476; 
- Wed, 20 Nov 2024 05:13:56 -0800 (PST)
-Received: from [192.168.69.197] ([176.187.208.27])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825493ea20sm2039709f8f.93.2024.11.20.05.13.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Nov 2024 05:13:55 -0800 (PST)
-Message-ID: <bcf9176b-b1c3-4b31-ba09-c1be7900c79d@linaro.org>
-Date: Wed, 20 Nov 2024 14:13:53 +0100
+ d=1e100.net; s=20230601; t=1732108790; x=1732713590;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=znWE5xJUoLsvveVy1LDnHfTbc4eDwLFD7E9DL5cBHUs=;
+ b=ICRf8OZc5xVTdWrcIzn71LbPD7jo6ZgSeMi7KOLEpicFXB6wF8D5w2LU4XV6KybLHU
+ CcRDVyjFita6bUQqYEPw2QEqBLbxS7F+OQJ+6bK/niWhs7lkmgQbWRVSZSKpGyFSHvES
+ Udv2BfMrRH2BzHJfyEsj3+s9zX3gbdk3v1c2+mGOh6l5ShVC9AAlNVZMcDd37jhr4vtq
+ jaAiQLhLavu8QiHpZ5tumDo0WUqMpWcxZ/h9mw0x88PYTaOT5BlaM/a1JJxttzSTZepG
+ zZZsEdnp8fn0hQ9qyTv6uCPjTRRF6jjAPBhSNw7JfIQqwJc6Qmc7cEUT1zvJ2Bq5ez8k
+ ghgg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNoMnLVyUeATtjyM43iOBTsD2q35d6i3XENYcpfKwjWaEa/eNeZ+VbqH92GzGyqcWoGnhk6Sg1l8l+@nongnu.org
+X-Gm-Message-State: AOJu0Yy0XHj8fZu1TMULBGp0LOh+k5+z5T+gYgZtxuf/b1MJ0Mb0O2Kx
+ 6t5/qHdpuUP7rlQ3xBcQ2KrxiJgFaxc9yJD9rFPJKH8AqC2fxag6ePXJ7EeJoRRUBA/0EMhnYXu
+ 0X/UNU6Zjf1mYN0404ASlQYZ0SpLTXXu6iGFiXw==
+X-Google-Smtp-Source: AGHT+IEVp7SBNfx2NeY0QKyGLicPBHsNgNjjvX4rC7n9Qmtlesb7vXM17bhMHA3z5Ay5mPaacoMNTgzGXYlBRT9f8CA=
+X-Received: by 2002:a05:6402:5216:b0:5cf:c97c:8218 with SMTP id
+ 4fb4d7f45d1cf-5cff4cbe2e3mr1739396a12.22.1732108790420; Wed, 20 Nov 2024
+ 05:19:50 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] hw/arm/armv7m: Expose and access System Control Space
- as little endian
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Tony Nguyen <tony.nguyen@bt.com>
-References: <20240924191932.49386-1-philmd@linaro.org>
- <CAFEAcA-X+BUGcq0EGOC05DWqjNd+WSs_Ufqv8=gpRfF0uAmUYg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-X+BUGcq0EGOC05DWqjNd+WSs_Ufqv8=gpRfF0uAmUYg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+References: <20241120105106.50669-1-kwolf@redhat.com>
+In-Reply-To: <20241120105106.50669-1-kwolf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 20 Nov 2024 13:19:39 +0000
+Message-ID: <CAFEAcA9M_-4=UdOTwV251qOxuELAxXtJW8QaZWTs4bUq7dJwxw@mail.gmail.com>
+Subject: Re: [PULL v3 0/8] Block layer patches
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,37 +89,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/9/24 13:04, Peter Maydell wrote:
-> On Tue, 24 Sept 2024 at 20:19, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Per the Armv7-M Architecture Reference Manual (ARM DDI 0403E):
->>
->>    The System Control Space (SCS, address range 0xE000E000 to
->>    0xE000EFFF) is a memory-mapped 4KB address space that provides
->>    32-bit registers for configuration, status reporting and control.
->>    All accesses to the SCS are little endian.
->>
->> Expose the region as a little-endian one and force dispatched
->> accesses to also be in little endianness.
->>
->> Fixes: d5d680cacc ("memory: Access MemoryRegion with endianness")
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> What's the rationale for this change? All Arm system emulator
-> builds are TARGET_LITTLE_ENDIAN, so MO_TE and MO_LE have
-> identical behaviour, as do DEVICE_LITTLE_ENDIAN and
-> DEVICE_TARGET_ENDIAN.
+On Wed, 20 Nov 2024 at 10:52, Kevin Wolf <kwolf@redhat.com> wrote:
+>
+> The following changes since commit e6459afb1ff4d86b361b14f4a2fc43f0d2b4d679:
+>
+>   Merge tag 'pull-target-arm-20241119' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-11-19 14:23:34 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://repo.or.cz/qemu/kevin.git tags/for-upstream
+>
+> for you to fetch changes up to 83987bf722b6b692bc745b47901be76a1c97140b:
+>
+>   vl: use qmp_device_add() in qemu_create_cli_devices() (2024-11-20 11:47:49 +0100)
+>
+> ----------------------------------------------------------------
+> Block layer patches
+>
+> - Fix qmp_device_add() to not throw non-scalar options away (fixes
+>   iothread-vq-mapping being silently ignored in device_add)
+> - Fix qdev property crash with integer PCI addresses and JSON -device
+> - iotests: Fix mypy failure
+> - parallels: Avoid potential integer overflow
+> - Fix crash in migration_is_running()
 
-When building a single heterogeneous binary, all device
-models can be built. We want to remove MO_TE, either
-using the proper endianness (like in this case) or use
-both, one MemoryRegionOps per endianness, letting the
-machine picking up the proper one.
+Hi; the hotplug_blk.py:HotPlug.test avocado seems to be failing:
 
-I'll reword the description to be clearer.
+https://gitlab.com/qemu-project/qemu/-/jobs/8423313170
+https://gitlab.com/qemu-project/qemu/-/jobs/8423313162
 
-Regards,
+[stdlog] 2024-11-20 12:49:35,669 avocado.test test L0740 ERROR| FAIL
+1-tests/avocado/hotplug_blk.py:HotPlug.test -> AssertionError: 1 != 0
+: Guest command failed: test -e /sys/block/vda
 
-Phil.
+https://qemu-project.gitlab.io/-/qemu/-/jobs/8423313162/artifacts/build/tests/results/latest/test-results/09-tests_avocado_hotplug_blk.py_HotPlug.test/debug.log
 
+Looks like the test called device_add, it succeeded, but
+it didn't see the /sys/block/vda node appear in the guest.
+
+(The test logic of "try the command, if it fails sleep for 1
+second then try a second time and if that fails call it a
+test error" doesn't seem super robust in the face of slow
+CI runners, but OTOH it failed the same way on both jobs,
+so I don't think that is the culprit here.)
+
+thanks
+-- PMM
 
