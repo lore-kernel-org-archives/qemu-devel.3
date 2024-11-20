@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9476D711C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 16:26:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C39F8D711C0
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 16:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDnX7-0008BG-KR; Wed, 20 Nov 2024 11:26:25 -0500
+	id 1tDnXL-0008EI-Ur; Wed, 20 Nov 2024 11:26:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tDnX4-00088N-Ft; Wed, 20 Nov 2024 11:26:22 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tDnXK-0008E5-6U
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 11:26:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tDnX2-0002q7-5k; Wed, 20 Nov 2024 11:26:22 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xtmrt33HLz6K5xS;
- Thu, 21 Nov 2024 00:23:58 +0800 (CST)
-Received: from frapeml100006.china.huawei.com (unknown [7.182.85.201])
- by mail.maildlp.com (Postfix) with ESMTPS id D4A701402C7;
- Thu, 21 Nov 2024 00:26:15 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100006.china.huawei.com (7.182.85.201) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 20 Nov 2024 17:26:15 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Wed, 20 Nov 2024 17:26:15 +0100
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
- SMMU nodes
-Thread-Topic: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
- SMMU nodes
-Thread-Index: AQHbMd3CYnIzOIz3QUan4PDL8HOdprK8zVGAgAAjLhCAABtdAIAAIywQgAAmhYCAAus70IAAGD4AgAAU00A=
-Date: Wed, 20 Nov 2024 16:26:15 +0000
-Message-ID: <e13f2e9c0a6341e8b25b7945bc7bf413@huawei.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <20241108125242.60136-5-shameerali.kolothum.thodi@huawei.com>
- <1dcea5ca-806f-4f51-8b13-faf5d62eb086@redhat.com>
- <efb9fb7fb0f04d92b7776cdbc474585d@huawei.com>
- <48bb0455-7c2e-4cc6-aa15-ebe4311d8430@redhat.com>
- <0803ec1a010a46b9811543e1044c3176@huawei.com>
- <aafc5fba-8d68-4796-a846-265362e7acac@redhat.com>
- <30ff8ac9ee9b4012aa6962c86ac06375@huawei.com>
- <41a67d4e-f7b8-4586-8d52-c32df400b675@redhat.com>
-In-Reply-To: <41a67d4e-f7b8-4586-8d52-c32df400b675@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tDnXI-0002ry-FB
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 11:26:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732119992;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wZHAT265Emdk3sie3jF9Z8/5I7LNCj/9GaSPNcwhcXE=;
+ b=D7o2E4M8wUXf1sWC0NDB13yolIVJn7j8BQ9hf3YUNSqoe0LwrcrLfvCX5ojU6wNvS+RYlD
+ +1pV0BJYFpEEvLFhRM8PSAGqvZvvIlYe6adUVlzD3UGwxdG9uD0ITsu3GbcAflnNWo/466
+ ofN4dm2x5E3KfEn9tAvYUUFqzB7E3h8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-uUqsketfOf6IDlifehVX4A-1; Wed,
+ 20 Nov 2024 11:26:27 -0500
+X-MC-Unique: uUqsketfOf6IDlifehVX4A-1
+X-Mimecast-MFC-AGG-ID: uUqsketfOf6IDlifehVX4A
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A5D241954B10; Wed, 20 Nov 2024 16:26:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.50])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 14A4919560A3; Wed, 20 Nov 2024 16:26:20 +0000 (UTC)
+Date: Wed, 20 Nov 2024 16:26:17 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V3 11/16] migration: cpr-transfer mode
+Message-ID: <Zz4NqcTDK73MKOaa@redhat.com>
+References: <1730468875-249970-1-git-send-email-steven.sistare@oracle.com>
+ <1730468875-249970-12-git-send-email-steven.sistare@oracle.com>
+ <ZzUg9w0Kvfuleuxk@x1n>
+ <51967cb2-05ec-485b-a639-8ff58d565604@oracle.com>
+ <ZzZJvTldpe3D4EO5@x1n>
+ <c53feba3-d448-4494-8dbf-0725a2dd8dba@oracle.com>
+ <ZzzyOJT_mDh37_Py@x1n>
+ <c56ffc81-b065-4dd0-ab06-eb79912dcaf7@oracle.com>
+ <Zz2uAWLAhaf2TQ01@redhat.com>
+ <fc5397de-8955-452e-87da-c5887e7f690d@oracle.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fc5397de-8955-452e-87da-c5887e7f690d@oracle.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,60 +98,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgRXJpYywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBFcmljIEF1
-Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+IFNlbnQ6IFdlZG5lc2RheSwgTm92ZW1iZXIg
-MjAsIDIwMjQgNDoxMSBQTQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaQ0KPiA8c2hh
-bWVlcmFsaS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPjsgcWVtdS1hcm1Abm9uZ251Lm9yZzsN
-Cj4gcWVtdS1kZXZlbEBub25nbnUub3JnDQo+IENjOiBwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7
-IGpnZ0BudmlkaWEuY29tOyBuaWNvbGluY0BudmlkaWEuY29tOw0KPiBkZHV0aWxlQHJlZGhhdC5j
-b207IExpbnV4YXJtIDxsaW51eGFybUBodWF3ZWkuY29tPjsgV2FuZ3pob3UgKEIpDQo+IDx3YW5n
-emhvdTFAaGlzaWxpY29uLmNvbT47IGppYW5na3Vua3VuIDxqaWFuZ2t1bmt1bkBodWF3ZWkuY29t
-PjsNCj4gSm9uYXRoYW4gQ2FtZXJvbiA8am9uYXRoYW4uY2FtZXJvbkBodWF3ZWkuY29tPjsNCj4g
-emhhbmdmZWkuZ2FvQGxpbmFyby5vcmcNCj4gU3ViamVjdDogUmU6IFtSRkMgUEFUQ0ggNC81XSBo
-dy9hcm0vdmlydC1hY3BpLWJ1aWxkOiBCdWlsZCBJT1JUIHdpdGgNCj4gbXVsdGlwbGUgU01NVSBu
-b2Rlcw0KPiANCj4gSGkgU2hhbWVlciwNCj4gDQo+IE9uIDExLzIwLzI0IDE1OjE2LCBTaGFtZWVy
-YWxpIEtvbG90aHVtIFRob2RpIHdyb3RlOg0KPiA+DQo+ID4+IC0tLS0tT3JpZ2luYWwgTWVzc2Fn
-ZS0tLS0tDQo+ID4+IEZyb206IEVyaWMgQXVnZXIgPGVyaWMuYXVnZXJAcmVkaGF0LmNvbT4NCj4g
-Pj4gU2VudDogTW9uZGF5LCBOb3ZlbWJlciAxOCwgMjAyNCA2OjEwIFBNDQo+ID4+IFRvOiBTaGFt
-ZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+ID4+IDxzaGFtZWVyYWxpLmtvbG90aHVtLnRob2RpQGh1
-YXdlaS5jb20+OyBxZW11LWFybUBub25nbnUub3JnOw0KPiA+PiBxZW11LWRldmVsQG5vbmdudS5v
-cmcNCj4gPj4gQ2M6IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsgamdnQG52aWRpYS5jb207IG5p
-Y29saW5jQG52aWRpYS5jb207DQo+ID4+IGRkdXRpbGVAcmVkaGF0LmNvbTsgTGludXhhcm0gPGxp
-bnV4YXJtQGh1YXdlaS5jb20+OyBXYW5nemhvdSAoQikNCj4gPj4gPHdhbmd6aG91MUBoaXNpbGlj
-b24uY29tPjsgamlhbmdrdW5rdW4gPGppYW5na3Vua3VuQGh1YXdlaS5jb20+Ow0KPiA+PiBKb25h
-dGhhbiBDYW1lcm9uIDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+Ow0KPiA+PiB6aGFuZ2Zl
-aS5nYW9AbGluYXJvLm9yZw0KPiA+PiBTdWJqZWN0OiBSZTogW1JGQyBQQVRDSCA0LzVdIGh3L2Fy
-bS92aXJ0LWFjcGktYnVpbGQ6IEJ1aWxkIElPUlQgd2l0aA0KPiA+PiBtdWx0aXBsZSBTTU1VIG5v
-ZGVzDQo+ID4gWy4uLl0NCj4gPg0KPiA+Pj4gSSB0aGluayB0aGUgYWJvdmUgd29uJ3QgYWZmZWN0
-IHRoZSBiYXNpYyBjYXNlIHdoZXJlIEkgaGF2ZSBvbmx5IG9uZQ0KPiA+Pj4gcGNpZS1weGIvU01N
-VXYzLiBCdXQgZXZlbiBpbiB0aGF0IGNhc2UgaG90IGFkZCBzZWVtcyBub3Qgd29ya2luZy4NCj4g
-Pj4+DQo+ID4+PiBJIHRyaWVkIGhhY2tpbmcgdGhlIG1pbi9tYXggcmFuZ2VzIGFzIHN1c3BlY3Rl
-ZCBieSBOaWNvbGluLiBCdXQgc3RpbGwgbm90DQo+ID4+IGVub3VnaCB0bw0KPiA+Pj4gZ2V0IGl0
-IHdvcmtpbmcuICBEbyB5b3UgaGF2ZSBhbnkgaGludCBvbiB3aHkgdGhlIGhvdCBhZGQoZGVzY3Jp
-YmVkDQo+ID4+IGJlbG93KSBpcyBub3QNCj4gPj4+IHdvcmtpbmc/DQo+ID4+IEh1bSB0aG91Z2h0
-IHRoZSBkdXBsaWNhdGUgaWRtYXAgY291bGQgYmUgdGhlIGNhdXNlLiBPdGhlcndpc2UgSSBoYXZl
-DQo+IG5vDQo+ID4+IGNsdWUuIEkgd291bGQgYWR2aWNlIHRvIGZpeCBpdCBmaXJzdC4NCj4gPiBJ
-IHRoaW5rIEkgaGF2ZSBhbiBpZGVhIHdoeSB0aGUgaG90IGFkZCB3YXMgbm90IHdvcmtpbmcuDQo+
-ID4NCj4gPiBXaGVuIHdlIGhhdmUgdGhlIFBDSWUgdG9wb2xvZ3kgYXMgc29tZXRoaW5nIGxpa2Ug
-YmVsb3csDQo+ID4NCj4gPiAtZGV2aWNlIHB4Yi1wY2llLGlkPXBjaWUuMSxidXNfbnI9OCxidXM9
-cGNpZS4wIFwNCj4gPiAtZGV2aWNlIHBjaWUtcm9vdC1wb3J0LGlkPXBjaWUucG9ydDEsYnVzPXBj
-aWUuMSxjaGFzc2lzPTEgXA0KPiA+IC1kZXZpY2UgcGNpZS1yb290LXBvcnQsaWQ9cGNpZS5wb3J0
-MixidXM9cGNpZS4xLGNoYXNzaXM9MiBcDQo+ID4gLWRldmljZSBhcm0tc21tdXYzLW5lc3RlZCxp
-ZD1zbW11djEscGNpLWJ1cz1wY2llLjEgXA0KPiA+IC4uLg0KPiA+DQo+ID4gVGhlIGN1cnJlbnQg
-SU9SVCBnZW5lcmF0aW9uIGluY2x1ZGVzIHRoZSBwY2llLXJvb3QtcG9ydCBkZXYgaWRzIGFsc28N
-Cj4gPiBpbiB0aGUgU01NVXYzIG5vZGUgaWRtYXBzLg0KPiA+DQo+ID4gSGVuY2UsIHdoZW4gR3Vl
-c3Qga2VybmVsIGxvYWRzLCBwY2llcG9ydCBpcyBhbHNvIGJlaGluZCB0aGUgU01NVXYzLg0KPiA+
-DQo+ID4gWyAgICAxLjQ2NjY3MF0gcGNpZXBvcnQgMDAwMDo2NDowMC4wOiBBZGRpbmcgdG8gaW9t
-bXUgZ3JvdXAgMQ0KPiA+IC4uLg0KPiA+IFsgICAgMS40NDgyMDVdIHBjaWVwb3J0IDAwMDA6NjQ6
-MDEuMDogQWRkaW5nIHRvIGlvbW11IGdyb3VwIDINCj4gDQo+IEJ1dCBpdCBzaG91bGQgYmUgdGhl
-IHNhbWUgd2l0aG91dCBtdWx0aS1pbnN0YW50aWF0aW9uLCBubz8gSSB3b3VsZCBoYXZlDQo+IGV4
-cGVjdGVkIHRoaXMgYXMgbm9ybWFsLiBIYXMgeW91IHRlc3RlZCBob3QtcGx1ZyB3aXRob3V0IHRo
-ZSBzZXJpZXMNCj4gbGF0ZXJseT8gRG8geW91IGhhdmUgdGhlIHNhbWUgcGI/DQoNClRoYXQgaXMg
-YSBnb29kIHF1ZXN0aW9uLiBJIHdpbGwgZ2l2ZSBpdCBhIHRyeSBzb29uIGFuZCB1cGRhdGUuDQoN
-ClRoYW5rcywNClNoYW1lZXIuDQo=
+On Wed, Nov 20, 2024 at 11:12:51AM -0500, Steven Sistare wrote:
+> On 11/20/2024 4:38 AM, Daniel P. Berrangé wrote:
+> > On Tue, Nov 19, 2024 at 03:32:55PM -0500, Steven Sistare wrote:
+> > > 
+> > > This begs the question, should we allow channels to be specified in hmp migrate
+> > > commands and for -incoming, in a very simple way?  Like with a prefix naming
+> > > the channel.  And eliminate the -cpr-uri argument. Examples:
+> > > 
+> > > (qemu) migrate -d main:tcp:0:44444,cpr:unix:cpr.sock
+> > > 
+> > > qemu -incoming main:tcp:0:44444,cpr:unix:cpr.sock
+> > > qemu -incoming main:defer,cpr:unix:cpr.sock
+> > 
+> > As a general rule, if you ever find yourself asking "should we add more
+> > magic parsing logic" to the command line argv, the answer should always
+> > be 'no'.
+> > 
+> > Any command line args where we need to have more expressive formatting
+> > are getting converted to accept JSON syntax, backed by QAPI modelling.
+> > We were anticipating that '-incoming' should ideally end up deprecated
+> > except for the plain "defer" option, on the expectation that any non-
+> > trivial use of migration needs HMP/QMP regardless. If there's a vaild
+> > use case for something other than 'defer', then we need to QAPI-ify
+> > -incoming with JSON syntax IMHO.
+> 
+> Hi Daniel, thank you for the guidance.
+> 
+> CPR needs to open and read its channel before the monitor is available,
+> so the cpr uri must be passed on the command line in some form.  Is that
+> sufficient reason to violate your general rule?
+
+Not really. IMHO it is still viable to define a CLI arg using JSON and
+QAPI, even if there's no need to use it from QMP.
+
+> If not, would you support the -cpr-uri command-line option?
+> 
+> If not, that leaves us with QAPI-ifying -incoming, which is messy, because
+> MigrationChannel has a nested type structure.  We would need to define
+> a flattened list of properties and duplicate much of the existing specification.
+> Unless, it could take a JSON object as its value, with all the {}:" syntax,
+> and be parsed with visit_type_MigrationChannel.  But I do not see any
+> precedent for that in other command-line arguments.
+
+Using JSON syntax exclusively is exactly what I'm suggesting. While some
+command line args have invented ways to express nested types, we don't
+really want to be in that business anymore. Anything complex should be
+JSON syntax on the command line. We support this with -object, -device,
+-audiodev, -netdev, -blockdev already, and eventually expect everything
+to support JSON syntax.
+
+You can see this in practice in libvirt, where we'll prefer JSON syntax
+for any args that support it:
+
+  https://gitlab.com/libvirt/libvirt/-/blob/master/tests/qemuxmlconfdata/x86_64-q35-graphics.x86_64-latest.args
+
+The approach to retrofitting to an existing cli arg is pretty crude but
+effective in QEMU. Just look if the first character is '{' and if so,
+switch to QAPI based parsing instead of legacy parsing.
+
+> Of these, I still think "qemu -incoming main:tcp:0:44444,cpr:unix:cpr.sock"
+> is the least worst option.  We could further simplify it by allowing the
+> option multiple times, and only recognizing the additional "cpr" prefix.
+> 
+>   qemu -incoming tcp:0:44444 -incoming cpr:unix:cpr.sock
+>   qemu -incoming defer -incoming cpr:unix:cpr.sock
+> 
+> Your further comments, please.  I need a way forward that you and other
+> maintainers will support.
+
+In terms of where we wire up CPR, -incoming or -cpr-uri is fairly
+arbitrary and I'm not seeing (easy) better answers.
+
+The (hard) better answer, would potentally be to leverage '-object'
+to create the migration state object but that would be a massive
+pile of work, that is unreasonable to ask you to experiment with.
+
+> 
+> > Yes, there's still the question of HMP, but personally I'm fine with
+> > leaving feature gaps in HMP and expecting people to use QMP. HMP shares
+> > all the same flaws as our old approach to the CLI, of needing to invent
+> > arbitrary magic syntaxes which has proved to be an undesirble path to
+> > take in general. I see HMP as being there for the 80% common / simple
+> > cases, and if you need to go beyond that, then QMP is there for you.
+> 
+> Fine with me.
+> 
+> - Steve
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
