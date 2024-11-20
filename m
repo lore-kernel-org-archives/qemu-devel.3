@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D966D743E7
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1513DD743E5
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDshP-0008CY-Kf; Wed, 20 Nov 2024 16:57:23 -0500
+	id 1tDshW-0008Nl-2S; Wed, 20 Nov 2024 16:57:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshM-0008CK-7I
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshS-0008HJ-Ca
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshD-0006L0-23
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:12 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshO-0006QR-BV
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732139829;
+ s=mimecast20190719; t=1732139841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=eD7+FugkD5uxWKXsl4KP6FXPPjpqepru+nhpsPr60gw=;
- b=hj3w4p9hXQzsZcBx0lh0ndPQY3oGFHxhqJXAYuKDBZU3cuc0YqTiM/MX413Ux+yByJiCu6
- 9+eGckEEbdcXPhU534iDe/3wxfXImEGlUeSpM/ObogKkCsPOGfT0adg9F9An44e1lSrK1a
- jAHaCnI2CWVwJdcC7eNAh9hZzFEqJy4=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PREdB4/GA5F1WtJr+XErnL2nDAuMQINonyrD4P78cKQ=;
+ b=fRz22foUYRNvPhtGVdBujBU9ofMI2h1kRY10VEs5mrkXcJQqktRI7+9u8KDEXxb6mnBsuR
+ W/x59P6vHMzZARFNM9EAYfFV3T/gTkGa77xF55xth1B8AZE9/+ElhVqgizajC2o9ylRWTo
+ 7/PogH+ztvcwYC+8FeAbZpMY5N/HyZY=
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
  [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-PfW5_WV8NuON98Fmp3ZC2w-1; Wed, 20 Nov 2024 16:57:08 -0500
-X-MC-Unique: PfW5_WV8NuON98Fmp3ZC2w-1
-X-Mimecast-MFC-AGG-ID: PfW5_WV8NuON98Fmp3ZC2w
+ us-mta-386-6EN9IQXcM6egjXUy8UK7Zw-1; Wed, 20 Nov 2024 16:57:20 -0500
+X-MC-Unique: 6EN9IQXcM6egjXUy8UK7Zw-1
+X-Mimecast-MFC-AGG-ID: 6EN9IQXcM6egjXUy8UK7Zw
 Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-460dd31b4c1so3148451cf.1
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 13:57:08 -0800 (PST)
+ d75a77b69052e-460c73093edso3031941cf.2
+ for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 13:57:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732139827; x=1732744627;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eD7+FugkD5uxWKXsl4KP6FXPPjpqepru+nhpsPr60gw=;
- b=ZDA78RBo69Jvnu/dwNdOBo6S+pOrlFtfMaIpCkf06YJ6/N3frSeK9Ne+5rpCHUnurQ
- qARdfig2d35Sy9F8kecDN9mWIKGFbuWRaZOEFcWOfCBLo2vvx61outvLvooJkkJCThi7
- b9zkPlkCBMDK8azLfOIbzPakZ8rKMZkr7ZFPNwmkNhbqVNfotWk9dXEai1AWJH202ePR
- nIdxJ0jJBWS8L41cgkKz2v2gHrzt5kRLd4OjH7sSTTDyZjyOesvmsAX1xhwiVhil3Oc4
- MHyhSkzhJvpKnxJiJS/E8eIQSmDBDOvsgTEv+W3xGkuHaVEwJM184TsqlPASsQR1EEq+
- wqpA==
-X-Gm-Message-State: AOJu0YyapzV+LZY2b3QP7FfDAISw509wiNXyJAs5aKc6kXSvjWKshAUz
- OWk6eKY9WqgeFEAgBNRQpsK538HYw93vfqpUwI6hThjEeX5Bcq1L1CBQQTR7yYnln+3AsGoehFV
- PtvgPqMPN9kNHgFgO/q6KnFvWxhst8zkzR6QMlqfMwLqZJw3JvrnMn9o+Dbe8lUJ883dxHRRI2B
- YvBBo2Rdzg4lCDP9Cnsow1/imn+1D7sQJkxg==
-X-Received: by 2002:a05:622a:1e85:b0:460:be37:7fc9 with SMTP id
- d75a77b69052e-464858aa89fmr66028721cf.56.1732139827156; 
- Wed, 20 Nov 2024 13:57:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGeu17J7WVKp1JOc/cT9DM+JoKQ2Ku0L6ttWOiat91K4TOkFCroJqMJFJRNE8Ud/vusRmCf7Q==
-X-Received: by 2002:a05:622a:1e85:b0:460:be37:7fc9 with SMTP id
- d75a77b69052e-464858aa89fmr66028371cf.56.1732139826810; 
- Wed, 20 Nov 2024 13:57:06 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732139839; x=1732744639;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PREdB4/GA5F1WtJr+XErnL2nDAuMQINonyrD4P78cKQ=;
+ b=unysTrCwL5+Z3I69R9wP9PGUc8EnTb8irhn8Xbe0dfo13JJKfsIFDA2mZd5xcRP0nU
+ I/zsPxKhF+XMS6y3PxvjmASqEBeShCjv9OCioFqdurBouuWjMR2RN227U26zBR6SIyFe
+ iZaoq+CzUhf8sD6yonvuiRTNz2kfrRw60Ldd6367mgbjl8B/4vIHGjDG9sHVhxEWtiiL
+ +C117OilCXbV2fXZFACu6oYILBaZfb8iTCDF+pu7KfHD5EYpzGhX5zMIYA+vKa7dCEw7
+ s8Ps2ngaWjfQHMgcwRywFRJO2zWsZemi3ZZ69jW5eFkURktE8PZX1MU+P/7ab2XgYCB5
+ 0Rsw==
+X-Gm-Message-State: AOJu0YyiMQfim8EzCJcGlVHH3Lp2gXEDmw7lYoEiquIKiPhggHV7d/mQ
+ qqU6XpoUKnqkR/uFV5YNCgd0if9FzFHwnOt1Rv1JYZmMPL6DOFiBv/97iG1tWPK+IGNu/W9WKI0
+ 61qvKrqhRGV3KhPgktjYaM8H0z6ZvX3sVLe7RP7kfmoqsTG22s3Ed7tBmGhzY5fuiNaz/E0AZ3q
+ kBxL7nJE0IX+1ayvPlhuswRB0xJbD6AoohAg==
+X-Received: by 2002:a05:622a:1bac:b0:460:edba:3696 with SMTP id
+ d75a77b69052e-464786ad4e0mr46595241cf.29.1732139839276; 
+ Wed, 20 Nov 2024 13:57:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHVGHBdtQ/JmTIKWWrebmM1RCJOykDeHiCaIMIIXn6l1dAkdlCCtyvFple3xNRztYKMrd4FaQ==
+X-Received: by 2002:a05:622a:1bac:b0:460:edba:3696 with SMTP id
+ d75a77b69052e-464786ad4e0mr46594901cf.29.1732139838917; 
+ Wed, 20 Nov 2024 13:57:18 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-464680d6826sm14632881cf.15.2024.11.20.13.57.04
+ d75a77b69052e-464680d6826sm14632881cf.15.2024.11.20.13.57.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Nov 2024 13:57:06 -0800 (PST)
+ Wed, 20 Nov 2024 13:57:18 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -73,22 +74,26 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Juraj Marcin <jmarcin@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 00/12] QOM: container_get() removal
-Date: Wed, 20 Nov 2024 16:56:51 -0500
-Message-ID: <20241120215703.3918445-1-peterx@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+Subject: [PATCH 06/12] hw/ppc: Explicitly create the drc container
+Date: Wed, 20 Nov 2024 16:56:57 -0500
+Message-ID: <20241120215703.3918445-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
+In-Reply-To: <20241120215703.3918445-1-peterx@redhat.com>
+References: <20241120215703.3918445-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,85 +111,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series is not for 9.2, but for 10.0.  It is intended to replace this
-previous patchset:
+QEMU will start to not rely on implicit creations of containers soon.  Make
+PPC drc devices follow by explicitly create the container whenever a drc
+device is realized, dropping container_get() calls.
 
-  [PATCH 0/5] QOM: Enforce container_get() to operate on containers only
-  https://lore.kernel.org/r/20241118221330.3480246-1-peterx@redhat.com
+No functional change intended.
 
-Since it's a different patchset, the versioning starts from v1.
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ hw/ppc/spapr_drc.c | 40 ++++++++++++++++++++++++++++++----------
+ 1 file changed, 30 insertions(+), 10 deletions(-)
 
-The series is about container_get() and its removal.  Meanwhile after the
-whole series applied, all the containers will be created explicitly.  No
-lookup code will implicitly create container anymore.
-
-In general, container_get() is a flaky interface in a few things.  Firstly,
-some of the users use it without getting a container object.  Secondly, it
-can implicitly create containers on the fly.
-
-As Dan (mostly) pointed out, we don't have a super complicated container
-layout.  It looks like this:
-
-  /objects
-  /chardevs
-  /backend         (conditional, ui/ only)
-  /dr-connector    (conditional, ppc/ only)
-  /machine
-    /peripheral
-    /peripheral-anon
-    /unattached
-
-This series create these containers explicitly.
-
-There's a side benefit of dropping container_get(), which is to avoid
-complicated string operations, as container_get() is never used in more
-than one depth.  It means switching to object_resolve_path_component()
-should make existing code even tiny little faster.
-
-To achieve this, some test needs to be fixed first.  For that, "tests: Fix
-test-qdev-global-props on anonymous qdev realize()".
-
-Comments welcomed, thanks.
-
-Peter Xu (12):
-  qom: Add TYPE_CONTAINER macro
-  qom: New container_create()
-  tests: Fix test-qdev-global-props on anonymous qdev realize()
-  tests: Explicitly create containers in test_qom_partial_path()
-  ui/console: Explicitly create "/backend" container
-  hw/ppc: Explicitly create the drc container
-  ppc/e500: Avoid abuse of container_get()
-  qdev: Make qdev_get_machine() not use container_get()
-  qdev: Add machine_get_container()
-  qom: Create system containers explicitly
-  qom: Add object_get_container()
-  qom: Drop container_get()
-
- include/hw/qdev-core.h              | 10 ++++++++
- include/qom/object.h                | 25 +++++++++++++-----
- backends/cryptodev.c                |  4 +--
- chardev/char.c                      |  2 +-
- hw/arm/stellaris.c                  |  2 +-
- hw/core/gpio.c                      |  3 +--
- hw/core/machine.c                   | 19 +++++++++++---
- hw/core/qdev.c                      | 28 +++++++++++++++++---
- hw/core/sysbus.c                    |  4 +--
- hw/i386/pc.c                        |  4 +--
- hw/pci-host/ppce500.c               |  4 +--
- hw/ppc/spapr_drc.c                  | 40 +++++++++++++++++++++--------
- qom/container.c                     | 31 ++++++++--------------
- qom/object.c                        | 30 +++++++++++++++++++---
- scsi/pr-manager.c                   |  4 +--
- system/ioport.c                     |  2 +-
- system/memory.c                     |  2 +-
- system/qdev-monitor.c               |  6 ++---
- system/vl.c                         |  3 +--
- tests/unit/check-qom-proplist.c     |  2 +-
- tests/unit/test-qdev-global-props.c | 21 +++++++++++++++
- ui/console.c                        |  4 +--
- ui/dbus-chardev.c                   |  2 +-
- 23 files changed, 180 insertions(+), 72 deletions(-)
-
+diff --git a/hw/ppc/spapr_drc.c b/hw/ppc/spapr_drc.c
+index 1484e3209d..3d6ef26b38 100644
+--- a/hw/ppc/spapr_drc.c
++++ b/hw/ppc/spapr_drc.c
+@@ -27,7 +27,7 @@
+ #include "sysemu/reset.h"
+ #include "trace.h"
+ 
+-#define DRC_CONTAINER_PATH "/dr-connector"
++#define DRC_CONTAINER_PATH "dr-connector"
+ #define DRC_INDEX_TYPE_SHIFT 28
+ #define DRC_INDEX_ID_MASK ((1ULL << DRC_INDEX_TYPE_SHIFT) - 1)
+ 
+@@ -514,6 +514,26 @@ static const VMStateDescription vmstate_spapr_drc = {
+     }
+ };
+ 
++static GOnce drc_container_created = G_ONCE_INIT;
++
++static gpointer drc_container_create(gpointer unused G_GNUC_UNUSED)
++{
++    container_create(object_get_root(), DRC_CONTAINER_PATH);
++    return NULL;
++}
++
++static Object *drc_container_get(void)
++{
++    return object_resolve_path_component(
++        object_get_root(), DRC_CONTAINER_PATH);
++}
++
++/* TODO: create the container in an ppc init function */
++static void drc_container_create_once(void)
++{
++    g_once(&drc_container_created, drc_container_create, NULL);
++}
++
+ static void drc_realize(DeviceState *d, Error **errp)
+ {
+     SpaprDrc *drc = SPAPR_DR_CONNECTOR(d);
+@@ -521,6 +541,9 @@ static void drc_realize(DeviceState *d, Error **errp)
+     Object *root_container;
+     const char *child_name;
+ 
++    /* Whenever a DRC device is realized, create the container */
++    drc_container_create_once();
++
+     trace_spapr_drc_realize(spapr_drc_index(drc));
+     /* NOTE: we do this as part of realize/unrealize due to the fact
+      * that the guest will communicate with the DRC via RTAS calls
+@@ -529,7 +552,7 @@ static void drc_realize(DeviceState *d, Error **errp)
+      * inaccessible by the guest, since lookups rely on this path
+      * existing in the composition tree
+      */
+-    root_container = container_get(object_get_root(), DRC_CONTAINER_PATH);
++    root_container = drc_container_get();
+     child_name = object_get_canonical_path_component(OBJECT(drc));
+     trace_spapr_drc_realize_child(spapr_drc_index(drc), child_name);
+     object_property_add_alias(root_container, link_name,
+@@ -543,12 +566,10 @@ static void drc_unrealize(DeviceState *d)
+ {
+     SpaprDrc *drc = SPAPR_DR_CONNECTOR(d);
+     g_autofree gchar *name = g_strdup_printf("%x", spapr_drc_index(drc));
+-    Object *root_container;
+ 
+     trace_spapr_drc_unrealize(spapr_drc_index(drc));
+     vmstate_unregister(VMSTATE_IF(drc), &vmstate_spapr_drc, drc);
+-    root_container = container_get(object_get_root(), DRC_CONTAINER_PATH);
+-    object_property_del(root_container, name);
++    object_property_del(drc_container_get(), name);
+ }
+ 
+ SpaprDrc *spapr_dr_connector_new(Object *owner, const char *type,
+@@ -796,9 +817,8 @@ static const TypeInfo spapr_drc_pmem_info = {
+ SpaprDrc *spapr_drc_by_index(uint32_t index)
+ {
+     Object *obj;
+-    g_autofree gchar *name = g_strdup_printf("%s/%x", DRC_CONTAINER_PATH,
+-                                             index);
+-    obj = object_resolve_path(name, NULL);
++    g_autofree gchar *name = g_strdup_printf("%x", index);
++    obj = object_resolve_path_component(drc_container_get(), name);
+ 
+     return !obj ? NULL : SPAPR_DR_CONNECTOR(obj);
+ }
+@@ -860,7 +880,7 @@ int spapr_dt_drc(void *fdt, int offset, Object *owner, uint32_t drc_type_mask)
+     /* aliases for all DRConnector objects will be rooted in QOM
+      * composition tree at DRC_CONTAINER_PATH
+      */
+-    root_container = container_get(object_get_root(), DRC_CONTAINER_PATH);
++    root_container = drc_container_get();
+ 
+     object_property_iter_init(&iter, root_container);
+     while ((prop = object_property_iter_next(&iter))) {
+@@ -953,7 +973,7 @@ void spapr_drc_reset_all(SpaprMachineState *spapr)
+     ObjectProperty *prop;
+     ObjectPropertyIterator iter;
+ 
+-    drc_container = container_get(object_get_root(), DRC_CONTAINER_PATH);
++    drc_container = drc_container_get();
+ restart:
+     object_property_iter_init(&iter, drc_container);
+     while ((prop = object_property_iter_next(&iter))) {
 -- 
 2.45.0
 
