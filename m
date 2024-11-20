@@ -4,92 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFBF0D6E2D2
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 07:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97666D6E2CE
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 07:28:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDf7p-00020L-I9; Wed, 20 Nov 2024 02:27:45 -0500
+	id 1tDf7r-00021J-6q; Wed, 20 Nov 2024 02:27:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tDf7l-0001zH-RA
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 02:27:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1tDf7p-00020Q-I6; Wed, 20 Nov 2024 02:27:45 -0500
+Received: from mta-03.yadro.com ([89.207.88.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tDf7k-00081l-7a
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 02:27:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732087659;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N2F9E4mEmEirmkyQv404Dyo179Nuu2p/DO/bYOMpAzw=;
- b=SRITF/itIjqJx2D8VrfzTdhQUJ7EslUYa+NQLB3xsMzoJlTo5dwNR9KQ46gagJ6tbk/0Ct
- u0jUk4z1LAipik98xEX1Lyaw3qmg+x0d5lhTVK8A9aIbROG/gEHGH20IP3QdjW3L0pi5EF
- mVubkRpI+C1018pvDkpDmBwZNqVO54E=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-274-j5vmsjoWOUe7OG-nwjAAYA-1; Wed, 20 Nov 2024 02:27:37 -0500
-X-MC-Unique: j5vmsjoWOUe7OG-nwjAAYA-1
-X-Mimecast-MFC-AGG-ID: j5vmsjoWOUe7OG-nwjAAYA
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4315ad4938fso13809195e9.0
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 23:27:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732087655; x=1732692455;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=N2F9E4mEmEirmkyQv404Dyo179Nuu2p/DO/bYOMpAzw=;
- b=VCXj/d+EN6P6PnS0CSkFZnWmUf+5/ts/07jCr6zKUMmtGdgw2TPksVLzoftyA7YN4X
- lQnkA1sXiRxAwfbwCl/2iaKgSynH4wfORpHi+MNtjCKDVPcXvKyA6bMDi2cGpQr3aB8x
- wWOLgATek7aJvOBBns7U5K0PH3MRK7I7RYSSl9Gat0d3L3U2EjbWpK/OVcwYrjmJsOz9
- eKuYrCZ3woNe31eJ3RqQNcdmyJkt518CMZZsiErPV0lSFAHQmeLEPFdXQEwFfIu8Vp8X
- Z9YmaRCj3mgOOSA+OKaT9aGc5WcFbdZR2leEj5/ykeMOdqrgX2SxFfQkRoqYis3Xy4mN
- hnPw==
-X-Gm-Message-State: AOJu0YwXmbrVSfy1ps6EtNzI4IfwHCcVe3mwwlbXRwhtUJzTR6z/Orqx
- wZ4FtNBCVYbnNRdUezQmpU4mH2n+xq5VdIq2sota14f/sI1val+flUkuT8Qx/I6RB3jNtq44ntz
- eCg4OVbzd0DJi37m7Xkp3On2+tIUoZdygwYICOUU0gVp6sMHGvXkiDaQbTtGB4bSEOggsYuUBr3
- HOAOB3vtaGgGC9qOmp4xUAlQTxD7rczdWVcw9e
-X-Received: by 2002:a5d:64c6:0:b0:382:5206:8b5d with SMTP id
- ffacd0b85a97d-38254b21ac8mr976270f8f.42.1732087655183; 
- Tue, 19 Nov 2024 23:27:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGGtjKu0P42Vwo06TAVfnN7ZEI6Gu+a7HawNXdaZ81ykKy1gTB52/PeupQA/RjI90nuuPLGhg==
-X-Received: by 2002:a5d:64c6:0:b0:382:5206:8b5d with SMTP id
- ffacd0b85a97d-38254b21ac8mr976258f8f.42.1732087654777; 
- Tue, 19 Nov 2024 23:27:34 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.84.243])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b45d4c68sm9007665e9.22.2024.11.19.23.27.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 23:27:33 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 4/5] hw/core/machine-smp: Fix error message parameter
-Date: Wed, 20 Nov 2024 08:27:22 +0100
-Message-ID: <20241120072723.103477-5-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241120072723.103477-1-pbonzini@redhat.com>
-References: <20241120072723.103477-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1tDf7m-00080p-DJ; Wed, 20 Nov 2024 02:27:45 -0500
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com F16AEE0004
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1732087656;
+ bh=bXAXM8qRTOfOTAxsT3cQ9smxjO2LyssIB37CUGRuvKs=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=psO7wffdCgpK+PLIiBA9YK5GV1gu1hkH+eY/VsG3rCz5lVX14qSdjsRVktxbbx9vW
+ 9oVWWX5VxH1Cdh63MYBhRWRP3YFEoQTFJ5EFHKSKESMKnd3cxKZZOMX8Ytrn7NTxU2
+ y3lU6+HZ0mWD8UtymE2ZotP2e08owXpABaaa2NcTlR99jb8gt/jzDtT2uqt6EMTP07
+ JTPtWhn08Dr1n+duFXxLEGYeMTlEsPFKo2+QdENDSdBeqhnHSMnvPNOVXPn2unS+/K
+ 4PBLrnDGgJFbZ/JmawAqACkHIdDVg9nEHZf7Dklq0hEvt65H4harMktonbd0yxXBnH
+ HYeAVQi4DnUOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1732087656;
+ bh=bXAXM8qRTOfOTAxsT3cQ9smxjO2LyssIB37CUGRuvKs=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=DNzlTj3Df4KGz3rAZXyV8kNIpbIRhTGVWyRQOrh1dFjgQhyX8YHfG+AaJGgyMiEG0
+ cIxkQAKBA0aihV8UpGl5goBy0nxbs55HCb8QpVXAHnYTVS9E1/Hqd4vo3ySVdIF952
+ Omb0CYbEADnIDLTPrIYET+m08STNh1na2kMRO8AoOEbEIpgcEnrAULCGF+n403h9O8
+ eqPTIp40KotEwdXV79tWceDtAUjwaATgG1vGJrPxuZdn22+lvv6IOogUgIONo9T6af
+ 5KwLg0ItnwyMsz4c3tLHQLCsTeZynmBdiUNJttbI2sNTsHww5815FT/JoLJxn+v9rg
+ EMTL/KfLj51/A==
+From: Ivan Klokov <ivan.klokov@syntacore.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
+ <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
+ <zhiwei_liu@linux.alibaba.com>, <farosas@suse.de>, <lvivier@redhat.com>,
+ <pbonzini@redhat.com>, Ivan Klokov <ivan.klokov@syntacore.com>
+Subject: [RFC PATCH v7 1/2] target/riscv: Add RISC-V CSR qtest support
+Date: Wed, 20 Nov 2024 10:27:11 +0300
+Message-ID: <20241120072712.65302-2-ivan.klokov@syntacore.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241120072712.65302-1-ivan.klokov@syntacore.com>
+References: <20241120072712.65302-1-ivan.klokov@syntacore.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain
+X-ClientProxiedBy: T-EXCH-10.corp.yadro.com (172.17.11.60) To
+ S-Exch-01.corp.yadro.com (10.78.5.241)
+Received-SPF: permerror client-ip=89.207.88.253;
+ envelope-from=ivan.klokov@syntacore.com; helo=mta-03.yadro.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,39 +80,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+The RISC-V architecture supports the creation of custom
+CSR-mapped devices. It would be convenient to test them in the same way
+as MMIO-mapped devices. To do this, a new call has been added
+to read/write CSR registers.
 
-In the loop checking smp cache support, the error message should report
-the current cache level and type.
-
-Fix the parameter of error_setg() to ensure it reports the correct cache
-level and type.
-
-Resolves: Coverity CID 1565391
-Fixes: f35c0221fef8 ("hw/core: Check smp cache topology support for machine")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20241110150901.130647-3-zhao1.liu@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
+Acked-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/core/machine-smp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/riscv/riscv_hart.c  | 55 ++++++++++++++++++++++++++++++++++++++++++
+ tests/qtest/libqtest.c | 27 +++++++++++++++++++++
+ tests/qtest/libqtest.h | 14 +++++++++++
+ 3 files changed, 96 insertions(+)
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index b87637c78f6..b954eb84902 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -317,7 +317,7 @@ bool machine_parse_smp_cache(MachineState *ms,
-             !mc->smp_props.cache_supported[props->cache]) {
-             error_setg(errp,
-                        "%s cache topology not supported by this machine",
--                       CacheLevelAndType_str(node->value->cache));
-+                       CacheLevelAndType_str(props->cache));
-             return false;
-         }
+diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+index 613ea2aaa0..22cc8ae31f 100644
+--- a/hw/riscv/riscv_hart.c
++++ b/hw/riscv/riscv_hart.c
+@@ -21,6 +21,8 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "qemu/module.h"
++#include "qemu/cutils.h"
++#include "sysemu/qtest.h"
+ #include "sysemu/reset.h"
+ #include "hw/sysbus.h"
+ #include "target/riscv/cpu.h"
+@@ -42,6 +44,55 @@ static void riscv_harts_cpu_reset(void *opaque)
+     cpu_reset(CPU(cpu));
+ }
  
++#ifndef CONFIG_USER_ONLY
++static void csr_call(char *cmd, uint64_t cpu_num, int csrno, uint64_t *val)
++{
++    RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(cpu_num));
++    CPURISCVState *env = &cpu->env;
++
++    int ret = RISCV_EXCP_NONE;
++    if (strcmp(cmd, "get_csr") == 0) {
++        ret = riscv_csrr(env, csrno, (target_ulong *)val);
++    } else if (strcmp(cmd, "set_csr") == 0) {
++        ret = riscv_csrrw(env, csrno, NULL, *(target_ulong *)val,
++                MAKE_64BIT_MASK(0, TARGET_LONG_BITS));
++    }
++
++    g_assert(ret == RISCV_EXCP_NONE);
++}
++
++static bool csr_qtest_callback(CharBackend *chr, gchar **words)
++{
++    if (strcmp(words[0], "csr") == 0) {
++
++        uint64_t cpu;
++        uint64_t val;
++        int rc, csr;
++
++        rc = qemu_strtou64(words[2], NULL, 0, &cpu);
++        g_assert(rc == 0);
++        rc = qemu_strtoi(words[3], NULL, 0, &csr);
++        g_assert(rc == 0);
++        rc = qemu_strtou64(words[4], NULL, 0, &val);
++        g_assert(rc == 0);
++        csr_call(words[1], cpu, csr, &val);
++
++        qtest_send_prefix(chr);
++        qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
++
++        return true;
++    }
++
++    return false;
++}
++
++static void riscv_cpu_register_csr_qtest_callback(void)
++{
++    static GOnce once;
++    g_once(&once, (GThreadFunc)qtest_set_command_cb, csr_qtest_callback);
++}
++#endif
++
+ static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
+                                char *cpu_type, Error **errp)
+ {
+@@ -59,6 +110,10 @@ static void riscv_harts_realize(DeviceState *dev, Error **errp)
+ 
+     s->harts = g_new0(RISCVCPU, s->num_harts);
+ 
++#ifndef CONFIG_USER_ONLY
++    riscv_cpu_register_csr_qtest_callback();
++#endif
++
+     for (n = 0; n < s->num_harts; n++) {
+         if (!riscv_hart_realize(s, n, s->cpu_type, errp)) {
+             return;
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 817fd7aac5..43bfa496e9 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -1202,6 +1202,33 @@ uint64_t qtest_rtas_call(QTestState *s, const char *name,
+     return 0;
+ }
+ 
++static void qtest_rsp_csr(QTestState *s, uint64_t *val)
++{
++    gchar **args;
++    uint64_t ret;
++    int rc;
++
++    args = qtest_rsp_args(s, 3);
++
++    rc = qemu_strtou64(args[1], NULL, 16, &ret);
++    g_assert(rc == 0);
++    rc = qemu_strtou64(args[2], NULL, 16, val);
++    g_assert(rc == 0);
++
++    g_strfreev(args);
++}
++
++uint64_t qtest_csr_call(QTestState *s, const char *name,
++                         uint64_t cpu, int csr,
++                         uint64_t *val)
++{
++    qtest_sendf(s, "csr %s 0x%"PRIx64" %d 0x%"PRIx64"\n",
++                    name, cpu, csr, *val);
++
++    qtest_rsp_csr(s, val);
++    return 0;
++}
++
+ void qtest_add_func(const char *str, void (*fn)(void))
+ {
+     gchar *path = g_strdup_printf("/%s/%s", qtest_get_arch(), str);
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index beb96b18eb..b516a16bd4 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -575,6 +575,20 @@ uint64_t qtest_rtas_call(QTestState *s, const char *name,
+                          uint32_t nargs, uint64_t args,
+                          uint32_t nret, uint64_t ret);
+ 
++/**
++ * qtest_csr_call:
++ * @s: #QTestState instance to operate on.
++ * @name: name of the command to call.
++ * @cpu: hart number.
++ * @csr: CSR number.
++ * @val: Value for reading/writing.
++ *
++ * Call an RISC-V CSR read/write function
++ */
++uint64_t qtest_csr_call(QTestState *s, const char *name,
++                         uint64_t cpu, int csr,
++                         unsigned long *val);
++
+ /**
+  * qtest_bufread:
+  * @s: #QTestState instance to operate on.
 -- 
-2.47.0
+2.34.1
 
 
