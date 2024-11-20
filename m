@@ -4,73 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 563B0D63954
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 14:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2C0D63954
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 14:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDleO-0003uz-6Y; Wed, 20 Nov 2024 09:25:48 -0500
+	id 1tDliA-0004u7-PS; Wed, 20 Nov 2024 09:29:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1tDleE-0003lh-1O; Wed, 20 Nov 2024 09:25:40 -0500
-Received: from mta-03.yadro.com ([89.207.88.253])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tDli7-0004t8-7X; Wed, 20 Nov 2024 09:29:39 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1tDleB-0001dw-Ac; Wed, 20 Nov 2024 09:25:37 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com C0F84E000C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1732112728;
- bh=rPbheIWXDQyT+cNsBvEiro8iUpek+GtZcyun9BORH18=;
- h=Content-Type:MIME-Version:Subject:From:Date:Message-ID:To:From;
- b=tjOwxN8Mx9o7Wspcw2TS0qjFrI2gfSlCN4iHtWlDdqxZqQ3/MEYR4eEPrXWDw3uuY
- +kU21zkqvAMsP1Tf+cMsTY0M7JvDOaa9+MLGHXBiPfKWAYwXqpGgMNPGY0033/0zq4
- QJujtKQP83yV6k5zttVHQxqeB5PnPi0Cy71x83/229uI9sHUCuDXY4amDV4zjhHYu0
- AmsAX7S7MHZiCJKKSJFWh9SgONUKrzhM8ERabVNQCeQe3G2iOibx6sZt4v/LXTr+iz
- T1bqyjUyU61VFWRnnBTOqTJ1Um9d85E73YxK47XbifpS6vSv4/UTODYiiKlsNbpRV+
- EYwHi1RHNq6jw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1732112728;
- bh=rPbheIWXDQyT+cNsBvEiro8iUpek+GtZcyun9BORH18=;
- h=Content-Type:MIME-Version:Subject:From:Date:Message-ID:To:From;
- b=Z2OC15UaY0UjYbQ9N9inbMbDacir9eUEvFlvaK4nT75/a9x7mUoWa8FP0h6vsTmod
- BtPptre8az/BuT9nOO7V8sAwlVsfGVgWTHKnPVtCvt135qkrteRAT/4/17Xu+fv65p
- ddxIq/3ShsZ+8mKyvZ5v3DjTK9jn1+kFBNX3GDVNRYNaJbhrDr++G4dnICWW24zi56
- e/W1fD0ynuvQTblEU6CcF3SSq5rtVRAJcK0k+5SDIGi1M6GmmSo1UJteFM4i5YH2i1
- CaiPP0IungzHVntdNQhUXMUzLI6zGNIlhqmhSqtetOIr2XdTfRtiwRMSlRxpW3c/81
- EWyy6stXb8orQ==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
-Subject: Re: [PATCH RFC 06/10] target/riscv: Define PMU event related
- structures
-From: Aleksei Filippov <alexei.filippov@syntacore.com>
-In-Reply-To: <CAHBxVyER0Lxp0uwed7ANW6d6pD1gvSVQ8b245scd+tm7HpT9ag@mail.gmail.com>
-Date: Wed, 20 Nov 2024 17:25:17 +0300
-CC: Aleksei Filippov <alexei.filippov@syntacore.com>, <qemu-riscv@nongnu.org>, 
- <qemu-devel@nongnu.org>, <palmer@dabbelt.com>, <liwei1518@gmail.com>,
- <zhiwei_liu@linux.alibaba.com>, <bin.meng@windriver.com>,
- <dbarboza@ventanamicro.com>, <alistair.francis@wdc.com>
-Content-Transfer-Encoding: quoted-printable
-Message-ID: <0214DDE7-28F3-48C1-96ED-E700764D95D3@syntacore.com>
-References: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
- <20241009-pmu_event_machine-v1-6-dcbd7a60e3ba@rivosinc.com>
- <fd89dafa-279d-436c-9569-f2fdc289bac9@yadro.com>
- <CAHBxVyE2C3sRJNbLOwhOZCnXAUTsEdh-mCewVAEJDDAURL10ug@mail.gmail.com>
- <3B504AA0-06F9-4316-9B10-ED46B1B271A4@syntacore.com>
- <CAHBxVyER0Lxp0uwed7ANW6d6pD1gvSVQ8b245scd+tm7HpT9ag@mail.gmail.com>
-To: Atish Kumar Patra <atishp@rivosinc.com>
-X-Mailer: Apple Mail (2.3774.500.171.1.1)
-X-ClientProxiedBy: T-EXCH-06.corp.yadro.com (172.17.10.110) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-Received-SPF: permerror client-ip=89.207.88.253;
- envelope-from=alexei.filippov@syntacore.com; helo=mta-03.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tDli5-0002na-6m; Wed, 20 Nov 2024 09:29:38 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XtkDp1MCqz6J6nG;
+ Wed, 20 Nov 2024 22:26:02 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id B0F6F140119;
+ Wed, 20 Nov 2024 22:29:33 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 20 Nov
+ 2024 15:29:33 +0100
+Date: Wed, 20 Nov 2024 14:29:31 +0000
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 1/6] acpi/ghes: Prepare to support multiple sources on ghes
+Message-ID: <20241120142931.00006b63@huawei.com>
+In-Reply-To: <3f6b7e8499bf5911de9b1533e4b2a4addc207536.1731486604.git.mchehab+huawei@kernel.org>
+References: <cover.1731486604.git.mchehab+huawei@kernel.org>
+ <3f6b7e8499bf5911de9b1533e4b2a4addc207536.1731486604.git.mchehab+huawei@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+MIME-Version: 1.0
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,146 +69,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 13 Nov 2024 09:36:58 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+
+> The current code is actually dependent on having just one
+> error structure with a single source.
+
+Trivial: Very short line wrap of the description. Maybe more
+than 60 chars?
+
+> 
+> As the number of sources should be arch-dependent, as it
+> will depend on what kind of synchronous/assynchronous
+> notifications will exist, change the logic to dynamically
+> build the table.
+> 
+> Yet, for a proper support, we need to get the number of
+> sources by reading the number from the HEST table. However,
+> bios currently doesn't store a pointer to it.
+> 
+> For now just change the logic at table build time, while
+> enforcing that it will behave like before with a single
+> source ID.
+> 
+> A future patch will add a HEST table bios pointer and
+> change the logic at acpi_ghes_record_errors() to
+> dynamically use the new size.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+Took a fresh look. One trivial comment.
 
 
-> On 22 Oct 2024, at 15:58, Atish Kumar Patra <atishp@rivosinc.com> =
-wrote:
->=20
-> On Mon, Oct 21, 2024 at 6:45=E2=80=AFAM Aleksei Filippov
-> <alexei.filippov@syntacore.com> wrote:
->>=20
->>=20
->>=20
->>> On 11 Oct 2024, at 23:45, Atish Kumar Patra <atishp@rivosinc.com> =
-wrote:
->>>=20
->>> On Thu, Oct 10, 2024 at 5:44=E2=80=AFAM Alexei Filippov
->>> <alexei.filippov@yadro.com> wrote:
->>>>=20
->>>>=20
->>>>=20
->>>> On 10.10.2024 02:09, Atish Patra wrote:
->>>>> Signed-off-by: Atish Patra <atishp@rivosinc.com>
->>>>> ---
->>>>> target/riscv/cpu.h | 25 +++++++++++++++++++++++++
->>>>> 1 file changed, 25 insertions(+)
->>>>>=20
->>>>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
->>>>> index 2ac391a7cf74..53426710f73e 100644
->>>>> --- a/target/riscv/cpu.h
->>>>> +++ b/target/riscv/cpu.h
->>>>> @@ -189,6 +189,28 @@ typedef struct PMUFixedCtrState {
->>>>>       uint64_t counter_virt_prev[2];
->>>>> } PMUFixedCtrState;
->>>>>=20
->>>>> +typedef uint64_t (*PMU_EVENT_CYCLE_FUNC)(RISCVCPU *);
->>>>> +typedef uint64_t (*PMU_EVENT_INSTRET_FUNC)(RISCVCPU *);
->>>>> +typedef uint64_t (*PMU_EVENT_TLB_FUNC)(RISCVCPU *, MMUAccessType =
-access_type);
->>>>> +
->>>>> +typedef struct PMUEventInfo {
->>>>> +    /* Event ID (BIT [0:55] valid) */
->>>>> +    uint64_t event_id;
->>>>> +    /* Supported hpmcounters for this event */
->>>>> +    uint32_t counter_mask;
->>>>> +    /* Bitmask of valid event bits */
->>>>> +    uint64_t event_mask;
->>>>> +} PMUEventInfo;
->>>>> +
->>>>> +typedef struct PMUEventFunc {
->>>>> +    /* Get the ID of the event that can monitor cycles */
->>>>> +    PMU_EVENT_CYCLE_FUNC get_cycle_id;
->>>>> +    /* Get the ID of the event that can monitor cycles */
->>>>> +    PMU_EVENT_INSTRET_FUNC get_intstret_id;
->>>>> +    /* Get the ID of the event that can monitor TLB events*/
->>>>> +    PMU_EVENT_TLB_FUNC get_tlb_access_id;
->>>> Ok, this is kinda interesting decision, but it's not scalable. =
-AFAIU
->>>=20
->>> Yes it is not scalable if there is a need to scale as mentioned =
-earlier.
->>> Do you have any other events that can be emulated in Qemu ?
->>>=20
->>> Having said that, I am okay with single call back though but not too =
-sure
->>> about read/write callback unless there is a use case to support =
-those.
->>>=20
->>>> none spec provide us full enum of existing events. So anytime when
->>>> somebody will try to implement their own pmu events they would have =
-to
->>>> add additional callbacks, and this structure never will be fulled
->>>> properly. And then we ended up with structure 1000+ callback with =
-only 5
->>>> machines wich supports pmu events. I suggest my approach with only
->>>> read/write callbacks, where machine can decide by itself how to =
-handle
->>>> any of machine specific events.
->>>=20
->>> Lot of these events are microarchitectural events which can't be
->>> supported in Qemu.
->>> I don't think it's a good idea at all to add dummy values for all =
-the
->>> events defined in a platform
->>> which is harder to debug for a user.
->>=20
->> Yes, you're right that the rest of the events are microarchitectural =
-and that they can't be properly simulated in QEMU at the moment, but it =
-seems to me that's not really the point here. The point is how elastic =
-this solution can be - that is, whether to do any events or not and how =
-exactly they should be counted should be decided by the vendor of a =
-particular machine, and not by the simulator in general. Plus, I have a =
-very real use case where it will come in handy - debugging perf. Support =
-the possibility of simulating events on QEMU side will make the life of =
-t perf folks much easier. I do not insist specifically on my =
-implementation of this solution, but I think that the solution with the =
-creation of a callback for each of the events will significantly =
-complicate the porting of the PMU for machine vendors.
->>>=20
->=20
-> As I mentioned in other threads, I am absolutely okay with single call
-> backs. So Let's do that. However, I am not in favor of adding
-> microarchitectural events that we can't support in Qemu with
-> completely bogus data. Debugging perf in Qemu can be easily done with
-> the current set of events supported. Those are not the most accurate
-> but it's a representation of what Qemu is running. Do you foresee any
-> debugging issue if we don't support all the events a platform
-> advertises ?
-In general - there is only one potential problem. When perf would try to =
-get event by the wrong id. The main algorithm indeed could be tested =
-with limited  quantities of events. But this gonna be a real pain for =
-the testers which gonna deduce and remember what particular event =
-can/can=E2=80=99t be counted in QEMU and why does he gets 0 there and =
-not 0 here. Moreover, if we would allow events with even complete bogus =
-data this would works perfectly for CI stuff for the benchmark + perf =
-ppl, and they wouldn=E2=80=99t restrict their CI to that. I really do  =
-not see any problem to let the vendor handle this situation. At least =
-vendor can decide by his own to count/not to count some types of event, =
-this gonna bring flexibility and the transparency of the solution and, =
-in general, if we=E2=80=99ll bring some rational reason why we can't add =
-such events we can always forbid to do such thing.
->=20
->>>=20
->>>>> +} PMUEventFunc;
->>>>> +
->>>>> struct CPUArchState {
->>>>>   target_ulong gpr[32];
->>>>>   target_ulong gprh[32]; /* 64 top bits of the 128-bit registers =
-*/
->>>>> @@ -386,6 +408,9 @@ struct CPUArchState {
->>>>>   target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
->>>>>=20
->>>>>   PMUFixedCtrState pmu_fixed_ctrs[2];
->>>>> +    PMUEventInfo *pmu_events;
->>>>> +    PMUEventFunc pmu_efuncs;
->>>>> +    int num_pmu_events;
->>>>>=20
->>>>>   target_ulong sscratch;
->>>>>   target_ulong mscratch;
->>=20
->>=20
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index e059317b002e..40f66792570c 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -889,6 +889,10 @@ static void acpi_align_size(GArray *blob, unsigned align)
+>      g_array_set_size(blob, ROUND_UP(acpi_data_len(blob), align));
+>  }
+>  
+> +static const AcpiNotificationSourceId hest_ghes_notify[] = {
+> +    {ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA},
+
+    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
+seems to be local style.
+
+> +};
+> +
+>  static
+>  void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+>  {
+> @@ -944,6 +948,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+>      if (vms->ras) {
+>          acpi_add_table(table_offsets, tables_blob);
+>          acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
+> +                        hest_ghes_notify, ARRAY_SIZE(hest_ghes_notify),
+>                          vms->oem_id, vms->oem_table_id);
+>      }
 
 
