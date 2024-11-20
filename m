@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E36D743E6
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51BB4D743E5
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDshU-0008Ky-K7; Wed, 20 Nov 2024 16:57:28 -0500
+	id 1tDshg-00005o-Jv; Wed, 20 Nov 2024 16:57:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshS-0008HF-C4
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshX-0008S8-KE
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshP-0006SY-Ba
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:25 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshW-0006U7-5E
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732139842;
+ s=mimecast20190719; t=1732139849;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GdlWuAzVgLMPTb7jLHDxfnOi9pO2fiIoW8m2eDrLfQg=;
- b=hOBbyi/+9xX5JCyTn8qRxrQUeUaobdWFZsyeulq2fyckHSWqipjAyZ2M6Keyb64klxiw1Y
- N4B0YcI13dnklzbJD/ei6iNSPSLs3RfhyXa8G8vxq2KG/+Yu0Yxh4iEikUyKQgLW670xah
- PnT96lBel1fFyiGoSD5c71dQZ0ws3RE=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mpJER/wYd4T6D0J0YdjUL6DwWyjfFMtJPuGjw2kdAM8=;
+ b=ibTOfJXerwfMUrSzcm1Dy3YilehpKesAmz/+7R+prpMK3eT2LfG9Gg+x6GBEfLlf2U9FrV
+ q2B/rfcL4U+GaQf1az40zhqtI+K9DXqlNKRMsRXY+VpqwxtK9kn51kwNNnYuJiuMReBuzj
+ FHJ5RpRQ7ySFT7WStmdo10C5gXnv5qc=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-32-MDcAJMaCMv2hjaOIBLbijg-1; Wed, 20 Nov 2024 16:57:19 -0500
-X-MC-Unique: MDcAJMaCMv2hjaOIBLbijg-1
-X-Mimecast-MFC-AGG-ID: MDcAJMaCMv2hjaOIBLbijg
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-5eb742a18ebso204873eaf.3
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 13:57:19 -0800 (PST)
+ us-mta-43-NYDU3bSZPxConvnsTgXwKg-1; Wed, 20 Nov 2024 16:57:28 -0500
+X-MC-Unique: NYDU3bSZPxConvnsTgXwKg-1
+X-Mimecast-MFC-AGG-ID: NYDU3bSZPxConvnsTgXwKg
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4608d303ebeso2903581cf.0
+ for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 13:57:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732139837; x=1732744637;
+ d=1e100.net; s=20230601; t=1732139847; x=1732744647;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GdlWuAzVgLMPTb7jLHDxfnOi9pO2fiIoW8m2eDrLfQg=;
- b=nzqSkL9kugiYmUnExfnqedt9ylyiyQqCqt5tZ5d9KRIgW9tND4aS2feQ4SEKJ9bdbP
- IoGiLABGiPonsw02nphay1rteHKQL0Y0Ts2XOIB12FxDfuG8RmDuZM8IoddY+qrvXXE+
- nwS526Kk6woyl5bu41sKTPnoXS4OML9Y4x8Vx8+pvgj/g8seMaZ+NTdnqehiWlgd+jA8
- vW5C7hemTmp51vKbP6dUfsdUUCoR4FiGUohjmp4cDgMqkdQiwsTiFiRQvakAZyg6tw5w
- Nif6mpGYI5t3St0pZAtAfg9cWyiNIPpFP1WE6p+ZlOhKaYsYj1/rpXlFjsauGiAkkycx
- Oy+Q==
-X-Gm-Message-State: AOJu0YyOPzd7o2CIdTeuPPWRx9rZimWEuxRUJeuWfBqAOSRjKHXj10KX
- LC9Y4sxMcxR1lYlkCzTnvVAlzZGJjg1eeF9/Qh4dBCrLu44rUePw2GkwQeXabjwmSZnjumeMEtb
- PbSUY4lLFdHqRNlEEPMTcThDd5CRmaz5lqF5eSsU27l4Ta6R7qB0qxTFghpUKEpqer6FwIrBI9a
- 5+cOa8KsakwFPpgsAJ4fbS5+8uAfK9X+CvYQ==
-X-Received: by 2002:a05:6359:2703:b0:1c3:8c84:e08c with SMTP id
- e5c5f4694b2df-1ca66495017mr344568655d.10.1732139837232; 
- Wed, 20 Nov 2024 13:57:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFZhlNlx3+iZq4ezAiFAE2b0r5JuUK83mBtbEHJy81HSXfFzaGsKsSK1jQ1j2lDNXCbJYSopw==
-X-Received: by 2002:a05:6359:2703:b0:1c3:8c84:e08c with SMTP id
- e5c5f4694b2df-1ca66495017mr344565555d.10.1732139836885; 
- Wed, 20 Nov 2024 13:57:16 -0800 (PST)
+ bh=mpJER/wYd4T6D0J0YdjUL6DwWyjfFMtJPuGjw2kdAM8=;
+ b=l2F1Q3B0vToOzGmcqdJHUZS+ZZPEc+udYgtm8wesNbbba7opI+EABnl7RNv0W09eV7
+ jcaePaHy/hCubvqErrNsgvh5BOSr7uOXcxJ44E03T4zGd4/l9SoPbkzb6L8eUge5Wcbv
+ ez9bPZKphLA0CxKI8EFDMx8qkZVxrH4AgYVZW00X3Ndx7ur70E1B8XK11IGKfd7/wyji
+ RQHjyJuPV6vOnAIb6mr0riilatTP1MgGnUV1GHxD2om7POjp/PEshYxp665xjXE7C/Zb
+ YQQzYRjmjICa26NdcBHjL8lnSZa2eXN6w4UzKvHksUXqDVHivGt0BKeVdG/okXdn2ruz
+ fe2w==
+X-Gm-Message-State: AOJu0Yy/WFvXYo1jtMwTcvDKqzPYC4lpTYx1aagiMit7rXJnFWEegFNB
+ IL3Q9ykZVFgc6xbbH2LT+0gPn/pZPdxe5xGgOfEeXE4hlh7M5eFqGLb4tkq+gTmQn4AVKtsx4xk
+ vQGaYjlrKMQCZl1H6ADe+NfAwg3zuhGC+VU6RTOEMCJ+sBziREIX/WhKtGkRwHIZzsb5Xn+Mhbs
+ wCt8G5j7SH4cXxwj91ezB6cnd4uqEjBWJq7w==
+X-Received: by 2002:a05:622a:1929:b0:461:22f1:dd17 with SMTP id
+ d75a77b69052e-46479b3f8famr51132001cf.41.1732139847288; 
+ Wed, 20 Nov 2024 13:57:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEixnMe5QzRr4geZePKFKIi+MNm54MALeM743Sq2Y7/tNWRPgLBq0p7RifvgnSyJKoYDuraEA==
+X-Received: by 2002:a05:622a:1929:b0:461:22f1:dd17 with SMTP id
+ d75a77b69052e-46479b3f8famr51131671cf.41.1732139846879; 
+ Wed, 20 Nov 2024 13:57:26 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-464680d6826sm14632881cf.15.2024.11.20.13.57.14
+ d75a77b69052e-464680d6826sm14632881cf.15.2024.11.20.13.57.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Nov 2024 13:57:16 -0800 (PST)
+ Wed, 20 Nov 2024 13:57:26 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -74,25 +74,23 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Juraj Marcin <jmarcin@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 05/12] ui/console: Explicitly create "/backend" container
-Date: Wed, 20 Nov 2024 16:56:56 -0500
-Message-ID: <20241120215703.3918445-6-peterx@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH 10/12] qom: Create system containers explicitly
+Date: Wed, 20 Nov 2024 16:57:01 -0500
+Message-ID: <20241120215703.3918445-11-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241120215703.3918445-1-peterx@redhat.com>
 References: <20241120215703.3918445-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,36 +108,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow the trend to explicitly create containers, do that for console.c on
-"/backend" container.
+Always explicitly create QEMU system containers upfront.
 
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Root containers will be created when trying to fetch the root object the
+1st time.  Machine sub-containers will be created only until machine is
+being initialized.
+
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- ui/console.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/core/machine.c | 19 ++++++++++++++++---
+ qom/object.c      | 16 +++++++++++++++-
+ 2 files changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/ui/console.c b/ui/console.c
-index 5165f17125..36f8c6debb 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1154,14 +1154,14 @@ DisplayState *init_displaystate(void)
- {
-     gchar *name;
-     QemuConsole *con;
-+    Object *backend = container_create(object_get_root(), "backend");
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index a35c4a8fae..a184dbf8f0 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1193,14 +1193,27 @@ static void machine_class_base_init(ObjectClass *oc, void *data)
+     }
+ }
  
-     QTAILQ_FOREACH(con, &consoles, next) {
-         /* Hook up into the qom tree here (not in object_new()), once
-          * all QemuConsoles are created and the order / numbering
-          * doesn't change any more */
-         name = g_strdup_printf("console[%d]", con->index);
--        object_property_add_child(container_get(object_get_root(), "/backend"),
--                                  name, OBJECT(con));
-+        object_property_add_child(backend, name, OBJECT(con));
-         g_free(name);
++const char *machine_containers[] = {
++    "unattached",
++    "peripheral",
++    "peripheral-anon"
++};
++
++static void qemu_create_machine_containers(Object *machine)
++{
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(machine_containers); i++) {
++        container_create(machine, machine_containers[i]);
++    }
++}
++
+ static void machine_initfn(Object *obj)
+ {
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+ 
+-    container_get(obj, "/peripheral");
+-    container_get(obj, "/peripheral-anon");
+-
++    qemu_create_machine_containers(obj);
+     ms->dump_guest_core = true;
+     ms->mem_merge = (QEMU_MADV_MERGEABLE != QEMU_MADV_INVALID);
+     ms->enable_graphics = true;
+diff --git a/qom/object.c b/qom/object.c
+index 214d6eb4c1..810e6f2bd9 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1734,12 +1734,26 @@ const char *object_property_get_type(Object *obj, const char *name, Error **errp
+     return prop->type;
+ }
+ 
++static Object *object_root_initialize(void)
++{
++    Object *root = object_new(TYPE_CONTAINER);
++
++    /*
++     * Create all QEMU system containers.  "machine" and its sub-containers
++     * are only created when machine initializes (qemu_create_machine()).
++     */
++    container_create(root, "chardevs");
++    container_create(root, "objects");
++
++    return root;
++}
++
+ Object *object_get_root(void)
+ {
+     static Object *root;
+ 
+     if (!root) {
+-        root = object_new(TYPE_CONTAINER);
++        root = object_root_initialize();
      }
  
+     return root;
 -- 
 2.45.0
 
