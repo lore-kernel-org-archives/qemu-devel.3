@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51BB4D743E5
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C7E1D743E7
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDshg-00005o-Jv; Wed, 20 Nov 2024 16:57:40 -0500
+	id 1tDshS-0008HS-HD; Wed, 20 Nov 2024 16:57:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshX-0008S8-KE
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshP-0008Cl-0U
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshW-0006U7-5E
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:31 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshM-0006Mz-19
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732139849;
+ s=mimecast20190719; t=1732139832;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mpJER/wYd4T6D0J0YdjUL6DwWyjfFMtJPuGjw2kdAM8=;
- b=ibTOfJXerwfMUrSzcm1Dy3YilehpKesAmz/+7R+prpMK3eT2LfG9Gg+x6GBEfLlf2U9FrV
- q2B/rfcL4U+GaQf1az40zhqtI+K9DXqlNKRMsRXY+VpqwxtK9kn51kwNNnYuJiuMReBuzj
- FHJ5RpRQ7ySFT7WStmdo10C5gXnv5qc=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=payjPLYurKI+5/EKzyakmMM06dc3GEHFTxopaOn1dX4=;
+ b=KCID8AoISrVxcJBLjeFUqmtEj/m31m5WWG73J58bLfZRgDEaildhG4cTBcVtFnaEBVw9FF
+ 5CcsazBRYgFXO5MYaNtBiYTHtrGT5fNGnl+iDn18Nvs7hqXLuMSrbEYlb+mEp0szFtF7Vf
+ fc4pk2UpESEvlHFZx30TgD80Sgn5xlk=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-43-NYDU3bSZPxConvnsTgXwKg-1; Wed, 20 Nov 2024 16:57:28 -0500
-X-MC-Unique: NYDU3bSZPxConvnsTgXwKg-1
-X-Mimecast-MFC-AGG-ID: NYDU3bSZPxConvnsTgXwKg
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4608d303ebeso2903581cf.0
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 13:57:27 -0800 (PST)
+ us-mta-244-S0lWEthfPmOCvB4Ne_cZNQ-1; Wed, 20 Nov 2024 16:57:10 -0500
+X-MC-Unique: S0lWEthfPmOCvB4Ne_cZNQ-1
+X-Mimecast-MFC-AGG-ID: S0lWEthfPmOCvB4Ne_cZNQ
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-461011bd338so2674271cf.3
+ for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 13:57:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732139847; x=1732744647;
+ d=1e100.net; s=20230601; t=1732139829; x=1732744629;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mpJER/wYd4T6D0J0YdjUL6DwWyjfFMtJPuGjw2kdAM8=;
- b=l2F1Q3B0vToOzGmcqdJHUZS+ZZPEc+udYgtm8wesNbbba7opI+EABnl7RNv0W09eV7
- jcaePaHy/hCubvqErrNsgvh5BOSr7uOXcxJ44E03T4zGd4/l9SoPbkzb6L8eUge5Wcbv
- ez9bPZKphLA0CxKI8EFDMx8qkZVxrH4AgYVZW00X3Ndx7ur70E1B8XK11IGKfd7/wyji
- RQHjyJuPV6vOnAIb6mr0riilatTP1MgGnUV1GHxD2om7POjp/PEshYxp665xjXE7C/Zb
- YQQzYRjmjICa26NdcBHjL8lnSZa2eXN6w4UzKvHksUXqDVHivGt0BKeVdG/okXdn2ruz
- fe2w==
-X-Gm-Message-State: AOJu0Yy/WFvXYo1jtMwTcvDKqzPYC4lpTYx1aagiMit7rXJnFWEegFNB
- IL3Q9ykZVFgc6xbbH2LT+0gPn/pZPdxe5xGgOfEeXE4hlh7M5eFqGLb4tkq+gTmQn4AVKtsx4xk
- vQGaYjlrKMQCZl1H6ADe+NfAwg3zuhGC+VU6RTOEMCJ+sBziREIX/WhKtGkRwHIZzsb5Xn+Mhbs
- wCt8G5j7SH4cXxwj91ezB6cnd4uqEjBWJq7w==
-X-Received: by 2002:a05:622a:1929:b0:461:22f1:dd17 with SMTP id
- d75a77b69052e-46479b3f8famr51132001cf.41.1732139847288; 
- Wed, 20 Nov 2024 13:57:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEixnMe5QzRr4geZePKFKIi+MNm54MALeM743Sq2Y7/tNWRPgLBq0p7RifvgnSyJKoYDuraEA==
-X-Received: by 2002:a05:622a:1929:b0:461:22f1:dd17 with SMTP id
- d75a77b69052e-46479b3f8famr51131671cf.41.1732139846879; 
- Wed, 20 Nov 2024 13:57:26 -0800 (PST)
+ bh=payjPLYurKI+5/EKzyakmMM06dc3GEHFTxopaOn1dX4=;
+ b=T9+IIBEwjOs18DaPop0IIu9Qccm4K8C9/Sl/odk/8XQvr07YB38OSLazf3g5l31ccb
+ m31vI5r59jR8VwDRjHkJSym2C+u1i8K0SRN9z69Wxici1szqb813rGwVx4DDiiclvkRS
+ /buSOSmpc4ZYByl+DbS0FNZyGUR5jXpI1blT90HhmwUM+CD8KRpcaJ3lDw07wcgL0PDa
+ aUFc8uzYsuNUskU92Rx1zU3CDzyYIvIW02793ynbtPaMWw0uJjvzEijf7+8wMFPgzz7Y
+ 6yN/H+ODYr6xtXNN8lcWSDO9KIrxBGOxbPkC+cQ9jQalRmicG/mjVmADZJnO4fZLORXy
+ xT2w==
+X-Gm-Message-State: AOJu0YwSTl9CgZ0/Rj3/I9QOTVDTpMYz5kd9hf2nXsFbZ5GA5vk5y8Vb
+ kMqZhSQrzaxg+aBOjFAgRV5DX8OnzkgUOo/PvhV37dSx3Vl7OtBPhz041jTSNp7iHCd1SMCoEEO
+ iuI4RNhzXLb1kSJ0UhLw+yD7KEvVRv5hE3q7PAqQYtyZcm0+ggv68PP0igMsstEEtZ7k1dfW4MO
+ GonWVRWQgHXkVVtv3lKFAYWWxB8NHG44iP2w==
+X-Received: by 2002:a05:622a:19a9:b0:460:9318:e4bb with SMTP id
+ d75a77b69052e-464782a73f5mr50726211cf.9.1732139829412; 
+ Wed, 20 Nov 2024 13:57:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGqYI4EbGa+pBwIBfzwW5MC23IJ6t+sM9r88rOhppSXbuA/5zJfuC7qcJOrRWZH7UTWZJDZqg==
+X-Received: by 2002:a05:622a:19a9:b0:460:9318:e4bb with SMTP id
+ d75a77b69052e-464782a73f5mr50725931cf.9.1732139829066; 
+ Wed, 20 Nov 2024 13:57:09 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-464680d6826sm14632881cf.15.2024.11.20.13.57.25
+ d75a77b69052e-464680d6826sm14632881cf.15.2024.11.20.13.57.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Nov 2024 13:57:26 -0800 (PST)
+ Wed, 20 Nov 2024 13:57:08 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -75,22 +75,22 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 10/12] qom: Create system containers explicitly
-Date: Wed, 20 Nov 2024 16:57:01 -0500
-Message-ID: <20241120215703.3918445-11-peterx@redhat.com>
+Subject: [PATCH 01/12] qom: Add TYPE_CONTAINER macro
+Date: Wed, 20 Nov 2024 16:56:52 -0500
+Message-ID: <20241120215703.3918445-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241120215703.3918445-1-peterx@redhat.com>
 References: <20241120215703.3918445-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,85 +108,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Always explicitly create QEMU system containers upfront.
-
-Root containers will be created when trying to fetch the root object the
-1st time.  Machine sub-containers will be created only until machine is
-being initialized.
+Provide a macro for the container type across QEMU source tree, rather than
+hard code it every time.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/core/machine.c | 19 ++++++++++++++++---
- qom/object.c      | 16 +++++++++++++++-
- 2 files changed, 31 insertions(+), 4 deletions(-)
+ include/qom/object.h | 1 +
+ hw/arm/stellaris.c   | 2 +-
+ qom/container.c      | 4 ++--
+ qom/object.c         | 4 ++--
+ 4 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index a35c4a8fae..a184dbf8f0 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1193,14 +1193,27 @@ static void machine_class_base_init(ObjectClass *oc, void *data)
-     }
- }
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 43c135984a..3ba370ce9b 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -26,6 +26,7 @@ typedef struct InterfaceClass InterfaceClass;
+ typedef struct InterfaceInfo InterfaceInfo;
  
-+const char *machine_containers[] = {
-+    "unattached",
-+    "peripheral",
-+    "peripheral-anon"
-+};
-+
-+static void qemu_create_machine_containers(Object *machine)
-+{
-+    int i;
-+
-+    for (i = 0; i < ARRAY_SIZE(machine_containers); i++) {
-+        container_create(machine, machine_containers[i]);
-+    }
-+}
-+
- static void machine_initfn(Object *obj)
- {
-     MachineState *ms = MACHINE(obj);
-     MachineClass *mc = MACHINE_GET_CLASS(obj);
+ #define TYPE_OBJECT "object"
++#define TYPE_CONTAINER "container"
  
--    container_get(obj, "/peripheral");
--    container_get(obj, "/peripheral-anon");
--
-+    qemu_create_machine_containers(obj);
-     ms->dump_guest_core = true;
-     ms->mem_merge = (QEMU_MADV_MERGEABLE != QEMU_MADV_INVALID);
-     ms->enable_graphics = true;
+ typedef struct ObjectProperty ObjectProperty;
+ 
+diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
+index 376746251e..6d518b9cde 100644
+--- a/hw/arm/stellaris.c
++++ b/hw/arm/stellaris.c
+@@ -1053,7 +1053,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+     flash_size = (((board->dc0 & 0xffff) + 1) << 1) * 1024;
+     sram_size = ((board->dc0 >> 18) + 1) * 1024;
+ 
+-    soc_container = object_new("container");
++    soc_container = object_new(TYPE_CONTAINER);
+     object_property_add_child(OBJECT(ms), "soc", soc_container);
+ 
+     /* Flash programming is done via the SCU, so pretend it is ROM.  */
+diff --git a/qom/container.c b/qom/container.c
+index 455e8410c6..cfec92a944 100644
+--- a/qom/container.c
++++ b/qom/container.c
+@@ -15,7 +15,7 @@
+ #include "qemu/module.h"
+ 
+ static const TypeInfo container_info = {
+-    .name          = "container",
++    .name          = TYPE_CONTAINER,
+     .parent        = TYPE_OBJECT,
+ };
+ 
+@@ -37,7 +37,7 @@ Object *container_get(Object *root, const char *path)
+     for (i = 1; parts[i] != NULL; i++, obj = child) {
+         child = object_resolve_path_component(obj, parts[i]);
+         if (!child) {
+-            child = object_new("container");
++            child = object_new(TYPE_CONTAINER);
+             object_property_add_child(obj, parts[i], child);
+             object_unref(child);
+         }
 diff --git a/qom/object.c b/qom/object.c
-index 214d6eb4c1..810e6f2bd9 100644
+index 9edc06d391..214d6eb4c1 100644
 --- a/qom/object.c
 +++ b/qom/object.c
-@@ -1734,12 +1734,26 @@ const char *object_property_get_type(Object *obj, const char *name, Error **errp
-     return prop->type;
- }
- 
-+static Object *object_root_initialize(void)
-+{
-+    Object *root = object_new(TYPE_CONTAINER);
-+
-+    /*
-+     * Create all QEMU system containers.  "machine" and its sub-containers
-+     * are only created when machine initializes (qemu_create_machine()).
-+     */
-+    container_create(root, "chardevs");
-+    container_create(root, "objects");
-+
-+    return root;
-+}
-+
- Object *object_get_root(void)
- {
+@@ -1739,7 +1739,7 @@ Object *object_get_root(void)
      static Object *root;
  
      if (!root) {
--        root = object_new(TYPE_CONTAINER);
-+        root = object_root_initialize();
+-        root = object_new("container");
++        root = object_new(TYPE_CONTAINER);
      }
  
      return root;
+@@ -1755,7 +1755,7 @@ Object *object_get_internal_root(void)
+     static Object *internal_root;
+ 
+     if (!internal_root) {
+-        internal_root = object_new("container");
++        internal_root = object_new(TYPE_CONTAINER);
+     }
+ 
+     return internal_root;
 -- 
 2.45.0
 
