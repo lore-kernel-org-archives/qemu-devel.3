@@ -4,67 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B97EFD743E6
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4562D743E6
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:59:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDshb-0008UI-75; Wed, 20 Nov 2024 16:57:35 -0500
+	id 1tDshk-0000Dz-4X; Wed, 20 Nov 2024 16:57:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshX-0008R0-2Z
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:31 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshj-0000DL-1L
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshV-0006U3-Kp
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:30 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDshd-0006Uk-05
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:57:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732139848;
+ s=mimecast20190719; t=1732139852;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AlcX7vR9/mJZNCZh9j7iz8mHqKYU+1nKrqM52qsEyNA=;
- b=Pm/sLC3+6HTNnrUb0T1ePH+IfanHNBDwfUzfA8ZtVQPbtlytPQyaumkfqZdh/MdUmBCp3h
- x1jnYnTUZ8NBbel6w/VCwWKO5z96ruRI9UtyZFMnf/zNRPKrtQfzVaMib1QL4kLo79EXOC
- vvS2/VPK1ZnylNwdtC5/yHoCmO+JorU=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u0jDqqudCxAu71oFUQRU0Kfl+jPW1gD7xhuPkzFbPVs=;
+ b=Mmgh+ITom1MWPPsCG0nay3L/JhSkArd/KeSdMcXC3VGe9byf1wKTbQbDq5J4Akq9i36k9R
+ eImp24DO/3wIzh+EP6n1idpYcLUnWytCs+VFs9SwgwwWQwrxZ9EigF9jEX825gL6V05IFz
+ BKPmEqEZVjKOa1zFLsKgBUltBTDLstQ=
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-298-05MCBheKNgafiWWNFD1t6w-1; Wed, 20 Nov 2024 16:57:26 -0500
-X-MC-Unique: 05MCBheKNgafiWWNFD1t6w-1
-X-Mimecast-MFC-AGG-ID: 05MCBheKNgafiWWNFD1t6w
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-e30cf48435fso325702276.0
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 13:57:26 -0800 (PST)
+ us-mta-428-5cv0xMfWMMiX2kJdCf1-Lw-1; Wed, 20 Nov 2024 16:57:30 -0500
+X-MC-Unique: 5cv0xMfWMMiX2kJdCf1-Lw-1
+X-Mimecast-MFC-AGG-ID: 5cv0xMfWMMiX2kJdCf1-Lw
+Received: by mail-ot1-f71.google.com with SMTP id
+ 46e09a7af769-71a3da16d58so240519a34.3
+ for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 13:57:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732139845; x=1732744645;
+ d=1e100.net; s=20230601; t=1732139849; x=1732744649;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AlcX7vR9/mJZNCZh9j7iz8mHqKYU+1nKrqM52qsEyNA=;
- b=Gom6Ot8n7p9MnbH03VE9fZ4fzr9xNfCxSN6ZZ+F6xyFGCeY19w9DKzR0kDXFGWonQm
- K8Zpg+ahLpGkFqrVqT51IheiWPG9+FjuqJFeY5ibmX7YlemzyD7S95CAU9UulM89AyYJ
- vEMATXUReBHkhtue0o5TtaaA7MPnBJmxUTVPnJoPkpVP1f9tM2keVnENnXkFFQWekK5R
- 7cGjsv6V/qutt2AGupC471fv6UTAeOR1waFoiXQeUl6mRwfcogYjgC4EgYushTtK+9OY
- W92wkjnZCmgMSbmlkbmj2SeHHFfmilbkqcnLpp5VrUK56V45jAQ0lWxzqF3x9l+7HA9s
- baNw==
-X-Gm-Message-State: AOJu0YwR+aeF89AYF47eDIst/dmUzG44CO5y49Cx7B9io+woaDihc7vV
- ohfhU6NEqABD6EKBudyTQkfX9S2nIH4pwngCaKad4XqbvVGoiOVxT1ScrwDYXWqBBfB9RPl3mYZ
- amSt3TyExSSgoOiVNrB+8J/RQgMfIFmkugQOLHtidzH1ucSH0dEcg18L7JBR0yenhcsqj9TQ1wV
- XVytnzW4B1foBqYog8AMMHa/nz7c1GOrsqQg==
-X-Received: by 2002:a05:6902:2510:b0:e38:7b08:867d with SMTP id
- 3f1490d57ef6-e38cb601d51mr3972711276.40.1732139845602; 
- Wed, 20 Nov 2024 13:57:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtMOwvJ/qXdCVBrXtKWx6hrxtSYuXOITngPAjEwqna7/9eE1JlnYujaPCAN1dqxHkCTlZnWw==
-X-Received: by 2002:a05:6902:2510:b0:e38:7b08:867d with SMTP id
- 3f1490d57ef6-e38cb601d51mr3972663276.40.1732139844873; 
- Wed, 20 Nov 2024 13:57:24 -0800 (PST)
+ bh=u0jDqqudCxAu71oFUQRU0Kfl+jPW1gD7xhuPkzFbPVs=;
+ b=RJpa1rvAs4yBr8+6N24z7rKLjRVMEtOQ4DopgnmTVkBSb7EiaL8aDWQ1eOQSUgswsJ
+ Dy2fVwJZ2fhv8sZqfhA5K06tcL4ZSSY7DA4Xn1UJTwefFlSnFra1UcdsK/yFLURTY3Mq
+ 0Rv4qsPCqGUoph6sTQz/01a2LIuHZHNCFHzLDqoKFVlg4+gflKpEGkRzLNlTp7ag1hc3
+ rkxM/2GSma2S0JKp8Y36OCzQQmN7ruHOjDxHYI+5oXTlmzdtlZZSOnaGeX0TKQXpoQ3F
+ B8sFnan64raMKyiAp7LwQ3WxCMPyzag1zPKCbIuJCHKIt4EqeoO0db9qAtg/TVM70VPg
+ P7mA==
+X-Gm-Message-State: AOJu0YzQ9dX9UGbwrYkGiXs9dd9B7UbXHgD+fUcWZJG3/X4XYVwosanz
+ uwZzTdd5qD/I+YxoXEiHRb0ffYu0ZfJzhiCTUYGrsbdysQDKJwtdsAZEuVTi/ccOkVgfef8wira
+ Jn7QQi9Uh4CpYGeJwgBfElOp4xZ0xLn3tyiYEUlEcEZqaEJpglpfP5Q9nEHWHEa6rsM13h0Qwki
+ nmvyB4Esk7FGXHpqfCwzSNxvn5OD7kJ30r/g==
+X-Gm-Gg: ASbGncuP+0UREEI3doQdNDv+JcSdIPUG53f6G+tnyttAJwcdMq2PmcTpRFBZP5O9oGe
+ DQX0Y8O7fw80ts0ZZ4j/w9BLraO+t/6qHl0eA8T3kc5vzJq/F2U4AhG3C6BFte+NYcfc+odjL4G
+ k1Pdz8YDkRrtFf8855Vr/m1XB2Hoh8jhO45mhOKLugfWgk1/fZSY7ygcK697TsNL8EKEiGxhe1n
+ lODAxs5Q/g7cIByAt4fyLuGrWAiXBrD6yu0VsUWDfYO/MT22L5yEzNm+LY0aNRVtq6yZ1mZ53F1
+ UvrJ9x500O+IVegaaSXndBwCKg==
+X-Received: by 2002:a05:6358:7aa:b0:1bc:58bc:ff14 with SMTP id
+ e5c5f4694b2df-1ca664947femr337723255d.10.1732139849302; 
+ Wed, 20 Nov 2024 13:57:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEo9MBMpx+CJGTi9ic34jdBJyCvTF74aN8KAHGuB04iBGFPopNgBUzSPsjJBXNqKPvOe6W90w==
+X-Received: by 2002:a05:6358:7aa:b0:1bc:58bc:ff14 with SMTP id
+ e5c5f4694b2df-1ca664947femr337721055d.10.1732139848923; 
+ Wed, 20 Nov 2024 13:57:28 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-464680d6826sm14632881cf.15.2024.11.20.13.57.23
+ d75a77b69052e-464680d6826sm14632881cf.15.2024.11.20.13.57.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Nov 2024 13:57:24 -0800 (PST)
+ Wed, 20 Nov 2024 13:57:27 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -75,9 +80,9 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 09/12] qdev: Add machine_get_container()
-Date: Wed, 20 Nov 2024 16:57:00 -0500
-Message-ID: <20241120215703.3918445-10-peterx@redhat.com>
+Subject: [PATCH 11/12] qom: Add object_get_container()
+Date: Wed, 20 Nov 2024 16:57:02 -0500
+Message-ID: <20241120215703.3918445-12-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241120215703.3918445-1-peterx@redhat.com>
 References: <20241120215703.3918445-1-peterx@redhat.com>
@@ -108,63 +113,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a helper to fetch machine containers.  Add some sanity check around.
+Add a helper to fetch a root container (under object_get_root()).  Sanity
+check on the type of the object.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/hw/qdev-core.h | 10 ++++++++++
- hw/core/qdev.c         | 17 +++++++++++++++++
- 2 files changed, 27 insertions(+)
+ include/qom/object.h | 10 ++++++++++
+ qom/object.c         | 10 ++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 5be9844412..38edfb1b54 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -996,6 +996,16 @@ const char *qdev_fw_name(DeviceState *dev);
- void qdev_assert_realized_properly(void);
- Object *qdev_get_machine(void);
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 41ef53241e..87b13f9681 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -1524,6 +1524,16 @@ const char *object_property_get_type(Object *obj, const char *name,
+  */
+ Object *object_get_root(void);
  
 +/**
-+ * machine_get_container:
-+ * @name: The name of container to lookup
++ * object_get_container:
++ * @name: the name of container to lookup
 + *
-+ * Get a container of the machine (QOM path "/machine/XXX").
++ * Lookup a root level container.
 + *
-+ * Returns: the machine container object.
++ * Returns: the container with @name.
 + */
-+Object *machine_get_container(const char *name);
++Object *object_get_container(const char *name);
 +
+ 
  /**
-  * qdev_get_human_name() - Return a human-readable name for a device
-  * @dev: The device. Must be a valid and non-NULL pointer.
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index c869c47a27..6cb4fe4691 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -829,6 +829,23 @@ Object *qdev_get_machine(void)
-     return dev;
+  * object_get_objects_root:
+diff --git a/qom/object.c b/qom/object.c
+index 810e6f2bd9..cf66803a6a 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1748,6 +1748,16 @@ static Object *object_root_initialize(void)
+     return root;
  }
  
-+Object *machine_get_container(const char *name)
++Object *object_get_container(const char *name)
 +{
-+    Object *container, *machine;
++    Object *container;
 +
-+    /*
-+     * NOTE: nobody should call this _before_ machine is created.  If it
-+     * happens, it's a programming error.
-+     */
-+    machine = qdev_get_machine();
-+    assert(machine);
-+
-+    container = object_resolve_path_component(machine, name);
++    container = object_resolve_path_component(object_get_root(), name);
 +    assert(object_dynamic_cast(container, TYPE_CONTAINER));
 +
 +    return container;
 +}
 +
- char *qdev_get_human_name(DeviceState *dev)
+ Object *object_get_root(void)
  {
-     g_assert(dev != NULL);
+     static Object *root;
 -- 
 2.45.0
 
