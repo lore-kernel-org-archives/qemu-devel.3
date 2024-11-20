@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DEC7D711B4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 15:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 754E7D711BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 16:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDmo5-0003c3-Mm; Wed, 20 Nov 2024 10:39:53 -0500
+	id 1tDn9G-0000Ds-Qe; Wed, 20 Nov 2024 11:01:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1tDmo4-0003bG-0i
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 10:39:52 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1tDmo1-000610-Fz
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 10:39:51 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-71e953f4e7cso3084301b3a.3
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 07:39:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1732117188; x=1732721988; darn=nongnu.org;
- h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=2KZqQE/UUmVgsvRJGOS0j9UuW1/93sgKbbyM+lCyFz4=;
- b=c2FMkU4Y7BIJBP3MeDGag8N4Us4Ea0VVtdTpaaXLb1ZiNdrJH7NsKerJotO25uKrCe
- 3IaidDgLXcc2G3NntMysTSV1S3dcPS9pNS2XQUn+QK7BvvpBCW78wG1WMhnHWAXr2bNz
- b7lEqUdTdLMoVrgYnmJt7qF9qe6vMhuItZxjHoS8KvcbG73ImBxaYJpACs6aR9v17kRF
- UGRxVBF2RC6xgaspl1iXLztZ06gWJw7FFWXGi4hE1img9l4V9gUJHUgaSYB8oN6HwT4z
- QBrAq5xzM5YGkvSSK5xL+Fp/NEJEMehqq2cASk7cd2Tp9TFSLUXIMINYRuMG7MZL404P
- jVHQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDn9F-0000DI-Em
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 11:01:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tDn9D-0005RS-Ra
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 11:01:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732118500;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=J99+4hSVKAmFhVLDQlgc3oplsYx5b7O6dXFRkHtUUlA=;
+ b=dOYQvNc3lOJC89J9bTJ21Q+58vbqGNaE+elsiS4cQjiMKsqS3z34THYSdlFRDsO1ZBwsbH
+ Jwm+fqnPdaf5/SEvLOVHzHpLUPV7vLjZXwoG/HcZBsW5W9ZC3DOhwDPkguTzm95aO2Bk4G
+ J6hkBSAAMqF5MtGmQs3sx3PR7JgfgSg=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-695-zIInjZK_MuOjp-jjvizmKQ-1; Wed, 20 Nov 2024 11:01:38 -0500
+X-MC-Unique: zIInjZK_MuOjp-jjvizmKQ-1
+X-Mimecast-MFC-AGG-ID: zIInjZK_MuOjp-jjvizmKQ
+Received: by mail-io1-f72.google.com with SMTP id
+ ca18e2360f4ac-83ab434c629so479582139f.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 08:01:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732117188; x=1732721988;
- h=references:in-reply-to:message-id:date:subject:cc:to:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2KZqQE/UUmVgsvRJGOS0j9UuW1/93sgKbbyM+lCyFz4=;
- b=SOhDKUvPtaiz8uXwv24RT4GRdj4oviXVst6RS1pk2myBYH0U/5oi4DfuJD5sA6/yvz
- bLrzZCf91eeN+iwjoDKXqz5vT6UQX5ZMKl0K7h/JUCZywYS6biLRvk6c6TcXB60hPj5v
- FwwXZsoAn4wKxArOjLehH+NW+e8LpFQtBjG6b4qWcgBedNKm/vHJvHm6HYJEYSiWvKGT
- un816roW/eJP6LfWdWkv8+dzZX7pBZYItlZkIHmS9EbLe4l8zDf0xIrnkILJw8ZM0nFE
- Q0Ondhy1HSPGRVrvJZpHegtCZbOuM4EyS6vLpBKk1O+x0vXYnkIPL1ZTlIwSeJCjcAnU
- xuBA==
-X-Gm-Message-State: AOJu0YzDiseHG00QiHkYB44tG7LGZRk4b8fYuFQBKY8upUdvAKEl4d8y
- fy48D8CetXLtZ/g9CXazyOqQXqezI7gp9bXDlfb3PvgaLyg7FnMF1+5lguZE00eCWDehkLwE/hs
- dGp7Vsoauxbbb1bUBAOkfdYoVzH6sgifGxPTt8A3j0DVQ9v3qWZ3L/+eml8jXBHd2dU4ObITEap
- F2cPxpcuBFF0JW5OtIwzzDJWN3vqKlhVCKtvdq
-X-Google-Smtp-Source: AGHT+IGF3bacYwqDii80+IvMeZTPV28U8Y7akDXQInprbO3IStychSVfUBDnR85ZGLeFPn4iQXO1Kw==
-X-Received: by 2002:aa7:88c6:0:b0:71e:e4f:3e58 with SMTP id
- d2e1a72fcca58-724bede9bbbmr4335605b3a.17.1732117187509; 
- Wed, 20 Nov 2024 07:39:47 -0800 (PST)
-Received: from hsinchu26.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724bef8da6asm1838903b3a.123.2024.11.20.07.39.45
+ d=1e100.net; s=20230601; t=1732118497; x=1732723297;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J99+4hSVKAmFhVLDQlgc3oplsYx5b7O6dXFRkHtUUlA=;
+ b=LWjwEz2ha6sNwT5Za8pWRpkJXxnBhj+7OR3YdQgSPEsNvksZt6I6comBiztIM20RKn
+ r7wtt2/astbAIidAcyCt2vH0bvGP7aD9CEAYEneev7Xv09pbu0UjQsU+493llebBypc0
+ wqMU2iUyLJvoJbOigaPjqb40KDqu6LTIaroU9XR0M8WhmlYFsgNzel9aGzWXM1GoIasx
+ W3qA157xzHDZCKI5UCKUHpXCoDczh2WHudTJIHGgjEtHNb+b5327pfcSqjNlR4chMdCC
+ NJKRoRDbaICnrs6KQe1/OqPwePr8PpBV9p1gIORutZPa+9TqMQ25zsoMX5Aqg4owGr3B
+ pFEg==
+X-Gm-Message-State: AOJu0YxxDVowqGwP5duRu4SMexk0LmNNXALeLhtA/DrQbDpupVPDHrBW
+ tyYt7U55eN1boZUCJoXCgXTj1xYXPryk4D18Tv2WElcd+aPT/pSoP0+LLELwGsVViGnDXgjoqRf
+ LGTsnkVNbeJSiFTHIHgNDH+iL547Kj9eZaOf8k5OdIX7tp0jeTjl0OBnR41XaKpfZBkvjFqMYzK
+ OI6mnA5Ul9gkbfxZVh3wlsQOdAXjtLHcKWIw==
+X-Received: by 2002:a05:6602:342a:b0:83a:71c6:26fb with SMTP id
+ ca18e2360f4ac-83eb5fa2915mr460464539f.6.1732118496873; 
+ Wed, 20 Nov 2024 08:01:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGPXv1Sc+B3CTMYPD4q4HTeA0Mvivg/n4m9B26vc15jrM8XLGtNymRuHz45ib45sTdLUuzpJA==
+X-Received: by 2002:a05:6602:342a:b0:83a:71c6:26fb with SMTP id
+ ca18e2360f4ac-83eb5fa2915mr460431239f.6.1732118494356; 
+ Wed, 20 Nov 2024 08:01:34 -0800 (PST)
+Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e0756f2519sm3333028173.148.2024.11.20.08.01.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Nov 2024 07:39:47 -0800 (PST)
-From: Jim Shu <jim.shu@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v4 3/3] hw/riscv: Add the checking if DTB overlaps to kernel
- or initrd
-Date: Wed, 20 Nov 2024 23:39:35 +0800
-Message-Id: <20241120153935.24706-4-jim.shu@sifive.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20241120153935.24706-1-jim.shu@sifive.com>
-References: <20241120153935.24706-1-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=jim.shu@sifive.com; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Wed, 20 Nov 2024 08:01:33 -0800 (PST)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, qemu-stable <qemu-stable@nongnu.org>,
+ Fabiano Rosas <farosas@suse.de>, Peter Krempa <pkrempa@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] migration: Allow pipes to keep working for fd migrations
+Date: Wed, 20 Nov 2024 11:01:32 -0500
+Message-ID: <20241120160132.3659735-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.45.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,94 +101,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DTB is placed to the end of memory, so we will check if the start
-address of DTB overlaps to the address of kernel/initrd.
+Libvirt may still use pipes for old file migrations in fd: URI form,
+especially when loading old images dumped from Libvirt's compression
+algorithms.
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
+In that case, Libvirt needs to compress / uncompress the images on its own
+over the migration binary stream, and pipes are passed over to QEMU for
+outgoing / incoming migrations in "fd:" URIs.
+
+For future such use case, it should be suggested to use mapped-ram when
+saving such VM image.  However there can still be old images that was
+compressed in such way, so libvirt needs to be able to load those images,
+uncompress them and use the same pipe mechanism to pass that over to QEMU.
+
+It means, even if new file migrations can be gradually moved over to
+mapped-ram (after Libvirt start supporting it), Libvirt still needs the
+uncompressor for the old images to be able to load like before.
+
+Meanwhile since Libvirt currently exposes the compression capability to
+guest images, it may needs its own lifecycle management to move that over
+to mapped-ram, maybe can be done after mapped-ram saved the image, however
+Dan and PeterK raised concern on temporary double disk space consumption.
+I suppose for now the easiest is to enable pipes for both sides of "fd:"
+migrations, until all things figured out from Libvirt side on how to move
+on.
+
+And for "channels" QMP interface support on "migrate" / "migrate-incoming"
+commands, we'll also need to move away from pipe.  But let's leave that for
+later too.
+
+So far, still allow pipes to happen like before on both save/load sides,
+just like we would allow sockets to pass.
+
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Krempa <pkrempa@redhat.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Fixes: c55deb860c ("migration: Deprecate fd: for file migration")
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/riscv/boot.c         | 25 ++++++++++++++++++++++++-
- include/hw/riscv/boot.h |  3 +++
- 2 files changed, 27 insertions(+), 1 deletion(-)
+ migration/fd.c | 27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index 81d27f935e..bc8074fec8 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -70,6 +70,7 @@ char *riscv_plic_hart_config_string(int hart_count)
- void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts)
+diff --git a/migration/fd.c b/migration/fd.c
+index aab5189eac..9bf9be6acb 100644
+--- a/migration/fd.c
++++ b/migration/fd.c
+@@ -25,6 +25,29 @@
+ #include "io/channel-util.h"
+ #include "trace.h"
+ 
++static bool fd_is_pipe(int fd)
++{
++    struct stat statbuf;
++
++    if (fstat(fd, &statbuf) == -1) {
++        return false;
++    }
++
++    return S_ISFIFO(statbuf.st_mode);
++}
++
++static bool migration_fd_valid(int fd)
++{
++    if (fd_is_socket(fd)) {
++        return true;
++    }
++
++    if (fd_is_pipe(fd)) {
++        return true;
++    }
++
++    return false;
++}
+ 
+ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **errp)
  {
-     info->kernel_size = 0;
-+    info->initrd_size = 0;
-     info->is_32bit = riscv_is_32bit(harts);
- }
- 
-@@ -213,6 +214,9 @@ static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info)
-         }
+@@ -34,7 +57,7 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
+         return;
      }
  
-+    info->initrd_start = start;
-+    info->initrd_size = size;
-+
-     /* Some RISC-V machines (e.g. opentitan) don't have a fdt. */
-     if (fdt) {
-         end = start + size;
-@@ -309,6 +313,7 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-     int ret = fdt_pack(ms->fdt);
-     hwaddr dram_end, temp;
-     int fdtsize;
-+    uint64_t dtb_start, dtb_start_limit;
- 
-     /* Should only fail if we've built a corrupted tree */
-     g_assert(ret == 0);
-@@ -319,6 +324,17 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-         exit(1);
+-    if (!fd_is_socket(fd)) {
++    if (!migration_fd_valid(fd)) {
+         warn_report("fd: migration to a file is deprecated."
+                     " Use file: instead.");
+     }
+@@ -68,7 +91,7 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+         return;
      }
  
-+    if (info->initrd_size) {
-+        /* If initrd is successfully loaded, place DTB after it. */
-+        dtb_start_limit = info->initrd_start + info->initrd_size;
-+    } else if (info->kernel_size) {
-+        /* If only kernel is successfully loaded, place DTB after it. */
-+        dtb_start_limit = info->image_high_addr;
-+    } else {
-+        /* Otherwise, do not check DTB overlapping */
-+        dtb_start_limit = 0;
-+    }
-+
-     /*
-      * A dram_size == 0, usually from a MemMapEntry[].size element,
-      * means that the DRAM block goes all the way to ms->ram_size.
-@@ -338,7 +354,14 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-         temp = (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram_end;
+-    if (!fd_is_socket(fd)) {
++    if (!migration_fd_valid(fd)) {
+         warn_report("fd: migration to a file is deprecated."
+                     " Use file: instead.");
      }
- 
--    return QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
-+    dtb_start = QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
-+
-+    if (dtb_start_limit && (dtb_start < dtb_start_limit)) {
-+        error_report("No enough memory to place DTB after kernel/initrd");
-+        exit(1);
-+    }
-+
-+    return dtb_start;
- }
- 
- /*
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index 06b51ed086..7d59b2e6c6 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -32,6 +32,9 @@ typedef struct RISCVBootInfo {
-     hwaddr image_low_addr;
-     hwaddr image_high_addr;
- 
-+    hwaddr initrd_start;
-+    ssize_t initrd_size;
-+
-     bool is_32bit;
- } RISCVBootInfo;
- 
 -- 
-2.17.1
+2.45.0
 
 
