@@ -4,92 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B3BDD743D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F3A5D743E3
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 21:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDsF1-0002Ip-1j; Wed, 20 Nov 2024 16:28:03 -0500
+	id 1tDsVd-0005C9-4u; Wed, 20 Nov 2024 16:45:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1tDsEx-0002IT-5S; Wed, 20 Nov 2024 16:27:59 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1tDsEv-00021b-1y; Wed, 20 Nov 2024 16:27:58 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AKFMa2g030824;
- Wed, 20 Nov 2024 21:27:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=jCjDShz1aVErzgPi9lmBgQNWKRCv9KNz8L7Grd76l
- Iw=; b=RPFRc22Fg7EWRx4UrpqY24Erw7aU3G+OHWOt7scl9ywKW7stR5f4trvMw
- er2erGWGO5lGGOYN4mxrqa2VMlV2EfpkCxgQotce6Y+MB+S1KIsqXJIO1vbysdNI
- +buo56a1nRrRRQ9qcfZBXQEg8HEgPgJcsmCyhALUgExsVcAOjIExUpM3bSktDFbI
- hFcN9B0SAWwg86SYqu/QANruoxq0c6UJYk3ZmqmgTINtfhVOfjUNCOUNktDG0Hy8
- +NA1ZcUkT6TW9FgV6yxkljZ7YSpMCjDhKgPyfDY1XGMIaRqL2t83ahbiBStOW27L
- eA+zBHwAI+93uomNfVvb4WEHya+gw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xhtjyaht-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Nov 2024 21:27:52 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AKLHWPN030975;
- Wed, 20 Nov 2024 21:27:25 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42y63yyvmw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Nov 2024 21:27:25 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4AKLRNDB7930166
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 Nov 2024 21:27:23 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B98332004B;
- Wed, 20 Nov 2024 21:27:23 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4AD6220043;
- Wed, 20 Nov 2024 21:27:23 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.179.13.249])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 Nov 2024 21:27:23 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Laurent Vivier <laurent@vivier.eu>, Thomas Huth <thuth@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH v2] linux-user: Fix strace output for s390x mmap()
-Date: Wed, 20 Nov 2024 22:26:44 +0100
-Message-ID: <20241120212717.246186-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tDsVX-000595-S0
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:45:09 -0500
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tDsVV-0004Mv-Do
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 16:45:07 -0500
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-71808b6246bso94677a34.2
+ for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 13:45:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732139104; x=1732743904; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TJla3E3VDFFTN5aiOh6fW6EvLvRgDPOxGQ6cFC1p1Kc=;
+ b=eJfLRkYfKtM5fyigX5Yx1vxejesJr0t1ndiuFkmpEYaYukzmUOsqAlPa01DCEspI1x
+ GiZqzMCpBUzXWlLLNvRQ3ihfOOumaULBmSCSvfci+J7FcjhaVBV4ZvE4eJhprSIvY1f1
+ cNOcIveR2xjchtQMfjt5ThraeKaY2llZsQWJPQj0RXODF3c2Pv5I4dJoVfhBboP6BksM
+ nL1N5lnkJani2HDlUoPTbFzXTBaXT3Kx2Zm+N513aT+Md4uKLP75Xlq9Lhupla+nVTsz
+ K7H94ndMhx341mnrSi96PNCKwr8iy4PrIS81q6eclow5jIrXeleZQZsSDBNdAXq8qgw9
+ 9QJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732139104; x=1732743904;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TJla3E3VDFFTN5aiOh6fW6EvLvRgDPOxGQ6cFC1p1Kc=;
+ b=N0x9d6fXjdLP3yqo6WZFBIlvIiEdx1u+5S/4HnetrNwdKwnpRabXShWf4iqM9FZcdL
+ 4gE607kCma8O7BsT1BJQaaOkWhq8m3UFBZueNYnSd7O+4ruS9CPYpVTS+EzaKouM4nyK
+ PaEDlK+McAgJMpdsvoV3dFf7uxgi6nmC63uycyKwMNsuys8y9AA0yj7Z7VRTBZ2oOcaa
+ bbSHfumlsSd2tnv9zgoGG5B9SSAa/IJ0y5fk/1h1iNxPgIqSqK49W90vtl1wCEZIfPHi
+ RQaN2Fkvc56RjxjUuXKaTlz2MpgXSWkBHXe8UIzGOvYLsonlM+cXcO1NFZEQ2kXhnUFX
+ Fu6g==
+X-Gm-Message-State: AOJu0YzF3eZ+VzXImMWbq5wN7S4at0Q8/oRGgvOFXohUqqLFXp6ksJkY
+ h5++XBUtA9iRo2XmOkbQudqHR4rnIi1SZfMTiI+gNq92uaGjwkRJNVOpmpx7zQk=
+X-Google-Smtp-Source: AGHT+IErPeFBjMpL5ETlyT9kF3tUsdjau2FQOJeVrBaUhVTCY56Gz4+PVGcx/4wBiXEXeY34qNzCPw==
+X-Received: by 2002:a9d:6553:0:b0:710:f879:a15a with SMTP id
+ 46e09a7af769-71ab31d8ba8mr4131033a34.27.1732139103846; 
+ Wed, 20 Nov 2024 13:45:03 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fbb65821b8sm21973a12.68.2024.11.20.13.45.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 Nov 2024 13:45:03 -0800 (PST)
+Message-ID: <94ead9ab-e290-4469-931a-d447d26f27aa@linaro.org>
+Date: Wed, 20 Nov 2024 13:45:02 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: GAOUO42APtQy1WCiP8AMv-WgylftHAJH
-X-Proofpoint-GUID: GAOUO42APtQy1WCiP8AMv-WgylftHAJH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxlogscore=938
- clxscore=1015 malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501
- impostorscore=0 mlxscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411200152
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] docs/devel: add git-publish for patch submitting
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ Andrew Melnychenko <andrew@daynix.com>, Jason Wang <jasowang@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, alex.bennee@linaro.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-arm@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
+ manos.pitsidianakis@linaro.org, qemu-block@nongnu.org,
+ Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk
+ <kkostiuk@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, gustavo.romero@linaro.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241118172357.475281-1-pierrick.bouvier@linaro.org>
+ <20241118172357.475281-3-pierrick.bouvier@linaro.org>
+ <ZzxUeTxHBHKlEhwN@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <ZzxUeTxHBHKlEhwN@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-ot1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,74 +109,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-print_mmap() assumes that mmap() receives arguments via memory if
-mmap2() is present. s390x (as opposed to s390) does not fit this
-pattern: it does not have mmap2(), but mmap() still receives arguments
-via memory.
-
-Fix by sharing the detection logic between syscall.c and strace.c.
-
-Cc: qemu-stable@nongnu.org
-Fixes: d971040c2d16 ("linux-user: Fix strace output for old_mmap")
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
-
-v1: https://lore.kernel.org/qemu-devel/20241119211138.148806-1-iii@linux.ibm.com/
-v1 -> v2: Share the detection logic between syscall.c and strace.c
-          (Richard).
-
- linux-user/strace.c       | 2 +-
- linux-user/syscall.c      | 5 +----
- linux-user/syscall_defs.h | 7 +++++++
- 3 files changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index b70eadc19ef..9c55f39b095 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -3971,7 +3971,7 @@ print_mmap(CPUArchState *cpu_env, const struct syscallname *name,
- {
-     return print_mmap_both(cpu_env, name, arg0, arg1, arg2, arg3,
-                            arg4, arg5,
--#if defined(TARGET_NR_mmap2)
-+#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
-                             true
- #else
-                             false
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 0279f235768..1ce4c79784f 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -10588,10 +10588,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return ret;
- #ifdef TARGET_NR_mmap
-     case TARGET_NR_mmap:
--#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
--    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
--    defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) \
--    || defined(TARGET_S390X)
-+#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
-         {
-             abi_ulong *v;
-             abi_ulong v1, v2, v3, v4, v5, v6;
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 0e08dfae3e4..faad9147c91 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2766,4 +2766,11 @@ struct target_open_how_ver0 {
- #define RESOLVE_NO_SYMLINKS     0x04
- #endif
- 
-+#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
-+    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
-+    defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) || \
-+    defined(TARGET_S390X)
-+#define TARGET_ARCH_WANT_SYS_OLD_MMAP
-+#endif
-+
- #endif
--- 
-2.47.0
-
+T24gMTEvMTkvMjQgMDE6MDQsIERhbmllbCBQLiBCZXJyYW5nw6kgd3JvdGU6DQo+IE9uIE1v
+biwgTm92IDE4LCAyMDI0IGF0IDA5OjIzOjUyQU0gLTA4MDAsIFBpZXJyaWNrIEJvdXZpZXIg
+d3JvdGU6DQo+PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5i
+b3V2aWVyQGxpbmFyby5vcmc+DQo+PiAtLS0NCj4+ICAgZG9jcy9kZXZlbC9zdWJtaXR0aW5n
+LWEtcGF0Y2gucnN0IHwgMTQgKysrKysrKysrKysrKysNCj4+ICAgMSBmaWxlIGNoYW5nZWQs
+IDE0IGluc2VydGlvbnMoKykNCj4+DQo+PiBkaWZmIC0tZ2l0IGEvZG9jcy9kZXZlbC9zdWJt
+aXR0aW5nLWEtcGF0Y2gucnN0IGIvZG9jcy9kZXZlbC9zdWJtaXR0aW5nLWEtcGF0Y2gucnN0
+DQo+PiBpbmRleCAzNDljMzJlZTNhOS4uOTUzNjgyZjIwY2IgMTAwNjQ0DQo+PiAtLS0gYS9k
+b2NzL2RldmVsL3N1Ym1pdHRpbmctYS1wYXRjaC5yc3QNCj4+ICsrKyBiL2RvY3MvZGV2ZWwv
+c3VibWl0dGluZy1hLXBhdGNoLnJzdA0KPj4gQEAgLTIzNyw2ICsyMzcsMjAgQEAgYXR0YWNo
+bWVudHMgY2FuIGJlIHVzZWQgYXMgYSBsYXN0IHJlc29ydCBvbiBhIGZpcnN0LXRpbWUgc3Vi
+bWlzc2lvbi4NCj4+ICAgDQo+PiAgIC4uIF9pZl95b3VfY2Fubm90X3NlbmRfcGF0Y2hfZW1h
+aWxzOg0KPiANCj4gVGhpcyBuZWVkcyB0byByZW1haW4gYXNzb2NpYXRlZCB3aXRoIHRoZSBo
+ZWFkaW5nIHRoYXQgaXMgKmFmdGVyKg0KPiB5b3VyIG5ldyBibG9jayBvZiB0ZXh0LCB3aGls
+ZSBoZXJlIHlvdSBuZWVkIHRvIGFkZCBhIG5ldyBhbmNob3INCj4gDQoNCk9vcHMsIHRoYXQg
+d2FzIG5vdCBpbnRlbnRpb25hbCwgdGhhbmtzIGZvciBwb2ludGluZyB0aGlzLg0KRml4ZWQg
+YW5kIGFkZGVkIHRoZSBuZXcgYW5jaG9yIGluIGNhc2Ugc29tZW9uZSBuZWVkcyBpdC4NCg0K
+PiAgICAgLi4gX3VzZV9naXRfcHVibGlzaDoNCj4gDQo+PiAgIA0KPj4gK1VzZSBnaXQtcHVi
+bGlzaA0KPj4gK35+fn5+fn5+fn5+fn5+fg0KPj4gKw0KPj4gK0lmIHlvdSBhbHJlYWR5IGNv
+bmZpZ3VyZWQgZ2l0IHNlbmQtZW1haWwsIHlvdSBjYW4gc2ltcGx5IHVzZSBgZ2l0LXB1Ymxp
+c2gNCj4+ICs8aHR0cHM6Ly9naXRodWIuY29tL3N0ZWZhbmhhL2dpdC1wdWJsaXNoPmBfXyB0
+byBzZW5kIHNlcmllcy4NCj4+ICsNCj4+ICs6Og0KPj4gKw0KPj4gKyAgICAkIGdpdCBjaGVj
+a291dCBtYXN0ZXIgLWIgbXktZmVhdHVyZQ0KPj4gKyAgICAkICMgd29yayBvbiBuZXcgY29t
+bWl0cywgYWRkIHlvdXIgJ1NpZ25lZC1vZmYtYnknIGxpbmVzIHRvIGVhY2gNCj4+ICsgICAg
+JCBnaXQgcHVibGlzaA0KPj4gKyAgICAkIC4uLiBtb3JlIHdvcmssIHJlYmFzZSBvbiBtYXN0
+ZXIsIC4uLg0KPj4gKyAgICAkIGdpdCBwdWJsaXNoICMgd2lsbCBzZW5kIGEgdjINCj4gDQo+
+IEFsc28gYWRkIGEgbm90ZQ0KPiANCj4gICAiRWFjaCB0aW1lIHlvdSBwb3N0IGEgc2VyaWVz
+LCBnaXQtcHVibGlzaCB3aWxsIGNyZWF0ZSBhIGxvY2FsIHRhZw0KPiAgICB3aXRoIHRoZSBm
+b3JtYXQgYGA8YnJhbmNobmFtZT4tdjx2ZXJzaW9uPmBgIHRvIHJlY29yZCB0aGUgcGF0Y2gN
+Cj4gICAgc2VyaWVzLiINCj4gDQoNCkFkZGVkIHRoaXMg8J+RjS4NCg0KPj4gKw0KPj4gICBJ
+ZiB5b3UgY2Fubm90IHNlbmQgcGF0Y2ggZW1haWxzDQo+PiAgIH5+fn5+fn5+fn5+fn5+fn5+
+fn5+fn5+fn5+fn5+fn4NCj4+ICAgDQo+PiAtLSANCj4+IDIuMzkuNQ0KPj4NCj4gDQo+IFdp
+dGggcmVnYXJkcywNCj4gRGFuaWVsDQoNCg==
 
