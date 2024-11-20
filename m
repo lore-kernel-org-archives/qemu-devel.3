@@ -4,132 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC83D6395D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 14:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F98D711A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 15:00:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDlwM-0001Z9-Tm; Wed, 20 Nov 2024 09:44:22 -0500
+	id 1tDmBD-00048K-7P; Wed, 20 Nov 2024 09:59:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tDlwM-0001Yz-4j
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 09:44:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tDmBB-000487-MJ; Wed, 20 Nov 2024 09:59:41 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tDlwK-0006bM-IS
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 09:44:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732113858;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rdYbQ/Aoj/+krIY68V8wdmLLwU8uwwkYZeL8sdybFSc=;
- b=OMUjBHsFk/nTo6mQ0IC81Do3z55gf1nAZDymjVuyubql0Re+zkojk/eN05v0JalK/JbuZE
- w2BGEFbAeK1Zdw4fCem7gPB1ffvQs0bDrznoXM70QDr6IrRhjOaKTd5AyZRagWhdMv07aR
- 2+C6DqeOrcG8oYSfLREfNahqVImg6xs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-XU9iQJ0_P4qSIvdV3rWHmg-1; Wed, 20 Nov 2024 09:44:16 -0500
-X-MC-Unique: XU9iQJ0_P4qSIvdV3rWHmg-1
-X-Mimecast-MFC-AGG-ID: XU9iQJ0_P4qSIvdV3rWHmg
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38229779bf4so3262460f8f.0
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 06:44:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732113855; x=1732718655;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rdYbQ/Aoj/+krIY68V8wdmLLwU8uwwkYZeL8sdybFSc=;
- b=NCjEx4nXBm2HW3SvRONfRCEdpO+a7fTaSBOjuxlh/3dBdd7guVzPgJ8spZQk5GH4cS
- vUO/ShLjUD8XktunY9JFPxzsopTEZnqo0dQJoOiU0C0/YodRe7ghQ7KJwA9fYP/c+9M5
- QWUzbtHEFr/vwLdcCYo3ORG/eKl1mOR/qmPQ84lmWFlWIHvxJBFTQqNSIYtIJS1AfddY
- e9VDeHrrZP8afg2EJkWDAhJ8vXDH4PYNFis7G7pJnDWbaH7EhTQQrnjwbaZLypjBQJhK
- pqPUzpG4RWXiUufyLj1QNkkPl9pZfMUh+cXGK/uv/juHBUyPWTCOgOHZDfzMZZh8+EzE
- gKlQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUJtZzUT+glSy7krbBsXigcT99E0Ldpf2+mykAlweXamHqcpRYahxtoxxgL9Mi8Ogk1GxQCcL8u0VFX@nongnu.org
-X-Gm-Message-State: AOJu0YwPUZ/vuW1VcRrjx/Fsje2M/+hauOX94XVq5T4SjY2eQE4PZE2g
- LzQg0/4r+0pDwptu/a+6ZWqe/DyKVqcpw5GwU9XZuAFoQG8xMfEWKnbim1FYeEv+NXduHcRyAkG
- SaZWlRd8WVRiT8R79jbLZvgG9dVlwEqS1sQYerInhmf7JNcQtu1W8
-X-Received: by 2002:a5d:6da2:0:b0:382:37b2:87de with SMTP id
- ffacd0b85a97d-38254b14b66mr2786778f8f.43.1732113855405; 
- Wed, 20 Nov 2024 06:44:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGfSOpI4AnI6+AaLCUfDP16N5uQqbFEqvf8mwZnBUvI1o08G692uycMqVWll2dNSn9xoqm/rg==
-X-Received: by 2002:a5d:6da2:0:b0:382:37b2:87de with SMTP id
- ffacd0b85a97d-38254b14b66mr2786754f8f.43.1732113855056; 
- Wed, 20 Nov 2024 06:44:15 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.84.243])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38254933c32sm2293345f8f.70.2024.11.20.06.44.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Nov 2024 06:44:14 -0800 (PST)
-Message-ID: <aaaf219b-dbfc-459c-a531-02b5c494c65f@redhat.com>
-Date: Wed, 20 Nov 2024 15:44:13 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tDmB9-0003nV-6T; Wed, 20 Nov 2024 09:59:41 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xtkwq2JTMz6GD2P;
+ Wed, 20 Nov 2024 22:57:15 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 92410140114;
+ Wed, 20 Nov 2024 22:59:32 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 20 Nov
+ 2024 15:59:32 +0100
+Date: Wed, 20 Nov 2024 14:59:30 +0000
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 4/6] acpi/ghes: Use HEST table offsets when preparing
+ GHES records
+Message-ID: <20241120145930.00003895@huawei.com>
+In-Reply-To: <cf60aee0059d12755c1b9deb2dddb355d8543297.1731486604.git.mchehab+huawei@kernel.org>
+References: <cover.1731486604.git.mchehab+huawei@kernel.org>
+ <cf60aee0059d12755c1b9deb2dddb355d8543297.1731486604.git.mchehab+huawei@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] chardev/char-mux: tweak mux bitset operations
-To: Roman Penyaev <r.peniaev@gmail.com>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- qemu-devel@nongnu.org
-References: <20241120075321.27143-1-r.peniaev@gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20241120075321.27143-1-r.peniaev@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,40 +68,161 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, with just one change:
+On Wed, 13 Nov 2024 09:37:01 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> Also add a static compile check that MAX_MUX never bigger than
-> `sizeof(d->mux_bitset)`.
+> There are two pointers that are needed during error injection:
+> 
+> 1. The start address of the CPER block to be stored;
+> 2. The address of the ack, which needs a reset before next error.
+> 
+> Calculate them preferrable from the HEST table, as this allows
+> checking the source ID, the size of the table and the type of
+> HEST error block structures.
 
-This needs to be multiplied by CHAR_BIT.
+It is preferable to calculate them from the HEST table.  This allows
+checking the source ID, the size of the table and the type of the
+HEST error block structures.
 
-Paolo
+A few comments inline.
 
-On 11/20/24 08:53, Roman Penyaev wrote:
-> Patchset tweaks bitset operations by changing a constant to unsigned
-> long, introduces a static compile check and simplifies bitset operations.
+Jonathan
+
+
 > 
-> v1..v2:
+> Yet, keep the old code, as this is needed for migration purposes.
 > 
-> Rebase on latest master, incorporate review tags.
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>  hw/acpi/ghes.c | 98 ++++++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 88 insertions(+), 10 deletions(-)
 > 
-> Roman Penyaev (2):
->    chardev/char-mux: shift unsigned long to avoid 32-bit overflow
->    chardev/char-mux: make boolean bit check instead of find_next_bit()
-> 
->   chardev/char-mux.c | 15 +++++++--------
->   1 file changed, 7 insertions(+), 8 deletions(-)
-> 
-> 
-> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-> Reviewed-by: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-> Cc: Peter Maydell <peter.maydell@linaro.org>
-> Reviewed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> Cc: qemu-devel@nongnu.org
-> 
-> 
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index c93bbaf1994a..9ee25efe8abf 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -61,6 +61,23 @@
+>   */
+>  #define ACPI_GHES_GESB_SIZE                 20
+>  
+> +/*
+> + * Offsets with regards to the start of the HEST table stored at
+> + * ags->hest_addr_le, according with the memory layout map at
+> + * docs/specs/acpi_hest_ghes.rst.
+> + */
+> +
+/*
+ * ACPI 6.2:
+
+to be consistent with local style.
+
+> +/* ACPI 6.2: 18.3.2.8 Generic Hardware Error Source version 2
+> + * Table 18-382 Generic Hardware Error Source version 2 (GHESv2) Structure
+> + */
+> +#define HEST_GHES_V2_TABLE_SIZE  92
+> +#define GHES_ACK_OFFSET          (64 + GAS_ADDR_OFFSET)
+> +
+/*
+ * ACPI 6.2: 
+> +/* ACPI 6.2: 18.3.2.7: Generic Hardware Error Source
+> + * Table 18-380: 'Error Status Address' field
+> + */
+
+> +static void get_ghes_source_offsets(uint16_t source_id, uint64_t hest_addr,
+> +                                    uint64_t *cper_addr,
+> +                                    uint64_t *read_ack_start_addr,
+> +                                    Error **errp)
+> +{
+> +    uint64_t hest_err_block_addr, hest_read_ack_addr;
+> +    uint64_t err_source_struct, error_block_addr;
+> +    uint32_t num_sources, i;
+> +
+> +    if (!hest_addr) {
+
+Trivial but I wonder if this should be named to indicate that it sin't the start
+of HEST but the first bit of the header.
+hest_body_address or something like that maybe?  I don't care that much
+though if you prefer to keep as is.
+
+
+> +        return;
+> +    }
+> +
+> +    cpu_physical_memory_read(hest_addr, &num_sources, sizeof(num_sources));
+> +    num_sources = le32_to_cpu(num_sources);
+> +
+> +    err_source_struct = hest_addr + sizeof(num_sources);
+> +
+> +    /*
+> +     * Currently, HEST Error source navigates only for GHESv2 tables
+> +     */
+
+Feels like duplication of the comment below where the type check is.
+Maybe drop this one?
+
+> +
+> +    for (i = 0; i < num_sources; i++) {
+> +        uint64_t addr = err_source_struct;
+> +        uint16_t type, src_id;
+> +
+> +        cpu_physical_memory_read(addr, &type, sizeof(type));
+> +        type = le16_to_cpu(type);
+> +
+> +        /* For now, we only know the size of GHESv2 table */
+> +        if (type != ACPI_GHES_SOURCE_GENERIC_ERROR_V2) {
+> +            error_setg(errp, "HEST: type %d not supported.", type);
+> +            return;
+> +        }
+> +
+> +        /* It is GHES. Compare CPER source address */
+
+It's GHESv2 (of course this bit is the same, but none the less comment
+is misleading). I'd just go with
+        /* Compare CPER source address */
+
+> +        addr += sizeof(type);
+> +        cpu_physical_memory_read(addr, &src_id, sizeof(src_id));
+> +
+> +        if (src_id == source_id) {
+> +            break;
+> +        }
+> +
+> +        err_source_struct += HEST_GHES_V2_TABLE_SIZE;
+> +    }
+> +    if (i == num_sources) {
+> +        error_setg(errp, "HEST: Source %d not found.", source_id);
+> +        return;
+> +    }
+> +
+> +    /* Navigate though table address pointers */
+> +    hest_err_block_addr = err_source_struct + GHES_ERR_ST_ADDR_OFFSET;
+> +    hest_read_ack_addr = err_source_struct + GHES_ACK_OFFSET;
+
+> +
+> +    cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
+> +                             sizeof(error_block_addr));
+So this points to a registers
+> +
+> +    cpu_physical_memory_read(error_block_addr, cper_addr,
+> +                             sizeof(*cper_addr));
+and this reads the register. I'm not sure the spec defines the
+contents of that register to be constant.  Maybe we should avoid
+reading the register here and do it instead at read of the record?
+I 'think' you could in theory use different storage for the CPER
+depending on other unhandled errors or whatever else meant you didn't
+want a fixed location.
+
+Or maybe just add a comment to say that the location of CPER storage
+is fixed.
+
+> +
+> +    cpu_physical_memory_read(hest_read_ack_addr, read_ack_start_addr,
+> +                             sizeof(*read_ack_start_addr));
+> +}
 
 
