@@ -4,67 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97666D6E2CE
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 07:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C24D6E2C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 07:29:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDf7r-00021J-6q; Wed, 20 Nov 2024 02:27:47 -0500
+	id 1tDf7g-0001yD-Mp; Wed, 20 Nov 2024 02:27:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
- id 1tDf7p-00020Q-I6; Wed, 20 Nov 2024 02:27:45 -0500
-Received: from mta-03.yadro.com ([89.207.88.253])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tDf7d-0001xV-9A
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 02:27:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
- id 1tDf7m-00080p-DJ; Wed, 20 Nov 2024 02:27:45 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com F16AEE0004
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1732087656;
- bh=bXAXM8qRTOfOTAxsT3cQ9smxjO2LyssIB37CUGRuvKs=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=psO7wffdCgpK+PLIiBA9YK5GV1gu1hkH+eY/VsG3rCz5lVX14qSdjsRVktxbbx9vW
- 9oVWWX5VxH1Cdh63MYBhRWRP3YFEoQTFJ5EFHKSKESMKnd3cxKZZOMX8Ytrn7NTxU2
- y3lU6+HZ0mWD8UtymE2ZotP2e08owXpABaaa2NcTlR99jb8gt/jzDtT2uqt6EMTP07
- JTPtWhn08Dr1n+duFXxLEGYeMTlEsPFKo2+QdENDSdBeqhnHSMnvPNOVXPn2unS+/K
- 4PBLrnDGgJFbZ/JmawAqACkHIdDVg9nEHZf7Dklq0hEvt65H4harMktonbd0yxXBnH
- HYeAVQi4DnUOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1732087656;
- bh=bXAXM8qRTOfOTAxsT3cQ9smxjO2LyssIB37CUGRuvKs=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=DNzlTj3Df4KGz3rAZXyV8kNIpbIRhTGVWyRQOrh1dFjgQhyX8YHfG+AaJGgyMiEG0
- cIxkQAKBA0aihV8UpGl5goBy0nxbs55HCb8QpVXAHnYTVS9E1/Hqd4vo3ySVdIF952
- Omb0CYbEADnIDLTPrIYET+m08STNh1na2kMRO8AoOEbEIpgcEnrAULCGF+n403h9O8
- eqPTIp40KotEwdXV79tWceDtAUjwaATgG1vGJrPxuZdn22+lvv6IOogUgIONo9T6af
- 5KwLg0ItnwyMsz4c3tLHQLCsTeZynmBdiUNJttbI2sNTsHww5815FT/JoLJxn+v9rg
- EMTL/KfLj51/A==
-From: Ivan Klokov <ivan.klokov@syntacore.com>
-To: <qemu-devel@nongnu.org>
-CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
- <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
- <zhiwei_liu@linux.alibaba.com>, <farosas@suse.de>, <lvivier@redhat.com>,
- <pbonzini@redhat.com>, Ivan Klokov <ivan.klokov@syntacore.com>
-Subject: [RFC PATCH v7 1/2] target/riscv: Add RISC-V CSR qtest support
-Date: Wed, 20 Nov 2024 10:27:11 +0300
-Message-ID: <20241120072712.65302-2-ivan.klokov@syntacore.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241120072712.65302-1-ivan.klokov@syntacore.com>
-References: <20241120072712.65302-1-ivan.klokov@syntacore.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tDf7b-00080C-O7
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 02:27:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732087650;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a9gy6dA9pZyQbx//Xc1zrgngdyVqqly2dozo3VuB5MA=;
+ b=PUDZ6+2fgCcI5zbRhFWd+/l7lYNCvl/m3qdJJwk/7ji0sMDKOpktCQ3S7SXaktKlXuIZxr
+ s08dph5+RlUrr+y8y9mrRuvEDFaUCWnTB69K0r7B/M8pBP4j44EOBOc1fGTj5qQzqJBxgx
+ sdWFjbmy+VWtDuhLWiiS5MEo4CTFnDw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-Ynmeb4u0OIq19Ng4IuaMPw-1; Wed, 20 Nov 2024 02:27:29 -0500
+X-MC-Unique: Ynmeb4u0OIq19Ng4IuaMPw-1
+X-Mimecast-MFC-AGG-ID: Ynmeb4u0OIq19Ng4IuaMPw
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4314c6ca114so37949845e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 23:27:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732087647; x=1732692447;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=a9gy6dA9pZyQbx//Xc1zrgngdyVqqly2dozo3VuB5MA=;
+ b=BPo+pcCrPgholzytyGIgiFB/vBFzBz/KCUrWCDXb9fNHwuKHhGWUHoiZBPHf5KgE01
+ LxWu+iFdvA0vPwZQVxFoKh8FgGFQCd86Q+v68zI9Asx7jnT9JtsZKGirSoYtsCTpN/gG
+ o2LcyAxgnkBjptmVuUdqUvfjvxp0ocRg8tnkzcxsIuZn+BeJaQPk9w0DZQDohyIIE4/9
+ TI8hiHFElQmnDDdWmi2RDr2NePzlkAwPDzGOdtsF4nsc+0W3Jb1v1nslNz07ZHL9/Wiq
+ lyuLYwI0B5lQW0J3oMWTrJHeOYLJ4ETLRd2mkjcgE99cv/8AtFGwL7fVKXB3+Dxko+mI
+ oH4g==
+X-Gm-Message-State: AOJu0YyMXUwSObp/jF32ZZp6MfwZZLyxhzD0dVx7SPJXutsqFFaWI74m
+ C+LQYQ4UyVD7HhaUHK4QUfJg9Xhim3mlwIhrsGhzjlVHHRHnlxpsR6uDV5o7HR+D07IQwBHVXfO
+ A9KY5iv+qVbUrc3wgERfH/y3SYoQ4n92XdL0qBcftga4ZV4miDBkmnbjPDBozFiC5bajTiCZ8Ox
+ MVSbGbByKuJu+Y5aWm2t+nw9zHScesY48BoRS4
+X-Received: by 2002:a05:600c:3d18:b0:431:58bc:ad5e with SMTP id
+ 5b1f17b1804b1-4334f025ee8mr11883175e9.28.1732087647495; 
+ Tue, 19 Nov 2024 23:27:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFYmWqdBsaQnqwGJr8X6vac5RxZSoaXjkTdy5HeFad9rUVDvLop9QacpENgNvYauoDldsjVnA==
+X-Received: by 2002:a05:600c:3d18:b0:431:58bc:ad5e with SMTP id
+ 5b1f17b1804b1-4334f025ee8mr11883065e9.28.1732087647165; 
+ Tue, 19 Nov 2024 23:27:27 -0800 (PST)
+Received: from [192.168.10.3] ([151.49.84.243])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-433b463ad1fsm9021245e9.38.2024.11.19.23.27.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Nov 2024 23:27:25 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Kamil=20Szcz=C4=99k?= <kamil@szczek.dev>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 1/5] hw/i386/pc: Remove vmport value assertion
+Date: Wed, 20 Nov 2024 08:27:19 +0100
+Message-ID: <20241120072723.103477-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241120072723.103477-1-pbonzini@redhat.com>
+References: <20241120072723.103477-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-10.corp.yadro.com (172.17.11.60) To
- S-Exch-01.corp.yadro.com (10.78.5.241)
-Received-SPF: permerror client-ip=89.207.88.253;
- envelope-from=ivan.klokov@syntacore.com; helo=mta-03.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,163 +105,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The RISC-V architecture supports the creation of custom
-CSR-mapped devices. It would be convenient to test them in the same way
-as MMIO-mapped devices. To do this, a new call has been added
-to read/write CSR registers.
+From: Kamil Szczęk <kamil@szczek.dev>
 
-Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
-Acked-by: Fabiano Rosas <farosas@suse.de>
+There is no need for this assertion here, as we only use vmport value
+for equality/inequality checks. This was originally prompted by the
+following Coverity report:
+ >>> CID 1559533:  Integer handling issues (CONSTANT_EXPRESSION_RESULT)
+ >>> "pcms->vmport >= 0" is always true regardless of the values of
+ >>> its operands. This occurs as the logical first operand of "&&".
+
+Signed-off-by: Kamil Szczęk <kamil@szczek.dev>
+Reported-By: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/ZwF9ZexNs1h-uC0MrbkgGtMtdyLinROjVSmMNVzNftjGVWgOiuzdD1dSXEtzNH7OHbBFY6GVDYVFIDBgc3lhGqCOb7kaNZolSBkVyl3rNr4=@szczek.dev
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/riscv/riscv_hart.c  | 55 ++++++++++++++++++++++++++++++++++++++++++
- tests/qtest/libqtest.c | 27 +++++++++++++++++++++
- tests/qtest/libqtest.h | 14 +++++++++++
- 3 files changed, 96 insertions(+)
+ hw/i386/pc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-index 613ea2aaa0..22cc8ae31f 100644
---- a/hw/riscv/riscv_hart.c
-+++ b/hw/riscv/riscv_hart.c
-@@ -21,6 +21,8 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
-+#include "qemu/cutils.h"
-+#include "sysemu/qtest.h"
- #include "sysemu/reset.h"
- #include "hw/sysbus.h"
- #include "target/riscv/cpu.h"
-@@ -42,6 +44,55 @@ static void riscv_harts_cpu_reset(void *opaque)
-     cpu_reset(CPU(cpu));
- }
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index f9147fecbdc..317aaca25a0 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1228,7 +1228,6 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+         isa_realize_and_unref(pcms->pcspk, isa_bus, &error_fatal);
+     }
  
-+#ifndef CONFIG_USER_ONLY
-+static void csr_call(char *cmd, uint64_t cpu_num, int csrno, uint64_t *val)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(cpu_num));
-+    CPURISCVState *env = &cpu->env;
-+
-+    int ret = RISCV_EXCP_NONE;
-+    if (strcmp(cmd, "get_csr") == 0) {
-+        ret = riscv_csrr(env, csrno, (target_ulong *)val);
-+    } else if (strcmp(cmd, "set_csr") == 0) {
-+        ret = riscv_csrrw(env, csrno, NULL, *(target_ulong *)val,
-+                MAKE_64BIT_MASK(0, TARGET_LONG_BITS));
-+    }
-+
-+    g_assert(ret == RISCV_EXCP_NONE);
-+}
-+
-+static bool csr_qtest_callback(CharBackend *chr, gchar **words)
-+{
-+    if (strcmp(words[0], "csr") == 0) {
-+
-+        uint64_t cpu;
-+        uint64_t val;
-+        int rc, csr;
-+
-+        rc = qemu_strtou64(words[2], NULL, 0, &cpu);
-+        g_assert(rc == 0);
-+        rc = qemu_strtoi(words[3], NULL, 0, &csr);
-+        g_assert(rc == 0);
-+        rc = qemu_strtou64(words[4], NULL, 0, &val);
-+        g_assert(rc == 0);
-+        csr_call(words[1], cpu, csr, &val);
-+
-+        qtest_send_prefix(chr);
-+        qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
-+
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+static void riscv_cpu_register_csr_qtest_callback(void)
-+{
-+    static GOnce once;
-+    g_once(&once, (GThreadFunc)qtest_set_command_cb, csr_qtest_callback);
-+}
-+#endif
-+
- static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
-                                char *cpu_type, Error **errp)
- {
-@@ -59,6 +110,10 @@ static void riscv_harts_realize(DeviceState *dev, Error **errp)
- 
-     s->harts = g_new0(RISCVCPU, s->num_harts);
- 
-+#ifndef CONFIG_USER_ONLY
-+    riscv_cpu_register_csr_qtest_callback();
-+#endif
-+
-     for (n = 0; n < s->num_harts; n++) {
-         if (!riscv_hart_realize(s, n, s->cpu_type, errp)) {
-             return;
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 817fd7aac5..43bfa496e9 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -1202,6 +1202,33 @@ uint64_t qtest_rtas_call(QTestState *s, const char *name,
-     return 0;
- }
- 
-+static void qtest_rsp_csr(QTestState *s, uint64_t *val)
-+{
-+    gchar **args;
-+    uint64_t ret;
-+    int rc;
-+
-+    args = qtest_rsp_args(s, 3);
-+
-+    rc = qemu_strtou64(args[1], NULL, 16, &ret);
-+    g_assert(rc == 0);
-+    rc = qemu_strtou64(args[2], NULL, 16, val);
-+    g_assert(rc == 0);
-+
-+    g_strfreev(args);
-+}
-+
-+uint64_t qtest_csr_call(QTestState *s, const char *name,
-+                         uint64_t cpu, int csr,
-+                         uint64_t *val)
-+{
-+    qtest_sendf(s, "csr %s 0x%"PRIx64" %d 0x%"PRIx64"\n",
-+                    name, cpu, csr, *val);
-+
-+    qtest_rsp_csr(s, val);
-+    return 0;
-+}
-+
- void qtest_add_func(const char *str, void (*fn)(void))
- {
-     gchar *path = g_strdup_printf("/%s/%s", qtest_get_arch(), str);
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index beb96b18eb..b516a16bd4 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -575,6 +575,20 @@ uint64_t qtest_rtas_call(QTestState *s, const char *name,
-                          uint32_t nargs, uint64_t args,
-                          uint32_t nret, uint64_t ret);
- 
-+/**
-+ * qtest_csr_call:
-+ * @s: #QTestState instance to operate on.
-+ * @name: name of the command to call.
-+ * @cpu: hart number.
-+ * @csr: CSR number.
-+ * @val: Value for reading/writing.
-+ *
-+ * Call an RISC-V CSR read/write function
-+ */
-+uint64_t qtest_csr_call(QTestState *s, const char *name,
-+                         uint64_t cpu, int csr,
-+                         unsigned long *val);
-+
- /**
-  * qtest_bufread:
-  * @s: #QTestState instance to operate on.
+-    assert(pcms->vmport >= 0 && pcms->vmport < ON_OFF_AUTO__MAX);
+     if (pcms->vmport == ON_OFF_AUTO_AUTO) {
+         pcms->vmport = (xen_enabled() || !pcms->i8042_enabled)
+             ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
 -- 
-2.34.1
+2.47.0
 
 
