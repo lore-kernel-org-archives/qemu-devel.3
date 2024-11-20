@@ -4,43 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2C0D63954
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 14:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCDD4D6395B
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 14:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDliA-0004u7-PS; Wed, 20 Nov 2024 09:29:42 -0500
+	id 1tDlkm-0006Ck-MJ; Wed, 20 Nov 2024 09:32:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tDli7-0004t8-7X; Wed, 20 Nov 2024 09:29:39 -0500
+ id 1tDlkj-0006CB-CR; Wed, 20 Nov 2024 09:32:22 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tDli5-0002na-6m; Wed, 20 Nov 2024 09:29:38 -0500
+ id 1tDlkh-0003b3-SF; Wed, 20 Nov 2024 09:32:21 -0500
 Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XtkDp1MCqz6J6nG;
- Wed, 20 Nov 2024 22:26:02 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XtkHx0VJfz6J6tf;
+ Wed, 20 Nov 2024 22:28:45 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id B0F6F140119;
- Wed, 20 Nov 2024 22:29:33 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 9495B140119;
+ Wed, 20 Nov 2024 22:32:16 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 20 Nov
- 2024 15:29:33 +0100
-Date: Wed, 20 Nov 2024 14:29:31 +0000
+ 2024 15:32:16 +0100
+Date: Wed, 20 Nov 2024 14:32:14 +0000
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 CC: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 1/6] acpi/ghes: Prepare to support multiple sources on ghes
-Message-ID: <20241120142931.00006b63@huawei.com>
-In-Reply-To: <3f6b7e8499bf5911de9b1533e4b2a4addc207536.1731486604.git.mchehab+huawei@kernel.org>
+ Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 2/6] acpi/ghes: add a firmware file with HEST address
+Message-ID: <20241120143214.00003570@huawei.com>
+In-Reply-To: <70ed97b5b335a3e399121be988bf37136aaaa7fd.1731486604.git.mchehab+huawei@kernel.org>
 References: <cover.1731486604.git.mchehab+huawei@kernel.org>
- <3f6b7e8499bf5911de9b1533e4b2a4addc207536.1731486604.git.mchehab+huawei@kernel.org>
+ <70ed97b5b335a3e399121be988bf37136aaaa7fd.1731486604.git.mchehab+huawei@kernel.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -74,64 +72,74 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 13 Nov 2024 09:36:58 +0100
+On Wed, 13 Nov 2024 09:36:59 +0100
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> The current code is actually dependent on having just one
-> error structure with a single source.
-
-Trivial: Very short line wrap of the description. Maybe more
-than 60 chars?
-
-> 
-> As the number of sources should be arch-dependent, as it
-> will depend on what kind of synchronous/assynchronous
-> notifications will exist, change the logic to dynamically
-> build the table.
-> 
-> Yet, for a proper support, we need to get the number of
-> sources by reading the number from the HEST table. However,
-> bios currently doesn't store a pointer to it.
-> 
-> For now just change the logic at table build time, while
-> enforcing that it will behave like before with a single
-> source ID.
-> 
-> A future patch will add a HEST table bios pointer and
-> change the logic at acpi_ghes_record_errors() to
-> dynamically use the new size.
+> Store HEST table address at GPA, placing its content at
+> hest_addr_le variable.
 > 
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> 
+> ---
+> 
+> Change from v8:
+> - hest_addr_lr is now pointing to the error source size and data.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Drop the extra SoB. Doesn't matter really but looks strange in the
+patch.
 
-Took a fresh look. One trivial comment.
+One trivial inline.
+
+This stuff always gives me a headache, so with that in mind, looks
+fine to me.
+
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index e059317b002e..40f66792570c 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -889,6 +889,10 @@ static void acpi_align_size(GArray *blob, unsigned align)
->      g_array_set_size(blob, ROUND_UP(acpi_data_len(blob), align));
->  }
+> ---
+>  hw/acpi/ghes.c         | 15 +++++++++++++++
+>  include/hw/acpi/ghes.h |  1 +
+>  2 files changed, 16 insertions(+)
+> 
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index a590b0f6f85f..4cd79d42cd04 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -30,6 +30,7 @@
 >  
-> +static const AcpiNotificationSourceId hest_ghes_notify[] = {
-> +    {ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA},
-
-    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
-seems to be local style.
-
-> +};
+>  #define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
+>  #define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
+> +#define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
+>  
+>  /* The max size in bytes for one error block */
+>  #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+> @@ -361,6 +362,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+>  
+>      acpi_table_begin(&table, table_data);
+>  
+> +    int hest_offset = table_data->len;
 > +
->  static
->  void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->  {
-> @@ -944,6 +948,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->      if (vms->ras) {
->          acpi_add_table(table_offsets, tables_blob);
->          acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
-> +                        hest_ghes_notify, ARRAY_SIZE(hest_ghes_notify),
->                          vms->oem_id, vms->oem_table_id);
+>      /* Error Source Count */
+>      build_append_int_noprefix(table_data, num_sources, 4);
+>      for (i = 0; i < num_sources; i++) {
+> @@ -368,6 +371,15 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
 >      }
+>  
+>      acpi_table_end(linker, &table);
+> +
+> +    /*
+> +     * tell firmware to write into GPA the address of HEST via fw_cfg,
+Tell
+
+File is inconsistent but mostly uses a capital to start.
+> +     * once initialized.
+> +     */
+> +    bios_linker_loader_write_pointer(linker,
+> +                                     ACPI_HEST_ADDR_FW_CFG_FILE, 0,
+> +                                     sizeof(uint64_t),
+> +                                     ACPI_BUILD_TABLE_FILE, hest_offset);
+>  }
+esState;
 
 
