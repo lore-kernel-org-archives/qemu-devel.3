@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA68AD6E2CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 07:29:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1274D6E2CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Nov 2024 07:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDf7q-000215-6j; Wed, 20 Nov 2024 02:27:46 -0500
+	id 1tDf7t-00022F-4c; Wed, 20 Nov 2024 02:27:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tDf7n-0001zt-Ty
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 02:27:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1tDf7p-00020N-4c; Wed, 20 Nov 2024 02:27:45 -0500
+Received: from mta-03.yadro.com ([89.207.88.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tDf7m-00086V-7v
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 02:27:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732087661;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2rLHa2lhaD4JkWUbp9sIMcNrBEmDkALIbWpGkF72WqY=;
- b=Yrh/eaL+hqMOYLlRd6sH5d0OuNsQztgsVL3YYx1A+py1oB/5OYO5rMzSCoXcDvdw4pmL9C
- PnTfdHyozVLOBWFbeTFVEWyE56w5rMQhXcAyfJLZwvdSG85p/kT+SE09vXBhNlHoAdFHxf
- rZuez9ypkXKV+HfHvSOXdNUhzZHJS80=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-g2th1MNmO3ueSzxoG51GWg-1; Wed, 20 Nov 2024 02:27:40 -0500
-X-MC-Unique: g2th1MNmO3ueSzxoG51GWg-1
-X-Mimecast-MFC-AGG-ID: g2th1MNmO3ueSzxoG51GWg
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-539e294566dso3838879e87.3
- for <qemu-devel@nongnu.org>; Tue, 19 Nov 2024 23:27:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732087658; x=1732692458;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2rLHa2lhaD4JkWUbp9sIMcNrBEmDkALIbWpGkF72WqY=;
- b=v3z/NaQCYpem0qTUYB2exOg4PpV6xvvUGgshfHN9FnNfu0WxR0U8803Z1vEaUNSE7q
- mWHMJyUzzSW6LzSUF4Hg3qh377ElEoK8Fe47yhh4xA2/nVTQr1ztSYWlD8IBEOAYinb4
- L64B9epdV3Zx1um+pj6AUSYzAH7KT+gRuwDaxIFeXUZjpbaUSVKUuL9FPLrJHEuoeBoU
- Aez7BUNXcnwj5UOFKN5WOlRjhBQENa+GU4hTonzIZ44Ln/gl3/HivIQ00mQLkRcd+6ES
- uwUyl2RaXNEf31lioCZ/8Bct4hwaNT3HlS6mQrjmQvNBnaxqoE9c7NYKxdFmO51aN/WJ
- Oiuw==
-X-Gm-Message-State: AOJu0YzIvYJkDtxN9SFWwuRSTnl8Ba29LOH+a3ncBhB1eaftwhD8Yz5a
- 2D134hiotaGY+RzmVWifElEWKkdOzvJYOww8rZbapYehQfxoaUGzEC9Ie6hUCShQ0JRDrwKdQBL
- NrNVpT94ZiBDt2chxPfLkprdrhRAeHBvEWxtph+wFY6kkH7tNbZO5UhApAvO+BDPpt5PPlpRGGm
- jdxjYHWGlKxFfKjQcBa5dLTWmKKdij//9Yyiav
-X-Received: by 2002:ac2:5b01:0:b0:539:f26f:d285 with SMTP id
- 2adb3069b0e04-53dc1323503mr633172e87.3.1732087658047; 
- Tue, 19 Nov 2024 23:27:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGhRVz9VYZsZd/AYl+/XTvilrzQiVez0TUuzzSwRNqUHj6o+oMnUPEX6uqNrjfjUJasZ4LH9w==
-X-Received: by 2002:ac2:5b01:0:b0:539:f26f:d285 with SMTP id
- 2adb3069b0e04-53dc1323503mr633154e87.3.1732087657623; 
- Tue, 19 Nov 2024 23:27:37 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.84.243])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b45d4ce6sm9161925e9.25.2024.11.19.23.27.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Nov 2024 23:27:35 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com,
-	thuth@redhat.com
-Subject: [PULL 5/5] scsi: fix allocation for s390x loadparm
-Date: Wed, 20 Nov 2024 08:27:23 +0100
-Message-ID: <20241120072723.103477-6-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241120072723.103477-1-pbonzini@redhat.com>
-References: <20241120072723.103477-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1tDf7m-000815-Cg; Wed, 20 Nov 2024 02:27:44 -0500
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com 27FCFE0004
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1732087658;
+ bh=wmeSqoVGvMzlf402PU8ZusnH/EFnjksm9+MU6IqoiHc=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=Qk/ZT3B4IgbzDFSUwWBBTlZzy1mgIvc9iFwVBN9yavgpF+TDepSjmf/0iDnE/qA3H
+ ajeyY3Boh+FDx5w8dBr6psOlMngVB5YuGuif2VQMr4TRaXtttz+Iu+0EIrx1xPagYJ
+ bUoDQ6vRshyKVTFozkD1jfsgbcgOF5NR32fFdQGCbyLgdhUzrymwJU0/+uJf+YPcN+
+ 40sEJkVezS0G7Xbcp33Jo5vg4E9fdrP5dRpndv4cUF0YmwA9j3nhLz/kplShxfAj1I
+ PaIuLV+NlNwslqZBwWFMFhPVJ3wH4wLRTHuo2pXnhPCSDgWXtP1YDBzr2VoDCmcHiv
+ w41uwG9peDY8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1732087658;
+ bh=wmeSqoVGvMzlf402PU8ZusnH/EFnjksm9+MU6IqoiHc=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=ucn3qoFMcIXY7uqWUvEoBLlWcNdqgEBPSJcBN5i6JYKm5PFkAZdKbfTlAidXJp1X2
+ 9+J+BFd9VtVxvqN7XPoomsfqmdESnW1i9caDUzS9CW1W4LLD2MrvMhYgRPrJjK1voh
+ SCXPIewLfbgxjBjpgIgr6/bRVf1B2G5dW8L/ZAwda4zgLoNLn6Veqdf6F5Rs0C17Gn
+ i/c2K2b7fcarbp1lwn9dg4jLv5iUXiHpas7NFc9cIjCBN+lW3uFVT/V6eppgsHz/OW
+ 1bpNcu0OCiLdBHfK5EFf+Qo8QSxduet6yLnETralRIgFqoj1QSATJVZSnushIdG/RD
+ GCii7DAn3PrSA==
+From: Ivan Klokov <ivan.klokov@syntacore.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
+ <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
+ <zhiwei_liu@linux.alibaba.com>, <farosas@suse.de>, <lvivier@redhat.com>,
+ <pbonzini@redhat.com>, Ivan Klokov <ivan.klokov@syntacore.com>
+Subject: [RFC PATCH v7 2/2] tests/qtest: QTest example for RISC-V CSR register
+Date: Wed, 20 Nov 2024 10:27:12 +0300
+Message-ID: <20241120072712.65302-3-ivan.klokov@syntacore.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241120072712.65302-1-ivan.klokov@syntacore.com>
+References: <20241120072712.65302-1-ivan.klokov@syntacore.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain
+X-ClientProxiedBy: T-EXCH-10.corp.yadro.com (172.17.11.60) To
+ S-Exch-01.corp.yadro.com (10.78.5.241)
+Received-SPF: permerror client-ip=89.207.88.253;
+ envelope-from=ivan.klokov@syntacore.com; helo=mta-03.yadro.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,35 +80,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity reports a possible buffer overrun due to a non-NUL-terminated
-string in scsi_property_set_loadparm().  While things are not so easy,
-because qdev_prop_sanitize_s390x_loadparm is designed to operate on a
-buffer that is not NUL-terminated, in this case the string *does* have
-to be NUL-terminated because it is read by scsi_property_get_loadparm
-and s390_build_iplb.
+Added demo for reading CSR register from qtest environment.
 
-Reviewed-by: jrossi@linux.ibm.com
-Cc: thuth@redhat.com
-Fixes: 429442e52d9 ("hw: Add "loadparm" property to scsi disk devices for booting on s390x", 2024-11-18)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/scsi/scsi-disk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/meson.build      |  2 +-
+ tests/qtest/riscv-csr-test.c | 56 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/riscv-csr-test.c
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 8e553487d50..7f13b0588f2 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -3152,7 +3152,7 @@ static void scsi_property_set_loadparm(Object *obj, const char *value,
-         return;
-     }
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index f2f35367ae..3aad77b3a9 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -272,7 +272,7 @@ qtests_s390x = \
+ qtests_riscv32 = \
+   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
  
--    lp_str = g_malloc0(strlen(value));
-+    lp_str = g_malloc0(strlen(value) + 1);
-     if (!qdev_prop_sanitize_s390x_loadparm(lp_str, value, errp)) {
-         g_free(lp_str);
-         return;
+-qtests_riscv64 = \
++qtests_riscv64 = ['riscv-csr-test'] + \
+   (unpack_edk2_blobs ? ['bios-tables-test'] : [])
+ 
+ qos_test_ss = ss.source_set()
+diff --git a/tests/qtest/riscv-csr-test.c b/tests/qtest/riscv-csr-test.c
+new file mode 100644
+index 0000000000..ff5c29e6c6
+--- /dev/null
++++ b/tests/qtest/riscv-csr-test.c
+@@ -0,0 +1,56 @@
++/*
++ * QTest testcase for RISC-V CSRs
++ *
++ * Copyright (c) 2024 Syntacore.
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
++ * for more details.
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++#define CSR_MVENDORID       0xf11
++#define CSR_MISELECT        0x350
++
++static void run_test_csr(void)
++{
++    uint64_t res;
++    uint64_t val = 0;
++
++    QTestState *qts = qtest_init("-machine virt -cpu veyron-v1");
++
++    res = qtest_csr_call(qts, "get_csr", 0, CSR_MVENDORID, &val);
++
++    g_assert_cmpint(res, ==, 0);
++    g_assert_cmpint(val, ==, 0x61f);
++
++    val = 0xff;
++    res = qtest_csr_call(qts, "set_csr", 0, CSR_MISELECT, &val);
++
++    g_assert_cmpint(res, ==, 0);
++
++    val = 0;
++    res = qtest_csr_call(qts, "get_csr", 0, CSR_MISELECT, &val);
++
++    g_assert_cmpint(res, ==, 0);
++    g_assert_cmpint(val, ==, 0xff);
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/cpu/csr", run_test_csr);
++
++    return g_test_run();
++}
 -- 
-2.47.0
+2.34.1
 
 
