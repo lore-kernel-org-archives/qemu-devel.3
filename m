@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E8FD78783
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 15:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C625D78782
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 15:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE9Kk-0008TJ-9b; Thu, 21 Nov 2024 10:43:06 -0500
+	id 1tE9KT-0008MA-LS; Thu, 21 Nov 2024 10:42:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE9Kh-0008Sp-PR
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:43:03 -0500
+ id 1tE9KS-0008M0-Kc
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:42:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE9Kg-0000jz-90
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:43:03 -0500
+ id 1tE9KR-0000iI-2a
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:42:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732203781;
+ s=mimecast20190719; t=1732203766;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Yj5+vx0K0OlA1WTlyKTZ9b/IpvJBZdLUFFn25VVcPtE=;
- b=RwMzZ9BqTtjquco7IRv3rIuX1Ur243cemNPOPpj9FUPHddvgC2dqbdjV8ApAg12MtRLQBZ
- TJiVjFoyMepImeHKPIVlNqGDg0h87a0M29f/ZfkHBjvGUV5D6bQcKfO0Lp0cR2wdQtg7nA
- yD0NEHYmVXiubXQixgojkYMi3AUinXU=
+ bh=jMkCy4MQl2qLOgRMp/s9Ejjza/xczcztT7nl6dT9KCs=;
+ b=Ce3tmH53909xHc9vSkadAXccSrD8293/60RpN3ucaK5Nhy1lxYwADoNhS6e4otw49F/vQM
+ 15Tz0MoUhDZ+4q5K75HbCt4N6DErwjyE9yboQoQt2F6tCQSlnB/bnMTgOC46IQByYnLp1n
+ E3Ulp2ntf4Bl+IY9aNRXvLuFGuBZl9I=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-312-4EqBEcFjN0imH1vHQ11iwQ-1; Thu,
- 21 Nov 2024 10:42:58 -0500
-X-MC-Unique: 4EqBEcFjN0imH1vHQ11iwQ-1
-X-Mimecast-MFC-AGG-ID: 4EqBEcFjN0imH1vHQ11iwQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-88-lDdkqxyIOxuPxpOaUDDWcA-1; Thu,
+ 21 Nov 2024 10:42:44 -0500
+X-MC-Unique: lDdkqxyIOxuPxpOaUDDWcA-1
+X-Mimecast-MFC-AGG-ID: lDdkqxyIOxuPxpOaUDDWcA
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E00991954128; Thu, 21 Nov 2024 15:42:56 +0000 (UTC)
+ id 6CECD19540F2; Thu, 21 Nov 2024 15:42:43 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.5])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 16E4E1956086; Thu, 21 Nov 2024 15:42:53 +0000 (UTC)
+ id 8970D195607C; Thu, 21 Nov 2024 15:42:35 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
@@ -54,9 +54,10 @@ Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 05/18] tests/functional: remove leftover :avocado: tags
-Date: Thu, 21 Nov 2024 15:42:05 +0000
-Message-ID: <20241121154218.1423005-6-berrange@redhat.com>
+Subject: [PATCH v2 02/18] tests/functional: automatically clean up scratch
+ files after tests
+Date: Thu, 21 Nov 2024 15:42:02 +0000
+Message-ID: <20241121154218.1423005-3-berrange@redhat.com>
 In-Reply-To: <20241121154218.1423005-1-berrange@redhat.com>
 References: <20241121154218.1423005-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,133 +89,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These tags are not honoured under the new functional test harness.
+The build/tests/functional subdirectories are consuming huge amounts
+of disk space.
+
+Split the location for scratch files into a 'scratch' sub-directory,
+separate from log files, and delete it upon completion of each test.
+The new env variable QEMU_TEST_KEEP_SCRATCH can be set to preserve
+this scratch dir for debugging access if required.
 
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/test_arm_bpim2u.py   | 20 --------------------
- tests/functional/test_arm_orangepi.py | 27 ---------------------------
- 2 files changed, 47 deletions(-)
+ docs/devel/testing/functional.rst      |  6 ++++++
+ tests/functional/qemu_test/testcase.py | 14 +++++++++-----
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/tests/functional/test_arm_bpim2u.py b/tests/functional/test_arm_bpim2u.py
-index 2f9fa145e3..35ea58d46c 100755
---- a/tests/functional/test_arm_bpim2u.py
-+++ b/tests/functional/test_arm_bpim2u.py
-@@ -37,11 +37,6 @@ class BananaPiMachine(LinuxKernelTest):
-         '5b41b4e11423e562c6011640f9a7cd3bdd0a3d42b83430f7caa70a432e6cd82c')
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index bf6f1bb81e..6b5d0c5b98 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -65,6 +65,12 @@ to the QEMU binary that should be used for the test, for example::
+   $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
+   $ python3 ../tests/functional/test_file.py
  
-     def test_arm_bpim2u(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:bpim2u
--        :avocado: tags=accel:tcg
--        """
-         self.set_machine('bpim2u')
-         deb_path = self.ASSET_DEB.fetch()
-         kernel_path = self.extract_from_deb(deb_path,
-@@ -64,11 +59,6 @@ def test_arm_bpim2u(self):
-         os.remove(dtb_path)
++The test framework will automatically purge any scratch files created during
++the tests. If needing to debug a failed test, it is possible to keep these
++files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=1``` as an env
++variable.  Any preserved files will be deleted the next time the test is run
++without this variable set.
++
+ Overview
+ --------
  
-     def test_arm_bpim2u_initrd(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=accel:tcg
--        :avocado: tags=machine:bpim2u
--        """
-         self.set_machine('bpim2u')
-         deb_path = self.ASSET_DEB.fetch()
-         kernel_path = self.extract_from_deb(deb_path,
-@@ -105,11 +95,6 @@ def test_arm_bpim2u_initrd(self):
-         os.remove(initrd_path)
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 411978b5ef..b9418e2ac0 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -13,8 +13,9 @@
  
-     def test_arm_bpim2u_gmac(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:bpim2u
--        :avocado: tags=device:sd
--        """
-         self.set_machine('bpim2u')
-         self.require_netdev('user')
+ import logging
+ import os
+-import subprocess
+ import pycotap
++import shutil
++import subprocess
+ import sys
+ import unittest
+ import uuid
+@@ -40,11 +41,12 @@ def setUp(self, bin_prefix):
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+         self.arch = self.qemu_bin.split('-')[-1]
  
-@@ -160,11 +145,6 @@ def test_arm_bpim2u_gmac(self):
+-        self.workdir = os.path.join(BUILD_DIR, 'tests/functional', self.arch,
+-                                    self.id())
++        self.outputdir = os.path.join(BUILD_DIR, 'tests', 'functional',
++                                      self.arch, self.id())
++        self.workdir = os.path.join(self.outputdir, 'scratch')
+         os.makedirs(self.workdir, exist_ok=True)
  
-     @skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
-     def test_arm_bpim2u_openwrt_22_03_3(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:bpim2u
--        :avocado: tags=device:sd
--        """
-         self.set_machine('bpim2u')
-         # This test download a 8.9 MiB compressed image and expand it
-         # to 127 MiB.
-diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/test_arm_orangepi.py
-index d2ed5fcc82..6d57223a03 100755
---- a/tests/functional/test_arm_orangepi.py
-+++ b/tests/functional/test_arm_orangepi.py
-@@ -49,11 +49,6 @@ class BananaPiMachine(LinuxKernelTest):
-         '20d3e07dc057e15c12452620e90ecab2047f0f7940d9cba8182ebc795927177f')
+-        self.logdir = self.workdir
++        self.logdir = self.outputdir
+         self.log_filename = os.path.join(self.logdir, 'base.log')
+         self.log = logging.getLogger('qemu-test')
+         self.log.setLevel(logging.DEBUG)
+@@ -56,6 +58,8 @@ def setUp(self, bin_prefix):
+         self.log.addHandler(self._log_fh)
  
-     def test_arm_orangepi(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:orangepi-pc
--        :avocado: tags=accel:tcg
--        """
-         self.set_machine('orangepi-pc')
-         deb_path = self.ASSET_DEB.fetch()
-         kernel_path = self.extract_from_deb(deb_path,
-@@ -75,11 +70,6 @@ def test_arm_orangepi(self):
-         os.remove(dtb_path)
+     def tearDown(self):
++        if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
++            shutil.rmtree(self.workdir)
+         self.log.removeHandler(self._log_fh)
  
-     def test_arm_orangepi_initrd(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=accel:tcg
--        :avocado: tags=machine:orangepi-pc
--        """
-         self.set_machine('orangepi-pc')
-         deb_path = self.ASSET_DEB.fetch()
-         kernel_path = self.extract_from_deb(deb_path,
-@@ -115,12 +105,6 @@ def test_arm_orangepi_initrd(self):
-         os.remove(initrd_path)
+     def main():
+@@ -108,7 +112,7 @@ def setUp(self):
  
-     def test_arm_orangepi_sd(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=accel:tcg
--        :avocado: tags=machine:orangepi-pc
--        :avocado: tags=device:sd
--        """
-         self.set_machine('orangepi-pc')
-         self.require_netdev('user')
-         deb_path = self.ASSET_DEB.fetch()
-@@ -167,11 +151,6 @@ def test_arm_orangepi_sd(self):
- 
-     @skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
-     def test_arm_orangepi_armbian(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:orangepi-pc
--        :avocado: tags=device:sd
--        """
-         self.set_machine('orangepi-pc')
-         # This test download a 275 MiB compressed image and expand it
-         # to 1036 MiB, but the underlying filesystem is 1552 MiB...
-@@ -208,12 +187,6 @@ def test_arm_orangepi_armbian(self):
- 
-     @skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
-     def test_arm_orangepi_uboot_netbsd9(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:orangepi-pc
--        :avocado: tags=device:sd
--        :avocado: tags=os:netbsd
--        """
-         self.set_machine('orangepi-pc')
-         # This test download a 304MB compressed image and expand it to 2GB
-         deb_path = self.ASSET_UBOOT.fetch()
+         console_log = logging.getLogger('console')
+         console_log.setLevel(logging.DEBUG)
+-        self.console_log_name = os.path.join(self.workdir, 'console.log')
++        self.console_log_name = os.path.join(self.logdir, 'console.log')
+         self._console_log_fh = logging.FileHandler(self.console_log_name,
+                                                    mode='w')
+         self._console_log_fh.setLevel(logging.DEBUG)
 -- 
 2.46.0
 
