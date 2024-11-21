@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2124D7879A
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50D4AD78799
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEAeb-0001k2-Sh; Thu, 21 Nov 2024 12:07:42 -0500
+	id 1tEAdb-0008EB-51; Thu, 21 Nov 2024 12:06:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAdl-0000Ty-JR
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:50 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1tEAdY-00086M-Fo
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:36 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAdT-0001cb-0d
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:49 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43161c0068bso9764035e9.1
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 09:06:29 -0800 (PST)
+ id 1tEAdR-0001Zq-1d
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:36 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4314fa33a35so9589595e9.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 09:06:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732208789; x=1732813589; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732208785; x=1732813585; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VAGsBPtTmpGlZjFjwkSGWhc1on1nGzftLOgY8SHHshk=;
- b=diIj3p6bBvvxD4wu5dFjlXyphXZ7EY4EAx5vg8FwOifWkmfwPh7vVIfIvNy7CdmbdG
- BJOApOhrWdMvOsVMX7VKHrGToMCkfDG10LIhCzHC51ofUxnh61zK81SgAvJ7DbVg7qlD
- kusIzlScLOVnYpN9bpH+wAwnT9OsHLKigaGzns2m1wnIqE6QQEI3xx1uco5Fc6RCsf0K
- 3d8HvnNiBYztI3Qv+Y4DeMYArlGDHidcdwrjTjw9MCkVRMxNhDpB7AuD4MvW3mgSs2Kc
- NRM/b/0FNftMBIPVI/XCvYfoKVjz4sQr/tjv9oRLevgT6XdP4j6OkJ5xJ8Ux8vohNkbN
- 8Hag==
+ bh=idIcVKGpYjCDsx+KcIa06gkN9HyuOLEg0Ymsw5Q1ZdE=;
+ b=r782XFJHMgK5HGG2p6y6i9+BHtyGGe+0ub3KPDvw46HrVpzBG4aX8lZxtGnR7e8c9M
+ h6eaDAxGr+q27dnR05IqXe3M02yQHdvqvy+P7vhT+H+nFxqYQYkIQQ3xLSZa/0olIsa2
+ ijwGRpDWeK4y7A6d5mC4rkw6tBDGYUlSHrgcp04v5UWyBfAQVGpnYfbLW8/irLdGjrv4
+ fShYbpuPJaEA358oBB0hWwsIt4eOJGnuQEEiNYYdBczmpD/G1JzUdy43KDu6wS1C9+TW
+ HQiAzSWsxwVjEgk+FD0sUwrMXUZsQCzfuhAkJKoIe2t0SyFSlqUE3TudGf7yUh7qqsZq
+ JzKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732208789; x=1732813589;
+ d=1e100.net; s=20230601; t=1732208785; x=1732813585;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VAGsBPtTmpGlZjFjwkSGWhc1on1nGzftLOgY8SHHshk=;
- b=YIzo/mACzNO1i4DhsnS+XSgjjfvrC+3qB1sWJUgPru6zFoM+TfMa14bI20qCOzd77X
- AxrkslIyJpE3f5bLoQVmd9PElxw4L3SzV96g6N3k8DD7AnfzwokY1YvH/AQ0Gblwiy69
- VZ1VluBcOiE1K666bXUoiEHsM/MaOoEj5ZMAPRjB7U+1lhi0DI/Y/z/LBXrwKVn8QF1O
- nxUFdeB2V+w7p8qYpuXdSNCkOehq+9Lilbi4NZkbOMpPNt5Il9INTD7xQFM3M9VHxPi0
- iP5v0SmEyGQwerpYCw3IZweIPmqs4IBGECYWEZogbExm6J8rGFxVNQM0clOJL0KSwdUT
- c80w==
-X-Gm-Message-State: AOJu0YxfHm4+G6HmanW1UtH5CAU+cXYHs1vQXESDga2O8xfotHevdV5E
- dsDILTPexjtVNy7qGMuqATbBKlhU+yM8H4JirPNlsgb//CmZTKu6TCWJE2gt4mA=
-X-Gm-Gg: ASbGnctG8TiOdtSR/2865fSaqtBErdGr5mDYed3WN3jAR9vjDXnbsIkrAPowxbMu1CY
- c76tyV8Yay24UqMB48oLIykxJBSZAwTvOreSVE+eXS/RPLItvw9CPqmTDOkUAftMZv250ZWH07k
- 10cOB6jQWpdfRMY5Ks/rmQOQPaMOEc+umsWiLLDMFLncvE6F5mXijKigquBkxsw0Ukvd8Pxg+AV
- eu2rXslMiMnOuqyP8QI9ClCiQ547uU9RaIX1iimlNpKosa/
-X-Google-Smtp-Source: AGHT+IEVnLw2xUtf0J9uvurODmXKtzkjOY30qGhQ5prc0K46NKf1TqRr8l+lGSKt4CWPqimkHrCH9Q==
-X-Received: by 2002:a05:600c:314b:b0:431:51c0:c90f with SMTP id
- 5b1f17b1804b1-4334f0202damr60948965e9.21.1732208787559; 
- Thu, 21 Nov 2024 09:06:27 -0800 (PST)
+ bh=idIcVKGpYjCDsx+KcIa06gkN9HyuOLEg0Ymsw5Q1ZdE=;
+ b=NAbCWn6yvkxDxLL+GCN1Y+BRCjdgSUwwh8GbQJOnWP2aTN3ZipPeBoliLAxA+ujFcH
+ C1OAnH0aJm9J8GxJkkpFV/Q2RQlnUIodDL4jtvGG8Sqnqh7mUgubqQjhCB3lSEIbSwG+
+ XosOPhfLSvCb8vUKeDA6DE/LnqBASywGcbpIrhaRTrwmjHyoBdt5fzzRykQNfgrXRUdF
+ 7xXlJ+lQNFeJVtTngEhscn58shIFnPG/o5njQlQwuhVxX6U3NkrKazS16EltwtNp16cg
+ wxx5kMV8Ws8X4IqYzpukX4uqIqVg2Za5BZc3T+KvzdwzCxnasZ7/dWXd2LFrRJ6djrqH
+ vmVw==
+X-Gm-Message-State: AOJu0YyVzVoUa2OqGZou7XvmCYhTqmKztwdie7zIBTCfFkOGf7PgT3jE
+ rPcHShYdVmlCm2/oldMNtHnT3+UWKjVhykWD5Utszdr1kq1Zgy2qAXG2dDFObbY=
+X-Gm-Gg: ASbGnctXW9d7Rhdeckb4qSNCCjz2SmvJpUx7ftLJNoOmM5KtcSymXQarfz8UcWCVQcd
+ M5pz6QdxEB3SUN8YH5uaQjIIi4KuCXW6JeyMBX6K0N7WiYCvLHVjgWoFH6hFq1Sg+rAYGwOGWK3
+ x/6jUXEbJLLUQfxEwpw5gWuap0qqlK+1jrSSe+8xVfqxw2Fp+W+kzwTYwlkX2r7rXp3GN9R/v7a
+ pcFzhfcukgoSjlk1d+2BkJhl2NkWdG3ovIFWdOFQcXgfDLP
+X-Google-Smtp-Source: AGHT+IH6g5M3vTaVsS3CPENTsM7HsoWcPZRMPU6znIjdL1RjlqwiFqX8MvTPqIsvEGnUeu6izcb0BA==
+X-Received: by 2002:a05:600c:c84:b0:431:5ed4:7e7d with SMTP id
+ 5b1f17b1804b1-433489d4d91mr68172095e9.18.1732208784265; 
+ Thu, 21 Nov 2024 09:06:24 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b4616636sm61146695e9.19.2024.11.21.09.06.25
+ 5b1f17b1804b1-433b46172d5sm61230635e9.23.2024.11.21.09.06.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 09:06:25 -0800 (PST)
+ Thu, 21 Nov 2024 09:06:23 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F412A603F4;
- Thu, 21 Nov 2024 16:58:07 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 9F3BD604E1;
+ Thu, 21 Nov 2024 16:58:09 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -93,18 +93,17 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 17/39] tests/functional: add a QMP backdoor for debugging
- stalled tests
-Date: Thu, 21 Nov 2024 16:57:44 +0000
-Message-Id: <20241121165806.476008-18-alex.bennee@linaro.org>
+Subject: [PATCH 35/39] plugins: add missing export for qemu_plugin_num_vcpus
+Date: Thu, 21 Nov 2024 16:58:02 +0000
+Message-Id: <20241121165806.476008-36-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241121165806.476008-1-alex.bennee@linaro.org>
 References: <20241121165806.476008-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,68 +126,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Support the QEMU_TEST_QMP_BACKDOOR=backdoor.sock env variable as a
-way to get a QMP backdoor for debugging a stalled QEMU test. Most
-typically this would be used if running the tests directly:
-
- $ QEMU_TEST_QMP_BACKDOOR=backdoor.sock \
-   QEMU_TEST_QEMU_BINARY=./build/qemu-system-arm \
-   PYTHONPATH=./python \
-   ./tests/functional/test_arm_tuxrun.py
-
-And then, when the test stalls, in a second shell run:
-
- $ ./scripts/qmp/qmp-shell backdoor.sock
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20241121154218.1423005-18-berrange@redhat.com>
+Fixes: 4a448b148ca ("plugins: add qemu_plugin_num_vcpus function")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241112212622.3590693-2-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/devel/testing/functional.rst      | 10 ++++++++++
- tests/functional/qemu_test/testcase.py |  7 +++++++
- 2 files changed, 17 insertions(+)
+ include/qemu/qemu-plugin.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index 6b5d0c5b98..b8ad7b0bf7 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -176,6 +176,16 @@ primarily depend on the value of the ``qemu_bin`` class attribute.
- If it is not explicitly set by the test code, its default value will
- be the result the QEMU_TEST_QEMU_BINARY environment variable.
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 622c9a0232..0fba36ae02 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -803,6 +803,7 @@ void qemu_plugin_register_atexit_cb(qemu_plugin_id_t id,
+                                     qemu_plugin_udata_cb_t cb, void *userdata);
  
-+Debugging hung QEMU
-+^^^^^^^^^^^^^^^^^^^
-+
-+When test cases go wrong it may be helpful to debug a stalled QEMU
-+process. While the QEMUMachine class owns the primary QMP monitor
-+socket, it is possible to request a second QMP monitor be created
-+by setting the ``QEMU_TEST_QMP_BACKDOOR`` env variable to refer
-+to a UNIX socket name. The ``qmp-shell`` command can then be
-+attached to the stalled QEMU to examine its live state.
-+
- Attribute reference
- -------------------
+ /* returns how many vcpus were started at this point */
++QEMU_PLUGIN_API
+ int qemu_plugin_num_vcpus(void);
  
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index e2a329c3e5..fceafb32b0 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -175,6 +175,13 @@ def _new_vm(self, name, *args):
-                          log_dir=self.logdir)
-         self.log.debug('QEMUMachine "%s" created', name)
-         self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
-+
-+        sockpath = os.environ.get("QEMU_TEST_QMP_BACKDOOR", None)
-+        if sockpath is not None:
-+            vm.add_args("-chardev",
-+                        f"socket,id=backdoor,path={sockpath},server=on,wait=off",
-+                        "-mon", "chardev=backdoor,mode=control")
-+
-         if args:
-             vm.add_args(*args)
-         return vm
+ /**
 -- 
 2.39.5
 
