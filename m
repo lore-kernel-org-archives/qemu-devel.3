@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B57E9D743FD
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FEFD743FC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwHp-0001aJ-Iq; Wed, 20 Nov 2024 20:47:13 -0500
+	id 1tDwHq-0001az-TB; Wed, 20 Nov 2024 20:47:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHn-0001ZT-IU
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:11 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHp-0001aR-NA
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:13 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHl-0004X7-Tm
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:11 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHn-0004XK-1d
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=5YVDpLsCIhM0Je0KSsPGzZGsGqGUsmMzfsGlF+C2ZE0=; b=rK/9p6PrysTn5bv
- g0i1MoWEYfzdeZDxhNyWJcWd+h0KUjtKXBJb9hNA2X38Sb4jF2FpufHNRdYkvcEnDt5IhGK0qKWmG
- 7VmyaRCZlY+nkLPTWefj/0E4stKWCUrE8hpXBZN+yQJYvlYNSnOrysrzCdcV9FbE1YdigBNRPI67f
- 1o=;
+ List-Help; bh=NXow3yI/n6VGiB50Xsb9COmLd+0cj1NMmA6+H2pmjgc=; b=WKYcobFPlzejlh4
+ I+kietp95+5ETSoDAeKdBuDIiOrQLmbbbGtOZefz0nnYjiVT0mKgpTUSk0NRUAn1jsOqOUlROjM3w
+ 8eaGIJ7sAPauDE4BakwCTHap6xqSC1aQmcPS8ZSP/dZcZYmesO0tzlI9q1ulUjW60jQHHGKCAOydj
+ k0=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 10/43] helper-to-tcg: Add meson.build
-Date: Thu, 21 Nov 2024 02:49:14 +0100
-Message-ID: <20241121014947.18666-11-anjo@rev.ng>
+Subject: [RFC PATCH v1 12/43] helper-to-tcg: Introduce custom LLVM pipeline
+Date: Thu, 21 Nov 2024 02:49:16 +0100
+Message-ID: <20241121014947.18666-13-anjo@rev.ng>
 In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
 References: <20241121014947.18666-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,111 +64,229 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sets up a barebones meson.build that handles:
+Adds a custom pipeline, similar to LLVM opt, with the goal of taking an
+input LLVM IR module to an equivalent output .c file implementing
+functions in TCG.
 
-  1. Exposing command for converting .c files to LLVM IR by looking at
-     compile_commads.json;
-
-  2. Finding LLVM and verifying the LLVM version manually by running
-     llvm-config, needed for dealing with multiple LLVM versions in a
-     sane way;
-
-  3. Building of helper-to-tcg.
-
-A meson option is added to specify the path to llvm-config.
+Initial LLVM boilerplate is added until the creation of a
+ModulePassManager.  A custom target derived from x64 is added, to ensure
+consistent behaviour across different hosts.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- subprojects/helper-to-tcg/meson.build       | 70 +++++++++++++++++++++
- subprojects/helper-to-tcg/meson_options.txt |  2 +
- 2 files changed, 72 insertions(+)
- create mode 100644 subprojects/helper-to-tcg/meson.build
- create mode 100644 subprojects/helper-to-tcg/meson_options.txt
+ .../helper-to-tcg/include/CmdLineOptions.h    |  23 +++
+ subprojects/helper-to-tcg/meson.build         |   1 +
+ .../helper-to-tcg/pipeline/Pipeline.cpp       | 159 ++++++++++++++++++
+ 3 files changed, 183 insertions(+)
+ create mode 100644 subprojects/helper-to-tcg/include/CmdLineOptions.h
+ create mode 100644 subprojects/helper-to-tcg/pipeline/Pipeline.cpp
 
+diff --git a/subprojects/helper-to-tcg/include/CmdLineOptions.h b/subprojects/helper-to-tcg/include/CmdLineOptions.h
+new file mode 100644
+index 0000000000..5774ab07b1
+--- /dev/null
++++ b/subprojects/helper-to-tcg/include/CmdLineOptions.h
+@@ -0,0 +1,23 @@
++//
++//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
++
++#pragma once
++
++#include <llvm/Support/CommandLine.h>
++
++// Options for pipeline
++extern llvm::cl::list<std::string> InputFiles;
 diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
-new file mode 100644
-index 0000000000..af593ccdfe
---- /dev/null
+index 7bb93ce005..63c6ed17fb 100644
+--- a/subprojects/helper-to-tcg/meson.build
 +++ b/subprojects/helper-to-tcg/meson.build
-@@ -0,0 +1,70 @@
-+##
-+##  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
-+##
-+##  This program is free software; you can redistribute it and/or modify
-+##  it under the terms of the GNU General Public License as published by
-+##  the Free Software Foundation; either version 2 of the License, or
-+##  (at your option) any later version.
-+##
-+##  This program is distributed in the hope that it will be useful,
-+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+##  GNU General Public License for more details.
-+##
-+##  You should have received a copy of the GNU General Public License
-+##  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+##
-+
-+project('helper-to-tcg', ['cpp'],
-+        meson_version: '>=0.63.0',
-+        version: '0.7',
-+        default_options: ['cpp_std=none', 'optimization=2'])
-+
-+python = import('python').find_installation()
-+
-+# Find LLVM using llvm-config manually.  Needed as meson struggles when multiple
-+# versions of LLVM are installed on the same system (always returns the most
-+# recent).
-+llvm_config = get_option('llvm_config_path')
-+cpp_args = [run_command(llvm_config, '--cxxflags').stdout().strip().split()]
-+bindir = run_command(llvm_config, '--bindir').stdout().strip()
-+ldflags = run_command(llvm_config, '--ldflags').stdout().strip().split()
-+libs = run_command(llvm_config, '--libs').stdout().strip().split()
-+syslibs = run_command(llvm_config, '--system-libs').stdout().strip().split()
-+incdir = run_command(llvm_config, '--includedir').stdout().strip().split()
-+version = run_command(llvm_config, '--version').stdout().strip()
-+version_major = version.split('.')[0].to_int()
-+
-+# Check LLVM version manually
-+if version_major < 10 or version_major > 14
-+    error('LLVM version', version, 'not supported.')
-+endif
-+
-+sources = [
-+]
-+
-+clang = bindir / 'clang'
-+llvm_link = bindir / 'llvm-link'
-+
-+get_llvm_ir_cmd = [python, meson.current_source_dir() / 'get-llvm-ir.py',
-+                   '--compile-commands', 'compile_commands.json',
-+                   '--clang', clang,
-+                   '--llvm-link', llvm_link]
-+
-+# NOTE: Add -Wno-template-id-cdtor for GCC versions >= 14.  This warning is
-+# related to a change in the C++ standard in C++20, that also applies to C++14
-+# for some reason. See defect report DR2237 and commit
-+#   https://gcc.gnu.org/git/gitweb.cgi?p=gcc.git;h=4b38d56dbac6742b038551a36ec80200313123a1
-+# (temporary)
-+compiler_info = meson.get_compiler('cpp')
-+compiler = compiler_info.get_id()
-+compiler_version = compiler_info.version().split('-').get(0)
-+compiler_version_major = compiler_version.split('.').get(0)
-+if compiler == 'gcc' and compiler_version_major.to_int() >= 14
-+    cpp_args += ['-Wno-template-id-cdtor', '-Wno-missing-template-keyword']
-+endif
-+
-+pipeline = executable('helper-to-tcg', sources,
-+                      include_directories: ['passes', './', 'include'] + [incdir],
-+                      link_args: [ldflags] + [libs] + [syslibs],
-+                      cpp_args: cpp_args)
-diff --git a/subprojects/helper-to-tcg/meson_options.txt b/subprojects/helper-to-tcg/meson_options.txt
+@@ -41,6 +41,7 @@ if version_major < 10 or version_major > 14
+ endif
+ 
+ sources = [
++    'pipeline/Pipeline.cpp',
+     'passes/llvm-compat.cpp',
+ ]
+ 
+diff --git a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
 new file mode 100644
-index 0000000000..8a4b28a585
+index 0000000000..9c0e777893
 --- /dev/null
-+++ b/subprojects/helper-to-tcg/meson_options.txt
-@@ -0,0 +1,2 @@
-+option('llvm_config_path', type : 'string', value : 'llvm-config',
-+       description: 'override default llvm-config used for finding LLVM')
++++ b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
+@@ -0,0 +1,159 @@
++//
++//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
++
++#include <llvm/ADT/Triple.h>
++#include <llvm/Analysis/AliasAnalysis.h>
++#include <llvm/Analysis/CGSCCPassManager.h>
++#include <llvm/Analysis/LoopAnalysisManager.h>
++#include <llvm/Analysis/TargetTransformInfo.h>
++#include <llvm/CodeGen/BasicTTIImpl.h>
++#include <llvm/IR/LLVMContext.h>
++#include <llvm/IR/Module.h>
++#include <llvm/IR/PassManager.h>
++#include <llvm/IRReader/IRReader.h>
++#include <llvm/InitializePasses.h>
++#include <llvm/Linker/Linker.h>
++#include <llvm/PassRegistry.h>
++#include <llvm/Passes/PassBuilder.h>
++#include <llvm/Support/CommandLine.h>
++#include <llvm/Support/InitLLVM.h>
++#include <llvm/Support/SourceMgr.h>
++#include <llvm/Support/TargetSelect.h>
++#include <llvm/Target/TargetMachine.h>
++
++#include "llvm-compat.h"
++
++using namespace llvm;
++
++cl::OptionCategory Cat("helper-to-tcg Options");
++
++// Options for pipeline
++cl::opt<std::string> InputFile(cl::Positional, cl::desc("[input LLVM module]"),
++                               cl::cat(Cat));
++
++// Define a TargetTransformInfo (TTI) subclass, this allows for overriding
++// common per-llvm-target information expected by other LLVM passes, such
++// as the width of the largest scalar/vector registers.  Needed for consistent
++// behaviour across different hosts.
++class TcgTTI : public BasicTTIImplBase<TcgTTI>
++{
++    friend class BasicTTIImplBase<TcgTTI>;
++
++    // We need to provide ST, TLI, getST(), getTLI()
++    const TargetSubtargetInfo *ST;
++    const TargetLoweringBase *TLI;
++
++    const TargetSubtargetInfo *getST() const { return ST; }
++    const TargetLoweringBase *getTLI() const { return TLI; }
++
++  public:
++    // Initialize ST and TLI from the target machine, e.g. if we're
++    // targeting x86 we'll get the Subtarget and TargetLowering to
++    // match that architechture.
++    TcgTTI(TargetMachine *TM, Function const &F)
++        : BasicTTIImplBase(TM, F.getParent()->getDataLayout()),
++          ST(TM->getSubtargetImpl(F)), TLI(ST->getTargetLowering())
++    {
++    }
++
++#if LLVM_VERSION_MAJOR >= 13
++    TypeSize getRegisterBitWidth(TargetTransformInfo::RegisterKind K) const
++    {
++        switch (K) {
++        case TargetTransformInfo::RGK_Scalar:
++            // We pretend we always support 64-bit registers
++            return TypeSize::getFixed(64);
++        case TargetTransformInfo::RGK_FixedWidthVector:
++            // We pretend we always support 2048-bit vector registers
++            return TypeSize::getFixed(2048);
++        case TargetTransformInfo::RGK_ScalableVector:
++            return TypeSize::getScalable(0);
++        default:
++            abort();
++        }
++    }
++#else
++    unsigned getRegisterBitWidth(bool Vector) const
++    {
++        if (Vector) {
++            return 2048;
++        } else {
++            return 64;
++        }
++    }
++#endif
++};
++
++int main(int argc, char **argv)
++{
++    InitLLVM X(argc, argv);
++    cl::HideUnrelatedOptions(Cat);
++
++    InitializeAllTargets();
++    InitializeAllTargetMCs();
++    PassRegistry &Registry = *PassRegistry::getPassRegistry();
++    initializeCore(Registry);
++    initializeScalarOpts(Registry);
++    initializeVectorization(Registry);
++    initializeAnalysis(Registry);
++    initializeTransformUtils(Registry);
++    initializeInstCombine(Registry);
++    initializeTarget(Registry);
++
++    cl::ParseCommandLineOptions(argc, argv);
++
++    LLVMContext Context;
++
++    SMDiagnostic Err;
++    std::unique_ptr<Module> M = parseIRFile(InputFile, Err, Context);
++
++    // Create a new TargetMachine to represent a TCG target,
++    // we use x86_64 as a base and derive from that using a
++    // TargetTransformInfo to provide allowed scalar and vector
++    // register sizes.
++    Triple ModuleTriple("x86_64-pc-unknown");
++    assert(ModuleTriple.getArch());
++    TargetMachine *TM = compat::getTargetMachine(ModuleTriple);
++
++    PipelineTuningOptions PTO;
++    PassBuilder PB = compat::createPassBuilder(TM, PTO);
++    LoopAnalysisManager LAM;
++    FunctionAnalysisManager FAM;
++    CGSCCAnalysisManager CGAM;
++    ModuleAnalysisManager MAM;
++
++    // Register our TargetIrAnalysis pass using our own TTI
++    FAM.registerPass([&] {
++        return TargetIRAnalysis(
++            [&](const Function &F) { return TcgTTI(TM, F); });
++    });
++    FAM.registerPass([&] { return LoopAnalysis(); });
++    LAM.registerPass([&] { return LoopAccessAnalysis(); });
++    // We need to specifically add the aliasing pipeline for LLVM <= 13
++    FAM.registerPass([&] { return PB.buildDefaultAAPipeline(); });
++
++    // Register other default LLVM Analyses
++    PB.registerFunctionAnalyses(FAM);
++    PB.registerModuleAnalyses(MAM);
++    PB.registerLoopAnalyses(LAM);
++    PB.registerCGSCCAnalyses(CGAM);
++    PB.crossRegisterProxies(LAM, FAM, CGAM, MAM);
++
++    ModulePassManager MPM;
++
++    return 0;
++}
 -- 
 2.45.2
 
