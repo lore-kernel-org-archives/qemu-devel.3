@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4D4E64002
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 18:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B87E64004
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 18:48:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEBvh-00085W-4G; Thu, 21 Nov 2024 13:29:25 -0500
+	id 1tECDU-0007m9-UY; Thu, 21 Nov 2024 13:47:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tEBve-00083h-TT
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:29:23 -0500
+ id 1tECDS-0007lv-Mx
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:47:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tEBvb-0000o3-Ra
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:29:22 -0500
+ id 1tECDQ-0004Jn-Bv
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:47:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732213757;
+ s=mimecast20190719; t=1732214861;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=46P5fCc+o6hH7ZVFiMBoQudmq3399lviu/5ndRrwzBo=;
- b=SK5ArTaQNEvqprozqmSy/6qi5cZOYeaudjcfVgMUF8EVvpkxkyLLEg9dJ4ODaFhYvgBinW
- UCIiNYSRFqHt23+8pZ5/MsjWsdug7xoj4puQt9XuD0I0PGqx0N06GCEWK/joK39y/YSSQU
- LaDkHWsS2LYBOyz+bJ/4F0PwcaUEj1g=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=HczF12C9pQkV2vUIcF8B/fEAuSsrL42TTguu1Y4A5lM=;
+ b=BSoYls4VH+9pIP8nWQpanF2pZH4ntCPz89PZ9mwvddNFhJ8s+48RdPaCB/2a5U+VOJmGNh
+ DyvPEK6Gk5aXJDK3umG8TCkrnRdUhbsv3TCqrWfwkZYloiYc8jY/ZvfkEqHpWkG9GnpwE4
+ dJ3gGS57SlUHGToZVhryTvzd6+HamJ4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-252-woQuvcB6MiWyCsSca3cfWw-1; Thu, 21 Nov 2024 13:29:15 -0500
-X-MC-Unique: woQuvcB6MiWyCsSca3cfWw-1
-X-Mimecast-MFC-AGG-ID: woQuvcB6MiWyCsSca3cfWw
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38235e99a53so719642f8f.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 10:29:15 -0800 (PST)
+ us-mta-438-ySI4CraNMt-5iEfPwCY6qw-1; Thu, 21 Nov 2024 13:47:37 -0500
+X-MC-Unique: ySI4CraNMt-5iEfPwCY6qw-1
+X-Mimecast-MFC-AGG-ID: ySI4CraNMt-5iEfPwCY6qw
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-38229779bf4so765793f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 10:47:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732213754; x=1732818554;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1732214856; x=1732819656;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=46P5fCc+o6hH7ZVFiMBoQudmq3399lviu/5ndRrwzBo=;
- b=T8fRrUrYAV0joo7wkBSQ0aEVNhMREYwAjtOuxSrPGqAwKlS0wh3C0FM79Z3y+JD7aD
- J7EYfcHCojtBbViUtQ0zPmzU5SvzMob0jm9dkFMgq6frEwXOHwW5rdnR2sH8l188JdOx
- 1VcnoeJjGOC/F0KQHW/IqQjHSCRukn9difhZAln+rfvjdo5f3q1i2uaIOKdHYpRIn54x
- D/8ib2qD2Na1m6kVUzRGJ3O39jgu9/LEW3lNIiRtYknmLdJ9fHCWAmh7qcvWUPlQ6HCP
- ZAK3l3ny+UgXssUgGq1yzPd1rGu+PMWZo4duCY7mRWrsOCu3Lne4zxjL/tUxvuFN4of9
- 0QCw==
-X-Gm-Message-State: AOJu0YwlbE0s2unfKe1+VoBF83Go0YjCUWs4EfWxIE1ltXhn9I2tXkh1
- RqMOnHDEOIcMJ4yvZwC2zQivmM4wxOPZH/OY59cJW2RNEBo8B5ItNdnc6kAgkKKS2Sry5Ji+WGD
- MAH+9Fq3eAh5u4BU3ZxUNFzTuV7jsn/b30dfXjN4sSxiAFs43b9+5qi3YXxqYyhn6cHzQcGDrey
- kJkRfHRyuLO3mSGuTmc7yhKWm1P5DgoAEzuHr9
-X-Gm-Gg: ASbGncvWTj00qgxE2pFyr2NmCWtF39xElTujp6K6M5fsO0TVW+ZEJYxhIQkNRZCSRuu
- WoX2liOntT7UptuLxqgu7VxVmo0rFXp9mDVAtpNxRblU8/KcGJ+h36lstylr2WMcAxaX5rSTuQB
- MJ85Tst7+Ls8DizH5YiCUj34pbSj99mz9MQItAEWveavCHqyNbKhVyOXcOoRdah0TDkKz2j2vcE
- DpKOxn8shTNxbOQo2UUCKk9f4ndUeP2FOQEhErIQPkAkIkHqMTsuA==
-X-Received: by 2002:a05:6000:1f8a:b0:381:f15a:e91 with SMTP id
- ffacd0b85a97d-382604ec295mr194235f8f.11.1732213753645; 
- Thu, 21 Nov 2024 10:29:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGIsK8gAk3mFWKo886ubeJMqXU9zbjRfIWOOjQwo/q9AExN/1IDj2zontDRvfL361KsO8PwHA==
-X-Received: by 2002:a05:6000:1f8a:b0:381:f15a:e91 with SMTP id
- ffacd0b85a97d-382604ec295mr194218f8f.11.1732213753189; 
- Thu, 21 Nov 2024 10:29:13 -0800 (PST)
-Received: from [192.168.10.3] ([151.62.196.119])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fbedeb3sm222233f8f.95.2024.11.21.10.29.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 10:29:12 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>,
- Akihiro Suda <akihiro.suda.cz@hco.ntt.co.jp>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2] hvf: Enable 1G page support
-Date: Thu, 21 Nov 2024 19:29:11 +0100
-Message-ID: <20241121182911.272300-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
+ bh=HczF12C9pQkV2vUIcF8B/fEAuSsrL42TTguu1Y4A5lM=;
+ b=WKh3AhIWjmpeAxxobo6UGHVoktP6c9jp7ZYH1e1siOC3DsuttRJWXH0Gu4l3jKFLpA
+ Pz4VtH6ozjZ++vLN/QAwygRWhjmjQYO+/u7xXzTO6vhU25HKQ7uP+oO//d0Cyr1+cp7X
+ brf/YWgR3NjoU6ocui2f9QTTDQ21RDeL6YEdSE+5bKmB4IznueOe3UlIeD9GsFmJYSFN
+ PPxsU21xuYMa7SfREi4gnsUyLuIKEbBrD1A+7+ZMjKoR5jenYB+NhB4+tlaecIfAPG8x
+ 4MWT55kQbApI15oy1bs6w5dk8nM3fiqfaVpjHUZU4z5U/rnBcwqoCt6BIcldGjxQE4jr
+ gwLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVp4WdhboWvaU/CXCl/ida1JvuAiL3f2tgb8Ghu0Yh0InYzEriwd62J/fZLrA8xQ4jqRtRdWMwmyym7@nongnu.org
+X-Gm-Message-State: AOJu0YwzLotSIG9Cv2/2nP4gDL4ho7XqL9kqKh0SvV7WIqCmHTUr2ReM
+ UluG3wrUVOPmnQzbozC3m6cdiAd7T+FyH4gR16Fymp2ZCwX2WhNBNbEOVXPXWv4EIRfvttkzmmR
+ h5GKKasoEKPC5XfIZbTTZd3pyQaUdIpjRaAfxKr9q7J36mopwiP4Yn3hrWUKuTR+EYt2/vTPtkL
+ +5TN3gqAUPpm/K7N/zA8UwB+3IPaM=
+X-Gm-Gg: ASbGncuLfOB+tzmRafen7hZJ6aX5MRMiieYKjK6svIFS01ik+T/A9GYyAw2NjVd/BmJ
+ znW9u9a46r6wu2gpOtzT0SKcOzAvxk73A
+X-Received: by 2002:a5d:47cb:0:b0:382:4fa4:e52f with SMTP id
+ ffacd0b85a97d-38260b5b0c9mr135446f8f.13.1732214856669; 
+ Thu, 21 Nov 2024 10:47:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH3klsm+haB01CRWcgjgpGYJbpj7mevS16wgUsUVFd9HCO3IAtXHVo6JVoHs5GWk6e7oXVWKDcYgivCCs7olLg=
+X-Received: by 2002:a5d:47cb:0:b0:382:4fa4:e52f with SMTP id
+ ffacd0b85a97d-38260b5b0c9mr135422f8f.13.1732214856348; Thu, 21 Nov 2024
+ 10:47:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAP52u7a_CA-PEw2gMgc32rCKGt8mqsjCkEedkzTgOosazrTs-w@mail.gmail.com>
+ <Zz99VtNtZCx-P5Mx@redhat.com>
+In-Reply-To: <Zz99VtNtZCx-P5Mx@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 21 Nov 2024 19:47:22 +0100
+Message-ID: <CABgObfY8fmSjQBU34NVhn-de5iWeWTBJr18u_GgFZpJXjL3NzQ@mail.gmail.com>
+Subject: Re: QEMU patches for native windows support through clang-cl
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Erwin Jansen <jansene@google.com>,
+ Roque Arcudia Hernandez <roqueh@google.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, sw@weilnetz.de, 
+ lvivier@redhat.com, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Patrick Leis <venture@google.com>, Nabih Estefan <nabihestefan@google.com>, 
+ Danny Rosen <dannyrosen@google.com>, JP Cottin <jpcottin@google.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -108,115 +107,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <agraf@csgraf.de>
+> NB As a general point, we actively block use of clang with Windows
+> builds (more strictly in 9.2 now), because it lacks support for the
+> 'gcc_struct' annotation that we rely on to guarantee correct ABI for
+> structs exposed to guests in particular.
 
-Hvf on x86 only supported 2MiB large pages, but never bothered to strip
-out the 1GiB page size capability from -cpu host. With QEMU 8.0.0 this
-became a problem because OVMF started to use 1GiB pages by default.
+Ah, good point. This is
+https://github.com/llvm/llvm-project/issues/24757 for the general
+tracking issue, and https://github.com/llvm/llvm-project/pull/71148
+for a recent PR that attempts to implement this.
 
-Let's just unconditionally add 1GiB page walk support to the walker.
+Using -mno-ms-bitfields globally is unsafe because there are probably
+Windows API structs that implement it.
 
-With this fix applied, I can successfully run OVMF again.
+One solution is to add `QEMU_BUILD_BUG_ON(sizeof(...) == ...)` to all
+structs in QEMU that use bitfields. That will prove very quickly if
+there are issues or not.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1603
-Signed-off-by: Alexander Graf <agraf@csgraf.de>
-Reported-by: Akihiro Suda <akihiro.suda.cz@hco.ntt.co.jp>
-Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Link: https://lore.kernel.org/r/20230420225258.58009-1-agraf@csgraf.de
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/hvf/x86_mmu.c | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+Paolo
 
-diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/hvf/x86_mmu.c
-index 649074a7d24..579d0c3a4cc 100644
---- a/target/i386/hvf/x86_mmu.c
-+++ b/target/i386/hvf/x86_mmu.c
-@@ -38,6 +38,7 @@
- #define LEGACY_PTE_PAGE_MASK        (0xffffffffllu << 12)
- #define PAE_PTE_PAGE_MASK           ((-1llu << 12) & ((1llu << 52) - 1))
- #define PAE_PTE_LARGE_PAGE_MASK     ((-1llu << (21)) & ((1llu << 52) - 1))
-+#define PAE_PTE_SUPER_PAGE_MASK     ((-1llu << (30)) & ((1llu << 52) - 1))
- 
- struct gpt_translation {
-     target_ulong  gva;
-@@ -96,7 +97,7 @@ static bool get_pt_entry(CPUState *cpu, struct gpt_translation *pt,
- 
- /* test page table entry */
- static bool test_pt_entry(CPUState *cpu, struct gpt_translation *pt,
--                          int level, bool *is_large, bool pae)
-+                          int level, int *largeness, bool pae)
- {
-     uint64_t pte = pt->pte[level];
- 
-@@ -118,9 +119,9 @@ static bool test_pt_entry(CPUState *cpu, struct gpt_translation *pt,
-         goto exit;
-     }
- 
--    if (1 == level && pte_large_page(pte)) {
-+    if (level && pte_large_page(pte)) {
-         pt->err_code |= MMU_PAGE_PT;
--        *is_large = true;
-+        *largeness = level;
-     }
-     if (!level) {
-         pt->err_code |= MMU_PAGE_PT;
-@@ -152,9 +153,18 @@ static inline uint64_t pse_pte_to_page(uint64_t pte)
-     return ((pte & 0x1fe000) << 19) | (pte & 0xffc00000);
- }
- 
--static inline uint64_t large_page_gpa(struct gpt_translation *pt, bool pae)
-+static inline uint64_t large_page_gpa(struct gpt_translation *pt, bool pae,
-+                                      int largeness)
- {
--    VM_PANIC_ON(!pte_large_page(pt->pte[1]))
-+    VM_PANIC_ON(!pte_large_page(pt->pte[largeness]))
-+
-+    /* 1Gib large page  */
-+    if (pae && largeness == 2) {
-+        return (pt->pte[2] & PAE_PTE_SUPER_PAGE_MASK) | (pt->gva & 0x3fffffff);
-+    }
-+
-+    VM_PANIC_ON(largeness != 1)
-+
-     /* 2Mb large page  */
-     if (pae) {
-         return (pt->pte[1] & PAE_PTE_LARGE_PAGE_MASK) | (pt->gva & 0x1fffff);
-@@ -170,7 +180,7 @@ static bool walk_gpt(CPUState *cpu, target_ulong addr, int err_code,
-                      struct gpt_translation *pt, bool pae)
- {
-     int top_level, level;
--    bool is_large = false;
-+    int largeness = 0;
-     target_ulong cr3 = rvmcs(cpu->accel->fd, VMCS_GUEST_CR3);
-     uint64_t page_mask = pae ? PAE_PTE_PAGE_MASK : LEGACY_PTE_PAGE_MASK;
-     
-@@ -186,19 +196,19 @@ static bool walk_gpt(CPUState *cpu, target_ulong addr, int err_code,
-     for (level = top_level; level > 0; level--) {
-         get_pt_entry(cpu, pt, level, pae);
- 
--        if (!test_pt_entry(cpu, pt, level - 1, &is_large, pae)) {
-+        if (!test_pt_entry(cpu, pt, level - 1, &largeness, pae)) {
-             return false;
-         }
- 
--        if (is_large) {
-+        if (largeness) {
-             break;
-         }
-     }
- 
--    if (!is_large) {
-+    if (!largeness) {
-         pt->gpa = (pt->pte[0] & page_mask) | (pt->gva & 0xfff);
-     } else {
--        pt->gpa = large_page_gpa(pt, pae);
-+        pt->gpa = large_page_gpa(pt, pae, largeness);
-     }
- 
-     return true;
--- 
-2.47.0
+> Many people try to simply remove that #ifdef, mistakenly assuming that
+> because the code compiles without warnings, it must be correct. Did
+> you have solution for this, as it would be a blocker for enabling
+> clang on Windows currently ?
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>
 
 
