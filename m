@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550F3E64002
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 19:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46EDBE64006
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 19:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tECSd-0005g1-16; Thu, 21 Nov 2024 14:03:27 -0500
+	id 1tECSq-00061W-Ma; Thu, 21 Nov 2024 14:03:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tECSZ-0005ap-Vc
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:03:24 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tECSW-00073q-Gw
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:03:23 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-211fcadd960so9313205ad.2
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 11:03:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732215799; x=1732820599; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UqPpd+IbtJeT0VhlDpvCQ1AMf22aum6w29og4Ma29m8=;
- b=fo1WBHe1kYvTs7oALEELRudVC8Y1R1IcOnaIP6txQd9XAHWBceLKBYDtmCWIKVPCWZ
- I/+ByVpCHt6yGOnSdAai9uCN3BdUnmIrESXDxrbnZ4P3i41owhUpjO3cZwsHp6tVgWDo
- piRgU2QmeoIf81McQTG/2WIYvz5RjBI0kgBdkoG/xN2bX4HSrBt3+DZNOoboMM15cOXB
- DDZjRwNoOxHsiTWG+wrOXOawmiFctnZb6adPRcLFi3VyoW1CjwBnAnKz8LBi8t1VJ6Gc
- tBbMeYV9bZuD2lfZ5SSF6H/2pCUPvtS2w7RXEXiCpeWA4rv2rrQS0/d1m6V5cvNKv744
- fTYA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tECSk-0005x4-4H
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:03:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tECSh-0007CX-9q
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:03:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732215810;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=IWsjYsBnacBCJXffRg4TOMqxnT5yfzq3EAuSbjWJybI=;
+ b=S2CMvj0s8X81lgKQ6/C2SvCSeUgA8jIEeNToqh0fEbRk1f049g788QY02L1LxGZ1P8yuwa
+ AKU//oUip7/L6mPlZRmVOmXTVYqylMCGRjqoLUw+KAEABwwpUi0eRyssSTCD71EjVfoXg5
+ LRutkAIsQ9wp32Mqy0HN25bmPIt6mCM=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-543-_RVp9abUOz68Da3gdLkhJw-1; Thu, 21 Nov 2024 14:03:29 -0500
+X-MC-Unique: _RVp9abUOz68Da3gdLkhJw-1
+X-Mimecast-MFC-AGG-ID: _RVp9abUOz68Da3gdLkhJw
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b161d4c422so160419385a.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 11:03:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732215799; x=1732820599;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UqPpd+IbtJeT0VhlDpvCQ1AMf22aum6w29og4Ma29m8=;
- b=mNZ6mAP7LrgvAtmQau5Mnn+mz7awky1aRt/febTtjpqNXqe7NzNdwQuq0sAdlJMyxI
- h8PxK6PDET+WefZKG8QBHFWyq/2lT/o5AOuV03rvhYHnAxbWdW7AVrDrNjzjsDn/Zhjj
- uWc5AA/HqHmbYOtRyLUx9wPHSPPcv0NVqQbdtX7+I1/sWdeZawZdApfPx0Ame6JVw3Tk
- D2qCwhdd/3viE7NB6FXZ3Xb34B5EAZ3PhgHHS/8fwdzumjAejCSgumVQWWXX94Ogia5h
- e9G2Id2cVXNi5vGQSTw4KAycZXA3zf5qxxLDOeU5ShW0CyCi3tQbbfIzyYv45I5ZNvNf
- 6nIQ==
+ d=1e100.net; s=20230601; t=1732215809; x=1732820609;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IWsjYsBnacBCJXffRg4TOMqxnT5yfzq3EAuSbjWJybI=;
+ b=as5aEXuQlzMa6B4WPyGM/cxheXQe3M+X6aXSZroQ227hJIKHTG0tpd1MMnzNq5tNGI
+ /zQU6UbLy+IQWyv44GjrZxhDq9LxHqUNxgj2isTm9uk8KyU4CmhwhLSNtJAgm+T0FeWZ
+ RRXypS3JE4SJNKZ1UP1nj5lT4JCEPs9QjtJ3y/1DRffvYtxg2B30pTuVgT7GoXhQ7uxh
+ 9DDnaXv44UvZdPjvcfGcn7W8A5AwMNEow5xhJoLUUbF+EFdtoMpKtsbXly8P1NC478/T
+ cYZ9DMw+5Z1YvviJqQeF3G0IU0WXR82vGhBVe+34QTgLy6+kxPG1vNwwxWYxH0OoCHsK
+ wEaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWH3Cw8gJMTEcukCbkrX9+5znbnd1R7MB9pzBaYbyTiIGPqLO6BmXqNYQ0kjGYeiL6VVrKx7qVUpirf@nongnu.org
-X-Gm-Message-State: AOJu0Yxvauq54ylAp+/bWeMXA87VWAe2t+5JifieDa2E0L9iYDnkFhxs
- DPE/vimsuxMFopufFCp2W5vCK/oH44X13CEtdGHxLobQs9J6bdkRSirz7yB6wJw=
-X-Gm-Gg: ASbGncv836BqfIQu2BcTVa0G3BiB4GxMdRKyrgokWXqaPhE8xODDQKEIjna5lOeiYdc
- 0yxdiP9ekFi9WAukLsSq1bJNt26y0JHMiYgRuOVXnp8wlNXd8KcxcL4aBhvNgeW3cqWztwEYyQV
- arz/34FGJeG4e/cJDtW7F4d9EvEGAaFELmZuS86UdZEkI/GZCgdzxZNqF3L1/LtQv0VMtOBKAIu
- eyyYYA4fxlNcveVtnCLBYvmNxESnUq0EU42iz7uiqSp78D8xMRjILjV7UPV4IVUudYxig1nG6zH
- ZJRZHPIO6mI4bffjlbHjig==
-X-Google-Smtp-Source: AGHT+IG5LrBxRjfabe2uc5HXPKig457aqJLeFY/PLXRzw00SCDy1j/V6h80nAREjT8tPT+CfDbrc4g==
-X-Received: by 2002:a17:902:d547:b0:212:26e:7117 with SMTP id
- d9443c01a7336-2129f24bb1cmr3326375ad.33.1732215798723; 
- Thu, 21 Nov 2024 11:03:18 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2129dbf9853sm1656155ad.165.2024.11.21.11.03.17
+ AJvYcCXNVoQvYIUxzcyErUWpSiToDbgsKiZWEsga/LkqKmgKiPd4nkB72CtheZlVgiK+m7YBiEg01U4k4MK5@nongnu.org
+X-Gm-Message-State: AOJu0YwIXHqZGcn5/j3Wdr5tV5EfFK3DI8aPtpK/HLI+omDusEIBhS+Z
+ 2HHpxQQWYkTZzVn2QGM63anSTpX5O6txSLlJ4Xz8R/mKMSJ0V6/GcfbpGDP71Juo1gHhy7CcEqz
+ u0DEJ/rZWJpEIZXRYUJlc4p0sfm93/bERntljS0QAcKZx6sfGMhUH
+X-Gm-Gg: ASbGncvB1mC2sGeWzBJLo/DuWcrYKCfgZ+KdaJhFc1v8yJwM8kwzN8mA4WBcX2iEVWP
+ ZiebYLDneCovi0P/lDaKXOqNgNCcy1FmxwSYNcfbTq93Txyq/CdTfj6tu/4GF1S94n/4z0R0bBB
+ kxMSzUO8yN6Q7uY11Y/C8m5LbYv4FiN5JX9F0m4cAYmVwjUy5JmLrfIVc2YdlM6KpEgFH1HZP8l
+ RkcURv1EVjeoGVSsJCDakIsjbUQwuM9PzHfw9ej3KT+o61wy5Dm4pSl7Qzi/AEC9LSiJeW2uF5O
+ SskkNatxYan3
+X-Received: by 2002:a05:620a:1925:b0:7b1:ae59:47c4 with SMTP id
+ af79cd13be357-7b5144df608mr17490685a.2.1732215808822; 
+ Thu, 21 Nov 2024 11:03:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFHtb9v2vjJD63fr4taaXeKiAOviSDKVTL8jg6v/Xw5SLj8/2qfvAfWXgmR+w0x3gyqzbFAmg==
+X-Received: by 2002:a05:620a:1925:b0:7b1:ae59:47c4 with SMTP id
+ af79cd13be357-7b5144df608mr17484785a.2.1732215808471; 
+ Thu, 21 Nov 2024 11:03:28 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b51415286esm8565485a.101.2024.11.21.11.03.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 11:03:18 -0800 (PST)
-Message-ID: <c4f6be27-c0d1-49ee-82ed-36144c38bad2@linaro.org>
-Date: Thu, 21 Nov 2024 11:03:16 -0800
+ Thu, 21 Nov 2024 11:03:27 -0800 (PST)
+Message-ID: <2b8f6079-f2ca-471f-8580-43352437625d@redhat.com>
+Date: Thu, 21 Nov 2024 20:03:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/39] tests/functional: remove comments talking about
- avocado
-Content-Language: en-US
+Subject: Re: [PATCH 00/39] maintainer updates for -rc2 pre-PR
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Halil Pasic <pasic@linux.ibm.com>,
@@ -100,20 +107,64 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>
 References: <20241121165806.476008-1-alex.bennee@linaro.org>
- <20241121165806.476008-8-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241121165806.476008-8-alex.bennee@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20241121165806.476008-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,52 +180,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTEvMjEvMjQgMDg6NTcsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gRnJvbTogRGFuaWVs
-IFAuIEJlcnJhbmfDqSA8YmVycmFuZ2VAcmVkaGF0LmNvbT4NCj4gDQo+IFRoZSBmaXJzdCBj
-b21tZW50IGlzIHN0aWxsIHJlbGV2YW50IGJ1dCBzaG91bGQgdGFsayBhYm91dCBvdXIgb3du
-IHRlc3QNCj4gaGFybmVzcyBpbnN0ZWFkLiBUaGUgc2Vjb25kIGNvbW1lbnQgYWRkcyBubyB2
-YWx1ZSBvdmVyIHJlYWRpbmcgdGhlIGNvZGUNCj4gYW5kIGNhbiBiZSByZW1vdmVkLg0KPiAN
-Cj4gU2lnbmVkLW9mZi1ieTogRGFuaWVsIFAuIEJlcnJhbmfDqSA8YmVycmFuZ2VAcmVkaGF0
-LmNvbT4NCj4gTWVzc2FnZS1JZDogPDIwMjQxMTIxMTU0MjE4LjE0MjMwMDUtOC1iZXJyYW5n
-ZUByZWRoYXQuY29tPg0KPiBTaWduZWQtb2ZmLWJ5OiBBbGV4IEJlbm7DqWUgPGFsZXguYmVu
-bmVlQGxpbmFyby5vcmc+DQo+IC0tLQ0KPiAgIHRlc3RzL2Z1bmN0aW9uYWwvdGVzdF9hY3Bp
-X2JpdHMucHkgfCAxMyArKysrKystLS0tLS0tDQo+ICAgMSBmaWxlIGNoYW5nZWQsIDYgaW5z
-ZXJ0aW9ucygrKSwgNyBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS90ZXN0cy9m
-dW5jdGlvbmFsL3Rlc3RfYWNwaV9iaXRzLnB5IGIvdGVzdHMvZnVuY3Rpb25hbC90ZXN0X2Fj
-cGlfYml0cy5weQ0KPiBpbmRleCBlZTQwNjQ3ZDViLi40YzE5MmQ5NWNjIDEwMDc1NQ0KPiAt
-LS0gYS90ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWNwaV9iaXRzLnB5DQo+ICsrKyBiL3Rlc3Rz
-L2Z1bmN0aW9uYWwvdGVzdF9hY3BpX2JpdHMucHkNCj4gQEAgLTE5NiwxMSArMTk2LDEyIEBA
-IGRlZiBjb3B5X3Rlc3Rfc2NyaXB0cyhzZWxmKToNCj4gICAgICAgICAgIGZvciBmaWxlbmFt
-ZSBpbiBvcy5saXN0ZGlyKGJpdHNfdGVzdF9kaXIpOg0KPiAgICAgICAgICAgICAgIGlmIG9z
-LnBhdGguaXNmaWxlKG9zLnBhdGguam9pbihiaXRzX3Rlc3RfZGlyLCBmaWxlbmFtZSkpIGFu
-ZCBcDQo+ICAgICAgICAgICAgICAgICAgZmlsZW5hbWUuZW5kc3dpdGgoJy5weTInKToNCj4g
-LSAgICAgICAgICAgICAgICAjIGFsbCB0ZXN0IHNjcmlwdHMgYXJlIG5hbWVkIHdpdGggZXh0
-ZW5zaW9uIC5weTIgc28gdGhhdA0KPiAtICAgICAgICAgICAgICAgICMgYXZvY2FkbyBkb2Vz
-IG5vdCB0cnkgdG8gbG9hZCB0aGVtLiBUaGVzZSBzY3JpcHRzIGFyZQ0KPiAtICAgICAgICAg
-ICAgICAgICMgd3JpdHRlbiBmb3IgcHl0aG9uIDIuNyBub3QgcHl0aG9uIDMgYW5kIGhlbmNl
-IGlmIGF2b2NhZG8NCj4gLSAgICAgICAgICAgICAgICAjIGxvYWRlZCB0aGVtLCBpdCB3b3Vs
-ZCBjb21wbGFpbiBhYm91dCBweXRob24gMyBzcGVjaWZpYw0KPiAtICAgICAgICAgICAgICAg
-ICMgc3ludGF4ZXMuDQo+ICsgICAgICAgICAgICAgICAgIyBBbGwgdGVzdCBzY3JpcHRzIGFy
-ZSBuYW1lZCB3aXRoIGV4dGVuc2lvbiAucHkyIHNvIHRoYXQNCj4gKyAgICAgICAgICAgICAg
-ICAjIHRoZXkgYXJlIG5vdCBydW4gYnkgYWNjaWRlbnQuDQo+ICsgICAgICAgICAgICAgICAg
-Iw0KPiArICAgICAgICAgICAgICAgICMgVGhlc2Ugc2NyaXB0cyBhcmUgaW50ZW5kZWQgdG8g
-cnVuIGluc2lkZSB0aGUgdGVzdCBWTQ0KPiArICAgICAgICAgICAgICAgICMgYW5kIGFyZSB3
-cml0dGVuIGZvciBweXRob24gMi43IG5vdCBweXRob24gMywgaGVuY2UNCj4gKyAgICAgICAg
-ICAgICAgICAjIHdvdWxkIGNhdXNlIHN5bnRheCBlcnJvcnMgaWYgbG9hZGVkIG91c2lkZSB0
-aGUgVk0uDQo+ICAgICAgICAgICAgICAgICAgIG5ld2ZpbGVuYW1lID0gb3MucGF0aC5zcGxp
-dGV4dChmaWxlbmFtZSlbMF0gKyAnLnB5Jw0KPiAgICAgICAgICAgICAgICAgICBzaHV0aWwu
-Y29weTIob3MucGF0aC5qb2luKGJpdHNfdGVzdF9kaXIsIGZpbGVuYW1lKSwNCj4gICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIG9zLnBhdGguam9pbih0YXJnZXRfdGVzdF9kaXIs
-IG5ld2ZpbGVuYW1lKSkNCj4gQEAgLTM5OSw4ICs0MDAsNiBAQCBkZWYgdGVzdF9hY3BpX3Nt
-Ymlvc19iaXRzKHNlbGYpOg0KPiAgIA0KPiAgICAgICAgICAgIyBiaW9zYml0cyBoYXMgYmVl
-biBjb25maWd1cmVkIHRvIHJ1biBhbGwgdGhlIHNwZWNpZmllZCB0ZXN0IHN1aXRlcw0KPiAg
-ICAgICAgICAgIyBpbiBiYXRjaCBtb2RlIGFuZCB0aGVuIGF1dG9tYXRpY2FsbHkgaW5pdGlh
-dGUgYSB2bSBzaHV0ZG93bi4NCj4gLSAgICAgICAgIyBTZXQgdGltZW91dCB0byBCSVRTX1RJ
-TUVPVVQgZm9yIFNIVVRET1dOIGV2ZW50IGZyb20gYml0cyBWTSBhdCBwYXINCj4gLSAgICAg
-ICAgIyB3aXRoIHRoZSBhdm9jYWRvIHRlc3QgdGltZW91dC4NCj4gICAgICAgICAgIHNlbGYu
-X3ZtLmV2ZW50X3dhaXQoJ1NIVVRET1dOJywgdGltZW91dD1CSVRTX1RJTUVPVVQpDQo+ICAg
-ICAgICAgICBzZWxmLl92bS53YWl0KHRpbWVvdXQ9Tm9uZSkNCj4gICAgICAgICAgIHNlbGYu
-bG9nZ2VyLmRlYnVnKCJDaGVja2luZyBjb25zb2xlIG91dHB1dCAuLi4iKQ0KDQpSZXZpZXdl
-ZC1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0K
-DQo=
+Hello Alex,
+
+On 11/21/24 17:57, Alex Bennée wrote:
+> This is a mostly testing focused set of patches but a few bug fixes as
+> well. I plan to send the PR in on Monday. I can drop any patches that
+> are objected to but I think its pretty safe.
+> 
+> Contains:
+> 
+>    - Daniel's clean-up of functional tests
+>    - Another avocado->function conversion from Thomas
+>    - Update the tuxrun baseline images
+>    - Minor fix to the rust pl011 device
+>    - Documentation clarification on identity
+> 
+> The following could do with some review:
+> 
+>    tests/functional: update the x86_64 tuxrun tests
+>    tests/functional: update the sparc64 tuxrun tests
+>    tests/functional: update the s390x tuxrun tests
+>    tests/functional: update the riscv64 tuxrun tests
+>    tests/functional: update the riscv32 tuxrun tests
+>    tests/functional: update the ppc64 tuxrun tests
+>    tests/functional: update the ppc32 tuxrun tests
+>    tests/functional: update the mips64el tuxrun tests
+>    tests/functional: update the mips64 tuxrun tests
+>    tests/functional: update the mips32el tuxrun tests
+>    tests/functional: update the mips32 tuxrun tests
+>    tests/functional: add a m68k tuxrun tests
+>    tests/functional: update the i386 tuxrun tests
+>    tests/functional: update the aarch64 tuxrun tests
+>    tests/functional: update the arm tuxrun tests
+>    tests/functional: Convert the Avocado aarch64 tuxrun tests 
+
+Do you think we could include patches 2-4 from this series ?
+
+https://lore.kernel.org/all/20241112130246.970281-1-clg@redhat.com/
+
+Only patch 3 lacks a R-b.
+
+Thanks,
+
+C.
+
 
