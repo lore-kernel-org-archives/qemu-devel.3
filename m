@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71A34D7877B
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 15:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C45D7877B
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 15:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE9Ls-0002A5-Op; Thu, 21 Nov 2024 10:44:17 -0500
+	id 1tE9Qd-0002Oh-8U; Thu, 21 Nov 2024 10:49:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE9Lq-0001z2-4T
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:44:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tE9Q6-0001x3-Lg
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:48:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE9Lo-00014p-7d
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:44:13 -0500
+ id 1tE9Q4-0002AG-1b
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:48:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732203851;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1732204114;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yyFkxmEDProtwTBUvdEdXCOHx7kjYPBJU+JzezPkC9M=;
- b=Q20Ffo9bhzIjSUU/TI04gGq/g22LF50bnTlNFPrCNq4EkfpIk7Hqn8vg6L6FGEru2cCMTV
- vQzWJTvaxh8u1GLHQSf5GYHPEtnga/SpkjKuB1pR7D82ivgO30UciAt/DeFq5nqF/uRr9A
- ElwYf8RaihqdUt3NhRnckx1GhP9tja4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gChjUOwlDe2QM9Y3s0+ierbHtSp1vFv8eqrgkylkfYU=;
+ b=G1tes3FbnGiHIbyTKoXj88+QHu2/Vs8j8iG5rXbe8OyVvE0vpS+soMNiDBMhTKpjQ3KOgv
+ 7WJUDu3tqop3NgOC4VAqf+zGzZzrL6QUX/2txmXavZ6YpbKsH8bjb/VQBU1dFf+gOTCObd
+ 9kLUlIyuYljkfvXklZTkpkhI6Zye1ew=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-29-Jkmg4TtxPEOiAuzL-TH5tQ-1; Thu,
- 21 Nov 2024 10:44:08 -0500
-X-MC-Unique: Jkmg4TtxPEOiAuzL-TH5tQ-1
-X-Mimecast-MFC-AGG-ID: Jkmg4TtxPEOiAuzL-TH5tQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-HnbsmOLoO3O6Vy28wR5Lmg-1; Thu,
+ 21 Nov 2024 10:48:30 -0500
+X-MC-Unique: HnbsmOLoO3O6Vy28wR5Lmg-1
+X-Mimecast-MFC-AGG-ID: HnbsmOLoO3O6Vy28wR5Lmg
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 354211956064; Thu, 21 Nov 2024 15:44:07 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.5])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 48ABD1956086; Thu, 21 Nov 2024 15:44:04 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 16/18] tests/functional: remove time.sleep usage from
- tuxrun tests
-Date: Thu, 21 Nov 2024 15:42:16 +0000
-Message-ID: <20241121154218.1423005-17-berrange@redhat.com>
-In-Reply-To: <20241121154218.1423005-1-berrange@redhat.com>
-References: <20241121154218.1423005-1-berrange@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 756121954B37; Thu, 21 Nov 2024 15:48:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.5])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 97F491956086; Thu, 21 Nov 2024 15:48:20 +0000 (UTC)
+Date: Thu, 21 Nov 2024 15:48:12 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: QEMU wiki theme table of contents changes
+Message-ID: <Zz9WPMgmY1aAfw8x@redhat.com>
+References: <ZzXV-KyYLa-7yNdV@redhat.com>
+ <CAJSP0QUkfSO3uXPjZCxNfCfVwwWBBy6u5a=PjqqnMZSxE95YpA@mail.gmail.com>
+ <ZzcMQeHfBTm2iEsc@redhat.com>
+ <CAJSP0QVPiibdfs1YsYMe0Mk-DX-Xy7f+utG=W4eSpBkdzaodGg@mail.gmail.com>
+ <ZzejHlGw3RJzc-Jk@redhat.com> <20241119195429.GE340853@fedora>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241119195429.GE340853@fedora>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,61 +89,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The tuxrun tests send a series of strings to the guest to login
-and then run commands. Since we have been unable to match on
-console output that isn't followed by a newline, the test used
-many time.sleep() statements to pretend to synchronize with
-the guest.
+On Tue, Nov 19, 2024 at 02:54:29PM -0500, Stefan Hajnoczi wrote:
+> On Fri, Nov 15, 2024 at 07:38:06PM +0000, Daniel P. Berrangé wrote:
+> > On Fri, Nov 15, 2024 at 02:21:12PM -0500, Stefan Hajnoczi wrote:
+> > > On Fri, 15 Nov 2024 at 03:54, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > >
+> > > > On Thu, Nov 14, 2024 at 02:04:35PM -0500, Stefan Hajnoczi wrote:
+> > > > > On Thu, 14 Nov 2024 at 05:51, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > > > >
+> > > > > > Looking at
+> > > > > >
+> > > > > >   https://wiki.qemu.org/ChangeLog/9.2
+> > > > > >
+> > > > > > I'm thinking that I'm sure there used to be a table of contents present
+> > > > > > at the top of pages, but none is to be seen..... until I eventually
+> > > > > > discover that there's a bare noticable, fully collapsed ToC in the left
+> > > > > > hand nav panel below all the general wiki nav links, partially off the
+> > > > > > bottom of the page :-(
+> > > > > >
+> > > > > > If going to https://wiki.qemu.org/Special:Preferences, "Appearance" and
+> > > > > > selecting "Vector legacy (2010)" as the "Skin" instad of "Vector (2022)"
+> > > > > > then the full ToC re-appears at the top of page in the main body content.
+> > > > > >
+> > > > > > I'm presuming this style change was triggered by a software upgrade that
+> > > > > > was done on the wiki at some point.
+> > > > > >
+> > > > > > IMHO this is quite a significant visual/usability regression.
+> > > > > >
+> > > > > > On wikipedia, they do have the same theme, with ToC in the left hand
+> > > > > > panel, but their ToC is expanded by default, and there's no other general
+> > > > > > navigation in the left hand panel that's displacing the ToC off the bottom
+> > > > > > of the page. That is fairly effective as a layout.
+> > > > > >
+> > > > > > We can do something to the QEMU skin to improve this ? Swapping order
+> > > > > > of the ToC & general nav blocks in the left hand panel would be a
+> > > > > > improvement, as well making it expand at least 1 further level by
+> > > > > > default.
+> > > > > >
+> > > > > > If we're going to have background colour set for the general nav block,
+> > > > > > we should also probably do similar for the ToC nav block to make it
+> > > > > > visually stand out to the same degree.
+> > > > >
+> > > > > Yes, that sounds good. The quickest would be for you to:
+> > > > > 1. Run https://hub.docker.com/_/mediawiki/ in a container on your machine.
+> > > > > 2. Adjust the theme CSS until you are happy.
+> > > > > 3. Send me the tweaks and I will apply them to wiki.qemu.org.
+> > > >
+> > > > Is the current QEMU mediawiki code (or just theme) published anywhere
+> > > > that I can base work off ?
+> > > 
+> > > The QEMU wiki runs from the vanilla mediawiki 1.39 container image.
+> > > The Vector (2022) theme comes with Mediawiki and there are no
+> > > QEMU-specific customizations.
+> > > 
+> > > You can get the same look with the vanilla Mediawiki container image
+> > > with the following in LocalSettings.php:
+> > > $wgDefaultSkin = "vector-2022";
+> > > wfLoadSkin('Vector');
+> > 
+> > Hmm, I'm wondering where the QEMU specific left nav bar content
+> > and styling comes from then... ? 
+> 
+> I'm not sure but unless there is something stored in the database, I
+> can't imagine any customizations because there aren't any config files,
+> themes, CSS overrides, etc to speak of in QEMU's MediaWiki installation.
+> It's just running the vanilla container image.
 
-This has proved to be unreliable for the aarch64be instance of
-the tuxrun tests, with the test often hanging. The hang is a
-very subtle timing problem, and it is suspected that some
-(otherwise apparently harmless) I/O error messages could be
-resulting in full FIFO buffers, stalling interaction with
-the guest.
+Ah, I found out  we've done it with the side-bar addon
 
-With the newly rewritten console interaction able to match
-strings that don't have a following newline, the tux run
-tests can now match directly on the login prompt, and/or
-shell PS1 prompt.
+  https://wiki.qemu.org/MediaWiki:Sidebar
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2689
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/functional/qemu_test/tuxruntest.py | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
-index ed2b238c92..ab3b27da43 100644
---- a/tests/functional/qemu_test/tuxruntest.py
-+++ b/tests/functional/qemu_test/tuxruntest.py
-@@ -124,16 +124,12 @@ def run_tuxtest_tests(self, haltmsg):
-         then do a few things on the console. Trigger a shutdown and
-         wait to exit cleanly.
-         """
--        self.wait_for_console_pattern("Welcome to TuxTest")
--        time.sleep(0.2)
--        exec_command(self, 'root')
--        time.sleep(0.2)
--        exec_command(self, 'cat /proc/interrupts')
--        time.sleep(0.1)
--        exec_command(self, 'cat /proc/self/maps')
--        time.sleep(0.1)
--        exec_command(self, 'uname -a')
--        time.sleep(0.1)
-+        ps1='root@tuxtest:~#'
-+        self.wait_for_console_pattern('tuxtest login:')
-+        exec_command_and_wait_for_pattern(self, 'root', ps1)
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/interrupts', ps1)
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/self/maps', ps1)
-+        exec_command_and_wait_for_pattern(self, 'uname -a', ps1)
-         exec_command_and_wait_for_pattern(self, 'halt', haltmsg)
- 
-         # Wait for VM to shut down gracefully if it can
+With regards,
+Daniel
 -- 
-2.46.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
