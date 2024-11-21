@@ -4,94 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1464BE64002
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 19:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2068AE64007
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 19:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tECT2-0006Z8-8q; Thu, 21 Nov 2024 14:03:52 -0500
+	id 1tECTV-0007Qz-Oy; Thu, 21 Nov 2024 14:04:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tECSz-0006QV-3z
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:03:49 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tECSx-0007FA-Bg
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:03:48 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4315eeb2601so14694645e9.2
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 11:03:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732215825; x=1732820625; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=x/EYQSKnaB0nQ2rrN8ALxbk8YBn9f7FB0WvyC01f9/4=;
- b=d+nJynM2+F6O/JyXzZuR+yKMUnCGcndCjgTpAeIbD4AxlAlLTbOM4yoy3Gc77n7n/4
- NnkkuMWg844++YGlGftb4sI0gbe+/GSe5AXMqUMxlePS4OwSDARQRnylIPpBR6XRhn0V
- 3w7byeBkHTEwpBBHIIIU/IdFIqS7hHF6zxOE3bk1dYqxcZadUpDVfTvPAaaaG8KZD6kz
- eOgxn89MwkzHSZAIAWVrmIB5J0Wa5Zo6Z+lABiU4/f8v7u9IGZg6UpQ3sV72CWhb16VH
- 99AOowtfd8FjZ5k3SBIfyg1GjjkaOG3ngBK+VF+sWMHiAi6UX6k76oj5Qdiy13Wv0J6r
- Hw1A==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECTS-0007Cn-Nb
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:04:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECTR-0007N3-7B
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:04:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732215855;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=bWYOm1YuZRGlW9g1Erx0N0dY58W3vi0hbMW4ZfJBLHM=;
+ b=gVn5hlLkbWj0u5uvKhLo1N0xGUHt9OSU3ACpUvfcFZpW91nXxhRT+12rr9Ur6QKTfJMH6D
+ Nyt+eDYb5aQGjdOV+IGhf0P1EnLh2BSGJWjoo4uZ62uPPuenbitPtTewogZGxEvma4jVTj
+ ybm/HyjKJAh8V8j9cx15VjNNmQLQ84o=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-199-oDxwWsinOMudY1scFR6a7g-1; Thu, 21 Nov 2024 14:04:13 -0500
+X-MC-Unique: oDxwWsinOMudY1scFR6a7g-1
+X-Mimecast-MFC-AGG-ID: oDxwWsinOMudY1scFR6a7g
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a99fa9f0c25so81215466b.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 11:04:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732215825; x=1732820625;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x/EYQSKnaB0nQ2rrN8ALxbk8YBn9f7FB0WvyC01f9/4=;
- b=PkzQz4YgSc6lygjyGn7FD8YwvBrbryZa5kWnvXF3bfhE0IdRt1M3rrrkiv3lswmfJL
- w4HIgJTTY9pbYZTc1Jg/+w3SKK91kEFBJ62N4nHbEGYPzFsLnf25XwQ8ikiXEpZJb8Wg
- DRU5jY2YEYBJQTJaI+id3MxK0NFFepXx4KvYjIt20oF9eN4w2mbLAkvWAyFf4SeWNyrA
- IB70lp7LUslA0AK8xlWLQONql/6rAgzKZeFQ6aqR/mEuZm5Hr+bCAoegXTkA4kwEauQ4
- JZNaDXZw3wWL7dDJw/uQOxPxbeyBWcwauLS6SafEAsX+zbzemKGRugygjt0bKXVtCzMG
- 87wA==
+ d=1e100.net; s=20230601; t=1732215850; x=1732820650;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bWYOm1YuZRGlW9g1Erx0N0dY58W3vi0hbMW4ZfJBLHM=;
+ b=UQWkHxUfm/LN8CiM0I+d9D0SSn/6JyxDbpw+1jIKIeC0cohubbqY8emSbYDR32hCr+
+ TY7QxkGoTRHfke3rYsfGRHYTw1VcbxBraJJYFplxzV8+qaeNFD6lbQ4LZo13rTDXaEj/
+ FzvtrN2vmmGAtMKGhTagUN211Y6u/Utq9gyUzxVURKpb5xZPBIWNTtlJ4VFZRoWfOvGd
+ hTmSSJLQHQTg4oJXvKDaOSjoc5keK1yEKT0OqLmaJuvkMqGlar0Ud0mZEq4yaoySUMYK
+ hU1gjvs8zn1FUhC7qeHlFjb+G3gp8/MjCCOkt2lJU27sfcaxuAJJQwJEFmbIBgHZQ17s
+ VTLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPQ2OGrGBX/LMZtxsv1ytdHvs8HVOA24dyfaQijJb26sFtdr88oRefLqsPKQbVLLtCqVtENxLNNtwu@nongnu.org
-X-Gm-Message-State: AOJu0Yxe+BqyZcQIV3Z/+926lIaauE72JiOi5BHhJLKU4aKBk2R9tkSH
- Ys8/Xl5ndGn4Q3u1RDeBI+Sd5dexLMA/jjg9yJv0d60KhCPRicGwCe3I+eOOXUc=
-X-Gm-Gg: ASbGnct2OpE3ZkQbF+AsIRn2F80hm7vcipPmi712Yx1aQTrJ6mH9mOBJkd8djGlK92I
- skpdiIN0UqKTbthcbxLLcfE8HZ4JJz4PbeAJBbaCVXJlibAFO5TN7iblOmdjXPxLGN7HFzADrG6
- GuU7tDq1t7shddvh9aWCgbHG0DL79l++L5mpGtjNhsGUobBhsFvEMhf77CARKKFgPuVKCqc3NqG
- wn9YjWk2Ab7YiRZN3Eu1OjBR/9+mypCW4WCWVhCpoX58E+gYg8kLubgK3XY3kI9
-X-Google-Smtp-Source: AGHT+IEFrXRRkDLpfgUugiemfHn67Y5bXKiXl4g70tYMd+uHUSRZ3sEcOzFX/aKUsYQiURuYr9gwNg==
-X-Received: by 2002:a05:600c:5013:b0:431:54f3:11ab with SMTP id
- 5b1f17b1804b1-4334f01e2a7mr75075665e9.33.1732215825444; 
- Thu, 21 Nov 2024 11:03:45 -0800 (PST)
-Received: from [192.168.69.197] ([176.187.204.90])
+ AJvYcCVYY802a/YdyRpXYt0ChU9fdokXA/7N+iWc6Ghp2o5xtxrLUVPqaoe/OJqxhW3zj6CUuvLN5H4T5DjP@nongnu.org
+X-Gm-Message-State: AOJu0YzmOqgGfIzuHgsMHt2f/wcTul+wwIjUu5/iXzoAWUv06/vjXPsr
+ rhc4Og/ieAz/kYFodwzjRA3JsNJpuF4Rah1XYeCIIDZ3IugEXXNtxHkPVUs1nxdBedPUBHkVXbT
+ r8r8pDSCJ3XkhRZ+vxH7K9LiaeNGw5O8kThza+FQ3EYH+mfWC+QqY
+X-Gm-Gg: ASbGncuY/HEB09Dj5IjbztQrk4PXIDCKhcC2mxNeQl9G4vdQi6YJBpgLcxb/BZODLUN
+ ySQYXb+uNDdwwqIZVlFaq4PGsheRnvw/y9x0Vks/4IaRTOeOPMBu9uREwy2t9k5xtV5L88jel/W
+ 6HjBqARbzm6tk9bb6TJmvMfc1p0Ww/njNfZ5+JsGelmclYl1cLMBmG+DCDsmijzHHGUNhvQLGee
+ 8lLRBDj3vF7Caah5DpVjbvb2swWpH6mT7kOdDO83juD3ZGOw9riU/M7K0z3RS0P14hjGuXkl/Dk
+ sUM=
+X-Received: by 2002:a17:907:aa5:b0:a99:f167:47c7 with SMTP id
+ a640c23a62f3a-aa509bca75fmr22736966b.55.1732215850089; 
+ Thu, 21 Nov 2024 11:04:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHdj/K15Lh23FRHIGOuvLMGI2lnY1GGg/E2LLjfKE70Jx4YrhIjVOCGVw58q4bUd9dXih167w==
+X-Received: by 2002:a17:907:aa5:b0:a99:f167:47c7 with SMTP id
+ a640c23a62f3a-aa509bca75fmr22733966b.55.1732215849736; 
+ Thu, 21 Nov 2024 11:04:09 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-70.web.vodafone.de. [109.42.51.70])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b45d4c68sm64092525e9.22.2024.11.21.11.03.43
+ a640c23a62f3a-aa50b57beb4sm3909966b.151.2024.11.21.11.04.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 11:03:44 -0800 (PST)
-Message-ID: <7a3dae57-59ba-45b3-b9e1-392430efe8d2@linaro.org>
-Date: Thu, 21 Nov 2024 20:03:42 +0100
+ Thu, 21 Nov 2024 11:04:09 -0800 (PST)
+Message-ID: <155840b0-d461-4699-aaa6-4b85e542281e@redhat.com>
+Date: Thu, 21 Nov 2024 20:04:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/12] qom: Create system containers explicitly
-To: Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20241120215703.3918445-1-peterx@redhat.com>
- <20241120215703.3918445-11-peterx@redhat.com> <Zz8LwhXsa6ail5qo@redhat.com>
- <64d02784-adde-459a-a019-10cdca93734f@linaro.org> <Zz9rDA_xlgweZzeP@x1n>
- <c68b260a-b4ee-48ec-9f5c-3c72a58f424b@linaro.org> <Zz91_IoN0e5E0v2k@x1n>
+Subject: Re: [PATCH 13/39] tests/functional: don't try to wait for the empty
+ string
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, qemu-riscv@nongnu.org,
+ Thomas Huth <huth@tuxfamily.org>, Bernhard Beschow <shentey@gmail.com>,
+ Eric Farman <farman@linux.ibm.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-s390x@nongnu.org, Niek Linnenbank <nieklinnenbank@gmail.com>,
+ qemu-arm@nongnu.org, John Snow <jsnow@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, qemu-rust@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20241121165806.476008-1-alex.bennee@linaro.org>
+ <20241121165806.476008-14-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Zz91_IoN0e5E0v2k@x1n>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241121165806.476008-14-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,153 +179,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/11/24 19:03, Peter Xu wrote:
-> On Thu, Nov 21, 2024 at 06:29:06PM +0100, Philippe Mathieu-Daudé wrote:
->> On 21/11/24 18:17, Peter Xu wrote:
->>> On Thu, Nov 21, 2024 at 02:01:45PM +0100, Philippe Mathieu-Daudé wrote:
->>>> On 21/11/24 11:30, Daniel P. Berrangé wrote:
->>>>> On Wed, Nov 20, 2024 at 04:57:01PM -0500, Peter Xu wrote:
->>>>>> Always explicitly create QEMU system containers upfront.
->>>>>>
->>>>>> Root containers will be created when trying to fetch the root object the
->>>>>> 1st time.  Machine sub-containers will be created only until machine is
->>>>>> being initialized.
->>>>>>
->>>>>> Signed-off-by: Peter Xu <peterx@redhat.com>
->>>>>> ---
->>>>>>     hw/core/machine.c | 19 ++++++++++++++++---
->>>>>>     qom/object.c      | 16 +++++++++++++++-
->>>>>>     2 files changed, 31 insertions(+), 4 deletions(-)
->>>>>
->>>>>
->>>>>> diff --git a/qom/object.c b/qom/object.c
->>>>>> index 214d6eb4c1..810e6f2bd9 100644
->>>>>> --- a/qom/object.c
->>>>>> +++ b/qom/object.c
->>>>>> @@ -1734,12 +1734,26 @@ const char *object_property_get_type(Object *obj, const char *name, Error **errp
->>>>>>         return prop->type;
->>>>>>     }
->>>>>> +static Object *object_root_initialize(void)
->>>>>> +{
->>>>>> +    Object *root = object_new(TYPE_CONTAINER);
->>>>>> +
->>>>>> +    /*
->>>>>> +     * Create all QEMU system containers.  "machine" and its sub-containers
->>>>>> +     * are only created when machine initializes (qemu_create_machine()).
->>>>>> +     */
->>>>>> +    container_create(root, "chardevs");
->>>>>> +    container_create(root, "objects");
->>>>>
->>>>> This is where I would expect 'backend' to have been created
->>>>> rather than ui/console.c, though you could potentially make
->>>>> a case to create it from the machine function, snice console
->>>>> stuff can't be used outside of the machine context, while
->>>>> chardevs/objects can be used in qemu-img/qemu-nbd, etc
->>>
->>> Would it hurt if we do it altogether here even if it won't be used in
->>> qemu-img/qemu-nbd?
->>>
->>> IMHO we should either make it simple (assuming empty containers won't hurt
->>> there..), or we should just leave "backend" to ui/ code, so we don't assume
->>> which binary is using the ui code: whoever uses it will create the container.
->>>
->>>>
->>>> What about creating "backend" container in qemu_create_machine()?
->>>
->>> I remember I started with that but it didn't work.  IIRC that's because
->>> machine_initfn() (or somewhere around the init code) requires the
->>> containers to present, hence it's too late even if we create the containers
->>> right after this line:
->>>
->>>       current_machine = MACHINE(object_new_with_class(OBJECT_CLASS(machine_class)));
->>
->> So qemu_create_machine_containers() really belongs to qemu_create_machine()
->> =)
+On 21/11/2024 17.57, Alex Bennée wrote:
+> From: Daniel P. Berrangé <berrange@redhat.com>
 > 
-> Frankly, I don't immediately get this line..
+> Telling exec_command_wand_wait_for_pattern to wait for the empty
+> string does not make any conceptual sense, as a check for empty
+> string will always succeed. It makes even less sense when followed
+> by a call to wait_for_console_pattern() with a real match.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Message-Id: <20241121154218.1423005-14-berrange@redhat.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/functional/test_virtio_gpu.py | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
-"machine_initfn requires the containers to be present" -> machine_initfn
-isn't the place to create them, it has to be before or after. Since it
-can't be before, the "after" place is qemu_create_machine_containers().
-Sorry for not being very clear :/
-
-> 
-> But when I was trying again just to check my memory, I can't see anything
-> crash anymore, moving things over.
-> 
-> So while I'll test some more, I can switch to that if I cannot reproduce
-> any issue with it.  That's:
-> 
-> ===8<===
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index ed613ec4cb..a72c001c3d 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -1193,27 +1193,11 @@ static void machine_class_base_init(ObjectClass *oc, void *data)
->       }
->   }
->   
-> -static const char *const machine_containers[] = {
-> -    "unattached",
-> -    "peripheral",
-> -    "peripheral-anon"
-> -};
-> -
-> -static void qemu_create_machine_containers(Object *machine)
-> -{
-> -    int i;
-> -
-> -    for (i = 0; i < ARRAY_SIZE(machine_containers); i++) {
-> -        object_property_add_new_container(machine, machine_containers[i]);
-> -    }
-> -}
-> -
->   static void machine_initfn(Object *obj)
->   {
->       MachineState *ms = MACHINE(obj);
->       MachineClass *mc = MACHINE_GET_CLASS(obj);
->   
-> -    qemu_create_machine_containers(obj);
->       ms->dump_guest_core = true;
->       ms->mem_merge = (QEMU_MADV_MERGEABLE != QEMU_MADV_INVALID);
->       ms->enable_graphics = true;
-> diff --git a/system/vl.c b/system/vl.c
-> index 822f7ff656..cdc0b6e10c 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2112,6 +2112,21 @@ static void parse_memory_options(void)
->       loc_pop(&loc);
->   }
->   
-> +static const char *const machine_containers[] = {
-> +    "unattached",
-> +    "peripheral",
-> +    "peripheral-anon"
-> +};
-> +
-> +static void qemu_create_machine_containers(Object *machine)
-> +{
-> +    int i;
-> +
-> +    for (i = 0; i < ARRAY_SIZE(machine_containers); i++) {
-> +        object_property_add_new_container(machine, machine_containers[i]);
-> +    }
-> +}
-> +
->   static void qemu_create_machine(QDict *qdict)
->   {
->       MachineClass *machine_class = select_machine(qdict, &error_fatal);
-> @@ -2120,6 +2135,7 @@ static void qemu_create_machine(QDict *qdict)
->       current_machine = MACHINE(object_new_with_class(OBJECT_CLASS(machine_class)));
->       object_property_add_child(object_get_root(), "machine",
->                                 OBJECT(current_machine));
-> +    qemu_create_machine_containers(OBJECT(current_machine));
->       object_property_add_child(machine_get_container("unattached"),
->                                 "sysbus", OBJECT(sysbus_get_default()));
->   
-> 
-
-Yes, this is exactly what I was thinking of / expecting :)
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
