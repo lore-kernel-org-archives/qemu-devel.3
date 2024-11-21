@@ -4,86 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D63BDD78799
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA20D7879A
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:14:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEAYu-0000ba-4F; Thu, 21 Nov 2024 12:01:48 -0500
+	id 1tEAeZ-0001g2-NJ; Thu, 21 Nov 2024 12:07:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tEAYK-0008Hi-HD
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:01:18 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tEAdg-0000OC-QF
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:46 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tEAYI-0000NK-Mi
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:01:12 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-724d8422dbaso463085b3a.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 09:01:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tEAdR-0001bu-Ql
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:44 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3823194a879so760858f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 09:06:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1732208468; x=1732813268; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=a/SRHG0Qm+evxtGHer1XfiTBuuTPjZsZSaIQJSlpRu0=;
- b=dMsJyQp49Ir/aAkz/LxYhGe4R2oCsHRGUQFjLrkHD0cbmz3cMkUnVgYNz50PlIIVP3
- I8sEGq7TP+m4DMRZaF3fQyFnUehdbYAjnXMfUoPKdfYhGpS3CIqLVW0KmE+vkgtBKokA
- 6ot3s969SS0vnKOEmZiFv1bDXukBGHd0e92XFfGHCXaWJ2v8d2cU25SWtnlVtQxnyYj4
- hPY1XQwrqrYDuOCIyOtfDwZK+KKXtEfkASCMRAK8x6c47w1kthp7aIApVw+SQUFX42Ru
- lDrkNMQ12IxcFcSk/K8VCjBV3cmOjsMCxehkLvRKU2y4l9Y83FFdNy++b9CH1m+GoeNB
- B8dg==
+ d=linaro.org; s=google; t=1732208788; x=1732813588; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QJ/BEIUZxqH6xjJjY5CC1Irgebs8pwBzHUuWnbPyaKg=;
+ b=EcFXxTYe7mtJp07OasdOjrHr+YS2Gu3m9P6dSHEF6BYzBAvBp0GEJxtmh/ps8JuASC
+ A+E5dI2QXV0y6BIZxcrU8lrElJWmIbKu+I4o0Okc93gZOI2heOdLH13vpzIY1m6SHx8j
+ 4O5N5txgm8Boctmd2p57AkkmAD7S7C2rqK+If4GDD9zNi0gln6CzdS74aB2a+iIsJlpC
+ BdWBzjEhp1+78CR5l5crFvUqfwBIimlsf5vWLGgRJvoWi1xVfT6pDGFt7y1lcyVUzWh0
+ +ejNWXL7qM4WTfq9v+jCWNMIIqK4gczsdiVFkdQd0UfYhm6b3AsX4B4lPkqEY4RR5+Qn
+ XC0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732208468; x=1732813268;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a/SRHG0Qm+evxtGHer1XfiTBuuTPjZsZSaIQJSlpRu0=;
- b=kiW4lTruTKm8+g3HJBhD6rytwUhxr54s9jCbbZUTIxHk/ovWHKlJwQEH4Om+1/6RxY
- +2dNMS+dj7iipZ3LAw3mRRb3UdBxvUEyWqQphEX0VbhO3jjNUOCLZetUJF5mkq9AL2ug
- MT1gfwP+TlxzD5in7dbWwLfzthqDK6pw+1aBhCzgxnEPLt/mrn4zOk+qq5v0jwVocwJq
- tV6RHC1FHw2e559Pg5tWkkNzH8sBO2g8QpbmjLMFiN47qgTn/b/iLypOe5OTlPQhMf6t
- CoGgSA+uHpdIhIW9RCXgGJz54S63tEfWjQF+TKZBNOjkEque7SNl7qGCcIegdCIDbn63
- 6vlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXL/g2hQPgpInY59QYKuRlH1FjDQITLC/AnSCJOW/chZdcC2EufspCm4hYOeb+ygv4JAQWAFpvAx+4B@nongnu.org
-X-Gm-Message-State: AOJu0YwCsgXaZFLyxUPEuYjqELzVEZObwYryt+mvaOuKsM5sPNR24WaH
- 5myL+xKrl96szwEsXW3DSp/YWhWfaWvPGlYfJHwvMYi8Q9U9M4w20ERTnOAzDientaQjitWXhBe
- c
-X-Gm-Gg: ASbGncuwyVgUKgmurD/chtEygIVpUAFFjY5+3NTIG1MHgBLghCiAaycWDpAfUms5ndI
- jywR6sUDgS/nV4/5VZOPhgCw2hqE+1xhl4nj/QE1CvUyPaYd/l8thsm+XK+1OzkKUFu6QtPJav/
- SK1NYdvBaJfIQu6mDnDZLUQb7cFvWwBqkgXkbhI0M54/PRSsdVRAqfA5UaqsjIGLsI98r0ZQXYb
- EatpspejtBZStmNzDr9v8AJF30+KTcsss5KH/677yk89BqX0MuE1Ppwz3Cwxm0=
-X-Google-Smtp-Source: AGHT+IHkEmSesM0qr6Vyj7HhE+kyj/wkScd4nnFvainIppA27H5wKVlKlJkX8ng3E5q0rEgg3cBCrQ==
-X-Received: by 2002:a05:6a00:882:b0:71e:ed6:1cab with SMTP id
- d2e1a72fcca58-724bed9d162mr8417537b3a.26.1732208468096; 
- Thu, 21 Nov 2024 09:01:08 -0800 (PST)
-Received: from [192.168.68.110] ([187.101.65.72])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724dda236afsm63760b3a.107.2024.11.21.09.01.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 09:01:07 -0800 (PST)
-Message-ID: <a96cc560-b43e-43df-a352-17805c614747@ventanamicro.com>
-Date: Thu, 21 Nov 2024 14:01:03 -0300
+ d=1e100.net; s=20230601; t=1732208788; x=1732813588;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QJ/BEIUZxqH6xjJjY5CC1Irgebs8pwBzHUuWnbPyaKg=;
+ b=jKKAz1Q8xN2WET0RoeRvx4RVf71Uvf8kU8I/Glm0joqC2aGmT+cLm7E45XIOlgcgnq
+ BT8rXCc7Lr7nitZAHsG/2+HYcO0AT0GnxR48m71uBN/G3EkzLpYshnsf3MmStZ63XZu0
+ 6pGJNnZDUlIknrjBdc4BSVns2w3eg4eREONA0kLdYV/ioU7Nmt6eS07EwKSIgOFpkpKj
+ BpT+syXUsJSDgk7Pw8m9dR5iCzaYGmew92Io/u9a9hifUacL3NDj4oN3gWsBYM+uGBxn
+ UEvWCV9kiq5RPKx68m4I2rqSPO16XjFi3rPx+aAYJacVMLrv8eiVDR/6pu/k2e24+D08
+ YLKQ==
+X-Gm-Message-State: AOJu0YwwN0DInGqKtB9iVZgL5dXJXsAc8zOavCiiryXdYhq1g8ew3yCl
+ xViCIl+q6wSQEN6da3t4Myzb7hX5/4B41779c/2HR8vCuSC3KbWeequWOBHlMAk=
+X-Gm-Gg: ASbGncuHLZ9ZA9IkVqm7B1VTRrI37tFsVrsCPT9MTxKPQRr4C/mMqMg3SZWFfRR0d22
+ O4db4/fLj73OGQXWZ/w/1naiKgNFM7knB6NantR4YxD/JFHMyy4MdlfOFLIqNw4xdHi50wWPgyC
+ mpTGIRanTMVMey5gzRKVbo8W3cKKrLqVd7QE32Wttp85p7HF31OFw88+tehwJO7DjCux/FA7ZeG
+ 7aEIw1mCLKlyHcXNpNOD8E2LykuEbk7MjmBNyzOjfR8BIdg
+X-Google-Smtp-Source: AGHT+IE4EjjgwVtMMaYGhp3H4uUck59/R9PMG4XNXoKs5UjMT+KGwmfr5DSEI3LaG7Qt/qfjENhHvw==
+X-Received: by 2002:a5d:5f86:0:b0:382:33b3:5f7d with SMTP id
+ ffacd0b85a97d-38254afa706mr5547618f8f.27.1732208788259; 
+ Thu, 21 Nov 2024 09:06:28 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fb2679dsm49665f8f.45.2024.11.21.09.06.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 Nov 2024 09:06:25 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1FAF760484;
+ Thu, 21 Nov 2024 16:58:09 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, qemu-riscv@nongnu.org,
+ Thomas Huth <huth@tuxfamily.org>, Bernhard Beschow <shentey@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-s390x@nongnu.org,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Snow <jsnow@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, qemu-rust@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Markus Armbruster <armbru@redhat.com>,
+ Weiwei Li <liwei1518@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Anders Roxell <anders.roxell@linaro.org>
+Subject: [PATCH 29/39] tests/functional: update the ppc64 tuxrun tests
+Date: Thu, 21 Nov 2024 16:57:56 +0000
+Message-Id: <20241121165806.476008-30-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241121165806.476008-1-alex.bennee@linaro.org>
+References: <20241121165806.476008-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v7 2/2] tests/qtest: QTest example for RISC-V CSR
- register
-To: Ivan Klokov <ivan.klokov@syntacore.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- bmeng.cn@gmail.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
-References: <20241120072712.65302-1-ivan.klokov@syntacore.com>
- <20241120072712.65302-3-ivan.klokov@syntacore.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20241120072712.65302-3-ivan.klokov@syntacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x434.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,96 +127,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Now there are new upto date images available we should update to them.
 
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Anders Roxell <anders.roxell@linaro.org>
+---
+ tests/functional/test_ppc64_tuxrun.py | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-On 11/20/24 4:27 AM, Ivan Klokov wrote:
-> Added demo for reading CSR register from qtest environment.
-> 
-> Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   tests/qtest/meson.build      |  2 +-
->   tests/qtest/riscv-csr-test.c | 56 ++++++++++++++++++++++++++++++++++++
->   2 files changed, 57 insertions(+), 1 deletion(-)
->   create mode 100644 tests/qtest/riscv-csr-test.c
-> 
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index f2f35367ae..3aad77b3a9 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -272,7 +272,7 @@ qtests_s390x = \
->   qtests_riscv32 = \
->     (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
->   
-> -qtests_riscv64 = \
-> +qtests_riscv64 = ['riscv-csr-test'] + \
->     (unpack_edk2_blobs ? ['bios-tables-test'] : [])
->   
->   qos_test_ss = ss.source_set()
-> diff --git a/tests/qtest/riscv-csr-test.c b/tests/qtest/riscv-csr-test.c
-> new file mode 100644
-> index 0000000000..ff5c29e6c6
-> --- /dev/null
-> +++ b/tests/qtest/riscv-csr-test.c
-> @@ -0,0 +1,56 @@
-> +/*
-> + * QTest testcase for RISC-V CSRs
-> + *
-> + * Copyright (c) 2024 Syntacore.
-> + *
-> + * This program is free software; you can redistribute it and/or modify it
-> + * under the terms of the GNU General Public License as published by the
-> + * Free Software Foundation; either version 2 of the License, or
-> + * (at your option) any later version.
-> + *
-> + * This program is distributed in the hope that it will be useful, but WITHOUT
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-> + * for more details.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +
-> +#define CSR_MVENDORID       0xf11
-> +#define CSR_MISELECT        0x350
-> +
-> +static void run_test_csr(void)
-> +{
-> +    uint64_t res;
-> +    uint64_t val = 0;
-> +
-> +    QTestState *qts = qtest_init("-machine virt -cpu veyron-v1");
-> +
-> +    res = qtest_csr_call(qts, "get_csr", 0, CSR_MVENDORID, &val);
-> +
-> +    g_assert_cmpint(res, ==, 0);
-> +    g_assert_cmpint(val, ==, 0x61f);
-> +
-> +    val = 0xff;
-> +    res = qtest_csr_call(qts, "set_csr", 0, CSR_MISELECT, &val);
-> +
-> +    g_assert_cmpint(res, ==, 0);
-> +
-> +    val = 0;
-> +    res = qtest_csr_call(qts, "get_csr", 0, CSR_MISELECT, &val);
-> +
-> +    g_assert_cmpint(res, ==, 0);
-> +    g_assert_cmpint(val, ==, 0xff);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    qtest_add_func("/cpu/csr", run_test_csr);
-> +
-> +    return g_test_run();
-> +}
+diff --git a/tests/functional/test_ppc64_tuxrun.py b/tests/functional/test_ppc64_tuxrun.py
+index 03b47e07f2..aee67f5e90 100755
+--- a/tests/functional/test_ppc64_tuxrun.py
++++ b/tests/functional/test_ppc64_tuxrun.py
+@@ -82,11 +82,11 @@ def ppc64_common_tuxrun(self, kernel_asset, rootfs_asset, prefix):
+                                drive="scsi-hd")
+ 
+     ASSET_PPC64_KERNEL = Asset(
+-        'https://storage.tuxboot.com/20230331/ppc64/vmlinux',
+-        'f22a9b9e924174a4c199f4c7e5d91a2339fcfe51c6eafd0907dc3e09b64ab728')
++        'https://storage.tuxboot.com/buildroot/20241119/ppc64/vmlinux',
++        '8219d5cb26e7654ad7826fe8aee6290f7c01eef44f2cd6d26c15fe8f99e1c17c')
+     ASSET_PPC64_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/20230331/ppc64/rootfs.ext4.zst',
+-        '1d953e81a4379e537fc8e41e05a0a59d9b453eef97aa03d47866c6c45b00bdff')
++        'https://storage.tuxboot.com/buildroot/20241119/ppc64/rootfs.ext4.zst',
++        'b68e12314303c5dd0fef37ae98021299a206085ae591893e73557af99a02d373')
+ 
+     def test_ppc64(self):
+         self.ppc64_common_tuxrun(kernel_asset=self.ASSET_PPC64_KERNEL,
+@@ -94,11 +94,11 @@ def test_ppc64(self):
+                                  prefix='tuxrun_ppc64_')
+ 
+     ASSET_PPC64LE_KERNEL = Asset(
+-        'https://storage.tuxboot.com/20230331/ppc64le/vmlinux',
+-        '979eb61b445a010fb13e2b927126991f8ceef9c590fa2be0996c00e293e80cf2')
++        'https://storage.tuxboot.com/buildroot/20241119/ppc64le/vmlinux',
++        '21aea1fbc18bf6fa7d8ca4ea48d4940b2c8363c077acd564eb47d769b7495279')
+     ASSET_PPC64LE_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/20230331/ppc64le/rootfs.ext4.zst',
+-        'b442678c93fb8abe1f7d3bfa20556488de6b475c22c8fed363f42cf81a0a3906')
++        'https://storage.tuxboot.com/buildroot/20241119/ppc64le/rootfs.ext4.zst',
++        '67d36a3f9597b738e8b7359bdf04500f4d9bb82fc35eaa65aa439d888b2392f4')
+ 
+     def test_ppc64le(self):
+         self.ppc64_common_tuxrun(kernel_asset=self.ASSET_PPC64LE_KERNEL,
+-- 
+2.39.5
 
 
