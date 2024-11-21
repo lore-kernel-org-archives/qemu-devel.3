@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870F4E64006
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 19:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B338E64006
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 19:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tECWf-0001Zn-MG; Thu, 21 Nov 2024 14:07:38 -0500
+	id 1tECXS-0002Iy-L8; Thu, 21 Nov 2024 14:08:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECWd-0001ZM-Oh
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:07:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECXM-00025X-EV
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:08:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECWc-0000lu-9K
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:07:35 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECXK-0000os-8O
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:08:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732216053;
+ s=mimecast20190719; t=1732216097;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6HnTTX2x3OAGO1JYFH5rKkwCGYup3u65ReQ1R5rAqhk=;
- b=iSLvzmGzYhjdO4muAh0imnniNEZ8WVxHdF1K+3zYv70LrPOkJfc8RDwQpudh8horqPX5IX
- S6ReEa9YyoWeFwBBP+u27eQEPy/n0LENQujCx2wQj3zB0W41feUVeVbdoX0H6WJ2o2wrgf
- dsMQp4jtlQdykD76cct7zxMHQzJMwOI=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TX53w6ZUuuS8FjfCf+6wknGkSPdV0PrLlHIEUwLF4Bg=;
+ b=Ej0qPHhwtYRioIUhlOwffy78wqzYepUsPZ+mdQqaa3gohmvNCqTZUSVIBI4Vrd4Qts2+TC
+ +zys614FDnQOeJFKqD4ewEAoxdDBzizrHLmVPcI9scBI/i1qs+4IpBy8BBSUbLPOAy9yNI
+ FJ7yqL+EFWq+MdF0Pap7hBRywT9dBaM=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-246-owsA4GQ0Pu6PWjjEsxi0vA-1; Thu, 21 Nov 2024 14:07:31 -0500
-X-MC-Unique: owsA4GQ0Pu6PWjjEsxi0vA-1
-X-Mimecast-MFC-AGG-ID: owsA4GQ0Pu6PWjjEsxi0vA
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2ff13df3759so11639211fa.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 11:07:31 -0800 (PST)
+ us-mta-263-T1BEIHdkNPiVikDq9s0O5g-1; Thu, 21 Nov 2024 14:08:16 -0500
+X-MC-Unique: T1BEIHdkNPiVikDq9s0O5g-1
+X-Mimecast-MFC-AGG-ID: T1BEIHdkNPiVikDq9s0O5g
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a99f43c4c7bso70470566b.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 11:08:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732216050; x=1732820850;
+ d=1e100.net; s=20230601; t=1732216095; x=1732820895;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6HnTTX2x3OAGO1JYFH5rKkwCGYup3u65ReQ1R5rAqhk=;
- b=NVERxG145bGKCTdWAA1RHVKk1XTLrYXyqRwxk0VbhPvXN8q+GaYN91DK1e77KekRL+
- BKZPP31qhJ4itrdh8G/TfAvFJSYO+Ls442ELiKxyQxGUlVg+Bxz5I6j/zPY+4+kAnn5Z
- JK3qeDmE6u0XY65VN5RUav9eCBWk6Fq8ZRyCAdrntRNOTpc1RBSez1oAISXeIzw1PQmB
- iublZ++jfdYHalrshIoczMjcxa0FZ7zlAskGSyrL9xCgplIpjD0JK/UdSHfh6zAugJyI
- BpwKHQjbzEmUQX5n2q6yAOH9CfMUFOoWsxjC4vg+szggs45y8rkrOB+E8jjQpWfK6s+3
- edbA==
+ bh=TX53w6ZUuuS8FjfCf+6wknGkSPdV0PrLlHIEUwLF4Bg=;
+ b=jQW3GV71NByMPZeUWyfDxSVFiRoMDeEJ0Rm+f4Y5CNTANUmDdkSKMQLT9h7dGhuY2T
+ Rlgd17tpaFo7GWPx46wfxRPp1xJ0UHK4nawkywFiHcLM7mb1gX2vy7SXoh0rmXaFgdcS
+ i6lWQ8JFobN+ZVTmR183kp+8K2yXFL/zbhfWeWMHtXag8qvljxhS81ruxGcoPkuBGj/F
+ BlDi+aSuS2tuqyB8bSSKPn9BLoztIRuqool/7mm1F69C7XYvFwvXQLrx615NuNfdJZ2E
+ y4tqJSu24G7IVUYYmebpYtRrPqrFsYFMNQVvBKw4nse/55o3qg9DDIRTsvpMyqGrS5wo
+ mexw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU54ooFiuHFjfZ4lZELWkr3B2NYdLdu13S9H/UmOTR1Heulwad8HgVKQv5K3bm9xKOey6H0H90dcmqV@nongnu.org
-X-Gm-Message-State: AOJu0YySkqBt0aM0pB4sCmx9DNjoKclILX7/O2xPHLXnk0fhrckIaSy8
- Kk0uAz06PsWPIr7rceDA3Y4zR4+9NRTQLBZBluKUN9m5MZO/5KUfaZf+UZSwCti5wVFP4p7XQOI
- XHKhUjeLwSVdpwxh1Z8A/7NpfCgBknV8t3AEIBVV7150FfJFIjWcC
-X-Gm-Gg: ASbGnctQ0vPnTxhPHGlJQxmIavIz2FaFBJjygzlCLR6IkGy+OqL82NI1vfirsdO7DKc
- tcML07eaF9KDVR/AITSphfUIWcVMNFPqjcCouMC0fkJNUK0eRsGjyYo7JixC0G5XU27g81gZ7rJ
- OZ1VxBkU0gDm2zm6wL3uQkdMwbLKRfvNR5jQjL+/UzFhLmOzYxeEDF8peMM1gRVXea+rUP5LJdw
- YLYnT92t7qdmHpIvfF63tz1q2dR5IkVD3uAsUCYBU6Psu55cz0LzGc1+ihyYYISHrJ6dIOq298t
- DxM=
-X-Received: by 2002:a2e:bc02:0:b0:2fb:51a:d2a with SMTP id
- 38308e7fff4ca-2ff8db311ccmr69166551fa.12.1732216049942; 
- Thu, 21 Nov 2024 11:07:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IES0t4H6ztoKPpLnnZhL9buxpRYg+KpH3BBOSyI0qyqKSeTe+iSY4c2ArDb14jcXUMmbLFXEg==
-X-Received: by 2002:a2e:bc02:0:b0:2fb:51a:d2a with SMTP id
- 38308e7fff4ca-2ff8db311ccmr69166311fa.12.1732216049498; 
- Thu, 21 Nov 2024 11:07:29 -0800 (PST)
+ AJvYcCUv0CNZ0h/h2P1oZOo07SN0F33jr9JqaQLCLILvomWeMlCsLCXzmhbn07imUEf0vRvKf0zE4ux0r2qI@nongnu.org
+X-Gm-Message-State: AOJu0YzcsxLGqNz6VxV5J8LVvCyObs3/QExXZ8qiJp6Hny6LjGyencl3
+ 1r6O9vrBRZQSXDE9nDKI3lhGjOuNSoU7eCZgHj/V1SGXLtragmmvR986/2DrRfvFf+A0J7z3Qdc
+ dAdXO2BQpjAxhm4TQwQTaNoGY6d+YkuQONwO0y0l2esn2z4Yb75h7
+X-Gm-Gg: ASbGncuaHokni/DqvsEAsKf/wYv+wRdqilvmD4uUXguazViWjqPjwUYkgQoL2Dc1ECr
+ dPSXKHsxJcZv2IGIM/JaPADeew6WvpxmMcuik3QmDI5+WXz8cOrXIqSC9CQOwF+03/EFXIE1WSx
+ 6fpae44TtaK7AikLHizLppzcJm+RHciw1ZsdP+xQBfoAIMZX3edeQCBrOOFdCwteQuaIy49Wzj4
+ fFTB27va7ss6bdCodSuFuwZP0/kl8Kcg3WzFU8zyQ6szo7M50HrYMTPtxLKSBK3ALTb9Um+ZcAN
+ NB4=
+X-Received: by 2002:a17:907:75e7:b0:a99:f56e:ce40 with SMTP id
+ a640c23a62f3a-aa509bc1416mr23034766b.47.1732216094806; 
+ Thu, 21 Nov 2024 11:08:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEf9cp++HfirTapPVkeKFLfumMvusZ585wX5aQ8vVYXMqRB1r2UVAsjJKqvDKjcfDjUQqrcaQ==
+X-Received: by 2002:a17:907:75e7:b0:a99:f56e:ce40 with SMTP id
+ a640c23a62f3a-aa509bc1416mr23030666b.47.1732216094369; 
+ Thu, 21 Nov 2024 11:08:14 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-70.web.vodafone.de. [109.42.51.70])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa50b57bca2sm4186566b.143.2024.11.21.11.07.26
+ a640c23a62f3a-aa50b5b8224sm4175966b.180.2024.11.21.11.08.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 11:07:29 -0800 (PST)
-Message-ID: <b2ba9b36-5971-4107-a6af-85b90ad18225@redhat.com>
-Date: Thu, 21 Nov 2024 20:07:26 +0100
+ Thu, 21 Nov 2024 11:08:13 -0800 (PST)
+Message-ID: <78c0ea0c-e73f-4614-8dd3-1b6088b042d9@redhat.com>
+Date: Thu, 21 Nov 2024 20:08:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/39] tests/functional: add a m68k tuxrun tests
+Subject: Re: [PATCH 21/39] tests/functional: update the aarch64 tuxrun tests
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -104,9 +104,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Laurent Vivier <laurent@vivier.eu>, Anders Roxell <anders.roxell@linaro.org>
+ Anders Roxell <anders.roxell@linaro.org>
 References: <20241121165806.476008-1-alex.bennee@linaro.org>
- <20241121165806.476008-24-alex.bennee@linaro.org>
+ <20241121165806.476008-22-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -151,19 +151,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241121165806.476008-24-alex.bennee@linaro.org>
+In-Reply-To: <20241121165806.476008-22-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,20 +180,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 21/11/2024 17.57, Alex Bennée wrote:
-> We didn't have this before and as it exercises the m68k virt platform
-> it seems worth adding. We don't wait for the shutdown because QEMU
-> will auto-exit on the shutdown.
+> Now there are new upto date images available we should update to them.
+> With the new rootfs the blk I/O errors also go away on arm64be.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Laurent Vivier <laurent@vivier.eu>
 > Cc: Anders Roxell <anders.roxell@linaro.org>
 > ---
->   tests/functional/meson.build         |  1 +
->   tests/functional/test_m68k_tuxrun.py | 34 ++++++++++++++++++++++++++++
->   2 files changed, 35 insertions(+)
->   create mode 100644 tests/functional/test_m68k_tuxrun.py
+>   tests/functional/test_aarch64_tuxrun.py | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 
-Nice!
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
