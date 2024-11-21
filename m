@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E8CD743FD
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB70D743FE
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwJn-0006UC-Ix; Wed, 20 Nov 2024 20:49:15 -0500
+	id 1tDwHr-0001bA-CK; Wed, 20 Nov 2024 20:47:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwJd-0006EC-MG
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:49:05 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHq-0001aq-El
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:14 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwJY-0004pJ-NN
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:49:03 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHo-0004XZ-D4
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=o0Qxb4icP5QHxebSgta6L/OLUkbwEJuI+/53RhwccoA=; b=ulBmn1bzcH+0Ntg
- ZrTqWVHoPdEAAzzrT8Lb5SpW/rFfVf+ZAgBVj05Ex4s3X+4Ilb8BgVA5RRhHyKp3+bHEWhuRjy7vu
- 16mSOLDpllGQRt68NRMiEC/jHoUtV/cH8uz/yoSign7cPCmlDpexjkjxYhONQhOLNdwwXQ8nAf3oB
- Xc=;
+ List-Help; bh=79pr1drhMqVTakNZzCI6+VG2OY2chgT2RrjIC+e91vQ=; b=gvB4mbFQ9zlG5lO
+ u1L/TOkOFKnZcHgVDSsTzZ7wwzSy3rpDes9tkzZz8t0WGAXx7GSwWyS3cCaWNUFo1YnSBC/dLSNUR
+ oeNIDO4ubvM7KYes46csSSvCJzGBDK1oNSTBl4T3pPGH+OugC3pm7wIIaKtx62pwGk8IJW3ucrFXR
+ xA=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 32/43] helper-to-tcg: Add README
-Date: Thu, 21 Nov 2024 02:49:36 +0100
-Message-ID: <20241121014947.18666-33-anjo@rev.ng>
+Subject: [RFC PATCH v1 14/43] helper-to-tcg: Introduce PrepareForOptPass
+Date: Thu, 21 Nov 2024 02:49:18 +0100
+Message-ID: <20241121014947.18666-15-anjo@rev.ng>
 In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
 References: <20241121014947.18666-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,283 +64,163 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Adds a new LLVM pass that runs early in the pipeline with the goal
+of preparing the input module for optimization by doing some early
+culling of functions and information gathering.
+
+This commits sets up a new LLVM pass over the IR module and runs it from
+the pipeline.
+
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- subprojects/helper-to-tcg/README.md | 265 ++++++++++++++++++++++++++++
- 1 file changed, 265 insertions(+)
- create mode 100644 subprojects/helper-to-tcg/README.md
+ .../helper-to-tcg/include/CmdLineOptions.h    |  2 ++
+ .../helper-to-tcg/include/PrepareForOptPass.h | 34 +++++++++++++++++++
+ subprojects/helper-to-tcg/meson.build         |  2 ++
+ .../PrepareForOptPass/PrepareForOptPass.cpp   | 25 ++++++++++++++
+ .../helper-to-tcg/pipeline/Pipeline.cpp       | 27 +++++++++++++++
+ 5 files changed, 90 insertions(+)
+ create mode 100644 subprojects/helper-to-tcg/include/PrepareForOptPass.h
+ create mode 100644 subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
 
-diff --git a/subprojects/helper-to-tcg/README.md b/subprojects/helper-to-tcg/README.md
+diff --git a/subprojects/helper-to-tcg/include/CmdLineOptions.h b/subprojects/helper-to-tcg/include/CmdLineOptions.h
+index 5774ab07b1..ed60c45f9a 100644
+--- a/subprojects/helper-to-tcg/include/CmdLineOptions.h
++++ b/subprojects/helper-to-tcg/include/CmdLineOptions.h
+@@ -21,3 +21,5 @@
+ 
+ // Options for pipeline
+ extern llvm::cl::list<std::string> InputFiles;
++// Options for PrepareForOptPass
++extern llvm::cl::opt<bool> TranslateAllHelpers;
+diff --git a/subprojects/helper-to-tcg/include/PrepareForOptPass.h b/subprojects/helper-to-tcg/include/PrepareForOptPass.h
 new file mode 100644
-index 0000000000..8d1304ef4f
+index 0000000000..d74618613f
 --- /dev/null
-+++ b/subprojects/helper-to-tcg/README.md
-@@ -0,0 +1,265 @@
-+# helper-to-tcg
++++ b/subprojects/helper-to-tcg/include/PrepareForOptPass.h
+@@ -0,0 +1,34 @@
++//
++//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
 +
-+`helper-to-tcg` is a standalone LLVM IR to TCG translator, with the goal of simplifying the implementation of complicated instructions in TCG. Instruction semantics can be specified either directly in LLVM IR or any language that can be compiled to it (C, C++, ...). However, the tool is tailored towards QEMU helper functions written in C.
++#pragma once
 +
-+Internally, `helper-to-tcg` consists of a mix of custom and built-in transformation and analysis passes that are applied to the input LLVM IR sequentially. The pipeline of passes is laid out as follows
-+```
-+           +---------------+    +-----+    +---------------+    +------------+
-+LLVM IR -> | PrepareForOpt | -> | -Os | -> | PrepareForTcg | -> | TcgGenPass | -> TCG
-+           +---------------+    +-----+    +---------------+    +------------+
-+```
-+where the custom passes performs:
-+* `PrepareForOpt` - Early culling of unneeded functions, mapping of function annotations, removal of `noinline` added by `-O0`
-+* `PrepareForTcg` - Post-optimization pass that tries to get the IR as close to Tinycode as possible, goal is to take complexity away from the backend;
-+* `TcgGenPass` - Backend pass that allocates TCG variables to LLVM values, and emits final TCG C code.
++#include <llvm/IR/PassManager.h>
 +
-+As for LLVM optimization, `-Os` strikes a good balance between unrolling and vectorization, from testing. More aggressive optimization levels would often unroll loops over compacting it with loop vectorization.
++//
++// PrepareForOptPass
++//
++// Pass that performs either early information collection or basic culling of
++// the input module. simplify the module, or to allow for further optimization.
++//
 +
-+## Project Structure
-+
-+* `get-llvm-ir.py` - Helper script to convert a QEMU .c file to LLVM IR by getting compile flags from `compile_commands.json`.
-+* `pipeline` - Implementation of pipeline orchestrating LLVM passes and handling input.
-+* `passes` - Implementation of custom LLVM passes (`PrepareForOpt`,`PrepareForTcg`,`TcgGenPass`).
-+* `include` - Shared headers between `passes/pipeline`.
-+* `tests` - Simple end-to-end tests of C functions we expect to be able to translate, tests fail if any function fails to translate, output is not verified.
-+
-+## Example Translations
-+
-+`helper-to-tcg` is able to deal with a wide variety of helper functions, the following code snippet contains two examples from the Hexagon architecture implementing the semantics of a predicated and instruction (`A2_pandt`) and a vectorized signed saturated 2-element scalar product (`V6_vdmpyhvsat`).
-+
-+```c
-+int32_t HELPER(A2_pandt)(CPUHexagonState *env, int32_t RdV,
-+                         int32_t PuV, int32_t RsV, int32_t RtV)
-+{
-+    if(fLSBOLD(PuV)) {
-+        RdV=RsV&RtV;
-+    } else {
-+        CANCEL;
-+    }
-+    return RdV;
-+}
-+
-+void HELPER(V6_vdmpyhvsat)(CPUHexagonState *env,
-+                           void * restrict VdV_void,
-+                           void * restrict VuV_void,
-+                           void * restrict VvV_void)
-+{
-+    fVFOREACH(32, i) {
-+        size8s_t accum = fMPY16SS(fGETHALF(0,VuV.w[i]),fGETHALF(0, VvV.w[i]));
-+        accum += fMPY16SS(fGETHALF(1,VuV.w[i]),fGETHALF(1, VvV.w[i]));
-+        VdV.w[i] = fVSATW(accum);
-+    }
-+}
-+```
-+For the above snippet, `helper-to-tcg` produces the following TCG
-+```c
-+void emit_A2_pandt(TCGv_i32 temp0, TCGv_env env, TCGv_i32 temp4,
-+                   TCGv_i32 temp8, TCGv_i32 temp7, TCGv_i32 temp6) {
-+    TCGv_i32 temp2 = tcg_temp_new_i32();
-+    tcg_gen_andi_i32(temp2, temp8, 1);
-+    TCGv_i32 temp5 = tcg_temp_new_i32();
-+    tcg_gen_and_i32(temp5, temp6, temp7);
-+    tcg_gen_movcond_i32(TCG_COND_EQ, temp0, temp2, tcg_constant_i32(0), temp4, temp5);
-+}
-+
-+void emit_V6_vdmpyhvsat(TCGv_env env, intptr_t vec3,
-+                        intptr_t vec7, intptr_t vec6) {
-+     VectorMem mem = {0};
-+     intptr_t vec0 = temp_new_gvec(&mem, 128);
-+     tcg_gen_gvec_shli(MO_32, vec0, vec7, 16, 128, 128);
-+     intptr_t vec5 = temp_new_gvec(&mem, 128);
-+     tcg_gen_gvec_sari(MO_32, vec5, vec0, 16, 128, 128);
-+     intptr_t vec1 = temp_new_gvec(&mem, 128);
-+     tcg_gen_gvec_shli(MO_32, vec1, vec6, 16, 128, 128);
-+     tcg_gen_gvec_sari(MO_32, vec1, vec1, 16, 128, 128);
-+     tcg_gen_gvec_mul(MO_32, vec1, vec1, vec5, 128, 128);
-+     intptr_t vec2 = temp_new_gvec(&mem, 128);
-+     tcg_gen_gvec_sari(MO_32, vec2, vec7, 16, 128, 128);
-+     tcg_gen_gvec_sari(MO_32, vec0, vec6, 16, 128, 128);
-+     tcg_gen_gvec_mul(MO_32, vec2, vec0, vec2, 128, 128);
-+     tcg_gen_gvec_ssadd(MO_32, vec3, vec1, vec2, 128, 128);
-+}
-+```
-+
-+In the first case, the predicated and instruction was made branchless by using a conditional move, and in the latter case the inner loop of the vectorized scalar product could be converted to a few vectorized shifts and multiplications, folllowed by a vectorized signed saturated addition.
-+
-+## Usage
-+
-+Building `helper-to-tcg` produces a binary implementing the pipeline outlined above, going from LLVM IR to TCG.
-+
-+### Specifying Functions to Translate
-+
-+Unless `--translate-all-helpers` is specified, the default behaviour of `helper-to-tcg` is to only translate functions annotated via a special `"helper-to-tcg"` annotation. Functions called by annotated functions will also be translated, see the following example:
-+
-+```c
-+// Function will be translated, annotation provided
-+__attribute__((annotate ("helper-to-tcg")))
-+int f(int a, int b) {
-+    return 2 * g(a, b);
-+}
-+
-+// Function will be translated, called by annotated `f()` function
-+int g(int a, int b) {
-+    ...
-+}
-+
-+// Function will not be translated
-+int h(int a, int b) {
-+    ...
-+}
-+```
-+
-+### Immediate and Vector Arguments
-+
-+Function annotations are in some cases used to provide extra information to `helper-to-tcg` not otherwise present in the IR. For example, whether an integer argument should actually be treated as an immediate rather than a register, or if a pointer argument should be treated as a `gvec` vector (offset into `CPUArchState`). For instance:
-+```c
-+__attribute__((annotate ("helper-to-tcg")))
-+__attribute__((annotate ("immediate: 1")))
-+int f(int a, int i) {
-+    ...
-+}
-+
-+__attribute__((annotate ("helper-to-tcg")))
-+__attribute__((annotate ("ptr-to-offset: 0, 1")))
-+void g(void * restrict a, void * restrict b) {
-+    ...
-+}
-+```
-+where `"immediate: 1"` tells `helper-to-tcg` that the argument with index `1` should be treated as an immediate (multiple arguments are specified through a comma separated list). Similarly `"ptr-to-offset: 0, 1"` indicates that arguments width index 0 and 1 should be treated as offsets from `CPUArchState` (given as `intptr_t`), rather than actual pointer arguments. For the above code, `helper-to-tcg` emits
-+```c
-+void emit_f(TCGv_i32 res, TCGv_i32 a, int i) {
-+    ...
-+}
-+
-+void emit_g(intptr_t a, intptr_t b) {
-+    ...
-+}
-+```
-+
-+### Loads and Stores
-+
-+Translating loads and stores is slightly trickier, as some QEMU specific assumptions are made. Loads and stores in the input are assumed to go through the `cpu_[st|ld]*()` functions defined in `exec/cpu_ldst.h` that a helper function would use. 
-+
-+If using standalone input functions (not QEMU helper functions), loads and stores are still represented by `cpu_[st|ld]*()` which needs to be declared, consider:
-+```c
-+/* Opaque CPU state type, will be mapped to tcg_env */
-+struct CPUArchState;
-+typedef struct CPUArchState CPUArchState;
-+
-+/* Prototype of QEMU helper guest load/store functions, see exec/cpu_ldst.h */
-+uint32_t cpu_ldub_data(CPUArchState *, uint32_t ptr);
-+void cpu_stb_data(CPUArchState *, uint32_t ptr, uint32_t data);
-+
-+uint32_t helper_ld8(CPUArchState *env, uint32_t addr) {
-+    return cpu_ldub_data(env, addr);
-+}
-+
-+void helper_st8(CPUArchState *env, uint32_t addr, uint32_t data) {
-+    return cpu_stb_data(env, addr, data);
-+}
-+```
-+implementing an 8-bit load and store instruction, these will be translated to the following TCG.
-+```c
-+void emit_ld8(TCGv_i32 temp0, TCGv_env env, TCGv_i32 temp1) {
-+    tcg_gen_qemu_ld_i32(temp0, temp1, tb_mmu_index(tcg_ctx->gen_tb->flags), MO_UB);
-+}
-+
-+void emit_st8(TCGv_env env, TCGv_i32 temp0, TCGv_i32 temp1) {
-+    tcg_gen_qemu_st_i32(temp1, temp0, tb_mmu_index(tcg_ctx->gen_tb->flags), MO_UB);
-+}
-+```
-+Note, the emitted code assumes the definition of a `tb_mmu_index()` function to retrieve the current CPU MMU index, the name of this function can be configured via the `--mmu-index-function` flag.
-+
-+### Mapping CPU State
-+
-+In QEMU, commonly accessed fields in the `CPUArchState` are often mapped to global `TCGv*` variables representing that piece of CPU state in TCG. When translating helper functions (or other C functions), a method of specifying which fields in the CPU state should be mapped to which globals is needed. To this end, a declarative approach is taken, where mappings between CPU state and globals can be consumed by both `helper-to-tcg` and runtime QEMU for instantiating the `TCGv` globals themselves.
-+
-+Users must define this mapping via a global `cpu_tcg_mapping []` array, as can be seen in the following example where `mapped_field` of `CPUArchState` is mapped to the global `tcg_field`. For more complicated examples see the tests in `tests/cpustate.c`.
-+```c
-+#include <stdint.h>
-+#include "tcg/tcg-global-mappings.h"
-+
-+/* Define a CPU state with some different fields */
-+
-+typedef struct CPUArchState {
-+    uint32_t mapped_field;
-+    uint32_t unmapped_field;
-+} CPUArchState;
-+
-+/* Dummy struct, in QEMU this would correspond to TCGv_i32 in tcg.h */
-+typedef struct TCGv_i32 {} TCGv_i32;
-+
-+/* Global TCGv representing CPU state */
-+TCGv_i32 tcg_field;
-+
-+/*
-+ * Finally provide a mapping of CPUArchState to TCG globals we care about, here
-+ * we map mapped_field to tcg_field
-+ */
-+cpu_tcg_mapping mappings[] = {
-+    CPU_TCG_MAP(CPUArchState, tcg_field, mapped_field, NULL),
++class PrepareForOptPass : public llvm::PassInfoMixin<PrepareForOptPass> {
++public:
++    PrepareForOptPass() {}
++    llvm::PreservedAnalyses run(llvm::Module &M,
++                                llvm::ModuleAnalysisManager &MAM);
 +};
+diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
+index 63c6ed17fb..fd3fd6f0ae 100644
+--- a/subprojects/helper-to-tcg/meson.build
++++ b/subprojects/helper-to-tcg/meson.build
+@@ -43,6 +43,8 @@ endif
+ sources = [
+     'pipeline/Pipeline.cpp',
+     'passes/llvm-compat.cpp',
++    'pipeline/Pipeline.cpp',
++    'passes/PrepareForOptPass/PrepareForOptPass.cpp',
+ ]
+ 
+ clang = bindir / 'clang'
+diff --git a/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp b/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
+new file mode 100644
+index 0000000000..0a018494fe
+--- /dev/null
++++ b/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
+@@ -0,0 +1,25 @@
++//
++//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
 +
-+uint32_t helper_mapped(CPUArchState *env) {
-+    return env->mapped_field;
++#include <PrepareForOptPass.h>
++
++using namespace llvm;
++
++PreservedAnalyses PrepareForOptPass::run(Module &M, ModuleAnalysisManager &MAM)
++{
++    return PreservedAnalyses::none();
 +}
+diff --git a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
+index 9c0e777893..fad335f4a9 100644
+--- a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
++++ b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
+@@ -34,7 +34,9 @@
+ #include <llvm/Support/SourceMgr.h>
+ #include <llvm/Support/TargetSelect.h>
+ #include <llvm/Target/TargetMachine.h>
++#include <llvm/Transforms/Scalar/SROA.h>
+ 
++#include <PrepareForOptPass.h>
+ #include "llvm-compat.h"
+ 
+ using namespace llvm;
+@@ -155,5 +157,30 @@ int main(int argc, char **argv)
+ 
+     ModulePassManager MPM;
+ 
++    //
++    // Start by Filtering out functions we don't want to translate,
++    // following by a pass that removes `noinline`s that are inserted
++    // by clang on -O0. We finally run a UnifyExitNodesPass to make sure
++    // the helpers we parse only has a single exit.
++    //
 +
-+uint32_t helper_unmapped(CPUArchState *env) {
-+    return env->unmapped_field;
-+}
-+```
-+Note, the name of the `cpu_tcg_mapping[]` is provided via the `--tcg-global-mappings` flag. For the above example, `helper-to-tcg` emits
-+```c
-+extern TCGv_i32 tcg_field;
-+
-+void emit_mapped(TCGv_i32 temp0, TCGv_env env) {
-+    tcg_gen_mov_i32(temp0, tcg_field);
-+}
-+
-+void emit_unmapped(TCGv_i32 temp0, TCGv_env env) {
-+    TCGv_ptr ptr1 = tcg_temp_new_ptr();
-+    tcg_gen_addi_ptr(ptr1, env, 128ull);
-+    tcg_gen_ld_i32(temp0, ptr1, 0);
-+}
-+```
-+where accesses in the input C code are correctly mapped to the corresponding TCG globals. The unmapped `CPUArchState` access turns into pointer math and a load, whereas the mapped access turns into a `mov` from a global.
-+
-+### Automatic Calling of Generated Code
-+
-+Finally, calling the generated code is as simple as including the output of `helper-to-tcg` into the project and manually calling `emit_*(...)`. However, when dealing with an existing frontend that has a lot of helper functions already in use, we simplify this process somewhat for non-vector instructions. `helper-to-tcg` can emit a dispatcher, which for the above CPU state mapping example looks like
-+```c
-+int helper_to_tcg_dispatcher(void *func, TCGTemp *ret_temp, int nargs, TCGTemp **args) {
-+    if ((uintptr_t) func == (uintptr_t) helper_mapped) {
-+        TCGv_i32 temp0 = temp_tcgv_i32(ret_temp);
-+        TCGv_env env = temp_tcgv_ptr(args[0]);
-+        emit_mapped(temp0, env);
-+        return 1;
-+    }
-+    if ((uintptr_t) func == (uintptr_t) helper_unmapped) {
-+        TCGv_i32 temp0 = temp_tcgv_i32(ret_temp);
-+        TCGv_env env = temp_tcgv_ptr(args[0]);
-+        emit_unmapped(temp0, env);
-+        return 1;
-+    }
-+    return 0;
-+}
-+```
-+Here `emit_mapped()` and `emit_unmapped()` are automatically called if the current helper function call being translated `void *func` corresponds to either of the input helper functions. If the fronend then defines
-+```c
-+#ifdef CONFIG_HELPER_TO_TCG
-+#define TARGET_HELPER_DISPATCHER helper_to_tcg_dispatcher
++    {
++        FunctionPassManager FPM;
++#if LLVM_VERSION_MAJOR < 14
++        FPM.addPass(SROA());
++#else
++        FPM.addPass(SROAPass());
 +#endif
-+```
-+in `cpu-param.h`, then calls to `gen_helper_mapped()` for instance, will end up in `emit_mapped()` with no change to frontends. Additionally, dispatching from helper calls allows for easy toggling of `helper-to-tcg`, which is increadibly useful for testing purposes.
++        MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
++    }
 +
-+### Simple Command Usage
++    MPM.addPass(PrepareForOptPass());
 +
-+Assume a `helpers.c` file with functions to translate, then to obtain LLVM IR
-+```bash
-+$ clang helpers.c -O0 -Xclang -disable-O0-optnone -S -emit-llvm
-+```
-+which produces `helpers.ll` to be fed into `helper-to-tcg`
-+```bash
-+$ ./helper-to-tcg helpers.ll --translate-all-helpers
-+```
-+where `--translate-all-helpers` means "translate all functions starting with helper_*". Finally, the above command produces `helper-to-tcg-emitted.[c|h]` with emitted TCG code.
++    {
++        FunctionPassManager FPM;
++        FPM.addPass(compat::UnifyFunctionExitNodesPass());
++        MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
++    }
++
+     return 0;
+ }
 -- 
 2.45.2
 
