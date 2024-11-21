@@ -4,92 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD1ED78796
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A1AD78793
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEALa-0008Uv-Tr; Thu, 21 Nov 2024 11:48:02 -0500
+	id 1tEAMW-0000i3-6B; Thu, 21 Nov 2024 11:49:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEALR-0008QA-He
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:47:55 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEALP-0006V7-HO
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:47:53 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a9e8522445dso181497566b.1
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:47:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732207669; x=1732812469; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WVJOS+Rhlkgtxl072NwhDRfn80V5P78/kYvpqtRvjSI=;
- b=I6CdGMtCONvpYVmTwTGSK27Tpnt463u1z2vKuAyi+qKWTGFF4VbeufrmcyQ6hD8jts
- J5OS0nJ4gs13X9czgao/9ua4Kc4rN+g9pXm+8H5vhHWckHnAOoZwuiicLoXx6gVmXSNY
- RPMgjI1NP8g2k225VLBmEnx6737cWoCFxvIW0xt4007vvEd6+biGSOxjKTi4h4cu2Jk0
- Ys3JNQiIiuEwFAGfD/0N+9Ssx7O6XfmYVT4mIQCUvFTVM2+Lb2dNYzynW6Qfo8WuIMPS
- ZPEEVwb49T+61YBLQKpnPu2bEoqNrNTBdpiLKlP3UlvhwkPCtefjDODvdHsPOvDs2TRO
- Wq4g==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEAML-0000UZ-D8
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:48:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEAMI-0006ca-PU
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:48:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732207725;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EmAGqbJ8J21Mv6LX0LV83l9hiBNpbgS8yyPan3PGV6U=;
+ b=LSAirr0FHRcYbEloTgJHWMxmOug6pcb/C2NQTl8W/rCs489yDs4puuKccUXkLPGMQBxZkm
+ zLSbRL54KOcp92h6/JxzG7NLOr2Zfvx5xBZwVCKjQ+Rp0R1u3Cm0to9YicY0uKG+3mhVX2
+ 3St8NS3iP+epVAcpw+t8eWsqaFl1MSg=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-UAEP7UK6PjKsV8DONwM5qA-1; Thu, 21 Nov 2024 11:48:42 -0500
+X-MC-Unique: UAEP7UK6PjKsV8DONwM5qA-1
+X-Mimecast-MFC-AGG-ID: UAEP7UK6PjKsV8DONwM5qA
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-6ee7ccc0286so18208877b3.2
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:48:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732207669; x=1732812469;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WVJOS+Rhlkgtxl072NwhDRfn80V5P78/kYvpqtRvjSI=;
- b=X6KW4g0fvat3heSE0K+B0PBHe+3w02PFHedNHzW4tTQqlR5NQ8pBwgO/8IbasTFS0p
- LYxGxofswGT0sPSNjb41vluTkCluFuizSrNPPZ5bI2LcIF0s+jl1mQkNMNbLCIcu+eJW
- UqM8YTepACLshyhja/xM+UQLPGEOjCGvYD0xWFEWD2vu/BSOaYnK93ZsmNV+pDnOEOBD
- KpSZ7W9zZToohAFWw0CSq73zFdW1iYJJIpqxAMJQBGSUMtjFtML634i+ywhPhMbSwTXL
- mQKkhmsQYHoZMKVR8/FuGJ1nnQq9OSp4Lf5vazqg1187oha19I+K0ux4p++P1JhegoGk
- yH5w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLZzrhprqRBYdjVO7beNjciEscwopae7I/rM6p4ZfhYE5MnqT/XY96jIFmFvxCHG1twWd0OyKPvpmC@nongnu.org
-X-Gm-Message-State: AOJu0YwjdOTKikmgOM+uUSFJpWliYSyoNdbVmt0dqeU8mSqDIUC7YvZ3
- gauRHFiS5AIqJEH6clloBXUPoilOKmq4YOF9IvxZdHParcHlmiG6V3d+5leUfWk=
-X-Gm-Gg: ASbGncuF5l6bPXpIQCyN7rtxm8kpo4N/2nMUQt6/3CsHKKa9pVycp1cezPpAhF8U6/U
- PNnVInbbak5ZmYeyLueECmcC1TefQZXLSBlO/HqAo8GfotHqz8VSnCKvVaWEln9OF3xDTZg4Q7P
- yOayzTKJdS4P2PrhPCKZtM4VFPskUSUj3wd7pZdiwKiltTR49SkTkopplSr9/z63nw1qOdtfsuT
- OxXwgH2TVHRVk6TclPzyTKhoppKwQFT5WTATuAWgoKdjOyF
-X-Google-Smtp-Source: AGHT+IHzljkr9YzL3oqJhGns1efsh8GNd5Q0GK/iA1xbOxtzAbxaB2mXNmsQxkvZjp22+ursJmopQQ==
-X-Received: by 2002:a17:907:7292:b0:a9e:c947:9855 with SMTP id
- a640c23a62f3a-aa4dd70badamr754599066b.48.1732207669125; 
- Thu, 21 Nov 2024 08:47:49 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa4f4181818sm99210366b.82.2024.11.21.08.47.48
+ d=1e100.net; s=20230601; t=1732207721; x=1732812521;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EmAGqbJ8J21Mv6LX0LV83l9hiBNpbgS8yyPan3PGV6U=;
+ b=KycJgObCukQPsyUIbhxwZWT8OyQbrqpskbGENI8bIq3qBBYpG33pOr008MwlBtLjF1
+ 5AxrQ8l118x50dwRWJC8TGltM2jSbJl02r1VA7bBaBJJK9pMnIE74B3lzkx5f548OdXl
+ jqvFCuPD7nw9hfVhLulNbYeBG0fVLGBRa3akMUA91pTb7irXCw01OEWExMJ98w7Swzb6
+ hkUUwRkE6B08S9qna+SzRlpwL2NdpAnm/tyUBcIJ0QzNCWMLk+Hq/6AYR6TasNQd2ulo
+ pGluUMgutddyjO1chOXOe8LjJKtlSqxL+/fP9JAgrrpCxkYCobHDhQ1uVyDn9b+0T0Lt
+ VXdQ==
+X-Gm-Message-State: AOJu0YxSqot/6ty/wSR/Y0TJIrZWaU7JrLi6n1T8ytOwvUskD/qXsf7U
+ Mz2b7c5DTEhPf5vFlGzQdXBb2pKDNBiTr2XeZ4eo3dEI2xvkxFvMQa2Agjx27ZUHlojokJdfDWO
+ mGicoYw0Q6WIDoI53N0jZo11IxvyKXq2DIjOAmMAKxO0OQ8jY7qzz
+X-Gm-Gg: ASbGncvDOK5LGAbvV1+9HFaMLS0bH13rLUrCTRoxLgmTUe/wyGoxiC9UQrssYibca47
+ cx8poH4vpB9E3JjzOwHRPTjHzHzei61JAhCBuJiseE88vhbPiqgP9XY1L2ukZ0oM+uBEqiK+EH8
+ sdqS4ESkFtXzksixaPZHmZvUIKh0ORqTXYL29TNbKBE+JEPZaiKYUJRHKog5HynVpH7ebSiDXOB
+ TKNmxZrC58QIBgYNZT76xYWZwgmszbquq066svQt6hhCc9v9HtK/ZdxujkPxPXVmok8Duu74Kav
+ 2nHRX9VHlJw=
+X-Received: by 2002:a05:690c:620e:b0:6eb:344:9fa5 with SMTP id
+ 00721157ae682-6eebd0f78e9mr85633697b3.15.1732207721687; 
+ Thu, 21 Nov 2024 08:48:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEuweCByBHJ2sG3RDLpmFoOp5qHdjXKdt5qL/qul5Shb6nB7r75cBJJE3x14zssOtHnlOqiMg==
+X-Received: by 2002:a05:690c:620e:b0:6eb:344:9fa5 with SMTP id
+ 00721157ae682-6eebd0f78e9mr85633517b3.15.1732207721417; 
+ Thu, 21 Nov 2024 08:48:41 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4653c415171sm552661cf.53.2024.11.21.08.48.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 08:47:48 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A9B705F77B;
- Thu, 21 Nov 2024 16:47:47 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Junjie Mao <junjie.mao@hotmail.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>
-Subject: Re: [PATCH] rust/pl011: Fix range checks for device ID accesses
-In-Reply-To: <SY0P300MB102644C4AC34A3AAD75DC4D5955C2@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
- (Junjie Mao's message of "Thu, 7 Nov 2024 14:13:07 +0800")
-References: <SY0P300MB102644C4AC34A3AAD75DC4D5955C2@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Thu, 21 Nov 2024 16:47:47 +0000
-Message-ID: <87plmolej0.fsf@draig.linaro.org>
+ Thu, 21 Nov 2024 08:48:41 -0800 (PST)
+Date: Thu, 21 Nov 2024 11:48:38 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 08/12] qdev: Make qdev_get_machine() not use
+ container_get()
+Message-ID: <Zz9kZnGrNgD64FIz@x1n>
+References: <20241120215703.3918445-1-peterx@redhat.com>
+ <20241120215703.3918445-9-peterx@redhat.com>
+ <Zz8JvAxXHqa3wfHv@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zz8JvAxXHqa3wfHv@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,32 +114,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Junjie Mao <junjie.mao@hotmail.com> writes:
+On Thu, Nov 21, 2024 at 10:21:48AM +0000, Daniel P. Berrangé wrote:
+> On Wed, Nov 20, 2024 at 04:56:59PM -0500, Peter Xu wrote:
+> > Currently, qdev_get_machine() has a slight misuse on container_get(), as
+> > the helper says "get a container" but in reality the goal is to get the
+> > machine object.  It is still a "container" but not strictly.
+> > 
+> > Note that it _may_ get a container (at "/machine") in our current unit test
+> > of test-qdev-global-props.c before all these changes, but it's probably
+> > unexpected and worked by accident.
+> > 
+> > Switch to an explicit object_resolve_path_component(), with a side benefit
+> > that qdev_get_machine() can happen a lot, and we don't need to split the
+> > string ("/machine") every time.  This also paves way for making the helper
+> > container_get() never try to return a non-container at all.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  hw/core/qdev.c | 8 +++++++-
+> >  1 file changed, 7 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+> > index 5f13111b77..c869c47a27 100644
+> > --- a/hw/core/qdev.c
+> > +++ b/hw/core/qdev.c
+> > @@ -817,7 +817,13 @@ Object *qdev_get_machine(void)
+> >      static Object *dev;
+> >  
+> >      if (dev == NULL) {
+> > -        dev = container_get(object_get_root(), "/machine");
+> > +        /*
+> > +         * NOTE: when the machine is not yet created, this helper will
+> > +         * also keep the cached object untouched and return NULL.  The next
+> > +         * invoke of the helper will try to look for the machine again.
+> > +         * It'll only cache the pointer when it's found the first time.
+> > +         */
+> 
+> This smells like a recipe for subtle bugs. I think I'd consider it a code
+> flaw if something called qdev_get_machine() in a scenario where the machine
+> does not yet exist.
 
-> The peripheral and PrimeCell identification registers of pl011 are locate=
-d at
-> offset 0xFE0 - 0xFFC. To check if a read falls to such registers, the C
-> implementation checks if the offset-shifted-by-2 (not the offset itself) =
-is in
-> the range 0x3F8 - 0x3FF.
->
-> Use the same check in the Rust implementation.
->
-> This fixes the timeout of the following avocado tests:
->
->   * tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_virt
->   * tests/avocado/replay_kernel.py:ReplayKernelNormal.test_arm_virt
->   * tests/avocado/replay_kernel.py:ReplayKernelNormal.test_arm_vexpressa9
->
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Junjie Mao <junjie.mao@hotmail.com>
+Returning NULL to catch such bug isn't that bad either if it appears, IMHO.
+It'll crash on the null reference instead.
 
-As this is the simple fix I'm grabbing this for rc2. We can revisit more
-Rusty solutions after the release.
+I did this not only because I used to allow this return NULL (in my other
+patchset to enable singleton for vIOMMUs, then whoever wants to do that for
+singleton doesn't need yet another qdev patch..), but also I think qemu is
+complex enough, so for such frequently used global helper it won't surprise
+me that users will start to detect NULL soon anyway.
 
-Queued to maintainer/for-9.2-rc2, thanks.
+For example, I learned only recently that migration_is_active() can be
+invoked before migration object is initialized.. and it needs to keep
+working like that..
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> 
+> > +        dev = object_resolve_path_component(object_get_root(), "machine");
+> >      }
+> 
+> IOW, I think we should assert that dev != NULL to ensure we immediately
+> diagnose the flawed sequence of calls.
+
+I'd confess indeed the current qemu can assert that.  OK, let me switch.
+
+-- 
+Peter Xu
+
 
