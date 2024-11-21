@@ -4,57 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 267ECD6E2A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 10:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD50D6E2CA
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 10:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE4L2-0005uI-8A; Thu, 21 Nov 2024 05:23:04 -0500
+	id 1tE4Ln-0006Dh-AJ; Thu, 21 Nov 2024 05:23:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1tE4L1-0005u6-Aw
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:23:03 -0500
-Received: from out-181.mta1.migadu.com ([2001:41d0:203:375::b5])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tE4Ld-0006BS-Tv
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:23:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1tE4Kx-0002WK-BL
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:23:00 -0500
-Content-Type: text/plain;
-	charset=utf-8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1732184575;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FeVQZF0FwaNkO3dCJrjK01ITq5xM5OeluXX9EWTRgt0=;
- b=M3bdrsBxb7z9ptW+rXKcq6n6QFejYzvxPJWiwbM1HqzfT7vuy8Ahw6kHy73AQtsXqEroln
- fVXNHD68EkKAl/SrnNQHf2bAG2x8cQnrqdx4+wZ1sRZD5BBQpmZUjZVOdd67SvbxJYDKOj
- U60Ju2WQSz3Ppd9mYy2uE3BonS//8xc=
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.200.121\))
-Subject: Re: New "rme-guest" QEMU object addition
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Itaru Kitayama <itaru.kitayama@linux.dev>
-In-Reply-To: <20241121100000.GA2024976@myrica>
-Date: Thu, 21 Nov 2024 19:22:37 +0900
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>,
- qemu-devel@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <BF591E76-2E35-48D4-B817-80A5297FEEE5@linux.dev>
-References: <9FF5EDFD-6026-4C3A-A6A1-A66521D837A5@linux.dev>
- <20241121100000.GA2024976@myrica>
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::b5;
- envelope-from=itaru.kitayama@linux.dev; helo=out-181.mta1.migadu.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tE4LR-0002YS-Jn
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:23:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732184606;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=PZKsWgosnOTgGkEfng6XkceWz3U4whhl0ZVd9xhBEXo=;
+ b=Mbp2gWGjKI7w0d9LprJCZyXdE/2TpoCEMP96YNLwPHoHr61WxtD/ZK5ogn9xL2zEUFK4bo
+ cl+VzmwtWYgAmvPhjqspivRvlMNBr3wnsVOG/EltMn9d8e+k2Cq0KTmrn9uEA7ENVdO1Xt
+ Fa967LGfpzssHpyzaEyJAqH7JzxESm0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-qzu1sfZdMh-20VaODhw1jw-1; Thu,
+ 21 Nov 2024 05:23:23 -0500
+X-MC-Unique: qzu1sfZdMh-20VaODhw1jw-1
+X-Mimecast-MFC-AGG-ID: qzu1sfZdMh-20VaODhw1jw
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D6E851955F77; Thu, 21 Nov 2024 10:23:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.5])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 265031955E99; Thu, 21 Nov 2024 10:23:17 +0000 (UTC)
+Date: Thu, 21 Nov 2024 10:23:14 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 09/12] qdev: Add machine_get_container()
+Message-ID: <Zz8KEg3f5u5Z_1bw@redhat.com>
+References: <20241120215703.3918445-1-peterx@redhat.com>
+ <20241120215703.3918445-10-peterx@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241120215703.3918445-10-peterx@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,63 +87,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jean,
+On Wed, Nov 20, 2024 at 04:57:00PM -0500, Peter Xu wrote:
+> Add a helper to fetch machine containers.  Add some sanity check around.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  include/hw/qdev-core.h | 10 ++++++++++
+>  hw/core/qdev.c         | 17 +++++++++++++++++
+>  2 files changed, 27 insertions(+)
+> 
+> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+> index 5be9844412..38edfb1b54 100644
+> --- a/include/hw/qdev-core.h
+> +++ b/include/hw/qdev-core.h
+> @@ -996,6 +996,16 @@ const char *qdev_fw_name(DeviceState *dev);
+>  void qdev_assert_realized_properly(void);
+>  Object *qdev_get_machine(void);
+>  
+> +/**
+> + * machine_get_container:
+> + * @name: The name of container to lookup
+> + *
+> + * Get a container of the machine (QOM path "/machine/XXX").
+> + *
+> + * Returns: the machine container object.
+> + */
+> +Object *machine_get_container(const char *name);
+> +
+>  /**
+>   * qdev_get_human_name() - Return a human-readable name for a device
+>   * @dev: The device. Must be a valid and non-NULL pointer.
+> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+> index c869c47a27..6cb4fe4691 100644
+> --- a/hw/core/qdev.c
+> +++ b/hw/core/qdev.c
+> @@ -829,6 +829,23 @@ Object *qdev_get_machine(void)
+>      return dev;
+>  }
+>  
+> +Object *machine_get_container(const char *name)
+> +{
+> +    Object *container, *machine;
+> +
+> +    /*
+> +     * NOTE: nobody should call this _before_ machine is created.  If it
+> +     * happens, it's a programming error.
+> +     */
+> +    machine = qdev_get_machine();
+> +    assert(machine);
 
-> On Nov 21, 2024, at 19:00, Jean-Philippe Brucker =
-<jean-philippe@linaro.org> wrote:
->=20
-> Hi Itaru,
->=20
-> On Thu, Nov 21, 2024 at 02:34:24PM +0900, Itaru Kitayama wrote:
->> Hi Jean, Mathieu,
->>=20
->> I=E2=80=99ve been using you guys=E2=80=99 ccs/v3 QEMU for some time =
-to bring up an Realm instance without a major issue, and as a one who is =
-making changes libvirt to support CCA, I wonder if you could merge the =
-v3 local changes under qap dir first so I can query the feature from =
-libvirt?
->=20
-> I'm not very familiar with libvirt, which changes are needed for =
-query,
-> this one:
-> =
-https://git.codelinaro.org/linaro/dcap/qemu/-/commit/250732e03bf0bd2e2a905=
-8358707baf51d0193cb#68c067b8d3c460fb3331256759e405f48df64c73
-> ?
+IMHO this assert should be in  qdev_get_machine() itself any
+premature call of it is a programming error.
 
-Yes, but I wasn=E2=80=99t aware of the Kim-rme,c code under the =
-target/arm. I am trying to generate C code using the QAPI so that we can =
-issue QMP command like other CoCo, SEV(-SNP) and SGX.
-Is this the way forward for Arm CCA support I wonder?
+> +
+> +    container = object_resolve_path_component(machine, name);
+> +    assert(object_dynamic_cast(container, TYPE_CONTAINER));
+> +
+> +    return container;
+> +}
+> +
+>  char *qdev_get_human_name(DeviceState *dev)
+>  {
+>      g_assert(dev != NULL);
+> -- 
+> 2.45.0
+> 
 
-For now the focus is on getting a reasonable output of `virsh =
-domcapabilities =E2=80=94emulatorbin qemu-system-aarch64` and getting =
-virsh edit can be finished without a complain if I added =
-<launchSecurity/> and <cca/>
-elements.
-=20
-Thanks,
-Itaru.
-
->=20
-> The problem for upstreaming QEMU VMM patches is that the whole series
-> depends on the updated KVM API, so until that gets merged in Linux I =
-can't
-> get the QEMU patches merged
-> =
-https://git.codelinaro.org/linaro/dcap/qemu/-/commit/bb044aeb5bf888f193b1d=
-ef0a4d03de2ff8389ac
-> =
-https://lore.kernel.org/linux-arm-kernel/20241004152804.72508-1-steven.pri=
-ce@arm.com/
-> And without the KVM API we can't allow users to create a rme-guest =
-object,
-> since it wouldn't be functional.
->=20
-> Thanks,
-> Jean
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
