@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F991D743FD
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E78BD743FC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:48:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwI2-0001hW-RZ; Wed, 20 Nov 2024 20:47:26 -0500
+	id 1tDwHv-0001e4-MG; Wed, 20 Nov 2024 20:47:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwI1-0001hN-TM
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:25 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHu-0001dC-Gu
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:18 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHx-0004a4-0V
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:25 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHs-0004Z9-Gg
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=7ZVMsM/ZVxwvDxZo9mEMb4JOOHxBreG1gQEY2DhLD5k=; b=mi4LEcTf4Dsrcx6
- ggzJOR2I1xRbZtZOs2+355YFKE5JF4CoFu5q0yWnrkIzDSSxV8PZGJIoWShfXu+koccD91N+/1bEy
- +LTGiRrG5Gl/J2R4OF+MfqvZRFJ5EAmRs9Ef3FpDjGK/oAVHSy/mkViSKKlpMy8f3S2Xp7xWem0/T
- Fk=;
+ List-Help; bh=3xa4cSQWq1UFcy/VC4ccaIM0E/2QjTKLoAtI/4PVoBM=; b=M35JFciezjmnJAh
+ Wji961ULdWWiTcGHd+BVNZ1XDhAoov5IUfXyk0Gnimg4vZ4+zIztxFXs97WkpOI3dt8E+QvWvLHj5
+ +vSlMxvNCGOD6IxvmnEzeayDvSm7YKXf8Qf5ibwJjr1K3892vLzmetG9vHA4DSxViVXC43Vra4eus
+ 9A=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 28/43] helper-to-tcg: Introduce TcgType.h
-Date: Thu, 21 Nov 2024 02:49:32 +0100
-Message-ID: <20241121014947.18666-29-anjo@rev.ng>
+Subject: [RFC PATCH v1 21/43] helper-to-tcg: Introduce PrepareForTcgPass
+Date: Thu, 21 Nov 2024 02:49:25 +0100
+Message-ID: <20241121014947.18666-22-anjo@rev.ng>
 In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
 References: <20241121014947.18666-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,34 +64,42 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a struct representing everything a LLVM value might map to in TCG,
-this includes:
+Adds a new pass over the LLVM module which runs post-optimization with
+the end-goal of:
+  * culling functions which aren't worth translating;
+  * canonicalizing the IR to something closer to TCG, and;
+  * extracting information which may be useful in the backend pass.
 
-  * TCGv (IrValue);
-  * TCGv_ptr (IrPtr);
-  * TCGv_env (IrEnv);
-  * TCGLabel (IrLabel);
-  * tcg_constant_*() (IrConst);
-  * 123123ull (IrImmediate);
-  * intptr_t gvec_vector (IrPtrToOffset).
-
-NOTE: Patch is subject to change due to rework of the TcgV type system.
-There is quite significant overlap in handling IrConst/IrImmediate and
-any other type with the ConstantExpression bool set. Space required for
-each TcgV can also be reduced by moving to a union.
+This commits sets up a new LLVM pass over the IR module and runs it from
+the pipeline.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- .../helper-to-tcg/passes/backend/TcgType.h    | 133 ++++++++++++++++++
- 1 file changed, 133 insertions(+)
- create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgType.h
+ .../helper-to-tcg/include/CmdLineOptions.h    |  2 ++
+ .../helper-to-tcg/include/PrepareForTcgPass.h | 27 +++++++++++++++++++
+ subprojects/helper-to-tcg/meson.build         |  1 +
+ .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 25 +++++++++++++++++
+ .../helper-to-tcg/pipeline/Pipeline.cpp       | 26 +++++++++++++++++-
+ 5 files changed, 80 insertions(+), 1 deletion(-)
+ create mode 100644 subprojects/helper-to-tcg/include/PrepareForTcgPass.h
+ create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
 
-diff --git a/subprojects/helper-to-tcg/passes/backend/TcgType.h b/subprojects/helper-to-tcg/passes/backend/TcgType.h
+diff --git a/subprojects/helper-to-tcg/include/CmdLineOptions.h b/subprojects/helper-to-tcg/include/CmdLineOptions.h
+index ed60c45f9a..9553e26407 100644
+--- a/subprojects/helper-to-tcg/include/CmdLineOptions.h
++++ b/subprojects/helper-to-tcg/include/CmdLineOptions.h
+@@ -23,3 +23,5 @@
+ extern llvm::cl::list<std::string> InputFiles;
+ // Options for PrepareForOptPass
+ extern llvm::cl::opt<bool> TranslateAllHelpers;
++// Options for PrepareForTcgPass
++extern llvm::cl::opt<std::string> TcgGlobalMappingsName;
+diff --git a/subprojects/helper-to-tcg/include/PrepareForTcgPass.h b/subprojects/helper-to-tcg/include/PrepareForTcgPass.h
 new file mode 100644
-index 0000000000..36ebdbe5cb
+index 0000000000..a41edb4c2e
 --- /dev/null
-+++ b/subprojects/helper-to-tcg/passes/backend/TcgType.h
-@@ -0,0 +1,133 @@
++++ b/subprojects/helper-to-tcg/include/PrepareForTcgPass.h
+@@ -0,0 +1,27 @@
 +//
 +//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
 +//
@@ -111,120 +119,117 @@ index 0000000000..36ebdbe5cb
 +
 +#pragma once
 +
-+#include <llvm/ADT/Optional.h>
-+#include <llvm/ADT/StringRef.h>
++#include <llvm/IR/PassManager.h>
 +
-+#include <assert.h>
-+#include <stdint.h>
-+#include <string>
-+
-+enum TcgVKind : uint8_t {
-+    IrValue,
-+    IrConst,
-+    IrEnv,
-+    IrImmediate,
-+    IrPtr,
-+    IrPtrToOffset,
-+    IrLabel,
++class PrepareForTcgPass : public llvm::PassInfoMixin<PrepareForTcgPass> {
++public:
++    PrepareForTcgPass() {}
++    llvm::PreservedAnalyses run(llvm::Module &M,
++                                llvm::ModuleAnalysisManager &MAM);
 +};
+diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
+index 6aba71d5ca..6db1a019ce 100644
+--- a/subprojects/helper-to-tcg/meson.build
++++ b/subprojects/helper-to-tcg/meson.build
+@@ -46,6 +46,7 @@ sources = [
+     'pipeline/Pipeline.cpp',
+     'passes/PrepareForOptPass/PrepareForOptPass.cpp',
+     'passes/PseudoInst.cpp',
++    'passes/PrepareForTcgPass/PrepareForTcgPass.cpp',
+ ]
+ 
+ clang = bindir / 'clang'
+diff --git a/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
+new file mode 100644
+index 0000000000..f0ef1abd17
+--- /dev/null
++++ b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
+@@ -0,0 +1,25 @@
++//
++//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
 +
-+// Counter incremented for every TcgV created, also used in the creation of
-+// unique names (e.g. varr_10 for an array).
-+extern uint32_t VarIndex;
++#include <PrepareForTcgPass.h>
 +
-+struct TcgV {
-+    uint16_t Id;
-+    std::string Name;
++using namespace llvm;
 +
-+    uint32_t TcgSize;
-+    uint8_t LlvmSize;
-+    uint8_t VectorElementCount;
-+
-+    TcgVKind Kind;
-+
-+    bool ConstantExpression = false;
-+
-+    static TcgV makeVector(uint32_t VectorWidthBits, uint32_t ElementWidthBits,
-+                           uint32_t ElementCount)
-+    {
-+        return TcgV("", VectorWidthBits, ElementWidthBits, ElementCount,
-+                    IrPtrToOffset);
-+    }
-+
-+    static TcgV makeImmediate(llvm::StringRef Name, uint32_t TcgWidth,
-+                              uint32_t LlvmWidth)
-+    {
-+        return TcgV(Name.str(), TcgWidth, LlvmWidth, 1, IrImmediate);
-+    }
-+
-+    static TcgV makeTemp(uint32_t TcgWidth, uint32_t LlvmWidth, TcgVKind Kind)
-+    {
-+        return TcgV("", TcgWidth, LlvmWidth, 1, Kind);
-+    }
-+
-+    static TcgV makeConstantExpression(llvm::StringRef Expression,
-+                                       uint32_t TcgWidth, uint32_t LlvmWidth,
-+                                       TcgVKind Kind)
-+    {
-+        TcgV Tcg(Expression.str(), TcgWidth, LlvmWidth, 1, Kind);
-+        Tcg.ConstantExpression = true;
-+        return Tcg;
-+    }
-+
-+    static TcgV makeLabel() { return TcgV("", 32, 32, 1, IrLabel); }
-+
-+    TcgV(std::string Name, uint32_t TcgSize, uint32_t LlvmSize,
-+         uint32_t VectorElementCount, TcgVKind Kind)
-+        : Id(VarIndex++), Name(Name), TcgSize(TcgSize), LlvmSize(LlvmSize),
-+          VectorElementCount(VectorElementCount), Kind(Kind)
-+    {
-+        assert(verifySize());
-+    }
-+
-+    // We make the following assumptions about TcgSize and LLvmSize:
-+    //   - TcgSize either 32- or 64-bit;
-+    //   - LlvmSize either 1-,8-,16-,32-,64-,or 128-bit.
-+    // We also assume that there are only these valid combinations of
-+    // (TcgSize, LlvmSize):
-+    //   - (64, 64) uint64_t
-+    //   - (64, 1)  bool
-+    //   - (32, 32) uint32_t
-+    //   - (32, 16) uint16_t
-+    //   - (32, 8)  uint8_t
-+    //   - (32, 1)  bool
-+    // So we try to fit the variables in the smallest possible TcgSize,
-+    // with the exception of booleans which need to able to be 64-bit
-+    // when dealing with conditions.
-+    bool verifySize()
-+    {
-+        return (LlvmSize == 1 || LlvmSize == 8 || LlvmSize == 16 ||
-+                LlvmSize == 32 || LlvmSize == 64) &&
-+               (LlvmSize <= TcgSize);
-+    }
-+
-+    bool operator==(const TcgV &Other) const { return Other.Id == Id; }
-+    bool operator!=(const TcgV &Other) const { return !operator==(Other); }
-+};
-+
-+inline uint64_t llvmToTcgSize(uint64_t LlvmSize)
++PreservedAnalyses PrepareForTcgPass::run(Module &M, ModuleAnalysisManager &MAM)
 +{
-+    return (LlvmSize <= 32) ? 32 : 64;
++    return PreservedAnalyses::none();
 +}
+diff --git a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
+index a26b7a7350..7d03389439 100644
+--- a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
++++ b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
+@@ -24,6 +24,7 @@
+ #include <llvm/IR/LLVMContext.h>
+ #include <llvm/IR/Module.h>
+ #include <llvm/IR/PassManager.h>
++#include <llvm/IR/Verifier.h>
+ #include <llvm/IRReader/IRReader.h>
+ #include <llvm/InitializePasses.h>
+ #include <llvm/Linker/Linker.h>
+@@ -34,10 +35,12 @@
+ #include <llvm/Support/SourceMgr.h>
+ #include <llvm/Support/TargetSelect.h>
+ #include <llvm/Target/TargetMachine.h>
++#include <llvm/Transforms/Scalar/DCE.h>
+ #include <llvm/Transforms/Scalar/SROA.h>
+ 
+ #include <PrepareForOptPass.h>
+-#include "llvm-compat.h"
++#include <PrepareForTcgPass.h>
++#include <llvm-compat.h>
+ 
+ using namespace llvm;
+ 
+@@ -52,6 +55,13 @@ cl::opt<bool> TranslateAllHelpers(
+     "translate-all-helpers", cl::init(false),
+     cl::desc("Translate all functions starting with helper_*"), cl::cat(Cat));
+ 
++// Options for PrepareForTcgPass
++cl::opt<std::string> TcgGlobalMappingsName(
++    "tcg-global-mappings",
++    cl::desc("<Name of global cpu_mappings[] used for mapping accesses"
++             "into a struct to TCG globals>"),
++    cl::Required, cl::cat(Cat));
 +
-+inline uint32_t vectorSizeInBytes(const TcgV &Vec)
-+{
-+    assert(Vec.Kind == IrPtrToOffset);
-+    return Vec.LlvmSize * Vec.VectorElementCount / 8;
-+}
+ // Define a TargetTransformInfo (TTI) subclass, this allows for overriding
+ // common per-llvm-target information expected by other LLVM passes, such
+ // as the width of the largest scalar/vector registers.  Needed for consistent
+@@ -200,5 +210,19 @@ int main(int argc, char **argv)
+     MPM.addPass(
+         PB.buildModuleOptimizationPipeline(compat::OptimizationLevel::Os));
+ 
++    //
++    // Next, we run our final transformations, including removing phis and our
++    // own instruction combining that prioritizes instructions that map more
++    // easily to TCG.
++    //
 +
-+struct TcgBinOp {
-+    std::string Code;
-+};
++    MPM.addPass(PrepareForTcgPass());
++    MPM.addPass(VerifierPass());
++    {
++        FunctionPassManager FPM;
++        FPM.addPass(DCEPass());
++        MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
++    }
 +
-+struct TcgVecBinOp {
-+    std::string Code;
-+    llvm::Optional<uint32_t> RequiredOp2Size;
-+};
+     return 0;
+ }
 -- 
 2.45.2
 
