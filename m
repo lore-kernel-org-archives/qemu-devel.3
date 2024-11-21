@@ -4,111 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6633DD7877B
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 15:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E16D7877D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 15:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE8kO-0007KY-0j; Thu, 21 Nov 2024 10:05:32 -0500
+	id 1tE8zI-0002n5-8A; Thu, 21 Nov 2024 10:20:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@imap.linux.ibm.com>)
- id 1tE5MD-000561-Qj; Thu, 21 Nov 2024 06:28:21 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tE8zG-0002mD-3w
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:20:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@imap.linux.ibm.com>)
- id 1tE5MA-0005dg-6o; Thu, 21 Nov 2024 06:28:21 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AL7vG5u006352;
- Thu, 21 Nov 2024 10:12:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=KWSgKe
- 07JV0XDIOFk7iX/wAVgsWTTtv4Ndf3x427RuM=; b=SPtaTm9moAgR7d9G4gHfsk
- qhKFcjKRQznQFRMjWognOoooZ7LihwCSqZAkiv/QW4XZZYHQ0O0ZzILkJ3jeJ5IY
- dABoyNf/AKG6OZe7FtXV9DcB19I51DIYXvcKItyphwzOfnQfPm2IigLM5ZfN72vA
- mgQ17WP59I61V6A3UvLW/2KxkW63Mwyo0nP/gK7Vk+WEV/dlaYTMaDKImJ7a3Npp
- fUuL9nYOSCgK09OhINaYSkvHllLYsXnRJxGWmMb/+RBVXo/k5kXe0HSiPVDvMS0R
- Iz/sKALPdPGNvUBD1IVV2zHCEx47qQOdy8k6PvHHlYO7gYVskdenbF2ugOIh1/kQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xk219t9d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 Nov 2024 10:12:18 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4ALA4HJD021389;
- Thu, 21 Nov 2024 10:12:18 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xk219t9a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 Nov 2024 10:12:18 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AL72Trd011847;
- Thu, 21 Nov 2024 10:12:17 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42y7xjrdqv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 Nov 2024 10:12:17 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4ALACGfv25232066
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 Nov 2024 10:12:16 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6AFDA58057;
- Thu, 21 Nov 2024 10:12:16 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1148D5805D;
- Thu, 21 Nov 2024 10:12:16 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 21 Nov 2024 10:12:15 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tE8zE-0005Gw-B0
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:20:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732202451;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NsgngFd0oKM3uJ0uRCOdxMUjEO3tFe3+cW3jqA5wdlY=;
+ b=Qgz9U/aJf9HW30n4SSjywqGQCC6hAN4lsfeqiOoj084R+Kt0gJhTfQ6iRjhwHw+LNXEPoi
+ 0XqufoZ6HL61FoFFjsWVY/yaxmBIaA47kYsiBUHpiHTe89CJmBNubbUatcegTMf+J7k8aE
+ YbQdiFRm2jtxDyMUh8oowAXQczyFWWA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-dBrYlWb7PhaNd5Wwk9X-4Q-1; Thu,
+ 21 Nov 2024 10:20:48 -0500
+X-MC-Unique: dBrYlWb7PhaNd5Wwk9X-4Q-1
+X-Mimecast-MFC-AGG-ID: dBrYlWb7PhaNd5Wwk9X-4Q
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E36C61956096; Thu, 21 Nov 2024 15:20:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.95])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC9B319560A3; Thu, 21 Nov 2024 15:20:44 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 89E5921E6A28; Thu, 21 Nov 2024 16:20:42 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org,  peter.maydell@linaro.org,  pbonzini@redhat.com,
+ berrange@redhat.com,  eduardo@habkost.net,  qemu-stable@nongnu.org
+Subject: Re: [PATCH] qdev: Fix set_pci_devfn() to visit option only once
+In-Reply-To: <20241119120353.57812-1-kwolf@redhat.com> (Kevin Wolf's message
+ of "Tue, 19 Nov 2024 13:03:53 +0100")
+References: <20241119120353.57812-1-kwolf@redhat.com>
+Date: Thu, 21 Nov 2024 16:20:42 +0100
+Message-ID: <87plmohaut.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Date: Thu, 21 Nov 2024 11:12:15 +0100
-From: iii <iii@imap.linux.ibm.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Helge Deller <deller@gmx.de>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>, Thomas Huth <thuth@redhat.com>, Richard
- Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org, qemu-stable@nongnu.org,
- John Reiser <jreiser@bitwagon.com>
-Subject: Re: [PATCH v2] linux-user: Fix strace output for s390x mmap()
-In-Reply-To: <47e35ab6-65f7-451e-b557-8528e2542222@linaro.org>
-References: <20241120212717.246186-1-iii@linux.ibm.com>
- <faeded70-af8e-4c3f-af1a-0bd1e11f5394@linaro.org>
- <66b61760a0cbc8001611a99678b4719e@imap.linux.ibm.com>
- <47e35ab6-65f7-451e-b557-8528e2542222@linaro.org>
-Message-ID: <79a33b561bc6d5daf590380ddecea8d4@imap.linux.ibm.com>
-X-Sender: iii@imap.linux.ibm.com
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: DTgxX8QlGFpYwondxyx6dMwIDOmRSJQF
-X-Proofpoint-GUID: NH17Sw1yDXMvQHToGeWh9ev-FBPySJu-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0
- mlxlogscore=999 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 clxscore=1034 mlxscore=0 spamscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411210078
-Received-SPF: none client-ip=148.163.158.5;
- envelope-from=iii@imap.linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_ADSP_NXDOMAIN=0.9,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, NO_DNS_FOR_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 21 Nov 2024 10:05:28 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,72 +85,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-11-21 11:07, Philippe Mathieu-Daudé wrote:
-> On 21/11/24 10:26, iii wrote:
->> On 2024-11-21 10:00, Philippe Mathieu-Daudé wrote:
->>> On 20/11/24 22:26, Ilya Leoshkevich wrote:
->>>> print_mmap() assumes that mmap() receives arguments via memory if
->>>> mmap2() is present. s390x (as opposed to s390) does not fit this
->>>> pattern: it does not have mmap2(), but mmap() still receives 
->>>> arguments
->>>> via memory.
->>>> 
->>>> Fix by sharing the detection logic between syscall.c and strace.c.
->>>> 
->>>> Cc: qemu-stable@nongnu.org
->>>> Fixes: d971040c2d16 ("linux-user: Fix strace output for old_mmap")
->>>> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
->>>> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
->>>> ---
->>>> 
->>>> v1: 
->>>> https://lore.kernel.org/qemu-devel/20241119211138.148806-1-iii@linux.ibm.com/
->>>> v1 -> v2: Share the detection logic between syscall.c and strace.c
->>>>            (Richard).
->>>> 
->>>>   linux-user/strace.c       | 2 +-
->>>>   linux-user/syscall.c      | 5 +----
->>>>   linux-user/syscall_defs.h | 7 +++++++
->>>>   3 files changed, 9 insertions(+), 5 deletions(-)
->>>> 
->>>> diff --git a/linux-user/strace.c b/linux-user/strace.c
->>>> index b70eadc19ef..9c55f39b095 100644
->>>> --- a/linux-user/strace.c
->>>> +++ b/linux-user/strace.c
->>>> @@ -3971,7 +3971,7 @@ print_mmap(CPUArchState *cpu_env, const struct 
->>>> syscallname *name,
->>>>   {
->>>>       return print_mmap_both(cpu_env, name, arg0, arg1, arg2, arg3,
->>>>                              arg4, arg5,
->>>> -#if defined(TARGET_NR_mmap2)
->>>> +#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
->>> 
->>> We still want to print for mmap2, so:
->>> 
->>>   #if defined(TARGET_NR_mmap2) || 
->>> defined(TARGET_ARCH_WANT_SYS_OLD_MMAP)
->>> 
->>>>                               true
->>>>   #else
->>>>                               false
->> 
->> mmap2() has its own flow from what I can see:
->> 
->> print_mmap2()
->>    print_mmap_both(..., is_old_mmap=false)
->> 
->> It should not call print_mmap(), which I'm changing here.
->> 
->> [...]
-> 
-> If so, better to clean that in a previous patch.
+Kevin Wolf <kwolf@redhat.com> writes:
 
-Sorry, I'm confused. What previous patch are you referring to?
+> pci_devfn properties accept either a string or an integer as input. To
+> implement this, set_pci_devfn() first tries to visit the option as a
+> string, and if that fails, it visits it as an integer instead. While the
+> QemuOpts visitor happens to accept this, it is invalid according to the
+> visitor interface. QObject input visitors run into an assertion failure
+> when this is done.
+>
+> QObject input visitors are used with the JSON syntax version of -device
+> on the command line:
+>
+> $ ./qemu-system-x86_64 -enable-kvm -M q35 -device pcie-pci-bridge,id=pci.1,bus=pcie.0 -blockdev null-co,node-name=disk -device '{ "driver": "virtio-blk-pci", "drive": "disk", "id": "virtio-disk0", "bus": "pci.1", "addr": 1 }'
+> qemu-system-x86_64: ../qapi/qobject-input-visitor.c:143: QObject *qobject_input_try_get_object(QObjectInputVisitor *, const char *, _Bool): Assertion `removed' failed.
+>
+> The proper way to accept both strings and integers is using the
+> alternate mechanism, which tells us the type of the input before it's
+> visited. With this information, we can directly visit it as the right
+> type.
+>
+> This fixes set_pci_devfn() by using the alternate mechanism.
+>
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  hw/core/qdev-properties-system.c | 54 +++++++++++++++++++++-----------
+>  1 file changed, 36 insertions(+), 18 deletions(-)
+>
+> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+> index 35deef05f3..91d3ff4719 100644
+> --- a/hw/core/qdev-properties-system.c
+> +++ b/hw/core/qdev-properties-system.c
+> @@ -790,39 +790,57 @@ static void set_pci_devfn(Object *obj, Visitor *v, const char *name,
+>                            void *opaque, Error **errp)
+>  {
+>      Property *prop = opaque;
+> +    GenericAlternate *alt;
+>      int32_t value, *ptr = object_field_prop_ptr(obj, prop);
+>      unsigned int slot, fn, n;
+> -    char *str;
+> +    g_autofree char *str = NULL;
+> +
+> +    if (!visit_start_alternate(v, name, &alt, sizeof(*alt), errp)) {
+> +        return;
+> +    }
+> +
+> +    switch (alt->type) {
+> +    case QTYPE_QSTRING:
+> +        if (!visit_type_str(v, name, &str, errp)) {
+> +            goto out;
+> +        }
+>  
+> -    if (!visit_type_str(v, name, &str, NULL)) {
+> +        if (sscanf(str, "%x.%x%n", &slot, &fn, &n) != 2) {
+> +            fn = 0;
+> +            if (sscanf(str, "%x%n", &slot, &n) != 1) {
+> +                goto invalid;
+> +            }
+> +        }
+> +        if (str[n] != '\0' || fn > 7 || slot > 31) {
+> +            goto invalid;
+> +        }
+> +        *ptr = slot << 3 | fn;
+> +        break;
+> +
+> +    case QTYPE_QNUM:
+>          if (!visit_type_int32(v, name, &value, errp)) {
+> -            return;
+> +            goto out;
+>          }
+>          if (value < -1 || value > 255) {
+>              error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
+>                         name ? name : "null", "a value between -1 and 255");
+> -            return;
+> +            goto out;
+>          }
+>          *ptr = value;
+> -        return;
+> -    }
+> +        break;
+>  
+> -    if (sscanf(str, "%x.%x%n", &slot, &fn, &n) != 2) {
+> -        fn = 0;
+> -        if (sscanf(str, "%x%n", &slot, &n) != 1) {
+> -            goto invalid;
+> -        }
+> -    }
+> -    if (str[n] != '\0' || fn > 7 || slot > 31) {
+> -        goto invalid;
+> +    default:
+> +        error_setg(errp, "Invalid parameter type for '%s', expected int or str",
+> +                   name ? name : "null");
+> +        goto out;
 
-> Cc'ing Helge since I'm a bit confused by commit d971040c2d intent
-> ("linux-user: Fix strace output for old_mmap").
+This goto is redundant.
 
-My understanding of the Helge's idea is that "defined(TARGET_NR_mmap2)" 
-is
-true if, and only if, mmap() takes arguments via memory.
+>      }
+> -    *ptr = slot << 3 | fn;
+> -    g_free(str);
+> -    return;
+> +
+> +    goto out;
+>  
+>  invalid:
+>      error_set_from_qdev_prop_error(errp, EINVAL, obj, name, str);
+> -    g_free(str);
+> +out:
+> +    visit_end_alternate(v, (void **) &alt);
+>  }
+>  
+>  static int print_pci_devfn(Object *obj, Property *prop, char *dest,
+
+Ugly control flow, but cleaning that up is not the patch's goal.
+Instead, it aims to just fix the bug.  Fair.
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
 
