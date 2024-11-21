@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A01C9D743FC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3850BD743FE
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:53:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwHt-0001cf-4W; Wed, 20 Nov 2024 20:47:17 -0500
+	id 1tDwHy-0001fi-8T; Wed, 20 Nov 2024 20:47:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHr-0001b0-2o
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:15 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHw-0001ew-EE
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:20 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHo-0004Xd-Um
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:14 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHu-0004Zh-Hk
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=lmWGLOze3SuRS/fAHZcf3ZMhqPnKfajIC31FbL7DQy4=; b=NtKZojsW4OM2ES9
- t+zx3ibbMJSZEnIAu6650ysyhwmS0QWy0JKdaK4i2rn3DNUvG5ocwzMFlMkJMyaVtcuGu0MmDJA9l
- VItuhIQ5DVPVNXjcsYjW7kSQuLTXnEzHm7rkWzQTi7u2FXbWfHQoTVEgl+JmVvEDuY6ZILsSuv/+Q
- 3s=;
+ List-Help; bh=hmTEpHQ0w/eNIbQgvG5tMvX+8YZQnrFZvWmxaOfG/ek=; b=ecK28upZ/txRPoV
+ +Ga3BDq7rsdIKfNmW/G3+py6rd1LS0HY6gIjPwCUyqbjjFU0hksgoEATQ7EXCO70oXjeXP6DcOLzi
+ sfb24opEcntdzF3nvgLO0oBks3r5lrE23XmbE1X3tnTD13xa9JJEnQ2ID9U/uaVDLerRwT5fYHGJn
+ gs=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 15/43] helper-to-tcg: PrepareForOptPass, map annotations
-Date: Thu, 21 Nov 2024 02:49:19 +0100
-Message-ID: <20241121014947.18666-16-anjo@rev.ng>
+Subject: [RFC PATCH v1 24/43] helper-to-tcg: PrepareForTcgPass, map TCG globals
+Date: Thu, 21 Nov 2024 02:49:28 +0100
+Message-ID: <20241121014947.18666-25-anjo@rev.ng>
 In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
 References: <20241121014947.18666-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,26 +64,54 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the LLVM IR module function annotations are stored in one big global
-array of strings.  Traverse this array and parse the data into a format
-more useful for future passes.  A map between Functions * and a list of
-annotations is exposed.
+The input LLVM module may define an array of cpu_mapping structs,
+describing the mapping between fields in a specified struct (usually
+CPUArchState) and TCG globals.
+
+Create a map between offsets into the specified struct and TCG globals
+(name, size, number of elements, stride) by iterating over the global
+cpu_mapping array.  The name of this array is configurable via
+the --tcg-global-mappings flag.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- .../include/FunctionAnnotation.h              | 54 ++++++++++++
- .../helper-to-tcg/include/PrepareForOptPass.h |  7 +-
- .../PrepareForOptPass/PrepareForOptPass.cpp   | 87 +++++++++++++++++++
- .../helper-to-tcg/pipeline/Pipeline.cpp       |  3 +-
- 4 files changed, 149 insertions(+), 2 deletions(-)
- create mode 100644 subprojects/helper-to-tcg/include/FunctionAnnotation.h
+ .../helper-to-tcg/include/PrepareForTcgPass.h |  7 ++-
+ .../helper-to-tcg/include/TcgGlobalMap.h      | 31 +++++++++++++
+ .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 43 +++++++++++++++++++
+ .../helper-to-tcg/pipeline/Pipeline.cpp       |  9 ++--
+ 4 files changed, 85 insertions(+), 5 deletions(-)
+ create mode 100644 subprojects/helper-to-tcg/include/TcgGlobalMap.h
 
-diff --git a/subprojects/helper-to-tcg/include/FunctionAnnotation.h b/subprojects/helper-to-tcg/include/FunctionAnnotation.h
+diff --git a/subprojects/helper-to-tcg/include/PrepareForTcgPass.h b/subprojects/helper-to-tcg/include/PrepareForTcgPass.h
+index a41edb4c2e..a731c70b4b 100644
+--- a/subprojects/helper-to-tcg/include/PrepareForTcgPass.h
++++ b/subprojects/helper-to-tcg/include/PrepareForTcgPass.h
+@@ -17,11 +17,16 @@
+ 
+ #pragma once
+ 
++#include "TcgGlobalMap.h"
+ #include <llvm/IR/PassManager.h>
+ 
+ class PrepareForTcgPass : public llvm::PassInfoMixin<PrepareForTcgPass> {
++    TcgGlobalMap &ResultTcgGlobalMap;
+ public:
+-    PrepareForTcgPass() {}
++    PrepareForTcgPass(TcgGlobalMap &ResultTcgGlobalMap)
++        : ResultTcgGlobalMap(ResultTcgGlobalMap)
++    {
++    }
+     llvm::PreservedAnalyses run(llvm::Module &M,
+                                 llvm::ModuleAnalysisManager &MAM);
+ };
+diff --git a/subprojects/helper-to-tcg/include/TcgGlobalMap.h b/subprojects/helper-to-tcg/include/TcgGlobalMap.h
 new file mode 100644
-index 0000000000..b562f7c892
+index 0000000000..7186d805ba
 --- /dev/null
-+++ b/subprojects/helper-to-tcg/include/FunctionAnnotation.h
-@@ -0,0 +1,54 @@
++++ b/subprojects/helper-to-tcg/include/TcgGlobalMap.h
+@@ -0,0 +1,31 @@
++#pragma once
++
 +//
 +//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
 +//
@@ -101,183 +129,109 @@ index 0000000000..b562f7c892
 +//  along with this program; if not, see <http://www.gnu.org/licenses/>.
 +//
 +
-+#pragma once
-+
++#include <llvm/ADT/StringRef.h>
 +#include <llvm/ADT/DenseMap.h>
-+#include <llvm/ADT/SmallVector.h>
 +#include <stdint.h>
 +
-+namespace llvm
-+{
-+class Function;
-+}
-+
-+// Different kind of function annotations which control the behaviour
-+// of helper-to-tcg.
-+enum class AnnotationKind : uint8_t {
-+    // Function should be translated
-+    HelperToTcg,
-+    // Declares a list of arguments as immediates
-+    Immediate,
-+    // Declares a list of arguments as vectors, represented by offsets into
-+    // the CPU state
-+    PtrToOffset,
++struct TcgGlobal {
++  llvm::StringRef Code;
++  uint64_t Size;
++  uint64_t NumElements;
++  uint64_t Stride;
 +};
 +
-+// Annotation data which may be attached to a function
-+struct Annotation {
-+    // Indices of function arguments the annotation applies to, only
-+    // used for AnnotationKind::[Immediate|PtrToOffset].
-+    llvm::SmallVector<uint8_t, 4> ArgIndices;
-+    AnnotationKind Kind;
-+};
-+
-+// Map from Function * to a list of struct Annotation.  std::map is used here
-+// which allocates for each mapped pair due to the value being large
-+// (at least 48*3 bits).  If ArgIndices were to be stored out-of-band this could
-+// be reduced, and DenseMap would be more appropriate.
-+using AnnotationVectorTy = llvm::SmallVector<Annotation, 3>;
-+using AnnotationMapTy = llvm::DenseMap<llvm::Function *, AnnotationVectorTy>;
-diff --git a/subprojects/helper-to-tcg/include/PrepareForOptPass.h b/subprojects/helper-to-tcg/include/PrepareForOptPass.h
-index d74618613f..5f9c059b97 100644
---- a/subprojects/helper-to-tcg/include/PrepareForOptPass.h
-+++ b/subprojects/helper-to-tcg/include/PrepareForOptPass.h
-@@ -17,6 +17,7 @@
- 
- #pragma once
- 
-+#include "FunctionAnnotation.h"
- #include <llvm/IR/PassManager.h>
- 
- //
-@@ -27,8 +28,12 @@
++using TcgGlobalMap = llvm::DenseMap<uint32_t, TcgGlobal>;
+diff --git a/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
+index a2808eafed..a453aa8558 100644
+--- a/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
++++ b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
+@@ -15,6 +15,7 @@
+ //  along with this program; if not, see <http://www.gnu.org/licenses/>.
  //
  
- class PrepareForOptPass : public llvm::PassInfoMixin<PrepareForOptPass> {
-+    AnnotationMapTy &ResultAnnotations;
- public:
--    PrepareForOptPass() {}
-+    PrepareForOptPass(AnnotationMapTy &ResultAnnotations)
-+        : ResultAnnotations(ResultAnnotations)
-+    {
-+    }
-     llvm::PreservedAnalyses run(llvm::Module &M,
-                                 llvm::ModuleAnalysisManager &MAM);
- };
-diff --git a/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp b/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
-index 0a018494fe..9f1d4df102 100644
---- a/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
-+++ b/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
-@@ -16,10 +16,97 @@
- //
++#include <CmdLineOptions.h>
+ #include <PrepareForTcgPass.h>
+ #include <llvm/ADT/SCCIterator.h>
+ #include <llvm/IR/Function.h>
+@@ -71,11 +72,53 @@ inline void demotePhis(Function &F)
+     }
+ }
  
- #include <PrepareForOptPass.h>
-+#include <Error.h>
-+
-+#include <llvm/IR/Constants.h>
-+#include <llvm/IR/Function.h>
-+#include <llvm/IR/Instruction.h>
-+#include <llvm/IR/Module.h>
- 
- using namespace llvm;
- 
-+static Expected<Annotation> parseAnnotationStr(StringRef Str,
-+                                               uint32_t num_function_args)
++static void collectTcgGlobals(Module &M, TcgGlobalMap &ResultTcgGlobalMap)
 +{
-+    Annotation Ann;
-+
-+    Str = Str.trim();
-+
-+    if (Str.consume_front("helper-to-tcg")) {
-+        Ann.Kind = AnnotationKind::HelperToTcg;
-+        // Early return, no additional info to parse from annotation string
-+        return Ann;
-+    } else if (Str.consume_front("immediate")) {
-+        Ann.Kind = AnnotationKind::Immediate;
-+    } else if (Str.consume_front("ptr-to-offset")) {
-+        Ann.Kind = AnnotationKind::PtrToOffset;
-+    } else {
-+        return mkError("Unknown annotation");
-+    }
-+
-+    // Parse comma separated list of argument indices
-+
-+    if (!Str.consume_front(":")) {
-+        return mkError("Expected \":\"");
-+    }
-+
-+    Str = Str.ltrim(' ');
-+    do {
-+        Str = Str.ltrim(' ');
-+        uint32_t i = 0;
-+        Str.consumeInteger(10, i);
-+        if (i >= num_function_args) {
-+            return mkError("Annotation has out of bounds argument index");
-+        }
-+        Ann.ArgIndices.push_back(i);
-+    } while (Str.consume_front(","));
-+
-+    return Ann;
-+}
-+
-+static void collectAnnotations(Module &M, AnnotationMapTy &ResultAnnotations)
-+{
-+    // cast over dyn_cast is being used here to
-+    // assert that the structure of
-+    //
-+    //     llvm.global.annotation
-+    //
-+    // is what we expect.
-+
-+    GlobalVariable *GA = M.getGlobalVariable("llvm.global.annotations");
-+    if (!GA) {
++    auto *Map = M.getGlobalVariable(TcgGlobalMappingsName);
++    if (!Map) {
 +        return;
 +    }
 +
-+    // Get the metadata which is stored in the first op
-+    auto *CA = cast<ConstantArray>(GA->getOperand(0));
-+    // Loop over metadata
-+    for (Value *CAOp : CA->operands()) {
-+        auto *Struct = cast<ConstantStruct>(CAOp);
-+        assert(Struct->getNumOperands() >= 2);
-+        Constant *UseOfF = Struct->getOperand(0);
-+        if (isa<UndefValue>(UseOfF)) {
-+            continue;
-+        }
-+        auto *F = cast<Function>(UseOfF->getOperand(0));
-+        auto *AnnVar =
-+            cast<GlobalVariable>(Struct->getOperand(1)->getOperand(0));
-+        auto *AnnData = cast<ConstantDataArray>(AnnVar->getOperand(0));
++    // In case the `tcg_global_mappings` array is empty,
++    // casting to `ConstantArray` will fail, even though it's a
++    // `[0 x %struct.cpu_tcg_mapping]`.
++    auto *MapElems = dyn_cast<ConstantArray>(Map->getOperand(0));
++    if (!MapElems) {
++        return;
++    }
 +
-+        StringRef AnnStr = AnnData->getAsString();
-+        AnnStr = AnnStr.substr(0, AnnStr.size() - 1);
-+        Expected<Annotation> Ann = parseAnnotationStr(AnnStr, F->arg_size());
-+        if (!Ann) {
-+            dbgs() << "Failed to parse annotation: \"" << Ann.takeError()
-+                   << "\" for function " << F->getName() << "\n";
-+            continue;
-+        }
-+        ResultAnnotations[F].push_back(*Ann);
++    for (auto Row : MapElems->operand_values()) {
++        auto *ConstRow = cast<ConstantStruct>(Row);
++
++        // Get code string
++        auto *CodePtr = ConstRow->getOperand(0);
++        auto CodeStr =
++            cast<ConstantDataArray>(
++                cast<Constant>(CodePtr->getOperand(0))->getOperand(0))
++                ->getAsString();
++        CodeStr = CodeStr.rtrim('\0');
++
++        // Get offset in cpu env
++        auto *Offset = cast<ConstantInt>(ConstRow->getOperand(3));
++        // Get size of variable in cpu env
++        auto *SizeInBytes = cast<ConstantInt>(ConstRow->getOperand(4));
++        unsigned SizeInBits = 8 * SizeInBytes->getLimitedValue();
++
++        auto *Stride = cast<ConstantInt>(ConstRow->getOperand(5));
++        auto *NumElements = cast<ConstantInt>(ConstRow->getOperand(6));
++
++        ResultTcgGlobalMap[Offset->getLimitedValue()] = {
++            CodeStr, SizeInBits, NumElements->getLimitedValue(),
++            Stride->getLimitedValue()};
 +    }
 +}
 +
- PreservedAnalyses PrepareForOptPass::run(Module &M, ModuleAnalysisManager &MAM)
+ PreservedAnalyses PrepareForTcgPass::run(Module &M, ModuleAnalysisManager &MAM)
  {
-+    collectAnnotations(M, ResultAnnotations);
+     removeFunctionsWithLoops(M, MAM);
+     for (Function &F : M) {
+         demotePhis(F);
+     }
++    collectTcgGlobals(M, ResultTcgGlobalMap);
      return PreservedAnalyses::none();
  }
 diff --git a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
-index fad335f4a9..3b9493bc73 100644
+index 7d03389439..a8df592af3 100644
 --- a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
 +++ b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
-@@ -174,7 +174,8 @@ int main(int argc, char **argv)
-         MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
-     }
+@@ -58,9 +58,9 @@ cl::opt<bool> TranslateAllHelpers(
+ // Options for PrepareForTcgPass
+ cl::opt<std::string> TcgGlobalMappingsName(
+     "tcg-global-mappings",
+-    cl::desc("<Name of global cpu_mappings[] used for mapping accesses"
+-             "into a struct to TCG globals>"),
+-    cl::Required, cl::cat(Cat));
++    cl::desc("Name of global cpu_mappings[] used for mapping accesses"
++             "into a struct to TCG globals"),
++    cl::init("mappings"), cl::cat(Cat));
  
--    MPM.addPass(PrepareForOptPass());
-+    AnnotationMapTy Annotations;
-+    MPM.addPass(PrepareForOptPass(Annotations));
+ // Define a TargetTransformInfo (TTI) subclass, this allows for overriding
+ // common per-llvm-target information expected by other LLVM passes, such
+@@ -216,7 +216,8 @@ int main(int argc, char **argv)
+     // easily to TCG.
+     //
  
+-    MPM.addPass(PrepareForTcgPass());
++    TcgGlobalMap TcgGlobals;
++    MPM.addPass(PrepareForTcgPass(TcgGlobals));
+     MPM.addPass(VerifierPass());
      {
          FunctionPassManager FPM;
 -- 
