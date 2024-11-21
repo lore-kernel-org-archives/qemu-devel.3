@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A5DD78799
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F83FD78797
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEAWT-0005kv-43; Thu, 21 Nov 2024 11:59:17 -0500
+	id 1tEAWS-0005gv-1N; Thu, 21 Nov 2024 11:59:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAVq-0004nr-T1
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:39 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1tEAVo-0004nO-P1
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:38 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAVW-00084w-TW
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:38 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4315df7b43fso10079385e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:58:18 -0800 (PST)
+ id 1tEAVW-00084N-AD
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:36 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-431616c23b5so6661075e9.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:58:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732208297; x=1732813097; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732208296; x=1732813096; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KjYXio7sBTQrYDC2ySSBbQ9mNKNL4IwihX3wcslKJhg=;
- b=cutSNmQxpdR0O3gRXmcF7OuN0CB961t2alKds9f1HPP+qFT1EJVYdAz5CiETZvYNCL
- Lf1IdtcHw8/Y9BGmWd7e3bO6lsNvHdWjIa8oSAi/+ccJ7EpaGtLglDySdpUswazpCeYK
- 7HNNuRrqQ7RD18Q1L7P5XU48L3bBcWr/TXmdGz2k7jmgu24I1Mz9ZfyqJrp0Zjy5LUq/
- fpNObBzEgbf0yyARJ0DGxGV8i/5+KYTORvhJjBkqmFkdddslokgftS92cKPsX2VsfAEM
- hoFLF4dn6ssz5B37uEKuV7Lka2GTv5QbKMZmDJmJB8RgH4iqiLOztiOCSmDpnNIZXxFQ
- 9p8w==
+ bh=e2HZ23XNFOLk981JEHm7evbs/KcDQehVIWxXpboMiiM=;
+ b=ZrMbeQ3ZJE61lgT5ynpIQkaQfqe1xdVyuEnHHbFuJj9nPfIBt+0toE4IoWWE0nfiVV
+ M8IPHu9iKWjej8FWPzFtAEaBoz6+tvp5It3nrgd4sxTE9deqv/c5EJ6BkmBRvNsuKckp
+ OP1jN+UDk9YrCyaFaFIPiqMJMA5pzz1LSauiE42G4UI3p6U0QkrdSL0oZDCEhHkPwpx4
+ ML8NO+VBTqOGxkwItP8TuWkr8kGOrfCWAXIy5FRT4tP/eK9Cfq70FEPxQcP8hMsD6B6q
+ Pk/WVT9TDtRvtJbh0pB+7tuseOI4hSfpoF1H4Fay58Fp4gL6TGMGJbvvUkIRkXPNDRZJ
+ b3mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732208297; x=1732813097;
+ d=1e100.net; s=20230601; t=1732208296; x=1732813096;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KjYXio7sBTQrYDC2ySSBbQ9mNKNL4IwihX3wcslKJhg=;
- b=t2QbK4s1AhkG77xmsdoTFMS+ovRJwOWsTCURQ+uKmlEVVTBVTcD06EdNiXAf7EVvdU
- wbJmz0YMEuX1I7OOjRaRsgujB2iIXEkl15wZEO/TrVkmiweV1LqEZ3QSSF7g3t/Bk0UW
- wqLMWuT5FXgGSjuamJscmkOn5bANMnKX1kWkN4aUtFUsxYXdapeMN/ZCpMUqIjACy0si
- Nz8lA1t4GoWQ4rs9hEHzGATDRH1VH7H2JY2U2cW/qV/27dNN7QM2hk+A3l+UfKX0kNG4
- rXdVZmjRCD2/Uh+AKlN4nUgNZh0nuCwkOCkA5xXN9H55T7qxIs5dP2hdnHUlN3PmhwFJ
- FNWQ==
-X-Gm-Message-State: AOJu0YxtHbHJqtyNV8LAa6XyBCMuvFJd7ktAxScrbNt3qFZV9rDcgOf7
- UV552uFtEgwp/ZXnzBgZt4QZsdBNLi1yNfsYyxNWo/9QhkQ5sByHyAVhI4Ugxg0=
-X-Gm-Gg: ASbGncvq3rI/tQQcPpZi9cGm9rosqnSD6/mLVrd5PxVipQtmZjZV2NxLCh12DsegMHy
- 9ksSpR+fGqOtx6dzMQYu9FCrao+uymjakzmoPcV15ZfqgCeVPDcWpAdl7Qqniz4oBR3m0vunVWT
- 63Lab4uT9LVuss7M6AlMQxqRZtGyXVmQ5lDKO76AmkHzCrCIJ2+Md2E9PkV4RJGrsM8PO1wFp8I
- U2X32847gNkIpxog5pqBOgW83I+iACcowfpW6wmXqR1MqRs
-X-Google-Smtp-Source: AGHT+IECwAUrVUtXDvyKMSJj1VIjspS24Jq7y5t339a/LZ0kw8tOiIKEKmOAyTEv8JiMDllbD2JF/A==
-X-Received: by 2002:a05:600c:1e23:b0:431:157a:986e with SMTP id
- 5b1f17b1804b1-4334f016fccmr59644595e9.20.1732208296970; 
+ bh=e2HZ23XNFOLk981JEHm7evbs/KcDQehVIWxXpboMiiM=;
+ b=sgPFMKWkZbhZLzWFfF7Z87qwIwXFoado5PfiCZwYsrGpi4Nt2h4p93dQOoQQEXKssl
+ GQKNePTWXZMSkRke6153PU+3bJ82Ar3quD9IRJcDsv3lCOqYldX3X7x9S0Aoi1AauMfu
+ Xch39pNrRDEuMuh0xOLigcZE7hKG2QaXdckS72ITloBttGmrl8xBiHZonNAAQpI6srYE
+ 0O/UH30gwGMhSwvJjpwK3aXGJaZ+x2DckfNlTpjFhwX19YruLubRsVcbEIMIPr7k1XTs
+ auvg6psYO2cZOX+jTMeUFtHvFwveG5h+MCn+vvCuALZJAPGU+3e/Xg2jp+kDWDpS9rRW
+ 1l+A==
+X-Gm-Message-State: AOJu0YwJYuPu5SPOYyWx/8ghQuo9Z6Vp4WymWW5ta/5T6jKx4qYh8jkx
+ iw96rx1NEnTzPx/XjtkXAftepQ1uUOBEhhdkx2GAwdX1ZvmNt7myl8ZR8IpknUo=
+X-Gm-Gg: ASbGncu9JB4SW7c0uhvwJWq99nw3nGdC6nMw0AjyHje4NlwBXIZJyF6hyAo2FDYzrul
+ iZ0eBefVoJzaTzHR9cHCpUswSQE63vKkaiESfcgKji+iaHSmp53nPSyKvidR7F4hVYWS9tLsr35
+ cYvkRj02V0MSsWmDT7ol+cxbcnf3KlXOajAKw88l3pQJmmJgVQnFwajXt6uWd2RpJMZ/aoP00yN
+ 0RK1ep5oDpEqXWzrF4YDq9OMXOA5VHUpD91e7YEy3ih1EeK
+X-Google-Smtp-Source: AGHT+IGDHBlSamv94hqq39SE1SaufjquwOaoSGOK1WLNw6iTeG+uZEgDu2CvhBFW9NHQ5b4/zJX4fw==
+X-Received: by 2002:a05:600c:a4b:b0:42c:b166:913 with SMTP id
+ 5b1f17b1804b1-433c5cb049dmr36104345e9.11.1732208296361; 
  Thu, 21 Nov 2024 08:58:16 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fb2679dsm31790f8f.45.2024.11.21.08.58.12
+ ffacd0b85a97d-3825fbc44f7sm18708f8f.82.2024.11.21.08.58.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 21 Nov 2024 08:58:14 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DF4D1603EA;
+ by draig.lan (Postfix) with ESMTP id 7AA3D60357;
  Thu, 21 Nov 2024 16:58:07 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -93,18 +93,17 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 16/39] tests/functional: remove time.sleep usage from tuxrun
- tests
-Date: Thu, 21 Nov 2024 16:57:43 +0000
-Message-Id: <20241121165806.476008-17-alex.bennee@linaro.org>
+Subject: [PATCH 11/39] tests/functional: enable debug logging for QEMUMachine
+Date: Thu, 21 Nov 2024 16:57:38 +0000
+Message-Id: <20241121165806.476008-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241121165806.476008-1-alex.bennee@linaro.org>
 References: <20241121165806.476008-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,59 +128,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The tuxrun tests send a series of strings to the guest to login
-and then run commands. Since we have been unable to match on
-console output that isn't followed by a newline, the test used
-many time.sleep() statements to pretend to synchronize with
-the guest.
+Set the 'qemu.machine' logger to 'DEBUG' level, to ensure we see log
+messages related to the QEMUMachine class. Most importantly this
+ensures we capture the full QEMU command line args for instances we
+spawn.
 
-This has proved to be unreliable for the aarch64be instance of
-the tuxrun tests, with the test often hanging. The hang is a
-very subtle timing problem, and it is suspected that some
-(otherwise apparently harmless) I/O error messages could be
-resulting in full FIFO buffers, stalling interaction with
-the guest.
-
-With the newly rewritten console interaction able to match
-strings that don't have a following newline, the tux run
-tests can now match directly on the login prompt, and/or
-shell PS1 prompt.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2689
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20241121154218.1423005-17-berrange@redhat.com>
+Message-Id: <20241121154218.1423005-12-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/functional/qemu_test/tuxruntest.py | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ tests/functional/qemu_test/testcase.py | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
-index ed2b238c92..ab3b27da43 100644
---- a/tests/functional/qemu_test/tuxruntest.py
-+++ b/tests/functional/qemu_test/tuxruntest.py
-@@ -124,16 +124,12 @@ def run_tuxtest_tests(self, haltmsg):
-         then do a few things on the console. Trigger a shutdown and
-         wait to exit cleanly.
-         """
--        self.wait_for_console_pattern("Welcome to TuxTest")
--        time.sleep(0.2)
--        exec_command(self, 'root')
--        time.sleep(0.2)
--        exec_command(self, 'cat /proc/interrupts')
--        time.sleep(0.1)
--        exec_command(self, 'cat /proc/self/maps')
--        time.sleep(0.1)
--        exec_command(self, 'uname -a')
--        time.sleep(0.1)
-+        ps1='root@tuxtest:~#'
-+        self.wait_for_console_pattern('tuxtest login:')
-+        exec_command_and_wait_for_pattern(self, 'root', ps1)
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/interrupts', ps1)
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/self/maps', ps1)
-+        exec_command_and_wait_for_pattern(self, 'uname -a', ps1)
-         exec_command_and_wait_for_pattern(self, 'halt', haltmsg)
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index f9c9de1166..e2a329c3e5 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -57,9 +57,15 @@ def setUp(self, bin_prefix):
+         self._log_fh.setFormatter(fileFormatter)
+         self.log.addHandler(self._log_fh)
  
-         # Wait for VM to shut down gracefully if it can
++        # Capture QEMUMachine logging
++        self.machinelog = logging.getLogger('qemu.machine')
++        self.machinelog.setLevel(logging.DEBUG)
++        self.machinelog.addHandler(self._log_fh)
++
+     def tearDown(self):
+         if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
+             shutil.rmtree(self.workdir)
++        self.machinelog.removeHandler(self._log_fh)
+         self.log.removeHandler(self._log_fh)
+ 
+     def main():
 -- 
 2.39.5
 
