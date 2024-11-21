@@ -4,93 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68ACEE65D00
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 23:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2718E65D03
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 23:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEGEN-0007hY-2w; Thu, 21 Nov 2024 18:04:59 -0500
+	id 1tEGMN-0001hY-Eu; Thu, 21 Nov 2024 18:13:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEGEF-0007gm-H8
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 18:04:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1tEGML-0001h5-MU; Thu, 21 Nov 2024 18:13:13 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEGED-0007lQ-F3
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 18:04:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732230287;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PGxfBZcE5SDWQnpM5AgtDO/BbDxAKd8X5wIGjf8eGqQ=;
- b=JM8vPG7BdcSjkvD6oxmmAUwbkq0x+jPg+c//1wVsWgiGfwkly1jBGvXKf9PAI2GP0u5OGe
- 94ewwjzrMPMidH+uXepnxFuLvVyhKDeM1YPCH4Ec1/kxsrJUjInJItCg/tGbZZg9cOKL60
- veA/ps7mNb6IZxOF9XPZLsLASz4K4rs=
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
- [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-6_IUiD2tNLyXuibhzAgKKQ-1; Thu, 21 Nov 2024 18:04:46 -0500
-X-MC-Unique: 6_IUiD2tNLyXuibhzAgKKQ-1
-X-Mimecast-MFC-AGG-ID: 6_IUiD2tNLyXuibhzAgKKQ
-Received: by mail-il1-f198.google.com with SMTP id
- e9e14a558f8ab-3a6b7974696so18478345ab.1
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 15:04:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732230285; x=1732835085;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PGxfBZcE5SDWQnpM5AgtDO/BbDxAKd8X5wIGjf8eGqQ=;
- b=iEeeYx+SAogJaywhD7Nq7Xc4Feam/g6AMdnc1VHLWMzycWq1n8hODMmULsnzUho8Wp
- aPT+n44RrO9EePWhrGNWt9BNU8C0JntLp6L9RzMrJV7PnjcjC54NUdpWJf/ZjycQ4+oK
- Z1jukMy8NMci3hcUw+6IJOx0QJ1SmHz4P9z4iTz5KqGXwXSrOOQVJJMg9DgZMYvgEDaM
- kTnrS4/InYtneQ5OWRUWLg8xW46jzimyoJTuLs2oeYpdYBH1G3a2SkH0oI5xUTS7/Ysu
- nIhejO/ejdgJCauwPrF2zTjig9EJF3Q5hXg1ZDEyycU3tJzXVx4jWXX1so0Kzs9JgpJK
- Yh6w==
-X-Gm-Message-State: AOJu0YwMd5Xbr+SnuDieOc6y3OngUQuNpHUxlYYcEgkrgmg7kUlu8tsN
- jUyjx3vliUi6WURQWFHKNhsj1tsmdyeesAmFYOb1q1+Ivxzpx5tPE8tw4IzGnU2aMiYlYW3nOiO
- 8LnpPYFr3QWSJxjtgfvXn9faSPWeZcG3QXwbAp5jts1UEnVHcOCEsPmlCYx7j
-X-Gm-Gg: ASbGncs/jFHeu5+I9we1uiYUYxoD5s7D0YjvpZjJSwpxr/e1l5knOf188vorhvHNXsj
- jatt4SeMqfl/XiyDKaRKLNaAEmCBA8t/ruMVBoyNZtPn2m2lKtOzrJHWHaSYw04pscms1wzL8ks
- HMFoSluDF1M7A8HYdGMRcrtoXww20fE7griza7qLnjsm0SanAqlXwYnvFnngExcyo3Bp2d1bZp6
- ftONGQI98bc6LswNJLZS0HIUiZE65/Dj/Gxt5QtR6TaJZA1QUA+sFBSYEsOlqVSs1Yi2n8Mac3c
- AGoq6QibZf0=
-X-Received: by 2002:a05:6e02:184a:b0:3a0:915d:a4a7 with SMTP id
- e9e14a558f8ab-3a79ad10db6mr11129855ab.2.1732230283820; 
- Thu, 21 Nov 2024 15:04:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGFLFQDlzpwqBkyK0Fh4X4T0r+r/nyP+TWmOHGGFF1hA1vDj73I4SWBP1iMT1ziex5vPwr3Og==
-X-Received: by 2002:a05:6e02:184a:b0:3a0:915d:a4a7 with SMTP id
- e9e14a558f8ab-3a79ad10db6mr11129735ab.2.1732230283512; 
- Thu, 21 Nov 2024 15:04:43 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e1cff358dbsm339398173.147.2024.11.21.15.04.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 15:04:43 -0800 (PST)
-Date: Thu, 21 Nov 2024 18:04:41 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 07/22] tests/qtest/migration: Rename migration-helpers.c
-Message-ID: <Zz-8iXBl79D0F7qM@x1n>
-References: <20241113194630.3385-1-farosas@suse.de>
- <20241113194630.3385-8-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1tEGMI-0000hh-Cw; Thu, 21 Nov 2024 18:13:13 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ALIHcN8010271;
+ Thu, 21 Nov 2024 23:12:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=mN7zmPkqqXbbeyxleQ1s5MXshNBL5U
+ EpE1TMQte/Wkk=; b=CQT0JgRBFsrc0V1PgmsIxEhgS4o7QCPzx8/EAeY/5geMyj
+ 3NNmiqo+pjhWYFmIW5R0gVAHxXsy/rUOzQ43qbn/btUM/2WZ1J7TNXAR0iJkKKd7
+ nUsFbHpjzJXgnxV8m684uPbHdS/PQ/1jc0Bj+AWXTToXzqlpSW82zDNW+OJj3R0u
+ qbPhBFJBnKUEtYDOtlOIcH01JoBo1tpp9JQlt6032GhCP6H7mMg0GvfRTwVeAKVB
+ jlsHe4RbLPg9JktcT6fy/tB4CMi9yliCeDL39SOtigbhgGhbaJvtn5iyPwqP+TjP
+ tsiNbPmpEEjAIg4LcqlLktNvoztt6TRqF4ntAlnQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xyu24hys-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Nov 2024 23:12:54 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4ALNCrUH020987;
+ Thu, 21 Nov 2024 23:12:54 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42xyu24hyq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Nov 2024 23:12:53 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4ALFWNR1031189;
+ Thu, 21 Nov 2024 23:12:53 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42y5qshret-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Nov 2024 23:12:53 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4ALNCqIn53215666
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 21 Nov 2024 23:12:52 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1C1E35805A;
+ Thu, 21 Nov 2024 23:12:52 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9746458051;
+ Thu, 21 Nov 2024 23:12:51 +0000 (GMT)
+Received: from [9.10.80.165] (unknown [9.10.80.165])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 21 Nov 2024 23:12:51 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------xHiU2egc3Fxob3vGKmWOtvum"
+Message-ID: <ad7794af-be65-47f5-adb6-5995f5aa3833@linux.ibm.com>
+Date: Thu, 21 Nov 2024 17:12:50 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241113194630.3385-8-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/14] ppc/xive2: Process group backlog when updating the
+ CPPR
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
+ milesg@linux.ibm.com, danielhb413@gmail.com,
+ david@gibson.dropbear.id.au, harshpb@linux.ibm.com, thuth@redhat.com,
+ lvivier@redhat.com, pbonzini@redhat.com
+References: <20241015211329.21113-1-kowal@linux.ibm.com>
+ <20241015211329.21113-7-kowal@linux.ibm.com>
+ <D5PVIFZABR4L.20XCWB75DIEW@gmail.com>
+Content-Language: en-US
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <D5PVIFZABR4L.20XCWB75DIEW@gmail.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 5fZnJwXGuCQxyF-kBX3KbyN6Z7SChoXa
+X-Proofpoint-ORIG-GUID: oWmqXeXc_TkOnNAg57TSp2zUM45lgBN8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
+ bulkscore=0 spamscore=0 mlxlogscore=999 adultscore=0 mlxscore=0
+ clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411210174
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,171 +120,722 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 13, 2024 at 04:46:15PM -0300, Fabiano Rosas wrote:
-> Rename migration-helpers.c to migration-util.c to make its purpose
-> more explicit and avoid the "helper" terminology.
-> 
-> Move the file to the qtest/migration/ directory along with the rest of
-> the migration files.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  tests/qtest/meson.build                                  | 4 ++--
->  tests/qtest/migration-test.c                             | 2 +-
->  tests/qtest/migration/migration-qmp.c                    | 2 +-
->  tests/qtest/migration/migration-qmp.h                    | 2 ++
->  .../{migration-helpers.c => migration/migration-util.c}  | 4 ++--
->  .../{migration-helpers.h => migration/migration-util.h}  | 9 ++++++---
->  tests/qtest/virtio-net-failover.c                        | 2 +-
->  7 files changed, 15 insertions(+), 10 deletions(-)
->  rename tests/qtest/{migration-helpers.c => migration/migration-util.c} (99%)
->  rename tests/qtest/{migration-helpers.h => migration/migration-util.h} (89%)
-> 
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index ca199b9491..b9f70ac32f 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -331,9 +331,9 @@ endif
->  tpmemu_files = ['tpm-emu.c', 'tpm-util.c', 'tpm-tests.c']
->  
->  migration_files = [files(
-> -  'migration-helpers.c',
->    'migration/bootfile.c',
->    'migration/migration-qmp.c',
-> +  'migration/migration-util.c',
->  )]
->  
->  if gnutls.found()
-> @@ -347,7 +347,7 @@ endif
->  qtests = {
->    'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
->    'cdrom-test': files('boot-sector.c'),
-> -  'dbus-vmstate-test': files('migration-helpers.c') + dbus_vmstate1,
-> +  'dbus-vmstate-test': files('migration/migration-qmp.c', 'migration/migration-util.c') + dbus_vmstate1,
+This is a multi-part message in MIME format.
+--------------xHiU2egc3Fxob3vGKmWOtvum
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Seems like the -qmp.c part should belong to previous patch.
 
->    'erst-test': files('erst-test.c'),
->    'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
->    'migration-test': migration_files,
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index a0c63026ed..59f02f7815 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -22,9 +22,9 @@
->  #include "crypto/tlscredspsk.h"
->  #include "ppc-util.h"
->  
-> -#include "migration-helpers.h"
->  #include "migration/bootfile.h"
->  #include "migration/migration-qmp.h"
-> +#include "migration/migration-util.h"
->  #ifdef CONFIG_GNUTLS
->  # include "tests/unit/crypto-tls-psk-helpers.h"
->  # ifdef CONFIG_TASN1
-> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-> index 20be46fdf6..71b14b51b2 100644
-> --- a/tests/qtest/migration/migration-qmp.c
-> +++ b/tests/qtest/migration/migration-qmp.c
-> @@ -12,8 +12,8 @@
->  
->  #include "qemu/osdep.h"
->  #include "libqtest.h"
-> -#include "migration-helpers.h"
->  #include "migration-qmp.h"
-> +#include "migration-util.h"
->  #include "qapi/error.h"
->  #include "qapi/qmp/qdict.h"
->  #include "qapi/qmp/qjson.h"
-> diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
-> index ed927cf408..caaa78722a 100644
-> --- a/tests/qtest/migration/migration-qmp.h
-> +++ b/tests/qtest/migration/migration-qmp.h
-> @@ -2,6 +2,8 @@
->  #ifndef MIGRATION_QMP_H
->  #define MIGRATION_QMP_H
->  
-> +#include "migration-util.h"
-> +
->  G_GNUC_PRINTF(4, 5)
->  void migrate_qmp_fail(QTestState *who, const char *uri,
->                        const char *channels, const char *fmt, ...);
-> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration/migration-util.c
-> similarity index 99%
-> rename from tests/qtest/migration-helpers.c
-> rename to tests/qtest/migration/migration-util.c
-> index 218ee4e59f..8a974ded22 100644
-> --- a/tests/qtest/migration-helpers.c
-> +++ b/tests/qtest/migration/migration-util.c
-> @@ -1,5 +1,5 @@
->  /*
-> - * QTest migration helpers
-> + * QTest migration utilities
->   *
->   * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
->   *   based on the vhost-user-test.c that is:
-> @@ -19,8 +19,8 @@
->  #include "qemu/cutils.h"
->  #include "qemu/memalign.h"
->  
-> -#include "migration-helpers.h"
->  #include "migration/bootfile.h"
-> +#include "migration/migration-util.h"
->  
->  static char *SocketAddress_to_str(SocketAddress *addr)
->  {
-> diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration/migration-util.h
-> similarity index 89%
-> rename from tests/qtest/migration-helpers.h
-> rename to tests/qtest/migration/migration-util.h
-> index 2cb1f78d9e..de1bc0ad0c 100644
-> --- a/tests/qtest/migration-helpers.h
-> +++ b/tests/qtest/migration/migration-util.h
-> @@ -10,11 +10,14 @@
->   *
->   */
->  
-> -#ifndef MIGRATION_HELPERS_H
-> -#define MIGRATION_HELPERS_H
-> +#ifndef MIGRATION_UTIL_H
-> +#define MIGRATION_UTIL_H
->  
->  #include "libqtest.h"
->  
-> +#define QEMU_ENV_SRC "QTEST_QEMU_BINARY_SRC"
-> +#define QEMU_ENV_DST "QTEST_QEMU_BINARY_DST"
+On 11/18/2024 10:34 PM, Nicholas Piggin wrote:
+> On Wed Oct 16, 2024 at 7:13 AM AEST, Michael Kowal wrote:
+>> From: Frederic Barrat<fbarrat@linux.ibm.com>
+>>
+>> When the hypervisor or OS pushes a new value to the CPPR, if the LSMFB
+>> value is lower than the new CPPR value, there could be a pending group
+>> interrupt in the backlog, so it needs to be scanned.
+>>
+>> Signed-off-by: Frederic Barrat<fbarrat@linux.ibm.com>
+>> Signed-off-by: Michael Kowal<kowal@linux.ibm.com>
+>> ---
+>>   include/hw/ppc/xive2.h |   4 +
+>>   hw/intc/xive.c         |   4 +-
+>>   hw/intc/xive2.c        | 173 ++++++++++++++++++++++++++++++++++++++++-
+>>   3 files changed, 177 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
+>> index d88db05687..e61b978f37 100644
+>> --- a/include/hw/ppc/xive2.h
+>> +++ b/include/hw/ppc/xive2.h
+>> @@ -115,6 +115,10 @@ typedef struct Xive2EndSource {
+>>    * XIVE2 Thread Interrupt Management Area (POWER10)
+>>    */
+>>   
+>> +void xive2_tm_set_hv_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+>> +                          hwaddr offset, uint64_t value, unsigned size);
+>> +void xive2_tm_set_os_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+>> +                          hwaddr offset, uint64_t value, unsigned size);
+>>   void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+>>                              uint64_t value, unsigned size);
+>>   uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+>> index 8ffcac4f65..2aa6e1fecc 100644
+>> --- a/hw/intc/xive.c
+>> +++ b/hw/intc/xive.c
+>> @@ -603,7 +603,7 @@ static const XiveTmOp xive2_tm_operations[] = {
+>>        * MMIOs below 2K : raw values and special operations without side
+>>        * effects
+>>        */
+>> -    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive_tm_set_os_cppr,
+>> +    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive2_tm_set_os_cppr,
+>>                                                        NULL },
+>>       { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive2_tm_push_os_ctx,
+>>                                                        NULL },
+>> @@ -611,7 +611,7 @@ static const XiveTmOp xive2_tm_operations[] = {
+>>                                                        NULL },
+>>       { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_LGS,        1, xive_tm_set_os_lgs,
+>>                                                        NULL },
+>> -    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
+>> +    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive2_tm_set_hv_cppr,
+>>                                                        NULL },
+>>       { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
+>>                                                        NULL },
+>> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+>> index 7130892482..0c53f71879 100644
+>> --- a/hw/intc/xive2.c
+>> +++ b/hw/intc/xive2.c
+>> @@ -18,6 +18,7 @@
+>>   #include "hw/ppc/xive.h"
+>>   #include "hw/ppc/xive2.h"
+>>   #include "hw/ppc/xive2_regs.h"
+>> +#include "trace.h"
+>>   
+>>   uint32_t xive2_router_get_config(Xive2Router *xrtr)
+>>   {
+>> @@ -764,6 +765,172 @@ void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>>       }
+>>   }
+>>   
+>> +static int xive2_tctx_get_nvp_indexes(XiveTCTX *tctx, uint8_t ring,
+>> +                                      uint32_t *nvp_blk, uint32_t *nvp_idx)
+>> +{
+>> +    uint32_t w2, cam;
+>> +
+>> +    w2 = xive_tctx_word2(&tctx->regs[ring]);
+>> +    switch (ring) {
+>> +    case TM_QW1_OS:
+>> +        if (!(be32_to_cpu(w2) & TM2_QW1W2_VO)) {
+>> +            return -1;
+>> +        }
+>> +        cam = xive_get_field32(TM2_QW1W2_OS_CAM, w2);
+>> +        break;
+>> +    case TM_QW2_HV_POOL:
+>> +        if (!(be32_to_cpu(w2) & TM2_QW2W2_VP)) {
+>> +            return -1;
+>> +        }
+>> +        cam = xive_get_field32(TM2_QW2W2_POOL_CAM, w2);
+>> +        break;
+>> +    case TM_QW3_HV_PHYS:
+>> +        if (!(be32_to_cpu(w2) & TM2_QW3W2_VT)) {
+>> +            return -1;
+>> +        }
+>> +        cam = xive2_tctx_hw_cam_line(tctx->xptr, tctx);
+>> +        break;
+>> +    default:
+>> +        return -1;
+>> +    }
+>> +    *nvp_blk = xive2_nvp_blk(cam);
+>> +    *nvp_idx = xive2_nvp_idx(cam);
+>> +    return 0;
+>> +}
+>> +
+>> +static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+> Some of the xive1 code kind of has placeholder for group code or routes
+> group stuff through to xive2 code, so I wonder if this duplication is
+> really necessary or it can just be added to xive1?
+>
+> I kind of hoped we could unify xive1 and 2 more, but maybe it's too late
+> without a lot more work, and all new development is going to go into
+> xive2...
 
-Are these re-defined in migration-test.c?
 
-> +
->  typedef struct QTestMigrationState {
->      bool stop_seen;
->      bool resume_seen;
-> @@ -51,4 +54,4 @@ void migration_test_add(const char *path, void (*fn)(void));
->  char *migrate_get_connect_uri(QTestState *who);
->  void migrate_set_ports(QTestState *to, QList *channel_list);
->  
-> -#endif /* MIGRATION_HELPERS_H */
-> +#endif /* MIGRATION_UTIL_H */
-> diff --git a/tests/qtest/virtio-net-failover.c b/tests/qtest/virtio-net-failover.c
-> index 28a6147d9a..08365ffa11 100644
-> --- a/tests/qtest/virtio-net-failover.c
-> +++ b/tests/qtest/virtio-net-failover.c
-> @@ -11,8 +11,8 @@
->  #include "libqtest.h"
->  #include "libqos/pci.h"
->  #include "libqos/pci-pc.h"
-> -#include "migration-helpers.h"
->  #include "migration/migration-qmp.h"
-> +#include "migration/migration-util.h"
->  #include "qapi/qmp/qdict.h"
->  #include "qapi/qmp/qlist.h"
->  #include "qapi/qmp/qjson.h"
-> -- 
-> 2.35.3
-> 
+I think that ship sailed long before I got involved.  Our other sim 
+models are totally independent, gen 1 or gen2.  Nor did we support gen 2 
+running n gen 1 mode.  Trying to move much of this function back into 
+xive 1 would be difficult and possible break existing  platforms and models.
 
--- 
-Peter Xu
+
+>
+> Okay for now I guess, we could look at unification one day maybe.
+
+
+You can have Caleb add it to the plan if you still think it would be 
+beneficial.  I think it would be a very low priority item. Contact me 
+directly to discuss.
+
+
+>
+>> +{
+>> +    uint8_t *regs = &tctx->regs[ring];
+>> +    Xive2Router *xrtr = XIVE2_ROUTER(tctx->xptr);
+>> +    uint8_t old_cppr, backlog_prio, first_group, group_level = 0;
+>> +    uint8_t pipr_min, lsmfb_min, ring_min;
+>> +    bool group_enabled;
+>> +    uint32_t nvp_blk, nvp_idx;
+>> +    Xive2Nvp nvp;
+>> +    int rc;
+>> +
+>> +    trace_xive_tctx_set_cppr(tctx->cs->cpu_index, ring,
+>> +                             regs[TM_IPB], regs[TM_PIPR],
+>> +                             cppr, regs[TM_NSR]);
+>> +
+>> +    if (cppr > XIVE_PRIORITY_MAX) {
+>> +        cppr = 0xff;
+>> +    }
+>> +
+>> +    old_cppr = regs[TM_CPPR];
+>> +    regs[TM_CPPR] = cppr;
+> If CPPR remains the same, can return early.
+>
+> If CPPR is being increased, this scanning is not required (a
+> redistribution of group interrupt if it became precluded is
+> required as noted in the TODO, but no scanning should be needed
+> so that TODO should be moved up here).
+>
+> If there is an interrupt already presented and CPPR is being
+> lowered, nothing needs to be done either (because the presented
+> interrupt should already be the most favoured).
+
+xive2_tctx_set_cppr() has gone though  a couple of iterations since this 
+patch set was done on Oct 2023.   Some of your points above have already 
+been addressed and will be included in group5.   For specifics, see the 
+following in ponq-4:
+
+     ppc/xive2: PIPR not updated correctly with CPPR updates.
+     4de83cd1a9fab774b1ab95aba804afa3c0159ebf
+
+
+>> +
+>> +    /*
+>> +     * Recompute the PIPR based on local pending interrupts. It will
+>> +     * be adjusted below if needed in case of pending group interrupts.
+>> +     */
+>> +    pipr_min = xive_ipb_to_pipr(regs[TM_IPB]);
+>> +    group_enabled = !!regs[TM_LGS];
+>> +    lsmfb_min = (group_enabled) ? regs[TM_LSMFB] : 0xff;
+>> +    ring_min = ring;
+>> +
+>> +    /* PHYS updates also depend on POOL values */
+>> +    if (ring == TM_QW3_HV_PHYS) {
+>> +        uint8_t *pregs = &tctx->regs[TM_QW2_HV_POOL];
+>> +
+>> +        /* POOL values only matter if POOL ctx is valid */
+>> +        if (pregs[TM_WORD2] & 0x80) {
+>> +
+>> +            uint8_t pool_pipr = xive_ipb_to_pipr(pregs[TM_IPB]);
+>> +            uint8_t pool_lsmfb = pregs[TM_LSMFB];
+>> +
+>> +            /*
+>> +             * Determine highest priority interrupt and
+>> +             * remember which ring has it.
+>> +             */
+>> +            if (pool_pipr < pipr_min) {
+>> +                pipr_min = pool_pipr;
+>> +                if (pool_pipr < lsmfb_min) {
+>> +                    ring_min = TM_QW2_HV_POOL;
+>> +                }
+>> +            }
+>> +
+>> +            /* Values needed for group priority calculation */
+>> +            if (pregs[TM_LGS] && (pool_lsmfb < lsmfb_min)) {
+>> +                group_enabled = true;
+>> +                lsmfb_min = pool_lsmfb;
+>> +                if (lsmfb_min < pipr_min) {
+>> +                    ring_min = TM_QW2_HV_POOL;
+>> +                }
+>> +            }
+>> +        }
+>> +    }
+>> +    regs[TM_PIPR] = pipr_min;
+>> +
+>> +    rc = xive2_tctx_get_nvp_indexes(tctx, ring_min, &nvp_blk, &nvp_idx);
+>> +    if (rc) {
+>> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: set CPPR on invalid context\n");
+>> +        return;
+>> +    }
+>> +
+>> +    if (cppr < old_cppr) {
+>> +        /*
+>> +         * FIXME: check if there's a group interrupt being presented
+>> +         * and if the new cppr prevents it. If so, then the group
+>> +         * interrupt needs to be re-added to the backlog and
+>> +         * re-triggered (see re-trigger END info in the NVGC
+>> +         * structure)
+>> +         */
+>> +    }
+>> +
+>> +    if (group_enabled &&
+>> +        lsmfb_min < cppr &&
+>> +        lsmfb_min < regs[TM_PIPR]) {
+>> +        /*
+>> +         * Thread has seen a group interrupt with a higher priority
+>> +         * than the new cppr or pending local interrupt. Check the
+>> +         * backlog
+>> +         */
+>> +        if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
+>> +            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
+>> +                          nvp_blk, nvp_idx);
+>> +            return;
+>> +        }
+>> +
+>> +        if (!xive2_nvp_is_valid(&nvp)) {
+>> +            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid NVP %x/%x\n",
+>> +                          nvp_blk, nvp_idx);
+>> +            return;
+>> +        }
+>> +
+>> +        first_group = xive_get_field32(NVP2_W0_PGOFIRST, nvp.w0);
+>> +        if (!first_group) {
+>> +            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid NVP %x/%x\n",
+>> +                          nvp_blk, nvp_idx);
+>> +            return;
+>> +        }
+>> +
+>> +        backlog_prio = xive2_presenter_backlog_check(tctx->xptr,
+>> +                                                     nvp_blk, nvp_idx,
+>> +                                                     first_group, &group_level);
+>> +        tctx->regs[ring_min + TM_LSMFB] = backlog_prio;
+> LSMFB may not be the same as lsmfb_min, so you can't present
+> unconditionally.
+>
+> I think after updating, it should test
+>
+>    if (lsmfb_min != backlog_prio) {
+>        goto scan_again;
+>    }
+>
+> Where scan_again: goes back to recomputing min priorities and scanning.
+
+
+Ditto from above.  I think...
+
+
+>
+> Thanks,
+> Nick
+>
+>> +        if (backlog_prio != 0xFF) {
+>> +            xive2_presenter_backlog_decr(tctx->xptr, nvp_blk, nvp_idx,
+>> +                                         backlog_prio, group_level);
+>> +            regs[TM_PIPR] = backlog_prio;
+>> +        }
+>> +    }
+>> +    /* CPPR has changed, check if we need to raise a pending exception */
+>> +    xive_tctx_notify(tctx, ring_min, group_level);
+>> +}
+>> +
+>> +void xive2_tm_set_hv_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+>> +                          hwaddr offset, uint64_t value, unsigned size)
+>> +{
+>> +    xive2_tctx_set_cppr(tctx, TM_QW3_HV_PHYS, value & 0xff);
+>> +}
+>> +
+>> +void xive2_tm_set_os_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+>> +                          hwaddr offset, uint64_t value, unsigned size)
+>> +{
+>> +    xive2_tctx_set_cppr(tctx, TM_QW1_OS, value & 0xff);
+>> +}
+>> +
+>>   static void xive2_tctx_set_target(XiveTCTX *tctx, uint8_t ring, uint8_t target)
+>>   {
+>>       uint8_t *regs = &tctx->regs[ring];
+>> @@ -934,7 +1101,9 @@ int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
+>>   
+>>   bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring, uint8_t priority)
+>>   {
+>> -    uint8_t *regs = &tctx->regs[ring];
+>> +    /* HV_POOL ring uses HV_PHYS NSR, CPPR and PIPR registers */
+>> +    uint8_t alt_ring = (ring == TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS : ring;
+>> +    uint8_t *alt_regs = &tctx->regs[alt_ring];
+>>   
+>>       /*
+>>        * The xive2_presenter_tctx_match() above tells if there's a match
+>> @@ -942,7 +1111,7 @@ bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring, uint8_t priority)
+>>        * priority to know if the thread can take the interrupt now or if
+>>        * it is precluded.
+>>        */
+>> -    if (priority < regs[TM_CPPR]) {
+>> +    if (priority < alt_regs[TM_CPPR]) {
+>>           return false;
+>>       }
+>>       return true;
+> These last two are logically separate patch for enabling group for POOL?
+>
+--------------xHiU2egc3Fxob3vGKmWOtvum
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 11/18/2024 10:34 PM, Nicholas Piggin
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:D5PVIFZABR4L.20XCWB75DIEW@gmail.com">
+      <pre wrap="" class="moz-quote-pre">On Wed Oct 16, 2024 at 7:13 AM AEST, Michael Kowal wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">From: Frederic Barrat <a class="moz-txt-link-rfc2396E" href="mailto:fbarrat@linux.ibm.com">&lt;fbarrat@linux.ibm.com&gt;</a>
+
+When the hypervisor or OS pushes a new value to the CPPR, if the LSMFB
+value is lower than the new CPPR value, there could be a pending group
+interrupt in the backlog, so it needs to be scanned.
+
+Signed-off-by: Frederic Barrat <a class="moz-txt-link-rfc2396E" href="mailto:fbarrat@linux.ibm.com">&lt;fbarrat@linux.ibm.com&gt;</a>
+Signed-off-by: Michael Kowal <a class="moz-txt-link-rfc2396E" href="mailto:kowal@linux.ibm.com">&lt;kowal@linux.ibm.com&gt;</a>
+---
+ include/hw/ppc/xive2.h |   4 +
+ hw/intc/xive.c         |   4 +-
+ hw/intc/xive2.c        | 173 ++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 177 insertions(+), 4 deletions(-)
+
+diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
+index d88db05687..e61b978f37 100644
+--- a/include/hw/ppc/xive2.h
++++ b/include/hw/ppc/xive2.h
+@@ -115,6 +115,10 @@ typedef struct Xive2EndSource {
+  * XIVE2 Thread Interrupt Management Area (POWER10)
+  */
+ 
++void xive2_tm_set_hv_cppr(XivePresenter *xptr, XiveTCTX *tctx,
++                          hwaddr offset, uint64_t value, unsigned size);
++void xive2_tm_set_os_cppr(XivePresenter *xptr, XiveTCTX *tctx,
++                          hwaddr offset, uint64_t value, unsigned size);
+ void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+                            uint64_t value, unsigned size);
+ uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index 8ffcac4f65..2aa6e1fecc 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -603,7 +603,7 @@ static const XiveTmOp xive2_tm_operations[] = {
+      * MMIOs below 2K : raw values and special operations without side
+      * effects
+      */
+-    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive_tm_set_os_cppr,
++    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive2_tm_set_os_cppr,
+                                                      NULL },
+     { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive2_tm_push_os_ctx,
+                                                      NULL },
+@@ -611,7 +611,7 @@ static const XiveTmOp xive2_tm_operations[] = {
+                                                      NULL },
+     { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_LGS,        1, xive_tm_set_os_lgs,
+                                                      NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
++    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive2_tm_set_hv_cppr,
+                                                      NULL },
+     { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
+                                                      NULL },
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 7130892482..0c53f71879 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -18,6 +18,7 @@
+ #include "hw/ppc/xive.h"
+ #include "hw/ppc/xive2.h"
+ #include "hw/ppc/xive2_regs.h"
++#include "trace.h"
+ 
+ uint32_t xive2_router_get_config(Xive2Router *xrtr)
+ {
+@@ -764,6 +765,172 @@ void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+     }
+ }
+ 
++static int xive2_tctx_get_nvp_indexes(XiveTCTX *tctx, uint8_t ring,
++                                      uint32_t *nvp_blk, uint32_t *nvp_idx)
++{
++    uint32_t w2, cam;
++
++    w2 = xive_tctx_word2(&amp;tctx-&gt;regs[ring]);
++    switch (ring) {
++    case TM_QW1_OS:
++        if (!(be32_to_cpu(w2) &amp; TM2_QW1W2_VO)) {
++            return -1;
++        }
++        cam = xive_get_field32(TM2_QW1W2_OS_CAM, w2);
++        break;
++    case TM_QW2_HV_POOL:
++        if (!(be32_to_cpu(w2) &amp; TM2_QW2W2_VP)) {
++            return -1;
++        }
++        cam = xive_get_field32(TM2_QW2W2_POOL_CAM, w2);
++        break;
++    case TM_QW3_HV_PHYS:
++        if (!(be32_to_cpu(w2) &amp; TM2_QW3W2_VT)) {
++            return -1;
++        }
++        cam = xive2_tctx_hw_cam_line(tctx-&gt;xptr, tctx);
++        break;
++    default:
++        return -1;
++    }
++    *nvp_blk = xive2_nvp_blk(cam);
++    *nvp_idx = xive2_nvp_idx(cam);
++    return 0;
++}
++
++static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+Some of the xive1 code kind of has placeholder for group code or routes
+group stuff through to xive2 code, so I wonder if this duplication is
+really necessary or it can just be added to xive1?
+
+I kind of hoped we could unify xive1 and 2 more, but maybe it's too late
+without a lot more work, and all new development is going to go into
+xive2...</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>I think that ship sailed long before I got involved.  Our other
+      sim models are totally independent, gen 1 or gen2.  Nor did we
+      support gen 2 running n gen 1 mode.  Trying to move much of this
+      function back into xive 1 would be difficult and possible break
+      existing  platforms and models.<br>
+    </p>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+      cite="mid:D5PVIFZABR4L.20XCWB75DIEW@gmail.com">
+      <pre wrap="" class="moz-quote-pre">
+
+Okay for now I guess, we could look at unification one day maybe.</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>You can have Caleb add it to the plan if you still think it would
+      be beneficial.  I think it would be a very low priority item. 
+      Contact me directly to discuss.</p>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+      cite="mid:D5PVIFZABR4L.20XCWB75DIEW@gmail.com">
+      <pre wrap="" class="moz-quote-pre">
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+{
++    uint8_t *regs = &amp;tctx-&gt;regs[ring];
++    Xive2Router *xrtr = XIVE2_ROUTER(tctx-&gt;xptr);
++    uint8_t old_cppr, backlog_prio, first_group, group_level = 0;
++    uint8_t pipr_min, lsmfb_min, ring_min;
++    bool group_enabled;
++    uint32_t nvp_blk, nvp_idx;
++    Xive2Nvp nvp;
++    int rc;
++
++    trace_xive_tctx_set_cppr(tctx-&gt;cs-&gt;cpu_index, ring,
++                             regs[TM_IPB], regs[TM_PIPR],
++                             cppr, regs[TM_NSR]);
++
++    if (cppr &gt; XIVE_PRIORITY_MAX) {
++        cppr = 0xff;
++    }
++
++    old_cppr = regs[TM_CPPR];
++    regs[TM_CPPR] = cppr;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+If CPPR remains the same, can return early.
+
+If CPPR is being increased, this scanning is not required (a
+redistribution of group interrupt if it became precluded is
+required as noted in the TODO, but no scanning should be needed
+so that TODO should be moved up here).
+
+If there is an interrupt already presented and CPPR is being
+lowered, nothing needs to be done either (because the presented
+interrupt should already be the most favoured).
+</pre>
+    </blockquote>
+    <p>xive2_tctx_set_cppr() has gone though  a couple of iterations
+      since this patch set was done on Oct 2023.   Some of your points
+      above have already been addressed and will be included in group5.
+        For specifics, see the following in ponq-4:   </p>
+    <div
+style="font-family: &quot;Consolas&quot;; font-size: 11.0pt; color: #000000;background-color: #FFFFFF; font-style: normal; font-weight: normal; text-decoration: none;">
+      <pre>    ppc/xive2: PIPR not updated correctly with CPPR updates.
+    4de83cd1a9fab774b1ab95aba804afa3c0159ebf</pre>
+    </div>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+      cite="mid:D5PVIFZABR4L.20XCWB75DIEW@gmail.com">
+      <pre wrap="" class="moz-quote-pre">
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+
++    /*
++     * Recompute the PIPR based on local pending interrupts. It will
++     * be adjusted below if needed in case of pending group interrupts.
++     */
++    pipr_min = xive_ipb_to_pipr(regs[TM_IPB]);
++    group_enabled = !!regs[TM_LGS];
++    lsmfb_min = (group_enabled) ? regs[TM_LSMFB] : 0xff;
++    ring_min = ring;
++
++    /* PHYS updates also depend on POOL values */
++    if (ring == TM_QW3_HV_PHYS) {
++        uint8_t *pregs = &amp;tctx-&gt;regs[TM_QW2_HV_POOL];
++
++        /* POOL values only matter if POOL ctx is valid */
++        if (pregs[TM_WORD2] &amp; 0x80) {
++
++            uint8_t pool_pipr = xive_ipb_to_pipr(pregs[TM_IPB]);
++            uint8_t pool_lsmfb = pregs[TM_LSMFB];
++
++            /*
++             * Determine highest priority interrupt and
++             * remember which ring has it.
++             */
++            if (pool_pipr &lt; pipr_min) {
++                pipr_min = pool_pipr;
++                if (pool_pipr &lt; lsmfb_min) {
++                    ring_min = TM_QW2_HV_POOL;
++                }
++            }
++
++            /* Values needed for group priority calculation */
++            if (pregs[TM_LGS] &amp;&amp; (pool_lsmfb &lt; lsmfb_min)) {
++                group_enabled = true;
++                lsmfb_min = pool_lsmfb;
++                if (lsmfb_min &lt; pipr_min) {
++                    ring_min = TM_QW2_HV_POOL;
++                }
++            }
++        }
++    }
++    regs[TM_PIPR] = pipr_min;
++
++    rc = xive2_tctx_get_nvp_indexes(tctx, ring_min, &amp;nvp_blk, &amp;nvp_idx);
++    if (rc) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: set CPPR on invalid context\n");
++        return;
++    }
++
++    if (cppr &lt; old_cppr) {
++        /*
++         * FIXME: check if there's a group interrupt being presented
++         * and if the new cppr prevents it. If so, then the group
++         * interrupt needs to be re-added to the backlog and
++         * re-triggered (see re-trigger END info in the NVGC
++         * structure)
++         */
++    }
++
++    if (group_enabled &amp;&amp;
++        lsmfb_min &lt; cppr &amp;&amp;
++        lsmfb_min &lt; regs[TM_PIPR]) {
++        /*
++         * Thread has seen a group interrupt with a higher priority
++         * than the new cppr or pending local interrupt. Check the
++         * backlog
++         */
++        if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &amp;nvp)) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
++                          nvp_blk, nvp_idx);
++            return;
++        }
++
++        if (!xive2_nvp_is_valid(&amp;nvp)) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid NVP %x/%x\n",
++                          nvp_blk, nvp_idx);
++            return;
++        }
++
++        first_group = xive_get_field32(NVP2_W0_PGOFIRST, nvp.w0);
++        if (!first_group) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid NVP %x/%x\n",
++                          nvp_blk, nvp_idx);
++            return;
++        }
++
++        backlog_prio = xive2_presenter_backlog_check(tctx-&gt;xptr,
++                                                     nvp_blk, nvp_idx,
++                                                     first_group, &amp;group_level);
++        tctx-&gt;regs[ring_min + TM_LSMFB] = backlog_prio;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+LSMFB may not be the same as lsmfb_min, so you can't present
+unconditionally.
+
+I think after updating, it should test
+
+  if (lsmfb_min != backlog_prio) {
+      goto scan_again;
+  }
+
+Where scan_again: goes back to recomputing min priorities and scanning.</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>Ditto from above.  I think...  <br>
+    </p>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+      cite="mid:D5PVIFZABR4L.20XCWB75DIEW@gmail.com">
+      <pre wrap="" class="moz-quote-pre">
+
+Thanks,
+Nick
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+        if (backlog_prio != 0xFF) {
++            xive2_presenter_backlog_decr(tctx-&gt;xptr, nvp_blk, nvp_idx,
++                                         backlog_prio, group_level);
++            regs[TM_PIPR] = backlog_prio;
++        }
++    }
++    /* CPPR has changed, check if we need to raise a pending exception */
++    xive_tctx_notify(tctx, ring_min, group_level);
++}
++
++void xive2_tm_set_hv_cppr(XivePresenter *xptr, XiveTCTX *tctx,
++                          hwaddr offset, uint64_t value, unsigned size)
++{
++    xive2_tctx_set_cppr(tctx, TM_QW3_HV_PHYS, value &amp; 0xff);
++}
++
++void xive2_tm_set_os_cppr(XivePresenter *xptr, XiveTCTX *tctx,
++                          hwaddr offset, uint64_t value, unsigned size)
++{
++    xive2_tctx_set_cppr(tctx, TM_QW1_OS, value &amp; 0xff);
++}
++
+ static void xive2_tctx_set_target(XiveTCTX *tctx, uint8_t ring, uint8_t target)
+ {
+     uint8_t *regs = &amp;tctx-&gt;regs[ring];
+@@ -934,7 +1101,9 @@ int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
+ 
+ bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring, uint8_t priority)
+ {
+-    uint8_t *regs = &amp;tctx-&gt;regs[ring];
++    /* HV_POOL ring uses HV_PHYS NSR, CPPR and PIPR registers */
++    uint8_t alt_ring = (ring == TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS : ring;
++    uint8_t *alt_regs = &amp;tctx-&gt;regs[alt_ring];
+ 
+     /*
+      * The xive2_presenter_tctx_match() above tells if there's a match
+@@ -942,7 +1111,7 @@ bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring, uint8_t priority)
+      * priority to know if the thread can take the interrupt now or if
+      * it is precluded.
+      */
+-    if (priority &lt; regs[TM_CPPR]) {
++    if (priority &lt; alt_regs[TM_CPPR]) {
+         return false;
+     }
+     return true;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+These last two are logically separate patch for enabling group for POOL?
+
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------xHiU2egc3Fxob3vGKmWOtvum--
 
 
