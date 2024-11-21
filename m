@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1A9D75BDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 09:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D97C0D75BDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 09:20:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE3Lw-0006zW-VT; Thu, 21 Nov 2024 04:19:56 -0500
+	id 1tE3M5-000735-Ue; Thu, 21 Nov 2024 04:20:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3Lv-0006zC-8j
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:19:55 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3M4-00071e-8p
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:20:04 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3Lq-0006Uc-G2
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:19:55 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4316a44d1bbso5195715e9.3
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 01:19:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3M2-0006WC-Pn
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:20:04 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-431548bd1b4so5417235e9.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 01:20:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732180788; x=1732785588; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732180801; x=1732785601; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QIDdrERkWlbZ6yxoIaloE1RT3v/1aqz5I9Ys1+A7e8o=;
- b=G9RcEOINLLur5A4DovvxwmWXPvFkPbsU9buqGB6czoRc1Syfx899hYI1ZkYLl3D5UK
- I70woVcBh9zZLQOBzNs8Ph58FiIOfZgKI92JH4u07YezloeDgWQ93G6Ghv1aeItZA6m0
- VT3IIeOUMhsSmH4lXfD08AlSEFJhaaFOABax5ARgR66GppBhW7XGuBznXv03zgLMpa7j
- RWbdbY+G44E9+jzT892PWtUphDOnsLTvAfHxjYxqslYzPKlZFQRMVqoqNkfn/xmesC0Z
- y6us+E4mzZ1rxUZrja2TIHHdV4N8OqsxuzMFxvQcBSUL2Vt+0mH15jZ01kVWmUKbiJY/
- 1aaQ==
+ bh=k5I7dV7K3xl837YcjJMUyH+X4UpQ9jmN8D70LndA5uY=;
+ b=qf/q2e3B/M5w57q2Tzgd9ezG9/EQXkGQj7sTn4ZuIkvEsOX9TcWDgLdlpHDf9xctpE
+ wIuDVS4cU01txTAqswtpubIe+RIVD29BxhyVhUEskPtxj6BUCAQ2lSGHKMXc4Lq9S331
+ xNoEzQCLKqlljRXP7nWmuR99YTYUe9qK4XifQlWFMMZR3RfjmtsZJTL3b3/Rb25acb3g
+ O+wOyteiFjmASvkY8Vd7OGFmx5W3PnWgo9YUsF+RJD/AReiMct+bhXO4NqDDNIxNAPrN
+ FRFD0xUG0wMtGzWP+UGevkH3u7aoEtQ/fJ39h7oR7hE48PK/BLdEdxP9D+Kkj3XMwuL0
+ zvkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732180788; x=1732785588;
+ d=1e100.net; s=20230601; t=1732180801; x=1732785601;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QIDdrERkWlbZ6yxoIaloE1RT3v/1aqz5I9Ys1+A7e8o=;
- b=GjRIQtaRDCmdmrufkDlDfvBooPi13sACkWH6INmLxZGmad3wF+ZFEs+keHtJJGlLm6
- Y/X2bvfMepIXKLEL0LDUxyvnDNP8kQyQFIujs8zETyG50vdUZz5TF54bMVfU2sUHUm1+
- iy+ciOBWjgTrgkBOoowU/YJ5iVG7L95GN0XZitBce1KxjDxIODzHjKXnV0oQFk1kdpm3
- 4xPq4RNuTDnUzsOqpXHgNYlLsB8yolMa0LynJIpmTEsOAabtEuu/k2UFekDyPJ/5cxdX
- ZZ5YLig3bBhaSCizf6moBaJ7TO0nuxqX82B5FxX1aBMeEgAZfSdGlI7191N1qrjQH+6c
- 6SzA==
+ bh=k5I7dV7K3xl837YcjJMUyH+X4UpQ9jmN8D70LndA5uY=;
+ b=oAZFGse+dVl7LRS+QcJzricaTssBz0/Rgl4WA9W+usqIaeCFtu/NQdtP/As5GSOZOP
+ G6WKRpT92Pl1ahMPFO77bsrt+Iz1JHuK5MviLIMl98T900Ip2oKGYT6YYcg7OBsMQYeV
+ kYGB1NtUDp+AIpeAsV8fskx6U/yc51nXgE5MCx9au7AXq18zf9n2luZ/lsOgTSzM2Cte
+ 0FrxX6WRj2y/X3bLP7IBdE8BjzraVMYCKoN4tG88lYyFXw3Rxe9d0A+JnvlazZkl47qI
+ 4naERTqVsxyIdkrJEKCWbHNdLGFjRme8FTYiTlor88Z8AlK4zKyjffpnKuvUwgl3IGUU
+ 5SZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUX946WmQjSMu10+Hug/RbDxTFgWKG+1A4OrOSxJV1vLwmnp9WmxpbI9GiNVLMzTI8QiPucWIgiIJC4@nongnu.org
-X-Gm-Message-State: AOJu0YzcbhZytjuXtEb00sSkEQiDV3gPVQ4m/MNUgTIKmLNW2fTIVz8U
- miAb1MWIgjEjblYUvL/UN9aIkOL0QXVZ5JgSbusS2cAW55pu1mIehiqviYMLnJI=
-X-Google-Smtp-Source: AGHT+IHB0IcqnWhyM1Zddf3gDsivObbS2nnaT6M1RoevEVnoKLgAdcrWtfDHOT/ZgNFCMzXLnJPaDg==
-X-Received: by 2002:a05:600c:3b83:b0:42c:bd27:4c12 with SMTP id
- 5b1f17b1804b1-433489b0c6bmr60326475e9.10.1732180788639; 
- Thu, 21 Nov 2024 01:19:48 -0800 (PST)
+ AJvYcCU3e0QtgHBE2tmIIy/zBRH0NdswVi8Ojr7Xqsqki6B3UOsNOUlOn+O3wlOh2fhWG1QE5vAo3Zas6zXl@nongnu.org
+X-Gm-Message-State: AOJu0YzuoLX3YRsRop43S7LmLwmlcU8Gf/xLzj1OQ2EdLzhvoxenWsN8
+ bqAOoixc9fOV7+BgBElz7h5+IdHwVAjDS8StpsE1bHK3ZQjtlZ7RbYdSiPSy6pQ=
+X-Google-Smtp-Source: AGHT+IECbRYGxFd41V3ILoj/olGIV+V0enam/f+P4Sh8L/GxxXjvoz8GV5/r0Ogu+fFlRMdRk4gtNg==
+X-Received: by 2002:a05:600c:3b0c:b0:432:d875:c298 with SMTP id
+ 5b1f17b1804b1-433489b820emr54159345e9.14.1732180801417; 
+ Thu, 21 Nov 2024 01:20:01 -0800 (PST)
 Received: from [192.168.69.146] ([176.187.204.90])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b01e0584sm47511745e9.5.2024.11.21.01.19.46
+ 5b1f17b1804b1-433b463ad1fsm47528845e9.38.2024.11.21.01.19.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 01:19:47 -0800 (PST)
-Message-ID: <0ffa4155-327e-4f49-a7fd-7a8cc6788c69@linaro.org>
-Date: Thu, 21 Nov 2024 10:19:46 +0100
+ Thu, 21 Nov 2024 01:20:00 -0800 (PST)
+Message-ID: <b33c5673-d279-4980-9c37-329d5f43d4f2@linaro.org>
+Date: Thu, 21 Nov 2024 10:19:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/12] ui/console: Explicitly create "/backend" container
+Subject: Re: [PATCH 04/12] tests: Explicitly create containers in
+ test_qom_partial_path()
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -70,17 +71,16 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Juraj Marcin <jmarcin@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+ Fabiano Rosas <farosas@suse.de>
 References: <20241120215703.3918445-1-peterx@redhat.com>
- <20241120215703.3918445-6-peterx@redhat.com>
+ <20241120215703.3918445-5-peterx@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241120215703.3918445-6-peterx@redhat.com>
+In-Reply-To: <20241120215703.3918445-5-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,14 +104,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/11/24 22:56, Peter Xu wrote:
-> Follow the trend to explicitly create containers, do that for console.c on
-> "/backend" container.
+> Drop one use of container_get(), instead switch to the explicit function to
+> create a container.
 > 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   ui/console.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   tests/unit/check-qom-proplist.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
