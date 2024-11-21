@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB70D743FE
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98527D743FC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:52:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwHr-0001bA-CK; Wed, 20 Nov 2024 20:47:15 -0500
+	id 1tDwHh-0001WZ-An; Wed, 20 Nov 2024 20:47:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHq-0001aq-El
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:14 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHg-0001W1-9J
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:04 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHo-0004XZ-D4
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:14 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHe-0004Wa-HL
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=79pr1drhMqVTakNZzCI6+VG2OY2chgT2RrjIC+e91vQ=; b=gvB4mbFQ9zlG5lO
- u1L/TOkOFKnZcHgVDSsTzZ7wwzSy3rpDes9tkzZz8t0WGAXx7GSwWyS3cCaWNUFo1YnSBC/dLSNUR
- oeNIDO4ubvM7KYes46csSSvCJzGBDK1oNSTBl4T3pPGH+OugC3pm7wIIaKtx62pwGk8IJW3ucrFXR
- xA=;
+ List-Help; bh=8jA/Gzvjxlok8TB/HYwf/iXFNHMSXCKjyKHLZ6z242c=; b=ADrb7mSEOSMIKwW
+ ynHHvZl4lpTy3OtLNngQ4RzIs09wmv40/g6bvEKkX5XsUvl0jWCXYEo8YKNTX+1K55bn78uG6j52U
+ +BlpzhX7HXBt979imJwuR4pplJg5AzkacymN8PF/k3DVn7vmfkvAkaMol+ij0ycCbhta65QHMpS33
+ mA=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 14/43] helper-to-tcg: Introduce PrepareForOptPass
-Date: Thu, 21 Nov 2024 02:49:18 +0100
-Message-ID: <20241121014947.18666-15-anjo@rev.ng>
+Subject: [RFC PATCH v1 04/43] tcg: Add gvec functions for creating consant
+ vectors
+Date: Thu, 21 Nov 2024 02:49:08 +0100
+Message-ID: <20241121014947.18666-5-anjo@rev.ng>
 In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
 References: <20241121014947.18666-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,163 +65,76 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a new LLVM pass that runs early in the pipeline with the goal
-of preparing the input module for optimization by doing some early
-culling of functions and information gathering.
+This commit adds a gvec function for copying data from constant array
+given in C to a gvec intptr_t.  For each element, a host store of
+each constant is performed, this is not ideal and will inflate TBs for
+large vectors.
 
-This commits sets up a new LLVM pass over the IR module and runs it from
-the pipeline.
+Moreover, data will be copied during each run of the generated code
+impacting performance.  A more suitable solution might store constant
+vectors separately, this can be handled either on the QEMU or
+helper-to-tcg side.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- .../helper-to-tcg/include/CmdLineOptions.h    |  2 ++
- .../helper-to-tcg/include/PrepareForOptPass.h | 34 +++++++++++++++++++
- subprojects/helper-to-tcg/meson.build         |  2 ++
- .../PrepareForOptPass/PrepareForOptPass.cpp   | 25 ++++++++++++++
- .../helper-to-tcg/pipeline/Pipeline.cpp       | 27 +++++++++++++++
- 5 files changed, 90 insertions(+)
- create mode 100644 subprojects/helper-to-tcg/include/PrepareForOptPass.h
- create mode 100644 subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
+ include/tcg/tcg-op-gvec-common.h |  2 ++
+ tcg/tcg-op-gvec.c                | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/subprojects/helper-to-tcg/include/CmdLineOptions.h b/subprojects/helper-to-tcg/include/CmdLineOptions.h
-index 5774ab07b1..ed60c45f9a 100644
---- a/subprojects/helper-to-tcg/include/CmdLineOptions.h
-+++ b/subprojects/helper-to-tcg/include/CmdLineOptions.h
-@@ -21,3 +21,5 @@
- 
- // Options for pipeline
- extern llvm::cl::list<std::string> InputFiles;
-+// Options for PrepareForOptPass
-+extern llvm::cl::opt<bool> TranslateAllHelpers;
-diff --git a/subprojects/helper-to-tcg/include/PrepareForOptPass.h b/subprojects/helper-to-tcg/include/PrepareForOptPass.h
-new file mode 100644
-index 0000000000..d74618613f
---- /dev/null
-+++ b/subprojects/helper-to-tcg/include/PrepareForOptPass.h
-@@ -0,0 +1,34 @@
-+//
-+//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
-+//
-+//  This program is free software; you can redistribute it and/or modify
-+//  it under the terms of the GNU General Public License as published by
-+//  the Free Software Foundation; either version 2 of the License, or
-+//  (at your option) any later version.
-+//
-+//  This program is distributed in the hope that it will be useful,
-+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+//  GNU General Public License for more details.
-+//
-+//  You should have received a copy of the GNU General Public License
-+//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+//
-+
-+#pragma once
-+
-+#include <llvm/IR/PassManager.h>
-+
-+//
-+// PrepareForOptPass
-+//
-+// Pass that performs either early information collection or basic culling of
-+// the input module. simplify the module, or to allow for further optimization.
-+//
-+
-+class PrepareForOptPass : public llvm::PassInfoMixin<PrepareForOptPass> {
-+public:
-+    PrepareForOptPass() {}
-+    llvm::PreservedAnalyses run(llvm::Module &M,
-+                                llvm::ModuleAnalysisManager &MAM);
-+};
-diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
-index 63c6ed17fb..fd3fd6f0ae 100644
---- a/subprojects/helper-to-tcg/meson.build
-+++ b/subprojects/helper-to-tcg/meson.build
-@@ -43,6 +43,8 @@ endif
- sources = [
-     'pipeline/Pipeline.cpp',
-     'passes/llvm-compat.cpp',
-+    'pipeline/Pipeline.cpp',
-+    'passes/PrepareForOptPass/PrepareForOptPass.cpp',
- ]
- 
- clang = bindir / 'clang'
-diff --git a/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp b/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
-new file mode 100644
-index 0000000000..0a018494fe
---- /dev/null
-+++ b/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
-@@ -0,0 +1,25 @@
-+//
-+//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
-+//
-+//  This program is free software; you can redistribute it and/or modify
-+//  it under the terms of the GNU General Public License as published by
-+//  the Free Software Foundation; either version 2 of the License, or
-+//  (at your option) any later version.
-+//
-+//  This program is distributed in the hope that it will be useful,
-+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+//  GNU General Public License for more details.
-+//
-+//  You should have received a copy of the GNU General Public License
-+//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+//
-+
-+#include <PrepareForOptPass.h>
-+
-+using namespace llvm;
-+
-+PreservedAnalyses PrepareForOptPass::run(Module &M, ModuleAnalysisManager &MAM)
-+{
-+    return PreservedAnalyses::none();
-+}
-diff --git a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
-index 9c0e777893..fad335f4a9 100644
---- a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
-+++ b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
-@@ -34,7 +34,9 @@
- #include <llvm/Support/SourceMgr.h>
- #include <llvm/Support/TargetSelect.h>
- #include <llvm/Target/TargetMachine.h>
-+#include <llvm/Transforms/Scalar/SROA.h>
- 
-+#include <PrepareForOptPass.h>
- #include "llvm-compat.h"
- 
- using namespace llvm;
-@@ -155,5 +157,30 @@ int main(int argc, char **argv)
- 
-     ModulePassManager MPM;
- 
-+    //
-+    // Start by Filtering out functions we don't want to translate,
-+    // following by a pass that removes `noinline`s that are inserted
-+    // by clang on -O0. We finally run a UnifyExitNodesPass to make sure
-+    // the helpers we parse only has a single exit.
-+    //
-+
-+    {
-+        FunctionPassManager FPM;
-+#if LLVM_VERSION_MAJOR < 14
-+        FPM.addPass(SROA());
-+#else
-+        FPM.addPass(SROAPass());
-+#endif
-+        MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
-+    }
-+
-+    MPM.addPass(PrepareForOptPass());
-+
-+    {
-+        FunctionPassManager FPM;
-+        FPM.addPass(compat::UnifyFunctionExitNodesPass());
-+        MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
-+    }
-+
-     return 0;
+diff --git a/include/tcg/tcg-op-gvec-common.h b/include/tcg/tcg-op-gvec-common.h
+index 39b0c2f64e..409a56c633 100644
+--- a/include/tcg/tcg-op-gvec-common.h
++++ b/include/tcg/tcg-op-gvec-common.h
+@@ -331,6 +331,8 @@ void tcg_gen_gvec_dup_mem(unsigned vece, uint32_t dofs, uint32_t aofs,
+                           uint32_t s, uint32_t m);
+ void tcg_gen_gvec_dup_imm(unsigned vece, uint32_t dofs, uint32_t s,
+                           uint32_t m, uint64_t imm);
++void tcg_gen_gvec_constant(unsigned vece, TCGv_env env, uint32_t dofs,
++                           void *arr, uint32_t maxsz);
+ void tcg_gen_gvec_dup_i32(unsigned vece, uint32_t dofs, uint32_t s,
+                           uint32_t m, TCGv_i32);
+ void tcg_gen_gvec_dup_i64(unsigned vece, uint32_t dofs, uint32_t s,
+diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+index 80649dc0d2..71b6875129 100644
+--- a/tcg/tcg-op-gvec.c
++++ b/tcg/tcg-op-gvec.c
+@@ -1835,6 +1835,36 @@ void tcg_gen_gvec_dup_imm(unsigned vece, uint32_t dofs, uint32_t oprsz,
+     do_dup(vece, dofs, oprsz, maxsz, NULL, NULL, x);
  }
+ 
++
++void tcg_gen_gvec_constant(unsigned vece, TCGv_env env, uint32_t dofs,
++                           void *arr, uint32_t maxsz)
++{
++    uint32_t elsz = memop_size(vece);
++    for (uint32_t i = 0; i < maxsz/elsz; ++i)
++    {
++        uint32_t off = i*elsz;
++        uint8_t *elptr = (uint8_t *)arr + off;
++        switch (vece) {
++        case MO_8:
++            tcg_gen_st8_i32(tcg_constant_i32(*elptr),
++                            env, dofs + off);
++            break;
++        case MO_16:
++            tcg_gen_st16_i32(tcg_constant_i32(*(uint16_t *) elptr),
++                             env, dofs + off);
++            break;
++        case MO_32:
++            tcg_gen_st_i32(tcg_constant_i32(*(uint32_t *) elptr),
++                             env, dofs + off);
++            break;
++        case MO_64:
++            tcg_gen_st_i64(tcg_constant_i64(*(uint64_t *) elptr),
++                           env, dofs + off);
++            break;
++        }
++    }
++}
++
+ void tcg_gen_gvec_not(unsigned vece, uint32_t dofs, uint32_t aofs,
+                       uint32_t oprsz, uint32_t maxsz)
+ {
 -- 
 2.45.2
 
