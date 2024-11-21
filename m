@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7733D75BD9
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 09:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5270D75BDD
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 09:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE3G7-0005Yr-W5; Thu, 21 Nov 2024 04:13:56 -0500
+	id 1tE3KL-0006Nx-Bz; Thu, 21 Nov 2024 04:18:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3G6-0005Ye-8A
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:13:54 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3KJ-0006Nl-Jg
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:18:15 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3G4-00051t-QK
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:13:54 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-382296631f1so433576f8f.3
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 01:13:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3KI-0006K4-2h
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:18:15 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-431695fa98bso4959445e9.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 01:18:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732180431; x=1732785231; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732180692; x=1732785492; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9DwyxcdicjOuZPpepYKRSNG5kr9KZ7Mb7T8PSf1cbdQ=;
- b=bQy20/ggUhb0Q96ADyBMFoEh0a1ryovFO4hcqdxQhrEsU7aZJKsy7Bn3rCqvFVYwgV
- FAt6mtP/W1U7yLtQohIx1UG7xOF5kUV+Wv/mwzQgC9t0txm2AXMhIoGd7ZpyQjYU4RFS
- Lg+aAgcJFX+i2xvMPzs0L0fOmsV1MZ7bCcVi5nbOC0HRfg7amqPGrAAUig3nB1YwQ3vR
- HHvTJAJcgZVlvImnu+tguDIg24lxIBUEoQZmFkW41tdlSGyg30DUH5uTWI/GL4rqYuIf
- Wyh89Lt7D2RYIf6NFlvNv1YZWh8/Tgk4WnFoxfw+cTTeTlaC1aQRawXMFVhl6VKM29Hi
- mxIw==
+ bh=Nt66NhA3OMEdTR5PV7nTYmEH0k8yZqtGIO+3/Ch3Pio=;
+ b=o75NBPvNWoNlvN/3n6t4LToGLnDgshbyp53FG/J0CAr0m9qbRNRUHpmF5mZ8BC8Htd
+ 1Jh6KYMTDyrom1P3xrwCvOiAzTtQuGO2rDOWo0hVj34fpYUU/wZZmilLKUe2HWb5bs4+
+ KFbbhuhUAKYan8tI/x6Ii7quXlL/IttJ65BeK6DL10i3kP/5R/9YebreKjL/woJLThgt
+ /m4tZaspaTFs8hBmb8j/o3/ZywXupbaTB1edM2wv7NxmOLZ2yVZhEGcFzG23xyGCuuuf
+ 5IHxFMsLbKNHpxtIG9tynd1vG3Danv5JpYtRvCZe4jQsddWp3TrvEc+fldmG81kjixiI
+ LQeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732180431; x=1732785231;
+ d=1e100.net; s=20230601; t=1732180692; x=1732785492;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9DwyxcdicjOuZPpepYKRSNG5kr9KZ7Mb7T8PSf1cbdQ=;
- b=Z//CHb6JZ655rcZAAGTieSiJOuxvxJXGuX2OAvJcLYpHt5k+LEwiBcfFtZk8WPkgPm
- 7ji/Ye62WZ0F2N6U1DATp2qT4hURU9L0cVlesLm/0A5U0/kISxXtHUJfDdZLI8RpFam9
- t1wfjwbQ+nzZs8GajeoM/UR30n4KtK9fPaC+tUAQa8p0aOUEm3uRQil/B4Su0W8iHm+H
- A0KHFCgWV6/Sg1RTbxkl1jH/DYG19Cfj2Ex4/KSDycjZ6iefvF+g+bp8V3yKtyI+0f4s
- N3xGezFMi3Krw2Q81VeOU6uJ8d6VSPbQdyUXIuzMseyNHkjvBi2EezYG0iduEsCz20Yx
- SCxQ==
+ bh=Nt66NhA3OMEdTR5PV7nTYmEH0k8yZqtGIO+3/Ch3Pio=;
+ b=r1JxvZrmE8YMcV0rmdtnhAsklV3lRzppGoLUqcPu0nyY3ym9FSAo/w9Kz1B3J6AKU3
+ Od/2q6djC9Ye60rHRqbAoasr/Y2TFq1BF2MxW71uCQLZZQvH1hZFBERLNoS2Fyoh8Bpx
+ nUmm7uataJZRAH+NDZPBYf6I+JU/m/YL/VX/McpKAjsaakT5ROoJLwqK+39GPAOm/HOS
+ mRLN3IhZh8tvenvCn88wvo/WYWwxorVz2ULurIvhca22ZtRPc4TF8txVvQu8PJrbjdbf
+ YSFdrg96A/Y/FvwhnLcmqkPFIN60jkd0/efbhoztApLu4SMDUrNwCO94m9XxfVTu8Gqg
+ Yv4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXONIZeEeP8VgkEf71aR9MoJl+dLln2uXgBAMo6xE9Ey9pxFAsey1LRN0LgfUPlcw3OSNpbo0Cvcl6g@nongnu.org
-X-Gm-Message-State: AOJu0YyLqAlVFQVws9s9dvldkN3zXMzeRDlrlvD/lm4kAcSiBvWVrbSE
- kOTNQVJoIQgJNW+I9VjKwatSqLyA5T1AS+abLQ5smgfAiAGkekkmO7WY3zETgHI=
-X-Gm-Gg: ASbGncvnY/QVuavKPOv+dpvJ1M1fPr2FFKQ726oGGV4eo3HVWmEsaqSskFEUeeXJCsF
- e0BL4rZUWScPMH/0JaUk5qBE36i3DI/2AWBlcGdGRf7WPvOuAxJQAzyIC0UajagwUEQFyNcWTQ3
- HSS8LWR2EbfmN8a3Oxe6QT0xKCLR3Bx6u0BfmUvkxQwnjziQvQ3Ja+15ULGNLkK1rCkkL8rpCYG
- 21sH3T2nP7NCMxsHAJ0udExJzKOFDi78kF2/6KpQQ6l5swhUF8xsRZ2qRHiLI6wbiXixw==
-X-Google-Smtp-Source: AGHT+IF8bllYWAMBwrB1sx2LBqxy688lEsvaHLH+fu4J4ueWFbdW2KCsyPbXFeGfXwsE6fd09uAyGw==
-X-Received: by 2002:a05:6000:1fa9:b0:382:5ae6:5aac with SMTP id
- ffacd0b85a97d-3825ae65bf9mr1034301f8f.50.1732180430968; 
- Thu, 21 Nov 2024 01:13:50 -0800 (PST)
+ AJvYcCXldoKqUPYR5qegJk8ihdwP9vZo11rDajuSzK/F5Ox1QZTcx2REaimUY4cNZv+Z9c8KcMgquP03bpgD@nongnu.org
+X-Gm-Message-State: AOJu0Yxj2nCypv69mwmaXAW332vDA57SVOyRkaQWuNYjhpIAcPBWhrLZ
+ uk0tLRnI6OFSTr+q2SEUQx/rYoURLPZuMcyx65tM9zfm7KvArZhv8N9MbtS+QZw=
+X-Gm-Gg: ASbGncvFpcQmWRzM3WVVh8oIzfD/wzlKoJZricoVa1PdVYmU299u2lbK+FTD2E8fMk0
+ /BL74Hbh2Wih8K1I2W+/sMRcwEXO9giQmGQCTiKPYKPyao6tsXP8OugOyyER+ZUFWABP4Mwwl1a
+ aj4++iV8IhtYFyFUGfKEe1rdP+dhZWqX6jChZQfl0iShFqpJBY9rB51zCB8ARgRkkiZFGv17giX
+ So4YvwTGod9BslSF1zvyzu6G23RULOTUxb2x/JGoPOxR+35ohY5e6QcF8BV+kmMjyyhew==
+X-Google-Smtp-Source: AGHT+IHmcU8qYRf53zoNdHjyHKDWLtTAlurgc18rAwywSeTtGP7DxHbgl/Cw9DvPo6Qn+BHv0/TCug==
+X-Received: by 2002:a05:600c:1d9e:b0:431:60d0:9088 with SMTP id
+ 5b1f17b1804b1-433489b4401mr49771065e9.13.1732180692422; 
+ Thu, 21 Nov 2024 01:18:12 -0800 (PST)
 Received: from [192.168.69.146] ([176.187.204.90])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b4642ad5sm46889775e9.37.2024.11.21.01.13.48
+ 5b1f17b1804b1-433b46430f1sm47242575e9.43.2024.11.21.01.18.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 01:13:49 -0800 (PST)
-Message-ID: <ced8ba1c-5f4f-44ee-b662-c7e1c745b3b0@linaro.org>
-Date: Thu, 21 Nov 2024 10:13:47 +0100
+ Thu, 21 Nov 2024 01:18:11 -0800 (PST)
+Message-ID: <53e20008-4d62-40a5-be0a-cf2d02009d96@linaro.org>
+Date: Thu, 21 Nov 2024 10:18:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/12] qom: Create system containers explicitly
+Subject: Re: [PATCH 00/12] QOM: container_get() removal
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -76,14 +76,13 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  <clg@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <20241120215703.3918445-1-peterx@redhat.com>
- <20241120215703.3918445-11-peterx@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241120215703.3918445-11-peterx@redhat.com>
+In-Reply-To: <20241120215703.3918445-1-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,37 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/11/24 22:57, Peter Xu wrote:
-> Always explicitly create QEMU system containers upfront.
-> 
-> Root containers will be created when trying to fetch the root object the
-> 1st time.  Machine sub-containers will be created only until machine is
-> being initialized.
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   hw/core/machine.c | 19 ++++++++++++++++---
->   qom/object.c      | 16 +++++++++++++++-
->   2 files changed, 31 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index a35c4a8fae..a184dbf8f0 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -1193,14 +1193,27 @@ static void machine_class_base_init(ObjectClass *oc, void *data)
->       }
->   }
->   
-> +const char *machine_containers[] = {
+On 20/11/24 22:56, Peter Xu wrote:
 
-    const char *const machine_containers[] = {
+> Peter Xu (12):
+>    qom: Add TYPE_CONTAINER macro
+>    qom: New container_create()
+>    tests: Fix test-qdev-global-props on anonymous qdev realize()
+>    tests: Explicitly create containers in test_qom_partial_path()
+>    ui/console: Explicitly create "/backend" container
+>    hw/ppc: Explicitly create the drc container
+>    ppc/e500: Avoid abuse of container_get()
+>    qdev: Make qdev_get_machine() not use container_get()
+>    qdev: Add machine_get_container()
+>    qom: Create system containers explicitly
+>    qom: Add object_get_container()
+>    qom: Drop container_get()
 
-> +    "unattached",
-> +    "peripheral",
-> +    "peripheral-anon"
-> +};
+Maybe split the last patch in 3, reordering as:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-
+- qom: Create system containers explicitly
+- qdev: Make qdev_get_machine() not use container_get()
+- qdev: Add machine_get_container()
+- qdev: Use machine_get_container()
+   (part 1 of 'qom: Drop container_get()')
+- qom: Add object_get_container()
+- qom: Use object_get_container()
+   (part 2 of 'qom: Drop container_get()')
+- qom: Drop container_get()
+   (part 3 of 'qom: Drop container_get()')
 
