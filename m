@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA8DD78799
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B1F0D78797
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEAVY-0004Wa-Jd; Thu, 21 Nov 2024 11:58:20 -0500
+	id 1tEAWF-0005EX-Pn; Thu, 21 Nov 2024 11:59:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAVT-0004SV-Jz
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:15 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tEAVh-0004gO-DW
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:29 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAVO-0007yE-VB
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:15 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4315df7b43fso10078145e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:58:10 -0800 (PST)
+ id 1tEAVT-00081h-9c
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:29 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4315e62afe0so10238575e9.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:58:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732208289; x=1732813089; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732208293; x=1732813093; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yY9M4nXaCJ2neB5ZRMCPvZw3DACi8uIco1VZWqAc51U=;
- b=RVW+Sp+BhRGH1OLGo4Qvw8zhS01M8U8JnIsmK60orhZx5jryg3rXg+00/xiJTAyX3B
- iV/cjhxcmuhI2Xefv77N/YTy7vgcMx4RKh6Ii3G1mdcEu6n9wLfcz9ZQ25sWhW6/LAMb
- 7AAAxKRmHTD61LYr+PkHhOkLglqKfBE9/twfj60M+q+abWZnBW5VxiF1uRgFk/2BhI6H
- ZNXSMjMsHjkqS/++j7XqRxaqkebpc32h/oN6tPW2FBHKNbfJ60Aw2RMPIUiozv3521Oa
- LD+qNeEN1UP3E6y+RgG14Qj2mpM9PhwDt5M/rcmH9gdvlAhyNKz5iQ1agxm0ulcEqn9/
- ec3Q==
+ bh=4ZyRU/wbphexjcfx9boVViUiFcAlCnY6CkVEXtnxhu4=;
+ b=hhYGvOSPNGsw9Jepc46UN4BQPqIEj54M9ukqOJKUEAY42KlRfdXWlHM2RKF4JFxyQj
+ cBxoFBvXOPEa3vPbj5iFtL7XdxVJMsBFXpKXgYNDaITDdsZfFBczlblJ/lpxsvUStiQE
+ cGefjNPx+o4S3k8OfElo4V0qgBjMtB2N586oG8yeWhSCMfEpszE3RQV3V7u1gND5Cn97
+ zNHJB3CAp2t/X8ZrrLymGKauOc2ClQZludwLPFEZ0kQFHVrkfaemyEdOjR0pzS5JkVxy
+ PeuHrLESl2ZMfaUDSLtQ4QRG7B1WJTUvgbb18m5peCdh0RUrOS7NOjK8M6Ikr7qjjLWp
+ F1zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732208289; x=1732813089;
+ d=1e100.net; s=20230601; t=1732208293; x=1732813093;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yY9M4nXaCJ2neB5ZRMCPvZw3DACi8uIco1VZWqAc51U=;
- b=VT+Ov0Tk8pentKDLzINmW14+xppslqaKh0GXW4K/2vLxMkyDz3jyPS4/JXBoMRPU25
- Y+XlLj78miK2WSnHsGTLS5VZfa4UqKDPkDxnFy5WxwSuvs3pTwH/mADdB33TGkbLMexL
- BfvOesLw37sF/f37ij5t31XuK6uHP2x2/jLvFBUn4MMe7ObNToIC2QYo+QGG1KGot+XW
- X60xuXbxBgCcouq4QEvxzVvBXcaQ55Ih/m05hhVQrremyDG3264id6zt7iHB1Dbr97WV
- dtzGfvxvmsEfmQDLUWqUhAzeDrCMH2v6o7cKv+Nd6S8ipwp1PA1hpd7XtC2RpEqJ5ywG
- XDBA==
-X-Gm-Message-State: AOJu0YxDi8t2hYGJURR5RxLhNl4654vih+FoKB7dGmjNKmTCzh16tQL9
- PF1x3AvPn9ozidt4q1xKrYSKhXUdKZ6LZyt9wQmls3XoyvNy/b5HuYC3aBD7uA4=
-X-Gm-Gg: ASbGncvY2lekoTzUAryEXVqQeKyW72UXbFUfVbP4gWpi/0kYtSF93uqfb1l6IFutmzF
- CZiTcp/p35O2i8g7DFkhor0aboCfj91j7uxkR1/B8uanh3EgpETywVU2LW5GRBGxH+a2XKFMRDC
- 99I6LBDJpFvdYkqAP87QPF0RvsHHIMnDRxqj1Z9WSpiDDcGCbfRaWfBrB6u6wXTQqDDsmKEkeT/
- ly4kdAFRU3ma9yrSip+WsPL0TYk32eTQtzxXVRXg9G95l4L
-X-Google-Smtp-Source: AGHT+IF8GSqlkmw1CWsVIpaNvgqu6+SlebdLtm04hJzKWCmEWIr+XGtZAqq/ZpdKEt5Zl9EyASIDSg==
-X-Received: by 2002:a05:6000:2c8:b0:37d:4389:e9de with SMTP id
- ffacd0b85a97d-38254adecefmr6619313f8f.1.1732208289215; 
- Thu, 21 Nov 2024 08:58:09 -0800 (PST)
+ bh=4ZyRU/wbphexjcfx9boVViUiFcAlCnY6CkVEXtnxhu4=;
+ b=W0mdwKrADiWHQbGpsJFVxDLGWOkjm68uPLHrX1xYWwFD4D0n7QiP6JH2EQYGbGxwpA
+ Wp0Ne1zPNgeHh9fVvDorV7zqd08psb6ylElV64dsjjpvFW80nV7NCKIqnzlqoMvPHeO9
+ PYfWVFOcEWGTEu4zsqAA2UPNjqmV+vrFN3I00llGEbTG8xCA4xX6qfuRso9yIt2BfjDd
+ yGh630l27tw4WmHo9erNEVfGBHuXz3hsGA+5yBRZjQ5HFjp/NfG3Fqke/TpZ7mxBqB0e
+ u9bbWYjnBwvKKouKdbgvdVExPIQduBXuEKEse6J+ZveQlkw2nEXZOU4RavbJzc/8Ipz9
+ BvDg==
+X-Gm-Message-State: AOJu0Yz8boaYPzft8jrZ+S7DNdb010wDu7vrfh9ijFVcbeiviXKP7GgM
+ BReWXri+NHbblmWQgPzsI33rKf2u3NbCClvYhBtYRtPro2IPIMNeSf5Ar4Nn3Ss=
+X-Gm-Gg: ASbGnctUW5u9E2Ob2k94HRVz3IeXe/9jiZeRDNH0Kw7dh+qGndtGPJUXiAuHB8OAYie
+ uC1QmdmavhrYcYfRZnZenk3+m/wQcoHGqsuI6GqW0Utlrtw1orK96L8SVET3mICd4AcZizEE2u7
+ FCXIUYJChjLFIIexlXGyoIU7AiCdJ5LjEagwLp+W2RHlxSY9e34jtcTT4MVORfwVnRBWnqikRzp
+ KAHiOxEyxLXSe/yL5hsG2aHiPVUo9eIxC2Ml7Eq0JYKBa74
+X-Google-Smtp-Source: AGHT+IG8ZaZHt07S0HtzgwKkgyl829XD6j1o75J0q8rbSHTP4tU6eE5Le7QKO8DRkJ/rmWriGFxJlQ==
+X-Received: by 2002:a05:6000:4604:b0:382:5aae:87cf with SMTP id
+ ffacd0b85a97d-3825aae8da4mr2729457f8f.31.1732208293386; 
+ Thu, 21 Nov 2024 08:58:13 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fad5f59sm38965f8f.10.2024.11.21.08.58.07
+ 5b1f17b1804b1-433b463bd19sm61028815e9.44.2024.11.21.08.58.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 08:58:08 -0800 (PST)
+ Thu, 21 Nov 2024 08:58:10 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9B2825F940;
- Thu, 21 Nov 2024 16:58:06 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 342085FC75;
+ Thu, 21 Nov 2024 16:58:07 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -93,18 +93,17 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 02/39] tests/functional: automatically clean up scratch files
- after tests
-Date: Thu, 21 Nov 2024 16:57:29 +0000
-Message-Id: <20241121165806.476008-3-alex.bennee@linaro.org>
+Subject: [PATCH 08/39] tests/functional: honour self.workdir in ACPI bits tests
+Date: Thu, 21 Nov 2024 16:57:35 +0000
+Message-Id: <20241121165806.476008-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241121165806.476008-1-alex.bennee@linaro.org>
 References: <20241121165806.476008-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,89 +128,145 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The build/tests/functional subdirectories are consuming huge amounts
-of disk space.
-
-Split the location for scratch files into a 'scratch' sub-directory,
-separate from log files, and delete it upon completion of each test.
-The new env variable QEMU_TEST_KEEP_SCRATCH can be set to preserve
-this scratch dir for debugging access if required.
+The ACPI bits test sets up its own private temporary directory into it
+creates scratch files. This is justified by a suggestion that we need
+to be able to preserve the scratch files. We have the ability to
+preserve the scratch dir with our functional harness, so there's no
+reason to diverge from standard practice in file placement.
 
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20241121154218.1423005-3-berrange@redhat.com>
+Message-Id: <20241121154218.1423005-9-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/devel/testing/functional.rst      |  6 ++++++
- tests/functional/qemu_test/testcase.py | 14 +++++++++-----
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ tests/functional/test_acpi_bits.py | 44 +++++++++---------------------
+ 1 file changed, 13 insertions(+), 31 deletions(-)
 
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index bf6f1bb81e..6b5d0c5b98 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -65,6 +65,12 @@ to the QEMU binary that should be used for the test, for example::
-   $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
-   $ python3 ../tests/functional/test_file.py
+diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_acpi_bits.py
+index 4c192d95cc..3498b96787 100755
+--- a/tests/functional/test_acpi_bits.py
++++ b/tests/functional/test_acpi_bits.py
+@@ -150,7 +150,6 @@ class AcpiBitsTest(QemuBaseTest): #pylint: disable=too-many-instance-attributes
+     def __init__(self, *args, **kwargs):
+         super().__init__(*args, **kwargs)
+         self._vm = None
+-        self._workDir = None
+         self._baseDir = None
  
-+The test framework will automatically purge any scratch files created during
-+the tests. If needing to debug a failed test, it is possible to keep these
-+files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=1``` as an env
-+variable.  Any preserved files will be deleted the next time the test is run
-+without this variable set.
-+
- Overview
- --------
+         self._debugcon_addr = '0x403'
+@@ -169,7 +168,7 @@ def copy_bits_config(self):
+         config_file = 'bits-cfg.txt'
+         bits_config_dir = os.path.join(self._baseDir, 'acpi-bits',
+                                        'bits-config')
+-        target_config_dir = os.path.join(self._workDir,
++        target_config_dir = os.path.join(self.workdir,
+                                          'bits-%d' %self.BITS_INTERNAL_VER,
+                                          'boot')
+         self.assertTrue(os.path.exists(bits_config_dir))
+@@ -186,7 +185,7 @@ def copy_test_scripts(self):
  
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 411978b5ef..b9418e2ac0 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -13,8 +13,9 @@
+         bits_test_dir = os.path.join(self._baseDir, 'acpi-bits',
+                                      'bits-tests')
+-        target_test_dir = os.path.join(self._workDir,
++        target_test_dir = os.path.join(self.workdir,
+                                        'bits-%d' %self.BITS_INTERNAL_VER,
+                                        'boot', 'python')
  
- import logging
- import os
--import subprocess
- import pycotap
-+import shutil
-+import subprocess
- import sys
- import unittest
- import uuid
-@@ -40,11 +41,12 @@ def setUp(self, bin_prefix):
-         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
-         self.arch = self.qemu_bin.split('-')[-1]
+@@ -225,8 +224,8 @@ def fix_mkrescue(self, mkrescue):
+             the directory where we have extracted our pre-built bits grub
+             tarball.
+         """
+-        grub_x86_64_mods = os.path.join(self._workDir, 'grub-inst-x86_64-efi')
+-        grub_i386_mods = os.path.join(self._workDir, 'grub-inst')
++        grub_x86_64_mods = os.path.join(self.workdir, 'grub-inst-x86_64-efi')
++        grub_i386_mods = os.path.join(self.workdir, 'grub-inst')
  
--        self.workdir = os.path.join(BUILD_DIR, 'tests/functional', self.arch,
--                                    self.id())
-+        self.outputdir = os.path.join(BUILD_DIR, 'tests', 'functional',
-+                                      self.arch, self.id())
-+        self.workdir = os.path.join(self.outputdir, 'scratch')
-         os.makedirs(self.workdir, exist_ok=True)
+         self.assertTrue(os.path.exists(grub_x86_64_mods))
+         self.assertTrue(os.path.exists(grub_i386_mods))
+@@ -247,11 +246,11 @@ def generate_bits_iso(self):
+         """ Uses grub-mkrescue to generate a fresh bits iso with the python
+             test scripts
+         """
+-        bits_dir = os.path.join(self._workDir,
++        bits_dir = os.path.join(self.workdir,
+                                 'bits-%d' %self.BITS_INTERNAL_VER)
+-        iso_file = os.path.join(self._workDir,
++        iso_file = os.path.join(self.workdir,
+                                 'bits-%d.iso' %self.BITS_INTERNAL_VER)
+-        mkrescue_script = os.path.join(self._workDir,
++        mkrescue_script = os.path.join(self.workdir,
+                                        'grub-inst-x86_64-efi', 'bin',
+                                        'grub-mkrescue')
  
--        self.logdir = self.workdir
-+        self.logdir = self.outputdir
-         self.log_filename = os.path.join(self.logdir, 'base.log')
-         self.log = logging.getLogger('qemu-test')
-         self.log.setLevel(logging.DEBUG)
-@@ -56,6 +58,8 @@ def setUp(self, bin_prefix):
-         self.log.addHandler(self._log_fh)
+@@ -290,17 +289,7 @@ def setUp(self): # pylint: disable=arguments-differ
  
-     def tearDown(self):
-+        if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
-+            shutil.rmtree(self.workdir)
-         self.log.removeHandler(self._log_fh)
+         self._baseDir = Path(__file__).parent
  
-     def main():
-@@ -108,7 +112,7 @@ def setUp(self):
+-        # workdir could also be avocado's own workdir in self.workdir.
+-        # At present, I prefer to maintain my own temporary working
+-        # directory. It gives us more control over the generated bits
+-        # log files and also for debugging, we may chose not to remove
+-        # this working directory so that the logs and iso can be
+-        # inspected manually and archived if needed.
+-        self._workDir = tempfile.mkdtemp(prefix='acpi-bits-',
+-                                         suffix='.tmp')
+-        self.logger.info('working dir: %s', self._workDir)
+-
+-        prebuiltDir = os.path.join(self._workDir, 'prebuilt')
++        prebuiltDir = os.path.join(self.workdir, 'prebuilt')
+         if not os.path.isdir(prebuiltDir):
+             os.mkdir(prebuiltDir, mode=0o775)
  
-         console_log = logging.getLogger('console')
-         console_log.setLevel(logging.DEBUG)
--        self.console_log_name = os.path.join(self.workdir, 'console.log')
-+        self.console_log_name = os.path.join(self.logdir, 'console.log')
-         self._console_log_fh = logging.FileHandler(self.console_log_name,
-                                                    mode='w')
-         self._console_log_fh.setLevel(logging.DEBUG)
+@@ -321,10 +310,10 @@ def setUp(self): # pylint: disable=arguments-differ
+ 
+         # extract the bits software in the temp working directory
+         with zipfile.ZipFile(bits_zip_file, 'r') as zref:
+-            zref.extractall(self._workDir)
++            zref.extractall(self.workdir)
+ 
+         with tarfile.open(grub_tar_file, 'r', encoding='utf-8') as tarball:
+-            tarball.extractall(self._workDir)
++            tarball.extractall(self.workdir)
+ 
+         self.copy_test_scripts()
+         self.copy_bits_config()
+@@ -334,7 +323,7 @@ def parse_log(self):
+         """parse the log generated by running bits tests and
+            check for failures.
+         """
+-        debugconf = os.path.join(self._workDir, self._debugcon_log)
++        debugconf = os.path.join(self.workdir, self._debugcon_log)
+         log = ""
+         with open(debugconf, 'r', encoding='utf-8') as filehandle:
+             log = filehandle.read()
+@@ -360,25 +349,18 @@ def tearDown(self):
+         """
+         if self._vm:
+             self.assertFalse(not self._vm.is_running)
+-        if not os.getenv('BITS_DEBUG') and self._workDir:
+-            self.logger.info('removing the work directory %s', self._workDir)
+-            shutil.rmtree(self._workDir)
+-        else:
+-            self.logger.info('not removing the work directory %s ' \
+-                             'as BITS_DEBUG is ' \
+-                             'passed in the environment', self._workDir)
+         super().tearDown()
+ 
+     def test_acpi_smbios_bits(self):
+         """The main test case implementation."""
+ 
+-        iso_file = os.path.join(self._workDir,
++        iso_file = os.path.join(self.workdir,
+                                 'bits-%d.iso' %self.BITS_INTERNAL_VER)
+ 
+         self.assertTrue(os.access(iso_file, os.R_OK))
+ 
+         self._vm = QEMUBitsMachine(binary=self.qemu_bin,
+-                                   base_temp_dir=self._workDir,
++                                   base_temp_dir=self.workdir,
+                                    debugcon_log=self._debugcon_log,
+                                    debugcon_addr=self._debugcon_addr)
+ 
 -- 
 2.39.5
 
