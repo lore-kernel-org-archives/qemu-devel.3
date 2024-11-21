@@ -4,64 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EC3FD75BBE
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 06:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F62CD75BBE
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 06:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE0RD-0004Tw-SQ; Thu, 21 Nov 2024 01:13:11 -0500
+	id 1tE0Rc-0004Zm-Tl; Thu, 21 Nov 2024 01:13:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tE0RC-0004TM-5G; Thu, 21 Nov 2024 01:13:10 -0500
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1tE0RI-0004Wa-E1; Thu, 21 Nov 2024 01:13:17 -0500
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tE0RA-0006J8-43; Thu, 21 Nov 2024 01:13:09 -0500
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-53d9ff8ef3aso502600e87.1; 
- Wed, 20 Nov 2024 22:13:07 -0800 (PST)
+ id 1tE0RG-0006Kp-J2; Thu, 21 Nov 2024 01:13:16 -0500
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-53c779ef19cso498787e87.3; 
+ Wed, 20 Nov 2024 22:13:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732169586; x=1732774386; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1732169592; x=1732774392; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vrCdLZ8Ddyr2Q8mjwb19Axqv6cumMVuY8X4Ma76BPPk=;
- b=g6sLpoliEa0C14eusIU9tzqBuobQX3zrS3bRSLSiqri1fhEJ4AiqSnVUhh6mc3ZzX+
- Y9q3l4FIXlxGJc7qxoYtKetTbZlxR2Pw0mwY/menNPXPA2Ooqun+FtFKTPBZwmto9hiL
- 86I2NBhsLEMY08CvJ3jLQiFa8I3x2P6k8/hl74wQUiK/vWbF9FGMkOxoY2eSh0zFRASj
- H79b8OKL9/k/YfPgDW1hpn6rRZiu+GOuZXWJF9a4Hv7CmVKp6k/zw8Yli0RiSpruDPkA
- XstvH+glaCVXvPEpzSS+fbebFS+eUuKsxUHwmR95f12pdNdVkzx1+ISA+34HZUCKFsID
- o2pg==
+ bh=gwcJT32j32KKKz/tCRrugf9yi6vjemEK7dj9TrpBfM8=;
+ b=IIGyLunvs6FQupyldKfdXuXvw4/gAK5FpclSkKgZJfUHEcLY/y+GGKIlkxfgrLosmK
+ 87hZfbQMaptN3Jp9wAv3CO3t8JQwPVVLcpM+uEJo2cfLyHR/Pue2nWID14B1N9dKdqMH
+ pWS+Fng9n5lxLdZ63E61NqX/pR4ZI0k1oUvzcPDWWd1WUGvW+OaQG5jSDO4SyaEhg1UE
+ VbVyiPbBSEB2bE38PO3nHvyTNmH32NONc2sEujWWZdH9ml4XLnCg8khLdGXDTO+l/qTD
+ WpUdwxRw/b9ajvVmVUtC2V7pOGZWKuG/HqZepsi75LZb7yOX9d5T7JInws6RVTsK8YU/
+ 7xUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732169586; x=1732774386;
+ d=1e100.net; s=20230601; t=1732169592; x=1732774392;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vrCdLZ8Ddyr2Q8mjwb19Axqv6cumMVuY8X4Ma76BPPk=;
- b=c1iEUguwddM6eTQucOlkoWEsKKQ1IOIUqOB7RpkAOys81NgpgwyEkILXqF3gMo95ph
- ObGgY1+l+7YeQoTcDAfuFmhZso2MRs+xr0nuZIyq+BdYQ3GLrhiP0T9mLTKlEednub8U
- f01DLRhNyQ19HHSrsJQWeaNBUl1lfrGZb1dlR8sQhZfe+S8Tmws0aV0f2oB9dGcRRIME
- xtCXrnYc3rQyN2c2qrpLK+Gd6knAAmMhRqr07oSFWUFN/5r4a4J4LyWps0cDQS8f8MIz
- EPpQYgXpBz8aOcB+OE6qlhf8yDHb4viArBIjFu1M137VRxcBN0QzblEqH/+ZEzVaMDGH
- Pvew==
+ bh=gwcJT32j32KKKz/tCRrugf9yi6vjemEK7dj9TrpBfM8=;
+ b=CrqldzuMSnQmZG/0swNiCnGfqmGTfGNlSASJr5AqxP1A+CyTNVH0LCqqBy+L1WuZyu
+ 1A+QdIYBw1pZebmOQzMJn362cCQD1LwdN0ghovpIQYqYdZzk7tZWq7d/YEKbkXhOzWU+
+ 7PbTInayJUu7q8do2ow0BEMzztplca+CLtBxajPZiNC/VyHDpplJ/pHOVSPNH9ksFX88
+ e670InBHkJbkdNdhxNKbXcxcnO7MPx8iT3L8tUYaNpoGJJnXqL3BQ/z7RiuNkpRrfRoD
+ EUtW2Zy82Pg1M+x+3lmzE/US5MxDafMpDk5pqDfQLXWBY5HNidNbCRhlPssE9+hYR3xl
+ X9Qg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUi0u8nHqDmNu9TDI/SrlLXGeXdrGHDtQh1rDvvMtjolZJoYTsDb1HQQlLSj/Y+Z3jMypHblxt38rOt@nongnu.org,
- AJvYcCVd7Y6FMQI0e49USOjbo6MYnPLL6PtgVdiAPeEIfjKJYx3dqsnYoEh1t5ngNqf/UngzpU+rAJeqpg9yiA==@nongnu.org
-X-Gm-Message-State: AOJu0Yz4+MdEKLcqfjP7V+xn3XMwLhiE6MgS3vCyKlkBUybMKnWJpYd7
- mv99H30/D0LwPJguIAI9GDjb067icNpNbYWQC7S9rdoLE+2NpOn0
-X-Gm-Gg: ASbGnctJYTCLdWTxC/6ZfYJ48mDlVZX1341mVgQzh3P7uCQ9DE4WE108i1tVCf9/L9n
- om6VUHNr0MBUMDP6jrzzxx+/Bafz2KIe4SmDn2to+C58le3DfMvRKncyKpUtKsNBEjZvrqQBOUX
- bnwa8SMWx1pCX9ouHV4Uz+fxfLxUnoahw6JjbzvA6wezdhiScTT8puTKzisOfalDicxNpKzQz5u
- uzp3qp3PZDJe7y7/t+yPpv1Kt5wPBEs7wW5PKWtVDB5jeuI4UF3wxA=
-X-Google-Smtp-Source: AGHT+IEXYG+GE9fI8JrY+3tupfwK39mKOr7g8xUWqyRlF+q/O5Td9vX5cNwioEO9nZ9Q2H2Et1koSw==
-X-Received: by 2002:a05:6512:3da6:b0:539:da76:c77e with SMTP id
- 2adb3069b0e04-53dc1327509mr2456764e87.5.1732169585772; 
- Wed, 20 Nov 2024 22:13:05 -0800 (PST)
+ AJvYcCVoB5HmF37uYANw3KWMSpc5EGAnvnPCTzMrFiHBeiEZJ1Bp3/sjMtIJ2b0kk1V/Rj2r16BZW3qQ+xpJ2Q==@nongnu.org,
+ AJvYcCXjNTzyinUqkKH4soONRsZhLUzrZWtLmr9LhJce+yyPX5DaNwZ25E8JlsBMgW/RWkg/hzOWfz2hS+Qy@nongnu.org
+X-Gm-Message-State: AOJu0YzUNlKD18YxHs5wbKu2eRFaHa8FlbYT1H8HUv6LuJytxNW7dgzf
+ 78JdkgkUxoEylkKNQkDCTaBAfHcEvdJiLObLsNGQFa2bBlyFHNbV
+X-Google-Smtp-Source: AGHT+IG6FfjP2NF19F0ASBrLYxaqH1b+MM5wn9wmBRoZxON33mvIkYXf+TV+S6GQJC9TzMWyZvq0NQ==
+X-Received: by 2002:a05:6512:3044:b0:539:f5a9:b224 with SMTP id
+ 2adb3069b0e04-53dc1323555mr2207662e87.11.1732169592323; 
+ Wed, 20 Nov 2024 22:13:12 -0800 (PST)
 Received: from vmdev.asgard ([81.200.11.243]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53dbd4726c3sm840443e87.205.2024.11.20.22.13.04
+ 2adb3069b0e04-53dbd4726c3sm840443e87.205.2024.11.20.22.13.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Nov 2024 22:13:04 -0800 (PST)
+ Wed, 20 Nov 2024 22:13:11 -0800 (PST)
 From: baturo.alexey@gmail.com
 To: 
 Cc: baturo.alexey@gmail.com, richard.henderson@linaro.org,
@@ -70,17 +66,17 @@ Cc: baturo.alexey@gmail.com, richard.henderson@linaro.org,
  palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
  kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
-Subject: [PATCH v2 2/7] target/riscv: Add new CSR fields for S{sn, mn,
- m}pm extensions as part of Zjpm v1.0
-Date: Thu, 21 Nov 2024 09:12:54 +0300
-Message-Id: <20241121061259.4043177-3-baturo.alexey@gmail.com>
+Subject: [PATCH v2 6/7] target/riscv: Apply pointer masking for virtualized
+ memory accesses
+Date: Thu, 21 Nov 2024 09:12:58 +0300
+Message-Id: <20241121061259.4043177-7-baturo.alexey@gmail.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241121061259.4043177-1-baturo.alexey@gmail.com>
 References: <20241121061259.4043177-1-baturo.alexey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=baturo.alexey@gmail.com; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=baturo.alexey@gmail.com; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,200 +103,124 @@ From: Alexey Baturo <baturo.alexey@gmail.com>
 
 Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
 ---
- target/riscv/cpu.h      |  8 ++++++++
- target/riscv/cpu_bits.h |  4 ++++
- target/riscv/cpu_cfg.h  |  3 +++
- target/riscv/csr.c      | 31 ++++++++++++++++++++++++++++++-
- target/riscv/pmp.c      | 14 +++++++++++---
- target/riscv/pmp.h      |  1 +
- 6 files changed, 57 insertions(+), 4 deletions(-)
+ target/riscv/cpu.h                      |  2 ++
+ target/riscv/cpu_helper.c               | 19 +++++++++++++++++++
+ target/riscv/insn_trans/trans_rvh.c.inc | 11 +++++++++++
+ target/riscv/translate.c                |  4 ++++
+ 4 files changed, 36 insertions(+)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index e11264231d..417ff45544 100644
+index 11e3a6d647..6bbd9c6c25 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -128,6 +128,14 @@ typedef enum {
-     EXT_STATUS_DIRTY,
- } RISCVExtStatus;
+@@ -634,6 +634,7 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
+ /* If pointer masking should be applied and address sign extended */
+ FIELD(TB_FLAGS, PM_PMM, 29, 2)
+ FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
++FIELD(TB_FLAGS, PM_VPMM, 32, 2)
  
-+/* Enum holds PMM field values for Zjpm v1.0 extension */
-+typedef enum {
-+    PMM_FIELD_DISABLED = 0,
-+    PMM_FIELD_RESERVED = 1,
-+    PMM_FIELD_PMLEN7   = 2,
-+    PMM_FIELD_PMLEN16  = 3,
-+} RISCVPmPmm;
-+
- typedef struct riscv_cpu_implied_exts_rule {
- #ifndef CONFIG_USER_ONLY
-     /*
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index 2a6aff63ed..d8f9bc68e3 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -574,6 +574,7 @@ typedef enum {
- #define HSTATUS_VTW          0x00200000
- #define HSTATUS_VTSR         0x00400000
- #define HSTATUS_VSXL         0x300000000
-+#define HSTATUS_HUPMM        0x3000000000000
+ #ifdef TARGET_RISCV32
+ #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+@@ -773,6 +774,7 @@ bool riscv_cpu_is_32bit(RISCVCPU *cpu);
  
- #define HSTATUS32_WPRI       0xFF8FF87E
- #define HSTATUS64_WPRI       0xFFFFFFFFFF8FF87EULL
-@@ -734,6 +735,7 @@ typedef enum RISCVException {
- #define MENVCFG_CBIE                       (3UL << 4)
- #define MENVCFG_CBCFE                      BIT(6)
- #define MENVCFG_CBZE                       BIT(7)
-+#define MENVCFG_PMM                        (3ULL << 32)
- #define MENVCFG_ADUE                       (1ULL << 61)
- #define MENVCFG_PBMTE                      (1ULL << 62)
- #define MENVCFG_STCE                       (1ULL << 63)
-@@ -749,6 +751,7 @@ typedef enum RISCVException {
- #define SENVCFG_CBIE                       MENVCFG_CBIE
- #define SENVCFG_CBCFE                      MENVCFG_CBCFE
- #define SENVCFG_CBZE                       MENVCFG_CBZE
-+#define SENVCFG_PMM                        MENVCFG_PMM
+ bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
+ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
++RISCVPmPmm riscv_pm_get_virt_pmm(CPURISCVState *env);
+ int riscv_pm_get_pmlen(RISCVPmPmm pmm);
  
- #define HENVCFG_FIOM                       MENVCFG_FIOM
- #define HENVCFG_LPE                        MENVCFG_LPE
-@@ -756,6 +759,7 @@ typedef enum RISCVException {
- #define HENVCFG_CBIE                       MENVCFG_CBIE
- #define HENVCFG_CBCFE                      MENVCFG_CBCFE
- #define HENVCFG_CBZE                       MENVCFG_CBZE
-+#define HENVCFG_PMM                        MENVCFG_PMM
- #define HENVCFG_ADUE                       MENVCFG_ADUE
- #define HENVCFG_PBMTE                      MENVCFG_PBMTE
- #define HENVCFG_STCE                       MENVCFG_STCE
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 59d6fc445d..79a114eb07 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -128,6 +128,9 @@ struct RISCVCPUConfig {
-     bool ext_ssaia;
-     bool ext_sscofpmf;
-     bool ext_smepmp;
-+    bool ext_ssnpm;
-+    bool ext_smnpm;
-+    bool ext_smmpm;
-     bool rvv_ta_all_1s;
-     bool rvv_ma_all_1s;
-     bool rvv_vl_half_avl;
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 941c9691da..5389ccb983 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -575,6 +575,9 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
-     if (riscv_cpu_cfg(env)->ext_zkr) {
-         return RISCV_EXCP_NONE;
-     }
-+    if (riscv_cpu_cfg(env)->ext_smmpm) {
-+        return RISCV_EXCP_NONE;
-+    }
+ RISCVException riscv_csrr(CPURISCVState *env, int csrno,
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 78b461a5cf..4065809d9f 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -213,6 +213,7 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+     flags = FIELD_DP32(flags, TB_FLAGS, AXL, cpu_address_xl(env));
+     flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
+     flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
++    flags = FIELD_DP64(flags, TB_FLAGS, PM_VPMM, riscv_pm_get_virt_pmm(env));
  
-     return RISCV_EXCP_ILLEGAL_INST;
+     *pflags = flags;
  }
-@@ -2379,6 +2382,12 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-         if (env_archcpu(env)->cfg.ext_zicfiss) {
-             mask |= MENVCFG_SSE;
-         }
-+
-+        /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-+        if (env_archcpu(env)->cfg.ext_smnpm &&
-+            get_field(val, MENVCFG_PMM) != PMM_FIELD_RESERVED) {
-+            mask |= MENVCFG_PMM;
+@@ -260,6 +261,24 @@ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
+     return pmm;
+ }
+ 
++RISCVPmPmm riscv_pm_get_virt_pmm(CPURISCVState *env)
++{
++    RISCVPmPmm pmm = PMM_FIELD_DISABLED;
++#ifndef CONFIG_USER_ONLY
++    int priv_mode = cpu_address_mode(env);
++    if (priv_mode == PRV_U) {
++        pmm = get_field(env->hstatus, HSTATUS_HUPMM);
++    } else {
++        if (get_field(env->hstatus, HSTATUS_SPVP)) {
++            pmm = get_field(env->henvcfg, HENVCFG_PMM);
++        } else {
++            pmm = get_field(env->senvcfg, SENVCFG_PMM);
 +        }
-     }
-     env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
- 
-@@ -2425,6 +2434,12 @@ static RISCVException write_senvcfg(CPURISCVState *env, int csrno,
- {
-     uint64_t mask = SENVCFG_FIOM | SENVCFG_CBIE | SENVCFG_CBCFE | SENVCFG_CBZE;
-     RISCVException ret;
-+    /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-+    if (env_archcpu(env)->cfg.ext_ssnpm &&
-+        riscv_cpu_mxl(env) == MXL_RV64 &&
-+        get_field(val, SENVCFG_PMM) != PMM_FIELD_RESERVED) {
-+        mask |= SENVCFG_PMM;
 +    }
- 
-     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
-     if (ret != RISCV_EXCP_NONE) {
-@@ -2489,6 +2504,12 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
-             get_field(env->menvcfg, MENVCFG_SSE)) {
-             mask |= HENVCFG_SSE;
-         }
++#endif
++    return pmm;
++}
 +
-+        /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-+        if (env_archcpu(env)->cfg.ext_ssnpm &&
-+            get_field(val, HENVCFG_PMM) != PMM_FIELD_RESERVED) {
-+            mask |= HENVCFG_PMM;
-+        }
-     }
- 
-     env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
-@@ -3525,7 +3546,15 @@ static RISCVException read_hstatus(CPURISCVState *env, int csrno,
- static RISCVException write_hstatus(CPURISCVState *env, int csrno,
-                                     target_ulong val)
+ bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)
  {
--    env->hstatus = val;
-+    uint64_t mask = (target_ulong)-1;
-+    /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-+    if (!env_archcpu(env)->cfg.ext_ssnpm ||
-+        riscv_cpu_mxl(env) != MXL_RV64 ||
-+        get_field(val, HSTATUS_HUPMM) == PMM_FIELD_RESERVED) {
-+        mask &= ~HSTATUS_HUPMM;
-+    }
-+    env->hstatus = (env->hstatus & ~mask) | (val & mask);
+     bool virt_mem_en = false;
+diff --git a/target/riscv/insn_trans/trans_rvh.c.inc b/target/riscv/insn_trans/trans_rvh.c.inc
+index 03c6694430..ae067789d1 100644
+--- a/target/riscv/insn_trans/trans_rvh.c.inc
++++ b/target/riscv/insn_trans/trans_rvh.c.inc
+@@ -44,6 +44,14 @@ static bool do_hlv(DisasContext *ctx, arg_r2 *a,
+     TCGv dest = dest_gpr(ctx, a->rd);
+     TCGv addr = get_gpr(ctx, a->rs1, EXT_NONE);
+ 
++    bool is_hlvx = (func == gen_helper_hyp_hlvx_hu) ||
++                   (func == gen_helper_hyp_hlvx_wu);
 +
-     if (riscv_cpu_mxl(env) != MXL_RV32 && get_field(val, HSTATUS_VSXL) != 2) {
-         qemu_log_mask(LOG_UNIMP,
-                       "QEMU does not support mixed HSXLEN options.");
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index a1b36664fc..a185c246d6 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -575,6 +575,13 @@ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
- void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
- {
-     int i;
-+    uint64_t mask = MSECCFG_MMWP | MSECCFG_MML;
-+    /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-+    if (riscv_cpu_cfg(env)->ext_smmpm &&
-+        riscv_cpu_mxl(env) == MXL_RV64 &&
-+        get_field(val, MSECCFG_PMM) != PMM_FIELD_RESERVED) {
-+        mask |= MSECCFG_PMM;
++    /* Apply Zjpm pointer masking */
++    if (!is_hlvx) {
++        tcg_gen_sextract_tl(addr, addr, 0, ctx->addr_vxl);
 +    }
++
+     decode_save_opc(ctx, 0);
+     func(dest, tcg_env, addr);
+     gen_set_gpr(ctx, a->rd, dest);
+@@ -56,6 +64,9 @@ static bool do_hsv(DisasContext *ctx, arg_r2_s *a,
+     TCGv addr = get_gpr(ctx, a->rs1, EXT_NONE);
+     TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
  
-     trace_mseccfg_csr_write(env->mhartid, val);
- 
-@@ -590,12 +597,13 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
- 
-     if (riscv_cpu_cfg(env)->ext_smepmp) {
-         /* Sticky bits */
--        val |= (env->mseccfg & (MSECCFG_MMWP | MSECCFG_MML));
--        if ((val ^ env->mseccfg) & (MSECCFG_MMWP | MSECCFG_MML)) {
-+        val |= (env->mseccfg & mask);
-+        if ((val ^ env->mseccfg) & mask) {
-             tlb_flush(env_cpu(env));
-         }
++    /* Apply Zjpm pointer masking */
++    tcg_gen_sextract_tl(addr, addr, 0, ctx->addr_vxl);
++
+     decode_save_opc(ctx, 0);
+     func(tcg_env, addr, data);
+     return true;
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 32df295123..d8f83315c6 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -104,6 +104,7 @@ typedef struct DisasContext {
+     TCGv zero;
+     /* actual address width */
+     uint8_t addr_xl;
++    uint8_t addr_vxl;
+     bool addr_signed;
+     /* Ztso */
+     bool ztso;
+@@ -1239,10 +1240,13 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->cs = cs;
+     if (get_xl(ctx) == MXL_RV32) {
+         ctx->addr_xl = 32;
++        ctx->addr_vxl = 32;
+         ctx->addr_signed = false;
      } else {
--        val &= ~(MSECCFG_MMWP | MSECCFG_MML | MSECCFG_RLB);
-+        mask |= MSECCFG_RLB;
-+        val &= ~(mask);
+         int pm_pmm = FIELD_EX32(tb_flags, TB_FLAGS, PM_PMM);
+         ctx->addr_xl = 64 - riscv_pm_get_pmlen(pm_pmm);
++        int pm_vpmm = FIELD_EX64(tb_flags, TB_FLAGS, PM_VPMM);
++        ctx->addr_vxl = 64 - riscv_pm_get_pmlen(pm_vpmm);
+         ctx->addr_signed = FIELD_EX32(tb_flags, TB_FLAGS, PM_SIGNEXTEND);
      }
- 
-     /* M-mode forward cfi to be enabled if cfi extension is implemented */
-diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-index e0530a17a3..271cf24169 100644
---- a/target/riscv/pmp.h
-+++ b/target/riscv/pmp.h
-@@ -46,6 +46,7 @@ typedef enum {
-     MSECCFG_USEED = 1 << 8,
-     MSECCFG_SSEED = 1 << 9,
-     MSECCFG_MLPE =  1 << 10,
-+    MSECCFG_PMM = 3ULL << 32,
- } mseccfg_field_t;
- 
- typedef struct {
+     ctx->ztso = cpu->cfg.ext_ztso;
 -- 
 2.39.5
 
