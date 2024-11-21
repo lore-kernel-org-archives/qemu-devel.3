@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C625D78782
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 15:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357D4D7877B
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 15:44:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE9KT-0008MA-LS; Thu, 21 Nov 2024 10:42:49 -0500
+	id 1tE9Ke-0008Rf-AA; Thu, 21 Nov 2024 10:43:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE9KS-0008M0-Kc
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:42:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tE9Kd-0008QF-Cj
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:42:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE9KR-0000iI-2a
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:42:48 -0500
+ id 1tE9Kb-0000jB-Vb
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 10:42:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732203766;
+ s=mimecast20190719; t=1732203776;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jMkCy4MQl2qLOgRMp/s9Ejjza/xczcztT7nl6dT9KCs=;
- b=Ce3tmH53909xHc9vSkadAXccSrD8293/60RpN3ucaK5Nhy1lxYwADoNhS6e4otw49F/vQM
- 15Tz0MoUhDZ+4q5K75HbCt4N6DErwjyE9yboQoQt2F6tCQSlnB/bnMTgOC46IQByYnLp1n
- E3Ulp2ntf4Bl+IY9aNRXvLuFGuBZl9I=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZDwzpubNeX/qNKmGspxHAL/q+ogQKTglNRA4riqdpPU=;
+ b=TjnzWa1RjNRR02MCo2UVsfCPK+IWC2UsWCuqlZfvxE1WvyReWyiSq9PRgulLqtZvthP+4x
+ DHmRkHn/o65JeSiFxrwQ+q/yKX+6WaSn+ippND/ABa9+olbADDEvYjIF71zug1GZW03Ydi
+ r4qy76xu0VTKM4TuEuLTtEEMeYyL7ec=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-88-lDdkqxyIOxuPxpOaUDDWcA-1; Thu,
- 21 Nov 2024 10:42:44 -0500
-X-MC-Unique: lDdkqxyIOxuPxpOaUDDWcA-1
-X-Mimecast-MFC-AGG-ID: lDdkqxyIOxuPxpOaUDDWcA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-qVwBDbvAM_CyKddU-mIZVA-1; Thu,
+ 21 Nov 2024 10:42:51 -0500
+X-MC-Unique: qVwBDbvAM_CyKddU-mIZVA-1
+X-Mimecast-MFC-AGG-ID: qVwBDbvAM_CyKddU-mIZVA
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CECD19540F2; Thu, 21 Nov 2024 15:42:43 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8CBA019560B4; Thu, 21 Nov 2024 15:42:49 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.5])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8970D195607C; Thu, 21 Nov 2024 15:42:35 +0000 (UTC)
+ id 3827D1956086; Thu, 21 Nov 2024 15:42:44 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
@@ -54,24 +54,24 @@ Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 02/18] tests/functional: automatically clean up scratch
- files after tests
-Date: Thu, 21 Nov 2024 15:42:02 +0000
-Message-ID: <20241121154218.1423005-3-berrange@redhat.com>
+Subject: [PATCH v2 03/18] tests/functional: remove "AVOCADO" from env variable
+ name
+Date: Thu, 21 Nov 2024 15:42:03 +0000
+Message-ID: <20241121154218.1423005-4-berrange@redhat.com>
 In-Reply-To: <20241121154218.1423005-1-berrange@redhat.com>
 References: <20241121154218.1423005-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,87 +89,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The build/tests/functional subdirectories are consuming huge amounts
-of disk space.
-
-Split the location for scratch files into a 'scratch' sub-directory,
-separate from log files, and delete it upon completion of each test.
-The new env variable QEMU_TEST_KEEP_SCRATCH can be set to preserve
-this scratch dir for debugging access if required.
+This env variable is a debugging flag to save screendumps in the
+mips64el malta tests.
 
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/devel/testing/functional.rst      |  6 ++++++
- tests/functional/qemu_test/testcase.py | 14 +++++++++-----
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ tests/functional/test_mips64el_malta.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index bf6f1bb81e..6b5d0c5b98 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -65,6 +65,12 @@ to the QEMU binary that should be used for the test, for example::
-   $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
-   $ python3 ../tests/functional/test_file.py
- 
-+The test framework will automatically purge any scratch files created during
-+the tests. If needing to debug a failed test, it is possible to keep these
-+files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=1``` as an env
-+variable.  Any preserved files will be deleted the next time the test is run
-+without this variable set.
-+
- Overview
- --------
- 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 411978b5ef..b9418e2ac0 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -13,8 +13,9 @@
- 
- import logging
- import os
--import subprocess
- import pycotap
-+import shutil
-+import subprocess
- import sys
- import unittest
- import uuid
-@@ -40,11 +41,12 @@ def setUp(self, bin_prefix):
-         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
-         self.arch = self.qemu_bin.split('-')[-1]
- 
--        self.workdir = os.path.join(BUILD_DIR, 'tests/functional', self.arch,
--                                    self.id())
-+        self.outputdir = os.path.join(BUILD_DIR, 'tests', 'functional',
-+                                      self.arch, self.id())
-+        self.workdir = os.path.join(self.outputdir, 'scratch')
-         os.makedirs(self.workdir, exist_ok=True)
- 
--        self.logdir = self.workdir
-+        self.logdir = self.outputdir
-         self.log_filename = os.path.join(self.logdir, 'base.log')
-         self.log = logging.getLogger('qemu-test')
-         self.log.setLevel(logging.DEBUG)
-@@ -56,6 +58,8 @@ def setUp(self, bin_prefix):
-         self.log.addHandler(self._log_fh)
- 
-     def tearDown(self):
-+        if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
-+            shutil.rmtree(self.workdir)
-         self.log.removeHandler(self._log_fh)
- 
-     def main():
-@@ -108,7 +112,7 @@ def setUp(self):
- 
-         console_log = logging.getLogger('console')
-         console_log.setLevel(logging.DEBUG)
--        self.console_log_name = os.path.join(self.workdir, 'console.log')
-+        self.console_log_name = os.path.join(self.logdir, 'console.log')
-         self._console_log_fh = logging.FileHandler(self.console_log_name,
-                                                    mode='w')
-         self._console_log_fh.setLevel(logging.DEBUG)
+diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
+index 24ebcdb9c1..6d1195d362 100755
+--- a/tests/functional/test_mips64el_malta.py
++++ b/tests/functional/test_mips64el_malta.py
+@@ -159,7 +159,7 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
+         loc = np.where(result >= match_threshold)
+         tuxlogo_count = 0
+         h, w = tuxlogo_bgr.shape[:2]
+-        debug_png = os.getenv('AVOCADO_CV2_SCREENDUMP_PNG_PATH')
++        debug_png = os.getenv('QEMU_TEST_CV2_SCREENDUMP_PNG_PATH')
+         for tuxlogo_count, pt in enumerate(zip(*loc[::-1]), start=1):
+             logger.debug('found Tux at position (x, y) = %s', pt)
+             cv2.rectangle(screendump_bgr, pt,
 -- 
 2.46.0
 
