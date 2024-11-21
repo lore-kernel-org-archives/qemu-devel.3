@@ -4,55 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93871D78788
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0014D78788
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE9x5-00011Y-7v; Thu, 21 Nov 2024 11:22:43 -0500
+	id 1tE9zZ-0001v0-D5; Thu, 21 Nov 2024 11:25:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <charmitro@posteo.net>)
- id 1tE9x3-00010z-9c
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:22:41 -0500
-Received: from mout02.posteo.de ([185.67.36.66])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tE9zX-0001uh-9m
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:25:15 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <charmitro@posteo.net>)
- id 1tE9x1-0001Cv-Hi
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:22:40 -0500
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout02.posteo.de (Postfix) with ESMTPS id 5ED08240101
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 17:22:32 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
- t=1732206153; bh=dX0H3zLmPY7rh6TPKPV6fcbuqthN9TQRCrXyn2GoFIQ=;
- h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:
- Content-Transfer-Encoding:From;
- b=dQd/VoXgM/EPK+vtk8C+/W9ZjLsk4lDu23J9yMkgv+SQlLQqbfTOO1Hs577pojAQP
- huC91Tb/19vHseyXvnHdWxCuPkuBJLZtoIVk2SnhSYiDHfkftVEdL54rLdL2cxBoua
- e5UbSHGK415SKRnzMrGCTSnozCeQxMyokCZGzJT072jq5t1mE+YJ7SzG2jKnnMFq1E
- SiDyc9p6SyMxoMIAZoxM0THMdGXRDWxFnfuHgDNyePQFjGpuPrNddf2f4XmS57YtAV
- +fsS9ZUaN/s9NSzsnmE/sUTIO/VOprbeqwMWhzLjRRmWWqUX9JXx6SCryqJa061mLH
- 4oiE7NsrK00lg==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4XvNmm08qyz6tw6;
- Thu, 21 Nov 2024 17:22:31 +0100 (CET)
-From: Charalampos Mitrodimas <charmitro@posteo.net>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, Charalampos Mitrodimas <charmitro@posteo.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH] ui/gtk: Fix event handling on macOS hosts
-Date: Thu, 21 Nov 2024 16:21:46 +0000
-Message-Id: <20241121162146.53643-1-charmitro@posteo.net>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tE9zT-0001mh-V2
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:25:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1732206311; x=1763742311;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=k4c0rQTQLU9hPG7mimFrHqPqo7cRSgEt30q3Snwn3pY=;
+ b=ivFdVQnATxMACE5IY+DmZLibZpQxG99ZoFikxKn1pPwZ2Cj7lMojzppz
+ E8fnpHR3Fn9Idy414WkkT7HAByENZhbrmrbXxVHvy3nBzER6GP8A0hiPc
+ i+xpvOtOw7nzFTArlCnucoZAJwKnJPdf5W60A2mhEuC6m2lycJrMdTyme
+ Fn/l6rkb6bWwDCfcFIDQRcfKmURbqXIuYvr6ly19kR+u5BHySA5QyvmnS
+ /BFqWd5p93ktHDDr8vH3cwHLW554tR7Q0EAjvhx4aJy32wUG8I3RG++/w
+ dZy5iWG7khuDZRg5VoMsQ3ffDVxEN2+QzRfEuKHYWkH1esycmmhBze3R8 w==;
+X-CSE-ConnectionGUID: o4X1rqURQGetZVJZDIx8pA==
+X-CSE-MsgGUID: cugvlee0TcGFdjZsuJiRVA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11263"; a="32448119"
+X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; d="scan'208";a="32448119"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Nov 2024 08:25:07 -0800
+X-CSE-ConnectionGUID: s4X62JbWSKCgMynXRgMjGQ==
+X-CSE-MsgGUID: sQ0zilIgRz+fsjHB8qq08A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; d="scan'208";a="90423187"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Nov 2024 08:25:04 -0800
+Message-ID: <1e210331-e458-4709-9506-b83abf89ebed@intel.com>
+Date: Fri, 22 Nov 2024 00:24:58 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/4] Initialize nr_cores and nr_threads early and
+ related clearup
+To: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>, Brian Cain <bcain@quicinc.com>,
+ Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org
+References: <20241108070609.3653085-1-xiaoyao.li@intel.com>
+ <5f8db586-cdda-4d00-be02-f9880a20e1a3@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <5f8db586-cdda-4d00-be02-f9880a20e1a3@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.67.36.66; envelope-from=charmitro@posteo.net;
- helo=mout02.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.669, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -70,42 +97,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GTK+ UI was not properly handling events on macOS due to missing
-event loop polling in the Cocoa backend. Add polling of the GLib main
-context during display refresh to ensure UI events are processed.
+On 11/11/2024 6:49 PM, David Hildenbrand wrote:
+> On 08.11.24 08:06, Xiaoyao Li wrote:
+>> This series is extracted from TDX QEMU v6[1] series per Paolo's request.
+>>
+>> It is originally motivated by x86 TDX to track CPUID_HT in env- 
+>> >features[]
+>> which requires nr_cores and nr_cores being initialized earlier than in
+> 
+> "and nr_threads"
+> 
+>> qemu_init_vcpu().
+>>
+>> Initialize of nr_cores and nr_threads earlier in x86's cpu_realizefn()
+>> can make it work for x86 but it's duplicated with the initialization in
+>> qemu_init_vcpu() which are used by all the ARCHes. Since initialize them
+>> earlier also work for other ARCHes, introduce qemu_init_early_vcpu() to
+>> hold the initialization of nr_cores and nr_threads and call it at the
+>> beginning in realizefn() for each ARCH.
+>>
+>> Note, I only tested it for x86 ARCH. Please help test on other ARCHes.
+> 
+> [...]
+> 
+>>   accel/tcg/user-exec-stub.c |  4 +++
+>>   hw/core/cpu-common.c       |  2 +-
+>>   include/hw/core/cpu.h      |  8 +++++
+>>   system/cpus.c              |  6 +++-
+>>   target/alpha/cpu.c         |  2 ++
+>>   target/arm/cpu.c           |  2 ++
+>>   target/avr/cpu.c           |  2 ++
+>>   target/hexagon/cpu.c       |  2 ++
+>>   target/hppa/cpu.c          |  2 ++
+>>   target/i386/cpu.c          | 61 +++++++++++++++++++-------------------
+>>   target/loongarch/cpu.c     |  2 ++
+>>   target/m68k/cpu.c          |  2 ++
+>>   target/microblaze/cpu.c    |  2 ++
+>>   target/mips/cpu.c          |  2 ++
+>>   target/openrisc/cpu.c      |  2 ++
+>>   target/ppc/cpu_init.c      |  2 ++
+>>   target/riscv/cpu.c         |  2 ++
+>>   target/rx/cpu.c            |  2 ++
+>>   target/s390x/cpu.c         |  2 ++
+>>   target/sh4/cpu.c           |  2 ++
+>>   target/sparc/cpu.c         |  2 ++
+>>   target/tricore/cpu.c       |  2 ++
+>>   target/xtensa/cpu.c        |  2 ++
+>>   23 files changed, 85 insertions(+), 32 deletions(-)
+> 
+> Hm. It looks like this belongs into the parent realize function. But the 
+> "bad thing" is that we call the parent realize function after we try 
+> realizing the derived CPU.
+> 
+> Could it go into cpu_common_initfn()?
+> 
 
-This fixes UI responsiveness issues when running QEMU with the GTK
-display (--display gtk) on macOS hosts.
+It can, I think.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2676
-
-Co-developed-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
----
- ui/gtk.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/ui/gtk.c b/ui/gtk.c
-index bf9d3dd679..979210255f 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -437,6 +437,15 @@ static void gd_update(DisplayChangeListener *dcl,
- 
- static void gd_refresh(DisplayChangeListener *dcl)
- {
-+#ifdef GDK_WINDOWING_QUARTZ
-+    GMainContext *context;
-+    if (GDK_IS_QUARTZ_DISPLAY(gdk_display_get_default())) {
-+        context = g_main_context_default();
-+        while (g_main_context_pending(context)) {
-+            g_main_context_iteration(context, FALSE);
-+        }
-+    }
-+#endif
-     graphic_hw_update(dcl->con);
- }
- 
--- 
-2.39.5 (Apple Git-154)
+I'll move them into cpu_common_initfn() in v2 to avoid touching all the 
+ARCHes.
 
 
