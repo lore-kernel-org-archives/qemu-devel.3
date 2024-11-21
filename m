@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72182D6ED26
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 13:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260A8D6ED2A
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 13:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE6wX-0001g1-Vt; Thu, 21 Nov 2024 08:09:58 -0500
+	id 1tE73N-0003oL-CU; Thu, 21 Nov 2024 08:17:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE6wM-0001fD-Bj
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:09:46 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE6wK-0003kw-NH
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:09:46 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43169902057so7372175e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 05:09:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732194582; x=1732799382; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lVqSf6tRgP2wjiZ5qyh5pJyYLA55IGXtorUGMNDvwL4=;
- b=nQ2QcczsfkNu2mkhMNrYMrC4qLoHUbK/5RNovYEM/oTDT1n4KwYUUZoKxGXDkWzAln
- lqXGwvEulmpnTQbdWd9Oz8YJW0K6E6Tt43zNcy3RiVyosTIJsN1Eml8RIqRsNcIrJtZi
- PWyBjfMGeOoUgqXqdDbZBNgDvpo5IRvuYpdmMGuEou1seMxwI1yf08LierVgx+4DQEyD
- oAZ6pQDSQ1A6nHGpF4fFxlZvg8eRoqLfRqMqr3Kg1sH/tDkk5VFcQ7LSx1bTeF4tNEit
- 5XjC0Pbp1CSLXCqcQ/R3Xolvu62DarHneCMDdzHLWT1K7pVgkz6CYpWsSAXAYX87TFf4
- Itbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732194582; x=1732799382;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lVqSf6tRgP2wjiZ5qyh5pJyYLA55IGXtorUGMNDvwL4=;
- b=Eo1bbvyZ9cBoOxguBZU1FNQ7lvFc3qD9hSs2/DQhyAMRPu757Un29vEx0dwDyKApLA
- e9alBN4OAIue8mK3mc2PVVu9wmEk3fFzLdoSJLL8CBzPqdfYjv/ivLtdhW+72gWZCANb
- ca1qp781Un2VkzBoYn+GpxRPjMVtESUkV9xV+b4H9gSNi4UQNkegDvc7Pp28tFMDk4zd
- dKntI+9/c7e94WeV4Ugmq2VyDlukhI0oq5CHw5cuCLqiaNGa7PJJ7Fr9MhGO5JBp2LyW
- PDkGa4KyEaZv11j+pLwd6k4jp7rF498oEjbdo7q2/cgY5o90HCLmpEt7wSIcBSQeOlHN
- Z4QA==
-X-Gm-Message-State: AOJu0Yw8xw4LcwlhxDmMw+B50hUzh2w8ChGQ8N4zGeZnlzur+sJj9gEj
- qfmdkCXwKctVDX6SShjtkIg95pRDrZAJnuTSEEmfGcBq1gwwV7081JXS9yvW42w6jvPCZ4/EWX3
- D
-X-Google-Smtp-Source: AGHT+IHAbFomlRlDmY9/6mHf+QZRm8Hz81G/qp7x94woRIsUCmKiBmJzraNgVkrt1BPh1tC7TMcHEQ==
-X-Received: by 2002:a05:600c:34cf:b0:431:5a93:4e3c with SMTP id
- 5b1f17b1804b1-433489d4d84mr63821425e9.16.1732194582407; 
- Thu, 21 Nov 2024 05:09:42 -0800 (PST)
-Received: from localhost.localdomain ([176.187.204.90])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b45d1aedsm54376575e9.1.2024.11.21.05.09.41
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 21 Nov 2024 05:09:41 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tE73K-0003np-TC
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:16:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tE73I-0004v8-GD
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:16:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732195014;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XGKEZUiCpzh6dawc60C225dXqn4F/n/V/z6oFEWAVW8=;
+ b=CXmgAscYILWblV8yKJVKwmlqHS3BOHN+KvA6NeMLwwkjgXP2LETVfk6+vHVY5QydNd+FtL
+ jS5tQMw7BZdkvt4VUuzkYwxU6hIEB1hsSs04Klb63QMevWXKdL7PFK3h3/9MRqkj/iTw58
+ 8+prO3YjKjJT90An0S5DC6hwARUJGUc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-a2gCq03uOJegNjfrNnfPvA-1; Thu,
+ 21 Nov 2024 08:16:48 -0500
+X-MC-Unique: a2gCq03uOJegNjfrNnfPvA-1
+X-Mimecast-MFC-AGG-ID: a2gCq03uOJegNjfrNnfPvA
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 34B3B1954B15; Thu, 21 Nov 2024 13:16:47 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.5])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8059230000DF; Thu, 21 Nov 2024 13:16:43 +0000 (UTC)
+Date: Thu, 21 Nov 2024 13:16:39 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Volker =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH] ui/gtk: ??? Remove dead code around X11 ???
-Date: Thu, 21 Nov 2024 14:09:39 +0100
-Message-ID: <20241121130939.97212-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: Re: [RFC PATCH] ui/gtk: ??? Remove dead code around X11 ???
+Message-ID: <Zz8yt2x7PoRHyF9M@redhat.com>
+References: <20241121130939.97212-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20241121130939.97212-1-philmd@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,86 +88,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I have no clue about what this code does,
-but gtk_widget_set_double_buffered() is deprecated since GTK 3.14
-and we require 3.22 since more than 4 years, commit 7b23d121f9
-("ui: increase min required GTK version to 3.22.0").
+On Thu, Nov 21, 2024 at 02:09:39PM +0100, Philippe Mathieu-Daudé wrote:
+> I have no clue about what this code does,
+> but gtk_widget_set_double_buffered() is deprecated since GTK 3.14
+> and we require 3.22 since more than 4 years, commit 7b23d121f9
+> ("ui: increase min required GTK version to 3.22.0").
+> 
+> Assert gtk_use_gl_area is set and remove the dead code.
 
-Assert gtk_use_gl_area is set and remove the dead code.
+This assertion is dubious.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- ui/gtk.c | 46 +++++++++-------------------------------------
- 1 file changed, 9 insertions(+), 37 deletions(-)
+gtk_use_gl_area is only set when running on Win32, or running
+on Wayland. IOW, the assert will fire on X11, which is a
+supported platform, and Broadway which is admitedly more of
+a curiosity than a serious GTK backend.
 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index bf9d3dd679..d968cf3de1 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -809,17 +809,9 @@ static gboolean gd_draw_event(GtkWidget *widget, cairo_t *cr, void *opaque)
- 
- #if defined(CONFIG_OPENGL)
-     if (vc->gfx.gls) {
--        if (gtk_use_gl_area) {
--            /* invoke render callback please */
--            return FALSE;
--        } else {
--#ifdef CONFIG_X11
--            gd_egl_draw(vc);
--            return TRUE;
--#else
--            abort();
--#endif
--        }
-+        assert(gtk_use_gl_area);
-+        /* invoke render callback please */
-+        return FALSE;
-     }
- #endif
- 
-@@ -2156,32 +2148,12 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
- 
- #if defined(CONFIG_OPENGL)
-     if (display_opengl) {
--        if (gtk_use_gl_area) {
--            vc->gfx.drawing_area = gtk_gl_area_new();
--            g_signal_connect(vc->gfx.drawing_area, "realize",
--                             G_CALLBACK(gl_area_realize), vc);
--            vc->gfx.dcl.ops = &dcl_gl_area_ops;
--            vc->gfx.dgc.ops = &gl_area_ctx_ops;
--        } else {
--#ifdef CONFIG_X11
--            vc->gfx.drawing_area = gtk_drawing_area_new();
--            /*
--             * gtk_widget_set_double_buffered() was deprecated in 3.14.
--             * It is required for opengl rendering on X11 though.  A
--             * proper replacement (native opengl support) is only
--             * available in 3.16+.  Silence the warning if possible.
--             */
--#pragma GCC diagnostic push
--#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
--            gtk_widget_set_double_buffered(vc->gfx.drawing_area, FALSE);
--#pragma GCC diagnostic pop
--            vc->gfx.dcl.ops = &dcl_egl_ops;
--            vc->gfx.dgc.ops = &egl_ctx_ops;
--            vc->gfx.has_dmabuf = qemu_egl_has_dmabuf();
--#else
--            abort();
--#endif
--        }
-+        assert(gtk_use_gl_area);
-+        vc->gfx.drawing_area = gtk_gl_area_new();
-+        g_signal_connect(vc->gfx.drawing_area, "realize",
-+                         G_CALLBACK(gl_area_realize), vc);
-+        vc->gfx.dcl.ops = &dcl_gl_area_ops;
-+        vc->gfx.dgc.ops = &gl_area_ctx_ops;
-     } else
- #endif
-     {
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  ui/gtk.c | 46 +++++++++-------------------------------------
+>  1 file changed, 9 insertions(+), 37 deletions(-)
+> 
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index bf9d3dd679..d968cf3de1 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -809,17 +809,9 @@ static gboolean gd_draw_event(GtkWidget *widget, cairo_t *cr, void *opaque)
+>  
+>  #if defined(CONFIG_OPENGL)
+>      if (vc->gfx.gls) {
+> -        if (gtk_use_gl_area) {
+> -            /* invoke render callback please */
+> -            return FALSE;
+> -        } else {
+> -#ifdef CONFIG_X11
+> -            gd_egl_draw(vc);
+> -            return TRUE;
+> -#else
+> -            abort();
+> -#endif
+> -        }
+> +        assert(gtk_use_gl_area);
+> +        /* invoke render callback please */
+> +        return FALSE;
+>      }
+>  #endif
+>  
+> @@ -2156,32 +2148,12 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+>  
+>  #if defined(CONFIG_OPENGL)
+>      if (display_opengl) {
+> -        if (gtk_use_gl_area) {
+> -            vc->gfx.drawing_area = gtk_gl_area_new();
+> -            g_signal_connect(vc->gfx.drawing_area, "realize",
+> -                             G_CALLBACK(gl_area_realize), vc);
+> -            vc->gfx.dcl.ops = &dcl_gl_area_ops;
+> -            vc->gfx.dgc.ops = &gl_area_ctx_ops;
+> -        } else {
+> -#ifdef CONFIG_X11
+> -            vc->gfx.drawing_area = gtk_drawing_area_new();
+> -            /*
+> -             * gtk_widget_set_double_buffered() was deprecated in 3.14.
+> -             * It is required for opengl rendering on X11 though.  A
+> -             * proper replacement (native opengl support) is only
+> -             * available in 3.16+.  Silence the warning if possible.
+> -             */
+
+
+
+> -#pragma GCC diagnostic push
+> -#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+> -            gtk_widget_set_double_buffered(vc->gfx.drawing_area, FALSE);
+> -#pragma GCC diagnostic pop
+> -            vc->gfx.dcl.ops = &dcl_egl_ops;
+> -            vc->gfx.dgc.ops = &egl_ctx_ops;
+> -            vc->gfx.has_dmabuf = qemu_egl_has_dmabuf();
+> -#else
+> -            abort();
+> -#endif
+> -        }
+> +        assert(gtk_use_gl_area);
+> +        vc->gfx.drawing_area = gtk_gl_area_new();
+> +        g_signal_connect(vc->gfx.drawing_area, "realize",
+> +                         G_CALLBACK(gl_area_realize), vc);
+> +        vc->gfx.dcl.ops = &dcl_gl_area_ops;
+> +        vc->gfx.dgc.ops = &gl_area_ctx_ops;
+>      } else
+>  #endif
+>      {
+> -- 
+> 2.45.2
+> 
+
+With regards,
+Daniel
 -- 
-2.45.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
