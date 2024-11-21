@@ -4,71 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 822EAD6E2A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 09:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64ABFD6E2A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 09:49:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE3mh-0007Mv-13; Thu, 21 Nov 2024 04:47:35 -0500
+	id 1tE3nw-00089p-A6; Thu, 21 Nov 2024 04:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tE3mf-0007ML-K5; Thu, 21 Nov 2024 04:47:33 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tE3nv-00089R-58
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:48:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tE3md-00044n-VH; Thu, 21 Nov 2024 04:47:33 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XvCwr18qDz6K6lP;
- Thu, 21 Nov 2024 17:43:56 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 42FEF140A79;
- Thu, 21 Nov 2024 17:47:30 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 21 Nov 2024 10:47:30 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Thu, 21 Nov 2024 10:47:30 +0100
-To: Andrea Bolognani <abologna@redhat.com>
-CC: Nicolin Chen <nicolinc@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- Mostafa Saleh <smostafa@google.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Peter Maydell" <peter.maydell@linaro.org>, Jason Gunthorpe <jgg@nvidia.com>, 
- Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
- <mdf@kernel.org>, Michael Shavit <mshavit@google.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Peter Xu <peterx@redhat.com>, Zhangfei Gao
- <zhangfei.gao@linaro.org>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
- "arighi@nvidia.com" <arighi@nvidia.com>, "ianm@nvidia.com" <ianm@nvidia.com>, 
- "jan@nvidia.com" <jan@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>
-Subject: RE: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
-Thread-Topic: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
-Thread-Index: AQHbLBPkDYWW/RlwrUqSJByfpx0jw7KisNtQgB4IZoCAAOMVUA==
-Date: Thu, 21 Nov 2024 09:47:29 +0000
-Message-ID: <9af947a939e24de894e8bdf6e7de5c22@huawei.com>
-References: <ZyRUcGKKS6NbIV5O@Asurada-Nvidia>
- <cf4359b18f0d44f09b8901141b678a09@huawei.com>
- <CABJz62M9-mtwd4dvCc=8LEJHGMnUn4zQDS8-ocTfxZ=Y3i1q-g@mail.gmail.com>
-In-Reply-To: <CABJz62M9-mtwd4dvCc=8LEJHGMnUn4zQDS8-ocTfxZ=Y3i1q-g@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tE3nt-0004C8-Pv
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:48:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732182528;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=YnI18RBOqZXxa5Nmfu+D8iFd38whElWbc8df/B1ji40=;
+ b=OWFihO+KiBX6PGYVNCunDLSJzGnCe6zyA0gdjvGMREjBmmeC9AlqRiPze4E4j5hTQmvSNp
+ BN7ljNKMfHuqDDbdHfYjn+h1NqdfLTQ/olzUmTUKoMFBiFAYSvLiLTYQ4k1N62KCiQ7p/t
+ ++/HsJhSOdCTPMMSktsI9zpD5v2V5pI=
+Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
+ [209.85.221.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-389-tJYk363lNVuTe5_jY9iQaw-1; Thu, 21 Nov 2024 04:48:47 -0500
+X-MC-Unique: tJYk363lNVuTe5_jY9iQaw-1
+X-Mimecast-MFC-AGG-ID: tJYk363lNVuTe5_jY9iQaw
+Received: by mail-vk1-f200.google.com with SMTP id
+ 71dfb90a1353d-507858fa6a3so478451e0c.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 01:48:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732182527; x=1732787327;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YnI18RBOqZXxa5Nmfu+D8iFd38whElWbc8df/B1ji40=;
+ b=Eof4jArcfZhoXfJx9klJjMTDlKyrwRgE713T62ZN+liQGIT3fWBoTpzxznYYwsrqcz
+ xtiP4p6u/Pv26yY3J93UE9411GkoFzIvysPZpSRNILkv2Jfp6wY0rH4879nNT8+tpFrT
+ 7mbwjL/H6ib1flnPd8JWsjGoZJCSylthZDHKSohzLFDVRHW0tzqW2lR1o+fh5hO51WgW
+ VdhtfWwMivr0QNpdvbYqZdmv0VRyq74GxZpaK2oiLY5zlCLJmbBvnas8xfe2UqmlHsen
+ 8JrTgTx3tdLcsTx9iLx5CpdFsAVVwnz1cr9857Ip4HJ+oThduKw2gxL6EPODfHECTP5R
+ DbnQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcRTjQtKk6Pb2poGOnH72DpKYpkUIhnI2Eez2OXLkoG96pRMDvx/bL3vGWQAYiJ2i8tZOtYYeBvmHc@nongnu.org
+X-Gm-Message-State: AOJu0YzHxAt64leNjYsV6vbTblH07Fy88avKiw/LeVKpoYteKAsnUFI0
+ +h2QOkuvY3l7QoHt9m/+LYkXpQmal2qzdqwbKudCI2vn3oMoJtUaB8YltRTlcSpYBmCEwUdxI6r
+ pC7bmXRUdiI91MNDKeKZI0VbyJJRAZAZdHSKtF4xiHbdy24DO6isl
+X-Received: by 2002:a05:6122:2025:b0:507:81f0:f952 with SMTP id
+ 71dfb90a1353d-514cf95f123mr6499670e0c.9.1732182526902; 
+ Thu, 21 Nov 2024 01:48:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHyruYADkhwj+kzjDQfFAVsCV5mANJ2kziCm+uQpKzH5H55hgwej/aGYgxycP2os0rYaexmQA==
+X-Received: by 2002:a05:6122:2025:b0:507:81f0:f952 with SMTP id
+ 71dfb90a1353d-514cf95f123mr6499654e0c.9.1732182526617; 
+ Thu, 21 Nov 2024 01:48:46 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d4380b4dc5sm21390946d6.20.2024.11.21.01.48.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 Nov 2024 01:48:46 -0800 (PST)
+Message-ID: <9e206447-86e6-4251-8e3b-b764b4bf6480@redhat.com>
+Date: Thu, 21 Nov 2024 10:48:43 +0100
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/12] ppc/e500: Avoid abuse of container_get()
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Bharat Bhushan <r65777@freescale.com>,
+ qemu-ppc@nongnu.org
+References: <20241120215703.3918445-1-peterx@redhat.com>
+ <20241120215703.3918445-8-peterx@redhat.com>
+ <2c63bf58-108a-4785-ad7e-c7e6446970e4@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <2c63bf58-108a-4785-ad7e-c7e6446970e4@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,43 +155,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogQW5kcmVhIEJvbG9nbmFu
-aSA8YWJvbG9nbmFAcmVkaGF0LmNvbT4NCj4gU2VudDogV2VkbmVzZGF5LCBOb3ZlbWJlciAyMCwg
-MjAyNCA5OjE0IFBNDQo+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpIDxzaGFtZWVyYWxp
-LmtvbG90aHVtLnRob2RpQGh1YXdlaS5jb20+DQo+IENjOiBOaWNvbGluIENoZW4gPG5pY29saW5j
-QG52aWRpYS5jb20+OyBFcmljIEF1Z2VyDQo+IDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+OyBNb3N0
-YWZhIFNhbGVoIDxzbW9zdGFmYUBnb29nbGUuY29tPjsgcWVtdS0NCj4gYXJtQG5vbmdudS5vcmc7
-IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZzsgUGV0ZXIgTWF5ZGVsbA0KPiA8cGV0ZXIubWF5ZGVsbEBs
-aW5hcm8ub3JnPjsgSmFzb24gR3VudGhvcnBlIDxqZ2dAbnZpZGlhLmNvbT47IEplYW4tDQo+IFBo
-aWxpcHBlIEJydWNrZXIgPGplYW4tcGhpbGlwcGVAbGluYXJvLm9yZz47IE1vcml0eiBGaXNjaGVy
-DQo+IDxtZGZAa2VybmVsLm9yZz47IE1pY2hhZWwgU2hhdml0IDxtc2hhdml0QGdvb2dsZS5jb20+
-OyBNaWNoYWVsIFMuDQo+IFRzaXJraW4gPG1zdEByZWRoYXQuY29tPjsgUGV0ZXIgWHUgPHBldGVy
-eEByZWRoYXQuY29tPjsgWmhhbmdmZWkgR2FvDQo+IDx6aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZz47
-IG5hdGhhbmNAbnZpZGlhLmNvbTsgYXJpZ2hpQG52aWRpYS5jb207DQo+IGlhbm1AbnZpZGlhLmNv
-bTsgamFuQG52aWRpYS5jb207IG1vY2hzQG52aWRpYS5jb20NCj4gU3ViamVjdDogUmU6IG5lc3Rl
-ZC1zbW11djMgdG9waWMgZm9yIFFFTVUvbGlidmlydCwgTm92IDIwMjQNCj4gDQo+IE9uIEZyaSwg
-Tm92IDAxLCAyMDI0IGF0IDA2OjM1OjIzUE0gKzAwMDAsIFNoYW1lZXJhbGkgS29sb3RodW0gVGhv
-ZGkNCj4gd3JvdGU6DQo+ID4gSSBoYXZlIGEgYmFyZSBtaW5pbXVtIHByb3RvdHlwZSBjb2RlIHRo
-YXQgd29ya3Mgd2l0aCBhIHBsdWdnYWJsZQ0KPiBzbW11djMuDQo+ID4NCj4gPiAuLi4NCj4gPiAt
-ZGV2aWNlIHB4Yi1wY2llLGlkPXBjaWUuMSxidXNfbnI9MixidXM9cGNpZS4wIFwNCj4gPiAtZGV2
-aWNlIHBjaWUtcm9vdC1wb3J0LGlkPXBjaWUucG9ydDEsYnVzPXBjaWUuMSBcDQo+ID4gLWRldmlj
-ZSBhcm0tc21tdXYzLW5lc3RlZCxpZD1zbW11djEscGNpLWJ1cz1wY2llLjEgXA0KPiA+IC1kZXZp
-Y2UgdmZpby1wY2ktDQo+IG5vaG90cGx1Zyxob3N0PTAwMDA6NzU6MDAuMSxidXM9cGNpZS5wb3J0
-MSxpb21tdWZkPWlvbW11ZmQwIFwNCj4gPiAtZGV2aWNlIHB4Yi1wY2llLGlkPXBjaWUuMixidXNf
-bnI9OCxidXM9cGNpZS4wIFwNCj4gPiAtZGV2aWNlIHBjaWUtcm9vdC1wb3J0LGlkPXBjaWUucG9y
-dDIsYnVzPXBjaWUuMixjaGFzc2lzPTggXA0KPiA+IC1kZXZpY2UgYXJtLXNtbXV2My1uZXN0ZWQs
-aWQ9c21tdXYyLHBjaS1idXM9cGNpZS4yIFwNCj4gPiAtZGV2aWNlIHZmaW8tcGNpLQ0KPiBub2hv
-dHBsdWcsaG9zdD0wMDAwOjdkOjAyLjEsYnVzPXBjaWUucG9ydDIsaW9tbXVmZD1pb21tdWZkMCBc
-DQo+IA0KPiBTaWxseSBiaXQgb2YgZmVlZGJhY2sgb24gdGhlIGludGVyZmFjZSwgYnV0IHdoeSBp
-cyB0aGUNCj4gYXJtLXNtbXV2My1uZXN0ZWQgcHJvcGVydHkgY2FsbGVkICJwY2ktYnVzIiBpbnN0
-ZWFkIG9mIGp1c3QgImJ1cyI/DQo+IA0KPiBBbGwgb3RoZXIgZGV2aWNlcyB0aGF0IG5lZWQgdG8g
-cmVmZXIgdG8gYW4gZXhpc3RpbmcgUENJIGJ1cyB1c2UgdGhlDQo+IGxhdHRlci4gSXMgdGhlcmUg
-YSByZWFzb24gZm9yIHRoaXMgc3BlY2lmaWMgb25lIHRvIGRpdmVyZ2U/DQoNCk5vcGUuIFRoaXMg
-d2lsbCBiZSBjaGFuZ2VkIHRvICJidXMiIGluIG5leHQgcmVzcGluLg0KDQpUaGFua3MsDQpTaGFt
-ZWVyDQo=
+On 11/21/24 10:38, Cédric Le Goater wrote:
+> On 11/20/24 22:56, Peter Xu wrote:
+>> container_get() is going to become strict on not allowing to return a
+>> non-container.
+>>
+>> Switch the e500 user to use object_resolve_path_component() explicitly.
+>>
+>> Cc: Bharat Bhushan <r65777@freescale.com>
+>> Cc: qemu-ppc@nongnu.org
+>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>> ---
+>>   hw/pci-host/ppce500.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
+>> index b70631045a..65233b9e3f 100644
+>> --- a/hw/pci-host/ppce500.c
+>> +++ b/hw/pci-host/ppce500.c
+>> @@ -418,8 +418,8 @@ static const VMStateDescription vmstate_ppce500_pci = {
+>>   static void e500_pcihost_bridge_realize(PCIDevice *d, Error **errp)
+>>   {
+>>       PPCE500PCIBridgeState *b = PPC_E500_PCI_BRIDGE(d);
+>> -    PPCE500CCSRState *ccsr = CCSR(container_get(qdev_get_machine(),
+>> -                                  "/e500-ccsr"));
+>> +    PPCE500CCSRState *ccsr = CCSR(
+>> +        object_resolve_path_component(qdev_get_machine(), "e500-ccsr"));
+> 
+> 
+> why not simply use :
+> 
+>        CCSR(object_resolve_path("/machine/e500-ccsr", NULL));
+
+
+I guess we want to avoid the absolute paths. If so,
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+
+We might want to convert these lookups to object_resolve_path_component
+too, not in this patchset.
+
+hw/i386/acpi-build.c:    host = PCI_HOST_BRIDGE(object_resolve_path("/machine/i440fx", NULL));
+hw/i386/acpi-build.c:        host = PCI_HOST_BRIDGE(object_resolve_path("/machine/q35", NULL));
+target/i386/kvm/kvm.c:        (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
+target/i386/tcg/sysemu/tcg-cpu.c:        (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
+
+Thanks,
+
+C.
+
 
