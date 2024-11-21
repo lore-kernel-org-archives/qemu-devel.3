@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 501FFD6ED2B
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 13:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E848D6ED2B
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 13:32:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE7AE-0006t9-VR; Thu, 21 Nov 2024 08:24:06 -0500
+	id 1tE7Hh-0008EK-8Y; Thu, 21 Nov 2024 08:31:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tE7AD-0006sj-LL
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:24:05 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tE7HW-0008Cl-7E
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:31:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tE7AB-0006YI-Mk
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:24:05 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tE7HQ-0007so-39
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:31:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732195441;
+ s=mimecast20190719; t=1732195890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YkdxfLxg6wDJzq1KoAfz4DcR2YRc1VOumPvRDp9+Ozc=;
- b=C5O1n8an2sNzD29WWzl2RIdFDX+B+G0zfNutasC3ISp0zICb76rgC8JlTrYAG7C113J378
- GWOROyiYLdxLeq98HC6931HtE11t9fwUOLylc3cKamMetKpH55P21FaXiLVBWLzTFBFAoZ
- jlUj+eVSqC3jOP4KCzLMJGRchjCRrwI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=X0YXp45s7vnoyQ3K0lsjcnH8rR5MKcGo4y9UEojEpHw=;
+ b=I4UmwS1azLsfdYaBfYzbnIu5nm53ymD4ASvwZhIcJkYUH8F1N8woYp0gRAUGBKSbVa8chz
+ osdsMP9i5mcsLTFerTuDhgiN25QgO/30dsV1xzb5/i+3e28pGcRTSO9sZo5Mj/B9fuCBkr
+ zbuziR2M/yZ08Nu2eaJ0zSmtvi3mlDg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-xGL4gtUKMlCvdvRs1Our-Q-1; Thu,
- 21 Nov 2024 08:24:00 -0500
-X-MC-Unique: xGL4gtUKMlCvdvRs1Our-Q-1
-X-Mimecast-MFC-AGG-ID: xGL4gtUKMlCvdvRs1Our-Q
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-j9f4avWZMJGuOA4vM7_ZHA-1; Thu,
+ 21 Nov 2024 08:31:27 -0500
+X-MC-Unique: j9f4avWZMJGuOA4vM7_ZHA-1
+X-Mimecast-MFC-AGG-ID: j9f4avWZMJGuOA4vM7_ZHA
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 264091955F10; Thu, 21 Nov 2024 13:23:59 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED2121977321; Thu, 21 Nov 2024 13:31:25 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.194.95])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D03E919560A3; Thu, 21 Nov 2024 13:23:58 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CAEF30000DF; Thu, 21 Nov 2024 13:31:25 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8A2C721E6A28; Thu, 21 Nov 2024 14:23:56 +0100 (CET)
+ id 3706B21E6A28; Thu, 21 Nov 2024 14:31:23 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org,  Eduardo Habkost <eduardo@habkost.net>,  Peter
@@ -54,17 +54,17 @@ Cc: qemu-devel@nongnu.org,  Eduardo Habkost <eduardo@habkost.net>,  Peter
  =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?C=C3=A9dri?=
  =?utf-8?Q?c?= Le Goater <clg@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,  Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 09/12] qdev: Add machine_get_container()
-In-Reply-To: <20241120215703.3918445-10-peterx@redhat.com> (Peter Xu's message
- of "Wed, 20 Nov 2024 16:57:00 -0500")
+Subject: Re: [PATCH 10/12] qom: Create system containers explicitly
+In-Reply-To: <20241120215703.3918445-11-peterx@redhat.com> (Peter Xu's message
+ of "Wed, 20 Nov 2024 16:57:01 -0500")
 References: <20241120215703.3918445-1-peterx@redhat.com>
- <20241120215703.3918445-10-peterx@redhat.com>
-Date: Thu, 21 Nov 2024 14:23:56 +0100
-Message-ID: <87plmoiutv.fsf@pond.sub.org>
+ <20241120215703.3918445-11-peterx@redhat.com>
+Date: Thu, 21 Nov 2024 14:31:23 +0100
+Message-ID: <87h680iuhg.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -92,39 +92,97 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> Add a helper to fetch machine containers.  Add some sanity check around.
+> Always explicitly create QEMU system containers upfront.
+>
+> Root containers will be created when trying to fetch the root object the
+> 1st time.
+
+Which ones are affected?
+
+Not a fan of creating stuff on first use, unless there may not be any
+use.  But no worse than before.
+
+>            Machine sub-containers will be created only until machine is
+> being initialized.
 >
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  include/hw/qdev-core.h | 10 ++++++++++
->  hw/core/qdev.c         | 17 +++++++++++++++++
->  2 files changed, 27 insertions(+)
+>  hw/core/machine.c | 19 ++++++++++++++++---
+>  qom/object.c      | 16 +++++++++++++++-
+>  2 files changed, 31 insertions(+), 4 deletions(-)
 >
-> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-> index 5be9844412..38edfb1b54 100644
-> --- a/include/hw/qdev-core.h
-> +++ b/include/hw/qdev-core.h
-> @@ -996,6 +996,16 @@ const char *qdev_fw_name(DeviceState *dev);
->  void qdev_assert_realized_properly(void);
->  Object *qdev_get_machine(void);
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index a35c4a8fae..a184dbf8f0 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -1193,14 +1193,27 @@ static void machine_class_base_init(ObjectClass *oc, void *data)
+>      }
+>  }
 >  
-> +/**
-> + * machine_get_container:
-> + * @name: The name of container to lookup
-> + *
-> + * Get a container of the machine (QOM path "/machine/XXX").
-
-Suggest "/machine/NAME" here.
-
-> + *
-> + * Returns: the machine container object.
-> + */
-> +Object *machine_get_container(const char *name);
+> +const char *machine_containers[] = {
+> +    "unattached",
+> +    "peripheral",
+> +    "peripheral-anon"
+> +};
 > +
->  /**
->   * qdev_get_human_name() - Return a human-readable name for a device
->   * @dev: The device. Must be a valid and non-NULL pointer.
+> +static void qemu_create_machine_containers(Object *machine)
+> +{
+> +    int i;
+> +
+> +    for (i = 0; i < ARRAY_SIZE(machine_containers); i++) {
+> +        container_create(machine, machine_containers[i]);
+> +    }
+> +}
+> +
+>  static void machine_initfn(Object *obj)
+>  {
+>      MachineState *ms = MACHINE(obj);
+>      MachineClass *mc = MACHINE_GET_CLASS(obj);
+>  
+> -    container_get(obj, "/peripheral");
+> -    container_get(obj, "/peripheral-anon");
+> -
+> +    qemu_create_machine_containers(obj);
 
-[...]
+We now additionally create "/machine/unattached" here.  
+
+>      ms->dump_guest_core = true;
+>      ms->mem_merge = (QEMU_MADV_MERGEABLE != QEMU_MADV_INVALID);
+>      ms->enable_graphics = true;
+> diff --git a/qom/object.c b/qom/object.c
+> index 214d6eb4c1..810e6f2bd9 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -1734,12 +1734,26 @@ const char *object_property_get_type(Object *obj, const char *name, Error **errp
+>      return prop->type;
+>  }
+>  
+> +static Object *object_root_initialize(void)
+> +{
+> +    Object *root = object_new(TYPE_CONTAINER);
+> +
+> +    /*
+> +     * Create all QEMU system containers.  "machine" and its sub-containers
+> +     * are only created when machine initializes (qemu_create_machine()).
+> +     */
+> +    container_create(root, "chardevs");
+> +    container_create(root, "objects");
+> +
+> +    return root;
+> +}
+> +
+>  Object *object_get_root(void)
+>  {
+>      static Object *root;
+>  
+>      if (!root) {
+> -        root = object_new(TYPE_CONTAINER);
+> +        root = object_root_initialize();
+
+We now additonally create "/chardevs" and "/objects" here, not just "/".
+
+>      }
+>  
+>      return root;
 
 
