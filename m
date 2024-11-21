@@ -4,114 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA20D7879A
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6507D78799
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEAeZ-0001g2-NJ; Thu, 21 Nov 2024 12:07:40 -0500
+	id 1tEAle-0008J0-1d; Thu, 21 Nov 2024 12:14:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAdg-0000OC-QF
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:46 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEAlb-0008CO-Ui
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:14:55 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAdR-0001bu-Ql
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:44 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3823194a879so760858f8f.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 09:06:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEAlW-0003eT-Mc
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:14:55 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-382442b7d9aso997772f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 09:14:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732208788; x=1732813588; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QJ/BEIUZxqH6xjJjY5CC1Irgebs8pwBzHUuWnbPyaKg=;
- b=EcFXxTYe7mtJp07OasdOjrHr+YS2Gu3m9P6dSHEF6BYzBAvBp0GEJxtmh/ps8JuASC
- A+E5dI2QXV0y6BIZxcrU8lrElJWmIbKu+I4o0Okc93gZOI2heOdLH13vpzIY1m6SHx8j
- 4O5N5txgm8Boctmd2p57AkkmAD7S7C2rqK+If4GDD9zNi0gln6CzdS74aB2a+iIsJlpC
- BdWBzjEhp1+78CR5l5crFvUqfwBIimlsf5vWLGgRJvoWi1xVfT6pDGFt7y1lcyVUzWh0
- +ejNWXL7qM4WTfq9v+jCWNMIIqK4gczsdiVFkdQd0UfYhm6b3AsX4B4lPkqEY4RR5+Qn
- XC0g==
+ d=linaro.org; s=google; t=1732209289; x=1732814089; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1jRM3SbL2Xoxq1lgpfB4HaF+zi4Ki5mT+NgJ7XmAcb8=;
+ b=iPuKk0poh+j7GnFFz5VxpJKjpbuwtjnhDKPcvpl38yqFmO+KTYgiQ2ybinb17Kin49
+ t9tW4VbeK4NVGyX5w9ITVe593/i+EG3d9unt8IHsItvsmy8c27c6kDrZSf8vyETuPoOC
+ Is8Bu5GXXkDvqsU1DV5NCkjPZZU0b8RAp31wg7hg1KMSRp3vtOgPu6uIEel8oEwv/vQP
+ p7AazgW3HXw3AkavPh1RXOvO222Q/iBBnohLVxqNXjxuFJs8+kTVQs25ny2sbEF6tz8a
+ UUt4rgwImp0PrzcXFjw8kV0Uxqw5UdnYyct5N9/nib1ekt1S4Zuti3c6tDZNcygqGUia
+ Lbpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732208788; x=1732813588;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QJ/BEIUZxqH6xjJjY5CC1Irgebs8pwBzHUuWnbPyaKg=;
- b=jKKAz1Q8xN2WET0RoeRvx4RVf71Uvf8kU8I/Glm0joqC2aGmT+cLm7E45XIOlgcgnq
- BT8rXCc7Lr7nitZAHsG/2+HYcO0AT0GnxR48m71uBN/G3EkzLpYshnsf3MmStZ63XZu0
- 6pGJNnZDUlIknrjBdc4BSVns2w3eg4eREONA0kLdYV/ioU7Nmt6eS07EwKSIgOFpkpKj
- BpT+syXUsJSDgk7Pw8m9dR5iCzaYGmew92Io/u9a9hifUacL3NDj4oN3gWsBYM+uGBxn
- UEvWCV9kiq5RPKx68m4I2rqSPO16XjFi3rPx+aAYJacVMLrv8eiVDR/6pu/k2e24+D08
- YLKQ==
-X-Gm-Message-State: AOJu0YwwN0DInGqKtB9iVZgL5dXJXsAc8zOavCiiryXdYhq1g8ew3yCl
- xViCIl+q6wSQEN6da3t4Myzb7hX5/4B41779c/2HR8vCuSC3KbWeequWOBHlMAk=
-X-Gm-Gg: ASbGncuHLZ9ZA9IkVqm7B1VTRrI37tFsVrsCPT9MTxKPQRr4C/mMqMg3SZWFfRR0d22
- O4db4/fLj73OGQXWZ/w/1naiKgNFM7knB6NantR4YxD/JFHMyy4MdlfOFLIqNw4xdHi50wWPgyC
- mpTGIRanTMVMey5gzRKVbo8W3cKKrLqVd7QE32Wttp85p7HF31OFw88+tehwJO7DjCux/FA7ZeG
- 7aEIw1mCLKlyHcXNpNOD8E2LykuEbk7MjmBNyzOjfR8BIdg
-X-Google-Smtp-Source: AGHT+IE4EjjgwVtMMaYGhp3H4uUck59/R9PMG4XNXoKs5UjMT+KGwmfr5DSEI3LaG7Qt/qfjENhHvw==
-X-Received: by 2002:a5d:5f86:0:b0:382:33b3:5f7d with SMTP id
- ffacd0b85a97d-38254afa706mr5547618f8f.27.1732208788259; 
- Thu, 21 Nov 2024 09:06:28 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fb2679dsm49665f8f.45.2024.11.21.09.06.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 09:06:25 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1FAF760484;
- Thu, 21 Nov 2024 16:58:09 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alexandre Iooss <erdnaxe@crans.org>, qemu-riscv@nongnu.org,
- Thomas Huth <huth@tuxfamily.org>, Bernhard Beschow <shentey@gmail.com>,
- Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-s390x@nongnu.org,
- Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, qemu-rust@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Markus Armbruster <armbru@redhat.com>,
- Weiwei Li <liwei1518@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH 29/39] tests/functional: update the ppc64 tuxrun tests
-Date: Thu, 21 Nov 2024 16:57:56 +0000
-Message-Id: <20241121165806.476008-30-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241121165806.476008-1-alex.bennee@linaro.org>
-References: <20241121165806.476008-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1732209289; x=1732814089;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1jRM3SbL2Xoxq1lgpfB4HaF+zi4Ki5mT+NgJ7XmAcb8=;
+ b=Lt2HvA5DbD9uHDR5Lsrfyt4yZwBg++0BGB7IM6RZjk4kokILnTna4l5injOPCizvcm
+ TbnCOT9dgNy/Mq+A7e95yhENsXx6Xk7kHBm8cyqBXfTv1iACpi2xIehIjsIRwTQpasMW
+ b5E42NiBLA13f1ui3/ScNW5QHis2eP8qR8P6XI58ZLMXziWj/EXax4j2efPXOZ82HOTm
+ JUAqofEi5p8/LvjqizsOs58CldG0HYb1+gmx7zDrWqEJ+KYPqeZzDjOIH/+cLDay0wnT
+ xTu9igkGzgEKf3wn+UcMchlbqgQXlMZI8EpFCJ/AOw5wxOH0bzWNMfHx2OG+cyb0zeJK
+ cxJg==
+X-Gm-Message-State: AOJu0YzOjJzLqO+feqIJ/o89YrM8lWJSq8R6Qh2mcrVh1jKYIAWk2OWK
+ 6yC7Pbc3XRiY9AWQjMdCmvos8VY9copTyEdrt+IgaMd1PU9a+WIlbXiEkT3a8wM=
+X-Gm-Gg: ASbGncsi26o01kc60JYS/VlR8+OWQMe4a9IY/kSdj4WIsPcERtAm9y6JxhsKZPIdw5c
+ dszkbKZ04oe2vFwPua1xDEGmdseBxXJzKE7/xM40nCbfsL7KJIJAKuPYX6pM21Na5oJtUrKbTx4
+ 1SeFHEgO/6GB8vokpS1s5ud+/lL+kgKjn4gVqGmh//VIRfsnCyt9MwDaDNd35CUqYWd0Q6agQSC
+ rGsXBu49YRfVKHpT0EcQ305ZP4i1IsjMujPagRCnZ0cJTb+Fij4bMlGK1VfQuXK
+X-Google-Smtp-Source: AGHT+IEc/r7dJx8PwhuQUDtSYCOFEJ3DJUcEFDvPnIeulnpDu3V95N2AeBLgj3cMHVOwe9lZex0WLw==
+X-Received: by 2002:a5d:47af:0:b0:382:44e0:c5e9 with SMTP id
+ ffacd0b85a97d-38254af9c4fmr5797178f8f.25.1732209288794; 
+ Thu, 21 Nov 2024 09:14:48 -0800 (PST)
+Received: from [192.168.69.197] ([176.187.204.90])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fafe338sm71258f8f.33.2024.11.21.09.14.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 Nov 2024 09:14:47 -0800 (PST)
+Message-ID: <2c5fb523-d146-4629-8fad-125011b518d6@linaro.org>
+Date: Thu, 21 Nov 2024 18:14:45 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/12] hw/ppc: Explicitly create the drc container
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+References: <20241120215703.3918445-1-peterx@redhat.com>
+ <20241120215703.3918445-7-peterx@redhat.com>
+ <66301003-f2cd-4a0a-8951-cbfdcb1c398b@linaro.org> <Zz9hnEj3xQnOoM0c@x1n>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <Zz9hnEj3xQnOoM0c@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,51 +107,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are new upto date images available we should update to them.
+On 21/11/24 17:36, Peter Xu wrote:
+> On Thu, Nov 21, 2024 at 10:35:39AM +0100, Philippe Mathieu-Daudé wrote:
+>> Hi Peter,
+>>
+>> On 20/11/24 22:56, Peter Xu wrote:
+>>> QEMU will start to not rely on implicit creations of containers soon.  Make
+>>> PPC drc devices follow by explicitly create the container whenever a drc
+>>> device is realized, dropping container_get() calls.
+>>>
+>>> No functional change intended.
+>>>
+>>> Cc: Nicholas Piggin <npiggin@gmail.com>
+>>> Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+>>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>> Cc: qemu-ppc@nongnu.org
+>>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>>> ---
+>>>    hw/ppc/spapr_drc.c | 40 ++++++++++++++++++++++++++++++----------
+>>>    1 file changed, 30 insertions(+), 10 deletions(-)
+>>
+>>
+>>> +static GOnce drc_container_created = G_ONCE_INIT;
+>>> +
+>>> +static gpointer drc_container_create(gpointer unused G_GNUC_UNUSED)
+>>> +{
+>>> +    container_create(object_get_root(), DRC_CONTAINER_PATH);
+>>> +    return NULL;
+>>> +}
+>>> +
+>>> +static Object *drc_container_get(void)
+>>> +{
+>>> +    return object_resolve_path_component(
+>>> +        object_get_root(), DRC_CONTAINER_PATH);
+>>> +}
+>>> +
+>>> +/* TODO: create the container in an ppc init function */
+>>> +static void drc_container_create_once(void)
+>>> +{
+>>> +    g_once(&drc_container_created, drc_container_create, NULL);
+>>> +}
+>>> +
+>>>    static void drc_realize(DeviceState *d, Error **errp)
+>>>    {
+>>>        SpaprDrc *drc = SPAPR_DR_CONNECTOR(d);
+>>> @@ -521,6 +541,9 @@ static void drc_realize(DeviceState *d, Error **errp)
+>>>        Object *root_container;
+>>>        const char *child_name;
+>>> +    /* Whenever a DRC device is realized, create the container */
+>>> +    drc_container_create_once();
+>>
+>> Can't we just create it once in spapr_dr_connector_class_init(),
+>> removing the G_ONCE_INIT need?
+> 
+> IIUC it's a matter of whether there's case where we have this file compiled
+> in, but never create any DRC device.  When that happens, the patch can
+> change the QEMU qom-tree slightly, in that there'll be an empty drc
+> container while we used to not have it.
+> 
+> I'm trying to be on the safe side in case something would detect the
+> container's existance to know whether drc devices are present.  lazy create
+> it in realize() is the safest way to behave 100% identical like before,
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Anders Roxell <anders.roxell@linaro.org>
----
- tests/functional/test_ppc64_tuxrun.py | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Class singleton must be taken care in class_init, not once in the
+first instance realize(). I'd rather fix this bad QOM pattern.
 
-diff --git a/tests/functional/test_ppc64_tuxrun.py b/tests/functional/test_ppc64_tuxrun.py
-index 03b47e07f2..aee67f5e90 100755
---- a/tests/functional/test_ppc64_tuxrun.py
-+++ b/tests/functional/test_ppc64_tuxrun.py
-@@ -82,11 +82,11 @@ def ppc64_common_tuxrun(self, kernel_asset, rootfs_asset, prefix):
-                                drive="scsi-hd")
- 
-     ASSET_PPC64_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/ppc64/vmlinux',
--        'f22a9b9e924174a4c199f4c7e5d91a2339fcfe51c6eafd0907dc3e09b64ab728')
-+        'https://storage.tuxboot.com/buildroot/20241119/ppc64/vmlinux',
-+        '8219d5cb26e7654ad7826fe8aee6290f7c01eef44f2cd6d26c15fe8f99e1c17c')
-     ASSET_PPC64_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/ppc64/rootfs.ext4.zst',
--        '1d953e81a4379e537fc8e41e05a0a59d9b453eef97aa03d47866c6c45b00bdff')
-+        'https://storage.tuxboot.com/buildroot/20241119/ppc64/rootfs.ext4.zst',
-+        'b68e12314303c5dd0fef37ae98021299a206085ae591893e73557af99a02d373')
- 
-     def test_ppc64(self):
-         self.ppc64_common_tuxrun(kernel_asset=self.ASSET_PPC64_KERNEL,
-@@ -94,11 +94,11 @@ def test_ppc64(self):
-                                  prefix='tuxrun_ppc64_')
- 
-     ASSET_PPC64LE_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/ppc64le/vmlinux',
--        '979eb61b445a010fb13e2b927126991f8ceef9c590fa2be0996c00e293e80cf2')
-+        'https://storage.tuxboot.com/buildroot/20241119/ppc64le/vmlinux',
-+        '21aea1fbc18bf6fa7d8ca4ea48d4940b2c8363c077acd564eb47d769b7495279')
-     ASSET_PPC64LE_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/ppc64le/rootfs.ext4.zst',
--        'b442678c93fb8abe1f7d3bfa20556488de6b475c22c8fed363f42cf81a0a3906')
-+        'https://storage.tuxboot.com/buildroot/20241119/ppc64le/rootfs.ext4.zst',
-+        '67d36a3f9597b738e8b7359bdf04500f4d9bb82fc35eaa65aa439d888b2392f4')
- 
-     def test_ppc64le(self):
-         self.ppc64_common_tuxrun(kernel_asset=self.ASSET_PPC64LE_KERNEL,
--- 
-2.39.5
+> considering my ppc knowledge is merely zero (even if I have drc tests
+> covered in ppc64's qtest..).
+> 
+> However I also doubt whether it matters much.  It'll be great if I can get
+> an ACK from anyone familiar with this device (Phil, are you?), then I can
+> move it over.
+
+I'm not, but having to care about G_ONCE_INIT seems cumbersome.
+
+> 
+>>
+>>>        trace_spapr_drc_realize(spapr_drc_index(drc));
+>>>        /* NOTE: we do this as part of realize/unrealize due to the fact
+>>>         * that the guest will communicate with the DRC via RTAS calls
+>>> @@ -529,7 +552,7 @@ static void drc_realize(DeviceState *d, Error **errp)
+>>>         * inaccessible by the guest, since lookups rely on this path
+>>>         * existing in the composition tree
+>>>         */
+>>> -    root_container = container_get(object_get_root(), DRC_CONTAINER_PATH);
+>>> +    root_container = drc_container_get();
+>>>        child_name = object_get_canonical_path_component(OBJECT(drc));
+>>>        trace_spapr_drc_realize_child(spapr_drc_index(drc), child_name);
+>>>        object_property_add_alias(root_container, link_name,
+>>
+> 
 
 
