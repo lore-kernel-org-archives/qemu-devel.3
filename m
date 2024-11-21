@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278AED743FE
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 142B4D743FD
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwHl-0001ZQ-O1; Wed, 20 Nov 2024 20:47:09 -0500
+	id 1tDwHs-0001cX-Tw; Wed, 20 Nov 2024 20:47:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHi-0001XT-7a
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:06 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHr-0001b4-8i
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:15 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHg-0004Wv-NE
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:05 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHp-0004Xj-Ie
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=gzkPiBJ/YsivON7QkdxAWJG2Cn2Aehqf0eG3z2ULstk=; b=K7mJ3OoNP33LQz3
- wC9DZ+2ldcUjU/kBe3x0YpUzJ1CyZjKM86jjKgkfPZifnpbDeBLWz0UKrw6jiHXLOUcjqSgPhqbDz
- PcEqZsPKH8Ij5yr3YED4VD7PYeCi/aQcQtQMDFcf6iyNntMfX7ZAXuRV1uPLF2xuoDz095DmVtcPl
- BE=;
+ List-Help; bh=OIlScO3BuH63uZxdmqbUwS+sjbYNsWyshmkeVqgGtWQ=; b=mrO8wMR8oaQDdcZ
+ JelEhQefGPshBw7N41+t9ly5Fx6J1+DhujzxT0HxjnTXZoVDY/DOO8wZK3lle/79GWxu43zp0qmFA
+ 1y/hKzVMBJ/GmKZ78F4PWjgQUBsCQtTBKcCbPCZOL6IO6NaIg6F0K+GdZrUZ5UISl2tMeIuU6L458
+ xc=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 08/43] include/helper-to-tcg: Introduce annotate.h
-Date: Thu, 21 Nov 2024 02:49:12 +0100
-Message-ID: <20241121014947.18666-9-anjo@rev.ng>
+Subject: [RFC PATCH v1 16/43] helper-to-tcg: PrepareForOptPass,
+ Cull unused functions
+Date: Thu, 21 Nov 2024 02:49:20 +0100
+Message-ID: <20241121014947.18666-17-anjo@rev.ng>
 In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
 References: <20241121014947.18666-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,51 +65,181 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wrap __attribute__((annotate(str))) in a macro for convenient
-function annotations.  Will be used in future commits to tag functions
-for translation by helper-to-tcg, and to specify which helper function
-arguments correspond to immediate or vector values.
+Make an early pass over all functions in the input module and filter out
+functions with:
+  1. Invalid return type;
+  2. No helper-to-tcg annotation.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- include/helper-to-tcg/annotate.h | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
- create mode 100644 include/helper-to-tcg/annotate.h
+ .../helper-to-tcg/include/PrepareForOptPass.h |  7 +-
+ .../PrepareForOptPass/PrepareForOptPass.cpp   | 93 +++++++++++++++++++
+ .../helper-to-tcg/pipeline/Pipeline.cpp       |  7 +-
+ 3 files changed, 104 insertions(+), 3 deletions(-)
 
-diff --git a/include/helper-to-tcg/annotate.h b/include/helper-to-tcg/annotate.h
-new file mode 100644
-index 0000000000..80ecf23217
---- /dev/null
-+++ b/include/helper-to-tcg/annotate.h
-@@ -0,0 +1,28 @@
-+/*
-+ *  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
+diff --git a/subprojects/helper-to-tcg/include/PrepareForOptPass.h b/subprojects/helper-to-tcg/include/PrepareForOptPass.h
+index 5f9c059b97..8615625f09 100644
+--- a/subprojects/helper-to-tcg/include/PrepareForOptPass.h
++++ b/subprojects/helper-to-tcg/include/PrepareForOptPass.h
+@@ -29,9 +29,12 @@
+ 
+ class PrepareForOptPass : public llvm::PassInfoMixin<PrepareForOptPass> {
+     AnnotationMapTy &ResultAnnotations;
++    bool TranslateAllHelpers;
+ public:
+-    PrepareForOptPass(AnnotationMapTy &ResultAnnotations)
+-        : ResultAnnotations(ResultAnnotations)
++    PrepareForOptPass(AnnotationMapTy &ResultAnnotations,
++                      bool TranslateAllHelpers)
++        : ResultAnnotations(ResultAnnotations),
++          TranslateAllHelpers(TranslateAllHelpers)
+     {
+     }
+     llvm::PreservedAnalyses run(llvm::Module &M,
+diff --git a/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp b/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
+index 9f1d4df102..22509008c8 100644
+--- a/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
++++ b/subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
+@@ -17,12 +17,17 @@
+ 
+ #include <PrepareForOptPass.h>
+ #include <Error.h>
++#include <FunctionAnnotation.h>
+ 
+ #include <llvm/IR/Constants.h>
+ #include <llvm/IR/Function.h>
+ #include <llvm/IR/Instruction.h>
++#include <llvm/IR/Instructions.h>
+ #include <llvm/IR/Module.h>
+ 
++#include <queue>
++#include <set>
 +
-+#ifndef ANNOTATE_H
-+#define ANNOTATE_H
+ using namespace llvm;
+ 
+ static Expected<Annotation> parseAnnotationStr(StringRef Str,
+@@ -105,8 +110,96 @@ static void collectAnnotations(Module &M, AnnotationMapTy &ResultAnnotations)
+     }
+ }
+ 
++inline bool hasValidReturnTy(const Module &M, const Function *F)
++{
++    Type *RetTy = F->getReturnType();
++    return RetTy == Type::getVoidTy(F->getContext()) ||
++           RetTy == Type::getInt8Ty(M.getContext()) ||
++           RetTy == Type::getInt16Ty(M.getContext()) ||
++           RetTy == Type::getInt32Ty(M.getContext()) ||
++           RetTy == Type::getInt64Ty(M.getContext());
++}
 +
-+/* HELPER_TO_TCG can be defined when generating LLVM IR. */
-+#ifdef HELPER_TO_TCG
-+#define LLVM_ANNOTATE(str) __attribute__((annotate (str)))
-+#else
-+#define LLVM_ANNOTATE(str) /* str */
-+#endif
++// Functions that should be removed:
++//   - No helper-to-tcg annotation (if TranslateAllHelpers == false);
++//   - Invalid (non-integer/void) return type
++static bool shouldRemoveFunction(const Module &M, const Function &F,
++                                 const AnnotationMapTy &AnnotationMap,
++                                 bool TranslateAllHelpers)
++{
++    if (F.isDeclaration()) {
++        return false;
++    }
 +
-+#endif /* ANNOTATE_H */
++    if (!hasValidReturnTy(M, &F)) {
++        return true;
++    }
++
++    auto hasCorrectAnnotation = [](const Annotation &Ann) {
++        return Ann.Kind == AnnotationKind::HelperToTcg;
++    };
++
++    std::queue<const Function *> Worklist;
++    std::set<const Function *> Visited;
++    Worklist.push(&F);
++    while (!Worklist.empty()) {
++        const Function *F = Worklist.front();
++        Worklist.pop();
++        if (F->isDeclaration() or Visited.find(F) != Visited.end()) {
++            continue;
++        }
++        Visited.insert(F);
++
++        // Check for llvm-to-tcg annotation
++        if (TranslateAllHelpers and F->getName().startswith("helper_")) {
++            return false;
++        } else {
++            auto It = AnnotationMap.find(F);
++            if (It != AnnotationMap.end()) {
++                const auto &AnnotationVec = It->second;
++                auto Res = find_if(AnnotationVec, hasCorrectAnnotation);
++                if (Res != AnnotationVec.end()) {
++                    return false;
++                }
++            }
++        }
++
++        // Push functions that call F to the worklist, this way we retain
++        // functions that are being called by functions with the llvm-to-tcg
++        // annotation.
++        for (const User *U : F->users()) {
++            auto Call = dyn_cast<CallInst>(U);
++            if (!Call) {
++                continue;
++            }
++            const Function *ParentF = Call->getParent()->getParent();
++            Worklist.push(ParentF);
++        }
++    }
++
++    return true;
++}
++
++static void cullUnusedFunctions(Module &M, AnnotationMapTy &Annotations,
++                                bool TranslateAllHelpers)
++{
++    SmallVector<Function *, 16> FunctionsToRemove;
++    for (auto &F : M) {
++        if (shouldRemoveFunction(M, F, Annotations, TranslateAllHelpers)) {
++            FunctionsToRemove.push_back(&F);
++        }
++    }
++
++    for (Function *F : FunctionsToRemove) {
++        Annotations.erase(F);
++        F->setComdat(nullptr);
++        F->deleteBody();
++    }
++}
++
+ PreservedAnalyses PrepareForOptPass::run(Module &M, ModuleAnalysisManager &MAM)
+ {
+     collectAnnotations(M, ResultAnnotations);
++    cullUnusedFunctions(M, ResultAnnotations, TranslateAllHelpers);
+     return PreservedAnalyses::none();
+ }
+diff --git a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
+index 3b9493bc73..dde3641ab3 100644
+--- a/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
++++ b/subprojects/helper-to-tcg/pipeline/Pipeline.cpp
+@@ -47,6 +47,11 @@ cl::OptionCategory Cat("helper-to-tcg Options");
+ cl::opt<std::string> InputFile(cl::Positional, cl::desc("[input LLVM module]"),
+                                cl::cat(Cat));
+ 
++// Options for PrepareForOptPass
++cl::opt<bool> TranslateAllHelpers(
++    "translate-all-helpers", cl::init(false),
++    cl::desc("Translate all functions starting with helper_*"), cl::cat(Cat));
++
+ // Define a TargetTransformInfo (TTI) subclass, this allows for overriding
+ // common per-llvm-target information expected by other LLVM passes, such
+ // as the width of the largest scalar/vector registers.  Needed for consistent
+@@ -175,7 +180,7 @@ int main(int argc, char **argv)
+     }
+ 
+     AnnotationMapTy Annotations;
+-    MPM.addPass(PrepareForOptPass(Annotations));
++    MPM.addPass(PrepareForOptPass(Annotations, TranslateAllHelpers));
+ 
+     {
+         FunctionPassManager FPM;
 -- 
 2.45.2
 
