@@ -4,141 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD74FE64000
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 18:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4D4E64002
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 18:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEBr5-000655-Hj; Thu, 21 Nov 2024 13:24:39 -0500
+	id 1tEBvh-00085W-4G; Thu, 21 Nov 2024 13:29:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tEBr1-00063X-HQ
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:24:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tEBve-00083h-TT
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:29:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tEBqw-0007GV-8Q
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:24:35 -0500
+ id 1tEBvb-0000o3-Ra
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:29:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732213468;
+ s=mimecast20190719; t=1732213757;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UJ9jAgXwMVHVFrUHaMWSAua/SnuMR5IMbLdDDB2um/c=;
- b=S/uFi4b+Y+3D+3jOsAXLvqGzSnA4JupW34CQVuKzNZsUcsh+hstiqls79lBtricQhdxLNn
- iVtambKOfDlvMHI1e58Doxon5+VPwh89u8rEorEWBW4IIjMVLe3R5uQsSV8WNLQ+LjzjI6
- SiYn0MlzhW1TcR4+8BHxJ4GUCH5DThs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=46P5fCc+o6hH7ZVFiMBoQudmq3399lviu/5ndRrwzBo=;
+ b=SK5ArTaQNEvqprozqmSy/6qi5cZOYeaudjcfVgMUF8EVvpkxkyLLEg9dJ4ODaFhYvgBinW
+ UCIiNYSRFqHt23+8pZ5/MsjWsdug7xoj4puQt9XuD0I0PGqx0N06GCEWK/joK39y/YSSQU
+ LaDkHWsS2LYBOyz+bJ/4F0PwcaUEj1g=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-W2eUXq0MPjO7sS6NEC_4AA-1; Thu, 21 Nov 2024 13:24:26 -0500
-X-MC-Unique: W2eUXq0MPjO7sS6NEC_4AA-1
-X-Mimecast-MFC-AGG-ID: W2eUXq0MPjO7sS6NEC_4AA
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4315c1b5befso8050775e9.1
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 10:24:26 -0800 (PST)
+ us-mta-252-woQuvcB6MiWyCsSca3cfWw-1; Thu, 21 Nov 2024 13:29:15 -0500
+X-MC-Unique: woQuvcB6MiWyCsSca3cfWw-1
+X-Mimecast-MFC-AGG-ID: woQuvcB6MiWyCsSca3cfWw
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38235e99a53so719642f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 10:29:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732213465; x=1732818265;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UJ9jAgXwMVHVFrUHaMWSAua/SnuMR5IMbLdDDB2um/c=;
- b=eQycxBC8DL+vUMtQeVC+SREVzyUj+Tg36PJnt3/LCk7ulr0cTynu7Qij9ODcAwzGsN
- hm9OVpPuNLhkmVJhqNi58CThsxMsF6ChGsZGf8qhGn0zFbzE1HmQuSoXVveEcMH6FsIB
- t5YcO0NCEZYPKCffzqT94OdCjVLzR+EbDy+50Ci0IrJjR2PxICSSeAOS1asHfUvihaiF
- 6tA5tB45Cj09Iz0BGiH4U1k1UryJtEipjU+wwRdZwozzN/16RCXqCz/uF2F/OQa5srQj
- 3dYAR/j+Dec4B+FiEJI4gW/h+CutLmZnyNX+iFbM8E+qVWjlwoJ5qBcsIUcvsyVRmz5n
- 8CEg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAuWFXE/PeMEWgi8paNYhM6tJijbWCHrJ3MogjCuq5SlsIPtSiQRXGV+b84axkN4HRcACQ/hxhwFOR@nongnu.org
-X-Gm-Message-State: AOJu0YzWZvHmW2Rl/5TSqIX4VUtPDER9bxCzHdlrRCOja1ypv56jTwFz
- O3RCTZTC3wTxa3UdVY/hl8e8zRe/IU89ax0R9IU8HgI9JEtfAPs8mt5MWjYF3cXjYxtj9wacscl
- HuUms+Qq+/N3pv1+t2YfFMqVf+kwBvc4a7mH+waIySCRW+wE6dZoI
-X-Gm-Gg: ASbGncv4Gyo9z9PfDmLzHrC8UGOpIYLcl93NWODZZhINSbc9RDxmPMU2uMDvR7ZJUMv
- bW8RPiCOTp5NQb1eZ/BO2B+BRzSRfzmBKNtho+Vio7GB9jyfQXfjI5RyCU081z+6ceD+XaBDBEg
- 630spMkLV36dFpwKTo+3uUfuC0A/iE6n2MLVP5zXwe8zg9WTpiSlJkpnVyO1FdRNKcRL94Oflzx
- 8aV0UFU1Ak3uysk9RNCx56YKJTlih+qmnHlnFLrgpSLNZy/i4gIdg==
-X-Received: by 2002:a05:600c:4f08:b0:430:54a4:5b03 with SMTP id
- 5b1f17b1804b1-43348986a08mr66391335e9.6.1732213465585; 
- Thu, 21 Nov 2024 10:24:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE8xiQlp54xG3XHDHxhViWwSoiqkq/1ywhOAV4GoL3Cb4arxAv3Fcp6ekpKROPIaYM2Us/qvw==
-X-Received: by 2002:a05:600c:4f08:b0:430:54a4:5b03 with SMTP id
- 5b1f17b1804b1-43348986a08mr66391095e9.6.1732213465134; 
- Thu, 21 Nov 2024 10:24:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732213754; x=1732818554;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=46P5fCc+o6hH7ZVFiMBoQudmq3399lviu/5ndRrwzBo=;
+ b=T8fRrUrYAV0joo7wkBSQ0aEVNhMREYwAjtOuxSrPGqAwKlS0wh3C0FM79Z3y+JD7aD
+ J7EYfcHCojtBbViUtQ0zPmzU5SvzMob0jm9dkFMgq6frEwXOHwW5rdnR2sH8l188JdOx
+ 1VcnoeJjGOC/F0KQHW/IqQjHSCRukn9difhZAln+rfvjdo5f3q1i2uaIOKdHYpRIn54x
+ D/8ib2qD2Na1m6kVUzRGJ3O39jgu9/LEW3lNIiRtYknmLdJ9fHCWAmh7qcvWUPlQ6HCP
+ ZAK3l3ny+UgXssUgGq1yzPd1rGu+PMWZo4duCY7mRWrsOCu3Lne4zxjL/tUxvuFN4of9
+ 0QCw==
+X-Gm-Message-State: AOJu0YwlbE0s2unfKe1+VoBF83Go0YjCUWs4EfWxIE1ltXhn9I2tXkh1
+ RqMOnHDEOIcMJ4yvZwC2zQivmM4wxOPZH/OY59cJW2RNEBo8B5ItNdnc6kAgkKKS2Sry5Ji+WGD
+ MAH+9Fq3eAh5u4BU3ZxUNFzTuV7jsn/b30dfXjN4sSxiAFs43b9+5qi3YXxqYyhn6cHzQcGDrey
+ kJkRfHRyuLO3mSGuTmc7yhKWm1P5DgoAEzuHr9
+X-Gm-Gg: ASbGncvWTj00qgxE2pFyr2NmCWtF39xElTujp6K6M5fsO0TVW+ZEJYxhIQkNRZCSRuu
+ WoX2liOntT7UptuLxqgu7VxVmo0rFXp9mDVAtpNxRblU8/KcGJ+h36lstylr2WMcAxaX5rSTuQB
+ MJ85Tst7+Ls8DizH5YiCUj34pbSj99mz9MQItAEWveavCHqyNbKhVyOXcOoRdah0TDkKz2j2vcE
+ DpKOxn8shTNxbOQo2UUCKk9f4ndUeP2FOQEhErIQPkAkIkHqMTsuA==
+X-Received: by 2002:a05:6000:1f8a:b0:381:f15a:e91 with SMTP id
+ ffacd0b85a97d-382604ec295mr194235f8f.11.1732213753645; 
+ Thu, 21 Nov 2024 10:29:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGIsK8gAk3mFWKo886ubeJMqXU9zbjRfIWOOjQwo/q9AExN/1IDj2zontDRvfL361KsO8PwHA==
+X-Received: by 2002:a05:6000:1f8a:b0:381:f15a:e91 with SMTP id
+ ffacd0b85a97d-382604ec295mr194218f8f.11.1732213753189; 
+ Thu, 21 Nov 2024 10:29:13 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.196.119])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-433b4643100sm66706405e9.39.2024.11.21.10.24.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 10:24:24 -0800 (PST)
-Message-ID: <f45226a9-7664-41e7-849d-e8939f692d49@redhat.com>
-Date: Thu, 21 Nov 2024 19:24:20 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: QEMU patches for native windows support through clang-cl
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Erwin Jansen <jansene@google.com>,
- Roque Arcudia Hernandez <roqueh@google.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, sw@weilnetz.de,
- lvivier@redhat.com, Patrick Leis <venture@google.com>,
- Nabih Estefan <nabihestefan@google.com>, Danny Rosen
- <dannyrosen@google.com>, JP Cottin <jpcottin@google.com>,
- berrange@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <CAP52u7a_CA-PEw2gMgc32rCKGt8mqsjCkEedkzTgOosazrTs-w@mail.gmail.com>
- <61ca5164-3d81-4e2c-b581-304cf3cdecc0@linaro.org>
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fbedeb3sm222233f8f.95.2024.11.21.10.29.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 Nov 2024 10:29:12 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <61ca5164-3d81-4e2c-b581-304cf3cdecc0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>,
+ Akihiro Suda <akihiro.suda.cz@hco.ntt.co.jp>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH v2] hvf: Enable 1G page support
+Date: Thu, 21 Nov 2024 19:29:11 +0100
+Message-ID: <20241121182911.272300-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,27 +108,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/21/24 19:17, Pierrick Bouvier wrote:
-> On 11/21/24 09:36, Erwin Jansen wrote:
->> The Android Emulator team has successfully ported QEMU 8 to compile 
->> with clang-cl, enabling Windows compilation and better integration 
->> with the Microsoft ecosystem. This involved:
->>
->>   * Replacing shell scripts with Python for enhanced Windows 
->> compatibility.
+From: Alexander Graf <agraf@csgraf.de>
 
-It would be useful to know what scripts.  configure? :)
+Hvf on x86 only supported 2MiB large pages, but never bothered to strip
+out the 1GiB page size capability from -cpu host. With QEMU 8.0.0 this
+became a problem because OVMF started to use 1GiB pages by default.
 
-If it's just scripts/make-config-poison.sh or scripts/qemu-version.sh, 
-no objection at all.
+Let's just unconditionally add 1GiB page walk support to the walker.
 
->>   * Implementing fixes within existing scripts.
->>   * Introducing a small set of header stubs and a series of compilation
->>     fixes.
+With this fix applied, I can successfully run OVMF again.
 
-If you can add this configuration to the GitLab CI, I don't see any 
-blocker.  Otherwise there's risk of bitrot.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1603
+Signed-off-by: Alexander Graf <agraf@csgraf.de>
+Reported-by: Akihiro Suda <akihiro.suda.cz@hco.ntt.co.jp>
+Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Link: https://lore.kernel.org/r/20230420225258.58009-1-agraf@csgraf.de
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/hvf/x86_mmu.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-Paolo
+diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/hvf/x86_mmu.c
+index 649074a7d24..579d0c3a4cc 100644
+--- a/target/i386/hvf/x86_mmu.c
++++ b/target/i386/hvf/x86_mmu.c
+@@ -38,6 +38,7 @@
+ #define LEGACY_PTE_PAGE_MASK        (0xffffffffllu << 12)
+ #define PAE_PTE_PAGE_MASK           ((-1llu << 12) & ((1llu << 52) - 1))
+ #define PAE_PTE_LARGE_PAGE_MASK     ((-1llu << (21)) & ((1llu << 52) - 1))
++#define PAE_PTE_SUPER_PAGE_MASK     ((-1llu << (30)) & ((1llu << 52) - 1))
+ 
+ struct gpt_translation {
+     target_ulong  gva;
+@@ -96,7 +97,7 @@ static bool get_pt_entry(CPUState *cpu, struct gpt_translation *pt,
+ 
+ /* test page table entry */
+ static bool test_pt_entry(CPUState *cpu, struct gpt_translation *pt,
+-                          int level, bool *is_large, bool pae)
++                          int level, int *largeness, bool pae)
+ {
+     uint64_t pte = pt->pte[level];
+ 
+@@ -118,9 +119,9 @@ static bool test_pt_entry(CPUState *cpu, struct gpt_translation *pt,
+         goto exit;
+     }
+ 
+-    if (1 == level && pte_large_page(pte)) {
++    if (level && pte_large_page(pte)) {
+         pt->err_code |= MMU_PAGE_PT;
+-        *is_large = true;
++        *largeness = level;
+     }
+     if (!level) {
+         pt->err_code |= MMU_PAGE_PT;
+@@ -152,9 +153,18 @@ static inline uint64_t pse_pte_to_page(uint64_t pte)
+     return ((pte & 0x1fe000) << 19) | (pte & 0xffc00000);
+ }
+ 
+-static inline uint64_t large_page_gpa(struct gpt_translation *pt, bool pae)
++static inline uint64_t large_page_gpa(struct gpt_translation *pt, bool pae,
++                                      int largeness)
+ {
+-    VM_PANIC_ON(!pte_large_page(pt->pte[1]))
++    VM_PANIC_ON(!pte_large_page(pt->pte[largeness]))
++
++    /* 1Gib large page  */
++    if (pae && largeness == 2) {
++        return (pt->pte[2] & PAE_PTE_SUPER_PAGE_MASK) | (pt->gva & 0x3fffffff);
++    }
++
++    VM_PANIC_ON(largeness != 1)
++
+     /* 2Mb large page  */
+     if (pae) {
+         return (pt->pte[1] & PAE_PTE_LARGE_PAGE_MASK) | (pt->gva & 0x1fffff);
+@@ -170,7 +180,7 @@ static bool walk_gpt(CPUState *cpu, target_ulong addr, int err_code,
+                      struct gpt_translation *pt, bool pae)
+ {
+     int top_level, level;
+-    bool is_large = false;
++    int largeness = 0;
+     target_ulong cr3 = rvmcs(cpu->accel->fd, VMCS_GUEST_CR3);
+     uint64_t page_mask = pae ? PAE_PTE_PAGE_MASK : LEGACY_PTE_PAGE_MASK;
+     
+@@ -186,19 +196,19 @@ static bool walk_gpt(CPUState *cpu, target_ulong addr, int err_code,
+     for (level = top_level; level > 0; level--) {
+         get_pt_entry(cpu, pt, level, pae);
+ 
+-        if (!test_pt_entry(cpu, pt, level - 1, &is_large, pae)) {
++        if (!test_pt_entry(cpu, pt, level - 1, &largeness, pae)) {
+             return false;
+         }
+ 
+-        if (is_large) {
++        if (largeness) {
+             break;
+         }
+     }
+ 
+-    if (!is_large) {
++    if (!largeness) {
+         pt->gpa = (pt->pte[0] & page_mask) | (pt->gva & 0xfff);
+     } else {
+-        pt->gpa = large_page_gpa(pt, pae);
++        pt->gpa = large_page_gpa(pt, pae, largeness);
+     }
+ 
+     return true;
+-- 
+2.47.0
 
 
