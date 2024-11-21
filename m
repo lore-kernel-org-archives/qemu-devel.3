@@ -4,94 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB3DAD6ED04
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE391D6ED08
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 11:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE52y-0000CM-GE; Thu, 21 Nov 2024 06:08:28 -0500
+	id 1tE52a-0000Aw-8f; Thu, 21 Nov 2024 06:08:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1tE52w-0000Bw-GX
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 06:08:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tE52Y-0000AQ-2r
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 06:08:02 -0500
+Received: from 4.mo552.mail-out.ovh.net ([178.33.43.201])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1tE52u-0002I0-3x
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 06:08:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732187302;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZSm40vKu9QKzup4hQxLg1EiiTpZrLAXVR4ECFVOf/no=;
- b=WuR6C0M9B/4nKLYrBd1YMvlezmFs5eZ9XB8pfaIt5e6hklFPncVizNj0C9jVjuohx3UnmK
- CHy8/Es4Sg7BF/hfz8Qyz+5DzKVvsMX+HgxoCT1L0+/iRYtcqxjPcfswCNDDANyvQs+qil
- Zxv7o/qtGuxfj+k2am67AAAWX+Cqr5I=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-IMyVQdR5OZO7Dejz3eNFOA-1; Thu, 21 Nov 2024 06:08:21 -0500
-X-MC-Unique: IMyVQdR5OZO7Dejz3eNFOA-1
-X-Mimecast-MFC-AGG-ID: IMyVQdR5OZO7Dejz3eNFOA
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3824395a677so364245f8f.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 03:08:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732187299; x=1732792099;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZSm40vKu9QKzup4hQxLg1EiiTpZrLAXVR4ECFVOf/no=;
- b=uOOelFpene9bM74dvbyoXBTuuHniBr0vyms1HFwcMfBdMVA+QRKw+GkhEGksf1tscU
- FyHrMlMYGVYZBctOBRJRRWOmvb7PgibBh5N84UIKvHM6toS14pSzwChHMu/gDBlCiFdn
- oBxnkpB1RgQOXf7k2IoUXPR/YHw/ffQat3DQc+319cy6ml0+BcgyEBP1mYKVNaFXjH1c
- NuJoAceZjnXvQqc/QcInrOtlwFSRW9Jda+NXH75XYK0EeQWaWLkQ+ruO9LG+L/EZXV1V
- kMZCVPDmqoWvRKQxgSSDRFh5cZSImPOAtuxI89mPNDO8FzEVPJoHGgN+nI+XAfUy9B5+
- MhWQ==
-X-Gm-Message-State: AOJu0YzpEnhFeIvCBY36411jNMQFLgsGqRH1Z2h0xXj69HRIE4kBEqdx
- VQKIqDmgCZ9sXBFOD5c4pRgLRaX8j4bRltVfpRrlA5obPBQ2uV4RPErmvb1w2gDapWlxDUlvxsj
- VKbaiGrIzycah3+DqzhUH6y6X8p4uh826A+rAthm8tkVyC0KDsXAzeT8wZ+zW1SWj/vsNfG7L8U
- hXhMylYmLhH8iHY6b1xQEvXl4/ulzLliIAaw==
-X-Gm-Gg: ASbGncvYYNfWXAaoYwFKTpXTIloGkE0XGNAy9V3LC7wahEsBM7HClqniE7nou4VUFCE
- 5G8rUJAJZuuVXwN/RVAIOUrntFUdDqxSxNpqnxqM3KZTGcvI7iY1Cho3D63+9RgQfAlUQr67orf
- jHVLvDTVlwGmWvtKbLqpRMYD4zvxu3IWCc0C6v3Ul2wRnPT9epY/EKvUkXSXctLovpfXjIYylj+
- qEhyRI2YuTJ8S8zpovNoy3pL8gWD6jAgHzAI2dXn9xVEVJ9GNbp8OvAhIW6bUsDHtq+tJ035O7L
- dOYlYEWigq6Oml5MRaqGM8c=
-X-Received: by 2002:a05:6000:2a12:b0:382:464e:1ab4 with SMTP id
- ffacd0b85a97d-38254adee18mr3486879f8f.3.1732187298856; 
- Thu, 21 Nov 2024 03:08:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEbutwYDYUL/VGg4e2FrXIZ8urzCmiKmvw1ITROfvkiJ7dImr5pG58xHCXNn/QotROQii462g==
-X-Received: by 2002:a05:6000:2a12:b0:382:464e:1ab4 with SMTP id
- ffacd0b85a97d-38254adee18mr3486858f8f.3.1732187298463; 
- Thu, 21 Nov 2024 03:08:18 -0800 (PST)
-Received: from rh (p200300f6af368f00f7bae606b15f3bdb.dip0.t-ipconnect.de.
- [2003:f6:af36:8f00:f7ba:e606:b15f:3bdb])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38254933bf7sm4812403f8f.72.2024.11.21.03.08.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 03:08:18 -0800 (PST)
-Date: Thu, 21 Nov 2024 12:08:17 +0100 (CET)
-From: Sebastian Ott <sebott@redhat.com>
-To: qemu-devel@nongnu.org
-cc: Alex Williamson <alex.williamson@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] pci: ensure valid link status bits for downstream
- ports
-In-Reply-To: <20241111123756.18393-1-sebott@redhat.com>
-Message-ID: <4995a8b7-af4e-cc74-81c5-9a7fb066ec1d@redhat.com>
-References: <20241111123756.18393-1-sebott@redhat.com>
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tE52W-0002G9-0i
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 06:08:01 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.176.7])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4XvFnW0Q73z1PNM;
+ Thu, 21 Nov 2024 11:07:43 +0000 (UTC)
+Received: from kaod.org (37.59.142.100) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 21 Nov
+ 2024 12:07:42 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-100R0030e79cc76-9273-494e-8d8c-ea7885503c3c,
+ FF192833FC087472966912589AD63751DC8D0292) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Thu, 21 Nov 2024 12:07:39 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>, Linus Heckemann <git@sphalerite.org>
+Subject: Re: [PATCH] 9pfs: cleanup V9fsFidState
+Message-ID: <20241121120739.5f2a8c1d@bahia>
+In-Reply-To: <E1tE4v2-0051EH-Ni@kylie.crudebyte.com>
+References: <E1tE4v2-0051EH-Ni@kylie.crudebyte.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.100]
+X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 0b539284-9ed7-41b6-94da-0da0420be5fb
+X-Ovh-Tracer-Id: 1476617730153290205
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeigddvfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutddtpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeefpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehgihhtsehsphhhrghlvghrihhtvgdrohhrghdpoffvtefjohhsthepmhhoheehvdgmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=Bd+gBqoNJ0k9U4pyQqcz4XB4liIozqJKIWhrIWEwU6M=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1732187263; v=1;
+ b=dj3yKfxRwZnmA8Xk1fcanoJPTazf9A3YKWvYva/kgE00jF23m8u+1oQfvlt2gft0RWPkrvEW
+ cZt5+QkCIpvdEr5Jb1RbFHesaDrwkTEamkb+7JiLqfG8UDntowq+3+G49kiLOixF49fqlHY0Uef
+ zMpMihGJUs7zb51hwI91ia/n6YLP5vdbyJ20ARQuoWHuo6IY6Mn2ONtfImS4QLV9m25MwSY+4Lj
+ kXdLDY3ViZgvtqVZaOJOd9mDUGlHz7mKOEbPEN/iyfXARugSAq6e/3TTpihlEoSU4iNlJu77sYV
+ Q8zLdjS+rJTNPbAzpMXhvfcQvdrWnTPU1KwA5xIech8KQ==
+Received-SPF: pass client-ip=178.33.43.201; envelope-from=groug@kaod.org;
+ helo=4.mo552.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,25 +82,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Nov 2024, Sebastian Ott wrote:
-> PCI hotplug for downstream endpoints on arm fails because Linux'
-> PCIe hotplug driver doesn't like the QEMU provided LNKSTA:
->
->  pcieport 0000:08:01.0: pciehp: Slot(2): Card present
->  pcieport 0000:08:01.0: pciehp: Slot(2): Link Up
->  pcieport 0000:08:01.0: pciehp: Slot(2): Cannot train link: status 0x2000
->
-> There's 2 cases where LNKSTA isn't setup properly:
-> * the downstream device has no express capability
-> * max link width of the bridge is 0
->
-> Fix these by making the LNKSTA modifications independent of each other.
->
-> Signed-off-by: Sebastian Ott <sebott@redhat.com>
+On Thu, 21 Nov 2024 11:52:48 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-Friendly ping. This fixes PCI hotplug to a downstream port on ARM.
+> Drop V9fsFidState's 'next' member, which is no longer used since:
+> 
+>   f5265c8f917e ('9pfs: use GHashTable for fid table')
+> 
 
-Thanks,
-Sebastian
+Good catch !
 
+Fixes: f5265c8f917e ('9pfs: use GHashTable for fid table')
+Reviewed-by: Greg Kurz <groug@kaod.org>
+
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  hw/9pfs/9p.h | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
+> index a6f59abccb..5e041e1f60 100644
+> --- a/hw/9pfs/9p.h
+> +++ b/hw/9pfs/9p.h
+> @@ -280,7 +280,6 @@ struct V9fsFidState {
+>      uid_t uid;
+>      int ref;
+>      bool clunked;
+> -    QSIMPLEQ_ENTRY(V9fsFidState) next;
+>      QSLIST_ENTRY(V9fsFidState) reclaim_next;
+>  };
+>  
+
+
+
+-- 
+Greg
 
