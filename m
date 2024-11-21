@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08C2D743FF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95228D743FE
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwJT-0005Sq-1d; Wed, 20 Nov 2024 20:48:55 -0500
+	id 1tDwI1-0001gn-9H; Wed, 20 Nov 2024 20:47:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwJP-0005LF-BS
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:48:52 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHz-0001g2-AT
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:23 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwJN-0004nq-0E
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:48:51 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHv-0004Zt-HT
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=bZuxt5qAqK6NkZvo8x4OT4L1OuOUMSkYtpG4jSe71JU=; b=o5/46J14uW1iY+9
- PNfgqltgr0FOgC7Tk/87WFrSUwwBBV74UWHBnRm6GtWkm7ICn5ABC//JDcTz6azBX5YayojzdoZRe
- lhAVHcO0nBcpjMbRL7cAESII3mmZ2lsWYHbEtkxB4Qlcc4P4o7YzQvM1wuAWWGV+76ARMEfiEg7Qt
- SQ=;
+ List-Help; bh=GcVPUJyptch/NiR/8R+sSM2oGaLEowkzsVXIpJeEORM=; b=Pu1eS6mafjujCyI
+ wgR/meO9r7ViGmRYbXdDJtGFhHt50GFhGETszsi/5jR3pYhqCGYLTNFmKKXhDHsDTgFwL1DsSYsAw
+ GmC0zCSfI0VM9tiRJ9PygYw43krzvwtqPMzKgQ5yt5LrCVUZqzhRZBMXAxu+IEgTCjUrO3EL66++o
+ uw=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 35/43] target/hexagon: Use argparse in all python
- scripts
-Date: Thu, 21 Nov 2024 02:49:39 +0100
-Message-ID: <20241121014947.18666-36-anjo@rev.ng>
+Subject: [RFC PATCH v1 26/43] helper-to-tcg: PrepareForTcgPass, canonicalize IR
+Date: Thu, 21 Nov 2024 02:49:30 +0100
+Message-ID: <20241121014947.18666-27-anjo@rev.ng>
 In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
 References: <20241121014947.18666-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -65,399 +64,1089 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QOL commit, all the various gen_* python scripts take a large set
-arguments where order is implicit.  Using argparse we also get decent
-error messages if a field is missing or too many are added.
+Iterates over the IR with the goal of converting it to a form closer to
+TCG, taking care of IR disparencies between LLVM and TCG.  This also
+simplifies the backend by containing the bulk of custom IR
+transformations, meaning the backend can be as dumb as possible.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hexagon/gen_analyze_funcs.py     |  6 +++--
- target/hexagon/gen_decodetree.py        | 19 +++++++++++----
- target/hexagon/gen_helper_funcs.py      |  7 +++---
- target/hexagon/gen_helper_protos.py     |  7 +++---
- target/hexagon/gen_idef_parser_funcs.py | 11 +++++++--
- target/hexagon/gen_op_attribs.py        | 11 +++++++--
- target/hexagon/gen_opcodes_def.py       | 11 +++++++--
- target/hexagon/gen_printinsn.py         | 11 +++++++--
- target/hexagon/gen_tcg_func_table.py    | 11 +++++++--
- target/hexagon/gen_tcg_funcs.py         |  9 +++----
- target/hexagon/gen_trans_funcs.py       | 17 ++++++++++---
- target/hexagon/hex_common.py            | 32 ++++++++++++-------------
- target/hexagon/meson.build              |  2 +-
- 13 files changed, 107 insertions(+), 47 deletions(-)
+ subprojects/helper-to-tcg/meson.build         |    1 +
+ .../PrepareForTcgPass/CanonicalizeIR.cpp      | 1000 +++++++++++++++++
+ .../passes/PrepareForTcgPass/CanonicalizeIR.h |   25 +
+ .../PrepareForTcgPass/PrepareForTcgPass.cpp   |    2 +
+ 4 files changed, 1028 insertions(+)
+ create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.cpp
+ create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.h
 
-diff --git a/target/hexagon/gen_analyze_funcs.py b/target/hexagon/gen_analyze_funcs.py
-index 54bac19724..3ac7cc2cfe 100755
---- a/target/hexagon/gen_analyze_funcs.py
-+++ b/target/hexagon/gen_analyze_funcs.py
-@@ -78,11 +78,13 @@ def gen_analyze_func(f, tag, regs, imms):
+diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
+index 6b18734bad..50bb926f49 100644
+--- a/subprojects/helper-to-tcg/meson.build
++++ b/subprojects/helper-to-tcg/meson.build
+@@ -48,6 +48,7 @@ sources = [
+     'passes/PseudoInst.cpp',
+     'passes/PrepareForTcgPass/PrepareForTcgPass.cpp',
+     'passes/PrepareForTcgPass/TransformGEPs.cpp',
++    'passes/PrepareForTcgPass/CanonicalizeIR.cpp',
+ ]
  
- 
- def main():
--    hex_common.read_common_files()
-+    args = hex_common.parse_common_args(
-+        "Emit functions analyzing register accesses"
-+    )
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
--    with open(sys.argv[-1], "w") as f:
-+    with open(args.out, "w") as f:
-         f.write("#ifndef HEXAGON_ANALYZE_FUNCS_C_INC\n")
-         f.write("#define HEXAGON_ANALYZE_FUNCS_C_INC\n\n")
- 
-diff --git a/target/hexagon/gen_decodetree.py b/target/hexagon/gen_decodetree.py
-index a4fcd622c5..ce703af41d 100755
---- a/target/hexagon/gen_decodetree.py
-+++ b/target/hexagon/gen_decodetree.py
-@@ -24,6 +24,7 @@
- import textwrap
- import iset
- import hex_common
-+import argparse
- 
- encs = {
-     tag: "".join(reversed(iset.iset[tag]["enc"].replace(" ", "")))
-@@ -191,8 +192,18 @@ def gen_decodetree_file(f, class_to_decode):
-         f.write(f"{tag}\t{enc_str} @{tag}\n")
- 
- 
-+def main():
-+    parser = argparse.ArgumentParser(
-+        description="Emit opaque macro calls with instruction semantics"
-+    )
-+    parser.add_argument("semantics", help="semantics file")
-+    parser.add_argument("class_to_decode", help="instruction class to decode")
-+    parser.add_argument("out", help="output file")
-+    args = parser.parse_args()
+ clang = bindir / 'clang'
+diff --git a/subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.cpp b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.cpp
+new file mode 100644
+index 0000000000..d53b7b8580
+--- /dev/null
++++ b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.cpp
+@@ -0,0 +1,1000 @@
++//
++//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
 +
-+    hex_common.read_semantics_file(args.semantics)
-+    with open(args.out, "w") as f:
-+        gen_decodetree_file(f, args.class_to_decode)
++#include "CanonicalizeIR.h"
++#include <PseudoInst.h>
++#include <llvm-compat.h>
 +
- if __name__ == "__main__":
--    hex_common.read_semantics_file(sys.argv[1])
--    class_to_decode = sys.argv[2]
--    with open(sys.argv[3], "w") as f:
--        gen_decodetree_file(f, class_to_decode)
-+    main()
-diff --git a/target/hexagon/gen_helper_funcs.py b/target/hexagon/gen_helper_funcs.py
-index e9685bff2f..c1f806ac4b 100755
---- a/target/hexagon/gen_helper_funcs.py
-+++ b/target/hexagon/gen_helper_funcs.py
-@@ -102,12 +102,13 @@ def gen_helper_function(f, tag, tagregs, tagimms):
- 
- 
- def main():
--    hex_common.read_common_files()
-+    args = hex_common.parse_common_args(
-+        "Emit helper function definitions for each instruction"
-+    )
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
--    output_file = sys.argv[-1]
--    with open(output_file, "w") as f:
-+    with open(args.out, "w") as f:
-         for tag in hex_common.tags:
-             ## Skip the priv instructions
-             if "A_PRIV" in hex_common.attribdict[tag]:
-diff --git a/target/hexagon/gen_helper_protos.py b/target/hexagon/gen_helper_protos.py
-index fd2bfd0f36..77f8e0a6a3 100755
---- a/target/hexagon/gen_helper_protos.py
-+++ b/target/hexagon/gen_helper_protos.py
-@@ -52,12 +52,13 @@ def gen_helper_prototype(f, tag, tagregs, tagimms):
- 
- 
- def main():
--    hex_common.read_common_files()
-+    args = hex_common.parse_common_args(
-+        "Emit helper function prototypes for each instruction"
-+    )
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
--    output_file = sys.argv[-1]
--    with open(output_file, "w") as f:
-+    with open(args.out, "w") as f:
-         for tag in hex_common.tags:
-             ## Skip the priv instructions
-             if "A_PRIV" in hex_common.attribdict[tag]:
-diff --git a/target/hexagon/gen_idef_parser_funcs.py b/target/hexagon/gen_idef_parser_funcs.py
-index 72f11c68ca..2f6e826f76 100644
---- a/target/hexagon/gen_idef_parser_funcs.py
-+++ b/target/hexagon/gen_idef_parser_funcs.py
-@@ -20,6 +20,7 @@
- import sys
- import re
- import string
-+import argparse
- from io import StringIO
- 
- import hex_common
-@@ -43,13 +44,19 @@
- ## them are inputs ("in" prefix), while some others are outputs.
- ##
- def main():
--    hex_common.read_semantics_file(sys.argv[1])
-+    parser = argparse.ArgumentParser(
-+        "Emit instruction implementations that can be fed to idef-parser"
-+    )
-+    parser.add_argument("semantics", help="semantics file")
-+    parser.add_argument("out", help="output file")
-+    args = parser.parse_args()
-+    hex_common.read_semantics_file(args.semantics)
-     hex_common.calculate_attribs()
-     hex_common.init_registers()
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
--    with open(sys.argv[-1], "w") as f:
-+    with open(args.out, "w") as f:
-         f.write('#include "macros.h.inc"\n\n')
- 
-         for tag in hex_common.tags:
-diff --git a/target/hexagon/gen_op_attribs.py b/target/hexagon/gen_op_attribs.py
-index 99448220da..bbbb02df3a 100755
---- a/target/hexagon/gen_op_attribs.py
-+++ b/target/hexagon/gen_op_attribs.py
-@@ -21,16 +21,23 @@
- import re
- import string
- import hex_common
-+import argparse
- 
- 
- def main():
--    hex_common.read_semantics_file(sys.argv[1])
-+    parser = argparse.ArgumentParser(
-+        "Emit opaque macro calls containing instruction attributes"
-+    )
-+    parser.add_argument("semantics", help="semantics file")
-+    parser.add_argument("out", help="output file")
-+    args = parser.parse_args()
-+    hex_common.read_semantics_file(args.semantics)
-     hex_common.calculate_attribs()
- 
-     ##
-     ##     Generate all the attributes associated with each instruction
-     ##
--    with open(sys.argv[-1], "w") as f:
-+    with open(args.out, "w") as f:
-         for tag in hex_common.tags:
-             f.write(
-                 f"OP_ATTRIB({tag},ATTRIBS("
-diff --git a/target/hexagon/gen_opcodes_def.py b/target/hexagon/gen_opcodes_def.py
-index 536f0eb68a..94a19ff412 100755
---- a/target/hexagon/gen_opcodes_def.py
-+++ b/target/hexagon/gen_opcodes_def.py
-@@ -21,15 +21,22 @@
- import re
- import string
- import hex_common
-+import argparse
- 
- 
- def main():
--    hex_common.read_semantics_file(sys.argv[1])
-+    parser = argparse.ArgumentParser(
-+        description="Emit opaque macro calls with instruction names"
-+    )
-+    parser.add_argument("semantics", help="semantics file")
-+    parser.add_argument("out", help="output file")
-+    args = parser.parse_args()
-+    hex_common.read_semantics_file(args.semantics)
- 
-     ##
-     ##     Generate a list of all the opcodes
-     ##
--    with open(sys.argv[-1], "w") as f:
-+    with open(args.out, "w") as f:
-         for tag in hex_common.tags:
-             f.write(f"OPCODE({tag}),\n")
- 
-diff --git a/target/hexagon/gen_printinsn.py b/target/hexagon/gen_printinsn.py
-index 8bf4d0985c..d5f969960a 100755
---- a/target/hexagon/gen_printinsn.py
-+++ b/target/hexagon/gen_printinsn.py
-@@ -21,6 +21,7 @@
- import re
- import string
- import hex_common
-+import argparse
- 
- 
- ##
-@@ -96,11 +97,17 @@ def spacify(s):
- 
- 
- def main():
--    hex_common.read_semantics_file(sys.argv[1])
-+    parser = argparse.ArgumentParser(
-+        "Emit opaque macro calls with information for printing string representations of instrucions"
-+    )
-+    parser.add_argument("semantics", help="semantics file")
-+    parser.add_argument("out", help="output file")
-+    args = parser.parse_args()
-+    hex_common.read_semantics_file(args.semantics)
- 
-     immext_casere = re.compile(r"IMMEXT\(([A-Za-z])")
- 
--    with open(sys.argv[-1], "w") as f:
-+    with open(args.out, "w") as f:
-         for tag in hex_common.tags:
-             if not hex_common.behdict[tag]:
-                 continue
-diff --git a/target/hexagon/gen_tcg_func_table.py b/target/hexagon/gen_tcg_func_table.py
-index 978ac1819b..299a39b1aa 100755
---- a/target/hexagon/gen_tcg_func_table.py
-+++ b/target/hexagon/gen_tcg_func_table.py
-@@ -21,15 +21,22 @@
- import re
- import string
- import hex_common
-+import argparse
- 
- 
- def main():
--    hex_common.read_semantics_file(sys.argv[1])
-+    parser = argparse.ArgumentParser(
-+        "Emit opaque macro calls with instruction semantics"
-+    )
-+    parser.add_argument("semantics", help="semantics file")
-+    parser.add_argument("out", help="output file")
-+    args = parser.parse_args()
-+    hex_common.read_semantics_file(args.semantics)
-     hex_common.calculate_attribs()
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
--    with open(sys.argv[-1], "w") as f:
-+    with open(args.out, "w") as f:
-         f.write("#ifndef HEXAGON_FUNC_TABLE_H\n")
-         f.write("#define HEXAGON_FUNC_TABLE_H\n\n")
- 
-diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_funcs.py
-index 05aa0a7855..c2ba91ddc0 100755
---- a/target/hexagon/gen_tcg_funcs.py
-+++ b/target/hexagon/gen_tcg_funcs.py
-@@ -108,15 +108,16 @@ def gen_def_tcg_func(f, tag, tagregs, tagimms):
- 
- 
- def main():
--    is_idef_parser_enabled = hex_common.read_common_files()
-+    args = hex_common.parse_common_args(
-+        "Emit functions calling generated code implementing instruction semantics (helpers, idef-parser)"
-+    )
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
--    output_file = sys.argv[-1]
--    with open(output_file, "w") as f:
-+    with open(args.out, "w") as f:
-         f.write("#ifndef HEXAGON_TCG_FUNCS_H\n")
-         f.write("#define HEXAGON_TCG_FUNCS_H\n\n")
--        if is_idef_parser_enabled:
-+        if args.idef_parser:
-             f.write('#include "idef-generated-emitter.h.inc"\n\n')
- 
-         for tag in hex_common.tags:
-diff --git a/target/hexagon/gen_trans_funcs.py b/target/hexagon/gen_trans_funcs.py
-index 30f0c73e0c..aea1c36f7d 100755
---- a/target/hexagon/gen_trans_funcs.py
-+++ b/target/hexagon/gen_trans_funcs.py
-@@ -24,6 +24,7 @@
- import textwrap
- import iset
- import hex_common
-+import argparse
- 
- encs = {
-     tag: "".join(reversed(iset.iset[tag]["enc"].replace(" ", "")))
-@@ -136,8 +137,18 @@ def gen_trans_funcs(f):
-         """))
- 
- 
--if __name__ == "__main__":
--    hex_common.read_semantics_file(sys.argv[1])
-+def main():
-+    parser = argparse.ArgumentParser(
-+        description="Emit trans_*() functions to be called by instruction decoder"
-+    )
-+    parser.add_argument("semantics", help="semantics file")
-+    parser.add_argument("out", help="output file")
-+    args = parser.parse_args()
-+    hex_common.read_semantics_file(args.semantics)
-     hex_common.init_registers()
--    with open(sys.argv[2], "w") as f:
-+    with open(args.out, "w") as f:
-         gen_trans_funcs(f)
++#include <llvm/ADT/SmallPtrSet.h>
++#include <llvm/ADT/SmallSet.h>
++#include <llvm/ADT/SmallVector.h>
++#include <llvm/Analysis/VectorUtils.h>
++#include <llvm/IR/Constants.h>
++#include <llvm/IR/DerivedTypes.h>
++#include <llvm/IR/Function.h>
++#include <llvm/IR/IRBuilder.h>
++#include <llvm/IR/InstIterator.h>
++#include <llvm/IR/InstrTypes.h>
++#include <llvm/IR/Instruction.h>
++#include <llvm/IR/Instructions.h>
++#include <llvm/IR/Intrinsics.h>
++#include <llvm/IR/Module.h>
++#include <llvm/IR/PatternMatch.h>
++#include <llvm/Support/Casting.h>
 +
++using namespace llvm;
++using namespace PatternMatch;
 +
-+if __name__ == "__main__":
-+    main()
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index 15ed4980e4..bb20711a2e 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -21,6 +21,7 @@
- import re
- import string
- import textwrap
-+import argparse
++// Needed to track and remove instructions not handled by a subsequent dead code
++// elimination, this applies to calls to pseudo instructions in particular.
++//
++// TODO: Can we instead make pseudo instructions side effect free via
++// attributes?
++using EraseInstVec = SmallVector<Instruction *, 16>;
++using UsageCountMap = DenseMap<Value *, uint16_t>;
++
++// Helper function to remove an instruction only if all uses have been removed.
++// This way we can keep track instruction uses without having to modify the IR,
++// or without having to iterate over all uses everytime we wish to remove an
++// instruction.
++static void addToEraseVectorIfUnused(EraseInstVec &InstToErase,
++                                     UsageCountMap &UsageMap, Value *V)
++{
++    auto *I = dyn_cast<Instruction>(V);
++    if (!I) {
++        return;
++    }
++
++    // Add V to map if not there
++    if (UsageMap.count(V) == 0) {
++        UsageMap[V] = V->getNumUses();
++    }
++
++    // Erase if count reaches zero
++    if (--UsageMap[V] == 0) {
++        InstToErase.push_back(I);
++        UsageMap.erase(V);
++    }
++}
++
++// Forward declarations of IR transformations used in canonicalizing the IR
++static void upcastAshr(Instruction *I);
++static void convertInsertShuffleToSplat(Module &M, Instruction *I);
++
++static void simplifyVecBinOpWithSplat(EraseInstVec &InstToErase,
++                                      UsageCountMap &UsageMap, Module &M,
++                                      BinaryOperator *BinOp);
++
++static void convertSelectICmp(Module &M, SelectInst *Select, ICmpInst *ICmp);
++
++static void convertQemuLoadStoreToPseudoInst(Module &M, CallInst *Call);
++static void convertExceptionCallsToPseudoInst(Module &M, CallInst *Call);
++static void convertVecStoreBitcastToPseudoInst(EraseInstVec &InstToErase,
++                                               Module &M, StoreInst *Store);
++static void convertICmpBrToPseudInst(LLVMContext &Context,
++                                     EraseInstVec &InstToErase, Module &M,
++                                     Instruction *I, BasicBlock *NextBb);
++
++void canonicalizeIR(Module &M)
++{
++    for (Function &F : M) {
++        if (F.isDeclaration()) {
++            continue;
++        }
++
++        EraseInstVec InstToErase;
++        UsageCountMap UsageMap;
++        LLVMContext &Context = F.getContext();
++
++        // Perform a first pass over all instructions in the function and apply
++        // IR transformations sequentially.  NOTE: order matters here.
++        for (Instruction &I : instructions(F)) {
++            if (I.isArithmeticShift()) {
++                upcastAshr(&I);
++            }
++
++            convertInsertShuffleToSplat(M, &I);
++
++            // Depends on convertInsertShuffleToSplat for @VecSplat instructions
++            if (auto *BinOp = dyn_cast<BinaryOperator>(&I)) {
++                simplifyVecBinOpWithSplat(InstToErase, UsageMap, M, BinOp);
++            }
++
++            // Independent of above
++            if (auto *ICmp = dyn_cast<ICmpInst>(&I)) {
++                for (auto *U : ICmp->users()) {
++                    auto *Select = dyn_cast<SelectInst>(U);
++                    if (Select and Select->getCondition() == ICmp) {
++                        convertSelectICmp(M, Select, ICmp);
++                    }
++                }
++            }
++
++            // Independent of above, can run at any point
++            if (auto *Call = dyn_cast<CallInst>(&I)) {
++                convertQemuLoadStoreToPseudoInst(M, Call);
++                convertExceptionCallsToPseudoInst(M, Call);
++            }
++
++            // Depends on other vector conversions performed above, needs to
++            // run last
++            if (auto *Store = dyn_cast<StoreInst>(&I)) {
++                convertVecStoreBitcastToPseudoInst(InstToErase, M, Store);
++            }
++        }
++
++        // Perform a second pass over the instructions. Can be combined with the
++        // above by using a worklist and making sure we have access to the
++        // BasicBlock.
++        //
++        // Depends on icmp,select -> @movcond
++        ReversePostOrderTraversal<Function *> RPOT(&F);
++        for (auto BbIt = RPOT.begin(); BbIt != RPOT.end(); ++BbIt) {
++            BasicBlock &BB = **BbIt;
++
++            auto NextIt = BbIt;
++            BasicBlock *NextBb = &**(++NextIt);
++
++            for (Instruction &I : BB) {
++                convertICmpBrToPseudInst(Context, InstToErase, M, &I, NextBb);
++            }
++        }
++
++        // Finally clean up instructions we need to remove manually
++        for (Instruction *I : InstToErase) {
++            I->eraseFromParent();
++        }
++    }
++}
++
++static Value *upcastInt(IRBuilder<> &Builder, IntegerType *FinalIntTy, Value *V)
++{
++    if (auto *ConstInt = dyn_cast<ConstantInt>(V)) {
++        return ConstantInt::get(FinalIntTy, ConstInt->getZExtValue());
++    } else {
++        return Builder.CreateSExt(V, FinalIntTy);
++    }
++}
++
++// Convert
++//
++//   %2 = ashr i[8|16] %1, %0
++//
++// to
++//
++//   %2 = zext i[8|16] %1 to i32
++//   %3 = zext i[8|16] %2 to i32
++//   %2 = ashr i32 %2, %3
++//
++static void upcastAshr(Instruction *I)
++{
++    // Only care about scalar shifts < on less than 32-bit integers
++    auto *IntTy = dyn_cast<IntegerType>(I->getType());
++    if (!IntTy or IntTy->getBitWidth() >= 32) {
++        return;
++    }
++
++    IRBuilder<> Builder(I);
++
++    Value *Op1 = I->getOperand(0);
++    Value *Op2 = I->getOperand(1);
++    auto *UpcastIntTy = Builder.getInt32Ty();
++    Op1 = upcastInt(Builder, UpcastIntTy, Op1);
++    Op2 = upcastInt(Builder, UpcastIntTy, Op2);
++
++    auto *AShr = Builder.CreateAShr(Op1, Op2);
++    auto *Trunc = Builder.CreateTrunc(AShr, I->getType());
++    I->replaceAllUsesWith(Trunc);
++}
++
++// Convert vector intrinsics
++//
++//   %0 = insertelement ...
++//   %1 = shuffle ...
++//
++// to
++//
++//   %0 = call @VecSplat.*
++//
++static void convertInsertShuffleToSplat(Module &M, Instruction *I)
++{
++    Value *SplatV;
++    if (match(I, compat_m_Shuffle(compat_m_InsertElt(m_Value(), m_Value(SplatV),
++                                                     m_ZeroInt()),
++                                  m_Value(), compat_m_ZeroMask()))) {
++
++        auto *VecTy = cast<VectorType>(I->getType());
++
++        IRBuilder<> Builder(I);
++        FunctionCallee Fn =
++            pseudoInstFunction(M, VecSplat, VecTy, {SplatV->getType()});
++        CallInst *Call = Builder.CreateCall(Fn, {SplatV});
++        I->replaceAllUsesWith(Call);
++    }
++}
++
++// Convert
++//
++//   %1 = @VecSplat(%0)
++//   %2 = <NxM> ... op <NxM> %1
++//
++// to
++//
++//   %2 = call @Vec[op]Scalar(..., %0)
++//
++// which more closely matches TCG gvec operations.
++static void simplifyVecBinOpWithSplat(EraseInstVec &InstToErase,
++                                      UsageCountMap &UsageMap, Module &M,
++                                      BinaryOperator *BinOp)
++{
++    Value *Lhs = BinOp->getOperand(0);
++    Value *Rhs = BinOp->getOperand(1);
++    if (!Lhs->getType()->isVectorTy() or !Rhs->getType()->isVectorTy()) {
++        return;
++    }
++
++    // Get splat value from constant or @VecSplat call
++    Value *SplatValue = nullptr;
++    if (auto *Const = dyn_cast<Constant>(Rhs)) {
++        SplatValue = Const->getSplatValue();
++    } else if (auto *Call = dyn_cast<CallInst>(Rhs)) {
++        if (getPseudoInstFromCall(Call) == VecSplat) {
++            SplatValue = Call->getOperand(0);
++        }
++    }
++
++    if (SplatValue == nullptr) {
++        return;
++    }
++
++    auto *VecTy = cast<VectorType>(Lhs->getType());
++    auto *ConstInt = dyn_cast<ConstantInt>(SplatValue);
++    bool ConstIsNegOne = ConstInt and ConstInt->getSExtValue() == -1;
++    bool IsNot = BinOp->getOpcode() == Instruction::Xor and ConstIsNegOne;
++    if (IsNot) {
++        FunctionCallee Fn = pseudoInstFunction(M, VecNot, VecTy, {VecTy});
++        IRBuilder<> Builder(BinOp);
++        CallInst *Call = Builder.CreateCall(Fn, {Lhs});
++        BinOp->replaceAllUsesWith(Call);
++    } else {
++        PseudoInst Inst;
++        switch (BinOp->getOpcode()) {
++        case Instruction::Add:
++            Inst = VecAddScalar;
++            break;
++        case Instruction::Sub:
++            Inst = VecSubScalar;
++            break;
++        case Instruction::Mul:
++            Inst = VecMulScalar;
++            break;
++        case Instruction::Xor:
++            Inst = VecXorScalar;
++            break;
++        case Instruction::Or:
++            Inst = VecOrScalar;
++            break;
++        case Instruction::And:
++            Inst = VecAndScalar;
++            break;
++        case Instruction::Shl:
++            Inst = VecShlScalar;
++            break;
++        case Instruction::LShr:
++            Inst = VecLShrScalar;
++            break;
++        case Instruction::AShr:
++            Inst = VecAShrScalar;
++            break;
++        default:
++            abort();
++        }
++
++        IRBuilder<> Builder(BinOp);
++        // Scalar gvec shift operations uses 32-bit scalars, whereas arithmetic
++        // operations uses 64-bit scalars.
++        uint32_t SplatSize = SplatValue->getType()->getIntegerBitWidth();
++        if (BinOp->isShift()) {
++            if (SplatSize > 32) {
++                SplatValue =
++                    Builder.CreateTrunc(SplatValue, Builder.getInt32Ty());
++            }
++        } else {
++            if (SplatSize < 64) {
++                SplatValue =
++                    Builder.CreateZExt(SplatValue, Builder.getInt64Ty());
++            }
++        }
++        FunctionCallee Fn =
++            pseudoInstFunction(M, Inst, VecTy, {VecTy, SplatValue->getType()});
++        CallInst *Call = Builder.CreateCall(Fn, {Lhs, SplatValue});
++        BinOp->replaceAllUsesWith(Call);
++    }
++
++    InstToErase.push_back(BinOp);
++    addToEraseVectorIfUnused(InstToErase, UsageMap, Rhs);
++}
++
++// Convert
++//
++//   %2 = icmp [sgt|ugt|slt|ult] %0, %1
++//   %5 = select %2, %3, %4
++//
++// to
++//
++//   %5 = [s|u][max|min] %0, %1
++//
++// if possible.  Results in cleaner IR, particularly useful for vector
++// instructions.
++static bool convertSelectICmpToMinMax(Module &M, SelectInst *Select,
++                                      ICmpInst *ICmp, ICmpInst::Predicate &Pred,
++                                      Value *ICmpOp0, Value *ICmpOp1,
++                                      Value *SelectOp0, Value *SelectOp1)
++{
++#if LLVM_VERSION_MAJOR > 11
++    if (ICmpOp0 != SelectOp0 or ICmpOp1 != SelectOp1) {
++        return false;
++    }
++
++    Intrinsic::ID Intrin;
++    switch (Pred) {
++    case ICmpInst::ICMP_SGT:
++        Intrin = Intrinsic::smax;
++        break;
++    case ICmpInst::ICMP_UGT:
++        Intrin = Intrinsic::umax;
++        break;
++    case ICmpInst::ICMP_SLT:
++        Intrin = Intrinsic::smin;
++        break;
++    case ICmpInst::ICMP_ULT:
++        Intrin = Intrinsic::umin;
++        break;
++    default:
++        return false;
++    }
++
++    auto Ty = Select->getType();
++    auto MaxMinF = Intrinsic::getDeclaration(&M, Intrin, {Ty});
++
++    IRBuilder<> Builder(Select);
++    auto Call = Builder.CreateCall(MaxMinF, {ICmpOp0, ICmpOp1});
++    Select->replaceAllUsesWith(Call);
++
++    return true;
++#else
++    return false;
++#endif
++}
++
++// In LLVM, icmp on vectors returns a vector on i1s whereas TCGs gvec_cmp
++// returns a vector of the element type of its operands.  This can result in
++// some subtle bugs.  Convert
++//
++//   icmp -> call @VecCompare
++//   select -> call @VecWideCondBitsel
++//
++static bool convertSelectICmpToVecBitsel(Module &M, SelectInst *Select,
++                                         ICmpInst *ICmp,
++                                         ICmpInst::Predicate &Pred,
++                                         Value *ICmpOp0, Value *ICmpOp1,
++                                         Value *SelectOp0, Value *SelectOp1)
++{
++    auto *ICmpVecTy = dyn_cast<VectorType>(ICmpOp0->getType());
++    auto *SelectVecTy = dyn_cast<VectorType>(Select->getType());
++    if (!ICmpVecTy or !SelectVecTy) {
++        return false;
++    }
++
++    Instruction *Cmp = ICmp;
++    {
++        IRBuilder<> Builder(Cmp);
++        FunctionCallee Fn =
++            pseudoInstFunction(M, VecCompare, ICmpVecTy,
++                               {Builder.getInt32Ty(), ICmpVecTy, ICmpVecTy});
++        ICmpInst::Predicate Pred = ICmp->getPredicate();
++        CallInst *Call = Builder.CreateCall(
++            Fn,
++            {ConstantInt::get(Builder.getInt32Ty(), Pred), ICmpOp0, ICmpOp1});
++        Cmp = Call;
++    }
++
++    unsigned SrcWidth = ICmpVecTy->getElementType()->getIntegerBitWidth();
++    unsigned DstWidth = SelectVecTy->getElementType()->getIntegerBitWidth();
++
++    if (SrcWidth < DstWidth) {
++        IRBuilder<> Builder(Select);
++        Value *ZExt = Builder.CreateSExt(Cmp, SelectVecTy);
++        FunctionCallee Fn =
++            pseudoInstFunction(M, VecWideCondBitsel, SelectVecTy,
++                               {SelectVecTy, SelectVecTy, SelectVecTy});
++        CallInst *Call = Builder.CreateCall(Fn, {ZExt, SelectOp0, SelectOp1});
++        Select->replaceAllUsesWith(Call);
++    } else if (SrcWidth > DstWidth) {
++        IRBuilder<> Builder(Select);
++        Value *ZExt = Builder.CreateTrunc(Cmp, SelectVecTy);
++        FunctionCallee Fn =
++            pseudoInstFunction(M, VecWideCondBitsel, SelectVecTy,
++                               {SelectVecTy, SelectVecTy, SelectVecTy});
++        CallInst *Call = Builder.CreateCall(Fn, {ZExt, SelectOp0, SelectOp1});
++        Select->replaceAllUsesWith(Call);
++    } else {
++        IRBuilder<> Builder(Select);
++        FunctionCallee Fn =
++            pseudoInstFunction(M, VecWideCondBitsel, SelectVecTy,
++                               {SelectVecTy, SelectVecTy, SelectVecTy});
++        CallInst *Call = Builder.CreateCall(Fn, {Cmp, SelectOp0, SelectOp1});
++        Select->replaceAllUsesWith(Call);
++    }
++
++    return true;
++}
++
++// Convert
++//
++//   %2 = icmp [sgt|ugt|slt|ult] %0, %1
++//   %5 = select %2, %3, %4
++//
++// to
++//
++//   5 = call @Movcond.[cond].*(%1, %0, %3, %4)
++//
++// to more closely match TCG semantics.
++static bool convertSelectICmpToMovcond(Module &M, SelectInst *Select,
++                                       ICmpInst *ICmp,
++                                       ICmpInst::Predicate &Pred,
++                                       Value *ICmpOp0, Value *ICmpOp1,
++                                       Value *SelectOp0, Value *SelectOp1)
++{
++    // We only handle integers, we have no movcond equivalent in gvec
++    auto *IntTy = dyn_cast<IntegerType>(Select->getType());
++    if (!IntTy) {
++        return false;
++    }
++
++    // If the type of the comparison does not match the return type of the
++    // select statement, we cannot do anything so skip
++    if (ICmpOp0->getType() != IntTy) {
++        return false;
++    }
++
++    IRBuilder<> Builder(Select);
++    if (cast<IntegerType>(ICmpOp0->getType())->getBitWidth() <
++        IntTy->getBitWidth()) {
++        if (ICmp->isSigned(Pred)) {
++            ICmpOp0 = Builder.CreateSExt(ICmpOp0, IntTy);
++            ICmpOp1 = Builder.CreateSExt(ICmpOp1, IntTy);
++        } else {
++            ICmpOp0 = Builder.CreateZExt(ICmpOp0, IntTy);
++            ICmpOp1 = Builder.CreateZExt(ICmpOp1, IntTy);
++        }
++    }
++
++    // Create @Movcond.[slt|...].* function
++    FunctionCallee Fn = pseudoInstFunction(M, Movcond, IntTy,
++                                           {IntTy, IntTy, IntTy, IntTy, IntTy});
++    CallInst *Call =
++        Builder.CreateCall(Fn, {ConstantInt::get(IntTy, Pred), ICmpOp0, ICmpOp1,
++                                SelectOp0, SelectOp1});
++    Select->replaceAllUsesWith(Call);
++
++    return true;
++}
++
++// Specialize
++//
++//   %2 = icmp [sgt|ugt|slt|ult] %0, %1
++//   %5 = select %2, %3, %4
++//
++// to either maximum/minimum, vector operations matching TCG, or a conditional
++// move that also matches TCG in sematics.
++static void convertSelectICmp(Module &M, SelectInst *Select, ICmpInst *ICmp)
++{
++    // Given
++    //   %2 = icmp [sgt|ugt|slt|ult] %0, %1
++    //   %5 = select %2, %3, %4
++    assert(Select->getCondition() == ICmp);
++    Value *ICmpOp0 = ICmp->getOperand(0);
++    Value *ICmpOp1 = ICmp->getOperand(1);
++    Value *SelectOp0 = Select->getTrueValue();
++    Value *SelectOp1 = Select->getFalseValue();
++    ICmpInst::Predicate Pred = ICmp->getPredicate();
++
++    // First try to convert to min/max
++    //   %5 = [s|u][max|min] %0, %1
++    if (convertSelectICmpToMinMax(M, Select, ICmp, Pred, ICmpOp0, ICmpOp1,
++                                  SelectOp0, SelectOp1)) {
++        return;
++    }
++
++    // Secondly try convert icmp -> @VecCompare, select -> @VecWideCondBitsel
++    if (convertSelectICmpToVecBitsel(M, Select, ICmp, Pred, ICmpOp0, ICmpOp1,
++                                     SelectOp0, SelectOp1)) {
++        return;
++    }
++
++    // If min/max and vector conversion failed we fallback to a movcond
++    //   %5 = call @Movcond.[cond].*(%1, %0, %3, %4)
++    convertSelectICmpToMovcond(M, Select, ICmp, Pred, ICmpOp0, ICmpOp1,
++                               SelectOp0, SelectOp1);
++}
++
++// Convert QEMU guest loads/stores represented by calls such as
++//
++//   call cpu_ldub*(),
++//   call cpu_stb*(),
++//
++// and friends, to pseudo instructions
++//
++//   %5 = call @GuestLoad.*(%addr, %sign, %size, %endian);
++//   %5 = call @GuestStore.*(%addr, %value, %size, %endian);
++//
++// Makes the backend agnostic to what instructions or calls are used to
++// represent loads and stores.
++static void convertQemuLoadStoreToPseudoInst(Module &M, CallInst *Call)
++{
++    Function *F = Call->getCalledFunction();
++    StringRef Name = F->getName();
++    if (Name.consume_front("cpu_")) {
++        bool IsLoad = Name.consume_front("ld");
++        bool IsStore = !IsLoad and Name.consume_front("st");
++        if (IsLoad or IsStore) {
++            bool Signed = !Name.consume_front("u");
++            uint8_t Size = 0;
++            switch (Name[0]) {
++            case 'b':
++                Size = 1;
++                break;
++            case 'w':
++                Size = 2;
++                break;
++            case 'l':
++                Size = 4;
++                break;
++            case 'q':
++                Size = 8;
++                break;
++            default:
++                abort();
++            }
++
++            uint8_t Endianness = 0; // unknown
++            if (Size > 1) {
++                Name = Name.drop_front(2);
++                switch (Name[0]) {
++                case 'l':
++                    Endianness = 1;
++                    break;
++                case 'b':
++                    Endianness = 2;
++                    break;
++                default:
++                    abort();
++                }
++            }
++
++            IRBuilder<> Builder(Call);
++            Value *AddrOp = Call->getArgOperand(1);
++            IntegerType *AddrTy = cast<IntegerType>(AddrOp->getType());
++            IntegerType *FlagTy = Builder.getInt8Ty();
++            Value *SizeOp = ConstantInt::get(FlagTy, Size);
++            Value *EndianOp = ConstantInt::get(FlagTy, Endianness);
++            CallInst *NewCall;
++            if (IsLoad) {
++                Value *SignOp = ConstantInt::get(FlagTy, Signed);
++                IntegerType *RetTy = cast<IntegerType>(Call->getType());
++                FunctionCallee Fn = pseudoInstFunction(
++                    M, GuestLoad, RetTy, {AddrTy, FlagTy, FlagTy, FlagTy});
++                NewCall =
++                    Builder.CreateCall(Fn, {AddrOp, SignOp, SizeOp, EndianOp});
++            } else {
++                Value *ValueOp = Call->getArgOperand(2);
++                IntegerType *ValueTy = cast<IntegerType>(ValueOp->getType());
++                FunctionCallee Fn =
++                    pseudoInstFunction(M, GuestStore, Builder.getVoidTy(),
++                                       {AddrTy, ValueTy, FlagTy, FlagTy});
++                NewCall =
++                    Builder.CreateCall(Fn, {AddrOp, ValueOp, SizeOp, EndianOp});
++            }
++            Call->replaceAllUsesWith(NewCall);
++        }
++    }
++}
++
++// Convert QEMU exception calls
++//
++//   call raise_exception_ra(...),
++//   ...
++//
++// to a pseudo instruction
++//
++//   %5 = call @Exception.*(...);
++//
++// Makes the backend agnostic to what instructions or calls are used to
++// represent exceptions, and the list of sources can be expanded here.
++static void convertExceptionCallsToPseudoInst(Module &M, CallInst *Call)
++{
++    Function *F = Call->getCalledFunction();
++    StringRef Name = F->getName();
++    // NOTE: expand as needed
++    if (Name == "raise_exception_ra") {
++        IRBuilder<> Builder(Call);
++        Value *Op0 = Call->getArgOperand(0);
++        Value *Op1 = Call->getArgOperand(1);
++        FunctionCallee Fn =
++            pseudoInstFunction(M, Exception, Builder.getVoidTy(),
++                               {Op0->getType(), Op1->getType()});
++        CallInst *NewCall = Builder.CreateCall(Fn, {Op0, Op1});
++        Call->replaceAllUsesWith(NewCall);
++    }
++}
++
++//
++// Following functions help with converting between different types of
++// instructions to pseudo instructions, particularly ones that write
++// to a pointer, aka the Vec*Store pseudo instructions
++//
++
++static PseudoInst instructionToStorePseudoInst(unsigned Opcode)
++{
++    switch (Opcode) {
++    case Instruction::Trunc:
++        return VecTruncStore;
++    case Instruction::ZExt:
++        return VecZExtStore;
++    case Instruction::SExt:
++        return VecSExtStore;
++    case Instruction::Select:
++        return VecSelectStore;
++    case Instruction::Add:
++        return VecAddStore;
++    case Instruction::Sub:
++        return VecSubStore;
++    case Instruction::Mul:
++        return VecMulStore;
++    case Instruction::Xor:
++        return VecXorStore;
++    case Instruction::Or:
++        return VecOrStore;
++    case Instruction::And:
++        return VecAndStore;
++    case Instruction::Shl:
++        return VecShlStore;
++    case Instruction::LShr:
++        return VecLShrStore;
++    case Instruction::AShr:
++        return VecAShrStore;
++    default:
++        abort();
++    }
++}
++
++static PseudoInst pseudoInstToStorePseudoInst(PseudoInst Inst)
++{
++    switch (Inst) {
++    case VecNot:
++        return VecNotStore;
++    case VecAddScalar:
++        return VecAddScalarStore;
++    case VecSubScalar:
++        return VecSubScalarStore;
++    case VecMulScalar:
++        return VecMulScalarStore;
++    case VecXorScalar:
++        return VecXorScalarStore;
++    case VecOrScalar:
++        return VecOrScalarStore;
++    case VecAndScalar:
++        return VecAndScalarStore;
++    case VecShlScalar:
++        return VecShlScalarStore;
++    case VecLShrScalar:
++        return VecLShrScalarStore;
++    case VecAShrScalar:
++        return VecAShrScalarStore;
++    case VecWideCondBitsel:
++        return VecWideCondBitselStore;
++    default:
++        abort();
++    }
++}
++
++static PseudoInst intrinsicToStorePseudoInst(unsigned IntrinsicID)
++{
++    switch (IntrinsicID) {
++    case Intrinsic::sadd_sat:
++        return VecSignedSatAddStore;
++    case Intrinsic::ssub_sat:
++        return VecSignedSatSubStore;
++    case Intrinsic::fshr:
++        return VecFunnelShrStore;
++#if LLVM_VERSION_MAJOR > 11
++    case Intrinsic::abs:
++        return VecAbsStore;
++    case Intrinsic::smax:
++        return VecSignedMaxStore;
++    case Intrinsic::umax:
++        return VecUnsignedMaxStore;
++    case Intrinsic::smin:
++        return VecSignedMinStore;
++    case Intrinsic::umin:
++        return VecUnsignedMinStore;
++#endif
++    case Intrinsic::ctlz:
++        return VecCtlzStore;
++    case Intrinsic::cttz:
++        return VecCttzStore;
++    case Intrinsic::ctpop:
++        return VecCtpopStore;
++    default:
++        abort();
++    }
++}
++
++// For binary/unary ops on vectors where the result is stored to a
++// pointer
++//
++//   %3 = <NxM> %1 [op] <NxM> %2
++//   %4 = bitcast i8* %0 to <NxM>*
++//   store <NxM> %3, <NxM>* %4
++//
++// to
++//
++//   call @Vec[Op]Store.*(%0, %1, %2)
++//
++// This deals with the duality of pointers and vectors, and
++// simplifies the backend.  We previously kept a map on the
++// side to propagate "vector"-ness from %3 to %4 via the store,
++// no longer!
++static void convertVecStoreBitcastToPseudoInst(EraseInstVec &InstToErase,
++                                               Module &M, StoreInst *Store)
++{
++    Value *ValueOp = Store->getValueOperand();
++    Type *ValueTy = ValueOp->getType();
++    if (!ValueTy->isVectorTy()) {
++        return;
++    }
++    auto *Bitcast = cast<BitCastInst>(Store->getPointerOperand());
++    Type *PtrTy = Bitcast->getType();
++    // Ensure store and binary op. are in the same basic
++    // block since the op. is moved to the store.
++    bool InSameBB =
++        cast<Instruction>(ValueOp)->getParent() == Store->getParent();
++    if (!InSameBB) {
++        return;
++    }
++
++    SmallVector<Type *, 3> Types;
++    SmallVector<Value *, 3> Args;
++    Value *PtrOp = Store->getPointerOperand();
++    if (auto *BinOp = dyn_cast<BinaryOperator>(ValueOp)) {
++        Instruction *Inst = cast<Instruction>(ValueOp);
++        PseudoInst NewInst = instructionToStorePseudoInst(BinOp->getOpcode());
++        IRBuilder<> Builder(Store);
++        const unsigned ArgCount = pseudoInstArgCount(NewInst);
++        // Add one to account for extra store pointer
++        // argument of Vec*Store pseudo instructions.
++        assert(ArgCount > 0 and ArgCount - 1 <= Inst->getNumOperands());
++        Types.push_back(PtrTy);
++        Args.push_back(PtrOp);
++        for (unsigned I = 0; I < ArgCount - 1; ++I) {
++            Value *Op = Inst->getOperand(I);
++            Types.push_back(Op->getType());
++            Args.push_back(Op);
++        }
++        FunctionCallee Fn =
++            pseudoInstFunction(M, NewInst, Builder.getVoidTy(), Types);
++        Builder.CreateCall(Fn, Args);
++    } else if (auto *Call = dyn_cast<CallInst>(ValueOp)) {
++        Function *F = Call->getCalledFunction();
++        PseudoInst OldInst = getPseudoInstFromCall(Call);
++        if (OldInst != InvalidPseudoInst) {
++            // Map scalar vector pseudo instructions to
++            // store variants
++            PseudoInst NewInst = pseudoInstToStorePseudoInst(OldInst);
++            IRBuilder<> Builder(Store);
++            Types.push_back(PtrTy);
++            Args.push_back(PtrOp);
++            for (Value *Op : Call->args()) {
++                Types.push_back(Op->getType());
++                Args.push_back(Op);
++            }
++            FunctionCallee Fn =
++                pseudoInstFunction(M, NewInst, Builder.getVoidTy(), Types);
++            Builder.CreateCall(Fn, Args);
++        } else if (F->isIntrinsic()) {
++            Instruction *Inst = cast<Instruction>(ValueOp);
++            PseudoInst NewInst =
++                intrinsicToStorePseudoInst(F->getIntrinsicID());
++            const unsigned ArgCount = pseudoInstArgCount(NewInst);
++            // Add one to account for extra store pointer
++            // argument of Vec*Store pseudo instructions.
++            assert(ArgCount > 0 and ArgCount - 1 <= Inst->getNumOperands());
++            IRBuilder<> Builder(Store);
++            SmallVector<Type *, 8> ArgTys;
++            SmallVector<Value *, 8> Args;
++            ArgTys.push_back(PtrTy);
++            Args.push_back(PtrOp);
++            for (unsigned I = 0; I < ArgCount - 1; ++I) {
++                Value *Op = Inst->getOperand(I);
++                ArgTys.push_back(Op->getType());
++                Args.push_back(Op);
++            }
++            FunctionCallee Fn =
++                pseudoInstFunction(M, NewInst, Builder.getVoidTy(), ArgTys);
++            Builder.CreateCall(Fn, Args);
++        } else {
++            dbgs() << "Uhandled vector + bitcast + store op. " << *ValueOp
++                   << "\n";
++            abort();
++        }
++    } else {
++        Instruction *Inst = cast<Instruction>(ValueOp);
++        PseudoInst NewInst = instructionToStorePseudoInst(Inst->getOpcode());
++        const unsigned ArgCount = pseudoInstArgCount(NewInst);
++        // Add one to account for extra store pointer
++        // argument of Vec*Store pseudo instructions.
++        assert(ArgCount > 0 and ArgCount - 1 <= Inst->getNumOperands());
++        IRBuilder<> Builder(Store);
++        SmallVector<Type *, 8> ArgTys;
++        SmallVector<Value *, 8> Args;
++        ArgTys.push_back(PtrTy);
++        Args.push_back(PtrOp);
++        for (unsigned I = 0; I < ArgCount - 1; ++I) {
++            Value *Op = Inst->getOperand(I);
++            ArgTys.push_back(Op->getType());
++            Args.push_back(Op);
++        }
++        FunctionCallee Fn =
++            pseudoInstFunction(M, NewInst, Builder.getVoidTy(), ArgTys);
++        Builder.CreateCall(Fn, Args);
++    }
++
++    // Remove store instruction, this ensures DCE
++    // can cleanup the rest, we also remove ValueOp
++    // here since it's a call and won't get cleaned
++    // by DCE.
++    InstToErase.push_back(cast<Instruction>(ValueOp));
++    InstToErase.push_back(Store);
++}
++
++//
++// Convert
++//
++//   %cond = icmp [cond] i32 %0, i32 %1
++//   br i1 %cond, label %true, label %false
++//
++// to
++//
++//   call void @brcond.[cond].i32(i32 %0, i32 %1, label %true.exit,
++//   label %false) br i1 %cond, label %true, label %false !dead-branch
++//
++// note the old branch still remains as @brcond.* is not an actual
++// branch instruction. Removing the old branch would result in broken
++// IR.
++//
++// Additionally if the %false basic block immediatly succeeds the
++// current one, we can ignore the false branch and fallthrough, this is
++// indicated via !fallthrough metadata on the call.
++//
++// TODO: Consider using a ConstantInt i1 arguments instead. Metadata is
++// fragile and does not survive optimization. We do not run any more
++// optimization passes, but this could be a source of future headache.
++static void convertICmpBrToPseudInst(LLVMContext &Context,
++                                     EraseInstVec &InstToErase, Module &M,
++                                     Instruction *I, BasicBlock *NextBb)
++{
++    auto *ICmp = dyn_cast<ICmpInst>(I);
++    if (!ICmp) {
++        return;
++    }
++
++    // Since we want to remove the icmp instruction we ensure that
++    // all uses are branch instructions that can be converted into
++    // @brcond.* calls.
++    for (User *U : ICmp->users()) {
++        if (!isa<BranchInst>(U)) {
++            return;
++        }
++    }
++
++    Value *Op0 = ICmp->getOperand(0);
++    Value *Op1 = ICmp->getOperand(1);
++    auto *CmpIntTy = dyn_cast<IntegerType>(Op0->getType());
++    if (!CmpIntTy) {
++        return;
++    }
++    for (User *U : ICmp->users()) {
++        auto *Br = cast<BranchInst>(U);
++
++        BasicBlock *True = Br->getSuccessor(0);
++        BasicBlock *False = Br->getSuccessor(1);
++
++        bool TrueUnreachable =
++            True->getTerminator()->getOpcode() == Instruction::Unreachable and
++            False->getTerminator()->getOpcode() != Instruction::Unreachable;
++
++        // If the next basic block is either of our true/false
++        // branches, we can fallthrough instead of branching.
++        bool Fallthrough = (NextBb == True or NextBb == False);
++
++        // If the succeeding basic block is the true branch we
++        // invert the condition so we can !fallthrough instead.
++        ICmpInst::Predicate Predicate;
++        if (NextBb == True or (TrueUnreachable and NextBb == False)) {
++            std::swap(True, False);
++            Predicate = ICmp->getInversePredicate();
++        } else {
++            Predicate = ICmp->getPredicate();
++        }
++
++        IRBuilder<> Builder(Br);
++        FunctionCallee Fn = pseudoInstFunction(
++            M, Brcond, Builder.getVoidTy(),
++            {CmpIntTy, CmpIntTy, CmpIntTy, True->getType(), False->getType()});
++        CallInst *Call = Builder.CreateCall(
++            Fn, {ConstantInt::get(CmpIntTy, Predicate), Op0, Op1, True, False});
++
++        if (Fallthrough) {
++            MDTuple *N = MDNode::get(Context, MDString::get(Context, ""));
++            Call->setMetadata("fallthrough", N);
++        }
++
++        //
++        // We need to keep the BB of the true branch alive
++        // so that we can iterate over the CFG as usual
++        // using LLVM. Or custom "opcode" @brcond is not an
++        // actual branch, so LLVM does not understand that
++        // we can branch to the true branch.
++        //
++        // For this reason we emit an extra dead branch
++        // to the true branch, and tag it as dead using
++        // metadata. The backend can later check that if
++        // this metadata is present and ignore the branch.
++        //
++        // Another idea:
++        //    What we could do instead is to
++        //    linearize the CFG before this point, i.e.
++        //    establish the order we want to emit all BBs
++        //    in, in say an array. We can then iterate
++        //    over this array instead, note this can only
++        //    happen in the later stages of the pipeline
++        //    where we don't rely on LLVM for any extra work.
++        //
++        //    Keeping our own linear array would also allow
++        //    us to optimize brconds for fallthroughs, e.g.
++        //    check if any of the basic blocks we branch to
++        //    is the next basic block, and if so we can adjust
++        //    the condition accordingly.
++        //    (We do this currently, but this assumes the
++        //    iteration order here is the same as in the
++        //    backend.)
++        //
++        // Note also: LLVM expectects the BB to end in a single
++        // branch.
++        //
++        BranchInst *DeadBranch =
++            Builder.CreateCondBr(ConstantInt::getFalse(Context), True, False);
++        {
++            MDTuple *N = MDNode::get(Context, MDString::get(Context, ""));
++            DeadBranch->setMetadata("dead-branch", N);
++        }
++
++        InstToErase.push_back(Br);
++    }
++    InstToErase.push_back(ICmp);
++}
+diff --git a/subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.h b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.h
+new file mode 100644
+index 0000000000..441200606d
+--- /dev/null
++++ b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.h
+@@ -0,0 +1,25 @@
++//
++//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
++
++#pragma once
++
++namespace llvm
++{
++class Module;
++}
++
++void canonicalizeIR(llvm::Module &M);
+diff --git a/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
+index b1e2932750..7fdbc2a0c9 100644
+--- a/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
++++ b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
+@@ -15,6 +15,7 @@
+ //  along with this program; if not, see <http://www.gnu.org/licenses/>.
+ //
  
- behdict = {}  # tag ->behavior
- semdict = {}  # tag -> semantics
-@@ -1181,22 +1182,19 @@ def helper_args(tag, regs, imms):
-     return args
- 
- 
--def read_common_files():
--    read_semantics_file(sys.argv[1])
--    read_overrides_file(sys.argv[2])
--    read_overrides_file(sys.argv[3])
--    ## Whether or not idef-parser is enabled is
--    ## determined by the number of arguments to
--    ## this script:
--    ##
--    ##   4 args. -> not enabled,
--    ##   5 args. -> idef-parser enabled.
--    ##
--    ## The 5:th arg. then holds a list of the successfully
--    ## parsed instructions.
--    is_idef_parser_enabled = len(sys.argv) > 5
--    if is_idef_parser_enabled:
--        read_idef_parser_enabled_file(sys.argv[4])
-+def parse_common_args(desc):
-+    parser = argparse.ArgumentParser(desc)
-+    parser.add_argument("semantics", help="semantics file")
-+    parser.add_argument("overrides", help="overrides file")
-+    parser.add_argument("overrides_vec", help="vector overrides file")
-+    parser.add_argument("out", help="output file")
-+    parser.add_argument("--idef-parser", help="file of instructions translated by idef-parser")
-+    args = parser.parse_args()
-+    read_semantics_file(args.semantics)
-+    read_overrides_file(args.overrides)
-+    read_overrides_file(args.overrides_vec)
-+    if args.idef_parser:
-+        read_idef_parser_enabled_file(args.idef_parser)
-     calculate_attribs()
-     init_registers()
--    return is_idef_parser_enabled
-+    return args
-diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index f1723778a6..bb4ebaae81 100644
---- a/target/hexagon/meson.build
-+++ b/target/hexagon/meson.build
-@@ -346,7 +346,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
-     # Setup input and dependencies for the next step, this depends on whether or
-     # not idef-parser is enabled
-     helper_dep = [semantics_generated, idef_generated_tcg_c, idef_generated_tcg]
--    helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h, idef_generated_list]
-+    helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h, '--idef-parser', idef_generated_list]
- else
-     # Setup input and dependencies for the next step, this depends on whether or
-     # not idef-parser is enabled
++#include "CanonicalizeIR.h"
+ #include <CmdLineOptions.h>
+ #include <PrepareForTcgPass.h>
+ #include "TransformGEPs.h"
+@@ -124,5 +125,6 @@ PreservedAnalyses PrepareForTcgPass::run(Module &M, ModuleAnalysisManager &MAM)
+     for (Function &F : M) {
+         transformGEPs(M, F, ResultTcgGlobalMap);
+     }
++    canonicalizeIR(M);
+     return PreservedAnalyses::none();
+ }
 -- 
 2.45.2
 
