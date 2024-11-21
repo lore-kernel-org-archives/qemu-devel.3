@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E791D6E2CA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47C95D711CA
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 10:05:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE44N-0006dd-6W; Thu, 21 Nov 2024 05:05:51 -0500
+	id 1tE43Z-0005Qx-Mg; Thu, 21 Nov 2024 05:05:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE44K-0006Uw-TA
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:05:48 -0500
+ id 1tE43Y-0005QU-0y
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:05:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE44J-0007By-64
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:05:48 -0500
+ id 1tE43W-0006w7-JR
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:04:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732183546;
+ s=mimecast20190719; t=1732183497;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=obHxylUISE6XurCE1/6FdQpOaavFimSX74cGd4/4X9o=;
- b=Mi+8FDTf2BdgxZJel6g5RHuXDPFxUy3OHfa2eDonvu58zVtRqrtVw8oB+NC61B1STF248B
- qOhMcpZ/VoEEiFKnRb71hGXiR/NdDq6hE7YVd9m7BgvgC+X9q3a9iYqSFo5ncNs2hUAd8o
- qAxlzESjKrFLlkKbtFSqNEtiQIAmVpw=
+ bh=OS12XeUcuZVOQTvgABeuuPoeXllBNsvBZg+zCEb4PfM=;
+ b=P6usLxwgH/JuSia1s1In8oXpItG4L6b5dGAatkFuhbXLbQ9mcSepzCciC7nI+f1iFTfet8
+ iihsMrUkhNaiKqWEgrXZqhtuI0a/e/MPLqsGyywJ2AZddolx0T7FM3tIzkSzw088pCedOc
+ 34fC5+YwPgpz6AuLv5If2xPPV9xLHnU=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-KhJIx_wQNVOgGyopxp7KOQ-1; Thu,
- 21 Nov 2024 05:05:44 -0500
-X-MC-Unique: KhJIx_wQNVOgGyopxp7KOQ-1
-X-Mimecast-MFC-AGG-ID: KhJIx_wQNVOgGyopxp7KOQ
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-xnZWvZGdPgOFHLr2ovkJPg-1; Thu,
+ 21 Nov 2024 05:04:52 -0500
+X-MC-Unique: xnZWvZGdPgOFHLr2ovkJPg-1
+X-Mimecast-MFC-AGG-ID: xnZWvZGdPgOFHLr2ovkJPg
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BD3D1955E91; Thu, 21 Nov 2024 10:05:38 +0000 (UTC)
+ id 4531B1956057; Thu, 21 Nov 2024 10:04:51 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 13F7930001A0; Thu, 21 Nov 2024 10:05:31 +0000 (UTC)
-Date: Thu, 21 Nov 2024 10:05:24 +0000
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35B2C19560A3; Thu, 21 Nov 2024 10:04:47 +0000 (UTC)
+Date: Thu, 21 Nov 2024 10:04:44 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
@@ -57,17 +57,17 @@ Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 02/12] qom: New container_create()
-Message-ID: <Zz8F5EuT2y1bnHqZ@redhat.com>
+Subject: Re: [PATCH 01/12] qom: Add TYPE_CONTAINER macro
+Message-ID: <Zz8FvCcL6spbRuDH@redhat.com>
 References: <20241120215703.3918445-1-peterx@redhat.com>
- <20241120215703.3918445-3-peterx@redhat.com>
+ <20241120215703.3918445-2-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241120215703.3918445-3-peterx@redhat.com>
+In-Reply-To: <20241120215703.3918445-2-peterx@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -94,15 +94,17 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 20, 2024 at 04:56:53PM -0500, Peter Xu wrote:
-> To move towards explicit creations of containers, starting that by
-> providing a helper for creating container objects.
+On Wed, Nov 20, 2024 at 04:56:52PM -0500, Peter Xu wrote:
+> Provide a macro for the container type across QEMU source tree, rather than
+> hard code it every time.
 > 
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  include/qom/object.h | 12 ++++++++++++
->  qom/container.c      | 18 +++++++++++++++---
->  2 files changed, 27 insertions(+), 3 deletions(-)
+>  include/qom/object.h | 1 +
+>  hw/arm/stellaris.c   | 2 +-
+>  qom/container.c      | 4 ++--
+>  qom/object.c         | 4 ++--
+>  4 files changed, 6 insertions(+), 5 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
