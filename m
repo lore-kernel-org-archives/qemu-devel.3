@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C91DD75BC8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 06:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D6ED75BC8
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 06:58:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE135-00067N-Bd; Thu, 21 Nov 2024 01:52:19 -0500
+	id 1tE18w-00077M-EH; Thu, 21 Nov 2024 01:58:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tE133-000670-NL
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 01:52:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tE18v-000779-GS
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 01:58:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tE132-0007DN-8E
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 01:52:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tE18t-00005i-UM
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 01:58:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732171933;
+ s=mimecast20190719; t=1732172298;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Ncq+CjI58xIBAcZuFDMZXlKY0bAiGpdV88it6CuDRRA=;
- b=Up6zu41f9+4tacQfYr63mGX1NlvD3cEO1PZqpsyK8CizzxP5n8VbTsj92Ir4CaBT8sy7wS
- 02sG/s6+2dG8cLrEBJibKSob6A1upRQ3yRsZX6O3iCEyShx0AT/nsGp3HcRKNewIdoOq/q
- kC6EDVz3d73HJYs+0RJHEIXsX3rBOwc=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0L8hWkMftFngYzsfQVpgiM1tFQLsV/0GyZINI/ydjlA=;
+ b=BP8FyCUkC5JpjSecmtI1Ij/JescKt+YsBrx8N7BF9U7mi6izBkzO+6c0NtZvsq0HVcUAVQ
+ eeOEM4VTEOyIq9WDFG2j1323BgfsZ0oEn1UrO6tsZdheiZ/D8iCHkiADstWWkFQ+weOflS
+ 07TDferOISJ2lwNAU/ewAsPAK09F4Qo=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-5JNWgNOPN8e9dUPPaqNu_w-1; Thu, 21 Nov 2024 01:52:11 -0500
-X-MC-Unique: 5JNWgNOPN8e9dUPPaqNu_w-1
-X-Mimecast-MFC-AGG-ID: 5JNWgNOPN8e9dUPPaqNu_w
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a99efe7369dso49289466b.0
- for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 22:52:11 -0800 (PST)
+ us-mta-462-nj7YHkOAOtyuipCl-FjamA-1; Thu, 21 Nov 2024 01:58:16 -0500
+X-MC-Unique: nj7YHkOAOtyuipCl-FjamA-1
+X-Mimecast-MFC-AGG-ID: nj7YHkOAOtyuipCl-FjamA
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5cffa805c94so353131a12.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Nov 2024 22:58:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732171930; x=1732776730;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ncq+CjI58xIBAcZuFDMZXlKY0bAiGpdV88it6CuDRRA=;
- b=F57faBjkhmINlmd6XlwaBxlY6JuMP0hdjRHKc7pI+nj6Je+mrtUx3wxIJH0CoIwxfb
- iOK4sDjq72BUfJBFIhpGNaf2MPWKfpEHcfBBjEsatcv1Aw6tD39Rnc2kte3Q6T/eTEjd
- fP30xfBmQuB24OzzfYejji6pB6IC646nX8hjaY9ZNBiZ4UgzpWtqLCI/85D7iwBHMl+9
- j5dTx/BdMbqK31kkIRzwr51kE1de53zIGUgxOY6r8ADcCtqLLLGrFPVrcwR2Ml6pKfUd
- 9viaaAOWEyP2QE3Ywq1gumkM5Edy7lav2hkHKokvXmXaA3rgnm4PNCuG97jc1xdGctTo
- DbRw==
+ d=1e100.net; s=20230601; t=1732172295; x=1732777095;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0L8hWkMftFngYzsfQVpgiM1tFQLsV/0GyZINI/ydjlA=;
+ b=aaz59jClYq0wuR2SDIwX6q1Y8JLxCDeAYXl9nJRvM9pkKU+hSMWdDuUmAWfetAtfwt
+ 6N+qKQMangda0rLWoGqFf1nqQyL6T3bWHi19xxzfQxhuTE7ysT/mVI6Bl7e91io1P76+
+ Wbox8UOBTgSiZTT6sId+GGxRDTB1JGSOM7NPcdVnVHYV7j8kRrjqeMzGsq2rHonTcVM4
+ N3tE/J47um6DLov9tSwKWFSiH8hwFcIwI8jnnzKxe2M3L07qULqdI7htC1Bmfti7c+eD
+ kl+VpF5+p5PqNLjLKa7MbtfgcEF3hpufbRrcENR589wr5YadGzh/dTFuin+soHJ0p0zo
+ 33rQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVB2XbFBtr7iSNV4tkTp/LzUAaPInvuZ8BheKpCJ+PIxiLkbX5s+c+v9Y9m7hBSw7nalxh4pH/RrVU5@nongnu.org
-X-Gm-Message-State: AOJu0YyEL6SWhxwvbmFDHQzGB9Hu72n/Dx0Jv3/DoD1VrmPdAnRf07wp
- 0gG/5Sos3p50O6IsViDgnMYptqdTEEzcjlXmJafE8bmP7WQJjjqKTrqtI9bVjle9qdVi266qICH
- m36tnFY5pshDCTJL8lxv7jc7u64Yg1vY6RmXl4TiM6Db2NkOTArye
-X-Received: by 2002:a17:906:d54b:b0:a9e:c4df:e3c9 with SMTP id
- a640c23a62f3a-aa4efdd0d12mr186061166b.24.1732171930485; 
- Wed, 20 Nov 2024 22:52:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEC2ykozHm05fG6AZ7jgdKhlFFTLT9V5bAbCubJzcY7qopgg8x4yy1/PpKBfMwr57hSh/fFjg==
-X-Received: by 2002:a17:906:d54b:b0:a9e:c4df:e3c9 with SMTP id
- a640c23a62f3a-aa4efdd0d12mr186060566b.24.1732171930212; 
- Wed, 20 Nov 2024 22:52:10 -0800 (PST)
+ AJvYcCX2dw+7lH5FfT3ZaEm1aQ4+BFjHZoguth0WMjR2rIbzdJqwSI9dKujKbHpbVJgtCp0lxLSfVIcOTxox@nongnu.org
+X-Gm-Message-State: AOJu0YwTMrzD5o3Q5WyAxjeeGgMaH71Xoo3QUdtQUyPRhge3HsAi7jIA
+ JtI3tFblm+Ous7Cc8Q21vVxDVPcJsmwnYNS4Q3MH0/gdIpItqRniRNCWfwxIgud4vbqpqrsL0Ce
+ O3yRxsDcXJuejyXNazurTsFEA7aBPfla+PPn90n2U/5PC0g27z82m
+X-Gm-Gg: ASbGncsAQvacPyPQOTgnmrj7uJ/qIe3EBIXy8Kf9bnKiqh+uvmS3sDO4zyMWRSPlyEu
+ GoAzZ+bHpZWiIOEZouxYJUW0bLeKFFO9YMbUoXbS2QLrGMFinhvk+BO/CFvMTG5hgheq7W9QT1q
+ Ny+EJXD4+J3XiM5oD+K9tVSEKGd+Dwm7qm6bvvQBOCCAxAbIm5HlI60eMnfs9D0N3aeLTn4AerN
+ yLKgq3LrZFWwLddbkC+zKgVdOWn5G0AoyzUoeA2IBNvQbpVL46Y6SAeIk9BvtTu61/Mjiqm72NI
+ akg=
+X-Received: by 2002:a17:906:dac2:b0:a9e:45e6:42cb with SMTP id
+ a640c23a62f3a-aa4dd55226emr614192366b.18.1732172295285; 
+ Wed, 20 Nov 2024 22:58:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGNiQp07DJSQcGkxRWorofLn/wUW0iEiYAXLo8pnaOA0mKEnl2LnaYHKiHCExD33hAE6US8iw==
+X-Received: by 2002:a17:906:dac2:b0:a9e:45e6:42cb with SMTP id
+ a640c23a62f3a-aa4dd55226emr614190966b.18.1732172294998; 
+ Wed, 20 Nov 2024 22:58:14 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-70.web.vodafone.de. [109.42.51.70])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa4f41537c5sm44292266b.26.2024.11.20.22.52.09
+ a640c23a62f3a-aa4f4319b8bsm43558066b.142.2024.11.20.22.58.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Nov 2024 22:52:09 -0800 (PST)
-Message-ID: <5225431d-a488-47dc-981f-a17d1256440b@redhat.com>
-Date: Thu, 21 Nov 2024 07:52:08 +0100
+ Wed, 20 Nov 2024 22:58:14 -0800 (PST)
+Message-ID: <412194e0-dd17-44f3-a01f-1ba5a9131d6b@redhat.com>
+Date: Thu, 21 Nov 2024 07:58:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/15] tests/functional: enable debug logging for
- QEMUMachine
+Subject: Re: [PATCH 12/15] tests/functional: logs details of console
+ interaction operations
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
 References: <20241119150519.1123365-1-berrange@redhat.com>
- <20241119150519.1123365-12-berrange@redhat.com>
-Content-Language: en-US
+ <20241119150519.1123365-13-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -124,7 +129,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241119150519.1123365-12-berrange@redhat.com>
+In-Reply-To: <20241119150519.1123365-13-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -153,39 +158,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19/11/2024 16.05, Daniel P. Berrangé wrote:
-> Set the 'qemu.machine' logger to 'DEBUG' level, to ensure we see log
-> messages related to the QEMUMachine class. Most importantly this
-> ensures we capture the full QEMU command line args for instances we
-> spawn.
+> When functional tests go wrong, it will often be related to the console
+> interaction wait state. By logging the messages that we're looking for,
+> and data we're about to be sending, it'll be easier to diagnose where
+> tests are getting stuck.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/qemu_test/testcase.py | 6 ++++++
->   1 file changed, 6 insertions(+)
+>   tests/functional/qemu_test/cmd.py | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index f9c9de1166..e2a329c3e5 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -57,9 +57,15 @@ def setUp(self, bin_prefix):
->           self._log_fh.setFormatter(fileFormatter)
->           self.log.addHandler(self._log_fh)
->   
-> +        # Capture QEMUMachine logging
-> +        self.machinelog = logging.getLogger('qemu.machine')
-> +        self.machinelog.setLevel(logging.DEBUG)
-> +        self.machinelog.addHandler(self._log_fh)
-> +
->       def tearDown(self):
->           if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
->               shutil.rmtree(self.workdir)
-> +        self.machinelog.removeHandler(self._log_fh)
->           self.log.removeHandler(self._log_fh)
->   
->       def main():
+> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+> index cbabb1ceed..76a48064cd 100644
+> --- a/tests/functional/qemu_test/cmd.py
+> +++ b/tests/functional/qemu_test/cmd.py
+> @@ -85,6 +85,8 @@ def _console_interaction(test, success_message, failure_message,
+>           vm = test.vm
+>       console = vm.console_file
+>       console_logger = logging.getLogger('console')
+> +    test.log.debug(f"Console interaction success:'{success_message}' " +
 
-That looks better in the logs, indeed!
+I have to admit that I had to read the message twice to really understand 
+it. Since the message starts with "Console interaction success", I thought 
+that this message means that we successfully matched a string already.
 
-Tested-by: Thomas Huth <thuth@redhat.com>
+So maybe rather change the text to read:
+
+  Console interaction: success_msg=... failure_msg=...
+
+?
+
+  Thomas
 
 
