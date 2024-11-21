@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AA1D743FD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC17D743FE
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwHq-0001ap-De; Wed, 20 Nov 2024 20:47:14 -0500
+	id 1tDwK1-0007Wp-Ls; Wed, 20 Nov 2024 20:49:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHp-0001aI-Ah
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:13 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwK0-0007G3-1z
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:49:28 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHn-0004XW-Qk
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:13 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwJy-0004sv-I8
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:49:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=i2OqdZuO+kr2Tl9S5r8bbQR09WB2cR2wCDZ7uUecgdY=; b=hh1zIFXVopAyKTW
- aMAA1frZj1gI6RIYpQyLTpFJ7MOKhnhkWKEgITYHn/304thqjHTUCxtnoCT3z7NWy4g2gchxFUVB9
- opc8FxVPQdrtaUOfisyq82C2i6HcEI/izvzJq/ZmS/6PZ9u+4y76lK7niV2b5r3PEWyT6bnXg7UAq
- hA=;
+ List-Help; bh=v6yNgUtqmAbkKUCCRshTh81ZOJJ3PLSMzGXN2kDgk8Q=; b=xS8Fw53VsdnzzE6
+ YRiEaY0hJrpW902X1vcnNeE6nQ9lUswJNRvHrwUzEme39lYv4HTz7WgVY2KimuNl3sSQijDIcqr2U
+ FlvJyLuajDjmsqmXGWUX5MBp/HBmxAP6DVRMslk2RBTp6zFA42URNpIG8F+BZD7TQr+okFwzgYi4X
+ ik=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 13/43] helper-to-tcg: Introduce Error.h
-Date: Thu, 21 Nov 2024 02:49:17 +0100
-Message-ID: <20241121014947.18666-14-anjo@rev.ng>
+Subject: [RFC PATCH v1 37/43] target/hexagon: Make HVX vector args. restrict *
+Date: Thu, 21 Nov 2024 02:49:41 +0100
+Message-ID: <20241121014947.18666-38-anjo@rev.ng>
 In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
 References: <20241121014947.18666-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,60 +64,64 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simple function for creating Expected<> with nice error messages.
+If pointer arguments to HVX helper functions are not marked restrict *,
+then LLVM will assume that input vectors may alias and emit runtime
+checks.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- subprojects/helper-to-tcg/include/Error.h | 40 +++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
- create mode 100644 subprojects/helper-to-tcg/include/Error.h
+ target/hexagon/mmvec/macros.h | 36 +++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/subprojects/helper-to-tcg/include/Error.h b/subprojects/helper-to-tcg/include/Error.h
-new file mode 100644
-index 0000000000..10205e29a6
---- /dev/null
-+++ b/subprojects/helper-to-tcg/include/Error.h
-@@ -0,0 +1,40 @@
-+//
-+//  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
-+//
-+//  This program is free software; you can redistribute it and/or modify
-+//  it under the terms of the GNU General Public License as published by
-+//  the Free Software Foundation; either version 2 of the License, or
-+//  (at your option) any later version.
-+//
-+//  This program is distributed in the hope that it will be useful,
-+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+//  GNU General Public License for more details.
-+//
-+//  You should have received a copy of the GNU General Public License
-+//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+//
-+
-+#pragma once
-+
-+#include <llvm/Support/Error.h>
-+#include <llvm/IR/Value.h>
-+#include <llvm/IR/ModuleSlotTracker.h>
-+
-+inline llvm::Error mkError(const llvm::StringRef Msg)
-+{
-+    return llvm::createStringError(llvm::inconvertibleErrorCode(), Msg);
-+}
-+
-+// TODO: Usage of mkError and dbgs() for serializing Values is __really__ slow,
-+// and should only occur for error reporting.  Wrap these in a class with a
-+// ModuleSlotTracker.
-+inline llvm::Error mkError(const llvm::StringRef Msg, const llvm::Value *V)
-+{
-+    std::string Str;
-+    llvm::raw_string_ostream Stream(Str);
-+    Stream << Msg;
-+    Stream << *V;
-+    Stream.flush();
-+    return llvm::createStringError(llvm::inconvertibleErrorCode(), Str);
-+}
+diff --git a/target/hexagon/mmvec/macros.h b/target/hexagon/mmvec/macros.h
+index 1ceb9453ee..dfaefc6b26 100644
+--- a/target/hexagon/mmvec/macros.h
++++ b/target/hexagon/mmvec/macros.h
+@@ -23,26 +23,26 @@
+ #include "mmvec/system_ext_mmvec.h"
+ 
+ #ifndef QEMU_GENERATE
+-#define VdV      (*(MMVector *)(VdV_void))
+-#define VsV      (*(MMVector *)(VsV_void))
+-#define VuV      (*(MMVector *)(VuV_void))
+-#define VvV      (*(MMVector *)(VvV_void))
+-#define VwV      (*(MMVector *)(VwV_void))
+-#define VxV      (*(MMVector *)(VxV_void))
+-#define VyV      (*(MMVector *)(VyV_void))
++#define VdV      (*(MMVector * restrict)(VdV_void))
++#define VsV      (*(MMVector * restrict)(VsV_void))
++#define VuV      (*(MMVector * restrict)(VuV_void))
++#define VvV      (*(MMVector * restrict)(VvV_void))
++#define VwV      (*(MMVector * restrict)(VwV_void))
++#define VxV      (*(MMVector * restrict)(VxV_void))
++#define VyV      (*(MMVector * restrict)(VyV_void))
+ 
+-#define VddV     (*(MMVectorPair *)(VddV_void))
+-#define VuuV     (*(MMVectorPair *)(VuuV_void))
+-#define VvvV     (*(MMVectorPair *)(VvvV_void))
+-#define VxxV     (*(MMVectorPair *)(VxxV_void))
++#define VddV     (*(MMVectorPair * restrict)(VddV_void))
++#define VuuV     (*(MMVectorPair * restrict)(VuuV_void))
++#define VvvV     (*(MMVectorPair * restrict)(VvvV_void))
++#define VxxV     (*(MMVectorPair * restrict)(VxxV_void))
+ 
+-#define QeV      (*(MMQReg *)(QeV_void))
+-#define QdV      (*(MMQReg *)(QdV_void))
+-#define QsV      (*(MMQReg *)(QsV_void))
+-#define QtV      (*(MMQReg *)(QtV_void))
+-#define QuV      (*(MMQReg *)(QuV_void))
+-#define QvV      (*(MMQReg *)(QvV_void))
+-#define QxV      (*(MMQReg *)(QxV_void))
++#define QeV      (*(MMQReg * restrict)(QeV_void))
++#define QdV      (*(MMQReg * restrict)(QdV_void))
++#define QsV      (*(MMQReg * restrict)(QsV_void))
++#define QtV      (*(MMQReg * restrict)(QtV_void))
++#define QuV      (*(MMQReg * restrict)(QuV_void))
++#define QvV      (*(MMQReg * restrict)(QvV_void))
++#define QxV      (*(MMQReg * restrict)(QxV_void))
+ #endif
+ 
+ #define LOG_VTCM_BYTE(VA, MASK, VAL, IDX) \
 -- 
 2.45.2
 
