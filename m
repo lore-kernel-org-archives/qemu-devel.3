@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C54CBD743FC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F6BD743FD
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwHx-0001fT-P9; Wed, 20 Nov 2024 20:47:21 -0500
+	id 1tDwHx-0001fJ-6M; Wed, 20 Nov 2024 20:47:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHu-0001dO-MO
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:18 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHv-0001e9-Md
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:19 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHt-0004ZP-7S
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:18 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwHu-0004Zd-5I
+ for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:47:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=gOqbb409IemoDA9cXRKMqCB6ZUSy0Qk58RmK/jyokAM=; b=LQ28/UUF0fF3/ns
- UMioWfeToFvaoy2MSNVq5FSH6NXASrhNUrNy3f2kiAOfLXOB6pTSB0kroWBFiG9knggN1/iuBQwQ2
- S2EGXvo+uYlj6Rac5jrZj9VWFRavn1To83P/d9SFeBmLmeQsZsDwhRL87lWnVDifCI1ygWJ7oXeWj
- dI=;
+ List-Help; bh=YnFxbrEajHIM+AsXZK4CS7tNWie2c17m2x9nwklbxBg=; b=KPOQ705RT54r1Mm
+ QaEruU5ym0GPWedmCLmh/f/g39ZnJZXf4483fDL+3OqgK+cTtrCYPXdREJNpGf5PWiq15WcGlir8w
+ ALVdfNrA+Yq8Ng77u6q6VAnrrCFRhdciNoI4Suvhu4t3MwCyXbTyiachEE0ukEA3QHohgbXk4IjaE
+ RA=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 22/43] helper-to-tcg: PrepareForTcgPass,
- remove functions w. cycles
-Date: Thu, 21 Nov 2024 02:49:26 +0100
-Message-ID: <20241121014947.18666-23-anjo@rev.ng>
+Subject: [RFC PATCH v1 23/43] helper-to-tcg: PrepareForTcgPass,
+ demote phi nodes
+Date: Thu, 21 Nov 2024 02:49:27 +0100
+Message-ID: <20241121014947.18666-24-anjo@rev.ng>
 In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
 References: <20241121014947.18666-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -65,70 +65,57 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Functions with cycles are removed for two primary reasons:
-
-  * as a simplifying assumption for register allocation which occurs down
-    the line, and;
-
-  * if a function contains cycles post-optimization neither unrolling or
-    loop vectorization were beneficial, and the function _might_ be
-    better suited as a helper anyway.
-
-Cycles are detected by iterating over Strongly Connected Components
-(SCCs) which imply the existence of cycles if:
-  - a SCC contains more than one node, or;
-  - it has a self-edge.
+PHI nodes have no clear analogue in TCG, this commits converts them to
+stack accesses using a built-in LLVM transformation.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 32 +++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
 diff --git a/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
-index f0ef1abd17..ccbe3820a0 100644
+index ccbe3820a0..a2808eafed 100644
 --- a/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
 +++ b/subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
-@@ -16,10 +16,42 @@
- //
- 
+@@ -18,7 +18,10 @@
  #include <PrepareForTcgPass.h>
-+#include <llvm/ADT/SCCIterator.h>
-+#include <llvm/IR/Function.h>
-+#include <llvm/IR/Module.h>
+ #include <llvm/ADT/SCCIterator.h>
+ #include <llvm/IR/Function.h>
++#include <llvm/IR/InstIterator.h>
++#include <llvm/IR/Instructions.h>
+ #include <llvm/IR/Module.h>
++#include <llvm/Transforms/Utils/Local.h>
  
  using namespace llvm;
  
-+static void removeFunctionsWithLoops(Module &M, ModuleAnalysisManager &MAM)
+@@ -50,8 +53,29 @@ static void removeFunctionsWithLoops(Module &M, ModuleAnalysisManager &MAM)
+     }
+ }
+ 
++inline void demotePhis(Function &F)
 +{
-+    // Iterate over all Strongly Connected Components (SCCs), a SCC implies
-+    // the existence of loops if:
-+    //   - it has more than one node, or;
-+    //   - it has a self-edge.
-+    SmallVector<Function *, 16> FunctionsToRemove;
-+    for (Function &F : M) {
-+        if (F.isDeclaration()) {
-+            continue;
-+        }
-+        for (auto It = scc_begin(&F); !It.isAtEnd(); ++It) {
-+#if LLVM_VERSION_MAJOR > 10
-+            if (It.hasCycle()) {
-+#else
-+            if (It.hasLoop()) {
-+#endif
-+                FunctionsToRemove.push_back(&F);
-+                break;
-+            }
++    if (F.isDeclaration()) {
++        return;
++    }
++
++    SmallVector<PHINode *, 10> Phis;
++    for (auto &I : instructions(F)) {
++        if (auto *Phi = dyn_cast<PHINode>(&I)) {
++            Phis.push_back(Phi);
 +        }
 +    }
 +
-+    for (auto *F : FunctionsToRemove) {
-+        F->deleteBody();
++    for (auto *Phi : Phis) {
++        DemotePHIToStack(Phi);
 +    }
 +}
 +
  PreservedAnalyses PrepareForTcgPass::run(Module &M, ModuleAnalysisManager &MAM)
  {
-+    removeFunctionsWithLoops(M, MAM);
+     removeFunctionsWithLoops(M, MAM);
++    for (Function &F : M) {
++        demotePhis(F);
++    }
      return PreservedAnalyses::none();
  }
 -- 
