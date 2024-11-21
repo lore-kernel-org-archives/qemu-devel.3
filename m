@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36DB2D78799
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F651D7879A
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEAWM-0005Pt-8Y; Thu, 21 Nov 2024 11:59:10 -0500
+	id 1tEAeh-00023a-RN; Thu, 21 Nov 2024 12:07:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAVu-0004rn-6C
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:43 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1tEAdj-0000RS-3r
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:48 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAVX-00086A-UW
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:41 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38231e9d518so804803f8f.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:58:19 -0800 (PST)
+ id 1tEAdS-0001cG-Af
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:06:45 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3823cf963f1so687004f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 09:06:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732208298; x=1732813098; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732208788; x=1732813588; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GDGZljMa8fdDNeLPb/JcZV7H88cNEUoroqHRVzlN6wI=;
- b=rohxcbDBW0DYKZlWLyDzGVKIuQ6MMatxYhMdZ9wenHZa3gySKPZTQMO6u399LEYA7I
- HR6gQVolW6Rd8BhhBxQ18jlKzOg8pRaHQx6uAWkjvU2uua4D+yGfaktUzAd8inW2Lc+c
- MBV+N2TQIKhi/D8LlJ3/taeldZwHiE0C0rCsoPsgVPJg0khqQczrktQ2CGbf5kJrLCsX
- 07LfQ/k99RB2bv18Jw3RXBzg9TesU+KoUKpkyEKeqyuUv4LNqPPnugtqR3E11xhZh8vN
- P151OMmIO06mZWB3wqi3O1+3U2RXgoaf+wZkwzoNZh8VKE8VzJvJZ54pO7UJtIdOQpWH
- tFrQ==
+ bh=oX7juP8P3Dz3dam5JbBdnNQ9MZQFT/0pRbnxh9O9VZE=;
+ b=AOeE2LaluN/ICVffAKIU064Nj9823lG3+p66XiA+bR6mSsZyDgzvwiRKXTH7CZoaGb
+ WKSggR55H6Gf2lh6P0q8SknNqaabevu1LgKayiVTHtD6L3TKv1Jt2fTT3LcC1BoEfE+z
+ B9ZOpHuU8v8t/fHFDlPuNU5UbLPVIgmJ9HEP2oYg29MXNsD1SMwoKFzCpLeS2AD0mvTi
+ mOqzWODjCd/GY/hwaJKwzORFhzEe+xsxdocz+Efi4fFqVRbXnEBzlwKXJFrKEVY3dO13
+ GuX/z03wNvhV1lWdYgjsMZZauyWHgo4ziUzvL7+pleGFNbIJNMw5kkjgkUqUsuPAxo6m
+ DMYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732208298; x=1732813098;
+ d=1e100.net; s=20230601; t=1732208788; x=1732813588;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GDGZljMa8fdDNeLPb/JcZV7H88cNEUoroqHRVzlN6wI=;
- b=KvrP3akcNfLOesoEHuu0Y5FMHC9B7l9YCtgFwJwT2gu2QCOcNgprrrvutPFFyj9Z/r
- ShEDd2CBzkkTTfIvdYfOeGoaCb1Gu2obNnyg/iRsOmhgRAzZP4TUp7a0lyQkNGQ7/9Oi
- 4azQ18Xz7oYBzj+Yz/eDYJDH5RJJ7z6tXW+ipg4YFosMgrSX+r7z0foe8InA78S+iCh3
- PEtIwpYCYcrVTo4ImDLe/0JLf1d4ULS805187JFEuiy1t+qoDLdN9kfWLLyJcG4oNCu1
- EDcljMKs5aEhTIC0uwa6XKh4F/hWP/UxV2P7HKwmdvOj4jqwdt6nxX5X2DuNORwwH+Xh
- ohsA==
-X-Gm-Message-State: AOJu0Yyf7fkY7rpsh5Vl/i2ypsGxUtogHw2n7eM359GY3MH9NLy7v346
- CqH6BaoaHQzw8WwXqS3hwHigPGdiNxW0jSely852hbfi9mJXBsjypf9yF+fRnuc=
-X-Gm-Gg: ASbGncuy6zL6EUcV0eJj2P3WpnoRtBYhutdGJKsDEpbwmxA4pUhC+5bp6KFeN4if2iT
- p1j730/nDO9bEOCkYfpMZu01K2YCb9kkPQGr4zx3RyutQAek+GQgiqbSh/6RWyN0bH35vhxHVs/
- mQn7yirVVw867u0GHhaoNLa23PIYexpPAQPia9t0CjAtxoI/9/uoAaulTIeCgsUKLQqQYMAoaNZ
- OxoMPqnxTAzP8BhvXuzXQXTigaW2MCfQAE47NhUNkKN/iDn
-X-Google-Smtp-Source: AGHT+IGTm4zZP3yHvIv7woropTBSbw1FfU0E6/kLCFoF4wYpn2LgqVYabzMyVfJtX7GCfjIlZ8vtoA==
-X-Received: by 2002:a05:6000:4007:b0:382:4503:7283 with SMTP id
- ffacd0b85a97d-38254adef91mr6740242f8f.9.1732208298110; 
- Thu, 21 Nov 2024 08:58:18 -0800 (PST)
+ bh=oX7juP8P3Dz3dam5JbBdnNQ9MZQFT/0pRbnxh9O9VZE=;
+ b=VYs9WxGMOPXRb08Lgu0SEjqO/RBlPCpG1a719OCS44YlUE3kSjrZ2KywdwYc7qL/+1
+ GfmgGDowkP9SSzLvqwm2z8KS/rbg5sVvPMI4Xkicj8/4iHioDkDGi2PlEs7RSSqh0wAv
+ 49T5FH0ET3JIkArfkJ806W5I5zftH52yI5VtkGNZyfdF/o7Lvkx1elAfeNjSG2YyMuLb
+ TFo16RHuF5WrP4wo/FXItybL578uDS4jyzlyiQXxirfii57Qw6+9uvVczAE6TrhG8nNn
+ rys/PnUAbhtJ+kFp+GgYLoA809+ylVx00IiFpOaukIdhmtMsDISI9/wc6Ie+uRIorZkG
+ RqEQ==
+X-Gm-Message-State: AOJu0YxQl2io2lvgxSbfrnN6X4p+5CQcKGpK468ofwzdV993P45lt44O
+ VOTMsjTfhTrVaWW9GxNv4iZ6peGG14j2tAfWEu3dWLEyDmkiMQLSOLaZCdgg1iA=
+X-Gm-Gg: ASbGnctOdN0UEHI5RjPu1BryN8oaBg1Ft0evqcPk+egrdQKGsOCW1VHE5I/uhIboimy
+ 5ItTOFHFDgsCOusQ9Tmtqorqn1uvhIMtMaN/KvPwv2Wi9JSFpnx1W66sy+foepdeZOKFsyMdjYN
+ znMvQLSGUcp2vyaRYzfc1pdOGFbj/Xfj9epDon7ESv/kpa1DLvOIVtfkKGdgO1u4zTcPLOmbnEL
+ go0+/2geKwYZOnWIjnLoVeoF68WpK2iYvSXaMcgFfcqY8kl
+X-Google-Smtp-Source: AGHT+IGP6kebeC2LPTZKsaekqtLwTbMwJwKU++AiGWreRNT81i2UAyPKHUX6eLm0bHUzXeFOqlpubg==
+X-Received: by 2002:a5d:6c6d:0:b0:382:3afd:125d with SMTP id
+ ffacd0b85a97d-38254b0422dmr5944667f8f.34.1732208787943; 
+ Thu, 21 Nov 2024 09:06:27 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b463439esm61337745e9.31.2024.11.21.08.58.14
+ ffacd0b85a97d-3825fad627bsm56549f8f.12.2024.11.21.09.06.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 08:58:14 -0800 (PST)
+ Thu, 21 Nov 2024 09:06:25 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 07F4B5F95A;
- Thu, 21 Nov 2024 16:58:09 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 13BE460406;
+ Thu, 21 Nov 2024 16:58:08 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -92,26 +92,26 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH 28/39] tests/functional: update the ppc32 tuxrun tests
-Date: Thu, 21 Nov 2024 16:57:55 +0000
-Message-Id: <20241121165806.476008-29-alex.bennee@linaro.org>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH 18/39] tests/functional: avoid accessing log_filename on
+ earlier failures
+Date: Thu, 21 Nov 2024 16:57:45 +0000
+Message-Id: <20241121165806.476008-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241121165806.476008-1-alex.bennee@linaro.org>
 References: <20241121165806.476008-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,34 +127,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are new upto date images available we should update to them.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
+If a failure occurs early in the QemuBaseTest constructor, the
+'log_filename' object atttribute may not exist yet. This happens
+most notably if the QEMU_TEST_QEMU_BINARY is not set. We can't
+initialize 'log_filename' earlier as we use the binary to identify
+the architecture which is then used to build the path in which the
+logs are stored.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20241121154218.1423005-19-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Anders Roxell <anders.roxell@linaro.org>
 ---
- tests/functional/test_ppc_tuxrun.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tests/functional/qemu_test/testcase.py | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/test_ppc_tuxrun.py b/tests/functional/test_ppc_tuxrun.py
-index 50b76946c4..5458a7fb71 100755
---- a/tests/functional/test_ppc_tuxrun.py
-+++ b/tests/functional/test_ppc_tuxrun.py
-@@ -17,11 +17,11 @@
- class TuxRunPPC32Test(TuxRunBaselineTest):
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index fceafb32b0..90ae59eb54 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -81,10 +81,12 @@ def main():
+         res = unittest.main(module = None, testRunner = tr, exit = False,
+                             argv=["__dummy__", path])
+         for (test, message) in res.result.errors + res.result.failures:
+-            print('More information on ' + test.id() + ' could be found here:'
+-                  '\n %s' % test.log_filename, file=sys.stderr)
+-            if hasattr(test, 'console_log_name'):
+-                print(' %s' % test.console_log_name, file=sys.stderr)
++
++            if hasattr(test, "log_filename"):
++                print('More information on ' + test.id() + ' could be found here:'
++                      '\n %s' % test.log_filename, file=sys.stderr)
++                if hasattr(test, 'console_log_name'):
++                    print(' %s' % test.console_log_name, file=sys.stderr)
+         sys.exit(not res.result.wasSuccessful())
  
-     ASSET_PPC32_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/ppc32/uImage',
--        '1a68f74b860fda022fb12e03c5efece8c2b8b590d96cca37a8481a3ae0b3f81f')
-+        'https://storage.tuxboot.com/buildroot/20241119/ppc32/uImage',
-+        'aa5d81deabdb255a318c4bc5ffd6fdd2b5da1ef39f1955dcc35b671d258b68e9')
-     ASSET_PPC32_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/ppc32/rootfs.ext4.zst',
--        '8885b9d999cc24d679542a02e9b6aaf48f718f2050ece6b8347074b6ee41dd09')
-+        'https://storage.tuxboot.com/buildroot/20241119/ppc32/rootfs.ext4.zst',
-+        '67554f830269d6bf53b67c7dd206bcc821e463993d526b1644066fea8117019b')
  
-     def test_ppc32(self):
-         self.set_machine('ppce500')
 -- 
 2.39.5
 
