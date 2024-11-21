@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260A8D6ED2A
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 13:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3494AD6ED2A
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 13:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE73N-0003oL-CU; Thu, 21 Nov 2024 08:17:01 -0500
+	id 1tE76S-00054E-9x; Thu, 21 Nov 2024 08:20:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE73K-0003np-TC
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:16:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tE73I-0004v8-GD
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:16:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732195014;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XGKEZUiCpzh6dawc60C225dXqn4F/n/V/z6oFEWAVW8=;
- b=CXmgAscYILWblV8yKJVKwmlqHS3BOHN+KvA6NeMLwwkjgXP2LETVfk6+vHVY5QydNd+FtL
- jS5tQMw7BZdkvt4VUuzkYwxU6hIEB1hsSs04Klb63QMevWXKdL7PFK3h3/9MRqkj/iTw58
- 8+prO3YjKjJT90An0S5DC6hwARUJGUc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-a2gCq03uOJegNjfrNnfPvA-1; Thu,
- 21 Nov 2024 08:16:48 -0500
-X-MC-Unique: a2gCq03uOJegNjfrNnfPvA-1
-X-Mimecast-MFC-AGG-ID: a2gCq03uOJegNjfrNnfPvA
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 34B3B1954B15; Thu, 21 Nov 2024 13:16:47 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8059230000DF; Thu, 21 Nov 2024 13:16:43 +0000 (UTC)
-Date: Thu, 21 Nov 2024 13:16:39 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Volker =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE76K-00050k-5f
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:20:05 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE76I-0005yk-9V
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 08:20:03 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-382325b0508so655145f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 05:19:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732195197; x=1732799997; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pS9ZcEKi8UeVfGQOjmFhhvFdLoLu3gKgufD3uqpB6sY=;
+ b=C3vaFLNqijD3c+muGhqmG/3ihx6lvYVW2tNey+Mi6FnJr1csmePUCR+Hg+DJBjuvVK
+ jP891U/feLf5MWjbad3f+dIHegZms4bj83azC222XvezU33C8TtW7v+OJWrCrP299T2e
+ A2eI1mzyGKBfCop4dqMIzOX1NFPfHGC/VA7Cy6AcsdVrxqiYMDS2JIOC6tT0wr9O+NYc
+ Q07d68w5KC4KhoxE/2EXgYd1f8a/JpbgkbjhQQ4t/pM+tXwKa2FWNzNAioYJ7HxuowIe
+ 9Aeg1s8eK+cnzzwl+rZspwTcVjhGO/jHJDeSUAAFIPurlaByn9ewGdIRcHounbODBaCb
+ aB7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732195197; x=1732799997;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pS9ZcEKi8UeVfGQOjmFhhvFdLoLu3gKgufD3uqpB6sY=;
+ b=dswfOjGfcv6GiYVRMbPiRm1SoopVcARTsW+jp2IFNyxlcL8m/qXYi2BTwQvVJjcV72
+ 0D4+Egn2bq60CeVXkLBHcVQFI7WMPTniiY16AANKJQLy71muaJebX+5IRCDORjH53i8O
+ Kvo+JBO67w4kRujROxPqWYj44lRpkxaJFr1tGo6J26i1AHPIxYfQeJ056GnIos3oHxxg
+ 3tHOVH8CCN9Om1Ix7JCNGQquCwWPZTIgvwllwsGJLEnkQTEw176ymPhvZLwqTENNck4z
+ jH6VCJFsxevrktYxezywn1gtxwKTHB5JECkksCTCsMef+f+UbTOWYddbSHM/nLAjCSA+
+ Hxrg==
+X-Gm-Message-State: AOJu0YxguzGYEL6TdjQtdcXVDtg+ZpHpu+7EJEyB12UCvhvta7htm+i/
+ rw7PSAe5qGtjyDarcN48JeLiUkjO+XBfxvtHkUVOADMEOuEO6vQbgE9j4K/kab4CncnISEuqNFg
+ L
+X-Google-Smtp-Source: AGHT+IESdmb9pXFJrCA77H3syuXsd3hMKpGtGXSwa+Q8giy5eFFONyKmB1caxlhHM8zS/zllQcV9Jw==
+X-Received: by 2002:a5d:5887:0:b0:382:4fd6:405e with SMTP id
+ ffacd0b85a97d-38254afa8ecmr4746611f8f.29.1732195196716; 
+ Thu, 21 Nov 2024 05:19:56 -0800 (PST)
+Received: from localhost.localdomain ([176.187.204.90])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38254905194sm5192750f8f.5.2024.11.21.05.19.55
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 21 Nov 2024 05:19:56 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [RFC PATCH] ui/gtk: ??? Remove dead code around X11 ???
-Message-ID: <Zz8yt2x7PoRHyF9M@redhat.com>
-References: <20241121130939.97212-1-philmd@linaro.org>
+Subject: [PATCH-for-9.2] ui/cocoa: Temporarily ignore annoying deprecated
+ declaration warnings
+Date: Thu, 21 Nov 2024 14:19:54 +0100
+Message-ID: <20241121131954.98949-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241121130939.97212-1-philmd@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,107 +94,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 02:09:39PM +0100, Philippe Mathieu-Daudé wrote:
-> I have no clue about what this code does,
-> but gtk_widget_set_double_buffered() is deprecated since GTK 3.14
-> and we require 3.22 since more than 4 years, commit 7b23d121f9
-> ("ui: increase min required GTK version to 3.22.0").
-> 
-> Assert gtk_use_gl_area is set and remove the dead code.
+These warnings are breaking some build configurations since 2 months
+now (https://gitlab.com/qemu-project/qemu/-/issues/2575):
 
-This assertion is dubious.
+  ui/cocoa.m:662:14: error: 'CVDisplayLinkCreateWithCGDisplay' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
+    662 |         if (!CVDisplayLinkCreateWithCGDisplay(display, &displayLink)) {
+        |              ^
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked deprecated here
+     89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
+        |                    ^
+  ui/cocoa.m:663:29: error: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
+    663 |             CVTime period = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
+        |                             ^
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:182:18: note: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' has been explicitly marked deprecated here
+    182 | CV_EXPORT CVTime CVDisplayLinkGetNominalOutputVideoRefreshPeriod( CVDisplayLinkRef CV_NONNULL displayLink );
+        |                  ^
+  ui/cocoa.m:664:13: error: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
+    664 |             CVDisplayLinkRelease(displayLink);
+        |             ^
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+    249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
+        |                ^
+  3 errors generated.
 
-gtk_use_gl_area is only set when running on Win32, or running
-on Wayland. IOW, the assert will fire on X11, which is a
-supported platform, and Broadway which is admitedly more of
-a curiosity than a serious GTK backend.
+For the next release, ignore the warnings using #pragma directives.
+At least until we figure the correct new API usage.
 
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  ui/gtk.c | 46 +++++++++-------------------------------------
->  1 file changed, 9 insertions(+), 37 deletions(-)
-> 
-> diff --git a/ui/gtk.c b/ui/gtk.c
-> index bf9d3dd679..d968cf3de1 100644
-> --- a/ui/gtk.c
-> +++ b/ui/gtk.c
-> @@ -809,17 +809,9 @@ static gboolean gd_draw_event(GtkWidget *widget, cairo_t *cr, void *opaque)
->  
->  #if defined(CONFIG_OPENGL)
->      if (vc->gfx.gls) {
-> -        if (gtk_use_gl_area) {
-> -            /* invoke render callback please */
-> -            return FALSE;
-> -        } else {
-> -#ifdef CONFIG_X11
-> -            gd_egl_draw(vc);
-> -            return TRUE;
-> -#else
-> -            abort();
-> -#endif
-> -        }
-> +        assert(gtk_use_gl_area);
-> +        /* invoke render callback please */
-> +        return FALSE;
->      }
->  #endif
->  
-> @@ -2156,32 +2148,12 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
->  
->  #if defined(CONFIG_OPENGL)
->      if (display_opengl) {
-> -        if (gtk_use_gl_area) {
-> -            vc->gfx.drawing_area = gtk_gl_area_new();
-> -            g_signal_connect(vc->gfx.drawing_area, "realize",
-> -                             G_CALLBACK(gl_area_realize), vc);
-> -            vc->gfx.dcl.ops = &dcl_gl_area_ops;
-> -            vc->gfx.dgc.ops = &gl_area_ctx_ops;
-> -        } else {
-> -#ifdef CONFIG_X11
-> -            vc->gfx.drawing_area = gtk_drawing_area_new();
-> -            /*
-> -             * gtk_widget_set_double_buffered() was deprecated in 3.14.
-> -             * It is required for opengl rendering on X11 though.  A
-> -             * proper replacement (native opengl support) is only
-> -             * available in 3.16+.  Silence the warning if possible.
-> -             */
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ ui/cocoa.m | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-
-
-> -#pragma GCC diagnostic push
-> -#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-> -            gtk_widget_set_double_buffered(vc->gfx.drawing_area, FALSE);
-> -#pragma GCC diagnostic pop
-> -            vc->gfx.dcl.ops = &dcl_egl_ops;
-> -            vc->gfx.dgc.ops = &egl_ctx_ops;
-> -            vc->gfx.has_dmabuf = qemu_egl_has_dmabuf();
-> -#else
-> -            abort();
-> -#endif
-> -        }
-> +        assert(gtk_use_gl_area);
-> +        vc->gfx.drawing_area = gtk_gl_area_new();
-> +        g_signal_connect(vc->gfx.drawing_area, "realize",
-> +                         G_CALLBACK(gl_area_realize), vc);
-> +        vc->gfx.dcl.ops = &dcl_gl_area_ops;
-> +        vc->gfx.dgc.ops = &gl_area_ctx_ops;
->      } else
->  #endif
->      {
-> -- 
-> 2.45.2
-> 
-
-With regards,
-Daniel
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 4c2dd33532..0422dafde4 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -639,6 +639,9 @@ - (void) updateBounds
+     [self setBoundsSize:NSMakeSize(screen.width, screen.height)];
+ }
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
++
+ - (void) updateUIInfoLocked
+ {
+     /* Must be called with the BQL, i.e. via updateUIInfo */
+@@ -685,6 +688,8 @@ - (void) updateUIInfoLocked
+     dpy_set_ui_info(dcl.con, &info, TRUE);
+ }
+ 
++#pragma GCC diagnostic pop
++
+ - (void) updateUIInfo
+ {
+     if (!allow_events) {
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.2
 
 
