@@ -4,94 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14016D6E2A7
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 10:01:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD3FD6E2A7
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 10:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE3zy-0003eI-Pf; Thu, 21 Nov 2024 05:01:19 -0500
+	id 1tE40i-0004Ae-9i; Thu, 21 Nov 2024 05:02:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tE3zq-0003dm-Qe; Thu, 21 Nov 2024 05:01:11 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tE3zn-00066b-Cn; Thu, 21 Nov 2024 05:01:10 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E80E8A9070;
- Thu, 21 Nov 2024 13:00:54 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7039117681D;
- Thu, 21 Nov 2024 13:01:02 +0300 (MSK)
-Message-ID: <ff07945a-3c82-489d-92db-3fc76ab24172@tls.msk.ru>
-Date: Thu, 21 Nov 2024 13:01:02 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE40d-00040a-PC
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:02:01 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE40c-000692-2F
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 05:01:59 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3822ba3cdbcso492136f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 02:01:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732183315; x=1732788115; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pGj58m+Vwzu7KfW3YTaiVXOTXVXViIn2zLD/4MTPWG4=;
+ b=HTS9zP5x8DoTlC3Bd1/fpfPBOMzno3FDn5pFSjAkhBywRt6YVzXfJ6x3jPF5+POgrm
+ hyRcpfmfa5nQvamcYJxlPDvgcgI+V8Pnj2gR4wrUVaNTjR+yC50sbV24bXiPvsSuqrDO
+ 2gVza+WfYhTjKs+aIC8DaYVqY94oPKReRhBZhhxMAOtj2GJyKZkpv9/Qm+O3WJjRR2kc
+ 1FbG56H5Z8UKjj+kW2j1u+Auzb4PodOZIMEgrWywjGQ+7V60La02kcU287oa1QbVja0k
+ cTYozFVTVARpPrBfvcH2NxHemZgmWz+rlBhAWQ2lkbPWOzkg4I7zV3M9DgOSBZVcZKg4
+ QH4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732183315; x=1732788115;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pGj58m+Vwzu7KfW3YTaiVXOTXVXViIn2zLD/4MTPWG4=;
+ b=pFvp94UbBpj50EZDYItq8XBDjHUpoaeLsKwAnrpnXIkOSUBZtUipZpOKAwXXuMnWcU
+ niLBHeA6ZYhEWP/6KKA5D0qA5rwdl/q1AtePLv9DkvsWLxhcKdezFZJHjzQxtDZK7yNM
+ XAuGRzmnxN+cNUUSUZIMpmeIV0xqHhWmWy6PwAELCAjtxUeHB5MZMsPu9F58obKv40P9
+ WxAH21iQgZ483DnRuDjMv5UK6oXTZWFC5TxGbuNMfiaxFLPbFoG/n+891jm9d73xgyEI
+ TqJBDWy91bLh4mQYB9gr/5xSGdZeHZyvYILENUWFZ9xS/EdY7LixXa9yg+KIdXEGek3d
+ AhZA==
+X-Gm-Message-State: AOJu0YwL+ivWM/myIMUkBbR7aSdtfpnw30lODY0FJZcVXdVg6x644Fe3
+ PUYrYzqjWXwO73DkWPaxqWN+KNlp0sMySmPt3gF41vatHGkHxh3bF4gTMCiaTDWSAQyBNlRXnT3
+ T
+X-Google-Smtp-Source: AGHT+IFPilQe2Br1yRVqpLEPGKiW5g7LVOyhyqE73BeVj3EOmkiwA4gtqrPTXh7gOjduBsaqyrCWtA==
+X-Received: by 2002:a05:6000:1543:b0:381:cffc:d40b with SMTP id
+ ffacd0b85a97d-38254b15a5dmr4993596f8f.39.1732183315532; 
+ Thu, 21 Nov 2024 02:01:55 -0800 (PST)
+Received: from localhost.localdomain ([176.187.204.90])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825494ca3fsm4486989f8f.111.2024.11.21.02.01.54
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 21 Nov 2024 02:01:55 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-block@nongnu.org,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>
+Subject: [PATCH] hw/ide/ahci: Check for PCI device once in ahci_init()
+Date: Thu, 21 Nov 2024 11:01:52 +0100
+Message-ID: <20241121100152.65476-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb: Use __attribute__((packed)) vs __packed
-To: Thomas Huth <thuth@redhat.com>,
- Roque Arcudia Hernandez <roqueh@google.com>, richard.henderson@linaro.org,
- jansene@google.com
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20241101211720.3354111-1-roqueh@google.com>
- <6f67908f-7ca7-4aa2-86e2-99b79aa6b4e7@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <6f67908f-7ca7-4aa2-86e2-99b79aa6b4e7@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,36 +95,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-04.11.2024 10:37, Thomas Huth wrote:
-> On 01/11/2024 22.17, Roque Arcudia Hernandez wrote:
->> __packed is non standard and is not present in clang-cl.
->> __attribute__((packed)) has the same semantics.
->>
->> Signed-off-by: Erwin Jansen <jansene@google.com>
->> Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
->> ---
->>   include/hw/usb/dwc2-regs.h | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/include/hw/usb/dwc2-regs.h b/include/hw/usb/dwc2-regs.h
->> index 523b112c5e..b8b4266543 100644
->> --- a/include/hw/usb/dwc2-regs.h
->> +++ b/include/hw/usb/dwc2-regs.h
->> @@ -838,7 +838,7 @@
->>   struct dwc2_dma_desc {
->>           uint32_t status;
->>           uint32_t buf;
->> -} __packed;
->> +} QEMU_PACKED;
-> 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> 
-> Actually, the struct only consists of two 32-bit values, so I doubt that the "packed" is needed here at all. Maybe we could even simply remove it?
-To me it is important to mark structures as packed if it is
-important for them to have strict layout like in this case,
-even if de-facto it does not change the actual layout.  It's
-just like an annotation saying this structure can be used
-on wire or somesuch.
+object_dynamic_cast() is expensive; IRQ helpers are certainly
+a bad place to call it. Since the device type won't change at
+runtime, resolve it once when the AHCI context is initialized
+in ahci_init().
 
-/mjt
+Reported-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/ide/ahci.h |  2 +-
+ hw/ide/ahci.c         | 17 +++++------------
+ 2 files changed, 6 insertions(+), 13 deletions(-)
+
+diff --git a/include/hw/ide/ahci.h b/include/hw/ide/ahci.h
+index ba31e75ff9..f6d977610d 100644
+--- a/include/hw/ide/ahci.h
++++ b/include/hw/ide/ahci.h
+@@ -37,7 +37,7 @@ typedef struct AHCIControlRegs {
+ } AHCIControlRegs;
+ 
+ typedef struct AHCIState {
+-    DeviceState *container;
++    PCIDevice *pci_dev;
+ 
+     AHCIDevice *dev;
+     AHCIControlRegs control_regs;
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 0eb24304ee..f2eb3b527b 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -181,14 +181,10 @@ static uint32_t ahci_port_read(AHCIState *s, int port, int offset)
+ 
+ static void ahci_irq_raise(AHCIState *s)
+ {
+-    DeviceState *dev_state = s->container;
+-    PCIDevice *pci_dev = (PCIDevice *) object_dynamic_cast(OBJECT(dev_state),
+-                                                           TYPE_PCI_DEVICE);
+-
+     trace_ahci_irq_raise(s);
+ 
+-    if (pci_dev && msi_enabled(pci_dev)) {
+-        msi_notify(pci_dev, 0);
++    if (s->pci_dev && msi_enabled(s->pci_dev)) {
++        msi_notify(s->pci_dev, 0);
+     } else {
+         qemu_irq_raise(s->irq);
+     }
+@@ -196,13 +192,9 @@ static void ahci_irq_raise(AHCIState *s)
+ 
+ static void ahci_irq_lower(AHCIState *s)
+ {
+-    DeviceState *dev_state = s->container;
+-    PCIDevice *pci_dev = (PCIDevice *) object_dynamic_cast(OBJECT(dev_state),
+-                                                           TYPE_PCI_DEVICE);
+-
+     trace_ahci_irq_lower(s);
+ 
+-    if (!pci_dev || !msi_enabled(pci_dev)) {
++    if (!s->pci_dev || !msi_enabled(s->pci_dev)) {
+         qemu_irq_lower(s->irq);
+     }
+ }
+@@ -1608,7 +1600,8 @@ static const IDEDMAOps ahci_dma_ops = {
+ 
+ void ahci_init(AHCIState *s, DeviceState *qdev)
+ {
+-    s->container = qdev;
++    s->pci_dev = (PCIDevice *)object_dynamic_cast(OBJECT(qdev), TYPE_PCI_DEVICE);
++
+     /* XXX BAR size should be 1k, but that breaks, so bump it to 4k for now */
+     memory_region_init_io(&s->mem, OBJECT(qdev), &ahci_mem_ops, s,
+                           "ahci", AHCI_MEM_BAR_SIZE);
+-- 
+2.45.2
+
 
