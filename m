@@ -4,50 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AEB5E64012
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 21:00:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6F9E64012
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 21:06:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEEHc-00055G-CU; Thu, 21 Nov 2024 16:00:14 -0500
+	id 1tEENN-0001TO-8q; Thu, 21 Nov 2024 16:06:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <wangfuqiang49@ZBMac-DY9GX4RFNX.localdomain>)
- id 1tEBDo-0001jF-TI
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:44:05 -0500
-Received: from [209.95.133.113] (helo=ZBMac-DY9GX4RFNX.localdomain)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangfuqiang49@ZBMac-DY9GX4RFNX.localdomain>)
- id 1tEBDl-0000vu-56
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:44:04 -0500
-Received: by ZBMac-DY9GX4RFNX.localdomain (Postfix, from userid 502)
- id AB8B72466CAA; Fri, 22 Nov 2024 01:34:16 +0800 (CST)
-From: wangfuqiang49 <wangfuqiang49@jd.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, Hyman Huang <yong.huang@smartx.com>
-Cc: qinzheng13 <qinzheng13@jd.com>,
-	yaowenchao1 <yaowenchao@jd.com>
-Subject: [PATCH] fix dirtyring not converge use small dirtylimit
-Date: Fri, 22 Nov 2024 01:34:16 +0800
-Message-ID: <20241121173416.75950-1-wangfuqiang49@jd.com>
-X-Mailer: git-send-email 2.47.0
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEENF-0001Sq-4A
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 16:06:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEENA-0003RC-EG
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 16:05:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732223154;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1uXNGcvkaA/O0m24D4+nXnCsyWsS8WD9pbofGs9Dq4=;
+ b=A0A78l3t3IE1BkNle0VfjuzuxUzfZnl+aJLWJdiMerH0sKhdCJrJvZqlWOslIQIGmt4Rhg
+ ug6U+hOELtOy+hOEh+gi6bftzDMcBSaeKt5U15GknC4Qwm+fyRvvXswe/KARikMEQQom+Z
+ gnHy64CN/VWMi+f2JkctDcI05NU/3Sg=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-550-T7P7R7nnOamTSPW2hTqr3w-1; Thu, 21 Nov 2024 16:05:52 -0500
+X-MC-Unique: T7P7R7nnOamTSPW2hTqr3w-1
+X-Mimecast-MFC-AGG-ID: T7P7R7nnOamTSPW2hTqr3w
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3a778ce76fbso14142345ab.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 13:05:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732223152; x=1732827952;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=v1uXNGcvkaA/O0m24D4+nXnCsyWsS8WD9pbofGs9Dq4=;
+ b=dXZiJAxHBXtvQUg6j8sfh5gwWNP21EnjefcKD3P5kKhiuU0HsPJB/ygVoMqTS2PH76
+ TSXGEunNnVlS6Q5suZhQEguzALVp+oM+xmxEZslsEKxJxVXDaropFM1KG3k+qxJpdGA9
+ sm8RbqSQfg3hc5lUE63RfeqgRcXg7H1ntl7tp9yaHRYFLSA+V3XM6U7N1UtZkviQD7Ke
+ sbSHL1Tbj/Oz6S/Imt8yPzvcd+sKUyIQvG4qUB6xLPA4ivl2dUTZRZvaXLiWQxQwKBss
+ e0QqD6OYldW3vcbIZf0LPwr0nsS5dGrzRe1DX2fTpPruvSVICi8jg3lWtfIrTaBqDFoX
+ JXgQ==
+X-Gm-Message-State: AOJu0YxwJOvyhQrPOImUmY0oeMoMMNVPfHPlzvAPwb02mSEYrwz4Jtx7
+ gXdrWB0sOAgXs2RnMzKyTlB4nxtKBVEiOpvYiQSvlZ4gYqDEnGSIKwcDXsDU1CtsAMz+qmX8i5o
+ EyK3VSWg/uLPnlY/DDS+CHwx4BvaIzAAen/G0s7oZ4nefoWm4bQKH
+X-Gm-Gg: ASbGncsdiFh0naUOr764KKcuBfwZg9/9M3XUG+ZkQZo0kvn6204cSZjf6Ae/Z1nL0EC
+ 9Mw8Al7Hs3JmZxLCc15ccLd/jf92hkpesASHTlcjBVLgqXrcxf9is5X3oJwQjxoTOquLrbYXQWi
+ 1a4vz7xT2blYxG6OYGl99S/r09lftYGM7hjp0uX74vl93uPBRa7Uj53ICW2wgrWeRqVW0gACzZO
+ bpseni0/IhH+hoMRzDDtNXX9IOvgVB7R3C0G7rVRRWpL+EgCEwXlpkAlA0O78oYFCYoM3v3f8Lm
+ VQ9cz6kh36Y=
+X-Received: by 2002:a05:6e02:1a83:b0:3a7:6d14:cc18 with SMTP id
+ e9e14a558f8ab-3a79af9ec8dmr6359335ab.23.1732223151829; 
+ Thu, 21 Nov 2024 13:05:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IECQmTJJ4UAsBOUjR3IJdKdjKVdnvArAzS7JBxDcfydzmCpDzPbPk7j4nZwgKxBCaXWb0GL8g==
+X-Received: by 2002:a05:6e02:1a83:b0:3a7:6d14:cc18 with SMTP id
+ e9e14a558f8ab-3a79af9ec8dmr6359105ab.23.1732223151564; 
+ Thu, 21 Nov 2024 13:05:51 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3a79acb77easm1366485ab.66.2024.11.21.13.05.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 Nov 2024 13:05:50 -0800 (PST)
+Date: Thu, 21 Nov 2024 16:05:47 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 04/22] tests/migration: Disambiguate guestperf vs. a-b
+Message-ID: <Zz-gq4XOzzaQnnz5@x1n>
+References: <20241113194630.3385-1-farosas@suse.de>
+ <20241113194630.3385-5-farosas@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 209.95.133.113 (failed)
-Received-SPF: none client-ip=209.95.133.113;
- envelope-from=wangfuqiang49@ZBMac-DY9GX4RFNX.localdomain;
- helo=ZBMac-DY9GX4RFNX.localdomain
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, NO_DNS_FOR_FROM=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241113194630.3385-5-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 21 Nov 2024 16:00:11 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,75 +107,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: fuqiang wang <wangfuqiang49@jd.com>
+On Wed, Nov 13, 2024 at 04:46:12PM -0300, Fabiano Rosas wrote:
+> The current build structure for migration tests is confusing. There is
+> the tests/migration directory, which contains two different guest code
+> implementations, one for the qtests (a-b-{bootblock|kernel}.S) and
+> another for the guestperf script (stress.c). One uses a Makefile,
+> while the other uses meson.
+> 
+> The next patches will add a new qtests/migration/ directory to hold
+> qtest code which will make the situation even more confusing.
+> 
+> Move the guest code used by qtests into a new qtests/migration/
+> directory and rename the old one to tests/migration-stress.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-When using a low dirtylimit to restrict a VM with a high dirty ratio,
-such as in the guestperf test scenario compr-dirty-limit-period-1000
-(dirtylimit=1), this can lead to too long sleep times for the vcpu
-threads and the migration thread may have to wait vcpu thread due to the
-kick operation, and during this waiting period, the guest will make some
-dirty pages at a high speed, which causes convergence issues.
+Generally makes sense to me.
 
-However, during the vcpu thread sleeping, it is not in kernel space
-(kvm), so there is no need to wait for a kick.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Signed-off-by: wangfuqiang49 <wangfuqiang49@jd.com>
----
- accel/kvm/kvm-all.c   | 6 +++++-
- include/hw/core/cpu.h | 1 +
- system/cpus.c         | 1 +
- 3 files changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 801cff16a5..86b1b8a6c6 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -926,7 +926,9 @@ static void kvm_cpu_synchronize_kick_all(void)
-     CPUState *cpu;
- 
-     CPU_FOREACH(cpu) {
--        run_on_cpu(cpu, do_kvm_cpu_synchronize_kick, RUN_ON_CPU_NULL);
-+        if (cpu->vcpu_in_kvm) {
-+            run_on_cpu(cpu, do_kvm_cpu_synchronize_kick, RUN_ON_CPU_NULL);
-+        }
-     }
- }
- 
-@@ -3131,7 +3133,9 @@ int kvm_cpu_exec(CPUState *cpu)
-          */
-         smp_rmb();
- 
-+        cpu->vcpu_in_kvm = true;
-         run_ret = kvm_vcpu_ioctl(cpu, KVM_RUN, 0);
-+        cpu->vcpu_in_kvm = false;
- 
-         attrs = kvm_arch_post_run(cpu, run);
- 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index db8a6fbc6e..853aba4ef7 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -537,6 +537,7 @@ struct CPUState {
-     uint64_t dirty_pages;
-     int kvm_vcpu_stats_fd;
-     bool vcpu_dirty;
-+    bool vcpu_in_kvm;
- 
-     /* Use by accel-block: CPU is executing an ioctl() */
-     QemuLockCnt in_ioctl_lock;
-diff --git a/system/cpus.c b/system/cpus.c
-index 1c818ff682..572c7e4f4d 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -670,6 +670,7 @@ void qemu_init_vcpu(CPUState *cpu)
-     cpu->nr_threads =  ms->smp.threads;
-     cpu->stopped = true;
-     cpu->random_seed = qemu_guest_random_seed_thread_part1();
-+    cpu->vcpu_in_kvm = false;
- 
-     if (!cpu->as) {
-         /* If the target cpu hasn't set up any address spaces itself,
 -- 
-2.47.0
+Peter Xu
 
 
