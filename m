@@ -4,104 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D40FD7878E
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44283D78793
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEAAu-00056m-7r; Thu, 21 Nov 2024 11:37:03 -0500
+	id 1tEAFH-00067k-KK; Thu, 21 Nov 2024 11:41:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEAAq-00056A-BG
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:36:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEAAm-0004AV-Ci
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:36:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732207010;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lUDhr6WGbhD59rB7ZJpOHtV40J++Ep8jGGZi3tGGH8E=;
- b=cArmz5408mcte0OX6s07+WiXMmlKhtqf0VHdt6YOrs02VfnbQ2ZN2pqUiYvDzEYiMUhLZ1
- phiXsrAveZuLzgj8NgFnH/DQgSU223z9Sng9VyWnZLKslgCDLatWtbDCMBCdL7edaN9je/
- KLH5wPsi8d3UPMtQWhoGId4lul5/jOA=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-Ix2EX8YJPgqTVW5QxnFq_A-1; Thu, 21 Nov 2024 11:36:49 -0500
-X-MC-Unique: Ix2EX8YJPgqTVW5QxnFq_A-1
-X-Mimecast-MFC-AGG-ID: Ix2EX8YJPgqTVW5QxnFq_A
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6d412384987so44055266d6.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:36:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tEAFC-000671-S8
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:41:26 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tEAFA-0005ns-R5
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:41:26 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-431616c23b5so6552675e9.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:41:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732207282; x=1732812082; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zRSHpS5mArv737GoSpxyuAlftPzlSnF23/QwowOdgac=;
+ b=eJct1/Jc778eNMfisS/Ile4cBF7sVgfjuduKufjcv9Ukg8faX6P38JyWAeFUfVAltm
+ ZvD/C0Mpk4SFoYQLDv2iArqIP3NMsgwLEOmO9T35CeuhqvblHCWaGuRRLZOxuk5UyERK
+ 8GvOHI37R/HWf0NU6KaZRtflgGPvcekKFOe7BcafaMaI2Xny+GBMY8YzGufwkTXx23I8
+ GmQAhoyHizMD7+PZWSll8m7dmk/89KElPlGYakKNJwmCa8g1pV8himVFZPVsoj/WhMMM
+ kB15rSg3b7lkN59Sg5AOgFgOkxFTkTGq6sB/XxMbtYml788GjS1QMQ3Co1k4fCDWxhgy
+ xUCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732207008; x=1732811808;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lUDhr6WGbhD59rB7ZJpOHtV40J++Ep8jGGZi3tGGH8E=;
- b=mLBh+Ng6NX+V1Nh6yiiZvrRxpx/U0jFjRnPm2QBu9INIl3bf+Sx/ahor3OECLyDqPn
- dei2LSQKIwzR9LAwnKNn1AcALHDzbNfzpeshNZQ0RY7iMlynrzhJ38RgRM8Zmqzhdk2k
- anfsjawWet26YwfksDo3GIdDNSyd5qlU3qfGeC+ee6HvOKePz58lqeJj3ByCOKIPbfKN
- 2dcKoCeri0qoUb6w4Tqh+h4qdu3Z5y/wMjqPZH7Clj2HBDNm4C+AA+Yg5HFrhrTSTCKJ
- AdzUowzjCy5x3VCCaJdzInDcCXkN6DXY8hg5DwoF0u20Qqy78KTaf+KfsHzmSannEGAV
- yQUA==
-X-Gm-Message-State: AOJu0Yy1gU+zFzJVt7Ot0i5H+6frkZ2AYnZ2fwBc9Rw2EhXgIKgJ/k1L
- peAVl6PnpfgGlo4WONBlqEOFOV6VwyHVsU4uckBkhi0/c3SuOOF7G5G7twzdZr/yyixtiBoQ78A
- LBdGALd4I1qzS7tBo7tiE8d90Ps4+H3fwYAdYNLt0Rg4pP6+1OI1wZhyhI0P9
-X-Gm-Gg: ASbGncvUkpbpzRmc00ifqrpROwry3rQYcvDQt2wn7A8toQez+47LiX+va8iWZKp+zBF
- WohjDe6sW3DfO8QAUZNsWL4seuNoM0qhUoibxf7koHW5BjBEsi6PgFWJQ8gkideDCU9GOEyWUW5
- 6LiMx4XwGEVDdj3UWTYS/AYnCWMvulqrI5rSM8ISUdaYM6Dl0QvpRwGcaUgBmO/IhucRZq7bvQD
- 2T5BVXQg0ZQ281uMOaK4T/MvoA6BIQOKsWOafoG+NpU6aRbysctgQLJS6URDGZxkRNeMA1vEvZM
- OFt2lRWvGo8=
-X-Received: by 2002:ad4:5cce:0:b0:6d4:cec:2ffd with SMTP id
- 6a1803df08f44-6d4424446a3mr68250596d6.15.1732207008349; 
- Thu, 21 Nov 2024 08:36:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFPv2yJv8KWTIrvLqwanMLfRiMyCw5klep5tF1ivGlDUuh7Xykrm04Ryt1g7pXAqOhGeBR9fw==
-X-Received: by 2002:ad4:5cce:0:b0:6d4:cec:2ffd with SMTP id
- 6a1803df08f44-6d4424446a3mr68250176d6.15.1732207008063; 
- Thu, 21 Nov 2024 08:36:48 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b479d84913sm228631685a.52.2024.11.21.08.36.46
+ d=1e100.net; s=20230601; t=1732207282; x=1732812082;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zRSHpS5mArv737GoSpxyuAlftPzlSnF23/QwowOdgac=;
+ b=tj3H5jjaeDfJOe+OqhRd3UVkDvnX+8J6b52vHi9OYb9yw3X/BBp9Q4cYK9QPE+QWMN
+ cO/ckynR5MxgdAj9735cZ763Jz5ykn/zJEFmjPoYivUuuNIAQq3JRZ45Z46mf6N2OJpO
+ 4A9eIPyiKzQxnayK3ZcXPOvRIXDi2AYAI1cNZHgMlr7yoqySyR7DqgWaUEq0p5AO0rBH
+ IPKr9uSZLnFfWs1EJzGo6HF9Cp+FNLvfsa2kIkWGB+jcIqhTZYsEBk3RbGj9YDk9YUVa
+ /CvzQxy6Zf2G8vzHwNpYJ0ElBwJYkuM8lgiSqqtiwGdMxgbiuByyf87umo1aZajil71Y
+ JTVQ==
+X-Gm-Message-State: AOJu0Yz47D2YSjCQ5bRAs8NqUu8+YoqGP7NfhRwsKh03xuNvf6asGutN
+ 1MS4RWGPc6q1e1DWm3EYjNVxJLmMTQsVo/vMJ7JVqegqrEjtW1ZXvxbUkauWXy8=
+X-Gm-Gg: ASbGncvotzKTr0wPzYLLjXRD6GZzp4im2UrQuIkhnU4+sdUfmRtf5qOCIlNariIEcOV
+ 9Bvc1ZFWixO9JMjt/4pEdZ2z4ReADK85Zpm8j5WEWdios1Qpu1Yd/UtYmC/D4tLcnH62V78g8fB
+ 0sWBs7y5joMT112vbF6Tq8kShL2AhhAXbd/pc7NkbtmqG9QMENwgF71I/dQBdFdwufJiq2GhrSV
+ 6LhnpeOv1zoftpuKFh/pgmS1hLglsMIgOB2yvidalmFwbcS
+X-Google-Smtp-Source: AGHT+IHo6kAGICz4cq5dWnn6Eg7daJ18wu9cabEhpGawBzV1fhdt9y5gsDd2NZd43QqlNTnIan2pzg==
+X-Received: by 2002:a05:600c:a401:b0:433:c76d:d56b with SMTP id
+ 5b1f17b1804b1-433c76dd67fmr25099375e9.12.1732207282081; 
+ Thu, 21 Nov 2024 08:41:22 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-433b4616843sm60798385e9.20.2024.11.21.08.41.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 08:36:47 -0800 (PST)
-Date: Thu, 21 Nov 2024 11:36:44 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: Re: [PATCH 06/12] hw/ppc: Explicitly create the drc container
-Message-ID: <Zz9hnEj3xQnOoM0c@x1n>
-References: <20241120215703.3918445-1-peterx@redhat.com>
- <20241120215703.3918445-7-peterx@redhat.com>
- <66301003-f2cd-4a0a-8951-cbfdcb1c398b@linaro.org>
+ Thu, 21 Nov 2024 08:41:21 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 69E2B5F77B;
+ Thu, 21 Nov 2024 16:41:20 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 00/18] test/functional: improve functional test
+ debugging & fix tuxrun
+In-Reply-To: <20241121154218.1423005-1-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 21 Nov 2024 15:42:00
+ +0000")
+References: <20241121154218.1423005-1-berrange@redhat.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Thu, 21 Nov 2024 16:41:20 +0000
+Message-ID: <87v7wgletr.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <66301003-f2cd-4a0a-8951-cbfdcb1c398b@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,89 +105,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 10:35:39AM +0100, Philippe Mathieu-Daudé wrote:
-> Hi Peter,
-> 
-> On 20/11/24 22:56, Peter Xu wrote:
-> > QEMU will start to not rely on implicit creations of containers soon.  Make
-> > PPC drc devices follow by explicitly create the container whenever a drc
-> > device is realized, dropping container_get() calls.
-> > 
-> > No functional change intended.
-> > 
-> > Cc: Nicholas Piggin <npiggin@gmail.com>
-> > Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
-> > Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> > Cc: qemu-ppc@nongnu.org
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >   hw/ppc/spapr_drc.c | 40 ++++++++++++++++++++++++++++++----------
-> >   1 file changed, 30 insertions(+), 10 deletions(-)
-> 
-> 
-> > +static GOnce drc_container_created = G_ONCE_INIT;
-> > +
-> > +static gpointer drc_container_create(gpointer unused G_GNUC_UNUSED)
-> > +{
-> > +    container_create(object_get_root(), DRC_CONTAINER_PATH);
-> > +    return NULL;
-> > +}
-> > +
-> > +static Object *drc_container_get(void)
-> > +{
-> > +    return object_resolve_path_component(
-> > +        object_get_root(), DRC_CONTAINER_PATH);
-> > +}
-> > +
-> > +/* TODO: create the container in an ppc init function */
-> > +static void drc_container_create_once(void)
-> > +{
-> > +    g_once(&drc_container_created, drc_container_create, NULL);
-> > +}
-> > +
-> >   static void drc_realize(DeviceState *d, Error **errp)
-> >   {
-> >       SpaprDrc *drc = SPAPR_DR_CONNECTOR(d);
-> > @@ -521,6 +541,9 @@ static void drc_realize(DeviceState *d, Error **errp)
-> >       Object *root_container;
-> >       const char *child_name;
-> > +    /* Whenever a DRC device is realized, create the container */
-> > +    drc_container_create_once();
-> 
-> Can't we just create it once in spapr_dr_connector_class_init(),
-> removing the G_ONCE_INIT need?
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-IIUC it's a matter of whether there's case where we have this file compiled
-in, but never create any DRC device.  When that happens, the patch can
-change the QEMU qom-tree slightly, in that there'll be an empty drc
-container while we used to not have it.
+> This started out as a series to get rid of the many GBs of temp
+> files the functional tests leave behind. Then it expanded into
+> improving the functional test debugging by ensuring we preserve
+> the QEMU stdout/stderr log file created by the QEMUMachine class.
+> In the course of doing that I encountered some other minor points
+> worth fixing, and then got side tracked into looking at the tuxrun
+> hangs with aarch64be. Investigating the latter exposed some further
+> holes in the debugging story prompting yet more patches, as well as
+> a final solution for tuxrun. So this series does:
+>
+>  * Purge all scratch files created by tests
+>  * Preserve the stdout/stderr log file
+>  * Capture debug log messages on QEMUMachine
+>  * Provide a QMP backdoor for debugging stuck QEMUs
+>  * Enhance console handling for partial line matches
+>  * Fix the tuxrun tests by eliminating sleeps
+>
+> There's quite alot of code here, but at the same time it feels like
+> the kind of stuff that'll be valuable either in the 9.2 release, or
+> in the soon to exist 9.2 stable branch.
+>
+> NB, with this series applied Thomas' tuxrun conversion to functional
+> testing survives 200 iterations on my machine, whereas it would
+> reliably hang in < 20, and often in < 10, before.
 
-I'm trying to be on the safe side in case something would detect the
-container's existance to know whether drc devices are present.  lazy create
-it in realize() is the safest way to behave 100% identical like before,
-considering my ppc knowledge is merely zero (even if I have drc tests
-covered in ppc64's qtest..).
+Queued to testing/next, thanks.
 
-However I also doubt whether it matters much.  It'll be great if I can get
-an ACK from anyone familiar with this device (Phil, are you?), then I can
-move it over.
+I'll combine with plugins/next and some other misc fixes and post a
+pre-PR for next week.
 
-> 
-> >       trace_spapr_drc_realize(spapr_drc_index(drc));
-> >       /* NOTE: we do this as part of realize/unrealize due to the fact
-> >        * that the guest will communicate with the DRC via RTAS calls
-> > @@ -529,7 +552,7 @@ static void drc_realize(DeviceState *d, Error **errp)
-> >        * inaccessible by the guest, since lookups rely on this path
-> >        * existing in the composition tree
-> >        */
-> > -    root_container = container_get(object_get_root(), DRC_CONTAINER_PATH);
-> > +    root_container = drc_container_get();
-> >       child_name = object_get_canonical_path_component(OBJECT(drc));
-> >       trace_spapr_drc_realize_child(spapr_drc_index(drc), child_name);
-> >       object_property_add_alias(root_container, link_name,
-> 
+>
+> Changed in v2:
+>
+>  - Changed console interaction to forbid 'failure_message'
+>    without 'success_message'
+>  - Reword console interaction log messages
+>  - Avoid stack trace when seeing early failure
+>  - Rewrote comment in acpi bits test
+>  - Avoid duplicate os.environ access
+>
+> Daniel P. Berrang=C3=A9 (18):
+>   tests/functional: fix mips64el test to honour workdir
+>   tests/functional: automatically clean up scratch files after tests
+>   tests/functional: remove "AVOCADO" from env variable name
+>   tests/functional: remove todo wrt avocado.utils.wait_for
+>   tests/functional: remove leftover :avocado: tags
+>   tests/functional: remove obsolete reference to avocado bug
+>   tests/functional: remove comments talking about avocado
+>   tests/functional: honour self.workdir in ACPI bits tests
+>   tests/functional: put QEMUMachine logs in testcase log directory
+>   tests/functional: honour requested test VM name in QEMUMachine
+>   tests/functional: enable debug logging for QEMUMachine
+>   tests/functional: logs details of console interaction operations
+>   tests/functional: don't try to wait for the empty string
+>   tests/functional: require non-NULL success_message for console wait
+>   tests/functional: rewrite console handling to be bytewise
+>   tests/functional: remove time.sleep usage from tuxrun tests
+>   tests/functional: add a QMP backdoor for debugging stalled tests
+>   tests/functional: avoid accessing log_filename on earlier failures
+>
+>  docs/devel/testing/functional.rst        | 16 +++++
+>  tests/functional/qemu_test/cmd.py        | 89 +++++++++++++++++++-----
+>  tests/functional/qemu_test/testcase.py   | 43 +++++++++---
+>  tests/functional/qemu_test/tuxruntest.py | 17 ++---
+>  tests/functional/test_acpi_bits.py       | 57 +++++----------
+>  tests/functional/test_arm_bpim2u.py      | 20 ------
+>  tests/functional/test_arm_orangepi.py    | 27 -------
+>  tests/functional/test_m68k_nextcube.py   |  3 +-
+>  tests/functional/test_mips64el_malta.py  |  4 +-
+>  tests/functional/test_virtio_gpu.py      |  3 +-
+>  10 files changed, 150 insertions(+), 129 deletions(-)
 
--- 
-Peter Xu
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
