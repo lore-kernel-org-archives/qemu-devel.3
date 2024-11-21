@@ -4,156 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E8DE64039
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 22:24:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3697CE6403B
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 22:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEFa6-0004jV-FU; Thu, 21 Nov 2024 17:23:22 -0500
+	id 1tEFiq-0007Ho-SR; Thu, 21 Nov 2024 17:32:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbates@raithlin.com>)
- id 1tEFa4-0004il-T1; Thu, 21 Nov 2024 17:23:20 -0500
-Received: from mail-canadacentralazlp170100000.outbound.protection.outlook.com
- ([2a01:111:f403:c103::] helo=YT3PR01CU008.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1tEFif-0007HT-Mq; Thu, 21 Nov 2024 17:32:15 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbates@raithlin.com>)
- id 1tEFZz-0007zf-Lm; Thu, 21 Nov 2024 17:23:20 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qUFUT0y3KS9F3bqSU7NXqM687BwjktoH2EN5KFsJkZrx85KoDcJyIIig2arr7kCZvOo4remQdEIZEOcYJXgeUc8e6rnrLGbj2ZorGeKgq7ZlfKWIJNHMnXsqADUP0UgYJzhNdxM1VHvoeJ8CBeNCbs61iW5SmMdD9TqYMWoKZ9Xa2cAyH31Sxw7n2/DqdHuc83rgcTkx0XXXN4/2OwaRWJoISqF0DKPpvpfRpVHkmbV+yRHnNlNngsbyAZ76xOXHEbgm0gUkI6BgBV86K8172EfuKTEI941Z6hEKRGtdJqi05YwXfnv8x/vFRhJR9/LwT/Jxi4pBIe6zlRhP1pjK7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=B9KYR3Ypdd42XMPtm+mtEIAC/0etnwSLiHqWI2gDMIs=;
- b=S0RbkqyuXXRUdlsyJ25txs8hxTIC6BpdnqMFxykbJ7goaXeyyvOKskYpPkKU6IROve0qD2Fqz/Hapi5cFN1hLIbi1FATm5b8uUdlbfnz3ssdUOC4D5SbmS1tHTXRDS4xNfXEb3V0SGBiJQy9+wrPYita3vzP4LDC4LvBIBYL8MSd3X455GhaicqDuh7V+ACP4wz70l0O08l4EMom54MtyWtyo+U+BRZ+IFuA4RtNrzv7HEZSsIHn9Tk9PFsWNlN8m5PGUi5n0PuGPPOdsl1iZHALvHhMOau+4E6zpIbXRBEbraSWFmStyWKL1gJ811zQF1+P/qDQgIm3bCMd585hnA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=raithlin.com; dmarc=pass action=none header.from=raithlin.com;
- dkim=pass header.d=raithlin.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=raithlin.onmicrosoft.com; s=selector2-raithlin-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=B9KYR3Ypdd42XMPtm+mtEIAC/0etnwSLiHqWI2gDMIs=;
- b=EugTCtLU0zd+ogjE5kcVP+mM40UeYQKHOycsKQecvlQnaq0fS9gm5HI1vATVtbTnajQpz3HW2wEB5ol2InaLTKBYgx0YBmpkJtwbZ4wJYh9RbTm6UlyBzPG+s5Va5ZPeYEEZVbnNRWHEE1xzQQelrsT42A5mIeaDim8uFgrO6ns=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=raithlin.com;
-Received: from TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b08::68c)
- by YT1PR01MB8505.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:c4::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8182.14; Thu, 21 Nov
- 2024 22:23:11 +0000
-Received: from TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::ceca:6aca:140d:7ce4]) by TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::ceca:6aca:140d:7ce4%6]) with mapi id 15.20.8182.014; Thu, 21 Nov 2024
- 22:23:11 +0000
-Date: Thu, 21 Nov 2024 15:23:04 -0700
-From: Stephen Bates <sbates@raithlin.com>
-To: qemu-devel@nongnu.org
-Cc: j.granados@samsung.com, javier.gonz@samsung.com, qemu-block@nongnu.org,
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it
-Subject: [PATCH v1 1/1] hw/nvme: Add OCP SMART / Health Information Extended
- Log Page
-Message-ID: <Zz-yyOolT5iWH7E7@snoc-pinewood>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-ClientProxiedBy: MW4PR03CA0174.namprd03.prod.outlook.com
- (2603:10b6:303:8d::29) To TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b08::68c)
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1tEFib-0001Jf-Mb; Thu, 21 Nov 2024 17:32:12 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ALIGJB0012429;
+ Thu, 21 Nov 2024 22:31:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=rGf5cq
+ s+7hUd2wz2lLk8DSyovwEU26XhTIsprbtTIDQ=; b=BOQolwtvTaWG6TeOUfQ82A
+ ddG2uzcN8WzslVy4liZc/AEPy40yTHRn+lZYELf6I2zfT1m6Bsmlvid1G+EQFaV4
+ gC5IGQVmOOUYhbyuxMfUP3vshmwqOLwshRB43yO9Yf0Po13OjeV3Pxv4/u+avhgd
+ NzWu+DMmmF1eO7E44J1FRt2bL25K1rF0qn3XcjeTKQbvo4o6+WuPcErQ/+bBE5Bz
+ O7K2DBmGP6ZlhtNL3UsA7NLN2aoyxEZebrAWKJa4dSxtxvuGGos2epszX8vNQOX3
+ 3M37Rf9AQ6xA59SFx50l2WmWSJkooXx7wxrvHcEvTiQ7FCtSOWM4pOaTFSJ7h+Kw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4313gsux1n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Nov 2024 22:31:17 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4ALMVHtM004262;
+ Thu, 21 Nov 2024 22:31:17 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4313gsux1g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Nov 2024 22:31:17 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4ALKewjq030980;
+ Thu, 21 Nov 2024 22:31:15 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42y640bvxj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Nov 2024 22:31:15 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4ALMVEaC55443808
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 21 Nov 2024 22:31:14 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C35585807D;
+ Thu, 21 Nov 2024 22:31:14 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4B6ED58060;
+ Thu, 21 Nov 2024 22:31:14 +0000 (GMT)
+Received: from [9.10.80.165] (unknown [9.10.80.165])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 21 Nov 2024 22:31:14 +0000 (GMT)
+Message-ID: <2cc8f6f4-86dd-4cd5-8b8e-42277a2aab97@linux.ibm.com>
+Date: Thu, 21 Nov 2024 16:31:13 -0600
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TO1PPFC79171DBA:EE_|YT1PR01MB8505:EE_
-X-MS-Office365-Filtering-Correlation-Id: 34cb612a-0654-4bbb-16ea-08dd0a7b156d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0; ARA:13230040|366016|10070799003|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VDVTeU5yLzcxQ3grUU1FaFdmaXQzei9Xd3huK2pMU1E0RTNZU0hURWc5QWNj?=
- =?utf-8?B?TEVYNjZ2b09oZzVvN2IvSjRLSGZmMG40aUJOUFQ4Y01zSkVLSDVQSnhqQ3ZQ?=
- =?utf-8?B?S3lZNlFCOHVBQWI1Um1xamNBMzVrck4vdlVyTlo3SW9oOWxJSmVOT1I2aEg2?=
- =?utf-8?B?WVBtekIwWWszZTc0cjZLVEhQdkNwdkhpTEZiV01Jdlp4VzJlZkJnS2lVY1ZD?=
- =?utf-8?B?WmtVSFdRdDFyV3YyK293bDYwdjhHMWliV3g1NHdoeFA1TTlKakFrR21NNEF3?=
- =?utf-8?B?dmdKT01CRk9yMko2VE1OWDMzWnBsRHdQT2ozN1l5dU5sWXRSbkxaK1o1K3Jw?=
- =?utf-8?B?TUlGeTYxcVJRNlZRTmdhTEJ3RC9lL3VXbWdUQ1VTTEk0TExreitGTXJqa3E2?=
- =?utf-8?B?VyszdVRQRFUvMmhGRzgyTUhGbWFGUk84bWlOV3BoVnBtRnBGRGlxZW1MbXBi?=
- =?utf-8?B?ZHNOdytqZlpGTXduRWRxZmtjSkVEOGZldEVXVmI0djc0T0JxSTFEWHJmSWNw?=
- =?utf-8?B?SXk4bXU3RHpNU0hwYjVEbTludE1MY1V3NjNCbzgyNjdqK0RPcnBReEJITmxk?=
- =?utf-8?B?YUVYempjSTZmeE16bldIdEN1Yk1ETUwyK2ZjaWR6NzhiQUVKUFlkQVFIeEpm?=
- =?utf-8?B?ak1xZ2pYTlpRd1hiQXNhY09mK1ZvOUdBTjVaSHFrUWg5ejZ1MlVRNE1Qd25T?=
- =?utf-8?B?a0lwOHJmNVY1TEwwT0JPZ3dOQ3BzQjg1a0dVT0I5cnNrdmZIOGF6OTJ4bTBv?=
- =?utf-8?B?L3p5WTcwMkF4OEMyV0hLMFM0djJRZjEzVGVNRDdXRklWUGxkczJSUjV4THlz?=
- =?utf-8?B?WGVOdGw0NGRZOERFRXlLcjI2RWcyQm9PTGI5NmlxMm5BazlMM0FialoxU0tu?=
- =?utf-8?B?Zm83ZXBaYzVpK1c3WHJWVVRGUHRwRU9jc05KekZ3dWJBVGRjaXEvd0FUQnpj?=
- =?utf-8?B?YUdzMUk1eFBtNFpyVk51MkZiekR5SjFuL3RvQVQzOEl2RWFGeW9YekIrUXQw?=
- =?utf-8?B?N0hQNy9YMjVEZm5zVDBrSVJaT1NvcHJOVloxOW9QZVlFUUZvOU5hSE5tUU5m?=
- =?utf-8?B?azhyRjJ0SWZObW0yQUNiOUFoSFZVZUozWTRsYjNGQlNmK0NNODdGSUZ2dkMr?=
- =?utf-8?B?V2ZlREdzUGNhcEVvL3lua0gwVUFYd05lOUJzdkVQdjdLakM0ZGxlamo4TWQ4?=
- =?utf-8?B?OS92L1o4bEV4WWZQTFZYUktvQ2wvdTRMcUVTWDRSeGxMQmhXN2VmWnBQZnB2?=
- =?utf-8?B?VGEyMVVZcDZxYm0vWWx0TkxVMDY4aFVyd2k3VGhhVnRzV0xvTHppRWRyblpo?=
- =?utf-8?B?bFJZRHZxSGdaSTVzSDBOTXh1alRNSXhlTXhiVU9uQ2NMM0pSREQ4aDlvemJS?=
- =?utf-8?B?dXg2TW8ydlh5VUZUUUtLMk1LS3dOblhkRFVnS0RQY2ZqRm5rdUR0REsyQ0lw?=
- =?utf-8?B?cjZmY2Q3SDUrRjNpa1dSTkdqZUs5NTJqVXlQcEVwRUJpWDRuSVNzTG9XMXhW?=
- =?utf-8?B?WWYvUWw2ZFpGblovbUZSNHZyRnNsZGlsQzg2RmhSUTZVWmI4a0pKdTRseUVF?=
- =?utf-8?B?UTVjT3JPeXlJLzMyUG1nRlIwdVdsMXRHV3NCVGhPZHpzVjUyYkFnOSt6Zkc3?=
- =?utf-8?B?N3YxOHpxNzNPOUtpSFVwVk43SnhQUGdDNlloT2Z2RGhjbVR1di92R2VTb0Ju?=
- =?utf-8?Q?bKXj7DddrtkHnVxoKeqV?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(10070799003)(1800799024)(376014); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YUFxMWdzejBXdnNPSXZFSTQzS3dVRUd2YnVWSlZ5SGNDUzBVUjB6ekJVT050?=
- =?utf-8?B?TnVxQnRMQlMrV0tFcFg4LytoSUx5Y2poaDdJWU1IeFBoOXNhdGlaOWlDOUNF?=
- =?utf-8?B?b3RmOUhIa2RpOTQxWWxNQlVqU2lRNnNPdVZnMjh1V2JzNHVLYlZIL096WXZ2?=
- =?utf-8?B?Y1FBVFozakZJZ2RlZnYrd1hpZkQwNllDbVVac1lIS1psMzBNY3JKQk01K2ZQ?=
- =?utf-8?B?YzdaUGkzQXVhbHlWMlVtMjNrMFpWYWZzT3NnNkF3Nm1SRm9oTEU0RWpkYWZY?=
- =?utf-8?B?L1k2SGdtY0xBQkdjUU5uZkhleVlkeXI1WFkwN3c5NFZIOWl6QUtLTEdnVENt?=
- =?utf-8?B?UHhWVlhKVmd1ZEZBQVdnRzNHZUQwbkhnNnhaRXMrTnRBMGdqc0JPaXBBb3Jn?=
- =?utf-8?B?S2xJYk0wUDl1V0lTekZKcmlUSDhjUW5LcCs4ZkE5aGFXZFlBRTZlU1paZXdW?=
- =?utf-8?B?TWNMMFlsQ3pnUXpOS3owWE9iRkpiMFNSc3dBeW5XUEZvNkxyT2ZJaEpEYnRC?=
- =?utf-8?B?N2l3UWN6WDNWbVFUd0d2RzEzcFdGaEFpRmVsMU5SWGFwNnlKcU1HbTl2ZlZr?=
- =?utf-8?B?eUNtTHBpSWJSZmo3SklTRjA5dmgybVFzZHI5TnJuQjN4bFJZc3lkaFJMOURi?=
- =?utf-8?B?RzUyaEQxSUpuWEk0UGVtUnJjVlZQdEw4amJndGZ0dkpDNmNPZGZCZktsN2dN?=
- =?utf-8?B?SWdualpjU1NMbGZ5NWgvOFZjM2swZGQ3VlVCLzk1NEp0ck9ZSXZldCs3ZldK?=
- =?utf-8?B?VW1PRTVMMnU4NC92YVhwODd5TVFvZ1BsNzlEakxScisycEttZjdwSmtRNFlV?=
- =?utf-8?B?QkUydTBtQStPc0NkaUNyamZPUUlkWUF3eEZhM1hHNm1QMlNlQ1oxWVlIZXlY?=
- =?utf-8?B?RXVyM21qK0VkaXFDaVlvbE9BbkxRb3ZvdktqTktrcUNvQzBob3hoRlpSK1lH?=
- =?utf-8?B?Ui93Q2xUc0FZSE8ySlQ1RU9QL0gzeFd0T1ZobmxDbk9IY3Bqek5IY1l2a3I1?=
- =?utf-8?B?L25tWENBMHVTN0R4Y0lkTEw1SmhwN0VLY1lOcmNGRU9MWk1ydm0wcGxvVndt?=
- =?utf-8?B?eGNHTEZOT1FJVldxTDlSL3RVOEtWMjYwUFIxZkxXaFBPWFhLNlVPTHZLMkZ0?=
- =?utf-8?B?UGVodEhvMko4M2YrRGJaSWJQcXhQWm9XMnRobnFnbEVjVUNtcWlHZG85Ykhy?=
- =?utf-8?B?TTB3c0FmZ080VVE3WUYxb2xkU0NCTG11SVMxZTdTSEFlMTZQUmRXYVFDUEEy?=
- =?utf-8?B?Q0wwQTFnOFdKYnJGc2RQOUJXN2FodGpMV2h6Z2xidm9ZLzB5ZlRFL0Q1eE85?=
- =?utf-8?B?S01QOUlPeWIrQmg1YXBnRk15akE2Mlh5STEwOVlENnc4bGszRDFWMHV5UXQ5?=
- =?utf-8?B?WndFQ01HbWdqc2NBTWlDeDJteTI3Umh1UXBBOXh3T1lpRTBLWmI0WXNNSC9i?=
- =?utf-8?B?Sk42RCtTSU5kbWVRYXFxZGhxdXJHTjFPSGlaTkd3VUk5U1VCaVAweUluYkgz?=
- =?utf-8?B?UFRTcjkwaG1TbEhocHZxSGgwdjUxQmxLYW10Ny8vWU9VaEl1VjlxbXMzVFFH?=
- =?utf-8?B?b2VKWTJGTHp3YUpqSktMRCtVc0hUaE40bjdIdzRlWE1jV1FjZlI1NG5JdDZ2?=
- =?utf-8?B?WDh4VFhndDFycE8wODhPQTBtWkg4UDhlNkU3bHVldXUybkVOZTBRMW5wL0lh?=
- =?utf-8?B?NjA4ejBOT3V4NFJYVE84K090cHpldk1PM3pDdFRHaGVFQURwSzdmdmhzNSsv?=
- =?utf-8?B?RlZaY2paNVJiVnhhZTJDaVptR3gxdGxmU3FJNUtHa0lvaXF1VjA0eWZIZGNp?=
- =?utf-8?B?SHVOblRTU2RnaDFMdVBFMnNrcFoxVXlVZUl2QmZLelN6NktKQlZjUUdzK0xT?=
- =?utf-8?B?b3ZGZEJYWXd5dFlHWjJ1aGVsWnJ1Yi8weEdWMno4T3htaURqQzI3U3NEaTJY?=
- =?utf-8?B?VXNiTzBaVXFTSFo4M0FRbmhZOW5BYnFCaUM4MTVwVVZvQlFlVm9NKy9rbGRJ?=
- =?utf-8?B?S3ErTXZ5UFpPVkxDZVlKcTUveWlhbzZ3TVVIelk4ZlFBa1AxN1ZsUkhOZWZz?=
- =?utf-8?B?dkgwMi8wZDl1NGlINHJ6NFg2K2FHSHczeWEzUzI4OTFIQVBzWkdHMytVczdM?=
- =?utf-8?B?YkdvS2xmQmo4YSs5QVM3U1o4c2JtaC90bjZtVENTcTZpN1gxOW5YLzlRY3E0?=
- =?utf-8?Q?MWwincvdq8TpB+yM2b2C+Gwm/qYlRykmE/t0eyYH6SJy?=
-X-OriginatorOrg: raithlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 34cb612a-0654-4bbb-16ea-08dd0a7b156d
-X-MS-Exchange-CrossTenant-AuthSource: TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2024 22:23:11.4330 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 18519031-7ff4-4cbb-bbcb-c3252d330f4b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: maUSOHaUNxM38qvP9XtACqc+rAOMevFx3aupEA0kSa3A0o0bEMEjJMKqf0ndK4etNFOCBWRSFWOul1os/fe/eA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT1PR01MB8505
-Received-SPF: pass client-ip=2a01:111:f403:c103::;
- envelope-from=sbates@raithlin.com;
- helo=YT3PR01CU008.outbound.protection.outlook.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/14] ppc/xive2: Add grouping level to notification
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
+ milesg@linux.ibm.com, danielhb413@gmail.com,
+ david@gibson.dropbear.id.au, harshpb@linux.ibm.com, thuth@redhat.com,
+ lvivier@redhat.com, pbonzini@redhat.com
+References: <20241015211329.21113-1-kowal@linux.ibm.com>
+ <20241015211329.21113-3-kowal@linux.ibm.com>
+ <D5PSEW94BJB5.KTCIM3LO579K@gmail.com>
+Content-Language: en-US
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <D5PSEW94BJB5.KTCIM3LO579K@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: hZC06lCq_aYKuT8jcT5DOHf-28HHyyrM
+X-Proofpoint-ORIG-GUID: TY_spBJWplRCgRZScc5i2TsuFnZaQhxd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0
+ adultscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0 spamscore=0
+ priorityscore=1501 phishscore=0 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2411210169
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,217 +120,414 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Open Compute Project [1] includes a Datacenter NVMe
-SSD Specification [2]. The most recent version of this specification
-(as of November 2024) is 2.6.1. This specification layers on top of
-the NVM Express specifications [3] to provide additional
-functionality. A key part of of this is the 512 Byte OCP SMART / Health
-Information Extended log page that is defined in Section 4.8.6 of the
-specification.
 
-We add a controller argument (ocp) that toggles on/off the SMART log
-extended structure.  To accommodate different vendor specific specifications
-like OCP, we add a multiplexing function (nvme_vendor_specific_log) which
-will route to the different log functions based on arguments and log ids.
-We only return the OCP extended SMART log when the command is 0xC0 and ocp
-has been turned on in the nvme argumants.
+On 11/18/2024 8:08 PM, Nicholas Piggin wrote:
+> On Wed Oct 16, 2024 at 7:13 AM AEST, Michael Kowal wrote:
+>> From: Frederic Barrat <fbarrat@linux.ibm.com>
+>>
+>> The NSR has a (so far unused) grouping level field. When a interrupt
+>> is presented, that field tells the hypervisor or OS if the interrupt
+>> is for an individual VP or for a VP-group/crowd. This patch reworks
+>> the presentation API to allow to set/unset the level when
+>> raising/accepting an interrupt.
+>>
+>> It also renames xive_tctx_ipb_update() to xive_tctx_pipr_update() as
+>> the IPB is only used for VP-specific target, whereas the PIPR always
+>> needs to be updated.
+>>
+>> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+>> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+>> ---
+>>   include/hw/ppc/xive.h      | 19 +++++++-
+>>   include/hw/ppc/xive_regs.h | 20 +++++++--
+>>   hw/intc/xive.c             | 90 +++++++++++++++++++++++---------------
+>>   hw/intc/xive2.c            | 18 ++++----
+>>   hw/intc/trace-events       |  2 +-
+>>   5 files changed, 100 insertions(+), 49 deletions(-)
+>>
+>> diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+>> index 31242f0406..27ef6c1a17 100644
+>> --- a/include/hw/ppc/xive.h
+>> +++ b/include/hw/ppc/xive.h
+>> @@ -510,6 +510,21 @@ static inline uint8_t xive_priority_to_ipb(uint8_t priority)
+>>           0 : 1 << (XIVE_PRIORITY_MAX - priority);
+>>   }
+>>   
+>> +static inline uint8_t xive_priority_to_pipr(uint8_t priority)
+>> +{
+>> +    return priority > XIVE_PRIORITY_MAX ? 0xFF : priority;
+>> +}
+>> +
+>> +/*
+>> + * Convert an Interrupt Pending Buffer (IPB) register to a Pending
+>> + * Interrupt Priority Register (PIPR), which contains the priority of
+>> + * the most favored pending notification.
+>> + */
+>> +static inline uint8_t xive_ipb_to_pipr(uint8_t ibp)
+>> +{
+>> +    return ibp ? clz32((uint32_t)ibp << 24) : 0xff;
+>> +}
+>> +
+>>   /*
+>>    * XIVE Thread Interrupt Management Aera (TIMA)
+>>    *
+>> @@ -532,8 +547,10 @@ void xive_tctx_pic_print_info(XiveTCTX *tctx, GString *buf);
+>>   Object *xive_tctx_create(Object *cpu, XivePresenter *xptr, Error **errp);
+>>   void xive_tctx_reset(XiveTCTX *tctx);
+>>   void xive_tctx_destroy(XiveTCTX *tctx);
+>> -void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb);
+>> +void xive_tctx_pipr_update(XiveTCTX *tctx, uint8_t ring, uint8_t priority,
+>> +                           uint8_t group_level);
+>>   void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring);
+>> +void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring, uint8_t group_level);
+>>   
+>>   /*
+>>    * KVM XIVE device helpers
+>> diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
+>> index 326327fc79..b455728c9c 100644
+>> --- a/include/hw/ppc/xive_regs.h
+>> +++ b/include/hw/ppc/xive_regs.h
+>> @@ -146,7 +146,14 @@
+>>   #define TM_SPC_PULL_PHYS_CTX_OL 0xc38   /* Pull phys ctx to odd cache line    */
+>>   /* XXX more... */
+>>   
+>> -/* NSR fields for the various QW ack types */
+>> +/*
+>> + * NSR fields for the various QW ack types
+>> + *
+>> + * P10 has an extra bit in QW3 for the group level instead of the
+>> + * reserved 'i' bit. Since it is not used and we don't support group
+>> + * interrupts on P9, we use the P10 definition for the group level so
+>> + * that we can have common macros for the NSR
+>> + */
+>>   #define TM_QW0_NSR_EB           PPC_BIT8(0)
+>>   #define TM_QW1_NSR_EO           PPC_BIT8(0)
+>>   #define TM_QW3_NSR_HE           PPC_BITMASK8(0, 1)
+>> @@ -154,8 +161,15 @@
+>>   #define  TM_QW3_NSR_HE_POOL     1
+>>   #define  TM_QW3_NSR_HE_PHYS     2
+>>   #define  TM_QW3_NSR_HE_LSI      3
+>> -#define TM_QW3_NSR_I            PPC_BIT8(2)
+>> -#define TM_QW3_NSR_GRP_LVL      PPC_BIT8(3, 7)
+>> +#define TM_NSR_GRP_LVL          PPC_BITMASK8(2, 7)
+>> +/*
+>> + * On P10, the format of the 6-bit group level is: 2 bits for the
+>> + * crowd size and 4 bits for the group size. Since group/crowd size is
+>> + * always a power of 2, we encode the log. For example, group_level=4
+>> + * means crowd size = 0 and group size = 16 (2^4)
+>> + * Same encoding is used in the NVP and NVGC structures for
+>> + * PGoFirst and PGoNext fields
+>> + */
+>>   
+>>   /*
+>>    * EAS (Event Assignment Structure)
+>> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+>> index efcb63e8aa..bacf518fa6 100644
+>> --- a/hw/intc/xive.c
+>> +++ b/hw/intc/xive.c
+>> @@ -27,16 +27,6 @@
+>>    * XIVE Thread Interrupt Management context
+>>    */
+>>   
+>> -/*
+>> - * Convert an Interrupt Pending Buffer (IPB) register to a Pending
+>> - * Interrupt Priority Register (PIPR), which contains the priority of
+>> - * the most favored pending notification.
+>> - */
+>> -static uint8_t ipb_to_pipr(uint8_t ibp)
+>> -{
+>> -    return ibp ? clz32((uint32_t)ibp << 24) : 0xff;
+>> -}
+>> -
+>>   static uint8_t exception_mask(uint8_t ring)
+>>   {
+>>       switch (ring) {
+>> @@ -87,10 +77,17 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
+>>   
+>>           regs[TM_CPPR] = cppr;
+>>   
+>> -        /* Reset the pending buffer bit */
+>> -        alt_regs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
+>> +        /*
+>> +         * If the interrupt was for a specific VP, reset the pending
+>> +         * buffer bit, otherwise clear the logical server indicator
+>> +         */
+>> +        if (regs[TM_NSR] & TM_NSR_GRP_LVL) {
+>> +            regs[TM_NSR] &= ~TM_NSR_GRP_LVL;
+>> +        } else {
+>> +            alt_regs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
+>> +        }
+>>   
+>> -        /* Drop Exception bit */
+>> +        /* Drop the exception bit */
+>>           regs[TM_NSR] &= ~mask;
+> NSR can just be set to 0 directly instead of clearing masks.
 
-Though we add the whole nvme SMART log extended structure, we only populate
-the physical_media_units_{read,written}, log_page_version and
-log_page_uuid.
+There are other fields in the NSR so maybe that is why he started this 
+way.  But yes, whenever an exception is inactive, all of the other 
+fields should be cleared too.
 
-This patch is based on work done by Joel but has been modified enough
-that he requested a co-developed-by tag rather than a signed-off-by.
 
-[1]: https://www.opencompute.org/
-[2]: https://www.opencompute.org/documents/datacenter-nvme-ssd-specification-v2-6-1-pdf
-[3]: https://nvmexpress.org/specifications/
+>
+>>   
+>>           trace_xive_tctx_accept(tctx->cs->cpu_index, alt_ring,
+>> @@ -101,7 +98,7 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
+>>       return ((uint64_t)nsr << 8) | regs[TM_CPPR];
+>>   }
+>>   
+>> -static void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring)
+>> +void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring, uint8_t group_level)
+>>   {
+>>       /* HV_POOL ring uses HV_PHYS NSR, CPPR and PIPR registers */
+>>       uint8_t alt_ring = (ring == TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS : ring;
+>> @@ -111,13 +108,13 @@ static void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring)
+>>       if (alt_regs[TM_PIPR] < alt_regs[TM_CPPR]) {
+>>           switch (ring) {
+>>           case TM_QW1_OS:
+>> -            regs[TM_NSR] |= TM_QW1_NSR_EO;
+>> +            regs[TM_NSR] = TM_QW1_NSR_EO | (group_level & 0x3F);
+>>               break;
+>>           case TM_QW2_HV_POOL:
+>> -            alt_regs[TM_NSR] = (TM_QW3_NSR_HE_POOL << 6);
+>> +            alt_regs[TM_NSR] = (TM_QW3_NSR_HE_POOL << 6) | (group_level & 0x3F);
+>>               break;
+>>           case TM_QW3_HV_PHYS:
+>> -            regs[TM_NSR] |= (TM_QW3_NSR_HE_PHYS << 6);
+>> +            regs[TM_NSR] = (TM_QW3_NSR_HE_PHYS << 6) | (group_level & 0x3F);
+>>               break;
+>>           default:
+>>               g_assert_not_reached();
+>
+> The big difference between presenting group and VP directed is that
+> VP can just be queued up in IPB, whereas group can not be, and must
+> be redistributed before they are precluded by a different interrupt.
+> So I wonder if we should assert if there is an existing group interrupt
+> in NSR being overwritten at this point.
 
-Signed-off-by: Stephen Bates <sbates@raithlin.com>
-Co-developed-by: Joel Granados <j.granados@samsung.com>
----
- docs/system/devices/nvme.rst |  7 +++++
- hw/nvme/ctrl.c               | 59 ++++++++++++++++++++++++++++++++++++
- hw/nvme/nvme.h               |  1 +
- include/block/nvme.h         | 36 ++++++++++++++++++++++
- 4 files changed, 103 insertions(+)
 
-diff --git a/docs/system/devices/nvme.rst b/docs/system/devices/nvme.rst
-index d2b1ca9645..6509b35fcb 100644
---- a/docs/system/devices/nvme.rst
-+++ b/docs/system/devices/nvme.rst
-@@ -53,6 +53,13 @@ parameters.
-   Vendor ID. Set this to ``on`` to revert to the unallocated Intel ID
-   previously used.
- 
-+``ocp`` (default: ``off``)
-+  The Open Compute Project defines the Datacenter NVMe SSD Specification that
-+  sits on top of NVMe. It describes additional commands and NVMe behaviors
-+  specific for the Datacenter. When this option is ``on`` OCP features such as
-+  the SMART / Health information extended log become available in the
-+  controller. We emulate version 5 of this log page.
-+
- Additional Namespaces
- ---------------------
- 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 9f277b81d8..42a7bbf945 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -4884,6 +4884,45 @@ static void nvme_set_blk_stats(NvmeNamespace *ns, struct nvme_stats *stats)
-     stats->write_commands += s->nr_ops[BLOCK_ACCT_WRITE];
- }
- 
-+static uint16_t nvme_ocp_extended_smart_info(NvmeCtrl *n, uint8_t rae,
-+                                             uint32_t buf_len, uint64_t off,
-+                                             NvmeRequest *req)
-+{
-+    NvmeNamespace *ns = NULL;
-+    NvmeSmartLogExtended smart_l = { 0 };
-+    struct nvme_stats stats = { 0 };
-+    uint32_t trans_len;
-+
-+    if (off >= sizeof(smart_l)) {
-+        return NVME_INVALID_FIELD | NVME_DNR;
-+    }
-+
-+    /* accumulate all stats from all namespaces */
-+    for (int i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-+        ns = nvme_ns(n, i);
-+        if (ns) {
-+            nvme_set_blk_stats(ns, &stats);
-+        }
-+    }
-+
-+    smart_l.physical_media_units_written[0] = cpu_to_le64(stats.units_written);
-+    smart_l.physical_media_units_read[0] = cpu_to_le64(stats.units_read);
-+    smart_l.log_page_version = 0x0005;
-+
-+    static const uint8_t guid[16] = {
-+        0xC5, 0xAF, 0x10, 0x28, 0xEA, 0xBF, 0xF2, 0xA4,
-+        0x9C, 0x4F, 0x6F, 0x7C, 0xC9, 0x14, 0xD5, 0xAF
-+    };
-+    memcpy(smart_l.log_page_guid, guid, sizeof(smart_l.log_page_guid));
-+
-+    if (!rae) {
-+        nvme_clear_events(n, NVME_AER_TYPE_SMART);
-+    }
-+
-+    trans_len = MIN(sizeof(smart_l) - off, buf_len);
-+    return nvme_c2h(n, (uint8_t *) &smart_l + off, trans_len, req);
-+}
-+
- static uint16_t nvme_smart_info(NvmeCtrl *n, uint8_t rae, uint32_t buf_len,
-                                 uint64_t off, NvmeRequest *req)
- {
-@@ -5113,6 +5152,23 @@ static uint16_t nvme_cmd_effects(NvmeCtrl *n, uint8_t csi, uint32_t buf_len,
-     return nvme_c2h(n, ((uint8_t *)&log) + off, trans_len, req);
- }
- 
-+static uint16_t nvme_vendor_specific_log(NvmeCtrl *n, uint8_t rae,
-+                                         uint32_t buf_len, uint64_t off,
-+                                         NvmeRequest *req, uint8_t lid)
-+{
-+    switch (lid) {
-+    case 0xc0:
-+        if (n->params.ocp) {
-+            return nvme_ocp_extended_smart_info(n, rae, buf_len, off, req);
-+        }
-+        break;
-+        /* add a case for each additional vendor specific log id */
-+    }
-+
-+    trace_pci_nvme_err_invalid_log_page(nvme_cid(req), lid);
-+    return NVME_INVALID_FIELD | NVME_DNR;
-+}
-+
- static size_t sizeof_fdp_conf_descr(size_t nruh, size_t vss)
- {
-     size_t entry_siz = sizeof(NvmeFdpDescrHdr) + nruh * sizeof(NvmeRuhDescr)
-@@ -5363,6 +5419,8 @@ static uint16_t nvme_get_log(NvmeCtrl *n, NvmeRequest *req)
-         return nvme_smart_info(n, rae, len, off, req);
-     case NVME_LOG_FW_SLOT_INFO:
-         return nvme_fw_log_info(n, len, off, req);
-+    case NVME_LOG_VENDOR_START...NVME_LOG_VENDOR_END:
-+        return nvme_vendor_specific_log(n, rae, len, off, req, lid);
-     case NVME_LOG_CHANGED_NSLIST:
-         return nvme_changed_nslist(n, rae, len, off, req);
-     case NVME_LOG_CMD_EFFECTS:
-@@ -8734,6 +8792,7 @@ static Property nvme_props[] = {
-                      false),
-     DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
-     DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
-+    DEFINE_PROP_BOOL("ocp", NvmeCtrl, params.ocp, false),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 781985754d..099f40f3e9 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -538,6 +538,7 @@ typedef struct NvmeParams {
-     uint32_t  sriov_max_vq_per_vf;
-     uint32_t  sriov_max_vi_per_vf;
-     bool     msix_exclusive_bar;
-+    bool     ocp;
- } NvmeParams;
- 
- typedef struct NvmeCtrl {
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 5298bc4a28..df8e45e396 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -1015,6 +1015,40 @@ typedef struct QEMU_PACKED NvmeSmartLog {
-     uint8_t     reserved2[320];
- } NvmeSmartLog;
- 
-+typedef struct QEMU_PACKED NvmeSmartLogExtended {
-+    uint64_t    physical_media_units_written[2];
-+    uint64_t    physical_media_units_read[2];
-+    uint64_t    bad_user_blocks;
-+    uint64_t    bad_system_nand_blocks;
-+    uint64_t    xor_recovery_count;
-+    uint64_t    uncorrectable_read_error_count;
-+    uint64_t    soft_ecc_error_count;
-+    uint64_t    end2end_correction_counts;
-+    uint8_t     system_data_percent_used;
-+    uint8_t     refresh_counts[7];
-+    uint64_t    user_data_erase_counts;
-+    uint16_t    thermal_throttling_stat_and_count;
-+    uint16_t    dssd_spec_version[3];
-+    uint64_t    pcie_correctable_error_count;
-+    uint32_t    incomplete_shutdowns;
-+    uint32_t    rsvd116;
-+    uint8_t     percent_free_blocks;
-+    uint8_t     rsvd121[7];
-+    uint16_t    capacity_health;
-+    uint8_t     nvme_errata_ver;
-+    uint8_t     rsvd131[5];
-+    uint64_t    unaligned_io;
-+    uint64_t    security_ver_num;
-+    uint64_t    total_nuse;
-+    uint64_t    plp_start_count[2];
-+    uint64_t    endurance_estimate[2];
-+    uint64_t    pcie_retraining_count;
-+    uint64_t    power_state_change_count;
-+    uint8_t     rsvd208[286];
-+    uint16_t    log_page_version;
-+    uint64_t    log_page_guid[2];
-+} NvmeSmartLogExtended;
-+
- #define NVME_SMART_WARN_MAX     6
- enum NvmeSmartWarn {
-     NVME_SMART_SPARE                  = 1 << 0,
-@@ -1052,6 +1086,8 @@ enum NvmeLogIdentifier {
-     NVME_LOG_FDP_RUH_USAGE              = 0x21,
-     NVME_LOG_FDP_STATS                  = 0x22,
-     NVME_LOG_FDP_EVENTS                 = 0x23,
-+    NVME_LOG_VENDOR_START               = 0xc0,
-+    NVME_LOG_VENDOR_END                 = 0xff,
- };
- 
- typedef struct QEMU_PACKED NvmePSD {
--- 
-2.43.0
+If we do the check below, assert if the exception bit(s) are not 0, then 
+we will know the group/crowd is 0 and has not been set.
 
+
+>
+> Also should we be masking the group level here? Maybe just assert the
+> top 2 bits are clear, otherwise something has gone wrong if this is
+> chopping off bits here.
+
+
+Do you mean masking off the group/crowd  such that we ensure the 
+exception bit(s) are 0?
+
+
+>
+>> @@ -159,7 +156,7 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+>>        * Recompute the PIPR based on local pending interrupts.  The PHYS
+>>        * ring must take the minimum of both the PHYS and POOL PIPR values.
+>>        */
+>> -    pipr_min = ipb_to_pipr(regs[TM_IPB]);
+>> +    pipr_min = xive_ipb_to_pipr(regs[TM_IPB]);
+>>       ring_min = ring;
+>>   
+>>       /* PHYS updates also depend on POOL values */
+>> @@ -169,7 +166,7 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+>>           /* POOL values only matter if POOL ctx is valid */
+>>           if (pool_regs[TM_WORD2] & 0x80) {
+>>   
+>> -            uint8_t pool_pipr = ipb_to_pipr(pool_regs[TM_IPB]);
+>> +            uint8_t pool_pipr = xive_ipb_to_pipr(pool_regs[TM_IPB]);
+>>   
+>>               /*
+>>                * Determine highest priority interrupt and
+> Moving this function and changing ipb->pipr (before adding group) could
+> be split into its own patch, since the mechanical changes seem to be
+> the biggest part, would make the group change simpler to see.
+
+
+I can do that.
+
+
+>
+>> @@ -185,17 +182,27 @@ static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+>>       regs[TM_PIPR] = pipr_min;
+>>   
+>>       /* CPPR has changed, check if we need to raise a pending exception */
+>> -    xive_tctx_notify(tctx, ring_min);
+>> +    xive_tctx_notify(tctx, ring_min, 0);
+>>   }
+>>   
+>> -void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb)
+>> -{
+>> +void xive_tctx_pipr_update(XiveTCTX *tctx, uint8_t ring, uint8_t priority,
+>> +                           uint8_t group_level)
+>> + {
+>> +    /* HV_POOL ring uses HV_PHYS NSR, CPPR and PIPR registers */
+>> +    uint8_t alt_ring = (ring == TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS : ring;
+>> +    uint8_t *alt_regs = &tctx->regs[alt_ring];
+>>       uint8_t *regs = &tctx->regs[ring];
+>>   
+>> -    regs[TM_IPB] |= ipb;
+>> -    regs[TM_PIPR] = ipb_to_pipr(regs[TM_IPB]);
+>> -    xive_tctx_notify(tctx, ring);
+>> -}
+>> +    if (group_level == 0) {
+>> +        /* VP-specific */
+>> +        regs[TM_IPB] |= xive_priority_to_ipb(priority);
+>> +        alt_regs[TM_PIPR] = xive_ipb_to_pipr(regs[TM_IPB]);
+>> +    } else {
+>> +        /* VP-group */
+>> +        alt_regs[TM_PIPR] = xive_priority_to_pipr(priority);
+>> +    }
+>> +    xive_tctx_notify(tctx, ring, group_level);
+>> + }
+>>   
+>>   /*
+>>    * XIVE Thread Interrupt Management Area (TIMA)
+>> @@ -411,13 +418,13 @@ static void xive_tm_set_os_lgs(XivePresenter *xptr, XiveTCTX *tctx,
+>>   }
+>>   
+>>   /*
+>> - * Adjust the IPB to allow a CPU to process event queues of other
+>> + * Adjust the PIPR to allow a CPU to process event queues of other
+>>    * priorities during one physical interrupt cycle.
+>>    */
+>>   static void xive_tm_set_os_pending(XivePresenter *xptr, XiveTCTX *tctx,
+>>                                      hwaddr offset, uint64_t value, unsigned size)
+>>   {
+>> -    xive_tctx_ipb_update(tctx, TM_QW1_OS, xive_priority_to_ipb(value & 0xff));
+>> +    xive_tctx_pipr_update(tctx, TM_QW1_OS, value & 0xff, 0);
+>>   }
+>>   
+>>   static void xive_os_cam_decode(uint32_t cam, uint8_t *nvt_blk,
+>> @@ -495,16 +502,20 @@ static void xive_tctx_need_resend(XiveRouter *xrtr, XiveTCTX *tctx,
+>>           /* Reset the NVT value */
+>>           nvt.w4 = xive_set_field32(NVT_W4_IPB, nvt.w4, 0);
+>>           xive_router_write_nvt(xrtr, nvt_blk, nvt_idx, &nvt, 4);
+>> -    }
+>> +
+>> +        uint8_t *regs = &tctx->regs[TM_QW1_OS];
+>> +        regs[TM_IPB] |= ipb;
+>> +}
+>> +
+> Whitespace damage here?
+>
+>>       /*
+>> -     * Always call xive_tctx_ipb_update(). Even if there were no
+>> +     * Always call xive_tctx_pipr_update(). Even if there were no
+>>        * escalation triggered, there could be a pending interrupt which
+>>        * was saved when the context was pulled and that we need to take
+>>        * into account by recalculating the PIPR (which is not
+>>        * saved/restored).
+>>        * It will also raise the External interrupt signal if needed.
+>>        */
+>> -    xive_tctx_ipb_update(tctx, TM_QW1_OS, ipb);
+>> +    xive_tctx_pipr_update(tctx, TM_QW1_OS, 0xFF, 0); /* fxb */
+> I don't understand what's going on here. Why not ipb_to_pipr(ipb)?
+>
+>>   }
+>>   
+>>   /*
+>> @@ -841,9 +852,9 @@ void xive_tctx_reset(XiveTCTX *tctx)
+>>        * CPPR is first set.
+>>        */
+>>       tctx->regs[TM_QW1_OS + TM_PIPR] =
+>> -        ipb_to_pipr(tctx->regs[TM_QW1_OS + TM_IPB]);
+>> +        xive_ipb_to_pipr(tctx->regs[TM_QW1_OS + TM_IPB]);
+>>       tctx->regs[TM_QW3_HV_PHYS + TM_PIPR] =
+>> -        ipb_to_pipr(tctx->regs[TM_QW3_HV_PHYS + TM_IPB]);
+>> +        xive_ipb_to_pipr(tctx->regs[TM_QW3_HV_PHYS + TM_IPB]);
+>>   }
+>>   
+>>   static void xive_tctx_realize(DeviceState *dev, Error **errp)
+>> @@ -1660,6 +1671,12 @@ static uint32_t xive_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
+>>       return xive_nvt_cam_line(blk, 1 << 7 | (pir & 0x7f));
+>>   }
+>>   
+>> +static uint8_t xive_get_group_level(uint32_t nvp_index)
+>> +{
+>> +    /* FIXME add crowd encoding */
+>> +    return ctz32(~nvp_index) + 1;
+>> +}
+>> +
+>>   /*
+>>    * The thread context register words are in big-endian format.
+>>    */
+>> @@ -1745,6 +1762,7 @@ bool xive_presenter_notify(XiveFabric *xfb, uint8_t format,
+>>   {
+>>       XiveFabricClass *xfc = XIVE_FABRIC_GET_CLASS(xfb);
+>>       XiveTCTXMatch match = { .tctx = NULL, .ring = 0 };
+>> +    uint8_t group_level;
+>>       int count;
+>>   
+>>       /*
+>> @@ -1758,9 +1776,9 @@ bool xive_presenter_notify(XiveFabric *xfb, uint8_t format,
+>>   
+>>       /* handle CPU exception delivery */
+>>       if (count) {
+>> -        trace_xive_presenter_notify(nvt_blk, nvt_idx, match.ring);
+>> -        xive_tctx_ipb_update(match.tctx, match.ring,
+>> -                             xive_priority_to_ipb(priority));
+>> +        group_level = cam_ignore ? xive_get_group_level(nvt_idx) : 0;
+>> +        trace_xive_presenter_notify(nvt_blk, nvt_idx, match.ring, group_level);
+>> +        xive_tctx_pipr_update(match.tctx, match.ring, priority, group_level);
+>>       }
+>>   
+>>       return !!count;
+>> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+>> index 4adc3b6950..db372f4b30 100644
+>> --- a/hw/intc/xive2.c
+>> +++ b/hw/intc/xive2.c
+>> @@ -564,8 +564,10 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+>>                                      uint8_t nvp_blk, uint32_t nvp_idx,
+>>                                      bool do_restore)
+>>   {
+>> +    uint8_t ipb, backlog_level;
+>> +    uint8_t backlog_prio;
+>> +    uint8_t *regs = &tctx->regs[TM_QW1_OS];
+>>       Xive2Nvp nvp;
+>> -    uint8_t ipb;
+> Put the uint8_ts all on the same line or keep them all on different
+> lines?
+>
+> Thanks,
+> Nick
+>
+>>   
+>>       /*
+>>        * Grab the associated thread interrupt context registers in the
+>> @@ -594,15 +596,15 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+>>           nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, 0);
+>>           xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
+>>       }
+>> +    regs[TM_IPB] = ipb;
+>> +    backlog_prio = xive_ipb_to_pipr(ipb);
+>> +    backlog_level = 0;
+>> +
+>>       /*
+>> -     * Always call xive_tctx_ipb_update(). Even if there were no
+>> -     * escalation triggered, there could be a pending interrupt which
+>> -     * was saved when the context was pulled and that we need to take
+>> -     * into account by recalculating the PIPR (which is not
+>> -     * saved/restored).
+>> -     * It will also raise the External interrupt signal if needed.
+>> +     * Compute the PIPR based on the restored state.
+>> +     * It will raise the External interrupt signal if needed.
+>>        */
+>> -    xive_tctx_ipb_update(tctx, TM_QW1_OS, ipb);
+>> +    xive_tctx_pipr_update(tctx, TM_QW1_OS, backlog_prio, backlog_level);
+>>   }
+>>   
+>>   /*
+>> diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+>> index 3dcf147198..7435728c51 100644
+>> --- a/hw/intc/trace-events
+>> +++ b/hw/intc/trace-events
+>> @@ -282,7 +282,7 @@ xive_router_end_notify(uint8_t end_blk, uint32_t end_idx, uint32_t end_data) "EN
+>>   xive_router_end_escalate(uint8_t end_blk, uint32_t end_idx, uint8_t esc_blk, uint32_t esc_idx, uint32_t end_data) "END 0x%02x/0x%04x -> escalate END 0x%02x/0x%04x data 0x%08x"
+>>   xive_tctx_tm_write(uint32_t index, uint64_t offset, unsigned int size, uint64_t value) "target=%d @0x%"PRIx64" sz=%d val=0x%" PRIx64
+>>   xive_tctx_tm_read(uint32_t index, uint64_t offset, unsigned int size, uint64_t value) "target=%d @0x%"PRIx64" sz=%d val=0x%" PRIx64
+>> -xive_presenter_notify(uint8_t nvt_blk, uint32_t nvt_idx, uint8_t ring) "found NVT 0x%x/0x%x ring=0x%x"
+>> +xive_presenter_notify(uint8_t nvt_blk, uint32_t nvt_idx, uint8_t ring, uint8_t group_level) "found NVT 0x%x/0x%x ring=0x%x group_level=%d"
+>>   xive_end_source_read(uint8_t end_blk, uint32_t end_idx, uint64_t addr) "END 0x%x/0x%x @0x%"PRIx64
+>>   
+>>   # pnv_xive.c
 
