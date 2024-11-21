@@ -4,50 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73A0AD743FF
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 01:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58944D75BB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 05:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tDwK7-0008Hu-DP; Wed, 20 Nov 2024 20:49:35 -0500
+	id 1tDzkU-0002rn-AK; Thu, 21 Nov 2024 00:29:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwK6-00087S-5l
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:49:34 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tDzkN-0002rY-9q; Thu, 21 Nov 2024 00:28:55 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tDwK4-0004tX-DY
- for qemu-devel@nongnu.org; Wed, 20 Nov 2024 20:49:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=e9Q0spTYTQ6FChSJsHReGLb3mMStqUbY3UIv4xcEKXQ=; b=nxVu8FWkMR2wWBb
- +KWQA0MvgmQGgKINhTshe7ddIXWZ3zfZVUarFHvaclMfbdyVpBC/kXy5tu3y8txBKepvasBfuYwwL
- FGNqeqyr1XcESac+m6Ly+SYt+EoX5PsdRFTqhdyfWceRN7/tueVkmWTt/D5AbohHDnXBfg6qcSy+q
- ZQ=;
-To: qemu-devel@nongnu.org
-Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
- richard.henderson@linaro.org, philmd@linaro.org, alex.bennee@linaro.org
-Subject: [RFC PATCH v1 41/43] target/hexagon: Manually call generated HVX
- instructions
-Date: Thu, 21 Nov 2024 02:49:45 +0100
-Message-ID: <20241121014947.18666-42-anjo@rev.ng>
-In-Reply-To: <20241121014947.18666-1-anjo@rev.ng>
-References: <20241121014947.18666-1-anjo@rev.ng>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tDzkL-000432-2y; Thu, 21 Nov 2024 00:28:55 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B0732A8B53;
+ Thu, 21 Nov 2024 08:28:31 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id ECBEE1765C0;
+ Thu, 21 Nov 2024 08:28:38 +0300 (MSK)
+Message-ID: <d99763fa-4b04-47a2-974e-b0e13466a9d1@tls.msk.ru>
+Date: Thu, 21 Nov 2024 08:28:28 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Subject: [ANNOUNCE] QEMU 7.2.15 Stable released
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------yUh1m0syp3kF9b4i6WnsC5Wh"
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,136 +98,129 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For HVX instructions that were successfully translated by helper-to-tcg,
-emit calls to emit_*() "manually" from generate_*().  Recall that scalar
-instructions translated by helper-to-tcg are automatically called by a
-hook in tcg_gen_callN.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------yUh1m0syp3kF9b4i6WnsC5Wh
+Content-Type: multipart/mixed; boundary="------------RWkwRu00t3LNTM0riHonBQUU";
+ protected-headers="v1"
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Message-ID: <d99763fa-4b04-47a2-974e-b0e13466a9d1@tls.msk.ru>
+Subject: [ANNOUNCE] QEMU 7.2.15 Stable released
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
----
- target/hexagon/gen_tcg_funcs.py | 13 ++++++++
- target/hexagon/hex_common.py    | 57 +++++++++++++++++++++++++++++++++
- 2 files changed, 70 insertions(+)
+--------------RWkwRu00t3LNTM0riHonBQUU
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_funcs.py
-index a06edeb9de..fd8dbf3724 100755
---- a/target/hexagon/gen_tcg_funcs.py
-+++ b/target/hexagon/gen_tcg_funcs.py
-@@ -75,7 +75,18 @@ def gen_tcg_func(f, tag, regs, imms):
- 
-         arguments = ", ".join(["ctx", "ctx->insn", "ctx->pkt"] + declared)
-         f.write(f"    emit_{tag}({arguments});\n")
-+    elif hex_common.is_helper_to_tcg_enabled(tag) and tag.startswith("V6_"):
-+        ## For vector functions translated by helper-to-tcg we need to
-+        ## manually call the emitted code.  All other instructions translated
-+        ## are automatically called by the helper-functions dispatcher in
-+        ## tcg_gen_callN.
-+        declared = []
-+        ## Handle registers
-+        for arg in hex_common.helper_to_tcg_hvx_call_args(tag, regs, imms):
-+            declared.append(arg)
- 
-+        arguments = ", ".join(declared)
-+        f.write(f"    emit_{tag}({arguments});\n")
-     elif hex_common.skip_qemu_helper(tag):
-         f.write(f"    fGEN_TCG_{tag}({hex_common.semdict[tag]});\n")
-     else:
-@@ -119,6 +130,8 @@ def main():
-         f.write("#define HEXAGON_TCG_FUNCS_H\n\n")
-         if args.idef_parser:
-             f.write('#include "idef-generated-emitter.h.inc"\n\n')
-+        if args.helper_to_tcg:
-+            f.write('#include "helper-to-tcg-emitted.h"\n\n')
- 
-         for tag in hex_common.tags:
-             ## Skip the priv instructions
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index fc4c9f648e..8391084982 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -1105,6 +1105,60 @@ def helper_ret_type(tag, regs):
-     return return_type
- 
- 
-+def helper_to_tcg_hvx_call_args(tag, regs, imms):
-+    args = []
-+    # Used to ensure immediates are passed translated as immediates by
-+    # helper-to-tcg.
-+    imm_indices = []
-+
-+    ## First argument is the CPU state
-+    if need_env(tag):
-+        args.append("tcg_env")
-+
-+    ## For predicated instructions, we pass in the destination register
-+    if is_predicated(tag):
-+        for regtype, regid in regs:
-+            reg = get_register(tag, regtype, regid)
-+            if reg.is_writeonly() and not reg.is_hvx_reg():
-+                args.append(reg.helper_arg().call_arg)
-+
-+    ## Pass the HVX destination registers
-+    for regtype, regid in regs:
-+        reg = get_register(tag, regtype, regid)
-+        if reg.is_written() and reg.is_hvx_reg():
-+            args.append(reg.hvx_off())
-+
-+    ## Pass the source registers
-+    for regtype, regid in regs:
-+        reg = get_register(tag, regtype, regid)
-+        if reg.is_read() and not (reg.is_hvx_reg() and reg.is_readwrite()):
-+            if reg.is_hvx_reg():
-+                args.append(reg.hvx_off())
-+            else:
-+                args.append(reg.helper_arg().call_arg)
-+
-+    ## Pass the immediates
-+    for immlett, bits, immshift in imms:
-+        imm_indices.append(len(args))
-+        args.append(f"{imm_name(immlett)}")
-+
-+    ## Other stuff the helper might need
-+    if need_pkt_has_multi_cof(tag):
-+        args.append("ctx->pkt->pkt_has_multi_cof")
-+    if need_pkt_need_commit(tag):
-+        args.append("ctx->need_commit")
-+    if need_PC(tag):
-+        args.append("ctx->pkt->pc")
-+    if need_next_PC(tag):
-+        args.append("ctx->next_PC")
-+    if need_slot(tag):
-+        args.append("gen_slotval(ctx)")
-+    if need_part1(tag):
-+        args.append("insn->part1")
-+
-+    return args
-+
-+
- def helper_args(tag, regs, imms):
-     args = []
-     # Used to ensure immediates are passed translated as immediates by
-@@ -1216,12 +1270,15 @@ def parse_common_args(desc):
-     parser.add_argument("overrides_vec", help="vector overrides file")
-     parser.add_argument("out", help="output file")
-     parser.add_argument("--idef-parser", help="file of instructions translated by idef-parser")
-+    parser.add_argument("--helper-to-tcg", help="file of instructions translated by helper-to-tcg")
-     args = parser.parse_args()
-     read_semantics_file(args.semantics)
-     read_overrides_file(args.overrides)
-     read_overrides_file(args.overrides_vec)
-     if args.idef_parser:
-         read_idef_parser_enabled_file(args.idef_parser)
-+    if args.helper_to_tcg:
-+        read_helper_to_tcg_enabled_file(args.helper_to_tcg)
-     calculate_attribs()
-     init_registers()
-     return args
--- 
-2.45.2
+SGkgZXZlcnlvbmUsDQoNClRoZSBRRU1VIHY3LjIuMTUgc3RhYmxlIHJlbGVhc2UgaXMgbm93
+IGF2YWlsYWJsZS4NCg0KWW91IGNhbiBncmFiIHRoZSB0YXJiYWxsIGZyb20gb3VyIGRvd25s
+b2FkIHBhZ2UgaGVyZToNCg0KICAgaHR0cHM6Ly93d3cucWVtdS5vcmcvZG93bmxvYWQvI3Nv
+dXJjZQ0KDQogICBodHRwczovL2Rvd25sb2FkLnFlbXUub3JnL3FlbXUtNy4yLjE1LnRhci54
+eg0KICAgaHR0cHM6Ly9kb3dubG9hZC5xZW11Lm9yZy9xZW11LTcuMi4xNS50YXIueHouc2ln
+IChzaWduYXR1cmUpDQoNCnY3LjIuMTUgaXMgbm93IHRhZ2dlZCBpbiB0aGUgb2ZmaWNpYWwg
+cWVtdS5naXQgcmVwb3NpdG9yeSwgYW5kIHRoZQ0Kc3RhYmxlLTcuMiBicmFuY2ggaGFzIGJl
+ZW4gdXBkYXRlZCBhY2NvcmRpbmdseToNCg0KICAgaHR0cHM6Ly9naXRsYWIuY29tL3FlbXUt
+cHJvamVjdC9xZW11Ly0vY29tbWl0cy9zdGFibGUtNy4yDQoNClRoZXJlIGFyZSAzOSBjaGFu
+Z2VzIHNpbmNlIHRoZSBwcmV2aW91cyB2Ny4yLjE0IHJlbGVhc2UuDQoNClRoYW5rIHlvdSBl
+dmVyeW9uZSB3aG8gaGFzIGJlZW4gaW52b2x2ZWQgYW5kIGhlbHBlZCB3aXRoIHRoZSBzdGFi
+bGUgc2VyaWVzIQ0KDQovbWp0DQoNCkNoYW5nZWxvZyAoc3RhYmxlLTcuMi1oYXNoIG1hc3Rl
+ci1oYXNoIEF1dGhvciBOYW1lOiBDb21tbWl0LVN1YmplY3QpOg0KDQo4YWM3NTcyNmZjIE1p
+Y2hhZWwgVG9rYXJldjoNCiAgVXBkYXRlIHZlcnNpb24gZm9yIDcuMi4xNSByZWxlYXNlDQo3
+ZmZjMzdiNTQxIGIyY2M2OTk5NzkgR3VlbnRlciBSb2VjazoNCiAgdXNiLWh1YjogRml4IGhh
+bmRsaW5nIHBvcnQgcG93ZXIgY29udHJvbCBtZXNzYWdlcw0KZTBhZjQwZjE0MCA2MjZiMzkw
+MDZkIFBhb2xvIEJvbnppbmk6DQogIGh3L2F1ZGlvL2hkYTogZml4IG1lbW9yeSBsZWFrIG9u
+IGF1ZGlvIHNldHVwDQoyZjUyMjU4ZWQ3IGMzZDdjMThiMGQgVGhvbWFzIEh1dGg6DQogIGh3
+L21pc2MvbW9zNjUyMjogRml4IGJhZCBjbGFzcyBkZWZpbml0aW9uIG9mIHRoZSBNT1M2NTIy
+IGRldmljZQ0KNTI1NThkNDlkNiA4Mzc3ZTNmYjg1IFBldGVyIE1heWRlbGw6DQogIHRjZzog
+QWxsb3cgdG9wIGJpdCBvZiBTSU1EX0RBVEFfQklUUyB0byBiZSBzZXQgaW4gc2ltZF9kZXNj
+KCkNCmI2NjFlZWE5N2YgZjI3NTUwODA0NiBSaWNoYXJkIEhlbmRlcnNvbjoNCiAgdGFyZ2V0
+L2FybTogRHJvcCB1c2VyLW9ubHkgc3BlY2lhbCBjYXNlIGluIHN2ZV9zdE5fcg0KZDUyNzQ2
+YjEwMSA4NDkxMDI2YTA4IEhlbGdlIERlbGxlcjoNCiAgbGludXgtdXNlcjogRml4IHNldHJl
+dWlkIGFuZCBzZXRyZWdpZCB0byB1c2UgZGlyZWN0IHN5c2NhbGxzDQphZmM4N2YxMmI1IDhm
+YTExYTRkZjMgQWxleGFuZGVyIEdyYWY6DQogIHRhcmdldC9pMzg2OiBGaXggbGVnYWN5IHBh
+Z2UgdGFibGUgd2Fsaw0KZTlhYmMyM2VmNCAwNDJiNGViZmQyIENocmlzdGlhbiBTY2hvZW5l
+YmVjazoNCiAgOXBmczogZml4IGNyYXNoIG9uICdUcmVhZGRpcicgcmVxdWVzdA0KODM3NWRh
+ZGJhNyA5NTI5YWE2YmI0IEtsYXVzIEplbnNlbjoNCiAgaHcvbnZtZTogZml4IGhhbmRsaW5n
+IG9mIG92ZXItY29tbWl0dGVkIHF1ZXVlcw0KNjc2ODMwNDhiZSBlNmIyZmExYjgxIFBldGVy
+IE1heWRlbGw6DQogIHRhcmdldC9hcm06IEZpeCBTVkUgU0RPVC9VRE9UL1VTRE9UICg0LXdh
+eSwgaW5kZXhlZCkNCjVjMWMxMzhlZTcgYzliOGExM2E4OCBJbHlhIExlb3Noa2V2aWNoOg0K
+ICB0YXJnZXQvcHBjOiBTZXQgY3R4LT5vcGNvZGUgZm9yIGRlY29kZV9pbnNuMzIoKQ0KODQ0
+ZmZiMzU3YSBjMTI4ZDM5ZWRlIEFudG9uIEJsYW5jaGFyZDoNCiAgdGFyZ2V0L3Jpc2N2OiBG
+aXggdmNvbXByZXNzIHdpdGggcnZ2X3RhX2FsbF8xcw0KMzlkODU4ZmEyMyAyYWU2Y2NhMWQz
+IFlvbmctWHVhbiBXYW5nOg0KICBody9pbnRjL3Jpc2N2X2FwbGljOiBDaGVjayBhbmQgdXBk
+YXRlIHBlbmRpbmcgd2hlbiB3cml0ZSBzb3VyY2VjZmcNCjZlNDZjYWE5MWYgMDY3OGU5ZjI5
+YyBBbnVwIFBhdGVsOg0KICBody9pbnRjL3Jpc2N2X2FwbGljOiBGaXggaW5fY2xyaXBbeF0g
+cmVhZCBlbXVsYXRpb24NCmRjODliMmIzMDAgZjhjMWYzNmEyZSBSb2IgQnJhZGZvcmQ6DQog
+IHRhcmdldC9yaXNjdjogU2V0IHZ0eXBlLnZpbGwgb24gQ1BVIHJlc2V0DQo1ZGJiYmFmOTcx
+IGE4NGJlMmJhYTkgU2VyZ2V5IE1ha2Fyb3Y6DQogIGh3L2ludGM6IERvbid0IGNsZWFyIHBl
+bmRpbmcgYml0cyBvbiBJUlEgbG93ZXJpbmcNCjc2ZTAwMzA2MzYgOTI5ZTQyNzdjMSBUQU5H
+IFRpYW5jaGVuZzoNCiAgdGFyZ2V0L3Jpc2N2OiBDb3JyZWN0IFNYTCByZXR1cm4gdmFsdWUg
+Zm9yIFJWMzIgaW4gUlY2NCBRRU1VDQo1NjgxOTBlZjYwIDVhNjAwMjZjYWQgRXZnZW5paSBQ
+cm9rb3BpZXY6DQogIHRhcmdldC9yaXNjdi9jc3IuYzogRml4IGFuIGFjY2VzcyB0byBWWFNB
+VA0KMDA0ZjA1ODNmMSAxNTA1YjY1MWZkIFBldGVyIE1heWRlbGw6DQogIHRhcmdldC9hcm06
+IERvbid0IGFzc2VydCBpbiByZWdpbWVfaXNfdXNlcigpIGZvciBFMTAgbW11aWR4IHZhbHVl
+cw0KZmNjZGMxNjQxNCA3NWZlMzZiNGU4IEJlcm5oYXJkIEJlc2Nob3c6DQogIG5ldC90YXAt
+d2luMzI6IEZpeCBnY2MgMTQgZm9ybWF0IHRydW5jYXRpb24gZXJyb3JzDQo1MGNhN2YxZmI0
+IGUyOWJjOTMxZTEgU3RlZmFuIFdlaWw6DQogIEZpeCBjYWxjdWxhdGlvbiBvZiBtaW5pbXVt
+IGluIGNvbG9fY29tcGFyZV90Y3ANCjI4YWNmNDMzOWQgOTdmMTE2ZjljNiBBbGV4IEJlbm7D
+qWU6DQogIGdpdGxhYjogbWFrZSBjaGVjay1bZGNvfHBhdGNoXSBhIGxpdHRsZSBtb3JlIHZl
+cmJvc2UNCjFkNmRlZTNlOGEgODcwNDEzMjgwNSBJbHlhIExlb3Noa2V2aWNoOg0KICBsaW51
+eC11c2VyL3BwYzogRml4IHNpZ21hc2sgZW5kaWFubmVzcyBpc3N1ZSBpbiBzaWdyZXR1cm4N
+CmMzNjNlYmFhMTkgYjU2NjE3YmJjYiBBbGV4YW5kZXIgR3JhZjoNCiAgdGFyZ2V0L2kzODY6
+IFdhbGsgTlBUIGluIGd1ZXN0IHJlYWwgbW9kZQ0KNmQzNmNmODlkMyA5ODdiNjNmMjRhIFBl
+dGVyIE1heWRlbGw6DQogIHRhcmdldC9pMzg2OiBBdm9pZCB1bnJlYWNoYWJsZSB2YXJpYWJs
+ZSBkZWNsYXJhdGlvbiBpbiBtbXVfdHJhbnNsYXRlKCkNCjE2YWMyMjczZDEgYTdjZmQ3NTFm
+YiBSaWNoYXJkIEhlbmRlcnNvbjoNCiAgdGNnOiBSZXNldCBkYXRhX2dlbl9wdHIgY29ycmVj
+dGx5DQoxMjg0NjA2ZmFmIDA0YmJjM2VlNTIgS2V2aW4gV29sZjoNCiAgcmF3LWZvcm1hdDog
+Rml4IGVycm9yIG1lc3NhZ2UgZm9yIGludmFsaWQgb2Zmc2V0L3NpemUNCmI2ZWNmMTA1MTcg
+ZDkyODBlYTMxNyBTdGVmYW4gQmVyZ2VyOg0KICB0ZXN0czogV2FpdCBmb3IgbWlncmF0aW9u
+IGNvbXBsZXRpb24gb24gZGVzdGluYXRpb24gUUVNVSB0byBhdm9pZCBmYWlsdXJlcw0KYWU0
+ZTQ2Y2QyMCA1NTA0YTgxMjYxIFBldGVyIFh1Og0KICBLVk06IER5bmFtaWMgc2l6ZWQga3Zt
+IG1lbXNsb3RzIGFycmF5DQplZmI0OGZmZGZhIGYyNzIwNmNlZWQgTWFyYy1BbmRyw6kgTHVy
+ZWF1Og0KICBody9hdWRpby9oZGE6IGZyZWUgdGltZXIgb24gZXhpdA0KY2I1MjM5ZTYwNyAz
+ZGI3NGFmZWMzIEFsZXhhbmRyYSBEaXVwaW5hOg0KICBody9pbnRjL2FybV9naWN2M19jcHVp
+ZjogQWRkIGNhc3QgdG8gbWF0Y2ggdGhlIGRvY3VtZW50YXRpb24NCmYxMTEyYzY3NzYgOTQ3
+MjA4M2U2NCBTdGVmYW5vIEdhcnphcmVsbGE6DQogIHNjc2k6IGZldGNoIHVuaXQgYXR0ZW50
+aW9uIHdoZW4gY3JlYXRpbmcgdGhlIHJlcXVlc3QNCjcwOWU2YWI1YWIgMjg4NDU5NmY1ZiBS
+aWNoYXJkIEhlbmRlcnNvbjoNCiAgbGludXgtdXNlcjogRml4IHBhcnNlX2VsZl9wcm9wZXJ0
+aWVzIEdOVTBfTUFHSUMgY2hlY2sNCjQ5ZDQyZWQzYmQgYTllZTY0MWJkNCBQaGlsaXBwZSBN
+YXRoaWV1LURhdWTDqToNCiAgbGludXgtdXNlci9mbGF0bG9hZDogVGFrZSBtbWFwX2xvY2sg
+aW4gbG9hZF9mbHRfYmluYXJ5KCkNCjNkMDhmZmUwYmEgZTZkOGU1ZTZlMyBQYW9sbyBCb256
+aW5pOg0KICB0cmFjZXRvb2w6IGF2b2lkIGludmFsaWQgZXNjYXBlIGluIFB5dGhvbiBzdHJp
+bmcNCmIyNzA3OGMyYTkgM2U5NjQyNzVkNiBBbGV4YW5kZXIgQnVsZWtvdjoNCiAgZnV6ejog
+ZGlzYWJsZSBsZWFrLWRldGVjdGlvbiBmb3Igb3NzLWZ1enogYnVpbGRzDQo0ZjYxNzE0MGE0
+IDY0NzUxNTVkNTEgRmlvbmEgRWJuZXI6DQogIGJsb2NrL3JlcWxpc3Q6IGFsbG93IGFkZGlu
+ZyBvdmVybGFwcGluZyByZXF1ZXN0cw0KNWY5ZmI0OTY0OCA4YmRlZDJlNzNlIEZhYmlhbm8g
+Um9zYXM6DQogIHRhcmdldC9wcGM6IEZpeCBseHZ4L3N0eHZ4IGZhY2lsaXR5IGNoZWNrDQpi
+NjJkYzZkOTRmIGQ4ZDVjYTQwMDQgRmVhLldhbmc6DQogIHNvZnRtbXUvcGh5c21lbS5jOiBL
+ZWVwIHRyYW5zYWN0aW9uIGF0dHJpYnV0ZSBpbiBhZGRyZXNzX3NwYWNlX21hcCgpDQoNCg==
 
+
+--------------RWkwRu00t3LNTM0riHonBQUU--
+
+--------------yUh1m0syp3kF9b4i6WnsC5Wh
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEZKoqtTHVaQM2a/75gqpKJDselHgFAmc+xPwACgkQgqpKJDse
+lHiGNg/+Km5nuXtJhx6nS4sbSWN3YQzKIGOrpneqJFfaIYX6vMBsdFSk+md2Xbe5
+Xx7V6VQLXtFdtLcybN9N2KlFecEvoq7AjcGsmmRHoxG6BzWqWSPE2Wq/N5qeS1TK
+jWo7dAQ3rFTtQnN7hZkq5OfUJY6dA+Y7eehtUjQ0TfXItVLMr9QZou/CxpXPq26G
+qMIWInLsyvWYWk2lVVgRpN9xwlr4Bz0zcd1E6FaUTHEgI5zzo+ozhXHsrlzP0+0c
+eFxrg7cDZf+A9pMlZtKxLn8Uc5eO/h0bFVL+NNylJYGIPcQEDy/Ca4VSiEOvCrfI
+3xHILZ4sr7m/SMUEUbWrOXBOf22DSr0dvlBgrYmWbYIMe4KaaIleHFQ5HKyN3MdZ
+PGd3RTQXhDerE0VzXaf8UJyYTSc/o3EjNcV/m+LfHs4Z2AVZzfceR1VBz/oDU6cz
+UM85vFvvsaU+I5KotamYQmzfE8/KIVx6mzdi7wL68+XjeQ9WM5XH3Zm1h0O06N3H
+alKES5Hm/Z4nq4T+kFCIvmJJH6XMmsQ21XoV3gxsb3pnyEcNeBjLJ/VYPcl6pcNu
+bbWaJt2SXu69bFKGNE1ieJzHoEcLwqq9cXkBHCI0U1ki0uBeU0gDm1L1PrXquVf/
+kkRGaMNILgacKxIOdiU7ZAelSpSUpA7A8LGuc/rSEb6wFmRDsjY=
+=g2zy
+-----END PGP SIGNATURE-----
+
+--------------yUh1m0syp3kF9b4i6WnsC5Wh--
 
