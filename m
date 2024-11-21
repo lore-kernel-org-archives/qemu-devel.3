@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B338E64006
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 19:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F9DE64006
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 19:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tECXS-0002Iy-L8; Thu, 21 Nov 2024 14:08:26 -0500
+	id 1tECaA-0003gW-UP; Thu, 21 Nov 2024 14:11:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECXM-00025X-EV
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:08:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECa6-0003g5-Vc
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:11:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECXK-0000os-8O
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:08:20 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tECa3-0001C9-7o
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 14:11:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732216097;
+ s=mimecast20190719; t=1732216266;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TX53w6ZUuuS8FjfCf+6wknGkSPdV0PrLlHIEUwLF4Bg=;
- b=Ej0qPHhwtYRioIUhlOwffy78wqzYepUsPZ+mdQqaa3gohmvNCqTZUSVIBI4Vrd4Qts2+TC
- +zys614FDnQOeJFKqD4ewEAoxdDBzizrHLmVPcI9scBI/i1qs+4IpBy8BBSUbLPOAy9yNI
- FJ7yqL+EFWq+MdF0Pap7hBRywT9dBaM=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jyCeNK40uxV9ePAceiXTo3bwxTN5xQG8pM7HNZY5mG4=;
+ b=Ae8D0Th0RICvKb/dMaokxeE0tpUTY1DRYZKgN/bSwqzNeKQTad1/9RwXzUyXADcZ689v8b
+ xFerQKNbsBrV45A+WCh+8g8JBZnzoIH7KKfJuC+5OQOW2kRLhVJ5Rzmt0kLptnmiiwE9Jr
+ aqeVm+SRNpsIPw4srTSJ9zfyxA3etqw=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-263-T1BEIHdkNPiVikDq9s0O5g-1; Thu, 21 Nov 2024 14:08:16 -0500
-X-MC-Unique: T1BEIHdkNPiVikDq9s0O5g-1
-X-Mimecast-MFC-AGG-ID: T1BEIHdkNPiVikDq9s0O5g
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a99f43c4c7bso70470566b.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 11:08:15 -0800 (PST)
+ us-mta-632-UxwcxmtrOZOJwsoXUgTg_g-1; Thu, 21 Nov 2024 14:11:05 -0500
+X-MC-Unique: UxwcxmtrOZOJwsoXUgTg_g-1
+X-Mimecast-MFC-AGG-ID: UxwcxmtrOZOJwsoXUgTg_g
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5d00e170f0dso632237a12.2
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 11:11:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732216095; x=1732820895;
+ d=1e100.net; s=20230601; t=1732216264; x=1732821064;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TX53w6ZUuuS8FjfCf+6wknGkSPdV0PrLlHIEUwLF4Bg=;
- b=jQW3GV71NByMPZeUWyfDxSVFiRoMDeEJ0Rm+f4Y5CNTANUmDdkSKMQLT9h7dGhuY2T
- Rlgd17tpaFo7GWPx46wfxRPp1xJ0UHK4nawkywFiHcLM7mb1gX2vy7SXoh0rmXaFgdcS
- i6lWQ8JFobN+ZVTmR183kp+8K2yXFL/zbhfWeWMHtXag8qvljxhS81ruxGcoPkuBGj/F
- BlDi+aSuS2tuqyB8bSSKPn9BLoztIRuqool/7mm1F69C7XYvFwvXQLrx615NuNfdJZ2E
- y4tqJSu24G7IVUYYmebpYtRrPqrFsYFMNQVvBKw4nse/55o3qg9DDIRTsvpMyqGrS5wo
- mexw==
+ bh=jyCeNK40uxV9ePAceiXTo3bwxTN5xQG8pM7HNZY5mG4=;
+ b=wq9YWPtlqLVkFOx5qo2e7xZiyk0FbGtFb7xUxgINl6a14Q/cRXq9I+fnJ/mXUGXw+i
+ tdXFersKq1svJRX+o04Lc9XgQR4FyYSyRkh/TB8uKyCAvXWUQAO0Q+oAoCj1Q3zOngRg
+ DXngVgM9ngTijANMLKZ5z03Dg+ImDzx2J4bFsSKq1kgh/vVWlr8sDPs5Dz5SV2O6MyMo
+ vr+k3/V9zB4IWWyeIwtfSMHFXMJIWnN20J8ySsMsikpTB7HUx+/rlLFOv9LgjPil+muP
+ HJah847tqn4kxMlkQajrDldynvDy7el3LB/Xj43Upl+JBJEaIGmvF7YVRLf8TanF+rOx
+ 4fig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUv0CNZ0h/h2P1oZOo07SN0F33jr9JqaQLCLILvomWeMlCsLCXzmhbn07imUEf0vRvKf0zE4ux0r2qI@nongnu.org
-X-Gm-Message-State: AOJu0YzcsxLGqNz6VxV5J8LVvCyObs3/QExXZ8qiJp6Hny6LjGyencl3
- 1r6O9vrBRZQSXDE9nDKI3lhGjOuNSoU7eCZgHj/V1SGXLtragmmvR986/2DrRfvFf+A0J7z3Qdc
- dAdXO2BQpjAxhm4TQwQTaNoGY6d+YkuQONwO0y0l2esn2z4Yb75h7
-X-Gm-Gg: ASbGncuaHokni/DqvsEAsKf/wYv+wRdqilvmD4uUXguazViWjqPjwUYkgQoL2Dc1ECr
- dPSXKHsxJcZv2IGIM/JaPADeew6WvpxmMcuik3QmDI5+WXz8cOrXIqSC9CQOwF+03/EFXIE1WSx
- 6fpae44TtaK7AikLHizLppzcJm+RHciw1ZsdP+xQBfoAIMZX3edeQCBrOOFdCwteQuaIy49Wzj4
- fFTB27va7ss6bdCodSuFuwZP0/kl8Kcg3WzFU8zyQ6szo7M50HrYMTPtxLKSBK3ALTb9Um+ZcAN
- NB4=
-X-Received: by 2002:a17:907:75e7:b0:a99:f56e:ce40 with SMTP id
- a640c23a62f3a-aa509bc1416mr23034766b.47.1732216094806; 
- Thu, 21 Nov 2024 11:08:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEf9cp++HfirTapPVkeKFLfumMvusZ585wX5aQ8vVYXMqRB1r2UVAsjJKqvDKjcfDjUQqrcaQ==
-X-Received: by 2002:a17:907:75e7:b0:a99:f56e:ce40 with SMTP id
- a640c23a62f3a-aa509bc1416mr23030666b.47.1732216094369; 
- Thu, 21 Nov 2024 11:08:14 -0800 (PST)
+ AJvYcCVysLzicQ+OJPP8QDudEuAQ++1Je2dauLGywsExcN5IX7lIA0T4GZ9ZEsHkOROTECsBZVEq3bNOBbFc@nongnu.org
+X-Gm-Message-State: AOJu0YzRdXm7PtjJNp4883i4Ud/ggz6J1dgJFlgMEPtK/n0ZgHQ3wwlO
+ 5BlbKoPT6uTXuTWzSO2H6hacaaXcaUbKlGPSxTuIkG5sWkb9e0FWZAWQFWZKCWD869NV1lHAmyu
+ S6dWbCHwxIGETGiudukWNnnf4Kbubq75NcE0Xr9bUagTz5vV5Zlfi
+X-Gm-Gg: ASbGncucj5MtyqGUTyjy8rdVkBhOfnp3Y9svUe41kMvdrukQ36970EamKYLy3uWDh5d
+ RJvlTK/aXIEcoNKgWL3wbm2Mo8RvK08ks5tVbtddwUOx7wtaCdxdyI7+0zH23sV/SvBEHpXnGpS
+ F7Fy5CzfsHF5NMNvtat1zR7T8NTPm+a8t7DYFe/oG/2Tdd18qUtbW5kvfDGgh+gHfIa0xgQLlup
+ zHF8dbzatQw6lgUlbv+TrrjSMPkeFh3M7OwoqVMnMzQJL+mqIVEoh4AcfQfqt431ouW/6JvvoB8
+ o9g=
+X-Received: by 2002:a05:6402:1e89:b0:5cf:d333:eb75 with SMTP id
+ 4fb4d7f45d1cf-5cff4cd134amr7112832a12.27.1732216264048; 
+ Thu, 21 Nov 2024 11:11:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHIBGk3Q9GVD4m+J0e6aU1klKWURKTA0HwJsQZd2rT5baSP9NLnBvSp2/IEJy9a+XEjYAwTWw==
+X-Received: by 2002:a05:6402:1e89:b0:5cf:d333:eb75 with SMTP id
+ 4fb4d7f45d1cf-5cff4cd134amr7112815a12.27.1732216263651; 
+ Thu, 21 Nov 2024 11:11:03 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-70.web.vodafone.de. [109.42.51.70])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa50b5b8224sm4175966b.180.2024.11.21.11.08.12
+ 4fb4d7f45d1cf-5d01d41d5basm85347a12.89.2024.11.21.11.10.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 11:08:13 -0800 (PST)
-Message-ID: <78c0ea0c-e73f-4614-8dd3-1b6088b042d9@redhat.com>
-Date: Thu, 21 Nov 2024 20:08:11 +0100
+ Thu, 21 Nov 2024 11:11:02 -0800 (PST)
+Message-ID: <a3935ca8-5a44-4f2a-a414-aaa39f8e193c@redhat.com>
+Date: Thu, 21 Nov 2024 20:10:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/39] tests/functional: update the aarch64 tuxrun tests
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
+Subject: Re: [PATCH 00/39] maintainer updates for -rc2 pre-PR
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
@@ -103,10 +103,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Anders Roxell <anders.roxell@linaro.org>
+ Alistair Francis <alistair.francis@wdc.com>
 References: <20241121165806.476008-1-alex.bennee@linaro.org>
- <20241121165806.476008-22-alex.bennee@linaro.org>
+ <2b8f6079-f2ca-471f-8580-43352437625d@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -151,19 +150,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241121165806.476008-22-alex.bennee@linaro.org>
+In-Reply-To: <2b8f6079-f2ca-471f-8580-43352437625d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -179,16 +178,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/11/2024 17.57, Alex Bennée wrote:
-> Now there are new upto date images available we should update to them.
-> With the new rootfs the blk I/O errors also go away on arm64be.
+On 21/11/2024 20.03, Cédric Le Goater wrote:
+> Hello Alex,
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Anders Roxell <anders.roxell@linaro.org>
-> ---
->   tests/functional/test_aarch64_tuxrun.py | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
+> On 11/21/24 17:57, Alex Bennée wrote:
+>> This is a mostly testing focused set of patches but a few bug fixes as
+>> well. I plan to send the PR in on Monday. I can drop any patches that
+>> are objected to but I think its pretty safe.
+>>
+>> Contains:
+>>
+>>    - Daniel's clean-up of functional tests
+>>    - Another avocado->function conversion from Thomas
+>>    - Update the tuxrun baseline images
+>>    - Minor fix to the rust pl011 device
+>>    - Documentation clarification on identity
+>>
+>> The following could do with some review:
+>>
+>>    tests/functional: update the x86_64 tuxrun tests
+>>    tests/functional: update the sparc64 tuxrun tests
+>>    tests/functional: update the s390x tuxrun tests
+>>    tests/functional: update the riscv64 tuxrun tests
+>>    tests/functional: update the riscv32 tuxrun tests
+>>    tests/functional: update the ppc64 tuxrun tests
+>>    tests/functional: update the ppc32 tuxrun tests
+>>    tests/functional: update the mips64el tuxrun tests
+>>    tests/functional: update the mips64 tuxrun tests
+>>    tests/functional: update the mips32el tuxrun tests
+>>    tests/functional: update the mips32 tuxrun tests
+>>    tests/functional: add a m68k tuxrun tests
+>>    tests/functional: update the i386 tuxrun tests
+>>    tests/functional: update the aarch64 tuxrun tests
+>>    tests/functional: update the arm tuxrun tests
+>>    tests/functional: Convert the Avocado aarch64 tuxrun tests 
+> 
+> Do you think we could include patches 2-4 from this series ?
+> 
+> https://lore.kernel.org/all/20241112130246.970281-1-clg@redhat.com/
+> 
+> Only patch 3 lacks a R-b.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I had a question on patch 3 and a suggestion on patch 4 ... could you maybe 
+address them first? Thanks!
+
+  Thomas
 
 
