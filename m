@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA209D7879A
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CAB7D78799
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEAWJ-0005Kx-2w; Thu, 21 Nov 2024 11:59:07 -0500
+	id 1tEAVi-0004gZ-64; Thu, 21 Nov 2024 11:58:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAVf-0004ev-AQ
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:28 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1tEAVa-0004XK-C2
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:22 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tEAVS-00080z-Qc
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:27 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-432d9bb168cso13391685e9.1
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:58:14 -0800 (PST)
+ id 1tEAVQ-0007zQ-HH
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:58:21 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-382423e1f7aso722830f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:58:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732208293; x=1732813093; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732208291; x=1732813091; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YGcTlsR7h0uL9l7JMzB9rSwqOcrfMiHg81PqrjL5LmY=;
- b=xX42+2L8GenXbFOnmeMFRQ6m20v6+DmGPoVE3IClm0GsABI2rvgBi28mUIAeAgfI6K
- pMgBbSL3suh8MaCLO3aD9VayEInpGIFfglWXLwpg5nUiafamuVsll6/gz0UgfEJbV+ka
- Os5rkom0lnkfVyyvHAvdFhqrwpLX/VDhElBrJ40fiyr5agxQFBinfx5ZIpe1UHlwZmzl
- JSLhT3kJ7DFNCxB5/tHEmvhyoX2Jcm7wGCeIXItRL9Fj1IfZ21XLEZtWtRC5WSRlwa6k
- 8OSPAtDscwcaZsdMphCQhqNmIyhJAgsstfQqPPw+rDEYWBYBD/y4Nv4psGCtxRyIIjmw
- 8Fdw==
+ bh=lPIFW+MIDvbZvhF0n5YdU4sfYa070860/v3aIWKALYk=;
+ b=SLKr4RkFcLb2obpzzxC7+3N7f1KG4Y5OwUynXwd4cCsHXAqhEUc6AirO3tHicsTn7J
+ FNmNc3OOHxyFer8PNL3kNPTNlYG4D+SnSq9UDjn3Q9Oxx0v+JE9FzDGEPlhvdmbRhcRu
+ V3Zm7+4vFnZ+TxJdU/Z6HjahlOVAZYMjiKTt7NQsxkIHyLGb6rrIgAtjaWhqFqSxg/m8
+ rq/5G8GjfzADoRZ+RLiSCMxIg9Z+mFqbVWslVSPrkzSd9o/x1D5RZQvTkNJkm6XzkoEz
+ ZQNLoeIJI1rd9oS107yRTM48CJhbSIgbNzbpOcbSfDlQaqCZ/9bEqJHrKR6Sgb/Q3GQT
+ c/rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732208293; x=1732813093;
+ d=1e100.net; s=20230601; t=1732208291; x=1732813091;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YGcTlsR7h0uL9l7JMzB9rSwqOcrfMiHg81PqrjL5LmY=;
- b=Nde2srTLYmI885csj6IUJGxEPvkNXLqMYFNcZe6Etu391JNCr619hqHlDNN9UGY85g
- uN/rR7mOPeYKMzEGtJQW8j7Tkr36bOM/8bgMUHe2WjKy6OX6PrmlhSYKA0wKs8CseDqQ
- hFIp749iSp/aYlhdXsPgqxn4XDQuDS6K0406P0gU/NE4TzoSmsPkrKGGMHtUBnYeTBNT
- txoXDRhklnyoWRgLfff2bfM16flzKgF4BaxXjJqKdcxfFASbedrOQR6EmCiEXr2pof6n
- UqWWXSkytGLf3oGnOCmH+Wnk4Nagft3O32vdIdrSck11J24dpucGzXW0XU0flE6pbhyO
- lasA==
-X-Gm-Message-State: AOJu0YyQqKQO1ywTL4SfZEr8V77+9zLqJf0pLb4KjqsDAj9G9g25hCjO
- JWPTpNjkkjraK8NmJKzqcySXl/2Mz7jK8WLVyyMMndBF1cITVZYvFkHnLBObnnM=
-X-Gm-Gg: ASbGncv2I403x2PduqTcj577j3X45o5DSQdoC2YbPDHlUYBPXQfT3xaGxxYOfzXZFSG
- F9HLOpegM38b8r7xisHU3jTDMULBjyWDdfLbfy+V22szpabIm7su6sU7hBYApY1GR8QeOh8au3t
- HsB6wBUns32SKsIDCqpiZdHPyL64mqNnVHKycYZmf5Se8v81w6iKSkONGoO29cO3Wf9vY1jrCHr
- 5QMFYn/QDTXrNOpmNKn+0zjfjq0D5+ndT9Y/BufejCVAuZK
-X-Google-Smtp-Source: AGHT+IGivVSM4iXmyGe9ts9qo7V/VNyalRyaK/3K4hnRsaWTip+g0uC3+13I9Lc1O5RmotPl3tN/mw==
-X-Received: by 2002:a05:6000:184f:b0:382:3210:a965 with SMTP id
- ffacd0b85a97d-38259d4f8dcmr3665940f8f.24.1732208292676; 
- Thu, 21 Nov 2024 08:58:12 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fbedebfsm14660f8f.100.2024.11.21.08.58.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=lPIFW+MIDvbZvhF0n5YdU4sfYa070860/v3aIWKALYk=;
+ b=HrdjHFNgJ04mJk1uffsQKs9EUoqiuzJVHvhMLLOiKzf0wWYRE8PbqRk49RdPS388tx
+ KMNqHGPrnlQ/0iKjVdYwRr3Nw0agqXXLc5Is46CR4Kq0nTOSAqHaeaV7vmiOhTi9yyi2
+ ri0V+I6V3XKNMrDDyhnhG4qb0pwzelQpghXMCJttJPZFGIsszdkM43Jm3l6g96kyYe4w
+ tvzKBf65c1bD9bRDGP/s4y3KnxFkIcjOY1+ua4DJTq824bWqr8fMKClRXAlF4ig65/gj
+ YOOO4gVK1zo/3UT3nzzFP2JUr5+aYxOpawwF8LSsgh9BKJocPeY2LthBY9OKHDV5MLjw
+ POQQ==
+X-Gm-Message-State: AOJu0YxAgky+BuRDgBdokArxp9Us5KZgbEjRxTaObMcvlxTGBrL76tj5
+ dPvp+lrD3kXdCN+mKM6Zj5LnNkCPgeoNPYLFjumK+agJcylUUMjtgLPHUv0bbZs=
+X-Gm-Gg: ASbGncuf3/6pvC1k3D8+1ZoonTwPdPEb0bYUuf09gow4TcK4rdnMPADMlXcSil2jlwq
+ bz3ZNBQ0axLGcszmU+/pDucUzJ9lD4jlg9yYrOZ+m3at60W/qf5KxJoxuRbfhtqnOvEKGzuHDdO
+ VwRlEo+YFbDO3R+IFP5SipMYuwVGgYaDmQVl5f6VzebxOADRJVg0Y9I3W0FXYsD4M2BkaxmBKi6
+ 7O9p0khINLRtfspYMG/BO0Tghf2sKbqsGt+LWF0VoYY9D5m
+X-Google-Smtp-Source: AGHT+IERjNcVY63Esz+m5ARC9qYMkrCrcDvhBkmECN98q+XaP8RU1AK9ROyMkEw7IhAPD3KpHAn5ZQ==
+X-Received: by 2002:a05:6000:154e:b0:382:542d:39ab with SMTP id
+ ffacd0b85a97d-38254adf714mr6452872f8f.3.1732208290915; 
  Thu, 21 Nov 2024 08:58:10 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fbc38afsm17867f8f.67.2024.11.21.08.58.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 Nov 2024 08:58:08 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6426B5FCD7;
- Thu, 21 Nov 2024 16:58:07 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id C8B1F5FA88;
+ Thu, 21 Nov 2024 16:58:06 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -93,18 +93,17 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 10/39] tests/functional: honour requested test VM name in
- QEMUMachine
-Date: Thu, 21 Nov 2024 16:57:37 +0000
-Message-Id: <20241121165806.476008-11-alex.bennee@linaro.org>
+Subject: [PATCH 04/39] tests/functional: remove todo wrt avocado.utils.wait_for
+Date: Thu, 21 Nov 2024 16:57:31 +0000
+Message-Id: <20241121165806.476008-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241121165806.476008-1-alex.bennee@linaro.org>
 References: <20241121165806.476008-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,32 +128,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The functional test case class is going to the trouble of passing
-around a machine name, but then fails to give this QEMUMachine. As
-a result, QEMUMachine will create a completely random name. Since
-log file names match the machine name, this results in log files
-accumulating over time.
+We're not using avocado anymore, so while the TODO item is still
+relevant, suggesting use of avocado.utils is not.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20241121154218.1423005-11-berrange@redhat.com>
+Message-Id: <20241121154218.1423005-5-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/functional/qemu_test/testcase.py | 1 +
- 1 file changed, 1 insertion(+)
+ tests/functional/test_m68k_nextcube.py | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index ca13af244b..f9c9de1166 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -164,6 +164,7 @@ def require_device(self, devicename):
+diff --git a/tests/functional/test_m68k_nextcube.py b/tests/functional/test_m68k_nextcube.py
+index 89385a134a..0124622c40 100755
+--- a/tests/functional/test_m68k_nextcube.py
++++ b/tests/functional/test_m68k_nextcube.py
+@@ -37,8 +37,7 @@ def check_bootrom_framebuffer(self, screenshot_path):
+         self.vm.launch()
  
-     def _new_vm(self, name, *args):
-         vm = QEMUMachine(self.qemu_bin,
-+                         name=name,
-                          base_temp_dir=self.workdir,
-                          log_dir=self.logdir)
-         self.log.debug('QEMUMachine "%s" created', name)
+         self.log.info('VM launched, waiting for display')
+-        # TODO: Use avocado.utils.wait.wait_for to catch the
+-        #       'displaysurface_create 1120x832' trace-event.
++        # TODO: wait for the 'displaysurface_create 1120x832' trace-event.
+         time.sleep(2)
+ 
+         self.vm.cmd('human-monitor-command',
 -- 
 2.39.5
 
