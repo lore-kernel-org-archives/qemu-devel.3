@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1632D7879C
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 024ECD7879D
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEAns-0001RA-AA; Thu, 21 Nov 2024 12:17:16 -0500
+	id 1tEAqQ-0002uN-Py; Thu, 21 Nov 2024 12:19:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEAnp-0001QO-VI
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:17:13 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tEAqP-0002uF-OL
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:19:53 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEAnn-0004EO-RM
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:17:13 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-431688d5127so9282745e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 09:17:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tEAqO-0004WY-8i
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:19:53 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5cf9ef18ae9so4363135a12.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 09:19:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732209430; x=1732814230; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0YUsV70Yj8MKXU157O36zAGQwVkHFyGXTDd61bcbs0U=;
- b=bBhG7WXrIy6YfAHoTaQQDT9Y64MsWzf/NhJb5l5wxnQALBEwkrtC9vx6OUJN95pco9
- AHykzrtPhz/GE5cFy5CYe+cpQlYHvkGcuhgMjz4AB1ZW4wTOJNUZ3MQPcfGmCCr4Jcut
- a9/WOndn6bB+wzLOkJVVX27C/d07W+ohts7Vlbhu4aG+lqjEi3PS1kJEuSe667A79MMl
- BIEs6D5O9XTi8nru8gb8o0pJLlPREf6jaOfoNlXGC+FacuQvMiAk3Bnp5yIasDNuLF7O
- KuWY9KfXozKbJrCUvdS2sexQObpYLgxUv/z8KxOXOCl2wgOyCjDX+feceS0iWAuxQCTn
- TkUg==
+ d=linaro.org; s=google; t=1732209590; x=1732814390; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZSYfZQtUN2o4b8G/ReClTSg634nDeYmIFhfu9vsCoVk=;
+ b=eFUPHiAraO1MqFtyzZStwpIy3Izd4WhW8SHlasZlfFZtUdbLrWaYyEowgSX0o8GLEm
+ ZouYNQTXliOphb97+MPOsqWLI5TosaX+iVdqQwEmR5uv4v0RmMlnc9w437UOpKXHyfwz
+ kNilo7TILjvrOr7wuDHeHEv1Eya3bDJFATDGyUCrGJxWP2QTIaTbe4Gsrwidd8BD/TmS
+ 94INWgm/KEzO+joVtMdZ0HKTNJbL+Ow2d6EdRJ2k3D8hPdQmvWeopKTiRUIh4EDevjg8
+ 5SgKMWiZQhH72R1NLoWSiPTcX93/nkIL7VyaR1mQgiz3KdG2OR/8i4y1VhnPOGUIb2+I
+ sqpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732209430; x=1732814230;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0YUsV70Yj8MKXU157O36zAGQwVkHFyGXTDd61bcbs0U=;
- b=arDptODA2RLu1jNnbHiU4LtX7c5GCr0Ek+ELftA2fpHsZeAYhbe3NHyWVfEaVymaKO
- swvRCPXXMiAgsgtUjADCe8NGlp9LHHuYKKPXvxrb7+sU5j3C74uLz9Z725uexCyaqs73
- 6EG9+fsOWQDSiWqVfeHrTVEmhcUg1sW6iv0a3B26eVpjigbA7nKP+zUGF06DU6UYTesU
- At8MzJg9SQCaJ1NUmQZrOHORHXSIiaH19lMh36SLUlh63AouP0wlpD8zQCV9SG2witqi
- PUO7LLAUD/UIzKjBN8gzIn8NE5S54fsvNeWYJrnQqS25/epailJn9eVTEGTB30zFKitq
- jX/Q==
-X-Gm-Message-State: AOJu0YzSmc+FVHFZPe369fdLsd6Ys61saH1alxg1g1GSj85POKDHZFS3
- G3wYPPaRmkssTA5upUTcw5+WrQ3H4Xfzb5d8zvnJk2eVZwj95tv9tO/V9utjoTY=
-X-Gm-Gg: ASbGncsgESVH/cYFwZIVwmonIgK6UE4zBfyy/AGnXomP4Aj7sX81bO+IIjPcsxS/WVK
- PX7SIpFiGjeWqJLSmVgQZF3MxyN0skBYQGVTUlHN7UBPVbrxuasPuweerXhLQOxCqFHawFLN8Ie
- hmJdxxO37ELJA8gINeF99dtiwUTUhobEGCW1+7yc4m8kIdngI+hsqaxpUCRqXTQKdpUMNxHMjat
- 4YK4xwudmX6hIoAp0UmfbJ3bkYOnmDAZ35UgF66mhBLvjt8dxO5tKebfUuGKO/0
-X-Google-Smtp-Source: AGHT+IETjGtoO8RR5QSMKQB5pJXFwR+QsNaYFV5GXuKguFrW1jc8MsMuk0j7pi/Rt2TLsOfeeTfJ8w==
-X-Received: by 2002:a05:600c:1d9e:b0:431:60d0:9088 with SMTP id
- 5b1f17b1804b1-433489b4401mr64840255e9.13.1732209430164; 
- Thu, 21 Nov 2024 09:17:10 -0800 (PST)
-Received: from [192.168.69.197] ([176.187.204.90])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fad62fasm81071f8f.15.2024.11.21.09.17.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 09:17:09 -0800 (PST)
-Message-ID: <725f4e9d-e751-4eaa-8173-d6cfa60966db@linaro.org>
-Date: Thu, 21 Nov 2024 18:17:07 +0100
+ d=1e100.net; s=20230601; t=1732209590; x=1732814390;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZSYfZQtUN2o4b8G/ReClTSg634nDeYmIFhfu9vsCoVk=;
+ b=J9CZocw80uHcZJjlrnYDjDKBI7W0PIXZafGEjAwtWP+vjZC3gHbYjDSMKCIzEsyXT5
+ 4P6wOvWkjPg/dXTBGfezWtsk1iVjqOGkyfKIGf43qjlbkVG3Yx/R1GB+j6jzKQuvf8Oz
+ WHnRzNatsKlPdJsXzheJfu3h/pxiVx2KexKmg9ZmcfqfKELRx9B8dMj4K1oJe1yC9fdK
+ KEc3OgTgDe2PR6gNLyaSUiiYV9SmrkAgWc+sqtOKsiGDIIbBOsAiSLbT4iWXA9fRGj+v
+ cVYS8nuR1nrBy2InTDS3Agu71DoR7H/s4YelbEI7F5pSdezRMbM4Myfc9x/lgExL74Fc
+ olsg==
+X-Gm-Message-State: AOJu0Yz7QmeLSIU7L8EJ7BUc5gy+f5OpHF1Oh0oQ760ZOPdXdNebe0RM
+ NGuAb7KdRnEnfd6HFvmnA7fEqi8dbfyDVc7DTfBob3QeJQhxsD5bvMJk/S0N1ndcoA2GT4zr1Zc
+ qp/YTQC+WdFPtJ2QJlWm/7eJdK8mkIGA0oThkhA==
+X-Gm-Gg: ASbGnct37lQ9u8OQo43Q1ifO97LmNshmbZgzSbY+w9ko7dOUokzcRyv4oEA33MAFz1w
+ G4ikzu8Z3LD5T4xHqpvCoWGEgIoyGKP7k
+X-Google-Smtp-Source: AGHT+IFIQYgVWucdZUZm/MGwW8o/x69WrsFwDAecdywlBycUkKs34jmlCDdAqxm02HpSotRtW2wplRUR0jbCuDj5t9o=
+X-Received: by 2002:a05:6402:42c3:b0:5cf:d1b2:b44e with SMTP id
+ 4fb4d7f45d1cf-5d007be495bmr4388140a12.1.1732209589766; Thu, 21 Nov 2024
+ 09:19:49 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/12] ppc/e500: Avoid abuse of container_get()
-To: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Bharat Bhushan <r65777@freescale.com>,
- qemu-ppc@nongnu.org
-References: <20241120215703.3918445-1-peterx@redhat.com>
- <20241120215703.3918445-8-peterx@redhat.com>
- <2c63bf58-108a-4785-ad7e-c7e6446970e4@redhat.com>
- <9e206447-86e6-4251-8e3b-b764b4bf6480@redhat.com> <Zz9irqNkWX3BSDqG@x1n>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Zz9irqNkWX3BSDqG@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+References: <20241121165806.476008-1-alex.bennee@linaro.org>
+In-Reply-To: <20241121165806.476008-1-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 Nov 2024 17:19:38 +0000
+Message-ID: <CAFEAcA8KD4qxY18pJakSeziTioNYDQkd3VYcxYfq9y2KAON4Wg@mail.gmail.com>
+Subject: Re: [PATCH 00/39] maintainer updates for -rc2 pre-PR
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, qemu-riscv@nongnu.org, 
+ Thomas Huth <huth@tuxfamily.org>, Bernhard Beschow <shentey@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ Eric Farman <farman@linux.ibm.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-s390x@nongnu.org, 
+ Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org, 
+ John Snow <jsnow@redhat.com>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, 
+ qemu-rust@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Markus Armbruster <armbru@redhat.com>,
+ Weiwei Li <liwei1518@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Ani Sinha <anisinha@redhat.com>, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,71 +116,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/11/24 17:41, Peter Xu wrote:
-> On Thu, Nov 21, 2024 at 10:48:43AM +0100, Cédric Le Goater wrote:
->> On 11/21/24 10:38, Cédric Le Goater wrote:
->>> On 11/20/24 22:56, Peter Xu wrote:
->>>> container_get() is going to become strict on not allowing to return a
->>>> non-container.
->>>>
->>>> Switch the e500 user to use object_resolve_path_component() explicitly.
->>>>
->>>> Cc: Bharat Bhushan <r65777@freescale.com>
->>>> Cc: qemu-ppc@nongnu.org
->>>> Signed-off-by: Peter Xu <peterx@redhat.com>
->>>> ---
->>>>    hw/pci-host/ppce500.c | 4 ++--
->>>>    1 file changed, 2 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
->>>> index b70631045a..65233b9e3f 100644
->>>> --- a/hw/pci-host/ppce500.c
->>>> +++ b/hw/pci-host/ppce500.c
->>>> @@ -418,8 +418,8 @@ static const VMStateDescription vmstate_ppce500_pci = {
->>>>    static void e500_pcihost_bridge_realize(PCIDevice *d, Error **errp)
->>>>    {
->>>>        PPCE500PCIBridgeState *b = PPC_E500_PCI_BRIDGE(d);
->>>> -    PPCE500CCSRState *ccsr = CCSR(container_get(qdev_get_machine(),
->>>> -                                  "/e500-ccsr"));
->>>> +    PPCE500CCSRState *ccsr = CCSR(
->>>> +        object_resolve_path_component(qdev_get_machine(), "e500-ccsr"));
->>>
->>>
->>> why not simply use :
->>>
->>>         CCSR(object_resolve_path("/machine/e500-ccsr", NULL));
->>
->>
->> I guess we want to avoid the absolute paths. If so,
-> 
-> It wasn't my intention, but what you said actually makes sense to me to
-> avoid hard-coded "/machine" if possible.
+On Thu, 21 Nov 2024 at 16:58, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> This is a mostly testing focused set of patches but a few bug fixes as
+> well. I plan to send the PR in on Monday. I can drop any patches that
+> are objected to but I think its pretty safe.
+>
+> Contains:
+>
+>   - Daniel's clean-up of functional tests
+>   - Another avocado->function conversion from Thomas
+>   - Update the tuxrun baseline images
+>   - Minor fix to the rust pl011 device
+>   - Documentation clarification on identity
 
-Long term (heterogeneous emulation & dynamic machines in mind) I'm
-unsure about qdev_get_machine() future. Not to take care now, but
-I'm expecting it to evolve. So not using hardcoded path is better
-IMHO.
+Should we really be updating the tuxrun baseline images
+in the middle of a release freeze period? Unless the old images
+are going to go away and break the tests, I think it would
+be better to stick with what we're currently testing.
 
-> 
-> OTOH, object_resolve_path_component() was actually tiny little faster when
-> we know the depth of the path.
-> 
->>
->> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->>
->>
->> We might want to convert these lookups to object_resolve_path_component
->> too, not in this patchset.
->>
->> hw/i386/acpi-build.c:    host = PCI_HOST_BRIDGE(object_resolve_path("/machine/i440fx", NULL));
->> hw/i386/acpi-build.c:        host = PCI_HOST_BRIDGE(object_resolve_path("/machine/q35", NULL));
->> target/i386/kvm/kvm.c:        (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
->> target/i386/tcg/sysemu/tcg-cpu.c:        (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
-> 
-> Sounds reasonable to me to use the same style.  I'll stick with this patch
-> as of now in the current series.
-> 
-> Thanks,
-> 
-
+thanks
+-- PMM
 
