@@ -4,66 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01DADD75BDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 09:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAECD75BDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 09:20:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE3MR-0007NP-Vt; Thu, 21 Nov 2024 04:20:28 -0500
+	id 1tE3Mb-0007z2-M4; Thu, 21 Nov 2024 04:20:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3MN-0007ET-PC
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:20:23 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3MZ-0007mS-1B
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:20:35 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3MM-0006ln-2C
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:20:23 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43152b79d25so5281345e9.1
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 01:20:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tE3MW-0006n5-2v
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 04:20:34 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-382442b7d9aso565195f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 01:20:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732180820; x=1732785620; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732180830; x=1732785630; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0xU2e3IGaGnrZPCNbtih61Ah7tKbc/zkcpEJDNxMiNc=;
- b=heThBthT0vWysvxOep2TGNLSig5ZsW8xeclUsKk6kCQe/32vuG9sgeaJsRh1shGfgo
- vINplcYrHOwZuIvjPldNQ6w6y0rjKWCH96HoVJLKZi7Yy+ATe8CO3y9OTluylPjZjeOA
- rlgGvXurOy5bkfHN7uffQMD/zlfF5uBLrOMOLP3BxI0rq/MneN3FfQWTjgnY0h87nBcw
- naiBT6j6GaNbrN6HNmU2x1mcvm/IZuQafd4Bk5N7pzyuAZVlbHpoy3ZhvUgK1Ksn266N
- taUKF7HmQjRhNyne2b3vqk9HLKMQ5Y6zAoOVoxBrPotiB7eJxzdTtaTSJFXX5tzazMA4
- uojw==
+ bh=NmHsWm9SOe/1O/0yZC1JhpX3Qt4NwD71m8LNeqKOBDU=;
+ b=pWqJA/E4jibwfuhylC0d4RUBahW9dt4qs7rTfGw8hsmHoJql8I5cNBa6SCjQQDGxcv
+ Bl+venqzalG+NvOhjKfgKq/YUHoIXgbA3CC/zn9t35FL7kFKuACAuNccn4IaFyzrwYX1
+ peRWlfRqX/XLOwQOTxT1o9HG0MJmVOQlCAVrTqFo3rhmeuMAzhJGEbmPoCnrEyEiPuLC
+ apalfcdPVTNMLXSawJmeNUYv514dAmPfZKB6BbIs9Av0GHsO9rBgeTiStqryW55cMSBx
+ zALNJQ/6pSLXwcAavspXjlsUaU7DhVmG9xkbDXVtTMut3MOv32bUKe3HQvQb2I1b2M8X
+ JeYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732180820; x=1732785620;
+ d=1e100.net; s=20230601; t=1732180830; x=1732785630;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0xU2e3IGaGnrZPCNbtih61Ah7tKbc/zkcpEJDNxMiNc=;
- b=LH0bLzgaVqASlHZR2hNEZ+Z9WXHV1zckew/+/uyaG3boo/McMaH3ivAjku5eljIcr5
- 4t+9gzHsD0gV2+ygdzF+sb2ehRshnD/Y5G2L9GVts0bqShllEW1SotbdXI+ITpaw73B5
- UI73ZTxd8iSnCQhOt1fWBb7ySrrC5YMJAFENtHkB6pD92rCUIPezDqFuTLBPLLlTZQ14
- eCd9UAWXgJH8njHxS950mAMEBa6EQK1wrwDIjuWEB5TiA1TP5Cf8lAXcao5e9Ol9KNtd
- s7UI3sr4hOQHCm8knypGZKqRM3JqMrfMegxvL8hDofm5E/3WnM+VfsFnJ8DEq4D+EJoQ
- DN3Q==
+ bh=NmHsWm9SOe/1O/0yZC1JhpX3Qt4NwD71m8LNeqKOBDU=;
+ b=ue7HY6dYfCrbw6looLm8IdmFjvvQwA8jzYjkpw8VMxRa0Eq39M8h3zw++HDdFTfeq6
+ bzyZOPbu6ih263LWQxVwDlZ7hc3mwydwEhqz3GsjottIz+hWXe3ir0md7kLx5xpQ5tdB
+ zKEIcxSz4Og8KDqflnekbQsnNd4kpGQW/PyeCdEX6+PLVONTrGLplNTDcghurzH5sWO7
+ pYRpwnaY5Jo4vpKTw2ZtYYYU9ltDP5EEEKvX6OP2E3X0odCWkjD1CVlya5j52tDVBXBV
+ cAwEgC3sNoraLo0m46a0cgr1+98zWBpjVHJ5Cq66CF2+a8QPY5fiX33iVZyXRFEtSmb1
+ sHqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5+LRkr9KF6Sl9YJuDisbri6rjuqd7f7vevODXIGGL6EFoCnEOOJ/3T04LXl9J2nfkfjBVsqlOsRTT@nongnu.org
-X-Gm-Message-State: AOJu0Yxxc/RetN8pg1RlctMG7FAPL/X3YPel5KnqP0ynLm9QKhL/8uRN
- j6tI79dSXc35ydeEbRdxJ7We/XlUabfHvcMAF9rW19cyIYvTKWJ3lTG7BEoYtX0=
-X-Google-Smtp-Source: AGHT+IG9emAhpiEvu6V/oLC6z5fuZoJCW8Ece6ODH1pbPPegPO9hukL2YrkSKLYGPPt+eOH68T+SCA==
-X-Received: by 2002:a05:600c:1391:b0:431:5ce4:bcf0 with SMTP id
- 5b1f17b1804b1-433489cc078mr57484835e9.15.1732180819668; 
- Thu, 21 Nov 2024 01:20:19 -0800 (PST)
+ AJvYcCW6bkdkG/9MSg8Ppv+xfdViyauhOyLe+ZT7D68sFuxFb8iAycdThwoTrM1pv8zu9YDxHicKJKoULqjB@nongnu.org
+X-Gm-Message-State: AOJu0YzqV+k1GAcRqwOnJeok6kurn1Dlh7u8nDtsfFVeVn9Z5ddQ9/Em
+ vI0A5gHKY//ccEknodlJGqbo4p0iVG386Jpa8QbanYbodaJ8avCHdn5mQgXOSrU=
+X-Gm-Gg: ASbGncsYbAwis+cAEJ5MxiHV0T1KBtZnmJ1iG1RByLHZS3MvNz8pu3M4r/71uitI+iV
+ OQjvbGS2YBSnYH+3RkLqCHfx7t318RcIKx6/lbZsvS1Lnzfhd0dD1xy6cRci+XiG5roU5xH/DVA
+ jSwfBmTCIhoTijmacWrcy0xkT49hqJTDd/l9ivL3bRVDbvcRgqQNWNEiDviH+vbVxSp9XX3wILQ
+ zk8Dj+aiGmqpxZ6kBtEInizYVaZtBlKvyc1RC7+8BWpAQeNCU6SdktgV2CeJpFzA8Upmg==
+X-Google-Smtp-Source: AGHT+IEpPIaN6vQJvl7E9jePpekFpNVOSwFrtk23cL0e+fysA16E6Twp4SmMdC81IJYXBfO/bCTjNg==
+X-Received: by 2002:a5d:64eb:0:b0:382:356a:c927 with SMTP id
+ ffacd0b85a97d-38254addfc3mr4315503f8f.9.1732180830563; 
+ Thu, 21 Nov 2024 01:20:30 -0800 (PST)
 Received: from [192.168.69.146] ([176.187.204.90])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b463ad45sm48995175e9.39.2024.11.21.01.20.18
+ ffacd0b85a97d-38254910e77sm4308506f8f.59.2024.11.21.01.20.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 01:20:19 -0800 (PST)
-Message-ID: <b632c5ee-62c8-4533-81ae-497d33724fcd@linaro.org>
-Date: Thu, 21 Nov 2024 10:20:17 +0100
+ Thu, 21 Nov 2024 01:20:30 -0800 (PST)
+Message-ID: <5eaea573-bcf1-4825-b165-cd72eddd32df@linaro.org>
+Date: Thu, 21 Nov 2024 10:20:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/12] tests: Fix test-qdev-global-props on anonymous qdev
- realize()
+Subject: Re: [PATCH 01/12] qom: Add TYPE_CONTAINER macro
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -73,14 +76,14 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  <clg@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <20241120215703.3918445-1-peterx@redhat.com>
- <20241120215703.3918445-4-peterx@redhat.com>
+ <20241120215703.3918445-2-peterx@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241120215703.3918445-4-peterx@redhat.com>
+In-Reply-To: <20241120215703.3918445-2-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,25 +107,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/11/24 22:56, Peter Xu wrote:
-> test-qdev-global-props creates a few subprocesses and test things based on
-> qdev realize().  One thing was overlooked since the start, that anonymous
-> creations of qdev (then realize() the device) requires the machine object's
-> presence, as all these devices need to be attached to QOM tree, by default
-> to path "/machine/unattached".
-> 
-> The test didn't crash simply because container_get() has an implicit
-> semantic to silently create any missing container, hence what happened here
-> is container_get() (when running these tests) will try to create containers
-> at QOM path "/machine" on the fly.  That's probably unexpected by the test,
-> but worked like charm before.
-> 
-> We're going to fix device_set_realized() soon, but before that make the
-> test case prepared, by creating the machine object on its own.
+> Provide a macro for the container type across QEMU source tree, rather than
+> hard code it every time.
 > 
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   tests/unit/test-qdev-global-props.c | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
+>   include/qom/object.h | 1 +
+>   hw/arm/stellaris.c   | 2 +-
+>   qom/container.c      | 4 ++--
+>   qom/object.c         | 4 ++--
+>   4 files changed, 6 insertions(+), 5 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
