@@ -4,92 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F068D743FE
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 17:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D544E64002
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 18:05:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEBP3-0006LQ-BF; Thu, 21 Nov 2024 12:55:41 -0500
+	id 1tEBX0-0000R1-16; Thu, 21 Nov 2024 13:03:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tEBP0-0006Hu-QV
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:55:39 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEBWy-0000Pw-RT
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:03:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tEBOy-0002dW-AN
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 12:55:38 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 11B9AA9940;
- Thu, 21 Nov 2024 20:55:21 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D6BA1176BD9;
- Thu, 21 Nov 2024 20:55:28 +0300 (MSK)
-Message-ID: <50f70ee6-8f84-4685-9ad8-779980804ed8@tls.msk.ru>
-Date: Thu, 21 Nov 2024 20:55:28 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEBWv-0003QU-Sh
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 13:03:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732212227;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=voKOFuuSe4kVVNDvzE4zcOkzQFmCC8UkE0e0u6FGJjs=;
+ b=LI6QfUB63UpUWxZUUp07mAD3KmnPzRVzUiLlL4sMwi1HOWFPg/UEzFVBxa5yRAsXUAFoAs
+ i5TFcDewOzUf/HidMZYAKqaVxUjeCjiOeKmWgMB1FuD44YG95AeikQLRYbPMpJsuvBy32P
+ ERvqASrnq0cgXG3VqtKCbYSozRv2vI0=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-306-T03RWiI7OcWT7MJzCriYDA-1; Thu, 21 Nov 2024 13:03:44 -0500
+X-MC-Unique: T03RWiI7OcWT7MJzCriYDA-1
+X-Mimecast-MFC-AGG-ID: T03RWiI7OcWT7MJzCriYDA
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-71a99fcee54so1078052a34.2
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 10:03:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732212224; x=1732817024;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=voKOFuuSe4kVVNDvzE4zcOkzQFmCC8UkE0e0u6FGJjs=;
+ b=gBuG6dEsOtZaBgykuL27NpsorVJcuIn7t7bIxXRt/FHNvJx22FMKC/X0PrHPVZCqSM
+ +kRGnNT8JPvusgxeOkon8hEEsHR3rXAoPCT/HBVGG6j3Yyz12m1P9XsBYoX7Q4SR6yy2
+ RsDLaD4d7GVe2Tno9f8kXPn57T0XZgt90r6EYEeKB4drKSdHEN8RbBOpaAlPvMwfrGwX
+ c18RWqdtB/IOT/wOL7ivU1+i0QRDHtGdZ9t6akLfTtt+B3rtjfOZE8DiSdyaANvb1ZUw
+ KerCvmEQB1C9+8tCXiUDSIWPAijBzMjcSm1exsvLfI2o9V6HyXSzmiDeh9FCsdJWIYh7
+ IVkg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXoCpjRHGRnCMIcetTsTpzNR/ak/3erl/ihrAKBiruekN3hFv8qykSHh+3L0uwQKKgxhG64QmNTMP1x@nongnu.org
+X-Gm-Message-State: AOJu0YzEkOhLPuSYWdA9qejHJOitnwTTDebDH2LBD+xhh+GXk7wg7YJk
+ FDEKonGTCYVDX2VpF4sCh9DRtaOCWNkBuo+dmHiz+SEo1zMjcPIboicRq3DqeaOY20WkdSpGcyz
+ 3GfEZtEk/P0qwFmRGVpLl5TPIkdAdZ9mRNjBCzNhG8N2wwmACJwVF
+X-Gm-Gg: ASbGncvJ9sxmyvYIg2Mb/U/86j6F5wfcF8HcZWMh6gFeAJVMkavZeX9UcQYz3Oll6f8
+ JkyiNy6zaOyIz41sIjMY0OLPGLuSEWM9MTUtrsOJ2x8vTf5FSR1bNR3UyzRq0zy/4XZvovx1whB
+ Qe5pzc2dxaADFOTTcLK2wtnZwbZy4zO9YWSqCF7nD4fEXAZmjtxjG7dRM4fT9g3l6UMKFT2XW1U
+ QTBXP3pegvKNEYVxx51MJ6wVNDT6tYiLBlgkMgqomu8EikHY70TUer6nmq5DZChB5iLCYruDO9I
+ R4d5SGVfRac=
+X-Received: by 2002:a05:6830:6a97:b0:710:ea11:3d34 with SMTP id
+ 46e09a7af769-71ab3190062mr9555646a34.12.1732212223652; 
+ Thu, 21 Nov 2024 10:03:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEZJ+cVPIckmKzvO4OH4h5wNriPPe46k1YdHEEb5huk6aDYYSnLBNYAtYcfu4Vwq+JyoQ7s2g==
+X-Received: by 2002:a05:6830:6a97:b0:710:ea11:3d34 with SMTP id
+ 46e09a7af769-71ab3190062mr9555606a34.12.1732212223199; 
+ Thu, 21 Nov 2024 10:03:43 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e1cfe4f8ecsm73555173.67.2024.11.21.10.03.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 Nov 2024 10:03:42 -0800 (PST)
+Date: Thu, 21 Nov 2024 13:03:40 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 10/12] qom: Create system containers explicitly
+Message-ID: <Zz91_IoN0e5E0v2k@x1n>
+References: <20241120215703.3918445-1-peterx@redhat.com>
+ <20241120215703.3918445-11-peterx@redhat.com>
+ <Zz8LwhXsa6ail5qo@redhat.com>
+ <64d02784-adde-459a-a019-10cdca93734f@linaro.org>
+ <Zz9rDA_xlgweZzeP@x1n>
+ <c68b260a-b4ee-48ec-9f5c-3c72a58f424b@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hvf: Enable 1G page support
-To: Alexander Graf <agraf@csgraf.de>, qemu-devel@nongnu.org
-Cc: Roman Bolshakov <r.bolshakov@yadro.com>,
- Cameron Esfahani <dirty@apple.com>,
- Akihiro Suda <akihiro.suda.cz@hco.ntt.co.jp>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20230420225258.58009-1-agraf@csgraf.de>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20230420225258.58009-1-agraf@csgraf.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+In-Reply-To: <c68b260a-b4ee-48ec-9f5c-3c72a58f424b@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,123 +118,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-21.04.2023 01:52, Alexander Graf wrote:
-> Hvf on x86 only supported 2MiB large pages, but never bothered to strip
-> out the 1GiB page size capability from -cpu host. With QEMU 8.0.0 this
-> became a problem because OVMF started to use 1GiB pages by default.
+On Thu, Nov 21, 2024 at 06:29:06PM +0100, Philippe Mathieu-Daudé wrote:
+> On 21/11/24 18:17, Peter Xu wrote:
+> > On Thu, Nov 21, 2024 at 02:01:45PM +0100, Philippe Mathieu-Daudé wrote:
+> > > On 21/11/24 11:30, Daniel P. Berrangé wrote:
+> > > > On Wed, Nov 20, 2024 at 04:57:01PM -0500, Peter Xu wrote:
+> > > > > Always explicitly create QEMU system containers upfront.
+> > > > > 
+> > > > > Root containers will be created when trying to fetch the root object the
+> > > > > 1st time.  Machine sub-containers will be created only until machine is
+> > > > > being initialized.
+> > > > > 
+> > > > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > > > > ---
+> > > > >    hw/core/machine.c | 19 ++++++++++++++++---
+> > > > >    qom/object.c      | 16 +++++++++++++++-
+> > > > >    2 files changed, 31 insertions(+), 4 deletions(-)
+> > > > 
+> > > > 
+> > > > > diff --git a/qom/object.c b/qom/object.c
+> > > > > index 214d6eb4c1..810e6f2bd9 100644
+> > > > > --- a/qom/object.c
+> > > > > +++ b/qom/object.c
+> > > > > @@ -1734,12 +1734,26 @@ const char *object_property_get_type(Object *obj, const char *name, Error **errp
+> > > > >        return prop->type;
+> > > > >    }
+> > > > > +static Object *object_root_initialize(void)
+> > > > > +{
+> > > > > +    Object *root = object_new(TYPE_CONTAINER);
+> > > > > +
+> > > > > +    /*
+> > > > > +     * Create all QEMU system containers.  "machine" and its sub-containers
+> > > > > +     * are only created when machine initializes (qemu_create_machine()).
+> > > > > +     */
+> > > > > +    container_create(root, "chardevs");
+> > > > > +    container_create(root, "objects");
+> > > > 
+> > > > This is where I would expect 'backend' to have been created
+> > > > rather than ui/console.c, though you could potentially make
+> > > > a case to create it from the machine function, snice console
+> > > > stuff can't be used outside of the machine context, while
+> > > > chardevs/objects can be used in qemu-img/qemu-nbd, etc
+> > 
+> > Would it hurt if we do it altogether here even if it won't be used in
+> > qemu-img/qemu-nbd?
+> > 
+> > IMHO we should either make it simple (assuming empty containers won't hurt
+> > there..), or we should just leave "backend" to ui/ code, so we don't assume
+> > which binary is using the ui code: whoever uses it will create the container.
+> > 
+> > > 
+> > > What about creating "backend" container in qemu_create_machine()?
+> > 
+> > I remember I started with that but it didn't work.  IIRC that's because
+> > machine_initfn() (or somewhere around the init code) requires the
+> > containers to present, hence it's too late even if we create the containers
+> > right after this line:
+> > 
+> >      current_machine = MACHINE(object_new_with_class(OBJECT_CLASS(machine_class)));
 > 
-> Let's just unconditionally add 1GiB page walk support to the walker.
-> 
-> With this fix applied, I can successfully run OVMF again.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1603
-> Signed-off-by: Alexander Graf <agraf@csgraf.de>
-> Reported-by: Akihiro Suda <akihiro.suda.cz@hco.ntt.co.jp>
-> Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> So qemu_create_machine_containers() really belongs to qemu_create_machine()
+> =)
 
-Hi!
+Frankly, I don't immediately get this line..
 
-Is this change not relevant or not needed anymore?
-It's been more than 1.5 years already..
+But when I was trying again just to check my memory, I can't see anything
+crash anymore, moving things over.
 
-(it probably needs to be tweaked for the current state of things,
-but I'm surprised there's been nothing at all for such a long time)
+So while I'll test some more, I can switch to that if I cannot reproduce
+any issue with it.  That's:
 
-/mjt
+===8<===
 
-> On my test VM, Linux dies later on with issues in interrupt delivery. But
-> those are unrelated to this patch; I confirmed that I get the same behavior
-> with 1GiB page support disabled.
-> ---
->   target/i386/hvf/x86_mmu.c | 30 ++++++++++++++++++++----------
->   1 file changed, 20 insertions(+), 10 deletions(-)
-> 
-> diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/hvf/x86_mmu.c
-> index 96d117567e..1d860651c6 100644
-> --- a/target/i386/hvf/x86_mmu.c
-> +++ b/target/i386/hvf/x86_mmu.c
-> @@ -38,6 +38,7 @@
->   #define LEGACY_PTE_PAGE_MASK        (0xffffffffllu << 12)
->   #define PAE_PTE_PAGE_MASK           ((-1llu << 12) & ((1llu << 52) - 1))
->   #define PAE_PTE_LARGE_PAGE_MASK     ((-1llu << (21)) & ((1llu << 52) - 1))
-> +#define PAE_PTE_SUPER_PAGE_MASK     ((-1llu << (30)) & ((1llu << 52) - 1))
->   
->   struct gpt_translation {
->       target_ulong  gva;
-> @@ -96,7 +97,7 @@ static bool get_pt_entry(struct CPUState *cpu, struct gpt_translation *pt,
->   
->   /* test page table entry */
->   static bool test_pt_entry(struct CPUState *cpu, struct gpt_translation *pt,
-> -                          int level, bool *is_large, bool pae)
-> +                          int level, int *largeness, bool pae)
->   {
->       uint64_t pte = pt->pte[level];
->   
-> @@ -118,9 +119,9 @@ static bool test_pt_entry(struct CPUState *cpu, struct gpt_translation *pt,
->           goto exit;
->       }
->   
-> -    if (1 == level && pte_large_page(pte)) {
-> +    if (level && pte_large_page(pte)) {
->           pt->err_code |= MMU_PAGE_PT;
-> -        *is_large = true;
-> +        *largeness = level;
->       }
->       if (!level) {
->           pt->err_code |= MMU_PAGE_PT;
-> @@ -152,9 +153,18 @@ static inline uint64_t pse_pte_to_page(uint64_t pte)
->       return ((pte & 0x1fe000) << 19) | (pte & 0xffc00000);
->   }
->   
-> -static inline uint64_t large_page_gpa(struct gpt_translation *pt, bool pae)
-> +static inline uint64_t large_page_gpa(struct gpt_translation *pt, bool pae,
-> +                                      int largeness)
->   {
-> -    VM_PANIC_ON(!pte_large_page(pt->pte[1]))
-> +    VM_PANIC_ON(!pte_large_page(pt->pte[largeness]))
-> +
-> +    /* 1Gib large page  */
-> +    if (pae && largeness == 2) {
-> +        return (pt->pte[2] & PAE_PTE_SUPER_PAGE_MASK) | (pt->gva & 0x3fffffff);
-> +    }
-> +
-> +    VM_PANIC_ON(largeness != 1)
-> +
->       /* 2Mb large page  */
->       if (pae) {
->           return (pt->pte[1] & PAE_PTE_LARGE_PAGE_MASK) | (pt->gva & 0x1fffff);
-> @@ -170,7 +180,7 @@ static bool walk_gpt(struct CPUState *cpu, target_ulong addr, int err_code,
->                        struct gpt_translation *pt, bool pae)
->   {
->       int top_level, level;
-> -    bool is_large = false;
-> +    int largeness = 0;
->       target_ulong cr3 = rvmcs(cpu->hvf->fd, VMCS_GUEST_CR3);
->       uint64_t page_mask = pae ? PAE_PTE_PAGE_MASK : LEGACY_PTE_PAGE_MASK;
->       
-> @@ -186,19 +196,19 @@ static bool walk_gpt(struct CPUState *cpu, target_ulong addr, int err_code,
->       for (level = top_level; level > 0; level--) {
->           get_pt_entry(cpu, pt, level, pae);
->   
-> -        if (!test_pt_entry(cpu, pt, level - 1, &is_large, pae)) {
-> +        if (!test_pt_entry(cpu, pt, level - 1, &largeness, pae)) {
->               return false;
->           }
->   
-> -        if (is_large) {
-> +        if (largeness) {
->               break;
->           }
->       }
->   
-> -    if (!is_large) {
-> +    if (!largeness) {
->           pt->gpa = (pt->pte[0] & page_mask) | (pt->gva & 0xfff);
->       } else {
-> -        pt->gpa = large_page_gpa(pt, pae);
-> +        pt->gpa = large_page_gpa(pt, pae, largeness);
->       }
->   
->       return true;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index ed613ec4cb..a72c001c3d 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1193,27 +1193,11 @@ static void machine_class_base_init(ObjectClass *oc, void *data)
+     }
+ }
+ 
+-static const char *const machine_containers[] = {
+-    "unattached",
+-    "peripheral",
+-    "peripheral-anon"
+-};
+-
+-static void qemu_create_machine_containers(Object *machine)
+-{
+-    int i;
+-
+-    for (i = 0; i < ARRAY_SIZE(machine_containers); i++) {
+-        object_property_add_new_container(machine, machine_containers[i]);
+-    }
+-}
+-
+ static void machine_initfn(Object *obj)
+ {
+     MachineState *ms = MACHINE(obj);
+     MachineClass *mc = MACHINE_GET_CLASS(obj);
+ 
+-    qemu_create_machine_containers(obj);
+     ms->dump_guest_core = true;
+     ms->mem_merge = (QEMU_MADV_MERGEABLE != QEMU_MADV_INVALID);
+     ms->enable_graphics = true;
+diff --git a/system/vl.c b/system/vl.c
+index 822f7ff656..cdc0b6e10c 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2112,6 +2112,21 @@ static void parse_memory_options(void)
+     loc_pop(&loc);
+ }
+ 
++static const char *const machine_containers[] = {
++    "unattached",
++    "peripheral",
++    "peripheral-anon"
++};
++
++static void qemu_create_machine_containers(Object *machine)
++{
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(machine_containers); i++) {
++        object_property_add_new_container(machine, machine_containers[i]);
++    }
++}
++
+ static void qemu_create_machine(QDict *qdict)
+ {
+     MachineClass *machine_class = select_machine(qdict, &error_fatal);
+@@ -2120,6 +2135,7 @@ static void qemu_create_machine(QDict *qdict)
+     current_machine = MACHINE(object_new_with_class(OBJECT_CLASS(machine_class)));
+     object_property_add_child(object_get_root(), "machine",
+                               OBJECT(current_machine));
++    qemu_create_machine_containers(OBJECT(current_machine));
+     object_property_add_child(machine_get_container("unattached"),
+                               "sysbus", OBJECT(sysbus_get_default()));
+ 
+
+-- 
+Peter Xu
 
 
