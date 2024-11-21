@@ -4,126 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60AB3D743C9
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 14:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4664ED7876B
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 14:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tE7tw-0005Fr-Mo; Thu, 21 Nov 2024 09:11:20 -0500
+	id 1tE8HO-0002MV-LE; Thu, 21 Nov 2024 09:35:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tE7tp-0005F7-Lh
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 09:11:13 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1tE8HN-0002ME-3v
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 09:35:33 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tE7tn-0000PN-EA
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 09:11:13 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C151721A22;
- Thu, 21 Nov 2024 14:11:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732198269; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PfpiEXUijtnY16vEkuA572Kv6GhUs1PtdznrY+O838c=;
- b=rmW84Zh2MepBBD46NJDyVCa9gtdmcCaIWoHsIQeWBStuOHSzDJmll2vEEHkEWm2kLOE1Wq
- EouY/NDjpt/jPaervq5TDutDraZqShjsFhX1K0d075jrbWpKdfPHN1QaAU9Cq4BLHx5GAq
- UDjPH3gmJR97gcZu8IwuIuTdL7PmlSk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732198269;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PfpiEXUijtnY16vEkuA572Kv6GhUs1PtdznrY+O838c=;
- b=wVmZh7P0/6J2mt2sMqmK4ZUe4nMg7MHy1Hbk+TI8CDCIlRzZqF0YKag8FudILmzzPE6AI6
- HPFlOCINiII98KDA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FgcY6P8d;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cgY2K12t
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732198267; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PfpiEXUijtnY16vEkuA572Kv6GhUs1PtdznrY+O838c=;
- b=FgcY6P8dBY95HqQuUUxRWt9+YZnKNyzCBUfFsz8hxxn9LF9cVavxT1wRiwRVwzB3CfR67c
- Chif4XXYduhf3wD1j3u+Bo3ipSLyToSHlOwxdc5UBSY0JKTTUr/RcZisFDSID6aDP2wtQX
- QHGplIbUQOPmkG2EUK2NyJuVZ/mJBRU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732198267;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PfpiEXUijtnY16vEkuA572Kv6GhUs1PtdznrY+O838c=;
- b=cgY2K12t72Fmfa3oLkQFJAEaR/ic/dEXchPYvYLKesboqR3cSY72UbVhUbylwOxh15S7f+
- OSnoDu1oiB4CTtCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 20B1B13927;
- Thu, 21 Nov 2024 14:11:06 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xDAwMno/P2dZNQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 21 Nov 2024 14:11:06 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yichen Wang <yichen.wang@bytedance.com>, Peter Xu <peterx@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
- <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: Re: [PATCH v7 03/12] util/dsa: Implement DSA device start and stop
- logic.
-In-Reply-To: <20241114220132.27399-4-yichen.wang@bytedance.com>
-References: <20241114220132.27399-1-yichen.wang@bytedance.com>
- <20241114220132.27399-4-yichen.wang@bytedance.com>
-Date: Thu, 21 Nov 2024 11:11:03 -0300
-Message-ID: <875xogsmmg.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1tE8HK-00057L-8y
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 09:35:32 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2ea4d429e43so818371a91.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 06:35:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1732199727; x=1732804527;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oa//9HiLv+OzTTvxthDQo8QphxTa8XGR6rR8rK6C1JQ=;
+ b=Rjh4H4Sc4XM1FI4tbAJm1Xx8f2t40/T8pmOzW8uzSEdzBdcYetSQ0Dy/NQnQfffqjI
+ 37vt//pI3sewe6eyVywa3Oc6B2qT7wbV0dmgJA5dpUwaYOPhvwlNAiAcl0jEQ4RoM0xl
+ L0PhPbzbdVNFUDFjx88LL4ML3uyPqRA1XQ0mpnj/oGvBn68j+3+S8qvj9PfoWQMtPp0e
+ KIU0HrbJgsGvoqxUrFUnDULsjfqec5xWR7UUcR9qpdAKg+bzeaWhLABiS9b7Lg0ADl+D
+ a+r6ccrfNJ9US8JvsQjstBcvJmV5V0x0BMseTOhnXbuSfLjdJzfVZ/O8BzVzM9bez9g4
+ Jjyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732199727; x=1732804527;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oa//9HiLv+OzTTvxthDQo8QphxTa8XGR6rR8rK6C1JQ=;
+ b=EY+ZeLboLr1eyukiw5DWDrW0I0u8v+gSM90LtAkTTXQ3JDSMKvDVKxhyyZbf642sS3
+ WHlK6SA0xpDc4XImDZoall9Ua+6gu0eZu45pBciAdxQPUuqAzsBk7ifbkjvjKPJxw+Ql
+ sLGpM7MjzuCp9S0UN2N6nVOU/6kSrfEo8Cf3oaP7iEDZBiBcMJ/LPiVxEC52PN9ZWFnb
+ 8QKnxTUsDAJgBycwp+2JpV7MdrgwkxxbnN3SQLnQUx10M8ztW2NVFxS4D7UvQmHTIdjw
+ g4gWwAaGZ32fg60msHKRaZVMellU2EjTwbHiZFZt/b7nNyz4vQDo0bWHQBjSEAn5Fnig
+ 2O7A==
+X-Gm-Message-State: AOJu0YwFpg3QTeBTP293U9GgTvE0EiVUwcmV3ilk2wSFbjllG5Wpqtp2
+ QJ2R2/N2DWyeEfB8tMtzX9lS1WT/3SoiKYUpn4/nrBKIw+fRcv7MGDs/afqhBtSj0DDJAiIsADs
+ W5oVnLwm3xGLS8dtPTApq06tDgtvkohsae3LKEynXLMQY+kdakg==
+X-Gm-Gg: ASbGnctdoCNx9ZBtpvp6oIoeQAuD4ec+mdZChqZr2uy9qIGEZFhGT80aLmdbzcbrbrx
+ /qqc1HQl/CCUlX01J2wsBeD+er1XF3hk=
+X-Google-Smtp-Source: AGHT+IFOCG1AJCHTMDqU1it1fKLZGGUzI23U0y6e33hfl554JefTt5laTE8Ue+vGiBJUWtdNiSYPPB0msdyufTb6ttg=
+X-Received: by 2002:a17:90b:1b0b:b0:2ea:97b6:c44d with SMTP id
+ 98e67ed59e1d1-2eaca703c19mr9186262a91.15.1732199727086; Thu, 21 Nov 2024
+ 06:35:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: C151721A22
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[18];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[bytedance.com:email,suse.de:dkim,suse.de:mid,linux.dev:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241121131954.98949-1-philmd@linaro.org>
+In-Reply-To: <20241121131954.98949-1-philmd@linaro.org>
+From: Phil Dennis-Jordan <lists@philjordan.eu>
+Date: Thu, 21 Nov 2024 15:35:15 +0100
+Message-ID: <CAGCz3vtkJS0Fgx_+1qJbUkYAxJ3WPvhEBxJ7P4T1a-g34KV1RA@mail.gmail.com>
+Subject: Re: [PATCH-for-9.2] ui/cocoa: Temporarily ignore annoying deprecated
+ declaration warnings
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Content-Type: multipart/alternative; boundary="00000000000069e69306276d2d55"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=lists@philjordan.eu; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,437 +95,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yichen Wang <yichen.wang@bytedance.com> writes:
+--00000000000069e69306276d2d55
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> From: Hao Xiang <hao.xiang@linux.dev>
+As we're talking about macOS-only code I'd perhaps have used '#pragma clang
+diagnostic' rather than the GCC versions, but clang seems to understand
+these just fine too. (Plus, we very much intend for these to be genuinely
+temporary.)
+
+Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
+
+I'll try to find some spare cycles to come up with a clean solution to the
+deprecation issue towards the end of the year. I need to research the
+available alternative APIs for another project anyway.
+
+I think part of the reason for the deprecation is that most modern Macs (as
+with other modern laptop and desktop computers) actually use a variable
+display frame rate, so the concept of a "native" frame rate is no longer
+well-defined. In an ideal world the frame rate would be something that's
+negotiable between the host UI and the virtual hardware.
+
+For example, the macOS PV Graphics I've been working on integrating would
+actually prefer a "push" arrangement where the guest/PV hardware notify the
+host when the next frame is ready, rather than expecting a fixed-rate frame
+refresh interrupt or similar. So when using that there would actually not
+be any need for the display-linked timer at all if the UI is happy with the
+hw calling dpy_gfx_update_full()/graphic_hw_update_done() proactively
+whenever it has a new frame available. I'm not sure what the story is for
+other display adapters in QEMU, but I can do a survey of that.
+
+
+On Thu, 21 Nov 2024 at 14:20, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g>
+wrote:
+
+> These warnings are breaking some build configurations since 2 months
+> now (https://gitlab.com/qemu-project/qemu/-/issues/2575):
 >
-> * DSA device open and close.
-> * DSA group contains multiple DSA devices.
-> * DSA group configure/start/stop/clean.
+>   ui/cocoa.m:662:14: error: 'CVDisplayLinkCreateWithCGDisplay' is
+> deprecated: first deprecated in macOS 15.0 - use
+> NSView.displayLink(target:selector:),
+> NSWindow.displayLink(target:selector:), or
+> NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declaration=
+s]
+>     662 |         if (!CVDisplayLinkCreateWithCGDisplay(display,
+> &displayLink)) {
+>         |              ^
 >
-> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
-> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+> /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Framew=
+orks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20:
+> note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked
+> deprecated here
+>      89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
+>         |                    ^
+>   ui/cocoa.m:663:29: error:
+> 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' is deprecated: first
+> deprecated in macOS 15.0 - use NSView.displayLink(target:selector:),
+> NSWindow.displayLink(target:selector:), or
+> NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declaration=
+s]
+>     663 |             CVTime period =3D
+> CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
+>         |                             ^
+>
+> /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Framew=
+orks/CoreVideo.framework/Headers/CVDisplayLink.h:182:18:
+> note: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' has been explicit=
+ly
+> marked deprecated here
+>     182 | CV_EXPORT CVTime
+> CVDisplayLinkGetNominalOutputVideoRefreshPeriod( CVDisplayLinkRef
+> CV_NONNULL displayLink );
+>         |                  ^
+>   ui/cocoa.m:664:13: error: 'CVDisplayLinkRelease' is deprecated: first
+> deprecated in macOS 15.0 - use NSView.displayLink(target:selector:),
+> NSWindow.displayLink(target:selector:), or
+> NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declaration=
+s]
+>     664 |             CVDisplayLinkRelease(displayLink);
+>         |             ^
+>
+> /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Framew=
+orks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16:
+> note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+>     249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT
+> CVDisplayLinkRef CV_NULLABLE displayLink );
+>         |                ^
+>   3 errors generated.
+>
+> For the next release, ignore the warnings using #pragma directives.
+> At least until we figure the correct new API usage.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  include/qemu/dsa.h | 103 +++++++++++++++++
->  util/dsa.c         | 280 +++++++++++++++++++++++++++++++++++++++++++++
->  util/meson.build   |   3 +
->  3 files changed, 386 insertions(+)
->  create mode 100644 include/qemu/dsa.h
->  create mode 100644 util/dsa.c
+>  ui/cocoa.m | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
-> new file mode 100644
-> index 0000000000..71686af28f
-> --- /dev/null
-> +++ b/include/qemu/dsa.h
-> @@ -0,0 +1,103 @@
-> +/*
-> + * Interface for using Intel Data Streaming Accelerator to offload certain
-> + * background operations.
-> + *
-> + * Copyright (C) Bytedance Ltd.
-> + *
-> + * Authors:
-> + *  Hao Xiang <hao.xiang@bytedance.com>
-> + *  Yichen Wang <yichen.wang@bytedance.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
+> diff --git a/ui/cocoa.m b/ui/cocoa.m
+> index 4c2dd33532..0422dafde4 100644
+> --- a/ui/cocoa.m
+> +++ b/ui/cocoa.m
+> @@ -639,6 +639,9 @@ - (void) updateBounds
+>      [self setBoundsSize:NSMakeSize(screen.width, screen.height)];
+>  }
+>
+> +#pragma GCC diagnostic push
+> +#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 > +
-> +#ifndef QEMU_DSA_H
-> +#define QEMU_DSA_H
+>  - (void) updateUIInfoLocked
+>  {
+>      /* Must be called with the BQL, i.e. via updateUIInfo */
+> @@ -685,6 +688,8 @@ - (void) updateUIInfoLocked
+>      dpy_set_ui_info(dcl.con, &info, TRUE);
+>  }
+>
+> +#pragma GCC diagnostic pop
 > +
-> +#include "qapi/error.h"
-> +#include "qemu/thread.h"
-> +#include "qemu/queue.h"
-> +
-> +#ifdef CONFIG_DSA_OPT
-> +
-> +#pragma GCC push_options
-> +#pragma GCC target("enqcmd")
-> +
-> +#include <linux/idxd.h>
-> +#include "x86intrin.h"
-> +
-> +typedef struct {
-> +    void *work_queue;
-> +} QemuDsaDevice;
-> +
-> +typedef QSIMPLEQ_HEAD(QemuDsaTaskQueue, QemuDsaBatchTask) QemuDsaTaskQueue;
-> +
-> +typedef struct {
-> +    QemuDsaDevice *dsa_devices;
-> +    int num_dsa_devices;
-> +    /* The index of the next DSA device to be used. */
-> +    uint32_t device_allocator_index;
-> +    bool running;
-> +    QemuMutex task_queue_lock;
-> +    QemuCond task_queue_cond;
-> +    QemuDsaTaskQueue task_queue;
-> +} QemuDsaDeviceGroup;
-> +
-> +/**
-> + * @brief Initializes DSA devices.
-> + *
-> + * @param dsa_parameter A list of DSA device path from migration parameter.
-> + *
-> + * @return int Zero if successful, otherwise non zero.
-> + */
-> +int qemu_dsa_init(const strList *dsa_parameter, Error **errp);
-> +
-> +/**
-> + * @brief Start logic to enable using DSA.
-> + */
-> +void qemu_dsa_start(void);
-> +
-> +/**
-> + * @brief Stop the device group and the completion thread.
-> + */
-> +void qemu_dsa_stop(void);
-> +
-> +/**
-> + * @brief Clean up system resources created for DSA offloading.
-> + */
-> +void qemu_dsa_cleanup(void);
-> +
-> +/**
-> + * @brief Check if DSA is running.
-> + *
-> + * @return True if DSA is running, otherwise false.
-> + */
-> +bool qemu_dsa_is_running(void);
-> +
-> +#else
-> +
-> +static inline bool qemu_dsa_is_running(void)
-> +{
-> +    return false;
-> +}
-> +
-> +static inline int qemu_dsa_init(const strList *dsa_parameter, Error **errp)
-> +{
-> +    if (dsa_parameter != NULL && strlen(dsa_parameter) != 0) {
-> +        error_setg(errp, "DSA is not supported.");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static inline void qemu_dsa_start(void) {}
-> +
-> +static inline void qemu_dsa_stop(void) {}
-> +
-> +static inline void qemu_dsa_cleanup(void) {}
-> +
-> +#endif
-> +
-> +#endif
-> diff --git a/util/dsa.c b/util/dsa.c
-> new file mode 100644
-> index 0000000000..79dab5d62c
-> --- /dev/null
-> +++ b/util/dsa.c
-> @@ -0,0 +1,280 @@
-> +/*
-> + * Use Intel Data Streaming Accelerator to offload certain background
-> + * operations.
-> + *
-> + * Copyright (C) Bytedance Ltd.
-> + *
-> + * Authors:
-> + *  Hao Xiang <hao.xiang@bytedance.com>
-> + *  Bryan Zhang <bryan.zhang@bytedance.com>
-> + *  Yichen Wang <yichen.wang@bytedance.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/queue.h"
-> +#include "qemu/memalign.h"
-> +#include "qemu/lockable.h"
-> +#include "qemu/cutils.h"
-> +#include "qemu/dsa.h"
-> +#include "qemu/bswap.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/rcu.h"
-> +
-> +#pragma GCC push_options
-> +#pragma GCC target("enqcmd")
-> +
-> +#include <linux/idxd.h>
-> +#include "x86intrin.h"
-> +
-> +#define DSA_WQ_PORTAL_SIZE 4096
-> +#define MAX_DSA_DEVICES 16
-> +
-> +uint32_t max_retry_count;
-> +static QemuDsaDeviceGroup dsa_group;
-> +
-> +
-> +/**
-> + * @brief This function opens a DSA device's work queue and
-> + *        maps the DSA device memory into the current process.
-> + *
-> + * @param dsa_wq_path A pointer to the DSA device work queue's file path.
-> + * @return A pointer to the mapped memory, or MAP_FAILED on failure.
-> + */
-> +static void *
-> +map_dsa_device(const char *dsa_wq_path)
-> +{
-> +    void *dsa_device;
-> +    int fd;
-> +
-> +    fd = open(dsa_wq_path, O_RDWR);
-> +    if (fd < 0) {
-> +        error_report("Open %s failed with errno = %d.",
-> +                dsa_wq_path, errno);
-> +        return MAP_FAILED;
-> +    }
-> +    dsa_device = mmap(NULL, DSA_WQ_PORTAL_SIZE, PROT_WRITE,
-> +                      MAP_SHARED | MAP_POPULATE, fd, 0);
-> +    close(fd);
-> +    if (dsa_device == MAP_FAILED) {
-> +        error_report("mmap failed with errno = %d.", errno);
-> +        return MAP_FAILED;
-> +    }
-> +    return dsa_device;
-> +}
-> +
-> +/**
-> + * @brief Initializes a DSA device structure.
-> + *
-> + * @param instance A pointer to the DSA device.
-> + * @param work_queue A pointer to the DSA work queue.
-> + */
-> +static void
-> +dsa_device_init(QemuDsaDevice *instance,
-> +                void *dsa_work_queue)
-> +{
-> +    instance->work_queue = dsa_work_queue;
-> +}
-> +
-> +/**
-> + * @brief Cleans up a DSA device structure.
-> + *
-> + * @param instance A pointer to the DSA device to cleanup.
-> + */
-> +static void
-> +dsa_device_cleanup(QemuDsaDevice *instance)
-> +{
-> +    if (instance->work_queue != MAP_FAILED) {
-> +        munmap(instance->work_queue, DSA_WQ_PORTAL_SIZE);
-> +    }
-> +}
-> +
-> +/**
-> + * @brief Initializes a DSA device group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + * @param dsa_parameter A list of DSA device path from are separated by space
-> + * character migration parameter. Multiple DSA device path.
-> + *
-> + * @return Zero if successful, non-zero otherwise.
-> + */
-> +static int
-> +dsa_device_group_init(QemuDsaDeviceGroup *group,
-> +                      const strList *dsa_parameter,
-> +                      Error **errp)
-> +{
-> +    if (dsa_parameter == NULL) {
-> +        error_setg(errp, "dsa device path is not supplied.");
-> +        return -1;
-> +    }
-> +
-> +    int ret = 0;
-> +    const char *dsa_path[MAX_DSA_DEVICES];
-> +    int num_dsa_devices = 0;
-> +
-> +    while (dsa_parameter) {
-> +        dsa_path[num_dsa_devices++] = dsa_parameter->value;
-> +        if (num_dsa_devices == MAX_DSA_DEVICES) {
-> +            break;
-> +        }
-> +        dsa_parameter = dsa_parameter->next;
-> +    }
-> +
-> +    group->dsa_devices =
-> +        g_new0(QemuDsaDevice, num_dsa_devices);
-> +    group->num_dsa_devices = num_dsa_devices;
-> +    group->device_allocator_index = 0;
-> +
-> +    group->running = false;
-> +    qemu_mutex_init(&group->task_queue_lock);
-> +    qemu_cond_init(&group->task_queue_cond);
-> +    QSIMPLEQ_INIT(&group->task_queue);
-> +
-> +    void *dsa_wq = MAP_FAILED;
-> +    for (int i = 0; i < num_dsa_devices; i++) {
-> +        dsa_wq = map_dsa_device(dsa_path[i]);
-> +        if (dsa_wq == MAP_FAILED) {
-> +            error_setg(errp, "map_dsa_device failed MAP_FAILED.");
+>  - (void) updateUIInfo
+>  {
+>      if (!allow_events) {
+> --
+> 2.45.2
+>
+>
+>
 
-This will assert if it fails in more than one iteration, errp cannot be
-set twice. You'll have to test 'ret' outside of the loop before
-returning and set the error there.
+--00000000000069e69306276d2d55
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +            ret = -1;
-> +        }
-> +        dsa_device_init(&group->dsa_devices[i], dsa_wq);
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +/**
-> + * @brief Starts a DSA device group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + */
-> +static void
-> +dsa_device_group_start(QemuDsaDeviceGroup *group)
-> +{
-> +    group->running = true;
-> +}
-> +
-> +/**
-> + * @brief Stops a DSA device group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + */
-> +__attribute__((unused))
-> +static void
-> +dsa_device_group_stop(QemuDsaDeviceGroup *group)
-> +{
-> +    group->running = false;
-> +}
-> +
-> +/**
-> + * @brief Cleans up a DSA device group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + */
-> +static void
-> +dsa_device_group_cleanup(QemuDsaDeviceGroup *group)
-> +{
-> +    if (!group->dsa_devices) {
-> +        return;
-> +    }
-> +    for (int i = 0; i < group->num_dsa_devices; i++) {
-> +        dsa_device_cleanup(&group->dsa_devices[i]);
-> +    }
-> +    g_free(group->dsa_devices);
-> +    group->dsa_devices = NULL;
-> +
-> +    qemu_mutex_destroy(&group->task_queue_lock);
-> +    qemu_cond_destroy(&group->task_queue_cond);
-> +}
-> +
-> +/**
-> + * @brief Returns the next available DSA device in the group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + *
-> + * @return struct QemuDsaDevice* A pointer to the next available DSA device
-> + *         in the group.
-> + */
-> +__attribute__((unused))
-> +static QemuDsaDevice *
-> +dsa_device_group_get_next_device(QemuDsaDeviceGroup *group)
-> +{
-> +    if (group->num_dsa_devices == 0) {
-> +        return NULL;
-> +    }
-> +    uint32_t current = qatomic_fetch_inc(&group->device_allocator_index);
-> +    current %= group->num_dsa_devices;
-> +    return &group->dsa_devices[current];
-> +}
-> +
-> +/**
-> + * @brief Check if DSA is running.
-> + *
-> + * @return True if DSA is running, otherwise false.
-> + */
-> +bool qemu_dsa_is_running(void)
-> +{
-> +    return false;
-> +}
-> +
-> +static void
-> +dsa_globals_init(void)
-> +{
-> +    max_retry_count = UINT32_MAX;
-> +}
-> +
-> +/**
-> + * @brief Initializes DSA devices.
-> + *
-> + * @param dsa_parameter A list of DSA device path from migration parameter.
-> + *
-> + * @return int Zero if successful, otherwise non zero.
-> + */
-> +int qemu_dsa_init(const strList *dsa_parameter, Error **errp)
-> +{
-> +    dsa_globals_init();
-> +
-> +    return dsa_device_group_init(&dsa_group, dsa_parameter, errp);
-> +}
-> +
-> +/**
-> + * @brief Start logic to enable using DSA.
-> + *
-> + */
-> +void qemu_dsa_start(void)
-> +{
-> +    if (dsa_group.num_dsa_devices == 0) {
-> +        return;
-> +    }
-> +    if (dsa_group.running) {
-> +        return;
-> +    }
-> +    dsa_device_group_start(&dsa_group);
-> +}
-> +
-> +/**
-> + * @brief Stop the device group and the completion thread.
-> + *
-> + */
-> +void qemu_dsa_stop(void)
-> +{
-> +    QemuDsaDeviceGroup *group = &dsa_group;
-> +
-> +    if (!group->running) {
-> +        return;
-> +    }
-> +}
-> +
-> +/**
-> + * @brief Clean up system resources created for DSA offloading.
-> + *
-> + */
-> +void qemu_dsa_cleanup(void)
-> +{
-> +    qemu_dsa_stop();
-> +    dsa_device_group_cleanup(&dsa_group);
-> +}
-> +
-> diff --git a/util/meson.build b/util/meson.build
-> index 5d8bef9891..5ec2158f9e 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -123,6 +123,9 @@ if cpu == 'aarch64'
->    util_ss.add(files('cpuinfo-aarch64.c'))
->  elif cpu in ['x86', 'x86_64']
->    util_ss.add(files('cpuinfo-i386.c'))
-> +  if config_host_data.get('CONFIG_DSA_OPT')
-> +    util_ss.add(files('dsa.c'))
-> +  endif
->  elif cpu == 'loongarch64'
->    util_ss.add(files('cpuinfo-loongarch.c'))
->  elif cpu in ['ppc', 'ppc64']
+<div dir=3D"ltr"><div>As we&#39;re talking about macOS-only code I&#39;d pe=
+rhaps have used &#39;#pragma clang diagnostic&#39; rather than the GCC vers=
+ions, but clang seems to understand these just fine too. (Plus, we very muc=
+h intend for these to be genuinely temporary.)<br></div><div><br></div><div=
+>Reviewed-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu">=
+phil@philjordan.eu</a>&gt;<br></div><div>Tested-by: Phil Dennis-Jordan &lt;=
+<a href=3D"mailto:phil@philjordan.eu">phil@philjordan.eu</a>&gt;</div><div>=
+<br></div><div>I&#39;ll try to find some spare cycles to come up with a cle=
+an solution to the deprecation issue towards the end of the year. I need to=
+ research the available alternative APIs for another project anyway.</div><=
+div><br></div><div>I think part of the reason for the deprecation is that m=
+ost modern Macs (as with other modern laptop and desktop computers) actuall=
+y use a variable display frame rate, so the concept of a &quot;native&quot;=
+ frame rate is no longer well-defined. In an ideal world the frame rate wou=
+ld be something that&#39;s negotiable between the host UI and the virtual h=
+ardware.</div><div><br></div><div>For example, the macOS PV Graphics I&#39;=
+ve been working on integrating would actually prefer a &quot;push&quot; arr=
+angement where the guest/PV hardware notify the host when the next frame is=
+ ready, rather than expecting a fixed-rate frame refresh interrupt or simil=
+ar. So when using that there would actually not be any need for the display=
+-linked timer at all if the UI is happy with the hw calling dpy_gfx_update_=
+full()/graphic_hw_update_done() proactively whenever it has a new frame ava=
+ilable. I&#39;m not sure what the story is for other display adapters in QE=
+MU, but I can do a survey of that.<br></div><div><br></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, 21 Nov 2024 =
+at 14:20, Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.o=
+rg">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">These warnings are breaking some build configurations =
+since 2 months<br>
+now (<a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2575" rel=3D"=
+noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/issues=
+/2575</a>):<br>
+<br>
+=C2=A0 ui/cocoa.m:662:14: error: &#39;CVDisplayLinkCreateWithCGDisplay&#39;=
+ is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(tar=
+get:selector:), NSWindow.displayLink(target:selector:), or NSScreen.display=
+Link(target:selector:)=C2=A0 [-Werror,-Wdeprecated-declarations]<br>
+=C2=A0 =C2=A0 662 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!CVDisplayLinkCrea=
+teWithCGDisplay(display, &amp;displayLink)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 ^<br>
+=C2=A0 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/F=
+rameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: &#39;CVD=
+isplayLinkCreateWithCGDisplay&#39; has been explicitly marked deprecated he=
+re<br>
+=C2=A0 =C2=A0 =C2=A089 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDispla=
+y(<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 ^<br>
+=C2=A0 ui/cocoa.m:663:29: error: &#39;CVDisplayLinkGetNominalOutputVideoRef=
+reshPeriod&#39; is deprecated: first deprecated in macOS 15.0 - use NSView.=
+displayLink(target:selector:), NSWindow.displayLink(target:selector:), or N=
+SScreen.displayLink(target:selector:)=C2=A0 [-Werror,-Wdeprecated-declarati=
+ons]<br>
+=C2=A0 =C2=A0 663 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CVTime p=
+eriod =3D CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^<br>
+=C2=A0 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/F=
+rameworks/CoreVideo.framework/Headers/CVDisplayLink.h:182:18: note: &#39;CV=
+DisplayLinkGetNominalOutputVideoRefreshPeriod&#39; has been explicitly mark=
+ed deprecated here<br>
+=C2=A0 =C2=A0 182 | CV_EXPORT CVTime CVDisplayLinkGetNominalOutputVideoRefr=
+eshPeriod( CVDisplayLinkRef CV_NONNULL displayLink );<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 ^<br>
+=C2=A0 ui/cocoa.m:664:13: error: &#39;CVDisplayLinkRelease&#39; is deprecat=
+ed: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector=
+:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:=
+selector:)=C2=A0 [-Werror,-Wdeprecated-declarations]<br>
+=C2=A0 =C2=A0 664 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CVDispla=
+yLinkRelease(displayLink);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0^<br>
+=C2=A0 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/F=
+rameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: &#39;CV=
+DisplayLinkRelease&#39; has been explicitly marked deprecated here<br>
+=C2=A0 =C2=A0 249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUME=
+NT CVDisplayLinkRef CV_NULLABLE displayLink );<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 ^<br>
+=C2=A0 3 errors generated.<br>
+<br>
+For the next release, ignore the warnings using #pragma directives.<br>
+At least until we figure the correct new API usage.<br>
+<br>
+Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0ui/cocoa.m | 5 +++++<br>
+=C2=A01 file changed, 5 insertions(+)<br>
+<br>
+diff --git a/ui/cocoa.m b/ui/cocoa.m<br>
+index 4c2dd33532..0422dafde4 100644<br>
+--- a/ui/cocoa.m<br>
++++ b/ui/cocoa.m<br>
+@@ -639,6 +639,9 @@ - (void) updateBounds<br>
+=C2=A0 =C2=A0 =C2=A0[self setBoundsSize:NSMakeSize(screen.width, screen.hei=
+ght)];<br>
+=C2=A0}<br>
+<br>
++#pragma GCC diagnostic push<br>
++#pragma GCC diagnostic ignored &quot;-Wdeprecated-declarations&quot;<br>
++<br>
+=C2=A0- (void) updateUIInfoLocked<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0/* Must be called with the BQL, i.e. via updateUIInfo *=
+/<br>
+@@ -685,6 +688,8 @@ - (void) updateUIInfoLocked<br>
+=C2=A0 =C2=A0 =C2=A0dpy_set_ui_info(dcl.con, &amp;info, TRUE);<br>
+=C2=A0}<br>
+<br>
++#pragma GCC diagnostic pop<br>
++<br>
+=C2=A0- (void) updateUIInfo<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0if (!allow_events) {<br>
+-- <br>
+2.45.2<br>
+<br>
+<br>
+</blockquote></div></div>
+
+--00000000000069e69306276d2d55--
 
