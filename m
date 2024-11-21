@@ -4,99 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 444A5D78788
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D40FD7878E
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Nov 2024 16:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEA25-0002lI-3Q; Thu, 21 Nov 2024 11:27:53 -0500
+	id 1tEAAu-00056m-7r; Thu, 21 Nov 2024 11:37:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEA1y-0002jc-ON
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:27:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEAAq-00056A-BG
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:36:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEA1u-00026D-5i
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:27:46 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tEAAm-0004AV-Ci
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 11:36:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732206457;
+ s=mimecast20190719; t=1732207010;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WVQINypMtL78z6TShU/lnEOb5MFSD74MHKFRTNgiFbQ=;
- b=gJQhUiJ9Iw9ub2w23UHWFl6FIKcXjBvCahjtMDW59MIM8vVWMCkC9QReg+b+fLJcM6JiFl
- vP36f9brvcvWWNoUvtE5H/iPRAzKuKSzZMpnBQukS7hAoXI97UltMxBvX+/wZz4gXUQYyJ
- 8LVELF0q5mRGnuHZ52ECaIBPQcX6CuY=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lUDhr6WGbhD59rB7ZJpOHtV40J++Ep8jGGZi3tGGH8E=;
+ b=cArmz5408mcte0OX6s07+WiXMmlKhtqf0VHdt6YOrs02VfnbQ2ZN2pqUiYvDzEYiMUhLZ1
+ phiXsrAveZuLzgj8NgFnH/DQgSU223z9Sng9VyWnZLKslgCDLatWtbDCMBCdL7edaN9je/
+ KLH5wPsi8d3UPMtQWhoGId4lul5/jOA=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-sDXjfjvgN065-EjGKx3meg-1; Thu, 21 Nov 2024 11:27:34 -0500
-X-MC-Unique: sDXjfjvgN065-EjGKx3meg-1
-X-Mimecast-MFC-AGG-ID: sDXjfjvgN065-EjGKx3meg
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-6ee57ae0f61so18141117b3.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:27:34 -0800 (PST)
+ us-mta-642-Ix2EX8YJPgqTVW5QxnFq_A-1; Thu, 21 Nov 2024 11:36:49 -0500
+X-MC-Unique: Ix2EX8YJPgqTVW5QxnFq_A-1
+X-Mimecast-MFC-AGG-ID: Ix2EX8YJPgqTVW5QxnFq_A
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6d412384987so44055266d6.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 08:36:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732206454; x=1732811254;
+ d=1e100.net; s=20230601; t=1732207008; x=1732811808;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WVQINypMtL78z6TShU/lnEOb5MFSD74MHKFRTNgiFbQ=;
- b=kVxF4E0q7Yle/G5fFPldGSkuVUNX/iJTqphQ6SMncDj7JNDJ9mV4g3Oerw1iGe5Ujx
- ortN5BMv9z+JcMyMJuV6DTQbFAFTefWxDIk57zI/4e7yZ5fKQ0PDLD5cRObP/Fwlbw8O
- ysRpTGd449p2FpaJrC7HimoDYSf6FCXPPYZ9aVZYuUdTzlvTidYaGPJlU+OCIZXb6VXz
- 4Gl7HT583CiGTn0Q8FpLKeiICX3zRIFVSA1jNx0HfMjG7jlxg91gpt29fb6g3Kr43xKN
- xkFxl2sfRfgPK7XFMec5nEUm9tNSg4YzhziUyf1Djy9QRy8G772TrIwoFO3xUCr7aezd
- ywrg==
-X-Gm-Message-State: AOJu0YyFQym2MeBzlHwD4cvm71gHKQrQ4UqdPQiAwF/h19+c5ZfAa8v2
- U8rNZBcT5IoYv8S+O3/AxdJ2vkge0lfMS9wjuDp48+e48C4xHXo+YckeevoF9KOaPqRDBxV4iWn
- O5vrEzhmDhe+PKG/bLmg2E5FSkf/ldTQJfjCg3aZ4svm1dvwA0Qhf
-X-Gm-Gg: ASbGncuuz2Wr7wzvHOtE1rNjQLMFgqR2J0PbZLxnYa85PJq9G/1ubN4aZnQiZjFOaTo
- APRzs+EnwpmmSQTt+e8LlhYTzE9Xo7UNC9qzM/bicNfBmi1bOBu3HBvpJC5Zpp5wiDbN7oAjU9Y
- e22QlOtXktg5ajZVxEqlB2Y2hvWaF6OnHY5hNRd1V9yQEEkthulfRVnRdyhFnS6Cwn6kecDxYTJ
- JfJR6L3Bs78paZTkIkFiqS1tQf8xPfnEPvLzysrjwtwG5f2i4t/5SAqag4LzJ2ysx9gvaaZwuqe
- st3UGWAYxaA=
-X-Received: by 2002:a05:6902:2608:b0:e30:84ef:351d with SMTP id
- 3f1490d57ef6-e38cb56d731mr6559626276.16.1732206454223; 
- Thu, 21 Nov 2024 08:27:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFJw5uq64ltFcyIIFZVuuX1PYd/jW4dVqbuAwSqisWHiQLDrbGrEwO1sZoLOmLQcl4LRMW9aA==
-X-Received: by 2002:a05:6902:2608:b0:e30:84ef:351d with SMTP id
- 3f1490d57ef6-e38cb56d731mr6559599276.16.1732206453948; 
- Thu, 21 Nov 2024 08:27:33 -0800 (PST)
+ bh=lUDhr6WGbhD59rB7ZJpOHtV40J++Ep8jGGZi3tGGH8E=;
+ b=mLBh+Ng6NX+V1Nh6yiiZvrRxpx/U0jFjRnPm2QBu9INIl3bf+Sx/ahor3OECLyDqPn
+ dei2LSQKIwzR9LAwnKNn1AcALHDzbNfzpeshNZQ0RY7iMlynrzhJ38RgRM8Zmqzhdk2k
+ anfsjawWet26YwfksDo3GIdDNSyd5qlU3qfGeC+ee6HvOKePz58lqeJj3ByCOKIPbfKN
+ 2dcKoCeri0qoUb6w4Tqh+h4qdu3Z5y/wMjqPZH7Clj2HBDNm4C+AA+Yg5HFrhrTSTCKJ
+ AdzUowzjCy5x3VCCaJdzInDcCXkN6DXY8hg5DwoF0u20Qqy78KTaf+KfsHzmSannEGAV
+ yQUA==
+X-Gm-Message-State: AOJu0Yy1gU+zFzJVt7Ot0i5H+6frkZ2AYnZ2fwBc9Rw2EhXgIKgJ/k1L
+ peAVl6PnpfgGlo4WONBlqEOFOV6VwyHVsU4uckBkhi0/c3SuOOF7G5G7twzdZr/yyixtiBoQ78A
+ LBdGALd4I1qzS7tBo7tiE8d90Ps4+H3fwYAdYNLt0Rg4pP6+1OI1wZhyhI0P9
+X-Gm-Gg: ASbGncvUkpbpzRmc00ifqrpROwry3rQYcvDQt2wn7A8toQez+47LiX+va8iWZKp+zBF
+ WohjDe6sW3DfO8QAUZNsWL4seuNoM0qhUoibxf7koHW5BjBEsi6PgFWJQ8gkideDCU9GOEyWUW5
+ 6LiMx4XwGEVDdj3UWTYS/AYnCWMvulqrI5rSM8ISUdaYM6Dl0QvpRwGcaUgBmO/IhucRZq7bvQD
+ 2T5BVXQg0ZQ281uMOaK4T/MvoA6BIQOKsWOafoG+NpU6aRbysctgQLJS6URDGZxkRNeMA1vEvZM
+ OFt2lRWvGo8=
+X-Received: by 2002:ad4:5cce:0:b0:6d4:cec:2ffd with SMTP id
+ 6a1803df08f44-6d4424446a3mr68250596d6.15.1732207008349; 
+ Thu, 21 Nov 2024 08:36:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFPv2yJv8KWTIrvLqwanMLfRiMyCw5klep5tF1ivGlDUuh7Xykrm04Ryt1g7pXAqOhGeBR9fw==
+X-Received: by 2002:ad4:5cce:0:b0:6d4:cec:2ffd with SMTP id
+ 6a1803df08f44-6d4424446a3mr68250176d6.15.1732207008063; 
+ Thu, 21 Nov 2024 08:36:48 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b485247155sm228119985a.114.2024.11.21.08.27.32
+ af79cd13be357-7b479d84913sm228631685a.52.2024.11.21.08.36.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 08:27:33 -0800 (PST)
-Date: Thu, 21 Nov 2024 11:27:31 -0500
+ Thu, 21 Nov 2024 08:36:47 -0800 (PST)
+Date: Thu, 21 Nov 2024 11:36:44 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
  Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 05/12] ui/console: Explicitly create "/backend" container
-Message-ID: <Zz9fc2Yuj9T4mojP@x1n>
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+Subject: Re: [PATCH 06/12] hw/ppc: Explicitly create the drc container
+Message-ID: <Zz9hnEj3xQnOoM0c@x1n>
 References: <20241120215703.3918445-1-peterx@redhat.com>
- <20241120215703.3918445-6-peterx@redhat.com>
- <Zz8K2kLi81lE8nQf@redhat.com>
+ <20241120215703.3918445-7-peterx@redhat.com>
+ <66301003-f2cd-4a0a-8951-cbfdcb1c398b@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zz8K2kLi81lE8nQf@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <66301003-f2cd-4a0a-8951-cbfdcb1c398b@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,63 +117,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 10:26:34AM +0000, Daniel P. Berrangé wrote:
-> On Wed, Nov 20, 2024 at 04:56:56PM -0500, Peter Xu wrote:
-> > Follow the trend to explicitly create containers, do that for console.c on
-> > "/backend" container.
+On Thu, Nov 21, 2024 at 10:35:39AM +0100, Philippe Mathieu-Daudé wrote:
+> Hi Peter,
+> 
+> On 20/11/24 22:56, Peter Xu wrote:
+> > QEMU will start to not rely on implicit creations of containers soon.  Make
+> > PPC drc devices follow by explicitly create the container whenever a drc
+> > device is realized, dropping container_get() calls.
 > > 
-> > Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > No functional change intended.
+> > 
+> > Cc: Nicholas Piggin <npiggin@gmail.com>
+> > Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+> > Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> > Cc: qemu-ppc@nongnu.org
 > > Signed-off-by: Peter Xu <peterx@redhat.com>
 > > ---
-> >  ui/console.c | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/ui/console.c b/ui/console.c
-> > index 5165f17125..36f8c6debb 100644
-> > --- a/ui/console.c
-> > +++ b/ui/console.c
-> > @@ -1154,14 +1154,14 @@ DisplayState *init_displaystate(void)
-> >  {
-> >      gchar *name;
-> >      QemuConsole *con;
-> > +    Object *backend = container_create(object_get_root(), "backend");
+> >   hw/ppc/spapr_drc.c | 40 ++++++++++++++++++++++++++++++----------
+> >   1 file changed, 30 insertions(+), 10 deletions(-)
 > 
-> What's the rationale for keeping this in the console code ?
 > 
-> I'd consider this to be a similar situation to '/chardevs' and
-> '/objects', and be a common container rather than UI specific.
-> IOW, be created by your later patch.
+> > +static GOnce drc_container_created = G_ONCE_INIT;
+> > +
+> > +static gpointer drc_container_create(gpointer unused G_GNUC_UNUSED)
+> > +{
+> > +    container_create(object_get_root(), DRC_CONTAINER_PATH);
+> > +    return NULL;
+> > +}
+> > +
+> > +static Object *drc_container_get(void)
+> > +{
+> > +    return object_resolve_path_component(
+> > +        object_get_root(), DRC_CONTAINER_PATH);
+> > +}
+> > +
+> > +/* TODO: create the container in an ppc init function */
+> > +static void drc_container_create_once(void)
+> > +{
+> > +    g_once(&drc_container_created, drc_container_create, NULL);
+> > +}
+> > +
+> >   static void drc_realize(DeviceState *d, Error **errp)
+> >   {
+> >       SpaprDrc *drc = SPAPR_DR_CONNECTOR(d);
+> > @@ -521,6 +541,9 @@ static void drc_realize(DeviceState *d, Error **errp)
+> >       Object *root_container;
+> >       const char *child_name;
+> > +    /* Whenever a DRC device is realized, create the container */
+> > +    drc_container_create_once();
+> 
+> Can't we just create it once in spapr_dr_connector_class_init(),
+> removing the G_ONCE_INIT need?
 
-I was trying to be careful on always create then on demand like
-before. E.g. I was thinking maybe this container shouldn't exist when
-there's no display at all.
+IIUC it's a matter of whether there's case where we have this file compiled
+in, but never create any DRC device.  When that happens, the patch can
+change the QEMU qom-tree slightly, in that there'll be an empty drc
+container while we used to not have it.
 
-But looks like init_displaystate() is indeed always invoked for system
-code.. so yeah, perhaps I can move it over too, and drop this patch (below
-will be part of last patch to use objects_get_container() instead, or part
-of its splits).
+I'm trying to be on the safe side in case something would detect the
+container's existance to know whether drc devices are present.  lazy create
+it in realize() is the safest way to behave 100% identical like before,
+considering my ppc knowledge is merely zero (even if I have drc tests
+covered in ppc64's qtest..).
+
+However I also doubt whether it matters much.  It'll be great if I can get
+an ACK from anyone familiar with this device (Phil, are you?), then I can
+move it over.
 
 > 
-> >  
-> >      QTAILQ_FOREACH(con, &consoles, next) {
-> >          /* Hook up into the qom tree here (not in object_new()), once
-> >           * all QemuConsoles are created and the order / numbering
-> >           * doesn't change any more */
-> >          name = g_strdup_printf("console[%d]", con->index);
-> > -        object_property_add_child(container_get(object_get_root(), "/backend"),
-> > -                                  name, OBJECT(con));
-> > +        object_property_add_child(backend, name, OBJECT(con));
-> >          g_free(name);
-> >      }
-> 
-> 
-> 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> >       trace_spapr_drc_realize(spapr_drc_index(drc));
+> >       /* NOTE: we do this as part of realize/unrealize due to the fact
+> >        * that the guest will communicate with the DRC via RTAS calls
+> > @@ -529,7 +552,7 @@ static void drc_realize(DeviceState *d, Error **errp)
+> >        * inaccessible by the guest, since lookups rely on this path
+> >        * existing in the composition tree
+> >        */
+> > -    root_container = container_get(object_get_root(), DRC_CONTAINER_PATH);
+> > +    root_container = drc_container_get();
+> >       child_name = object_get_canonical_path_component(OBJECT(drc));
+> >       trace_spapr_drc_realize_child(spapr_drc_index(drc), child_name);
+> >       object_property_add_alias(root_container, link_name,
 > 
 
 -- 
