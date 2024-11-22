@@ -4,102 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D15E4E69175
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 16:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 455F6E69182
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 16:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEWQ5-0005dI-Pw; Fri, 22 Nov 2024 11:22:09 -0500
+	id 1tEWcv-0001Qr-M2; Fri, 22 Nov 2024 11:35:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tEWQ4-0005cs-A5
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:22:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tEWQ1-0003m7-WA
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:22:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732292525;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NyV4m9dJITsICN0qNNwyYDHcaqurrOEnQKifJ5kQsB0=;
- b=T2DD5iPu2WXCibw8KDvBmIADHNaeT0RqZZpGDb/t+TThZWm/YMaAK+5cagsAwmlS/xK7NS
- Cq0od5R+yK0XGWSAXNjs6LPao+77g570YRkeGpS9thsw6X+RWSUKVBHaMOaCkP0/Gngddm
- OoYVZMDRFC8ATAVsHaD0g/OHjf9hj2c=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-g7pXYZ1aP7abEZQuUjUo9Q-1; Fri, 22 Nov 2024 11:22:01 -0500
-X-MC-Unique: g7pXYZ1aP7abEZQuUjUo9Q-1
-X-Mimecast-MFC-AGG-ID: g7pXYZ1aP7abEZQuUjUo9Q
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4316655b2f1so16181345e9.0
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 08:22:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEWcu-0001Qj-W5
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:35:25 -0500
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEWct-0005oI-4d
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:35:24 -0500
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-3825a721ae5so1244182f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 08:35:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1732293321; x=1732898121; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=dol8uvqp9j6AoZwv3OIjidk1Mz4UVwABRHAlp+oY/D0=;
+ b=X66EfNxSd59P/6G0sqze7LX8BcoMcKpUy5i4MMmxQ1J0EJHrXCNYExRqfKN7N0qnhh
+ 9aqriHTTu2kbgl5MskwCaN5m917A7A+XnpA4LOED/UwGhICdftNdzNOeavl/X7uMKl9X
+ 7ZesZjKunRYpuqJ+zGcqPV+Bry+4aqTgU1/q6/ybMf3oT5IxenXtVKMBPl+Dro75C5mt
+ 8HSzZxvsfPbUkv4UjMr5wbGjolv6grIkUNncYeSBZNwRNynR7CxKgHYuRCEUcDZRTzMH
+ 2XtJZMRgFFXQFNEi+vUV7qMkPhiZ832eIVRbnyGKmJqGvV4inwATW3NFpoDIg/tYbQEV
+ DLew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732292520; x=1732897320;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NyV4m9dJITsICN0qNNwyYDHcaqurrOEnQKifJ5kQsB0=;
- b=Y/57iRpIZrZUTuYgK2oXXIZHDChuIxjciGkZmstLneIBN15joiKlTelAiFnSbiUOeE
- hkjr05rG3T8Hk8isE6wwY2VdAiKMrormj4XDvPgrQMW+j/kdWZDMVPPhBBu/cLD2OGIX
- c9eCj813yGZgjuFAFWLvzVGMzmGpIsipxck8cAdyzhTVxAvKa2CvPin+cQxNXmJqivoz
- d+O6eEShAqM9Ew5vmQXyNFhHrL9Mz1QfMVP7ivoUQPXtvf4xPbGJZ99ef7X/qVTtnmX0
- cv6DEUnC4GBeoIEd3prYXSlyfiXIkfoJGX5xeFVXnLo5gLgr31BhLgY9Iwz21BSQHBlB
- GuXA==
+ d=1e100.net; s=20230601; t=1732293321; x=1732898121;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dol8uvqp9j6AoZwv3OIjidk1Mz4UVwABRHAlp+oY/D0=;
+ b=RCwR3fvRM6lR+DuuWWgSgtUzR5EUJOfsrTyt7KPJBJ4PY0FjrUfzAV8JkyxhZ+H/He
+ 3naKitE2kCFFL6N1jZF3737BV95XDDVwn/MN/D0BTfGhqEz4tX/mZkxAnPu86hiuJM59
+ lFVBd01dPF4aFbu+boEqenJzRN/7dbDNGKERRreY1LptveR4MSf+x0nfxSIcG51GcjnZ
+ U4hFnciYLJjVy+FhGXkGgeQhb1OsLPBEDdCmTShKEt6Yge2RO4nazLx3Ke/bFLKmFynd
+ G6pwlMwb+QDBjUgIUBPizOF7bRWnvqUzNXCHAxgIVHEcbEVBIkz5TAEfX4CvpIGIWKbH
+ yqEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXbaWVh2xBA8LrFmWqiegFa7M+JhpV/X4tdhrgZvg2kelkk44pysBrNnv/XLQ7Jq3qoVofGXHb29dl8@nongnu.org
-X-Gm-Message-State: AOJu0Ywplzo1lDDKMqsF9oiJ6b9TmSsz2Dy3MZoF54wNdiMQpzhIX5n+
- R0wnaDkeGwvu4QGoDaqosnxvgK89O1PreYIcifT2CfbR3NV8toDgZ/vvHo7Z8AF9vSXrqFrsz1e
- n9qXfotA+08e2feOVOxA9oUqU7bVKAw4xPjazcqUqGfm7u8MUbs/q
-X-Gm-Gg: ASbGnct83LB6W3b0U+u1zcJVY7GoCd7P/VvDptd++C6WpLGNz0l25l6H8vufIjR2eRF
- 3yozciEtj8TS+MAFXer+i/Oq5Tw6o13MMzEDAlb0n+yOAbHcxkWebmOLyclgXrpOhQj4R5rg5Yt
- 6J7DkMcq9K/56eU926HxWeEMOf6rNAJkcIdmSZ9e5nax891M1T4RV7OB5QjbrRMsri75OJxj5wT
- TtFVbtMSBER5yXFY+Dae4oIObp3oBBtY/taw/i7iNMcnWsuqGxevYgv42A9g+dBlA8d4X17SRk+
- 6B+qCrX5IKxQUHbUb+YtvQ==
-X-Received: by 2002:a05:600c:3b19:b0:42c:bae0:f05b with SMTP id
- 5b1f17b1804b1-433ce413c8emr26604705e9.1.1732292520043; 
- Fri, 22 Nov 2024 08:22:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFEkstkJfSxr8aGDMBPVQGktPpGXJ+GanjyrPf4YG9VrYHHxatCFCWHJCelP1CWqHq06xVoyw==
-X-Received: by 2002:a05:600c:3b19:b0:42c:bae0:f05b with SMTP id
- 5b1f17b1804b1-433ce413c8emr26604585e9.1.1732292519763; 
- Fri, 22 Nov 2024 08:21:59 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b45d40basm100217045e9.21.2024.11.22.08.21.57
+ AJvYcCXXpZO2KcHN668bu7YtrDsEech9u1ytO82tU9y3qaqHM5o27rRSmxkyn461ABaEdnofHfqYdNFqrtt6@nongnu.org
+X-Gm-Message-State: AOJu0Yz6jVa/6hw8y5DANQ6eeFzhVa2lN2bUSq7TLZe4RtiHetp2rsF5
+ YNvTwc1Wo8LJq01sQW8r3y6AzCb6b5kGNCzODSxa5+FRIzXciO2TPYJ2MI+K
+X-Gm-Gg: ASbGncsaFrGX33kHsUdnWrbl+SlF3eeZfrH5qxIse62xrYyLh6TyrbtzoN7Bu0KmfGS
+ hWbM/u0CTovW/33AYNFCUZI7ubEtCgQiLvwvw+cc4DSikpDqF/TboPR66VjnxXwBUJpxiE7MqTG
+ 2G0OXecXZG+wGgb8hRmzS+Tr5CBWDgMmLDEYMmx6AfSQ7qT6DU6ci/iXDLvsLEPfuK+4Py0GNzk
+ 0A0+MEFmgtsziwmx6sl6M9woLelrCatyYQ8P3u4Ji5qx/GwOkml0enO/apJT68IRg8NVW/JH6oC
+ J4tdoDfyOROF1A==
+X-Google-Smtp-Source: AGHT+IG5FVroKsAHosJGeQL/hQVSeRsFz/bTucJL1fbBsdhUHIDeIwovhpyhi+j2HwS7wJpexFGY0Q==
+X-Received: by 2002:a5d:6d03:0:b0:382:22d6:988c with SMTP id
+ ffacd0b85a97d-3826011336cmr3457579f8f.5.1732293320685; 
+ Fri, 22 Nov 2024 08:35:20 -0800 (PST)
+Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
+ [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fb537d4sm2816189f8f.61.2024.11.22.08.35.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Nov 2024 08:21:58 -0800 (PST)
-Date: Fri, 22 Nov 2024 17:21:57 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 10/15] acpi/ghes: don't crash QEMU if ghes GED is not
- found
-Message-ID: <20241122172157.10012778@imammedo.users.ipa.redhat.com>
-In-Reply-To: <d72d9cf99ad0169a39cd3f8028ee7c2e112edf06.1732266152.git.mchehab+huawei@kernel.org>
-References: <cover.1732266152.git.mchehab+huawei@kernel.org>
- <d72d9cf99ad0169a39cd3f8028ee7c2e112edf06.1732266152.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Fri, 22 Nov 2024 08:35:19 -0800 (PST)
+Date: Fri, 22 Nov 2024 16:35:19 +0000
+From: Stafford Horne <shorne@gmail.com>
+To: Rob Landley <rob@landley.net>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Subject: Re: QEMU commit 0a923be2f642 broke my or1k image.
+Message-ID: <Z0Cyx3i3z7Zl7XPm@antec>
+References: <afac091f-08cb-0f6d-4c01-bfa4421e7a47@landley.net>
+ <Zufcf4iAqosZ7VBf@antec>
+ <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=shorne@gmail.com; helo=mail-wr1-x442.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,36 +101,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Nov 2024 10:11:27 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-
-> Make error handling within ghes_record_cper_errors() consistent,
-> i.e. instead abort just print a error in case ghes GED is not found.
+On Thu, Nov 21, 2024 at 04:32:25PM -0600, Rob Landley wrote:
+> On 9/16/24 02:21, Stafford Horne wrote:
+> > On Wed, Sep 11, 2024 at 12:42:58AM -0500, Rob Landley wrote:
+> > > Grab this tarball, extract it, and ./run-qemu.sh. It's a simple
+> > > linux+initramfs image that boots to a shell prompt.
+> > > 
+> > >    https://landley.net/bin/mkroot/latest/or1k.tgz
+> > > 
+> > > QEMU 7.0.0 ran that linux-or1k image, but newer qemu does not. I besected the
+> > > issue to qemu commit 0a923be2f642, and it's still broken in current tip of tree.
+> > 
+> > Patch is:
+> > 
+> >   0a923be2f6 ("hw/openrisc: page-align FDT address")
+> > 
+> > > Rebuilding the image with current linux-git doesn't seem to make a difference?
+> > > Either way I get serial output with old qemu and don't with current qemu.
+> > 
+> > The bisect looks strange as it's only moving a page boundary, it could be
+> > correct but it seems harmeless.  There is another commit close by that was
+> > causing issues with serial output for the barebox guys and this is a patch I am
+> > working on to fix it.
+> > 
+> > https://lore.kernel.org/qemu-devel/20240908062756.70514-1-shorne@gmail.com/
+> > 
+> > I will try to get time today to look at your tarball and run it, but if not have
+> > a look at this patch.
 > 
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
->  hw/acpi/ghes.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+> I just regression tested linux-6.12 against qemu-9.2.0-rc1 and I'm still
+> getting no output from or1k, with the current image or the old or1k release
+> image that worked under old qemu versions.
 > 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index ad7d895def2a..25587f5fc9ab 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -371,7 +371,10 @@ void ghes_record_cper_errors(const void *cper, size_t len,
->  
->      acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
->                                                         NULL));
-> -    g_assert(acpi_ged_state);
-> +    if (!acpi_ged_state) {
-> +        error_setg(errp, "Can't find ACPI_GED object");
-> +        return;
-> +    }
->      ags = &acpi_ged_state->ghes_state;
->  
->      start_addr = le64_to_cpu(ags->ghes_addr_le);
+> I tried applying your serial patch to current qemu, and it made no
+> difference: still no output booting the image.
 
+OK, I am trying to get that patch pushed upstream.  I will be sure we fix your
+issues before we do that.
+
+> Alas I can no longer test that reverting the commit I identified (git show
+> $HASH | patch -p1 -r) makes it work again in current qemu (although it did
+> at one point, that's a standard sanity check at the end of bisect for me),
+> and I can't fix it up by hand either because hw/openrisc/openrisc_sim.c no
+> longer contains the string "load_sim", looks like it got collated with
+> common code for other architectures.
+> 
+> I'm happy to tweak the kernel config if qemu changed in a way that broke
+> compatibility with old images (I assume _you_ have a kernel that boots), but
+> I was hoping "this week's kernel release" would have any necessary patches
+> to work with QEMU's changed ABI.
+
+The patch I have put in 6.12 only helps with earlycon.  Regular output has
+always been working for me.  I will work on testing your image again to see what
+is special about it.
+
+Note, I did find some issues with the kernel nor properly handling stdout-path.
+It seems that if there are multiple uarts the first one will always be used as
+the default uart.  Only the console= command line argument can be used to
+override that.
+
+So as long as the kernel selects the first uart as the stdout path (it should
+have always been the case)  AND qemu picks the first uart as the uart connected
+to the console (it should be with my latest patch) we should get serial output.
+
+Another thing that may get me delayed is that I need to rebuild my or1k-elf-gdb
+as it's python version is no longer compatible with the kernel's python.
+
+-Stafford
 
