@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB1B5E69183
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 17:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0CDE69185
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 17:30:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEXR3-0008OS-2O; Fri, 22 Nov 2024 12:27:15 -0500
+	id 1tEXUR-00019d-Im; Fri, 22 Nov 2024 12:30:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEXQs-0008NX-AC
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 12:27:04 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tEXUO-00019V-Pr
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 12:30:40 -0500
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEXQp-0001Dm-RW
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 12:27:01 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4315e62afe0so21760725e9.1
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 09:26:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tEXUN-0001yP-2w
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 12:30:40 -0500
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2ffa3e8e917so17433401fa.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 09:30:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732296418; x=1732901218; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732296637; x=1732901437; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9zJLTUOHy8eB9gweQwwCyTwnOEqP405oQC7LUekK7Iw=;
- b=rIYMS3reAODXSCsidfOccOipzhnOQZp6DN+e7mhUG+uhM7p4l4HkBy7qumo/vVVEUo
- qGb8nsOhc+rcRyObcqSwXfZpR825PQqPYPjcg3oTBjLTpBjKMx1a09o3B930NFk0cuvh
- htljwJTtr/gpaJNm0sXNsJFUEk0AHJqhEn7je79M6BW4FY2BEAmPpsstdEggjtl/Xy6R
- PG5IDTgi3c76fPqN2l5LYHGCUtpftemGEo+FuwDdvc8zBSPAzJfpUOJsswofjCmLR+1X
- tNJOLXM6xAoT7hjme59A8Imf+3FyRxKEUlhUqR/Q7pfU8QTn2TOzGsZW/nEXSO6krCjj
- T4AA==
+ bh=xCOEFkCfIx6XecVH5AdGIl5HyPk1/GoEj7JrUsfI3wg=;
+ b=IMfwT/V0O5cf1CuFbZ8QcNENc2/upgpxPt/yy5PsRNe+Mahr9B9TPRjRfh/6wG0VA1
+ QJVsnpT9rn6fdyVEJoh2QHLkeAzUqwyMSmfTF4Lz+GQqUTXIcdXAIFofrZtHTeCfgLLV
+ lNZgn6qgXaOUgnK0OnYQw9IGHCZJvFIY4zAYw5DX5YCl2wVHA5DLy6EbEwrWVJidC7/M
+ Ov2SbZpR9aCuTp87v4E5P6Uqjvum2BJGIRc5yw4htv1TP2GnO/rEKzFQVTWZHNZ4rYvq
+ JE/edJuERLdu499Z4cFr8T+9my50eMVaG+7ihyuGBSvTlX+vkR0hTwpmds26cA8kJSzr
+ h4MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732296418; x=1732901218;
+ d=1e100.net; s=20230601; t=1732296637; x=1732901437;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9zJLTUOHy8eB9gweQwwCyTwnOEqP405oQC7LUekK7Iw=;
- b=J56UgahC81imKUopZjmRqAid9oJpxb+RrganRohauMLyIdgc9wVlhJ2D7k1BCrcIBU
- lnZsugvawbqZN88M3/fDTPh0n30Z+SSB+9lQfV55kZ+S7K1xe0ZuscydM6b6WDKbZbvU
- m+q0aqApkIri2xvE4yz4sRVIa+2wr3AoYed44mJESBfUZOM2Sh61tkd+MLKYWMhOhP5H
- 4exDkyQ7ULEEz1qK+UoXDtm7LR2Slz3yB8pkV+oX1NoXLsD++Ptf1rVJKAbXA9ivtVLt
- 5dqnJVKALK7e1yxJ4Ln2vhk9bJE1aTqShDDV8/yYBgj3Z79nogKHlsb6qNHzRldo7VkE
- aw6w==
-X-Gm-Message-State: AOJu0YyDoa8Cy/ZE3ZAzmf1WFcXUuTCgpVQ1iu5Ul7jj2SU0JLRIBQGG
- m3awmcSFWo3O7gfFE1gOm5o3uo3XNY+vpx9kpW00AF1BHqn/perzmlEueBY5EAg=
-X-Gm-Gg: ASbGnctJQEGPyWG0cQBRaoVomRQWgM/6ErHKN5mTfFetdWbNMSOOmDJMR3ihFGEf8FE
- k4ufql1guhU0OSQY4BIFVzsRRRJ5rVenMczJp1KpN3PFqqvTp2a1eb84dUfl+kl1z6qY7qGhCzs
- NAIw94Ar1k/5NOKioTvAmaHV199Kah6bG9K031AyqPGpIQi7t3Xqb1P0CkVv+BX1r+JRgCJUgJe
- v48js4kiYxWPHcPhrDZFNAfBxFv6Bwhfx2g0+W/orWvAyDLOfuz42M0JgZHt4k=
-X-Google-Smtp-Source: AGHT+IHCAcaaPWgZeFB/QZFIh69Pn4JBoDIO0aHVJ9Htwbcif2DNNwlrONnlIqDz69L9vO3GLSrwsA==
-X-Received: by 2002:a05:600c:310b:b0:42e:93af:61c5 with SMTP id
- 5b1f17b1804b1-433ce41e542mr33457235e9.14.1732296417639; 
- Fri, 22 Nov 2024 09:26:57 -0800 (PST)
-Received: from [192.168.1.121] ([176.187.211.33])
+ bh=xCOEFkCfIx6XecVH5AdGIl5HyPk1/GoEj7JrUsfI3wg=;
+ b=Qq/yLEB2AAgZ79FhASGCUTVG3c0gejEul8y/QCxEI7sq5Pb+DM87kEFe+0kXL3rrXb
+ i9xVCCy7Qf4bjVXHh5KXHPf8R7/qsXaCo0Xsy9nKpApjm2qEmg+BR2+lDVyz/LhVQ5qT
+ tOjC82h3WLkgYyrVrDnk5/OIzfIW58GwYvV9l6trnJAyAlqI59vKIgMxb1vxOicQCy2T
+ EwZ84cRM1oqLkUS5xD/zaGPkN4hVFeMg2WH6VC9erykHXqqpjFBEmGqkl7pTQXiHGb9i
+ +DlKuFsjXacJwd/YaWNIvlhrTD6jj1Ca8ntBigU5NwzukBgxWuA+EpFGjPOGGdT3xJkd
+ neGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEP0zSDFpF4Shshe8xjayrNJjqGnxccWEh1JLVKdJX5t4FvPwer0AqQ7hLZ8nod+ec48xL9YBha+z7@nongnu.org
+X-Gm-Message-State: AOJu0YzxbRuMCedaznfCjSJbNCrQPdSR9cApkAz1s6uw70arreo4LL+W
+ JuKDHHJKs4XRgTfUtwtseMF6roVCgRz8FrCrCV6Y6qik15pVaXwDIN3FbZiL+BV57NbS8tbZCtg
+ 67rE=
+X-Gm-Gg: ASbGncsM/8biTPZycJh9hHUOBsWcnx8215Si6rKYnpi9ms3e4rqRN3ocn9urxTVFAeQ
+ QKDzonQa5G4Ml7XUy1PxGdQKByFh1ay9o9JyvYR6aMKAKfmHU7GmRQjvLxcNnB9SEXaehZdysbk
+ I1dOb97bLDAWhztveyZ/4VhJZDvWlUq0peR18hxNqhAu782DHdS4KNgcPPTWscuyGegXmMwDXv6
+ JB22Yt2TQiUvCIKz5OQxANSrYsCMsHZScTm/iWcfiFTgJbvLxEVjY9v9+0HSmrl8gw6
+X-Google-Smtp-Source: AGHT+IGZEsL2mT0sYqo9w1gYPNM/WUdGxicZ+6mUb2AW3owWvSezB3QW7jTP0DlGrTx5fQHUd+VNVA==
+X-Received: by 2002:a05:651c:2228:b0:2fe:f8e1:5127 with SMTP id
+ 38308e7fff4ca-2ffa711e015mr22997001fa.9.1732296637128; 
+ Fri, 22 Nov 2024 09:30:37 -0800 (PST)
+Received: from [192.168.170.227] ([91.223.100.65])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b45d40basm101966015e9.21.2024.11.22.09.26.56
+ 38308e7fff4ca-2ffa4d17149sm4335771fa.2.2024.11.22.09.30.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Nov 2024 09:26:56 -0800 (PST)
-Message-ID: <dc286a4a-1885-4457-a248-846c16d847fa@linaro.org>
-Date: Fri, 22 Nov 2024 18:26:54 +0100
+ Fri, 22 Nov 2024 09:30:35 -0800 (PST)
+Message-ID: <c478cbc8-6684-4a8d-bd88-724d48098c36@linaro.org>
+Date: Fri, 22 Nov 2024 11:30:27 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cpu: Initialize nr_cores and nr_threads in
- cpu_common_initfn()
-To: Xiaoyao Li <xiaoyao.li@intel.com>, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>
-References: <20241108070609.3653085-2-xiaoyao.li@intel.com>
- <20241122160317.4070177-1-xiaoyao.li@intel.com>
+Subject: Re: [RFC PATCH v1 01/43] Add option to enable/disable helper-to-tcg
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
+ philmd@linaro.org, alex.bennee@linaro.org
+References: <20241121014947.18666-1-anjo@rev.ng>
+ <20241121014947.18666-2-anjo@rev.ng>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241122160317.4070177-1-xiaoyao.li@intel.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241121014947.18666-2-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,68 +104,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/11/24 17:03, Xiaoyao Li wrote:
-> Currently cpu->nr_cores and cpu->nr_threads are initialized in
-> qemu_init_vcpu(), which is called a bit late in *cpu_realizefn() for
-> each ARCHes.
+On 11/20/24 19:49, Anton Johansson wrote:
+> Adds a meson option for enabling/disabling helper-to-tcg along with a
+> CONFIG_* definition.
 > 
-> x86 arch would like to use nr_cores and nr_threads earlier in its
-> realizefn(). To serve this purpose, initialize nr_cores and nr_threads
-> in cpu_common_initfn(), which is earlier than *cpu_realizefn().
+> CONFIG_* will in future commits be used to conditionally include the
+> helper-to-tcg subproject, and to remove unneeded code/memory when
+> helper-to-tcg is not in use.
 > 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Current meson option is limited to Hexagon, as helper-to-tcg will be
+> included as a subproject from target/hexagon.  This will change in the
+> future if multiple frontends adopt helper-to-tcg.
+> 
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
->   hw/core/cpu-common.c | 10 +++++++++-
->   system/cpus.c        |  4 ----
->   2 files changed, 9 insertions(+), 5 deletions(-)
+>   meson.build                   | 7 +++++++
+>   meson_options.txt             | 2 ++
+>   scripts/meson-buildoptions.sh | 5 +++++
+>   3 files changed, 14 insertions(+)
+
+Looks ok.  Could probably stand another set of meson eyes.
+
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
+
 > 
-> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-> index 09c79035949b..6de92ed854bc 100644
-> --- a/hw/core/cpu-common.c
-> +++ b/hw/core/cpu-common.c
-> @@ -237,14 +237,22 @@ static void cpu_common_unrealizefn(DeviceState *dev)
->   static void cpu_common_initfn(Object *obj)
->   {
->       CPUState *cpu = CPU(obj);
-> +    Object *machine = qdev_get_machine();
-> +    MachineState *ms;
+> diff --git a/meson.build b/meson.build
+> index e0b880e4e1..657ebe43f6 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -230,6 +230,7 @@ have_ga = get_option('guest_agent') \
+>              error_message: 'unsupported OS for QEMU guest agent') \
+>     .allowed()
+>   have_block = have_system or have_tools
+> +helper_to_tcg_enabled = get_option('hexagon_helper_to_tcg')
 >   
->       gdb_init_cpu(cpu);
->       cpu->cpu_index = UNASSIGNED_CPU_INDEX;
->       cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
->       /* user-mode doesn't have configurable SMP topology */
-> -    /* the default value is changed by qemu_init_vcpu() for system-mode */
->       cpu->nr_cores = 1;
->       cpu->nr_threads = 1;
-> +#ifndef CONFIG_USER_ONLY
-
-Is CONFIG_USER_ONLY available in an common_ss[] object? I don't recall.
-
-Anyway, can we not use CONFIG_USER_ONLY in cpu-common.c?
-
-> +    if (object_dynamic_cast(machine, TYPE_MACHINE)) {
-> +        ms = MACHINE(machine);
-> +        cpu->nr_cores = machine_topo_get_cores_per_socket(ms);
-> +        cpu->nr_threads = ms->smp.threads;
+>   enable_modules = get_option('modules') \
+>     .require(host_os != 'windows',
+> @@ -3245,6 +3246,11 @@ foreach target : target_dirs
+>         'CONFIG_QEMU_RTSIG_MAP': get_option('rtsig_map'),
+>       }
+>     endif
+> +  if helper_to_tcg_enabled
+> +    config_target += {
+> +      'CONFIG_HELPER_TO_TCG': 'y',
 > +    }
-> +#endif
->       cpu->cflags_next_tb = -1;
+> +  endif
 >   
->       /* allocate storage for thread info, initialise condition variables */
-> diff --git a/system/cpus.c b/system/cpus.c
-> index 1c818ff6828c..c1547fbfd39b 100644
-> --- a/system/cpus.c
-> +++ b/system/cpus.c
-> @@ -664,10 +664,6 @@ const AccelOpsClass *cpus_get_accel(void)
+>     target_kconfig = []
+>     foreach sym: accelerators
+> @@ -4122,6 +4128,7 @@ foreach target : target_dirs
+>     if host_os == 'linux'
+>       target_inc += include_directories('linux-headers', is_system: true)
+>     endif
+> +
+>     if target.endswith('-softmmu')
+>       target_type='system'
+>       t = target_system_arch[target_base_arch].apply(config_target, strict: false)
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 5eeaf3eee5..0730378305 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -374,6 +374,8 @@ option('qemu_ga_version', type: 'string', value: '',
 >   
->   void qemu_init_vcpu(CPUState *cpu)
->   {
-> -    MachineState *ms = MACHINE(qdev_get_machine());
-> -
-> -    cpu->nr_cores = machine_topo_get_cores_per_socket(ms);
-> -    cpu->nr_threads =  ms->smp.threads;
->       cpu->stopped = true;
->       cpu->random_seed = qemu_guest_random_seed_thread_part1();
+>   option('hexagon_idef_parser', type : 'boolean', value : true,
+>          description: 'use idef-parser to automatically generate TCG code for the Hexagon frontend')
+> +option('hexagon_helper_to_tcg', type : 'boolean', value : true,
+> +       description: 'use the helper-to-tcg translator to automatically generate TCG code for the Hexagon frontend')
 >   
+>   option('x86_version', type : 'combo', choices : ['0', '1', '2', '3', '4'], value: '1',
+>          description: 'tweak required x86_64 architecture version beyond compiler default')
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+> index a8066aab03..19c891a39b 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -13,6 +13,9 @@ meson_options_help() {
+>     printf "%s\n" '  --datadir=VALUE          Data file directory [share]'
+>     printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better performance)'
+>     printf "%s\n" '  --disable-debug-info     Enable debug symbols and other information'
+> +  printf "%s\n" '  --disable-hexagon-helper-to-tcg'
+> +  printf "%s\n" '                           use the helper-to-tcg translator to automatically'
+> +  printf "%s\n" '                           generate TCG code for the Hexagon frontend'
+>     printf "%s\n" '  --disable-hexagon-idef-parser'
+>     printf "%s\n" '                           use idef-parser to automatically generate TCG'
+>     printf "%s\n" '                           code for the Hexagon frontend'
+> @@ -341,6 +344,8 @@ _meson_option_parse() {
+>       --disable-guest-agent) printf "%s" -Dguest_agent=disabled ;;
+>       --enable-guest-agent-msi) printf "%s" -Dguest_agent_msi=enabled ;;
+>       --disable-guest-agent-msi) printf "%s" -Dguest_agent_msi=disabled ;;
+> +    --enable-hexagon-helper-to-tcg) printf "%s" -Dhexagon_helper_to_tcg=true ;;
+> +    --disable-hexagon-helper-to-tcg) printf "%s" -Dhexagon_helper_to_tcg=false ;;
+>       --enable-hexagon-idef-parser) printf "%s" -Dhexagon_idef_parser=true ;;
+>       --disable-hexagon-idef-parser) printf "%s" -Dhexagon_idef_parser=false ;;
+>       --enable-hv-balloon) printf "%s" -Dhv_balloon=enabled ;;
 
 
