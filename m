@@ -4,133 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10430D75E4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 13:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D583AD75E53
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 14:10:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEU8P-0003aX-BP; Fri, 22 Nov 2024 08:55:45 -0500
+	id 1tEUM4-0007b4-Pr; Fri, 22 Nov 2024 09:09:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tEU8M-0003aO-Re
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 08:55:43 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tEUM0-0007Ya-8L
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 09:09:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tEU8L-0006h1-6n
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 08:55:42 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tEULw-00033Y-Il
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 09:09:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732283740;
+ s=mimecast20190719; t=1732284562;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=M1aNENPIJBfq4uETvhgombxGAS/em6TlbLGqyIv3g5w=;
- b=Ls2BoxpZwRdz8GoRWguLqKtYQl2AC0N1+VoE9AaH1R//o9jpOSq+2BamrMcywu/7oHko6r
- Z/Kfo/Zhdjk2rjR6Q5PMWUNye8nmFPpUUOli/UVIx9iDiAuw7Azr65jioWJfzR34+6nrU/
- bOCFP0Skpjfdjsm69uQO2JfFQ+1XDho=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=yk2Ax7+hVQvI+U9sh4VeVFQ699U5AWMe6eQhGwrnkAY=;
+ b=TEoTwk6/Z7lX+u4fYz3YqPVzuO4+e2xmI5Rgu7yYFw2x5KpDuoonDdwzv/0giEkKbCJCPZ
+ HpCm9+doR5AdlaP9eH/fc+OCWNuHLdH7atT7wm/kBo2v2L5syHb51JjKLDXy0nKsqA3tD1
+ Fg/OYNGmT6jS97ZOaLMxTPOx90rKYb8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-uapkzqjeMYacK6m9FzU4uA-1; Fri, 22 Nov 2024 08:55:38 -0500
-X-MC-Unique: uapkzqjeMYacK6m9FzU4uA-1
-X-Mimecast-MFC-AGG-ID: uapkzqjeMYacK6m9FzU4uA
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4314f023f55so14371685e9.2
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 05:55:38 -0800 (PST)
+ us-mta-217-hBQIs8mIOIOQ8LDIUpz7RA-1; Fri, 22 Nov 2024 09:09:21 -0500
+X-MC-Unique: hBQIs8mIOIOQ8LDIUpz7RA-1
+X-Mimecast-MFC-AGG-ID: hBQIs8mIOIOQ8LDIUpz7RA
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38243a4ba5fso1465984f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 06:09:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732283737; x=1732888537;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=M1aNENPIJBfq4uETvhgombxGAS/em6TlbLGqyIv3g5w=;
- b=C+W16qO3npSIqcohSS0be7HHwvhcu+peBTpX0eAevsEuZcGEOJMT8ZaQ5glLV4Yvsx
- chZLjJ+4QVOIRFmsfFf17de7hnqjtKTi1Z5uvVuW0QXFdag+TTcySWa+/snQL7Tz/Hqe
- 8yuW0wqbj6pwvvuApKUDFgsxSGpyvVqIR5PeHa01PEucyPQyr8Nx4PLopVrHc7I1apeP
- WfFoV3yTeVd3Bd52hCiQjfNCphbUNeJV53vj3qwaVnnVMS0cv/7vZ1Sm9uP40CLP6qsa
- sehML8E7OP96xdfjqTki7fpwRI1N8f8ydIzlZouBzgWn6aXhgKBftFpSj0T/ugwm349e
- nXSQ==
+ d=1e100.net; s=20230601; t=1732284559; x=1732889359;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yk2Ax7+hVQvI+U9sh4VeVFQ699U5AWMe6eQhGwrnkAY=;
+ b=Zj0mEFoery2w5wuBvD+Hai0rcmtPx71tjO6EEnjJYA8a+DhrY9lAz5dOn4BQb4dyyo
+ uOP5DiYLFu7TbmjJ7G1ybmOMkSjlP1rQdVI8imi438S4xKJDufe6sO3FjQUvxUSryU/1
+ fTaO0bu9S5SkqUFdDQ5QkmDqq6PRNzEcb53Xb4aeQ7NHcuwQ14Yhi2DG5SddPhg8hA94
+ h2e0O1Q7ODdCcN66zj6Yj8NAs/Hrr4U4Dfj/PnJ5dW5imwtCGkhIBJ4RXwGyhQo6qOBA
+ 59oJy3/z7GjLGKPn+v4VHwLi9ap8c4BF/KlaTE/6Wmd5UeH7hVX/bfFaiLql98PnXYxa
+ B97Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDNBSFc5uGJ16v9ihoXdUu8oykeg9pNFQ76K+DHOLOSrxEfpwTlOypOLdkWAZrHpi+dxEP/yos4yaL@nongnu.org
-X-Gm-Message-State: AOJu0YxkcmuD01HrHqgrjbyii1Cxji0dNIjApsfQV9wnRvf/L/++r4kG
- 3Uwfb8PQzBpkzFQKHl4l3OUPe6t0P6ndQ/h+zOPPYlHkWinjn0jobZ/VKD4gSASe2VKU72tHepJ
- 7Kp0MMosvyH/XY0MnBZheB/c1CeXhsCkMPJOdc24vQu5mUK+b1r5CGsZdLjyMVCE=
-X-Gm-Gg: ASbGncuLz9N+LPFJwGHMzPxFlmQZI+mtRi+Svkyl8t0UsV+RnBLU8uywMs3cMMIytnp
- US8P9MRHNUBCcZvm0XnutQxJgpOFbN6/bQeYU0/4+vfuwNrG5xO/6NGIhzOMQXgrcodV4Byekxm
- 6eUyrpG53AdMLeGGrHK3fHgTTB45UTkNvO7xsfcjdoT6OtNirSfeNYm1Sl68CSy4c2SaU83DbUj
- D4lbzsBsssb4YBZsbIblvCx/5Pr0VBnf5XeAdEwGzxT1XQZn9pkLVH3W6eVo7YwipB/FEP9BHc=
-X-Received: by 2002:a05:600c:348b:b0:42c:c003:edd1 with SMTP id
- 5b1f17b1804b1-433ce41ce4emr29963675e9.10.1732283737486; 
- Fri, 22 Nov 2024 05:55:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEYdpUK5k+B/WRu/z81TRL81nREs5fNdslWOQebXNWDRQk8Dy0d0SN4ZeGT8lBFJyzKStY9fw==
-X-Received: by 2002:a05:600c:348b:b0:42c:c003:edd1 with SMTP id
- 5b1f17b1804b1-433ce41ce4emr29963465e9.10.1732283737165; 
- Fri, 22 Nov 2024 05:55:37 -0800 (PST)
-Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433cde8c804sm27992165e9.30.2024.11.22.05.55.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Nov 2024 05:55:36 -0800 (PST)
-Message-ID: <67824c2b-42f7-4112-b6a3-c33262d73ba4@redhat.com>
-Date: Fri, 22 Nov 2024 14:55:36 +0100
+ AJvYcCXsV8nJUfY2buZ8CskZbXA9Adm1V//FlqOMKlb/GdezBTsOm1Ck6oYE3j8kh1PW1BaQpcPiUfNTpzzi@nongnu.org
+X-Gm-Message-State: AOJu0YzF02cnkOvFsloum+986HTWBdWNjvUqsFsAjUDILrzrN4QLJGOL
+ c7mp/QZ9KUPCGp36Zt0kCj6UPpDOCAfP8HyN7YZge6YtmiqNUUvZeG13jy5mb1rjbjNfGvr7I4i
+ HdT+zcTis7v/7Hqflmx2aZ3ZomPKTjS86QZR3Dribpru306o+rGc1pNpKCv5B
+X-Gm-Gg: ASbGncs+jnp23M9jWiONuvVyOKVNg/DXaffVQnWWBLWHl3r81QcotctB2Lk2yWxnmxQ
+ Cz3v28/hm4VvDKV5k3YzBcxdapY7SpiRvEDxGzeTj/A7IZ7CAGJZ4DTSGrv8A6EVYpx+v59bnhR
+ DrVLNoxXdiLqz3FmUuBSMQwx4Vkwx0Pled0iKBBFmcxXeBg5q06+yWq95uFjs+yASNL62sAjGqU
+ wkx8l7ETW5fRJiT0Tv2coioJvnerS4o3878yc6dS89lyVDCx2gH1l0/kwd6fnVeNR7H8v+bxT4y
+ 9zTA4ElXcAB0UdjQIe4SbA==
+X-Received: by 2002:a05:6000:1788:b0:382:51d7:a2e0 with SMTP id
+ ffacd0b85a97d-38260b61f45mr2788447f8f.27.1732284559096; 
+ Fri, 22 Nov 2024 06:09:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGyprGJV54qibFTr3TC4PN2R3DF0M9faj0ZtA0+QcxKPjJaRAb3VhPOvn4IscveuG6hYKjsCA==
+X-Received: by 2002:a05:6000:1788:b0:382:51d7:a2e0 with SMTP id
+ ffacd0b85a97d-38260b61f45mr2788423f8f.27.1732284558605; 
+ Fri, 22 Nov 2024 06:09:18 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fbc3a47sm2543903f8f.73.2024.11.22.06.09.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 22 Nov 2024 06:09:17 -0800 (PST)
+Date: Fri, 22 Nov 2024 15:09:17 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>, Paolo
+ Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>
+Subject: Re: [PATCH v2 1/4] hw/loongarch/virt: Add CPU topology support
+Message-ID: <20241122150917.242e7699@imammedo.users.ipa.redhat.com>
+In-Reply-To: <ZyzH8cjpTmkN88us@intel.com>
+References: <20241029095335.2219343-1-maobibo@loongson.cn>
+ <20241029095335.2219343-2-maobibo@loongson.cn>
+ <ZyDg00Vwowxkt5LO@intel.com>
+ <20241106114150.5af254a7@imammedo.users.ipa.redhat.com>
+ <ZyzH8cjpTmkN88us@intel.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Remove sleep workarounds from sh4 test
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20241122130804.2013662-1-clg@redhat.com>
- <a1026443-c8d4-4e07-9d8c-0bd2356e8cf0@redhat.com>
- <a02705f0-e07b-4829-81f7-df76bb574df0@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <a02705f0-e07b-4829-81f7-df76bb574df0@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -155,58 +116,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/11/2024 14.52, Cédric Le Goater wrote:
-> On 11/22/24 14:49, Thomas Huth wrote:
->> On 22/11/2024 14.08, Cédric Le Goater wrote:
->>> These were introduced in the avocado tests to workaround read issues
->>> when interacting with console. They are no longer necessary and we can
->>> use the expected login string instead.
->>>
->>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>>   tests/functional/test_sh4_tuxrun.py | 8 +++-----
->>>   1 file changed, 3 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/tests/functional/test_sh4_tuxrun.py b/tests/functional/ 
->>> test_sh4_tuxrun.py
->>> index 352cb360ef74..dcb49f28b9aa 100755
->>> --- a/tests/functional/test_sh4_tuxrun.py
->>> +++ b/tests/functional/test_sh4_tuxrun.py
->>> @@ -15,7 +15,7 @@
->>>   import time
->>>   from unittest import skipUnless
->>> -from qemu_test import Asset, exec_command_and_wait_for_pattern, 
->>> exec_command
->>> +from qemu_test import Asset, exec_command_and_wait_for_pattern
->>>   from qemu_test.tuxruntest import TuxRunBaselineTest
->>>   class TuxRunSh4Test(TuxRunBaselineTest):
->>> @@ -46,10 +46,8 @@ def test_sh4(self):
->>>                            console_index=1)
->>>           self.vm.launch()
->>> -        self.wait_for_console_pattern("Welcome to TuxTest")
->>> -        time.sleep(0.1)
->>> -        exec_command(self, 'root')
->>> -        time.sleep(0.1)
->>> +        self.wait_for_console_pattern("tuxtest login:")
->>> +        exec_command_and_wait_for_pattern(self, 'root', 'root@tuxtest:~#')
->>>           exec_command_and_wait_for_pattern(self, 'halt',
->>>                                             "reboot: System halted")
->>
->> Could we also remove the  
->> @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS')...) now?
->>
->>   Thomas
->>
-> 
-> I didn't because of this comment :
-> 
->      # Note: some segfaults caused by unaligned userspace access
-> 
-> It does not reproduce on my systems though.
+On Thu, 7 Nov 2024 22:00:17 +0800
+Zhao Liu <zhao1.liu@intel.com> wrote:
 
-I also cannot reproduce the problem anymore here ... so maybe we should give 
-it a try and remove the skipUnless now?
+> Hi Igor,
+>=20
+> > > What's the difference between arch_id and CPU index (CPUState.cpu_ind=
+ex)? =20
+> >=20
+> > They might be the same but not necessarily.
+> > arch_id is unique cpu identifier from architecture point of view
+> > (which easily could be sparse and without specific order).
+> > (ex: for x86 it's apic_id, for spapr it's core_id) =20
+>=20
+> Yes, I was previously puzzled as to why the core_id of spapr is global,
+> which is completely different from the meaning of core_id in x86. Now,
+> your analogy has made it very clear to me. Thanks!
+>=20
+> > while cpu_index is internal QEMU, that existed before possible_cpus[]
+> > and non-sparse range and depends on order of cpus are created.
+> > For machines that support possible_cpus[], we override default
+> > cpu_index assignment to fit possible_cpus[].
+> >=20
+> > It might be nice to get rid of cpu_index in favor of possible_cpus[],
+> > but that would be a lot work probably with no huge benefit
+> > when it comes majority of machines that don't need variable
+> > cpu count.  =20
+>=20
+> Thank you! Now I see.
+>=20
+> > > In include/hw/boards.h, the doc of CPUArchId said:
+> > >=20
+> > > vcpus_count - number of threads provided by @cpu object
+> > >=20
+> > > And I undersatnd each element in possible_cpus->cpus[] is mapped to a
+> > > CPU object, so that here vcpus_count should be 1. =20
+> >=20
+> > it's arch specific, CPU object in possible_cpus was meant to point to
+> > thread/core/..higher layers in future../
+> >=20
+> > For example spapr put's there CPUCore, where vcpus_count can be > 1
+> >
+> > That is a bit broken though, since CPUCore is not CPUState by any means,
+> > spapr_core_plug() gets away with it only because
+> >   core_slot->cpu =3D CPU(dev)
+> > CPU() is dumb pointer cast. =20
+>=20
+> Is it also because of architectural reasons that the smallest granularity
+> supported by spapr can only be the core?
 
-  Thomas
+Yes, I think so if I recall it correctly.
+
+> > Ideally CPUArchId::cpu should be (Object*) to accommodate various
+> > levels of granularity correctly (with dumb cast above it's just
+> > cosmetics though as long as we treat it as Object in non arch
+> > specific code). =20
+>=20
+> Thank you. So, I would like to ask, should the elements in possible_cpus
+> be understood as the smallest granularity supported by hotplug?
+
+not necessarily, eventually we might want to plug sockets someday,
+machine would expose only have_socket in hotpluggable CPUs interface
+and hotplugging a CPU would look like (device_add xeon_E5_2630,socket-id=3D=
+X),
+which resembles real hw use-case. And that xeon device would create interna=
+lly
+all necessary vCPUs, and configure internal parameters topo/caches/whatnot.
+=20
+> I want to understand that this reason is unrelated to the loongarch patch,
+> instead I mainly want to continue thinking about my previous qom-topo[*]
+> proposal.
+>=20
+> I remember your hotplug slides also mentioned larger granularity hotplug,
+> which I understand, for example, allows x86 to support core/socket, etc.
+> (this of course requires core/socket object abstraction).
+>=20
+> If possible_cpus[] only needs to correspond to the smallest granularity
+> topo object, then it matches my qom-topo proposal quite well, essentially
+> mapping one layer of a complete topology tree (which is built from socket
+> to thread, layer by layer) to possible_cpus[] (actually, this is my desig=
+n:
+> mapping the thread layer of the x86 topology tree to possible_cpus[]. :) )
+>=20
+> Although many years have passed, I still believe that larger granularity
+> hotplug is valuable, especially as hardware includes more and more CPUs.
+
+that wasn't the case in the past for virt world, as main goal of it there
+is dynamic scalability, while in real hw (in x86 world) it's mainly RAS
+feature.
+
+> [*]: https://lore.kernel.org/qemu-devel/20240919015533.766754-1-zhao1.liu=
+@intel.com/
+It looks to me as too complicated approach, I'll comment there.
+
+>=20
+> [snip]
+>=20
+> > > IIUC, the phy_id is kind of like the x86 apic_id, but the field is co=
+mpletely
+> > > derived from topology, so why do you need to define it as a property =
+and then
+> > > expose it to the user? =20
+> >=20
+> > for x86 we do expose apic_id as a property as well, partly from histori=
+cal pov
+> > but also it's better to access cpu fields via properties from outside of
+> > CPU object than directly poke inside of CPU structure from outside of C=
+PU
+> > (especially if it comes to generic code) =20
+>=20
+> Thank you for your guidance. Similar to Bibo=E2=80=99s question, I also w=
+onder
+> if there is the need for a property that won't be exposed to users.
+>=20
+> Regards,
+> Zhao
+>=20
 
 
