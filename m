@@ -4,94 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A965BD75E49
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 13:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C074FD75E4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 13:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEU3K-0001w5-Sx; Fri, 22 Nov 2024 08:50:30 -0500
+	id 1tEU5N-0002oA-U0; Fri, 22 Nov 2024 08:52:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tEU3H-0001vt-Vu
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 08:50:28 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tEU5L-0002nJ-R1
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 08:52:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tEU3G-0004m0-1C
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 08:50:27 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tEU5J-0005JV-Pl
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 08:52:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732283424;
+ s=mimecast20190719; t=1732283552;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4Y/5od7ojm0wmzKfaDCSuhJUyTNJHWyO0M9lVuSQD8k=;
- b=Gvt5JVkgeardqTKXvK+lsaK5fh1vGH/abYsNNyKHpDMnRmH+gU9hGB73IENdytVdGYdm65
- MXZuhueL464wO+XviAmHpuYLIzuyyThsQhfix76FiuaRdSYpiaG/d4kl2WGowg+1m9dNpC
- h0FoMKw/GXOlLB2wMlDmFbiQRXCeWZw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uMAsz0cucGnnDkVXKJG4RPqzmSqorsO9L0gIyjPa/hc=;
+ b=dKKvYIRY1Ib7gBWjQPr36XsNpw9TA4KDzC5QkkTvOVIaD3jfqi3JD6XWHFMLInRKxTqqY5
+ p96/xiQO6ai9p90k88sYInD+YffEMiiIgrKGVtx8axM8XO6AdS8zHLgJ5VRDa+chZbjXBN
+ PM800+nyjo0pDX1uUEOURwObO7SKi1U=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-hXBsyBkbPzSkSyhrtZj87g-1; Fri, 22 Nov 2024 08:50:23 -0500
-X-MC-Unique: hXBsyBkbPzSkSyhrtZj87g-1
-X-Mimecast-MFC-AGG-ID: hXBsyBkbPzSkSyhrtZj87g
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-382308d07dfso1056043f8f.3
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 05:50:22 -0800 (PST)
+ us-mta-96-DHVZx9aXOIy5pQ1u7bNs0A-1; Fri, 22 Nov 2024 08:52:31 -0500
+X-MC-Unique: DHVZx9aXOIy5pQ1u7bNs0A-1
+X-Mimecast-MFC-AGG-ID: DHVZx9aXOIy5pQ1u7bNs0A
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4316e2dde9eso18656165e9.2
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 05:52:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732283422; x=1732888222;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4Y/5od7ojm0wmzKfaDCSuhJUyTNJHWyO0M9lVuSQD8k=;
- b=be8KDh8Mv1XWF5JSlHNRUHAuMw/gAg30zBzI6PcsHmWxyAh1eHPIQawqZzczfQfGs+
- nsPpm8URmDAa8+iYCzrWpKXd1839v6oicDADfS6gwsuTi6rDt1ln0iLExrGCX3S8TxDf
- N0p7x/VSaqIqdAK6QsHd2ktPrHUAVwsPlZcSW/eEbs33PFmqN1dHHPxbuOhYYTUCRpWp
- jQTRC/4bnm99lVSmmmckVjeEkkQ0j/0th3nzryzUQB5yD1uEAOM5rXs+zauskdKL7ed1
- QNeiBdGu2Tk00bDew2Y/LHbWpuL7qL4L7ah+ofdl1ABjCrNfK8JbJkrAMQnqNwtDnU1X
- WgRA==
+ d=1e100.net; s=20230601; t=1732283547; x=1732888347;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uMAsz0cucGnnDkVXKJG4RPqzmSqorsO9L0gIyjPa/hc=;
+ b=n+l6VkC4u2bbbvThhBuX/Hd8pxkREA0lA845QjnVz00chfwTul5z1/Z3rKRZp25Xa5
+ B6HoGecAE5wr4i+7XNgJLwZiUZ00LlqZGQsDJXVGFwH0XL4frwmfF3xfKcS0NFpM8Yuo
+ UgTceoqptXgv4sK82UaM8iyPuDtD5DvIeqeGKe1zrGTV+9EtR5rO8R84NESm3+0YszjC
+ jyScLQA5uBhqL17Xof+f2CXnsPtshl2oJYFscp3hkEbfMuntT7nKtUfdxEIMriImNeVa
+ ueZrKnVr/HHAMef7bqwMoUCzcv1GAHaNZ1Eala5zQS7Ud1FcawYeOHUpwr4qjw3DABJ4
+ 28IA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvQf6YJIoXnjl4K24/nTZeDZiAntf10UXuTjsXlpvjgbqm/CFWzyqVG34agI0mt38Hmp6lUqkHvC7s@nongnu.org
-X-Gm-Message-State: AOJu0YzF181qYXe9a3BxBDYMd0XN8pOhbYYPBAMsR6kb78PgH0vX5VwJ
- 2qMLl6BgnmE+tkKzEdd88q0sMakFSoWCty9l9VpnZ9g6EX1NOdV3zDWycBzf/fp+oztMh/8p1cw
- 2LaNbysVzGtXiIiixTMJyh86NN+Y7xO5NjmfAaAagcEggkKSOvmb2
-X-Gm-Gg: ASbGnct4kUj22ga5pkoOEO31ljMjgqC3dtFyCTEl+jJCJex7z7AojQ+cBT4zoUMTLI/
- 6qY1MIwvD7w+tQZIr8VHf7BUn0V34v0Gy8QaqSXFMKEqiGLYBSmcAdpurCDXUO4+9Cc7nPXx5Vu
- 6SrRTEs4BHCqjSyQXOS2/QdEWRUrWAHseKumJ/LIerAcCvMFV2BHLgHMQa+T2UabkVuAvG8QyKH
- CUkRoUUUYp1EXG7UB9SuGRXKHuYRij8QszFJGl8UBHqGTWg93BB69RFRnybscbK0STf1zckpkzN
- XBJ9F/wrdMxnXMPZOU8P7A==
-X-Received: by 2002:a05:6000:2d01:b0:382:5010:c8c3 with SMTP id
- ffacd0b85a97d-38260b78295mr2112461f8f.28.1732283421854; 
- Fri, 22 Nov 2024 05:50:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGzOIAcJLgL/TnB3oBdwi2/+kzMe4jmqvSrYN1bEpQCrJWcrqv+XLeSkN722GolPkgzfEHATg==
-X-Received: by 2002:a05:6000:2d01:b0:382:5010:c8c3 with SMTP id
- ffacd0b85a97d-38260b78295mr2112445f8f.28.1732283421407; 
- Fri, 22 Nov 2024 05:50:21 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825faff9cdsm2449481f8f.28.2024.11.22.05.50.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Nov 2024 05:50:20 -0800 (PST)
-Date: Fri, 22 Nov 2024 14:50:20 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: bibo mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 6/6] hw/loongarch/virt: Enable cpu hotplug feature on
- virt machine
-Message-ID: <20241122145020.74d52161@imammedo.users.ipa.redhat.com>
-In-Reply-To: <2ecae20c-d354-5cb7-0972-f0fdc2c568c2@loongson.cn>
-References: <20241112021738.1952851-1-maobibo@loongson.cn>
- <20241112021738.1952851-7-maobibo@loongson.cn>
- <20241118180306.6b8019c4@imammedo.users.ipa.redhat.com>
- <2ecae20c-d354-5cb7-0972-f0fdc2c568c2@loongson.cn>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCWt+w7dkFwyYMMRxUjM+aPxWwrVcO+5rNsXo9rHU+m2Ft+aj5lz/XKFy/7w/QjiNMmNmvNqNmQCI6P2@nongnu.org
+X-Gm-Message-State: AOJu0YzoK01XcLlKAI0TXXUL2BLYaaHWUicMFXbOJ3nV1eXQ5QTuzU58
+ 5C3oGHkJ4KwN0b8k4TIUpgkS04XzABTeWC77dSEvrhUJNqJxErdyMoiSnFf/AY6j9rPACNtOtc8
+ KJHYvq5VyfC/UwIxx3l3YtC7sthwAWMTS2MnoQFeEOPrWnuVh6ux33d7BxlxW
+X-Gm-Gg: ASbGnct7JKQb5AuUZf30+bqG6GSVIwp/6bNVDBJAPLwPJ1/iRIHiJl0u9IYtqFpQLLu
+ M8OQHTt5esYt56/p4dP80kr7aWl385ypjrzmzCUXL6gnhX7i5bLab+D2dUdJW+B6/0Gi16bslYm
+ 4t9ZbmBAVY/ACAEXJCqMzy4a2zxRvdSLQ/2eE5rpkAiC3sIQGOgZEzlb2PpK7xbRuIXwr2QK/fE
+ z2IaegU5Jg3t7EP01IGroVs+mPete9AHg6aGag1Z55y2VibvWQ8p1AY0Y1fLE5dHTn+PxrImX7/
+ J+eQZVlGiUYF
+X-Received: by 2002:a5d:6d8c:0:b0:382:51ae:755c with SMTP id
+ ffacd0b85a97d-38260bc6d05mr3572797f8f.46.1732283547677; 
+ Fri, 22 Nov 2024 05:52:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHJcJB8wAsUIDBCuWHXrJvPkWMAjljOt6JKMV3bPVNoDeQW4tlR8h4s+wLqfUrpduqUCqzMzg==
+X-Received: by 2002:a5d:6d8c:0:b0:382:51ae:755c with SMTP id
+ ffacd0b85a97d-38260bc6d05mr3572779f8f.46.1732283547318; 
+ Fri, 22 Nov 2024 05:52:27 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825faf9d97sm2441276f8f.35.2024.11.22.05.52.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Nov 2024 05:52:26 -0800 (PST)
+Message-ID: <a02705f0-e07b-4829-81f7-df76bb574df0@redhat.com>
+Date: Fri, 22 Nov 2024 14:52:26 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: Remove sleep workarounds from sh4 test
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20241122130804.2013662-1-clg@redhat.com>
+ <a1026443-c8d4-4e07-9d8c-0bd2356e8cf0@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <a1026443-c8d4-4e07-9d8c-0bd2356e8cf0@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -116,222 +157,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 Nov 2024 18:18:27 +0800
-bibo mao <maobibo@loongson.cn> wrote:
+On 11/22/24 14:49, Thomas Huth wrote:
+> On 22/11/2024 14.08, Cédric Le Goater wrote:
+>> These were introduced in the avocado tests to workaround read issues
+>> when interacting with console. They are no longer necessary and we can
+>> use the expected login string instead.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   tests/functional/test_sh4_tuxrun.py | 8 +++-----
+>>   1 file changed, 3 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/tests/functional/test_sh4_tuxrun.py b/tests/functional/test_sh4_tuxrun.py
+>> index 352cb360ef74..dcb49f28b9aa 100755
+>> --- a/tests/functional/test_sh4_tuxrun.py
+>> +++ b/tests/functional/test_sh4_tuxrun.py
+>> @@ -15,7 +15,7 @@
+>>   import time
+>>   from unittest import skipUnless
+>> -from qemu_test import Asset, exec_command_and_wait_for_pattern, exec_command
+>> +from qemu_test import Asset, exec_command_and_wait_for_pattern
+>>   from qemu_test.tuxruntest import TuxRunBaselineTest
+>>   class TuxRunSh4Test(TuxRunBaselineTest):
+>> @@ -46,10 +46,8 @@ def test_sh4(self):
+>>                            console_index=1)
+>>           self.vm.launch()
+>> -        self.wait_for_console_pattern("Welcome to TuxTest")
+>> -        time.sleep(0.1)
+>> -        exec_command(self, 'root')
+>> -        time.sleep(0.1)
+>> +        self.wait_for_console_pattern("tuxtest login:")
+>> +        exec_command_and_wait_for_pattern(self, 'root', 'root@tuxtest:~#')
+>>           exec_command_and_wait_for_pattern(self, 'halt',
+>>                                             "reboot: System halted")
+> 
+> Could we also remove the  @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS')...) now?
+> 
+>   Thomas
+> 
 
-> On 2024/11/19 =E4=B8=8A=E5=8D=881:03, Igor Mammedov wrote:
-> > On Tue, 12 Nov 2024 10:17:38 +0800
-> > Bibo Mao <maobibo@loongson.cn> wrote:
-> >  =20
-> >> On virt machine, enable CPU hotplug feature has_hotpluggable_cpus. For
-> >> hot-added CPUs, there is socket-id/core-id/thread-id property set,
-> >> arch_id can be caculated from these properties. So that cpu slot can be
-> >> searched from its arch_id.
-> >>
-> >> Also change num-cpu property of extioi and ipi from smp.cpus to
-> >> smp.max_cpus
-> >>
-> >> Co-developed-by: Xianglai Li <lixianglai@loongson.cn>
-> >> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> >> ---
-> >>   hw/loongarch/virt.c | 68 +++++++++++++++++++++++++++++++++++++++----=
---
-> >>   1 file changed, 59 insertions(+), 9 deletions(-)
-> >>
-> >> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> >> index b49b15c0f6..5f81673368 100644
-> >> --- a/hw/loongarch/virt.c
-> >> +++ b/hw/loongarch/virt.c
-> >> @@ -890,7 +890,7 @@ static void virt_irq_init(LoongArchVirtMachineStat=
-e *lvms)
-> >>  =20
-> >>       /* Create IPI device */
-> >>       ipi =3D qdev_new(TYPE_LOONGARCH_IPI);
-> >> -    qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.cpus);
-> >> +    qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.max_cpus);
-> >>       sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
-> >>       lvms->ipi =3D ipi;
-> >>  =20
-> >> @@ -905,7 +905,7 @@ static void virt_irq_init(LoongArchVirtMachineStat=
-e *lvms)
-> >>  =20
-> >>       /* Create EXTIOI device */
-> >>       extioi =3D qdev_new(TYPE_LOONGARCH_EXTIOI);
-> >> -    qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
-> >> +    qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.max_cpus);
-> >>       if (virt_is_veiointc_enabled(lvms)) {
-> >>           qdev_prop_set_bit(extioi, "has-virtualization-extension", tr=
-ue);
-> >>       }
-> >> @@ -1369,11 +1369,15 @@ static void virt_get_topo_from_index(MachineSt=
-ate *ms,
-> >>   }
-> >>  =20
-> >>   /* Find cpu slot in machine->possible_cpus by arch_id */
-> >> -static CPUArchId *virt_find_cpu_slot(MachineState *ms, int arch_id)
-> >> +static CPUArchId *virt_find_cpu_slot(MachineState *ms, int arch_id, i=
-nt *index)
-> >>   {
-> >>       int n;
-> >>       for (n =3D 0; n < ms->possible_cpus->len; n++) {
-> >>           if (ms->possible_cpus->cpus[n].arch_id =3D=3D arch_id) {
-> >> +            if (index) {
-> >> +                *index =3D n;
-> >> +            }
-> >> +
-> >>               return &ms->possible_cpus->cpus[n];
-> >>           }
-> >>       }
-> >> @@ -1386,10 +1390,12 @@ static void virt_cpu_pre_plug(HotplugHandler *=
-hotplug_dev,
-> >>   {
-> >>       LoongArchVirtMachineState *lvms =3D LOONGARCH_VIRT_MACHINE(hotpl=
-ug_dev);
-> >>       MachineState *ms =3D MACHINE(OBJECT(hotplug_dev));
-> >> +    CPUState *cs =3D CPU(dev);
-> >>       LoongArchCPU *cpu =3D LOONGARCH_CPU(dev);
-> >>       CPUArchId *cpu_slot;
-> >>       Error *local_err =3D NULL;
-> >> -    int arch_id;
-> >> +    LoongArchCPUTopo topo;
-> >> +    int arch_id, index;
-> >>  =20
-> >>       /* sanity check the cpu */
-> >>       if (!object_dynamic_cast(OBJECT(cpu), ms->cpu_type)) {
-> >> @@ -1408,12 +1414,45 @@ static void virt_cpu_pre_plug(HotplugHandler *=
-hotplug_dev,
-> >>        }
-> >>  =20
-> >>       if (cpu->phy_id =3D=3D UNSET_PHY_ID) { =20
-> >  =20
-> >> -        error_setg(&local_err, "CPU hotplug not supported");
-> >> -        goto out;
-> >> +        if ((cpu->thread_id < 0) || (cpu->thread_id >=3D ms->smp.thre=
-ads)) {
-> >> +            error_setg(&local_err,
-> >> +                       "Invalid thread-id %u specified, must be in ra=
-nge 1:%u",
-> >> +                       cpu->thread_id, ms->smp.threads - 1);
-> >> +            goto out;
-> >> +        }
-> >> +
-> >> +        if ((cpu->core_id < 0) || (cpu->core_id >=3D ms->smp.cores)) {
-> >> +            error_setg(&local_err,
-> >> +                       "Invalid core-id %u specified, must be in rang=
-e 1:%u",
-> >> +                       cpu->core_id, ms->smp.cores - 1);
-> >> +            goto out;
-> >> +        }
-> >> +
-> >> +        if ((cpu->socket_id < 0) || (cpu->socket_id >=3D ms->smp.sock=
-ets)) {
-> >> +            error_setg(&local_err,
-> >> +                       "Invalid socket-id %u specified, must be in ra=
-nge 1:%u",
-> >> +                       cpu->socket_id, ms->smp.sockets - 1);
-> >> +            goto out;
-> >> +        }
-> >> +
-> >> +        topo.socket_id =3D cpu->socket_id;
-> >> +        topo.core_id =3D cpu->core_id;
-> >> +        topo.thread_id =3D cpu->thread_id;
-> >> +        arch_id =3D  virt_get_arch_id_from_topo(ms, &topo);
-> >> +        cpu_slot =3D virt_find_cpu_slot(ms, arch_id, &index);
-> >> +        if (CPU(cpu_slot->cpu)) {
-> >> +            error_setg(&local_err,
-> >> +                       "cpu(id%d=3D%d:%d:%d) with arch-id %" PRIu64 "=
- exists",
-> >> +                       cs->cpu_index, cpu->socket_id, cpu->core_id,
-> >> +                       cpu->thread_id, cpu_slot->arch_id);
-> >> +            goto out;
-> >> +        }
-> >> +        cpu->phy_id =3D arch_id;
-> >> +        cs->cpu_index =3D index; =20
-> > this whole branch applies to cold-plugged CPUs as well, especially
-> > if both (hot/cold plugged CPUs are getting wired with help of pre_plug)
-> > So this hunk should be introduced somewhere earlier in series,
-> > and than I'd likely won't need (cpu->phy_id =3D=3D UNSET_PHY_ID) check =
-to begin with.
-> >=20
-> > the only difference vs cold-plug would be need to call acpi_ged plug ha=
-ndler,
-> > like you are dong below in virt_cpu_plug =20
-> Sure, will check acpi_ged plug handler for cold-plug/hot-plug CPU.
->=20
-> >  =20
-> >>       } else {
-> >>           /* For cold-add cpu, find cpu slot from arch_id */
-> >>           arch_id =3D cpu->phy_id;
-> >> -        cpu_slot =3D virt_find_cpu_slot(ms, arch_id);
-> >> +        cpu_slot =3D virt_find_cpu_slot(ms, arch_id, NULL);
-> >>       }
-> >>  =20
-> >>       numa_cpu_pre_plug(cpu_slot, dev, &local_err);
-> >> @@ -1468,7 +1507,7 @@ static void virt_cpu_unplug(HotplugHandler *hotp=
-lug_dev,
-> >>           return;
-> >>       }
-> >>  =20
-> >> -    cpu_slot =3D virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> >> +    cpu_slot =3D virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id, NULL);
-> >>       cpu_slot->cpu =3D NULL;
-> >>       return;
-> >>   }
-> >> @@ -1477,14 +1516,24 @@ static void virt_cpu_plug(HotplugHandler *hotp=
-lug_dev,
-> >>                                   DeviceState *dev, Error **errp)
-> >>   {
-> >>       CPUArchId *cpu_slot;
-> >> +    Error *local_err =3D NULL;
-> >>       LoongArchCPU *cpu =3D LOONGARCH_CPU(dev);
-> >>       MachineState *ms =3D MACHINE(hotplug_dev);
-> >>       LoongArchVirtMachineState *lvms =3D LOONGARCH_VIRT_MACHINE(hotpl=
-ug_dev);
-> >>  =20
-> >>       /* Connect irq to cpu, including ipi and extioi irqchip */
-> >>       virt_init_cpu_irq(ms, CPU(cpu));
-> >> -    cpu_slot =3D virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> >> +    cpu_slot =3D virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id, NULL);
-> >>       cpu_slot->cpu =3D CPU(dev);
-> >> +
-> >> +    if (lvms->acpi_ged) { =20
-> > Why do you need check, can machine be created without acpi_ged? =20
-> There is no NULL check with macro HOTPLUG_HANDLER() for cold-plug cpu.
-> Now machine is created with acpi_ged always, in later will add noapic=20
-> option support.
+I didn't because of this comment :
 
-you've probably meant '-noacpi',
-anyways right now acpi_ged is always present, so make this patch unconditio=
-nal.
+     # Note: some segfaults caused by unaligned userspace access
 
-If later on you find a use-case for '-noacpi' and add it,
-then introduce condition at that time.
+It does not reproduce on my systems though.
 
->=20
-> Regards
-> Bibo Mao
->=20
-> >  =20
-> >> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &l=
-ocal_err);
-> >> +        if (local_err) {
-> >> +            error_propagate(errp, local_err);
-> >> +            return;
-> >> +        }
-> >> +    }
-> >> +
-> >>       return;
-> >>   }
-> >>  =20
-> >> @@ -1667,6 +1716,7 @@ static void virt_class_init(ObjectClass *oc, voi=
-d *data)
-> >>       mc->numa_mem_supported =3D true;
-> >>       mc->auto_enable_numa_with_memhp =3D true;
-> >>       mc->auto_enable_numa_with_memdev =3D true;
-> >> +    mc->has_hotpluggable_cpus =3D true;
-> >>       mc->get_hotplug_handler =3D virt_get_hotplug_handler;
-> >>       mc->default_nic =3D "virtio-net-pci";
-> >>       hc->plug =3D virt_device_plug_cb; =20
->=20
+C.
 
 
