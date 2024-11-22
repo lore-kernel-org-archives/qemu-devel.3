@@ -4,62 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16D0BE65D2F
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 08:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8453FE65D34
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 08:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEOya-0000Qs-7e; Fri, 22 Nov 2024 03:25:16 -0500
+	id 1tEP1Z-0001bA-I5; Fri, 22 Nov 2024 03:28:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tEOyW-0000Pw-Qz; Fri, 22 Nov 2024 03:25:12 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tEOyU-0000Ia-0D; Fri, 22 Nov 2024 03:25:12 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 237295C3EE9;
- Fri, 22 Nov 2024 08:24:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA0EC4CECE;
- Fri, 22 Nov 2024 08:24:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1732263900;
- bh=82IqythBJBaMRewCz8uu1EinmQlUf337AmmiKnmg5dM=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=p4b68gjfp3GfkyCiomz72kMFMhKhM4Abm53VM+JhoW+TWgiSH9ggd7O5jeg8Ah/2u
- Aegw0QHOWbhFsmHURlsDB6jcre9xLlyCDHhyxb3aVlNLnEbAjSWnY61lYCJGkDoIhC
- FrJLVgDW6k2WwOqxWbMM83+GzeukwrSI6pOcGI29pStY22VEzQ4A+4iQPYQTCfR5Ol
- dEIyDiyU5Q1EB8KRuugXcji81YATsEdmWVkz+uNtQwwQrYYqZaiMR6qoVWsIVRmJhe
- ymb4sfwl6R9kLhihnJRrNNh/N1qlOja0VLp3pcUNVjkJr+Q5AiArlbj9QKvyzt9XlN
- mU5+aKZZccOew==
-Date: Fri, 22 Nov 2024 09:24:55 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v3 08/15] acpi/ghes: make the GHES record generation
- more generic
-Message-ID: <20241122092455.5e2584a4@foz.lan>
-In-Reply-To: <20241120141838.000070c1@huawei.com>
-References: <cover.1731406254.git.mchehab+huawei@kernel.org>
- <8227e881bec84f27861f04c7af62667eef2708e7.1731406254.git.mchehab+huawei@kernel.org>
- <20241120141838.000070c1@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEP1X-0001au-QF
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:28:19 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEP1W-0000e3-23
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:28:19 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3823194a879so1258186f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 00:28:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732264096; x=1732868896; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=I44exm/KAdLBmQ8me8mXE3lF0QVR1MNMb5Ta44lrJzs=;
+ b=CPQZNMxpN+RWwua+2tDjnVVASx0A8WRPDGVM1nqR/jUmdPHLC7D6rvWSAfod1mDR0G
+ Vyudv6BiftTsdGnDCto1RIUYA6HUPJVUD23YlIRjvrq5Zn1LBZiLkq3edDOYK9P4JM9x
+ wLJ7FU0qTvN5ooz0gueXj9cf2pm+vz8ZTsICif/F+G7M1pPswGWvbeVrrrC2s/EjKCCu
+ I8X73KS6CTpGP2OJVgbtC45344LNCmyv3J8KCXUzAvmLpSqdvttB2BE3TLErujhyQOz5
+ d2Ogy9COU1MM5kblQN2gURvzEZ2x4lRIo58u8QxSsBVk9I17Inewh+tPNCbN1xhTr0eM
+ fW2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732264096; x=1732868896;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I44exm/KAdLBmQ8me8mXE3lF0QVR1MNMb5Ta44lrJzs=;
+ b=WoTAzac8wFXClGqapUCDbidHxBOwM5wuSOzIQvq9WBuvu6nMPy8eSplwkqU6KLIYBX
+ o/aqVg61OwPTw8VdisP6NqrQ3IIRcqTfSXz/JDiG80MmxK1+20+2OXNE4+mYwU5LnrDl
+ R6xisynFtc21cC+VLI3moRyjMhE9dwwS2Q60LJkszLg0ET4YLqd1kAGFAMO7QJgXZwkP
+ pxfjaWFxxNvFoSRLYWUlpnen0stbsaYTIEsxPYIYMytChmiUS3wecjFrOwB13JNpIwra
+ TEUw9Eiy1fOfzwIg80nd6LOPukIlbt4JJhMnuTAcp4Kh0qbxHG3NvfhARQgzp+NmvD8b
+ 1rVQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJQ6rjY5pC7/TF3fayWI8y6kZ/TucI1vsBkTeJ9dSQr+wiI3suA7I7K3iW5XeLUb4T+iGZGTq764wM@nongnu.org
+X-Gm-Message-State: AOJu0YwSkRgfVLJ99KVq/7VlHVOFY1llxgQ7GbUqZb54AGKf3TJ2WadR
+ P8uqwvl06J3VFlSWKMOs6lV6cAhG4ZtlWCGuy086YJvT5l/lbwkKZUj9f/tMiNY=
+X-Gm-Gg: ASbGncs8fM9GKGz2It0XK3P0lQfkCGOlelzkQ6WZ4xb46odERq0mEwM8N5CKH6ffv1F
+ 4JQAxI+gvmhL8osBYX4qKZzr/q1gJC6ufrlGfoh2lED4pmtQAQP3MMXVRxcXZnQyStmnMIx+QtZ
+ HokfVyap8hglOkW52Uid9t4A3hDEQzsg6OV46/mFhKnKO4E5zKjSKF5MBGNg1g3Q2p709XhbhYB
+ e/vLavd4eN8mpAfpNOUiJOQKyUvCdWeFUyBkSC1SZhGcM0z1sWZEgPTDqcj/rQyl3Bv
+X-Google-Smtp-Source: AGHT+IFk0+Nh40l9UOw67AEzyalytC9wmuJHMYjhKdi+5Ps7W+wOr+kGiGWl80b1ycR2xfnsoY0brw==
+X-Received: by 2002:a05:6000:2d06:b0:382:4b83:d4c0 with SMTP id
+ ffacd0b85a97d-38260b486f8mr1225385f8f.3.1732264096005; 
+ Fri, 22 Nov 2024 00:28:16 -0800 (PST)
+Received: from [192.168.1.121] ([176.187.204.90])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825faf9f59sm1739701f8f.34.2024.11.22.00.28.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Nov 2024 00:28:15 -0800 (PST)
+Message-ID: <70f44731-6879-4adf-a71b-a781af48fe99@linaro.org>
+Date: Fri, 22 Nov 2024 09:28:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] rust: add bindings for interrupt sources
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: junjie.mao@hotmail.com, zhao1.liu@intel.com, qemu-rust@nongnu.org
+References: <20241122074756.282142-1-pbonzini@redhat.com>
+ <20241122074756.282142-3-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241122074756.282142-3-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,298 +100,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Wed, 20 Nov 2024 14:18:38 +0000
-Jonathan Cameron <Jonathan.Cameron@huawei.com> escreveu:
+Hi Paolo,
 
-> On Tue, 12 Nov 2024 11:14:52 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On 22/11/24 08:47, Paolo Bonzini wrote:
+> The InterruptSource bindings let us call qemu_set_irq() and sysbus_init_irq()
+> as safe code.
 > 
-> > Split the code into separate functions to allow using the
-> > common CPER filling code by different error sources.
-> > 
-> > The generic code was moved to ghes_record_cper_errors(),
-> > and ghes_gen_err_data_uncorrectable_recoverable() now contains
-> > only a logic to fill GEGB part of the record.  
-> GESB?
-
-This name came from this part of the code at hw/acpi/ghes.c:
-
-	/*
-	 * Total size for Generic Error Status Block except Generic Error Data Entries
-	 * ACPI 6.2: 18.3.2.7.1 Generic Error Data,
-	 * Table 18-380 Generic Error Status Block
-	 */
-	#define ACPI_GHES_GESB_SIZE                 20
-
-I replaced it to:
-
-	The generic code was moved to ghes_record_cper_errors(),
-	and ghes_gen_err_data_uncorrectable_recoverable() now contains
-	only a logic to fill the Generic Error Data part of the record,
-	as described at:                            
-
-	        ACPI 6.2: 18.3.2.7.1 Generic Error Data
-
-to make it clearer.
-
-> > 
-> > The remaining code to generate a memory error now belongs to
-> > acpi_ghes_record_errors() function.
-> > 
-> > A further patch will give it a better name.
-> > 
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>  
-> Hi Mauro,
+> Interrupt sources, qemu_irq in C code, are pointers to IRQState objects.
+> They are QOM link properties and can be written to outside the control
+> of the device (i.e. from a shared reference); therefore they must be
+> interior-mutable in Rust.  Since thread-safety is provided by the BQL,
+> what we want here is the newly-introduced BqlCell.  A pointer to the
+> contents of the BqlCell (an IRQState**, or equivalently qemu_irq*)
+> is then passed to the C sysbus_init_irq function.
 > 
-> I've kind of forgotten how all this works. Anyhow, looking afresh
-> I think there is a functional change in her which I wasn't expecting
-> to see.
-> 
-> > ---
-> >  hw/acpi/ghes.c         | 122 +++++++++++++++++++++++------------------
-> >  include/hw/acpi/ghes.h |   3 +
-> >  2 files changed, 73 insertions(+), 52 deletions(-)
-> > 
-> > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> > index edc74c38bf8a..0eb874a11ff7 100644
-> > --- a/hw/acpi/ghes.c
-> > +++ b/hw/acpi/ghes.c
-> > @@ -181,51 +181,30 @@ static void acpi_ghes_build_append_mem_cper(GArray *table,
-> >      build_append_int_noprefix(table, 0, 7);
-> >  }
-> >  
-> > -static int acpi_ghes_record_mem_error(uint64_t error_block_address,
-> > -                                      uint64_t error_physical_addr)
-> > +static void
-> > +ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
-> > +                                            const uint8_t *section_type,
-> > +                                            int data_length)
-> >  {
-> > -    GArray *block;
-> > -
-> > -    /* Memory Error Section Type */
-> > -    const uint8_t uefi_cper_mem_sec[] =
-> > -          UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
-> > -                  0xED, 0x7C, 0x83, 0xB1);
-> > -
-> >      /* invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
-> >       * Table 17-13 Generic Error Data Entry
-> >       */
-> >      QemuUUID fru_id = {};
-> > -    uint32_t data_length;
-> >  
-> > -    block = g_array_new(false, true /* clear */, 1);
-> > -
-> > -    /* This is the length if adding a new generic error data entry*/
-> > -    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH;
-> >      /*
-> > -     * It should not run out of the preallocated memory if adding a new generic
-> > -     * error data entry
-> > +     * Calculate the size with this block. No need to check for
-> > +     * too big CPER, as CPER size is checked at ghes_record_cper_errors()
-> >       */
-> > -    assert((data_length + ACPI_GHES_GESB_SIZE) <=
-> > -            ACPI_GHES_MAX_RAW_DATA_LENGTH);
-> > +    data_length += ACPI_GHES_GESB_SIZE;  
-> 
-> After this change the data length passe dto acpi_ghes_generic_error_status is
-> ACPI_GHES_MAX_RAW_DATA_LENGTH + ACPI_GHES_GESB_SIZE;
-> I can't see why that would be the same as previous value of
->  ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH
-> 
-> So is this a functional change?  If so please call it out in the patch
-> description with some info on why it doesn't matter.
-
-Good point.
-
-My understanding from the specs is that the generic error data part
-is meant to contain the size of the entire space, and not only the
-payload part.
-
-Such change used to make more sense on some previous versions of the 
-series, where ghes_gen_err_data_uncorrectable_recoverable() was called
-by error injection. However, now the only place where this is used is
-inside the code to return QEMU memory errors via SEA.
-
-So, I removed the functional change from the series I'm currently
-submitting, as it doesn't belong here. It could be relevant only when
-we decide to implement other internal errors on QEMU that would reuse
-ghes_gen_err_data_uncorrectable_recoverable() function.
-
-So, I'll keep on my pile of QEMU patches, at the end, to be submitted
-if/when we need it.
-
-> >  
-> >      /* Build the new generic error status block header */
-> >      acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
-> >          0, 0, data_length, ACPI_CPER_SEV_RECOVERABLE);
-> >  
-> >      /* Build this new generic error data entry header */
-> > -    acpi_ghes_generic_error_data(block, uefi_cper_mem_sec,
-> > +    acpi_ghes_generic_error_data(block, section_type,
-> >          ACPI_CPER_SEV_RECOVERABLE, 0, 0,
-> >          ACPI_GHES_MEM_CPER_LENGTH, fru_id, 0);
-> > -
-> > -    /* Build the memory section CPER for above new generic error data entry */
-> > -    acpi_ghes_build_append_mem_cper(block, error_physical_addr);
-> > -
-> > -    /* Write the generic error data entry into guest memory */
-> > -    cpu_physical_memory_write(error_block_address, block->data, block->len);
-> > -
-> > -    g_array_free(block, true);
-> > -
-> > -    return 0;
-> >  }
-> >  
-> >  /*
-> > @@ -383,15 +362,18 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> >      ags->present = true;
-> >  }
-> >  
-> > -int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
-> > +void ghes_record_cper_errors(const void *cper, size_t len,
-> > +                             uint16_t source_id, Error **errp)
-> >  {
-> >      uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
-> >      uint64_t start_addr;
-> > -    bool ret = -1;
-> >      AcpiGedState *acpi_ged_state;
-> >      AcpiGhesState *ags;
-> >  
-> > -    assert(source_id < ACPI_GHES_ERROR_SOURCE_COUNT);
-> > +    if (len > ACPI_GHES_MAX_RAW_DATA_LENGTH) {
-> > +        error_setg(errp, "GHES CPER record is too big: %ld", len);
-> > +        return;
-> > +    }
-> >  
-> >      acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
-> >                                                         NULL));
-> > @@ -400,16 +382,16 @@ int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
-> >  
-> >      start_addr = le64_to_cpu(ags->ghes_addr_le);
-> >  
-> > -    if (!physical_address) {
-> > -        return -1;
-> > -    }
-> > -
-> >      start_addr += source_id * sizeof(uint64_t);
-> >  
-> >      cpu_physical_memory_read(start_addr, &error_block_addr,
-> >                               sizeof(error_block_addr));
-> >  
-> >      error_block_addr = le64_to_cpu(error_block_addr);
-> > +    if (!error_block_addr) {
-> > +        error_setg(errp, "can not find Generic Error Status Block");
-> > +        return;
-> > +    }
-> >  
-> >      read_ack_register_addr = start_addr +
-> >                               ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
-> > @@ -419,24 +401,60 @@ int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
-> >  
-> >      /* zero means OSPM does not acknowledge the error */
-> >      if (!read_ack_register) {
-> > -        error_report("OSPM does not acknowledge previous error,"
-> > -                     " so can not record CPER for current error anymore");
-> > -    } else if (error_block_addr) {
-> > -        read_ack_register = cpu_to_le64(0);
-> > -        /*
-> > -         * Clear the Read Ack Register, OSPM will write it to 1 when
-> > -         * it acknowledges this error.
-> > -         */
-> > -        cpu_physical_memory_write(read_ack_register_addr,
-> > -                                  &read_ack_register, sizeof(uint64_t));
-> > -
-> > -        ret = acpi_ghes_record_mem_error(error_block_addr,
-> > -                                         physical_address);
-> > -    } else {
-> > -        error_report("can not find Generic Error Status Block");
-> > +        error_setg(errp,
-> > +                   "OSPM does not acknowledge previous error,"
-> > +                   " so can not record CPER for current error anymore");
-> > +        return;
-> >      }
-> >  
-> > -    return ret;
-> > +    read_ack_register = cpu_to_le64(0);
-> > +    /*
-> > +     * Clear the Read Ack Register, OSPM will write it to 1 when
-> > +     * it acknowledges this error.
-> > +     */
-> > +    cpu_physical_memory_write(read_ack_register_addr,
-> > +        &read_ack_register, sizeof(uint64_t));  
-> Alignment of this could be more consistent with rest of the code around it.
-> So perhaps align after (
-> 
-> > +
-> > +    /* Write the generic error data entry into guest memory */
-> > +    cpu_physical_memory_write(error_block_addr, cper, len);
-> > +
-> > +    return;
-> > +}
-> > +
-> > +int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
-> > +{
-> > +    /* Memory Error Section Type */
-> > +    const uint8_t guid[] =
-> > +          UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
-> > +                  0xED, 0x7C, 0x83, 0xB1);
-> > +    Error *errp = NULL;
-> > +    GArray *block;
-> > +
-> > +    if (!physical_address) {
-> > +        error_report("can not find Generic Error Status Block for source id %d",
-> > +                     source_id);
-> > +        return -1;
-> > +    }
-> > +
-> > +    block = g_array_new(false, true /* clear */, 1);
-> > +
-> > +    ghes_gen_err_data_uncorrectable_recoverable(block, guid,
-> > +                                                ACPI_GHES_MAX_RAW_DATA_LENGTH);
-> > +
-> > +    /* Build the memory section CPER for above new generic error data entry */
-> > +    acpi_ghes_build_append_mem_cper(block, physical_address);
-> > +
-> > +    /* Report the error */
-> > +    ghes_record_cper_errors(block->data, block->len, source_id, &errp);
-> > +
-> > +    g_array_free(block, true);
-> > +
-> > +    if (errp) {
-> > +        error_report_err(errp);
-> > +        return -1;
-> > +    }
-> > +
-> > +    return 0;
-> >  }
-> >  
-> >  bool acpi_ghes_present(void)
-> > diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> > index 9295e46be25e..8859346af51a 100644
-> > --- a/include/hw/acpi/ghes.h
-> > +++ b/include/hw/acpi/ghes.h
-> > @@ -23,6 +23,7 @@
-> >  #define ACPI_GHES_H
-> >  
-> >  #include "hw/acpi/bios-linker-loader.h"
-> > +#include "qapi/error.h"
-> >  
-> >  /*
-> >   * Values for Hardware Error Notification Type field
-> > @@ -73,6 +74,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-> >                       const char *oem_id, const char *oem_table_id);
-> >  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-> >                            GArray *hardware_errors);
-> > +void ghes_record_cper_errors(const void *cper, size_t len,
-> > +                             uint16_t source_id, Error **errp);
-> >  int acpi_ghes_record_errors(uint16_t source_id, uint64_t error_physical_addr);
-> >  
-> >  /**  
-> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   rust/hw/char/pl011/src/device.rs | 22 ++++++-----
+>   rust/qemu-api/meson.build        |  2 +
+>   rust/qemu-api/src/irq.rs         | 66 ++++++++++++++++++++++++++++++++
+>   rust/qemu-api/src/lib.rs         |  2 +
+>   rust/qemu-api/src/sysbus.rs      | 26 +++++++++++++
+>   5 files changed, 108 insertions(+), 10 deletions(-)
+>   create mode 100644 rust/qemu-api/src/irq.rs
+>   create mode 100644 rust/qemu-api/src/sysbus.rs
 
 
+> diff --git a/rust/qemu-api/src/irq.rs b/rust/qemu-api/src/irq.rs
+> new file mode 100644
+> index 00000000000..7dbff007995
+> --- /dev/null
+> +++ b/rust/qemu-api/src/irq.rs
+> @@ -0,0 +1,66 @@
+> +// Copyright 2024 Red Hat, Inc.
+> +// Author(s): Paolo Bonzini <pbonzini@redhat.com>
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +//! Bindings for interrupt sources
+> +
+> +use core::ptr;
+> +
+> +use crate::{
+> +    bindings::{qemu_set_irq, IRQState},
+> +    cell::BqlCell,
+> +};
+> +
+> +/// Interrupt sources are used by devices to pass changes to a boolean value to
+> +/// other devices (typically interrupt or GPIO controllers).  QEMU interrupt
+> +/// sources are always active-high.
 
-Thanks,
-Mauro
+So 'always active-high' = true below? (Wondering about pulsation, if the
+true -> false transition is always correct).
+
+I understand polarity is not part of this interrupt description, so for
+GPIO it has to be modelled elsewhere.
+
+Note the C API allows using qemu_set_irq() for vectored interrupts,
+which is why the prototype takes an integer argument and not a boolean.
+Is this deliberate to restrict the Rust binding to boolean? (Maybe you
+envision a VectoredInterruptSource implementation for that).
+
+> +///
+> +/// Interrupts are implemented as a pointer to the interrupt "sink", which has
+> +/// type [`IRQState`].  A device exposes its source as a QOM link property using
+> +/// a function such as
+> +/// [`SysBusDevice::init_irq`](crate::sysbus::SysBusDevice::init_irq), and
+> +/// initially leaves the pointer to a NULL value, representing an unconnected
+> +/// interrupt. To connect it, whoever creates the device fills the pointer with
+> +/// the sink's `IRQState *`, for example using `sysbus_connect_irq`.  Because
+> +/// devices are generally shared objects, interrupt sources are an example of
+> +/// the interior mutability pattern.
+> +///
+> +/// Interrupt sources can only be triggered under the Big QEMU Lock; they are
+> +/// neither `Send` nor `Sync`.
+> +#[derive(Debug)]
+> +pub struct InterruptSource(BqlCell<*mut IRQState>);
+> +
+> +impl InterruptSource {
+> +    /// Send a low (`false`) value to the interrupt sink.
+> +    pub fn lower(&self) {
+> +        self.set(false);
+> +    }
+> +
+> +    /// Send a high-low pulse to the interrupt sink.
+> +    pub fn pulse(&self) {
+> +        self.set(true);
+> +        self.set(false);
+> +    }
+> +
+> +    /// Send a high (`true`) value to the interrupt sink.
+> +    pub fn raise(&self) {
+> +        self.set(true);
+> +    }
+> +
+> +    /// Send `level` to the interrupt sink.
+> +    pub fn set(&self, level: bool) {
+> +        unsafe {
+> +            qemu_set_irq(self.0.get(), level.into());
+> +        }
+> +    }
+> +
+> +    pub(crate) const fn as_ptr(&self) -> *mut *mut IRQState {
+> +        self.0.as_ptr()
+> +    }
+> +}
+> +
+> +impl Default for InterruptSource {
+> +    fn default() -> Self {
+> +        InterruptSource(BqlCell::new(ptr::null_mut()))
+> +    }
+> +}
+
 
