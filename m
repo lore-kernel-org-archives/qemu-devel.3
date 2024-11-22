@@ -4,99 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C57F1E6916D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 15:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7869BE6916C
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 16:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEVnI-00049M-B3; Fri, 22 Nov 2024 10:42:06 -0500
+	id 1tEWKa-0002Rx-Jg; Fri, 22 Nov 2024 11:16:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tEVnB-00047Q-07
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 10:41:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tEWKZ-0002Qj-4G
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:16:27 -0500
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tEVn9-0003g1-1b
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 10:41:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732290113;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=D+yaHaIkSyy8GR8NSGw9v4GihzAiPvpRQjvYO902Fu4=;
- b=BnAVdp7G0m0+R+w/RxHrRWKRV15DV0eMNa7pdSupIkD8jP1+FaTp9g1W0frPcNZxy+iQ/m
- 81FXukQaV3GIQ1TcRvkn6QVIqI3osexgxQeFKEGjo+WUEsmPjTfOT2t34bb4JoMTobITsw
- Flj3hQ7w6VDWwAlRW/KY3cOGy0/Emec=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-RBT33PWpOBq6EUz1Jdwb_g-1; Fri, 22 Nov 2024 10:41:51 -0500
-X-MC-Unique: RBT33PWpOBq6EUz1Jdwb_g-1
-X-Mimecast-MFC-AGG-ID: RBT33PWpOBq6EUz1Jdwb_g
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3822ec50b64so1179444f8f.1
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 07:41:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732290111; x=1732894911;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=D+yaHaIkSyy8GR8NSGw9v4GihzAiPvpRQjvYO902Fu4=;
- b=phgCYGd+pY2ZXOviqA5u5PO+olEv9rai76kJFitnXhTBuJAGNH8Dk8+WPQF4ggLJcM
- f7MVgmEXFloSJSQVRdOY3Ny+JtOQGaUKrXjkTKueQ9GM4EBjRQuZSGjBtnKYfcci2t8s
- NuuFAjgjRqK5iuEY1dy/m+kFwjGlM5LFd/ZjBGmHfwWVmKV8tqTmt3LzSGuA06G6BaFl
- Q3QbSrbSHulrAK06C63tDFXbXXDIuEE1nEFuulhEheR3uWnFEka02gyIneHub39fhnwR
- wLXTcflWfWzXeJoxQ566zXEUze4G32ZVS9BZP6LA17O3cSaH6ut1SqqSizwOfuCIFJLW
- C1fQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVNjilZx48E/epeZPRIKbcCd8Jm6e+/Ii8yXlVzZNji57z4eHZcZVrt/ZREECyfddkbFHgKXa0PBGoA@nongnu.org
-X-Gm-Message-State: AOJu0YyQA2u1vQz6NghCTcWiu/LEku8GMAW5/v/dgsaXB0w7MnUalFJ1
- LBzpx1r9QklU3JUR2uR4kfnUusD7pZraTqBCZM+x0JCPfpZqzcL1ScakZ6lhgR5bfyZH4xjfRsh
- zLWpfyPBFWoQ9lubdfssQk/MNMxoXQIOJuAXo8KdWX9xQIxqJ6LBU
-X-Gm-Gg: ASbGncsowt09MG+uGgob+VMPe8W663HE/8b0tdXQ+YdQQStdSCzOgnAzg+cXgQHnNkZ
- 4/ZAokJlVX/bLAnhCKtqTQx1EQekjgghgt6mRNqN7LZ92JnjRLgb4n7/+p/aqtBy71jdGSHm7+q
- Y/X7zIvvNUKEzTMYcMKZJTPokR5wolPuSl4zvOhZRBi/DF/kdPQX2FcQcWxuwB618Wb008Sb8Ji
- WVPf9HB7uyyzGmVCKKZ/vy/MW9H1smNctHpcqfkAK8I0j6LNARmZ37uNN2jj3t6kz3GLRZZ7cff
- 9M7SDpat+E757RTsRA/vyw==
-X-Received: by 2002:a05:6000:1446:b0:382:512b:baff with SMTP id
- ffacd0b85a97d-38260bfaedamr3291400f8f.59.1732290110703; 
- Fri, 22 Nov 2024 07:41:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEZIAv9MqkDQh4Mlw1DlID8h5lyTKTFj7KDo0Gz8w4AVp3Lc4Otp3hDXSOF+GaOumjzW9S5LA==
-X-Received: by 2002:a05:6000:1446:b0:382:512b:baff with SMTP id
- ffacd0b85a97d-38260bfaedamr3291367f8f.59.1732290110322; 
- Fri, 22 Nov 2024 07:41:50 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fd0fbdcsm2680201f8f.109.2024.11.22.07.41.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Nov 2024 07:41:49 -0800 (PST)
-Date: Fri, 22 Nov 2024 16:41:48 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 07/15] acpi/ghes: Change the type for source_id
-Message-ID: <20241122164148.60dc5290@imammedo.users.ipa.redhat.com>
-In-Reply-To: <84475e30b69680d93697ec666214482e36cd8844.1732266152.git.mchehab+huawei@kernel.org>
-References: <cover.1732266152.git.mchehab+huawei@kernel.org>
- <84475e30b69680d93697ec666214482e36cd8844.1732266152.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tEWKW-0002Bg-J8
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:16:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1732292184; x=1763828184;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=ZSrBNdu2H3L1tG9PQWDqIPUmn/HWuxKpxHuQjxIZ3Nc=;
+ b=DVpU24v/0JNcGzmikyFBclCVzb9FwmgYnpxZXzxkHO2k8Xjf347xEOAI
+ HYmZqJbI5rld+2OmWEL2fmURMo+Ytj0T3NxOfIxt0KAM9r4+2fI950Bw7
+ FN1BReRVC1uG406XWy9qNi1TujfsGEDukKIjq77hQxMGPprcwno11Q+MG
+ Wz2Y7OQ2+ptkgHnHlT2t4z9vdgtk/RFDb++0lGIz2WZdS9KQBCfxk/iqK
+ aiPjNbRwJbUb+2GXqUR32W7lJKzJD2QN4jRv3Aw5N+5Mn75cULy6e7Do+
+ WwQur7qspQLX+mzxTI66yyvLnDnaslFy1E+4AJxx1CCgkadJ/pQJTkOY5 Q==;
+X-CSE-ConnectionGUID: 4z4yuDtRRLuhCA2vr9iccQ==
+X-CSE-MsgGUID: NXe7wGQ5QCqtUwomhK6fuA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11264"; a="49969720"
+X-IronPort-AV: E=Sophos;i="6.12,176,1728975600"; d="scan'208";a="49969720"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Nov 2024 08:16:21 -0800
+X-CSE-ConnectionGUID: QaGw/B4ISiKo2Ofia7xV0w==
+X-CSE-MsgGUID: Kvz6Ymm6TjCg8R1H2tv3yQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,176,1728975600"; d="scan'208";a="91030800"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by orviesa007.jf.intel.com with ESMTP; 22 Nov 2024 08:16:20 -0800
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	xiaoyao.li@intel.com
+Subject: [PATCH] cpu: Initialize nr_cores and nr_threads in cpu_common_initfn()
+Date: Fri, 22 Nov 2024 11:03:17 -0500
+Message-Id: <20241122160317.4070177-1-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241108070609.3653085-2-xiaoyao.li@intel.com>
+References: <20241108070609.3653085-2-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.551, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,66 +82,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Nov 2024 10:11:24 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+Currently cpu->nr_cores and cpu->nr_threads are initialized in
+qemu_init_vcpu(), which is called a bit late in *cpu_realizefn() for
+each ARCHes.
 
-> As described at: ACPI 6.5 spec at:
-> 	18.3.2. ACPI Error Source
-> 
-> In particular at GHES/GHESv2 table:
-> 	Table 18.10 Generic Hardware Error Source Structure
-> 
-> HEST source ID is actually a 16-bit value.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+x86 arch would like to use nr_cores and nr_threads earlier in its
+realizefn(). To serve this purpose, initialize nr_cores and nr_threads
+in cpu_common_initfn(), which is earlier than *cpu_realizefn().
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ hw/core/cpu-common.c | 10 +++++++++-
+ system/cpus.c        |  4 ----
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
-> ---
->  hw/acpi/ghes-stub.c    | 2 +-
->  hw/acpi/ghes.c         | 2 +-
->  include/hw/acpi/ghes.h | 2 +-
->  3 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
-> index c315de1802d6..2b64cbd2819a 100644
-> --- a/hw/acpi/ghes-stub.c
-> +++ b/hw/acpi/ghes-stub.c
-> @@ -11,7 +11,7 @@
->  #include "qemu/osdep.h"
->  #include "hw/acpi/ghes.h"
->  
-> -int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-> +int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
->  {
->      return -1;
->  }
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 5f67322bf0f2..edc74c38bf8a 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -383,7 +383,7 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
->      ags->present = true;
->  }
->  
-> -int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-> +int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
->  {
->      uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
->      uint64_t start_addr;
-> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> index 50e3a25ea384..9295e46be25e 100644
-> --- a/include/hw/acpi/ghes.h
-> +++ b/include/hw/acpi/ghes.h
-> @@ -73,7 +73,7 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
->                       const char *oem_id, const char *oem_table_id);
->  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
->                            GArray *hardware_errors);
-> -int acpi_ghes_record_errors(uint8_t source_id, uint64_t error_physical_addr);
-> +int acpi_ghes_record_errors(uint16_t source_id, uint64_t error_physical_addr);
->  
->  /**
->   * acpi_ghes_present: Report whether ACPI GHES table is present
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 09c79035949b..6de92ed854bc 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -237,14 +237,22 @@ static void cpu_common_unrealizefn(DeviceState *dev)
+ static void cpu_common_initfn(Object *obj)
+ {
+     CPUState *cpu = CPU(obj);
++    Object *machine = qdev_get_machine();
++    MachineState *ms;
+ 
+     gdb_init_cpu(cpu);
+     cpu->cpu_index = UNASSIGNED_CPU_INDEX;
+     cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
+     /* user-mode doesn't have configurable SMP topology */
+-    /* the default value is changed by qemu_init_vcpu() for system-mode */
+     cpu->nr_cores = 1;
+     cpu->nr_threads = 1;
++#ifndef CONFIG_USER_ONLY
++    if (object_dynamic_cast(machine, TYPE_MACHINE)) {
++        ms = MACHINE(machine);
++        cpu->nr_cores = machine_topo_get_cores_per_socket(ms);
++        cpu->nr_threads = ms->smp.threads;
++    }
++#endif
+     cpu->cflags_next_tb = -1;
+ 
+     /* allocate storage for thread info, initialise condition variables */
+diff --git a/system/cpus.c b/system/cpus.c
+index 1c818ff6828c..c1547fbfd39b 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -664,10 +664,6 @@ const AccelOpsClass *cpus_get_accel(void)
+ 
+ void qemu_init_vcpu(CPUState *cpu)
+ {
+-    MachineState *ms = MACHINE(qdev_get_machine());
+-
+-    cpu->nr_cores = machine_topo_get_cores_per_socket(ms);
+-    cpu->nr_threads =  ms->smp.threads;
+     cpu->stopped = true;
+     cpu->random_seed = qemu_guest_random_seed_thread_part1();
+ 
+-- 
+2.34.1
 
 
