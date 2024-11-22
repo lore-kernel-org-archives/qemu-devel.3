@@ -4,90 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4C1CE69186
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 18:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9782EE69186
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 18:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEYBJ-0000Nb-Oz; Fri, 22 Nov 2024 13:15:01 -0500
+	id 1tEYJU-0001zr-0A; Fri, 22 Nov 2024 13:23:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEYBI-0000N5-87
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 13:15:00 -0500
-Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEYBE-0002AR-UX
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 13:14:59 -0500
-Received: by mail-oa1-x2e.google.com with SMTP id
- 586e51a60fabf-2958ddf99a7so2274400fac.2
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 10:14:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732299295; x=1732904095; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WelkrKiwn0tLulTsFyNcHq5FFNkPPLRleBfrN1uHqyU=;
- b=tJvjxXaWQnm0ZWwNicPmXn3gX2HUZKNshsTt6xB9G9nbC5H9jXsXzCsQ+Rc+ooLSl6
- CcImfE64t6CGLL3pnp6lxJPQp5o6VeKmF083ma+hm9aGdR7ehUIujSL9+iJREkWZ4GUr
- SXo9vSBp5LalZWb+YEQkKtYFFvsBdmEKb2So0hrfABD94kgZy4ZxtFvzCYqXtGT07c3c
- xQ/fsMMwNnEPuSGeTbZozVoe70z93HAdnhbFJ3J5Vv0uVMBimlz5jJuJpsaGdHN8gM9Y
- aKxQOld0w8jaj7eyBJUzRgZfCwuHdMLJMviIcl+Nq8/CciQLZF8mUADFCbC8PtkK72VM
- F9dw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tEYJP-0001zU-OX
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 13:23:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tEYJM-0003al-Q7
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 13:23:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732299799;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=PH8gtYqhB9mwTl35PPBm7dRAxK+CYGA0GQDmeaTYwiA=;
+ b=Wf6b8uI1pZzRWiDOfxho4J5JkJk+9xt+3HpFOmI3T3mdcTt21RliYe2GIJFPt/LJKZQG9j
+ DdckJfAsldrOO75W7DSzxYNvm3FZtaAd06d0W2gcyoU7c+9Whz+gFdUDYa4zWRvw/QRcj5
+ Fd/nFhT+zob9MFGQWldQarrhBsGhSD4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-616-bCUvcHGOMWaAlCqLy0KMyA-1; Fri, 22 Nov 2024 13:23:18 -0500
+X-MC-Unique: bCUvcHGOMWaAlCqLy0KMyA-1
+X-Mimecast-MFC-AGG-ID: bCUvcHGOMWaAlCqLy0KMyA
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3822f550027so1185588f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 10:23:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732299295; x=1732904095;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WelkrKiwn0tLulTsFyNcHq5FFNkPPLRleBfrN1uHqyU=;
- b=bhua8EvZEBtd6FkOW4iUszWAU3gOD79HdqlFlo44ziEBtF1H42nRTSiX/ZQB0xcgjN
- zTxFFUsUN8uGSdlSLNIyaIThsOaNA3/C863s30cXDNOB7IElsKEgPW6kvLlpVxtxfoO3
- C1lg5YBqJtK+Fw9lHC5R/kyyH5oiMdMX+PtsyqCa3PNhwvAOfyWkPNyT9zbQ+dmzwfCF
- rFn32fHvPGO9JmeqU4XsayVujtpbXhgk4ylfWlATjzOZNZsL3uC3o6Q8pI32VvuzqgZB
- EJ510Ln254Ocl5g5Jxu4UWoCHwQ5BifqO1Ywu4k2MCa/SxuwUj52WBWaDd5HNY4wgk3/
- Piwg==
+ d=1e100.net; s=20230601; t=1732299797; x=1732904597;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PH8gtYqhB9mwTl35PPBm7dRAxK+CYGA0GQDmeaTYwiA=;
+ b=l2VFHkT9zUwByOuJy1x5L/8GRshiVYs2FCwOJub/9YPhlS2O6aEMoKI1zEeyTKR4w8
+ /lv+ppFj/01irA9zmUlQV129jPrKDuIuCl2nNVwtGAlPfaS2qrI9PPpteKFyVBsqjXiU
+ 7zpG6r3UfDLyYcmMhI/2HXlxVUsnL4nx+Eyb75Dv0VlJnx7SPuSadxP4/Jtzup2QcEXp
+ bqtgZu1yBihLcdWj47J03PKKUqW65zFybU+6i9WxsYzB+RObZKOXczYwpnkuMU9JAaND
+ KqwKzG7P8zsZ2Y2OpdGdgvaiFakZkwiP+hoNrioLQDkUuB5ZhG0HZUVsh2/w9PNBgayp
+ 9Q2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZTFo7RyjwN2L8lxWoGCIuseGlG5eImGTq1a7v7eDZ9UqcQBAVnfbrQBzi5fGk1hbhmGMEQyP0v15z@nongnu.org
-X-Gm-Message-State: AOJu0Yw37V2Zmj8IvIjwR11RmAWPMDvKKbpOJKyLPRPSPdXrlmWTucoT
- wBdstIWADvVk3RQLPW6X6SDtGmapRiMiQ2VDbbBH2vNECu12mK5ApnuIluagjZo=
-X-Gm-Gg: ASbGnctFn1SYk7e9s91jjrpw3ZlMyV7t3lQPKUNzKWksbfu3jgq/iufaOdd5fQHSwoh
- Q/ALs3dC3vFexDy8iTloDAixD9FsaqmdIq1hmaUIK5HLw7DhVA+15FYgBduABo/QjII/mfc3Ym1
- A1zjT/jULe0U9+ryQt4HFoBYecYfEptE2LJnjM8OWs2bu606C6XHjRxBJMU4me3A8xuFzH+nOJc
- 4le6RpHEvkD6iqr6LCzUQIdnfAiIcgzLl2gdIbBbppuFrCBLXBYrDDVB1ZoD7eaHoquGEI=
-X-Google-Smtp-Source: AGHT+IFqoGuNmU3ChlM2xAmm0i+FlnpzJphUE//Hr6OVmCz26aS88j2Fw7+Xl4mlfth1vGagq6v8rg==
-X-Received: by 2002:a05:6870:65aa:b0:296:23e2:f5f3 with SMTP id
- 586e51a60fabf-29720af1221mr4509329fac.6.1732299295234; 
- Fri, 22 Nov 2024 10:14:55 -0800 (PST)
-Received: from [192.168.170.227] ([187.210.107.181])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2971d88f849sm709889fac.49.2024.11.22.10.14.53
+ AJvYcCUhw7hCL2KQXAfhTgTvWUAmU6x3ObCsZa0PlHm0gA17pifsP4ptq+8dipwWZd6H9/Oo4lFs7/t/XYeS@nongnu.org
+X-Gm-Message-State: AOJu0YwRKQBUM0yJwYPw8CzXlAB8QueOGTwtHZnpswZEAZpYE8pYzcgO
+ KV7n1ChTO6sBqUJ9UZFqhBcyfhMd1Ra3VLNU4An6b3eoL+csWCVCz1QwGE3aRhqX7G7Y8+pp/dc
+ Khxx/HkJh336E6TR2baePIuZ1qyQsde440n6D3nrQCC0ZZ4qyiZ0G
+X-Gm-Gg: ASbGncunmDwhbf5i2gCv/yzKdY19ZFmFbo+R8RWTrXEQ04KZQfXMc+JbN0Pf8RWv/nH
+ WPmgg4KrRkWRkf19QFzlEGFtF8ySZG23qeguyPSdxipk2Yjp7xuKP7EkAbrMOLc11bO/wniwtVI
+ ZJk/xXOQKshS2wu8QUkybf5eP5mbFhI0po6+lUHcXGT8eZsx8SgKn2VqKWU31PrmZdaCwd4+FGC
+ OqV9kNcpaVQS/MrekSkCXFyaC+k4BnyPzj4J+F5EEmT73FvUwirw94=
+X-Received: by 2002:a5d:5f53:0:b0:382:4bc5:e5f0 with SMTP id
+ ffacd0b85a97d-38260bcb489mr3314375f8f.39.1732299797060; 
+ Fri, 22 Nov 2024 10:23:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGJ6yDmHzXNPRun3NGOz7YE0zgF52BdkbJpaI20Lhftq10VpEvwyToAonl+P+wHEynU+ig7wA==
+X-Received: by 2002:a5d:5f53:0:b0:382:4bc5:e5f0 with SMTP id
+ ffacd0b85a97d-38260bcb489mr3314362f8f.39.1732299796693; 
+ Fri, 22 Nov 2024 10:23:16 -0800 (PST)
+Received: from [192.168.10.28] ([151.49.204.250])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-433cde10eabsm36057845e9.13.2024.11.22.10.23.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Nov 2024 10:14:54 -0800 (PST)
-Message-ID: <6b087061-fb11-4ac5-aecc-43f3324060df@linaro.org>
-Date: Fri, 22 Nov 2024 12:14:51 -0600
+ Fri, 22 Nov 2024 10:23:16 -0800 (PST)
+Message-ID: <240aa88b-7ac4-4852-9c40-4fb5d8fbd89a@redhat.com>
+Date: Fri, 22 Nov 2024 19:23:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 09/43] helper-to-tcg: Introduce get-llvm-ir.py
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH v1 01/43] Add option to enable/disable helper-to-tcg
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  philmd@linaro.org, alex.bennee@linaro.org
 References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-10-anjo@rev.ng>
+ <20241121014947.18666-2-anjo@rev.ng>
+ <c478cbc8-6684-4a8d-bd88-724d48098c36@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241121014947.18666-10-anjo@rev.ng>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <c478cbc8-6684-4a8d-bd88-724d48098c36@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,172 +150,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/20/24 19:49, Anton Johansson wrote:
-> Introduces a new python helper script to convert a set of QEMU .c files to
-> LLVM IR .ll using clang.  Compile flags are found by looking at
-> compile_commands.json, and llvm-link is used to link together all LLVM
-> modules into a single module.
+On 11/22/24 18:30, Richard Henderson wrote:
+> On 11/20/24 19:49, Anton Johansson wrote:
+>> Adds a meson option for enabling/disabling helper-to-tcg along with a
+>> CONFIG_* definition.
+>>
+>> CONFIG_* will in future commits be used to conditionally include the
+>> helper-to-tcg subproject, and to remove unneeded code/memory when
+>> helper-to-tcg is not in use.
+>>
+>> Current meson option is limited to Hexagon, as helper-to-tcg will be
+>> included as a subproject from target/hexagon.  This will change in the
+>> future if multiple frontends adopt helper-to-tcg.
+>>
+>> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>> ---
+>>   meson.build                   | 7 +++++++
+>>   meson_options.txt             | 2 ++
+>>   scripts/meson-buildoptions.sh | 5 +++++
+>>   3 files changed, 14 insertions(+)
 > 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   subprojects/helper-to-tcg/get-llvm-ir.py | 143 +++++++++++++++++++++++
->   1 file changed, 143 insertions(+)
->   create mode 100755 subprojects/helper-to-tcg/get-llvm-ir.py
-
-Is this not something that can be done in meson?
-
-
-r~
-
+> Looks ok.  Could probably stand another set of meson eyes.
 > 
-> diff --git a/subprojects/helper-to-tcg/get-llvm-ir.py b/subprojects/helper-to-tcg/get-llvm-ir.py
-> new file mode 100755
-> index 0000000000..9ee5d0e136
-> --- /dev/null
-> +++ b/subprojects/helper-to-tcg/get-llvm-ir.py
-> @@ -0,0 +1,143 @@
-> +#!/usr/bin/env python3
-> +
-> +##
-> +##  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
-> +##
-> +##  This program is free software; you can redistribute it and/or modify
-> +##  it under the terms of the GNU General Public License as published by
-> +##  the Free Software Foundation; either version 2 of the License, or
-> +##  (at your option) any later version.
-> +##
-> +##  This program is distributed in the hope that it will be useful,
-> +##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-> +##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> +##  GNU General Public License for more details.
-> +##
-> +##  You should have received a copy of the GNU General Public License
-> +##  along with this program; if not, see <http://www.gnu.org/licenses/>.
-> +##
-> +
-> +import argparse
-> +import json
-> +import os
-> +import shlex
-> +import sys
-> +import subprocess
-> +
-> +
-> +def log(msg):
-> +    print(msg, file=sys.stderr)
-> +
-> +
-> +def run_command(command):
-> +    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-> +    out = proc.communicate()
-> +    if proc.wait() != 0:
-> +        log(f"Command: {' '.join(command)} exited with {proc.returncode}\n")
-> +        log(f"output:\n{out}\n")
-> +
-> +
-> +def find_compile_commands(compile_commands_path, clang_path, input_path, target):
-> +    with open(compile_commands_path, "r") as f:
-> +        compile_commands = json.load(f)
-> +        for compile_command in compile_commands:
-> +            path = compile_command["file"]
-> +            if os.path.basename(path) != os.path.basename(input_path):
-> +                continue
-> +
-> +            os.chdir(compile_command["directory"])
-> +            command = compile_command["command"]
-> +
-> +            # If building multiple targets there's a chance
-> +            # input files share the same path and name.
-> +            # This could cause us to find the wrong compile
-> +            # command, we use the target path to distinguish
-> +            # between these.
-> +            if not target in command:
-> +                continue
-> +
-> +            argv = shlex.split(command)
-> +            argv[0] = clang_path
-> +
-> +            return argv
-> +
-> +    raise ValueError(f"Unable to find compile command for {input_path}")
-> +
-> +
-> +def generate_llvm_ir(
-> +    compile_commands_path, clang_path, output_path, input_path, target
-> +):
-> +    command = find_compile_commands(
-> +        compile_commands_path, clang_path, input_path, target
-> +    )
-> +
-> +    flags_to_remove = {
-> +        "-ftrivial-auto-var-init=zero",
-> +        "-fzero-call-used-regs=used-gpr",
-> +        "-Wimplicit-fallthrough=2",
-> +        "-Wold-style-declaration",
-> +        "-Wno-psabi",
-> +        "-Wshadow=local",
-> +    }
-> +
-> +    # Remove
-> +    #   - output of makefile rules (-MQ,-MF target);
-> +    #   - output of object files (-o target);
-> +    #   - excessive zero-initialization of block-scope variables
-> +    #     (-ftrivial-auto-var-init=zero);
-> +    #   - and any optimization flags (-O).
-> +    for i, arg in reversed(list(enumerate(command))):
-> +        if arg in {"-MQ", "-o", "-MF"}:
-> +            del command[i : i + 2]
-> +        elif arg.startswith("-O") or arg in flags_to_remove:
-> +            del command[i]
-> +
-> +    # Define a HELPER_TO_TCG macro for translation units wanting to
-> +    # conditionally include or exclude code during translation to TCG.
-> +    # Disable optimization (-O0) and make sure clang doesn't emit optnone
-> +    # attributes (-disable-O0-optnone) which inhibit further optimization.
-> +    # Optimization will be performed at a later stage in the helper-to-tcg
-> +    # pipeline.
-> +    command += [
-> +        "-S",
-> +        "-emit-llvm",
-> +        "-DHELPER_TO_TCG",
-> +        "-O0",
-> +        "-Xclang",
-> +        "-disable-O0-optnone",
-> +    ]
-> +    if output_path:
-> +        command += ["-o", output_path]
-> +
-> +    run_command(command)
-> +
-> +
-> +def main():
-> +    parser = argparse.ArgumentParser(
-> +        description="Produce the LLVM IR of a given .c file."
-> +    )
-> +    parser.add_argument(
-> +        "--compile-commands", required=True, help="Path to compile_commands.json"
-> +    )
-> +    parser.add_argument("--clang", default="clang", help="Path to clang.")
-> +    parser.add_argument("--llvm-link", default="llvm-link", help="Path to llvm-link.")
-> +    parser.add_argument("-o", "--output", required=True, help="Output .ll file path")
-> +    parser.add_argument(
-> +        "--target-path", help="Path to QEMU target dir. (e.q. target/i386)"
-> +    )
-> +    parser.add_argument("inputs", nargs="+", help=".c file inputs")
-> +    args = parser.parse_args()
-> +
-> +    outputs = []
-> +    for input in args.inputs:
-> +        output = os.path.basename(input) + ".ll"
-> +        generate_llvm_ir(
-> +            args.compile_commands, args.clang, output, input, args.target_path
-> +        )
-> +        outputs.append(output)
-> +
-> +    run_command([args.llvm_link] + outputs + ["-S", "-o", args.output])
-> +
-> +
-> +if __name__ == "__main__":
-> +    sys.exit(main())
+> Acked-by: Richard Henderson <richard.henderson@linaro.org>
+
+/me bows
+
+Since the subproject has a pretty hefty (and specific) set of
+dependencies, please make this a "feature" option.  This allows
+subprojects/helper-to-tcg to disable itself if it cannot find
+a dependency or otherwise invokes error(), without breaking the
+build.  The --enable-hexagon-helper-to-tcg flag however *will*
+force the subproject to be buildable, just like all other
+QEMU feature options.
+
+Something like this:
+
+
+########################
+# Target configuration #
+########################
+
+# a bit gross to hardcode hexagon, but acceptable given the name of the option
+helper_to_tcg = subproject('helper-to-tcg', get_option('hexagon_helper_to_tcg') \
+    .disable_auto_if('hexagon-linux-user' not in target_dirs))
+
+
+and replace helper_to_tcg_enabled throughout with helper_to_tcg.found().
+
+>> +  if helper_to_tcg_enabled
+>> +    config_target += {
+>> +      'CONFIG_HELPER_TO_TCG': 'y',
+>> +    }
+>> +  endif
+
+Here I would add instead add CONFIG_HELPER_TO_TCG (maybe renamed to
+TARGET_HELPER_TO_TCG) in configs/targets/) and add before the loop:
+
+ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR', 'TARGET_ARCH' ]
+if not helper_to_tcg.found()
+   # do not define it if it is not usable
+   ignored += ['TARGET_HELPER_TO_TCG']
+endif
+
+Paolo
 
 
