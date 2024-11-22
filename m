@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E77E65D25
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 05:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFBA2E65D2C
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 06:59:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEMRv-0008If-35; Fri, 22 Nov 2024 00:43:23 -0500
+	id 1tENcm-00048k-5l; Fri, 22 Nov 2024 01:58:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tEMRt-0008IC-30; Fri, 22 Nov 2024 00:43:21 -0500
-Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tEMRq-0005YT-Ng; Fri, 22 Nov 2024 00:43:20 -0500
-Received: by mail-ua1-x92b.google.com with SMTP id
- a1e0cc1a2514c-856fd9237e7so458738241.2; 
- Thu, 21 Nov 2024 21:43:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732254197; x=1732858997; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OQWcDgvvv1UdyqG2YL5z2Ya4zYzlMYkwG3KOBTS/J28=;
- b=PCkvedB96RAYsHKEmX6ieB8R2osf9BfyPjKChC7l1lBN3SVsLEgEcLOvOmn6zGEb9t
- L0tvWSlhA0Z5LLfDyuFBpTHGx6b8IunBux1VPiM5VgBzDN8xEIivh9v1DFwF/HI7cQLi
- 7xae2pi13tWo/+kWbSsb8F8CFEWyhVHWuoDHbO5pn8PNiVHZfszzlnIv77GSnVFjvDOl
- JqP6n92N4NsuMzcRjZ4Sxf/oaviCiqx/HU+MbCnpiavPECKTnO417BN09QmhWmm9zTy7
- 3vPf3KpOwalJ3G3TZqsl3CA8rIDbMTq09FjBD5I/RI2dEFfpbB/5YD/PK0HTfZPxCRx1
- +y2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732254197; x=1732858997;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OQWcDgvvv1UdyqG2YL5z2Ya4zYzlMYkwG3KOBTS/J28=;
- b=qleor3r7oMlSGa2Ib3UIFIBlIt5nmrbel1IQSuYdnylNH2ggZE0NA9GECPvk+JeWg2
- 9INW38VVZs8VSSuzEPIHf1JyvHNX3/R73Nw9ZPzKqD8lCECeWVURuHe7aWXqvHfKkF1O
- zI5kzQx+8qgrJFBu+rc0BZ/HOCI9ciE4xS/EJCpubOmiVrw9287qeoVirzgzYAQ88W+M
- fXD3heev/vVm1geLr1dg5/c5u0UL8HTQaB80bU1qR63KlCtMwEs+LJfkQOhgimN/NP/B
- G7JQZlzZwV8PECVJSeoXecr8oHksZkOBKyDfUFkaRgiOm7ptKt3zoiJq6/p8/1vYP2gB
- d6zw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUK1pDetzOUS5a5d+sDgHM79/6Ze59ZkI3oxlYHkEiKzM7tdpJ+eygbuQGM9oxvQq8crVyDiGoa/a71@nongnu.org
-X-Gm-Message-State: AOJu0YzypEPg9O3ZFjwWlc0cT2b3ANkUCRb7+QCn+lve/lEDGp29CYYg
- 8G736lQ6XjXiWhLQ4ZLI8A04i1w40FBDprPIWVftm9D+lnEtzWs5MWjgNLogbV9tHZT/1UAD86b
- eVkqM8kc7sffnKNn1myAIDfT/NrA=
-X-Gm-Gg: ASbGncuOkHYVsABv6//S+llEHxzVE00E+PQMq96FYgqnDh8mZjuaRX4dwoVKSeKhzJu
- dXevWYgAa/Yy5CwRoA8hCByoFNGzZlr+f+AQev3WBlvuZ1fN5Zbxtybn5pz99tg==
-X-Google-Smtp-Source: AGHT+IG2FG+HO4IhqUY3LjLamfJQalJLq0k6XuP5jZRdWNfQDeAoYJ5hKXIJMbCGKvkh4NS7XP2pG6owz6p0eTnhYgY=
-X-Received: by 2002:a05:6102:54a3:b0:4a4:9363:b84f with SMTP id
- ada2fe7eead31-4addcb8b2b2mr2087316137.5.1732254197169; Thu, 21 Nov 2024
- 21:43:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tENck-00048U-PD
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 01:58:38 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tENci-0002vI-U9
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 01:58:38 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4F028AA9ED;
+ Fri, 22 Nov 2024 09:58:16 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4AF211772DE;
+ Fri, 22 Nov 2024 09:58:25 +0300 (MSK)
+Message-ID: <5c90aeb4-2773-4c1b-b727-0f2221860761@tls.msk.ru>
+Date: Fri, 22 Nov 2024 09:58:25 +0300
 MIME-Version: 1.0
-References: <20241119144956.728384-1-sai.pavan.boddu@amd.com>
-In-Reply-To: <20241119144956.728384-1-sai.pavan.boddu@amd.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 22 Nov 2024 15:42:51 +1000
-Message-ID: <CAKmqyKMcW3p914U4oH6X0K6e2owOcWF2w6vNhPVVL1ViH4Q3Tg@mail.gmail.com>
-Subject: Re: [PATCH v4] hw/riscv: Add Microblaze V generic board
-To: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Simek Michal <michal.simek@amd.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Iglesias Francisco <francisco.iglesias@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: pc-bios/optionrom: when/why do we build it?
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,397 +101,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 20, 2024 at 12:50=E2=80=AFAM Sai Pavan Boddu
-<sai.pavan.boddu@amd.com> wrote:
->
-> Add a basic board with interrupt controller (intc), timer, serial
-> (uartlite), small memory called LMB@0 (128kB) and DDR@0x80000000
-> (configured via command line eg. -m 2g).
-> This is basic configuration which matches HW generated out of AMD Vivado
-> (design tools). But initial configuration is going beyond what it is
-> configured by default because validation should be done on other
-> configurations too. That's why wire also additional uart16500, axi
-> ethernet(with axi dma).
-> GPIOs, i2c and qspi is also listed for completeness.
->
-> IRQ map is: (addr)
-> 0 - timer (0x41c00000)
-> 1 - uartlite (0x40600000)
-> 2 - i2c (0x40800000)
-> 3 - qspi (0x44a00000)
-> 4 - uart16550 (0x44a10000)
-> 5 - emaclite (0x40e00000)
-> 6 - timer2 (0x41c10000)
-> 7 - axi emac (0x40c00000)
-> 8 - axi dma (0x41e00000)
-> 9 - axi dma
-> 10 - gpio (0x40000000)
-> 11 - gpio2 (0x40010000)
-> 12 - gpio3 (0x40020000)
->
-> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-> Signed-off-by: Michal Simek <michal.simek@amd.com>
-> ---
-> Changes for V2:
->     Make changes to support -cpu switch
->     Remove setting of default board
->     Include doc to toctree
->     Remove setting of 'imac' extensions as they are available by
->     default.
-> Chages for V3:
->     Replace virt with generic
->     Update doc with supported riscv extensions
->     Change base CPU to TYPE_RISCV_CPU_BASE
-> Changes for V4:
->     Improved the doc based on comments
->     Disabled support for Double-Precision and Hypervisor extensions
->     Updated Maintainers file at riscv machine space.
->
->  MAINTAINERS                                |   6 +
->  docs/system/riscv/microblaze-v-generic.rst |  42 +++++
->  docs/system/target-riscv.rst               |   1 +
->  hw/riscv/microblaze-v-generic.c            | 184 +++++++++++++++++++++
->  hw/riscv/Kconfig                           |   8 +
->  hw/riscv/meson.build                       |   1 +
->  6 files changed, 242 insertions(+)
->  create mode 100644 docs/system/riscv/microblaze-v-generic.rst
->  create mode 100644 hw/riscv/microblaze-v-generic.c
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index acc7405aed2..100a138d8f2 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1619,6 +1619,12 @@ F: docs/system/riscv/sifive_u.rst
->  F: hw/*/*sifive*.c
->  F: include/hw/*/*sifive*.h
->
-> +AMD Microblaze-V Generic Board
-> +M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-> +S: Maintained
-> +F: hw/riscv/microblaze-v-generic.c
-> +F: docs/system/riscv/microblaze-v-generic.rst
-> +
->  RX Machines
->  -----------
->  rx-gdbsim
-> diff --git a/docs/system/riscv/microblaze-v-generic.rst b/docs/system/ris=
-cv/microblaze-v-generic.rst
-> new file mode 100644
-> index 00000000000..5606f88d570
-> --- /dev/null
-> +++ b/docs/system/riscv/microblaze-v-generic.rst
-> @@ -0,0 +1,42 @@
-> +Microblaze-V generic board (``amd-microblaze-v-generic``)
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-> +The AMD MicroBlaze=E2=84=A2 V processor is a soft-core RISC-V processor =
-IP for AMD
-> +adaptive SoCs and FPGAs. The MicroBlaze=E2=84=A2 V processor is based on=
- the 32-bit (or
-> +64-bit) RISC-V instruction set architecture (ISA) and contains interface=
-s
-> +compatible with the classic MicroBlaze=E2=84=A2 V processor (i.e it is a=
- drop in
-> +replacement for the classic MicroBlaze=E2=84=A2 processor in existing RT=
-L designs).
-> +More information can be found in below document.
-> +
-> +https://docs.amd.com/r/en-US/ug1629-microblaze-v-user-guide/MicroBlaze-V=
--Architecture
-> +
-> +The MicroBlaze=E2=84=A2 V generic board in QEMU has following supported =
-devices:
-> +
-> +    - timer
-> +    - uartlite
-> +    - uart16550
-> +    - emaclite
-> +    - timer2
-> +    - axi emac
-> +    - axi dma
-> +
-> +The MicroBlaze=E2=84=A2 V core in QEMU has the following configuration:
-> +
-> +    - RV32I base integer instruction set
-> +    - "Zicsr" Control and Status register instructions
-> +    - "Zifencei" instruction-fetch
-> +    - Extensions: m, a, f, c
-> +
-> +Running
-> +"""""""
-> +Below is an example command line for launching mainline U-boot
-> +(xilinx_mbv32_defconfig) on the Microblaze-V generic board.
-> +
-> +.. code-block:: bash
-> +
-> +   $ qemu-system-riscv32 -M amd-microblaze-v-generic \
-> +     -display none \
-> +     -device loader,addr=3D0x80000000,file=3Du-boot-spl.bin,cpu-num=3D0 =
-\
-> +     -device loader,addr=3D0x80200000,file=3Du-boot.img \
-> +     -serial mon:stdio \
-> +     -device loader,addr=3D0x83000000,file=3Dsystem.dtb \
-> +     -m 2g
-> diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-> index ba195f1518a..95457af130b 100644
-> --- a/docs/system/target-riscv.rst
-> +++ b/docs/system/target-riscv.rst
-> @@ -66,6 +66,7 @@ undocumented; you can get a complete list by running
->  .. toctree::
->     :maxdepth: 1
->
-> +   riscv/microblaze-v-generic
->     riscv/microchip-icicle-kit
->     riscv/shakti-c
->     riscv/sifive_u
-> diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-gene=
-ric.c
-> new file mode 100644
-> index 00000000000..427e3baca7b
-> --- /dev/null
-> +++ b/hw/riscv/microblaze-v-generic.c
-> @@ -0,0 +1,184 @@
-> +/*
-> + * QEMU model of Microblaze V generic board.
-> + *
-> + * based on hw/microblaze/petalogix_ml605_mmu.c
-> + *
-> + * Copyright (c) 2011 Michal Simek <monstr@monstr.eu>
-> + * Copyright (c) 2011 PetaLogix
-> + * Copyright (c) 2009 Edgar E. Iglesias.
-> + * Copyright (C) 2024, Advanced Micro Devices, Inc.
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Written by Sai Pavan Boddu <sai.pavan.boddu@amd.com
-> + *     and by Michal Simek <michal.simek@amd.com>.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/units.h"
-> +#include "qapi/error.h"
-> +#include "cpu.h"
-> +#include "hw/sysbus.h"
-> +#include "sysemu/sysemu.h"
-> +#include "net/net.h"
-> +#include "hw/boards.h"
-> +#include "hw/char/serial-mm.h"
-> +#include "exec/address-spaces.h"
-> +#include "hw/char/xilinx_uartlite.h"
-> +#include "hw/misc/unimp.h"
-> +
-> +#define LMB_BRAM_SIZE (128 * KiB)
-> +#define MEMORY_BASEADDR 0x80000000
-> +#define INTC_BASEADDR 0x41200000
-> +#define TIMER_BASEADDR 0x41c00000
-> +#define TIMER_BASEADDR2 0x41c10000
-> +#define UARTLITE_BASEADDR 0x40600000
-> +#define ETHLITE_BASEADDR 0x40e00000
-> +#define UART16550_BASEADDR 0x44a10000
-> +#define AXIENET_BASEADDR 0x40c00000
-> +#define AXIDMA_BASEADDR 0x41e00000
-> +#define GPIO_BASEADDR 0x40000000
-> +#define GPIO_BASEADDR2 0x40010000
-> +#define GPIO_BASEADDR3 0x40020000
-> +#define I2C_BASEADDR 0x40800000
-> +#define QSPI_BASEADDR 0x44a00000
-> +
-> +#define TIMER_IRQ           0
-> +#define UARTLITE_IRQ        1
-> +#define UART16550_IRQ       4
-> +#define ETHLITE_IRQ         5
-> +#define TIMER_IRQ2          6
-> +#define AXIENET_IRQ         7
-> +#define AXIDMA_IRQ1         8
-> +#define AXIDMA_IRQ0         9
-> +
-> +static void mb_v_generic_init(MachineState *machine)
-> +{
-> +    ram_addr_t ram_size =3D machine->ram_size;
-> +    DeviceState *dev, *dma, *eth0;
-> +    Object *ds, *cs;
-> +    int i;
-> +    RISCVCPU *cpu;
-> +    hwaddr ddr_base =3D MEMORY_BASEADDR;
-> +    MemoryRegion *phys_lmb_bram =3D g_new(MemoryRegion, 1);
-> +    MemoryRegion *phys_ram =3D g_new(MemoryRegion, 1);
-> +    qemu_irq irq[32];
-> +    MemoryRegion *sysmem =3D get_system_memory();
-> +
-> +    cpu =3D RISCV_CPU(object_new(machine->cpu_type));
-> +    object_property_set_bool(OBJECT(cpu), "h", false, NULL);
-> +    object_property_set_bool(OBJECT(cpu), "d", false, NULL);
+Hi!
 
-Note that there are a bunch of other extensions that are enabled in
-the base CPU that you aren't disabling.
+Our configure includes pc-bios/optionrom/ into SUBDIRS variable in
+config-host.mak when i386 compiler is available, so `make all` will
+visit this subdir when building things.  This will (re)build the
+roms in pc-bios/optionroms/ directory, but wont update the binaries
+in pc-bios/ which will be used to install things.
 
-See https://github.com/qemu/qemu/blob/master/target/riscv/cpu.c#L1472
+So the question is: why do we build them?
 
-I don't think it matters too much, but you might want a vendor CPU or
-use the bare CPU and enable the extensions if you want to customise
-the extensions. The base CPU is a bit odd because of the way it had
-grown organically.
+Thanks,
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> +    qdev_realize(DEVICE(cpu), NULL, &error_abort);
-> +    /* Attach emulated BRAM through the LMB.  */
-> +    memory_region_init_ram(phys_lmb_bram, NULL,
-> +                           "mb_v.lmb_bram", LMB_BRAM_SIZE,
-> +                           &error_fatal);
-> +    memory_region_add_subregion(sysmem, 0x00000000, phys_lmb_bram);
-> +
-> +    memory_region_init_ram(phys_ram, NULL, "mb_v.ram",
-> +                           ram_size, &error_fatal);
-> +    memory_region_add_subregion(sysmem, ddr_base, phys_ram);
-> +
-> +    dev =3D qdev_new("xlnx.xps-intc");
-> +    qdev_prop_set_uint32(dev, "kind-of-intr",
-> +                         1 << UARTLITE_IRQ);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, INTC_BASEADDR);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-> +                       qdev_get_gpio_in(DEVICE(cpu), 11));
-> +    for (i =3D 0; i < 32; i++) {
-> +        irq[i] =3D qdev_get_gpio_in(dev, i);
-> +    }
-> +
-> +    /* Uartlite */
-> +    dev =3D qdev_new(TYPE_XILINX_UARTLITE);
-> +    qdev_prop_set_chr(dev, "chardev", serial_hd(0));
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, UARTLITE_BASEADDR);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[UARTLITE_IRQ]);
-> +
-> +    /* Full uart */
-> +    serial_mm_init(sysmem, UART16550_BASEADDR + 0x1000, 2,
-> +                   irq[UART16550_IRQ], 115200, serial_hd(1),
-> +                   DEVICE_LITTLE_ENDIAN);
-> +
-> +    /* 2 timers at irq 0 @ 100 Mhz.  */
-> +    dev =3D qdev_new("xlnx.xps-timer");
-> +    qdev_prop_set_uint32(dev, "one-timer-only", 0);
-> +    qdev_prop_set_uint32(dev, "clock-frequency", 100000000);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ]);
-> +
-> +    /* 2 timers at irq 3 @ 100 Mhz.  */
-> +    dev =3D qdev_new("xlnx.xps-timer");
-> +    qdev_prop_set_uint32(dev, "one-timer-only", 0);
-> +    qdev_prop_set_uint32(dev, "clock-frequency", 100000000);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR2);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ2]);
-> +
-> +    /* Emaclite */
-> +    dev =3D qdev_new("xlnx.xps-ethernetlite");
-> +    qemu_configure_nic_device(dev, true, NULL);
-> +    qdev_prop_set_uint32(dev, "tx-ping-pong", 0);
-> +    qdev_prop_set_uint32(dev, "rx-ping-pong", 0);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, ETHLITE_BASEADDR);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[ETHLITE_IRQ]);
-> +
-> +    /* axi ethernet and dma initialization. */
-> +    eth0 =3D qdev_new("xlnx.axi-ethernet");
-> +    dma =3D qdev_new("xlnx.axi-dma");
-> +
-> +    /* FIXME: attach to the sysbus instead */
-> +    object_property_add_child(qdev_get_machine(), "xilinx-eth", OBJECT(e=
-th0));
-> +    object_property_add_child(qdev_get_machine(), "xilinx-dma", OBJECT(d=
-ma));
-> +
-> +    ds =3D object_property_get_link(OBJECT(dma),
-> +                                  "axistream-connected-target", NULL);
-> +    cs =3D object_property_get_link(OBJECT(dma),
-> +                                  "axistream-control-connected-target", =
-NULL);
-> +    qemu_configure_nic_device(eth0, true, NULL);
-> +    qdev_prop_set_uint32(eth0, "rxmem", 0x1000);
-> +    qdev_prop_set_uint32(eth0, "txmem", 0x1000);
-> +    object_property_set_link(OBJECT(eth0), "axistream-connected", ds,
-> +                             &error_abort);
-> +    object_property_set_link(OBJECT(eth0), "axistream-control-connected"=
-, cs,
-> +                             &error_abort);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(eth0), &error_fatal);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(eth0), 0, AXIENET_BASEADDR);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(eth0), 0, irq[AXIENET_IRQ]);
-> +
-> +    ds =3D object_property_get_link(OBJECT(eth0),
-> +                                  "axistream-connected-target", NULL);
-> +    cs =3D object_property_get_link(OBJECT(eth0),
-> +                                  "axistream-control-connected-target", =
-NULL);
-> +    qdev_prop_set_uint32(dma, "freqhz", 100000000);
-> +    object_property_set_link(OBJECT(dma), "axistream-connected", ds,
-> +                             &error_abort);
-> +    object_property_set_link(OBJECT(dma), "axistream-control-connected",=
- cs,
-> +                             &error_abort);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dma), &error_fatal);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dma), 0, AXIDMA_BASEADDR);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dma), 0, irq[AXIDMA_IRQ0]);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dma), 1, irq[AXIDMA_IRQ1]);
-> +
-> +    /* unimplemented devices */
-> +    create_unimplemented_device("gpio", GPIO_BASEADDR, 0x10000);
-> +    create_unimplemented_device("gpio2", GPIO_BASEADDR2, 0x10000);
-> +    create_unimplemented_device("gpio3", GPIO_BASEADDR3, 0x10000);
-> +    create_unimplemented_device("i2c", I2C_BASEADDR, 0x10000);
-> +    create_unimplemented_device("qspi", QSPI_BASEADDR, 0x10000);
-> +}
-> +
-> +static void mb_v_generic_machine_init(MachineClass *mc)
-> +{
-> +    mc->desc =3D "AMD Microblaze-V generic platform";
-> +    mc->init =3D mb_v_generic_init;
-> +    mc->min_cpus =3D 1;
-> +    mc->max_cpus =3D 1;
-> +    mc->default_cpu_type =3D TYPE_RISCV_CPU_BASE;
-> +    mc->default_cpus =3D 1;
-> +}
-> +
-> +DEFINE_MACHINE("amd-microblaze-v-generic", mb_v_generic_machine_init)
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index 2e88467c4ab..e6a0ac1fa1d 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -25,6 +25,14 @@ config MICROCHIP_PFSOC
->      select SIFIVE_PLIC
->      select UNIMP
->
-> +config MICROBLAZE_V
-> +    bool
-> +    default y
-> +    depends on RISCV32 || RISCV64
-> +    select XILINX
-> +    select XILINX_AXI
-> +    select XILINX_ETHLITE
-> +
->  config OPENTITAN
->      bool
->      default y
-> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-> index adbef8a9b2d..140bcb55d64 100644
-> --- a/hw/riscv/meson.build
-> +++ b/hw/riscv/meson.build
-> @@ -11,5 +11,6 @@ riscv_ss.add(when: 'CONFIG_SPIKE', if_true: files('spik=
-e.c'))
->  riscv_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_p=
-fsoc.c'))
->  riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
->  riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files('riscv-iommu.c',=
- 'riscv-iommu-pci.c'))
-> +riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-g=
-eneric.c'))
->
->  hw_arch +=3D {'riscv': riscv_ss}
-> --
-> 2.34.1
->
+/mjt
 
