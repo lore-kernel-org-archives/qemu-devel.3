@@ -4,89 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38244E65D2F
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 08:09:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A0CDE65D32
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 08:21:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEOiQ-0001UE-DZ; Fri, 22 Nov 2024 03:08:34 -0500
+	id 1tEOuS-0006iY-RA; Fri, 22 Nov 2024 03:21:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tEOiN-0001Tz-Mc
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:08:32 -0500
+ id 1tEOuQ-0006iA-Ct
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:20:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tEOiL-0006gq-5q
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:08:31 -0500
+ id 1tEOuO-0008En-Ps
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:20:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732262906;
+ s=mimecast20190719; t=1732263655;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LRgftvTBDhcefk4FeiYBaxplo0GnNs6y5n23lwk8ikQ=;
- b=QLj2HWUpKQeTKJIYLhgpOM/SzAD2+DxYkoFb3nmnD2tJ9nz854B340fvphq9lnPtLR2zfN
- tDEwn1gi9L+o0+JdYbauYImeaULwn0k3U9ft5XahzNJ6JO0iq+R1KJ1kKrf94Lw2iJcl6j
- P28dgee9ZJKiha2QMSXhmWUwuFS3kxU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=SMiTLXqPrQJxKJ37ZL8bN8EGF9omAw7ifdKAnxt4DII=;
+ b=iuOoFLpoU1wvg+LR9+17/vuOLhsg/y+Nln37Vtb/K/AG3DAU38InF2Pvav41g4GPdOmn75
+ F7l75m0kLkYNjY1iw47d0VmxEPX7lKDqjcUW1rGci73JwrlUlCCQbi+Kcx8zEiq5oax/up
+ 5Ar9A/Q/wBR/T/ttDxu6FF9Z6wWRWB0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-gT_fm5qqMVOWMv4DBjgvPg-1; Fri, 22 Nov 2024 03:08:25 -0500
-X-MC-Unique: gT_fm5qqMVOWMv4DBjgvPg-1
-X-Mimecast-MFC-AGG-ID: gT_fm5qqMVOWMv4DBjgvPg
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38229779bf4so1133482f8f.0
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 00:08:25 -0800 (PST)
+ us-mta-350-aJQ_yQl_OpmzG7VRf874fA-1; Fri, 22 Nov 2024 03:20:53 -0500
+X-MC-Unique: aJQ_yQl_OpmzG7VRf874fA-1
+X-Mimecast-MFC-AGG-ID: aJQ_yQl_OpmzG7VRf874fA
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-431518e6d8fso13967345e9.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 00:20:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732262904; x=1732867704;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LRgftvTBDhcefk4FeiYBaxplo0GnNs6y5n23lwk8ikQ=;
- b=QjO7xTtllq9zbU/bxbcnT69diSd/+YjploZ+Nc1/bclDcmivbNYUiQLtf0Now9p7dn
- fJ7tHxvTlpErrdd9TtD+HsxpCCV/4SiHtdHYxkT3iMcCSBiOhdOA1gtgoYBZlEXoeEll
- +hId9UUkNHOKV1y6o3/s3J3gq1c73/7GPABmdTcm48VAoRdzwQuduOb5eMdP4kNwxqy9
- WT5ELv/92QA533hrIEiwrsdSk+BxcbkMIFbWPRNjP0i6u/hkzDyHp3HN03PHxcSZAen9
- ufthmnZpqD+I2KwCFgSGXRFROv/5IHbKeC7imjJOdGXO/vzrX9uHrpRDWoR6QZGMaKBv
- v9cA==
+ d=1e100.net; s=20230601; t=1732263651; x=1732868451;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SMiTLXqPrQJxKJ37ZL8bN8EGF9omAw7ifdKAnxt4DII=;
+ b=So0oDswns0MS/d1ibk9SOdJTforEGNkP0vT1OLVGdPs0oTov7x99iHYT+PUi4sHHQH
+ WcfRquO0ppOSgHJYAapPooTub9mxpdIhYTmjB/s7LpxpbXQdXMng2cvrgHx7O8n202DJ
+ ks+gSoE471KyTjf/qeM2ugPNGjuxF9zRMbWVgVo4WSxKHbPd9x0/jxLb0FN4/cbTze4G
+ VZKuOoEumkQCKLAvSc0sfdStQUe9dWoPc4VOEoay1VmSiK4vQZHa/oj96GpZBJSIQIum
+ MvJRXQ7NNmZqrnvIkRX0INoxp/EC0C+BzYJLOcJH6JtJrgJjZimTl+N9xXaW3jPDmPAy
+ tTwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjkkehYR+i+hoV9grVQZKJWrT2QWtXzFnGWaTz6+KvzLWSRKIpbhqyCgqnpZKMtfb+iIKJVHuP1O9o@nongnu.org
-X-Gm-Message-State: AOJu0YxYjL6B80jvbxuB96g9QZZHKXpns3SOdEKeC6g/hhlD/iw0uUPV
- cZ3XkhMujXtDDVTmOyf0VGAyQ7v25jISz3rqk1RIebWKXzilfGQPJiSDAlqHyeuiMJzbbeT74gX
- vLJw7SjSuPhK8JaPfDwXg0JkQ8d0KTArl+IecMjLNIHefI/qRTSkDPWwROY2Tt5+Z1W7j6EDcTD
- kevfhpb+4CpyWTRknVQbYW88XB/Eo=
-X-Gm-Gg: ASbGncsBPjnTWczCkNCCZaPu8GR4NrHXDdxND8jowPSl18cOJ+UIosfRDBxf/4S7Yun
- nbrWjQKjkm9bOcx1eftOy0DiCoG2eOO7k
-X-Received: by 2002:a05:6000:1882:b0:382:4fd6:405e with SMTP id
- ffacd0b85a97d-38260b86b69mr1362219f8f.29.1732262904085; 
- Fri, 22 Nov 2024 00:08:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH9hSycLCM6Zzq88VAUy84zfXg1KHu5q5nfkpgaXC/DlIkbA2uKuDpUShla83eBrWYJyAL1rA9rksxk0LN2RvU=
-X-Received: by 2002:a05:6000:1882:b0:382:4fd6:405e with SMTP id
- ffacd0b85a97d-38260b86b69mr1362195f8f.29.1732262903769; Fri, 22 Nov 2024
- 00:08:23 -0800 (PST)
+ AJvYcCWO90PRSF4pzJra5tOM0RJfwz66opCJ5lXuaFAh4HsGreQoNyxxDKPwIeJ0RsLBuVxFH91EEpWgSDcB@nongnu.org
+X-Gm-Message-State: AOJu0YyQHCaoup8D2XSPyMs9ahiCNuPp0fw7ijS6O+U5nF3KrumJ5wjZ
+ n8vy5qeynEQaqES7XIEJj9rcp7KaA68ybBRFL4RYDeYnwPn3Qq7AMbSqSTnAnU4e/iyZfSaPYM7
+ WHGnoPvkzuPYUzkcCgWNykFvyWZ0M+vNKCbVy38UbPOO12fFXkgbzfJccTaEK
+X-Gm-Gg: ASbGncvlaLA5l0MTv29K2n+T11zsy2s8lbBUfKgOymgule2yUNAd9uUpaa98ojxwUQ9
+ lAuQ5+b/9/cY7NAi5g9y8jeFzZGElFzZdHLic1Zg7Nkw9w85FTfsSsytohK9Eq/iaWko0e1i3HF
+ yjvhZkxR11MDXco68zp7kK07sbFxctYca0I9WnICs/uBYXl8kPGho5kWHb9/t68LNEeBaDSj6X3
+ UymvB7d3iVulNCNfUfbe9yGBJsFTCXm6f2E3lfrp6HZIeLUoFNYaQ==
+X-Received: by 2002:a05:600d:2:b0:431:5ba1:a513 with SMTP id
+ 5b1f17b1804b1-433ce4267b2mr17036335e9.10.1732263651378; 
+ Fri, 22 Nov 2024 00:20:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGibK+LEosluRe8iM4Bypqi3T7EBT9N8zvJFM57G3Rxm3/x1Nku9asgh4aoJDzfdiYSHWKwNw==
+X-Received: by 2002:a05:600d:2:b0:431:5ba1:a513 with SMTP id
+ 5b1f17b1804b1-433ce4267b2mr17036105e9.10.1732263651049; 
+ Fri, 22 Nov 2024 00:20:51 -0800 (PST)
+Received: from [192.168.10.3] ([151.49.204.250])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-433cde16a95sm19550855e9.18.2024.11.22.00.20.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Nov 2024 00:20:50 -0800 (PST)
+Message-ID: <0facde38-6026-4c08-bcb5-4ba2ec562cf9@redhat.com>
+Date: Fri, 22 Nov 2024 09:20:49 +0100
 MIME-Version: 1.0
-References: <CAP52u7a_CA-PEw2gMgc32rCKGt8mqsjCkEedkzTgOosazrTs-w@mail.gmail.com>
- <Zz99VtNtZCx-P5Mx@redhat.com>
- <CABgObfY8fmSjQBU34NVhn-de5iWeWTBJr18u_GgFZpJXjL3NzQ@mail.gmail.com>
- <CAP52u7ZdRxATBfopYB90fgWheuqnxJ1R6p-WK0CX0Nrk7Z4jeQ@mail.gmail.com>
-In-Reply-To: <CAP52u7ZdRxATBfopYB90fgWheuqnxJ1R6p-WK0CX0Nrk7Z4jeQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: pc-bios/optionrom: when/why do we build it?
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel <qemu-devel@nongnu.org>
+References: <5c90aeb4-2773-4c1b-b727-0f2221860761@tls.msk.ru>
+ <ec822e92-179a-44e3-80d4-48763544689f@tls.msk.ru>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 22 Nov 2024 09:08:06 +0100
-Message-ID: <CABgObfbPK=fNLkQ8esRz0nd1m=ZcMHAV5s7EHgVUNrt67te8Fw@mail.gmail.com>
-Subject: Re: QEMU patches for native windows support through clang-cl
-To: Erwin Jansen <jansene@google.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Roque Arcudia Hernandez <roqueh@google.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- sw@weilnetz.de, lvivier@redhat.com, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Patrick Leis <venture@google.com>, 
- Nabih Estefan <nabihestefan@google.com>, Danny Rosen <dannyrosen@google.com>, 
- JP Cottin <jpcottin@google.com>, qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <ec822e92-179a-44e3-80d4-48763544689f@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -112,69 +145,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 10:43=E2=80=AFPM Erwin Jansen <jansene@google.com> =
-wrote:
->
-> Would a good next step be to work out some more details in a document tha=
-t outlines what process we are using, what we are planning to do and includ=
-e a set of suggestions as a starting point to see if we can upstream some o=
-f the changes to the larger community?
+On 11/22/24 08:05, Michael Tokarev wrote:
+> Maybe a more general question would be:
+> what is our main build entry point?  Is it `make` (or `make all`)
+> still, or is it meson now?
 
-Yes, you can write it at https://wiki.qemu.org/Features/ClangCL. I'll
-send you credentials off list.
+s/meson/ninja/
+
+But no, it's always make.  Using make ensures that:
+
+1) you build stuff that is not emulators (option ROMs, TCG tests). 
+Meson is only for stuff that runs on the host
+
+2) you rerun configure if it changes.
+
+> For this specific optionrom thing, I'd say we should add a separate
+> rule to the top-level Makefile (or to meson.build) which is not
+> run by default but can be run explicitly, like `make optionrom` -
+> this will check if pc-bios/optionrom/config.mak is there and either
+> run make in this subdir or complain saying no i386 compiler is found.
+
+The optionroms are built by default to ensure that they do not bitrot. 
+I think they're not copied (this is really old policy...) so that, if 
+there is no need, the binary does not change at all across releases.
+
+But yes, adding an explicit makefile target is useful.  It could also 
+copy the build products over to the source directory.
 
 Paolo
-
-> We currently don't have a proper solution for packing. We are tracking th=
-e issue here https://issuetracker.google.com/issues/380295845. All our code=
- is public and development is happening on the emu-dev repository: https://=
-android.googlesource.com/platform/external/qemu/+/emu-dev
->
-> Greetings,
-> Erwin.
->
->
->
->
->
-> On Thu, Nov 21, 2024 at 10:47=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.c=
-om> wrote:
->>
->> > NB As a general point, we actively block use of clang with Windows
->> > builds (more strictly in 9.2 now), because it lacks support for the
->> > 'gcc_struct' annotation that we rely on to guarantee correct ABI for
->> > structs exposed to guests in particular.
->>
->> Ah, good point. This is
->> https://github.com/llvm/llvm-project/issues/24757 for the general
->> tracking issue, and https://github.com/llvm/llvm-project/pull/71148
->> for a recent PR that attempts to implement this.
->>
->> Using -mno-ms-bitfields globally is unsafe because there are probably
->> Windows API structs that implement it.
->>
->> One solution is to add `QEMU_BUILD_BUG_ON(sizeof(...) =3D=3D ...)` to al=
-l
->> structs in QEMU that use bitfields. That will prove very quickly if
->> there are issues or not.
->>
->> Paolo
->>
->> > Many people try to simply remove that #ifdef, mistakenly assuming that
->> > because the code compiles without warnings, it must be correct. Did
->> > you have solution for this, as it would be a blocker for enabling
->> > clang on Windows currently ?
->> >
->> > With regards,
->> > Daniel
->> > --
->> > |: https://berrange.com      -o-    https://www.flickr.com/photos/dber=
-range :|
->> > |: https://libvirt.org         -o-            https://fstop138.berrang=
-e.com :|
->> > |: https://entangle-photo.org    -o-    https://www.instagram.com/dber=
-range :|
->> >
->>
 
 
