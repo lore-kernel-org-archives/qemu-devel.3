@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22E1E6918F
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 19:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 908C9E69191
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 20:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEZiO-0001N9-5R; Fri, 22 Nov 2024 14:53:16 -0500
+	id 1tEa51-0004Lz-SD; Fri, 22 Nov 2024 15:16:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEZiM-0001Mg-Pt
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 14:53:14 -0500
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ id 1tEa50-0004LU-SR
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 15:16:39 -0500
+Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEZiL-0008LQ-Es
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 14:53:14 -0500
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-5f06787eab7so1115409eaf.1
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 11:53:11 -0800 (PST)
+ id 1tEa4z-0003c2-CH
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 15:16:38 -0500
+Received: by mail-oo1-xc2c.google.com with SMTP id
+ 006d021491bc7-5ebc52deca0so1397172eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 12:16:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732305190; x=1732909990; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732306596; x=1732911396; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/TdhaA4cgmHWBvGWzYY3pi+v0OjOybIwBAljQPz8crs=;
- b=wHKvq9MfStVaHiY7g982aDwilbNujxFu5pTpTBYg81oUkNEs35wOGAreXqENkzmDW7
- JAlEc/uW+bTblYSOZXHhbQT90PDQGQ2FDLCGnIM59RQJeS+tm3TZnUe1w+3oFjrkoM7t
- w+tD2+DDOP/wdj+ZgugYfQTZEcexvL5iRp5CcO6K6iiD9R7XWSs4DshD/fUmYtwl98qK
- oglAlVVP3pijpEPWyh9W9VLG6ljkDAcJX4fomyov8G0vAOzeJp2jabbIOHnm9PuqVsUy
- oxwmGbVBY+rKRx/MpbXNPJot8L3s2u8hyLugtw3DgtYujI/4aGEgxzTRLoAPTZd82rPc
- r43A==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bYwjthPz7ZSTjWvT6SOtnqt6VUWOzk4V8pDNWIDKjVU=;
+ b=zErxDJw170wWC4q0m+6n6dk4pCps0VGonm2b/m95m6tbnrC1dBpdei3EMtctiRGKWH
+ Pna+5SYcEZQ7H68D5GnpSAITovlHV2+1tL2MAbkN0T4DJICSpgHCo2YZvEfmi3ccwp1Z
+ R3pHYslNZNpuzIZUe8zeLOJrRwt+jWo2+qHVW4UIRYpWQfLuIauWJFqyfzg/DmawqMi7
+ eapO1KWp0jZsgtR+mVtUmK+pcVK+vcQ2+b7yzCT4rp1w843frIQBHjW2rM9W6asHsMkf
+ 75oN+E3W6EowLy3ZERDtQjCC8dJHwKJgU4qdHMaXipecZGYsU9yUhqGCmh4wdsIjTt2M
+ Kp0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732305190; x=1732909990;
+ d=1e100.net; s=20230601; t=1732306596; x=1732911396;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/TdhaA4cgmHWBvGWzYY3pi+v0OjOybIwBAljQPz8crs=;
- b=GJHot7n6KSs1TMbBkcZtgbSmMdWw8aCC/yCeEP0Stc/hGBIexIJxCKmZJTMoKjDm+F
- VVepXKgympEWQpVlKc5D2OHCd61PSEKFf1O9AN68TIfeuUdI5dlbbEZ29DLredBFQIIj
- ciIhtGbaqrd3W1Rr526zuqcvHtfANRIkrfrps9mUEIEzHoRKs6C0OX8mw00oFKtK/IRN
- 7EkKJLllUKrvUWlIhQlnXe4W7hexKA+KPNPwEp7ifUumQvULM4drYJjSDjZVvJZ8hGK7
- l8hC6+2A6f7xBd8EiMj4wZrh+kXU92DbdaF4puvR47EjdlvPggMSxdu8dxTedYJfAGrX
- JcBA==
-X-Gm-Message-State: AOJu0YykejXBpqNrVPTAGiKOUQTF1X9WekL7d0cEyGHvQB3yWiF1OXNe
- 9pAGumQP14s/VPGVkW1qIMHkjwdahBn2SFtAK3I4RdoxMMz8LtkGrFKRls7tpBP95Q2TE8DZFvs
- PuJY=
-X-Gm-Gg: ASbGnctqEsUCXVDj++D101FNAMq3Ietu8aZfcdLNfoV5OUxu44TfybG9doFxUzc6stk
- MYKR8atovOh/pn2D4qr/u5GJJBsSaoNWaDFkSRL4hZd4VntK+BVuaUTS8OeAuxQCUz2Rdx8H+/F
- UUF0r9JeSJ3m9xezQW4YKhvXCl81llLQs4j4m7tJRXB7GeeFoLinT3p/bnxdFOTVNJ1WEke3wHR
- HKovj8mnB72Yq5hpH2RWiXW2HRSouIQsjxBvAxeQKKoQeo5hJZSqExer5EmOk6rZg==
-X-Google-Smtp-Source: AGHT+IGTCy1lyO0ueUy1jvtwkjYX3uYz4AQpRjPq6HQ0VtmTbMu+2WZMs+/3Y14JUlao0ODdZe3Jog==
-X-Received: by 2002:a05:6830:6b0e:b0:716:a62d:a79a with SMTP id
- 46e09a7af769-71c04cf0dd9mr4985991a34.29.1732305190484; 
- Fri, 22 Nov 2024 11:53:10 -0800 (PST)
-Received: from [10.25.2.124] ([187.210.107.185])
+ bh=bYwjthPz7ZSTjWvT6SOtnqt6VUWOzk4V8pDNWIDKjVU=;
+ b=BSxr/sq5649zTumxLZFUCx0zYpn3PZXxOIjUPRykEakz7T/6BqdhKuTKiYy3lT1l6T
+ TMt4dIjS3c/b0p8S06gfXD6StK1rbpzq3EP0lb3h4kRa0VmpVNzlbQAADwnjnSJFd24Y
+ bjB76c4oW4WKnS26FqpdxdxXhdBM5C4bPlaRt/3WpOfCwH+Ytwz1oH/GXO7OQjNroDIc
+ 7wOijPpGcqFE3NKY6xDjGOYAR176/rm9YXp/HyyP1j7J3RjwwLvXF7I+wyvjQXQGM6AW
+ LYz+DGmoGK1TxiEtyYC5rXMOx6eeivh0c5WyEdtWgs4lKwwLQbRx3fehLa9k6+K0PrKK
+ u4Ow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWd2DBMYuGzLspmQjlCHbNuFobcgDppk397xqoXfamHJnbHIdFzplK1DFUXk0wlISnIlh+BbzCsaEhB@nongnu.org
+X-Gm-Message-State: AOJu0YxqPnNlc5mO2iwpN1RJz4Zrnf5n42K0bFI+wRlP0LwMhy0A59kM
+ cb36401qL4iIlzdG0xqyKNyMk3T/OX2SkpprTjzrUyH3GlZapJGhPb0OPvHWRrc=
+X-Gm-Gg: ASbGncuCWWxSlNWlhvHjOVJgF9Airs5nx94HBUpKVEPWKlAKiZm5TlqBgsoh4iZ3EMX
+ K7Y/FjmDY0XsfrObm+0yqOJhm3QVqDTHzPQC1m8e27L0qkWHKO6ABxHKBy2+JnDxQgJxpEe4J1s
+ Asa/k4nph0UqgWvuBKg/8TZsbcIcMmQ2yJliO+jhjWvHdP0aBCeL9SqyQN+/5mOXpPDVdcoxrbV
+ djvjB04NzWHl2u429JoLppMxgVxO9pyShQWBPp9ihyt+T1GYysMO8BOj6I36+jYhrfA39I=
+X-Google-Smtp-Source: AGHT+IFegg7NAMezxrQakum+ABDZZ9Y450wDu/3U+Xx+7fw7W/hXuR0sTrLw2o2VUMm4TpNUCTC1UQ==
+X-Received: by 2002:a05:6820:8c6:b0:5eb:6c26:1ca0 with SMTP id
+ 006d021491bc7-5f06a911c41mr3723009eaf.1.1732306595926; 
+ Fri, 22 Nov 2024 12:16:35 -0800 (PST)
+Received: from [192.168.170.227] ([187.210.107.181])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71c03759d13sm573256a34.12.2024.11.22.11.53.09
- for <qemu-devel@nongnu.org>
+ 006d021491bc7-5f071fa5201sm280632eaf.25.2024.11.22.12.16.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Nov 2024 11:53:09 -0800 (PST)
-Message-ID: <ef0bfcae-1682-4772-a9d3-018e12c93da4@linaro.org>
-Date: Fri, 22 Nov 2024 13:31:12 -0600
+ Fri, 22 Nov 2024 12:16:35 -0800 (PST)
+Message-ID: <ab1c101c-67e2-4bfb-a050-94567fca0699@linaro.org>
+Date: Fri, 22 Nov 2024 14:16:30 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 35/39] plugins: add missing export for
- qemu_plugin_num_vcpus
-To: qemu-devel@nongnu.org
-References: <20241121165806.476008-1-alex.bennee@linaro.org>
- <20241121165806.476008-36-alex.bennee@linaro.org>
+Subject: Re: [PATCH] target/arm/tcg/cpu32.c: swap ATCM and BTCM register names
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20241121171602.3273252-1-mjt@tls.msk.ru>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241121165806.476008-36-alex.bennee@linaro.org>
+In-Reply-To: <20241121171602.3273252-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,30 +102,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/21/24 10:58, Alex Bennée wrote:
-> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 11/21/24 11:16, Michael Tokarev wrote:
+> According to Cortex-R5 r1p2 manual, register with opcode2=0 is
+> BTCM and with opcode2=1 is ATCM, - exactly the opposite from how
+> qemu labels them.  Just swap the labels to avoid confusion, -
+> both registers are implemented as always-zero.
 > 
-> Fixes: 4a448b148ca ("plugins: add qemu_plugin_num_vcpus function")
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Message-Id: <20241112212622.3590693-2-pierrick.bouvier@linaro.org>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 > ---
->   include/qemu/qemu-plugin.h | 1 +
->   1 file changed, 1 insertion(+)
+>   target/arm/tcg/cpu32.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index 622c9a0232..0fba36ae02 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -803,6 +803,7 @@ void qemu_plugin_register_atexit_cb(qemu_plugin_id_t id,
->                                       qemu_plugin_udata_cb_t cb, void *userdata);
+> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+> index 20c2737f17..2a77701f8d 100644
+> --- a/target/arm/tcg/cpu32.c
+> +++ b/target/arm/tcg/cpu32.c
+> @@ -574,9 +574,9 @@ static void cortex_a15_initfn(Object *obj)
 >   
->   /* returns how many vcpus were started at this point */
-> +QEMU_PLUGIN_API
->   int qemu_plugin_num_vcpus(void);
->   
->   /**
+>   static const ARMCPRegInfo cortexr5_cp_reginfo[] = {
+>       /* Dummy the TCM region regs for the moment */
+> -    { .name = "ATCM", .cp = 15, .opc1 = 0, .crn = 9, .crm = 1, .opc2 = 0,
+> +    { .name = "BTCM", .cp = 15, .opc1 = 0, .crn = 9, .crm = 1, .opc2 = 0,
+>         .access = PL1_RW, .type = ARM_CP_CONST },
+> -    { .name = "BTCM", .cp = 15, .opc1 = 0, .crn = 9, .crm = 1, .opc2 = 1,
+> +    { .name = "ATCM", .cp = 15, .opc1 = 0, .crn = 9, .crm = 1, .opc2 = 1,
+>         .access = PL1_RW, .type = ARM_CP_CONST },
+>       { .name = "DCACHE_INVAL", .cp = 15, .opc1 = 0, .crn = 15, .crm = 5,
+>         .opc2 = 0, .access = PL1_W, .type = ARM_CP_NOP },
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
