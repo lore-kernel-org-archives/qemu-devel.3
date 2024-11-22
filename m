@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66B4FE65D35
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 09:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0962E65D36
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 09:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEPhr-0002E5-Oe; Fri, 22 Nov 2024 04:12:05 -0500
+	id 1tEPiZ-0002Yi-RX; Fri, 22 Nov 2024 04:12:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tEPhk-0002Ab-Ij; Fri, 22 Nov 2024 04:11:56 -0500
+ id 1tEPhn-0002C1-0C; Fri, 22 Nov 2024 04:11:59 -0500
 Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tEPhg-0000ta-Oj; Fri, 22 Nov 2024 04:11:55 -0500
+ id 1tEPhk-0000vA-Oa; Fri, 22 Nov 2024 04:11:58 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 171425C59B1;
+ by dfw.source.kernel.org (Postfix) with ESMTP id A18FB5C59E6;
  Fri, 22 Nov 2024 09:11:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692CFC4AF0B;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3EAC4CED7;
  Fri, 22 Nov 2024 09:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1732266708;
- bh=cnC/4PFJE/2cvBR4Q7/KZ6l55Niv58/LD5ZqxNIOM3A=;
+ bh=80tymdZsA4gV0nz/70yruPzz2rfWPx4O9L07JwfBNsg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=cHhnWAhYZCSn3+zHWS5kYI7IAF8mBYUofwobG85xEqk0jlXf1So0dfVjdwOcVyZ16
- T1A8w4HfOJwI6rUh6/oewiBYCZx93f8XPmqBzpe6uSK/hPeTcq6eF0y0qmUsWyG3t6
- 1RTThynw32RQyOIvwnnuGWo9lHuTVD+7Xql40G0FgSOlK4VL3B6OYfYAlPWq6z5nwc
- jJkmIpIv5aGa6RN/2sV6UaUFVj95qpMC5hkwAEy6pW3ujojZvtnE5Bs3VQ86h+EzJy
- VGEnBXmrIZf4QggSNFFkSI9xKQzqn5Vi6WmO7rfllbe58r5r+cDuOpBAff6Fivdaq1
- O08VHlk00vO+g==
+ b=Xgim6UF4N0aFf5qEPKNhNevuAd2AV+b5ufeY1q311b+8FuojhUkU9e6pcFx23nJBl
+ 4DoBCZ6MrFh+rhuCejs781gBaWAncJqYs4ie1/SAhEaqlwztO2ipiejzTj8ZcIBjfS
+ 7aBg+pVmJVEDiZgJkzxm0EbBI8SQEPaWVMnxXMqVpINBMXSjXkudsbKZzmJLR6MWxe
+ tw5ZgAFbDWVByq/YgbI1DeJEkGgAe07C31X08jBYSHhGhxHBgcIGLM9olf/QolSW/w
+ Sad9VfIgSQsRzOaDtwBDy56NQFuk2I2TmqOwn3qSO4YiefPYTjirj4bNC7z1DIQOC8
+ 5NnMIwYsXjIsQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tEPhX-00000006l46-15eY; Fri, 22 Nov 2024 10:11:43 +0100
+ id 1tEPhX-00000006l3k-0JEe; Fri, 22 Nov 2024 10:11:43 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -44,10 +44,9 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v4 12/15] acpi/ghes: better name the offset of the hardware
- error firmware
-Date: Fri, 22 Nov 2024 10:11:29 +0100
-Message-ID: <a3dc717c96eba1d8b67f81e2ba3e4a9e600f7c51.1732266152.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v4 05/15] acpi/ghes: Fix acpi_ghes_record_errors() argument
+Date: Fri, 22 Nov 2024 10:11:22 +0100
+Message-ID: <fcb73712586b5b465252fd6c1f5fa5fdb2b40d7d.1732266152.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1732266152.git.mchehab+huawei@kernel.org>
 References: <cover.1732266152.git.mchehab+huawei@kernel.org>
@@ -78,79 +77,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The hardware error firmware is where HEST error structures are
-stored. Those can be GHESv2, but they can also be other types.
-
-Better name the location of the hardware error.
-
-No functional changes.
+Align the header file with the actual implementation of
+this function, as the first argument is source ID and not
+notification type.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
----
- hw/acpi/generic_event_device.c | 4 ++--
- hw/acpi/ghes.c                 | 4 ++--
- include/hw/acpi/ghes.h         | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 663d9cb09380..17baf36132a8 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -364,7 +364,7 @@ static const VMStateDescription vmstate_ghes = {
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),
-+        VMSTATE_UINT64(hw_error_le, AcpiGhesState),
-         VMSTATE_END_OF_LIST()
-     },
- };
-@@ -372,7 +372,7 @@ static const VMStateDescription vmstate_ghes = {
- static bool ghes_needed(void *opaque)
- {
-     AcpiGedState *s = opaque;
--    return s->ghes_state.ghes_addr_le;
-+    return s->ghes_state.hw_error_le;
- }
- 
- static const VMStateDescription vmstate_ghes_state = {
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 292c77e78a5a..87fd3feedd2a 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -359,7 +359,7 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
- 
-     /* Create a read-write fw_cfg file for Address */
-     fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
--        NULL, &(ags->ghes_addr_le), sizeof(ags->ghes_addr_le), false);
-+        NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
- 
-     ags->present = true;
- }
-@@ -385,7 +385,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-     }
-     ags = &acpi_ged_state->ghes_state;
- 
--    start_addr = le64_to_cpu(ags->ghes_addr_le);
-+    start_addr = le64_to_cpu(ags->hw_error_le);
- 
-     start_addr += source_id * sizeof(uint64_t);
- 
+---
+
+Changes from v8:
+- Non-rename/cleanup changes merged altogether;
+- source ID is now more generic, defined per guest target.
+  That should make easier to add support for 86.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+---
+ include/hw/acpi/ghes.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 21666a4bcc8b..39619a2457cb 100644
+index 20016c226d1f..50e3a25ea384 100644
 --- a/include/hw/acpi/ghes.h
 +++ b/include/hw/acpi/ghes.h
-@@ -65,7 +65,7 @@ enum {
- };
+@@ -73,7 +73,7 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+                      const char *oem_id, const char *oem_table_id);
+ void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+                           GArray *hardware_errors);
+-int acpi_ghes_record_errors(uint8_t notify, uint64_t error_physical_addr);
++int acpi_ghes_record_errors(uint8_t source_id, uint64_t error_physical_addr);
  
- typedef struct AcpiGhesState {
--    uint64_t ghes_addr_le;
-+    uint64_t hw_error_le;
-     bool present; /* True if GHES is present at all on this board */
- } AcpiGhesState;
- 
+ /**
+  * acpi_ghes_present: Report whether ACPI GHES table is present
 -- 
 2.47.0
 
