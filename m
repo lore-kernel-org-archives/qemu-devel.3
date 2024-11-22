@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE63E65D35
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 08:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41677E65D35
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 08:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEPRJ-0000SW-7h; Fri, 22 Nov 2024 03:54:57 -0500
+	id 1tEPRI-0000S2-N6; Fri, 22 Nov 2024 03:54:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1tEPRF-0000RQ-Ha
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:54:54 -0500
+ id 1tEPRC-0000R7-Pr
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:54:52 -0500
 Received: from mx1.zhaoxin.com ([210.0.225.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1tEPRD-0005Jz-Cp
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:54:53 -0500
-X-ASG-Debug-ID: 1732265670-086e2312d603810001-jgbH7p
-Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
- mx1.zhaoxin.com with ESMTP id tRYtahXSRVfPVcoX (version=TLSv1.2
+ id 1tEPRA-0005TL-40
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:54:50 -0500
+X-ASG-Debug-ID: 1732265683-086e2312d603820001-jgbH7p
+Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
+ mx1.zhaoxin.com with ESMTP id 4zMdX0nuWe36phMh (version=TLSv1.2
  cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Fri, 22 Nov 2024 16:54:31 +0800 (CST)
+ Fri, 22 Nov 2024 16:54:43 +0800 (CST)
 X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
- (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
+Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX1.zhaoxin.com
+ (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 22 Nov
- 2024 16:54:30 +0800
+ 2024 16:54:43 +0800
 Received: from ZXSHMBX1.zhaoxin.com ([fe80::3066:e339:e3d6:5264]) by
  ZXSHMBX1.zhaoxin.com ([fe80::3066:e339:e3d6:5264%7]) with mapi id
- 15.01.2507.039; Fri, 22 Nov 2024 16:54:30 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+ 15.01.2507.039; Fri, 22 Nov 2024 16:54:43 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
 Received: from ewan-server.zhaoxin.com (10.28.66.62) by zxbjmbx1.zhaoxin.com
  (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 22 Nov
- 2024 14:21:36 +0800
+ 2024 14:21:38 +0800
 From: EwanHai <ewanhai-oc@zhaoxin.com>
 To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>
 CC: <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>,
  <rockcui@zhaoxin.com>, <louisqi@zhaoxin.com>, <liamni@zhaoxin.com>,
  <frankzhu@zhaoxin.com>
-Subject: [PATCH RESEND v4 0/4] Add support for Zhaoxin Yongfeng CPU model and
-Date: Fri, 22 Nov 2024 01:21:31 -0500
-X-ASG-Orig-Subj: [PATCH RESEND v4 0/4] Add support for Zhaoxin Yongfeng CPU
- model and
-Message-ID: <20241122062135.479200-1-ewanhai-oc@zhaoxin.com>
+Subject: [PATCH RESEND v4 4/4] target/i386: Mask CMPLegacy bit in
+ CPUID[0x80000001].ECX for Zhaoxin CPUs
+Date: Fri, 22 Nov 2024 01:21:35 -0500
+X-ASG-Orig-Subj: [PATCH RESEND v4 4/4] target/i386: Mask CMPLegacy bit in
+ CPUID[0x80000001].ECX for Zhaoxin CPUs
+Message-ID: <20241122062135.479200-5-ewanhai-oc@zhaoxin.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241122062135.479200-1-ewanhai-oc@zhaoxin.com>
+References: <20241122062135.479200-1-ewanhai-oc@zhaoxin.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain
 X-Originating-IP: [10.28.66.62]
 X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
  zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 11/22/2024 4:54:29 PM
-X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
-X-Barracuda-Start-Time: 1732265670
+X-Moderation-Data: 11/22/2024 4:54:41 PM
+X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
+X-Barracuda-Start-Time: 1732265683
 X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
 X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
 X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 2295
+X-Barracuda-Scan-Msg-Size: 2287
 X-Barracuda-BRTS-Status: 1
 X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
 X-Barracuda-Spam-Score: -2.02
@@ -96,66 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series introduces support for the Zhaoxin Yongfeng CPU model and
-includes improvements and updates specific to Zhaoxin CPUs (including vendo=
-r
-"Centaurhauls" and "Shanghai"). The changes ensure that QEMU can correctly
-identify and emulate Zhaoxin CPUs, accurately reflecting their functionalit=
+Zhaoxin CPUs (including vendors "Shanghai" and "Centaurhauls") handle the
+CMPLegacy bit similarly to Intel CPUs. Therefore, this commit masks the
+CMPLegacy bit in CPUID[0x80000001].ECX for Zhaoxin CPUs, just as it is done
+for Intel CPUs.
+
+AMD uses the CMPLegacy bit (CPUID[0x80000001].ECX.bit1) along with other CP=
+UID
+information to enumerate platform topology (e.g., the number of logical
+processors per package). However, for Intel and other CPUs that follow Inte=
+l's
+behavior, CPUID[0x80000001].ECX.bit1 is reserved.
+
+- Impact on Intel and similar CPUs:
+This change has no effect on Intel and similar CPUs, as the goal is to
+accurately emulate CPU CPUID information.
+
+- Impact on Linux Guests running on Intel (and similar) vCPUs:
+During boot, Linux checks if the CPU supports Hyper-Threading. For the Linu=
+x
+kernel before v6.9, if it detects X86_FEATURE_CMP_LEGACY, it assumes
+Hyper-Threading is not supported. For Intel and similar vCPUs, if the
+CMPLegacy bit is not masked in CPUID[0x80000001].ECX, Linux will incorrectl=
 y
-and performance characteristics.
+assume that Hyper-Threading is not supported, even if the vCPU does support=
+ it.
 
-### Summary of changes
+Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ target/i386/cpu.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-EwanHai (4):
-  target/i386: Add support for Zhaoxin CPU vendor identification
-  target/i386: Add CPUID leaf 0xC000_0001 EDX definitions
-  target/i386: Introduce Zhaoxin Yongfeng CPU model
-  target/i386: Mask CMPLegacy bit in CPUID[0x80000001].ECX for Zhaoxin
-    CPUs
-
- target/i386/cpu.c | 131 ++++++++++++++++++++++++++++++++++++++++++++--
- target/i386/cpu.h |  41 ++++++++++++++-
- 2 files changed, 167 insertions(+), 5 deletions(-)
-
-v4 -> v3:
-1. Added "For the kernel before v6.9 ..." for more accurately describe the
-patch's impact on Linux Guests.
-
-v3 link: https://lore.kernel.org/all/20240809094259.119221-1-ewanhai-
-oc@zhaoxin.com/
-
-v3 -> v2:
-1. Added a more detailed description of the CPUID[0x80000001].ECX.CMPLegacy
-bit masking.
-
-v2 link:
-https://lore.kernel.org/all/20240704112511.184257-1-ewanhai-oc@zhaoxin.com/
-
-
-v2 -> v1:
-1. Removed VIA-related information from the patch description to avoid
-misunderstanding.
-2. Replaced CPUID_VENDOR_VIA with CPUID_VENDOR_ZHAOXIN1 because the
-"Centaurhauls" vendor ID now belongs to Zhaoxin.The previous CPUID_VENDOR_V=
-IA
-macro was only defined but never used in QEMU, making this change
-straightforward.
-
-v1 link:
-https://lore.kernel.org/qemu-devel/20240625091905.1325205-1-ewanhai-
-oc@zhaoxin.com/
-
-### Known Issues
-1. Issue with VMX Preemption Timer Rate on Yongfeng CPU:
-   - Description: On Yongfeng CPUs, the VMX preemption timer rate is 128,
-     meaning that bits 4:0 of MSR_IA32_VMX_MISC_CTLS should be set to 7.
-     However, due to Intel's rate being 5, the Linux kernel has hardcoded
-     this value as 5: `#define VMX_MISC_EMULATED_PREEMPTION_TIMER_RATE 5`.
-   - Impact: This discrepancy can cause incorrect behavior in the VMX
-     preemption timer on Yongfeng CPUs.
-   - Workaround: A patch to correct this issue in the Linux kernel is
-     currently being prepared and will be submitted soon.
-
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index ae8e9ccfc7..2474ebbafc 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7089,12 +7089,11 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index=
+, uint32_t count,
+=20
+         /* The Linux kernel checks for the CMPLegacy bit and
+          * discards multiple thread information if it is set.
+-         * So don't set it here for Intel to make Linux guests happy.
++         * So don't set it here for Intel(and other processors
++         * following Intel's behavior) to make Linux guests happy.
+          */
+         if (threads_per_pkg > 1) {
+-            if (env->cpuid_vendor1 !=3D CPUID_VENDOR_INTEL_1 ||
+-                env->cpuid_vendor2 !=3D CPUID_VENDOR_INTEL_2 ||
+-                env->cpuid_vendor3 !=3D CPUID_VENDOR_INTEL_3) {
++            if (!IS_INTEL_CPU(env) && !IS_ZHAOXIN_CPU(env)) {
+                 *ecx |=3D 1 << 1;    /* CmpLegacy bit */
+             }
+         }
 --=20
 2.34.1
 
