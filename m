@@ -4,75 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77EE7E6403D
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 10:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A27D75E21
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 10:30:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEQoF-000087-7M; Fri, 22 Nov 2024 05:22:43 -0500
+	id 1tEQvi-0002nr-UH; Fri, 22 Nov 2024 05:30:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tEQoD-00006N-Kh
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 05:22:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tEQoC-0006DL-1T
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 05:22:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732270959;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=mWJHbvg5SeYLsjfAgYDCROVrO7UXlCe3qtrXBLDDuTs=;
- b=c4kYp+iMZBatT2IE/Tjsly6z15P38Hry0VS6+1MjVuNvLypoQ3EqJuINC9sKu0+jIxBzUg
- PPJwzTG37xEEuenHlyrF/Xui0w/Q5ULGMaNzWhZa8qzDwDghxgrliIwfFUS5Bb0L3KusV9
- s95SUK8CnhShF8HsiJcuR1Z1VeVJoHU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-fFolGp2iPtGNBcx-Snvd8Q-1; Fri,
- 22 Nov 2024 05:22:37 -0500
-X-MC-Unique: fFolGp2iPtGNBcx-Snvd8Q-1
-X-Mimecast-MFC-AGG-ID: fFolGp2iPtGNBcx-Snvd8Q
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74E7E19560A3; Fri, 22 Nov 2024 10:22:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.114])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4579219560A3; Fri, 22 Nov 2024 10:22:32 +0000 (UTC)
-Date: Fri, 22 Nov 2024 10:22:29 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, armbru@redhat.com, stefanha@redhat.com,
- pkrempa@redhat.com
-Subject: Re: [PULL v3 0/8] Block layer patches
-Message-ID: <Z0BbZfJid7VbvCUv@redhat.com>
-References: <20241120105106.50669-1-kwolf@redhat.com>
- <CAFEAcA9M_-4=UdOTwV251qOxuELAxXtJW8QaZWTs4bUq7dJwxw@mail.gmail.com>
- <Z0BaQ0ahUn4ORhPS@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEQvh-0002nO-RN
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 05:30:25 -0500
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEQvg-0007es-23
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 05:30:25 -0500
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-53da22c5863so2313132e87.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 02:30:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732271420; x=1732876220; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JJuSOnbv0I0x5ZCJYxfGG/RH+rlor1HAm3NxBXX6nmE=;
+ b=T5n5st5cbt4Euxh4lh0nPqsST05LXRR7G78VoxbS7U3rAsyb+uehqSgGZhF0qq+Hnc
+ pSHhbhRc4yk3OO7fcgEUkg5E/hB6O4gssPS3xGyAex4yvjwoc1uEfAQFs7uN9DUN5Om/
+ LhQqmikS5K1y0YhaYaxbt06TICf6HE38vGFb5JniRBm9ILXd9oGcUB5UuDqI8L4x5eCx
+ suhrb37LrBaBvryBczPdsj/P8xWg8WLu+UcbOulseJBYXy/iV/wIe/ZxJwJE2BxXP/Kn
+ 9+0h2a0oIPpnHAUDy/IDybXUC8a/GFSnUeIXnEE5CDdxWqoO0G+JOoHVPXI035u732a3
+ AATw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732271420; x=1732876220;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JJuSOnbv0I0x5ZCJYxfGG/RH+rlor1HAm3NxBXX6nmE=;
+ b=BxhJlWh0mlZAR05NmomgzGR+5HTh+R4/HIx3UeXDeBN7UsJGMv5TVHIF8rajMOkaFY
+ 7MqcBDqJ2VJL4rHth/px6k6rB6Y8u6/tYfkgulabb9OXEz95SKPAVK+G1Qlc3/ijBThH
+ sAvXN0YsmrIhYw0W50+IHOg7EteKL3R1ghtCzM/nOAmyA/yUK3NY8X79eRguJtSbyCJo
+ d5kQq4t/a1EXtE6nRCfMx8XHMGIrFDaW3jjjMy3Z7sfAWjd/ATB18rSs5hAIb8jOKQWB
+ esShip/gKJEjObhCDjyxfSGJA52uYHX/31X9viEoZDScgKcUouSeRjlrccRIhiNHz1ff
+ F9iw==
+X-Gm-Message-State: AOJu0YwAea6YQre1vd/qNuw0yRQByLmJm7JtJMcqaFx4+LOib04o+dBu
+ y1wHAWlbkuM01v1GBXtqm0dVywhq06GceWBaQNrbvMoAqgcj9d0aUc0JgBK4kAE=
+X-Gm-Gg: ASbGnctKGx+rVDNeTFagVI+aHJ4R7DWpSq4FwUKqOfMD2McirDHXL6g5ORoU5Z/yYmu
+ FsaRWfpFXgGCiH9XsgCJ/+cXMbHaABiTHxsQC6TkVEOfymkCS6Jx7fNrzX263rko4EuK8XjK+tG
+ g56d/7H2n3tefg7hBoU2PmR4QXY0WnjdkolAhbcqd2Z42gayHDtD5F01WvMnE8ezGf02TFYh2wQ
+ bbpuBEvlTwoaONuYj55CGuwJEB1xIv2149Y6SsdYdWHJfrDJFDQT9iUPXSG9QJSd6krFg==
+X-Google-Smtp-Source: AGHT+IESntLJN3oIrlq7eQOldwTnk/Hn4ZTOTBIDsaLGEhjBu0QnGP8HC5Sa9USOFjHgVOyYtVSf2w==
+X-Received: by 2002:a05:6512:23a2:b0:539:e58a:9704 with SMTP id
+ 2adb3069b0e04-53dd3993988mr980728e87.33.1732271420305; 
+ Fri, 22 Nov 2024 02:30:20 -0800 (PST)
+Received: from [192.168.69.146] ([176.187.211.33])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-433cde16f11sm22618055e9.23.2024.11.22.02.30.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Nov 2024 02:30:19 -0800 (PST)
+Message-ID: <fff34325-203e-4138-a795-27a45b20e6ab@linaro.org>
+Date: Fri, 22 Nov 2024 11:30:18 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z0BaQ0ahUn4ORhPS@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] rust: add bindings for interrupt sources
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, junjie.mao@hotmail.com, zhao1.liu@intel.com,
+ qemu-rust@nongnu.org
+References: <20241122074756.282142-1-pbonzini@redhat.com>
+ <20241122074756.282142-3-pbonzini@redhat.com>
+ <70f44731-6879-4adf-a71b-a781af48fe99@linaro.org>
+ <CABgObfbOj8FCvjXOM_AF8=jyFMi1bs-gfsRu+_GH3802hLhM1A@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfbOj8FCvjXOM_AF8=jyFMi1bs-gfsRu+_GH3802hLhM1A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,101 +99,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 22, 2024 at 11:17:39AM +0100, Kevin Wolf wrote:
-> Am 20.11.2024 um 14:19 hat Peter Maydell geschrieben:
-> > On Wed, 20 Nov 2024 at 10:52, Kevin Wolf <kwolf@redhat.com> wrote:
-> > >
-> > > The following changes since commit e6459afb1ff4d86b361b14f4a2fc43f0d2b4d679:
-> > >
-> > >   Merge tag 'pull-target-arm-20241119' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-11-19 14:23:34 +0000)
-> > >
-> > > are available in the Git repository at:
-> > >
-> > >   https://repo.or.cz/qemu/kevin.git tags/for-upstream
-> > >
-> > > for you to fetch changes up to 83987bf722b6b692bc745b47901be76a1c97140b:
-> > >
-> > >   vl: use qmp_device_add() in qemu_create_cli_devices() (2024-11-20 11:47:49 +0100)
-> > >
-> > > ----------------------------------------------------------------
-> > > Block layer patches
-> > >
-> > > - Fix qmp_device_add() to not throw non-scalar options away (fixes
-> > >   iothread-vq-mapping being silently ignored in device_add)
-> > > - Fix qdev property crash with integer PCI addresses and JSON -device
-> > > - iotests: Fix mypy failure
-> > > - parallels: Avoid potential integer overflow
-> > > - Fix crash in migration_is_running()
-> > 
-> > Hi; the hotplug_blk.py:HotPlug.test avocado seems to be failing:
-> > 
-> > https://gitlab.com/qemu-project/qemu/-/jobs/8423313170
-> > https://gitlab.com/qemu-project/qemu/-/jobs/8423313162
-> > 
-> > [stdlog] 2024-11-20 12:49:35,669 avocado.test test L0740 ERROR| FAIL
-> > 1-tests/avocado/hotplug_blk.py:HotPlug.test -> AssertionError: 1 != 0
-> > : Guest command failed: test -e /sys/block/vda
-> > 
-> > https://qemu-project.gitlab.io/-/qemu/-/jobs/8423313162/artifacts/build/tests/results/latest/test-results/09-tests_avocado_hotplug_blk.py_HotPlug.test/debug.log
-> > 
-> > Looks like the test called device_add, it succeeded, but
-> > it didn't see the /sys/block/vda node appear in the guest.
-> > 
-> > (The test logic of "try the command, if it fails sleep for 1
-> > second then try a second time and if that fails call it a
-> > test error" doesn't seem super robust in the face of slow
-> > CI runners, but OTOH it failed the same way on both jobs,
-> > so I don't think that is the culprit here.)
+On 22/11/24 09:32, Paolo Bonzini wrote:
+>>> +/// Interrupt sources are used by devices to pass changes to a boolean value to
+>>> +/// other devices (typically interrupt or GPIO controllers).  QEMU interrupt
+>>> +/// sources are always active-high.
+>>
+>> So 'always active-high' = true below? (Wondering about pulsation, if the
+>> true -> false transition is always correct).
 > 
-> This looks like a bug in the test case that was previously cancelled out
-> by a QEMU bug. :-/
+> Yeah, I mean that raise uses true (or 1 :)) and lower uses false.
+> an example?
+
+I was thinking of an active-low line where you want to pulse 1 -> 0.
+Just chiming in, not to worry about.
+
 > 
-> {
->   "execute": "device_add",
->   "arguments": {
->     "driver": "virtio-blk-pci",
->     "drive": "disk",
->     "id": "virtio-disk0",
->     "bus": "pci.1",
->     "addr": 1
->   },
->   "id": "__qmp#00002"
-> }
+>> Is this deliberate to restrict the Rust binding to boolean? (Maybe you
+>> envision a VectoredInterruptSource implementation for that).
 > 
-> What it actually meant is "addr": "1". It's an unfortunate interface,
-> but string "1" and integer 1 mean different things for PCI address
-> properties... Going through QemuOpts turned everything into strings, so
-> that masked the bug in the test case.
+> No, I simply wasn't aware of that.  I'll adjust; do you have
+> an example?
+
+I am having hard time to find one, in particular because I
+removed one in c264c074d8 ("hw/intc: Remove TYPE_ETRAX_FS_PIC device"):
+
+-static void pic_update(struct etrax_pic *fs)
+-{
+-    uint32_t vector = 0;
+-    int i;
+-
+-    fs->regs[R_R_MASKED_VECT] = fs->regs[R_R_VECT] & fs->regs[R_RW_MASK];
+-
+-    /* The ETRAX interrupt controller signals interrupts to the core
+-       through an interrupt request wire and an irq vector bus. If
+-       multiple interrupts are simultaneously active it chooses vector
+-       0x30 and lets the sw choose the priorities.  */
+-    if (fs->regs[R_R_MASKED_VECT]) {
+-        uint32_t mv = fs->regs[R_R_MASKED_VECT];
+-        for (i = 0; i < 31; i++) {
+-            if (mv & 1) {
+-                vector = 0x31 + i;
+-                /* Check for multiple interrupts.  */
+-                if (mv > 1)
+-                    vector = 0x30;
+-                break;
+-            }
+-            mv >>= 1;
+-        }
+-    }
+-
+-    qemu_set_irq(fs->parent_irq, vector);
+-}
+
+See Peter's comment in 
+https://lore.kernel.org/qemu-devel/CAFEAcA9cObnb11cSS_StbSHdP0aB6sDeqSHfjb3-qRBfy7K9Kw@mail.gmail.com/
+
+>>> +/// Interrupt sources can only be triggered under the Big QEMU Lock; they are
+>>> +/// neither `Send` nor `Sync`.
 > 
-> Should I just fix the test case and move on, or are we concerned about
-> other users having a similar bug and want to move the change to 10.0,
-> keeping device_add with iothread-vq-mapping broken in 9.2?
+> Oops, this is incorrect.  BqlCell *is* Send/Sync, but checks the
+> BQL state at run-time.
 > 
-> As far as I can tell, libvirt always uses the string form, so everything
-> using libvirt should be fine either way. Peter (Krempa), can you
-> confirm?
-
-Yes, we're fine.
-
-The code is here:
-
-  https://gitlab.com/libvirt/libvirt/-/blob/master/src/qemu/qemu_command.c#L572
-
-The "s:addr" arg indicates we've reqyested "string" formatting for
-the arg, which we've always done, because we need the ability to
-pass the "slot:function" pair which can't be represented in int
-format.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> Paolo
+> 
 
 
