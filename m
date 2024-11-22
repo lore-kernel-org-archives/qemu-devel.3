@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD4E3E69173
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 16:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D15E4E69175
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 16:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEWOi-0004KB-5b; Fri, 22 Nov 2024 11:20:44 -0500
+	id 1tEWQ5-0005dI-Pw; Fri, 22 Nov 2024 11:22:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tEWOW-0004BX-Gr
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:20:33 -0500
+ id 1tEWQ4-0005cs-A5
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:22:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tEWOU-0003fZ-VN
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:20:32 -0500
+ id 1tEWQ1-0003m7-WA
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:22:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732292430;
+ s=mimecast20190719; t=1732292525;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aeBsoywq5pgh/XUprwXSGU0TjSDIfHvJFYAFD/VkyJs=;
- b=JlT4n2a8GPa9XqjJT7M4rtXX74FzU0tuSrJbeTGdnjLf2atzsfyUr5rgwQixUAdsJbwTSF
- C2+PR9GAdVHJDRtfTeMpxa4VQnibhsuf7vrz5wfF4T5qXF1ndZUNuahPdk/WoQqS+b1zqA
- DGxeldP4ANGsFyq/f2bUavtGjh83mUw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NyV4m9dJITsICN0qNNwyYDHcaqurrOEnQKifJ5kQsB0=;
+ b=T2DD5iPu2WXCibw8KDvBmIADHNaeT0RqZZpGDb/t+TThZWm/YMaAK+5cagsAwmlS/xK7NS
+ Cq0od5R+yK0XGWSAXNjs6LPao+77g570YRkeGpS9thsw6X+RWSUKVBHaMOaCkP0/Gngddm
+ OoYVZMDRFC8ATAVsHaD0g/OHjf9hj2c=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-jaE3XKheM4Ku-IZXB2LeAw-1; Fri, 22 Nov 2024 11:20:27 -0500
-X-MC-Unique: jaE3XKheM4Ku-IZXB2LeAw-1
-X-Mimecast-MFC-AGG-ID: jaE3XKheM4Ku-IZXB2LeAw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4315dd8fe7fso20074985e9.3
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 08:20:27 -0800 (PST)
+ us-mta-395-g7pXYZ1aP7abEZQuUjUo9Q-1; Fri, 22 Nov 2024 11:22:01 -0500
+X-MC-Unique: g7pXYZ1aP7abEZQuUjUo9Q-1
+X-Mimecast-MFC-AGG-ID: g7pXYZ1aP7abEZQuUjUo9Q
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4316655b2f1so16181345e9.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 08:22:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732292426; x=1732897226;
+ d=1e100.net; s=20230601; t=1732292520; x=1732897320;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aeBsoywq5pgh/XUprwXSGU0TjSDIfHvJFYAFD/VkyJs=;
- b=jZNf9YgRuKpM7wt4iIGP7gqLH3DupAUUPI0J5cKkkmm+GW6a6RVO/5mKH9V5o0oR6v
- yhBs8vpWM/2ua3p0ykIMGjE5HAoeH/P+pfIt4eN4fC9IWOgYjZu9GSfyyBc/5cBXMsYn
- AsqfHrVxZebgt1DW2fX/p+kuc4BktZ3+P1XvAv6YVZcQWTsr+GakwLlELHxx06AWJHNe
- 2b5Kty/w8dPasZXaseI0ti6Ptf+LSF7beDfQrcHLhR3lEM00b+M/swsJJsCcfWjULOTJ
- IOs5yM6X+wkykY0aoqsT/oGmlyKo67pQ+4eU0leLW3J1fJyhBoArH/Ov0JDcBSaQxzMO
- D4tw==
+ bh=NyV4m9dJITsICN0qNNwyYDHcaqurrOEnQKifJ5kQsB0=;
+ b=Y/57iRpIZrZUTuYgK2oXXIZHDChuIxjciGkZmstLneIBN15joiKlTelAiFnSbiUOeE
+ hkjr05rG3T8Hk8isE6wwY2VdAiKMrormj4XDvPgrQMW+j/kdWZDMVPPhBBu/cLD2OGIX
+ c9eCj813yGZgjuFAFWLvzVGMzmGpIsipxck8cAdyzhTVxAvKa2CvPin+cQxNXmJqivoz
+ d+O6eEShAqM9Ew5vmQXyNFhHrL9Mz1QfMVP7ivoUQPXtvf4xPbGJZ99ef7X/qVTtnmX0
+ cv6DEUnC4GBeoIEd3prYXSlyfiXIkfoJGX5xeFVXnLo5gLgr31BhLgY9Iwz21BSQHBlB
+ GuXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXaxSk97696zBb/9aO9MbVMxRya2fxkFqqE016nPU1++Xlsy1Im7Pkgi0QSK4bAgpKbcIrcCgJvFf+m@nongnu.org
-X-Gm-Message-State: AOJu0YyDNfRMLlIzp/osD1TQqyx5X/Q6gB7OBpWllAoI7paEwhobn4pO
- atJzaVknaRgZGD3BaQZoJ5/ujTigEmdEVd1QP7/UD68ps3hCTHAEJuSMPTAUP7eZ/X5ka36/JI3
- lH0L6oaPzedZcAlWCTOIQifc3di1/NcwxYKdslcBHYotwnrPUVASX
-X-Gm-Gg: ASbGnctrrDV1NPSqoYZZNZ8sozih4wXj52+hnD+uN7ieBQXCYBodDUH6eVLM9C9H02u
- 725ZGjrQQXEeWeYqJiMzHgWCIvARytzcTLG8YUCwYJj92Zi7VcDf9uwukeTLzX5yQXTfQ2fFRw3
- RoibwKGBef8aOt1SZ7MeLZ2DGD+l1Flxb6AgXhrc0/wfNM4Zk3mOq1JvozxYWawrwTAf5Co3rKP
- aE5UfGod5r+rIf7TAk1yPi9xnDZBMn7T0EtN73pP5M1EvWunZRGf4D5p3kkGcqx9Kv7d0KiwRPt
- o3H/5RxXNo2xzFzpynVdmQ==
-X-Received: by 2002:a05:600c:4fcc:b0:42c:ba83:3f00 with SMTP id
- 5b1f17b1804b1-433ce410337mr29781475e9.1.1732292426642; 
- Fri, 22 Nov 2024 08:20:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFfnCVCtSLDvYz49C8CbppJHHhiynRHuZUEWU9I8Ig8QVTpU3P25aNt428T9B2r9GX9wU/yTw==
-X-Received: by 2002:a05:600c:4fcc:b0:42c:ba83:3f00 with SMTP id
- 5b1f17b1804b1-433ce410337mr29781235e9.1.1732292426254; 
- Fri, 22 Nov 2024 08:20:26 -0800 (PST)
+ AJvYcCXbaWVh2xBA8LrFmWqiegFa7M+JhpV/X4tdhrgZvg2kelkk44pysBrNnv/XLQ7Jq3qoVofGXHb29dl8@nongnu.org
+X-Gm-Message-State: AOJu0Ywplzo1lDDKMqsF9oiJ6b9TmSsz2Dy3MZoF54wNdiMQpzhIX5n+
+ R0wnaDkeGwvu4QGoDaqosnxvgK89O1PreYIcifT2CfbR3NV8toDgZ/vvHo7Z8AF9vSXrqFrsz1e
+ n9qXfotA+08e2feOVOxA9oUqU7bVKAw4xPjazcqUqGfm7u8MUbs/q
+X-Gm-Gg: ASbGnct83LB6W3b0U+u1zcJVY7GoCd7P/VvDptd++C6WpLGNz0l25l6H8vufIjR2eRF
+ 3yozciEtj8TS+MAFXer+i/Oq5Tw6o13MMzEDAlb0n+yOAbHcxkWebmOLyclgXrpOhQj4R5rg5Yt
+ 6J7DkMcq9K/56eU926HxWeEMOf6rNAJkcIdmSZ9e5nax891M1T4RV7OB5QjbrRMsri75OJxj5wT
+ TtFVbtMSBER5yXFY+Dae4oIObp3oBBtY/taw/i7iNMcnWsuqGxevYgv42A9g+dBlA8d4X17SRk+
+ 6B+qCrX5IKxQUHbUb+YtvQ==
+X-Received: by 2002:a05:600c:3b19:b0:42c:bae0:f05b with SMTP id
+ 5b1f17b1804b1-433ce413c8emr26604705e9.1.1732292520043; 
+ Fri, 22 Nov 2024 08:22:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFEkstkJfSxr8aGDMBPVQGktPpGXJ+GanjyrPf4YG9VrYHHxatCFCWHJCelP1CWqHq06xVoyw==
+X-Received: by 2002:a05:600c:3b19:b0:42c:bae0:f05b with SMTP id
+ 5b1f17b1804b1-433ce413c8emr26604585e9.1.1732292519763; 
+ Fri, 22 Nov 2024 08:21:59 -0800 (PST)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b4643217sm95331535e9.44.2024.11.22.08.20.23
+ 5b1f17b1804b1-433b45d40basm100217045e9.21.2024.11.22.08.21.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Nov 2024 08:20:24 -0800 (PST)
-Date: Fri, 22 Nov 2024 17:20:22 +0100
+ Fri, 22 Nov 2024 08:21:58 -0800 (PST)
+Date: Fri, 22 Nov 2024 17:21:57 +0100
 From: Igor Mammedov <imammedo@redhat.com>
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
  <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
  <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
  linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 04/15] acpi/ghes: better handle source_id and
- notification
-Message-ID: <20241122172022.64fddb52@imammedo.users.ipa.redhat.com>
-In-Reply-To: <0ad66ed39b357d5fbf2e4a6d1fa47d310796cc1c.1732266152.git.mchehab+huawei@kernel.org>
+Subject: Re: [PATCH v4 10/15] acpi/ghes: don't crash QEMU if ghes GED is not
+ found
+Message-ID: <20241122172157.10012778@imammedo.users.ipa.redhat.com>
+In-Reply-To: <d72d9cf99ad0169a39cd3f8028ee7c2e112edf06.1732266152.git.mchehab+huawei@kernel.org>
 References: <cover.1732266152.git.mchehab+huawei@kernel.org>
- <0ad66ed39b357d5fbf2e4a6d1fa47d310796cc1c.1732266152.git.mchehab+huawei@kernel.org>
+ <d72d9cf99ad0169a39cd3f8028ee7c2e112edf06.1732266152.git.mchehab+huawei@kernel.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -115,96 +115,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Nov 2024 10:11:21 +0100
+On Fri, 22 Nov 2024 10:11:27 +0100
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> GHES has two fields that are stored on HEST error source
-> blocks associated with notifications:
+> Make error handling within ghes_record_cper_errors() consistent,
+> i.e. instead abort just print a error in case ghes GED is not found.
 > 
-> - notification type, which is a number defined at the ACPI spec
->   containing several arch-specific synchronous and assynchronous
->   types;
-> - source id, which is a HW/FW defined number, used to distinguish
->   between different implemented sources.
-> 
-> There could be several sources with the same notification type,
-> which is dependent of the way each architecture maps notifications.
-> 
-> Right now, build_ghes_v2() hardcodes a 1:1 mapping between such
-> fields. Move it to two independent parameters, allowing the
-> caller function to fill both.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-> 
 > ---
-> 
-> Chenges from v10:
-> 
-> - Some changes got moved to the previous patch.
-> 
-> Changes from v8:
-> - Non-rename/cleanup changes merged altogether;
-> - source ID is now more generic, defined per guest target.
->   That should make easier to add support for 86.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  hw/acpi/ghes.c | 23 +++++++++--------------
->  1 file changed, 9 insertions(+), 14 deletions(-)
+>  hw/acpi/ghes.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
 > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 4a6c45bcb4be..29cd7e4d8171 100644
+> index ad7d895def2a..25587f5fc9ab 100644
 > --- a/hw/acpi/ghes.c
 > +++ b/hw/acpi/ghes.c
-> @@ -284,9 +284,13 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
->  }
+> @@ -371,7 +371,10 @@ void ghes_record_cper_errors(const void *cper, size_t len,
 >  
->  /* Build Generic Hardware Error Source version 2 (GHESv2) */
-> -static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-> +static void build_ghes_v2(GArray *table_data,
-> +                          BIOSLinker *linker,
-> +                          enum AcpiGhesNotifyType notify,
-> +                          uint16_t source_id)
->  {
->      uint64_t address_offset;
-> +
->      /*
->       * Type:
->       * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-> @@ -316,18 +320,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
->          address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
->          ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
+>      acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
+>                                                         NULL));
+> -    g_assert(acpi_ged_state);
+> +    if (!acpi_ged_state) {
+> +        error_setg(errp, "Can't find ACPI_GED object");
+> +        return;
+> +    }
+>      ags = &acpi_ged_state->ghes_state;
 >  
-> -    switch (source_id) {
-> -    case ACPI_HEST_SRC_ID_SEA:
-> -        /*
-> -         * Notification Structure
-> -         * Now only enable ARMv8 SEA notification type
-> -         */
-> -        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
-> -        break;
-> -    default:
-> -        error_report("Not support this error source");
-> -        abort();
-> -    }
-> +    /* Notification Structure */
-> +    build_ghes_hw_error_notification(table_data, notify);
->  
->      /* Error Status Block Length */
->      build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
-> @@ -369,7 +363,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
->  
->      /* Error Source Count */
->      build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
-> -    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-> +    build_ghes_v2(table_data, linker,
-> +                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
->  
->      acpi_table_end(linker, &table);
->  }
+>      start_addr = le64_to_cpu(ags->ghes_addr_le);
 
 
