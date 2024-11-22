@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E0B3D75E2A
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 11:28:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A1D6D75E30
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 11:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tERpP-0002zf-Hq; Fri, 22 Nov 2024 06:27:59 -0500
+	id 1tESI0-0001kh-5B; Fri, 22 Nov 2024 06:57:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tERpL-0002yW-LM
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 06:27:56 -0500
-Received: from 8.mo548.mail-out.ovh.net ([46.105.45.231])
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1tESHy-0001kL-M7; Fri, 22 Nov 2024 06:57:30 -0500
+Received: from mta-03.yadro.com ([89.207.88.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tERpH-0007kC-S5
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 06:27:54 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.139.7])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4XvtB92WtGzyWR;
- Fri, 22 Nov 2024 11:27:45 +0000 (UTC)
-Received: from kaod.org (37.59.142.100) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 22 Nov
- 2024 12:27:44 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-100R00396a4dc3c-5bfc-4d65-bfe8-d4b9a69085dc,
- 779FBE69B6F0E2356A26C58B36A0EABAAA1670E4) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Fri, 22 Nov 2024 12:27:43 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-CC: Wafer <Wafer@jaguarmicro.com>, <mst@redhat.com>, <jasowang@redhat.com>,
- <eperezma@redhat.com>, <qemu-devel@nongnu.org>, <angus.chen@jaguarmicro.com>
-Subject: Re: [PATCH] hw/virtio: Fix getting the correct ring number on loading
-Message-ID: <20241122122743.0229a672@bahia>
-In-Reply-To: <52aebd45-da0c-41a9-ab2f-acee8da5d7e4@linaro.org>
-References: <20241122020002.564-1-Wafer@jaguarmicro.com>
- <52aebd45-da0c-41a9-ab2f-acee8da5d7e4@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1tESHw-0006F2-A4; Fri, 22 Nov 2024 06:57:30 -0500
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com 4B972E0008
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1732275816;
+ bh=ioAQwrSmmSALrKzDacXq0pcwNhsS9+sPLTjRqSNwCTs=;
+ h=Content-Type:MIME-Version:Subject:From:Date:Message-ID:To:From;
+ b=NO4O2us2vDGerj9XvE2EGLeJwNHMEEsbgYxaUBYPLeyhlAyjHCF8zhjm9kmA1MKAq
+ /BM0sB7hemaoMKZ950tPz3xptcgr94BC95SFd6geaOMRdY/SEVoKdvNZ9Wn3LkKDK6
+ RHdxA6T7TjXA1f44SCPJF/cdxRV+XWBtRPIU7+kag9nga4bQdAyZHzhyq8TkEtsvBQ
+ hg4vZ5XG62sz24blpe8z89l5qZ42yN9yZRAGwte7rpf22oeUSSoKI95Z3MOo4My+Qd
+ qTRKHsb3hkS5Ee3EDeh2bspqvGAS0/VnifDUrNXXW0y92oFwBWs+HKhWQlztZizGsN
+ /AongbzISwanQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1732275816;
+ bh=ioAQwrSmmSALrKzDacXq0pcwNhsS9+sPLTjRqSNwCTs=;
+ h=Content-Type:MIME-Version:Subject:From:Date:Message-ID:To:From;
+ b=j7IRBzvtcAVa0+1Tq3sC3yWFevr1P+f/Tq8cdW5aMYWq1WHYIr5hxbK8cW+gcHbLH
+ WXIQvAHDc/tbuvoMIYKikZMOSOELt5Nzca0T0rrY4ZBrWf9PzcLYpwAJnAWi6HaABq
+ 5xgiOcGfyRAGVjfqQrg66A2ax0O282J+Yt8gM94gZnaRdD0toc0aVq7DrbX7SuidOE
+ VRHlkgAj0aGIP0EqJb5DrDYEpFWcKGfRQ8D1OJcDOJZqPH0LwlneQIb+h0VVZFtdc6
+ G53pqViIUWq0BaPN2/xQ1a2PBF6OSsujMsouvEwrR09BauOFE3I3odPVVvn6GIBX3h
+ z+FMXQ8UPz6Mw==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
+Subject: Re: [PATCH RFC 06/10] target/riscv: Define PMU event related
+ structures
+From: Aleksei Filippov <alexei.filippov@syntacore.com>
+In-Reply-To: <CAHBxVyGU1nbY5HC7dk4fhWNEJP8EPP-eNxhNU992usQi7Cim7w@mail.gmail.com>
+Date: Fri, 22 Nov 2024 14:43:24 +0300
+CC: Aleksei Filippov <alexei.filippov@syntacore.com>, <qemu-riscv@nongnu.org>, 
+ <qemu-devel@nongnu.org>, <palmer@dabbelt.com>, <liwei1518@gmail.com>,
+ <zhiwei_liu@linux.alibaba.com>, <bin.meng@windriver.com>,
+ <dbarboza@ventanamicro.com>, <alistair.francis@wdc.com>
 Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [37.59.142.100]
-X-ClientProxiedBy: DAG2EX1.mxp5.local (172.16.2.11) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 5f74a200-13a7-48c4-af55-10023659f54b
-X-Ovh-Tracer-Id: 7687926039359166825
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrfeelgddtgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtqhertdertdejnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeeuueeijedtleeluedthfetjeffieetffeuvefffeeftedvieefueejgfdugeetueenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddruddttddpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepjedprhgtphhtthhopehphhhilhhmugeslhhinhgrrhhordhorhhgpdhrtghpthhtohephggrfhgvrhesjhgrghhurghrmhhitghrohdrtghomhdprhgtphhtthhopehmshhtsehrvgguhhgrthdrtghomhdprhgtphhtthhopehjrghsohifrghnghesrhgvughhrghtrdgtohhmpdhrtghpthhtohepvghpvghrvgiimhgrsehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheprghnghhushdrtghhvghnsehjrghguh
- grrhhmihgtrhhordgtohhmpdfovfetjfhoshhtpehmohehgeekmgdpmhhouggvpehsmhhtphhouhht
-DKIM-Signature: a=rsa-sha256; bh=bqNu3gXH1snuhIDOGSJZIX+L8pYZP8KMp3+kHU6Zg7g=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1732274866; v=1;
- b=o2UJJ0WWwjY9323o6uQNSjgzzkdVT7C+Dlq+RzzWQZxx5fON68zMrSz5bADYDd8TmowdQuc0
- aATQAAbGk34klfCqj8vN5OUs43OeaT8j8bZDxAtrEShaRLi4Md5/xHwlJYSJwAshLBhDc4ce6CE
- JgdNi2WJlfVTsQdU/IJHny1tUczER/WLyNR6cKN9qT7MEXhv+wv3da/oOlHAXpMci3Uv9g1FTUB
- e899w1qZP318NZ8lVT7qFA/Yd6qd3je+TOvyPjEF4K9jSEV/chAFdG8a0sn7Daw3uK3Fpv9mloS
- bKroK0bUbUen47EK3yFYD6i48mjguZepRQeSQzP9+2uqA==
-Received-SPF: pass client-ip=46.105.45.231; envelope-from=groug@kaod.org;
- helo=8.mo548.mail-out.ovh.net
+Message-ID: <DBECF034-EC77-4165-A571-902B86C81EE6@syntacore.com>
+References: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
+ <20241009-pmu_event_machine-v1-6-dcbd7a60e3ba@rivosinc.com>
+ <fd89dafa-279d-436c-9569-f2fdc289bac9@yadro.com>
+ <CAHBxVyE2C3sRJNbLOwhOZCnXAUTsEdh-mCewVAEJDDAURL10ug@mail.gmail.com>
+ <3B504AA0-06F9-4316-9B10-ED46B1B271A4@syntacore.com>
+ <CAHBxVyER0Lxp0uwed7ANW6d6pD1gvSVQ8b245scd+tm7HpT9ag@mail.gmail.com>
+ <0214DDE7-28F3-48C1-96ED-E700764D95D3@syntacore.com>
+ <CAHBxVyGU1nbY5HC7dk4fhWNEJP8EPP-eNxhNU992usQi7Cim7w@mail.gmail.com>
+To: Atish Kumar Patra <atishp@rivosinc.com>
+X-Mailer: Apple Mail (2.3774.500.171.1.1)
+X-ClientProxiedBy: T-EXCH-09.corp.yadro.com (172.17.11.59) To
+ T-EXCH-12.corp.yadro.com (172.17.11.143)
+Received-SPF: permerror client-ip=89.207.88.253;
+ envelope-from=alexei.filippov@syntacore.com; helo=mta-03.yadro.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,84 +88,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Nov 2024 08:01:34 +0100
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> Hi Wafer,
+
+> On 21 Nov 2024, at 22:54, Atish Kumar Patra <atishp@rivosinc.com> =
+wrote:
 >=20
-> On 22/11/24 03:00, Wafer wrote:
-> > From: Wafer Xie <wafer@jaguarmicro.com>
-> >=20
-> > The virtio-1.2 specification writes:
-> >=20
-> > 2.7.6 The Virtqueue Available Ring:
-> > "idx field indicates where the driver would put the next descriptor ent=
-ry
-> > in the ring (modulo the queue size). This starts at 0, and increases"
+> On Wed, Nov 20, 2024 at 6:25=E2=80=AFAM Aleksei Filippov
+> <alexei.filippov@syntacore.com> wrote:
+>>=20
+>>=20
+>>=20
+>>> On 22 Oct 2024, at 15:58, Atish Kumar Patra <atishp@rivosinc.com> =
+wrote:
+>>>=20
+>>> On Mon, Oct 21, 2024 at 6:45=E2=80=AFAM Aleksei Filippov
+>>> <alexei.filippov@syntacore.com> wrote:
+>>>>=20
+>>>>=20
+>>>>=20
+>>>>> On 11 Oct 2024, at 23:45, Atish Kumar Patra <atishp@rivosinc.com> =
+wrote:
+>>>>>=20
+>>>>> On Thu, Oct 10, 2024 at 5:44=E2=80=AFAM Alexei Filippov
+>>>>> <alexei.filippov@yadro.com> wrote:
+>>>>>>=20
+>>>>>>=20
+>>>>>>=20
+>>>>>> On 10.10.2024 02:09, Atish Patra wrote:
+>>>>>>> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+>>>>>>> ---
+>>>>>>> target/riscv/cpu.h | 25 +++++++++++++++++++++++++
+>>>>>>> 1 file changed, 25 insertions(+)
+>>>>>>>=20
+>>>>>>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>>>>>>> index 2ac391a7cf74..53426710f73e 100644
+>>>>>>> --- a/target/riscv/cpu.h
+>>>>>>> +++ b/target/riscv/cpu.h
+>>>>>>> @@ -189,6 +189,28 @@ typedef struct PMUFixedCtrState {
+>>>>>>>      uint64_t counter_virt_prev[2];
+>>>>>>> } PMUFixedCtrState;
+>>>>>>>=20
+>>>>>>> +typedef uint64_t (*PMU_EVENT_CYCLE_FUNC)(RISCVCPU *);
+>>>>>>> +typedef uint64_t (*PMU_EVENT_INSTRET_FUNC)(RISCVCPU *);
+>>>>>>> +typedef uint64_t (*PMU_EVENT_TLB_FUNC)(RISCVCPU *, =
+MMUAccessType access_type);
+>>>>>>> +
+>>>>>>> +typedef struct PMUEventInfo {
+>>>>>>> +    /* Event ID (BIT [0:55] valid) */
+>>>>>>> +    uint64_t event_id;
+>>>>>>> +    /* Supported hpmcounters for this event */
+>>>>>>> +    uint32_t counter_mask;
+>>>>>>> +    /* Bitmask of valid event bits */
+>>>>>>> +    uint64_t event_mask;
+>>>>>>> +} PMUEventInfo;
+>>>>>>> +
+>>>>>>> +typedef struct PMUEventFunc {
+>>>>>>> +    /* Get the ID of the event that can monitor cycles */
+>>>>>>> +    PMU_EVENT_CYCLE_FUNC get_cycle_id;
+>>>>>>> +    /* Get the ID of the event that can monitor cycles */
+>>>>>>> +    PMU_EVENT_INSTRET_FUNC get_intstret_id;
+>>>>>>> +    /* Get the ID of the event that can monitor TLB events*/
+>>>>>>> +    PMU_EVENT_TLB_FUNC get_tlb_access_id;
+>>>>>> Ok, this is kinda interesting decision, but it's not scalable. =
+AFAIU
+>>>>>=20
+>>>>> Yes it is not scalable if there is a need to scale as mentioned =
+earlier.
+>>>>> Do you have any other events that can be emulated in Qemu ?
+>>>>>=20
+>>>>> Having said that, I am okay with single call back though but not =
+too sure
+>>>>> about read/write callback unless there is a use case to support =
+those.
+>>>>>=20
+>>>>>> none spec provide us full enum of existing events. So anytime =
+when
+>>>>>> somebody will try to implement their own pmu events they would =
+have to
+>>>>>> add additional callbacks, and this structure never will be fulled
+>>>>>> properly. And then we ended up with structure 1000+ callback with =
+only 5
+>>>>>> machines wich supports pmu events. I suggest my approach with =
+only
+>>>>>> read/write callbacks, where machine can decide by itself how to =
+handle
+>>>>>> any of machine specific events.
+>>>>>=20
+>>>>> Lot of these events are microarchitectural events which can't be
+>>>>> supported in Qemu.
+>>>>> I don't think it's a good idea at all to add dummy values for all =
+the
+>>>>> events defined in a platform
+>>>>> which is harder to debug for a user.
+>>>>=20
+>>>> Yes, you're right that the rest of the events are =
+microarchitectural and that they can't be properly simulated in QEMU at =
+the moment, but it seems to me that's not really the point here. The =
+point is how elastic this solution can be - that is, whether to do any =
+events or not and how exactly they should be counted should be decided =
+by the vendor of a particular machine, and not by the simulator in =
+general. Plus, I have a very real use case where it will come in handy - =
+debugging perf. Support the possibility of simulating events on QEMU =
+side will make the life of t perf folks much easier. I do not insist =
+specifically on my implementation of this solution, but I think that the =
+solution with the creation of a callback for each of the events will =
+significantly complicate the porting of the PMU for machine vendors.
+>>>>>=20
+>>>=20
+>>> As I mentioned in other threads, I am absolutely okay with single =
+call
+>>> backs. So Let's do that. However, I am not in favor of adding
+>>> microarchitectural events that we can't support in Qemu with
+>>> completely bogus data. Debugging perf in Qemu can be easily done =
+with
+>>> the current set of events supported. Those are not the most accurate
+>>> but it's a representation of what Qemu is running. Do you foresee =
+any
+>>> debugging issue if we don't support all the events a platform
+>>> advertises ?
+>> In general - there is only one potential problem. When perf would try =
+to get event by the wrong id. The main algorithm indeed could be tested =
+with limited  quantities of events. But this
 >=20
-> "modulo" ...
+> It won't get a wrong id as the Qemu platform won't support those.
+> Hence, you can not run perf for those events to begin with.
 >=20
-> >=20
-> > The idx will increase from 0 to 0xFFFF and repeat,
-> > So idx may be less than last_avail_idx.
-> >=20
-> > Fixes: 616a6552 (virtio: add endian-ambivalent support to VirtIODevice)
+>> gonna be a real pain for the testers which gonna deduce and remember =
+what particular event can/can=E2=80=99t be counted in QEMU and why does =
+he gets 0 there and not 0 here. Moreover,
 >=20
-> This commit is only about endianness...=20
-
-I totally agree with you Philippe (bonjour BTW). Commit 616a6552 simply
-moves pre-existing VQ check code around. Contributor should `git blame`
-deeper ;-)
-
-> Do you mean 1abeb5a65d
-> ("virtio: fix up VQ checks") or 258dc7c96b ("virtio: sanity-check
-> available index")?
+>> perf list will show which events are supported on a particular =
+platform. So user won't be confused. We
 >=20
-
-The code this patch is changing was originally introduced by the latter.
-
-> >=20
-> > Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
-> > ---
-> >   hw/virtio/virtio.c | 8 +++++++-
-> >   1 file changed, 7 insertions(+), 1 deletion(-)
-> >=20
-> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> > index a26f18908e..ae7d407113 100644
-> > --- a/hw/virtio/virtio.c
-> > +++ b/hw/virtio/virtio.c
-> > @@ -3362,7 +3362,13 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int=
- version_id)
-> >                   continue;
-> >               }
-> >  =20
-> > -            nheads =3D vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].las=
-t_avail_idx;
-> > +            if (vring_avail_idx(&vdev->vq[i]) >=3D vdev->vq[i].last_av=
-ail_idx) {
-> > +                nheads =3D vring_avail_idx(&vdev->vq[i]) -
-> > +                         vdev->vq[i].last_avail_idx;
-> > +            } else {
-> > +                nheads =3D UINT16_MAX - vdev->vq[i].last_avail_idx +
-> > +                         vring_avail_idx(&vdev->vq[i]) + 1;
-> > +            }
+>> we would allow events with even complete bogus data this would works =
+perfectly for CI stuff for the benchmark + perf ppl, and they wouldn=E2=80=
+=99t restrict their CI to that. I really do  not see
 >=20
-> ...           nheads %=3D UINT16_MAX; ?
+> IMO, it is more confusing to show bogus data rather than restricting
+> the number of events an user can run on Qemu platforms. Clearly, you
+> think otherwise. I think we can agree to disagree here. Let's
+> consolidate our patches to provide the infrastructure for the actual
+> events. The bogus event support can be a separate series(per vendor)
+> as that warrants a different discussion whether it is useful for users
+> or not.
 >=20
-
-Exactly and since everything is uint16_t there, we get that for free with
-the existing code base. IOW both arms of the if produce exactly the same
-result... I don't know the motivation behind this patch but it does not
-change anything.
-
-Cheers,
-
---
-Greg
-
-> >               /* Check it isn't doing strange things with descriptor nu=
-mbers. */
-> >               if (nheads > vdev->vq[i].vring.num) {
-> >                   virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
+> Sounds good ?
+Yeah, it=E2=80=99s even better to do it separately, agreed. Do you want =
+me to do
+ general part? Or we gonna split it in some way?
 >=20
+> any problem to let the vendor handle this situation. At least vendor
+> can decide by his own to count/not to count some types of event, this
+> gonna bring flexibility and the transparency of the solution and, in
+> general, if we=E2=80=99ll bring some rational reason why we can't add =
+such
+> events we can always forbid to do such thing.
+>>>=20
+>>>>>=20
+>>>>>>> +} PMUEventFunc;
+>>>>>>> +
+>>>>>>> struct CPUArchState {
+>>>>>>>  target_ulong gpr[32];
+>>>>>>>  target_ulong gprh[32]; /* 64 top bits of the 128-bit registers =
+*/
+>>>>>>> @@ -386,6 +408,9 @@ struct CPUArchState {
+>>>>>>>  target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
+>>>>>>>=20
+>>>>>>>  PMUFixedCtrState pmu_fixed_ctrs[2];
+>>>>>>> +    PMUEventInfo *pmu_events;
+>>>>>>> +    PMUEventFunc pmu_efuncs;
+>>>>>>> +    int num_pmu_events;
+>>>>>>>=20
+>>>>>>>  target_ulong sscratch;
+>>>>>>>  target_ulong mscratch;
+
+
 
