@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608E8E65D35
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 09:14:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 086BDE65D17
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 09:15:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEPiq-0002hd-LE; Fri, 22 Nov 2024 04:13:07 -0500
+	id 1tEPhv-0002FB-A1; Fri, 22 Nov 2024 04:12:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tEPhn-0002C3-3M; Fri, 22 Nov 2024 04:12:00 -0500
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ id 1tEPhi-00029u-VH; Fri, 22 Nov 2024 04:11:55 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tEPhg-0000tg-Ks; Fri, 22 Nov 2024 04:11:58 -0500
+ id 1tEPhg-0000tf-Bp; Fri, 22 Nov 2024 04:11:53 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 0235EA40313;
- Fri, 22 Nov 2024 09:09:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79965C4CED8;
+ by nyc.source.kernel.org (Postfix) with ESMTP id E1D58A402F9;
+ Fri, 22 Nov 2024 09:09:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74351C4AF09;
  Fri, 22 Nov 2024 09:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1732266708;
- bh=qKfL0lpeQe7vMNvWc+52krTVhwa9caxmXJXwYVTO5NQ=;
- h=From:To:Cc:Subject:Date:From;
- b=hicpxZG2RDz2cNDb4J8Z3NXf7HweFZSJdwR69DK3Zbi3z3X1hk3gWdKnildZXhahv
- xrmiaO8yWXA91QrwRv7SR3WeS25Ht++UZWOnS5/Ftz6n5IXW1CeNdzp1Isr56gE3ZR
- eGGOGHckhhXZqoXvX5G9Y2kjja2x407mgKAIEa+5OL3se04hUeCM4UiuroGvUZ1Ttj
- TaSrz2Y0oT+mB/mxvc3VrDrOjki9oVBZxtRnYwAtVdAITZW90qN9eYZe0JfyUjZ8Qg
- G8dxA36CZ5ZE6cZDNPCE4lqw8J+oU4nn5JHsW9nqzC0c7SzTGbg4fJxzswUMQthIDV
- kdUKHsEzMf6Mw==
+ bh=0AQUDLyqeERjbSqSRvCL78HkKAIvkN74meWRt+QvhBo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=cLd5FCWYYslwq3ct4I91L075lCQQTFwpn77DDvu64EA4rGJVXOea9VIZk9Ux+OIIR
+ PBlcQ2y7ZljDH2VIf3ddXwbUEHGYvbiIsyTJSzOtXTI8kYu9NEDLgUBTrmr7TQrMIr
+ T2K4TsZBL7kzLjQkUhIwRY2ne30NsRFn7k0RCgBWk/3g9m6Q6VT8KPjRkPl7IVJhY9
+ SribaSyqlgqjJFSysp9KjK4+5OydiXDKY4jGwqf89+V27b8m8psVZ9/dhBiZxrYaUB
+ M3PuRixzTIzR6sl/6HGWs2I8N73o5OSBelohgNfZ2XiXknt5zEXuExdQL7N69lqQrS
+ rx3FvdyQnFWMw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tEPhW-00000006l3V-3wPb; Fri, 22 Nov 2024 10:11:42 +0100
+ id 1tEPhX-00000006l40-0rlY; Fri, 22 Nov 2024 10:11:43 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v4 00/15] Prepare GHES driver to support error injection
-Date: Fri, 22 Nov 2024 10:11:17 +0100
-Message-ID: <cover.1732266152.git.mchehab+huawei@kernel.org>
+ Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v4 10/15] acpi/ghes: don't crash QEMU if ghes GED is not found
+Date: Fri, 22 Nov 2024 10:11:27 +0100
+Message-ID: <d72d9cf99ad0169a39cd3f8028ee7c2e112edf06.1732266152.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <cover.1732266152.git.mchehab+huawei@kernel.org>
+References: <cover.1732266152.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+Received-SPF: pass client-ip=147.75.193.91;
  envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
 X-Spam_bar: ----
 X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,78 +77,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During the development of a patch series meant to allow GHESv2 error injections,
-it was requested a change on how CPER offsets are calculated, by adding a new
-BIOS pointer and reworking the GHES logic. See:
+Make error handling within ghes_record_cper_errors() consistent,
+i.e. instead abort just print a error in case ghes GED is not found.
 
-https://lore.kernel.org/qemu-devel/cover.1726293808.git.mchehab+huawei@kernel.org/
-
-Such change ended being a big patch, so several intermediate steps are needed,
-together with several cleanups and renames.
-
-As agreed duing v10 review, I'll be splitting the big patch series into separate pull 
-requests, starting with the cleanup series. This is the first patch set, containing
-only such preparation patches.
-
-The next series will contain the shift to use offsets from the location of the
-HEST table, together with a migration logic to make it compatible with 9.1.
-
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
+ hw/acpi/ghes.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-v4:
-- merged a patch renaming the function which calculate offsets to:
-  get_hw_error_offsets(), to avoid the need of such change at the next
-  patch series;
-- removed a functional change at the logic which makes
-  the GHES record generation more generic;
-- a couple of trivial changes on patch descriptions and line break cleanups.
-
-v3:
-- improved some patch descriptions;
-- some patches got reordered to better reflect the changes;
-- patch v2 08/15: acpi/ghes: Prepare to support multiple sources on ghes
-  was split on two patches. The first one is in this cleanup series:
-      acpi/ghes: Change ghes fill logic to work with only one source
-  contains just the simplification logic. The actual preparation will
-  be moved to this series:
-     https://lore.kernel.org/qemu-devel/cover.1727782588.git.mchehab+huawei@kernel.org/
-
-v2: 
-- some indentation fixes;
-- some description improvements;
-- fixed a badly-solved merge conflict that ended renaming a parameter.
-
-
-
-
-Mauro Carvalho Chehab (15):
-  acpi/ghes: get rid of ACPI_HEST_SRC_ID_RESERVED
-  acpi/ghes: simplify acpi_ghes_record_errors() code
-  acpi/ghes: simplify the per-arch caller to build HEST table
-  acpi/ghes: better handle source_id and notification
-  acpi/ghes: Fix acpi_ghes_record_errors() argument
-  acpi/ghes: Remove a duplicated out of bounds check
-  acpi/ghes: Change the type for source_id
-  acpi/ghes: make the GHES record generation more generic
-  acpi/ghes: better name GHES memory error function
-  acpi/ghes: don't crash QEMU if ghes GED is not found
-  acpi/ghes: rename etc/hardware_error file macros
-  acpi/ghes: better name the offset of the hardware error firmware
-  acpi/ghes: move offset calculus to a separate function
-  acpi/ghes: Change ghes fill logic to work with only one source
-  docs: acpi_hest_ghes: fix documentation for CPER size
-
- docs/specs/acpi_hest_ghes.rst  |   6 +-
- hw/acpi/generic_event_device.c |   4 +-
- hw/acpi/ghes-stub.c            |   2 +-
- hw/acpi/ghes.c                 | 266 +++++++++++++++++++--------------
- hw/arm/virt-acpi-build.c       |   5 +-
- include/hw/acpi/ghes.h         |  16 +-
- target/arm/kvm.c               |   2 +-
- 7 files changed, 176 insertions(+), 125 deletions(-)
-
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index ad7d895def2a..25587f5fc9ab 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -371,7 +371,10 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+ 
+     acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
+                                                        NULL));
+-    g_assert(acpi_ged_state);
++    if (!acpi_ged_state) {
++        error_setg(errp, "Can't find ACPI_GED object");
++        return;
++    }
+     ags = &acpi_ged_state->ghes_state;
+ 
+     start_addr = le64_to_cpu(ags->ghes_addr_le);
 -- 
 2.47.0
-
 
 
