@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B80E69186
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 18:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0679E69185
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 18:12:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEY1f-0003bi-D2; Fri, 22 Nov 2024 13:05:03 -0500
+	id 1tEY7m-0006sn-7F; Fri, 22 Nov 2024 13:11:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEY1c-0003am-GP
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 13:05:00 -0500
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
+ id 1tEY7k-0006qv-UG
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 13:11:20 -0500
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEY1a-0001Fi-RZ
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 13:05:00 -0500
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-297078d8eaeso1563763fac.1
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 10:04:58 -0800 (PST)
+ id 1tEY7j-00024f-6w
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 13:11:20 -0500
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3e5f968230bso1199984b6e.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 10:11:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732298697; x=1732903497; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732299077; x=1732903877; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9osE1jozsxDIu0u8DqUFBG659cF6BEwupOzdrisrJBE=;
- b=BOEUhH7htJy9My3O8qmrwLAhHteSVlPVtIe5jFQbw7zhkA48f0JS+WdurxsshjNvNc
- oQRl0WsI6+F0KTE1rrRX4VTGUG6IzrVKQZ0ZbNtlsDRBiinHjeRVB+QUcVGCVqbL4SiH
- xFqrvyIBysGaPifHdvmq7Pw9z7/BfSXY6xoC+OPkB8dmtlxkR9puu7UVCj+m6XFr4+oi
- WdEBYOHIFT93ZGit/5m/LKDnU0jy/etrmBlbIFd4KdzAA4KbMCigCUcHQDOrkMVrpQw+
- 0iOQgWkVf7D5UZ3Scyac0QltWJeO2VGqCtQvH1GqSEyPxGzbltiJxtAOnkiYW3b1Q0n2
- iHEQ==
+ bh=ETZUX9Ryspj7j0fLoxoG2ElE8otyTmNQMLZNDXeylFg=;
+ b=gsWOtmEnBHShqpBgwsuZrqr79ogFfJsgPud86QexrcxMUzMD2i8ow6fnQQGK7v5goO
+ Av6B65wSifAosC2EQDT8gHYiSqdoojUqpD/Q/BgvKbX5N+JmC4nBWbRB1GmeYTWGvYSX
+ qRa3RcIBQiF6cTsiobmDek+/IS9c8m4pckDZgcKnFUFRhP8D5rWoP5q6G7L3AJk+pKV9
+ zJK3CiNE0jon+2HP0hRaVorqRDrHR4/i9ktAAXIGgLL1mSDJpYRVf4WoErKqmTJ/GYaB
+ 9F0tp/m38OAABgcnE2bL36uHSGqJEfFcv9NkY6b4OpE/HaS8HtLjzht+HqjNhw+K5ZE1
+ W5Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732298697; x=1732903497;
+ d=1e100.net; s=20230601; t=1732299077; x=1732903877;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9osE1jozsxDIu0u8DqUFBG659cF6BEwupOzdrisrJBE=;
- b=pf3eUDxHyArI91AhI/rsqycJlpEdvGrKdnNJ5BL5CwJUqHVp5hW0zs9X9AnhmMT+th
- KLOnbdLzO+kQpPj8Yt3FqgNrgQEddlYqezAKAurc5oKgSdCDdIzybFyVnwRfpVz73Hsk
- 3KdQrqDibW8UYIUlWzgbBoOC4qay6eaMAkTdZfKmBDR/jCP331D6fRWJBmpgqfk1+Dci
- 2DjlqVHTCfkr/mUwGw3YP4g3TbpEZkzKWRg4IL9qmgd9Edzo4e/GYxGsdg3A+u8lslbe
- TYS2LxzoOHqLamQKi/ILhVBV1FamktHSh0kOWkAMdKJfoTAYLJwHJO6Hi1dwe+caJSh0
- +tCA==
+ bh=ETZUX9Ryspj7j0fLoxoG2ElE8otyTmNQMLZNDXeylFg=;
+ b=VXHZuJpnn2CkechXaW7z1wvJRIBBrdmslozKmRuhf1CQc77XsnQyvPJwC2MTBiS/vc
+ QxpoQwIVLrJooeEjb82yMdATORkpYEXtbYk6oXiOuc4iFbl1rNISZBZdmKHXgBoQYPT4
+ baTCoiVvEYkCT6sfF0mLDm3Swf/b1lIbpjzrLfj7b3DhlJC4TXQqe8bL7CpT3jqv4pUt
+ vi330AOoeXxteKIvqFlcB3GWrb0vjGRFnGqT2uQC8vT+mGJpX8ufQcUwwZgsm0lya/sH
+ mPcU9tk430E/XwMpnQ4c7VbQoc5no8aIeneyh77h+6GdXF9/gsJ4VzsQ4Dpji70iENMI
+ Rz5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWpnFrS8saKiQeBgxDITkeSM6fbZWcGKjtnwmQAIK5XcpmQWZD3aG8aD3gw01gLb09zpvU8/vUTlnMe@nongnu.org
-X-Gm-Message-State: AOJu0Ywo/XyNLXgqPbfnOHCmMU4LOOV43xMVQDuVqf27+uqREQ6Vmk3D
- GL72AjniQ/HcjOwb7o21W9ikqZkXtwFXUZSP1d2oHoZndYQc3m2D37qnSwAneR6dFa1NVv3lp9I
- LpTg=
-X-Gm-Gg: ASbGncuS43EVVs3ZR4sdPSB0hbL7Ly6N3cHs/DIGv8+L0Menm8JhxnjfVSrQO4sMs16
- eLKvUuqpVQHIGevp20eV+3xYBXwo37iyiJGwBJnCbQ2k6GiYYuE+YLH22/JWcWkEjYnrAwSUkj1
- EpQo9flHKgVkwDS1CALRxxgHwFD/IZba+Ubp34t2UcOLGczgYpczo+7Ub/ol7vHWUvLbXUGCnLl
- xN5DFA9V7RouvYtvCsSNa31R2v+/tx7N+V9w4x/6D1Bc0HnVnLG7DzNP0R0K2Y5qoaCLvQ=
-X-Google-Smtp-Source: AGHT+IFtVyKfdQ0stXJmSKWycZsfkuBzq4sD+RIpavPAv0FLyG6/9M5ISSjQ+fczvzdSfJh6iw7oqQ==
-X-Received: by 2002:a05:6870:e0c8:b0:296:e289:138c with SMTP id
- 586e51a60fabf-29720ee4bc3mr4285074fac.30.1732298697311; 
- Fri, 22 Nov 2024 10:04:57 -0800 (PST)
+ AJvYcCWTewcjNAi8Fm4KpQ6/xwpltLM8WD33XWO+xHmkraUw9mDujJQhj2zSKtkpEHlX3XDZ0VHzNhL/DDRV@nongnu.org
+X-Gm-Message-State: AOJu0YxjSPJpVaKN+ERaQddYjeQKrjMZbiitNa5WhhkDEe+ZosHqnjqF
+ CnwtIj3yUu7c968fPcTD7SCaFYa2SDih7ECfJygbxNDfFM+6eIm++vzu9HEohLs=
+X-Gm-Gg: ASbGncvaO58aaUwW+qopynFJNT0X3DL6k7XtZP0ZnWtLd6fliGEseIzuQsWFC680sBv
+ KIY0p+ssVYCYrUnDArdmgB3p2IJZxw9rLksaP7olD5WD8YI+Rum8/f5dESTd4ZVVGZFpt1YACLE
+ mWR2zD9oJmfMe+iWqIwptGsPuYg4fuyAhjIHUU0fcG/7op990pNZ6INIlur7vPxxUxseCgbwYR1
+ alCfatmV/aCRNkPU370co+sGGQAp39V3w8hc+3MczN4o5FAZ8Zpsdd4nHT/eEPTCRukado=
+X-Google-Smtp-Source: AGHT+IGisbn3CFAjzZ99CsGKoYxPqi9Ci17qLHIgfQvaz3Hzjvh7NvF/77XugJjgFXa2UJAHKepstg==
+X-Received: by 2002:a05:6808:1914:b0:3e7:61f6:811a with SMTP id
+ 5614622812f47-3e915a648c2mr5168495b6e.35.1732299077328; 
+ Fri, 22 Nov 2024 10:11:17 -0800 (PST)
 Received: from [192.168.170.227] ([187.210.107.181])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2971d5e29ebsm686591fac.14.2024.11.22.10.04.55
+ 5614622812f47-3e914ed7cd5sm497727b6e.25.2024.11.22.10.11.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Nov 2024 10:04:56 -0800 (PST)
-Message-ID: <1e4bfa65-715a-4ac8-958f-48f0f6301218@linaro.org>
-Date: Fri, 22 Nov 2024 12:04:53 -0600
+ Fri, 22 Nov 2024 10:11:16 -0800 (PST)
+Message-ID: <8562d16e-78c3-48d3-9393-109ba6435062@linaro.org>
+Date: Fri, 22 Nov 2024 12:11:12 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 05/43] tcg: Add helper function dispatcher and hook
- tcg_gen_callN
+Subject: Re: [RFC PATCH v1 07/43] tcg: Increase maximum TB size and maximum
+ temporaries
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
  philmd@linaro.org, alex.bennee@linaro.org
 References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-6-anjo@rev.ng>
+ <20241121014947.18666-8-anjo@rev.ng>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241121014947.18666-6-anjo@rev.ng>
+In-Reply-To: <20241121014947.18666-8-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,74 +105,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/20/24 19:49, Anton Johansson wrote:
-> Adds a function pointer to the TCGContext which may be set by targets via
-> the TARGET_HELPER_DISPATCHER macro.  The dispatcher is function
-> 
->    (void *func, TCGTemp *ret, int nargs, TCGTemp **args) -> bool
-> 
-> which allows targets to hook the generation of helper calls in TCG and
-> take over translation.  Specifically, this will be used by helper-to-tcg
-> to replace helper function translation, without having to modify frontends.
+> Doubles amount of space allocated for translation blocks.  This is
+> needed, particularly for Hexagon, where a single instruction packet may
+> consist of up to four vector instructions.  If each vector instruction
+> then gets expanded into gvec operations that utilize a small host vector
+> size the TB blows up quite quickly.
 > 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   accel/tcg/translate-all.c | 4 ++++
->   include/tcg/tcg.h         | 4 ++++
->   tcg/tcg.c                 | 5 +++++
->   3 files changed, 13 insertions(+)
 
-I guess I'll have to read further to understand this, but my first reaction is: why would 
-we not modify how the gen_helper_* functions are defined instead?
+I hope this is a performance modification only?
+I hope that the normal set of "restart on resource overflow" code functioned correctly?
+If you're overflowing these values with a single hexagon insn, then I suggest something is 
+wrong.
+
+> ---
+>   include/tcg/tcg.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+> index d3e820568f..bd8cb9ff50 100644
+> --- a/include/tcg/tcg.h
+> +++ b/include/tcg/tcg.h
+> @@ -39,7 +39,7 @@
+>   /* XXX: make safe guess about sizes */
+>   #define MAX_OP_PER_INSTR 266
+>   
+> -#define CPU_TEMP_BUF_NLONGS 128
+> +#define CPU_TEMP_BUF_NLONGS 256
+>   #define TCG_STATIC_FRAME_SIZE  (CPU_TEMP_BUF_NLONGS * sizeof(long))
+
+Changing this probably requires auditing all tcg/arch/ backends.  The various prologue 
+generation code *ought* to catch out of range values, but I bet we weren't that careful.
 
 
 r~
 
-> 
-> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-> index fdf6d8ac19..814aae93ae 100644
-> --- a/accel/tcg/translate-all.c
-> +++ b/accel/tcg/translate-all.c
-> @@ -352,6 +352,10 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
->       tcg_ctx->guest_mo = TCG_MO_ALL;
->   #endif
 >   
-> +#if defined(CONFIG_HELPER_TO_TCG) && defined(TARGET_HELPER_DISPATCHER)
-> +    tcg_ctx->helper_dispatcher = TARGET_HELPER_DISPATCHER;
-> +#endif
-> +
->    restart_translate:
->       trace_translate_block(tb, pc, tb->tc.ptr);
+>   #if TCG_TARGET_REG_BITS == 32
+> @@ -231,7 +231,7 @@ typedef struct TCGPool {
 >   
-> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-> index a77ed12b9d..d3e820568f 100644
-> --- a/include/tcg/tcg.h
-> +++ b/include/tcg/tcg.h
-> @@ -549,6 +549,10 @@ struct TCGContext {
+>   #define TCG_POOL_CHUNK_SIZE 32768
 >   
->       /* Exit to translator on overflow. */
->       sigjmp_buf jmp_trans;
-> +
-> +
-> +    bool (*helper_dispatcher)(void *func, TCGTemp *ret_temp,
-> +                              int nargs, TCGTemp **args);
->   };
+> -#define TCG_MAX_TEMPS 512
+> +#define TCG_MAX_TEMPS 1024
+>   #define TCG_MAX_INSNS 512
 >   
->   static inline bool temp_readonly(TCGTemp *ts)
-> diff --git a/tcg/tcg.c b/tcg/tcg.c
-> index 0babae1b88..5f03bef688 100644
-> --- a/tcg/tcg.c
-> +++ b/tcg/tcg.c
-> @@ -2252,6 +2252,11 @@ static void tcg_gen_callN(void *func, TCGHelperInfo *info,
->       }
->   
->       total_args = info->nr_out + info->nr_in + 2;
-> +    if (unlikely(tcg_ctx->helper_dispatcher) &&
-> +        tcg_ctx->helper_dispatcher(info->func, ret, total_args, args)) {
-> +        return;
-> +    }
-> +
->       op = tcg_op_alloc(INDEX_op_call, total_args);
->   
->   #ifdef CONFIG_PLUGIN
+>   /* when the size of the arguments of a called function is smaller than
 
 
