@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 455F6E69182
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 16:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFE3E69186
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 17:12:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEWcv-0001Qr-M2; Fri, 22 Nov 2024 11:35:25 -0500
+	id 1tEXBw-0001c5-B7; Fri, 22 Nov 2024 12:11:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEWcu-0001Qj-W5
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:35:25 -0500
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ (Exim 4.90_1) (envelope-from <patrick.eads@gmail.com>)
+ id 1tEXBt-0001au-H4; Fri, 22 Nov 2024 12:11:33 -0500
+Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEWct-0005oI-4d
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 11:35:24 -0500
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-3825a721ae5so1244182f8f.1
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 08:35:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <patrick.eads@gmail.com>)
+ id 1tEXBr-0005ho-Gj; Fri, 22 Nov 2024 12:11:33 -0500
+Received: by mail-qt1-x835.google.com with SMTP id
+ d75a77b69052e-460c2418e37so15281911cf.0; 
+ Fri, 22 Nov 2024 09:11:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732293321; x=1732898121; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=dol8uvqp9j6AoZwv3OIjidk1Mz4UVwABRHAlp+oY/D0=;
- b=X66EfNxSd59P/6G0sqze7LX8BcoMcKpUy5i4MMmxQ1J0EJHrXCNYExRqfKN7N0qnhh
- 9aqriHTTu2kbgl5MskwCaN5m917A7A+XnpA4LOED/UwGhICdftNdzNOeavl/X7uMKl9X
- 7ZesZjKunRYpuqJ+zGcqPV+Bry+4aqTgU1/q6/ybMf3oT5IxenXtVKMBPl+Dro75C5mt
- 8HSzZxvsfPbUkv4UjMr5wbGjolv6grIkUNncYeSBZNwRNynR7CxKgHYuRCEUcDZRTzMH
- 2XtJZMRgFFXQFNEi+vUV7qMkPhiZ832eIVRbnyGKmJqGvV4inwATW3NFpoDIg/tYbQEV
- DLew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732293321; x=1732898121;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1732295490; x=1732900290; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dol8uvqp9j6AoZwv3OIjidk1Mz4UVwABRHAlp+oY/D0=;
- b=RCwR3fvRM6lR+DuuWWgSgtUzR5EUJOfsrTyt7KPJBJ4PY0FjrUfzAV8JkyxhZ+H/He
- 3naKitE2kCFFL6N1jZF3737BV95XDDVwn/MN/D0BTfGhqEz4tX/mZkxAnPu86hiuJM59
- lFVBd01dPF4aFbu+boEqenJzRN/7dbDNGKERRreY1LptveR4MSf+x0nfxSIcG51GcjnZ
- U4hFnciYLJjVy+FhGXkGgeQhb1OsLPBEDdCmTShKEt6Yge2RO4nazLx3Ke/bFLKmFynd
- G6pwlMwb+QDBjUgIUBPizOF7bRWnvqUzNXCHAxgIVHEcbEVBIkz5TAEfX4CvpIGIWKbH
- yqEA==
+ bh=izQJKG6QF25GAEH564C0myRJVqYdt1T0ELVAI90Dfrs=;
+ b=dk1jrvAMV5s+dGzNyNvZbHABOt7SsQFozjyJJYKmZ+L9fNnf8Ex6wCk1/78Xm2fgt4
+ l8DEET3LSGzlktAYllOHq4wH9ijBh13IMN0UkVlPW1O3O4hVLvYHMYBz726wyT4fflhe
+ D+2XPj4vStvIIjSSsOJ8jL5tn7s6ZOkG0kS/1drRMlJG5OvnokueL39fQRABX9IwJdjM
+ kXoTGHvoRZpmhGKdzc7ogYIWAFubynGfSMEmiTrFxwGHb6Uo3C+F/PuQgMMT6fr8OI6c
+ E1634PFv6p45UtvhLLbF4Owv5zcRCm9BAmedq7RbBZqkIyv8Rq3QbUjkPHTbbnbfPs2G
+ zUbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732295490; x=1732900290;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=izQJKG6QF25GAEH564C0myRJVqYdt1T0ELVAI90Dfrs=;
+ b=LAhLSKigIG7za+4Z2v5IfYhIOmtXFtMYQ19dwvO08CM4mA2cKy4xKvtv2WuncLoJ4E
+ ZghRHlcWHPcadX9ppLHvU9Ai6yp0hKEpMCoQgXZRd0pEwCY07S4ENyL+Ak7G+094M20C
+ goGMqbtG2kLtXy0vCcf8qW7cjp83INYKTeqtv9JAobqpZBL5tivv2fdlJ0ThD15+Alfv
+ MoVq+Z6fCgO5SwGzeiU2UglJ/q2YI/XC104JjNzTnOB6TlFMmIU9dgj353a0i5cfFVmG
+ lkve64/jOYm1/k9YZ/BJyMtKIzsvoDkMLixrk0wvGYX8F/EgyhSw9sHJjzixXL7mm7hf
+ nUCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXpZO2KcHN668bu7YtrDsEech9u1ytO82tU9y3qaqHM5o27rRSmxkyn461ABaEdnofHfqYdNFqrtt6@nongnu.org
-X-Gm-Message-State: AOJu0Yz6jVa/6hw8y5DANQ6eeFzhVa2lN2bUSq7TLZe4RtiHetp2rsF5
- YNvTwc1Wo8LJq01sQW8r3y6AzCb6b5kGNCzODSxa5+FRIzXciO2TPYJ2MI+K
-X-Gm-Gg: ASbGncsaFrGX33kHsUdnWrbl+SlF3eeZfrH5qxIse62xrYyLh6TyrbtzoN7Bu0KmfGS
- hWbM/u0CTovW/33AYNFCUZI7ubEtCgQiLvwvw+cc4DSikpDqF/TboPR66VjnxXwBUJpxiE7MqTG
- 2G0OXecXZG+wGgb8hRmzS+Tr5CBWDgMmLDEYMmx6AfSQ7qT6DU6ci/iXDLvsLEPfuK+4Py0GNzk
- 0A0+MEFmgtsziwmx6sl6M9woLelrCatyYQ8P3u4Ji5qx/GwOkml0enO/apJT68IRg8NVW/JH6oC
- J4tdoDfyOROF1A==
-X-Google-Smtp-Source: AGHT+IG5FVroKsAHosJGeQL/hQVSeRsFz/bTucJL1fbBsdhUHIDeIwovhpyhi+j2HwS7wJpexFGY0Q==
-X-Received: by 2002:a5d:6d03:0:b0:382:22d6:988c with SMTP id
- ffacd0b85a97d-3826011336cmr3457579f8f.5.1732293320685; 
- Fri, 22 Nov 2024 08:35:20 -0800 (PST)
-Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
- [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fb537d4sm2816189f8f.61.2024.11.22.08.35.19
+ AJvYcCUChWF5KuuQS3fnQ1S85o/3/aNC+P1hYJrt4ZUQWipr1ldBZVkNYIQ/IejEE+Zu5Ou9sCjMbjPW1S07@nongnu.org,
+ AJvYcCXuiBPdoifjkKntnDlOD7ndrUFSpmdRU9C6H25OCNpSW2h2Tf1I0GGBNr3Bi8H7FuJWIZPVZa7WMLA=@nongnu.org
+X-Gm-Message-State: AOJu0Yw7UaOjq6x/NpNe9uXYvRE6yT6xEHci5s5TTcAKPy41IKeqX9pn
+ yIBSA4hdbGFZWFiBrDc/AC8fElusOUsNcVkZYe9MpvX6Znh39ZHe
+X-Gm-Gg: ASbGncveXLiLhJRGaHarLOqUoSTWCF93aOkz6G55/InNAhW9YZ2AbTurJbPZt+8oUlR
+ /MhJAFRtXCZg+Ns53tLBvm2GxCdprNLyPg9Ld68ESvWavYP0xinNGPkPMlewSYkghA8aS5eH+WK
+ fFVDRQde6GtAF2VjL7fVW7marew4c3HwrNm4imcbNWldzrtzPbrMKUuqr/xOxe9AF7QyAq0tjKj
+ oCjVF9Y+SigOAxJtyBWi09Ag9Dy6gq9kyiZiocy8qx7MMjqIRlkboAXW8kZ9n1EBI/HqTyvKsFV
+ Bysp4oDkDecXGuvjBk5va1RGQ/4Voc96JSSQm0dr
+X-Google-Smtp-Source: AGHT+IF+nz8GJd9NgBxsAE0qG5YvL2/Sioi+MVPiSCw0WNFKDlun6rGlD00K/SZeJ8Yz8Ctki1y1Fg==
+X-Received: by 2002:a05:622a:1e8e:b0:460:ab29:e6b1 with SMTP id
+ d75a77b69052e-4653d617eb8mr48438801cf.44.1732295489785; 
+ Fri, 22 Nov 2024 09:11:29 -0800 (PST)
+Received: from tungsten-chungus.. (c-174-169-154-147.hsd1.nh.comcast.net.
+ [174.169.154.147]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4653c3d7189sm13730381cf.14.2024.11.22.09.11.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Nov 2024 08:35:19 -0800 (PST)
-Date: Fri, 22 Nov 2024 16:35:19 +0000
-From: Stafford Horne <shorne@gmail.com>
-To: Rob Landley <rob@landley.net>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: QEMU commit 0a923be2f642 broke my or1k image.
-Message-ID: <Z0Cyx3i3z7Zl7XPm@antec>
-References: <afac091f-08cb-0f6d-4c01-bfa4421e7a47@landley.net>
- <Zufcf4iAqosZ7VBf@antec>
- <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
+ Fri, 22 Nov 2024 09:11:29 -0800 (PST)
+From: Patrick Eads <patrick.eads@gmail.com>
+X-Google-Original-From: Patrick Eads <peads@users.noreply.github.com>
+To: 
+Cc: Patrick Eads <patrick.eads@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ qemu-ppc@nongnu.org (open list:New World (mac99)),
+ qemu-devel@nongnu.org (open list:All patches CC here)
+Subject: [PATCH v2 2/2] Added support for WACOM 2.x/ArtZ/Digitizer II
+Date: Fri, 22 Nov 2024 17:10:52 +0000
+Message-ID: <20241122171101.2370389-3-peads@users.noreply.github.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241122171101.2370389-1-peads@users.noreply.github.com>
+References: <20241122171101.2370389-1-peads@users.noreply.github.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=shorne@gmail.com; helo=mail-wr1-x442.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
+ envelope-from=patrick.eads@gmail.com; helo=mail-qt1-x835.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,71 +103,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 04:32:25PM -0600, Rob Landley wrote:
-> On 9/16/24 02:21, Stafford Horne wrote:
-> > On Wed, Sep 11, 2024 at 12:42:58AM -0500, Rob Landley wrote:
-> > > Grab this tarball, extract it, and ./run-qemu.sh. It's a simple
-> > > linux+initramfs image that boots to a shell prompt.
-> > > 
-> > >    https://landley.net/bin/mkroot/latest/or1k.tgz
-> > > 
-> > > QEMU 7.0.0 ran that linux-or1k image, but newer qemu does not. I besected the
-> > > issue to qemu commit 0a923be2f642, and it's still broken in current tip of tree.
-> > 
-> > Patch is:
-> > 
-> >   0a923be2f6 ("hw/openrisc: page-align FDT address")
-> > 
-> > > Rebuilding the image with current linux-git doesn't seem to make a difference?
-> > > Either way I get serial output with old qemu and don't with current qemu.
-> > 
-> > The bisect looks strange as it's only moving a page boundary, it could be
-> > correct but it seems harmeless.  There is another commit close by that was
-> > causing issues with serial output for the barebox guys and this is a patch I am
-> > working on to fix it.
-> > 
-> > https://lore.kernel.org/qemu-devel/20240908062756.70514-1-shorne@gmail.com/
-> > 
-> > I will try to get time today to look at your tarball and run it, but if not have
-> > a look at this patch.
-> 
-> I just regression tested linux-6.12 against qemu-9.2.0-rc1 and I'm still
-> getting no output from or1k, with the current image or the old or1k release
-> image that worked under old qemu versions.
-> 
-> I tried applying your serial patch to current qemu, and it made no
-> difference: still no output booting the image.
+From: Patrick Eads <patrick.eads@gmail.com>
 
-OK, I am trying to get that patch pushed upstream.  I will be sure we fix your
-issues before we do that.
+streamlined efficiency since setting the xy-values to zero is not the correct way by adding state variables against which the new xy-values can be compared
 
-> Alas I can no longer test that reverting the commit I identified (git show
-> $HASH | patch -p1 -r) makes it work again in current qemu (although it did
-> at one point, that's a standard sanity check at the end of bisect for me),
-> and I can't fix it up by hand either because hw/openrisc/openrisc_sim.c no
-> longer contains the string "load_sim", looks like it got collated with
-> common code for other architectures.
-> 
-> I'm happy to tweak the kernel config if qemu changed in a way that broke
-> compatibility with old images (I assume _you_ have a kernel that boots), but
-> I was hoping "this week's kernel release" would have any necessary patches
-> to work with QEMU's changed ABI.
+added other buttons
 
-The patch I have put in 6.12 only helps with earlycon.  Regular output has
-always been working for me.  I will work on testing your image again to see what
-is special about it.
+Signed-off-by: Patrick Eads <patrick.eads@gmail.com>
+---
+ hw/input/adb-wacom.c  | 50 +++++++++++++++++++++++++++----------------
+ hw/input/trace-events |  2 +-
+ 2 files changed, 32 insertions(+), 20 deletions(-)
 
-Note, I did find some issues with the kernel nor properly handling stdout-path.
-It seems that if there are multiple uarts the first one will always be used as
-the default uart.  Only the console= command line argument can be used to
-override that.
+diff --git a/hw/input/adb-wacom.c b/hw/input/adb-wacom.c
+index 1e8fb83cf4..91df9508d4 100644
+--- a/hw/input/adb-wacom.c
++++ b/hw/input/adb-wacom.c
+@@ -37,6 +37,7 @@ struct WacomState {
+     QemuInputHandlerState *hs;
+     int buttons_state, last_buttons_state;
+     uint16_t dx, dy, dz;
++    uint16_t last_x, last_y;
+ };
+ 
+ struct ADBWacomClass {
+@@ -47,8 +48,11 @@ struct ADBWacomClass {
+     DeviceRealize parent_realize;
+ };
+ 
+-#define ADB_WACOM_BUTTON_LEFT   0x01
+-#define ADB_WACOM_BUTTON_RIGHT  0x02
++#define ADB_WACOM_BUTTON_MIDDLE     0x01
++#define ADB_WACOM_BUTTON_LEFT       0x02
++#define ADB_WACOM_BUTTON_RIGHT      0x04
++#define ADB_WACOM_BUTTON_SIDE       0x08
++#define ADB_WACOM_BUTTON_EXTRA      0x10
+ 
+ static void adb_wacom_handle_event(DeviceState *dev, QemuConsole *src,
+                                     InputEvent *evt) {
+@@ -56,8 +60,11 @@ static void adb_wacom_handle_event(DeviceState *dev, QemuConsole *src,
+     InputMoveEvent *move;
+     InputBtnEvent *btn;
+     static const int bmap[INPUT_BUTTON__MAX] = {
+-            [INPUT_BUTTON_LEFT]   = ADB_WACOM_BUTTON_LEFT,
+-            [INPUT_BUTTON_RIGHT]  = ADB_WACOM_BUTTON_RIGHT,
++            [INPUT_BUTTON_LEFT]        = ADB_WACOM_BUTTON_LEFT,
++            [INPUT_BUTTON_RIGHT]       = ADB_WACOM_BUTTON_RIGHT,
++            [INPUT_BUTTON_MIDDLE]      = ADB_WACOM_BUTTON_MIDDLE,
++            [INPUT_BUTTON_SIDE]        = ADB_WACOM_BUTTON_SIDE,
++            [INPUT_BUTTON_EXTRA]       = ADB_WACOM_BUTTON_EXTRA
+     };
+ 
+     switch (evt->type) {
+@@ -68,12 +75,10 @@ static void adb_wacom_handle_event(DeviceState *dev, QemuConsole *src,
+                 case INPUT_AXIS_X:
+                     // Digitizer II / Artz lpi 2540 => dpi 5080
+                     s->dx = (uint16_t) (move->value * qemu_console_get_width(src, 640) / 2450);
+-//                    s->dx = (uint16_t) (move->value * qemu_console_get_width(src, 640) / 5080);
+                     break;
+                 case INPUT_AXIS_Y:
+                     // 6x8 inch interactive surface => 4:3 aspect ratio
+                     s->dy = (uint16_t) (move->value * qemu_console_get_height(src, 480) / 1905);
+-//                    s->dy = (uint16_t) (move->value * qemu_console_get_height(src, 480) / 3810);
+                     break;
+                 default:
+                     break;
+@@ -111,7 +116,10 @@ static const QemuInputHandler adb_wacom_handler = {
+ static int adb_wacom_poll(ADBDevice *d, uint8_t *obuf) {
+     WacomState *s = ADB_WACOM(d);
+ 
+-    if (s->last_buttons_state == s->buttons_state && !(s->dx || s->dy)) {
++    // if state of button(s) or coordinates have changed since last poll
++    if (!(s->last_buttons_state != s->buttons_state
++        || s->dx != s->last_x
++        || s->dy != s->last_y)) {
+         return 0;
+     }
+     // Not quite any of the WACOM II-S/IV/IVe, BitPad One/Two, or MM 1201/961
+@@ -121,12 +129,13 @@ static int adb_wacom_poll(ADBDevice *d, uint8_t *obuf) {
+     // with ADB unlike with a standard serial bus, the packet can be condensed
+     // into five bytes instead of requiring seven.
+     s->last_buttons_state = s->buttons_state;
+-    obuf[0] = 0xC0 | ((s->dx >> 8) & 0x3F);
++    s->last_x = s->dx;
++    s->last_y = s->dy;
++    obuf[0] = (0xC0 | ((s->dx >> 8) & 0x3F)) & 0xFF;
+     obuf[1] = s->dx & 0xFF;
+-    obuf[2] = ((s->dy >> 8) & 0xFF);
++    obuf[2] = (s->dy >> 8) & 0xFF;
+     obuf[3] = s->dy & 0xFF;
+-    obuf[4] = s->buttons_state;
+-    s->dx = s->dy = 0;
++    obuf[4] = s->buttons_state & 0xFF;
+     return 5;
+ }
+ 
+@@ -138,10 +147,8 @@ static int adb_wacom_request(ADBDevice *d, uint8_t *obuf, const uint8_t *buf,
+ 
+     if ((buf[0] & 0x0f) == ADB_FLUSH) {
+         /* flush wacom fifo */
+-        s->buttons_state = s->last_buttons_state;
+-        s->dx = 0;
+-        s->dy = 0;
+-        s->dz = 0;
++        s->last_buttons_state = s->buttons_state = 0;
++        s->last_x = s->last_y = s->dx = s->dy = s->dz = 0;
+         trace_adb_device_wacom_flush();
+         return 0;
+     }
+@@ -153,9 +160,9 @@ static int adb_wacom_request(ADBDevice *d, uint8_t *obuf, const uint8_t *buf,
+         case ADB_WRITEREG:
+             switch (reg) {
+                 default:
+-//                case 1: // receives 0xFE0449 on initialization. seems to be settings packet
++                case 1: // receives 0xFE0449 on initialization. seems to be settings packet
+                         // described (the manual, p. 47)?
+-//                case 2: // receives 0x204A when modifying certain settings in control panel
++                case 2: // receives 0x204A when modifying certain settings in control panel
+                         // doesn't seem to vary based on settings values chosen.
+                     break;
+                 case 3:
+@@ -170,6 +177,9 @@ static int adb_wacom_request(ADBDevice *d, uint8_t *obuf, const uint8_t *buf,
+                     }
+ 
+                     switch (buf[2]) {
++                        case 'h':
++                            d->devaddr = (buf[0] & 0xF0) >> 4;
++                            break;
+                         case ADB_CMD_SELF_TEST:
+                             break;
+                         case ADB_CMD_CHANGE_ID:
+@@ -191,7 +201,7 @@ static int adb_wacom_request(ADBDevice *d, uint8_t *obuf, const uint8_t *buf,
+                             break;
+                     }
+             }
+-            if (reg != 3) trace_adb_device_wacom_writereg(reg, *(uint64_t *) buf);
++            trace_adb_device_wacom_writereg(reg, *(uint64_t *) buf);
+             break;
+         case ADB_READREG:
+             switch (reg) {
+@@ -245,7 +255,7 @@ static void adb_wacom_reset(DeviceState *dev) {
+     d->handler = 0x3A;
+     d->devaddr = ADB_DEVID_TABLET;
+     s->last_buttons_state = s->buttons_state = 0;
+-    s->dx = s->dy = s->dz = 0;
++    s->last_x = s->last_y = s->dx = s->dy = s->dz = 0;
+ }
+ 
+ static const VMStateDescription vmstate_adb_wacom = {
+@@ -257,6 +267,8 @@ static const VMStateDescription vmstate_adb_wacom = {
+                                ADBDevice),
+                 VMSTATE_INT32(buttons_state, WacomState),
+                 VMSTATE_INT32(last_buttons_state, WacomState),
++                VMSTATE_UINT16(last_x, WacomState),
++                VMSTATE_UINT16(last_y, WacomState),
+                 VMSTATE_UINT16(dx, WacomState),
+                 VMSTATE_UINT16(dy, WacomState),
+                 VMSTATE_UINT16(dz, WacomState),
+diff --git a/hw/input/trace-events b/hw/input/trace-events
+index 90e9f61dc2..610955245f 100644
+--- a/hw/input/trace-events
++++ b/hw/input/trace-events
+@@ -17,7 +17,7 @@ adb_device_mouse_request_change_addr_and_handler(int devaddr, int handler) "chan
+ # adb-wacom.c
+ adb_device_wacom_flush(void) "flush"
+ adb_device_wacom_writereg(int reg, uint64_t buf) "\t<- reg %d buf 0x%04lX"
+-adb_device_wacom_readreg(int reg, uint64_t obut) "\t-> reg %d obuf 0x%04lX"
++adb_device_wacom_readreg(int reg, uint64_t obuf) "\t-> reg %d obuf 0x%04lX"
+ adb_device_wacom_request_change_addr_and_handler(int devaddr, int handler) "change addr and handler to 0x%x, 0x%x"
+ 
+ # adb.c
+-- 
+2.45.2
 
-So as long as the kernel selects the first uart as the stdout path (it should
-have always been the case)  AND qemu picks the first uart as the uart connected
-to the console (it should be with my latest patch) we should get serial output.
-
-Another thing that may get me delayed is that I need to rebuild my or1k-elf-gdb
-as it's python version is no longer compatible with the kernel's python.
-
--Stafford
 
