@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA41CE6918E
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 19:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22E1E6918F
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 19:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEZ9j-0002Jt-NL; Fri, 22 Nov 2024 14:17:27 -0500
+	id 1tEZiO-0001N9-5R; Fri, 22 Nov 2024 14:53:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEZ9h-0002IE-TZ
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 14:17:25 -0500
-Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
+ id 1tEZiM-0001Mg-Pt
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 14:53:14 -0500
+Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEZ9f-00087E-Lc
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 14:17:25 -0500
-Received: by mail-oa1-x30.google.com with SMTP id
- 586e51a60fabf-2969ae2c99fso1531720fac.3
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 11:17:22 -0800 (PST)
+ id 1tEZiL-0008LQ-Es
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 14:53:14 -0500
+Received: by mail-oo1-xc2f.google.com with SMTP id
+ 006d021491bc7-5f06787eab7so1115409eaf.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 11:53:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732303041; x=1732907841; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732305190; x=1732909990; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XZk9cjMHDdKEVSn/umzrOvbjeL8TRpKLbhdropNJY54=;
- b=XRwg8SOObd5/BcF7nLJYm5ujBK/SAFYhmmw+4cpsy4iyukxObo9VbwaHbrqwZxpm2s
- 8KCtWpHTLKLuIAlZL1lor1joRZpkvpqMqI8xSpRthnUGGxyMMlRh+20vVojdbVlmKdZS
- 7nnNLxj6288X86RZ4yaDW/FxgW+PSks/dwDzz8l8Lt9RufRvFMHGgc5o8zr96T3JXNCo
- LPks7FJx5ftXJaSFGwmp36W+NVyxc4KQdHJTvag35kl0bxtoisBBFUaWdSDQwiBmqT5R
- SMcaVu1IkzXoUatsU81oLcMbtorr2ax1hnl4zZLguqVYFb7kTxBauXHNeKCPTouRl6G3
- 8hgg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/TdhaA4cgmHWBvGWzYY3pi+v0OjOybIwBAljQPz8crs=;
+ b=wHKvq9MfStVaHiY7g982aDwilbNujxFu5pTpTBYg81oUkNEs35wOGAreXqENkzmDW7
+ JAlEc/uW+bTblYSOZXHhbQT90PDQGQ2FDLCGnIM59RQJeS+tm3TZnUe1w+3oFjrkoM7t
+ w+tD2+DDOP/wdj+ZgugYfQTZEcexvL5iRp5CcO6K6iiD9R7XWSs4DshD/fUmYtwl98qK
+ oglAlVVP3pijpEPWyh9W9VLG6ljkDAcJX4fomyov8G0vAOzeJp2jabbIOHnm9PuqVsUy
+ oxwmGbVBY+rKRx/MpbXNPJot8L3s2u8hyLugtw3DgtYujI/4aGEgxzTRLoAPTZd82rPc
+ r43A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732303041; x=1732907841;
+ d=1e100.net; s=20230601; t=1732305190; x=1732909990;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XZk9cjMHDdKEVSn/umzrOvbjeL8TRpKLbhdropNJY54=;
- b=EPcgZbDpQPSuKhLXaAB3Hxvi55PVoeJTk0g01Xm/tILO6MxIihbjLqb3xfbWBRd3pV
- 78Scs4iaoqbJfEU6alA1ycM5UkkBU6KY1gMCZdWlR9wj7tDpJf+LNIl9EzZqZdm+ghJc
- RQJmzQ/CVhaAxSSm5mmyMOtrSZxRv0Qd/Oiukg80q8jk4EDjmfFsX4QWjNWAjDUxfkOE
- leDxJ9CkVFVVd+rO02WFGqKVpB1XavT9XFLWK8aYvUEwd6uVSK6zYHrnRFIoE1lbDmBt
- +dNPMYP1Ijo7PU2kbAcNblNJy6PBmJOhyWLTe2cQeDB3/+A/fB2H76BTmBuU36l+aGCL
- FYbQ==
-X-Gm-Message-State: AOJu0Yy3/Lb6wvXIQz4qDL6pH+gLMLn6wNhle6KN5OKYYTaiA9WMjr+f
- 4kzHmW/whIWI2FxOw8nmTeSFV/iJbTrpVT2B8so2jkt87Lyf+MdKQnkoHfcmnZmIP4pvRePlWH+
- up0Y=
-X-Gm-Gg: ASbGnctGs1kyUbtu21Hh6fSOLP0NbVyuU+RNzXycCXicfCGTB7ia9ci5JcCqRnSYlQN
- 8FZHkc2oPpneM0Dl3hrx9tyLX0dfAzUTAbOZOy1/QPc/qh7BYlFlrpuJzmfHYgZQ4/3lDGBTi/y
- 4CM265m6Ee+gL4r2Hu6i/yYY9cJWNeOM43x6ZXSE2xKZkBFGBF/Ml0m3Y6XAE8+J4mdvGpC7mZl
- Kd6YOuAlzSGFnRIoPI2FDt+scYeRxf2evujTIbxLirp+t07B05p9HD0JoJTGgt7Og==
-X-Google-Smtp-Source: AGHT+IH/dYJHZffrqNXeGriz2TVIXgb5MHRRA/OPAPgB3t8RU313QK6/NM9cnY46/Eqck2CAx8c0aA==
-X-Received: by 2002:a05:6870:40ca:b0:270:1884:9db1 with SMTP id
- 586e51a60fabf-29720af286fmr4728908fac.7.1732303041264; 
- Fri, 22 Nov 2024 11:17:21 -0800 (PST)
+ bh=/TdhaA4cgmHWBvGWzYY3pi+v0OjOybIwBAljQPz8crs=;
+ b=GJHot7n6KSs1TMbBkcZtgbSmMdWw8aCC/yCeEP0Stc/hGBIexIJxCKmZJTMoKjDm+F
+ VVepXKgympEWQpVlKc5D2OHCd61PSEKFf1O9AN68TIfeuUdI5dlbbEZ29DLredBFQIIj
+ ciIhtGbaqrd3W1Rr526zuqcvHtfANRIkrfrps9mUEIEzHoRKs6C0OX8mw00oFKtK/IRN
+ 7EkKJLllUKrvUWlIhQlnXe4W7hexKA+KPNPwEp7ifUumQvULM4drYJjSDjZVvJZ8hGK7
+ l8hC6+2A6f7xBd8EiMj4wZrh+kXU92DbdaF4puvR47EjdlvPggMSxdu8dxTedYJfAGrX
+ JcBA==
+X-Gm-Message-State: AOJu0YykejXBpqNrVPTAGiKOUQTF1X9WekL7d0cEyGHvQB3yWiF1OXNe
+ 9pAGumQP14s/VPGVkW1qIMHkjwdahBn2SFtAK3I4RdoxMMz8LtkGrFKRls7tpBP95Q2TE8DZFvs
+ PuJY=
+X-Gm-Gg: ASbGnctqEsUCXVDj++D101FNAMq3Ietu8aZfcdLNfoV5OUxu44TfybG9doFxUzc6stk
+ MYKR8atovOh/pn2D4qr/u5GJJBsSaoNWaDFkSRL4hZd4VntK+BVuaUTS8OeAuxQCUz2Rdx8H+/F
+ UUF0r9JeSJ3m9xezQW4YKhvXCl81llLQs4j4m7tJRXB7GeeFoLinT3p/bnxdFOTVNJ1WEke3wHR
+ HKovj8mnB72Yq5hpH2RWiXW2HRSouIQsjxBvAxeQKKoQeo5hJZSqExer5EmOk6rZg==
+X-Google-Smtp-Source: AGHT+IGTCy1lyO0ueUy1jvtwkjYX3uYz4AQpRjPq6HQ0VtmTbMu+2WZMs+/3Y14JUlao0ODdZe3Jog==
+X-Received: by 2002:a05:6830:6b0e:b0:716:a62d:a79a with SMTP id
+ 46e09a7af769-71c04cf0dd9mr4985991a34.29.1732305190484; 
+ Fri, 22 Nov 2024 11:53:10 -0800 (PST)
 Received: from [10.25.2.124] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2971d88f849sm758655fac.49.2024.11.22.11.17.18
+ 46e09a7af769-71c03759d13sm573256a34.12.2024.11.22.11.53.09
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Nov 2024 11:17:20 -0800 (PST)
-Message-ID: <c0e086a3-a7dd-426c-8d1e-044c937d6358@linaro.org>
-Date: Fri, 22 Nov 2024 13:17:16 -0600
+ Fri, 22 Nov 2024 11:53:09 -0800 (PST)
+Message-ID: <ef0bfcae-1682-4772-a9d3-018e12c93da4@linaro.org>
+Date: Fri, 22 Nov 2024 13:31:12 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cpu: Initialize nr_cores and nr_threads in
- cpu_common_initfn()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Xiaoyao Li <xiaoyao.li@intel.com>, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>
-References: <20241108070609.3653085-2-xiaoyao.li@intel.com>
- <20241122160317.4070177-1-xiaoyao.li@intel.com>
- <dc286a4a-1885-4457-a248-846c16d847fa@linaro.org>
+Subject: Re: [PATCH 35/39] plugins: add missing export for
+ qemu_plugin_num_vcpus
+To: qemu-devel@nongnu.org
+References: <20241121165806.476008-1-alex.bennee@linaro.org>
+ <20241121165806.476008-36-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <dc286a4a-1885-4457-a248-846c16d847fa@linaro.org>
+In-Reply-To: <20241121165806.476008-36-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::30;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,46 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/22/24 11:26, Philippe Mathieu-Daudé wrote:
-> On 22/11/24 17:03, Xiaoyao Li wrote:
->> Currently cpu->nr_cores and cpu->nr_threads are initialized in
->> qemu_init_vcpu(), which is called a bit late in *cpu_realizefn() for
->> each ARCHes.
->>
->> x86 arch would like to use nr_cores and nr_threads earlier in its
->> realizefn(). To serve this purpose, initialize nr_cores and nr_threads
->> in cpu_common_initfn(), which is earlier than *cpu_realizefn().
->>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
->>   hw/core/cpu-common.c | 10 +++++++++-
->>   system/cpus.c        |  4 ----
->>   2 files changed, 9 insertions(+), 5 deletions(-)
->>
->> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
->> index 09c79035949b..6de92ed854bc 100644
->> --- a/hw/core/cpu-common.c
->> +++ b/hw/core/cpu-common.c
->> @@ -237,14 +237,22 @@ static void cpu_common_unrealizefn(DeviceState *dev)
->>   static void cpu_common_initfn(Object *obj)
->>   {
->>       CPUState *cpu = CPU(obj);
->> +    Object *machine = qdev_get_machine();
->> +    MachineState *ms;
->>       gdb_init_cpu(cpu);
->>       cpu->cpu_index = UNASSIGNED_CPU_INDEX;
->>       cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
->>       /* user-mode doesn't have configurable SMP topology */
->> -    /* the default value is changed by qemu_init_vcpu() for system-mode */
->>       cpu->nr_cores = 1;
->>       cpu->nr_threads = 1;
->> +#ifndef CONFIG_USER_ONLY
+On 11/21/24 10:58, Alex Bennée wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
-> Is CONFIG_USER_ONLY available in an common_ss[] object? I don't recall.
+> Fixes: 4a448b148ca ("plugins: add qemu_plugin_num_vcpus function")
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Message-Id: <20241112212622.3590693-2-pierrick.bouvier@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   include/qemu/qemu-plugin.h | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index 622c9a0232..0fba36ae02 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -803,6 +803,7 @@ void qemu_plugin_register_atexit_cb(qemu_plugin_id_t id,
+>                                       qemu_plugin_udata_cb_t cb, void *userdata);
+>   
+>   /* returns how many vcpus were started at this point */
+> +QEMU_PLUGIN_API
+>   int qemu_plugin_num_vcpus(void);
+>   
+>   /**
 
-No.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
 
