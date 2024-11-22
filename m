@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A6AE65D26
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 05:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F29C4E65D26
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 05:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tELpL-0005m3-1i; Fri, 22 Nov 2024 00:03:31 -0500
+	id 1tELpS-0005uS-92; Fri, 22 Nov 2024 00:03:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tELpE-0005cQ-Ut
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 00:03:25 -0500
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ id 1tELpH-0005gT-Fj
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 00:03:28 -0500
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tELpD-0006SP-Be
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 00:03:24 -0500
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-296b0d23303so958542fac.2
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 21:03:21 -0800 (PST)
+ id 1tELpF-0006Sb-Pe
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 00:03:27 -0500
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-3e5fbc40239so1022579b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 21:03:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1732251801; x=1732856601;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1732251804; x=1732856604;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=RFrNi2VVoowoqBy/v/ykZ3Me3c8V3mgQT6KledOV830=;
- b=N5ePF+LvCRJQOtuvvh7ndzqXvKOc05HcFlOuxg9YKZinZeQm2y3OcRzRZavSelfxx0
- Zo7CeVGPFpRyAOg4y6+GcPiKN1BjH6Kv37hLo9C7sjavLWSmZoImksSaE7Z90dzTvZ62
- GJHQjGaQAS5CaTcWrX58nWdR3iqxI8JvdOYHtvgvluuT3mmpCMEY6evdtlRAmJX9aoDX
- PA4bVk4fdXHdOeNZseVR7Cxdsb7c6knb/X4Xe/INPxnExicvCcsFhlkMxz31E/RkXTfk
- FCZjFfKf8X94XGXrDXtbQBd4Uncu7Sr3fDtxzBEveLkHzLS6GID+QZUQkwUy0XXTa/AB
- sTLA==
+ :reply-to; bh=aydS1nIFZysizdq/nBxIGIRe/Qf80XxmCfhRmPTZ8i4=;
+ b=wOk1FlECEOpwgWB5zEGdZCYTcNAYz5WkGFFGmSlsKHBSIVOgqzRD/QEIFNqMvRFINw
+ ZZAr3lJC96PVDUW2apoYltcj0TPqJMlOPlQGF25cyAYhArDU2FyOsKV50Iw2fqcg7mc9
+ 60qjlelSd5iWRzAVVEoq0PvziXj2A/5ycfe2/235X14vQ7XUcoWUD5QhyWUjhOwExGmA
+ RDJR3ftllGZ5d5L1Dl49z3AcXmHzqVzID/isVbw6Snea3TFGGqFn08UtpKXU/AdEB7ze
+ LwppqRZprHcTz17WTgp6oHlgZ/rPEkLvKYr+R31mkTPxyTvNmhLvUv78VHcs7j/Ks+bC
+ PXvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732251801; x=1732856601;
+ d=1e100.net; s=20230601; t=1732251804; x=1732856604;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RFrNi2VVoowoqBy/v/ykZ3Me3c8V3mgQT6KledOV830=;
- b=grAAGAQCaIMYbrLOoHXUhiVslJaRR4t6TYZeD8ON7zu+vcHTb3NCUrthLT8RuBLGUa
- YvirgzaHVLa3jmgeIJRCJRwI+2gr5z6AmGmeCXJuX8MWKE2t3Zh4xhs/LZXiO148jL6N
- +fMBhZnvTvCF0fsB21K8J2qac+o8wLjiuwkYnkhzZsyZm0gren/ZF9rQhOV1waQPD6el
- yfq8x5WllvEIikFLoeu5mDkpmIYaS8U1dk72bpkennBT/IrZRCmY2IycYwQwfwkgl9Tr
- P34QbqsPYpC8zwgWzjiH6ewe5RQcTGV1aUT7UTOCKywqvsOQ+73nZadqUwI4sqKmy7KG
- xWcw==
-X-Gm-Message-State: AOJu0YxnrR8ZBl3kWHlkLSc1U09QoLwzu9zKjniffzcwzYxnxrjwiJo+
- xfVirEOo2/vj6vSoZUwcp4RoihKdv3Rg3re22vXoACXoVNE1XvVFyuOKhlibVhFaeVfvrgpyhqa
- 7c/o=
-X-Gm-Gg: ASbGncuvoiBvC72Tegs+5KkDIJ02LgxHIBzd5VOk6lTq3i4lPojn81ryDqRkJV5dgLI
- 4wyHD8S3s+uBbdVtf5IjlSobiVQD2cp+JYVfpurh9TalUnhUVwMhXzj39XZ+4y3H+VctpA7B99H
- Pzn0LA1THIDEq+mVHLJNA8Oo/etadXWY8AU0nhE1xyrrqMhdLTxuo24xv6XSXBCJ8OUH5Mk4HYl
- y/oNE7USYVpt9I1X4UaDf2IGR6PMgHKoYmUj6T4aZdT1jmSbvNP5Q==
-X-Google-Smtp-Source: AGHT+IEFtOrZjtB0E6GXqF4mxiPc7RfgQoajBAuBGF8sqsqPv9vj+dZkPy72h2JqZLtQIMsfUy+vDw==
-X-Received: by 2002:a05:6870:9e47:b0:297:291c:ad88 with SMTP id
- 586e51a60fabf-297291d0d9amr732788fac.28.1732251801164; 
- Thu, 21 Nov 2024 21:03:21 -0800 (PST)
+ bh=aydS1nIFZysizdq/nBxIGIRe/Qf80XxmCfhRmPTZ8i4=;
+ b=ebmDam8+hZTvYHlA3I4m2FnzKQkl+ouuWfrizBrNxO8JJpx3eeTzW6txgW4poN5u5s
+ p34VBBvSpd7GdOpj6jdHlWIyolnAtfHAdwdlV0l5T1x7B5HwNaSFCJ2hYQ4oVzm5hX4F
+ asdg4qei/p8XXU8FavzWn3J1e8wnu9YindF07+8eXn+apBLN2LvImRhTu48AP+mKSpzF
+ 8o4bK218m/LnrqwNZ6vm5OLEKqXcv1yM08G9xCL6rVM3kc7J3Jv72wGHf372M3AFIm3D
+ 2jQ/nNjgmHmrKg9bUaQ+Pjv5eFHjw+znXX2M51XB+Wn9zZ6RxJafHqFFVnuidTE/U/Oz
+ akRA==
+X-Gm-Message-State: AOJu0YwGIWEUqlWyvw12GrqN3pBhRfRL3xbEDKVIOyrakf82xOxKMTkd
+ SFkwoBlFrXo7XmWHcSsQq1QKrZMoGMWODdn8UJHrjp2OwSwgNUlLgbFPBRqzfivmk0AjGfFJkQu
+ jF18=
+X-Gm-Gg: ASbGncuSGe7pW0JbpkV2k2DbwSwlZXfCTiqAYSugoEyffknqHdTR+LLnDrT3c1hdYH7
+ 04+Hr/CZlv5wk+v2muGF8KSE9CJBLv9nj4q2C0d18zkNAoc5fB2out1gj+Y0SiEAckueQisxeGp
+ HHZoXk0ZY4JpiVkrPCkcJLgIgEug9wGqSfKeNlU8vduwL29brzY3u+MPMDhTaY+Yro+v/ja2que
+ jRWYRLHWJzrmJyh3mPPe/fdhw/Gxi8zL8viAGAJgjefCT4eUWdboQ==
+X-Google-Smtp-Source: AGHT+IHpQmyuEUl7ZY7IQgoZ44mIjfwxuXcIKwAs/YISw8GDNwPYV1qaN8Vf7okuxWynyJunmfUp5A==
+X-Received: by 2002:a05:6808:1210:b0:3e6:5f5:5e25 with SMTP id
+ 5614622812f47-3e9158395a3mr1914216b6e.19.1732251804221; 
+ Thu, 21 Nov 2024 21:03:24 -0800 (PST)
 Received: from localhost ([157.82.207.167])
  by smtp.gmail.com with UTF8SMTPSA id
- 586e51a60fabf-2971d882c3dsm378121fac.44.2024.11.21.21.03.19
+ 46e09a7af769-71c03790782sm286676a34.40.2024.11.21.21.03.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Nov 2024 21:03:20 -0800 (PST)
+ Thu, 21 Nov 2024 21:03:23 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 22 Nov 2024 14:03:09 +0900
-Subject: [PATCH v3 3/6] virtio-net: Do not check for the queue before RSS
+Date: Fri, 22 Nov 2024 14:03:10 +0900
+Subject: [PATCH v3 4/6] virtio-net: Fix hash reporting when the queue changes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241122-queue-v3-3-f2ff03b8dbfd@daynix.com>
+Message-Id: <20241122-queue-v3-4-f2ff03b8dbfd@daynix.com>
 References: <20241122-queue-v3-0-f2ff03b8dbfd@daynix.com>
 In-Reply-To: <20241122-queue-v3-0-f2ff03b8dbfd@daynix.com>
 To: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
 Cc: qemu-devel@nongnu.org, devel@daynix.com, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,43 +99,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_net_can_receive() checks if the queue is ready, but RSS will
-change the queue to use so, strictly speaking, we may still be able to
-receive the packet even if the queue initially provided is not ready.
-Perform RSS before virtio_net_can_receive() to cover such a case.
+virtio_net_process_rss() fills the values used for hash reporting, but
+the values used to be thrown away with a recursive function call if
+the queue changes after RSS. Avoid the function call to keep the values.
 
-Fixes: 4474e37a5b3a ("virtio-net: implement RX RSS processing")
+Fixes: a4c960eedcd2 ("virtio-net: Do not write hashes to peer buffer")
+Buglink: https://issues.redhat.com/browse/RHEL-59572
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/net/virtio-net.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/net/virtio-net.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index a2a8d6b07bcc..d4aaf362b70f 100644
+index d4aaf362b70f..b544d2e91a77 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -1911,10 +1911,6 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+@@ -1898,10 +1898,10 @@ static int virtio_net_process_rss(NetClientState *nc, const uint8_t *buf,
+ }
+ 
+ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+-                                      size_t size, bool no_rss)
++                                      size_t size)
+ {
+     VirtIONet *n = qemu_get_nic_opaque(nc);
+-    VirtIONetQueue *q = virtio_net_get_subqueue(nc);
++    VirtIONetQueue *q;
+     VirtIODevice *vdev = VIRTIO_DEVICE(n);
+     VirtQueueElement *elems[VIRTQUEUE_MAX_SIZE];
+     size_t lens[VIRTQUEUE_MAX_SIZE];
+@@ -1911,12 +1911,10 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
      size_t offset, i, guest_offset, j;
      ssize_t err;
  
--    if (!virtio_net_can_receive(nc)) {
--        return -1;
--    }
--
-     if (!no_rss && n->rss_data.enabled && n->rss_data.enabled_software_rss) {
+-    if (!no_rss && n->rss_data.enabled && n->rss_data.enabled_software_rss) {
++    if (n->rss_data.enabled && n->rss_data.enabled_software_rss) {
          int index = virtio_net_process_rss(nc, buf, size, &extra_hdr);
          if (index >= 0) {
-@@ -1924,6 +1920,10 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+-            NetClientState *nc2 =
+-                qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
+-            return virtio_net_receive_rcu(nc2, buf, size, true);
++            nc = qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
          }
      }
  
-+    if (!virtio_net_can_receive(nc)) {
-+        return -1;
-+    }
+@@ -1924,6 +1922,8 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+         return -1;
+     }
+ 
++    q = virtio_net_get_subqueue(nc);
 +
      /* hdr_len refers to the header we supply to the guest */
      if (!virtio_net_has_buffers(q, size + n->guest_hdr_len - n->host_hdr_len)) {
          return 0;
+@@ -2049,7 +2049,7 @@ static ssize_t virtio_net_do_receive(NetClientState *nc, const uint8_t *buf,
+ {
+     RCU_READ_LOCK_GUARD();
+ 
+-    return virtio_net_receive_rcu(nc, buf, size, false);
++    return virtio_net_receive_rcu(nc, buf, size);
+ }
+ 
+ /*
 
 -- 
 2.47.0
