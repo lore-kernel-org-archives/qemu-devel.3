@@ -4,165 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE18D75E25
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 11:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5D6D75E29
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 11:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tERf8-0006UB-4k; Fri, 22 Nov 2024 06:17:22 -0500
+	id 1tERhl-0007hN-QA; Fri, 22 Nov 2024 06:20:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tERey-0006On-H3
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 06:17:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tERex-0005W7-6a
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 06:17:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732274230;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QfXK/eRTNutRVyPxhTR54zIMRLNHR/gdc49ekKuHocs=;
- b=GDxEa2vLys4sBN56n2IgwCnknkq/1/QSNHOu2JDxjdB47IrjPdJu0/F5OjmjRZPcNB0pHb
- dHngBI2u/BkvxhkMb/struqSQQB0SsxCk8uTgpBH8Cp6jCsGhcu532GHeK+LXVVOXV/zzD
- xDZL33uHKByY+5urqihvlVEVgBidKQA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-ijqaxdgmPMWyf18qTcfrYA-1; Fri, 22 Nov 2024 06:17:09 -0500
-X-MC-Unique: ijqaxdgmPMWyf18qTcfrYA-1
-X-Mimecast-MFC-AGG-ID: ijqaxdgmPMWyf18qTcfrYA
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-382480686f2so1099004f8f.1
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 03:17:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tERhg-0007eJ-Vm
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 06:20:02 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tERhZ-00069p-DF
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 06:20:00 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-431ac30d379so17756965e9.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 03:19:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732274390; x=1732879190; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2hRSTyr9LseUA345HjOb58N9q4glOwPpxbZ3ixu2HJM=;
+ b=oikOljE90Xisob9a6/Lh3s85Tkc1LtG+zrjU5dpp1zy0iBxvUvE5X2U3MYRmFoH21A
+ aetkbbCssPXAXvcLuStR+LkC9SPS4bsQ31/1AMcZ6bEeSOTevI+AEdNjMhOUMgEUQlXu
+ Y39rMy78xAYo7Mah4Xph8fgEylyWMTXlN/GelNJqBYaHk6YK4A+ySk12fSI4hqoAkwK5
+ WgEI7XBH3xZAlMGwOWuBKe6L+ioy2wUMnOHeWW3+BsMNI95twX57zN09LfcZXVMjddfB
+ PUhzu0LDQUX/gw3p8vu9SWuL5Cfrc6/IsddAHZsCnlGB9W3gPMsruJgP/Ks2HeyTsQ6V
+ 4F9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732274228; x=1732879028;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QfXK/eRTNutRVyPxhTR54zIMRLNHR/gdc49ekKuHocs=;
- b=bwiaH2HJv2HjfPSpt+EUb33UdCtHz58X2t0XC15OSWkXlXI1HGnEeKRtqCMToytcXS
- kaWxZUhqY4lYgxvcUQPKpYu+biTndlt+6rBUS5Q0mokgGzfSfOXCRQRvBvWUDsRyVaWv
- cKHfA7EvMIyARYwjOYW1IYdwxj3aqT5UqIDKnpTnQXtZIpdBzkwh0/LRFn7hfqVu00p6
- EnqJEZCRko4fCacRj9wYYznOSlk7gjk2DewrRKyHYj2AIrBKyLX0PT8nFnfxVQt6EVC2
- YSlPKML11NloxlRmSlysFYr6YqyPdhOEvc1EbHv40ZXFjhhPeznRf5bPiYxYbfgHBXFp
- 0ffA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUaUpQPavvilpLE399SRZEE4XFve+Rg2T8pRy6+d5z+MnfJ+QebnQy/VINo3y2LzTJZfLGrvgMWh/Pf@nongnu.org
-X-Gm-Message-State: AOJu0Yxa6pgVpICxG71IYxP0M15E/I2mnDi2t6Kas7T68Ba07QtWkVwc
- G5p/E/dwC0B9Wa+x1/I4CqD6wr6L182powwTAQG0eLoU92QFeav6DeBkPgvysqaoZB5uEasLBhH
- VMSZLZC7mEdu+kG5XjJ9h6fY+LbuWq1vvmWN5MLmArzXiRhxD4lww
-X-Gm-Gg: ASbGnctt9fECtJMKL0Om6L/5WEI4BR2tlRRzCHrbGY3AhW6l4Bc2lYtw23+S958V1Vh
- 3Ml4D/FtHJWiO1ap9LSm3gQPwcdddO0hpda/hgaj+FImDeVm1hBp/s2foBk/YsPwDP83Ls9Bf/X
- /eQxhK5m268nSlNbc9q8+usGvoxFeUoY3GNNGxWCYf1LfHy36eL9bJ7DXNnW7P6ge0LAEw1Tkim
- 0fsU63tYR/QVfn3x+iHgpBYRVtjI++5j8grHNOqQBUUkxXy74UYqA9G5j3fldH75I5Jd1HjUnQ=
-X-Received: by 2002:a05:6000:1a8e:b0:382:46ea:1125 with SMTP id
- ffacd0b85a97d-38260b86386mr2149722f8f.33.1732274228194; 
- Fri, 22 Nov 2024 03:17:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE8lOPUUIi6SwX9MkcMHCV6ehNKEUWnCrAG0QbpZq3HRVJDq+3Wwen6db8lNbTDRS+UTjJw6w==
-X-Received: by 2002:a05:6000:1a8e:b0:382:46ea:1125 with SMTP id
- ffacd0b85a97d-38260b86386mr2149697f8f.33.1732274227788; 
- Fri, 22 Nov 2024 03:17:07 -0800 (PST)
-Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ d=1e100.net; s=20230601; t=1732274390; x=1732879190;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2hRSTyr9LseUA345HjOb58N9q4glOwPpxbZ3ixu2HJM=;
+ b=TXP8EtLcgLC844F8GVnVGW65Tas33juOd6BIXDpDP0CFQ80x53jwexWiHcx0fRUWLd
+ KLYCATe+AZwlDen0dnxvq3o2kjCKeMbdWCJ2vwcHN/ViOemHtAszhe2wS5Sny1DDuaPu
+ caOxxxOZian3KdOEbDzY+PINyEe4/wXR1tESc3/k/pc6a1ejCg2hjt3VAYzC0Wdf6bdA
+ jEgbrRx31ssQeE0VmbwhaiQefhFrvc48A6uQ0lXcP99RtPqeVGPuu5hcB6FaKH5So0Qm
+ Gi0BRr5w9hCI9cUuOs/FHYDpa1OzY5fe2GA5n+K/Owu52kgKDi735z/q4rvvULotFG6d
+ kV+w==
+X-Gm-Message-State: AOJu0YyCh35kDRKQ/w8wXYZwqTwYUrbzhwRec2bavzguyurZ2xuHo07b
+ tV7BxoMOPJAJWSvK1yh2cGB0iRpzkiMe7liDJhtb2FmdZN2VgVKyFZkXWAeui/YRlp0550FJOum
+ f
+X-Gm-Gg: ASbGncv2tA8A9CdZnk06d+AHgBkcuVN+n2KzzKhZcfR7hQSx4zWYIa+3+r6QHq09PNp
+ MD2787NRSOC+t08mbhTSkOrDlQTIuffkwq2pmnoSpWegKiM0afE1MKlM5izw2yeZnBYdQf3JoND
+ iXDNU/79tZQJSGjI9ZjSzkxGG4i+SD1ak9uiFibJvre/MbmwaipYuC+V0qmWSb6wdW6r7MRzqyF
+ ye9s3Qqe2jzqNrfddoaqFaHx19NhvxKJ4DjRBgBif15h0NLYrWkyHa0wWW8T0NSNWC9R1IjUpOp
+X-Google-Smtp-Source: AGHT+IGlE04LYbgRfQK9sKvaRbhv+saNgdI9rlh2DZYBJXOWfjTBw3UWvTHYcARESYcaWuRcKIAPxQ==
+X-Received: by 2002:a05:600c:4f90:b0:431:4fa0:2e0b with SMTP id
+ 5b1f17b1804b1-433ce4af2eemr16585165e9.28.1732274389724; 
+ Fri, 22 Nov 2024 03:19:49 -0800 (PST)
+Received: from localhost.localdomain ([176.187.211.33])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fbedad6sm2093564f8f.91.2024.11.22.03.17.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Nov 2024 03:17:07 -0800 (PST)
-Message-ID: <a85a1fa2-9ab4-4a76-88f6-f64a2ccb74fd@redhat.com>
-Date: Fri, 22 Nov 2024 12:17:06 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/39] tests/functional: update the i386 tuxrun tests
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alexandre Iooss <erdnaxe@crans.org>, qemu-riscv@nongnu.org,
- Thomas Huth <huth@tuxfamily.org>, Bernhard Beschow <shentey@gmail.com>,
- Eric Farman <farman@linux.ibm.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-s390x@nongnu.org, Niek Linnenbank <nieklinnenbank@gmail.com>,
- qemu-arm@nongnu.org, John Snow <jsnow@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, qemu-rust@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
+ 5b1f17b1804b1-43366cbcd17sm65040505e9.1.2024.11.22.03.19.47
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 22 Nov 2024 03:19:49 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Ani Sinha <anisinha@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Anders Roxell <anders.roxell@linaro.org>
-References: <20241121165806.476008-1-alex.bennee@linaro.org>
- <20241121165806.476008-23-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241121165806.476008-23-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <huth@tuxfamily.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Helge Deller <deller@gmx.de>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH 1/3] hw/scsi/spapr_vscsi: Call
+ scsi_bus_legacy_handle_cmdline() in REALIZE
+Date: Fri, 22 Nov 2024 12:19:37 +0100
+Message-ID: <20241122111939.11936-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241122111939.11936-1-philmd@linaro.org>
+References: <20241122111939.11936-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,16 +112,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/11/2024 17.57, Alex Bennée wrote:
-> Now there are new upto date images available we should update to them.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Anders Roxell <anders.roxell@linaro.org>
-> ---
->   tests/functional/test_i386_tuxrun.py | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+Call scsi_bus_legacy_handle_cmdline() in the DeviceRealize
+handler, just after scsi_bus_init().
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/scsi/spapr_vscsi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
+index c75a6c8807..8e76bfd7ce 100644
+--- a/hw/scsi/spapr_vscsi.c
++++ b/hw/scsi/spapr_vscsi.c
+@@ -1218,6 +1218,7 @@ static void spapr_vscsi_realize(SpaprVioDevice *dev, Error **errp)
+     dev->crq.SendFunc = vscsi_do_crq;
+ 
+     scsi_bus_init(&s->bus, sizeof(s->bus), DEVICE(dev), &vscsi_scsi_info);
++    scsi_bus_legacy_handle_cmdline(&s->bus);
+ 
+     /* ibmvscsi SCSI bus does not allow hotplug. */
+     qbus_set_hotplug_handler(BUS(&s->bus), NULL);
+@@ -1227,10 +1228,9 @@ void spapr_vscsi_create(SpaprVioBus *bus)
+ {
+     DeviceState *dev;
+ 
+-    dev = qdev_new("spapr-vscsi");
++    dev = qdev_new(TYPE_VIO_SPAPR_VSCSI_DEVICE);
+ 
+     qdev_realize_and_unref(dev, &bus->bus, &error_fatal);
+-    scsi_bus_legacy_handle_cmdline(&VIO_SPAPR_VSCSI_DEVICE(dev)->bus);
+ }
+ 
+ static int spapr_vscsi_devnode(SpaprVioDevice *dev, void *fdt, int node_off)
+-- 
+2.45.2
 
 
