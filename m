@@ -4,130 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A0CDE65D32
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 08:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2BEAE65D32
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 08:22:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEOuS-0006iY-RA; Fri, 22 Nov 2024 03:21:00 -0500
+	id 1tEOv8-0006tT-8P; Fri, 22 Nov 2024 03:21:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tEOuQ-0006iA-Ct
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:20:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tEOv6-0006tA-JG
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:21:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tEOuO-0008En-Ps
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:20:58 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tEOv4-0008GH-Lm
+ for qemu-devel@nongnu.org; Fri, 22 Nov 2024 03:21:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732263655;
+ s=mimecast20190719; t=1732263697;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SMiTLXqPrQJxKJ37ZL8bN8EGF9omAw7ifdKAnxt4DII=;
- b=iuOoFLpoU1wvg+LR9+17/vuOLhsg/y+Nln37Vtb/K/AG3DAU38InF2Pvav41g4GPdOmn75
- F7l75m0kLkYNjY1iw47d0VmxEPX7lKDqjcUW1rGci73JwrlUlCCQbi+Kcx8zEiq5oax/up
- 5Ar9A/Q/wBR/T/ttDxu6FF9Z6wWRWB0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pdHXf7bdQWNwC0IHZFz5RGSWoCd2ZJXMrUIo60PbqTw=;
+ b=XesYvffAjj5jZ8oeK9xCpbwmZcKtUxuChtvsTVr/4Prjr3CblOoMtmG45uI1Wkz8iYqk2R
+ XnkPyujEwHyF5A2W8DkcCIOFJG0nNGd7z1hdIdL1HtRvmC7CrRoVc6XnkfE57DiyFHTd1B
+ CxGmCi/W9GvoreXvKV/coVTAHdxP4uk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-350-aJQ_yQl_OpmzG7VRf874fA-1; Fri, 22 Nov 2024 03:20:53 -0500
-X-MC-Unique: aJQ_yQl_OpmzG7VRf874fA-1
-X-Mimecast-MFC-AGG-ID: aJQ_yQl_OpmzG7VRf874fA
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-431518e6d8fso13967345e9.0
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 00:20:52 -0800 (PST)
+ us-mta-251-3IKPJSeBMh6oPoGzICZXig-1; Fri, 22 Nov 2024 03:21:35 -0500
+X-MC-Unique: 3IKPJSeBMh6oPoGzICZXig-1
+X-Mimecast-MFC-AGG-ID: 3IKPJSeBMh6oPoGzICZXig
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4314f1e0f2bso13893465e9.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 00:21:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732263651; x=1732868451;
+ d=1e100.net; s=20230601; t=1732263694; x=1732868494;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SMiTLXqPrQJxKJ37ZL8bN8EGF9omAw7ifdKAnxt4DII=;
- b=So0oDswns0MS/d1ibk9SOdJTforEGNkP0vT1OLVGdPs0oTov7x99iHYT+PUi4sHHQH
- WcfRquO0ppOSgHJYAapPooTub9mxpdIhYTmjB/s7LpxpbXQdXMng2cvrgHx7O8n202DJ
- ks+gSoE471KyTjf/qeM2ugPNGjuxF9zRMbWVgVo4WSxKHbPd9x0/jxLb0FN4/cbTze4G
- VZKuOoEumkQCKLAvSc0sfdStQUe9dWoPc4VOEoay1VmSiK4vQZHa/oj96GpZBJSIQIum
- MvJRXQ7NNmZqrnvIkRX0INoxp/EC0C+BzYJLOcJH6JtJrgJjZimTl+N9xXaW3jPDmPAy
- tTwQ==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pdHXf7bdQWNwC0IHZFz5RGSWoCd2ZJXMrUIo60PbqTw=;
+ b=eemI8PZZRn/ZOHhhCOPQq8i8neS5Ft/jV/pLAbUDhGxdncs9MzcDDG+ubOQdklOurj
+ 6MuXZHPdmkdZTphDBLDG7Qky0/ThWyqqKb1e1MXw6QpNYRmGJCTTmeK5W9vbeIG7r8HQ
+ 1EqqgvLnEJkFtxeVYHuFQYvNs2Qh4xwG0tqyg2SWj2e43TyLCPWFdkwDB8qp3TvvmJEn
+ vDSw9XajMa2PjfW46zhCUFlBCpGxfz/mIg7WL5VqeqVgdRzt5gX1lLye4yFwUnOO4TG1
+ K2qWJl28DBNzQsRzPPtyrtjAtAjBlbhBDa2M4gOmVk/CZpO2TQT/fcWSxNMW5YGrRmzn
+ kuYg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWO90PRSF4pzJra5tOM0RJfwz66opCJ5lXuaFAh4HsGreQoNyxxDKPwIeJ0RsLBuVxFH91EEpWgSDcB@nongnu.org
-X-Gm-Message-State: AOJu0YyQHCaoup8D2XSPyMs9ahiCNuPp0fw7ijS6O+U5nF3KrumJ5wjZ
- n8vy5qeynEQaqES7XIEJj9rcp7KaA68ybBRFL4RYDeYnwPn3Qq7AMbSqSTnAnU4e/iyZfSaPYM7
- WHGnoPvkzuPYUzkcCgWNykFvyWZ0M+vNKCbVy38UbPOO12fFXkgbzfJccTaEK
-X-Gm-Gg: ASbGncvlaLA5l0MTv29K2n+T11zsy2s8lbBUfKgOymgule2yUNAd9uUpaa98ojxwUQ9
- lAuQ5+b/9/cY7NAi5g9y8jeFzZGElFzZdHLic1Zg7Nkw9w85FTfsSsytohK9Eq/iaWko0e1i3HF
- yjvhZkxR11MDXco68zp7kK07sbFxctYca0I9WnICs/uBYXl8kPGho5kWHb9/t68LNEeBaDSj6X3
- UymvB7d3iVulNCNfUfbe9yGBJsFTCXm6f2E3lfrp6HZIeLUoFNYaQ==
-X-Received: by 2002:a05:600d:2:b0:431:5ba1:a513 with SMTP id
- 5b1f17b1804b1-433ce4267b2mr17036335e9.10.1732263651378; 
- Fri, 22 Nov 2024 00:20:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGibK+LEosluRe8iM4Bypqi3T7EBT9N8zvJFM57G3Rxm3/x1Nku9asgh4aoJDzfdiYSHWKwNw==
-X-Received: by 2002:a05:600d:2:b0:431:5ba1:a513 with SMTP id
- 5b1f17b1804b1-433ce4267b2mr17036105e9.10.1732263651049; 
- Fri, 22 Nov 2024 00:20:51 -0800 (PST)
-Received: from [192.168.10.3] ([151.49.204.250])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-433cde16a95sm19550855e9.18.2024.11.22.00.20.50
+ AJvYcCVOO7F0rocjygx2PAPZGqDW0p1fZb1bN205K0jjMREOfrrnnc72df3mEFc/arAr9DchUc0BfbV6KJi+@nongnu.org
+X-Gm-Message-State: AOJu0YxoRj5xN4kS1ahHoZ5IFRXE2hyRXKajQC2+9Iiojs612MguERlh
+ HTk4ucj996T8ZXyzksItpji2NPeHANUnGxUfA3abbZVmwdTOjywxoQmMYVQkZ7L0q7SIlVg5gdJ
+ NYWvBy62W2LWVxuvM5WSTCWOyDdrr8Q7YgxNEVGOnloyrLGJVefdG
+X-Gm-Gg: ASbGncsWodS0p62Hoa1/qQcM/KkiOZ+pi9jvHRv8Yvlmjd3YCAaHfwq1Hkxt3kreaxm
+ 0Kdvzc5lHl/KG98Aq1bAw1Tbc8+lWwXqJecLQwstm08n5BeHZt3rGzK7VxGNBtwS4tbKbiBLlaC
+ KWEb+0qRal+AOk4IIlRseNWtJu/NVTKw41B+07HwBjPacoTROQUqkdNMSOW5Ajp64mvLDE8gkkq
+ +jP1OyisY3D1fCCr23aEsV8Hy7GKMT+ptS5uiKZGRg7HNi6ukETgfUALUKmlZdby+Aks8L3uB8=
+X-Received: by 2002:a05:600c:a02:b0:431:4a5a:f09a with SMTP id
+ 5b1f17b1804b1-433ce4b2f62mr14332915e9.24.1732263693906; 
+ Fri, 22 Nov 2024 00:21:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFeyTnJ7F+FsKj8wYI/p3ISwyJ4MRU0LIPezpOucchCekh3L+OUdAlFza3AsMGqJ4zNEi/jHw==
+X-Received: by 2002:a05:600c:a02:b0:431:4a5a:f09a with SMTP id
+ 5b1f17b1804b1-433ce4b2f62mr14332665e9.24.1732263693488; 
+ Fri, 22 Nov 2024 00:21:33 -0800 (PST)
+Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-433cde05898sm19459475e9.9.2024.11.22.00.21.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Nov 2024 00:20:50 -0800 (PST)
-Message-ID: <0facde38-6026-4c08-bcb5-4ba2ec562cf9@redhat.com>
-Date: Fri, 22 Nov 2024 09:20:49 +0100
+ Fri, 22 Nov 2024 00:21:33 -0800 (PST)
+Message-ID: <fa39d761-91c5-4cb6-93b3-c077ce51a989@redhat.com>
+Date: Fri, 22 Nov 2024 09:21:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: pc-bios/optionrom: when/why do we build it?
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel <qemu-devel@nongnu.org>
-References: <5c90aeb4-2773-4c1b-b727-0f2221860761@tls.msk.ru>
- <ec822e92-179a-44e3-80d4-48763544689f@tls.msk.ru>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 2/3] tests/functional: Convert Aspeed arm SDK tests
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20241122073309.1897944-1-clg@redhat.com>
+ <20241122073309.1897944-3-clg@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <ec822e92-179a-44e3-80d4-48763544689f@tls.msk.ru>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241122073309.1897944-3-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -145,33 +157,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/22/24 08:05, Michael Tokarev wrote:
-> Maybe a more general question would be:
-> what is our main build entry point?  Is it `make` (or `make all`)
-> still, or is it meson now?
+On 22/11/2024 08.33, Cédric Le Goater wrote:
+> Drop the SSH connection which was introduced in the avocado tests to
+> workaround read issues when interacting with console.
+> 
+> EXTRA_BOOTARGS was introduced to reduce the console output at Linux
+> boot time. This didn't have the desired effect as we still had issues
+> when trying to match patterns on the console and we had to use the ssh
+> connection as a workaround.
+> 
+> While at it, remove the U-Boot EXTRA_BOOTARGS variable which has
+> become useless.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+...
+> -    def do_test_arm_aspeed_sdk_start(self, image):
+> -        self.require_netdev('user')
 
-s/meson/ninja/
+The require_netdev('user') is gone in the new code, but it still uses "-net 
+user" ... so I'd like to suggest to add it in the new code, too?
 
-But no, it's always make.  Using make ensures that:
+With that nit fixed:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-1) you build stuff that is not emulators (option ROMs, TCG tests). 
-Meson is only for stuff that runs on the host
 
-2) you rerun configure if it changes.
-
-> For this specific optionrom thing, I'd say we should add a separate
-> rule to the top-level Makefile (or to meson.build) which is not
-> run by default but can be run explicitly, like `make optionrom` -
-> this will check if pc-bios/optionrom/config.mak is there and either
-> run make in this subdir or complain saying no i386 compiler is found.
-
-The optionroms are built by default to ensure that they do not bitrot. 
-I think they're not copied (this is really old policy...) so that, if 
-there is no need, the binary does not change at all across releases.
-
-But yes, adding an explicit makefile target is useful.  It could also 
-copy the build products over to the source directory.
-
-Paolo
+> -        self.vm.set_console()
+> -        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
+> -                         '-net', 'nic', '-net', 'user,hostfwd=:127.0.0.1:0-:22')
+> -        self.vm.launch()
+> -
+> -        self.wait_for_console_pattern('U-Boot 2019.04')
+> -        interrupt_interactive_console_until_pattern(
+> -            self, 'Hit any key to stop autoboot:', 'ast#')
+> -        exec_command_and_wait_for_pattern(
+> -            self, 'setenv bootargs ${bootargs} ' + self.EXTRA_BOOTARGS, 'ast#')
+> -        exec_command_and_wait_for_pattern(
+> -            self, 'boot', '## Loading kernel from FIT Image')
+> -        self.wait_for_console_pattern('Starting kernel ...')
+> -
+> -    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+> -    def test_arm_ast2500_evb_sdk(self):
+> -        """
+> -        :avocado: tags=arch:arm
+> -        :avocado: tags=machine:ast2500-evb
+> -        :avocado: tags=flaky
+> -        """
+> -
+> -        image_url = ('https://github.com/AspeedTech-BMC/openbmc/releases/'
+> -                     'download/v08.06/ast2500-default-obmc.tar.gz')
+> -        image_hash = ('e1755f3cadff69190438c688d52dd0f0d399b70a1e14b1d3d5540fc4851d38ca')
+> -        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+> -                                      algorithm='sha256')
+> -        archive.extract(image_path, self.workdir)
+> -
+> -        self.do_test_arm_aspeed_sdk_start(
+> -            self.workdir + '/ast2500-default/image-bmc')
+> -        self.wait_for_console_pattern('nodistro.0 ast2500-default ttyS4')
+> -
+> -    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+> -    def test_arm_ast2600_evb_sdk(self):
+> -        """
+> -        :avocado: tags=arch:arm
+> -        :avocado: tags=machine:ast2600-evb
+> -        :avocado: tags=flaky
+> -        """
+> -
+> -        image_url = ('https://github.com/AspeedTech-BMC/openbmc/releases/'
+> -                     'download/v08.06/ast2600-a2-obmc.tar.gz')
+> -        image_hash = ('9083506135f622d5e7351fcf7d4e1c7125cee5ba16141220c0ba88931f3681a4')
+> -        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+> -                                      algorithm='sha256')
+> -        archive.extract(image_path, self.workdir)
+> -
+> -        self.vm.add_args('-device',
+> -                         'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test');
+> -        self.vm.add_args('-device',
+> -                         'ds1338,bus=aspeed.i2c.bus.5,address=0x32');
+> -        self.do_test_arm_aspeed_sdk_start(
+> -            self.workdir + '/ast2600-a2/image-bmc')
+> -        self.wait_for_console_pattern('nodistro.0 ast2600-a2 ttyS4')
+> -
+> -        self.ssh_connect('root', '0penBmc', False)
+> -        self.ssh_command('dmesg -c > /dev/null')
+> -
+> -        self.ssh_command_output_contains(
+> -             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-5/device/new_device ; '
+> -             'dmesg -c',
+> -             'i2c i2c-5: new_device: Instantiated device lm75 at 0x4d');
+> -        self.ssh_command_output_contains(
+> -                             'cat /sys/class/hwmon/hwmon19/temp1_input', '0')
+> -        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+> -                    property='temperature', value=18000);
+> -        self.ssh_command_output_contains(
+> -                             'cat /sys/class/hwmon/hwmon19/temp1_input', '18000')
+> -
+> -        self.ssh_command_output_contains(
+> -             'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-5/device/new_device ; '
+> -             'dmesg -c',
+> -             'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32');
+> -        year = time.strftime("%Y")
+> -        self.ssh_command_output_contains('/sbin/hwclock -f /dev/rtc1', year);
+> -
+> diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+> index 5fb1adf46439..7644ecbae750 100755
+> --- a/tests/functional/test_arm_aspeed.py
+> +++ b/tests/functional/test_arm_aspeed.py
+> @@ -252,6 +252,73 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
+>   
+>           self.do_test_arm_aspeed_buildroot_poweroff()
+>   
+> +    def do_test_arm_aspeed_sdk_start(self, image):
+> +        self.vm.set_console()
+> +        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
+> +                         '-net', 'nic', '-net', 'user', '-snapshot')
+> +        self.vm.launch()
+> +
+> +        self.wait_for_console_pattern('U-Boot 2019.04')
+> +        self.wait_for_console_pattern('## Loading kernel from FIT Image')
+> +        self.wait_for_console_pattern('Starting kernel ...')
+> +
+> +    ASSET_SDK_V806_AST2500 = Asset(
+> +        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v08.06/ast2500-default-obmc.tar.gz',
+> +        'e1755f3cadff69190438c688d52dd0f0d399b70a1e14b1d3d5540fc4851d38ca')
+> +
+> +    def test_arm_ast2500_evb_sdk(self):
+> +        self.set_machine('ast2500-evb')
+> +
+> +        image_path = self.ASSET_SDK_V806_AST2500.fetch()
+> +
+> +        archive_extract(image_path, self.workdir)
+> +
+> +        self.do_test_arm_aspeed_sdk_start(
+> +            self.workdir + '/ast2500-default/image-bmc')
+> +
+> +        self.wait_for_console_pattern('ast2500-default login:')
+> +
+> +    ASSET_SDK_V806_AST2600_A2 = Asset(
+> +        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v08.06/ast2600-a2-obmc.tar.gz',
+> +        '9083506135f622d5e7351fcf7d4e1c7125cee5ba16141220c0ba88931f3681a4')
+> +
+> +    def test_arm_ast2600_evb_sdk(self):
+> +        self.set_machine('ast2600-evb')
+> +
+> +        image_path = self.ASSET_SDK_V806_AST2600_A2.fetch()
+> +
+> +        archive_extract(image_path, self.workdir)
+> +
+> +        self.vm.add_args('-device',
+> +            'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test');
+> +        self.vm.add_args('-device',
+> +            'ds1338,bus=aspeed.i2c.bus.5,address=0x32');
+> +        self.do_test_arm_aspeed_sdk_start(
+> +            self.workdir + '/ast2600-a2/image-bmc')
+> +
+> +        self.wait_for_console_pattern('ast2600-a2 login:')
+> +
+> +        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+> +        exec_command_and_wait_for_pattern(self, '0penBmc', 'root@ast2600-a2:~#')
+> +
+> +        exec_command_and_wait_for_pattern(self,
+> +            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-5/device/new_device',
+> +            'i2c i2c-5: new_device: Instantiated device lm75 at 0x4d');
+> +        exec_command_and_wait_for_pattern(self,
+> +             'cat /sys/class/hwmon/hwmon19/temp1_input', '0')
+> +        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+> +                    property='temperature', value=18000);
+> +        exec_command_and_wait_for_pattern(self,
+> +             'cat /sys/class/hwmon/hwmon19/temp1_input', '18000')
+> +
+> +        exec_command_and_wait_for_pattern(self,
+> +             'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-5/device/new_device',
+> +             'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32');
+> +        year = time.strftime("%Y")
+> +        exec_command_and_wait_for_pattern(self,
+> +             '/sbin/hwclock -f /dev/rtc1', year);
+> +
+> +
+>   class AST2x00MachineMMC(LinuxKernelTest):
+>   
+>       ASSET_RAINIER_EMMC = Asset(
 
 
