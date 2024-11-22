@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A8A3E65D1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 03:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC7FE65D18
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 03:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEKFo-0005Yj-PJ; Thu, 21 Nov 2024 22:22:46 -0500
+	id 1tEKFe-0005VL-Td; Thu, 21 Nov 2024 22:22:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tEKFk-0005XX-6Q
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 22:22:40 -0500
+ id 1tEKFc-0005Tb-IY
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 22:22:32 -0500
 Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tEKFi-0003y3-Na
- for qemu-devel@nongnu.org; Thu, 21 Nov 2024 22:22:39 -0500
+ id 1tEKFb-0003wN-1S
+ for qemu-devel@nongnu.org; Thu, 21 Nov 2024 22:22:32 -0500
 Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-21145812538so12799195ad.0
- for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 19:22:38 -0800 (PST)
+ d9443c01a7336-212583bd467so16350105ad.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Nov 2024 19:22:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1732245757; x=1732850557; darn=nongnu.org;
+ d=sifive.com; s=google; t=1732245749; x=1732850549; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ac5vpUHfFOddVJFriYu+6Qi8+wWX9FL8DoIUJSWkCVQ=;
- b=ImnPNExe34RLm4SjPbAiHqykZp/ON8aABTXWBv2qb9kLySrGNFbEDKX4WEYlTGCXgq
- wsuuc31P6gia8QyECvrlOjqje3gygDbeAnBfHr+QDjsD7cK0VldTLsW0U3TQ7SWkpH+9
- 8E+QMcujElBy861m48z0GnZqy4PXFvL4RuQf5W0MFSVWqinCSApbSUd575yBeMuUb75X
- cHBigOPhZ1erchYmtLFWGhpNaWkEYqecMFmL/k4fqjftkH860sVMCVXD7KDb6+krFZES
- UcnJk/w4YN7RM9FkwWuamclW5IAEBZ63o7kSCAwNetfaUreZOZXGxJqAsgJ/8qlEnbZz
- hiLg==
+ bh=ete+ZJB8URbofv6Sb72yOCLqH3KqEk//Slye3l6+Ywk=;
+ b=ReYY0V14yx7limW5OhkEIqMDkrcvla4NKGieLXG5C8GEphe3eTB0naP/L6HUfUuVFK
+ HMPCrxu9vkeJd3QEgqN8Z4MzXrpweGd0EGCPvEHYnBVtCeCoNkwr+tbD3l6OIV7knyu1
+ 8Ua/DT0RYocKCwhbOXKEQ9B5vlgV6Q+ysvpdypxM4FETP+OpEGr+E9mjc15zinI/LQUm
+ PxcfRNxSi9I6pEFy/Cyge7NjfTTD0h15tOUoZ8a3uROuxK01nDWZseyjJoB/+uYk9eIs
+ FTKXlm/NbqsCPe0GMEWHgg4/67dbE4QVrSGR7jIz65w3jK0Ni2Yi9vRpiTF+bavgN/4a
+ +RVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732245757; x=1732850557;
+ d=1e100.net; s=20230601; t=1732245749; x=1732850549;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ac5vpUHfFOddVJFriYu+6Qi8+wWX9FL8DoIUJSWkCVQ=;
- b=Y+1/9EyR3p+aP8fOAU6gFJNNd0XDtDRf0Ajo0BZV13Lq5ePUMwlWJdtMxAdL9Rxmyx
- YuMa7umVBYAyPj3gH2J0GAMR898ly2PpvRqzqKqfq0A97XPeSCBdsYTt4QiSqOr47iVp
- P/4+7rlafA+qUUdIICOQhiOFUNWb8er/w6Vp+t0NJBjJm2+awCsi61spMVjJIFtbndlO
- 1fJRFCbG3+9FuE2ukxXU8BQHBIMAnfVrXFzjIP8Wy8tHur6nvfwICNQo5T9R2FSJFoRu
- mQmEtLMHYohKZqVZhsmKSoRVpr1hhfBMxlARmaSEcblJZxFc5OgujdTD67DicTYx2Ps4
- 5y8w==
-X-Gm-Message-State: AOJu0YzWAjgzP69N9+vQ2yKW1ZVknEww91i8WK2XTC1OReBhOOJLKLMB
- EuaWW8j50wK0XTG+VRPk/F4UIqM3kK+eQDtHHAB4a48HpFlQaQCSOWcS/4nIAvbaUYFnobBIwkP
- mjAesIZllOjKRicI47pgS5+wzQ5YgzQU0O2/AifLSUQjjSA+7mKpB19PRGU3474MVbWDTnH/wpz
- uonIDxyz5JA91iCTTz7AmpKY9HFtr9GNjLBT63N5I1Xh7F
-X-Gm-Gg: ASbGncusj6WrLntjO6ApJPcp+42b8uLWsDiReAT8rzZEHeF7rfdXvbBAM4v1iGBv9Y2
- U8fP0xCk0ZpuxrRdNQrAf/fF+5QCptdBJ4/lo6ZpVD4JDYYnIALNZen82dYgS9pigzyS/g74r4s
- Wma3QKWCZp5YbULz3pdYuLVtCcfMYiWgaPm4EJLU4rSXaxvLg6Sbhnbstw8SEZVMHsRhGw7CPPZ
- Up/COHoUmBz28zi52Hzo0TIIi2BkeOqedRX9ywUGD+5liAlfvfJCdrQzlEMt/hIIJdiieUtrCXT
- 5HmzmQ==
-X-Google-Smtp-Source: AGHT+IGkQEQhtzFsufICB4DTLKiak+NF6QYZWdUlZIyTO2pwITRNoyLVMwo05qfQ7LnD6bOPsPTjQw==
-X-Received: by 2002:a17:902:f64c:b0:212:6981:7587 with SMTP id
- d9443c01a7336-2129fd0fc42mr19001305ad.24.1732245756994; 
- Thu, 21 Nov 2024 19:22:36 -0800 (PST)
+ bh=ete+ZJB8URbofv6Sb72yOCLqH3KqEk//Slye3l6+Ywk=;
+ b=JKkVs6063lVRDd/sBEqBVWN9WX9J3Xn0pTQNmiZ8/RFxvMH+N3R7KsdO0O4qbhw110
+ cPq2Zv7QueUtnheNDmEf74nB/2u61ptJ/Oj2tuuPtghF1tMdf6yCBTJjgk6PJYIkpxNp
+ hPCwv3Z1yGHViUApdAJ5LcgTI3himPMY1gj4ItQujNqo4Lv/FggJ3f4QOqn20sp8poA/
+ 9NpFNegGrPf16w9FRmLRx8ExC36JgXb5yn5gJ6pJnQAkSUvzK8EAr693suFnjuKzI81p
+ t692hX1W0Nf6rUjSfPIf4zB2zovvhjyzNAJLsVVZjSj+bzzVAZvNPQbkUMUi5HYw5c1W
+ lHhQ==
+X-Gm-Message-State: AOJu0YwjefhUikaLaf+brjcxulhErARNthfKoJf4Ma7T53pwEtiDtqfJ
+ MRAzKpH1K9kq3Asd4bpxtqA4W5614CyYXVSjzupCR3/UfwVTGK6t+qzlnCTSTjT4M7d8imuqjGl
+ HigBPm/X9BasyuA/jS2z0lJvArb6IgpL7zbYsVRbompvrQA6HGhFfXov3Cp3EbI/Ya/LFgsoCnf
+ h+E0fpAac2mnpXviXANQnW8tsoSNVGR/a7lDog1iYBFJpZ
+X-Gm-Gg: ASbGnctt/vB5Lgm/AkRAxWShfx+1OZPnF0ReR54ATRu6Cap5wq9TpvPq/LLTLaGx8+n
+ dxwt9CQkxFhNHUPBxn4hBCMXntSuvdfs14CAUDVYZlbi1HkEXk0cpAS92jCpx5Jg7/aUPcLtCZJ
+ nqrV4+vGYooWFCAbgCMx3XhBQi5cyhWv4we9HzosVm3fniFFQx8+GJ9HMf8StcerHrt8m9LQcYi
+ Vi2jUnLboqKEOmcF+a4Uug8v82VGEueZO8YFDkYa0jYJAL47vTJ7cjwyzDxp8eNLu4yvKOTyAxv
+ shx7tA==
+X-Google-Smtp-Source: AGHT+IHBEVnFrbzMXecQHh/nZ+GmGIm98FgEFEm1Vd5Gh6Yy+xQdDvnKgQD8iOmlfoA0OndNvUSyYQ==
+X-Received: by 2002:a17:902:e742:b0:212:4e37:204b with SMTP id
+ d9443c01a7336-2129fd74184mr13294575ad.51.1732245748842; 
+ Thu, 21 Nov 2024 19:22:28 -0800 (PST)
 Received: from fchang-1826.internal.sifive.com ([136.226.240.187])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2129dc157f3sm5506905ad.203.2024.11.21.19.22.35
+ d9443c01a7336-2129dc157f3sm5506905ad.203.2024.11.21.19.22.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Nov 2024 19:22:36 -0800 (PST)
+ Thu, 21 Nov 2024 19:22:28 -0800 (PST)
 From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
-Cc: Tommy Wu <tommy.wu@sifive.com>,
-	Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v9 5/6] target/riscv: Add Smrnmi cpu extension
-Date: Fri, 22 Nov 2024 11:22:16 +0800
-Message-Id: <20241122032217.3816540-6-frank.chang@sifive.com>
+Cc: Tommy Wu <tommy.wu@sifive.com>, Frank Chang <frank.chang@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v9 1/6] target/riscv: Add 'ext_smrnmi' in the RISCVCPUConfig
+Date: Fri, 22 Nov 2024 11:22:12 +0800
+Message-Id: <20241122032217.3816540-2-frank.chang@sifive.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241122032217.3816540-1-frank.chang@sifive.com>
 References: <20241122032217.3816540-1-frank.chang@sifive.com>
@@ -86,7 +86,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +104,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Tommy Wu <tommy.wu@sifive.com>
 
-This adds the properties for ISA extension Smrnmi.
+The boolean variable 'ext_smrnmi' is used to determine whether the
+Smrnmi extension exists.
 
 Signed-off-by: Frank Chang <frank.chang@sifive.com>
 Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/riscv/cpu_cfg.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index b402d8545b..6c91464a00 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -186,6 +186,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
-     ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
-     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
-+    ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
-     ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
-     ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
-     ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
-@@ -1516,6 +1517,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
- 
-     MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
-     MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
-+    MULTI_EXT_CFG_BOOL("smrnmi", ext_smrnmi, false),
-     MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
-     MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
-     MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index 59d6fc445d..321f64fd72 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -128,6 +128,7 @@ struct RISCVCPUConfig {
+     bool ext_ssaia;
+     bool ext_sscofpmf;
+     bool ext_smepmp;
++    bool ext_smrnmi;
+     bool rvv_ta_all_1s;
+     bool rvv_ma_all_1s;
+     bool rvv_vl_half_avl;
 -- 
 2.34.1
 
