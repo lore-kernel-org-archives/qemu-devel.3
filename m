@@ -4,82 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DED5D75E22
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 10:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6691D75E22
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Nov 2024 10:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEQza-00055W-5F; Fri, 22 Nov 2024 05:34:26 -0500
+	id 1tER2U-0006hQ-Qg; Fri, 22 Nov 2024 05:37:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEQzY-00053r-AY
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 05:34:24 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tEQzW-0008TD-RH
- for qemu-devel@nongnu.org; Fri, 22 Nov 2024 05:34:24 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4319399a411so17765925e9.2
- for <qemu-devel@nongnu.org>; Fri, 22 Nov 2024 02:34:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732271661; x=1732876461; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=TbvDqEd1B3bnnTrloGtTMnweakIQQJasrSikw54dhrE=;
- b=nr9GkqLFB0Ixkja8swJREm8KUh2coWy/YcXYoSWC1n2RRysl+BZv1WxJiB9uvSePW9
- trk4ph5/rEt9Hnzx2e7hfUQiIawXtjW6aEDKFZZ/hPiTqsWfcg0+/cI2td8B4JcnQbMK
- V2Ku2rN0N+IGdhU2FszCAbgRV+XRERn266WrRRhouH+MRce46K1oWyzx+me6gOPzPbrw
- LT/ngt63AKdLh/5HPZBIvhCyNlFFgcgJhKPb7DvrpYGtJivrwziEPGB8bjO2X2cXw+yu
- tTzoXcDVi96xp1dd78HppIeAk5rtB3lsy/SoNHkxSI3+9jMgc/OYawmDc3OMVvcyinKy
- LFMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732271661; x=1732876461;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TbvDqEd1B3bnnTrloGtTMnweakIQQJasrSikw54dhrE=;
- b=EqzBqmcO6cVNYDJlu75C1/UOikj7mHBIES5JzJh3FlI5BBS2eq91S4x2mPR01sdUh9
- Sy9aZd81IDNfwENIf7MUljCgbqgMDPTNWqjywQsFwWnWYcesBXQjhQvIDj1kJNKZ0UN3
- zFHVXnv54mS0WiYeQfsMz/RboX/LuUI9JF/Za9kRXdcBBYvYROKZJFXk+ilxVDnSr6Ts
- KD7+Y2JKIqu6kzcoImIct+QVI5cqxeM8rMp2yiyESx3jjT0IhkB5n9Zm6Ip2xd0Ziqac
- tvz8Kfyc0VZ899jYNjf/AxSA2uNKrLDhZ8u2sLyoP5Cgh1c8nPKuglp8t9awHIbmV4jJ
- TfCQ==
-X-Gm-Message-State: AOJu0YywPUJpHaWIEiwjwJKzwOMOWHNeKhI0kQW14sTxuvVYOoqnNFFp
- dKCOKhfKKRKejJxDEemRX//5sitrmFtB2UK/SWHTgT5e0kamK0G7wLjs0ZGzGAHEHST9GSW7cvS
- Q
-X-Gm-Gg: ASbGncv7mUJZ2W3JCWFsjYysv1A7tdfENdzSra+TRX71dr+DHUVMNDAbDOnGKPeBi1B
- uz0ITFabepaNWQzVA9CHLHLnFNlTUxPvk6X1zmrXEJF6HF+EHlMGTbPR/AluIFRVSKjju5yUHjw
- woRzXC89plXbOh96/x2lDGcuuieABMwXHvGH/rT7hz53ilRSQmsDgb6L6xN7vg9i36SE8P2hbeZ
- iauBSGZpvp/GGxReqRFtq4c1a6n4MXgKZXNyVfnMD7z0y/l7yq5fmCmzC+ZmbvB9d31ftipsWKq
-X-Google-Smtp-Source: AGHT+IEYQUCgJpl2jjrFL9PpQUtlshsNvqo1STqrhzW/N43/MDulwIz9JY87STgJ/25l9x6ZUeyIGA==
-X-Received: by 2002:a05:600c:19c9:b0:426:5269:1a50 with SMTP id
- 5b1f17b1804b1-433ce41ce42mr17547785e9.11.1732271660756; 
- Fri, 22 Nov 2024 02:34:20 -0800 (PST)
-Received: from localhost.localdomain ([176.187.211.33])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b0139b22sm89075545e9.0.2024.11.22.02.34.19
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 22 Nov 2024 02:34:20 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/pci: Remove unused pci_irq_pulse() method
-Date: Fri, 22 Nov 2024 11:34:18 +0100
-Message-ID: <20241122103418.539-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tER2T-0006h7-9R; Fri, 22 Nov 2024 05:37:25 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1tER2R-0000Z6-3G; Fri, 22 Nov 2024 05:37:25 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id B989FA40E67;
+ Fri, 22 Nov 2024 10:35:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDB0C4CECE;
+ Fri, 22 Nov 2024 10:37:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1732271839;
+ bh=DgUsnE/Iq2GfNLfNuPyO9qTX5uILPd/ZA6hXdILi7Zc=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=AAQ833H0e0snGV45Z6HmgISZ7G3F0fvjyJy2GYHSJGfDNghJ5RbgQ6PpaaPoyNSM2
+ vOV/aCA0Zyw+04TduaoF5XtOPl1yCwLNMuEwXWgx80K4gjxyul0MM368VoGNxmJYD6
+ 5g5F4U8pCDGjEOHPZWJf0irQiQQIihRg7J49XPtb6hhjzzhAd223kPaAmDdOPoZPwn
+ KWTCU96gAauuz7VDiTQr+5i2710XwneKA/qDnzLEhEP2UrQLLiI3NCxiSNlCIKsrit
+ A9jHZBJ448nMT+nNVOb4qp7fci6Vx2osgDiB6HabUDwSLZwW233UExpC8BSdE5JwUU
+ 8izNGbaaKbFqg==
+Date: Fri, 22 Nov 2024 11:37:14 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 4/6] acpi/ghes: Use HEST table offsets when preparing
+ GHES records
+Message-ID: <20241122113714.04450f6b@foz.lan>
+In-Reply-To: <20241120145930.00003895@huawei.com>
+References: <cover.1731486604.git.mchehab+huawei@kernel.org>
+ <cf60aee0059d12755c1b9deb2dddb355d8543297.1731486604.git.mchehab+huawei@kernel.org>
+ <20241120145930.00003895@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=147.75.193.91;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.14,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,36 +76,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Last use of pci_irq_pulse() was removed 7 years ago in commit
-5e9aa92eb1 ("hw/block: Fix pin-based interrupt behaviour of NVMe").
+Em Wed, 20 Nov 2024 14:59:30 +0000
+Jonathan Cameron <Jonathan.Cameron@huawei.com> escreveu:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/pci/pci.h | 10 ----------
- 1 file changed, 10 deletions(-)
+> On Wed, 13 Nov 2024 09:37:01 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > There are two pointers that are needed during error injection:
+> > 
+> > 1. The start address of the CPER block to be stored;
+> > 2. The address of the ack, which needs a reset before next error.
+> > 
+> > Calculate them preferrable from the HEST table, as this allows
+> > checking the source ID, the size of the table and the type of
+> > HEST error block structures.  
+> 
+> It is preferable to calculate them from the HEST table.  This allows
+> checking the source ID, the size of the table and the type of the
+> HEST error block structures.
+> 
+> A few comments inline.
+> 
+> Jonathan
+> 
+> 
+> > 
+> > Yet, keep the old code, as this is needed for migration purposes.
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> >  hw/acpi/ghes.c | 98 ++++++++++++++++++++++++++++++++++++++++++++------
+> >  1 file changed, 88 insertions(+), 10 deletions(-)
+> > 
+> > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> > index c93bbaf1994a..9ee25efe8abf 100644
+> > --- a/hw/acpi/ghes.c
+> > +++ b/hw/acpi/ghes.c
+> > @@ -61,6 +61,23 @@
+> >   */
+> >  #define ACPI_GHES_GESB_SIZE                 20
+> >  
+> > +/*
+> > + * Offsets with regards to the start of the HEST table stored at
+> > + * ags->hest_addr_le, according with the memory layout map at
+> > + * docs/specs/acpi_hest_ghes.rst.
+> > + */
+> > +  
+> /*
+>  * ACPI 6.2:
+> 
+> to be consistent with local style.
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 135695c551..c0717e3121 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -670,16 +670,6 @@ static inline void pci_irq_deassert(PCIDevice *pci_dev)
-     pci_set_irq(pci_dev, 0);
- }
- 
--/*
-- * FIXME: PCI does not work this way.
-- * All the callers to this method should be fixed.
-- */
--static inline void pci_irq_pulse(PCIDevice *pci_dev)
--{
--    pci_irq_assert(pci_dev);
--    pci_irq_deassert(pci_dev);
--}
--
- MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
- void pci_set_power(PCIDevice *pci_dev, bool state);
- 
--- 
-2.45.2
+Actually, the local style inside this file was preserved. See, before
+this series we have:
 
+$ git grep "ACPI " hw/acpi/ghes.c
+hw/acpi/ghes.c: * ACPI 6.1/6.2: 18.3.2.7.1 Generic Error Data,
+hw/acpi/ghes.c: * ACPI 6.2: 18.3.2.7.1 Generic Error Data,
+hw/acpi/ghes.c: * ACPI 4.0: 17.3.2.7 Hardware Error Notification
+hw/acpi/ghes.c: * ACPI 6.1: 18.3.2.7.1 Generic Error Data
+hw/acpi/ghes.c: * ACPI 6.1: 18.3.2.7.1 Generic Error Data
+hw/acpi/ghes.c:    /* invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
+hw/acpi/ghes.c:         * ACPI 6.2: 18.3.2.8 Generic Hardware Error Source version 2
+hw/acpi/ghes.c:     * ACPI 6.1: 18.3.2.8 Generic Hardware Error Source
+
+> 
+> > +/* ACPI 6.2: 18.3.2.8 Generic Hardware Error Source version 2
+> > + * Table 18-382 Generic Hardware Error Source version 2 (GHESv2) Structure
+> > + */
+> > +#define HEST_GHES_V2_TABLE_SIZE  92
+> > +#define GHES_ACK_OFFSET          (64 + GAS_ADDR_OFFSET)
+> > +  
+> /*
+>  * ACPI 6.2: 
+> > +/* ACPI 6.2: 18.3.2.7: Generic Hardware Error Source
+> > + * Table 18-380: 'Error Status Address' field
+> > + */  
+> 
+> > +static void get_ghes_source_offsets(uint16_t source_id, uint64_t hest_addr,
+> > +                                    uint64_t *cper_addr,
+> > +                                    uint64_t *read_ack_start_addr,
+> > +                                    Error **errp)
+> > +{
+> > +    uint64_t hest_err_block_addr, hest_read_ack_addr;
+> > +    uint64_t err_source_struct, error_block_addr;
+> > +    uint32_t num_sources, i;
+> > +
+> > +    if (!hest_addr) {  
+> 
+> Trivial but I wonder if this should be named to indicate that it sin't the start
+> of HEST but the first bit of the header.
+> hest_body_address or something like that maybe?  I don't care that much
+> though if you prefer to keep as is.
+
+I prefer to keep a simple name here, so let's keep as is.
+
+> 
+> 
+> > +        return;
+> > +    }
+> > +
+> > +    cpu_physical_memory_read(hest_addr, &num_sources, sizeof(num_sources));
+> > +    num_sources = le32_to_cpu(num_sources);
+> > +
+> > +    err_source_struct = hest_addr + sizeof(num_sources);
+> > +
+> > +    /*
+> > +     * Currently, HEST Error source navigates only for GHESv2 tables
+> > +     */  
+> 
+> Feels like duplication of the comment below where the type check is.
+> Maybe drop this one?
+
+If I recall correctly [1], Igor asked to place such comment, on one of
+the past versions of this code.
+
+IMO, placing it clearly there helps to identify what needs to change when
+support for non-GHES tables is needed.
+
+[1] this is the 12th version of this code - my memory is starting to fail
+    to remind were exactly each change was requested.
+> 
+> > +
+> > +    for (i = 0; i < num_sources; i++) {
+> > +        uint64_t addr = err_source_struct;
+> > +        uint16_t type, src_id;
+> > +
+> > +        cpu_physical_memory_read(addr, &type, sizeof(type));
+> > +        type = le16_to_cpu(type);
+> > +
+> > +        /* For now, we only know the size of GHESv2 table */
+> > +        if (type != ACPI_GHES_SOURCE_GENERIC_ERROR_V2) {
+> > +            error_setg(errp, "HEST: type %d not supported.", type);
+> > +            return;
+> > +        }
+> > +
+> > +        /* It is GHES. Compare CPER source address */  
+> 
+> It's GHESv2 (of course this bit is the same, but none the less comment
+> is misleading). I'd just go with
+>         /* Compare CPER source address */
+
+I changed it to:
+
+        /* Compare CPER source address at the GHESv2 structure */
+
+to better state what is there. IMO, it is important to let it
+clear, as, with:
+ACPI 6.5: 18.3.2.11. Error Source Structure Header (Type 12 Onward)
+
+what happens if that, if type <= 11, the struct is:
+
+	offset 0:	type
+	offset 2:	source ID
+
+When type >= 12, the structure changes to:
+
+	offset 0:	type
+	offset 2:	Error Source Structure Length
+
+As ACPI 6.5 doesn't define type 12, we don't know yet where source ID
+will be placed.
+
+> 
+> > +        addr += sizeof(type);
+> > +        cpu_physical_memory_read(addr, &src_id, sizeof(src_id));
+> > +
+> > +        if (src_id == source_id) {
+> > +            break;
+> > +        }
+> > +
+> > +        err_source_struct += HEST_GHES_V2_TABLE_SIZE;
+> > +    }
+> > +    if (i == num_sources) {
+> > +        error_setg(errp, "HEST: Source %d not found.", source_id);
+> > +        return;
+> > +    }
+> > +
+> > +    /* Navigate though table address pointers */
+> > +    hest_err_block_addr = err_source_struct + GHES_ERR_ST_ADDR_OFFSET;
+> > +    hest_read_ack_addr = err_source_struct + GHES_ACK_OFFSET;  
+> 
+> > +
+> > +    cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
+> > +                             sizeof(error_block_addr));  
+> So this points to a registers
+> > +
+> > +    cpu_physical_memory_read(error_block_addr, cper_addr,
+> > +                             sizeof(*cper_addr));  
+> and this reads the register. I'm not sure the spec defines the
+> contents of that register to be constant.  Maybe we should avoid
+> reading the register here and do it instead at read of the record?
+> I 'think' you could in theory use different storage for the CPER
+> depending on other unhandled errors or whatever else meant you didn't
+> want a fixed location.
+> 
+> Or maybe just add a comment to say that the location of CPER storage
+> is fixed.
+
+Sorry, but I missed your point. The actual offset of the error block 
+address is defined when fw_cfg callback is called. When this happens,
+this function is called:
+
+	void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+	                          GArray *hardware_error)
+	{
+	    /* Create a read-only fw_cfg file for GHES */
+	    fw_cfg_add_file(s, ACPI_HW_ERROR_FW_CFG_FILE, hardware_error->data,
+        	            hardware_error->len);
+
+	    /* Create a read-write fw_cfg file for Address */
+	    fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
+	        NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
+
+	    fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
+	        NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
+
+	    ags->present = true;
+	}
+
+The other calls for fw_cfg functions ensure the offset of the memory read 
+inside the hardware_error firmware and this never changes, as such offsets
+are defined when the hardware_firmware is built at build_ghes_error_table()
+function. This will only change if such function is called again, which
+would, in turn, make acpi_ghes_add_fw_cfg() be called again.
+
+In any case, no matter if build_ghes_error_table()/acpi_ghes_add_fw_cfg()
+is called only once or multiple times [1], at the time 
+get_ghes_source_offsets() is called, such offsets are stable.
+
+[1] On some tests I did adding printks, the GHES build logic and the callbacks
+    are called twice - both before loading OSPM.
+
+    If migration is used, I suspect that it will be called again during
+    migration but before starting OSPM. Again, when get_ghes_source_offsets()
+    is called, the offsets are fixed.
+
+Thanks,
+Mauro
 
