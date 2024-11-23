@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E7DAE6ADF8
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 12:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D873D1BDC2
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 13:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEpBM-00039U-Sp; Sat, 23 Nov 2024 07:24:12 -0500
+	id 1tEqMp-00026v-6I; Sat, 23 Nov 2024 08:40:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tEpBK-00039D-55; Sat, 23 Nov 2024 07:24:10 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tEpBF-0005yC-5a; Sat, 23 Nov 2024 07:24:09 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CDF64AD422;
- Sat, 23 Nov 2024 15:12:01 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B1878177E9C;
- Sat, 23 Nov 2024 15:12:12 +0300 (MSK)
-Message-ID: <618427e1-ef6d-439f-be0a-6d573b28f1c4@tls.msk.ru>
-Date: Sat, 23 Nov 2024 15:12:12 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tEqMn-00026W-Mz
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 08:40:05 -0500
+Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tEqMm-0000iq-69
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 08:40:05 -0500
+Received: by mail-oa1-x36.google.com with SMTP id
+ 586e51a60fabf-27d0e994ae3so1551084fac.3
+ for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 05:40:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732369201; x=1732974001; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4iOsiPStMfROVDLuxtCwKLVN9n2WprpVU4m6PSaSX9k=;
+ b=QPnklXZvhscSx1gUz3XlGBQu5teRXt6EQ8vNmWoh5frypmmyXue3IMZN7vipT1XBFh
+ y6FFkKC/yDoTi0dMwc9C4UjPGfL1BT9PkF2xdOtxYwZJ7rw7JXhMZASTVFV6+PjI5SsR
+ gwMhKGB5fH95vYLdecDsYoy5RGl/uD8pPqATvsQ/e4iq+QvFN8BIlZkTA/l4g/xGEM2B
+ SqpvmwLGXtSVtxjOoLyo0AawxMDl+a7Nf49AhpIeGrZghrs3NM47Wxk0U+81nBX9bnv2
+ pvo/ZUFvVo73qwZGdUx2a1LO8raiQ2yZHQQkt36M4ud6Hja95tacLm7Rd3IDjfX25bZs
+ pZPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732369201; x=1732974001;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4iOsiPStMfROVDLuxtCwKLVN9n2WprpVU4m6PSaSX9k=;
+ b=oWu4Rw5lVkDhntvcuadj46bazWLlMLnPCYT7D7fL6A3d2pt2hx16xhdTQcGRu06T46
+ sHRkjbQITQukkMg6gtwvGh0Xmic/xv845dhAFYRnXtGMSGJrLi8PfUNSMtIuEm4Xi8H3
+ cBSzgSpgswiVcU4LfsK6q6d9iHv5y6BMWOsFd6QbAB/NrVyxW5C6zHpClmoA/ezRBQyb
+ Pr9hFrYEXWGl9K3d3+MHmV12Du4RjRPI8SDaHCn6c9MSqvzYuaAPZmlc/a5srBQeoueT
+ UQ6qI7Qxk+WaVAQFzKIZRew/YPygPSFN7lj9JRZBPeUBtA42y0XqPLAVQWlIJm5eX79G
+ LR4w==
+X-Gm-Message-State: AOJu0YzuDQ8eM5o44h3wwkDVGNHdaN+OGRBJJ4/XcLDYh2BxzKrh/Hws
+ hMyj/3JpwQewX8QfmdsXYezmib7q7GNVMNgBvi63gS9huVW4DiirDSYBqX/L738Pgn2rE9hQ70R
+ nXSY=
+X-Gm-Gg: ASbGncsCCMzd0JsA6SwYmj8dgnVJkO4i/wXWrpNigFzL1e1A57dh68NcFljatyYhle0
+ uJolcGhmpXBoPtaCvJFvpKkHhiPZoG82m4jSavS3pZoCaPHiemPRL6OnPZrdGBwdBoshNS22Vnm
+ LLw7VgyQ7tcOhcPGNEJysdlesBCE0RgoaDoZ45apwThFfjwjac9h7tzgZ9KlKFqaZwMloMniVtX
+ ZwmNs1qqHj3GBK4/0qPIvSDNiyWQ3f0vLtX2nvj76o7Me6jVhbihNhcS8iAW+GVJA==
+X-Google-Smtp-Source: AGHT+IE7bNggqsLCq+XJyLjNZEciX+E8HdtwrrCH1LnWuEhlDugo+L3YijcOWRmIg375S+u9H+ZtGg==
+X-Received: by 2002:a05:6870:8189:b0:260:ebf7:d0e7 with SMTP id
+ 586e51a60fabf-29720bf0409mr5964520fac.15.1732369201323; 
+ Sat, 23 Nov 2024 05:40:01 -0800 (PST)
+Received: from [10.25.0.199] ([187.210.107.185])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2971d898b54sm1344645fac.53.2024.11.23.05.39.59
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 23 Nov 2024 05:40:00 -0800 (PST)
+Message-ID: <0105f2c1-9390-4557-bfad-668a328ce951@linaro.org>
+Date: Sat, 23 Nov 2024 07:39:57 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Misc OpenRISC fixes for 9.2.0
-To: Stafford Horne <shorne@gmail.com>, QEMU Development <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 2/2] hw/openrisc: Fixed undercounting of TTCR in
+ continuous mode
+To: qemu-devel@nongnu.org
 References: <20241123103828.3157128-1-shorne@gmail.com>
-Content-Language: en-US, ru-RU
-Cc: qemu-stable <qemu-stable@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20241123103828.3157128-1-shorne@gmail.com>
+ <20241123103828.3157128-3-shorne@gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241123103828.3157128-3-shorne@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2001:4860:4864:20::36;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x36.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,19 +102,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.11.2024 13:38, Stafford Horne wrote:
-> This series has 2 fixes for OpenRISC that came in over that past few months.
-> 
-> Ahmad Fatoum (1):
->    hw/openrisc/openrisc_sim: keep serial@90000000 as default
-> 
-> Joel Holdsworth (1):
->    hw/openrisc: Fixed undercounting of TTCR in continuous mode
+On 11/23/24 04:38, Stafford Horne wrote:
+> +    or1k_timer->ttcr = or1k_timer->ttcr_offset +
+> +        (now - or1k_timer->clk_offset + TIMER_PERIOD - 1) / TIMER_PERIOD;
 
-Is there anything in there which is worth picking up for stable?
-The first one above seems to be a good candidate.
+Better using DIV_ROUND_UP.
 
-Thanks,
+> +        /* Zero the count by applying a negative offset to the counter */
+> +        or1k_timer->ttcr_offset += UINT32_MAX - (cpu->env.ttmr & TTMR_TP);
 
-/mjt
+Since UINT32_MAX is -1 in this context, this appears to be off-by-one.
+I think -(ttmr & mask) alone is correct.
+
+
+r~
 
