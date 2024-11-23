@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC59EE6ADFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 13:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4699E6ADFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 13:56:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEqSD-0005MM-4M; Sat, 23 Nov 2024 08:45:41 -0500
+	id 1tEqbU-0007Wj-GT; Sat, 23 Nov 2024 08:55:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEqSB-0005LQ-5S
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 08:45:39 -0500
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ id 1tEqbN-0007Rw-3U
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 08:55:10 -0500
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tEqS8-0001hL-Q9
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 08:45:38 -0500
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-5ee461f5dedso1636904eaf.0
- for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 05:45:35 -0800 (PST)
+ id 1tEqbL-0002rl-8k
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 08:55:08 -0500
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-295d27f9fc9so2388995fac.0
+ for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 05:55:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732369534; x=1732974334; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732370106; x=1732974906; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=kMEujV34bk6qujov70uRVE3pIW1OydilkhN9+3yJN2g=;
- b=oDbORvClVl4Ive9TQrGUqfNJLR8QpirJ/ejcNl4OFg/dnVF6t4Y764Tcm++gN12aZn
- pwW3piZHT3dNfccDaaFwI5ehyztSS2OuFWwu58NzMwMu3O7aEknzApSzPrkRghUzSjPL
- ge4fQ4ct7+CIM4ul4g3kW2MX9n4O6jeE/SON6y4w5Ba6Kmig7GONA2ayCu44bhtEWumj
- egeAV8WrpS7uTtcoqnDzeFVrV/kZ3Qs7Bp9+x09GP/d2xe0dIeomxqcYFCdwMtpgmvBl
- c07AEvsBcezWfSZwQvopzsSQ1UrdQ86TiKRD2WSgZME37lNZigVRcjpt5hTYjWZnC/4N
- 1jZQ==
+ bh=AJc25+dSQHUILeCA4jN1qnTr+e5ECOoGf7XJSWsiFZo=;
+ b=JMgGpf10tu+H1AllFTGFTSfHUKnMnRfIDBxQkZgRMQF8mGkedWBGYum3ffeMDNRFMU
+ YztIkyYOhAvb1SJR7/ZzHvKsT6+yg3DNkRPnEgYnuO0ACek28E7dlxS3J9qnMAJtaUfY
+ lwQZThWDx1DP8QjQ/7PVoZhFsQ7T0sKSh1xOFje1caeHNneX2MzGXvkl2DOI7xnKHWpP
+ tvvVh2sCq2IJHaW2inEADIYwtFHEt+d9fjGL0q/ACEnM11a8KuKGw9PMc69b1euhvY0m
+ C2BuIZ0/QpkDLqjXyp7rrQuy8eCc92d9fMKGMrYinbw9tkuXJeqS09tULohB7YDLFcmo
+ SSrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732369534; x=1732974334;
+ d=1e100.net; s=20230601; t=1732370106; x=1732974906;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kMEujV34bk6qujov70uRVE3pIW1OydilkhN9+3yJN2g=;
- b=iVYY34tGtAKpR0MxHMzgTf6JKhLxgoS2szraTxMKiHwzWqadRmkEJQcG3J4z9/c8ys
- H6IbLis3dEA+9YkE0j8oW1u1YykSQ8mEVRQ3lmhzyi/x4uKdKZrK95vv+HaL+9IoHzen
- TG82sLgq6hYu7itLe25CDZxqUA9wpJHPoEpDc9l8mo6lCUgjxv4NTxopbFhtOHC4DCR7
- 2OLenC6k3sN5H3eIKqhuDo1db72S4wipHn+9xade2mld43xqjGY1cAcnZbYvMcrAlt4A
- Qrjag18xzbaQZWT5MO2Rf0XNtuT+i7jHVdX0wmW1PkiTRz2GE+X0qx99d2L7EFxZWubO
- IwYQ==
+ bh=AJc25+dSQHUILeCA4jN1qnTr+e5ECOoGf7XJSWsiFZo=;
+ b=thuUnV9I563VngofkgjScIJSwR6UbHd+B2PA3sCfKUF2Mk6IsJDUj57QN26GtCqdxI
+ RVJ8b62XtWBBpyfLHWf1+mQtHt/plo92LMMi+B5faWALOkfRz3g3dit4qEX03EM8AqC+
+ ZPNuwM7yDl9bSNywPo94L4NhpnlssEvuXREDEuVuszHv2FVPPd+W7NNRWjst4scxdZzc
+ H7fYuncvqAtUzApxBLMSpq9I58G4WvR/vEkxF/eB2pNp/hIaSRfkRaXSmog3ElcTKU5y
+ 76qPhNrmitc/s9U+zfR6NcWfq2apGPeSmSoDjFjACPlCt1IhY5vGaGvvIGVD1Qf5WyaX
+ 8YMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4RF4yz+WhpcT4RV8W0q0dOFqTWQLLM8vLCDycTWrPaluUFovLlf6MhHqWekQzEpJvk2n1kStOgk7B@nongnu.org
-X-Gm-Message-State: AOJu0YwvodbhEyNyvQD17AnXsBjuHaGzABzJzBwLzKDEj+EMUqMU3eIc
- dnbiUxeoNxCKW3kmr/7l4zG4MGDITX2xrU30FSjG/7+s9Bnxz06kabZdbvzjPdo=
-X-Gm-Gg: ASbGnct4jYcqvzg9EayWlTWBP0b/Gi6s99fafz8qWi49Vo4QrH8rJPPxQWVr6XNwGpU
- I7e7MUDMrpehI8irBNWUqtSUcP8WxADz8qmpWhtqVxGsru97Bjxm/Sg5MJbYa0n2oGWnXJfH0bF
- sAM0kmjPEBh2j27uPUbGEj6FxofU+PZzH8QrT8scUgBYkdy7KCL9dKY3iC2Od2dyrPd83yHtNuH
- TT8f4kUql3Ds/8oWAXotV5mgpveAQofyuIHVjX4NV0eUBPu3Edf71t1mqtXch228Q==
-X-Google-Smtp-Source: AGHT+IFYzNNKoF9QCJ1MczkI4Rrlfpxvv9z/x4S/rJC9cNwo/BsFU9/hIXCD2DBZT65tYgv5nuGURA==
-X-Received: by 2002:a05:6808:1691:b0:3e7:bcab:8f0d with SMTP id
- 5614622812f47-3e9158768dbmr6298599b6e.24.1732369534604; 
- Sat, 23 Nov 2024 05:45:34 -0800 (PST)
+ AJvYcCXtalOSl9qCKnubTTultgHrsRRNYti2v5/FTqyUwnEcnHpOvGJ8AEBGxRpieHhg23cfEepqjQnH5cSr@nongnu.org
+X-Gm-Message-State: AOJu0YyjMEeVcngiyGbmJhl1eBALGxe+RqmwrE4tJwfcCZIq6D7fVbcx
+ D7gLrdZMLb6SOEsuAFwvzAr4oFB5tFR1hmYjgieuumbRtXj7wztszorESNeQAKo=
+X-Gm-Gg: ASbGnctuo1Su+AH2Pu7rPJJVTfdP/Id2HW2A06uY8wo0zPQbs/ibwVtL7jiL2aqDjGf
+ 0jOsvhiecLr1HGApF86RAlGXIS3mNmJw8FTmwAJJpMAa4hYnLjrdhxmr8V8mwQHCRz6ekhrN0LK
+ +FV1REYASQQ/2opAu6OSjE3QcTtKs9NEHnUAIfQucF+5CZ/rphB3ilO0D3FAITAMegX2E4XeItU
+ mnAvShWcAhZQrfXcOXfRpDmIAcx6RJy3zzRMjtGV7vJeRmjWTOhFz2TOIFro1jAuw==
+X-Google-Smtp-Source: AGHT+IFSWTpCWaBvKjRInTxMTGUorbedv6Hc4u+ZbV6Dkm9KWPTYSESypqg6by15ZjEMzgDDMCMhDg==
+X-Received: by 2002:a05:6870:168b:b0:296:e5ef:6b4e with SMTP id
+ 586e51a60fabf-29720f79e30mr5825569fac.37.1732370105781; 
+ Sat, 23 Nov 2024 05:55:05 -0800 (PST)
 Received: from [10.25.0.199] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3e9150141aesm970797b6e.54.2024.11.23.05.45.33
+ 586e51a60fabf-29724490f17sm1211665fac.6.2024.11.23.05.55.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 23 Nov 2024 05:45:34 -0800 (PST)
-Message-ID: <28fabc27-29e1-4692-870c-69c41b29b9fa@linaro.org>
-Date: Sat, 23 Nov 2024 07:45:32 -0600
+ Sat, 23 Nov 2024 05:55:05 -0800 (PST)
+Message-ID: <6fbdbe5b-f592-4426-8136-9e04ef770a5c@linaro.org>
+Date: Sat, 23 Nov 2024 07:55:02 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/12] docs/system/arm/emulation: add FEAT_SSBS2
+Subject: Re: [PATCH 04/12] target/arm/tcg/: fix typo in FEAT name
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 References: <20241122225049.1617774-1-pierrick.bouvier@linaro.org>
- <20241122225049.1617774-4-pierrick.bouvier@linaro.org>
+ <20241122225049.1617774-5-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241122225049.1617774-4-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241122225049.1617774-5-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc33.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,24 +104,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 11/22/24 16:50, Pierrick Bouvier wrote:
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   docs/system/arm/emulation.rst | 1 +
->   1 file changed, 1 insertion(+)
+>   target/arm/tcg/cpu32.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
+Oops.  :-)
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 > 
-> diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-> index af613b9c8b8..50d0250b1eb 100644
-> --- a/docs/system/arm/emulation.rst
-> +++ b/docs/system/arm/emulation.rst
-> @@ -137,6 +137,7 @@ the following architecture extensions:
->   - FEAT_SVE2 (Scalable Vector Extension version 2)
->   - FEAT_SPECRES (Speculation restriction instructions)
->   - FEAT_SSBS (Speculative Store Bypass Safe)
-> +- FEAT_SSBS2 (MRS and MSR instructions for SSBS version 2)
->   - FEAT_TGran16K (Support for 16KB memory translation granule size at stage 1)
->   - FEAT_TGran4K (Support for 4KB memory translation granule size at stage 1)
->   - FEAT_TGran64K (Support for 64KB memory translation granule size at stage 1)
+> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+> index 20c2737f17b..4e589b747e4 100644
+> --- a/target/arm/tcg/cpu32.c
+> +++ b/target/arm/tcg/cpu32.c
+> @@ -71,7 +71,7 @@ void aa32_max_features(ARMCPU *cpu)
+>       cpu->isar.id_mmfr5 = t;
+>   
+>       t = cpu->isar.id_pfr0;
+> -    t = FIELD_DP32(t, ID_PFR0, CSV2, 2);          /* FEAT_CVS2 */
+> +    t = FIELD_DP32(t, ID_PFR0, CSV2, 2);          /* FEAT_CSV2 */
+>       t = FIELD_DP32(t, ID_PFR0, DIT, 1);           /* FEAT_DIT */
+>       t = FIELD_DP32(t, ID_PFR0, RAS, 1);           /* FEAT_RAS */
+>       cpu->isar.id_pfr0 = t;
 
 
