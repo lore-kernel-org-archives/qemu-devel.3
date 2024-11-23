@@ -4,85 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF0AD75E5C
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 17:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33C6FD75E5C
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 17:26:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEtfb-0004uV-SH; Sat, 23 Nov 2024 12:11:43 -0500
+	id 1tEttA-0007bU-Nx; Sat, 23 Nov 2024 12:25:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEtfa-0004uI-KS
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 12:11:42 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEtfZ-0003az-8n
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 12:11:42 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38232cebb0cso2429232f8f.1
- for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 09:11:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732381899; x=1732986699; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=wzpqO62uWZlCUePwlDZJYuyp2WHS5Oin/YQQaFhnDew=;
- b=Zke5yziY0pf/VKJkd8lgb2tqvIYD8u3pJdh8ArA5tYYOD9K3x+6r/IU48IxbVo5196
- VgWSw/+TIu8ek09OmjCH4tJayMRwZBYtuarjgGSD1G6wSzqTHG4hhVoTggCi+xMeV47Q
- EMOX6Bw7p14qy2NJxG9DAkrs0jrVJvEMWiZw2oemqnx9gIl4QDSx9AoRoXCvX9XvVDoY
- 9dhBBd+2TovYe5FK0M/7hQmsn994t0zBj2+oh7iY7GHjR66wcYn7yyZDGYZ0Fai6JPi/
- Q90Gcpc+/8CSmaXLYNFdd7vPnef6/BZa9LGw7+0aT3XDg+WwyKhOSSVFa91sbcDu+UoG
- 0gbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732381899; x=1732986699;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wzpqO62uWZlCUePwlDZJYuyp2WHS5Oin/YQQaFhnDew=;
- b=pfM1BxatpDjHsNkyZvE0Gy6FpXBBhWhGeJJBeCq692Npr15z06lO57WQg7m+YyxLcz
- 28PA9hcRfJp77kxtOwPJCeql9qhEdJnC4uYjeNY/kAzTEp4X8ClO/lvgpSo811dl8xk0
- 0WAD3TBwrBco3uOFwa/Me0IOL0FZReXpUI5epwEUikVeqqd78j67hn5+rrcMuiNhJTzr
- oucnzrcgt3+88xKMWtp2mbOC0cWuAfIEbE7FcvvWD7mftSE5s11eRrV1IWEqAyADY+I8
- CrB1j3KsC5T6kKo71Lfk+RDIWwCfHx6fMrpiTI55rlAWzG2suMNnnxRQrEOZiQFn3CP3
- Hqmg==
-X-Gm-Message-State: AOJu0Yxn75JdQNp1I5OGePznysnnM/a2sSS/ZHiawLw2zbL9+Xi79kKK
- ma41nxNYf7YohDaIzaMPQnF9XfWmMm0zT8aTNc0sTe2rm23MNgsUInGixQ==
-X-Gm-Gg: ASbGncsf9h0qIIEAujFeyRt4RbFhy9MNkKoeqrMNVcS1NSA1vqe7GBxW+QyqHTXHrx3
- t5tcUp17HLb4q+1tJtmns4uF6NEs7ffkNXoMZE9yIyB5pAiq/b0ClI9dtZpgFgXzwilRlW78TT7
- 8HGtg4RemqWPsPoTiFCnDv5kzXldg4x3HKB25vPd2oXqmS7oFQe1DHOiRhgY/mFygoU9i0XmvpL
- G/GXOL4C5J65hhu4cBgfasOKWUYt9C2aVH8glYetSrpuo3VucWt02zxldm2TjJrv9oKLGTKV15R
- t/38N2aAKl97/A==
-X-Google-Smtp-Source: AGHT+IFwxG2JZc/N0+dMquV3c4ePMiNqmvP/wHSHL1mMWJKSDppxEwTodQoPfLwgbdlZm8NT9eddJg==
-X-Received: by 2002:a05:6000:2807:b0:382:45c9:e34f with SMTP id
- ffacd0b85a97d-38260b59713mr4185605f8f.18.1732381899332; 
- Sat, 23 Nov 2024 09:11:39 -0800 (PST)
-Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
- [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433cde070easm65926565e9.5.2024.11.23.09.11.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 Nov 2024 09:11:38 -0800 (PST)
-Date: Sat, 23 Nov 2024 17:11:37 +0000
-From: Stafford Horne <shorne@gmail.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] hw/openrisc: Fixed undercounting of TTCR in
- continuous mode
-Message-ID: <Z0IMyRB3O4Q9s5eG@antec>
-References: <20241123103828.3157128-1-shorne@gmail.com>
- <20241123103828.3157128-3-shorne@gmail.com>
- <0105f2c1-9390-4557-bfad-668a328ce951@linaro.org>
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1tEtt7-0007au-9s
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 12:25:41 -0500
+Received: from mail-m16.yeah.net ([220.197.32.19])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <chao.liu@yeah.net>) id 1tEtt3-0004w8-MS
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 12:25:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
+ s=s110527; h=From:Subject:Date:Message-ID:MIME-Version:
+ Content-Type; bh=E3sijzoWZReTHUH3OjmWWLOvn6tgRh/DvyVq3jhJP2o=;
+ b=l4aAQVp6tuZE/LUC0a736gB5UyqnM3sh2yt0rhjAbzp+rEODTKar/g61GGLqsi
+ wghHJYRgyyt0LCkJL8F9XU1X6ZACR0UMd2vkITIiLkriDM8nI79HnErVEgjDqWED
+ L7YSsSqX0BOIkYnB2fiIFopWVHxK4hh1jSgPkhA4Ym01w=
+Received: from ulan.. (unknown [])
+ by gzsmtp2 (Coremail) with SMTP id Ms8vCgDX3zD8D0JnTuE_Aw--.3002S2;
+ Sun, 24 Nov 2024 01:25:17 +0800 (CST)
+From: Chao Liu <chao.liu@yeah.net>
+To: qemu-devel@nongnu.org
+Cc: bmeng.cn@gmail.com, liwei1518@gmail.com, peter.maydell@linaro.org,
+ palmer@dabbelt.com, alistair.francis@wdc.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, Chao Liu <chao.liu@yeah.net>
+Subject: [RFC PATCH v1 0/1] Add helper_print functions for printing
+ intermediate results of complex instructions in RISC-V target
+Date: Sun, 24 Nov 2024 01:23:37 +0800
+Message-ID: <cover.1732376265.git.chao.liu@yeah.net>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0105f2c1-9390-4557-bfad-668a328ce951@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=shorne@gmail.com; helo=mail-wr1-x433.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: Ms8vCgDX3zD8D0JnTuE_Aw--.3002S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7WF4UtF18JF4xAryxXr1rXrb_yoW8AFW7pF
+ 45uayYyF4DAFZ7Aw1fJw4xtw1fCFWrJw4UXwn7Jw12ywn8Gas2vF4vka4Y9w1UArW8ur12
+ va12qr1UuFyUZFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jp-eOUUUUU=
+X-Originating-IP: [39.144.154.56]
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiEQ+gKGdB+IgyegAAsI
+Received-SPF: pass client-ip=220.197.32.19; envelope-from=chao.liu@yeah.net;
+ helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,32 +73,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Nov 23, 2024 at 07:39:57AM -0600, Richard Henderson wrote:
-> On 11/23/24 04:38, Stafford Horne wrote:
-> > +    or1k_timer->ttcr = or1k_timer->ttcr_offset +
-> > +        (now - or1k_timer->clk_offset + TIMER_PERIOD - 1) / TIMER_PERIOD;
-> 
-> Better using DIV_ROUND_UP.
+Hi all,
 
-Sure, I can change it to that.
+Recently, I have been working on functional simulation and verification of
+an extended complex instruction set for an AI chip based on the RISC-V
+architecture using QEMU.
 
-> > +        /* Zero the count by applying a negative offset to the counter */
-> > +        or1k_timer->ttcr_offset += UINT32_MAX - (cpu->env.ttmr & TTMR_TP);
-> 
-> Since UINT32_MAX is -1 in this context, this appears to be off-by-one.
-> I think -(ttmr & mask) alone is correct.
+Given the complexity of some instructions, I attempted to introduce a set of
+helper functions that can print certain intermediate results of IR
+corresponding to a single instruction, such as those from sparse matrix operations.
 
-Thanks, I did send a mail to Joel asking about this bit.  He didn't respond for 2
-weeks to I just sent the patch as is as it appears to work.  As I understand,
-yes UINT32_MAX is just -1.  But why the -1?  I guess it's because after
-ttcr_offset is updated we call cpu_openrisc_timer_update() which calls
-cpu_openrisc_count_update() to update ttcr.  Since a few _ns would have passed
-and we are rounding up it will update ttcr to 0.
+My implementation approach is as follows:
 
-But maybe I am reading too much into it.
+    1. Encapsulate printf within helper functions (to avoid issues where the printf
+    address might exceed the ±2GB address space when called directly). Since helpers
+    do not support variadic arguments, I defined multiple helper_print functions with
+    a maximum of 7 parameters.
 
-If you think that makes sense I could add a comment as such, also I would prefer
-to change to UINT32_MAX to -1.
+    2. Designed a syntactic sugar using C macros and the concatenation operator ##
+    to encapsulate the aforementioned helper_print functions, which can support up
+    to 7 parameters.
 
--Stafford
+However, I encountered some issues, such as having to set < #pragma GCC diagnostic
+ignored "-Wformat-security"> for this piece of code, but I think there might be
+some security risks involved.
+
+Currently, these macros are temporarily added under target/risc-v, but I believe
+they could be designed more generally to support more architectures.
+
+During testing, I found that these interfaces work particularly well for debugging
+simulations of complex instructions.
+
+Therefore, I am sharing this patch with the mailing list in hopes that we can discuss
+and come up with a friendlier and more universal solution. :)
+
+Regards,
+Chao
+
+Chao Liu (1):
+  riscv: Add gen_helper_print() to debug IR
+
+ target/riscv/helper.h    | 13 ++++++++++++
+ target/riscv/op_helper.c | 46 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
+
+-- 
+2.40.1
+
 
