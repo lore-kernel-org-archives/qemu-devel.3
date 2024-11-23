@@ -4,57 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D64E6ADDD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA8D8D75E59
 	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 16:47:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEtHq-00062P-V3; Sat, 23 Nov 2024 11:47:10 -0500
+	id 1tEtHs-00062s-Ug; Sat, 23 Nov 2024 11:47:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1tEtHp-00061x-4J
+ (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1tEtHp-000626-TG
  for qemu-devel@nongnu.org; Sat, 23 Nov 2024 11:47:09 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1tEtHn-0000Mz-Kf
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 11:47:08 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ANFvtfp031167;
+ (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1tEtHn-0000N0-KY
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 11:47:09 -0500
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ANFUCQI005126;
  Sat, 23 Nov 2024 16:47:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=BNzmEptSCmcF1mZ7qv63yu
- 8CWT1ByQVKWh4C+PLQ8qg=; b=J2prpp/XNKkSfnJ1p9kJVZ9iMQEnyJEW0arXR8
- /8eGIZjj7AtysSoC95yFOEjbpKlxr5jNuwfSq+iAXMXBlDtv+s2cBSpvEq4KqGqJ
- oH++nEkGkXKuUavkbE8JiqgIAq2X3AyjKxTCr+HPLmFIsBHI8Twf7OTMB0CnrQ4v
- c+Gx6y1Xh9dMKz4d2MYkNnyUJPLbvsHqowM6s5jdV7iEsJM790B4wY0Py24bJmQo
- 6lCGzWweEs7AiuQr9kBlfWHu1r8iCSnOWkoldT34z1JfQNRB/SpnMDs4U2jcUbqD
- kbc8iOp5oB55ZeTvc3cxbYkdrU3FYBANpii/0Vkxh8d6jXzA==
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ //vVRbDMIWAdumv940/3em+M16b+ZbG/FXSeniT9bPI=; b=G2R4umucAmIvGNK0
+ pdQiES+pxhywYNBs7zIpVkr7r3lwbB8F8sXwMN8LM2VzjfaCVDXKh+A6NCLqOZDP
+ SOHjfYWaBKTayr6XcX1ml8vaX/T8nCMB8TGgLvaYqCCcskP5he1evMbDjmDOK/oP
+ j6Ruz11Dqoi1b/8iXzQSeaCAc9rDppgy1hKkV+vlDDwKnlm21G+3UaAM97auBKfg
+ oa2qHBLo3XpwOtja7M7vqNsmqmT6va9lTiVvJGU3qm4GbDM/urWy324DrQkBZbfY
+ z3pJa8kd8UZwEG6ujEveFtwAkVEV3przBPT792smHlAtNcpjkdZ3oo3jGcmQErcg
+ +p6KSA==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4336cfh3ey-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4334dms8y5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Sat, 23 Nov 2024 16:47:03 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
  [10.47.209.196])
- by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ANGl1RK030363
+ by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4ANGl1eE030370
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Sat, 23 Nov 2024 16:47:01 GMT
 Received: from hu-bcain-lv.qualcomm.com (10.49.16.6) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sat, 23 Nov 2024 08:47:00 -0800
+ 15.2.1544.9; Sat, 23 Nov 2024 08:47:01 -0800
 From: Brian Cain <bcain@quicinc.com>
 To: <qemu-devel@nongnu.org>
 CC: <bcain@quicinc.com>, <richard.henderson@linaro.org>, <philmd@linaro.org>, 
  <peter.maydell@linaro.org>, <quic_mathbern@quicinc.com>,
  <stefanha@redhat.com>, <ale@rev.ng>, <anjo@rev.ng>,
  <quic_mliebel@quicinc.com>, <ltaylorsimpson@gmail.com>,
- <alex.bennee@linaro.org>, <quic_mburton@quicinc.com>
-Subject: [PATCH 0/1] Update email addr
-Date: Sat, 23 Nov 2024 08:46:39 -0800
-Message-ID: <20241123164641.364748-1-bcain@quicinc.com>
+ <alex.bennee@linaro.org>, <quic_mburton@quicinc.com>, Brian Cain
+ <brian.cain@oss.qualcomm.com>
+Subject: [PATCH 1/1] MAINTAINERS: update email addr for Brian Cain
+Date: Sat, 23 Nov 2024 08:46:40 -0800
+Message-ID: <20241123164641.364748-2-bcain@quicinc.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241123164641.364748-1-bcain@quicinc.com>
+References: <20241123164641.364748-1-bcain@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: base64
@@ -64,17 +68,17 @@ X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
  signatures=585085
-X-Proofpoint-GUID: Ue9zpn_taKR884StAH6Pk0NNnMHa-nAx
-X-Proofpoint-ORIG-GUID: Ue9zpn_taKR884StAH6Pk0NNnMHa-nAx
+X-Proofpoint-GUID: -OmhCpnNk4n_JskJjefU7z6wpX1_uEnx
+X-Proofpoint-ORIG-GUID: -OmhCpnNk4n_JskJjefU7z6wpX1_uEnx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0
- spamscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 malwarescore=0
- mlxscore=0 suspectscore=0 mlxlogscore=632 clxscore=1011 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411230136
+ clxscore=1015
+ priorityscore=1501 mlxlogscore=633 phishscore=0 mlxscore=0
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 adultscore=0 spamscore=0
+ impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2411230136
 Received-SPF: pass client-ip=205.220.180.131; envelope-from=bcain@quicinc.com;
  helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -100,13 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rm9yIHJldmlld2Vyczogbm90ZSBhbHNvIHRoYXQgSSBoYXZlIHNpZ25lZCBhIHRhZyB3aXRoIG15
-IEdQRyBrZXkKZmluZ2VycHJpbnQgNjM1MDIwRjk2N0E3NzE2NDc5RUY0OUUwMTc1QzQ2NEU1NDFC
-NkQ0NyB0aGF0IGhhcyBoYWQKdGhpcyBuZXcgdWlkIGFkZGVkIHRvIGl0LgoKU2VlIGh0dHBzOi8v
-Z2l0aHViLmNvbS9xdWljL3FlbXUvdHJlZS9iY2Fpbi1lbWFpbC1hZGRyLXVwZGF0ZS1vc3MucXVh
-bGNvbW0uY29tCmFuZCBodHRwczovL2dpdGh1Yi5jb20vcXVpYy9xZW11L3JlbGVhc2VzL3RhZy9i
-Y2Fpbi1lbWFpbC1hZGRyLXVwZGF0ZS1vc3MucXVhbGNvbW0uY29tCgpCcmlhbiBDYWluICgxKToK
-ICBNQUlOVEFJTkVSUzogdXBkYXRlIGVtYWlsIGFkZHIgZm9yIEJyaWFuIENhaW4KCiAubWFpbG1h
-cCAgICB8IDIgKysKIE1BSU5UQUlORVJTIHwgMiArLQogMiBmaWxlcyBjaGFuZ2VkLCAzIGluc2Vy
-dGlvbnMoKyksIDEgZGVsZXRpb24oLSkKCi0tIAoyLjM0LjEKCg==
+RnJvbTogQnJpYW4gQ2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgoKQWxzbzogYWRk
+IG1hcHBpbmcgZm9yICJxdWljX2JjYWluQHF1aWNpbmMuY29tIiB3aGljaCB3YXMgfmJyaWVmbHkK
+dXNlZCBmb3Igc29tZSByZXBsaWVzIHRvIG1haWxpbmcgbGlzdCB0cmFmZmljLgoKU2lnbmVkLW9m
+Zi1ieTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+ClNpZ25lZC1vZmYtYnk6IEJyaWFu
+IENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiAubWFpbG1hcCAgICB8IDIg
+KysKIE1BSU5UQUlORVJTIHwgMiArLQogMiBmaWxlcyBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyks
+IDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS8ubWFpbG1hcCBiLy5tYWlsbWFwCmluZGV4IGVm
+MWI4YTUzZjQuLjcyN2NlMjA0YjIgMTAwNjQ0Ci0tLSBhLy5tYWlsbWFwCisrKyBiLy5tYWlsbWFw
+CkBAIC03NSw2ICs3NSw4IEBAIEFsZWtzYW5kYXIgUmlrYWxvIDxhbGVrc2FuZGFyLnJpa2Fsb0Bz
+eXJtaWEuY29tPiA8YWxla3NhbmRhci5yaWthbG9AcnQtcmsuY29tPgogQWxleGFuZGVyIEdyYWYg
+PGFncmFmQGNzZ3JhZi5kZT4gPGFncmFmQHN1c2UuZGU+CiBBbmkgU2luaGEgPGFuaXNpbmhhQHJl
+ZGhhdC5jb20+IDxhbmlAYW5pc2luaGEuY2E+CiBBbnRob255IExpZ3VvcmkgPGFudGhvbnlAY29k
+ZW1vbmtleS53cz4gQW50aG9ueSBMaWd1b3JpIDxhbGlndW9yaUB1cy5pYm0uY29tPgorQnJpYW4g
+Q2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPiA8YmNhaW5AcXVpY2luYy5jb20+CitC
+cmlhbiBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+IDxxdWljX2JjYWluQHF1aWNp
+bmMuY29tPgogQ2hyaXN0aWFuIEJvcm50cmFlZ2VyIDxib3JudHJhZWdlckBsaW51eC5pYm0uY29t
+PiA8Ym9ybnRyYWVnZXJAZGUuaWJtLmNvbT4KIERhbWllbiBIZWRkZSA8ZGFtaWVuLmhlZGRlQGRh
+aGUuZnI+IDxkYW1pZW4uaGVkZGVAZ3JlZW5zb2NzLmNvbT4KIEZpbGlwIEJvenV0YSA8ZmlsaXAu
+Ym96dXRhQHN5cm1pYS5jb20+IDxmaWxpcC5ib3p1dGFAcnQtcmsuY29tLmNvbT4KZGlmZiAtLWdp
+dCBhL01BSU5UQUlORVJTIGIvTUFJTlRBSU5FUlMKaW5kZXggYWNjNzQwNWFlZC4uMTEwYTY5YTZj
+YSAxMDA2NDQKLS0tIGEvTUFJTlRBSU5FUlMKKysrIGIvTUFJTlRBSU5FUlMKQEAgLTIyNiw3ICsy
+MjYsNyBAQCBGOiB0YXJnZXQvYXZyLwogRjogdGVzdHMvZnVuY3Rpb25hbC90ZXN0X2F2cl9tZWdh
+MjU2MC5weQogCiBIZXhhZ29uIFRDRyBDUFVzCi1NOiBCcmlhbiBDYWluIDxiY2FpbkBxdWljaW5j
+LmNvbT4KK006IEJyaWFuIENhaW4gPGJjYWluQG9zcy5xdWFsY29tbS5jb20+CiBTOiBTdXBwb3J0
+ZWQKIEY6IHRhcmdldC9oZXhhZ29uLwogWDogdGFyZ2V0L2hleGFnb24vaWRlZi1wYXJzZXIvCi0t
+IAoyLjM0LjEKCg==
 
