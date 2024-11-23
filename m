@@ -4,78 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17BD2D75E5B
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 15:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD8CD75E59
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 15:30:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tErjB-00025J-Q2; Sat, 23 Nov 2024 10:07:17 -0500
+	id 1tEs4Z-00065u-8d; Sat, 23 Nov 2024 10:29:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tErj9-00024W-8v
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 10:07:15 -0500
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tEs4W-00064m-Nv
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 10:29:20 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tErj7-0004qK-NE
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 10:07:15 -0500
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-296b0d23303so1570203fac.2
- for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 07:07:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tEs4V-0007nN-20
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 10:29:20 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4314f38d274so36979405e9.1
+ for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 07:29:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732374432; x=1732979232; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1732375757; x=1732980557; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rlzoEerYr1QXo4i48LqayXX7/GK/4llQjkrQzRbzFKU=;
- b=FW9wThUNKfWRM/P/v5TXjxI/ZtRjnH+DIkmRAPDJyNTBRPqpFZUIbFwDeg1AZ+w5A5
- O1IXHvr6t2v9ItY/VdjI7gaWYddY+D1wNQNHwAaDoZhkP5mrFmhyfxzWlAwyKPHwbcws
- MY0HRbzCOWiiRU/mip+oJosfAmD/0p9fqqVoR6eJL25rX+4zg4RGC+Ac+UE+1ktFPxYC
- tDOLK7WDjjp3aifKZTL6fWxmVfNp8Hn79hx1yO+zRz9y1bRR9efOIwgqfw4W6rdjI0id
- pvb+HcxX71rQcLvyMZWTF/ExU/WKgsgGSPje+bB+LOnXmUvrJGo48jr3jFc7eU/bdRVs
- 506Q==
+ bh=L83RtzyR0L4NcRtwdTXA1VSnlQBPYZvSb84HRUVcJp0=;
+ b=CDjRX/jTqarkYryLd5gJN6z/DDG9e+TvLc4ja2UjtzRdEO8lLTgx4QX+XhhScuwCQa
+ +Iag3MlLsbv8rPRAcV30wiL8MDbz4Cgy2e1/bq7on4x4T+ExLqMnooYhbEfTWhp5msns
+ pg+LIajiM9FHp1lh0z7NbB6jo+ChStUSE84i2SK/4BJE0XMvG0b8ZNa3CyO8yHSGaRIo
+ Q+xxwtWqbbmpvbHTcqowRm3yfInHXEB8lyfx0c5606jli8NQEi18B8s+crbeX8pFG4kg
+ orTKhN/btcY4rjNzuIp8X92PWXL9wMQpsj/cX8XqTTVbIBCdoEN3u5igexG4r0UFzTzd
+ gPzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732374432; x=1732979232;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rlzoEerYr1QXo4i48LqayXX7/GK/4llQjkrQzRbzFKU=;
- b=GuPEAe3GlKUal+Xtp1u0KfveiT/UztDqgdZ7+BwluWIXL1qUGFMiMZwud5f5w79zyi
- XXoK5ItGsAaPlli+qgDnw4D54yFKhGYd7DNsFnT10Kz+PVaIxjxtlsQxjdF0VV/Fr1Bd
- l9iMhC3Am/2RmSPOqyclgmj0Elu04O/E1z20HBBQxhjM47yBxIDTC/IxCLQSV6vwzX3o
- L1W2gRpgtwm3d6sIEHjv3fZuEXLxa4XcTEjqV4CceRP6hZEu1n0xGQBBYHPdSpxZTgZU
- 0nfsdXnXVKDbCR91Sjiw2hGXZkRCHFqSzUosu8hcjLLa0+CAUptnmnmUsbQ0bJte1Cl9
- WGjA==
-X-Gm-Message-State: AOJu0YwDdn0+turd89czXQM0m5g7m32ac79GH8hSEiHU6tphxz5cEhvz
- z6mgkT8yE2E3WIaYeQUaFFo/oM148aO5IccDOIDHMEHn2n4XtGRv+9qOMxSuPfd72yuc/tn3Zxp
- ECeY=
-X-Gm-Gg: ASbGncufflolQg40ntrGd5N6+tSKt0dtK6dCP7DY13TvSLc5R/CiaPyYDWMK4dCmSAx
- LVsPq41fw1/9mPUl5b8mGRu8EVM8yxjJisfsri5ogrDoFjkgXtrw6mu/fC/ssTbkyvi2cWOhdSP
- 7jQNy0D7Aenz2W8+rwIN9yHQhM+wHsCebqEtqbgcN29tcCjkxg/2RzHjE8qbUzNN0LibzI1p5hk
- pIGXxYk97p+f7rFK1qgx2Khzmuia47UQaACC0nkmNOPfHNXDEqDZBqxLQ==
-X-Google-Smtp-Source: AGHT+IFzP6O0Y1HVuWABaN6NTb37r8GT8dGypUOEIQB8q57J23Q1AHlxgw1Gy+CArb8mVW4OtXE34g==
-X-Received: by 2002:a05:6870:5a9b:b0:297:2643:fa25 with SMTP id
- 586e51a60fabf-2972644cd34mr4901809fac.26.1732374432021; 
- Sat, 23 Nov 2024 07:07:12 -0800 (PST)
-Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2971d82291fsm1396390fac.33.2024.11.23.07.07.10
+ d=1e100.net; s=20230601; t=1732375757; x=1732980557;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=L83RtzyR0L4NcRtwdTXA1VSnlQBPYZvSb84HRUVcJp0=;
+ b=VAnVPdB23tcy0x2nNZo/+4+aeoOITwrAi5gu5MGiz/lmLPl/Kjk3vyk/LAernkZmHo
+ pwRlshfm3YR8WHEzCeSaIn3IRtwQxaXEUbscAZSCGxjxCtcA7C+KrRG2njyPIGsQ/qCT
+ OgoN6wNFlRWFrLdIrjVnB8EXDE1Dcn/OFkUYmK1Ggs8IMNdp7XtmpghnfYKWl0qcKQIO
+ yxfkmAurqs3efEdOq2znaVyjMbdcEDdPrWhkW3O3kYcixasfM5TKtf2yFqycmTKW10Nr
+ Vn05ihvlZIaUPBw2tkoXMe4iPieUTQcOKsGHFJPF7qA8Xc6dVGdmZ+F6rJ3otwL891a5
+ Kttg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWNTM16u0kFbQxGrUj7dyrzVrJq0cbaaQ6vaX3tVcC+Qg8BVbfJaoO4i81ZxFcK3YRlEVAYPHtoKjxq@nongnu.org
+X-Gm-Message-State: AOJu0YyBn47MntIzR4hhEcRHh3WiW5JDN/1Vdkyo1CXOykofFXoW8lsF
+ 2eR+FOW0fau2OgP79Bc2fEaDoDkqpoaYujVnJ4l4+5ohHTEbXYx0HFzk07PMMNY=
+X-Gm-Gg: ASbGncvM+v1WzShqHrLAapRWHzgbhMdEmNIyzWhfFRowmNK8wWeNZDoiywSWmKD5xcY
+ bm6xTQBVEY7fCy/80tbzN8QiQegYvZrqOXHHujJTYvi/EBc6cx4maPqHrAQpdn9RLrE0vTy/giG
+ 5ER+Xgrc9q7H4rjuMYTg9p31DglGbQzLeNTJPUzKrGrJE9x3JzKncAR3PiRNkvvckymH7R6Z480
+ idC1OpyVs9e1pZrsYp0G6c1iO2Yc3dqCATeY4Q7tas2uyS1
+X-Google-Smtp-Source: AGHT+IHhredJ7Kkusy+tGIE0IwuBjJ8/nZr2qMMx1RKVolxYRMe6Wz1tOxQ5etLaAplLbHpp6+sN3w==
+X-Received: by 2002:a05:600c:3ac3:b0:431:4b88:d407 with SMTP id
+ 5b1f17b1804b1-433ce410255mr66227435e9.5.1732375756689; 
+ Sat, 23 Nov 2024 07:29:16 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-433cde114d5sm63238445e9.17.2024.11.23.07.29.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 Nov 2024 07:07:11 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
-	qemu-stable@nongnu.org
-Subject: [PULL 2/2] linux-user: Fix strace output for s390x mmap()
-Date: Sat, 23 Nov 2024 09:07:06 -0600
-Message-ID: <20241123150706.19740-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241123150706.19740-1-richard.henderson@linaro.org>
-References: <20241123150706.19740-1-richard.henderson@linaro.org>
+ Sat, 23 Nov 2024 07:29:15 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D93295F7DF;
+ Sat, 23 Nov 2024 15:29:14 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael S.
+ Tsirkin"
+ <mst@redhat.com>,  Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Harsh Prateek Bora
+ <harshpb@linux.ibm.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,  Halil Pasic
+ <pasic@linux.ibm.com>,  Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-ppc@nongnu.org,  Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>,  Alexandre Iooss <erdnaxe@crans.org>,
+ qemu-riscv@nongnu.org,  Thomas Huth <huth@tuxfamily.org>,  Bernhard
+ Beschow <shentey@gmail.com>,  Eric Farman <farman@linux.ibm.com>,  Bin
+ Meng <bmeng.cn@gmail.com>,  qemu-s390x@nongnu.org,  Niek Linnenbank
+ <nieklinnenbank@gmail.com>,  qemu-arm@nongnu.org,  John Snow
+ <jsnow@redhat.com>,  Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>,  qemu-rust@nongnu.org,  Nicholas Piggin
+ <npiggin@gmail.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Palmer
+ Dabbelt <palmer@dabbelt.com>,  Markus Armbruster <armbru@redhat.com>,
+ Weiwei Li <liwei1518@gmail.com>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>,  Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>,  Aurelien Jarno <aurelien@aurel32.net>,
+ Ani Sinha <anisinha@redhat.com>,  Alistair Francis
+ <alistair.francis@wdc.com>
+Subject: Re: [PATCH 00/39] maintainer updates for -rc2 pre-PR
+In-Reply-To: <eb3dd52c-b7bc-4c77-ad33-33e52d7ecef7@redhat.com> (Thomas Huth's
+ message of "Fri, 22 Nov 2024 11:45:42 +0100")
+References: <20241121165806.476008-1-alex.bennee@linaro.org>
+ <CAFEAcA8KD4qxY18pJakSeziTioNYDQkd3VYcxYfq9y2KAON4Wg@mail.gmail.com>
+ <875xoglcin.fsf@draig.linaro.org>
+ <eb3dd52c-b7bc-4c77-ad33-33e52d7ecef7@redhat.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Sat, 23 Nov 2024 15:29:14 +0000
+Message-ID: <87wmguoto5.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x34.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,74 +130,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+Thomas Huth <thuth@redhat.com> writes:
 
-print_mmap() assumes that mmap() receives arguments via memory if
-mmap2() is present. s390x (as opposed to s390) does not fit this
-pattern: it does not have mmap2(), but mmap() still receives arguments
-via memory.
+> On 21/11/2024 18.31, Alex Benn=C3=A9e wrote:
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>=20
+>>> On Thu, 21 Nov 2024 at 16:58, Alex Benn=C3=A9e <alex.bennee@linaro.org>=
+ wrote:
+>>>>
+>>>> This is a mostly testing focused set of patches but a few bug fixes as
+>>>> well. I plan to send the PR in on Monday. I can drop any patches that
+>>>> are objected to but I think its pretty safe.
+>>>>
+>>>> Contains:
+>>>>
+>>>>    - Daniel's clean-up of functional tests
+>>>>    - Another avocado->function conversion from Thomas
+>>>>    - Update the tuxrun baseline images
+>>>>    - Minor fix to the rust pl011 device
+>>>>    - Documentation clarification on identity
+>>>
+>>> Should we really be updating the tuxrun baseline images
+>>> in the middle of a release freeze period? Unless the old images
+>>> are going to go away and break the tests, I think it would
+>>> be better to stick with what we're currently testing.
+>> Well the arm64be fixed a real problem and while I was at it I
+>> figured
+>> might as well keep the rest in sync. I have tested them so they all pass
+>> (although I'm waiting on the CI run now).
+>
+> But there could be new intermittent problems in the new images ... so
+> if we'd face such a problem, we would not know whether it is the image
+> or whether it is QEMU. Thus maybe let's better keep the old versions
+> for 9.2 (except for the arm64 patch that fixes a real problem), and
+> use the new versions for 10.0 ?
 
-Fix by sharing the detection logic between syscall.c and strace.c.
+Fair enough. Will drop the others for now.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d971040c2d16 ("linux-user: Fix strace output for old_mmap")
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20241120212717.246186-1-iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/syscall_defs.h | 7 +++++++
- linux-user/strace.c       | 2 +-
- linux-user/syscall.c      | 5 +----
- 3 files changed, 9 insertions(+), 5 deletions(-)
+>
+>  Thomas
 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 0e08dfae3e..faad9147c9 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2766,4 +2766,11 @@ struct target_open_how_ver0 {
- #define RESOLVE_NO_SYMLINKS     0x04
- #endif
- 
-+#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
-+    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
-+    defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) || \
-+    defined(TARGET_S390X)
-+#define TARGET_ARCH_WANT_SYS_OLD_MMAP
-+#endif
-+
- #endif
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index f68c5cdc44..3b744ccd4a 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -3971,7 +3971,7 @@ print_mmap(CPUArchState *cpu_env, const struct syscallname *name,
- {
-     return print_mmap_both(cpu_env, name, arg0, arg1, arg2, arg3,
-                            arg4, arg5,
--#if defined(TARGET_NR_mmap2)
-+#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
-                             true
- #else
-                             false
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 0279f23576..1ce4c79784 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -10588,10 +10588,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return ret;
- #ifdef TARGET_NR_mmap
-     case TARGET_NR_mmap:
--#if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
--    (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
--    defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) \
--    || defined(TARGET_S390X)
-+#ifdef TARGET_ARCH_WANT_SYS_OLD_MMAP
-         {
-             abi_ulong *v;
-             abi_ulong v1, v2, v3, v4, v5, v6;
--- 
-2.43.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
