@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19BCBE6ADF1
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 10:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E7DAE6ADF8
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 12:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEnXP-0003xu-BJ; Sat, 23 Nov 2024 05:38:51 -0500
+	id 1tEpBM-00039U-Sp; Sat, 23 Nov 2024 07:24:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXN-0003xX-Ls
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:49 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXL-0001Y7-W3
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:49 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-38231f84dccso2071830f8f.1
- for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 02:38:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732358326; x=1732963126; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y7sa4WnkD19vIhgLdanCBDNOHZb6rMAj72QyGrMMNhU=;
- b=SYVWzhYplDN7rnhH78yYosQuVwTnUrwLSGW1izjdeDWVD8CnFF9BqkMfRBLp2mRbFX
- 6EYo633BqtFhK7j3vaNIQESYJ0UGpniUoUxwvlQc6/n+TBvFn3ShEJ8q2QcVjw5hrlHn
- DZlS9/76jTDuv0NN9+FQljEaZ0juzWh+XeiOyLcpVJpyueX1yOAbxLOSWYhcCCaAn7ao
- WA1GI77hVjVH8OuJjZWH+okW1wiMXg0UpEuvrlxOkr9PRLn0TYwKcwgHzYIlr0vynQvt
- vbyY4p6oD/t0kaiWlt/BLssrClG29rZHEuUt/qglFZRq1kGt7zPtv8VAqojeXAz7zniI
- tuFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732358326; x=1732963126;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y7sa4WnkD19vIhgLdanCBDNOHZb6rMAj72QyGrMMNhU=;
- b=mRaZBUDBDwPn6uPdg9KehfDERyAiuiemIOoQCtCvZUnxueUDRZacxY6rRtFQX+bYzT
- A3/0ygo1NRba8znghVYtrq2LD+pTRqdIjvj8X5oe+6fQ9y2bZS5yM5lrUmdd41cLt4wc
- lMpDXVso6RJhuFf/NmmNRnlFlb7K9273/jHE6MsyRoW+pJGjNZJEdXEubWJhbFD0CEjp
- ijLtvXSmHqVCXXgGQjqy2M8Iz/L2oVcWsda95moEyMSXQv7FJjajMnQVF57Z4uie3tH6
- 8P5Y/AxaFavzGmaxuGY6xbMxmpM8nU04OPPrf2MBYRz/yyTLyr8ba9ZW+i1OPOgQnTO7
- 17AQ==
-X-Gm-Message-State: AOJu0Yw7UpCLD190P7Iyv5YIXnJjWui/0T+8h0bEUobLYMBsdvSGOvoG
- vwt3h7gp9d1uiC/ZZxMYLnTVzH38IWScHynG/K68+CY8YkhCRRU4spoRDQ==
-X-Gm-Gg: ASbGncvEL1LMHFoMczyAMI4I9HR++lO+m3Jj1/VDBpxZTpk9ulq0ZEzFjfEvnMLTEbt
- ThXoC6YLY3b7fSddyzDiphxT0EX91qRzgTHi1h6p1RJ/1Kxt7vRSauHdGZEASYGbCuO0cZ++qF/
- tTJdvf5aAuIkiZc7nLEFwW/szhW573suszgB7u4ItqD/dEkLqcCPcLZ4kvvwOX0HNIPg2ExOhC5
- oI1nyVuZKnu42ziy2HDELHfTcrDv+xNRBKBPFJ9yATvUbplzjCoRm3H6bssB7ae8NUjUnoSkTHF
- ZaM9jIr5hQIemQ==
-X-Google-Smtp-Source: AGHT+IFIjUabn+3nrWKgecbDd8dH6FHRQGS2a2bd8wPRvZR0h677+9MGw5hWjm12aODweq8MGU2uyg==
-X-Received: by 2002:a5d:59a6:0:b0:382:383e:850e with SMTP id
- ffacd0b85a97d-38260b58a50mr5722085f8f.13.1732358325662; 
- Sat, 23 Nov 2024 02:38:45 -0800 (PST)
-Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
- [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fafe338sm4857406f8f.33.2024.11.23.02.38.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 Nov 2024 02:38:44 -0800 (PST)
-From: Stafford Horne <shorne@gmail.com>
-To: QEMU Development <qemu-devel@nongnu.org>
-Cc: Joel Holdsworth <jholdsworth@nvidia.com>, Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 2/2] hw/openrisc: Fixed undercounting of TTCR in continuous
- mode
-Date: Sat, 23 Nov 2024 10:38:27 +0000
-Message-ID: <20241123103828.3157128-3-shorne@gmail.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241123103828.3157128-1-shorne@gmail.com>
-References: <20241123103828.3157128-1-shorne@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tEpBK-00039D-55; Sat, 23 Nov 2024 07:24:10 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tEpBF-0005yC-5a; Sat, 23 Nov 2024 07:24:09 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id CDF64AD422;
+ Sat, 23 Nov 2024 15:12:01 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B1878177E9C;
+ Sat, 23 Nov 2024 15:12:12 +0300 (MSK)
+Message-ID: <618427e1-ef6d-439f-be0a-6d573b28f1c4@tls.msk.ru>
+Date: Sat, 23 Nov 2024 15:12:12 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=shorne@gmail.com; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Misc OpenRISC fixes for 9.2.0
+To: Stafford Horne <shorne@gmail.com>, QEMU Development <qemu-devel@nongnu.org>
+References: <20241123103828.3157128-1-shorne@gmail.com>
+Content-Language: en-US, ru-RU
+Cc: qemu-stable <qemu-stable@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20241123103828.3157128-1-shorne@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,114 +103,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Holdsworth <jholdsworth@nvidia.com>
+On 23.11.2024 13:38, Stafford Horne wrote:
+> This series has 2 fixes for OpenRISC that came in over that past few months.
+> 
+> Ahmad Fatoum (1):
+>    hw/openrisc/openrisc_sim: keep serial@90000000 as default
+> 
+> Joel Holdsworth (1):
+>    hw/openrisc: Fixed undercounting of TTCR in continuous mode
 
-In the existing design, TTCR is prone to undercounting when running in
-continuous mode. This manifests as a timer interrupt appearing to
-trigger a few cycles prior to the deadline set in SPR_TTMR_TP.
+Is there anything in there which is worth picking up for stable?
+The first one above seems to be a good candidate.
 
-When the timer triggers, the virtual time delta in nanoseconds between
-the time when the timer was set, and when it triggers is calculated.
-This nanoseconds value is then divided by TIMER_PERIOD (50) to compute
-an increment of cycles to apply to TTCR.
+Thanks,
 
-However, this calculation rounds down the number of cycles causing the
-undercounting.
-
-A simplistic solution would be to instead round up the number of cycles,
-however this will result in the accumulation of timing error over time.
-
-This patch corrects the issue by calculating the time delta in
-nanoseconds between when the timer was last reset and the timer event.
-This approach allows the TTCR value to be rounded up, but without
-accumulating error over time.
-
-Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
-[stafford: Incremented version in vmstate_or1k_timer, checkpatch fixes]
-Signed-off-by: Stafford Horne <shorne@gmail.com>
----
- hw/openrisc/cputimer.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
-
-diff --git a/hw/openrisc/cputimer.c b/hw/openrisc/cputimer.c
-index 835986c4db..7fb97ce2b0 100644
---- a/hw/openrisc/cputimer.c
-+++ b/hw/openrisc/cputimer.c
-@@ -29,7 +29,8 @@
- /* Tick Timer global state to allow all cores to be in sync */
- typedef struct OR1KTimerState {
-     uint32_t ttcr;
--    uint64_t last_clk;
-+    uint32_t ttcr_offset;
-+    uint64_t clk_offset;
- } OR1KTimerState;
- 
- static OR1KTimerState *or1k_timer;
-@@ -37,6 +38,8 @@ static OR1KTimerState *or1k_timer;
- void cpu_openrisc_count_set(OpenRISCCPU *cpu, uint32_t val)
- {
-     or1k_timer->ttcr = val;
-+    or1k_timer->ttcr_offset = val;
-+    or1k_timer->clk_offset = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
- }
- 
- uint32_t cpu_openrisc_count_get(OpenRISCCPU *cpu)
-@@ -53,9 +56,8 @@ void cpu_openrisc_count_update(OpenRISCCPU *cpu)
-         return;
-     }
-     now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    or1k_timer->ttcr += (uint32_t)((now - or1k_timer->last_clk)
--                                    / TIMER_PERIOD);
--    or1k_timer->last_clk = now;
-+    or1k_timer->ttcr = or1k_timer->ttcr_offset +
-+        (now - or1k_timer->clk_offset + TIMER_PERIOD - 1) / TIMER_PERIOD;
- }
- 
- /* Update the next timeout time as difference between ttmr and ttcr */
-@@ -69,7 +71,7 @@ void cpu_openrisc_timer_update(OpenRISCCPU *cpu)
-     }
- 
-     cpu_openrisc_count_update(cpu);
--    now = or1k_timer->last_clk;
-+    now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
- 
-     if ((cpu->env.ttmr & TTMR_TP) <= (or1k_timer->ttcr & TTMR_TP)) {
-         wait = TTMR_TP - (or1k_timer->ttcr & TTMR_TP) + 1;
-@@ -110,7 +112,8 @@ static void openrisc_timer_cb(void *opaque)
-     case TIMER_NONE:
-         break;
-     case TIMER_INTR:
--        or1k_timer->ttcr = 0;
-+        /* Zero the count by applying a negative offset to the counter */
-+        or1k_timer->ttcr_offset += UINT32_MAX - (cpu->env.ttmr & TTMR_TP);
-         break;
-     case TIMER_SHOT:
-         cpu_openrisc_count_stop(cpu);
-@@ -137,17 +140,18 @@ static void openrisc_count_reset(void *opaque)
- /* Reset the global timer state. */
- static void openrisc_timer_reset(void *opaque)
- {
--    or1k_timer->ttcr = 0x00000000;
--    or1k_timer->last_clk = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    OpenRISCCPU *cpu = opaque;
-+    cpu_openrisc_count_set(cpu, 0);
- }
- 
- static const VMStateDescription vmstate_or1k_timer = {
-     .name = "or1k_timer",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(ttcr, OR1KTimerState),
--        VMSTATE_UINT64(last_clk, OR1KTimerState),
-+        VMSTATE_UINT32(ttcr_offset, OR1KTimerState),
-+        VMSTATE_UINT64(clk_offset, OR1KTimerState),
-         VMSTATE_END_OF_LIST()
-     }
- };
--- 
-2.47.0
-
+/mjt
 
