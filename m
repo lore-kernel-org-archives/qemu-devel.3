@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94DE5D75E5D
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 18:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 955C0E65D18
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 19:09:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEv0w-0002IT-P1; Sat, 23 Nov 2024 13:37:50 -0500
+	id 1tEvV4-0000LK-Sn; Sat, 23 Nov 2024 14:08:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1tEv0u-0002I7-6R
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 13:37:48 -0500
-Received: from mail-m16.yeah.net ([220.197.32.17])
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1tEvV2-0000Kt-NU
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 14:08:56 -0500
+Received: from mail-m16.yeah.net ([220.197.32.18])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <chao.liu@yeah.net>) id 1tEv0p-0007Bm-U3
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 13:37:47 -0500
+ (envelope-from <chao.liu@yeah.net>) id 1tEvUz-0003J0-BK
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 14:08:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
- s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=LE57E
- pe0vfXYb8a2OouQK4wIBbdUURp1yQC6DMZFaX4=; b=IuUvCqY+/n3RLX4104UCG
- LlhUPiNBARcx3TLiHhdrrVt3NFYj2eaEf/JGSgUR7nW+8+dz2iva/VGT9XEuG8vN
- BlG5Td240GmAXoblvlijkqv8TOYSK29rRKVXB7PAkrPl3316rffns6F/W0d9E21y
- 1FVL8B7CXKz/X68niRfseI=
+ s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=cZ/yR
+ KGi8ElueBb08IbglQTeOAV/liBtLU81OJaERLY=; b=VfvIQYRAY9XRDB4qN3NaR
+ UGxVIK5eMzue2+QY2B09BmYlBEinzdKB1gZKYSvSRuUBKm0UW1e6eQoaEYWY4y+S
+ E1lQJ6Z3mei5xjSzd2uIBouffbit54JH1GpLgquzH5+nZAvpiFD8WSIafr+KXGCT
+ dyETqU8fvbSPuUSsrSQYb0=
 Received: from ulan.. (unknown [])
- by gzsmtp1 (Coremail) with SMTP id Mc8vCgDH71JsIEJnfr8zAw--.10278S2;
- Sun, 24 Nov 2024 02:35:26 +0800 (CST)
+ by gzsmtp2 (Coremail) with SMTP id Ms8vCgDnbzQxKEJn8ENBAw--.3265S2;
+ Sun, 24 Nov 2024 03:08:35 +0800 (CST)
 From: Chao Liu <chao.liu@yeah.net>
 To: chao.liu@yeah.net
 Cc: alistair.francis@wdc.com, bmeng.cn@gmail.com, dbarboza@ventanamicro.com,
  liwei1518@gmail.com, palmer@dabbelt.com, peter.maydell@linaro.org,
  qemu-devel@nongnu.org, zhiwei_liu@linux.alibaba.com
-Subject: Re: [RFC PATCH v1 0/1] Add helper_print functions for printing
+Subject: Re: Re: [RFC PATCH v1 0/1] Add helper_print functions for printing
  intermediate results of complex instructions in RISC-V target
-Date: Sun, 24 Nov 2024 02:35:24 +0800
-Message-ID: <20241123183524.16316-1-chao.liu@yeah.net>
+Date: Sun, 24 Nov 2024 03:08:32 +0800
+Message-ID: <20241123190832.26155-1-chao.liu@yeah.net>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <b516765922b56fcfd5a16ceaf46428dbdfe0e41f.1732376265.git.chao.liu@yeah.net>
-References: <b516765922b56fcfd5a16ceaf46428dbdfe0e41f.1732376265.git.chao.liu@yeah.net>
+In-Reply-To: <20241123183524.16316-1-chao.liu@yeah.net>
+References: <20241123183524.16316-1-chao.liu@yeah.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: Mc8vCgDH71JsIEJnfr8zAw--.10278S2
+X-CM-TRANSID: Ms8vCgDnbzQxKEJn8ENBAw--.3265S2
 X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
- VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxU3xwIUUUUU
+ VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUVuc_UUUUU
 X-Originating-IP: [39.144.154.56]
-X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiEgqgKGdB+I4zUgABsg
-Received-SPF: pass client-ip=220.197.32.17; envelope-from=chao.liu@yeah.net;
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiCwqgKGdBtFbxXQAAsh
+Received-SPF: pass client-ip=220.197.32.18; envelope-from=chao.liu@yeah.net;
  helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -71,24 +71,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For example:
+Currently, the v1-patch is not yet capable of achieving the desired effect.
+It still requires passing the number of variable arguments to the helper_print()
+function:
 
-    static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
-    {
-        TCGv src1;
+     static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
+     {
+         TCGv src1;
+ 
+         decode_save_opc(ctx, 0);
+         src1 = get_address(ctx, a->rs1, 0);
+         gen_helper_print(2, "src1 %x\n", src1);
+         ...
+         return true;
+     }
 
-        decode_save_opc(ctx, 0);
-        src1 = get_address(ctx, a->rs1, 0);
-        gen_helper_print("src1 %x\n", src1);
-        ...
-        return true;
-    }
-
-When the TCG executes instructions containing this function, the terminal will print:
-
-    src1 0x...
-
-However, currently the parameter type for `helper_print` is uniformly set to `tl`,
-so when passing parameters of other types, they need to be cast to the `TCGv` type.
+Regards,
+Chao
 
 
