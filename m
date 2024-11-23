@@ -4,90 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0ADFE6ADD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 08:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7249E6ADE7
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 08:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tElV1-00054b-6p; Sat, 23 Nov 2024 03:28:15 -0500
+	id 1tElkt-0006rk-SW; Sat, 23 Nov 2024 03:44:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tElUx-000549-1h
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 03:28:11 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tElUu-0004pP-PA
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 03:28:10 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-431688d5127so24003895e9.0
- for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 00:28:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732350487; x=1732955287; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=tdYKfDoQ9875GdY/cyfgCfE6f1yYUBQqCM8T5x1EV08=;
- b=AcBMLLTJV/dhiN24C/8h0EbZCa7x3XIOMFHsMlsRxOTy6ffUqperc9tpjcEIfpSpFO
- 5WAF0IgIciUzZ5JcJcKN0qT34y3kCIlDtYme7ptH9X7WBGfn7vf7RPciWEuOIPTBtxf4
- 0FddouLc64dP2+F/wQR4V5xnjSW+NWE8HsIHmQVqjmlrinIRyNd+y+TRfcpT5TTsCZ49
- npyuyhqOMHC8fRDEOIvADo+cwUqRGWdnaAj0EzQ4OYLxJ9akc/r5EVSIqwcJpc2XyTSb
- LWg6ehHyMNUkUe7lO7stcZQNnq41KisXSETKFV3p55zSgcvoTciI4XM6+vxh6VJtyS0P
- 7h0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732350487; x=1732955287;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tdYKfDoQ9875GdY/cyfgCfE6f1yYUBQqCM8T5x1EV08=;
- b=V3q0oqdoanOMTjX66NFr5AFSLOZCmolFNWBcGN8QOhal9OFBQpx6CfWzssdhV9kRlq
- p5jvMUUpOMW0B+WlH1yTeQvdu3eEowQTNRBl0DGBX4zpVg5OZn7HxpHwJKNxjHE0ltqq
- 75iEMhRoLZJJZIxA7vhB9uPNfls0Nfxo4pAWSdMKmuuGEGVzrAWvWJfJ2+XDhQIAusYV
- YaVKz2xx85dcjAt9OWH27wH9olI+PDajLJrTA1Rg6hP2bzMUG5ysYFRK1n/pE5pj1V7H
- VADEbkAP1x/0Q6VXgdYtZ8ylMacGOnYkCGdpYXKAhHBXhbUMlrdD51DL9qdFjU/+Ea9f
- fmZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWy+WIlbFh32myacAd8Kon2RPEYtIjAb8D66Q2TeYFjjbdxG3aeE5ABbG3RxDHHlbuJ8mpFEjS1q1pE@nongnu.org
-X-Gm-Message-State: AOJu0YzrjPIP9mr30GZH7cw6s3l/vaMTolCWhfgBm6KNdAMej06m0few
- 8pDAgUNHUcEf72hGXnaTfJXvQvHw/QK152gBVy2MZ4M4sJb5nnK0
-X-Gm-Gg: ASbGncuB3qMYZNIN7oWuNMXO/jmFkyxg1lMlXHjhX/GEGrUZaQBpF1BYrc60qZAXPeB
- ZgGqT+PzPDJivDrHqLqkPqfOFjSuhgcLmfgDZZScsZNp8YSOzYusTAxipkYGxdTHwOjOZVg50ce
- 365LDW4bY1RwftRi7TCG2IU8G0COrUBYrBYBq9gQjkPxW0HxmTv4WZo/5fOYOa62/UInTGlKPHD
- tBgVjTmpaoVGCRwY1KZRGBg0uxirM3q3vpdjRkYVydTm6gxU/xMMcQ5a6gTnZhZzwQa/IW/sbgR
- KNQNisOP4fqYGA==
-X-Google-Smtp-Source: AGHT+IEuYDMvxshg4lYJoS3kME4mshwql8KbJTa8z82Y+9HmDIm3efEDm+i9y01etczGIzfIvAxPgQ==
-X-Received: by 2002:a05:6000:154b:b0:382:5295:b33c with SMTP id
- ffacd0b85a97d-38260be4135mr4538246f8f.58.1732350484979; 
- Sat, 23 Nov 2024 00:28:04 -0800 (PST)
-Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
- [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fbc4173sm4737449f8f.72.2024.11.23.00.28.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 Nov 2024 00:28:03 -0800 (PST)
-Date: Sat, 23 Nov 2024 08:28:01 +0000
-From: Stafford Horne <shorne@gmail.com>
-To: Rob Landley <rob@landley.net>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: QEMU commit 0a923be2f642 broke my or1k image.
-Message-ID: <Z0GSETLeT5w8B2DX@antec>
-References: <afac091f-08cb-0f6d-4c01-bfa4421e7a47@landley.net>
- <Zufcf4iAqosZ7VBf@antec>
- <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
- <Z0Cyx3i3z7Zl7XPm@antec>
- <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
+ (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
+ id 1tElks-0006rJ-4W
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 03:44:38 -0500
+Received: from mail-sg2apc01on2126.outbound.protection.outlook.com
+ ([40.107.215.126] helo=APC01-SG2-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
+ id 1tElkp-0006Uu-6N
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 03:44:37 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZPmH0Utz+mljRsOGQQfmpwzqRfhuDEtsTTqUgOeNYpDHnbZk45JQC4bnA8MvOz5zCSft3hvJiYEgwHLXd7w2Y+TA4uJihZiq3D/LRUI/6ffhq+c9+mlzGbTJhihyDZFMp84SgC2yPeVPKjpa5k57jKplB+dlnua/xLkv1LsNdLsMQf5o1JjezTFRZJw86lZ0ClacTeHo1zIcqNb0+kvqKbSTzaSZApDys4viw94c4OtnHkxh3u2t5nQFRd2DBOWdZdfT6nBJ3kZ+UnJxwI0NsAW6GP5/bh/sCs5IJe072EACd1AK20WmSUKUD7pdW6G7rN6I2koMAcH6e+C9qOfmVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eGiYKXQZNGAuZCCZ7CJB/7y5VEkef8lOLuk1BJ47jZY=;
+ b=rgPNxQXlsqREAMenDScCL5RtjrutCsL+YNLfrVhrttxISPnKliBbUFbASel64sXzsdWVyVTQ5TQIC3HaGVCO8XrTCLzeG9aLg1CEgImSiYj2OybKlFmCn3eiYz1XQdJoh9tSztGdsaWfmK/u6ZTB0TRyxzUY8jtNoC4zx6Lao2gFIKxcBf38VuDH/xb6AP/F0baQiaP3Sg57jQ3VHITdXGCULz2pHYbDv4ciDiAVl0qqMVqOuVreRP37JJWWs1OTRWMa8A8WDzm7p7ufXR/w0dn8rjoVzeLel2Dr7mNCwYuzxjybnrAdz46ZrIwx41+fC/2NDXsrXOvy4tRKB6QzOA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
+ header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eGiYKXQZNGAuZCCZ7CJB/7y5VEkef8lOLuk1BJ47jZY=;
+ b=lo4GqoWFRgkDoApuXcZqisIro/bXLWBg2Kr3gaGEaUK9Q6va86gRQZoKx/HtC38IQDZhT4fsqusc1pgmv5ti9wFlW1ek+UpyvArARrWfNUfO9ju0H16kWfPgoX4a20dIbuLQiR4vVFeA5XPPwMkO9+RU/MFHBRM3HWreFHWsi3uST25Uni8XWblhnJy2C9MTIvlJ6397Ju0OQCKRUclZhi79cYFCxG9PsSEUIe81wsYraSxmHBiV/o5XY1y9j37rmzcCnm0CbTBBWNPLIsO2WmdtZlPL1UfumVsGeqwRShpxLyeXoer0pWJ8Wm3kPRJOSld6KfbYZBxFDzgJAaHcPQ==
+Received: from PUZPR06MB4713.apcprd06.prod.outlook.com (2603:1096:301:b4::10)
+ by JH0PR06MB7296.apcprd06.prod.outlook.com (2603:1096:990:a2::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8182.18; Sat, 23 Nov
+ 2024 08:39:22 +0000
+Received: from PUZPR06MB4713.apcprd06.prod.outlook.com
+ ([fe80::b6f8:321a:6742:9bde]) by PUZPR06MB4713.apcprd06.prod.outlook.com
+ ([fe80::b6f8:321a:6742:9bde%5]) with mapi id 15.20.8182.018; Sat, 23 Nov 2024
+ 08:39:22 +0000
+From: Wafer <wafer@jaguarmicro.com>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+CC: "eperezma@redhat.com" <eperezma@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Angus Chen <angus.chen@jaguarmicro.com>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "groug@kaod.org" <groug@kaod.org>
+Subject: RE: [PATCH] hw/virtio: Fix getting the correct ring number on loading
+Thread-Topic: [PATCH] hw/virtio: Fix getting the correct ring number on loading
+Thread-Index: AQHbPIJosKTsv0Hf0kCpKj2UATG/HLLC37YAgAGkUlA=
+Date: Sat, 23 Nov 2024 08:39:21 +0000
+Message-ID: <PUZPR06MB4713C38048484D29F20B3B65A22C2@PUZPR06MB4713.apcprd06.prod.outlook.com>
+References: <20241122020002.564-1-Wafer@jaguarmicro.com>
+ <52aebd45-da0c-41a9-ab2f-acee8da5d7e4@linaro.org>
+In-Reply-To: <52aebd45-da0c-41a9-ab2f-acee8da5d7e4@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PUZPR06MB4713:EE_|JH0PR06MB7296:EE_
+x-ms-office365-filtering-correlation-id: dde9ec89-b458-4cc1-c077-08dd0b9a541a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?cjhsbld6ZERWWnUrbTkwR2RIRVZPeVl6ZDF3V3drektubElBbUVUa25Bb3lG?=
+ =?utf-8?B?Z0piek5PUTBBbEpGNFBuaDRzdDh4K3NTZDlLdjQ2VVg4WXQvV0dSbVdGdHdL?=
+ =?utf-8?B?R3g5RnFRbVZUZ2pCZ2taTmFFQmlTSjhaeCt4YkdaeEtCT2JtajJRUGhnWVE4?=
+ =?utf-8?B?eHZIU2U0TzZHN2ZIZEF5eXJpWEtTTTRwMksrOGRnNHprcVIvZ2Vmc3Z1aDJm?=
+ =?utf-8?B?SVBjaGp3SXMrbnU3SXhaN3NManZOdmlRYnQ1T21SMUlOSGU5NVBMQkI5SVMv?=
+ =?utf-8?B?ZC9FbWY2NTV4K3RHN1BZQVJvWUNuODliTDcxY2RpQmg3RzB0cnNRaGpSTzBF?=
+ =?utf-8?B?aCtrL1BOSnhha0ZlM1pjOU10MjhPOGpwSnY1M0FxUFdVZ1BhOS92dloyclZh?=
+ =?utf-8?B?cFZNZStmQjdMMjdzWldaT0h3bzhoSzFGUTQrTGRzRkJFb25wQ0RuR3VlaTMr?=
+ =?utf-8?B?TEN0ZlJWUGlSVnZMems5cUwrd1BZMmJBT25Ld2YvMEpjN1ZMK3pMMEVaWEl2?=
+ =?utf-8?B?RkoxQndmcEtsbndITGZnOGh2Ni9SVldSOHByOG9TOW1KTFk5bURhTjVsZjZU?=
+ =?utf-8?B?cCtreWg0bDREbTIxMWxsVjZPaWI4aWJqYXNSekFJUUNoRDFwdGtEVzRTWDF2?=
+ =?utf-8?B?cEhwamJ4LzZuc1NnOVBKcEJodHVxc3A4bjllekNIenFCb2VQTzY5cmVISjFz?=
+ =?utf-8?B?YytORGR6c3o5TlUySm1CekdHcTE3TmwyYkR1R1Q0S241Snk3VmVVb3k3bkl1?=
+ =?utf-8?B?MURycndrdW41S3lsZVFMNE16cCtoV1kvM3NKNU84MEltS1JYMmZlRnNOWUlz?=
+ =?utf-8?B?ZGNFWjNYMzJqSjhPUERwamw0cFAwTS90S0Q0cW9ab09YSzBBaU9oYVdudWR0?=
+ =?utf-8?B?RmF4TmFZd1UyRW9CYWJGYWpoS3RWY1d0UzZYNTJBOWFFTUhoZXdYaFd3alNa?=
+ =?utf-8?B?SzRCRDRkK1FwRHhqNkpOa0lOUWNCQUlLMkZKMDR5QVVxV0V5Z2cxU00xMFFu?=
+ =?utf-8?B?U3hDTm9OOUxpY1NLZ0pJektrQ2V5Sk0yQWNGQlRCREkvMnVCbGxXd3lOSmg5?=
+ =?utf-8?B?ajFVRm1JbWJZUkZ3UHBGV2VMbXg5SmNlTkJBNjdVUkxnQmlNN2J4bDM0ZThy?=
+ =?utf-8?B?NDU2NUltVm13VUF6UXZVU3hUTFE1aUdIZ1RVU0ZVSVZMYnBRYUFHalRpZmFW?=
+ =?utf-8?B?RGhKeW5tZjV6MHAxZ1R1OWt4K3JkVkdnQXBZaGtsbzJUMFNIU3JlSENrbGlR?=
+ =?utf-8?B?WWhwTHhURUZCd0wrZE8xMUFIbkdYVXVjTWhTemx2cVQ0RWRHb0RxaTdNSFdn?=
+ =?utf-8?B?ZWxxckdic21BU1JaZlhvWnVzNklxcStxT1hDZ05SdXU3VFEwWWFjTzJUYkJC?=
+ =?utf-8?B?RjNldDNoRHVkTXBTa2l1MUJVWm04K1NxbWQ3RW1DVzlvNk5lc2w0aXZYOHc0?=
+ =?utf-8?B?Vmo0Tkorbkc0eXFrREVMcGlOVHBvNmxRZUV6YWdnRklqS1RUYm95dDRmZDZr?=
+ =?utf-8?B?bXBJZUZxQTVGbXVSVzF5RER3TUZPKy9qcDRyOFJYb3pHaXpWbFRIaksxUjBx?=
+ =?utf-8?B?QVFLVWxPMnNLblRCOVN4UnNhcmVQa0ZPTnpaRGl0dTZzQ3R4blJjelNFZXBJ?=
+ =?utf-8?B?TFhoY2FxazZvdWgwbmxsK1ZRT0g2TVJhKzlnTHBiQXROVDhZYzM4MjN2RXNO?=
+ =?utf-8?B?NXR0OVFEWjdXWmQxOGlpV2hUeXRVQzFHTFBmaWFuUzhjdWlrZFJZWkhsSWds?=
+ =?utf-8?B?UVhTSTNvamlLRE0vWUJFdnhXbXJZUy93MEhxM0YzVEVVVUE2WUtoTTNmdXFq?=
+ =?utf-8?B?dlZNSDAvMnd2dWwwYnI4dDZmOGtYaTd0NUVkYjhlVzZuMGlncG9NZ2krTzU4?=
+ =?utf-8?B?U21hNVRvdVN5cTFsdHdEYjhIOFdxTEJVOFBPSkgzeS9tZXc9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PUZPR06MB4713.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Ym1oYUhFU25IcUlKTExjOUQ4OVNDNVBFUFZuL2t2emRHSHBsL2EyYktSeE52?=
+ =?utf-8?B?eXA0cFE2TXdXeWEvekRTMGNRVkxSOXFOY2ZyWTNSd1JubUdJOWNZT1NYZ3NX?=
+ =?utf-8?B?amFabTdEZW80Zzg1N1Q0cmhEV2NENlplaFdKMWFyU2ZtM2lyRlg0K2FzL20y?=
+ =?utf-8?B?L1RveDg4MEw4OUtNOHFZcmdDQk5zTTdiTldCaGg3bEhyWm5oRG1ZOWZqQ2lm?=
+ =?utf-8?B?S2lIKzcwdFlFaGpsbzhKWFZRRlgyTkNnQ0xwSUF5clE1TGplWTRyUUY0N0l3?=
+ =?utf-8?B?SHR3SlpnelYveWExdHVleXRaenc0VXprSkk5WmVjZzBEWjJCMzlwU0ZTTzAz?=
+ =?utf-8?B?Q2l4NGc3bmpnL1pQaVBSYXdKN3lIQy9kZXYrTnRwdkRaYTVSL1ZhT0hPVnlu?=
+ =?utf-8?B?eUtHbGhmZ29KY2FZR2ZZWXZ2SE9zZHBRZHFXenVINGZ0azJuc1VYbHFtSnJt?=
+ =?utf-8?B?eHZJRzFTeWdhWDBrdGNqQy9PMHBEY09HRHhvVzkxODZCTDJCK3JiQ0Z0ZVR6?=
+ =?utf-8?B?aGFyeHY1UURMc3JpNng2YUpkZjJOTW9jWDZWY1VhdS9Xb2VrYnZMNkRzd0hE?=
+ =?utf-8?B?dWZxOXFCcmEzVERBcmlvbkNSRU9HMU12MmNWVENjUmd2MDlCYjd4TENzMlEy?=
+ =?utf-8?B?Y3ZyQ0tsUWtCR0k1ZjgwemZYU3dXeGI1cEJlQ0V2bHE1SlVvTUJVcUlMcUNt?=
+ =?utf-8?B?OW1ORWpmdDlFdDFtM04vTDhqZ04xK0hOK3h6WVVwUWNOR3JHRGlGWFVlSFBK?=
+ =?utf-8?B?VTlpRGUwS3pBUnEyZ2Y4UDlrdkZpNGpSRVhBNzRBUXM5cHEwMTRJaWlSSGdu?=
+ =?utf-8?B?cEhXZVp2UXk2UjNKK2t3QWtYdHZkK2VmZkR0TnZzSlJ1VGJiclNXbTREbGk1?=
+ =?utf-8?B?MXlNdzlGV1pmV0hTaFJ3VlozTGlsMDNZb2hiMHBNT3dxTEl5SXlhNGk5RlhI?=
+ =?utf-8?B?V1NRZHdHNEtTWkNmSGoyWmovb3Exbzh2NEpKRHVIVHpSN2Z1UEgvZ2hjS3d6?=
+ =?utf-8?B?UEM1ajc5WkpuME5VczFPOUgyaWNrSmYyOVdjOE5PYXlVanZBVW8walNCYWpz?=
+ =?utf-8?B?QlFOSHIrTE9BNzV5d0xqbVVCM1hWUGxiVXdlMGhMKzdLVjZMS1BUcDVUTkNM?=
+ =?utf-8?B?eHhIbWZTT0NqNnI1Zm5VRXJqZVBHenBNalFqNzBJZWljeWwzTTdseit6TndU?=
+ =?utf-8?B?cjNqT2dmS21pV1FMV3VwSDJuanBxNWxkQThCSmlBQWhsSXI3Ym1kMEF0M3Y4?=
+ =?utf-8?B?SlJPVGU0c01PNHlxR014NVIvUlpzT0ZHQ29SM280Q3hvN1JubEgrTml1QVE5?=
+ =?utf-8?B?Q3VlVERQRWxhaGFRdWprNDJjL2hxcjBpUHphYjRDS0lFTnZMc1kvcFM5WGFI?=
+ =?utf-8?B?aTh6MHRpZVVwdmQ5c3Z4MGo5cnd6RVVhMFg3NEZjRzdIOTJqdVprQjk4dlpF?=
+ =?utf-8?B?VzVzU0lnd0tVdmtQSkt2UTFBdGVIZUdOUEROUEVtVHlPRmRXWXlLVHg0UTkw?=
+ =?utf-8?B?NEdMb0tZNS9OSVBQZ3R6TWVuNXZxV2ZidUE3M3hIQm1XL2lwSUNaZUxQNTlV?=
+ =?utf-8?B?UG9wckZRRHNQZW1tMzF5YVBEOXVZMUQ4UDB0eWdMSEdyQzlBUXpkQ25xSWJF?=
+ =?utf-8?B?em5QNkdPekxOWWh4YWlUR2hKU1pSQlhuQWh3MXNOR0dwdmNIekU5QjJOSmRp?=
+ =?utf-8?B?QXBkZURUeWVDUW50TVlwNlR5SS9vZHBBU3o4V3k5OXlWSXdLa0pHMHQxOXVx?=
+ =?utf-8?B?RkZXcTVOSXM0NFRxdXZpOGZ2UFYrS0ZGMFlvNmJJZm5jYzRwTUl5Wlp5TUY3?=
+ =?utf-8?B?YjduWW82d3hGbEdpaHdpRUEwZUtVM0RvdGx3RDltSXJZOTNFL011enBRcUk0?=
+ =?utf-8?B?dFQ3Y2RaNUd2NzA4aTZnQmp3blNUTzdKVHdhb2N3QjZsMU1USmZ5eUJxb3hw?=
+ =?utf-8?B?ZzYrNWhSek9id3JEZUlqODQrdUluUzhFSTFWMmZvVUNGdzcyMUJHUzJ6NUxU?=
+ =?utf-8?B?dFhyZnVwMjdBaE43dmI3M1B6YTJMa1hmU1lHbGpGd2VYeEM3c281T3ZoQzA1?=
+ =?utf-8?B?dFhPZDhHUnFGQkU2d3hKaFRQVFIyWW5ERW9GbTBMbnAvQmpZZFZ3a25ZbEU4?=
+ =?utf-8?Q?WzB+K8h9hPEqNs1W7C+MX/fmB?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=shorne@gmail.com; helo=mail-wm1-x344.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+X-OriginatorOrg: jaguarmicro.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4713.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: dde9ec89-b458-4cc1-c077-08dd0b9a541a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Nov 2024 08:39:21.9998 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: fLnAXcwQanqgmqNPe/0JxvRDHtKwf6xSfMIuAoNUSUp2hZDXNgEogfMww3yBtzMQB57R03eiYmyQqPVM/Tb0Og==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB7296
+Received-SPF: pass client-ip=40.107.215.126;
+ envelope-from=wafer@jaguarmicro.com;
+ helo=APC01-SG2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,220 +182,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 22, 2024 at 06:54:21PM -0600, Rob Landley wrote:
-> On 11/22/24 10:35, Stafford Horne wrote:
-> > > I just regression tested linux-6.12 against qemu-9.2.0-rc1 and I'm still
-> > > getting no output from or1k, with the current image or the old or1k release
-> > > image that worked under old qemu versions.
-> > > 
-> > > I tried applying your serial patch to current qemu, and it made no
-> > > difference: still no output booting the image.
-> > 
-> > OK, I am trying to get that patch pushed upstream.  I will be sure we fix your
-> > issues before we do that.
-> 
-> Thanks. Let me know how/if I can help.
-> 
-> > > Alas I can no longer test that reverting the commit I identified (git show
-> > > $HASH | patch -p1 -r) makes it work again in current qemu (although it did
-> > > at one point, that's a standard sanity check at the end of bisect for me),
-> > > and I can't fix it up by hand either because hw/openrisc/openrisc_sim.c no
-> > > longer contains the string "load_sim", looks like it got collated with
-> > > common code for other architectures.
-> > > 
-> > > I'm happy to tweak the kernel config if qemu changed in a way that broke
-> > > compatibility with old images (I assume _you_ have a kernel that boots), but
-> > > I was hoping "this week's kernel release" would have any necessary patches
-> > > to work with QEMU's changed ABI.
-> > 
-> > The patch I have put in 6.12 only helps with earlycon.  Regular output has
-> > always been working for me.  I will work on testing your image again to see what
-> > is special about it.
-> 
-> Just a guess, but given the alignment change, I suspect it's barfing on the
-> statically linked initramfs? That seems the most likely step to go off the
-> rails given the failing patch is a symbol alignment change in the flattened
-> device tree plumbing, and I think the initramfs extractor parses device
-> trees very early on to find stuff (I forget why). Moving "where the data
-> lives" without a corresponding change to the "where to look for the data"
-> code seems a bit strange, but it's not my area...
-
-OK, and the broken earlycon may be masking what is going on, as we should at
-least see some console output before things fail.  The earlcon fix is in 6.13
-not 6.12.
-
-I was able to test your or1k.tgz image and figure out what is wrong.  Your
-run-qemu.sh script has 'console=FIXME'.  This command line argument is taken in
-and is causing the boot process to not be able to find the console.
-
-Changing it to 'console=ttyS0' allows me to see the output.
-
-I put a branch with the qemu patches I have here:
-
-  - https://github.com/stffrdhrn/qemu/tree/or1k-9.2.0-fixes-1
-
-> Here's the miniconfig I built 6.12 with (90% of which is generic to all the
-> architectures I'm testing, the sections are labeled. The console="FIXME" bit
-> is because I can't get qemu-system-or1k -append "blah" to go through to
-> linux, so I stuck FIXME in that field for the or1k target and it wound up in
-> the output):
-
-The kernel command line is injected by qemu into the qemu generated
-devicetree.  I notice when I boot your kernel with the reverted FDT alignment
-fix the console prints:
-
-    Kernel command line: earlycon
-
-This means that the qemu devicetree is not being used, hence the command line
-args are not working.  The qemu device tree not being used is not good, but that
-is why reverting the alignment fix 'seems' to fix the issue.  To me the revert
-looks to be breaking the qemu devicetree allowing us to fall back to the kernel
-supplied devicetree.
-
-This gave me a clue as to what was going on.
-
-> # make ARCH=openrisc allnoconfig KCONFIG_ALLCONFIG=linux-miniconfig
-> # make ARCH=openrisc -j $(nproc)
-> # boot vmlinux console=FIXME
-> 
-> # architecture independent
-> CONFIG_PANIC_TIMEOUT=1
-> CONFIG_NO_HZ=y
-> CONFIG_HIGH_RES_TIMERS=y
-> CONFIG_RD_GZIP=y
-> CONFIG_BINFMT_ELF=y
-> CONFIG_BINFMT_SCRIPT=y
-> CONFIG_BLK_DEV=y
-> CONFIG_BLK_DEV_INITRD=y
-> CONFIG_BLK_DEV_LOOP=y
-> CONFIG_EXT4_FS=y
-> CONFIG_EXT4_USE_FOR_EXT2=y
-> CONFIG_VFAT_FS=y
-> CONFIG_FAT_DEFAULT_UTF8=y
-> CONFIG_MISC_FILESYSTEMS=y
-> CONFIG_NLS_CODEPAGE_437=y
-> CONFIG_NLS_ISO8859_1=y
-> CONFIG_SQUASHFS=y
-> CONFIG_SQUASHFS_XATTR=y
-> CONFIG_SQUASHFS_ZLIB=y
-> CONFIG_TMPFS=y
-> CONFIG_TMPFS_POSIX_ACL=y
-> CONFIG_DEVTMPFS=y
-> CONFIG_DEVTMPFS_MOUNT=y
-> CONFIG_NET=y
-> CONFIG_NETDEVICES=y
-> CONFIG_NET_CORE=y
-> CONFIG_NETCONSOLE=y
-> CONFIG_PACKET=y
-> CONFIG_UNIX=y
-> CONFIG_INET=y
-> CONFIG_IPV6=y
-> CONFIG_ETHERNET=y
-> CONFIG_COMPAT_32BIT_TIME=y
-> CONFIG_EARLY_PRINTK=y
-> CONFIG_IKCONFIG=y
-> CONFIG_IKCONFIG_PROC=y
-> 
-> # architecture specific
-> CONFIG_ETHOC=y
-> CONFIG_SERIO=y
-> CONFIG_SERIAL_OF_PLATFORM=y
-> CONFIG_SERIAL_8250=y
-> CONFIG_SERIAL_8250_CONSOLE=y
-> CONFIG_OPENRISC_BUILTIN_DTB="or1ksim"
-> 
-> # architecture extra
-> CONFIG_INITRAMFS_SOURCE="../../root/or1k/fs"
-> 
-> And then run-qemu.sh is just:
-> 
-> DIR="$(dirname $0)"; qemu-system-or1k -M or1k-sim -m 256 "$@" -nographic
-> -no-reboot -kernel "$DIR"/linux-kernel -append "HOST=or1k console=FIXME
-> $KARGS"
-> echo -e '\e[?7h'
-> 
-> (The echo is because some qemu bioses disable wordwrap in the terminal and
-> leave it broken, driving bash cursor-up history nuts. My plumbing just
-> sticks a reset in all the architectures' scripts...)
-> 
-> The or1k support in mkroot is the 4 lines at:
-> 
->   https://github.com/landley/toybox/blob/master/mkroot/mkroot.sh#L256
-> 
-> (I'd cut and paste them here but thunderbird wordwraps everything.)
-> 
-> Also, looking at that, I'm using a builtin DTB and you might be passing one
-> in via -dtb? Another thing the alignment change might break...
-
-Thanks for the steps.  I was just using the or1k.tgz you provided earlier.  The
-above will help if I want to try some kernel fixes on my own.
-
-> > Note, I did find some issues with the kernel nor properly handling stdout-path.
-> > It seems that if there are multiple uarts the first one will always be used as
-> > the default uart.  Only the console= command line argument can be used to
-> > override that.
-> 
-> I've never managed to get console= to go through to linux in
-> qemu-system-or1k. The above tries but is ignored.
-
-As I mentioned above this is a good clue and explains why the alignment "fix"
-fixes your issue.
-
-> It's also doing a statically linked initramfs because -initrd didn't work on
-> this target. Happy to update if it's been fixed, the other targets are
-> almost all using -initrd to feed in an external cpio.gz
-
-Using -initrd should work.  But also using the statically linked initramfs
-should be fine too.  The setup I use for testing uses virt with a virtio block
-driver.
-
-When using qemu with -initrd qemu will back the kernel, initrd and fdt one after
-the other into memory as per.
-
-[ kernel ] - Loads from 0x100 (based on elf layout)
-[ initrd ] - page aligned
-[  fdt   ] - page aligned devicetree (revert moved to 4 bytes aligned)
-
-The fdt address gets placed into r3 which the kernel uses to find the qemu FDT.
-Finding the FDT one of the first steps of the boot processes.
-
-> > So as long as the kernel selects the first uart as the stdout path (it should
-> > have always been the case)  AND qemu picks the first uart as the uart connected
-> > to the console (it should be with my latest patch) we should get serial output.
-> 
-> The commit in question is not changing UART configuration. It's changing the
-> alignment of a symbol. Your patch to the UART plumbing did not fix it. I
-> don't see how the UART configuration could have changed between the
-> "working" and "not working" states.
-
-As mentioned, it's causing us to switch off access to the QEMU supplied
-FDT which is allowing the uart to work.
-
-If you provide command line args console=ttyS0 things will work.
-
-Also console=ttyS0 is not used as all as it should be the default in QEMU.
-
-> > Another thing that may get me delayed is that I need to rebuild my or1k-elf-gdb
-> > as it's python version is no longer compatible with the kernel's python.
-> 
-> Yeah, Python 3's forced upgrade treadmill is deeply silly. I'm not a fan:
-> https://landley.net/notes-2024.html#09-04-2024
-> 
-> (I know they're doing it to make sure they never have another "our userbase
-> refuses to move off 2.0 for a full decade" moment by holding tightly to the
-> control they wrested away from their users and never giving an inch back now
-> they've forced the issue, by making sure their code spoils like milk and the
-> installed base is regularly slashed and burned, but for me that just means
-> "use lua" or something. Yes your dev team had trauma. So did the perl guys,
-> who eventually gave UP forcing their transition down an unwilling userbase's
-> throat... But again, not my area.)
-
-It looks like I didnt need this to solve the issue.  But I will need it soon.
-sigh.
-
-It looks like the root cause of the issue was the 'console=FIXME'.
-
-I hope it helps.
-
--Stafford
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGhpbGlwcGUgTWF0aGll
+dS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPiBTZW50OiAyMDI05bm0MTHmnIgyMuaXpSAx
+NTowMg0KPiBUbzogV2FmZXIgPHdhZmVyQGphZ3Vhcm1pY3JvLmNvbT47IG1zdEByZWRoYXQuY29t
+Ow0KPiBqYXNvd2FuZ0ByZWRoYXQuY29tOyBncm91Z0BrYW9kLm9yZw0KPiBDYzogZXBlcmV6bWFA
+cmVkaGF0LmNvbTsgcWVtdS1kZXZlbEBub25nbnUub3JnOyBBbmd1cyBDaGVuDQo+IDxhbmd1cy5j
+aGVuQGphZ3Vhcm1pY3JvLmNvbT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSF0gaHcvdmlydGlvOiBG
+aXggZ2V0dGluZyB0aGUgY29ycmVjdCByaW5nIG51bWJlciBvbiBsb2FkaW5nDQo+IA0KPiBFeHRl
+cm5hbCBNYWlsOiBUaGlzIGVtYWlsIG9yaWdpbmF0ZWQgZnJvbSBPVVRTSURFIG9mIHRoZSBvcmdh
+bml6YXRpb24hDQo+IERvIG5vdCBjbGljayBsaW5rcywgb3BlbiBhdHRhY2htZW50cyBvciBwcm92
+aWRlIEFOWSBpbmZvcm1hdGlvbiB1bmxlc3MgeW91DQo+IHJlY29nbml6ZSB0aGUgc2VuZGVyIGFu
+ZCBrbm93IHRoZSBjb250ZW50IGlzIHNhZmUuDQo+IA0KPiANCj4gSGkgV2FmZXIsDQo+IA0KPiBP
+biAyMi8xMS8yNCAwMzowMCwgV2FmZXIgd3JvdGU6DQo+ID4gRnJvbTogV2FmZXIgWGllIDx3YWZl
+ckBqYWd1YXJtaWNyby5jb20+DQo+ID4NCj4gPiBUaGUgdmlydGlvLTEuMiBzcGVjaWZpY2F0aW9u
+IHdyaXRlczoNCj4gPg0KPiA+IDIuNy42IFRoZSBWaXJ0cXVldWUgQXZhaWxhYmxlIFJpbmc6DQo+
+ID4gImlkeCBmaWVsZCBpbmRpY2F0ZXMgd2hlcmUgdGhlIGRyaXZlciB3b3VsZCBwdXQgdGhlIG5l
+eHQgZGVzY3JpcHRvcg0KPiA+IGVudHJ5IGluIHRoZSByaW5nIChtb2R1bG8gdGhlIHF1ZXVlIHNp
+emUpLiBUaGlzIHN0YXJ0cyBhdCAwLCBhbmQgaW5jcmVhc2VzIg0KPiANCj4gIm1vZHVsbyIgLi4u
+DQo+IA0KPiA+DQo+ID4gVGhlIGlkeCB3aWxsIGluY3JlYXNlIGZyb20gMCB0byAweEZGRkYgYW5k
+IHJlcGVhdCwgU28gaWR4IG1heSBiZSBsZXNzDQo+ID4gdGhhbiBsYXN0X2F2YWlsX2lkeC4NCj4g
+Pg0KPiA+IEZpeGVzOiA2MTZhNjU1MiAodmlydGlvOiBhZGQgZW5kaWFuLWFtYml2YWxlbnQgc3Vw
+cG9ydCB0bw0KPiA+IFZpcnRJT0RldmljZSkNCj4gDQo+IFRoaXMgY29tbWl0IGlzIG9ubHkgYWJv
+dXQgZW5kaWFubmVzcy4uLiBEbyB5b3UgbWVhbiAxYWJlYjVhNjVkDQo+ICgidmlydGlvOiBmaXgg
+dXAgVlEgY2hlY2tzIikgb3IgMjU4ZGM3Yzk2YiAoInZpcnRpbzogc2FuaXR5LWNoZWNrIGF2YWls
+YWJsZQ0KPiBpbmRleCIpPw0KDQpUaGFua3MsIEkgbWVhbiAyNThkYzdjOTZiICgidmlydGlvOiBz
+YW5pdHktY2hlY2sgYXZhaWxhYmxlIGluZGV4IikNCkkgd2lsbCBtYWtlIGNoYW5nZXMgaW4gdGhl
+IG5leHQgdmVyc2lvbi4NCg0KPiANCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IFdhZmVyIFhpZSA8
+d2FmZXJAamFndWFybWljcm8uY29tPg0KPiA+IC0tLQ0KPiA+ICAgaHcvdmlydGlvL3ZpcnRpby5j
+IHwgOCArKysrKysrLQ0KPiA+ICAgMSBmaWxlIGNoYW5nZWQsIDcgaW5zZXJ0aW9ucygrKSwgMSBk
+ZWxldGlvbigtKQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2h3L3ZpcnRpby92aXJ0aW8uYyBiL2h3
+L3ZpcnRpby92aXJ0aW8uYyBpbmRleA0KPiA+IGEyNmYxODkwOGUuLmFlN2Q0MDcxMTMgMTAwNjQ0
+DQo+ID4gLS0tIGEvaHcvdmlydGlvL3ZpcnRpby5jDQo+ID4gKysrIGIvaHcvdmlydGlvL3ZpcnRp
+by5jDQo+ID4gQEAgLTMzNjIsNyArMzM2MiwxMyBAQCB2aXJ0aW9fbG9hZChWaXJ0SU9EZXZpY2Ug
+KnZkZXYsIFFFTVVGaWxlICpmLCBpbnQNCj4gdmVyc2lvbl9pZCkNCj4gPiAgICAgICAgICAgICAg
+ICAgICBjb250aW51ZTsNCj4gPiAgICAgICAgICAgICAgIH0NCj4gPg0KPiA+IC0gICAgICAgICAg
+ICBuaGVhZHMgPSB2cmluZ19hdmFpbF9pZHgoJnZkZXYtPnZxW2ldKSAtIHZkZXYtPnZxW2ldLmxh
+c3RfYXZhaWxfaWR4Ow0KPiA+ICsgICAgICAgICAgICBpZiAodnJpbmdfYXZhaWxfaWR4KCZ2ZGV2
+LT52cVtpXSkgPj0gdmRldi0+dnFbaV0ubGFzdF9hdmFpbF9pZHgpIHsNCj4gPiArICAgICAgICAg
+ICAgICAgIG5oZWFkcyA9IHZyaW5nX2F2YWlsX2lkeCgmdmRldi0+dnFbaV0pIC0NCj4gPiArICAg
+ICAgICAgICAgICAgICAgICAgICAgIHZkZXYtPnZxW2ldLmxhc3RfYXZhaWxfaWR4Ow0KPiA+ICsg
+ICAgICAgICAgICB9IGVsc2Ugew0KPiA+ICsgICAgICAgICAgICAgICAgbmhlYWRzID0gVUlOVDE2
+X01BWCAtIHZkZXYtPnZxW2ldLmxhc3RfYXZhaWxfaWR4ICsNCj4gPiArICAgICAgICAgICAgICAg
+ICAgICAgICAgIHZyaW5nX2F2YWlsX2lkeCgmdmRldi0+dnFbaV0pICsgMTsNCj4gPiArICAgICAg
+ICAgICAgfQ0KPiANCj4gLi4uICAgICAgICAgICBuaGVhZHMgJT0gVUlOVDE2X01BWDsgPw0KDQpu
+aGVhZHMgY2Fubm90IGV4Y2VlZCBVSU5UMTZfTUFYLCBidXQgaXMgaW52YWxpZCBpZiBpdCBleGNl
+ZWQgdnJpbmcubnVtDQoNCj4gPiAgICAgICAgICAgICAgIC8qIENoZWNrIGl0IGlzbid0IGRvaW5n
+IHN0cmFuZ2UgdGhpbmdzIHdpdGggZGVzY3JpcHRvciBudW1iZXJzLiAqLw0KPiA+ICAgICAgICAg
+ICAgICAgaWYgKG5oZWFkcyA+IHZkZXYtPnZxW2ldLnZyaW5nLm51bSkgew0KPiA+ICAgICAgICAg
+ICAgICAgICAgIHZpcnRpb19lcnJvcih2ZGV2LCAiVlEgJWQgc2l6ZSAweCV4IEd1ZXN0IGluZGV4
+IDB4JXggIg0KDQo=
 
