@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D71E6ADEF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8C1AE6ADF0
 	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 10:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEnXH-0003wX-TE; Sat, 23 Nov 2024 05:38:43 -0500
+	id 1tEnXM-0003xG-NI; Sat, 23 Nov 2024 05:38:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXG-0003wL-Qh
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:42 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXL-0003x4-MM
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:47 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXF-0001Xa-Dd
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:42 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43161c0068bso26108175e9.1
- for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 02:38:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXJ-0001Xt-W2
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:47 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-382378f359dso2001519f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 02:38:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732358318; x=1732963118; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=PqmikmZDyeHIBM/sfd9W7X6AK78vfBdfMyKfkZeHz/E=;
- b=AuELhD4YEsT+lpaz3VaxT0Pl3OjB2TUu2vEBYStvkhCwtRc3qV5f2EdYSYzcxq3bqK
- j40ThLeL2++bdo93GlX5Y0wPyqhNcmjkbV8rw2wLDTUZC3u8Vu6tkEfgEh170De/6TO0
- gbAvl8qYJeXGG0zo28CXJ0obnen2NevVWOvRl8/CXyAj2GUZ+5AYNpuzUCU/eVyRVxjj
- DHR6VESBSKQAjqSXxNMWcDcy1sB6Hs3LD4bBceHqnzyzO+DxNGpgLU9uHSO2MvKdO54U
- WnQNygxEk69fAOFif2WyqFWMJO8/mN2ZVdH+dSe9zYMuxKZDBRoVxwcaX/3J0gjyMAMw
- jGBA==
+ d=gmail.com; s=20230601; t=1732358324; x=1732963124; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=soMaH1HqrIUeZXGpqxj4Ff7nwJBYPRniFswtXgwBnYc=;
+ b=ImIa+QgfeAbSaY85J7iSw8m5A9BnGDmLSbKFWjhIQJwo8jN3Yd+9w/ZwKBTdbPxVcM
+ SIAsmYu4RXs0mMqnAbcW2Re8/WD3qFofU0GtK/vOZj9bOYiXC3TSM1CNC1/R1r8yR6fv
+ 7AcB9KxtbXPM7dy3iYi7J1F5PTRueBt+YsX/7B/dSxADllWQ54zcxKuQfIktUoNwUv5x
+ IxAczVI9NN6Sm8c7+TjCLtEraW3K9JMzvmRRQJozV7lj87H6jGgkc/4wjkdEdkQHbvE7
+ 6fRBJ1gKFGlpt6hQfDcQxHTJEJv09iNCzga0zJFSQYZNXk2QN9hl81yfwVOdDLmm7SFU
+ 9aiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732358318; x=1732963118;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PqmikmZDyeHIBM/sfd9W7X6AK78vfBdfMyKfkZeHz/E=;
- b=TeF0AAN9jzj5ZgpEZ9HVCg81UiVfCrUBIe3iYRwnh6oDKxEA+WJ1cAScs5iu6NnnCh
- KKga8tNKtILrikEbE1FQ1GDt1Us3u7G4dGrydleZS2kX53+rFnn0Z2TDejx3bAxXQ0Ik
- FwQKEKuAI1AgaL18zDmILpyCnmW9ugR5BHnABKGXonSPgBfshbj8Q1rShSHWsnChQ3kj
- 04F5j2DCt6IZRIiihwXBx8sJ1BMZOg4oQrxCIZflvywva0CsNsbC8WRe0dApPL74mJIg
- rAy9IBKAHAZ9OJipbn4qv+OJGjMKFaB1ult8B3N4kT4FmePLEtwAM/+rSoHZC19VWoC2
- /qyw==
-X-Gm-Message-State: AOJu0YzYcksWVH1nN2tc3Ui5cCr9bwR2Tzdy2IZvu0cbqvIoWn2Ap9gy
- 20Wh7/+nCR7c0ZDKGUyTitDq/gpZQ1kUhLVrMi2QDRR14a1aETCQamPU0Q==
-X-Gm-Gg: ASbGncsI12zmwY5NVFZa0ZBg1QRs6LG8BQNx2lzpQP0omLt2LtgT62M2Xr4dQlgc3eZ
- DSr9tWWhS2II8z29AzztG3pvQubB563rJ/Sch5122tLTSAXvyciIQdtoTqK99djJw8MaPxW5VJ5
- aBA952FxsL3ZmV6DMuD5kFRBfr5NN/S78KHetY0yPHg7jYwFNl6XMEyuVKZdU2qbnMn8LV9DB+U
- ngOKcNYRA3G+dML9lwLPCK4LJ91SJ3ZFTop9sEf3FQtu9TaWuE7LYzzAOSoz/1+V4lCKfjKGYHl
- ZPkxbhhjoUEBoQ==
-X-Google-Smtp-Source: AGHT+IE+kugnKf4tsaSr7+QGaO/HvjiEbO2E2addTRyuny6viYqbGZHm2c6NOgk1XswAnpubYANkEg==
-X-Received: by 2002:a05:600c:34c3:b0:431:58c4:2eb9 with SMTP id
- 5b1f17b1804b1-433ce41c6a2mr57547205e9.3.1732358317904; 
- Sat, 23 Nov 2024 02:38:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732358324; x=1732963124;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=soMaH1HqrIUeZXGpqxj4Ff7nwJBYPRniFswtXgwBnYc=;
+ b=qEKQYDWwPrkhwmAw3+rUBNRfnEnaUTr4PAupx9ZpD1j+OcsuMFt9et1/7nhHZJ1l7u
+ Jw9+IYpUdyuiXwHINo28yJ0FHYPgMkHjIDRgA10wA1Jbc1quDeLfvWAH0fgi4s9YMxP3
+ gAR5Okg89Sb7sdJUpYCXIayvXM3gr43JFZNwh6oYF/lfA4Gz9gCn4Gm/J6Hun2IaqoSx
+ eW3qaj2X+W0fcKXm4hCjBJRs9ab6X3RusGv95uD27SSzrPbmzO1GNntcT44LQ316tqAP
+ /7XBQ8EG/mnnZWsVBHl5jiLwe5HXBiGOBx04T4gjyOK4ZKfAMax0EgTNxmexXKt/D0t0
+ Pjog==
+X-Gm-Message-State: AOJu0Yz6e9H4u1rskMWt2gAY8Z323ZsEBPf7u845OoML0N+sNZaoo+kA
+ HIsHtJr5xW+PlQRye3ifW9b1vpGBHMBR57ESEMGLpK7FtIZxHQGExbYvSA==
+X-Gm-Gg: ASbGnctl5MasDSTxGnB0ozo+LscR6AK891gP1KyzqYmeMoJfT9bQ+8vzS3XSktU95+D
+ w6Z1Md6HYiOzkYvslhQLXOhbGaxRW/fcRD5hAyAnT6XtgSB11916hX4PJ+icO7sgRWsClANAGQr
+ eatAFIAWYuQ9cHghsgBIQw1F16Gr3RqjphSgansGujnHutrQdxsAWIPzhRTNNPAJ3pYodlZz8rD
+ ZCV0a9E9dDUv2N0WoIaTbYQyQgQVwp5/9w0Hx+YZ45mu5eUuJ7ng1+xxVj4qdP8hKU5AfKsa4G2
+ kUpna9JG2iKk8A==
+X-Google-Smtp-Source: AGHT+IEK4xzq1xuj+8JBJLwq8gwEciX+6H/l+n2X6aNrQJmqiiCQiWjYVOs4vtk7xJ+ftB2SZ+FzMg==
+X-Received: by 2002:a05:6000:1887:b0:382:5284:989 with SMTP id
+ ffacd0b85a97d-38260bcdbc5mr5741663f8f.46.1732358323843; 
+ Sat, 23 Nov 2024 02:38:43 -0800 (PST)
 Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
  [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43366c8757asm74862895e9.1.2024.11.23.02.38.36
+ ffacd0b85a97d-3825fbc3defsm5032463f8f.70.2024.11.23.02.38.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 Nov 2024 02:38:36 -0800 (PST)
+ Sat, 23 Nov 2024 02:38:41 -0800 (PST)
 From: Stafford Horne <shorne@gmail.com>
 To: QEMU Development <qemu-devel@nongnu.org>
-Cc: Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 0/2] Misc OpenRISC fixes for 9.2.0
-Date: Sat, 23 Nov 2024 10:38:25 +0000
-Message-ID: <20241123103828.3157128-1-shorne@gmail.com>
+Cc: Ahmad Fatoum <a.fatoum@pengutronix.de>, Stafford Horne <shorne@gmail.com>,
+ Jia Liu <proljc@gmail.com>
+Subject: [PATCH 1/2] hw/openrisc/openrisc_sim: keep serial@90000000 as default
+Date: Sat, 23 Nov 2024 10:38:26 +0000
+Message-ID: <20241123103828.3157128-2-shorne@gmail.com>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241123103828.3157128-1-shorne@gmail.com>
+References: <20241123103828.3157128-1-shorne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=shorne@gmail.com; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=shorne@gmail.com; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,18 +97,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series has 2 fixes for OpenRISC that came in over that past few months.
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-Ahmad Fatoum (1):
-  hw/openrisc/openrisc_sim: keep serial@90000000 as default
+We used to only have a single UART on the platform and it was located at
+address 0x90000000. When the number of UARTs was increased to 4, the
+first UART remained at it's location, but instead of being the first one
+to be registered, it became the last.
 
-Joel Holdsworth (1):
-  hw/openrisc: Fixed undercounting of TTCR in continuous mode
+This caused QEMU to pick 0x90000300 as the default UART, which broke
+software that hardcoded the address of 0x90000000 and expected it's
+output to be visible when the user configured only a single console.
 
- hw/openrisc/cputimer.c     | 26 +++++++++++++++-----------
+This caused regressions[1] in the barebox test suite when updating to a
+newer QEMU. As there seems to be no good reason to register the UARTs in
+inverse order, let's register them by ascending address, so existing
+software can remain oblivious to the additional UART ports.
+
+Changing the order of uart registration alone breaks Linux which
+was choosing the UART at 0x90000300 as the default for ttyS0.  To fix
+Linux we fix two things in the device tree:
+
+ 1. Define stdout-path only one time for the first registerd UART
+    instead of incorrectly defining for each UART.
+ 2. Change the UART alias name from 'uart0' to 'serial0' as almost all
+    Linux tty drivers look for an alias starting with "serial".
+
+[1]: https://lore.barebox.org/barebox/707e7c50-aad1-4459-8796-0cc54bab32e2@pengutronix.de/T/#m5da26e8a799033301489a938b5d5667b81cef6ad
+
+Fixes: 777784bda468 ("hw/openrisc: support 4 serial ports in or1ksim")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+[stafford: Change to serial0 alias and update change message]
+Signed-off-by: Stafford Horne <shorne@gmail.com>
+---
  hw/openrisc/openrisc_sim.c | 13 ++++++++-----
- 2 files changed, 23 insertions(+), 16 deletions(-)
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
+diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
+index 9fb63515ef..5ec9172ccf 100644
+--- a/hw/openrisc/openrisc_sim.c
++++ b/hw/openrisc/openrisc_sim.c
+@@ -250,7 +250,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+     void *fdt = state->fdt;
+     char *nodename;
+     qemu_irq serial_irq;
+-    char alias[sizeof("uart0")];
++    char alias[sizeof("serial0")];
+     int i;
+ 
+     if (num_cpus > 1) {
+@@ -265,7 +265,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+         serial_irq = get_cpu_irq(cpus, 0, irq_pin);
+     }
+     serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
+-                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
++                   serial_hd(uart_idx),
+                    DEVICE_NATIVE_ENDIAN);
+ 
+     /* Add device tree node for serial. */
+@@ -277,10 +277,13 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+     qemu_fdt_setprop_cell(fdt, nodename, "clock-frequency", OR1KSIM_CLK_MHZ);
+     qemu_fdt_setprop(fdt, nodename, "big-endian", NULL, 0);
+ 
+-    /* The /chosen node is created during fdt creation. */
+-    qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
+-    snprintf(alias, sizeof(alias), "uart%d", uart_idx);
++    if (uart_idx == 0) {
++        /* The /chosen node is created during fdt creation. */
++        qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
++    }
++    snprintf(alias, sizeof(alias), "serial%d", uart_idx);
+     qemu_fdt_setprop_string(fdt, "/aliases", alias, nodename);
++
+     g_free(nodename);
+ }
+ 
 -- 
 2.47.0
 
