@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8C1AE6ADF0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19BCBE6ADF1
 	for <qemu-devel@archiver.kernel.org>; Sat, 23 Nov 2024 10:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tEnXM-0003xG-NI; Sat, 23 Nov 2024 05:38:48 -0500
+	id 1tEnXP-0003xu-BJ; Sat, 23 Nov 2024 05:38:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXL-0003x4-MM
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:47 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXN-0003xX-Ls
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:49 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXJ-0001Xt-W2
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:47 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-382378f359dso2001519f8f.1
- for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 02:38:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tEnXL-0001Y7-W3
+ for qemu-devel@nongnu.org; Sat, 23 Nov 2024 05:38:49 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-38231f84dccso2071830f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 02:38:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732358324; x=1732963124; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1732358326; x=1732963126; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=soMaH1HqrIUeZXGpqxj4Ff7nwJBYPRniFswtXgwBnYc=;
- b=ImIa+QgfeAbSaY85J7iSw8m5A9BnGDmLSbKFWjhIQJwo8jN3Yd+9w/ZwKBTdbPxVcM
- SIAsmYu4RXs0mMqnAbcW2Re8/WD3qFofU0GtK/vOZj9bOYiXC3TSM1CNC1/R1r8yR6fv
- 7AcB9KxtbXPM7dy3iYi7J1F5PTRueBt+YsX/7B/dSxADllWQ54zcxKuQfIktUoNwUv5x
- IxAczVI9NN6Sm8c7+TjCLtEraW3K9JMzvmRRQJozV7lj87H6jGgkc/4wjkdEdkQHbvE7
- 6fRBJ1gKFGlpt6hQfDcQxHTJEJv09iNCzga0zJFSQYZNXk2QN9hl81yfwVOdDLmm7SFU
- 9aiQ==
+ bh=Y7sa4WnkD19vIhgLdanCBDNOHZb6rMAj72QyGrMMNhU=;
+ b=SYVWzhYplDN7rnhH78yYosQuVwTnUrwLSGW1izjdeDWVD8CnFF9BqkMfRBLp2mRbFX
+ 6EYo633BqtFhK7j3vaNIQESYJ0UGpniUoUxwvlQc6/n+TBvFn3ShEJ8q2QcVjw5hrlHn
+ DZlS9/76jTDuv0NN9+FQljEaZ0juzWh+XeiOyLcpVJpyueX1yOAbxLOSWYhcCCaAn7ao
+ WA1GI77hVjVH8OuJjZWH+okW1wiMXg0UpEuvrlxOkr9PRLn0TYwKcwgHzYIlr0vynQvt
+ vbyY4p6oD/t0kaiWlt/BLssrClG29rZHEuUt/qglFZRq1kGt7zPtv8VAqojeXAz7zniI
+ tuFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732358324; x=1732963124;
+ d=1e100.net; s=20230601; t=1732358326; x=1732963126;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=soMaH1HqrIUeZXGpqxj4Ff7nwJBYPRniFswtXgwBnYc=;
- b=qEKQYDWwPrkhwmAw3+rUBNRfnEnaUTr4PAupx9ZpD1j+OcsuMFt9et1/7nhHZJ1l7u
- Jw9+IYpUdyuiXwHINo28yJ0FHYPgMkHjIDRgA10wA1Jbc1quDeLfvWAH0fgi4s9YMxP3
- gAR5Okg89Sb7sdJUpYCXIayvXM3gr43JFZNwh6oYF/lfA4Gz9gCn4Gm/J6Hun2IaqoSx
- eW3qaj2X+W0fcKXm4hCjBJRs9ab6X3RusGv95uD27SSzrPbmzO1GNntcT44LQ316tqAP
- /7XBQ8EG/mnnZWsVBHl5jiLwe5HXBiGOBx04T4gjyOK4ZKfAMax0EgTNxmexXKt/D0t0
- Pjog==
-X-Gm-Message-State: AOJu0Yz6e9H4u1rskMWt2gAY8Z323ZsEBPf7u845OoML0N+sNZaoo+kA
- HIsHtJr5xW+PlQRye3ifW9b1vpGBHMBR57ESEMGLpK7FtIZxHQGExbYvSA==
-X-Gm-Gg: ASbGnctl5MasDSTxGnB0ozo+LscR6AK891gP1KyzqYmeMoJfT9bQ+8vzS3XSktU95+D
- w6Z1Md6HYiOzkYvslhQLXOhbGaxRW/fcRD5hAyAnT6XtgSB11916hX4PJ+icO7sgRWsClANAGQr
- eatAFIAWYuQ9cHghsgBIQw1F16Gr3RqjphSgansGujnHutrQdxsAWIPzhRTNNPAJ3pYodlZz8rD
- ZCV0a9E9dDUv2N0WoIaTbYQyQgQVwp5/9w0Hx+YZ45mu5eUuJ7ng1+xxVj4qdP8hKU5AfKsa4G2
- kUpna9JG2iKk8A==
-X-Google-Smtp-Source: AGHT+IEK4xzq1xuj+8JBJLwq8gwEciX+6H/l+n2X6aNrQJmqiiCQiWjYVOs4vtk7xJ+ftB2SZ+FzMg==
-X-Received: by 2002:a05:6000:1887:b0:382:5284:989 with SMTP id
- ffacd0b85a97d-38260bcdbc5mr5741663f8f.46.1732358323843; 
- Sat, 23 Nov 2024 02:38:43 -0800 (PST)
+ bh=Y7sa4WnkD19vIhgLdanCBDNOHZb6rMAj72QyGrMMNhU=;
+ b=mRaZBUDBDwPn6uPdg9KehfDERyAiuiemIOoQCtCvZUnxueUDRZacxY6rRtFQX+bYzT
+ A3/0ygo1NRba8znghVYtrq2LD+pTRqdIjvj8X5oe+6fQ9y2bZS5yM5lrUmdd41cLt4wc
+ lMpDXVso6RJhuFf/NmmNRnlFlb7K9273/jHE6MsyRoW+pJGjNZJEdXEubWJhbFD0CEjp
+ ijLtvXSmHqVCXXgGQjqy2M8Iz/L2oVcWsda95moEyMSXQv7FJjajMnQVF57Z4uie3tH6
+ 8P5Y/AxaFavzGmaxuGY6xbMxmpM8nU04OPPrf2MBYRz/yyTLyr8ba9ZW+i1OPOgQnTO7
+ 17AQ==
+X-Gm-Message-State: AOJu0Yw7UpCLD190P7Iyv5YIXnJjWui/0T+8h0bEUobLYMBsdvSGOvoG
+ vwt3h7gp9d1uiC/ZZxMYLnTVzH38IWScHynG/K68+CY8YkhCRRU4spoRDQ==
+X-Gm-Gg: ASbGncvEL1LMHFoMczyAMI4I9HR++lO+m3Jj1/VDBpxZTpk9ulq0ZEzFjfEvnMLTEbt
+ ThXoC6YLY3b7fSddyzDiphxT0EX91qRzgTHi1h6p1RJ/1Kxt7vRSauHdGZEASYGbCuO0cZ++qF/
+ tTJdvf5aAuIkiZc7nLEFwW/szhW573suszgB7u4ItqD/dEkLqcCPcLZ4kvvwOX0HNIPg2ExOhC5
+ oI1nyVuZKnu42ziy2HDELHfTcrDv+xNRBKBPFJ9yATvUbplzjCoRm3H6bssB7ae8NUjUnoSkTHF
+ ZaM9jIr5hQIemQ==
+X-Google-Smtp-Source: AGHT+IFIjUabn+3nrWKgecbDd8dH6FHRQGS2a2bd8wPRvZR0h677+9MGw5hWjm12aODweq8MGU2uyg==
+X-Received: by 2002:a5d:59a6:0:b0:382:383e:850e with SMTP id
+ ffacd0b85a97d-38260b58a50mr5722085f8f.13.1732358325662; 
+ Sat, 23 Nov 2024 02:38:45 -0800 (PST)
 Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
  [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fbc3defsm5032463f8f.70.2024.11.23.02.38.40
+ ffacd0b85a97d-3825fafe338sm4857406f8f.33.2024.11.23.02.38.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 Nov 2024 02:38:41 -0800 (PST)
+ Sat, 23 Nov 2024 02:38:44 -0800 (PST)
 From: Stafford Horne <shorne@gmail.com>
 To: QEMU Development <qemu-devel@nongnu.org>
-Cc: Ahmad Fatoum <a.fatoum@pengutronix.de>, Stafford Horne <shorne@gmail.com>,
- Jia Liu <proljc@gmail.com>
-Subject: [PATCH 1/2] hw/openrisc/openrisc_sim: keep serial@90000000 as default
-Date: Sat, 23 Nov 2024 10:38:26 +0000
-Message-ID: <20241123103828.3157128-2-shorne@gmail.com>
+Cc: Joel Holdsworth <jholdsworth@nvidia.com>, Stafford Horne <shorne@gmail.com>
+Subject: [PATCH 2/2] hw/openrisc: Fixed undercounting of TTCR in continuous
+ mode
+Date: Sat, 23 Nov 2024 10:38:27 +0000
+Message-ID: <20241123103828.3157128-3-shorne@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241123103828.3157128-1-shorne@gmail.com>
 References: <20241123103828.3157128-1-shorne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=shorne@gmail.com; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=shorne@gmail.com; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,80 +97,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Joel Holdsworth <jholdsworth@nvidia.com>
 
-We used to only have a single UART on the platform and it was located at
-address 0x90000000. When the number of UARTs was increased to 4, the
-first UART remained at it's location, but instead of being the first one
-to be registered, it became the last.
+In the existing design, TTCR is prone to undercounting when running in
+continuous mode. This manifests as a timer interrupt appearing to
+trigger a few cycles prior to the deadline set in SPR_TTMR_TP.
 
-This caused QEMU to pick 0x90000300 as the default UART, which broke
-software that hardcoded the address of 0x90000000 and expected it's
-output to be visible when the user configured only a single console.
+When the timer triggers, the virtual time delta in nanoseconds between
+the time when the timer was set, and when it triggers is calculated.
+This nanoseconds value is then divided by TIMER_PERIOD (50) to compute
+an increment of cycles to apply to TTCR.
 
-This caused regressions[1] in the barebox test suite when updating to a
-newer QEMU. As there seems to be no good reason to register the UARTs in
-inverse order, let's register them by ascending address, so existing
-software can remain oblivious to the additional UART ports.
+However, this calculation rounds down the number of cycles causing the
+undercounting.
 
-Changing the order of uart registration alone breaks Linux which
-was choosing the UART at 0x90000300 as the default for ttyS0.  To fix
-Linux we fix two things in the device tree:
+A simplistic solution would be to instead round up the number of cycles,
+however this will result in the accumulation of timing error over time.
 
- 1. Define stdout-path only one time for the first registerd UART
-    instead of incorrectly defining for each UART.
- 2. Change the UART alias name from 'uart0' to 'serial0' as almost all
-    Linux tty drivers look for an alias starting with "serial".
+This patch corrects the issue by calculating the time delta in
+nanoseconds between when the timer was last reset and the timer event.
+This approach allows the TTCR value to be rounded up, but without
+accumulating error over time.
 
-[1]: https://lore.barebox.org/barebox/707e7c50-aad1-4459-8796-0cc54bab32e2@pengutronix.de/T/#m5da26e8a799033301489a938b5d5667b81cef6ad
-
-Fixes: 777784bda468 ("hw/openrisc: support 4 serial ports in or1ksim")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-[stafford: Change to serial0 alias and update change message]
+Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
+[stafford: Incremented version in vmstate_or1k_timer, checkpatch fixes]
 Signed-off-by: Stafford Horne <shorne@gmail.com>
 ---
- hw/openrisc/openrisc_sim.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ hw/openrisc/cputimer.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
-index 9fb63515ef..5ec9172ccf 100644
---- a/hw/openrisc/openrisc_sim.c
-+++ b/hw/openrisc/openrisc_sim.c
-@@ -250,7 +250,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-     void *fdt = state->fdt;
-     char *nodename;
-     qemu_irq serial_irq;
--    char alias[sizeof("uart0")];
-+    char alias[sizeof("serial0")];
-     int i;
+diff --git a/hw/openrisc/cputimer.c b/hw/openrisc/cputimer.c
+index 835986c4db..7fb97ce2b0 100644
+--- a/hw/openrisc/cputimer.c
++++ b/hw/openrisc/cputimer.c
+@@ -29,7 +29,8 @@
+ /* Tick Timer global state to allow all cores to be in sync */
+ typedef struct OR1KTimerState {
+     uint32_t ttcr;
+-    uint64_t last_clk;
++    uint32_t ttcr_offset;
++    uint64_t clk_offset;
+ } OR1KTimerState;
  
-     if (num_cpus > 1) {
-@@ -265,7 +265,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-         serial_irq = get_cpu_irq(cpus, 0, irq_pin);
-     }
-     serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
--                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
-+                   serial_hd(uart_idx),
-                    DEVICE_NATIVE_ENDIAN);
- 
-     /* Add device tree node for serial. */
-@@ -277,10 +277,13 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-     qemu_fdt_setprop_cell(fdt, nodename, "clock-frequency", OR1KSIM_CLK_MHZ);
-     qemu_fdt_setprop(fdt, nodename, "big-endian", NULL, 0);
- 
--    /* The /chosen node is created during fdt creation. */
--    qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
--    snprintf(alias, sizeof(alias), "uart%d", uart_idx);
-+    if (uart_idx == 0) {
-+        /* The /chosen node is created during fdt creation. */
-+        qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
-+    }
-+    snprintf(alias, sizeof(alias), "serial%d", uart_idx);
-     qemu_fdt_setprop_string(fdt, "/aliases", alias, nodename);
-+
-     g_free(nodename);
+ static OR1KTimerState *or1k_timer;
+@@ -37,6 +38,8 @@ static OR1KTimerState *or1k_timer;
+ void cpu_openrisc_count_set(OpenRISCCPU *cpu, uint32_t val)
+ {
+     or1k_timer->ttcr = val;
++    or1k_timer->ttcr_offset = val;
++    or1k_timer->clk_offset = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
  }
  
+ uint32_t cpu_openrisc_count_get(OpenRISCCPU *cpu)
+@@ -53,9 +56,8 @@ void cpu_openrisc_count_update(OpenRISCCPU *cpu)
+         return;
+     }
+     now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    or1k_timer->ttcr += (uint32_t)((now - or1k_timer->last_clk)
+-                                    / TIMER_PERIOD);
+-    or1k_timer->last_clk = now;
++    or1k_timer->ttcr = or1k_timer->ttcr_offset +
++        (now - or1k_timer->clk_offset + TIMER_PERIOD - 1) / TIMER_PERIOD;
+ }
+ 
+ /* Update the next timeout time as difference between ttmr and ttcr */
+@@ -69,7 +71,7 @@ void cpu_openrisc_timer_update(OpenRISCCPU *cpu)
+     }
+ 
+     cpu_openrisc_count_update(cpu);
+-    now = or1k_timer->last_clk;
++    now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+ 
+     if ((cpu->env.ttmr & TTMR_TP) <= (or1k_timer->ttcr & TTMR_TP)) {
+         wait = TTMR_TP - (or1k_timer->ttcr & TTMR_TP) + 1;
+@@ -110,7 +112,8 @@ static void openrisc_timer_cb(void *opaque)
+     case TIMER_NONE:
+         break;
+     case TIMER_INTR:
+-        or1k_timer->ttcr = 0;
++        /* Zero the count by applying a negative offset to the counter */
++        or1k_timer->ttcr_offset += UINT32_MAX - (cpu->env.ttmr & TTMR_TP);
+         break;
+     case TIMER_SHOT:
+         cpu_openrisc_count_stop(cpu);
+@@ -137,17 +140,18 @@ static void openrisc_count_reset(void *opaque)
+ /* Reset the global timer state. */
+ static void openrisc_timer_reset(void *opaque)
+ {
+-    or1k_timer->ttcr = 0x00000000;
+-    or1k_timer->last_clk = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    OpenRISCCPU *cpu = opaque;
++    cpu_openrisc_count_set(cpu, 0);
+ }
+ 
+ static const VMStateDescription vmstate_or1k_timer = {
+     .name = "or1k_timer",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(ttcr, OR1KTimerState),
+-        VMSTATE_UINT64(last_clk, OR1KTimerState),
++        VMSTATE_UINT32(ttcr_offset, OR1KTimerState),
++        VMSTATE_UINT64(clk_offset, OR1KTimerState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
 -- 
 2.47.0
 
