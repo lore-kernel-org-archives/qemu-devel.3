@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87798E6688A
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Nov 2024 05:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D07E6688A
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Nov 2024 05:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tF4nD-0000Dr-UR; Sun, 24 Nov 2024 00:04:20 -0500
+	id 1tF51T-0002lP-V2; Sun, 24 Nov 2024 00:19:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tF4n2-0000Ck-2V; Sun, 24 Nov 2024 00:04:10 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tF51S-0002lA-PY
+ for qemu-devel@nongnu.org; Sun, 24 Nov 2024 00:19:02 -0500
+Received: from dormouse.elm.relay.mailchannels.net ([23.83.212.50])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tF4mz-0000nB-H6; Sun, 24 Nov 2024 00:04:07 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 07363AEB84;
- Sun, 24 Nov 2024 08:03:42 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0E42D178A74;
- Sun, 24 Nov 2024 08:03:54 +0300 (MSK)
-Message-ID: <a7afbef0-89c5-418d-8d98-8c3e2d0698ec@tls.msk.ru>
-Date: Sun, 24 Nov 2024 08:03:53 +0300
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tF51Q-0002iW-J9
+ for qemu-devel@nongnu.org; Sun, 24 Nov 2024 00:19:02 -0500
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 10E98901B33;
+ Sun, 24 Nov 2024 05:18:55 +0000 (UTC)
+Received: from pdx1-sub0-mail-a290.dreamhost.com
+ (trex-3.trex.outbound.svc.cluster.local [100.121.85.75])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id A37AB901BB4;
+ Sun, 24 Nov 2024 05:18:54 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1732425534; a=rsa-sha256;
+ cv=none;
+ b=CrFg8mO++muxYg2Pj7iB4BbOOLfyiVKyOKRhOYvcJQ1vz12soZFgfcc04sQ+hLjMgqfwje
+ gYOC2v53lOHUdxqoo+R7F+o993r8dJICVG2NnXOwqDBwEUQAym/TPYGjZOrEwo3cdbLd9j
+ bHeO+FBjWng7VReQ8YqO78jaTs/swtCEI3wXTs8sXvrMsvO/KYmIO66zBuV1wLSB69Kfj/
+ xvSBJiG1b4jvWheKtdqwFcmOrkKBjVd/xVDJIJfO2m04bh/gm2BXpssP+JMMS+gSiec126
+ LAPXqrxsWJbnS9yPZVa8opvG8PnkOATnobYQfPfctuESiuLppoRYvYscIh6Z+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1732425534;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=AqJbXNOLdgSA7gVFU5bnH87Kf2GqvZYJ5R0hTLzKm+8=;
+ b=0BM1I6Fz2M451SKW7x5H5ZP/9NtggdbdHBJzYxgLWyYIvIsoU/MZlYu1fn7iESGe8d26eH
+ gK6ugAXYw264NmywUxJn0a3qIrqAcE62I7UtN7R2QSwMpGjYYO4mUwzva54RL+PYytHt9X
+ vOTB1wXAwnLG13AyB5IK11wCAzuwB9bP0qvvuOma2J+cyJm/17KdX9V26bsmJOsq9YsSH8
+ prd2/4DR6P33wS2wdkfcdRAV+5deavLNGKiOrgbWhjxGXjd1CzsRDL+hV8amee/xQFET5q
+ vEpmt457RjQrDRPrD9ZcrwgR6fk3N71L7rqPhTYECkmDfgi37fPZJJJlSSUgTA==
+ARC-Authentication-Results: i=1; rspamd-dcc6979f6-hvl4v;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
+X-MailChannels-Auth-Id: dreamhost
+X-Macabre-Cooperative: 795c01750be9d9d8_1732425534915_2511799689
+X-MC-Loop-Signature: 1732425534915:1009308627
+X-MC-Ingress-Time: 1732425534915
+Received: from pdx1-sub0-mail-a290.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.121.85.75 (trex/7.0.2); Sun, 24 Nov 2024 05:18:54 +0000
+Received: from [172.22.7.54] (unknown [198.232.126.195])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: rob@landley.net)
+ by pdx1-sub0-mail-a290.dreamhost.com (Postfix) with ESMTPSA id 4Xwxvf0y52zRq; 
+ Sat, 23 Nov 2024 21:18:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
+ s=dreamhost; t=1732425534;
+ bh=jwW6w90Mj7X6S1xVXGRhxfRhHYbXTegVvejWIqiEcl8=;
+ h=Date:Subject:To:Cc:From:Content-Type:Content-Transfer-Encoding;
+ b=qiT9G2C/Xxi3KxVnb+tlpKbtSiJlhS+8GDFDYF2/fr+59mxweBVuIHycIrbioQ7OB
+ KY9ptoZxK429e2Gbm+CwfsvC65qMm9Y4IlAcmSKe9H0FKyoWjqTr9uowlcp/Zjolya
+ JGFFFFhdqGBYiD3niiqiUcaHXCWJ86+HnUXP9t+7QLFn7pFnnHmCYHoRg9ar8yF0O0
+ 94R3LEcAHOoCmZbGdWUIpMHQJYVeHGUR91AD+v23ytFzPatXuHZ936Co96zYluK9cG
+ DSrsLsc0N6+EXPyYxkyWevYgeUeLwEKBa1ZDaPPAij82NmnSZqDuww4jItfMJQiIOL
+ rrrBtz+3YfIGQ==
+Message-ID: <87a6b910-5af6-47ad-ad8d-b79f11a7cbf2@landley.net>
+Date: Sat, 23 Nov 2024 23:18:53 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Misc OpenRISC fixes for 9.2.0
+Subject: Re: QEMU commit 0a923be2f642 broke my or1k image.
 To: Stafford Horne <shorne@gmail.com>
-Cc: QEMU Development <qemu-devel@nongnu.org>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20241123103828.3157128-1-shorne@gmail.com>
- <618427e1-ef6d-439f-be0a-6d573b28f1c4@tls.msk.ru> <Z0IKhkyU8YdI5vyP@antec>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <Z0IKhkyU8YdI5vyP@antec>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ QEMU Developers <qemu-devel@nongnu.org>
+References: <afac091f-08cb-0f6d-4c01-bfa4421e7a47@landley.net>
+ <Zufcf4iAqosZ7VBf@antec> <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
+ <Z0Cyx3i3z7Zl7XPm@antec> <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
+ <Z0GSETLeT5w8B2DX@antec>
+Content-Language: en-US
+From: Rob Landley <rob@landley.net>
+In-Reply-To: <Z0GSETLeT5w8B2DX@antec>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=23.83.212.50; envelope-from=rob@landley.net;
+ helo=dormouse.elm.relay.mailchannels.net
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,39 +118,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-23.11.2024 20:01, Stafford Horne wrote:
-> On Sat, Nov 23, 2024 at 03:12:12PM +0300, Michael Tokarev wrote:
->> On 23.11.2024 13:38, Stafford Horne wrote:
->>> This series has 2 fixes for OpenRISC that came in over that past few months.
->>>
->>> Ahmad Fatoum (1):
->>>     hw/openrisc/openrisc_sim: keep serial@90000000 as default
->>>
->>> Joel Holdsworth (1):
->>>     hw/openrisc: Fixed undercounting of TTCR in continuous mode
->>
->> Is there anything in there which is worth picking up for stable?
->> The first one above seems to be a good candidate.
+On 11/23/24 02:28, Stafford Horne wrote:
+>> Just a guess, but given the alignment change, I suspect it's barfing on the
+>> statically linked initramfs? That seems the most likely step to go off the
+>> rails given the failing patch is a symbol alignment change in the flattened
+>> device tree plumbing, and I think the initramfs extractor parses device
+>> trees very early on to find stuff (I forget why). Moving "where the data
+>> lives" without a corresponding change to the "where to look for the data"
+>> code seems a bit strange, but it's not my area...
 > 
-> Yes, I think so, would you like me to tag it with anything?  It does have a
-> Fixes.
+> OK, and the broken earlycon may be masking what is going on, as we should at
+> least see some console output before things fail.  The earlcon fix is in 6.13
+> not 6.12.
+> 
+> I was able to test your or1k.tgz image and figure out what is wrong.  Your
+> run-qemu.sh script has 'console=FIXME'.  This command line argument is taken in
+> and is causing the boot process to not be able to find the console.
+> 
+> Changing it to 'console=ttyS0' allows me to see the output.
 
-Well, there are Fixes and Fixes.  Some are much more important to be
-in stable series, while others are hardly relevant.  Obviously you're
-much better to judge in your area than others.  After all, maybe  you're
-the only one in this world to run or1k, and you don't need stable
-series at all :)
+Ha, so it STARTED parsing console= and broke. Oops. (It was there so I'd 
+notice...)
 
- From the two fixes in this series, I (with my very limited understanding)
-see first one above is maybe good for stable, while for second I don't know.
-So I entirely rely on your call, hence I asked.
+> I put a branch with the qemu patches I have here:
+> 
+>    - https://github.com/stffrdhrn/qemu/tree/or1k-9.2.0-fixes-1
+> 
+>> Here's the miniconfig I built 6.12 with (90% of which is generic to all the
+>> architectures I'm testing, the sections are labeled. The console="FIXME" bit
+>> is because I can't get qemu-system-or1k -append "blah" to go through to
+>> linux, so I stuck FIXME in that field for the or1k target and it wound up in
+>> the output):
+> 
+> The kernel command line is injected by qemu into the qemu generated
+> devicetree.  I notice when I boot your kernel with the reverted FDT alignment
+> fix the console prints:
+> 
+>      Kernel command line: earlycon
+> 
+> This means that the qemu devicetree is not being used, hence the command line
+> args are not working.  The qemu device tree not being used is not good, but that
+> is why reverting the alignment fix 'seems' to fix the issue.  To me the revert
+> looks to be breaking the qemu devicetree allowing us to fall back to the kernel
+> supplied devicetree.
 
-As for tagging, you might add Cc: qemu-stable@ tag for all changes which
-you  want to be back-ported, or just send a note to qemu-stabl@ with the
-changes you'd like to be in stable (note: this email has Cc: there already).
-The key point is to make qemu-stable@ aware of what do you think is relevant.
+I'm happy to do it the "right" way if I know what that is. I just 
+stumbled around and got it to work.
+
+>> Also, looking at that, I'm using a builtin DTB and you might be passing one
+>> in via -dtb? Another thing the alignment change might break...
+> 
+> Thanks for the steps.  I was just using the or1k.tgz you provided earlier.  The
+> above will help if I want to try some kernel fixes on my own.
+
+I'm attempting to regression test as many targets as I can to get 
+consistent basic behavior out of:
+
+   https://landley.net/bin/mkroot/0.8.11/
+
+I'm trying to get a new release out with the 6.12 kernel which is why 
+I'm revisiting this now.
+
+I've even got a test script that runs all the targets under qemu 
+(booting them in parallel even) and checks that A) they boot and run 
+userspace, B) they can talk to an emulated hard disk, C) they can talk 
+to an emulated network, D) the clock gets set reasonably, E) it knows 
+how to exit the emulator. You'd be surprised how many regressions there 
+are in just that...
+
+Speaking of which, is there a way to get or1k to exit the emulator? I 
+told the kernel to reboot but it says "reboot failed, system halted" and 
+hangs instead of exiting qemu. (My testroot runs qemu under "timeout -i 
+10" to kill it after 10 seconds of inactivity, I.E. nothing written to 
+stdout, but it still counts as a failure on one of the criteria.)
+
+>>> Note, I did find some issues with the kernel nor properly handling stdout-path.
+>>> It seems that if there are multiple uarts the first one will always be used as
+>>> the default uart.  Only the console= command line argument can be used to
+>>> override that.
+>>
+>> I've never managed to get console= to go through to linux in
+>> qemu-system-or1k. The above tries but is ignored.
+> 
+> As I mentioned above this is a good clue and explains why the alignment "fix"
+> fixes your issue.
+
+Happy to do it properly. Almost all the other targets can do console=, 
+the FIXME was there to highlight the fact it didn't work right. 
+(Silently working for the WRONG REASON is still bad when regression 
+testing.)
+
+>> It's also doing a statically linked initramfs because -initrd didn't work on
+>> this target. Happy to update if it's been fixed, the other targets are
+>> almost all using -initrd to feed in an external cpio.gz
+> 
+> Using -initrd should work.  But also using the statically linked initramfs
+> should be fine too.  The setup I use for testing uses virt with a virtio block
+> driver.
+
+Most of the other targets _don't_ use builtin initramfs, so you can swap 
+them out "aftermarket" as it were. When it's separate you can examine 
+and edit the contents without rebuilding the kernel...
+
+> When using qemu with -initrd qemu will back the kernel, initrd and fdt one after
+> the other into memory as per.
+> 
+> [ kernel ] - Loads from 0x100 (based on elf layout)
+> [ initrd ] - page aligned
+> [  fdt   ] - page aligned devicetree (revert moved to 4 bytes aligned)
+> 
+> The fdt address gets placed into r3 which the kernel uses to find the qemu FDT.
+> Finding the FDT one of the first steps of the boot processes.
+
+I updated my mkroot config:
+
+   https://github.com/landley/toybox/commit/fb3ca98e2faa
+
+I.E. changed the FIXME to ttyS0, removed BUILTIN=1 so it's no longer 
+statically linking the initramfs image, and yanked the builtin DTB, and 
+the result works with v9.2.0-rc1.
+
+Still doesn't know how to exit qemu, though. (Is there a kernel symbol I 
+can add to 6.12, or does qemu still not have an exit mechanism for this 
+board yet?)
+
+(FYI: be2csv is a shell function to convert bash's brace expansion 
+syntax to a comma separated value list, and then csv2cfg is another 
+shell function that turns the CSV into https://lwn.net/Articles/160497/ 
+. The CSV is shipped as docs/linux-microconfig in the tarball if you're 
+curious. That's how a 400 line bash script can build a Linux system that 
+boots to a shell prompt for a dozen architectures. The or1k config is 
+now 2 lines, for example. 3 with the "if or1k" check. The variables it 
+assigns to are documented around line 190.)
+
+> If you provide command line args console=ttyS0 things will work.
+> 
+> Also console=ttyS0 is not used as all as it should be the default in QEMU.
+
+I specify it explicitly to be consistent across architectures.
+
+> It looks like the root cause of the issue was the 'console=FIXME'.
+> 
+> I hope it helps.
+
+Yup, I just had to remove workarounds for old qemu that are no longer 
+needed. Thanks for the help. (If you do teach qemu to exit at some 
+point, please let me know...)
+
+> -Stafford
 
 Thanks,
 
-/mjt
+Rob
 
