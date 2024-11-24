@@ -4,80 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8C4E668A0
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Nov 2024 04:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87798E6688A
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Nov 2024 05:05:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tF4Go-0003hw-Ko; Sat, 23 Nov 2024 23:30:50 -0500
+	id 1tF4nD-0000Dr-UR; Sun, 24 Nov 2024 00:04:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xndchn@gmail.com>) id 1tF4Gn-0003hm-J4
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 23:30:49 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xndchn@gmail.com>) id 1tF4Gm-0005G2-3f
- for qemu-devel@nongnu.org; Sat, 23 Nov 2024 23:30:49 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-382588b7a5cso2233669f8f.3
- for <qemu-devel@nongnu.org>; Sat, 23 Nov 2024 20:30:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732422641; x=1733027441; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=j84R7S4u5qFoSng2S1WnpKvSJ4jAccScvN5kudKagkY=;
- b=EIXh/g5m6+O4fT4H/cgxR5tr71ePfB6I56uMMN0owSSe+/rhdKdcOWWqLy6N65y+Fr
- FwZI55NyTNhekseeqipipiPU1tZnfIthhwhjIrTaoJHg85cXWQdF/N8s7kvhRpj0Os+T
- ASow5Vrp8f6eIRyWjdt8Sw1pRJ+S8UehUsBhV0NP5TrMnf2IPTEsGApE8BFZMHPvuaKk
- G71Dl01kVTuellDVA7h/iKj2N+Az0XVzcYYx5vojcJp4bFr+dseMDddfslUa4hTEIquF
- 9NTOwiYg8gUHWcPdY2T5Gx1tHX1FZXMQ6am5ZmFPnsH8mgbHIMAzbF7T3nVnnY4zGWfa
- x6RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732422641; x=1733027441;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=j84R7S4u5qFoSng2S1WnpKvSJ4jAccScvN5kudKagkY=;
- b=kb3zEUBN8BYIVc4/mbSG2zDNw77jpnabH38kjx1uZJFQ2h6RLfyt2DHTru9x1V1tsq
- yQafN1vd7C49d5/nekejUGYdVYyL/ZicFYgUDrRyqymXHv3JHkFwM1jhg0IDK28qm4/+
- MRHmYlrP6e38DJ+mBHMOr5TJGungRzU8+9gX/m3e8xmzzplfL83RiMHBgw/+/9tJEN0u
- lBd9G4/FDc4zkNbsGhxm42vyrCKcKG3DKJNl5WflKWvzGMIf4qJUsaKJItEIods53FGW
- eAsxzhQv/fUYesndbQkR0v6r4+j+lEdJ8Zw7Zv9ag/yA5zU9/caCsTBb5uNyMkAO1x26
- p4Fg==
-X-Gm-Message-State: AOJu0Yy89i4qnO/6RV3PGkfsFFinfBHjUZDxbk9OTZLtTpesUedzDtxO
- w0j9fphCIvSj3HluG9sMSohXhuwy44NEt803JM7428tx1iXWrELnZCSfWc7AD5boVDlB3jb4/Tx
- NlmZ83xwx3kpEoz9Lb2A+eW0MKFU=
-X-Gm-Gg: ASbGncuWoJ7w/FA2OssRC5SFFwIwCTCBblt7NKaFB2lPDgQ7XU3KGwUgJiRZqx5zfDq
- Q/R7czfS+qYBIVgU8LPyQvKkHJTWaQcM=
-X-Google-Smtp-Source: AGHT+IF901QaET9KyJbY8FhNQtRUvpTH1xHI7UinXbbJ3MEq+IQkmKTotue0aJruQeOt5Bsy3XdWMnX91I4kwuR9gaA=
-X-Received: by 2002:a5d:59a3:0:b0:382:346b:3654 with SMTP id
- ffacd0b85a97d-38260be30d4mr7536260f8f.56.1732422641315; Sat, 23 Nov 2024
- 20:30:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tF4n2-0000Ck-2V; Sun, 24 Nov 2024 00:04:10 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tF4mz-0000nB-H6; Sun, 24 Nov 2024 00:04:07 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 07363AEB84;
+ Sun, 24 Nov 2024 08:03:42 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0E42D178A74;
+ Sun, 24 Nov 2024 08:03:54 +0300 (MSK)
+Message-ID: <a7afbef0-89c5-418d-8d98-8c3e2d0698ec@tls.msk.ru>
+Date: Sun, 24 Nov 2024 08:03:53 +0300
 MIME-Version: 1.0
-References: <20241120151515.56884-1-xndchn@gmail.com>
- <20241120151515.56884-2-xndchn@gmail.com>
- <4d3f8a83-7c03-4b48-9a84-d99b88b0d47c@linaro.org>
-In-Reply-To: <4d3f8a83-7c03-4b48-9a84-d99b88b0d47c@linaro.org>
-From: xndcn <xndchn@gmail.com>
-Date: Sun, 24 Nov 2024 12:30:30 +0800
-Message-ID: <CAJ=gGT3v9WrDButDKP7C_6b7dLnX7AS0Gfyy5x1cLYunJqWBwg@mail.gmail.com>
-Subject: Re: [PATCH] system/physmem: Fix cpu_memory_rw_debug for armv7m MPU
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=xndchn@gmail.com; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Misc OpenRISC fixes for 9.2.0
+To: Stafford Horne <shorne@gmail.com>
+Cc: QEMU Development <qemu-devel@nongnu.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20241123103828.3157128-1-shorne@gmail.com>
+ <618427e1-ef6d-439f-be0a-6d573b28f1c4@tls.msk.ru> <Z0IKhkyU8YdI5vyP@antec>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <Z0IKhkyU8YdI5vyP@antec>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,64 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks. This patch at least guarantees normal read/write access to
-addresses with r/w flags, although there is still a risk of
-misidentifying accessible regions within continuous address spaces.
+23.11.2024 20:01, Stafford Horne wrote:
+> On Sat, Nov 23, 2024 at 03:12:12PM +0300, Michael Tokarev wrote:
+>> On 23.11.2024 13:38, Stafford Horne wrote:
+>>> This series has 2 fixes for OpenRISC that came in over that past few months.
+>>>
+>>> Ahmad Fatoum (1):
+>>>     hw/openrisc/openrisc_sim: keep serial@90000000 as default
+>>>
+>>> Joel Holdsworth (1):
+>>>     hw/openrisc: Fixed undercounting of TTCR in continuous mode
+>>
+>> Is there anything in there which is worth picking up for stable?
+>> The first one above seems to be a good candidate.
+> 
+> Yes, I think so, would you like me to tag it with anything?  It does have a
+> Fixes.
 
-Actually, initially I did write a patch with a modified page size as
-an argument, but I soon found that the current implementation of
-armv7a (pmsav7) will return the page size (lg_page_size) as 0 in many
-situations (such as overlapping regions).
-Maybe we can simply make the page size as 2^5 (minimal page size) when
-the returned lg_page_size =3D=3D 0?
+Well, there are Fixes and Fixes.  Some are much more important to be
+in stable series, while others are hardly relevant.  Obviously you're
+much better to judge in your area than others.  After all, maybe  you're
+the only one in this world to run or1k, and you don't need stable
+series at all :)
 
-On Sat, Nov 23, 2024 at 4:32=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/20/24 09:15, Xiong Nandi wrote:
-> > The actual page size (region size for MPU) of armv7m may
-> > smaller than TARGET_PAGE_SIZE (2^5 vs 2^10). So we should
-> > use the actual virtual address to get the phys page address.
-> >
-> > Signed-off-by: Xiong Nandi <xndchn@gmail.com>
-> > ---
-> >   system/physmem.c | 3 ++-
-> >   1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/system/physmem.c b/system/physmem.c
-> > index dc1db3a384..a76b305130 100644
-> > --- a/system/physmem.c
-> > +++ b/system/physmem.c
-> > @@ -3564,11 +3564,12 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr ad=
-dr,
-> >           MemTxResult res;
-> >
-> >           page =3D addr & TARGET_PAGE_MASK;
-> > -        phys_addr =3D cpu_get_phys_page_attrs_debug(cpu, page, &attrs)=
-;
-> > +        phys_addr =3D cpu_get_phys_page_attrs_debug(cpu, addr, &attrs)=
-;
-> >           asidx =3D cpu_asidx_from_attrs(cpu, attrs);
-> >           /* if no physical page mapped, return an error */
-> >           if (phys_addr =3D=3D -1)
-> >               return -1;
-> > +        phys_addr &=3D TARGET_PAGE_MASK;
-> >           l =3D (page + TARGET_PAGE_SIZE) - addr;
-> >           if (l > len)
-> >               l =3D len;
->
-> So... I guess this might accidentally work, but L is definitely incorrect=
- under the
-> circumstances.  So we could easily be exchanging one set of bugs for anot=
-her.
->
-> We really need to be returning the range of addresses under which the add=
-ress translation
-> is valid.  One solution could be passing in 'l =3D len, &l' to be modifie=
-d so that (addr, l)
-> translates to (phys_addr, l) after the call; iterate for sum l < len as w=
-e're currently doing.
->
->
-> r~
+ From the two fixes in this series, I (with my very limited understanding)
+see first one above is maybe good for stable, while for second I don't know.
+So I entirely rely on your call, hence I asked.
+
+As for tagging, you might add Cc: qemu-stable@ tag for all changes which
+you  want to be back-ported, or just send a note to qemu-stabl@ with the
+changes you'd like to be in stable (note: this email has Cc: there already).
+The key point is to make qemu-stable@ aware of what do you think is relevant.
+
+Thanks,
+
+/mjt
 
