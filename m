@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2905D75E5D
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Nov 2024 20:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FE5E6780A
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Nov 2024 20:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFJ8l-00034l-PZ; Sun, 24 Nov 2024 15:23:31 -0500
+	id 1tFJA2-0003fB-Ee; Sun, 24 Nov 2024 15:24:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tFJ8j-00034a-Jw
- for qemu-devel@nongnu.org; Sun, 24 Nov 2024 15:23:29 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tFJA0-0003cK-4x
+ for qemu-devel@nongnu.org; Sun, 24 Nov 2024 15:24:48 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tFJ8h-0000gz-Q0
- for qemu-devel@nongnu.org; Sun, 24 Nov 2024 15:23:29 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4315abed18aso33437995e9.2
- for <qemu-devel@nongnu.org>; Sun, 24 Nov 2024 12:23:27 -0800 (PST)
+ id 1tFJ9x-0000kA-FB
+ for qemu-devel@nongnu.org; Sun, 24 Nov 2024 15:24:46 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3823e45339bso2838771f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 24 Nov 2024 12:24:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732479806; x=1733084606; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1732479883; x=1733084683; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZV6K6VqLj+LOkOKwyTQOzednhffXQInyWmrCLlYyySs=;
- b=mLGFhotEih2w/ZU7MnGSqjLPRBwZPBSMHy2dAfGLP41hcdPBl7e1GuTeO5yp0gpH8u
- 9zdikyAyMyfQ4kUJN8UDsRnEC1mpoxb2ItcreIU+lM7vx56zmUWYLYV/UM1rpS97mRTu
- /03zltWCc+EHteuNUeQvQwtpK9ou7QrabrVhpcJxoVmzo+mcxmXVQzACebvDNO4bLZtg
- PJOSIkxHQmmxXYRoNupGXAxQ00Sj27wyDoY8xgU1/b9of1j1rX8vi6DwgpRnvYF5bPjV
- vvHsFpppl6YQcETTb96xzF9SUEzEno77FPAzTVAjTQFTNqlcIYr8a3vzEgtx2ywhjO0h
- TotQ==
+ bh=ySifidxIfGNwfPX42w3vvTQ59tD9aEwxVzH1Ky4J9UE=;
+ b=prC3ex9RewXm2sdJq8r2e0ja5xHBUx+bBvxEHRBQqut16lPxXjyPupWy/LZw4Ly/SZ
+ hnKZ8/cJ97jj3GV8Qxi/7P2xNEbr/N+nKwIg4AJQzo2TuQ9VVh4+/ellUxNyXhpnFudL
+ MOmpgQcgYABKkhEbjL9YAiZTx80ripaUXg+tLMcDKFPqNVWaxE+Kf3a51ye9OT1H63Aa
+ ueRkZpb1Nya9850jpolxERbSG2IiR09ZQtBu6hRV+LP1aXw96GTBP8h+y7wAKEpnmWvZ
+ DxzmcN4i+4iT8c5bH/ZXrN4SCg8MhyLnu+yq4nUf/mY2n0aDBLprUE5+o38BbnpCRBnp
+ qdXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732479806; x=1733084606;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1732479883; x=1733084683;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZV6K6VqLj+LOkOKwyTQOzednhffXQInyWmrCLlYyySs=;
- b=C8vRcApPyle2gNBfA0kct1xhZweyHjHdmPRax5mc00fMl96yRc3kfr6OzrMTeBOAuE
- 1WK59eLPdmifMeBlN8xLHXHwlvlGLj+y+zrCSe1fnOfzpWg7iqMKa/uiu7CSjy5uUeEF
- cBoR2p1xNugaRFQRSg67RvSMTaDAPKAem0JvDhakGIuS+cDQKIFt/wvLYCFbBiztdk/b
- zrkpuk3USXGYruwsYDladGA9LVgGMqmIcEtqqDPL28YA/NVLnuNtmbr0W/3f5NGh5Fw3
- fJwOwDhT7xqeI9b2+pP+9oDS+TP80oaL9F8XXmSWzEm65woZQED7SSziO4VsAUDPWPDY
- Q4FA==
+ bh=ySifidxIfGNwfPX42w3vvTQ59tD9aEwxVzH1Ky4J9UE=;
+ b=o7FCjIxGtSrYaOkeuuA+Opg8gIWUPukTOgee5qykCNjJNXx/HQRXfMu+ewHmHfDguG
+ j/3txOtPLR/Fg7nEaq1K/PhbcNgOlnqdWiAyuSBBBO5Ztsn/ncV0IRPjCopW3cOhCOKk
+ 8ueS+aKknGrW4i90iK+fHi5EBH8EOfWmwPAC50K9vf0wNOIsmIFKxr9JVG4rtQHg2Ur5
+ zlhMsrxIM/msnxNy43LU9C8WXkeKqGncGIGhyxX4uIwTojPF7N4C+Z/uhgRqHwlkRDI5
+ TKtp4KMHHX5NM6h7PFGYC77BjQHhLtW8GMPscO6lWBYBIwNAl12GzYfrpFOaqAv38+Lm
+ yFMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVM/r7mHlkz7g5/q1TwZu6A3W8eO4wJluzsB2Y5htn4I4TS6+4jrQ9fzKFubFW9n75idn83coPOPNxw@nongnu.org
-X-Gm-Message-State: AOJu0YyDiJqRJJBaY7tecKwuUN0IOvYPw47x5hcndLDGVi54EMprZn66
- JrXpBxih54n3Tev4DZGLq784ocdyY2XqOfbYYsULo7xRu0GNBqhFyEeSaeiuyPA=
-X-Gm-Gg: ASbGnctotk+O6kOjE2qZKvxmXV8R1K+72zjt0KKcFpDMy9O55whosNYjSm+a6X9GZRG
- g4XDAhP5W+89Bym2065p8akQLu6b6Mr9Z49R2HUrs6knQFdoruF7TC59CTuYZJLaSme1o1KCeCr
- MzqY7mcWzNiNuyOQVy0zkQKi4R8XBcrHd60G4vDR52j2LfyFAg1Y/aCLVOss0SkFIRut1rStdvd
- t7hqMkZtedxBCauBF/4nC7tt9rHfcC6NQnAWX5Ltw2sJJVCHwSQQLoPLmFEiUj4xQ==
-X-Google-Smtp-Source: AGHT+IHFoyZ+s+85pvKN/GaRpQTGaY/MHO5A2753bO/EbTAZcQyUwzdxwIIwEPDvFQcwwe63b5sXmQ==
-X-Received: by 2002:a05:600c:3b12:b0:432:d875:c298 with SMTP id
- 5b1f17b1804b1-433ce426968mr88949445e9.14.1732479805696; 
- Sun, 24 Nov 2024 12:23:25 -0800 (PST)
+ AJvYcCWQwXJenaySCyIamiN9RIj8VjOLwCtjsC4LTos5/pakSBSjXjWaEDqO8MVS8rlRdnZ5xZIMLTVnxVZ8@nongnu.org
+X-Gm-Message-State: AOJu0Yz5EYmcmAMU2FG+GcNJ956NkrK6PnsXmqbJ2aJj131MXiSmGaAi
+ ZXuGLMbOXIAXlLYHapuU2gf5T0VB2q55IRVLqNSGTyepeXfEpToEqUwOUH55ZfY=
+X-Gm-Gg: ASbGnctZp+/FE9sdAkC8trSKT7m+G8qB9b7YYXrpCvz8P9udGx+mQph7jmQ5SJSPHj/
+ 9s4Zc1MOMSl8GZEJEJmU4SHJ36M4ukIJW+svvm/86wis93hsLMKpMNqMTUe5nRnmHRZEmuwBTQL
+ ipVLZjOHlXGkTQY6KLcWXCBS/8rVcjEPhfGKc4wflSF94VKiA0u5thldIuBJXdVWh7HUlNbyKgJ
+ axpOKZ+At0UlQHnWWAqRQ4qWRlBhc6LKdNW5xLEagDwxdUXfz8lgd68cb4zMmWzmQ==
+X-Google-Smtp-Source: AGHT+IFnCxD/k+sdqAZXeD1m95nULUHcmPW9t/HNDT1D7fM9W3/o8wynejQCKMcv0TxDdjNyygLkQw==
+X-Received: by 2002:a5d:6c69:0:b0:382:31ca:4dca with SMTP id
+ ffacd0b85a97d-38260b4d679mr8167011f8f.7.1732479882594; 
+ Sun, 24 Nov 2024 12:24:42 -0800 (PST)
 Received: from [10.150.212.240] ([95.173.222.38])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4348e272094sm58146565e9.7.2024.11.24.12.23.23
+ 5b1f17b1804b1-432f64e7e12sm124577565e9.2.2024.11.24.12.24.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 24 Nov 2024 12:23:25 -0800 (PST)
-Message-ID: <c8ec9243-f489-4b91-946e-2c6ff7e36f71@linaro.org>
-Date: Sun, 24 Nov 2024 12:23:21 -0800
+ Sun, 24 Nov 2024 12:24:42 -0800 (PST)
+Message-ID: <4220b050-e29a-461d-85b7-93a335a96e4d@linaro.org>
+Date: Sun, 24 Nov 2024 12:24:39 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Supporting clang on windows
-To: Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Thomas Huth <thuth@redhat.com>
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org>
- <b045c676-4722-4fb9-a800-27c92d832347@redhat.com>
-Content-Language: en-US
+ <ae79e5a8-d875-41c5-ace0-911be633d8c5@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <b045c676-4722-4fb9-a800-27c92d832347@redhat.com>
+In-Reply-To: <ae79e5a8-d875-41c5-ace0-911be633d8c5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x331.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,80 +108,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/24/24 04:10, Paolo Bonzini wrote:
-> On 11/24/24 01:21, Pierrick Bouvier wrote:
->> After thinking about it, a simple, exhaustive and reliable way to find
->> this type information is the debug (dwarf) info.
->> By compiling qemu binaries with --enable-debug, and extracting info
->> using llvm-dwarfdump plus a custom filter [4], we can obtain a text
->> representation of all structures QEMU uses.
-> 
-> Yes, this is a good idea.
-> 
->> As there is a lot of repetition between all qemu binaries, the reduced
->> list of structs concerned is [6]:
->> +name:ArduinoMachineClass size:0x0198
->> +name:ARMCacheAttrs size:0x04
->> +name:ARMVAParameters size:0x04
->> +name:AspeedMachineClass size:0x01d0
->> +name:_GIOChannel size:0x70
-> 
-> This one unfortunately shows why the global change is wrong.  The size
-> of _GIOChannel must match between glib and QEMU, otherwise you have an
-> ABI mismatch.
-> 
-
-In the codebase, we always use this type as an opaque type (through 
-pointer, using library functions to interact with it and never use it's 
-size). So the fact we see a different layout is *not* an issue for QEMU. 
-I don't see it as a counter example that this does not work.
-
-> In other words, the global default _must_ be -mms-bitfields, because all
-> other libraries (and also Windows itself, though you didn't find any
-> occurrences) are built with MSVC ABI compatibility.  Bitfields are
-> relatively rare, and therefore you only found one occurrence; however,
-> this is a constraint that we cannot get rid of.
-> 
-
--mms-bitfields is already the (silent) gcc default on windows, to mimic 
-MSVC behaviour. Yes, it would be preferable to use this default and 
-gcc_struct attribute, but right now, it does not work with clang. So the 
-whole point is to accept a compromise for this.
-We can even apply this selectively when clang is detected in case QEMU 
-community is scared changing this default would break existing code.
-
-I don't understand the strong pushback against clang support on windows. 
-Because of a "theoretical" problem, that was proved here we don't have 
-currently, we are stuck with gcc_struct attribute. This is currently 
-blocking clang, and I don't see the point about that.
-If clang supports gcc_struct attribute in the future, we can always 
-decide to revert this change, and use it again. Meanwhile (1 month? 1 
-year? 5 years?), we are just blocking progress support for the sake of 
-blocking it.
-The risk of this approach is that MSYS2, and Google folks using clang-cl 
-will simply move forward and remove this restriction, even if the 
-upstream community does not agree. Closing eyes and say "not supported" 
-is not the best way to move forward.
-
-> However, your script lets you do the opposite experiment: remove
-> gcc_struct QEMU_PACKED and check if anything changes, i.e. whether there
-> are any QEMU_PACKED structs that do rely on the gcc_struct attribute.
-> If there are any, then it should be possible to change the definition
-> and fix them.
-> 
-
-It does not only remove gcc_struct attribute, it replaces it with an 
-option that does the same thing globally for all packed structs.
-
-I did the experiment with gcc only, simply to have an easier diff 
-because code layout stays the same, while clang would order symbols 
-differently.
-
-> Thanks,
-> 
-> Paolo
-> 
-
-Thanks,
-Pierrick
+T24gMTEvMjQvMjQgMDQ6MjgsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPiBP
+biAyNC8xMS8yNCAwMToyMSwgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4+IEhpIGFsbCwN
+Cj4gDQo+IA0KPj4gQWZ0ZXIgdGhpbmtpbmcgYWJvdXQgaXQsIGEgc2ltcGxlLCBleGhhdXN0
+aXZlIGFuZCByZWxpYWJsZSB3YXkgdG8gZmluZA0KPj4gdGhpcyB0eXBlIGluZm9ybWF0aW9u
+IGlzIHRoZSBkZWJ1ZyAoZHdhcmYpIGluZm8uDQo+PiBCeSBjb21waWxpbmcgcWVtdSBiaW5h
+cmllcyB3aXRoIC0tZW5hYmxlLWRlYnVnLCBhbmQgZXh0cmFjdGluZyBpbmZvDQo+PiB1c2lu
+ZyBsbHZtLWR3YXJmZHVtcCBwbHVzIGEgY3VzdG9tIGZpbHRlciBbNF0sIHdlIGNhbiBvYnRh
+aW4gYSB0ZXh0DQo+PiByZXByZXNlbnRhdGlvbiBvZiBhbGwgc3RydWN0dXJlcyBRRU1VIHVz
+ZXMuDQo+Pg0KPj4gQXMgZXhwZWN0ZWQsIHR1cm5pbmcgdGhlIG9wdGlvbiBnbG9iYWxseSBo
+YXMgYW4gZWZmZWN0LiBUaGUgZXhhY3QgbGlzdA0KPj4gb2Ygc3RydWN0dXJlcyBpbXBhY3Rl
+ZCAodGhvc2UgaGF2aW5nIGJpdGZpZWxkcywgYW5kIG5vdCBiZWluZyBwYWNrZWQpDQo+PiBj
+YW4gYmUgc2VlbiBmb3IgZWFjaCBiaW5hcnkgaGVyZTogWzVdLg0KPj4gQXMgdGhlcmUgaXMg
+YSBsb3Qgb2YgcmVwZXRpdGlvbiBiZXR3ZWVuIGFsbCBxZW11IGJpbmFyaWVzLCB0aGUgcmVk
+dWNlZA0KPj4gbGlzdCBvZiBzdHJ1Y3RzIGNvbmNlcm5lZCBpcyBbNl06DQo+PiArbmFtZTpB
+cmR1aW5vTWFjaGluZUNsYXNzIHNpemU6MHgwMTk4DQo+PiArbmFtZTpBUk1DYWNoZUF0dHJz
+IHNpemU6MHgwNA0KPj4gK25hbWU6QVJNVkFQYXJhbWV0ZXJzIHNpemU6MHgwNA0KPj4gK25h
+bWU6QXNwZWVkTWFjaGluZUNsYXNzIHNpemU6MHgwMWQwDQo+PiArbmFtZTpfR0lPQ2hhbm5l
+bCBzaXplOjB4NzANCj4+ICtuYW1lOk1hY2hpbmVDbGFzcyBzaXplOjB4MDE4OA0KPj4gK25h
+bWU6TWljcm92bU1hY2hpbmVDbGFzcyBzaXplOjB4MDFhMA0KPj4gK25hbWU6TVBTMk1hY2hp
+bmVDbGFzcyBzaXplOjB4MDFhOA0KPj4gK25hbWU6TVBTMlRaTWFjaGluZUNsYXNzIHNpemU6
+MHgwMWU4DQo+PiArbmFtZTpNUFMzUk1hY2hpbmVDbGFzcyBzaXplOjB4MDFhMA0KPj4gK25h
+bWU6TXVzY2FNYWNoaW5lQ2xhc3Mgc2l6ZToweDAxYTgNCj4+ICtuYW1lOk5QQ003eHhNYWNo
+aW5lQ2xhc3Mgc2l6ZToweDAxOTANCj4+ICtuYW1lOlBDTWFjaGluZUNsYXNzIHNpemU6MHgw
+MWMwDQo+PiArbmFtZTpQbnZNYWNoaW5lQ2xhc3Mgc2l6ZToweDAxYjANCj4+ICtuYW1lOlBQ
+Q0U1MDBNYWNoaW5lQ2xhc3Mgc2l6ZToweDAxZTANCj4+ICtuYW1lOlJhc3BpQmFzZU1hY2hp
+bmVDbGFzcyBzaXplOjB4MDE5MA0KPj4gK25hbWU6UnhHZGJTaW1NYWNoaW5lQ2xhc3Mgc2l6
+ZToweDAxOTgNCj4+ICtuYW1lOlMzOTBDY3dNYWNoaW5lQ2xhc3Mgc2l6ZToweDAxOTANCj4+
+ICtuYW1lOlNwYXByTWFjaGluZUNsYXNzIHNpemU6MHgwMWQwDQo+PiArbmFtZTpTdW40bU1h
+Y2hpbmVDbGFzcyBzaXplOjB4MDE5MA0KPj4gK25hbWU6VHJpQm9hcmRNYWNoaW5lQ2xhc3Mg
+c2l6ZToweDAxYTANCj4+ICtuYW1lOlZleHByZXNzTWFjaGluZUNsYXNzIHNpemU6MHgwMTkw
+DQo+PiArbmFtZTpWaXJ0TWFjaGluZUNsYXNzIHNpemU6MHgwMWEwDQo+PiArbmFtZTpYODZN
+YWNoaW5lQ2xhc3Mgc2l6ZToweDAxOTANCj4gDQo+IFRoZSAqTWFjaGluZUNsYXNzIG9uZXMg
+Y29tZSBmcm9tIFsqXToNCj4gDQo+ICAgICBzdHJ1Y3QgTWFjaGluZUNsYXNzIHsNCj4gICAg
+ICAgICAuLi4NCj4gICAgICAgICB1bnNpZ25lZCBpbnQgbm9fc2VyaWFsOjEsDQo+ICAgICAg
+ICAgICAgIG5vX3BhcmFsbGVsOjEsDQo+ICAgICAgICAgICAgIG5vX2Zsb3BweToxLA0KPiAg
+ICAgICAgICAgICBub19jZHJvbToxLA0KPiAgICAgICAgICAgICBub19zZGNhcmQ6MSwNCj4g
+ICAgICAgICAgICAgcGNpX2FsbG93XzBfYWRkcmVzczoxLA0KPiAgICAgICAgICAgICBsZWdh
+Y3lfZndfY2ZnX29yZGVyOjE7DQo+IA0KPiBJTUhPIFVzaW5nIGJpdGZpZWxkIHRvIG1hbnVh
+bGx5IG1pY3JvLW9wdGltaXplIG1lbW9yeSBzaXplIHNlZW1zDQo+IGEgYml0IGEgd2FzdGUg
+b2YgZGV2ZWxvcGVyIHRpbWUvZm9jdXMsIEknZCByYXRoZXIgc2VlIGNvbXBpbGVycw0KPiBk
+b2luZyB0aGF0IGZvciB1cy4NCj4gDQoNClllcywgaXQncyAoYW5vdGhlcikgbGVzc29uIHRo
+YXQgQyBiaXRmaWVsZHMgYXJlIGEgZ29vZCBzeW5vbnltIG9mIG5vbiANCnBvcnRhYmxlIGNv
+ZGUgaW4gZ2VuZXJhbC4NCg0KPiBSZWdhcmRzLA0KPiANCj4gUGhpbC4NCj4gDQo+IFsqXSBJ
+bnRlcmVzdGluZ2x5IFRob21hcyBpcyBhbHNvIGxvb2tpbmcgYXQgdGhvc2UgZmllbGRzOg0K
+PiAgIA0KPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjQxMTIyMDg0
+OTIzLjE1NDI3NDMtMS10aHV0aEByZWRoYXQuY29tLw0KDQo=
 
