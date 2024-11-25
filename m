@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1020D3B7F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 08:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7A9D3B7F0
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 08:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFUJC-0002zD-Fx; Mon, 25 Nov 2024 03:19:02 -0500
+	id 1tFUSL-0004uQ-BF; Mon, 25 Nov 2024 03:28:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=2wM6=SU=kaod.org=clg@ozlabs.org>)
- id 1tFUIy-0002xg-Lt; Mon, 25 Nov 2024 03:18:49 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1tFUSK-0004uD-1B
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:28:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=2wM6=SU=kaod.org=clg@ozlabs.org>)
- id 1tFUIv-0000Rq-UG; Mon, 25 Nov 2024 03:18:48 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XxdrQ49XNz4xcm;
- Mon, 25 Nov 2024 19:18:30 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XxdrM0781z4wc3;
- Mon, 25 Nov 2024 19:18:26 +1100 (AEDT)
-Message-ID: <85b3fc32-130a-4a63-8e01-83c7336616ea@kaod.org>
-Date: Mon, 25 Nov 2024 09:18:26 +0100
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1tFUSH-0001qB-Hg
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:28:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732523302;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kTTquZBRghUyEt/d8fUM9BAOnGyMtDCD3/9+3IwE1mk=;
+ b=ejIv5fVADG43NebStudSPJdHaRezb3/gGgkd2U4IR5S3OSgbti2E1QNsMbh5VtzuG2acV8
+ FQO4xmYL0+cKzovGUYgIJwSFJMBUwRQyzEMfkhO8XxGjgFjIuRjjWZ9Ck/IwzXpB/B70se
+ J1RRuPhMj9vtyKTtRp9kg64Y8FZzjVw=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-527-KCFORbWUNhaYMg4g1NIi7w-1; Mon, 25 Nov 2024 03:28:20 -0500
+X-MC-Unique: KCFORbWUNhaYMg4g1NIi7w-1
+X-Mimecast-MFC-AGG-ID: KCFORbWUNhaYMg4g1NIi7w
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2ea2dc1a51fso4196009a91.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 00:28:20 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732523299; x=1733128099;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kTTquZBRghUyEt/d8fUM9BAOnGyMtDCD3/9+3IwE1mk=;
+ b=e8eNQbTAtV5ve7sRzpt7gMPGFro+J2+lysSkah5N8fuaueKspVrvWBQv7tk8xaOmjD
+ Uv/dlCBabK4mkf1XWCsPMO1uCmSaescKSdXBzfvZovUhaNAfYRjFUtS57X4+HG0clZ4X
+ /npeYx2eHSQURinPiiRa/rDl12bcEm2/YTh6QyyiI6cHECvHjqg5xVXcJJFDejfYcRLy
+ J1JJvoPe+Nsan2Mks8kOGzVQ0TK3vvuv+rpcC8qCAbbyi8sJihad5H9pyJG/4yMyb1nR
+ GXMjHLRtILMg+UDm6ryel4//HB1cIMBx7KJxQv4/5kS/W6/+ABw317YeXgLF0kW02FTg
+ lzUQ==
+X-Gm-Message-State: AOJu0Yy6CYMxK0Baq6904eAMM3zNhyVNmolZQgwVv0ClKXW0hpTLXsyw
+ 4nmSncMSazcpJbarsCtoNVXJJKV2b8z33Sa2GZLUyNhnvv3a2IRrIZykQSb6IIe+dHh5wykS5JO
+ htdf0G/OvYvWv5QwMWP4dHmz7mG+zgLOn1Te+s9cuKvkBbM+VQ17TL7++LiVrN1gmFyhlMmvYr8
+ mCU0wQG6g6vsXgNteQMAxxGvV3zXM=
+X-Gm-Gg: ASbGncvK2Pid7uPW9+Yi19N8QVpL/soEAHGwX4EMnyLDaVgD2qBQP/MG+gKWTPmlDYD
+ Kv1Kmo0rDVq8PCWIjQzYecGsnVrg22DXv
+X-Received: by 2002:a17:90b:4c4b:b0:2ea:b2a5:933e with SMTP id
+ 98e67ed59e1d1-2eb0e024b84mr16367766a91.7.1732523299370; 
+ Mon, 25 Nov 2024 00:28:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEyQZe5njMakZDxWiIsr6oysMMn2z5ddOSCaWQQmB6lnoS29XpoVOjhORMVZClZGwTscg/QG1u6WM8BscXQWME=
+X-Received: by 2002:a17:90b:4c4b:b0:2ea:b2a5:933e with SMTP id
+ 98e67ed59e1d1-2eb0e024b84mr16367742a91.7.1732523299039; Mon, 25 Nov 2024
+ 00:28:19 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/aspeed: Correct minimum access size for all models
-To: Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: BMC-SW@aspeedtech.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20241118021820.4928-1-joel@jms.id.au>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20241118021820.4928-1-joel@jms.id.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=2wM6=SU=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240912145335.129447-1-aesteve@redhat.com>
+ <20240912145335.129447-2-aesteve@redhat.com>
+ <abfd06b7-ad85-454b-a973-6c939c4588e3@redhat.com>
+In-Reply-To: <abfd06b7-ad85-454b-a973-6c939c4588e3@redhat.com>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Mon, 25 Nov 2024 09:28:07 +0100
+Message-ID: <CADSE00+Yg+ufOT1NQ+8H7DSaE0zCFrWbn-yTajx72G0BZdUw9g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] vhost-user: Add VIRTIO Shared Memory map request
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ slp@redhat.com, hi@alyssa.is, mst@redhat.com, jasowang@redhat.com, 
+ stefanha@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
+ stevensd@chromium.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,206 +106,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Joel,
+On Tue, Sep 17, 2024 at 12:08=E2=80=AFPM David Hildenbrand <david@redhat.co=
+m> wrote:
+>
+> On 12.09.24 16:53, Albert Esteve wrote:
+> > Add SHMEM_MAP/UNMAP requests to vhost-user to
+> > handle VIRTIO Shared Memory mappings.
+> >
+> > This request allows backends to dynamically map
+> > fds into a VIRTIO Shared Memory Region indentified
+> > by its `shmid`. Then, the fd memory is advertised
+> > to the driver as a base addres + offset, so it
+> > can be read/written (depending on the mmap flags
+> > requested) while its valid.
+> >
+> > The backend can munmap the memory range
+> > in a given VIRTIO Shared Memory Region (again,
+> > identified by its `shmid`), to free it. Upon
+> > receiving this message, the front-end must
+> > mmap the regions with PROT_NONE to reserve
+> > the virtual memory space.
+> >
+> > The device model needs to create MemoryRegion
+> > instances for the VIRTIO Shared Memory Regions
+> > and add them to the `VirtIODevice` instance.
+> >
+> > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > ---
+> >   hw/virtio/vhost-user.c                    | 122 +++++++++++++++++++++=
++
+> >   hw/virtio/virtio.c                        |  13 +++
+> >   include/hw/virtio/virtio.h                |   5 +
+> >   subprojects/libvhost-user/libvhost-user.c |  60 +++++++++++
+> >   subprojects/libvhost-user/libvhost-user.h |  52 +++++++++
+> >   5 files changed, 252 insertions(+)
+> >
+> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > index 00561daa06..338cc942ec 100644
+> > --- a/hw/virtio/vhost-user.c
+> > +++ b/hw/virtio/vhost-user.c
+> > @@ -115,6 +115,8 @@ typedef enum VhostUserBackendRequest {
+> >       VHOST_USER_BACKEND_SHARED_OBJECT_ADD =3D 6,
+> >       VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE =3D 7,
+> >       VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP =3D 8,
+> > +    VHOST_USER_BACKEND_SHMEM_MAP =3D 9,
+> > +    VHOST_USER_BACKEND_SHMEM_UNMAP =3D 10,
+> >       VHOST_USER_BACKEND_MAX
+> >   }  VhostUserBackendRequest;
+> >
+> > @@ -192,6 +194,24 @@ typedef struct VhostUserShared {
+> >       unsigned char uuid[16];
+> >   } VhostUserShared;
+> >
+> > +/* For the flags field of VhostUserMMap */
+> > +#define VHOST_USER_FLAG_MAP_R (1u << 0)
+> > +#define VHOST_USER_FLAG_MAP_W (1u << 1)
+> > +
+> > +typedef struct {
+> > +    /* VIRTIO Shared Memory Region ID */
+> > +    uint8_t shmid;
+> > +    uint8_t padding[7];
+> > +    /* File offset */
+> > +    uint64_t fd_offset;
+> > +    /* Offset within the VIRTIO Shared Memory Region */
+> > +    uint64_t shm_offset;
+> > +    /* Size of the mapping */
+> > +    uint64_t len;
+> > +    /* Flags for the mmap operation, from VHOST_USER_FLAG_* */
+> > +    uint64_t flags;
+> > +} VhostUserMMap;
+> > +
+> >   typedef struct {
+> >       VhostUserRequest request;
+> >
+> > @@ -224,6 +244,7 @@ typedef union {
+> >           VhostUserInflight inflight;
+> >           VhostUserShared object;
+> >           VhostUserTransferDeviceState transfer_state;
+> > +        VhostUserMMap mmap;
+> >   } VhostUserPayload;
+> >
+> >   typedef struct VhostUserMsg {
+> > @@ -1749,6 +1770,100 @@ vhost_user_backend_handle_shared_object_lookup(=
+struct vhost_user *u,
+> >       return 0;
+> >   }
+> >
+> > +static int
+> > +vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
+> > +                                    VhostUserMMap *vu_mmap,
+> > +                                    int fd)
+> > +{
+> > +    void *addr =3D 0;
+> > +    MemoryRegion *mr =3D NULL;
+> > +
+> > +    if (fd < 0) {
+> > +        error_report("Bad fd for map");
+> > +        return -EBADF;
+> > +    }
+> > +
+> > +    if (!dev->vdev->shmem_list ||
+> > +        dev->vdev->n_shmem_regions <=3D vu_mmap->shmid) {
+> > +        error_report("Device only has %d VIRTIO Shared Memory Regions.=
+ "
+> > +                     "Requested ID: %d",
+> > +                     dev->vdev->n_shmem_regions, vu_mmap->shmid);
+> > +        return -EFAULT;
+> > +    }
+> > +
+> > +    mr =3D &dev->vdev->shmem_list[vu_mmap->shmid];
+> > +
+> > +    if (!mr) {
+> > +        error_report("VIRTIO Shared Memory Region at "
+> > +                     "ID %d unitialized", vu_mmap->shmid);
+> > +        return -EFAULT;
+> > +    }
+> > +
+> > +    if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
+> > +        (vu_mmap->shm_offset + vu_mmap->len) > mr->size) {
+> > +        error_report("Bad offset/len for mmap %" PRIx64 "+%" PRIx64,
+> > +                     vu_mmap->shm_offset, vu_mmap->len);
+> > +        return -EFAULT;
+> > +    }
+> > +
+> > +    void *shmem_ptr =3D memory_region_get_ram_ptr(mr);
+> > +
+> > +    addr =3D mmap(shmem_ptr + vu_mmap->shm_offset, vu_mmap->len,
+> > +        ((vu_mmap->flags & VHOST_USER_FLAG_MAP_R) ? PROT_READ : 0) |
+> > +        ((vu_mmap->flags & VHOST_USER_FLAG_MAP_W) ? PROT_WRITE : 0),
+> > +        MAP_SHARED | MAP_FIXED, fd, vu_mmap->fd_offset);
+> > +
+>
+> I'm sorry, but that looks completely wrong. You cannot just take some
+> RAM memory region/ RAMBlock that has properly set flags/fd/whatssoever
+> and map whatever you want in there.
+>
+> Likely you would need a distinct RAMBlock/RAM memory region per mmap(),
+> and would end up mmaping implicitly via qemu_ram_mmap().
+>
+> Then, your shared region would simply be an empty container into which
+> you map these RAM memory regions.
 
-On 11/18/24 03:18, Joel Stanley wrote:
-> Guest code was performing a byte load to the SCU MMIO region, leading to
-> the guest code crashing (it should be using proper accessors, but
-> that is not Qemu's bug). Hardware and the documentation[1] both agree that
-> byte loads are okay, so change all of the aspeed devices to accept a
-> minimum access size of 1.
+Hi, sorry it took me so long to get back to this. Lately I have been
+testing the patch and fixing bugs, and I am was going to add some
+tests to be able to verify the patch without having to use a backend
+(which is what I am doing right now).
 
-I think this is true for read ops but not for writes. You could model
-the write limitation with a .accept() handler. See esp_mem_accepts()
-or npcm7xx_mft_check_mem_op ().
+But I wanted to address/discuss this comment. I am not sure of the
+actual problem with the current approach (I am not completely aware of
+the concern in your first paragraph), but I see other instances where
+qemu mmaps stuff into a MemoryRegion. Take into account that the
+implementation follows the definition of shared memory region here:
+https://docs.oasis-open.org/virtio/virtio/v1.3/csd01/virtio-v1.3-csd01.html=
+#x1-10200010
+Which hints to a memory region per ID, not one per required map. So
+the current strategy seems to fit it better.
 
-Also, could we start by modifying first SCU since that is the IP
-reported in 2636 ?
+Also, I was aware that I was not the first one attempting this, so I
+based this code in previous attempts (maybe I should give credit in
+the commit now that I think of):
+https://gitlab.com/virtio-fs/qemu/-/blob/qemu5.0-virtiofs-dax/hw/virtio/vho=
+st-user-fs.c?ref_type=3Dheads#L75
+As you can see, it pretty much follows the same strategy. And in my
+examples I have been able to use this to video stream with multiple
+queues mapped into the shared memory (used to capture video frames),
+using the backend I mentioned above for testing. So the concept works.
+I may be wrong with this, but for what I understood looking at the
+code, crosvm uses a similar strategy. Reserve a memory block and use
+for all your mappings, and use an allocator to find a free slot.
 
+And if I were to do what you say, those distinct RAMBlocks should be
+created when the device starts? What would be their size? Should I
+create them when qemu receives a request to mmap? How would the driver
+find the RAMBlock?
 
-Thanks,
+BR,
+Albert.
 
-C.
-
-
-
-
-> 
-> [1] See the 'ARM Address Space Mapping' table in the ASPEED docs. This
-> is section 6.1 in the ast2400 and ast2700, and 7.1 in the ast2500 and
-> ast2600 datasheets.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2636
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->   hw/fsi/aspeed_apb2opb.c  | 2 +-
->   hw/gpio/aspeed_gpio.c    | 4 ++--
->   hw/intc/aspeed_vic.c     | 2 +-
->   hw/misc/aspeed_scu.c     | 4 ++--
->   hw/misc/aspeed_sdmc.c    | 2 +-
->   hw/misc/aspeed_xdma.c    | 2 +-
->   hw/net/ftgmac100.c       | 4 ++--
->   hw/sd/aspeed_sdhci.c     | 2 +-
->   hw/timer/aspeed_timer.c  | 2 +-
->   hw/watchdog/wdt_aspeed.c | 2 +-
->   10 files changed, 13 insertions(+), 13 deletions(-)
-> 
-> diff --git a/hw/fsi/aspeed_apb2opb.c b/hw/fsi/aspeed_apb2opb.c
-> index 0e2cc143f105..855dccf6094c 100644
-> --- a/hw/fsi/aspeed_apb2opb.c
-> +++ b/hw/fsi/aspeed_apb2opb.c
-> @@ -259,7 +259,7 @@ static const struct MemoryRegionOps aspeed_apb2opb_ops = {
->       .read = fsi_aspeed_apb2opb_read,
->       .write = fsi_aspeed_apb2opb_write,
->       .valid.max_access_size = 4,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .impl.max_access_size = 4,
->       .impl.min_access_size = 4,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-> index a5b3f454e800..c8bb7e590696 100644
-> --- a/hw/gpio/aspeed_gpio.c
-> +++ b/hw/gpio/aspeed_gpio.c
-> @@ -1372,7 +1372,7 @@ static const MemoryRegionOps aspeed_gpio_ops = {
->       .read       = aspeed_gpio_read,
->       .write      = aspeed_gpio_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->   };
->   
-> @@ -1380,7 +1380,7 @@ static const MemoryRegionOps aspeed_gpio_2700_ops = {
->       .read       = aspeed_gpio_2700_read,
->       .write      = aspeed_gpio_2700_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->   };
->   
-> diff --git a/hw/intc/aspeed_vic.c b/hw/intc/aspeed_vic.c
-> index 55fe51a6675f..8ee662064469 100644
-> --- a/hw/intc/aspeed_vic.c
-> +++ b/hw/intc/aspeed_vic.c
-> @@ -286,7 +286,7 @@ static const MemoryRegionOps aspeed_vic_ops = {
->       .read = aspeed_vic_read,
->       .write = aspeed_vic_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->       .valid.unaligned = false,
->   };
-> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-> index 2c919349cfc0..b7a62da45907 100644
-> --- a/hw/misc/aspeed_scu.c
-> +++ b/hw/misc/aspeed_scu.c
-> @@ -436,7 +436,7 @@ static const MemoryRegionOps aspeed_ast2500_scu_ops = {
->       .read = aspeed_scu_read,
->       .write = aspeed_ast2500_scu_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->       .valid.unaligned = false,
->   };
-> @@ -777,7 +777,7 @@ static const MemoryRegionOps aspeed_ast2600_scu_ops = {
->       .read = aspeed_ast2600_scu_read,
->       .write = aspeed_ast2600_scu_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->       .valid.unaligned = false,
->   };
-> diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c
-> index 4bc9faf691d6..ba700b008e5e 100644
-> --- a/hw/misc/aspeed_sdmc.c
-> +++ b/hw/misc/aspeed_sdmc.c
-> @@ -195,7 +195,7 @@ static const MemoryRegionOps aspeed_sdmc_ops = {
->       .read = aspeed_sdmc_read,
->       .write = aspeed_sdmc_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->   };
->   
-> diff --git a/hw/misc/aspeed_xdma.c b/hw/misc/aspeed_xdma.c
-> index 1dd32f72f453..f222c632c099 100644
-> --- a/hw/misc/aspeed_xdma.c
-> +++ b/hw/misc/aspeed_xdma.c
-> @@ -114,7 +114,7 @@ static const MemoryRegionOps aspeed_xdma_ops = {
->       .read = aspeed_xdma_read,
->       .write = aspeed_xdma_write,
->       .endianness = DEVICE_NATIVE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->   };
->   
-> diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-> index 478356ee3e10..c8f6e1138ed0 100644
-> --- a/hw/net/ftgmac100.c
-> +++ b/hw/net/ftgmac100.c
-> @@ -1150,7 +1150,7 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
->   static const MemoryRegionOps ftgmac100_ops = {
->       .read = ftgmac100_read,
->       .write = ftgmac100_write,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->       .endianness = DEVICE_LITTLE_ENDIAN,
->   };
-> @@ -1158,7 +1158,7 @@ static const MemoryRegionOps ftgmac100_ops = {
->   static const MemoryRegionOps ftgmac100_high_ops = {
->       .read = ftgmac100_high_read,
->       .write = ftgmac100_high_write,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->       .endianness = DEVICE_LITTLE_ENDIAN,
->   };
-> diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
-> index 98d5460905df..85e3f05e438f 100644
-> --- a/hw/sd/aspeed_sdhci.c
-> +++ b/hw/sd/aspeed_sdhci.c
-> @@ -123,7 +123,7 @@ static const MemoryRegionOps aspeed_sdhci_ops = {
->       .read = aspeed_sdhci_read,
->       .write = aspeed_sdhci_write,
->       .endianness = DEVICE_NATIVE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->   };
->   
-> diff --git a/hw/timer/aspeed_timer.c b/hw/timer/aspeed_timer.c
-> index 149f7cc5a6aa..a116488aa2dd 100644
-> --- a/hw/timer/aspeed_timer.c
-> +++ b/hw/timer/aspeed_timer.c
-> @@ -460,7 +460,7 @@ static const MemoryRegionOps aspeed_timer_ops = {
->       .read = aspeed_timer_read,
->       .write = aspeed_timer_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->       .valid.unaligned = false,
->   };
-> diff --git a/hw/watchdog/wdt_aspeed.c b/hw/watchdog/wdt_aspeed.c
-> index 39c3f362a833..d9fd6fc9079f 100644
-> --- a/hw/watchdog/wdt_aspeed.c
-> +++ b/hw/watchdog/wdt_aspeed.c
-> @@ -229,7 +229,7 @@ static const MemoryRegionOps aspeed_wdt_ops = {
->       .read = aspeed_wdt_read,
->       .write = aspeed_wdt_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> -    .valid.min_access_size = 4,
-> +    .valid.min_access_size = 1,
->       .valid.max_access_size = 4,
->       .valid.unaligned = false,
->   };
+>
+> --
+> Cheers,
+>
+> David / dhildenb
+>
 
 
