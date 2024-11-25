@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2399DD59D72
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 21:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE8D6D59D72
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 21:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFgY4-0005EZ-Nr; Mon, 25 Nov 2024 16:23:12 -0500
+	id 1tFgZ2-0006Fa-3t; Mon, 25 Nov 2024 16:24:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFgY0-0005Cq-Iq
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 16:23:08 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFgYy-00067W-LX
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 16:24:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFgXy-0001Ew-5Y
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 16:23:07 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFgYw-0001KU-Qq
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 16:24:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732569785;
+ s=mimecast20190719; t=1732569845;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nYEm2RS0ZdPoce+9zYia6MkhA7x3IFwCIT7jee4PpQ8=;
- b=hTarZWUy2Y4sH68UO7wCFHK3CC8yzXBt5iCRwysrxqvC0sg2y7+c/B6yfGebUXp4n60eXx
- p70ZGv1DWCvdlHLo6oZ/jTJY+LuA32pv3Uw/M8ZfnRgi2a4AgSOkOuFMMcYYB5j/Z5LSKk
- QtKkUGSKrnbb/YJa6wD9U8aYQDXbiOo=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DiiNhnmCqRXILNTTZhFH17rdtH6YHk+47ieUdFgN2Ic=;
+ b=f7VSJfqJBukJKA8Qbh2a2w+kYIJ6qIk1HpEvDtzRVqMUrSgjKXgPIzSup05+RoFtw6zQZE
+ YHWEgaoSXrQu8uOL+O06CZZxZlPpuWcCC/+p6b8gJ7lFqHDDn6qcbGUOonWLtTh/U/9SoK
+ 20BW75d6s/sxlK+XK8JmhFAeZxGOEmM=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-189-UimHkIpRPbCatpeoJDGlRA-1; Mon, 25 Nov 2024 16:23:03 -0500
-X-MC-Unique: UimHkIpRPbCatpeoJDGlRA-1
-X-Mimecast-MFC-AGG-ID: UimHkIpRPbCatpeoJDGlRA
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-83aed4f24a9so536067239f.0
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 13:23:03 -0800 (PST)
+ us-mta-267-5j7WKpG6PUy6JCwx3MLHjQ-1; Mon, 25 Nov 2024 16:24:03 -0500
+X-MC-Unique: 5j7WKpG6PUy6JCwx3MLHjQ-1
+X-Mimecast-MFC-AGG-ID: 5j7WKpG6PUy6JCwx3MLHjQ
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-841963a1fb4so161337439f.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 13:24:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732569782; x=1733174582;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nYEm2RS0ZdPoce+9zYia6MkhA7x3IFwCIT7jee4PpQ8=;
- b=SD+4mF0j82D4i1a1dwvLgDjSyLB32WYbeAenWpupdDnsyaFEyrznnerXjuNO43RASy
- MQ7Lh6lptsy6fbA60SiRx5WF7kkmJYZELcJnH3+tufnzK6M98GpZbrck97YtIAJNRbXN
- VFD2axoeYzKwmG9+Ki949yqVqp0Oip6Bu8P5gHz/tN5M1x2JGtrdzeuqjgCPwApOA9DU
- oAWaweZLCbgMYQ34Ane4ZGRoLmvCIgB0ra3Rn+xelpW11hvhB+pozp5MQC186WqK8gkF
- //vBd7ccpGTJLv877tW5fIpOX/iy/6UvIsmboXxKVopJNYiuS5SsNnw0hVoqJzmAmo0w
- f5+g==
-X-Gm-Message-State: AOJu0Yw+jBiiOXCzdpcUjw/x0vxfIkCLVNmjGnRGyHTOSakxLnS4e8qO
- +r7w7c776H2wSB8xK/n10rnYUWMBnGAwPOMoRXIkWZyeu1j8hHIz+zJiauGUQtflQJKxahtBTBS
- 8VW8lyOiA2s9o9jyB917dFTPOiaIdLfk3HVkz3w/B6sjn0WrPRLRMq8QJK7SUyOSr20PdZ1sqW4
- 9JzPEogaG1y9S8I8kadVTTXKeWerKt0gBjug==
-X-Gm-Gg: ASbGncvqdbI69tEonRZoER5fPCaFDm1dfXVbO3jI+fEfmn2WJoYidhUceNFb+KyDfM4
- 31v1cTNxRhGsrfnt9+zaqzJc4zHUSwpkrptmBus4nqNREz+pTH4Z8DFq92myNY8+9hmEpGUY1aP
- 2DJBx/0fj0s3EqGmzSjd9OkK3yrFiDMiBcd69zeAxVk6gt4mDaoPSk8uyLz2BforNT7zyRmMmpC
- fw3oeIK+irvLecMXgX1fyYeSVvGY+SWiXzUb8PBWlVC1ZZgxViGwudY+BSnrKiDvg0hL/SWgZkB
- t8urUXsh7uNUYARcngjjWALgQQ==
-X-Received: by 2002:a05:6e02:190a:b0:3a7:93af:ef55 with SMTP id
- e9e14a558f8ab-3a79ae9d90fmr163556505ab.12.1732569782250; 
- Mon, 25 Nov 2024 13:23:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFgxBz6BuTxRidWxxJIf/tKEF6QwyeLUUatw5X4RQ1J+GuEJjqnqJFN9xBEjBD5kyDjGbTLQA==
-X-Received: by 2002:a05:6e02:190a:b0:3a7:93af:ef55 with SMTP id
- e9e14a558f8ab-3a79ae9d90fmr163556275ab.12.1732569781877; 
- Mon, 25 Nov 2024 13:23:01 -0800 (PST)
-Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ d=1e100.net; s=20230601; t=1732569843; x=1733174643;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DiiNhnmCqRXILNTTZhFH17rdtH6YHk+47ieUdFgN2Ic=;
+ b=rzEDIjwMn7jNU4L1gbRWG5fgMpQhAuGyUGhlI9SMC2IFLyqXo881+kl+TqJShKdTMf
+ IE9EAmFWgqt2HfiimAhxx89u4ZdBSSUNYRPCXHruTzxIFjFLS69+9Dfc8wWeMRekjW0o
+ 5gNAWqgmlpWO91eUvfIuh294yrKq/FReiHTMivj6W8WW4Ox6I2fydUWCN2gZbiSqdxbR
+ YYugmoud8ulMrAnfB3KvKcsHvvFiUK+ULnJlzyES9CYJ1bWFr0ZIqcaJHahyRqRHAYBD
+ QxDxkPUO0XfLYqOc3IzZ7gx0j6xkpAhVsb4diq5FznAG12LeZcBeWbjIn34FcbQB+hQx
+ mHbA==
+X-Gm-Message-State: AOJu0Yz0SSiaitM5FP+pH9b/FIC0wPmc23RKGbq5I9yn2p7L9wp22mZB
+ n0R3zfH12B33fABGQNfYSsNWj/ng7N2Yy20QEUWyvCSfKTtubDxx+CxjEPcrFfXNaGSpek727cX
+ tvrwbNvSFmAQFQrYkL88je9vzfZovFSvtgDOQ9on2P763ByUkc4yj
+X-Gm-Gg: ASbGncuRjYs8jB8rmq8ekh2wda/NLnk8WpfY52a3xTWiv2zmqTel8ggIFmUH+FTFNLP
+ QXyWKYSBQlPSADuzM9soldYie/7A86Ov+ZB98cXoZj/mB4qcwVjLdTrDpgMIqDQYOLEtYpNr/0U
+ EUmE0ilAsESerVi/WvB3nfDL5yPpl+qdjYraopFvKA4rf6vPtbz131u3KVW9QQo7okv5I2srxOC
+ VD+QQLxFL69ArKWaZ8+j3DPWgTPtoQ74PHwePIoIlFLTQhigU3oHhvVlxTMZylMo+WOUXtdyomn
+ VFCzKhpp/0w=
+X-Received: by 2002:a05:6602:29d4:b0:83a:a746:68a6 with SMTP id
+ ca18e2360f4ac-83ecdc611d1mr1739093439f.5.1732569842873; 
+ Mon, 25 Nov 2024 13:24:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF5uObW3sl65PYqEe9FKQa5yDLvhmYU0CmH2ipOooC5jPVKKCU1QvTJ/EopesFCnvMKxarMrw==
+X-Received: by 2002:a05:6602:29d4:b0:83a:a746:68a6 with SMTP id
+ ca18e2360f4ac-83ecdc611d1mr1739091839f.5.1732569842611; 
+ Mon, 25 Nov 2024 13:24:02 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3a79acb7b6fsm18989815ab.67.2024.11.25.13.23.00
+ 8926c6da1cb9f-4e1cfe5060bsm2368959173.65.2024.11.25.13.24.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 13:23:01 -0800 (PST)
+ Mon, 25 Nov 2024 13:24:02 -0800 (PST)
+Date: Mon, 25 Nov 2024 16:23:59 -0500
 From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
- peterx@redhat.com
-Subject: [PULL 2/2] migration: Fix extra cleanup at postcopy listen
-Date: Mon, 25 Nov 2024 16:22:56 -0500
-Message-ID: <20241125212256.62608-3-peterx@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241125212256.62608-1-peterx@redhat.com>
-References: <20241125212256.62608-1-peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 00/22] tests/qtest: migration-test refactoring
+Message-ID: <Z0Tq723fXUn81KoC@x1n>
+References: <20241113194630.3385-1-farosas@suse.de> <Z0TlE9PNsTR5CWKO@x1n>
+ <874j3vnhbc.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <874j3vnhbc.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
@@ -107,32 +107,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+On Mon, Nov 25, 2024 at 06:18:15PM -0300, Fabiano Rosas wrote:
+> > One thing we could do (but you can decide which you prefer..) is you can
+> > respin with the initial 18 patches, then we may get it in in the 1st 10.0
+> > pull.  It may conflict with some other series for sure, but it's
+> > unavoidable with such changes one way or another..
+> 
+> I can put them on top of migration-next, sure. As I said previously,
+> just point me at any conflicting series and I can provide a rebase.
 
-After fixing the loadvm cleanup race the qemu_loadvm_state_cleanup()
-is now being called twice in the postcopy listen thread.
+I didn't queue anything yet for -next.  So far this series looks like the
+closest to be queued first there.  So I suppose if you repost you can base
+onto the master branch.
 
-Fixes: 4ce5622908 ("migration/multifd: Fix rb->receivedmap cleanup race")
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20241125191128.9120-1-farosas@suse.de
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/savevm.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/migration/savevm.c b/migration/savevm.c
-index f4e4876f72..98821c8120 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2057,7 +2057,6 @@ static void *postcopy_ram_listen_thread(void *opaque)
-      * got a bad migration state).
-      */
-     migration_incoming_state_destroy();
--    qemu_loadvm_state_cleanup();
- 
-     rcu_unregister_thread();
-     mis->have_listen_thread = false;
 -- 
-2.47.0
+Peter Xu
 
 
