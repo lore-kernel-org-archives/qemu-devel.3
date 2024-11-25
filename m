@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0744D3B7E1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA7BD3B7E0
 	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 07:00:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFT4k-0007CP-CT; Mon, 25 Nov 2024 02:00:02 -0500
+	id 1tFT58-0007O5-Md; Mon, 25 Nov 2024 02:00:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tFT4h-0007B7-Gi
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 01:59:59 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tFT4f-0006L3-Od
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 01:59:59 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7250c199602so571905b3a.1
- for <qemu-devel@nongnu.org>; Sun, 24 Nov 2024 22:59:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732517995; x=1733122795; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Bn7NxH5CTNFEKOKyiJSwD1xFNrPz8+UgiToRUfTH7Yo=;
- b=IDHYsFWurliSUV9uBi3uYKOF/rMcQqABxK6qAJko7VHCTQ8SNCG4abxlT+8ZKRM86C
- 9iH6vv4j1MuWRrFokOx4GdGIXepN071Zn/f+atz404B61lwQZyq4E6OORoDNMLkm4899
- ORfciBXPRVSiU+T5j+AaQnI0GpUdtNSKIxCOARWyw7IjXo1YDxI1/+rglwPYsZyDjJ6K
- E4MTnaSHT3CY2trBCboTlsl9Sj0SpvhETfHdVWa+lxhPdDRfaMdhayn5tFGw5jtMgOmr
- dcuWP0c0hVOV7T+12Hdh2EEjt2Ro0nDQnIibdAs7dXdoqJIzYtiXoib1o0rnfpovXSlm
- Cocw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tFT51-0007MT-LE
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 02:00:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tFT4y-0006Yz-Ef
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 02:00:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732518012;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=07HcakVChWGda56kqCXSe9WUPbcKa0aStTsqSjw/Cgs=;
+ b=Soj2D/aj6z8mfQK2aemO/98TJG05z9jqPL1enQa8+4+3jiMmKT+Ake8d1eZHs5YMFxMORB
+ c4QWN0h52xUt4VvXmMmfZJ0sXdvxblhNaUEmp+T34vW1f9NNio8sIh2o8D6ZQqp+xvvT4i
+ j5xHIYUkYhlFaQpSWdwhqBaRuVIM79U=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-3-TzN256LMOTuFlm2zHaoV9A-1; Mon, 25 Nov 2024 02:00:11 -0500
+X-MC-Unique: TzN256LMOTuFlm2zHaoV9A-1
+X-Mimecast-MFC-AGG-ID: TzN256LMOTuFlm2zHaoV9A
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4349cda1899so7895895e9.0
+ for <qemu-devel@nongnu.org>; Sun, 24 Nov 2024 23:00:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732517995; x=1733122795;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Bn7NxH5CTNFEKOKyiJSwD1xFNrPz8+UgiToRUfTH7Yo=;
- b=W07Pm6aBRoIkmSEPjQizsPtZRGlL8NQ7Aqz0k49ky7YJKXfFt7rbcqwEw3L8zN6siG
- 8IBnuqdgNcfmDpkodPjrN4VNqsC80j6rmag3zN835i35PHNNjrH0mGwFER0PTuzo45Cs
- 0Cr0AqPV7KtHTTmjlzb5lnFsPAqtTBRbA/Vx4rFBYIdOS2cQm5uQjMWcn7PYupK/xpEK
- ZSOPKZmQilTCMT8RT9xNGkPStkO9kusYY19Vy6S66oeYGys3oaqNCNMEWgunjVluv5df
- qWQwKSSPhArlys6szbc3junF90yLzXR/hbP0HAjem8Tl38twb22wY+0Q35gxXpxYiwkR
- Bm+A==
-X-Gm-Message-State: AOJu0YzPalDaK/wlIYEic4wCVTaecuggMZNg8jENhM4lIP8n68ZR0fLw
- qdFSXIXIfIhgUfZh5Md6v2C6UPv5t8nFtjeixXvXFg44uroUryFYvZdKlIqmSlBAGMT8/vBkNp7
- qho4=
-X-Gm-Gg: ASbGncsOLLZAC7PjBByYG2S85zPQnwd6cu9awGc1s+TqbKuwv+cX20Q4qwyLwc4gfGJ
- elHdfrEBGiiUNGlR0/zi5Tl3abwWEdfe9opTCryp9MF5vAekmWo06ZfvMBKAAAH6sm/3nfIdol6
- 7yVBzpTBPVCd0SIsN7H2R4ae7LsMNAHwmg63jCg3cEO87TtQDyTKe5Y42YMgfVbxkT6Hv3KkWC2
- wpApLf7WWQOoLluiNaOgA/hpJAhpQaX0YG7kSRiSVyxREIwDOfiKBu1MwZsYCYAxxgxsaxsYLd4
- Fl2OcvmojQ7SnA==
-X-Google-Smtp-Source: AGHT+IF0TS2PAUId3MwBi1Bm2sxNWzHRCH4G4icKj4IY/3Rb0bGno90jHLOsM92e4UABeYAjY7LBlg==
-X-Received: by 2002:a05:6a00:1d91:b0:724:f10b:e663 with SMTP id
- d2e1a72fcca58-724f10bfd03mr9903358b3a.0.1732517995217; 
- Sun, 24 Nov 2024 22:59:55 -0800 (PST)
-Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724de454b5asm5866634b3a.27.2024.11.24.22.59.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 Nov 2024 22:59:54 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mathieu.poirier@linaro.org, gustavo.romero@linaro.org,
- alex.bennee@linaro.org, jean-philippe@linaro.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] tests/functional/aarch64_virt: add test for FEAT_RME
-Date: Sun, 24 Nov 2024 22:59:50 -0800
-Message-Id: <20241125065950.1179068-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ d=1e100.net; s=20230601; t=1732518008; x=1733122808;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=07HcakVChWGda56kqCXSe9WUPbcKa0aStTsqSjw/Cgs=;
+ b=cd6h2ldpKUqD89PEi2ktiggYzbpd/MWnXHKiJvsbcjoQgHarDuviOJCitmvb3Sr4bY
+ TJNdqt1EqxmrwodKJNTViPpzFxzVxuE8wef+THgGnQUZZHoozN2bReiz7IViPLLvunrH
+ iH9Un1O4MOVMtNbDf/zK1M4ux3re/66igyURE7Vud63tg/C/K9u4YWYWisOtnrJbSyiA
+ jlXPyJbQ4NDU/efD1JelI46jUxEiUg1l4bY4kXFvGu0uLAz+P4wmtex3y5KJhJfNBSIy
+ nxBQmw/EqFDasRE6XZsawI3kQuzfVoN+4q2H78sReDZQcF2EkHRcsejcB5BbHwgDYh2e
+ RrFw==
+X-Gm-Message-State: AOJu0YwQJpI0BDcB3qB9WuNVdmAQtE0P68pUw8PycIYjFbsYix21BcZO
+ 98FB+Ygb3OOcAJd5MRLlVZSkHCgRhl3zGHksjwCFMkiTv+VmOSs72Xt1SxLXZtjnpfBz1m5Bm3P
+ AjyCwGcHVRrxNOjSpaUKb56W2akwrc8AO+g1HjXBemlf77YJ5rCUBlnLYmzHafMnYHPEkMezA/T
+ a2irxGMLtE6imUS9VYeWED/Jzkqpo=
+X-Gm-Gg: ASbGncs3kuwsaIJrFT3HaUSaZ0GGioxcQ/QFTHt87kV/6Bb8cNTSCCaI4RKWPY8/5x5
+ +KylWdXur64RidDFkl0k29aQAcdtoQdBS
+X-Received: by 2002:a05:600c:3150:b0:42f:310f:de9 with SMTP id
+ 5b1f17b1804b1-433ce434707mr111165665e9.15.1732518007972; 
+ Sun, 24 Nov 2024 23:00:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFXys4A+KtxGd4eB8n/G2i2yPyLG2Lce4s4GiM+9D7i9hhdBSJYgvrXkwQDZY7wOxpuuP7HeMxZUPDzuTYhZiI=
+X-Received: by 2002:a05:600c:3150:b0:42f:310f:de9 with SMTP id
+ 5b1f17b1804b1-433ce434707mr111165355e9.15.1732518007628; Sun, 24 Nov 2024
+ 23:00:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org>
+ <b045c676-4722-4fb9-a800-27c92d832347@redhat.com>
+ <c8ec9243-f489-4b91-946e-2c6ff7e36f71@linaro.org>
+In-Reply-To: <c8ec9243-f489-4b91-946e-2c6ff7e36f71@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 25 Nov 2024 08:00:00 +0100
+Message-ID: <CABgObfbpEEHbLYNNXoNUwD0VNPiNAYB-9REqgEFhRz3QQKTZYw@mail.gmail.com>
+Subject: Re: Supporting clang on windows
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,95 +107,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This boot an OP-TEE environment, and launch a nested guest VM inside it
-using the Realms feature.
+On Sun, Nov 24, 2024 at 9:23=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+> > This one unfortunately shows why the global change is wrong.  The size
+> > of _GIOChannel must match between glib and QEMU, otherwise you have an
+> > ABI mismatch.
+>
+> In the codebase, we always use this type as an opaque type (through
+> pointer, using library functions to interact with it and never use it's
+> size). So the fact we see a different layout is *not* an issue for QEMU.
+> I don't see it as a counter example that this does not work.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- tests/functional/test_aarch64_virt.py | 62 +++++++++++++++++++++++++++
- 1 file changed, 62 insertions(+)
+_GIOChannel is just an example, and in principle macros could be
+relying on the layout of GIOChannel. My point is that compiling a
+program with a different ABI than the rest of the system is a ticking
+time bomb, and therefore compiling QEMU with -mno-ms-bitfields is not
+a solution.
 
-diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
-index 30bab5a677c..3e8f9372132 100755
---- a/tests/functional/test_aarch64_virt.py
-+++ b/tests/functional/test_aarch64_virt.py
-@@ -18,6 +18,7 @@
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import exec_command, wait_for_console_pattern
- from qemu_test import get_qemu_img, run_cmd
-+from qemu_test.utils import archive_extract
- 
- 
- class Aarch64VirtMachine(QemuSystemTest):
-@@ -129,6 +130,67 @@ def test_aarch64_virt_gicv2(self):
-         return
-         self.common_aarch64_virt("virt,gic-version=2")
- 
-+    # Stack is built with OP-TEE build environment from those instructions:
-+    # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
-+    # https://github.com/pbo-linaro/qemu-rme-stack
-+    ASSET_RME_STACK = Asset(
-+        ('https://fileserver.linaro.org/s/JX7oNgfDeGXSxcY/'
-+         'download/rme-stack-op-tee-4.2.0.tar.gz'),
-+         '1f240f55e8a7a66489c2b7db5d40391e5dcfdd54c82600bd0d4b2145b9a0fbfb')
-+
-+    # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
-+    # and launching a nested VM using it.
-+    def test_aarch64_virt_rme(self):
-+        stack_path_tar_gz = self.ASSET_RME_STACK.fetch()
-+        archive_extract(stack_path_tar_gz, self.workdir)
-+
-+        self.set_machine('virt')
-+        self.vm.set_console()
-+        self.require_accelerator('tcg')
-+
-+        rme_stack = os.path.join(self.workdir, 'rme-stack')
-+        kernel = os.path.join(rme_stack, 'out', 'bin', 'Image')
-+        bios = os.path.join(rme_stack, 'out', 'bin', 'flash.bin')
-+        drive = os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ext4')
-+
-+        self.vm.add_args('-accel', 'tcg')
-+        self.vm.add_args('-cpu', 'max,x-rme=on')
-+        self.vm.add_args('-m', '2048')
-+        self.vm.add_args('-M', 'virt,acpi=off,'
-+                         'virtualization=on,'
-+                         'secure=on,'
-+                         'gic-version=3')
-+        self.vm.add_args('-bios', bios)
-+        self.vm.add_args('-kernel', kernel)
-+        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
-+        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
-+        self.vm.add_args('-device', 'virtio-9p-device,fsdev=shr0,mount_tag=shr0')
-+        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
-+        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
-+        self.vm.add_args('-netdev', 'user,id=net0')
-+        self.vm.add_args('-append', 'root=/dev/vda')
-+
-+        self.vm.launch()
-+        self.wait_for_console_pattern('Welcome to Buildroot')
-+        time.sleep(0.1)
-+        exec_command(self, 'root')
-+        time.sleep(0.1)
-+
-+        # We now boot the (nested) guest VM
-+        exec_command(self,
-+                     'qemu-system-aarch64 -M virt,gic-version=3 '
-+                     '-cpu host -enable-kvm -m 512M '
-+                     '-M confidential-guest-support=rme0 '
-+                     '-object rme-guest,id=rme0,measurement-algo=sha512 '
-+                     '-device virtio-net-pci,netdev=net0,romfile= '
-+                     '-netdev user,id=net0 '
-+                     '-kernel /mnt/out/bin/Image '
-+                     '-initrd /mnt/out-br/images/rootfs.cpio '
-+                     '-serial stdio')
-+        # Detect Realm activation during boot.
-+        self.wait_for_console_pattern('SMC_RMI_REALM_ACTIVATE')
-+        # Wait for boot to complete.
-+        self.wait_for_console_pattern('Welcome to Buildroot')
- 
- if __name__ == '__main__':
-     QemuSystemTest.main()
--- 
-2.39.5
+This is also explained at
+https://github.com/GNOME/glib/blob/main/docs/win32-build.md: "You
+should link to GLib using the -mms-bitfields GCC flag. This flag means
+that the struct layout rules are identical to those used by MSVC. This
+is essential if the same DLLs are to be usable both from gcc- and
+MSVC-compiled code".
+
+> -mms-bitfields is already the (silent) gcc default on windows, to mimic
+> MSVC behaviour. Yes, it would be preferable to use this default and
+> gcc_struct attribute, but right now, it does not work with clang. So the
+> whole point is to accept a compromise for this.
+> I don't understand the strong pushback against clang support on windows.
+> Because of a "theoretical" problem, that was proved here we don't have
+> currently, we are stuck with gcc_struct attribute.
+
+I think you are unnecessarily pessimistic:
+
+* there is no need for a compromise, eliminating gcc_struct is the
+best solution but it needs proof that it introduces no guest-visible
+changes
+
+* there is no pushback against clang support, there is pushback
+against asking for a change without understanding the problem
+
+On the other hand, the problem is very real even though we might not
+have it *now*; it's not hard to find out when and why the option was
+introduced. If you do "git log -Sgcc_struct", and then Google for the
+commit subject "Add new macro QEMU_PACKED for packed C structures",
+you'll quickly find one of these two links:
+
+https://patchwork.ozlabs.org/project/qemu-devel/patch/1314564200-6872-2-git=
+-send-email-weil@mail.berlios.de/
+https://lists.gnu.org/archive/html/qemu-devel/2011-08/msg01877.html
+
+As an aside, at https://github.com/msys2/MINGW-packages/pull/21540 you
+said "I think too it's more a FUD argument than a real problem", which
+is a bit too dismissive. If anything it's a case of "once bitten,
+twice shy".
+
+Anyway, the problem is *not* that QEMU uses gcc_struct. Rather, the
+rare but real problem is that there is, in some cases involving
+bitfields, incompatible struct layout between Linux and Windows
+compilers.
+
+gcc_struct is *one* solution to that problem, and the one that QEMU is
+currently using. It has the advantage that it cannot go wrong, and the
+disadvantage that clang doesn't support it. Note that it's perfectly
+possible that there are no such cases in QEMU, i.e. that the attribute
+has no effect now. But it's been there for 13 years and it was
+introduced because of a bug whose cause was MSVC bitfield layout.
+People *should* be wary of removing it.
+
+clang's lack of support for gcc_struct is stupid, but we have to work
+around it and we can, without introducing potential ABI breaks. Just
+verify that gcc_struct still has any effect. Initially I mentioned
+checking sizeof() but actually it's possible to do the same using
+debug info, similar to your scripts.
+
+For example, I tried doing another kind of analysis based on
+llvm-dwarfdump. This will give the list of source files with bitfields
+in them:
+
+find . -name "*.c.o" | xargs llvm-dwarfdump|\
+  grep -we DW_AT_data_bit_offset -e DW_AT_bit_size -e DW_AT_decl_file|\
+  grep -B1 _bit_ | grep decl_file | sort -u
+
+Restricting the list of files further to those that have QEMU_PACKED
+in them, the list becomes just:
+
+hw/nvme/ctrl.c
+hw/pci/pcie_doe.c
+net/util.h
+include/hw/cxl/cxl_device.h
+include/hw/hyperv/dynmem-proto.h
+include/hw/i386/intel_iommu.h
+include/hw/i386/x86-iommu.h
+include/net/eth.h
+
+Looking at these eight files, in some of them the bitfields are
+defined via registers.h. In others the bitfields:
+- have the same type within a word
+- don't span multiple words
+- use the smallest integer type that fits them (e.g. uint8_t in net/util.h)
+- always have a nonzero width
+
+So it *should* be fine to remove gcc_struct from QEMU even without
+-mms-bitfields. But we need to be *sure* that it is, hence the next
+part of the email...
+
+> > However, your script lets you do the opposite experiment: remove
+> > gcc_struct QEMU_PACKED and check if anything changes, i.e. whether ther=
+e
+> > are any QEMU_PACKED structs that do rely on the gcc_struct attribute.
+> > If there are any, then it should be possible to change the definition
+> > and fix them.
+>
+> It does not only remove gcc_struct attribute, it replaces it with an
+> option that does the same thing globally for all packed structs.
+
+I understand that, and I'm asking you to do another experiment. Do not
+change the compile-time options. Instead, change QEMU_PACKED to just
+
+#define QEMU_PACKED __attribute__((packed))
+
+and see if any struct definitions (which will all follow the ms_struct
+rules) change. If there are changes, let's examine what they are and
+why my analysis above was incorrect. Fix those cases, add
+QEMU_BUILD_BUG_ON checks only to the affected structs, and once you've
+addressed any differences (if they exist), you can proceed with
+dropping gcc_struct since there will be concrete evidence proving it's
+safe.
+
+Paolo
 
 
