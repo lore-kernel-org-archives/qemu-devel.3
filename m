@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB7ADD58D5E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B32CD58D5A
 	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 15:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFau1-00045N-B9; Mon, 25 Nov 2024 10:21:29 -0500
+	id 1tFatw-000432-0E; Mon, 25 Nov 2024 10:21:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFatv-000430-Qq
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:21:23 -0500
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ id 1tFatr-0003zb-Du
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:21:19 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFatq-0001nM-T4
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:21:23 -0500
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-539eb97f26aso5064039e87.2
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 07:21:18 -0800 (PST)
+ id 1tFatp-0001mz-NK
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:21:19 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3822ba3cdbcso2844996f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 07:21:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732548077; x=1733152877; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732548076; x=1733152876; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f/9NmZeUsPKrEXQM/VYYoqE8OEZ3mgV8GxzNtjGupA8=;
- b=eMFpTKkghoEv/F514X7XKCb0t//39jUVOe1J8Rd+qyOHRDE+YSVnR2GsKNFjSKUQVh
- qn5sdRNY2nsgYrCTbtkT5IwqO1Bjx8JXeHvqi0pHYPee2E/cQY1eblfm9Uwa6zkM94C2
- PKExTK/HT+IYQL+I5ahDtbJYTpp00OWwU41WTcoXm5rMajyWkA+QRZjBnIy4vkXlPZl4
- GoFPpDC2uEGG//85UjCaPsXQLN2JwdySofeFlBZZYEoEdGaPjjLrN1+237C/UIovXmoB
- 0+vn5HMxGUC+LoLnzFq5oR1ylJyCv9LNeRBeSCNFmiBLZKh+kL/IDEe/U+F2ysZCN9D+
- Nwuw==
+ bh=xTSgqyxDsK0Oo0m3pWRtTEQfgAp9aCc6vBTDVarFPdg=;
+ b=ZbDwWsNvDXx/EO+4d/LZVF2EMpBUvtVfX5k/1/k8jLpXfqOwatKjd81WBGAAkl4RDR
+ LruPgLbtpkHCHdA3bLo8VMZOgOEHd14dtAI6qgm2ad8+7GXcqf8lj+SEzdPBDfRFwR74
+ Vjoz2PiiufDNnULcqAaD2n3PPnreSy3jHu3Rwu8C6jPxuIq7QR7WBDmjKaW03YFZisXV
+ 8E3mNdVRKWcnzehwgKyVM7c6cDIVv3pWKfS5kZvl9nJwYVTFKkrN5xO93ZcxB1iiqJEs
+ r85O+KFK2lpwT4HzO2/swuw9ahV+XzXSiRze2RaAu4+pgHeFG7nRU5fLNdko0Z5VqKAo
+ gbSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732548077; x=1733152877;
+ d=1e100.net; s=20230601; t=1732548076; x=1733152876;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=f/9NmZeUsPKrEXQM/VYYoqE8OEZ3mgV8GxzNtjGupA8=;
- b=wOvAw07bPh5GHAR5cWLVylaJp5jUScjSSafjYoUezdHJ2z2jeQ7TKa/87xm0xSEHmn
- uddpHBpwjd+tmAbv2hq/AMj1hNeYcqCOWZp81Okf/KusP0rsaKFOLv9Wa+G6f4poDEGA
- lLNTHAoc9qAQ8bH/xYaEUTsp4dSP/Bq+ytnS2cnVNpR4INMg7FMO1bp1cOcX3oR+B26B
- 7RdA+tCbWsX6/hCZRhCUELYjXgHWQQlfTkKQ6UlLylYhg7hsGXdYxtjLuu915Qr42Opm
- GlLyOBvl4RlBpKDXSRWUgAldv+nrjFLbs3YwwcbRQUT9bFGMkVNYDpfy8K66b21UcyDD
- acig==
-X-Gm-Message-State: AOJu0YxJsM+UOzWWdmDEwVIogGTNif/DNuNHixFUZ4J8m15i9o2FvB1/
- L8IjL7OKbKn6Hcv+yyJ5DsifQVngtTPEEzSPo8gv0fjfUpHWZB3HuBT5/Hbm6pM=
-X-Gm-Gg: ASbGncvlzkGA2kZ6D0iT7NuGrbmRnMheg5RkW1jXkRibF6be+rbN8jDKmSwyGckc//t
- 5UI36vB6BJtz1ZpRDTGFKj/BVUpJFLXJCBgByM4y9RTcoe8TeAXXgEnmpKwEgK1TzXlDsZmO/Xg
- tjLE3qbxgp/RiQF+D4bsYi0FjyfRp+86WXo6ttM5vBMnjDrWbcG4aKDayhcceaTZZoak3UALGAb
- OQOgCHJnDB+QVIKnrhMMQIOOWcTjNIbKAnqTboSgi7q9SuZ
-X-Google-Smtp-Source: AGHT+IFGIPnDG14AlwKZkeVefHwuHxMCWxaAf1S8VdvJWt7eQ0/ZIjrVfSIKGexiNJ7cWPeWSxkG3g==
-X-Received: by 2002:a05:6512:1303:b0:53d:ab0d:b9f9 with SMTP id
- 2adb3069b0e04-53dd36aa6a1mr5702270e87.23.1732548075950; 
- Mon, 25 Nov 2024 07:21:15 -0800 (PST)
+ bh=xTSgqyxDsK0Oo0m3pWRtTEQfgAp9aCc6vBTDVarFPdg=;
+ b=Fl1iKz2rCBXSgdmvOs7x8pUOuXGyMlVYfCPx1La3T3uCT460VDMqaJr0eJCtb6TPAc
+ pIltzfbAQUh+/utrqRsrXCdK12gyD7fcI5dbETyun6PJU6G1PRQgqSiZEa61+LpE9pDI
+ tE0SlNebm2+8AzN6yVCFxOxzuytcRkj/s70ODOzlVnglD6ICysucrwF3C3VAwdBOMz25
+ HQVkQno4VJwEptw63VzFLjFLuFf5IZ13FmdnxvJIuXkQnp4WxtTJDkGo9m2FvStpoHjl
+ Mn0lKIR7Z1gwUC/U0HefZmiMZVJnEkNPCWajAS2PRLoo+dydkvZL3sHsbuenmVPL8Fd6
+ MPCQ==
+X-Gm-Message-State: AOJu0YydMfUXQhuoTU3XOzNQMpm9emZJ/y11etpe+O3BALYYYHqHsAVq
+ yTkZkzpSYlYC2CrvkSg8LvLRrsRMp/UsEGy/779XpB1Xab5sN5YjIO/IJmH6deM=
+X-Gm-Gg: ASbGncvTmYxqJMp3uaa0QLgOiCrIdXXBttA90bDhiMiLEHOWyROTTONbYRaIsttbQml
+ 96fpJdAr/Qc7x46ySAUiVxkLXcoyQXcnXXb+J0Drszzz/Sdk++2FDdT0MC+K5g0W1yUjpSxE3U7
+ y3DdeaA/0thqr0hnHghs5fo/s3cNjMmnDUwKQLPvRhtfASdWiNmcA10/hoQ6o3TKHwSxRDKO5P2
+ lTxi2spIr1sdL5fFyzuZT/8JxmMcCbkUEFmpAXz6SrDxZvL
+X-Google-Smtp-Source: AGHT+IEG0zIqaOlFy68rp/k6386Hc7lJsMMHijoofJHfFGo5MCvZvb7KVO6F176TIf37mrTGvKIq4Q==
+X-Received: by 2002:a05:6000:4910:b0:382:50a7:beef with SMTP id
+ ffacd0b85a97d-38260b6cc86mr11938162f8f.24.1732548076243; 
+ Mon, 25 Nov 2024 07:21:16 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4349b70aa23sm72514665e9.14.2024.11.25.07.21.09
+ 5b1f17b1804b1-4349e47f3d1sm51561925e9.17.2024.11.25.07.21.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 25 Nov 2024 07:21:13 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 00AD260B7D;
+ by draig.lan (Postfix) with ESMTP id 17D2560B84;
  Mon, 25 Nov 2024 15:21:07 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 13/28] tests/functional: don't try to wait for the empty string
-Date: Mon, 25 Nov 2024 15:20:50 +0000
-Message-Id: <20241125152105.2100395-14-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 14/28] tests/functional: require non-NULL success_message for
+ console wait
+Date: Mon, 25 Nov 2024 15:20:51 +0000
+Message-Id: <20241125152105.2100395-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241125152105.2100395-1-alex.bennee@linaro.org>
 References: <20241125152105.2100395-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,32 +106,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-Telling exec_command_wand_wait_for_pattern to wait for the empty
-string does not make any conceptual sense, as a check for empty
-string will always succeed. It makes even less sense when followed
-by a call to wait_for_console_pattern() with a real match.
+When waiting for expected output, the 'success_message' is a mandatory
+parameter, with 'failure_message' defaulting to None.
+
+The code has logic which indicates it was trying to cope with
+'success_message' being None and 'failure_message' being non-None but
+it does not appear able to actually do anything useful. The check for
+'success_message is None' will break out of the loop before any check
+for 'failure_message' has been performed.
+
+IOW, for practcal purposes 'success_message' must be non-None unless
+'send_string' is set. Assert this expectation and simplify the loop
+logic.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20241121154218.1423005-14-berrange@redhat.com>
+Message-Id: <20241121154218.1423005-15-berrange@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-14-alex.bennee@linaro.org>
+Message-Id: <20241121165806.476008-15-alex.bennee@linaro.org>
 
-diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
-index 441cbdcf2d..d5027487ac 100755
---- a/tests/functional/test_virtio_gpu.py
-+++ b/tests/functional/test_virtio_gpu.py
-@@ -80,9 +80,8 @@ def test_virtio_vga_virgl(self):
+diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+index 98722a9cf6..f6c4e4dda1 100644
+--- a/tests/functional/qemu_test/cmd.py
++++ b/tests/functional/qemu_test/cmd.py
+@@ -81,6 +81,8 @@ def is_readable_executable_file(path):
+ def _console_interaction(test, success_message, failure_message,
+                          send_string, keep_sending=False, vm=None):
+     assert not keep_sending or send_string
++    assert success_message or send_string
++
+     if vm is None:
+         vm = test.vm
+     console = vm.console_file
+@@ -95,7 +97,7 @@ def _console_interaction(test, success_message, failure_message,
+                 send_string = None # send only once
  
-         self.wait_for_console_pattern("as init process")
-         exec_command_and_wait_for_pattern(
--            self, "/usr/sbin/modprobe virtio_gpu", ""
-+            self, "/usr/sbin/modprobe virtio_gpu", "features: +virgl +edid"
-         )
--        self.wait_for_console_pattern("features: +virgl +edid")
+         # Only consume console output if waiting for something
+-        if success_message is None and failure_message is None:
++        if success_message is None:
+             if send_string is None:
+                 break
+             continue
+@@ -107,7 +109,7 @@ def _console_interaction(test, success_message, failure_message,
+         if not msg:
+             continue
+         console_logger.debug(msg)
+-        if success_message is None or success_message in msg:
++        if success_message in msg:
+             break
+         if failure_message and failure_message in msg:
+             console.close()
+@@ -138,6 +140,7 @@ def interrupt_interactive_console_until_pattern(test, success_message,
+     :param interrupt_string: a string to send to the console before trying
+                              to read a new line
+     """
++    assert success_message
+     _console_interaction(test, success_message, failure_message,
+                          interrupt_string, True)
  
-     def test_vhost_user_vga_virgl(self):
-         # FIXME: should check presence of vhost-user-gpu, virgl, memfd etc
+@@ -152,6 +155,7 @@ def wait_for_console_pattern(test, success_message, failure_message=None,
+     :param success_message: if this message appears, test succeeds
+     :param failure_message: if this message appears, test fails
+     """
++    assert success_message
+     _console_interaction(test, success_message, failure_message, None, vm=vm)
+ 
+ def exec_command(test, command):
+@@ -180,6 +184,7 @@ def exec_command_and_wait_for_pattern(test, command,
+     :param success_message: if this message appears, test succeeds
+     :param failure_message: if this message appears, test fails
+     """
++    assert success_message
+     _console_interaction(test, success_message, failure_message, command + '\r')
+ 
+ def get_qemu_img(test):
 -- 
 2.39.5
 
