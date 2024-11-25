@@ -4,94 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E347AD59D62
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB31D59D60
 	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 19:14:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFeWj-0008Lq-7N; Mon, 25 Nov 2024 14:13:41 -0500
+	id 1tFeWn-0008Vy-62; Mon, 25 Nov 2024 14:13:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFeWe-0008FW-Mj
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:13:37 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFeWk-0008RZ-MJ
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:13:42 -0500
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFeWd-0005q3-8D
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:13:36 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFeWj-0005qz-4U
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:13:42 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 1362F21195;
- Mon, 25 Nov 2024 19:13:32 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B0FD321195;
+ Mon, 25 Nov 2024 19:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732562013; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=tm37V9kYWltWA+Ubiv5HZTusyDWMk9wuiERt8EUmPbs=;
- b=WD3WvcE2JzIh0jSeFp/tAH4xaLrQlj+M8sJoCBSiYqciuWqnZ0sCG/0UnuJDsNxM0W2JNS
- RK2LmaUqeYrGwYm2N8v+iEcr6OGQ4dNGvPgZtiM8tPOI0qVMLCyMnq71zWyAJV0EOedq/B
- hHl5gX33hHdZBg9cGbBBwaGoZixZ2xI=
+ t=1732562018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9e5rdNSqr5cb8vPy6i62AsNEpbU7grXRCLFYDKfLK+g=;
+ b=XC1leTugVHOLo12Qh2tzFHKQmGVNwRcrPMuGHxe4PRpamGqsNvL+kZSIUIvJzbSKyOdMma
+ 6Uzg6xpbBMB5LIOR3+pmv6DILRGPAS3IyWVe0GCbHm2vpGtJ9kgAZtk2KbulSB3rAYBdTy
+ UZt2c2O9CTfsQY6Y9LT0kpAC/JFWAR8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732562013;
+ s=susede2_ed25519; t=1732562018;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=tm37V9kYWltWA+Ubiv5HZTusyDWMk9wuiERt8EUmPbs=;
- b=s5LG8rRs7JWibs4MrHBXjOZCZPW7i9/S+Ls2fhYInBYglUmcg741lqcLaUbeIK1V5cPtmM
- 8u0LeUs6TalhwcCw==
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9e5rdNSqr5cb8vPy6i62AsNEpbU7grXRCLFYDKfLK+g=;
+ b=kfWJ8wj7A5+KnZ00S9nerV+DZTCZAoTeAC8FkQE7WM48ASPlDbLjAl9PhlnDIb5WKchOe4
+ B5fMJUU9n/1D8bAA==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ckLvtCak;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CGrQE90V
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XC1leTug;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=kfWJ8wj7
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732562012; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=tm37V9kYWltWA+Ubiv5HZTusyDWMk9wuiERt8EUmPbs=;
- b=ckLvtCak1XuseJ43B+0D0K+6qUuAf1N8F0k62YcYXVvzihK5U86di1+dr4bEcbYCPl6f9f
- w1fPmZe59quyrqPTcPxhooRVXz7giRPTX9PTvBSQb1Fl2ryhyqy8fz4JI6WqfNe8+obH2o
- NcGa4k8EhwDYn3AVRDgC409vdiu3GhQ=
+ t=1732562018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9e5rdNSqr5cb8vPy6i62AsNEpbU7grXRCLFYDKfLK+g=;
+ b=XC1leTugVHOLo12Qh2tzFHKQmGVNwRcrPMuGHxe4PRpamGqsNvL+kZSIUIvJzbSKyOdMma
+ 6Uzg6xpbBMB5LIOR3+pmv6DILRGPAS3IyWVe0GCbHm2vpGtJ9kgAZtk2KbulSB3rAYBdTy
+ UZt2c2O9CTfsQY6Y9LT0kpAC/JFWAR8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732562012;
+ s=susede2_ed25519; t=1732562018;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=tm37V9kYWltWA+Ubiv5HZTusyDWMk9wuiERt8EUmPbs=;
- b=CGrQE90VSXjiL5p7pt4rnME5Tk9HJpIJWK68ksqJ0A4eHp4iCGFjzElYojwuqCCQ2oJGo0
- 3BZmSG/0U5hw4MAw==
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9e5rdNSqr5cb8vPy6i62AsNEpbU7grXRCLFYDKfLK+g=;
+ b=kfWJ8wj7A5+KnZ00S9nerV+DZTCZAoTeAC8FkQE7WM48ASPlDbLjAl9PhlnDIb5WKchOe4
+ B5fMJUU9n/1D8bAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 10736137D4;
- Mon, 25 Nov 2024 19:13:30 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 387DE137D4;
+ Mon, 25 Nov 2024 19:13:38 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iO6OMVrMRGcwJQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 25 Nov 2024 19:13:30 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1AYqAGLMRGdDJQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 25 Nov 2024 19:13:38 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PATCH] migration: Fix extra cleanup at postcopy listen
-Date: Mon, 25 Nov 2024 16:11:28 -0300
-Message-Id: <20241125191128.9120-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Peter Xu
+ <peterx@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
+ Goater <clg@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Avihai
+ Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 02/24] thread-pool: Remove thread_pool_submit() function
+In-Reply-To: <dc48aed87cb7d22d01996d948adf3eef4dd25240.1731773021.git.maciej.szmigiero@oracle.com>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <dc48aed87cb7d22d01996d948adf3eef4dd25240.1731773021.git.maciej.szmigiero@oracle.com>
+Date: Mon, 25 Nov 2024 16:13:35 -0300
+Message-ID: <87r06znn34.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 1362F21195
-X-Spamd-Result: default: False [-2.98 / 50.00]; BAYES_HAM(-2.97)[99.88%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
+Content-Type: text/plain
+X-Rspamd-Queue-Id: B0FD321195
+X-Spamd-Result: default: False [-3.94 / 50.00]; BAYES_HAM(-2.43)[97.38%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
+ MX_GOOD(-0.01)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FROM_EQ_ENVFROM(0.00)[];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[10]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
  DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid]
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
@@ -120,28 +133,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After fixing the loadvm cleanup race the qemu_loadvm_state_cleanup()
-is now being called twice in the postcopy listen thread.
+"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
 
-Fixes: 4ce5622908 ("migration/multifd: Fix rb->receivedmap cleanup race")
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/savevm.c | 1 -
- 1 file changed, 1 deletion(-)
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>
+> This function name conflicts with one used by a future generic thread pool
+> function and it was only used by one test anyway.
+>
+> Update the trace event name in thread_pool_submit_aio() accordingly.
+>
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index f4e4876f72..98821c8120 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2057,7 +2057,6 @@ static void *postcopy_ram_listen_thread(void *opaque)
-      * got a bad migration state).
-      */
-     migration_incoming_state_destroy();
--    qemu_loadvm_state_cleanup();
- 
-     rcu_unregister_thread();
-     mis->have_listen_thread = false;
--- 
-2.35.3
-
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
