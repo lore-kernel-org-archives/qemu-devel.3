@@ -4,83 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04426D3B7F1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 08:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B046D3B7F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 08:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFUaL-00062K-9O; Mon, 25 Nov 2024 03:36:45 -0500
+	id 1tFUjb-0007p2-5N; Mon, 25 Nov 2024 03:46:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1tFUaE-00060w-QA
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:36:38 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1tFUaC-0003Fb-1N
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:36:38 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-724f74d6457so1446559b3a.0
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 00:36:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1732523793; x=1733128593; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=n+lDgGOWJ1iKrYQQwwYtIGQvaSmtx6BX6Lz2oVGpLs0=;
- b=dQ9PkzkaFBTjL2O7kA7vRz5BhkubyxQdyS5WuKVpuDqV9yZZQupbyf+tkpy547yNmq
- xjtUN4EATZwXvhXsPAgTMUDFaHVYD7dU2raOAc+u73pjQV1ZWQdXB8v9cfVhQDo3w47v
- iCm1r3cEEUNLwZxpeVZseW0oUINtrGpy+MX4VZqJCYbgs6Wlx4fmX7rLjABg11xwS+0K
- 8lwJfqL7U+wXi5TOsw7llglZCX7MkB7DYL98i7FbXv67R5NYqPpfbklaH6Fu+bVQXvs7
- KjzHPp5EavfDmj7x7oacI9HNK4XmhfAdQdB3pMmOgAnm34h5eQE+vzGRC4Gc2w72pDQj
- 9B2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732523793; x=1733128593;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n+lDgGOWJ1iKrYQQwwYtIGQvaSmtx6BX6Lz2oVGpLs0=;
- b=Pp/WMTpR8MS1oabptsRKG54CK55h2masFQGj6P80kjCkPDQX3stvvv2Nuiwz+nVyc1
- E5gHB2yLWocTXdEfX5vi68R51CM3U2KQo8DMwS1ZM4ddhMhzpVG8FMgrX1MvSz5G1Ss/
- mQYJvHQW5bQGLI+vd3DDt2WWzv8RQB+Hgyp36CnP3UNF4Yx1ENcPnB3VW33U6llHIwPX
- RsOqYdED9OadoExKugFvNYbztbFJVIsuMtoKzIKBwUqMPEuekSojR5pVCou885QQavG8
- C6aUhlF4GHdrdiuPlriHp2P6CPh9y8B8s8D4HYqo8llaujm3FQXwuh63B/EsRzqnb/N6
- sfsQ==
-X-Gm-Message-State: AOJu0YwOSlrFK561VMg3viZTf7NMD5kZGCeqBay550o924EhzrieQkcR
- rK9orvLytUTg3Q0nWO4ihy/IQHX68p+E48e4Q4UmRKVtbDRFI6fjDODAW6UORv++ZtG91ozNHPs
- S4z/ivq9EW3pHfGSe+8LS1W+GcbLWFR2HLKbRBw==
-X-Gm-Gg: ASbGnctlfHE6N6GjSRRk1nMbXTHOHJ/EweN1UEq2gv1GiI13oTv8YhRXfnoy5BrMwFI
- jC4VbMfZhKDNjZbjliW4vUkVQyZ5qUR4=
-X-Google-Smtp-Source: AGHT+IEbTH+2stgEdh2uUNsGnFD7eRtzdODAPKemm/0x2U9z6wwh9CPTRUIIkIiZCH9AVtysxFKTNe+JaH/1AHAS9/4=
-X-Received: by 2002:a05:6a21:3289:b0:1db:ef78:c60f with SMTP id
- adf61e73a8af0-1e09e57ad1amr14357941637.33.1732523793603; Mon, 25 Nov 2024
- 00:36:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUjV-0007oe-Vc
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:46:14 -0500
+Received: from 8.mo548.mail-out.ovh.net ([46.105.45.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUjR-0005IB-LB
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:46:12 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.108.25.74])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4XxfS63gwPz11N5;
+ Mon, 25 Nov 2024 08:45:58 +0000 (UTC)
+Received: from kaod.org (37.59.142.96) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 25 Nov
+ 2024 09:45:57 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-96R00144160b35-88a5-42e5-b03f-80c14b10ddee,
+ 9B13B6726B83599ED9C5792380F23B2D0625FF83) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Mon, 25 Nov 2024 09:45:54 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>
+Subject: Re: [PATCH 0/6] 9pfs: fix fstat() after unlink() (with a Linux guest)
+Message-ID: <20241125094554.5e1b17ba@bahia>
+In-Reply-To: <cover.1732465720.git.qemu_oss@crudebyte.com>
+References: <cover.1732465720.git.qemu_oss@crudebyte.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20241120074854.1767780-1-fea.wang@sifive.com>
- <20241120074854.1767780-7-fea.wang@sifive.com>
- <CAKmqyKOFp3dXjvX-Q2=a2ny3aDv33B064dFGzxgUB1cD0M5M_g@mail.gmail.com>
-In-Reply-To: <CAKmqyKOFp3dXjvX-Q2=a2ny3aDv33B064dFGzxgUB1cD0M5M_g@mail.gmail.com>
-From: Fea Wang <fea.wang@sifive.com>
-Date: Mon, 25 Nov 2024 16:36:21 +0800
-Message-ID: <CAKhCfsdYrE=AKEGCg7bu2F004e6Y+FcoM-ovCPTkxVzTHB+1Cg@mail.gmail.com>
-Subject: Re: [PATCH v4 6/6] target/riscv: Check svukte is not enabled in RV32
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: multipart/alternative; boundary="0000000000004882eb0627b8a1a9"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=fea.wang@sifive.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.96]
+X-ClientProxiedBy: DAG8EX1.mxp5.local (172.16.2.71) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: f5a9815a-bf58-4067-818a-9a0329f8a8ec
+X-Ovh-Tracer-Id: 4126986110409152989
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdduvdduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpefhffeuvdegkedugeehvedtkeehheevfeefteeuveehfeetgeevtddtgefhfefhffenucffohhmrghinhepghhithhlrggsrdgtohhmpdhgihhthhhusgdrtghomhenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddrleeipdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeefpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrghdpoffvtefjohhsthepmhhoheegkegmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=NsO8LsFnHvGX6BBMMKoGValeVIH2r7vN9LkJTXzg3zY=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1732524358; v=1;
+ b=BDgEmPL8/GZ/K1/Tnn/T2s1TJ6XUawVSJf2P8NYqbRmhq/sRkiBWteAtoASmChNdFEGfjQSI
+ g6HiOj/Od98UnNfin3OHuelsJ4BlPCMba0sbkLLfC0PH0qogvqrsGNbvtMrNrTOj9ynFX0jakMk
+ skdUfVO9r3/uNmrRcv9VH2xEm+vAq+pCgEXLqbRBEq0oHsan8psNJS8NPmBqQ8Z689jWWQ51Gfi
+ 8k9qrIkvq5VXmQMF8grL8vdHf2JezUFKpwXDfNfrgbfNuiiL2zvcWhNTTyQzIA39oJaYMlaK442
+ JFQrdFT7LA8fSwt1B2pnEWepiR02k/RVYVx4FM6dWytPw==
+Received-SPF: pass client-ip=46.105.45.231; envelope-from=groug@kaod.org;
+ helo=8.mo548.mail-out.ovh.net
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,116 +82,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004882eb0627b8a1a9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Sun, 24 Nov 2024 17:28:40 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-OK, thank you.
-I will refine it in the next patches.
+> This fixes an infamous, long standing bug:
+> https://gitlab.com/qemu-project/qemu/-/issues/103
+> 
 
-On Fri, Nov 22, 2024 at 1:00=E2=80=AFPM Alistair Francis <alistair23@gmail.=
-com>
-wrote:
+\o/
 
-> On Wed, Nov 20, 2024 at 5:47=E2=80=AFPM Fea.Wang <fea.wang@sifive.com> wr=
-ote:
-> >
-> > Based on the spec, svukte depends on SV39, so it should not be enabled
-> > in RV32.
->
-> The spec explicitly says it doesn't support RV32.
->
-> >
-> > Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-> > ---
-> >  target/riscv/tcg/tcg-cpu.c | 5 +++++
-> >  1 file changed, 5 insertions(+)
-> >
-> > diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> > index c62c221696..4273f1f472 100644
-> > --- a/target/riscv/tcg/tcg-cpu.c
-> > +++ b/target/riscv/tcg/tcg-cpu.c
-> > @@ -652,6 +652,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU
-> *cpu, Error **errp)
-> >          return;
-> >      }
-> >
-> > +    if (mcc->misa_mxl_max =3D=3D MXL_RV32 && cpu->cfg.ext_svukte) {
-> > +        error_setg(errp, "svukte is not supported by to RV32");
->
-> "svukte is not supported for RV32"
->
-> Alistair
->
-> > +        return;
-> > +    }
-> > +
-> >      /*
-> >       * Disable isa extensions based on priv spec after we
-> >       * validated and set everything we need.
-> > --
-> > 2.34.1
-> >
-> >
->
+It is great if you manage to fix that once and far all !
 
---0000000000004882eb0627b8a1a9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> * Actual fix of this bug is patch 5.
+> 
+> * Patches 1 and 6 add a test case to verify the expected behaviour.
+> 
+> * The other patches (2, 3, 4) are basically just minor cleanup patches more
+>   or less (un)related that I simply did not bother to send separately.
+> 
+> Probably there are still other 9p request types that should be fixed for this
+> use-after-unlink idiom, but this series fixes the mentioned bug report as
+> described by reporter, so fair enough to round this up here for now.
+> 
 
-<div dir=3D"ltr"><br><div>OK, thank you.</div><div>I will refine it in the =
-next patches.</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cl=
-ass=3D"gmail_attr">On Fri, Nov 22, 2024 at 1:00=E2=80=AFPM Alistair Francis=
- &lt;<a href=3D"mailto:alistair23@gmail.com">alistair23@gmail.com</a>&gt; w=
-rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Wed, No=
-v 20, 2024 at 5:47=E2=80=AFPM Fea.Wang &lt;<a href=3D"mailto:fea.wang@sifiv=
-e.com" target=3D"_blank">fea.wang@sifive.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Based on the spec, svukte depends on SV39, so it should not be enabled=
-<br>
-&gt; in RV32.<br>
-<br>
-The spec explicitly says it doesn&#39;t support RV32.<br>
-<br>
-&gt;<br>
-&gt; Signed-off-by: Fea.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com" tar=
-get=3D"_blank">fea.wang@sifive.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 target/riscv/tcg/tcg-cpu.c | 5 +++++<br>
-&gt;=C2=A0 1 file changed, 5 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c<b=
-r>
-&gt; index c62c221696..4273f1f472 100644<br>
-&gt; --- a/target/riscv/tcg/tcg-cpu.c<br>
-&gt; +++ b/target/riscv/tcg/tcg-cpu.c<br>
-&gt; @@ -652,6 +652,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *=
-cpu, Error **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;<br>
-&gt; +=C2=A0 =C2=A0 if (mcc-&gt;misa_mxl_max =3D=3D MXL_RV32 &amp;&amp; cpu=
--&gt;cfg.ext_svukte) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;svukte is not supp=
-orted by to RV32&quot;);<br>
-<br>
-&quot;svukte is not supported for RV32&quot;<br>
-<br>
-Alistair<br>
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* Disable isa extensions based on priv spec =
-after we<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* validated and set everything we need.<br>
-&gt; --<br>
-&gt; 2.34.1<br>
-&gt;<br>
-&gt;<br>
-</blockquote></div>
+When I last worked on that issue I had spotted some other places to fix.
 
---0000000000004882eb0627b8a1a9--
+Maybe you can find some ideas for future work at :
+
+https://github.com/gkurz/qemu/tree/9p-attr-fixes
+
+> Simple test app to verify this behaviour on a Linux guest:
+> 
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <sys/types.h>
+> #include <sys/stat.h>
+> #include <unistd.h>
+> #include <fcntl.h>
+> 
+> int main() {
+>   struct stat st;
+>   int fd = open("doa-file", O_RDWR | O_CREAT | O_EXCL, 0600);
+>   unlink("doa-file");
+>   int res = fstat(fd, &st);
+>   printf("fstat() = %d\n", res);
+>   return res;
+> }
+> 
+> Christian Schoenebeck (6):
+>   tests/9p: add 'use-after-unlink' test
+>   tests/9p: fix Rreaddir response name
+>   tests/9p: add missing Rgetattr response name
+>   9pfs: remove obsolete comment in v9fs_getattr()
+>   9pfs: fix 'Tgetattr' after unlink
+>   tests/9p: also check 'Tgetattr' in 'use-after-unlink' test
+> 
+>  hw/9pfs/9p.c                          | 12 ++++---
+>  tests/qtest/libqos/virtio-9p-client.c |  3 +-
+>  tests/qtest/virtio-9p-test.c          | 46 +++++++++++++++++++++++++++
+>  3 files changed, 55 insertions(+), 6 deletions(-)
+> 
+
+Cheers,
+
+-- 
+Greg
 
