@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF9C5D58D69
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88215D58D69
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:05:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFcTo-0003Wy-Kt; Mon, 25 Nov 2024 12:02:32 -0500
+	id 1tFcWd-0005nh-K4; Mon, 25 Nov 2024 12:05:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFcTm-0003Vm-KP
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:02:30 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1tFcWc-0005nF-BK
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:05:26 -0500
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFcTk-0000rn-SC
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:02:30 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5ceca0ec4e7so5821068a12.0
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:02:28 -0800 (PST)
+ id 1tFcWa-0001Vu-R6
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:05:26 -0500
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2fb388e64b0so51696011fa.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:05:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732554147; x=1733158947; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732554323; x=1733159123; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eqLkZhZ7p76k8PAt3meHFxaU003h0npuWguDuJNfBSw=;
- b=Wr3kYMDauL+UnfOlgLGAB0KKH1OpcqoltxOMgdl1GKXInCGZibZBMOBEKNkp8t7kHh
- HBd8HRsTnLLDBpu5IL5JwxQVV7AQFNsta/aNVThPWSq/alfj4zqSdy++x3iLnFIAaVv/
- ep3BE1X7+Fe5v1YlW4olBL/HBu6dqR1gxnA8dGftiE74gywkwGJLIq+rLCiIAL3+aDXL
- IKrqp42Z3ll+8Un6mu6KsYdKuCYqUGosJkETBl5gs0dT8I16OOgJ4lqcZWswpuQ47nF3
- 6VCa4ECaF6oNeOtNH4Z3YQCCeW439dmVOzweR1X+VN7uNjsLGkSdXXeI/I1HREJD6Z6m
- balQ==
+ bh=7Hmw44pw3/Vp/cuis3JSLF6c/m41LswAYGjx2Tpj8ys=;
+ b=Cwq7P86OWuaCMwRx5WKkwqO2/K49bK2Ba4rCS+vFTl0+1qdpa72VlyquLRb1ITo5SI
+ 0XH+bjK253hgkc9FXEOQUS3BYWLDxJek6KL9lQ2w62Mgz8TzmBUWIKljhuIHtqThJItR
+ cbN4bBuDquR4tHx+GJQ2I7il+ZCjduXWOJ3iT2MH09ewf7IynNn170enPr2e19QAbXGo
+ VVwoTpzqR9ofjh2oFPMTD+fW1uuhtmdDL52TO4KhZaV0AP21PxLD7QoCybUbS4oYYuLD
+ QBbhMD16tOLamPNjwSDAK2SxogzLfDliHAGeHLEZM49Ej7oA/Jp7+mnmc8qJvkjgdu8c
+ LWGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732554147; x=1733158947;
+ d=1e100.net; s=20230601; t=1732554323; x=1733159123;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eqLkZhZ7p76k8PAt3meHFxaU003h0npuWguDuJNfBSw=;
- b=trtGtR5qH4Ws8g0HxgFsSJpxsEuvWIRmLvvRPtyNVdCTOKnnAgztKfBuQNJBFOmEdh
- bVArEYFGEJH/IchQDOIguu+eBID15bBwT026tgHlpWvJ3ccgdE06fs6LOgFUvr3vV5Tr
- sjuBs6ZpxC6GD0nxErgT5HcjreaNjiA5qGc/oOWvd4imUttAf9aZtlNy9U4nWOmMK7Or
- RKKhyb6tsJlbbZk41tShmPy0pGGQspOUl9VLHKK20Kma11hmRCYCHMvX8F+kdMU9IMok
- /X7189thaoaKOyQF6TJPwMm/G2v3aqcJ6pXo+NpGqoosjGQMwOo0pcaupf73tt7we9CU
- SlaA==
-X-Gm-Message-State: AOJu0YxoaNYHH5UEVioJSto4V6EBcxGRIDAO5im5e9PfQ/7IyR45sfjz
- B9WJNJUTF1VAf8JwUWbKlmEJS0ypXt7WE7g+rwOUbWHkj3YpDB5sdBOY2Y0cj0dIiTVnDSWkgdK
- ivhZZDMYDkhh2QuaQ8fuN9sQfeY5yhqznUUupjA==
-X-Gm-Gg: ASbGnctivfaDzndStmHdpUXe1BffRN10yC6NdJNVz5f8q8RJlGdTeX1kk2uoCwvs9Dp
- U5VMjOnpK09dgI9BVwKp/uPiyot5WtkWP
-X-Google-Smtp-Source: AGHT+IGz/86ZqJMIYRap/sJ993dRDzOWvj+mJ7093Ami+8aSJ2bj+9kUBYiZcETg0KqO9rcJbZ9oxnDq8SknuVLC//0=
-X-Received: by 2002:a05:6402:210e:b0:5cf:ba57:b213 with SMTP id
- 4fb4d7f45d1cf-5d0205a805bmr11366382a12.2.1732554146874; Mon, 25 Nov 2024
- 09:02:26 -0800 (PST)
+ bh=7Hmw44pw3/Vp/cuis3JSLF6c/m41LswAYGjx2Tpj8ys=;
+ b=WPFz9+eMKJTCDvxvOwLU8hbnqbRfJ2mfaRTnYfRStQwp5l/ROGQl3f2gPK5/XyrRs3
+ 8Kq1pLAes1PeOOp/h2cDogOoDm4Hld5ZKfea3qOtYPCgK0rqFMb7ltCynbS1ktD8w8e7
+ uPW7grpim24785cB58z4/7iICaMUfInEDMY76DrmrzSapZJ84jo2QuQSxhiSuLf8dLy8
+ XWNUEAOv5IEVaXZLxamD1YjUzebiYu4PrypecWI5GGPrGIFb2T6OzBC4gOBCQ5eZU1gl
+ CC+X833DHr0SAfzt2tkGtFegivEOtqmo92GZJYcsMnzJLqsuXKRPLMI/Nl5QY9nzQikR
+ fESA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU9NTZYamDRXQeyNhN7ubkPc0bjx5M2j4F5JiJ460SVFYY72CPmwvYJIA3eeeyjXIj7csuT0O0DUatd@nongnu.org
+X-Gm-Message-State: AOJu0Yy1FrrqUjTDpvnfLajJio4/41eYxRXi39AfixpuMnCHdphpUULF
+ euS0NG8Ag7eVsgf7DwsEcOJRwrwBRN9kmjaNL0//z1JE0vUe6twG/6gJ8MNxGnbuTQCvr9QuIzS
+ cL6i0ErJgM30z47VsvuxtA5oN16phNfq+3YR9Rw==
+X-Gm-Gg: ASbGncuAhT5PR4QzQ9Ij/JHVDCZt+73J1rb2hiyMBsmeCQqPbVl9rVXcycBxxQbxVpJ
+ Dzoj3Ol404Cm1lo4SvJfHY9aAtDHkXsJk
+X-Google-Smtp-Source: AGHT+IFqbcKLOT3IIhmCTqNt7SEN32m8otN0YzTPHPZH4+XT3F8HJOslxDp0E/WEDl1QQpijCZnzprhSYLCkeUwmkkE=
+X-Received: by 2002:a2e:bc09:0:b0:2ff:caf8:2ff7 with SMTP id
+ 38308e7fff4ca-2ffcaf83659mr6572981fa.15.1732554322659; Mon, 25 Nov 2024
+ 09:05:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20241122225049.1617774-1-pierrick.bouvier@linaro.org>
- <20241122225049.1617774-12-pierrick.bouvier@linaro.org>
-In-Reply-To: <20241122225049.1617774-12-pierrick.bouvier@linaro.org>
+References: <66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org>
+ <b045c676-4722-4fb9-a800-27c92d832347@redhat.com>
+ <c8ec9243-f489-4b91-946e-2c6ff7e36f71@linaro.org>
+ <CABgObfbpEEHbLYNNXoNUwD0VNPiNAYB-9REqgEFhRz3QQKTZYw@mail.gmail.com>
+ <Z0REl6xtaYuvP876@redhat.com>
+ <CABgObfYeNW2WYVkPVGmaPKXHLC6bfHm8fFO+wuoQzZiOB5DPyA@mail.gmail.com>
+ <05108195-009e-4d06-bc79-065b1e3432ed@redhat.com>
+ <d02f2221-ffa6-4232-bfcf-a19deee6d1ac@linaro.org>
+In-Reply-To: <d02f2221-ffa6-4232-bfcf-a19deee6d1ac@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 25 Nov 2024 17:02:16 +0000
-Message-ID: <CAFEAcA8BhxbGH7xD8rpwRq2yG-FCef2yiNc6DWVmPgTFXEbLKA@mail.gmail.com>
-Subject: Re: [PATCH 11/12] docs/system/arm/virt: document missing properties
+Date: Mon, 25 Nov 2024 17:05:11 +0000
+Message-ID: <CAFEAcA9vPC40B1cJpuzhN2-mfQG4sY6Sth8jhB+9RwC7aVvDsw@mail.gmail.com>
+Subject: Re: Supporting clang on windows
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- alex.bennee@linaro.org, Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>
+Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,73 +102,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Nov 2024 at 22:52, Pierrick Bouvier
+On Mon, 25 Nov 2024 at 16:48, Pierrick Bouvier
 <pierrick.bouvier@linaro.org> wrote:
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  docs/bypass-iommu.txt    |  2 ++
->  docs/system/arm/virt.rst | 15 +++++++++++++++
->  2 files changed, 17 insertions(+)
->
-> diff --git a/docs/bypass-iommu.txt b/docs/bypass-iommu.txt
-> index e6677bddd32..62818e44ed9 100644
-> --- a/docs/bypass-iommu.txt
-> +++ b/docs/bypass-iommu.txt
-> @@ -1,3 +1,5 @@
-> +.. _bypass_iommu:
-> +
+> Before sending the a series removing gcc_struct and editing the
+> documentation, do we all agree here it's the right move forward?
+> If yes, should we apply this to 9.2 release?
 
-This is a .txt file -- adding rST markup to it won't do anything :-)
+I would prefer not to put it into the 9.2 release -- it's one
+of those "small change with global effects" which it's hard to be
+sure don't have unexpected consequences[*], this isn't a
+regression, and we're already some way into the freeze-and-rc
+process.
 
-(It's one of the remaining legacy .txt files that we haven't
-yet converted to .rst and moved to the right place in the
-documentation. The .txt files in the /docs/ directory are
-mostly the awkward ones to convert because they are a mishmash
-of internal info about the implementation and stuff that is user
-facing, that needs to be pulled apart by somebody with some
-familiarity with the feature and moved into the right places,
-or in some cases simply deleted as unnecessary.)
-
->  BYPASS IOMMU PROPERTY
->  =====================
->
-> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-> index 11ceb898264..d3d21499ff5 100644
-> --- a/docs/system/arm/virt.rst
-> +++ b/docs/system/arm/virt.rst
-> @@ -169,10 +169,17 @@ iommu
->    ``smmuv3``
->      Create an SMMUv3
->
-> +default-bus-bypass-iommu
-> +  Set ``on``/``off`` to enable/disable `bypass_iommu <bypass_iommu>`_ for
-> +  default root bus.
-> +
->  ras
->    Set ``on``/``off`` to enable/disable reporting host memory errors to a guest
->    using ACPI and guest external abort exceptions. The default is off.
->
-> +acpi
-> +  Set ``on``/``off``/``auto`` to enable/disable ACPI.
-> +
->  dtb-randomness
->    Set ``on``/``off`` to pass random seeds via the guest DTB
->    rng-seed and kaslr-seed nodes (in both "/chosen" and
-> @@ -186,6 +193,14 @@ dtb-randomness
->  dtb-kaslr-seed
->    A deprecated synonym for dtb-randomness.
->
-> +x-oem-id
-> +  Set string (up to 6 bytes) to override the default value of field OEMID in ACPI
-> +  table header.
-> +
-> +x-oem-table-id
-> +  Set string (up to 8 bytes) to override the default value of field OEM Table ID
-> +  in ACPI table header.
-
-Do we have a policy about whether we should explicitly note that
-x- options are not ABI-stable when we document them?
+[*] though in this case the stuff you've done with comparing
+binaries is great and very reassuring
 
 thanks
 -- PMM
