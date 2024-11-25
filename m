@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B32CD58D5A
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 15:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBF60D58D5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 15:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFatw-000432-0E; Mon, 25 Nov 2024 10:21:24 -0500
+	id 1tFatn-0003ws-Gt; Mon, 25 Nov 2024 10:21:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFatr-0003zb-Du
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:21:19 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1tFatk-0003uy-S7
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:21:12 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFatp-0001mz-NK
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:21:19 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3822ba3cdbcso2844996f8f.0
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 07:21:17 -0800 (PST)
+ id 1tFath-0001js-Hl
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:21:12 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-382433611d0so3891427f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 07:21:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732548076; x=1733152876; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732548068; x=1733152868; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xTSgqyxDsK0Oo0m3pWRtTEQfgAp9aCc6vBTDVarFPdg=;
- b=ZbDwWsNvDXx/EO+4d/LZVF2EMpBUvtVfX5k/1/k8jLpXfqOwatKjd81WBGAAkl4RDR
- LruPgLbtpkHCHdA3bLo8VMZOgOEHd14dtAI6qgm2ad8+7GXcqf8lj+SEzdPBDfRFwR74
- Vjoz2PiiufDNnULcqAaD2n3PPnreSy3jHu3Rwu8C6jPxuIq7QR7WBDmjKaW03YFZisXV
- 8E3mNdVRKWcnzehwgKyVM7c6cDIVv3pWKfS5kZvl9nJwYVTFKkrN5xO93ZcxB1iiqJEs
- r85O+KFK2lpwT4HzO2/swuw9ahV+XzXSiRze2RaAu4+pgHeFG7nRU5fLNdko0Z5VqKAo
- gbSg==
+ bh=W2LvUWK0oXyNULzh/PoP5B4uyQP6aDypt8ae/Sui1l0=;
+ b=AGqP9kDrBkKHlDLOERGUgRimaUr3FCS7HAQImFWXHgtafd9ICndOdwPkiJF9Rk9sUg
+ hLoi/fRncU1PG0fDhaZqabq3L5Kxgqa0zgRzdPBm7qkydciuk1HSGg8znX/iDMoGa8qH
+ XtuhOY7I5LHxyZZOPYiGPzOMQYIeEujfOwKGtqzTdY1PGQnrIIHUURY820PQxYUBJ48A
+ tqVnQL+WEiVuw28zBQzfCvw/4q6Dgn/vVme97BlMwZCEnVrqrjGP3tmCa11Gs0C552Mw
+ YjrH8JkIGw1l9T9ihJRkM7ivdszVB2hOXa2ZSQdjXjxuO/baoirDe99dD+hiahQtmSHt
+ 4bhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732548076; x=1733152876;
+ d=1e100.net; s=20230601; t=1732548068; x=1733152868;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xTSgqyxDsK0Oo0m3pWRtTEQfgAp9aCc6vBTDVarFPdg=;
- b=Fl1iKz2rCBXSgdmvOs7x8pUOuXGyMlVYfCPx1La3T3uCT460VDMqaJr0eJCtb6TPAc
- pIltzfbAQUh+/utrqRsrXCdK12gyD7fcI5dbETyun6PJU6G1PRQgqSiZEa61+LpE9pDI
- tE0SlNebm2+8AzN6yVCFxOxzuytcRkj/s70ODOzlVnglD6ICysucrwF3C3VAwdBOMz25
- HQVkQno4VJwEptw63VzFLjFLuFf5IZ13FmdnxvJIuXkQnp4WxtTJDkGo9m2FvStpoHjl
- Mn0lKIR7Z1gwUC/U0HefZmiMZVJnEkNPCWajAS2PRLoo+dydkvZL3sHsbuenmVPL8Fd6
- MPCQ==
-X-Gm-Message-State: AOJu0YydMfUXQhuoTU3XOzNQMpm9emZJ/y11etpe+O3BALYYYHqHsAVq
- yTkZkzpSYlYC2CrvkSg8LvLRrsRMp/UsEGy/779XpB1Xab5sN5YjIO/IJmH6deM=
-X-Gm-Gg: ASbGncvTmYxqJMp3uaa0QLgOiCrIdXXBttA90bDhiMiLEHOWyROTTONbYRaIsttbQml
- 96fpJdAr/Qc7x46ySAUiVxkLXcoyQXcnXXb+J0Drszzz/Sdk++2FDdT0MC+K5g0W1yUjpSxE3U7
- y3DdeaA/0thqr0hnHghs5fo/s3cNjMmnDUwKQLPvRhtfASdWiNmcA10/hoQ6o3TKHwSxRDKO5P2
- lTxi2spIr1sdL5fFyzuZT/8JxmMcCbkUEFmpAXz6SrDxZvL
-X-Google-Smtp-Source: AGHT+IEG0zIqaOlFy68rp/k6386Hc7lJsMMHijoofJHfFGo5MCvZvb7KVO6F176TIf37mrTGvKIq4Q==
-X-Received: by 2002:a05:6000:4910:b0:382:50a7:beef with SMTP id
- ffacd0b85a97d-38260b6cc86mr11938162f8f.24.1732548076243; 
- Mon, 25 Nov 2024 07:21:16 -0800 (PST)
+ bh=W2LvUWK0oXyNULzh/PoP5B4uyQP6aDypt8ae/Sui1l0=;
+ b=qM+3TtdHJuN1UwxXLWAr/MKnQv0XEJJMkQlyEwsis6gDsXzzgdSJjTx4HxTcHIuxYq
+ rPzFWf7BqXqCjpTl2558uE0Ovv9uSlhXfN112KLQgesTGSMu7XAp78s2HQ3/k4CP6FYR
+ fdlH+UINkYV9tHVS07TkdA1HrovfVa9/8ZWdHhUqL1B6m8uqZVMsDUv7mTgy2JaQqaoG
+ oglneFLbuLwQlgUOsbsmfJP3NWGAhLlVjPhvM440i5xQBq+4N8cGcvxkl3whJKlZpnGw
+ w0zz0fxGQuMcoYmUD/o0+jdbB4grXcwn6UTB+RsYdpgH2RIQECclqPpVGv5gK4hxnQ8h
+ FbuQ==
+X-Gm-Message-State: AOJu0YwbfaQ9StmgoI7EKhYamYs74aOzWJqTPdUQddWJ4vjtOCRQ41YZ
+ WWwnfSC0xaZIxEUBEF2rM/uUB8rzGATwfFuartFzejmTI3oZ36YTbhLwfcoSYOg=
+X-Gm-Gg: ASbGncshmGmA22fc3PRdiYhqNv32Wc4wLlXL8EYB2YX6XZ+om2qzZpratLBbaXKFrig
+ K2pqUpDJ2pfF6mVI0CSmRDRSJaEfFyv/aJ+GIKwpKDa+AO3FsQnxpmSL+tON02UUIde1r9XbfXW
+ ZeMRBxa7r7Tv6xJn5b4VR+H4rs6C5iZVELqtY7DA28LcreilFV3xD2zTwQSnGsWP7teFe5WiSSE
+ CTudsB3mt9/AYBieIV7hQ48flJV84ThMc2i4F8u/4bL/Ge5
+X-Google-Smtp-Source: AGHT+IH0j5Dau9BvakrrsFuRV0m2i/pKx8mBp1Xedx6g9OPPxpfNeWmDY2QsLnclKs63as0MYEupVw==
+X-Received: by 2002:a05:6000:184d:b0:382:465f:336d with SMTP id
+ ffacd0b85a97d-38260b3cabbmr15409059f8f.1.1732548067824; 
+ Mon, 25 Nov 2024 07:21:07 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4349e47f3d1sm51561925e9.17.2024.11.25.07.21.09
+ ffacd0b85a97d-3825fafe147sm10577475f8f.30.2024.11.25.07.21.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 07:21:13 -0800 (PST)
+ Mon, 25 Nov 2024 07:21:06 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 17D2560B84;
- Mon, 25 Nov 2024 15:21:07 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 0303B5F8FE;
+ Mon, 25 Nov 2024 15:21:06 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 14/28] tests/functional: require non-NULL success_message for
- console wait
-Date: Mon, 25 Nov 2024 15:20:51 +0000
-Message-Id: <20241125152105.2100395-15-alex.bennee@linaro.org>
+Subject: [PULL 02/28] tests/functional: automatically clean up scratch files
+ after tests
+Date: Mon, 25 Nov 2024 15:20:39 +0000
+Message-Id: <20241125152105.2100395-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241125152105.2100395-1-alex.bennee@linaro.org>
 References: <20241125152105.2100395-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,80 +106,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-When waiting for expected output, the 'success_message' is a mandatory
-parameter, with 'failure_message' defaulting to None.
+The build/tests/functional subdirectories are consuming huge amounts
+of disk space.
 
-The code has logic which indicates it was trying to cope with
-'success_message' being None and 'failure_message' being non-None but
-it does not appear able to actually do anything useful. The check for
-'success_message is None' will break out of the loop before any check
-for 'failure_message' has been performed.
+Split the location for scratch files into a 'scratch' sub-directory,
+separate from log files, and delete it upon completion of each test.
+The new env variable QEMU_TEST_KEEP_SCRATCH can be set to preserve
+this scratch dir for debugging access if required.
 
-IOW, for practcal purposes 'success_message' must be non-None unless
-'send_string' is set. Assert this expectation and simplify the loop
-logic.
-
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20241121154218.1423005-15-berrange@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20241121154218.1423005-3-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-15-alex.bennee@linaro.org>
+Message-Id: <20241121165806.476008-3-alex.bennee@linaro.org>
 
-diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-index 98722a9cf6..f6c4e4dda1 100644
---- a/tests/functional/qemu_test/cmd.py
-+++ b/tests/functional/qemu_test/cmd.py
-@@ -81,6 +81,8 @@ def is_readable_executable_file(path):
- def _console_interaction(test, success_message, failure_message,
-                          send_string, keep_sending=False, vm=None):
-     assert not keep_sending or send_string
-+    assert success_message or send_string
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index bf6f1bb81e..6b5d0c5b98 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -65,6 +65,12 @@ to the QEMU binary that should be used for the test, for example::
+   $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
+   $ python3 ../tests/functional/test_file.py
+ 
++The test framework will automatically purge any scratch files created during
++the tests. If needing to debug a failed test, it is possible to keep these
++files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=1``` as an env
++variable.  Any preserved files will be deleted the next time the test is run
++without this variable set.
 +
-     if vm is None:
-         vm = test.vm
-     console = vm.console_file
-@@ -95,7 +97,7 @@ def _console_interaction(test, success_message, failure_message,
-                 send_string = None # send only once
+ Overview
+ --------
  
-         # Only consume console output if waiting for something
--        if success_message is None and failure_message is None:
-+        if success_message is None:
-             if send_string is None:
-                 break
-             continue
-@@ -107,7 +109,7 @@ def _console_interaction(test, success_message, failure_message,
-         if not msg:
-             continue
-         console_logger.debug(msg)
--        if success_message is None or success_message in msg:
-+        if success_message in msg:
-             break
-         if failure_message and failure_message in msg:
-             console.close()
-@@ -138,6 +140,7 @@ def interrupt_interactive_console_until_pattern(test, success_message,
-     :param interrupt_string: a string to send to the console before trying
-                              to read a new line
-     """
-+    assert success_message
-     _console_interaction(test, success_message, failure_message,
-                          interrupt_string, True)
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 411978b5ef..b9418e2ac0 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -13,8 +13,9 @@
  
-@@ -152,6 +155,7 @@ def wait_for_console_pattern(test, success_message, failure_message=None,
-     :param success_message: if this message appears, test succeeds
-     :param failure_message: if this message appears, test fails
-     """
-+    assert success_message
-     _console_interaction(test, success_message, failure_message, None, vm=vm)
+ import logging
+ import os
+-import subprocess
+ import pycotap
++import shutil
++import subprocess
+ import sys
+ import unittest
+ import uuid
+@@ -40,11 +41,12 @@ def setUp(self, bin_prefix):
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+         self.arch = self.qemu_bin.split('-')[-1]
  
- def exec_command(test, command):
-@@ -180,6 +184,7 @@ def exec_command_and_wait_for_pattern(test, command,
-     :param success_message: if this message appears, test succeeds
-     :param failure_message: if this message appears, test fails
-     """
-+    assert success_message
-     _console_interaction(test, success_message, failure_message, command + '\r')
+-        self.workdir = os.path.join(BUILD_DIR, 'tests/functional', self.arch,
+-                                    self.id())
++        self.outputdir = os.path.join(BUILD_DIR, 'tests', 'functional',
++                                      self.arch, self.id())
++        self.workdir = os.path.join(self.outputdir, 'scratch')
+         os.makedirs(self.workdir, exist_ok=True)
  
- def get_qemu_img(test):
+-        self.logdir = self.workdir
++        self.logdir = self.outputdir
+         self.log_filename = os.path.join(self.logdir, 'base.log')
+         self.log = logging.getLogger('qemu-test')
+         self.log.setLevel(logging.DEBUG)
+@@ -56,6 +58,8 @@ def setUp(self, bin_prefix):
+         self.log.addHandler(self._log_fh)
+ 
+     def tearDown(self):
++        if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
++            shutil.rmtree(self.workdir)
+         self.log.removeHandler(self._log_fh)
+ 
+     def main():
+@@ -108,7 +112,7 @@ def setUp(self):
+ 
+         console_log = logging.getLogger('console')
+         console_log.setLevel(logging.DEBUG)
+-        self.console_log_name = os.path.join(self.workdir, 'console.log')
++        self.console_log_name = os.path.join(self.logdir, 'console.log')
+         self._console_log_fh = logging.FileHandler(self.console_log_name,
+                                                    mode='w')
+         self._console_log_fh.setLevel(logging.DEBUG)
 -- 
 2.39.5
 
