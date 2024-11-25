@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1E09D58D65
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 16:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B062D58D69
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 16:39:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFc0I-0003DJ-R3; Mon, 25 Nov 2024 11:32:02 -0500
+	id 1tFc6o-0005LS-K9; Mon, 25 Nov 2024 11:38:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1tFc0H-0003CN-1c; Mon, 25 Nov 2024 11:32:01 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1tFc0F-0004X4-7g; Mon, 25 Nov 2024 11:32:00 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4APDlU9V012447;
- Mon, 25 Nov 2024 16:31:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=UC546h/lPFyVIukfOx1qRtW/NxbN25lrGPShRSQPwio=; b=FfhpIjAuk7f6
- 8KLxb9YNVkpFv5uBCKyKjtCut/xpzk7OYlGfKZ1OT6cRZCVjiuDCe4ctZ8UWbSuz
- w35xCIdEAwd/5wLcqzdgzvmVuq9I6X63/w8WG2EuNloTVY6U7yoTvlumhF55APY5
- TLE/H0pmAWAzNbsREiKDgnjzCrFUETZhJ+7teMz3Cs9L71JFT43l8bCkKHiyJ9ii
- 15pkXGxl+RowZHg6lDeWyYvCZEmYNuhB6omq89/tLRl43WlyN+EtSKr1hItDmC4o
- mWQIJjaZR4dbCC1uOGtniYKxaceOGNus6Rf+EXI43BWIdD4atqqtyK3CYDljA4xG
- Plm4ll3ckw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43386n9f65-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Nov 2024 16:31:57 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4APGUM9D013143;
- Mon, 25 Nov 2024 16:31:56 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43386n9f63-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Nov 2024 16:31:56 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AP60L40026326;
- Mon, 25 Nov 2024 16:31:55 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 433v30tnxj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Nov 2024 16:31:55 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4APGVsBq50331982
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 25 Nov 2024 16:31:55 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E094258057;
- Mon, 25 Nov 2024 16:31:54 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A8EDF58066;
- Mon, 25 Nov 2024 16:31:54 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 25 Nov 2024 16:31:54 +0000 (GMT)
-Message-ID: <d62ad308a4b243503dde319bbe35c7466522dccf.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/4] ppc/pnv: Fix direct controls quiesce
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, Chalapathi V <chalapathi.v@linux.ibm.com>, Harsh
- Prateek Bora <harshpb@linux.ibm.com>
-Date: Mon, 25 Nov 2024 10:31:54 -0600
-In-Reply-To: <20241125132042.325734-3-npiggin@gmail.com>
-References: <20241125132042.325734-1-npiggin@gmail.com>
- <20241125132042.325734-3-npiggin@gmail.com>
-Organization: IBM
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFc6l-0005L3-Q7
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 11:38:43 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFc6k-0005ZV-2R
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 11:38:43 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5cfbeed072dso5887830a12.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 08:38:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732552720; x=1733157520; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8W2PHlqzuLwSu++3qOdo0UFQcb9hDu43m0wkS5CHwmk=;
+ b=dXkyMcJZD6tEO78Q6whCbX4m1va3sfA6gaKqIh4w5pZAL7R8eNSNbLdj+obHTohlxo
+ ARGrFZXIigmuHc5dG3Oc5SAwVKsNerGepw1p154GcV8QudrapDfY03V4kzDiYD2VMuEV
+ TcGkuJg3Coo+Arfcvvzl5fsWT0iAhoYHCiRIW/KR8dbLM591bzkqYkGeJ5PFpR/bb+Ex
+ Y1TreqINN7X1B4sRqOfExMK6WxkNhexlVZ1FXgQOTqOuLu3BbHNOUbms3sNVn0hqaPmC
+ qccDvcmJ4mwXwcPJj7LhXL+BxvqGCuk2g2P17mkbaqCv+n/QSFw3eVk5a+sH5/m6ipN9
+ mifQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732552720; x=1733157520;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8W2PHlqzuLwSu++3qOdo0UFQcb9hDu43m0wkS5CHwmk=;
+ b=FVbfBTYLgxjG2NKzB4CUVthldf1sDWrewNorwrgAKJXw938BBECaQddmXEtzxflTX4
+ g+7hRuwM9qYJ75olAH/KIlS1Q5MWrUKPBTGoOV2NyPovbxH6caZGB5YXHs9XTBWRy0jG
+ s3qVddxhneN7TiVLv1zF7YPsO8KkERCok70rmUBHohhiLwd5gbV4wjXA0/cioyW/zce5
+ OTIchW4+rg34sI5F99vLtl5pdXZ7R2UKt7NhbRAnxUOle/iJWkWIgCoMB55Aux+QW55j
+ 5eroar7C+Wz8l8PiJf/a3uLTimFucn+iJ1V4dlPOY7olQuJIhT6GTX8AhFzcigoW4uv5
+ oKig==
+X-Gm-Message-State: AOJu0Yw4kB8ukJqDYTRcXAwvySW3aQ1HWhVmoIE1nWat3cyB738NjAkU
+ ciTmoiNOlm4Nu4r2uLjiB/AQ0/4pofJu+TNqVlILm/DaweAUW9BOLPyX4COqi3VLl1RFvGU9D94
+ f8Tgn7lOryrcgiBH1ihopXTOj/E/9+abLOHe7OQ==
+X-Gm-Gg: ASbGncvl2KBU5ryxqwzH9TN6OXS/as8R72UWr6cvx7zGYg4vP2PsWAoXbMsuInJQMUz
+ usxEi61tt2gTSWFHoHr/q7aciHM/0+ExC
+X-Google-Smtp-Source: AGHT+IHpG4BNQkKwovRSHjcSSztWlba5dB3PINZvZhJcLTuNIqrxSBgvDeVJecoM+DsuSSZygBRxjfRRUePFb9VhGdw=
+X-Received: by 2002:a05:6402:1ecc:b0:5cf:c188:81b6 with SMTP id
+ 4fb4d7f45d1cf-5d0205c7491mr11920947a12.6.1732552720004; Mon, 25 Nov 2024
+ 08:38:40 -0800 (PST)
+MIME-Version: 1.0
+References: <20241125140535.4526-1-philmd@linaro.org>
+ <CAFEAcA9vS-9u282Jr+_QaGZT6vD4cpmh0wjuYPQSPLZQw30e4Q@mail.gmail.com>
+ <748eb21d-4b73-4d2a-8058-b3a79d4fb802@linaro.org>
+In-Reply-To: <748eb21d-4b73-4d2a-8058-b3a79d4fb802@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 25 Nov 2024 16:38:29 +0000
+Message-ID: <CAFEAcA_NqH5v5Oii2dQqw_Lx66u=Fkbqq6WGnOHF_Z0jfumgSg@mail.gmail.com>
+Subject: Re: [PATCH-for-10.0 0/8] hw/boards: Remove legacy
+ MachineClass::pci_allow_0_address flag
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Leif Lindholm <quic_llindhol@quicinc.com>, qemu-riscv@nongnu.org, 
+ Weiwei Li <liwei1518@gmail.com>, Radoslaw Biernacki <rad@semihalf.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ qemu-ppc@nongnu.org, 
+ Laurent Vivier <lvivier@redhat.com>, Alexander Gordeev <agordeev@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-22.el8_8.2) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: _QJGC31orimFnuKbJdZMnG_KKR3JGZKm
-X-Proofpoint-ORIG-GUID: 4KxYKtBP1ie8WBlYD_E7VXSVtK-YEjAs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxscore=0
- mlxlogscore=763 suspectscore=0 impostorscore=0 malwarescore=0 spamscore=0
- clxscore=1015 adultscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411250138
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.93, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,99 +108,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On Mon, 25 Nov 2024 at 14:49, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 25/11/24 15:14, Peter Maydell wrote:
+> > On Mon, 25 Nov 2024 at 14:06, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
+o.org> wrote:
+> >>
+> >> This series aims to remove a legacy field from
+> >> MachineClass.
+> >>
+> >> Rather than a global exposed to all machines,
+> >> use a pci-bus specific flag on each machine
+> >> requiering it.
+> >
+> > Should this be a property of the PCI controller, rather
+> > than on the PCI bus? Presumably on the machines that
+> > don't allow a 0 PCI BAR address this happens because the
+> > PCI controller refuses to map BARs at that address.
+> >
+> > TBH the commit message for e402463073 suggests to me
+> > that "allow address zero" should be the default and
+> > either specific machines should forbid it or else we
+> > should figure out what goes wrong with them, if the
+> > problem is caused by some bug in QEMU. The commit message's
+> > mention of "fix PCI memory priorities" suggests to me
+> > that this is a QEMU bug, and that it ought to be possible
+> > to have the machine set up such that you *can* map the
+> > BAR at address 0, it's merely invisible to the guest because
+> > some other machine devices have higher priority and are
+> > visible "on top" of it instead.
+>
+> You are probably right, the following comment ...:
+>
+>   pcibus_t pci_bar_address(PCIDevice *d,
+>                            int reg, uint8_t type, pcibus_t size)
+>   {
+>       ...
+>       /* NOTE: we do not support wrapping */
+>       /* XXX: as we cannot support really dynamic
+>          mappings, we handle specific values as invalid
+>          mappings. */
+>       if (last_addr <=3D new_addr || last_addr =3D=3D PCI_BAR_UNMAPPED ||
+>           (!allow_0_address && new_addr =3D=3D 0)) {
+>           return PCI_BAR_UNMAPPED;
+>       }
+>
+> ... is from 20 years ago at the beginning of PCI in QEMU, commit
+> 0ac32c8375 ("PCI interrupt support - PCI BIOS interrupt remapping
+> - more accurate memory mapping - 'info pci' monitor command") which
+> suggest the implementation is incomplete here.
 
-On Mon, 2024-11-25 at 23:20 +1000, Nicholas Piggin wrote:
-> powernv CPUs have a set of control registers that can stop, start,
-> and
-> do other things to control a thread's execution.
-> 
-> Using this interface to stop a thread puts it into a particular state
-> that can be queried, and is distinguishable from other things that
-> might stop the CPU (e.g., going idle, or being debugged via gdb, or
-> stopped by the monitor).
-> 
-> Add a new flag that can speficially distinguish this state where it
-> is stopped with control registers. This solves some hangs when
-> rebooting powernv machines when skiboot is modified to allow QEMU
-> to use the CPU control facility (that uses controls to bring all
-> secondaries to a known state).
-> 
-> Fixes: c8891955086 ("ppc/pnv: Implement POWER10 PC xscom registers
-> for direct controls")
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> 
-> There might still be a bigger issue with how we handle CPU stop
-> requests. Multiple different sources may want to stop a CPU, there
-> may be situations where one of them resumes a CPU before all agree?
-> A stop_request mask or refcount might be a nice way to consolidate
-> all these.
-> ---
->  target/ppc/cpu.h  | 1 +
->  hw/ppc/pnv_core.c | 9 +++++++--
->  2 files changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 945af07a64..0b4f1013b8 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1355,6 +1355,7 @@ struct CPUArchState {
->       * special way (such as routing some resume causes to 0x100,
-> i.e. sreset).
->       */
->      bool resume_as_sreset;
-> +    bool quiesced;
->  #endif
->  
->      /* These resources are used only in TCG */
-> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-> index a30693990b..cbfac49862 100644
-> --- a/hw/ppc/pnv_core.c
-> +++ b/hw/ppc/pnv_core.c
-> @@ -217,8 +217,8 @@ static uint64_t pnv_core_power10_xscom_read(void
-> *opaque, hwaddr addr,
->      case PNV10_XSCOM_EC_CORE_RAS_STATUS:
->          for (i = 0; i < nr_threads; i++) {
->              PowerPCCPU *cpu = pc->threads[i];
-> -            CPUState *cs = CPU(cpu);
-> -            if (cs->stopped) {
-> +            CPUPPCState *env = &cpu->env;
-> +            if (env->quiesced) {
->                  val |= PPC_BIT(0 + 8 * i) | PPC_BIT(1 + 8 * i);
->              }
->          }
-> @@ -244,20 +244,25 @@ static void pnv_core_power10_xscom_write(void
-> *opaque, hwaddr addr,
->          for (i = 0; i < nr_threads; i++) {
->              PowerPCCPU *cpu = pc->threads[i];
->              CPUState *cs = CPU(cpu);
-> +            CPUPPCState *env = &cpu->env;
->  
->              if (val & PPC_BIT(7 + 8 * i)) { /* stop */
->                  val &= ~PPC_BIT(7 + 8 * i);
->                  cpu_pause(cs);
-> +                env->quiesced = true;
->              }
->              if (val & PPC_BIT(6 + 8 * i)) { /* start */
->                  val &= ~PPC_BIT(6 + 8 * i);
-> +                env->quiesced = false;
->                  cpu_resume(cs);
->              }
->              if (val & PPC_BIT(4 + 8 * i)) { /* sreset */
->                  val &= ~PPC_BIT(4 + 8 * i);
-> +                env->quiesced = false;
->                  pnv_cpu_do_nmi_resume(cs);
->              }
->              if (val & PPC_BIT(3 + 8 * i)) { /* clear maint */
-> +                env->quiesced = false;
->                  /*
->                   * Hardware has very particular cases for where
-> clear maint
->                   * must be used and where start must be used to
-> resume a
+See also this thread from 2015:
 
+https://lore.kernel.org/qemu-devel/1444683308-30543-1-git-send-email-agorde=
+ev@redhat.com/T/#u
+
+which includes:
+ * me asking why this isn't a property on the PCI controller device :-)
+ * MST confirming that this setting is only for buggy machine types
+   that don't get the priorities correct when the BAR is configured
+   so it overlaps something else
+ * me expressing disappointment that we made the default for this
+   flag be "this machine type is broken" rather than "this machine
+   type is not broken", because of course almost every machine added
+   since has left the flag at its default value
+ * a now out-of-date list of possibly affected machine types that
+   might actually need to mark themselves as "broken", or at least
+   be tested to see what they do
+
+thanks
+-- PMM
 
