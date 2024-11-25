@@ -4,102 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0832D59D71
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 21:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE31ED59D72
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 21:23:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFgTS-0003iA-B5; Mon, 25 Nov 2024 16:18:26 -0500
+	id 1tFgY3-0005DD-BX; Mon, 25 Nov 2024 16:23:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFgTP-0003hx-Fg
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 16:18:24 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFgTN-0000fr-Qz
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 16:18:23 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1EE721F453;
- Mon, 25 Nov 2024 21:18:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732569498; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YgBveMF9V33fYL0Yl98VcKJcYih5k3Sud0sO4XAM5t8=;
- b=GNg5g/0Qza1Ogc7jREbOisCuWJO3/pDnT1snJALDZaIz08qNcMH5rF3gkcUhe0L+Wb4Pjt
- SCSZrMeV8yyQavyVvHSe7X0FjH9V30hUwfRq4BZeKJHsIrTZ0uvfpNbpd2khWZLFLIqoGa
- DJbI11++A4UwxEDU43nJCc5xNIaM0F8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732569498;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YgBveMF9V33fYL0Yl98VcKJcYih5k3Sud0sO4XAM5t8=;
- b=wUJtnjRa3ZanJUqoomrRxRbnJypn5RNcobqzf1AFBX5PchlVpO3ttzVu46T8PtXV3w3yF9
- H4sJysQmBnxuA2Ag==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732569498; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YgBveMF9V33fYL0Yl98VcKJcYih5k3Sud0sO4XAM5t8=;
- b=GNg5g/0Qza1Ogc7jREbOisCuWJO3/pDnT1snJALDZaIz08qNcMH5rF3gkcUhe0L+Wb4Pjt
- SCSZrMeV8yyQavyVvHSe7X0FjH9V30hUwfRq4BZeKJHsIrTZ0uvfpNbpd2khWZLFLIqoGa
- DJbI11++A4UwxEDU43nJCc5xNIaM0F8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732569498;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YgBveMF9V33fYL0Yl98VcKJcYih5k3Sud0sO4XAM5t8=;
- b=wUJtnjRa3ZanJUqoomrRxRbnJypn5RNcobqzf1AFBX5PchlVpO3ttzVu46T8PtXV3w3yF9
- H4sJysQmBnxuA2Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9BE38137D4;
- Mon, 25 Nov 2024 21:18:17 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id GLFGGJnpRGfNRgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 25 Nov 2024 21:18:17 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v2 00/22] tests/qtest: migration-test refactoring
-In-Reply-To: <Z0TlE9PNsTR5CWKO@x1n>
-References: <20241113194630.3385-1-farosas@suse.de> <Z0TlE9PNsTR5CWKO@x1n>
-Date: Mon, 25 Nov 2024 18:18:15 -0300
-Message-ID: <874j3vnhbc.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFgXy-0005CT-N7
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 16:23:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFgXx-0001Ee-14
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 16:23:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732569783;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=1SNTKMA9xsbPVcH1VQL6J+ge2XbGSj41RWwtVsTB/BA=;
+ b=RB7JJeIw/QXYEY6GPi83Y679McAyOoaVDsZatNlnQf/6jHY/ce2BnRuzsJIIqy3N+fngfn
+ WaNLt6PGzoZqvJdCgrto4zbeArFP/NVp4ATHlShUwuDxRKxYHhKilmDvOoFIaK8XN9m++a
+ pIJgY0yMtnm0tDcSBwzSckeD5mfi3cM=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-388-7JQL1lhWMv2-vOOfduoeZg-1; Mon, 25 Nov 2024 16:23:00 -0500
+X-MC-Unique: 7JQL1lhWMv2-vOOfduoeZg-1
+X-Mimecast-MFC-AGG-ID: 7JQL1lhWMv2-vOOfduoeZg
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-3a743d76ed9so53044935ab.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 13:23:00 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732569779; x=1733174579;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1SNTKMA9xsbPVcH1VQL6J+ge2XbGSj41RWwtVsTB/BA=;
+ b=u/J/Zb9zbmzZcs+qON4vZt21gpEb8LD3E3VadPz8+U/ssxj4EGpU7xdf04gt2BMVBz
+ aAMJRUGPqp00/wsVP5+/FNCSpblssTm7+DPBpH/zTyMzT9RxFXduPa5G9CZB17WVrhnG
+ PME5LvHcVsSQz7YyvfHD0OtHQkwKIXY5WYTjGRJjrV18aDMCa+njbzbynkAyrRwISHqu
+ MPAumAcTsUdFH3H+Al7wy5HE/0lQTL+CgklhMlDhTBO5Mx9qRaUz7iVM92XZ1Pp9a/do
+ wMRuFjIfU50pmXJcJcKpHr62NYAfXqm444CrETnulrJ8GzorvOlAv6gSrI+XtoE0VGMf
+ yuzg==
+X-Gm-Message-State: AOJu0YxEu0iNxnVdQg+1dpd2TIRDY6GVP4RY7rzbMvqI2hem7QCLYM4W
+ 5BYKg0aeWWBLDYp6RFRQZdV7NjOA3T0JvzKPcm8YZmIsyx24IT7uW48q//farqybH5Q1cwC3jR1
+ I1mO9EE+zGomhvhv0quJHcQ11a4sTpUBdvBrhMpVk++BmYk0hSPbMRprCUaM2tho2swTVvx9QMl
+ vVy0LNBxZrmjFv9orPlXA+MCKUQ8wp8utvCw==
+X-Gm-Gg: ASbGncvflBX7DFTmYjkGa6tJ89jkh5djBj6fYE5ZtRUEJuoJS9/ff+qVeJLdtqwTJdZ
+ RVI+sG0od2a/Zk7uKmVXa95YDbb1jr6NBDmaHWkfKLBy8rNkEC/0r/Kp934uY5AC2fCD6Rr3UVQ
+ wLmiqYdomesy5DGgSPGjRZkBb+mOufOjhHx0pFX8QOD5yYRhH/4A3ojIWZO43FtO+AtB52sVEKr
+ ppTLCJ5ACiQ3p+HRckk2r0zrVZrbbZxZ7sV+28KC8hy9C8N/ZNj0IP29ML0X7XtqwlzgZGjBC4U
+ 8TXLutxw6nW+c4X+1NquLF5HqQ==
+X-Received: by 2002:a05:6e02:3386:b0:3a7:933e:ed95 with SMTP id
+ e9e14a558f8ab-3a7bbd57994mr12711745ab.2.1732569779224; 
+ Mon, 25 Nov 2024 13:22:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFCUbxmtQm+dNgle0/7EgNyOCwexXHtVoe/+Wnz7JGBijXU1OxsLknH8t04cA/aFx3Og04qJA==
+X-Received: by 2002:a05:6e02:3386:b0:3a7:933e:ed95 with SMTP id
+ e9e14a558f8ab-3a7bbd57994mr12711505ab.2.1732569778873; 
+ Mon, 25 Nov 2024 13:22:58 -0800 (PST)
+Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3a79acb7b6fsm18989815ab.67.2024.11.25.13.22.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Nov 2024 13:22:58 -0800 (PST)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
+ peterx@redhat.com
+Subject: [PULL 0/2] Migration 20241125 patches
+Date: Mon, 25 Nov 2024 16:22:54 -0500
+Message-ID: <20241125212256.62608-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,49 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+The following changes since commit 791e3837c1105aec4e328674aad32e34056957e2:
 
-> On Wed, Nov 13, 2024 at 04:46:08PM -0300, Fabiano Rosas wrote:
->> Fabiano Rosas (22):
->>   tests/qtest/migration: Fix indentations
->>   tests/qtest/migration: Standardize hook names
->>   tests/qtest/migration: Stop calling everything "test"
->>   tests/migration: Disambiguate guestperf vs. a-b
->>   tests/qtest/migration: Move bootfile code to its own file
->>   tests/qtest/migration: Move qmp helpers to a separate file
->>   tests/qtest/migration: Rename migration-helpers.c
->>   tests/qtest/migration: Move ufd_version_check to utils
->>   tests/qtest/migration: Move kvm_dirty_ring_supported to utils
->>   tests/qtest/migration: Isolate test initialization
->>   tests/qtest/migration: Move common test code
->>   tests/qtest/migration: Split TLS tests from migration-test.c
->>   tests/qtest/migration: Split compression tests from migration-test.c
->>   tests/qtest/migration: Split postcopy tests
->>   tests/qtest/migration: Split file tests
->>   tests/qtest/migration: Split precopy tests
->>   tests/qtest/migration: Split CPR tests
->>   tests/qtest/migration: Split validation tests + misc
->
-> I'm not sure whether the above chunk could affect people reading the last
-> four, which is the real meat.
->
-> One thing we could do (but you can decide which you prefer..) is you can
-> respin with the initial 18 patches, then we may get it in in the 1st 10.0
-> pull.  It may conflict with some other series for sure, but it's
-> unavoidable with such changes one way or another..
+  Merge tag 'net-pull-request' of https://github.com/jasowang/qemu into staging (2024-11-25 10:44:11 +0000)
 
-I can put them on top of migration-next, sure. As I said previously,
-just point me at any conflicting series and I can provide a rebase.
+are available in the Git repository at:
 
-> then when it's there we could repost the last four separately, so it
-> can have a higher chance of getting some comments.  So I'll leave that
-> to you to decide.
+  https://gitlab.com/peterx/qemu.git tags/migration-20241125-pull-request
 
-That's fine.
+for you to fetch changes up to 59c390d95b4984c87db0deda2b8dad0c9595156e:
 
->
-> I also wonder whether we could already move migration-test*.c into
-> tests/qtest/migration/ too.
+  migration: Fix extra cleanup at postcopy listen (2024-11-25 16:21:55 -0500)
 
-I'll look into it.
+----------------------------------------------------------------
+Migration pull for 9.2-rc2
+
+- Fabiano's patch to remove double vmstate cleanup in postcopy
+- Peter's patch to whitelist pipes in fd migration URIs
+
+----------------------------------------------------------------
+
+Fabiano Rosas (1):
+  migration: Fix extra cleanup at postcopy listen
+
+Peter Xu (1):
+  migration: Allow pipes to keep working for fd migrations
+
+ migration/fd.c     | 27 +++++++++++++++++++++++++--
+ migration/savevm.c |  1 -
+ 2 files changed, 25 insertions(+), 3 deletions(-)
+
+-- 
+2.47.0
+
 
