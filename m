@@ -4,88 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9CFD3B7F5
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 09:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34530D3B7F6
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 09:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFVZD-0005HA-9F; Mon, 25 Nov 2024 04:39:39 -0500
+	id 1tFVh5-0007Wl-8B; Mon, 25 Nov 2024 04:47:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tFVZC-0005B8-16
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 04:39:38 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tFVh3-0007Wc-0O
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 04:47:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tFVZA-00048Q-HJ
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 04:39:37 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tFVh0-0005RC-Do
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 04:47:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732527575;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1732528061;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dkAqJT9HP0Flub/HnesEuOlwBQ8lAvokj1P23pmzfUw=;
- b=d7kF311KP7FOoaUkqFei7SX1B4TTY/+nuzvtfINZwf+S4AHnrIMnrR7gsu1l1Vr1N/WM9T
- DMfg7cXmunoCQU2zgrwPaQcf8sIqqNpGBHAtI/AC8bkDf6AJMIWFSHjyeNW8aGnzdlUhny
- y2/PLeiF4oUOjcdakqAlp6IRVRm+id0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-fkoois5QPl2hKqWfq8TnbQ-1; Mon, 25 Nov 2024 04:39:33 -0500
-X-MC-Unique: fkoois5QPl2hKqWfq8TnbQ-1
-X-Mimecast-MFC-AGG-ID: fkoois5QPl2hKqWfq8TnbQ
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-382480686f2so2623491f8f.1
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 01:39:32 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732527572; x=1733132372;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dkAqJT9HP0Flub/HnesEuOlwBQ8lAvokj1P23pmzfUw=;
- b=RBx+TSwzKyTUecnz8xBtocUkJKh/DX276p2mHj1yPqD53SgIDrwawbE2Lde1Rh1aFh
- LNrgaI0NGaudZwoirFe2GY2wM/k3lu4r+IuojGWg0CXoMsNimJYT5B1qBNuwdlD/bkDt
- wgXsmqLhIkXiuhvZ2uWSlX9icGtpJ+Swgmf80RSUdtYUfg6On30sxnKhZ/Si6J8mZ0an
- EhILXVYZ62u2aD0t7ItMX16YyoUVIqW8M6VQYPni8mE8kII0gpnrq6QJyTicAL3Eh+Gr
- 05BtYJ/Azpck00JkSYtAeadbRzd/vzTFo6e/WmLBJaUK0SqTYdQ8U7BlD/lZhPUEIJ9r
- RTLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVL0ob41FxlTavVBEso2/zhvRj1xre/uY7Bs6khvGpbe/Kg+Zt831eiW/ixRvtCVyH/HnzNa1DsGuGw@nongnu.org
-X-Gm-Message-State: AOJu0YzXDBNzo4BF/1YKdKTwnBuR8mNaPSLtOl68F09ZFln3eeuEuGfH
- jEZCOZ+hL9r4Lq+fA3utMcxK10ZvHXAxeByauWzBOzeox0TTr7xJlb/I+qS9OsHL0cKGvsP+C0U
- kUwk0qFySOkSfiLRo9YWeUpwTP1Nyg+i+k5wNTXVXYQC6Py+zF0Jsq4sHGGyfrzIcAila3rHar+
- rl3b+1wDd0rmJItgmrAkSJVL+v8Lc=
-X-Gm-Gg: ASbGnctZZlFs5uC6ea+WprTC+KtSqhc6LgmGTIBbhb1aBxNMZMsEd2kLtv8rlQ8ehe6
- UaRGjV5Bwmu6S1TaP+Aed6lFDJWPfMaLh
-X-Received: by 2002:a5d:588f:0:b0:382:4851:46d2 with SMTP id
- ffacd0b85a97d-38260b45c95mr11155412f8f.1.1732527571887; 
- Mon, 25 Nov 2024 01:39:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGizQbUUiTbGBN23TGyz4G/06K8gKdTMkaChLYv9AfVcEhdfcGqK0Dwxfnpeh3aHHAi1MBUHYrsNvK9l5dTGi4=
-X-Received: by 2002:a5d:588f:0:b0:382:4851:46d2 with SMTP id
- ffacd0b85a97d-38260b45c95mr11155394f8f.1.1732527571601; Mon, 25 Nov 2024
- 01:39:31 -0800 (PST)
+ bh=b0g1lORZLriE0WE15MbaCvCtDy8BO0zUIG1q9btuAG8=;
+ b=HnZGgDIQJQn5nW5d5n2nIZCDHqZWJLsGWVyB7tXYOAijbtp7O1wbTZNeqmLVlavpNw9kGQ
+ WxbgBdcpcS2AwZXsp/e60ELwUINiMtdlTmG693L5apQ3zK49YwGANTLNiiW3VyxWR5J5pP
+ wkDavy3372RaF8nYEm5RBfKVhtHIcIs=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-256-HJZZ0vE2MjmT33bmDJ4R4A-1; Mon,
+ 25 Nov 2024 04:47:38 -0500
+X-MC-Unique: HJZZ0vE2MjmT33bmDJ4R4A-1
+X-Mimecast-MFC-AGG-ID: HJZZ0vE2MjmT33bmDJ4R4A
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 447651955EE7; Mon, 25 Nov 2024 09:47:37 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.111])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92EAD195E481; Mon, 25 Nov 2024 09:47:35 +0000 (UTC)
+Date: Mon, 25 Nov 2024 09:47:31 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Anne Macedo <retpolanne@posteo.net>, qemu-devel@nongnu.org
+Subject: Re: Onboarding QEMU Firmware Configuration to other machines
+Message-ID: <Z0RHs89WxRFnZs2M@redhat.com>
+References: <m2wmgsiudo.fsf@posteo.net>
+ <CAFEAcA_ROEC7UkEzZ5v7FKYHajhLVKZuMAtzA2M8_Fj7KSZO0A@mail.gmail.com>
 MIME-Version: 1.0
-References: <66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org>
- <b045c676-4722-4fb9-a800-27c92d832347@redhat.com>
- <c8ec9243-f489-4b91-946e-2c6ff7e36f71@linaro.org>
- <CABgObfbpEEHbLYNNXoNUwD0VNPiNAYB-9REqgEFhRz3QQKTZYw@mail.gmail.com>
- <Z0REl6xtaYuvP876@redhat.com>
-In-Reply-To: <Z0REl6xtaYuvP876@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 25 Nov 2024 10:39:19 +0100
-Message-ID: <CABgObfYeNW2WYVkPVGmaPKXHLC6bfHm8fFO+wuoQzZiOB5DPyA@mail.gmail.com>
-Subject: Re: Supporting clang on windows
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA_ROEC7UkEzZ5v7FKYHajhLVKZuMAtzA2M8_Fj7KSZO0A@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -107,32 +85,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 25, 2024 at 10:34=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
-> IMHO we need to have confidence not only in the current state of the code=
-,
-> but also that we're not going to accidentally regresss it in the future.
-> This is what the gcc_struct attribute gives us confidence in.
+On Sun, Nov 24, 2024 at 05:41:08PM +0000, Peter Maydell wrote:
+> On Sun, 24 Nov 2024 at 14:24, Anne Macedo <retpolanne@posteo.net> wrote:
+> > How should one port fw_cfg to other QEMU machines?
+> >
+> > Context:
+> >
+> > - I found a possible bug on the Debian builds for Raspberry Pi 4 that is
+> >   only triggered when I try to launch it on QEMU;
+> >
+> > - I wrote an issue on systemd (I thought it had something to do with
+> >   logind) and they requested me to only fill bugs if they show up on the
+> >   upstream.
+> >
+> > - I tried baking systemd with mkosi – however, to test with mkosi and
+> >   qemu, it uses fw_cfg [1] which seems specific to the virt machine on
+> >   ARM.
+> >
+> > - Opened an issue [2] and started working on that [3]
+> >
+> > However, I still don't understand exactly how fw_cfg works. My current
+> > understanding is that it is a device that, when connected some memory
+> > mapping will happen on the guest so that it can access this memmap.
+> >
+> > TL;DR which steps should I take to onboard fw_cfg to machines such as
+> > raspi4b?
+> 
+> fw_cfg is a device that is intended for setups where the guest
+> knows it is running as a virtual machine. It provides a way
+> for the guest to ask for e.g. particular files like a kernel
+> for direct kernel boot, among other things. It's present on
+> the Arm "virt" machine and on the x86 PC machine.
+> 
+> It doesn't and should not exist on the raspi4b model, because
+> almost all QEMU machine types are supposed to model the real
+> hardware, which doesn't have a fw_cfg.
 
-Yes, as you say below the "solution" to that could be simply to avoid
-bitfields. They are problematic anyway for big-endian machines, see
-the commit that Thomas pointed out. Unfortunately it's a
-human-enforced solution, but then it is already human-enforced for
-endianness issues.
+To expand on this, by chance fw_cfg is visible to the guest OS, and thus
+apps developers have (mis-)used this as a way to config data to the OS.
+This should *not* be relied upon to work everywhere/anywhere. Adding it
+to other targets / machines for general purpose application usage is a
+non-goal for QEMU.
 
-> As an alternative is it practical for us to eliminate all bitfields
-> from our structs ?
+> I'm not sure exactly what mkosi is or does, but if it's supposed to be
+> able to produce images that work with the raspberry pi then
+> it needs to not require fw_cfg to exist (because on a real
+> rpi it doesn't).
 
-It is (at least for guest-visible structs), but it is a lot of work
-and I don't think it's reasonable for it to block clang enablement on
-Windows.
+mkosi is a simple python tool for creating virtual disk images aka acronym
+"MaKe Operating System Image".
 
-Of course it is possible for future contributions. Pierrick, would you
-like to contribute a patch to docs/devel/style.rst as well?
+What they need is a way to pass configuration metadata into the guest.
 
-Paolo
+They already support a range of options, in order of preference looking
+for SMBIOS (OEM strings),  fw_cfg, kernel command line:
+
+  https://github.com/systemd/mkosi/blob/6c33859a1b445e0bff19d9e7f28158140893a3e4/mkosi/qemu.py#L1336
+
+If none of those 3 options are viable, then a further option is to create
+a virtual disk image containing a JSON file of the data needed and pass
+that in. There are other options available too, virtiofs, 9p, usb-mtp,
+virtio-serial, virtio-sock, all of which provide a ways to communicate
+with the guest OS, with varying pros & cons. It is upto mkosi devs to
+decide which best serve their needs, if they think their current 3 options
+are insufficient.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
