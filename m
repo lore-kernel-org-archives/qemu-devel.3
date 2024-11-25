@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA3FD59D67
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:01:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9665D59D67
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFfFF-00058Y-Jy; Mon, 25 Nov 2024 14:59:41 -0500
+	id 1tFfFF-00058a-Rt; Mon, 25 Nov 2024 14:59:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tFfFB-00054c-S4
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:37 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1tFfFD-00056J-9E
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:39 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tFfF4-0004ly-0o
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:37 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3824446d2bcso4300921f8f.2
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 11:59:29 -0800 (PST)
+ id 1tFfF5-0004mk-QY
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:38 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4315e9e9642so44610845e9.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 11:59:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732564768; x=1733169568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732564770; x=1733169570; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y1yqlpej3WjW1JQDA6ksx54DWAhTx2FxYXSqrclmH28=;
- b=VfZ9MnM1GfBL5TzHBhsMp8SFlKTnEpX8aq8uZ/3GQRcL+9zU+vVfEKkizT0hS/3R0t
- yEbSBNATrlZyK9xTEIvxzLSriAM1EztFG8s0NJ3eTCJiWm/OvRFXtxaGkSqtMXWmA6ks
- gmP9rs5whUBQ++Bho4mBvgUtCVOsxca49FRPs5nlwqzUTEI4CG3coZqm7Ynz/SkJOvnE
- OSiFgbBE28lBkuxSmHymx0neYSI7tQDNSAagiK+Av+9rcr8Lns/QmOqaaLFlHyCipfx1
- WGznofsvreDHtRRE0q6v8OWx5OyzC1FPUMtIx6Zj+t3gvbXjE6OOT1KsWTOiHrppZ4V+
- cJ5A==
+ bh=Oo1EgfoyArPx0QyjZUVlmbBpOKVgCXNN/Sfqm4FiXXo=;
+ b=mieKa2DMzTeXllctCe6oPxhkEn80nnS3hJD8WSMTy29YMtHD8JJ9dwAZdmymZssaM+
+ qkD5e/r24gdy4F/pZEeQToorGM1tXXKeQBtoPIOuFkAk6vo3Oigz2V5OyPqMJI/zhS7C
+ 1ytrUYN9R6rzTcpG8oYBCr51/siNIfwAE9rp4jz+bkv7wbVnz2wuGApOeI5NCFYDdHp8
+ XNFdBybGT++Xld6qiwuqXpvADCsNRzWoDK+c2tKqBUlBToSSM65oAvQiOKpe90wbGG3Q
+ UuIblbqYoYrAO1K+k/b7SusKUpP+HmOFRxjIM9NaRuiCWklGP+1g2IU+FBZAeX+59ibd
+ bKBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732564768; x=1733169568;
+ d=1e100.net; s=20230601; t=1732564770; x=1733169570;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y1yqlpej3WjW1JQDA6ksx54DWAhTx2FxYXSqrclmH28=;
- b=qOa8Ss5MuZJUNn+G5FuiURzjgn+62ndE77NWEJ/UNXCVrtr13ELspsHDgacj15xmzp
- B/7OrWibsUxh32/97LwBIxEymm6n5CsweRPavuoaTLxjkzwNOXREw16kQhgxL8BjGsXa
- JtFpt/vSdPy2GG/T7Pz4ap1kRWXmw9v3nxWQTqJtXzTI9ID9RAiOQkBSiL//eI6oUn2e
- yZITrlgKnWCeEgmFD4x1Lmay0jonUJ+BOnTND81yExL5cV2c/Ean1/dHTgebhU9N5GDF
- SPTt1gAmhdnCm9A/aI5uprQlxXIDWw+cgaBeZyR4mItVlQXyrj/c7vj8NLahnIT91t7m
- hGkA==
+ bh=Oo1EgfoyArPx0QyjZUVlmbBpOKVgCXNN/Sfqm4FiXXo=;
+ b=MVT2DtS3qhxYrWpMcGzFRjJyUX8DxLkdDj+++XubxC0yzWN5/yIuSQ/w9GiWz/Ngb9
+ 1B7y/L1h9lSyUcyflVK1eBG5DKaUlL0HyuiAPnW31lKsY9ICCWBSSl3QHA+YHi0QCI6R
+ QtqCLWFZf+eSeG6ao+frTLVxWaTrwJOtQIK6qdKk3i7cPgfJrPgZOBo+dfJj000x9qEa
+ uAnHFp8SJnC7q/98JvqNkchehvB37w6ONeoTaadpoXGpJJI2l/FMiWwAJR8REgWBWfDZ
+ KGSgm2DMn21bQgVkcIIvryaBXr+xyAZXFpWEeG/y4kiT934gaC5b7mE2cpsVpBMb1YmO
+ lOsw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUqnHYHp0yXtrRBcUcVDozIkGBYJ0CZpAQEHANdeIfRm+ncrYFf7LGJ88zLo6rvqecWxg4jD8ErG/z@nongnu.org
-X-Gm-Message-State: AOJu0Yxd/Jy6vE/dhLMvUQn44MRz0tjVReC7exh0NZb4Bbh826F+/tXC
- Kr6UzJsNlvByW+QrvbUjlwecXqrAJw3CfNhq1mwAgs6mqU/KYF4jm3V27p5clJo=
-X-Gm-Gg: ASbGncs/VU/AZ9kUXpf3RJpYYcRfxEbUg1a0t9zmPoB9sUiRDsHa4DHgxLMGXLT74uV
- NLe6noOTddAGg2IMDIYq7aW+VbgWUBRE2bt2msHgVi2GGdoC/AlQKJYo2ofoYwVSQLWd9Y+yOMm
- dq9WFy/YORbgMP+OurUR+0J/7UDVsTntZBErrocDkWrLyx+kSNGm/njg5/o9tRC/lx+5Y9Ju3/l
- 34m+MOXpryL0Uk7KK/6TQP0fA2iUl2TJ/IP8M/7mmWrsKk/zRET6mScUWVyISx8h5j0
-X-Google-Smtp-Source: AGHT+IFsIzPEH/whkFkArGEmVc/nnWnbFUS8SKjy/3ZNik9sJI/dbV0ygS/lbB2p3m1K4Zl/8as48w==
-X-Received: by 2002:a5d:47cc:0:b0:382:506b:f627 with SMTP id
- ffacd0b85a97d-38260bea7a0mr17079479f8f.57.1732564766896; 
- Mon, 25 Nov 2024 11:59:26 -0800 (PST)
+ AJvYcCX3SWlpb1eHC+sKQF+2Ef3ZDJ7FDELZLdHYWWhIsjP2sNo4kbxlmsqUmvnxvyauHsy7qDbxERLoVhge@nongnu.org
+X-Gm-Message-State: AOJu0YzrnqiA1iZj2/ZFaJ56tmgxnIRjfu6GhpNLarnhCWVXiUW6uk2a
+ P6PSL/QW/45fk9KQpbUf7/v3q5u1lOhgtv5xE9x90SHfAqtFkPq70ahxPCxH1S8THNuFUhH84ly
+ I
+X-Gm-Gg: ASbGncswGzWPRTBE3cgHo6u+sa8N4OUDRZptP6186r6b5V3lT8oc1zZsdCqaG7AWz6p
+ NlMdyIdglcsffVdLpMAX4PFq0D/Cz0+W/iOcy9mQkSiJDJ0orog2XwEXeObY5peq41VyNYaOYS3
+ S/wChpakyfl50FwyxnKOjDhwlSXo1giLv2E3EC8Bsu6XdSNHlO5sv+OvgLWbtKfA9UQNCXoFzQm
+ +ipag/llkab38nDAkNxQ1ELYwldaudL1VhMMqHg2pP5PDzZ0oGOlOV/ekcwDts3Mh66
+X-Google-Smtp-Source: AGHT+IGEuG55nfDajrGEaz7M/kGNc1ktpiuJCiuV/narivEo/mrkiiTEuTAGFHtr+tUvMIFwJ0tt4A==
+X-Received: by 2002:a05:600c:1f85:b0:431:5ce4:bcf0 with SMTP id
+ 5b1f17b1804b1-433ce428100mr134775805e9.15.1732564769711; 
+ Mon, 25 Nov 2024 11:59:29 -0800 (PST)
 Received: from localhost.localdomain ([2.221.137.100])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fd0fbdcsm11237971f8f.109.2024.11.25.11.59.26
+ ffacd0b85a97d-3825fd0fbdcsm11237971f8f.109.2024.11.25.11.59.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 11:59:26 -0800 (PST)
+ Mon, 25 Nov 2024 11:59:29 -0800 (PST)
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 To: peter.maydell@linaro.org
 Cc: richard.henderson@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, alex.bennee@linaro.org,
  Jean-Philippe Brucker <jean-philippe@linaro.org>
-Subject: [PATCH v3 04/26] target/arm/kvm-rme: Initialize realm
-Date: Mon, 25 Nov 2024 19:56:03 +0000
-Message-ID: <20241125195626.856992-6-jean-philippe@linaro.org>
+Subject: [PATCH v3 09/26] target/arm/kvm-rme: Initialize Realm memory
+Date: Mon, 25 Nov 2024 19:56:08 +0000
+Message-ID: <20241125195626.856992-11-jean-philippe@linaro.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241125195626.856992-2-jean-philippe@linaro.org>
 References: <20241125195626.856992-2-jean-philippe@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,255 +102,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The machine code calls kvm_arm_rme_vm_type() to get the VM flag and KVM
-calls kvm_arm_rme_init() to prepare for launching a Realm. Once VM
-creation is complete, create the Realm:
-
-* Create the realm descriptor,
-* load images into Realm RAM (in another patch),
-* finalize the REC (vCPU) after the registers are reset,
-* activate the realm, at which point the realm is sealed.
+Initialize the IPA state of RAM. Collect the images copied into guest
+RAM into a sorted list, and issue POPULATE_REALM KVM ioctls once we've
+created the Realm Descriptor. The images are part of the Realm Initial
+Measurement.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 ---
-v2->v3:
-* Cleaner error handling
+v2->v3: RIPAS is now initialized separately
 ---
- target/arm/kvm_arm.h |  39 ++++++++++++++++
- target/arm/kvm-rme.c | 106 +++++++++++++++++++++++++++++++++++++++++++
- target/arm/kvm.c     |   9 +++-
- 3 files changed, 152 insertions(+), 2 deletions(-)
+ target/arm/kvm_arm.h |  14 +++++
+ target/arm/kvm-rme.c | 128 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 142 insertions(+)
 
 diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 2e6b49bf13..9d6a89f9b1 100644
+index 8b52a881b0..67db09a424 100644
 --- a/target/arm/kvm_arm.h
 +++ b/target/arm/kvm_arm.h
-@@ -153,6 +153,14 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
+@@ -255,6 +255,16 @@ int kvm_arm_rme_vm_type(MachineState *ms);
   */
- void kvm_arm_add_vcpu_properties(ARMCPU *cpu);
+ int kvm_arm_rme_vcpu_init(CPUState *cs);
  
-+/**
-+ * @cpu: The CPU object to finalize
-+ * @feature: a KVM_ARM_VCPU_* feature
++/*
++ * kvm_arm_rme_init_guest_ram
++ * @base: base address of RAM
++ * @size: size of RAM
 + *
-+ * Finalize the configuration of the given vcpu feature.
++ * If the user requested a Realm, set the base and size of guest RAM, in order
++ * to initialize the Realm IPA space.
 + */
-+int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature);
-+
- /**
-  * kvm_arm_steal_time_finalize:
-  * @cpu: ARMCPU for which to finalize kvm-steal-time
-@@ -221,6 +229,22 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level);
- 
- void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
- 
-+/**
-+ * kvm_arm_rme_init
-+ * @ms: the machine state
-+ *
-+ * Prepare the machine to be a Realm, if the user enabled it.
-+ */
-+int kvm_arm_rme_init(MachineState *ms);
-+
-+/**
-+ * kvm_arm_rme_vm_type
-+ * @ms: the machine state
-+ *
-+ * Returns the Realm KVM VM type if the user requested a Realm, 0 otherwise.
-+ */
-+int kvm_arm_rme_vm_type(MachineState *ms);
++void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size);
 +
  #else
  
  /*
-@@ -260,6 +284,11 @@ static inline void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
-     g_assert_not_reached();
+@@ -281,6 +291,10 @@ static inline bool kvm_arm_mte_supported(void)
+     return false;
  }
  
-+static inline int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
++static inline void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
 +{
-+    g_assert_not_reached();
 +}
 +
- static inline int kvm_arm_get_max_vm_ipa_size(MachineState *ms, bool *fixed_ipa)
- {
-     g_assert_not_reached();
-@@ -300,6 +329,16 @@ static inline void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
-     g_assert_not_reached();
- }
- 
-+static inline int kvm_arm_rme_init(MachineState *ms)
-+{
-+    g_assert_not_reached();
-+}
-+
-+static inline int kvm_arm_rme_vm_type(MachineState *ms)
-+{
-+    g_assert_not_reached();
-+}
-+
- #endif
- 
- #endif
+ /*
+  * These functions should never actually be called without KVM support.
+  */
 diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-index 67909349c1..60d967a842 100644
+index e3cc37538a..83a29421df 100644
 --- a/target/arm/kvm-rme.c
 +++ b/target/arm/kvm-rme.c
-@@ -12,6 +12,7 @@
+@@ -9,6 +9,7 @@
+ #include "exec/confidential-guest-support.h"
+ #include "hw/boards.h"
+ #include "hw/core/cpu.h"
++#include "hw/loader.h"
  #include "kvm_arm.h"
  #include "migration/blocker.h"
  #include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "qom/object_interfaces.h"
- #include "sysemu/kvm.h"
- #include "sysemu/runstate.h"
-@@ -27,14 +28,119 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+@@ -20,16 +21,85 @@
+ #define TYPE_RME_GUEST "rme-guest"
+ OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
+ 
++#define RME_PAGE_SIZE qemu_real_host_page_size()
++
+ struct RmeGuest {
+     ConfidentialGuestSupport parent_obj;
++    Notifier rom_load_notifier;
++    GSList *ram_regions;
++
++    hwaddr ram_base;
++    size_t ram_size;
+ };
+ 
+ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
                                            CONFIDENTIAL_GUEST_SUPPORT,
                                            { TYPE_USER_CREATABLE }, { })
  
-+static RmeGuest *rme_guest;
++typedef struct {
++    hwaddr base;
++    hwaddr size;
++} RmeRamRegion;
 +
-+static int rme_init_cpus(Error **errp)
+ static RmeGuest *rme_guest;
+ 
++static int rme_init_ram(hwaddr base, size_t size, Error **errp)
 +{
 +    int ret;
-+    CPUState *cs;
-+
-+    /*
-+     * Now that do_cpu_reset() initialized the boot PC and
-+     * kvm_cpu_synchronize_post_reset() registered it, we can finalize the REC.
-+     */
-+    CPU_FOREACH(cs) {
-+        ret = kvm_arm_vcpu_finalize(ARM_CPU(cs), KVM_ARM_VCPU_REC);
-+        if (ret) {
-+            error_setg_errno(errp, -ret, "failed to finalize vCPU");
-+            return ret;
-+        }
-+    }
-+    return 0;
-+}
-+
-+static int rme_create_realm(Error **errp)
-+{
-+    int ret;
++    uint64_t start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
++    uint64_t end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
++    struct kvm_cap_arm_rme_init_ipa_args init_args = {
++        .init_ipa_base = start,
++        .init_ipa_size = end - start,
++    };
 +
 +    ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
-+                            KVM_CAP_ARM_RME_CREATE_RD);
++                            KVM_CAP_ARM_RME_INIT_IPA_REALM,
++                            (intptr_t)&init_args);
 +    if (ret) {
-+        error_setg_errno(errp, -ret, "failed to create Realm Descriptor");
-+        return -1;
-+    }
-+
-+    if (rme_init_cpus(errp)) {
-+        return -1;
-+    }
-+
-+    ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
-+                            KVM_CAP_ARM_RME_ACTIVATE_REALM);
-+    if (ret) {
-+        error_setg_errno(errp, -ret, "failed to activate realm");
-+        return -1;
-+    }
-+
-+    kvm_mark_guest_state_protected();
-+    return 0;
-+}
-+
-+static void rme_vm_state_change(void *opaque, bool running, RunState state)
-+{
-+    Error *err = NULL;
-+
-+    if (!running) {
-+        return;
-+    }
-+
-+    if (rme_create_realm(&err)) {
-+        error_propagate_prepend(&error_fatal, err, "RME: ");
-+    }
-+}
-+
- static void rme_guest_class_init(ObjectClass *oc, void *data)
- {
- }
- 
- static void rme_guest_init(Object *obj)
- {
-+    if (rme_guest) {
-+        error_report("a single instance of RmeGuest is supported");
-+        exit(1);
-+    }
-+    rme_guest = RME_GUEST(obj);
- }
- 
- static void rme_guest_finalize(Object *obj)
- {
- }
-+
-+int kvm_arm_rme_init(MachineState *ms)
-+{
-+    static Error *rme_mig_blocker;
-+    ConfidentialGuestSupport *cgs = ms->cgs;
-+
-+    if (!rme_guest) {
-+        return 0;
-+    }
-+
-+    if (!cgs) {
-+        error_report("missing -machine confidential-guest-support parameter");
-+        return -EINVAL;
-+    }
-+
-+    if (!kvm_check_extension(kvm_state, KVM_CAP_ARM_RME)) {
-+        return -ENODEV;
-+    }
-+
-+    error_setg(&rme_mig_blocker, "RME: migration is not implemented");
-+    migrate_add_blocker(&rme_mig_blocker, &error_fatal);
-+
-+    /*
-+     * The realm activation is done last, when the VM starts, after all images
-+     * have been loaded and all vcpus finalized.
-+     */
-+    qemu_add_vm_change_state_handler(rme_vm_state_change, NULL);
-+
-+    cgs->require_guest_memfd = true;
-+    cgs->ready = true;
-+    return 0;
-+}
-+
-+int kvm_arm_rme_vm_type(MachineState *ms)
-+{
-+    if (rme_guest) {
-+        return KVM_VM_TYPE_ARM_REALM;
-+    }
-+    return 0;
-+}
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 95bcecf804..440c3ac8c6 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -95,7 +95,7 @@ static int kvm_arm_vcpu_init(ARMCPU *cpu)
-  *
-  * Returns: 0 if success else < 0 error code
-  */
--static int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
-+int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
- {
-     return kvm_vcpu_ioctl(CPU(cpu), KVM_ARM_VCPU_FINALIZE, &feature);
- }
-@@ -627,7 +627,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     hw_breakpoints = g_array_sized_new(true, true,
-                                        sizeof(HWBreakpoint), max_hw_bps);
- 
--    return 0;
-+    ret = kvm_arm_rme_init(ms);
-+    if (ret) {
-+        error_report("Failed to enable RME: %s", strerror(-ret));
++        error_setg_errno(errp, -ret,
++                         "failed to init RAM [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
++                         start, end);
 +    }
 +
 +    return ret;
++}
++
++static int rme_populate_range(hwaddr base, size_t size, bool measure,
++                              Error **errp)
++{
++    int ret;
++    uint64_t start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
++    uint64_t end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
++    struct kvm_cap_arm_rme_populate_realm_args populate_args = {
++        .populate_ipa_base = start,
++        .populate_ipa_size = end - start,
++        .flags = measure ? KVM_ARM_RME_POPULATE_FLAGS_MEASURE : 0,
++    };
++
++    ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
++                            KVM_CAP_ARM_RME_POPULATE_REALM,
++                            (intptr_t)&populate_args);
++    if (ret) {
++        error_setg_errno(errp, -ret,
++                   "failed to populate realm [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
++                   start, end);
++    }
++    return ret;
++}
++
++static void rme_populate_ram_region(gpointer data, gpointer err)
++{
++    Error **errp = err;
++    const RmeRamRegion *region = data;
++
++    if (*errp) {
++        return;
++    }
++
++    rme_populate_range(region->base, region->size, /* measure */ true, errp);
++}
++
+ static int rme_init_cpus(Error **errp)
+ {
+     int ret;
+@@ -60,6 +130,16 @@ static int rme_create_realm(Error **errp)
+         return -1;
+     }
+ 
++    if (rme_init_ram(rme_guest->ram_base, rme_guest->ram_size, errp)) {
++        return -1;
++    }
++
++    g_slist_foreach(rme_guest->ram_regions, rme_populate_ram_region, errp);
++    g_slist_free_full(g_steal_pointer(&rme_guest->ram_regions), g_free);
++    if (*errp) {
++        return -1;
++    }
++
+     if (rme_init_cpus(errp)) {
+         return -1;
+     }
+@@ -105,6 +185,43 @@ static void rme_guest_finalize(Object *obj)
+ {
  }
  
- unsigned long kvm_arch_vcpu_id(CPUState *cpu)
++static gint rme_compare_ram_regions(gconstpointer a, gconstpointer b)
++{
++        const RmeRamRegion *ra = a;
++        const RmeRamRegion *rb = b;
++
++        g_assert(ra->base != rb->base);
++        return ra->base < rb->base ? -1 : 1;
++}
++
++static void rme_rom_load_notify(Notifier *notifier, void *data)
++{
++    RmeRamRegion *region;
++    RomLoaderNotify *rom = data;
++
++    if (rom->addr == -1) {
++        /*
++         * These blobs (ACPI tables) are not loaded into guest RAM at reset.
++         * Instead the firmware will load them via fw_cfg and measure them
++         * itself.
++         */
++        return;
++    }
++
++    region = g_new0(RmeRamRegion, 1);
++    region->base = rom->addr;
++    region->size = rom->len;
++
++    /*
++     * The Realm Initial Measurement (RIM) depends on the order in which we
++     * initialize and populate the RAM regions. To help a verifier
++     * independently calculate the RIM, sort regions by GPA.
++     */
++    rme_guest->ram_regions = g_slist_insert_sorted(rme_guest->ram_regions,
++                                                   region,
++                                                   rme_compare_ram_regions);
++}
++
+ int kvm_arm_rme_init(MachineState *ms)
+ {
+     static Error *rme_mig_blocker;
+@@ -132,11 +249,22 @@ int kvm_arm_rme_init(MachineState *ms)
+      */
+     qemu_add_vm_change_state_handler(rme_vm_state_change, NULL);
+ 
++    rme_guest->rom_load_notifier.notify = rme_rom_load_notify;
++    rom_add_load_notifier(&rme_guest->rom_load_notifier);
++
+     cgs->require_guest_memfd = true;
+     cgs->ready = true;
+     return 0;
+ }
+ 
++void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
++{
++    if (rme_guest) {
++        rme_guest->ram_base = base;
++        rme_guest->ram_size = size;
++    }
++}
++
+ int kvm_arm_rme_vcpu_init(CPUState *cs)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
 -- 
 2.47.0
 
