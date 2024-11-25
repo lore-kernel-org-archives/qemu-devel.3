@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88215D58D69
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB9BD58D69
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFcWd-0005nh-K4; Mon, 25 Nov 2024 12:05:27 -0500
+	id 1tFcYu-0007Lk-NW; Mon, 25 Nov 2024 12:07:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFcWc-0005nF-BK
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:05:26 -0500
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFcWa-0001Vu-R6
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:05:26 -0500
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2fb388e64b0so51696011fa.0
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:05:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732554323; x=1733159123; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7Hmw44pw3/Vp/cuis3JSLF6c/m41LswAYGjx2Tpj8ys=;
- b=Cwq7P86OWuaCMwRx5WKkwqO2/K49bK2Ba4rCS+vFTl0+1qdpa72VlyquLRb1ITo5SI
- 0XH+bjK253hgkc9FXEOQUS3BYWLDxJek6KL9lQ2w62Mgz8TzmBUWIKljhuIHtqThJItR
- cbN4bBuDquR4tHx+GJQ2I7il+ZCjduXWOJ3iT2MH09ewf7IynNn170enPr2e19QAbXGo
- VVwoTpzqR9ofjh2oFPMTD+fW1uuhtmdDL52TO4KhZaV0AP21PxLD7QoCybUbS4oYYuLD
- QBbhMD16tOLamPNjwSDAK2SxogzLfDliHAGeHLEZM49Ej7oA/Jp7+mnmc8qJvkjgdu8c
- LWGQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFcYs-0007Ia-Pz
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:07:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFcYq-0001qQ-Ke
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:07:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732554462;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5AP8XbkEUuC8BeAqN8PL1cu9PSN7idF//Sd3vo+DF/4=;
+ b=Do7nGmSnaEPS6sp36C1ABnESRomx75Z92pl/qTPGQuccQ6pCWU9Z3wdfOblgvLHNtolnhU
+ NXBXIBN9dHKH2WXW4wa8oB/5H1CufVQx2czu3nkpaClDFwndvekdW6s8BhUh5I8Yd0+POr
+ ubfpA3nYyIyM71FGcCeXT3tVdv/nDDM=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-37-nF9rOVvINLCQpnz-SHP78A-1; Mon, 25 Nov 2024 12:07:41 -0500
+X-MC-Unique: nF9rOVvINLCQpnz-SHP78A-1
+X-Mimecast-MFC-AGG-ID: nF9rOVvINLCQpnz-SHP78A
+Received: by mail-io1-f72.google.com with SMTP id
+ ca18e2360f4ac-841a3f2aebfso86152039f.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:07:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732554323; x=1733159123;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7Hmw44pw3/Vp/cuis3JSLF6c/m41LswAYGjx2Tpj8ys=;
- b=WPFz9+eMKJTCDvxvOwLU8hbnqbRfJ2mfaRTnYfRStQwp5l/ROGQl3f2gPK5/XyrRs3
- 8Kq1pLAes1PeOOp/h2cDogOoDm4Hld5ZKfea3qOtYPCgK0rqFMb7ltCynbS1ktD8w8e7
- uPW7grpim24785cB58z4/7iICaMUfInEDMY76DrmrzSapZJ84jo2QuQSxhiSuLf8dLy8
- XWNUEAOv5IEVaXZLxamD1YjUzebiYu4PrypecWI5GGPrGIFb2T6OzBC4gOBCQ5eZU1gl
- CC+X833DHr0SAfzt2tkGtFegivEOtqmo92GZJYcsMnzJLqsuXKRPLMI/Nl5QY9nzQikR
- fESA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9NTZYamDRXQeyNhN7ubkPc0bjx5M2j4F5JiJ460SVFYY72CPmwvYJIA3eeeyjXIj7csuT0O0DUatd@nongnu.org
-X-Gm-Message-State: AOJu0Yy1FrrqUjTDpvnfLajJio4/41eYxRXi39AfixpuMnCHdphpUULF
- euS0NG8Ag7eVsgf7DwsEcOJRwrwBRN9kmjaNL0//z1JE0vUe6twG/6gJ8MNxGnbuTQCvr9QuIzS
- cL6i0ErJgM30z47VsvuxtA5oN16phNfq+3YR9Rw==
-X-Gm-Gg: ASbGncuAhT5PR4QzQ9Ij/JHVDCZt+73J1rb2hiyMBsmeCQqPbVl9rVXcycBxxQbxVpJ
- Dzoj3Ol404Cm1lo4SvJfHY9aAtDHkXsJk
-X-Google-Smtp-Source: AGHT+IFqbcKLOT3IIhmCTqNt7SEN32m8otN0YzTPHPZH4+XT3F8HJOslxDp0E/WEDl1QQpijCZnzprhSYLCkeUwmkkE=
-X-Received: by 2002:a2e:bc09:0:b0:2ff:caf8:2ff7 with SMTP id
- 38308e7fff4ca-2ffcaf83659mr6572981fa.15.1732554322659; Mon, 25 Nov 2024
- 09:05:22 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732554460; x=1733159260;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5AP8XbkEUuC8BeAqN8PL1cu9PSN7idF//Sd3vo+DF/4=;
+ b=HrLS8OmfBpA1p3VDkRdiVJTO1DD+BIBoqIAmLXrGcrnAnLL7JXkP2xsdxw7YNeuRWQ
+ iydGwrPh+vfCFKsVhcW4zQKL5gwhnI3flo6EgnEecvn8xnH4MpOvwiLELCP/CFR8NjCU
+ jhO+XjzeYxQpiOHFhPE9nNZrUZVjUaZC3+W8lCMYIcC0KCJeyXohbIqTYQvS+mVK4mxn
+ DdvFxyk/foTaYm00Ob57ZnAw/lsZPPOqMuO71bsa2uy2I3MHcRgaMC8jr4tO1nC4z6dY
+ 5MQj+KSvWJPRqfUyTnIo6HkAKM9bnGgmKgTLXX+wCfQpnqxn8PDBzF2GQkFjaa3zYTvv
+ CJDA==
+X-Gm-Message-State: AOJu0Yw46iGkpJKBbuC0Pj9Oi2ohs2eXosN7YpITxp4Qpc0MrxHB6aeh
+ KXkYovnBtKe8xl4dt4336rvGdbc9o+4ZBV1FKrezT9wgf+qIVZQdbHifb95KTOP1oW1NJ1o/cVG
+ Be6Tl2hOWnVzl9go9oX1QGtic+dSYLqZk4DJwJB5IRNZKnwlqwNpr
+X-Gm-Gg: ASbGncs7r93ut8gGmCzIRky/IOw2iqGhhu0o/nPvVF3IcERq0jB++T/4Oker0rTw3qn
+ QREEK2BxQu/a161fppRunkjsKTjW8oroN4QBmt6KzVMWt3zWCBCynAm+/iL/qOBqVHZQwIS4pnp
+ BuY8rzbLxMWnL+eKZVaXipHV/al6b8TxgZRmqRPBAjC+od26HzJ1yeQONmjs+mtUYIikzwYQrVX
+ xCvz1PE/1GzB+Vm2kJr6fea5Sh8arTZ0BetY94SJo9j5uL/vtFytpP7G/g+PkpPlao1rs3crZ96
+ XAvT449EVGE=
+X-Received: by 2002:a05:6e02:156f:b0:3a7:80ff:4a6e with SMTP id
+ e9e14a558f8ab-3a79ae26a72mr113565335ab.11.1732554460189; 
+ Mon, 25 Nov 2024 09:07:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHWU3czKdOz4aiklPLAV9l1mhkYhci4xohBNS8R5uzzwaNtviqPFMEUUo7Ku6uv2YW6meA6dA==
+X-Received: by 2002:a05:6e02:156f:b0:3a7:80ff:4a6e with SMTP id
+ e9e14a558f8ab-3a79ae26a72mr113565095ab.11.1732554459746; 
+ Mon, 25 Nov 2024 09:07:39 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e2056df4aesm531958173.19.2024.11.25.09.07.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Nov 2024 09:07:39 -0800 (PST)
+Date: Mon, 25 Nov 2024 12:07:37 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ andrey.drobyshev@virtuozzo.com, den@virtuozzo.com,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH 4/5] migration: Activate block devices if VM is paused
+ when migrating
+Message-ID: <Z0Su2RINKfqRk969@x1n>
+References: <20241125144612.16194-1-farosas@suse.de>
+ <20241125144612.16194-5-farosas@suse.de>
 MIME-Version: 1.0
-References: <66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org>
- <b045c676-4722-4fb9-a800-27c92d832347@redhat.com>
- <c8ec9243-f489-4b91-946e-2c6ff7e36f71@linaro.org>
- <CABgObfbpEEHbLYNNXoNUwD0VNPiNAYB-9REqgEFhRz3QQKTZYw@mail.gmail.com>
- <Z0REl6xtaYuvP876@redhat.com>
- <CABgObfYeNW2WYVkPVGmaPKXHLC6bfHm8fFO+wuoQzZiOB5DPyA@mail.gmail.com>
- <05108195-009e-4d06-bc79-065b1e3432ed@redhat.com>
- <d02f2221-ffa6-4232-bfcf-a19deee6d1ac@linaro.org>
-In-Reply-To: <d02f2221-ffa6-4232-bfcf-a19deee6d1ac@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 25 Nov 2024 17:05:11 +0000
-Message-ID: <CAFEAcA9vPC40B1cJpuzhN2-mfQG4sY6Sth8jhB+9RwC7aVvDsw@mail.gmail.com>
-Subject: Re: Supporting clang on windows
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241125144612.16194-5-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,21 +109,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 25 Nov 2024 at 16:48, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
-> Before sending the a series removing gcc_struct and editing the
-> documentation, do we all agree here it's the right move forward?
-> If yes, should we apply this to 9.2 release?
+On Mon, Nov 25, 2024 at 11:46:11AM -0300, Fabiano Rosas wrote:
+> Currently a VM that has been target of a migration using
+> late-block-activate will crash at the end of a new migration (with it
+> as source) when releasing ownership of the disks due to the VM having
+> never taken ownership of the disks in the first place.
+> 
+> The issue is that late-block-activate expects a qmp_continue command
+> to be issued at some point on the destination VM after the migration
+> finishes. If the user decides to never continue the VM, but instead
+> issue a new migration, then bdrv_activate_all() will never be called
+> and the assert will be reached:
+> 
+> bdrv_inactivate_recurse: Assertion `!(bs->open_flags &
+> BDRV_O_INACTIVE)' failed.
+> 
+> Fix the issue by checking at the start of migration if the VM is
+> paused and call bdrv_activate_all() before migrating. Even if the
+> late-block-activate capability is not in play or if the VM has been
+> paused manually, there is no harm calling that function again.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/migration.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/migration/migration.c b/migration/migration.c
+> index aedf7f0751..26af30137b 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -2029,6 +2029,25 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+>          return false;
+>      }
+>  
+> +    /*
+> +     * The VM might have been target of a previous migration. If it
+> +     * was in the paused state then nothing will have required the
+> +     * block layer to be activated. Do it now to ensure this QEMU
+> +     * instance owns the disk locks.
+> +     */
+> +    if (!resume && runstate_check(RUN_STATE_PAUSED)) {
 
-I would prefer not to put it into the 9.2 release -- it's one
-of those "small change with global effects" which it's hard to be
-sure don't have unexpected consequences[*], this isn't a
-regression, and we're already some way into the freeze-and-rc
-process.
+I hope this will cover all the cases that QEMU could overlook.. or I'm not
+sure whether we could invoke bdrv_activate_all() unconditionally, as it
+looks like safe to be used if all disks are active already.
 
-[*] though in this case the stuff you've done with comparing
-binaries is great and very reassuring
+I wished we don't need to bother with disk activation status at all,
+because IIUC migration could work all fine even if all disks are inactivate
+when preparing migration.. hence such change always looks like a workaround
+of a separate issue.
 
-thanks
--- PMM
+> +        Error *local_err = NULL;
+> +
+> +        g_assert(bql_locked());
+> +
+> +        bdrv_activate_all(&local_err);
+> +        if (local_err) {
+> +            error_propagate(errp, local_err);
+> +            return false;
+> +        }
+> +        s->block_inactive = false;
+
+This var so far was only used within one migration iteration, and the var
+was only set in migration_completion_precopy() so far.  Now we're resetting
+it upfront of a migration.  I'm not 100% sure if it's needed, or should be
+put somewhere else.
+
+In general, I saw the mention of other places that may also try to
+invalidate disks that used to be invalidated.  If that's the case, I wish
+we don't need to touch migration code at all, but instead if block layer
+can cope with "invalidate on top of invalidated disks" it'll be perfect.
+
+> +    }
+> +
+>      return true;
+>  }
+>  
+> -- 
+> 2.35.3
+> 
+
+-- 
+Peter Xu
+
 
