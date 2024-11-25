@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D106D58D69
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 16:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF9C5D58D69
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFcMn-00009I-8m; Mon, 25 Nov 2024 11:55:17 -0500
+	id 1tFcTo-0003Wy-Kt; Mon, 25 Nov 2024 12:02:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tFcMl-00008W-QT
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 11:55:15 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFcTm-0003Vm-KP
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:02:30 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tFcMj-00080d-O1
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 11:55:15 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-21260cfc918so32898815ad.0
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 08:55:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFcTk-0000rn-SC
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:02:30 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5ceca0ec4e7so5821068a12.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:02:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732553712; x=1733158512; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zc82MiK/JkYljK345qg6O1Q+tMFI7BEg9vg2UdNytps=;
- b=SUFvdhnpHVYMCWDCOMr/UTKxJBMtouf7PMFeP38gg+RQXAHkcu0GyMlCV7G5RTsVMd
- zXVIwy+c6XBwA+AmjgpAXJZ10ONwIaq1lwi/aWT3dHWtgLZBiAzyVORzoT1CHD2SLwvT
- 1gLrLVo5w0T27iUai+JtWKiAvor4k0cWb4gCuCij3e2XmsWxM7w0Fa4lfIT9fURqDpGd
- wYFcXD/6J3EqFYEXc2SknBbgTbwr2RxQb3tMMvrzv9AzxwkOPwY98hIc09ot2SJ20DPp
- kdaHaKebaGmWItcXBSYpJvZAumsAqTBUGTSOvxGpfJJPB5LecDyoY79Khw7VRHrC/HcJ
- PrqQ==
+ d=linaro.org; s=google; t=1732554147; x=1733158947; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=eqLkZhZ7p76k8PAt3meHFxaU003h0npuWguDuJNfBSw=;
+ b=Wr3kYMDauL+UnfOlgLGAB0KKH1OpcqoltxOMgdl1GKXInCGZibZBMOBEKNkp8t7kHh
+ HBd8HRsTnLLDBpu5IL5JwxQVV7AQFNsta/aNVThPWSq/alfj4zqSdy++x3iLnFIAaVv/
+ ep3BE1X7+Fe5v1YlW4olBL/HBu6dqR1gxnA8dGftiE74gywkwGJLIq+rLCiIAL3+aDXL
+ IKrqp42Z3ll+8Un6mu6KsYdKuCYqUGosJkETBl5gs0dT8I16OOgJ4lqcZWswpuQ47nF3
+ 6VCa4ECaF6oNeOtNH4Z3YQCCeW439dmVOzweR1X+VN7uNjsLGkSdXXeI/I1HREJD6Z6m
+ balQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732553712; x=1733158512;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zc82MiK/JkYljK345qg6O1Q+tMFI7BEg9vg2UdNytps=;
- b=VONJMDz7mGWaqq/4+q8ClwoLZqgPk5Diur4VPo6cg4IthI4cRqsNVWEe9BcEwcd+Us
- niIpZvPxrVTSGpNnE9HA/zU8KFKYSQYvnqA8yTeIA3k0qTWSCknaU6zoiW8nzQkRc+Cd
- LpUaMNCfqUBEke0tPkGzKwXPC8xGgl7bMEtfE4BsCFb+8ncL+CWo76rnm9Nc6DRjdyew
- bpWAWhpcaZEOrVA89nHZ1YxvR91JYnrFyLAkmKuKsVY+xmhgO+WY2MX0ZAVqENIdj5qH
- xgOlL2utLlZK9rm0mzw4r2XqZG6H2fyaQVE2i1aSC4fx8e7tmH2zs0tJzpU4RjUvODrC
- osMA==
-X-Gm-Message-State: AOJu0YzatyMSGqgm+NjoibKczL5+MxYceGDK38oyJ99DGblQ684XTXPo
- lsk1uHjOA9p093Fl3nhEFdu72IuLcrIOGQrDLd4o8kJL26rZrFXU7rOvYHqbmM0=
-X-Gm-Gg: ASbGnctDtrxMj767iFK8ARc3ZDIccHBcU/R0RmK7Ip2fQTRBg1r0EmvovvNJAYlmGmw
- P98BuZkmWJVdvq14Df1TJskqheU3OWwGcqhAcCJSaXwG2zITKmaCJlKflCaSyBrYu3rKlEbw3BV
- NeIY2I6ujHZXKqGbJzsF9bUNa+Nyt4zVgQzQAtTJPNTtDSnCpkDtEvSoJ3jKyULNi4+s/dopJeB
- 3S1eKDXs/RO4/rYE8is+rd6X5M8xZF14JlS1nzYrid3rVGb9uV1/XoD5LvcU73zAPDJKjSpGfbD
- UUz/jPXii4+9TuaC6jGdeQ==
-X-Google-Smtp-Source: AGHT+IH33AqXbjnaLMxMKpJDYdJMTr4JDSbYMoB9gVY6mL+tg6Q1TKUUg+NepGXoJJIrr/cztZgPuA==
-X-Received: by 2002:a17:902:db03:b0:20c:8f98:5dbe with SMTP id
- d9443c01a7336-2129f7c3b81mr153897625ad.33.1732553711774; 
- Mon, 25 Nov 2024 08:55:11 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2129dc2bd79sm65565035ad.281.2024.11.25.08.55.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Nov 2024 08:55:11 -0800 (PST)
-Message-ID: <55e0ff78-765e-4db7-9406-e8a42679c1c6@linaro.org>
-Date: Mon, 25 Nov 2024 08:55:10 -0800
+ d=1e100.net; s=20230601; t=1732554147; x=1733158947;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eqLkZhZ7p76k8PAt3meHFxaU003h0npuWguDuJNfBSw=;
+ b=trtGtR5qH4Ws8g0HxgFsSJpxsEuvWIRmLvvRPtyNVdCTOKnnAgztKfBuQNJBFOmEdh
+ bVArEYFGEJH/IchQDOIguu+eBID15bBwT026tgHlpWvJ3ccgdE06fs6LOgFUvr3vV5Tr
+ sjuBs6ZpxC6GD0nxErgT5HcjreaNjiA5qGc/oOWvd4imUttAf9aZtlNy9U4nWOmMK7Or
+ RKKhyb6tsJlbbZk41tShmPy0pGGQspOUl9VLHKK20Kma11hmRCYCHMvX8F+kdMU9IMok
+ /X7189thaoaKOyQF6TJPwMm/G2v3aqcJ6pXo+NpGqoosjGQMwOo0pcaupf73tt7we9CU
+ SlaA==
+X-Gm-Message-State: AOJu0YxoaNYHH5UEVioJSto4V6EBcxGRIDAO5im5e9PfQ/7IyR45sfjz
+ B9WJNJUTF1VAf8JwUWbKlmEJS0ypXt7WE7g+rwOUbWHkj3YpDB5sdBOY2Y0cj0dIiTVnDSWkgdK
+ ivhZZDMYDkhh2QuaQ8fuN9sQfeY5yhqznUUupjA==
+X-Gm-Gg: ASbGnctivfaDzndStmHdpUXe1BffRN10yC6NdJNVz5f8q8RJlGdTeX1kk2uoCwvs9Dp
+ U5VMjOnpK09dgI9BVwKp/uPiyot5WtkWP
+X-Google-Smtp-Source: AGHT+IGz/86ZqJMIYRap/sJ993dRDzOWvj+mJ7093Ami+8aSJ2bj+9kUBYiZcETg0KqO9rcJbZ9oxnDq8SknuVLC//0=
+X-Received: by 2002:a05:6402:210e:b0:5cf:ba57:b213 with SMTP id
+ 4fb4d7f45d1cf-5d0205a805bmr11366382a12.2.1732554146874; Mon, 25 Nov 2024
+ 09:02:26 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Supporting clang on windows
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org>
- <b045c676-4722-4fb9-a800-27c92d832347@redhat.com>
- <c8ec9243-f489-4b91-946e-2c6ff7e36f71@linaro.org>
- <CABgObfbpEEHbLYNNXoNUwD0VNPiNAYB-9REqgEFhRz3QQKTZYw@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <CABgObfbpEEHbLYNNXoNUwD0VNPiNAYB-9REqgEFhRz3QQKTZYw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+References: <20241122225049.1617774-1-pierrick.bouvier@linaro.org>
+ <20241122225049.1617774-12-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241122225049.1617774-12-pierrick.bouvier@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 25 Nov 2024 17:02:16 +0000
+Message-ID: <CAFEAcA8BhxbGH7xD8rpwRq2yG-FCef2yiNc6DWVmPgTFXEbLKA@mail.gmail.com>
+Subject: Re: [PATCH 11/12] docs/system/arm/virt: document missing properties
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ alex.bennee@linaro.org, Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,41 +98,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTEvMjQvMjQgMjM6MDAsIFBhb2xvIEJvbnppbmkgd3JvdGU6DQo+IE9uIFN1biwgTm92
-IDI0LCAyMDI0IGF0IDk6MjPigK9QTSBQaWVycmljayBCb3V2aWVyDQo+IDxwaWVycmljay5i
-b3V2aWVyQGxpbmFyby5vcmc+IHdyb3RlOg0KPiAqIHRoZXJlIGlzIG5vIHB1c2hiYWNrIGFn
-YWluc3QgY2xhbmcgc3VwcG9ydCwgdGhlcmUgaXMgcHVzaGJhY2sNCj4gYWdhaW5zdCBhc2tp
-bmcgZm9yIGEgY2hhbmdlIHdpdGhvdXQgdW5kZXJzdGFuZGluZyB0aGUgcHJvYmxlbQ0KPg0K
-DQpUaGFua3MgZm9yIHRha2luZyB0aW1lIHRvIHNoYXJlIG1vcmUgaW5zaWdodHMgYWJvdXQg
-aXQuDQoNCj4gQXMgYW4gYXNpZGUsIGF0IGh0dHBzOi8vZ2l0aHViLmNvbS9tc3lzMi9NSU5H
-Vy1wYWNrYWdlcy9wdWxsLzIxNTQwIHlvdQ0KPiBzYWlkICJJIHRoaW5rIHRvbyBpdCdzIG1v
-cmUgYSBGVUQgYXJndW1lbnQgdGhhbiBhIHJlYWwgcHJvYmxlbSIsIHdoaWNoDQo+IGlzIGEg
-Yml0IHRvbyBkaXNtaXNzaXZlLiBJZiBhbnl0aGluZyBpdCdzIGEgY2FzZSBvZiAib25jZSBi
-aXR0ZW4sDQo+IHR3aWNlIHNoeSIuDQo+DQoNClRoZXJlIHdhcyBubyBpbnRlbnRpb24gdG8g
-aGF2ZSBhIHBlcnNvbmFsIGp1Z2RtZW50LCBub3QgYmxhbWUgYW55b25lLCANCmFuZCBJIGhv
-cGUgeW91IGRpZG4ndCB0YWtlIGl0IHRoaXMgd2F5LiBJZiB0aGF0J3MgdGhlIGNhc2UsIHNv
-cnJ5IGFib3V0IA0KdGhhdC4NCg0KRlVEIGFwcGxpZXMgd2hlbiBGZWFyIGFuZCBVbmNlcnRh
-aW50eSBhcHBsaWVzLCBhbmQgaXQncyBkZWZpbml0ZWx5IHdoZXJlIA0Kd2UgYXJlIG9uIHRo
-aXMgLSB3ZSBmZWFyIHNvbWV0aGluZyBmcm9tIGEgcGFzdCBleHBlcmllbmNlLCBhbmQgd2Ug
-YXJlIA0KdW5jZXJ0YWluIGFib3V0IHRoZSBjdXJyZW50IHN0YXR1cy4gSSB0b3RhbGx5IHVu
-ZGVyc3RhbmQgdGhhdCdzIGEgdmVyeSANCmhhcmQgaXNzdWUgdG8gZGlhZ25vc2Ugd2hlbiB5
-b3UgbWVldCB0aG9zZSBraW5kIG9mIG1lbW9yeSBsYXlvdXQgYnVncy4NCg0KPiBJIHVuZGVy
-c3RhbmQgdGhhdCwgYW5kIEknbSBhc2tpbmcgeW91IHRvIGRvIGFub3RoZXIgZXhwZXJpbWVu
-dC4gRG8gbm90DQo+IGNoYW5nZSB0aGUgY29tcGlsZS10aW1lIG9wdGlvbnMuIEluc3RlYWQs
-IGNoYW5nZSBRRU1VX1BBQ0tFRCB0byBqdXN0DQo+IA0KPiAjZGVmaW5lIFFFTVVfUEFDS0VE
-IF9fYXR0cmlidXRlX18oKHBhY2tlZCkpDQo+IA0KPiBhbmQgc2VlIGlmIGFueSBzdHJ1Y3Qg
-ZGVmaW5pdGlvbnMgKHdoaWNoIHdpbGwgYWxsIGZvbGxvdyB0aGUgbXNfc3RydWN0DQo+IHJ1
-bGVzKSBjaGFuZ2UuIElmIHRoZXJlIGFyZSBjaGFuZ2VzLCBsZXQncyBleGFtaW5lIHdoYXQg
-dGhleSBhcmUgYW5kDQo+IHdoeSBteSBhbmFseXNpcyBhYm92ZSB3YXMgaW5jb3JyZWN0LiBG
-aXggdGhvc2UgY2FzZXMsIGFkZA0KPiBRRU1VX0JVSUxEX0JVR19PTiBjaGVja3Mgb25seSB0
-byB0aGUgYWZmZWN0ZWQgc3RydWN0cywgYW5kIG9uY2UgeW91J3ZlDQo+IGFkZHJlc3NlZCBh
-bnkgZGlmZmVyZW5jZXMgKGlmIHRoZXkgZXhpc3QpLCB5b3UgY2FuIHByb2NlZWQgd2l0aA0K
-PiBkcm9wcGluZyBnY2Nfc3RydWN0IHNpbmNlIHRoZXJlIHdpbGwgYmUgY29uY3JldGUgZXZp
-ZGVuY2UgcHJvdmluZyBpdCdzDQo+IHNhZmUuDQo+DQoNCkkgZGlkbid0IGV4cGVjdCB0aGUg
-aXNzdWUgb2Ygb3VyIGNvbnZlcnNhdGlvbiB3b3VsZCBiZSB0byBnZXQgcmlkIG9mIA0KZ2Nj
-X3N0cnVjdCBlbnRpcmVseS4gVGhhbmtzIGZvciBwdXNoaW5nIGluIHRoZSByaWdodCBkaXJl
-Y3Rpb24uDQoNCkkgYW5zd2VyZWQgbGF0ZXIgb24gdGhpcyB0aHJlYWQgZm9yIHRoaXMsIGFu
-ZCBpdCdzIGEgdmVyeSBwb3NpdGl2ZSANCmNvbmNsdXNpb246IG5vIGRpZmZlcmVuY2Ugd2Fz
-IGZvdW5kIHdpdGgvd2l0aG91dCBnY2Nfc3RydWN0IGF0dHJpYnV0ZS4NCg0KPiBQYW9sbw0K
-PiANCg0KVGhhbmtzLA0KUGllcnJpY2sNCg==
+On Fri, 22 Nov 2024 at 22:52, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  docs/bypass-iommu.txt    |  2 ++
+>  docs/system/arm/virt.rst | 15 +++++++++++++++
+>  2 files changed, 17 insertions(+)
+>
+> diff --git a/docs/bypass-iommu.txt b/docs/bypass-iommu.txt
+> index e6677bddd32..62818e44ed9 100644
+> --- a/docs/bypass-iommu.txt
+> +++ b/docs/bypass-iommu.txt
+> @@ -1,3 +1,5 @@
+> +.. _bypass_iommu:
+> +
+
+This is a .txt file -- adding rST markup to it won't do anything :-)
+
+(It's one of the remaining legacy .txt files that we haven't
+yet converted to .rst and moved to the right place in the
+documentation. The .txt files in the /docs/ directory are
+mostly the awkward ones to convert because they are a mishmash
+of internal info about the implementation and stuff that is user
+facing, that needs to be pulled apart by somebody with some
+familiarity with the feature and moved into the right places,
+or in some cases simply deleted as unnecessary.)
+
+>  BYPASS IOMMU PROPERTY
+>  =====================
+>
+> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+> index 11ceb898264..d3d21499ff5 100644
+> --- a/docs/system/arm/virt.rst
+> +++ b/docs/system/arm/virt.rst
+> @@ -169,10 +169,17 @@ iommu
+>    ``smmuv3``
+>      Create an SMMUv3
+>
+> +default-bus-bypass-iommu
+> +  Set ``on``/``off`` to enable/disable `bypass_iommu <bypass_iommu>`_ for
+> +  default root bus.
+> +
+>  ras
+>    Set ``on``/``off`` to enable/disable reporting host memory errors to a guest
+>    using ACPI and guest external abort exceptions. The default is off.
+>
+> +acpi
+> +  Set ``on``/``off``/``auto`` to enable/disable ACPI.
+> +
+>  dtb-randomness
+>    Set ``on``/``off`` to pass random seeds via the guest DTB
+>    rng-seed and kaslr-seed nodes (in both "/chosen" and
+> @@ -186,6 +193,14 @@ dtb-randomness
+>  dtb-kaslr-seed
+>    A deprecated synonym for dtb-randomness.
+>
+> +x-oem-id
+> +  Set string (up to 6 bytes) to override the default value of field OEMID in ACPI
+> +  table header.
+> +
+> +x-oem-table-id
+> +  Set string (up to 8 bytes) to override the default value of field OEM Table ID
+> +  in ACPI table header.
+
+Do we have a policy about whether we should explicitly note that
+x- options are not ABI-stable when we document them?
+
+thanks
+-- PMM
 
