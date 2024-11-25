@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF270D3B7F2
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 08:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A582D3B7F1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 08:48:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFUkl-0008Po-LF; Mon, 25 Nov 2024 03:47:31 -0500
+	id 1tFUla-0000n9-FJ; Mon, 25 Nov 2024 03:48:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUki-0008PL-RJ
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:47:29 -0500
-Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUlZ-0000mg-NK
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:48:21 -0500
+Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUkg-0005Ne-NT
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:47:28 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.108.2.98])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4XxfTm07r0z10Ym;
- Mon, 25 Nov 2024 08:47:24 +0000 (UTC)
-Received: from kaod.org (37.59.142.101) by DAG6EX1.mxp5.local (172.16.2.51)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUlY-0005RC-46
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:48:21 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.108.25.112])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4XxfVn57mwz10Ms;
+ Mon, 25 Nov 2024 08:48:17 +0000 (UTC)
+Received: from kaod.org (37.59.142.106) by DAG6EX1.mxp5.local (172.16.2.51)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 25 Nov
- 2024 09:47:23 +0100
+ 2024 09:48:17 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-101G004d3c38113-41d6-493b-a9ad-d9b41f2bfc47,
+ (GARM-106R00679406e19-4716-4bea-83a9-98cbfa6ce69d,
  9B13B6726B83599ED9C5792380F23B2D0625FF83) smtp.auth=groug@kaod.org
 X-OVh-ClientIp: 88.179.9.154
-Date: Mon, 25 Nov 2024 09:47:17 +0100
+Date: Mon, 25 Nov 2024 09:48:09 +0100
 From: Greg Kurz <groug@kaod.org>
 To: Christian Schoenebeck <qemu_oss@crudebyte.com>
 CC: <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>
-Subject: Re: [PATCH 1/6] tests/9p: add 'use-after-unlink' test
-Message-ID: <20241125094717.50e0344b@bahia>
-In-Reply-To: <3d6449d4df25bcdd3e807eff169f46f1385e5257.1732465720.git.qemu_oss@crudebyte.com>
+Subject: Re: [PATCH 2/6] tests/9p: fix Rreaddir response name
+Message-ID: <20241125094809.1e7d2bcd@bahia>
+In-Reply-To: <daad7af58b403aaa2487c566032beca36664b30e.1732465720.git.qemu_oss@crudebyte.com>
 References: <cover.1732465720.git.qemu_oss@crudebyte.com>
- <3d6449d4df25bcdd3e807eff169f46f1385e5257.1732465720.git.qemu_oss@crudebyte.com>
+ <daad7af58b403aaa2487c566032beca36664b30e.1732465720.git.qemu_oss@crudebyte.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.101]
-X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG6EX1.mxp5.local
+X-Originating-IP: [37.59.142.106]
+X-ClientProxiedBy: DAG8EX1.mxp5.local (172.16.2.71) To DAG6EX1.mxp5.local
  (172.16.2.51)
-X-Ovh-Tracer-GUID: 89b7e42d-70c6-49bf-b267-de1e671fe25d
-X-Ovh-Tracer-Id: 4150911485057800669
+X-Ovh-Tracer-GUID: cac344ee-de2b-4577-9c5e-2dce7e9b0c03
+X-Ovh-Tracer-Id: 4166111131521358301
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdduvdduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddruddtuddpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepfedprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdfovfetjfhoshhtpehmohehgeekmgdpmhhouggvpehsmhhtphhouhht
-DKIM-Signature: a=rsa-sha256; bh=qchhKHFOU1S+U6JPlA/xvmQ7hSOHGeQfZsDLKScdBhg=; 
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdduvdduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddruddtiedpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepfedprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdfovfetjfhoshhtpehmohehgeekmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=WrK2D5viesXupmPj6r6mRsv1uMqHflvmZGnHzDBHDRQ=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1732524444; v=1;
- b=F/ozCWwrj3SO1iOsKMMKzfg75zOcwB7DtugKYxnHYUDFBHp35VHXaRFaRbZgYJoFg0+CDiK6
- qX3tJUkOqpi+lMD1dk3dDH5swi5tGYu+1nB/6xHJXlGMLx04IfDteJPHON1gZZ6s9JQwWANGOei
- N2EmenlUfwDvasfxZFTg4oS+/4XtGQurRzgY28TDLgC79V4e/Hlb19ndFFipUEz/z1WtePzSZkK
- K+FevchCQCoyS7oTAek4s0X4y1f+CKMVdjYxsJWueoZG+N7e/qeK/E0iBAAuiVy8pCHtSFGx7AS
- yA/WeoJlJ9EzjJkgO9PFB2jmwAm+yk/eT1VjJ/LeuhCOQ==
-Received-SPF: pass client-ip=178.33.255.19; envelope-from=groug@kaod.org;
- helo=2.mo548.mail-out.ovh.net
+ t=1732524497; v=1;
+ b=jtBCk4EqYhfOBrCp3+yPYZ/9oefHPTGnWS+V8E/wdqAHUZxL7FE2y/pbY5qqUKafwT1jxQwF
+ U12sByQ1wTuMY/yXFjtb+2Jv+y9L9lSvbgFXuUCc5mwzssHRdi8PdD/KuH/iz+n+6Dj4wqfXems
+ UT+d/3UZxOBr5RABPXYXVUs8Vozstg6P8Lw10P4Yh5WYi+qBdDyYp3dGQRO+sLO1ym/UvIat7Tj
+ ScUSf4wypqLCQT2flvs9PG34vgk8fvoEz4FoWdeLovtvliF5b8hMdhA1OQb5JDB7NXzzQSGOw65
+ Y/opzi171VInOxYX8jSY6PSqkpWdNeJbUgpLW6zvQStjQ==
+Received-SPF: pass client-ip=188.165.32.156; envelope-from=groug@kaod.org;
+ helo=3.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -67,7 +67,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,91 +83,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Christian,
-
-On Wed, 21 Feb 2024 15:13:13 +0100
+On Sun, 24 Nov 2024 14:34:31 +0100
 Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-> After removing a file from the file system, we should still be able to
-> work with the file if we already had it open before removal.
-> 
-> As a first step we verify that it is possible to write to an unlinked
-> file, as this is what already works. This test is extended later on
-> after having fixed other use cases after unlink that are not working
-> yet.
+> All 9p response types are prefixed with an "R", therefore fix
+> "READDIR" -> "RREADDIR" in function rmessage_name().
 > 
 > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 > ---
 
-Test looks good but make sure it is merged last to preserve bisect.
-
 Reviewed-by: Greg Kurz <groug@kaod.org>
 
->  tests/qtest/virtio-9p-test.c | 41 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
+>  tests/qtest/libqos/virtio-9p-client.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-> index 3c8cd235cf..f6d7400a87 100644
-> --- a/tests/qtest/virtio-9p-test.c
-> +++ b/tests/qtest/virtio-9p-test.c
-> @@ -693,6 +693,45 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
->      g_assert(stat(real_file, &st_real) == 0);
+> diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+> index b8adc8d4b9..c61632fcd3 100644
+> --- a/tests/qtest/libqos/virtio-9p-client.c
+> +++ b/tests/qtest/libqos/virtio-9p-client.c
+> @@ -238,7 +238,7 @@ static const char *rmessage_name(uint8_t id)
+>          id == P9_RLINK ? "RLINK" :
+>          id == P9_RUNLINKAT ? "RUNLINKAT" :
+>          id == P9_RFLUSH ? "RFLUSH" :
+> -        id == P9_RREADDIR ? "READDIR" :
+> +        id == P9_RREADDIR ? "RREADDIR" :
+>          "<unknown>";
 >  }
 >  
-> +static void fs_use_after_unlink(void *obj, void *data,
-> +                                QGuestAllocator *t_alloc)
-> +{
-> +    QVirtio9P *v9p = obj;
-> +    v9fs_set_allocator(t_alloc);
-> +    static const uint32_t write_count = P9_MAX_SIZE / 2;
-> +    g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
-> +    g_autofree char *buf = g_malloc0(write_count);
-> +    struct stat st_file;
-> +    uint32_t fid_file;
-> +    uint32_t count;
-> +
-> +    tattach({ .client = v9p });
-> +
-> +    /* create a file "09/doa_file" and make sure it exists and is regular */
-> +    tmkdir({ .client = v9p, .atPath = "/", .name = "09" });
-> +    tlcreate({ .client = v9p, .atPath = "09", .name = "doa_file" });
-> +    g_assert(stat(real_file, &st_file) == 0);
-> +    g_assert((st_file.st_mode & S_IFMT) == S_IFREG);
-> +
-> +    /* request a FID for that regular file that we can work with next */
-> +    fid_file = twalk({
-> +        .client = v9p, .fid = 0, .path = "09/doa_file"
-> +    }).newfid;
-> +    g_assert(fid_file != 0);
-> +
-> +    /* now first open the file in write mode before ... */
-> +    tlopen({ .client = v9p, .fid = fid_file, .flags = O_WRONLY });
-> +    /* ... removing the file from file system */
-> +    tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
-> +
-> +    /* file is removed, but we still have it open, so this should succeed */
-> +    count = twrite({
-> +        .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
-> +        .data = buf
-> +    }).count;
-> +    g_assert_cmpint(count, ==, write_count);
-> +}
-> +
->  static void cleanup_9p_local_driver(void *data)
->  {
->      /* remove previously created test dir when test is completed */
-> @@ -758,6 +797,8 @@ static void register_virtio_9p_test(void)
->      qos_add_test("local/hardlink_file", "virtio-9p", fs_hardlink_file, &opts);
->      qos_add_test("local/unlinkat_hardlink", "virtio-9p", fs_unlinkat_hardlink,
->                   &opts);
-> +    qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
-> +                 &opts);
->  }
->  
->  libqos_init(register_virtio_9p_test);
 
 
-Cheers,
 
 -- 
 Greg
