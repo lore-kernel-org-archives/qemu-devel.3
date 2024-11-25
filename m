@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9F1FD58D49
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 13:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3363ED58D4C
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 13:38:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFZD8-0008Pl-OP; Mon, 25 Nov 2024 08:33:08 -0500
+	id 1tFZHL-00022P-Af; Mon, 25 Nov 2024 08:37:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tFZD0-0008OY-Qc; Mon, 25 Nov 2024 08:32:59 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tFZCy-00089e-RS; Mon, 25 Nov 2024 08:32:58 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 32E1CB1409;
- Mon, 25 Nov 2024 16:32:27 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 598571795DF;
- Mon, 25 Nov 2024 16:32:41 +0300 (MSK)
-Message-ID: <2bc0c77c-e843-4c0b-b7c3-1c97a12a7ad1@tls.msk.ru>
-Date: Mon, 25 Nov 2024 16:32:41 +0300
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tFZHJ-0001zE-FH
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 08:37:25 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tFZHH-0000lo-Gz
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 08:37:25 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7248c1849bdso4404242b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 05:37:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1732541841; x=1733146641; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=30sNnKLjIG+X0DddhDYNVvgCWDY8gxVcKu0ojUEV0Ic=;
+ b=n0upVOuy6qjGQWkO6m7fO+VSABhJN5wb3vfy7EvcxOEl2Gzmhaje+PnGAWitkKRgCZ
+ DNhheqjb0NL9fz20w2GjZ9Nh7awiE0NcUUj0gK93dHGy2sXkAoPeH40R4N58qQxhNgbM
+ G8fM0W1PSiuiaTX6KO4gftM9J5HfWnznpwl5cVhc/AA6X/A52Kw6wUDYtxEJ6hrfeOh0
+ yLVfZq4aRxrhDJ7bWpvD5iiDQejacNlPE/6enpUZJqf9kFl7jLgRJ4VztHNO1Df2x1R/
+ PrLwyKIOOUZKs+E7e7hZKCUoqefTnJ2DnPpsLuKOhyO02WpC4SOAykCYawVQjwrqCTAh
+ pGLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732541841; x=1733146641;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=30sNnKLjIG+X0DddhDYNVvgCWDY8gxVcKu0ojUEV0Ic=;
+ b=ac572MfKEzEuc7W2XD76IQdlEth0LIOSSGQZYSop87/D+vtfdm5RASEcFhkSEYXu0O
+ y4NBwUgpGWfacVvu7mIouQeaAe0Hi1MKZe98ijtyNBsHSDsLpb5X3UbTBM7ThJfB805H
+ l3Js6gCgJdGrvLWcaZ1b5/6Ifky9X9t0jBP/1Z/YPpQ7MeN/XwDIlM++/UQb9Ii83MeH
+ jXSStviXimR3FPpcBIlknKLwxeuTNzyfhe33Gye65/idwCuvIKOxz2WZjGwQ5p+SIKYB
+ QJOJiBLXLpkcyYmLphYnUgAnuCwz+xpwLloL2CC6Js8I31O/ejmjfJzA+wKBzqVe5+6u
+ bgVw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVk/GUtB61uhkXBb76YpXgtQbO2CsbyenuQVc2KWrQshnSX5IWkoJmIXxCh4puC9WqyXGJihtSn+ZOw@nongnu.org
+X-Gm-Message-State: AOJu0YwhOxYqPO7R+lx1yjsn/LUqiDn77cPwOBKeVRxR/m2jnmupx6XR
+ TqFekoGdRyOAfGSMl39pcE30cv+Ww0r+uzQ2vWGZ/m1WpfaJ8+ppPMHUrRHj6OE=
+X-Gm-Gg: ASbGnct/NCzyCu6bnG6ROrtVWOlWGIuUeKt78bO18YLkqVPoYrjD4kdSMqd8owMUVaD
+ YJn9aI94zi9nk+X1Gn98Uy/wlX2RLxht0diQp5yxQsFxbheBP/K+TXlczgQcL0K8LgN31Bg7G8X
+ +hcSGHXWImj3lyhAXjNmhjc810aJyY6HCEW53uGcDGhBqoh6j96vlz2hCvEFs8gaBezdAP3zVoB
+ LVMaO5M59kcUF6ooItTrhu1mvK3+sXc6MavKYlbZ3Cg/jVjmJjRo878eUtCheU=
+X-Google-Smtp-Source: AGHT+IF0ORFvsoXHhr245DHOFUfCRQ5+JqW4V/UPXsmPoVch6cWd4xk9e7Iy5HRpFc99b8rO2gyrzA==
+X-Received: by 2002:a05:6a20:c91c:b0:1dc:5023:e8d9 with SMTP id
+ adf61e73a8af0-1e09e4af483mr19642573637.25.1732541841557; 
+ Mon, 25 Nov 2024 05:37:21 -0800 (PST)
+Received: from [192.168.68.110] ([187.101.65.72])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fbcc3de284sm6606468a12.55.2024.11.25.05.37.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Nov 2024 05:37:21 -0800 (PST)
+Message-ID: <f4aa9779-8d69-46ac-9923-3beecf760770@ventanamicro.com>
+Date: Mon, 25 Nov 2024 10:37:15 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] cirrus-ci: Remove MSYS2 jobs duplicated with
- gitlab-ci
-To: Thomas Huth <thuth@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Jintao Yin <nicememory@gmail.com>,
- Yonggang Luo <luoyonggang@gmail.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20230322135721.61138-1-philmd@linaro.org>
- <20230322135721.61138-3-philmd@linaro.org>
- <918536da-bba3-4a0f-96e0-0acf5287e59e@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <918536da-bba3-4a0f-96e0-0acf5287e59e@redhat.com>
+Subject: Re: [PATCH v2 0/7] Pointer Masking update for Zjpm v1.0
+To: baturo.alexey@gmail.com
+Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com,
+ liwei1518@gmail.com, alistair23@gmail.com, frank.chang@sifive.com,
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+References: <20241121061259.4043177-1-baturo.alexey@gmail.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20241121061259.4043177-1-baturo.alexey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,18 +104,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-25.11.2024 15:16, Thomas Huth wrote:
-> 
->   Hi Michael,
-> 
-> could you please cherry-pick this patch to the QEMU 7.2 stable branch?
-> 
-> On IRC, we just noticed that this job is still running for the staging-7.2 branch. Since nobody really looks for the output on cirrus-ci by default 
-> (this is the part that is not mirrored to our gitlab CI board), this is just wasting our precious CI minutes from the Cirrus-CI nowadays. Since we 
-> just ran out of Cirrus-CI credits for this month, removing the job from the 7.2 branch could help to survive longer the next month, I think.
+Hi Alexey,
 
-Picked up.  It's nice to have one less failing job for the 7.2 branch,
-thank you!
 
-/mjt
+I believe this is not the second version of this work. When I asked about the
+next versions this was already in v9:
+
+https://lore.kernel.org/qemu-riscv/d4241c7b-ae97-4dc1-bc60-5f0eed58d3a5@ventanamicro.com/
+
+And it had most of the patches already reviewed by Alistair and Richard. So this
+would be in fact v11, with a lot of patches already reviewed.
+
+If you could re-send this series as v11, keeping reviewed-by tags from code that you
+didn't change from one version to the other, the review will go faster.
+
+
+Thanks,
+
+Daniel
+
+On 11/21/24 3:12 AM, baturo.alexey@gmail.com wrote:
+> From: Alexey Baturo <baturo.alexey@gmail.com>
+> 
+> Hi,
+> 
+> I've rebased this patch series and addressed Richard's and Daniel's comments.
+> Thanks
+> 
+> *** BLURB HERE ***
+> [v0]:
+> As Pointer Masking is finally ratified, these patches intend to update the existing code to the final version.
+> These patches have been submitted previously and I tried to address all the suggestions, but I'd suggest to review them from the clean slate and then finally push them to the repo.
+> Thanks.
+> 
+> Alexey Baturo (7):
+>    target/riscv: Remove obsolete pointer masking extension code.
+>    target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
+>      of Zjpm v1.0
+>    target/riscv: Add helper functions to calculate current number of
+>      masked bits for pointer masking
+>    target/riscv: Add pointer masking tb flags
+>    target/riscv: Update address modify functions to take into account
+>      pointer masking
+>    target/riscv: Apply pointer masking for virtualized memory accesses
+>    target/riscv: Enable updates for pointer masking variables and thus
+>      enable pointer masking extension
+> 
+>   target/riscv/cpu.c                      |  19 +-
+>   target/riscv/cpu.h                      |  51 ++--
+>   target/riscv/cpu_bits.h                 |  91 +-----
+>   target/riscv/cpu_cfg.h                  |   3 +
+>   target/riscv/cpu_helper.c               | 124 +++++---
+>   target/riscv/csr.c                      | 357 ++----------------------
+>   target/riscv/insn_trans/trans_rvh.c.inc |  11 +
+>   target/riscv/machine.c                  |  17 +-
+>   target/riscv/pmp.c                      |  14 +-
+>   target/riscv/pmp.h                      |   1 +
+>   target/riscv/tcg/tcg-cpu.c              |   5 +-
+>   target/riscv/translate.c                |  51 ++--
+>   target/riscv/vector_helper.c            |  18 +-
+>   13 files changed, 224 insertions(+), 538 deletions(-)
+> 
+
 
