@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65917D59D68
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA3FD59D67
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:01:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFfFO-0005I3-BM; Mon, 25 Nov 2024 14:59:50 -0500
+	id 1tFfFF-00058Y-Jy; Mon, 25 Nov 2024 14:59:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tFfFK-0005Em-Hc
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:46 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1tFfFB-00054c-S4
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:37 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tFfFC-0004ru-TJ
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:45 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43167ff0f91so44393155e9.1
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 11:59:38 -0800 (PST)
+ id 1tFfF4-0004ly-0o
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:37 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3824446d2bcso4300921f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 11:59:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732564777; x=1733169577; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732564768; x=1733169568; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0X0EuUhZkl3V6dkF5yC+rBGIPkT3Qq6H9A8p4Nm7TQw=;
- b=hpz6CoXWrfu/u5D/zuUdjHh/AvL8kP27mzNPXiXdNnoalsfkyzsBrzGSqBII1X7CIa
- rp17wBbh7KHPR2xV2TNhp7/ta9AogEokpZjqOH5OiRBnC6mqK7P1w5EmEeyu3vF1ZrJv
- Rqrf6NRdA2YmWzedbX6P3Om39hocVrlgGKlgnj02Oslb/sJxeb4iISvhq91Df+axqSuz
- x7PpQbz3GsEDERvckGsNDWJTfsz7ZfcyULuDI3fqQhdQX2xadmLZYUfcK4Rvl0vfR+Kw
- hroJBsgXpx/9M8TR8JBj6TvaZA301YtxUj6ZNOiMyzyprwnIqoQbnlpJTGVdGHK5/Pym
- IAOw==
+ bh=y1yqlpej3WjW1JQDA6ksx54DWAhTx2FxYXSqrclmH28=;
+ b=VfZ9MnM1GfBL5TzHBhsMp8SFlKTnEpX8aq8uZ/3GQRcL+9zU+vVfEKkizT0hS/3R0t
+ yEbSBNATrlZyK9xTEIvxzLSriAM1EztFG8s0NJ3eTCJiWm/OvRFXtxaGkSqtMXWmA6ks
+ gmP9rs5whUBQ++Bho4mBvgUtCVOsxca49FRPs5nlwqzUTEI4CG3coZqm7Ynz/SkJOvnE
+ OSiFgbBE28lBkuxSmHymx0neYSI7tQDNSAagiK+Av+9rcr8Lns/QmOqaaLFlHyCipfx1
+ WGznofsvreDHtRRE0q6v8OWx5OyzC1FPUMtIx6Zj+t3gvbXjE6OOT1KsWTOiHrppZ4V+
+ cJ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732564777; x=1733169577;
+ d=1e100.net; s=20230601; t=1732564768; x=1733169568;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0X0EuUhZkl3V6dkF5yC+rBGIPkT3Qq6H9A8p4Nm7TQw=;
- b=EXaDtip1lRuSytzP6s3rJFwTUIJWz0+6R+aHT4Nogsi3ZpkKhS4/nhXNQzZ5lFxNlU
- uBCOjC9SjnZw/G1oCpnKPNTnl7MD+BVm4CGAUseuEvSzfLZxCYJVSAo24PDky/dNDAse
- wRN9UvEDABqlrTlNzL6xMIoM7yyA9S1QOUTCN+wmrwN/hlGRsOgpnDieILTusktlCIrj
- OXe2xP1AJ2ElQeSB6Z9LHybfYLVQ44SyIWeK1bZPrDQv2+3ZMhGVVyL/UHFhkWGKJR6R
- pIyJcwoPUyuqcw2Qz0GyqQO/jtPN6kVuL18HkZuL6NBypstdyQ6Jm+cz3udhiqpFC+ei
- +RjA==
+ bh=y1yqlpej3WjW1JQDA6ksx54DWAhTx2FxYXSqrclmH28=;
+ b=qOa8Ss5MuZJUNn+G5FuiURzjgn+62ndE77NWEJ/UNXCVrtr13ELspsHDgacj15xmzp
+ B/7OrWibsUxh32/97LwBIxEymm6n5CsweRPavuoaTLxjkzwNOXREw16kQhgxL8BjGsXa
+ JtFpt/vSdPy2GG/T7Pz4ap1kRWXmw9v3nxWQTqJtXzTI9ID9RAiOQkBSiL//eI6oUn2e
+ yZITrlgKnWCeEgmFD4x1Lmay0jonUJ+BOnTND81yExL5cV2c/Ean1/dHTgebhU9N5GDF
+ SPTt1gAmhdnCm9A/aI5uprQlxXIDWw+cgaBeZyR4mItVlQXyrj/c7vj8NLahnIT91t7m
+ hGkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcXAetnsNvuVxjjgshZV+2EFUzg7fV8dZHws/xbWCsRAp5idw0uLtS16M2GcFR2P1xSnqf6lI8+i8g@nongnu.org
-X-Gm-Message-State: AOJu0Yxvyt7xB8HIWk2d9S2yRilHHUNQr29GaxDusMf9JWF58zzhukAp
- QvoEayi+zuNjdPU23oDPQdzPyyinnTcYbV5hBbmBXcBXAT1WmrOLSj3D0QYJyY8=
-X-Gm-Gg: ASbGncvXdYCk8R0r1qSjZcTRZeLcWCaghjpWHm1Lo/mOQpeKoVU6xi1sX6xYOIQ4rnz
- Fh8b+MQ+rOLnSv0qi/+/bW7qqwP0QiptD5gzDGCOjc9FcuKRItBPF0U9pGFhjGwFGg6Uk98d+8I
- Mp3yd1+jdZDnIMmPKcnZ7y4C+eo0kgxZUUFy4Hpdi3sDWDe2MyVtbOjUjXsK9/4Pdxe1aXjbkHJ
- aESqR0HMjTfC3znSE0jRbLBlrVmtxyAmln0LcovKAWcbPa/u4qV95du9hhdoS3NjtKn
-X-Google-Smtp-Source: AGHT+IFSmpP21tnbsCvXgk64PcQ1IqbTren1CzqreRLS7x4zvWdbhUeeP02hsbF6jzpxXIfyBKQGpQ==
-X-Received: by 2002:a5d:6d0b:0:b0:385:bd85:5a32 with SMTP id
- ffacd0b85a97d-385bd855a91mr2115120f8f.15.1732564777217; 
- Mon, 25 Nov 2024 11:59:37 -0800 (PST)
+ AJvYcCWUqnHYHp0yXtrRBcUcVDozIkGBYJ0CZpAQEHANdeIfRm+ncrYFf7LGJ88zLo6rvqecWxg4jD8ErG/z@nongnu.org
+X-Gm-Message-State: AOJu0Yxd/Jy6vE/dhLMvUQn44MRz0tjVReC7exh0NZb4Bbh826F+/tXC
+ Kr6UzJsNlvByW+QrvbUjlwecXqrAJw3CfNhq1mwAgs6mqU/KYF4jm3V27p5clJo=
+X-Gm-Gg: ASbGncs/VU/AZ9kUXpf3RJpYYcRfxEbUg1a0t9zmPoB9sUiRDsHa4DHgxLMGXLT74uV
+ NLe6noOTddAGg2IMDIYq7aW+VbgWUBRE2bt2msHgVi2GGdoC/AlQKJYo2ofoYwVSQLWd9Y+yOMm
+ dq9WFy/YORbgMP+OurUR+0J/7UDVsTntZBErrocDkWrLyx+kSNGm/njg5/o9tRC/lx+5Y9Ju3/l
+ 34m+MOXpryL0Uk7KK/6TQP0fA2iUl2TJ/IP8M/7mmWrsKk/zRET6mScUWVyISx8h5j0
+X-Google-Smtp-Source: AGHT+IFsIzPEH/whkFkArGEmVc/nnWnbFUS8SKjy/3ZNik9sJI/dbV0ygS/lbB2p3m1K4Zl/8as48w==
+X-Received: by 2002:a5d:47cc:0:b0:382:506b:f627 with SMTP id
+ ffacd0b85a97d-38260bea7a0mr17079479f8f.57.1732564766896; 
+ Mon, 25 Nov 2024 11:59:26 -0800 (PST)
 Received: from localhost.localdomain ([2.221.137.100])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fd0fbdcsm11237971f8f.109.2024.11.25.11.59.36
+ ffacd0b85a97d-3825fd0fbdcsm11237971f8f.109.2024.11.25.11.59.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 11:59:36 -0800 (PST)
+ Mon, 25 Nov 2024 11:59:26 -0800 (PST)
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 To: peter.maydell@linaro.org
 Cc: richard.henderson@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, alex.bennee@linaro.org,
  Jean-Philippe Brucker <jean-philippe@linaro.org>
-Subject: [RFC PATCH v3 22/26] hw/arm/boot: Skip bootloader for confidential
- guests
-Date: Mon, 25 Nov 2024 19:56:21 +0000
-Message-ID: <20241125195626.856992-24-jean-philippe@linaro.org>
+Subject: [PATCH v3 04/26] target/arm/kvm-rme: Initialize realm
+Date: Mon, 25 Nov 2024 19:56:03 +0000
+Message-ID: <20241125195626.856992-6-jean-philippe@linaro.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241125195626.856992-2-jean-philippe@linaro.org>
 References: <20241125195626.856992-2-jean-philippe@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,114 +101,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An independent verifier needs to reconstruct the content of guest memory
-in order to attest that it is running trusted code. To avoid having to
-reconstruct the bootloader generated by QEMU, skip this step and jump
-directly to the kernel, with the DTB address in x0 as specified by the
-Linux boot protocol [1].
+The machine code calls kvm_arm_rme_vm_type() to get the VM flag and KVM
+calls kvm_arm_rme_init() to prepare for launching a Realm. Once VM
+creation is complete, create the Realm:
 
-[1] https://docs.kernel.org/arch/arm64/booting.html
+* Create the realm descriptor,
+* load images into Realm RAM (in another patch),
+* finalize the REC (vCPU) after the registers are reset,
+* activate the realm, at which point the realm is sealed.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 ---
-v2->v3: new
+v2->v3:
+* Cleaner error handling
 ---
- include/hw/arm/boot.h |  6 ++++++
- hw/arm/boot.c         | 23 +++++++++++++++++------
- hw/arm/virt.c         |  1 +
- 3 files changed, 24 insertions(+), 6 deletions(-)
+ target/arm/kvm_arm.h |  39 ++++++++++++++++
+ target/arm/kvm-rme.c | 106 +++++++++++++++++++++++++++++++++++++++++++
+ target/arm/kvm.c     |   9 +++-
+ 3 files changed, 152 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
-index d91cfc6942..5fcbaa2625 100644
---- a/include/hw/arm/boot.h
-+++ b/include/hw/arm/boot.h
-@@ -137,6 +137,12 @@ struct arm_boot_info {
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 2e6b49bf13..9d6a89f9b1 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -153,6 +153,14 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
+  */
+ void kvm_arm_add_vcpu_properties(ARMCPU *cpu);
  
-     arm_endianness endianness;
- 
-+    /*
-+     * Instead of starting in a small bootloader that jumps to the kernel,
-+     * immediately start in the kernel.
-+     */
-+    bool skip_bootloader;
++/**
++ * @cpu: The CPU object to finalize
++ * @feature: a KVM_ARM_VCPU_* feature
++ *
++ * Finalize the configuration of the given vcpu feature.
++ */
++int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature);
 +
-     /*
-      * Confidential guest boot loads everything into RAM so it can be measured.
-      */
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index 20b3071339..e461137595 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -762,7 +762,13 @@ static void do_cpu_reset(void *opaque)
-             if (cs == first_cpu) {
-                 AddressSpace *as = arm_boot_address_space(cpu, info);
+ /**
+  * kvm_arm_steal_time_finalize:
+  * @cpu: ARMCPU for which to finalize kvm-steal-time
+@@ -221,6 +229,22 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level);
  
--                cpu_set_pc(cs, info->loader_start);
-+                if (info->skip_bootloader)  {
-+                    assert(is_a64(env));
-+                    env->xregs[0] = info->dtb_start;
-+                    cpu_set_pc(cs, info->entry);
-+                } else {
-+                    cpu_set_pc(cs, info->loader_start);
-+                }
+ void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
  
-                 if (!have_dtb(info)) {
-                     if (old_param) {
-@@ -860,7 +866,8 @@ static ssize_t arm_load_elf(struct arm_boot_info *info, uint64_t *pentry,
++/**
++ * kvm_arm_rme_init
++ * @ms: the machine state
++ *
++ * Prepare the machine to be a Realm, if the user enabled it.
++ */
++int kvm_arm_rme_init(MachineState *ms);
++
++/**
++ * kvm_arm_rme_vm_type
++ * @ms: the machine state
++ *
++ * Returns the Realm KVM VM type if the user requested a Realm, 0 otherwise.
++ */
++int kvm_arm_rme_vm_type(MachineState *ms);
++
+ #else
+ 
+ /*
+@@ -260,6 +284,11 @@ static inline void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+     g_assert_not_reached();
  }
  
- static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
--                                   hwaddr *entry, AddressSpace *as)
-+                                   hwaddr *entry, AddressSpace *as,
-+                                   bool skip_bootloader)
++static inline int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
++{
++    g_assert_not_reached();
++}
++
+ static inline int kvm_arm_get_max_vm_ipa_size(MachineState *ms, bool *fixed_ipa)
  {
-     hwaddr kernel_load_offset = KERNEL64_LOAD_ADDR;
-     uint64_t kernel_size = 0;
-@@ -912,7 +919,8 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
-              * bootloader, we can just load it starting at 2MB+offset rather
-              * than 0MB + offset.
-              */
--            if (kernel_load_offset < BOOTLOADER_MAX_SIZE) {
-+            if (kernel_load_offset < BOOTLOADER_MAX_SIZE &&
-+                !skip_bootloader) {
-                 kernel_load_offset += 2 * MiB;
-             }
-         }
-@@ -996,7 +1004,8 @@ static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
-     }
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64) && kernel_size < 0) {
-         kernel_size = load_aarch64_image(info->kernel_filename,
--                                         info->loader_start, &entry, as);
-+                                         info->loader_start, &entry, as,
-+                                         info->skip_bootloader);
-         is_linux = 1;
-         if (kernel_size >= 0) {
-             image_low_addr = entry;
-@@ -1136,8 +1145,10 @@ static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
-         fixupcontext[FIXUP_ENTRYPOINT_LO] = entry;
-         fixupcontext[FIXUP_ENTRYPOINT_HI] = entry >> 32;
+     g_assert_not_reached();
+@@ -300,6 +329,16 @@ static inline void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
+     g_assert_not_reached();
+ }
  
--        arm_write_bootloader("bootloader", as, info->loader_start,
--                             primary_loader, fixupcontext);
-+        if (!info->skip_bootloader) {
-+            arm_write_bootloader("bootloader", as, info->loader_start,
-+                                 primary_loader, fixupcontext);
++static inline int kvm_arm_rme_init(MachineState *ms)
++{
++    g_assert_not_reached();
++}
++
++static inline int kvm_arm_rme_vm_type(MachineState *ms)
++{
++    g_assert_not_reached();
++}
++
+ #endif
+ 
+ #endif
+diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+index 67909349c1..60d967a842 100644
+--- a/target/arm/kvm-rme.c
++++ b/target/arm/kvm-rme.c
+@@ -12,6 +12,7 @@
+ #include "kvm_arm.h"
+ #include "migration/blocker.h"
+ #include "qapi/error.h"
++#include "qemu/error-report.h"
+ #include "qom/object_interfaces.h"
+ #include "sysemu/kvm.h"
+ #include "sysemu/runstate.h"
+@@ -27,14 +28,119 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+                                           CONFIDENTIAL_GUEST_SUPPORT,
+                                           { TYPE_USER_CREATABLE }, { })
+ 
++static RmeGuest *rme_guest;
++
++static int rme_init_cpus(Error **errp)
++{
++    int ret;
++    CPUState *cs;
++
++    /*
++     * Now that do_cpu_reset() initialized the boot PC and
++     * kvm_cpu_synchronize_post_reset() registered it, we can finalize the REC.
++     */
++    CPU_FOREACH(cs) {
++        ret = kvm_arm_vcpu_finalize(ARM_CPU(cs), KVM_ARM_VCPU_REC);
++        if (ret) {
++            error_setg_errno(errp, -ret, "failed to finalize vCPU");
++            return ret;
 +        }
++    }
++    return 0;
++}
++
++static int rme_create_realm(Error **errp)
++{
++    int ret;
++
++    ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
++                            KVM_CAP_ARM_RME_CREATE_RD);
++    if (ret) {
++        error_setg_errno(errp, -ret, "failed to create Realm Descriptor");
++        return -1;
++    }
++
++    if (rme_init_cpus(errp)) {
++        return -1;
++    }
++
++    ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
++                            KVM_CAP_ARM_RME_ACTIVATE_REALM);
++    if (ret) {
++        error_setg_errno(errp, -ret, "failed to activate realm");
++        return -1;
++    }
++
++    kvm_mark_guest_state_protected();
++    return 0;
++}
++
++static void rme_vm_state_change(void *opaque, bool running, RunState state)
++{
++    Error *err = NULL;
++
++    if (!running) {
++        return;
++    }
++
++    if (rme_create_realm(&err)) {
++        error_propagate_prepend(&error_fatal, err, "RME: ");
++    }
++}
++
+ static void rme_guest_class_init(ObjectClass *oc, void *data)
+ {
+ }
  
-         if (info->write_board_setup) {
-             info->write_board_setup(cpu, info);
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0750c83fae..5247f53882 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2509,6 +2509,7 @@ static void machvirt_init(MachineState *machine)
-     vms->bootinfo.firmware_max_size = vms->memmap[VIRT_FLASH].size;
-     vms->bootinfo.psci_conduit = vms->psci_conduit;
-     vms->bootinfo.confidential = virt_machine_is_confidential(vms);
-+    vms->bootinfo.skip_bootloader = vms->bootinfo.confidential;
-     arm_load_kernel(ARM_CPU(first_cpu), machine, &vms->bootinfo);
+ static void rme_guest_init(Object *obj)
+ {
++    if (rme_guest) {
++        error_report("a single instance of RmeGuest is supported");
++        exit(1);
++    }
++    rme_guest = RME_GUEST(obj);
+ }
  
-     vms->machine_done.notify = virt_machine_done;
+ static void rme_guest_finalize(Object *obj)
+ {
+ }
++
++int kvm_arm_rme_init(MachineState *ms)
++{
++    static Error *rme_mig_blocker;
++    ConfidentialGuestSupport *cgs = ms->cgs;
++
++    if (!rme_guest) {
++        return 0;
++    }
++
++    if (!cgs) {
++        error_report("missing -machine confidential-guest-support parameter");
++        return -EINVAL;
++    }
++
++    if (!kvm_check_extension(kvm_state, KVM_CAP_ARM_RME)) {
++        return -ENODEV;
++    }
++
++    error_setg(&rme_mig_blocker, "RME: migration is not implemented");
++    migrate_add_blocker(&rme_mig_blocker, &error_fatal);
++
++    /*
++     * The realm activation is done last, when the VM starts, after all images
++     * have been loaded and all vcpus finalized.
++     */
++    qemu_add_vm_change_state_handler(rme_vm_state_change, NULL);
++
++    cgs->require_guest_memfd = true;
++    cgs->ready = true;
++    return 0;
++}
++
++int kvm_arm_rme_vm_type(MachineState *ms)
++{
++    if (rme_guest) {
++        return KVM_VM_TYPE_ARM_REALM;
++    }
++    return 0;
++}
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 95bcecf804..440c3ac8c6 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -95,7 +95,7 @@ static int kvm_arm_vcpu_init(ARMCPU *cpu)
+  *
+  * Returns: 0 if success else < 0 error code
+  */
+-static int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
++int kvm_arm_vcpu_finalize(ARMCPU *cpu, int feature)
+ {
+     return kvm_vcpu_ioctl(CPU(cpu), KVM_ARM_VCPU_FINALIZE, &feature);
+ }
+@@ -627,7 +627,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     hw_breakpoints = g_array_sized_new(true, true,
+                                        sizeof(HWBreakpoint), max_hw_bps);
+ 
+-    return 0;
++    ret = kvm_arm_rme_init(ms);
++    if (ret) {
++        error_report("Failed to enable RME: %s", strerror(-ret));
++    }
++
++    return ret;
+ }
+ 
+ unsigned long kvm_arch_vcpu_id(CPUState *cpu)
 -- 
 2.47.0
 
