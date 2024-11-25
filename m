@@ -4,72 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC8FD58094
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 12:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EC65D58094
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 12:38:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFYKz-0008AZ-0j; Mon, 25 Nov 2024 07:37:09 -0500
+	id 1tFYLk-0008Fg-63; Mon, 25 Nov 2024 07:37:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjavadsekonji@gmail.com>)
- id 1tFYKq-00089e-9C
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 07:37:00 -0500
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tFYLf-0008Ey-9Z; Mon, 25 Nov 2024 07:37:51 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mjavadsekonji@gmail.com>)
- id 1tFYKo-00063O-1e
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 07:36:59 -0500
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2ffa3e8e917so38339821fa.3
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 04:36:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tFYLd-00069G-QE; Mon, 25 Nov 2024 07:37:51 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-212776d6449so47261955ad.1; 
+ Mon, 25 Nov 2024 04:37:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732538213; x=1733143013; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=ao/o4KEII5apUCnc3YYd4kirFdOQ4PNw5GNgmPegnig=;
- b=EAlfVLSAkF6GWLec3HBsFgJBp8MvI1mfdJqE20Txr8WymfBSAhQ+ei7Hm0uFSs64vD
- XyL+9hycevDst1c7oKLOd2M6ZHG0cVklnFCYokeib55b/jY6U5X0EDOU4qsT9Ga7I+b5
- OmtXyMojZHNOVVg++EJbV6snk4Peub8L/PWSysWMQ0GW5oAm+ut2KyvYti3B+me5hYiD
- jUG2wBwf/DBbAKebyNBOVNUGAWJ3cIH9q37eQM6MxDkrdhlXlyliPBEbzP3e+LOvKCYF
- 31JqxapuLtHx/BmXL0LGJgaU3TYUnU3cJ737Ar76MxFiObMMEcCpxJCripPDQBK1FcYi
- jnmw==
+ d=gmail.com; s=20230601; t=1732538267; x=1733143067; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U5W1qTOBYUQet13FtB0D0yLiFF8HatBm5KD8hCvnFtg=;
+ b=aQyjiuO3IVQ3CTwXlZwYTj0UDi/U/9ygTCVb7uCWWHTA8Ou44w0+gFSEM1xQPsoLCI
+ hWUz2krQFWS5IqBNrMdXE1GaYIBS7idq2E9c8AXNuYlTLqex/TnqEhUqykZpebgGoZkj
+ HFK+kY5mdGNiC1GJ8QMsiKBQ7MMJPTZOW05ZwCb2LgDMKvaBXzDR0GkvKqo+Ma/97leY
+ w7vnpgeCsdeOkwPnW622pVCEYwGYD66YSWFGuwPt7Ez9OAcPNihOkpLlWU69Uu5A15U7
+ 8s5b6l9b5FGT8Ydk7QRPOtwlNXCdBs7fhcCGcN1oTgtT2aRLmwqN/U2qJW/4flko/yub
+ yKJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732538213; x=1733143013;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ao/o4KEII5apUCnc3YYd4kirFdOQ4PNw5GNgmPegnig=;
- b=TodSBnq3yzPggbc6+2KnPI557GT1vwWoNuXI6j8RRF33y+FzWZwaknPjPZ8X1y4bZB
- fKVs1hl65iu/GhK/EjKyqc4Y7/iMU6G598r6B8pJXqKlu69V5Kk7JXQNWN1OqpQwJT2m
- qugLyMDxKDk2vVYQ3Yorkrl9Essye5eX6miAcHhc/OjRTU7y3PAUYhFgENoSHn5gnBkl
- SGPDf/yNOYACBKadD8grZrJgNz/lAs6E8ySc3O3ryVgMSCzRzToyLpacO7tTOIXAKQ2B
- hIcSt+qAXGYkjhB0XrQ2MqGGDV3Jw3HhO5Yk0Bj+nq5doJUp/hf5wy3hITD3FMh1Sx2/
- l29A==
-X-Gm-Message-State: AOJu0YwyHyfUUw1QUPewt8ySPAIyK+8qoGhIrNb+0YM5xU5DytpfmgsV
- H5BYj1DhjyMxzS2AOTLbWyuiJLG9Yn3LwOPM+uArzShx8klS5dbnrsIuFvLnhNe+7N2BiiRpNy6
- oSRrO1IQh9dl0iST0z4iFnJBv5OIJWPtn32OXL/TC
-X-Gm-Gg: ASbGnctzcd8+5uY9+Fpg9CG/D1xZAXlKeOUIkgaH7VEeInse7UZ7X8I8AATnnoSRIJx
- 2IRXLUCAdRk2kJCEwet5JL7oA7judOa8/Ag==
-X-Google-Smtp-Source: AGHT+IE3LbCwgLmQ4dTO/XmF3ifkoh+0iasoc67pZbzzYpprCXzd8ADg+FyFNMvATZwpIsuCH2Xw011TPv8qbJWNWeQ=
-X-Received: by 2002:a2e:a916:0:b0:2ff:c67f:5197 with SMTP id
- 38308e7fff4ca-2ffc67f54b2mr10090291fa.13.1732538213040; Mon, 25 Nov 2024
- 04:36:53 -0800 (PST)
-MIME-Version: 1.0
-From: Mohammad Javad Sekonji <mjavadsekonji@gmail.com>
-Date: Mon, 25 Nov 2024 16:06:41 +0330
-Message-ID: <CAEe4h_KP4Sz1creWtuOk+dMVbA02sbJnycu+Ai3u_tsL=FdZyA@mail.gmail.com>
-Subject: Request for Technical Guidance on Custom RISC-V64 Architecture with
- Linux OS
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000bf8a9c0627bbfc2e"
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=mjavadsekonji@gmail.com; helo=mail-lj1-x234.google.com
+ d=1e100.net; s=20230601; t=1732538267; x=1733143067;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=U5W1qTOBYUQet13FtB0D0yLiFF8HatBm5KD8hCvnFtg=;
+ b=UA+KUbKymgZ7wqnE6iTPtfijHtlE25c4PyoqgW8VUQQnMIZOOUrHc50KpjPgSE8qwD
+ VpW1MEzJirvWVGvqd7L7U5mJAaxzKHZ1z/23L5+BT7urewNsU2zw5rqZmD6FAzfDcakO
+ iJIgfyD1HZKzQS0IRaxGfjtDWvotSGhvBgDnkGa0Jms7HnIAuQWNRol2k3qaxfce5/Jd
+ znUucigq+psSKJFUVNOa73xvrMYtF6Ao7bxmj5tpqNlEhl4Kyi4bkO9N6WiCzp00neDO
+ C6BeEHsyflkz3DKe/6bzVrUAp7Rzs9pFAeq6F8z1cspsHU8JuKxaKHZNsVUKidt5QCrC
+ 4sgA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVYR5l6Kvt1kL31HqK8RUZdgw0UaKPi8hbClvJS1uuAltaETDuqVyjWzrQhTa7bQd+MpYG8ijCobKc=@nongnu.org,
+ AJvYcCWLNXMnyHYDB5sGnTBaBcb2on7MOsiEzsqN7cziLSWIdWNVXPswV0DZKVBqqguPCYUxtOcvTzDpj2yI@nongnu.org
+X-Gm-Message-State: AOJu0Yx4N9Sz8AnYSPSpXlfesmKTP5nYdGOJcqVXQts1en5tACkwJqOc
+ zWJ53HcxTugTYhZbwPrJyup599WOFHayZSBg4JEorb+zTQzaAcxWbe4lBg==
+X-Gm-Gg: ASbGnctDaznoiXCCpDICitpVXnaowmACsrCZGUZ7FPoBQBj4haib0vPsoStOLXegDGd
+ L4MQL/216N55zkmBtU0ywNSlTNgAye0yDyn4Ks9WX6M8Jd+ramgtmkxcqjl53ky03G536g3Sky8
+ r9AJeO1Qe5zEy9o1bh74Z/F4dC5aZrBH483qiA4CNeOSfGImluFiCUMy23UqRE98/5Z1waG+fUS
+ fomCRXU5i8T4Zphgd9B/9ZLtOk+bVGO4dmHyU3qt2hoecFc0+g7Cl91D0eDJIQ2448nFHY=
+X-Google-Smtp-Source: AGHT+IE8XQbHfwkIBQSTUTpdAc+m+p55g3KS8iDFk5W3A+yX1NhS64drG94BZBoXZ4BNaG/lA88u2w==
+X-Received: by 2002:a17:903:228d:b0:211:f335:aba with SMTP id
+ d9443c01a7336-2129f5790edmr215761675ad.31.1732538265396; 
+ Mon, 25 Nov 2024 04:37:45 -0800 (PST)
+Received: from localhost (124-171-72-210.tpgi.com.au. [124.171.72.210])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2129dbfa6ebsm63352785ad.144.2024.11.25.04.37.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Nov 2024 04:37:44 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 25 Nov 2024 22:37:40 +1000
+Message-Id: <D5V9K11FTTVF.Z46ZIKO60UU7@gmail.com>
+To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>,
+ <qemu-devel@nongnu.org>
+Cc: <anushree.mathur@linux.vnet.ibm.com>
+Subject: Re: [PATCH] ppc/spapr: fix drc index mismatch for partially enabled
+ vcpus
+From: "Nicholas Piggin" <npiggin@gmail.com>
+X-Mailer: aerc 0.18.2
+References: <20241119090849.1335829-1-harshpb@linux.ibm.com>
+In-Reply-To: <20241119090849.1335829-1-harshpb@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,91 +101,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bf8a9c0627bbfc2e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue Nov 19, 2024 at 7:08 PM AEST, Harsh Prateek Bora wrote:
+> In case when vcpus are explicitly enabled/disabled in a non-consecutive
+> order within a libvirt xml, it results in a drc index mismatch during
+> vcpu hotplug later because the existing logic uses vcpu id to derive the
+> corresponding drc index which is not correct. Use env->core_index to
+> derive a vcpu's drc index as appropriate to fix this issue.
+>
+> For ex, for the given libvirt xml config:
+>   <vcpus>
+>     <vcpu id=3D'0' enabled=3D'yes' hotpluggable=3D'no'/>
+>     <vcpu id=3D'1' enabled=3D'yes' hotpluggable=3D'yes'/>
+>     <vcpu id=3D'2' enabled=3D'no' hotpluggable=3D'yes'/>
+>     <vcpu id=3D'3' enabled=3D'yes' hotpluggable=3D'yes'/>
+>     <vcpu id=3D'4' enabled=3D'no' hotpluggable=3D'yes'/>
+>     <vcpu id=3D'5' enabled=3D'yes' hotpluggable=3D'yes'/>
+>     <vcpu id=3D'6' enabled=3D'no' hotpluggable=3D'yes'/>
+>     <vcpu id=3D'7' enabled=3D'no' hotpluggable=3D'yes'/>
+>   </vcpus>
+>
+> We see below error on guest console with "virsh setvcpus <domain> 5" :
+>
+> pseries-hotplug-cpu: CPU with drc index 10000002 already exists
+>
+> This patch fixes the issue by using correct drc index for explicitly
+> enabled vcpus during init.
+>
+> Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
+> Tested-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Dear QEMU developer team
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-I hope this email finds you well. My name is Mohammad Javad Sekonji, and I
-am a master=E2=80=99s student specializing in electronic digital systems. I=
- am
-currently working on a project involving the installation and operation of
-a Linux operating system (preferably Debian Sid) on a custom RISC-V64
-architecture with specific hardware modifications. My goal is to use QEMU
-to emulate the system and compare its performance and behavior to the
-standard RISC-V64 architecture.
+> ---
+>  hw/ppc/spapr.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 5c02037c56..0d4efaa0c0 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -701,7 +701,7 @@ static void spapr_dt_cpu(CPUState *cs, void *fdt, int=
+ offset,
+>      uint32_t radix_AP_encodings[PPC_PAGE_SIZES_MAX_SZ];
+>      int i;
+> =20
+> -    drc =3D spapr_drc_by_id(TYPE_SPAPR_DRC_CPU, index);
+> +    drc =3D spapr_drc_by_id(TYPE_SPAPR_DRC_CPU, env->core_index);
+>      if (drc) {
+>          drc_index =3D spapr_drc_index(drc);
+>          _FDT((fdt_setprop_cell(fdt, offset, "ibm,my-drc-index", drc_inde=
+x)));
 
-I have successfully completed a similar process for a standard RISC-V64
-setup and am familiar with the general workflow. However, I would like to
-confirm whether it is technically feasible to implement such a setup on a
-customized RISC-V64 architecture and, if so, to understand any additional
-considerations or steps that might be required for this process.
-
-To provide more context about the customizations I am planning:
-
-   - *Architectural level:* I am considering replacing the standard
-   architecture with variations such as RISC-V BOOM, 2-stage pipelines,
-   5-stage pipelines, Rocket, and similar designs.
-   - *Microarchitectural level:* I am exploring modifications to components
-   like the branch predictor and other similar elements.
-
-Given these planned changes, I would be grateful if you could share your
-thoughts on any specific considerations or potential challenges I should
-anticipate. Additionally, if there are resources or examples you recommend
-for implementing such customizations and conducting performance
-comparisons, they would be immensely helpful.
-
-Given your expertise in embedded systems and related areas, I was hoping to
-seek your guidance on the matter or any relevant resources you might
-recommend. Your insight would be invaluable to the success of this project.
-
-Thank you very much for your time and assistance. Please let me know if you
-need any additional details about the project. I look forward to your
-response.
-
-Best regards,
-Mohammad Javad Sekonji
-Master=E2=80=99s Student of Electronic Digital Systems
-
---000000000000bf8a9c0627bbfc2e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Dear QEMU developer team<br><p>I hope this email finds you=
- well. My name is Mohammad Javad Sekonji,=20
-and I am a master=E2=80=99s student specializing in electronic digital syst=
-ems. I
- am currently working on a project involving the installation and=20
-operation of a Linux operating system (preferably Debian Sid) on a=20
-custom RISC-V64 architecture with specific hardware modifications. My=20
-goal is to use QEMU to emulate the system and compare its performance=20
-and behavior to the standard RISC-V64 architecture.</p><p>I have=20
-successfully completed a similar process for a standard RISC-V64 setup=20
-and am familiar with the general workflow. However, I would like to=20
-confirm whether it is technically feasible to implement such a setup on a
- customized RISC-V64 architecture and, if so, to understand any=20
-additional considerations or steps that might be required for this=20
-process.<br></p><p>To provide more context about the customizations I am pl=
-anning:</p><ul><li><strong>Architectural level:</strong>
- I am considering replacing the standard architecture with variations=20
-such as RISC-V BOOM, 2-stage pipelines, 5-stage pipelines, Rocket, and=20
-similar designs.</li><li><strong>Microarchitectural level:</strong> I am ex=
-ploring modifications to components like the branch predictor and other sim=
-ilar elements.</li></ul><p>Given
- these planned changes, I would be grateful if you could share your=20
-thoughts on any specific considerations or potential challenges I should
- anticipate. Additionally, if there are resources or examples you=20
-recommend for implementing such customizations and conducting=20
-performance comparisons, they would be immensely helpful.</p><p>Given your =
-expertise in embedded systems and related=20
-areas, I was hoping to seek your guidance on the matter or any relevant=20
-resources you might recommend. Your insight would be invaluable to the=20
-success of this project.</p><p>Thank you very much for your time and=20
-assistance. Please let me know if you need any additional details about=20
-the project. I look forward to your response.</p><p>Best regards,<br>Mohamm=
-ad Javad Sekonji<br>Master=E2=80=99s Student of Electronic Digital Systems<=
-/p></div>
-
---000000000000bf8a9c0627bbfc2e--
 
