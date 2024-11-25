@@ -4,100 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3CA4D58D4B
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 14:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FBED58D4C
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 14:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFZkH-0002vq-Lz; Mon, 25 Nov 2024 09:07:21 -0500
+	id 1tFZkO-0003VL-QN; Mon, 25 Nov 2024 09:07:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFZjp-0002Xq-OL
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 09:06:53 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFZkJ-00037u-AL
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 09:07:23 -0500
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFZjn-0006dW-2m
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 09:06:53 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-434a1833367so3479915e9.1
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 06:06:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFZkH-0006nz-MP
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 09:07:23 -0500
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2ffc1009a06so14694901fa.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 06:07:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732543609; x=1733148409; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nwOFcDol4u8ZIeIm4VbuTBCsXEbth7QSSqvQY7JvfPk=;
- b=r8cgP8liI7HuD70/D/hzuwcvXQPS7oGNmwLaDP91pLh0Bn80692c7KOjKppwpTMGs1
- ebJ2xVOJfr3mBavOHbh/CvRZvIOVJ8oPj1a1nPLuQBKvujf/8FYim22XGfN2p4w9rioW
- 9kiks7lxf8ZYosa2UjwB21r9JeDuPNzEvBJxUzlz3pvHUg3nNSszWx+fMiZIlG2gnVEo
- 9qGqJP0EIFPE+dSMhVhVEH2K3P3lcbCyTPXXYFAEdl2zynSNqJMGBasH9Fh1ULWwPv26
- SZ/Glw000ixHmGOsyPQgWwTcJQn6wpdvWj8LDy+HXZRBSuE3fW/24TrBSJAx727fRDxs
- 8Oww==
+ d=linaro.org; s=google; t=1732543640; x=1733148440; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=L0447YFcBRMDlI9ba9HXBwkyCRxekR5l41XUqVGmghw=;
+ b=vlR5i1T5phyZKjz+wg1SjKYOZe9HfOX9lyxXrbsKY2s0jlikIi6iYlUV0YEHULtkLR
+ 1l0AHB9izkyvSEUwPcUQSggomu0it7dYtbeDJdsoKDGtwQxUQGrVlH+wLJsuOG1IzW+u
+ mbXwvb3ljMb4/MMRitFnzvXxgAD3UiaogGaA/zAOjttzCL5x9mv0Sm3K1yynMPTdG6cc
+ gUkl4DHdcwTgRlKBIrQAXmEz/cwaHQEngajHt6GFCZ1SqGhsZNtsoCpwS+CEzCxVWF/7
+ iV5k04BzcxDnDyxLaNbN5qSaj3Ul6jU5T1yJLE+FX0UNNaBQqQKISjla2l8TjHsSfZsg
+ lQ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732543609; x=1733148409;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nwOFcDol4u8ZIeIm4VbuTBCsXEbth7QSSqvQY7JvfPk=;
- b=XPQdcyGHGUlNhJEoqondvTZ/CvswrVesWpnAtHSpa8z5/64E/cc8Z5nMv4VRCWlsmh
- wUbiyz6tsfvkd7FViH6sz3Fpf4SVByzgV6yBLbqOHvoT06vmus4mdzuRuer0iRocujgz
- kp9Tsp+UrdROUFxdd2SK2ryujQLSZlS+9Uer3NvJusHTGurZSaQN9sWUCssFm6Z+CXoc
- EyvFKANFGDfnY1ddlU6jOJT2+PDE2QpVE6Izj23o/y8IuJjXhM1Y0M8SBeU3L58pI4Lh
- WtgPpefPB0TaGi6CGVQJmZY1hnYIqi5uy5ZQkBgCv6gzw7n+NEjZG03TuBDn1d16m8xP
- 8pSQ==
-X-Gm-Message-State: AOJu0YwxdWRd4klN81ZKGuQOkXHquetxpJIrW01CXBeFsW9Yew6w9evd
- Zr5i0KxHOZdqmk7wyRvjyPaxkE1G6zWyb7RVN+JXtp5ghmCkdmZbEWb8b5BjxEDaNUKEgmkwZav
- s
-X-Gm-Gg: ASbGncvI14r6OE10xeTJ3tW0ej1UL5pDGn4y2bwFc+K1pbTCjTtZjP4RevkO+gWWZk3
- gIt51hj2xGJO307eeK9NGSVoNziNXUHUk0vTcdSp5ZXowDSlLmFMMlJBrrWczngqxRCKyySmFUC
- Lmon7zohSXJspoCioTtNpurLtfsobu9JQSAv1L8Yx/M/tu1wYk5WrSCri4XO6vpx1Mf+Q6LrRa8
- TPkifLY1MdOzVwtOMwcpBwBoZLvgKBShOEP7FmtO8jlmWNFqr2oTonzpEbtMsPX3uQWTV0v
-X-Google-Smtp-Source: AGHT+IHueUgZ5dfvvnsaTax+Tcm7lAWU8gj6AQiJ4jiKzYjtvhxK2RCPGGpq5pRAQvBX+KADlSNm7g==
-X-Received: by 2002:a05:600c:3b27:b0:431:9340:77e0 with SMTP id
- 5b1f17b1804b1-433cdb0b3b6mr102923075e9.9.1732543599641; 
- Mon, 25 Nov 2024 06:06:39 -0800 (PST)
-Received: from localhost.localdomain ([176.176.170.239])
+ d=1e100.net; s=20230601; t=1732543640; x=1733148440;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=L0447YFcBRMDlI9ba9HXBwkyCRxekR5l41XUqVGmghw=;
+ b=M1A1gNptNDIUMYyeOORYE1UsNIXm4Zl06GSNKhJeQ4Xo/GBV4fqJ1GGVB3ggKSgg+i
+ UDGzi00kZ4E8SxSBvk/q5y30hCo+kPmR9TnidgupGNiErMINg1xM6sDJ8d8x6hl8xhGM
+ TpvKkJyhDy8K1IDR25iSaVvSZC8EbtnwDpWjONJhikO20GM41gw14cE/uyjYszitq/48
+ A5OkYI5weYDT7Df9apA9EsEjN5bfMZ5TP9KWo8eR5ZyCVO9L9zdheNU/g0uWyXYLHny0
+ pas+vJF2+yWG59aJw3rYbrI2dGwfNhLZ6x/orRKiTusnM/L5Jz17yiGEduWa9bsIC1AG
+ NmDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMV8WDgBcTekFoZKJg3SXbJnDleny9593cT5y8DuX3FUb9S9kYU0rMtOcn+yY5mvXnYPBfL5pfx9ar@nongnu.org
+X-Gm-Message-State: AOJu0YzFVGwJHkINGQGkJPj5x/j2P+aUhAVPnpQhpO7Fky2GlkeTKm75
+ XM6InW8NPjsWAHzFeyIzd4rjAM4QeHu7kzuFC8fRpMjI8CCPFyVvB9qia+ukPy4=
+X-Gm-Gg: ASbGncsatfUc+QkZgC55dK0suSqs2JFym61hHPPt+q18qh1KUCJ5h+w22IUeLi6bvl0
+ S1Lk1WPFLI+EMBwGZM4m9WRU++zqFT6DxC9jDFSbH7SgU6EEyBRmX9aQd3dsiruN4PtojFk3IO6
+ oRRnXUIt5wQuvLEXrNPPWpYDmWNb+ScaACJIXS2nfH45/kB0mukyvAPtZw9/XT2JpmmVfdqvi5H
+ Izd4W8fVAdfhOUEZCVzJJanJAb2hYFo3d1LXPfe4gAFeasOv5MYLbF+fb3r0Zg/hw==
+X-Google-Smtp-Source: AGHT+IFmlEXEEgK6XrULabuQbbr71LFbxg3DNrJfOch2N0c+PrBaFnM4zdcyIq9gWO9OdWAe9pl+mA==
+X-Received: by 2002:a2e:a5c9:0:b0:2fa:fcf0:7c2a with SMTP id
+ 38308e7fff4ca-2ffa712e526mr85449331fa.24.1732543639749; 
+ Mon, 25 Nov 2024 06:07:19 -0800 (PST)
+Received: from [192.168.69.146] ([176.176.170.239])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b45d40basm199474065e9.21.2024.11.25.06.06.30
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 25 Nov 2024 06:06:31 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Bin Meng <bmeng.cn@gmail.com>, Alistair Francis <alistair.francis@wdc.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Radoslaw Biernacki <rad@semihalf.com>,
- Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org
-Subject: [PATCH-for-10.0 3/8] hw/pci-host/gpex: Allow machines to set
- PCI_BUS_IO_ADDR0_ALLOWED flag
-Date: Mon, 25 Nov 2024 15:05:30 +0100
-Message-ID: <20241125140535.4526-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241125140535.4526-1-philmd@linaro.org>
-References: <20241125140535.4526-1-philmd@linaro.org>
+ 5b1f17b1804b1-4349c89a113sm65186785e9.21.2024.11.25.06.07.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Nov 2024 06:07:19 -0800 (PST)
+Message-ID: <39533af1-57c0-4e6b-90f0-049cca884c1f@linaro.org>
+Date: Mon, 25 Nov 2024 15:07:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] .gitlab-ci.d/cirrus: Remove the wrong CPU and RAM
+ settings from the macOS job
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20241125124342.187594-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241125124342.187594-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,59 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose the "allow-io-addr0-accesses" property so machines
-using a GPEX host bridge can set this flag on the bus.
+On 25/11/24 13:43, Thomas Huth wrote:
+> The macOS runner ignores them and always uses 4 CPUs and 12 GiB of
+> RAM, so remove our setting to avoid wrong expecatations.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/pci-host/gpex.h | 1 +
- hw/pci-host/gpex.c         | 6 ++++++
- 2 files changed, 7 insertions(+)
+"expectations"
 
-diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
-index dce883573b..8c990bff5f 100644
---- a/include/hw/pci-host/gpex.h
-+++ b/include/hw/pci-host/gpex.h
-@@ -64,6 +64,7 @@ struct GPEXHost {
-     int irq_num[GPEX_NUM_IRQS];
- 
-     bool allow_unmapped_accesses;
-+    bool allow_io_addr0_accesses;
- 
-     struct GPEXConfig gpex_cfg;
- };
-diff --git a/hw/pci-host/gpex.c b/hw/pci-host/gpex.c
-index e9cf455bf5..635467016f 100644
---- a/hw/pci-host/gpex.c
-+++ b/hw/pci-host/gpex.c
-@@ -32,6 +32,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/irq.h"
-+#include "hw/pci/pci_bus.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/qdev-properties.h"
- #include "migration/vmstate.h"
-@@ -136,6 +137,9 @@ static void gpex_host_realize(DeviceState *dev, Error **errp)
-     pci->bus = pci_register_root_bus(dev, "pcie.0", gpex_set_irq,
-                                      pci_swizzle_map_irq_fn, s, &s->io_mmio,
-                                      &s->io_ioport, 0, 4, TYPE_PCIE_BUS);
-+    if (s->allow_io_addr0_accesses) {
-+        pci->bus->flags |= PCI_BUS_IO_ADDR0_ALLOWED;
-+    }
- 
-     pci_bus_set_route_irq_fn(pci->bus, gpex_route_intx_pin_to_irq);
-     qdev_realize(DEVICE(&s->gpex_root), BUS(pci->bus), &error_fatal);
-@@ -154,6 +158,8 @@ static Property gpex_host_properties[] = {
-      */
-     DEFINE_PROP_BOOL("allow-unmapped-accesses", GPEXHost,
-                      allow_unmapped_accesses, true),
-+    DEFINE_PROP_BOOL("allow-io-addr0-accesses", GPEXHost,
-+                     allow_io_addr0_accesses, false),
-     DEFINE_PROP_UINT64(PCI_HOST_ECAM_BASE, GPEXHost, gpex_cfg.ecam.base, 0),
-     DEFINE_PROP_SIZE(PCI_HOST_ECAM_SIZE, GPEXHost, gpex_cfg.ecam.size, 0),
-     DEFINE_PROP_UINT64(PCI_HOST_PIO_BASE, GPEXHost, gpex_cfg.pio.base, 0),
--- 
-2.45.2
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   .gitlab-ci.d/cirrus.yml | 2 --
+>   1 file changed, 2 deletions(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
