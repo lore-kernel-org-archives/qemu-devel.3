@@ -4,67 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B5CD3B7F6
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 10:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BC9AD3B7F6
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 10:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFVyh-0003NJ-Mh; Mon, 25 Nov 2024 05:06:00 -0500
+	id 1tFW3w-0006x2-T7; Mon, 25 Nov 2024 05:11:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tFVyd-0003Me-Rn
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 05:05:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tFVyb-0008Bb-7M
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 05:05:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732529152;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=6SMsgNkKKmgIIsg8EyJhLbqeFa8eI74P8++VgVIhggs=;
- b=cC58l+8s5/OYh0R3XHnkRonqJBXsB/vd1yQSK1irN3K138flLvPkajuKEwNUC5DIC5f9as
- 9HQT7yd3WsjJ0XsY4DY6EhWUK3e+xBo3GSmWjoZSX8hSEgRmcHUQm2KFKuqfLamUZ2Cn30
- O3XJevAQc0mQFmcY4SGlYFAPYp3vspk=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-gNGVtkv_PwCGkGAuHm5v4w-1; Mon,
- 25 Nov 2024 05:05:50 -0500
-X-MC-Unique: gNGVtkv_PwCGkGAuHm5v4w-1
-X-Mimecast-MFC-AGG-ID: gNGVtkv_PwCGkGAuHm5v4w
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DB791953953; Mon, 25 Nov 2024 10:05:49 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.39.192.190])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2D435196BC05; Mon, 25 Nov 2024 10:05:47 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL v4 00/10] Block layer patches
-Date: Mon, 25 Nov 2024 11:05:41 +0100
-Message-ID: <20241125100541.26259-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tFW3u-0006wE-2w
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 05:11:23 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tFW3r-00016U-5u
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 05:11:21 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-aa549f2fa32so151893166b.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 02:11:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732529476; x=1733134276; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R/lZMEnbhR9qsmWCm5bRH1d2VMPYciSXvkPZfmK5k/k=;
+ b=Ao9aJYlmt9FUXgC+pbjwMviYYFBJqVlmDICtpfShLGzMKfoSSCASDtF1x1FrQ7JDXZ
+ 9MJNW1s5HMt3vxFVDDKZwYE9GaBu6UP74Ma4RQqfcvEke04vp6g6L5jGQ8aYA0stPL20
+ gtPXUIXPu0j7f0WTkpDfymobcSmgcOOuAQUwGLUVVElbg2aN/QqP4u5RpCaGJsKH6tFW
+ AP/SI2G25w2RGoP+zOCiP3T34oa1rVu9v2nVDfnttUvZ2vf49xlwm/XG4KNWDlykSY0T
+ mAoj1lFl7GJN7H8FcmpZX1Jl+Vb9PfDbJDh19ZdFSkee9gagB0DnMP19AaWdWKizZs8i
+ mscg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732529476; x=1733134276;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=R/lZMEnbhR9qsmWCm5bRH1d2VMPYciSXvkPZfmK5k/k=;
+ b=YZd7OhuSfJ9cL56ZIJWpatZNtfdYT5TAyjexqPdtrP7o9YByfkPAxDUCzkDijXhtuX
+ R9xt6XxRDQogc6NEnqEoJRyq7zZOrJEw+IX84pf2sLdMVoyfT/jUdnl7qqrFgti3NHTB
+ lhieaCY9VIEl3d7VwIntH/EAeekJe08yuK81j+lOD9/LK6jhwK0eaJ9aFb2hdhumfu3r
+ PIXyHln9le8ZVy7MHV0fLBlJxmaPgGcDR6r1rbBkhcviZ3E2nyUfunmXfjtQVns5M41h
+ aYCX+CWT0b1FOjtbeymErBTxtOFhFWP5z9wlVouvcpQe85gUTkAGUMWcGcijF2tpZdUw
+ AYIA==
+X-Gm-Message-State: AOJu0YwEjbGrEUqPf2LsOZx4g2LweYEtfinOu0x2lX0GHvTC5WDRZyuG
+ X95ZsSnRGPx4At1x31+GyxrbFU4YLxZROyRTWkPnNUoWmDaZ8b63xgmPd8CxKMA=
+X-Gm-Gg: ASbGnctszjd1m0EnEQfl/WeNqCYBmsnHeO/3Ehlp1+UtChR59kSo6iEsOL3jNmnOzCU
+ hqOUtRmQtBVtfwahhnGhS9LbeFHaqz3kIfd8fJeSy5xGv5vV+8F4gcqszsdK60LAwinv6X3SkZb
+ 4AV9s2g3GKkmeSQUCFiQONpocTNBQpLUuowIpXZNtE9BbrIORcTQFRD5WrvuSgVWKRhjKOTM8Wd
+ DpeP3Pg7DuXJXCIJsqD32U049FFrNhSSU5gQAeMzMa/34Df
+X-Google-Smtp-Source: AGHT+IEWk61DilDF6TTNEr5fHU0Ws9aAbrLhF/YB2A0f3xte/bGgmss5xIZ/CYpJwP6ZoJYNWVhuQA==
+X-Received: by 2002:a17:907:9306:b0:a9a:55de:11f4 with SMTP id
+ a640c23a62f3a-aa509c00fddmr1118939866b.54.1732529476274; 
+ Mon, 25 Nov 2024 02:11:16 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa552066e39sm108718066b.6.2024.11.25.02.11.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Nov 2024 02:11:15 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5D2D85F869;
+ Mon, 25 Nov 2024 10:11:13 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Peter Maydell
+ <peter.maydell@linaro.org>,  Steven Lee <steven_lee@aspeedtech.com>,  Troy
+ Lee <leetroy@gmail.com>,  Jamin Lin <jamin_lin@aspeedtech.com>,  Andrew
+ Jeffery <andrew@codeconstruct.com.au>,  Joel Stanley <joel@jms.id.au>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v4 0/3] tests/functional: Finish conversion of Aspeed tests
+In-Reply-To: <20241122090322.1934697-1-clg@redhat.com> (=?utf-8?Q?=22C?=
+ =?utf-8?Q?=C3=A9dric?= Le Goater"'s
+ message of "Fri, 22 Nov 2024 10:03:19 +0100")
+References: <20241122090322.1934697-1-clg@redhat.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Mon, 25 Nov 2024 10:11:13 +0000
+Message-ID: <87y117d3ni.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,60 +106,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 6b99bb046dd36a6dd5525b8f88c2dcddae49222a:
+C=C3=A9dric Le Goater <clg@redhat.com> writes:
 
-  Merge tag 'pull-lu-20241122' of https://gitlab.com/rth7680/qemu into staging (2024-11-24 13:39:06 +0000)
+> Hello,
+>
+> This series completes the conversion of the Aspeed tests to the new
+> functional framework and removes the workarounds for capturing the
+> console output.
 
-are available in the Git repository at:
+Queued to pr/251124-9.2-rc2-updates-1, thanks.
 
-  https://repo.or.cz/qemu/kevin.git tags/for-upstream
-
-for you to fetch changes up to fbdea3d6c13d5a75895c287a004c6f1a6bf6c164:
-
-  ssh: Do not switch session to non-blocking mode (2024-11-25 11:03:42 +0100)
-
-----------------------------------------------------------------
-Block layer patches
-
-- Fix qmp_device_add() to not throw non-scalar options away (fixes
-  iothread-vq-mapping being silently ignored in device_add)
-- Fix qdev property crash with integer PCI addresses and JSON -device
-- iotests: Fix mypy failure
-- parallels: Avoid potential integer overflow
-- ssh: libssh broke with non-blocking sessions, use a blocking one for now
-- Fix crash in migration_is_running()
-
-----------------------------------------------------------------
-Dmitry Frolov (1):
-      parallels: fix possible int overflow
-
-Jakub Jelen (1):
-      ssh: Do not switch session to non-blocking mode
-
-John Snow (4):
-      iotests: reflow ReproducibleTestRunner arguments
-      iotests: correct resultclass type in ReproducibleTestRunner
-      python: disable too-many-positional-arguments warning
-      python: silence pylint raising-non-exception error
-
-Kevin Wolf (2):
-      qdev: Fix set_pci_devfn() to visit option only once
-      tests/avocado/hotplug_blk: Fix addr in device_add command
-
-Stefan Hajnoczi (2):
-      qdev-monitor: avoid QemuOpts in QMP device_add
-      vl: use qmp_device_add() in qemu_create_cli_devices()
-
- block/parallels.c                |  4 +--
- block/ssh.c                      |  3 ---
- hw/core/qdev-properties-system.c | 54 ++++++++++++++++++++++++++--------------
- system/qdev-monitor.c            | 42 ++++++++++++++++++++-----------
- system/vl.c                      | 14 +++--------
- python/scripts/mkvenv.py         |  3 +++
- tests/avocado/hotplug_blk.py     |  2 +-
- tests/qemu-iotests/iotests.py    | 11 +++++---
- python/setup.cfg                 |  1 +
- tests/qemu-iotests/pylintrc      |  1 +
- 10 files changed, 83 insertions(+), 52 deletions(-)
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
