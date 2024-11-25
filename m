@@ -4,113 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A667D59D63
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 19:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0AA1D59D62
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 19:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFeYY-0001rq-EF; Mon, 25 Nov 2024 14:15:34 -0500
+	id 1tFekz-0004UN-QX; Mon, 25 Nov 2024 14:28:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFeYV-0001lv-4N
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:15:31 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFekl-0004Tn-Ss
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:28:14 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFeYP-0006GX-Ag
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:15:27 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B35DE1F399;
- Mon, 25 Nov 2024 19:15:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732562121; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=v6ggcdOEtsNq2b6zLhdnWeVucYDWAKBb/OxoSURpP5M=;
- b=1HEok43mNth9S7mthaqgZ1KC+q6ucCAlsXXdW3eSkOJrrzrrmveshnfQy6UvMDQcHIhoca
- /GBrHU5TtcU9B+fpwy9orkjpi11P2pJ4G9elXu38Y2pM/j1u2IZMPzgEs4YNTeBRY75fH3
- hIcZHvArqK74e1S/WqZanjeo5OnDV5k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732562121;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=v6ggcdOEtsNq2b6zLhdnWeVucYDWAKBb/OxoSURpP5M=;
- b=Nj2pBpmrbkvwoVm1uD3YAMLrTvltBspriW5FY8T8Oi5E0Ci9XBUkz95K6Oivdh/oawYw2Q
- rHJkZ/jL/5SZPSAA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1HEok43m;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Nj2pBpmr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732562121; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=v6ggcdOEtsNq2b6zLhdnWeVucYDWAKBb/OxoSURpP5M=;
- b=1HEok43mNth9S7mthaqgZ1KC+q6ucCAlsXXdW3eSkOJrrzrrmveshnfQy6UvMDQcHIhoca
- /GBrHU5TtcU9B+fpwy9orkjpi11P2pJ4G9elXu38Y2pM/j1u2IZMPzgEs4YNTeBRY75fH3
- hIcZHvArqK74e1S/WqZanjeo5OnDV5k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732562121;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=v6ggcdOEtsNq2b6zLhdnWeVucYDWAKBb/OxoSURpP5M=;
- b=Nj2pBpmrbkvwoVm1uD3YAMLrTvltBspriW5FY8T8Oi5E0Ci9XBUkz95K6Oivdh/oawYw2Q
- rHJkZ/jL/5SZPSAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2BB79137D4;
- Mon, 25 Nov 2024 19:15:20 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id tBxNN8jMRGe6JQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 25 Nov 2024 19:15:20 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Peter Xu
- <peterx@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Avihai
- Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 03/24] thread-pool: Rename AIO pool functions to
- *_aio() and data types to *Aio
-In-Reply-To: <ea3e65080c00cebdc95dad8b68070709c3607e79.1731773021.git.maciej.szmigiero@oracle.com>
-References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <ea3e65080c00cebdc95dad8b68070709c3607e79.1731773021.git.maciej.szmigiero@oracle.com>
-Date: Mon, 25 Nov 2024 16:15:18 -0300
-Message-ID: <87o723nn09.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFekh-0008Mw-1r
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:28:09 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-434a1833367so5853505e9.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 11:28:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732562884; x=1733167684; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pW7+uYwIghRYgAt49F1O0Ud11ZccwgTk6qQaLmfk6ag=;
+ b=M0cMUmsf/Cmyat96mj13obSG0ghfB3NSmZv6l0oOVxSeZ3bKiSNwFpNQlWOzvY5pnm
+ LTjUHD4gui8wjIDSAXUc234/tOQh7y2ehc4qJAPFVEDUOWqV9AsBrGYW8q2YJ4iZgEf0
+ /VRQ801MuOl2nJ7sPnGt8TeG7JIEivmAroRkBugxlJEOmrWpWWH4fxwVLbgDK+UbBVtR
+ 9L76CB6V9U/TGqiysqgkH+Zjm32sDAi3XCfOydDQlG+Gai66zfFC2RTkLgdJzk9xuj7X
+ i5S6L5IVFRtM/+Dz8KiGnNQqY2ZpQEYjO2+MJkrNULOBzakdPFrR3uE/QkSIA+FCUn0r
+ Jong==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732562884; x=1733167684;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pW7+uYwIghRYgAt49F1O0Ud11ZccwgTk6qQaLmfk6ag=;
+ b=td3pTp8NBbBlAftKE/lYfn+nxsg+1R8TU5TR50OmvXB6EwFcVXQNrCwKKItOTZhStu
+ QRjruOo7tRQCp+2yLXU9/kJh9axQ6gTtON6RY3NJY0GOZe0pHWUxzfZPRSeS2yQjFQsT
+ 577kkXrj7zkGpb0cPkDshij7mMZcwdjx3xinnv9y816dQi1x7OPN/ZVfKdJLCJwatt6r
+ 0WUzfpt6VSMPWPK8er6HF9ItRkpaObGu2hhSxHBWVFoQO8zzoLMGnwwXu+F+M6CtbehG
+ BdQNdO6Gu8QQZ+KYkZfc3kmQ8I7+GTNY9sxNUJGN8VDyXywoA2twasBjfLo4k/UxSEyj
+ Vq2w==
+X-Gm-Message-State: AOJu0YwAPENGYU4+3wzPTKb9pbCtQa1Ogypwj32Mzyn/xRB2kwRtGTNL
+ /zs3w7PBLh/pSF/9wISrmtv1AqpqiOtEqttfJHPbgP3khgU2ZXVn07clRZRuarc=
+X-Gm-Gg: ASbGncvp2vwji8pWTvx52sqTgpt9Oz+SgZAhSO9l7zL5FTd8YI/biHTyNhOB4/1pC5K
+ nQXk4YZfSWUja2Xi7rFCCw0jnHu9XERmVd1tJBFRPAj2gnxahjtbdTTY8z+STgC0kHcHXkAR2qO
+ UUZ40ORmhyMq4gkgOscuwmtBfbB4cu6MEp6SGs9Unc96eTGnigBf2Fb6baHoifym4hypogRXXLq
+ iaKUlecEhZDGPYarfjboInckAVvUSDzcdQFZHA+rXoNNq/PBryCdzSnoBXb8X48iw==
+X-Google-Smtp-Source: AGHT+IESWRV4aQuh/HB7FLNbtngESnFXBJwC+IvDaQt+OPUKboEKnqP0ZJ+5/8uH9kuhUdjWbTQNDA==
+X-Received: by 2002:a05:600c:2248:b0:434:a33d:ba44 with SMTP id
+ 5b1f17b1804b1-434a4ea42b0mr5177785e9.15.1732562884557; 
+ Mon, 25 Nov 2024 11:28:04 -0800 (PST)
+Received: from [192.168.69.146] ([176.176.170.239])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-433b45bd7d7sm206499415e9.13.2024.11.25.11.28.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Nov 2024 11:28:04 -0800 (PST)
+Message-ID: <03d94b2b-4653-4401-a33d-8581ec022ced@linaro.org>
+Date: Mon, 25 Nov 2024 20:28:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: B35DE1F399
-X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-2.78)[99.04%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[10]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] ppc/pnv: Add xscom- prefix to pervasive-control
+ region name
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Chalapathi V <chalapathi.v@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>
+References: <20241125132042.325734-1-npiggin@gmail.com>
+ <20241125132042.325734-5-npiggin@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241125132042.325734-5-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -133,16 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+Hi,
 
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->
-> These names conflict with ones used by future generic thread pool
-> equivalents.
-> Generic names should belong to the generic pool type, not specific (AIO)
-> type.
->
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+On 25/11/24 14:20, Nicholas Piggin wrote:
+> By convention, xscom regions get a xscom- prefix.
+> 
+> Fixes: 1adf24708bf7 ("hw/ppc: Add pnv nest pervasive common chiplet model")
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   hw/ppc/pnv_nest_pervasive.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/ppc/pnv_nest_pervasive.c b/hw/ppc/pnv_nest_pervasive.c
+> index 77476753a4..780fa69dde 100644
+> --- a/hw/ppc/pnv_nest_pervasive.c
+> +++ b/hw/ppc/pnv_nest_pervasive.c
+> @@ -177,7 +177,7 @@ static void pnv_nest_pervasive_realize(DeviceState *dev, Error **errp)
+>       pnv_xscom_region_init(&nest_pervasive->xscom_ctrl_regs_mr,
+>                             OBJECT(nest_pervasive),
+>                             &pnv_nest_pervasive_control_xscom_ops,
+> -                          nest_pervasive, "pervasive-control",
+> +                          nest_pervasive, "xscom-pervasive-control",
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+Could this break migration stream? Or only RAM regions need to
+have a stable name? I don't remember, but try be be cautions with
+such cosmetic change just before the release ;)
+
+>                             PNV10_XSCOM_CHIPLET_CTRL_REGS_SIZE);
+>   }
+>   
+
 
