@@ -4,55 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD3ED3B7F5
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 09:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EA9D3B7F6
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 09:39:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFVXW-0003bc-Ur; Mon, 25 Nov 2024 04:37:54 -0500
+	id 1tFVYv-0004vd-OV; Mon, 25 Nov 2024 04:39:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1tFVXP-0003aa-Ah; Mon, 25 Nov 2024 04:37:47 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1tFVXK-0003uL-3L; Mon, 25 Nov 2024 04:37:47 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBnbNxZRURnxoU1BA--.51636S2;
- Mon, 25 Nov 2024 17:37:29 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCH23dTRURnT9pZAA--.7191S3;
- Mon, 25 Nov 2024 17:37:24 +0800 (CST)
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: rad@semihalf.com, peter.maydell@linaro.org, quic_llindhol@quicinc.com,
- marcin.juszkiewicz@linaro.org, jonathan.cameron@huawei.com,
- fan.ni@samsung.com
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- chenbaozi@phytium.com.cn, Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Subject: [RFC PATCH v3 0/1] Sbsa-ref CXL Enablement
-Date: Mon, 25 Nov 2024 17:37:08 +0800
-Message-Id: <20241125093709.57204-1-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tFVYn-0004v6-F7
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 04:39:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tFVYi-00045y-Su
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 04:39:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732527546;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2w08m8o6SK0yxDdTGXbIYmmkIdO0S1p/4kTWVQ2YX+g=;
+ b=K8GCGHy4MCVXw/F322ypCj3SWZEAw1gNU6T4cT13sXo241+cpd+qEvKKHad/QbVYemBV0/
+ BpTWdWkGLzEt9SrT9sPI8Nrd+X7AP6Ed3LkDx1YxAgFI/0yNTGT7bdSPuLEHRE7ofDUdGY
+ BqZ1iMCiXLG8Bds6sCkTLwOJsypgIE0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-NMn79X_XPK--Wx8-Mvxa-Q-1; Mon, 25 Nov 2024 04:39:00 -0500
+X-MC-Unique: NMn79X_XPK--Wx8-Mvxa-Q-1
+X-Mimecast-MFC-AGG-ID: NMn79X_XPK--Wx8-Mvxa-Q
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38256b20f5fso3209283f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 01:39:00 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732527539; x=1733132339;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2w08m8o6SK0yxDdTGXbIYmmkIdO0S1p/4kTWVQ2YX+g=;
+ b=ZSyvQXa2Gb4xQqwJCxhT2Yj3Yah+2ogXIwtVUenv/Uq6TNaCPZoAK/OFANZJlNKlyX
+ GOYPlmZaFDasmbP1xEaZW5eChMEq3NKmKvW+arWxBz6rQzMHtLnHj6jQ3ZYxNs7LS9RX
+ ztgQeUzR/gZWrxHdIe8X6Diqt7mOeZDNQZMCBfIzrXcn9VZO1yRXe8XvCObWMKIyIji/
+ qeEiG4sGP71vn/ACd0j+573N5nw/y091ET7MDzr5FD4gMFDdqWxX064ZNqOB9ajW/wjY
+ FOOv0Zc8h1ze9p2ToJn54Kk+xaFdiIfXAP+whzANjR3/rAy8axoz3IIMpLqekzugeP2D
+ ocrQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCULjfsDP0mwHdeKyuY01FxoVB5CmqBCsOiqsr2wxcfYreaUzW26OVLX1Zd2vwvYGjUMkedVux57H1zb@nongnu.org
+X-Gm-Message-State: AOJu0Yxelf7TIVUrwxOwDWKpXDiR4YIjLizyV3XO0YZFWBlChfgjc1qD
+ XxMfs8XGDZ8emcpH4w02CSNTontH5idgd6fuOB4U3xcjvrYXz1w0fj5BosPRaFYGKOEa5knqAMp
+ 3rBdH9nO0WIxr0lAVY9qqHsgLKarnib2wPaRfQ4naEaY8bSYmp6hV
+X-Gm-Gg: ASbGnctcx6JtY5wM5thZMR8Eg9Tmzhh5RwAUztqqo5DzDNWVtVF756qjo35Z11xkh+t
+ 9ph/fuc528xWU7t8UTgIQ5ddtCdn+4WfaFCnQD8eI+5NePeCv2GE/DKaY/f0p4psZahRQKVyzh5
+ KmhV6RWYfoe9h1gFs93M1Q28UC7zKIy08A8zizai/9mv4l7IfFkMHrdVoBy1HSf+kPdgeM/EDW0
+ 3AKS3KVGwglR7iS56oImZgKQ9huELcGGy98EY6Wc6u+4E3mwWuS8yp3ETgs2Cs6DJUCIbPKNItA
+ LGGYhWJB20SEE1noa8zLRQ==
+X-Received: by 2002:a5d:6d0c:0:b0:381:d890:b5b7 with SMTP id
+ ffacd0b85a97d-38260bda386mr12447420f8f.52.1732527539381; 
+ Mon, 25 Nov 2024 01:38:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEvoGsqasZcTQFAofuB3P2+k1YkiqaLxxV5bdZI6EYjy/wgQgnER614EJ73ze0gSuEqNRmeRQ==
+X-Received: by 2002:a5d:6d0c:0:b0:381:d890:b5b7 with SMTP id
+ ffacd0b85a97d-38260bda386mr12447393f8f.52.1732527538952; 
+ Mon, 25 Nov 2024 01:38:58 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fbc4140sm10144027f8f.77.2024.11.25.01.38.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Nov 2024 01:38:58 -0800 (PST)
+Date: Mon, 25 Nov 2024 10:38:57 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] cpu: Initialize nr_cores and nr_threads in
+ cpu_common_initfn()
+Message-ID: <20241125103857.78a23715@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20241122160317.4070177-1-xiaoyao.li@intel.com>
+References: <20241108070609.3653085-2-xiaoyao.li@intel.com>
+ <20241122160317.4070177-1-xiaoyao.li@intel.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCH23dTRURnT9pZAA--.7191S3
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAAAWdDg3QEXwABsJ
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxtw43ZF1xtFy5tw15JryfCrg_yoWxCw4UpF
- 1DK34SkFWkWry2krn3uw1UWr15uw1kAa98Jrn7G34jkFnFgrWvvrykt3WYva47Wr1UAFyU
- Xr1Dta40g3W2vaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -70,158 +113,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2 -> v3:
-- create a new host bridge type: TYPE_SBSA_CXL_HOST
-- CXL exclusive ECAM, PIO, MMIO32 & MMIO64 space in sbsa-ref
-- combine all cxl infrastructure creating into one function
+On Fri, 22 Nov 2024 11:03:17 -0500
+Xiaoyao Li <xiaoyao.li@intel.com> wrote:
 
-v1 -> v2:
-- provide CXL exclusive MMIO32 & MMIO64 space
-- hard coded two cxl root ports
+> Currently cpu->nr_cores and cpu->nr_threads are initialized in
+> qemu_init_vcpu(), which is called a bit late in *cpu_realizefn() for
+> each ARCHes.
+> 
+> x86 arch would like to use nr_cores and nr_threads earlier in its
+> realizefn(). To serve this purpose, initialize nr_cores and nr_threads
+> in cpu_common_initfn(), which is earlier than *cpu_realizefn().
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>  hw/core/cpu-common.c | 10 +++++++++-
+>  system/cpus.c        |  4 ----
+>  2 files changed, 9 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index 09c79035949b..6de92ed854bc 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -237,14 +237,22 @@ static void cpu_common_unrealizefn(DeviceState *dev)
+>  static void cpu_common_initfn(Object *obj)
+>  {
+>      CPUState *cpu = CPU(obj);
+> +    Object *machine = qdev_get_machine();
+> +    MachineState *ms;
+>  
+>      gdb_init_cpu(cpu);
+>      cpu->cpu_index = UNASSIGNED_CPU_INDEX;
+>      cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
+>      /* user-mode doesn't have configurable SMP topology */
+> -    /* the default value is changed by qemu_init_vcpu() for system-mode */
+>      cpu->nr_cores = 1;
+>      cpu->nr_threads = 1;
+> +#ifndef CONFIG_USER_ONLY
+> +    if (object_dynamic_cast(machine, TYPE_MACHINE)) {
+> +        ms = MACHINE(machine);
+> +        cpu->nr_cores = machine_topo_get_cores_per_socket(ms);
+> +        cpu->nr_threads = ms->smp.threads;
+> +    }
+> +#endif
 
-RFC because
-- Many contents are ported from Jonathan' patch on qemu virt design
+Can't say, that I'm fond of adding/moving hack to access MachineState
+from CPU context. Granted we did/still do it elsewhere, But I'd rather
+prefer getting rid of those remnants that access globals.
+It's basically technical debt we are carrying since 2009 (dc6b1c09849).
+Moving that around doesn't help with getting rid of arbitrary access to globals.
 
-- Less experience and not particularly confident in sbsa-ref address space design
-  so this might be stupidly broken in a way I've not considered.
+As Paolo've noted there are other ways to set cores/threads,
+albeit at expense of adding more code. And that could be fine
+if it's done within expected cpu initialization flow.
 
-Background
-==========
-Currently the base CXL support for arm platforms is only on Jonathan's patches[1]
-which have not yet merged into upstream. SBSA-REF can be more like a real machine,
-thus the support of cxl could be meaningful.
+Instead of accessing MachineState directly from CPU code (which is
+essentially a layer violation), I'd suggest to set cores_nr/threads_nr
+from pre_plug handler (which is machine code).
+We do similar thing for nr_dies/nr_modules already, and we should do
+same for cores/trheads.
 
-This series leverages Jonathan's patches[1] to design [SBSA_CXL_CHBCR] and
-[SBSA_CXL_FIXED_WINDOW] spaces for sbsa-ref layout. 
+Quick hack would be do the same for cores/threads in x86_cpu_pre_plug(),
+and make qemu_init_vcpu() conditional to avoid touching other targets/machines.
 
-Regard to the burden of edk2 firmware, I try to build a static CEDT table and add
-acpi0016, acpi0017 and other cxl relevant contents into acpi tables[2][3]. Hence it
-doesn't need to communicate cxl contents via DT to edk2. 
+I'd even ack that, however that's just leaves us with the same
+old technical debt. So I'd like to coax a promise to fix it properly
+(i.e. get rid of access to machine from CPU code).
 
-CXL HOST design
-===============
-In previous version, the pxb-cxl-host with any cxl root ports and cxl endpoint devices
-would occupy the BDF number of the original pcie domain resulting in the max available
-pcie devices on sbsa-ref would decrease, which seems to bring a series of trouble. 
+(here goes typical ask to rewrite whole QEMU before doing thing you
+actually need)
 
-In this version, to avoid that problems, the new host bridge type is defined
-(TYPE_SBSA_CXL_HOST). Actually, this new device could be considered as a prototype of
-an independent cxl host bridge which combines gpex features(mmio windows & irq) and
-pxb-cxl features(CHBCR) at meanwhile. If this could be work, we can just remove the
-prefix of 'SBSA' and introduce it as a general qemu object on other boards.
+To do that we would need to:
+  1. audit usage of cpu->nr_cores/cpu->nr_threads across QEMU, to figure out
+     what targets/machines need them
+  2. then add pre_plug() handlers to those machines to set them.
+  3. In the end get rid of initializing them in cpu_common_initfn().
 
-For [SBSA_CXL_CHBCR], since this creates a default cxl host bridge (0001:00)
-with two cxl root ports on sbsa-ref, the new memory layout places 64K space for
-one hard coded cxl host bridge register regions in the sbsa-ref memmap. (Meaning
-for now only two cxl type3 devices could be added on the cxl host)
+With that done we can then add a common helper to generalize topo config
+based on -smp from pre_plug() handlers to reduce duplication caused by
+per machine pre_plug handlers.
 
-And the memory layout provides separate space windows for the cxl host bridge in the
-sbsa-ref memmap:
-- 64K  CXL Host Bridge Component Registers (CHBCR)
-- 64K  CXL_PIO
-- 128M CXL_MMIO
-- 256M CXL_ECAM
-- 4G   CXL_MMIO_HIGH
+Or introduce a generic cpu_pre_plug() handler at Machine level and make
+_pre_plug call chain to call it (sort of what we do with nested realize calls);
 
-CXL FIXED WINDOW design
-=======================
-For [SBSA_CXL_FIXED_WINDOW], in order to provide CFMWs on sbsa-ref, this extends 1TB
-space from the hole above RAM Memory [SBSA_MEM] for CXL Fixed Memory Window. 
-- 1T   CXL_FIXED_WINDOW
+I'd prefer the 1st option (#2) as it explicitly documents what
+targets/machines care about cores/threads at expense of some boiler plate code
+duplication, instead of blanket generic fallback like we have now (regardless of
+if it's actually needed).
 
-0xA0000000000 is chosen as the base address of this space because of 3 reasons:
-1) It is more suitable to choose a static address instead of that
-implementation in virt, since a dynamic address space layout of
-sbsa-ref is not appropriate for its original purpose as a reference
-platform.
-
-2) The Hotplug Memory address range should in the range of maximum
-addressable range of sbsa-ref platform(0x10000000000-0x80ffffffffff).
-It is satisfied the requirements of memory hotplug in linux kernel.
-
-3) The start pfn of CFMW should exceed the reserved_pfn_range for
-onlined numa node.
-
-Usage of cxl on sbsa-ref
-========================
-With the 'create_cxl' and 'create_cxl_fixed_window', users don't need to input
-'-device pxb-cxl' , '-device cxl-rp' and '-M cxl-fmw' parameters.
-
-Thus, to run sbsa-ref with a cxl device could use:
-qemu-system-aarch64 \
--object memory-backend-file,id=mem2,mem-path=/tmp/mem2,size=256M,share=true \
--device cxl-type3,bus=cxl.0,volatile-memdev=mem2,id=cxl-mem1 \
-
-Incompatibility problem
-=======================
-Although the new cxl host bridge has been separated from the original pcie host, the
-incompatibility problem of "-device qemu-xhci" is not resolved. Because the new device
-to plug by qemu command would be enumerated at the largest domain(0001), for example,
-if we add "-device qemu-xhci" to boot sbsa-ref with cxl, the lspci would show:
-
-    root@ubuntu-jammy-arm64:~# lspci
-    0000:00:00.0 Host bridge: Red Hat, Inc. QEMU PCIe Host bridge
-    0000:00:01.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
-    0000:00:02.0 Display controller: Device 1234:1111 (rev 02)
-    0001:00:00.0 PCI bridge: Intel Corporation Device 7075
-    0001:00:01.0 PCI bridge: Intel Corporation Device 7075
-    0001:00:02.0 USB controller: Red Hat, Inc. QEMU XHCI Host Controller (rev 01)
-    0001:01:00.0 CXL: Intel Corporation Device 0d93 (rev 01)
-
-    root@ubuntu-jammy-arm64:~# lspci -tv
-    -+-[0001:00]-+-00.0-[01]----00.0  Intel Corporation Device 0d93
-    |           +-01.0-[02]--
-    |           \-02.0  Red Hat, Inc. QEMU XHCI Host Controller
-    \-[0000:00]-+-00.0  Red Hat, Inc. QEMU PCIe Host bridge
-                +-01.0  Intel Corporation 82574L Gigabit Network Connection
-                \-02.0  Device 1234:1111
-
-Hence we should add "bus=pcie.0" when we want to plug some devices on the original
-pcie bus, for example:
--device qemu-xhci,bus=pcie.0 \
-or
--device nvme,serial=deadbeef,bus=pcie.0,drive=hdd \
--drive file=../disk/hdd.qcow2,format=qcow2,id=hdd,if=none \
-
-So the result is:
-    root@ubuntu-jammy-arm64:~# lspci
-    0000:00:00.0 Host bridge: Red Hat, Inc. QEMU PCIe Host bridge
-    0000:00:01.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
-    0000:00:02.0 Display controller: Device 1234:1111 (rev 02)
-    0000:00:03.0 USB controller: Red Hat, Inc. QEMU XHCI Host Controller (rev 01)
-    0001:00:00.0 PCI bridge: Intel Corporation Device 7075
-    0001:00:01.0 PCI bridge: Intel Corporation Device 7075
-    0001:01:00.0 CXL: Intel Corporation Device 0d93 (rev 01)
-
-    root@ubuntu-jammy-arm64:~# lspci -tv
-    -+-[0001:00]-+-00.0-[01]----00.0  Intel Corporation Device 0d93
-    |           \-01.0-[02]--
-    \-[0000:00]-+-00.0  Red Hat, Inc. QEMU PCIe Host bridge
-                +-01.0  Intel Corporation 82574L Gigabit Network Connection
-                +-02.0  Device 1234:1111
-                \-03.0  Red Hat, Inc. QEMU XHCI Host Controller
-
-I am looking for suggestions on if there are better ways to do it.
-
-This series patches are here to hopefully some comments to guide me!
-
-Link:
-[1]: https://lore.kernel.org/linux-cxl/20220616141950.23374-1-Jonathan.Cameron@huawei.com/
-[2]: https://edk2.groups.io/g/devel/topic/rfc_edk2_patch_v3_0_1/109403423#
-[3]: https://edk2.groups.io/g/devel/topic/rfc_patch_edk2_platforms_v3/109768222
-
-Yuquan Wang (1):
-  hw/arm/sbsa-ref: Support CXL Host Bridge & CFMW
-
- docs/system/arm/sbsa.rst  |   4 +
- hw/arm/sbsa-ref.c         | 139 ++++++++++++++++++++++++++++++-
- hw/cxl/cxl-host-stubs.c   |   2 +
- hw/cxl/cxl-host.c         | 169 +++++++++++++++++++++++++++++++++++++-
- include/hw/cxl/cxl.h      |  22 +++++
- include/hw/cxl/cxl_host.h |   5 ++
- 6 files changed, 339 insertions(+), 2 deletions(-)
-
--- 
-2.34.1
+>      cpu->cflags_next_tb = -1;
+>  
+>      /* allocate storage for thread info, initialise condition variables */
+> diff --git a/system/cpus.c b/system/cpus.c
+> index 1c818ff6828c..c1547fbfd39b 100644
+> --- a/system/cpus.c
+> +++ b/system/cpus.c
+> @@ -664,10 +664,6 @@ const AccelOpsClass *cpus_get_accel(void)
+>  
+>  void qemu_init_vcpu(CPUState *cpu)
+>  {
+> -    MachineState *ms = MACHINE(qdev_get_machine());
+> -
+> -    cpu->nr_cores = machine_topo_get_cores_per_socket(ms);
+> -    cpu->nr_threads =  ms->smp.threads;
+>      cpu->stopped = true;
+>      cpu->random_seed = qemu_guest_random_seed_thread_part1();
+>  
 
 
