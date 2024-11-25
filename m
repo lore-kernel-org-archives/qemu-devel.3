@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD4AD3B7CA
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 02:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2615D3B7CA
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 03:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFPBZ-0002cj-Vp; Sun, 24 Nov 2024 21:50:50 -0500
+	id 1tFPse-0000hQ-Jj; Sun, 24 Nov 2024 22:35:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xndchn@gmail.com>) id 1tFPBY-0002cX-Rc
- for qemu-devel@nongnu.org; Sun, 24 Nov 2024 21:50:48 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tFPsd-0000hF-PR; Sun, 24 Nov 2024 22:35:19 -0500
+Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xndchn@gmail.com>) id 1tFPBX-0001og-9m
- for qemu-devel@nongnu.org; Sun, 24 Nov 2024 21:50:48 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3823f1ed492so2680448f8f.1
- for <qemu-devel@nongnu.org>; Sun, 24 Nov 2024 18:50:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tFPsc-0006sc-5m; Sun, 24 Nov 2024 22:35:19 -0500
+Received: by mail-vs1-xe2c.google.com with SMTP id
+ ada2fe7eead31-4af07a8d444so374149137.1; 
+ Sun, 24 Nov 2024 19:35:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732503045; x=1733107845; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1732505716; x=1733110516; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jUJbZS3C7fmzQr1Tn+81Zq025uSX+jp9kLROGKOS1kY=;
- b=hBQ7x9m6tC9i792XbkRWEM/1Qc8OxjupzHGqAd2fio+sx4JlkSOXZ+Z8avkqehtbre
- ymGCAuN4q83qO3wCUWMYWOlP8XRefheI7hNFD17K60bn7wq+7bDs0XwLgfCAnqgmZwPy
- mkS9xyE22qNbwyawMPrvfC6tIv6YxWz6BccUBc1+cTq8h8x+a8St0rHSK4f4CAf9QFD0
- K/zonTSXp8tE/r3qYyfGrHG3dEUaopAWpEGgnSSPic7AR7bxnL0UmiznC2ZlMICgaCq6
- 4mESDrRhEjfMDjJXKrvcxwQzdNeYY3E+ev4bZ6h9k+WPu2cb9kzzsvYim0FeEG2bxf7R
- Xgkg==
+ bh=2mqVRXfF2lEyuk7g4aN6G4po242Z2AWrnlUQfn9CGDE=;
+ b=aezGFEue7DyVP0c0OHgnFKV9SS7FEfFbeinlxB7gbDA83QudA3u2/p+im8j+/wOkCi
+ czkK16D5jLDPb1399acrZE3l3bohQvROI3rwzHK2w7mD1BKKIAfTRgAz8pJeJzjwFf4y
+ wr7BdJ9mg2X9z+lhoYinK6xDmCx4ufW4IT+d4jxG9frTIky5OxPIkEpyO1O+S6uDvAtb
+ TcciCk4nT+pMqcXHl0DJlmgLlcf1yFj3JMxrvH06a22A0on1jVIX82wo9s23dh5MHf9u
+ IGn/8EBlxnDArpdZQU2lKJBRCv8qgGH54/TLtvOmB9HhGYbsKE3WAmxouWu3/UWAdnMb
+ JubQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732503045; x=1733107845;
+ d=1e100.net; s=20230601; t=1732505716; x=1733110516;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jUJbZS3C7fmzQr1Tn+81Zq025uSX+jp9kLROGKOS1kY=;
- b=PIKI1qID8Uwd+no0idOPWCchDsLOr8gKlxjIM8/waPtBkj4aWEB+uImlxGx+3D8Ss8
- lFwEIsNf0IkuHY3UYylUU5UDyA6SYp0N37g9MXxdv3wMrIq3nHy2nY4IlZnWseus26kk
- 7L6M5rsmNVPjxN9gblEs4kwGwh+4D19V3duWJSt1M3tYLEN68luljC9kTjoEEf6Xjbwc
- IKGuICtsxBvBAY/ELdYFQY+0W0dqTXjG0xzrRwf6dvfeAamYQCPNV2HTdWPjZVtuCCFF
- /jh8tAF4fQAI7ZiXuy+PHE5Vdg/MfSCAkCF0nIsW3H8opEF78ajCp4/o8u0kc+Lvhgxj
- heyg==
-X-Gm-Message-State: AOJu0YzRoWzzGZ72rDn6JwNY+kx64cGiiYbLd/Rc9ivPVH9yarLADG0m
- naG/5ljh+LDi/lvOcGf/td3fym5XDxKazX907mjCkVLzKCuyUKAoxxaMfSrR04QbgnBNR/+jy6e
- NtnoMPTtm4oHOGAU2SMGuyAWBcLI=
-X-Gm-Gg: ASbGncuQG7kuKcp9A3UIR0E32VimkZlK5ibfFXVGP9A3yY0w+IEYKhaWk/gTZaEGOQh
- N/AMmsyCCsMQu+fKEyy2ht9VrRtFsaSs=
-X-Google-Smtp-Source: AGHT+IG0PfVw8i323s2yaFk/ubjuQt+AROo/WH3zStx0XZsbDsuyfwgdpXSddh8YcoKpmnZBj5lJrVPJ6uJ3NfCmpl8=
-X-Received: by 2002:a05:6000:1545:b0:382:3efc:c6de with SMTP id
- ffacd0b85a97d-382601132d7mr7128793f8f.3.1732503045159; Sun, 24 Nov 2024
- 18:50:45 -0800 (PST)
+ bh=2mqVRXfF2lEyuk7g4aN6G4po242Z2AWrnlUQfn9CGDE=;
+ b=MjHze1Q/txLS3j/S81KgIBx/MxG8JugyKxwmJ5XnPDbVMDayAHpbSke6GzbiSeJDuq
+ 3TqBXrkQUwKMhWjOEQr0x6XNbEYusl7Y8djHvAkUoHsFD21UWWsfDf48PU1onOVDn+0N
+ fEp1xGsOXm0SJpZVH2+Xgnfvyr7kVZjLX4PRgHihYcl39z23Hxv4mZDQ3ayV0VYrOpVk
+ rR1LqHaB35hVWTMjlaSv8TD4Fo6S/eely/UY/iwDk1X9ELbvcMkJVinbSUgoaqjmG/O9
+ 2ic1OjPzP0iBssd9CFrLfRCkbQVghJvKJnHfZVJhxkiqnU8QvAVwkfJLNKAosxfQycqm
+ oxKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2yUHh0tZjWNc6JMCx2kMFyMTr43x7DDTLYb5VDfObHjRmx2ByoxkjHn0fp7WDT6GJn1bhtyKnS5ii@nongnu.org
+X-Gm-Message-State: AOJu0YzmybByeKIBjgbFBGep5mG9PowfBTOHB8MR2a7xA9JcKXI1PhuQ
+ a9zwtonr/oyMzhbJwMX2HsIRjjwIHJf2gXOK+jAdk8j/8g/ECqFAt+bCgXx8bnUlIvSPlzayVJk
+ m9FhICiqFyiIVsI6JCnwZ7oouti4=
+X-Gm-Gg: ASbGncsZ6yVKnmLpxUbr8I6mys9zexsmecDbNbTwNZbr1RU3wqdVKawy5o0kcuJ5K6F
+ Mh7kZZPgVb6/7LSZ5W6AP/3avM+ZdeM1AtBXvOnxToqvjUwc1f0YXOhtk1h5jGw==
+X-Google-Smtp-Source: AGHT+IFHFksXu6PBerAejXG5Slg5ms2ckK+IF09F8GZC5NXKpMkd+Yl4cT/f1eOUlMAyMNGVQO6L6n2ajq46BliegZQ=
+X-Received: by 2002:a05:6102:5091:b0:4af:1683:aeaf with SMTP id
+ ada2fe7eead31-4af1683afdfmr2050060137.9.1732505716242; Sun, 24 Nov 2024
+ 19:35:16 -0800 (PST)
 MIME-Version: 1.0
-References: <20241120151515.56884-1-xndchn@gmail.com>
- <20241120151515.56884-2-xndchn@gmail.com>
- <4d3f8a83-7c03-4b48-9a84-d99b88b0d47c@linaro.org>
- <CAJ=gGT3v9WrDButDKP7C_6b7dLnX7AS0Gfyy5x1cLYunJqWBwg@mail.gmail.com>
- <501e74e5-72b1-4d0c-8e22-c213dd4a75da@linaro.org>
-In-Reply-To: <501e74e5-72b1-4d0c-8e22-c213dd4a75da@linaro.org>
-From: xndcn <xndchn@gmail.com>
-Date: Mon, 25 Nov 2024 10:50:34 +0800
-Message-ID: <CAJ=gGT1B8kC7tzT0dKbZ2053e8fQZS82qfRT9CHj2xWpONf7zA@mail.gmail.com>
-Subject: Re: [PATCH] system/physmem: Fix cpu_memory_rw_debug for armv7m MPU
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+References: <20241119144956.728384-1-sai.pavan.boddu@amd.com>
+In-Reply-To: <20241119144956.728384-1-sai.pavan.boddu@amd.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 25 Nov 2024 13:34:50 +1000
+Message-ID: <CAKmqyKNBepMhGEP7grV0Ay1=VZcRyvRujO5cSAg2JAY29eciCg@mail.gmail.com>
+Subject: Re: [PATCH v4] hw/riscv: Add Microblaze V generic board
+To: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Simek Michal <michal.simek@amd.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Iglesias Francisco <francisco.iglesias@amd.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=xndchn@gmail.com; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,42 +98,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Got it, thanks.
-It seems like there is still a lot of work surrounding the API, so I
-create a issue to track it
-https://gitlab.com/qemu-project/qemu/-/issues/2697
+On Wed, Nov 20, 2024 at 12:50=E2=80=AFAM Sai Pavan Boddu
+<sai.pavan.boddu@amd.com> wrote:
+>
+> Add a basic board with interrupt controller (intc), timer, serial
+> (uartlite), small memory called LMB@0 (128kB) and DDR@0x80000000
+> (configured via command line eg. -m 2g).
+> This is basic configuration which matches HW generated out of AMD Vivado
+> (design tools). But initial configuration is going beyond what it is
+> configured by default because validation should be done on other
+> configurations too. That's why wire also additional uart16500, axi
+> ethernet(with axi dma).
+> GPIOs, i2c and qspi is also listed for completeness.
+>
+> IRQ map is: (addr)
+> 0 - timer (0x41c00000)
+> 1 - uartlite (0x40600000)
+> 2 - i2c (0x40800000)
+> 3 - qspi (0x44a00000)
+> 4 - uart16550 (0x44a10000)
+> 5 - emaclite (0x40e00000)
+> 6 - timer2 (0x41c10000)
+> 7 - axi emac (0x40c00000)
+> 8 - axi dma (0x41e00000)
+> 9 - axi dma
+> 10 - gpio (0x40000000)
+> 11 - gpio2 (0x40010000)
+> 12 - gpio3 (0x40020000)
+>
+> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+> Signed-off-by: Michal Simek <michal.simek@amd.com>
+> ---
+> Changes for V2:
+>     Make changes to support -cpu switch
+>     Remove setting of default board
+>     Include doc to toctree
+>     Remove setting of 'imac' extensions as they are available by
+>     default.
+> Chages for V3:
+>     Replace virt with generic
+>     Update doc with supported riscv extensions
+>     Change base CPU to TYPE_RISCV_CPU_BASE
+> Changes for V4:
+>     Improved the doc based on comments
+>     Disabled support for Double-Precision and Hypervisor extensions
+>     Updated Maintainers file at riscv machine space.
+>
+>  MAINTAINERS                                |   6 +
+>  docs/system/riscv/microblaze-v-generic.rst |  42 +++++
+>  docs/system/target-riscv.rst               |   1 +
+>  hw/riscv/microblaze-v-generic.c            | 184 +++++++++++++++++++++
+>  hw/riscv/Kconfig                           |   8 +
+>  hw/riscv/meson.build                       |   1 +
 
-On Mon, Nov 25, 2024 at 5:23=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/23/24 22:30, xndcn wrote:
-> > Thanks. This patch at least guarantees normal read/write access to
-> > addresses with r/w flags, although there is still a risk of
-> > misidentifying accessible regions within continuous address spaces.
-> >
-> > Actually, initially I did write a patch with a modified page size as
-> > an argument, but I soon found that the current implementation of
-> > armv7a (pmsav7) will return the page size (lg_page_size) as 0 in many
-> > situations (such as overlapping regions).
->
-> 0 was arbitrarily chosen as "anything less than TARGET_PAGE_BITS".
->
-> > Maybe we can simply make the page size as 2^5 (minimal page size) when
-> > the returned lg_page_size =3D=3D 0?
->
-> No, don't lie, or make unhelpful guesses at the generic level. The only t=
-hing you could do
-> for arm m-profile is give accurate information, which for now will be imm=
-ediately
-> discarded as *still* being less than TARGET_PAGE_BITS.  But I do have pla=
-ns for that.
->
-> Anyway, nothing you do with page sizes is helpful along the debug path.  =
-For that, we need
-> to swap away from "pages" to "ranges", where some ranges are in fact page=
-s, but others
-> aren't.  This means changing the API for cpu_get_phys_<something>_debug.
->
->
-> r~
+It looks like this needs a rebase, do you mind rebasing on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next and
+sending a new version
+
+Alistair
 
