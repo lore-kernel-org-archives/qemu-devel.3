@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8864D58D71
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD46AD58D72
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFcwM-0005U1-HY; Mon, 25 Nov 2024 12:32:02 -0500
+	id 1tFdCd-0007wT-RK; Mon, 25 Nov 2024 12:48:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFcwK-0005TL-2X
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:32:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFdCb-0007w1-Re
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:48:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFcwI-0006TS-9h
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:31:59 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFdCa-0001GW-BG
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:48:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732555917;
+ s=mimecast20190719; t=1732556926;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3tGfHG9rw/y8mFkGxTEzAIGADPuMvMHGqvh3DKZN7do=;
- b=XaK15H3tfo6uXl05x8zskFAFTh/IWxecc76JvtQyVeSI9ueDmJqQF6xcA6UAUFRGw3RHiC
- WxCu9UEPA8Jb8543bMA8ngWN9HhHhhn6sD1P3fOtRuxyk9TXlPLHAjxdWMBVS29B3xdRDc
- NxvlCTxwPPRijfUWGvGly5n8HDjDU34=
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
- [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1nOGoPVZzN353iDJZzkuNXnEmcEvYTkZNAZ4tk6pm+o=;
+ b=X6IppYA9MyrMbJ4wQ8MmGFFtq84XeHMduumXtT/rW6eo2wlXnanZB9XiEbhaS0CbhBgl+I
+ THc08ycbxJwEDtaC+h3QsixbopWdNdtwEcJiNNKlyoidnRz9Qnjj1t3NYrXak8SJnxQQI8
+ 0oLMdJRYI7KlU35vkPH1S+wzLJByHn4=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-CUVYG0WuOq2vcZx6Tq4NeA-1; Mon, 25 Nov 2024 12:31:55 -0500
-X-MC-Unique: CUVYG0WuOq2vcZx6Tq4NeA-1
-X-Mimecast-MFC-AGG-ID: CUVYG0WuOq2vcZx6Tq4NeA
-Received: by mail-ot1-f70.google.com with SMTP id
- 46e09a7af769-71d4d832305so821427a34.0
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:31:55 -0800 (PST)
+ us-mta-66-e-9-hJnkNeW8bznqs-XRHQ-1; Mon, 25 Nov 2024 12:48:45 -0500
+X-MC-Unique: e-9-hJnkNeW8bznqs-XRHQ-1
+X-Mimecast-MFC-AGG-ID: e-9-hJnkNeW8bznqs-XRHQ
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-8418f68672eso132493239f.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:48:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732555915; x=1733160715;
+ d=1e100.net; s=20230601; t=1732556925; x=1733161725;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3tGfHG9rw/y8mFkGxTEzAIGADPuMvMHGqvh3DKZN7do=;
- b=KcYiNLitlLdpOHlBkdiaXtcPHw/rqlb6bplwKJu6FJEUeqVLm8BOCLvPekICM98gcP
- F0GM7kZlc3g54XsEZYOq6N3DA6O37YsYfOe7SLLZGpYu5xXk+XI8U0jjscCvW6y6XQB+
- UcxZufNGRiVD8oHoCQb2LQBZK23lsM9uzRoYiNGrOrgMTFSRPrqkJI1CEUlbYNLptIrs
- KODDe0nWq1RGDwsHHope2NVjNGoLJZ2Znouie1ijkX/rGAQ1PjlkEZfCkvv+YD2fDCek
- Xuo+wGUUDaiS8zG5o7AMRVcPaNKUfzAddizNuKU98WT/Tzhu7CHkTK516xHQhv9BIPOt
- HTmw==
-X-Gm-Message-State: AOJu0YxtWq2AJxbCkRKa6Hc4nuTg5qPE+kxrFmJpowI7mU0WaVmXJu5f
- oa+2xPNVrIFGT0IDkQRdqoS40Xk03/ANSToaG5OsXU2+3IdJSklZK61FNk3FAFrBSU8Fj7W6a8g
- 6MOB39ywimA+HHmdgPbwoGGwWeOi3Tr/V2r9NmPV7xUNJwcejqWXx
-X-Gm-Gg: ASbGncuuYT5SnQt4clnJ0WeqIScmxfmMeiv3QgYj6iHtEdKfU0M+6uONEuC9S9Qi0sK
- +e/irCPtIzp7bNcA8KU50PEO4+morpJ8Guuxxwr0xAtXXS/fW/XinHsCSKA3dmhqghYtlfgovsn
- GkuC8Pkw6vNyfsuoOOgd41ox4sygEgjEBVy9FCDrkNsZeYEsDNN8UIRQprG+bNzvIpyWrLbuBY6
- C+ia+ritFq4Qc8qRqLpYqvHF9wtjj/y2f8g2eStqVEigH36hEwP3DxZyFUHgTx30c2i4fvL/AEr
- 6VeziktsLwA=
-X-Received: by 2002:a05:6830:65c6:b0:71d:4150:9e5e with SMTP id
- 46e09a7af769-71d4150a358mr6535865a34.2.1732555914822; 
- Mon, 25 Nov 2024 09:31:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG6eT7SM6qsXBta5H5TcuYEZuMcAK+Qj2maspSikyD+NMJvaVpq42EwteDSUaN7vP6lILgu7w==
-X-Received: by 2002:a05:6830:65c6:b0:71d:4150:9e5e with SMTP id
- 46e09a7af769-71d4150a358mr6535848a34.2.1732555914573; 
- Mon, 25 Nov 2024 09:31:54 -0800 (PST)
+ bh=1nOGoPVZzN353iDJZzkuNXnEmcEvYTkZNAZ4tk6pm+o=;
+ b=crxC3uWWwA3+HZqrJLKcc9Q793857Zu+N5iMtf5ejiDRD1lp0Sx48fwPz1o5plRtWB
+ M/CSn7fXWMGgcr2ZmWXPXvdkVj/ebvAZU/sZHbPIIbyLT2pPVj0C1ZlMTTgDCjviqyPD
+ TZ6KTPRE5pVnqFbhfmtu812vA6NprOvItrn6/HTB5zotYyq4GBvTd4cSdQFj8104NS+i
+ JTiqXTj2XCsq5bjEUOdZNUjb5ijWDiza5HqV5nas+ky8IF2JFvcY1SgQpnLfc0+JSkEb
+ JCGI+xXwZyMIxOJQ4cmLCfCZKt1Ph8sXAB+5ZoSjxXEHjFd6WLXSB6NcA3lh8+XofYZL
+ 7Nyw==
+X-Gm-Message-State: AOJu0YzVSny+LpBGp042v75pQpZ65QLZ5TCtWx0LpH8nF1/vFYQRL9BD
+ wvJbyVqrargH1auRFP31sBI55nZJ/CXijAr+jaStptMAeKLG4HOgyGoVBeCDlqo0oaib/5kFLTs
+ St354pneg8gOGCu9JSx7ZZqoHwS2aPNPG/hgZ2QgjwM+CKIy9PWLk
+X-Gm-Gg: ASbGncuC6JWszqAxr+77iskq4VTeu/+/StF/uyrZUbi9qWzq2ME6tbhlQKlFzvvOWNv
+ bO46RNitU/rTpQAUKJzBdZbEjYOE4maca64/aZ9+ZTqIQbFTuow0aOcC8cndqvd/UVNfBa/3BFv
+ VrJd28CD5FhcyEpBWWByrKMx+H9PHu/CpDDXBa5taJcM+WrJ74L7a2+5I932g3baevkJgBgDw3A
+ iI8+IF8qhtdYXEqUKM2yF4SDE1BaFYoay9jiAFGmLpAsUcVMuZuS7lw0jQ1DWSXroHpKA+ygbU0
+ pR3/d0E2v6M=
+X-Received: by 2002:a05:6602:2b85:b0:83a:b43b:da89 with SMTP id
+ ca18e2360f4ac-83ecdd0bd18mr1458070539f.10.1732556924951; 
+ Mon, 25 Nov 2024 09:48:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGuRdcVG1/TkkxCFIOW6qYjgMU2oWEvgCNDXiGnSHFI8bTGqd5A7S9onRaGDoYNTeDvCI4yfg==
+X-Received: by 2002:a05:6602:2b85:b0:83a:b43b:da89 with SMTP id
+ ca18e2360f4ac-83ecdd0bd18mr1458068839f.10.1732556924662; 
+ Mon, 25 Nov 2024 09:48:44 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e1cfee836esm2243555173.106.2024.11.25.09.31.53
+ ca18e2360f4ac-841a54abb68sm35753639f.25.2024.11.25.09.48.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 09:31:53 -0800 (PST)
-Date: Mon, 25 Nov 2024 12:31:52 -0500
+ Mon, 25 Nov 2024 09:48:44 -0800 (PST)
+Date: Mon, 25 Nov 2024 12:48:41 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 11/22] tests/qtest/migration: Move common test code
-Message-ID: <Z0S0iMbqsjoup5vh@x1n>
+Subject: Re: [PATCH v2 12/22] tests/qtest/migration: Split TLS tests from
+ migration-test.c
+Message-ID: <Z0S4eVeFIAgGHiyY@x1n>
 References: <20241113194630.3385-1-farosas@suse.de>
- <20241113194630.3385-12-farosas@suse.de>
+ <20241113194630.3385-13-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241113194630.3385-12-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20241113194630.3385-13-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,41 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 13, 2024 at 04:46:19PM -0300, Fabiano Rosas wrote:
-> The migration tests have a set of core infrastructure routines. These
-> are functions that are called by (almost) all tests and centralize the
-> common operations of: starting migration on both sides, waiting for
-> guests to boot, performing guest initialization and teardown, guest
-> memory validation, etc.
+On Wed, Nov 13, 2024 at 04:46:20PM -0300, Fabiano Rosas wrote:
+> The migration-test.c file has become unwieldy large. It's quite
+> confusing to navigate with all the test definitions mixed with hook
+> definitions. The TLS tests make this worse with ifdef'ery.
 > 
-> Move this basic framework code (and a few static helpers) into a
-> separate file. Leave only individual test functions (and their own
-> static helpers) in migration-test.c.
+> Since we're planning on having a smaller set of tests to run as smoke
+> testing on all architectures, I'm taking the time to split some tests
+> into their own file.
+> 
+> Move the TLS tests into a file of their own.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  tests/qtest/meson.build                |    1 +
->  tests/qtest/migration-test.c           | 1140 +-----------------------
->  tests/qtest/migration/bootfile.c       |    2 +-
->  tests/qtest/migration/bootfile.h       |    2 +-
->  tests/qtest/migration/test-framework.c |  969 ++++++++++++++++++++
->  tests/qtest/migration/test-framework.h |  216 +++++
->  6 files changed, 1201 insertions(+), 1129 deletions(-)
->  create mode 100644 tests/qtest/migration/test-framework.c
->  create mode 100644 tests/qtest/migration/test-framework.h
+>  tests/qtest/meson.build                |   8 +-
+>  tests/qtest/migration-test.c           | 788 +-----------------------
+>  tests/qtest/migration/test-framework.h |   6 +
+>  tests/qtest/migration/tls-tests.c      | 791 +++++++++++++++++++++++++
+>  4 files changed, 804 insertions(+), 789 deletions(-)
+>  create mode 100644 tests/qtest/migration/tls-tests.c
 > 
 > diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index b9f70ac32f..bdb9512510 100644
+> index bdb9512510..9ad9f0dc65 100644
 > --- a/tests/qtest/meson.build
 > +++ b/tests/qtest/meson.build
-> @@ -332,6 +332,7 @@ tpmemu_files = ['tpm-emu.c', 'tpm-util.c', 'tpm-tests.c']
+> @@ -337,11 +337,13 @@ migration_files = [files(
+>    'migration/migration-util.c',
+>  )]
 >  
->  migration_files = [files(
->    'migration/bootfile.c',
-> +  'migration/test-framework.c',
+> +migration_tls_files = []
+>  if gnutls.found()
+> -  migration_files += [files('../unit/crypto-tls-psk-helpers.c'), gnutls]
+> +  migration_tls_files = [files('migration/tls-tests.c'),
+> +                         files('../unit/crypto-tls-psk-helpers.c'), gnutls]
 
-Nit: considering your previous ways of renaming things (where you tend to
-drop "test" prefixes all over the places), maybe framework.c suites more.
+Nit: not a meson expert, but I think we could simply use files(A, B)
+instead of files(A), files(B)..
 
 Acked-by: Peter Xu <peterx@redhat.com>
 
