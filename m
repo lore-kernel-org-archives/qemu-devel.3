@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47BEBD58D5A
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 15:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C1FDD58D5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 15:27:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFayq-0006zt-C5; Mon, 25 Nov 2024 10:26:28 -0500
+	id 1tFazA-0007ms-IQ; Mon, 25 Nov 2024 10:26:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFaym-0006ws-Ef
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:26:24 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1tFayp-000704-FR
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:26:27 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFayg-0002YE-GM
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:26:20 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-382442b7d9aso3508281f8f.1
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 07:26:18 -0800 (PST)
+ id 1tFaym-0002Yp-5x
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 10:26:27 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-434a2f3bae4so3267925e9.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 07:26:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732548377; x=1733153177; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732548379; x=1733153179; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a2fXEZ40BYTZpxwqr81qDeJmktd3tot0XA64fsee8Sk=;
- b=m5RC1SLZacH0sCo5RcGZL4t/RqbD+GUJoub5tl3tOJ5US9Vg7AAPTTr6hApB8eQvVr
- WQIblMjl9R0hvUPIYBPSKPBu4uwGRNO7aa5OWSlOgHCW4nXDS1TsOGUmomB8p0KayHy9
- 06ZxBIxNszJcyIRcdRuFhhGcooQ4LHt+Kwh2Fe48fljww06F0ezRC+eNdm7VpOKNM9gR
- oyMgPiLxdgKBQ+JN9qRhnQbVtR3qYQNsmTiQJolLjIiQshQDSH5fOvgZemE1yx3h2+Aw
- ROhyDwvnYG62f7vL0DtkeNpb8HN87p7JXIslSEKy+7lJ4XfJrRLaGdmM5+SHRg6ztfAQ
- ZrbQ==
+ bh=+4ComUgm0VsNi+m3XoSttwvHYd1J7DrWJSpG+S4G9WI=;
+ b=B3YpDNlMGxd+8iyWODfOeyW4BiTsIh8KCx8Zm0CiBAgmCvVr2mrdhy0kj+guX87B+G
+ Q4cMTRK3MB2UvL71puxy/6n5497NZU5nLXswdDmY73TobgWF2c0VrmJnzYZiuqdQ3Kpk
+ Pegy9nHkZsHrSa4f/SuZbF/mHSvvvD9fgm5W8CAFpKogPZWoLN6D5LYkU4lGbO6nj1/8
+ 0oCaRlm8Z0hOvEBAbvR05YBlBZIbHE4chHgReKp7iJ/wrkLgxPo1F3yRwJLnqdxWIxxW
+ 9+iZQWiN/ZBcem4e391/WKiyxFnkBPdXmFUPGVCIzwJBpophDlnX6hTTm7K04wR2Vh8g
+ TFDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732548377; x=1733153177;
+ d=1e100.net; s=20230601; t=1732548379; x=1733153179;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a2fXEZ40BYTZpxwqr81qDeJmktd3tot0XA64fsee8Sk=;
- b=qRL1eD8gvakYDIWl+B0TV58Fjlv1ceGj90Zj9860eJepzMxSr3rjl1Q0bCdRsuzD1Y
- rZpj+tNkthWe9xDtVcIw2L/kcuIe+bfjjqksuaagzifEYIldkE1v62KKxB6p7654wIZb
- aVYoEStZlxBq+UNNy6Gb1DZQ1uuaRlZpzC9+KPjPwKlcNJkmRmIUxv+7C3c+1MspiK9Y
- 9GIDX2b46UmRofuOMWr8+oAbPgydwaSr9n8jG5/sYk2UfEHy0naAHM/3HVwaLjPaVtD5
- KWvMUCSk2IcP3NISpqyib7rLoDews69Huz2DDJBQCQ/nFsm+hP08FbxJ9uV4orkKxu2L
- Q4kQ==
-X-Gm-Message-State: AOJu0YylRdZS+nRi7ZSGCU+uvNxT2diK6RFMvcT8F17lBTl0E6o4ogRm
- Sd+pAHi4PF3lI2IIXVQ43W8kQvvYL70bPHP275qKibZpVGWDWXCj6FdytP4OT0g=
-X-Gm-Gg: ASbGncua8xsiTkF8/i5mTFEyBOGd9EShIJVZ6ueoZku3AcKc0uMAQO3gjbYCn1xerov
- q+Xswi7QOjZ9AqM9tSo+EgkbQMuPobdhXYZcCsPAwSBXSi2oJNNTpmsBxZqgnoGDE2Ng4lodqET
- OnvlL5IfNuIJgEBBlCRjaZGy+fg0wap0ePUfKaHxZRKVat6Lkme/vtC9iw5zM/YXzfvEI2wUxeo
- P2sMP8W7vL9BMV9NldLwXlPRkT2cu7UZbsty9/g/S2N089B
-X-Google-Smtp-Source: AGHT+IHLFKXVbfrWbEJ2k0TaxAtiGiJ5Zz01ioXL6R/DB3CMfOz6JI1ww3hZgY61mfYdL9p51Fs6aQ==
-X-Received: by 2002:a05:6000:401f:b0:382:2cbd:9a4b with SMTP id
- ffacd0b85a97d-38260b6df0amr10466459f8f.24.1732548376874; 
- Mon, 25 Nov 2024 07:26:16 -0800 (PST)
+ bh=+4ComUgm0VsNi+m3XoSttwvHYd1J7DrWJSpG+S4G9WI=;
+ b=fW+JKPLK1Zm2ihmdCfkvquUMKrUazNoAnP/y8Ojnn0ibgzYE//76o1icaaCyzwmX/C
+ F0Eo/Unt1x2zqvbTaORwW41obIeLvlkZeJCn/wmgEVlVroXdA6hu7/0jVcEKtC0TrH3X
+ nAoIsNmTvfccQnMWq14TPo4R0hm67RRlT8sxh4rKDQBwEVbAGSyNRvDakUTA7mB20/EK
+ tzndbKvW7r/KV1NI/Xrsjq1kq2wnXiQ7v4YC1KyRXtWEfK4vMJnv4smFYyi74u7GoBkh
+ VQBKTCuoX0HjDMm2aj+JIhnbMep3Iua2EiJuB/TpsKLyN0Tua1DPbrX40XTjshBx5+Hq
+ /swA==
+X-Gm-Message-State: AOJu0Yz8GKlXP5qIS8V0W6jSrfd7FVJAMe42TGWMzb1qxS730ktx7JJA
+ TFe++7jU7+VVPyqIPQvvKsIEsPzYYMGCNz4F5k+Wp4F5IV9iFJJdtTUqlNvuHBw=
+X-Gm-Gg: ASbGncv42vppowTgHbvnRXdIVP6Y7Jx5YA22Di0x8Hh0b9qM5JMCPTT2BEEVxKzKXuK
+ eR0EUGE+h273A/Ng66nXyXAhE8rCjp7n2xFjHzhUxwbaIQIVdKjxskS/v1dmW3V1HQTSdR8TObu
+ eM8LoE/HJCmAh6yQpnrq2kJKUt+yx7pDzZANQERqP0FI7HMN3n4h1Bq1HOnw7dxfElAlPf7uvjS
+ lq+YQEXPlA7Mmeadx+dvixnWnnt8Xa1mcSra31IF55aSxdH
+X-Google-Smtp-Source: AGHT+IH722bugulfuUBYdRcspq0o7wykmZNoQ3Pgu+dwnJDb6T6mtjejE09gTz9OyFxIeHpyLjBQlA==
+X-Received: by 2002:a7b:cc06:0:b0:431:59ab:15cf with SMTP id
+ 5b1f17b1804b1-434891a1dc5mr97627645e9.19.1732548379059; 
+ Mon, 25 Nov 2024 07:26:19 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fd04ef5sm10611647f8f.111.2024.11.25.07.26.14
+ 5b1f17b1804b1-434a0c889c5sm26615595e9.2.2024.11.25.07.26.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 07:26:14 -0800 (PST)
+ Mon, 25 Nov 2024 07:26:16 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 14E675F8FE;
- Mon, 25 Nov 2024 15:21:08 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id AE9F962644;
+ Mon, 25 Nov 2024 15:21:07 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 25/28] docs: explicitly permit a "commonly known identity" with
- SoB
-Date: Mon, 25 Nov 2024 15:21:02 +0000
-Message-Id: <20241125152105.2100395-26-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 21/28] plugins: add missing export for qemu_plugin_num_vcpus
+Date: Mon, 25 Nov 2024 15:20:58 +0000
+Message-Id: <20241125152105.2100395-22-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241125152105.2100395-1-alex.bennee@linaro.org>
 References: <20241125152105.2100395-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,104 +103,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The docs for submitting a patch describe using your "Real Name" with
-the Signed-off-by line. Although somewhat ambiguous, this has often
-been interpreted to mean someone's legal name.
-
-In recent times, there's been a general push back[1] against the notion
-that use of Signed-off-by in a project automatically requires / implies
-the use of legal ("real") names and greater awareness of the downsides.
-
-Full discussion of the problems of such policies is beyond the scope of
-this commit message, but at a high level they are liable to marginalize,
-disadvantage, and potentially result in harm, to contributors.
-
-TL;DR: there are compelling reasons for a person to choose distinct
-identities in different contexts & a decision to override that choice
-should not be taken lightly.
-
-A number of key projects have responded to the issues raised by making
-it clear that a contributor is free to determine the identity used in
-SoB lines:
-
- * Linux has clarified[2] that they merely expect use of the
-   contributor's "known identity", removing the previous explicit
-   rejection of pseudonyms.
-
- * CNCF has clarified[3] that the real name is simply the identity
-   the contributor chooses to use in the context of the community
-   and does not have to be a legal name, nor birth name, nor appear
-   on any government ID.
-
-Since we have no intention of ever routinely checking any form of ID
-documents for contributors[4], realistically we have no way of knowing
-anything about the name they are using, except through chance, or
-through the contributor volunteering the information. IOW, we almost
-certainly already have people using pseudonyms for contributions.
-
-This proposes to accept that reality and eliminate unnecessary friction,
-by following Linux & the CNCF in merely asking that a contributors'
-commonly known identity, of their choosing, be used with the SoB line.
-
-[1] Raised in many contexts at many times, but a decent overall summary
-    can be read at https://drewdevault.com/2023/10/31/On-real-names.html
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d4563201f33a022fc0353033d9dfeb1606a88330
-[3] https://github.com/cncf/foundation/blob/659fd32c86dc/dco-guidelines.md
-[4] Excluding the rare GPG key signing parties for regular maintainers
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Acked-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 4a448b148ca ("plugins: add qemu_plugin_num_vcpus function")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241021190939.1482466-1-berrange@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241112212622.3590693-2-pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-40-alex.bennee@linaro.org>
+Message-Id: <20241121165806.476008-36-alex.bennee@linaro.org>
 
-diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
-index 83e9092b8c..10b062eec2 100644
---- a/docs/devel/submitting-a-patch.rst
-+++ b/docs/devel/submitting-a-patch.rst
-@@ -18,7 +18,7 @@ one-shot fix, the bare minimum we ask is that:
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 622c9a0232..0fba36ae02 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -803,6 +803,7 @@ void qemu_plugin_register_atexit_cb(qemu_plugin_id_t id,
+                                     qemu_plugin_udata_cb_t cb, void *userdata);
  
-    * - Check
-      - Reason
--   * - Patches contain Signed-off-by: Real Name <author@email>
-+   * - Patches contain Signed-off-by: Your Name <author@email>
-      - States you are legally able to contribute the code. See :ref:`patch_emails_must_include_a_signed_off_by_line`
-    * - Sent as patch emails to ``qemu-devel@nongnu.org``
-      - The project uses an email list based workflow. See :ref:`submitting_your_patches`
-@@ -335,6 +335,11 @@ include a "From:" line in the body of the email (different from your
- envelope From:) that will give credit to the correct author; but again,
- that author's Signed-off-by: line is mandatory, with the same spelling.
+ /* returns how many vcpus were started at this point */
++QEMU_PLUGIN_API
+ int qemu_plugin_num_vcpus(void);
  
-+The name used with "Signed-off-by" does not need to be your legal name,
-+nor birth name, nor appear on any government ID. It is the identity you
-+choose to be known by in the community, but should not be anonymous,
-+nor misrepresent whom you are.
-+
- There are various tooling options for automatically adding these tags
- include using ``git commit -s`` or ``git format-patch -s``. For more
- information see `SubmittingPatches 1.12
-diff --git a/.gitlab-ci.d/check-dco.py b/.gitlab-ci.d/check-dco.py
-index d221b16bd5..70dec7d6ee 100755
---- a/.gitlab-ci.d/check-dco.py
-+++ b/.gitlab-ci.d/check-dco.py
-@@ -78,7 +78,10 @@
- 
- To indicate acceptance of the DCO every commit must have a tag
- 
--  Signed-off-by: REAL NAME <EMAIL>
-+  Signed-off-by: YOUR NAME <EMAIL>
-+
-+where "YOUR NAME" is your commonly known identity in the context
-+of the community.
- 
- This can be achieved by passing the "-s" flag to the "git commit" command.
- 
+ /**
 -- 
 2.39.5
 
