@@ -4,94 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 649ADD59D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 053BDD59D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFg3L-00050k-TD; Mon, 25 Nov 2024 15:51:27 -0500
+	id 1tFg3j-00058E-Rs; Mon, 25 Nov 2024 15:51:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFg3K-00050J-0y
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 15:51:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFg3I-0004p1-Of
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 15:51:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732567883;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFg3h-00053c-4f
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 15:51:49 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFg3f-0004rU-8l
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 15:51:48 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 42ECD21184;
+ Mon, 25 Nov 2024 20:51:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732567905; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JUYC+tdyE/SsVFrWnz9ybOndScEBRZK/bO56fGpJ3Uk=;
- b=VLs9n84KxaTyODHwQA5lIvYm47m6UqIigrH9dlsYLXN3VNdg73XwN4Wn6wVax+XjTA93Tq
- l2agTFUnhd9rO2HIzp7t08zFfbd0Qu/HATzxY6FdhvBvZgy2c35lo+VDCiQRY/VkG0zw7a
- CjdciEK4MEC9FKlcTjYuT0+t+BJIjJo=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-HlfBSUAOOjuNxZ0Y7gcX1Q-1; Mon, 25 Nov 2024 15:51:21 -0500
-X-MC-Unique: HlfBSUAOOjuNxZ0Y7gcX1Q-1
-X-Mimecast-MFC-AGG-ID: HlfBSUAOOjuNxZ0Y7gcX1Q
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-83abe8804a5so502049839f.2
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 12:51:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732567881; x=1733172681;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JUYC+tdyE/SsVFrWnz9ybOndScEBRZK/bO56fGpJ3Uk=;
- b=h/DCb3RHFefWUu24VfcUxpRwSELe2svF+XnfAXWWlwdjzDuEca/XHuieA/RBAYVO8S
- PHlrRYMDCGgS9qcs37YTKCV4+f3i5mOVTdu81fvjCHiqLYopNRnPxcOgZxoNR7rWLWMg
- lxI2eihuN7ANGysf986HJFEVy/pdacpcByMWaZU2uqeb5dF0Od9K0Usq6t11ofkAl+KS
- J0KLJB6w6xIum4XbyjDsfi6C97CQmrLPiJjQ/oyUlXZss5tKqKxZSEtMW+Wv/T/SOL1n
- zz+G+vStwdA5cPATeP4YsriCf61jxNSNDpmXiHAN38PJqRgFC9YBr9raqxK5Gz3KbIh/
- DnZw==
-X-Gm-Message-State: AOJu0YwASdKQzicAjrd17smtrDHMixT4df7wovmcMEoRIXEOA6iL9m5o
- YM9q/iAT3uTFdQKILDHbFrnDYvQfZl7/FwHdfNfGV1ABuOQa+sU+qsKl9zxeMwR2ZxsL4bGVrsy
- cHNgiF0FAmqnTQdbBHpdVqmaLvdgl4kAqkF/AZDKY97lOnWzP/+JZ
-X-Gm-Gg: ASbGnct0a1eH7skr7p4V+1QbHutfRDpszoCvRbG08J7eFnbEaVWb0g4svYaEFQfQU8D
- 0cXCwGmF+n9cWzin/DpD4B2Jv9NMpN0uR7sidI01eKmyAHTMtcTSSdhK7VQWQlff4KJ3OW194Is
- KcOhrpQH6xTCKGoxNexQaKA0D92FQ4I5vp0FOY43FJIPQ2XYGOwFzlJ8T6Mu6BMAiEcOgPg0A+1
- 6kuHeRgPZc0D9l2gw4nGvz89nU5yyIoYSdRNCpjaD8Ki2+9eLY7NPWNECq7F+6hkFf7amFjodkw
- tGHTRxytLzI=
-X-Received: by 2002:a05:6602:6b0f:b0:835:4278:f130 with SMTP id
- ca18e2360f4ac-83ecdd3a105mr1564038639f.13.1732567880989; 
- Mon, 25 Nov 2024 12:51:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHYHRX5OLc2sMuiD6cWYijHtbthXXUWXIpSUtxn9l8kwSqk09eIZrVaHT4b8QG8r1l+urZ2SA==
-X-Received: by 2002:a05:6602:6b0f:b0:835:4278:f130 with SMTP id
- ca18e2360f4ac-83ecdd3a105mr1564036939f.13.1732567880755; 
- Mon, 25 Nov 2024 12:51:20 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-841a7f8dd0fsm37633439f.39.2024.11.25.12.51.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 12:51:19 -0800 (PST)
-Date: Mon, 25 Nov 2024 15:51:17 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v2 02/22] tests/qtest/migration: Standardize hook names
-Message-ID: <Z0TjRertI__KnVoZ@x1n>
-References: <20241113194630.3385-1-farosas@suse.de>
- <20241113194630.3385-3-farosas@suse.de>
+ bh=Hid5PQ2NamKSCghruMP/VYIZ3qSCKRZI6ucAcCB8cP0=;
+ b=N2r8e1NZr0+W7nH9vQTpEVzM+jqxd2G59NNCzdHIJCCL97jJkEXCS20j+932vc4Irv1YPs
+ kru5oFp+iYcAxxncKAmEu8RdVXxTn9ZTPFK0FFuJzOmxMKbGNkAi8QYAdzfBSmtjiSyuSb
+ dRvyawl9XB5F9NB7ZTyc9S3uQ43xHOY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732567905;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hid5PQ2NamKSCghruMP/VYIZ3qSCKRZI6ucAcCB8cP0=;
+ b=kHltQUO9o5aQtkRzE+0Umwyr1amIgQAF9csIKJqZ0u+DzLEBvRlFRZTKY2E1i23wKqvc0w
+ TNGV2hUDnjpWgjCQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732567905; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hid5PQ2NamKSCghruMP/VYIZ3qSCKRZI6ucAcCB8cP0=;
+ b=N2r8e1NZr0+W7nH9vQTpEVzM+jqxd2G59NNCzdHIJCCL97jJkEXCS20j+932vc4Irv1YPs
+ kru5oFp+iYcAxxncKAmEu8RdVXxTn9ZTPFK0FFuJzOmxMKbGNkAi8QYAdzfBSmtjiSyuSb
+ dRvyawl9XB5F9NB7ZTyc9S3uQ43xHOY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732567905;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hid5PQ2NamKSCghruMP/VYIZ3qSCKRZI6ucAcCB8cP0=;
+ b=kHltQUO9o5aQtkRzE+0Umwyr1amIgQAF9csIKJqZ0u+DzLEBvRlFRZTKY2E1i23wKqvc0w
+ TNGV2hUDnjpWgjCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B67CA137D4;
+ Mon, 25 Nov 2024 20:51:44 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id tss7HmDjRGeFPwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 25 Nov 2024 20:51:44 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
+ Goater <clg@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Avihai
+ Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH v3 04/24] thread-pool: Implement generic (non-AIO) pool
+ support
+In-Reply-To: <7efee58f-90be-44a5-92b0-7b792e1ab906@maciej.szmigiero.name>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <babda1bbe43024baaa4a9ac855f7930b6679f2b7.1731773021.git.maciej.szmigiero@oracle.com>
+ <87ldx7nlsj.fsf@suse.de>
+ <7efee58f-90be-44a5-92b0-7b792e1ab906@maciej.szmigiero.name>
+Date: Mon, 25 Nov 2024 17:51:42 -0300
+Message-ID: <87a5dnnijl.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241113194630.3385-3-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,27 +123,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 13, 2024 at 04:46:10PM -0300, Fabiano Rosas wrote:
->  static void *
-> -test_migration_precopy_tcp_multifd_start_no_zero_page(QTestState *from,
-> +test_migration_precopy_tcp_multifd_no_zero_page_start(QTestState *from,
+"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
 
-Looks like this one is leftover to do s/test_migration/migrate_hook/ (and
-below when referenced)?
+> On 25.11.2024 20:41, Fabiano Rosas wrote:
+>> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+>> 
+>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>
+>>> Migration code wants to manage device data sending threads in one place.
+>>>
+>>> QEMU has an existing thread pool implementation, however it is limited
+>>> to queuing AIO operations only and essentially has a 1:1 mapping between
+>>> the current AioContext and the AIO ThreadPool in use.
+>>>
+>>> Implement generic (non-AIO) ThreadPool by essentially wrapping Glib's
+>>> GThreadPool.
+>>>
+>>> This brings a few new operations on a pool:
+>>> * thread_pool_wait() operation waits until all the submitted work requests
+>>> have finished.
+>>>
+>>> * thread_pool_set_max_threads() explicitly sets the maximum thread count
+>>> in the pool.
+>>>
+>>> * thread_pool_adjust_max_threads_to_work() adjusts the maximum thread count
+>>> in the pool to equal the number of still waiting in queue or unfinished work.
+>>>
+>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>> ---
+>>>   include/block/thread-pool.h |   9 +++
+>>>   util/thread-pool.c          | 109 ++++++++++++++++++++++++++++++++++++
+>>>   2 files changed, 118 insertions(+)
+>>>
+>>> diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
+>>> index 6f27eb085b45..3f9f66307b65 100644
+>>> --- a/include/block/thread-pool.h
+>>> +++ b/include/block/thread-pool.h
+>>> @@ -38,5 +38,14 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
+>>>   int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg);
+>>>   void thread_pool_update_params(ThreadPoolAio *pool, struct AioContext *ctx);
+>>>   
+>>> +typedef struct ThreadPool ThreadPool;
+>>> +
+>>> +ThreadPool *thread_pool_new(void);
+>>> +void thread_pool_free(ThreadPool *pool);
+>>> +void thread_pool_submit(ThreadPool *pool, ThreadPoolFunc *func,
+>>> +                        void *opaque, GDestroyNotify opaque_destroy);
+>>> +void thread_pool_wait(ThreadPool *pool);
+>>> +bool thread_pool_set_max_threads(ThreadPool *pool, int max_threads);
+>>> +bool thread_pool_adjust_max_threads_to_work(ThreadPool *pool);
+>>>   
+>>>   #endif
+>>> diff --git a/util/thread-pool.c b/util/thread-pool.c
+>>> index 908194dc070f..d80c4181c897 100644
+>>> --- a/util/thread-pool.c
+>>> +++ b/util/thread-pool.c
+>>> @@ -374,3 +374,112 @@ void thread_pool_free_aio(ThreadPoolAio *pool)
+>>>       qemu_mutex_destroy(&pool->lock);
+>>>       g_free(pool);
+>>>   }
+>>> +
+>>> +struct ThreadPool { /* type safety */
+>>> +    GThreadPool *t;
+>>> +    size_t unfinished_el_ctr;
+>>> +    QemuMutex unfinished_el_ctr_mutex;
+>>> +    QemuCond unfinished_el_ctr_zero_cond;
+>>> +};
+>>> +
+>>> +typedef struct {
+>>> +    ThreadPoolFunc *func;
+>>> +    void *opaque;
+>>> +    GDestroyNotify opaque_destroy;
+>>> +} ThreadPoolElement;
+>>> +
+>>> +static void thread_pool_func(gpointer data, gpointer user_data)
+>>> +{
+>>> +    ThreadPool *pool = user_data;
+>>> +    g_autofree ThreadPoolElement *el = data;
+>>> +
+>>> +    el->func(el->opaque);
+>>> +
+>>> +    if (el->opaque_destroy) {
+>>> +        el->opaque_destroy(el->opaque);
+>>> +    }
+>>> +
+>>> +    QEMU_LOCK_GUARD(&pool->unfinished_el_ctr_mutex);
+>>> +
+>>> +    assert(pool->unfinished_el_ctr > 0);
+>>> +    pool->unfinished_el_ctr--;
+>>> +
+>>> +    if (pool->unfinished_el_ctr == 0) {
+>>> +        qemu_cond_signal(&pool->unfinished_el_ctr_zero_cond);
+>>> +    }
+>>> +}
+>>> +
+>>> +ThreadPool *thread_pool_new(void)
+>>> +{
+>>> +    ThreadPool *pool = g_new(ThreadPool, 1);
+>>> +
+>>> +    pool->unfinished_el_ctr = 0;
+>>> +    qemu_mutex_init(&pool->unfinished_el_ctr_mutex);
+>>> +    qemu_cond_init(&pool->unfinished_el_ctr_zero_cond);
+>>> +
+>>> +    pool->t = g_thread_pool_new(thread_pool_func, pool, 0, TRUE, NULL);
+>>> +    /*
+>>> +     * g_thread_pool_new() can only return errors if initial thread(s)
+>>> +     * creation fails but we ask for 0 initial threads above.
+>>> +     */
+>>> +    assert(pool->t);
+>>> +
+>>> +    return pool;
+>>> +}
+>>> +
+>>> +void thread_pool_free(ThreadPool *pool)
+>>> +{
+>>> +    g_thread_pool_free(pool->t, FALSE, TRUE);
+>> 
+>> Should we make it an error to call thread_poll_free without first
+>> calling thread_poll_wait? I worry the current usage will lead to having
+>> two different ways of waiting with one of them (this one) being quite
+>> implicit.
+>> 
+>
+> thread_pool_wait() can be used as a barrier between two sets of
+> tasks executed on a thread pool without destroying it or in a performance
+> sensitive path where we want to just wait for task completion while
+> deferring the free operation for later, less sensitive time.
+>
+> I don't think requiring explicit thread_pool_wait() before
+> thread_pool_free() actually gives any advantage, while at the same
+> time it's making this API usage slightly more complex in cases
+> where the consumer is fine with having combined wait+free semantics
+> for thread_pool_free().
 
-Other than that:
+Fair enough,
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
->                                                        QTestState *to)
->  {
-> -    test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
-> +    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
->      migrate_set_parameter_str(from, "zero-page-detection", "none");
->      return NULL;
->  }
-
--- 
-Peter Xu
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
