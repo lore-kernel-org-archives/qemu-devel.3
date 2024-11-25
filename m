@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 183C5D3B7D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 04:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D5DD3B7D2
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 04:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFQIN-0007f5-Ky; Sun, 24 Nov 2024 23:01:55 -0500
+	id 1tFQq4-0004lz-OD; Sun, 24 Nov 2024 23:36:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tFQIL-0007ea-J9; Sun, 24 Nov 2024 23:01:53 -0500
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ id 1tFQq0-0004lh-Gj; Sun, 24 Nov 2024 23:36:40 -0500
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tFQIK-0001or-14; Sun, 24 Nov 2024 23:01:53 -0500
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-856e76fdf11so891010241.3; 
- Sun, 24 Nov 2024 20:01:51 -0800 (PST)
+ id 1tFQpy-0006Wc-Qq; Sun, 24 Nov 2024 23:36:40 -0500
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-84ff612ca93so1182915241.0; 
+ Sun, 24 Nov 2024 20:36:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732507310; x=1733112110; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1732509397; x=1733114197; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=20z6im6nQ0/3Stjv9eBtZ94i8AdjHF2gyGmqoYlguVA=;
- b=ahnkvSf/dc7bGeXKnVRjvMZOxeHCTLBO8c319FbsnDAPBdrFlLyRbaIGca32OuctwQ
- QHv6r4Ao4VaN2amcvYXAC1HktHXnkaCZVh9XM22YfmAmB8I9bCXjck9xrtiOaqsE3IR1
- IG/kjQiZiDP+QXowPVgHyQNg7/SI1xqShNfOA8ovMIC5KT3Aly+9KuGtgrWQYgoPEXYI
- LHHBbwE3y7ecgaoiIIRJCv6k2OaEY3TLmo+8IJRFrfgcOxVV4wc8OCivevzrIdAL9bcb
- ncegmQjSKedOXDSlgxu6CDErCvtFh09JmHAOsBhmUN/9hTKxYuZAIhlXuXwlPqhsxIzL
- IcNQ==
+ bh=CpFj9GSYfzkEGmASAIG7nCFVTW9dIuN9f7BIh3LVCQE=;
+ b=Sg27uKETaTf7ES3LnCbnicNeYQJ4x6qzInsVseZM+O/srlE5/ELDAZMhq+ykOpSAgh
+ V3Z/hLQznlr6PWQJ2RGSdf2YEtSKta/JPXy8VXEAO104vhYNLbvfwxNdUxf93O74y8NW
+ qZ8310iV+68lOYXsNOjWbfSRho4afvCXvmjuHcMaLxDXb9Kr57VNqLZU38s77gezuoS4
+ wMPaP/BHIysGcYW3qHp2lNOoc9vH6JDTwn3uOuamPVuaKkxVQxklcWD5/o0H4E9lCwUv
+ eDMb36vd/6f5gV1TSVz9G+ysQPotdRcokcfhp6jAoNuQ8EUrYx75z8hcPQ1oONtdc3Wx
+ qATQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732507310; x=1733112110;
+ d=1e100.net; s=20230601; t=1732509397; x=1733114197;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=20z6im6nQ0/3Stjv9eBtZ94i8AdjHF2gyGmqoYlguVA=;
- b=Af94V60iV6pX65mPTzc8wU3M8FVgjBsCFUovXJAgOuspVYqpd4HpSzueoK4pFMjDcg
- Gltb7IfGF0FJxWtVvyNjWdluDJ/FSDVYbpxBVy3WNsYeJR3RwnUBSYvAuSAqStVb3ckO
- b4SYBOzD10a+UzjkF0uoObcckPPaKAJdxkFt6yI+vCR08oYL7NBFH5620Ar/ImCzhk2u
- +kpOb3dX7CLzlCwvubJ4gcvz/oaTbLCq4v6sNY3sI3J849CnQBLsnbjBGpOgIx0wwQ6y
- CiKDvDsipHoq3uhvsixrq/eJj6NKCo6Wj99B/SV6PI2kcq4CUF593jr7cXvR3ZcVHGgn
- bC1g==
+ bh=CpFj9GSYfzkEGmASAIG7nCFVTW9dIuN9f7BIh3LVCQE=;
+ b=EVv/9mpk0LAw5paRo7LM2zxSx7fNUwyYSciE2LY2bUZJk5NJxXLwqHCkYZVzrw4ILj
+ JzWLU8viVJzAPLfCnPncsfvoivjO0i5gDWc75Un6idxR6EL/SXxClL0TGLydjGUGRPTt
+ LtPWnbtXn/IyrCVLZS/YKSPl+K2ApPdHfWKTQUy9+cED7Bb9BEo3BfDOQBa+9ttzaUh+
+ /ZAOn2HTcYfy4+2YO/5jaamPNbdNN9G7iYnt7oXuwhA/O/1DFW5aRmebhi7RaJN3/CsJ
+ TJLuebF3md5n/mtv5gwYG8hwjocZ8+5x+wmsOlUJRSALWjR/blZTiA38SMSOFj4gET1H
+ yCFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUh6h5/E7AqXb/tMXoxv0kvIqMrNfljPoY2dkk/NpFMKO7ivuzTbXnYixJGlnh3+WhulpRU3dqb2EOizA==@nongnu.org,
- AJvYcCX8XSBjMTnnFq0mM2iBFbeEDy2Tv31s1YiR+K3pg3sjSr1X4/9noQ6dZvw7HUyzEnTb8M1CeCs1EvEM@nongnu.org
-X-Gm-Message-State: AOJu0YwQNAjfBwECnygMZa7rAvsheUBYVQTHkXDBiKN7mYszhl/B2I/a
- PgQ4wz9G1kGacfuGdoSa7RZq3/aC38moWq/J+DK0pH12rjZQiCuWsincCvy9ztQ3NaFWQcR8917
- PQhWjH309YPNUSBmluHYox6LDovs=
-X-Gm-Gg: ASbGncswoQYgN7MoSIlh1ylLKOS9WPjVn6ppcdoP8kwV6RA3345cSKFqP9B14Ix8FaN
- mIXWb41V3X84BtNiFU/QCx3LF2e1J6EE/Zerr6zHKQEZ3Qap/4K5Fe/N08t5C2w==
-X-Google-Smtp-Source: AGHT+IEfEOY/cHzvXVpQKDoqa3TUzwRT9qTeVTkmcRfnK9dFpxALGhCpdLLeLBFD7blv2MWhQxg+AJV/EZMuEIj6Jsc=
-X-Received: by 2002:a05:6102:c52:b0:4a4:878a:e3b7 with SMTP id
- ada2fe7eead31-4addcd33997mr8552423137.22.1732507310149; Sun, 24 Nov 2024
- 20:01:50 -0800 (PST)
+ AJvYcCXf6Jdd2v/EXbGL+TOEyg0jMPAHu2HhfmEeeryX/TWj8ZemHGEFVhoNIvq0jFfxlH3DpUMfjChq0TR0@nongnu.org
+X-Gm-Message-State: AOJu0Yxv46ETs4NC12F5zbW5dX8t63pIaz8mgrUEO1NhX6qH+AsJvKlb
+ znqkRhDgeP+ZBCcBU85Uj9kAEaezi1htWGCdnc1UvfXSXAmxaL3hzlvIKfnjICQmklN3I5/ZFsA
+ rYC1rRISynGPUqjI82DKyfxCugpI=
+X-Gm-Gg: ASbGncs/xf1XVusA8mVGpqHIG1X2RTtEln6TjOzGzGtzOspNiI6UaBBg4ktNbzvPzs2
+ usknEEKmrhS9Yc+tIPWStBVl1Yy4o/smNK/jmsnaIiDFQwnnF9+ZTN/Gx2ZZLdw==
+X-Google-Smtp-Source: AGHT+IH72I8e1gQQadsJh0E3+R60iA8Dg+ALB4MeYS+x4yhLcW5/e+qAOB9Bp20sT7W/Lk8UVzWma2R3ro8sM7BUUEA=
+X-Received: by 2002:a05:6102:32d4:b0:4af:c66:de88 with SMTP id
+ ada2fe7eead31-4af0c66f5b7mr3914989137.16.1732509397274; Sun, 24 Nov 2024
+ 20:36:37 -0800 (PST)
 MIME-Version: 1.0
-References: <20241121061259.4043177-1-baturo.alexey@gmail.com>
- <20241121061259.4043177-2-baturo.alexey@gmail.com>
-In-Reply-To: <20241121061259.4043177-2-baturo.alexey@gmail.com>
+References: <20241113171755.978109-1-dbarboza@ventanamicro.com>
+ <20241113171755.978109-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20241113171755.978109-2-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 25 Nov 2024 14:01:24 +1000
-Message-ID: <CAKmqyKObuwwp7AGrUgNWO9PdzBW0f8FFTrhFBVqij8ZOy+RQAg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] target/riscv: Remove obsolete pointer masking
- extension code.
-To: baturo.alexey@gmail.com
-Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
- dbarboza@ventanamicro.com, liwei1518@gmail.com, frank.chang@sifive.com, 
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Date: Mon, 25 Nov 2024 14:36:11 +1000
+Message-ID: <CAKmqyKOgtDnKLHZCW+Y0F64vEgdTGOJDdFJLpZW6Qft8pBKpaQ@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 1/9] target/riscv/tcg: hide warn for named feats
+ when disabling via priv_ver
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,19 +96,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 4:13=E2=80=AFPM <baturo.alexey@gmail.com> wrote:
+On Thu, Nov 14, 2024 at 3:20=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> From: Alexey Baturo <baturo.alexey@gmail.com>
+> Commit 68c9e54bea handled a situation where a warning was being shown
+> when using the 'sifive_e' cpu when disabling the named extension zic64b.
+> It makes little sense to show user warnings for named extensions that
+> users can't control, and the solution taken was to disable zic64b
+> manually in riscv_cpu_update_named_features().
 >
-> Zjpm extension is finally ratified. And it's much simplier compared to th=
-e experimental one.
-> The newer version doesn't allow to specify custom mask or base for pointe=
-r masking.
-> Instead it allows only certain options for masking top bits.
+> This solution won't scale well when adding more named features, and can
+> eventually end up repeating riscv_cpu_disable_priv_spec_isa_exts().
 >
-> Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
+> Change riscv_cpu_disable_priv_spec_isa_exts() to not show warnings when
+> disabling a named feature. This will accomplish the same thing we're
+> doing today while avoiding having two points where we're disabling
+> exts via priv_ver mismatch.
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Wasn't this and part of this series previously reviewed?
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
+
+> ---
+>  target/riscv/tcg/tcg-cpu.c | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
+>
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index c62c221696..cd83968166 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -304,6 +304,15 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RIS=
+CVCPU *cpu)
+>              }
+>
+>              isa_ext_update_enabled(cpu, edata->ext_enable_offset, false)=
+;
+> +
+> +            /*
+> +             * Do not show user warnings for named features that users
+> +             * can't enable/disable in the command line. See commit
+> +             * 68c9e54bea for more info.
+> +             */
+> +            if (cpu_cfg_offset_is_named_feat(edata->ext_enable_offset)) =
+{
+> +                continue;
+> +            }
+>  #ifndef CONFIG_USER_ONLY
+>              warn_report("disabling %s extension for hart 0x" TARGET_FMT_=
+lx
+>                          " because privilege spec version does not match"=
+,
+> @@ -331,11 +340,9 @@ static void riscv_cpu_update_named_features(RISCVCPU=
+ *cpu)
+>          cpu->cfg.has_priv_1_13 =3D true;
+>      }
+>
+> -    /* zic64b is 1.12 or later */
+>      cpu->cfg.ext_zic64b =3D cpu->cfg.cbom_blocksize =3D=3D 64 &&
+>                            cpu->cfg.cbop_blocksize =3D=3D 64 &&
+> -                          cpu->cfg.cboz_blocksize =3D=3D 64 &&
+> -                          cpu->cfg.has_priv_1_12;
+> +                          cpu->cfg.cboz_blocksize =3D=3D 64;
+>  }
+>
+>  static void riscv_cpu_validate_g(RISCVCPU *cpu)
+> --
+> 2.47.0
+>
+>
 
