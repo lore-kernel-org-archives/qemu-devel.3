@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907BDD58D73
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF75D58D71
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:52:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFdFb-00016c-Nb; Mon, 25 Nov 2024 12:51:55 -0500
+	id 1tFdG7-0001Kd-FT; Mon, 25 Nov 2024 12:52:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFdFW-000167-E7
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:51:51 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFdG5-0001Ie-O6
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:52:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFdFU-0001p2-Cb
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:51:50 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFdG4-0001sS-Bu
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:52:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732557106;
+ s=mimecast20190719; t=1732557143;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Xdk69IssmzBUXlrlgN0651gfuNqPbjiHIelP6q5j4Dg=;
- b=JOnrob8GfupJWY54My4eu8/Nda2FVPsWRNbbZbSIKz4l5vz+JNUiqdv+xDWCQGadMvvJum
- s+OyoTu/ewG2kNeOK+cAa/nk85EvBqaiPRz2EFzmAv/8toeay06zCxdBL7SW6BGDc0p3tm
- PayxojSbUNGTMFdFITi5BMjy8OxpN4g=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yLtLe87azHvt7N42GxKEtuNK9Y9P6nfdtq4AEWorpiA=;
+ b=BJkVqJSVsB3AqrOamQOrfbL0Qn2AVnTtEpQ5/jE9LYo/vsnTyfQgWfToR9C6RNUSNAmfa9
+ fs1CG9/Kh/rHlKlGGj7nuz3U3Z8WFQiD56qW13Z76uiadWT3k1KxsNRzNlxa5zq99O8PVY
+ dObexcA7VYISsFAmrIs5E6O/TCkyRyc=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-94-JJAibHvwM1azedKdcGjT5g-1; Mon, 25 Nov 2024 12:51:44 -0500
-X-MC-Unique: JJAibHvwM1azedKdcGjT5g-1
-X-Mimecast-MFC-AGG-ID: JJAibHvwM1azedKdcGjT5g
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-841843a9970so151529039f.3
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:51:44 -0800 (PST)
+ us-mta-390-bM1OSFULOBatWsajy_Zfkg-1; Mon, 25 Nov 2024 12:52:21 -0500
+X-MC-Unique: bM1OSFULOBatWsajy_Zfkg-1
+X-Mimecast-MFC-AGG-ID: bM1OSFULOBatWsajy_Zfkg
+Received: by mail-io1-f71.google.com with SMTP id
+ ca18e2360f4ac-8419f8859f7so95916939f.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:52:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732557103; x=1733161903;
+ d=1e100.net; s=20230601; t=1732557141; x=1733161941;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xdk69IssmzBUXlrlgN0651gfuNqPbjiHIelP6q5j4Dg=;
- b=Ov+hLXJJq39Q8+s44QV7921hvG7Vzc0fIQuZtyKyJQwsyJI7RiRJhIGanOGXqhbUoT
- Mhbc7hfCzLW9wAhnlXQIhxXRl7PZaTDCM0CR5nvJlw3eHRTs1l/50+U5vt5yn9wwZSct
- wndcOWcTsJiL7d90o6HERrd4V2cCh3FK95khUliU52fbBX76Uzx0iVzZ1m6FcyCC2zEk
- +cuBDlgt25N8KDKsstOq9n5GqFPK8qaAKxdVrGzjmXef/CjQkCAr0bc6qxgcvuuENRiI
- iFnbgHHkxtRP1SeGLqZzHtJXC7ORSoE/bU3WL8Tq/yNuKCSwtxuf6jDBvJXUBmQxeZSG
- jn5A==
-X-Gm-Message-State: AOJu0Yy2elVTla2Tvdt5ZSYy/opjpoDFI/qlOd9uJp3yHmaRpf/rbA+4
- dgjVCHGn3aTxYNcSJZAqIhY8zuFfkVgVtW1kTSbEL8uE1DbHDymKmfbM636Gk1z/gE2cjMpQr6h
- 2ew94AIJ63RqMJB9DUYjGo87xqqjijwU+CEUDIINFDUNEsoSLtvvdTpnQ0hbR
-X-Gm-Gg: ASbGncsX+5HgKPa2wcu32op9fLE97NOvdjGRP/orqtFJTXw2CU8KfKT8yyFm6IOvD2N
- jMbxsjV2q3D7jhClakSO+IMxqoCBJSx0T7JwryZ3QWBvtzIkNHG1tE6NkW7qG8EAh+KF8gEgPqi
- c73dzUVmE5YM0mpLZitqJzW5PCOZKrI7zQs8P47waLx6m5clyQgk6SwYz3TJb9nhVAEczDBaIdK
- V74joBWVqIeC01y/NTB5bS/Wl0F9J09o5U8CfVRpeeW8QJFh6zCxCErthNZW2H4A0U55QJ7RQTL
- ByUNOeTFCj8=
-X-Received: by 2002:a05:6602:14d5:b0:83a:d646:9c0a with SMTP id
- ca18e2360f4ac-83ecdd16358mr1092140439f.11.1732557103628; 
- Mon, 25 Nov 2024 09:51:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF9GwTdKC601JXo76tg9AIGAcESlBRfo1yhMkTKQlpyMYNQJ4yXnJF+1QgjpiskrONYT5CoUw==
-X-Received: by 2002:a05:6602:14d5:b0:83a:d646:9c0a with SMTP id
- ca18e2360f4ac-83ecdd16358mr1092138639f.11.1732557103344; 
- Mon, 25 Nov 2024 09:51:43 -0800 (PST)
+ bh=yLtLe87azHvt7N42GxKEtuNK9Y9P6nfdtq4AEWorpiA=;
+ b=vT2PjGJ8dM9gxf2piHibRPItGAmJ1xyG+8jnb2ZgDwdUijFNC6yilZyUl8GGfssFEh
+ /KR7Ph/iqPbiaaFbOQu+5Uc847vN/snljIzpDuAqLaj087HnfctlGtaTaqa+kdXaEa59
+ tAl0VM9njU7yNnWIcN0SXJZPfh69QPNEOLWDEQESY5Jkw65GijJJ8TZgfE5gUzvI+1Yu
+ yI3z8E4zYDvUuD3+F0KVwddToYE3/66c0aor7SVjPj26PUYbJPXEZkawcZUhEokkGobz
+ cB/ncuiP7CTLrUWoo7ggjL968BQ/qQkLhd35kncV9OZsXqwEmQ+1QilLanwYXgkfXSP/
+ 9vYg==
+X-Gm-Message-State: AOJu0YxUFjAsuXxg0/THXzeicoQh785G5/3xzmDMcMA1Vzo/bvNta4qt
+ Wm6q0ciK79NVgS4SvSgkpxJKNmEsK3rpWVJcUOGLxRjhYVQ1kCI5XBHjNHBWU18QrF2/O8uRS1u
+ rYqPmA8N17bhVaGG7jL5smDPG9cEBRdfLM0w5ZxrlMxBVCo+9KdEj
+X-Gm-Gg: ASbGncsC9I0bVkdw35OPPIb7xYvWfHyF5adqUTsiG5TNYbbPOtVsjf69+094+ELuo2s
+ RTo5v7IN745qGY7rtAnOlaBnHPEGPBIFIaFylHEg7Yphv77oeAXTkJ2+Na8OVChS5Y951QxOBCp
+ wv/CHHVfSDSpZ0xSaAxylsTBmKnLjJfLbR/5ZIbotXR9AvZZ6HY7iC4jSwNmm3kKw/o6nj+CKHh
+ SCCE0pAwDsiDYxU9ozC2wqHEVfHU/A9iNGtpJYxqQiJY4HFJrDX1BLZRvTR9yrJOBIbx0nljx7g
+ PWkt9KPOSkE=
+X-Received: by 2002:a05:6602:490:b0:82c:d768:aa4d with SMTP id
+ ca18e2360f4ac-83ecdc97029mr1480007739f.9.1732557141042; 
+ Mon, 25 Nov 2024 09:52:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGKAUjkUu5ipk7hYCmnE9Pfl60NYF3Xepvu4P16h5GeAPBrgZhtiBt2Sc7Wt5bg4lxtY/XytQ==
+X-Received: by 2002:a05:6602:490:b0:82c:d768:aa4d with SMTP id
+ ca18e2360f4ac-83ecdc97029mr1480006239f.9.1732557140790; 
+ Mon, 25 Nov 2024 09:52:20 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-84199ef66f1sm55187939f.19.2024.11.25.09.51.42
+ ca18e2360f4ac-83ecd418010sm186580139f.42.2024.11.25.09.52.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 09:51:42 -0800 (PST)
-Date: Mon, 25 Nov 2024 12:51:40 -0500
+ Mon, 25 Nov 2024 09:52:20 -0800 (PST)
+Date: Mon, 25 Nov 2024 12:52:18 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 14/22] tests/qtest/migration: Split postcopy tests
-Message-ID: <Z0S5LDuo2ksvA_L2@x1n>
+Subject: Re: [PATCH v2 15/22] tests/qtest/migration: Split file tests
+Message-ID: <Z0S5UthCGNfYeWjx@x1n>
 References: <20241113194630.3385-1-farosas@suse.de>
- <20241113194630.3385-15-farosas@suse.de>
+ <20241113194630.3385-16-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241113194630.3385-15-farosas@suse.de>
+In-Reply-To: <20241113194630.3385-16-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -108,10 +108,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 13, 2024 at 04:46:22PM -0300, Fabiano Rosas wrote:
-> Split the next group of tests from migration-test.c, the postcopy
-> tests. This is another well-defined group of tests and postcopy is a
-> unique enough feature that it deserves it's own file.
+On Wed, Nov 13, 2024 at 04:46:23PM -0300, Fabiano Rosas wrote:
+> Split the file tests from migration-test.c. These are being moved to
+> their own file due to being special enough compared with the regular
+> stream migration. There is also the entire mapped-ram feature which
+> depends on file migration.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
