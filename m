@@ -4,96 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D94D58D73
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 17:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F94CD58D75
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 18:01:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFdJ1-0004EJ-5G; Mon, 25 Nov 2024 12:55:27 -0500
+	id 1tFdO1-0005ek-BE; Mon, 25 Nov 2024 13:00:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFdIs-0004D6-04
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:55:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tFdIq-0002Qg-OK
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 12:55:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732557315;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFdNc-0005TT-Sv
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:00:18 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFdNa-0003CT-KU
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:00:12 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E114B211A1;
+ Mon, 25 Nov 2024 18:00:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732557609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Zs5Ey9f8xUXLp81qL9bt3rze6yMFdzt/or2KTgjIyI0=;
- b=gAExXmjMWDR0l6iHyki29WcvxvsSXxDC+Dgdgq7LQHI/qgY3ZLnkouP5Q/cGd/JR6DYLL0
- d2wmmSso0ZakjZuqhcL1CGHLBOPbsiQLUiSelzq7xbNS4Z2WJ3DlNzSNFgTiYIGIq4vO8j
- +KuqUZDuw0Nyj8k4usVvzZXGFEkgMVg=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-hbTyXWPVPq-S9ck83g0iWA-1; Mon, 25 Nov 2024 12:55:13 -0500
-X-MC-Unique: hbTyXWPVPq-S9ck83g0iWA-1
-X-Mimecast-MFC-AGG-ID: hbTyXWPVPq-S9ck83g0iWA
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-83acaa1f819so518024239f.3
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 09:55:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732557313; x=1733162113;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Zs5Ey9f8xUXLp81qL9bt3rze6yMFdzt/or2KTgjIyI0=;
- b=pcfVV1NjdOcgrb/ik+uCaTimWj6Gyi2yW7CsiHI9C7sKGdv88NZJd3353kTACnzlpY
- KRJpntK+XNIhVSsz0xuuYMnV7OI1Wof46dpN+zW9CEO/c+AYHL1zmpk0L7WTwA5Sxg4s
- iJQFO8tpIvivoLRrpRJIt9h3Lw7F5Ya0tGfWQ8qzJ29QinHL8ybFaUXR8DX5QPjt93qK
- bPpNyr0V4CQdsDr9dtpssSEyQW9UX3WUb0UDbw05X6xMMykT/mcfv0QnE4HP+6+M6O5K
- KGMPNunHYpyKcGNzuCtnNmhQnJ59f578dq8cDcA/QBGWfqdzvMkWJwNdUeWs6rD5L3pW
- HDlg==
-X-Gm-Message-State: AOJu0Yy0ULmKc4kdhjz0cTsMFf801aTdVfME0ErEubK2Hbmf8dVIvwB5
- llDuVi1TPq4cWZmUB4YjElCiF5fyw69/aKVCy6NyThw52CZf3VGZO84N6xUajLGeLx78gae+r1s
- 9MKnfZDmDWpqMgHID7mKSTI6A9eVolSu+yBdBrAbUrXgF9dWjA9IR
-X-Gm-Gg: ASbGncszsXAD5lHJcA3hMmfm65UevbNK7IKzx9AKoSw+GGW1pQ7vJ2tmDn6v8XMXeU2
- g8x6HCOcAyKnzg+6Hcz9dqorOoe3BIPohwg2GOnsTKr3KSmXdEJ4iQ1DseXHV0aYH4fhlGZCIks
- xHiwR5QzBXjGI+LmDfNYlF2W+T65RxiqsfUt2iwd3s0C9HfEat9SHIqFfW/aRK2EJeMIQMrfHy/
- vdsmBDgogoBjVsCKoEYFz5iubQBQQsdyR56jRuYmQe9d9NdkQv9qId/PP1uKU38X8tO70o7zH2p
- ToNBB1g/kb0=
-X-Received: by 2002:a05:6602:2c89:b0:83a:aab3:57f with SMTP id
- ca18e2360f4ac-83ecdb3e288mr1450135939f.0.1732557313092; 
- Mon, 25 Nov 2024 09:55:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGPsBSaun6UWagSByp9uxc+9YdtjCHJmEyHD29FiGsbe0gw19C7mvOuhHH+yYk0Q/5ozKb7GQ==
-X-Received: by 2002:a05:6602:2c89:b0:83a:aab3:57f with SMTP id
- ca18e2360f4ac-83ecdb3e288mr1450134439f.0.1732557312874; 
- Mon, 25 Nov 2024 09:55:12 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e1cfee8920sm2276648173.91.2024.11.25.09.55.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 09:55:12 -0800 (PST)
-Date: Mon, 25 Nov 2024 12:55:10 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 18/22] tests/qtest/migration: Split validation tests +
- misc
-Message-ID: <Z0S5_pFFy7YRubr_@x1n>
-References: <20241113194630.3385-1-farosas@suse.de>
- <20241113194630.3385-19-farosas@suse.de>
+ bh=0aHyGijHd2W5qErN6Jpkx5UYnQKxEo8EGAbcQVt33CE=;
+ b=dZJh1LlKYCQu+3TurD2xtEuz1ixH4WHKNF4kTBd7Z7xkHBXMWQhPxvDu71lvsM6L1eTFyW
+ m/0QJSRD6r1SUCxpjNvFwxSWWZ5MIwF3UxAedyfz6fcOqFrBQUq8plYSGdlPAZ+fb98EGc
+ +RWJZ1GTpaMv91bug0/Pj09aCyvjDog=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732557609;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0aHyGijHd2W5qErN6Jpkx5UYnQKxEo8EGAbcQVt33CE=;
+ b=SCy1k8Q+QNN/p4EhAnNHD5EfHVJt//azbRMZb5M6mZxIvca9Mbu3qfYL2Co3vHkts9ccIU
+ nccHAltvEODKlbAA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=mxaLdOJo;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ZeV1sKgX
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732557608; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0aHyGijHd2W5qErN6Jpkx5UYnQKxEo8EGAbcQVt33CE=;
+ b=mxaLdOJoyYgKZ/0S6Sk50c3rN7SC/iV4lf4XZ5ZXE3sjXoUUthKI6p/uH4D74ZHt0P/1qj
+ Oo0XXK8iG2JgfgprKL0CaQORYsnTc687G5KPgbjJ7GsYYWXz5pxHaNS0NKTFqbwUNvfZgg
+ h27KgJ3zvLVyNcpEo0XT6vZKj4KVdOg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732557608;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0aHyGijHd2W5qErN6Jpkx5UYnQKxEo8EGAbcQVt33CE=;
+ b=ZeV1sKgXgTOeYEC2LIzOae7v61Om1h1HqMNI/jyy6u28/5S4S3zoxAEqwimUbmo+HJTZeQ
+ t74bzoz+azWa7ODA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4D92D13890;
+ Mon, 25 Nov 2024 18:00:08 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id wqVLBSi7RGfCEAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 25 Nov 2024 18:00:08 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Yichen Wang <yichen.wang@bytedance.com>, Peter Xu <peterx@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, qemu-devel@nongnu.org
+Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: Re: [PATCH v7 07/12] util/dsa: Implement DSA task asynchronous
+ submission and wait for completion.
+In-Reply-To: <20241114220132.27399-8-yichen.wang@bytedance.com>
+References: <20241114220132.27399-1-yichen.wang@bytedance.com>
+ <20241114220132.27399-8-yichen.wang@bytedance.com>
+Date: Mon, 25 Nov 2024 15:00:05 -0300
+Message-ID: <8734jfp522.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241113194630.3385-19-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: E114B211A1
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[18];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,16 +139,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 13, 2024 at 04:46:26PM -0300, Fabiano Rosas wrote:
-> Move the remaining tests into a misc-tests.c file. These tests are
-> mostly about validation of input and should be in the future replaced
-> by unit testing.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Yichen Wang <yichen.wang@bytedance.com> writes:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+> From: Hao Xiang <hao.xiang@linux.dev>
+>
+> * Add a DSA task completion callback.
+> * DSA completion thread will call the tasks's completion callback
+> on every task/batch task completion.
+> * DSA submission path to wait for completion.
+> * Implement CPU fallback if DSA is not able to complete the task.
+>
+> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
+> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+> ---
+>  include/qemu/dsa.h |  14 +++++
+>  util/dsa.c         | 125 +++++++++++++++++++++++++++++++++++++++++++--
+>  2 files changed, 135 insertions(+), 4 deletions(-)
+>
+> diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+> index cb407b8b49..8284804a32 100644
+> --- a/include/qemu/dsa.h
+> +++ b/include/qemu/dsa.h
+> @@ -123,6 +123,20 @@ buffer_zero_batch_task_init(int batch_size);
+>   */
+>  void buffer_zero_batch_task_destroy(QemuDsaBatchTask *task);
+>  
+> +/**
+> + * @brief Performs buffer zero comparison on a DSA batch task synchronously.
+> + *
+> + * @param batch_task A pointer to the batch task.
+> + * @param buf An array of memory buffers.
+> + * @param count The number of buffers in the array.
+> + * @param len The buffer length.
+> + *
+> + * @return Zero if successful, otherwise non-zero.
+> + */
+> +int
+> +buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
+> +                              const void **buf, size_t count, size_t len);
+> +
+>  #else
+>  
+>  typedef struct QemuDsaBatchTask {} QemuDsaBatchTask;
+> diff --git a/util/dsa.c b/util/dsa.c
+> index 408c163195..50f53ec24b 100644
+> --- a/util/dsa.c
+> +++ b/util/dsa.c
+> @@ -433,6 +433,42 @@ poll_completion(struct dsa_completion_record *completion,
+>      return 0;
+>  }
+>  
+> +/**
+> + * @brief Helper function to use CPU to complete a single
+> + *        zero page checking task.
+> + *
+> + * @param completion A pointer to a DSA task completion record.
+> + * @param descriptor A pointer to a DSA task descriptor.
+> + * @param result A pointer to the result of a zero page checking.
+> + */
+> +static void
+> +task_cpu_fallback_int(struct dsa_completion_record *completion,
+> +                      struct dsa_hw_desc *descriptor, bool *result)
+> +{
+> +    const uint8_t *buf;
+> +    size_t len;
+> +
+> +    if (completion->status == DSA_COMP_SUCCESS) {
+> +        return;
+> +    }
+> +
+> +    /*
+> +     * DSA was able to partially complete the operation. Check the
+> +     * result. If we already know this is not a zero page, we can
+> +     * return now.
+> +     */
+> +    if (completion->bytes_completed != 0 && completion->result != 0) {
+> +        *result = false;
+> +        return;
+> +    }
+> +
+> +    /* Let's fallback to use CPU to complete it. */
+> +    buf = (const uint8_t *)descriptor->src_addr;
+> +    len = descriptor->xfer_size;
+> +    *result = buffer_is_zero(buf + completion->bytes_completed,
+> +                             len - completion->bytes_completed);
+> +}
+> +
+>  /**
+>   * @brief Complete a single DSA task in the batch task.
+>   *
+> @@ -561,7 +597,7 @@ dsa_completion_loop(void *opaque)
+>          (QemuDsaCompletionThread *)opaque;
+>      QemuDsaBatchTask *batch_task;
+>      QemuDsaDeviceGroup *group = thread_context->group;
+> -    int ret;
+> +    int ret = 0;
+>  
+>      rcu_register_thread();
+>  
+> @@ -829,7 +865,6 @@ buffer_zero_batch_task_set(QemuDsaBatchTask *batch_task,
+>   *
+>   * @return int Zero if successful, otherwise an appropriate error code.
+>   */
+> -__attribute__((unused))
+>  static int
+>  buffer_zero_dsa_async(QemuDsaBatchTask *task,
+>                        const void *buf, size_t len)
+> @@ -848,7 +883,6 @@ buffer_zero_dsa_async(QemuDsaBatchTask *task,
+>   * @param count The number of buffers.
+>   * @param len The buffer length.
+>   */
+> -__attribute__((unused))
+>  static int
+>  buffer_zero_dsa_batch_async(QemuDsaBatchTask *batch_task,
+>                              const void **buf, size_t count, size_t len)
+> @@ -879,13 +913,61 @@ buffer_zero_dsa_completion(void *context)
+>   *
+>   * @param batch_task A pointer to the buffer zero comparison batch task.
+>   */
+> -__attribute__((unused))
+>  static void
+>  buffer_zero_dsa_wait(QemuDsaBatchTask *batch_task)
+>  {
+>      qemu_sem_wait(&batch_task->sem_task_complete);
+>  }
+>  
+> +/**
+> + * @brief Use CPU to complete the zero page checking task if DSA
+> + *        is not able to complete it.
+> + *
+> + * @param batch_task A pointer to the batch task.
+> + */
+> +static void
+> +buffer_zero_cpu_fallback(QemuDsaBatchTask *batch_task)
+> +{
+> +    if (batch_task->task_type == QEMU_DSA_TASK) {
+> +        if (batch_task->completions[0].status == DSA_COMP_SUCCESS) {
+> +            return;
+> +        }
+> +        task_cpu_fallback_int(&batch_task->completions[0],
+> +                              &batch_task->descriptors[0],
+> +                              &batch_task->results[0]);
+> +    } else if (batch_task->task_type == QEMU_DSA_BATCH_TASK) {
+> +        struct dsa_completion_record *batch_completion =
+> +            &batch_task->batch_completion;
+> +        struct dsa_completion_record *completion;
+> +        uint8_t status;
+> +        bool *results = batch_task->results;
+> +        uint32_t count = batch_task->batch_descriptor.desc_count;
+> +
+> +        /* DSA is able to complete the entire batch task. */
+> +        if (batch_completion->status == DSA_COMP_SUCCESS) {
+> +            assert(count == batch_completion->bytes_completed);
+> +            return;
+> +        }
+> +
+> +        /*
+> +         * DSA encounters some error and is not able to complete
+> +         * the entire batch task. Use CPU fallback.
+> +         */
+> +        for (int i = 0; i < count; i++) {
+> +
+> +            completion = &batch_task->completions[i];
+> +            status = completion->status;
+> +
+> +            assert(status == DSA_COMP_SUCCESS ||
+> +                status == DSA_COMP_PAGE_FAULT_NOBOF);
+> +
+> +            task_cpu_fallback_int(completion,
+> +                                  &batch_task->descriptors[i],
+> +                                  &results[i]);
+> +        }
+> +    }
+> +}
+> +
+>  /**
+>   * @brief Initializes a buffer zero comparison DSA task.
+>   *
+> @@ -962,3 +1044,38 @@ buffer_zero_batch_task_destroy(QemuDsaBatchTask *task)
+>      qemu_sem_destroy(&task->sem_task_complete);
+>      qemu_vfree(task);
+>  }
+> +
+> +/**
+> + * @brief Performs buffer zero comparison on a DSA batch task synchronously.
+> + *
+> + * @param batch_task A pointer to the batch task.
+> + * @param buf An array of memory buffers.
+> + * @param count The number of buffers in the array.
+> + * @param len The buffer length.
+> + *
+> + * @return Zero if successful, otherwise non-zero.
+> + */
+> +int
+> +buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
+> +                              const void **buf, size_t count, size_t len)
+> +{
+> +    if (count <= 0 || count > batch_task->batch_size) {
+> +        return -1;
+> +    }
+> +
+> +    assert(batch_task != NULL);
 
--- 
-Peter Xu
+batch_task is already dereferenced above.
 
+> +    assert(len != 0);
+> +    assert(buf != NULL);
+> +
+> +    if (count == 1) {
+> +        /* DSA doesn't take batch operation with only 1 task. */
+> +        buffer_zero_dsa_async(batch_task, buf[0], len);
+> +    } else {
+> +        buffer_zero_dsa_batch_async(batch_task, buf, count, len);
+> +    }
+> +
+> +    buffer_zero_dsa_wait(batch_task);
+> +    buffer_zero_cpu_fallback(batch_task);
+> +
+> +    return 0;
+> +}
 
