@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B078D58D65
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 16:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E61D58D64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 16:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFblj-0005ve-Mb; Mon, 25 Nov 2024 11:16:59 -0500
+	id 1tFbo6-0006bW-Oa; Mon, 25 Nov 2024 11:19:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1tFblU-0005uq-GS
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 11:16:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1tFblS-0001PH-Fr
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 11:16:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732551398;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gbYfC+LamzSHTf3w/DlFzqng6fcdLeWy/BouBZYn1X8=;
- b=cfLs1+6m/5ORW/F/GVzfjsyq9eS7hsRBk+z6AqAXA8BGMYbtpDs+izwB5xD/sYUPxE5+6K
- K5XKJ1vOfrCVDCVXTqs97l5vijt+feA6dL/4+D03dPbXgRTjc58MS2a02cS3QSQUeke2k8
- 0WBA7IkUOfXvzKirj4EieN5tOJCEIM0=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-RkPsXJYWPPWfbZocFuIsIA-1; Mon, 25 Nov 2024 11:16:36 -0500
-X-MC-Unique: RkPsXJYWPPWfbZocFuIsIA-1
-X-Mimecast-MFC-AGG-ID: RkPsXJYWPPWfbZocFuIsIA
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2ea42039766so4426570a91.3
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 08:16:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tFbo4-0006b6-J9
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 11:19:24 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tFbo2-0001mo-2X
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 11:19:24 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7250844b0ecso1173912b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 08:19:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732551560; x=1733156360; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Q7+Kv2CH+VtFubwcMDktmyRtFwfU0RZ/N7Z0ALqa0rk=;
+ b=pkRD4TVPsX+UANhqKQgByBT+gcstvJARpsiRphI0U6YA5zEmoIWcW9jdMts4605qK6
+ oNrfW+mgAKXClut3JJS8KMqsr59H0gbxzfvIi3VtfI8KgSoL73wsCAeR+HfrttBNdS2F
+ fd4UyXEiWbKWGBCCci+EnFcn7ScTA+xJdEzvqj/YwNlLkCXDIHeMPaLBgKfCJyO/yX7u
+ 9AOm31nMD/eZsRUONNhmzdc0ffTo6ySo0hHeMdV6wxzS5EihM/SqSBifl6lIrOArFB6y
+ 0HyDUck8CIBHt6pqxHQlEiGf8MZSKZhDlgzevnOb+Mt6u9ztXoUvfTrihb4+wJqhT4Qo
+ 8L2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732551395; x=1733156195;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gbYfC+LamzSHTf3w/DlFzqng6fcdLeWy/BouBZYn1X8=;
- b=fv4VQ5FozqGwPhVUYYSnGBN5RSsSltcQ2ocO0X4SqbIg5XD6LNSg84mT8CKTuUYutk
- RksSG1RVDRj207BowD5CZYBD/0qnslfCO+gCQiOd8eIPfkxHcNeboRZKYuxfHzTTigLF
- a7poNsGK92gXKXCD6RV7bgxlzoMyYgYrkpPYhTZi8I+TlMnixUyzeBw/k2XbBzhrOTot
- RlHoEVzr5IOFLjTErBqXI+O5zA7hicuZ2MMUfMcLxAWucpm2yQXH27PnVNamTmENFM2c
- lzYAiptzmjUkf2FpOXnPVjtZipZa7rSJmgu43H3q27L/awUoiW8thU+WomZhKLUxMinB
- f01Q==
-X-Gm-Message-State: AOJu0YxSPxFpGRElbmv55WZs+T3NwAUeHXBYnPWZmwyHLDgLbVAmSoHG
- dHsGYOZ7rtlVS0OO+x1HKjA/ys3iwnb8Utl++Po5lHrmEAvig00j+t2vQud38SV8Cqw2nlIoeuY
- D1PdwU+pYGHNk5pFCUjHIOQTtBAjiKsZMnNrc4zLz3RGKrTYTHT6fsmPm7NLKvyK4gaVGOSoieJ
- Bzi6mSEeU1YsptQTLr4W6grkNp2CU=
-X-Gm-Gg: ASbGncum1st98X3Yaw/JJSeYdF0RYxQVyseulPyFVfikx1fnD7eHDeF5vpfVI7qBzOi
- 1si/S4uFlqZuIEOKexsHc7KU53U65QoZi
-X-Received: by 2002:a17:90b:3946:b0:2ea:83a0:47a6 with SMTP id
- 98e67ed59e1d1-2eb0e888000mr18918353a91.33.1732551394182; 
- Mon, 25 Nov 2024 08:16:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFRvBC3kflTL74BFzJ9KHawLkzjPfcbrqGI5pwHT2/4awG304a00hfn9hinjMfiNY4/Ww0VG2c7S3SDTWIc1fs=
-X-Received: by 2002:a17:90b:3946:b0:2ea:83a0:47a6 with SMTP id
- 98e67ed59e1d1-2eb0e888000mr18918295a91.33.1732551393682; Mon, 25 Nov 2024
- 08:16:33 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732551560; x=1733156360;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Q7+Kv2CH+VtFubwcMDktmyRtFwfU0RZ/N7Z0ALqa0rk=;
+ b=QKIGQMmwBok/QCT+/vJ1Hnn+sxNEqZhAEK6RajTnOcTPezjszgmnAcwK1cFxZrBxu1
+ 4DufzLScvFUwikhQ1UwMOnRFyACOLOY4GURy2GR2EYULEf3T00OO2H8GmbFFKbQiq+1C
+ rt1hyfYBnVxxWuOUZeh1jfj+k4JdmMv2bv6LF4s3wQdmsu8unSPLc+HTe2EBg8yS8/pQ
+ 2qtCN9CSUql/6iRqIkp3qBlSswDxx+Bds4R5naYaIS79K4GouJyrylZTPl+efiZK7dTE
+ w+bJ+ehJwKlZuNX+P4g83swnMSr84Rq2Qo9SMtJqwtc2kooLps9MR9BOIqjflOH0jbWn
+ sxjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCGYmCFymhQoVK0RreNmzEGw2N+Z945cBjXJZIpfWvdAs4gLhvoMcBY4xOutBP3doIW30y2pbJEl+P@nongnu.org
+X-Gm-Message-State: AOJu0YxP+55qAmQjmoUGpUAxKVd/I32+IcTN/X3qEx8Dk/XEkUWt+F0V
+ 9qSb3sgjWpp4Cm8qhpqHuZtezksoQpeAaIQOaclPYOuw2K3lsAq/KBvRTqQnBgtpadZAUUqa01J
+ LpjI=
+X-Gm-Gg: ASbGncuRwAnZV2vKum8aeexH3a6QdgIIfRqaDwPWpiKPuJgq+kIvlmmyRacUaqYoi06
+ 8LFo6yyLqWLOV8F2yiIgpgN1sCMUVNiuKmvlmYvyedeCWwDdTISQ5vTKPvjiYyYmPOXztqusqDO
+ hTm4GZ0MHi2Z9dmec6FOeuttr65xNzW7a3j1/ZVKAIdYwulM6nDkKf+CWwj9T/s76queTBwyGB7
+ 1Uec2UrCCJoZBuXRWYRHBm1YtWTLRjsu1lrVXJko8ZuWXLhd/ieXcU05TFoXlLxO1RhE8wIOnEB
+ +xuPK+YRiiy+JYhdV/Scxw==
+X-Google-Smtp-Source: AGHT+IFInkC4B6etn68KSMZR8cIXSOPCPUaKBHq5bZAMIKI7hves7WckLun09EnX+6XsCs6bNfci1w==
+X-Received: by 2002:a05:6a00:3ccc:b0:71e:2a0:b0b8 with SMTP id
+ d2e1a72fcca58-724df3c82e6mr16361434b3a.1.1732551559978; 
+ Mon, 25 Nov 2024 08:19:19 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fbcbfc0857sm6846927a12.10.2024.11.25.08.19.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Nov 2024 08:19:19 -0800 (PST)
+Message-ID: <3c5272ea-0e10-43cb-8390-a633ad43fd0c@linaro.org>
+Date: Mon, 25 Nov 2024 08:19:18 -0800
 MIME-Version: 1.0
-References: <20240912145335.129447-1-aesteve@redhat.com>
- <20240912145335.129447-5-aesteve@redhat.com>
- <20240917082751.GD575885@fedora.redhat.com>
-In-Reply-To: <20240917082751.GD575885@fedora.redhat.com>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Mon, 25 Nov 2024 17:16:22 +0100
-Message-ID: <CADSE00JXG7-EswSRUcYwcmKHc2V=gTMB0i5nz5yCq3egmt4=UA@mail.gmail.com>
-Subject: Re: [PATCH v3 4/5] vhost-user-dev: Add cache BAR
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- slp@redhat.com, hi@alyssa.is, mst@redhat.com, david@redhat.com, 
- jasowang@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
- stevensd@chromium.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Supporting clang on windows
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org>
+ <77e47a71-a426-4bdb-bbad-24e6f99c498c@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <77e47a71-a426-4bdb-bbad-24e6f99c498c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,229 +108,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 17, 2024 at 10:27=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.c=
-om> wrote:
->
-> On Thu, Sep 12, 2024 at 04:53:34PM +0200, Albert Esteve wrote:
-> > Add a cache BAR in the vhost-user-device
-> > into which files can be directly mapped.
-> >
-> > The number, shmid, and size of the VIRTIO Shared
-> > Memory subregions is retrieved through a get_shmem_config
-> > message sent by the vhost-user-base module
-> > on the realize step, after virtio_init().
-> >
-> > By default, if VHOST_USER_PROTOCOL_F_SHMEM
-> > feature is not supported by the backend,
-> > there is no cache.
-> >
-> > Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> > ---
->
-> Not all devices derive from vhost-user-base.c so this does not offer
-> full coverage. I think that's okay since few devices currently use
-> VIRTIO Shared Memory Regions. A note about this in the commit
-> description would be useful though. Which vhost-user devices gain VIRTIO
-> Shared Memory Region support and what should you do if your device is
-> not included in this list?
->
-> >  hw/virtio/vhost-user-base.c       | 37 +++++++++++++++++++++++++++--
-> >  hw/virtio/vhost-user-device-pci.c | 39 ++++++++++++++++++++++++++++---
-> >  2 files changed, 71 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-> > index 2bc3423326..f2597d021a 100644
-> > --- a/hw/virtio/vhost-user-base.c
-> > +++ b/hw/virtio/vhost-user-base.c
-> > @@ -271,7 +271,9 @@ static void vub_device_realize(DeviceState *dev, Er=
-ror **errp)
-> >  {
-> >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> >      VHostUserBase *vub =3D VHOST_USER_BASE(dev);
-> > -    int ret;
-> > +    uint64_t memory_sizes[8];
-> > +    void *cache_ptr;
-> > +    int i, ret, nregions;
-> >
-> >      if (!vub->chardev.chr) {
-> >          error_setg(errp, "vhost-user-base: missing chardev");
-> > @@ -314,7 +316,7 @@ static void vub_device_realize(DeviceState *dev, Er=
-ror **errp)
-> >
-> >      /* Allocate queues */
-> >      vub->vqs =3D g_ptr_array_sized_new(vub->num_vqs);
-> > -    for (int i =3D 0; i < vub->num_vqs; i++) {
-> > +    for (i =3D 0; i < vub->num_vqs; i++) {
-> >          g_ptr_array_add(vub->vqs,
-> >                          virtio_add_queue(vdev, vub->vq_size,
-> >                                           vub_handle_output));
-> > @@ -331,6 +333,37 @@ static void vub_device_realize(DeviceState *dev, E=
-rror **errp)
-> >          do_vhost_user_cleanup(vdev, vub);
->
-> Missing return statement.
+On 11/25/24 06:04, Richard Henderson wrote:
+> On 11/23/24 18:21, Pierrick Bouvier wrote:
+>> After thinking about it, a simple, exhaustive and reliable way to find this type
+>> information is the debug (dwarf) info.
+>> By compiling qemu binaries with --enable-debug, and extracting info using llvm-dwarfdump
+>> plus a custom filter [4], we can obtain a text representation of all structures QEMU uses.
+> 
+> It appears you are re-creating libabigail's abidiff tool.
+> 
+> https://sourceware.org/libabigail/manual/abidiff.html
+> 
+> 
+> r~
 
-True, but this is unrelated to this patchset. I will fix it in a
-different patch, so that it can find its way in faster.
+Thanks for mentioning it.
 
->
-> >      }
-> >
-> > +    ret =3D vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vho=
-st_dev,
-> > +                                                           &nregions,
-> > +                                                           memory_size=
-s,
->
-> Buffer overflow. vhost_get_shmem_config() copies out up to 256
-> memory_sizes[] elements. Please introduce a constant in the VIRTIO
-> header and use it instead of hardcoding uint64_t memory_sizes[8] above.
->
-> > +                                                           errp);
-> > +
-> > +    if (ret < 0) {
-> > +        do_vhost_user_cleanup(vdev, vub);
->
-> Missing return statement.
-
-Same here.
->
-> > +    }
-> > +
-> > +    for (i =3D 0; i < nregions; i++) {
-> > +        if (memory_sizes[i]) {
-> > +            if (memory_sizes[i] % qemu_real_host_page_size() !=3D 0) {
-> > +                error_setg(errp, "Shared memory %d size must be a powe=
-r of 2 "
-> > +                                 "no smaller than the page size", i);
-> > +                return;
->
-> Missing do_vhost_user_cleanup().
-
-Maybe a goto would be preferable here? Just because the same exit
-pattern occurs quite a few times now.
-
->
-> > +            }
-> > +
-> > +            cache_ptr =3D mmap(NULL, memory_sizes[i], PROT_NONE,
-> > +                            MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
->
->
->
-> > +            if (cache_ptr =3D=3D MAP_FAILED) {
-> > +                error_setg_errno(errp, errno, "Unable to mmap blank ca=
-che");
-> > +                return;
->
-> Missing do_vhost_user_cleanup().
->
-> > +            }
-> > +
-> > +            virtio_new_shmem_region(vdev);
-> > +            memory_region_init_ram_ptr(vdev->shmem_list[i].mr,
-> > +                                       OBJECT(vdev), "vub-shm-" + i,
-> > +                                       memory_sizes[i], cache_ptr);
->
-> I think memory_region_init_ram_ptr() is included in live migration, so
-> the contents of VIRTIO Shared Memory Regions will be transferred to the
-> destination QEMU and written to the equivalent memory region there. I'm
-> not sure this works:
-> 1. If there are PROT_NONE memory ranges, then live migration will
->    probably crash the source QEMU while trying to send this memory to
->    the destination QEMU.
-> 2. If the destination vhost-user device has not yet loaded its state and
->    sent MAP messages setting up the VIRTIO Shared Memory Region, then
->    receiving migrated data and writing it into this memory will fail.
->
-> QEMU has a migration blocker API so that devices can refuse live
-> migration. For the time being a migration blocker is probably needed
-> here. See migrate_add_blocker()/migrate_del_blocker().
->
-> > +        }
-> > +    }
-> > +
-> >      qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event, NUL=
-L,
-> >                               dev, NULL, true);
-> >  }
-> > diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user-d=
-evice-pci.c
-> > index efaf55d3dd..abf4e90c21 100644
-> > --- a/hw/virtio/vhost-user-device-pci.c
-> > +++ b/hw/virtio/vhost-user-device-pci.c
-> > @@ -8,14 +8,18 @@
-> >   */
-> >
-> >  #include "qemu/osdep.h"
-> > +#include "qapi/error.h"
-> >  #include "hw/qdev-properties.h"
-> >  #include "hw/virtio/vhost-user-base.h"
-> >  #include "hw/virtio/virtio-pci.h"
-> >
-> > +#define VIRTIO_DEVICE_PCI_CACHE_BAR 2
->
-> "Cache" is ambigous. Call it shmem_bar here and everywhere else?
->
-> > +
-> >  struct VHostUserDevicePCI {
-> >      VirtIOPCIProxy parent_obj;
-> >
-> >      VHostUserBase vub;
-> > +    MemoryRegion cachebar;
-> >  };
-> >
-> >  #define TYPE_VHOST_USER_DEVICE_PCI "vhost-user-device-pci-base"
-> > @@ -25,10 +29,39 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOS=
-T_USER_DEVICE_PCI)
-> >  static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev, Er=
-ror **errp)
-> >  {
-> >      VHostUserDevicePCI *dev =3D VHOST_USER_DEVICE_PCI(vpci_dev);
-> > -    DeviceState *vdev =3D DEVICE(&dev->vub);
-> > -
-> > +    DeviceState *dev_state =3D DEVICE(&dev->vub);
-> > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev_state);
-> > +    MemoryRegion *mr;
-> > +    uint64_t offset =3D 0, cache_size =3D 0;
-> > +    int i;
-> > +
-> >      vpci_dev->nvectors =3D 1;
-> > -    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
-> > +    qdev_realize(dev_state, BUS(&vpci_dev->bus), errp);
-> > +
-> > +    for (i =3D 0; i < vdev->n_shmem_regions; i++) {
-> > +        mr =3D vdev->shmem_list[i].mr;
-> > +        if (mr->size > UINT64_MAX - cache_size) {
-> > +            error_setg(errp, "Total shared memory required overflow");
-> > +            return;
-> > +        }
-> > +        cache_size =3D cache_size + mr->size;
-> > +    }
-> > +    if (cache_size) {
-> > +        memory_region_init(&dev->cachebar, OBJECT(vpci_dev),
-> > +                           "vhost-device-pci-cachebar", cache_size);
-> > +        for (i =3D 0; i < vdev->n_shmem_regions; i++) {
-> > +            mr =3D vdev->shmem_list[i].mr;
-> > +            memory_region_add_subregion(&dev->cachebar, offset, mr);
-> > +            virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_CACHE_B=
-AR,
-> > +                                   offset, mr->size, i);
-> > +            offset =3D offset + mr->size;
-> > +        }
-> > +        pci_register_bar(&vpci_dev->pci_dev, VIRTIO_DEVICE_PCI_CACHE_B=
-AR,
-> > +                        PCI_BASE_ADDRESS_SPACE_MEMORY |
-> > +                        PCI_BASE_ADDRESS_MEM_PREFETCH |
-> > +                        PCI_BASE_ADDRESS_MEM_TYPE_64,
-> > +                        &dev->cachebar);
-> > +    }
-> >  }
-> >
-> >  static void vhost_user_device_pci_class_init(ObjectClass *klass, void =
-*data)
-> > --
-> > 2.45.2
-> >
-
+To make sure we don't miss anything, I made sure to run that using 
+windows binaries.
+So, except if I missed something on how to use those tools, this 
+excludes support for abidiff and pahole which are ELF centric.
+Thus the idea to simply to dump full dwarf info included in COFF and 
+compare the result.
 
