@@ -4,68 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 194DAD3B7F3
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 08:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB7AD3B7F3
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 08:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFUoh-0001j6-Im; Mon, 25 Nov 2024 03:51:35 -0500
+	id 1tFUrJ-0002k0-Cl; Mon, 25 Nov 2024 03:54:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUob-0001hz-HT
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:51:29 -0500
-Received: from 2.mo552.mail-out.ovh.net ([178.33.105.233])
+ (Exim 4.90_1) (envelope-from <jjelen@redhat.com>) id 1tFUqu-0002bv-If
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:53:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUoZ-0005nc-ND
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:51:29 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.140.168])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4XxfZN6W9mz1Qw4;
- Mon, 25 Nov 2024 08:51:24 +0000 (UTC)
-Received: from kaod.org (37.59.142.100) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 25 Nov
- 2024 09:51:24 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-100R0033b2de842-5e7e-4c56-8860-63f1d210d7cd,
- 9B13B6726B83599ED9C5792380F23B2D0625FF83) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Mon, 25 Nov 2024 09:51:23 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>
-Subject: Re: [PATCH 3/6] tests/9p: add missing Rgetattr response name
-Message-ID: <20241125095123.05c4457b@bahia>
-In-Reply-To: <e183da80d390cfd7d55bdbce92f0ff6e3e5cdced.1732465720.git.qemu_oss@crudebyte.com>
-References: <cover.1732465720.git.qemu_oss@crudebyte.com>
- <e183da80d390cfd7d55bdbce92f0ff6e3e5cdced.1732465720.git.qemu_oss@crudebyte.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <jjelen@redhat.com>) id 1tFUqT-00062s-E5
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:53:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732524794;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sY88uyl8L+dMzcTqkVAm54adm/pTjybdK0hsOlCZPs0=;
+ b=LJ+8E7l4r+l61vK6XcefoLNYY9kNx4M57eR4A/cbeYzyZcryd9Fcz2I/VpOTRRE+Zyg0PV
+ pgeqNe5v6Vp4E6ZpTVrfKB7EcOrHhKVtSxD0Tomh1LWeM9T1GK5ji39lT9AAbqz/tQhgkL
+ UitXIhJlqJbPcCMEtbBimqlrSlPZ4wA=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-408-yYnHFcD3NCa-ls9ke_TkOA-1; Mon, 25 Nov 2024 03:53:12 -0500
+X-MC-Unique: yYnHFcD3NCa-ls9ke_TkOA-1
+X-Mimecast-MFC-AGG-ID: yYnHFcD3NCa-ls9ke_TkOA
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2ff13df3766so25385821fa.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 00:53:12 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732524791; x=1733129591;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sY88uyl8L+dMzcTqkVAm54adm/pTjybdK0hsOlCZPs0=;
+ b=Qj1wFnzwikUTuvTg9Pmnj7Mf9bS/5DLJAZebyFeWwLVm4a6C8XQWbSVkYjfmKWFr5l
+ Np8dyxkNIGV2mG+P4rpJfwinyIDBoIIbWQBODQJxZ55uwKkWnVYRYQKCtc524rToiYLU
+ PJ9fhMKWoyCP1dGty2ynQjcfrEF3jqbrxuq1jNTQAxkuOePYhrfEf/tr+BaFwB8XxGGu
+ 3veRSdeEkjS1C200pk5EcgFLA4h2gxoRXlsH42tQ4MHFYKdKF0+BDnpbvmjm+zl5gFXe
+ n11OvO3cBCvsDuyip5nhKwYqOIMBLaUlKTzFtC7TH2BEm6LtpHz1gCn8DNOSEbunHLE6
+ BL6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0iMDr2iVBW0svHQR4b7gRuC6pErG396xbL+Y1kAVNluAdTR1CQm/wXvzLMPytZN+KkqxhXN+v9V3X@nongnu.org
+X-Gm-Message-State: AOJu0Yx6568kR3eCLID5y8IKDBG4fnSu1yyFKgH3+Wox/uFXmtDl7dIL
+ FK4Rv3+5kPZGIb5kzbJQQ/XDXDMDqHTshbsbTZp6hF2MOW4y72Kif5iMFCZl+TMsUY9zzSc02ob
+ 0hWnHF7GOi+W3kwcehZFyt/99z9cl4OKgr27Tz4Zi5JNNj5rO1qQxOupngpc1VTrkQvm+vuyQT8
+ GDoDbL0l1DC4P0rzFZucnIdzxMKis=
+X-Gm-Gg: ASbGncs9uvf4RqnUDprd4Eef07629WTaqwRzi1su9rvagaSlx7soL4QLuCdvMqnONr8
+ VZGjMON4TLowv9N3PP2aZe/prU6rS
+X-Received: by 2002:a2e:b607:0:b0:2ff:a728:2ba0 with SMTP id
+ 38308e7fff4ca-2ffa7282e2fmr38858341fa.19.1732524791358; 
+ Mon, 25 Nov 2024 00:53:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHrIe6IENuSASL7fud7gaCcmio32hLan5rMsSHoWc9oMuoBTrWsvXaifXohMJ5I3NjaHy1a+Uq718GVBA76MdU=
+X-Received: by 2002:a2e:b607:0:b0:2ff:a728:2ba0 with SMTP id
+ 38308e7fff4ca-2ffa7282e2fmr38858251fa.19.1732524791008; Mon, 25 Nov 2024
+ 00:53:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.100]
-X-ClientProxiedBy: DAG8EX1.mxp5.local (172.16.2.71) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: a9e1eb72-ddbe-437d-b205-d45ea75a2ad0
-X-Ovh-Tracer-Id: 4218746953838598621
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdduvddvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddruddttddpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepfedprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdfovfetjfhoshhtpehmohehhedvmgdpmhhouggvpehsmhhtphhouhht
-DKIM-Signature: a=rsa-sha256; bh=VQVehl+GxkQ1OSzl0FMfMWMD5M/e2f8DBlyMc95S30Q=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1732524685; v=1;
- b=iQ9k5NCdORtyBm4XMR+nWz90daV+h+1P2+X/nveViz8CsLXEM4/GRBghFzEC/ODSo8g87HYr
- kbPuxM/UP2QjMvjBZPYI9WWltcYxkqJ/YZITc13klo4LmSX+nFpVM5daDPULXD7bWg27dmbxz38
- YlkGWJSIBFfJQRdE0j3jCFP9m+5gjiqm3eagpJ/vbIxYUu/LWatv8jXQCfAqORVd0tQFDFTt01V
- z29bZRsXYHx8gQgs5gKNLgezIq5HwqBbf5EsPjcD1Xb1n4CD0s4rQ1zy6dmXZFZKZMRGWAON+WA
- DcxQBwdk8/S8dVj2P4ZUDqWpfnT3DM+Q0htlgmOK5hwPQ==
-Received-SPF: pass client-ip=178.33.105.233; envelope-from=groug@kaod.org;
- helo=2.mo552.mail-out.ovh.net
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+References: <20241113115000.2494785-1-rjones@redhat.com>
+ <0371e3cc-1ed5-4685-835a-5378dd4dfbb7@tls.msk.ru>
+ <20241113130021.GA20898@redhat.com> <ZzYVgRo_l2ZHQztg@redhat.com>
+ <CAHrFiA98_icSL5WqTFN1gpWN+=70d58rH=V3iJWDf4zYApSMQA@mail.gmail.com>
+ <ZzY4D7t5asZZWgwN@redhat.com>
+ <CAHrFiA9tURvg0xitWK6gaA9osGF1ZoHq6d1yFv+nB8FPTg7-Cg@mail.gmail.com>
+ <Z0CYiB3r8yZKw4sP@redhat.com>
+In-Reply-To: <Z0CYiB3r8yZKw4sP@redhat.com>
+From: Jakub Jelen <jjelen@redhat.com>
+Date: Mon, 25 Nov 2024 09:52:59 +0100
+Message-ID: <CAHrFiA9owTevctg=Sw2xUBVjZ41YF1+sSpxrqq4LO00BwxB_NQ@mail.gmail.com>
+Subject: Re: [PATCH ssh] ssh: Do not switch session to non-blocking mode
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: "Richard W.M. Jones" <rjones@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ qemu-block@nongnu.org, 
+ qemu-devel@nongnu.org, hreitz@redhat.com, mpitt@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jjelen@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,36 +108,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 24 Nov 2024 15:49:55 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+On Fri, Nov 22, 2024 at 3:43=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
+:
+> > So going back to the original issue, is the proposed patch something
+> > that could work for you in the short term before a better solution
+> > will be implemented or is there something we should change?
+>
+> Given that apparently it was always blocking, the patch doesn't make the
+> situation any worse. I'll apply it for 9.2.
 
-> 'Tgetattr' 9p request and its 'Rgetattr' response types are already used
-> by test client, however this response type is yet missing in function
-> rmessage_name(), so add it.
-> 
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
+Thank you.
 
-Reviewed-by: Greg Kurz <groug@kaod.org>
+Jakub
 
->  tests/qtest/libqos/virtio-9p-client.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-> index c61632fcd3..98b77db51d 100644
-> --- a/tests/qtest/libqos/virtio-9p-client.c
-> +++ b/tests/qtest/libqos/virtio-9p-client.c
-> @@ -235,6 +235,7 @@ static const char *rmessage_name(uint8_t id)
->          id == P9_RMKDIR ? "RMKDIR" :
->          id == P9_RLCREATE ? "RLCREATE" :
->          id == P9_RSYMLINK ? "RSYMLINK" :
-> +        id == P9_RGETATTR ? "RGETATTR" :
->          id == P9_RLINK ? "RLINK" :
->          id == P9_RUNLINKAT ? "RUNLINKAT" :
->          id == P9_RFLUSH ? "RFLUSH" :
-
-
-
--- 
-Greg
 
