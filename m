@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6ECCD58D76
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 18:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8963BD58D7A
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 18:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFdm5-0007Um-FT; Mon, 25 Nov 2024 13:25:29 -0500
+	id 1tFdp6-0000r9-S4; Mon, 25 Nov 2024 13:28:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFdm2-0007UD-Fr
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:25:26 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFdp5-0000qZ-BY
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:28:35 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFdlz-0007Do-PW
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:25:25 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFdp3-0007j9-UV
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:28:35 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 705432117E;
- Mon, 25 Nov 2024 18:25:20 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C21981F453;
+ Mon, 25 Nov 2024 18:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732559120; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1732559312; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JP7tG8atLtxhtLeIqxwk+bQLYzGbAee5DSkAqeSuh0E=;
- b=DWqVz732zfH5X6VEM2b6MATWcoYteH8mSAH4wzLtCeVSVt0KtEPfoq0kKyFBU9gf/9uyBv
- 4IhmJ0pvZAy1Kyw3vE2AT36fNSz+bt/8PIXtRJty5xvu5t0mI9yA0p4Ety12wZRyqWsZ5a
- cmI5jsCzeYFnhJkB3u4cT/SeGlbeU9s=
+ bh=Gb4H6xyTReEsQRTF/EIoNsTKqq05yVybKdaGIyvt1dU=;
+ b=2InsYfe67eAbw/Wj9vuOVQH4bFyHPv/glGGXRHt8tf1LbnGTsjcl1FsjUf79V3HzbWmiJM
+ dHORyIGXbWZxkZI8IqxeRIBVmE60kwmWf1Bxc89KgblpPNnu91JjHuEjsQbVDCJuZ0UGTb
+ OQCFuLko597nITPMllaIORczOPqIbhM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732559120;
+ s=susede2_ed25519; t=1732559312;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JP7tG8atLtxhtLeIqxwk+bQLYzGbAee5DSkAqeSuh0E=;
- b=Z5hQkT0kohGL0SBnGI7oP/BiEFE6KXeksZo1IkdTTpFZewn8Kp9SY7LXrxRQaMTDlZQn++
- +UDesH2waLDdpkAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DWqVz732;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Z5hQkT0k
+ bh=Gb4H6xyTReEsQRTF/EIoNsTKqq05yVybKdaGIyvt1dU=;
+ b=7tbwLvGwZ3vvmKWjIS0611Bs6zTMuriJ0DozatT1itjg34qlJSQny09rbSe7J7HIQ1Pl3Q
+ IpuTdC/PHQOAgcBQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732559120; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1732559310; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JP7tG8atLtxhtLeIqxwk+bQLYzGbAee5DSkAqeSuh0E=;
- b=DWqVz732zfH5X6VEM2b6MATWcoYteH8mSAH4wzLtCeVSVt0KtEPfoq0kKyFBU9gf/9uyBv
- 4IhmJ0pvZAy1Kyw3vE2AT36fNSz+bt/8PIXtRJty5xvu5t0mI9yA0p4Ety12wZRyqWsZ5a
- cmI5jsCzeYFnhJkB3u4cT/SeGlbeU9s=
+ bh=Gb4H6xyTReEsQRTF/EIoNsTKqq05yVybKdaGIyvt1dU=;
+ b=YqMMdXi8ppmw+ncYqXjHGeBDmeyZULuSWucXlqWFKjQtx0iClwYOeXweFHh3Pww6G3xa3t
+ tz9MoD0AlcfUgFbWLIOmhaIBfi+12ObijSkZ9RpHq7JGD1UQwtn43hzAcnHrxMIwXrRMq/
+ BP00BkSInxZrAjWbTlZWFyl9L/r5+eo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732559120;
+ s=susede2_ed25519; t=1732559310;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JP7tG8atLtxhtLeIqxwk+bQLYzGbAee5DSkAqeSuh0E=;
- b=Z5hQkT0kohGL0SBnGI7oP/BiEFE6KXeksZo1IkdTTpFZewn8Kp9SY7LXrxRQaMTDlZQn++
- +UDesH2waLDdpkAw==
+ bh=Gb4H6xyTReEsQRTF/EIoNsTKqq05yVybKdaGIyvt1dU=;
+ b=svHHujK0kYES8oySq+XpnuikqipOlXviPPiytgqVdhc5ifSL47ZfWeehmk6gF9mUFz4X75
+ ZnAdohloqYeo8kDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DDE0C13890;
- Mon, 25 Nov 2024 18:25:19 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4068E137D4;
+ Mon, 25 Nov 2024 18:28:30 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id /Z5kKA/BRGeqFwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 25 Nov 2024 18:25:19 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 36P6Ac7BRGexGAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 25 Nov 2024 18:28:30 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Yichen Wang <yichen.wang@bytedance.com>, Peter Xu <peterx@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>, Paolo Bonzini
@@ -81,42 +79,37 @@ To: Yichen Wang <yichen.wang@bytedance.com>, Peter Xu <peterx@redhat.com>,
  <cohuck@redhat.com>, qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
  Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
- <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: Re: [PATCH v7 11/12] migration/multifd: Add integration tests for
- multifd with Intel DSA offloading.
-In-Reply-To: <20241114220132.27399-12-yichen.wang@bytedance.com>
+ <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>
+Subject: Re: [PATCH v7 12/12] migration/doc: Add DSA zero page detection doc
+In-Reply-To: <20241114220132.27399-13-yichen.wang@bytedance.com>
 References: <20241114220132.27399-1-yichen.wang@bytedance.com>
- <20241114220132.27399-12-yichen.wang@bytedance.com>
-Date: Mon, 25 Nov 2024 15:25:17 -0300
-Message-ID: <87zflnnpbm.fsf@suse.de>
+ <20241114220132.27399-13-yichen.wang@bytedance.com>
+Date: Mon, 25 Nov 2024 15:28:27 -0300
+Message-ID: <87wmgrnp6c.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: 705432117E
-X-Spamd-Result: default: False [-4.48 / 50.00]; BAYES_HAM(-2.97)[99.85%];
+X-Spamd-Result: default: False [-3.64 / 50.00]; BAYES_HAM(-2.34)[96.95%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[18]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[17]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[bytedance.com:email,
+ imap1.dmz-prg2.suse.org:helo, intel.com:email, suse.de:mid, suse.de:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -135,29 +128,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Yichen Wang <yichen.wang@bytedance.com> writes:
 
-> From: Hao Xiang <hao.xiang@linux.dev>
+> From: Yuan Liu <yuan1.liu@intel.com>
 >
-> * Add test case to start and complete multifd live migration with DSA
-> offloading enabled.
-> * Add test case to start and cancel multifd live migration with DSA
-> offloading enabled.
->
-> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
-> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 > Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
-> ---
-
-Alright, we should figure out eventually what to do with tests that call
-test_migrate_start|end more than once regarding the hooks. I propose we
-should stop setting capabilities within hooks and have a separate
-mechanism that can take a list of key=value entries as part of
-MigrateCommon and set all the capabilities at once. The hooks could
-probably be phased out then.
-
-This is too much work for now, it would be better if those changes came
-from QMP/QEMU first and the tests then followed. Doing it the other way
-around will result in a mess of macros.
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-
 
