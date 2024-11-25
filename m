@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F82DD59D6A
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8640AD59D67
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFfFT-0005UP-LA; Mon, 25 Nov 2024 14:59:55 -0500
+	id 1tFfFL-0005FX-Bc; Mon, 25 Nov 2024 14:59:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tFfFM-0005GL-Fg
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:48 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1tFfFF-00058c-Sr
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:41 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tFfFE-0004tr-TV
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:48 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-382376fcc4fso2823649f8f.2
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 11:59:40 -0800 (PST)
+ id 1tFfF8-0004px-NE
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:41 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-382442b7d9aso3702352f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 11:59:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732564779; x=1733169579; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732564773; x=1733169573; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Sx/wgUhO2hnEU30pqKphmQJjzDJZvYIKeuvBl/T4ue8=;
- b=GfO+JlXUCiBEocXmlOnYc0MVFNcxFPDU6qd4i8zU3MvRESadkbT5Kjafu+UQlHOPts
- IyLYsHe7pEjc7cTK/e/PfZvIE2sVGhPhQ3eKkV9h8gzsiH+EpoebJLHqParFv1ydpxGf
- ASJo/dAajouef4BFgm/OCABAL0YsPlhm+oiCs3yPnAnN75nonea10J2747WiduFBMFVf
- NnTCsiG0Yb+gcsw+NZhpOd4JUVEIGstipXSlKc+uqaR20KNNrRK69OktIVaAsMBMLlN9
- AL9fJOafVOwV0YaWbtkZhL2prSyGpSnXn/JkP4zpSYqw4B+BJ1g2naQzA+kDrYcuNAme
- YicQ==
+ bh=AM9CmiES+peuGOYCBRYh0Z2NclowtBsfFXloH3BjlTc=;
+ b=dRHjC29qNV+eJt2DmKU5jbWE15eyykMPIar8TDdP2GfBR7jO/6YP8lVAPC7+MneffB
+ Xpbc9eIT+onE8l0IRMiyGcB5TleQt6CdOF2uWbMK43oSB6BI7flTT9vvm8wnXxKhjew8
+ MNEIN2f0/eiSmbEem6wt8tiwH3stoQcRMSmEM8+bV1Inh6GDe6hUfvZhjARqoMI62MxD
+ YuWkMEbbwQJ9GoDheI1ErjxcFyrnH4b/qQKJXA/bNRf0O99K6WxzbJGOpTNY9rO8gvZQ
+ C2HPsFr+nNeyWMBFiN9qEDJbqgOLyEFPXeRXFb7w50xqVk/Xe5ZaTcTrbsPCBVG5rb4O
+ 5H/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732564779; x=1733169579;
+ d=1e100.net; s=20230601; t=1732564773; x=1733169573;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Sx/wgUhO2hnEU30pqKphmQJjzDJZvYIKeuvBl/T4ue8=;
- b=aF47AdqTTMd87SU/QkYwBeXBQ2u8k31JKAcoVabAGIQB92hvcSF5K45eKJD+dMrgZY
- V2pjzsQ5ibN3FGySzO8aKEvkwU9spfSVoN6e7zclMJDUOPiGm/iD+s542thJQlNXSSBQ
- zBwDViN/fF9zntLUFFJ6xJqZISb8M0KFZePWiD/JRvKuLe+wBLQv8Tg/fARFS31z/+R2
- 0zj6iC7KaUrMqjOAPDtr+6M18LehdUZ47oFivnsCofXGQVRmw3+oosiegxsIdGOQ2HH5
- /2+clA+XT5Cag8ISkbns+CdgiR4o6On2vb7j1FqelU5YaLxnlhAhrgxQGnPZEzQethvr
- DxEQ==
+ bh=AM9CmiES+peuGOYCBRYh0Z2NclowtBsfFXloH3BjlTc=;
+ b=cUIHsMDFMn1zza5gvgM78lWkMmk9m2mHLYeIx9HzM8W3/OC3GnnpWbqu2kBbJLPT/8
+ MN0/E1NOYURwvaK2Brxn/ij8VKBcCMhrOU17dGVt9EHaMhhCG1OHs174UeafEsuwHedA
+ BgqEuz9KFJHDGyVJhCJ4uPRPQekpOlojF8cblBaZ+YVGWMuCCtjGJxOvLk9uHIjp1Go9
+ vy5Ta+PFRZ3vF2VboH6G95g9Zy1c4L8pSlikoulcwXrp5WfAzgxIS2KsMuBRC45X6Lxo
+ t6dI+oCpzvPYv/ui68J+DITmz4cnCcAbTYdDhP4dQr3UL10kGAxLEIiY4c9ugBLkKvrF
+ r23w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFcU8R2uW1IqTzpoxWCF9oKnOkhB+U5t9aWnXX2TjQTn7ARf+SYtfPaZzK0tWpkTwNphoKJm2S1kIl@nongnu.org
-X-Gm-Message-State: AOJu0Yy7uUG/UVA69GnCimxIPYSrGPJiWNUUVg33963v8BLG0FGd2eCX
- 4sRRe6mmnTp7iKKjvID0eS9QEGt5LGehSWO0frAK7LnCs7y4IX5Db+z6KXfK9QI=
-X-Gm-Gg: ASbGnctWycijkpDyGke7yEaDGt7w0yCgmwsqugj85tKacsNuw1H6miUjq+sgb5fA8qV
- nc+1DsKPZ0XdAilKH6XFaVfg2bUC+L5rADR5UFxcDQfuT+V9mUJrVCt+fPUm3CdB4hCsLF6iDWn
- suhZQ4KHnBfRkoEtpvycB7CL72WJfBROqvkg+MM/HUB7tyTeOLpP/pPPyydyesmZDc3mOPxn1Ky
- nmWK7EPH4W6Ca5B0WhlrJBbNlAzKT7RW1GpLhFxQVIqU7UEr6Mslssmu+5lRvLO763P
-X-Google-Smtp-Source: AGHT+IEDhTtNZEirT7xBFMutfVs/saGMV1bfHmtxSxlCg2GretDVGOBISN5KO8jHbhgqfqZOMilyVg==
-X-Received: by 2002:a05:6000:18a2:b0:382:496e:8784 with SMTP id
- ffacd0b85a97d-38260b6eb06mr12571026f8f.26.1732564779568; 
- Mon, 25 Nov 2024 11:59:39 -0800 (PST)
+ AJvYcCUwtiZdRX6ycpg5zEFFhBRwQKmDc8uCg382W5ZIsiiOpd+uP0XSTYMtuzbzyaHqWDSAfut/A5kMtRSJ@nongnu.org
+X-Gm-Message-State: AOJu0YzBTpPkLr+cUnJWeZZPGHS4/SDTVUDdu4ZQU2SU7Tzv5Cl6dVVn
+ U75p+UX/H+Vf7sNuaAfh0+UFBlOAoG+vdmH8WSrsv2twOJdSrdglBgnqbLw5XSI=
+X-Gm-Gg: ASbGncu0cDosYGSNC/l6uFGgizCUN2PDacUrzosggNOW3UksvcooEnFNklARxatfyFC
+ jDZOcnoPxroz9e0k9B7YG7aTrwCTISox+7xn5aJ68YedY/hNIQZ70fQfnPv0wNzJUul/iYrUkwB
+ 7kmIemubhGqiFlSGKH94pKyc+Fj16vXRAwNaa1xZgYTW3vISBt8ROwwOgBXOUh28nG9XMfSvLwa
+ K9/tEz6gu+offhPWyVBI+Eqc7U3Psam3OqQf9S7po2qH1iZvo0lt81rt20qx+NiAQXO
+X-Google-Smtp-Source: AGHT+IG8nC95KgxPOV4gNNszZYNmR7epAcoJPgXz8ijIjcuMTQZVqQBxAAlIVhMM0m+tNLQY0PCvEQ==
+X-Received: by 2002:a05:6000:2ae:b0:382:4378:4652 with SMTP id
+ ffacd0b85a97d-38260bcb8b4mr11780186f8f.45.1732564773213; 
+ Mon, 25 Nov 2024 11:59:33 -0800 (PST)
 Received: from localhost.localdomain ([2.221.137.100])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fd0fbdcsm11237971f8f.109.2024.11.25.11.59.39
+ ffacd0b85a97d-3825fd0fbdcsm11237971f8f.109.2024.11.25.11.59.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 11:59:39 -0800 (PST)
+ Mon, 25 Nov 2024 11:59:32 -0800 (PST)
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 To: peter.maydell@linaro.org
 Cc: richard.henderson@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, alex.bennee@linaro.org,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: [RFC PATCH v3 26/26] hw/arm/virt: Add measurement log for
- confidential boot
-Date: Mon, 25 Nov 2024 19:56:25 +0000
-Message-ID: <20241125195626.856992-28-jean-philippe@linaro.org>
+ Jean-Philippe Brucker <jean-philippe@linaro.org>
+Subject: [PATCH v3 15/26] hw/arm/virt: Add support for Arm RME
+Date: Mon, 25 Nov 2024 19:56:14 +0000
+Message-ID: <20241125195626.856992-17-jean-philippe@linaro.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241125195626.856992-2-jean-philippe@linaro.org>
 References: <20241125195626.856992-2-jean-philippe@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,180 +101,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create a measurement log describing operations performed by QEMU to
-initialize the guest, and load it into guest memory above the DTB.
+When confidential-guest-support is enabled for the virt machine, add the
+RME flag to the VM type.
 
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>
+The HVC conduit for PSCI is not supported for Realms.
+
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 ---
-v2->v3: New
----
- include/hw/arm/boot.h |  3 +++
- include/hw/arm/virt.h |  1 +
- hw/arm/boot.c         | 47 +++++++++++++++++++++++++++++++++++++++++++
- hw/arm/virt.c         | 23 +++++++++++++++++++++
- 4 files changed, 74 insertions(+)
+ hw/arm/virt.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
-index 5fcbaa2625..f2518c4e81 100644
---- a/include/hw/arm/boot.h
-+++ b/include/hw/arm/boot.h
-@@ -147,6 +147,9 @@ struct arm_boot_info {
-      * Confidential guest boot loads everything into RAM so it can be measured.
-      */
-     bool confidential;
-+    /* measurement log location in guest memory */
-+    hwaddr log_start;
-+    size_t log_size;
- };
- 
- /**
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index e5e9f67f52..fe1c464be6 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -180,6 +180,7 @@ struct VirtMachineState {
-     char *oem_id;
-     char *oem_table_id;
-     bool ns_el2_virt_timer_irq;
-+    Object *event_log;
- };
- 
- #define VIRT_ECAM_ID(high) (high ? VIRT_HIGH_PCIE_ECAM : VIRT_PCIE_ECAM)
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index e461137595..1ced008062 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -665,6 +665,24 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
- 
-     fdt_add_psci_node(fdt);
- 
-+    /* Add a reserved-memory node for the event log */
-+    if (binfo->log_size) {
-+        char *nodename;
-+
-+        qemu_fdt_add_subnode(fdt, "/reserved-memory");
-+        qemu_fdt_setprop_cell(fdt, "/reserved-memory", "#address-cells", 0x2);
-+        qemu_fdt_setprop_cell(fdt, "/reserved-memory", "#size-cells", 0x2);
-+        qemu_fdt_setprop(fdt, "/reserved-memory", "ranges", NULL, 0);
-+
-+        nodename = g_strdup_printf("/reserved-memory/event-log@%" PRIx64,
-+                                   binfo->log_start);
-+        qemu_fdt_add_subnode(fdt, nodename);
-+        qemu_fdt_setprop_string(fdt, nodename, "compatible", "cc-event-log");
-+        qemu_fdt_setprop_sized_cells(fdt, nodename, "reg", 2, binfo->log_start,
-+                                           2, binfo->log_size);
-+        g_free(nodename);
-+    }
-+
-     if (binfo->modify_dtb) {
-         binfo->modify_dtb(binfo, fdt);
-     }
-@@ -943,6 +961,30 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
-     return kernel_size;
- }
- 
-+static void add_event_log(struct arm_boot_info *info)
-+{
-+    if (!info->log_size) {
-+        return;
-+    }
-+
-+    if (!info->dtb_limit) {
-+        int dtb_size = 0;
-+
-+        if (!info->get_dtb(info, &dtb_size) || dtb_size == 0) {
-+            error_report("Board does not have a DTB");
-+            exit(1);
-+        }
-+        info->dtb_limit = info->dtb_start + dtb_size;
-+    }
-+
-+    info->log_start = info->dtb_limit;
-+    if (info->log_start + info->log_size >
-+        info->loader_start + info->ram_size) {
-+        error_report("Not enough space for measurement log and DTB");
-+        exit(1);
-+    }
-+}
-+
- static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
-                                          struct arm_boot_info *info)
- {
-@@ -990,6 +1032,7 @@ static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
-             }
-             info->dtb_start = info->loader_start;
-             info->dtb_limit = image_low_addr;
-+            add_event_log(info);
-         }
-     }
-     entry = elf_entry;
-@@ -1128,6 +1171,8 @@ static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
-                 error_report("Not enough space for DTB after kernel/initrd");
-                 exit(1);
-             }
-+            add_event_log(info);
-+
-             fixupcontext[FIXUP_ARGPTR_LO] = info->dtb_start;
-             fixupcontext[FIXUP_ARGPTR_HI] = info->dtb_start >> 32;
-         } else {
-@@ -1189,6 +1234,8 @@ static void arm_setup_confidential_firmware_boot(ARMCPU *cpu,
-         error_report("could not load firmware '%s'", firmware_filename);
-         exit(1);
-     }
-+
-+    add_event_log(info);
- }
- 
- static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info,
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 5247f53882..1e0f664af0 100644
+index 1a381e9a2b..2d36640733 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -1808,6 +1808,11 @@ void virt_machine_done(Notifier *notifier, void *data)
-         exit(1);
-     }
+@@ -229,6 +229,11 @@ static const int a15irqmap[] = {
+     [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 */
+ };
  
-+    if (vms->event_log) {
-+        object_property_set_uint(vms->event_log, "load-addr",
-+                                 vms->bootinfo.log_start, &error_fatal);
-+    }
-+
-     fw_cfg_add_extra_pci_roots(vms->bus, vms->fw_cfg);
- 
-     virt_acpi_setup(vms);
-@@ -2149,6 +2154,21 @@ static void virt_cpu_post_init(VirtMachineState *vms, MemoryRegion *sysmem)
-     }
- }
- 
-+static void create_measurement_log(VirtMachineState *vms)
++static bool virt_machine_is_confidential(VirtMachineState *vms)
 +{
-+    Error *err = NULL;
-+
-+    vms->event_log = kvm_arm_rme_get_measurement_log();
-+    if (vms->event_log == NULL) {
-+        return;
-+    }
-+    vms->bootinfo.log_size = object_property_get_uint(vms->event_log,
-+                                                      "max-size", &err);
-+    if (err != NULL) {
-+        error_report_err(err);
-+    }
++    return MACHINE(vms)->cgs;
 +}
 +
- static void machvirt_init(MachineState *machine)
+ static void create_randomness(MachineState *ms, const char *node)
  {
-     VirtMachineState *vms = VIRT_MACHINE(machine);
-@@ -2499,6 +2519,9 @@ static void machvirt_init(MachineState *machine)
-                                vms->fw_cfg, OBJECT(vms));
-     }
+     struct {
+@@ -2165,10 +2170,11 @@ static void machvirt_init(MachineState *machine)
+      * if the guest has EL2 then we will use SMC as the conduit,
+      * and otherwise we will use HVC (for backwards compatibility and
+      * because if we're using KVM then we must use HVC).
++     * Realm guests must also use SMC.
+      */
+     if (vms->secure && firmware_loaded) {
+         vms->psci_conduit = QEMU_PSCI_CONDUIT_DISABLED;
+-    } else if (vms->virt) {
++    } else if (vms->virt || virt_machine_is_confidential(vms)) {
+         vms->psci_conduit = QEMU_PSCI_CONDUIT_SMC;
+     } else {
+         vms->psci_conduit = QEMU_PSCI_CONDUIT_HVC;
+@@ -3013,6 +3019,7 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
+ static int virt_kvm_type(MachineState *ms, const char *type_str)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(ms);
++    int rme_vm_type = kvm_arm_rme_vm_type(ms);
+     int max_vm_pa_size, requested_pa_size;
+     bool fixed_ipa;
  
-+    kvm_arm_rme_set_ipa_size(64 - clz64(vms->highest_gpa));
-+    create_measurement_log(vms);
+@@ -3042,7 +3049,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+      * the implicit legacy 40b IPA setting, in which case the kvm_type
+      * must be 0.
+      */
+-    return fixed_ipa ? 0 : requested_pa_size;
++    if (fixed_ipa) {
++        return 0;
++    }
 +
-     vms->bootinfo.ram_size = machine->ram_size;
-     vms->bootinfo.board_id = -1;
-     vms->bootinfo.loader_start = vms->memmap[VIRT_MEM].base;
++    return requested_pa_size | rme_vm_type;
+ }
+ 
+ static int virt_hvf_get_physical_address_range(MachineState *ms)
 -- 
 2.47.0
 
