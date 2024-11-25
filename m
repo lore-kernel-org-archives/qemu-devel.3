@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77ABCD3B7CA
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 01:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B2AAD3B7CC
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 01:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFODS-0002kt-3d; Sun, 24 Nov 2024 20:48:42 -0500
+	id 1tFOKF-00048T-Sv; Sun, 24 Nov 2024 20:55:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tFODO-0002iu-Oq
- for qemu-devel@nongnu.org; Sun, 24 Nov 2024 20:48:38 -0500
+ id 1tFOKC-00048J-Kw
+ for qemu-devel@nongnu.org; Sun, 24 Nov 2024 20:55:40 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tFODF-0003Uw-1K
- for qemu-devel@nongnu.org; Sun, 24 Nov 2024 20:48:32 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tFOK9-0004DS-Kk
+ for qemu-devel@nongnu.org; Sun, 24 Nov 2024 20:55:40 -0500
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxuuBg10NnKPJHAA--.10632S3;
- Mon, 25 Nov 2024 09:48:16 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxUa8U2UNnv_JHAA--.9982S3;
+ Mon, 25 Nov 2024 09:55:32 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMCxPMJf10NnqZdmAA--.2556S3;
- Mon, 25 Nov 2024 09:48:15 +0800 (CST)
-Subject: Re: [PATCH v4 1/6] hw/loongarch/virt: Add CPU topology support
+ by front1 (Coremail) with SMTP id qMiowMCx70cU2UNnp5lmAA--.41212S3;
+ Mon, 25 Nov 2024 09:55:32 +0800 (CST)
+Subject: Re: [PATCH v4 3/6] hw/loongarch/virt: Add generic function to init
+ interrupt pin of CPU
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
 References: <20241112021738.1952851-1-maobibo@loongson.cn>
- <20241112021738.1952851-2-maobibo@loongson.cn>
- <20241118171029.5a9ed8bd@imammedo.users.ipa.redhat.com>
- <10896516-58cd-d614-e6f0-f9c683da7b88@loongson.cn>
- <20241122143126.571199b0@imammedo.users.ipa.redhat.com>
+ <20241112021738.1952851-4-maobibo@loongson.cn>
+ <20241118174346.23b6d2ee@imammedo.users.ipa.redhat.com>
+ <b3a86101-faab-3db2-e049-d77ecf0cc27e@loongson.cn>
+ <20241122144533.5ce77f6e@imammedo.users.ipa.redhat.com>
 From: bibo mao <maobibo@loongson.cn>
-Message-ID: <dcb839ea-30cf-aefd-8699-6cb74f349553@loongson.cn>
-Date: Mon, 25 Nov 2024 09:47:38 +0800
+Message-ID: <efae1aa0-3f62-ad20-7f39-21e7a1cc8732@loongson.cn>
+Date: Mon, 25 Nov 2024 09:54:55 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20241122143126.571199b0@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20241122144533.5ce77f6e@imammedo.users.ipa.redhat.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxPMJf10NnqZdmAA--.2556S3
+X-CM-TRANSID: qMiowMCx70cU2UNnp5lmAA--.41212S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9fXoW3tw4ktFWfXr18CrW3Gr1DCFX_yoW8Jw4kZo
- WrJa17J3WkJr1Y9FykJ39rXrW2kw1UC39rAr9rCwsruanrt3y7Zr1UGw10qayxKFW5Jr17
- J34UGr43ZFW3Xryfl-sFpf9Il3svdjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf
- 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
- UjIYCTnIWjp_UUUY27kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
- 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
- Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
- v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0FALU
- UUUU=
+X-Coremail-Antispam: 1Uk129KBj93XoWxKr4rCFW3ur15Cw4DKFW7Awc_yoWfAry5pr
+ W8CFsYyr4UXry3WwnFgw1jgFnayrn5KF1xXr43G3WSk3WqyFy3Jr1UAw4UCay8CrykXF1j
+ vr18XFWfWFy7A3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU82g43UU
+ UUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -50
@@ -89,347 +90,240 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2024/11/22 下午9:31, Igor Mammedov wrote:
-> On Tue, 19 Nov 2024 16:01:37 +0800
+On 2024/11/22 下午9:45, Igor Mammedov wrote:
+> On Tue, 19 Nov 2024 18:02:54 +0800
 > bibo mao <maobibo@loongson.cn> wrote:
 > 
->> Hi Ignor,
->>
->> On 2024/11/19 上午12:10, Igor Mammedov wrote:
->>> On Tue, 12 Nov 2024 10:17:33 +0800
+>> On 2024/11/19 上午12:43, Igor Mammedov wrote:
+>>> On Tue, 12 Nov 2024 10:17:35 +0800
 >>> Bibo Mao <maobibo@loongson.cn> wrote:
 >>>    
->>>> Add topological relationships for Loongarch VCPU and initialize
->>>> topology member variables. Also physical cpu id calculation
->>>> method comes from its topo information.
+>>>> Here generic function virt_init_cpu_irq() is added to init interrupt
+>>>> pin of CPU object, IPI and extioi interrupt controllers are connected
+>>>> to interrupt pin of CPU object.
 >>>>
->>>> Co-developed-by: Xianglai Li <lixianglai@loongson.cn>
+>>>> The generic function can be used to both cold-plug and hot-plug CPUs.
+>>>
+>>> this patch is heavily depends on cpu_index and specific order CPUs
+>>> are created.
+>> yes, that is actually one problem with heavy dependency, I will try to
+>> remove the dependency.
+>>>    
+>>>>
 >>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 >>>> ---
->>>>    docs/system/loongarch/virt.rst | 31 +++++++++++++++
->>>>    hw/loongarch/virt.c            | 73 ++++++++++++++++++++++++++++------
->>>>    target/loongarch/cpu.c         | 12 ++++++
->>>>    target/loongarch/cpu.h         | 16 ++++++++
->>>>    4 files changed, 119 insertions(+), 13 deletions(-)
+>>>>    hw/loongarch/virt.c         | 78 ++++++++++++++++++++++++-------------
+>>>>    include/hw/loongarch/virt.h |  2 +
+>>>>    2 files changed, 53 insertions(+), 27 deletions(-)
 >>>>
->>>> diff --git a/docs/system/loongarch/virt.rst b/docs/system/loongarch/virt.rst
->>>> index 172fba079e..8daf60785f 100644
->>>> --- a/docs/system/loongarch/virt.rst
->>>> +++ b/docs/system/loongarch/virt.rst
->>>> @@ -28,6 +28,37 @@ The ``qemu-system-loongarch64`` provides emulation for virt
->>>>    machine. You can specify the machine type ``virt`` and
->>>>    cpu type ``la464``.
+>>>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>>>> index b6b616d278..621380e2b3 100644
+>>>> --- a/hw/loongarch/virt.c
+>>>> +++ b/hw/loongarch/virt.c
+>>>> @@ -58,6 +58,20 @@ static bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+>>>>        return true;
+>>>>    }
 >>>>    
->>>> +CPU Topology
->>>> +------------
+>>>> +static CPUState *virt_get_cpu(MachineState *ms, int index)
+>>>> +{
+>>>> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+>>>> +    const CPUArchIdList *possible_cpus;
 >>>> +
->>>> +The ``LA464`` type CPUs have the concept of Socket Core and Thread.
+>>>> +    /* Init CPUs */
+>>>> +    possible_cpus = mc->possible_cpu_arch_ids(ms);
+>>>> +    if (index < 0 || index >= possible_cpus->len) {
+>>>> +        return NULL;
+>>>> +    }
 >>>> +
->>>> +For example:
->>>> +
->>>> +``-smp 1,maxcpus=M,sockets=S,cores=C,threads=T``
->>>> +
->>>> +The above parameters indicate that the machine has a maximum of ``M`` vCPUs and
->>>> +``S`` sockets, each socket has ``C`` cores, each core has ``T`` threads,
->>>> +and each thread corresponds to a vCPU.
->>>> +
->>>> +Then ``M`` ``S`` ``C`` ``T`` has the following relationship:
->>>> +
->>>> +``M = S * C * T``
->>>> +
->>>> +In the CPU topology relationship, When we know the ``socket_id`` ``core_id``
->>>> +and ``thread_id`` of the CPU, we can calculate its ``arch_id``:
->>>> +
->>>> +``arch_id = (socket_id * S) + (core_id * C) + (thread_id * T)``
+>>>> +    return possible_cpus->cpus[index].cpu;
+>>>> +}
 >>>
->>> Is there a spec or some other reference where all of this is described?
->>> (or is that a made up just for QEMU?)
->> With hardware manual about cpuid register, it only says that it is 9-bit
-> Is manual accessible to public/published somewhere?
-> What I'm basically asking is to add comments to registers involved
-> that point to specification that defines them in format
->    (Spec name, revision, chapter [,reg name])
-> so whoever reads that code could go and compare it with specification
+>>> instead of adding this helper I'd suggest to try reusing
+>>> virt_find_cpu_slot() added in previous patch.
+>>>    
+>>>> +
+>>>>    static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
+>>>>                                  void *opaque, Error **errp)
+>>>>    {
+>>>> @@ -365,7 +379,7 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
+>>>>    static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
+>>>>    {
+>>>>        int num;
+>>>> -    const MachineState *ms = MACHINE(lvms);
+>>>> +    MachineState *ms = MACHINE(lvms);
+>>>>        int smp_cpus = ms->smp.cpus;
+>>>>    
+>>>>        qemu_fdt_add_subnode(ms->fdt, "/cpus");
+>>>> @@ -375,7 +389,7 @@ static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
+>>>>        /* cpu nodes */
+>>>>        for (num = smp_cpus - 1; num >= 0; num--) {
+>>>
+>>> loops based on smp_cpus become broken as soon as you have
+>>>    '-smp x, -device your-cpu,...
+>>> since it doesn't take in account '-device' created CPUs.
+>>> You likely need to replace such loops to iterate over possible_cpus
+>>> (in a separate patch please)
+>> yes, will do. possible_cpus can be used and virt_get_cpu() is unnecessary.
+>>
+>> Interesting, I never create cpu like the method like this, will try this.
+>> '-smp x, -device your-cpu,...'
 > 
->> width now, however there is no detailed introduction about
->> socket_id/core_id/thread_id about this register. So it can be treated as
->> a made up for QEMU.
-> I'd rather not make up thing unless there is no other way around.
-> arch_id doesn't have to be derived from topo parameters, and can be
-> separate from them (it's an ID by which a cpu can be addressed in hw)
+> that's how target VM could be starred with if cpu were hotpluged on
+> migration source side.
 > 
-> How topology is encoded on real hw?
-With real hw, the encoding order is socket, and then core, the last is 
-thread id. On one socket there are 12 cores or 16 cores,  it uses 4 bit 
-for core id representation; 2 bit us used 4 cores or 3 core on one socket.
+> '-smp x' basically shortcut to series of '-device cpu-foo',
+> with the only big difference is that the later is created after machine_init
+> while '-smp x' CPUs are created at machine_init time.
+> 
+> That's the reason to I'm pushing you to move all CPU wiring to plug handlers,
+> so eventually you would end up with only way of adding CPUs, regardless of
+> what creates them (-smp or -device/device_add)
+Got it. I have further understanding with CPU object, I do not notice 
+this before.
 
-Different HW platforms has different cores, so the bit width for core 
-number is not fixed, the total width is 8-bit because of limitation of 
-MSI/EXIIOT interrupt chip. Overall arch_id is a little different with 
-cpu_index,
-
-arch_id = socket_id * aligned_up(S, powerof(2)) + core_id * 
-aligned_up(C, powerof(2))) + thread_id * aligned_up(T, powerof(2))
+And thanks for your kindly help.
 
 Regards
 Bibo Mao
 > 
->>>
->>>    
->>>> +
->>>> +Similarly, when we know the ``arch_id`` of the CPU,
->>>> +we can also get its ``socket_id`` ``core_id`` and ``thread_id``:
->>>> +
->>>> +``socket_id = arch_id / (C * T)``
->>>> +
->>>> +``core_id = (arch_id / T) % C``
->>>> +
->>>> +``thread_id = arch_id % T``
->>>> +
->>>>    Boot options
->>>>    ------------
+> Ideally/if possible you should be able to start VM with '-smp 0, -device cpu-foo'
+> 
+>>>       
+>>>>            char *nodename = g_strdup_printf("/cpus/cpu@%d", num);
+>>>> -        LoongArchCPU *cpu = LOONGARCH_CPU(qemu_get_cpu(num));
+>>>> +        LoongArchCPU *cpu = LOONGARCH_CPU(virt_get_cpu(ms, num));
+>>>>            CPUState *cs = CPU(cpu);
 >>>>    
->>>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->>>> index 9a635d1d3d..1ed5130edf 100644
->>>> --- a/hw/loongarch/virt.c
->>>> +++ b/hw/loongarch/virt.c
->>>> @@ -1143,9 +1143,9 @@ static void virt_init(MachineState *machine)
->>>>        LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(machine);
->>>>        int i;
->>>>        hwaddr base, size, ram_size = machine->ram_size;
->>>> -    const CPUArchIdList *possible_cpus;
->>>>        MachineClass *mc = MACHINE_GET_CLASS(machine);
->>>>        CPUState *cpu;
->>>> +    Object *cpuobj;
->>>>    
->>>>        if (!cpu_model) {
->>>>            cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
->>>> @@ -1163,13 +1163,30 @@ static void virt_init(MachineState *machine)
->>>>        memory_region_add_subregion(&lvms->system_iocsr, 0, &lvms->iocsr_mem);
->>>>    
->>>>        /* Init CPUs */
->>>> -    possible_cpus = mc->possible_cpu_arch_ids(machine);
->>> I'd keep this, and use below, it makes line shorter
->> Sure, will modify it in next version.
->>
->>>
->>>    
->>>> -    for (i = 0; i < possible_cpus->len; i++) {
->>>> -        cpu = cpu_create(machine->cpu_type);
->>>> +    mc->possible_cpu_arch_ids(machine);
->>>> +    for (i = 0; i < machine->smp.cpus; i++) {
->>>> +        cpuobj = object_new(machine->cpu_type);
->>>> +        if (cpuobj == NULL) {
->>>> +            error_report("Fail to create object with type %s ",
->>>> +                         machine->cpu_type);
->>>> +            exit(EXIT_FAILURE);
->>>> +        }
->>>> +
->>>> +        cpu = CPU(cpuobj);
->>>    
->>>>            cpu->cpu_index = i;
->>> this probably should be in _pre_plug handler,
->>> also see
->>> (a15d2728a9aa pc: Init CPUState->cpu_index with index in possible_cpus[])
->>> for why x86 does it.
->>>    
->> Will modify it in next version.
->>
->>>>            machine->possible_cpus->cpus[i].cpu = cpu;
->>>> -        lacpu = LOONGARCH_CPU(cpu);
->>>> +        lacpu = LOONGARCH_CPU(cpuobj);
->>>    
->>>>            lacpu->phy_id = machine->possible_cpus->cpus[i].arch_id;
->>> Given above is derived from topo data set below, I'd move above above
->>> to pre_plug time, and calculate/set it there based on topo data.
->>> There is no point in setting both at the same place.
->>>    
->> Will do.
->>>> +        object_property_set_int(cpuobj, "socket-id",
->>>> +                                machine->possible_cpus->cpus[i].props.socket_id,
->>>> +                                NULL);
->>>> +        object_property_set_int(cpuobj, "core-id",
->>>> +                                machine->possible_cpus->cpus[i].props.core_id,
->>>> +                                NULL);
->>>> +        object_property_set_int(cpuobj, "thread-id",
->>>> +                                machine->possible_cpus->cpus[i].props.thread_id,
->>>> +                                NULL);
->>>> +        qdev_realize_and_unref(DEVICE(cpuobj), NULL, &error_fatal);
->>>>        }
->>>>        fdt_add_cpu_nodes(lvms);
->>>>        fdt_add_memory_nodes(machine);
->>>> @@ -1286,6 +1303,35 @@ static void virt_initfn(Object *obj)
->>>>        virt_flash_create(lvms);
+>>>>            qemu_fdt_add_subnode(ms->fdt, nodename);
+>>>> @@ -783,16 +797,42 @@ static void virt_devices_init(DeviceState *pch_pic,
+>>>>        lvms->platform_bus_dev = create_platform_bus(pch_pic);
 >>>>    }
 >>>>    
->>>> +static int virt_get_arch_id_from_topo(MachineState *ms, LoongArchCPUTopo *topo)
+>>>> +static void virt_init_cpu_irq(MachineState *ms, CPUState *cs)
 >>>> +{
->>>> +    int arch_id, sock_vcpu_num, core_vcpu_num;
+>>>> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+>>>> +    CPULoongArchState *env;
+>>>> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+>>>> +    int pin;
 >>>> +
->>>> +    /*
->>>> +     * calculate total logical cpus across socket/core/thread.
->>>> +     * For more information on how to calculate the arch_id,
->>>> +     * you can refer to the CPU Topology chapter of the
->>>> +     * docs/system/loongarch/virt.rst document.
->>>> +     */
->>>> +    sock_vcpu_num = topo->socket_id * (ms->smp.threads * ms->smp.cores);
->>>> +    core_vcpu_num = topo->core_id * ms->smp.threads;
+>>>> +    if (!lvms->ipi || !lvms->extioi) {
+>>>> +        return;
+>>>> +    }
 >>>> +
->>>> +    /* get vcpu-id(logical cpu index) for this vcpu from this topology */
->>>> +    arch_id = (sock_vcpu_num + core_vcpu_num) + topo->thread_id;
->>>> +
->>>> +    assert(arch_id >= 0 && arch_id < ms->possible_cpus->len);
->>>> +
->>>> +    return arch_id;
->>>> +}
->>>> +
->>>> +static void virt_get_topo_from_index(MachineState *ms,
->>>> +                                     LoongArchCPUTopo *topo, int index)
->>>> +{
->>>> +    topo->socket_id = index / (ms->smp.cores * ms->smp.threads);
->>>> +    topo->core_id = index / ms->smp.threads % ms->smp.cores;
->>>> +    topo->thread_id = index % ms->smp.threads;
->>>> +}
->>>> +
->>>>    static bool memhp_type_supported(DeviceState *dev)
->>>>    {
->>>>        /* we only support pc dimm now */
->>>> @@ -1385,8 +1431,9 @@ static HotplugHandler *virt_get_hotplug_handler(MachineState *machine,
->>>>    
->>>>    static const CPUArchIdList *virt_possible_cpu_arch_ids(MachineState *ms)
->>>>    {
->>>> -    int n;
->>>> +    int n, arch_id;
->>>>        unsigned int max_cpus = ms->smp.max_cpus;
->>>> +    LoongArchCPUTopo topo;
->>>>    
->>>>        if (ms->possible_cpus) {
->>>>            assert(ms->possible_cpus->len == max_cpus);
->>>> @@ -1397,17 +1444,17 @@ static const CPUArchIdList *virt_possible_cpu_arch_ids(MachineState *ms)
->>>>                                      sizeof(CPUArchId) * max_cpus);
->>>>        ms->possible_cpus->len = max_cpus;
->>>>        for (n = 0; n < ms->possible_cpus->len; n++) {
->>>> +        virt_get_topo_from_index(ms, &topo, n);
->>>> +        arch_id = virt_get_arch_id_from_topo(ms, &topo);
->>>> +        ms->possible_cpus->cpus[n].vcpus_count = 1;
->>>>            ms->possible_cpus->cpus[n].type = ms->cpu_type;
->>>> -        ms->possible_cpus->cpus[n].arch_id = n;
->>>> -
->>>> +        ms->possible_cpus->cpus[n].arch_id = arch_id;
->>>>            ms->possible_cpus->cpus[n].props.has_socket_id = true;
->>>> -        ms->possible_cpus->cpus[n].props.socket_id  =
->>>> -                                   n / (ms->smp.cores * ms->smp.threads);
->>>> +        ms->possible_cpus->cpus[n].props.socket_id = topo.socket_id;
->>>>            ms->possible_cpus->cpus[n].props.has_core_id = true;
->>>> -        ms->possible_cpus->cpus[n].props.core_id =
->>>> -                                   n / ms->smp.threads % ms->smp.cores;
->>>> +        ms->possible_cpus->cpus[n].props.core_id = topo.core_id;
->>>>            ms->possible_cpus->cpus[n].props.has_thread_id = true;
->>>> -        ms->possible_cpus->cpus[n].props.thread_id = n % ms->smp.threads;
->>>> +        ms->possible_cpus->cpus[n].props.thread_id = topo.thread_id;
->>>>        }
->>>>        return ms->possible_cpus;
->>>>    }
->>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>>> index 57cc4f314b..a99e22094e 100644
->>>> --- a/target/loongarch/cpu.c
->>>> +++ b/target/loongarch/cpu.c
->>>> @@ -16,6 +16,7 @@
->>>>    #include "kvm/kvm_loongarch.h"
->>>>    #include "exec/exec-all.h"
->>>>    #include "cpu.h"
->>>> +#include "hw/qdev-properties.h"
->>>>    #include "internals.h"
->>>>    #include "fpu/softfloat-helpers.h"
->>>>    #include "cpu-csr.h"
->>>> @@ -725,6 +726,7 @@ static void loongarch_cpu_init(Object *obj)
->>>>        timer_init_ns(&cpu->timer, QEMU_CLOCK_VIRTUAL,
->>>>                      &loongarch_constant_timer_cb, cpu);
->>>>    #endif
->>>> +    cpu->phy_id = UNSET_PHY_ID;
->>>>    #endif
->>>>    }
->>>>    
->>>> @@ -823,6 +825,14 @@ static int64_t loongarch_cpu_get_arch_id(CPUState *cs)
->>>>    }
->>>>    #endif
->>>>    
->>>> +static Property loongarch_cpu_properties[] = {
->>>> +    DEFINE_PROP_INT32("socket-id", LoongArchCPU, socket_id, 0),
->>>> +    DEFINE_PROP_INT32("core-id", LoongArchCPU, core_id, 0),
->>>> +    DEFINE_PROP_INT32("thread-id", LoongArchCPU, thread_id, 0),
->>>> +    DEFINE_PROP_INT32("node-id", LoongArchCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
->>>> +    DEFINE_PROP_END_OF_LIST()
->>>> +};
->>>> +
->>>>    static void loongarch_cpu_class_init(ObjectClass *c, void *data)
->>>>    {
->>>>        LoongArchCPUClass *lacc = LOONGARCH_CPU_CLASS(c);
->>>> @@ -830,6 +840,7 @@ static void loongarch_cpu_class_init(ObjectClass *c, void *data)
->>>>        DeviceClass *dc = DEVICE_CLASS(c);
->>>>        ResettableClass *rc = RESETTABLE_CLASS(c);
->>>>    
->>>> +    device_class_set_props(dc, loongarch_cpu_properties);
->>>>        device_class_set_parent_realize(dc, loongarch_cpu_realizefn,
->>>>                                        &lacc->parent_realize);
->>>>        resettable_class_set_parent_phases(rc, NULL, loongarch_cpu_reset_hold, NULL,
->>>> @@ -854,6 +865,7 @@ static void loongarch_cpu_class_init(ObjectClass *c, void *data)
->>>>    #ifdef CONFIG_TCG
->>>>        cc->tcg_ops = &loongarch_tcg_ops;
->>>>    #endif
->>>> +    dc->user_creatable = true;
->>>>    }
->>>>    
->>>>    static const gchar *loongarch32_gdb_arch_name(CPUState *cs)
->>>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->>>> index 86c86c6c95..7472df0521 100644
->>>> --- a/target/loongarch/cpu.h
->>>> +++ b/target/loongarch/cpu.h
->>>> @@ -19,6 +19,12 @@
->>>>    #include "cpu-csr.h"
->>>>    #include "cpu-qom.h"
->>>>    
->>>> +/*
->>>> + * CPU can't have 0xFFFFFFFF physical ID, use that value to distinguish
->>>> + * that physical ID hasn't been set yet
->>>
->>> pointer to CPU spec/doc here would be nice to have
->>>    
->> Will add comments about CPU manual, the physical ID is 9-bit width at
->> most now.
+>>>> +    env = &(cpu->env);
+>>>> +    env->address_space_iocsr = &lvms->as_iocsr;
+>>>> +    env->ipistate = lvms->ipi;
+>>>> +    /* connect ipi irq to cpu irq, logic cpu index used here */
+>>>> +    qdev_connect_gpio_out(lvms->ipi, cs->cpu_index,
+>>> I'd try to avoid using cpu_index (basically internal CPU detail) when
+>>> wiring components together. It would be better to implement this the way
+>>> the real hw does it.
+>> yes, will try to remove this and ipi device realize funciton. When ipi
+>> device is created, it will search possible_cpus and connect to interrupt
+>> pin of supported CPU.
+>>
+>> The real hw is same with Interrupt Pin method :(, and there is no
+>> apic-bus or Processor System Bus like x86.
 >>
 >> Regards
 >> Bibo Mao
->>>> + */
->>>> +#define UNSET_PHY_ID 0xFFFFFFFF
+>>>
+>>>    
+>>>> +                              qdev_get_gpio_in(DEVICE(cs), IRQ_IPI));
 >>>> +
->>>>    #define IOCSRF_TEMP             0
->>>>    #define IOCSRF_NODECNT          1
->>>>    #define IOCSRF_MSI              2
->>>> @@ -390,6 +396,12 @@ typedef struct CPUArchState {
->>>>    #endif
->>>>    } CPULoongArchState;
->>>>    
->>>> +typedef struct LoongArchCPUTopo {
->>>> +    int32_t socket_id;  /* socket-id of this VCPU */
->>>> +    int32_t core_id;    /* core-id of this VCPU */
->>>> +    int32_t thread_id;  /* thread-id of this VCPU */
->>>> +} LoongArchCPUTopo;
+>>>> +    /*
+>>>> +     * connect ext irq to the cpu irq
+>>>> +     * cpu_pin[9:2] <= intc_pin[7:0]
+>>>> +     */
+>>>> +    for (pin = 0; pin < LS3A_INTC_IP; pin++) {
+>>>> +        qdev_connect_gpio_out(lvms->extioi, cs->cpu_index * LS3A_INTC_IP + pin,
+>>>> +                              qdev_get_gpio_in(DEVICE(cs), pin + 2));
+>>>> +    }
+>>>> +}
 >>>> +
->>>>    /**
->>>>     * LoongArchCPU:
->>>>     * @env: #CPULoongArchState
->>>> @@ -404,6 +416,10 @@ struct ArchCPU {
->>>>        uint32_t  phy_id;
->>>>        OnOffAuto lbt;
->>>>        OnOffAuto pmu;
->>>> +    int32_t socket_id;  /* socket-id of this VCPU */
->>>> +    int32_t core_id;    /* core-id of this VCPU */
->>>> +    int32_t thread_id;  /* thread-id of this VCPU */
->>>> +    int32_t node_id;    /* NUMA node of this VCPU */
+>>>>    static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>>>    {
+>>>>        MachineState *ms = MACHINE(lvms);
+>>>> -    DeviceState *pch_pic, *pch_msi, *cpudev;
+>>>> +    DeviceState *pch_pic, *pch_msi;
+>>>>        DeviceState *ipi, *extioi;
+>>>>        SysBusDevice *d;
+>>>> -    LoongArchCPU *lacpu;
+>>>> -    CPULoongArchState *env;
+>>>>        CPUState *cpu_state;
+>>>> -    int cpu, pin, i, start, num;
+>>>> +    int cpu, i, start, num;
+>>>>        uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle, pch_msi_phandle;
 >>>>    
->>>>        /* 'compatible' string for this CPU for Linux device trees */
->>>>        const char *dtb_compatible;
+>>>>        /*
+>>>> @@ -843,6 +883,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>>>        ipi = qdev_new(TYPE_LOONGARCH_IPI);
+>>>>        qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.cpus);
+>>>>        sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
+>>>> +    lvms->ipi = ipi;
+>>>>    
+>>>>        /* IPI iocsr memory region */
+>>>>        memory_region_add_subregion(&lvms->system_iocsr, SMP_IPI_MAILBOX,
+>>>> @@ -853,18 +894,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>>>        /* Add cpu interrupt-controller */
+>>>>        fdt_add_cpuic_node(lvms, &cpuintc_phandle);
+>>>>    
+>>>> -    for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
+>>>> -        cpu_state = qemu_get_cpu(cpu);
+>>>> -        cpudev = DEVICE(cpu_state);
+>>>> -        lacpu = LOONGARCH_CPU(cpu_state);
+>>>> -        env = &(lacpu->env);
+>>>> -        env->address_space_iocsr = &lvms->as_iocsr;
+>>>> -
+>>>> -        /* connect ipi irq to cpu irq */
+>>>> -        qdev_connect_gpio_out(ipi, cpu, qdev_get_gpio_in(cpudev, IRQ_IPI));
+>>>> -        env->ipistate = ipi;
+>>>> -    }
+>>>> -
+>>>>        /* Create EXTIOI device */
+>>>>        extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
+>>>>        qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
+>>>> @@ -872,6 +901,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>>>            qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
+>>>>        }
+>>>>        sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
+>>>> +    lvms->extioi = extioi;
+>>>>        memory_region_add_subregion(&lvms->system_iocsr, APIC_BASE,
+>>>>                        sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 0));
+>>>>        if (virt_is_veiointc_enabled(lvms)) {
+>>>> @@ -879,16 +909,10 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>>>>                        sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 1));
+>>>>        }
+>>>>    
+>>>> -    /*
+>>>> -     * connect ext irq to the cpu irq
+>>>> -     * cpu_pin[9:2] <= intc_pin[7:0]
+>>>> -     */
+>>>> +    /* Connect irq to cpu, including ipi and extioi irqchip */
+>>>>        for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
+>>>> -        cpudev = DEVICE(qemu_get_cpu(cpu));
+>>>> -        for (pin = 0; pin < LS3A_INTC_IP; pin++) {
+>>>> -            qdev_connect_gpio_out(extioi, (cpu * 8 + pin),
+>>>> -                                  qdev_get_gpio_in(cpudev, pin + 2));
+>>>> -        }
+>>>> +        cpu_state = virt_get_cpu(ms, cpu);
+>>>> +        virt_init_cpu_irq(ms, cpu_state);
+>>>>        }
+>>>>    
+>>>>        /* Add Extend I/O Interrupt Controller node */
+>>>> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+>>>> index 9ba47793ef..260e6bd7cf 100644
+>>>> --- a/include/hw/loongarch/virt.h
+>>>> +++ b/include/hw/loongarch/virt.h
+>>>> @@ -60,6 +60,8 @@ struct LoongArchVirtMachineState {
+>>>>        MemoryRegion iocsr_mem;
+>>>>        AddressSpace as_iocsr;
+>>>>        struct loongarch_boot_info bootinfo;
+>>>> +    DeviceState *ipi;
+>>>> +    DeviceState *extioi;
+>>>>    };
+>>>>    
+>>>>    #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
 >>
 
 
