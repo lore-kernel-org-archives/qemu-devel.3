@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 023C0D59D67
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:05:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C36D59D69
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 20:05:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFfFP-0005JX-L3; Mon, 25 Nov 2024 14:59:51 -0500
+	id 1tFfF8-00052W-Vo; Mon, 25 Nov 2024 14:59:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tFfFK-0005En-Hi
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:46 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1tFfF6-000514-L0
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:32 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tFfFD-0004t3-OF
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:46 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-382442b7d9aso3702400f8f.1
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 11:59:39 -0800 (PST)
+ id 1tFfF1-0004lJ-Oi
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 14:59:32 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43494a20379so17709955e9.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 11:59:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732564778; x=1733169578; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732564766; x=1733169566; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+uO/papoLLk0b3uqMB8ZdXvs73vVNVF+lSFeGHBI0zI=;
- b=OhLABPK0bpZqrobwEtOOLMTKOkMVtkJ5E7s1GUlIG6BExVa7kBportjf1o4p578c5i
- c1yiJORL9E2+FOSULKNlW+m6rTnMFmLY9cUpTMxZBXhp6Fn4Cha96b2NKzh7JxxlVDkf
- LDFd012ecJThVk2mhIexaaZa+huU9GvCJASXDIMl5TsyBq8O/sX5ojAZkfnx9OaENrX/
- XdsfnWLqjehD45XJyZJbwR9i7k+DaUvq5sb9NY3viFJ4Sszp6JwCJFFqaIHPoZ2gdHf1
- Bz9gXBeHHZcKDMcAECk+FgL0CL43V4Gph6I/l0460RVkM3wRzIw03qavu+mcQfwKsMC+
- k39Q==
+ bh=AUUGPkOeOTTu2+NC5FrYwYu1VqmCribZfZ+rxUCPPlM=;
+ b=AYELKALOpB+vT8qq4kgt2mXmKO/TBS3e7WBJ574fISxgduEip4MNXiSp7RhIqmfx5a
+ 1+ZeQv+oL62ej32AXuYDKl+Pd/IveMf+VQa2A2d9mMXOHX0Ra85y4Pe3xq/DSZmd9iJU
+ 0h2joaq/9LgWS4cDDgQI5+RJsgS+ZgqMArG4A1pkBzO4kNsUp9GFbYZZ+gTfBvknwugY
+ 0uYXVA1uLxdFsPwsYH9NtIjcMCk+fyBhNdjx/r9Pq+QvT+JHHl2FfrmHswqTToYOIZn5
+ Bx3YCtzj95c6l0v17k8db7GgQcpt3TufOVv9tvEUN0dOm6ZlWCQRoYtZpFTDSRm0SrK9
+ ix6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732564778; x=1733169578;
+ d=1e100.net; s=20230601; t=1732564766; x=1733169566;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+uO/papoLLk0b3uqMB8ZdXvs73vVNVF+lSFeGHBI0zI=;
- b=OIn6yHfbJWPNaEB1p6eR35ThMxHjD22iOEAqcqjSfUUGdBoOhADR3ibbKrLA9zoGLc
- 8Hv4Kk36jk7pLknvqScHdefJwthsn9KVvg94Dai155YVg3VtwEstdDJgCHZlQQAtfvRA
- u6sn8chfBYJ5e5CQGCImNz945k0DcqXuxsxcgey+ZR96xZKHotY4g1dE1wPyFn6jlPil
- op/RAwdUrTUhjjL5hCxDbrEmiGYBXphuj66TnKpYgYkTyotCpb0Mn22RL1eYnmqB9nOl
- pMQeVU85HmT0HlNMLfrbbpRwSOog1IDw7fP128VJEv4yxhBG/RLCXglquWbxcuBNmZ/9
- arNA==
+ bh=AUUGPkOeOTTu2+NC5FrYwYu1VqmCribZfZ+rxUCPPlM=;
+ b=Vt/eX3FTFianrmlylkSDGK7Sbdffn2TFYxfS1HCJXTDOYDpR5tnyOxR+v0XcmVN/rC
+ ZfEqTP7ZhBXgKicgcks+Av4Uf/v/b6gGy7QwjaYREfM7VFL/LtDayGQJlJ3TGay4VbLA
+ mc4YEXbDo8hgkzLTH4J6ZiJOJ0WC4ZUJSzrouBVXhKSitoGXcZ5KO2bbrA6ywC8SBnBU
+ +B3yyigRxLG8fnKn6mxhc8XgWxIgYpaZL6CTyKV+ulnHwxvEYIRKphh7ZZSIxhdQHMjC
+ zefgtmLTKnMkl2MgQqpcofF+LBmFG4Ex4c8t2MgerTePkYybhKPLaCDnjEzDSmT7fksu
+ qB/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAAlaAmrzehqdVI8fYx/N30hmCZGZoeRuGhXOt7WrzDFVO0IhzkPFMlt3SIgMobMau3+xjiZx/iQ3I@nongnu.org
-X-Gm-Message-State: AOJu0YztX1TU9GW3v0mH108Ezkvvs7wb0dWFMwcJ3KzRZ6Ur/x7Xe8ZS
- GG0MaB6asyPFwHFD92BGP9L3PrqzZ8Hz+3FKQ27xvGKtn6BQb+wNeZXFbgUfbFk=
-X-Gm-Gg: ASbGnctMHZ3ueQXosvC1Tl7tX+LgCP0ma2MpbNsTfiKqevMYBhNGKibe1PCKOz5zThv
- a3ITWZPcff9laaZWaOI/4joqTpnZEDhbWHOxIFeH6M81jWL6PVj9B/6OQLp9IdhZ2U7yeyzdyYK
- XWfJag/rLhE3EMJwLTj2Lnd+gAokoHLIzeVOH207b/DLFVFjZ7FmAPcUyYBLIuMxRPQViJel3CE
- xFn5Wx/btD5tBRmearkOSmh6h6vXUK81R+Eb1mnUbpOfTwS5De49lcytUbqoyVACyJ+
-X-Google-Smtp-Source: AGHT+IGczDRNS0/GYso0gUYtSQC3fi60MTtYP0+QSa7oHPzr77RTsYNzR/7WGuk/JJO1HJo4LUm2pg==
-X-Received: by 2002:a05:6000:1541:b0:382:2f62:bd45 with SMTP id
- ffacd0b85a97d-38260b70e7emr10262936f8f.29.1732564778383; 
- Mon, 25 Nov 2024 11:59:38 -0800 (PST)
+ AJvYcCU2xFUKc8d2GQGpKZuHvShKXzwp3SZrNn0Hnscr7FcKcpfa2/4wbeax8iSig4xevT7M8x49M0KjjrY0@nongnu.org
+X-Gm-Message-State: AOJu0YzDDmovlOtQcNhxulE+V5UKfU9+yU7BvS0VYPYLOr1cqbR1Gc/c
+ GFvkPsm6aUmm857c7RDG3pKadNXM9g7g4RnN30TS0zPWBhwuS+mu8HkuzoypWaM=
+X-Gm-Gg: ASbGncuEFUunXt1E8aCJoa6CeLEWOJFNQPH+gfghzN8sgPOqPVWwtmExVej22+wL04t
+ c6SNP5hssMJRJfpj/s9020v/VfCFMaOb6zRdK1XV5RyR2YDaqvybKnwMNpgxebJ2ZCo6YJrIXxU
+ rGajgNnDKpor4nHI3PvjiUKtad2AOo+mqCyo+j8UConHvrlGVYm7wYoK2zZz8yg1eYa0+3dfWn/
+ Mi7PlhGpCfEniFI2Ebr6eFwfZQNjd+xvOswtdO9ZVD+zL4VBrH2L+CKYkRtCQC4NDbz
+X-Google-Smtp-Source: AGHT+IEKfTHdZFW+oj4dYHwYt+075eZ/vDoe3cPOa5Tj6NfVEo8CowgGjm+2FvHfVf6gMGEwUzHcFw==
+X-Received: by 2002:a05:600c:3b25:b0:430:5760:2fe with SMTP id
+ 5b1f17b1804b1-433ce4c2218mr111110665e9.22.1732564766349; 
+ Mon, 25 Nov 2024 11:59:26 -0800 (PST)
 Received: from localhost.localdomain ([2.221.137.100])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fd0fbdcsm11237971f8f.109.2024.11.25.11.59.37
+ ffacd0b85a97d-3825fd0fbdcsm11237971f8f.109.2024.11.25.11.59.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 11:59:38 -0800 (PST)
+ Mon, 25 Nov 2024 11:59:26 -0800 (PST)
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 To: peter.maydell@linaro.org
 Cc: richard.henderson@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, alex.bennee@linaro.org,
  Jean-Philippe Brucker <jean-philippe@linaro.org>
-Subject: [RFC PATCH v3 24/26] hw/core/loader: Add fields to RomLoaderNotify
-Date: Mon, 25 Nov 2024 19:56:23 +0000
-Message-ID: <20241125195626.856992-26-jean-philippe@linaro.org>
+Subject: [PATCH v3 03/26] target/arm/kvm: Return immediately on error in
+ kvm_arch_init()
+Date: Mon, 25 Nov 2024 19:56:02 +0000
+Message-ID: <20241125195626.856992-5-jean-philippe@linaro.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241125195626.856992-2-jean-philippe@linaro.org>
 References: <20241125195626.856992-2-jean-philippe@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,43 +102,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to write an event log, the ROM load notification handler needs
-two more fields.
+Returning an error to kvm_init() is fatal anyway, no need to continue
+the initialization.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 ---
-v2->v3: New
----
- include/hw/loader.h | 2 ++
- hw/core/loader.c    | 2 ++
- 2 files changed, 4 insertions(+)
+ target/arm/kvm.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/loader.h b/include/hw/loader.h
-index 0cd9905f97..73f317966d 100644
---- a/include/hw/loader.h
-+++ b/include/hw/loader.h
-@@ -355,6 +355,8 @@ ssize_t rom_add_option(const char *file, int32_t bootindex);
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 8bdf4abeb6..95bcecf804 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -563,7 +563,7 @@ int kvm_arch_get_default_type(MachineState *ms)
  
- typedef struct RomLoaderNotify {
-     /* Parameters passed to rom_add_blob() */
-+    const char *name;
-+    uint8_t *data;
-     hwaddr addr;
-     size_t len;
-     size_t max_len;
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 759a62cf58..4ff40e8762 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -1278,6 +1278,8 @@ static void rom_reset(void *unused)
-         trace_loader_write_rom(rom->name, rom->addr, rom->datasize, rom->isrom);
+ int kvm_arch_init(MachineState *ms, KVMState *s)
+ {
+-    int ret = 0;
++    int ret;
+     /* For ARM interrupt delivery is always asynchronous,
+      * whether we are using an in-kernel VGIC or not.
+      */
+@@ -585,7 +585,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         !kvm_check_extension(s, KVM_CAP_ARM_IRQ_LINE_LAYOUT_2)) {
+         error_report("Using more than 256 vcpus requires a host kernel "
+                      "with KVM_CAP_ARM_IRQ_LINE_LAYOUT_2");
+-        ret = -EINVAL;
++        return -EINVAL;
+     }
  
-         notify = (RomLoaderNotify) {
-+            .name = rom->name,
-+            .data = rom->data,
-             .addr = rom->addr,
-             .len = rom->datasize,
-             .max_len = rom->romsize,
+     if (kvm_check_extension(s, KVM_CAP_ARM_NISV_TO_USER)) {
+@@ -607,13 +607,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+             warn_report("Eager Page Split support not available");
+         } else if (!(s->kvm_eager_split_size & sizes)) {
+             error_report("Eager Page Split requested chunk size not valid");
+-            ret = -EINVAL;
++            return -EINVAL;
+         } else {
+             ret = kvm_vm_enable_cap(s, KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE, 0,
+                                     s->kvm_eager_split_size);
+             if (ret < 0) {
+                 error_report("Enabling of Eager Page Split failed: %s",
+                              strerror(-ret));
++                return ret;
+             }
+         }
+     }
+@@ -626,7 +627,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     hw_breakpoints = g_array_sized_new(true, true,
+                                        sizeof(HWBreakpoint), max_hw_bps);
+ 
+-    return ret;
++    return 0;
+ }
+ 
+ unsigned long kvm_arch_vcpu_id(CPUState *cpu)
 -- 
 2.47.0
 
