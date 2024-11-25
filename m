@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F31D3D58D75
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 18:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA6ED58D76
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 18:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFdOC-0005ke-Hc; Mon, 25 Nov 2024 13:00:49 -0500
+	id 1tFdbS-00017t-A3; Mon, 25 Nov 2024 13:14:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFdO0-0005f5-IE
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:00:37 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFdbQ-00016x-SC
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:14:28 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFdNy-0003HH-LF
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:00:36 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-434a2033562so5771765e9.1
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 10:00:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFdbN-0005Am-Sr
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 13:14:28 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3822ec43fb0so3699995f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 10:14:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732557633; x=1733162433; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ac0iysu/ahEQUXIHfh0YrxOEs55it9ZquFHoKqSfZiU=;
- b=FX5u8Zc55yfzBk6HzCQ7kul0PTWj3OQbbI2YI3bG02JJZ+xeg6/kRobWa92kX34gZz
- lrXkbq4Eh//Waf3Ix6wuvybn7GWNJyysYGGsBviY5cQjVyPJtW1eHrt+JGS4pctu3AlD
- w3c/MKCrP8Ox+ZFgvA/JCOIZLhXBAM59ZvTczZkK0kz4Ejk0z/y+/rexaz4jWoYNTn6V
- W8mc+Gt/hS0SenVszU/RmLWhPEvhQWW1bTSJC8vj7hJ6z1BrijfIVOUQ0KE5Vnvg+V1u
- zgear97Vo6uWixTFtEUc/PS/Yu5tVdldjT/o9Dn13lU5fA5TxPv3GxbdIDtLKxJYKdAi
- OXMw==
+ d=linaro.org; s=google; t=1732558464; x=1733163264; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=x4OQHtvWJlI5keyr30zc800rGp/vJUHcuq/CHZvm30Q=;
+ b=qGwk8AV8BNf403c+GHo4iHuWcpSaJVVeqDZ6jKCnQSeKJqJe2+0X0FbwZNrN5Snjfo
+ ILuXgBiLdzsN0vrq/vKVoYOG0atz72LtDnYgXqlg+qOwCVZ1EVEudYWhYSl+wgXVRsfX
+ mB68MYBiPtacyxsT7/0GD6ZPV3L/dVAPEBr51qnUjUKZC+UKSUwEgIVGLC/LzrQANBz3
+ pJJWVrCXAInZyN0o9KjuF0XSLSV5tEK5jnLjUBkBfElXjz7lDQbsispjq7ueofXxAw8x
+ 96jGqw6gjB86XMkov6lP8ybZRR+yHfDsife9Z7dmmeeh1eUj/Qte+MtQ/KLi7eXJhd9/
+ Jm7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732557633; x=1733162433;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ac0iysu/ahEQUXIHfh0YrxOEs55it9ZquFHoKqSfZiU=;
- b=QQJmxUgBaMVVTyOjkOuxE4xmX/WCxSD7TnM/oV08KiVsKULDCpBQat6PBx2yVjI9HZ
- hdhzrYKvv6q6/p5F/+RYhr4zJeTB0+N0hgBuI6rVku1zvj5Av8kjqJmk4BG1AsEMpfR0
- m98VbOWfkeFjXZPPqAHumeSCGkOBnJPZEF1XqkZa0aL6jaHfP53Dtx54pCgCDvcZTPfD
- qPv30UN5b/H4PC9vMBmJnslwCMJLAvidij7/w22fub2AXFT7cw/7VJmo68mO+1Ngxw1Y
- dQAtIlQSIWKHNQso3kALKdxD2rojtfGTwXluxI1nnFkM1eFC2VSxjkD4D/CgHwVAQBZ7
- qPPg==
-X-Gm-Message-State: AOJu0YwXGQARSA8jElXvFNEyH4VZuS2tLzkO/W05XebyDPztlODCxh+W
- qck+GAAS+1mYBrpQ5/yQUGQUBqN1BDINJ5oA31KODbpgBgmv1fyYkiZBHNL0yMo=
-X-Gm-Gg: ASbGncu6vZkyWoTZjudl7LpDUBidALGFxj2mjExLotTnv/8T9/au2izUHS2CbWwDgFz
- 4EHDfGAR9CsicaYKk2Em4FaBoAXeW2LnuWvwZTE9o0QUA8EFEbJ6JehDnnLe58TAjPTBFCpt4hp
- Imdq2P+nUoPkiv0hJT+tJ0Wusx7hFUcrT7ocvMtASofDiBD4QJylXa1vur8MVtFB4Hy7jqNtM6e
- ItaSB4bu1eaEFG7DCHO+RIauxsgqXKuR/dNufu8izcV0oZl
-X-Google-Smtp-Source: AGHT+IEdxyrvsmKoayoYbDsyscH4yKCHtcGWoou7tUuJQpR+jBjgeEhFMeMqPnr9elyMvWW345FLMw==
-X-Received: by 2002:a05:600c:3b97:b0:42c:a580:71cf with SMTP id
- 5b1f17b1804b1-433ce4e7b6amr132044715e9.30.1732557632245; 
- Mon, 25 Nov 2024 10:00:32 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-432f643e65bsm181717675e9.0.2024.11.25.10.00.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Nov 2024 10:00:31 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BA1725F869;
- Mon, 25 Nov 2024 18:00:29 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  mathieu.poirier@linaro.org,
- gustavo.romero@linaro.org,  jean-philippe@linaro.org,
- qemu-arm@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] tests/functional/aarch64_virt: add test for FEAT_RME
-In-Reply-To: <20241125065950.1179068-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Sun, 24 Nov 2024 22:59:50 -0800")
-References: <20241125065950.1179068-1-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Mon, 25 Nov 2024 18:00:29 +0000
-Message-ID: <8734jfchxe.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1732558464; x=1733163264;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=x4OQHtvWJlI5keyr30zc800rGp/vJUHcuq/CHZvm30Q=;
+ b=d71ZGLb7m7IH1ZrX3TdrMRovBR+9hja/fV+74J4C6pNZKiO9vxWO9JM2Xi0Tht9EVw
+ sGkrx9OAPg051svOtEJwffn46nqM0boxq66jBZZVZYWwDaW0t5ywvQogCU4HREcl4gM2
+ WsPweGtamDcXDpNOMJcE6VGv1xwzOqngLS70N0Ya0hkfP6+PWlnLI8XZQZ5RkcS2ofNQ
+ R+e39WaPsUohmfEFUjPQ0d7ufegLRAsyv1hZ0c9GCoXtuVrX87B3scvlE1WzkGa/mAxi
+ FEIQToxXjsd8w9tvIMsO8NFywOc7fXWP7zXdjhIYbwwKuzv1cB4jk8EhNRHLfKyeYL1O
+ 0KRg==
+X-Gm-Message-State: AOJu0Yyy7+rcuwZOgiB6cJFBZHhttSWpelcaTTTE19odrw2y34P2LQJC
+ 10qRNmeGyAU9jo55X70DIRb/5o3QYxSV02X9vI+eg/eL6PFnBS8Me300tsQnwIuaJgD8HAKU/ki
+ J
+X-Gm-Gg: ASbGncuamWOmHCfWg5a56vwXDCAGJRHSf7y6AuGvQeCoeUthP/pUIvNhwm9sxaw9e6v
+ kfnoWoHZK18jITCfJG1lCnwe+lCY9CnoiQcMHT72j7xF85Fg5EpEfBtpPhESoKLwk5zNOBa53vC
+ leyPsx04p7G0hyt/5vxsAFTK2wZRJU8QfIdrVlL5r/P9Mi3KFakucXW0qVboHTbwSEzAhumVdc1
+ 4SALwCvn4Pb9x3EL8d5ixiP6C0eLBeACXCfdc0w64Qh3au09v5rL0SUFRuoAtCPVZAon/UH
+X-Google-Smtp-Source: AGHT+IG6W96qbhVf76NBP4G4DNq50TBXW8RSZH344y1V4Q6NiYWi2i90hV2EM1RBdalGEBzZMi1BQA==
+X-Received: by 2002:a05:6000:1fab:b0:382:4a15:6928 with SMTP id
+ ffacd0b85a97d-38260b5715fmr12267551f8f.14.1732558464046; 
+ Mon, 25 Nov 2024 10:14:24 -0800 (PST)
+Received: from localhost.localdomain ([176.176.170.239])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fad60f0sm11036986f8f.22.2024.11.25.10.14.22
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 25 Nov 2024 10:14:23 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.0 0/3] hw/boards: Try to make sense of
+ MachineClass::no_sdcard flag
+Date: Mon, 25 Nov 2024 19:14:17 +0100
+Message-ID: <20241125181420.24424-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,112 +100,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Invert MachineClass 'no_sdcard' flag logic and rename it
+to 'create_default_sdcard_drive' to make sense of this
+default value applied to all machines. No logical change
+intended.
 
-> This boot an OP-TEE environment, and launch a nested guest VM inside it
-> using the Realms feature.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  tests/functional/test_aarch64_virt.py | 62 +++++++++++++++++++++++++++
->  1 file changed, 62 insertions(+)
->
-> diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/tes=
-t_aarch64_virt.py
-> index 30bab5a677c..3e8f9372132 100755
-> --- a/tests/functional/test_aarch64_virt.py
-> +++ b/tests/functional/test_aarch64_virt.py
-> @@ -18,6 +18,7 @@
->  from qemu_test import QemuSystemTest, Asset
->  from qemu_test import exec_command, wait_for_console_pattern
->  from qemu_test import get_qemu_img, run_cmd
-> +from qemu_test.utils import archive_extract
->=20=20
->=20=20
->  class Aarch64VirtMachine(QemuSystemTest):
-> @@ -129,6 +130,67 @@ def test_aarch64_virt_gicv2(self):
->          return
->          self.common_aarch64_virt("virt,gic-version=3D2")
->=20=20
-> +    # Stack is built with OP-TEE build environment from those instructio=
-ns:
-> +    # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
-> +    # https://github.com/pbo-linaro/qemu-rme-stack
-> +    ASSET_RME_STACK =3D Asset(
-> +        ('https://fileserver.linaro.org/s/JX7oNgfDeGXSxcY/'
-> +         'download/rme-stack-op-tee-4.2.0.tar.gz'),
-> +         '1f240f55e8a7a66489c2b7db5d40391e5dcfdd54c82600bd0d4b2145b9a0fb=
-fb')
-> +
-> +    # This tests the FEAT_RME cpu implementation, by booting a VM suppor=
-ting it,
-> +    # and launching a nested VM using it.
-> +    def test_aarch64_virt_rme(self):
-> +        stack_path_tar_gz =3D self.ASSET_RME_STACK.fetch()
-> +        archive_extract(stack_path_tar_gz, self.workdir)
-> +
-> +        self.set_machine('virt')
-> +        self.vm.set_console()
-> +        self.require_accelerator('tcg')
-> +
-> +        rme_stack =3D os.path.join(self.workdir, 'rme-stack')
-> +        kernel =3D os.path.join(rme_stack, 'out', 'bin', 'Image')
-> +        bios =3D os.path.join(rme_stack, 'out', 'bin', 'flash.bin')
-> +        drive =3D os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ex=
-t4')
-> +
-> +        self.vm.add_args('-accel', 'tcg')
-> +        self.vm.add_args('-cpu', 'max,x-rme=3Don')
-> +        self.vm.add_args('-m', '2048')
-> +        self.vm.add_args('-M', 'virt,acpi=3Doff,'
-> +                         'virtualization=3Don,'
-> +                         'secure=3Don,'
-> +                         'gic-version=3D3')
-> +        self.vm.add_args('-bios', bios)
-> +        self.vm.add_args('-kernel', kernel)
-> +        self.vm.add_args('-drive', f'format=3Draw,if=3Dnone,file=3D{driv=
-e},id=3Dhd0')
-> +        self.vm.add_args('-device', 'virtio-blk-pci,drive=3Dhd0')
-> +        self.vm.add_args('-device', 'virtio-9p-device,fsdev=3Dshr0,mount=
-_tag=3Dshr0')
-> +        self.vm.add_args('-fsdev', f'local,security_model=3Dnone,path=3D=
-{rme_stack},id=3Dshr0')
-> +        self.vm.add_args('-device', 'virtio-net-pci,netdev=3Dnet0')
-> +        self.vm.add_args('-netdev', 'user,id=3Dnet0')
-> +        self.vm.add_args('-append', 'root=3D/dev/vda')
-> +
-> +        self.vm.launch()
-> +        self.wait_for_console_pattern('Welcome to Buildroot')
-> +        time.sleep(0.1)
-> +        exec_command(self, 'root')
-> +        time.sleep(0.1)
-> +
-> +        # We now boot the (nested) guest VM
-> +        exec_command(self,
-> +                     'qemu-system-aarch64 -M virt,gic-version=3D3 '
-> +                     '-cpu host -enable-kvm -m 512M '
-> +                     '-M confidential-guest-support=3Drme0 '
-> +                     '-object rme-guest,id=3Drme0,measurement-algo=3Dsha=
-512 '
-> +                     '-device virtio-net-pci,netdev=3Dnet0,romfile=3D '
-> +                     '-netdev user,id=3Dnet0 '
-> +                     '-kernel /mnt/out/bin/Image '
-> +                     '-initrd /mnt/out-br/images/rootfs.cpio '
-> +                     '-serial stdio')
-> +        # Detect Realm activation during boot.
-> +        self.wait_for_console_pattern('SMC_RMI_REALM_ACTIVATE')
-> +        # Wait for boot to complete.
-> +        self.wait_for_console_pattern('Welcome to Buildroot')
+Philippe Mathieu-Daudé (3):
+  hw/boards: Convert no_sdcard flag to OnOffAuto tri-state
+  hw/boards: Explicit no_sdcard=false as ON_OFF_AUTO_OFF
+  hw/boards: Rename no_sdcard -> create_default_sdcard_drive
 
-This is the same as above? Or the console of the guest?
+ include/hw/boards.h                      | 2 +-
+ hw/alpha/dp264.c                         | 1 +
+ hw/arm/aspeed.c                          | 2 ++
+ hw/arm/b-l475e-iot01a.c                  | 1 +
+ hw/arm/bananapi_m2u.c                    | 1 +
+ hw/arm/collie.c                          | 1 +
+ hw/arm/cubieboard.c                      | 1 +
+ hw/arm/digic_boards.c                    | 1 +
+ hw/arm/exynos4_boards.c                  | 2 ++
+ hw/arm/fby35.c                           | 1 +
+ hw/arm/highbank.c                        | 2 ++
+ hw/arm/imx25_pdk.c                       | 1 +
+ hw/arm/integratorcp.c                    | 1 +
+ hw/arm/kzm.c                             | 1 +
+ hw/arm/mcimx6ul-evk.c                    | 1 +
+ hw/arm/mcimx7d-sabre.c                   | 1 +
+ hw/arm/microbit.c                        | 1 +
+ hw/arm/mps2-tz.c                         | 1 +
+ hw/arm/mps2.c                            | 1 +
+ hw/arm/mps3r.c                           | 1 +
+ hw/arm/msf2-som.c                        | 1 +
+ hw/arm/musca.c                           | 1 +
+ hw/arm/musicpal.c                        | 1 +
+ hw/arm/netduino2.c                       | 1 +
+ hw/arm/netduinoplus2.c                   | 1 +
+ hw/arm/npcm7xx_boards.c                  | 1 +
+ hw/arm/olimex-stm32-h405.c               | 1 +
+ hw/arm/omap_sx1.c                        | 2 ++
+ hw/arm/orangepi.c                        | 1 +
+ hw/arm/raspi.c                           | 1 +
+ hw/arm/realview.c                        | 4 ++++
+ hw/arm/sabrelite.c                       | 1 +
+ hw/arm/sbsa-ref.c                        | 1 +
+ hw/arm/stellaris.c                       | 2 ++
+ hw/arm/stm32vldiscovery.c                | 1 +
+ hw/arm/versatilepb.c                     | 2 ++
+ hw/arm/vexpress.c                        | 1 +
+ hw/arm/virt.c                            | 1 +
+ hw/arm/xen-pvh.c                         | 1 +
+ hw/arm/xilinx_zynq.c                     | 3 ++-
+ hw/arm/xlnx-versal-virt.c                | 1 +
+ hw/arm/xlnx-zcu102.c                     | 1 +
+ hw/avr/arduino.c                         | 1 +
+ hw/core/null-machine.c                   | 2 +-
+ hw/hppa/machine.c                        | 2 ++
+ hw/i386/pc.c                             | 1 +
+ hw/i386/x86.c                            | 1 +
+ hw/i386/xen/xen-pvh.c                    | 1 +
+ hw/loongarch/virt.c                      | 1 +
+ hw/m68k/an5206.c                         | 1 +
+ hw/m68k/mcf5208.c                        | 1 +
+ hw/m68k/next-cube.c                      | 1 +
+ hw/m68k/q800.c                           | 1 +
+ hw/m68k/virt.c                           | 1 +
+ hw/microblaze/petalogix_ml605_mmu.c      | 1 +
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 1 +
+ hw/microblaze/xlnx-zynqmp-pmu.c          | 1 +
+ hw/mips/boston.c                         | 1 +
+ hw/mips/fuloong2e.c                      | 1 +
+ hw/mips/jazz.c                           | 2 ++
+ hw/mips/loongson3_virt.c                 | 1 +
+ hw/mips/malta.c                          | 1 +
+ hw/mips/mipssim.c                        | 1 +
+ hw/openrisc/openrisc_sim.c               | 1 +
+ hw/openrisc/virt.c                       | 1 +
+ hw/ppc/amigaone.c                        | 1 +
+ hw/ppc/e500.c                            | 8 ++++++++
+ hw/ppc/e500plat.c                        | 1 +
+ hw/ppc/mac_newworld.c                    | 1 +
+ hw/ppc/mac_oldworld.c                    | 1 +
+ hw/ppc/mpc8544ds.c                       | 1 +
+ hw/ppc/pegasos2.c                        | 1 +
+ hw/ppc/pnv.c                             | 1 +
+ hw/ppc/ppc405_boards.c                   | 1 +
+ hw/ppc/ppc440_bamboo.c                   | 1 +
+ hw/ppc/prep.c                            | 1 +
+ hw/ppc/sam460ex.c                        | 1 +
+ hw/ppc/spapr.c                           | 1 +
+ hw/ppc/virtex_ml507.c                    | 1 +
+ hw/remote/machine.c                      | 1 +
+ hw/riscv/microchip_pfsoc.c               | 1 +
+ hw/riscv/opentitan.c                     | 1 +
+ hw/riscv/shakti_c.c                      | 1 +
+ hw/riscv/sifive_e.c                      | 1 +
+ hw/riscv/sifive_u.c                      | 1 +
+ hw/riscv/spike.c                         | 1 +
+ hw/riscv/virt.c                          | 1 +
+ hw/rx/rx-gdbsim.c                        | 1 +
+ hw/s390x/s390-virtio-ccw.c               | 2 +-
+ hw/sh4/r2d.c                             | 1 +
+ hw/sparc/leon3.c                         | 1 +
+ hw/sparc/sun4m.c                         | 1 +
+ hw/sparc64/niagara.c                     | 1 +
+ hw/sparc64/sun4u.c                       | 2 ++
+ hw/tricore/triboard.c                    | 1 +
+ hw/tricore/tricore_testboard.c           | 1 +
+ hw/xen/xen-pvh-common.c                  | 1 +
+ hw/xenpv/xen_machine_pv.c                | 1 +
+ hw/xtensa/sim.c                          | 1 +
+ hw/xtensa/virt.c                         | 1 +
+ hw/xtensa/xtfpga.c                       | 8 ++++++++
+ system/vl.c                              | 2 +-
+ 102 files changed, 129 insertions(+), 5 deletions(-)
 
-Could we also check the output of the other serial posts?
+-- 
+2.45.2
 
->=20=20
->  if __name__ =3D=3D '__main__':
->      QemuSystemTest.main()
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
