@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B5BD3B7DF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 06:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9B93D3B7DF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 06:10:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFSGt-0007K4-Jd; Mon, 25 Nov 2024 01:08:31 -0500
+	id 1tFSHH-0007Mq-1T; Mon, 25 Nov 2024 01:08:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tFSGk-0007JH-85
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 01:08:22 -0500
+ id 1tFSHD-0007MQ-V3
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 01:08:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tFSGi-0000Ow-5I
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 01:08:22 -0500
+ id 1tFSHB-0000RN-Eg
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 01:08:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732514898;
+ s=mimecast20190719; t=1732514928;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WOjigm9hIE+sZC/HrHpDVMHBlKkNfp7b6U/FebyKFGk=;
- b=cQVDfdCOQUbxEgOdbbVeiOOjSSBxWlO9jaX+8Oxz4pdGUw/jQLgDuTPSGoW6WFVl54YFCh
- 2jPOMjakt0QcBl5Bi7rSUNddwIndUck5YNxlT8u/UYeabXD6HnPbT50MxFx/9JsS1XVZwk
- EM9tsN/kwWkLFoAtqJGhtB+v/huOItw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mOEJDjNDOkiYEFqpDmf+K1tsu4f4hEtFrS86tdZmOYA=;
+ b=OxRmYBn0WNsUfcprbTVk9lanRiZIKoYh8UC9mS46sC1jovO1gbVhYbXE79WU7apxJg/9GX
+ UvHyhxqMRU0cyqtU6zP+wAtTiAZR6LXMd2vmnmHN/oXVRng179NlkNsfYYSO6j1/Ga47g2
+ wUxZ++44qOtKvba+Hy+Zx4Smujb2Nm4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-0mMP1CumN8eG0bcHpEJMVQ-1; Mon,
- 25 Nov 2024 01:08:16 -0500
-X-MC-Unique: 0mMP1CumN8eG0bcHpEJMVQ-1
-X-Mimecast-MFC-AGG-ID: 0mMP1CumN8eG0bcHpEJMVQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-DKlXqG5iNVqlR0yQRQjf1w-1; Mon,
+ 25 Nov 2024 01:08:44 -0500
+X-MC-Unique: DKlXqG5iNVqlR0yQRQjf1w-1
+X-Mimecast-MFC-AGG-ID: DKlXqG5iNVqlR0yQRQjf1w
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7168A195395A
- for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 06:08:15 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A6E6F19560AD; Mon, 25 Nov 2024 06:08:38 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.241])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CECD930001A2; Mon, 25 Nov 2024 06:08:12 +0000 (UTC)
+ id 3905B300019E; Mon, 25 Nov 2024 06:08:33 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>
-Subject: [PULL 0/6] Net patches
-Date: Mon, 25 Nov 2024 14:08:03 +0800
-Message-ID: <20241125060809.15543-1-jasowang@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 4/6] virtio-net: Fix hash reporting when the queue changes
+Date: Mon, 25 Nov 2024 14:08:07 +0800
+Message-ID: <20241125060809.15543-5-jasowang@redhat.com>
+In-Reply-To: <20241125060809.15543-1-jasowang@redhat.com>
+References: <20241125060809.15543-1-jasowang@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
@@ -82,43 +84,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 6b99bb046dd36a6dd5525b8f88c2dcddae49222a:
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-  Merge tag 'pull-lu-20241122' of https://gitlab.com/rth7680/qemu into staging (2024-11-24 13:39:06 +0000)
+virtio_net_process_rss() fills the values used for hash reporting, but
+the values used to be thrown away with a recursive function call if
+the queue changes after RSS. Avoid the function call to keep the values.
 
-are available in the Git repository at:
+Fixes: a4c960eedcd2 ("virtio-net: Do not write hashes to peer buffer")
+Buglink: https://issues.redhat.com/browse/RHEL-59572
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+---
+ hw/net/virtio-net.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-  https://github.com/jasowang/qemu.git tags/net-pull-request
-
-for you to fetch changes up to 7987d2be5a8bc3a502f89ba8cf3ac3e09f64d1ce:
-
-  virtio-net: Copy received header to buffer (2024-11-25 14:00:51 +0800)
-
-----------------------------------------------------------------
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmdEEtgACgkQ7wSWWzmN
-YhH5qAgAlKdcx/gFt4EBXtjVq/qbPluEGOQxvcRYLlN90rPLHPgCjAoT5ly3fIv1
-4kCgcVZyG8SdGu1n0TzTTS9kg5tL7weQ9xEWwF0oyyuZABgAB7w/wpC8MHSkJFOn
-2Tv+2Iab0dJ+e1pw71OMpE/YR5X2xq5vopsSHRtnyGWfRPGswJFwka+f8FS5DSiq
-2CeNxADgTkPxJgDmOrNSsAPz8Rns77FAZdvDMqFjx1Lrqm8kPv9jzwOMO+a/2LpC
-t6OkpFzGjiiskPjSnSn/tzo4TfWYoABjJaI7b3vEqmNEJSTAaxltZNtSXZucctEt
-1ihnFdjr/wPwGK/5Wu+qGnfDbFNxBw==
-=W4y1
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-Akihiko Odaki (6):
-      net: checksum: Convert data to void *
-      virtio-net: Fix size check in dhclient workaround
-      virtio-net: Do not check for the queue before RSS
-      virtio-net: Fix hash reporting when the queue changes
-      virtio-net: Initialize hash reporting values
-      virtio-net: Copy received header to buffer
-
- hw/net/virtio-net.c    | 108 +++++++++++++++++++++++++++----------------------
- include/net/checksum.h |   2 +-
- net/checksum.c         |   4 +-
- 3 files changed, 63 insertions(+), 51 deletions(-)
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index d4aaf362b7..b544d2e91a 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1898,10 +1898,10 @@ static int virtio_net_process_rss(NetClientState *nc, const uint8_t *buf,
+ }
+ 
+ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+-                                      size_t size, bool no_rss)
++                                      size_t size)
+ {
+     VirtIONet *n = qemu_get_nic_opaque(nc);
+-    VirtIONetQueue *q = virtio_net_get_subqueue(nc);
++    VirtIONetQueue *q;
+     VirtIODevice *vdev = VIRTIO_DEVICE(n);
+     VirtQueueElement *elems[VIRTQUEUE_MAX_SIZE];
+     size_t lens[VIRTQUEUE_MAX_SIZE];
+@@ -1911,12 +1911,10 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+     size_t offset, i, guest_offset, j;
+     ssize_t err;
+ 
+-    if (!no_rss && n->rss_data.enabled && n->rss_data.enabled_software_rss) {
++    if (n->rss_data.enabled && n->rss_data.enabled_software_rss) {
+         int index = virtio_net_process_rss(nc, buf, size, &extra_hdr);
+         if (index >= 0) {
+-            NetClientState *nc2 =
+-                qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
+-            return virtio_net_receive_rcu(nc2, buf, size, true);
++            nc = qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
+         }
+     }
+ 
+@@ -1924,6 +1922,8 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+         return -1;
+     }
+ 
++    q = virtio_net_get_subqueue(nc);
++
+     /* hdr_len refers to the header we supply to the guest */
+     if (!virtio_net_has_buffers(q, size + n->guest_hdr_len - n->host_hdr_len)) {
+         return 0;
+@@ -2049,7 +2049,7 @@ static ssize_t virtio_net_do_receive(NetClientState *nc, const uint8_t *buf,
+ {
+     RCU_READ_LOCK_GUARD();
+ 
+-    return virtio_net_receive_rcu(nc, buf, size, false);
++    return virtio_net_receive_rcu(nc, buf, size);
+ }
+ 
+ /*
+-- 
+2.42.0
 
 
