@@ -4,57 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3570AD58069
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 11:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB21FD58069
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 11:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFXi4-0003uI-72; Mon, 25 Nov 2024 06:56:56 -0500
+	id 1tFXjQ-0004sx-T6; Mon, 25 Nov 2024 06:58:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tFXi1-0003mi-5l; Mon, 25 Nov 2024 06:56:53 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tFXhy-00071n-PS; Mon, 25 Nov 2024 06:56:52 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Xxkgg4lh4z6LDHJ;
- Mon, 25 Nov 2024 19:56:15 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id C523E140C98;
- Mon, 25 Nov 2024 19:56:45 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 25 Nov
- 2024 12:56:45 +0100
-Date: Mon, 25 Nov 2024 11:56:43 +0000
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-CC: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v4 08/15] acpi/ghes: make the GHES record generation
- more generic
-Message-ID: <20241125115643.00002923@huawei.com>
-In-Reply-To: <b3845a8c78ef36c633d5e20af868de4ed16650a4.1732266152.git.mchehab+huawei@kernel.org>
-References: <cover.1732266152.git.mchehab+huawei@kernel.org>
- <b3845a8c78ef36c633d5e20af868de4ed16650a4.1732266152.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFXjO-0004sU-GY
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 06:58:18 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFXjN-0007Au-0q
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 06:58:18 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5cf6f804233so5218593a12.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 03:58:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732535895; x=1733140695; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HktPphgw9wf/x2lyqTJ/BfyoWoO9q6nqOuABLrI8JZQ=;
+ b=vSJ2dYIHz5gFU5/kXvN3qjn+oZvc8mVJZK6wWY+VQr5H150xABCFgmd6vL4utK6GtC
+ PmpoxsEa1vdtnEph5perWD9/OdDbC3T8kRJK67MsTc6lUT9RLql+4SUWW+eTIwCoeoGy
+ Xz8e7g9mMHLDNamif75gJM8wcIG1oGQGRUXco5vCKDJQqgPEAfFnldUoawejpzncKxST
+ zZinEhGFteCJiRFVDYvNs6P48V8raLuuo9tyu608p54Gdn6xqgeA/3oAr5VsaTdk5guI
+ Etnyw9BjXni65GXOYSnsVltQPqhms0Q+jv2YNzK+tNE0X3wBXNZa7epm1hjHyudwI4Y/
+ gQwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732535895; x=1733140695;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HktPphgw9wf/x2lyqTJ/BfyoWoO9q6nqOuABLrI8JZQ=;
+ b=qiPsVL5spycLuxCBgUaKw+Z2TAWlPz+/J9rTPqvs+o9g7aHUXno+ReOO8a5X5XmDnw
+ 9XP3m+K0xeAdF+nqTHqivNCwDHqfTVZavlTMTBIoqCsFYkslyKBUAxWvNgmZHRRJljZg
+ X94hT0roPyj4kChou4vz7iOkHB4JOtXQ5mizthshc1xNmEvlok4U/p5SwYOEtqi7Wdcy
+ 6JSf8iLsbo5ZJZwVZf2jCOMGYrANASC76Bvw7f9adaKQi8T3NY46aVK4U6qhZLgkuFY/
+ B8MoknNm+c26gExxh5yoCn3WfLxhbIaSb4Q+EgR3i7L8YJXmsHDC3Q1zq5MrMqaM3EvH
+ gmPw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXt0hC6SlAbB4nIO5BOCcDKPMYeH15URuXIr6xRfCnwo84Q3haGlZL9YCvupzqw6HndQZ0ehNkK8v6B@nongnu.org
+X-Gm-Message-State: AOJu0Yy1Un6MzbPJAyOx2jm0bZE8zFgtrZIhH5wXck/U0CJF+cXDayeX
+ lmUwnZrTy7jlLLXozUxs03qKMuORpXrYCB/7HaqQ7rbp4eyVPanPDkK3usf5Ln+1n1WrlNmXuoe
+ bkEYh124Hn1gonlJecetTbBBLlLg1g/gvN3Cmvw==
+X-Gm-Gg: ASbGncsiHiHOqfiOoyfZZSIpCUosiUiXKRCDJ/RVSSbX4ldXQjwL37KXnmERXHZhsSU
+ UQVkmx62qtNELAahwpy8y30NxPeRP3wPH
+X-Google-Smtp-Source: AGHT+IEp2dlnGYl0YzB4EpHMMLvwEe7jZTWx5oU/FeFO/BHZseSyxN0vYhUE4I4xX5d9IyG99WHIUjSddNPYUpnDtOM=
+X-Received: by 2002:a05:6402:50d4:b0:5cf:dfaf:d60e with SMTP id
+ 4fb4d7f45d1cf-5d020625962mr10886567a12.14.1732535895288; Mon, 25 Nov 2024
+ 03:58:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.93, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20241121171602.3273252-1-mjt@tls.msk.ru>
+In-Reply-To: <20241121171602.3273252-1-mjt@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 25 Nov 2024 11:58:04 +0000
+Message-ID: <CAFEAcA_ywbza7rF_DcpsaiJbokOXPUn_s84VrvGKiTmwrDEMrA@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/tcg/cpu32.c: swap ATCM and BTCM register names
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,93 +88,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Nov 2024 10:11:25 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-
-> Split the code into separate functions to allow using the
-> common CPER filling code by different error sources.
-> 
-> The generic code was moved to ghes_record_cper_errors(),
-> and ghes_gen_err_data_uncorrectable_recoverable() now contains
-> only a logic to fill the Generic Error Data part of the record,
-> as described at:
-> 
-> 	ACPI 6.2: 18.3.2.7.1 Generic Error Data
-> 
-> The remaining code to generate a memory error now belongs to
-> acpi_ghes_record_errors() function.
-> 
-> A further patch will give it a better name.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-
-One trivial follow up that is enabled by the change you are discussing with Igor.
-Up to you that one.
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> +
-> +int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
-> +{
-> +    /* Memory Error Section Type */
-> +    const uint8_t guid[] =
-> +          UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
-> +                  0xED, 0x7C, 0x83, 0xB1);
-> +    Error *errp = NULL;
-> +    int data_length;
-> +    GArray *block;
-> +
-> +    if (!physical_address) {
-> +        error_report("can not find Generic Error Status Block for source id %d",
-> +                     source_id);
-> +        return -1;
-> +    }
-
-With this error check gone (as per discussion with Igor) you could use
-g_autofree to deal with freeing block.
-
-That would bring the errp check right next to the call that would result
-in errp potentially being set and slightly improve readability.
-
-Mind you there are no uses of this in hw/acpi currently so maybe this
-isn't a good time to start :)
+On Thu, 21 Nov 2024 at 17:16, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> According to Cortex-R5 r1p2 manual, register with opcode2=0 is
+> BTCM and with opcode2=1 is ATCM, - exactly the opposite from how
+> qemu labels them.  Just swap the labels to avoid confusion, -
+> both registers are implemented as always-zero.
+>
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>  target/arm/tcg/cpu32.c | 4 ++--
 
 
 
+Applied to target-arm.next, thanks.
 
-> +
-> +    block = g_array_new(false, true /* clear */, 1);
-> +
-> +    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH;
-> +    /*
-> +     * It should not run out of the preallocated memory if adding a new generic
-> +     * error data entry
-> +     */
-> +    assert((data_length + ACPI_GHES_GESB_SIZE) <=
-> +            ACPI_GHES_MAX_RAW_DATA_LENGTH);
-> +
-> +    ghes_gen_err_data_uncorrectable_recoverable(block, guid,
-> +                                                data_length);
-> +
-> +    /* Build the memory section CPER for above new generic error data entry */
-> +    acpi_ghes_build_append_mem_cper(block, physical_address);
-> +
-> +    /* Report the error */
-> +    ghes_record_cper_errors(block->data, block->len, source_id, &errp);
-> +
-> +    g_array_free(block, true);
-> +
-> +    if (errp) {
-> +        error_report_err(errp);
-> +        return -1;
-> +    }
-> +
-> +    return 0;
->  }
-
-
+-- PMM
 
