@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBF4D3B7F1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 08:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3839D3B7F5
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 09:06:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFUrr-0002v1-Sp; Mon, 25 Nov 2024 03:54:53 -0500
+	id 1tFV2U-0005m5-5T; Mon, 25 Nov 2024 04:05:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUrV-0002lX-9r
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:54:29 -0500
-Received: from 5.mo548.mail-out.ovh.net ([188.165.49.213])
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFV2P-0005kI-Ej
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 04:05:46 -0500
+Received: from 3.mo552.mail-out.ovh.net ([178.33.254.192])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFUrT-0006ED-Lr
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 03:54:29 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.140.134])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4Xxfdr4Pqbz11Mf;
- Mon, 25 Nov 2024 08:54:24 +0000 (UTC)
-Received: from kaod.org (37.59.142.98) by DAG6EX1.mxp5.local (172.16.2.51)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFV2K-00086T-Ke
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 04:05:43 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.176.248])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4Xxftn1yFVz1QrR;
+ Mon, 25 Nov 2024 09:05:37 +0000 (UTC)
+Received: from kaod.org (37.59.142.102) by DAG6EX1.mxp5.local (172.16.2.51)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 25 Nov
- 2024 09:54:24 +0100
+ 2024 10:05:36 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-98R0026221e93c-d75e-46aa-b93c-a72a114f466b,
+ (GARM-102R0049fb6008d-bb95-471b-a278-70ac657efc44,
  9B13B6726B83599ED9C5792380F23B2D0625FF83) smtp.auth=groug@kaod.org
 X-OVh-ClientIp: 88.179.9.154
-Date: Mon, 25 Nov 2024 09:54:17 +0100
+Date: Mon, 25 Nov 2024 10:05:35 +0100
 From: Greg Kurz <groug@kaod.org>
 To: Christian Schoenebeck <qemu_oss@crudebyte.com>
 CC: <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>
-Subject: Re: [PATCH 4/6] 9pfs: remove obsolete comment in v9fs_getattr()
-Message-ID: <20241125095417.438e2f32@bahia>
-In-Reply-To: <fb364d12045217a4c6ccd0dd6368103ddb80698b.1732465720.git.qemu_oss@crudebyte.com>
+Subject: Re: [PATCH 0/6] 9pfs: fix fstat() after unlink() (with a Linux guest)
+Message-ID: <20241125100535.42a8838d@bahia>
+In-Reply-To: <20241125094554.5e1b17ba@bahia>
 References: <cover.1732465720.git.qemu_oss@crudebyte.com>
- <fb364d12045217a4c6ccd0dd6368103ddb80698b.1732465720.git.qemu_oss@crudebyte.com>
+ <20241125094554.5e1b17ba@bahia>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.98]
-X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG6EX1.mxp5.local
+X-Originating-IP: [37.59.142.102]
+X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG6EX1.mxp5.local
  (172.16.2.51)
-X-Ovh-Tracer-GUID: f70c898c-5aff-483f-a8e0-5302ed17b2e8
-X-Ovh-Tracer-Id: 4269412447911713245
+X-Ovh-Tracer-GUID: 693c89e2-ce88-4427-8c9e-38cdb3dab539
+X-Ovh-Tracer-Id: 4458845109554420189
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdduvdefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddrleekpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeefpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrghdpoffvtefjohhsthepmhhoheegkegmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=NGVyXouLZIxnWQuYJqJx2bPNpUY9eXVs2OulvpjQ9lA=; 
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdduvdehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpedvffdvteeljeelvdelvdejtdehueevgfetudevudeugefhfeeukeeiudekveeihfenucffohhmrghinhepghhithhlrggsrdgtohhmpdhlrghunhgthhhprggurdhnvghtpdhgihhthhhusgdrtghomhenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddruddtvddpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepfedprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdfovfetjfhoshhtpehmohehhedvmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=6sKTLzUQO1Zq1CwoPWU7B3B3eqr1UE0VMUDa+6Ev83M=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1732524864; v=1;
- b=XEHxJmkBSAAgbnvZ3UOQuvQM3n8CCzNu3wcu1wUnrnNUdfoDv1Ocj7VgPAci52HFLum+eF3C
- 8dtl4yNWA9qNgK2py1tOnLfe/UrAWWzzQtXa34Qsd9NWLWabK49agpVgpzQ5M8yNlrHlA7D8E+s
- SA9iRWrLW4f46zPya/U3I2OCOgB/ApQwT7xiFleyVBZ0zL1dFIZJqtVhxYd+IM0aNiLgEUQCGev
- 5SlGN/hJ2vIBuriq2jhsYOSOdSJN7UZ+fWeR6NLhJazzRFGc4pGqXjZdxMtPhNELjjoL45zt9od
- XryczlPQyGSoZd4BYE/KxVMG1DaX+ddlTJHoRXPMWrSOw==
-Received-SPF: pass client-ip=188.165.49.213; envelope-from=groug@kaod.org;
- helo=5.mo548.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ t=1732525537; v=1;
+ b=e84V2rShjysmYZsaHz2sz2k3YYHTr2fGJghnrSS1LCDU7bhtZu/Ky0en0Xk5OUI0OPQWzeaT
+ lNpBeNQdbSqZARzn0XRaWaezJO9KjO9Y5jqvGumxzDpc6uTtvuN3K227FF8IXzWxsNdV/NZUHp1
+ M5H24BcoWfXBlJGJES/CjL7wsPi73vYiy8V3HIeVWV0ucaIcTp0cEna0GEzj5uJzMDqEFyRQmgi
+ JuC7Su6LcHehwLJrCVfG3IMDacJWUIJO08XcxvnXNprkQaNYZdqsdTWfe/QOPxSaDmxa8n1MeCK
+ Hes9PYWXac8UpALZdM4zwvJm2nLDNiQI8cQJAslmJdtvQ==
+Received-SPF: pass client-ip=178.33.254.192; envelope-from=groug@kaod.org;
+ helo=3.mo552.mail-out.ovh.net
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,39 +83,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 24 Nov 2024 16:06:40 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+On Mon, 25 Nov 2024 09:45:54 +0100
+Greg Kurz <groug@kaod.org> wrote:
 
-> The comment claims that we'd only support basic Tgetattr fields. This is
-> no longer true, so remove this comment.
+> On Sun, 24 Nov 2024 17:28:40 +0100
+> Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 > 
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
-
-Heh another very long standing nit :-)
-
-Good catch !
-
-Reviewed-by: Greg Kurz <groug@kaod.org>
-
->  hw/9pfs/9p.c | 4 ----
->  1 file changed, 4 deletions(-)
+> > This fixes an infamous, long standing bug:
+> > https://gitlab.com/qemu-project/qemu/-/issues/103
+> > 
 > 
-> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> index 9a291d1b51..851e36b9a1 100644
-> --- a/hw/9pfs/9p.c
-> +++ b/hw/9pfs/9p.c
-> @@ -1596,10 +1596,6 @@ static void coroutine_fn v9fs_getattr(void *opaque)
->          retval = -ENOENT;
->          goto out_nofid;
->      }
-> -    /*
-> -     * Currently we only support BASIC fields in stat, so there is no
-> -     * need to look at request_mask.
-> -     */
->      retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
->      if (retval < 0) {
->          goto out;
+> \o/
+> 
+> It is great if you manage to fix that once and far all !
+> 
+
+For the records. Original report was :
+
+https://bugs.launchpad.net/qemu/+bug/1336794
+
+> > * Actual fix of this bug is patch 5.
+> > 
+> > * Patches 1 and 6 add a test case to verify the expected behaviour.
+> > 
+> > * The other patches (2, 3, 4) are basically just minor cleanup patches more
+> >   or less (un)related that I simply did not bother to send separately.
+> > 
+> > Probably there are still other 9p request types that should be fixed for this
+> > use-after-unlink idiom, but this series fixes the mentioned bug report as
+> > described by reporter, so fair enough to round this up here for now.
+> > 
+> 
+> When I last worked on that issue I had spotted some other places to fix.
+> 
+> Maybe you can find some ideas for future work at :
+> 
+> https://github.com/gkurz/qemu/tree/9p-attr-fixes
+> 
+> > Simple test app to verify this behaviour on a Linux guest:
+> > 
+> > #include <stdio.h>
+> > #include <stdlib.h>
+> > #include <sys/types.h>
+> > #include <sys/stat.h>
+> > #include <unistd.h>
+> > #include <fcntl.h>
+> > 
+> > int main() {
+> >   struct stat st;
+> >   int fd = open("doa-file", O_RDWR | O_CREAT | O_EXCL, 0600);
+> >   unlink("doa-file");
+> >   int res = fstat(fd, &st);
+> >   printf("fstat() = %d\n", res);
+> >   return res;
+> > }
+> > 
+> > Christian Schoenebeck (6):
+> >   tests/9p: add 'use-after-unlink' test
+> >   tests/9p: fix Rreaddir response name
+> >   tests/9p: add missing Rgetattr response name
+> >   9pfs: remove obsolete comment in v9fs_getattr()
+> >   9pfs: fix 'Tgetattr' after unlink
+> >   tests/9p: also check 'Tgetattr' in 'use-after-unlink' test
+> > 
+> >  hw/9pfs/9p.c                          | 12 ++++---
+> >  tests/qtest/libqos/virtio-9p-client.c |  3 +-
+> >  tests/qtest/virtio-9p-test.c          | 46 +++++++++++++++++++++++++++
+> >  3 files changed, 55 insertions(+), 6 deletions(-)
+> > 
+> 
+> Cheers,
+> 
 
 
 
