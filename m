@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6BC1D58D41
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 13:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21ACBD58D40
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 13:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFYkj-00080X-Cg; Mon, 25 Nov 2024 08:03:45 -0500
+	id 1tFZ1X-0002Th-Tf; Mon, 25 Nov 2024 08:21:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tFYkh-00080K-JN; Mon, 25 Nov 2024 08:03:43 -0500
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1tFZ1W-0002T9-59; Mon, 25 Nov 2024 08:21:06 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tFYkf-0002Ne-78; Mon, 25 Nov 2024 08:03:42 -0500
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-7e6d04f74faso3010763a12.1; 
- Mon, 25 Nov 2024 05:03:40 -0800 (PST)
+ id 1tFZ1U-0005oq-NE; Mon, 25 Nov 2024 08:21:05 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-7f450f7f11dso3127484a12.2; 
+ Mon, 25 Nov 2024 05:21:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732539819; x=1733144619; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1732540863; x=1733145663; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0t5ZYhSsVTmh6oCEPLwfuhbeFDt36YI2arCPlIIOHbE=;
- b=L0wjLyyMRWqapCah6zwGpg2Xk2FXEEJGP2n8lHPtW1tjzMjDH1W2DPONT6yTy4yfk6
- nbvlyuQ+L4EuzuPXHdhCKh7TR39mxcM4K2oETrmLzz7hnGXuX7FXCwt5vp+npco1QPfi
- qeujPDeORVjzyKUpEW1MMZnXhgV9la953tyiQmDfB6AyZT576IBFansBm/vZj+dDZj/S
- vaIATUIW0t8cqjTIA8/GrrVPV3j28p0dNZv7tq5uCGN+nqfuiaadibOnhFJftVIm6ZHM
- l+4rEXnLoufvVNJ9FFva+2IZQD2X2WuT8rByAJTUZLOxQIDyaBq7nNoTGtIrC180Af6O
- emVA==
+ bh=7IdWvHR5b7t4vflEj+LY1CHfeckBBRyVCsURA5jMuHo=;
+ b=A1trK9e4zdDfVgc2Sz6bSlDeOyMz08iLaZQ63B07h6KSnsgTCiwuBRB6P9fVSx5Eym
+ C2iz5hs+o1Oi5ntIaOYfdzD1b5fAT0OsF3tS1kGdWKSjXuZw6CF/kjf9GIRo12yG7wds
+ M+CjamAf3pP/kdHrfeOIU8ZGyxDVmj3m8R1DaTHHeew+c+8Xp6sxMN+i/Zc34H2aPeAQ
+ UTJCHHhPShH/NYAuXFhHzysj5Pb1pM0VAehHA77kFokzW1Nu8B6t6h32dG0EOiU343pK
+ VwSEQ8hsxk29LlZmrve8qot94bg0eCPD3YHg4au59spSlqA4ULMa23I+ANb7ke4XjMHe
+ KWcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732539819; x=1733144619;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=0t5ZYhSsVTmh6oCEPLwfuhbeFDt36YI2arCPlIIOHbE=;
- b=vPbL5rDGyFaN6ThrBD2rqPylSrok1DQmxoW3tf/alnNZqn+sogsC09vRWfVoMEejgR
- k2SMUhxFjAmBbT9cP5a9rZk0EgRyywFcQotHgwlA5zkgPmov9Z5xkuDUR9gr/Cvus4fw
- 8lQf3GS2V4KOJCxxniK5YLr3Mg7TNMYcLByZaAziPodCQAtotmX4XLAYJxUZIG0s/BJV
- jRjHhDdBdw8DkpCCyHtqp7bas5QbFdVw232Rw3HP355QDfIejZYyhRRqyQpjoUMuRVNb
- 7M5gok0EqqNyYe97WxHS3CkDcNZh5KKpbCtIH3TAdGvtiE08mgJVeU0dR5TZlbW2ukAF
- 31Xg==
+ d=1e100.net; s=20230601; t=1732540863; x=1733145663;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7IdWvHR5b7t4vflEj+LY1CHfeckBBRyVCsURA5jMuHo=;
+ b=aC0rwTZBZGkH8qCdmmsHrVuuXgcNNWQ1zE58WuzyU83CmhW7EWrT9jf4W6YnGGibTz
+ H1yDi3XOlRHe92iHncwDfByWxfZITGlhinqPv1LRBdDmzlUIeBA44hmewGI7mONDDZyZ
+ oVUEnebAD1N5khpdka/056Yjk+MKTgLv6tEkzTqAOYGuxwYkoZYwRux1TBKpoE7/FJa0
+ AJ148EpjQefvGKU4KG/inTk+F5mLQKw7KsFa4YoZsQPsiBEAAGxFfisUmx2Ks1X4VsCv
+ be4hnN1c0yvKxJh2VU/fONiWisih3+R+cSJaudtO3TARDEbvIn+5NtPjI8OTGSYqVx2s
+ JEWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW6k/widznyRTDIn3Op34WxZCTbrvN95XWFomE2PoUFdFPgXEinvrx7rxsuo4TWpNaZp8GYzGPHDWJU@nongnu.org,
- AJvYcCWtHAh8f1v+nycX1t3MOnJys0scNUIYVI7hHJEYLV+FbdMPshwdDc6u31Mu9b+Lb0bsrHBfd84VWd0=@nongnu.org
-X-Gm-Message-State: AOJu0YzwGz/sGX14RKr/tNhJqqZJX+MyEsjnVPJyRNRl3BrSaDGR3sp0
- qlKU4VDan6C9wkU0ECZIKo+52ztOO4wFuhZ4dTm2j86AyjM6W4o8atbUZQ==
-X-Gm-Gg: ASbGnct4jn+uERFOp4Qa9UMn0hbynZvKmKqw9919xUV5e4fNMj7oIm+2WwUHgebw8fJ
- ign6OzImFHPiYfMXtcFF3/VuIuoryHh2Uyb9YirLyHOanRY3FAaVG8V2oC6HX4Vkfmxlhtkwynk
- nc0gqMpSmYAntZO5wb/4WauFHfyeW4kHgd8dt+hMApGSwvswPXxWF3fHg+Q53A+LqcnO1eiBWuJ
- RXACrM/IZmEpcfSQV58clbvODYhMQz+iRLBIZrj7fhqh2T3IIAqm0pC5mmaIGqeD/U69Do=
-X-Google-Smtp-Source: AGHT+IHGC83FaEa3F+pH9OX57BfXgOZHlMSTuRPfWv0hPalwj+Yhvc/H5GOxVG2aQN2E6maTrv5bDA==
-X-Received: by 2002:a17:902:fc86:b0:212:3f13:d4bc with SMTP id
- d9443c01a7336-21284112f8bmr248425935ad.27.1732539818965; 
- Mon, 25 Nov 2024 05:03:38 -0800 (PST)
-Received: from localhost (124-171-72-210.tpgi.com.au. [124.171.72.210])
+ AJvYcCXL48OFgKCpSpG1RAHEUGEf6KERt5LjGi2GHiITg2JDuLgoKVjuiPM20Jkppm2sUEoYyWaRwZF2M2YL@nongnu.org
+X-Gm-Message-State: AOJu0YwGByCUN+luYlMcGFBTdsEtZiJuTfft45wDYujvNFj+sKsyJUQX
+ 8WloyfgOJPb4t7HiAmBKWVAQZ/VbPNuA9pHVPWCrH+Q8m+RKX/SgEdfA3Q==
+X-Gm-Gg: ASbGnct1DL3XsT1VUwAlmDmbLRZbtfzT1Be6S+yXW4iGVn3MM/k81AcZ/M7BrmzXdE2
+ oXZeh4qj3lr7WA65FMYucTXGi5nG8SJfnU4DcS9otQWdrljL+IxsXEiiGNe204aRw2zdR3ig83o
+ JSFMLCE3xpaRJA2svbA1C7Gtk7thddUjPT5lyfHTIz/qJozCWHJ0qRPe9IKWHqwqR+QB5Jd33Vj
+ nA0GPzPGdj247J/9Zd/Nz7S09vl0bYJRx0tzjb3ONs480MhvUWefraVSc31EA/BzqwdDCawXkVl
+ QExyaA==
+X-Google-Smtp-Source: AGHT+IHxUCaw/ZQPWI4iqqBUFwF1LBolZtaXndO+gpWUDCccz9wunrEjVlRULjLXlF6LnPGC34nUBQ==
+X-Received: by 2002:a05:6a20:6a10:b0:1db:e508:cf68 with SMTP id
+ adf61e73a8af0-1e09e46dd36mr21694414637.24.1732540862696; 
+ Mon, 25 Nov 2024 05:21:02 -0800 (PST)
+Received: from wheely.local0.net (124-171-72-210.tpgi.com.au. [124.171.72.210])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724de531247sm6514919b3a.104.2024.11.25.05.03.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Nov 2024 05:03:38 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 25 Nov 2024 23:03:34 +1000
-Message-Id: <D5VA3V07UFIY.BX05Q673TWAV@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH v2] hw/ppc/pegasos2: Fix IRQ routing from pci.0
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.18.2
-References: <20241102121711.26F054E6013@zero.eik.bme.hu>
- <88eff33f-d9b8-01c7-db0e-5ac38d722f8b@eik.bme.hu>
-In-Reply-To: <88eff33f-d9b8-01c7-db0e-5ac38d722f8b@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52f.google.com
+ 41be03b00d2f7-7fbcc1e44d5sm5616721a12.32.2024.11.25.05.20.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Nov 2024 05:21:02 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ Chalapathi V <chalapathi.v@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>
+Subject: [PATCH 4/4] ppc/pnv: Add xscom- prefix to pervasive-control region
+ name
+Date: Mon, 25 Nov 2024 23:20:41 +1000
+Message-ID: <20241125132042.325734-5-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241125132042.325734-1-npiggin@gmail.com>
+References: <20241125132042.325734-1-npiggin@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,122 +102,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat Nov 16, 2024 at 2:01 AM AEST, BALATON Zoltan wrote:
-> On Sat, 2 Nov 2024, BALATON Zoltan wrote:
-> > The MV64361 has two PCI buses one of which is used for AGP on
-> > PegasosII. So far we only emulated the PCI bus on pci.1 but some
-> > graphics cards are only recognised by some guests when connected to
-> > pci.0 corresponding to the AGP port. So far the interrupts were not
-> > routed from pci.0 so this patch fixes that allowing the use of both
-> > PCI buses. On real board only INTA and INTB are connected for AGP but
-> > to avoid surprises we connect all 4 PCI interrupt lines so pci.0 can
-> > be used for all PCI cards as well.
->
-> Ping? As this is a bug fix it's still not too late to merge I think.
+By convention, xscom regions get a xscom- prefix.
 
-I missed it, sorry.
+Fixes: 1adf24708bf7 ("hw/ppc: Add pnv nest pervasive common chiplet model")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/ppc/pnv_nest_pervasive.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-
->
-> Regards,
-> BALATON Zoltan
->
-> > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> > ---
-> > hw/pci-host/mv64361.c |  1 +
-> > hw/ppc/pegasos2.c     | 30 +++++++++++++++++++++++++++++-
-> > 2 files changed, 30 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/pci-host/mv64361.c b/hw/pci-host/mv64361.c
-> > index 1036d8600d..421c287eb0 100644
-> > --- a/hw/pci-host/mv64361.c
-> > +++ b/hw/pci-host/mv64361.c
-> > @@ -95,6 +95,7 @@ static void mv64361_pcihost_realize(DeviceState *dev,=
- Error **errp)
-> >                                    &s->mem, &s->io, 0, 4, TYPE_PCI_BUS)=
-;
-> >     g_free(name);
-> >     pci_create_simple(h->bus, 0, TYPE_MV64361_PCI_BRIDGE);
-> > +    qdev_init_gpio_out(dev, s->irq, ARRAY_SIZE(s->irq));
-> > }
-> >
-> > static Property mv64361_pcihost_props[] =3D {
-> > diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-> > index 8ff4a00c34..16abeaac82 100644
-> > --- a/hw/ppc/pegasos2.c
-> > +++ b/hw/ppc/pegasos2.c
-> > @@ -14,6 +14,7 @@
-> > #include "hw/sysbus.h"
-> > #include "hw/pci/pci_host.h"
-> > #include "hw/irq.h"
-> > +#include "hw/or-irq.h"
-> > #include "hw/pci-host/mv64361.h"
-> > #include "hw/isa/vt82c686.h"
-> > #include "hw/ide/pci.h"
-> > @@ -73,8 +74,11 @@ OBJECT_DECLARE_TYPE(Pegasos2MachineState, MachineCla=
-ss, PEGASOS2_MACHINE)
-> >
-> > struct Pegasos2MachineState {
-> >     MachineState parent_obj;
-> > +
-> >     PowerPCCPU *cpu;
-> >     DeviceState *mv;
-> > +    IRQState pci_irqs[PCI_NUM_PINS];
-> > +    OrIRQState orirq[PCI_NUM_PINS];
-> >     qemu_irq mv_pirq[PCI_NUM_PINS];
-> >     qemu_irq via_pirq[PCI_NUM_PINS];
-> >     Vof *vof;
-> > @@ -177,7 +181,6 @@ static void pegasos2_init(MachineState *machine)
-> >         pm->mv_pirq[i] =3D qdev_get_gpio_in_named(pm->mv, "gpp", 12 + i=
-);
-> >     }
-> >     pci_bus =3D mv64361_get_pci_bus(pm->mv, 1);
-> > -    pci_bus_irqs(pci_bus, pegasos2_pci_irq, pm, PCI_NUM_PINS);
-> >
-> >     /* VIA VT8231 South Bridge (multifunction PCI device) */
-> >     via =3D OBJECT(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_=
-ISA));
-> > @@ -209,6 +212,31 @@ static void pegasos2_init(MachineState *machine)
-> >     /* other PC hardware */
-> >     pci_vga_init(pci_bus);
-> >
-> > +    /* PCI interrupt routing: lines from pci.0 and pci.1 are ORed */
-> > +    for (int h =3D 0; h < 2; h++) {
-> > +        DeviceState *pd;
-> > +        g_autofree const char *pn =3D g_strdup_printf("pcihost%d", h);
-> > +
-> > +        pd =3D DEVICE(object_resolve_path_component(OBJECT(pm->mv), pn=
-));
-> > +        assert(pd);
-> > +        for (i =3D 0; i < PCI_NUM_PINS; i++) {
-> > +            OrIRQState *ori =3D &pm->orirq[i];
-> > +
-> > +            if (h =3D=3D 0) {
-> > +                g_autofree const char *n =3D g_strdup_printf("pci-orir=
-q[%d]", i);
-> > +
-> > +                object_initialize_child_with_props(OBJECT(pm), n,
-> > +                                                   ori, sizeof(*ori),
-> > +                                                   TYPE_OR_IRQ, &error=
-_fatal,
-> > +                                                   "num-lines", "2", N=
-ULL);
-> > +                qdev_realize(DEVICE(ori), NULL, &error_fatal);
-> > +                qemu_init_irq(&pm->pci_irqs[i], pegasos2_pci_irq, pm, =
-i);
-> > +                qdev_connect_gpio_out(DEVICE(ori), 0, &pm->pci_irqs[i]=
-);
-> > +            }
-> > +            qdev_connect_gpio_out(pd, i, qdev_get_gpio_in(DEVICE(ori),=
- h));
-> > +        }
-> > +    }
-> > +
-> >     if (machine->kernel_filename) {
-> >         sz =3D load_elf(machine->kernel_filename, NULL, NULL, NULL,
-> >                       &pm->kernel_entry, &pm->kernel_addr, NULL, NULL, =
-1,
-> >
+diff --git a/hw/ppc/pnv_nest_pervasive.c b/hw/ppc/pnv_nest_pervasive.c
+index 77476753a4..780fa69dde 100644
+--- a/hw/ppc/pnv_nest_pervasive.c
++++ b/hw/ppc/pnv_nest_pervasive.c
+@@ -177,7 +177,7 @@ static void pnv_nest_pervasive_realize(DeviceState *dev, Error **errp)
+     pnv_xscom_region_init(&nest_pervasive->xscom_ctrl_regs_mr,
+                           OBJECT(nest_pervasive),
+                           &pnv_nest_pervasive_control_xscom_ops,
+-                          nest_pervasive, "pervasive-control",
++                          nest_pervasive, "xscom-pervasive-control",
+                           PNV10_XSCOM_CHIPLET_CTRL_REGS_SIZE);
+ }
+ 
+-- 
+2.45.2
 
 
