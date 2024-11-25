@@ -4,55 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37ECCD58D4C
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 14:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B013D58D4F
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Nov 2024 14:15:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFZoQ-0001rz-Q6; Mon, 25 Nov 2024 09:11:38 -0500
+	id 1tFZrV-00037e-8O; Mon, 25 Nov 2024 09:14:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tFZoN-0001rZ-1b; Mon, 25 Nov 2024 09:11:35 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tFZoL-0007QW-5n; Mon, 25 Nov 2024 09:11:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=BFKb8Rq8xQMWorM1jMPQkSFjh8eBrzRcxywfh/I+zCE=; b=W4OPQW+yKrB/3D4zBduBZfU7ey
- muKx7jbo+Ot4EUpnCJzvlu1/3PhIC4pFUi8C0/Xo/OWhP7ACJk+ZKPM45rPtcOF75s+GROXxF10vQ
- ZHOt/lgLK0qwJw1I5Ago1R34E2+YBVDw+Ko3h50WkUNPN1Wv5DgxriiSglZnc+vATvEICLbCA58jY
- /p1RHPSknVn3xVk0A8eJbDtNcwN0YXGNCa9Ocx15Bko6iDM8oPv2OqDCD4mftvjz41iNDLsslFnX5
- yDjYsDpz/AG4qez7aMpZoIJK4k1RVYwr0pYJQoUWJoilfXlL4tApnVh4yrk0VeStJdpsedsFBjpeF
- 8YmtAghL7x+6EzEogNjrVXh5C6+TkI2HrsZLHRz+HQYC9ZrLtPdQRfJJdCg5Y+FF1TzPbMAoKOiuh
- lwf5uQvtxZ8aUBLvq5AigwGoZWq8j5Lw4mRLYpy/U7byIvb6nfmiOY0IQ6pi90I/ARNbhfiemNj61
- uMvcEHJtXtaPhVfGDHaJdWxRK+wK46O3Mx+B73k4pjCvRhpV2wG21KlbiDPGmpHfl+wwq7GX9zouE
- PDcSG0NyWV/IfblBNCzWgwYE7Wu0UYP4scUMgoSbeWuNn83eQKD77vFDldR0bIKtCSWo87NKdolF9
- Scxm4PTU6IuqdhP/zdKSQnGaaF0jcgvG/ru4zVL5U=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Subject: Re: [PATCH 0/6] 9pfs: fix fstat() after unlink() (with a Linux guest)
-Date: Mon, 25 Nov 2024 15:11:26 +0100
-Message-ID: <1808065.5Gi7jleHS2@silver>
-In-Reply-To: <20241125123505.06ab0568@bahia>
-References: <cover.1732465720.git.qemu_oss@crudebyte.com>
- <192504804.CgdclvVjum@silver> <20241125123505.06ab0568@bahia>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tFZrT-00037R-KI
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 09:14:47 -0500
+Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tFZrR-0007iJ-Tq
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 09:14:47 -0500
+Received: by mail-oa1-x2f.google.com with SMTP id
+ 586e51a60fabf-29687cd1924so2317135fac.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 06:14:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732544084; x=1733148884; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UrL/dIBt9uTBdBmadV78TEVSyml1Ukxh7UYu/YNXmzI=;
+ b=x/SLVf67dSHa2B1rnP6M8nnjpwV3uJs0gBHbjW4eaZXBByIi+YIxYRQnO2oCMfGvH0
+ 3i1EATjX8RKom2EZkzmOhMHDcJAlg4cKQA0qrfvL6A/LsU3+aqdyoHEtAxqqYa65VQer
+ pEdRNwMOHkDPtFA4SsBoK6SsfIEAhAEATOtCNeAGGTUr56Adq46aiqG92Me10Td0/k+j
+ KLotTb2L1vkJuX0Mo46vcSRpf0+aEhvCUHFR7zXEJjGArdgKVBjhPUTByGixeonnTzWN
+ F/n+kHASAPULEwLIovWRQraYH/VK/ZwkVPIGebzM0cPZkQtiV2KIx6csI3wipJWWeAig
+ A+Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732544084; x=1733148884;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UrL/dIBt9uTBdBmadV78TEVSyml1Ukxh7UYu/YNXmzI=;
+ b=Fac6+CNHkN3BfH9rwM9aMvx4M4KTxxeyRv+JO7QDDkhKcyou+PXJAzeaKU2grS1JJ3
+ Wi+jlikXIE+DPwhU4lcR6bHNvNRx4ONhM8r9OeH2vxLQJj28/wDeKaJQHkWd3o6MhbzQ
+ VkqXgJsbiZjGUtXqUBnGUixwZ80Sn8DJrhXhNyTOqWsPYoW5M3kQ45nVNdznqmi/7Urt
+ a2NF3teXlI/czR5jS3wYsgd5Wp0CgjF+sTi1b6sBsudXXhHSP72DQBOlEdulQVw3hNpN
+ 0GLFq1K0PsXg87Ivlq7QIDI8mh58/Y/G6FiLlhYOnMAPGN6cIGfqbKK3C997R1gWwJ0Y
+ EvZQ==
+X-Gm-Message-State: AOJu0YwyfEYtUue5UKVdiuLxOG706dcEwVC4lT+MzRToebw2rMXempPj
+ 5zvc8o4g7hzYOzjRPIpo3F9u6v8R9nf4WyCixdSAChs55i8Ncnfrk2GUveWAQetI4oytM3EUmDh
+ vYak=
+X-Gm-Gg: ASbGncvzwzSWmqocMbSjgP77XnivLrFQ5CKk1PdEyNh6rPVtfuRXumD8h/CfKRXZT5r
+ BkEYKcCSRZG4phzx+6ckdSyEQ4RI7Z6HGbRuxik2BtKv3QOGzBg4FYbG/+KfS2OTOd9QHFcTpHH
+ CNdUdNC4+uE3FwYzq2hfS3v14uNfrHYIA6c3yPcLOXOGexz8C4uPNcJRbkbtFbktaTWjZwe7uTr
+ nACLctnLnJ6FXUpE+SHKzqMLWLWjxsZE1RnZeqj2SyGtS/z7uGrmNjTKXVGwQvetQ==
+X-Google-Smtp-Source: AGHT+IFnBmzGbieqHT02wRLOscyofVUfyz2xF5UR/5gtzTNlHb6V0KpoIXBAZifpUW0eTXVPsYpJ4A==
+X-Received: by 2002:a05:6870:d113:b0:277:c28c:147e with SMTP id
+ 586e51a60fabf-29720d6ef33mr10737745fac.21.1732544083331; 
+ Mon, 25 Nov 2024 06:14:43 -0800 (PST)
+Received: from [10.25.0.199] ([187.210.107.185])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-71c0381e282sm2339254a34.48.2024.11.25.06.14.42
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Nov 2024 06:14:43 -0800 (PST)
+Message-ID: <3b3e2723-9489-482a-b08d-09915f04fb0d@linaro.org>
+Date: Mon, 25 Nov 2024 08:14:40 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional/aarch64_virt: add test for FEAT_RME
+To: qemu-devel@nongnu.org
+References: <20241125065950.1179068-1-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241125065950.1179068-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,46 +100,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Monday, November 25, 2024 12:35:05 PM CET Greg Kurz wrote:
-> On Mon, 25 Nov 2024 11:23:39 +0100
-> Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-> 
-> > On Monday, November 25, 2024 9:45:54 AM CET Greg Kurz wrote:
-> > > On Sun, 24 Nov 2024 17:28:40 +0100
-> > > Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-[...]
-> > > > Probably there are still other 9p request types that should be fixed for this
-> > > > use-after-unlink idiom, but this series fixes the mentioned bug report as
-> > > > described by reporter, so fair enough to round this up here for now.
-> > > > 
-> > > 
-> > > When I last worked on that issue I had spotted some other places to fix.
-> > > 
-> > > Maybe you can find some ideas for future work at :
-> > > 
-> > > https://github.com/gkurz/qemu/tree/9p-attr-fixes
-> > 
-> > Was there a reason why you left those patches on the attic?
-> > 
-> 
-> Lack of cycles
+On 11/25/24 00:59, Pierrick Bouvier wrote:
+> +        self.vm.launch()
+> +        self.wait_for_console_pattern('Welcome to Buildroot')
+> +        time.sleep(0.1)
+> +        exec_command(self, 'root')
+> +        time.sleep(0.1)
 
-Yeah, that's clear, I more meant in sense of known issues, as I haven't
-spotted something obvious (above nit level) that would have spoken against
-pushing those patches.
-
-But OK, I also understand the lack of reviewers at that time, etc.
-
-/Christian
-
-> > What I am seeing is that it was not fixing Tgetattr (i.e. fstat() on guest),
-> > so it wouldn't have fixed the original reporter's scenario, but they would
-> > have brought things forward. So just wondering ...
-> > 
-> 
-> Yeah the fix for Tgetattr was in some other series I had sent at the time but
-> I did not get much feeback then...
+There are patches on list or just merged to allow matching login/ps1 prompts instead of 
+sleeping.
 
 
-
+r~
 
