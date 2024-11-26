@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 196CCD6552D
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:04:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C875D65532
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:13:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFyxR-0007OJ-HD; Tue, 26 Nov 2024 12:02:37 -0500
+	id 1tFz7Y-00075u-63; Tue, 26 Nov 2024 12:13:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFyxP-0007Ij-Ch
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:35 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tFz7S-00075R-FB; Tue, 26 Nov 2024 12:12:58 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFyxN-00020n-LA
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:35 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-38242abf421so3900202f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 09:02:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tFz7Q-0004G9-Rc; Tue, 26 Nov 2024 12:12:58 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-212a3067b11so50042945ad.3; 
+ Tue, 26 Nov 2024 09:12:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732640551; x=1733245351; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=L2iIthzQ3Mqn0qPR+9i7K6uncY9n1uibxmIy4im4uGk=;
- b=eymfbaZxA2Lxx/40e2IviQuh/5HR1CupDENwLxulJoT/NhcmGQxeQ1idA5iG1AYw8l
- xrBw3zdJ6bdJCvnadezIIFTGakLDRKY+K6Fe2Zx86S4Zkv+OAm5u6LtiYLn6ICSlQnFr
- G7xS5HkwTN6U1mOHeEzEubpMQmm3xwlwWDLMSq6Ycsk4wLN6tqD2i1Szo9oz8r0/6JWT
- Y0g3z33acfgdM1dqfdvkBnpasfBKZAt4HFt5pUerxW0dQ317ec3DhF1EkcFobNpUUv0m
- ou82ydMMSjcrMwrVd92ngy5MpQYsouvJYgD8MDVM72Hx3+DOfn0AKsKmpPgeymgQvvl/
- TR3g==
+ d=gmail.com; s=20230601; t=1732641174; x=1733245974; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=nraLEcdRhzv800XFWmlyyEZTSQqqQaK9BuAuRo4hIeA=;
+ b=cjVxBgR+qWAjP/SmZ7R0ClRGVpLNIINzShKerMl4Wcc9kWUQEhIcdAdLiQFquwxCpx
+ KkUXzMmoVmO4nTSaZzukb1WHEumwcoBGU9OrldkgPPEHnDvd6InqtsYmUN+DiO0XD8FU
+ vF71bS1F2v2LM3W1Y7akrj4Ex0DszCFPMBPf32ddHzif0TWEAQ32zZOXjunpsvhQqQ1J
+ hI6wfWkJfIiZqxBQPoiJswyqgSN/k7ZdRaqq6WArrAo8CP88uyZIvkaZoTGRLyXa7Z2n
+ ja+ccIX2EVERbDTtUFwF6YZUB1WuQLC8WmRzCq+bLzoYMzzwiO9pCt5FqBWI3ITYpPl6
+ hH4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732640551; x=1733245351;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=L2iIthzQ3Mqn0qPR+9i7K6uncY9n1uibxmIy4im4uGk=;
- b=gCFbqYWPfwD6FNUN8vJG7x49woKoDR0JgRcmOpER9sw+DQGeDiyNyEr37OVXD8hzCU
- VVgZC0xvnPw8xHI42lQQ8ynI5OrqZsyesod/nxYYImdYXmlXi5r5bTYKJgXQSngirMvr
- W8nAXv8C3q/NVo+7KtEKAHT15535Cg+K64eXOztj9Y1Pgvu9myKyXPNjPilQtZmJyp6k
- vRh333kc1f68KIuYbAA+TgZVOzhIiGQ2Rc6/rL3AnvTsVs2j6UDbyA4+plE8f9kXbT3B
- 6JIzuC7VvGXTOZ1jfhsP5lA2aGqBHFrzmYf0du7brhK/1t4bRuX9kfYZ5kSjgLyw+AjG
- iKDg==
-X-Gm-Message-State: AOJu0YzB5+XAsmwBhwjM3qwuMdvr8r+Z+19bCfgpJ4ZXTKWHwadK7c0R
- ChNXrsfFFEpOCS71JWxQIyg90k1/A4WsyhB+IYs+aygQ+242/Tk2rZG+Iqy0SmR/OIn7mQ++W8T
- 7
-X-Gm-Gg: ASbGncsNAh/j8cnokMKN353TmRGR4bouGt+vowafRN3L+ATFqZHziH953/g7uBt7Sv8
- c38fa0NlVcd+GtR3+6sSw5GoGo38WIHHtN9qsJFEbtwQm3tzviAmvQS8qCnz9WPdiV6y+vg4nWb
- tc9Yb7e6Uf1tYGWsJfNn3aIG9fJ/WiOSpvRUj1EPlvF7VlfZBbq9dOtlrUxFc2/VUfnr1sS3QHm
- oWe7TDIeoAHCP0xP/1MYQTMJ3eaf9ysGo1ouNEpT3NA84Y9QM6/QxtA
-X-Google-Smtp-Source: AGHT+IGNkxLq+Rc9juj3VQc8mjA7i1ZhvZ4GgfOGjFh+KFkRk3JhCeso9+JCt5JTPk8SM/d+0UuXeQ==
-X-Received: by 2002:a05:6000:184e:b0:382:2242:7a8 with SMTP id
- ffacd0b85a97d-38260bcb00cmr14390861f8f.40.1732640551123; 
- Tue, 26 Nov 2024 09:02:31 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1732641174; x=1733245974;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nraLEcdRhzv800XFWmlyyEZTSQqqQaK9BuAuRo4hIeA=;
+ b=Hcaj4oLywXOQ2LMxOuFgukBBVqrHY0z/qWywOFf8CpS2D+8A0P7kuWSSa0vsTGdk6c
+ WVG3WeHq7X3tnOucGSuC9rXg9ODN6efkgXW1aii3hTIlapuJ+MfghsNUlum+0AYCnJv4
+ aboa6GXDf9pL4X84CoWxpOud6ZW4dVUdBVIhs4qdNrKqyGi+9U7Q+j9L8sCpltn4SiAM
+ puoz30P60us5JkdxqV7hZuNspTn/6uz8SpzPP02xUDQcNGh/7I6KMXHJnfgUsywVZZzE
+ OPBWxoef3el+OgI7cRTnnB+V8+3S6Pojp2k0FYqVYjUXoUF+ns49KUePxQLN0kZKJRyF
+ tGAQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX15pmTB7hCPdJhAXgkJ02qz3OquSVjvcR+q3Zk9v6pneYBDFiJwiFiaZnS4uKJlxzBwVKdjefmzQ==@nongnu.org
+X-Gm-Message-State: AOJu0YwFH3nUBliWhjq4vO87m6jr4w0eAZ92pKKrUMF6YmOfXtzKWT5i
+ vIbh/wtu3N+D9dk58LozuoyUtdEB4KRzO9BooYCGBeC4EvLjhd8HOXjFXg==
+X-Gm-Gg: ASbGncvGU6Ubn+ULL4hSItsswTMH0bJa2C5o9fkxVOCdPhWGqr3dOQa4d3A7ejglARO
+ 2yzAouE/C6QcTEPyVCj3uEEaMQAD87Zd8q+dqeOMfQvTIaAgPzKUO4H33IyiPXr1i6T1rUNfH/E
+ yQHoCpkkymZ9PqiU7oqYpKeIFi6Nr3+L0HyadRywj9EyKbwoU3TUXNMenJJtGAv9I6aksxm1wPF
+ 8GVb/WuxJNy9pJBE0w9H161OJ9rScm4O2KMAQqh79f/bktvrzkpVsyZlsQrQRiF1aLlW78ZddqJ
+ 5Ci77g==
+X-Google-Smtp-Source: AGHT+IF0ZLkF7XZHpr7ozucYl0lIbO4yRbkYy/JNdWxfI2lLpvi4qHnNfzBHAI15gAvcJak43yrbQw==
+X-Received: by 2002:a17:902:c948:b0:212:5636:7923 with SMTP id
+ d9443c01a7336-2129f6b25c2mr205584625ad.21.1732641173824; 
+ Tue, 26 Nov 2024 09:12:53 -0800 (PST)
+Received: from wheely.local0.net (124-171-72-210.tpgi.com.au. [124.171.72.210])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434a36c7a9fsm43017865e9.44.2024.11.26.09.02.30
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-2129dc21c28sm87321175ad.246.2024.11.26.09.12.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Nov 2024 09:02:30 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Tue, 26 Nov 2024 09:12:53 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 4/9] docs/system/arm/emulation: add FEAT_SSBS2
-Date: Tue, 26 Nov 2024 17:02:19 +0000
-Message-Id: <20241126170224.2926917-5-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241126170224.2926917-1-peter.maydell@linaro.org>
-References: <20241126170224.2926917-1-peter.maydell@linaro.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 0/6] ppc-for-9.2-2 queue
+Date: Wed, 27 Nov 2024 03:12:29 +1000
+Message-ID: <20241126171235.362916-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,34 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The following changes since commit ba54a7e6b86884e43bed2d2f5a79c719059652a8:
 
-We implemented this at the same times as FEAT_SSBS, but forgot
-to list it in the documentation.
+  Merge tag 'net-pull-request' of https://github.com/jasowang/qemu into staging (2024-11-26 14:06:40 +0000)
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241122225049.1617774-4-pierrick.bouvier@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: improve commit message]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/system/arm/emulation.rst | 1 +
- 1 file changed, 1 insertion(+)
+are available in the Git repository at:
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index af613b9c8b8..50d0250b1eb 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -137,6 +137,7 @@ the following architecture extensions:
- - FEAT_SVE2 (Scalable Vector Extension version 2)
- - FEAT_SPECRES (Speculation restriction instructions)
- - FEAT_SSBS (Speculative Store Bypass Safe)
-+- FEAT_SSBS2 (MRS and MSR instructions for SSBS version 2)
- - FEAT_TGran16K (Support for 16KB memory translation granule size at stage 1)
- - FEAT_TGran4K (Support for 4KB memory translation granule size at stage 1)
- - FEAT_TGran64K (Support for 64KB memory translation granule size at stage 1)
--- 
-2.34.1
+  https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.2-2-20241127
 
+for you to fetch changes up to 0805136a44d39adc2467f23ac3c65e680e45d0a2:
+
+  hw/ppc/pegasos2: Fix IRQ routing from pci.0 (2024-11-27 02:49:36 +1000)
+
+----------------------------------------------------------------
+* Assorted small ppc fixes
+
+----------------------------------------------------------------
+BALATON Zoltan (1):
+      hw/ppc/pegasos2: Fix IRQ routing from pci.0
+
+Glenn Miles (1):
+      target/ppc: Fix THREAD_SIBLING_FOREACH for multi-socket
+
+Harsh Prateek Bora (1):
+      ppc/spapr: fix drc index mismatch for partially enabled vcpus
+
+Nicholas Piggin (3):
+      target/ppc: Fix non-maskable interrupt while halted
+      ppc/pnv: Fix direct controls quiesce
+      ppc/pnv: Add xscom- prefix to pervasive-control region name
+
+ hw/pci-host/mv64361.c       |  1 +
+ hw/ppc/pegasos2.c           | 30 +++++++++++++++++++++++++++++-
+ hw/ppc/pnv_core.c           | 11 +++++++++--
+ hw/ppc/pnv_nest_pervasive.c |  2 +-
+ hw/ppc/spapr.c              |  2 +-
+ hw/ppc/spapr_cpu_core.c     |  1 +
+ target/ppc/cpu.h            |  8 ++++++--
+ target/ppc/excp_helper.c    |  7 +++++++
+ 8 files changed, 55 insertions(+), 7 deletions(-)
 
