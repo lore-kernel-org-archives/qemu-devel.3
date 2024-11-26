@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1987D3B993
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 647C3D3B994
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFwQW-0001at-Fh; Tue, 26 Nov 2024 09:20:28 -0500
+	id 1tFwUL-0003Hz-1b; Tue, 26 Nov 2024 09:24:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <weichenforschung@gmail.com>)
- id 1tFwQU-0001a9-8d
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:20:26 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tFwUJ-0003Hb-W1
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:24:24 -0500
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <weichenforschung@gmail.com>)
- id 1tFwQS-0000pv-6A
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:20:25 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-724d57a9f7cso4614946b3a.3
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:20:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tFwUI-0001S2-C9
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:24:23 -0500
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-2965e65ce89so3415835fac.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:24:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732630823; x=1733235623; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=r8Xsp/wgILfFCWsl1NR3Sc8ZsxXOoqphZL9JaNT7FFE=;
- b=O/tOdMcSJyOEMXbu0g0J/7lhQXV67LnSJ//t4Y0KXkUFn9WNr5EV4JK1sLQvG+LCDE
- EpXxZZrI6RzY7GODZa7mpPhW5utefez8xeKQQj98vhK0H5ym0+G1oqZjAN/YlEvPcndR
- Rge/AY1l1ntj2k2c4+U78rYhes4su4vSUsmUKXPc951oYkZKd0G49mqgzMjkE4ucw/Kw
- 1v7ZDSC5KkI0L9OUtz9DVjW0QAItvPaWzupEUSGkfwUZcZHaO7wsYQeI91bdgSWeq4T6
- bmLdpN7Jfq/HP5qEXFfKpZ/j2qbqUrxzNqIwpuSiEYAmNn6vrwu7WxTLosD+v9y48gwi
- u3zA==
+ d=linaro.org; s=google; t=1732631060; x=1733235860; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FH5t9T7YzViKHsUNN+maku0jWh0/jn+/lE9Ae9nQW6s=;
+ b=McitxfDqs7M0X7zE9GMFER/HU03o1B89GqZgEOFqeYbrjonAUTHaMIcQQjzzQvHCmN
+ i7LqBLGnHLDg/AmuYcogPUvdTkCvmWSrIQ8uSJrtOK6vzdH2H/G4+3dPV8PmOLp/YK0g
+ VGxQ1Mmqn4xW4K1bHq2Z6M24z+sWgovukZ+ZSHNu5B23PtwFnZDQ8s7dwqHaBflfqTzM
+ ca1fp2C15DlIx0oy6DLeTfQyuliCkGof/fkWVQhkjp1mvvcslmklv/QeLYs7CmeNf9qq
+ R1xArDCAYZniRIiFAN+Z2Aobj1VydNdELCRSQ3ExnLWVIZov974LwHKBpwzmFywhL5JZ
+ EiXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732630823; x=1733235623;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=r8Xsp/wgILfFCWsl1NR3Sc8ZsxXOoqphZL9JaNT7FFE=;
- b=uFnTxCkMXGqE0oykJ2JaIlbupiRXkIAhHobILExFu6z9/HxNcljU8YTzgvBseGj7Ki
- 98f81v8xf+iVhXRrRg8UsJ68cRkOnD6pKqcSH80EwfzgKiYwYLemVzz0HmJjIGMi6Vg2
- MB0s3+2sGftKfRlFD+ApCOQXmiBoI684o0Nw+nmun+lEE1LhTFun3PwjlFQ9YrsZyvv0
- zh4VBah79TJcyFcM79PHdFUBCibWbfkpg6rdZUBvNzdknjVb76OM5y6v8iG82Q79vFgA
- IEr3k3bcoVVLmghVkYnDALLoVzZstedd+qs2jbDG8DMfB7mf/Cyf1rcdwP3uVPfIqjJq
- 3Z2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbD0Ea8fkO085Oat1L/kF/J8t2D13oVucRY8ngaYdVLFcDfVczy1HIh+XIUF5g40Kt1lzXJhEboHyl@nongnu.org
-X-Gm-Message-State: AOJu0YzBVSNfrLDPXP9Ftmsi94Vgv/c3ZuDfXWFPeQtRevlBO2AhEaGB
- 25TUuuZgzSOS+NTSKQFybOZFXLaMpjpAtEq2RpGH2AdTqQZIByRr
-X-Gm-Gg: ASbGncuQhQzNsuCmMK/+M8m5CdxtgjE2y2fDPmJpbfxod8Flu3oXef81f+TprIp8ZgV
- WXLjPFlZiPtshKlgnV6xo7y9aomwwzgAE/0w/+K6HULstarQlgPHwNkjqWXeu/UjSx87Np7v1fj
- LliLH1WRF682Acodh1IyX1LdkcNJRRtox9rIVb4RAugn79u3gxGIwpEor53hEdMazqJ6f1bxetc
- BycOidKCUnkfvQ8lmomnznctEhF6XWgW8pQ1o86ih3W5NFezgDeDJ87qwG63D7GzERW00EfQHLI
- c4uAV/NfdaKJFwCo+toZRpJ2ig==
-X-Google-Smtp-Source: AGHT+IHlQQaF3I1t0IcvKQhNrMXVz6urZkkUxEzomaqH37ySkL6ceCoHtLQopIIkjssW4po7D8bjHw==
-X-Received: by 2002:a17:902:f68e:b0:20e:71ee:568e with SMTP id
- d9443c01a7336-2129f2246f0mr207343065ad.13.1732630822512; 
- Tue, 26 Nov 2024 06:20:22 -0800 (PST)
-Received: from ?IPV6:240e:360:7d01:c00:3df6:d95:4ef4:2f85? ([212.107.30.68])
+ d=1e100.net; s=20230601; t=1732631060; x=1733235860;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FH5t9T7YzViKHsUNN+maku0jWh0/jn+/lE9Ae9nQW6s=;
+ b=JeFFtKv4aLGgwdi2HvBiLNoL0lFkWXSTxq/eAx5A4IW44QpWO8gHTTdySIzELLO/c7
+ M/tKjCN/itILeFdoRRUiNGNZnkcwntRpBO/Q4JztvR91bttwbzd4H3GdvkyWiXSYFVOn
+ en5r3JE4iRYY78nBWNfXYZA4CQFCIRs9SMjm66vnmv92+6lxgxDImVIfmcADHcxhe+Op
+ mDVFeiWgvoRsNhQDAN6oHCYMeoQQUkMZ/Gj4Ik883hvmaA/EnlXxXmsPzQ81sYJdakf8
+ i+Z3TtZ68iVrLsxbGElKX3TQNiWTFgJ+lBLquKXvylSvR29jmdFd/764RK3C5ZAgki5v
+ jjSA==
+X-Gm-Message-State: AOJu0YzeoeV84r9NxrHVdux8yc3DJdrCi/JhQax4WJZ11+aANpWiWt6W
+ 7frvx9UmAZSFA4pzfAahjV0ILAAM1TukN9Ghuj8UR93EGl045Uld92llT28U41zfc6UXGRwt4sM
+ j
+X-Gm-Gg: ASbGncuyYEvOIb05PaPRZlm2EReHalXHrsR7CVi/C0OC30b+LclgAGOq0n1o6b6NI0a
+ hIT03sIq6JQvwwmHhExqXgrikPs3uQdCvt1Yf1H4gmseFZG6NTUgypoj2K6jcT2sDfneoxevID4
+ HFoGZqesnQOSYlFDUf3D0Zzgkamrl/2Od03+UURytz2ZkFn73y5pSxQuNgoV05U2VjyxqqcIaYX
+ LLqWjAAE8T6DU8su5IBAiQnUbOGGwZ8I+eXT+TMu/KKLnV9FX3VW7aYBcjbmwtN1A==
+X-Google-Smtp-Source: AGHT+IHKs7LruoyV1VGL0/xoZlxRzqR8XL+r657OpDHsMMmzD/lcUBAc+yLFZBSd6Y9H+o/Ea7Ro5Q==
+X-Received: by 2002:a05:6870:ac10:b0:288:4823:fe1b with SMTP id
+ 586e51a60fabf-29720b9abdcmr10493806fac.17.1732631060590; 
+ Tue, 26 Nov 2024 06:24:20 -0800 (PST)
+Received: from [10.25.0.199] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2129dba6782sm84523455ad.102.2024.11.26.06.20.20
+ 586e51a60fabf-2972715a4dcsm3738171fac.34.2024.11.26.06.24.19
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 06:20:21 -0800 (PST)
-Message-ID: <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
-Date: Tue, 26 Nov 2024 22:20:18 +0800
+ Tue, 26 Nov 2024 06:24:19 -0800 (PST)
+Message-ID: <eed165a5-c436-4277-b833-a59e7bfab67d@linaro.org>
+Date: Tue, 26 Nov 2024 08:24:17 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
- requested_size
-To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, yuval.yarom@rub.de, genkin@gatech.edu,
- Zhi Zhang <zzhangphd@gmail.com>
-References: <20241126080213.248-1-weichenforschung@gmail.com>
- <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
-From: Wei Chen <weichenforschung@gmail.com>
-In-Reply-To: <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
+Subject: Re: [PATCH 13/13] target/mips: Make DSPControl register 32-bit wide
+To: qemu-devel@nongnu.org
+References: <20241126131546.66145-1-philmd@linaro.org>
+ <20241126131546.66145-14-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241126131546.66145-14-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=weichenforschung@gmail.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,125 +101,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- > Please provide more information how this is supposed to work
+On 11/26/24 07:15, Philippe Mathieu-Daudé wrote:
+> Per 'MIPS® DSP Module for MIPS64™ Architecture, Revision 3.02',
+>   * 3.10 Additional Register State for the DSP Module
+>   ~Figure 3.5 MIPS® DSP Module Control Register (DSPControl) Format~
+> 
+> the DSPControl register is 32-bit wide.
+> 
+> Convert it from 'target_ulong' to 'uint32_t'.
+> 
+> Update TCG calls to truncate/extend from i32 to target_ulong.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/mips/cpu.h                        |  2 +-
+>   target/mips/tcg/sysemu_helper.h.inc      |  4 +--
+>   target/mips/sysemu/machine.c             |  5 ++-
+>   target/mips/tcg/dsp_helper.c             | 10 +++---
+>   target/mips/tcg/sysemu/cp0_helper.c      |  4 +--
+>   target/mips/tcg/translate.c              | 40 +++++++++++++++++-------
+>   target/mips/tcg/nanomips_translate.c.inc | 16 +++++++---
+>   7 files changed, 54 insertions(+), 27 deletions(-)
+> 
+> diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+> index f80b05885b1..bc636510132 100644
+> --- a/target/mips/cpu.h
+> +++ b/target/mips/cpu.h
+> @@ -472,7 +472,7 @@ struct TCState {
+>       target_ulong HI[MIPS_DSP_ACC];
+>       target_ulong LO[MIPS_DSP_ACC];
+>       target_ulong ACX[MIPS_DSP_ACC];
+> -    target_ulong DSPControl;
+> +    uint32_t DSPControl;
+>       int32_t CP0_TCStatus;
+>   #define CP0TCSt_TCU3    31
+>   #define CP0TCSt_TCU2    30
+> diff --git a/target/mips/tcg/sysemu_helper.h.inc b/target/mips/tcg/sysemu_helper.h.inc
+> index 1861d538de1..36ce21f863b 100644
+> --- a/target/mips/tcg/sysemu_helper.h.inc
+> +++ b/target/mips/tcg/sysemu_helper.h.inc
+> @@ -144,12 +144,12 @@ DEF_HELPER_2(mftgpr, tl, env, i32)
+>   DEF_HELPER_2(mftlo, tl, env, i32)
+>   DEF_HELPER_2(mfthi, tl, env, i32)
+>   DEF_HELPER_2(mftacx, tl, env, i32)
+> -DEF_HELPER_1(mftdsp, tl, env)
+> +DEF_HELPER_1(mftdsp, i32, env)
+>   DEF_HELPER_3(mttgpr, void, env, tl, i32)
+>   DEF_HELPER_3(mttlo, void, env, tl, i32)
+>   DEF_HELPER_3(mtthi, void, env, tl, i32)
+>   DEF_HELPER_3(mttacx, void, env, tl, i32)
+> -DEF_HELPER_2(mttdsp, void, env, tl)
+> +DEF_HELPER_2(mttdsp, void, env, i32)
+>   DEF_HELPER_0(dmt, tl)
+>   DEF_HELPER_0(emt, tl)
+>   DEF_HELPER_1(dvpe, tl, env)
+> diff --git a/target/mips/sysemu/machine.c b/target/mips/sysemu/machine.c
+> index 823a49e2ca1..c1fb72864f6 100644
+> --- a/target/mips/sysemu/machine.c
+> +++ b/target/mips/sysemu/machine.c
+> @@ -88,7 +88,10 @@ static const VMStateField vmstate_tc_fields[] = {
+>       VMSTATE_UINTTL_ARRAY(HI, TCState, MIPS_DSP_ACC),
+>       VMSTATE_UINTTL_ARRAY(LO, TCState, MIPS_DSP_ACC),
+>       VMSTATE_UINTTL_ARRAY(ACX, TCState, MIPS_DSP_ACC),
+> -    VMSTATE_UINTTL(DSPControl, TCState),
+> +    VMSTATE_UINT32(DSPControl, TCState),
+> +#if defined(TARGET_MIPS64)
+> +    VMSTATE_UNUSED(4),
+> +#endif /* TARGET_MIPS64 */
+>       VMSTATE_INT32(CP0_TCStatus, TCState),
+>       VMSTATE_INT32(CP0_TCBind, TCState),
+>       VMSTATE_UINTTL(CP0_TCHalt, TCState),
 
-We initially discovered that virtio-mem could be used by a malicious
-agent to trigger the Rowhammer vulnerability and further achieve a VM
-escape.
+This would go into the new subsection, and you wouldn't need padding, since we're already 
+incrementing version numbers for migration.
 
-Simply speaking, Rowhammer is a DRAM vulnerability where frequent access
-to a memory location might cause voltage leakage to adjacent locations,
-effectively flipping bits in these locations. In other words, with
-Rowhammer, an adversary can modify the data stored in the memory.
-
-For a complete attack, an adversary needs to: a) determine which parts
-of the memory are prone to bit flips, b) trick the system to store
-important data on those parts of memory and c) trigger bit flips to
-tamper important data.
-
-Now, for an attacker who only has access to their VM but not to the
-hypervisor, one important challenge among the three is b), i.e., to give
-back the memory they determine as vulnerable to the hypervisor. This is
-where the pitfall for virtio-mem lies: the attacker can modify the
-virtio-mem driver in the VM's kernel and unplug memory proactively.
-
-The current impl of virtio-mem in qemu does not check if it is valid for
-the VM to unplug memory. Therefore, as is proved by our experiments,
-this method works in practice.
-
- > whether this is a purely theoretical case, and how relevant this is in
- > practice.
-
-In our design, on a host machine equipped with certain Intel processors
-and inside a VM that a) has a passed-through PCI device, b) has a vIOMMU
-and c) has a virtio-mem device, an attacker can force the EPT to use
-pages that are prone to Rowhammer bit flips and thus modify the EPT to
-gain read and write privileges to an arbitrary memory location.
-
-Our efforts involved conducting end-to-end attacks on two separate
-machines with the Core i3-10100 and the Xeon E2124 processors
-respectively, and has achieved successful VM escapes.
-
- > Further, what about virtio-balloon, which does not even support
- > rejecting requests?
-
-virtio-balloon does not work with device passthrough currently, so we
-have yet to produce a feasible attack with it.
-
- > I recall that that behavior was desired once the driver would support
- > de-fragmenting unplugged memory blocks.
-
-By "that behavior" do you mean to unplug memory when size <=
-requested_size? I am not sure how that is to be implemented.
-
- > Note that VIRTIO_MEM_REQ_UNPLUG_ALL would still always be allowed
-
-That is true, but the attacker will want the capability to release a
-specific sub-block.
-
-In fact, a sub-block is still somewhat coarse, because most likely there
-is only one page in a sub-block that contains potential bit flips. When
-the attacker spawns EPTEs, they have to spawn enough to make sure the
-target page is used to store the EPTEs.
-
-A 2MB sub-block can store 2MB/4KB*512=262,144 EPTEs, equating to at
-least 1GB of memory. In other words, the attack program exhausts 1GB of
-memory just for the possibility that KVM uses the target page to store
-EPTEs.
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
-Best regards,
-Wei Chen
-
-On 2024/11/26 20:29, David Hildenbrand wrote:
-> On 26.11.24 09:02, Wei Chen wrote:
->> A malicious guest can exploit virtio-mem to release memory back to the
->> hypervisor and attempt Rowhammer attacks.
->
-> Please provide more information how this is supposed to work, whether 
-> this is a purely theoretical case, and how relevant this is in practice.
->
-> Because I am not sure how relevant and accurate this statement is, and 
-> if any action is needed at all.
->
-> Further, what about virtio-balloon, which does not even support 
-> rejecting requests?
->
-> The only case reasonable for
->> unplugging is when the size > requested_size.
->
-> I recall that that behavior was desired once the driver would support 
-> de-fragmenting unplugged memory blocks. I don't think drivers do that 
-> today (would have to double-check the Windows one). The spec does not 
-> document what is to happen in that case.
->
-> Note that VIRTIO_MEM_REQ_UNPLUG_ALL would still always be allowed, so 
-> this change would not cover all cases. VIRTIO_MEM_REQ_UNPLUG_ALL could 
-> be ratelimited -- if there is a real issue here.
->
->
->>
->> Signed-off-by: Wei Chen <weichenforschung@gmail.com>
->> Signed-off-by: Zhi Zhang <zzhangphd@gmail.com>
->> ---
->>   hw/virtio/virtio-mem.c | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
->> index 80ada89551..4ef67082a2 100644
->> --- a/hw/virtio/virtio-mem.c
->> +++ b/hw/virtio/virtio-mem.c
->> @@ -671,6 +671,10 @@ static int 
->> virtio_mem_state_change_request(VirtIOMEM *vmem, uint64_t gpa,
->>           return VIRTIO_MEM_RESP_NACK;
->>       }
->>   +    if (!plug && vmem->size <= vmem->requested_size) {
->> +        return VIRTIO_MEM_RESP_NACK;
->> +    }
->> +
->>       /* test if really all blocks are in the opposite state */
->>       if ((plug && !virtio_mem_is_range_unplugged(vmem, gpa, size)) ||
->>           (!plug && !virtio_mem_is_range_plugged(vmem, gpa, size))) {
->
->
+r~
 
