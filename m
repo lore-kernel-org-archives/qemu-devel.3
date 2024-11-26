@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D131BD6552E
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E94FCD6552D
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFyxi-0007mI-RC; Tue, 26 Nov 2024 12:02:55 -0500
+	id 1tFyxh-0007le-C5; Tue, 26 Nov 2024 12:02:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFyxg-0007kb-4f
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:52 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tFyxd-0007id-VC
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:49 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFyxe-00026J-Fs
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:51 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43155abaf0bso54060535e9.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 09:02:50 -0800 (PST)
+ id 1tFyxc-00025j-3v
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:49 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-382610c7116so3155432f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 09:02:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732640569; x=1733245369; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732640566; x=1733245366; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3W6K66990zHqezmpYgbBot+Izh9ypQHacNdBXiFdB4o=;
- b=gnP5jgIxO2RSHNd7l7/eZtHMyYFF8CEAxCzFSrSh3oFea5wJnKNZ2mye/1rHk8FCWJ
- Fnid4rr9MK/z1/wbYATzzzIoJQpzOzZvCe2ZLyhJir49ibNBH+yNldMOPPcLjl9GlhUb
- jAu+12+yGi26gfCa9xlsO/IU8vOByXEWBV+ljFCz+I/5pYhVRgTUvZ67skSjE1OXnYxQ
- kFYe4aGval+u2DRwsTmhpqH250qjn/YDI3aHl2j6vuF0peFkwk15TRZAGvmOmuv+apVX
- P4wTP/+f2KP+McjWLF10a5/SM6bQv3Ar7IhBYNqb5sul9Y+dOtI9mf0QZot0sNsfEYFW
- Kijg==
+ :reply-to; bh=Bia3Nu7mTs0/BpblAmMLwXurER5c+Mz/qR+4adC7kjU=;
+ b=IU2mHCcQ5dlkAAZTitleBHD92plO4NoMit/+3XiQa+a/UcHk59Ihc5b+Gd3C6+F/da
+ OlmR7J00bKt4reOIS+pysp1HcdPQ+3105noJgxD8PO8wl6tef3yCpuS7SXyg+UZRvHO9
+ Yqa8fVIZffM7YLN40tIDca6VSnyrsj0iPauoAIl3LUAC6OLKAUPeiKb4hxZnp757kQAp
+ qoj4SMOWaMBdv0G4o5IiglqWw5F49q+s1pZZsqrFwSuvPqxanVlR22QOvgt+tgsttEyY
+ KVeqJ3oNSDziXDdMX/DF9dkwQkqQV2Z9zifLbdMHynKNtW3fw4GXXUzzaPV4fMn9s3u4
+ hHiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732640569; x=1733245369;
+ d=1e100.net; s=20230601; t=1732640566; x=1733245366;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3W6K66990zHqezmpYgbBot+Izh9ypQHacNdBXiFdB4o=;
- b=s9gHC9QcFQiSZqwzYpNv8fB1nfPYK/MEQ1IgvQKa4Sal8pjRDL4PIMGcoA30SA9piA
- wvmeAUCPdojYRlf2jTg1F745CaEMJYyYXXewNcAI1BTTdxEsdyVawzOwVjZwhzqcxzUI
- mDqHr6BcjGHoiOXfuEc9MR5Q2vAkktZyAL8jlgd8x2c9H/zHkgzE/LR0BLNWHyF8LTEE
- dpEycYndr+4F00RGZGujLyZGw+10u6KchiXBCoT1QKNgZTcOcCbkcZdedp45YDEs61U/
- 5ldeFvae1fUi0Ot9vzA3yrSZr/ibopqKEIwjU5dfeh55bxhpfLb8jAAfoSl/csgxCaQ9
- Q2EQ==
-X-Gm-Message-State: AOJu0YyVwEcnBCbL5kLDi/s0I0iuYb9QApZiJuNqnLiGC+1YMHUTPVD7
- +wwNKseIGXxshxHOOhgxtZQjZRvei3lIlHCID9H9MF2dL1XDKjhrD03/LX3E6dkedqkn1IUF5s7
+ bh=Bia3Nu7mTs0/BpblAmMLwXurER5c+Mz/qR+4adC7kjU=;
+ b=KwooMzjCPFmSLxxTr5ZsEWc8HqaHZn/tYHFuHcb8blTIg4Wg+lIv0ytuR8+PugDULn
+ c4Y5jb5JPbGe95dXeFMfsgQOgXE193jmkVasu3wiLisPjWyJV+gsJLb6Sa3Ig+Vc5NEq
+ h0QhGmGMH2lfeK7I6546iwOuIS6KNT+js37QkebmKb8bGhhNghU1sPznO/RD9cosl75o
+ NCEk6f1ifoqtq3MGRZaLAQ2QRtX2o1BcnCYmCkDnV0C1CpgTutslsNGGnDW/z7uAQDxB
+ N8xjcLQ5EdZNLYnqr5b25Ygurq6MRaGboNiF09i0CTVTAb5mpVhdEjSjxE2HJr1y15N8
+ 8dPA==
+X-Gm-Message-State: AOJu0Yxk+0AQrhLQu0YYPe7mrvARuvwH8iJuCs+G1zmdtZd+a8pgqVIw
+ BTyIhYHI6Ar4VMNyXMVIxRB2fmw/6GLW5aU1fgdSdnav9Px6fdmXPecamOHqbb25Em6KWUE5+qU
  w
-X-Gm-Gg: ASbGncvLuUT4sqhQndSQcXyEvMTXYfVmGuxa8JSgQ2xYReAOXgCrCGV0ibabUCDsg9x
- LIQPgA1t6FaUiODPxM6AYKzUIgUfpZ4SpmB2SfwCBSPRJtCw+e7kxMSz5eWChhS1v9U3Scj0UQw
- SxqctiIw6hYfN9SxpomJ2X4Xr/zDa+ZXQnbN0aQRvMzQumFWgt/FbR36jJtNruQWZTbPzIKWaRP
- a+mGnEDHOlpt52NbDW3oZML8QnNBJl67esdtd42X0M6NEGOwGjYlwV6
-X-Google-Smtp-Source: AGHT+IGUDemz5XVmN+fyqFQlFY7k6S5TLIJq+LQJLzuS5Q0r03iELFdPmCO8x5D7ChfswpAsqSs/gw==
-X-Received: by 2002:a05:600c:190d:b0:42b:af5a:109 with SMTP id
- 5b1f17b1804b1-434a9de8bf7mr11115e9.24.1732640566892; 
+X-Gm-Gg: ASbGncu4cvDLf82o8NaOj8yJIsb0N0rqqUG/4xhVMeePjy0NscWmdd9YSmN59XF0KHF
+ g/CEfmRDu8SNlWFBuW1FI9tl4SYg39sNCJblmdl33sesidAbHG25vTg5EU8K6OvZ67eDc/Cz6Ex
+ 7iUo1WEQB5mfGTo/w0+mucf4Li8PHlx0rW1HgGjIKoiC4wDO+wCnZN/UuM5ots5Mqth3OaI6l4F
+ JfyR5oCdmWeSF7dnlQ5diC5pZ3lar6sJ3LrIFN0jsee1tkE6XX7WGyZ
+X-Google-Smtp-Source: AGHT+IFBJTnwIjGEQcv3Q1Y1pKLdamk4Zr+ulniyLFiRryAYAoC0jnDo03NEXNrLVP+SYYLecxmkog==
+X-Received: by 2002:a05:6000:a18:b0:382:49f9:74bb with SMTP id
+ ffacd0b85a97d-38260b8c87cmr16058185f8f.35.1732640566420; 
  Tue, 26 Nov 2024 09:02:46 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
@@ -65,17 +65,17 @@ Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  Tue, 26 Nov 2024 09:02:46 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 9/9] docs/system/arm/aspeed: add missing model
- supermicrox11spi-bmc
-Date: Tue, 26 Nov 2024 17:02:24 +0000
-Message-Id: <20241126170224.2926917-10-peter.maydell@linaro.org>
+Subject: [PULL 8/9] docs/system/arm/fby35: update link to product page
+Date: Tue, 26 Nov 2024 17:02:23 +0000
+Message-Id: <20241126170224.2926917-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241126170224.2926917-1-peter.maydell@linaro.org>
 References: <20241126170224.2926917-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,35 +101,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Message-id: 20241122225049.1617774-13-pierrick.bouvier@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20241122225049.1617774-8-pierrick.bouvier@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/aspeed.rst | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ docs/system/arm/fby35.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 2e9ba12f7ae..d17fe7a4fc8 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -1,5 +1,5 @@
--Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``tiogapass-bmc``, ``tacoma-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
--========================================================================================================================================================================================================================================================================================================================================================================================================
-+Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``tacoma-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
-+==================================================================================================================================================================================================================================================================================================================================================================================================================================
+diff --git a/docs/system/arm/fby35.rst b/docs/system/arm/fby35.rst
+index 742b887d44c..bf6da6baa2a 100644
+--- a/docs/system/arm/fby35.rst
++++ b/docs/system/arm/fby35.rst
+@@ -12,7 +12,7 @@ include various compute accelerators (video, inferencing, etc). At the moment,
+ only the first server slot's BIC is included.
  
- The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
- Aspeed evaluation boards. They are based on different releases of the
-@@ -15,7 +15,8 @@ AST2400 SoC based machines :
+ Yosemite v3.5 is itself a sled which fits into a 40U chassis, and 3 sleds
+-can be fit into a chassis. See `here <https://www.opencompute.org/products/423/wiwynn-yosemite-v3-server>`__
++can be fit into a chassis. See `here <https://www.opencompute.org/products-chiplets/237/wiwynn-yosemite-v3-server>`__
+ for an example.
  
- - ``palmetto-bmc``         OpenPOWER Palmetto POWER8 BMC
- - ``quanta-q71l-bmc``      OpenBMC Quanta BMC
--- ``supermicrox11-bmc``    Supermicro X11 BMC
-+- ``supermicrox11-bmc``    Supermicro X11 BMC (ARM926EJ-S)
-+- ``supermicrox11spi-bmc``    Supermicro X11 SPI BMC (ARM1176)
- 
- AST2500 SoC based machines :
- 
+ In this generation, the BMC is an AST2600 and each BIC is an AST1030. The BMC
 -- 
 2.34.1
 
