@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1DC3D3B996
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5880FD3B99F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 15:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFwpp-00043o-27; Tue, 26 Nov 2024 09:46:37 -0500
+	id 1tFxBB-0007tR-Pn; Tue, 26 Nov 2024 10:08:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFwpn-00043Z-3j
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:46:35 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFxBA-0007t5-KA
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 10:08:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFwpl-0006Os-2o
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:46:34 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFxB8-0001bb-Jw
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 10:08:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732632390;
+ s=mimecast20190719; t=1732633716;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OM3KlEC6LYcGl9lOceCER6TDVM2iQDHubZ/D452Bjc4=;
- b=RspOpTNmB7S4kykXQjm5scW37tGBMcUjZ/pIF66EadYz9a9FgYqLpa1Tn6GrFJQ8DLRaoi
- wCs2HqjZrFYReuYP6e9YG3miG8HgC91Awbe5q9SGo4Rwj/6LSxGH3pCCLd6SQlPaJHFh7J
- GiISPSIZ9ri1Nwf1HPJ4iM13etUau5Q=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=x9tFEiuEIhgqcvA8RB1zZQzmWwKsRps+zAsWtvHuaXU=;
+ b=c/xRs9bnNniS1j7Cb4eAX2c1lxWSYzSidJqG63TrB9iLTwmMM7NQoRS0D5cE8dzN5FID1T
+ RaowTuXLksTMxHeMcf0rfIWWBxbuaSMDfz3HhiZV84LHzZXLcfQHJdjlM9p5Sh+VahWdJ6
+ bUf4BMJpc2XImXgjpoSP+pnPaSBQNtI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-6XdWY0RTNpWUgQ4b_zaNfQ-1; Tue, 26 Nov 2024 09:46:28 -0500
-X-MC-Unique: 6XdWY0RTNpWUgQ4b_zaNfQ-1
-X-Mimecast-MFC-AGG-ID: 6XdWY0RTNpWUgQ4b_zaNfQ
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38256bf4828so2943489f8f.1
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:46:28 -0800 (PST)
+ us-mta-643-RFmov09vNgK8yHOtjIExXg-1; Tue, 26 Nov 2024 10:08:33 -0500
+X-MC-Unique: RFmov09vNgK8yHOtjIExXg-1
+X-Mimecast-MFC-AGG-ID: RFmov09vNgK8yHOtjIExXg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4349cda1899so19985035e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 07:08:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732632387; x=1733237187;
+ d=1e100.net; s=20230601; t=1732633712; x=1733238512;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
+ :content-language:references:cc:to:from:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=OM3KlEC6LYcGl9lOceCER6TDVM2iQDHubZ/D452Bjc4=;
- b=VQPFE2ouehT6BuKOpaO+Gp6wLED4a/lZVba5sbwo4c7vcCZ2s1XZUBDHPAs2saTZYc
- Ef62HuNcIqeydxrITY7RthmaqF/pr6GRUKh5TaaP7BVn4Vio4FtlMv81A3NOiJRxi7hg
- xfx/KFpmgpw8ncvhJxRQ/NCQv7GE72GZSmdV0JCvrBZklKQcOASY6pEYWy5LfiSCF6tG
- a10JieYygeVyXEVo+icBVNW40Vb2s3UCVv9uacO+CoQkpyJtmAvvQVDVHKCWXjV0U03X
- 4u5r3N1US8Qog2R7wrwiC7m+DXOqqVJ2xkoqkBSeM/gXQ/MYX1RcALVAxCd2NTXpEqUZ
- GIHw==
+ bh=x9tFEiuEIhgqcvA8RB1zZQzmWwKsRps+zAsWtvHuaXU=;
+ b=P478xycJF7XLFegbgjdD7Mjsh6TAxkfLrBGM7VyCfWrUFaLt99tgRDer2+RAJ+9Viu
+ IxqPnbb3Y+da7thw/5HqDAL8P9SAbrIT/gnN2PPt64+eYNeHBhMpgHLQ1Cd8eHxaKEns
+ tFsxbFQBoqc6UnxPWC4vlvu2o9AJpM4jqttOlPRAFl2beubSHv70gb9J+2oW7MYP9Y3b
+ 5oldfMuvQuQq/xcNI08mW9BVNNMppQns/9Seiy+kFzmY84sewCVFOpvPKBWBFE88TbPk
+ e9Q6OTfXfSYOLmJhh6rpGDzqN88bWqGxPkJ3WonMDQm/NnDkpexFVeq6jpvsWbX+Yfyy
+ tRyg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXTNsja2c6d7tHq6vO3/g1n858LRssU9KvhMTQQhXHLvvyjw/wXB6nItQsNHaFbVkhuMHnh+DI2qEuV@nongnu.org
-X-Gm-Message-State: AOJu0Yw2IGEIlV/HQJPQGcH5/uYpfoWcYiS00uJu8etLgTRvoX4AZ4tu
- SEDFVDSTMxvvi04mbLRHTo16ihSaFpTzSPTSLK4esbE7evgvHHUcHluKJMwFFlQwNaIMW+HRn06
- Mq4cWDHi/DTa2pRd4VQSU5yM2vVAsor/ePOy5uP+nH3TMseyYE/wJ
-X-Gm-Gg: ASbGncvLSjpStQMC8a1QL9qiuhpFB8080/cFraOmFVHBP7Z1ZoIlm/fVoidetwtSoiM
- Omj49q2lOcNX1cqZPjMp7xyehHqu1HcqUyCKnHSRcy5k3e4h6YE3SBRZQ4wthHJl+xLyThHzWSB
- dG1r9ssVOyUzEjfNdJgh5jMpBbjfK2xzvyHMdeoxtji+CysebXea+yTJP1G3KOwO+uZXGCn8MmM
- U2CXikBLR+K4Osn+chpg60gydo46lVjoj2HETOouLgp6PKF58uPAZOdiMFAFP7eXslXl9/DMHCt
- u4kqWGM1CnkiYe3vx+lnReKLgpqbLsHBbgT/8cjdKN/OGtxSeQKqJC4U9eYYlacktuIme9QoT5L
- 5pw==
-X-Received: by 2002:a05:6000:184c:b0:381:ed32:d604 with SMTP id
- ffacd0b85a97d-385bfaea7e1mr3257184f8f.10.1732632387307; 
- Tue, 26 Nov 2024 06:46:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH/tyMFoqAS0Uj9qLtt4wdKyd1v6Afnyn6tcsmqYHMHcIEiDRMrmXU5Wn1jJJt5yq9ef8K7Fg==
-X-Received: by 2002:a05:6000:184c:b0:381:ed32:d604 with SMTP id
- ffacd0b85a97d-385bfaea7e1mr3257161f8f.10.1732632386897; 
- Tue, 26 Nov 2024 06:46:26 -0800 (PST)
+ AJvYcCWpHgSjJigfaVFFlEqYr/xIr+UipSQUHe6RlexC0L/B3p7KZJXtkW92t7GS0mBBsIJWebCLya4leUQ5@nongnu.org
+X-Gm-Message-State: AOJu0YypcHW22TeaC9lu72FIQjvL8A1CZew8csPTqNH0sNXoGNzXYsF/
+ 11NrCAvwyViXugkMkST2J9cDjB8rQxfZQnuUREBEh3/mSYzw7ysEhtLLuflP5FNyMm28sWc+gwI
+ zMNNB/voftnrAYWNEt4R0eZxYrOAGWGrcYHGT/Pm+DT2dhj2e2xXj
+X-Gm-Gg: ASbGncui461NEqBqt/ZOAoQQ2kcmWCScfo4dxdQFJETj25kGm90YneDFd+tWztbEJRh
+ uNmRZNodBmArUsTF3ub7cZtKZWLYbUwGodIvCPoTI0IgD+TKv5zM1bMbKP/74cx9hP0hhmqfE6B
+ x9IhsUddOuwZdWWaNHCoO/4QP0ORKMzRjSjnmNaOjg3vAh0zN0H2NbF2bsZW4mp5JsdLd811foc
+ +LmbXFcsZatpMtvard7Exx8M+1VukvKhvlihXiGKJz9odrlOFIL61dwNFJFKXjiFdLKIiZedVPb
+ YHqb0ja91lz9S0S82hKmV5WXd5GV/3AdZYmmpkWwGHO6aY8S+OcmIfuJh7DJGVPDi76VRZlzDge
+ eRQ==
+X-Received: by 2002:a05:600c:21d3:b0:434:9936:c828 with SMTP id
+ 5b1f17b1804b1-4349936c93fmr110094855e9.12.1732633712013; 
+ Tue, 26 Nov 2024 07:08:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHGXfSf4iDKX/p8iQTWP24Wja4sDBl6OHNOl//HChF3xnPm/M6DFZldnsz6cQSiW+nlRP2jJw==
+X-Received: by 2002:a05:600c:21d3:b0:434:9936:c828 with SMTP id
+ 5b1f17b1804b1-4349936c93fmr110087685e9.12.1732633704922; 
+ Tue, 26 Nov 2024 07:08:24 -0800 (PST)
 Received: from ?IPV6:2003:cb:c72d:e900:38f3:8bdd:52f7:5e83?
  (p200300cbc72de90038f38bdd52f75e83.dip0.t-ipconnect.de.
  [2003:cb:c72d:e900:38f3:8bdd:52f7:5e83])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fb36612sm13446807f8f.59.2024.11.26.06.46.25
+ 5b1f17b1804b1-433b45d4dd6sm238451565e9.24.2024.11.26.07.08.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 06:46:26 -0800 (PST)
-Message-ID: <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
-Date: Tue, 26 Nov 2024 15:46:25 +0100
+ Tue, 26 Nov 2024 07:08:24 -0800 (PST)
+Message-ID: <79c4ed2c-2ac8-43b5-ad90-2b91f6e7fd8f@redhat.com>
+Date: Tue, 26 Nov 2024 16:08:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
  requested_size
+From: David Hildenbrand <david@redhat.com>
 To: Wei Chen <weichenforschung@gmail.com>, qemu-devel@nongnu.org
 Cc: mst@redhat.com, yuval.yarom@rub.de, genkin@gatech.edu,
  Zhi Zhang <zzhangphd@gmail.com>
 References: <20241126080213.248-1-weichenforschung@gmail.com>
  <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
  <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
-From: David Hildenbrand <david@redhat.com>
+ <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -134,7 +135,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
+In-Reply-To: <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -162,107 +163,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.11.24 15:20, Wei Chen wrote:
->   > Please provide more information how this is supposed to work
+On 26.11.24 15:46, David Hildenbrand wrote:
+> On 26.11.24 15:20, Wei Chen wrote:
+>>    > Please provide more information how this is supposed to work
+>>
 > 
-
-Thanks for the information. A lot of what you wrote belongs into the 
-patch description. Especially, that this might currently only be 
-relevant with device passthrough + viommu.
-
-> We initially discovered that virtio-mem could be used by a malicious
-> agent to trigger the Rowhammer vulnerability and further achieve a VM
-> escape.
+> Thanks for the information. A lot of what you wrote belongs into the
+> patch description. Especially, that this might currently only be
+> relevant with device passthrough + viommu.
 > 
-> Simply speaking, Rowhammer is a DRAM vulnerability where frequent access
-> to a memory location might cause voltage leakage to adjacent locations,
-> effectively flipping bits in these locations. In other words, with
-> Rowhammer, an adversary can modify the data stored in the memory.
+>> We initially discovered that virtio-mem could be used by a malicious
+>> agent to trigger the Rowhammer vulnerability and further achieve a VM
+>> escape.
+>>
+>> Simply speaking, Rowhammer is a DRAM vulnerability where frequent access
+>> to a memory location might cause voltage leakage to adjacent locations,
+>> effectively flipping bits in these locations. In other words, with
+>> Rowhammer, an adversary can modify the data stored in the memory.
+>>
+>> For a complete attack, an adversary needs to: a) determine which parts
+>> of the memory are prone to bit flips, b) trick the system to store
+>> important data on those parts of memory and c) trigger bit flips to
+>> tamper important data.
+>>
+>> Now, for an attacker who only has access to their VM but not to the
+>> hypervisor, one important challenge among the three is b), i.e., to give
+>> back the memory they determine as vulnerable to the hypervisor. This is
+>> where the pitfall for virtio-mem lies: the attacker can modify the
+>> virtio-mem driver in the VM's kernel and unplug memory proactively.
 > 
-> For a complete attack, an adversary needs to: a) determine which parts
-> of the memory are prone to bit flips, b) trick the system to store
-> important data on those parts of memory and c) trigger bit flips to
-> tamper important data.
+> But b), as you write, is not only about giving back that memory to the
+> hypervisor. How can you be sure (IOW trigger) that the system will store
+> "important data" like EPTs?
 > 
-> Now, for an attacker who only has access to their VM but not to the
-> hypervisor, one important challenge among the three is b), i.e., to give
-> back the memory they determine as vulnerable to the hypervisor. This is
-> where the pitfall for virtio-mem lies: the attacker can modify the
-> virtio-mem driver in the VM's kernel and unplug memory proactively.
-
-But b), as you write, is not only about giving back that memory to the 
-hypervisor. How can you be sure (IOW trigger) that the system will store 
-"important data" like EPTs?
-
+>>
+>> The current impl of virtio-mem in qemu does not check if it is valid for
+>> the VM to unplug memory. Therefore, as is proved by our experiments,
+>> this method works in practice.
+>>
+>>    > whether this is a purely theoretical case, and how relevant this is in
+>>    > practice.
+>>
+>> In our design, on a host machine equipped with certain Intel processors
+>> and inside a VM that a) has a passed-through PCI device, b) has a vIOMMU
+>> and c) has a virtio-mem device, an attacker can force the EPT to use
+>> pages that are prone to Rowhammer bit flips and thus modify the EPT to
+>> gain read and write privileges to an arbitrary memory location.
+>>
+>> Our efforts involved conducting end-to-end attacks on two separate
+>> machines with the Core i3-10100 and the Xeon E2124 processors
+>> respectively, and has achieved successful VM escapes.
 > 
-> The current impl of virtio-mem in qemu does not check if it is valid for
-> the VM to unplug memory. Therefore, as is proved by our experiments,
-> this method works in practice.
+> Out of curiosity, are newer CPUs no longer affected?
 > 
->   > whether this is a purely theoretical case, and how relevant this is in
->   > practice.
+>>
+>>    > Further, what about virtio-balloon, which does not even support
+>>    > rejecting requests?
+>>
+>> virtio-balloon does not work with device passthrough currently, so we
+>> have yet to produce a feasible attack with it.
 > 
-> In our design, on a host machine equipped with certain Intel processors
-> and inside a VM that a) has a passed-through PCI device, b) has a vIOMMU
-> and c) has a virtio-mem device, an attacker can force the EPT to use
-> pages that are prone to Rowhammer bit flips and thus modify the EPT to
-> gain read and write privileges to an arbitrary memory location.
+> So is one magic bit really that for your experiments, one needs a viommu?
 > 
-> Our efforts involved conducting end-to-end attacks on two separate
-> machines with the Core i3-10100 and the Xeon E2124 processors
-> respectively, and has achieved successful VM escapes.
-
-Out of curiosity, are newer CPUs no longer affected?
-
+> The only mentioning of rohammer+memory ballooning I found is:
+> https://www.whonix.org/pipermail/whonix-devel/2016-September/000746.html
 > 
->   > Further, what about virtio-balloon, which does not even support
->   > rejecting requests?
+>>
+>>    > I recall that that behavior was desired once the driver would support
+>>    > de-fragmenting unplugged memory blocks.
+>>
+>> By "that behavior" do you mean to unplug memory when size <=
+>> requested_size? I am not sure how that is to be implemented.
 > 
-> virtio-balloon does not work with device passthrough currently, so we
-> have yet to produce a feasible attack with it.
-
-So is one magic bit really that for your experiments, one needs a viommu?
-
-The only mentioning of rohammer+memory ballooning I found is: 
-https://www.whonix.org/pipermail/whonix-devel/2016-September/000746.html
-
+> To defragment, the idea was to unplug one additional block, so we can
+> plug another block.
 > 
->   > I recall that that behavior was desired once the driver would support
->   > de-fragmenting unplugged memory blocks.
+>>
+>>    > Note that VIRTIO_MEM_REQ_UNPLUG_ALL would still always be allowed
+>>
+>> That is true, but the attacker will want the capability to release a
+>> specific sub-block.
 > 
-> By "that behavior" do you mean to unplug memory when size <=
-> requested_size? I am not sure how that is to be implemented.
-
-To defragment, the idea was to unplug one additional block, so we can 
-plug another block.
-
+> So it won't be sufficient to have a single sub-block plugged and then
+> trigger VIRTIO_MEM_REQ_UNPLUG_ALL?
 > 
->   > Note that VIRTIO_MEM_REQ_UNPLUG_ALL would still always be allowed
+>>
+>> In fact, a sub-block is still somewhat coarse, because most likely there
+>> is only one page in a sub-block that contains potential bit flips. When
+>> the attacker spawns EPTEs, they have to spawn enough to make sure the
+>> target page is used to store the EPTEs.
+>>
+>> A 2MB sub-block can store 2MB/4KB*512=262,144 EPTEs, equating to at
+>> least 1GB of memory. In other words, the attack program exhausts 1GB of
+>> memory just for the possibility that KVM uses the target page to store
+>> EPTEs.
 > 
-> That is true, but the attacker will want the capability to release a
-> specific sub-block.
-
-So it won't be sufficient to have a single sub-block plugged and then 
-trigger VIRTIO_MEM_REQ_UNPLUG_ALL?
-
+> Ah, that makes sense.
 > 
-> In fact, a sub-block is still somewhat coarse, because most likely there
-> is only one page in a sub-block that contains potential bit flips. When
-> the attacker spawns EPTEs, they have to spawn enough to make sure the
-> target page is used to store the EPTEs.
-> 
-> A 2MB sub-block can store 2MB/4KB*512=262,144 EPTEs, equating to at
-> least 1GB of memory. In other words, the attack program exhausts 1GB of
-> memory just for the possibility that KVM uses the target page to store
-> EPTEs.
+> Can you compress what you wrote into the patch description? Further, I
+> assume we want to add a Fixes: tag and Cc: QEMU Stable
+> <qemu-stable@nongnu.org>
 
-Ah, that makes sense.
+I just recalled another scenario where we unplug memory: see 
+virtio_mem_cleanup_pending_mb() in the Linux driver as one example.
 
-Can you compress what you wrote into the patch description? Further, I 
-assume we want to add a Fixes: tag and Cc: QEMU Stable 
-<qemu-stable@nongnu.org>
+We first plug memory, then add the memory to Linux. If that adding 
+fails, we unplug the memory again.
 
-Thanks!
+So this change can turn the virtio_mem driver in Linux non-functional, 
+unfortunately.
 
 -- 
 Cheers,
