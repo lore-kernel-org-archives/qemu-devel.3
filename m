@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5109FD6555A
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 21:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C3AD65559
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 21:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tG30X-0005Ho-AL; Tue, 26 Nov 2024 16:22:05 -0500
+	id 1tG30w-00060l-Vx; Tue, 26 Nov 2024 16:22:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tG30V-0005HO-7b
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:22:03 -0500
+ id 1tG30v-0005xk-BT
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:22:29 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tG30T-0002mj-1H
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:22:02 -0500
+ id 1tG30t-0002y2-Nt
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:22:29 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tG30E-00000002pmL-1OTt; Tue, 26 Nov 2024 22:21:46 +0100
-Message-ID: <0dd32133-a10a-47f8-9c0d-94984749868a@maciej.szmigiero.name>
-Date: Tue, 26 Nov 2024 22:21:41 +0100
+ id 1tG30o-00000002pmv-0KCk; Tue, 26 Nov 2024 22:22:22 +0100
+Message-ID: <5838740c-6bf6-4ae2-ba65-130595a4892e@maciej.szmigiero.name>
+Date: Tue, 26 Nov 2024 22:22:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/24] thread-pool: Implement generic (non-AIO) pool
- support
+Subject: Re: [PATCH v3 05/24] migration: Add MIG_CMD_SWITCHOVER_START and its
+ load handler
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+ qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <babda1bbe43024baaa4a9ac855f7930b6679f2b7.1731773021.git.maciej.szmigiero@oracle.com>
- <87ldx7nlsj.fsf@suse.de>
- <7efee58f-90be-44a5-92b0-7b792e1ab906@maciej.szmigiero.name>
- <82c4e11b-8b90-4bd0-82dd-7c0f72932195@redhat.com>
+ <624309a8e37f7779336bd5c0573d24f155b2ed41.1731773021.git.maciej.szmigiero@oracle.com>
+ <3d208919-7ac0-4922-a61c-8475d8697822@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -85,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <82c4e11b-8b90-4bd0-82dd-7c0f72932195@redhat.com>
+In-Reply-To: <3d208919-7ac0-4922-a61c-8475d8697822@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=145.239.82.108;
@@ -112,138 +110,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.11.2024 20:25, Cédric Le Goater wrote:
-> On 11/25/24 20:55, Maciej S. Szmigiero wrote:
->> On 25.11.2024 20:41, Fabiano Rosas wrote:
->>> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
->>>
->>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>
->>>> Migration code wants to manage device data sending threads in one place.
->>>>
->>>> QEMU has an existing thread pool implementation, however it is limited
->>>> to queuing AIO operations only and essentially has a 1:1 mapping between
->>>> the current AioContext and the AIO ThreadPool in use.
->>>>
->>>> Implement generic (non-AIO) ThreadPool by essentially wrapping Glib's
->>>> GThreadPool.
->>>>
->>>> This brings a few new operations on a pool:
->>>> * thread_pool_wait() operation waits until all the submitted work requests
->>>> have finished.
->>>>
->>>> * thread_pool_set_max_threads() explicitly sets the maximum thread count
->>>> in the pool.
->>>>
->>>> * thread_pool_adjust_max_threads_to_work() adjusts the maximum thread count
->>>> in the pool to equal the number of still waiting in queue or unfinished work.
->>>>
->>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>>> ---
->>>>   include/block/thread-pool.h |   9 +++
->>>>   util/thread-pool.c          | 109 ++++++++++++++++++++++++++++++++++++
->>>>   2 files changed, 118 insertions(+)
->>>>
->>>> diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
->>>> index 6f27eb085b45..3f9f66307b65 100644
->>>> --- a/include/block/thread-pool.h
->>>> +++ b/include/block/thread-pool.h
->>>> @@ -38,5 +38,14 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
->>>>   int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg);
->>>>   void thread_pool_update_params(ThreadPoolAio *pool, struct AioContext *ctx);
->>>> +typedef struct ThreadPool ThreadPool;
->>>> +
->>>> +ThreadPool *thread_pool_new(void);
->>>> +void thread_pool_free(ThreadPool *pool);
->>>> +void thread_pool_submit(ThreadPool *pool, ThreadPoolFunc *func,
->>>> +                        void *opaque, GDestroyNotify opaque_destroy);
->>>> +void thread_pool_wait(ThreadPool *pool);
->>>> +bool thread_pool_set_max_threads(ThreadPool *pool, int max_threads);
->>>> +bool thread_pool_adjust_max_threads_to_work(ThreadPool *pool);
->>>>   #endif
->>>> diff --git a/util/thread-pool.c b/util/thread-pool.c
->>>> index 908194dc070f..d80c4181c897 100644
->>>> --- a/util/thread-pool.c
->>>> +++ b/util/thread-pool.c
->>>> @@ -374,3 +374,112 @@ void thread_pool_free_aio(ThreadPoolAio *pool)
->>>>       qemu_mutex_destroy(&pool->lock);
->>>>       g_free(pool);
->>>>   }
->>>> +
->>>> +struct ThreadPool { /* type safety */
->>>> +    GThreadPool *t;
->>>> +    size_t unfinished_el_ctr;
->>>> +    QemuMutex unfinished_el_ctr_mutex;
->>>> +    QemuCond unfinished_el_ctr_zero_cond;
->>>> +};
->>>> +
->>>> +typedef struct {
->>>> +    ThreadPoolFunc *func;
->>>> +    void *opaque;
->>>> +    GDestroyNotify opaque_destroy;
->>>> +} ThreadPoolElement;
->>>> +
->>>> +static void thread_pool_func(gpointer data, gpointer user_data)
->>>> +{
->>>> +    ThreadPool *pool = user_data;
->>>> +    g_autofree ThreadPoolElement *el = data;
->>>> +
->>>> +    el->func(el->opaque);
->>>> +
->>>> +    if (el->opaque_destroy) {
->>>> +        el->opaque_destroy(el->opaque);
->>>> +    }
->>>> +
->>>> +    QEMU_LOCK_GUARD(&pool->unfinished_el_ctr_mutex);
->>>> +
->>>> +    assert(pool->unfinished_el_ctr > 0);
->>>> +    pool->unfinished_el_ctr--;
->>>> +
->>>> +    if (pool->unfinished_el_ctr == 0) {
->>>> +        qemu_cond_signal(&pool->unfinished_el_ctr_zero_cond);
->>>> +    }
->>>> +}
->>>> +
->>>> +ThreadPool *thread_pool_new(void)
->>>> +{
->>>> +    ThreadPool *pool = g_new(ThreadPool, 1);
->>>> +
->>>> +    pool->unfinished_el_ctr = 0;
->>>> +    qemu_mutex_init(&pool->unfinished_el_ctr_mutex);
->>>> +    qemu_cond_init(&pool->unfinished_el_ctr_zero_cond);
->>>> +
->>>> +    pool->t = g_thread_pool_new(thread_pool_func, pool, 0, TRUE, NULL);
->>>> +    /*
->>>> +     * g_thread_pool_new() can only return errors if initial thread(s)
->>>> +     * creation fails but we ask for 0 initial threads above.
->>>> +     */
->>>> +    assert(pool->t);
->>>> +
->>>> +    return pool;
->>>> +}
->>>> +
->>>> +void thread_pool_free(ThreadPool *pool)
->>>> +{
->>>> +    g_thread_pool_free(pool->t, FALSE, TRUE);
->>>
->>> Should we make it an error to call thread_poll_free without first
->>> calling thread_poll_wait? I worry the current usage will lead to having
->>> two different ways of waiting with one of them (this one) being quite
->>> implicit.
->>>
+On 26.11.2024 20:37, Cédric Le Goater wrote:
+> On 11/17/24 20:20, Maciej S. Szmigiero wrote:
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> thread_pool_wait() can be used as a barrier between two sets of
->> tasks executed on a thread pool without destroying it or in a performance
->> sensitive path where we want to just wait for task completion while
->> deferring the free operation for later, less sensitive time.
+>> This QEMU_VM_COMMAND sub-command and its switchover_start SaveVMHandler is
+>> used to mark the switchover point in main migration stream.
+>>
+>> It can be used to inform the destination that all pre-switchover main
+>> migration stream data has been sent/received so it can start to process
+>> post-switchover data that it might have received via other migration
+>> channels like the multifd ones.
+>>
+>> Add also the relevant MigrationState bit stream compatibility property and
+>> its hw_compat entry.
+>>
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   hw/core/machine.c                  |  1 +
+>>   include/migration/client-options.h |  4 +++
+>>   include/migration/register.h       | 12 +++++++++
+>>   migration/colo.c                   |  3 +++
+>>   migration/migration-hmp-cmds.c     |  2 ++
+>>   migration/migration.c              |  3 +++
+>>   migration/migration.h              |  2 ++
+>>   migration/options.c                |  9 +++++++
+>>   migration/savevm.c                 | 39 ++++++++++++++++++++++++++++++
+>>   migration/savevm.h                 |  1 +
+>>   migration/trace-events             |  1 +
+>>   scripts/analyze-migration.py       | 11 +++++++++
+>>   12 files changed, 88 insertions(+)
+>>
+>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>> index a35c4a8faecb..ed8d39fd769f 100644
+>> --- a/hw/core/machine.c
+>> +++ b/hw/core/machine.c
+>> @@ -38,6 +38,7 @@
+>>   GlobalProperty hw_compat_9_1[] = {
+>>       { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
+>> +    { "migration", "send-switchover-start", "off"},
+>>   };
+>>   const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
+>> diff --git a/include/migration/client-options.h b/include/migration/client-options.h
+>> index 59f4b55cf4f7..289c9d776221 100644
+>> --- a/include/migration/client-options.h
+>> +++ b/include/migration/client-options.h
+>> @@ -10,6 +10,10 @@
+>>   #ifndef QEMU_MIGRATION_CLIENT_OPTIONS_H
+>>   #define QEMU_MIGRATION_CLIENT_OPTIONS_H
+>> +
+>> +/* properties */
+>> +bool migrate_send_switchover_start(void);
+>> +
+>>   /* capabilities */
+>>   bool migrate_background_snapshot(void);
+>> diff --git a/include/migration/register.h b/include/migration/register.h
+>> index 0b0292738320..ff0faf5f68c8 100644
+>> --- a/include/migration/register.h
+>> +++ b/include/migration/register.h
+>> @@ -279,6 +279,18 @@ typedef struct SaveVMHandlers {
+>>        * otherwise
+>>        */
+>>       bool (*switchover_ack_needed)(void *opaque);
+>> +
+>> +    /**
+>> +     * @switchover_start
+>> +     *
+>> +     * Notifies that the switchover has started. Called only on
+>> +     * the destination.
+>> +     *
+>> +     * @opaque: data pointer passed to register_savevm_live()
+>> +     *
+>> +     * Returns zero to indicate success and negative for error
+>> +     */
+>> +    int (*switchover_start)(void *opaque);
 > 
-> A comment above g_thread_pool_free() would be good to have since
-> the wait_ argument is TRUE and g_thread_pool_free() effectively
-> waits for all threads to complete.
+> We don't need an 'Error **' parameter  ? Just asking.
+
+This is only called from "loadvm_process_command(QEMUFile *f)",
+which does not support "Error" returns.
+
+>>   } SaveVMHandlers;
+>>   /**
+>> diff --git a/migration/colo.c b/migration/colo.c
+>> index 9590f281d0f1..a75c2c41b464 100644
+>> --- a/migration/colo.c
+>> +++ b/migration/colo.c
+>> @@ -452,6 +452,9 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+>>           bql_unlock();
+>>           goto out;
+>>       }
+>> +
+>> +    qemu_savevm_maybe_send_switchover_start(s->to_dst_file);
 > 
+> I would drop '_maybe_' from the name.
 
-Will add an appropriate comment there.
+I can drop it, but then there will be no hint in this function
+name that this sending is conditional on the relevant migration
+property (rather than unconditional).
 
+> 
 > Thanks,
 > 
 > C.
