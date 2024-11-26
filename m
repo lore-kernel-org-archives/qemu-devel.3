@@ -4,104 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37B27D3B7C1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 09:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F08FFD3B7C1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 09:30:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFro2-0000NB-JU; Tue, 26 Nov 2024 04:24:26 -0500
+	id 1tFrtE-00027U-VZ; Tue, 26 Nov 2024 04:29:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1tFro0-0000JS-5I; Tue, 26 Nov 2024 04:24:24 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dominique.martinet@atmark-techno.com>)
+ id 1tFrtD-000272-4P
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 04:29:47 -0500
+Received: from gw2.atmark-techno.com ([35.74.137.57])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1tFrnx-0001D1-Pq; Tue, 26 Nov 2024 04:24:23 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQ0qc5b001323;
- Tue, 26 Nov 2024 09:24:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=CXCPij
- +CpvPI+EzRSI7tOqQabILwsDPinX+hT4Ybcfs=; b=QbjpqvORwFPP2G8NH6mwQO
- 2fxs6yguiArG5hn99eNAI4BfJy73cZecycbjw6P64531gGqLP0quoRxKlbbaSeBG
- qB/hlen4Y9L88mpODx6aZB6n6hyW4+ChPhAEe2NL4Sfl1wFUe3wodg2LaSepBcDC
- Y46zgO1VgsmEydRIgFii4eK2Jo9NEw9/awZeQjkcszmOFpyw8crhW8FHkJm1rW1u
- fsJvNWafTb6V03opAEJILEsRr+mdCo+fybeXjkB1VE51GWA0C+JTQw1YvNcKZZDV
- L/eHOgcGdYEj99Ur22Xx8wDmHNOsrSuEN4YjFDhKnJutmO4QRTa4ibEfKzLrewxQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43386nd37u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Nov 2024 09:24:16 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4AQ9HbgN002240;
- Tue, 26 Nov 2024 09:24:16 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43386nd37q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Nov 2024 09:24:16 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4AQ8OARf000866;
- Tue, 26 Nov 2024 09:24:15 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 433sry94cv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Nov 2024 09:24:14 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4AQ9ODPs64094584
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 26 Nov 2024 09:24:13 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E9FAA2004B;
- Tue, 26 Nov 2024 09:24:12 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A60220043;
- Tue, 26 Nov 2024 09:24:12 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 26 Nov 2024 09:24:12 +0000 (GMT)
-Message-ID: <3f1f56122cde6ac457f774b79fa4ba4113a38a33.camel@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <dominique.martinet@atmark-techno.com>)
+ id 1tFrtB-000290-D9
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 04:29:46 -0500
+Authentication-Results: gw2.atmark-techno.com; dkim=pass (2048-bit key;
+ unprotected) header.d=atmark-techno.com header.i=@atmark-techno.com
+ header.a=rsa-sha256 header.s=google header.b=hk4pSnja; 
+ dkim-atps=neutral
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71])
+ by gw2.atmark-techno.com (Postfix) with ESMTPS id 1B426526
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 18:29:38 +0900 (JST)
+Received: by mail-oa1-f71.google.com with SMTP id
+ 586e51a60fabf-29678d451b1so2937575fac.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 01:29:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=atmark-techno.com; s=google; t=1732613377; x=1733218177; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ytpt1At+kByxx2N4/uIMj3TAJFX5iDpIGrRspMUx5TQ=;
+ b=hk4pSnjaJB7lmcDk6JkOHT4RqH2TEYV6EPX124/AX4hVo1ITiQJjXihG/EY5BR8ZKW
+ JkBm0S+qNn7S4nIXA5MDfJd7cgXdX6a87pJCwwgE80NGWF0OjcjYSeHDwzv2gTrmbzPM
+ 2YTB+BbMxCP8TjT0rKtGulFBB9wHaUr3EhSb1K2r8+FD7KF8vT4pF7Zv1iAUNjYNChNq
+ Vw6vfOmif9LmK6oAOo5hbcqeRLsF75xnNP08D473drw3Mm0zjuIOegtpZtZ0F01z9GX1
+ y4oiWh6mqpui3Mm/GWMhb3thJLyo0hLe5IzV+gq5lVs4UJ73c9BgkAI4LMasf7e8OTCF
+ jcyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732613377; x=1733218177;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ytpt1At+kByxx2N4/uIMj3TAJFX5iDpIGrRspMUx5TQ=;
+ b=Ym5+l0Pypg/lNMSKT6MDILjTJ6FWdRGI1Ml9sE04aqpIk3QjX9uHS09IUctshBm2LK
+ s21PaHmRB8OgUVlAVHEz98/CnIz/rKtri8hO1eE4eo8arCfn2g6Mk6cmFXfWAOwlbYFl
+ Owv2wRFEFr0asndXqHC65Hn8iO5k/qJ6kBv+k/s+rdte7O559t1nNnRv3D0/NP+xx1ZP
+ LXX/AKFyj7lcQlPuY2cWwlBIzh0L+XgLy0F2gmvw6kOXbupvngwUoebu/ErysdW8n6i7
+ 8KVf+Cq19uzKlnUQK/7yyAMDvw/gSzZ6npNXBkkqv3JhpCWvsP5GbPtFkMgKrEHJRAWr
+ VJTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWK5L/FvsbKFlyVsnJFoOxqr91b1abRQOHUm0fde4TE3gp2zBrM7GYtpGpV8lIr7kKydbwXFmu+KaD/@nongnu.org
+X-Gm-Message-State: AOJu0YzJdd3lD4LUv6M1wJFVbDx9MEKC+uSFBikzdDCJFvXTKoxrC6eu
+ PjoREe7p1+JvCKdmKqt9U82bsufBKRO4xW/k3fvKOXPpunBY1Ms1DLyRNH7tl95ljQfTm3vqIZi
+ Yn3mg/NOVCu0xDcC8nmJtH0NXK9xKUlszJ//PuyaYuuEuRWNLlNjdVg==
+X-Gm-Gg: ASbGnctOkIo5ffu03p6izV+6wNmnSrFv1GacQLDVxs3OjhP+VKDQ4F8z2WJ2nsdvI3/
+ L+hpPLlQEnxWLEOytGJyKddMHSltdOh4t8T0dxtdeUrCCIICRsyFeqtXd3D8pDmQF8nTh6OZiC+
+ i6l6JcmARhtbU+iM1S0j4Wc6RdOJ2EbDGT3lO0oLs1pltmDRGb5bUTfceT7MtJrnQk4UyFh2iFU
+ KSZQAND+oy9dZBjgJylSzFgdf82+S26JMGoK1qscwjsrGBV99a191aNlNMQdJXvxUgIS+U0xP1/
+ 6zp1fVJ0WHBPQT4R83yohlQWq79jERVYYA==
+X-Received: by 2002:a05:6871:582c:b0:26c:5312:a13b with SMTP id
+ 586e51a60fabf-29720df620emr13587912fac.30.1732613377581; 
+ Tue, 26 Nov 2024 01:29:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHb2oy79f1fT/p67Da8bzjREHu+Ufr0ESzqkHhkVuHIuiz3mHdCQ4vfJpvL2jktRt+ipG21Dg==
+X-Received: by 2002:a05:6871:582c:b0:26c:5312:a13b with SMTP id
+ 586e51a60fabf-29720df620emr13587867fac.30.1732613376354; 
+ Tue, 26 Nov 2024 01:29:36 -0800 (PST)
+Received: from localhost (162.198.187.35.bc.googleusercontent.com.
+ [35.187.198.162]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fbcbfc4c28sm8222084a12.3.2024.11.26.01.29.35
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 26 Nov 2024 01:29:35 -0800 (PST)
+Date: Tue, 26 Nov 2024 18:29:24 +0900
+From: Dominique MARTINET <dominique.martinet@atmark-techno.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ deller@gmx.de, qemu-stable@nongnu.org
 Subject: Re: [PATCH 3/6] linux-user: Adjust brk for load_bias [regression]
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Dominique MARTINET <dominique.martinet@atmark-techno.com>, Richard
- Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@gmx.de, qemu-stable@nongnu.org
-Date: Tue, 26 Nov 2024 10:24:12 +0100
-In-Reply-To: <Z0V0undiZVtHIy7z@atmark-techno.com>
+Message-ID: <Z0WU9GN9TBjJ1fbs@atmark-techno.com>
 References: <20230816181437.572997-1-richard.henderson@linaro.org>
  <20230816181437.572997-4-richard.henderson@linaro.org>
  <Z0V0undiZVtHIy7z@atmark-techno.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+ <3f1f56122cde6ac457f774b79fa4ba4113a38a33.camel@linux.ibm.com>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 3VsB6oA851dkFmYmPTjFT9RJcP2fpCS9
-X-Proofpoint-ORIG-GUID: RJgquBcHWQ_KOcXZQSMWvrpIsX71M3iH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxscore=0
- mlxlogscore=999 suspectscore=0 impostorscore=0 malwarescore=0 spamscore=0
- clxscore=1011 adultscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2411260070
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.93, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3f1f56122cde6ac457f774b79fa4ba4113a38a33.camel@linux.ibm.com>
+Received-SPF: pass client-ip=35.74.137.57;
+ envelope-from=dominique.martinet@atmark-techno.com; helo=gw2.atmark-techno.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,78 +115,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2024-11-26 at 16:11 +0900, Dominique MARTINET wrote:
-> This commit is fairly old, but this appears to cause a segfault for
-> older versions of ldconfig:
-> ```
-> $ docker run --rm --platform linux/arm64/v8 -ti
-> docker.io/debian:bullseye-slim ldconfig
-> qemu: uncaught target signal 11 (Segmentation fault) - core dumped
-> Segmentation fault (core dumped)
-> ```
->=20
-> The segfault happens inside ldconfig code (code_gen_buffer in qemu's
-> backtrace), so I'm not sure how to debug that further, but it doesn't
-> reproduce in bookworm's ldconfig so that is something that was
-> "fixed"
-> in glibc at some point.
->=20
-> If someone needs to run older debian releases with a newer qemu that
-> might be a problem in the future?
->=20
-> [we might need to run old containers once every few years to rebuild
-> old
-> projects in a similar environment they were built on, so would
-> eventually need to work around this problem somehow]
->=20
->=20
-> The failure can be reproduced just running `qemu-aarch64
-> ./path/to/ldconfig` on an extracted container so it was easy to
-> bisect
-> and I've got down to this commit; hence replying here directly with
-> involved people.
-> ------
-> commit aec338d63bc28f1f13d5e64c561d7f1dd0e4b07e
-> Author: Richard Henderson <richard.henderson@linaro.org>
-> Date:=C2=A0=C2=A0 Wed Aug 16 10:32:18 2023 -0700
->=20
-> =C2=A0=C2=A0=C2=A0 linux-user: Adjust brk for load_bias
-> =C2=A0=C2=A0=C2=A0=20
-> =C2=A0=C2=A0=C2=A0 PIE executables are usually linked at offset 0 and are
-> =C2=A0=C2=A0=C2=A0 relocated somewhere during load.=C2=A0 The hiaddr need=
-s to
-> =C2=A0=C2=A0=C2=A0 be adjusted to keep the brk next to the executable.
-> =C2=A0=C2=A0=C2=A0=20
-> =C2=A0=C2=A0=C2=A0 Cc: qemu-stable@nongnu.org
-> =C2=A0=C2=A0=C2=A0 Fixes: 1f356e8c013 ("linux-user: Adjust initial brk wh=
-en
-> interpreter is close to executable")
-> =C2=A0=C2=A0=C2=A0 Tested-by: Helge Deller <deller@gmx.de>
-> =C2=A0=C2=A0=C2=A0 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> =C2=A0=C2=A0=C2=A0 Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org>
-> =C2=A0=C2=A0=C2=A0 Signed-off-by: Richard Henderson <richard.henderson@li=
-naro.org>
-> ------
->=20
-> I've done my share of debugging linux-user last week[1] so I'll leave
-> this
-> as is for now, I've downgraded to (a non-static-pie build of) 7.1 for
-> our build machine and am not in immediate trouble.
-> [1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D1053101
->=20
-> If this doesn't get much interest I might try to pick at it further
-> in
-> a couple of weeks, assuming it's something we can/want to fix on qemu
-> side.
->=20
-> Thanks,
+Ilya Leoshkevich wrote on Tue, Nov 26, 2024 at 10:24:12AM +0100:
+> I think this is
+> https://gitlab.com/qemu-project/qemu/-/issues/1913
 
-Hi,
+Thank you, I should have looked there first !
 
-I think this is
-https://gitlab.com/qemu-project/qemu/-/issues/1913
+I'll continue to follow-up on the issue if time permits as it doesn't
+look like this has had progress in the past few months
 
-Best regards,
-Ilya
+-- 
+Dominique
 
