@@ -4,57 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C121D3B997
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1DC3D3B996
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:47:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFwmb-0001zZ-BY; Tue, 26 Nov 2024 09:43:20 -0500
+	id 1tFwpp-00043o-27; Tue, 26 Nov 2024 09:46:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tFwmS-0001xD-3c; Tue, 26 Nov 2024 09:43:08 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFwpn-00043Z-3j
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:46:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tFwmO-0005i6-K9; Tue, 26 Nov 2024 09:43:07 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XyQF41dB4z6FGPc;
- Tue, 26 Nov 2024 22:39:04 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 7200B140393;
- Tue, 26 Nov 2024 22:42:54 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 26 Nov
- 2024 15:42:53 +0100
-Date: Tue, 26 Nov 2024 14:42:52 +0000
-To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-CC: <rad@semihalf.com>, <peter.maydell@linaro.org>,
- <quic_llindhol@quicinc.com>, <marcin.juszkiewicz@linaro.org>,
- <fan.ni@samsung.com>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
- <linux-cxl@vger.kernel.org>, <chenbaozi@phytium.com.cn>, <mst@redhat.com>
-Subject: Re: [RFC PATCH v3 1/1] hw/arm/sbsa-ref: Support CXL Host Bridge & CFMW
-Message-ID: <20241126144252.00006b16@huawei.com>
-In-Reply-To: <20241125093709.57204-2-wangyuquan1236@phytium.com.cn>
-References: <20241125093709.57204-1-wangyuquan1236@phytium.com.cn>
- <20241125093709.57204-2-wangyuquan1236@phytium.com.cn>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFwpl-0006Os-2o
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:46:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732632390;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=OM3KlEC6LYcGl9lOceCER6TDVM2iQDHubZ/D452Bjc4=;
+ b=RspOpTNmB7S4kykXQjm5scW37tGBMcUjZ/pIF66EadYz9a9FgYqLpa1Tn6GrFJQ8DLRaoi
+ wCs2HqjZrFYReuYP6e9YG3miG8HgC91Awbe5q9SGo4Rwj/6LSxGH3pCCLd6SQlPaJHFh7J
+ GiISPSIZ9ri1Nwf1HPJ4iM13etUau5Q=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-19-6XdWY0RTNpWUgQ4b_zaNfQ-1; Tue, 26 Nov 2024 09:46:28 -0500
+X-MC-Unique: 6XdWY0RTNpWUgQ4b_zaNfQ-1
+X-Mimecast-MFC-AGG-ID: 6XdWY0RTNpWUgQ4b_zaNfQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38256bf4828so2943489f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:46:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732632387; x=1733237187;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=OM3KlEC6LYcGl9lOceCER6TDVM2iQDHubZ/D452Bjc4=;
+ b=VQPFE2ouehT6BuKOpaO+Gp6wLED4a/lZVba5sbwo4c7vcCZ2s1XZUBDHPAs2saTZYc
+ Ef62HuNcIqeydxrITY7RthmaqF/pr6GRUKh5TaaP7BVn4Vio4FtlMv81A3NOiJRxi7hg
+ xfx/KFpmgpw8ncvhJxRQ/NCQv7GE72GZSmdV0JCvrBZklKQcOASY6pEYWy5LfiSCF6tG
+ a10JieYygeVyXEVo+icBVNW40Vb2s3UCVv9uacO+CoQkpyJtmAvvQVDVHKCWXjV0U03X
+ 4u5r3N1US8Qog2R7wrwiC7m+DXOqqVJ2xkoqkBSeM/gXQ/MYX1RcALVAxCd2NTXpEqUZ
+ GIHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXTNsja2c6d7tHq6vO3/g1n858LRssU9KvhMTQQhXHLvvyjw/wXB6nItQsNHaFbVkhuMHnh+DI2qEuV@nongnu.org
+X-Gm-Message-State: AOJu0Yw2IGEIlV/HQJPQGcH5/uYpfoWcYiS00uJu8etLgTRvoX4AZ4tu
+ SEDFVDSTMxvvi04mbLRHTo16ihSaFpTzSPTSLK4esbE7evgvHHUcHluKJMwFFlQwNaIMW+HRn06
+ Mq4cWDHi/DTa2pRd4VQSU5yM2vVAsor/ePOy5uP+nH3TMseyYE/wJ
+X-Gm-Gg: ASbGncvLSjpStQMC8a1QL9qiuhpFB8080/cFraOmFVHBP7Z1ZoIlm/fVoidetwtSoiM
+ Omj49q2lOcNX1cqZPjMp7xyehHqu1HcqUyCKnHSRcy5k3e4h6YE3SBRZQ4wthHJl+xLyThHzWSB
+ dG1r9ssVOyUzEjfNdJgh5jMpBbjfK2xzvyHMdeoxtji+CysebXea+yTJP1G3KOwO+uZXGCn8MmM
+ U2CXikBLR+K4Osn+chpg60gydo46lVjoj2HETOouLgp6PKF58uPAZOdiMFAFP7eXslXl9/DMHCt
+ u4kqWGM1CnkiYe3vx+lnReKLgpqbLsHBbgT/8cjdKN/OGtxSeQKqJC4U9eYYlacktuIme9QoT5L
+ 5pw==
+X-Received: by 2002:a05:6000:184c:b0:381:ed32:d604 with SMTP id
+ ffacd0b85a97d-385bfaea7e1mr3257184f8f.10.1732632387307; 
+ Tue, 26 Nov 2024 06:46:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH/tyMFoqAS0Uj9qLtt4wdKyd1v6Afnyn6tcsmqYHMHcIEiDRMrmXU5Wn1jJJt5yq9ef8K7Fg==
+X-Received: by 2002:a05:6000:184c:b0:381:ed32:d604 with SMTP id
+ ffacd0b85a97d-385bfaea7e1mr3257161f8f.10.1732632386897; 
+ Tue, 26 Nov 2024 06:46:26 -0800 (PST)
+Received: from ?IPV6:2003:cb:c72d:e900:38f3:8bdd:52f7:5e83?
+ (p200300cbc72de90038f38bdd52f75e83.dip0.t-ipconnect.de.
+ [2003:cb:c72d:e900:38f3:8bdd:52f7:5e83])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fb36612sm13446807f8f.59.2024.11.26.06.46.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Nov 2024 06:46:26 -0800 (PST)
+Message-ID: <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
+Date: Tue, 26 Nov 2024 15:46:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
+ requested_size
+To: Wei Chen <weichenforschung@gmail.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, yuval.yarom@rub.de, genkin@gatech.edu,
+ Zhi Zhang <zzhangphd@gmail.com>
+References: <20241126080213.248-1-weichenforschung@gmail.com>
+ <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
+ <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.931, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.931,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,579 +159,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 25 Nov 2024 17:37:09 +0800
-Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
-
-> This creates a specific cxl host bridge (0001:00) with two cxl
-> root ports on sbsa-ref. And the memory layout provides separate
-> space windows for the cxl host bridge in the sbsa-ref memmap:
+On 26.11.24 15:20, Wei Chen wrote:
+>   > Please provide more information how this is supposed to work
 > 
-> - 64K  CXL Host Bridge Component Registers (CHBCR)
-> - 64K  CXL_PIO
-> - 128M CXL_MMIO
-> - 256M CXL_ECAM
-> - 4G   CXL_MMIO_HIGH
+
+Thanks for the information. A lot of what you wrote belongs into the 
+patch description. Especially, that this might currently only be 
+relevant with device passthrough + viommu.
+
+> We initially discovered that virtio-mem could be used by a malicious
+> agent to trigger the Rowhammer vulnerability and further achieve a VM
+> escape.
 > 
-> To provide CFMWs on sbsa-ref, this extends 1TB space from the
-> hole above RAM Memory [SBSA_MEM] for CXL Fixed Memory Window:
+> Simply speaking, Rowhammer is a DRAM vulnerability where frequent access
+> to a memory location might cause voltage leakage to adjacent locations,
+> effectively flipping bits in these locations. In other words, with
+> Rowhammer, an adversary can modify the data stored in the memory.
 > 
-> - 1T   CXL_FIXED_WINDOW
+> For a complete attack, an adversary needs to: a) determine which parts
+> of the memory are prone to bit flips, b) trick the system to store
+> important data on those parts of memory and c) trigger bit flips to
+> tamper important data.
 > 
-> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Hi.
+> Now, for an attacker who only has access to their VM but not to the
+> hypervisor, one important challenge among the three is b), i.e., to give
+> back the memory they determine as vulnerable to the hypervisor. This is
+> where the pitfall for virtio-mem lies: the attacker can modify the
+> virtio-mem driver in the VM's kernel and unplug memory proactively.
 
-I'm surprised this wasn't more complex.
+But b), as you write, is not only about giving back that memory to the 
+hypervisor. How can you be sure (IOW trigger) that the system will store 
+"important data" like EPTs?
 
-Main feedback is that this new host bridge is not SBSA specific
-so name it more generally. I'll try and find some time to see if I can
-also spin one up with arm-virt as for my usecases that is more useful
-as a modeling platform than SBSA ref.
-
-Various other minor comments inline.
-+CC Michael Tsirkin as this is effectively a new PCI host bridge.
-
-Jonathan
-
-> ---
->  docs/system/arm/sbsa.rst  |   4 +
->  hw/arm/sbsa-ref.c         | 139 ++++++++++++++++++++++++++++++-
->  hw/cxl/cxl-host-stubs.c   |   2 +
->  hw/cxl/cxl-host.c         | 169 +++++++++++++++++++++++++++++++++++++-
->  include/hw/cxl/cxl.h      |  22 +++++
->  include/hw/cxl/cxl_host.h |   5 ++
->  6 files changed, 339 insertions(+), 2 deletions(-)
 > 
-> diff --git a/docs/system/arm/sbsa.rst b/docs/system/arm/sbsa.rst
-> index 2bf3fc8d59..21b88e88e7 100644
-> --- a/docs/system/arm/sbsa.rst
-> +++ b/docs/system/arm/sbsa.rst
-> @@ -28,6 +28,7 @@ The ``sbsa-ref`` board supports:
->    - E1000E ethernet card on PCIe bus
->    - Bochs display adapter on PCIe bus
->    - A generic SBSA watchdog device
-> +  - CXL host bridge and CXL fixed memory window
->  
->  
->  Board to firmware interface
-> @@ -92,3 +93,6 @@ Platform version changes:
->  
->  0.4
->    CPU topology information is present in devicetree.
-> +
-> +0.5
-> +  CXL host bridge and CXL fixed memory window are supported.
-> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-> index e3195d5449..78aef823a6 100644
-> --- a/hw/arm/sbsa-ref.c
-> +++ b/hw/arm/sbsa-ref.c
-> @@ -36,12 +36,18 @@
->  #include "hw/arm/smmuv3.h"
->  #include "hw/block/flash.h"
->  #include "hw/boards.h"
-> +#include "hw/cxl/cxl.h"
-> +#include "hw/cxl/cxl_host.h"
->  #include "hw/ide/ide-bus.h"
->  #include "hw/ide/ahci-sysbus.h"
->  #include "hw/intc/arm_gicv3_common.h"
->  #include "hw/intc/arm_gicv3_its_common.h"
->  #include "hw/loader.h"
-> +#include "hw/pci/pci_bridge.h"
-> +#include "hw/pci/pci_bus.h"
-> +#include "hw/pci/pcie_port.h"
-Surprised if you need all of these.
+> The current impl of virtio-mem in qemu does not check if it is valid for
+> the VM to unplug memory. Therefore, as is proved by our experiments,
+> this method works in practice.
+> 
+>   > whether this is a purely theoretical case, and how relevant this is in
+>   > practice.
+> 
+> In our design, on a host machine equipped with certain Intel processors
+> and inside a VM that a) has a passed-through PCI device, b) has a vIOMMU
+> and c) has a virtio-mem device, an attacker can force the EPT to use
+> pages that are prone to Rowhammer bit flips and thus modify the EPT to
+> gain read and write privileges to an arbitrary memory location.
+> 
+> Our efforts involved conducting end-to-end attacks on two separate
+> machines with the Core i3-10100 and the Xeon E2124 processors
+> respectively, and has achieved successful VM escapes.
 
->  #include "hw/pci-host/gpex.h"
-> +#include "hw/pci-bridge/pci_expander_bridge.h"
-Don't think you need this any more.
->  #include "hw/qdev-properties.h"
->  #include "hw/usb.h"
->  #include "hw/usb/xhci.h"
-> @@ -94,6 +100,13 @@ enum {
->      SBSA_SECURE_MEM,
->      SBSA_AHCI,
->      SBSA_XHCI,
-> +    SBSA_CXL,
-> +    SBSA_CXL_CHBCR,
-> +    SBSA_CXL_MMIO,
-> +    SBSA_CXL_MMIO_HIGH,
-> +    SBSA_CXL_PIO,
-> +    SBSA_CXL_ECAM,
-> +    SBSA_CXL_FIXED_WINDOW,
->  };
->  
->  struct SBSAMachineState {
-> @@ -105,6 +118,7 @@ struct SBSAMachineState {
->      int psci_conduit;
->      DeviceState *gic;
->      PFlashCFI01 *flash[2];
-> +    CXLState cxl_devices_state;
->  };
->  
->  #define TYPE_SBSA_MACHINE   MACHINE_TYPE_NAME("sbsa-ref")
-> @@ -132,6 +146,14 @@ static const MemMapEntry sbsa_ref_memmap[] = {
->      /* Space here reserved for more SMMUs */
->      [SBSA_AHCI] =               { 0x60100000, 0x00010000 },
->      [SBSA_XHCI] =               { 0x60110000, 0x00010000 },
-> +    /* 64K CXL Host Bridge Registers space */
-> +    [SBSA_CXL_CHBCR] =          { 0x60120000, 0x00010000 },
-> +    /* 64K CXL PIO space */
-> +    [SBSA_CXL_PIO] =            { 0x60130000, 0x00010000 },
-> +    /* 128M CXL 32-bit MMIO space */
-> +    [SBSA_CXL_MMIO] =           { 0x60140000, 0x08000000 },
-> +    /* 256M CXL ECAM space */
-> +    [SBSA_CXL_ECAM] =           { 0x68140000, 0x10000000 },
+Out of curiosity, are newer CPUs no longer affected?
 
-I'd be tempted to align these at least somewhat - so leave gaps.
+> 
+>   > Further, what about virtio-balloon, which does not even support
+>   > rejecting requests?
+> 
+> virtio-balloon does not work with device passthrough currently, so we
+> have yet to produce a feasible attack with it.
 
->      /* Space here reserved for other devices */
->      [SBSA_PCIE_PIO] =           { 0x7fff0000, 0x00010000 },
->      /* 32-bit address PCIE MMIO space */
-> @@ -141,6 +163,10 @@ static const MemMapEntry sbsa_ref_memmap[] = {
->      /* ~1TB PCIE MMIO space (4GB to 1024GB boundary) */
->      [SBSA_PCIE_MMIO_HIGH] =     { 0x100000000ULL, 0xFF00000000ULL },
->      [SBSA_MEM] =                { 0x10000000000ULL, RAMLIMIT_BYTES },
-> +    /* 4G CXL 64-bit MMIO space */
-> +    [SBSA_CXL_MMIO_HIGH] =      { 0x90000000000ULL, 0x100000000ULL },
-> +    /* 1TB CXL FIXED WINDOW space */
-> +    [SBSA_CXL_FIXED_WINDOW] =   { 0xA0000000000ULL, 0x10000000000ULL },
->  };
->  
->  static const int sbsa_ref_irqmap[] = {
-> @@ -154,6 +180,7 @@ static const int sbsa_ref_irqmap[] = {
->      [SBSA_XHCI] = 11,
->      [SBSA_SMMU] = 12, /* ... to 15 */
->      [SBSA_GWDT_WS0] = 16,
-> +    [SBSA_CXL] = 17, /* ... to 20 */
->  };
->  
->  static uint64_t sbsa_ref_cpu_mp_affinity(SBSAMachineState *sms, int idx)
-> @@ -216,7 +243,7 @@ static void create_fdt(SBSAMachineState *sms)
->       *                        fw compatibility.
->       */
->      qemu_fdt_setprop_cell(fdt, "/", "machine-version-major", 0);
-> -    qemu_fdt_setprop_cell(fdt, "/", "machine-version-minor", 4);
-> +    qemu_fdt_setprop_cell(fdt, "/", "machine-version-minor", 5);
->  
->      if (ms->numa_state->have_numa_distance) {
->          int size = nb_numa_nodes * nb_numa_nodes * 3 * sizeof(uint32_t);
-> @@ -629,6 +656,114 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
->      }
->  }
->  
-> +static void create_cxl_fixed_window(SBSAMachineState *sms,
-> +                               MemoryRegion *mem, SbsaCXLHost *host)
-> +{
-> +    PCIBus *cxlbus = PCI_HOST_BRIDGE(host)->bus;
-> +    char *cxl_host = object_get_canonical_path(OBJECT(cxlbus));
-> +    hwaddr base = sbsa_ref_memmap[SBSA_CXL_FIXED_WINDOW].base;
-> +    GList *it;
-> +    strList host_target = { NULL, cxl_host };
-> +    CXLFixedMemoryWindowOptions sbsa_ref_cfmwoptions = {
-> +        .size = 1 * TiB,
-> +        .has_interleave_granularity = false,
-> +        .targets = &host_target,
-> +    };
-> +    CXLFixedWindow *fw;
-> +
-> +    cxl_fixed_memory_window_config(&sms->cxl_devices_state,
-> +                               &sbsa_ref_cfmwoptions, &error_fatal);
-> +
-> +    it = sms->cxl_devices_state.fixed_windows;
-> +    fw = it->data;
-> +    fw->base = base;
-> +    fw->sbsa_target = host;
-> +
-> +    memory_region_init_io(&fw->mr, OBJECT(sms), &cfmws_ops, fw,
-> +                            "cxl-fixed-memory-region", fw->size);
-> +
-> +    memory_region_add_subregion(mem, fw->base, &fw->mr);
-> +}
-> +
-> +static void create_cxl(SBSAMachineState *sms)
-> +{
-> +    hwaddr base_ecam = sbsa_ref_memmap[SBSA_CXL_ECAM].base;
-> +    hwaddr size_ecam = sbsa_ref_memmap[SBSA_CXL_ECAM].size;
-> +    hwaddr base_mmio = sbsa_ref_memmap[SBSA_CXL_MMIO].base;
-> +    hwaddr size_mmio = sbsa_ref_memmap[SBSA_CXL_MMIO].size;
-> +    hwaddr base_mmio_high = sbsa_ref_memmap[SBSA_CXL_MMIO_HIGH].base;
-> +    hwaddr size_mmio_high = sbsa_ref_memmap[SBSA_CXL_MMIO_HIGH].size;
+So is one magic bit really that for your experiments, one needs a viommu?
 
-For most of these I'd just use the values inline.  That will be easier
-to read than having to check where the value in the local variable came from.
+The only mentioning of rohammer+memory ballooning I found is: 
+https://www.whonix.org/pipermail/whonix-devel/2016-September/000746.html
 
-> +    hwaddr base_pio = sbsa_ref_memmap[SBSA_CXL_PIO].base;
-> +    int irq = sbsa_ref_irqmap[SBSA_CXL];
-> +    MemoryRegion *mmio_alias, *mmio_alias_high, *mmio_reg;
-> +    MemoryRegion *ecam_alias, *ecam_reg;
-> +    MemoryRegion *sysmem = get_system_memory();
-> +    MemoryRegion *chbcr = &sms->cxl_devices_state.host_mr;
-> +    DeviceState *dev;
-> +    SbsaCXLHost *host;
-> +    PCIHostState *cxl;
-> +    PCIDevice *cxlrp;
-> +    PCIEPort *p;
-> +    PCIESlot *s;
-> +    int i;
-> +
-> +    dev = qdev_new(TYPE_SBSA_CXL_HOST);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +    sms->cxl_devices_state.is_enabled = true;
-> +
-> +    /* Map CXL ECAM space */
-> +    ecam_alias = g_new0(MemoryRegion, 1);
-> +    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
-> +    memory_region_init_alias(ecam_alias, OBJECT(dev), "cxl-ecam",
-> +                             ecam_reg, 0, size_ecam);
-> +    memory_region_add_subregion(get_system_memory(), base_ecam, ecam_alias);
-> +
-> +    /* Map CXL MMIO space */
-> +    mmio_alias = g_new0(MemoryRegion, 1);
-> +    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 2);
-> +    memory_region_init_alias(mmio_alias, OBJECT(dev), "cxl-mmio",
-> +                             mmio_reg, base_mmio, size_mmio);
-> +    memory_region_add_subregion(get_system_memory(), base_mmio, mmio_alias);
-> +
-> +    /* Map CXL MMIO_HIGH space */
-> +    mmio_alias_high = g_new0(MemoryRegion, 1);
-> +    memory_region_init_alias(mmio_alias_high, OBJECT(dev), "cxl-mmio-high",
-> +                             mmio_reg, base_mmio_high, size_mmio_high);
-> +    memory_region_add_subregion(get_system_memory(), base_mmio_high,
-> +                                mmio_alias_high);
-> +
-> +    /* Map CXL IO port space */
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 3, base_pio);
-> +
-> +    for (i = 0; i < SBSA_CXL_NUM_IRQS; i++) {
-> +        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
-> +                           qdev_get_gpio_in(sms->gic, irq + i));
-> +        sbsa_cxl_set_irq_num(SBSA_CXL_HOST(dev), i, irq + i);
-> +    }
-> +
-> +    /* Map CXL CHBCR space */
-> +    memory_region_init(chbcr, OBJECT(sms), "cxl_host_reg",
-> +                       sbsa_ref_memmap[SBSA_CXL_CHBCR].size);
-> +    memory_region_add_subregion(sysmem, sbsa_ref_memmap[SBSA_CXL_CHBCR].base, chbcr);
-> +
-> +    cxl = PCI_HOST_BRIDGE(dev);
-> +
-> +    /* Connect two cxl root ports */
-> +    for (i = 0; i < 2; i++) {
-> +        cxlrp = pci_new(-1, "cxl-rp");
-> +        p = PCIE_PORT(cxlrp);
-> +        s = PCIE_SLOT(cxlrp);
-> +        p->port = i;
-> +        s->slot = i;
-> +        pci_realize_and_unref(cxlrp, cxl->bus, &error_fatal);
-> +    }
-> +
-> +    host = SBSA_CXL_HOST(dev);
-> +    sbsa_cxl_hook_up_registers(&sms->cxl_devices_state, host, &error_fatal);
-> +
-> +    create_cxl_fixed_window(sms, sysmem, host);
-> +}
-> +
->  static void create_pcie(SBSAMachineState *sms)
->  {
->      hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
-> @@ -821,6 +956,8 @@ static void sbsa_ref_init(MachineState *machine)
->  
->      create_pcie(sms);
->  
-> +    create_cxl(sms);
-> +
->      create_secure_ec(secure_sysmem);
->  
->      sms->bootinfo.ram_size = machine->ram_size;
-> diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
-> index cae4afcdde..aea94933ba 100644
-> --- a/hw/cxl/cxl-host-stubs.c
-> +++ b/hw/cxl/cxl-host-stubs.c
-> @@ -11,5 +11,7 @@
->  void cxl_fmws_link_targets(CXLState *stat, Error **errp) {};
->  void cxl_machine_init(Object *obj, CXLState *state) {};
->  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp) {};
-> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
-> +                        CXLFixedMemoryWindowOptions *object, Error **errp) {};
->  
->  const MemoryRegionOps cfmws_ops;
-> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> index e9f2543c43..7e9d82819a 100644
-> --- a/hw/cxl/cxl-host.c
-> +++ b/hw/cxl/cxl-host.c
-> @@ -16,13 +16,14 @@
->  #include "qapi/qapi-visit-machine.h"
->  #include "hw/cxl/cxl.h"
->  #include "hw/cxl/cxl_host.h"
-> +#include "hw/irq.h"
->  #include "hw/pci/pci_bus.h"
->  #include "hw/pci/pci_bridge.h"
->  #include "hw/pci/pci_host.h"
->  #include "hw/pci/pcie_port.h"
->  #include "hw/pci-bridge/pci_expander_bridge.h"
->  
-> -static void cxl_fixed_memory_window_config(CXLState *cxl_state,
-> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
->                                             CXLFixedMemoryWindowOptions *object,
->                                             Error **errp)
->  {
-> @@ -166,6 +167,17 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
->      /* Address is relative to memory region. Convert to HPA */
->      addr += fw->base;
->  
-> +    if (fw->sbsa_target) {
+> 
+>   > I recall that that behavior was desired once the driver would support
+>   > de-fragmenting unplugged memory blocks.
+> 
+> By "that behavior" do you mean to unplug memory when size <=
+> requested_size? I am not sure how that is to be implemented.
 
-This should be established by parameters parsed that are not specific to sbsa.
-I'd like to see the thing created as a normal device then just hooked up here
-if its found.
+To defragment, the idea was to unplug one additional block, so we can 
+plug another block.
 
-> +        hb = PCI_HOST_BRIDGE(fw->sbsa_target);
-> +        SbsaCXLHost *host = fw->sbsa_target;
-> +
-> +        hb_cstate = &host->cxl_cstate;
-> +        cache_mem = hb_cstate->crb.cache_mem_registers;
-> +        target_found = cxl_hdm_find_target(cache_mem, addr, &target);
-> +        rp = pcie_find_port_by_pn(hb->bus, target);
-> +        goto done;
+> 
+>   > Note that VIRTIO_MEM_REQ_UNPLUG_ALL would still always be allowed
+> 
+> That is true, but the attacker will want the capability to release a
+> specific sub-block.
 
-Probably makes sense to use an else and deal with a mix of cxl host (your sbsa
-one that needs renaming) and pxb.
+So it won't be sufficient to have a single sub-block plugged and then 
+trigger VIRTIO_MEM_REQ_UNPLUG_ALL?
 
-> +    }
-> +
->      rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
->      hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
->      if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
-> @@ -196,6 +208,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
->          }
->      }
->  
-> +done:
->      d = pci_bridge_get_sec_bus(PCI_BRIDGE(rp))->devices[0];
->      if (!d) {
->          return NULL;
-> @@ -372,3 +385,157 @@ void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp)
->          }
->      }
->  }
-> +
-> +/****************************************************************************
-> + * Sbsa CXL host
-Naming makes all this obvious, I'd not have a the comment as it's just an
-opportunity for problems later.
+> 
+> In fact, a sub-block is still somewhat coarse, because most likely there
+> is only one page in a sub-block that contains potential bit flips. When
+> the attacker spawns EPTEs, they have to spawn enough to make sure the
+> target page is used to store the EPTEs.
+> 
+> A 2MB sub-block can store 2MB/4KB*512=262,144 EPTEs, equating to at
+> least 1GB of memory. In other words, the attack program exhausts 1GB of
+> memory just for the possibility that KVM uses the target page to store
+> EPTEs.
 
-May make sense to split up cxl-host now we have multiple host bridges.
+Ah, that makes sense.
 
-> + */
-> +
-> +static void sbsa_cxl_set_irq(void *opaque, int irq_num, int level)
-> +{
-> +    SbsaCXLHost *host = opaque;
-> +
-> +    qemu_set_irq(host->irq[irq_num], level);
-> +}
-> +
-> +int sbsa_cxl_set_irq_num(SbsaCXLHost *host, int index, int gsi)
-> +{
-> +    if (index >= SBSA_CXL_NUM_IRQS) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    host->irq_num[index] = gsi;
-> +    return 0;
-> +}
+Can you compress what you wrote into the patch description? Further, I 
+assume we want to add a Fixes: tag and Cc: QEMU Stable 
+<qemu-stable@nongnu.org>
 
-> +
-> +static const char *sbsa_host_root_bus_path(PCIHostState *host_bridge,
-> +                                          PCIBus *rootbus)
-> +{
-> +    return "0001:00";
+Thanks!
 
-> +}
-> +static void sbsa_cxl_host_reset(SbsaCXLHost *host)
-> +{
-> +    CXLComponentState *cxl_cstate = &host->cxl_cstate;
-> +    uint32_t *reg_state = cxl_cstate->crb.cache_mem_registers;
-> +    uint32_t *write_msk = cxl_cstate->crb.cache_mem_regs_write_mask;
-> +
-> +    cxl_component_register_init_common(reg_state, write_msk, CXL2_RC);
-> +
-> +    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, TARGET_COUNT,
-> +                         8);
-Fix alignment.
-> +}
-> +
-> +static void sbsa_cxl_realize(DeviceState *dev, Error **errp)
-> +{
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    SbsaCXLHost *host = SBSA_CXL_HOST(dev);
-> +    CXLComponentState *cxl_cstate = &host->cxl_cstate;
-> +    struct MemoryRegion *mr = &cxl_cstate->crb.component_registers;
-> +    PCIBus *cxlbus;
-> +    PCIHostState *pci = PCI_HOST_BRIDGE(dev);
-> +    PCIExpressHost *pex = PCIE_HOST_BRIDGE(dev);
-> +    int i;
-> +
-> +    /* CHBCR MMIO init */
-> +    sbsa_cxl_host_reset(host);
-> +    cxl_component_register_block_init(OBJECT(dev), cxl_cstate,
-> +                                      TYPE_SBSA_CXL_HOST);
-> +    sysbus_init_mmio(sbd, mr);
-> +
-> +    /* PCIe Host MMIO init */
-> +    pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);
-> +    sysbus_init_mmio(sbd, &pex->mmio);
-> +
-> +    memory_region_init(&host->io_mmio, OBJECT(host), "cxl_host_mmio", UINT64_MAX);
-> +    memory_region_init(&host->io_ioport, OBJECT(host), "cxl_host_ioport", 64 * 1024);
+-- 
+Cheers,
 
-Why that size?  Add a comment.
-
-> +
-> +    memory_region_init_io(&host->io_mmio_window, OBJECT(host),
-> +                              &unassigned_io_ops, OBJECT(host),
-> +                              "cxl_host_mmio_window", UINT64_MAX);
-> +    memory_region_init_io(&host->io_ioport_window, OBJECT(host),
-> +                              &unassigned_io_ops, OBJECT(host),
-> +                              "cxl_host_ioport_window", 64 * 1024);
-> +
-> +    memory_region_add_subregion(&host->io_mmio_window, 0, &host->io_mmio);
-> +    memory_region_add_subregion(&host->io_ioport_window, 0, &host->io_ioport);
-> +    sysbus_init_mmio(sbd, &host->io_mmio_window);
-> +    sysbus_init_mmio(sbd, &host->io_ioport_window);
-> +
-> +    sysbus_init_mmio(sbd, &host->io_mmio);
-> +    sysbus_init_mmio(sbd, &host->io_ioport);
-> +
-> +    for (i = 0; i < SBSA_CXL_NUM_IRQS; i++) {
-> +        sysbus_init_irq(sbd, &host->irq[i]);
-> +        host->irq_num[i] = -1;
-> +    }
-> +
-> +    pci->bus = pci_register_root_bus(dev, "cxlhost.0", sbsa_cxl_set_irq,
-> +                                     pci_swizzle_map_irq_fn, host, &host->io_mmio,
-> +                                     &host->io_ioport, 0, 4, TYPE_CXL_BUS);
-> +    cxlbus = pci->bus;
-> +    cxlbus->flags |= PCI_BUS_CXL;
-> +
-> +    pci_bus_set_route_irq_fn(pci->bus, sbsa_cxl_route_intx_pin_to_irq);
-> +}
-> +
-> +static void sbsa_cxl_host_class_init(ObjectClass *class, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(class);
-> +    PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(class);
-> +
-> +    hc->root_bus_path = sbsa_host_root_bus_path;
-> +    dc->realize = sbsa_cxl_realize;
-> +    dc->desc = "Sbsa CXL Host Bridge";
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-> +    dc->fw_name = "cxl";
-> +
-No blank line here.
-
-> +}
-> +
-> +/*
-> + *  SBSA CXL HOST
-
-Obvious enough that Id' drop the comment. Naming should tell
-us everything we need here.
-
-> + */
-> +static const TypeInfo sbsa_cxl_host_info = {
-> +    .name          = TYPE_SBSA_CXL_HOST,
-> +    .parent        = TYPE_PCIE_HOST_BRIDGE,
-> +    .instance_size = sizeof(SbsaCXLHost),
-> +    .class_init    = sbsa_cxl_host_class_init,
-> +};
-
-> diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-> index 75e47b6864..5ae9957c69 100644
-> --- a/include/hw/cxl/cxl.h
-> +++ b/include/hw/cxl/cxl.h
-> @@ -17,6 +17,7 @@
->  #include "cxl_pci.h"
->  #include "cxl_component.h"
->  #include "cxl_device.h"
-> +#include "hw/pci/pcie_host.h"
->  
->  #define CXL_CACHE_LINE_SIZE 64
->  #define CXL_COMPONENT_REG_BAR_IDX 0
-> @@ -24,12 +25,33 @@
->  
->  #define CXL_WINDOW_MAX 10
->  
-> +#define TYPE_SBSA_CXL_HOST "sbsa-cxl-host"
-> +OBJECT_DECLARE_SIMPLE_TYPE(SbsaCXLHost, SBSA_CXL_HOST)
-> +
-> +#define SBSA_CXL_NUM_IRQS 4
-> +
->  typedef struct PXBCXLDev PXBCXLDev;
->  
-> +struct SbsaCXLHost {
-
-This is not Sbsa specific that I can see - I'm certainly going to
-play around with it on virt (as generally SBSA-ref is no use for testing CXL
-because of it's relatively fixed configuration - it serves a different
-purpose!)  It might be more generally useful. So just go with CXLHostBridge
-
-> +    PCIExpressHost parent_obj;
-> +
-> +    CXLComponentState cxl_cstate;
-> +    bool passthrough;
-
-Not used.
-
-> +    int rp_count;
-
-Not used.
-
-> +
-> +    MemoryRegion io_ioport;
-> +    MemoryRegion io_mmio;
-> +    MemoryRegion io_ioport_window;
-> +    MemoryRegion io_mmio_window;
-> +    qemu_irq irq[SBSA_CXL_NUM_IRQS];
-> +    int irq_num[SBSA_CXL_NUM_IRQS];
-> +};
-> +
->  typedef struct CXLFixedWindow {
->      uint64_t size;
->      char **targets;
->      PXBCXLDev *target_hbs[16];
-> +    SbsaCXLHost *sbsa_target;
-
-We probably want to allow for several even if sbsa is
-only using one for now.   I'd copy PXBCXLDev and just make
-it [16];
-
->      uint8_t num_targets;
->      uint8_t enc_int_ways;
->      uint8_t enc_int_gran;
-> diff --git a/include/hw/cxl/cxl_host.h b/include/hw/cxl/cxl_host.h
-> index c9bc9c7c50..ae3ba436cc 100644
-> --- a/include/hw/cxl/cxl_host.h
-> +++ b/include/hw/cxl/cxl_host.h
-> @@ -16,6 +16,11 @@
->  void cxl_machine_init(Object *obj, CXLState *state);
->  void cxl_fmws_link_targets(CXLState *stat, Error **errp);
->  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp);
-> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
-> +                        CXLFixedMemoryWindowOptions *object, Error **errp);
-> +
-> +int sbsa_cxl_set_irq_num(SbsaCXLHost *host, int index, int gsi);
-> +void sbsa_cxl_hook_up_registers(CXLState *cxl_state, SbsaCXLHost *host, Error **errp);
-
-As above, this is not an SBSA thing, you are just using it for sbsa, so
-drop that form all the naming and refer to CXLHostBridge or similar.
-
->  
->  extern const MemoryRegionOps cfmws_ops;
->  
+David / dhildenb
 
 
