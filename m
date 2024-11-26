@@ -4,110 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73058D5A6F9
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 08:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185B6D3B7C1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 08:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFqoo-0007J9-3Y; Tue, 26 Nov 2024 03:21:10 -0500
+	id 1tFr6W-0001w2-QL; Tue, 26 Nov 2024 03:39:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFqom-0007J0-NX
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:21:08 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFr6V-0001vq-RK
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:39:27 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tFqoi-0006tM-4U
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:21:08 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-aa55171d73cso316743366b.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 00:21:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFr6U-00011j-82
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:39:27 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-38246333e12so5320019f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 00:39:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732609261; x=1733214061; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YVGMaNu9DmDF8LPIZpOr28OEAot8zPj/5cWlid61o0Y=;
- b=XQDviFO8lhlT+CZbEFXtFxZQwQip3KlzrYYe8HPRL6oYukDluAga0Q0sTQEa+wNti5
- 4XLp27cJxGYtjqmKlNhpDNTXismthJ1dqfcwQLTFVqzjot04DqIQMFmgn86wxtUDhbLj
- LoY73mKGEkMT7455fRzRMuPgBEEI1XRvP1X/VLN4teFelV65IFX6nKefjK6PWuzqN7+S
- NJaVJ+zNV0dIbvM2ZUril1eKa0pPjBv6n5YWHtVrMVvmHW1YP+7exuIMxTmIgClvAGVS
- uD7pUjTXXvDB49esf9Eh91QybptyqiN/vTo2N7Dev/E7tIQb7mrREZv6s9cFxjJfh5F/
- NI3Q==
+ d=linaro.org; s=google; t=1732610364; x=1733215164; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9rhTDNDlcmoEuMSSYLzJyCSZMnNBLZIp/7iQL6IIYlo=;
+ b=vUkzVmMGZu+TdW4dagrvjPQdUzIQ3gXAocA+B7fWwhEuX4AnkRga4CH0OIvLpFvpqd
+ 1yi8bcsgc7lI7tRgnmEj4Y0qG5aPaOfcQTVCoDbQhIxdVWBw44LxadSCe6A3iq9yfxmR
+ enwVQrgzLf6cijCKNpC/xYYt3yv1/Ns2b7TlpAZ0E04LR24as1KHqcAbpagSyfYh1yr2
+ PwINsoi7FKgUWRaA2YivE1rVcHZL62veNXp/VI26V8eqvJN6/2sjpPonTEcbYr4yAKJI
+ BhDWSFsyrUNgqIaT8IYroHkPDoAh3oFeMDdWprzVDn7hUMomXwLQrcxFJqlaPJ8f8W6e
+ T6pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732609261; x=1733214061;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YVGMaNu9DmDF8LPIZpOr28OEAot8zPj/5cWlid61o0Y=;
- b=kkluy5F4dg1nf5APYNKJIX72MSHfKcUVYt6K0uBvRANNnG1TvdSAoVq2rbVu9tI/FO
- 73VwRgwJDJZrDbecna236dhppJQCRPYnE/Kz4ZlvgTc22m/XkdQ6NNG0IyGFi0ZwB5AI
- 7lk7sqHrsugG07WDUPEUHqQATQP2SeXfHuAphxbeKdiVlc1UJblij5LjjpET6bWxP1rH
- ntGvOxvzOezs000schEZCu7Xe1Na/ODs1bnBJsWRazlyD5TlVBQZ6T95oaqnZ2Ynqa/Z
- +NqlKLDzW5ciTU1wsi62MwB3fROGQy4anTQDI6W2hGIEKgfjQfoRpnMTIH/75e0xoQ7e
- zfLg==
+ d=1e100.net; s=20230601; t=1732610364; x=1733215164;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9rhTDNDlcmoEuMSSYLzJyCSZMnNBLZIp/7iQL6IIYlo=;
+ b=wU3n6etgftOt/djYb5zuMZRNhzhrKzEBi8BZY8s81YTf1qwsPRdyVW2ZnSQRuO5LlF
+ S+8nh3J2McKz8nzTcprrZqWih/jFdWJqBgjZC38YQ1ANx5qK65vUxZSMFeeIk4X1v+HS
+ 9ZitfvKVTE2WNaCXdjrVhZya1OXgVGLctjNjDNvjbIIOEbhblZoMaP4Yir4qIvMC1Wgf
+ t7YjCloTAljkIUSp2up8NlfiWUn69KlcTSZ/aBqWBq27cRSwLw1fwTP7+zb6p7sVhJgV
+ fGe86uyBUU8OfaoR/fJ7K5woPT/rQYNo7qQcZfqXY6n7wH1Mkq4VZyHQ2Rq083K8znNF
+ EfWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUoBi1ST28EKYbQfsrhDx0W7FpR/BsU4+6WVH762YVqz3k4BmIyI19HrXeHfGrG2maT9H4OJ+CzAFF7@nongnu.org
-X-Gm-Message-State: AOJu0Yz8kJMK3m/EtKQKUfIydxQd33AX90ox9gqo71heCQ7VT+4iaGDa
- Qs1guOg3DY3JHyAjAHZlEAjL8K9NS1mudA7V8f5HlOM9ShZDnbSeErE2PCtSd1s=
-X-Gm-Gg: ASbGncv6tqs+On2zcHfTvtFEidxg+kIMk1xL2Lz/UqMex9bkMg5iyVAJPwtgdhgzylX
- YUj81otdNsCpOK9h7Zx4DkiVgX/jQUEIQIhFFRyXF0fvSq/aYZaqR9hRQIrlFGLi9ZowptGoPZX
- SQeDYc1s4Xs2OumVTjxZz7RgwnhHpPXJebbZSTWKlgCM7gITHAmesfC2fyL2giTLH8bcSzi9dQg
- Vzvp3Qet/jD4nN9J3I9y2UwSf/s3Ap4Sg+3LTbr/t9XJRH/
-X-Google-Smtp-Source: AGHT+IH+z0gF3UzsRPn8LO25RtWzvwjy4ireT1v8B3W/ay+G18OE1vC7HIjcvqDtxhNYYxpWILUNBw==
-X-Received: by 2002:a17:906:3145:b0:a9a:eeb:b26a with SMTP id
- a640c23a62f3a-aa56486a020mr207126366b.1.1732609261013; 
- Tue, 26 Nov 2024 00:21:01 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa50b3426f3sm566033166b.87.2024.11.26.00.21.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Nov 2024 00:21:00 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 93D3E5F713;
- Tue, 26 Nov 2024 08:20:59 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org,
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
- Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com, Warner
- Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe
- <jgg@nvidia.com>, jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Joao Martins <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
- Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
- mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>, Paul
- Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Richard
- Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU community call 26/11/2024 agenda items
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Tue, 26 Nov 2024 08:20:59 +0000
-Message-ID: <87wmgqbe38.fsf@draig.linaro.org>
+ AJvYcCURLEqj92hFuyvbvOoNJ0Hw/nd3ke96TcmK0BiYv2LZmSJQKwjVOJn7KG63nz3A6MBq3anPIwWpRRKQ@nongnu.org
+X-Gm-Message-State: AOJu0Yytz3K51aDoBndxERMKu7iM0ud/nhkxS/QzELPfiHTPbHXYvT4+
+ IbWvkmRSGkh6wbkZrqVqe78cexmHOnqnKSPJD6H6AIO8K1PHL8k9iUsxG5fEYmk=
+X-Gm-Gg: ASbGncvvy5bEyOU0CZS91pUzDWKtEJJxscAxrK5XsHIVq/HR+oaCJYiPLIWhrncWZG4
+ nxbXpwuIyaLSMXYjx3deZ8mV+59spUV844fHm8CENBESdhRM7PCXuBKnlViv7v7nBQ6eUUeFn3u
+ P32b1ojmrrgh1roFw0gJQqry5ocRCoUX8inaAB1bUI2fG9/t9j36TlIlV9n5ADkt2voQ2223ME6
+ rYCXjYzUQZI8fXBQMBMbyOz0pbX/G5k6IIuhvzsfHMRf9lcWGi7l7uaO7VEIFxerA==
+X-Google-Smtp-Source: AGHT+IEkUQB75KlqgDVq2a9nJp9OOIrDYxWUGVT3ddb13FOci1VO8b+RyFkbYvoqztUmxqqMnWSaHw==
+X-Received: by 2002:a05:6000:400b:b0:382:5112:5631 with SMTP id
+ ffacd0b85a97d-38260b60ff1mr15321177f8f.23.1732610363606; 
+ Tue, 26 Nov 2024 00:39:23 -0800 (PST)
+Received: from [192.168.69.146] ([176.176.143.205])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fb2609csm12809351f8f.44.2024.11.26.00.39.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Nov 2024 00:39:22 -0800 (PST)
+Message-ID: <39d99130-0d3f-4254-86dd-20151e57ec68@linaro.org>
+Date: Tue, 26 Nov 2024 09:39:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/timer: fix int underflow
+To: Dmitry Frolov <frolov@swemel.ru>, peter.maydell@linaro.org
+Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
+References: <20241106104041.624806-2-frolov@swemel.ru>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241106104041.624806-2-frolov@swemel.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,22 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Dmitry,
 
-Hi,
+On 6/11/24 11:40, Dmitry Frolov wrote:
+> Both timeout and return value of imx_gpt_update_count() are unsigned.
+> Thus "limit" can not be negative, but obviously it was implied.
+> 
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> 
+> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+> ---
+>   hw/timer/imx_gpt.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/timer/imx_gpt.c b/hw/timer/imx_gpt.c
+> index 23b3d79bdb..06e4837fed 100644
+> --- a/hw/timer/imx_gpt.c
+> +++ b/hw/timer/imx_gpt.c
+> @@ -238,7 +238,7 @@ static void imx_gpt_compute_next_timeout(IMXGPTState *s, bool event)
+>       }
+>   
+>       /* the new range to count down from */
+> -    limit = timeout - imx_gpt_update_count(s);
+> +    limit = (long long)timeout - imx_gpt_update_count(s);
 
-The KVM/QEMU community call is at:
+You posted similar automatic change in at least 3 different
+code areas. Each time different maintainers made similar
+comments. At this point you should be able to auto-review
+this patch and respin a proper follow up IMHO. Reviewers and
+maintainers time is scarce.
 
-https://meet.jit.si/kvmcallmeeting
-@
-26/11/2024 14:00 UTC
+Regards,
 
-Are there any agenda items for the sync-up?
-
-So far I have:
-
-  - follow up on Rust up-streaming
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Phil.
 
