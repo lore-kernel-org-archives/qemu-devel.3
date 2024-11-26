@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5005D59D93
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF80AD59D90
 	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 10:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFsq3-0002Ma-12; Tue, 26 Nov 2024 05:30:35 -0500
+	id 1tFsqU-0002UI-Af; Tue, 26 Nov 2024 05:31:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tFspz-0002Lq-Qe
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 05:30:32 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tFsqB-0002P6-4t
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 05:30:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tFspy-0007hU-9y
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 05:30:31 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tFsq8-0007kd-8Z
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 05:30:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732617027;
+ s=mimecast20190719; t=1732617038;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=eQnzQfjT0Z3rEKQKyPNCt1jUbCqDmfZ0DJXWfkxrHns=;
- b=frS7zGVkz6g12tC/Qmu3/VYw8HIOvhUCgTedSEmIKm4ic9WC75HCYYbBO4iIem0+m75/Sx
- 8l4vmaq2EdioRvlT/ENftE5zz2Xl8vSryeDkGnVXKBxkeXwnMqsamqQTfIViRnWxJSVpGP
- +5nTcUl/0zL5aah9MSTIGJGUWGVa3C4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e0QooqLNSfNvqmAjIj1jmKoMNKXLdeDqsAIQbM+z5ZM=;
+ b=gG0/boJxjZmwlHoPS54XOEnVNbbuCM2SmMOFWYvgXNj92hGahoy7iiNBCbFeZgC90C+dHk
+ OFVzHgbQiYzmzmnkhCmseYOy+l4UseVWcZ8xJ/HfgOw3l7qMruM3nvEVjo4Kw1wD3UQECt
+ Iduw5mYwWfZeZHmQKys/dO+n2+H7bLw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-Eb_c0IOPMCWJ8UlBKWsyqQ-1; Tue,
- 26 Nov 2024 05:30:24 -0500
-X-MC-Unique: Eb_c0IOPMCWJ8UlBKWsyqQ-1
-X-Mimecast-MFC-AGG-ID: Eb_c0IOPMCWJ8UlBKWsyqQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-150--rp_DyRNPB2ayhqbmkN7JQ-1; Tue,
+ 26 Nov 2024 05:30:33 -0500
+X-MC-Unique: -rp_DyRNPB2ayhqbmkN7JQ-1
+X-Mimecast-MFC-AGG-ID: -rp_DyRNPB2ayhqbmkN7JQ
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 534A41956057; Tue, 26 Nov 2024 10:30:21 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6E9E2195419D; Tue, 26 Nov 2024 10:30:28 +0000 (UTC)
 Received: from gondolin.str.redhat.com (dhcp-192-244.str.redhat.com
  [10.33.192.244])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 614D11955F3E; Tue, 26 Nov 2024 10:30:11 +0000 (UTC)
+ id C21711956054; Tue, 26 Nov 2024 10:30:21 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -65,9 +66,12 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH for-10.0 0/2] compat machines for 10.0
-Date: Tue, 26 Nov 2024 11:30:03 +0100
-Message-ID: <20241126103005.3794748-1-cohuck@redhat.com>
+Subject: [PATCH for-10.0 1/2] hw/i386: define _AS_LATEST() macros for machine
+ types
+Date: Tue, 26 Nov 2024 11:30:04 +0100
+Message-ID: <20241126103005.3794748-2-cohuck@redhat.com>
+In-Reply-To: <20241126103005.3794748-1-cohuck@redhat.com>
+References: <20241126103005.3794748-1-cohuck@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -97,28 +101,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's that time of the year^Wrelease cycle again, so here are the machine
-types for the next release. I'm also including the _AS_LATEST() patch
-that had apparently fallen through the cracks.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Cornelia Huck (1):
-  hw: add compat machines for 10.0
+Follow the other architecture targets by adding extra macros for
+defining a versioned machine type as the latest. This reduces the
+size of the changes when introducing new machine types at the start
+of each release cycle.
 
-Daniel P. Berrangé (1):
-  hw/i386: define _AS_LATEST() macros for machine types
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240910163041.3764176-1-berrange@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+---
+ hw/i386/pc_piix.c    | 11 +++++------
+ hw/i386/pc_q35.c     | 11 ++++++-----
+ include/hw/i386/pc.h |  4 +++-
+ 3 files changed, 14 insertions(+), 12 deletions(-)
 
- hw/arm/virt.c              |  9 ++++++++-
- hw/core/machine.c          |  3 +++
- hw/i386/pc.c               |  3 +++
- hw/i386/pc_piix.c          | 20 ++++++++++++++------
- hw/i386/pc_q35.c           | 20 +++++++++++++++-----
- hw/m68k/virt.c             |  9 ++++++++-
- hw/ppc/spapr.c             | 15 +++++++++++++--
- hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
- include/hw/boards.h        |  3 +++
- include/hw/i386/pc.h       |  7 ++++++-
- 10 files changed, 86 insertions(+), 17 deletions(-)
-
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 2bf6865d405e..495367617009 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -446,7 +446,10 @@ static void pc_i440fx_init(MachineState *machine)
+ }
+ 
+ #define DEFINE_I440FX_MACHINE(major, minor) \
+-    DEFINE_PC_VER_MACHINE(pc_i440fx, "pc-i440fx", pc_i440fx_init, major, minor);
++    DEFINE_PC_VER_MACHINE(pc_i440fx, "pc-i440fx", pc_i440fx_init, false, NULL, major, minor);
++
++#define DEFINE_I440FX_MACHINE_AS_LATEST(major, minor) \
++    DEFINE_PC_VER_MACHINE(pc_i440fx, "pc-i440fx", pc_i440fx_init, true, "pc", major, minor);
+ 
+ static void pc_i440fx_machine_options(MachineClass *m)
+ {
+@@ -477,17 +480,13 @@ static void pc_i440fx_machine_options(MachineClass *m)
+ static void pc_i440fx_machine_9_2_options(MachineClass *m)
+ {
+     pc_i440fx_machine_options(m);
+-    m->alias = "pc";
+-    m->is_default = true;
+ }
+ 
+-DEFINE_I440FX_MACHINE(9, 2);
++DEFINE_I440FX_MACHINE_AS_LATEST(9, 2);
+ 
+ static void pc_i440fx_machine_9_1_options(MachineClass *m)
+ {
+     pc_i440fx_machine_9_2_options(m);
+-    m->alias = NULL;
+-    m->is_default = false;
+     compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
+     compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
+ }
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 8319b6d45ee3..42bdedbaa403 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -327,10 +327,13 @@ static void pc_q35_init(MachineState *machine)
+ }
+ 
+ #define DEFINE_Q35_MACHINE(major, minor) \
+-    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, major, minor);
++    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, NULL, major, minor);
++
++#define DEFINE_Q35_MACHINE_AS_LATEST(major, minor) \
++    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, "q35", major, minor);
+ 
+ #define DEFINE_Q35_MACHINE_BUGFIX(major, minor, micro) \
+-    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, major, minor, micro);
++    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, NULL, major, minor, micro);
+ 
+ static void pc_q35_machine_options(MachineClass *m)
+ {
+@@ -359,15 +362,13 @@ static void pc_q35_machine_options(MachineClass *m)
+ static void pc_q35_machine_9_2_options(MachineClass *m)
+ {
+     pc_q35_machine_options(m);
+-    m->alias = "q35";
+ }
+ 
+-DEFINE_Q35_MACHINE(9, 2);
++DEFINE_Q35_MACHINE_AS_LATEST(9, 2);
+ 
+ static void pc_q35_machine_9_1_options(MachineClass *m)
+ {
+     pc_q35_machine_9_2_options(m);
+-    m->alias = NULL;
+     compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
+     compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
+ }
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 14ee06287da3..890427c56ed2 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -320,7 +320,7 @@ extern const size_t pc_compat_2_3_len;
+     } \
+     type_init(pc_machine_init_##suffix)
+ 
+-#define DEFINE_PC_VER_MACHINE(namesym, namestr, initfn, ...) \
++#define DEFINE_PC_VER_MACHINE(namesym, namestr, initfn, isdefault, malias, ...) \
+     static void MACHINE_VER_SYM(init, namesym, __VA_ARGS__)( \
+         MachineState *machine) \
+     { \
+@@ -334,6 +334,8 @@ extern const size_t pc_compat_2_3_len;
+         MACHINE_VER_SYM(options, namesym, __VA_ARGS__)(mc); \
+         mc->init = MACHINE_VER_SYM(init, namesym, __VA_ARGS__); \
+         MACHINE_VER_DEPRECATION(__VA_ARGS__); \
++        mc->is_default = isdefault; \
++        mc->alias = malias; \
+     } \
+     static const TypeInfo MACHINE_VER_SYM(info, namesym, __VA_ARGS__) = \
+     { \
 -- 
 2.47.0
 
