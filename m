@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A05AAD6552F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:32:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C478D65536
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFzPt-0007lC-US; Tue, 26 Nov 2024 12:32:01 -0500
+	id 1tFzec-0002wQ-FX; Tue, 26 Nov 2024 12:47:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tFzPr-0007ky-8E
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:31:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tFzPo-0007t3-C2
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:31:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732642313;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rAgf85YJ/oQ6qg2rbRMZ5VgWa5R/CnWv2YzgwtiUHps=;
- b=cX6VjsMZ84vm5ljjzVDmf2Zid598DnvRyvbBn7HvbFsVUS+wcbUFY+8XE79H5Y4u+jZcIA
- SMh6btEcHlGaVI+QGtxFhQkuchVnUuC3ckNOsXzuebaA3xXx+k2S5t6Bktj9cxdxv+uzgL
- i0/d6IXkPwwtO94k8QpjkGIT1N2Dxfg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-52DuZdnMPBmElik7oMca6Q-1; Tue,
- 26 Nov 2024 12:31:42 -0500
-X-MC-Unique: 52DuZdnMPBmElik7oMca6Q-1
-X-Mimecast-MFC-AGG-ID: 52DuZdnMPBmElik7oMca6Q
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F1F419560BD; Tue, 26 Nov 2024 17:31:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.147])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E024D30001A0; Tue, 26 Nov 2024 17:31:37 +0000 (UTC)
-Date: Tue, 26 Nov 2024 17:31:34 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PULL 15/42] tests/functional: enable pre-emptive caching of
- assets
-Message-ID: <Z0YF9i2pwBkznkCD@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFzeD-0002qd-EG
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:46:53 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFzeA-0002O1-5s
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:46:47 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5cfbaf3d88dso3173938a12.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 09:46:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732643201; x=1733248001; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MuaqPWTqepOxmZq4sggQsfJVuv4ciLBHwbuq1iPIJzQ=;
+ b=HdpNuWZpVibC6HSlv7pAMLBYh0aU5PlpTFSoVk9MHLVKBj96PSy4bWRIgpn7Yg5QNL
+ Rv83kDtnZpXWvyjOdg5HjBFjSQoBj7YOkszLCvmC3ntZ88Y/QY3ga5GJAeJvFP7N5jSe
+ epfaHKOkhGQMPkMtHHz7J1LTerGYavc41e5rYexfDfdheKqu2No55OP8A1zOs4l/hxV0
+ mYQAtkLs6f1kW6wBgVIqvXpC9rNpBx2QYLA36A8xAE015iehxHspOYQtDmyAJZVntTm4
+ a10xnfA6F3WeTuNjy0TxPixL0gJz/zQKq2TB3GTcOuqs1ZACwivwJkqKfxw7J6TmCJRY
+ eLCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732643201; x=1733248001;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MuaqPWTqepOxmZq4sggQsfJVuv4ciLBHwbuq1iPIJzQ=;
+ b=h5eu3cp14NJV3uzqy3k+Q+raM5W+Ya7kWpU98OtRLK3sW0L9EaeLNxJwMCmxkNIYAF
+ fRvsuhOkD+nJoMjJXS7OlG4v8Wr9yBIg7h1tO+BXwBmCO5LxSNXHAhJTcUVd/uUjqAO0
+ ibG4Yh+H0gVGOHUvCg6bGv+9s+ytYTq4Fb+docMh/Ps5N8St8906mIzg2y3Qot6fwnPo
+ jCZ8le1z7AKeNIHwZ68ZBdR2AxNNgPbeNLvB5ZaNxqvfLfKfHPWw//HjzjWnFI9Sp8d6
+ +v+S2gSYoeBY6zcGrlOhLYl8MDT9u1ID8W3vlyMlJ2jPzPb4PjXivbrfyd4kemhRBJ7l
+ xgnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX4UqyjpPkYFZGfjZQpaThPduW/cmHRwBi2f9z8ZWAASwVv0n10cBadr9p3hVUSMJVVDbHMu6Kmb9tI@nongnu.org
+X-Gm-Message-State: AOJu0Yx6T1hh4vqqqSXci9ji22Cbw5YFtNIq9IYZF0R4VXp+XGXL5D7j
+ DBwCf1uKfGxy7SFghgo13PhbjFbBXh6R0Jh6alSMRHZRzOIysyDy+7Zendw9se2TWv4bZKkwpsM
+ s/C3Lr2xusaTahpWDZRAAGcmWdK5yIq7HBg6tfQ==
+X-Gm-Gg: ASbGncvVN1drT7FoccDpHe2SfZtEBCU6gRxZppeemZ+bhULtMP0lZYdNqf5l2wlvW2S
+ j7GKXCoK49iSuk+6keNtJq2k+VW20dTlM
+X-Google-Smtp-Source: AGHT+IEyJgXLPWOQEGo2jaN7iS4ukCZfz9hs32+b8tlDafHsyViHMWIZcOqqM9nQsc4OknA/kaoJfvRbf8C8ohFeUeg=
+X-Received: by 2002:a05:6402:51d4:b0:5ce:de19:472a with SMTP id
+ 4fb4d7f45d1cf-5d080be4926mr128102a12.16.1732643200858; Tue, 26 Nov 2024
+ 09:46:40 -0800 (PST)
+MIME-Version: 1.0
 References: <20240904103923.451847-1-thuth@redhat.com>
  <20240904103923.451847-16-thuth@redhat.com>
  <66bf4784-f1e4-479f-83db-2d4f91c10e48@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <66bf4784-f1e4-479f-83db-2d4f91c10e48@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ <Z0YF9i2pwBkznkCD@redhat.com>
+In-Reply-To: <Z0YF9i2pwBkznkCD@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 Nov 2024 17:46:28 +0000
+Message-ID: <CAFEAcA-ematCTyj0SN2=e3mGHvp0VWjN1GV-Tu5Rkf-V721L1w@mail.gmail.com>
+Subject: Re: [PULL 15/42] tests/functional: enable pre-emptive caching of
+ assets
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,146 +97,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 26, 2024 at 05:44:29PM +0100, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> On 4/9/24 12:38, Thomas Huth wrote:
-> > From: Daniel P. Berrangé <berrange@redhat.com>
-> > 
-> > Many tests need to access assets stored on remote sites. We don't want
-> > to download these during test execution when run by meson, since this
-> > risks hitting test timeouts when data transfers are slow.
-> > 
-> > Add support for pre-emptive caching of assets by setting the env var
-> > QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
-> > instead of running the test, the assets will be downloaded and saved
-> > to the cache, then the timestamp file created.
-> > 
-> > A meson custom target is created as a dependency of each test suite
-> > to trigger the pre-emptive caching logic before the test runs.
-> > 
-> > When run in caching mode, it will locate assets by looking for class
-> > level variables with a name prefix "ASSET_", and type "Asset".
-> > 
-> > At the ninja level
-> > 
-> >     ninja test --suite functional
-> > 
-> > will speculatively download any assets that are not already cached,
-> > so it is advisable to set a timeout multiplier.
-> > 
-> >     QEMU_TEST_NO_DOWNLOAD=1 ninja test --suite functional
-> > 
-> > will fail the test if a required asset is not already cached
-> > 
-> >     ninja precache-functional
-> > 
-> > will download and cache all assets required by the functional
-> > tests
-> > 
-> > At the make level, precaching is always done by
-> > 
-> >     make check-functional
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > Tested-by: Richard Henderson <richard.henderson@linaro.org>
-> > [thuth: Remove the duplicated "path = os.path.basename(...)" line]
-> > Message-ID: <20240830133841.142644-16-thuth@redhat.com>
-> > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > ---
-> >   tests/Makefile.include                 |  3 ++-
-> >   tests/functional/meson.build           | 33 +++++++++++++++++++++++--
-> >   tests/functional/qemu_test/asset.py    | 34 ++++++++++++++++++++++++++
-> >   tests/functional/qemu_test/testcase.py |  7 ++++++
-> >   4 files changed, 74 insertions(+), 3 deletions(-)
-> 
-> 
-> > diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-> > index c0e675d847..b329ab7dbe 100644
-> > --- a/tests/functional/qemu_test/asset.py
-> > +++ b/tests/functional/qemu_test/asset.py
-> > @@ -9,6 +9,8 @@
-> >   import logging
-> >   import os
-> >   import subprocess
-> > +import sys
-> > +import unittest
-> >   import urllib.request
-> >   from pathlib import Path
-> >   from shutil import copyfileobj
-> > @@ -62,6 +64,9 @@ def fetch(self):
-> >                              self.cache_file, self.url)
-> >               return str(self.cache_file)
-> > +        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
-> > +            raise Exception("Asset cache is invalid and downloads disabled")
-> > +
-> >           self.log.info("Downloading %s to %s...", self.url, self.cache_file)
-> >           tmp_cache_file = self.cache_file.with_suffix(".download")
-> > @@ -95,3 +100,32 @@ def fetch(self):
-> >           self.log.info("Cached %s at %s" % (self.url, self.cache_file))
-> >           return str(self.cache_file)
-> > +
-> > +    def precache_test(test):
-> > +        log = logging.getLogger('qemu-test')
-> > +        log.setLevel(logging.DEBUG)
-> > +        handler = logging.StreamHandler(sys.stdout)
-> > +        handler.setLevel(logging.DEBUG)
-> > +        formatter = logging.Formatter(
-> > +            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-> > +        handler.setFormatter(formatter)
-> > +        log.addHandler(handler)
-> > +        for name, asset in vars(test.__class__).items():
-> > +            if name.startswith("ASSET_") and type(asset) == Asset:
-> > +                log.info("Attempting to cache '%s'" % asset)
-> > +                asset.fetch()
-> 
-> fetch() can fail [*] (see previous patch, various Exceptions returned).
-> 
-> What should we do in this case? If we ignore a missing artifact,
-> the tests will eventually fail. Better bail out early and save
-> credit minutes?
+On Tue, 26 Nov 2024 at 17:31, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Tue, Nov 26, 2024 at 05:44:29PM +0100, Philippe Mathieu-Daud=C3=A9 wro=
+te:
+> > Hi,
+> >
+> > On 4/9/24 12:38, Thomas Huth wrote:
+> > fetch() can fail [*] (see previous patch, various Exceptions returned).
+> >
+> > What should we do in this case? If we ignore a missing artifact,
+> > the tests will eventually fail. Better bail out early and save
+> > credit minutes?
+>
+> We already do what you describe - 'fetch' will raise an exception
+> which causes the precache task to fail, and the CI job gets marked
+> as failed. We don't attempt to run tests if assets are missing.
+>
+>
+> > > @@ -58,6 +59,12 @@ def tearDown(self):
+> > >       def main():
+> > >           path =3D os.path.basename(sys.argv[0])[:-3]
+> > > +
+> > > +        cache =3D os.environ.get("QEMU_TEST_PRECACHE", None)
+> > > +        if cache is not None:
+> > > +            Asset.precache_suites(path, cache)
+> > > +            return
+> > > +
+> > >           tr =3D pycotap.TAPTestRunner(message_log =3D pycotap.LogMod=
+e.LogToError,
+> > >                                      test_output_log =3D pycotap.LogM=
+ode.LogToError)
+> > >           unittest.main(module =3D None, testRunner =3D tr, argv=3D["=
+__dummy__", path])
+> >
+> > [*] Peter reported the following CI failure:
+> >
+> >   https://gitlab.com/qemu-project/qemu/-/jobs/8474928266
+> >
+> > 2024-11-26 14:58:53,170 - qemu-test - ERROR - Unable to download https:=
+//apt.armbian.com/pool/main/l/linux-6.6.16/linux-image-current-sunxi_24.2.1=
+_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb:
+>
+> This looks to be working as intended. We failed to cache
+> the asset, and so we stopped the job, without trying to
+> run the tests.
 
-We already do what you describe - 'fetch' will raise an exception
-which causes the precache task to fail, and the CI job gets marked
-as failed. We don't attempt to run tests if assets are missing.
+The job ended up in state "failed", with a red X mark in
+the gitlab UI. If we intend that not being able to fetch
+the assets doesn't count as a test failure, that didn't
+work here. If we do intend that fetch failures should be
+CI failures, we need to make our process of fetching and
+caching the images more robust, because otherwise the result
+is flaky CI jobs.
 
-
-> > @@ -58,6 +59,12 @@ def tearDown(self):
-> >       def main():
-> >           path = os.path.basename(sys.argv[0])[:-3]
-> > +
-> > +        cache = os.environ.get("QEMU_TEST_PRECACHE", None)
-> > +        if cache is not None:
-> > +            Asset.precache_suites(path, cache)
-> > +            return
-> > +
-> >           tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-> >                                      test_output_log = pycotap.LogMode.LogToError)
-> >           unittest.main(module = None, testRunner = tr, argv=["__dummy__", path])
-> 
-> [*] Peter reported the following CI failure:
-> 
->   https://gitlab.com/qemu-project/qemu/-/jobs/8474928266
-> 
-> 2024-11-26 14:58:53,170 - qemu-test - ERROR - Unable to download https://apt.armbian.com/pool/main/l/linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb:
-
-This looks to be working as intended. We failed to cache
-the asset, and so we stopped the job, without trying to
-run the tests.
-
-The only problem I see is that our private CI runner
-config is still broken, with no persistent cache provided
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
