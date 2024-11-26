@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF39AD3B98F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C71D3B992
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:15:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFwDy-0006fB-Np; Tue, 26 Nov 2024 09:07:31 -0500
+	id 1tFwLP-0008Hv-Ab; Tue, 26 Nov 2024 09:15:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tFwDf-0006Xr-Dk
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:07:13 -0500
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1tFwLN-0008HR-8M
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:15:09 -0500
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tFwDb-0006kp-MV
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:07:11 -0500
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3ea5a7a5e48so424303b6e.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:07:02 -0800 (PST)
+ id 1tFwLL-0008Hx-0d
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:15:08 -0500
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-5f201a932b2so260273eaf.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:15:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732630021; x=1733234821; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732630504; x=1733235304; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xcryzYJuSJxBgPfjrWgLsT+ux1El2hGVWKizBrK9DI0=;
- b=TSJwPCBvRwoztjwAKUyRkOzwpGOG7xuE2hFxtdvOlSr+bpPtt9RJgUtSIihI6c87TH
- XY/TrLzWSOQ2YkP00q6GCJ38IEVFd8fmqO2yCeLGG1n5OjeuF/9HTavLsW5kI+shTEsz
- XmFzfJ0ehGyTf8SYbM+XkLzMs4+dw/pdtMcbuR7Sy8i6gqsPEs/xJzk/6vjD0h4VV4kC
- Iqi4uGx3AVBM4VODw9Oas05fQS0OA1yUarB1sN617k3lzNrU+xpc7zxUc+2qlWv0hkRX
- ZaA/N302mZYKAhJgszZHWxRGky+MVmehVvipaQdRXLH/Cu+fzkVnzKKGidpyRST4tBEn
- SQzw==
+ bh=ROA+OZ9D+Wv/M9rcMPWwyzEf0I4zm5e8oyhizSV4ziw=;
+ b=sOgj/UHqqm6bpCNq4XHU5JAQvLLfgZVSKEBRJucAeNwZgMToxxFj4emNwD2TXVk4k4
+ QcgY+7BeC+sQnpMCmv5wYkt6EIcFM9B4WdmENc04iAUC4LyJDYTBApy8Ne0xfceGTZV/
+ Ju2oErf0x4K0jHWtndZjFIno+a/CcfcUpiX1PNi875pdXKGV0jirfrA0ed+uEELfBMlJ
+ mVUFq/CoTxb2jFtq33jv5PK2edzWyQJ6jhCkfBp3/ZGL7s34jYZ9reEIG3dvxGJb0vgu
+ QNCakiG/twR+7cnaY8IDySYyxjyThMt2bFTu0UZA0V9GXY3Oi88NhD0DNSCORK2M9XgK
+ YEHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732630021; x=1733234821;
+ d=1e100.net; s=20230601; t=1732630504; x=1733235304;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xcryzYJuSJxBgPfjrWgLsT+ux1El2hGVWKizBrK9DI0=;
- b=YBxZgvc8BsT9pT3Zu0o+A0yvkREySRsKxpr0FWzXZKcSurGdinLxS0LA84Uq+lPbPL
- b1O1NDQqH+JvaZ8OhB5jZRpIi2zqzmqTNhdJdUFmtSAdVWVvtoBhSyhZJ8Xqf3gkds8p
- rnibTn80pkn/v4TASVd6zCABkKc2H0w6KhuuBwzvwzLCnuY9pfglm+rN6aRYp8E1WezT
- 81UpsAk6ZzoUvGHItZXNlbejakGiR6+W07ozD/rZGpk5dSKQ+taqsfUNRG6rrawv6yI5
- JH7POvDHCTZ1HI3yMR2CJxfi6UTHQ5IGKEIu4YTM9YBlVZ+0MTtVGasRtQvc4GNxsab2
- 2L8g==
-X-Gm-Message-State: AOJu0YzSuAoG64QA4wVAf9NBAHXqFpCa5zni5x/ROO3XoUq1qx+upHRC
- rMBXx+6/N2ZIxM1yMpAcTP6ocTRbvEXdJUlLROlonpsbJBBogOEUl6vpqYZLJgUa4KfCB9NIJJ+
- x
-X-Gm-Gg: ASbGnct6+BwuqA7uQp3cyp5zaySXrTlox4gx00esJIPwK4FsXBgfvlKLWMLe44efeXv
- zUsQxj6Cu2UntYOC9dhJjkRIconf5kBX5J4zMLJBbrM1OMVgIhLj8qNyGfviIg+LkQ9hPWwK4P6
- ZTkGVTjgQpO8MM9m3mdY2Ui1MGsg/eZ40lLsPMwy5XrR5UXxoa45Hi7a4owWRSgvh49djHAqD/8
- VNtTPZ7nNJGE0bn2Mp2RtN7jJwNDt+1c4AXRSNFg1mEI30r/7I67w8aN1Qjj1GPzQ==
-X-Google-Smtp-Source: AGHT+IFL8vo7VWMeR18/9bg1p2y0zFkHUhjLgriCQxyolSYRZ4hluS2zVgWB3Pdwqlhvua6tnZIsMQ==
-X-Received: by 2002:a05:6808:18a0:b0:3e7:9f1f:b84a with SMTP id
- 5614622812f47-3e9158770bcmr15642903b6e.21.1732630021007; 
- Tue, 26 Nov 2024 06:07:01 -0800 (PST)
+ bh=ROA+OZ9D+Wv/M9rcMPWwyzEf0I4zm5e8oyhizSV4ziw=;
+ b=l7ZdJF3EjX28U1epRV62d9dSUZo//7k064SHeW318htN5DA2CDePSu1tfbL/OEYcJx
+ FdBUzL+o7lmS9vr4ZSIy/hMDOvHLMbcYagK46vFDK2RdasybsfrH1Y4y6SUX0i1b4KwU
+ 4mLge28N+efx87FRs/NtpC4DFZIIB0+Y3yC1DpH6tFYoDJkHdXJ4xDDSfCMd34Qwsj1a
+ Y3YZvG5SJ0/CE2zXkYSpitA2UxiVCuLkEt3VzzdUxxCRhb8ytvW+Il+cMlSiMZeuD4/j
+ 7BtuXFGhl6WuBuaFbY7CqhqkEkmZ+iJx75EIX/yYCMwjvZWP1pR03vjNZeEebFcPNRsJ
+ N/gQ==
+X-Gm-Message-State: AOJu0YwKUI1exj0d3WzZLr/tYBzU6oqzL3wPkTqGEAyyTcL7pKI+w674
+ 8KObRhkt0mstKsboUcqz6tuPrM+83oeDLxmOticSij3wEdjb7TdgUJ73Fm4/j3+z/vCxOv2H+j+
+ p
+X-Gm-Gg: ASbGncv+d9g63Z+0bCHyl5uXxJCixQ0PpBbUw3xR8iZ2sWLxRvaBcCgHzAQktmn7sGj
+ x3gaxJXOk8Wp7+sduCrO9gf+fEaom8YkNOxN/Y4As1y9N4BShxLZouKBuDr7Gkq9PeXVwkinHe2
+ /tnThpWJAKn4nbhpNrAHDm+DgCgzutczQNa8OxFwCZ/+ndqBJoXSDMrF8Tm/Y2IhZnyfsZHDe8O
+ 2Wnijyml1L03YKajny1MIddIszANfLf4JwqMWjWegJlGN6Ha12wm99Le/9xy5+zxw==
+X-Google-Smtp-Source: AGHT+IHFkcT2OR+0bPp0E6T74SIVXbijUm8Cp9f0h73hxT4QiIvI6uoZ66QrpmFXTu7vlrP/U5+B6Q==
+X-Received: by 2002:a05:6830:902:b0:71d:5f22:afec with SMTP id
+ 46e09a7af769-71d5f22b21dmr1670016a34.12.1732630504355; 
+ Tue, 26 Nov 2024 06:15:04 -0800 (PST)
 Received: from [10.25.0.199] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3e91500f91bsm2928224b6e.52.2024.11.26.06.06.59
+ 006d021491bc7-5f1daa186d7sm1722537eaf.36.2024.11.26.06.15.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 06:07:00 -0800 (PST)
-Message-ID: <d7988393-2cf5-4806-830f-9e6e60e72691@linaro.org>
-Date: Tue, 26 Nov 2024 08:06:57 -0600
+ Tue, 26 Nov 2024 06:15:03 -0800 (PST)
+Message-ID: <0a751295-7e17-4ac5-b6de-224424ba21fe@linaro.org>
+Date: Tue, 26 Nov 2024 08:15:01 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 10/13] target/mips: Introduce gen_move_high32_i32()
@@ -77,8 +77,8 @@ From: Richard Henderson <richard.henderson@linaro.org>
 In-Reply-To: <20241126131546.66145-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,10 +105,42 @@ On 11/26/24 07:15, Philippe Mathieu-Daudé wrote:
 > Similarly to the gen_move_high32_tl() helper which sign-extract
 > the 32-higher bits of a target-wide TCG register, add a helper
 > to sign-extract from 32-bit TCG registers.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/mips/tcg/translate.h | 1 +
+>   target/mips/tcg/translate.c | 5 +++++
+>   2 files changed, 6 insertions(+)
+> 
+> diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
+> index d5d74faad92..f974cf29297 100644
+> --- a/target/mips/tcg/translate.h
+> +++ b/target/mips/tcg/translate.h
+> @@ -156,6 +156,7 @@ void gen_base_offset_addr_tl(DisasContext *ctx, TCGv addr, int base, int offset)
+>   void gen_move_low32_tl(TCGv ret, TCGv_i64 arg);
+>   void gen_move_low32_i32(TCGv_i32 ret, TCGv_i64 arg);
+>   void gen_move_high32_tl(TCGv ret, TCGv_i64 arg);
+> +void gen_move_high32_i32(TCGv_i32 ret, TCGv_i64 arg);
+>   void gen_load_gpr_tl(TCGv t, int reg);
+>   void gen_load_gpr_i32(TCGv_i32 t, int reg);
+>   void gen_store_gpr_tl(TCGv t, int reg);
+> diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+> index 80e2a8e5256..d6be37d56d3 100644
+> --- a/target/mips/tcg/translate.c
+> +++ b/target/mips/tcg/translate.c
+> @@ -1494,6 +1494,11 @@ void gen_move_high32_tl(TCGv ret, TCGv_i64 arg)
+>   #endif
+>   }
+>   
+> +void gen_move_high32_i32(TCGv_i32 ret, TCGv_i64 arg)
+> +{
+> +    tcg_gen_extrh_i64_i32(ret, arg);
+> +}
+> +
+Actually, I don't see a need for either of these.
+Why not use the tcg_gen_* functions directly?
 
-Similarly wrt "sign-extract" and "from".
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Indeed, the combined tcg_gen_extr_i64_i32(low, high, arg) in most places.
 
 
 r~
