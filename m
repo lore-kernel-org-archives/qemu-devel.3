@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015C8D3B98E
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 13:18:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 158B0D3B98E
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 13:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFvS6-0001fW-04; Tue, 26 Nov 2024 08:18:02 -0500
+	id 1tFvSc-0002eM-PO; Tue, 26 Nov 2024 08:18:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFvQo-0008ST-0E
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:16:44 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFvRH-0000MD-Jw
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:17:17 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFvQl-0003gW-2J
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:16:40 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3825c05cc90so3646265f8f.1
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 05:16:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFvR9-0003lY-L9
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:17:08 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4349cc45219so23569245e9.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 05:17:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732626997; x=1733231797; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732627021; x=1733231821; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NRFaOAbwvwcs4m43OVY/bnuL6cj5pbeln7bkTpDrxFM=;
- b=OXdIOn9dBfFnD+2nqN7fo3wmixSxutpwOF32ZwvHUQSw00rXai5IYeoJup5vsdIPpb
- gwQ2b12vo8FxpsNd+z3X1pOnPmOQrgDrKVBIC6XdHb8VA2r0ozRH8K3Rclow6E+SzwRa
- EFQGqjPttnrJON+MQ6fhPeYj81PgLeOxd2RqA2Jxdc/USP2AgnAQ3yMTvlErdo5BNskF
- RKZ2Z209ZymawJxMooLOYsjfI0H0lb9ial3TTaz02BYJ3R25ySDo3rmZPajhHe5xjKts
- pg97OG+qQmz7HksgP7Z7dv/ilQpkyM7zI0OZiwFajCL4pEYBR8bqmMhm1dyR3jWIuK5h
- hxdQ==
+ bh=YSQBzSlAdODx41wo1IKcP1SlnbBLzR0kktNb2psirMo=;
+ b=E04IWYL2//8YzGauijtEoCahJzVkMOVY+/lcD4ZCn4dTpHKUF9uw16tOUFPGnfD05d
+ nog+Tj/wg8X6AIuQFVEmnQr6r4sqRRnr3k27vFlgInunHBrFOjim5DFBkXyg5vmYBuJS
+ WLHVBBoVpXjIhRAnL3LAzISoshBvpa5La6fTpevbXBvr5UVrF5Lk2oL4JLkA+wWA9xRB
+ MuwMjrXxBLtASA0OrP0RmfqSJ43G0XkisSe6h7/bnJawYDP3m1pXMrkrFNh5FyQx8oXI
+ 1oiSpVyGRcL2x9Ir5wkvY+qTB38FE171pUU4aH/RIjkM9AKK4mvPLL6CpBpgOQWPFWMm
+ 0dsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732626997; x=1733231797;
+ d=1e100.net; s=20230601; t=1732627021; x=1733231821;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NRFaOAbwvwcs4m43OVY/bnuL6cj5pbeln7bkTpDrxFM=;
- b=KB4pyPDfYPVmJBjWgZ5r6HSrpolP5BIDG91WsL5PEa88HOFifOQQy7jk7VvK1LT1K8
- Q/2OhoicHH8KciK89gaYAG93j9ZhypqKxorkBNH1n4hbZ2r16Qr9KUqrmeISn+XTohaV
- o9vQ8drtbYoIoxkQrt+xQ7RLVpweM0z0DsVluulGMc59nIN2P3Mkpg3dCZs1vMDi8oWt
- 1Sh7d5/PT4q6g91feZFXjjLs2G0bfpwY8eLAQrxr8mRC4JYp9PX7/gypNQmXkNI+nCXU
- U4TrY1s075Sg/C0hhZRavTsbHtCOr4QDnEm0ETU2GY8z/RdvNq/OpkiPTzBgjFLcS42t
- qPcQ==
-X-Gm-Message-State: AOJu0YwfUeQVGfJrGLHsYdvlMTXuW/ucQ9yZOs3TStZ1ebPuUBZ0Ty7t
- cvO99hPYU2mJNGnY8eni1qt3/JMOVcghxKuGhhr6/Zct8LsahqtMWu/8uLjEKKrljd7INxpmUmL
- z
-X-Gm-Gg: ASbGnctH8Ep2QjmWErvmC2ST+fmhDO+uJDfcTngtGWqmrV14UMLAO/LREYIFasmqpvf
- UP5xsf9DAbZo9c1Suj1KGL+wMJQEaSEGXJXvwTo9ujTt2t8qK7bddmQqWzMlPNggsscxLZQYm5l
- +WdRXSkZLG2rQf1SJXkZzw/Q3eLKg5M0PUAK46x0puQ4AbNvQoXMaLAI2CGniH8STi8iyy+k+XA
- +Z/X2ieGlfzsfdHTMaBv1wmRt97VjQqzQhg4OkJ017iQLO1DETWNAg2CxqM9Gk6lOp0lJMq
-X-Google-Smtp-Source: AGHT+IHYkhzo1tdW73+SJSCXtnDzdiXeJ9xv4DhnAzIngIqAcFcOZavgX+D+2UuOhfVTMfTbK67L1g==
-X-Received: by 2002:a05:6000:2cd:b0:382:498a:9cf5 with SMTP id
- ffacd0b85a97d-38260b5ae29mr16808245f8f.14.1732626996769; 
- Tue, 26 Nov 2024 05:16:36 -0800 (PST)
+ bh=YSQBzSlAdODx41wo1IKcP1SlnbBLzR0kktNb2psirMo=;
+ b=JqJDQvNh2cyDAEs2XfDWq8T7NJVrm52bQwEK+fl+EaYjHs7f2yaLE2LmHv66qy7Ufa
+ TGVOxMMa+ohcm89n78uBshMmVrCnxJpJHUxehLQlQIqzuSfwsyId9dZYTMmUJYSSNXuU
+ hLi7vmMq+6QYMGvspKF6GIg759znTaiCuUeyJo2im43/rwQeEJHumFdP5dwxTT35PnBb
+ arze37cED9icVq942EhLy4XezYyBGFdq0YqwhFCFGZ+AzK8wmkjgUAS0NarY3/uNIq/B
+ WPVzGL7Nf2NY0oU0O7N4KzbLQhXUf3rP2Ugq57TQKojjmwOjk1BCDiHbDaMFBcJLQxnD
+ jGYA==
+X-Gm-Message-State: AOJu0YwyhQfAPa6jzAA5elv9y7EtWdG/+cDJUdB66T0Hzrkw2ICztl97
+ Dgt+VpiMTKBGP4CBeSWhWJ8XqOSeNtMsPevUHAIRJ/YN4QzRJiOrTOAA/3/uh3zCB1P2QTF+e2/
+ I
+X-Gm-Gg: ASbGnctYjmWgVik8U9DG291MCkBkTH2byhelzAuN2kkWRIN9qfPjMP6R5Nhqqja47gq
+ MzVUNXSUR0JjlUy+GB8UxpPLUp2/V8knqo5GAA7Iz1eedmWmN+d8xrPZuHDMP2rSxl8t1HdRRxn
+ gDNklexaIswLaQPY63fTHXj1c7k7fxcV3SIv3w8kH7O41PxL5eQ+WY58wRPLDY36b51+DEHkC7E
+ PmOqF0MNiwZ7zQvnzZfB7gXLFRensC8PK+P22YoA1jDZqgaRnnpsktfoqpRuzjkqFH6g3Hn
+X-Google-Smtp-Source: AGHT+IF624rhvCZ3vdcklpaWPbSB9HH/OZtqIvs6WYLxM1pWvPmJEKsUOWu78VPYgqrcbOYilZCILQ==
+X-Received: by 2002:a05:600c:4fcc:b0:42c:ba83:3f0e with SMTP id
+ 5b1f17b1804b1-433ce410127mr139533845e9.7.1732627020270; 
+ Tue, 26 Nov 2024 05:17:00 -0800 (PST)
 Received: from localhost.localdomain ([176.176.143.205])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434a59c46casm25977585e9.7.2024.11.26.05.16.35
+ 5b1f17b1804b1-433b01e1188sm235163425e9.1.2024.11.26.05.16.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 Nov 2024 05:16:36 -0800 (PST)
+ Tue, 26 Nov 2024 05:16:59 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Aurelien Jarno <aurelien@aurel32.net>,
  Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 08/13] target/mips: Introduce gen_store_gpr_i32()
-Date: Tue, 26 Nov 2024 14:15:40 +0100
-Message-ID: <20241126131546.66145-9-philmd@linaro.org>
+Subject: [PATCH 12/13] target/mips: Access MXU registers using TCGv_i32 API
+Date: Tue, 26 Nov 2024 14:15:44 +0100
+Message-ID: <20241126131546.66145-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241126131546.66145-1-philmd@linaro.org>
 References: <20241126131546.66145-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,47 +100,2699 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similarly to the gen_store_gpr_tl() helper which stores a
-target-wide TCG register to the CPU generic purpose registers,
-add a helper to store 32-bit TCG register.
+MXU extension is only built for 32-bit targets,
+its registers are 32-bit only: no need to call
+the 'target-wide' TCG API, we can simply use the
+32-bit one.
+
+Mechanical change doing:
+
+  $ sed -e -i 's/_tl/_i32/g' target/mips/tcg/mxu_translate.c
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/tcg/translate.h | 1 +
- target/mips/tcg/translate.c | 8 ++++++++
- 2 files changed, 9 insertions(+)
+ target/mips/tcg/mxu_translate.c | 1538 +++++++++++++++----------------
+ 1 file changed, 769 insertions(+), 769 deletions(-)
 
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index e15d631ad2a..d9faa82ff70 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -158,6 +158,7 @@ void gen_move_high32_tl(TCGv ret, TCGv_i64 arg);
- void gen_load_gpr_tl(TCGv t, int reg);
- void gen_load_gpr_i32(TCGv_i32 t, int reg);
- void gen_store_gpr_tl(TCGv t, int reg);
-+void gen_store_gpr_i32(TCGv_i32 t, int reg);
- #if defined(TARGET_MIPS64)
- void gen_load_gpr_hi(TCGv_i64 t, int reg);
- void gen_store_gpr_hi(TCGv_i64 t, int reg);
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index d7c83c863d5..6ac0734d1b2 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -1216,6 +1216,14 @@ void gen_store_gpr_tl(TCGv t, int reg)
+diff --git a/target/mips/tcg/mxu_translate.c b/target/mips/tcg/mxu_translate.c
+index ee70ae96c32..69b6b352024 100644
+--- a/target/mips/tcg/mxu_translate.c
++++ b/target/mips/tcg/mxu_translate.c
+@@ -631,16 +631,16 @@ void mxu_translate_init(void)
+ static inline void gen_load_mxu_gpr(TCGv t, unsigned int reg)
+ {
+     if (reg == 0) {
+-        tcg_gen_movi_tl(t, 0);
++        tcg_gen_movi_i32(t, 0);
+     } else if (reg <= 15) {
+-        tcg_gen_mov_tl(t, mxu_gpr[reg - 1]);
++        tcg_gen_mov_i32(t, mxu_gpr[reg - 1]);
      }
  }
  
-+void gen_store_gpr_i32(TCGv_i32 t, int reg)
-+{
-+    assert(reg >= 0 && reg <= ARRAY_SIZE(cpu_gpr));
-+    if (reg != 0) {
-+        tcg_gen_ext_i32_tl(cpu_gpr[reg], t);
-+    }
-+}
-+
- #if defined(TARGET_MIPS64)
- void gen_load_gpr_hi(TCGv_i64 t, int reg)
+ static inline void gen_store_mxu_gpr(TCGv t, unsigned int reg)
  {
+     if (reg > 0 && reg <= 15) {
+-        tcg_gen_mov_tl(mxu_gpr[reg - 1], t);
++        tcg_gen_mov_i32(mxu_gpr[reg - 1], t);
+     }
+ }
+ 
+@@ -648,22 +648,22 @@ static inline void gen_extract_mxu_gpr(TCGv t, unsigned int reg,
+                                        unsigned int ofs, unsigned int len)
+ {
+     if (reg == 0) {
+-        tcg_gen_movi_tl(t, 0);
++        tcg_gen_movi_i32(t, 0);
+     } else if (reg <= 15) {
+-        tcg_gen_extract_tl(t, mxu_gpr[reg - 1], ofs, len);
++        tcg_gen_extract_i32(t, mxu_gpr[reg - 1], ofs, len);
+     }
+ }
+ 
+ /* MXU control register moves. */
+ static inline void gen_load_mxu_cr(TCGv t)
+ {
+-    tcg_gen_mov_tl(t, mxu_CR);
++    tcg_gen_mov_i32(t, mxu_CR);
+ }
+ 
+ static inline void gen_store_mxu_cr(TCGv t)
+ {
+     /* TODO: Add handling of RW rules for MXU_CR. */
+-    tcg_gen_mov_tl(mxu_CR, t);
++    tcg_gen_mov_i32(mxu_CR, t);
+ }
+ 
+ /*
+@@ -679,7 +679,7 @@ static void gen_mxu_s32i2m(DisasContext *ctx)
+     XRa = extract32(ctx->opcode, 6, 5);
+     Rb = extract32(ctx->opcode, 16, 5);
+ 
+-    gen_load_gpr_tl(t0, Rb);
++    gen_load_gpr_i32(t0, Rb);
+     if (XRa <= 15) {
+         gen_store_mxu_gpr(t0, XRa);
+     } else if (XRa == 16) {
+@@ -706,7 +706,7 @@ static void gen_mxu_s32m2i(DisasContext *ctx)
+         gen_load_mxu_cr(t0);
+     }
+ 
+-    gen_store_gpr_tl(t0, Rb);
++    gen_store_gpr_i32(t0, Rb);
+ }
+ 
+ /*
+@@ -728,61 +728,61 @@ static void gen_mxu_s8ldd(DisasContext *ctx, bool postmodify)
+     optn3 = extract32(ctx->opcode, 18, 3);
+     Rb = extract32(ctx->opcode, 21, 5);
+ 
+-    gen_load_gpr_tl(t0, Rb);
+-    tcg_gen_addi_tl(t0, t0, (int8_t)s8);
++    gen_load_gpr_i32(t0, Rb);
++    tcg_gen_addi_i32(t0, t0, (int8_t)s8);
+     if (postmodify) {
+-        gen_store_gpr_tl(t0, Rb);
++        gen_store_gpr_i32(t0, Rb);
+     }
+ 
+     switch (optn3) {
+     /* XRa[7:0] = tmp8 */
+     case MXU_OPTN3_PTN0:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UB);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UB);
+         gen_load_mxu_gpr(t0, XRa);
+-        tcg_gen_deposit_tl(t0, t0, t1, 0, 8);
++        tcg_gen_deposit_i32(t0, t0, t1, 0, 8);
+         break;
+     /* XRa[15:8] = tmp8 */
+     case MXU_OPTN3_PTN1:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UB);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UB);
+         gen_load_mxu_gpr(t0, XRa);
+-        tcg_gen_deposit_tl(t0, t0, t1, 8, 8);
++        tcg_gen_deposit_i32(t0, t0, t1, 8, 8);
+         break;
+     /* XRa[23:16] = tmp8 */
+     case MXU_OPTN3_PTN2:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UB);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UB);
+         gen_load_mxu_gpr(t0, XRa);
+-        tcg_gen_deposit_tl(t0, t0, t1, 16, 8);
++        tcg_gen_deposit_i32(t0, t0, t1, 16, 8);
+         break;
+     /* XRa[31:24] = tmp8 */
+     case MXU_OPTN3_PTN3:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UB);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UB);
+         gen_load_mxu_gpr(t0, XRa);
+-        tcg_gen_deposit_tl(t0, t0, t1, 24, 8);
++        tcg_gen_deposit_i32(t0, t0, t1, 24, 8);
+         break;
+     /* XRa = {8'b0, tmp8, 8'b0, tmp8} */
+     case MXU_OPTN3_PTN4:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UB);
+-        tcg_gen_deposit_tl(t0, t1, t1, 16, 16);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UB);
++        tcg_gen_deposit_i32(t0, t1, t1, 16, 16);
+         break;
+     /* XRa = {tmp8, 8'b0, tmp8, 8'b0} */
+     case MXU_OPTN3_PTN5:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UB);
+-        tcg_gen_shli_tl(t1, t1, 8);
+-        tcg_gen_deposit_tl(t0, t1, t1, 16, 16);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UB);
++        tcg_gen_shli_i32(t1, t1, 8);
++        tcg_gen_deposit_i32(t0, t1, t1, 16, 16);
+         break;
+     /* XRa = {{8{sign of tmp8}}, tmp8, {8{sign of tmp8}}, tmp8} */
+     case MXU_OPTN3_PTN6:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_SB);
+-        tcg_gen_mov_tl(t0, t1);
+-        tcg_gen_andi_tl(t0, t0, 0xFF00FFFF);
+-        tcg_gen_shli_tl(t1, t1, 16);
+-        tcg_gen_or_tl(t0, t0, t1);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_SB);
++        tcg_gen_mov_i32(t0, t1);
++        tcg_gen_andi_i32(t0, t0, 0xFF00FFFF);
++        tcg_gen_shli_i32(t1, t1, 16);
++        tcg_gen_or_i32(t0, t0, t1);
+         break;
+     /* XRa = {tmp8, tmp8, tmp8, tmp8} */
+     case MXU_OPTN3_PTN7:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UB);
+-        tcg_gen_deposit_tl(t1, t1, t1, 8, 8);
+-        tcg_gen_deposit_tl(t0, t1, t1, 16, 16);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UB);
++        tcg_gen_deposit_i32(t1, t1, t1, 8, 8);
++        tcg_gen_deposit_i32(t0, t1, t1, 16, 16);
+         break;
+     }
+ 
+@@ -813,33 +813,33 @@ static void gen_mxu_s8std(DisasContext *ctx, bool postmodify)
+         return;
+     }
+ 
+-    gen_load_gpr_tl(t0, Rb);
+-    tcg_gen_addi_tl(t0, t0, (int8_t)s8);
++    gen_load_gpr_i32(t0, Rb);
++    tcg_gen_addi_i32(t0, t0, (int8_t)s8);
+     if (postmodify) {
+-        gen_store_gpr_tl(t0, Rb);
++        gen_store_gpr_i32(t0, Rb);
+     }
+     gen_load_mxu_gpr(t1, XRa);
+ 
+     switch (optn3) {
+     /* XRa[7:0] => tmp8 */
+     case MXU_OPTN3_PTN0:
+-        tcg_gen_extract_tl(t1, t1, 0, 8);
++        tcg_gen_extract_i32(t1, t1, 0, 8);
+         break;
+     /* XRa[15:8] => tmp8 */
+     case MXU_OPTN3_PTN1:
+-        tcg_gen_extract_tl(t1, t1, 8, 8);
++        tcg_gen_extract_i32(t1, t1, 8, 8);
+         break;
+     /* XRa[23:16] => tmp8 */
+     case MXU_OPTN3_PTN2:
+-        tcg_gen_extract_tl(t1, t1, 16, 8);
++        tcg_gen_extract_i32(t1, t1, 16, 8);
+         break;
+     /* XRa[31:24] => tmp8 */
+     case MXU_OPTN3_PTN3:
+-        tcg_gen_extract_tl(t1, t1, 24, 8);
++        tcg_gen_extract_i32(t1, t1, 24, 8);
+         break;
+     }
+ 
+-    tcg_gen_qemu_st_tl(t1, t0, ctx->mem_idx, MO_UB);
++    tcg_gen_qemu_st_i32(t1, t0, ctx->mem_idx, MO_UB);
+ }
+ 
+ /*
+@@ -862,34 +862,34 @@ static void gen_mxu_s16ldd(DisasContext *ctx, bool postmodify)
+     optn2 = extract32(ctx->opcode,  19, 2);
+     Rb    = extract32(ctx->opcode,  21, 5);
+ 
+-    gen_load_gpr_tl(t0, Rb);
+-    tcg_gen_addi_tl(t0, t0, s10);
++    gen_load_gpr_i32(t0, Rb);
++    tcg_gen_addi_i32(t0, t0, s10);
+     if (postmodify) {
+-        gen_store_gpr_tl(t0, Rb);
++        gen_store_gpr_i32(t0, Rb);
+     }
+ 
+     switch (optn2) {
+     /* XRa[15:0] = tmp16 */
+     case MXU_OPTN2_PTN0:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UW);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UW);
+         gen_load_mxu_gpr(t0, XRa);
+-        tcg_gen_deposit_tl(t0, t0, t1, 0, 16);
++        tcg_gen_deposit_i32(t0, t0, t1, 0, 16);
+         break;
+     /* XRa[31:16] = tmp16 */
+     case MXU_OPTN2_PTN1:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UW);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UW);
+         gen_load_mxu_gpr(t0, XRa);
+-        tcg_gen_deposit_tl(t0, t0, t1, 16, 16);
++        tcg_gen_deposit_i32(t0, t0, t1, 16, 16);
+         break;
+     /* XRa = sign_extend(tmp16) */
+     case MXU_OPTN2_PTN2:
+-        tcg_gen_qemu_ld_tl(t0, t0, ctx->mem_idx, MO_SW);
++        tcg_gen_qemu_ld_i32(t0, t0, ctx->mem_idx, MO_SW);
+         break;
+     /* XRa = {tmp16, tmp16} */
+     case MXU_OPTN2_PTN3:
+-        tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, MO_UW);
+-        tcg_gen_deposit_tl(t0, t1, t1,  0, 16);
+-        tcg_gen_deposit_tl(t0, t1, t1, 16, 16);
++        tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, MO_UW);
++        tcg_gen_deposit_i32(t0, t1, t1,  0, 16);
++        tcg_gen_deposit_i32(t0, t1, t1, 16, 16);
+         break;
+     }
+ 
+@@ -921,25 +921,25 @@ static void gen_mxu_s16std(DisasContext *ctx, bool postmodify)
+         return;
+     }
+ 
+-    gen_load_gpr_tl(t0, Rb);
+-    tcg_gen_addi_tl(t0, t0, s10);
++    gen_load_gpr_i32(t0, Rb);
++    tcg_gen_addi_i32(t0, t0, s10);
+     if (postmodify) {
+-        gen_store_gpr_tl(t0, Rb);
++        gen_store_gpr_i32(t0, Rb);
+     }
+     gen_load_mxu_gpr(t1, XRa);
+ 
+     switch (optn2) {
+     /* XRa[15:0] => tmp16 */
+     case MXU_OPTN2_PTN0:
+-        tcg_gen_extract_tl(t1, t1, 0, 16);
++        tcg_gen_extract_i32(t1, t1, 0, 16);
+         break;
+     /* XRa[31:16] => tmp16 */
+     case MXU_OPTN2_PTN1:
+-        tcg_gen_extract_tl(t1, t1, 16, 16);
++        tcg_gen_extract_i32(t1, t1, 16, 16);
+         break;
+     }
+ 
+-    tcg_gen_qemu_st_tl(t1, t0, ctx->mem_idx, MO_UW);
++    tcg_gen_qemu_st_i32(t1, t0, ctx->mem_idx, MO_UW);
+ }
+ 
+ /*
+@@ -965,20 +965,20 @@ static void gen_mxu_s32mul(DisasContext *ctx, bool mulu)
+     rt  = extract32(ctx->opcode, 21, 5);
+ 
+     if (unlikely(rs == 0 || rt == 0)) {
+-        tcg_gen_movi_tl(t0, 0);
+-        tcg_gen_movi_tl(t1, 0);
++        tcg_gen_movi_i32(t0, 0);
++        tcg_gen_movi_i32(t1, 0);
+     } else {
+-        gen_load_gpr_tl(t0, rs);
+-        gen_load_gpr_tl(t1, rt);
++        gen_load_gpr_i32(t0, rs);
++        gen_load_gpr_i32(t1, rt);
+ 
+         if (mulu) {
+-            tcg_gen_mulu2_tl(t0, t1, t0, t1);
++            tcg_gen_mulu2_i32(t0, t1, t0, t1);
+         } else {
+-            tcg_gen_muls2_tl(t0, t1, t0, t1);
++            tcg_gen_muls2_i32(t0, t1, t0, t1);
+         }
+     }
+-    tcg_gen_mov_tl(cpu_HI[0], t1);
+-    tcg_gen_mov_tl(cpu_LO[0], t0);
++    tcg_gen_mov_i32(cpu_HI[0], t1);
++    tcg_gen_mov_i32(cpu_LO[0], t0);
+     gen_store_mxu_gpr(t1, XRa);
+     gen_store_mxu_gpr(t0, XRd);
+ }
+@@ -1014,38 +1014,38 @@ static void gen_mxu_d16mul(DisasContext *ctx, bool fractional,
+      */
+ 
+     gen_load_mxu_gpr(t1, XRb);
+-    tcg_gen_sextract_tl(t0, t1, 0, 16);
+-    tcg_gen_sextract_tl(t1, t1, 16, 16);
++    tcg_gen_sextract_i32(t0, t1, 0, 16);
++    tcg_gen_sextract_i32(t1, t1, 16, 16);
+     gen_load_mxu_gpr(t3, XRc);
+-    tcg_gen_sextract_tl(t2, t3, 0, 16);
+-    tcg_gen_sextract_tl(t3, t3, 16, 16);
++    tcg_gen_sextract_i32(t2, t3, 0, 16);
++    tcg_gen_sextract_i32(t3, t3, 16, 16);
+ 
+     switch (optn2) {
+     case MXU_OPTN2_WW: /* XRB.H*XRC.H == lop, XRB.L*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t1, t3);
+-        tcg_gen_mul_tl(t2, t0, t2);
++        tcg_gen_mul_i32(t3, t1, t3);
++        tcg_gen_mul_i32(t2, t0, t2);
+         break;
+     case MXU_OPTN2_LW: /* XRB.L*XRC.H == lop, XRB.L*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t0, t3);
+-        tcg_gen_mul_tl(t2, t0, t2);
++        tcg_gen_mul_i32(t3, t0, t3);
++        tcg_gen_mul_i32(t2, t0, t2);
+         break;
+     case MXU_OPTN2_HW: /* XRB.H*XRC.H == lop, XRB.H*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t1, t3);
+-        tcg_gen_mul_tl(t2, t1, t2);
++        tcg_gen_mul_i32(t3, t1, t3);
++        tcg_gen_mul_i32(t2, t1, t2);
+         break;
+     case MXU_OPTN2_XW: /* XRB.L*XRC.H == lop, XRB.H*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t0, t3);
+-        tcg_gen_mul_tl(t2, t1, t2);
++        tcg_gen_mul_i32(t3, t0, t3);
++        tcg_gen_mul_i32(t2, t1, t2);
+         break;
+     }
+     if (fractional) {
+         TCGLabel *l_done = gen_new_label();
+         TCGv rounding = tcg_temp_new();
+ 
+-        tcg_gen_shli_tl(t3, t3, 1);
+-        tcg_gen_shli_tl(t2, t2, 1);
+-        tcg_gen_andi_tl(rounding, mxu_CR, 0x2);
+-        tcg_gen_brcondi_tl(TCG_COND_EQ, rounding, 0, l_done);
++        tcg_gen_shli_i32(t3, t3, 1);
++        tcg_gen_shli_i32(t2, t2, 1);
++        tcg_gen_andi_i32(rounding, mxu_CR, 0x2);
++        tcg_gen_brcondi_i32(TCG_COND_EQ, rounding, 0, l_done);
+         if (packed_result) {
+             TCGLabel *l_apply_bias_l = gen_new_label();
+             TCGLabel *l_apply_bias_r = gen_new_label();
+@@ -1056,22 +1056,22 @@ static void gen_mxu_d16mul(DisasContext *ctx, bool fractional,
+              * D16MULF supports unbiased rounding aka "bankers rounding",
+              * "round to even", "convergent rounding"
+              */
+-            tcg_gen_andi_tl(bias, mxu_CR, 0x4);
+-            tcg_gen_brcondi_tl(TCG_COND_NE, bias, 0, l_apply_bias_l);
+-            tcg_gen_andi_tl(t0, t3, 0x1ffff);
+-            tcg_gen_brcondi_tl(TCG_COND_EQ, t0, 0x8000, l_half_done);
++            tcg_gen_andi_i32(bias, mxu_CR, 0x4);
++            tcg_gen_brcondi_i32(TCG_COND_NE, bias, 0, l_apply_bias_l);
++            tcg_gen_andi_i32(t0, t3, 0x1ffff);
++            tcg_gen_brcondi_i32(TCG_COND_EQ, t0, 0x8000, l_half_done);
+             gen_set_label(l_apply_bias_l);
+-            tcg_gen_addi_tl(t3, t3, 0x8000);
++            tcg_gen_addi_i32(t3, t3, 0x8000);
+             gen_set_label(l_half_done);
+-            tcg_gen_brcondi_tl(TCG_COND_NE, bias, 0, l_apply_bias_r);
+-            tcg_gen_andi_tl(t0, t2, 0x1ffff);
+-            tcg_gen_brcondi_tl(TCG_COND_EQ, t0, 0x8000, l_done);
++            tcg_gen_brcondi_i32(TCG_COND_NE, bias, 0, l_apply_bias_r);
++            tcg_gen_andi_i32(t0, t2, 0x1ffff);
++            tcg_gen_brcondi_i32(TCG_COND_EQ, t0, 0x8000, l_done);
+             gen_set_label(l_apply_bias_r);
+-            tcg_gen_addi_tl(t2, t2, 0x8000);
++            tcg_gen_addi_i32(t2, t2, 0x8000);
+         } else {
+             /* D16MULE doesn't support unbiased rounding */
+-            tcg_gen_addi_tl(t3, t3, 0x8000);
+-            tcg_gen_addi_tl(t2, t2, 0x8000);
++            tcg_gen_addi_i32(t3, t3, 0x8000);
++            tcg_gen_addi_i32(t2, t2, 0x8000);
+         }
+         gen_set_label(l_done);
+     }
+@@ -1079,9 +1079,9 @@ static void gen_mxu_d16mul(DisasContext *ctx, bool fractional,
+         gen_store_mxu_gpr(t3, XRa);
+         gen_store_mxu_gpr(t2, XRd);
+     } else {
+-        tcg_gen_andi_tl(t3, t3, 0xffff0000);
+-        tcg_gen_shri_tl(t2, t2, 16);
+-        tcg_gen_or_tl(t3, t3, t2);
++        tcg_gen_andi_i32(t3, t3, 0xffff0000);
++        tcg_gen_shri_i32(t2, t2, 16);
++        tcg_gen_or_i32(t3, t3, t2);
+         gen_store_mxu_gpr(t3, XRa);
+     }
+ }
+@@ -1113,55 +1113,55 @@ static void gen_mxu_d16mac(DisasContext *ctx, bool fractional,
+     aptn2 = extract32(ctx->opcode, 24, 2);
+ 
+     gen_load_mxu_gpr(t1, XRb);
+-    tcg_gen_sextract_tl(t0, t1, 0, 16);
+-    tcg_gen_sextract_tl(t1, t1, 16, 16);
++    tcg_gen_sextract_i32(t0, t1, 0, 16);
++    tcg_gen_sextract_i32(t1, t1, 16, 16);
+ 
+     gen_load_mxu_gpr(t3, XRc);
+-    tcg_gen_sextract_tl(t2, t3, 0, 16);
+-    tcg_gen_sextract_tl(t3, t3, 16, 16);
++    tcg_gen_sextract_i32(t2, t3, 0, 16);
++    tcg_gen_sextract_i32(t3, t3, 16, 16);
+ 
+     switch (optn2) {
+     case MXU_OPTN2_WW: /* XRB.H*XRC.H == lop, XRB.L*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t1, t3);
+-        tcg_gen_mul_tl(t2, t0, t2);
++        tcg_gen_mul_i32(t3, t1, t3);
++        tcg_gen_mul_i32(t2, t0, t2);
+         break;
+     case MXU_OPTN2_LW: /* XRB.L*XRC.H == lop, XRB.L*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t0, t3);
+-        tcg_gen_mul_tl(t2, t0, t2);
++        tcg_gen_mul_i32(t3, t0, t3);
++        tcg_gen_mul_i32(t2, t0, t2);
+         break;
+     case MXU_OPTN2_HW: /* XRB.H*XRC.H == lop, XRB.H*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t1, t3);
+-        tcg_gen_mul_tl(t2, t1, t2);
++        tcg_gen_mul_i32(t3, t1, t3);
++        tcg_gen_mul_i32(t2, t1, t2);
+         break;
+     case MXU_OPTN2_XW: /* XRB.L*XRC.H == lop, XRB.H*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t0, t3);
+-        tcg_gen_mul_tl(t2, t1, t2);
++        tcg_gen_mul_i32(t3, t0, t3);
++        tcg_gen_mul_i32(t2, t1, t2);
+         break;
+     }
+ 
+     if (fractional) {
+-        tcg_gen_shli_tl(t3, t3, 1);
+-        tcg_gen_shli_tl(t2, t2, 1);
++        tcg_gen_shli_i32(t3, t3, 1);
++        tcg_gen_shli_i32(t2, t2, 1);
+     }
+     gen_load_mxu_gpr(t0, XRa);
+     gen_load_mxu_gpr(t1, XRd);
+ 
+     switch (aptn2) {
+     case MXU_APTN2_AA:
+-        tcg_gen_add_tl(t3, t0, t3);
+-        tcg_gen_add_tl(t2, t1, t2);
++        tcg_gen_add_i32(t3, t0, t3);
++        tcg_gen_add_i32(t2, t1, t2);
+         break;
+     case MXU_APTN2_AS:
+-        tcg_gen_add_tl(t3, t0, t3);
+-        tcg_gen_sub_tl(t2, t1, t2);
++        tcg_gen_add_i32(t3, t0, t3);
++        tcg_gen_sub_i32(t2, t1, t2);
+         break;
+     case MXU_APTN2_SA:
+-        tcg_gen_sub_tl(t3, t0, t3);
+-        tcg_gen_add_tl(t2, t1, t2);
++        tcg_gen_sub_i32(t3, t0, t3);
++        tcg_gen_add_i32(t2, t1, t2);
+         break;
+     case MXU_APTN2_SS:
+-        tcg_gen_sub_tl(t3, t0, t3);
+-        tcg_gen_sub_tl(t2, t1, t2);
++        tcg_gen_sub_i32(t3, t0, t3);
++        tcg_gen_sub_i32(t2, t1, t2);
+         break;
+     }
+ 
+@@ -1169,8 +1169,8 @@ static void gen_mxu_d16mac(DisasContext *ctx, bool fractional,
+         TCGLabel *l_done = gen_new_label();
+         TCGv rounding = tcg_temp_new();
+ 
+-        tcg_gen_andi_tl(rounding, mxu_CR, 0x2);
+-        tcg_gen_brcondi_tl(TCG_COND_EQ, rounding, 0, l_done);
++        tcg_gen_andi_i32(rounding, mxu_CR, 0x2);
++        tcg_gen_brcondi_i32(TCG_COND_EQ, rounding, 0, l_done);
+         if (packed_result) {
+             TCGLabel *l_apply_bias_l = gen_new_label();
+             TCGLabel *l_apply_bias_r = gen_new_label();
+@@ -1181,22 +1181,22 @@ static void gen_mxu_d16mac(DisasContext *ctx, bool fractional,
+              * D16MACF supports unbiased rounding aka "bankers rounding",
+              * "round to even", "convergent rounding"
+              */
+-            tcg_gen_andi_tl(bias, mxu_CR, 0x4);
+-            tcg_gen_brcondi_tl(TCG_COND_NE, bias, 0, l_apply_bias_l);
+-            tcg_gen_andi_tl(t0, t3, 0x1ffff);
+-            tcg_gen_brcondi_tl(TCG_COND_EQ, t0, 0x8000, l_half_done);
++            tcg_gen_andi_i32(bias, mxu_CR, 0x4);
++            tcg_gen_brcondi_i32(TCG_COND_NE, bias, 0, l_apply_bias_l);
++            tcg_gen_andi_i32(t0, t3, 0x1ffff);
++            tcg_gen_brcondi_i32(TCG_COND_EQ, t0, 0x8000, l_half_done);
+             gen_set_label(l_apply_bias_l);
+-            tcg_gen_addi_tl(t3, t3, 0x8000);
++            tcg_gen_addi_i32(t3, t3, 0x8000);
+             gen_set_label(l_half_done);
+-            tcg_gen_brcondi_tl(TCG_COND_NE, bias, 0, l_apply_bias_r);
+-            tcg_gen_andi_tl(t0, t2, 0x1ffff);
+-            tcg_gen_brcondi_tl(TCG_COND_EQ, t0, 0x8000, l_done);
++            tcg_gen_brcondi_i32(TCG_COND_NE, bias, 0, l_apply_bias_r);
++            tcg_gen_andi_i32(t0, t2, 0x1ffff);
++            tcg_gen_brcondi_i32(TCG_COND_EQ, t0, 0x8000, l_done);
+             gen_set_label(l_apply_bias_r);
+-            tcg_gen_addi_tl(t2, t2, 0x8000);
++            tcg_gen_addi_i32(t2, t2, 0x8000);
+         } else {
+             /* D16MACE doesn't support unbiased rounding */
+-            tcg_gen_addi_tl(t3, t3, 0x8000);
+-            tcg_gen_addi_tl(t2, t2, 0x8000);
++            tcg_gen_addi_i32(t3, t3, 0x8000);
++            tcg_gen_addi_i32(t2, t2, 0x8000);
+         }
+         gen_set_label(l_done);
+     }
+@@ -1205,9 +1205,9 @@ static void gen_mxu_d16mac(DisasContext *ctx, bool fractional,
+         gen_store_mxu_gpr(t3, XRa);
+         gen_store_mxu_gpr(t2, XRd);
+     } else {
+-        tcg_gen_andi_tl(t3, t3, 0xffff0000);
+-        tcg_gen_shri_tl(t2, t2, 16);
+-        tcg_gen_or_tl(t3, t3, t2);
++        tcg_gen_andi_i32(t3, t3, 0xffff0000);
++        tcg_gen_shri_i32(t2, t2, 16);
++        tcg_gen_or_i32(t3, t3, t2);
+         gen_store_mxu_gpr(t3, XRa);
+     }
+ }
+@@ -1234,60 +1234,60 @@ static void gen_mxu_d16madl(DisasContext *ctx)
+     aptn2 = extract32(ctx->opcode, 24, 2);
+ 
+     gen_load_mxu_gpr(t1, XRb);
+-    tcg_gen_sextract_tl(t0, t1,  0, 16);
+-    tcg_gen_sextract_tl(t1, t1, 16, 16);
++    tcg_gen_sextract_i32(t0, t1,  0, 16);
++    tcg_gen_sextract_i32(t1, t1, 16, 16);
+ 
+     gen_load_mxu_gpr(t3, XRc);
+-    tcg_gen_sextract_tl(t2, t3,  0, 16);
+-    tcg_gen_sextract_tl(t3, t3, 16, 16);
++    tcg_gen_sextract_i32(t2, t3,  0, 16);
++    tcg_gen_sextract_i32(t3, t3, 16, 16);
+ 
+     switch (optn2) {
+     case MXU_OPTN2_WW: /* XRB.H*XRC.H == lop, XRB.L*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t1, t3);
+-        tcg_gen_mul_tl(t2, t0, t2);
++        tcg_gen_mul_i32(t3, t1, t3);
++        tcg_gen_mul_i32(t2, t0, t2);
+         break;
+     case MXU_OPTN2_LW: /* XRB.L*XRC.H == lop, XRB.L*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t0, t3);
+-        tcg_gen_mul_tl(t2, t0, t2);
++        tcg_gen_mul_i32(t3, t0, t3);
++        tcg_gen_mul_i32(t2, t0, t2);
+         break;
+     case MXU_OPTN2_HW: /* XRB.H*XRC.H == lop, XRB.H*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t1, t3);
+-        tcg_gen_mul_tl(t2, t1, t2);
++        tcg_gen_mul_i32(t3, t1, t3);
++        tcg_gen_mul_i32(t2, t1, t2);
+         break;
+     case MXU_OPTN2_XW: /* XRB.L*XRC.H == lop, XRB.H*XRC.L == rop */
+-        tcg_gen_mul_tl(t3, t0, t3);
+-        tcg_gen_mul_tl(t2, t1, t2);
++        tcg_gen_mul_i32(t3, t0, t3);
++        tcg_gen_mul_i32(t2, t1, t2);
+         break;
+     }
+-    tcg_gen_extract_tl(t2, t2, 0, 16);
+-    tcg_gen_extract_tl(t3, t3, 0, 16);
++    tcg_gen_extract_i32(t2, t2, 0, 16);
++    tcg_gen_extract_i32(t3, t3, 0, 16);
+ 
+     gen_load_mxu_gpr(t1, XRa);
+-    tcg_gen_extract_tl(t0, t1,  0, 16);
+-    tcg_gen_extract_tl(t1, t1, 16, 16);
++    tcg_gen_extract_i32(t0, t1,  0, 16);
++    tcg_gen_extract_i32(t1, t1, 16, 16);
+ 
+     switch (aptn2) {
+     case MXU_APTN2_AA:
+-        tcg_gen_add_tl(t3, t1, t3);
+-        tcg_gen_add_tl(t2, t0, t2);
++        tcg_gen_add_i32(t3, t1, t3);
++        tcg_gen_add_i32(t2, t0, t2);
+         break;
+     case MXU_APTN2_AS:
+-        tcg_gen_add_tl(t3, t1, t3);
+-        tcg_gen_sub_tl(t2, t0, t2);
++        tcg_gen_add_i32(t3, t1, t3);
++        tcg_gen_sub_i32(t2, t0, t2);
+         break;
+     case MXU_APTN2_SA:
+-        tcg_gen_sub_tl(t3, t1, t3);
+-        tcg_gen_add_tl(t2, t0, t2);
++        tcg_gen_sub_i32(t3, t1, t3);
++        tcg_gen_add_i32(t2, t0, t2);
+         break;
+     case MXU_APTN2_SS:
+-        tcg_gen_sub_tl(t3, t1, t3);
+-        tcg_gen_sub_tl(t2, t0, t2);
++        tcg_gen_sub_i32(t3, t1, t3);
++        tcg_gen_sub_i32(t2, t0, t2);
+         break;
+     }
+ 
+-    tcg_gen_andi_tl(t2, t2, 0xffff);
+-    tcg_gen_shli_tl(t3, t3, 16);
+-    tcg_gen_or_tl(mxu_gpr[XRd - 1], t3, t2);
++    tcg_gen_andi_i32(t2, t2, 0xffff);
++    tcg_gen_shli_i32(t3, t3, 16);
++    tcg_gen_or_i32(mxu_gpr[XRd - 1], t3, t2);
+ }
+ 
+ /*
+@@ -1319,32 +1319,32 @@ static void gen_mxu_s16mad(DisasContext *ctx)
+ 
+     switch (optn2) {
+     case MXU_OPTN2_WW: /* XRB.H*XRC.H */
+-        tcg_gen_sextract_tl(t0, t0, 16, 16);
+-        tcg_gen_sextract_tl(t1, t1, 16, 16);
++        tcg_gen_sextract_i32(t0, t0, 16, 16);
++        tcg_gen_sextract_i32(t1, t1, 16, 16);
+         break;
+     case MXU_OPTN2_LW: /* XRB.L*XRC.L */
+-        tcg_gen_sextract_tl(t0, t0,  0, 16);
+-        tcg_gen_sextract_tl(t1, t1,  0, 16);
++        tcg_gen_sextract_i32(t0, t0,  0, 16);
++        tcg_gen_sextract_i32(t1, t1,  0, 16);
+         break;
+     case MXU_OPTN2_HW: /* XRB.H*XRC.L */
+-        tcg_gen_sextract_tl(t0, t0, 16, 16);
+-        tcg_gen_sextract_tl(t1, t1,  0, 16);
++        tcg_gen_sextract_i32(t0, t0, 16, 16);
++        tcg_gen_sextract_i32(t1, t1,  0, 16);
+         break;
+     case MXU_OPTN2_XW: /* XRB.L*XRC.H */
+-        tcg_gen_sextract_tl(t0, t0,  0, 16);
+-        tcg_gen_sextract_tl(t1, t1, 16, 16);
++        tcg_gen_sextract_i32(t0, t0,  0, 16);
++        tcg_gen_sextract_i32(t1, t1, 16, 16);
+         break;
+     }
+-    tcg_gen_mul_tl(t0, t0, t1);
++    tcg_gen_mul_i32(t0, t0, t1);
+ 
+     gen_load_mxu_gpr(t1, XRa);
+ 
+     switch (aptn1) {
+     case MXU_APTN1_A:
+-        tcg_gen_add_tl(t1, t1, t0);
++        tcg_gen_add_i32(t1, t1, t0);
+         break;
+     case MXU_APTN1_S:
+-        tcg_gen_sub_tl(t1, t1, t0);
++        tcg_gen_sub_i32(t1, t1, t0);
+         break;
+     }
+ 
+@@ -1384,53 +1384,53 @@ static void gen_mxu_q8mul_mac(DisasContext *ctx, bool su, bool mac)
+ 
+     if (su) {
+         /* Q8MULSU / Q8MACSU */
+-        tcg_gen_sextract_tl(t0, t3,  0, 8);
+-        tcg_gen_sextract_tl(t1, t3,  8, 8);
+-        tcg_gen_sextract_tl(t2, t3, 16, 8);
+-        tcg_gen_sextract_tl(t3, t3, 24, 8);
++        tcg_gen_sextract_i32(t0, t3,  0, 8);
++        tcg_gen_sextract_i32(t1, t3,  8, 8);
++        tcg_gen_sextract_i32(t2, t3, 16, 8);
++        tcg_gen_sextract_i32(t3, t3, 24, 8);
+     } else {
+         /* Q8MUL / Q8MAC */
+-        tcg_gen_extract_tl(t0, t3,  0, 8);
+-        tcg_gen_extract_tl(t1, t3,  8, 8);
+-        tcg_gen_extract_tl(t2, t3, 16, 8);
+-        tcg_gen_extract_tl(t3, t3, 24, 8);
++        tcg_gen_extract_i32(t0, t3,  0, 8);
++        tcg_gen_extract_i32(t1, t3,  8, 8);
++        tcg_gen_extract_i32(t2, t3, 16, 8);
++        tcg_gen_extract_i32(t3, t3, 24, 8);
+     }
+ 
+-    tcg_gen_extract_tl(t4, t7,  0, 8);
+-    tcg_gen_extract_tl(t5, t7,  8, 8);
+-    tcg_gen_extract_tl(t6, t7, 16, 8);
+-    tcg_gen_extract_tl(t7, t7, 24, 8);
++    tcg_gen_extract_i32(t4, t7,  0, 8);
++    tcg_gen_extract_i32(t5, t7,  8, 8);
++    tcg_gen_extract_i32(t6, t7, 16, 8);
++    tcg_gen_extract_i32(t7, t7, 24, 8);
+ 
+-    tcg_gen_mul_tl(t0, t0, t4);
+-    tcg_gen_mul_tl(t1, t1, t5);
+-    tcg_gen_mul_tl(t2, t2, t6);
+-    tcg_gen_mul_tl(t3, t3, t7);
++    tcg_gen_mul_i32(t0, t0, t4);
++    tcg_gen_mul_i32(t1, t1, t5);
++    tcg_gen_mul_i32(t2, t2, t6);
++    tcg_gen_mul_i32(t3, t3, t7);
+ 
+     if (mac) {
+         gen_load_mxu_gpr(t4, XRd);
+         gen_load_mxu_gpr(t5, XRa);
+-        tcg_gen_extract_tl(t6, t4,  0, 16);
+-        tcg_gen_extract_tl(t7, t4, 16, 16);
++        tcg_gen_extract_i32(t6, t4,  0, 16);
++        tcg_gen_extract_i32(t7, t4, 16, 16);
+         if (aptn2 & 1) {
+-            tcg_gen_sub_tl(t0, t6, t0);
+-            tcg_gen_sub_tl(t1, t7, t1);
++            tcg_gen_sub_i32(t0, t6, t0);
++            tcg_gen_sub_i32(t1, t7, t1);
+         } else {
+-            tcg_gen_add_tl(t0, t6, t0);
+-            tcg_gen_add_tl(t1, t7, t1);
++            tcg_gen_add_i32(t0, t6, t0);
++            tcg_gen_add_i32(t1, t7, t1);
+         }
+-        tcg_gen_extract_tl(t6, t5,  0, 16);
+-        tcg_gen_extract_tl(t7, t5, 16, 16);
++        tcg_gen_extract_i32(t6, t5,  0, 16);
++        tcg_gen_extract_i32(t7, t5, 16, 16);
+         if (aptn2 & 2) {
+-            tcg_gen_sub_tl(t2, t6, t2);
+-            tcg_gen_sub_tl(t3, t7, t3);
++            tcg_gen_sub_i32(t2, t6, t2);
++            tcg_gen_sub_i32(t3, t7, t3);
+         } else {
+-            tcg_gen_add_tl(t2, t6, t2);
+-            tcg_gen_add_tl(t3, t7, t3);
++            tcg_gen_add_i32(t2, t6, t2);
++            tcg_gen_add_i32(t3, t7, t3);
+         }
+     }
+ 
+-    tcg_gen_deposit_tl(t0, t0, t1, 16, 16);
+-    tcg_gen_deposit_tl(t1, t2, t3, 16, 16);
++    tcg_gen_deposit_i32(t0, t0, t1, 16, 16);
++    tcg_gen_deposit_i32(t1, t2, t3, 16, 16);
+ 
+     gen_store_mxu_gpr(t0, XRd);
+     gen_store_mxu_gpr(t1, XRa);
+@@ -1464,45 +1464,45 @@ static void gen_mxu_q8madl(DisasContext *ctx)
+     gen_load_mxu_gpr(t3, XRb);
+     gen_load_mxu_gpr(t7, XRc);
+ 
+-    tcg_gen_extract_tl(t0, t3,  0, 8);
+-    tcg_gen_extract_tl(t1, t3,  8, 8);
+-    tcg_gen_extract_tl(t2, t3, 16, 8);
+-    tcg_gen_extract_tl(t3, t3, 24, 8);
++    tcg_gen_extract_i32(t0, t3,  0, 8);
++    tcg_gen_extract_i32(t1, t3,  8, 8);
++    tcg_gen_extract_i32(t2, t3, 16, 8);
++    tcg_gen_extract_i32(t3, t3, 24, 8);
+ 
+-    tcg_gen_extract_tl(t4, t7,  0, 8);
+-    tcg_gen_extract_tl(t5, t7,  8, 8);
+-    tcg_gen_extract_tl(t6, t7, 16, 8);
+-    tcg_gen_extract_tl(t7, t7, 24, 8);
++    tcg_gen_extract_i32(t4, t7,  0, 8);
++    tcg_gen_extract_i32(t5, t7,  8, 8);
++    tcg_gen_extract_i32(t6, t7, 16, 8);
++    tcg_gen_extract_i32(t7, t7, 24, 8);
+ 
+-    tcg_gen_mul_tl(t0, t0, t4);
+-    tcg_gen_mul_tl(t1, t1, t5);
+-    tcg_gen_mul_tl(t2, t2, t6);
+-    tcg_gen_mul_tl(t3, t3, t7);
++    tcg_gen_mul_i32(t0, t0, t4);
++    tcg_gen_mul_i32(t1, t1, t5);
++    tcg_gen_mul_i32(t2, t2, t6);
++    tcg_gen_mul_i32(t3, t3, t7);
+ 
+     gen_load_mxu_gpr(t4, XRa);
+-    tcg_gen_extract_tl(t6, t4, 0, 8);
+-    tcg_gen_extract_tl(t7, t4, 8, 8);
++    tcg_gen_extract_i32(t6, t4, 0, 8);
++    tcg_gen_extract_i32(t7, t4, 8, 8);
+     if (aptn2 & 1) {
+-        tcg_gen_sub_tl(t0, t6, t0);
+-        tcg_gen_sub_tl(t1, t7, t1);
++        tcg_gen_sub_i32(t0, t6, t0);
++        tcg_gen_sub_i32(t1, t7, t1);
+     } else {
+-        tcg_gen_add_tl(t0, t6, t0);
+-        tcg_gen_add_tl(t1, t7, t1);
++        tcg_gen_add_i32(t0, t6, t0);
++        tcg_gen_add_i32(t1, t7, t1);
+     }
+-    tcg_gen_extract_tl(t6, t4, 16, 8);
+-    tcg_gen_extract_tl(t7, t4, 24, 8);
++    tcg_gen_extract_i32(t6, t4, 16, 8);
++    tcg_gen_extract_i32(t7, t4, 24, 8);
+     if (aptn2 & 2) {
+-        tcg_gen_sub_tl(t2, t6, t2);
+-        tcg_gen_sub_tl(t3, t7, t3);
++        tcg_gen_sub_i32(t2, t6, t2);
++        tcg_gen_sub_i32(t3, t7, t3);
+     } else {
+-        tcg_gen_add_tl(t2, t6, t2);
+-        tcg_gen_add_tl(t3, t7, t3);
++        tcg_gen_add_i32(t2, t6, t2);
++        tcg_gen_add_i32(t3, t7, t3);
+     }
+ 
+-    tcg_gen_andi_tl(t5, t0, 0xff);
+-    tcg_gen_deposit_tl(t5, t5, t1,  8, 8);
+-    tcg_gen_deposit_tl(t5, t5, t2, 16, 8);
+-    tcg_gen_deposit_tl(t5, t5, t3, 24, 8);
++    tcg_gen_andi_i32(t5, t0, 0xff);
++    tcg_gen_deposit_i32(t5, t5, t1,  8, 8);
++    tcg_gen_deposit_i32(t5, t5, t2, 16, 8);
++    tcg_gen_deposit_i32(t5, t5, t3, 24, 8);
+ 
+     gen_store_mxu_gpr(t5, XRd);
+ }
+@@ -1528,17 +1528,17 @@ static void gen_mxu_s32ldxx(DisasContext *ctx, bool reversed, bool postinc)
+     s12 = sextract32(ctx->opcode, 10, 10);
+     Rb = extract32(ctx->opcode, 21, 5);
+ 
+-    gen_load_gpr_tl(t0, Rb);
+-    tcg_gen_movi_tl(t1, s12 * 4);
+-    tcg_gen_add_tl(t0, t0, t1);
++    gen_load_gpr_i32(t0, Rb);
++    tcg_gen_movi_i32(t1, s12 * 4);
++    tcg_gen_add_i32(t0, t0, t1);
+ 
+-    tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx,
++    tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx,
+                        MO_SL | mo_endian_rev(ctx, reversed) |
+                         ctx->default_tcg_memop_mask);
+     gen_store_mxu_gpr(t1, XRa);
+ 
+     if (postinc) {
+-        gen_store_gpr_tl(t0, Rb);
++        gen_store_gpr_i32(t0, Rb);
+     }
+ }
+ 
+@@ -1563,17 +1563,17 @@ static void gen_mxu_s32stxx(DisasContext *ctx, bool reversed, bool postinc)
+     s12 = sextract32(ctx->opcode, 10, 10);
+     Rb = extract32(ctx->opcode, 21, 5);
+ 
+-    gen_load_gpr_tl(t0, Rb);
+-    tcg_gen_movi_tl(t1, s12 * 4);
+-    tcg_gen_add_tl(t0, t0, t1);
++    gen_load_gpr_i32(t0, Rb);
++    tcg_gen_movi_i32(t1, s12 * 4);
++    tcg_gen_add_i32(t0, t0, t1);
+ 
+     gen_load_mxu_gpr(t1, XRa);
+-    tcg_gen_qemu_st_tl(t1, t0, ctx->mem_idx,
++    tcg_gen_qemu_st_i32(t1, t0, ctx->mem_idx,
+                        MO_SL | mo_endian_rev(ctx, reversed) |
+                         ctx->default_tcg_memop_mask);
+ 
+     if (postinc) {
+-        gen_store_gpr_tl(t0, Rb);
++        gen_store_gpr_i32(t0, Rb);
+     }
+ }
+ 
+@@ -1599,18 +1599,18 @@ static void gen_mxu_s32ldxvx(DisasContext *ctx, bool reversed,
+     Rc = extract32(ctx->opcode, 16, 5);
+     Rb = extract32(ctx->opcode, 21, 5);
+ 
+-    gen_load_gpr_tl(t0, Rb);
+-    gen_load_gpr_tl(t1, Rc);
+-    tcg_gen_shli_tl(t1, t1, strd2);
+-    tcg_gen_add_tl(t0, t0, t1);
++    gen_load_gpr_i32(t0, Rb);
++    gen_load_gpr_i32(t1, Rc);
++    tcg_gen_shli_i32(t1, t1, strd2);
++    tcg_gen_add_i32(t0, t0, t1);
+ 
+-    tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx,
++    tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx,
+                        MO_SL | mo_endian_rev(ctx, reversed) |
+                         ctx->default_tcg_memop_mask);
+     gen_store_mxu_gpr(t1, XRa);
+ 
+     if (postinc) {
+-        gen_store_gpr_tl(t0, Rb);
++        gen_store_gpr_i32(t0, Rb);
+     }
+ }
+ 
+@@ -1637,13 +1637,13 @@ static void gen_mxu_lxx(DisasContext *ctx, uint32_t strd2, MemOp mop)
+     Rc = extract32(ctx->opcode, 16, 5);
+     Rb = extract32(ctx->opcode, 21, 5);
+ 
+-    gen_load_gpr_tl(t0, Rb);
+-    gen_load_gpr_tl(t1, Rc);
+-    tcg_gen_shli_tl(t1, t1, strd2);
+-    tcg_gen_add_tl(t0, t0, t1);
++    gen_load_gpr_i32(t0, Rb);
++    gen_load_gpr_i32(t1, Rc);
++    tcg_gen_shli_i32(t1, t1, strd2);
++    tcg_gen_add_i32(t0, t0, t1);
+ 
+-    tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, mop | ctx->default_tcg_memop_mask);
+-    gen_store_gpr_tl(t1, Ra);
++    tcg_gen_qemu_ld_i32(t1, t0, ctx->mem_idx, mop | ctx->default_tcg_memop_mask);
++    gen_store_gpr_i32(t1, Ra);
+ }
+ 
+ /*
+@@ -1668,18 +1668,18 @@ static void gen_mxu_s32stxvx(DisasContext *ctx, bool reversed,
+     Rc = extract32(ctx->opcode, 16, 5);
+     Rb = extract32(ctx->opcode, 21, 5);
+ 
+-    gen_load_gpr_tl(t0, Rb);
+-    gen_load_gpr_tl(t1, Rc);
+-    tcg_gen_shli_tl(t1, t1, strd2);
+-    tcg_gen_add_tl(t0, t0, t1);
++    gen_load_gpr_i32(t0, Rb);
++    gen_load_gpr_i32(t1, Rc);
++    tcg_gen_shli_i32(t1, t1, strd2);
++    tcg_gen_add_i32(t0, t0, t1);
+ 
+     gen_load_mxu_gpr(t1, XRa);
+-    tcg_gen_qemu_st_tl(t1, t0, ctx->mem_idx,
++    tcg_gen_qemu_st_i32(t1, t0, ctx->mem_idx,
+                        MO_SL | mo_endian_rev(ctx, reversed) |
+                         ctx->default_tcg_memop_mask);
+ 
+     if (postinc) {
+-        gen_store_gpr_tl(t0, Rb);
++        gen_store_gpr_i32(t0, Rb);
+     }
+ }
+ 
+@@ -1867,15 +1867,15 @@ static void gen_mxu_d32sxx(DisasContext *ctx, bool right, bool arithmetic)
+ 
+     if (right) {
+         if (arithmetic) {
+-            tcg_gen_sari_tl(t0, t0, sft4);
+-            tcg_gen_sari_tl(t1, t1, sft4);
++            tcg_gen_sari_i32(t0, t0, sft4);
++            tcg_gen_sari_i32(t1, t1, sft4);
+         } else {
+-            tcg_gen_shri_tl(t0, t0, sft4);
+-            tcg_gen_shri_tl(t1, t1, sft4);
++            tcg_gen_shri_i32(t0, t0, sft4);
++            tcg_gen_shri_i32(t1, t1, sft4);
+         }
+     } else {
+-        tcg_gen_shli_tl(t0, t0, sft4);
+-        tcg_gen_shli_tl(t1, t1, sft4);
++        tcg_gen_shli_i32(t0, t0, sft4);
++        tcg_gen_shli_i32(t1, t1, sft4);
+     }
+     gen_store_mxu_gpr(t0, XRa);
+     gen_store_mxu_gpr(t1, XRd);
+@@ -1906,20 +1906,20 @@ static void gen_mxu_d32sxxv(DisasContext *ctx, bool right, bool arithmetic)
+ 
+     gen_load_mxu_gpr(t0, XRa);
+     gen_load_mxu_gpr(t1, XRd);
+-    gen_load_gpr_tl(t2, rs);
+-    tcg_gen_andi_tl(t2, t2, 0x0f);
++    gen_load_gpr_i32(t2, rs);
++    tcg_gen_andi_i32(t2, t2, 0x0f);
+ 
+     if (right) {
+         if (arithmetic) {
+-            tcg_gen_sar_tl(t0, t0, t2);
+-            tcg_gen_sar_tl(t1, t1, t2);
++            tcg_gen_sar_i32(t0, t0, t2);
++            tcg_gen_sar_i32(t1, t1, t2);
+         } else {
+-            tcg_gen_shr_tl(t0, t0, t2);
+-            tcg_gen_shr_tl(t1, t1, t2);
++            tcg_gen_shr_i32(t0, t0, t2);
++            tcg_gen_shr_i32(t1, t1, t2);
+         }
+     } else {
+-        tcg_gen_shl_tl(t0, t0, t2);
+-        tcg_gen_shl_tl(t1, t1, t2);
++        tcg_gen_shl_i32(t0, t0, t2);
++        tcg_gen_shl_i32(t1, t1, t2);
+     }
+     gen_store_mxu_gpr(t0, XRa);
+     gen_store_mxu_gpr(t1, XRd);
+@@ -1952,17 +1952,17 @@ static void gen_mxu_d32sarl(DisasContext *ctx, bool sarw)
+ 
+         if (!sarw) {
+             /* Make SFT4 from rb field */
+-            tcg_gen_movi_tl(t2, rb >> 1);
++            tcg_gen_movi_i32(t2, rb >> 1);
+         } else {
+-            gen_load_gpr_tl(t2, rb);
+-            tcg_gen_andi_tl(t2, t2, 0x0f);
++            gen_load_gpr_i32(t2, rb);
++            tcg_gen_andi_i32(t2, t2, 0x0f);
+         }
+         gen_load_mxu_gpr(t0, XRb);
+         gen_load_mxu_gpr(t1, XRc);
+-        tcg_gen_sar_tl(t0, t0, t2);
+-        tcg_gen_sar_tl(t1, t1, t2);
+-        tcg_gen_extract_tl(t2, t1, 0, 16);
+-        tcg_gen_deposit_tl(t2, t2, t0, 16, 16);
++        tcg_gen_sar_i32(t0, t0, t2);
++        tcg_gen_sar_i32(t1, t1, t2);
++        tcg_gen_extract_i32(t2, t1, 0, 16);
++        tcg_gen_deposit_i32(t2, t2, t0, 16, 16);
+         gen_store_mxu_gpr(t2, XRa);
+     }
+ }
+@@ -1997,37 +1997,37 @@ static void gen_mxu_q16sxx(DisasContext *ctx, bool right, bool arithmetic)
+     gen_load_mxu_gpr(t2, XRc);
+ 
+     if (arithmetic) {
+-        tcg_gen_sextract_tl(t1, t0, 16, 16);
+-        tcg_gen_sextract_tl(t0, t0,  0, 16);
+-        tcg_gen_sextract_tl(t3, t2, 16, 16);
+-        tcg_gen_sextract_tl(t2, t2,  0, 16);
++        tcg_gen_sextract_i32(t1, t0, 16, 16);
++        tcg_gen_sextract_i32(t0, t0,  0, 16);
++        tcg_gen_sextract_i32(t3, t2, 16, 16);
++        tcg_gen_sextract_i32(t2, t2,  0, 16);
+     } else {
+-        tcg_gen_extract_tl(t1, t0, 16, 16);
+-        tcg_gen_extract_tl(t0, t0,  0, 16);
+-        tcg_gen_extract_tl(t3, t2, 16, 16);
+-        tcg_gen_extract_tl(t2, t2,  0, 16);
++        tcg_gen_extract_i32(t1, t0, 16, 16);
++        tcg_gen_extract_i32(t0, t0,  0, 16);
++        tcg_gen_extract_i32(t3, t2, 16, 16);
++        tcg_gen_extract_i32(t2, t2,  0, 16);
+     }
+ 
+     if (right) {
+         if (arithmetic) {
+-            tcg_gen_sari_tl(t0, t0, sft4);
+-            tcg_gen_sari_tl(t1, t1, sft4);
+-            tcg_gen_sari_tl(t2, t2, sft4);
+-            tcg_gen_sari_tl(t3, t3, sft4);
++            tcg_gen_sari_i32(t0, t0, sft4);
++            tcg_gen_sari_i32(t1, t1, sft4);
++            tcg_gen_sari_i32(t2, t2, sft4);
++            tcg_gen_sari_i32(t3, t3, sft4);
+         } else {
+-            tcg_gen_shri_tl(t0, t0, sft4);
+-            tcg_gen_shri_tl(t1, t1, sft4);
+-            tcg_gen_shri_tl(t2, t2, sft4);
+-            tcg_gen_shri_tl(t3, t3, sft4);
++            tcg_gen_shri_i32(t0, t0, sft4);
++            tcg_gen_shri_i32(t1, t1, sft4);
++            tcg_gen_shri_i32(t2, t2, sft4);
++            tcg_gen_shri_i32(t3, t3, sft4);
+         }
+     } else {
+-        tcg_gen_shli_tl(t0, t0, sft4);
+-        tcg_gen_shli_tl(t1, t1, sft4);
+-        tcg_gen_shli_tl(t2, t2, sft4);
+-        tcg_gen_shli_tl(t3, t3, sft4);
++        tcg_gen_shli_i32(t0, t0, sft4);
++        tcg_gen_shli_i32(t1, t1, sft4);
++        tcg_gen_shli_i32(t2, t2, sft4);
++        tcg_gen_shli_i32(t3, t3, sft4);
+     }
+-    tcg_gen_deposit_tl(t0, t0, t1, 16, 16);
+-    tcg_gen_deposit_tl(t2, t2, t3, 16, 16);
++    tcg_gen_deposit_i32(t0, t0, t1, 16, 16);
++    tcg_gen_deposit_i32(t2, t2, t3, 16, 16);
+ 
+     gen_store_mxu_gpr(t0, XRa);
+     gen_store_mxu_gpr(t2, XRd);
+@@ -2060,42 +2060,42 @@ static void gen_mxu_q16sxxv(DisasContext *ctx, bool right, bool arithmetic)
+ 
+     gen_load_mxu_gpr(t0, XRa);
+     gen_load_mxu_gpr(t2, XRd);
+-    gen_load_gpr_tl(t5, rs);
+-    tcg_gen_andi_tl(t5, t5, 0x0f);
++    gen_load_gpr_i32(t5, rs);
++    tcg_gen_andi_i32(t5, t5, 0x0f);
+ 
+ 
+     if (arithmetic) {
+-        tcg_gen_sextract_tl(t1, t0, 16, 16);
+-        tcg_gen_sextract_tl(t0, t0,  0, 16);
+-        tcg_gen_sextract_tl(t3, t2, 16, 16);
+-        tcg_gen_sextract_tl(t2, t2,  0, 16);
++        tcg_gen_sextract_i32(t1, t0, 16, 16);
++        tcg_gen_sextract_i32(t0, t0,  0, 16);
++        tcg_gen_sextract_i32(t3, t2, 16, 16);
++        tcg_gen_sextract_i32(t2, t2,  0, 16);
+     } else {
+-        tcg_gen_extract_tl(t1, t0, 16, 16);
+-        tcg_gen_extract_tl(t0, t0,  0, 16);
+-        tcg_gen_extract_tl(t3, t2, 16, 16);
+-        tcg_gen_extract_tl(t2, t2,  0, 16);
++        tcg_gen_extract_i32(t1, t0, 16, 16);
++        tcg_gen_extract_i32(t0, t0,  0, 16);
++        tcg_gen_extract_i32(t3, t2, 16, 16);
++        tcg_gen_extract_i32(t2, t2,  0, 16);
+     }
+ 
+     if (right) {
+         if (arithmetic) {
+-            tcg_gen_sar_tl(t0, t0, t5);
+-            tcg_gen_sar_tl(t1, t1, t5);
+-            tcg_gen_sar_tl(t2, t2, t5);
+-            tcg_gen_sar_tl(t3, t3, t5);
++            tcg_gen_sar_i32(t0, t0, t5);
++            tcg_gen_sar_i32(t1, t1, t5);
++            tcg_gen_sar_i32(t2, t2, t5);
++            tcg_gen_sar_i32(t3, t3, t5);
+         } else {
+-            tcg_gen_shr_tl(t0, t0, t5);
+-            tcg_gen_shr_tl(t1, t1, t5);
+-            tcg_gen_shr_tl(t2, t2, t5);
+-            tcg_gen_shr_tl(t3, t3, t5);
++            tcg_gen_shr_i32(t0, t0, t5);
++            tcg_gen_shr_i32(t1, t1, t5);
++            tcg_gen_shr_i32(t2, t2, t5);
++            tcg_gen_shr_i32(t3, t3, t5);
+         }
+     } else {
+-        tcg_gen_shl_tl(t0, t0, t5);
+-        tcg_gen_shl_tl(t1, t1, t5);
+-        tcg_gen_shl_tl(t2, t2, t5);
+-        tcg_gen_shl_tl(t3, t3, t5);
++        tcg_gen_shl_i32(t0, t0, t5);
++        tcg_gen_shl_i32(t1, t1, t5);
++        tcg_gen_shl_i32(t2, t2, t5);
++        tcg_gen_shl_i32(t3, t3, t5);
+     }
+-    tcg_gen_deposit_tl(t0, t0, t1, 16, 16);
+-    tcg_gen_deposit_tl(t2, t2, t3, 16, 16);
++    tcg_gen_deposit_i32(t0, t0, t1, 16, 16);
++    tcg_gen_deposit_i32(t2, t2, t3, 16, 16);
+ 
+     gen_store_mxu_gpr(t0, XRa);
+     gen_store_mxu_gpr(t2, XRd);
+@@ -2142,7 +2142,7 @@ static void gen_mxu_S32MAX_S32MIN(DisasContext *ctx)
+         /* both operands zero registers -> just set destination to zero */
+         tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely((XRb == 0) || (XRc == 0))) {
+-        /* exactly one operand is zero register - find which one is not...*/
++        /* exaci32y one operand is zero register - find which one is not...*/
+         uint32_t XRx = XRb ? XRb : XRc;
+         /* ...and do max/min operation with one operand 0 */
+         if (opc == OPC_MXU_S32MAX) {
+@@ -2192,7 +2192,7 @@ static void gen_mxu_D16MAX_D16MIN(DisasContext *ctx)
+         /* both operands zero registers -> just set destination to zero */
+         tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely((XRb == 0) || (XRc == 0))) {
+-        /* exactly one operand is zero register - find which one is not...*/
++        /* exaci32y one operand is zero register - find which one is not...*/
+         uint32_t XRx = XRb ? XRb : XRc;
+         /* ...and do half-word-wise max/min with one operand 0 */
+         TCGv_i32 t0 = tcg_temp_new();
+@@ -2285,7 +2285,7 @@ static void gen_mxu_Q8MAX_Q8MIN(DisasContext *ctx)
+         /* both operands zero registers -> just set destination to zero */
+         tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely((XRb == 0) || (XRc == 0))) {
+-        /* exactly one operand is zero register - make it be the first...*/
++        /* exaci32y one operand is zero register - make it be the first...*/
+         uint32_t XRx = XRb ? XRb : XRc;
+         /* ...and do byte-wise max/min with one operand 0 */
+         TCGv_i32 t0 = tcg_temp_new();
+@@ -2387,10 +2387,10 @@ static void gen_mxu_q8slt(DisasContext *ctx, bool sltu)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely((XRb == 0) && (XRc == 0))) {
+         /* both operands zero registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely(XRb == XRc)) {
+         /* both operands same registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+@@ -2401,18 +2401,18 @@ static void gen_mxu_q8slt(DisasContext *ctx, bool sltu)
+ 
+         gen_load_mxu_gpr(t3, XRb);
+         gen_load_mxu_gpr(t4, XRc);
+-        tcg_gen_movi_tl(t2, 0);
++        tcg_gen_movi_i32(t2, 0);
+ 
+         for (int i = 0; i < 4; i++) {
+             if (sltu) {
+-                tcg_gen_extract_tl(t0, t3, 8 * i, 8);
+-                tcg_gen_extract_tl(t1, t4, 8 * i, 8);
++                tcg_gen_extract_i32(t0, t3, 8 * i, 8);
++                tcg_gen_extract_i32(t1, t4, 8 * i, 8);
+             } else {
+-                tcg_gen_sextract_tl(t0, t3, 8 * i, 8);
+-                tcg_gen_sextract_tl(t1, t4, 8 * i, 8);
++                tcg_gen_sextract_i32(t0, t3, 8 * i, 8);
++                tcg_gen_sextract_i32(t1, t4, 8 * i, 8);
+             }
+-            tcg_gen_setcond_tl(TCG_COND_LT, t0, t0, t1);
+-            tcg_gen_deposit_tl(t2, t2, t0, 8 * i, 8);
++            tcg_gen_setcond_i32(TCG_COND_LT, t0, t0, t1);
++            tcg_gen_deposit_i32(t2, t2, t0, 8 * i, 8);
+         }
+         gen_store_mxu_gpr(t2, XRa);
+     }
+@@ -2438,10 +2438,10 @@ static void gen_mxu_S32SLT(DisasContext *ctx)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely((XRb == 0) && (XRc == 0))) {
+         /* both operands zero registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely(XRb == XRc)) {
+         /* both operands same registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+@@ -2449,7 +2449,7 @@ static void gen_mxu_S32SLT(DisasContext *ctx)
+ 
+         gen_load_mxu_gpr(t0, XRb);
+         gen_load_mxu_gpr(t1, XRc);
+-        tcg_gen_setcond_tl(TCG_COND_LT, mxu_gpr[XRa - 1], t0, t1);
++        tcg_gen_setcond_i32(TCG_COND_LT, mxu_gpr[XRa - 1], t0, t1);
+     }
+ }
+ 
+@@ -2474,10 +2474,10 @@ static void gen_mxu_D16SLT(DisasContext *ctx)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely((XRb == 0) && (XRc == 0))) {
+         /* both operands zero registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely(XRb == XRc)) {
+         /* both operands same registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+@@ -2488,14 +2488,14 @@ static void gen_mxu_D16SLT(DisasContext *ctx)
+ 
+         gen_load_mxu_gpr(t3, XRb);
+         gen_load_mxu_gpr(t4, XRc);
+-        tcg_gen_sextract_tl(t0, t3, 16, 16);
+-        tcg_gen_sextract_tl(t1, t4, 16, 16);
+-        tcg_gen_setcond_tl(TCG_COND_LT, t0, t0, t1);
+-        tcg_gen_shli_tl(t2, t0, 16);
+-        tcg_gen_sextract_tl(t0, t3,  0, 16);
+-        tcg_gen_sextract_tl(t1, t4,  0, 16);
+-        tcg_gen_setcond_tl(TCG_COND_LT, t0, t0, t1);
+-        tcg_gen_or_tl(mxu_gpr[XRa - 1], t2, t0);
++        tcg_gen_sextract_i32(t0, t3, 16, 16);
++        tcg_gen_sextract_i32(t1, t4, 16, 16);
++        tcg_gen_setcond_i32(TCG_COND_LT, t0, t0, t1);
++        tcg_gen_shli_i32(t2, t0, 16);
++        tcg_gen_sextract_i32(t0, t3,  0, 16);
++        tcg_gen_sextract_i32(t1, t4,  0, 16);
++        tcg_gen_setcond_i32(TCG_COND_LT, t0, t0, t1);
++        tcg_gen_or_i32(mxu_gpr[XRa - 1], t2, t0);
+     }
+ }
+ 
+@@ -2525,10 +2525,10 @@ static void gen_mxu_d16avg(DisasContext *ctx, bool round45)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely((XRb == 0) && (XRc == 0))) {
+         /* both operands zero registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely(XRb == XRc)) {
+         /* both operands same registers -> just set destination to same */
+-        tcg_gen_mov_tl(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
++        tcg_gen_mov_i32(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+@@ -2539,22 +2539,22 @@ static void gen_mxu_d16avg(DisasContext *ctx, bool round45)
+ 
+         gen_load_mxu_gpr(t3, XRb);
+         gen_load_mxu_gpr(t4, XRc);
+-        tcg_gen_sextract_tl(t0, t3, 16, 16);
+-        tcg_gen_sextract_tl(t1, t4, 16, 16);
+-        tcg_gen_add_tl(t0, t0, t1);
++        tcg_gen_sextract_i32(t0, t3, 16, 16);
++        tcg_gen_sextract_i32(t1, t4, 16, 16);
++        tcg_gen_add_i32(t0, t0, t1);
+         if (round45) {
+-            tcg_gen_addi_tl(t0, t0, 1);
++            tcg_gen_addi_i32(t0, t0, 1);
+         }
+-        tcg_gen_shli_tl(t2, t0, 15);
+-        tcg_gen_andi_tl(t2, t2, 0xffff0000);
+-        tcg_gen_sextract_tl(t0, t3,  0, 16);
+-        tcg_gen_sextract_tl(t1, t4,  0, 16);
+-        tcg_gen_add_tl(t0, t0, t1);
++        tcg_gen_shli_i32(t2, t0, 15);
++        tcg_gen_andi_i32(t2, t2, 0xffff0000);
++        tcg_gen_sextract_i32(t0, t3,  0, 16);
++        tcg_gen_sextract_i32(t1, t4,  0, 16);
++        tcg_gen_add_i32(t0, t0, t1);
+         if (round45) {
+-            tcg_gen_addi_tl(t0, t0, 1);
++            tcg_gen_addi_i32(t0, t0, 1);
+         }
+-        tcg_gen_shri_tl(t0, t0, 1);
+-        tcg_gen_deposit_tl(t2, t2, t0, 0, 16);
++        tcg_gen_shri_i32(t0, t0, 1);
++        tcg_gen_deposit_i32(t2, t2, t0, 0, 16);
+         gen_store_mxu_gpr(t2, XRa);
+     }
+ }
+@@ -2585,10 +2585,10 @@ static void gen_mxu_q8avg(DisasContext *ctx, bool round45)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely((XRb == 0) && (XRc == 0))) {
+         /* both operands zero registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely(XRb == XRc)) {
+         /* both operands same registers -> just set destination to same */
+-        tcg_gen_mov_tl(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
++        tcg_gen_mov_i32(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+@@ -2599,17 +2599,17 @@ static void gen_mxu_q8avg(DisasContext *ctx, bool round45)
+ 
+         gen_load_mxu_gpr(t3, XRb);
+         gen_load_mxu_gpr(t4, XRc);
+-        tcg_gen_movi_tl(t2, 0);
++        tcg_gen_movi_i32(t2, 0);
+ 
+         for (int i = 0; i < 4; i++) {
+-            tcg_gen_extract_tl(t0, t3, 8 * i, 8);
+-            tcg_gen_extract_tl(t1, t4, 8 * i, 8);
+-            tcg_gen_add_tl(t0, t0, t1);
++            tcg_gen_extract_i32(t0, t3, 8 * i, 8);
++            tcg_gen_extract_i32(t1, t4, 8 * i, 8);
++            tcg_gen_add_i32(t0, t0, t1);
+             if (round45) {
+-                tcg_gen_addi_tl(t0, t0, 1);
++                tcg_gen_addi_i32(t0, t0, 1);
+             }
+-            tcg_gen_shri_tl(t0, t0, 1);
+-            tcg_gen_deposit_tl(t2, t2, t0, 8 * i, 8);
++            tcg_gen_shri_i32(t0, t0, 1);
++            tcg_gen_deposit_i32(t2, t2, t0, 8 * i, 8);
+         }
+         gen_store_mxu_gpr(t2, XRa);
+     }
+@@ -2649,28 +2649,28 @@ static void gen_mxu_q8movzn(DisasContext *ctx, TCGCond cond)
+     gen_load_mxu_gpr(t1, XRb);
+     gen_load_mxu_gpr(t2, XRa);
+ 
+-    tcg_gen_extract_tl(t3, t1, 24, 8);
+-    tcg_gen_brcondi_tl(cond, t3, 0, l_quarterdone);
+-    tcg_gen_extract_tl(t3, t0, 24, 8);
+-    tcg_gen_deposit_tl(t2, t2, t3, 24, 8);
++    tcg_gen_extract_i32(t3, t1, 24, 8);
++    tcg_gen_brcondi_i32(cond, t3, 0, l_quarterdone);
++    tcg_gen_extract_i32(t3, t0, 24, 8);
++    tcg_gen_deposit_i32(t2, t2, t3, 24, 8);
+ 
+     gen_set_label(l_quarterdone);
+-    tcg_gen_extract_tl(t3, t1, 16, 8);
+-    tcg_gen_brcondi_tl(cond, t3, 0, l_halfdone);
+-    tcg_gen_extract_tl(t3, t0, 16, 8);
+-    tcg_gen_deposit_tl(t2, t2, t3, 16, 8);
++    tcg_gen_extract_i32(t3, t1, 16, 8);
++    tcg_gen_brcondi_i32(cond, t3, 0, l_halfdone);
++    tcg_gen_extract_i32(t3, t0, 16, 8);
++    tcg_gen_deposit_i32(t2, t2, t3, 16, 8);
+ 
+     gen_set_label(l_halfdone);
+-    tcg_gen_extract_tl(t3, t1, 8, 8);
+-    tcg_gen_brcondi_tl(cond, t3, 0, l_quarterrest);
+-    tcg_gen_extract_tl(t3, t0, 8, 8);
+-    tcg_gen_deposit_tl(t2, t2, t3, 8, 8);
++    tcg_gen_extract_i32(t3, t1, 8, 8);
++    tcg_gen_brcondi_i32(cond, t3, 0, l_quarterrest);
++    tcg_gen_extract_i32(t3, t0, 8, 8);
++    tcg_gen_deposit_i32(t2, t2, t3, 8, 8);
+ 
+     gen_set_label(l_quarterrest);
+-    tcg_gen_extract_tl(t3, t1, 0, 8);
+-    tcg_gen_brcondi_tl(cond, t3, 0, l_done);
+-    tcg_gen_extract_tl(t3, t0, 0, 8);
+-    tcg_gen_deposit_tl(t2, t2, t3, 0, 8);
++    tcg_gen_extract_i32(t3, t1, 0, 8);
++    tcg_gen_brcondi_i32(cond, t3, 0, l_done);
++    tcg_gen_extract_i32(t3, t0, 0, 8);
++    tcg_gen_deposit_i32(t2, t2, t3, 0, 8);
+ 
+     gen_set_label(l_done);
+     gen_store_mxu_gpr(t2, XRa);
+@@ -2708,16 +2708,16 @@ static void gen_mxu_d16movzn(DisasContext *ctx, TCGCond cond)
+     gen_load_mxu_gpr(t1, XRb);
+     gen_load_mxu_gpr(t2, XRa);
+ 
+-    tcg_gen_extract_tl(t3, t1, 16, 16);
+-    tcg_gen_brcondi_tl(cond, t3, 0, l_halfdone);
+-    tcg_gen_extract_tl(t3, t0, 16, 16);
+-    tcg_gen_deposit_tl(t2, t2, t3, 16, 16);
++    tcg_gen_extract_i32(t3, t1, 16, 16);
++    tcg_gen_brcondi_i32(cond, t3, 0, l_halfdone);
++    tcg_gen_extract_i32(t3, t0, 16, 16);
++    tcg_gen_deposit_i32(t2, t2, t3, 16, 16);
+ 
+     gen_set_label(l_halfdone);
+-    tcg_gen_extract_tl(t3, t1, 0, 16);
+-    tcg_gen_brcondi_tl(cond, t3, 0, l_done);
+-    tcg_gen_extract_tl(t3, t0, 0, 16);
+-    tcg_gen_deposit_tl(t2, t2, t3, 0, 16);
++    tcg_gen_extract_i32(t3, t1, 0, 16);
++    tcg_gen_brcondi_i32(cond, t3, 0, l_done);
++    tcg_gen_extract_i32(t3, t0, 0, 16);
++    tcg_gen_deposit_i32(t2, t2, t3, 0, 16);
+ 
+     gen_set_label(l_done);
+     gen_store_mxu_gpr(t2, XRa);
+@@ -2751,7 +2751,7 @@ static void gen_mxu_s32movzn(DisasContext *ctx, TCGCond cond)
+     gen_load_mxu_gpr(t0, XRc);
+     gen_load_mxu_gpr(t1, XRb);
+ 
+-    tcg_gen_brcondi_tl(cond, t1, 0, l_done);
++    tcg_gen_brcondi_i32(cond, t1, 0, l_done);
+     gen_store_mxu_gpr(t0, XRa);
+     gen_set_label(l_done);
+ }
+@@ -2784,18 +2784,18 @@ static void gen_mxu_S32CPS(DisasContext *ctx)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely(XRb == 0)) {
+         /* XRc make no sense 0 - 0 = 0 -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely(XRc == 0)) {
+         /* condition always false -> just move XRb to XRa */
+-        tcg_gen_mov_tl(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
++        tcg_gen_mov_i32(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+         TCGLabel *l_not_less = gen_new_label();
+         TCGLabel *l_done = gen_new_label();
+ 
+-        tcg_gen_brcondi_tl(TCG_COND_GE, mxu_gpr[XRc - 1], 0, l_not_less);
+-        tcg_gen_neg_tl(t0, mxu_gpr[XRb - 1]);
++        tcg_gen_brcondi_i32(TCG_COND_GE, mxu_gpr[XRc - 1], 0, l_not_less);
++        tcg_gen_neg_i32(t0, mxu_gpr[XRb - 1]);
+         tcg_gen_br(l_done);
+         gen_set_label(l_not_less);
+         gen_load_mxu_gpr(t0, XRb);
+@@ -2824,10 +2824,10 @@ static void gen_mxu_D16CPS(DisasContext *ctx)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely(XRb == 0)) {
+         /* XRc make no sense 0 - 0 = 0 -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else if (unlikely(XRc == 0)) {
+         /* condition always false -> just move XRb to XRa */
+-        tcg_gen_mov_tl(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
++        tcg_gen_mov_i32(mxu_gpr[XRa - 1], mxu_gpr[XRb - 1]);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+@@ -2836,25 +2836,25 @@ static void gen_mxu_D16CPS(DisasContext *ctx)
+         TCGLabel *l_not_less_lo = gen_new_label();
+         TCGLabel *l_done_lo = gen_new_label();
+ 
+-        tcg_gen_sextract_tl(t0, mxu_gpr[XRc - 1], 16, 16);
+-        tcg_gen_sextract_tl(t1, mxu_gpr[XRb - 1], 16, 16);
+-        tcg_gen_brcondi_tl(TCG_COND_GE, t0, 0, l_done_hi);
+-        tcg_gen_subfi_tl(t1, 0, t1);
++        tcg_gen_sextract_i32(t0, mxu_gpr[XRc - 1], 16, 16);
++        tcg_gen_sextract_i32(t1, mxu_gpr[XRb - 1], 16, 16);
++        tcg_gen_brcondi_i32(TCG_COND_GE, t0, 0, l_done_hi);
++        tcg_gen_subfi_i32(t1, 0, t1);
+ 
+         gen_set_label(l_done_hi);
+         tcg_gen_shli_i32(t1, t1, 16);
+ 
+-        tcg_gen_sextract_tl(t0, mxu_gpr[XRc - 1],  0, 16);
+-        tcg_gen_brcondi_tl(TCG_COND_GE, t0, 0, l_not_less_lo);
+-        tcg_gen_sextract_tl(t0, mxu_gpr[XRb - 1],  0, 16);
+-        tcg_gen_subfi_tl(t0, 0, t0);
++        tcg_gen_sextract_i32(t0, mxu_gpr[XRc - 1],  0, 16);
++        tcg_gen_brcondi_i32(TCG_COND_GE, t0, 0, l_not_less_lo);
++        tcg_gen_sextract_i32(t0, mxu_gpr[XRb - 1],  0, 16);
++        tcg_gen_subfi_i32(t0, 0, t0);
+         tcg_gen_br(l_done_lo);
+ 
+         gen_set_label(l_not_less_lo);
+-        tcg_gen_extract_tl(t0, mxu_gpr[XRb - 1],  0, 16);
++        tcg_gen_extract_i32(t0, mxu_gpr[XRb - 1],  0, 16);
+ 
+         gen_set_label(l_done_lo);
+-        tcg_gen_deposit_tl(mxu_gpr[XRa - 1], t1, t0, 0, 16);
++        tcg_gen_deposit_i32(mxu_gpr[XRa - 1], t1, t0, 0, 16);
+     }
+ }
+ 
+@@ -2880,7 +2880,7 @@ static void gen_mxu_Q8ABD(DisasContext *ctx)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely((XRb == 0) && (XRc == 0))) {
+         /* both operands zero registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+@@ -2891,16 +2891,16 @@ static void gen_mxu_Q8ABD(DisasContext *ctx)
+ 
+         gen_load_mxu_gpr(t3, XRb);
+         gen_load_mxu_gpr(t4, XRc);
+-        tcg_gen_movi_tl(t2, 0);
++        tcg_gen_movi_i32(t2, 0);
+ 
+         for (int i = 0; i < 4; i++) {
+-            tcg_gen_extract_tl(t0, t3, 8 * i, 8);
+-            tcg_gen_extract_tl(t1, t4, 8 * i, 8);
++            tcg_gen_extract_i32(t0, t3, 8 * i, 8);
++            tcg_gen_extract_i32(t1, t4, 8 * i, 8);
+ 
+-            tcg_gen_sub_tl(t0, t0, t1);
+-            tcg_gen_abs_tl(t0, t0);
++            tcg_gen_sub_i32(t0, t0, t1);
++            tcg_gen_abs_i32(t0, t0);
+ 
+-            tcg_gen_deposit_tl(t2, t2, t0, 8 * i, 8);
++            tcg_gen_deposit_i32(t2, t2, t0, 8 * i, 8);
+         }
+         gen_store_mxu_gpr(t2, XRa);
+     }
+@@ -2940,31 +2940,31 @@ static void gen_mxu_Q8ADD(DisasContext *ctx)
+         gen_load_mxu_gpr(t4, XRc);
+ 
+         for (int i = 0; i < 4; i++) {
+-            tcg_gen_andi_tl(t0, t3, 0xff);
+-            tcg_gen_andi_tl(t1, t4, 0xff);
++            tcg_gen_andi_i32(t0, t3, 0xff);
++            tcg_gen_andi_i32(t1, t4, 0xff);
+ 
+             if (i < 2) {
+                 if (aptn2 & 0x01) {
+-                    tcg_gen_sub_tl(t0, t0, t1);
++                    tcg_gen_sub_i32(t0, t0, t1);
+                 } else {
+-                    tcg_gen_add_tl(t0, t0, t1);
++                    tcg_gen_add_i32(t0, t0, t1);
+                 }
+             } else {
+                 if (aptn2 & 0x02) {
+-                    tcg_gen_sub_tl(t0, t0, t1);
++                    tcg_gen_sub_i32(t0, t0, t1);
+                 } else {
+-                    tcg_gen_add_tl(t0, t0, t1);
++                    tcg_gen_add_i32(t0, t0, t1);
+                 }
+             }
+             if (i < 3) {
+-                tcg_gen_shri_tl(t3, t3, 8);
+-                tcg_gen_shri_tl(t4, t4, 8);
++                tcg_gen_shri_i32(t3, t3, 8);
++                tcg_gen_shri_i32(t4, t4, 8);
+             }
+             if (i > 0) {
+-                tcg_gen_deposit_tl(t2, t2, t0, 8 * i, 8);
++                tcg_gen_deposit_i32(t2, t2, t0, 8 * i, 8);
+             } else {
+-                tcg_gen_andi_tl(t0, t0, 0xff);
+-                tcg_gen_mov_tl(t2, t0);
++                tcg_gen_andi_i32(t0, t0, 0xff);
++                tcg_gen_mov_i32(t2, t0);
+             }
+         }
+         gen_store_mxu_gpr(t2, XRa);
+@@ -2999,10 +2999,10 @@ static void gen_mxu_q8adde(DisasContext *ctx, bool accumulate)
+     if (unlikely((XRb == 0) && (XRc == 0))) {
+         /* both operands zero registers -> just set destination to zero */
+         if (XRa != 0) {
+-            tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++            tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+         }
+         if (XRd != 0) {
+-            tcg_gen_movi_tl(mxu_gpr[XRd - 1], 0);
++            tcg_gen_movi_i32(mxu_gpr[XRd - 1], 0);
+         }
+     } else {
+         /* the most general case */
+@@ -3019,22 +3019,22 @@ static void gen_mxu_q8adde(DisasContext *ctx, bool accumulate)
+             gen_extract_mxu_gpr(t2, XRb, 24, 8);
+             gen_extract_mxu_gpr(t3, XRc, 24, 8);
+             if (aptn2 & 2) {
+-                tcg_gen_sub_tl(t0, t0, t1);
+-                tcg_gen_sub_tl(t2, t2, t3);
++                tcg_gen_sub_i32(t0, t0, t1);
++                tcg_gen_sub_i32(t2, t2, t3);
+             } else {
+-                tcg_gen_add_tl(t0, t0, t1);
+-                tcg_gen_add_tl(t2, t2, t3);
++                tcg_gen_add_i32(t0, t0, t1);
++                tcg_gen_add_i32(t2, t2, t3);
+             }
+             if (accumulate) {
+                 gen_load_mxu_gpr(t5, XRa);
+-                tcg_gen_extract_tl(t1, t5,  0, 16);
+-                tcg_gen_extract_tl(t3, t5, 16, 16);
+-                tcg_gen_add_tl(t0, t0, t1);
+-                tcg_gen_add_tl(t2, t2, t3);
++                tcg_gen_extract_i32(t1, t5,  0, 16);
++                tcg_gen_extract_i32(t3, t5, 16, 16);
++                tcg_gen_add_i32(t0, t0, t1);
++                tcg_gen_add_i32(t2, t2, t3);
+             }
+-            tcg_gen_shli_tl(t2, t2, 16);
+-            tcg_gen_extract_tl(t0, t0, 0, 16);
+-            tcg_gen_or_tl(t4, t2, t0);
++            tcg_gen_shli_i32(t2, t2, 16);
++            tcg_gen_extract_i32(t0, t0, 0, 16);
++            tcg_gen_or_i32(t4, t2, t0);
+         }
+         if (XRd != 0) {
+             gen_extract_mxu_gpr(t0, XRb, 0, 8);
+@@ -3042,22 +3042,22 @@ static void gen_mxu_q8adde(DisasContext *ctx, bool accumulate)
+             gen_extract_mxu_gpr(t2, XRb, 8, 8);
+             gen_extract_mxu_gpr(t3, XRc, 8, 8);
+             if (aptn2 & 1) {
+-                tcg_gen_sub_tl(t0, t0, t1);
+-                tcg_gen_sub_tl(t2, t2, t3);
++                tcg_gen_sub_i32(t0, t0, t1);
++                tcg_gen_sub_i32(t2, t2, t3);
+             } else {
+-                tcg_gen_add_tl(t0, t0, t1);
+-                tcg_gen_add_tl(t2, t2, t3);
++                tcg_gen_add_i32(t0, t0, t1);
++                tcg_gen_add_i32(t2, t2, t3);
+             }
+             if (accumulate) {
+                 gen_load_mxu_gpr(t5, XRd);
+-                tcg_gen_extract_tl(t1, t5,  0, 16);
+-                tcg_gen_extract_tl(t3, t5, 16, 16);
+-                tcg_gen_add_tl(t0, t0, t1);
+-                tcg_gen_add_tl(t2, t2, t3);
++                tcg_gen_extract_i32(t1, t5,  0, 16);
++                tcg_gen_extract_i32(t3, t5, 16, 16);
++                tcg_gen_add_i32(t0, t0, t1);
++                tcg_gen_add_i32(t2, t2, t3);
+             }
+-            tcg_gen_shli_tl(t2, t2, 16);
+-            tcg_gen_extract_tl(t0, t0, 0, 16);
+-            tcg_gen_or_tl(t5, t2, t0);
++            tcg_gen_shli_i32(t2, t2, 16);
++            tcg_gen_extract_i32(t0, t0, 0, 16);
++            tcg_gen_or_i32(t5, t2, t0);
+         }
+ 
+         gen_store_mxu_gpr(t4, XRa);
+@@ -3090,7 +3090,7 @@ static void gen_mxu_d8sum(DisasContext *ctx, bool sumc)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely((XRb == 0) && (XRc == 0))) {
+         /* both operands zero registers -> just set destination to zero */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+@@ -3101,35 +3101,35 @@ static void gen_mxu_d8sum(DisasContext *ctx, bool sumc)
+         TCGv t5 = tcg_temp_new();
+ 
+         if (XRb != 0) {
+-            tcg_gen_extract_tl(t0, mxu_gpr[XRb - 1],  0, 8);
+-            tcg_gen_extract_tl(t1, mxu_gpr[XRb - 1],  8, 8);
+-            tcg_gen_extract_tl(t2, mxu_gpr[XRb - 1], 16, 8);
+-            tcg_gen_extract_tl(t3, mxu_gpr[XRb - 1], 24, 8);
+-            tcg_gen_add_tl(t4, t0, t1);
+-            tcg_gen_add_tl(t4, t4, t2);
+-            tcg_gen_add_tl(t4, t4, t3);
++            tcg_gen_extract_i32(t0, mxu_gpr[XRb - 1],  0, 8);
++            tcg_gen_extract_i32(t1, mxu_gpr[XRb - 1],  8, 8);
++            tcg_gen_extract_i32(t2, mxu_gpr[XRb - 1], 16, 8);
++            tcg_gen_extract_i32(t3, mxu_gpr[XRb - 1], 24, 8);
++            tcg_gen_add_i32(t4, t0, t1);
++            tcg_gen_add_i32(t4, t4, t2);
++            tcg_gen_add_i32(t4, t4, t3);
+         } else {
+-            tcg_gen_mov_tl(t4, 0);
++            tcg_gen_mov_i32(t4, 0);
+         }
+         if (XRc != 0) {
+-            tcg_gen_extract_tl(t0, mxu_gpr[XRc - 1],  0, 8);
+-            tcg_gen_extract_tl(t1, mxu_gpr[XRc - 1],  8, 8);
+-            tcg_gen_extract_tl(t2, mxu_gpr[XRc - 1], 16, 8);
+-            tcg_gen_extract_tl(t3, mxu_gpr[XRc - 1], 24, 8);
+-            tcg_gen_add_tl(t5, t0, t1);
+-            tcg_gen_add_tl(t5, t5, t2);
+-            tcg_gen_add_tl(t5, t5, t3);
++            tcg_gen_extract_i32(t0, mxu_gpr[XRc - 1],  0, 8);
++            tcg_gen_extract_i32(t1, mxu_gpr[XRc - 1],  8, 8);
++            tcg_gen_extract_i32(t2, mxu_gpr[XRc - 1], 16, 8);
++            tcg_gen_extract_i32(t3, mxu_gpr[XRc - 1], 24, 8);
++            tcg_gen_add_i32(t5, t0, t1);
++            tcg_gen_add_i32(t5, t5, t2);
++            tcg_gen_add_i32(t5, t5, t3);
+         } else {
+-            tcg_gen_mov_tl(t5, 0);
++            tcg_gen_mov_i32(t5, 0);
+         }
+ 
+         if (sumc) {
+-            tcg_gen_addi_tl(t4, t4, 2);
+-            tcg_gen_addi_tl(t5, t5, 2);
++            tcg_gen_addi_i32(t4, t4, 2);
++            tcg_gen_addi_i32(t5, t5, 2);
+         }
+-        tcg_gen_shli_tl(t4, t4, 16);
++        tcg_gen_shli_i32(t4, t4, 16);
+ 
+-        tcg_gen_or_tl(mxu_gpr[XRa - 1], t4, t5);
++        tcg_gen_or_i32(mxu_gpr[XRa - 1], t4, t5);
+     }
+ }
+ 
+@@ -3156,66 +3156,66 @@ static void gen_mxu_q16add(DisasContext *ctx)
+     TCGv t5 = tcg_temp_new();
+ 
+     gen_load_mxu_gpr(t1, XRb);
+-    tcg_gen_extract_tl(t0, t1,  0, 16);
+-    tcg_gen_extract_tl(t1, t1, 16, 16);
++    tcg_gen_extract_i32(t0, t1,  0, 16);
++    tcg_gen_extract_i32(t1, t1, 16, 16);
+ 
+     gen_load_mxu_gpr(t3, XRc);
+-    tcg_gen_extract_tl(t2, t3,  0, 16);
+-    tcg_gen_extract_tl(t3, t3, 16, 16);
++    tcg_gen_extract_i32(t2, t3,  0, 16);
++    tcg_gen_extract_i32(t3, t3, 16, 16);
+ 
+     switch (optn2) {
+     case MXU_OPTN2_WW: /* XRB.H+XRC.H == lop, XRB.L+XRC.L == rop */
+-        tcg_gen_mov_tl(t4, t1);
+-        tcg_gen_mov_tl(t5, t0);
++        tcg_gen_mov_i32(t4, t1);
++        tcg_gen_mov_i32(t5, t0);
+         break;
+     case MXU_OPTN2_LW: /* XRB.L+XRC.H == lop, XRB.L+XRC.L == rop */
+-        tcg_gen_mov_tl(t4, t0);
+-        tcg_gen_mov_tl(t5, t0);
++        tcg_gen_mov_i32(t4, t0);
++        tcg_gen_mov_i32(t5, t0);
+         break;
+     case MXU_OPTN2_HW: /* XRB.H+XRC.H == lop, XRB.H+XRC.L == rop */
+-        tcg_gen_mov_tl(t4, t1);
+-        tcg_gen_mov_tl(t5, t1);
++        tcg_gen_mov_i32(t4, t1);
++        tcg_gen_mov_i32(t5, t1);
+         break;
+     case MXU_OPTN2_XW: /* XRB.L+XRC.H == lop, XRB.H+XRC.L == rop */
+-        tcg_gen_mov_tl(t4, t0);
+-        tcg_gen_mov_tl(t5, t1);
++        tcg_gen_mov_i32(t4, t0);
++        tcg_gen_mov_i32(t5, t1);
+         break;
+     }
+ 
+     switch (aptn2) {
+     case MXU_APTN2_AA: /* lop +, rop + */
+-        tcg_gen_add_tl(t0, t4, t3);
+-        tcg_gen_add_tl(t1, t5, t2);
+-        tcg_gen_add_tl(t4, t4, t3);
+-        tcg_gen_add_tl(t5, t5, t2);
++        tcg_gen_add_i32(t0, t4, t3);
++        tcg_gen_add_i32(t1, t5, t2);
++        tcg_gen_add_i32(t4, t4, t3);
++        tcg_gen_add_i32(t5, t5, t2);
+         break;
+     case MXU_APTN2_AS: /* lop +, rop + */
+-        tcg_gen_sub_tl(t0, t4, t3);
+-        tcg_gen_sub_tl(t1, t5, t2);
+-        tcg_gen_add_tl(t4, t4, t3);
+-        tcg_gen_add_tl(t5, t5, t2);
++        tcg_gen_sub_i32(t0, t4, t3);
++        tcg_gen_sub_i32(t1, t5, t2);
++        tcg_gen_add_i32(t4, t4, t3);
++        tcg_gen_add_i32(t5, t5, t2);
+         break;
+     case MXU_APTN2_SA: /* lop +, rop + */
+-        tcg_gen_add_tl(t0, t4, t3);
+-        tcg_gen_add_tl(t1, t5, t2);
+-        tcg_gen_sub_tl(t4, t4, t3);
+-        tcg_gen_sub_tl(t5, t5, t2);
++        tcg_gen_add_i32(t0, t4, t3);
++        tcg_gen_add_i32(t1, t5, t2);
++        tcg_gen_sub_i32(t4, t4, t3);
++        tcg_gen_sub_i32(t5, t5, t2);
+         break;
+     case MXU_APTN2_SS: /* lop +, rop + */
+-        tcg_gen_sub_tl(t0, t4, t3);
+-        tcg_gen_sub_tl(t1, t5, t2);
+-        tcg_gen_sub_tl(t4, t4, t3);
+-        tcg_gen_sub_tl(t5, t5, t2);
++        tcg_gen_sub_i32(t0, t4, t3);
++        tcg_gen_sub_i32(t1, t5, t2);
++        tcg_gen_sub_i32(t4, t4, t3);
++        tcg_gen_sub_i32(t5, t5, t2);
+         break;
+     }
+ 
+-    tcg_gen_shli_tl(t0, t0, 16);
+-    tcg_gen_extract_tl(t1, t1, 0, 16);
+-    tcg_gen_shli_tl(t4, t4, 16);
+-    tcg_gen_extract_tl(t5, t5, 0, 16);
++    tcg_gen_shli_i32(t0, t0, 16);
++    tcg_gen_extract_i32(t1, t1, 0, 16);
++    tcg_gen_shli_i32(t4, t4, 16);
++    tcg_gen_extract_i32(t5, t5, 0, 16);
+ 
+-    tcg_gen_or_tl(mxu_gpr[XRa - 1], t4, t5);
+-    tcg_gen_or_tl(mxu_gpr[XRd - 1], t0, t1);
++    tcg_gen_or_i32(mxu_gpr[XRa - 1], t4, t5);
++    tcg_gen_or_i32(mxu_gpr[XRd - 1], t0, t1);
+ }
+ 
+ /*
+@@ -3242,56 +3242,56 @@ static void gen_mxu_q16acc(DisasContext *ctx)
+     TCGv s0 = tcg_temp_new();
+ 
+     gen_load_mxu_gpr(t1, XRb);
+-    tcg_gen_extract_tl(t0, t1,  0, 16);
+-    tcg_gen_extract_tl(t1, t1, 16, 16);
++    tcg_gen_extract_i32(t0, t1,  0, 16);
++    tcg_gen_extract_i32(t1, t1, 16, 16);
+ 
+     gen_load_mxu_gpr(t3, XRc);
+-    tcg_gen_extract_tl(t2, t3,  0, 16);
+-    tcg_gen_extract_tl(t3, t3, 16, 16);
++    tcg_gen_extract_i32(t2, t3,  0, 16);
++    tcg_gen_extract_i32(t3, t3, 16, 16);
+ 
+     switch (aptn2) {
+     case MXU_APTN2_AA: /* lop +, rop + */
+-        tcg_gen_add_tl(s3, t1, t3);
+-        tcg_gen_add_tl(s2, t0, t2);
+-        tcg_gen_add_tl(s1, t1, t3);
+-        tcg_gen_add_tl(s0, t0, t2);
++        tcg_gen_add_i32(s3, t1, t3);
++        tcg_gen_add_i32(s2, t0, t2);
++        tcg_gen_add_i32(s1, t1, t3);
++        tcg_gen_add_i32(s0, t0, t2);
+         break;
+     case MXU_APTN2_AS: /* lop +, rop - */
+-        tcg_gen_sub_tl(s3, t1, t3);
+-        tcg_gen_sub_tl(s2, t0, t2);
+-        tcg_gen_add_tl(s1, t1, t3);
+-        tcg_gen_add_tl(s0, t0, t2);
++        tcg_gen_sub_i32(s3, t1, t3);
++        tcg_gen_sub_i32(s2, t0, t2);
++        tcg_gen_add_i32(s1, t1, t3);
++        tcg_gen_add_i32(s0, t0, t2);
+         break;
+     case MXU_APTN2_SA: /* lop -, rop + */
+-        tcg_gen_add_tl(s3, t1, t3);
+-        tcg_gen_add_tl(s2, t0, t2);
+-        tcg_gen_sub_tl(s1, t1, t3);
+-        tcg_gen_sub_tl(s0, t0, t2);
++        tcg_gen_add_i32(s3, t1, t3);
++        tcg_gen_add_i32(s2, t0, t2);
++        tcg_gen_sub_i32(s1, t1, t3);
++        tcg_gen_sub_i32(s0, t0, t2);
+         break;
+     case MXU_APTN2_SS: /* lop -, rop - */
+-        tcg_gen_sub_tl(s3, t1, t3);
+-        tcg_gen_sub_tl(s2, t0, t2);
+-        tcg_gen_sub_tl(s1, t1, t3);
+-        tcg_gen_sub_tl(s0, t0, t2);
++        tcg_gen_sub_i32(s3, t1, t3);
++        tcg_gen_sub_i32(s2, t0, t2);
++        tcg_gen_sub_i32(s1, t1, t3);
++        tcg_gen_sub_i32(s0, t0, t2);
+         break;
+     }
+ 
+     if (XRa != 0) {
+-        tcg_gen_add_tl(t0, mxu_gpr[XRa - 1], s0);
+-        tcg_gen_extract_tl(t0, t0, 0, 16);
+-        tcg_gen_extract_tl(t1, mxu_gpr[XRa - 1], 16, 16);
+-        tcg_gen_add_tl(t1, t1, s1);
+-        tcg_gen_shli_tl(t1, t1, 16);
+-        tcg_gen_or_tl(mxu_gpr[XRa - 1], t1, t0);
++        tcg_gen_add_i32(t0, mxu_gpr[XRa - 1], s0);
++        tcg_gen_extract_i32(t0, t0, 0, 16);
++        tcg_gen_extract_i32(t1, mxu_gpr[XRa - 1], 16, 16);
++        tcg_gen_add_i32(t1, t1, s1);
++        tcg_gen_shli_i32(t1, t1, 16);
++        tcg_gen_or_i32(mxu_gpr[XRa - 1], t1, t0);
+     }
+ 
+     if (XRd != 0) {
+-        tcg_gen_add_tl(t0, mxu_gpr[XRd - 1], s2);
+-        tcg_gen_extract_tl(t0, t0, 0, 16);
+-        tcg_gen_extract_tl(t1, mxu_gpr[XRd - 1], 16, 16);
+-        tcg_gen_add_tl(t1, t1, s3);
+-        tcg_gen_shli_tl(t1, t1, 16);
+-        tcg_gen_or_tl(mxu_gpr[XRd - 1], t1, t0);
++        tcg_gen_add_i32(t0, mxu_gpr[XRd - 1], s2);
++        tcg_gen_extract_i32(t0, t0, 0, 16);
++        tcg_gen_extract_i32(t1, mxu_gpr[XRd - 1], 16, 16);
++        tcg_gen_add_i32(t1, t1, s3);
++        tcg_gen_shli_i32(t1, t1, 16);
++        tcg_gen_or_i32(mxu_gpr[XRd - 1], t1, t0);
+     }
+ }
+ 
+@@ -3321,46 +3321,46 @@ static void gen_mxu_q16accm(DisasContext *ctx)
+         TCGv a0 = tcg_temp_new();
+         TCGv a1 = tcg_temp_new();
+ 
+-        tcg_gen_extract_tl(t0, t2,  0, 16);
+-        tcg_gen_extract_tl(t1, t2, 16, 16);
++        tcg_gen_extract_i32(t0, t2,  0, 16);
++        tcg_gen_extract_i32(t1, t2, 16, 16);
+ 
+         gen_load_mxu_gpr(a1, XRa);
+-        tcg_gen_extract_tl(a0, a1,  0, 16);
+-        tcg_gen_extract_tl(a1, a1, 16, 16);
++        tcg_gen_extract_i32(a0, a1,  0, 16);
++        tcg_gen_extract_i32(a1, a1, 16, 16);
+ 
+         if (aptn2 & 2) {
+-            tcg_gen_sub_tl(a0, a0, t0);
+-            tcg_gen_sub_tl(a1, a1, t1);
++            tcg_gen_sub_i32(a0, a0, t0);
++            tcg_gen_sub_i32(a1, a1, t1);
+         } else {
+-            tcg_gen_add_tl(a0, a0, t0);
+-            tcg_gen_add_tl(a1, a1, t1);
++            tcg_gen_add_i32(a0, a0, t0);
++            tcg_gen_add_i32(a1, a1, t1);
+         }
+-        tcg_gen_extract_tl(a0, a0, 0, 16);
+-        tcg_gen_shli_tl(a1, a1, 16);
+-        tcg_gen_or_tl(mxu_gpr[XRa - 1], a1, a0);
++        tcg_gen_extract_i32(a0, a0, 0, 16);
++        tcg_gen_shli_i32(a1, a1, 16);
++        tcg_gen_or_i32(mxu_gpr[XRa - 1], a1, a0);
+     }
+ 
+     if (XRd != 0) {
+         TCGv a0 = tcg_temp_new();
+         TCGv a1 = tcg_temp_new();
+ 
+-        tcg_gen_extract_tl(t0, t3,  0, 16);
+-        tcg_gen_extract_tl(t1, t3, 16, 16);
++        tcg_gen_extract_i32(t0, t3,  0, 16);
++        tcg_gen_extract_i32(t1, t3, 16, 16);
+ 
+         gen_load_mxu_gpr(a1, XRd);
+-        tcg_gen_extract_tl(a0, a1,  0, 16);
+-        tcg_gen_extract_tl(a1, a1, 16, 16);
++        tcg_gen_extract_i32(a0, a1,  0, 16);
++        tcg_gen_extract_i32(a1, a1, 16, 16);
+ 
+         if (aptn2 & 1) {
+-            tcg_gen_sub_tl(a0, a0, t0);
+-            tcg_gen_sub_tl(a1, a1, t1);
++            tcg_gen_sub_i32(a0, a0, t0);
++            tcg_gen_sub_i32(a1, a1, t1);
+         } else {
+-            tcg_gen_add_tl(a0, a0, t0);
+-            tcg_gen_add_tl(a1, a1, t1);
++            tcg_gen_add_i32(a0, a0, t0);
++            tcg_gen_add_i32(a1, a1, t1);
+         }
+-        tcg_gen_extract_tl(a0, a0, 0, 16);
+-        tcg_gen_shli_tl(a1, a1, 16);
+-        tcg_gen_or_tl(mxu_gpr[XRd - 1], a1, a0);
++        tcg_gen_extract_i32(a0, a0, 0, 16);
++        tcg_gen_shli_i32(a1, a1, 16);
++        tcg_gen_or_i32(mxu_gpr[XRd - 1], a1, a0);
+     }
+ }
+ 
+@@ -3388,24 +3388,24 @@ static void gen_mxu_d16asum(DisasContext *ctx)
+     gen_load_mxu_gpr(t3, XRc);
+ 
+     if (XRa != 0) {
+-        tcg_gen_sextract_tl(t0, t2,  0, 16);
+-        tcg_gen_sextract_tl(t1, t2, 16, 16);
+-        tcg_gen_add_tl(t0, t0, t1);
++        tcg_gen_sextract_i32(t0, t2,  0, 16);
++        tcg_gen_sextract_i32(t1, t2, 16, 16);
++        tcg_gen_add_i32(t0, t0, t1);
+         if (aptn2 & 2) {
+-            tcg_gen_sub_tl(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
++            tcg_gen_sub_i32(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
+         } else {
+-            tcg_gen_add_tl(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
++            tcg_gen_add_i32(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
+         }
+     }
+ 
+     if (XRd != 0) {
+-        tcg_gen_sextract_tl(t0, t3,  0, 16);
+-        tcg_gen_sextract_tl(t1, t3, 16, 16);
+-        tcg_gen_add_tl(t0, t0, t1);
++        tcg_gen_sextract_i32(t0, t3,  0, 16);
++        tcg_gen_sextract_i32(t1, t3, 16, 16);
++        tcg_gen_add_i32(t0, t0, t1);
+         if (aptn2 & 1) {
+-            tcg_gen_sub_tl(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t0);
++            tcg_gen_sub_i32(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t0);
+         } else {
+-            tcg_gen_add_tl(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t0);
++            tcg_gen_add_i32(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t0);
+         }
+     }
+ }
+@@ -3445,14 +3445,14 @@ static void gen_mxu_d32add(DisasContext *ctx)
+             gen_load_mxu_gpr(t1, XRc);
+             gen_load_mxu_cr(cr);
+             if (XRa != 0) {
+-                tcg_gen_extract_tl(t2, cr, 31, 1);
+-                tcg_gen_add_tl(t0, t0, t2);
+-                tcg_gen_add_tl(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
++                tcg_gen_extract_i32(t2, cr, 31, 1);
++                tcg_gen_add_i32(t0, t0, t2);
++                tcg_gen_add_i32(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
+             }
+             if (XRd != 0) {
+-                tcg_gen_extract_tl(t2, cr, 30, 1);
+-                tcg_gen_add_tl(t1, t1, t2);
+-                tcg_gen_add_tl(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t1);
++                tcg_gen_extract_i32(t2, cr, 30, 1);
++                tcg_gen_add_i32(t1, t1, t2);
++                tcg_gen_add_i32(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t1);
+             }
+         }
+     } else if (unlikely(XRa == 0 && XRd == 0)) {
+@@ -3468,27 +3468,27 @@ static void gen_mxu_d32add(DisasContext *ctx)
+         if (XRa != 0) {
+             if (aptn2 & 2) {
+                 tcg_gen_sub_i32(t2, t0, t1);
+-                tcg_gen_setcond_tl(TCG_COND_GTU, carry, t0, t1);
++                tcg_gen_setcond_i32(TCG_COND_GTU, carry, t0, t1);
+             } else {
+                 tcg_gen_add_i32(t2, t0, t1);
+-                tcg_gen_setcond_tl(TCG_COND_GTU, carry, t0, t2);
++                tcg_gen_setcond_i32(TCG_COND_GTU, carry, t0, t2);
+             }
+-            tcg_gen_andi_tl(cr, cr, 0x7fffffff);
+-            tcg_gen_shli_tl(carry, carry, 31);
+-            tcg_gen_or_tl(cr, cr, carry);
++            tcg_gen_andi_i32(cr, cr, 0x7fffffff);
++            tcg_gen_shli_i32(carry, carry, 31);
++            tcg_gen_or_i32(cr, cr, carry);
+             gen_store_mxu_gpr(t2, XRa);
+         }
+         if (XRd != 0) {
+             if (aptn2 & 1) {
+                 tcg_gen_sub_i32(t2, t0, t1);
+-                tcg_gen_setcond_tl(TCG_COND_GTU, carry, t0, t1);
++                tcg_gen_setcond_i32(TCG_COND_GTU, carry, t0, t1);
+             } else {
+                 tcg_gen_add_i32(t2, t0, t1);
+-                tcg_gen_setcond_tl(TCG_COND_GTU, carry, t0, t2);
++                tcg_gen_setcond_i32(TCG_COND_GTU, carry, t0, t2);
+             }
+-            tcg_gen_andi_tl(cr, cr, 0xbfffffff);
+-            tcg_gen_shli_tl(carry, carry, 30);
+-            tcg_gen_or_tl(cr, cr, carry);
++            tcg_gen_andi_i32(cr, cr, 0xbfffffff);
++            tcg_gen_shli_i32(carry, carry, 30);
++            tcg_gen_or_i32(cr, cr, carry);
+             gen_store_mxu_gpr(t2, XRd);
+         }
+         gen_store_mxu_cr(cr);
+@@ -3521,19 +3521,19 @@ static void gen_mxu_d32acc(DisasContext *ctx)
+         gen_load_mxu_gpr(t1, XRc);
+         if (XRa != 0) {
+             if (aptn2 & 2) {
+-                tcg_gen_sub_tl(t2, t0, t1);
++                tcg_gen_sub_i32(t2, t0, t1);
+             } else {
+-                tcg_gen_add_tl(t2, t0, t1);
++                tcg_gen_add_i32(t2, t0, t1);
+             }
+-            tcg_gen_add_tl(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t2);
++            tcg_gen_add_i32(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t2);
+         }
+         if (XRd != 0) {
+             if (aptn2 & 1) {
+-                tcg_gen_sub_tl(t2, t0, t1);
++                tcg_gen_sub_i32(t2, t0, t1);
+             } else {
+-                tcg_gen_add_tl(t2, t0, t1);
++                tcg_gen_add_i32(t2, t0, t1);
+             }
+-            tcg_gen_add_tl(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t2);
++            tcg_gen_add_i32(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t2);
+         }
+     }
+ }
+@@ -3563,19 +3563,19 @@ static void gen_mxu_d32accm(DisasContext *ctx)
+         gen_load_mxu_gpr(t0, XRb);
+         gen_load_mxu_gpr(t1, XRc);
+         if (XRa != 0) {
+-            tcg_gen_add_tl(t2, t0, t1);
++            tcg_gen_add_i32(t2, t0, t1);
+             if (aptn2 & 2) {
+-                tcg_gen_sub_tl(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t2);
++                tcg_gen_sub_i32(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t2);
+             } else {
+-                tcg_gen_add_tl(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t2);
++                tcg_gen_add_i32(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t2);
+             }
+         }
+         if (XRd != 0) {
+-            tcg_gen_sub_tl(t2, t0, t1);
++            tcg_gen_sub_i32(t2, t0, t1);
+             if (aptn2 & 1) {
+-                tcg_gen_sub_tl(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t2);
++                tcg_gen_sub_i32(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t2);
+             } else {
+-                tcg_gen_add_tl(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t2);
++                tcg_gen_add_i32(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t2);
+             }
+         }
+     }
+@@ -3606,16 +3606,16 @@ static void gen_mxu_d32asum(DisasContext *ctx)
+         gen_load_mxu_gpr(t1, XRc);
+         if (XRa != 0) {
+             if (aptn2 & 2) {
+-                tcg_gen_sub_tl(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
++                tcg_gen_sub_i32(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
+             } else {
+-                tcg_gen_add_tl(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
++                tcg_gen_add_i32(mxu_gpr[XRa - 1], mxu_gpr[XRa - 1], t0);
+             }
+         }
+         if (XRd != 0) {
+             if (aptn2 & 1) {
+-                tcg_gen_sub_tl(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t1);
++                tcg_gen_sub_i32(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t1);
+             } else {
+-                tcg_gen_add_tl(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t1);
++                tcg_gen_add_i32(mxu_gpr[XRd - 1], mxu_gpr[XRd - 1], t1);
+             }
+         }
+     }
+@@ -3659,24 +3659,24 @@ static void gen_mxu_s32extr(DisasContext *ctx)
+ 
+         gen_load_mxu_gpr(t0, XRd);
+         gen_load_mxu_gpr(t1, XRa);
+-        gen_load_gpr_tl(t2, rs);
+-        tcg_gen_andi_tl(t2, t2, 0x1f);
+-        tcg_gen_subfi_tl(t2, 32, t2);
+-        tcg_gen_brcondi_tl(TCG_COND_GE, t2, bits5, l_xra_only);
+-        tcg_gen_subfi_tl(t2, bits5, t2);
+-        tcg_gen_subfi_tl(t3, 32, t2);
+-        tcg_gen_shr_tl(t0, t0, t3);
+-        tcg_gen_shl_tl(t1, t1, t2);
+-        tcg_gen_or_tl(t0, t0, t1);
++        gen_load_gpr_i32(t2, rs);
++        tcg_gen_andi_i32(t2, t2, 0x1f);
++        tcg_gen_subfi_i32(t2, 32, t2);
++        tcg_gen_brcondi_i32(TCG_COND_GE, t2, bits5, l_xra_only);
++        tcg_gen_subfi_i32(t2, bits5, t2);
++        tcg_gen_subfi_i32(t3, 32, t2);
++        tcg_gen_shr_i32(t0, t0, t3);
++        tcg_gen_shl_i32(t1, t1, t2);
++        tcg_gen_or_i32(t0, t0, t1);
+         tcg_gen_br(l_done);
+         gen_set_label(l_xra_only);
+-        tcg_gen_subi_tl(t2, t2, bits5);
+-        tcg_gen_shr_tl(t0, t1, t2);
++        tcg_gen_subi_i32(t2, t2, bits5);
++        tcg_gen_shr_i32(t0, t1, t2);
+         gen_set_label(l_done);
+-        tcg_gen_extract_tl(t0, t0, 0, bits5);
++        tcg_gen_extract_i32(t0, t0, 0, bits5);
+     } else {
+         /* unspecified behavior but matches tests on real hardware*/
+-        tcg_gen_movi_tl(t0, 0);
++        tcg_gen_movi_i32(t0, 0);
+     }
+     gen_store_mxu_gpr(t0, XRa);
+ }
+@@ -3709,34 +3709,34 @@ static void gen_mxu_s32extrv(DisasContext *ctx)
+     /* {tmp} = {XRa:XRd} >> (64 - rs - rt) */
+     gen_load_mxu_gpr(t0, XRd);
+     gen_load_mxu_gpr(t1, XRa);
+-    gen_load_gpr_tl(t2, rs);
+-    gen_load_gpr_tl(t4, rt);
+-    tcg_gen_brcondi_tl(TCG_COND_EQ, t4, 0, l_zero);
+-    tcg_gen_andi_tl(t2, t2, 0x1f);
+-    tcg_gen_subfi_tl(t2, 32, t2);
+-    tcg_gen_brcond_tl(TCG_COND_GE, t2, t4, l_xra_only);
+-    tcg_gen_sub_tl(t2, t4, t2);
+-    tcg_gen_subfi_tl(t3, 32, t2);
+-    tcg_gen_shr_tl(t0, t0, t3);
+-    tcg_gen_shl_tl(t1, t1, t2);
+-    tcg_gen_or_tl(t0, t0, t1);
++    gen_load_gpr_i32(t2, rs);
++    gen_load_gpr_i32(t4, rt);
++    tcg_gen_brcondi_i32(TCG_COND_EQ, t4, 0, l_zero);
++    tcg_gen_andi_i32(t2, t2, 0x1f);
++    tcg_gen_subfi_i32(t2, 32, t2);
++    tcg_gen_brcond_i32(TCG_COND_GE, t2, t4, l_xra_only);
++    tcg_gen_sub_i32(t2, t4, t2);
++    tcg_gen_subfi_i32(t3, 32, t2);
++    tcg_gen_shr_i32(t0, t0, t3);
++    tcg_gen_shl_i32(t1, t1, t2);
++    tcg_gen_or_i32(t0, t0, t1);
+     tcg_gen_br(l_extract);
+ 
+     gen_set_label(l_xra_only);
+-    tcg_gen_sub_tl(t2, t2, t4);
+-    tcg_gen_shr_tl(t0, t1, t2);
++    tcg_gen_sub_i32(t2, t2, t4);
++    tcg_gen_shr_i32(t0, t1, t2);
+     tcg_gen_br(l_extract);
+ 
+     /* unspecified behavior but matches tests on real hardware*/
+     gen_set_label(l_zero);
+-    tcg_gen_movi_tl(t0, 0);
++    tcg_gen_movi_i32(t0, 0);
+     tcg_gen_br(l_done);
+ 
+     /* {XRa} = extract({tmp}, 0, rt) */
+     gen_set_label(l_extract);
+-    tcg_gen_subfi_tl(t4, 32, t4);
+-    tcg_gen_shl_tl(t0, t0, t4);
+-    tcg_gen_shr_tl(t0, t0, t4);
++    tcg_gen_subfi_i32(t4, 32, t4);
++    tcg_gen_shl_i32(t0, t0, t4);
++    tcg_gen_shr_i32(t0, t0, t4);
+ 
+     gen_set_label(l_done);
+     gen_store_mxu_gpr(t0, XRa);
+@@ -3766,29 +3766,29 @@ static void gen_mxu_s32lui(DisasContext *ctx)
+ 
+         switch (optn3) {
+         case 0:
+-            tcg_gen_movi_tl(t0, s8);
++            tcg_gen_movi_i32(t0, s8);
+             break;
+         case 1:
+-            tcg_gen_movi_tl(t0, s8 << 8);
++            tcg_gen_movi_i32(t0, s8 << 8);
+             break;
+         case 2:
+-            tcg_gen_movi_tl(t0, s8 << 16);
++            tcg_gen_movi_i32(t0, s8 << 16);
+             break;
+         case 3:
+-            tcg_gen_movi_tl(t0, s8 << 24);
++            tcg_gen_movi_i32(t0, s8 << 24);
+             break;
+         case 4:
+-            tcg_gen_movi_tl(t0, (s8 << 16) | s8);
++            tcg_gen_movi_i32(t0, (s8 << 16) | s8);
+             break;
+         case 5:
+-            tcg_gen_movi_tl(t0, (s8 << 24) | (s8 << 8));
++            tcg_gen_movi_i32(t0, (s8 << 24) | (s8 << 8));
+             break;
+         case 6:
+             s16 = (uint16_t)(int16_t)(int8_t)s8;
+-            tcg_gen_movi_tl(t0, (s16 << 16) | s16);
++            tcg_gen_movi_i32(t0, (s16 << 16) | s16);
+             break;
+         case 7:
+-            tcg_gen_movi_tl(t0, (s8 << 24) | (s8 << 16) | (s8 << 8) | s8);
++            tcg_gen_movi_i32(t0, (s8 << 24) | (s8 << 16) | (s8 << 8) | s8);
+             break;
+         }
+         gen_store_mxu_gpr(t0, XRa);
+@@ -3820,7 +3820,7 @@ static void gen_mxu_Q16SAT(DisasContext *ctx)
+         TCGv t1 = tcg_temp_new();
+         TCGv t2 = tcg_temp_new();
+ 
+-        tcg_gen_movi_tl(t2, 0);
++        tcg_gen_movi_i32(t2, 0);
+         if (XRb != 0) {
+             TCGLabel *l_less_hi = gen_new_label();
+             TCGLabel *l_less_lo = gen_new_label();
+@@ -3829,32 +3829,32 @@ static void gen_mxu_Q16SAT(DisasContext *ctx)
+             TCGLabel *l_greater_lo = gen_new_label();
+             TCGLabel *l_done = gen_new_label();
+ 
+-            tcg_gen_sari_tl(t0, mxu_gpr[XRb - 1], 16);
+-            tcg_gen_brcondi_tl(TCG_COND_LT, t0, 0, l_less_hi);
+-            tcg_gen_brcondi_tl(TCG_COND_GT, t0, 255, l_greater_hi);
++            tcg_gen_sari_i32(t0, mxu_gpr[XRb - 1], 16);
++            tcg_gen_brcondi_i32(TCG_COND_LT, t0, 0, l_less_hi);
++            tcg_gen_brcondi_i32(TCG_COND_GT, t0, 255, l_greater_hi);
+             tcg_gen_br(l_lo);
+             gen_set_label(l_less_hi);
+-            tcg_gen_movi_tl(t0, 0);
++            tcg_gen_movi_i32(t0, 0);
+             tcg_gen_br(l_lo);
+             gen_set_label(l_greater_hi);
+-            tcg_gen_movi_tl(t0, 255);
++            tcg_gen_movi_i32(t0, 255);
+ 
+             gen_set_label(l_lo);
+-            tcg_gen_shli_tl(t1, mxu_gpr[XRb - 1], 16);
+-            tcg_gen_sari_tl(t1, t1, 16);
+-            tcg_gen_brcondi_tl(TCG_COND_LT, t1, 0, l_less_lo);
+-            tcg_gen_brcondi_tl(TCG_COND_GT, t1, 255, l_greater_lo);
++            tcg_gen_shli_i32(t1, mxu_gpr[XRb - 1], 16);
++            tcg_gen_sari_i32(t1, t1, 16);
++            tcg_gen_brcondi_i32(TCG_COND_LT, t1, 0, l_less_lo);
++            tcg_gen_brcondi_i32(TCG_COND_GT, t1, 255, l_greater_lo);
+             tcg_gen_br(l_done);
+             gen_set_label(l_less_lo);
+-            tcg_gen_movi_tl(t1, 0);
++            tcg_gen_movi_i32(t1, 0);
+             tcg_gen_br(l_done);
+             gen_set_label(l_greater_lo);
+-            tcg_gen_movi_tl(t1, 255);
++            tcg_gen_movi_i32(t1, 255);
+ 
+             gen_set_label(l_done);
+-            tcg_gen_shli_tl(t2, t0, 24);
+-            tcg_gen_shli_tl(t1, t1, 16);
+-            tcg_gen_or_tl(t2, t2, t1);
++            tcg_gen_shli_i32(t2, t0, 24);
++            tcg_gen_shli_i32(t1, t1, 16);
++            tcg_gen_or_i32(t2, t2, t1);
+         }
+ 
+         if (XRc != 0) {
+@@ -3865,32 +3865,32 @@ static void gen_mxu_Q16SAT(DisasContext *ctx)
+             TCGLabel *l_greater_lo = gen_new_label();
+             TCGLabel *l_done = gen_new_label();
+ 
+-            tcg_gen_sari_tl(t0, mxu_gpr[XRc - 1], 16);
+-            tcg_gen_brcondi_tl(TCG_COND_LT, t0, 0, l_less_hi);
+-            tcg_gen_brcondi_tl(TCG_COND_GT, t0, 255, l_greater_hi);
++            tcg_gen_sari_i32(t0, mxu_gpr[XRc - 1], 16);
++            tcg_gen_brcondi_i32(TCG_COND_LT, t0, 0, l_less_hi);
++            tcg_gen_brcondi_i32(TCG_COND_GT, t0, 255, l_greater_hi);
+             tcg_gen_br(l_lo);
+             gen_set_label(l_less_hi);
+-            tcg_gen_movi_tl(t0, 0);
++            tcg_gen_movi_i32(t0, 0);
+             tcg_gen_br(l_lo);
+             gen_set_label(l_greater_hi);
+-            tcg_gen_movi_tl(t0, 255);
++            tcg_gen_movi_i32(t0, 255);
+ 
+             gen_set_label(l_lo);
+-            tcg_gen_shli_tl(t1, mxu_gpr[XRc - 1], 16);
+-            tcg_gen_sari_tl(t1, t1, 16);
+-            tcg_gen_brcondi_tl(TCG_COND_LT, t1, 0, l_less_lo);
+-            tcg_gen_brcondi_tl(TCG_COND_GT, t1, 255, l_greater_lo);
++            tcg_gen_shli_i32(t1, mxu_gpr[XRc - 1], 16);
++            tcg_gen_sari_i32(t1, t1, 16);
++            tcg_gen_brcondi_i32(TCG_COND_LT, t1, 0, l_less_lo);
++            tcg_gen_brcondi_i32(TCG_COND_GT, t1, 255, l_greater_lo);
+             tcg_gen_br(l_done);
+             gen_set_label(l_less_lo);
+-            tcg_gen_movi_tl(t1, 0);
++            tcg_gen_movi_i32(t1, 0);
+             tcg_gen_br(l_done);
+             gen_set_label(l_greater_lo);
+-            tcg_gen_movi_tl(t1, 255);
++            tcg_gen_movi_i32(t1, 255);
+ 
+             gen_set_label(l_done);
+-            tcg_gen_shli_tl(t0, t0, 8);
+-            tcg_gen_or_tl(t2, t2, t0);
+-            tcg_gen_or_tl(t2, t2, t1);
++            tcg_gen_shli_i32(t0, t0, 8);
++            tcg_gen_or_i32(t2, t2, t0);
++            tcg_gen_or_i32(t2, t2, t1);
+         }
+         gen_store_mxu_gpr(t2, XRa);
+     }
+@@ -3930,47 +3930,47 @@ static void gen_mxu_q16scop(DisasContext *ctx)
+     gen_load_mxu_gpr(t0, XRb);
+     gen_load_mxu_gpr(t1, XRc);
+ 
+-    tcg_gen_sextract_tl(t2, t0, 16, 16);
+-    tcg_gen_brcondi_tl(TCG_COND_LT, t2, 0, l_b_hi_lt);
+-    tcg_gen_brcondi_tl(TCG_COND_GT, t2, 0, l_b_hi_gt);
+-    tcg_gen_movi_tl(t3, 0);
++    tcg_gen_sextract_i32(t2, t0, 16, 16);
++    tcg_gen_brcondi_i32(TCG_COND_LT, t2, 0, l_b_hi_lt);
++    tcg_gen_brcondi_i32(TCG_COND_GT, t2, 0, l_b_hi_gt);
++    tcg_gen_movi_i32(t3, 0);
+     tcg_gen_br(l_b_lo);
+     gen_set_label(l_b_hi_lt);
+-    tcg_gen_movi_tl(t3, 0xffff0000);
++    tcg_gen_movi_i32(t3, 0xffff0000);
+     tcg_gen_br(l_b_lo);
+     gen_set_label(l_b_hi_gt);
+-    tcg_gen_movi_tl(t3, 0x00010000);
++    tcg_gen_movi_i32(t3, 0x00010000);
+ 
+     gen_set_label(l_b_lo);
+-    tcg_gen_sextract_tl(t2, t0, 0, 16);
+-    tcg_gen_brcondi_tl(TCG_COND_EQ, t2, 0, l_c_hi);
+-    tcg_gen_brcondi_tl(TCG_COND_LT, t2, 0, l_b_lo_lt);
+-    tcg_gen_ori_tl(t3, t3, 0x00000001);
++    tcg_gen_sextract_i32(t2, t0, 0, 16);
++    tcg_gen_brcondi_i32(TCG_COND_EQ, t2, 0, l_c_hi);
++    tcg_gen_brcondi_i32(TCG_COND_LT, t2, 0, l_b_lo_lt);
++    tcg_gen_ori_i32(t3, t3, 0x00000001);
+     tcg_gen_br(l_c_hi);
+     gen_set_label(l_b_lo_lt);
+-    tcg_gen_ori_tl(t3, t3, 0x0000ffff);
++    tcg_gen_ori_i32(t3, t3, 0x0000ffff);
+     tcg_gen_br(l_c_hi);
+ 
+     gen_set_label(l_c_hi);
+-    tcg_gen_sextract_tl(t2, t1, 16, 16);
+-    tcg_gen_brcondi_tl(TCG_COND_LT, t2, 0, l_c_hi_lt);
+-    tcg_gen_brcondi_tl(TCG_COND_GT, t2, 0, l_c_hi_gt);
+-    tcg_gen_movi_tl(t4, 0);
++    tcg_gen_sextract_i32(t2, t1, 16, 16);
++    tcg_gen_brcondi_i32(TCG_COND_LT, t2, 0, l_c_hi_lt);
++    tcg_gen_brcondi_i32(TCG_COND_GT, t2, 0, l_c_hi_gt);
++    tcg_gen_movi_i32(t4, 0);
+     tcg_gen_br(l_c_lo);
+     gen_set_label(l_c_hi_lt);
+-    tcg_gen_movi_tl(t4, 0xffff0000);
++    tcg_gen_movi_i32(t4, 0xffff0000);
+     tcg_gen_br(l_c_lo);
+     gen_set_label(l_c_hi_gt);
+-    tcg_gen_movi_tl(t4, 0x00010000);
++    tcg_gen_movi_i32(t4, 0x00010000);
+ 
+     gen_set_label(l_c_lo);
+-    tcg_gen_sextract_tl(t2, t1, 0, 16);
+-    tcg_gen_brcondi_tl(TCG_COND_EQ, t2, 0, l_done);
+-    tcg_gen_brcondi_tl(TCG_COND_LT, t2, 0, l_c_lo_lt);
+-    tcg_gen_ori_tl(t4, t4, 0x00000001);
++    tcg_gen_sextract_i32(t2, t1, 0, 16);
++    tcg_gen_brcondi_i32(TCG_COND_EQ, t2, 0, l_done);
++    tcg_gen_brcondi_i32(TCG_COND_LT, t2, 0, l_c_lo_lt);
++    tcg_gen_ori_i32(t4, t4, 0x00000001);
+     tcg_gen_br(l_done);
+     gen_set_label(l_c_lo_lt);
+-    tcg_gen_ori_tl(t4, t4, 0x0000ffff);
++    tcg_gen_ori_i32(t4, t4, 0x0000ffff);
+ 
+     gen_set_label(l_done);
+     gen_store_mxu_gpr(t3, XRa);
+@@ -4001,52 +4001,52 @@ static void gen_mxu_s32sfl(DisasContext *ctx)
+ 
+     switch (ptn2) {
+     case 0:
+-        tcg_gen_andi_tl(t2, t0, 0xff000000);
+-        tcg_gen_andi_tl(t3, t1, 0x000000ff);
+-        tcg_gen_deposit_tl(t3, t3, t0,  8, 8);
+-        tcg_gen_shri_tl(t0, t0,  8);
+-        tcg_gen_shri_tl(t1, t1,  8);
+-        tcg_gen_deposit_tl(t3, t3, t0, 24, 8);
+-        tcg_gen_deposit_tl(t3, t3, t1, 16, 8);
+-        tcg_gen_shri_tl(t0, t0,  8);
+-        tcg_gen_shri_tl(t1, t1,  8);
+-        tcg_gen_deposit_tl(t2, t2, t0,  8, 8);
+-        tcg_gen_deposit_tl(t2, t2, t1,  0, 8);
+-        tcg_gen_shri_tl(t1, t1,  8);
+-        tcg_gen_deposit_tl(t2, t2, t1, 16, 8);
++        tcg_gen_andi_i32(t2, t0, 0xff000000);
++        tcg_gen_andi_i32(t3, t1, 0x000000ff);
++        tcg_gen_deposit_i32(t3, t3, t0,  8, 8);
++        tcg_gen_shri_i32(t0, t0,  8);
++        tcg_gen_shri_i32(t1, t1,  8);
++        tcg_gen_deposit_i32(t3, t3, t0, 24, 8);
++        tcg_gen_deposit_i32(t3, t3, t1, 16, 8);
++        tcg_gen_shri_i32(t0, t0,  8);
++        tcg_gen_shri_i32(t1, t1,  8);
++        tcg_gen_deposit_i32(t2, t2, t0,  8, 8);
++        tcg_gen_deposit_i32(t2, t2, t1,  0, 8);
++        tcg_gen_shri_i32(t1, t1,  8);
++        tcg_gen_deposit_i32(t2, t2, t1, 16, 8);
+         break;
+     case 1:
+-        tcg_gen_andi_tl(t2, t0, 0xff000000);
+-        tcg_gen_andi_tl(t3, t1, 0x000000ff);
+-        tcg_gen_deposit_tl(t3, t3, t0, 16, 8);
+-        tcg_gen_shri_tl(t0, t0,  8);
+-        tcg_gen_shri_tl(t1, t1,  8);
+-        tcg_gen_deposit_tl(t2, t2, t0, 16, 8);
+-        tcg_gen_deposit_tl(t2, t2, t1,  0, 8);
+-        tcg_gen_shri_tl(t0, t0,  8);
+-        tcg_gen_shri_tl(t1, t1,  8);
+-        tcg_gen_deposit_tl(t3, t3, t0, 24, 8);
+-        tcg_gen_deposit_tl(t3, t3, t1,  8, 8);
+-        tcg_gen_shri_tl(t1, t1,  8);
+-        tcg_gen_deposit_tl(t2, t2, t1,  8, 8);
++        tcg_gen_andi_i32(t2, t0, 0xff000000);
++        tcg_gen_andi_i32(t3, t1, 0x000000ff);
++        tcg_gen_deposit_i32(t3, t3, t0, 16, 8);
++        tcg_gen_shri_i32(t0, t0,  8);
++        tcg_gen_shri_i32(t1, t1,  8);
++        tcg_gen_deposit_i32(t2, t2, t0, 16, 8);
++        tcg_gen_deposit_i32(t2, t2, t1,  0, 8);
++        tcg_gen_shri_i32(t0, t0,  8);
++        tcg_gen_shri_i32(t1, t1,  8);
++        tcg_gen_deposit_i32(t3, t3, t0, 24, 8);
++        tcg_gen_deposit_i32(t3, t3, t1,  8, 8);
++        tcg_gen_shri_i32(t1, t1,  8);
++        tcg_gen_deposit_i32(t2, t2, t1,  8, 8);
+         break;
+     case 2:
+-        tcg_gen_andi_tl(t2, t0, 0xff00ff00);
+-        tcg_gen_andi_tl(t3, t1, 0x00ff00ff);
+-        tcg_gen_deposit_tl(t3, t3, t0,  8, 8);
+-        tcg_gen_shri_tl(t0, t0, 16);
+-        tcg_gen_shri_tl(t1, t1,  8);
+-        tcg_gen_deposit_tl(t2, t2, t1,  0, 8);
+-        tcg_gen_deposit_tl(t3, t3, t0, 24, 8);
+-        tcg_gen_shri_tl(t1, t1, 16);
+-        tcg_gen_deposit_tl(t2, t2, t1, 16, 8);
++        tcg_gen_andi_i32(t2, t0, 0xff00ff00);
++        tcg_gen_andi_i32(t3, t1, 0x00ff00ff);
++        tcg_gen_deposit_i32(t3, t3, t0,  8, 8);
++        tcg_gen_shri_i32(t0, t0, 16);
++        tcg_gen_shri_i32(t1, t1,  8);
++        tcg_gen_deposit_i32(t2, t2, t1,  0, 8);
++        tcg_gen_deposit_i32(t3, t3, t0, 24, 8);
++        tcg_gen_shri_i32(t1, t1, 16);
++        tcg_gen_deposit_i32(t2, t2, t1, 16, 8);
+         break;
+     case 3:
+-        tcg_gen_andi_tl(t2, t0, 0xffff0000);
+-        tcg_gen_andi_tl(t3, t1, 0x0000ffff);
+-        tcg_gen_shri_tl(t1, t1, 16);
+-        tcg_gen_deposit_tl(t2, t2, t1,  0, 16);
+-        tcg_gen_deposit_tl(t3, t3, t0, 16, 16);
++        tcg_gen_andi_i32(t2, t0, 0xffff0000);
++        tcg_gen_andi_i32(t3, t1, 0x0000ffff);
++        tcg_gen_shri_i32(t1, t1, 16);
++        tcg_gen_deposit_i32(t2, t2, t1,  0, 16);
++        tcg_gen_deposit_i32(t3, t3, t0, 16, 16);
+         break;
+     }
+ 
+@@ -4077,20 +4077,20 @@ static void gen_mxu_q8sad(DisasContext *ctx)
+     gen_load_mxu_gpr(t2, XRb);
+     gen_load_mxu_gpr(t3, XRc);
+     gen_load_mxu_gpr(t5, XRd);
+-    tcg_gen_movi_tl(t4, 0);
++    tcg_gen_movi_i32(t4, 0);
+ 
+     for (int i = 0; i < 4; i++) {
+-        tcg_gen_andi_tl(t0, t2, 0xff);
+-        tcg_gen_andi_tl(t1, t3, 0xff);
+-        tcg_gen_sub_tl(t0, t0, t1);
+-        tcg_gen_abs_tl(t0, t0);
+-        tcg_gen_add_tl(t4, t4, t0);
++        tcg_gen_andi_i32(t0, t2, 0xff);
++        tcg_gen_andi_i32(t1, t3, 0xff);
++        tcg_gen_sub_i32(t0, t0, t1);
++        tcg_gen_abs_i32(t0, t0);
++        tcg_gen_add_i32(t4, t4, t0);
+         if (i < 3) {
+-            tcg_gen_shri_tl(t2, t2, 8);
+-            tcg_gen_shri_tl(t3, t3, 8);
++            tcg_gen_shri_i32(t2, t2, 8);
++            tcg_gen_shri_i32(t3, t3, 8);
+         }
+     }
+-    tcg_gen_add_tl(t5, t5, t4);
++    tcg_gen_add_i32(t5, t5, t4);
+     gen_store_mxu_gpr(t4, XRa);
+     gen_store_mxu_gpr(t5, XRd);
+ }
+@@ -4290,7 +4290,7 @@ static void gen_mxu_S32ALN(DisasContext *ctx)
+         /* destination is zero register -> do nothing */
+     } else if (unlikely((XRb == 0) && (XRc == 0))) {
+         /* both operands zero registers -> just set destination to all 0s */
+-        tcg_gen_movi_tl(mxu_gpr[XRa - 1], 0);
++        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+     } else {
+         /* the most general case */
+         TCGv t0 = tcg_temp_new();
+@@ -4303,21 +4303,21 @@ static void gen_mxu_S32ALN(DisasContext *ctx)
+ 
+         gen_load_mxu_gpr(t0, XRb);
+         gen_load_mxu_gpr(t1, XRc);
+-        gen_load_gpr_tl(t2, rs);
+-        tcg_gen_andi_tl(t2, t2, 0x07);
++        gen_load_gpr_i32(t2, rs);
++        tcg_gen_andi_i32(t2, t2, 0x07);
+ 
+         /* do nothing for undefined cases */
+-        tcg_gen_brcondi_tl(TCG_COND_GE, t2, 5, l_exit);
++        tcg_gen_brcondi_i32(TCG_COND_GE, t2, 5, l_exit);
+ 
+-        tcg_gen_brcondi_tl(TCG_COND_EQ, t2, 0, l_b_only);
+-        tcg_gen_brcondi_tl(TCG_COND_EQ, t2, 4, l_c_only);
++        tcg_gen_brcondi_i32(TCG_COND_EQ, t2, 0, l_b_only);
++        tcg_gen_brcondi_i32(TCG_COND_EQ, t2, 4, l_c_only);
+ 
+-        tcg_gen_shli_tl(t2, t2, 3);
+-        tcg_gen_subfi_tl(t3, 32, t2);
++        tcg_gen_shli_i32(t2, t2, 3);
++        tcg_gen_subfi_i32(t3, 32, t2);
+ 
+-        tcg_gen_shl_tl(t0, t0, t2);
+-        tcg_gen_shr_tl(t1, t1, t3);
+-        tcg_gen_or_tl(mxu_gpr[XRa - 1], t0, t1);
++        tcg_gen_shl_i32(t0, t0, t2);
++        tcg_gen_shr_i32(t1, t1, t3);
++        tcg_gen_or_i32(mxu_gpr[XRa - 1], t0, t1);
+         tcg_gen_br(l_exit);
+ 
+         gen_set_label(l_b_only);
+@@ -4364,32 +4364,32 @@ static void gen_mxu_s32madd_sub(DisasContext *ctx, bool sub, bool uns)
+         TCGv_i64 t2 = tcg_temp_new_i64();
+         TCGv_i64 t3 = tcg_temp_new_i64();
+ 
+-        gen_load_gpr_tl(t0, Rb);
+-        gen_load_gpr_tl(t1, Rc);
++        gen_load_gpr_i32(t0, Rb);
++        gen_load_gpr_i32(t1, Rc);
+ 
+         if (uns) {
+-            tcg_gen_extu_tl_i64(t2, t0);
+-            tcg_gen_extu_tl_i64(t3, t1);
++            tcg_gen_extu_i32_i64(t2, t0);
++            tcg_gen_extu_i32_i64(t3, t1);
+         } else {
+-            tcg_gen_ext_tl_i64(t2, t0);
+-            tcg_gen_ext_tl_i64(t3, t1);
++            tcg_gen_ext_i32_i64(t2, t0);
++            tcg_gen_ext_i32_i64(t3, t1);
+         }
+         tcg_gen_mul_i64(t2, t2, t3);
+ 
+         gen_load_mxu_gpr(t0, XRa);
+         gen_load_mxu_gpr(t1, XRd);
+ 
+-        tcg_gen_concat_tl_i64(t3, t1, t0);
++        tcg_gen_concat_i32_i64(t3, t1, t0);
+         if (sub) {
+             tcg_gen_sub_i64(t3, t3, t2);
+         } else {
+             tcg_gen_add_i64(t3, t3, t2);
+         }
+-        gen_move_low32_tl(t1, t3);
+-        gen_move_high32_tl(t0, t3);
++        gen_move_low32_i32(t1, t3);
++        gen_move_high32_i32(t0, t3);
+ 
+-        tcg_gen_mov_tl(cpu_HI[0], t0);
+-        tcg_gen_mov_tl(cpu_LO[0], t1);
++        tcg_gen_mov_i32(cpu_HI[0], t0);
++        tcg_gen_mov_i32(cpu_LO[0], t1);
+ 
+         gen_store_mxu_gpr(t1, XRd);
+         gen_store_mxu_gpr(t0, XRa);
+@@ -4940,8 +4940,8 @@ bool decode_ase_mxu(DisasContext *ctx, uint32_t insn)
+         TCGLabel *l_exit = gen_new_label();
+ 
+         gen_load_mxu_cr(t_mxu_cr);
+-        tcg_gen_andi_tl(t_mxu_cr, t_mxu_cr, MXU_CR_MXU_EN);
+-        tcg_gen_brcondi_tl(TCG_COND_NE, t_mxu_cr, MXU_CR_MXU_EN, l_exit);
++        tcg_gen_andi_i32(t_mxu_cr, t_mxu_cr, MXU_CR_MXU_EN);
++        tcg_gen_brcondi_i32(TCG_COND_NE, t_mxu_cr, MXU_CR_MXU_EN, l_exit);
+ 
+         switch (opcode) {
+         case OPC_MXU_S32MADD:
 -- 
 2.45.2
 
