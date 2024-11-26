@@ -4,53 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0A5D3B7CA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF26DD3B7C1
 	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 09:24:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFrnE-0008VP-5u; Tue, 26 Nov 2024 04:23:36 -0500
+	id 1tFrnl-00007v-NB; Tue, 26 Nov 2024 04:24:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1tFrnB-0008VD-VG
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 04:23:34 -0500
-Received: from mx.swemel.ru ([95.143.211.150])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tFrng-00007B-AG
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 04:24:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1tFrnA-00015n-0b
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 04:23:33 -0500
-Message-ID: <7ae4fdf4-43e0-46e5-a2c3-1377468397a9@swemel.ru>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
- t=1732613006;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tFrne-0001BI-G3
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 04:24:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732613041;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5miLtF7v8rk69mDHoZ2uK60wtc37yTWYy5PGKlJTdFA=;
- b=wyxnm/dQiuavz5ko6C69qJS4TkNWZZdLWfwxs79U7NcbrXxx6+1R8epXgV2c7622ZxOknQ
- 3J1VxL59hF0uG81aHhoT6hH51cYZfLmRZUxCpCXysv/oqPhgSuuP370HTLsceF0NOyQbzS
- S9Zshwejt6qRJb6VYfbVJIfLWXiQFos=
-Date: Tue, 26 Nov 2024 12:23:26 +0300
+ bh=nWDnt6huFVCn9JAKZvLEf6AXmdOdVc/03WwJVkSyVZo=;
+ b=I1/BbW8QU6nrOb7n78RXvEkHp58IkcbTDF5ag6HGq04N2XuROV7IkM4CM618sujDeHCAcW
+ gPqX4y51ZSycPNh/XF6WfkpcBVvv1ZoctG2wt1EkaQ4hTwCAJHq8fTtvR+sXQUsGPho4HH
+ VkE7pscvxSBHUs1lS1HFq5Zx3A1swnk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-kIZVlXZXNwq63JXpuu2THQ-1; Tue,
+ 26 Nov 2024 04:23:56 -0500
+X-MC-Unique: kIZVlXZXNwq63JXpuu2THQ-1
+X-Mimecast-MFC-AGG-ID: kIZVlXZXNwq63JXpuu2THQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 790731955BD2; Tue, 26 Nov 2024 09:23:54 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.147])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 853EF1956054; Tue, 26 Nov 2024 09:23:52 +0000 (UTC)
+Date: Tue, 26 Nov 2024 09:23:49 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] meson.build: Refuse XCode versions < v15.0
+Message-ID: <Z0WTkQYWaNlnGipo@redhat.com>
+References: <20241126081054.244365-1-thuth@redhat.com>
+ <6f883a0f-3fdb-4326-8262-c0482e30ea32@linaro.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH] hw/timer: fix int underflow
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- peter.maydell@linaro.org
-Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
-References: <20241106104041.624806-2-frolov@swemel.ru>
- <39d99130-0d3f-4254-86dd-20151e57ec68@linaro.org>
-From: =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0LvQvtCy?= <frolov@swemel.ru>
-In-Reply-To: <39d99130-0d3f-4254-86dd-20151e57ec68@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=95.143.211.150; envelope-from=frolov@swemel.ru;
- helo=mx.swemel.ru
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <6f883a0f-3fdb-4326-8262-c0482e30ea32@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,54 +89,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Phil.
+On Tue, Nov 26, 2024 at 09:57:15AM +0100, Philippe Mathieu-Daudé wrote:
+> On 26/11/24 09:10, Thomas Huth wrote:
+> > According to our support policy, we only support the two latest
+> > major versions of macOS, and we already removed compatibility code
+> > for older versions. However, it's still possible that people install
+> > an older version of XCode on a recent version of macOS - which won't
+> > be able to compile QEMU anymore, see for example the ticket here:
+> > 
+> >   https://gitlab.com/qemu-project/qemu/-/issues/2694
+> 
+> Wondering about this issue, it is possible to install concurrent
+> XCode versions, which is useful i.e. when you build an application
+> targeting multiple (and older) App Store releases. See:
+> https://xcodereleases.com/
 
-On 26.11.2024 11:39, Philippe Mathieu-Daudé wrote:
-> Hi Dmitry,
->
-> On 6/11/24 11:40, Dmitry Frolov wrote:
->> Both timeout and return value of imx_gpt_update_count() are unsigned.
->> Thus "limit" can not be negative, but obviously it was implied.
->>
->> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->>
->> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
->> ---
->>   hw/timer/imx_gpt.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/timer/imx_gpt.c b/hw/timer/imx_gpt.c
->> index 23b3d79bdb..06e4837fed 100644
->> --- a/hw/timer/imx_gpt.c
->> +++ b/hw/timer/imx_gpt.c
->> @@ -238,7 +238,7 @@ static void 
->> imx_gpt_compute_next_timeout(IMXGPTState *s, bool event)
->>       }
->>         /* the new range to count down from */
->> -    limit = timeout - imx_gpt_update_count(s);
->> +    limit = (long long)timeout - imx_gpt_update_count(s);
->
-> You posted similar automatic change in at least 3 different
-> code areas.
-The patches, I've sent, are not "automatic".
-The problems were found by static analyzer in different code
-areas, maintained by different people. These problems were
-reviewed and fixed by me manually.
-> Each time different maintainers made similar
-> comments. At this point you should be able to auto-review
-> this patch and respin a proper follow up IMHO. Reviewers and
-> maintainers time is scarce.
-Sorry, if do something wrong.
-What is the proper workflow in this case from your point of view?
+That's true of any platform. You can get many GCC versions for Debian
+and Fedora too.
 
-> Regards,
->
-> Phil.
+> Maybe we need to clarify our support policy that we only support
+> the XCode released with the 2 latest major macOS versions?
 
-Regards,
-Dmitry.
->
+We implicitly support the XCode versions that are the "default" with
+the latest 2 macOS versions.
+
+> > @@ -315,8 +315,8 @@ foreach lang : all_languages
+> >       # ok
+> >     elif compiler.get_id() == 'clang' and compiler.compiles('''
+> >         #ifdef __apple_build_version__
+> > -      # if __clang_major__ < 12 || (__clang_major__ == 12 && __clang_minor__ < 0)
+> > -      #  error You need at least XCode Clang v12.0 to compile QEMU
+> > +      # if __clang_major__ < 15 || (__clang_major__ == 15 && __clang_minor__ < 0)
+> > +      #  error You need at least XCode Clang v15.0 to compile QEMU
+> >         # endif
+> >         #else
+> >         # if __clang_major__ < 10 || (__clang_major__ == 10 && __clang_minor__ < 0)
+> > @@ -325,7 +325,7 @@ foreach lang : all_languages
+> >         #endif''')
+> >       # ok
+> >     else
+> > -    error('You either need GCC v7.4 or Clang v10.0 (or XCode Clang v12.0) to compile QEMU')
+> > +    error('You either need GCC v7.4 or Clang v10.0 (or XCode Clang v15.0) to compile QEMU')
+> 
+> BTW apparently CentOS 8 (which we don't support anymore IIRC)
+> provides Clang 12.0.1, and also Ubuntu 22.04, Alpine 3.16.
+> 
+> I wonder if the relation with XCode __apple_build_version__ is
+> always __clang_major__ + 3...
+
+No, it isn't. It varies all over the place -
+
+eg
+
+From xcode 11.3 to 11.4 they bump from llvm 8.0.0 to 9.0.0, while the
+clang version goes from 11.0.0 to 11.0.3.
+
+From xcode 15.4 to 16.0 they from llmvm 16.0.0 to 17.0.6, while the
+clang version goes from 15.0.0 to 16.0.0.
+
+I can just about interpret a rule they're following, but relating that
+to the upstream clang versions algorithmically is impossible.
+
+  https://en.wikipedia.org/wiki/Xcode#Toolchain_versions
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
