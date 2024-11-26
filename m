@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A900FD3B98B
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 13:52:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B300D3B98B
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 13:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFvzP-0007f7-RX; Tue, 26 Nov 2024 08:52:27 -0500
+	id 1tFvzY-0007zf-7k; Tue, 26 Nov 2024 08:52:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tFvzO-0007er-7T
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:52:26 -0500
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ (Exim 4.90_1) (envelope-from <weichenforschung@gmail.com>)
+ id 1tFqXY-0004hO-6D
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:03:20 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tFvzM-0003Up-SH
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:52:25 -0500
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-5f1e560d973so984531eaf.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 05:52:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <weichenforschung@gmail.com>)
+ id 1tFqXV-0003UL-1j
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:03:18 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21145812538so42457745ad.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 00:03:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732629144; x=1733233944; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Lwb0v4A0HzD+x7rCMsVy49rE6G46vtMrbFrBP2Svi2o=;
- b=xWliuMAf025eW8GXPgonVvUbsXJCnzFmV1ygKaSVHDiOslNISE/4456hf5Dtfr1BGt
- dJTs+RiNuJvyxQIxoPllSgEpcseQPOo6GhT4z0MP+LuhQylcMXJXQc5S6O0WazCsUSNL
- BgECym8TCupqNO2ZEZ4dFJUTrGk6sbnND7Qt2fRbIc3V17vU4tYPc2JOIu8vsCxaE1ig
- eumVSfXXy8ySQkcfmDlYzwncxQtYueo4+wwK8rX3xHdTgS8F3+h/j3CFj+1tY+pM39vv
- GKNQdJqG1/hsA3webN9EVnHW54R77yogRJdsjskhAaDJfqNhZ8PcEY/uNAtA/F7dR32v
- 3wjw==
+ d=gmail.com; s=20230601; t=1732608194; x=1733212994; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=c3rZxnvTwyQvkWJKdeGmyoAhgKD9L896K2Toi49f/K4=;
+ b=SgdbtKGEFgrxMqGoy1OkhpmPcYEK+2edxRRudmT0IJ0ZLfYMY5DvIb7prvh+NmVsKn
+ XjTuar6xIFJtGE3nn3iOr/2UPLpreI6tsENQB2u9fMX7sFNGCqzUo8FHHF5iOAle1CjV
+ yADqwqHKnt5oLEa51GqxreIbkB8hXuugSdlKyegCRdvjVyVgMmX8d/Bd5a8NFyBrswct
+ 67olwV6CXI0GYin+XTcAafircegq2CRGBAGZfdCsXGLPtdtDl+5mROBzphSqEM4S0WLX
+ vCTr+i1ZaYWeb5DqopQ299fllw369ijUyrGTTqX7JXOkSmmUnTz8ZZDcXEOO69BBIaOh
+ XfMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732629144; x=1733233944;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Lwb0v4A0HzD+x7rCMsVy49rE6G46vtMrbFrBP2Svi2o=;
- b=cfl4VLM1reH0VargY/+jBw/V3Ce5NVkjeWTo4jAafYaUgvd+FscNaqUZdWoYSGZvaK
- ykrNl0QwSDnAKNgainT2y1UzWJMUVVZ4sLVu4hvPOi04odzOnXybZsGxRiXw4OCu19xy
- 311pFaX4V7QakSOM19EigCwlNz2cxuKGb+IZDfKOhrpJ8CmHgsuXHWBtEIi8dYzK1yPj
- nyTZv1XHlb8nNU45Q2w9pBStXWdkzGbk0MpwHw60t4vy9jyv8Cl5+BMDrSmnOtb6M1Oi
- t6CtuLS0eWuweFdLSHYa7Aa8iDP5DGTDGmUJJeFr/jYVP9mp/9k3K5TS/3WZ7ryFnyte
- 2/3w==
-X-Gm-Message-State: AOJu0Yx+0Hx0J/haMKcvMnTSqMK+RUtUG2HJjpOrsU8mAjmwc8u45snG
- z8CDHhysyBFvtotAp0502mCa1ExZx3IxN+IH4R8k6lXtjlcxbeW0Avr8n0Cfi9Yx4mTbq4rio92
- 8
-X-Gm-Gg: ASbGncsla9l7EV4KBbs6KI9pVWqhpjbLerOchM2WWYvqbUFe8IByw/ZWa8Ep8WcYZ68
- R2UIrjVCi6QIXu9a7HJ84mc3dWJsORxNy3kezDnyJF88m5X54dsDRpfG8UCNSWXix7q752mggHU
- MZyy2m7xfFoeZb3wtarZ4imdv8affKxFck/+1LQDOmtuiRbQmC8qVT4VFsvV9EpZZzjQJNjcAKg
- iryXDe+8iSzLO/Eec+75mOUPVHaxk1OL40a/tT4hKiFoMhruray9dcTEVfGA6PDhA==
-X-Google-Smtp-Source: AGHT+IHlGH4yqFvrqZp55piQW5NNTRcLxdY37FIoMfR0518akRZ+orofLIH6V2HBRjcpkLJsXkdcNQ==
-X-Received: by 2002:a05:6820:503:b0:5f1:dc89:fa85 with SMTP id
- 006d021491bc7-5f1fc75a6d8mr1783266eaf.3.1732629143806; 
- Tue, 26 Nov 2024 05:52:23 -0800 (PST)
-Received: from [10.25.0.199] ([187.210.107.185])
+ d=1e100.net; s=20230601; t=1732608194; x=1733212994;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=c3rZxnvTwyQvkWJKdeGmyoAhgKD9L896K2Toi49f/K4=;
+ b=xThE53aVDjEmWOqXHD0k3pu6HUO6gMb3cj/xQS2kbl/6nXinqZ3l3i6VbarBLCozpd
+ eXzZ0qgiuETHFQg4oVaWOX18WxOaVnvd59ubplG0EJIugosVXoO41n0ZrzQlWZ1zfhMH
+ HSUY1fLxNfOrv3y5+T1CPcynIi7FHRyGp4rlVHpRAnrhQsaeAsLK4hd1xPgJnMkmMlt9
+ 5f096oBRFxU95okVtTS1RDA3EdY8vypb7z1mFGMO0oLNw0rLZ2/8XuYrcl52UGjb2AvA
+ KZW7vBn4jYbCW5pnaC35a29qXnQCdYx599xIOiaEEAkPiGtseXpmi8o1qr84f7IE4nyt
+ v7oQ==
+X-Gm-Message-State: AOJu0Yyct+gCh2MhaWRLg64Y8NMR9C20v+WeepsntIXSIPZt1BDDXrk+
+ GHawE2ZxfuvYV9ZScoe79/dgKKLYkXoFZbtN1hfjye505KoO47jKvnhuUjbejTCHsg==
+X-Gm-Gg: ASbGncs3Au7lJWSKFkmQiwaXN+crhAtixDKZs6eY//PrWuxE9DjpyjlrtT+7YgF0PlA
+ b0E751xhX1wMXauB+Xvyw816H/WETZlSAW8F5/kY1jd6QqDOBWVB8ebKk4+CkLDYW2sE8eurYUF
+ gCM4Z3ugD5rpgawIaqK4bo+b4mTlBLLfalkQQdUaeCQty0o5McZ/u7XvV0V+YIQ1uTD35ghjkFS
+ iiMCfu5vn3uLJJOoQEr9K99anr1EpnLEoDDankx8F/WJt45jBb2fJcK7ZicK+bZzw8IPEci
+X-Google-Smtp-Source: AGHT+IE4o41DHKYVYw/Cxcw/im1rEx92qvpa+aYDzZs1yFIlsVxCLR9CySVwq1+DA21U8ZIpcdiXiA==
+X-Received: by 2002:a17:902:d4c6:b0:211:6b37:8b4d with SMTP id
+ d9443c01a7336-2129fd5c7b4mr203328705ad.45.1732608194494; 
+ Tue, 26 Nov 2024 00:03:14 -0800 (PST)
+Received: from localhost.localdomain ([212.107.29.200])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f06984b14bsm2755726eaf.31.2024.11.26.05.52.22
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 05:52:23 -0800 (PST)
-Message-ID: <0b15a9ea-001f-4b3d-a0c0-b942b9a5356b@linaro.org>
-Date: Tue, 26 Nov 2024 07:52:21 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/13] target/mips: Rename gen_base_offset_addr() ->
- gen_base_offset_addr_tl()
+ d9443c01a7336-2129db8db4asm78718375ad.10.2024.11.26.00.03.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Nov 2024 00:03:14 -0800 (PST)
+From: Wei Chen <weichenforschung@gmail.com>
 To: qemu-devel@nongnu.org
-References: <20241126131546.66145-1-philmd@linaro.org>
- <20241126131546.66145-6-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241126131546.66145-6-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: mst@redhat.com, david@redhat.com, yuval.yarom@rub.de, genkin@gatech.edu,
+ Wei Chen <weichenforschung@gmail.com>, Zhi Zhang <zzhangphd@gmail.com>
+Subject: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
+ requested_size
+Date: Tue, 26 Nov 2024 16:02:13 +0800
+Message-ID: <20241126080213.248-1-weichenforschung@gmail.com>
+X-Mailer: git-send-email 2.47.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=weichenforschung@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 26 Nov 2024 08:52:34 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,20 +97,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/24 07:15, Philippe Mathieu-Daudé wrote:
-> MIPS gen_base_offset_addr() takes a target-specific TCGv argument.
-> Rename it as gen_base_offset_addr_tl() to clarify, like other TCG
-> core helpers.
-> 
-> Mechanical change doing:
-> 
->    $ sed -i -e 's/gen_base_offset_addr/gen_base_offset_addr_tl/' \
->       $(git grep -l gen_base_offset_addr)
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
+A malicious guest can exploit virtio-mem to release memory back to the
+hypervisor and attempt Rowhammer attacks. The only case reasonable for
+unplugging is when the size > requested_size.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Wei Chen <weichenforschung@gmail.com>
+Signed-off-by: Zhi Zhang <zzhangphd@gmail.com>
+---
+ hw/virtio/virtio-mem.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-r~
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index 80ada89551..4ef67082a2 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -671,6 +671,10 @@ static int virtio_mem_state_change_request(VirtIOMEM *vmem, uint64_t gpa,
+         return VIRTIO_MEM_RESP_NACK;
+     }
+ 
++    if (!plug && vmem->size <= vmem->requested_size) {
++        return VIRTIO_MEM_RESP_NACK;
++    }
++
+     /* test if really all blocks are in the opposite state */
+     if ((plug && !virtio_mem_is_range_unplugged(vmem, gpa, size)) ||
+         (!plug && !virtio_mem_is_range_plugged(vmem, gpa, size))) {
+-- 
+2.47.1
+
 
