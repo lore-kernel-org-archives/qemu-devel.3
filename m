@@ -4,81 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 647C3D3B994
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11495D3B996
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFwUL-0003Hz-1b; Tue, 26 Nov 2024 09:24:25 -0500
+	id 1tFwe2-0006vV-Qo; Tue, 26 Nov 2024 09:34:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tFwUJ-0003Hb-W1
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:24:24 -0500
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFwe0-0006vB-OR
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:34:24 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tFwUI-0001S2-C9
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:24:23 -0500
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-2965e65ce89so3415835fac.3
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:24:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732631060; x=1733235860; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FH5t9T7YzViKHsUNN+maku0jWh0/jn+/lE9Ae9nQW6s=;
- b=McitxfDqs7M0X7zE9GMFER/HU03o1B89GqZgEOFqeYbrjonAUTHaMIcQQjzzQvHCmN
- i7LqBLGnHLDg/AmuYcogPUvdTkCvmWSrIQ8uSJrtOK6vzdH2H/G4+3dPV8PmOLp/YK0g
- VGxQ1Mmqn4xW4K1bHq2Z6M24z+sWgovukZ+ZSHNu5B23PtwFnZDQ8s7dwqHaBflfqTzM
- ca1fp2C15DlIx0oy6DLeTfQyuliCkGof/fkWVQhkjp1mvvcslmklv/QeLYs7CmeNf9qq
- R1xArDCAYZniRIiFAN+Z2Aobj1VydNdELCRSQ3ExnLWVIZov974LwHKBpwzmFywhL5JZ
- EiXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732631060; x=1733235860;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FH5t9T7YzViKHsUNN+maku0jWh0/jn+/lE9Ae9nQW6s=;
- b=JeFFtKv4aLGgwdi2HvBiLNoL0lFkWXSTxq/eAx5A4IW44QpWO8gHTTdySIzELLO/c7
- M/tKjCN/itILeFdoRRUiNGNZnkcwntRpBO/Q4JztvR91bttwbzd4H3GdvkyWiXSYFVOn
- en5r3JE4iRYY78nBWNfXYZA4CQFCIRs9SMjm66vnmv92+6lxgxDImVIfmcADHcxhe+Op
- mDVFeiWgvoRsNhQDAN6oHCYMeoQQUkMZ/Gj4Ik883hvmaA/EnlXxXmsPzQ81sYJdakf8
- i+Z3TtZ68iVrLsxbGElKX3TQNiWTFgJ+lBLquKXvylSvR29jmdFd/764RK3C5ZAgki5v
- jjSA==
-X-Gm-Message-State: AOJu0YzeoeV84r9NxrHVdux8yc3DJdrCi/JhQax4WJZ11+aANpWiWt6W
- 7frvx9UmAZSFA4pzfAahjV0ILAAM1TukN9Ghuj8UR93EGl045Uld92llT28U41zfc6UXGRwt4sM
- j
-X-Gm-Gg: ASbGncuyYEvOIb05PaPRZlm2EReHalXHrsR7CVi/C0OC30b+LclgAGOq0n1o6b6NI0a
- hIT03sIq6JQvwwmHhExqXgrikPs3uQdCvt1Yf1H4gmseFZG6NTUgypoj2K6jcT2sDfneoxevID4
- HFoGZqesnQOSYlFDUf3D0Zzgkamrl/2Od03+UURytz2ZkFn73y5pSxQuNgoV05U2VjyxqqcIaYX
- LLqWjAAE8T6DU8su5IBAiQnUbOGGwZ8I+eXT+TMu/KKLnV9FX3VW7aYBcjbmwtN1A==
-X-Google-Smtp-Source: AGHT+IHKs7LruoyV1VGL0/xoZlxRzqR8XL+r657OpDHsMMmzD/lcUBAc+yLFZBSd6Y9H+o/Ea7Ro5Q==
-X-Received: by 2002:a05:6870:ac10:b0:288:4823:fe1b with SMTP id
- 586e51a60fabf-29720b9abdcmr10493806fac.17.1732631060590; 
- Tue, 26 Nov 2024 06:24:20 -0800 (PST)
-Received: from [10.25.0.199] ([187.210.107.185])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2972715a4dcsm3738171fac.34.2024.11.26.06.24.19
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 06:24:19 -0800 (PST)
-Message-ID: <eed165a5-c436-4277-b833-a59e7bfab67d@linaro.org>
-Date: Tue, 26 Nov 2024 08:24:17 -0600
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFwdx-0003jI-UV
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:34:24 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id AA2251F74C;
+ Tue, 26 Nov 2024 14:34:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732631658; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZpnvrG4vSI1hnwVuuBUlge5KGGdBpaIO9DB+15POB2c=;
+ b=gyN00eubQG4Kn6ZqFOv4pSYjoOzgXGSoD8xEOukbv5pg7/GsH+9Per5DY+A3EHhFNvoMzB
+ FDiPhw8n2i6Or/DyFn26GOeA9P52bySDIeodQQ2ZC+AE28zaHrhL3PfYjSCNaxNbySZ/Rr
+ 00fe38RwN2PydZ8Y1hIqjXBGZYw7oQ8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732631658;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZpnvrG4vSI1hnwVuuBUlge5KGGdBpaIO9DB+15POB2c=;
+ b=nRjqqj+c/etbsgyK50vOMsq3q9OP/zkzPjgge2Pqg5dJ8ReY92B5O8sm+YfG58yhmtiXUF
+ HK6rT5K+aPDzhfBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732631658; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZpnvrG4vSI1hnwVuuBUlge5KGGdBpaIO9DB+15POB2c=;
+ b=gyN00eubQG4Kn6ZqFOv4pSYjoOzgXGSoD8xEOukbv5pg7/GsH+9Per5DY+A3EHhFNvoMzB
+ FDiPhw8n2i6Or/DyFn26GOeA9P52bySDIeodQQ2ZC+AE28zaHrhL3PfYjSCNaxNbySZ/Rr
+ 00fe38RwN2PydZ8Y1hIqjXBGZYw7oQ8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732631658;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZpnvrG4vSI1hnwVuuBUlge5KGGdBpaIO9DB+15POB2c=;
+ b=nRjqqj+c/etbsgyK50vOMsq3q9OP/zkzPjgge2Pqg5dJ8ReY92B5O8sm+YfG58yhmtiXUF
+ HK6rT5K+aPDzhfBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2F26B139AA;
+ Tue, 26 Nov 2024 14:34:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id nZ8VOWncRWcoegAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 26 Nov 2024 14:34:17 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Peter Xu
+ <peterx@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
+ Goater <clg@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Avihai
+ Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 09/24] migration/multifd: Split packet into header
+ and RAM data
+In-Reply-To: <8cb65952e475c0236d66047270fd3ed907f7404e.1731773021.git.maciej.szmigiero@oracle.com>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <8cb65952e475c0236d66047270fd3ed907f7404e.1731773021.git.maciej.szmigiero@oracle.com>
+Date: Tue, 26 Nov 2024 11:34:15 -0300
+Message-ID: <87y116m5co.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/13] target/mips: Make DSPControl register 32-bit wide
-To: qemu-devel@nongnu.org
-References: <20241126131546.66145-1-philmd@linaro.org>
- <20241126131546.66145-14-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241126131546.66145-14-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.15 / 50.00]; BAYES_HAM(-2.85)[99.37%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
+ suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,83 +122,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/24 07:15, Philippe Mathieu-Daudé wrote:
-> Per 'MIPS® DSP Module for MIPS64™ Architecture, Revision 3.02',
->   * 3.10 Additional Register State for the DSP Module
->   ~Figure 3.5 MIPS® DSP Module Control Register (DSPControl) Format~
-> 
-> the DSPControl register is 32-bit wide.
-> 
-> Convert it from 'target_ulong' to 'uint32_t'.
-> 
-> Update TCG calls to truncate/extend from i32 to target_ulong.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/cpu.h                        |  2 +-
->   target/mips/tcg/sysemu_helper.h.inc      |  4 +--
->   target/mips/sysemu/machine.c             |  5 ++-
->   target/mips/tcg/dsp_helper.c             | 10 +++---
->   target/mips/tcg/sysemu/cp0_helper.c      |  4 +--
->   target/mips/tcg/translate.c              | 40 +++++++++++++++++-------
->   target/mips/tcg/nanomips_translate.c.inc | 16 +++++++---
->   7 files changed, 54 insertions(+), 27 deletions(-)
-> 
-> diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-> index f80b05885b1..bc636510132 100644
-> --- a/target/mips/cpu.h
-> +++ b/target/mips/cpu.h
-> @@ -472,7 +472,7 @@ struct TCState {
->       target_ulong HI[MIPS_DSP_ACC];
->       target_ulong LO[MIPS_DSP_ACC];
->       target_ulong ACX[MIPS_DSP_ACC];
-> -    target_ulong DSPControl;
-> +    uint32_t DSPControl;
->       int32_t CP0_TCStatus;
->   #define CP0TCSt_TCU3    31
->   #define CP0TCSt_TCU2    30
-> diff --git a/target/mips/tcg/sysemu_helper.h.inc b/target/mips/tcg/sysemu_helper.h.inc
-> index 1861d538de1..36ce21f863b 100644
-> --- a/target/mips/tcg/sysemu_helper.h.inc
-> +++ b/target/mips/tcg/sysemu_helper.h.inc
-> @@ -144,12 +144,12 @@ DEF_HELPER_2(mftgpr, tl, env, i32)
->   DEF_HELPER_2(mftlo, tl, env, i32)
->   DEF_HELPER_2(mfthi, tl, env, i32)
->   DEF_HELPER_2(mftacx, tl, env, i32)
-> -DEF_HELPER_1(mftdsp, tl, env)
-> +DEF_HELPER_1(mftdsp, i32, env)
->   DEF_HELPER_3(mttgpr, void, env, tl, i32)
->   DEF_HELPER_3(mttlo, void, env, tl, i32)
->   DEF_HELPER_3(mtthi, void, env, tl, i32)
->   DEF_HELPER_3(mttacx, void, env, tl, i32)
-> -DEF_HELPER_2(mttdsp, void, env, tl)
-> +DEF_HELPER_2(mttdsp, void, env, i32)
->   DEF_HELPER_0(dmt, tl)
->   DEF_HELPER_0(emt, tl)
->   DEF_HELPER_1(dvpe, tl, env)
-> diff --git a/target/mips/sysemu/machine.c b/target/mips/sysemu/machine.c
-> index 823a49e2ca1..c1fb72864f6 100644
-> --- a/target/mips/sysemu/machine.c
-> +++ b/target/mips/sysemu/machine.c
-> @@ -88,7 +88,10 @@ static const VMStateField vmstate_tc_fields[] = {
->       VMSTATE_UINTTL_ARRAY(HI, TCState, MIPS_DSP_ACC),
->       VMSTATE_UINTTL_ARRAY(LO, TCState, MIPS_DSP_ACC),
->       VMSTATE_UINTTL_ARRAY(ACX, TCState, MIPS_DSP_ACC),
-> -    VMSTATE_UINTTL(DSPControl, TCState),
-> +    VMSTATE_UINT32(DSPControl, TCState),
-> +#if defined(TARGET_MIPS64)
-> +    VMSTATE_UNUSED(4),
-> +#endif /* TARGET_MIPS64 */
->       VMSTATE_INT32(CP0_TCStatus, TCState),
->       VMSTATE_INT32(CP0_TCBind, TCState),
->       VMSTATE_UINTTL(CP0_TCHalt, TCState),
+"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
 
-This would go into the new subsection, and you wouldn't need padding, since we're already 
-incrementing version numbers for migration.
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>
+> Read packet header first so in the future we will be able to
+> differentiate between a RAM multifd packet and a device state multifd
+> packet.
+>
+> Since these two are of different size we can't read the packet body until
+> we know which packet type it is.
+>
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
