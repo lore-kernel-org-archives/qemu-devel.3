@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A93FD3B9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 15:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F8AD3B9B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 15:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFxrG-0005iU-Lo; Tue, 26 Nov 2024 10:52:10 -0500
+	id 1tFxt0-0006L9-2J; Tue, 26 Nov 2024 10:53:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFxrD-0005iH-94
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 10:52:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFxsy-0006Kk-6F
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 10:53:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFxrA-0004Zv-PL
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 10:52:06 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tFxsw-0004u1-Li
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 10:53:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732636323;
+ s=mimecast20190719; t=1732636433;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3TSy9SAAhn/qbEK9idN7sqIwc7DNNwBC1JL+kwsdmrI=;
- b=Ywsr+Dv1V7CFdykusZd0lpnF0GTdolDsLPcGgHXdb2VhbzcJIwV1ieAM6JqxJ/SKSU145K
- lKh0BYx3XehpFsCAiPm/xnbFxiJG7zJOBPDp75zZYlbZDjdmxmHqmCTQs3YOCQ5j86PoH8
- 4Nez1ejDgAiAcjJzcRnBPmBK4nMvgXM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KE9ej8SXahlscLndMydhMSLCQD7wA69jhqva7D7oJ60=;
+ b=Yubfpur7/FCDPtCGJzLzKvYDMp452tnIx8XApOueFRg2gerBV+ccpqW1LTywc43tYSM7yi
+ tTugrv3EYNK/Ul8M7KSj3RXn7Ojk6ZwA/f2AuuyEhs6HGogQtUExkxzzrbPcTgS7/mUbgw
+ Wdm3rNZnqxn/GXV6Docfe9zkSlASHqw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-306-RBUH1kcCOMOWCud6lmobWw-1; Tue, 26 Nov 2024 10:52:00 -0500
-X-MC-Unique: RBUH1kcCOMOWCud6lmobWw-1
-X-Mimecast-MFC-AGG-ID: RBUH1kcCOMOWCud6lmobWw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43499c1342aso21705345e9.1
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 07:51:59 -0800 (PST)
+ us-mta-479-_-pgYZXGNh-fxKshYo0j7g-1; Tue, 26 Nov 2024 10:53:51 -0500
+X-MC-Unique: _-pgYZXGNh-fxKshYo0j7g-1
+X-Mimecast-MFC-AGG-ID: _-pgYZXGNh-fxKshYo0j7g
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38233ea8c1bso3596934f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 07:53:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732636319; x=1733241119;
+ d=1e100.net; s=20230601; t=1732636430; x=1733241230;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=3TSy9SAAhn/qbEK9idN7sqIwc7DNNwBC1JL+kwsdmrI=;
- b=ClQHcm9qa7oC97/wq1JfhcgxvteqgWKViUictdhUSDugInllyxqwmmXYD3ovg+azUz
- HQ7yzKsoAp/HKLRXMfWroKxrk20PLBVuqu4FL2SOQ+kqVXC+lQHv+JXpu6/FYxm4pBDK
- FlvWxr1hF3kzUHNCH/s+xcC11afdiJGAWMXdH/Xzg4jGYcr+WBY4uTiLbF86wfbfga4m
- Nb6/FmvLHnqQCeb/6eV5I6chqOxdW7jioSSLes9SF/uIdr83dbmlZw6etvr7wkkiUM91
- IAB1dEBY65bLNKAyCFauUuF5P+lRntti7v8tbv1ia7X7hY7QUCJSLgI0ttjd5Q+hd3TC
- j1VA==
+ bh=KE9ej8SXahlscLndMydhMSLCQD7wA69jhqva7D7oJ60=;
+ b=hjShl8/JQ+U6bQ/36WhgKCp7QxhQznRjex4GH7BYPlgn7Zri8vTHf66QuVw3lIOmd1
+ yJuZ3w9pW6l8gwJciuFY+Uc8ob+bXw+Mz2wWo7OGBNIwbh1iaO6u2gfVYIxPANjoe+5k
+ 30hnXJz0G76EFJ5Jem6vsAJoLkXrR63IXVuD/Wty9x2QVOwruBki9ZvmSQGUJMjzVUAN
+ hN64UgNdfOTvk8u0D71ZiTWybN7A43ORsK6b2Oz4MwgHUN2VhrolM1CTT33WxEFjUoyu
+ cAPmSR+E2CdLMDeODqTSf4rP91ESWZ5eFXpxdfsI+JjXVNvQ6uEZ36y1X9SGeVCOp7tL
+ 9auQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0RhJFrJJ8PbK8wcDG5W4r9sRRb+nw5rT8Ym+SiDxWDVyd2SC8H0xI8m8JklQrsQWz222fsMm2P4c2@nongnu.org
-X-Gm-Message-State: AOJu0Ywe4QDk0SocWwe2P74EuN1ETbM7GEs5yn+3VSBTMmNO85urNyDL
- G0AL0gQYt3FB9R5nIuOZ9FtQ+4hrh1iiZ9JbePXd6meHdGdtcMFde8PIDcuTRyTVIItEOiyxb7c
- hMiCWf7Hl9gdda5eRjO2qmcxTqGgjIl851zyq1IfWIN/0CfYtmiG6
-X-Gm-Gg: ASbGncu2l+POG9yzxhh8bnxEIXYlvxWQQYD/QS84dpI28aWMRdZfel5LxH57CKaT9Gg
- dTE6Q7GOOVGR3HugInHBChn1QseTrnisxml8Og6w3aJXWTPaMHutfRRnc14cMxpjRYS1CeLnFa/
- hEcQUzeYX9ncWuyMqN+lCnkHi+tywEJ3mdPOQTr9KHp8h7sggqnPmBl50IBS9xAnqsg2+XW73t9
- aq0fPD6dQlIkZhdjqfbuzGUiJEX7lzUWzu8/eMYpD+Vrwld0pvugiIp8dpaqrLeG30dYIgkJ62O
- zOY=
-X-Received: by 2002:a5d:6d03:0:b0:382:4d54:2cde with SMTP id
- ffacd0b85a97d-38260bcb33emr14601637f8f.37.1732636318906; 
- Tue, 26 Nov 2024 07:51:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH/ongt6JLjNkDTGPCyoNkiSZmqLr3Y0SRfi0ahtu4NXjn37zuSsL/0inAA1RhUiRzYYRhytg==
-X-Received: by 2002:a5d:6d03:0:b0:382:4d54:2cde with SMTP id
- ffacd0b85a97d-38260bcb33emr14601623f8f.37.1732636318581; 
- Tue, 26 Nov 2024 07:51:58 -0800 (PST)
+ AJvYcCWGdqUK3YFVvIdkPzfOg1SmoUCy7IuY1FQXg+7zXESX0cifX02GLjkR3s2QUS2ftlwDeino4TOAwV4P@nongnu.org
+X-Gm-Message-State: AOJu0YxgCDwnpz2VsQl4SdZWYLsBYwPI8BmmJJOLz/S+iq2aaRDKGfvj
+ iP3YY8LpsT34v/6Lsm5pf+9IvLmTbDQXAX/bhzRkrxI3KKEUhY6pLap9zcC2tbSK8Hd5JjR0cds
+ 2DD4owU/zBkDjvuvzM+uukhbBWgd6xofH3fOQR8r3PUU1hE4cub+G
+X-Gm-Gg: ASbGncveV+wSKmxvXwIZ1mvfL9E65x3LcwJMoK1wUwIzEKGyVbStRWdBZI1EOtaskv9
+ vSe5JqYB90xQh2FV/khDX02hjHRm5msOUpARmZIgCkDyCopZ+leI3ICexk7lA5UYM5gasntpMIr
+ UHKhFD07kM0DQGkpIrCk82kbtrD07DGcpzgnZJmYPO/oz5+V2OpmQ9ozF51R4GZXwOTu3r6+nA6
+ bLHiW/Rg9FY3UVc/RDbmnc4MVEddWMqXP0hk5Vfmcu0mM6RLUjIlrLMuzz24/u04Oekz1VOFQZq
+ /c0=
+X-Received: by 2002:a05:6000:1ac8:b0:382:395d:bf93 with SMTP id
+ ffacd0b85a97d-385bf9ef35emr3349478f8f.6.1732636430600; 
+ Tue, 26 Nov 2024 07:53:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFWlzhR3fwLsVwviUNeoZlzjXU0gw44jQDEAO1T/29Upv8HWssq2Q0cpp6ijNJofF4O0IVH7Q==
+X-Received: by 2002:a05:6000:1ac8:b0:382:395d:bf93 with SMTP id
+ ffacd0b85a97d-385bf9ef35emr3349464f8f.6.1732636430257; 
+ Tue, 26 Nov 2024 07:53:50 -0800 (PST)
 Received: from [192.168.3.141] (p4ff23d2a.dip0.t-ipconnect.de. [79.242.61.42])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fad6441sm13993003f8f.4.2024.11.26.07.51.56
+ ffacd0b85a97d-3825fd04ef5sm13575850f8f.111.2024.11.26.07.53.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 07:51:57 -0800 (PST)
-Message-ID: <9eafe8fa-de09-40e3-9687-573255ce37de@redhat.com>
-Date: Tue, 26 Nov 2024 16:51:55 +0100
+ Tue, 26 Nov 2024 07:53:49 -0800 (PST)
+Message-ID: <ed809337-4055-4ad4-b0f4-8d71f957467b@redhat.com>
+Date: Tue, 26 Nov 2024 16:53:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
@@ -85,7 +85,9 @@ References: <20241126080213.248-1-weichenforschung@gmail.com>
  <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
  <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
  <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
- <93616a1e-3614-49ca-9515-697f1c9205b6@gmail.com>
+ <79c4ed2c-2ac8-43b5-ad90-2b91f6e7fd8f@redhat.com>
+ <d75f20d9-dd4a-4439-a261-612766b7cfba@redhat.com>
+ <0a3b9e0b-6725-44f8-8599-ae868a3fc864@gmail.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -133,17 +135,17 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <93616a1e-3614-49ca-9515-697f1c9205b6@gmail.com>
+In-Reply-To: <0a3b9e0b-6725-44f8-8599-ae868a3fc864@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.931,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -161,70 +163,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.11.24 16:31, Wei Chen wrote:
->   > How can you be sure (IOW trigger) that the system will store
->   > "important data" like EPTs?
-> 
-> We cannot, but we have designed the attack (see below) to improve the
-> possibility.
-> 
->   > So is one magic bit really that for your experiments, one needs a
->   > viommu?
-> 
-> Admittedly the way we accomplish a VM escape is a bit arcane.
+On 26.11.24 16:41, Wei Chen wrote:
+> Thanks for the information! I will try to come up with V2 that does not
+> impact virtio-mem's functionality.
 
-That's what I imagined :)
+Thanks. In case we want to go this path in this patch, we'd have to glue 
+the new behavior to a new feature flag, and implement support for that 
+in Linux (+Windows) drivers.
 
-> 
-> We require device passthrough because it pins the VM's memory down and
-> converts them to MIGRATE_UNMOVABLE. 
-
-Interesting, that's news to me. Can you share where GUP in the kernel 
-would do that?
-
-> Hotplugged memory will also be
-> converted to MIGRATE_UNMOVABLE. 
-
-But that's in the VM? Because we don't hotplug memory in the hypervisor.
-
-That way when we give memory back to the
-> hypervisor, they stay UNMOVABLE. Otherwise we will have to convert the
-> pages to UNMOVABLE or exhaust ALL MIGRATE_MOVALE pages, both of which
-> cannot be easily accomplished.
-> 
-> Then we require vIOMMU because vIOMMU mappings, much like EPTEs, use
-> MIGRATE_UNMOVABLE pages as well. By spawning lots of meaningless vIOMMU
-> entries, we exhaust UNMOVABLE page blocks of lower orders (<9). Next
-> time KVM tries to allocate pages to store EPTEs, the kernel has to split
-> an order-9 page block, which is exactly the size of a 2MB sub-block.
-> 
-
-Ah, so you also need a THP in the hypervisor I assume.
-
->   > Out of curiosity, are newer CPUs no longer affected?
-> 
-> When qemu pins down the VM's memory, it also establishes every possible
-> mapping to the VM's memory in the EPT.
-> 
-> To spawn new EPTEs, we exploit KVM's fix to the iTLB multihit bug.
-> Basically, we execute a bunch of no-op functions, and KVM will have to
-> split hugepages into 4KB pages. This process creates a large number of
-> EPTEs.
-> 
-> The iTLB multihit bug roughly speaking is only present on non-Atom Intel
-> CPUs manufactured before 2020.
-
-Interesting, thanks!
-
-> 
->   > So it won't be sufficient to have a single sub-block plugged and then
->   > trigger VIRTIO_MEM_REQ_UNPLUG_ALL?
-> 
-> Could work in theory, but if the newly plugged sub-block does not
-> contain vulnerable pages, there is no promise that the attacker would
-> get a sub-block containing a different set of pages next time.
-
-Right.
+So if we can find a way to avoid that, it would be beneficial.
 
 -- 
 Cheers,
