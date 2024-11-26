@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCE3D65559
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 21:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2E0CD6555E
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 21:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tG3B8-0007RM-J7; Tue, 26 Nov 2024 16:33:02 -0500
+	id 1tG3XQ-000341-1P; Tue, 26 Nov 2024 16:56:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tG36w-0002J2-EN
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:28:42 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tG3XN-00033l-C1
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:56:01 -0500
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tG36u-0004s9-Mc
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:28:42 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5cece886771so378457a12.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 13:28:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tG3XL-0006um-Hf
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:56:01 -0500
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-5f1e573f35bso1105878eaf.2
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 13:55:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732656519; x=1733261319; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Eu/52GZcECNuZxxjAb33YtGkeMmnYt1bCtM/EN0TjVk=;
- b=f8H11EZfbZOus2Jl+8hum9H9D7tjTWvk3WsrRI+0JNSFdLg8di/154T1U6GpyeFMSE
- 4VXZBKaiw0fZUz4kBdU8C3SjhRLa/uQn2+XwVv/eFewCrAaOhQMjcDsNQFx99/J+gzvp
- m4N8I2LeeGCPzleHserTx3bwzQEBClZtHM66jHm0HXUjtBSWvOLdH/pHg2X3VEYge8WT
- RBD3idj16N2rYphAwndMZesBH9taN7Z4vgO0nnwwkMoBXvoXZlr5EfWAXqQA/1rMlqVR
- KQRQr+c8Qo183KRcn6HnqM82CFGNIgbXXS/lqVFHB2njmSvPc84GMr+XhxNfFV2KSIRg
- +0Iw==
+ d=linaro.org; s=google; t=1732658157; x=1733262957; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ax2B3V2rSbqIYcBXkgXTK5KxKqm3DuufkDhLPr+GcAM=;
+ b=fuadwk1bEaS67TRLNXk/040p7dkbupO57nO9DUs7u+u3/T620qjLWG2KlwbixIwwgw
+ peCsVz7fC/QMfaIA2s8cSKZ2rbHatmF0BqxJpyOugm1DK0Mlhg5UwVICTAX3jSsGUSKT
+ QfP1Sf6Sb1Viu+ZgjiUozLQuw8aSJvxC3LM+7PQQBuqdmqcl+YWA2gk/snUo63H1cM7P
+ n7M1Ov3P5DVhkFKx/MWeveA2jBRx6eXQDM1KZtKmknUjb/TlQ95P+dhHgYKtFz74uB5g
+ ZNuyj12hECieREUe40BUxhuKiRbwhm6JXh62on4KTlQA4bd2kz9NqZokgJh/06R/s6gU
+ V/Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732656519; x=1733261319;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Eu/52GZcECNuZxxjAb33YtGkeMmnYt1bCtM/EN0TjVk=;
- b=jeyqr2STya/i1sjnReUNoQCgqt8nYhWkEKqu1I/5k1gwYCEMF6zZ7br1E2tC0WQVEi
- cRpsJdm+pHIa3xBfTIAtgkSifZXfe1vDcF4xCNUNs9IM2d2POIKE0ff4zwBuAa0A1GEw
- 1T5xAaB3aTuB+RKSJsU7Sqc+tlIREQjuKp7sw3WlNk9bjqmnaOUvgJ/TmNmLl5/7gg5Y
- dfIqdYbGDZQT2PvuVOsNk8BzhXZeYmEwlY1zGlxhfRNF69TFPihVzmKbj162CT5ecN3f
- O+w3uROx09ymctybcAZS4NhuznbWJ1kXfsOfGXDnlD+PYxFAPWamMQ419/fKYuZxPDL/
- /Spg==
-X-Gm-Message-State: AOJu0Yw5sjolPM95a4MWh7cvik6QOgbJSRsR//+6GfSn8ep9Imb/jeuA
- rsrFgxsUCzucFP4biCHaflKa2sw+pjNBr+xJfAqEDq6ayJVM5duEG/h8ex7nJ4RrO6Mvd/uFYuI
- fmlE3gWkwLB5ytHAy+iWyXK6QlPrhet1ak9wmSQ==
-X-Gm-Gg: ASbGncuzAiMLkziTR8aLLrXAjdtPvRzzyEa1I5+HhtqMaRZujNWXJLr1sCHKvZGYRPV
- TC1zYGhzxSD04yBow/Ga7tvyQes+Zjj/P
-X-Google-Smtp-Source: AGHT+IHswj/gVRg7l3/Tf7MB111fi5cKRTe/iRORjs9h0ll51mhUUsLon6fEKcuFjMpu7JmF8nY277Xq1tPE4ZfjJ7o=
-X-Received: by 2002:aa7:d417:0:b0:5d0:8357:9f8f with SMTP id
- 4fb4d7f45d1cf-5d083579fd9mr38203a12.8.1732656518804; Tue, 26 Nov 2024
- 13:28:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732658157; x=1733262957;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ax2B3V2rSbqIYcBXkgXTK5KxKqm3DuufkDhLPr+GcAM=;
+ b=Jaq3C4kYdPfaShinxPo/1rmvSJpavX52qr6xyZw7qfF0IuTfqVbIB1STo7wJVUHVGr
+ wBb1doY3Ie83TV2Howz1Yb5CCx9UcktUBsIrzhO8WempfPpevPH38bynLGpDrG40yI0x
+ nUiBIL1m8lPAZC6HjWfWWI8Tx7c0axtsWzgmlGsu8iB2d0cSZjLnOrvG8TgHcWrIREsG
+ 0ptoyo/cSbAm5RXvvD+jS956juEQm1f8ocmPRSaO16LkPDIn61+R+v8N5rlz9MUAIUmc
+ tpjuRetezarXin2CFC82HperT3G7CiFxHrepmWwocLg95S8cBteq+KVe6ViaJEqe5hrk
+ HwZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXIvWDYV5A+Kuza9t0V7eeO90GvdK3g3TRNMuAPMPv2eE0wUOHkqZ7O6wE+WLxzGKciAFjsBDKuKu+o@nongnu.org
+X-Gm-Message-State: AOJu0YzbHWAnKWG7Kk5Jrpkx/uA5zQmQJ0SEJJ5oUF3DRrMU7vcPnDZU
+ F25u57duxnTmvxY78J4JEWP/V0nOStT6arRBv7BCDoiRBkvf3i47OTY19QQ7UfM=
+X-Gm-Gg: ASbGnct4VQyyeamObUQlaKJx4lzWlAuowicNAWud+Q+G0GGCvqFH7pkw+bjXQI5ZN+1
+ wOJlHO3ObhJetjBZynX4aM+jvnvubWneJA9mItmb311mKX241r7CzkbyMUaMTWGHnyd77avkR2f
+ XQrBWNhHNfi0g8ibqVxFP3Qr99GF7E0ysLnaMwJof8AgvfT8kiVKbB4ai5ky4IQGCoIlD0pBhI/
+ GSRw2DCopb45szsgnO4Q/EiGKh0emmeShg6FFNodgXOnN0vvA2JpLc20jx+7k3mOs7cRe6BeWh6
+ QD6FjKLyY3nlE4qkh4NOjoFFr9yl
+X-Google-Smtp-Source: AGHT+IGnJirHCNHQDWtLz6aZm34rpiHLNDLCl6skq2zTGim9upUxlpJ7CFR3do+IrtXp6REfaCKVUA==
+X-Received: by 2002:a05:6820:1e12:b0:5ba:ec8b:44b5 with SMTP id
+ 006d021491bc7-5f20a1db85cmr960942eaf.3.1732658156975; 
+ Tue, 26 Nov 2024 13:55:56 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5f0696476fasm2975984eaf.0.2024.11.26.13.55.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Nov 2024 13:55:56 -0800 (PST)
+Message-ID: <d03c3d13-5e4d-4766-afe5-0064a9338566@linaro.org>
+Date: Tue, 26 Nov 2024 15:55:54 -0600
 MIME-Version: 1.0
-References: <20241126211736.122285-1-pierrick.bouvier@linaro.org>
- <20241126211736.122285-3-pierrick.bouvier@linaro.org>
-In-Reply-To: <20241126211736.122285-3-pierrick.bouvier@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 26 Nov 2024 21:28:27 +0000
-Message-ID: <CAFEAcA9cbV4a8r=h4imdvyMV3P3B4mhgnWU-eobH4ESrsr0Uww@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] docs/devel/style: add a section about bitfield,
- and disallow them for packed structures
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 15/16] target/mips: Convert MIPS16e LI opcodes to
+ decodetree
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20241126140003.74871-1-philmd@linaro.org>
+ <20241126140003.74871-16-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241126140003.74871-16-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,58 +106,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Nov 2024 at 21:18, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 11/26/24 08:00, Philippe Mathieu-Daudé wrote:
+> Decode the destination register using the xlat() helper.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  docs/devel/style.rst | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-> index 2f68b500798..13cb1ef626b 100644
-> --- a/docs/devel/style.rst
-> +++ b/docs/devel/style.rst
-> @@ -416,6 +416,16 @@ definitions instead of typedefs in headers and function prototypes; this
->  avoids problems with duplicated typedefs and reduces the need to include
->  headers from other headers.
->
-> +Bitfields
-> +---------
+>   target/mips/tcg/mips16e_16.decode       |  8 ++++++++
+>   target/mips/tcg/mips16e_32.decode       |  9 +++++++++
+>   target/mips/tcg/mips16e_translate.c     | 14 ++++++++++++++
+>   target/mips/tcg/mips16e_translate.c.inc | 11 -----------
+>   4 files changed, 31 insertions(+), 11 deletions(-)
+> 
+> diff --git a/target/mips/tcg/mips16e_16.decode b/target/mips/tcg/mips16e_16.decode
+> index 82586493f68..bae7bfbb522 100644
+> --- a/target/mips/tcg/mips16e_16.decode
+> +++ b/target/mips/tcg/mips16e_16.decode
+> @@ -7,3 +7,11 @@
+>   # Reference: MIPS Architecture for Programmers, Volume IV-a
+>   #            The MIPS16e Application Specific Extension
+>   #            (Document Number: MD00076)
 > +
-> +C bitfields can be a cause of non-portability issues, especially under windows
-> +where `MSVC has a different way to layout them than gcc
+> +&rd_imm         rd imm
+> +
+> +%xlat_rx8       8:3  !function=xlat
+> +
+> +@ri             ..... ... imm:8             &rd_imm   rd=%xlat_rx8
 
-"to lay them out"
+mips16e is decent enough to name its instruction formats -- this one is "I8".  You'd do 
+well to use those names.
 
-> +<https://gcc.gnu.org/onlinedocs/gcc/x86-Type-Attributes.html>`_.
-
-We should mention also that the layout is different on big and
-little endian hosts.
-
-> +For this reason, we disallow usage of bitfields in packed structures.
-
-maybe add "and in any structures which are supposed to exactly
-match a specific layout in guest memory" ?
-
-> +For general usage, using bitfields should be proven to add significant benefits
-> +regarding memory usage or usability.
-
-Maybe phrase this as
-
- We also suggest avoiding bitfields even in structures where
- the exact layout does not matter, unless you can show that
- they provide a significant memory usage or usability benefit.
-
-?
 
 > +
->  Reserved namespaces in C and POSIX
->  ----------------------------------
->
-> --
-> 2.39.5
+> +LI              01101 ... ........          @ri
+> diff --git a/target/mips/tcg/mips16e_32.decode b/target/mips/tcg/mips16e_32.decode
+> index fc429049e18..248ee95706d 100644
+> --- a/target/mips/tcg/mips16e_32.decode
+> +++ b/target/mips/tcg/mips16e_32.decode
+> @@ -7,3 +7,12 @@
+>   # Reference: MIPS Architecture for Programmers, Volume IV-a
+>   #            The MIPS16e Application Specific Extension
+>   #            (Document Number: MD00076)
+> +
+> +&rd_imm         rd imm                                          !extern
+> +
+> +%immx           0:5 21:6 16:5
 
-thanks
--- PMM
+The bits are in reverse order.
+
+> +%xlat_rx8       8:3  !function=xlat
+> +
+> +@ri             ..... ...... ..... ..... ... ... .....          &rd_imm rd=%xlat_rx8 imm=%immx
+
+The format is "EXT-I8", though there appear to be variants where the immediate is signed 
+(ADDIU) or unsigned (LI).
+
+> @@ -9,6 +9,20 @@
+>   #include "qemu/osdep.h"
+>   #include "translate.h"
+>   
+> +static inline int xlat(DisasContext *ctx, int x)
+> +{
+> +  static const int map[8] = { 16, 17, 2, 3, 4, 5, 6, 7 };
+> +
+> +  return map[x];
+> +}
+
+Don't mark inline.
+
+> +
+>   /* Include the auto-generated decoders.  */
+>   #include "decode-mips16e_16.c.inc"
+>   #include "decode-mips16e_32.c.inc"
+> +
+> +static bool trans_LI(DisasContext *ctx, arg_rd_imm *a)
+> +{
+> +    gen_li(ctx, a->rd, a->imm);
+> +
+> +    return true;
+> +}
+
+We nearly have the right set of decodetree options to allow these trans_* functions to be 
+shared:
+
+     --translate=trans
+
+which will drop the 'static'.  But we do not currently have an option to emit a separate 
+header with all of the declarations.  That should be trivial.
+
+
+r~
 
