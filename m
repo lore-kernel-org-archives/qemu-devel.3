@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FAF1D5A6EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 07:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A638D5A6EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 07:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFq1B-0006A5-Rr; Tue, 26 Nov 2024 02:29:54 -0500
+	id 1tFqCg-0001Mb-9O; Tue, 26 Nov 2024 02:41:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tFq19-00069a-N2
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 02:29:51 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tFq17-0006QM-NB
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 02:29:51 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxPuPkeEVnLPRIAA--.10818S3;
- Tue, 26 Nov 2024 15:29:40 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBx20bjeEVnGkRoAA--.42022S2;
- Tue, 26 Nov 2024 15:29:39 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 0/2] hw/loongarch/virt: Improve fdt table creation
-Date: Tue, 26 Nov 2024 15:29:37 +0800
-Message-Id: <20241126072939.4188548-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1tFqCb-0001M3-Pu
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 02:41:42 -0500
+Received: from mx.swemel.ru ([95.143.211.150])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1tFqCZ-0008VG-O6
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 02:41:41 -0500
+Message-ID: <a47efa0e-4f4f-48ef-bbe1-7303f07405d7@swemel.ru>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
+ t=1732606887;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7zPquDCtZyzOA5PY0kmGl8Aq5WV/QI7GoaYVVezsWQc=;
+ b=pJqCtiszFsuCXBwnfNh/FAKrTtXxLi3AfbSst8HLY1QlZ2udpy3Vb4GIHuYmClPhX/q0fw
+ HLEOWXuOSP2nJSMbvxsjyeOH/NVZdgC5URa6j3AiwX6O9tabtPniK71skZkBOfwWNbXKz3
+ L4fCzHoqbH7oPJNJoqqhjAG4QRIQLqk=
+Date: Tue, 26 Nov 2024 10:41:27 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx20bjeEVnGkRoAA--.42022S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+From: =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0LvQvtCy?= <frolov@swemel.ru>
+Subject: [PATCH] hw/timer: fix int underflow
+To: peter.maydell@linaro.org
+Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org,
+ Dmitry Frolov <frolov@swemel.ru>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=95.143.211.150; envelope-from=frolov@swemel.ru;
+ helo=mx.swemel.ru
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, PYZOR_CHECK=1.392,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,24 +62,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here move fdt table creation from spotted places to machine done
-notification, since all objects finish to create when machine is done.
-
-Also create fdt table for CPU objects with possible_cpu_arch_ids()
-function rather than smp.cpus, since command 
--smp x, -device la464-loongarch-cpu can be used.
-
-Bibo Mao (2):
-  hw/loongarch/virt: Create fdt table on machine creation done
-    notification
-  hw/loongarch/virt: Improve fdt table creation for CPU object
-
- hw/loongarch/virt.c | 142 +++++++++++++++++++++++++-------------------
- 1 file changed, 82 insertions(+), 60 deletions(-)
-
-
-base-commit: 791e3837c1105aec4e328674aad32e34056957e2
--- 
-2.39.3
+ping
 
 
