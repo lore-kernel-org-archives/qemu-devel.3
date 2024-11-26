@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C478D65536
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 982BDD65537
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFzec-0002wQ-FX; Tue, 26 Nov 2024 12:47:14 -0500
+	id 1tFzgb-0003gs-L9; Tue, 26 Nov 2024 12:49:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFzeD-0002qd-EG
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:46:53 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tFzgU-0003fu-Ds
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:49:10 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFzeA-0002O1-5s
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:46:47 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5cfbaf3d88dso3173938a12.3
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 09:46:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tFzgI-0002lb-9v
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:48:59 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21260cfc918so41634525ad.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 09:48:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732643201; x=1733248001; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MuaqPWTqepOxmZq4sggQsfJVuv4ciLBHwbuq1iPIJzQ=;
- b=HdpNuWZpVibC6HSlv7pAMLBYh0aU5PlpTFSoVk9MHLVKBj96PSy4bWRIgpn7Yg5QNL
- Rv83kDtnZpXWvyjOdg5HjBFjSQoBj7YOkszLCvmC3ntZ88Y/QY3ga5GJAeJvFP7N5jSe
- epfaHKOkhGQMPkMtHHz7J1LTerGYavc41e5rYexfDfdheKqu2No55OP8A1zOs4l/hxV0
- mYQAtkLs6f1kW6wBgVIqvXpC9rNpBx2QYLA36A8xAE015iehxHspOYQtDmyAJZVntTm4
- a10xnfA6F3WeTuNjy0TxPixL0gJz/zQKq2TB3GTcOuqs1ZACwivwJkqKfxw7J6TmCJRY
- eLCA==
+ d=linaro.org; s=google; t=1732643337; x=1733248137; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=py3bas/inOsUM5HDFYSzz+yH9/NOPOso45ep82zMtR0=;
+ b=Bo7ALbK+NBDONexfA9KsV//W71Zcov+OF1quMTNFTrWra2NGD1+p4hwIhxPMm/dGcO
+ UdKXJWKOcYyNoc1snuZbOnCxvf5iO7qk8uL9M0WOBVFJI+CRab6gD+ASHuk46I7RU2bg
+ RWaCz7LxTV6pTJ/gvWnYvV/8TtsIjYhN75OK7bYIDnfWAnCjYHIKsJvfkmD9Is3qOriq
+ gy5R1XS7Nf8MOAevYwZZgfQAQjeFxbnd0Kjg0hQft8p3BQ3dgbhwSm/g9D+iCSAjBll+
+ GypGsyxZ+RQS10O5HHFgDYNIiaD49sIs+v+T3/xnFUEE6NIrEfI0tJ0vFYvOGc6Lydw9
+ cy7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732643201; x=1733248001;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MuaqPWTqepOxmZq4sggQsfJVuv4ciLBHwbuq1iPIJzQ=;
- b=h5eu3cp14NJV3uzqy3k+Q+raM5W+Ya7kWpU98OtRLK3sW0L9EaeLNxJwMCmxkNIYAF
- fRvsuhOkD+nJoMjJXS7OlG4v8Wr9yBIg7h1tO+BXwBmCO5LxSNXHAhJTcUVd/uUjqAO0
- ibG4Yh+H0gVGOHUvCg6bGv+9s+ytYTq4Fb+docMh/Ps5N8St8906mIzg2y3Qot6fwnPo
- jCZ8le1z7AKeNIHwZ68ZBdR2AxNNgPbeNLvB5ZaNxqvfLfKfHPWw//HjzjWnFI9Sp8d6
- +v+S2gSYoeBY6zcGrlOhLYl8MDT9u1ID8W3vlyMlJ2jPzPb4PjXivbrfyd4kemhRBJ7l
- xgnA==
+ d=1e100.net; s=20230601; t=1732643337; x=1733248137;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=py3bas/inOsUM5HDFYSzz+yH9/NOPOso45ep82zMtR0=;
+ b=gJycw4S8x6l7NlMmhqCjOOYWryHkgXCqZZW2Dk2WyliposVw9Jc3oJXjIMyl4OqDt/
+ HS2cRj4g0eXLwp1YMngeWYzT7kddwPfookvrN/im7hzWLR4qx47HiiWme901t7jxLNpE
+ jPVkYV9JfDS1k9psIknKClyeDsDxYY9Ka9lPlUVMG+o+gnmsikISK8VbJzIxU1KeJAu1
+ rwdcpTk5+XjMjj6sEN7Nfa8YftRmypBvJf/ZTFljB4u/er2AwbpcbUjn33MURe1r+5UD
+ CSJ1LpTyjhi71Y/oohTu1FUnSAVohCoi0araJVX3uOMgTFgjPhmp6v5zU3hBH3j+0IBI
+ Q52g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4UqyjpPkYFZGfjZQpaThPduW/cmHRwBi2f9z8ZWAASwVv0n10cBadr9p3hVUSMJVVDbHMu6Kmb9tI@nongnu.org
-X-Gm-Message-State: AOJu0Yx6T1hh4vqqqSXci9ji22Cbw5YFtNIq9IYZF0R4VXp+XGXL5D7j
- DBwCf1uKfGxy7SFghgo13PhbjFbBXh6R0Jh6alSMRHZRzOIysyDy+7Zendw9se2TWv4bZKkwpsM
- s/C3Lr2xusaTahpWDZRAAGcmWdK5yIq7HBg6tfQ==
-X-Gm-Gg: ASbGncvVN1drT7FoccDpHe2SfZtEBCU6gRxZppeemZ+bhULtMP0lZYdNqf5l2wlvW2S
- j7GKXCoK49iSuk+6keNtJq2k+VW20dTlM
-X-Google-Smtp-Source: AGHT+IEyJgXLPWOQEGo2jaN7iS4ukCZfz9hs32+b8tlDafHsyViHMWIZcOqqM9nQsc4OknA/kaoJfvRbf8C8ohFeUeg=
-X-Received: by 2002:a05:6402:51d4:b0:5ce:de19:472a with SMTP id
- 4fb4d7f45d1cf-5d080be4926mr128102a12.16.1732643200858; Tue, 26 Nov 2024
- 09:46:40 -0800 (PST)
+ AJvYcCVXilteh9paTp13jyiucoh841h/sm5631DdBvLR//wpqg9JqpsKtQUV0/s96DTPkY3xJMP59F1bn9h/@nongnu.org
+X-Gm-Message-State: AOJu0YzI9MNYR/NeFlMbN5+lev6F9fdeAk5lfwh8NXdp33FOh4vD8mZI
+ 4aZOPyWh8dXmN8rIdwYqcYyAy7x03WX3+k9wW+GsCis1jeTlBmMgIbKQIaTnLvGFQhjnF2337pT
+ 47UA=
+X-Gm-Gg: ASbGnctO81fxmJ+qJZAhvCO9JU85kOE5QkZUocKzzqZhQLXtyagYkG/wETekcOk0TyM
+ XnFxyX0FVtkRV+hiskQ3kIPsxHXRbWoNLUdywRT8Bl53Km/GGU2aKpeKwNhCStCMN8Yn3aBBJf3
+ OOwTvbjyPlROK56vyo0wFfCiuumJONGp0PVq+Cc9rsqT1kRzozZbgJKDpx4Xb5izVBUsgagktgp
+ qZtSSfrz+p9I4nZVhwJNzqUq2mtlz//i/b65vU6wczSwpNIA19peNXDFwq72CqPAtqOERkRNAoQ
+ 5BeaaYd4oZsM8KzTFrNmTA==
+X-Google-Smtp-Source: AGHT+IHZIiwgigkNUSfV9FwIbhNSG80IMasr4sFIE48U2Fxa8cj72ENEXU6mBUFfULjkV7EsTuqr4A==
+X-Received: by 2002:a17:903:234c:b0:20c:5e86:9b5e with SMTP id
+ d9443c01a7336-21501086e0dmr687825ad.3.1732643336863; 
+ Tue, 26 Nov 2024 09:48:56 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2129dbff549sm87492285ad.130.2024.11.26.09.48.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Nov 2024 09:48:56 -0800 (PST)
+Message-ID: <8da5c689-3116-42c1-b215-fbb50f35f49c@linaro.org>
+Date: Tue, 26 Nov 2024 09:48:55 -0800
 MIME-Version: 1.0
-References: <20240904103923.451847-1-thuth@redhat.com>
- <20240904103923.451847-16-thuth@redhat.com>
- <66bf4784-f1e4-479f-83db-2d4f91c10e48@linaro.org>
- <Z0YF9i2pwBkznkCD@redhat.com>
-In-Reply-To: <Z0YF9i2pwBkznkCD@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 26 Nov 2024 17:46:28 +0000
-Message-ID: <CAFEAcA-ematCTyj0SN2=e3mGHvp0VWjN1GV-Tu5Rkf-V721L1w@mail.gmail.com>
-Subject: Re: [PULL 15/42] tests/functional: enable pre-emptive caching of
- assets
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/qtest: add TIMEOUT_MULTIPLIER
+Content-Language: en-US
+To: Fabiano Rosas <farosas@suse.de>, Dmitry Frolov <frolov@swemel.ru>,
+ lvivier@redhat.com
+Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
+References: <20241113094342.282676-2-frolov@swemel.ru> <87bjyij0q2.fsf@suse.de>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87bjyij0q2.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,61 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Nov 2024 at 17:31, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Tue, Nov 26, 2024 at 05:44:29PM +0100, Philippe Mathieu-Daud=C3=A9 wro=
-te:
-> > Hi,
-> >
-> > On 4/9/24 12:38, Thomas Huth wrote:
-> > fetch() can fail [*] (see previous patch, various Exceptions returned).
-> >
-> > What should we do in this case? If we ignore a missing artifact,
-> > the tests will eventually fail. Better bail out early and save
-> > credit minutes?
->
-> We already do what you describe - 'fetch' will raise an exception
-> which causes the precache task to fail, and the CI job gets marked
-> as failed. We don't attempt to run tests if assets are missing.
->
->
-> > > @@ -58,6 +59,12 @@ def tearDown(self):
-> > >       def main():
-> > >           path =3D os.path.basename(sys.argv[0])[:-3]
-> > > +
-> > > +        cache =3D os.environ.get("QEMU_TEST_PRECACHE", None)
-> > > +        if cache is not None:
-> > > +            Asset.precache_suites(path, cache)
-> > > +            return
-> > > +
-> > >           tr =3D pycotap.TAPTestRunner(message_log =3D pycotap.LogMod=
-e.LogToError,
-> > >                                      test_output_log =3D pycotap.LogM=
-ode.LogToError)
-> > >           unittest.main(module =3D None, testRunner =3D tr, argv=3D["=
-__dummy__", path])
-> >
-> > [*] Peter reported the following CI failure:
-> >
-> >   https://gitlab.com/qemu-project/qemu/-/jobs/8474928266
-> >
-> > 2024-11-26 14:58:53,170 - qemu-test - ERROR - Unable to download https:=
-//apt.armbian.com/pool/main/l/linux-6.6.16/linux-image-current-sunxi_24.2.1=
-_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb:
->
-> This looks to be working as intended. We failed to cache
-> the asset, and so we stopped the job, without trying to
-> run the tests.
+On 11/13/24 13:13, Fabiano Rosas wrote:
+> Dmitry Frolov <frolov@swemel.ru> writes:
+> 
+>> Some tests need more time when qemu is built with
+>> "--enable-asan --enable-ubsan"
+>>
+>> As was discussed here:
+>> https://patchew.org/QEMU/20241112120100.176492-2-frolov@swemel.ru/
+>>
+>> TIMEOUT_MULTIPLIER enviroment variable will be
+>> a useful option, allowing non-invasive timeouts
+>> increasing for a specific build.
+>>
+>> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+> 
+> Tested-by: Fabiano Rosas <farosas@suse.de>
+> 
+> and queued for qtest.
+> 
 
-The job ended up in state "failed", with a red X mark in
-the gitlab UI. If we intend that not being able to fetch
-the assets doesn't count as a test failure, that didn't
-work here. If we do intend that fetch failures should be
-CI failures, we need to make our process of fetching and
-caching the images more robust, because otherwise the result
-is flaky CI jobs.
+Hi Fabiano,
 
-thanks
--- PMM
+will a PR be sent for 9.2 release, or later?
+
+Regards,
+Pierrick
 
