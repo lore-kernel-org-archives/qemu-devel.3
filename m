@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC2DED3B9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 16:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 613A0D3B9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 16:26:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFyNw-00045c-3Q; Tue, 26 Nov 2024 11:25:56 -0500
+	id 1tFyO7-0004Bc-3d; Tue, 26 Nov 2024 11:26:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tFyNZ-0003vT-7H
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:25:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tFyNz-00047m-Ns
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:26:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tFyNW-0003Ow-70
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:25:32 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tFyNy-0003RY-0I
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:25:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732638324;
+ s=mimecast20190719; t=1732638356;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eaXSUrSzDyqyBCYMtv59u+5Y36ny2i2aqn9R89gpmvE=;
- b=PbPLKjpoPSwnheuE10rBpOSKS3LLpnEBLKmLBBKk+VRlPZfRvrioHjbSWTo7YbogpYSspp
- CjSzONGQTMbpasiESGT5XxZ75yiNvtX4uIGM4zgszPO+o4i/DCCwdZA8ZIVWkboVACtM9G
- FJdV0l4OKZEtKe87Fr/tzWz/n119fp0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0CZ3fPtLp4BLa1ycRZfCYLKPMiOOPu/JKlHEx6fkj6k=;
+ b=fZx1EofkFw4nG9IeMj5A7TN4uh6tho+xrrtWdQ8v44jHAg2cgkk/XdibBi/1iI/Tk3TbVM
+ Z5MDswULtqU9fqll7gZvGZ7eiFScCcAKNQ+t++N1usCy/Jv5i0kU7QiLVa99CO5go/s7eN
+ tDp5rPFExV4KDhw00hDu3jHMJzG6YSA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-1o4Gcct9M9Kxr36zhYSrOg-1; Tue, 26 Nov 2024 11:25:23 -0500
-X-MC-Unique: 1o4Gcct9M9Kxr36zhYSrOg-1
-X-Mimecast-MFC-AGG-ID: 1o4Gcct9M9Kxr36zhYSrOg
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-434a37a57dfso11845615e9.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 08:25:22 -0800 (PST)
+ us-mta-271-_k0xzsbRNWy80R8prJNyDg-1; Tue, 26 Nov 2024 11:25:54 -0500
+X-MC-Unique: _k0xzsbRNWy80R8prJNyDg-1
+X-Mimecast-MFC-AGG-ID: _k0xzsbRNWy80R8prJNyDg
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3823d2f712fso3189462f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 08:25:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732638322; x=1733243122;
+ d=1e100.net; s=20230601; t=1732638350; x=1733243150;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eaXSUrSzDyqyBCYMtv59u+5Y36ny2i2aqn9R89gpmvE=;
- b=tjhAxMrVz5PgqSlVwllMkLwjO1sgfbIV7aBni+rPaieoPe/dRMh9ZfYqfTIxYRaov9
- ZmgQQA9hVKRCKxDI0ZLKvbQz3m13Pf5wRI2nTthmKzKjarx+Rm6IcW9RTHWssV9Km7ps
- 0fRHuB2X8dFecRuV5fHGx6wBLEDoaNBW8aYucIZ2rcHRvGbWlkcmD1L4quyvZV5hryaW
- fTQEOefS4QKT5qXxly1x/DaBfbqaTCWlwDxVvGGNRxKsr0RhC6QC+FhsNcWk9MnnQVnF
- hkuv7nPADdt84rqipywc7fy9y58aLFHNMI5JwTbgKKFfU4f1b1GsATca2ZLFGu5a+uhB
- sdAw==
+ bh=0CZ3fPtLp4BLa1ycRZfCYLKPMiOOPu/JKlHEx6fkj6k=;
+ b=Yzw/IX0ae8902dKsHc9RR6KRorD7DsoEfdsCZjK+FfcI0ngNprRHr3yXaBh2SsJJ6U
+ MqzNK1tFKgQU8ZQNWbF4dK6q9hw2o0HTXeVTw7IVSd7lvBvI7e1x5SPoBN+8fvPHYLLy
+ IOY+qbrMVAF0NJQCwbVKWYMjFNv/C/MML4pKuooNiRLoFcMF91qPby0TehdHi28iLvoL
+ XZiNnhMYWfm0jIYpsbWWKC1aq4TBTjd45XUAlNolP8x1N49CDF2NoMeUbxLg2urK8H3d
+ y/VOqH/V+Y9tjLtoqZN55ULhveLyo+BeMw2g2Rr52oD2OMTXE7cvN8gYBNd/DGq0/vk3
+ Lztw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNsk/wPKEoih7LhVFfLsTem/zBJ1z5d5tezUyOZPUzzcTyoobWVpXYe5THyHIjJtMCGWBcTCqCoJ8R@nongnu.org
-X-Gm-Message-State: AOJu0YzSNIM89CW6suPtx2eqkDCMsPIQH5B7SgxnJEma73U/5Bz+zPD4
- bH3zkG0/sL0KT+GZL8MHZ/Dl752SH7npPcMN3x9zOEsfIw4IeVOuObXFMQmx2P4PQv30YezqhhH
- dSfTwSlEbNOf+FO231f7MHe4mvdPsUfDs4b69E+TaSSgD8qP5rseA
-X-Gm-Gg: ASbGncvCu1QaC9myaFlcEQMqe/gjyMHmuzjs4yp+vzNvjIsLcJo6DXf/dRX8qF/nFPe
- xSSUPSFEcwElDE4qr/S8sFpigh1Gm6roVvYDetQ3iIggd34B0zTrJArw7fG8hVz0AiElFBABZub
- O0kF2VllE/lEaeNZ0NZ8gs+io7IvxQ61JQRSsi2eKwD0ekecoQjQwUW0RwCc5R2gPSMMLtflG56
- E7sdtzy19mhawZpIN+8rzKGm49OOfQx/ZBMnI4Cr6mla+ycUYqrHXh2dDhuSpS9rpqy/39zDAwX
- Ze2AKck3EuHx
-X-Received: by 2002:a05:600c:1c25:b0:434:a504:7a51 with SMTP id
- 5b1f17b1804b1-434a50489demr29734155e9.21.1732638321870; 
- Tue, 26 Nov 2024 08:25:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFqcELqZJgvT2XXxcJjawvyQcHbclrdqXALbnF+wv+Bk0y2yDRZ4msBDMCXETY3MOIj/Ky+Tg==
-X-Received: by 2002:a05:600c:1c25:b0:434:a504:7a51 with SMTP id
- 5b1f17b1804b1-434a50489demr29733925e9.21.1732638321513; 
- Tue, 26 Nov 2024 08:25:21 -0800 (PST)
+ AJvYcCVRrkrVDX9brgofcSfKQgVRO8QEAmZruzO9v5z4I8qu8U00iPFdxjBygIx8+KEUDfXgXh3SH9b1mbz5@nongnu.org
+X-Gm-Message-State: AOJu0Yw3EPxb6dJbtwAmIHjSXY0sLsLCyjSnzjsKcPgTV7yBasDl5N+B
+ Wc/RQTd3EjLKuOwVXsypqqK7kwXCF52xLR0RGudk0jDC3NQN3Mabs9vIdV6xIpqT4vJyVZ7RHvl
+ uq85jlHuQbJM+hAQL1/mEKhYHGZ87CSTs91TeEcA52VzRWsHJdfRG
+X-Gm-Gg: ASbGncv4iUZbUl0toV/Kz7FGQntdDITEhnGY9QD92tkPp9CAwtUmSJNSuDHCzk12RlA
+ Nrn56nfTPSnVVjdFRK6bmOOHw7tRgtgY1DbhgfG8T2x9WLvhAjYOZiqW+oHePo8+7KMUHnRf1sk
+ yKskZ2ZfDRBwkJ90FB77tVbVtKjaWhhQs7wGhT7CAQph9bzIUsDP0U6FNNT9Ch+TIRFCMoZ7mFN
+ waQqcGQjtylqV9b4usIharBBFcQwGk3y1oAmr5UkonRUs80MC2htdE4FhdeCFh7inuMBStN6l4I
+ Kf16VO/okREv
+X-Received: by 2002:a05:6000:4813:b0:382:134d:65e0 with SMTP id
+ ffacd0b85a97d-38260be5f63mr16275846f8f.56.1732638350388; 
+ Tue, 26 Nov 2024 08:25:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGbZJswEeBssspTyECs45i/745Wk1QAOr4nX1t+Jcov/2cBvTpG7cO1h96QilDBpRErm0KRcQ==
+X-Received: by 2002:a05:6000:4813:b0:382:134d:65e0 with SMTP id
+ ffacd0b85a97d-38260be5f63mr16275816f8f.56.1732638350002; 
+ Tue, 26 Nov 2024 08:25:50 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434a15d86a4sm57725305e9.36.2024.11.26.08.25.19
+ ffacd0b85a97d-3825fbedad6sm13659277f8f.91.2024.11.26.08.25.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 08:25:20 -0800 (PST)
-Message-ID: <955b56c1-d749-4266-adff-54dc78ceda6e@redhat.com>
-Date: Tue, 26 Nov 2024 17:25:18 +0100
+ Tue, 26 Nov 2024 08:25:49 -0800 (PST)
+Message-ID: <114ef1d5-8e3c-4bb4-abf1-47433299f88f@redhat.com>
+Date: Tue, 26 Nov 2024 17:25:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/24] migration: Clarify that {load,save}_cleanup
- handlers can run without setup
+Subject: Re: [PATCH v3 02/24] thread-pool: Remove thread_pool_submit() function
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -87,7 +86,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <b082ad4d76ab10e4078acdf25b2bad4278a98331.1731773021.git.maciej.szmigiero@oracle.com>
+ <dc48aed87cb7d22d01996d948adf3eef4dd25240.1731773021.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,17 +132,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <b082ad4d76ab10e4078acdf25b2bad4278a98331.1731773021.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <dc48aed87cb7d22d01996d948adf3eef4dd25240.1731773021.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.931,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -164,22 +163,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 11/17/24 20:19, Maciej S. Szmigiero wrote:
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> It's possible for {load,save}_cleanup SaveVMHandlers to get called without
-> the corresponding {load,save}_setup handler being called first.
+> This function name conflicts with one used by a future generic thread pool
+> function and it was only used by one test anyway.
 > 
-> One such example is if {load,save}_setup handler of a proceeding device
-> returns error.
-> In this case the migration core cleanup code will call all corresponding
-> cleanup handlers, even for these devices which haven't had its setup
-> handler called.
+> Update the trace event name in thread_pool_submit_aio() accordingly.
 > 
-> Since this behavior can generate some surprises let's clearly document it
-> in these SaveVMHandlers description.
-
-I think we should spend some time analyzing the issues too. I would prefer
-to avoid the changes in patch 18 ("vfio/migration: Don't run load cleanup
-if load setup didn't run") if possible.
-
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
 
@@ -191,33 +179,82 @@ C.
 
 
 > ---
->   include/migration/register.h | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
+>   include/block/thread-pool.h   | 3 +--
+>   tests/unit/test-thread-pool.c | 2 +-
+>   util/thread-pool.c            | 7 +------
+>   util/trace-events             | 2 +-
+>   4 files changed, 4 insertions(+), 10 deletions(-)
 > 
-> diff --git a/include/migration/register.h b/include/migration/register.h
-> index f60e797894e5..0b0292738320 100644
-> --- a/include/migration/register.h
-> +++ b/include/migration/register.h
-> @@ -69,7 +69,9 @@ typedef struct SaveVMHandlers {
->       /**
->        * @save_cleanup
->        *
-> -     * Uninitializes the data structures on the source
-> +     * Uninitializes the data structures on the source.
-> +     * Note that this handler can be called even if save_setup
-> +     * wasn't called earlier.
->        *
->        * @opaque: data pointer passed to register_savevm_live()
->        */
-> @@ -244,6 +246,8 @@ typedef struct SaveVMHandlers {
->        * @load_cleanup
->        *
->        * Uninitializes the data structures on the destination.
-> +     * Note that this handler can be called even if load_setup
-> +     * wasn't called earlier.
->        *
->        * @opaque: data pointer passed to register_savevm_live()
->        *
+> diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
+> index 948ff5f30c31..4f6694026123 100644
+> --- a/include/block/thread-pool.h
+> +++ b/include/block/thread-pool.h
+> @@ -30,13 +30,12 @@ ThreadPool *thread_pool_new(struct AioContext *ctx);
+>   void thread_pool_free(ThreadPool *pool);
+>   
+>   /*
+> - * thread_pool_submit* API: submit I/O requests in the thread's
+> + * thread_pool_submit_{aio,co} API: submit I/O requests in the thread's
+>    * current AioContext.
+>    */
+>   BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
+>                                      BlockCompletionFunc *cb, void *opaque);
+>   int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg);
+> -void thread_pool_submit(ThreadPoolFunc *func, void *arg);
+>   
+>   void thread_pool_update_params(ThreadPool *pool, struct AioContext *ctx);
+>   
+> diff --git a/tests/unit/test-thread-pool.c b/tests/unit/test-thread-pool.c
+> index 1483e53473db..7a7055141ddb 100644
+> --- a/tests/unit/test-thread-pool.c
+> +++ b/tests/unit/test-thread-pool.c
+> @@ -46,7 +46,7 @@ static void done_cb(void *opaque, int ret)
+>   static void test_submit(void)
+>   {
+>       WorkerTestData data = { .n = 0 };
+> -    thread_pool_submit(worker_cb, &data);
+> +    thread_pool_submit_aio(worker_cb, &data, NULL, NULL);
+>       while (data.n == 0) {
+>           aio_poll(ctx, true);
+>       }
+> diff --git a/util/thread-pool.c b/util/thread-pool.c
+> index 27eb777e855b..2f751d55b33f 100644
+> --- a/util/thread-pool.c
+> +++ b/util/thread-pool.c
+> @@ -256,7 +256,7 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
+>   
+>       QLIST_INSERT_HEAD(&pool->head, req, all);
+>   
+> -    trace_thread_pool_submit(pool, req, arg);
+> +    trace_thread_pool_submit_aio(pool, req, arg);
+>   
+>       qemu_mutex_lock(&pool->lock);
+>       if (pool->idle_threads == 0 && pool->cur_threads < pool->max_threads) {
+> @@ -290,11 +290,6 @@ int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg)
+>       return tpc.ret;
+>   }
+>   
+> -void thread_pool_submit(ThreadPoolFunc *func, void *arg)
+> -{
+> -    thread_pool_submit_aio(func, arg, NULL, NULL);
+> -}
+> -
+>   void thread_pool_update_params(ThreadPool *pool, AioContext *ctx)
+>   {
+>       qemu_mutex_lock(&pool->lock);
+> diff --git a/util/trace-events b/util/trace-events
+> index 49a4962e1886..5be12d7fab89 100644
+> --- a/util/trace-events
+> +++ b/util/trace-events
+> @@ -14,7 +14,7 @@ aio_co_schedule_bh_cb(void *ctx, void *co) "ctx %p co %p"
+>   reentrant_aio(void *ctx, const char *name) "ctx %p name %s"
+>   
+>   # thread-pool.c
+> -thread_pool_submit(void *pool, void *req, void *opaque) "pool %p req %p opaque %p"
+> +thread_pool_submit_aio(void *pool, void *req, void *opaque) "pool %p req %p opaque %p"
+>   thread_pool_complete(void *pool, void *req, void *opaque, int ret) "pool %p req %p opaque %p ret %d"
+>   thread_pool_cancel(void *req, void *opaque) "req %p opaque %p"
+>   
 > 
 
 
