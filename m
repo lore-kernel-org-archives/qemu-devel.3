@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C492DD5A6DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B1BD5A6D9
 	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 03:56:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFmfJ-0008Tc-Vv; Mon, 25 Nov 2024 22:55:06 -0500
+	id 1tFmfL-0008U4-PG; Mon, 25 Nov 2024 22:55:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tFmfH-0008Sv-Pn; Mon, 25 Nov 2024 22:55:03 -0500
-Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tFmfG-0006ur-BJ; Mon, 25 Nov 2024 22:55:03 -0500
-Received: by mail-oi1-x22d.google.com with SMTP id
- 5614622812f47-3e5f6e44727so2923646b6e.0; 
- Mon, 25 Nov 2024 19:55:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732593300; x=1733198100; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3Mmqcbtlt+klpWyRG3GmFv/UEI56uqJChQEwlSl6sC4=;
- b=fNuZO2Kmi9v/rrP14hjtQMglN//fnJKu5/bndQUCeVPFK00m1rfF77pNnFWLP2M/fC
- eVS2HAFAegEm2ekF9BFw5MDqiRks4fw4iz1JkmXLmoNNbWsK7B3Dcc7IFBAHoRxOyDyw
- KSFQO/2RgIEoYFasxbVJWi705ZP1RIDTol91eL+Qe5kwaLN8cZuHpODhvGjNjhrinxbW
- O7fbwq4mLMktjLJ8Yu1o6b4rNJ3DagguIy7XJP4yzZU+Hh8T8h3Z7giGn8YFtLC1DBw9
- iV43U3Nir8gBrAC21df/a6IuFtGJqxQb+SOwjeY3mYhPJxTsclJY/kRxyO9RG88iTWqw
- fS5A==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tFmfI-0008T8-9F
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 22:55:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tFmfG-0006vK-N6
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 22:55:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732593301;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=41VeTf95S8wFsZoIdCwmCRAAO43sxmp+0bRFB6ore5o=;
+ b=Av+2J1MgL09vvlnyzzKFIRIhbzX2LXc43N6uujnrh2cgnSDoR2VThFwKCxMArhQzz3gvuc
+ VK/FwZPzUaRw7ah7Or5dftZanRxBGKBok4gsQ5mch8XbSCdixDZOCsdrYifI/g2zcrxb7L
+ ZkChWPlI+uQrFSMgyjb1ailtgBEoV1A=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-392-YcNZJ2GNPK61Y9WDJmF_PA-1; Mon, 25 Nov 2024 22:53:02 -0500
+X-MC-Unique: YcNZJ2GNPK61Y9WDJmF_PA-1
+X-Mimecast-MFC-AGG-ID: YcNZJ2GNPK61Y9WDJmF_PA
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aa538575f0fso189717266b.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Nov 2024 19:53:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732593300; x=1733198100;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=3Mmqcbtlt+klpWyRG3GmFv/UEI56uqJChQEwlSl6sC4=;
- b=RWGuP+x7i1BZYBIYuWYoe2+1ztWTSaBeKunoENk0PNqjKiw6fMEW5+T0lpxPemcrS+
- CcQX2L5hyZed270x0HBPN7KJOjj2PmXxEiKyH5wS4NutYfWp8Ul9tywI0ylNObTO91YZ
- kZHu3IjhsYndBJxjJQa65kj4weG54zzGgKUptxVb+aVVVEbuFnI9MfDnyWRbudLeI3/3
- 4iY2OjS+KV1nV6woMg9EN+QjxRAthXWstg0o5hQaNxE290frW4FfDDPzbBrha043Yf6T
- NtcnoOhV2RiEOwPMgHbuZ3GMDnr9VOOLKEJKjiilRCWE7+sd9UC7oBKMWLrawMOKy2/d
- 2s2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVo+ETbF1TpG52++H+hzwF4eId9U2AV/QDDBT1Ni72RxFLc1yl7m8zzo2Q66m/WyNl2aiyv8R1ZKg==@nongnu.org
-X-Gm-Message-State: AOJu0Yyzrm3dRhETOIpUFHGNMJwXn2v9horsy5A7ysvUvpVCFl2VrCEs
- bwMtV12GKBr/nPZ4Rp3ZoFhc40dYtqET9cPxYs7NfgN/THU9M+pr
-X-Gm-Gg: ASbGncuQtz3xDu1P56Ip6w3w+HCSLaY470AOi7680MBUPMkSrJAUTHzsIcfdp3eSGr+
- tbbXTzbq+xiDo8woz6LLgtB4YzsnCjqak6TeWXSTYRU5DPht5v9UXMZla3I/EiKzNQ3LAKnNwPQ
- VjeKah5aO4BYQfjFkQHdHcOJw3FrUx5fGdROuWxoVN+kytqdP1tKAT3mo6tXSxM9KC4K2pqIazw
- 1OXRl715lmeC+6gAxkEOwagGMKfVYB/xmEq0Y+h
-X-Google-Smtp-Source: AGHT+IGfuPlt/h4AyqihR8hpan3zRg1bkQBev6NNsEKTL6O9b2bZmge8b/p2sadgpD+G4sMYiphViQ==
-X-Received: by 2002:a05:6808:2228:b0:3e6:5b89:de24 with SMTP id
- 5614622812f47-3e91581c659mr13046010b6e.11.1732593300312; 
- Mon, 25 Nov 2024 19:55:00 -0800 (PST)
-Received: from localhost ([1.146.45.41]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724df8b04f2sm7433267b3a.66.2024.11.25.19.54.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Nov 2024 19:54:59 -0800 (PST)
-Mime-Version: 1.0
+ d=1e100.net; s=20230601; t=1732593181; x=1733197981;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=41VeTf95S8wFsZoIdCwmCRAAO43sxmp+0bRFB6ore5o=;
+ b=pjsLFc1tffInOW9GsEECoEj1HYaMPWyzhJ67a+p5SgMDOOGAPTxSXE3yJUQXuO+o3/
+ fuRv9m6ttBQ1wEvu8OX4rxv+23+jAXyT2oVM1NgNXF8BgTnXRmT1V6ImrMX+2TA20meD
+ RacpWkpxmM0qHo4X36KYQKfRXrrW4CYyXPujnMB+1Cg/os2DbnjuGbYU2qwqxRbMZsrp
+ Wes3VkNaHCtSVW2W/ppBj+bFKTgxSmBwmerNfss85+nekg451tqPfi+DmIqMvPms8gfF
+ VfR+i1Z4y8a11ZvlAFigurGbCMdSuvU9OOFnaqfGcKv3aVhczfrERTMBmgrHwyKnMMU0
+ 1v5A==
+X-Gm-Message-State: AOJu0YwXlfspwNPx9u5x6tSlY00BzQWBd6sjcPiEfWintQOLhVUBbSVE
+ 6sUyfpNKQaEi9Q1yUzY0DYyltHa8bK0h/r4ilLfCmn+6A8qG2uJ3Qps1Htl4eoQ7xuRJzFOKWNj
+ PETjjiPL/AFS2I4sAa2iBqIc9kIVgheW8/FrVK7SW9OtbdYVFtmU3bhp7ZNSSUsKZjkIAhlG5xE
+ sCEGDpJ9zKO43fTtiPM4DOflRwhZU=
+X-Gm-Gg: ASbGnctg0zW459De3v0jvhv1MQ2XzhnvIjw5/ZbudZxZKgLNeREX8tRzF8LugPxRttC
+ afRTBaP+27oVfkpLKo4yE0mORY+djMGE=
+X-Received: by 2002:a17:907:3d93:b0:a9f:508:5f5a with SMTP id
+ a640c23a62f3a-aa509d3fb54mr1676868066b.40.1732593181405; 
+ Mon, 25 Nov 2024 19:53:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFcyn+ilEOkXmV/VJW9gGCMOr5B1ak4D0mnl0dCLFODQfNG0eUDUE3cmAKP9ZsI2i3iDZB45szUQQujfjcWiXM=
+X-Received: by 2002:a17:907:3d93:b0:a9f:508:5f5a with SMTP id
+ a640c23a62f3a-aa509d3fb54mr1676867066b.40.1732593181061; Mon, 25 Nov 2024
+ 19:53:01 -0800 (PST)
+MIME-Version: 1.0
+References: <20241125152105.2100395-1-alex.bennee@linaro.org>
+ <20241125152105.2100395-8-alex.bennee@linaro.org>
+In-Reply-To: <20241125152105.2100395-8-alex.bennee@linaro.org>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Tue, 26 Nov 2024 09:22:49 +0530
+Message-ID: <CAK3XEhNWsCzCLotDFr_VDzVXGe+n+3NrHtw=Q_MpCTS-gwzaAQ@mail.gmail.com>
+Subject: Re: [PULL 07/28] tests/functional: remove comments talking about
+ avocado
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 26 Nov 2024 13:54:53 +1000
-Message-Id: <D5VT2APZ0C4M.2BNQ7AT62V693@gmail.com>
-Cc: <qemu-devel@nongnu.org>, "Chalapathi V" <chalapathi.v@linux.ibm.com>,
- "Harsh Prateek Bora" <harshpb@linux.ibm.com>, "Glenn Miles"
- <milesg@linux.ibm.com>
-Subject: Re: [PATCH 4/4] ppc/pnv: Add xscom- prefix to pervasive-control
- region name
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-ppc@nongnu.org>, "Peter Xu" <peterx@redhat.com>, "Fabiano Rosas"
- <farosas@suse.de>
-X-Mailer: aerc 0.18.2
-References: <20241125132042.325734-1-npiggin@gmail.com>
- <20241125132042.325734-5-npiggin@gmail.com>
- <03d94b2b-4653-4401-a33d-8581ec022ced@linaro.org>
-In-Reply-To: <03d94b2b-4653-4401-a33d-8581ec022ced@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
- envelope-from=npiggin@gmail.com; helo=mail-oi1-x22d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,43 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Nov 26, 2024 at 5:28 AM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
-> Hi,
+On Mon, Nov 25, 2024 at 8:51=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
 >
-> On 25/11/24 14:20, Nicholas Piggin wrote:
-> > By convention, xscom regions get a xscom- prefix.
-> >=20
-> > Fixes: 1adf24708bf7 ("hw/ppc: Add pnv nest pervasive common chiplet mod=
-el")
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   hw/ppc/pnv_nest_pervasive.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/hw/ppc/pnv_nest_pervasive.c b/hw/ppc/pnv_nest_pervasive.c
-> > index 77476753a4..780fa69dde 100644
-> > --- a/hw/ppc/pnv_nest_pervasive.c
-> > +++ b/hw/ppc/pnv_nest_pervasive.c
-> > @@ -177,7 +177,7 @@ static void pnv_nest_pervasive_realize(DeviceState =
-*dev, Error **errp)
-> >       pnv_xscom_region_init(&nest_pervasive->xscom_ctrl_regs_mr,
-> >                             OBJECT(nest_pervasive),
-> >                             &pnv_nest_pervasive_control_xscom_ops,
-> > -                          nest_pervasive, "pervasive-control",
-> > +                          nest_pervasive, "xscom-pervasive-control",
+> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 >
-> Could this break migration stream? Or only RAM regions need to
-> have a stable name? I don't remember, but try be be cautions with
-> such cosmetic change just before the release ;)
+> The first comment is still relevant but should talk about our own test
+> harness instead. The second comment adds no value over reading the code
+> and can be removed.
 
-Hey Phil,
+I know I am late in the party (been away from QEMU for a bit) but ...
 
-Thanks for always somehow being across everything :)
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-For the powernv machine we are okay since we don't support migration
-at all. It's on the wishlist, but at the moment we have lots of
-hardware models that don't provide vmstate. So I think we are okay.
+Acked-by: Ani Sinha <anisinha@redhat.com>
 
-Thanks,
-Nick
+> Message-Id: <20241121154218.1423005-8-berrange@redhat.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Message-Id: <20241121165806.476008-8-alex.bennee@linaro.org>
+>
+> diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_a=
+cpi_bits.py
+> index ee40647d5b..4c192d95cc 100755
+> --- a/tests/functional/test_acpi_bits.py
+> +++ b/tests/functional/test_acpi_bits.py
+> @@ -196,11 +196,12 @@ def copy_test_scripts(self):
+>          for filename in os.listdir(bits_test_dir):
+>              if os.path.isfile(os.path.join(bits_test_dir, filename)) and=
+ \
+>                 filename.endswith('.py2'):
+> -                # all test scripts are named with extension .py2 so that
+> -                # avocado does not try to load them. These scripts are
+> -                # written for python 2.7 not python 3 and hence if avoca=
+do
+> -                # loaded them, it would complain about python 3 specific
+> -                # syntaxes.
+> +                # All test scripts are named with extension .py2 so that
+> +                # they are not run by accident.
+> +                #
+> +                # These scripts are intended to run inside the test VM
+> +                # and are written for python 2.7 not python 3, hence
+> +                # would cause syntax errors if loaded ouside the VM.
+>                  newfilename =3D os.path.splitext(filename)[0] + '.py'
+>                  shutil.copy2(os.path.join(bits_test_dir, filename),
+>                               os.path.join(target_test_dir, newfilename))
+> @@ -399,8 +400,6 @@ def test_acpi_smbios_bits(self):
+>
+>          # biosbits has been configured to run all the specified test sui=
+tes
+>          # in batch mode and then automatically initiate a vm shutdown.
+> -        # Set timeout to BITS_TIMEOUT for SHUTDOWN event from bits VM at=
+ par
+> -        # with the avocado test timeout.
+>          self._vm.event_wait('SHUTDOWN', timeout=3DBITS_TIMEOUT)
+>          self._vm.wait(timeout=3DNone)
+>          self.logger.debug("Checking console output ...")
+> --
+> 2.39.5
+>
+
 
