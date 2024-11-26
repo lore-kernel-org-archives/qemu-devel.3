@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185B6D3B7C1
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 08:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE4D3D3B7C1
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 08:50:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFr6W-0001w2-QL; Tue, 26 Nov 2024 03:39:28 -0500
+	id 1tFrGR-0003T6-1w; Tue, 26 Nov 2024 03:49:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFr6V-0001vq-RK
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:39:27 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tFrGO-0003SR-J2
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:49:40 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFr6U-00011j-82
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:39:27 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38246333e12so5320019f8f.1
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 00:39:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tFrGM-0002jb-RF
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 03:49:40 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-aa55171d73cso321471066b.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 00:49:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732610364; x=1733215164; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9rhTDNDlcmoEuMSSYLzJyCSZMnNBLZIp/7iQL6IIYlo=;
- b=vUkzVmMGZu+TdW4dagrvjPQdUzIQ3gXAocA+B7fWwhEuX4AnkRga4CH0OIvLpFvpqd
- 1yi8bcsgc7lI7tRgnmEj4Y0qG5aPaOfcQTVCoDbQhIxdVWBw44LxadSCe6A3iq9yfxmR
- enwVQrgzLf6cijCKNpC/xYYt3yv1/Ns2b7TlpAZ0E04LR24as1KHqcAbpagSyfYh1yr2
- PwINsoi7FKgUWRaA2YivE1rVcHZL62veNXp/VI26V8eqvJN6/2sjpPonTEcbYr4yAKJI
- BhDWSFsyrUNgqIaT8IYroHkPDoAh3oFeMDdWprzVDn7hUMomXwLQrcxFJqlaPJ8f8W6e
- T6pw==
+ d=linaro.org; s=google; t=1732610977; x=1733215777; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vt+DBc9E7puNWklMEXZgAviwA5/ofl4yBlgoefDshmI=;
+ b=tQg3Jq5DZnvfe9doH6WxvWW/akicfU3lIpu8GezrivQC1w2ZhycvhPMCY9VHcuc528
+ ROtGO9fcjagM1aUFLoVSskooSeJIVulSuRT7nOjCaPBafslXk4qFzcH+0NLG0cO2ZNCy
+ SxzQbrEOaxeJKVZua5KEYV8UqznE52gYZ8iLDlGoMWMy1Dud9IOEB4qzxFjUqVAqFzk9
+ DzYTT7cd6vUiudaq/SuhQ9OERHSv4mvAL0WaMR+25T2UgE5xEuIaYck5S8tPJcH4iscK
+ sXmtIOjnK4igDsVRgJgbi6he4JiXTz7YlHt6DSiz3yLdJ6RMrZhJFwnt3bH/fWg319On
+ K6cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732610364; x=1733215164;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9rhTDNDlcmoEuMSSYLzJyCSZMnNBLZIp/7iQL6IIYlo=;
- b=wU3n6etgftOt/djYb5zuMZRNhzhrKzEBi8BZY8s81YTf1qwsPRdyVW2ZnSQRuO5LlF
- S+8nh3J2McKz8nzTcprrZqWih/jFdWJqBgjZC38YQ1ANx5qK65vUxZSMFeeIk4X1v+HS
- 9ZitfvKVTE2WNaCXdjrVhZya1OXgVGLctjNjDNvjbIIOEbhblZoMaP4Yir4qIvMC1Wgf
- t7YjCloTAljkIUSp2up8NlfiWUn69KlcTSZ/aBqWBq27cRSwLw1fwTP7+zb6p7sVhJgV
- fGe86uyBUU8OfaoR/fJ7K5woPT/rQYNo7qQcZfqXY6n7wH1Mkq4VZyHQ2Rq083K8znNF
- EfWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURLEqj92hFuyvbvOoNJ0Hw/nd3ke96TcmK0BiYv2LZmSJQKwjVOJn7KG63nz3A6MBq3anPIwWpRRKQ@nongnu.org
-X-Gm-Message-State: AOJu0Yytz3K51aDoBndxERMKu7iM0ud/nhkxS/QzELPfiHTPbHXYvT4+
- IbWvkmRSGkh6wbkZrqVqe78cexmHOnqnKSPJD6H6AIO8K1PHL8k9iUsxG5fEYmk=
-X-Gm-Gg: ASbGncvvy5bEyOU0CZS91pUzDWKtEJJxscAxrK5XsHIVq/HR+oaCJYiPLIWhrncWZG4
- nxbXpwuIyaLSMXYjx3deZ8mV+59spUV844fHm8CENBESdhRM7PCXuBKnlViv7v7nBQ6eUUeFn3u
- P32b1ojmrrgh1roFw0gJQqry5ocRCoUX8inaAB1bUI2fG9/t9j36TlIlV9n5ADkt2voQ2223ME6
- rYCXjYzUQZI8fXBQMBMbyOz0pbX/G5k6IIuhvzsfHMRf9lcWGi7l7uaO7VEIFxerA==
-X-Google-Smtp-Source: AGHT+IEkUQB75KlqgDVq2a9nJp9OOIrDYxWUGVT3ddb13FOci1VO8b+RyFkbYvoqztUmxqqMnWSaHw==
-X-Received: by 2002:a05:6000:400b:b0:382:5112:5631 with SMTP id
- ffacd0b85a97d-38260b60ff1mr15321177f8f.23.1732610363606; 
- Tue, 26 Nov 2024 00:39:23 -0800 (PST)
-Received: from [192.168.69.146] ([176.176.143.205])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fb2609csm12809351f8f.44.2024.11.26.00.39.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 00:39:22 -0800 (PST)
-Message-ID: <39d99130-0d3f-4254-86dd-20151e57ec68@linaro.org>
-Date: Tue, 26 Nov 2024 09:39:21 +0100
+ d=1e100.net; s=20230601; t=1732610977; x=1733215777;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vt+DBc9E7puNWklMEXZgAviwA5/ofl4yBlgoefDshmI=;
+ b=HkZYHMXiF4dKnn3SUZYUlhJighI9Ce1I5qKWgBVyMqQZkThebK2zufgK/VxTt6VbNR
+ gxD0QJZRgpHk45vY85sRx8R7nxnMlNNQQJ3+Dxzon6+b03K1/4KcUVvOZvu20BYdCSLI
+ Pkn5dobro2NxnQMoZYeebDs+4K4dCJ0L/3gvn8bbcftru48NQZr0yWgwpTJFxVd0YYG3
+ kk7o00AD8mz0LLLpqML19ajF+ClTul/zvJevv5LUE1Pu+6pGQxzShctzFWPeyZyrv0Jn
+ avZZHbR01ck8gEi/2STg0RaC2iFhOVsQgn7eSc/y9AIlrvpTWg7TTBJ450bL+3f9Gq7M
+ c1JA==
+X-Gm-Message-State: AOJu0YyeAMUV/hsL1VjFk6P+hs2rfzBNjvWwisMaGQUh3/BnUNsuRJ7V
+ Rf8LzLBJEmTLTI4mp+eQPTyDkk1HQEDQ9l5KAZE0z45lGpgmG0CfeXrBLNFj4UlOaqDBjPicMQ9
+ +
+X-Gm-Gg: ASbGncs1RDgTxNVzbLbE8MpxZDma4hqvp5LrQrzB1p8iForLCsyBEyiM15pFzDeUp/n
+ yEY8Lx7fU3ppDgy283aVFX8VjTtQ0hfEQQJ44/t37juCq9WHJQVWTsZ/kA2Lh1StjDcXjh0DBUC
+ qfX23MONYDBKzoS3yalEjaVwuqnxcMyOb3spDlURiAWD/dSzkMY6Ktvsq5nui1oarUcigR3cGb9
+ ypVBfTcJjt0VEexw3g+hECYM5cf0wd7JGxVOg9J/zOiXjlk6EGntXdNY8IHKEPcfaJBfJRDWn3T
+ 80ohc1HAAhWsSzJI9YBaNbjAug==
+X-Google-Smtp-Source: AGHT+IHidfZq/knKBoKFvpKkkEHxCbz/LGwO+JDb4GD0DM9pFMqQQC9eBUApKNGu2ZpNIhOsX6Tlrg==
+X-Received: by 2002:a17:907:7809:b0:aa5:2e06:7e18 with SMTP id
+ a640c23a62f3a-aa564891059mr223979966b.10.1732610976879; 
+ Tue, 26 Nov 2024 00:49:36 -0800 (PST)
+Received: from applejack.lan (83.11.10.28.ipv4.supernova.orange.pl.
+ [83.11.10.28]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa50b2efbf1sm568553666b.44.2024.11.26.00.49.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Nov 2024 00:49:36 -0800 (PST)
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, qemu-arm@nongnu.org,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Subject: [PATCH 1/1] hw/arm/sbsa-ref: bump default memory size to 2GB
+Date: Tue, 26 Nov 2024 09:49:28 +0100
+Message-ID: <20241126084928.252067-1-marcin.juszkiewicz@linaro.org>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/timer: fix int underflow
-To: Dmitry Frolov <frolov@swemel.ru>, peter.maydell@linaro.org
-Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
-References: <20241106104041.624806-2-frolov@swemel.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241106104041.624806-2-frolov@swemel.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,37 +100,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dmitry,
+We are working on adding RME support to SBSA Reference Platform.
+When RME is enabled then RMM (Realm Managment Monitor) takes 1072MB of
+memory for own use. Which ends with firmware panic on 1GB machine.
 
-On 6/11/24 11:40, Dmitry Frolov wrote:
-> Both timeout and return value of imx_gpt_update_count() are unsigned.
-> Thus "limit" can not be negative, but obviously it was implied.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
-> ---
->   hw/timer/imx_gpt.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/timer/imx_gpt.c b/hw/timer/imx_gpt.c
-> index 23b3d79bdb..06e4837fed 100644
-> --- a/hw/timer/imx_gpt.c
-> +++ b/hw/timer/imx_gpt.c
-> @@ -238,7 +238,7 @@ static void imx_gpt_compute_next_timeout(IMXGPTState *s, bool event)
->       }
->   
->       /* the new range to count down from */
-> -    limit = timeout - imx_gpt_update_count(s);
-> +    limit = (long long)timeout - imx_gpt_update_count(s);
+Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+---
+ hw/arm/sbsa-ref.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-You posted similar automatic change in at least 3 different
-code areas. Each time different maintainers made similar
-comments. At this point you should be able to auto-review
-this patch and respin a proper follow up IMHO. Reviewers and
-maintainers time is scarce.
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index e3195d5449..2195465202 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -901,7 +901,7 @@ static void sbsa_ref_class_init(ObjectClass *oc, void *data)
+     mc->block_default_type = IF_IDE;
+     mc->no_cdrom = 1;
+     mc->default_nic = "e1000e";
+-    mc->default_ram_size = 1 * GiB;
++    mc->default_ram_size = 2 * GiB;
+     mc->default_ram_id = "sbsa-ref.ram";
+     mc->default_cpus = 4;
+     mc->smp_props.clusters_supported = true;
+-- 
+2.47.0
 
-Regards,
-
-Phil.
 
