@@ -4,83 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90747D3B98E
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 13:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D023D3B98E
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 13:23:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFvUt-0008ND-I6; Tue, 26 Nov 2024 08:20:55 -0500
+	id 1tFvX9-0000dy-2G; Tue, 26 Nov 2024 08:23:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFvUm-0008Mg-GC
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:20:48 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFvX5-0000dd-PJ
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:23:13 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFvUk-0004iy-Qy
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:20:48 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-38245e072e8so5463880f8f.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 05:20:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732627245; x=1733232045; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dEHyBT7fNcPjFo7nEqMdEQ9kYOZb3iBk8z/fx9S3l0M=;
- b=cyJcLbo20I4YNByRXRtrrjh4rSES5xGtOUZhY4TS/gdYX6HND4S1v4QSjWDdNVV96U
- VlwRBqJ1T7VDz6tZ95qoizpHcLsAn8Z2jEzfcxq/g7su6zWi5r88EwViUb7zQeRvh+qh
- lDMdpdV9cFSj+YBio1iM53Muq6nRNJYQBX5gNUwanqp98p6CIwBC4DZix6jD8gkNzoWL
- SRCv9fa54j7Qx+DV6TQZzflL6oBwpaqgwVAuB/wVwKJjZYBbYGzO/12z1jDPoAQEch40
- WxnE2Srnjy7N8DAusbPQXnKzqJjNqHROEnQKoDp0/HGGm3rcCZnMAy+Jr/Ynlomm44CQ
- +BOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732627245; x=1733232045;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dEHyBT7fNcPjFo7nEqMdEQ9kYOZb3iBk8z/fx9S3l0M=;
- b=w5N8LZDB0E7IEjJEIFZd6cZ52N+1CRSlPy3TTay1NBL1+1q+Xho+T1xXsrjyGi7ytd
- mBH2hiedrsRE+8KFHxOjzm315hJgWhhhNumGxO63W/UcnOZo63n8jW+RMieuVHzxX0da
- 3bMidoUzND75HABJhjDzYmcgwycwyF78X9LLtv/PUWniq54Njz1CunYrIwj3RFCtZWbO
- Va54fCxlUub2NjaJyEyGAE51/3utdhVrLybfoH1eb1cpJsXTP/0tM2/7M6GgqxCqIhP7
- fV7FUOixmJaBnTV4/oB1L7hUAD8u664M3PenWLsA7GOrIPWIprgHEn3N49DGCXr6ECiM
- m/Mg==
-X-Gm-Message-State: AOJu0YzucJSILnjO/Sp9V8WoAE9Y82R97wetklc3o1V+iobAJcx8WUAT
- hMxGZ6FCs3PpvtlyG/+hjrLiOFlo/QPNFyw1H8cG5jCZNLWN7r1znf4fC0XO3QkLcwuJWeUNpqs
- 5
-X-Gm-Gg: ASbGnctD0zRGQV2BXcKWBceNmACNj2D/CFd7eR03N0N3jlpPkSSCTl4e+vEA9PpJUAl
- WCVK3TW9LqvIOrmDSUq+0yAshZfUYWtTyzjPoDsZLCYKV6h1r2rwwTRGoUg4owJhNOvouOKbHWx
- d49MVEK+BaKvPSR4/LENYcofMV38VmfAJ/KP5AtRJRGBdVfZczKIWjN2/L1/mgR2DE6coaA5XBr
- OrVSE+zP8xyQPTeQFPRJ1MmeUAWZVJOJxpTnDv+V5uHEmU69dspfNzXRvQYJlsFRg==
-X-Google-Smtp-Source: AGHT+IEV/N4aqozMfSFlZdyYaGvftvHsW4UgILNevUi7ZEuH1drjRAZgKKBPJImtt1mwPqo1eXovwA==
-X-Received: by 2002:a5d:47cc:0:b0:382:506b:f627 with SMTP id
- ffacd0b85a97d-38260bea7a0mr20202881f8f.57.1732627245007; 
- Tue, 26 Nov 2024 05:20:45 -0800 (PST)
-Received: from [192.168.69.146] ([176.176.143.205])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4349f9eca01sm72346435e9.29.2024.11.26.05.20.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 05:20:44 -0800 (PST)
-Message-ID: <2be6cd2d-44c6-45ab-bfce-c5ae31dc63ab@linaro.org>
-Date: Tue, 26 Nov 2024 14:20:43 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tFvX3-0005Jt-1i
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:23:11 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 4F9981F745;
+ Tue, 26 Nov 2024 13:23:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732627385; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ddrh39faBDQrTKLapUlESt2jGuyWKf2YvSHXBeczHTU=;
+ b=ebp8uhFp8RCPZT49XtqOMcKpMRM4wSucryiM4JhEqMMjQOgioiFYjSj/aOn66HCBAMBOZI
+ suyzY1Kyt4jlfa9G2+CzUUAujZ/1tNaRh/ub8JiYJ2FCKQ8wPInFnLt04rcXzEJx2nIbDl
+ Xt98mDD9X0A3m45mdMpBF9zxqEjzyk4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732627385;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ddrh39faBDQrTKLapUlESt2jGuyWKf2YvSHXBeczHTU=;
+ b=Xpe+QIyatRy1bW/SkXqC/YzX0vKhowPd3xi7Gr1jbzdzp0NZWXEDI1d230qAlJv1jlLuDA
+ 8OIkEvEwPmPZqvDQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ebp8uhFp;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Xpe+QIya
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732627385; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ddrh39faBDQrTKLapUlESt2jGuyWKf2YvSHXBeczHTU=;
+ b=ebp8uhFp8RCPZT49XtqOMcKpMRM4wSucryiM4JhEqMMjQOgioiFYjSj/aOn66HCBAMBOZI
+ suyzY1Kyt4jlfa9G2+CzUUAujZ/1tNaRh/ub8JiYJ2FCKQ8wPInFnLt04rcXzEJx2nIbDl
+ Xt98mDD9X0A3m45mdMpBF9zxqEjzyk4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732627385;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ddrh39faBDQrTKLapUlESt2jGuyWKf2YvSHXBeczHTU=;
+ b=Xpe+QIyatRy1bW/SkXqC/YzX0vKhowPd3xi7Gr1jbzdzp0NZWXEDI1d230qAlJv1jlLuDA
+ 8OIkEvEwPmPZqvDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4657213890;
+ Tue, 26 Nov 2024 13:23:04 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id tYjdArjLRWfzYQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 26 Nov 2024 13:23:04 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Yichen Wang <yichen.wang@bytedance.com>
+Cc: Peter Xu <peterx@redhat.com>, "Dr. David Alan Gilbert"
+ <dave@treblig.org>, Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Marc-A?=
+ =?utf-8?Q?ndr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ qemu-devel@nongnu.org, Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1"
+ <yuan1.liu@intel.com>, Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren
+ (Jack) Chuang" <horenchuang@bytedance.com>
+Subject: Re: [External] Re: [PATCH v7 09/12] migration/multifd: Enable DSA
+ offloading in multifd sender path.
+In-Reply-To: <CAHObMVZvNcQcF41TB+tXK9hyPfaFV3tQM90bU2hVku5y-kXPYg@mail.gmail.com>
+References: <20241114220132.27399-1-yichen.wang@bytedance.com>
+ <20241114220132.27399-10-yichen.wang@bytedance.com>
+ <87iksgpb02.fsf@suse.de>
+ <CAHObMVZvNcQcF41TB+tXK9hyPfaFV3tQM90bU2hVku5y-kXPYg@mail.gmail.com>
+Date: Tue, 26 Nov 2024 10:20:46 -0300
+Message-ID: <871pyynnbl.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] target/mips: Introduce decode tree bindings for
- nanoMIPS ISA
-To: qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno
- <aurelien@aurel32.net>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <f4bug@amsat.org>, Richard Henderson <richard.henderson@linaro.org>
-References: <20241112172022.88348-1-philmd@linaro.org>
- <20241112172022.88348-3-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241112172022.88348-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 4F9981F745
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[16]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,67 +140,379 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/24 18:20, Philippe Mathieu-Daudé wrote:
-> From: Philippe Mathieu-Daudé <f4bug@amsat.org>
-> 
-> Introduce the nanoMIPS decodetree configs for the 16-bit
-> and 32-bit instructions.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-> Reviewed-by: Aleksandar Rikalo <arikalo@gmail.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/tcg/translate.h              |  2 ++
->   target/mips/tcg/nanomips16.decode        |  8 ++++++++
->   target/mips/tcg/nanomips32.decode        |  8 ++++++++
->   target/mips/tcg/nanomips_translate.c     | 14 ++++++++++++++
->   target/mips/tcg/nanomips_translate.c.inc |  7 +++++++
->   target/mips/tcg/meson.build              |  3 +++
->   6 files changed, 42 insertions(+)
->   create mode 100644 target/mips/tcg/nanomips16.decode
->   create mode 100644 target/mips/tcg/nanomips32.decode
->   create mode 100644 target/mips/tcg/nanomips_translate.c
+Yichen Wang <yichen.wang@bytedance.com> writes:
 
+> On Thu, Nov 21, 2024 at 12:52=E2=80=AFPM Fabiano Rosas <farosas@suse.de> =
+wrote:
+>>
+>> Yichen Wang <yichen.wang@bytedance.com> writes:
+>>
+>> > From: Hao Xiang <hao.xiang@linux.dev>
+>> >
+>> > Multifd sender path gets an array of pages queued by the migration
+>> > thread. It performs zero page checking on every page in the array.
+>> > The pages are classfied as either a zero page or a normal page. This
+>> > change uses Intel DSA to offload the zero page checking from CPU to
+>> > the DSA accelerator. The sender thread submits a batch of pages to DSA
+>> > hardware and waits for the DSA completion thread to signal for work
+>> > completion.
+>> >
+>> > Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+>> > Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+>> > ---
+>> >  migration/multifd-zero-page.c | 129 ++++++++++++++++++++++++++++++----
+>> >  migration/multifd.c           |  29 +++++++-
+>> >  migration/multifd.h           |   5 ++
+>> >  3 files changed, 147 insertions(+), 16 deletions(-)
+>> >
+>> > diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-pa=
+ge.c
+>> > index f1e988a959..639aed9f6b 100644
+>> > --- a/migration/multifd-zero-page.c
+>> > +++ b/migration/multifd-zero-page.c
+>> > @@ -21,7 +21,9 @@
+>> >
+>> >  static bool multifd_zero_page_enabled(void)
+>> >  {
+>> > -    return migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_M=
+ULTIFD;
+>> > +    ZeroPageDetection curMethod =3D migrate_zero_page_detection();
+>> > +    return (curMethod =3D=3D ZERO_PAGE_DETECTION_MULTIFD ||
+>> > +            curMethod =3D=3D ZERO_PAGE_DETECTION_DSA_ACCEL);
+>> >  }
+>> >
+>> >  static void swap_page_offset(ram_addr_t *pages_offset, int a, int b)
+>> > @@ -37,26 +39,49 @@ static void swap_page_offset(ram_addr_t *pages_off=
+set, int a, int b)
+>> >      pages_offset[b] =3D temp;
+>> >  }
+>> >
+>> > +#ifdef CONFIG_DSA_OPT
+>> > +
+>> > +static void swap_result(bool *results, int a, int b)
+>> > +{
+>> > +    bool temp;
+>> > +
+>> > +    if (a =3D=3D b) {
+>> > +        return;
+>> > +    }
+>> > +
+>> > +    temp =3D results[a];
+>> > +    results[a] =3D results[b];
+>> > +    results[b] =3D temp;
+>> > +}
+>> > +
+>> >  /**
+>> > - * multifd_send_zero_page_detect: Perform zero page detection on all =
+pages.
+>> > + * zero_page_detect_dsa: Perform zero page detection using
+>> > + * Intel Data Streaming Accelerator (DSA).
+>> >   *
+>> > - * Sorts normal pages before zero pages in p->pages->offset and updat=
+es
+>> > - * p->pages->normal_num.
+>> > + * Sorts normal pages before zero pages in pages->offset and updates
+>> > + * pages->normal_num.
+>> >   *
+>> >   * @param p A pointer to the send params.
+>> >   */
+>> > -void multifd_send_zero_page_detect(MultiFDSendParams *p)
+>> > +static void zero_page_detect_dsa(MultiFDSendParams *p)
+>> >  {
+>> >      MultiFDPages_t *pages =3D &p->data->u.ram;
+>> >      RAMBlock *rb =3D pages->block;
+>> > -    int i =3D 0;
+>> > -    int j =3D pages->num - 1;
+>> > +    bool *results =3D p->dsa_batch_task->results;
+>> >
+>> > -    if (!multifd_zero_page_enabled()) {
+>> > -        pages->normal_num =3D pages->num;
+>> > -        goto out;
+>> > +    for (int i =3D 0; i < pages->num; i++) {
+>> > +        p->dsa_batch_task->addr[i] =3D
+>> > +            (ram_addr_t)(rb->host + pages->offset[i]);
+>> >      }
+>> >
+>> > +    buffer_is_zero_dsa_batch_sync(p->dsa_batch_task,
+>> > +                                  (const void **)p->dsa_batch_task->a=
+ddr,
+>> > +                                  pages->num,
+>> > +                                  multifd_ram_page_size());
+>> > +
+>> > +    int i =3D 0;
+>> > +    int j =3D pages->num - 1;
+>> > +
+>> >      /*
+>> >       * Sort the page offset array by moving all normal pages to
+>> >       * the left and all zero pages to the right of the array.
+>> > @@ -64,23 +89,39 @@ void multifd_send_zero_page_detect(MultiFDSendPara=
+ms *p)
+>> >      while (i <=3D j) {
+>> >          uint64_t offset =3D pages->offset[i];
+>> >
+>> > -        if (!buffer_is_zero(rb->host + offset, multifd_ram_page_size(=
+))) {
+>> > +        if (!results[i]) {
+>> >              i++;
+>> >              continue;
+>> >          }
+>> >
+>> > +        swap_result(results, i, j);
+>> >          swap_page_offset(pages->offset, i, j);
+>> >          ram_release_page(rb->idstr, offset);
+>> >          j--;
+>> >      }
+>> >
+>> >      pages->normal_num =3D i;
+>> > +}
+>> >
+>> > -out:
+>> > -    stat64_add(&mig_stats.normal_pages, pages->normal_num);
+>> > -    stat64_add(&mig_stats.zero_pages, pages->num - pages->normal_num);
+>> > +void multifd_dsa_cleanup(void)
+>> > +{
+>> > +    qemu_dsa_cleanup();
+>> > +}
+>> > +
+>> > +#else
+>> > +
+>> > +static void zero_page_detect_dsa(MultiFDSendParams *p)
+>> > +{
+>> > +    g_assert_not_reached();
+>> > +}
+>> > +
+>> > +void multifd_dsa_cleanup(void)
+>> > +{
+>> > +    return ;
+>> >  }
+>> >
+>> > +#endif
+>> > +
+>> >  void multifd_recv_zero_page_process(MultiFDRecvParams *p)
+>> >  {
+>> >      for (int i =3D 0; i < p->zero_num; i++) {
+>> > @@ -92,3 +133,63 @@ void multifd_recv_zero_page_process(MultiFDRecvPar=
+ams *p)
+>> >          }
+>> >      }
+>> >  }
+>> > +
+>> > +/**
+>> > + * zero_page_detect_cpu: Perform zero page detection using CPU.
+>> > + *
+>> > + * Sorts normal pages before zero pages in p->pages->offset and updat=
+es
+>> > + * p->pages->normal_num.
+>> > + *
+>> > + * @param p A pointer to the send params.
+>> > + */
+>> > +static void zero_page_detect_cpu(MultiFDSendParams *p)
+>> > +{
+>> > +    MultiFDPages_t *pages =3D &p->data->u.ram;
+>> > +    RAMBlock *rb =3D pages->block;
+>> > +    int i =3D 0;
+>> > +    int j =3D pages->num - 1;
+>> > +
+>> > +    /*
+>> > +     * Sort the page offset array by moving all normal pages to
+>> > +     * the left and all zero pages to the right of the array.
+>> > +     */
+>> > +    while (i <=3D j) {
+>> > +        uint64_t offset =3D pages->offset[i];
+>> > +
+>> > +        if (!buffer_is_zero(rb->host + offset, multifd_ram_page_size(=
+))) {
+>> > +            i++;
+>> > +            continue;
+>> > +        }
+>> > +
+>> > +        swap_page_offset(pages->offset, i, j);
+>> > +        ram_release_page(rb->idstr, offset);
+>> > +        j--;
+>> > +    }
+>> > +
+>> > +    pages->normal_num =3D i;
+>> > +}
+>> > +
+>> > +/**
+>> > + * multifd_send_zero_page_detect: Perform zero page detection on all =
+pages.
+>> > + *
+>> > + * @param p A pointer to the send params.
+>> > + */
+>> > +void multifd_send_zero_page_detect(MultiFDSendParams *p)
+>> > +{
+>> > +    MultiFDPages_t *pages =3D &p->data->u.ram;
+>> > +
+>> > +    if (!multifd_zero_page_enabled()) {
+>> > +        pages->normal_num =3D pages->num;
+>> > +        goto out;
+>> > +    }
+>> > +
+>> > +    if (qemu_dsa_is_running()) {
+>> > +        zero_page_detect_dsa(p);
+>> > +    } else {
+>> > +        zero_page_detect_cpu(p);
+>> > +    }
+>> > +
+>> > +out:
+>> > +    stat64_add(&mig_stats.normal_pages, pages->normal_num);
+>> > +    stat64_add(&mig_stats.zero_pages, pages->num - pages->normal_num);
+>> > +}
+>> > diff --git a/migration/multifd.c b/migration/multifd.c
+>> > index 4374e14a96..689acceff2 100644
+>> > --- a/migration/multifd.c
+>> > +++ b/migration/multifd.c
+>> > @@ -13,6 +13,7 @@
+>> >  #include "qemu/osdep.h"
+>> >  #include "qemu/cutils.h"
+>> >  #include "qemu/rcu.h"
+>> > +#include "qemu/dsa.h"
+>> >  #include "exec/target_page.h"
+>> >  #include "sysemu/sysemu.h"
+>> >  #include "exec/ramblock.h"
+>> > @@ -462,6 +463,8 @@ static bool multifd_send_cleanup_channel(MultiFDSe=
+ndParams *p, Error **errp)
+>> >      p->name =3D NULL;
+>> >      g_free(p->data);
+>> >      p->data =3D NULL;
+>> > +    buffer_zero_batch_task_destroy(p->dsa_batch_task);
+>> > +    p->dsa_batch_task =3D NULL;
+>> >      p->packet_len =3D 0;
+>> >      g_free(p->packet);
+>> >      p->packet =3D NULL;
+>> > @@ -493,6 +496,8 @@ void multifd_send_shutdown(void)
+>> >
+>> >      multifd_send_terminate_threads();
+>> >
+>> > +    multifd_dsa_cleanup();
+>> > +
+>> >      for (i =3D 0; i < migrate_multifd_channels(); i++) {
+>> >          MultiFDSendParams *p =3D &multifd_send_state->params[i];
+>> >          Error *local_err =3D NULL;
+>> > @@ -814,11 +819,31 @@ bool multifd_send_setup(void)
+>> >      uint32_t page_count =3D multifd_ram_page_count();
+>> >      bool use_packets =3D multifd_use_packets();
+>> >      uint8_t i;
+>> > +    Error *local_err =3D NULL;
+>> >
+>> >      if (!migrate_multifd()) {
+>> >          return true;
+>> >      }
+>> >
+>> > +    if (s &&
+>> > +        s->parameters.zero_page_detection =3D=3D ZERO_PAGE_DETECTION_=
+DSA_ACCEL) {
+>> > +        // Populate the dsa device path from accel-path
+>>
+>> scripts/checkpatch.pl would have rejected this.
+>>
+>
+> Sorry. I will make sure to run checkpatch.pl, unit test (both
+> with/without DSA), before the send-email...
+>
+>> > +        const strList *accel_path =3D migrate_accel_path();
+>> > +        g_autofree strList *dsa_parameter =3D g_malloc0(sizeof(strLis=
+t));
+>> > +        strList **tail =3D &dsa_parameter;
+>> > +        while (accel_path) {
+>> > +            if (strncmp(accel_path->value, "dsa:", 4) =3D=3D 0) {
+>> > +                QAPI_LIST_APPEND(tail, &accel_path->value[4]);
+>> > +            }
+>> > +            accel_path =3D accel_path->next;
+>> > +        }
+>>
+>> The parsing of the parameter should be in options.c. In fact, Peter
+>> suggested in v4 to make all of this a multifd_dsa_send_setup() or
+>> multifd_dsa_init(), I think that's a good idea.
+>>
+>
+> Will fix it in the next version.
+>
+>> > +        if (qemu_dsa_init(dsa_parameter, &local_err)) {
+>> > +            ret =3D -1;
+>>
+>> migrate_set_error(s, local_err);
+>> goto err;
+>
+> Will fix it in the next version. But here we can't goto err, because
+> the cleanup() function will be called when setup() fails, and it has
+> assumptions that a certain data structure is in place. If we exit
+> earlier, the cleanup() function will complain and fail.
+>
 
-> diff --git a/target/mips/tcg/nanomips_translate.c b/target/mips/tcg/nanomips_translate.c
-> new file mode 100644
-> index 0000000000..c148c13ed9
-> --- /dev/null
-> +++ b/target/mips/tcg/nanomips_translate.c
-> @@ -0,0 +1,14 @@
-> +/*
-> + * MIPS emulation for QEMU - nanoMIPS translation routines
-> + *
-> + * Copyright (c) 2021 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + *
-> + * SPDX-License-Identifier: LGPL-2.1-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "translate.h"
-> +
-> +/* Include the auto-generated decoders.  */
-> +#include "decode-nanomips16.c.inc"
-> +#include "decode-nanomips32.c.inc"
-> diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
-> index 1e274143bb..e401b92bfd 100644
-> --- a/target/mips/tcg/nanomips_translate.c.inc
-> +++ b/target/mips/tcg/nanomips_translate.c.inc
-> @@ -4482,6 +4482,13 @@ static int decode_isa_nanomips(CPUMIPSState *env, DisasContext *ctx)
->           return 2;
->       }
->   
-> +    if (decode_isa_nanomips16(ctx, ctx->opcode)) {
-> +        return 2;
-> +    }
-> +    if (decode_isa_nanomips32(ctx, ctx->opcode)) {
+Which data structure? Is that multifd_send_state below? You could move
+those before qemu_dsa_init if that's the case.
 
-This call is incorrect, the caller previously called
-translator_lduw() so ctx->opcode is incomplete.
-
-> +        return 4;
-> +    }
-
-Discarding this series for now.
+>>
+>> > +        } else {
+>> > +            qemu_dsa_start();
+>> > +        }
+>> > +    }
+>> > +
+>> >      thread_count =3D migrate_multifd_channels();
+>> >      multifd_send_state =3D g_malloc0(sizeof(*multifd_send_state));
+>> >      multifd_send_state->params =3D g_new0(MultiFDSendParams, thread_c=
+ount);
+>> > @@ -829,12 +854,12 @@ bool multifd_send_setup(void)
+>> >
+>> >      for (i =3D 0; i < thread_count; i++) {
+>> >          MultiFDSendParams *p =3D &multifd_send_state->params[i];
+>> > -        Error *local_err =3D NULL;
+>> >
+>> >          qemu_sem_init(&p->sem, 0);
+>> >          qemu_sem_init(&p->sem_sync, 0);
+>> >          p->id =3D i;
+>> >          p->data =3D multifd_send_data_alloc();
+>> > +        p->dsa_batch_task =3D buffer_zero_batch_task_init(page_count);
+>> >
+>> >          if (use_packets) {
+>> >              p->packet_len =3D sizeof(MultiFDPacket_t)
+>> > @@ -865,7 +890,6 @@ bool multifd_send_setup(void)
+>> >
+>> >      for (i =3D 0; i < thread_count; i++) {
+>> >          MultiFDSendParams *p =3D &multifd_send_state->params[i];
+>> > -        Error *local_err =3D NULL;
+>> >
+>> >          ret =3D multifd_send_state->ops->send_setup(p, &local_err);
+>> >          if (ret) {
+>> > @@ -1047,6 +1071,7 @@ void multifd_recv_cleanup(void)
+>> >              qemu_thread_join(&p->thread);
+>> >          }
+>> >      }
+>> > +    multifd_dsa_cleanup();
+>> >      for (i =3D 0; i < migrate_multifd_channels(); i++) {
+>> >          multifd_recv_cleanup_channel(&multifd_recv_state->params[i]);
+>> >      }
+>> > diff --git a/migration/multifd.h b/migration/multifd.h
+>> > index 50d58c0c9c..e293ddbc1d 100644
+>> > --- a/migration/multifd.h
+>> > +++ b/migration/multifd.h
+>> > @@ -15,6 +15,7 @@
+>> >
+>> >  #include "exec/target_page.h"
+>> >  #include "ram.h"
+>> > +#include "qemu/dsa.h"
+>> >
+>> >  typedef struct MultiFDRecvData MultiFDRecvData;
+>> >  typedef struct MultiFDSendData MultiFDSendData;
+>> > @@ -155,6 +156,9 @@ typedef struct {
+>> >      bool pending_sync;
+>> >      MultiFDSendData *data;
+>> >
+>> > +    /* Zero page checking batch task */
+>> > +    QemuDsaBatchTask *dsa_batch_task;
+>> > +
+>> >      /* thread local variables. No locking required */
+>> >
+>> >      /* pointer to the packet */
+>> > @@ -313,6 +317,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p=
+);
+>> >  bool multifd_send_prepare_common(MultiFDSendParams *p);
+>> >  void multifd_send_zero_page_detect(MultiFDSendParams *p);
+>> >  void multifd_recv_zero_page_process(MultiFDRecvParams *p);
+>> > +void multifd_dsa_cleanup(void);
+>> >
+>> >  static inline void multifd_send_prepare_header(MultiFDSendParams *p)
+>> >  {
 
