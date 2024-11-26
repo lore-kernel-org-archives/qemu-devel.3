@@ -4,95 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34404D6555A
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 21:19:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B47D6555A
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 21:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tG2wh-0001Vr-1e; Tue, 26 Nov 2024 16:18:07 -0500
+	id 1tG2xg-0002cN-5F; Tue, 26 Nov 2024 16:19:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tG2we-0001Uy-Dj
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:18:04 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tG2xR-0002Ji-BP
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:18:55 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tG2wc-0001aq-MZ
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:18:04 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-724f383c5bfso3074046b3a.1
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 13:18:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732655881; x=1733260681; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zhU83W89p+RCeB/hbc2plZMB5afwgNr/zybcZ8PE9c0=;
- b=fvUjHhUMAyznJHel/DwOISGBKS/JFDnYzdmpq7m1sORcZQj2eDrIIgPFaeuOaMI5T3
- WckLyYjbCYMpZs0OOo1OMR4gvtIdP/S0XFiANuYHkqaxX5y9C54eOaL4ave8CyMCgANK
- oIrNHkqgYiH78Jd8s5eQoAjmK8Wrcv9/SbSfZwj/SAIE3Yv96Vi4D6qu3ORea/PkL3tQ
- dBDuKVv1ul2Q31tCuHxRQN/ZMCUbBkuDMmp4NwvaV8R93h2PFT0ui1EdWE9P30wZwKRa
- y85ubiOeFU2VYncPLVxtW47EpoMXW17iixvlIMDYQ5iQ9y/X2SgORL4XXZxfRpT03ojT
- 8kpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732655881; x=1733260681;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zhU83W89p+RCeB/hbc2plZMB5afwgNr/zybcZ8PE9c0=;
- b=H3okOeD3x+AM/rVXzkrR4darzCuD785t21tVMtFyPK6juHdjiWoznt3ddvmNnFTp9R
- gTe0XayBk0GXQde/akuZesyhONytCs1+zW+g+dgLB2hEnxG0qLVFKm3Ud4d0wNjJclHO
- etsq4ZeEYqMwMnPeYk8hO30QvfTunLz+CWbBTPb3SfWcubZtp6QNbEyeClbeYa8rjPHq
- HNtMc9Dydx9Vw0oyuxLLf/1P6UqMF5f0FrshfkW8MFQNu8Z1Uddb9qhpreAtcRohS4PV
- SJjHOcQOGzv/mvOyfDb0jgcsObdHmygnbwIhhOCLvL35cvbmWG9fqYDRp8KMz+lJEHGw
- zcPA==
-X-Gm-Message-State: AOJu0YxtePeQHZyTB2MzZqw3IHm66/Wx3Dy8tpsOeHDowsliKJjQOh5F
- 4zN5p/tW5b91ZPCg3e62B+t0PX+3jkXK03szdNpEt4S3HYtt86U90yBL8RaHQRN5nI4979yPqgt
- jkX0=
-X-Gm-Gg: ASbGncseRhEJPvQ9v8p0+50AHGIb9+ckYCpMH2QFq7pi7125dHi1uzQfyVEjelmO12M
- 0qWUJE6me+1zFHbXBGyJ0BBL62DkJ1Z7LwyoCwIjxotBjXXjfmcZ9u6iGitPsvG6U8mRCbUu56o
- WFsMCt1YaDjuH8mbqU1J2zjshdW3HeOrNOUrNx0Bycep1PJqxELQyORSL1sRJyWoCqPwZSC33Pj
- 6kO404EM2dTY+unKDkCNqqEAuDVCeFex4In49L4tN8I5RkwA1+ZtVBEFOArdmXvrf+mXTgxbPjl
- 0bM6T92eJn0nEg==
-X-Google-Smtp-Source: AGHT+IGXTVZPNfbgU8mK3eOWSPjuZabooPf3zHxauX8N8bFxXIy1olis0fm8eKVa/eZAY5fzLhzuWw==
-X-Received: by 2002:a05:6a00:928e:b0:724:f1c7:dfbb with SMTP id
- d2e1a72fcca58-7253001aa22mr1020702b3a.7.1732655881402; 
- Tue, 26 Nov 2024 13:18:01 -0800 (PST)
-Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724fd95ed01sm5811766b3a.8.2024.11.26.13.18.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Nov 2024 13:18:00 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH v2 1/3] win32: remove usage of attribute gcc_struct
-Date: Tue, 26 Nov 2024 13:17:34 -0800
-Message-Id: <20241126211736.122285-2-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241126211736.122285-1-pierrick.bouvier@linaro.org>
-References: <20241126211736.122285-1-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tG2xO-0001sM-Sa
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 16:18:52 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 69AC91F74D;
+ Tue, 26 Nov 2024 21:18:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732655928; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zF1tp96OCcRBkeRqR1s1pS4ltX9lpLn7X08QiFGkf58=;
+ b=LCVDkXmSaFO+5mh/c3ncfa+ZYX5lbSkBJaiwBROf8MYk2qd0zxeqS9yDGi/Nrk3PZuFJ5q
+ HmxY4qEZjPaQrDnE9r7WCFheBBb7RX3kN/uSn4ACvmjUfi89/KbUtfdFqHoX2vjx+vvRlJ
+ /f1fAkNUiqbTO/9uWKiv21S1zp7feJs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732655928;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zF1tp96OCcRBkeRqR1s1pS4ltX9lpLn7X08QiFGkf58=;
+ b=oKcyW4EJCRqlqwiuVAXeCxMf4Gd9Qv32GZgOHgI2nMJNR8+5ns2dTp3NN3Sm315GHVa9nw
+ kbrGm35wrW7bh3Ag==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=LCVDkXmS;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oKcyW4EJ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732655928; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zF1tp96OCcRBkeRqR1s1pS4ltX9lpLn7X08QiFGkf58=;
+ b=LCVDkXmSaFO+5mh/c3ncfa+ZYX5lbSkBJaiwBROf8MYk2qd0zxeqS9yDGi/Nrk3PZuFJ5q
+ HmxY4qEZjPaQrDnE9r7WCFheBBb7RX3kN/uSn4ACvmjUfi89/KbUtfdFqHoX2vjx+vvRlJ
+ /f1fAkNUiqbTO/9uWKiv21S1zp7feJs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732655928;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zF1tp96OCcRBkeRqR1s1pS4ltX9lpLn7X08QiFGkf58=;
+ b=oKcyW4EJCRqlqwiuVAXeCxMf4Gd9Qv32GZgOHgI2nMJNR8+5ns2dTp3NN3Sm315GHVa9nw
+ kbrGm35wrW7bh3Ag==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E94A913890;
+ Tue, 26 Nov 2024 21:18:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id KeeVKzc7RmfTdgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 26 Nov 2024 21:18:47 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, berrange@redhat.com, Prasad Pandit
+ <pjp@fedoraproject.org>
+Subject: Re: [PATCH v1 3/4] migration: refactor ram_save_target_page functions
+In-Reply-To: <20241126115748.118683-4-ppandit@redhat.com>
+References: <20241126115748.118683-1-ppandit@redhat.com>
+ <20241126115748.118683-4-ppandit@redhat.com>
+Date: Tue, 26 Nov 2024 18:18:45 -0300
+Message-ID: <87ed2xn16y.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 69AC91F74D
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCPT_COUNT_FIVE(0.00)[5]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,93 +124,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This attribute is not recognized by clang.
+Prasad Pandit <ppandit@redhat.com> writes:
 
-An investigation has been performed to ensure this attribute has no
-effect on layout of structures we use in QEMU [1], so it's safe to
-remove now.
+> From: Prasad Pandit <pjp@fedoraproject.org>
+>
+> Refactor ram_save_target_page legacy and multifd
+> functions into one. Other than simplifying it,
+> it frees 'migration_ops' object from usage, so it
+> is expunged.
+>
+> When both Multifd and Postcopy modes are enabled,
+> to avoid errors, the Multifd threads are active until
+> migration reaches the Postcopy mode. This is done by
+> checking the state returned by migration_in_postcopy().
 
-In the future, we'll forbid introducing new bitfields in packed struct.
+This patch should be just the actual refactoring on top of master, with
+no mention to postcopy at all.
 
-[1] https://lore.kernel.org/qemu-devel/66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org/
+>
+> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+> ---
+>  migration/multifd-nocomp.c |  3 +-
+>  migration/ram.c            | 74 ++++++++++++--------------------------
+>  2 files changed, 24 insertions(+), 53 deletions(-)
+>
+> v1: Further refactor ram_save_target_page() function to conflate
+>     save_zero_page() calls.
+>
+>     Add migration_in_postcopy() call to check migration state
+>     instead of combining it with migrate_multifd().
+>
+> v0: https://lore.kernel.org/qemu-devel/20241029150908.1136894-1-ppandit@redhat.com/T/#u
+>
+> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+> index 55191152f9..e92821e8f6 100644
+> --- a/migration/multifd-nocomp.c
+> +++ b/migration/multifd-nocomp.c
+> @@ -14,6 +14,7 @@
+>  #include "exec/ramblock.h"
+>  #include "exec/target_page.h"
+>  #include "file.h"
+> +#include "migration.h"
+>  #include "multifd.h"
+>  #include "options.h"
+>  #include "qapi/error.h"
+> @@ -345,7 +346,7 @@ retry:
+>  
+>  int multifd_ram_flush_and_sync(void)
+>  {
+> -    if (!migrate_multifd()) {
+> +    if (!migrate_multifd() || migration_in_postcopy()) {
+>          return 0;
+>      }
+>  
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 05ff9eb328..9d1ec6209c 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -467,13 +467,6 @@ void ram_transferred_add(uint64_t bytes)
+>      }
+>  }
+>  
+> -struct MigrationOps {
+> -    int (*ram_save_target_page)(RAMState *rs, PageSearchStatus *pss);
+> -};
+> -typedef struct MigrationOps MigrationOps;
+> -
+> -MigrationOps *migration_ops;
+> -
+>  static int ram_save_host_page_urgent(PageSearchStatus *pss);
+>  
+>  /* NOTE: page is the PFN not real ram_addr_t. */
+> @@ -1323,9 +1316,9 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
+>          pss->page = 0;
+>          pss->block = QLIST_NEXT_RCU(pss->block, next);
+>          if (!pss->block) {
+> -            if (migrate_multifd() &&
+> -                (!migrate_multifd_flush_after_each_section() ||
+> -                 migrate_mapped_ram())) {
+> +            if (migrate_multifd() && !migration_in_postcopy()
+> +                && (!migrate_multifd_flush_after_each_section()
+> +                    || migrate_mapped_ram())) {
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- meson.build                               | 5 -----
- include/qemu/compiler.h                   | 7 +------
- scripts/cocci-macro-file.h                | 6 +-----
- subprojects/libvhost-user/libvhost-user.h | 6 +-----
- 4 files changed, 3 insertions(+), 21 deletions(-)
+This is getting out of hand. We can't keep growing this condition every
+time something new comes up. Any ideas?
 
-diff --git a/meson.build b/meson.build
-index e0b880e4e13..fa6d24e1233 100644
---- a/meson.build
-+++ b/meson.build
-@@ -354,11 +354,6 @@ elif host_os == 'sunos'
-   qemu_common_flags += '-D__EXTENSIONS__'
- elif host_os == 'haiku'
-   qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
--elif host_os == 'windows'
--  if not compiler.compiles('struct x { int y; } __attribute__((gcc_struct));',
--                           args: '-Werror')
--    error('Your compiler does not support __attribute__((gcc_struct)) - please use GCC instead of Clang')
--  endif
- endif
- 
- # Choose instruction set (currently x86-only)
-diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-index c06954ccb41..d904408e5ed 100644
---- a/include/qemu/compiler.h
-+++ b/include/qemu/compiler.h
-@@ -22,12 +22,7 @@
- #define QEMU_EXTERN_C extern
- #endif
- 
--#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__))
--# define QEMU_PACKED __attribute__((gcc_struct, packed))
--#else
--# define QEMU_PACKED __attribute__((packed))
--#endif
--
-+#define QEMU_PACKED __attribute__((packed))
- #define QEMU_ALIGNED(X) __attribute__((aligned(X)))
- 
- #ifndef glue
-diff --git a/scripts/cocci-macro-file.h b/scripts/cocci-macro-file.h
-index d247a5086e9..c64831d5408 100644
---- a/scripts/cocci-macro-file.h
-+++ b/scripts/cocci-macro-file.h
-@@ -23,11 +23,7 @@
- #define G_GNUC_WARN_UNUSED_RESULT __attribute__((warn_unused_result))
- #define G_GNUC_NULL_TERMINATED __attribute__((sentinel))
- 
--#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__))
--# define QEMU_PACKED __attribute__((gcc_struct, packed))
--#else
--# define QEMU_PACKED __attribute__((packed))
--#endif
-+#define QEMU_PACKED __attribute__((packed))
- 
- #define cat(x,y) x ## y
- #define cat2(x,y) cat(x,y)
-diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
-index deb40e77b3f..2ffc58c11b1 100644
---- a/subprojects/libvhost-user/libvhost-user.h
-+++ b/subprojects/libvhost-user/libvhost-user.h
-@@ -186,11 +186,7 @@ typedef struct VhostUserShared {
-     unsigned char uuid[UUID_LEN];
- } VhostUserShared;
- 
--#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__))
--# define VU_PACKED __attribute__((gcc_struct, packed))
--#else
--# define VU_PACKED __attribute__((packed))
--#endif
-+#define VU_PACKED __attribute__((packed))
- 
- typedef struct VhostUserMsg {
-     int request;
--- 
-2.39.5
+>                  QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
+>                  int ret = multifd_ram_flush_and_sync();
+>                  if (ret < 0) {
+> @@ -1986,55 +1979,39 @@ int ram_save_queue_pages(const char *rbname, ram_addr_t start, ram_addr_t len,
+>  }
+>  
+>  /**
+> - * ram_save_target_page_legacy: save one target page
+> + * ram_save_target_page: save one target page to the precopy thread
+> + * OR to multifd workers.
+>   *
+> - * Returns the number of pages written
+> + * Multifd mode: returns 1 if the page was queued, -1 otherwise.
+> + * Non-multifd mode: returns the number of pages written.
 
+Yes, although I wonder if we should keep documenting this when we only
+call this function for a single page and it always returns at most 1.
+
+>   *
+>   * @rs: current RAM state
+>   * @pss: data about the page we want to send
+>   */
+> -static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *pss)
+> +static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+>  {
+>      ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+>      int res;
+>  
+> +    if (!migrate_multifd()
+> +        || migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
+> +        if (save_zero_page(rs, pss, offset)) {
+> +            return 1;
+> +        }
+> +    }
+> +
+> +    if (migrate_multifd() && !migration_in_postcopy()) {
+> +        RAMBlock *block = pss->block;
+> +        return ram_save_multifd_page(block, offset);
+> +    }
+> +
+>      if (control_save_page(pss, offset, &res)) {
+>          return res;
+>      }
+>  
+> -    if (save_zero_page(rs, pss, offset)) {
+> -        return 1;
+> -    }
+> -
+>      return ram_save_page(rs, pss);
+>  }
+>  
+> -/**
+> - * ram_save_target_page_multifd: send one target page to multifd workers
+> - *
+> - * Returns 1 if the page was queued, -1 otherwise.
+> - *
+> - * @rs: current RAM state
+> - * @pss: data about the page we want to send
+> - */
+> -static int ram_save_target_page_multifd(RAMState *rs, PageSearchStatus *pss)
+> -{
+> -    RAMBlock *block = pss->block;
+> -    ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+> -
+> -    /*
+> -     * While using multifd live migration, we still need to handle zero
+> -     * page checking on the migration main thread.
+> -     */
+> -    if (migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
+> -        if (save_zero_page(rs, pss, offset)) {
+> -            return 1;
+> -        }
+> -    }
+> -
+> -    return ram_save_multifd_page(block, offset);
+> -}
+> -
+>  /* Should be called before sending a host page */
+>  static void pss_host_page_prepare(PageSearchStatus *pss)
+>  {
+> @@ -2121,7 +2098,7 @@ static int ram_save_host_page_urgent(PageSearchStatus *pss)
+>  
+>          if (page_dirty) {
+>              /* Be strict to return code; it must be 1, or what else? */
+
+... this^ comment, for instance.
+
+> -            if (migration_ops->ram_save_target_page(rs, pss) != 1) {
+> +            if (ram_save_target_page(rs, pss) != 1) {
+>                  error_report_once("%s: ram_save_target_page failed", __func__);
+>                  ret = -1;
+>                  goto out;
+> @@ -2190,7 +2167,7 @@ static int ram_save_host_page(RAMState *rs, PageSearchStatus *pss)
+>              if (preempt_active) {
+>                  qemu_mutex_unlock(&rs->bitmap_mutex);
+>              }
+> -            tmppages = migration_ops->ram_save_target_page(rs, pss);
+> +            tmppages = ram_save_target_page(rs, pss);
+>              if (tmppages >= 0) {
+>                  pages += tmppages;
+>                  /*
+> @@ -2388,8 +2365,6 @@ static void ram_save_cleanup(void *opaque)
+>      xbzrle_cleanup();
+>      multifd_ram_save_cleanup();
+>      ram_state_cleanup(rsp);
+> -    g_free(migration_ops);
+> -    migration_ops = NULL;
+>  }
+>  
+>  static void ram_state_reset(RAMState *rs)
+> @@ -3055,13 +3030,8 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>          return ret;
+>      }
+>  
+> -    migration_ops = g_malloc0(sizeof(MigrationOps));
+> -
+>      if (migrate_multifd()) {
+>          multifd_ram_save_setup();
+> -        migration_ops->ram_save_target_page = ram_save_target_page_multifd;
+> -    } else {
+> -        migration_ops->ram_save_target_page = ram_save_target_page_legacy;
+>      }
+>  
+>      bql_unlock();
 
