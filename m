@@ -4,84 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B76CD65531
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA21CD6552D
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFyxf-0007jl-J3; Tue, 26 Nov 2024 12:02:51 -0500
+	id 1tFyxL-0007Bq-Rn; Tue, 26 Nov 2024 12:02:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFyxd-0007iD-96
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:49 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFyxb-00025h-Ju
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:48 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-434a7ee3d60so4435225e9.1
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 09:02:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732640566; x=1733245366; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KhNpoYBpBgMtrTtvaiAKYKeBjehZXk/NeYq/vlyz2aU=;
- b=DFlE3bZ41KcVzWlFuqF/kujhTptk1RD9O6RLDxqrcbB5Wxr/fTYAxWE57zhvclZukv
- OdphXmCW3ltq+Xqr4LT6tKgKMWctD99/n/bR9pfYdg6SxaI7JDyxnR+hC6ysVS9iSEJA
- mYo0MIj2XLkmUtJsCwYeJAE406ba6O5/4/OB9pUwJzr2RSxk5m4U9/5UN5tBbRPoHZYN
- 0/32KsFYr4PqH2D4HALS6EyoeO0D3M7OAzWscUkBlgrt+0+nGSL5E2Q/eNJ/V4pJ6HG0
- iC3/hqpLMxIzXES+ozLzT46IP+KHHt/9wgTmwBczHonFuBoOGaRqNeN/zs6ng/YkG331
- GMrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732640566; x=1733245366;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KhNpoYBpBgMtrTtvaiAKYKeBjehZXk/NeYq/vlyz2aU=;
- b=dkNu+amkqm4tK/2P4vGiiAIs79oryWLOCWEHzy0qDF6ZeNT7/sYGE05N3t+mmzh+Fc
- J6EC4i9OauNKSsRxxo4/+czsyvvUDAfh+fP62j5ywRxOP25bgd/AE2L4TBV2p+RJ6TH3
- koPV1eWAxzV4y3roleEPdQHkYLcLXZ2wZS0IIz+MNahGJ/je3eZOL6x49NH5C2q0I1uj
- 5vpxqFZVvX/G40FyEXMBuzOQBmG7a4qsrpHhtb6EJhNTiA/m/iBmJdgUfST3mcxii5KC
- d/ywkwEXHnFVkeDfUXrUqTwdn6ZkktTXZIefmwJtjt1dA+jtIc904tdxB//nl5azEuSv
- auKQ==
-X-Gm-Message-State: AOJu0Yy0rFT77he2l+TSRs+GIhu95rlhdmnKUs0r8burEW5HInpJwyv0
- Aln3fLa7gsLjLvm7ooc9TkJRhsL2ObUmRYRuW6ZlurH40o873Q/RC2LqQ2foOdNcd803uHX+MS7
- i
-X-Gm-Gg: ASbGncs2DEpUtg2AliRx469dh6Y2TSn4VRiY0VSwo50Vbu97lMSycqBMYAdv2vYluWQ
- TCIYUOsISenHLuM4rMc2luPkkwoArvtpA05kgLFVGQVtsA0FWJOjpbpDhHWMqRGrrjGKg+CPNw/
- 9j9Y4pWA4fZAjQYYXl4le3bIgTzNRsmZfuIQlvc9a5KVTfA1LEDrvd8BvpfKWRAEcK0gJZdtJm4
- 6lD2Qg74VPzOP/gdAbIn0uQpEtgAzdmBgTmjMiS5oMLqTBxGHengtyf
-X-Google-Smtp-Source: AGHT+IGPWZd1rG/6U/gx0VOAQJPnTPI2YZzhOm66JGyu5vyM0qwyvxx6PsVQ07GPfnzaxMxxLv+BJQ==
-X-Received: by 2002:a05:600c:3b03:b0:42c:b603:422 with SMTP id
- 5b1f17b1804b1-434a4e7ac3emr35145915e9.8.1732640552538; 
- Tue, 26 Nov 2024 09:02:32 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434a36c7a9fsm43017865e9.44.2024.11.26.09.02.32
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Nov 2024 09:02:32 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 7/9] docs/system/arm/: add FEAT_DoubleLock
-Date: Tue, 26 Nov 2024 17:02:22 +0000
-Message-Id: <20241126170224.2926917-8-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241126170224.2926917-1-peter.maydell@linaro.org>
-References: <20241126170224.2926917-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFyxD-00075k-Oi
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:25 -0500
+Received: from 10.mo552.mail-out.ovh.net ([87.98.187.244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFyxB-0001xq-Kg
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:23 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.108.17.25])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4XyTQK5zlRz1XVN;
+ Tue, 26 Nov 2024 17:02:17 +0000 (UTC)
+Received: from kaod.org (37.59.142.113) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 26 Nov
+ 2024 18:02:17 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-113S0079c07db02-204e-46ce-ae7c-77ddec5ee49e,
+ FCC27489C1BA5BDC89FB1F76958C936B1C45CC5D) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Tue, 26 Nov 2024 18:02:16 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>
+Subject: Re: [PATCH 6/6] tests/9p: also check 'Tgetattr' in
+ 'use-after-unlink' test
+Message-ID: <20241126180216.0638d10e@bahia>
+In-Reply-To: <7017658155c517b9665b75333a97c79aa2d4f3df.1732465720.git.qemu_oss@crudebyte.com>
+References: <cover.1732465720.git.qemu_oss@crudebyte.com>
+ <7017658155c517b9665b75333a97c79aa2d4f3df.1732465720.git.qemu_oss@crudebyte.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.113]
+X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 787cb7a0-f735-425c-91f6-a3d2ec21ac26
+X-Ovh-Tracer-Id: 18381723358036007389
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrgeejgdelvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrdduudefpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeefpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrghdpoffvtefjohhsthepmhhoheehvdgmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=WyctVfbWJzr83NlvSlm6t2iwr/06Iy8jkXoLnLqLsa4=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1732640538; v=1;
+ b=KVuyfBRIzz97SVhWeiXH6A0iLMQP38Ss29mlggTStFSyI8M8YARbHk7qH1mUor4+7bVDIjSl
+ HvvxNOi04Y/5IwKnr5XIOi7MYCMs74QYmmDgveqRjqM+TcDlF1ZyRsg6Zp+rmctzqflcqg4JHW6
+ 89Q1FZiUh05ZxYFs2Eht/YoGa8fsa43rJyBgb6/FitaPz5SLrjfdErduY1Tq90hCi7tSwVllgKA
+ ScSyqLxPQQ6s5yC6Gop1/4qiBh6mLPALxs/roORynm0y+1imI8P72nkqF2ZY03ivboia65D8MFd
+ aoyXMSYs7JN292zyj0/10kq2IzPNGsvTgWyNZPmiUVyQg==
+Received-SPF: pass client-ip=87.98.187.244; envelope-from=groug@kaod.org;
+ helo=10.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,36 +84,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On Sun, 24 Nov 2024 17:05:32 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-We already implement FEAT_DoubleLock (see commit f94a6df5dd6a7) when
-the ID registers call for it.  This feature is actually one that must
-*not* be implemented in v9.0, but since our documentation lists
-everything we can emulate, we should include FEAT_DoubleLock in the
-list.
+> This verifies expected behaviour of previous bug fix patch.
+> 
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20241122225049.1617774-7-pierrick.bouvier@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: expand commit message]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/system/arm/emulation.rst | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Greg Kurz <groug@kaod.org>
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 47f5123a31d..38534dcdd32 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -37,6 +37,7 @@ the following architecture extensions:
- - FEAT_CSV3 (Cache speculation variant 3)
- - FEAT_DGH (Data gathering hint)
- - FEAT_DIT (Data Independent Timing instructions)
-+- FEAT_DoubleLock (Double Lock)
- - FEAT_DPB (DC CVAP instruction)
- - FEAT_DPB2 (DC CVADP instruction)
- - FEAT_Debugv8p1 (Debug with VHE)
+>  tests/qtest/virtio-9p-test.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+> index f6d7400a87..ab3a12c816 100644
+> --- a/tests/qtest/virtio-9p-test.c
+> +++ b/tests/qtest/virtio-9p-test.c
+> @@ -702,6 +702,7 @@ static void fs_use_after_unlink(void *obj, void *data,
+>      g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
+>      g_autofree char *buf = g_malloc0(write_count);
+>      struct stat st_file;
+> +    struct v9fs_attr attr;
+>      uint32_t fid_file;
+>      uint32_t count;
+>  
+> @@ -725,6 +726,10 @@ static void fs_use_after_unlink(void *obj, void *data,
+>      tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
+>  
+>      /* file is removed, but we still have it open, so this should succeed */
+> +    tgetattr({
+> +        .client = v9p, .fid = fid_file, .request_mask = P9_GETATTR_BASIC,
+> +        .rgetattr.attr = &attr
+> +    });
+>      count = twrite({
+>          .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
+>          .data = buf
+
+
+
 -- 
-2.34.1
-
+Greg
 
