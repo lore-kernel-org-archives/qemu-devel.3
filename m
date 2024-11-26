@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0385AD3B98B
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11872D3B98B
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFw7s-0003fV-Os; Tue, 26 Nov 2024 09:01:12 -0500
+	id 1tFw8k-0004i9-GC; Tue, 26 Nov 2024 09:02:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFw7n-0003My-SH
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:01:07 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFw8H-0004Jz-Nq
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:01:43 -0500
 Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFw7m-0005J4-14
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:01:07 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFw8F-0005OT-Ip
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:01:36 -0500
 Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43497839b80so23793205e9.2
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:01:05 -0800 (PST)
+ 5b1f17b1804b1-434a8b94fb5so2285565e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:01:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732629664; x=1733234464; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732629693; x=1733234493; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tardOrbKTYXoxRnABs7gTXmCmfB9GEPw0cdGe0ErewQ=;
- b=EcAGGetuA5u+FyCq6ph+9WYIzg3PcsxzXHxprvoO/AO9yCcBDY9tibY2LpAuy/7E76
- MZinY/Q5NJePHoY7Z4LZBJuFSGlu/oL6LbbAuALmxacUnZzbjzkRiUmP22LqWPQqkzrm
- ZZmx+shku9Ev3tewnJJCOxd7grdLRXpyG98rnCKmk9BhLmDL6RVgKQhrG2AOL/K/SQfb
- kVphWf8tONMkOiX1Qae8TqNPSPT/OeIZuj3xe/yI5ITk4hfcw9gU7Dl+imIrOj92wUxt
- dfYk86F+IqsdIPIj9rRRO6P4ZAcwS6BnZ6adaQIuwUAjKoTPOctPHD9Pco0r6qHd+9F+
- 8f/Q==
+ bh=EsJ6Yh+YQIX9fCAehh/cKi7Uu1GgsUp/kUVg81Uxhdg=;
+ b=kf8v+yLVGQWlo/z3JPyKpiJu6ZPQ/jlJwKo4a9eYavl44BcOAIxjeBZbG6y8KYTosl
+ iUpvRndZs3C/Ao7tqyDPobSg1DIDsSL+ViIJDKPGz8oY6MC+Evr7aI8kcaFBmFDlplj/
+ Q3u1WVwzDEH3AJr5SELw1h0uocALIDFKB8AfnDUw/TSpVaAckxnWG5cO+l2ouaIPc4fs
+ zbxgBlKKeyWL1cnzrCagRYbfmbSiXa2oTGL8SBC7FO7KBtKSDl1xOqdUN64ddto52mE6
+ tN4YzjpHv8AWdF/2EgUGfROqgaA4h/cz5Hg+EkDVEapA6omEuMqZLuafvkVhFB/M/4bs
+ BdLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732629664; x=1733234464;
+ d=1e100.net; s=20230601; t=1732629693; x=1733234493;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tardOrbKTYXoxRnABs7gTXmCmfB9GEPw0cdGe0ErewQ=;
- b=ei4VZFEkr7FbhlIhnql983HZDJFzDltlkVh1g7NB5zLpsdFQq6sLPGMiXjxKZg0KhD
- bU/+oWYWC7zJF8oyCywUYFZ6gK2T5SXxo2eXkqM55hcrsRYLyyci2f5xPDG8Ay4WC2Mm
- BVM1SxjrebG3QReoOl/soroBlnUqxxYeXDUa1O1yfSp3fkS8HkBXsBA4pCyX9sBbtMj6
- DIXqRpd9Jn4x0Z09zRlGUQP3HInBUzjLbsdgqDQ/xy8Liyxbn716/EdPK2mFDZ74W0w1
- P3kUh0aBGdfr3LwxVGzmhfjhDEG9iOkmIASYrkvYu2GHOVZYBjuH5zstLEufs51JgepC
- 9DEw==
-X-Gm-Message-State: AOJu0YxkGVrHGoPcwyWgwc8gLwYUEvpWPMRx4ZGS/j2+mwkCncgPk3ki
- vrZqN+5/TtaJMl9/4iZTJj7F7ZHW3OU5KRhrta4PZwxxKQ7gLK68htsxUPgyQzntyQ1s6GMal1i
- R
-X-Gm-Gg: ASbGncuR8a3oQ40qinYaQIiUgo8/dtXTu8nb6nLZo+KKWOWER3YeHHnIYJlmb+VW5hZ
- lPTR4q6n91RccwUXZKfRKuvmeyg8pnR0Uvk7USyijK11r7f8h3eHYUYXSeJqsDCrOxZ6wELkDNk
- kknaawYs9iHaiYdZ+OgES7qLWLGROGsgEsyOJptBcxhBMLU0JWZP3c2s539fT0m2itqh8Iu4YiY
- 0h2kwR1PPLXzfJuuzAbJHeqUSErirmS6YtnNRFATWNpcNGjHakMXGY6q0UOPhk20egEMRb7
-X-Google-Smtp-Source: AGHT+IEKpTpLGorfWPGdjBVdLylZK75l9mVp8elZDwaEcA+TS2DHsdl5qRAdr+EBzhnv+0CTsU9yyQ==
-X-Received: by 2002:a05:600c:3509:b0:431:5187:28dd with SMTP id
- 5b1f17b1804b1-433ce4d3e48mr121677815e9.28.1732629663782; 
- Tue, 26 Nov 2024 06:01:03 -0800 (PST)
+ bh=EsJ6Yh+YQIX9fCAehh/cKi7Uu1GgsUp/kUVg81Uxhdg=;
+ b=W4KNCxqGYKK+GpLJaushuPDZbmyDzG91Aj+7aUiYQIyoeOGcXd4BUV5taKZXZPpz8d
+ 22vZVThS1FayMv9BstrIi5nHt/H0vy5OVsTKK8Xc+7umEJI5u91jr/IdWJHjVPXiVgFO
+ JZgXfIJNPSdCt0oP0riC/INkzQ9oZbITrI5FSUW43srlMGZ16J7d8vuFfbqFQAjBjvCx
+ ZP4He14tMCXNQashpQmJSUgTNvbzAm6AT3dth6YeQhRlCtSmsiRKi0agdQiSqSZ/fyg5
+ BYpteY1nYxQjsnOQyvMwFigxZluVFn4BhNKnwkN4lM7kCV4OXYL1iexloiTBH6TL6DVG
+ J35Q==
+X-Gm-Message-State: AOJu0YwWSVLjf80lsJP2Vf421bNQwwGLkg8u6rJUI9CqfEWzWEpKPI4m
+ uZVSJ1tmh+LtlMNWXesVMSmoJrHZPLVoogeJ7NsHudMDT7d1rae3t7n8bz9qEpJPKnm8a1exiGH
+ b
+X-Gm-Gg: ASbGncsC7BgFxCrsORs7WSXHl5w8g43nd2p54PSz6Z35Ohk8U815ejCaVFStzW28yMB
+ XxyK7+dLUsaUGD923+/Uvhml+kTdJJxX3ES0JQf4ZlvFG7A4LCt/lJYlzR0yCatL9UZCwGW/Cr+
+ 9ha0knJDZs9LGAI2vMrmVpVSS++fyuWwRoNDNxdlkACuVFO1DM2bwQKtz1bKRDepcndLN7H5ILK
+ wliWxV1qbSgQej/KyvG9eh48xURe4/P6nu84FLU9un4bvpeN7snu0BaW6tMI0VaLMTskFNC
+X-Google-Smtp-Source: AGHT+IFIwqEJXvc2BnadJkv+2gzjVm44SF+kLfXTwJtmoiMo3ofxQoj6Dgum4UJV7AuPKOJsC59lTQ==
+X-Received: by 2002:a05:600c:b51:b0:431:416e:2603 with SMTP id
+ 5b1f17b1804b1-434a4e56412mr29545955e9.3.1732629693209; 
+ Tue, 26 Nov 2024 06:01:33 -0800 (PST)
 Received: from localhost.localdomain ([176.176.143.205])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-433b45d4dd6sm236632255e9.24.2024.11.26.06.01.02
+ 5b1f17b1804b1-4349f2e1b3bsm78086625e9.25.2024.11.26.06.01.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 Nov 2024 06:01:03 -0800 (PST)
+ Tue, 26 Nov 2024 06:01:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -68,10 +68,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH v3 09/16] scripts/decodetree: Add support for 48-bit
- instructions
-Date: Tue, 26 Nov 2024 14:59:55 +0100
-Message-ID: <20241126140003.74871-10-philmd@linaro.org>
+Subject: [PATCH v3 13/16] target/mips: Add gen_li() helper
+Date: Tue, 26 Nov 2024 14:59:59 +0100
+Message-ID: <20241126140003.74871-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241126140003.74871-1-philmd@linaro.org>
 References: <20241126140003.74871-1-philmd@linaro.org>
@@ -102,28 +101,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some nanoMIPS instructions are encoded using 48-bit.
+gen_li() is the trivial 'Load Immediate' instruction.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- scripts/decodetree.py | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/mips/tcg/translate.h        |  1 +
+ target/mips/tcg/comput_translate.c | 21 +++++++++++++++++++++
+ target/mips/tcg/meson.build        |  1 +
+ 3 files changed, 23 insertions(+)
+ create mode 100644 target/mips/tcg/comput_translate.c
 
-diff --git a/scripts/decodetree.py b/scripts/decodetree.py
-index e8b72da3a97..88cd476d2d3 100644
---- a/scripts/decodetree.py
-+++ b/scripts/decodetree.py
-@@ -1543,6 +1543,10 @@ def main():
-                 insntype = 'uint64_t'
-                 insnmask = 0xffffffffffffffff
-                 bitop_width = 64
-+            elif insnwidth == 48:
-+                insntype = 'uint64_t'
-+                insnmask = 0xffffffffffff
-+                bitop_width = 64
-             elif insnwidth != 32:
-                 error(0, 'cannot handle insns of width', insnwidth)
-         elif o == '--test-for-error':
+diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
+index 7fe34a1d891..222fa9e1e8b 100644
+--- a/target/mips/tcg/translate.h
++++ b/target/mips/tcg/translate.h
+@@ -168,6 +168,7 @@ void gen_store_fpr32(DisasContext *ctx, TCGv_i32 t, int reg);
+ void gen_store_fpr64(DisasContext *ctx, TCGv_i64 t, int reg);
+ int get_fp_bit(int cc);
+ 
++void gen_li(DisasContext *ctx, int rd, int imm);
+ void gen_lx(DisasContext *ctx, int rd, int base, int index, MemOp mop);
+ void gen_ldxs(DisasContext *ctx, int base, int index, int rd);
+ void gen_align(DisasContext *ctx, int wordsz, int rd, int rs, int rt, int bp);
+diff --git a/target/mips/tcg/comput_translate.c b/target/mips/tcg/comput_translate.c
+new file mode 100644
+index 00000000000..3414cc079af
+--- /dev/null
++++ b/target/mips/tcg/comput_translate.c
+@@ -0,0 +1,21 @@
++/*
++ * MIPS emulation for QEMU - computational translation routines
++ *
++ * Copyright (c) 2021 Philippe Mathieu-Daudé <f4bug@amsat.org>
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "translate.h"
++
++/* logical instructions */
++
++void gen_li(DisasContext *ctx, int rd, int imm)
++{
++    if (rd == 0) {
++        /* Treat as NOP. */
++        return;
++    }
++    tcg_gen_movi_tl(cpu_gpr[rd], imm);
++}
+diff --git a/target/mips/tcg/meson.build b/target/mips/tcg/meson.build
+index f674819e6a8..a46c13f3e75 100644
+--- a/target/mips/tcg/meson.build
++++ b/target/mips/tcg/meson.build
+@@ -18,6 +18,7 @@ gen = [
+ 
+ mips_ss.add(gen)
+ mips_ss.add(files(
++  'comput_translate.c',
+   'dsp_helper.c',
+   'exception.c',
+   'fpu_helper.c',
 -- 
 2.45.2
 
