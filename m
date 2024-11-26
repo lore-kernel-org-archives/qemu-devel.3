@@ -4,85 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E056ED65522
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 16:46:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E586BD65527
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:00:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFyha-0003FW-Un; Tue, 26 Nov 2024 11:46:14 -0500
+	id 1tFyts-0004Y6-Pt; Tue, 26 Nov 2024 11:58:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFyhY-0003Eo-Px
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:46:13 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFyhW-0007LT-OP
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:46:12 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5cfd28222f9so3141351a12.1
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 08:46:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732639569; x=1733244369; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zE04q7b457xT71pVD4Ufr5C7nwSk/7sow4mENwtg0mE=;
- b=dY7hms0J/XjM8BzSLz8G2C9pIOrqbBL6Q1SZ0a7l+u3jmqiZK7U+ZyGdmc19G2btBW
- r8WACYjSbATDBpeCjc8x5UrT1J69EgmYFYxtOvPZJrrvMulMGJ2rW9ts4ocdwrt0nkgp
- afEzOR0EBi6vWprXJA+mFq3/Dd25XYiK219b6ZzPZc4Ha0qf2fn2iYI7z77wQXhS121q
- rjFFIC3WL4+Y9FWeoW28g+vdPv/YxBXlXot5QiH4GuTsiRwtqsviz3evIWWhzl7ySafE
- UYOG2ZuAEB1GRX0/wSxrFV3+BN4O5EzGqp2ceF9WxX4JtQCmGs+rD01NYMKPWrjjGEbK
- mS0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732639569; x=1733244369;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zE04q7b457xT71pVD4Ufr5C7nwSk/7sow4mENwtg0mE=;
- b=QVG80laDugRiO+vcCBJ5XKknQ6MDHcL4GWUzQqk+wtzBL8TkuRKR70Xuc0fJfTNNdI
- MbUUnr7OcqhP72OlkdxFATlTX1OR9VPCrIxBbRLuBbcOG/NWIwDZBU3kiZGT8nbT/a26
- 5pocnw/9nfNEzBgpGmGTE3lZ/7VNhfWuTF+BRzkfKPRZ3fNWPGUHdzJ3b95cJFYPt+2j
- ERlEgQ0/UW+TLf/eC6kXnvEvjfZ4wAiCI9A3PVJOAKkhM0/ftUjx2cbUrcOsNQ2o3f4l
- PlyEdCnT7p+hX8nbcgyqoV2l03GZyXNdsMiqcYFww1Hs18F71pLx+yRvqnPP6/p0+Z2l
- 9U+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVbR3LuNr9u9hf0aQ1Zr5VViZJ1o5C7CM/M5VZxv76+KuY4x92jaadt1oa/hyhRZ8hISZt2+EcYshy9@nongnu.org
-X-Gm-Message-State: AOJu0Yy0mf7hnN6EPMwHYj3jl4qHhwdoe6vSaHm00qXZ3ROT5Tz0QaSi
- 9cYRoReWuU3yq8v/oQcZ9S94iN2Aczwze8Vz+C9F3anU5f//RHhA8UUHpH7xKdz4ZJJkaBu/Bnp
- 5YpB6dNMcnfDkgCPt3t5EbF4MgNUYWTa2uKTumw==
-X-Gm-Gg: ASbGncsXnYq8BJs1MIXZLubFWHZVVhgWfSUGWpNFMSY1CV3Llc2QS2nDLUFgU7a0yLH
- 61oNI3mSEGSmaWf2b+xrLQSGYUkvXxlkX
-X-Google-Smtp-Source: AGHT+IESgI7yfkcEFP2yVi5fyXux5qznZQBWjvNcc7AWfougkoCjFUNwj+W1n+BuCiUB7P+kdVa4C9NSqecql6jebu8=
-X-Received: by 2002:a05:6402:3511:b0:5cf:cfa8:d6cf with SMTP id
- 4fb4d7f45d1cf-5d02066288emr22005458a12.17.1732639568918; Tue, 26 Nov 2024
- 08:46:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFytq-0004Xe-UJ
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:58:54 -0500
+Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFyto-00019g-H8
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:58:54 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.108.2.213])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4XyTL9608zzyHS;
+ Tue, 26 Nov 2024 16:58:41 +0000 (UTC)
+Received: from kaod.org (37.59.142.111) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 26 Nov
+ 2024 17:58:41 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-111S005aa6c7434-9339-4993-976b-5ca9bf9ba585,
+ FCC27489C1BA5BDC89FB1F76958C936B1C45CC5D) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Tue, 26 Nov 2024 17:58:35 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>
+Subject: Re: [PATCH 5/6] 9pfs: fix 'Tgetattr' after unlink
+Message-ID: <20241126175835.5442c7d5@bahia>
+In-Reply-To: <5608682.ghPI0kNXTk@silver>
+References: <cover.1732465720.git.qemu_oss@crudebyte.com>
+ <4c41ad47f449a5cc8bfa9285743e029080d5f324.1732465720.git.qemu_oss@crudebyte.com>
+ <5608682.ghPI0kNXTk@silver>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20240904103923.451847-1-thuth@redhat.com>
- <20240904103923.451847-16-thuth@redhat.com>
- <66bf4784-f1e4-479f-83db-2d4f91c10e48@linaro.org>
-In-Reply-To: <66bf4784-f1e4-479f-83db-2d4f91c10e48@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 26 Nov 2024 16:45:58 +0000
-Message-ID: <CAFEAcA_iem8QN+BDUJPzMrhbYRNmq5GRbX-bqaACdUS1BAkpwQ@mail.gmail.com>
-Subject: Re: [PULL 15/42] tests/functional: enable pre-emptive caching of
- assets
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.111]
+X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 38c6f9a7-b0a9-4b45-85dc-281a89149f72
+X-Ovh-Tracer-Id: 18320924762250189277
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrgeejgdeludcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgfeuieefieevffdvhfehgfdtfeeuudffhefftdfgleeuvdetteejgeeijedtgeegnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhdpughirhdrshhtrhgvrghmpdhgihhthhhusgdrtghomhenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddrudduuddpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepfedprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdfovfetjfhoshhtpehmohehgeekmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=RysGIvybac7IXE4jSHy/InNOVHCghvd8Cqk3joRnxtg=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1732640322; v=1;
+ b=dNQj/jDiGXxWNi468jwiFzBkAY16SmwH7eHH1LctBDrgFsNFbDDE6m8ypoeeR7I4afiUaDVX
+ BiHlWR54XLIUoO1RduOAdGbJcBASw4EXEynJDxEO20L69CqaaUJI70WMN5yEVxMew51SIwDqULT
+ ToJYGQiZFrwPC2Se/e2Rdjoh1MbjuJlpiBcU0ybzQUMVEJaLqJ6ovrbNrRFXcKS0yfcmHhD8+Rr
+ U/zpvqEeFZS3nhHgadPEd0wv08JVqsjifMefElfblKfv2L3k2JbqN/N7JqijJSz54IYL6kRSe25
+ c5oZh+K22ZN+lYLkasAPit7+ekYVbketWKpbbOQ2N1xJQ==
+Received-SPF: pass client-ip=188.165.32.156; envelope-from=groug@kaod.org;
+ helo=3.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,119 +84,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Nov 2024 at 16:44, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Hi,
->
-> On 4/9/24 12:38, Thomas Huth wrote:
-> > From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> >
-> > Many tests need to access assets stored on remote sites. We don't want
-> > to download these during test execution when run by meson, since this
-> > risks hitting test timeouts when data transfers are slow.
-> >
-> > Add support for pre-emptive caching of assets by setting the env var
-> > QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
-> > instead of running the test, the assets will be downloaded and saved
-> > to the cache, then the timestamp file created.
-> >
-> > A meson custom target is created as a dependency of each test suite
-> > to trigger the pre-emptive caching logic before the test runs.
-> >
-> > When run in caching mode, it will locate assets by looking for class
-> > level variables with a name prefix "ASSET_", and type "Asset".
-> >
-> > At the ninja level
-> >
-> >     ninja test --suite functional
-> >
-> > will speculatively download any assets that are not already cached,
-> > so it is advisable to set a timeout multiplier.
-> >
-> >     QEMU_TEST_NO_DOWNLOAD=3D1 ninja test --suite functional
-> >
-> > will fail the test if a required asset is not already cached
-> >
-> >     ninja precache-functional
-> >
-> > will download and cache all assets required by the functional
-> > tests
-> >
-> > At the make level, precaching is always done by
-> >
-> >     make check-functional
-> >
-> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > Tested-by: Richard Henderson <richard.henderson@linaro.org>
-> > [thuth: Remove the duplicated "path =3D os.path.basename(...)" line]
-> > Message-ID: <20240830133841.142644-16-thuth@redhat.com>
-> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+On Tue, 26 Nov 2024 17:03:45 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+
+> On Sunday, November 24, 2024 4:50:03 PM CET Christian Schoenebeck wrote:
+> > With a valid file ID (FID) of an open file, it should be possible to send
+> > a 'Tgettattr' 9p request and successfully receive a 'Rgetattr' response,
+> > even if the file has been removed in the meantime. Currently this would
+> > fail with ENOENT.
+> > 
+> > I.e. this fixes the following misbehaviour with a 9p Linux client:
+> > 
+> >   open("/home/tst/filename", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
+> >   unlink("/home/tst/filename") = 0
+> >   fstat(3, 0x23aa1a8) = -1 ENOENT (No such file or directory)
+> > 
+> > Expected results:
+> > 
+> >   open("/home/tst/filename", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
+> >   unlink("/home/tst/filename") = 0
+> >   fstat(3, {st_mode=S_IFREG|0600, st_size=0, ...}) = 0
+> > 
+> > This is because 9p server is always using a path name based stat() call
+> > which fails as soon as the file got removed. So to fix this, use fstat()
+> > whenever we have an open file descriptor already.
+> > 
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/103
+> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 > > ---
-> >   tests/Makefile.include                 |  3 ++-
-> >   tests/functional/meson.build           | 33 +++++++++++++++++++++++--
-> >   tests/functional/qemu_test/asset.py    | 34 +++++++++++++++++++++++++=
-+
-> >   tests/functional/qemu_test/testcase.py |  7 ++++++
-> >   4 files changed, 74 insertions(+), 3 deletions(-)
->
->
-> > diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qem=
-u_test/asset.py
-> > index c0e675d847..b329ab7dbe 100644
-> > --- a/tests/functional/qemu_test/asset.py
-> > +++ b/tests/functional/qemu_test/asset.py
-> > @@ -9,6 +9,8 @@
-> >   import logging
-> >   import os
-> >   import subprocess
-> > +import sys
-> > +import unittest
-> >   import urllib.request
-> >   from pathlib import Path
-> >   from shutil import copyfileobj
-> > @@ -62,6 +64,9 @@ def fetch(self):
-> >                              self.cache_file, self.url)
-> >               return str(self.cache_file)
-> >
-> > +        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
-> > +            raise Exception("Asset cache is invalid and downloads disa=
-bled")
-> > +
-> >           self.log.info("Downloading %s to %s...", self.url, self.cache=
-_file)
-> >           tmp_cache_file =3D self.cache_file.with_suffix(".download")
-> >
-> > @@ -95,3 +100,32 @@ def fetch(self):
-> >
-> >           self.log.info("Cached %s at %s" % (self.url, self.cache_file)=
-)
-> >           return str(self.cache_file)
-> > +
-> > +    def precache_test(test):
-> > +        log =3D logging.getLogger('qemu-test')
-> > +        log.setLevel(logging.DEBUG)
-> > +        handler =3D logging.StreamHandler(sys.stdout)
-> > +        handler.setLevel(logging.DEBUG)
-> > +        formatter =3D logging.Formatter(
-> > +            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-> > +        handler.setFormatter(formatter)
-> > +        log.addHandler(handler)
-> > +        for name, asset in vars(test.__class__).items():
-> > +            if name.startswith("ASSET_") and type(asset) =3D=3D Asset:
-> > +                log.info("Attempting to cache '%s'" % asset)
-> > +                asset.fetch()
->
-> fetch() can fail [*] (see previous patch, various Exceptions returned).
->
-> What should we do in this case? If we ignore a missing artifact,
-> the tests will eventually fail. Better bail out early and save
-> credit minutes?
+> >  hw/9pfs/9p.c | 8 +++++++-
+> >  1 file changed, 7 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> > index 851e36b9a1..578517739a 100644
+> > --- a/hw/9pfs/9p.c
+> > +++ b/hw/9pfs/9p.c
+> > @@ -1596,7 +1596,13 @@ static void coroutine_fn v9fs_getattr(void *opaque)
+> >          retval = -ENOENT;
+> >          goto out_nofid;
+> >      }
+> > -    retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
+> > +    if ((fidp->fid_type == P9_FID_FILE && fidp->fs.fd != -1) ||
+> > +        (fidp->fid_type == P9_FID_DIR && fidp->fs.dir.stream))
+> > +    {
+> > +        retval = v9fs_co_fstat(pdu, fidp, &stbuf);
+> > +    } else {
+> > +        retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
+> > +    }
+> 
+> As for performance fstat() vs. lstat(): with glibc >= 2.39 and/or Linux
+> kernel >= 6.6, fstat() is Theta(1) whereas lstat() is O(log n). So fstat() is
+> faster than lstat() and hence prioritizing fstat() over lstat() does make
+> sense here IMO.
+> 
+> That's because on Linux kernel side fstat() is implemented by a simple
+> constant time linear array access via file descriptor number, whereas lstat()
+> needs to lookup the path and hence walk a tree.
+> 
+> There is a caveat though: Both on glibc and Linux kernel side there was a
+> performance bug each, which were both fixed in September 2023 by glibc 2.39
+> and Linux kernel 6.6 respectively:
+> 
+> kernel fix: https://github.com/torvalds/linux/commit/9013c51
+> 
+> glibc fix: https://github.com/bminor/glibc/commit/551101e
+> 
+> So on glibc side, due to a misconception, they inappropriately translated
+> fstat(fd, buf) -> fstatat(fd, "", buf, AT_EMPTY_PATH) for a long time, instead
+> of just calling fstat() directly as ought to be and done now.
+> 
+> And on kernel side, the negative performance impact of case AT_EMPTY_PATH +
+> empty string wasn't considered in fstatat() implementation. This case is now
+> short-circuited right at the beginning of the function.
+> 
+> /Christian
+> 
+> 
 
-And more generally, can we arrange to cache these images
-in a way that lets us share them across k8s CI runners?
-Store to local disk doesn't help much there...
+Great explanation Christian !
 
-thanks
--- PMM
+Reviewed-by: Greg Kurz <groug@kaod.org>
+
+Cheers,
+
+-- 
+Greg
 
