@@ -4,79 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793B5D5A6EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 07:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B9B2D5A6EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 07:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFpse-0004te-HG; Tue, 26 Nov 2024 02:21:04 -0500
+	id 1tFq1F-0006AU-Nv; Tue, 26 Nov 2024 02:29:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tFpsV-0004sy-LE
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 02:20:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tFpsT-0004tR-Lz
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 02:20:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732605651;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/t+3zN1N/Z1eFtsFHvzBm9JzfRD3zH5mb3eNt0z7WMA=;
- b=Oa4JbG0f29VED8FsbX0Oiw3EzP9a1Z6U9SdoBNqyXRGZoCHuNUeo4xuv5NZc+pXUC/lzaM
- 4mXepZqPjII3/hpAmXJ370sncjr1N0IbPstB21KR5kR0Q9npaKtVURFUsdwJ/9bCQtJlgN
- a6yqa1OI5NQhSqqok6Ll0OHtiDwjC0s=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-O8Qmtis3MBu2W0E0Cfso3g-1; Tue,
- 26 Nov 2024 02:20:48 -0500
-X-MC-Unique: O8Qmtis3MBu2W0E0Cfso3g-1
-X-Mimecast-MFC-AGG-ID: O8Qmtis3MBu2W0E0Cfso3g
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 974F0195608A; Tue, 26 Nov 2024 07:20:45 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A757195DF81; Tue, 26 Nov 2024 07:20:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 49BDF21E66D2; Tue, 26 Nov 2024 08:20:42 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Cc: peter.maydell@linaro.org,  richard.henderson@linaro.org,
- philmd@linaro.org,  qemu-arm@nongnu.org,  qemu-devel@nongnu.org,
- alex.bennee@linaro.org,  Eric Blake <eblake@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>
-Subject: Re: [PATCH v3 10/26] target/arm/kvm-rme: Add Realm Personalization
- Value parameter
-In-Reply-To: <20241125195626.856992-12-jean-philippe@linaro.org>
- (Jean-Philippe Brucker's message of "Mon, 25 Nov 2024 19:56:09 +0000")
-References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-12-jean-philippe@linaro.org>
-Date: Tue, 26 Nov 2024 08:20:42 +0100
-Message-ID: <87wmgqsbp1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tFq1A-00069x-R3
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 02:29:53 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tFq17-0006P9-US
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 02:29:52 -0500
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8BxYa_keEVnLvRIAA--.12088S3;
+ Tue, 26 Nov 2024 15:29:40 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMBx20bjeEVnGkRoAA--.42022S3;
+ Tue, 26 Nov 2024 15:29:39 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 1/2] hw/loongarch/virt: Create fdt table on machine creation
+ done notification
+Date: Tue, 26 Nov 2024 15:29:38 +0800
+Message-Id: <20241126072939.4188548-2-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20241126072939.4188548-1-maobibo@loongson.cn>
+References: <20241126072939.4188548-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBx20bjeEVnGkRoAA--.42022S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,257 +66,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jean-Philippe Brucker <jean-philippe@linaro.org> writes:
+The same with ACPI table, fdt table is created on machine done
+notification. Some objects like CPU objects can be created with cold-plug
+method with command such as -smp x, -device la464-loongarch-cpu, so all
+objects finish to create when machine is done.
 
-> The Realm Personalization Value (RPV) is provided by the user to
-> distinguish Realms that have the same initial measurement.
->
-> The user provides up to 64 hexadecimal bytes. They are stored into the
-> RPV in the same order, zero-padded on the right.
->
-> Cc: Eric Blake <eblake@redhat.com>
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Cc: Eduardo Habkost <eduardo@habkost.net>
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> ---
-> v2->v3: Fix documentation
-> ---
->  qapi/qom.json        |  15 ++++++
->  target/arm/kvm-rme.c | 111 +++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 126 insertions(+)
->
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index a8beeabf1f..f982850bca 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1068,6 +1068,19 @@
->    'data': { '*cpu-affinity': ['uint16'],
->              '*node-affinity': ['uint16'] } }
->=20=20
-> +##
-> +# @RmeGuestProperties:
-> +#
-> +# Properties for rme-guest objects.
-> +#
-> +# @personalization-value: Realm personalization value, as a 64-byte
-> +#     hex string. This optional parameter allows to uniquely identify
-> +#     the VM instance during attestation. (default: 0)
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/loongarch/virt.c | 103 ++++++++++++++++++++++++--------------------
+ 1 file changed, 57 insertions(+), 46 deletions(-)
 
-QMP commonly uses base64 for encoding binary data.  Any particular
-reason to deviate?
-
-Is the "hex string" to be mapped to binary in little or big endian?  Not
-an issue with base64.
-
-Nitpick: (default: all-zero), please, for consistency with similar
-documentation in SevSnpGuestProperties.
-
-> +#
-> +# Since: 9.3
-> +##
-> +{ 'struct': 'RmeGuestProperties',
-> +  'data': { '*personalization-value': 'str' } }
->=20=20
->  ##
->  # @ObjectType:
-> @@ -1121,6 +1134,7 @@
->      { 'name': 'pr-manager-helper',
->        'if': 'CONFIG_LINUX' },
->      'qtest',
-> +    'rme-guest',
->      'rng-builtin',
->      'rng-egd',
->      { 'name': 'rng-random',
-
-The commit message claims the patch adds a parameter.  It actually adds
-an entire object type.
-
-> @@ -1195,6 +1209,7 @@
->        'pr-manager-helper':          { 'type': 'PrManagerHelperProperties=
-',
->                                        'if': 'CONFIG_LINUX' },
->        'qtest':                      'QtestProperties',
-> +      'rme-guest':                  'RmeGuestProperties',
->        'rng-builtin':                'RngProperties',
->        'rng-egd':                    'RngEgdProperties',
->        'rng-random':                 { 'type': 'RngRandomProperties',
-> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> index 83a29421df..0be55867ee 100644
-> --- a/target/arm/kvm-rme.c
-> +++ b/target/arm/kvm-rme.c
-> @@ -23,11 +23,15 @@ OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
->=20=20
->  #define RME_PAGE_SIZE qemu_real_host_page_size()
->=20=20
-> +#define RME_MAX_CFG         1
-> +
->  struct RmeGuest {
->      ConfidentialGuestSupport parent_obj;
->      Notifier rom_load_notifier;
->      GSList *ram_regions;
->=20=20
-> +    uint8_t *personalization_value;
-> +
->      hwaddr ram_base;
->      size_t ram_size;
->  };
-> @@ -43,6 +47,48 @@ typedef struct {
->=20=20
->  static RmeGuest *rme_guest;
->=20=20
-> +static int rme_configure_one(RmeGuest *guest, uint32_t cfg, Error **errp)
-> +{
-> +    int ret;
-> +    const char *cfg_str;
-> +    struct kvm_cap_arm_rme_config_item args =3D {
-> +        .cfg =3D cfg,
-> +    };
-> +
-> +    switch (cfg) {
-> +    case KVM_CAP_ARM_RME_CFG_RPV:
-> +        if (!guest->personalization_value) {
-> +            return 0;
-> +        }
-> +        memcpy(args.rpv, guest->personalization_value, KVM_CAP_ARM_RME_R=
-PV_SIZE);
-> +        cfg_str =3D "personalization value";
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-
-This function gets called with @cfg arguments 0 .. RME_MAX_CFG-1, from
-rme_configure() right below.  RME_MAX_CFG is defined to 1 above.
-
-The switch assumes KVM_CAP_ARM_RME_CFG_RPV is zero.  Such assumptions
-are ideally avoided, and alternatively checked at build time.
-
-> +
-> +    ret =3D kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
-> +                            KVM_CAP_ARM_RME_CONFIG_REALM, (intptr_t)&arg=
-s);
-> +    if (ret) {
-> +        error_setg_errno(errp, -ret, "failed to configure %s", cfg_str);
-> +    }
-> +    return ret;
-> +}
-> +
-> +static int rme_configure(Error **errp)
-> +{
-> +    int ret;
-> +    int cfg;
-> +
-> +    for (cfg =3D 0; cfg < RME_MAX_CFG; cfg++) {
-> +        ret =3D rme_configure_one(rme_guest, cfg, errp);
-> +        if (ret) {
-> +            return ret;
-> +        }
-> +    }
-> +    return 0;
-> +}
-> +
->  static int rme_init_ram(hwaddr base, size_t size, Error **errp)
->  {
->      int ret;
-> @@ -123,6 +169,10 @@ static int rme_create_realm(Error **errp)
->  {
->      int ret;
->=20=20
-> +    if (rme_configure(errp)) {
-> +        return -1;
-> +    }
-> +
->      ret =3D kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
->                              KVM_CAP_ARM_RME_CREATE_RD);
->      if (ret) {
-> @@ -168,8 +218,69 @@ static void rme_vm_state_change(void *opaque, bool r=
-unning, RunState state)
->      }
->  }
->=20=20
-> +static char *rme_get_rpv(Object *obj, Error **errp)
-> +{
-> +    RmeGuest *guest =3D RME_GUEST(obj);
-> +    GString *s;
-> +    int i;
-> +
-> +    if (!guest->personalization_value) {
-> +        return NULL;
-> +    }
-> +
-> +    s =3D g_string_sized_new(KVM_CAP_ARM_RME_RPV_SIZE * 2 + 1);
-> +
-> +    for (i =3D 0; i < KVM_CAP_ARM_RME_RPV_SIZE; i++) {
-> +        g_string_append_printf(s, "%02x", guest->personalization_value[i=
-]);
-> +    }
-
-The size of the destrination string is known at compile time.  Why grow
-it dynamically?
-
-Base64 would take less code.
-
-> +
-> +    return g_string_free(s, /* free_segment */ false);
-> +}
-> +
-> +static void rme_set_rpv(Object *obj, const char *value, Error **errp)
-> +{
-> +    RmeGuest *guest =3D RME_GUEST(obj);
-> +    size_t len =3D strlen(value);
-> +    uint8_t *out;
-> +    int i =3D 1;
-> +    int ret;
-> +
-> +    g_free(guest->personalization_value);
-> +    guest->personalization_value =3D out =3D g_malloc0(KVM_CAP_ARM_RME_R=
-PV_SIZE);
-> +
-> +    /* Two chars per byte */
-> +    if (len > KVM_CAP_ARM_RME_RPV_SIZE * 2) {
-> +        error_setg(errp, "Realm Personalization Value is too large");
-> +        return;
-> +    }
-> +
-> +    /* First byte may have a single char */
-> +    if (len % 2) {
-> +        ret =3D sscanf(value, "%1hhx", out++);
-> +    } else {
-> +        ret =3D sscanf(value, "%2hhx", out++);
-> +        i++;
-> +    }
-> +    if (ret !=3D 1) {
-> +        error_setg(errp, "Invalid Realm Personalization Value");
-> +        return;
-> +    }
-> +
-> +    for (; i < len; i +=3D 2) {
-> +        ret =3D sscanf(value + i, "%2hhx", out++);
-> +        if (ret !=3D 1) {
-> +            error_setg(errp, "Invalid Realm Personalization Value");
-> +            return;
-> +        }
-> +    }
-
-Looks like this supports hex strings shorter than
-KVM_CAP_ARM_RME_RPV_SIZE * 2.  How these get padded is not documented.
-Fixable, but are you sure the convenience is worth the complexity?
-
-Again, base64 would take less code.
-
-> +}
-> +
->  static void rme_guest_class_init(ObjectClass *oc, void *data)
->  {
-> +    object_class_property_add_str(oc, "personalization-value", rme_get_r=
-pv,
-> +                                  rme_set_rpv);
-> +    object_class_property_set_description(oc, "personalization-value",
-> +            "Realm personalization value (512-bit hexadecimal number)");
->  }
->=20=20
->  static void rme_guest_init(Object *obj)
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 9a635d1d3d..d24779b2bd 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -615,12 +615,67 @@ static void virt_build_smbios(LoongArchVirtMachineState *lvms)
+     }
+ }
+ 
++static void virt_fdt_setup(LoongArchVirtMachineState *lvms)
++{
++    MachineState *machine = MACHINE(lvms);
++    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle, pch_msi_phandle;
++    int i;
++
++    create_fdt(lvms);
++    fdt_add_cpu_nodes(lvms);
++    fdt_add_memory_nodes(machine);
++    fdt_add_fw_cfg_node(lvms);
++    fdt_add_flash_node(lvms);
++
++    /* Add cpu interrupt-controller */
++    fdt_add_cpuic_node(lvms, &cpuintc_phandle);
++    /* Add Extend I/O Interrupt Controller node */
++    fdt_add_eiointc_node(lvms, &cpuintc_phandle, &eiointc_phandle);
++    /* Add PCH PIC node */
++    fdt_add_pch_pic_node(lvms, &eiointc_phandle, &pch_pic_phandle);
++    /* Add PCH MSI node */
++    fdt_add_pch_msi_node(lvms, &eiointc_phandle, &pch_msi_phandle);
++    /* Add pcie node */
++    fdt_add_pcie_node(lvms, &pch_pic_phandle, &pch_msi_phandle);
++
++    /*
++     * Create uart fdt node in reverse order so that they appear
++     * in the finished device tree lowest address first
++     */
++    for (i = VIRT_UART_COUNT; i-- > 0;) {
++        hwaddr base = VIRT_UART_BASE + i * VIRT_UART_SIZE;
++        int irq = VIRT_UART_IRQ + i - VIRT_GSI_BASE;
++        fdt_add_uart_node(lvms, &pch_pic_phandle, base, irq, i == 0);
++    }
++
++    fdt_add_rtc_node(lvms, &pch_pic_phandle);
++    fdt_add_ged_reset(lvms);
++    platform_bus_add_all_fdt_nodes(machine->fdt, "/platic",
++                                   VIRT_PLATFORM_BUS_BASEADDRESS,
++                                   VIRT_PLATFORM_BUS_SIZE,
++                                   VIRT_PLATFORM_BUS_IRQ);
++
++    /*
++     * Since lowmem region starts from 0 and Linux kernel legacy start address
++     * at 2 MiB, FDT base address is located at 1 MiB to avoid NULL pointer
++     * access. FDT size limit with 1 MiB.
++     * Put the FDT into the memory map as a ROM image: this will ensure
++     * the FDT is copied again upon reset, even if addr points into RAM.
++     */
++    qemu_fdt_dumpdtb(machine->fdt, lvms->fdt_size);
++    rom_add_blob_fixed_as("fdt", machine->fdt, lvms->fdt_size, FDT_BASE,
++                          &address_space_memory);
++    qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
++            rom_ptr_for_as(&address_space_memory, FDT_BASE, lvms->fdt_size));
++}
++
+ static void virt_done(Notifier *notifier, void *data)
+ {
+     LoongArchVirtMachineState *lvms = container_of(notifier,
+                                       LoongArchVirtMachineState, machine_done);
+     virt_build_smbios(lvms);
+     loongarch_acpi_setup(lvms);
++    virt_fdt_setup(lvms);
+ }
+ 
+ static void virt_powerdown_req(Notifier *notifier, void *opaque)
+@@ -699,9 +754,7 @@ static DeviceState *create_platform_bus(DeviceState *pch_pic)
+ }
+ 
+ static void virt_devices_init(DeviceState *pch_pic,
+-                                   LoongArchVirtMachineState *lvms,
+-                                   uint32_t *pch_pic_phandle,
+-                                   uint32_t *pch_msi_phandle)
++                                   LoongArchVirtMachineState *lvms)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(lvms);
+     DeviceState *gpex_dev;
+@@ -747,9 +800,6 @@ static void virt_devices_init(DeviceState *pch_pic,
+         gpex_set_irq_num(GPEX_HOST(gpex_dev), i, 16 + i);
+     }
+ 
+-    /* Add pcie node */
+-    fdt_add_pcie_node(lvms, pch_pic_phandle, pch_msi_phandle);
+-
+     /*
+      * Create uart fdt node in reverse order so that they appear
+      * in the finished device tree lowest address first
+@@ -760,7 +810,6 @@ static void virt_devices_init(DeviceState *pch_pic,
+         serial_mm_init(get_system_memory(), base, 0,
+                        qdev_get_gpio_in(pch_pic, irq),
+                        115200, serial_hd(i), DEVICE_LITTLE_ENDIAN);
+-        fdt_add_uart_node(lvms, pch_pic_phandle, base, irq, i == 0);
+     }
+ 
+     /* Network init */
+@@ -774,8 +823,6 @@ static void virt_devices_init(DeviceState *pch_pic,
+     sysbus_create_simple("ls7a_rtc", VIRT_RTC_REG_BASE,
+                          qdev_get_gpio_in(pch_pic,
+                          VIRT_RTC_IRQ - VIRT_GSI_BASE));
+-    fdt_add_rtc_node(lvms, pch_pic_phandle);
+-    fdt_add_ged_reset(lvms);
+ 
+     /* acpi ged */
+     lvms->acpi_ged = create_acpi_ged(pch_pic, lvms);
+@@ -793,7 +840,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     CPULoongArchState *env;
+     CPUState *cpu_state;
+     int cpu, pin, i, start, num;
+-    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle, pch_msi_phandle;
+ 
+     /*
+      * Extended IRQ model.
+@@ -850,9 +896,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     memory_region_add_subregion(&lvms->system_iocsr, MAIL_SEND_ADDR,
+                    sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 1));
+ 
+-    /* Add cpu interrupt-controller */
+-    fdt_add_cpuic_node(lvms, &cpuintc_phandle);
+-
+     for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
+         cpu_state = qemu_get_cpu(cpu);
+         cpudev = DEVICE(cpu_state);
+@@ -891,9 +934,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+         }
+     }
+ 
+-    /* Add Extend I/O Interrupt Controller node */
+-    fdt_add_eiointc_node(lvms, &cpuintc_phandle, &eiointc_phandle);
+-
+     pch_pic = qdev_new(TYPE_LOONGARCH_PCH_PIC);
+     num = VIRT_PCH_PIC_IRQ_NUM;
+     qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
+@@ -913,9 +953,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+         qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
+     }
+ 
+-    /* Add PCH PIC node */
+-    fdt_add_pch_pic_node(lvms, &eiointc_phandle, &pch_pic_phandle);
+-
+     pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
+     start   =  num;
+     num = EXTIOI_IRQS - start;
+@@ -930,10 +967,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+                               qdev_get_gpio_in(extioi, i + start));
+     }
+ 
+-    /* Add PCH MSI node */
+-    fdt_add_pch_msi_node(lvms, &eiointc_phandle, &pch_msi_phandle);
+-
+-    virt_devices_init(pch_pic, lvms, &pch_pic_phandle, &pch_msi_phandle);
++    virt_devices_init(pch_pic, lvms);
+ }
+ 
+ static void virt_firmware_init(LoongArchVirtMachineState *lvms)
+@@ -1151,8 +1185,6 @@ static void virt_init(MachineState *machine)
+         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
+     }
+ 
+-    create_fdt(lvms);
+-
+     /* Create IOCSR space */
+     memory_region_init_io(&lvms->system_iocsr, OBJECT(machine), NULL,
+                           machine, "iocsr", UINT64_MAX);
+@@ -1171,8 +1203,6 @@ static void virt_init(MachineState *machine)
+         lacpu = LOONGARCH_CPU(cpu);
+         lacpu->phy_id = machine->possible_cpus->cpus[i].arch_id;
+     }
+-    fdt_add_cpu_nodes(lvms);
+-    fdt_add_memory_nodes(machine);
+     fw_cfg_add_memory(machine);
+ 
+     /* Node0 memory */
+@@ -1224,34 +1254,15 @@ static void virt_init(MachineState *machine)
+                         memmap_table,
+                         sizeof(struct memmap_entry) * (memmap_entries));
+     }
+-    fdt_add_fw_cfg_node(lvms);
+-    fdt_add_flash_node(lvms);
+ 
+     /* Initialize the IO interrupt subsystem */
+     virt_irq_init(lvms);
+-    platform_bus_add_all_fdt_nodes(machine->fdt, "/platic",
+-                                   VIRT_PLATFORM_BUS_BASEADDRESS,
+-                                   VIRT_PLATFORM_BUS_SIZE,
+-                                   VIRT_PLATFORM_BUS_IRQ);
+     lvms->machine_done.notify = virt_done;
+     qemu_add_machine_init_done_notifier(&lvms->machine_done);
+      /* connect powerdown request */
+     lvms->powerdown_notifier.notify = virt_powerdown_req;
+     qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
+ 
+-    /*
+-     * Since lowmem region starts from 0 and Linux kernel legacy start address
+-     * at 2 MiB, FDT base address is located at 1 MiB to avoid NULL pointer
+-     * access. FDT size limit with 1 MiB.
+-     * Put the FDT into the memory map as a ROM image: this will ensure
+-     * the FDT is copied again upon reset, even if addr points into RAM.
+-     */
+-    qemu_fdt_dumpdtb(machine->fdt, lvms->fdt_size);
+-    rom_add_blob_fixed_as("fdt", machine->fdt, lvms->fdt_size, FDT_BASE,
+-                          &address_space_memory);
+-    qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
+-            rom_ptr_for_as(&address_space_memory, FDT_BASE, lvms->fdt_size));
+-
+     lvms->bootinfo.ram_size = ram_size;
+     loongarch_load_kernel(machine, &lvms->bootinfo);
+ }
+-- 
+2.39.3
 
 
