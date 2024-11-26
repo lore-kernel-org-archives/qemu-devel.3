@@ -4,71 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92E3AD3B98B
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 13:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802CCD3B98E
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 13:16:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFvPM-00076t-S7; Tue, 26 Nov 2024 08:15:12 -0500
+	id 1tFvQ6-0007so-89; Tue, 26 Nov 2024 08:15:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFvPK-00073i-8Z
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:15:10 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFvQ1-0007q8-5Y
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:15:56 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tFvPI-0003Gu-8d
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:15:09 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5ceca0ec4e7so6822772a12.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 05:15:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFvPz-0003Wk-80
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 08:15:52 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3823cae4be1so3445907f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 05:15:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732626906; x=1733231706; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4l0CJj8RvJAvRigw/HDAj1EXsBOQZdxFcnAHit473Jk=;
- b=NnDTsphTous07yAUyvqJm3dmHHqmHLVYz1851ba02fFvQGA3ZyMnXEULZUlid9+dRe
- qlYhj+91x9cq4oqHuTZxksScC/AtLIkBjnhdRD5f0I5XMWVfGCxWNGcszLU4BDEl/ORB
- bcvnlzp5lwcWpI+AmKS7MKVfahGOZih/HS/ljn9o0BNBZRRoFM6HgUV6+TAmNcsUlQjh
- qOSPU7VrUgEgYg37NpjihsaCkQoAJWhFb6gHtOd3/FHP6AW5brPagI9ASDVR7y+X8kBq
- LutjMxAQLxtquI43Mm2VabsH34LyLw86FZF6RfbDNWhSF3jup2JRKx1Bh09Ex716iMYi
- jdWw==
+ d=linaro.org; s=google; t=1732626949; x=1733231749; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qicA4tgCJfDpFBaDTHOXe1Z6RwEjpfQXVt8zL8Tv2/8=;
+ b=tlVjA7SQvITe5blKwsmzTNO5HijKQDSouBMhXBA0Wrs0el9f5MdLSXxnz+Zv7I4BnH
+ LsnvBJ6VI+/Yc6D8TYkNxJMugdYJGbqPDN+9vfZDC7/bQYd7wH7NF5kdlNE22CSxOsOL
+ sF+Zp6yJXmABserqxoNGFhWVCspzTad+WB0Pj6Z6zmtGzNBtDxBP3dB1RovYiTYV0nfO
+ VRKODhliTpobEIuLDQtYPe2t4UNMKH0K+W26HBXugSX3nKaNvemvT7q0D95/RQp8Lcc4
+ +MscyMHpNFZs5Lo7OXGOWARg/npnqeH3FZsT0doBfejldFYmzRRwrCaxZEJSRQweMEBQ
+ 6yVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732626906; x=1733231706;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1732626949; x=1733231749;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4l0CJj8RvJAvRigw/HDAj1EXsBOQZdxFcnAHit473Jk=;
- b=Ei34WdOIsEoa4ax+SXO3esVKc5ZPUs1NnAOsGFI1vdRrxukozBABzCF8YLo+p8pRXJ
- jqLP4K4bV6ThdPS7ih34NN6p6Y3OnfVoAB6hF/3zQcDc/Bnh6TTZuZ2FrnCovcI7OzUN
- aMSP7H6vFDkUNyC5tdHVs4XMP1N2xz9XSO0Y2Y1zYmXuEMAVy465hm7NMMchACXkEGne
- M1zV3z/bvziDwYE7id9OKzosgM01L9r9yJNV3Y93e5tejpDEcVdTTq8kEF/+ekMYFwaT
- ZcgprJX/rhXT0SgWWdXS9gXynOw6EyvX41L4GYFvNNjuCPGjF15lypFeUncc+GwWyH0Z
- WKiw==
-X-Gm-Message-State: AOJu0Yx+6S9gi7KD7ClDFNHSdbhI37KqWwSmHxoKZiRc2+8ZabVjsUKP
- CCzfoxUaTYsxZY39d5NMCgnxN9VNiCw7f54PhWtZjXFCQ7rxBlAN9VSRGbvFny3QHXupgQOoCcR
- T3RcKKPyojXQ5RfINcgGzVVNJYb4SH+NcbFD7bMd0cqLScV4S
-X-Gm-Gg: ASbGncuy5VWquQCUEAy2ki1QwaulD88t5ghGQeO9hp6CL49xRf8x9DgFhWJwfJ3FCBM
- 71u1f7Dq1/C3oE3AnahtxeoKHYwstdMdx
-X-Google-Smtp-Source: AGHT+IG/y2hfmwCneajRZ504p4S5veBMQ9DOHb3pMS7oxE+Ys8n3VseEfGZKPJZJfvFnIPAlb/yFKx9jkRqLeDSnTh8=
-X-Received: by 2002:a05:6402:502:b0:5d0:214b:9343 with SMTP id
- 4fb4d7f45d1cf-5d0214b962amr12203229a12.4.1732626905696; Tue, 26 Nov 2024
- 05:15:05 -0800 (PST)
+ bh=qicA4tgCJfDpFBaDTHOXe1Z6RwEjpfQXVt8zL8Tv2/8=;
+ b=gupisJj69kHwFo9eCJbi5vEH+szEu/szvCgaIgznz8fadWW6je+wek/h1GUQkmEQQr
+ mID8Si5cbPKRTMDbvu80Xp9XiwBse4r7a7DjqrPaTFrXrvMJPpoROePMAyXRvZIjcNT8
+ PzYSbC+IQpvry0ibqZ6QmQZ8ztJQVvB4c19oeN/KjyDUOkSZ/vr2G4mV3zD9rxW7pWH6
+ a6RXkdaatCmoOWOrGdTGqMUlOlzwtUm/naH2evHTnijIAEH3nQAMBJn7Xtbbsi9x74p0
+ k9PYl9RHyYwGzA8Zcgh0Uz6VJL17PCLOv9R2ORGIIODhZpOMC7hMC8oZHst0ezvsyR3T
+ ywnQ==
+X-Gm-Message-State: AOJu0YzNPu2K7dRv/StPx04/NOEk6DqqKGUBx3iGNROn4H/zlBbgQ4yf
+ WLBojeOVo4fPko9WJsuGonm3IrIb2sUIaL5fr0Cs/SJL5IS/CKnD/HxY1gBw9DP18bAu3KOfH64
+ s
+X-Gm-Gg: ASbGncsch86d9nzRdUx5g35f8skqV/jnjWXWi0FR7N1c4wTYTPJRalVSXwKcksKRbJ1
+ B4hKiv/yJ4JGCwBjNQEXpyJbrIO6gthaJPBQIG16k5YxGqviegS/rB8lX2Ww+9n8eXr4P2q3btb
+ ewG6BhhgKVLp8xe4pVtGxLuUtHN8i30VGbGOmDA/rxJ1nY9wsGyemVIAYP1Yc0lwQXGxGaq0INI
+ Fde8ujLz7w7qE0SSWIsxjapW7VEx8XSFO1kKbZf4EfrsVEYDGN2sTlZSyxeL13i39ahgpq9
+X-Google-Smtp-Source: AGHT+IFFESbkUg4JfyK9FpiXksBHo/+OWpjEVuF6qRfNb5JoyBDwN1JBjbGWfjoTTPSURKX1lZblGg==
+X-Received: by 2002:a05:6000:1887:b0:382:5284:989 with SMTP id
+ ffacd0b85a97d-38260bcdbc5mr15485941f8f.46.1732626949376; 
+ Tue, 26 Nov 2024 05:15:49 -0800 (PST)
+Received: from localhost.localdomain ([176.176.143.205])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fbc38afsm13223769f8f.67.2024.11.26.05.15.47
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 26 Nov 2024 05:15:48 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 00/13] target/mips: Simplify some target_ulong registers to
+ 32-bit
+Date: Tue, 26 Nov 2024 14:15:32 +0100
+Message-ID: <20241126131546.66145-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-References: <20241126084928.252067-1-marcin.juszkiewicz@linaro.org>
-In-Reply-To: <20241126084928.252067-1-marcin.juszkiewicz@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 26 Nov 2024 13:14:54 +0000
-Message-ID: <CAFEAcA_SkZ+ew8AAVpBHuw-9YW4S5wFbB0Vqx+dBzXf97JGDGw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] hw/arm/sbsa-ref: bump default memory size to 2GB
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: qemu-devel@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
- qemu-arm@nongnu.org, Mathieu Poirier <mathieu.poirier@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,17 +98,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Nov 2024 at 08:49, Marcin Juszkiewicz
-<marcin.juszkiewicz@linaro.org> wrote:
->
-> We are working on adding RME support to SBSA Reference Platform.
-> When RME is enabled then RMM (Realm Managment Monitor) takes 1072MB of
-> memory for own use. Which ends with firmware panic on 1GB machine.
+This series is part of an experiment trying to run 32/64-bit
+MIPS cores in the same process.
 
-Reasonable change, but isn't it also a bug in the RMM that it
-grabs 1GB of RAM regardless of how much RAM the machine
-actually has?
+MXU is only available for 32-bit ISA, so there we have
+target_ulong == uint32_t.
+DSPControl is a 32-bit register, so we can also use uint32_t.
 
-thanks
--- PMM
+First introduce 32-bit equivalent helper_i32() for some MIPS
+specific helper_tl(), then use them in mxu_translate.c, using
+32-bit registers.
+
+For DSPControl register, we convert it to 32-bit, and use
+truncate() when using a 64-bit argument, or extu() when
+returning to 64-bit.
+
+Philippe Mathieu-Daudé (13):
+  target/mips: Rename gen_load_gpr() -> gen_load_gpr_tl()
+  target/mips: Rename gen_store_gpr() -> gen_store_gpr_tl()
+  target/mips: Rename gen_move_low32() -> gen_move_low32_tl()
+  target/mips: Rename gen_move_high32() -> gen_move_high32_tl()
+  target/mips: Rename gen_base_offset_addr() ->
+    gen_base_offset_addr_tl()
+  target/mips: Rename gen_op_addr_add?() -> gen_op_addr_add?_tl()
+  target/mips: Introduce gen_load_gpr_i32()
+  target/mips: Introduce gen_store_gpr_i32()
+  target/mips: Introduce gen_move_low32_i32()
+  target/mips: Introduce gen_move_high32_i32()
+  target/mips: Declare MXU registers as 32-bit
+  target/mips: Access MXU registers using TCGv_i32 API
+  target/mips: Make DSPControl register 32-bit wide
+
+ target/mips/cpu.h                         |    6 +-
+ target/mips/tcg/translate.h               |   18 +-
+ target/mips/tcg/sysemu_helper.h.inc       |    4 +-
+ target/mips/sysemu/machine.c              |    9 +-
+ target/mips/tcg/dsp_helper.c              |   10 +-
+ target/mips/tcg/lcsr_translate.c          |   12 +-
+ target/mips/tcg/loong_translate.c         |   20 +-
+ target/mips/tcg/msa_translate.c           |    6 +-
+ target/mips/tcg/mxu_translate.c           | 1546 ++++++++++-----------
+ target/mips/tcg/octeon_translate.c        |   28 +-
+ target/mips/tcg/sysemu/cp0_helper.c       |    4 +-
+ target/mips/tcg/translate.c               |  520 +++----
+ target/mips/tcg/translate_addr_const.c    |    8 +-
+ target/mips/tcg/tx79_translate.c          |   36 +-
+ target/mips/tcg/vr54xx_translate.c        |    6 +-
+ target/mips/tcg/micromips_translate.c.inc |   38 +-
+ target/mips/tcg/mips16e_translate.c.inc   |   32 +-
+ target/mips/tcg/nanomips_translate.c.inc  |  438 +++---
+ 18 files changed, 1400 insertions(+), 1341 deletions(-)
+
+-- 
+2.45.2
+
 
