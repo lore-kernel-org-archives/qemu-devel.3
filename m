@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32495D65530
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00F8AD65531
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:14:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFz7e-00077j-Pm; Tue, 26 Nov 2024 12:13:10 -0500
+	id 1tFz7l-0007AG-SE; Tue, 26 Nov 2024 12:13:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tFz7X-00075x-O8; Tue, 26 Nov 2024 12:13:04 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tFz7a-00076h-Lr; Tue, 26 Nov 2024 12:13:07 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tFz7V-0004GW-Rd; Tue, 26 Nov 2024 12:13:03 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-21288d3b387so44431295ad.1; 
- Tue, 26 Nov 2024 09:13:00 -0800 (PST)
+ id 1tFz7Z-0004Gv-1q; Tue, 26 Nov 2024 12:13:06 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7252b5d7b1dso398564b3a.0; 
+ Tue, 26 Nov 2024 09:13:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732641179; x=1733245979; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1732641182; x=1733245982; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LZNPYSPlNBAIgFECBRph2WnB34JU07BYLZNqVQrL8CI=;
- b=J+51+qZ6YkFk5Wh8hLAQ3CuO5ad0ksA+ykLFriBV6fWpYxGc9Yfp1PlberSRJ2X/5j
- ToOlw4B71eiwUvYhgz7IwvmVsD5pGYXKAla4Kirj0T/FVIxHb+qOCC/1qnIPS7tKCYJu
- AZpWuo1NM9f2UW3/BbyzJTBI2XPOjrTUL/jqRinMfRVyvXcqtbDNeS4/EyLzL3K+sgIy
- tsnd64wodAz+u9HhbiVNsZral85dEyJlAnqCGH3BKK1K7f81LvK98ztAgvPQlsWpwVHU
- PlFtfarezwBCxRcHKSKX6+8TyHiy0lSYBOw2zzAhydz740YcNtgZ/pnOJ4Y1rnuyMzQZ
- 06UA==
+ bh=rsqoIQj9JODnX97WlmZNc/233c/fmCNEOp8SnAPre+k=;
+ b=gb63PHwdJrrWh1FFKgYoF3HGdKB8a59uKgDllElqnQiio6Jn+Zx6QwS+AbCBUwWrRQ
+ dlZfiCExUu2MCp5Acus7WuKK3V6Yoe5fHUi6wNDxBrK0E6cb426McMbtwdfHDYPfIaKs
+ JWq4Qal+4JCbX3D6XJZBx4SIGTSDRbyL1W9qcsc7qQpmcrbnS1K2yAJoDLdmJgxTiRqp
+ 0H4EeAkRkCMXri9QH3/1cAfWVeq/K9KfbO8CldrvrKpA5KwFr1Lzjump4/9d5T9EsXGD
+ DOl+Fk8BTclRb8LEW2wRVxKcEu+1MsJbVBVfdJxHiDmBYX58vFCW8t7NVM5RbBfu7eSZ
+ QmiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732641179; x=1733245979;
+ d=1e100.net; s=20230601; t=1732641182; x=1733245982;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LZNPYSPlNBAIgFECBRph2WnB34JU07BYLZNqVQrL8CI=;
- b=QX/YtGlmURVHUzGWpNDSN3oRQ2dNuK8qZyVGIbS4PjM91/DQIbBN3GUljPm9gTlvQD
- GPD1WACxalHfy2hpteqWflKQyYr1JJNtO3Bb2HzOtbnKW9eF2Ej8sfXA6XNEJGjtOGQ1
- nmQhwweQOwpY376k/B9Y1B2X9apdo1qnM/SwaZda7AdnoTI1VxcNeuFJ1RlOe3He4pou
- 2FGB7EF0GJz8s0cZoYGAUaNigI2//5R6riImDwPT37uyGE6XEXmBojHRMyZDdkQszr8K
- qbmvFVYp2HuGYqvnYRObXZlHpxtnrBvtGrHR6c6D5Rj+Q9uQ1RT4DQ1dir3j+HDI0W6L
- AV/w==
+ bh=rsqoIQj9JODnX97WlmZNc/233c/fmCNEOp8SnAPre+k=;
+ b=eaT9R376JEz7kmxwd9MCKQSiGqeTHfOtr/GaF9tIc4pF+BktG9bqLAyq64L99sFF6b
+ p6i8zjR/jG08tN9SNODIRMr2+FR42ZVOJXuDcZK4xYWBvmK35GsnOhJ9h4lhfkuORdPL
+ 4fWPHUaThQaQFjdFGRSdTj18AJjFnC8Q3uCBKGt+Ky1JM611LX+w3Bfst/WUMZ8F24l/
+ qHTRwojze+j+tW1s6Sy7LJZHsP+c330BI/BhU2POm9xngvnb7nx1wyGX/H96gadLpTlP
+ 4Kg0RVnYqhpsydzSO1qywFB9EyuHeawP2CIUDXDbmT1y046iiC12XqHTvouFaTh7161U
+ ibvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVX+HNqyKZqeSd9v5x89rj6sKLQaH1B5MzPRdWCW5wNHA3rulOlhpQ2oTlaAXe5lUsLv0ac8jcBpQ==@nongnu.org
-X-Gm-Message-State: AOJu0YxiEr736MJh8v42v6VCrLXjE+5jiJGNPGyvMnhvNHcmmtdFmLFR
- xmeo8BrDpcTEPUYqQytPx8rXlSD/l7cjLqzPmZcn5ImjkAD4W8Fu/BiMIg==
-X-Gm-Gg: ASbGncs59/u+TCWAlwiMmJGonyvQnz/Au3/zIxprPmFXKqLAkckK6VnmwmBtWaLB8Qw
- qxLSnv7pOxKa6Sl99TN0ZSBzyu/C67LRo+0KHZpfDHDjN+tKz63WnegC8r+SAyPBw4Ibfc4Gctj
- ApX4SuVWmQwkr3ieaXmn7tKNJe1IfTZjtLKsGMVWLhFWT6fqtL8tjt/nXzyt4vxp6A/VXxuBGBp
- M7FdMgUnYc7yG9heUkiIeFELYQ7uZ8H0EW3h3B/D88V7yz8YEC//KW+OqcE3oQ7FOslC+gZ9HzV
- DbiwZg==
-X-Google-Smtp-Source: AGHT+IHoYQQnXm2PES9Hc054dxAUMVzvfXyo3fLyUP1OW4mFn40WyVw0IAn1BkJaRigBOji6G29mpA==
-X-Received: by 2002:a17:902:e5d2:b0:211:6b21:5a87 with SMTP id
- d9443c01a7336-2129f6b909dmr230132035ad.56.1732641179386; 
- Tue, 26 Nov 2024 09:12:59 -0800 (PST)
+ AJvYcCVD1QCTvdQ92RvTUVzBmMImpSACWmg2zXtF4LjJWihJ0/bPWdRm72JIVfWV5cs+TWYCvAtAi8yyow==@nongnu.org
+X-Gm-Message-State: AOJu0YwrPqECNiDEEfFmO6ap10hUIoMm7DiR9lHFTO8wrA6ePaMj1Heg
+ QOb1ZnLKRmpfE3mRefd15GQqbYMDcZpd5VmvGO8eOZ5BEVIH38KNj2mMjA==
+X-Gm-Gg: ASbGncthCAtJCsgfyMMthri6ok+UMuHeNBcQm22wB1wtTqqGawUgJxJF5WmrCqOetJq
+ k7QZC4gFLM9P1OzGr1wxuwhMwvpUbUAGns/uiZ0xBlORvA80ahF1pNbMkXDcJIRB54mqA+ASJNJ
+ Php5aW8FAp6QQYsDhtpji4wyJEPamYJRSAXG+xUz7lrxM7qoF5TQGesqlbpcnzV2fkuA5MtrpEI
+ DdfVWtwrA2ZQZB56JxSOyl8nPoWSk8R4ozhsYUV/+yAwo59KL1fUmbKYqMmepZBxPeFV0AP0NUj
+ 1nkeRg==
+X-Google-Smtp-Source: AGHT+IE2lYA53utzLTjXEQsS15gOtScxgjGz09dKdolIMw12r+4+ceXY7V+egsNtbVdxZCvi8Jy4FA==
+X-Received: by 2002:a17:902:d507:b0:20c:5d5a:af6f with SMTP id
+ d9443c01a7336-21500f5a535mr538635ad.10.1732641182055; 
+ Tue, 26 Nov 2024 09:13:02 -0800 (PST)
 Received: from wheely.local0.net (124-171-72-210.tpgi.com.au. [124.171.72.210])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2129dc21c28sm87321175ad.246.2024.11.26.09.12.57
+ d9443c01a7336-2129dc21c28sm87321175ad.246.2024.11.26.09.12.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Nov 2024 09:12:59 -0800 (PST)
+ Tue, 26 Nov 2024 09:13:01 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Glenn Miles <milesg@linux.ibm.com>
-Subject: [PULL 2/6] ppc/pnv: Fix direct controls quiesce
-Date: Wed, 27 Nov 2024 03:12:31 +1000
-Message-ID: <20241126171235.362916-3-npiggin@gmail.com>
+Subject: [PULL 3/6] target/ppc: Fix THREAD_SIBLING_FOREACH for multi-socket
+Date: Wed, 27 Nov 2024 03:12:32 +1000
+Message-ID: <20241126171235.362916-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241126171235.362916-1-npiggin@gmail.com>
 References: <20241126171235.362916-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,81 +99,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-powernv CPUs have a set of control registers that can stop, start, and
-do other things to control a thread's execution.
+From: Glenn Miles <milesg@linux.ibm.com>
 
-Using this interface to stop a thread puts it into a particular state
-that can be queried, and is distinguishable from other things that might
-stop the CPU (e.g., going idle, or being debugged via gdb, or stopped by
-the monitor).
+The THREAD_SIBLING_FOREACH macro wasn't excluding threads from other
+chips. Add chip_index field to the thread state and add a check for the
+new field in the macro.
 
-Add a new flag that can speficially distinguish this state where it is
-stopped with control registers. This solves some hangs when rebooting
-powernv machines when skiboot is modified to allow QEMU to use the CPU
-control facility (that uses controls to bring all secondaries to a known
-state).
-
-Fixes: c8891955086 ("ppc/pnv: Implement POWER10 PC xscom registers for direct controls")
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Fixes: b769d4c8f4c6 ("target/ppc: Add initial flags and helpers for SMT support")
+Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+[npiggin: set chip_index for spapr too]
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_core.c | 9 +++++++--
- target/ppc/cpu.h  | 1 +
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ hw/ppc/pnv_core.c       | 2 ++
+ hw/ppc/spapr_cpu_core.c | 1 +
+ target/ppc/cpu.h        | 7 +++++--
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index a30693990b..cbfac49862 100644
+index cbfac49862..e6b02294b1 100644
 --- a/hw/ppc/pnv_core.c
 +++ b/hw/ppc/pnv_core.c
-@@ -217,8 +217,8 @@ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
-     case PNV10_XSCOM_EC_CORE_RAS_STATUS:
-         for (i = 0; i < nr_threads; i++) {
-             PowerPCCPU *cpu = pc->threads[i];
--            CPUState *cs = CPU(cpu);
--            if (cs->stopped) {
-+            CPUPPCState *env = &cpu->env;
-+            if (env->quiesced) {
-                 val |= PPC_BIT(0 + 8 * i) | PPC_BIT(1 + 8 * i);
-             }
-         }
-@@ -244,20 +244,25 @@ static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
-         for (i = 0; i < nr_threads; i++) {
-             PowerPCCPU *cpu = pc->threads[i];
-             CPUState *cs = CPU(cpu);
-+            CPUPPCState *env = &cpu->env;
+@@ -322,6 +322,8 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
+     pir_spr->default_value = pir;
+     tir_spr->default_value = tir;
  
-             if (val & PPC_BIT(7 + 8 * i)) { /* stop */
-                 val &= ~PPC_BIT(7 + 8 * i);
-                 cpu_pause(cs);
-+                env->quiesced = true;
-             }
-             if (val & PPC_BIT(6 + 8 * i)) { /* start */
-                 val &= ~PPC_BIT(6 + 8 * i);
-+                env->quiesced = false;
-                 cpu_resume(cs);
-             }
-             if (val & PPC_BIT(4 + 8 * i)) { /* sreset */
-                 val &= ~PPC_BIT(4 + 8 * i);
-+                env->quiesced = false;
-                 pnv_cpu_do_nmi_resume(cs);
-             }
-             if (val & PPC_BIT(3 + 8 * i)) { /* clear maint */
-+                env->quiesced = false;
-                 /*
-                  * Hardware has very particular cases for where clear maint
-                  * must be used and where start must be used to resume a
++    env->chip_index = pc->chip->chip_id;
++
+     if (pc->big_core) {
+         /* 2 "small cores" get the same core index for SMT operations */
+         env->core_index = core_hwid >> 1;
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index ada439e831..135f86a622 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -313,6 +313,7 @@ static PowerPCCPU *spapr_create_vcpu(SpaprCpuCore *sc, int i, Error **errp)
+         return NULL;
+     }
+ 
++    env->chip_index = sc->node_id;
+     env->core_index = cc->core_id;
+ 
+     cpu->node_id = sc->node_id;
 diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 945af07a64..0b4f1013b8 100644
+index 0b4f1013b8..2ffac2ed03 100644
 --- a/target/ppc/cpu.h
 +++ b/target/ppc/cpu.h
-@@ -1355,6 +1355,7 @@ struct CPUArchState {
-      * special way (such as routing some resume causes to 0x100, i.e. sreset).
-      */
-     bool resume_as_sreset;
-+    bool quiesced;
- #endif
+@@ -1253,6 +1253,7 @@ struct CPUArchState {
+     /* For SMT processors */
+     bool has_smt_siblings;
+     int core_index;
++    int chip_index;
  
-     /* These resources are used only in TCG */
+ #if !defined(CONFIG_USER_ONLY)
+     /* MMU context, only relevant for full system emulation */
+@@ -1412,8 +1413,10 @@ struct CPUArchState {
+ 
+ #define THREAD_SIBLING_FOREACH(cs, cs_sibling)                  \
+     CPU_FOREACH(cs_sibling)                                     \
+-        if (POWERPC_CPU(cs)->env.core_index ==                  \
+-            POWERPC_CPU(cs_sibling)->env.core_index)
++        if ((POWERPC_CPU(cs)->env.chip_index ==                 \
++             POWERPC_CPU(cs_sibling)->env.chip_index) &&        \
++            (POWERPC_CPU(cs)->env.core_index ==                 \
++             POWERPC_CPU(cs_sibling)->env.core_index))
+ 
+ #define SET_FIT_PERIOD(a_, b_, c_, d_)          \
+ do {                                            \
 -- 
 2.45.2
 
