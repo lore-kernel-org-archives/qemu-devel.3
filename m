@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 182DAD3B98F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16753D3B98F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFw7k-0003ER-MQ; Tue, 26 Nov 2024 09:01:04 -0500
+	id 1tFw7R-0002ij-0h; Tue, 26 Nov 2024 09:00:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFw7e-0002wm-Pq
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:00:59 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFw7G-0002hC-GH
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:00:34 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFw7b-0005FH-EF
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:00:57 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-382610c7116so3004433f8f.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:00:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFw7C-000589-F9
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:00:33 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4315e9e9642so52115735e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:00:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732629653; x=1733234453; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732629625; x=1733234425; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e6jveqDxIgi93N+jXqdSQZa/NGDVOMeV1ydXtJqSLpU=;
- b=MDWAlgmoJZhkCYg/Gv1MXoF7yBGhh+DMiqUeqsZTkyObedh5rElDx4SFrhvm/QknWV
- vDQ5OJVHcZ/WbvPf0/nYZbyUr2VuHhXELKoMexYOKh01AemPj5XjCBbj4DpaHNeagSKn
- Pd1+FLM17Hh45KaQAlSvJzf5ZpT9qzEPVTWZZ/r1Ykp9Qj3rC6py4rwUXkEwaJjC20Ni
- WhK0V9dbe9yNYnTP3CGFkre+I4V4LLnT5PY03T0dMICPgHPk1ypGj3qVMW88sy5DoycK
- odgrTo5Tr6T4rbhMF0w0W9bJIG/7YlE95unQfs1TUXNTj8bEwMmMzdTmLA0eUqAkW2E9
- DDKA==
+ bh=SgT7974TBaSnVy5uBFRbu9gIDuhkpzf7gv8ciPR3e+w=;
+ b=pYGQChg+B6egG69qNWs5lQso1scGxol9tmIFSRHYWVrTbPkZiXuzd0xChefc4AIt74
+ M3uJliH6LaMTzu/qT5fuXyph3+ZEe8cP10jMsB7aAZwdZqoJmFjHP5HJ5Q1yqYgqTpxC
+ daom26GnSmySSXU+rW5TClqwAz51h6fXkfBJ5jF+aySwbBrtWPG5ONriTtH2b2YmlkWS
+ FjLgU0mWtLonQKZiFi2Jvmlck4YQHiNtE0fI0QbvTMSc/GKj3oX38iRldw6z/qDMRR3I
+ qL6AeFKpQ+oLlU1EUCvWGPYcFeNDzdxg3VAtjPXcaKVYe5hTzld2wRBl2/Nay0S52qOo
+ UkRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732629653; x=1733234453;
+ d=1e100.net; s=20230601; t=1732629625; x=1733234425;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=e6jveqDxIgi93N+jXqdSQZa/NGDVOMeV1ydXtJqSLpU=;
- b=n/AB6LQxia8bbpRa2Y5ROFhymleTbduPSL4xDaCyylsPWK31vu/O+e/TigQ/EeOmKS
- 73OevNl6V3kh8hvf8JXRyLgkuaj/zRXX8biBougVZ7aHDojTxU2E6ICvSHgVJHI1OsAq
- 3fw3l5DcMZFtFxVbho1lrYYQ0Xs0QiOX5rOBLRGhD2BBGiodQCQLXX31+7E6BO1+Nj9H
- y0N8crJ2vYkfguBXoNRKoTUvB8RjkI/fOpd36y3VdKLA3hq2vzzGWfejNcrSnGWv05GA
- YBp6Qu5Tj8uvqv5nxj5EUNvgfiifELzgVtiRebzsZzL2tEP2DSi6w7jkPv9SyxuSj/Hm
- 7/iw==
-X-Gm-Message-State: AOJu0YzouGHxzWE8vdOiV7pFqZwE/MKIJWkmviAalyJJjHtJZ2GCoQI4
- sKmaBiESykSKnZ4iFBi6p6j1h/qKKgpJal0+phKqtKkjUU/vg790ahLLwAqFg+ZepnxVCcZZw6Y
- 0
-X-Gm-Gg: ASbGncuNuhF5JqsAttiznUO+3feiUujeF3UkxcbCtbQTxDhibh1d2y1E4hq61MA1Wk0
- eyW1JQ1UrQM2TxjrZlO+tFQ5/UC7LkWdc+hbh5r8BOUQQpABIpfASgLxUtiB7l9p+DOOIVQf6ab
- dehyL3CEAQR8SVNeNA0hli7HjbgSW5HxEze6DJDDqXTTOSE4iMEoiHeerKqalWcVY2+2B1ZcPxr
- fKWfjEC71DRYPQWrb8iTkyegCnVKiGudr80ZLKmXRIw2/WmjWmgsOksBtsS4b8tFCvwgebv
-X-Google-Smtp-Source: AGHT+IE5UW4DKVIAJJCiER1hTYjtOanYuptPrD72i1uF3fBBLwchRd2Dy/JX93NZeWo+EpkFJ5Qk3w==
-X-Received: by 2002:a05:6000:1449:b0:37c:d569:97b with SMTP id
- ffacd0b85a97d-38260b60008mr14060733f8f.19.1732629650662; 
- Tue, 26 Nov 2024 06:00:50 -0800 (PST)
+ bh=SgT7974TBaSnVy5uBFRbu9gIDuhkpzf7gv8ciPR3e+w=;
+ b=AortOnc+y0nKpa5rZPZtoO4RNJ+GhAEZl7ZtMimYkDU5FmLsrpA5i6zOX6E2T3Xqhl
+ NhlJ2TbDDk9Um5NwL5Tn5XLsLuwoav2ugTfxHxcQpt3yWYzzGODyJoOghTvnPskMQJtt
+ TXyXx0HB8eU3OZJu2Me5t4lLWKNGbU0qmjhdNqw7b6iM0UKsNkgypN0VVHgr0bnCa9oz
+ PPpk0BbN1BoWwPmuHLa3vv7SrFnZYRlOcchDtV4laHzq09tayPwV86pxdMTFnrRUpo/O
+ mC5Gahvv5hlvRHJOv7zdW7MrQKkIWARn4C08K3JlHkmfVmw16h7Q4glnnCvTTJt1kM+R
+ fv3Q==
+X-Gm-Message-State: AOJu0Yx6BY12KNvMuMrjRb0VsIBc0DK0BrpDTFiGmD4/k5khcS4ESLOR
+ 4DJtz9+gu5lJ/VMKkdWrDqVoF4YwfaCfXp3920lJdoo9I69QRiOMniydiHEP8zBF/9aSMq80iJ5
+ /
+X-Gm-Gg: ASbGncsW0LXSfyVgqVw5j9j647iLmb4HkYez+D+cxGuwxuEIRLivfXU+wB5f4wdvwVY
+ ulu06ujqPbsLHfnMdYrK/Gq+HB7dDF0ffTk65lkcdZUUWqV65qHJvXGe1t+/zejtOuWolvaLkRh
+ 9w02KjW2Ot6WFF4HQ178MprjMsJ6VFVK8LH7ZJkf2cKyVwwpXExglUWAfE5RofGrf47h2Vjpe+7
+ NRpW2VkDVzAubeoMSTc9Q2oQS6U5cbjCKy8iLAxQpTh1m1IV53c9n3cVzDT8ACXFCQs2NIGnVYc
+ tQ==
+X-Google-Smtp-Source: AGHT+IHOHgJ0coNubj+24r+96yTdONaN/gsorOmJGolLH+QOccSj4A0bDX5whV8CyWwTTpwfOJy7Qg==
+X-Received: by 2002:a05:600c:1c95:b0:434:a802:e99a with SMTP id
+ 5b1f17b1804b1-434a802eb8fmr14892965e9.4.1732629624605; 
+ Tue, 26 Nov 2024 06:00:24 -0800 (PST)
 Received: from localhost.localdomain ([176.176.143.205])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fafeceesm13407142f8f.37.2024.11.26.06.00.47
+ 5b1f17b1804b1-433b46430f1sm229389415e9.43.2024.11.26.06.00.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 Nov 2024 06:00:48 -0800 (PST)
+ Tue, 26 Nov 2024 06:00:23 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH v3 07/16] target/mips: Introduce decode tree bindings for
- MIPS16e ASE
-Date: Tue, 26 Nov 2024 14:59:53 +0100
-Message-ID: <20241126140003.74871-8-philmd@linaro.org>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+Subject: [PATCH v3 03/16] target/mips: Convert Octeon LX instructions to
+ decodetree
+Date: Tue, 26 Nov 2024 14:59:49 +0100
+Message-ID: <20241126140003.74871-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241126140003.74871-1-philmd@linaro.org>
 References: <20241126140003.74871-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,123 +104,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the MIPS16e decodetree configs for the 16-bit
-and 32-bit instructions.
+Use Octeon decodetree to call gen_lx() for the LX instructions.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20241111222936.59869-4-philmd@linaro.org>
 ---
- target/mips/tcg/translate.h             |  2 ++
- target/mips/tcg/mips16e_16.decode       |  9 +++++++++
- target/mips/tcg/mips16e_32.decode       |  9 +++++++++
- target/mips/tcg/mips16e_translate.c     | 14 ++++++++++++++
- target/mips/tcg/mips16e_translate.c.inc |  8 ++++++++
- target/mips/tcg/meson.build             |  3 +++
- 6 files changed, 45 insertions(+)
- create mode 100644 target/mips/tcg/mips16e_16.decode
- create mode 100644 target/mips/tcg/mips16e_32.decode
- create mode 100644 target/mips/tcg/mips16e_translate.c
+ target/mips/tcg/octeon.decode      |  8 ++++++++
+ target/mips/tcg/octeon_translate.c | 12 ++++++++++++
+ target/mips/tcg/translate.c        |  4 +---
+ 3 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index a65ab4a747c..d1aa811cfa1 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -223,6 +223,8 @@ bool decode_64bit_enabled(DisasContext *ctx);
- 
- /* decodetree generated */
- bool decode_isa_rel6(DisasContext *ctx, uint32_t insn);
-+bool decode_ase_mips16e_16(DisasContext *ctx, uint16_t insn);
-+bool decode_ase_mips16e_32(DisasContext *ctx, uint32_t insn);
- bool decode_ase_msa(DisasContext *ctx, uint32_t insn);
- bool decode_ext_txx9(DisasContext *ctx, uint32_t insn);
- bool decode_ext_loongson(DisasContext *ctx, uint32_t insn);
-diff --git a/target/mips/tcg/mips16e_16.decode b/target/mips/tcg/mips16e_16.decode
-new file mode 100644
-index 00000000000..82586493f68
---- /dev/null
-+++ b/target/mips/tcg/mips16e_16.decode
-@@ -0,0 +1,9 @@
-+# MIPS16e 16-bit instruction set extensions
-+#
-+# Copyright (C) 2021  Philippe Mathieu-Daudé
-+#
-+# SPDX-License-Identifier: LGPL-2.1-or-later
-+#
-+# Reference: MIPS Architecture for Programmers, Volume IV-a
-+#            The MIPS16e Application Specific Extension
-+#            (Document Number: MD00076)
-diff --git a/target/mips/tcg/mips16e_32.decode b/target/mips/tcg/mips16e_32.decode
-new file mode 100644
-index 00000000000..fc429049e18
---- /dev/null
-+++ b/target/mips/tcg/mips16e_32.decode
-@@ -0,0 +1,9 @@
-+# MIPS16e 32-bit instruction set extensions
-+#
-+# Copyright (C) 2021  Philippe Mathieu-Daudé
-+#
-+# SPDX-License-Identifier: LGPL-2.1-or-later
-+#
-+# Reference: MIPS Architecture for Programmers, Volume IV-a
-+#            The MIPS16e Application Specific Extension
-+#            (Document Number: MD00076)
-diff --git a/target/mips/tcg/mips16e_translate.c b/target/mips/tcg/mips16e_translate.c
-new file mode 100644
-index 00000000000..6de9928b37e
---- /dev/null
-+++ b/target/mips/tcg/mips16e_translate.c
-@@ -0,0 +1,14 @@
-+/*
-+ * MIPS emulation for QEMU - MIPS16e translation routines
-+ *
-+ * Copyright (c) 2021 Philippe Mathieu-Daudé <f4bug@amsat.org>
-+ *
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
-+ */
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 0c787cb498c..102a05860df 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -1,6 +1,7 @@
+ # Octeon Architecture Module instruction set
+ #
+ # Copyright (C) 2022 Pavel Dovgalyuk
++# Copyright (C) 2024 Philippe Mathieu-Daudé
+ #
+ # SPDX-License-Identifier: LGPL-2.1-or-later
+ #
+@@ -39,3 +40,10 @@ CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
+ POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
+ SEQNE        011100 rs:5 rt:5 rd:5 00000 10101 ne:1
+ SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
 +
-+#include "qemu/osdep.h"
-+#include "translate.h"
++&lx          base index rd
++@lx          ...... base:5 index:5 rd:5 ...... ..... &lx
++LWX          011111 ..... ..... ..... 00000 001010 @lx
++LHX          011111 ..... ..... ..... 00100 001010 @lx
++LBUX         011111 ..... ..... ..... 00110 001010 @lx
++LDX          011111 ..... ..... ..... 01000 001010 @lx
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index e25c4cbaa06..0e0b00303a7 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -174,3 +174,15 @@ static bool trans_SEQNEI(DisasContext *ctx, arg_SEQNEI *a)
+     }
+     return true;
+ }
 +
-+/* Include the auto-generated decoders.  */
-+#include "decode-mips16e_16.c.inc"
-+#include "decode-mips16e_32.c.inc"
-diff --git a/target/mips/tcg/mips16e_translate.c.inc b/target/mips/tcg/mips16e_translate.c.inc
-index defef3ce559..a57ae4e95b1 100644
---- a/target/mips/tcg/mips16e_translate.c.inc
-+++ b/target/mips/tcg/mips16e_translate.c.inc
-@@ -657,6 +657,14 @@ static int decode_ase_mips16e(CPUMIPSState *env, DisasContext *ctx)
-     int n_bytes;
- 
-     ctx->opcode = translator_lduw(env, &ctx->base, ctx->base.pc_next);
++static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
++{
++    gen_lx(ctx, a->rd, a->base, a->index, mop);
 +
-+    if (decode_ase_mips16e_16(ctx, ctx->opcode)) {
-+        return 2;
-+    }
-+    if (decode_ase_mips16e_32(ctx, ctx->opcode)) {
-+        return 4;
-+    }
++    return true;
++}
 +
-     op = (ctx->opcode >> 11) & 0x1f;
-     sa = (ctx->opcode >> 2) & 0x7;
-     sa = sa == 0 ? 8 : sa;
-diff --git a/target/mips/tcg/meson.build b/target/mips/tcg/meson.build
-index 7b18e6c4c8b..bcb64368be8 100644
---- a/target/mips/tcg/meson.build
-+++ b/target/mips/tcg/meson.build
-@@ -1,4 +1,6 @@
- gen = [
-+  decodetree.process('mips16e_16.decode', extra_args: ['--decode=decode_ase_mips16e_16', '--insnwidth=16']),
-+  decodetree.process('mips16e_32.decode', extra_args: ['--decode=decode_ase_mips16e_32']),
-   decodetree.process('rel6.decode', extra_args: ['--decode=decode_isa_rel6']),
-   decodetree.process('msa.decode', extra_args: '--decode=decode_ase_msa'),
-   decodetree.process('tx79.decode', extra_args: '--static-decode=decode_tx79'),
-@@ -16,6 +18,7 @@ mips_ss.add(files(
-   'fpu_helper.c',
-   'ldst_helper.c',
-   'lmmi_helper.c',
-+  'mips16e_translate.c',
-   'msa_helper.c',
-   'msa_translate.c',
-   'op_helper.c',
++TRANS(LBUX, trans_lx, MO_UB);
++TRANS(LHX,  trans_lx, MO_SW);
++TRANS(LWX,  trans_lx, MO_SL);
++TRANS(LDX,  trans_lx, MO_UQ);
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index acadd3d8919..6fd5462a24f 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -13583,9 +13583,7 @@ static void decode_opc_special3_legacy(CPUMIPSState *env, DisasContext *ctx)
+         }
+         break;
+     case OPC_LX_DSP:
+-        if (!(ctx->insn_flags & INSN_OCTEON)) {
+-            check_dsp(ctx);
+-        }
++        check_dsp(ctx);
+         op2 = MASK_LX(ctx->opcode);
+         switch (op2) {
+ #if defined(TARGET_MIPS64)
 -- 
 2.45.2
 
