@@ -4,86 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2FBD3B996
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:35:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 131CDD3B997
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 14:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFweR-0006xY-6Q; Tue, 26 Nov 2024 09:34:51 -0500
+	id 1tFwhZ-0000iQ-Bs; Tue, 26 Nov 2024 09:38:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFweN-0006wn-Ls
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:34:49 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFweL-0003nU-8e
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 09:34:46 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3824709ee03so4111192f8f.2
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 06:34:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732631682; x=1733236482; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kd84w85kLEPEiBmjrzJ02AtQs4ZYLhpRXTdWpYd4MqI=;
- b=FgIssMrLmliqE1SToFsPXSNs/dCHhRlZMUSNUL/F0T539troXQrmqqkdF0bFB6+dUQ
- 4Wne5cPYYOKDRFsqRORKiESzKWi/RzGitjUPHZx8C9rEPn1zOjaJiwv3NdDneK4+njsR
- IkyxPWDN+Zb5xHHsS04x/pR/9BrlvfZBWawDIKUYRmQG/whgEs9YE8lYcDlO+49bHGWh
- i8mtky1muFR/Rinq34znHMg4PWQHj/1jgJwIzrnhRws2ERrbZ6839Pxf0GLtVsFJK/JF
- bIxUfxKeq0XvBfWOO/+owTjJIX0VcPWz1mYUzsP1BvVTfXdlY8m5dAXWbke9wbFnn3mi
- v/Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732631682; x=1733236482;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kd84w85kLEPEiBmjrzJ02AtQs4ZYLhpRXTdWpYd4MqI=;
- b=s2bDBdj3kt3W4PPmAhmrez8FFrt0FU3gLppLKSTJkaXaH0XW4kf7K9oYsxIu0beIoB
- TlkEVKgIypNcdG9ALdJNgEAh8Pk/DqRDofX5HLQN/jlS1xHhkmG+dd2SzTQ3eBInYy1v
- 12XsgauGEiqA7R8RUOnOEq/yZJ7yUQhvxgtAMvjr2oVvX4duVsZWj0iAXR3NLOnEzA5i
- BHzmosf+jcieRJecUiXF15o8C+XKtXoEaR4KcjaI0BBVCvXgpXVjTjt0XzXCCdcIwQ7U
- TlrfAdGUGXYhQvoXel7GwIcysfvyNY++Ax5l9qB98frMOt2abWPIdJxOocIoYIUm4b+6
- yRRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXowTUXz8n1AUFptlXTRnXgYX70Q8nnLSbOWSBJMOCDNzVYSaTFQ9Hl7hfiw4OEb3OEEaOU/S3Fh8lH@nongnu.org
-X-Gm-Message-State: AOJu0YwKU7J3wEP0FYcJquOXSnGkTu2+NbBaKjvJSCwnoq1PPxbWo7Vf
- B0XfmgBeH0r/H2XkqkOWexy3rSnUpt5Y5V8r4kW7MIFJ/HvHa9pcn3br9y1tz1k=
-X-Gm-Gg: ASbGncsMk1yFSjPA4hb+KJuJfmY0weVWzDZ0qDqgJMIbljvFREPSZUmffwPebE31NjH
- 4kO63hNubUhc9wzRaLxv6gGjAxvAh1zI3lCOxUd1cF+i6TcrGaPpgCddVHTph+0JbmmjhNxThCu
- AOjzeRnZozbCVCq3OubBIFmxYKQwLjlZUj+tZ0R/qC9uehvPliyTQHcPHbb9G8JSJp1H46Gq/yo
- DE528Sr161VK/2fwWybRcOWm1OELiPOdZDtRmqhP1ZuOMWC8SQWeciFjqeb883TwQ==
-X-Google-Smtp-Source: AGHT+IEX8Extxn6UX6yDjeFMHGXjpfBi0qth/ebQFmxVLBxvedc0HauXPtR+cTjNXhPqDKYDkE1D7A==
-X-Received: by 2002:a05:6000:1acd:b0:382:5351:5bbf with SMTP id
- ffacd0b85a97d-38260bcdc5cmr14270518f8f.41.1732631681826; 
- Tue, 26 Nov 2024 06:34:41 -0800 (PST)
-Received: from [192.168.69.146] ([176.176.143.205])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434a81f59d8sm14137845e9.27.2024.11.26.06.34.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 06:34:41 -0800 (PST)
-Message-ID: <25361bd1-c5cd-4949-8b86-1d7e4e833a83@linaro.org>
-Date: Tue, 26 Nov 2024 15:34:39 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tFwhX-0000i7-T1; Tue, 26 Nov 2024 09:38:04 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tFwhV-0004b4-8q; Tue, 26 Nov 2024 09:38:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1732631881; x=1764167881;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=tWnKBX6Qf1ceyQZF9SkLZLjcN5RoYjdfpd3Rs8PjOxc=;
+ b=WgYG7kP8Re3jsX1UnCrY9AuUDCF/C1qj62PnYSLePFOlpczsnbaFVIrq
+ 3cm5vXBwOOgLVV7ytK5fazcLU9XUHtG8w66vMuGma4Dyg9eCZ5J58ZPzQ
+ m3l5iIydjDGuqS3pzbh93Z3+9iJFIxDxjTMOO1DfbiGL+sjE4Kb511rXc
+ sS2w/7PfDzwa42lviqqzn6h2CqEu8y2tUJ5NYxXbzKHn8goo2zIS75lqO
+ MxOzLHarpPmnllY9wSaxT5Pm/eMJerSJmQllMqYw5vPJOip4uTz/Timfd
+ tek1RefUapVrtof4VIUCux0aovUNlXkins6e43wlDPhEBH1EJ/6s0VOun Q==;
+X-CSE-ConnectionGUID: zG7FD+OKQ8e/Gh4F42NSSg==
+X-CSE-MsgGUID: miDrGnUcT22RmReSVgIT7w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11268"; a="36721890"
+X-IronPort-AV: E=Sophos;i="6.12,186,1728975600"; d="scan'208";a="36721890"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Nov 2024 06:37:57 -0800
+X-CSE-ConnectionGUID: 9hX/TuovTD2Hjv6AwdGBiA==
+X-CSE-MsgGUID: Ee90qsKLTFS2vkXKsjdeMQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,186,1728975600"; d="scan'208";a="91249842"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa006.fm.intel.com with ESMTP; 26 Nov 2024 06:37:55 -0800
+Date: Tue, 26 Nov 2024 22:56:04 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, junjie.mao@hotmail.com, qemu-rust@nongnu.org
+Subject: Re: [PATCH 1/2] rust: add BQL-enforcing Cell variant
+Message-ID: <Z0XhhB48W4Nqagku@intel.com>
+References: <20241122074756.282142-1-pbonzini@redhat.com>
+ <20241122074756.282142-2-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/13] target/mips: Declare MXU registers as 32-bit
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241126131546.66145-1-philmd@linaro.org>
- <20241126131546.66145-12-philmd@linaro.org>
- <44952443-3928-4430-8fd1-23c2bb4c00b4@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <44952443-3928-4430-8fd1-23c2bb4c00b4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241122074756.282142-2-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,22 +81,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/11/24 15:18, Richard Henderson wrote:
-> On 11/26/24 07:15, Philippe Mathieu-Daudé wrote:
->> MXU extension is only built for 32-bit targets,
->> so the MXU registers can be directly declared as
->> 32-bit.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Fri, Nov 22, 2024 at 08:47:55AM +0100, Paolo Bonzini wrote:
+> Date: Fri, 22 Nov 2024 08:47:55 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 1/2] rust: add BQL-enforcing Cell variant
+> X-Mailer: git-send-email 2.47.0
 > 
-> While the mxu extension is only enabled for 32-bit targets, the fields 
-> are unconditionally present in TCState and the vmstate.  Thus this 
-> affects migration.
-> 
-> Since there's a migration breaker, I think you might as well extract the 
-> mxu state to a subsection, enabled only when mxu support is enabled.
+> QEMU objects usually have their pointer shared with the "outside
+> world" very early in their lifetime, for example when they create their
+> MemoryRegions.  Because at this point it is not valid anymore to
+> create a &mut reference to the device, individual parts of the
+> device struct must be made mutable in a controlled manner.
 
-We don't have MIPS versioned machine, so I can just bump
-the version number.
+I try to understand this description with the words in v1 :) :
+
+>> But this actually applies to _all_ of the device struct!  Once a
+>> pointer to the device has been handed out (for example via
+>> memory_region_init_io or qdev_init_clock_in), accesses to the device
+>> struct must not use &mut anymore.
+
+is the final goal to wrap the entire DeviceState into the
+BQLRefCell as well?
+
+> QEMU's Big Lock (BQL) effectively turns multi-threaded code into
+> single-threaded code while device code runs, as long as the BQL is not
+> released while the device is borrowed (because C code could sneak in and
+> mutate the device).  We can then introduce custom interior mutability primitives
+> that are semantically similar to the standard library's (single-threaded)
+> Cell and RefCell, but account for QEMU's threading model.  Accessing
+> the "BqlCell" or borrowing the "BqlRefCell" requires proving that the
+> BQL is held, and attempting to access without the BQL is a runtime panic,
+> similar to RefCell's already-borrowed panic.
+
+This design is very clever and clear!
+
+But I'm a little fuzzy on when to use it. And could you educate me on
+whether there are any guidelines for determining which bindings should
+be placed in the BQLCell, such as anything that might be shared?
+
+...
+
+> diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+> index d719c13f46d..edc21e1a3f8 100644
+> --- a/rust/qemu-api/meson.build
+> +++ b/rust/qemu-api/meson.build
+> @@ -13,6 +13,7 @@ _qemu_api_rs = static_library(
+>      [
+>        'src/lib.rs',
+>        'src/bindings.rs',
+         ^^^^^^^^^^^^^^^^^
+
+need to rebase :-)
+
+> +      'src/cell.rs',
+>        'src/c_str.rs',
+>        'src/definitions.rs',
+>        'src/device_class.rs',
+> +        self.get().fmt(f)
+> +    }
+> +}
+
+...
+
+> +    /// Replaces the contained value with `val`, and returns the old contained
+> +    /// value.
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```
+> +    /// use qemu_api::cell::BqlCell;
+> +    ///
+> +    /// let cell = BqlCell::new(5);
+> +    /// assert_eq!(cell.get(), 5);
+> +    /// assert_eq!(cell.replace(10), 5);
+> +    /// assert_eq!(cell.get(), 10);
+> +    /// ```
+> +    #[inline]
+> +    pub fn replace(&self, val: T) -> T {
+> +        debug_assert!(bql_locked());
+
+Could debug_assert() work? IIUC, it requires to pass `-C debug-assertions` to
+compiler, but currently we don't support this flag in meson...
+
+...so, should we add a debug option in meson configure?
+
+> +        // SAFETY: This can cause data races if called from a separate thread,
+> +        // but `BqlCell` is `!Sync` so this won't happen.
+> +        mem::replace(unsafe { &mut *self.value.get() }, val)
+> +    }
+> +
+
+Regards,
+Zhao
 
 
