@@ -4,148 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14DFBD65551
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 19:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C667D65553
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 19:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tG1NX-0007LW-Ex; Tue, 26 Nov 2024 14:37:43 -0500
+	id 1tG1iE-0001By-Ps; Tue, 26 Nov 2024 14:59:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tG1NU-0007LF-O3
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 14:37:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tG1NR-0002CW-KJ
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 14:37:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732649855;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dBsCg/xvUw2LKCCBtB7nnDfZh8HHuPMlQdRPaw9bV44=;
- b=jWlVEN9EmKcA5siqRAQA8SRcYbzss4k9eVBLBb5diQ2ox5jIW/5LztjoltjvtBb9gdiDzA
- nOjDLr0PcjK9SX7y2+KX1VYC6nqx2gVlplAppaFcEY/lNck0/7efB6GWXgDygBt9qjOnRc
- hWaW8ns5dtC94oqcPNTQOfIujsbiXMk=
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
- [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-3R1Faf9ZONK7hS_8sCYblw-1; Tue, 26 Nov 2024 14:37:34 -0500
-X-MC-Unique: 3R1Faf9ZONK7hS_8sCYblw-1
-X-Mimecast-MFC-AGG-ID: 3R1Faf9ZONK7hS_8sCYblw
-Received: by mail-ot1-f70.google.com with SMTP id
- 46e09a7af769-71d46c2ead8so1834808a34.3
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 11:37:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732649853; x=1733254653;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dBsCg/xvUw2LKCCBtB7nnDfZh8HHuPMlQdRPaw9bV44=;
- b=QYeCoHzb+6ZUiGWP3oK/R5WSteqWpXvwjz+O+CgTJFZosV7WILYoTvm4Zv+tebhTJZ
- mVeqdQOoqZjcUOALR+dAqXVu1YSp6JWlV4Y42mNcdiUBifMzGOp1fIZKWxElQeb8pSD1
- 1jo8s2NckpBBxmZPX2eVmu2+/lD1GIa2bN+D/bnoOMHm+I/53HhX/4g6USPNIIOtqZX7
- Wwu7o3TFUryVMTYjciztgjahysajOe9vyWF34yQR3Cqc3dRDCbHCI+Re7/PiZ5VRs5xS
- ba92/E0gMq94o8zc7/jW8LKYVj12cxL3fyhxjPrFi5LfvvodhoeMaVR7OvJvO4mtqxKK
- bT/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWYMmVA43NPpZFi64QQ5nHOVyI1D7oPwJRzemMUt9v+4FtdZC/9Vx41TBENIs5u1+W8wDllu0W4+ujA@nongnu.org
-X-Gm-Message-State: AOJu0Yw1hvEbz4w4sNeuENSC7hof9aRz6F1WhKBcEiAogxWPFUKTJ7Tq
- Hdpg2Gio85SEs+XGUHm5M/NOhwxz9sM6Pbzi7e27yLkfXjgLckNyrq9Epudpv5bLiWytxcwqe+U
- gj9kA1NSoR+qGA2IprDnAbUi8pywq38oqyApsvtu5/WkWi0kN3eQT
-X-Gm-Gg: ASbGnctosyN/kKXWCzALE63mSp1RpMm4uu0biE34bHvToXL/dIhGkrnnxTJAKk6ktwC
- M7CzqH9YgSyhTN6PyplF7Zxfj71gQgfpWxDL+F6DE8x7i8uLeKUxkGzxVBcoiViIfRukHIj0O0Z
- DsfOwtx9uKkIAUJRg0P41YW32oNtDUKFc9lCZZH3aeIZWdJv3jW8DbrBX41+bTw4ATWmrVKV2Ws
- c+oOgwijNbnPbxIheQtYU+pwE142o5P7MX0F2+fylyIHRiKaOr63+LuZnh/5M4cnqvN34Ya7ggz
- YqHtuyisbwoj
-X-Received: by 2002:a05:6358:7254:b0:1ca:94ab:4cee with SMTP id
- e5c5f4694b2df-1cab16933cemr93708055d.16.1732649853347; 
- Tue, 26 Nov 2024 11:37:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHtRRrm/V+EJ4GYvTSaPGPGGbQaiCXzyiGr/Cbnpr/J2WDqzW1xzz9FwfeQsR4AsN/jqc73bw==
-X-Received: by 2002:a05:6358:7254:b0:1ca:94ab:4cee with SMTP id
- e5c5f4694b2df-1cab16933cemr93704655d.16.1732649852957; 
- Tue, 26 Nov 2024 11:37:32 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b513f9035dsm495704785a.1.2024.11.26.11.37.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 11:37:32 -0800 (PST)
-Message-ID: <3d208919-7ac0-4922-a61c-8475d8697822@redhat.com>
-Date: Tue, 26 Nov 2024 20:37:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/24] migration: Add MIG_CMD_SWITCHOVER_START and its
- load handler
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tG1iC-00018I-H3
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 14:59:05 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tG1iA-0006c4-3t
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 14:59:04 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 183131F770;
+ Tue, 26 Nov 2024 19:59:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732651140; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GIYP5WNzf2qgv7mrdizpA0vJ4WsKJ+SSY4jc/ckxVb4=;
+ b=gmhmg2cT6bZam88pKz+yRp6KwK2Q4tBNRFq3FjfIwtNh449YKMqJNBW6Ud456s9G//9baK
+ +991QA/C1d9qOu4nU/VxJ1DnaxDRrRSfoyCcEzKgRR6RWDY0abk0i6S8kaPFhOCKBryWHS
+ CxhTK/cqsap46PXz4VX7KGboQ+/Hc04=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732651140;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GIYP5WNzf2qgv7mrdizpA0vJ4WsKJ+SSY4jc/ckxVb4=;
+ b=m29jU/gQtfr+djomvOx/IO894UomrGkLUMdPgUyBjgLMJNCPHuMRfGDY6wqzw4OWiYl0si
+ GidqJOTPJJOTnBAA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1732651140; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GIYP5WNzf2qgv7mrdizpA0vJ4WsKJ+SSY4jc/ckxVb4=;
+ b=gmhmg2cT6bZam88pKz+yRp6KwK2Q4tBNRFq3FjfIwtNh449YKMqJNBW6Ud456s9G//9baK
+ +991QA/C1d9qOu4nU/VxJ1DnaxDRrRSfoyCcEzKgRR6RWDY0abk0i6S8kaPFhOCKBryWHS
+ CxhTK/cqsap46PXz4VX7KGboQ+/Hc04=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1732651140;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GIYP5WNzf2qgv7mrdizpA0vJ4WsKJ+SSY4jc/ckxVb4=;
+ b=m29jU/gQtfr+djomvOx/IO894UomrGkLUMdPgUyBjgLMJNCPHuMRfGDY6wqzw4OWiYl0si
+ GidqJOTPJJOTnBAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8727813890;
+ Tue, 26 Nov 2024 19:58:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id pRgnE4MoRmetYQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 26 Nov 2024 19:58:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Peter Xu
+ <peterx@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
+ Goater <clg@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Avihai
+ Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 13/24] migration/multifd: Device state transfer
+ support - send side
+In-Reply-To: <dbff60e022ada2f072300559bd24d9e0939be21a.1731773021.git.maciej.szmigiero@oracle.com>
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <624309a8e37f7779336bd5c0573d24f155b2ed41.1731773021.git.maciej.szmigiero@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <624309a8e37f7779336bd5c0573d24f155b2ed41.1731773021.git.maciej.szmigiero@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ <dbff60e022ada2f072300559bd24d9e0939be21a.1731773021.git.maciej.szmigiero@oracle.com>
+Date: Tue, 26 Nov 2024 16:58:56 -0300
+Message-ID: <87serdn4vz.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.997]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[szmigiero.name:email, oracle.com:email,
+ suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,325 +122,401 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/17/24 20:20, Maciej S. Szmigiero wrote:
+"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> 
-> This QEMU_VM_COMMAND sub-command and its switchover_start SaveVMHandler is
-> used to mark the switchover point in main migration stream.
-> 
-> It can be used to inform the destination that all pre-switchover main
-> migration stream data has been sent/received so it can start to process
-> post-switchover data that it might have received via other migration
-> channels like the multifd ones.
-> 
-> Add also the relevant MigrationState bit stream compatibility property and
-> its hw_compat entry.
-> 
+>
+> A new function multifd_queue_device_state() is provided for device to queue
+> its state for transmission via a multifd channel.
+>
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 > ---
->   hw/core/machine.c                  |  1 +
->   include/migration/client-options.h |  4 +++
->   include/migration/register.h       | 12 +++++++++
->   migration/colo.c                   |  3 +++
->   migration/migration-hmp-cmds.c     |  2 ++
->   migration/migration.c              |  3 +++
->   migration/migration.h              |  2 ++
->   migration/options.c                |  9 +++++++
->   migration/savevm.c                 | 39 ++++++++++++++++++++++++++++++
->   migration/savevm.h                 |  1 +
->   migration/trace-events             |  1 +
->   scripts/analyze-migration.py       | 11 +++++++++
->   12 files changed, 88 insertions(+)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index a35c4a8faecb..ed8d39fd769f 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -38,6 +38,7 @@
->   
->   GlobalProperty hw_compat_9_1[] = {
->       { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
-> +    { "migration", "send-switchover-start", "off"},
->   };
->   const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
->   
-> diff --git a/include/migration/client-options.h b/include/migration/client-options.h
-> index 59f4b55cf4f7..289c9d776221 100644
-> --- a/include/migration/client-options.h
-> +++ b/include/migration/client-options.h
-> @@ -10,6 +10,10 @@
->   #ifndef QEMU_MIGRATION_CLIENT_OPTIONS_H
->   #define QEMU_MIGRATION_CLIENT_OPTIONS_H
->   
+>  include/migration/misc.h         |   4 ++
+>  migration/meson.build            |   1 +
+>  migration/multifd-device-state.c | 106 +++++++++++++++++++++++++++++++
+>  migration/multifd-nocomp.c       |  11 +++-
+>  migration/multifd.c              |  43 +++++++++++--
+>  migration/multifd.h              |  24 ++++---
+>  6 files changed, 173 insertions(+), 16 deletions(-)
+>  create mode 100644 migration/multifd-device-state.c
+>
+> diff --git a/include/migration/misc.h b/include/migration/misc.h
+> index c92ca018ab3b..118e205bbcc6 100644
+> --- a/include/migration/misc.h
+> +++ b/include/migration/misc.h
+> @@ -109,4 +109,8 @@ bool migration_incoming_postcopy_advised(void);
+>  /* True if background snapshot is active */
+>  bool migration_in_bg_snapshot(void);
+>  
+> +/* migration/multifd-device-state.c */
+> +bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
+> +                                char *data, size_t len);
 > +
-> +/* properties */
-> +bool migrate_send_switchover_start(void);
+>  #endif
+> diff --git a/migration/meson.build b/migration/meson.build
+> index d53cf3417ab8..9788c47bb56e 100644
+> --- a/migration/meson.build
+> +++ b/migration/meson.build
+> @@ -22,6 +22,7 @@ system_ss.add(files(
+>    'migration-hmp-cmds.c',
+>    'migration.c',
+>    'multifd.c',
+> +  'multifd-device-state.c',
+>    'multifd-nocomp.c',
+>    'multifd-zlib.c',
+>    'multifd-zero-page.c',
+> diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
+> new file mode 100644
+> index 000000000000..7741a64fbd4d
+> --- /dev/null
+> +++ b/migration/multifd-device-state.c
+> @@ -0,0 +1,106 @@
+> +/*
+> + * Multifd device state migration
+> + *
+> + * Copyright (C) 2024 Oracle and/or its affiliates.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
 > +
->   /* capabilities */
->   
->   bool migrate_background_snapshot(void);
-> diff --git a/include/migration/register.h b/include/migration/register.h
-> index 0b0292738320..ff0faf5f68c8 100644
-> --- a/include/migration/register.h
-> +++ b/include/migration/register.h
-> @@ -279,6 +279,18 @@ typedef struct SaveVMHandlers {
->        * otherwise
->        */
->       bool (*switchover_ack_needed)(void *opaque);
+> +#include "qemu/osdep.h"
+> +#include "qemu/lockable.h"
+> +#include "migration/misc.h"
+> +#include "multifd.h"
 > +
-> +    /**
-> +     * @switchover_start
-> +     *
-> +     * Notifies that the switchover has started. Called only on
-> +     * the destination.
-> +     *
-> +     * @opaque: data pointer passed to register_savevm_live()
-> +     *
-> +     * Returns zero to indicate success and negative for error
-> +     */
-> +    int (*switchover_start)(void *opaque);
-
-We don't need an 'Error **' parameter  ? Just asking.
-
->   } SaveVMHandlers;
->   
->   /**
-> diff --git a/migration/colo.c b/migration/colo.c
-> index 9590f281d0f1..a75c2c41b464 100644
-> --- a/migration/colo.c
-> +++ b/migration/colo.c
-> @@ -452,6 +452,9 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
->           bql_unlock();
->           goto out;
->       }
+> +static QemuMutex queue_job_mutex;
 > +
-> +    qemu_savevm_maybe_send_switchover_start(s->to_dst_file);
-
-I would drop '_maybe_' from the name.
-
-
-Thanks,
-
-C.
-
-
+> +static MultiFDSendData *device_state_send;
 > +
->       /* Note: device state is saved into buffer */
->       ret = qemu_save_device_state(fb);
->   
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 20d1a6e21948..59d0c48a3e0d 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -46,6 +46,8 @@ static void migration_global_dump(Monitor *mon)
->                      ms->send_configuration ? "on" : "off");
->       monitor_printf(mon, "send-section-footer: %s\n",
->                      ms->send_section_footer ? "on" : "off");
-> +    monitor_printf(mon, "send-switchover-start: %s\n",
-> +                   ms->send_switchover_start ? "on" : "off");
->       monitor_printf(mon, "clear-bitmap-shift: %u\n",
->                      ms->clear_bitmap_shift);
->   }
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 8c5bd0a75c85..2e9d6d5087d7 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -2543,6 +2543,8 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->       }
->       restart_block = true;
->   
-> +    qemu_savevm_maybe_send_switchover_start(ms->to_dst_file);
-> +
->       /*
->        * Cause any non-postcopiable, but iterative devices to
->        * send out their final data.
-> @@ -2742,6 +2744,7 @@ static int migration_completion_precopy(MigrationState *s,
->        */
->       s->block_inactive = !migrate_colo();
->       migration_rate_set(RATE_LIMIT_DISABLED);
-> +    qemu_savevm_maybe_send_switchover_start(s->to_dst_file);
->       ret = qemu_savevm_state_complete_precopy(s->to_dst_file, false,
->                                                s->block_inactive);
->   out_unlock:
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 0956e9274b2c..2a18349cfec2 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -403,6 +403,8 @@ struct MigrationState {
->       bool send_configuration;
->       /* Whether we send section footer during migration */
->       bool send_section_footer;
-> +    /* Whether we send switchover start notification during migration */
-> +    bool send_switchover_start;
->   
->       /* Needed by postcopy-pause state */
->       QemuSemaphore postcopy_pause_sem;
-> diff --git a/migration/options.c b/migration/options.c
-> index ad8d6989a807..f916c8ed4e09 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -92,6 +92,8 @@ Property migration_properties[] = {
->                        send_configuration, true),
->       DEFINE_PROP_BOOL("send-section-footer", MigrationState,
->                        send_section_footer, true),
-> +    DEFINE_PROP_BOOL("send-switchover-start", MigrationState,
-> +                     send_switchover_start, true),
->       DEFINE_PROP_BOOL("multifd-flush-after-each-section", MigrationState,
->                         multifd_flush_after_each_section, false),
->       DEFINE_PROP_UINT8("x-clear-bitmap-shift", MigrationState,
-> @@ -206,6 +208,13 @@ bool migrate_auto_converge(void)
->       return s->capabilities[MIGRATION_CAPABILITY_AUTO_CONVERGE];
->   }
->   
-> +bool migrate_send_switchover_start(void)
+> +size_t multifd_device_state_payload_size(void)
 > +{
-> +    MigrationState *s = migrate_get_current();
-> +
-> +    return s->send_switchover_start;
+> +    return sizeof(MultiFDDeviceState_t);
 > +}
 > +
->   bool migrate_background_snapshot(void)
->   {
->       MigrationState *s = migrate_get_current();
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index f4e4876f7202..a254c38edcca 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -90,6 +90,7 @@ enum qemu_vm_cmd {
->       MIG_CMD_ENABLE_COLO,       /* Enable COLO */
->       MIG_CMD_POSTCOPY_RESUME,   /* resume postcopy on dest */
->       MIG_CMD_RECV_BITMAP,       /* Request for recved bitmap on dst */
-> +    MIG_CMD_SWITCHOVER_START,  /* Switchover start notification */
->       MIG_CMD_MAX
->   };
->   
-> @@ -109,6 +110,7 @@ static struct mig_cmd_args {
->       [MIG_CMD_POSTCOPY_RESUME]  = { .len =  0, .name = "POSTCOPY_RESUME" },
->       [MIG_CMD_PACKAGED]         = { .len =  4, .name = "PACKAGED" },
->       [MIG_CMD_RECV_BITMAP]      = { .len = -1, .name = "RECV_BITMAP" },
-> +    [MIG_CMD_SWITCHOVER_START] = { .len =  0, .name = "SWITCHOVER_START" },
->       [MIG_CMD_MAX]              = { .len = -1, .name = "MAX" },
->   };
->   
-> @@ -1201,6 +1203,19 @@ void qemu_savevm_send_recv_bitmap(QEMUFile *f, char *block_name)
->       qemu_savevm_command_send(f, MIG_CMD_RECV_BITMAP, len + 1, (uint8_t *)buf);
->   }
->   
-> +static void qemu_savevm_send_switchover_start(QEMUFile *f)
+> +void multifd_device_state_send_setup(void)
 > +{
-> +    trace_savevm_send_switchover_start();
-> +    qemu_savevm_command_send(f, MIG_CMD_SWITCHOVER_START, 0, NULL);
+> +    qemu_mutex_init(&queue_job_mutex);
+> +
+> +    device_state_send = multifd_send_data_alloc();
 > +}
 > +
-> +void qemu_savevm_maybe_send_switchover_start(QEMUFile *f)
+> +void multifd_device_state_clear(MultiFDDeviceState_t *device_state)
 > +{
-> +    if (migrate_send_switchover_start()) {
-> +        qemu_savevm_send_switchover_start(f);
-> +    }
+> +    g_clear_pointer(&device_state->idstr, g_free);
+> +    g_clear_pointer(&device_state->buf, g_free);
 > +}
 > +
->   bool qemu_savevm_state_blocked(Error **errp)
->   {
->       SaveStateEntry *se;
-> @@ -1713,6 +1728,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
->   
->       ret = qemu_file_get_error(f);
->       if (ret == 0) {
-> +        qemu_savevm_maybe_send_switchover_start(f);
->           qemu_savevm_state_complete_precopy(f, false, false);
->           ret = qemu_file_get_error(f);
->       }
-> @@ -2413,6 +2429,26 @@ static int loadvm_process_enable_colo(MigrationIncomingState *mis)
->       return ret;
->   }
->   
-> +static int loadvm_postcopy_handle_switchover_start(void)
+> +void multifd_device_state_send_cleanup(void)
 > +{
-> +    SaveStateEntry *se;
+> +    g_clear_pointer(&device_state_send, multifd_send_data_free);
 > +
-> +    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +        int ret;
+> +    qemu_mutex_destroy(&queue_job_mutex);
+> +}
 > +
-> +        if (!se->ops || !se->ops->switchover_start) {
-> +            continue;
-> +        }
+> +static void multifd_device_state_fill_packet(MultiFDSendParams *p)
+> +{
+> +    MultiFDDeviceState_t *device_state = &p->data->u.device_state;
+> +    MultiFDPacketDeviceState_t *packet = p->packet_device_state;
 > +
-> +        ret = se->ops->switchover_start(se->opaque);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
+> +    packet->hdr.flags = cpu_to_be32(p->flags);
+> +    strncpy(packet->idstr, device_state->idstr, sizeof(packet->idstr));
+> +    packet->instance_id = cpu_to_be32(device_state->instance_id);
+> +    packet->next_packet_size = cpu_to_be32(p->next_packet_size);
+> +}
+> +
+> +static void multifd_prepare_header_device_state(MultiFDSendParams *p)
+> +{
+> +    p->iov[0].iov_len = sizeof(*p->packet_device_state);
+> +    p->iov[0].iov_base = p->packet_device_state;
+> +    p->iovs_num++;
+> +}
+> +
+> +void multifd_device_state_send_prepare(MultiFDSendParams *p)
+> +{
+> +    MultiFDDeviceState_t *device_state = &p->data->u.device_state;
+> +
+> +    assert(multifd_payload_device_state(p->data));
+> +
+> +    multifd_prepare_header_device_state(p);
+> +
+> +    assert(!(p->flags & MULTIFD_FLAG_SYNC));
+> +
+> +    p->next_packet_size = device_state->buf_len;
+> +    if (p->next_packet_size > 0) {
+> +        p->iov[p->iovs_num].iov_base = device_state->buf;
+> +        p->iov[p->iovs_num].iov_len = p->next_packet_size;
+> +        p->iovs_num++;
 > +    }
 > +
-> +    return 0;
+> +    p->flags |= MULTIFD_FLAG_NOCOMP | MULTIFD_FLAG_DEVICE_STATE;
+> +
+> +    multifd_device_state_fill_packet(p);
 > +}
 > +
->   /*
->    * Process an incoming 'QEMU_VM_COMMAND'
->    * 0           just a normal return
-> @@ -2511,6 +2547,9 @@ static int loadvm_process_command(QEMUFile *f)
->   
->       case MIG_CMD_ENABLE_COLO:
->           return loadvm_process_enable_colo(mis);
+> +bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
+> +                                char *data, size_t len)
+> +{
+> +    /* Device state submissions can come from multiple threads */
+> +    QEMU_LOCK_GUARD(&queue_job_mutex);
+> +    MultiFDDeviceState_t *device_state;
 > +
-> +    case MIG_CMD_SWITCHOVER_START:
-> +        return loadvm_postcopy_handle_switchover_start();
->       }
->   
->       return 0;
-> diff --git a/migration/savevm.h b/migration/savevm.h
-> index 9ec96a995c93..4d402723bc3c 100644
-> --- a/migration/savevm.h
-> +++ b/migration/savevm.h
-> @@ -53,6 +53,7 @@ void qemu_savevm_send_postcopy_listen(QEMUFile *f);
->   void qemu_savevm_send_postcopy_run(QEMUFile *f);
->   void qemu_savevm_send_postcopy_resume(QEMUFile *f);
->   void qemu_savevm_send_recv_bitmap(QEMUFile *f, char *block_name);
-> +void qemu_savevm_maybe_send_switchover_start(QEMUFile *f);
->   
->   void qemu_savevm_send_postcopy_ram_discard(QEMUFile *f, const char *name,
->                                              uint16_t len,
-> diff --git a/migration/trace-events b/migration/trace-events
-> index bb0e0cc6dcfe..551f5af0740f 100644
-> --- a/migration/trace-events
-> +++ b/migration/trace-events
-> @@ -39,6 +39,7 @@ savevm_send_postcopy_run(void) ""
->   savevm_send_postcopy_resume(void) ""
->   savevm_send_colo_enable(void) ""
->   savevm_send_recv_bitmap(char *name) "%s"
-> +savevm_send_switchover_start(void) ""
->   savevm_state_setup(void) ""
->   savevm_state_resume_prepare(void) ""
->   savevm_state_header(void) ""
-> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-> index 8a254a5b6a2e..a4d4042584c0 100755
-> --- a/scripts/analyze-migration.py
-> +++ b/scripts/analyze-migration.py
-> @@ -564,7 +564,9 @@ class MigrationDump(object):
->       QEMU_VM_SUBSECTION    = 0x05
->       QEMU_VM_VMDESCRIPTION = 0x06
->       QEMU_VM_CONFIGURATION = 0x07
-> +    QEMU_VM_COMMAND       = 0x08
->       QEMU_VM_SECTION_FOOTER= 0x7e
-> +    QEMU_MIG_CMD_SWITCHOVER_START = 0x0b
->   
->       def __init__(self, filename):
->           self.section_classes = {
-> @@ -626,6 +628,15 @@ def read(self, desc_only = False, dump_memory = False, write_memory = False):
->               elif section_type == self.QEMU_VM_SECTION_PART or section_type == self.QEMU_VM_SECTION_END:
->                   section_id = file.read32()
->                   self.sections[section_id].read()
-> +            elif section_type == self.QEMU_VM_COMMAND:
-> +                command_type = file.read16()
-> +                command_data_len = file.read16()
-> +                if command_type != self.QEMU_MIG_CMD_SWITCHOVER_START:
-> +                    raise Exception("Unknown QEMU_VM_COMMAND: %x" %
-> +                                    (command_type))
-> +                if command_data_len != 0:
-> +                    raise Exception("Invalid SWITCHOVER_START length: %x" %
-> +                                    (command_data_len))
->               elif section_type == self.QEMU_VM_SECTION_FOOTER:
->                   read_section_id = file.read32()
->                   if read_section_id != section_id:
-> 
+> +    assert(multifd_payload_empty(device_state_send));
+> +
+> +    multifd_set_payload_type(device_state_send, MULTIFD_PAYLOAD_DEVICE_STATE);
+> +    device_state = &device_state_send->u.device_state;
+> +    device_state->idstr = g_strdup(idstr);
+> +    device_state->instance_id = instance_id;
+> +    device_state->buf = g_memdup2(data, len);
+> +    device_state->buf_len = len;
+> +
+> +    if (!multifd_send(&device_state_send)) {
+> +        multifd_send_data_clear(device_state_send);
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+> index fa0fd0289eca..23564ce9aea9 100644
+> --- a/migration/multifd-nocomp.c
+> +++ b/migration/multifd-nocomp.c
+> @@ -84,6 +84,13 @@ static void multifd_nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
+>      return;
+>  }
+>  
+> +static void multifd_ram_prepare_header(MultiFDSendParams *p)
+> +{
+> +    p->iov[0].iov_len = p->packet_len;
+> +    p->iov[0].iov_base = p->packet;
+> +    p->iovs_num++;
+> +}
+> +
+>  static void multifd_send_prepare_iovs(MultiFDSendParams *p)
+>  {
+>      MultiFDPages_t *pages = &p->data->u.ram;
+> @@ -117,7 +124,7 @@ static int multifd_nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+>           * Only !zerocopy needs the header in IOV; zerocopy will
+>           * send it separately.
+>           */
+> -        multifd_send_prepare_header(p);
+> +        multifd_ram_prepare_header(p);
+>      }
+>  
+>      multifd_send_prepare_iovs(p);
+> @@ -368,7 +375,7 @@ bool multifd_send_prepare_common(MultiFDSendParams *p)
+>          return false;
+>      }
+>  
+> -    multifd_send_prepare_header(p);
+> +    multifd_ram_prepare_header(p);
+>  
+>      return true;
+>  }
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 730acf55cfad..56419af417cc 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -12,6 +12,7 @@
+>  
+>  #include "qemu/osdep.h"
+>  #include "qemu/cutils.h"
+> +#include "qemu/iov.h"
+>  #include "qemu/rcu.h"
+>  #include "exec/target_page.h"
+>  #include "sysemu/sysemu.h"
+> @@ -19,6 +20,7 @@
+>  #include "qemu/error-report.h"
+>  #include "qapi/error.h"
+>  #include "file.h"
+> +#include "migration/misc.h"
+>  #include "migration.h"
+>  #include "migration-stats.h"
+>  #include "savevm.h"
+> @@ -111,7 +113,9 @@ MultiFDSendData *multifd_send_data_alloc(void)
+>       * added to the union in the future are larger than
+>       * (MultiFDPages_t + flex array).
+>       */
+> -    max_payload_size = MAX(multifd_ram_payload_size(), sizeof(MultiFDPayload));
+> +    max_payload_size = MAX(multifd_ram_payload_size(),
+> +                           multifd_device_state_payload_size());
+> +    max_payload_size = MAX(max_payload_size, sizeof(MultiFDPayload));
+>  
+>      /*
+>       * Account for any holes the compiler might insert. We can't pack
+> @@ -130,6 +134,9 @@ void multifd_send_data_clear(MultiFDSendData *data)
+>      }
+>  
+>      switch (data->type) {
+> +    case MULTIFD_PAYLOAD_DEVICE_STATE:
+> +        multifd_device_state_clear(&data->u.device_state);
+> +        break;
+>      default:
+>          /* Nothing to do */
+>          break;
+> @@ -232,6 +239,7 @@ static int multifd_recv_initial_packet(QIOChannel *c, Error **errp)
+>      return msg.id;
+>  }
+>  
+> +/* Fills a RAM multifd packet */
+>  void multifd_send_fill_packet(MultiFDSendParams *p)
+>  {
+>      MultiFDPacket_t *packet = p->packet;
+> @@ -524,6 +532,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+>      p->name = NULL;
+>      g_clear_pointer(&p->data, multifd_send_data_free);
+>      p->packet_len = 0;
+> +    g_clear_pointer(&p->packet_device_state, g_free);
+>      g_free(p->packet);
+>      p->packet = NULL;
+>      multifd_send_state->ops->send_cleanup(p, errp);
+> @@ -536,6 +545,7 @@ static void multifd_send_cleanup_state(void)
+>  {
+>      file_cleanup_outgoing_migration();
+>      socket_cleanup_outgoing_migration();
+> +    multifd_device_state_send_cleanup();
+>      qemu_sem_destroy(&multifd_send_state->channels_created);
+>      qemu_sem_destroy(&multifd_send_state->channels_ready);
+>      qemu_mutex_destroy(&multifd_send_state->multifd_send_mutex);
+> @@ -662,16 +672,33 @@ static void *multifd_send_thread(void *opaque)
+>           * qatomic_store_release() in multifd_send().
+>           */
+>          if (qatomic_load_acquire(&p->pending_job)) {
+> +            bool is_device_state = multifd_payload_device_state(p->data);
+> +            size_t total_size;
+> +
+>              p->flags = 0;
+>              p->iovs_num = 0;
+>              assert(!multifd_payload_empty(p->data));
+>  
+> -            ret = multifd_send_state->ops->send_prepare(p, &local_err);
+> -            if (ret != 0) {
+> -                break;
+> +            if (is_device_state) {
+> +                multifd_device_state_send_prepare(p);
+> +
+> +                total_size = iov_size(p->iov, p->iovs_num);
 
+This is such a good idea, because it allows us to kill
+next_packet_size. Let's make it work.
+
+What if you add packet_len to mig_stats under use_zero_copy at
+multifd_nocomp_send_prepare? It's only fair since that's when the data
+is actually sent. Then this total_size gets consolidated between the
+paths.
+
+> +            } else {
+> +                ret = multifd_send_state->ops->send_prepare(p, &local_err);
+> +                if (ret != 0) {
+> +                    break;
+> +                }
+> +
+> +                /*
+> +                 * Can't just always measure IOVs since these do not include
+> +                 * packet header in the zerocopy RAM case.
+> +                 */
+> +                total_size = (uint64_t)p->next_packet_size + p->packet_len;
+>              }
+>  
+>              if (migrate_mapped_ram()) {
+> +                assert(!is_device_state);
+> +
+>                  ret = file_write_ramblock_iov(p->c, p->iov, p->iovs_num,
+>                                                &p->data->u.ram, &local_err);
+>              } else {
+> @@ -684,8 +711,7 @@ static void *multifd_send_thread(void *opaque)
+>                  break;
+>              }
+>  
+> -            stat64_add(&mig_stats.multifd_bytes,
+> -                       (uint64_t)p->next_packet_size + p->packet_len);
+> +            stat64_add(&mig_stats.multifd_bytes, total_size);
+>  
+>              p->next_packet_size = 0;
+>              multifd_send_data_clear(p->data);
+> @@ -903,6 +929,9 @@ bool multifd_send_setup(void)
+>              p->packet_len = sizeof(MultiFDPacket_t)
+>                            + sizeof(uint64_t) * page_count;
+>              p->packet = g_malloc0(p->packet_len);
+> +            p->packet_device_state = g_malloc0(sizeof(*p->packet_device_state));
+> +            p->packet_device_state->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
+> +            p->packet_device_state->hdr.version = cpu_to_be32(MULTIFD_VERSION);
+>          }
+>          p->name = g_strdup_printf(MIGRATION_THREAD_SRC_MULTIFD, i);
+>          p->write_flags = 0;
+> @@ -938,6 +967,8 @@ bool multifd_send_setup(void)
+>          assert(p->iov);
+>      }
+>  
+> +    multifd_device_state_send_setup();
+> +
+>      return true;
+>  
+>  err:
+> diff --git a/migration/multifd.h b/migration/multifd.h
+> index d2f1d0d74da7..dec7d9404434 100644
+> --- a/migration/multifd.h
+> +++ b/migration/multifd.h
+> @@ -121,10 +121,12 @@ typedef struct {
+>  typedef enum {
+>      MULTIFD_PAYLOAD_NONE,
+>      MULTIFD_PAYLOAD_RAM,
+> +    MULTIFD_PAYLOAD_DEVICE_STATE,
+>  } MultiFDPayloadType;
+>  
+>  typedef union MultiFDPayload {
+>      MultiFDPages_t ram;
+> +    MultiFDDeviceState_t device_state;
+>  } MultiFDPayload;
+>  
+>  struct MultiFDSendData {
+> @@ -137,6 +139,11 @@ static inline bool multifd_payload_empty(MultiFDSendData *data)
+>      return data->type == MULTIFD_PAYLOAD_NONE;
+>  }
+>  
+> +static inline bool multifd_payload_device_state(MultiFDSendData *data)
+> +{
+> +    return data->type == MULTIFD_PAYLOAD_DEVICE_STATE;
+> +}
+> +
+>  static inline void multifd_set_payload_type(MultiFDSendData *data,
+>                                              MultiFDPayloadType type)
+>  {
+> @@ -188,8 +195,9 @@ typedef struct {
+>  
+>      /* thread local variables. No locking required */
+>  
+> -    /* pointer to the packet */
+> +    /* pointers to the possible packet types */
+>      MultiFDPacket_t *packet;
+> +    MultiFDPacketDeviceState_t *packet_device_state;
+>      /* size of the next packet that contains pages */
+>      uint32_t next_packet_size;
+>      /* packets sent through this channel */
+> @@ -346,13 +354,6 @@ bool multifd_send_prepare_common(MultiFDSendParams *p);
+>  void multifd_send_zero_page_detect(MultiFDSendParams *p);
+>  void multifd_recv_zero_page_process(MultiFDRecvParams *p);
+>  
+> -static inline void multifd_send_prepare_header(MultiFDSendParams *p)
+> -{
+> -    p->iov[0].iov_len = p->packet_len;
+> -    p->iov[0].iov_base = p->packet;
+> -    p->iovs_num++;
+> -}
+> -
+>  void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc);
+>  bool multifd_send(MultiFDSendData **send_data);
+>  MultiFDSendData *multifd_send_data_alloc(void);
+> @@ -375,4 +376,11 @@ int multifd_ram_flush_and_sync(void);
+>  size_t multifd_ram_payload_size(void);
+>  void multifd_ram_fill_packet(MultiFDSendParams *p);
+>  int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
+> +
+> +size_t multifd_device_state_payload_size(void);
+> +void multifd_device_state_send_setup(void);
+> +void multifd_device_state_clear(MultiFDDeviceState_t *device_state);
+> +void multifd_device_state_send_cleanup(void);
+> +void multifd_device_state_send_prepare(MultiFDSendParams *p);
+> +
+>  #endif
 
