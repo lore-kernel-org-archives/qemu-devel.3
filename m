@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEFAFD3B9B8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 16:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 964F7D3B9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 16:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFyF2-0001AT-W7; Tue, 26 Nov 2024 11:16:45 -0500
+	id 1tFyJf-0002Sb-PG; Tue, 26 Nov 2024 11:21:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tFyEv-00019t-B1
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:16:38 -0500
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1tFyJe-0002S2-4B
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:21:30 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tFyEs-0001eO-Vi
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:16:36 -0500
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-296994dd3bfso3363060fac.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 08:16:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1tFyJb-0002ao-GV
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 11:21:29 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4349cc45219so25547055e9.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 08:21:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732637793; x=1733242593; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jUnZVHtD4Hg76AcYtT4C/WvTg3aqvDojtgQFOLhH7KM=;
- b=ShXdyMCjzIziOB6cCKm8LtX8oQpSoHxIKLJeYid97sK3v2IfaZgcJFewG+XAGDYx2V
- N0ayZYrqx6fk2nAToiLY1+cWPCf2xySeUSFrgEb9edtP6vN3DAG0c8OOU8j1xcMyTJiw
- yjVxRbO8RtQ5rOJ0LvApdwOlETlGrkpelke+WgWBXRdevwB0oYkhZTnis4KnsGXxebSK
- zSotn8qM0wMs3IZkdUubpEwzo5WYMO0ESQmPUBdVUXF5VXTjI2EMIic/24nIa8lBfE2A
- XVxqIoZrCOvyg2uap0DKc4oNrLwAflURpFmqfWRSSoLV3Vd4HYm+QUgSunsNDpm3Pou8
- XdQg==
+ d=linaro.org; s=google; t=1732638085; x=1733242885; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=h/Y3dfJHpWGeVDMDu3RlQMaq4H0hBO/Po984mVdCMzk=;
+ b=lr5O0MBYfJVIklD3EJreO1OKMwiDPdLTSrF8shj06Yh2HRFToR+MdSCpuWfG7UViya
+ AJ5zso79dkD9nf6gBu12IxP+G8UgiqTAcPOM5cUiYvDGmjkNKgepZQya64DatuxM8Iam
+ HTBzEExRWq9Umb/v8e11GGtmM8KEC+FGE2gXlsYDuQ48R/hCGLQPS9zzzxcPotV35voz
+ /el7nXFiEiX1NtR36Yjr2sCWZxWhlznJp6qksEwNOrLgDKeoYeFuQZg9QIqpo85zs6iv
+ fq7wLpc66tkjR01dJ4ugRqOXggnsSKLhDT/c47Tev7TAJazUR0mgQuQadnpW6JhV7wgg
+ G6YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732637793; x=1733242593;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1732638085; x=1733242885;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jUnZVHtD4Hg76AcYtT4C/WvTg3aqvDojtgQFOLhH7KM=;
- b=DqhlS+1spmgnzCGtmE0PqOVFAaD2hIS8XR6Y8A/6LHGZgykklkqBAlwP8nHXZMAMKH
- hOUi9I39gLw7AWXdmmrDcb/D+CyyjUW3bgGKD9dr+wJFav6TfSu2SptR5qrFyzzwej8p
- pi7YJ5ckY0qredEJVCY9IjCItrD+wHI987xaj+ERc/Yp2x529ZRuz8U2Dx/nna7gbbyl
- brA/oIhSEQyXNsBlWiB71CmCpMAr9QhDn1maI+GuP5feCCcoz0WiQj7QwfCbKkZnzpyf
- TOLrXXahls6VLlaX+PM+rvGBSpLA9Q+JuAnocKv0YxBdhPnUY1zu1x76krtvcAiFCWhL
- VkvA==
+ bh=h/Y3dfJHpWGeVDMDu3RlQMaq4H0hBO/Po984mVdCMzk=;
+ b=NyyFmEKOn2FgssDfeyFqq1bfDlQH4Zre+hVnZPTcueQACFmWjSFaEuTYboV7ZKelXG
+ FdaLns0mC0R925DRW+xX19UR2zc8y5TcyGUFpdge5HiHSjDu8Ssyu0UmqwZhuxLd5z2Z
+ WZp9MSF3aJGsZh4Vk2UGKjvzMwwWQLh1J0Bf7NIXIPfOdHdBvGQu/4/fYYfSYggGcsS8
+ X6IwRE8byQnjw9m76+DB0I5gu2bVwk5PnlqNQv1Il1LhREPtZ3eAh6Ah00phORkscNV+
+ x7/9uo+MtsvYoQ6Uujf0k38fopYaysdyb5dizcyJvoCbGWJJVcdwkAT1z8eudnH2Jhwp
+ 7bHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfPpfTUJ4gw9qhp+PZ8U0hLGTPOTjfzuSjbSCCwOtApMAGSBHQEbn59i7AdXNt7U3lU02XNZJ6+EWe@nongnu.org
-X-Gm-Message-State: AOJu0Yw/sK4mAzUEG/lfIDK+g26XwqxkUtJfmrFsrVjGx6YxdE3yWgMI
- wH3TnyOLuN7I5qVb6rnRbx08Bz00JWtxXsc+fZYFf+0plqGdohrUNvz0Bt2hlR8=
-X-Gm-Gg: ASbGncuF7IEt0bdkhcLbxcPAJWTcKL2GwY1fJAcDmVYBS4pb7smtmW7WyRUStzOjOTt
- 5Sf/NWFeUp3ogJdxIuObn5VXS2azg8sCzfCddMQd8Uyo7lPS4uKIC91DsBy+y+mITi3im92I4uZ
- TjPmonYfRO4na59prhGGoeQWwnZyd0PccHhoQKJet/LXziQKTo7jOPOwkqVcuLGJFcpygzRHMHa
- 7MFOlxk7Cbq/Ki/LeMM/Uu096Aip8V807golP9hls9CEKKN+jVZIZS5gSxP0gV6jQ==
-X-Google-Smtp-Source: AGHT+IF5GqFpSWfTxUwDXMik3dWrxGxE3b7I5BIy9CFd8y74z1/bt0+3Vb+HLT1gG7f/cyIEKi8VLQ==
-X-Received: by 2002:a05:6871:820a:b0:297:699:2ca8 with SMTP id
- 586e51a60fabf-29720af123bmr14242626fac.1.1732637793446; 
- Tue, 26 Nov 2024 08:16:33 -0800 (PST)
-Received: from [10.25.0.199] ([187.210.107.185])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f1fa5ac0d8sm720251eaf.20.2024.11.26.08.16.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 08:16:32 -0800 (PST)
-Message-ID: <0ab3577a-87a6-4269-b888-4947d7f8de5b@linaro.org>
-Date: Tue, 26 Nov 2024 10:16:30 -0600
+ AJvYcCVIFGwLi9LiMDvd63y2PI/njfPjx6lZOTPscxOOagxV0ouOE4sOO+GpNCEFgwVNeCmpaf72x+Ds+GHt@nongnu.org
+X-Gm-Message-State: AOJu0Yz/+1pAoqlfNWkSsY62vkmvdgvWWPgJ3zcIpUEHKXIVfuhpIFPq
+ WnI1BPbm07Ihzod+nAr5B/ON/v/cklSGpVbHMhBpNHmiTLGJt2uggz925fRaA/c=
+X-Gm-Gg: ASbGncuIKGp0+z2taupPJgWpOeGyBZ3i0Juz9tvpjWnTqIHJmWy/KPXWLMXzIPTmxR/
+ soQVG/aJkmrfngD19Do5NmtOiC3Oyjsc9+eyabJqq4sFBQlmdd7q2l6pI941LncQguDlTbyN+fY
+ JQqwEgxlRgzC3CSovwjgIJ+cox2lik0Jgnzi9sTyYIIQ0D0Xd8mcozRnAmHyyNuw7TlGLUEN/cq
+ 5Pe5nx3u98hnvjPnbKWLPIQYMKrc7pTat/CM/Lg0XbCxI2h
+X-Google-Smtp-Source: AGHT+IERC/qysp9e4MP1YayPf4Tiox6DeK1HwZXr50kJG05vy8ZZDrAgDmOEoML+pIX03Snk065zYQ==
+X-Received: by 2002:a05:6000:1acd:b0:382:31db:d61 with SMTP id
+ ffacd0b85a97d-38260bcb9dbmr16775365f8f.38.1732638085131; 
+ Tue, 26 Nov 2024 08:21:25 -0800 (PST)
+Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fd0fbdcsm13655099f8f.109.2024.11.26.08.21.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Nov 2024 08:21:24 -0800 (PST)
+Date: Tue, 26 Nov 2024 16:21:49 +0000
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Stefan Berger <stefanb@linux.ibm.com>, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, philmd@linaro.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, alex.bennee@linaro.org,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>
+Subject: Re: [RFC PATCH v3 25/26] target/arm/kvm-rme: Add measurement log
+Message-ID: <20241126162149.GC956991@myrica>
+References: <20241125195626.856992-2-jean-philippe@linaro.org>
+ <20241125195626.856992-27-jean-philippe@linaro.org>
+ <02b90518-2996-4231-bee9-43ce313669b0@linux.ibm.com>
+ <Z0XREyMovNyB4s6t@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/16] target/mips: Introduce decode tree bindings for
- MIPS16e ASE
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
- Aleksandar Rikalo <arikalo@gmail.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20241126140003.74871-1-philmd@linaro.org>
- <20241126140003.74871-8-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241126140003.74871-8-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
+In-Reply-To: <Z0XREyMovNyB4s6t@redhat.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,116 +105,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/24 07:59, Philippe Mathieu-Daudé wrote:
-> Introduce the MIPS16e decodetree configs for the 16-bit
-> and 32-bit instructions.
+On Tue, Nov 26, 2024 at 01:45:55PM +0000, Daniel P. Berrangé wrote:
+> On Mon, Nov 25, 2024 at 05:23:44PM -0500, Stefan Berger wrote:
+> > 
+> > 
+> > On 11/25/24 2:56 PM, Jean-Philippe Brucker wrote:
+> > > Create an event log, in the format defined by Trusted Computing Group
+> > > for TPM2. It contains information about the VMM, the Realm parameters,
+> > > any data loaded into guest memory before boot and the initial vCPU
+> > > state.
+> > > 
+> > > The guest can access this log from RAM and send it to a verifier, to
+> > > help the verifier independently compute the Realm Initial Measurement,
+> > > and check that the data we load into guest RAM is known-good images.
+> > > Without this log, the verifier has to guess where everything is loaded>
+> > and in what order.
+> > 
+> > Typically these logs are backed by extensions of TPM PCRs and when you send
+> > a log to a verifier you send a TPM quote along with it for the verifer to
+> > replay the log and check the TPM quote. Also, early code in the firmware is
+> > typically serving as a root of trust that starts the chain of measurements
+> > of code and data, first measuring itself and then other parts of the
+> > firmware before it jumps into the other parts. Now here you seem to just
+> > have a log and no PCR extensions and therefore no quote over PCRs can be
+> > used.
+
+Indeed, in our case it's the trusted hypervisor (RMM) that provides the
+equivalent to TPM quote and PCRs. In more details:
+
+1. QEMU loads images into guest RAM by calling KVM, which calls RMM.
+2. RMM calculates a hash of the image content, adds it to a rolling hash
+   the "Realm Initial Measurement" (RIM), which I believe is equivalent to
+   a PCR.
+3. During remote attestation, the guest sends evidence containing this RIM
+   signed by the root of trust, along with a signed token identifying the
+   platform (hardware, firmware, RMM).
+4. The verifier checks the signature and the platform token, so it trusts
+   the RMM and the RIM.
+
+> > Then what prevents anyone from faking this log and presenting a
+> > completely fake log to the verifier?
+
+Absolutely, the verifier does not trust the content of the log, it only
+uses the log as helper to try to reconstruct the RIM. For example a log
+event says "I loaded image XYZ at address A", then the verifier searches
+image XYZ in its database of known-good images, calculates the hash that
+would result from loading that image at address A. Any malformed event in
+the log causes the hash to diverge from the trusted RIM value, and causes
+an attestation error.
+
+> In addition, a measurement log is just one of the interesting features
+> that a TPM provides to OS. The other TPM features are still relevant
+> and useful to confidential VMs.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/tcg/translate.h             |  2 ++
->   target/mips/tcg/mips16e_16.decode       |  9 +++++++++
->   target/mips/tcg/mips16e_32.decode       |  9 +++++++++
->   target/mips/tcg/mips16e_translate.c     | 14 ++++++++++++++
->   target/mips/tcg/mips16e_translate.c.inc |  8 ++++++++
->   target/mips/tcg/meson.build             |  3 +++
->   6 files changed, 45 insertions(+)
->   create mode 100644 target/mips/tcg/mips16e_16.decode
->   create mode 100644 target/mips/tcg/mips16e_32.decode
->   create mode 100644 target/mips/tcg/mips16e_translate.c
+> As a high level goal I think we should be aiming to make it possible for
+> users to move their existing VM workloads from non-confidentail to
+> confidential environments, simply as a choice at deployment time. To make
+> this as practical as possible, confidential VMs  need to be aiming to
+> match non-confidential VM features where ever it is practical to do so.
+> Users & vendors should not need to build & carry around 2 sets of disk
+> images - one setup for confidential and one setup for non-confidential.
+> Following existing standards will reduce the work both for OS developers,
+> app developers and users alike, to adopt the CVM world.
 > 
-> diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-> index a65ab4a747c..d1aa811cfa1 100644
-> --- a/target/mips/tcg/translate.h
-> +++ b/target/mips/tcg/translate.h
-> @@ -223,6 +223,8 @@ bool decode_64bit_enabled(DisasContext *ctx);
->   
->   /* decodetree generated */
->   bool decode_isa_rel6(DisasContext *ctx, uint32_t insn);
-> +bool decode_ase_mips16e_16(DisasContext *ctx, uint16_t insn);
-> +bool decode_ase_mips16e_32(DisasContext *ctx, uint32_t insn);
->   bool decode_ase_msa(DisasContext *ctx, uint32_t insn);
->   bool decode_ext_txx9(DisasContext *ctx, uint32_t insn);
->   bool decode_ext_loongson(DisasContext *ctx, uint32_t insn);
-> diff --git a/target/mips/tcg/mips16e_16.decode b/target/mips/tcg/mips16e_16.decode
-> new file mode 100644
-> index 00000000000..82586493f68
-> --- /dev/null
-> +++ b/target/mips/tcg/mips16e_16.decode
-> @@ -0,0 +1,9 @@
-> +# MIPS16e 16-bit instruction set extensions
-> +#
-> +# Copyright (C) 2021  Philippe Mathieu-Daudé
-> +#
-> +# SPDX-License-Identifier: LGPL-2.1-or-later
-> +#
-> +# Reference: MIPS Architecture for Programmers, Volume IV-a
-> +#            The MIPS16e Application Specific Extension
-> +#            (Document Number: MD00076)
-> diff --git a/target/mips/tcg/mips16e_32.decode b/target/mips/tcg/mips16e_32.decode
-> new file mode 100644
-> index 00000000000..fc429049e18
-> --- /dev/null
-> +++ b/target/mips/tcg/mips16e_32.decode
-> @@ -0,0 +1,9 @@
-> +# MIPS16e 32-bit instruction set extensions
-> +#
-> +# Copyright (C) 2021  Philippe Mathieu-Daudé
-> +#
-> +# SPDX-License-Identifier: LGPL-2.1-or-later
-> +#
-> +# Reference: MIPS Architecture for Programmers, Volume IV-a
-> +#            The MIPS16e Application Specific Extension
-> +#            (Document Number: MD00076)
-> diff --git a/target/mips/tcg/mips16e_translate.c b/target/mips/tcg/mips16e_translate.c
-> new file mode 100644
-> index 00000000000..6de9928b37e
-> --- /dev/null
-> +++ b/target/mips/tcg/mips16e_translate.c
-> @@ -0,0 +1,14 @@
-> +/*
-> + * MIPS emulation for QEMU - MIPS16e translation routines
-> + *
-> + * Copyright (c) 2021 Philippe Mathieu-Daudé <f4bug@amsat.org>
-> + *
-> + * SPDX-License-Identifier: LGPL-2.1-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "translate.h"
-> +
-> +/* Include the auto-generated decoders.  */
-> +#include "decode-mips16e_16.c.inc"
-> +#include "decode-mips16e_32.c.inc"
-> diff --git a/target/mips/tcg/mips16e_translate.c.inc b/target/mips/tcg/mips16e_translate.c.inc
-> index defef3ce559..a57ae4e95b1 100644
-> --- a/target/mips/tcg/mips16e_translate.c.inc
-> +++ b/target/mips/tcg/mips16e_translate.c.inc
-> @@ -657,6 +657,14 @@ static int decode_ase_mips16e(CPUMIPSState *env, DisasContext *ctx)
->       int n_bytes;
->   
->       ctx->opcode = translator_lduw(env, &ctx->base, ctx->base.pc_next);
-> +
-> +    if (decode_ase_mips16e_16(ctx, ctx->opcode)) {
-> +        return 2;
-> +    }
-> +    if (decode_ase_mips16e_32(ctx, ctx->opcode)) {
-> +        return 4;
-> +    }
+> IOW, this is a long winded way of saying that we should be looking to
+> provide a complete *standards compliant*, trusted TPM implementation to
+> confidential VMs, not providing a cherry-picked selection of a few
+> TPM-like features.
+> 
+> On the x86 side of things, the route to providing a trusted TPM is via
+> SVSM, both for SNP and TDX. Microsoft's recently open sources openhcl
+> similarly provides a st
+> 
+> I don't know so much about RME. Is providing a trusted TPM a job for
+> the RMM ?
 
-This is misplaced wrt loading 32-bits of opcode.  You have two options:
+Not directly, but I've heard of at least two options that are being
+actively worked on:
+* running payloads like SVSM and openhcl that emulate a TPM. In RMM 1.1
+  there is a concept of "planes" that enables this.
+* having edk2 in the VM provide a "fTPM".
 
-     opcode = lduw(...)
-     if (extract32(opcode, 11, 5) == M16_OPC_EXTEND) {
-         opcode <<= 16;
-         opcode |= lduw(...);
-         decode_ase_mips16e_32(...);
-     } else {
-         decode_ase_mips16e_16(...);
-     }
+I'm less familiar with these, but I think both need to connect the virtual
+TPM to the root of trust by performing remote attestation via RMM (?). So
+the problem of reconstructing a RIM on the verifier side remains, even if
+it's not done by the application.
 
-Or, make use of the variable-length support in decodetree.  Given the trivial test above, 
-the complexity and oddness of the variable-length stuff doesn't seem worth it.
+In addition I'm wondering about lighter, container-like workloads, which
+will want to boot quickly and run the bare minimum software, and where
+edk2 or SVSM seems superfluous. Maybe people will want to tailor those
+workloads and avoid the extra layer?
 
-
-r~
+Thanks,
+Jean
 
