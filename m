@@ -4,98 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F93CD3B7CA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 09:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5005D59D93
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 10:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFs99-0004lj-Id; Tue, 26 Nov 2024 04:46:15 -0500
+	id 1tFsq3-0002Ma-12; Tue, 26 Nov 2024 05:30:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFs95-0004lB-Nd
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 04:46:11 -0500
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tFs93-0005zD-VC
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 04:46:11 -0500
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-53da209492cso6841290e87.3
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 01:46:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732614368; x=1733219168; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=utOlLiB1oR3lMYaNsbhIs9qYb6RkQxsFS+ZnaRw29QQ=;
- b=xAfB4JAx8ccBfOmry+8ghfE6MmXuyIS1i/IlAtFkwgHueCy6thh8oWiPZd0UZSyHLo
- WaRxAwAFzGWPfw+Q2kd0EHG0JfEYvPfOZ4Ioovea2M2usDSh+1AVTO4FlpGUzeW5VkEy
- 5dKSyM2bmut/yIzb4QXlVh4gxytRZA9IGvLWPJvqRsRi4427lJFu6txhU3QYuhqam+2w
- i0fvY7+O1KT1eB6F0b5q2JBPEXkZ70GfJZYPJbsdNmEZ4lkXB5WAga5cFTLenpDfjyPh
- wfb9Ac0XylK8/4xmVvIuJn+/MmIYWz5Z8hXVen5najGTfZfRvigAlDQ1KLW2vX6nJT7z
- eX9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732614368; x=1733219168;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=utOlLiB1oR3lMYaNsbhIs9qYb6RkQxsFS+ZnaRw29QQ=;
- b=lGETpxn4WDQrcPzOCE3ALfY1n2yLvFWOqWnFVz33Za6fSO5rJ8RFKn0YXEcJXxZRbM
- K43bi/p9ZQY30/QVNxII4vr3xwsU7Le5x0H+3xu0EIbEfMz/7AsLr7rkb4MUpKpgJbQ0
- VlM9OdgxuA9csX5VFZokPxqhflKrQeQ1Pxjg6pu/Z+NLBkqVbYgq9K81c8ewrSGvqk2x
- lSbCLbDQuEEf0UghizFxxXVbf/S0yNSxNrIN3QtSm2sPq3VDCJilxCe8/frWOsyDjQ/r
- x7IGRsTbF8ZSwqEfauCACcr+Gl2nm5sBTZXM9+HtQJKvg8otKkYMQPZwKB12o9YwMRAg
- KogQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWkA6bXeWID6/WSK7Dl0UCmDYr3ld+s3pFzUD/l/BEsTTl/qGp9aWmsD9Yn6B7VOtiuYFM7mPQ6+Mvt@nongnu.org
-X-Gm-Message-State: AOJu0Yz2YTwnO0ah7tjN9psdYX6CrHtq5h34ivcDMB6WYvfduFJCfKPZ
- 7+irz0ijuMCIgl37HOxGp8lz4T2ld6+RYZq2/PjebR+fJT6ZeCHU/AEKrv50xRI=
-X-Gm-Gg: ASbGncvQ8jqKO8MrwzIJvB7fHSf2QA+PvHsgdQFeFBr/uCu4vPja3xpd/XpHPyg+a3s
- 7cbRdBWjxLHvAr3JYA7gABTjViFJEBUr2xjhlYo8ooHUu76Jkp10rc4cL55r3I/j8IwdS0M6Fn0
- unx5NuFINBhILrTBZdzEIwWolsXmy/1QrlI8tm1S4ll3i85D9qmBEXnYXm5X9as24kSlRwCVtWD
- 2pyATUGFTWs6Y9uk56omp7g4nahYRA0jOpxQQqgA6Omt7Hh6TJhdkD6vDCf/SzEvw==
-X-Google-Smtp-Source: AGHT+IGQWM6uXzGcNGnkQNOhuHw97egQRdbE7AkCaRYHafH78NNtcslkaJUAwejq3eS7g3joDs3QMQ==
-X-Received: by 2002:a05:6512:2356:b0:539:e2cc:d380 with SMTP id
- 2adb3069b0e04-53dd389c8cbmr6294994e87.27.1732614367757; 
- Tue, 26 Nov 2024 01:46:07 -0800 (PST)
-Received: from [192.168.69.197] ([176.176.143.205])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fbc4123sm13084777f8f.79.2024.11.26.01.46.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 01:46:07 -0800 (PST)
-Message-ID: <04e11ba4-2e3d-4e98-a125-977da8c75d7c@linaro.org>
-Date: Tue, 26 Nov 2024 10:46:04 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 07/60] kvm: Introduce kvm_arch_pre_create_vcpu()
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tFspz-0002Lq-Qe
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 05:30:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tFspy-0007hU-9y
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 05:30:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732617027;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=eQnzQfjT0Z3rEKQKyPNCt1jUbCqDmfZ0DJXWfkxrHns=;
+ b=frS7zGVkz6g12tC/Qmu3/VYw8HIOvhUCgTedSEmIKm4ic9WC75HCYYbBO4iIem0+m75/Sx
+ 8l4vmaq2EdioRvlT/ENftE5zz2Xl8vSryeDkGnVXKBxkeXwnMqsamqQTfIViRnWxJSVpGP
+ +5nTcUl/0zL5aah9MSTIGJGUWGVa3C4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-Eb_c0IOPMCWJ8UlBKWsyqQ-1; Tue,
+ 26 Nov 2024 05:30:24 -0500
+X-MC-Unique: Eb_c0IOPMCWJ8UlBKWsyqQ-1
+X-Mimecast-MFC-AGG-ID: Eb_c0IOPMCWJ8UlBKWsyqQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 534A41956057; Tue, 26 Nov 2024 10:30:21 +0000 (UTC)
+Received: from gondolin.str.redhat.com (dhcp-192-244.str.redhat.com
+ [10.33.192.244])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 614D11955F3E; Tue, 26 Nov 2024 10:30:11 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Cc: Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-8-xiaoyao.li@intel.com>
- <fbe5da1d-9a0e-4aa4-91f9-dfb729f39dc9@linaro.org>
- <68c65132-0f2e-44eb-b084-bf70edd51417@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <68c65132-0f2e-44eb-b084-bf70edd51417@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH for-10.0 0/2] compat machines for 10.0
+Date: Tue, 26 Nov 2024 11:30:03 +0100
+Message-ID: <20241126103005.3794748-1-cohuck@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,74 +97,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/11/24 08:27, Xiaoyao Li wrote:
-> On 11/13/2024 2:28 PM, Philippe Mathieu-Daudé wrote:
->> Hi,
->>
->> On 5/11/24 06:23, Xiaoyao Li wrote:
->>> Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
->>> work prior to create any vcpu. This is for i386 TDX because it needs
->>> call TDX_INIT_VM before creating any vcpu.
->>>
->>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
->>> ---
->>> Changes in v3:
->>> - pass @errp to kvm_arch_pre_create_vcpu(); (Per Daniel)
->>> ---
->>>   accel/kvm/kvm-all.c  | 10 ++++++++++
->>>   include/sysemu/kvm.h |  1 +
->>>   2 files changed, 11 insertions(+)
->>>
->>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->>> index 930a5bfed58f..1732fa1adecd 100644
->>> --- a/accel/kvm/kvm-all.c
->>> +++ b/accel/kvm/kvm-all.c
->>> @@ -523,6 +523,11 @@ void kvm_destroy_vcpu(CPUState *cpu)
->>>       }
->>>   }
->>> +int __attribute__ ((weak)) kvm_arch_pre_create_vcpu(CPUState *cpu, 
->>> Error **errp)
->>
->> We don't use the weak attribute. Maybe declare stubs for each arch?
-> 
-> Or define TARGET_KVM_HAVE_PRE_CREATE_VCPU to avoid touching other ARCHes?
-> 
-> 8<------------------------------------------------------------------
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -536,10 +531,12 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
-> 
->       trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
-> 
-> +#ifdef TARGET_KVM_HAVE_PRE_CREATE_VCPU
->       ret = kvm_arch_pre_create_vcpu(cpu, errp);
->       if (ret < 0) {
->           goto err;
->       }
-> +#endif
-> 
->       ret = kvm_create_vcpu(cpu);
->       if (ret < 0) {
-> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-> index 643ca4950543..bb76bf090fec 100644
-> --- a/include/sysemu/kvm.h
-> +++ b/include/sysemu/kvm.h
-> @@ -374,7 +374,9 @@ int kvm_arch_get_default_type(MachineState *ms);
-> 
->   int kvm_arch_init(MachineState *ms, KVMState *s);
-> 
-> +#ifdef TARGET_KVM_HAVE_PRE_CREATE_VCPU
->   int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp);
-> +#enfid
->   int kvm_arch_init_vcpu(CPUState *cpu);
->   int kvm_arch_destroy_vcpu(CPUState *cpu);
-> 
-> 
-> 
-> I'm OK with either. Please let me what is your preference!
+It's that time of the year^Wrelease cycle again, so here are the machine
+types for the next release. I'm also including the _AS_LATEST() patch
+that had apparently fallen through the cracks.
 
-Personally stubs because it is simpler to find where to
-implement something, but it is Paolo's area, so his
-preference takes over.
+Cornelia Huck (1):
+  hw: add compat machines for 10.0
+
+Daniel P. Berrangé (1):
+  hw/i386: define _AS_LATEST() macros for machine types
+
+ hw/arm/virt.c              |  9 ++++++++-
+ hw/core/machine.c          |  3 +++
+ hw/i386/pc.c               |  3 +++
+ hw/i386/pc_piix.c          | 20 ++++++++++++++------
+ hw/i386/pc_q35.c           | 20 +++++++++++++++-----
+ hw/m68k/virt.c             |  9 ++++++++-
+ hw/ppc/spapr.c             | 15 +++++++++++++--
+ hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+ include/hw/boards.h        |  3 +++
+ include/hw/i386/pc.h       |  7 ++++++-
+ 10 files changed, 86 insertions(+), 17 deletions(-)
+
+-- 
+2.47.0
+
 
