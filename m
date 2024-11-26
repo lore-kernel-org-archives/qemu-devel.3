@@ -4,55 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82B81D5A6DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 04:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04062D5A6D9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 04:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFmqD-0002Tk-NJ; Mon, 25 Nov 2024 23:06:21 -0500
+	id 1tFmqO-0002UZ-18; Mon, 25 Nov 2024 23:06:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tFmqC-0002Tc-Pg
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 23:06:20 -0500
+ id 1tFmqJ-0002UC-3U
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 23:06:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tFmqB-0000Q9-A5
- for qemu-devel@nongnu.org; Mon, 25 Nov 2024 23:06:20 -0500
+ id 1tFmqG-0000QZ-KK
+ for qemu-devel@nongnu.org; Mon, 25 Nov 2024 23:06:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732593976;
+ s=mimecast20190719; t=1732593984;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=VPcaPf0ek3RGB5CC1KrZKYV8HwtmuSAnfGJrOVM6XII=;
- b=WCJBcdq4ICquhDwSiOZFqp+PCi26bvX0RGUn0NX/PawHW2MYvGT5oBGATH+VZZyfc5FIaX
- 2qe18nO7BgJEQY5R/MDoHN+1zqdbw2X9W9KxCtGKyImlwK8cmiif5DtZrkkG3ykr1tOrRC
- YPtflhzQaiTDCPOp3aKIAUQIe3+3oy8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9RRMSPY1SLofs8v6wOz3QWgrxgYKX4TXuyavq1J8ViE=;
+ b=hkXaJdqqGAZD7N6pJ+ezR1NPOpdRFxR+Osf8smmCz/Tbr3RJGWJgspLGPAmSKCosAFMQyW
+ C/YH0S0GQ8j7IToWLEhCN2wXCLp5GI1wfck1aLMra51ab7gLnFd+7BbEbjXNk/L2T1bMpA
+ L7tvoVQxUOYOnsNjEK3vmb7OZuxk/GI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-OjvJ2nW4P9O1do14_0TTbQ-1; Mon,
- 25 Nov 2024 23:06:14 -0500
-X-MC-Unique: OjvJ2nW4P9O1do14_0TTbQ-1
-X-Mimecast-MFC-AGG-ID: OjvJ2nW4P9O1do14_0TTbQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-548-jO9FzPyYMvqaVAjFNi3nEQ-1; Mon,
+ 25 Nov 2024 23:06:20 -0500
+X-MC-Unique: jO9FzPyYMvqaVAjFNi3nEQ-1
+X-Mimecast-MFC-AGG-ID: jO9FzPyYMvqaVAjFNi3nEQ
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 936A21956089
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 04:06:13 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6BF9195608A; Tue, 26 Nov 2024 04:06:18 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.25])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF62A1956086; Tue, 26 Nov 2024 04:06:11 +0000 (UTC)
+ id 290921956086; Tue, 26 Nov 2024 04:06:13 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>
-Subject: [PULL 0/1] Net patches round 2
-Date: Tue, 26 Nov 2024 12:06:06 +0800
-Message-ID: <20241126040607.1704-1-jasowang@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-stable@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 1/1] virtio-net: Add queues before loading them
+Date: Tue, 26 Nov 2024 12:06:07 +0800
+Message-ID: <20241126040607.1704-2-jasowang@redhat.com>
+In-Reply-To: <20241126040607.1704-1-jasowang@redhat.com>
+References: <20241126040607.1704-1-jasowang@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -82,39 +86,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 791e3837c1105aec4e328674aad32e34056957e2:
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-  Merge tag 'net-pull-request' of https://github.com/jasowang/qemu into staging (2024-11-25 10:44:11 +0000)
+Call virtio_net_set_multiqueue() to add queues before loading their
+states. Otherwise the loaded queues will not have handlers and elements
+in them will not be processed.
 
-are available in the Git repository at:
-
-  https://github.com/jasowang/qemu.git tags/net-pull-request
-
-for you to fetch changes up to 9379ea9db3c0064fa2787db0794a23a30f7b2d2d:
-
-  virtio-net: Add queues before loading them (2024-11-26 11:56:44 +0800)
-
-----------------------------------------------------------------
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmdFRyQACgkQ7wSWWzmN
-YhFU1Qf/T9bBOCrbQqbZSG7eKk8QuH35zcgNU7FzFTrGeVCc1bUMNYhiioqAFmE+
-h5h/3vmkmt+01vaTuimTRumI2SJnFFwggveJDWf+ICSl9MRtCXB5+w0n71vJ6gUO
-njm36pIl+aMkZIrsDc7lLewVouZkF8mAKP7mn9x53s5lX/HbXZSdPJmrkdUXtNT5
-d3nXlUkNhEWKL9dKIQ9dWYmj3l+tLfuYPiR8a+kKFMEwHlGBuFbNoVN03v5VvFyf
-Dmy1P1ZFApP0SsR4SiccXg7C8AslBC6wc7Bhd0aiKpGBnlt20mE9EJSVyrU8yP1p
-UTKzzB0QHN7Nnd6AcFRhWvo9C74mGg==
-=qP+q
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-Akihiko Odaki (1):
-      virtio-net: Add queues before loading them
-
+Cc: qemu-stable@nongnu.org
+Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizing")
+Reported-by: Laurent Vivier <lvivier@redhat.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+---
  hw/net/virtio-net.c        | 10 ++++++++++
  hw/virtio/virtio.c         |  7 +++++++
  include/hw/virtio/virtio.h |  2 ++
  3 files changed, 19 insertions(+)
 
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index bc0f31b666..6e8c51a2db 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3064,6 +3064,15 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
+     virtio_net_set_queue_pairs(n);
+ }
+ 
++static int virtio_net_pre_load_queues(VirtIODevice *vdev)
++{
++    virtio_net_set_multiqueue(VIRTIO_NET(vdev),
++                              virtio_has_feature(vdev->guest_features, VIRTIO_NET_F_RSS) ||
++                              virtio_has_feature(vdev->guest_features, VIRTIO_NET_F_MQ));
++
++    return 0;
++}
++
+ static int virtio_net_post_load_device(void *opaque, int version_id)
+ {
+     VirtIONet *n = opaque;
+@@ -4073,6 +4082,7 @@ static void virtio_net_class_init(ObjectClass *klass, void *data)
+     vdc->guest_notifier_mask = virtio_net_guest_notifier_mask;
+     vdc->guest_notifier_pending = virtio_net_guest_notifier_pending;
+     vdc->legacy_features |= (0x1 << VIRTIO_NET_F_GSO);
++    vdc->pre_load_queues = virtio_net_pre_load_queues;
+     vdc->post_load = virtio_net_post_load_virtio;
+     vdc->vmsd = &vmstate_virtio_net_device;
+     vdc->primary_unplug_pending = primary_unplug_pending;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index a26f18908e..f12c4aa81e 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3255,6 +3255,13 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+         config_len--;
+     }
+ 
++    if (vdc->pre_load_queues) {
++        ret = vdc->pre_load_queues(vdev);
++        if (ret) {
++            return ret;
++        }
++    }
++
+     num = qemu_get_be32(f);
+ 
+     if (num > VIRTIO_QUEUE_MAX) {
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index f526ecc8fc..6386910280 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -210,6 +210,8 @@ struct VirtioDeviceClass {
+     void (*guest_notifier_mask)(VirtIODevice *vdev, int n, bool mask);
+     int (*start_ioeventfd)(VirtIODevice *vdev);
+     void (*stop_ioeventfd)(VirtIODevice *vdev);
++    /* Called before loading queues. Useful to add queues before loading. */
++    int (*pre_load_queues)(VirtIODevice *vdev);
+     /* Saving and loading of a device; trying to deprecate save/load
+      * use vmsd for new devices.
+      */
+-- 
+2.42.0
 
 
