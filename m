@@ -4,71 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA21CD6552D
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D131BD6552E
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 17:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tFyxL-0007Bq-Rn; Tue, 26 Nov 2024 12:02:32 -0500
+	id 1tFyxi-0007mI-RC; Tue, 26 Nov 2024 12:02:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFyxD-00075k-Oi
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:25 -0500
-Received: from 10.mo552.mail-out.ovh.net ([87.98.187.244])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tFyxB-0001xq-Kg
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:23 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.108.17.25])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4XyTQK5zlRz1XVN;
- Tue, 26 Nov 2024 17:02:17 +0000 (UTC)
-Received: from kaod.org (37.59.142.113) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 26 Nov
- 2024 18:02:17 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-113S0079c07db02-204e-46ce-ae7c-77ddec5ee49e,
- FCC27489C1BA5BDC89FB1F76958C936B1C45CC5D) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Tue, 26 Nov 2024 18:02:16 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>
-Subject: Re: [PATCH 6/6] tests/9p: also check 'Tgetattr' in
- 'use-after-unlink' test
-Message-ID: <20241126180216.0638d10e@bahia>
-In-Reply-To: <7017658155c517b9665b75333a97c79aa2d4f3df.1732465720.git.qemu_oss@crudebyte.com>
-References: <cover.1732465720.git.qemu_oss@crudebyte.com>
- <7017658155c517b9665b75333a97c79aa2d4f3df.1732465720.git.qemu_oss@crudebyte.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFyxg-0007kb-4f
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:52 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tFyxe-00026J-Fs
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 12:02:51 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43155abaf0bso54060535e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 09:02:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732640569; x=1733245369; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=3W6K66990zHqezmpYgbBot+Izh9ypQHacNdBXiFdB4o=;
+ b=gnP5jgIxO2RSHNd7l7/eZtHMyYFF8CEAxCzFSrSh3oFea5wJnKNZ2mye/1rHk8FCWJ
+ Fnid4rr9MK/z1/wbYATzzzIoJQpzOzZvCe2ZLyhJir49ibNBH+yNldMOPPcLjl9GlhUb
+ jAu+12+yGi26gfCa9xlsO/IU8vOByXEWBV+ljFCz+I/5pYhVRgTUvZ67skSjE1OXnYxQ
+ kFYe4aGval+u2DRwsTmhpqH250qjn/YDI3aHl2j6vuF0peFkwk15TRZAGvmOmuv+apVX
+ P4wTP/+f2KP+McjWLF10a5/SM6bQv3Ar7IhBYNqb5sul9Y+dOtI9mf0QZot0sNsfEYFW
+ Kijg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732640569; x=1733245369;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3W6K66990zHqezmpYgbBot+Izh9ypQHacNdBXiFdB4o=;
+ b=s9gHC9QcFQiSZqwzYpNv8fB1nfPYK/MEQ1IgvQKa4Sal8pjRDL4PIMGcoA30SA9piA
+ wvmeAUCPdojYRlf2jTg1F745CaEMJYyYXXewNcAI1BTTdxEsdyVawzOwVjZwhzqcxzUI
+ mDqHr6BcjGHoiOXfuEc9MR5Q2vAkktZyAL8jlgd8x2c9H/zHkgzE/LR0BLNWHyF8LTEE
+ dpEycYndr+4F00RGZGujLyZGw+10u6KchiXBCoT1QKNgZTcOcCbkcZdedp45YDEs61U/
+ 5ldeFvae1fUi0Ot9vzA3yrSZr/ibopqKEIwjU5dfeh55bxhpfLb8jAAfoSl/csgxCaQ9
+ Q2EQ==
+X-Gm-Message-State: AOJu0YyVwEcnBCbL5kLDi/s0I0iuYb9QApZiJuNqnLiGC+1YMHUTPVD7
+ +wwNKseIGXxshxHOOhgxtZQjZRvei3lIlHCID9H9MF2dL1XDKjhrD03/LX3E6dkedqkn1IUF5s7
+ w
+X-Gm-Gg: ASbGncvLuUT4sqhQndSQcXyEvMTXYfVmGuxa8JSgQ2xYReAOXgCrCGV0ibabUCDsg9x
+ LIQPgA1t6FaUiODPxM6AYKzUIgUfpZ4SpmB2SfwCBSPRJtCw+e7kxMSz5eWChhS1v9U3Scj0UQw
+ SxqctiIw6hYfN9SxpomJ2X4Xr/zDa+ZXQnbN0aQRvMzQumFWgt/FbR36jJtNruQWZTbPzIKWaRP
+ a+mGnEDHOlpt52NbDW3oZML8QnNBJl67esdtd42X0M6NEGOwGjYlwV6
+X-Google-Smtp-Source: AGHT+IGUDemz5XVmN+fyqFQlFY7k6S5TLIJq+LQJLzuS5Q0r03iELFdPmCO8x5D7ChfswpAsqSs/gw==
+X-Received: by 2002:a05:600c:190d:b0:42b:af5a:109 with SMTP id
+ 5b1f17b1804b1-434a9de8bf7mr11115e9.24.1732640566892; 
+ Tue, 26 Nov 2024 09:02:46 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434a36c7a9fsm43017865e9.44.2024.11.26.09.02.46
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Nov 2024 09:02:46 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 9/9] docs/system/arm/aspeed: add missing model
+ supermicrox11spi-bmc
+Date: Tue, 26 Nov 2024 17:02:24 +0000
+Message-Id: <20241126170224.2926917-10-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241126170224.2926917-1-peter.maydell@linaro.org>
+References: <20241126170224.2926917-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.113]
-X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 787cb7a0-f735-425c-91f6-a3d2ec21ac26
-X-Ovh-Tracer-Id: 18381723358036007389
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrgeejgdelvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrdduudefpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeefpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdrohhrghdpoffvtefjohhsthepmhhoheehvdgmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=WyctVfbWJzr83NlvSlm6t2iwr/06Iy8jkXoLnLqLsa4=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1732640538; v=1;
- b=KVuyfBRIzz97SVhWeiXH6A0iLMQP38Ss29mlggTStFSyI8M8YARbHk7qH1mUor4+7bVDIjSl
- HvvxNOi04Y/5IwKnr5XIOi7MYCMs74QYmmDgveqRjqM+TcDlF1ZyRsg6Zp+rmctzqflcqg4JHW6
- 89Q1FZiUh05ZxYFs2Eht/YoGa8fsa43rJyBgb6/FitaPz5SLrjfdErduY1Tq90hCi7tSwVllgKA
- ScSyqLxPQQ6s5yC6Gop1/4qiBh6mLPALxs/roORynm0y+1imI8P72nkqF2ZY03ivboia65D8MFd
- aoyXMSYs7JN292zyj0/10kq2IzPNGsvTgWyNZPmiUVyQg==
-Received-SPF: pass client-ip=87.98.187.244; envelope-from=groug@kaod.org;
- helo=10.mo552.mail-out.ovh.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,45 +98,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 24 Nov 2024 17:05:32 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-> This verifies expected behaviour of previous bug fix patch.
-> 
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Message-id: 20241122225049.1617774-13-pierrick.bouvier@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ docs/system/arm/aspeed.rst | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Reviewed-by: Greg Kurz <groug@kaod.org>
-
->  tests/qtest/virtio-9p-test.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-> index f6d7400a87..ab3a12c816 100644
-> --- a/tests/qtest/virtio-9p-test.c
-> +++ b/tests/qtest/virtio-9p-test.c
-> @@ -702,6 +702,7 @@ static void fs_use_after_unlink(void *obj, void *data,
->      g_autofree char *real_file = virtio_9p_test_path("09/doa_file");
->      g_autofree char *buf = g_malloc0(write_count);
->      struct stat st_file;
-> +    struct v9fs_attr attr;
->      uint32_t fid_file;
->      uint32_t count;
->  
-> @@ -725,6 +726,10 @@ static void fs_use_after_unlink(void *obj, void *data,
->      tunlinkat({ .client = v9p, .atPath = "09", .name = "doa_file" });
->  
->      /* file is removed, but we still have it open, so this should succeed */
-> +    tgetattr({
-> +        .client = v9p, .fid = fid_file, .request_mask = P9_GETATTR_BASIC,
-> +        .rgetattr.attr = &attr
-> +    });
->      count = twrite({
->          .client = v9p, .fid = fid_file, .offset = 0, .count = write_count,
->          .data = buf
-
-
-
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 2e9ba12f7ae..d17fe7a4fc8 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,5 +1,5 @@
+-Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``tiogapass-bmc``, ``tacoma-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+-========================================================================================================================================================================================================================================================================================================================================================================================================
++Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``tacoma-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
++==================================================================================================================================================================================================================================================================================================================================================================================================================================
+ 
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+ Aspeed evaluation boards. They are based on different releases of the
+@@ -15,7 +15,8 @@ AST2400 SoC based machines :
+ 
+ - ``palmetto-bmc``         OpenPOWER Palmetto POWER8 BMC
+ - ``quanta-q71l-bmc``      OpenBMC Quanta BMC
+-- ``supermicrox11-bmc``    Supermicro X11 BMC
++- ``supermicrox11-bmc``    Supermicro X11 BMC (ARM926EJ-S)
++- ``supermicrox11spi-bmc``    Supermicro X11 SPI BMC (ARM1176)
+ 
+ AST2500 SoC based machines :
+ 
 -- 
-Greg
+2.34.1
+
 
