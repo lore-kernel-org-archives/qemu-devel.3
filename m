@@ -4,87 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36BBD609A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 05:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D89D609A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 06:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGAqu-0004ln-Dc; Wed, 27 Nov 2024 00:44:40 -0500
+	id 1tGBMn-0007sw-4C; Wed, 27 Nov 2024 01:17:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zzhangphd@gmail.com>)
- id 1tG7Mb-0002xH-E1
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 21:01:09 -0500
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zzhangphd@gmail.com>)
- id 1tG7MY-0007WQ-AX
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 21:01:09 -0500
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e388d8850d3so6108232276.3
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 18:01:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732672864; x=1733277664; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/OzBLSo0MUco3fGE9PH+FLy8BRllJZbdcHycBNjbBjs=;
- b=aWOqaZoktq+HocgJZ9MhNCnlLE2gdLW6boJMcxnCqRFf7IhLKYeEVOrJyHT116j2r7
- EpQi9RFj+IEX/TOZLA7ZFh0jgEKCmLc5tJkKBwNY0wQkrRv5+WH1+e5p5eufFWIVbiw6
- GH1+mnYlEDf5PUOsoLf3yeW5v/3WYGCPZwr2/hGXT+xB3jMedPHPlJhTBEEq6j/OeUnz
- kE28srlXNW4LSZ5GrfJQg9OXWwcje8OHPifS9RZUTGvjInMGE8rI29gA7tkdKCZGYo8W
- HlcXVV5/ZruXoSNapPQDXgFix/kep+pwzRQCs7rrN9OJLduKwgTSSKRxKdLg+fsgThS/
- AVcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732672864; x=1733277664;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/OzBLSo0MUco3fGE9PH+FLy8BRllJZbdcHycBNjbBjs=;
- b=Ds9mV9WbwuG0wvYC5f5PdbYGCK5CzO6DONouhpV0czWLxIwzj2/2zPzMckiCWijrXb
- XDvr5Mf8cvnQ00CO5lAmk8sd+XPaEw95g99EZPG311x7Qw6Z2TKk98RY6tiLGopZhLvN
- y/2xIN3sc5v4q/PwcZPuHo/haEbIQA72B1Z06CAyVvOtWlOngW9ORDGHBT/jrW0sp1tu
- 1bgcnzMaGCGOwSVadg4Xg7r1hR7d1oNsc4/zMs7WFWq9Qnx6vq2uuNPXVvaPV49tmx4k
- M/4aev1hbUx2W/NPQ/2Ual1o8HH9nYivprbYkxbzF+rzvgOhjBModNVvux63+PWFW1TO
- HdmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQ3ys2Q/YxYhXfrpmtT+p2Qz4EFmisNZsccYhi3xWYHdy8Phul0V0AjWNYNF3G8eU3C+6ck+D1zyn+@nongnu.org
-X-Gm-Message-State: AOJu0YxSGKti8QEmL9Z+n6h0a8eoJPfifPYwqIbMGJ8xyPSujyGv/vuJ
- G1akP3Ym/XtGbbjA19UMa7o9vmRsM3EKnq2wF6EVxs3i/GxnQlFoi+IdgCrUlyMusrkxdHvtI8a
- sTh09yuxvmgvdLSQmx2Q/No0jZko=
-X-Gm-Gg: ASbGncsUxWlFF13W2hKqk2mW7+nMoAlySbAfxfTSVy3eZVvXNsaOqA/Xhj+4gs5CxGM
- +OYWo9JfP/bgMydCQ7Z2oUhr5y8OvD1m4
-X-Google-Smtp-Source: AGHT+IFLuZ8SEqPD5TAyCWwxG4wuFF50ExupWvdz4itzWz3fiYX7E16Pir1L0yRAis68PSbQvp9THncme/PWEHSvu1Y=
-X-Received: by 2002:a05:6902:2487:b0:e38:a34f:ff7b with SMTP id
- 3f1490d57ef6-e395b8eb4d2mr1336695276.30.1732672864370; Tue, 26 Nov 2024
- 18:01:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tGBMl-0007si-B9; Wed, 27 Nov 2024 01:17:35 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tGBMj-00084e-AP; Wed, 27 Nov 2024 01:17:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1732688253; x=1764224253;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=cLMxevIKX9YlJD44FQS5ZQrh+RSehuIdUCBvDX3E6NQ=;
+ b=b7/37AF0UjbsjICGOxd5X7BS/8DkG5qTxQHwC8Pzu3NIgjZhaC2L/NOE
+ 670ED/2hPgYsQQNOkzTw4SPIH4L1tzSFlVRMIl4tsm4XAzxvx6FDRki5U
+ 5uA31E/n+AQMQ+dJLJXE4CVqxVuz3Nr/9F9REyAmbnsr6QOw84WQfyxmt
+ 3mciqscNVu2pJB/XcnmL7qkbKYwFSY/nGA6/eSREtVWWlwiKphzYcR+lq
+ hj3JpTxf7cJ6/IfEo/ivQgw9fCWkhI7F3jnNx1/4IyrV5Ex3zeHLcDWzi
+ uS7hIepElNr8LXlwdLReToUtSihac0G0x9+cqJGnzqDMQwzZHBdbLk7tI g==;
+X-CSE-ConnectionGUID: ye6fiM28QdKImg+t1TjYuw==
+X-CSE-MsgGUID: CEwB/+sMSk2rdgyvT2ztdg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11268"; a="32816860"
+X-IronPort-AV: E=Sophos;i="6.12,188,1728975600"; d="scan'208";a="32816860"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Nov 2024 22:17:29 -0800
+X-CSE-ConnectionGUID: 8Z4ynokcQeuu3ePbFtrp4A==
+X-CSE-MsgGUID: JaP156PoQtOq4qAHi9nUVw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,188,1728975600"; d="scan'208";a="92159201"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa010.fm.intel.com with ESMTP; 26 Nov 2024 22:17:27 -0800
+Date: Wed, 27 Nov 2024 14:35:36 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, junjie.mao@hotmail.com, qemu-rust@nongnu.org
+Subject: Re: [PATCH 1/2] rust: add BQL-enforcing Cell variant
+Message-ID: <Z0a9uPLxrGyVJJwB@intel.com>
+References: <20241122074756.282142-1-pbonzini@redhat.com>
+ <20241122074756.282142-2-pbonzini@redhat.com>
+ <Z0XhhB48W4Nqagku@intel.com>
+ <1d0e1b5f-36ad-41d4-b526-260fa5cd0b34@redhat.com>
 MIME-Version: 1.0
-References: <20241126080213.248-1-weichenforschung@gmail.com>
- <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
- <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
- <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
- <93616a1e-3614-49ca-9515-697f1c9205b6@gmail.com>
- <9eafe8fa-de09-40e3-9687-573255ce37de@redhat.com>
-In-Reply-To: <9eafe8fa-de09-40e3-9687-573255ce37de@redhat.com>
-From: zhi zhang <zzhangphd@gmail.com>
-Date: Wed, 27 Nov 2024 10:00:53 +0800
-Message-ID: <CAD-9bcdm+gupZQ91Q-JMjuPikVmfVhCdJuwq=ptfaipL7Peevg@mail.gmail.com>
-Subject: Re: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
- requested_size
-To: David Hildenbrand <david@redhat.com>
-Cc: Wei Chen <weichenforschung@gmail.com>, qemu-devel@nongnu.org,
- mst@redhat.com, yuval.yarom@rub.de, genkin@gatech.edu
-Content-Type: multipart/alternative; boundary="00000000000097ced30627db563b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=zzhangphd@gmail.com; helo=mail-yb1-xb2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1d0e1b5f-36ad-41d4-b526-260fa5cd0b34@redhat.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 27 Nov 2024 00:44:38 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,109 +83,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000097ced30627db563b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Nov 26, 2024 at 05:11:36PM +0100, Paolo Bonzini wrote:
+> Date: Tue, 26 Nov 2024 17:11:36 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 1/2] rust: add BQL-enforcing Cell variant
+> 
+> On 11/26/24 15:56, Zhao Liu wrote:
+> > > > But this actually applies to _all_ of the device struct!  Once a
+> > > > pointer to the device has been handed out (for example via
+> > > > memory_region_init_io or qdev_init_clock_in), accesses to the device
+> > > > struct must not use &mut anymore.
+> > 
+> > is the final goal to wrap the entire DeviceState into the
+> > BQLRefCell as well?
+> 
+> Not all of it, but certainly parts of it.  For example, the
+> properties are not mutable so they don't need to be in the BqlRefCell. The
+> parents (SysBusDevice/DeviceState/Object) also manage their mutability on
+> their own.
+> 
+> The registers and FIFO state would be in q BqlRefCell; as an approximation I
+> expect that if you migrate a field, it will likely be in a BqlRefCell.
+> 
+> For PL011, that would be something like
+> 
+> struct PL011Registers {
+>     pub flags: registers::Flags,
+>     pub line_control: registers::LineControl,
+>     pub receive_status_error_clear: registers::ReceiveStatusErrorClear,
+>     pub control: registers::Control,
+>     pub dmacr: u32,
+>     pub int_enabled: u32,
+>     pub int_level: u32,
+>     pub read_fifo: [u32; PL011_FIFO_DEPTH],
+>     pub ilpr: u32,
+>     pub ibrd: u32,
+>     pub fbrd: u32,
+>     pub ifl: u32,
+>     pub read_pos: usize,
+>     pub read_count: usize,
+>     pub read_trigger: usize,
+> }
+> 
+> and a single "regs: BqlRefCell<PL011Registers>" in PL011State.
 
-On Tue, Nov 26, 2024 at 11:52=E2=80=AFPM David Hildenbrand <david@redhat.co=
-m> wrote:
+Here I have a possibly common question about the choice of BqlCell and
+future BqlRefCell. Pls refer my comment below...
 
-> On 26.11.24 16:31, Wei Chen wrote:
-> >   > How can you be sure (IOW trigger) that the system will store
-> >   > "important data" like EPTs?
-> >
-> > We cannot, but we have designed the attack (see below) to improve the
-> > possibility.
-> >
-> >   > So is one magic bit really that for your experiments, one needs a
-> >   > viommu?
-> >
-> > Admittedly the way we accomplish a VM escape is a bit arcane.
->
-> That's what I imagined :)
->
-> >
-> > We require device passthrough because it pins the VM's memory down and
-> > converts them to MIGRATE_UNMOVABLE.
->
-> Interesting, that's news to me. Can you share where GUP in the kernel
-> would do that?
->
+> > > QEMU's Big Lock (BQL) effectively turns multi-threaded code into
+> > > single-threaded code while device code runs, as long as the BQL is not
+> > > released while the device is borrowed (because C code could sneak in and
+> > > mutate the device).  We can then introduce custom interior mutability primitives
+> > > that are semantically similar to the standard library's (single-threaded)
+> > > Cell and RefCell, but account for QEMU's threading model.  Accessing
+> > > the "BqlCell" or borrowing the "BqlRefCell" requires proving that the
+> > > BQL is held, and attempting to access without the BQL is a runtime panic,
+> > > similar to RefCell's already-borrowed panic.
+> > 
+> > This design is very clever and clear!
+> > 
+> > But I'm a little fuzzy on when to use it. And could you educate me on
+> > whether there are any guidelines for determining which bindings should
+> > be placed in the BQLCell, such as anything that might be shared?
+> 
+> It's the same as normal Rust code.  If in Rust you'd use a Cell or a
+> RefCell, use a BqlCell or a BqlRefCell.
+> 
+> Right now it's hard to see it because there are a lot of "bad" casts from
+> *mut to &mut.  But once the right bindings are in place, it will be a lot
+> clearer.  For example the pl011 receive callback (currently an unsafe fn)
+> might look like this:
+> 
+>     pub fn receive(&mut self, buf: [u8]) {
+>         if self.loopback_enabled() {
+>             return;
+>         }
+>         if !buf.is_empty() {
+>             debug_assert!(buf.len() == 1);
+>             self.put_fifo(buf[0].into());
+>         }
+>     }
+> 
+> except that it would not compile because the receiver must be &self. Hence
+> the need for the BqlRefCell<PL011Registers>, which lets you change it to
+> 
+>     pub fn receive(&self, buf: [u8]) {
+>         let regs = self.regs.borrow_mut();
+>         if regs.loopback_enabled() {
+>             return;
+>         }
+>         if !buf.is_empty() {
+>             debug_assert!(buf.len() == 1);
+>             regs.put_fifo(buf[0].into());
+>         }
+>     }
+> 
+> Likewise for the MemoryRegionOps.  Right now you have
+> 
+>     pub fn write(&mut self, offset: hwaddr, value: u64) {
+>         ...
+>     }
+> 
+> but it will become
+> 
+>     pub fn write(&self, offset: hwaddr, value: u64) {
+>         let regs = self.regs.borrow_mut();
+>         ...
+>     }
 
-In /drivers/vfio/vfio_iommu_type1.c, there is a function called
-vfio_iommu_type1_pin_pages where VM's memory is pinned down.
+I understand we need BqlRefCell instead of BqlCell for registers since
+there may be more than one reference, e.g., callbacks from CharBackend
+and MemoryRegion may hold multiple references at the same time, right?
 
+If right, like HPET, with only MemoryRegion callbacks, reads and writes
+I guess which should not be able to happen at the same time, so BqlCell
+is also feasible, as is Irq?
 
->
-> > Hotplugged memory will also be
-> > converted to MIGRATE_UNMOVABLE.
->
-> But that's in the VM? Because we don't hotplug memory in the hypervisor.
->
+(This piece of the thread model is a bit more complex, and I'm fully
+aware that the right TYPE relies a lot on understanding the underlying
+mechanism, which I'm not yet familiar enough with :-) ).
 
-Yes, the virtio-mem driver in the VM is modified to actively release memory
-vulnerable to Rowhammer.
+However, all in all, using BqlRefCell for register fields looks to be
+always better than BqlCell.
 
-For more details, would you be interested in reading our paper? It was
-recently submitted to ASPLOS for publication and we are happy to share it
-with you.
+> Or who knows---perhaps the body of PL011State::write could become
+> PL011Registers::write, and PL011State will do just
+> 
+>     pub fn write(&self, offset: hwaddr, value: u64) {
+>         self.regs.borrow_mut().write(offset, value);
+>         self.update()
+>     }
+> 
+> You can already apply this technique to your HPET port using a "normal"
+> RefCell.  You'd lose the BQL assertion check and your object will not be
+> Sync/Send (this is technically incorrect, because the code *does* run in
+> multiple threads, but with the current state of Rust in QEMU it's not a bad
+> option), but apart from this it will work.
+
+Thank you! I'll change the current code to support this. Instead of
+implementing a register space like PL011, I continue to handle registers
+with u64 variables and bit macro definitions like the C version. Also
+related to the above question, I'm a bit hesitant to use BqlCell directly
+or RefCell for such u64 fields...
+
+> However if you have already written a vmstate, you'll have to disable the
+> vmstate temporarily because the vmstate macros cannot (yet) accept fields
+> within a BqlRefCell.  Personally I believe that disabling vmstate and
+> experimenting with interior mutability is a good compromise.
+
+Sure, I'll drop current VMState support.
+
+> Plus, speaking in general, "it does something in a different way than the
+> pl011 device model" is a good reason to merge the HPET model earlier too. :)
+
+There must be a lot more opens :-(, such as the memattrs/timer binding,
+which I hope to discuss with you at the later RFC!
+
+> > > +    #[inline]
+> > > +    pub fn replace(&self, val: T) -> T {
+> > > +        debug_assert!(bql_locked());
+> > 
+> > Could debug_assert() work? IIUC, it requires to pass `-C debug-assertions` to
+> > compiler, but currently we don't support this flag in meson...
+> 
+> Meson automatically adds -C debug-assertions unless you configure with
+> -Db_ndebug=off, which we never do.  So debug_assert!() is always on in QEMU;
+> whether to use it or assert!() is more of a documentation choice.
+
+Thank you! I see.
 
 Regards,
-Zhi Zhang
+Zhao
 
---00000000000097ced30627db563b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 26, 2024 at 11:52=E2=80=
-=AFPM David Hildenbrand &lt;<a href=3D"mailto:david@redhat.com">david@redha=
-t.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"ma=
-rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
-1ex">On 26.11.24 16:31, Wei Chen wrote:<br>
-&gt;=C2=A0 =C2=A0&gt; How can you be sure (IOW trigger) that the system wil=
-l store<br>
-&gt;=C2=A0 =C2=A0&gt; &quot;important data&quot; like EPTs?<br>
-&gt; <br>
-&gt; We cannot, but we have designed the attack (see below) to improve the<=
-br>
-&gt; possibility.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0&gt; So is one magic bit really that for your experiments,=
- one needs a<br>
-&gt;=C2=A0 =C2=A0&gt; viommu?<br>
-&gt; <br>
-&gt; Admittedly the way we accomplish a VM escape is a bit arcane.<br>
-<br>
-That&#39;s what I imagined :)<br>
-<br>
-&gt; <br>
-&gt; We require device passthrough because it pins the VM&#39;s memory down=
- and<br>
-&gt; converts them to MIGRATE_UNMOVABLE. <br>
-<br>
-Interesting, that&#39;s news to me. Can you share where GUP in the kernel <=
-br>
-would do that?<br></blockquote><div><br></div><div>In /drivers/vfio/vfio_io=
-mmu_type1.c, there is a function called vfio_iommu_type1_pin_pages where VM=
-&#39;s memory is pinned down.</div><div>=C2=A0</div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
-<br>
-&gt; Hotplugged memory will also be<br>
-&gt; converted to MIGRATE_UNMOVABLE. <br>
-<br>
-But that&#39;s in the VM? Because we don&#39;t hotplug memory in the hyperv=
-isor.<br></blockquote><div><br></div><div>Yes, the virtio-mem driver in the=
- VM is modified to actively release memory vulnerable to Rowhammer.</div><d=
-iv>=C2=A0</div><div>
-
-For more details, would you be interested in reading our paper? It was rece=
-ntly submitted to ASPLOS for publication and we are happy to share it with =
-you.
-
-</div><div><br></div><div>Regards,</div><div>Zhi Zhang</div><div><br></div>=
-</div></div>
-
---00000000000097ced30627db563b--
 
