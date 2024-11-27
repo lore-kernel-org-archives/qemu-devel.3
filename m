@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F055FD66B86
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Nov 2024 22:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0305AD66B9D
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 00:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tG4Rv-0005iq-N3; Tue, 26 Nov 2024 17:54:27 -0500
+	id 1tG5im-0007RJ-HF; Tue, 26 Nov 2024 19:15:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tG4Rt-0005iP-5D
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 17:54:25 -0500
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tG5ii-0007R0-Jr
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 19:15:52 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tG4Rr-0005l3-Ek
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 17:54:24 -0500
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-5f1e73033cbso1280398eaf.3
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 14:54:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tG5ig-0006WC-OC
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 19:15:52 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-724fee568aaso3306018b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 16:15:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732661662; x=1733266462; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1732666548; x=1733271348; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=O38pWA9cK+5InTtRisO791sL7WKwS0W+bWyB2Anfg/I=;
- b=ZEh8zuL/d8SQRZ9RkGf9ntHmR+85t9T6K/5831qzDZPlh2SrLVEbJ89DEGkIGzuRPU
- JpcdlS8DTAcgZ4JCDIU5A8hoyZ9sDIIniO3j7KXEednBZwj9lDRYHagV3YOGKuAk1hzP
- 1aGdi+2PZidfkFV6jwpR80YVy6jXSNAwz6z3bubT1oi8CO4Owg2NYVVPqBHKnkEg5b9W
- IjJrSGvO42AiE6ct25IocbE4lyRZ4YIFMRh3z9Rb8wUtCjrtp89MtORSpqNUDz1B7AsO
- +29+/LqW7iwLZ+cdSn7vkiMScRKoBYndPxBgJkJa8w5pu5BV0cfN5PNzLC4JZ9NhiLyZ
- xmOg==
+ bh=uBLl+ao6k2E+6Rj7SgjrUVdq4+6MpdrhLD6Cd98n84Y=;
+ b=AET6nHvWP51eWI8ZQWY5T6NgJBSOyag1PvFGTpLQlv2bekz5e379vNvpWo9yNDmJMZ
+ ygofQarVnjYWFz0swM1z+eeMdigULbzTeBuWTZ/VuxdOD+dLfxXBbqvvmzcH7gVbQzj3
+ QLG3F8iqe3z2YvUoFhw6J4Ns8b5riZkSc89KHQST+6w096J4B3+kj2k5mxD0mX+o9AAX
+ b0IYtk1HYYi6ybsIqkuFJTNZl5HEsDOodGjF+HjEnwD2Nl1IyOnMQ0fvFp1mrqeNTdF8
+ KJMfo+tW1ukno3YR8SfWipc/UOTnI/7OooGI93NFjULJLLdrC9MZ2v33AJJT9wQNjIMv
+ GzaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732661662; x=1733266462;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1732666548; x=1733271348;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=O38pWA9cK+5InTtRisO791sL7WKwS0W+bWyB2Anfg/I=;
- b=tMmA4/fqoL8TBYYxQ8yL0qY5ZHdZq/QYoj8EBuLyH1b9T5a8zurBVG5Ll2zGFzoL6V
- yp5xfjcOKBwGhGDBk+i1S8N9SrTh9Vf7LAHvpA8z5mrrSioRz+fQRIA8rIg97IjJHAk8
- 1bgog3rDTSeBmP8UG4duw7yq3wITcXs+g1TJBobh2paQohAzyIklKMYYpCUVtmKuYHet
- 6IdphwVWft7lQaSbkuyJXG1FPK3707WfyIvVTix3pO4stTM/CYtnwjPCMWRFPftxvcOZ
- IlIpsvbN+VPkTNo6qRnL8BiaafKyyPKrgwqCddlSrM3WCxHn8ZGFIQP9u0ID58C/lC7o
- gkPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXcblY3Kh0kdiQDnNinQk/zjb53psbIHj3+qp/F9K/4J+Ne9HqSS1A0BTuZU6f+1qQwrUSZ9A9N5Mn7@nongnu.org
-X-Gm-Message-State: AOJu0Yy5ALTdafXNVytKb66XAxdBJLy0kMwfpFSDO/uVn/D33Q06Jl5L
- h+k2WkmYCgBP6VcHcfK28bdz7e1v8eVHzKfKCcOdywnkflSVPp42PWIQEs190j8=
-X-Gm-Gg: ASbGnctHSreBN7qiMEj5PfQIoIIsr8s3dJThB5YLkx0A6TgJ/W+xSNx87Q01sHaeiId
- 1AY6wUdqkQqYcKLy7aqpCmjAmN8RGh5ix9O1VxaeyDkaDtdHVJf+I7adCN1zw47UPEIDz6VFG/t
- dQYD28YM6axP5iUO9ifWN8xVIzu53dcTh57GvwP1rYQpweCwPfuLgifTP0QhQw3D0SPfqcUxitR
- 7JypK0cQX6R/5opP1rSe03SfYtSG+glvlwkS0En8vytYINIdj4REjAqZviY4y1j7ta4y1FqBmwC
- xIwtxS2p2tzQbTtY7QZ4g9dBT1ET
-X-Google-Smtp-Source: AGHT+IFAglJk+yRi7vyPt8HITqOAHE0c6MsfDfBjnYg7j6gOeBVAYAmp6bRd5ozhzZ7tbIzUmmZhKg==
-X-Received: by 2002:a05:6820:990:b0:5f1:d944:a1da with SMTP id
- 006d021491bc7-5f20a260420mr1044039eaf.8.1732661662046; 
- Tue, 26 Nov 2024 14:54:22 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f1d621368asm2057346eaf.1.2024.11.26.14.54.20
+ bh=uBLl+ao6k2E+6Rj7SgjrUVdq4+6MpdrhLD6Cd98n84Y=;
+ b=I441nUEarijA/7VOFiXoCnGgh9RGRPpTc1vaxrISazFIGFqzyDqBWraiYUYetl6sDp
+ uC/vknPnyaBwweBGADh6VuRa4nyMCzXmWzGtnxAH6AuJpYIqIVtuzqJ0FEQZUBWhvYAv
+ 7hr3Ae7su44bR9PqJ4MV+ss8P8AYuHMNH1oLePKwzclhpRpSrO7qsXgGavLRDcBdye+Q
+ iFSORTTg6nJqpF+cWThsiADOs/9ncQ6Un6Pa9eCcAf8bhPBVkTqYsT4MmF+LFuYiEEEZ
+ 7w87TzsDWg05TVf1S24QPpcDn8mu4//BfNoPLMwYasC0gEuW4MF1omxuawvwf8iHkZ32
+ MBSQ==
+X-Gm-Message-State: AOJu0YxIKXn6bT9uKb4xNH72vkViV6tvOFw7DtEQL1SQTQ5lE0oH8wLe
+ vGGwZeig+DT2L4nj78Aap0PsXptfVJni78Yx+o1ZeQtrwh49tRt4bQGiiEXET+Y=
+X-Gm-Gg: ASbGnctOVmvOaYAiE8F9a+rzZpFsZtfSuYnxnnD0AYJKpzoKgADYXqPGRCp4bnjMRen
+ hwPCdgdFQlGRSp/G5Q/pQeYk/ooFx5ZQ9dcP8qGiUYNdZ2dwIPW3yDhNscXvG8lfa7tL8rttTW8
+ SPOGqZl9LBOI2NIWj+El25qhbZpQjqzxKHW2m1388md/24/qt0AmzscUI3hNc9U9hqZirjni8CL
+ NCc6tIVm9R4jBFuXeEUFQmCgwQ5uexNEhRYR4KaV7eXsHsbhIdAS+YusW3TRB5hf8ktTTXon1Hi
+ 6Dual5udSSj8p+mOqgKqRg==
+X-Google-Smtp-Source: AGHT+IFkWoXx7OMpwZ2wPvazO5T9BvrRPRPxg+1szkzHtyLjffC7j/zVL7TYNG1NKUXr9iitFOQAxw==
+X-Received: by 2002:a05:6a00:4f88:b0:71d:fb29:9f07 with SMTP id
+ d2e1a72fcca58-725300cec87mr1315174b3a.15.1732666548414; 
+ Tue, 26 Nov 2024 16:15:48 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-724de485c84sm9016917b3a.80.2024.11.26.16.15.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 14:54:21 -0800 (PST)
-Message-ID: <7c62e46b-26c8-48e7-b8ec-b7478146a8d1@linaro.org>
-Date: Tue, 26 Nov 2024 16:54:18 -0600
+ Tue, 26 Nov 2024 16:15:47 -0800 (PST)
+Message-ID: <e0c904f2-8620-4f6f-8392-75971529080e@linaro.org>
+Date: Tue, 26 Nov 2024 16:15:47 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 15/42] tests/functional: enable pre-emptive caching of
- assets
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Camilla Conte <cconte@redhat.com>
-References: <20240904103923.451847-1-thuth@redhat.com>
- <20240904103923.451847-16-thuth@redhat.com>
- <66bf4784-f1e4-479f-83db-2d4f91c10e48@linaro.org>
- <Z0YF9i2pwBkznkCD@redhat.com>
- <CAFEAcA-ematCTyj0SN2=e3mGHvp0VWjN1GV-Tu5Rkf-V721L1w@mail.gmail.com>
- <8ff5ef91-1a4b-498e-a948-37444d699f94@redhat.com>
+Subject: Re: [PATCH v2 2/3] docs/devel/style: add a section about bitfield,
+ and disallow them for packed structures
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <8ff5ef91-1a4b-498e-a948-37444d699f94@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>
+References: <20241126211736.122285-1-pierrick.bouvier@linaro.org>
+ <20241126211736.122285-3-pierrick.bouvier@linaro.org>
+ <CAFEAcA9cbV4a8r=h4imdvyMV3P3B4mhgnWU-eobH4ESrsr0Uww@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA9cbV4a8r=h4imdvyMV3P3B4mhgnWU-eobH4ESrsr0Uww@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,13 +111,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/24 11:52, Thomas Huth wrote:
-> I think we want to continue to maek failing downloads as test failures, otherwise we'll 
-> never notice when an asset is not available from the internet anymore (since SKIPs just 
-> get ignored).
+On 11/26/24 13:28, Peter Maydell wrote:
+> On Tue, 26 Nov 2024 at 21:18, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   docs/devel/style.rst | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/docs/devel/style.rst b/docs/devel/style.rst
+>> index 2f68b500798..13cb1ef626b 100644
+>> --- a/docs/devel/style.rst
+>> +++ b/docs/devel/style.rst
+>> @@ -416,6 +416,16 @@ definitions instead of typedefs in headers and function prototypes; this
+>>   avoids problems with duplicated typedefs and reduces the need to include
+>>   headers from other headers.
+>>
+>> +Bitfields
+>> +---------
+>> +
+>> +C bitfields can be a cause of non-portability issues, especially under windows
+>> +where `MSVC has a different way to layout them than gcc
+> 
+> "to lay them out"
+> 
 
-I disagree.  Download failures are not rare.
+Thanks for the language fix to a non-native speaker :).
 
+>> +<https://gcc.gnu.org/onlinedocs/gcc/x86-Type-Attributes.html>`_.
+> 
+> We should mention also that the layout is different on big and
+> little endian hosts.
+> 
+>> +For this reason, we disallow usage of bitfields in packed structures.
+> 
+> maybe add "and in any structures which are supposed to exactly
+> match a specific layout in guest memory" ?
+>
 
-r~
+I'll add this.
+
+>> +For general usage, using bitfields should be proven to add significant benefits
+>> +regarding memory usage or usability.
+> 
+> Maybe phrase this as
+> 
+>   We also suggest avoiding bitfields even in structures where
+>   the exact layout does not matter, unless you can show that
+>   they provide a significant memory usage or usability benefit.
+> 
+> ?
+> 
+
+Ok!
+
+Should we push further and try to convince people bitfields are not 
+worth all the problem that come with them (except when really needed)?
+
+Except for saving memory in *very* specific case (a structure allocated 
+tens of millions times for example), I hardly see a benefit vs using 
+integer types.
+
+>> +
+>>   Reserved namespaces in C and POSIX
+>>   ----------------------------------
+>>
+>> --
+>> 2.39.5
+> 
+> thanks
+> -- PMM
+
 
