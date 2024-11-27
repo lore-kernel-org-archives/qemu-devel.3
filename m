@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0556CD6ACEF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 16:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC580D6ACF3
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 16:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGKnK-0005AT-Hy; Wed, 27 Nov 2024 11:21:38 -0500
+	id 1tGKpT-0005z9-MK; Wed, 27 Nov 2024 11:23:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tGKnH-00059z-PU
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:21:36 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tGKpR-0005yj-Rt
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:23:49 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tGKnG-00026t-1j
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:21:35 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tGKpQ-00035k-GZ
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:23:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=5gSJW59PE+w83XePv77shAVTBntpQpwmqiXZQ+enPws=; b=Vzhb1dPK0r6XMvo
- KLdN/tKi89pqQRkHs85rSh7A1rrrNaLzamj0+Mok9LuXieXROs0voPmNBGjuotmErcjlhgvvqnkDn
- tBTckpIV1GfnxBSGKR3rLsuIkskuiZosUAXYbnZI8KoVLrrLde2rDr/pwRJKD6rmQNJkrPvCsgU9z
- pE=;
-Date: Wed, 27 Nov 2024 17:24:16 +0100
+ List-Help; bh=Ta7AoTsl6hTXBYPZpXYN8ce8NC9AxvNO2SlkmBuqpNI=; b=myCySrtwfyOflAF
+ YBcR1jJl1o2FRZbPelx9+IJ25Kx2tOMv9GqMLrEXQ1VzC6EUJOWGgKFsEZO1VylNbtwFVhp+5LZUm
+ imzsJL3SUYAvtl7rRYUT1UdUR8En9GsRSSKBW+85/qBBH24NMDUqHGxfcEOW7cHkSWsOYQvHLFdn8
+ go=;
+Date: Wed, 27 Nov 2024 17:26:32 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH-for-10.0 1/6] target/ppc: Indent ppc_tcg_ops[] with 4
- spaces
-Message-ID: <owott6b6hsqg2drozs5beb6roezlks5v6cw2h637ky4cxjpnoq@7a5tcpqltrvk>
+Cc: qemu-devel@nongnu.org, 
+	Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH-for-10.0 2/6] accel/tcg: Declare local tcg_ops variable
+ in tcg_exec_realizefn()
+Message-ID: <sltzzalo2paevqb7uxk2uczfsjk3wnpjyj54b345tfesmohfgz@gtmfm7heqhxd>
 References: <20241127121658.88966-1-philmd@linaro.org>
- <20241127121658.88966-2-philmd@linaro.org>
+ <20241127121658.88966-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241127121658.88966-2-philmd@linaro.org>
+In-Reply-To: <20241127121658.88966-3-philmd@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -69,11 +69,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 27/11/24, Philippe Mathieu-Daudé wrote:
+> Ease reading code by declaring a local 'tcg_ops' variable.
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Acked-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  target/ppc/cpu_init.c | 29 ++++++++++++++---------------
->  1 file changed, 14 insertions(+), 15 deletions(-)
+>  accel/tcg/cpu-exec.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
