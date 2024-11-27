@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF52BD6ACF4
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 16:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1021D6ACEF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 16:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGKaR-0001lu-RK; Wed, 27 Nov 2024 11:08:23 -0500
+	id 1tGKal-0002C7-Tp; Wed, 27 Nov 2024 11:08:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGKaI-0001jA-D2
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:08:10 -0500
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGKaj-00026F-Oq
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:08:37 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGKaG-0004u8-Qa
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:08:10 -0500
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2ffc80318c9so33896961fa.2
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 08:08:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGKah-000567-Mj
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:08:37 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3824709ee03so5055378f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 08:08:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732723686; x=1733328486; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732723713; x=1733328513; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mIkCk7y38vWyW+8Cbf3UeBCVXSKBTT0KIxuchZyj8YM=;
- b=eP8qUHEWBaoMEjR/+MgXommPkHKp4QsRg04RodDqpIXijyAKKxXy0cqZkAw02EqGQX
- zwfu58oqv9G3w7ETn26FuTe2ejMH1h8mCkAZMIUEilwl279pyTmqoVoq8gP+jsGCQzZR
- wa5riCJD8/hS/VdyzB16WkGx0uRvSpmizECXUABQOtcWAp7a84F7uhHffGhWJdb0wMA3
- phRUyzQjEjzHzEM2zPCIjKoeXgIxtt2lkWjnx415pkOW7glpY03YM6gxk2J8Zse2hByQ
- izb0M/JbQpOu2iou2d9DB/FyIJuSifBlJzK288t80CHQOMf/xEJLlWkeztchD1T4h0dq
- KrDw==
+ bh=UV+6gAzfd8mCpCLEPYFJ8Olh2UYamIhOq1oCZybPIQA=;
+ b=nDg9c/I0TV9PL86+juLBgTNvs6vcsL75Lo4GaU0aM0qxWHDpDCyTafWtC7Z10I6359
+ r8rxMO5WMntuTy0fb4v6e5Qle7XJOSuOIN1ecZ3ZEjAjaHJRxbnlFrUopvRvzc7K2Ow8
+ lIpHsLBiL4YXkwfppHxCR53nvJOYZyGySmj1O0MWIRltO3ZmSoFwvtXqcrVx5ecuJpwM
+ OD/KA3rMt8dMeo2ckPbnHZD5cE4x6Rb67ZN6TYH/urRPGYyp6kvqdXVouvEgU4ed8DjX
+ 9afv1pSBOjxuJthD73h5xFSDMY2oSb9I5T7RH5SiJtSATcMzcGUnDYfEcoPTxePZ1faK
+ CDDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732723686; x=1733328486;
+ d=1e100.net; s=20230601; t=1732723713; x=1733328513;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mIkCk7y38vWyW+8Cbf3UeBCVXSKBTT0KIxuchZyj8YM=;
- b=S8dPzfNsChxjYI78m1rwaLICLCLutXOMoVDWxskCyj+YjdGw3v5V0cBQsGDu/BDx32
- ean6sDGto6guDubx9/FrDKBTDhTo9B2DFHLLmsfYyNWemehTf+3aEqxCQj2QN7LO65m8
- ZrKdtfgQ2FV/KavQrDA2dXolSwyUl2eHeRVxVq/IontRUXnaT7qSunkUCh6+4HhgAUyt
- x8r8opAQ+f8jr38tDrIzGMthI11Hc2/q8aYThn2LsBVbwzlvCzbjfGVM42fj8dffMA+A
- NUqW4zyQJboycbudG+guCcmSyk1c5NKmXvKZJ5KOSU41TM+qY/J5gUq3lv/9BGxDJ1W3
- aI2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMaZvwf29Ie9kr0o6qwIUZP2xzAwFSsA052ItmRK8musOOdX+w7sSlPyA4WctdM6r6QyFZtDhuKpZh@nongnu.org
-X-Gm-Message-State: AOJu0YwgWEhOrZILgPLBfe1XW8aVd6WhiELueeQ/M6yKRc2VzAYa2j6I
- z/muVqgVfxOfqdNCdgZQODULOAUhJ7bGeoNBIz4gfBEVvI/J4zi6BblpyT1Q98ibk5FXDKCoZZC
- aINQ=
-X-Gm-Gg: ASbGnctCsrvJYantfsvm1jMqLqPioZ1tst4etJYV6n21LkQ5XsJy4x66sikc9raetey
- R/1MozAjB/ThXQNh1SPipXcdb1ACbN7zIu2R2d70RCpmeeNiP3lTZTaY3I5ye+CO69jkwALeDzH
- Cdk27m2cYdQwva1jm/QiIgwOoe6u07AyFg2lSeK7NF48U27W/68RLXUvy3pyzuLT4Tscjq5fLiW
- 6u0NSLx0eaFencuHQG81p06OKAVgQEBMJjbZtVazSwpAUZfYgKlS76f89Yx34rIl0xy
-X-Google-Smtp-Source: AGHT+IHjzom4tD3W7my2+NkDuaeQrpr8SABG5FHCVHO9bgCI1vrCiQs2kLNvVdRgb0zPo/X9XqZnSw==
-X-Received: by 2002:a2e:b8c3:0:b0:2ff:b822:ec4c with SMTP id
- 38308e7fff4ca-2ffd6130847mr21178021fa.35.1732723686512; 
- Wed, 27 Nov 2024 08:08:06 -0800 (PST)
-Received: from [192.168.170.227] ([91.223.100.71])
- by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2ffa4d57ad4sm21826811fa.60.2024.11.27.08.08.00
+ bh=UV+6gAzfd8mCpCLEPYFJ8Olh2UYamIhOq1oCZybPIQA=;
+ b=SgaLz6nbz/POch+L2JILliMJuZx+sFkVVY43zu6gCIPzaIh8RRP5momyxxwmmBIHr+
+ 3R7s2YNNSTKWJHMCDJKUi3zPLWvnM6tAxBSUfyaJvwJV3WwhijXznvWsfR3GpNnV3BQ+
+ jnjG5h+JeboEMIVCDlYGOoQk4jiMZkVH4QmjwFZTmPOFhG6Bqo7f9AGT4mHpXdJBV6yW
+ V3kJts/+OqzgxotQGWIXbNP5g7X1FixVUFRx3mdgMnIzFjsCbfPTBC1oQYaQjPqSARgq
+ /dqZs0FgXjtJc32boUyll0Zvels5Q5jYUs4rIoW1cGh8bOn1FmGq4Py+9Z0wIsSPGZn3
+ DtBA==
+X-Gm-Message-State: AOJu0Yzd3nUC5KaqQRUCBtV240fy946qvPKCtGKdP7+nqlATqlJTZSVA
+ dslKbW2cvWRB26eZaAKt2KJNIDH6dQIv6w+lqD5PGi4cBtRSVodohvc7w4lKtAI=
+X-Gm-Gg: ASbGnctOXMhP4jJzut+umQzKIUIHa2ePChC2ypwof+cJ+0N4JBtnWvXqYDDAbAgygSI
+ 4LAx26qH+cR6gNZmKlzFmui3nMJR62zK4+saAL1XZBiXvfzzDGwBKk8Ow//tjo9MAw1CIA6KreS
+ qwvWfLFWthSkTgdLkn+RZ9KRCOAdYOmcuvhp2yDahmQjjwFGTWntlpveCFcWEfZEIJ5f8J+dxQZ
+ G8fAIJbKdZ6uXTjpQRoHcXsK94D1T0XSKnSeO+oFptSxchA0Rg+p+JUFrUplD/yHKb2IuuoCAkE
+ SsWWOQPn05sgEpGeiUDBGIw+hwI/rOvpBlbH
+X-Google-Smtp-Source: AGHT+IGORJYJ5dXFPu04ama4dMmBTA9saMjvuKlHe+2b14skSaKzhNuuAct61BgtbrBeasEWo8CrIQ==
+X-Received: by 2002:a5d:47cd:0:b0:382:2ba9:9d56 with SMTP id
+ ffacd0b85a97d-385c6edc341mr3064808f8f.48.1732723712629; 
+ Wed, 27 Nov 2024 08:08:32 -0800 (PST)
+Received: from [192.168.69.146] (plb95-h02-176-184-14-96.dsl.sta.abo.bbox.fr.
+ [176.184.14.96]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3825fbc4123sm17053193f8f.79.2024.11.27.08.08.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Nov 2024 08:08:06 -0800 (PST)
-Message-ID: <33ee1415-7f72-488d-bbf6-cf55e6d0a601@linaro.org>
-Date: Wed, 27 Nov 2024 10:07:53 -0600
+ Wed, 27 Nov 2024 08:08:32 -0800 (PST)
+Message-ID: <c32ee498-4bc4-408a-bc28-ab21563bb2e3@linaro.org>
+Date: Wed, 27 Nov 2024 17:08:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 6/7] target/riscv: Apply pointer masking for
- virtualized memory accesses
-To: baturo.alexey@gmail.com
-Cc: zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
- liwei1518@gmail.com, alistair23@gmail.com, frank.chang@sifive.com,
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-References: <20241127053523.397378-1-baturo.alexey@gmail.com>
- <20241127053523.397378-7-baturo.alexey@gmail.com>
+Subject: Re: [PATCH v13 1/2] generic-loader: Add a generic loader
+To: Alistair Francis <alistair.francis@wdc.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com,
+ Thomas Huth <thuth@redhat.com>
+References: <cover.1475195078.git.alistair.francis@xilinx.com>
+ <10f2a9dce5e5e11b6c6d959415b0ad6ee22bcba5.1475195078.git.alistair.francis@xilinx.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241127053523.397378-7-baturo.alexey@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <10f2a9dce5e5e11b6c6d959415b0ad6ee22bcba5.1475195078.git.alistair.francis@xilinx.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,33 +101,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/24 23:35, baturo.alexey@gmail.com wrote:
-> From: Alexey Baturo <baturo.alexey@gmail.com>
+Hi,
+
+[very old patch merged as commit e481a1f63c93]
+
+On 30/9/16 02:25, Alistair Francis wrote:
+> Add a generic loader to QEMU which can be used to load images or set
+> memory values.
 > 
-> Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
+> Internally inside QEMU this is a device. It is a strange device that
+> provides no hardware interface but allows QEMU to monkey patch memory
+> specified when it is created. To be able to do this it has a reset
+> callback that does the memory operations.
+> 
+> This device allows the user to monkey patch memory. To be able to do
+> this it needs a backend to manage the datas, the same as other
+> memory-related devices. In this case as the backend is so trivial we
+> have merged it with the frontend instead of creating and maintaining a
+> seperate backend.
+> 
+> Signed-off-by: Alistair Francis <alistair.francis@xilinx.com>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   target/riscv/cpu.h                      |  2 ++
->   target/riscv/cpu_helper.c               | 19 +++++++++++++++++++
->   target/riscv/insn_trans/trans_rvh.c.inc | 11 +++++++++++
->   target/riscv/translate.c                |  4 ++++
->   4 files changed, 36 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 11e3a6d647..6bbd9c6c25 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -634,6 +634,7 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
->   /* If pointer masking should be applied and address sign extended */
->   FIELD(TB_FLAGS, PM_PMM, 29, 2)
->   FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
-> +FIELD(TB_FLAGS, PM_VPMM, 32, 2)
 
-(1) tb_flags is only 32 bits wide, and this overflows.
+> diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
+> new file mode 100644
+> index 0000000..79ab6df
+> --- /dev/null
+> +++ b/hw/core/generic-loader.c
+> @@ -0,0 +1,211 @@
+> +/*
+> + * Generic Loader
+> + *
+> + * Copyright (C) 2014 Li Guang
+> + * Copyright (C) 2016 Xilinx Inc.
+> + * Written by Li Guang <lig.fnst@cn.fujitsu.com>
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms of the GNU General Public License as published by the
+> + * Free Software Foundation; either version 2 of the License, or
+> + * (at your option) any later version.
+> + *
+> + * This program is distributed in the hope that it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+> + * for more details.
+> + *
+> + */
+> +
+> +/*
+> + * Internally inside QEMU this is a device. It is a strange device that
+> + * provides no hardware interface but allows QEMU to monkey patch memory
+> + * specified when it is created. To be able to do this it has a reset
+> + * callback that does the memory operations.
+> +
+> + * This device allows the user to monkey patch memory. To be able to do
+> + * this it needs a backend to manage the datas, the same as other
+> + * memory-related devices. In this case as the backend is so trivial we
+> + * have merged it with the frontend instead of creating and maintaining a
+> + * seperate backend.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qom/cpu.h"
+> +#include "hw/sysbus.h"
+> +#include "sysemu/dma.h"
+> +#include "hw/loader.h"
+> +#include "qapi/error.h"
+> +#include "hw/core/generic-loader.h"
+> +
+> +#define CPU_NONE 0xFFFFFFFF
+> +
+> +static void generic_loader_reset(void *opaque)
+> +{
+> +    GenericLoaderState *s = GENERIC_LOADER(opaque);
+> +
+> +    if (s->set_pc) {
+> +        CPUClass *cc = CPU_GET_CLASS(s->cpu);
+> +        cpu_reset(s->cpu);
+> +        if (cc) {
+> +            cc->set_pc(s->cpu, s->addr);
+> +        }
+> +    }
+> +
+> +    if (s->data_len) {
+> +        assert(s->data_len < sizeof(s->data));
+> +        dma_memory_write(s->cpu->as, s->addr, &s->data, s->data_len);
+> +    }
+> +}
+> +
+> +static void generic_loader_realize(DeviceState *dev, Error **errp)
+> +{
+> +    GenericLoaderState *s = GENERIC_LOADER(dev);
+> +    hwaddr entry;
+> +    int big_endian;
+> +    int size = 0;
+> +
+> +    s->set_pc = false;
+> +
+> +    /* Perform some error checking on the user's options */
+> +    if (s->data || s->data_len  || s->data_be) {
+> +        /* User is loading memory values */
+> +        if (s->file) {
+> +            error_setg(errp, "Specifying a file is not supported when loading "
+> +                       "memory values");
+> +            return;
+> +        } else if (s->force_raw) {
+> +            error_setg(errp, "Specifying force-raw is not supported when "
+> +                       "loading memory values");
+> +            return;
+> +        } else if (!s->data_len) {
+> +            /* We cant' check for !data here as a value of 0 is still valid. */
+> +            error_setg(errp, "Both data and data-len must be specified");
+> +            return;
+> +        } else if (s->data_len > 8) {
+> +            error_setg(errp, "data-len cannot be greater then 8 bytes");
 
-(2) All of the logic for HSV/HLV is in op_helper.c, so there's no point in doing this 
-masking inline.  Do it in helper_hyp_* instead, possibly reusing pieces of adjust_addr 
-from vector_helper.c.
+If s->data_len < 8 (like 4 or 2) ...
 
+> +            return;
+> +        }
+> +    } else if (s->file || s->force_raw)  {
+> +        /* User is loading an image */
+> +        if (s->data || s->data_len || s->data_be) {
+> +            error_setg(errp, "data can not be specified when loading an "
+> +                       "image");
+> +            return;
+> +        }
+> +        s->set_pc = true;
+> +    } else if (s->addr) {
+> +        /* User is setting the PC */
+> +        if (s->data || s->data_len || s->data_be) {
+> +            error_setg(errp, "data can not be specified when setting a "
+> +                       "program counter");
+> +            return;
+> +        } else if (!s->cpu_num) {
+> +            error_setg(errp, "cpu_num must be specified when setting a "
+> +                       "program counter");
+> +            return;
+> +        }
+> +        s->set_pc = true;
+> +    } else {
+> +        /* Did the user specify anything? */
+> +        error_setg(errp, "please include valid arguments");
+> +        return;
+> +    }
+> +
+> +    qemu_register_reset(generic_loader_reset, dev);
+> +
+> +    if (s->cpu_num != CPU_NONE) {
+> +        s->cpu = qemu_get_cpu(s->cpu_num);
+> +        if (!s->cpu) {
+> +            error_setg(errp, "Specified boot CPU#%d is nonexistent",
+> +                       s->cpu_num);
+> +            return;
+> +        }
+> +    } else {
+> +        s->cpu = first_cpu;
+> +    }
+> +
+> +#ifdef TARGET_WORDS_BIGENDIAN
+> +    big_endian = 1;
+> +#else
+> +    big_endian = 0;
+> +#endif
+> +
+> +    if (s->file) {
+> +        if (!s->force_raw) {
+> +            size = load_elf_as(s->file, NULL, NULL, &entry, NULL, NULL,
+> +                               big_endian, 0, 0, 0, s->cpu->as);
+> +
+> +            if (size < 0) {
+> +                size = load_uimage_as(s->file, &entry, NULL, NULL, NULL, NULL,
+> +                                      s->cpu->as);
+> +            }
+> +        }
+> +
+> +        if (size < 0 || s->force_raw) {
+> +            /* Default to the maximum size being the machine's ram size */
+> +            size = load_image_targphys_as(s->file, s->addr, ram_size,
+> +                                          s->cpu->as);
+> +        } else {
+> +            s->addr = entry;
+> +        }
+> +
+> +        if (size < 0) {
+> +            error_setg(errp, "Cannot load specified image %s", s->file);
+> +            return;
+> +        }
+> +    }
+> +
+> +    /* Convert the data endiannes */
+> +    if (s->data_be) {
+> +        s->data = cpu_to_be64(s->data);
+> +    } else {
+> +        s->data = cpu_to_le64(s->data);
 
-r~
+... and if we swap, we ignore the data-len and swap 64-bit
+regardless, returning invalid data.
+
+I.e. data=0x1122, data-len=2, once swapped we get data=0x0000.
+
+Is that expected?
+
+> +    }
+> +}
+> +
+> +static void generic_loader_unrealize(DeviceState *dev, Error **errp)
+> +{
+> +    qemu_unregister_reset(generic_loader_reset, dev);
+> +}
+> +
+> +static Property generic_loader_props[] = {
+> +    DEFINE_PROP_UINT64("addr", GenericLoaderState, addr, 0),
+> +    DEFINE_PROP_UINT64("data", GenericLoaderState, data, 0),
+> +    DEFINE_PROP_UINT8("data-len", GenericLoaderState, data_len, 0),
+> +    DEFINE_PROP_BOOL("data-be", GenericLoaderState, data_be, false),
+> +    DEFINE_PROP_UINT32("cpu-num", GenericLoaderState, cpu_num, CPU_NONE),
+> +    DEFINE_PROP_BOOL("force-raw", GenericLoaderState, force_raw, false),
+> +    DEFINE_PROP_STRING("file", GenericLoaderState, file),
+> +    DEFINE_PROP_END_OF_LIST(),
+> +};
+
 
