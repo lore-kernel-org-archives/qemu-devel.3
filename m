@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B96F3D6D22E
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 19:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7DA6D6D238
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 20:18:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGNcm-00039K-QM; Wed, 27 Nov 2024 14:22:56 -0500
+	id 1tGOTS-0003NZ-LE; Wed, 27 Nov 2024 15:17:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGNck-00038w-VY
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 14:22:55 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGNcj-0007Ox-2e
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 14:22:54 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3823e45339bso72863f8f.0
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 11:22:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732735371; x=1733340171; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=o0aH4alW4mStXgjAu+q2wshRCmic4d3mjkw5bj2WKJo=;
- b=Jux2dhqWsc8YT/v+1FhpI8Cy54UPhTqb9R5JJhcF7lKTaJgYdFTQn0oRvUSgJaowm3
- Uugw1hItBc6YLfCpiBaIb3KILXe7F3OBqmvGOI3LNF0LmMiPc2HWKjBM0PgH4PFQ+V4o
- C6UJ/WguZ55rhLT62NzpYeKmE7V+MCoOmFhbdixMFCXm8bKxLBP0kaO8pA4z5EslXz0r
- aOpgmHV8L5BgyArTbbIhx+70BeAcjBEn7Gm8rpvQp2OR3gQDPbdBdpVjUJT+P/THR4d0
- ZD26oWpicDiErTF0WnIRxO/VPDFIy4jtr5Bn27X/td2a5xuixMM95mju2VEBMWjHW1/l
- J8LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732735371; x=1733340171;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o0aH4alW4mStXgjAu+q2wshRCmic4d3mjkw5bj2WKJo=;
- b=Qq1GU2MqSa4qAdoyf/CFTtPWC26BfNNMdb5PCiaiS+qXzmcQCi5MrjrrCIZcO7/1HY
- w43Y+Rjkx5ruE2DN5yCS03yQcVq/qiCRpqxbF42TaAW7ZrpzTs7v54DEscQFUSi3HvCs
- daR4wEUdws4FSydoMxF+PyQ+w14Oft5prbTPolCk+/r80wO6YmCr48bSX6lSJvtVztj+
- gcFr7vvLOxWfRRD6hYF1g4FMrWPllnkQ9JcF1V18JeCDTh3voTgQKXIcoB5h3GZK+xqR
- /QTV9KjV3NY0AbDg2RU46euIZzHla6fRbNOeiGKAA+B4jTeihkVQGXaOTzh9+0gROTGr
- MfNg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWeko7j1ll7FAkxmraPbGi4dHNb+7T3m72jlZ955CIzhLIYy0qPCTUQ2OrefdEymZGTpsjFTjWGYrc@nongnu.org
-X-Gm-Message-State: AOJu0Ywkg41JK2GdEiD5CMSQFdjZX+6DLKdiGCHnUPXIz81vNA5MLHXB
- Mj6X9u/wuLpXs/WeUHQvGtiM2smyWzpGHep+URwd/FZvIXedUQaYglPWoJlTHnw=
-X-Gm-Gg: ASbGnctfclgun7iWyeyR+J2MHk2ETBc1VNZknjXOPHTvStV7wizQ0i9A6OpcHkuiG64
- BJfM8hwLWt0s6WSxL2t3rrFjyINHgK+PMCAFAwfnS/+Iqlus1PRVGLrbYaAp00w00cV2l+YFZMT
- NjxkX6oIli8HkVMnMNFwn0gYFjYP0QkBMDFKKNIsRVPbyqFn6fIw1CpP20j4wDVTDZO1z3wTIZE
- W/2MZ8TIPRwHeKVZg+KHwa26VilHHrBPqEawzDKsFkcfLjDrhpd9N/HOIINDT4jYWiDO1EsB9wK
- NAv9Kz6kcewGyIJH4mpM2X6srWZ3C3JTfO5Y
-X-Google-Smtp-Source: AGHT+IHjaHOWkV873OUDP6iboKIDechhJE7U2r5oWHe/M7gYwe2LpRR/ZkT4Edwe7etfWk82CSKD2g==
-X-Received: by 2002:a05:6000:4604:b0:382:2cbd:9a4b with SMTP id
- ffacd0b85a97d-385c6ebcd7emr3839635f8f.24.1732735371156; 
- Wed, 27 Nov 2024 11:22:51 -0800 (PST)
-Received: from [192.168.69.146] (plb95-h02-176-184-14-96.dsl.sta.abo.bbox.fr.
- [176.184.14.96]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fbc3ba2sm17445292f8f.74.2024.11.27.11.22.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Nov 2024 11:22:50 -0800 (PST)
-Message-ID: <cfa1c780-012b-4c4d-975a-e08068706607@linaro.org>
-Date: Wed, 27 Nov 2024 20:22:48 +0100
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tGOTQ-0003My-5z
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 15:17:20 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tGOTL-0005Hw-FX
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 15:17:18 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tGOT0-00000002shH-3VbO; Wed, 27 Nov 2024 21:16:54 +0100
+Message-ID: <489d1769-3807-4007-888c-608c1e9407fb@maciej.szmigiero.name>
+Date: Wed, 27 Nov 2024 21:16:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest: add TIMEOUT_MULTIPLIER
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0LvQvtCy?= <frolov@swemel.ru>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: farosas@suse.de, lvivier@redhat.com, sdl.qemu@linuxtesting.org,
+Subject: Re: [PATCH v3 08/24] migration: Add thread pool of optional load
+ threads
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
-References: <20241113094342.282676-2-frolov@swemel.ru>
- <Z0YUMoPr0oyQhqqK@redhat.com>
- <04edda40-32d2-43e0-8ade-a4b2a3e06eab@swemel.ru>
- <49cc1e5e-dd62-475e-b483-c2897c829529@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <49cc1e5e-dd62-475e-b483-c2897c829529@linaro.org>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <877b7108c9cb9064615606d4c731cb12c549b7f9.1731773021.git.maciej.szmigiero@oracle.com>
+ <9a229308-2c80-4ee2-8c49-5fec2207ad74@redhat.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ xsFNBFpGusUBEADXUMM2t7y9sHhI79+2QUnDdpauIBjZDukPZArwD+sDlx5P+jxaZ13XjUQc
+ 6oJdk+jpvKiyzlbKqlDtw/Y2Ob24tg1g/zvkHn8AVUwX+ZWWewSZ0vcwp7u/LvA+w2nJbIL1
+ N0/QUUdmxfkWTHhNqgkNX5hEmYqhwUPozFR0zblfD/6+XFR7VM9yT0fZPLqYLNOmGfqAXlxY
+ m8nWmi+lxkd/PYqQQwOq6GQwxjRFEvSc09m/YPYo9hxh7a6s8hAP88YOf2PD8oBB1r5E7KGb
+ Fv10Qss4CU/3zaiyRTExWwOJnTQdzSbtnM3S8/ZO/sL0FY/b4VLtlZzERAraxHdnPn8GgxYk
+ oPtAqoyf52RkCabL9dsXPWYQjkwG8WEUPScHDy8Uoo6imQujshG23A99iPuXcWc/5ld9mIo/
+ Ee7kN50MOXwS4vCJSv0cMkVhh77CmGUv5++E/rPcbXPLTPeRVy6SHgdDhIj7elmx2Lgo0cyh
+ uyxyBKSuzPvb61nh5EKAGL7kPqflNw7LJkInzHqKHDNu57rVuCHEx4yxcKNB4pdE2SgyPxs9
+ 9W7Cz0q2Hd7Yu8GOXvMfQfrBiEV4q4PzidUtV6sLqVq0RMK7LEi0RiZpthwxz0IUFwRw2KS/
+ 9Kgs9LmOXYimodrV0pMxpVqcyTepmDSoWzyXNP2NL1+GuQtaTQARAQABzTBNYWNpZWogUy4g
+ U3ptaWdpZXJvIDxtYWlsQG1hY2llai5zem1pZ2llcm8ubmFtZT7CwZQEEwEIAD4CGwMFCwkI
+ BwIGFQoJCAsCBBYCAwECHgECF4AWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCZdEV4gUJDWuO
+ nQAKCRCEf143kM4JdyzED/0Qwk2KVsyNwEukYK2zbJPHp7CRbXcpCApgocVwtmdabAubtHej
+ 7owLq89ibmkKT0gJxc6OfJJeo/PWTJ/Qo/+db48Y7y03Xl+rTbFyzsoTyZgdR21FQGdgNRG9
+ 3ACPDpZ0UlEwA4VdGT+HKfu0X8pVb0G0D44DjIeHC7lBRzzE5JXJUGUVUd2FiyUqMFqZ8xP3
+ wp53ekB5p5OstceqyZIq+O/r1pTgGErZ1No80JrnVC/psJpmMpw1Q56t88JMaHIe+Gcnm8fB
+ k3LyWNr7gUwVOus8TbkP3TOx/BdS/DqkjN3GvXauhVXfGsasmHHWEFBE0ijNZi/tD63ZILRY
+ wUpRVRU2F0UqI+cJvbeG3c+RZ7jqMAAZj8NB8w6iviX1XG3amlbJgiyElxap6Za1SQ3hfTWf
+ c6gYzgaNOFRh77PQbzP9BcAVDeinOqXg2IkjWQ89o0YVFKXiaDHKw7VVld3kz2FQMI8PGfyn
+ zg5vyd9id1ykISCQQUQ4Nw49tqYoSomLdmIgPSfXDDMOvoDoENWDXPiMGOgDS2KbqRNYCNy5
+ KGQngJZNuDicDBs4r/FGt9/xg2uf8M5lU5b8vC78075c4DWiKgdqaIhqhSC+n+qcHX0bAl1L
+ me9DMNm0NtsVw+mk65d7cwxHmYXKEGgzBcbVMa5C+Yevv+0GPkkwccIvps7AzQRaRrwiAQwA
+ xnVmJqeP9VUTISps+WbyYFYlMFfIurl7tzK74bc67KUBp+PHuDP9p4ZcJUGC3UZJP85/GlUV
+ dE1NairYWEJQUB7bpogTuzMI825QXIB9z842HwWfP2RW5eDtJMeujzJeFaUpmeTG9snzaYxY
+ N3r0TDKj5dZwSIThIMQpsmhH2zylkT0jH7kBPxb8IkCQ1c6wgKITwoHFjTIO0B75U7bBNSDp
+ XUaUDvd6T3xd1Fz57ujAvKHrZfWtaNSGwLmUYQAcFvrKDGPB5Z3ggkiTtkmW3OCQbnIxGJJw
+ /+HefYhB5/kCcpKUQ2RYcYgCZ0/WcES1xU5dnNe4i0a5gsOFSOYCpNCfTHttVxKxZZTQ/rxj
+ XwTuToXmTI4Nehn96t25DHZ0t9L9UEJ0yxH2y8Av4rtf75K2yAXFZa8dHnQgCkyjA/gs0ujG
+ wD+Gs7dYQxP4i+rLhwBWD3mawJxLxY0vGwkG7k7npqanlsWlATHpOdqBMUiAR22hs02FikAo
+ iXNgWTy7ABEBAAHCwXwEGAEIACYCGwwWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCZdEWBwUJ
+ DWuNXAAKCRCEf143kM4Jd5OdD/0UXMpMd4eDWvtBBQkoOcz2SqsWwMj+vKPJS0BZ33MV/wXT
+ PaTbzAFy23/JXbyBPcb0qgILCmoimBNiXDzYBfcwIoc9ycNwCMBBN47Jxwb8ES5ukFutjS4q
+ +tPcjbPYu+hc9qzodl1vjAhaWjgqY6IzDGe4BAmM+L6UUID4Vr46PPN02bpm4UsL31J6X+lA
+ Vj5WbY501vKMvTAiF1dg7RkHPX7ZVa0u7BPLjBLqu6NixNkpSRts8L9G4QDpIGVO7sOC9oOU
+ 2h99VYY1qKml0qJ9SdTwtDj+Yxz+BqW7O4nHLsc4FEIjILjwF71ZKY/dlTWDEwDl5AJR7bhy
+ HXomkWae2nBTzmWgIf9fJ2ghuCIjdKKwOFkDbFUkSs8HjrWymvMM22PHLTTGFx+0QbjOstEh
+ 9i56FZj3DoOEfVKvoyurU86/4sxjIbyhqL6ZiTzuZAmB0RICOIGilm5x03ESkDztiuCtQL2u
+ xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
+ ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
+ WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
+In-Reply-To: <9a229308-2c80-4ee2-8c49-5fec2207ad74@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,80 +110,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/11/24 19:44, Pierrick Bouvier wrote:
-> On 11/26/24 23:40, Дмитрий Фролов wrote:
->> Hello, Daniel
+On 27.11.2024 10:13, Cédric Le Goater wrote:
+> On 11/17/24 20:20, Maciej S. Szmigiero wrote:
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> On 26.11.2024 21:32, Daniel P. Berrangé wrote:
->>> On Wed, Nov 13, 2024 at 12:43:40PM +0300, Dmitry Frolov wrote:
->>>> Some tests need more time when qemu is built with
->>>> "--enable-asan --enable-ubsan"
->>>>
->>>> As was discussed here:
->>>> https://patchew.org/QEMU/20241112120100.176492-2-frolov@swemel.r/u
->>>>
->>>> TIMEOUT_MULTIPLIER enviroment variable will be
->>>> a useful option, allowing non-invasive timeouts
->>>> increasing for a specific build.
->>>>
->>>> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
->>>> ---
->>>>    scripts/mtest2make.py | 2 ++
->>>>    1 file changed, 2 insertions(+)
->>>>
->>>> diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
->>>> index eb01a05ddb..ff60b62724 100644
->>>> --- a/scripts/mtest2make.py
->>>> +++ b/scripts/mtest2make.py
->>>> @@ -27,7 +27,9 @@ def names(self, base):
->>>>    .speed.slow = $(foreach s,$(sort $(filter-out %-thorough, $1)), 
->>>> --suite $s)
->>>>    .speed.thorough = $(foreach s,$(sort $1), --suite $s)
->>>> +ifndef TIMEOUT_MULTIPLIER
->>>>    TIMEOUT_MULTIPLIER = 1
->>>> +endif
->>> Can you explain what scenario this is needed for, as unless I'm
->>> missing something this change has no purpose. This assignment is
->>> merely defining the defalt value, which can already be overridden
->>> at runtime without this 'ifndef'
->>>
->>> eg
->>>
->>> $ make check-unit TIMEOUT_MULTIPLIER=7
->>>
->>> In another shell:
->>>
->>> $ ps -axuwwf | grep 'meson test'
->>> berrange 1931657  3.9  0.1 330904 99344 pts/1    S+   18:29   
->>> 0:00                  \_ 
->>> /var/home/berrange/src/virt/qemu/build/pyvenv/bin/python3 
->>> /var/home/berrange/src/virt/qemu/build/pyvenv/bin/meson test 
->>> --no-rebuild -t 7 --num-processes 1 --print-errorlogs --suite unit
->>>
->>> shows TIMEOUT_MULTIPLIER being honoured
->> Yeah... You are right!
->> It is possible to set TIMEOUT_MULTIPLIER only to run tests.
->> It is not necessary to set it for the whole build.
+>> Some drivers might want to make use of auxiliary helper threads during VM
+>> state loading, for example to make sure that their blocking (sync) I/O
+>> operations don't block the rest of the migration process.
 >>
->> Sorry, and thanks a lot!
->>>
->>>
->>> With regards,
->>> Daniel
->> regards,
->> Dmitry
+>> Add a migration core managed thread pool to facilitate this use case.
+>>
+>> The migration core will wait for these threads to finish before
+>> (re)starting the VM at destination.
+>>
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   include/migration/misc.h |  3 ++
+>>   include/qemu/typedefs.h  |  1 +
+>>   migration/savevm.c       | 77 ++++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 81 insertions(+)
+>>
+>> diff --git a/include/migration/misc.h b/include/migration/misc.h
+>> index 804eb23c0607..c92ca018ab3b 100644
+>> --- a/include/migration/misc.h
+>> +++ b/include/migration/misc.h
+>> @@ -45,9 +45,12 @@ bool migrate_ram_is_ignored(RAMBlock *block);
+>>   /* migration/block.c */
+>>   AnnounceParameters *migrate_announce_params(void);
+>> +
+>>   /* migration/savevm.c */
+>>   void dump_vmstate_json_to_file(FILE *out_fp);
+>> +void qemu_loadvm_start_load_thread(MigrationLoadThread function,
+>> +                                   void *opaque);
+>>   /* migration/migration.c */
+>>   void migration_object_init(void);
+>> diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+>> index 3d84efcac47a..8c8ea5c2840d 100644
+>> --- a/include/qemu/typedefs.h
+>> +++ b/include/qemu/typedefs.h
+>> @@ -131,5 +131,6 @@ typedef struct IRQState *qemu_irq;
+>>    * Function types
+>>    */
+>>   typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
+>> +typedef int (*MigrationLoadThread)(bool *abort_flag, void *opaque);
+>>   #endif /* QEMU_TYPEDEFS_H */
+>> diff --git a/migration/savevm.c b/migration/savevm.c
+>> index 1f58a2fa54ae..6ea9054c4083 100644
+>> --- a/migration/savevm.c
+>> +++ b/migration/savevm.c
+>> @@ -54,6 +54,7 @@
+>>   #include "qemu/job.h"
+>>   #include "qemu/main-loop.h"
+>>   #include "block/snapshot.h"
+>> +#include "block/thread-pool.h"
+>>   #include "qemu/cutils.h"
+>>   #include "io/channel-buffer.h"
+>>   #include "io/channel-file.h"
+>> @@ -71,6 +72,10 @@
+>>   const unsigned int postcopy_ram_discard_version;
+>> +static ThreadPool *load_threads;
+>> +static int load_threads_ret;
+>> +static bool load_threads_abort;
+>> +
+>>   /* Subcommands for QEMU_VM_COMMAND */
+>>   enum qemu_vm_cmd {
+>>       MIG_CMD_INVALID = 0,   /* Must be 0 */
+>> @@ -2788,6 +2793,12 @@ static int qemu_loadvm_state_setup(QEMUFile *f, Error **errp)
+>>       int ret;
+>>       trace_loadvm_state_setup();
+>> +
+>> +    assert(!load_threads);
+>> +    load_threads = thread_pool_new();
+>> +    load_threads_ret = 0;
+>> +    load_threads_abort = false;
+> 
+> I would introduce a qemu_loadvm_thread_pool_create() helper.
+
+Will do.
+
+> Why is the thead pool always created ? Might be OK.
+> 
+
+This functionality provides a generic auxiliary load helper threads
+pool, not necessarily tied to the multifd device state transfer.
+
+That's why the pool is created unconditionally.
+
+>> +
+>>       QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+>>           if (!se->ops || !se->ops->load_setup) {
+>>               continue;
+>> @@ -2806,19 +2817,72 @@ static int qemu_loadvm_state_setup(QEMUFile *f, Error **errp)
+>>               return ret;
+>>           }
+>>       }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +struct LoadThreadData {
+>> +    MigrationLoadThread function;
+>> +    void *opaque;
+>> +};
+>> +
+>> +static int qemu_loadvm_load_thread(void *thread_opaque)
+>> +{
+>> +    struct LoadThreadData *data = thread_opaque;
+>> +    int ret;
+>> +
+>> +    ret = data->function(&load_threads_abort, data->opaque);
+>> +    if (ret && !qatomic_read(&load_threads_ret)) {
+>> +        /*
+>> +         * Racy with the above read but that's okay - which thread error
+>> +         * return we report is purely arbitrary anyway.
+>> +         */
+>> +        qatomic_set(&load_threads_ret, ret);
+>> +    }
+>> +
+>>       return 0;>   }
+>> +void qemu_loadvm_start_load_thread(MigrationLoadThread function,
+>> +                                   void *opaque)
+>> +{> +    struct LoadThreadData *data;
+>> +
+>> +    /* We only set it from this thread so it's okay to read it directly */
+>> +    assert(!load_threads_abort);
+>> +
+>> +    data = g_new(struct LoadThreadData, 1);
+>> +    data->function = function;
+>> +    data->opaque = opaque;
+>> +
+>> +    thread_pool_submit(load_threads, qemu_loadvm_load_thread,
+>> +                       data, g_free);
+>> +    thread_pool_adjust_max_threads_to_work(load_threads);
+>> +}> +>   void qemu_loadvm_state_cleanup(void)
+>>   {
+>>       SaveStateEntry *se;
+>>       trace_loadvm_state_cleanup();
+>> +
+>>       QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+>>           if (se->ops && se->ops->load_cleanup) {
+>>               se->ops->load_cleanup(se->opaque);
+>>           }
+>>       }
+>> +
+>> +    /*
+>> +     * We might be called even without earlier qemu_loadvm_state_setup()
+>> +     * call if qemu_loadvm_state() fails very early.
+>> +     */
+>> +    if (load_threads) {
+>> +        qatomic_set(&load_threads_abort, true);
+>> +        bql_unlock(); /* Load threads might be waiting for BQL */
+>> +        thread_pool_wait(load_threads);
+>> +        bql_lock();
+>> +        g_clear_pointer(&load_threads, thread_pool_free);
+>> +    }
+> 
+> I would introduce a qemu_loadvm_thread_pool_destroy() helper
+
+Will do.
+
+>>   }
+>>   /* Return true if we should continue the migration, or false. */
+>> @@ -3007,6 +3071,19 @@ int qemu_loadvm_state(QEMUFile *f)
+>>           return ret;
+>>       }
+>> +    if (ret == 0) {
+>> +        bql_unlock(); /* Let load threads do work requiring BQL */
+>> +        thread_pool_wait(load_threads);
+>> +        bql_lock();
+>> +
+>> +        ret = load_threads_ret;
+>> +    }
+>> +    /*
+>> +     * Set this flag unconditionally so we'll catch further attempts to
+>> +     * start additional threads via an appropriate assert()
+>> +     */
+>> +    qatomic_set(&load_threads_abort, true);
+>> +
+> 
+> 
+> I would introduce a qemu_loadvm_thread_pool_wait() helper
+
+Will do.
+
+>>       if (ret == 0) {
+>>           ret = qemu_file_get_error(f);
+>>       }
 >>
 > 
-> This patch is still useful if we want to set TIMEOUT_MULTIPLIER as 
-> global env variable, and not explicitely on each make invocation.
+> I think we could hide the implementation in a new component of
+> the migration subsystem or, at least, we could group the
+> implementation at the top the file. It would help the uninitiated
+> reader to become familiar with the migration area.
 
-If so, I'd rather use conditional assignment [*]:
+I will move these new helpers to a separate area of the "savevm.c"
+file, marked/separated by an appropriate comment.
 
-- TIMEOUT_MULTIPLIER = 1
-+ TIMEOUT_MULTIPLIER ?= 1
+> Thanks,
+> 
+> C.
+> 
 
-[*] 
-https://www.gnu.org/software/make/manual/html_node/Conditional-Assignment.html
-
+Thanks,
+Maciej
 
 
