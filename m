@@ -4,51 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0879D609AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 07:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B048D609AD
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 08:14:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGCff-0002f1-DS; Wed, 27 Nov 2024 02:41:11 -0500
+	id 1tGDBP-0007MD-G2; Wed, 27 Nov 2024 03:13:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1tGCfa-0002ee-NU
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 02:41:07 -0500
-Received: from mx.swemel.ru ([95.143.211.150])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1tGCfW-0001yk-DG
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 02:41:06 -0500
-Message-ID: <04edda40-32d2-43e0-8ade-a4b2a3e06eab@swemel.ru>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
- t=1732693256;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=A7cRTFNEHy+uKdH8+AWNBo+R70NdpdNPuW8z/01NfxU=;
- b=wcqJLaQtK6e+Ldm8MD/aA2UW3/e60xAmRFawx9ik8HjdIkm/uvaFDBQTEAiBG1azuE33dU
- VI1nZnqHq/Ia6/Om1opjlRCiWQsIShZoTOqHYHrsa7StFukvVbJ+2geB+FU39oo+qZMDYX
- TAHi+V+2v+L/ird0Gw0aDE4MNlJAQb8=
-Date: Wed, 27 Nov 2024 10:40:56 +0300
-MIME-Version: 1.0
-Subject: Re: [PATCH] tests/qtest: add TIMEOUT_MULTIPLIER
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: farosas@suse.de, lvivier@redhat.com, sdl.qemu@linuxtesting.org,
- qemu-devel@nongnu.org
-References: <20241113094342.282676-2-frolov@swemel.ru>
- <Z0YUMoPr0oyQhqqK@redhat.com>
-From: =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0LvQvtCy?= <frolov@swemel.ru>
-In-Reply-To: <Z0YUMoPr0oyQhqqK@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=95.143.211.150; envelope-from=frolov@swemel.ru;
- helo=mx.swemel.ru
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ (Exim 4.90_1) (envelope-from <agraf@csgraf.de>) id 1tGDBN-0007Ly-Ef
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 03:13:57 -0500
+Received: from mail.csgraf.de ([85.25.223.15] helo=zulu616.server4you.de)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <agraf@csgraf.de>) id 1tGDBL-00054m-5k
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 03:13:56 -0500
+Received: from smtpclient.apple (unknown [194.72.32.180])
+ by csgraf.de (Postfix) with ESMTPSA id 01B616080102;
+ Wed, 27 Nov 2024 09:13:45 +0100 (CET)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Alexander Graf <agraf@csgraf.de>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] docs: Document that hvf on Arm is supported
+Date: Wed, 27 Nov 2024 08:13:35 +0000
+Message-Id: <B4E0EC0D-811F-4288-87C1-232B3FD8EEE4@csgraf.de>
+References: <20241127-build-v1-1-65b8162733f0@daynix.com>
+Cc: Cameron Esfahani <dirty@apple.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-devel@nongnu.org,
+ devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20241127-build-v1-1-65b8162733f0@daynix.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: iPhone Mail (22B91)
+Received-SPF: pass client-ip=85.25.223.15; envelope-from=agraf@csgraf.de;
+ helo=zulu616.server4you.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -66,60 +58,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello, Daniel
 
-On 26.11.2024 21:32, Daniel P. Berrangé wrote:
-> On Wed, Nov 13, 2024 at 12:43:40PM +0300, Dmitry Frolov wrote:
->> Some tests need more time when qemu is built with
->> "--enable-asan --enable-ubsan"
->>
->> As was discussed here:
->> https://patchew.org/QEMU/20241112120100.176492-2-frolov@swemel.r/u
->>
->> TIMEOUT_MULTIPLIER enviroment variable will be
->> a useful option, allowing non-invasive timeouts
->> increasing for a specific build.
->>
->> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
->> ---
->>   scripts/mtest2make.py | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
->> index eb01a05ddb..ff60b62724 100644
->> --- a/scripts/mtest2make.py
->> +++ b/scripts/mtest2make.py
->> @@ -27,7 +27,9 @@ def names(self, base):
->>   .speed.slow = $(foreach s,$(sort $(filter-out %-thorough, $1)), --suite $s)
->>   .speed.thorough = $(foreach s,$(sort $1), --suite $s)
->>   
->> +ifndef TIMEOUT_MULTIPLIER
->>   TIMEOUT_MULTIPLIER = 1
->> +endif
-> Can you explain what scenario this is needed for, as unless I'm
-> missing something this change has no purpose. This assignment is
-> merely defining the defalt value, which can already be overridden
-> at runtime without this 'ifndef'
->
-> eg
->
-> $ make check-unit TIMEOUT_MULTIPLIER=7
->
-> In another shell:
->
-> $ ps -axuwwf | grep 'meson test'
-> berrange 1931657  3.9  0.1 330904 99344 pts/1    S+   18:29   0:00                  \_ /var/home/berrange/src/virt/qemu/build/pyvenv/bin/python3 /var/home/berrange/src/virt/qemu/build/pyvenv/bin/meson test --no-rebuild -t 7 --num-processes 1 --print-errorlogs --suite unit
->
-> shows TIMEOUT_MULTIPLIER being honoured
-Yeah... You are right!
-It is possible to set TIMEOUT_MULTIPLIER only to run tests.
-It is not necessary to set it for the whole build.
 
-Sorry, and thanks a lot!
->
->
-> With regards,
-> Daniel
-regards,
-Dmitry
+> Am 27.11.2024 um 07:15 schrieb Akihiko Odaki <akihiko.odaki@daynix.com>:
+>=20
+> =EF=BB=BFhvf on Arm is supported since commit a1477da3ddeb ("hvf: Add Appl=
+e
+> Silicon support").
+>=20
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+
+Reviewed-by: Alexander Graf <agraf@csgraf.de>
+
+Alex
+
+> ---
+> docs/about/build-platforms.rst | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.r=
+st
+> index 6102f00aec0f..d8b0445157f0 100644
+> --- a/docs/about/build-platforms.rst
+> +++ b/docs/about/build-platforms.rst
+> @@ -40,7 +40,7 @@ Those hosts are officially supported, with various accel=
+erators:
+>    * - CPU Architecture
+>      - Accelerators
+>    * - Arm
+> -     - kvm (64 bit only), tcg, xen
+> +     - hvf (64 bit only), kvm (64 bit only), tcg, xen
+>    * - MIPS (64 bit little endian only)
+>      - kvm, tcg
+>    * - PPC
+>=20
+> ---
+> base-commit: 34754a3a627e1937be7f3daaa0c5e73d91c7d9b5
+> change-id: 20241121-build-c1661b2e728d
+>=20
+> Best regards,
+> --
+> Akihiko Odaki <akihiko.odaki@daynix.com>
+>=20
 
