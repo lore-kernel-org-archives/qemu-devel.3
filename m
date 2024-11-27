@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99BF5D6ACD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 13:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A77D6ACD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 13:59:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGIYQ-0003jT-Nk; Wed, 27 Nov 2024 08:58:06 -0500
+	id 1tGIYV-0003kQ-Ay; Wed, 27 Nov 2024 08:58:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYQ-0003jK-0G
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYT-0003k1-KE
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYO-0007l2-Al
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:05 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYS-0007lZ-69
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732715883;
+ s=mimecast20190719; t=1732715887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=PVkuzJ3PZWHU81/L5qS9M1rthMb+FEyxqRXv2Sgjhfs=;
- b=Urax264/p8e6G9YaXB82si6eLaJMoKQTEK9gCP7foJR770mNk6oLIil6K9w2/WA/kJfy1z
- SPltw8pdojtpnPp3jBpDLbaH0mjM3XqcFd+JeB8cdSeb2pVK32zqULRD2ecsWGTxuW/kZY
- SkzYT2+invNqkmOzXgFHXTQE9VvS2Bg=
+ bh=NYnMOw7bKRrTuXSKTx/j7+jLrUGgRw/r9cXH2IkbZbo=;
+ b=c9kJfgha7eSb6zFqfkG9i+UIANH1+6sFOzwK9DxQfbZ8oB3U4/1rTwkKeoCUxSkgH5u+b1
+ 0VGVSS8h2ZC8e75UdVnLeR/n0gXKQP+f9OnWdLa4OyXjxb77Nx1PvU3I76Cv8EbIQNB535
+ 6xSzxeTgUrWOAXS3P64mNfD2hPTzO6o=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-7BZsZw3zP4izATAdwo09Vg-1; Wed, 27 Nov 2024 08:58:01 -0500
-X-MC-Unique: 7BZsZw3zP4izATAdwo09Vg-1
-X-Mimecast-MFC-AGG-ID: 7BZsZw3zP4izATAdwo09Vg
+ us-mta-589-APhiqstKOcqrHC0OTa2yqw-1; Wed, 27 Nov 2024 08:58:06 -0500
+X-MC-Unique: APhiqstKOcqrHC0OTa2yqw-1
+X-Mimecast-MFC-AGG-ID: APhiqstKOcqrHC0OTa2yqw
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-434a90febb8so7993075e9.1
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 05:58:01 -0800 (PST)
+ 5b1f17b1804b1-4349df2d87dso34711365e9.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 05:58:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732715880; x=1733320680;
+ d=1e100.net; s=20230601; t=1732715885; x=1733320685;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PVkuzJ3PZWHU81/L5qS9M1rthMb+FEyxqRXv2Sgjhfs=;
- b=VbzUBGeR67SX1hhYoIKP7unls3+SA08Xinsw+QqEJg0YOsnpT1zsqWSEvRoBxlNaDv
- /I8juKlN8uvOKwhvZyIICHWvSg51UWSBgWPyqJuw5cG+2DjHKiD2/bmN1FHQRCb4yZyH
- +b9B7Zz6l9ALMGra7En6gFF8GAz8/eCk9NFKGgO1N1Or7lFvdl635UOQpoablsLTcAhV
- ad54Jz5njE0xPS5MAPYlbTFdYZMYBFs/L+9qd86PpuRqZMK2lXmjawxbPsrJ9iNAV2mE
- numoF3OkedLrH9sLFiohd3qwmMIJZBAz8vH6P0SXngRSJbw8EwlvF2d6GOCy07DsxOv1
- 7PdA==
-X-Gm-Message-State: AOJu0Yx+t2lRPU9CQwB7z7w0j10Tgy4N4U3Ghq7S6bpaWnz4oVvG0RSw
- FtY3Pia9xWj3+Vlzk6/szNfo6WpaNnrCDrNmojXEJLSroO+OVdm8dZJunB1QQREcMoky/VjrgST
- K7+lGqJAbK932LTFwb3NBEWSJ+0wsiuK77+V5+RwlEkdz6e1zjrphyWaTyLvrn6ACAV3GB8tAue
- qHUs/uE/btzYptsFazO8RcxNi+i4Iy/Mk0
-X-Gm-Gg: ASbGnctidP5d7Ofr6YfZR1lZIh+sVGxsLHHOiZQ5vlVwsko+gk5EtgQRTFXJhGlyJ00
- YBu837yX5oWemq2BGdJ8oq4Iv1ZOqMSn26ypOoEN8oIqe53jqKjxu+BkOY+mAIgm/rGUMCy0tdW
- qN/Cg92iUg56ABM1fQfimY77elJMKEaVKDvKomAUr551Y5dGvMcIrXTdvobxUUvGke4WdTca/9R
- cy3f+rIJHqOch1YDdwh2VrcrGLv+EDnzJUwXrvdl6X5
-X-Received: by 2002:a05:6000:2cc:b0:382:498a:9cf5 with SMTP id
- ffacd0b85a97d-385c6ebb6d9mr2753746f8f.14.1732715879917; 
- Wed, 27 Nov 2024 05:57:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFYo73Vhc5gZnsNQ89iDBTlPAYABUSyYi/dd+/lr+ioOv/d3JeBQh530VXrw8FJEgu2iKzXyw==
-X-Received: by 2002:a05:6000:2cc:b0:382:498a:9cf5 with SMTP id
- ffacd0b85a97d-385c6ebb6d9mr2753717f8f.14.1732715879435; 
- Wed, 27 Nov 2024 05:57:59 -0800 (PST)
+ bh=NYnMOw7bKRrTuXSKTx/j7+jLrUGgRw/r9cXH2IkbZbo=;
+ b=VFc89fpFgIqL4+Wlk/K6zxJ+fK2IXgnTUvipK0wbidxgZBobkWWuQpB0IXqMzdvcGY
+ 3VzRWAZkh80Xty+ItCPrjuPSTH/U2OTfn8E/xdCr/LfVSR42WYqeBVeXBBhVcllvwnD4
+ eVtVQNJ5tXBZjJxadEojH4PTSLFqVHZpGRcqvYba4ZmKFRmN4tstop0IFg95MzV9DR0G
+ gJOBiZJKPVzi/JO7jD+AVI8xPNE3nAyM3B7kTOuQbcgQ+IHJwCqFZRcJ44Yf3QQfhVHP
+ wx+7eCpXva16bnT+tLxlmNxFy02AZ6NUQBOQITdod3eZAT8jW2PNyekeXVCfYSKGAMOX
+ jZJw==
+X-Gm-Message-State: AOJu0YylNhZI3CxQtN7INu2+maaUd4MzkAHzUudLJitjXk4FmqQxhw9Z
+ nofrxtHNk4/AKnpQ2JEaeN6E5wLXy7szpMp/zPuFVG1YGftRCO7q9hLOPxIVfm7Jk7rll/+OAEs
+ 7gYQpwHgcGM0vIEo8+ASCGDd+SPsZp7m7ksJSU2m/rKrIFWCONBURZl3kf+18cq8DRe2X8Q4Rjp
+ a+xNDMFYlfhsSzGx5+EylatbnvqHqya6cP
+X-Gm-Gg: ASbGncsBiN3tg/4EpnTG+NzfOLjn0NJOkZNKxwA56haWQSY/phncB1GAgR+NWT/di8t
+ Cdx/d+OnFKSR/JznQV32Wj+79Sofy8KeTyatLS80+69YkgOMPHrEQtiUEFACMgG5EFntPDshaTx
+ V/2M0ZifWOY4c827L4c17oh/0mmbudP968piGg+Sq1W43BRHRsSy8OccdDsmyrhCp2/tRI/8quR
+ VZWUMrn8Wi/2Rq0T90E62BQo4Mx4vk+h+nVKgBaFCdB
+X-Received: by 2002:a05:600c:1d20:b0:434:a5c2:53c1 with SMTP id
+ 5b1f17b1804b1-434a9de8bd4mr27435765e9.23.1732715884997; 
+ Wed, 27 Nov 2024 05:58:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFZ7zdAiUKzcmAmlMRToDZqxbL1+MAKAJicumhr7HFMIF0eXutGc3lu9Vrwr79QzQjsa/hh7g==
+X-Received: by 2002:a05:600c:1d20:b0:434:a5c2:53c1 with SMTP id
+ 5b1f17b1804b1-434a9de8bd4mr27435575e9.23.1732715884659; 
+ Wed, 27 Nov 2024 05:58:04 -0800 (PST)
 Received: from redhat.com ([2a02:14f:1ec:7d4b:8b11:bed7:9e00:8df7])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434aa74f18bsm22809315e9.4.2024.11.27.05.57.58
+ 5b1f17b1804b1-434aa7f79c8sm21870955e9.40.2024.11.27.05.58.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Nov 2024 05:57:58 -0800 (PST)
-Date: Wed, 27 Nov 2024 08:57:57 -0500
+ Wed, 27 Nov 2024 05:58:04 -0800 (PST)
+Date: Wed, 27 Nov 2024 08:58:02 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 11/13] bios-tables-test: Add complex SRAT / HMAT test for GI GP
-Message-ID: <18afed7402038b772dc9e9250181bcaddda864ab.1732715823.git.mst@redhat.com>
+ Prasad Pandit <pjp@fedoraproject.org>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 13/13] vhost: fail device start if iotlb update fails
+Message-ID: <571bdc97b83646dfd3746ec56fb2f70bca55b9a2.1732715823.git.mst@redhat.com>
 References: <cover.1732715823.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -83,14 +83,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1732715823.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.931,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,136 +108,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-Add a test with 6 nodes to exercise most interesting corner cases of SRAT
-and HMAT generation including the new Generic Initiator and Generic Port
-Affinity structures.  More details of the set up in the following patch
-adding the table data.
+While starting a vhost device, updating iotlb entries
+via 'vhost_device_iotlb_miss' may return an error.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20241107123446.902801-5-Jonathan.Cameron@huawei.com>
+  qemu-kvm: vhost_device_iotlb_miss:
+    700871,700871: Fail to update device iotlb
+
+Fail device start when such an error occurs.
+
+Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+Message-Id: <20241107113247.46532-1-ppandit@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- tests/qtest/bios-tables-test.c | 97 ++++++++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+ hw/virtio/vhost.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index e79f3a03df..16d0ffbdf6 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -1936,6 +1936,101 @@ static void test_acpi_q35_tcg_acpi_hmat_noinitiator(void)
-     free_test_data(&data);
- }
- 
-+/* Test intended to hit corner cases of SRAT and HMAT */
-+static void test_acpi_q35_tcg_acpi_hmat_generic_x(void)
-+{
-+    test_data data = {};
-+
-+    data.machine = MACHINE_Q35;
-+    data.arch    = "x86";
-+    data.variant = ".acpihmat-generic-x";
-+    test_acpi_one(" -machine hmat=on,cxl=on"
-+                  " -smp 3,sockets=3"
-+                  " -m 128M,maxmem=384M,slots=2"
-+                  " -device pcie-root-port,chassis=1,id=pci.1"
-+                  " -device pci-testdev,bus=pci.1,"
-+                  "multifunction=on,addr=00.0"
-+                  " -device pci-testdev,bus=pci.1,addr=00.1"
-+                  " -device pci-testdev,bus=pci.1,id=gidev,addr=00.2"
-+                  " -device pxb-cxl,bus_nr=64,bus=pcie.0,id=cxl.1"
-+                  " -object memory-backend-ram,size=64M,id=ram0"
-+                  " -object memory-backend-ram,size=64M,id=ram1"
-+                  " -numa node,nodeid=0,cpus=0,memdev=ram0"
-+                  " -numa node,nodeid=1"
-+                  " -object acpi-generic-initiator,id=gi0,pci-dev=gidev,node=1"
-+                  " -numa node,nodeid=2"
-+                  " -object acpi-generic-port,id=gp0,pci-bus=cxl.1,node=2"
-+                  " -numa node,nodeid=3,cpus=1"
-+                  " -numa node,nodeid=4,memdev=ram1"
-+                  " -numa node,nodeid=5,cpus=2"
-+                  " -numa hmat-lb,initiator=0,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=10"
-+                  " -numa hmat-lb,initiator=0,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=800M"
-+                  " -numa hmat-lb,initiator=0,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=100"
-+                  " -numa hmat-lb,initiator=0,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=0,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=100"
-+                  " -numa hmat-lb,initiator=0,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=0,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=200"
-+                  " -numa hmat-lb,initiator=0,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=1,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=500"
-+                  " -numa hmat-lb,initiator=1,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=100M"
-+                  " -numa hmat-lb,initiator=1,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=50"
-+                  " -numa hmat-lb,initiator=1,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=1,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=50"
-+                  " -numa hmat-lb,initiator=1,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=800M"
-+                  " -numa hmat-lb,initiator=1,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=500"
-+                  " -numa hmat-lb,initiator=1,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=100M"
-+                  " -numa hmat-lb,initiator=3,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=20"
-+                  " -numa hmat-lb,initiator=3,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=3,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=3,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=3,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=3,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=3,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=20"
-+                  " -numa hmat-lb,initiator=3,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=5,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=20"
-+                  " -numa hmat-lb,initiator=5,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=5,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=5,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=5,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=5,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=5,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=10"
-+                  " -numa hmat-lb,initiator=5,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=800M",
-+                  &data);
-+    free_test_data(&data);
-+}
-+
- #ifdef CONFIG_POSIX
- static void test_acpi_erst(const char *machine, const char *arch)
- {
-@@ -2414,6 +2509,8 @@ int main(int argc, char *argv[])
-             qtest_add_func("acpi/q35/nohpet", test_acpi_q35_tcg_nohpet);
-             qtest_add_func("acpi/q35/acpihmat-noinitiator",
-                            test_acpi_q35_tcg_acpi_hmat_noinitiator);
-+            qtest_add_func("acpi/q35/acpihmat-genericx",
-+                           test_acpi_q35_tcg_acpi_hmat_generic_x);
- 
-             /* i386 does not support memory hotplug */
-             if (strcmp(arch, "i386")) {
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 76f9b2aaad..c40f48ac4d 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -2095,11 +2095,22 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+          * vhost-kernel code requires for this.*/
+         for (i = 0; i < hdev->nvqs; ++i) {
+             struct vhost_virtqueue *vq = hdev->vqs + i;
+-            vhost_device_iotlb_miss(hdev, vq->used_phys, true);
++            r = vhost_device_iotlb_miss(hdev, vq->used_phys, true);
++            if (r) {
++                goto fail_iotlb;
++            }
+         }
+     }
+     vhost_start_config_intr(hdev);
+     return 0;
++fail_iotlb:
++    if (vhost_dev_has_iommu(hdev) &&
++        hdev->vhost_ops->vhost_set_iotlb_callback) {
++        hdev->vhost_ops->vhost_set_iotlb_callback(hdev, false);
++    }
++    if (hdev->vhost_ops->vhost_dev_start) {
++        hdev->vhost_ops->vhost_dev_start(hdev, false);
++    }
+ fail_start:
+     if (vrings) {
+         vhost_dev_set_vring_enable(hdev, false);
 -- 
 MST
 
