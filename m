@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8BECD609CE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 10:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 428AAD609CF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 10:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGFOv-0006Ac-AU; Wed, 27 Nov 2024 05:36:05 -0500
+	id 1tGFOv-0006Ab-AN; Wed, 27 Nov 2024 05:36:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tGFOu-0006A6-9q
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tGFOu-0006A8-D2
  for qemu-devel@nongnu.org; Wed, 27 Nov 2024 05:36:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tGFOs-0001D2-Ij
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tGFOs-0001D0-II
  for qemu-devel@nongnu.org; Wed, 27 Nov 2024 05:36:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1732703761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7zNdxrb4f+HDgq2AGchAcDvoIDaLfr/gxCTxBiYFIZ0=;
- b=hfrGXUmJD94ceSOkeu/bqQXqJ4Z+Ou/O21gd6ACXvsN0HCn67GfCjJ90SNu8H6amPa5O9Q
- R8T2R+Y0UaoiXnAj4/kpumX2HtGv8m38xj5sXOzlYZseMJ5SX0jHcXfXLf4Oo0wh4MWRaX
- qjZN23lenPMUZTGr2NjDfu8JeTS19QY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lMgk/YScTLU4mxrI16zf0pSPSex+Rb+lgo104kYKSiY=;
+ b=BJtek//LD75DrfBFeZzeHyhvtShlmYRlMV6fk+4AziG5cW5Gt7UIB/V076JsRvH4PZBnQc
+ XcmgCa9HLopl25cjDAC9yVLlCSvcwins2kGtpeacU+tvRP0X4CmoNFUppaeHQTB6fMntmv
+ 0fUKDN8yE6PctrZfb/tkc7Gs0e9g8xQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-342-6hZ6qhd7NWK0duDhaNR4kg-1; Wed,
- 27 Nov 2024 05:34:35 -0500
-X-MC-Unique: 6hZ6qhd7NWK0duDhaNR4kg-1
-X-Mimecast-MFC-AGG-ID: 6hZ6qhd7NWK0duDhaNR4kg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-KqdAjDIwNKCHykc0sIV0qA-1; Wed,
+ 27 Nov 2024 05:34:38 -0500
+X-MC-Unique: KqdAjDIwNKCHykc0sIV0qA-1
+X-Mimecast-MFC-AGG-ID: KqdAjDIwNKCHykc0sIV0qA
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BDC219541AE; Wed, 27 Nov 2024 10:34:34 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 14C3E195608A; Wed, 27 Nov 2024 10:34:37 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.82])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 966B01955F3C; Wed, 27 Nov 2024 10:34:32 +0000 (UTC)
+ id B21731955F3D; Wed, 27 Nov 2024 10:34:34 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Xianglai Li <lixianglai@loongson.cn>
-Subject: [PULL 3/7] tests/functional: Fix the running test case causes
- loongarch64 to hang
-Date: Wed, 27 Nov 2024 11:34:21 +0100
-Message-ID: <20241127103425.378289-4-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 4/7] meson.build: Refuse XCode versions < v15.0
+Date: Wed, 27 Nov 2024 11:34:22 +0100
+Message-ID: <20241127103425.378289-5-thuth@redhat.com>
 In-Reply-To: <20241127103425.378289-1-thuth@redhat.com>
 References: <20241127103425.378289-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -83,48 +83,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xianglai Li <lixianglai@loongson.cn>
+According to our support policy, we only support the two latest
+major versions of macOS, and we already removed compatibility code
+for older versions. However, it's still possible that people install
+an older version of XCode on a recent version of macOS - which won't
+be able to compile QEMU anymore, see for example the ticket here:
 
-There is a bug in the process of resolving the serial port base address
-in the fdt of the loongarch VM UEFI. When both serial port information
-and rng-seed information are chosen in the fdt, there is a probability
-that the serial port base address cannot be resolved correctly.
-This problem can be fixed by updating UEFI.
+ https://gitlab.com/qemu-project/qemu/-/issues/2694
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2686
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Message-ID: <20241127013438.2206426-1-lixianglai@loongson.cn>
-Tested-by: Thomas Huth <thuth@redhat.com>
+Thus let's set the expectations right and refuse older versions of
+XCode that do not match the two latest versions of macOS anymore.
+
+Message-ID: <20241126081054.244365-1-thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/test_loongarch64_virt.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ meson.build | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/test_loongarch64_virt.py b/tests/functional/test_loongarch64_virt.py
-index 2b8baa2c2a..b7d9abf933 100755
---- a/tests/functional/test_loongarch64_virt.py
-+++ b/tests/functional/test_loongarch64_virt.py
-@@ -18,16 +18,16 @@ class LoongArchMachine(QemuSystemTest):
+diff --git a/meson.build b/meson.build
+index e0b880e4e1..a290dbfa33 100644
+--- a/meson.build
++++ b/meson.build
+@@ -315,8 +315,8 @@ foreach lang : all_languages
+     # ok
+   elif compiler.get_id() == 'clang' and compiler.compiles('''
+       #ifdef __apple_build_version__
+-      # if __clang_major__ < 12 || (__clang_major__ == 12 && __clang_minor__ < 0)
+-      #  error You need at least XCode Clang v12.0 to compile QEMU
++      # if __clang_major__ < 15 || (__clang_major__ == 15 && __clang_minor__ < 0)
++      #  error You need at least XCode Clang v15.0 to compile QEMU
+       # endif
+       #else
+       # if __clang_major__ < 10 || (__clang_major__ == 10 && __clang_minor__ < 0)
+@@ -325,7 +325,7 @@ foreach lang : all_languages
+       #endif''')
+     # ok
+   else
+-    error('You either need GCC v7.4 or Clang v10.0 (or XCode Clang v12.0) to compile QEMU')
++    error('You either need GCC v7.4 or Clang v10.0 (or XCode Clang v15.0) to compile QEMU')
+   endif
+ endforeach
  
-     ASSET_KERNEL = Asset(
-         ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
--         'releases/download/2024-05-30/vmlinuz.efi'),
-+         'releases/download/2024-11-26/vmlinuz.efi'),
-         '08b88a45f48a5fd92260bae895be4e5175be2397481a6f7821b9f39b2965b79e')
-     ASSET_INITRD = Asset(
-         ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
--         'releases/download/2024-05-30/ramdisk'),
-+         'releases/download/2024-11-26/ramdisk'),
-         '03d6fb6f8ee64ecac961120a0bdacf741f17b3bee2141f17fa01908c8baf176a')
-     ASSET_BIOS = Asset(
-         ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
--         'releases/download/2024-05-30/QEMU_EFI.fd'),
--        '937c1e7815e2340150c194a9f8f0474259038a3d7b8845ed62cc08163c46bea1')
-+         'releases/download/2024-11-26/QEMU_EFI.fd'),
-+        'f55fbf5d92e885844631ae9bfa8887f659bbb4f6ef2beea9e9ff8bc0603b6697')
- 
-     def wait_for_console_pattern(self, success_message, vm=None):
-         wait_for_console_pattern(self, success_message,
 -- 
 2.47.0
 
