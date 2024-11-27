@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F333BD609B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 09:17:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A280DD609BA
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 09:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGE9Q-00027g-DP; Wed, 27 Nov 2024 04:16:00 -0500
+	id 1tGE9p-0002M6-TU; Wed, 27 Nov 2024 04:16:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tGE9O-00026x-BS; Wed, 27 Nov 2024 04:15:58 -0500
+ id 1tGE9h-0002BD-Qa; Wed, 27 Nov 2024 04:16:19 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tGE9M-0004K2-Sk; Wed, 27 Nov 2024 04:15:58 -0500
+ id 1tGE9g-0004K2-5j; Wed, 27 Nov 2024 04:16:17 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 27 Nov
- 2024 17:15:43 +0800
+ 2024 17:15:45 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 27 Nov 2024 17:15:43 +0800
+ Transport; Wed, 27 Nov 2024 17:15:45 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -35,10 +35,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@redhat.com>
-Subject: [PATCH v3 01/10] test/qtest/aspeed_smc-test: Move testcases to
- test_palmetto_bmc function
-Date: Wed, 27 Nov 2024 17:15:34 +0800
-Message-ID: <20241127091543.1243114-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 05/10] test/qtest/aspeed_smc-test: Support to test AST2500
+Date: Wed, 27 Nov 2024 17:15:38 +0800
+Message-ID: <20241127091543.1243114-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241127091543.1243114-1-jamin_lin@aspeedtech.com>
 References: <20241127091543.1243114-1-jamin_lin@aspeedtech.com>
@@ -70,55 +69,78 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far, the test cases are used for testing SMC model with AST2400 BMC.
-However, AST2400 is end off live and ASPEED is no longer support this SOC.
-To test SMC model for AST2500, AST2600 and AST1030, move the test cases
-from main to test_palmetto_bmc function.
+Add test_ast2500_evb function and reused testcases for AST2500 testing.
+The spi base address, flash base address and ce index of fmc_cs0 are
+0x1E620000, 0x20000000 and 0, respectively.
+The default flash model of fmc_cs0 is "mx25l25635e" whose size is 32MB,
+so set jedec_id 0xc22019.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/qtest/aspeed_smc-test.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ tests/qtest/aspeed_smc-test.c | 40 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
 diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
-index 4673371d95..ec1fa6ec15 100644
+index 6db18451d2..0171ecf4ed 100644
 --- a/tests/qtest/aspeed_smc-test.c
 +++ b/tests/qtest/aspeed_smc-test.c
-@@ -610,14 +610,12 @@ static void test_write_block_protect_bottom_bit(void)
-     flash_reset();
+@@ -701,17 +701,57 @@ static void test_palmetto_bmc(TestData *data)
+                         data, test_write_block_protect_bottom_bit);
  }
  
--int main(int argc, char **argv)
-+static int test_palmetto_bmc(void)
- {
-     g_autofree char *tmp_path = NULL;
-     int ret;
-     int fd;
- 
--    g_test_init(&argc, &argv, NULL);
--
-     fd = g_file_open_tmp("qtest.m25p80.XXXXXX", &tmp_path, NULL);
-     g_assert(fd >= 0);
-     ret = ftruncate(fd, FLASH_SIZE);
-@@ -644,8 +642,18 @@ int main(int argc, char **argv)
- 
-     flash_reset();
-     ret = g_test_run();
--
-     qtest_quit(global_qtest);
-     unlink(tmp_path);
-+
-+    return ret;
-+}
-+
-+int main(int argc, char **argv)
++static void test_ast2500_evb(TestData *data)
 +{
 +    int ret;
++    int fd;
 +
-+    g_test_init(&argc, &argv, NULL);
-+    ret = test_palmetto_bmc();
++    fd = g_file_open_tmp("qtest.m25p80.mx25l25635e.XXXXXX",
++                         &data->tmp_path, NULL);
++    g_assert(fd >= 0);
++    ret = ftruncate(fd, 32 * 1024 * 1024);
++    g_assert(ret == 0);
++    close(fd);
 +
++    data->s = qtest_initf("-machine ast2500-evb "
++                          "-drive file=%s,format=raw,if=mtd",
++                          data->tmp_path);
++
++    /* fmc cs0 with mx25l25635e flash */
++    data->flash_base = 0x20000000;
++    data->spi_base = 0x1E620000;
++    data->jedec_id = 0xc22019;
++    data->cs = 0;
++    data->node = "/machine/soc/fmc/ssi.0/child[0]";
++    /* beyond 16MB */
++    data->page_addr = 0x14000 * FLASH_PAGE_SIZE;
++
++    qtest_add_data_func("/ast2500/smc/read_jedec", data, test_read_jedec);
++    qtest_add_data_func("/ast2500/smc/erase_sector", data, test_erase_sector);
++    qtest_add_data_func("/ast2500/smc/erase_all",  data, test_erase_all);
++    qtest_add_data_func("/ast2500/smc/write_page", data, test_write_page);
++    qtest_add_data_func("/ast2500/smc/read_page_mem",
++                        data, test_read_page_mem);
++    qtest_add_data_func("/ast2500/smc/write_page_mem",
++                        data, test_write_page_mem);
++    qtest_add_data_func("/ast2500/smc/read_status_reg",
++                        data, test_read_status_reg);
++}
+ int main(int argc, char **argv)
+ {
+     TestData palmetto_data;
++    TestData ast2500_evb_data;
+     int ret;
+ 
+     g_test_init(&argc, &argv, NULL);
+ 
+     test_palmetto_bmc(&palmetto_data);
++    test_ast2500_evb(&ast2500_evb_data);
+     ret = g_test_run();
+ 
+     qtest_quit(palmetto_data.s);
++    qtest_quit(ast2500_evb_data.s);
+     unlink(palmetto_data.tmp_path);
++    unlink(ast2500_evb_data.tmp_path);
      return ret;
  }
 -- 
