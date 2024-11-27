@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56410D609A8
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 07:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D04ABD609A7
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 07:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGC8z-0003HG-EU; Wed, 27 Nov 2024 02:07:25 -0500
+	id 1tGCGM-0005AP-8M; Wed, 27 Nov 2024 02:15:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tGC8x-0003H7-7H
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 02:07:23 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1tGCGI-00058i-IW
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 02:14:58 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tGC8v-0006pp-Ci
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 02:07:22 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7251ce598adso1401814b3a.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 23:07:21 -0800 (PST)
+ id 1tGCGG-0002FK-Cs
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 02:14:57 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2127d4140bbso58154635ad.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 23:14:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1732691240; x=1733296040;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1732691695; x=1733296495;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rhFqRXVkmeLfYzjLIl7KHgrAL3L2SlSZNpbKMyKYojI=;
- b=vhzFgtogEP7G55v5VYcgfO10g3KFQliiARHhm4W68/hP+q0+zlNTArSQiw2hWcfFJb
- zDLJsjY823Ggqc21KBtgWrXQcklEx5mZL0+SL7B/NKESfxJB+mDf0A6iFI22B8/RHUUu
- DyU9P7k1/0gtOUrEgWDZQeDMfliCWKhupSAUOWusYYUEvtO+b0ZE8jJXtBEPERBQUr/C
- BOiu39V01oApVxrh2oqt0dETGxu1pA5sJHGt3Z9PXk408fSKmiNdA3plXTMkP9uMY3ck
- UoOX3SLuB6bUD7vrodACl5T3wLpDBdkFYFptRqkpKXEoN4btZjkw10Tln/zCGDDLYmOz
- 9y4A==
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=EVxZHoAS0l6T6qHnkVAAH0XlqJRKaM6QoigOQruNJfQ=;
+ b=vInYbGY0sTCgTcELBPha8l+nKXCXGtKg1NJfYSu90XeL9Ka4qAzWxXSE6+d+TM1QEG
+ Nj3iXVtdqYAXH6fhyi8/1M2DRWHxL3OcpxHu4LEiQUJTnDqQjAafbIdCKVWX5E2p5QYL
+ sXDLnPSvKqk3a6fPr1dM4hb1FkE4CSZvO9TqndGu2jTWRoV3DQsYTIPLKswWSjZXB+/q
+ nD4ktgqxY9sQOgEKW91zk/18RnnM/I86zG5h0J+56L66LvbHm7sIQ0zVIgHWxJNL2AGS
+ 5WQ7j1wi/UT+RDlWUjgR6Rb8hpVb6C8XaHlh6rOjry3u6kTvmteWb45EVnAtkKakNd1d
+ TGUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732691240; x=1733296040;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rhFqRXVkmeLfYzjLIl7KHgrAL3L2SlSZNpbKMyKYojI=;
- b=b2hd+QFE+nmsgr05tOeh9YlMIWRwAPfhBoVWiC1hKNPEzMDlYTogq7aXIPxwILCK4w
- CrCAijBiDvtcKqghul0p7vVzYt1E9SONNrgBCWthcoKLtWSAu1/l2qZ3qhR73xge5MoY
- GZ8ZA4TQCXfpTPOFWKWfmQJI/+f2Lr09jUhH36dkdb4+nBw7XGaD3Q6ikIQKHV586db6
- D3fyNkTPRoeLuArXkbKkFj0qjcQQ8vjgw6H1UYcbtfcaLYDug5IwlFnm3OGtcsuDyPc3
- NzlGNKsLvuzRgvRTogOe0wWOWNzftcWFHFZVQgyzNeJuZCC2TFW3hFfU8bJFbOF/cxtS
- X/Ig==
-X-Gm-Message-State: AOJu0Yzhp5edjy95QfZ04qTpQYLHm5i0MxstxqV16t7zaMkt5G7ugCbp
- gRnPIhuQpNfz8c7fhRiDOMSyMU57vXqqLUe49rc+58sBc+rZjgXirFPtJx6x30E=
-X-Gm-Gg: ASbGnctehoGpNYB87xQsHK95SDpJZQ1q3dHvzPi4AWPf23qK2pFS41XGYuZ6Fvi6FOV
- wLt085dqcwxB64dVx6VIF1fkEo0HftWvhVW3I1uMRZPKBfHjKTkHSTxzNmTp6kiJPtsKiNMAH5K
- mmH9PMkheiG89dtpsl1sgNqg+adw5IhDDQVfFH4s0ceMIiUntICvNDezwya3KA7DfJb+xnDZa8Q
- 9FYg1O4WMvlnxqLTuLUCK+h2jjHSEYXjHWABOij9hOdoil/QqLqsbtOZ6DHBaM=
-X-Google-Smtp-Source: AGHT+IHMFMBgRb80y5HZFfv3qJZHHStqXxFXIv1BG951YRjxhllJcSkG5ep87/drlrnbip/MAev73Q==
-X-Received: by 2002:a05:6a00:138c:b0:71e:41b3:a56b with SMTP id
- d2e1a72fcca58-7253015633bmr2913288b3a.24.1732691239883; 
- Tue, 26 Nov 2024 23:07:19 -0800 (PST)
-Received: from [157.82.207.167] ([157.82.207.167])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724de532da6sm9833616b3a.105.2024.11.26.23.07.17
+ d=1e100.net; s=20230601; t=1732691695; x=1733296495;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EVxZHoAS0l6T6qHnkVAAH0XlqJRKaM6QoigOQruNJfQ=;
+ b=mtfOGRIPPi1Cz65Xj6r14GFKLR4DgvKyvpCC1nH5hkmmRLsuf3SWT972CTsov5VWI0
+ REywGbRAngzVU7y0GromprIqlcfOaf2KxqiEC9JJSyOfA26FsnTqiZtsidHHuRT9e7pZ
+ vfYpFPbaZo41eapmaSM62paPa9Q76TWN/aQip820xwy69deM78WrZ7ij9UFNyl1DJPlX
+ Y40ERZolYoT4p8MH3uXJFYNX8rFUFJcwEM4i4VrpE+FOxQS1J+g9vd71nEe6csIdulm1
+ FOuINpSxmbSAT/BRWDCBlvD3zZyMpV7J0VG6uC5ytfDHT4ZYICydS7fj5kb/tgPZLt3v
+ oyfw==
+X-Gm-Message-State: AOJu0YwMkVj3yedBGrN74E7npyiypyYuUwlHJddDGkDJCWz47UBSnrgP
+ HF1zQZ/QT3xlPf//Z7QSxGjgLV+BiXz1/+lyePUrC03+Xq2qOaW+6LoqkO+zVEg=
+X-Gm-Gg: ASbGncvrqdM6IGMBgfv9TR4cK52U0S5kovcXYQqvCzDWaZB1c6P6Hp7y0XgJqGFdzME
+ Lq3JZzRTHwkcdUFuQFkrMPHpIn05F5dKAQ0eSI2MflbtHxOhD8ZlbgKHz13ZK/Nva2SPBmNUJEa
+ ppkpEVDlmyiBsYzQEXolypqysMKfOz/C4RYaUK8o17HYWEUTWqqnAGrGZa3xOm4fehkPcvowFgk
+ w796xBy5TUXpXU/qpS6loXJPA6TothrlcTgddW5Ta7+P63J7mwNoQ==
+X-Google-Smtp-Source: AGHT+IGnAmDV/VsnYFWi5bkfiYFoNo2ppbnSk3xIVkPRvjgH0nEUZUgoHW7tBcIy5Ld9sGKfXyARow==
+X-Received: by 2002:a17:902:e743:b0:212:40e0:9553 with SMTP id
+ d9443c01a7336-215018560cfmr28163025ad.32.1732691694861; 
+ Tue, 26 Nov 2024 23:14:54 -0800 (PST)
+Received: from localhost ([157.82.207.167])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-2129db8c9e3sm96302445ad.6.2024.11.26.23.14.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 23:07:19 -0800 (PST)
-Message-ID: <0082edc1-e296-48d5-a44d-7a6531dfe211@daynix.com>
-Date: Wed, 27 Nov 2024 16:07:15 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.2] ui/cocoa: Temporarily ignore annoying deprecated
- declaration warnings
-To: Phil Dennis-Jordan <lists@philjordan.eu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Volker_R=C3=BCmelin?=
- <vr_qemu@t-online.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20241121131954.98949-1-philmd@linaro.org>
- <CAGCz3vtkJS0Fgx_+1qJbUkYAxJ3WPvhEBxJ7P4T1a-g34KV1RA@mail.gmail.com>
-Content-Language: en-US
+ Tue, 26 Nov 2024 23:14:54 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAGCz3vtkJS0Fgx_+1qJbUkYAxJ3WPvhEBxJ7P4T1a-g34KV1RA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Wed, 27 Nov 2024 16:14:38 +0900
+Subject: [PATCH] docs: Document that hvf on Arm is supported
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42b.google.com
+Message-Id: <20241127-build-v1-1-65b8162733f0@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAN3GRmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDQyND3aTSzJwU3WRDMzPDJKNUcyOLFCWg2oKi1LTMCrA50bG1tQAdD59
+ lVwAAAA==
+To: Alexander Graf <agraf@csgraf.de>, Cameron Esfahani <dirty@apple.com>, 
+ Roman Bolshakov <rbolshakov@ddn.com>
+Cc: qemu-devel@nongnu.org, devel@daynix.com, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -106,47 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/11/21 23:35, Phil Dennis-Jordan wrote:
-> As we're talking about macOS-only code I'd perhaps have used '#pragma 
-> clang diagnostic' rather than the GCC versions, but clang seems to 
-> understand these just fine too. (Plus, we very much intend for these to 
-> be genuinely temporary.)
-> 
-> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu 
-> <mailto:phil@philjordan.eu>>
-> Tested-by: Phil Dennis-Jordan <phil@philjordan.eu 
-> <mailto:phil@philjordan.eu>>
-> 
-> I'll try to find some spare cycles to come up with a clean solution to 
-> the deprecation issue towards the end of the year. I need to research 
-> the available alternative APIs for another project anyway.
-> 
-> I think part of the reason for the deprecation is that most modern Macs 
-> (as with other modern laptop and desktop computers) actually use a 
-> variable display frame rate, so the concept of a "native" frame rate is 
-> no longer well-defined. In an ideal world the frame rate would be 
-> something that's negotiable between the host UI and the virtual hardware.
-> 
-> For example, the macOS PV Graphics I've been working on integrating 
-> would actually prefer a "push" arrangement where the guest/PV hardware 
-> notify the host when the next frame is ready, rather than expecting a 
-> fixed-rate frame refresh interrupt or similar. So when using that there 
-> would actually not be any need for the display-linked timer at all if 
-> the UI is happy with the hw calling dpy_gfx_update_full()/ 
-> graphic_hw_update_done() proactively whenever it has a new frame 
-> available. I'm not sure what the story is for other display adapters in 
-> QEMU, but I can do a survey of that.
+hvf on Arm is supported since commit a1477da3ddeb ("hvf: Add Apple
+Silicon support").
 
-Regarding dpy_gfx_update_full()/graphic_hw_update_done(), it's probably 
-better to stay the "pull" semantics. With the pull semantics, we can 
-drop frames when the UI cannot update the output in timely manner 
-because it's in the power-saving mode or it's just too busy. Adapting to 
-variable refresh rate will be achieved by using a platform's mechanism 
-that fires a refresh event at proper timing.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ docs/about/build-platforms.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-There is also another function we need to care: dpy_set_ui_info(). This 
-function updates the "mode" of the emulated display to tell the refresh 
-rate to the guest. A mode is expected to be somewhat stable so it cannot 
-properly represent the variable refresh rate. A safe option is to expose 
-the maximum refresh rate via the mode.
+diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+index 6102f00aec0f..d8b0445157f0 100644
+--- a/docs/about/build-platforms.rst
++++ b/docs/about/build-platforms.rst
+@@ -40,7 +40,7 @@ Those hosts are officially supported, with various accelerators:
+    * - CPU Architecture
+      - Accelerators
+    * - Arm
+-     - kvm (64 bit only), tcg, xen
++     - hvf (64 bit only), kvm (64 bit only), tcg, xen
+    * - MIPS (64 bit little endian only)
+      - kvm, tcg
+    * - PPC
+
+---
+base-commit: 34754a3a627e1937be7f3daaa0c5e73d91c7d9b5
+change-id: 20241121-build-c1661b2e728d
+
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
+
 
