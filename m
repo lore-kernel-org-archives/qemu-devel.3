@@ -4,89 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E233D609CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 10:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 038C0D609CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 10:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGF5Y-0007ne-Og; Wed, 27 Nov 2024 05:16:04 -0500
+	id 1tGFB0-0001Fe-Q9; Wed, 27 Nov 2024 05:21:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tGF5V-0007mx-7F
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 05:16:01 -0500
-Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tGF5S-0000nq-RN
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 05:16:00 -0500
-Received: by mail-ua1-x92b.google.com with SMTP id
- a1e0cc1a2514c-85715f21c82so1642168241.3
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 02:15:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1732702557; x=1733307357;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=a+hUjgE0CAKr3uN/Dtmw/JvDmx8Fmd9e/oWNu/3aw0I=;
- b=quRKOzs9L6miRvXx0Boj5u22U/w7X4vUtTvtJ9xafc1uy0jL/x/km4y6JTDi4AJQbe
- 9tN8C16+U3eys+tby5/elhoIAnfLpc2kSNVl9+PIUSMt9umv9s/3cwFgtbFDLWhFVKnS
- 3irkOXQwBUaWxc0wQSGW2wrS9G1MK/Xi/Mfjj2Lb67j4qvqL7eyOPt7HU1IiGyjD8tWZ
- MIPXFsVAVEeD/d8P2D6cX3IltbQGISnaHFrjbjHCRTJnVWqBrqlAcUB7N2uOx2nvhVpr
- CrBI7ojKfN4h+0ZKT67ZIvnSjIDrmysrM3MbdjI0AyASc0lYVOos71AcY3ODgD3X6JCz
- HV1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732702557; x=1733307357;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=a+hUjgE0CAKr3uN/Dtmw/JvDmx8Fmd9e/oWNu/3aw0I=;
- b=sqKCVArgYwZl09TjTJsny0hnLIc6NwwPfpyjmGa0QYNWYS8W2irckKgYxa3kkv1atM
- 1VpL9TGM32sHsa6NplqSwHJl5Q/QrKBklEIE0TcdOxU+h9JCHkhoSNQGsPVGQRWbvKrW
- 7CCOPEjedi0NmgNIxMJzUE2MhC1s8muITPbCpqMbDgOUXW2x2yrGE0uFHr+AkdQIG9pi
- uXIgmNhKyw7h+zkGL3MBKtptX3z0ZPpaS/2BegrGqrFEwCtvH1xuP5Rdfub6qWWaYyvD
- c8ph9zoyufQX8ZO7d9ALJ6EwGWt6Ak6npnPJUYDWp1w7xjoMbpTT295WtJHYC1kpO+NE
- qamw==
-X-Gm-Message-State: AOJu0YzNpNfsnEkvBU8d5nRB+XA19qC6bWakmAZjiszYVNWD1APZjZgQ
- 1/KXKWfmcCofS65LvMazlGn+GC2GFNBWdK8/rxpznqbbBMIujOYF1WZdqVg9f2eSs0zWcDC7vpe
- df2j3+7h1hzjHB6EJlZbNUmnBC+mEMBq1YNaV
-X-Gm-Gg: ASbGncvyhwoCn8ur+uL5nCA9gdMrcmNjyPKpnpAJszOPROH02SGIuqdXzijYYVtganc
- KpeByS0Fs1RlfFnr7de+ZARecU4O33CM=
-X-Google-Smtp-Source: AGHT+IFgjY36JnK09rmFyiajWqpeOxB3eDmi9qLbqNMN/yVrN5bnGljZh7MYQHi7pWDUtQnghy8METpiIcYnbCxfcsE=
-X-Received: by 2002:a05:6102:1899:b0:4af:469b:d3b8 with SMTP id
- ada2fe7eead31-4af469bd4d8mr1776569137.25.1732702556966; Wed, 27 Nov 2024
- 02:15:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tGFAx-0001F4-Rp; Wed, 27 Nov 2024 05:21:39 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tGFAv-0003UI-H3; Wed, 27 Nov 2024 05:21:39 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XywQH6ptlz6GD9c;
+ Wed, 27 Nov 2024 18:18:47 +0800 (CST)
+Received: from frapeml100005.china.huawei.com (unknown [7.182.85.132])
+ by mail.maildlp.com (Postfix) with ESMTPS id 89F341400CA;
+ Wed, 27 Nov 2024 18:21:24 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100005.china.huawei.com (7.182.85.132) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 27 Nov 2024 11:21:24 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 27 Nov 2024 11:21:24 +0100
+To: Donald Dutile <ddutile@redhat.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ Eric Auger <eric.auger@redhat.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "jgg@nvidia.com" <jgg@nvidia.com>, Linuxarm
+ <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [RFC PATCH 2/5] hw/arm/smmuv3: Add initial support for SMMUv3
+ Nested device
+Thread-Topic: [RFC PATCH 2/5] hw/arm/smmuv3: Add initial support for SMMUv3
+ Nested device
+Thread-Index: AQHbMeWSJ83HnnIr30KCqoK78hZMsLK1adCAgAAO0ACAFHTOgIABDrKg
+Date: Wed, 27 Nov 2024 10:21:24 +0000
+Message-ID: <d8fbaa677771425dac985438b4b1db59@huawei.com>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <20241108125242.60136-3-shameerali.kolothum.thodi@huawei.com>
+ <00e8a5d6-c926-44bb-8d11-dab4ddc4820d@redhat.com>
+ <ZzTqXCFKV9s++C2N@Asurada-Nvidia>
+ <cfe8864c-f830-4b39-b4d5-f219f5a42eea@redhat.com>
+In-Reply-To: <cfe8864c-f830-4b39-b4d5-f219f5a42eea@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.158.10]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20241113142343.40832-1-phil@philjordan.eu>
- <20241113142343.40832-3-phil@philjordan.eu>
- <c2fed303-b79b-4a1b-b360-914522125650@daynix.com>
-In-Reply-To: <c2fed303-b79b-4a1b-b360-914522125650@daynix.com>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Wed, 27 Nov 2024 11:15:46 +0100
-Message-ID: <CAAibmn0PR=om9pEgbnp6iJsnP56ro10M+YZkEhv-5T92y6QcKA@mail.gmail.com>
-Subject: Re: [PATCH v10 02/15] hw/display/apple-gfx: Introduce
- ParavirtualizedGraphics.Framework support
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org, 
- pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com, 
- stefanha@redhat.com, mst@redhat.com, slp@redhat.com, 
- richard.henderson@linaro.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
- gaosong@loongson.cn, jiaxun.yang@flygoat.com, chenhuacai@kernel.org, 
- kwolf@redhat.com, hreitz@redhat.com, philmd@linaro.org, shorne@gmail.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com, 
- qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org, 
- balaton@eik.bme.hu, Alexander Graf <graf@amazon.com>
-Content-Type: multipart/alternative; boundary="00000000000068e8c00627e24015"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::92b;
- envelope-from=phil@philjordan.eu; helo=mail-ua1-x92b.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.931, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,301 +82,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000068e8c00627e24015
-Content-Type: text/plain; charset="UTF-8"
-
-On Wed, 27 Nov 2024 at 07:45, Akihiko Odaki <akihiko.odaki@daynix.com>
-wrote:
-
-> > +    s->pgdev = PGNewDeviceWithDescriptor(desc);
-> > +
-> > +    disp_desc = apple_gfx_prepare_display_descriptor(s);
-> > +    s->pgdisp = [s->pgdev newDisplayWithDescriptor:disp_desc
-> > +                                              port:0 serialNum:1234];
->
-> port has a fixed number, but I don't think there is anything that
-> prevents plugging multiple apple-gfx devices.
->
-
-The port number is PGDevice instance specific, so 0 is safe here. I've
-actually now tested with 2 apple-gfx-pci devices, and it's technically
-possible and the guest picks them both up. But it's actually the serial
-number that ends up being a problem, because macOS ignores "duplicate"
-displays with identical vendor/product/serial number tuples.
-
-So I suggest a static integer variable for the display serial number that
-we initialise to 1 and increment every time an apple-gfx device is realized.
-
-
-> > +    [disp_desc release];
-> > +    s->pgdisp.modeList = apple_gfx_prepare_display_mode_array();
-> > +
-> > +    s->con = graphic_console_init(dev, 0, &apple_gfx_fb_ops, s);
-> > +    return true;
-> > +}
-> > diff --git a/hw/display/meson.build b/hw/display/meson.build
-> > index 20a94973fa2..cf9e6dd35d2 100644
-> > --- a/hw/display/meson.build
-> > +++ b/hw/display/meson.build
-> > @@ -61,6 +61,12 @@ system_ss.add(when: 'CONFIG_ARTIST', if_true:
-> files('artist.c'))
-> >
-> >   system_ss.add(when: 'CONFIG_ATI_VGA', if_true: [files('ati.c',
-> 'ati_2d.c', 'ati_dbg.c'), pixman])
-> >
-> > +if host_os == 'darwin'
-> > +  system_ss.add(when: 'CONFIG_MAC_PVG',         if_true:
-> [files('apple-gfx.m'), pvg, metal])
-> > +  if cpu == 'aarch64'
-> > +    system_ss.add(when: 'CONFIG_MAC_PVG_MMIO',  if_true:
-> [files('apple-gfx-mmio.m'), pvg, metal])
-> > +  endif
-> > +endif
-> >
-> >   if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
-> >     virtio_gpu_ss = ss.source_set()
-> > diff --git a/hw/display/trace-events b/hw/display/trace-events
-> > index d26d663f963..a50e4eea0c0 100644
-> > --- a/hw/display/trace-events
-> > +++ b/hw/display/trace-events
-> > @@ -194,3 +194,31 @@ dm163_bits_ppi(unsigned dest_width) "dest_width :
-> %u"
-> >   dm163_leds(int led, uint32_t value) "led %d: 0x%x"
-> >   dm163_channels(int channel, uint8_t value) "channel %d: 0x%x"
-> >   dm163_refresh_rate(uint32_t rr) "refresh rate %d"
-> > +
-> > +# apple-gfx.m
-> > +apple_gfx_read(uint64_t offset, uint64_t res) "offset=0x%"PRIx64"
-> res=0x%"PRIx64
-> > +apple_gfx_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64"
-> val=0x%"PRIx64
-> > +apple_gfx_create_task(uint32_t vm_size, void *va) "vm_size=0x%x
-> base_addr=%p"
-> > +apple_gfx_destroy_task(void *task, unsigned int num_mapped_regions)
-> "task=%p, task->mapped_regions->len=%u"
-> > +apple_gfx_map_memory(void *task, uint32_t range_count, uint64_t
-> virtual_offset, uint32_t read_only) "task=%p range_count=0x%x
-> virtual_offset=0x%"PRIx64" read_only=%d"
-> > +apple_gfx_map_memory_range(uint32_t i, uint64_t phys_addr, uint64_t
-> phys_len) "[%d] phys_addr=0x%"PRIx64" phys_len=0x%"PRIx64
-> > +apple_gfx_remap(uint64_t retval, void *source_ptr, uint64_t target)
-> "retval=%"PRId64" source=%p target=0x%"PRIx64
-> > +apple_gfx_unmap_memory(void *task, uint64_t virtual_offset, uint64_t
-> length) "task=%p virtual_offset=0x%"PRIx64" length=0x%"PRIx64
-> > +apple_gfx_read_memory(uint64_t phys_address, uint64_t length, void
-> *dst) "phys_addr=0x%"PRIx64" length=0x%"PRIx64" dest=%p"
-> > +apple_gfx_raise_irq(uint32_t vector) "vector=0x%x"
-> > +apple_gfx_new_frame(void) ""
-> > +apple_gfx_mode_change(uint64_t x, uint64_t y) "x=%"PRId64" y=%"PRId64
-> > +apple_gfx_cursor_set(uint32_t bpp, uint64_t width, uint64_t height)
-> "bpp=%d width=%"PRId64" height=0x%"PRId64
-> > +apple_gfx_cursor_show(uint32_t show) "show=%d"
-> > +apple_gfx_cursor_move(void) ""
-> > +apple_gfx_common_init(const char *device_name, size_t mmio_size)
-> "device: %s; MMIO size: %zu bytes"
-> > +
-> > +# apple-gfx-mmio.m
-> > +apple_gfx_mmio_iosfc_read(uint64_t offset, uint64_t res)
-> "offset=0x%"PRIx64" res=0x%"PRIx64
-> > +apple_gfx_mmio_iosfc_write(uint64_t offset, uint64_t val)
-> "offset=0x%"PRIx64" val=0x%"PRIx64
-> > +apple_gfx_iosfc_map_memory(uint64_t phys, uint64_t len, uint32_t ro,
-> void *va, void *e, void *f, void* va_result) "phys=0x%"PRIx64"
-> len=0x%"PRIx64" ro=%d va=%p e=%p f=%p -> *va=%p"
-> > +apple_gfx_iosfc_map_memory_new_region(size_t i, void *region, uint64_t
-> start, uint64_t end) "index=%zu, region=%p, 0x%"PRIx64"-0x%"PRIx64
-> > +apple_gfx_iosfc_unmap_memory(void *a, void *b, void *c, void *d, void
-> *e, void *f) "a=%p b=%p c=%p d=%p e=%p f=%p"
-> > +apple_gfx_iosfc_unmap_memory_region(void* mem, void *region) "unmapping
-> @ %p from memory region %p"
-> > +apple_gfx_iosfc_raise_irq(uint32_t vector) "vector=0x%x"
-> > +
-> > diff --git a/meson.build b/meson.build
-> > index e0b880e4e13..3c61238bc77 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -794,6 +794,8 @@ socket = []
-> >   version_res = []
-> >   coref = []
-> >   iokit = []
-> > +pvg = not_found
-> > +metal = []
-> >   emulator_link_args = []
-> >   midl = not_found
-> >   widl = not_found
-> > @@ -815,6 +817,8 @@ elif host_os == 'darwin'
-> >     coref = dependency('appleframeworks', modules: 'CoreFoundation')
-> >     iokit = dependency('appleframeworks', modules: 'IOKit', required:
-> false)
-> >     host_dsosuf = '.dylib'
-> > +  pvg = dependency('appleframeworks', modules:
-> 'ParavirtualizedGraphics')
-> > +  metal = dependency('appleframeworks', modules: 'Metal')
-> >   elif host_os == 'sunos'
-> >     socket = [cc.find_library('socket'),
-> >               cc.find_library('nsl'),
->
->
-
---00000000000068e8c00627e24015
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"g=
-mail_attr">On Wed, 27 Nov 2024 at 07:45, Akihiko Odaki &lt;<a href=3D"mailt=
-o:akihiko.odaki@daynix.com">akihiko.odaki@daynix.com</a>&gt; wrote:<br></di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; +=C2=A0 =C2=A0 s-&gt;pgdev =3D PGNewDeviceWithDescriptor(desc);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 disp_desc =3D apple_gfx_prepare_display_descriptor(s);<=
-br>
-&gt; +=C2=A0 =C2=A0 s-&gt;pgdisp =3D [s-&gt;pgdev newDisplayWithDescriptor:=
-disp_desc<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 port:0 serialNum:1234];<br>
-<br>
-port has a fixed number, but I don&#39;t think there is anything that <br>
-prevents plugging multiple apple-gfx devices.<br></blockquote><div><br></di=
-v><div>The port number is PGDevice instance specific, so 0 is safe here. I&=
-#39;ve actually now tested with 2 apple-gfx-pci devices, and it&#39;s techn=
-ically possible and the guest picks them both up. But it&#39;s actually the=
- serial number that ends up being a problem, because macOS ignores &quot;du=
-plicate&quot; displays with identical vendor/product/serial number tuples.<=
-/div><div><br></div><div>So I suggest a static integer variable for the dis=
-play serial number that we initialise to 1 and increment every time an appl=
-e-gfx device is realized.<br></div><div>=C2=A0</div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
-&gt; +=C2=A0 =C2=A0 [disp_desc release];<br>
-&gt; +=C2=A0 =C2=A0 s-&gt;pgdisp.modeList =3D apple_gfx_prepare_display_mod=
-e_array();<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 s-&gt;con =3D graphic_console_init(dev, 0, &amp;apple_g=
-fx_fb_ops, s);<br>
-&gt; +=C2=A0 =C2=A0 return true;<br>
-&gt; +}<br>
-&gt; diff --git a/hw/display/meson.build b/hw/display/meson.build<br>
-&gt; index 20a94973fa2..cf9e6dd35d2 100644<br>
-&gt; --- a/hw/display/meson.build<br>
-&gt; +++ b/hw/display/meson.build<br>
-&gt; @@ -61,6 +61,12 @@ system_ss.add(when: &#39;CONFIG_ARTIST&#39;, if_tru=
-e: files(&#39;artist.c&#39;))<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0system_ss.add(when: &#39;CONFIG_ATI_VGA&#39;, if_true: [fi=
-les(&#39;ati.c&#39;, &#39;ati_2d.c&#39;, &#39;ati_dbg.c&#39;), pixman])<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +if host_os =3D=3D &#39;darwin&#39;<br>
-&gt; +=C2=A0 system_ss.add(when: &#39;CONFIG_MAC_PVG&#39;,=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0if_true: [files(&#39;apple-gfx.m&#39;), pvg, metal])<br>
-&gt; +=C2=A0 if cpu =3D=3D &#39;aarch64&#39;<br>
-&gt; +=C2=A0 =C2=A0 system_ss.add(when: &#39;CONFIG_MAC_PVG_MMIO&#39;,=C2=
-=A0 if_true: [files(&#39;apple-gfx-mmio.m&#39;), pvg, metal])<br>
-&gt; +=C2=A0 endif<br>
-&gt; +endif<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0if config_all_devices.has_key(&#39;CONFIG_VIRTIO_GPU&#39;)=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0virtio_gpu_ss =3D ss.source_set()<br>
-&gt; diff --git a/hw/display/trace-events b/hw/display/trace-events<br>
-&gt; index d26d663f963..a50e4eea0c0 100644<br>
-&gt; --- a/hw/display/trace-events<br>
-&gt; +++ b/hw/display/trace-events<br>
-&gt; @@ -194,3 +194,31 @@ dm163_bits_ppi(unsigned dest_width) &quot;dest_wi=
-dth : %u&quot;<br>
-&gt;=C2=A0 =C2=A0dm163_leds(int led, uint32_t value) &quot;led %d: 0x%x&quo=
-t;<br>
-&gt;=C2=A0 =C2=A0dm163_channels(int channel, uint8_t value) &quot;channel %=
-d: 0x%x&quot;<br>
-&gt;=C2=A0 =C2=A0dm163_refresh_rate(uint32_t rr) &quot;refresh rate %d&quot=
-;<br>
-&gt; +<br>
-&gt; +# apple-gfx.m<br>
-&gt; +apple_gfx_read(uint64_t offset, uint64_t res) &quot;offset=3D0x%&quot=
-;PRIx64&quot; res=3D0x%&quot;PRIx64<br>
-&gt; +apple_gfx_write(uint64_t offset, uint64_t val) &quot;offset=3D0x%&quo=
-t;PRIx64&quot; val=3D0x%&quot;PRIx64<br>
-&gt; +apple_gfx_create_task(uint32_t vm_size, void *va) &quot;vm_size=3D0x%=
-x base_addr=3D%p&quot;<br>
-&gt; +apple_gfx_destroy_task(void *task, unsigned int num_mapped_regions) &=
-quot;task=3D%p, task-&gt;mapped_regions-&gt;len=3D%u&quot;<br>
-&gt; +apple_gfx_map_memory(void *task, uint32_t range_count, uint64_t virtu=
-al_offset, uint32_t read_only) &quot;task=3D%p range_count=3D0x%x virtual_o=
-ffset=3D0x%&quot;PRIx64&quot; read_only=3D%d&quot;<br>
-&gt; +apple_gfx_map_memory_range(uint32_t i, uint64_t phys_addr, uint64_t p=
-hys_len) &quot;[%d] phys_addr=3D0x%&quot;PRIx64&quot; phys_len=3D0x%&quot;P=
-RIx64<br>
-&gt; +apple_gfx_remap(uint64_t retval, void *source_ptr, uint64_t target) &=
-quot;retval=3D%&quot;PRId64&quot; source=3D%p target=3D0x%&quot;PRIx64<br>
-&gt; +apple_gfx_unmap_memory(void *task, uint64_t virtual_offset, uint64_t =
-length) &quot;task=3D%p virtual_offset=3D0x%&quot;PRIx64&quot; length=3D0x%=
-&quot;PRIx64<br>
-&gt; +apple_gfx_read_memory(uint64_t phys_address, uint64_t length, void *d=
-st) &quot;phys_addr=3D0x%&quot;PRIx64&quot; length=3D0x%&quot;PRIx64&quot; =
-dest=3D%p&quot;<br>
-&gt; +apple_gfx_raise_irq(uint32_t vector) &quot;vector=3D0x%x&quot;<br>
-&gt; +apple_gfx_new_frame(void) &quot;&quot;<br>
-&gt; +apple_gfx_mode_change(uint64_t x, uint64_t y) &quot;x=3D%&quot;PRId64=
-&quot; y=3D%&quot;PRId64<br>
-&gt; +apple_gfx_cursor_set(uint32_t bpp, uint64_t width, uint64_t height) &=
-quot;bpp=3D%d width=3D%&quot;PRId64&quot; height=3D0x%&quot;PRId64<br>
-&gt; +apple_gfx_cursor_show(uint32_t show) &quot;show=3D%d&quot;<br>
-&gt; +apple_gfx_cursor_move(void) &quot;&quot;<br>
-&gt; +apple_gfx_common_init(const char *device_name, size_t mmio_size) &quo=
-t;device: %s; MMIO size: %zu bytes&quot;<br>
-&gt; +<br>
-&gt; +# apple-gfx-mmio.m<br>
-&gt; +apple_gfx_mmio_iosfc_read(uint64_t offset, uint64_t res) &quot;offset=
-=3D0x%&quot;PRIx64&quot; res=3D0x%&quot;PRIx64<br>
-&gt; +apple_gfx_mmio_iosfc_write(uint64_t offset, uint64_t val) &quot;offse=
-t=3D0x%&quot;PRIx64&quot; val=3D0x%&quot;PRIx64<br>
-&gt; +apple_gfx_iosfc_map_memory(uint64_t phys, uint64_t len, uint32_t ro, =
-void *va, void *e, void *f, void* va_result) &quot;phys=3D0x%&quot;PRIx64&q=
-uot; len=3D0x%&quot;PRIx64&quot; ro=3D%d va=3D%p e=3D%p f=3D%p -&gt; *va=3D=
-%p&quot;<br>
-&gt; +apple_gfx_iosfc_map_memory_new_region(size_t i, void *region, uint64_=
-t start, uint64_t end) &quot;index=3D%zu, region=3D%p, 0x%&quot;PRIx64&quot=
-;-0x%&quot;PRIx64<br>
-&gt; +apple_gfx_iosfc_unmap_memory(void *a, void *b, void *c, void *d, void=
- *e, void *f) &quot;a=3D%p b=3D%p c=3D%p d=3D%p e=3D%p f=3D%p&quot;<br>
-&gt; +apple_gfx_iosfc_unmap_memory_region(void* mem, void *region) &quot;un=
-mapping @ %p from memory region %p&quot;<br>
-&gt; +apple_gfx_iosfc_raise_irq(uint32_t vector) &quot;vector=3D0x%x&quot;<=
-br>
-&gt; +<br>
-&gt; diff --git a/meson.build b/meson.build<br>
-&gt; index e0b880e4e13..3c61238bc77 100644<br>
-&gt; --- a/meson.build<br>
-&gt; +++ b/meson.build<br>
-&gt; @@ -794,6 +794,8 @@ socket =3D []<br>
-&gt;=C2=A0 =C2=A0version_res =3D []<br>
-&gt;=C2=A0 =C2=A0coref =3D []<br>
-&gt;=C2=A0 =C2=A0iokit =3D []<br>
-&gt; +pvg =3D not_found<br>
-&gt; +metal =3D []<br>
-&gt;=C2=A0 =C2=A0emulator_link_args =3D []<br>
-&gt;=C2=A0 =C2=A0midl =3D not_found<br>
-&gt;=C2=A0 =C2=A0widl =3D not_found<br>
-&gt; @@ -815,6 +817,8 @@ elif host_os =3D=3D &#39;darwin&#39;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0coref =3D dependency(&#39;appleframeworks&#39;, mod=
-ules: &#39;CoreFoundation&#39;)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0iokit =3D dependency(&#39;appleframeworks&#39;, mod=
-ules: &#39;IOKit&#39;, required: false)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0host_dsosuf =3D &#39;.dylib&#39;<br>
-&gt; +=C2=A0 pvg =3D dependency(&#39;appleframeworks&#39;, modules: &#39;Pa=
-ravirtualizedGraphics&#39;)<br>
-&gt; +=C2=A0 metal =3D dependency(&#39;appleframeworks&#39;, modules: &#39;=
-Metal&#39;)<br>
-&gt;=C2=A0 =C2=A0elif host_os =3D=3D &#39;sunos&#39;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0socket =3D [cc.find_library(&#39;socket&#39;),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cc.find_library(=
-&#39;nsl&#39;),<br>
-<br>
-</blockquote></div></div>
-
---00000000000068e8c00627e24015--
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRG9uYWxkIER1dGlsZSA8
+ZGR1dGlsZUByZWRoYXQuY29tPg0KPiBTZW50OiBUdWVzZGF5LCBOb3ZlbWJlciAyNiwgMjAyNCA2
+OjI5IFBNDQo+IFRvOiBOaWNvbGluIENoZW4gPG5pY29saW5jQG52aWRpYS5jb20+OyBFcmljIEF1
+Z2VyDQo+IDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+IENjOiBTaGFtZWVyYWxpIEtvbG90aHVt
+IFRob2RpDQo+IDxzaGFtZWVyYWxpLmtvbG90aHVtLnRob2RpQGh1YXdlaS5jb20+OyBxZW11LWFy
+bUBub25nbnUub3JnOw0KPiBxZW11LWRldmVsQG5vbmdudS5vcmc7IHBldGVyLm1heWRlbGxAbGlu
+YXJvLm9yZzsgamdnQG52aWRpYS5jb207DQo+IExpbnV4YXJtIDxsaW51eGFybUBodWF3ZWkuY29t
+PjsgV2FuZ3pob3UgKEIpDQo+IDx3YW5nemhvdTFAaGlzaWxpY29uLmNvbT47IGppYW5na3Vua3Vu
+IDxqaWFuZ2t1bmt1bkBodWF3ZWkuY29tPjsNCj4gSm9uYXRoYW4gQ2FtZXJvbiA8am9uYXRoYW4u
+Y2FtZXJvbkBodWF3ZWkuY29tPjsNCj4gemhhbmdmZWkuZ2FvQGxpbmFyby5vcmcNCj4gU3ViamVj
+dDogUmU6IFtSRkMgUEFUQ0ggMi81XSBody9hcm0vc21tdXYzOiBBZGQgaW5pdGlhbCBzdXBwb3J0
+IGZvcg0KPiBTTU1VdjMgTmVzdGVkIGRldmljZQ0KPiANCj4gDQo+IA0KPiBPbiAxMS8xMy8yNCAx
+OjA1IFBNLCBOaWNvbGluIENoZW4gd3JvdGU6DQo+ID4gSGkgRXJpYywNCj4gPg0KPiA+IE9uIFdl
+ZCwgTm92IDEzLCAyMDI0IGF0IDA2OjEyOjE1UE0gKzAxMDAsIEVyaWMgQXVnZXIgd3JvdGU6DQo+
+ID4+IE9uIDExLzgvMjQgMTM6NTIsIFNoYW1lZXIgS29sb3RodW0gd3JvdGU6DQo+ID4+PiBAQCAt
+MTgxLDYgKzE4MSw3IEBAIHN0YXRpYyBjb25zdCBNZW1NYXBFbnRyeSBiYXNlX21lbW1hcFtdID0g
+ew0KPiA+Pj4gICAgICAgW1ZJUlRfUFZUSU1FXSA9ICAgICAgICAgICAgIHsgMHgwOTBhMDAwMCwg
+MHgwMDAxMDAwMCB9LA0KPiA+Pj4gICAgICAgW1ZJUlRfU0VDVVJFX0dQSU9dID0gICAgICAgIHsg
+MHgwOTBiMDAwMCwgMHgwMDAwMTAwMCB9LA0KPiA+Pj4gICAgICAgW1ZJUlRfTU1JT10gPSAgICAg
+ICAgICAgICAgIHsgMHgwYTAwMDAwMCwgMHgwMDAwMDIwMCB9LA0KPiA+Pj4gKyAgICBbVklSVF9T
+TU1VX05FU1RFRF0gPSAgICAgICAgeyAweDBiMDAwMDAwLCAweDAxMDAwMDAwIH0sDQo+ID4NCj4g
+Pj4gSSBhZ3JlZSB3aXRoIE1vc3RhZmEgdGhhdCB0aGUgX05FU1RFRCB0ZXJtaW5vbG9neSBtYXkg
+bm90IGJlIHRoZSBiZXN0DQo+ID4+IGNob2ljZS4NCj4gPj4gVGhlIG1vdGl2YXRpb24gYmVoaW5k
+IHRoYXQgbXVsdGktaW5zdGFuY2UgYXR0ZW1wdCwgYXMgaW50cm9kdWNlZCBpbg0KPiA+PiBodHRw
+czovL2xvcmUua2VybmVsLm9yZy9hbGwvWkVjVCUyRjdlcmtoSERhTnZEQEFzdXJhZGEtTnZpZGlh
+Lw0KPiA+PiB3YXM6DQo+ID4+IC0gU01NVXMgd2l0aCBkaWZmZXJlbnQgZmVhdHVyZSBiaXRzDQo+
+ID4+IC0gc3VwcG9ydCBvZiBWQ01EUSBIVyBleHRlbnNpb24gZm9yIFNNTVUgQ01EUQ0KPiA+PiAt
+IG5lZWQgZm9yIHNlcGFyYXRlIFMxIGludmFsaWRhdGlvbiBwYXRocw0KPiA+Pg0KPiA+PiBJZiBJ
+IHVuZGVyc3RhbmQgY29ycmVjdGx5IHRoaXMgaXMgbW9zdGx5IHdhbnRlZCBmb3IgVkNNRFEgaGFu
+ZGxpbmc/IGlmDQo+ID4+IHRoaXMgaXMgY29ycmVjdCB3ZSBtYXkgaW5kaWNhdGUgdGhhdCBzb21l
+aG93IGluIHRoZSB0ZXJtaW5vbG9neS4NCj4gPj4NCj4gPj4gSWYgSSB1bmRlcnN0YW5kIGNvcnJl
+Y3RseSBWQ01EUSB0ZXJtaW5vbG9neSBpcyBOVmlkaWEgc3BlY2lmaWMgd2hpbGUNCj4gPj4gRUNN
+RFEgaXMgdGhlIGJhc2VsaW5lICg/KS4NCj4gPg0KPiA+IFZDTURRIG1ha2VzIGEgbXVsdGktdlNN
+TVUtaW5zdGFuY2UgZGVzaWduIGEgaGFyZCByZXF1aXJlbWVudCwgeWV0DQo+ID4gdGhlIHBvaW50
+ICgzKSBmb3Igc2VwYXJhdGUgaW52YWxpZGF0aW9uIHBhdGhzIGFsc28gbWF0dGVycy4gSmFzb24N
+Cj4gPiBzdWdnZXN0ZWQgVk1NIGluIGJhc2UgY2FzZSB0byBjcmVhdGUgbXVsdGkgdlNNTVUgaW5z
+dGFuY2VzIGFzIHRoZQ0KPiA+IGtlcm5lbCBkb2MgbWVudGlvbmVkIGhlcmU6DQo+ID4gaHR0cHM6
+Ly9naXQua2VybmVsLm9yZy9wdWIvc2NtL2xpbnV4L2tlcm5lbC9naXQvbmV4dC9saW51eC0NCj4g
+bmV4dC5naXQvdHJlZS9Eb2N1bWVudGF0aW9uL3VzZXJzcGFjZS1hcGkvaW9tbXVmZC5yc3Qjbjg0
+DQo+ID4NCj4gPiBXLnIudCBuYW1pbmcsIG1heWJlIHNvbWV0aGluZyByZWxhdGVkIHRvICJoYXJk
+d2FyZS1hY2NlbGVyYXRlZCI/DQo+ID4NCj4gR2l2ZW4gdGhhdCAnYWNjZWwnIGhhcyBiZWVuIHVz
+ZWQgZm9yIGh3LWFjY2VsZXJhdGlvbiBlbHNld2hlcmUsIHRoYXQgc2VlbXMNCj4gbGlrZSBhIHJl
+YXNvbmFibGUgJ21vZGUnLg0KPiBCdXQsIGl0IG5lZWRzIGEgcGFyYW1hdGVyIHRvIHN0YXRlIHdh
+cyBpcyBiZWluZyBhY2NlbGVyYXRlZC4NCj4gaS5lLiwgdGhlIG1vcmUgZ2xvYmFsICdhY2NlbD1r
+dm0nIGhhcyAna3ZtJy4NCg0KSSB3YXMgdGhpbmtpbmcgbW9yZSBsaWtlIGNhbGxpbmcgdGhpcyBo
+dyBhY2NlbGVyYXRlZCBuZXN0ZWQgU01NVXYzIGVtdWxhdGlvbg0KYXMgJ3NtbXV2My1hY2NlbCcu
+ICBUaGlzIGF2b2lkcyBjb25mdXNpb24gd2l0aCB0aGUgYWxyZWFkeSBleGlzdGluZyANCidpb21t
+dT1zbW11djMnIHRoYXQgYWxzbyBoYXMgYSBuZXN0ZWQgZW11bGF0aW9uIHN1cHBvcnQuIA0KDQpp
+ZSwNCi1kZXZpY2UgYXJtLXNtbXV2My1hY2NlbCxpZD1zbW11djEsYnVzPXBjaWUuMSBcDQoNCj4g
+DQo+IEZvciBTTU1VdjMsIE5WSURJQS1zcGVjaWZpYyB2Q01EUSwgaXQgbmVlZHMgYSBwYXJhbWV0
+ZXIgdG8gc3RhdGUgdGhhdA0KPiBzcGVjaWZpY2FsbHksDQo+IHNpbmNlIEknbSBjb25jbHVkaW5n
+IGZyb20gcmVhZGluZyB0aGUgU01NVXYzIHZlcnNpb24gRy5hIHNwZWMsIHRoYXQNCj4gRUNNRFEg
+d2FzIGFkZGVkDQo+IHRvIGJlIGFibGUgdG8gYXNzaWduIGFuIEVDTURRIHRvIGEgVk0sDQoNCk5v
+dCBzdXJlIHRoZSBpbnRlbnRpb24gb2YgRUNNRFEgYXMgcGVyIHRoYXQgc3BlY2lmaWNhdGlvbiBp
+cyB0byBhc3NpZ24NCml0IHRvIGEgVk0uIEkgdGhpbmsgdGhlIG1haW4gaWRlYSBiZWhpbmQgaXQg
+aXMgdG8gaGF2ZSBvbmUgQ29tbWFuZCBRdWV1ZSANCnBlciBob3N0IENQVSB0byBlbGltaW5hdGUg
+bG9jayBjb250ZW50aW9uIHdoaWxlIHN1Ym1pdHRpbmcgY29tbWFuZHMNCnRvIFNNTVUuDQoNCkFG
+QUlLIGl0IGlzIG5vdCBzYWZlIHRvIGFzc2lnbiBvbmUgb2YgdGhlIEVDTURRIHRvIGd1ZXN0IHll
+dC4gSSB0aGluayB0aGVyZSBpcyBubw0Kd2F5IHlvdSBjYW4gYXNzb2NpYXRlIGEgVk1JRCB3aXRo
+IEVDTURRLiBTbyB0aGVyZSBpcyBubyBwbGFuIHRvDQpzdXBwb3J0IEFSTSBFQ01EUSBub3cuDQoN
+Ck5WSURJQSBWQ01EUSBpcyBhIGNvbXBsZXRlbHkgdmVuZG9yIHNwZWNpZmljIG9uZS4gUGVyaGFw
+cyBBUk0gbWF5IGNvbWUNCnVwIHdpdGggYW4gYXNzaWduYWJsZSBDTURRIGluIGZ1dHVyZSB0aG91
+Z2guDQoNCiBhbmQgbGV0IHRoZSBWTSBkbyBDTURRIGRyaXZlbg0KPiBpbnZhbGlkYXRpb25zIHZp
+YQ0KPiBhIHNpbWlsYXIgbWVjaGFuaXNtIGFzIGFzc2lnbmVkIFBDSS1kZXZpY2UgbW1pbyBzcGFj
+ZSBpbiBhIFZNLg0KPiBTbywgaG93IHNob3VsZCB0aGUgUUVNVSBpbnZvY2F0aW9uIHNlbGVjdCB3
+aGF0IHBhcnRzIHRvICdhY2NlbCcgaW4gdGhlDQo+IHZTTU1VdjMgZ2l2ZW4NCj4gdG8gdGhlIFZN
+PyAgLi4uIGFuZCBnaXZlbiB0aGUgaGlzdG9yeSBvZiBody1iYXNlZCwgdmlydC1hY2NlbGVyYXRp
+b24sIEkgY2FuDQo+IG9ubHkgZ3Vlc3MNCj4gbW9yZSBTTU1VdjMgYWNjZWwgdHdlYWtzIHdpbGwg
+YmUgZm91bmQvZGVzaXJlZC9pbXBsZW1lbnRlZC4NCj4gDQo+IFNvLCBnaXZlbiB0aGVyZSBpcyBh
+biBOVklESUEtc3BlY2lmaWMvbGlrZSBFQ01EUSwgYnV0IGRpZmZlcmVudCwgdGhlIGFjY2VsDQo+
+IHBhcmFtZXRlcg0KPiBjaG9zZW4gaGFzIHRvIGNvbnNpZGVyICduYW1lLXNwYWNlIGNvbGxpc2lv
+bicsIGkuZS4sIGFjY2VsPW52LXZjbWRxICBhbmQNCj4gYWNjZWw9ZWNtZHEsDQo+IHVubGVzcyBz
+dyBjYW4gYmUgbWFkZSB0byBzbWFydGx5IHByb2JlIGFuZCBkZXRlcm1pbmUgdGhlIHVuZGVybHlp
+bmcNCj4gZGlmZnMsIGFuZCBoYXZlDQo+IGVxdWl2YWxlbnQgZnVuY3Rpb25hbGl0eSwgaW4gd2hp
+Y2ggY2FzZSwgYSBzaW1wbGVyICdhY2NlbD12Y21kcScgY291bGQgYmUNCj4gdXNlZC4NCj4gDQoN
+ClllcC4gUHJvYmFibHkgd2UgY291bGQgYWJzdHJhY3QgdGhhdCBmcm9tIHRoZSB1c2VyIGFuZCBo
+YW5kbGUgaXQgd2l0aGluDQpRZW11IHdoZW4gdGhlIGtlcm5lbCByZXBvcnRzIHRoZSBjYXBhYmls
+aXR5IGJhc2VkIG9uIHBoeXNpY2FsIFNNTVV2My4NCg0KPiBGaW5hbGx5LCB3cnQgbGlidmlydCwg
+aG93IGRvZXMgaXQga25vdy90ZWxsIHdoYXQgY2FuIGFuZCBzaG91bGQgYmUgdXNlZD8NCj4gRm9y
+IEVDTURRLCBzb21ldGhpbmcgdW5kZXIgc3lzZnMgZm9yIGFuIFNNTVV2MyBjb3VsZCBleHBvc2Ug
+aXRzDQo+IHByZXNlbmNlL2NhcGFiaWxpdHkvYXZhaWxhYmlsaXR5DQo+ICh0YWcgZm9yIHVzZS9h
+bGxvYydkIGZvciBhIFZNKSwgb3IgYW4gaW9jdGwvY2RldiBpL2YgdG8gdGhlIFNNTVV2My4NCj4g
+QnV0IGhvdyBkb2VzIG9uZSBrbm93IHRvZGF5IHRoYXQgdGhlcmUncyBOVklESUEtdkNNRFEgc3Vw
+cG9ydCBvbiBpdHMNCj4gU01NVXYzPyAtLSBpcyBpdA0KPiBleHBvc2VkIGluIHN5c2ZzLCBpb2N0
+bCwgY2Rldj8NCg0KSSB0aGluayB0aGUgY2FwYWJpbGl0eSB3aWxsIGJlIHJlcG9ydGVkIHRocm91
+Z2ggYSBJT0NUTC4gIE5pY29saW4gPw0KDQo+IC4uLiBhbmQgYWxsIG5lZWRzIHRvIGJlIHBlci1p
+bnN0YW5jZSAuLi4uDQo+IC4uLiBsaWJ2aXJ0ICAob3IgYW55IG90aGVyIFZNTSBvcmNoZXN0cmF0
+b3IpIHdpbGwgbmVlZCB0byBkZXRlcm1pbmUNCj4gY29tcGF0aWJpbGl0eSBmb3INCj4gICAgICBs
+aXZlIG1pZ3JhdGlvbi4gZS5nLiwgY2FuIG9uZSBsaXZlIG1pZ3JhdGUgYW4gYWNjZWw9bnYtdmNt
+ZHEtYmFzZWQgVk0gdG8NCj4gYSBob3N0IHdpdGgNCj4gICAgICBhY2NlbD1lY21kcSBzdXBwb3J0
+PyAgb25seSBudi12Y21kcT8gIHdoYXQgaWYgdGhlcmUgYXJlIHZlcnNpb24gZGlmZnMgb2YNCj4g
+bnYtdmNtZHEgb3ZlciB0aW1lPw0KPiAgICAgIC0tIGFwb2xvZ2llcywgYnV0IEkgZG9uJ3Qga25v
+dyB0aGUgbWludXRlIGRldGFpbHMgb2YgbnYtdmNtZHEgdG8NCj4gZGV0ZXJtaW5lIGlmIHRoYXQn
+cyB1bmxpa2VseSBvciBub3QuDQoNClllcy4gVGhpcyByZXF1aXJlIG1vcmUgdGhvdWdodC4gQnV0
+IG91ciBmaXJzdCBhaW0gaXMgZ2V0IHRoZSBiYXNpYyBzbW11djMtYWNjZWwNCnN1cHBvcnQuDQoN
+ClRoYW5rcywNClNoYW1lZXINCg0K
 
