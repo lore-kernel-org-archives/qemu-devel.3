@@ -4,89 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12B3D6ACC0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 12:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D79D6ACC0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 12:19:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGGzI-0004pE-Ki; Wed, 27 Nov 2024 07:17:44 -0500
+	id 1tGH15-00082r-2F; Wed, 27 Nov 2024 07:19:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGGzE-0004kK-Bi
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:17:40 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGGz9-0008Qg-9f
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:17:40 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-38232cebb0cso5056382f8f.1
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 04:17:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732709853; x=1733314653; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ovAf/aTwQanZ1kaeaRGXJq0cBfq7fMpiWo8HJEdNw9k=;
- b=Sig+/wagaILiRJzycMgR6DtH0UL/joDCaryq3xNdU9QhXlRlAyODOe4lkeIdCy890u
- 2a7qSWLoC8vnaHxJtNdA5CsIWGgLqZcSswJepU6dXMngAZy/b1B1hBpZ8EjReDlcL5ti
- C0zIjHrJgS6WzmGHzsBRB+tfH8BjBLLJFEqX8bJHlmN9ISBPyXkgT7Q8pIwkY1xzFVe/
- ZoA+XLa8BLDsjZHbYwvQE59fg68OArB9l+ySYJgaokfSFcue9Ba1eVZ7qAT8ch4UDgk3
- J5+2N+n4l1SMlfLUn8g3TiVc8aWTgIIiXbbOgqyqskU7W4BTsimE1Zg84U0yNo1Z0jGz
- /xxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732709853; x=1733314653;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ovAf/aTwQanZ1kaeaRGXJq0cBfq7fMpiWo8HJEdNw9k=;
- b=SjTtDF2pVqNhVcdBzdZy1pT8GzSbR6DJIYA2S1FjkAtizv7TnUv35hCyhzQeaEDQl0
- r0Stz4+L19sA3hwu7sNURkhbJRaKUKSTKVl9iLJ5L8i2PjkYH8RiBAGbHEcpIiRQwSiz
- YKfLb2s0d+UGnLh3X+t5cCmaoX4RBBjcxazxHE2xN+ad7h+fmtWP5yC2Qt2ZyIfD3Y7n
- uLYXAYxxGQ8QPXNZnySoHmHzjF5UfuoCotlh92YphUooVGwGptrCW2gErVen4B+PhADQ
- rXeieX1V/jeHAdoojwrDT6w20635NOEO+Ef7hIF66Fdb4+Cc1y/wFMoLs0u1suFPQ5Iv
- qH2g==
-X-Gm-Message-State: AOJu0Yz4rqR/abE5ui+msnqaJXWv485tubSS58v/WygfYoKgBa+5QYDP
- qlRrE6yFn6OeDZw3Z3iNSav1ECaxIaxtOt3A1QIZDJesP6IUjqupywVOxCc4snhXVFnmy3zB1Mg
- X
-X-Gm-Gg: ASbGnct3SSqlXV0uL5ulT8TiLCGYps5rw005SyI170rDLbxHKCTDmuDZEQfLWZf1vz8
- LrPnllDCunc9AQMRBLzU05uI92/X/9dQ1hrrOoNSZ/yRap6n+ZbTV/FliLg5OeiYZMBnju8QwbQ
- khuRtNN7Ks/1MyYW3KhbdohnCNmTZvyrJALNWP74ah4Z1rFz0WMh9oioTZWDdFTFGKtycB9inSp
- Y0W3xSaBYHP8OelI/X8MC3IEWDdknMckE/ctfsHLTBcYqwJ6ujgXD4tBwEvYsIemkRxb2Y9eaju
- rvhZYcdZg4MSskcwaULVLrbFQJeOtJPMjg99f4RSgl4=
-X-Google-Smtp-Source: AGHT+IHOJHvX5ELxrj8ghxXxVQtSf5N6T7rzcyPR2TLVAKchEbTgMNhWBsNNnGV5czQYy1r0WU6vMA==
-X-Received: by 2002:a05:6000:144c:b0:37c:d4f8:3f2e with SMTP id
- ffacd0b85a97d-385c6ee0f54mr2231083f8f.55.1732709852760; 
- Wed, 27 Nov 2024 04:17:32 -0800 (PST)
-Received: from localhost.localdomain
- (plb95-h02-176-184-14-96.dsl.sta.abo.bbox.fr. [176.184.14.96])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fad6270sm16075120f8f.14.2024.11.27.04.17.31
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 Nov 2024 04:17:32 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.0 6/6] accel/tcg: Allow tcg_exec_realizefn() initialize
- multiple frontends
-Date: Wed, 27 Nov 2024 13:16:58 +0100
-Message-ID: <20241127121658.88966-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241127121658.88966-1-philmd@linaro.org>
-References: <20241127121658.88966-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tGH0W-0007hH-Fy
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:19:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tGH0U-0000UT-2S
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:18:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732709936;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=JFo9gsAIMuKk4LMqiiNBj1csuD9JhLBNnUiinJlMyV4=;
+ b=cusZOQe2LWZV6W1nCmrExySXjJ2R6RLLRi00Ze+ME9cl2jhVChQLr2jwmyyCiS8g1EOsd+
+ ZoXHpDY/u0sKkPW4hUYyEjEgmlPefirP2IdHB9/tfAdCoWhfxq+4+HU5wD+B6tOTDnJ+5G
+ uj4Fn5scps/Aho6TTUL00Et8LhWUI30=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-mgH7ZpHcMIO7-axjBmN-9A-1; Wed,
+ 27 Nov 2024 07:18:55 -0500
+X-MC-Unique: mgH7ZpHcMIO7-axjBmN-9A-1
+X-Mimecast-MFC-AGG-ID: mgH7ZpHcMIO7-axjBmN-9A
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 478DF195FE12; Wed, 27 Nov 2024 12:18:54 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.25])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 819581956054; Wed, 27 Nov 2024 12:18:52 +0000 (UTC)
+Date: Wed, 27 Nov 2024 12:18:48 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: Rust in QEMU roadmap
+Message-ID: <Z0cOKGl-46wg5NTG@redhat.com>
+References: <cc40943e-dec1-4890-a1d9-579350ce296f@pbonzini.local>
+ <CAJSP0QVGP9RQ57V-+2Lo2Se0x0O1KuENT24HzOn2X3A3vmn73A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJSP0QVGP9RQ57V-+2Lo2Se0x0O1KuENT24HzOn2X3A3vmn73A@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.931,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,44 +83,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than initializing the first random target architecture
-and ignore the following ones when a global boolean is set,
-use a bitmask allowing different frontend targets to be
-initialized.
+On Wed, Nov 27, 2024 at 05:47:19AM -0500, Stefan Hajnoczi wrote:
+> On Tue, 26 Nov 2024 at 13:04, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> > Tracing/logging
+> > '''''''''''''''
+> >
+> > Tracepoints and logging are not supported yet, and no one has started working
+> > on it.
+> >
+> > For tracing, it's not clear to me how much C code can be reused and how
+> > much Rust code can be automatically generated.  This would be a valid
+> > Outreachy or Summer of Code project, as it has a limited need for unsafe
+> > code and a well-defined scope.
+> >
+> > A pure-Rust implementation would be interesting, but note that the usage
+> > of printf-style %-based field formatting is pervasive in the tracing
+> > subsystem.
+> 
+> The purpose of QEMU's tracing subsystem is to support cross-platform
+> tracing. Instead of making QEMU code depend on a specific tracer (like
+> DTrace or LTTng UST) that may not be available across platforms, the
+> tracing subsystem generates tracer-specific C code for trace events at
+> compile time. The most straightforward way to expose this to Rust is
+> to add C functions that invoke each trace event and then call those C
+> functions from Rust. Tracing is designed to be lightweight and this
+> approach results in more overhead than in native C tracing though.
+> 
+> A pure Rust solution would be nice, but I'm not sure how to reconcile
+> that with the purpose of the tracing subsystem, which is to support
+> the various tracers native to QEMU's host platforms. They are geared
+> towards C and use low-level techniques to generate low overhead
+> tracing code.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- accel/tcg/cpu-exec.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+I think a purer Rust solution looks not too difficult for many of
+the backends.
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index ab77740c954..b37995f7d0c 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -1070,16 +1070,17 @@ int cpu_exec(CPUState *cpu)
- 
- bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
- {
-+    static unsigned initialized_targets;
-     const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
- 
--    if (!tcg_target_initialized) {
-+    if (!(initialized_targets & tcg_ops->arch_id)) {
-         /* Check mandatory TCGCPUOps handlers */
- #ifndef CONFIG_USER_ONLY
-         assert(tcg_ops->cpu_exec_halt);
-         assert(tcg_ops->cpu_exec_interrupt);
- #endif /* !CONFIG_USER_ONLY */
-         tcg_ops->initialize_once();
--        tcg_target_initialized = true;
-+        initialized_targets |= tcg_ops->arch_id;
-     }
- 
-     cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
+ * dtrace
+
+   Use this crate https://crates.io/crates/usdt to generate
+   Rust code from the .d file we already generate
+
+ * ftrace
+
+   A mere write() to a pre-opened FD
+
+ * log
+
+   A call to the qemu_log function, which can be exposed to rust
+
+ * simple
+
+   A call to some funcs in trace/simple.h which can be exposed
+   to rust
+
+ * syslog
+
+   A call to syslog(), can be done with https://crates.io/crates/syslog
+
+ * ust
+
+   Unclear how to do this at a quick glance, but likely
+   has a solution
+
+Most of these rely on the trace_event_get_state macro which is
+where we try to take some fast paths. So the hardest bit is likely
+figuring out a nice way to represent the 'state check' in Rust
+without it always turning into a function call.
+
+> That's what QEMU's tracing subsystem is today. But it's a low activity
+> subsystem where things can be changed with less disruption to users
+> than in most other subsystems. I think it would be nice to look at
+> what native Rust tracing has to offer ad reconsider some of the
+> requirements that shaped QEMU's C tracing subsystem. Maybe we can take
+> a more modern approach.
+
+IMHO a core requirement for this must be that we can seemlessly trace
+across Rust and C code using the same mechanism.
+
+With my developer hat on, 99% of the time I'm just using the 'log'
+backend because it is soooooo simple, very effective for dev use
+and we enable it by default.
+
+With my distro hat on, we enable 'dtrace' because that gives us a
+low-overhead probe facility for tracing production deployments,
+AND crucially it gives us system-global tracing facility across
+the kernel, QEMU and all other apps.
+
+IOW, my POV is that support for the "log" and "dtrace" backends
+is mandatory for the Rust layer as a minium viable baseline.
+
+
+I question the usefulness of the 'syslog' trace target. I can't see
+it being desirable as a option for 'production' builds, and it seems
+uneccessarily indirect for developers. What's its compelling USP ?
+
+WRT 'ftrace', IIUC, the Linux 'perf' command has built-in support
+for using USDT probes now:
+
+  https://www.brendangregg.com/perf.html#StaticUserTracing
+
+Do we still have a compelling USP for the 'ftrace' backend, if we
+can use 'perf' for this ?
+
+WRT 'ust', in LTTng, I see reference to the ability to use USDT probes,
+so I wonder if we still need a dedicated 'ust' backend around ?
+
+Potentially we're down to three options 'log', 'simple', and 'dtrace'.
+
+With regards,
+Daniel
 -- 
-2.45.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
