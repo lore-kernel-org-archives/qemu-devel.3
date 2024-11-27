@@ -4,72 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38517D609DB
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 11:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB274D6ACC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 11:27:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGG90-0001lN-7m; Wed, 27 Nov 2024 06:23:42 -0500
+	id 1tGGCJ-0003Mo-7K; Wed, 27 Nov 2024 06:27:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGG8z-0001kt-77
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 06:23:41 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGG8x-0004hD-Hj
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 06:23:40 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-434a044dce2so33541775e9.2
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 03:23:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732706618; x=1733311418; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D85e/9sSN7VtTqiuPNUfHF2+WXR3ZSp+4nYaf+WMPLA=;
- b=qqyP8FHeRtw9NXM+JP7mWE3kNHDqdXnp6a2cfR4/ALPLUh4BBasVvPvOFZrGViyEP4
- EuwGFPEUWPlRK1Ap966/tkjyMau6iviRU2ZOfYPYtOsy/viGx23VfHwKD0kcgSmybmk4
- 4g7DnX8TSwqBWjV+tcFI+R+YteJTSRmQZe5DtmVSTmHBthiophc/C9Cga347iRv3xUt9
- ZhY9vjxMsajGdXY9fIBBS6OaXNtttEo0rznwA3MmFJZO5+OX7SCkI1BA2p1xuU2YdZl+
- kbbam7jYgkWcJhTMkXMzvCL7Frd/dW/aA4p2Kkr6DihA7lt/xL0HgNOHpjdWrwEXKTmj
- m0yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732706618; x=1733311418;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D85e/9sSN7VtTqiuPNUfHF2+WXR3ZSp+4nYaf+WMPLA=;
- b=c3COgOCsLbIl8MC32dEPyKSCAvOwA2JhLHj6qykj4/QE/ZMmSVu+/GO23e6iS/db7r
- v1Ww7hDo7zrjGE0qM5m0tX2voWkpAN7/Q15nune3ZEtCdRMOXCj773+v2FXERaJq7p3g
- R8QFiNvlkFvt9rgbWIc2ALDA4pqUAysoUrK9wRHxBzgpTjyFCRNr7nnfjk4TWfiBud91
- dK3ly0UyVumtQA/x0vNZnNuO/S2EBDfG0SFhzYQFtjQxncNjS0XkCXmS359YFI0Q6N36
- cnhSsbo7+VTvUvXSslZlsLA87eCFdb4z70cdK0smQk3yqX8ZvSvqMLYJ++Z3weN+JAVp
- nYoQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUV4RYDITnezZ866W3IkGntEaWxs/C6GbsERKGuPnwN6t8lAIEFop805yu00ygRdTIBLaOHy8TywInB@nongnu.org
-X-Gm-Message-State: AOJu0YwWBxj5sOA79QLjFU3HSNqu4BYMSHCX+xb14lNO/0+RPrDvmldB
- PizMjl1VhvWAuBl+4O/sPLKJg8CBQkgYuEt7/VtVLEq40RJV7zj9pCOiAFMxEac=
-X-Gm-Gg: ASbGncukLNtWbL7UIvqP0EN9bHKP+Iulb/QE5LAvYpLng75jxJpcDl/iVcQ9Ogvs8YS
- 5CQi5x8allLtJCd9i66ZqGCeSqP1hMIiDkjBy9CyiPE38KWHqz6Ao9NDiJ2m1cccap9IUIFOd38
- RqV54L7yrVakGqTiC+h1LylN5vGMs5y0xThFSR1dWy+GJ3VZ2670KuNZVBOTRUk+iG7yODerscJ
- EmZGIHHe0iEJtUWeqzvz0gB3u+6IcEXvEzqIzg5kLwvisuRFlGIYwPvXJStoldsgYSG90oQ7lu6
- 48+FlaNsrextEOcJ440o5PwMydDS22rVrnuo
-X-Google-Smtp-Source: AGHT+IHV3++2Z6NO8qxuM07KOrgEs7fits6xKbeI5gZeEoPpM1Tz8NzbAabe7EEYRCHTppeXj8MfjQ==
-X-Received: by 2002:a05:600c:4747:b0:434:9ec0:9e4e with SMTP id
- 5b1f17b1804b1-434a9dfbb21mr28528965e9.30.1732706617659; 
- Wed, 27 Nov 2024 03:23:37 -0800 (PST)
-Received: from [192.168.69.146] (plb95-h02-176-184-14-96.dsl.sta.abo.bbox.fr.
- [176.184.14.96]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434aa7a4e85sm18253945e9.5.2024.11.27.03.23.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Nov 2024 03:23:37 -0800 (PST)
-Message-ID: <b520adf4-12f1-4261-a48f-bb74589bb31d@linaro.org>
-Date: Wed, 27 Nov 2024 12:23:35 +0100
+ (Exim 4.90_1) (envelope-from <SRS0=9yFr=SW=kaod.org=clg@ozlabs.org>)
+ id 1tGGC6-0003Kl-In; Wed, 27 Nov 2024 06:26:54 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=9yFr=SW=kaod.org=clg@ozlabs.org>)
+ id 1tGGC4-00060a-Bh; Wed, 27 Nov 2024 06:26:54 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Xyxwf24P3z4xgK;
+ Wed, 27 Nov 2024 22:26:42 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XyxwY4Jm6z4wcT;
+ Wed, 27 Nov 2024 22:26:37 +1100 (AEDT)
+Message-ID: <a7c967ce-6bc0-47e0-aa25-cc89dab29cfb@kaod.org>
+Date: Wed, 27 Nov 2024 12:26:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 0/3] Introduce a new Write Protected pin inverted
  property
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -80,20 +44,62 @@ To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
 References: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
  <2e956389-289a-4806-8985-ab846d808736@kaod.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <2e956389-289a-4806-8985-ab846d808736@kaod.org>
+ <b520adf4-12f1-4261-a48f-bb74589bb31d@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <b520adf4-12f1-4261-a48f-bb74589bb31d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=9yFr=SW=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,59 +115,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/11/24 10:44, Cédric Le Goater wrote:
-> On 11/14/24 10:48, Jamin Lin wrote:
->> change from v1:
->> 1. Support RTC for AST2700.
->> 2. Support SDHCI write protected pin inverted for AST2500 and AST2600.
->> 3. Introduce Capabilities Register 2 for SD slot 0 and 1.
->> 4. Support create flash devices via command line for AST1030.
->>
->> change from v2:
->> replace wp-invert with wp-inverted and fix review issues.
->>
->> change from v3:
->> 1. add reviewer suggestion about wp_inverted comment
->> 2. AST2500 EVB does not need to set wp-inverted property of sdhci model
->>     
->> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm/boot/dts/aspeed/aspeed-ast2500-evb.dts#L110
->>
->> Jamin Lin (3):
->>    hw/sd/sdhci: Fix coding style
->>    hw/sd/sdhci: Introduce a new Write Protected pin inverted property
->>    hw/arm/aspeed: Invert sdhci write protected pin for AST2600 EVB
->>
->>   hw/arm/aspeed.c         |  7 +++++
->>   hw/sd/sdhci.c           | 70 ++++++++++++++++++++++++++++-------------
->>   include/hw/arm/aspeed.h |  1 +
->>   include/hw/sd/sdhci.h   |  5 +++
->>   4 files changed, 61 insertions(+), 22 deletions(-)
->>
+
+> Having to modify sdhci.c internals is dubious, since inversion
+> occurs out of this block. If this is the soc/board layer, isn't
+> better to model at this level? Smth like:
 > 
-> Philippe,
+> -- >8 --
+> diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+> index be3eb70cdd7..aad9be66b75 100644
+> --- a/hw/arm/aspeed_ast2600.c
+> +++ b/hw/arm/aspeed_ast2600.c
+> @@ -559,8 +559,9 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+>       }
+>       aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdhci), 0,
+>                       sc->memmap[ASPEED_DEV_SDHCI]);
+> +    irq = aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI);
+>       sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci), 0,
+> -                       aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI));
+> +                       sc->sdhci_wp_inverted ? qemu_irq_invert(irq) : irq);
 > 
-> I plan to queue patch 2-3 for QEMU 10.0. Is that ok for you ?
+>       /* eMMC */
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->emmc), errp)) {
+> ---
 
-Having to modify sdhci.c internals is dubious, since inversion
-occurs out of this block. If this is the soc/board layer, isn't
-better to model at this level? Smth like:
+Nice ! I didn't know about qemu_irq_invert().
 
--- >8 --
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index be3eb70cdd7..aad9be66b75 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -559,8 +559,9 @@ static void aspeed_soc_ast2600_realize(DeviceState 
-*dev, Error **errp)
-      }
-      aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdhci), 0,
-                      sc->memmap[ASPEED_DEV_SDHCI]);
-+    irq = aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI);
-      sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci), 0,
--                       aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI));
-+                       sc->sdhci_wp_inverted ? qemu_irq_invert(irq) : irq);
+Jamin, could you please give it a try and respin ?
 
-      /* eMMC */
-      if (!sysbus_realize(SYS_BUS_DEVICE(&s->emmc), errp)) {
----
+Thanks,
+
+C.
+
 
