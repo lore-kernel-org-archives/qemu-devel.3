@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48D17D609A1
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 05:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E925BD609A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 05:40:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGAkt-0002wJ-1j; Wed, 27 Nov 2024 00:38:27 -0500
+	id 1tGAmK-0003rc-HA; Wed, 27 Nov 2024 00:39:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tGAkp-0002sy-CN; Wed, 27 Nov 2024 00:38:25 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1tGAmJ-0003rC-BG; Wed, 27 Nov 2024 00:39:55 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tGAkm-0001eT-A0; Wed, 27 Nov 2024 00:38:22 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5cfe5da1251so7661711a12.1; 
- Tue, 26 Nov 2024 21:38:19 -0800 (PST)
+ id 1tGAmH-0002O8-QL; Wed, 27 Nov 2024 00:39:55 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5d071f70b51so1574870a12.3; 
+ Tue, 26 Nov 2024 21:39:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732685898; x=1733290698; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1732685992; x=1733290792; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8EklJFOhtl3yzHo14MyR4oCu/gPy3s2sKhjutcxFUcQ=;
- b=ilnQYJ0YO34oB3xuySd5O6P7re6pSTBPt2kz7wOvAXhXDvSMhYun7RSv3SCQ9gxNs3
- 4HyLYtqojY60Ix9i9pESOqDfxPrtH/A+M06y5ifv04fF47GJdU2nfqFz4vUrhTsilK9b
- XtkmqlbtneA732oDhOLK0fE59HG86DoAyEp6qw7XGilUPlGdbJEP5ZlA6uvslv9U0VQ1
- i//erpsi7pl2BuAqcUw8Yttqnc6pkXw7k599Kp4HEeyYUKnzfPykmOTREFrA+4FSQ32E
- BqU28IjUTndvnvIgcAkTogaCnegy/NTWwKbswGXUjAqm64JoZxPqQcqx3qFKHs2bWn5u
- yqUA==
+ bh=XXw+Yt1fukKiKcNXQZr+JHMytivTBC/jlST45XFrnBk=;
+ b=MlQiNeRqBhowi3OhrwIpCH5DbxPoEca2CXNiyi0k9kYJEkY1xNbxpmeqY+trZbZ9Uq
+ 1woclhk6SyxzwrvXSUuQg/sipNzPlk7IA0k/6We/4ubYWE0XLrSxe+2x0ltQ9KdaUUAq
+ 9k1lJ02+YUwp7OVRhpwO6IEtb1VCpUf8cXysQ3n7oVuJjxn0j3aH8nKDuMwWegODfOa6
+ 97AsdeGCN2erR1FJOn/mcMt6NWXD1UazWEvb+Pht0CTRHS+F9X8cIpq4X81fMhDnqTVr
+ nEN77PJ4dqTmMkNEQTsvo4KiuhM0+pVN/lcrnPCqNjLDlSWzUgAGbQtgDv3S5BJ7HSh2
+ z4zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732685898; x=1733290698;
+ d=1e100.net; s=20230601; t=1732685992; x=1733290792;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8EklJFOhtl3yzHo14MyR4oCu/gPy3s2sKhjutcxFUcQ=;
- b=n4OVg3KzyGut9ii9tEuQkw2O4+kwRWDIfALvkdrjyT+J/Vkx61abfMcXza7R8CVxvl
- 5Va9lbTEv+ucDVvyP3AF1ikwEtGwTBxRh4GS7ma2dcyiEq/7j6pHEuyDi9epW0s8t0LR
- IPCxV7cx7No8JZjVY8BN9LCZ23JEwg1b8wVFmOWpyJfow4FTGP5Eh7EQ548jBvW58I3J
- nWr+QYBWdATwuz5hAVYlNTbpjerftQrxS7PQrJYXEE8X08QBNpT7wQxhhOyvWRsZJidK
- Ub2B0jUUGiNVfFH0l60uoGsewIxd0kucnN6avlK00w5Viq/oFfWv3lNqcfnBJAaaeT/E
- fh0w==
+ bh=XXw+Yt1fukKiKcNXQZr+JHMytivTBC/jlST45XFrnBk=;
+ b=hBuj9/rqwqIWCNFejZFIyqBFi05+oibXe0UttobzP7aOj9Xw6rrdf36J39gXV/NBnQ
+ uRdjbR720wcFLUNkLO+Dkh5tRlYS8yF6F6ZITXICuTsD3xGg5RLi3cF11TmDF62UKySN
+ c2To8AwjEfvkR5jFCCAImInKtuNUIIFdJJ22A6W2ffKcGHnv2aqQzI2r0mNGt+17+rxi
+ WWq6YpfQ309AT6M7pZOKl/7bfNx0vdAkQTviEWbIquOx7vnwxr6d3VAGDlOx38vMnrYZ
+ eQVh1L3ZgvwFhLVCen/A7Eh7iQLrzCrGFf3noAILeTWs3c6/VmRZ7xYTKYiM1lPkDpmo
+ Qdbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFjjTrx3O5jv7NJrmTIwzXvr9CkZ6JZV4T1nFVBfzvH/BdlHZ0AV9VztDU9ua2T8yPJh5530pxo+R+@nongnu.org,
- AJvYcCXdTpnmcZoPjN0p/bpJz/3YQke4OF5tVbkjapMRRqoBlibxFvdrivbshKSZ8kK5sACrxQW4QAlx76AlSw==@nongnu.org
-X-Gm-Message-State: AOJu0Yx8RQCEGEFPg6HUeCow2paKC6DENbyBwHiesxfqoAnXkvxng8yH
- p1UvFTrYoxFWJWdldmaqkOnijaf09HelWO9CvaA1e2GKD++pkkUvXazA9E6vXeQ9GHjJ+I02SMB
- Rx4rsEolB3QoFA8CRGZT2edIsE1zWJUuw
-X-Gm-Gg: ASbGncuX+bjuc1yZfjHJu0EPEP3apl90ZH6c7bHymm5dWcAwAFFLxEXbTGlETbLWz4b
- ZZJ2NzFxHSI8nczpkb0XCTIMa8B73AwA=
-X-Google-Smtp-Source: AGHT+IE3bTWFac0DAbTAtSfg69AaeBL30Ek9J056qja2imA1RruyUBGip/NzDKbGYEhV/sUs9Hq4k5ugOgCZ0AXim0I=
-X-Received: by 2002:a05:6402:274a:b0:5cf:cfa8:d6bd with SMTP id
- 4fb4d7f45d1cf-5d080c98d7emr1242343a12.25.1732685898130; Tue, 26 Nov 2024
- 21:38:18 -0800 (PST)
+ AJvYcCWrRhbVE9fh3/GdkTDfQSaCjCfD9YmV+QHJ76vwjEKjZ6OAMfHsRgzov4ny91YY4Mv8x2cq4tvieV3Zww==@nongnu.org,
+ AJvYcCX9q9bNoAgUsuzXDGCBYGD8PAAY9KV5TtFHKhUYur1a3TR49f1IK85AEEoZKi+zMLfuRHBmvMrpwibn@nongnu.org
+X-Gm-Message-State: AOJu0YwDtw9FOpyzJRc9F4Zvt0yS//Uu9Zc5mSHXgqPMH9bre//YBXCr
+ M3fueNEwhtIG97r3FcGTpylLgMeax6L6ylncvt9RZut2maaetKFh7P9c3rzCs3vYvH4MHB2Wa1g
+ 78cQ5HeJus+mNnjAAASty1NY/8RI=
+X-Gm-Gg: ASbGncs1AXcEPd8gYnbrd67ELod8P5MJfvwLtzWyATAVANIoY/8Fiv8GRIxe3KANkNx
+ 1DBUDHO5C/9xeTe2CJXkHNBKvYl/4hHk=
+X-Google-Smtp-Source: AGHT+IFRrT+GeYM05jeW66nQJCVXmehVe2WZqh86XZlkLqZnAYv73NWMevXmuKyIJpjTFqIKzcuVk4r+S4G3lg4Te1A=
+X-Received: by 2002:a05:6402:43c9:b0:5cf:e3eb:5153 with SMTP id
+ 4fb4d7f45d1cf-5d080bcbf86mr1295857a12.16.1732685991740; Tue, 26 Nov 2024
+ 21:39:51 -0800 (PST)
 MIME-Version: 1.0
 References: <20241121061259.4043177-1-baturo.alexey@gmail.com>
- <f4aa9779-8d69-46ac-9923-3beecf760770@ventanamicro.com>
-In-Reply-To: <f4aa9779-8d69-46ac-9923-3beecf760770@ventanamicro.com>
+ <20241121061259.4043177-2-baturo.alexey@gmail.com>
+ <CAKmqyKObuwwp7AGrUgNWO9PdzBW0f8FFTrhFBVqij8ZOy+RQAg@mail.gmail.com>
+In-Reply-To: <CAKmqyKObuwwp7AGrUgNWO9PdzBW0f8FFTrhFBVqij8ZOy+RQAg@mail.gmail.com>
 From: Alexey Baturo <baturo.alexey@gmail.com>
-Date: Wed, 27 Nov 2024 08:38:06 +0300
-Message-ID: <CAFukJ-Aa9q27qH0RxzP0QsCgRJE7FJ73GH5x1DMaLiB-NVH83g@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] Pointer Masking update for Zjpm v1.0
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Date: Wed, 27 Nov 2024 08:39:40 +0300
+Message-ID: <CAFukJ-CUUi7tC8srp3E3wtbP0LZBC5ytFgGzD+T2ywV2p0LTAg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] target/riscv: Remove obsolete pointer masking
+ extension code.
+To: Alistair Francis <alistair23@gmail.com>
 Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
- liwei1518@gmail.com, alistair23@gmail.com, frank.chang@sifive.com, 
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, frank.chang@sifive.com, 
  palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
  kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000772c280627de5f8f"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=baturo.alexey@gmail.com; helo=mail-ed1-x530.google.com
+Content-Type: multipart/alternative; boundary="0000000000000b8b4e0627de657e"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=baturo.alexey@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,201 +96,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000772c280627de5f8f
+--0000000000000b8b4e0627de657e
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Daniel,
+Hi Alistair,
 
-Thanks for the suggestion. I've resubmitted it with the v11 tag and put
-some reviewed-bys.
+You're right.
+Initially I thought it might be a good idea to do the whole process from
+scratch, but as @Daniel Henrique Barboza <dbarboza@ventanamicro.com> sugges=
+ted
+I resubmitted the series with a proper version tag and added some
+reviewed-by.
+Sorry for the confusion.
 
 Thanks
 
-=D0=BF=D0=BD, 25 =D0=BD=D0=BE=D1=8F=D0=B1. 2024=E2=80=AF=D0=B3. =D0=B2 16:3=
-7, Daniel Henrique Barboza <
-dbarboza@ventanamicro.com>:
+=D0=BF=D0=BD, 25 =D0=BD=D0=BE=D1=8F=D0=B1. 2024=E2=80=AF=D0=B3. =D0=B2 07:0=
+1, Alistair Francis <alistair23@gmail.com>:
 
-> Hi Alexey,
->
->
-> I believe this is not the second version of this work. When I asked about
-> the
-> next versions this was already in v9:
->
->
-> https://lore.kernel.org/qemu-riscv/d4241c7b-ae97-4dc1-bc60-5f0eed58d3a5@v=
-entanamicro.com/
->
-> And it had most of the patches already reviewed by Alistair and Richard.
-> So this
-> would be in fact v11, with a lot of patches already reviewed.
->
-> If you could re-send this series as v11, keeping reviewed-by tags from
-> code that you
-> didn't change from one version to the other, the review will go faster.
->
->
-> Thanks,
->
-> Daniel
->
-> On 11/21/24 3:12 AM, baturo.alexey@gmail.com wrote:
+> On Thu, Nov 21, 2024 at 4:13=E2=80=AFPM <baturo.alexey@gmail.com> wrote:
+> >
 > > From: Alexey Baturo <baturo.alexey@gmail.com>
 > >
-> > Hi,
+> > Zjpm extension is finally ratified. And it's much simplier compared to
+> the experimental one.
+> > The newer version doesn't allow to specify custom mask or base for
+> pointer masking.
+> > Instead it allows only certain options for masking top bits.
 > >
-> > I've rebased this patch series and addressed Richard's and Daniel's
-> comments.
-> > Thanks
-> >
-> > *** BLURB HERE ***
-> > [v0]:
-> > As Pointer Masking is finally ratified, these patches intend to update
-> the existing code to the final version.
-> > These patches have been submitted previously and I tried to address all
-> the suggestions, but I'd suggest to review them from the clean slate and
-> then finally push them to the repo.
-> > Thanks.
-> >
-> > Alexey Baturo (7):
-> >    target/riscv: Remove obsolete pointer masking extension code.
-> >    target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
-> >      of Zjpm v1.0
-> >    target/riscv: Add helper functions to calculate current number of
-> >      masked bits for pointer masking
-> >    target/riscv: Add pointer masking tb flags
-> >    target/riscv: Update address modify functions to take into account
-> >      pointer masking
-> >    target/riscv: Apply pointer masking for virtualized memory accesses
-> >    target/riscv: Enable updates for pointer masking variables and thus
-> >      enable pointer masking extension
-> >
-> >   target/riscv/cpu.c                      |  19 +-
-> >   target/riscv/cpu.h                      |  51 ++--
-> >   target/riscv/cpu_bits.h                 |  91 +-----
-> >   target/riscv/cpu_cfg.h                  |   3 +
-> >   target/riscv/cpu_helper.c               | 124 +++++---
-> >   target/riscv/csr.c                      | 357 ++---------------------=
--
-> >   target/riscv/insn_trans/trans_rvh.c.inc |  11 +
-> >   target/riscv/machine.c                  |  17 +-
-> >   target/riscv/pmp.c                      |  14 +-
-> >   target/riscv/pmp.h                      |   1 +
-> >   target/riscv/tcg/tcg-cpu.c              |   5 +-
-> >   target/riscv/translate.c                |  51 ++--
-> >   target/riscv/vector_helper.c            |  18 +-
-> >   13 files changed, 224 insertions(+), 538 deletions(-)
-> >
+> > Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
 >
+> Wasn't this and part of this series previously reviewed?
+>
+> Alistair
 >
 
---000000000000772c280627de5f8f
+--0000000000000b8b4e0627de657e
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi Daniel,<div><br></div><div>Thanks for the suggestion. I=
-&#39;ve resubmitted it with the v11 tag and put some reviewed-bys.</div><di=
-v><br></div><div>Thanks</div></div><br><div class=3D"gmail_quote gmail_quot=
-e_container"><div dir=3D"ltr" class=3D"gmail_attr">=D0=BF=D0=BD, 25 =D0=BD=
-=D0=BE=D1=8F=D0=B1. 2024=E2=80=AF=D0=B3. =D0=B2 16:37, Daniel Henrique Barb=
-oza &lt;<a href=3D"mailto:dbarboza@ventanamicro.com">dbarboza@ventanamicro.=
-com</a>&gt;:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi =
-Alexey,<br>
-<br>
-<br>
-I believe this is not the second version of this work. When I asked about t=
-he<br>
-next versions this was already in v9:<br>
-<br>
-<a href=3D"https://lore.kernel.org/qemu-riscv/d4241c7b-ae97-4dc1-bc60-5f0ee=
-d58d3a5@ventanamicro.com/" rel=3D"noreferrer" target=3D"_blank">https://lor=
-e.kernel.org/qemu-riscv/d4241c7b-ae97-4dc1-bc60-5f0eed58d3a5@ventanamicro.c=
-om/</a><br>
-<br>
-And it had most of the patches already reviewed by Alistair and Richard. So=
- this<br>
-would be in fact v11, with a lot of patches already reviewed.<br>
-<br>
-If you could re-send this series as v11, keeping reviewed-by tags from code=
- that you<br>
-didn&#39;t change from one version to the other, the review will go faster.=
-<br>
-<br>
-<br>
-Thanks,<br>
-<br>
-Daniel<br>
-<br>
-On 11/21/24 3:12 AM, <a href=3D"mailto:baturo.alexey@gmail.com" target=3D"_=
-blank">baturo.alexey@gmail.com</a> wrote:<br>
+<div dir=3D"ltr">Hi Alistair,<div><br></div><div>You&#39;re right.</div><di=
+v>Initially I thought it might be a good idea to do the whole process from =
+scratch, but as=C2=A0<a class=3D"gmail_plusreply" id=3D"plusReplyChip-0" hr=
+ef=3D"mailto:dbarboza@ventanamicro.com" tabindex=3D"-1">@Daniel Henrique Ba=
+rboza</a>=C2=A0suggested I resubmitted the series with a proper version tag=
+ and added some reviewed-by.</div><div>Sorry for the confusion.</div><div><=
+br></div><div>Thanks</div></div><br><div class=3D"gmail_quote gmail_quote_c=
+ontainer"><div dir=3D"ltr" class=3D"gmail_attr">=D0=BF=D0=BD, 25 =D0=BD=D0=
+=BE=D1=8F=D0=B1. 2024=E2=80=AF=D0=B3. =D0=B2 07:01, Alistair Francis &lt;<a=
+ href=3D"mailto:alistair23@gmail.com">alistair23@gmail.com</a>&gt;:<br></di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu, Nov 21, 2024 at=
+ 4:13=E2=80=AFPM &lt;<a href=3D"mailto:baturo.alexey@gmail.com" target=3D"_=
+blank">baturo.alexey@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
 &gt; From: Alexey Baturo &lt;<a href=3D"mailto:baturo.alexey@gmail.com" tar=
 get=3D"_blank">baturo.alexey@gmail.com</a>&gt;<br>
-&gt; <br>
-&gt; Hi,<br>
-&gt; <br>
-&gt; I&#39;ve rebased this patch series and addressed Richard&#39;s and Dan=
-iel&#39;s comments.<br>
-&gt; Thanks<br>
-&gt; <br>
-&gt; *** BLURB HERE ***<br>
-&gt; [v0]:<br>
-&gt; As Pointer Masking is finally ratified, these patches intend to update=
- the existing code to the final version.<br>
-&gt; These patches have been submitted previously and I tried to address al=
-l the suggestions, but I&#39;d suggest to review them from the clean slate =
-and then finally push them to the repo.<br>
-&gt; Thanks.<br>
-&gt; <br>
-&gt; Alexey Baturo (7):<br>
-&gt;=C2=A0 =C2=A0 target/riscv: Remove obsolete pointer masking extension c=
-ode.<br>
-&gt;=C2=A0 =C2=A0 target/riscv: Add new CSR fields for S{sn,mn,m}pm extensi=
-ons as part<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 of Zjpm v1.0<br>
-&gt;=C2=A0 =C2=A0 target/riscv: Add helper functions to calculate current n=
-umber of<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 masked bits for pointer masking<br>
-&gt;=C2=A0 =C2=A0 target/riscv: Add pointer masking tb flags<br>
-&gt;=C2=A0 =C2=A0 target/riscv: Update address modify functions to take int=
-o account<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 pointer masking<br>
-&gt;=C2=A0 =C2=A0 target/riscv: Apply pointer masking for virtualized memor=
-y accesses<br>
-&gt;=C2=A0 =C2=A0 target/riscv: Enable updates for pointer masking variable=
-s and thus<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 enable pointer masking extension<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0target/riscv/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 19 +-<br>
-&gt;=C2=A0 =C2=A0target/riscv/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 51 ++--<br>
-&gt;=C2=A0 =C2=A0target/riscv/cpu_bits.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 91 +-----<br>
-&gt;=C2=A0 =C2=A0target/riscv/cpu_cfg.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A03 +<br>
-&gt;=C2=A0 =C2=A0target/riscv/cpu_helper.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0| 124 +++++---<br>
-&gt;=C2=A0 =C2=A0target/riscv/csr.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 357 ++----------------------<br>
-&gt;=C2=A0 =C2=A0target/riscv/insn_trans/trans_rvh.c.inc |=C2=A0 11 +<br>
-&gt;=C2=A0 =C2=A0target/riscv/machine.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 17 +-<br>
-&gt;=C2=A0 =C2=A0target/riscv/pmp.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 14 +-<br>
-&gt;=C2=A0 =C2=A0target/riscv/pmp.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A01 +<br>
-&gt;=C2=A0 =C2=A0target/riscv/tcg/tcg-cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A05 +-<br>
-&gt;=C2=A0 =C2=A0target/riscv/translate.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 |=C2=A0 51 ++--<br>
-&gt;=C2=A0 =C2=A0target/riscv/vector_helper.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |=C2=A0 18 +-<br>
-&gt;=C2=A0 =C2=A013 files changed, 224 insertions(+), 538 deletions(-)<br>
-&gt; <br>
+&gt;<br>
+&gt; Zjpm extension is finally ratified. And it&#39;s much simplier compare=
+d to the experimental one.<br>
+&gt; The newer version doesn&#39;t allow to specify custom mask or base for=
+ pointer masking.<br>
+&gt; Instead it allows only certain options for masking top bits.<br>
+&gt;<br>
+&gt; Signed-off-by: Alexey Baturo &lt;<a href=3D"mailto:baturo.alexey@gmail=
+.com" target=3D"_blank">baturo.alexey@gmail.com</a>&gt;<br>
 <br>
+Wasn&#39;t this and part of this series previously reviewed?<br>
+<br>
+Alistair<br>
 </blockquote></div>
 
---000000000000772c280627de5f8f--
+--0000000000000b8b4e0627de657e--
 
