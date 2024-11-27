@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70D0D66BA3
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 02:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC9FD66BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 02:13:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tG7Ta-0003dX-EO; Tue, 26 Nov 2024 21:08:22 -0500
+	id 1tG7YY-0004yt-Ka; Tue, 26 Nov 2024 21:13:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tG7TR-0003cP-Fg
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 21:08:14 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tG7TO-0001iw-Dv
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 21:08:13 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-7ee51d9ae30so4852472a12.1
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 18:08:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732673285; x=1733278085; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L2/d3lJCa2A0xqWzZDg8pbxlKhIaJLRiROSXUvD85lk=;
- b=hn0rubzUiYsQNXHUQmvgcRkJ6QWQOrSrNw7deelyOSbfpmqlrDBBDEc80pZUubyIZW
- qofcjB4iN9ijdSXPsLNiFb7cbnD+oLxp5uuWffVBolcIbchWF2wg2rRSjNSPRM8YNWYM
- zgtuTmsA2cWXOl35b0ilWW6YXj5Zz7YoaJlvR2YsPycv6f/qIEz+CMAdnZQrlaCnMVHP
- Dm15zLKxWdNjbvynFZzrRyZWWNeV17KgD32lbzL4r+6FEsgkPNPi7jXJgnZbMF7B+aD9
- AVU/E1oDFrBRH04D0y1NR4+Ix+8ZP5Sxv3F2x4S2LYVsm3uHGyMb+2Afq0F5DYe/T6AC
- 7ccQ==
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tG7YW-0004yT-HU
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 21:13:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tG7YU-0003Bj-Sf
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 21:13:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732673604;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=07JoLij0j7IFqx3ACXBURCgjwbIuRCVRW/gMPjsOuYg=;
+ b=YEQJSGC1QLXOq3HN6puyfQneC8MxLAMUTaoF4MM9A7MhG5CnO8/yFtKDHdOtIQ9pGM/j28
+ 4fZclrCkPBtWKC2stJ66u0WMFYOgd5BUcd88ExjtvGmEYTW5APLA7i0Bo62yY3fDGQQZkL
+ 3c3wVgGzYR9yLbNS56bmzdyHpvwd5SM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-590-251gq6D1OXeDqB0O9A5fqQ-1; Tue, 26 Nov 2024 21:13:23 -0500
+X-MC-Unique: 251gq6D1OXeDqB0O9A5fqQ-1
+X-Mimecast-MFC-AGG-ID: 251gq6D1OXeDqB0O9A5fqQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3822f550027so3047880f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 18:13:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732673285; x=1733278085;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=L2/d3lJCa2A0xqWzZDg8pbxlKhIaJLRiROSXUvD85lk=;
- b=GggTX3aMbX/GrS1Hb5k/v7z933ltOHbHXUDm5Jd/3Z7Qw+T1go4zARz/k8HrvcDHxo
- f8q+cPCW9+mBsc7F76I52S5yji4urE7sElLmw/NrwG1PNiFK8+FE7mM0DaBt7wzoIRGx
- ICHAQ5LJ4SQeJ3L+ViaYNau0woaJU1sI7/USkd3rR81CcLgjFu7YMnm55dgndT/GIWMn
- PajCscCc2bBBXFVmfGyBzpn3hsI7irG7LZQr7sdHxPhi4YJOPxfc1pX6S/qALhKP4ZBX
- tsRB9++aLMIhb75zw1WPbYejmKzyoWSkaid7acrWC4lH0OyatSOoQcn2Lahh89eh/oXO
- 7Cvg==
+ d=1e100.net; s=20230601; t=1732673602; x=1733278402;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=07JoLij0j7IFqx3ACXBURCgjwbIuRCVRW/gMPjsOuYg=;
+ b=wX62E1MmsqixjKvT6LNFN3891zPJm0zFKK59KLFhqnDL0WD2PHdrmV/CV0zxFyqbVi
+ DCdbWOPEbXxSt16aHddQBhBKpiOltWITr8QPptMQT9VnUjNiMmA8eqhnWlisxBp5s42m
+ hltkDnXx7ZCg45rN1S3xUOvRBEknbBzJo+QIwS6x1eov6FC84JhCNv51Ir86rtihUEt/
+ MHLaLJFXdoWDhWBYURMbMetTlAByn+6MS2luhCJJpOjPBVEQA8FAt3dS+YEHLzfsqsQu
+ bxIR4oOCwaS7T8SSoq79OgxMaD5WozAAQOevK9xG90cm6xtiSfjYLIYrEXlnjgdI8r27
+ 4z+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlsI5gvYfQqpzuEO0s0bpLkV2iOZTcLHaGXOA5nNkLok+PCwfvMCoOqRyueUWLroO1vGS0USzKW+HS@nongnu.org
-X-Gm-Message-State: AOJu0YyB93wmfdmt2UTcOHPZjLgnJgV7Mkm09eERBH+3gqXxoQPwVl0f
- CAbL3Zgzs0arJ2A1ncPPPs9yHp9N23Fuoa/UwTW4JdUQ1vJ9tWGH
-X-Gm-Gg: ASbGncunupsfb6+o5zz5IGB5TvFK2cmDu3veDVhkmTr47D6cPBM91I8GXXCAdqhFlUH
- KTybDL1dLU+THWQMuCJhhkRd76GrcyiQ4Njo802YTEZg5aORY23mqDIoepEkVcdzwD3p/JeknEL
- GB1XSmcXekoozIKpsjnQEtHm2YmEoG+TMhnSbvj91RZcAB06RGUGhoBMXWzCmYcmQPmlAg40zv4
- 5rU0nfqTHtFhF3eyP1e7oHXNO5v+WQdV8LzfzDaKCs7DCMODiILhEOCoJd/8ddPUXAHAqI=
-X-Google-Smtp-Source: AGHT+IGOSK2hGAcJ3MdALfPrdEKu5FAsuXOUQ2GXA3W6FT+/3n2tZPWUNcenLwGnVP4N9in1m5EToA==
-X-Received: by 2002:a05:6a20:e198:b0:1db:e1b0:b673 with SMTP id
- adf61e73a8af0-1e0e0aaf9aemr2449304637.9.1732673284723; 
- Tue, 26 Nov 2024 18:08:04 -0800 (PST)
-Received: from localhost (124-171-72-210.tpgi.com.au. [124.171.72.210])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7251226247esm4062731b3a.170.2024.11.26.18.08.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 18:08:04 -0800 (PST)
-Mime-Version: 1.0
+ AJvYcCVh8ohL02GkCS+Wn8cOhDH3whnePCd/B0dfuRpsmUDaLi7lrMuYnkH1F4qb4cSYpNy7C3m3cRWcANNF@nongnu.org
+X-Gm-Message-State: AOJu0YzKqxicZdb7z/+DdnjYxH+WMtuUsEy9RQmOWrzdCmnwSvb4SxGg
+ nKe2z4+c2HH0fep/yZzJIcKCN+Wq3MTPLtiWmXKXwm7P48hxOXCVQmTQnK06OY4nqqyoTpZzO8a
+ vGAdOQoyl11mFBZFqhE9lNpDGkY9qM9c+tftFe7CDDcp0C+oDpDkjLwOX8lK39TWg8aAP+P+2tz
+ JeNZPzGEgdYDfAdEyXFK1f3qn4zjk=
+X-Gm-Gg: ASbGncvUr0Ernw5tXx6gHoUSFHRXSL1tmZvL6UP3iv64GVFWNFfICHcp1I6B3cc0aye
+ 4hiZ01JFL0wVK/gB7fdUjV3/P50flSctD
+X-Received: by 2002:a5d:6482:0:b0:382:356a:c927 with SMTP id
+ ffacd0b85a97d-385c6eb7eccmr839943f8f.9.1732673601959; 
+ Tue, 26 Nov 2024 18:13:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHv37+/+Vgo2151LDNwLNbkoVJuq0uhErrVmsU/Mv5bXnX+fQYnbo7mCH0MqdwNYjYP6EWY7ryzbOrM7A/B3YY=
+X-Received: by 2002:a5d:6482:0:b0:382:356a:c927 with SMTP id
+ ffacd0b85a97d-385c6eb7eccmr839930f8f.9.1732673601677; Tue, 26 Nov 2024
+ 18:13:21 -0800 (PST)
+MIME-Version: 1.0
+References: <20241109063241.1039433-1-lulu@redhat.com>
+ <20241109063241.1039433-3-lulu@redhat.com>
+In-Reply-To: <20241109063241.1039433-3-lulu@redhat.com>
+From: Lei Yang <leiyang@redhat.com>
+Date: Wed, 27 Nov 2024 10:12:44 +0800
+Message-ID: <CAPpAL=z6aybHaEajNeCziTEpB7QDv1YRXrHBi_NshBSxHt4o0g@mail.gmail.com>
+Subject: Re: [PATCH v4 2/4] virtio_net: Add the check for vdpa's mac address
+To: Cindy Lu <lulu@redhat.com>
+Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 27 Nov 2024 12:07:59 +1000
-Message-Id: <D5WLEZZRQ9GY.1FI9FC4T787TW@gmail.com>
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
-Cc: "Paolo Bonzini" <pbonzini@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>, "Gerd
- Hoffmann" <kraxel@redhat.com>
-Subject: Re: [PATCH 2/2] hw/usb: Add TI TUSB73X0 XHCI controller model
-X-Mailer: aerc 0.18.2
-References: <20241110050009.389367-1-npiggin@gmail.com>
- <20241110050009.389367-3-npiggin@gmail.com>
- <72319f4e-cfe5-4e1a-90a3-d2d29752291f@linaro.org>
-In-Reply-To: <72319f4e-cfe5-4e1a-90a3-d2d29752291f@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,126 +103,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon Nov 11, 2024 at 1:39 AM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
-> Hi Nick,
+QE tested this series patch with regression tests and tested
+"check-mac=3Dtrue" separately. Regression test pass, about the
+"check-mac=3Dtrue" test results, QE also think it is expect result:
+1. Boot guest with vdpa device and "check-mac=3Dtrue", and randomly
+setup a mac address.
+-netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0,che=
+ck-mac=3Dtrue
+\
+-device virtio-net-pci,netdev=3Dvhost-vdpa0,mac=3D00:11:22:33:44:55 \
+2. Check it inside the guest, what is different from the previous
+situation is that the nic with a randomly set mac address can still
+obtain an ip from the dhcp server.
+3. Re-setup mac address and boot again this guest, it will fail with:
+vDPA device's mac 00:11:22:33:44:66not same with the cmdline's mac
+00:11:22:33:44:55,Please check.
+
+Tested-by: Lei Yang <leiyang@redhat.com>
+
+
+On Sat, Nov 9, 2024 at 2:34=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
 >
-> On 10/11/24 05:00, Nicholas Piggin wrote:
-> > This controller is accepted by IBM Power firmware when the subsystem ID=
-s
-> > are set to Power servers. Firmware is picky about device support so the
-> > NEC driver does not work.
-> >=20
-> > The TI HW has some interesting differences from NEC, notably a separate
-> > BAR for MSIX, and PM capabilities. The spec is freely available without
-> > sign-up.
-> >=20
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   include/hw/pci/pci_ids.h |  1 +
-> >   include/hw/usb/xhci.h    |  1 +
-> >   hw/usb/hcd-xhci-ti.c     | 94 +++++++++++++++++++++++++++++++++++++++=
-+
-> >   hw/usb/Kconfig           |  5 +++
-> >   hw/usb/meson.build       |  1 +
-> >   5 files changed, 102 insertions(+)
-> >   create mode 100644 hw/usb/hcd-xhci-ti.c
-> >=20
-> > diff --git a/include/hw/pci/pci_ids.h b/include/hw/pci/pci_ids.h
-> > index f1a53fea8d..fdb692db51 100644
-> > --- a/include/hw/pci/pci_ids.h
-> > +++ b/include/hw/pci/pci_ids.h
-> > @@ -182,6 +182,7 @@
-> >   #define PCI_VENDOR_ID_HP                 0x103c
-> >  =20
-> >   #define PCI_VENDOR_ID_TI                 0x104c
-> > +#define PCI_DEVICE_ID_TI_TUSB73X0        0x8241
-> >  =20
-> >   #define PCI_VENDOR_ID_MOTOROLA           0x1057
-> >   #define PCI_DEVICE_ID_MOTOROLA_MPC106    0x0002
-> > diff --git a/include/hw/usb/xhci.h b/include/hw/usb/xhci.h
-> > index 5c90e1373e..203ec1fca3 100644
-> > --- a/include/hw/usb/xhci.h
-> > +++ b/include/hw/usb/xhci.h
-> > @@ -3,6 +3,7 @@
-> >  =20
-> >   #define TYPE_XHCI "base-xhci"
-> >   #define TYPE_NEC_XHCI "nec-usb-xhci"
-> > +#define TYPE_TI_XHCI "ti-usb-xhci"
-> >   #define TYPE_QEMU_XHCI "qemu-xhci"
-> >   #define TYPE_XHCI_SYSBUS "sysbus-xhci"
-> >  =20
-> > diff --git a/hw/usb/hcd-xhci-ti.c b/hw/usb/hcd-xhci-ti.c
-> > new file mode 100644
-> > index 0000000000..a3f7ef8ba2
-> > --- /dev/null
-> > +++ b/hw/usb/hcd-xhci-ti.c
-> > @@ -0,0 +1,94 @@
-> > +/*
-> > + * USB xHCI controller emulation
-> > + * Datasheet https://www.ti.com/product/TUSB7340
-> > + *
-> > + * Copyright (c) 2011 Securiforest
-> > + * Date: 2011-05-11 ;  Author: Hector Martin <hector@marcansoft.com>
-> > + * Based on usb-xhci-nec.c, emulates TI TUSB73X0
-> > + *
-> > + * This library is free software; you can redistribute it and/or
-> > + * modify it under the terms of the GNU Lesser General Public
-> > + * License as published by the Free Software Foundation; either
-> > + * version 2.1 of the License, or (at your option) any later version.
-> > + *
-> > + * This library is distributed in the hope that it will be useful,
-> > + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> > + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-> > + * Lesser General Public License for more details.
-> > + *
-> > + * You should have received a copy of the GNU Lesser General Public
-> > + * License along with this library; if not, see <http://www.gnu.org/li=
-censes/>.
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "hw/usb.h"
-> > +#include "qemu/module.h"
-> > +#include "hw/pci/pci.h"
-> > +#include "hw/qdev-properties.h"
-> > +
-> > +#include "hcd-xhci-pci.h"
-> > +
-> > +OBJECT_DECLARE_SIMPLE_TYPE(XHCITiState, TI_XHCI)
-> > +
-> > +struct XHCITiState {
-> > +    /*< private >*/
-> > +    XHCIPciState parent_obj;
-> > +    /*< public >*/
-> > +    uint32_t flags;
-> > +    uint32_t intrs;
-> > +    uint32_t slots;
-> > +};
-> > +
-> > +static Property ti_xhci_properties[] =3D {
-> > +    DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi, ON_OFF_AUTO_AUTO=
-),
-> > +    DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AU=
-TO),
-> > +    DEFINE_PROP_UINT32("intrs", XHCITiState, intrs, 8),
-> > +    DEFINE_PROP_UINT32("slots", XHCITiState, slots, XHCI_MAXSLOTS),
-> > +    DEFINE_PROP_END_OF_LIST(),
-> > +};
-> > +
-> > +static void ti_xhci_instance_init(Object *obj)
-> > +{
-> > +    XHCIPciState *pci =3D XHCI_PCI(obj);
-> > +    XHCITiState *ti =3D TI_XHCI(obj);
-> > +
-> > +    pci->xhci.flags    =3D ti->flags;
+> When using a VDPA device, it is important to ensure that the MAC
+> address is correctly set. The MAC address in the hardware should
+> match the MAC address from the QEMU command line. This is a recommended
+> configuration and will allow the system to boot.
 >
-> ti->flags doesn't seem initialized / used.
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
+> ---
+>  hw/net/virtio-net.c | 40 +++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 39 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index f2104ed364..01cac20d92 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -3594,12 +3594,43 @@ static bool failover_hide_primary_device(DeviceLi=
+stener *listener,
+>      /* failover_primary_hidden is set during feature negotiation */
+>      return qatomic_read(&n->failover_primary_hidden);
+>  }
+> +static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n,
+> +                                      MACAddr *cmdline_mac, Error **errp=
+)
+> +{
+> +    struct virtio_net_config hwcfg =3D {};
+> +    static const MACAddr zero =3D { .a =3D { 0, 0, 0, 0, 0, 0 } };
+> +
+> +    vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwcfg, ETH=
+_ALEN);
+> +
+> +    /*For VDPA device following situations are acceptable:*/
+> +
+> +    if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) !=3D 0) {
+> +        /*
+> +         * 1.The hardware MAC address is the same as the QEMU command li=
+ne MAC
+> +         *   address, and both of them are not 0.
+> +         */
+> +        if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) =3D=3D 0))=
+ {
+> +            return true;
+> +        }
+> +    }
+>
+> +    error_setg(errp,
+> +               "vDPA device's mac %02x:%02x:%02x:%02x:%02x:%02x"
+> +               "not same with the cmdline's mac %02x:%02x:%02x:%02x:%02x=
+:%02x,"
+> +               "Please check.",
+> +               hwcfg.mac[0], hwcfg.mac[1], hwcfg.mac[2], hwcfg.mac[3],
+> +               hwcfg.mac[4], hwcfg.mac[5], cmdline_mac->a[0], cmdline_ma=
+c->a[1],
+> +               cmdline_mac->a[2], cmdline_mac->a[3], cmdline_mac->a[4],
+> +               cmdline_mac->a[5]);
+> +
+> +    return false;
+> +}
+>  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>  {
+>      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+>      VirtIONet *n =3D VIRTIO_NET(dev);
+>      NetClientState *nc;
+> +    MACAddr macaddr_cmdline;
+>      int i;
+>
+>      if (n->net_conf.mtu) {
+> @@ -3707,6 +3738,7 @@ static void virtio_net_device_realize(DeviceState *=
+dev, Error **errp)
+>      virtio_net_add_queue(n, 0);
+>
+>      n->ctrl_vq =3D virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
+> +    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
+>      qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
+>      memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
+>      n->status =3D VIRTIO_NET_S_LINK_UP;
+> @@ -3753,7 +3785,13 @@ static void virtio_net_device_realize(DeviceState =
+*dev, Error **errp)
+>      nc =3D qemu_get_queue(n->nic);
+>      nc->rxfilter_notify_enabled =3D 1;
+>
+> -   if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_V=
+DPA) {
+> +    if (nc->peer && (nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST=
+_VDPA)) {
+> +        if (nc->peer->check_mac) {
+> +            if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, errp=
+)) {
+> +                virtio_cleanup(vdev);
+> +                return;
+> +            }
+> +        }
+>          struct virtio_net_config netcfg =3D {};
+>          memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
+>          vhost_net_set_config(get_vhost_net(nc->peer),
+> --
+> 2.45.0
+>
+>
 
-Aha, because you removed the last flags from nec driver and I
-copied this from there :P
-
-Good catch. Shall we just remove the flags from XHCINecState?
-
-Thanks,
-Nick
 
