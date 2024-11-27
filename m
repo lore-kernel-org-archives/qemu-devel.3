@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BADFD5A6DA
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 04:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA64D65521
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 04:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tG9jf-0008Q9-Je; Tue, 26 Nov 2024 23:33:07 -0500
+	id 1tGA31-00020M-FS; Tue, 26 Nov 2024 23:53:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1tG9jd-0008Pm-Jo
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 23:33:05 -0500
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tGA30-00020B-3n
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 23:53:06 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1tG9jb-0001Fd-0e
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 23:33:05 -0500
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3ea49cc8b88so1459795b6e.2
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 20:33:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tGA2y-0000qB-L6
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 23:53:05 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7251ce598adso1346576b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 20:53:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1732681980; x=1733286780;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KuyV35kDHBuCE/NOASw5LnaCOMCBbNtEhwel8NnzjQU=;
- b=oEB8t4WeLJH5RSpf9utvajZlaQ4YD9WDNkmW3ykQiTsMN6x7gypoRDjb3axHjCnQOA
- uTnjE5T4tTl2hB7bYG0pxNb8IHDTHbwktwADkHQ9z08iHAWOlSdIDMup+MuQxAfcF3Fi
- Cqo9MYZCn8gjYzAZ7bJa8quoPbcVgWtvIz2buYodb/VmHzTb2rug+6fJ2PyfBlJPcMnd
- j/E8NahF6JUphry1O3YgoH7L0T8IbMb30tLdauNA7N1oWk9+CQjdw27isprrK+izK0Ym
- nITPxUI6ecFOfZCLSlnBDnsDIvw49k+od+3mW5q/bE2c/WZ9JiteCjKYWiT8fP8loWMm
- Jpag==
+ d=gmail.com; s=20230601; t=1732683183; x=1733287983; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=javaToCsMiTsQ8pDFsFdvCh0qT7TlykghWDR4UvfU3w=;
+ b=mFDw+LNQ7V0YUFsoyjQ1FiMhlM7IDOB6ET6zlsRsGxJ+5xjcuc94C2OJ5e3f7lFXL4
+ MrRic3GJE32PzRTAKBuGMHooPgv8WChMibC/k648V035kSt2245Yjbzj+Ot9tGc19xaK
+ aIdTQNyzoVa4BsSLikqCfdIu66ZKu+KG4/7eOZZRYURkBO1C2Xz1SH5T/hnMdoyaHf82
+ 2JbYqb193Jr+2AEiUZ3B5CAD1abRQNAX6oJmpxU92wq45oSxfB0ciu0NdDFraapcgpww
+ nhHN+RzyafjBPecMGKnLmDOOAlnDBDEkqe6hQm1HysQqCjfeYRMKo7sWjJ/+2kAAjpjV
+ D8Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732681980; x=1733286780;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KuyV35kDHBuCE/NOASw5LnaCOMCBbNtEhwel8NnzjQU=;
- b=CZNbSNZTyo6WEMJ7YDeG5RnGv6IDYQg5o/ZN1x7ND6uGyWDQzhSq3DyNGIrcjHIH/W
- l31veRT3uCQPEFemJVyCIfp3ICM5RMoV79ZI7Sg8bejziSzPOzwx+C5NeQfHjhRvVrqe
- yekO1Q6Lolgh+76eBjB5xKEfGd/re+OIWXjLXNRvG/2K46hskUMOLlKuRCAFEejvOM/N
- p+czahBUTdXUuX6wjCmOsLlfw8BmEdp22U5MG8vQLrkpBtvpLL09rkz6zpUiTu/AQCXx
- tI1JKoKJkJYBasNcUCg96NtOtE5L94DVI0vfsjS6Kz/yFg+DdtWrsxZ+pKGAuUe0n1hP
- nEBQ==
+ d=1e100.net; s=20230601; t=1732683183; x=1733287983;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=javaToCsMiTsQ8pDFsFdvCh0qT7TlykghWDR4UvfU3w=;
+ b=ds22Vzx2tl0weo6NI5HD28vto37H02XVR9yg9qtjso8PzyM/mxU+VWKkmJHOJA2ndt
+ tieFP2c5n0FtviAsOcZlriFyrG0EOVZ6lrHXSQkWwuC98VSwgoqhMfKP1VaH+Npt1Wrp
+ sLxg1fdbFYRG58h09L/PR3gPhuf+c6qIhrbHTkdSfv4Ng1l8uvFfNMFS5aKKD94GjCg6
+ 0Mz1iGxzNnWGxjONXrBdd7+7QDMXDsNuedKDC8cW2G/FLFcVGT8+MWx5CH91BwlBZmdm
+ Ta/EjsbUcB3VlZKL5ZA6G2xFmNzzFLNsgB/8HAs3T93ixyLoz8PI8pCztZekzH/S9pCZ
+ Q+sw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWPSRUSarC2TADxVYNP/CNtxyyAxNAmH/YMeSWWJHpk+fH5MV4khAmnbbrCtAVtNcgo1gargVVzBdN6@nongnu.org
-X-Gm-Message-State: AOJu0Yy1//EDStgCGZKrIYat+sRuVawTUy0CPtsmYnXeZ0F5rbodiDdA
- ZRp82QoTZsctwp49WLUqbAz09oUDS0w/1BOgjg3f/BU2nM77T4jSDSwHe+2Jm+8=
-X-Gm-Gg: ASbGncsYrNLgX2LT9vk2WaDuF5xyjYhpYqkOL70A1OJOUrjf0ZsmDedQbqkWz8iI0dQ
- R7Py3iMOlGkS4ICYeys/oxwRO1tlxoG/XMEIUGveZA2vcnzieA4jUNzmrY1OuJhqBXUx0Nz18tf
- /2WB5fPFN2fm8wo1T0ONst0QDqBiLClRo3JY8SFQbhnPA8WuLvVtZYmECJuNxomRhjVaLahXYFf
- is4g7mooO/OwkmCAaib83z4YxgZqZMTpcVtkJLG6dF9cyhROvPEgcNxgOYMdROpC/3PEbidCjA=
-X-Google-Smtp-Source: AGHT+IFmCZMbAATAzEArfZNJqBbBX0mVmrmgAgPukR4leB13vSLplOL9UurZZNslGZv8y4Am13C6Uw==
-X-Received: by 2002:a05:6808:181a:b0:3ea:44ae:a65 with SMTP id
- 5614622812f47-3ea6db8720emr2111073b6e.5.1732681980690; 
- Tue, 26 Nov 2024 20:33:00 -0800 (PST)
-Received: from [10.16.166.2] (napt.igel.co.jp. [219.106.231.132])
+ AJvYcCVhZUEPBoLFsaV7AhDSI4EOgUggcRzIxYLxYd8JaxNPBwC4XtBlB9kI80JwE9EOJgV/zwDnM6QhzuFM@nongnu.org
+X-Gm-Message-State: AOJu0Yw00LC97JZcuV4tu/cBJGrPDOsFxFTzQ+tIa+QkcA4acEUKYiX+
+ 6t/i0tbbBPCpVs8RqFkJNOCxkOtNLJBCzJ6yHDYhIC0hMpyw09kD
+X-Gm-Gg: ASbGncvBgFNjRPNtIng3diKUt4gTTyd56QJvp72Agi4zuzd7jMbmyn9VPbscIDn54Co
+ VVx1fiIfowtlmyVmP4k2tupdbcoebwqeDAG3EidYvrDsw3jUqeJXf25u/vFty8tZ8fo8UIggbf1
+ Sjgwdh0nyF1A12tfl18PJVlGALAar3FwV+tT7xqEX77VWZYQQEqXTIIYSW7hFgk6tjKCU9ywKwo
+ q88XYnNrSfA0QPiirvpDKBsJ52NNmHzbe/GOwzdjQQVUQ3qjY0h6wUca2RPxOP+S1ywzgo=
+X-Google-Smtp-Source: AGHT+IFx3e1wxZeVagmeCN0qUNm/UHZKSm8km4kffKxyTt0Rb6TImJ6nCZ7a1os3OXtaYs0OdBdHYg==
+X-Received: by 2002:a17:902:e94c:b0:20b:8a93:eeff with SMTP id
+ d9443c01a7336-21501c60a6amr24847375ad.37.1732683182935; 
+ Tue, 26 Nov 2024 20:53:02 -0800 (PST)
+Received: from localhost (124-171-72-210.tpgi.com.au. [124.171.72.210])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-724de454bd4sm9533130b3a.26.2024.11.26.20.32.54
+ d9443c01a7336-2129dc2210dsm93506115ad.245.2024.11.26.20.53.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 20:33:00 -0800 (PST)
-Message-ID: <0ace2747-efc8-4c0a-9d9f-68f255f1e3a5@igel.co.jp>
-Date: Wed, 27 Nov 2024 13:32:50 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/5] support unaligned access to xHCI Capability
-To: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>, qemu-devel@nongnu.org
-References: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
-Content-Language: en-US
-Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it,
- qemu-block@nongnu.org, pbonzini@redhat.com, peterx@redhat.com,
- david@redhat.com, philmd@linaro.org, farosas@suse.de, lvivier@redhat.com
-From: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
-In-Reply-To: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-oi1-x22e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ Tue, 26 Nov 2024 20:53:02 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 27 Nov 2024 14:52:57 +1000
+Message-Id: <D5WOXB6WYUGI.5U9UWQCHRI6J@gmail.com>
+Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ <qemu-devel@nongnu.org>, =?utf-8?q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 0/2] chardev: fixes for recent record/replay on muxed
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Nicholas Piggin" <npiggin@gmail.com>, "Peter Maydell"
+ <peter.maydell@linaro.org>
+X-Mailer: aerc 0.18.2
+References: <20240828043337.14587-1-npiggin@gmail.com>
+In-Reply-To: <20240828043337.14587-1-npiggin@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,49 +101,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I would be happy to receive your comments.
-ping.
+On Wed Aug 28, 2024 at 2:33 PM AEST, Nicholas Piggin wrote:
+> Fix a couple of issues that Peter found with recent record/replay
+> fix for muxed device.
 
-On 2024/11/08 12:29, Tomoyuki HIROSE wrote:
-> This patch set aims to support unaligned access to xHCI Capability
-> Registers.
->
-> To achieve this, we introduce the emulation of an unaligned access
-> through multiple aligned accesses. This patch set also adds a test
-> device and several tests using this device to verify that the
-> emulation functions correctly.
->
-> Using these changes, unaligned access to xHCI Capability Registers is
-> now supported.
->
-> During development, I required a lot of 'MemoryRegionOps' structs with
-> its own read/write functions for tests. In the QEMU project, a large
-> number of similar functions or structs are often written in '.inc'
-> files. I followed this approach for the test functions but would
-> appreciate feedback on whether this is appropriate.
->
-> Tomoyuki HIROSE (5):
->    hw/nvme/ctrl: specify the 'valid' field in MemoryRegionOps
->    system/memory: support unaligned access
->    hw/misc: add test device for memory access
->    tests/qtest: add test for memory region access
->    hw/usb/hcd-xhci: allow unaligned access to Capability Registers
->
->   hw/misc/Kconfig                         |    4 +
->   hw/misc/memaccess-testdev.c             |  197 +++
->   hw/misc/meson.build                     |    1 +
->   hw/nvme/ctrl.c                          |    5 +
->   hw/usb/hcd-xhci.c                       |    4 +-
->   include/hw/misc/memaccess-testdev.h     |   42 +
->   include/hw/misc/memaccess-testdev.h.inc | 1864 +++++++++++++++++++++++
->   system/memory.c                         |  147 +-
->   system/physmem.c                        |    8 -
->   tests/qtest/memaccess-test.c            |  598 ++++++++
->   tests/qtest/meson.build                 |    9 +
->   11 files changed, 2842 insertions(+), 37 deletions(-)
->   create mode 100644 hw/misc/memaccess-testdev.c
->   create mode 100644 include/hw/misc/memaccess-testdev.h
->   create mode 100644 include/hw/misc/memaccess-testdev.h.inc
->   create mode 100644 tests/qtest/memaccess-test.c
->
+Hi,
+
+I've just realised these never got merged. Sorry for losing track of
+them, I was on vacation when doing them and things got a bit neglected.
+Looks like I forgot to cc you, Marc-Andre.
+
+Thanks,
+Nick
 
