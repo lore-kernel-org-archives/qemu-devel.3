@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A8DD6ACE4
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 15:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A17E9D6ACE5
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 15:09:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGJdl-0003CQ-IH; Wed, 27 Nov 2024 10:07:42 -0500
+	id 1tGJe2-0003mz-T6; Wed, 27 Nov 2024 10:07:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tGJcQ-0001It-7D
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 10:06:18 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1tGJcd-0001qT-Jr
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 10:06:36 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tGJcM-0008Mb-Ms
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 10:06:17 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-434a45f05feso26073465e9.3
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 07:06:14 -0800 (PST)
+ id 1tGJcZ-0008U2-QC
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 10:06:31 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3823eaad37aso618639f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 07:06:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1732719973; x=1733324773;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1732719986; x=1733324786;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9fBIkfb/JNGOeADe4W7k8MHHsSm50BaP9rSq2He7Rec=;
- b=XnNBOdhN2rPjugjAgisEBh9B6AB1iVOdfrShg4Xb1c+IAxUR/xk12dUBleU1euAui/
- Hdvhw7lhsXG7tYYsVknn5EO3Sjk9m7cdvP8auDPZuNk86hmRbgxp5sjhs1DrtisppLHY
- YBeDFIXFPveGJS08oFYHvtO0f+EsyvW/I+t2S6hStLwhusaJGTGCFCnQly0aVZt9jrES
- mVuULEc0r5FR6g/ZowJeiWaHhfvfpCo1k8OVhONFMBt8zLKMU100/fAvYKpqs4sz/RoB
- LSgcPzZ8tcABZgHuXq2ovbWM6Vprhh5KTCPBOY7bg1ZP0omoQpoNa04NDYKzwSJfF37m
- 03HQ==
+ bh=zJyb/oSP4s5MQv1qtNuoZ+xlTBWcKQOnrAEU2Oe4ZXw=;
+ b=bCKNHLkSPiTaFdAQ7m7espmwx/GQfri1zYS1E55/LMsOBDXceQILdL5V2qDamnXfde
+ 5SmlJW45gXPqlzO89+C+TYEPxaTAMoVYAb5PtFP2ATYcLnL5qXTGzVMVcg5bWdnPiX16
+ Pj+xD2LsJJbfSvkRPiz2tBFdVr7/a1UYAWMTmKowE7VvCRlhhO+ggpGfeX+wd9ad4Ooa
+ Kzw7Rtt3aNYPKB8Lv4rnnTFK6X9EK7MtRQ4ZUflnRDTLE3gA4MNavmByiF5EKHtiAkzz
+ 4JZG1tdI+8++QXmeCOTr+a6uPUGzA796ydeNJ+29DbC3VOnX9WYTkDpwhr3l1+jIUd70
+ 7gkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732719973; x=1733324773;
+ d=1e100.net; s=20230601; t=1732719986; x=1733324786;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9fBIkfb/JNGOeADe4W7k8MHHsSm50BaP9rSq2He7Rec=;
- b=RmNho4lgmFrVBXv1S14NlZtnFLwOTqhe2fESvxy9ue3aU8GsF93CN8pAxLtbAHKHvy
- 0fpeW6vcd02hUaA4aef/CoKlUf3Z6ZUqiX8fZqya1xWSmY/tH2l1iySplpK99cVgx6RD
- tGts1CcAeq4/Ar9v1SH2QbhGcHzML05yXCypUK5ACcQ6OgZ2HXYnbskV77q2oE0VQ44M
- aPPbqOnB5I866kNALDMyAVY4iXogOpHVux5LqbiwUazuZM+vEui/nNvb6NiApJQpc6Ah
- TX0E1M4gDPxCq9rTruaiJGhldytRt2s8a1VKhebby7QGv/a/i0q5TJAvmHNhRh9yz/gQ
- ff+g==
-X-Gm-Message-State: AOJu0YwMpoiUtLcuoBRJ7GZ7ojXgDLgDy8TCW+I1q8uTmQa2aJ5UY1Ix
- hYaeqzV1faFnxSPpahnojyG7jUb5dhkdUZXCz1I+BLTNhDMrDHINrDyiz5JKvIMbYS53EsIr27Y
- MGw==
-X-Gm-Gg: ASbGncuV7DwmNXwynTgjJa0pP1LQFUf3d/jfxq2+b8IdNPUrThjGzDLH9fPYSv8BRWu
- cWiqCYXxugfIIOhKiJxX+yBl5DQ9K2KKOyla8QT31HbqOSG+G0/4dX+KUudGN1t4m1nbxr46B7f
- oxD9rNdq2jAmSE0aCUkW4H6/fJ0Y0spqriDENM0UIwZYCpL0nTu2YNaASw6yeX/6sqSGvJZGJJK
- cO7RaJ/YDMOJxg2e11tY+Flr5bqOs7W7KfVtUw6kN0DF7ryVd2XST3rOqCL0oSjM5IQzEbKd8c6
- O31LTtIyrDpl1xrFg8uQNcyZIg==
-X-Google-Smtp-Source: AGHT+IE8NyDcLjRih8DKRvaU19pHiQROv58ZP2L2Qp6a3H/BBzV4lqHx3ULb8spvhA9ezvPX86fkFg==
-X-Received: by 2002:a05:600c:c86:b0:42c:ba83:3f00 with SMTP id
- 5b1f17b1804b1-434a9dbb6a7mr30133015e9.1.1732719965079; 
- Wed, 27 Nov 2024 07:06:05 -0800 (PST)
+ bh=zJyb/oSP4s5MQv1qtNuoZ+xlTBWcKQOnrAEU2Oe4ZXw=;
+ b=DnTm52kzJ8NMy6GmfJYMWS9Fkf5aA4HUUX9bb4REs2Jx1BUGCNpQcm9ls7IAh7dqkq
+ g5ZWDSlitgiwTw2EiRer4T2wPYaoTiV30kndvoTuKLjNcb4BJgUEDCYZimZgxbaFRjyx
+ dFYIhUBXnFwrgFKlGCgBrlmGXXkFQTOl94eMLyCypb4Tf9DyM9zuexOjrnmwb4x4pM0u
+ gJYn+FUQbLY8eErvL5VAWCZsoumjBAqFV9RemISINMOPkO/jCgscNwdqUVYJFJ4o19Tm
+ srCI2bGebUJi2DoyG1jraFWYMdaLkzC+bWx14QvZoWBACjwK1RskwSK87dT3ZXjl/IXL
+ gd/Q==
+X-Gm-Message-State: AOJu0YxaAzZP3ayyziQxP/CfvQgYRUMrnI9WxLfR3R9vOgFFo/dPGax7
+ ExsmHWGExXi2UTZ5tNPAOGm8zcgEvlSk/skNbgrqDRJSp1Wk9yYsf0TBPhmqtjSh5XeXqW2X7Q+
+ 14Q==
+X-Gm-Gg: ASbGnct23RVZGUPLSrQSPv5LElmyhRVTt8xgx2XQEg+1RoVuqzoG/AtJSJhFpvO3mpl
+ 0vFSxCv88gaVgVmneerQp4jWGRpB3EdzPlTfYf+LNMFHihCHwhDjpbYgaUMdZK5PBrx0S7YGHy1
+ ruk+YvAkckThLPrYfE865MKixmngQz1+j4z/Wj8Vg+pHEBjXSikSTuRToZtt45xaaeGVEH7Sf3K
+ ryX6Kdxv612ONTtzCBCVTKmXx12QRjotmx6uBdSbW3+gTP7D4Elx4EzJROpD23uLRW83GjYfLR2
+ X5xkrPvVqExTQ8bipgj/oyDbng==
+X-Google-Smtp-Source: AGHT+IHSC1pJ7dE5jPRc64upcuSWWJFHJooxy/0lF61NGwNh1yVp98Y6alTfKMzWOA9CiM97W/zPsw==
+X-Received: by 2002:a5d:6da6:0:b0:382:48ba:631 with SMTP id
+ ffacd0b85a97d-385bfb14b66mr7051365f8f.22.1732719968450; 
+ Wed, 27 Nov 2024 07:06:08 -0800 (PST)
 Received: from localhost.localdomain (h082218084190.host.wavenet.at.
  [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434aa7e256esm23339155e9.32.2024.11.27.07.05.02
+ 5b1f17b1804b1-434aa7e256esm23339155e9.32.2024.11.27.07.06.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 Nov 2024 07:05:03 -0800 (PST)
+ Wed, 27 Nov 2024 07:06:08 -0800 (PST)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
@@ -79,17 +79,18 @@ Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
  jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
  akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  qemu-riscv@nongnu.org, balaton@eik.bme.hu, Alexander Graf <graf@amazon.com>
-Subject: [PATCH v11 07/15] hw/misc/pvpanic: Add MMIO interface
-Date: Wed, 27 Nov 2024 16:02:41 +0100
-Message-Id: <20241127150249.50767-8-phil@philjordan.eu>
+Subject: [PATCH v11 11/15] hw/vmapple/bdif: Introduce vmapple backdoor
+ interface
+Date: Wed, 27 Nov 2024 16:02:45 +0100
+Message-Id: <20241127150249.50767-12-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20241127150249.50767-1-phil@philjordan.eu>
 References: <20241127150249.50767-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::336;
- envelope-from=phil@philjordan.eu; helo=mail-wm1-x336.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::436;
+ envelope-from=phil@philjordan.eu; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -113,132 +114,364 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Graf <graf@amazon.com>
 
-In addition to the ISA and PCI variants of pvpanic, let's add an MMIO
-platform device that we can use in embedded arm environments.
+The VMApple machine exposes AUX and ROOT block devices (as well as USB OTG
+emulation) via virtio-pci as well as a special, simple backdoor platform
+device.
+
+This patch implements this backdoor platform device to the best of my
+understanding. I left out any USB OTG parts; they're only needed for
+guest recovery and I don't understand the protocol yet.
 
 Signed-off-by: Alexander Graf <graf@amazon.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
 
-v3:
- * Rebased on upstream, updated a header path
+v4:
 
- hw/misc/Kconfig           |  4 +++
- hw/misc/meson.build       |  1 +
- hw/misc/pvpanic-mmio.c    | 61 +++++++++++++++++++++++++++++++++++++++
- include/hw/misc/pvpanic.h |  1 +
- 4 files changed, 67 insertions(+)
- create mode 100644 hw/misc/pvpanic-mmio.c
+ * Moved most header code to .c, rest to vmapple.h
+ * Better compliance with coding, naming, and formatting conventions.
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 1f1baa5dde9..5a6c1603b60 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -145,6 +145,10 @@ config PVPANIC_ISA
-     depends on ISA_BUS
-     select PVPANIC_COMMON
+v8:
+
+ * Replaced uses of cpu_physical_memory_read with dma_memory_read.
+ * Replaced an instance of g_free with g_autofree.
+
+v9:
+
+ * Replaced uses of cpu_physical_memory_write with dma_memory_write.
  
-+config PVPANIC_MMIO
-+    bool
-+    select PVPANIC_COMMON
-+
- config AUX
+ hw/vmapple/Kconfig           |   3 +
+ hw/vmapple/bdif.c            | 275 +++++++++++++++++++++++++++++++++++
+ hw/vmapple/meson.build       |   1 +
+ hw/vmapple/trace-events      |   5 +
+ include/hw/vmapple/vmapple.h |   2 +
+ 5 files changed, 286 insertions(+)
+ create mode 100644 hw/vmapple/bdif.c
+
+diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
+index a73504d5999..68f88876eb9 100644
+--- a/hw/vmapple/Kconfig
++++ b/hw/vmapple/Kconfig
+@@ -1,3 +1,6 @@
+ config VMAPPLE_AES
      bool
-     select I2C
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index d02d96e403b..4de4db0a600 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -122,6 +122,7 @@ system_ss.add(when: 'CONFIG_ARMSSE_MHU', if_true: files('armsse-mhu.c'))
  
- system_ss.add(when: 'CONFIG_PVPANIC_ISA', if_true: files('pvpanic-isa.c'))
- system_ss.add(when: 'CONFIG_PVPANIC_PCI', if_true: files('pvpanic-pci.c'))
-+system_ss.add(when: 'CONFIG_PVPANIC_MMIO', if_true: files('pvpanic-mmio.c'))
- system_ss.add(when: 'CONFIG_AUX', if_true: files('auxbus.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_hace.c',
-diff --git a/hw/misc/pvpanic-mmio.c b/hw/misc/pvpanic-mmio.c
++config VMAPPLE_BDIF
++    bool
++
+diff --git a/hw/vmapple/bdif.c b/hw/vmapple/bdif.c
 new file mode 100644
-index 00000000000..56738efee53
+index 00000000000..d7b6b7a25a4
 --- /dev/null
-+++ b/hw/misc/pvpanic-mmio.c
-@@ -0,0 +1,61 @@
++++ b/hw/vmapple/bdif.c
+@@ -0,0 +1,275 @@
 +/*
-+ * QEMU simulated pvpanic device (MMIO frontend)
++ * VMApple Backdoor Interface
 + *
 + * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+
-+#include "hw/qdev-properties.h"
-+#include "hw/misc/pvpanic.h"
++#include "qemu/units.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "trace.h"
++#include "hw/vmapple/vmapple.h"
 +#include "hw/sysbus.h"
-+#include "standard-headers/misc/pvpanic.h"
++#include "hw/block/block.h"
++#include "qapi/error.h"
++#include "sysemu/block-backend.h"
++#include "sysemu/dma.h"
 +
-+OBJECT_DECLARE_SIMPLE_TYPE(PVPanicMMIOState, PVPANIC_MMIO_DEVICE)
++OBJECT_DECLARE_SIMPLE_TYPE(VMAppleBdifState, VMAPPLE_BDIF)
 +
-+#define PVPANIC_MMIO_SIZE 0x2
-+
-+struct PVPanicMMIOState {
++struct VMAppleBdifState {
 +    SysBusDevice parent_obj;
 +
-+    PVPanicState pvpanic;
++    BlockBackend *aux;
++    BlockBackend *root;
++    MemoryRegion mmio;
 +};
 +
-+static void pvpanic_mmio_initfn(Object *obj)
-+{
-+    PVPanicMMIOState *s = PVPANIC_MMIO_DEVICE(obj);
++#define VMAPPLE_BDIF_SIZE   0x00200000
 +
-+    pvpanic_setup_io(&s->pvpanic, DEVICE(s), PVPANIC_MMIO_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->pvpanic.mr);
++#define REG_DEVID_MASK      0xffff0000
++#define DEVID_ROOT          0x00000000
++#define DEVID_AUX           0x00010000
++#define DEVID_USB           0x00100000
++
++#define REG_STATUS          0x0
++#define REG_STATUS_ACTIVE     BIT(0)
++#define REG_CFG             0x4
++#define REG_CFG_ACTIVE        BIT(1)
++#define REG_UNK1            0x8
++#define REG_BUSY            0x10
++#define REG_BUSY_READY        BIT(0)
++#define REG_UNK2            0x400
++#define REG_CMD             0x408
++#define REG_NEXT_DEVICE     0x420
++#define REG_UNK3            0x434
++
++typedef struct VblkSector {
++    uint32_t pad;
++    uint32_t pad2;
++    uint32_t sector;
++    uint32_t pad3;
++} VblkSector;
++
++typedef struct VblkReqCmd {
++    uint64_t addr;
++    uint32_t len;
++    uint32_t flags;
++} VblkReqCmd;
++
++typedef struct VblkReq {
++    VblkReqCmd sector;
++    VblkReqCmd data;
++    VblkReqCmd retval;
++} VblkReq;
++
++#define VBLK_DATA_FLAGS_READ  0x00030001
++#define VBLK_DATA_FLAGS_WRITE 0x00010001
++
++#define VBLK_RET_SUCCESS  0
++#define VBLK_RET_FAILED   1
++
++static uint64_t bdif_read(void *opaque, hwaddr offset, unsigned size)
++{
++    uint64_t ret = -1;
++    uint64_t devid = offset & REG_DEVID_MASK;
++
++    switch (offset & ~REG_DEVID_MASK) {
++    case REG_STATUS:
++        ret = REG_STATUS_ACTIVE;
++        break;
++    case REG_CFG:
++        ret = REG_CFG_ACTIVE;
++        break;
++    case REG_UNK1:
++        ret = 0x420;
++        break;
++    case REG_BUSY:
++        ret = REG_BUSY_READY;
++        break;
++    case REG_UNK2:
++        ret = 0x1;
++        break;
++    case REG_UNK3:
++        ret = 0x0;
++        break;
++    case REG_NEXT_DEVICE:
++        switch (devid) {
++        case DEVID_ROOT:
++            ret = 0x8000000;
++            break;
++        case DEVID_AUX:
++            ret = 0x10000;
++            break;
++        }
++        break;
++    }
++
++    trace_bdif_read(offset, size, ret);
++    return ret;
 +}
 +
-+static Property pvpanic_mmio_properties[] = {
-+    DEFINE_PROP_UINT8("events", PVPanicMMIOState, pvpanic.events,
-+                      PVPANIC_PANICKED | PVPANIC_CRASH_LOADED),
++static void le2cpu_sector(VblkSector *sector)
++{
++    sector->sector = le32_to_cpu(sector->sector);
++}
++
++static void le2cpu_reqcmd(VblkReqCmd *cmd)
++{
++    cmd->addr = le64_to_cpu(cmd->addr);
++    cmd->len = le32_to_cpu(cmd->len);
++    cmd->flags = le32_to_cpu(cmd->flags);
++}
++
++static void le2cpu_req(VblkReq *req)
++{
++    le2cpu_reqcmd(&req->sector);
++    le2cpu_reqcmd(&req->data);
++    le2cpu_reqcmd(&req->retval);
++}
++
++static void vblk_cmd(uint64_t devid, BlockBackend *blk, uint64_t gp_addr,
++                     uint64_t static_off)
++{
++    VblkReq req;
++    VblkSector sector;
++    uint64_t off = 0;
++    g_autofree char *buf = NULL;
++    uint8_t ret = VBLK_RET_FAILED;
++    int r;
++    MemTxResult dma_result;
++
++    dma_result = dma_memory_read(&address_space_memory, gp_addr,
++                                 &req, sizeof(req), MEMTXATTRS_UNSPECIFIED);
++    if (dma_result != MEMTX_OK) {
++        goto out;
++    }
++
++    le2cpu_req(&req);
++
++    if (req.sector.len != sizeof(sector)) {
++        goto out;
++    }
++
++    /* Read the vblk command */
++    dma_result = dma_memory_read(&address_space_memory, req.sector.addr,
++                                 &sector, sizeof(sector),
++                                 MEMTXATTRS_UNSPECIFIED);
++    if (dma_result != MEMTX_OK) {
++        goto out;
++    }
++    le2cpu_sector(&sector);
++
++    off = sector.sector * 512ULL + static_off;
++
++    /* Sanity check that we're not allocating bogus sizes */
++    if (req.data.len > 128 * MiB) {
++        goto out;
++    }
++
++    buf = g_malloc0(req.data.len);
++    switch (req.data.flags) {
++    case VBLK_DATA_FLAGS_READ:
++        r = blk_pread(blk, off, req.data.len, buf, 0);
++        trace_bdif_vblk_read(devid == DEVID_AUX ? "aux" : "root",
++                             req.data.addr, off, req.data.len, r);
++        if (r < 0) {
++            goto out;
++        }
++        dma_result = dma_memory_write(&address_space_memory, req.data.addr, buf,
++                                      req.data.len, MEMTXATTRS_UNSPECIFIED);
++        if (dma_result == MEMTX_OK) {
++            ret = VBLK_RET_SUCCESS;
++        }
++        break;
++    case VBLK_DATA_FLAGS_WRITE:
++        /* Not needed, iBoot only reads */
++        break;
++    default:
++        break;
++    }
++
++out:
++    dma_memory_write(&address_space_memory, req.retval.addr, &ret, 1,
++                     MEMTXATTRS_UNSPECIFIED);
++}
++
++static void bdif_write(void *opaque, hwaddr offset,
++                       uint64_t value, unsigned size)
++{
++    VMAppleBdifState *s = opaque;
++    uint64_t devid = (offset & REG_DEVID_MASK);
++
++    trace_bdif_write(offset, size, value);
++
++    switch (offset & ~REG_DEVID_MASK) {
++    case REG_CMD:
++        switch (devid) {
++        case DEVID_ROOT:
++            vblk_cmd(devid, s->root, value, 0x0);
++            break;
++        case DEVID_AUX:
++            vblk_cmd(devid, s->aux, value, 0x0);
++            break;
++        }
++        break;
++    }
++}
++
++static const MemoryRegionOps bdif_ops = {
++    .read = bdif_read,
++    .write = bdif_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++    .impl = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++};
++
++static void bdif_init(Object *obj)
++{
++    VMAppleBdifState *s = VMAPPLE_BDIF(obj);
++
++    memory_region_init_io(&s->mmio, obj, &bdif_ops, obj,
++                         "VMApple Backdoor Interface", VMAPPLE_BDIF_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
++}
++
++static Property bdif_properties[] = {
++    DEFINE_PROP_DRIVE("aux", VMAppleBdifState, aux),
++    DEFINE_PROP_DRIVE("root", VMAppleBdifState, root),
 +    DEFINE_PROP_END_OF_LIST(),
 +};
 +
-+static void pvpanic_mmio_class_init(ObjectClass *klass, void *data)
++static void bdif_class_init(ObjectClass *klass, void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    device_class_set_props(dc, pvpanic_mmio_properties);
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++    dc->desc = "VMApple Backdoor Interface";
++    device_class_set_props(dc, bdif_properties);
 +}
 +
-+static const TypeInfo pvpanic_mmio_info = {
-+    .name          = TYPE_PVPANIC_MMIO_DEVICE,
++static const TypeInfo bdif_info = {
++    .name          = TYPE_VMAPPLE_BDIF,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(PVPanicMMIOState),
-+    .instance_init = pvpanic_mmio_initfn,
-+    .class_init    = pvpanic_mmio_class_init,
++    .instance_size = sizeof(VMAppleBdifState),
++    .instance_init = bdif_init,
++    .class_init    = bdif_class_init,
 +};
 +
-+static void pvpanic_register_types(void)
++static void bdif_register_types(void)
 +{
-+    type_register_static(&pvpanic_mmio_info);
++    type_register_static(&bdif_info);
 +}
 +
-+type_init(pvpanic_register_types)
-diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
-index 9a71a5ad0d7..049a94c1125 100644
---- a/include/hw/misc/pvpanic.h
-+++ b/include/hw/misc/pvpanic.h
-@@ -26,6 +26,7 @@
++type_init(bdif_register_types)
+diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
+index bcd4dcb28d2..d4624713deb 100644
+--- a/hw/vmapple/meson.build
++++ b/hw/vmapple/meson.build
+@@ -1 +1,2 @@
+ system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
++system_ss.add(when: 'CONFIG_VMAPPLE_BDIF', if_true: files('bdif.c'))
+diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
+index 0d4a73d7d1c..d86f64d50fe 100644
+--- a/hw/vmapple/trace-events
++++ b/hw/vmapple/trace-events
+@@ -14,3 +14,8 @@ aes_2_read(uint64_t offset, uint64_t res) "offset=0x%"PRIx64" res=0x%"PRIx64
+ aes_2_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64" val=0x%"PRIx64
+ aes_dump_data(const char *desc, const char *hex) "%s%s"
  
- #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
- #define TYPE_PVPANIC_PCI_DEVICE "pvpanic-pci"
-+#define TYPE_PVPANIC_MMIO_DEVICE "pvpanic-mmio"
++# bdif.c
++bdif_read(uint64_t offset, uint32_t size, uint64_t value) "offset=0x%"PRIx64" size=0x%x value=0x%"PRIx64
++bdif_write(uint64_t offset, uint32_t size, uint64_t value) "offset=0x%"PRIx64" size=0x%x value=0x%"PRIx64
++bdif_vblk_read(const char *dev, uint64_t addr, uint64_t offset, uint32_t len, int r) "dev=%s addr=0x%"PRIx64" off=0x%"PRIx64" size=0x%x r=%d"
++
+diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
+index 6762b6c869f..9090e9c5ac8 100644
+--- a/include/hw/vmapple/vmapple.h
++++ b/include/hw/vmapple/vmapple.h
+@@ -14,4 +14,6 @@
  
- #define PVPANIC_IOPORT_PROP "ioport"
+ #define TYPE_APPLE_AES "apple-aes"
  
++#define TYPE_VMAPPLE_BDIF "vmapple-bdif"
++
+ #endif /* HW_VMAPPLE_VMAPPLE_H */
 -- 
 2.39.5 (Apple Git-154)
 
