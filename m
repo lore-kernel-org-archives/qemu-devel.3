@@ -4,151 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50600D6ACC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 12:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC099D6ACC0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 12:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGGzo-0005Ei-0s; Wed, 27 Nov 2024 07:18:16 -0500
+	id 1tGGzE-0004jv-AY; Wed, 27 Nov 2024 07:17:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tGGzf-000569-NN
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:18:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tGGzd-0000Hg-JE
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:18:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732709882;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=M9mzA8P4z44It+NfVfL4iSSjjQ3sYQYIK8zhXdpjXrQ=;
- b=e0UW/N1qJLaXYrMKfR2c+0bNfCDjlCTn0WKBFzhri6+ZDQn9rbCZAvUw7xNT6HUBLelkv5
- wGCV79OkHnxl2ahFhpZEum8BfY9dQ62Pkk/aHc8RB6Kf6I0P66zAhQwnhG6Gjl4dz6+0nX
- c/NNXfI9oy2LXkPR3Vms648DhLmB5kU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-TNPpEo2oOFyX-fMZQXm3-g-1; Wed, 27 Nov 2024 07:18:01 -0500
-X-MC-Unique: TNPpEo2oOFyX-fMZQXm3-g-1
-X-Mimecast-MFC-AGG-ID: TNPpEo2oOFyX-fMZQXm3-g
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-382412f3e62so3487542f8f.3
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 04:18:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGGz6-0004do-Ts
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:17:35 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGGz3-0008Oy-Nm
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:17:32 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-382378f359dso4874001f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 04:17:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732709847; x=1733314647; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vns9bqBuR5cnqvo3EIuMottCnMJCI/I9HZl614iUdF8=;
+ b=sBKESlkEUoyGrWo3pXae3o0PUG+BZA0Bs/RaW18JeNN5awEXffSiBJ0Neg2s7SGALn
+ KueOa1Ch4pjY4Sl/QdMDOMajiMaIxqt3jjABvWqYzchWYSaL7KIQI5mloFKG1Fhv9Qye
+ TAMiKusp0+I3R1zG+uC23CAUlLLIb3J7Zx989qwYTbCTkdwvm/gCoZb4RlNKQ3yKKRlM
+ 91XcBwlfLUXKqcdFJqI0aDPVYhtgsC80DLKrMQqAbY5v+ZzMF1xtNMqdeS3VF97xSpOm
+ oZu078UJsJaUGGWF8IdrkRCc7F2ijTAx3gm1xq1G5OJmAHTe4bNCglMHFbUWblxSAP44
+ mR8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732709880; x=1733314680;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:references:cc:to:from:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=M9mzA8P4z44It+NfVfL4iSSjjQ3sYQYIK8zhXdpjXrQ=;
- b=QS0AeSqlI5DfB4ZE/zbXjzii0cfWXlJ04fAmBjOfhkXVgpWvmclKA3TW+ElGvELQTe
- UJy9As7TKiqqNuBZPpgBND90Jkrf4ePtq9w9CCpBUSfFY7FJL+Uyo3CothjfV8ruixYO
- m8dGwxRZ26NlncQ8FSnUvFiOufiAkdHdfCkkZ9eYMWQSvjghNApyVpaukrs7bVLp5/jI
- aoPfkRR78QjIJA3TOoLOiqqjxMY6gsHvSn6rD9az8SWKEb4YDOzMaOhXBEPohAlNsVWv
- lcMg2UeONimSAhrwoN4S/ujpDWyV+cFtcJ3AQjKbfdEylJ44u7msFes0NG7n+ypcFUYg
- ///w==
-X-Gm-Message-State: AOJu0YwkabQBaPKzH/dfYBjQNQxkaUP170I0iF7W/U5O0BLuLXPkglA0
- hmUHNiVIQ2ZNF5qE9l/bxx/jwusQIpmELalWYJPBTd67y6SOBBygsbw4K2rF2btF/A8h11BS3HX
- w3oanynYEjXPtR8HS1mVw6GVCXYE9VmCULoIcIc9+VL63ZULomXnL
-X-Gm-Gg: ASbGnctmWk2kzFUD/bizwAVW0vwgBWnShd8tdif9iRLE0YeABzXkpRXKpT+Jk+iQE8B
- ypvLgekymWjGDLo7taJsdcS5QkXZZ5OJBj1giWcHkxFOmygX5csbsAistcnpls6Wa3UAGF214s3
- fRbXZ5khBZpHMGkPUjiK62WbP33Gt/U5Ny0QMoDKB3lQ2Qq5XuCajCP4udv+YRppJ+d7NK4UpnY
- gHrcDmtjRxS6fF7zV2ft3GIT4ReXif0wZbbPbRPAODPDLtWTN0aHy1YSfF5qVyjRs+gpIaV6Oc2
- y8oXULyebQniBJy2My4+0hXv86rHlnImPzW4AoMMg2pykqjBhNEWuM64ELyVbCt9Zg9iX0m7zY4
- Nrg==
-X-Received: by 2002:a5d:5f50:0:b0:382:542d:39ac with SMTP id
- ffacd0b85a97d-385c6ebb9admr1878217f8f.19.1732709880127; 
- Wed, 27 Nov 2024 04:18:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGymb6ChZB/jAt4wIwa8vKGzxFk/8FgsBBZlZ+uC7IoGauMZxUmttwjvU4K0sAZiyVW6MXoqQ==
-X-Received: by 2002:a5d:5f50:0:b0:382:542d:39ac with SMTP id
- ffacd0b85a97d-385c6ebb9admr1878196f8f.19.1732709879692; 
- Wed, 27 Nov 2024 04:17:59 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70d:be00:66fa:83a6:8803:977e?
- (p200300cbc70dbe0066fa83a68803977e.dip0.t-ipconnect.de.
- [2003:cb:c70d:be00:66fa:83a6:8803:977e])
+ d=1e100.net; s=20230601; t=1732709847; x=1733314647;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vns9bqBuR5cnqvo3EIuMottCnMJCI/I9HZl614iUdF8=;
+ b=S8G6Ma+0GihSYayNhIbWQf7pE5v8ZmZVEQp+EHkrJyJdyByX6iraIlXBkHHwWbJhC0
+ PpLwGkiiW4DSULh5bAlYUfBQfYobjbMN9DnwlpsY1OOh3c7PhLHroByHlmn+/g+Da9Rx
+ c1ebhap2WUtNvlY51SILkjdmE3vbgsH7ixuaoSe7ZvwY0qtiII5sBSuE4nKNFF301XTX
+ hPaIwVyweaJuGorzXLSH8tJRRT/Yjl3FznhWYSYVNgYG2l3oq8uF1jMEHV+lGgkG699x
+ BcBMgrZOlclAZoXSDHXF1rbSQR8V6kMV74Phv605y7qebAYC0p4d0PFwHiIzYUxmLaaV
+ pqyw==
+X-Gm-Message-State: AOJu0Yzkq47lO4+og6mIR67jKITrbISsEIOGjOf/8JX5Eyv91SAbPCli
+ Oj/sUprh5GthDEw5JelB35Me1x/bRKbX8j7nMdn69ptUrbPQpu/9nUoWN8qc+MASLTUuCMAuixz
+ N
+X-Gm-Gg: ASbGncvgDmw2KE6k/DiGHLECVTMO9rrq5dBG6dbdL5BLWiWha+IRAgRbr/mKZMIZEZa
+ WJhDbefDcVwqQEJKVHWvwByOAM5XdQ85CoS2R16PJtCiQja1trYAmkOwgDQWfwQBUp3jAwEu0OS
+ 9xgXJBC6Ca8XeaVZ18dRUSkfqH1g/sLRG6fwhd9AH5KqBtM7PHJkRtK7H0MNpWs7gjyH5Tzqy0C
+ 7ijkSlgOcE+3vLOla2+KXhgfDV93XvrVJjxoxJDdYtSitB5meIYaPiDGLZKH32GBee59aJymCZ+
+ BEIBJ4B6NJtcgf+M3K2FxS3qcTb5FZwwsva233As2o4=
+X-Google-Smtp-Source: AGHT+IG5tiJenNQw0m27Qs/4K0McssL84TMGSF3gCDnWRmBvScqyJWE8Ed0lOGL4TDEXr5UIrsjIzQ==
+X-Received: by 2002:adf:e185:0:b0:382:3894:346c with SMTP id
+ ffacd0b85a97d-385c6eba8b3mr2230726f8f.27.1732709847507; 
+ Wed, 27 Nov 2024 04:17:27 -0800 (PST)
+Received: from localhost.localdomain
+ (plb95-h02-176-184-14-96.dsl.sta.abo.bbox.fr. [176.184.14.96])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fcff017sm16171141f8f.108.2024.11.27.04.17.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Nov 2024 04:17:58 -0800 (PST)
-Message-ID: <6714e754-8d2d-4751-8b3b-dd7ce469a469@redhat.com>
-Date: Wed, 27 Nov 2024 13:17:56 +0100
+ ffacd0b85a97d-3825fbedfccsm16080714f8f.101.2024.11.27.04.17.26
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 27 Nov 2024 04:17:27 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.0 5/6] accel/tcg: Add TCGCPUOps::arch_id field
+Date: Wed, 27 Nov 2024 13:16:57 +0100
+Message-ID: <20241127121658.88966-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241127121658.88966-1-philmd@linaro.org>
+References: <20241127121658.88966-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] vhost-user: Add VIRTIO Shared Memory map request
-From: David Hildenbrand <david@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, slp@redhat.com, hi@alyssa.is, mst@redhat.com,
- jasowang@redhat.com, stefanha@redhat.com,
- Stefano Garzarella <sgarzare@redhat.com>, stevensd@chromium.org
-References: <20240912145335.129447-1-aesteve@redhat.com>
- <20240912145335.129447-2-aesteve@redhat.com>
- <abfd06b7-ad85-454b-a973-6c939c4588e3@redhat.com>
- <CADSE00+Yg+ufOT1NQ+8H7DSaE0zCFrWbn-yTajx72G0BZdUw9g@mail.gmail.com>
- <c998c231-5034-4a7e-bf97-1470959c052d@redhat.com>
- <44de54b5-8336-4d84-96f0-36f809f48eff@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <44de54b5-8336-4d84-96f0-36f809f48eff@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.931,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,142 +101,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.11.24 13:10, David Hildenbrand wrote:
-> On 27.11.24 11:50, David Hildenbrand wrote:
->>
->>>> RAM memory region/ RAMBlock that has properly set flags/fd/whatssoever
->>>> and map whatever you want in there.
->>>>
->>>> Likely you would need a distinct RAMBlock/RAM memory region per mmap(),
->>>> and would end up mmaping implicitly via qemu_ram_mmap().
->>>>
->>>> Then, your shared region would simply be an empty container into which
->>>> you map these RAM memory regions.
->>>
->>
->> Hi,
->>
->>> Hi, sorry it took me so long to get back to this. Lately I have been
->>> testing the patch and fixing bugs, and I am was going to add some
->>> tests to be able to verify the patch without having to use a backend
->>> (which is what I am doing right now).
->>>
->>> But I wanted to address/discuss this comment. I am not sure of the
->>> actual problem with the current approach (I am not completely aware of
->>> the concern in your first paragraph), but I see other instances where
->>> qemu mmaps stuff into a MemoryRegion.
->>
->> I suggest you take a look at the three relevant MAP_FIXED users outside
->> of user emulation code.
->>
->> (1) hw/vfio/helpers.c: We create a custom memory region + RAMBlock with
->>        memory_region_init_ram_device_ptr(). This doesn't mmap(MAP_FIXED)
->>        into any existing RAMBlock.
->>
->> (2) system/physmem.c: I suggest you take a close look at
->>        qemu_ram_remap() and how it is one example of how RAMBlock
->>        properties describe exactly what is mmaped.
->>
->> (3) util/mmap-alloc.c: Well, this is the code that performs the mmap(),
->>        to bring a RAMBlock to life. See qemu_ram_mmap().
->>
->> There is some oddity hw/xen/xen-mapcache.c; XEN mapcache seems to manage
->> guest RAM without RAMBlocks.
->>
->>> Take into account that the
->>> implementation follows the definition of shared memory region here:
->>> https://docs.oasis-open.org/virtio/virtio/v1.3/csd01/virtio-v1.3-csd01.html#x1-10200010
->>> Which hints to a memory region per ID, not one per required map. So
->>> the current strategy seems to fit it better.
->>
->> I'm confused, we are talking about an implementation detail here? How is
->> that related to the spec?
->>
->>>
->>> Also, I was aware that I was not the first one attempting this, so I
->>> based this code in previous attempts (maybe I should give credit in
->>> the commit now that I think of):
->>> https://gitlab.com/virtio-fs/qemu/-/blob/qemu5.0-virtiofs-dax/hw/virtio/vhost-user-fs.c?ref_type=heads#L75
->>> As you can see, it pretty much follows the same strategy.
->>
->> So, people did some hacky things in a QEMU fork 6 years ago ... :) That
->> cannot possibly be a good argument why we should have it like that in QEMU.
->>
->>> And in my
->>> examples I have been able to use this to video stream with multiple
->>> queues mapped into the shared memory (used to capture video frames),
->>> using the backend I mentioned above for testing. So the concept works.
->>> I may be wrong with this, but for what I understood looking at the
->>> code, crosvm uses a similar strategy. Reserve a memory block and use
->>> for all your mappings, and use an allocator to find a free slot.
->>>
->>
->> Again, I suggest you take a look at what a RAMBlock is, and how it's
->> properties describe the containing mmap().
->>
->>> And if I were to do what you say, those distinct RAMBlocks should be
->>> created when the device starts? What would be their size? Should I
->>> create them when qemu receives a request to mmap? How would the driver
->>> find the RAMBlock?
->>
->> You'd have an empty memory region container into which you will map
->> memory regions that describe the memory you want to share.
->>
->> mr = g_new0(MemoryRegion, 1);
->> memory_region_init(mr, OBJECT(TODO), "vhost-user-shm", region_size);
->>
->>
->> Assuming you are requested to mmap an fd, you'd create a new
->> MemoryRegion+RAMBlock that describes the memory and performs the mmap()
->> for you:
->>
->> map_mr = g_new0(MemoryRegion, 1);
->> memory_region_init_ram_from_fd(map_mr, OBJECT(TODO), "TODO", map_size,
->> 			       RAM_SHARED, map_fd, map_offs, errp);
->>
->> To then map it into your container:
->>
->> memory_region_add_subregion(mr, offset_within_container, map_mr);
->>
->>
->> To unmap, you'd first remove the subregion, to then unref the map_mr.
->>
->>
->>
->> The only alternative would be to do it like (1) above: you perform all
->> of the mmap() yourself, and create it using
->> memory_region_init_ram_device_ptr(). This will set RAM_PREALLOC on the
->> RAMBlock and tell QEMU "this is special, just disregard it". The bad
->> thing about RAM_PREALLOC will be that it will not be compatible with
->> vfio, not communicated to other vhost-user devices etc ... whereby what
->> I describe above would just work with them.
->>
-> 
-> FWIW, I took another look at this patch and I cannot really make sense
-> of what you are doing.
-> 
-> In virtio_new_shmem_region(), you allocate a region, but I don't see how
-> it would ever get initialized?
-> 
-> In vhost_user_backend_handle_shmem_map(), you then assume that it is
-> suddenly a RAM memory region? For example, that
-> memory_region_get_ram_ptr() returns something reasonable.
-> 
-> Likely, you really just want to initialize that MR using
-> memory_region_init_ram_from_fd(), and have that just perform the proper
-> mmap() for you and setup the RAMBlock?
+When using multiple TCG frontends concurrently, we need to
+be able to discriminate by target architecture. While we
+can infer that from the CPUClass, it can be quicker to get
+it from a direct field in TCGCPUOps.
 
-In patch #4 I find: memory_region_init_ram_ptr(vdev->shmem_list[i].mr ...
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/core/tcg-cpu-ops.h | 3 +++
+ target/alpha/cpu.c            | 1 +
+ target/arm/cpu.c              | 1 +
+ target/arm/tcg/cpu-v7m.c      | 1 +
+ target/avr/cpu.c              | 1 +
+ target/hexagon/cpu.c          | 1 +
+ target/hppa/cpu.c             | 1 +
+ target/i386/tcg/tcg-cpu.c     | 1 +
+ target/loongarch/cpu.c        | 1 +
+ target/m68k/cpu.c             | 1 +
+ target/microblaze/cpu.c       | 1 +
+ target/mips/cpu.c             | 1 +
+ target/openrisc/cpu.c         | 1 +
+ target/ppc/cpu_init.c         | 1 +
+ target/riscv/tcg/tcg-cpu.c    | 1 +
+ target/rx/cpu.c               | 1 +
+ target/s390x/cpu.c            | 1 +
+ target/sh4/cpu.c              | 1 +
+ target/sparc/cpu.c            | 1 +
+ target/tricore/cpu.c          | 1 +
+ target/xtensa/cpu.c           | 1 +
+ 21 files changed, 23 insertions(+)
 
-Which does what I describe as the alternative. That makes it clearer 
-that you are not operating on arbitrary RAMBlocks. So that should indeed 
-work.
-
-The way you structured these patches really is suboptimal for review.
-
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index 9a01eb87bfb..ec3d2b50a9e 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -10,6 +10,7 @@
+ #ifndef TCG_CPU_OPS_H
+ #define TCG_CPU_OPS_H
+ 
++#include "qemu/arch_id.h"
+ #include "exec/breakpoint.h"
+ #include "exec/hwaddr.h"
+ #include "exec/memattrs.h"
+@@ -18,6 +19,8 @@
+ #include "exec/vaddr.h"
+ 
+ struct TCGCPUOps {
++    QemuArch arch_id;
++
+     /**
+      * @initialize_once: Initialize TCG state
+      *
+diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+index 4a20b0c5d16..e020b4ce173 100644
+--- a/target/alpha/cpu.c
++++ b/target/alpha/cpu.c
+@@ -220,6 +220,7 @@ static const struct SysemuCPUOps alpha_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps alpha_tcg_ops = {
++    .arch_id = QEMU_ARCH_ALPHA,
+     .initialize_once = alpha_translate_init,
+     .synchronize_from_tb = alpha_cpu_synchronize_from_tb,
+     .restore_state_to_opc = alpha_restore_state_to_opc,
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index f5b0c33a6dc..9b088c893bf 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2671,6 +2671,7 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
+ 
+ #ifdef CONFIG_TCG
+ static const TCGCPUOps arm_tcg_ops = {
++    .arch_id = QEMU_ARCH_ARM,
+     .initialize_once = arm_translate_init,
+     .synchronize_from_tb = arm_cpu_synchronize_from_tb,
+     .debug_excp_handler = arm_debug_excp_handler,
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index 7a887a29b75..7a316561acc 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -233,6 +233,7 @@ static void cortex_m55_initfn(Object *obj)
+ }
+ 
+ static const TCGCPUOps arm_v7m_tcg_ops = {
++    .arch_id = QEMU_ARCH_ARM,
+     .initialize_once = arm_translate_init,
+     .synchronize_from_tb = arm_cpu_synchronize_from_tb,
+     .debug_excp_handler = arm_debug_excp_handler,
+diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+index e69b5a6af9b..a9cce351755 100644
+--- a/target/avr/cpu.c
++++ b/target/avr/cpu.c
+@@ -206,6 +206,7 @@ static const struct SysemuCPUOps avr_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps avr_tcg_ops = {
++    .arch_id = QEMU_ARCH_AVR,
+     .initialize_once = avr_cpu_tcg_init,
+     .synchronize_from_tb = avr_cpu_synchronize_from_tb,
+     .restore_state_to_opc = avr_restore_state_to_opc,
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 6f7777c607e..2a3b2e5fb4f 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -322,6 +322,7 @@ static void hexagon_cpu_init(Object *obj)
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps hexagon_tcg_ops = {
++    .arch_id = QEMU_ARCH_HEXAGON,
+     .initialize_once = hexagon_translate_init,
+     .synchronize_from_tb = hexagon_cpu_synchronize_from_tb,
+     .restore_state_to_opc = hexagon_restore_state_to_opc,
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index e654f133636..9bee8ef24f6 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -221,6 +221,7 @@ static const struct SysemuCPUOps hppa_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps hppa_tcg_ops = {
++    .arch_id = QEMU_ARCH_HPPA,
+     .initialize_once = hppa_translate_init,
+     .synchronize_from_tb = hppa_cpu_synchronize_from_tb,
+     .restore_state_to_opc = hppa_restore_state_to_opc,
+diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
+index b44d2f370d1..0577d6237a9 100644
+--- a/target/i386/tcg/tcg-cpu.c
++++ b/target/i386/tcg/tcg-cpu.c
+@@ -107,6 +107,7 @@ static bool x86_debug_check_breakpoint(CPUState *cs)
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps x86_tcg_ops = {
++    .arch_id = QEMU_ARCH_I386,
+     .initialize_once = tcg_x86_init,
+     .synchronize_from_tb = x86_cpu_synchronize_from_tb,
+     .restore_state_to_opc = x86_restore_state_to_opc,
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 32aa5468ceb..96ae8c4ef05 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -793,6 +793,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps loongarch_tcg_ops = {
++    .arch_id = QEMU_ARCH_LOONGARCH,
+     .initialize_once = loongarch_translate_init,
+     .synchronize_from_tb = loongarch_cpu_synchronize_from_tb,
+     .restore_state_to_opc = loongarch_restore_state_to_opc,
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 230057b7375..8a45fbe9d2f 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -546,6 +546,7 @@ static const struct SysemuCPUOps m68k_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps m68k_tcg_ops = {
++    .arch_id = QEMU_ARCH_M68K,
+     .initialize_once = m68k_tcg_init,
+     .restore_state_to_opc = m68k_restore_state_to_opc,
+ 
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index f75e1cf5ab1..e2cfbbbbefd 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -420,6 +420,7 @@ static const struct SysemuCPUOps mb_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps mb_tcg_ops = {
++    .arch_id = QEMU_ARCH_MICROBLAZE,
+     .initialize_once = mb_tcg_init,
+     .synchronize_from_tb = mb_cpu_synchronize_from_tb,
+     .restore_state_to_opc = mb_restore_state_to_opc,
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index 4f7d9c03599..769f25551c7 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -551,6 +551,7 @@ static Property mips_cpu_properties[] = {
+  * mips hardware (see hw/mips/jazz.c).
+  */
+ static const TCGCPUOps mips_tcg_ops = {
++    .arch_id = QEMU_ARCH_MIPS,
+     .initialize_once = mips_tcg_init,
+     .synchronize_from_tb = mips_cpu_synchronize_from_tb,
+     .restore_state_to_opc = mips_restore_state_to_opc,
+diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
+index 24125eea1e7..ac041b4427b 100644
+--- a/target/openrisc/cpu.c
++++ b/target/openrisc/cpu.c
+@@ -232,6 +232,7 @@ static const struct SysemuCPUOps openrisc_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps openrisc_tcg_ops = {
++    .arch_id = QEMU_ARCH_OPENRISC,
+     .initialize_once = openrisc_translate_init,
+     .synchronize_from_tb = openrisc_cpu_synchronize_from_tb,
+     .restore_state_to_opc = openrisc_restore_state_to_opc,
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 9f90de7f6bd..13295b9dfcb 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7416,6 +7416,7 @@ static const struct SysemuCPUOps ppc_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps ppc_tcg_ops = {
++    .arch_id = QEMU_ARCH_PPC,
+     .initialize_once = ppc_translate_init,
+     .restore_state_to_opc = ppc_restore_state_to_opc,
+ #ifdef CONFIG_USER_ONLY
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 2be43b90908..ad00183a830 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -133,6 +133,7 @@ static void riscv_restore_state_to_opc(CPUState *cs,
+ }
+ 
+ static const TCGCPUOps riscv_tcg_ops = {
++    .arch_id = QEMU_ARCH_RISCV,
+     .initialize_once = riscv_translate_init,
+     .synchronize_from_tb = riscv_cpu_synchronize_from_tb,
+     .restore_state_to_opc = riscv_restore_state_to_opc,
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index 7c338b584e8..12ed4a4101f 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -192,6 +192,7 @@ static const struct SysemuCPUOps rx_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps rx_tcg_ops = {
++    .arch_id = QEMU_ARCH_RX,
+     .initialize_once = rx_translate_init,
+     .synchronize_from_tb = rx_cpu_synchronize_from_tb,
+     .restore_state_to_opc = rx_restore_state_to_opc,
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index a5ab2a083b5..984cacce2d4 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -357,6 +357,7 @@ void cpu_get_tb_cpu_state(CPUS390XState *env, vaddr *pc,
+ }
+ 
+ static const TCGCPUOps s390_tcg_ops = {
++    .arch_id = QEMU_ARCH_S390X,
+     .initialize_once = s390x_translate_init,
+     .restore_state_to_opc = s390x_restore_state_to_opc,
+ 
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index 75d6504293f..cd7336bd7f2 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -247,6 +247,7 @@ static const struct SysemuCPUOps sh4_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps superh_tcg_ops = {
++    .arch_id = QEMU_ARCH_SH4,
+     .initialize_once = sh4_translate_init,
+     .synchronize_from_tb = superh_cpu_synchronize_from_tb,
+     .restore_state_to_opc = superh_restore_state_to_opc,
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index d803c329650..7e89c4033b2 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -927,6 +927,7 @@ static const struct SysemuCPUOps sparc_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps sparc_tcg_ops = {
++    .arch_id = QEMU_ARCH_SPARC,
+     .initialize_once = sparc_tcg_init,
+     .synchronize_from_tb = sparc_cpu_synchronize_from_tb,
+     .restore_state_to_opc = sparc_restore_state_to_opc,
+diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
+index 19c583ed326..a8864955201 100644
+--- a/target/tricore/cpu.c
++++ b/target/tricore/cpu.c
+@@ -170,6 +170,7 @@ static const struct SysemuCPUOps tricore_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps tricore_tcg_ops = {
++    .arch_id = QEMU_ARCH_TRICORE,
+     .initialize_once = tricore_tcg_init,
+     .synchronize_from_tb = tricore_cpu_synchronize_from_tb,
+     .restore_state_to_opc = tricore_restore_state_to_opc,
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 71c0a10ef0c..5d115328ffb 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -227,6 +227,7 @@ static const struct SysemuCPUOps xtensa_sysemu_ops = {
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+ static const TCGCPUOps xtensa_tcg_ops = {
++    .arch_id = QEMU_ARCH_XTENSA,
+     .initialize_once = xtensa_translate_init,
+     .debug_excp_handler = xtensa_breakpoint_handler,
+     .restore_state_to_opc = xtensa_restore_state_to_opc,
 -- 
-Cheers,
-
-David / dhildenb
+2.45.2
 
 
