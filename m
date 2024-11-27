@@ -4,69 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B759FD609D7
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 11:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F7FCD609DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 11:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGG1T-0007li-DB; Wed, 27 Nov 2024 06:15:55 -0500
+	id 1tGG8y-0001kZ-UL; Wed, 27 Nov 2024 06:23:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tGG1P-0007kQ-G4
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 06:15:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tGG1N-0001kC-FS
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 06:15:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732706147;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=oHENvK5q8dSKft7BX87XNj1KWsLEULxlB9iidhIHNTk=;
- b=iBmvxzj0SsxxTT7OPew1nPWJvvAWdPaptOV/Y5h6FMGgLbUxL/vtOl4nxN5kOYJFSEdu3t
- qU9sD+Q3DW/ccQ8E1jxw2RsPZe875GT5oO5ybnSP/Lcr2Xn1ELEXpg2MEG98obyPbBWb2a
- gciuR3cA62ZmFB38KQTG5CKRcIPYOi0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-m9ZNmz-YPeaTdMrMmFGC0g-1; Wed,
- 27 Nov 2024 06:15:42 -0500
-X-MC-Unique: m9ZNmz-YPeaTdMrMmFGC0g-1
-X-Mimecast-MFC-AGG-ID: m9ZNmz-YPeaTdMrMmFGC0g
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E329819560B0; Wed, 27 Nov 2024 11:15:40 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.74.16.158])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED8301956054; Wed, 27 Nov 2024 11:15:34 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- yong.huang@smartx.com, chen.zhang@intel.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH] migration: correct multifd receive thread name
-Date: Wed, 27 Nov 2024 16:45:28 +0530
-Message-ID: <20241127111528.167330-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tGG8v-0001k9-Rw
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 06:23:39 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tGG8u-0004fa-15
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 06:23:37 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5cfddb70965so8128924a12.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 03:23:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732706614; x=1733311414; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=d0PzA+s/QDhUbgJg2hssFIWE6nAfzQd+B4Ci9W7D+3c=;
+ b=pqZiAVfBsROBd1wfK7nwUxJxoySFRlp7qx3Qib0PbwmBN1zeJCPYN5ReuNOon0771L
+ oGXyYjRAyHYu4IEA/vYum7ILICYK547ufPzSM9z7MkKTBTwD9dQRHZNXNbhtLHyu7SLL
+ FCzu8mNzkgLjOlwXyTBbw1eg6yrKq3p6E9VmWnzG7Qn6AgEqNwAaORabNKgcHpCpIWZ6
+ w5y2Ppf/aGLhFoV7OEwBXj4OM89Fq5LLp26mC9elmSozlWfQtt5biplA+HuDeU3tcsB3
+ CM5aLuUbrkF41+Ri+HVmvqKQed4vAL+x+bU34iiBwwgb5639I+DDUUg0umOjngyqImgp
+ mr7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732706614; x=1733311414;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d0PzA+s/QDhUbgJg2hssFIWE6nAfzQd+B4Ci9W7D+3c=;
+ b=ZApDQKq3uWJlUk12M2tAICf370lholdzhhh4iX0NucxZ9KjM6j6O/fx8bQdcI8T80x
+ 8SjJ17WzL2KaHkW173FM8CN0bxD6yPwuD3webXOcitZTp/UPATPCeDsNxclbQdbBSpLk
+ cWt4PelXQ/mhLq+d98/rJX78X5R1CHwa3yTo3FoBuhhym2yJQ+Khw3fk51n2VfRHA+3t
+ SoJUyOmUZXu1HGk/E0EQL076vU8O7jvhBuJQ15MyRbbi+NDizPlyV/yQvCY7Pc0sTSq1
+ ubAUXGrevrr14I+VJ3g+Nhm8f/IDcQUC3lqA/aB4oYKTah4gbED2i/Vsdhf6XH8F7v7o
+ Idaw==
+X-Gm-Message-State: AOJu0Yx5+sHofUy6U4NuxfZCiDkjQ4t6EL4MWra1yAoY4RDBdaJI33hM
+ TTyR6yPqmQh1WIr3OCscK2ZQutyFfO7cwLiGGs/kkY5qshJQVp/+tST0XKQi1Dv+NT8y4EzSxq8
+ iWSHGScUVo/V2vPXAby5ceLJu4JrMkITAiDyLGw==
+X-Gm-Gg: ASbGncvd3o4g7gW9srub5cV9QCQ70qvpL9xrIGXV1fjGiLd4SGPzzXT0JT7btrd1+qI
+ vLYTV/0NzEmXqxEZWwTqWfTNWQUmywL3R
+X-Google-Smtp-Source: AGHT+IE5WrzX27stcE2nVVAGFNqsbIDkzcYSV8yNpSSfvDcfvm6mIDCbHDDVoR9Xs0TfG/965tlhMFLSTkTdryC72Fw=
+X-Received: by 2002:aa7:d68d:0:b0:5d0:8676:3ed9 with SMTP id
+ 4fb4d7f45d1cf-5d08676410cmr964845a12.8.1732706613360; Wed, 27 Nov 2024
+ 03:23:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
+ <0ace2747-efc8-4c0a-9d9f-68f255f1e3a5@igel.co.jp>
+In-Reply-To: <0ace2747-efc8-4c0a-9d9f-68f255f1e3a5@igel.co.jp>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 27 Nov 2024 11:23:22 +0000
+Message-ID: <CAFEAcA8oDPD7xdhMC__Rp3WOzSdm9CnSHw-bepvQnxK3BMzVOg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/5] support unaligned access to xHCI Capability
+To: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, its@irrelevant.dk, 
+ foss@defmacro.it, qemu-block@nongnu.org, pbonzini@redhat.com, 
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org, farosas@suse.de, 
+ lvivier@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,31 +93,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+On Wed, 27 Nov 2024 at 04:34, Tomoyuki HIROSE
+<tomoyuki.hirose@igel.co.jp> wrote:
+>
+> I would be happy to receive your comments.
+> ping.
 
-Multifd receive threads run on the destination side.
-Correct the thread name marco to indicate the same.
+Hi; this one is on my to-review list (along, sadly, with 23 other
+series); I had a quick look a while back and it seemed good
+(the testing support you've added looks great), but I need
+to sit down and review the implementation more carefully.
 
-Fixes: e620b1e4770b ("migration: Put thread names together with macros")
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
----
- migration/migration.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The one concern I did have was the big long list of macro
+invocations in the memaccess-testdev device. I wonder if it
+would be more readable and more compact to fill in MemoryRegionOps
+structs at runtime using loops in C code, rather than trying to do
+it all at compile time with macros ?
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 0956e9274b..3857905c0e 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -37,7 +37,7 @@
- #define  MIGRATION_THREAD_SRC_TLS           "mig/src/tls"
- 
- #define  MIGRATION_THREAD_DST_COLO          "mig/dst/colo"
--#define  MIGRATION_THREAD_DST_MULTIFD       "mig/src/recv_%d"
-+#define  MIGRATION_THREAD_DST_MULTIFD       "mig/dst/recv_%d"
- #define  MIGRATION_THREAD_DST_FAULT         "mig/dst/fault"
- #define  MIGRATION_THREAD_DST_LISTEN        "mig/dst/listen"
- #define  MIGRATION_THREAD_DST_PREEMPT       "mig/dst/preempt"
--- 
-2.47.0
-
+thanks
+-- PMM
 
