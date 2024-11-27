@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8186D6ACF4
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 17:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59AE5D6ACF4
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 17:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGLkt-00014C-0Y; Wed, 27 Nov 2024 12:23:11 -0500
+	id 1tGLmu-0001m4-RT; Wed, 27 Nov 2024 12:25:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tGLkq-00013s-HA
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 12:23:08 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tGLmt-0001kP-FE
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 12:25:15 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tGLko-00077L-MP
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 12:23:08 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tGLmr-0007yV-FK
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 12:25:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=M+M5aW18ddkRLTN8mPb7seP7JJfO8IXnP0SHH3+Rjqk=; b=XTM2q0bnfeafnna
- H1SHyni+pwzJe2tyLQYfsYBhLAUwTVsl/VSsw18suC9Tod/rRwEUY3Yef4tCksJi3hYqdGwtXix6B
- FkJaTrmn9oty3AhCa5sTAJcfjOg8VA19ePJ2XPNGBvKZhST3wuwAIoo4YpXCHjR9A9mMdhfM44BBv
- /0=;
-Date: Wed, 27 Nov 2024 18:26:03 +0100
+ List-Help; bh=LR7opar0egR/IAAOFgxbIY8BMSl6v5RQsq3KfIztrZI=; b=wZD0sC2sEhqFrQ9
+ szOt0pTsZoNwyP1urQkD3NNLFT8hB+1VPDWkE8DViwHiHj7LaJIJx1x5KlDfrzGLvV/BhSH3JtNhO
+ IWWlrEqH1M5yRamcQ0Z8O4QhcAnAZDDmJF1+Cbl2lyr+MD+QvguSxjNzAoEchits1MmUTOiQFdwCm
+ jY=;
+Date: Wed, 27 Nov 2024 18:28:07 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, 
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH-for-10.0 5/6] accel/tcg: Add TCGCPUOps::arch_id field
-Message-ID: <nrtmnhffrv7bpkdd5py7vkn6lfntmbp4ynephisgo7jrmedydk@w6vgenkwx73g>
+Subject: Re: [PATCH-for-10.0 6/6] accel/tcg: Allow tcg_exec_realizefn()
+ initialize multiple frontends
+Message-ID: <pfndwuswldc3bqu5p4uof53nu6wxuvoeuzsbo3c7uaqij7go3e@yypfckmjv4dc>
 References: <20241127121658.88966-1-philmd@linaro.org>
- <20241127121658.88966-6-philmd@linaro.org>
+ <20241127121658.88966-7-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241127121658.88966-6-philmd@linaro.org>
+In-Reply-To: <20241127121658.88966-7-philmd@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -68,35 +69,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 27/11/24, Philippe Mathieu-Daudé wrote:
-> When using multiple TCG frontends concurrently, we need to
-> be able to discriminate by target architecture. While we
-> can infer that from the CPUClass, it can be quicker to get
-> it from a direct field in TCGCPUOps.
+> Rather than initializing the first random target architecture
+> and ignore the following ones when a global boolean is set,
+> use a bitmask allowing different frontend targets to be
+> initialized.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  include/hw/core/tcg-cpu-ops.h | 3 +++
->  target/alpha/cpu.c            | 1 +
->  target/arm/cpu.c              | 1 +
->  target/arm/tcg/cpu-v7m.c      | 1 +
->  target/avr/cpu.c              | 1 +
->  target/hexagon/cpu.c          | 1 +
->  target/hppa/cpu.c             | 1 +
->  target/i386/tcg/tcg-cpu.c     | 1 +
->  target/loongarch/cpu.c        | 1 +
->  target/m68k/cpu.c             | 1 +
->  target/microblaze/cpu.c       | 1 +
->  target/mips/cpu.c             | 1 +
->  target/openrisc/cpu.c         | 1 +
->  target/ppc/cpu_init.c         | 1 +
->  target/riscv/tcg/tcg-cpu.c    | 1 +
->  target/rx/cpu.c               | 1 +
->  target/s390x/cpu.c            | 1 +
->  target/sh4/cpu.c              | 1 +
->  target/sparc/cpu.c            | 1 +
->  target/tricore/cpu.c          | 1 +
->  target/xtensa/cpu.c           | 1 +
->  21 files changed, 23 insertions(+)
+>  accel/tcg/cpu-exec.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+> index ab77740c954..b37995f7d0c 100644
+> --- a/accel/tcg/cpu-exec.c
+> +++ b/accel/tcg/cpu-exec.c
+> @@ -1070,16 +1070,17 @@ int cpu_exec(CPUState *cpu)
+>  
+>  bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+>  {
+> +    static unsigned initialized_targets;
+>      const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+>  
+> -    if (!tcg_target_initialized) {
+> +    if (!(initialized_targets & tcg_ops->arch_id)) {
+>          /* Check mandatory TCGCPUOps handlers */
+>  #ifndef CONFIG_USER_ONLY
+>          assert(tcg_ops->cpu_exec_halt);
+>          assert(tcg_ops->cpu_exec_interrupt);
+>  #endif /* !CONFIG_USER_ONLY */
+>          tcg_ops->initialize_once();
+> -        tcg_target_initialized = true;
+> +        initialized_targets |= tcg_ops->arch_id;
+>      }
+>  
+>      cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
+> -- 
+> 2.45.2
+> 
+
+Only suggestion would be to assert that arch_id is set, might save some
+headache in the future.
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
