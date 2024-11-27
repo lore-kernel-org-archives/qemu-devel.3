@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A77D6ACD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 13:59:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B43D6ACD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 14:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGIYV-0003kQ-Ay; Wed, 27 Nov 2024 08:58:11 -0500
+	id 1tGIYO-0003it-1e; Wed, 27 Nov 2024 08:58:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYT-0003k1-KE
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:09 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYM-0003iL-6m
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYS-0007lZ-69
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:09 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYK-0007kF-O9
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732715887;
+ s=mimecast20190719; t=1732715880;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NYnMOw7bKRrTuXSKTx/j7+jLrUGgRw/r9cXH2IkbZbo=;
- b=c9kJfgha7eSb6zFqfkG9i+UIANH1+6sFOzwK9DxQfbZ8oB3U4/1rTwkKeoCUxSkgH5u+b1
- 0VGVSS8h2ZC8e75UdVnLeR/n0gXKQP+f9OnWdLa4OyXjxb77Nx1PvU3I76Cv8EbIQNB535
- 6xSzxeTgUrWOAXS3P64mNfD2hPTzO6o=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zSBqlGSMGO71ouqzAy5nufmGT2K8poJn0RVdXU6iYP0=;
+ b=bzFbGOihZLNFdu6NOJ93Q8VEoQa7aShb9F9z2DKXs88kmHrcUpw1yDMVu0jf1dW7m07frW
+ oT9fPmsMwr2qNEmG6CeEGXVyyCPijbGh03GPOLN1IIvTYvWAkl+Sf2pDfJ6F2zI2OCXO8t
+ BY28s+Du1Vypdq5vyFUHTF0Adi3fj7U=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-APhiqstKOcqrHC0OTa2yqw-1; Wed, 27 Nov 2024 08:58:06 -0500
-X-MC-Unique: APhiqstKOcqrHC0OTa2yqw-1
-X-Mimecast-MFC-AGG-ID: APhiqstKOcqrHC0OTa2yqw
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4349df2d87dso34711365e9.2
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 05:58:06 -0800 (PST)
+ us-mta-665--JdigCxeNEqeDF_Ue7Oyzg-1; Wed, 27 Nov 2024 08:57:58 -0500
+X-MC-Unique: -JdigCxeNEqeDF_Ue7Oyzg-1
+X-Mimecast-MFC-AGG-ID: -JdigCxeNEqeDF_Ue7Oyzg
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38243a4ba7cso3612087f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 05:57:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732715885; x=1733320685;
+ d=1e100.net; s=20230601; t=1732715877; x=1733320677;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NYnMOw7bKRrTuXSKTx/j7+jLrUGgRw/r9cXH2IkbZbo=;
- b=VFc89fpFgIqL4+Wlk/K6zxJ+fK2IXgnTUvipK0wbidxgZBobkWWuQpB0IXqMzdvcGY
- 3VzRWAZkh80Xty+ItCPrjuPSTH/U2OTfn8E/xdCr/LfVSR42WYqeBVeXBBhVcllvwnD4
- eVtVQNJ5tXBZjJxadEojH4PTSLFqVHZpGRcqvYba4ZmKFRmN4tstop0IFg95MzV9DR0G
- gJOBiZJKPVzi/JO7jD+AVI8xPNE3nAyM3B7kTOuQbcgQ+IHJwCqFZRcJ44Yf3QQfhVHP
- wx+7eCpXva16bnT+tLxlmNxFy02AZ6NUQBOQITdod3eZAT8jW2PNyekeXVCfYSKGAMOX
- jZJw==
-X-Gm-Message-State: AOJu0YylNhZI3CxQtN7INu2+maaUd4MzkAHzUudLJitjXk4FmqQxhw9Z
- nofrxtHNk4/AKnpQ2JEaeN6E5wLXy7szpMp/zPuFVG1YGftRCO7q9hLOPxIVfm7Jk7rll/+OAEs
- 7gYQpwHgcGM0vIEo8+ASCGDd+SPsZp7m7ksJSU2m/rKrIFWCONBURZl3kf+18cq8DRe2X8Q4Rjp
- a+xNDMFYlfhsSzGx5+EylatbnvqHqya6cP
-X-Gm-Gg: ASbGncsBiN3tg/4EpnTG+NzfOLjn0NJOkZNKxwA56haWQSY/phncB1GAgR+NWT/di8t
- Cdx/d+OnFKSR/JznQV32Wj+79Sofy8KeTyatLS80+69YkgOMPHrEQtiUEFACMgG5EFntPDshaTx
- V/2M0ZifWOY4c827L4c17oh/0mmbudP968piGg+Sq1W43BRHRsSy8OccdDsmyrhCp2/tRI/8quR
- VZWUMrn8Wi/2Rq0T90E62BQo4Mx4vk+h+nVKgBaFCdB
-X-Received: by 2002:a05:600c:1d20:b0:434:a5c2:53c1 with SMTP id
- 5b1f17b1804b1-434a9de8bd4mr27435765e9.23.1732715884997; 
- Wed, 27 Nov 2024 05:58:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFZ7zdAiUKzcmAmlMRToDZqxbL1+MAKAJicumhr7HFMIF0eXutGc3lu9Vrwr79QzQjsa/hh7g==
-X-Received: by 2002:a05:600c:1d20:b0:434:a5c2:53c1 with SMTP id
- 5b1f17b1804b1-434a9de8bd4mr27435575e9.23.1732715884659; 
- Wed, 27 Nov 2024 05:58:04 -0800 (PST)
+ bh=zSBqlGSMGO71ouqzAy5nufmGT2K8poJn0RVdXU6iYP0=;
+ b=jb92QiWFa/dPNJZCzHF6f6URrjmj07KpRtavcqJ+rsWNh9KUN4c7Yh+aAtwz211yio
+ bZM7PkJOdHuX0auDRpBQkI6r38tGU6iPaq5sUx6w23MqzsWRRCseN4qxRXzJuiHyt7+R
+ QRn+uh+2xQOf8SmoJ7ZsAXbJQpJeSqXMpbfL0RIQa8dO7+gPy8Beb6KXjwX2sfNlHFyf
+ 0D43dBsM+jlS+c7pB02508aIL1AxComdeClQo9UN/hX4GSPYrDaMON22fzm9ccdSr2av
+ ESsVD2lalghBcevB3hEKlPqKGJtz4ZJPCJzb1V7mvpRnhPWa3R01HFEvuJvfeP9yfPcs
+ uSAQ==
+X-Gm-Message-State: AOJu0YwySFH229Nf50cmgyZeeq4ys3WQok6w/7SupsRaNY1uv0HoZ8cN
+ 1jWo4pH54VyAphiM3YPqkaA84TnWP1bKJf/6ZFocxjzEzVw1O6HvqVWcT/JXRd8pMah1Nh0CtUp
+ Qd1Ey3Qgp+LELsqtLWQhYWErrpmCJnjYRRHQ607vZ2kOOP4zeYwQ5a+cI/8al2dizg1hE8Ac/zH
+ vQTROe/qJySuIDS0+n/rGnZ9DMirVNOlGR
+X-Gm-Gg: ASbGncsSEQsGLWDydcdkIb4YbrW2Iocaib9ZfQ3IF+aXUfjXxXb4ymkRprTqbWIuTpj
+ AcLHzd48fYpeN7ei5WHU6x8/1gtJ4Y/pmiu6XCE5pFPxnegak+wgYfeDngOQc/Wh1i6J2qzIet+
+ RkL/+hPxTaYgqsPRwAqUVFgx17/aftEMSUq1cvT4fw/4uQE/0bqTjXNC/vgYcH2+41yU+wgIhCr
+ owxSuJ2rbiajC+Rvi4f0BLqNUMgjxPXryLcvjPnBOoc
+X-Received: by 2002:a5d:6f06:0:b0:382:383e:850e with SMTP id
+ ffacd0b85a97d-385c6ebcb69mr2665392f8f.13.1732715877323; 
+ Wed, 27 Nov 2024 05:57:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFg/2F7t+g1Gf9CMhMX1i0I+XZTOpGkQP/Q+oLvE+8IB528S/TwUgNV3COpO8AxqVw/qU+CVA==
+X-Received: by 2002:a5d:6f06:0:b0:382:383e:850e with SMTP id
+ ffacd0b85a97d-385c6ebcb69mr2665371f8f.13.1732715876933; 
+ Wed, 27 Nov 2024 05:57:56 -0800 (PST)
 Received: from redhat.com ([2a02:14f:1ec:7d4b:8b11:bed7:9e00:8df7])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434aa7f79c8sm21870955e9.40.2024.11.27.05.58.03
+ ffacd0b85a97d-3825fbedce3sm16353473f8f.97.2024.11.27.05.57.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Nov 2024 05:58:04 -0800 (PST)
-Date: Wed, 27 Nov 2024 08:58:02 -0500
+ Wed, 27 Nov 2024 05:57:56 -0800 (PST)
+Date: Wed, 27 Nov 2024 08:57:54 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Prasad Pandit <pjp@fedoraproject.org>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 13/13] vhost: fail device start if iotlb update fails
-Message-ID: <571bdc97b83646dfd3746ec56fb2f70bca55b9a2.1732715823.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 10/13] bios-tables-test: Allow for new acpihmat-generic-x test
+ data.
+Message-ID: <2cb740932c567b57f6f51c9ead036a1d31d3e620.1732715823.git.mst@redhat.com>
 References: <cover.1732715823.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -108,53 +109,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-While starting a vhost device, updating iotlb entries
-via 'vhost_device_iotlb_miss' may return an error.
+The test to be added exercises many corner cases of the SRAT and HMAT table
+generation.
 
-  qemu-kvm: vhost_device_iotlb_miss:
-    700871,700871: Fail to update device iotlb
-
-Fail device start when such an error occurs.
-
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-Message-Id: <20241107113247.46532-1-ppandit@redhat.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20241107123446.902801-4-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- hw/virtio/vhost.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ tests/qtest/bios-tables-test-allowed-diff.h     | 5 +++++
+ tests/data/acpi/x86/q35/APIC.acpihmat-generic-x | 0
+ tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x | 0
+ tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x | 0
+ tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x | 0
+ tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x | 0
+ 6 files changed, 5 insertions(+)
+ create mode 100644 tests/data/acpi/x86/q35/APIC.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 76f9b2aaad..c40f48ac4d 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -2095,11 +2095,22 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-          * vhost-kernel code requires for this.*/
-         for (i = 0; i < hdev->nvqs; ++i) {
-             struct vhost_virtqueue *vq = hdev->vqs + i;
--            vhost_device_iotlb_miss(hdev, vq->used_phys, true);
-+            r = vhost_device_iotlb_miss(hdev, vq->used_phys, true);
-+            if (r) {
-+                goto fail_iotlb;
-+            }
-         }
-     }
-     vhost_start_config_intr(hdev);
-     return 0;
-+fail_iotlb:
-+    if (vhost_dev_has_iommu(hdev) &&
-+        hdev->vhost_ops->vhost_set_iotlb_callback) {
-+        hdev->vhost_ops->vhost_set_iotlb_callback(hdev, false);
-+    }
-+    if (hdev->vhost_ops->vhost_dev_start) {
-+        hdev->vhost_ops->vhost_dev_start(hdev, false);
-+    }
- fail_start:
-     if (vrings) {
-         vhost_dev_set_vring_enable(hdev, false);
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..3c0967078f 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,6 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/q35/APIC.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x",
+diff --git a/tests/data/acpi/x86/q35/APIC.acpihmat-generic-x b/tests/data/acpi/x86/q35/APIC.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x b/tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x b/tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x b/tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x b/tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x
+new file mode 100644
+index 0000000000..e69de29bb2
 -- 
 MST
 
