@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA64D65521
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 04:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A33D609A1
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 05:36:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGA31-00020M-FS; Tue, 26 Nov 2024 23:53:07 -0500
+	id 1tGAiA-00066q-SG; Wed, 27 Nov 2024 00:35:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tGA30-00020B-3n
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 23:53:06 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1tGAi7-00066T-K5; Wed, 27 Nov 2024 00:35:36 -0500
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tGA2y-0000qB-L6
- for qemu-devel@nongnu.org; Tue, 26 Nov 2024 23:53:05 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7251ce598adso1346576b3a.0
- for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 20:53:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1tGAi5-0000iu-UD; Wed, 27 Nov 2024 00:35:35 -0500
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-53de84e4005so2393999e87.0; 
+ Tue, 26 Nov 2024 21:35:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732683183; x=1733287983; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=javaToCsMiTsQ8pDFsFdvCh0qT7TlykghWDR4UvfU3w=;
- b=mFDw+LNQ7V0YUFsoyjQ1FiMhlM7IDOB6ET6zlsRsGxJ+5xjcuc94C2OJ5e3f7lFXL4
- MrRic3GJE32PzRTAKBuGMHooPgv8WChMibC/k648V035kSt2245Yjbzj+Ot9tGc19xaK
- aIdTQNyzoVa4BsSLikqCfdIu66ZKu+KG4/7eOZZRYURkBO1C2Xz1SH5T/hnMdoyaHf82
- 2JbYqb193Jr+2AEiUZ3B5CAD1abRQNAX6oJmpxU92wq45oSxfB0ciu0NdDFraapcgpww
- nhHN+RzyafjBPecMGKnLmDOOAlnDBDEkqe6hQm1HysQqCjfeYRMKo7sWjJ/+2kAAjpjV
- D8Xg==
+ d=gmail.com; s=20230601; t=1732685730; x=1733290530; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QytoZ0TK5U4qN9PucTCqslMUpou6AOWFOTy698mfJmk=;
+ b=Idk/6+7v5VQy2Shjb/9iZlTR1B+CeVpUe0SrHbqnCOl3DbFpy6TrBZVNlgT6Y48brm
+ qTKm0C711GXmf5skDx+VKZpJkGc8cxVVnJOo3SjLCknpD9yHWD8vlORZWl22mFoh2uJM
+ F4mwtYSDJSH/CrximNjU0cXmK88tBxANkWegxTgFuYgk3+fKEfH+ox8VIVmyEo/sPIuH
+ vQiKbKReLRoEPkNNY+4ojzCRdhmBKAYmE3cjwXO8d3Wsea49AFDkcloIvpjQ4r5pG0Gg
+ PcjnhG3N1+xL261ZznaEQZ396KGLn/N7gr9+keSOGtcOXdOfaoQmQGfK5iR28LXEwqxy
+ Y3Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732683183; x=1733287983;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=javaToCsMiTsQ8pDFsFdvCh0qT7TlykghWDR4UvfU3w=;
- b=ds22Vzx2tl0weo6NI5HD28vto37H02XVR9yg9qtjso8PzyM/mxU+VWKkmJHOJA2ndt
- tieFP2c5n0FtviAsOcZlriFyrG0EOVZ6lrHXSQkWwuC98VSwgoqhMfKP1VaH+Npt1Wrp
- sLxg1fdbFYRG58h09L/PR3gPhuf+c6qIhrbHTkdSfv4Ng1l8uvFfNMFS5aKKD94GjCg6
- 0Mz1iGxzNnWGxjONXrBdd7+7QDMXDsNuedKDC8cW2G/FLFcVGT8+MWx5CH91BwlBZmdm
- Ta/EjsbUcB3VlZKL5ZA6G2xFmNzzFLNsgB/8HAs3T93ixyLoz8PI8pCztZekzH/S9pCZ
- Q+sw==
+ d=1e100.net; s=20230601; t=1732685730; x=1733290530;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QytoZ0TK5U4qN9PucTCqslMUpou6AOWFOTy698mfJmk=;
+ b=xPnEMQdMpFURMYXAq8o7mL4TMTAdwBpxcsyRff6AHUxpRj1ZxJq3nCZNhS3fDm//4O
+ NjuGznDs034MPaKxhgKH2KAAOmP4K1JmO5SppdYhnxv1hDTg8Ooz77YN4EmRyc2F1yPg
+ psPCP+5e/7z4SGodD5igbLxUQvcsjlM8tgDAK1hDnDjGS48eQN1MmJqNXH2BskVtsA6s
+ 0RFiydDv6L3ahR91Nde5s049bhSL7uHG5jtrSearM9EVYdQhPeHwy+8hyygX/oWvJXD1
+ FuHVAYfeMLjKpaxtv6FQVuKQ6S4rkS0m11LAE9PaNwAcsENRbvwYjY/qICzV+A2XNi6y
+ 0Uyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhZUEPBoLFsaV7AhDSI4EOgUggcRzIxYLxYd8JaxNPBwC4XtBlB9kI80JwE9EOJgV/zwDnM6QhzuFM@nongnu.org
-X-Gm-Message-State: AOJu0Yw00LC97JZcuV4tu/cBJGrPDOsFxFTzQ+tIa+QkcA4acEUKYiX+
- 6t/i0tbbBPCpVs8RqFkJNOCxkOtNLJBCzJ6yHDYhIC0hMpyw09kD
-X-Gm-Gg: ASbGncvBgFNjRPNtIng3diKUt4gTTyd56QJvp72Agi4zuzd7jMbmyn9VPbscIDn54Co
- VVx1fiIfowtlmyVmP4k2tupdbcoebwqeDAG3EidYvrDsw3jUqeJXf25u/vFty8tZ8fo8UIggbf1
- Sjgwdh0nyF1A12tfl18PJVlGALAar3FwV+tT7xqEX77VWZYQQEqXTIIYSW7hFgk6tjKCU9ywKwo
- q88XYnNrSfA0QPiirvpDKBsJ52NNmHzbe/GOwzdjQQVUQ3qjY0h6wUca2RPxOP+S1ywzgo=
-X-Google-Smtp-Source: AGHT+IFx3e1wxZeVagmeCN0qUNm/UHZKSm8km4kffKxyTt0Rb6TImJ6nCZ7a1os3OXtaYs0OdBdHYg==
-X-Received: by 2002:a17:902:e94c:b0:20b:8a93:eeff with SMTP id
- d9443c01a7336-21501c60a6amr24847375ad.37.1732683182935; 
- Tue, 26 Nov 2024 20:53:02 -0800 (PST)
-Received: from localhost (124-171-72-210.tpgi.com.au. [124.171.72.210])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2129dc2210dsm93506115ad.245.2024.11.26.20.53.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Nov 2024 20:53:02 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 27 Nov 2024 14:52:57 +1000
-Message-Id: <D5WOXB6WYUGI.5U9UWQCHRI6J@gmail.com>
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- <qemu-devel@nongnu.org>, =?utf-8?q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 0/2] chardev: fixes for recent record/replay on muxed
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Nicholas Piggin" <npiggin@gmail.com>, "Peter Maydell"
- <peter.maydell@linaro.org>
-X-Mailer: aerc 0.18.2
-References: <20240828043337.14587-1-npiggin@gmail.com>
-In-Reply-To: <20240828043337.14587-1-npiggin@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
+ AJvYcCV5Krl3dUlXO/kBcoJCOTJWEiaIrVPxmgWxKhx27bmkoqMklW4rSVeq50EXYjXJDJ5G2h/dw8XHPBQl4g==@nongnu.org,
+ AJvYcCXens+uOwZ/SvSmcFvMDiymkCEK6XjZhJLFM565jlTsC0Un1qZBuanqc39BiyAByhhzprzDlYVqmCJs@nongnu.org
+X-Gm-Message-State: AOJu0YxCM+XmIxWTpDbuJZxyvxX7lXo5RaW9bKHKSBn00BC5QnMppVP3
+ pdal/5D7FzODG6f9e9rfrs30ysHNGo4qDDm3nc82TpEEP9vVRVhO
+X-Gm-Gg: ASbGncvUwFjaCI9bO/mMsWaKtZQWUZQbbNoxlyhippYSssDJSbQ97tDfl1LNdIt8wIk
+ qymzIKx+m/AdzMjzhoIJx0PVJ66FuBatHrCgyKSpcvfUJNGVKBwPDtKBeOM3QsReJh0u9G8Q38M
+ xBER7Slhr5Y/yttTDGzUdAKTZWsN1/+6XXY66DXXLelCDAUwPCN8043DcWP7iulQ53gmY16RuT0
+ NqHbzzrCW+aMCL7ugIDEwvFu7H24ef8MzlKN6hKme+tEPun2nnRTUM=
+X-Google-Smtp-Source: AGHT+IHuCq/pEdpPvEgLdQS+TxLu9+k9ppiPE4Gb4ebYzD7TcukxSQiJsSk3u+XK91P6rZURgo/myg==
+X-Received: by 2002:a05:6512:3d26:b0:53d:a556:52a7 with SMTP id
+ 2adb3069b0e04-53df00de5c6mr784698e87.34.1732685730247; 
+ Tue, 26 Nov 2024 21:35:30 -0800 (PST)
+Received: from vmdev.asgard ([81.200.11.243]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-53de0c3ce8bsm1211799e87.116.2024.11.26.21.35.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Nov 2024 21:35:29 -0800 (PST)
+From: baturo.alexey@gmail.com
+To: 
+Cc: baturo.alexey@gmail.com, richard.henderson@linaro.org,
+ zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
+ liwei1518@gmail.com, alistair23@gmail.com, frank.chang@sifive.com,
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Subject: [PATCH v11 0/7] Pointer Masking update for Zjpm v1.0
+Date: Wed, 27 Nov 2024 08:35:16 +0300
+Message-Id: <20241127053523.397378-1-baturo.alexey@gmail.com>
+X-Mailer: git-send-email 2.39.5
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=baturo.alexey@gmail.com; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,16 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Aug 28, 2024 at 2:33 PM AEST, Nicholas Piggin wrote:
-> Fix a couple of issues that Peter found with recent record/replay
-> fix for muxed device.
+From: Alexey Baturo <baturo.alexey@gmail.com>
 
 Hi,
 
-I've just realised these never got merged. Sorry for losing track of
-them, I was on vacation when doing them and things got a bit neglected.
-Looks like I forgot to cc you, Marc-Andre.
+As suggested on the mailing list by Daniel, I'm resubmitting this series and keeping the original versioning number.
+So that makes this one v11 and previous - v10.
+Also I applied previously issues reviewed-by tags on some of the patches that were present in v9 series, but only for the code, that didn't change much.
+For the others I'd really like to have them reviewed as there were a lot of comments on v9 series.
+Also rebased on the current upstream.
 
-Thanks,
-Nick
+Thanks
+
+[v10]:
+I've rebased this patch series and addressed Richard's and Daniel's comments.
+Thanks
+
+[v0]:
+As Pointer Masking is finally ratified, these patches intend to update the existing code to the final version.
+These patches have been submitted previously and I tried to address all the suggestions, but I'd suggest to review them from the clean slate and then finally push them to the repo.
+Thanks.
+
+Alexey Baturo (7):
+  target/riscv: Remove obsolete pointer masking extension code.
+  target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
+    of Zjpm v1.0
+  target/riscv: Add helper functions to calculate current number of
+    masked bits for pointer masking
+  target/riscv: Add pointer masking tb flags
+  target/riscv: Update address modify functions to take into account
+    pointer masking
+  target/riscv: Apply pointer masking for virtualized memory accesses
+  target/riscv: Enable updates for pointer masking variables and thus
+    enable pointer masking extension
+
+ target/riscv/cpu.c                      |  19 +-
+ target/riscv/cpu.h                      |  51 ++--
+ target/riscv/cpu_bits.h                 |  91 +-----
+ target/riscv/cpu_cfg.h                  |   3 +
+ target/riscv/cpu_helper.c               | 124 +++++---
+ target/riscv/csr.c                      | 357 ++----------------------
+ target/riscv/insn_trans/trans_rvh.c.inc |  11 +
+ target/riscv/machine.c                  |  17 +-
+ target/riscv/pmp.c                      |  14 +-
+ target/riscv/pmp.h                      |   1 +
+ target/riscv/tcg/tcg-cpu.c              |   5 +-
+ target/riscv/translate.c                |  51 ++--
+ target/riscv/vector_helper.c            |  18 +-
+ 13 files changed, 224 insertions(+), 538 deletions(-)
+
+-- 
+2.39.5
+
 
