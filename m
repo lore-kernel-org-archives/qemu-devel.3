@@ -4,100 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B56C1D609C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 09:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FBC5D609C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 09:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGEbW-0007v8-7A; Wed, 27 Nov 2024 04:45:02 -0500
+	id 1tGEe9-0001L9-Kx; Wed, 27 Nov 2024 04:47:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=9yFr=SW=kaod.org=clg@ozlabs.org>)
- id 1tGEbT-0007t1-Ol; Wed, 27 Nov 2024 04:44:59 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=9yFr=SW=kaod.org=clg@ozlabs.org>)
- id 1tGEbR-0006qN-Tc; Wed, 27 Nov 2024 04:44:59 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Xyvg23WYLz4xgK;
- Wed, 27 Nov 2024 20:44:46 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Xyvfy05hDz4xgB;
- Wed, 27 Nov 2024 20:44:41 +1100 (AEDT)
-Message-ID: <2e956389-289a-4806-8985-ab846d808736@kaod.org>
-Date: Wed, 27 Nov 2024 10:44:40 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGEe7-0001Kg-Qo
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 04:47:43 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGEe5-0008UW-TN
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 04:47:43 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-434a752140eso12757385e9.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 01:47:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732700860; x=1733305660; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VN3u6wWkERZNGNGGGvSyfpNe2pEDLlhLupStzXI7GIY=;
+ b=XM5RCRdI1691PlSbWXLYV4NNr00JxKavC/Kx6znHfON2aaWEVr7GD712RMKIpqxe1N
+ Tdsdd1pvOggiVKM0RDix+kscJyr7uQNUyQfV9gEeclUZNbq7iDSCBsFBP85KdWUgOqP4
+ M12S8Vpe1x+BGRFIkdnoosa/RlcZIrbhRhi+tz9OpQWRjvAcWjI/0de8QzfYs06DF/Wc
+ rFVFZd90lrpK+B+I1T4nkwft75XHTg3kEKsVTpMRnl1h4mPt5caVUPMl4krOpUWvJWbe
+ BG+FUkYm9kjJ4K2xprrOe/9UAOyu3VpOTSrfQ7TTLS3Z9lP+urdGhHSfkvX9ufgd1qLx
+ 1FSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732700860; x=1733305660;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VN3u6wWkERZNGNGGGvSyfpNe2pEDLlhLupStzXI7GIY=;
+ b=wF/fo3n1WMsSaZPQuzgkO7THSe2irufy18/lx/egaebF+sktM41EJ4jmkBs2NAqOO3
+ Vx7GCKsU9HxmTk0SkZASJf4JhM7LP52AkmdS6lgDKNagSjre8nmp/1aPlkCabCxaKnRY
+ eZA1+RsEBVCgELXqkujVLQRfNJmEkg5J8x0MI0RCQuxVzJ8CJMSVSSauGU0FIZI3N26J
+ GnFSB3O1TzJxfvW7qMdzg/4/8ViI69TwQ2X18iMmY9IuQGlWxeIMya2Moe/EEzjd1Nth
+ 5OR924xcRsWJ5WEdo8iKl0l+GVAZ/kjjdu3zZGVSLhNkSG4NxrEhCGeLmt+MxfDlID2Q
+ K10A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUT0pGyrVTQNyCrsPm2Yb2eBeguAi26Qpv/8Hf2ryMVHQISmSXA1uxTcNAQJmaWOTT0Wqk7bZLgeIv8@nongnu.org
+X-Gm-Message-State: AOJu0Yzh/uJZKOHUeLp7y0KLRlKnWdq5TF96G8TuqGcrJOjLETQd4f5A
+ Iu9aGiWej/66WcPUb0pIcAhp6kzVk8uAB0L9I3kIVzm+FxlUXoE2zoEf2OmxBYQ=
+X-Gm-Gg: ASbGncsTwk5IW7ljVAxIlN3tjf+XB2qKFb7MrkUf4osiMYSqWHxNGB/woh2SrdO1QUD
+ yvJ14H+Q7YlsSt5aeipwQJ0oI0LTv2Nv0R0P2U76Xrz0uHbKSlNOnspIwvHUY3fHZAp1TYUnckd
+ FscAzupXqGCMS0dW3tbNC+l2iTfGNl5Svtz0z0HPE/8Usoe22ixD4FoeRH+CqDfdy3ddNiroT8Q
+ Ym1Gwu3RTp8Ts/8QkhURdmLAwjKqNZtL1NYFRTkuwWAs94s0uSP21fjoLS69zP8ZztFSSrix3wh
+ NWwmCYooDrCtwED9aepRO+apVeCJmT68+619
+X-Google-Smtp-Source: AGHT+IGpowm6z1opauhL4aIWf455fMKr356UmlX5dZsW06r7M3Pwe0sPQUkyY14Q4tzDs+3JmCw6bw==
+X-Received: by 2002:a05:600c:4fc9:b0:434:a315:19c with SMTP id
+ 5b1f17b1804b1-434a9dbc455mr23014595e9.3.1732700859787; 
+ Wed, 27 Nov 2024 01:47:39 -0800 (PST)
+Received: from [192.168.69.146] (plb95-h02-176-184-14-96.dsl.sta.abo.bbox.fr.
+ [176.184.14.96]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434aa74f2c7sm15805485e9.2.2024.11.27.01.47.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Nov 2024 01:47:39 -0800 (PST)
+Message-ID: <f986d30b-0b15-4889-9e46-8a8d9afe918d@linaro.org>
+Date: Wed, 27 Nov 2024 10:47:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] Introduce a new Write Protected pin inverted
- property
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bin Meng <bmeng.cn@gmail.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH] tests/functional: Fix the running test case causes
+ loongarch64 to hang
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>, peter.maydell@linaro.org
+References: <20241127013438.2206426-1-lixianglai@loongson.cn>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241127013438.2206426-1-lixianglai@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=9yFr=SW=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,40 +103,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/14/24 10:48, Jamin Lin wrote:
-> change from v1:
-> 1. Support RTC for AST2700.
-> 2. Support SDHCI write protected pin inverted for AST2500 and AST2600.
-> 3. Introduce Capabilities Register 2 for SD slot 0 and 1.
-> 4. Support create flash devices via command line for AST1030.
-> 
-> change from v2:
-> replace wp-invert with wp-inverted and fix review issues.
-> 
-> change from v3:
-> 1. add reviewer suggestion about wp_inverted comment
-> 2. AST2500 EVB does not need to set wp-inverted property of sdhci model
->     https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm/boot/dts/aspeed/aspeed-ast2500-evb.dts#L110
-> 
-> Jamin Lin (3):
->    hw/sd/sdhci: Fix coding style
->    hw/sd/sdhci: Introduce a new Write Protected pin inverted property
->    hw/arm/aspeed: Invert sdhci write protected pin for AST2600 EVB
-> 
->   hw/arm/aspeed.c         |  7 +++++
->   hw/sd/sdhci.c           | 70 ++++++++++++++++++++++++++++-------------
->   include/hw/arm/aspeed.h |  1 +
->   include/hw/sd/sdhci.h   |  5 +++
->   4 files changed, 61 insertions(+), 22 deletions(-)
-> 
+On 27/11/24 02:34, Xianglai Li wrote:
+> There is a bug in the process of resolving the serial port base address
+> in the fdt of the loongarch VM UEFI. When both serial port information
+> and rng-seed information are chosen in the fdt, there is a probability
+> that the serial port base address cannot be resolved correctly.
 
-Philippe,
+> This problem can be fixed by updating UEFI.
+> 
+> issue link:
 
-I plan to queue patch 2-3 for QEMU 10.0. Is that ok for you ?
+s/issue link/Resolves/
 
-Thanks,
-
-C.
-
+> https://gitlab.com/qemu-project/qemu/-/issues/2686
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Daniel P. Berrangé <berrange@redhat.com>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+> Cc: <peter.maydell@linaro.org>
+> Cc: Xianglai Li <lixianglai@loongson.cn>
+> 
+>   tests/functional/test_loongarch64_virt.py | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/tests/functional/test_loongarch64_virt.py b/tests/functional/test_loongarch64_virt.py
+> index 2b8baa2c2a..b7d9abf933 100755
+> --- a/tests/functional/test_loongarch64_virt.py
+> +++ b/tests/functional/test_loongarch64_virt.py
+> @@ -18,16 +18,16 @@ class LoongArchMachine(QemuSystemTest):
+>   
+>       ASSET_KERNEL = Asset(
+>           ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
+> -         'releases/download/2024-05-30/vmlinuz.efi'),
+> +         'releases/download/2024-11-26/vmlinuz.efi'),
+>           '08b88a45f48a5fd92260bae895be4e5175be2397481a6f7821b9f39b2965b79e')
+>       ASSET_INITRD = Asset(
+>           ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
+> -         'releases/download/2024-05-30/ramdisk'),
+> +         'releases/download/2024-11-26/ramdisk'),
+>           '03d6fb6f8ee64ecac961120a0bdacf741f17b3bee2141f17fa01908c8baf176a')
+>       ASSET_BIOS = Asset(
+>           ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
+> -         'releases/download/2024-05-30/QEMU_EFI.fd'),
+> -        '937c1e7815e2340150c194a9f8f0474259038a3d7b8845ed62cc08163c46bea1')
+> +         'releases/download/2024-11-26/QEMU_EFI.fd'),
+> +        'f55fbf5d92e885844631ae9bfa8887f659bbb4f6ef2beea9e9ff8bc0603b6697')
+>   
+>       def wait_for_console_pattern(self, success_message, vm=None):
+>           wait_for_console_pattern(self, success_message,
 
 
