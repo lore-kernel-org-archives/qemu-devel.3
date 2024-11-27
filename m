@@ -4,88 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B48D609C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 09:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90C5BD609C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 09:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGEaN-0007ED-9H; Wed, 27 Nov 2024 04:43:51 -0500
+	id 1tGEbB-0007aL-T2; Wed, 27 Nov 2024 04:44:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tGEaL-0007Dh-2j; Wed, 27 Nov 2024 04:43:49 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tGEb6-0007VI-Gs
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 04:44:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tGEaJ-00067P-BU; Wed, 27 Nov 2024 04:43:48 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 710EFB5739;
- Wed, 27 Nov 2024 12:43:26 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9464F17B5AF;
- Wed, 27 Nov 2024 12:43:43 +0300 (MSK)
-Message-ID: <e18a1d0a-7970-4985-80d7-99d0801d22b0@tls.msk.ru>
-Date: Wed, 27 Nov 2024 12:43:43 +0300
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tGEb5-0006dK-1H
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 04:44:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732700673;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=TdH4U0wUUTMzUh+y6C23GONALy57JHOOFS+mP3dQiGg=;
+ b=BQYN9ylpJKSBaNwN+Ytb7/aAUanFoKeOiGXusJH1q1CZi8gpgoUZt4ifcpJyMsN1uXtplh
+ QFqqxnkYxkviU1aZQnT2bDlRxBpCSe92z29S9vg9eGTfaiOk+zwr9vgHSmNK4B7HXRybgh
+ 6aCBnE+BgnyxPawzfiNoAexCSUBVW+A=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-423-hIMN8QkBMJGqHBT2I9xagg-1; Wed, 27 Nov 2024 04:44:30 -0500
+X-MC-Unique: hIMN8QkBMJGqHBT2I9xagg-1
+X-Mimecast-MFC-AGG-ID: hIMN8QkBMJGqHBT2I9xagg
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-434a90febb8so6347035e9.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 01:44:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732700669; x=1733305469;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=TdH4U0wUUTMzUh+y6C23GONALy57JHOOFS+mP3dQiGg=;
+ b=eazA6WlBwHKd30TYUgXr7wAOZdHVI50PMVgzMd7BjuonbQJ5Kko2w8M2V489d7CKYF
+ klQ/qQe381nmbChud31VrXieZoBZe+df/pHClx8IxiYzfvN4mJYZ45OWKJwM9zggooXj
+ U2kgEQGHMaPFO/uzWvwjKa3rH4Haxgrd2s5Z8w+BRUEahhIH6jgu3GojWrh8FYQZaVQ/
+ +HVurYQKZGK+0XYkRLtl3LCMJZtTbHYYRzkkM1cJ9w1m9RvalAufeeOfq8HUkZKJ8HeX
+ z7W0Kxo6neyEZYwOUs0A1O1E+q+9HW8cuCCtY5QOYCA6EJRBKOuyNS7+/ms60keyeV2A
+ fPWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCPCTQNcwzSLSsgWOW+Z7sNHYU+76CTxmHUrReCAphUzZdT1dL4PXtKJUXRZGvfBR+KtniqCwSBdPV@nongnu.org
+X-Gm-Message-State: AOJu0YwG+F2S19RRQIFhKuVrDJf2OOV50crbrGIAIO8LJTtHNQ3yxMeJ
+ mxiWkS2QFa63M9cw3cJJUKVUNR0BSWNI1AWB6nwEhbKbdWejWHyIZKA9uhaSq3/2j8BhVzSPmsq
+ zdWSybWZbV2hOQCdqZyTobC0INt7RIp9a5dVhhrupiPPu09Coq356
+X-Gm-Gg: ASbGncsA24O9g7KPkBAQdGGlpBCE7LB1wf7OR3TabyC5nLVsA3GPG2HeNRNdBprh4H8
+ bafAcam+GZIMBzX/ElruYNoQYo02LZHG8U5KMwVMKrZGLdMxWsBfGwpLLVWnaULD6C7rpNP+61P
+ 5fPEqZQshHfO0iemF4JEpSqiU+naJaq1oVBfXl1lyWpI2G4iQbxQ/KH5L5OaW4ANa6f6tWRzp/3
+ Yk2TTdPejk34mjo/cpzcesdGzyNh8/qrpIo9jcR7zkvDWYXHhlDztoK5F+/CIg+Y3rX1CkV5BxH
+ QE8NWwvVbZl6K2/OP8b6sbmn+6Zpg8YmwhSH/lVhGcva+Rff2KSMmobCat7+fbfrvijfjWy2iPh
+ 4ew==
+X-Received: by 2002:a5d:6f1d:0:b0:382:4926:98e0 with SMTP id
+ ffacd0b85a97d-385c6ee2262mr1795996f8f.52.1732700669648; 
+ Wed, 27 Nov 2024 01:44:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEHBtTFDyMh8eTakS+qB9gTfPoCXIoXoV58+QlnP2r7gfvzPRmkmG/rblAnqMs9OyI7h0slBg==
+X-Received: by 2002:a5d:6f1d:0:b0:382:4926:98e0 with SMTP id
+ ffacd0b85a97d-385c6ee2262mr1795974f8f.52.1732700669374; 
+ Wed, 27 Nov 2024 01:44:29 -0800 (PST)
+Received: from ?IPV6:2003:cb:c70d:be00:66fa:83a6:8803:977e?
+ (p200300cbc70dbe0066fa83a68803977e.dip0.t-ipconnect.de.
+ [2003:cb:c70d:be00:66fa:83a6:8803:977e])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434a9728460sm15771635e9.1.2024.11.27.01.44.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Nov 2024 01:44:28 -0800 (PST)
+Message-ID: <8ac29c77-1de5-444c-b7f9-adc332e0b8ff@redhat.com>
+Date: Wed, 27 Nov 2024 10:44:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/6] ppc-for-9.2-2 queue
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org
-References: <20241126171235.362916-1-npiggin@gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20241126171235.362916-1-npiggin@gmail.com>
+Subject: Re: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
+ requested_size
+To: Wei Chen <weichenforschung@gmail.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, yuval.yarom@rub.de, genkin@gatech.edu,
+ Zhi Zhang <zzhangphd@gmail.com>
+References: <20241126080213.248-1-weichenforschung@gmail.com>
+ <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
+ <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
+ <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
+ <79c4ed2c-2ac8-43b5-ad90-2b91f6e7fd8f@redhat.com>
+ <d75f20d9-dd4a-4439-a261-612766b7cfba@redhat.com>
+ <0a3b9e0b-6725-44f8-8599-ae868a3fc864@gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <0a3b9e0b-6725-44f8-8599-ae868a3fc864@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.931,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,28 +166,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.11.2024 20:12, Nicholas Piggin:
+On 26.11.24 16:41, Wei Chen wrote:
+> Thanks for the information! I will try to come up with V2 that does not
+> impact virtio-mem's functionality.
 
-> * Assorted small ppc fixes
-> 
-> ----------------------------------------------------------------
-> BALATON Zoltan (1):
->        hw/ppc/pegasos2: Fix IRQ routing from pci.0
-> 
-> Glenn Miles (1):
->        target/ppc: Fix THREAD_SIBLING_FOREACH for multi-socket
-> 
-> Harsh Prateek Bora (1):
->        ppc/spapr: fix drc index mismatch for partially enabled vcpus
-> 
-> Nicholas Piggin (3):
->        target/ppc: Fix non-maskable interrupt while halted
->        ppc/pnv: Fix direct controls quiesce
->        ppc/pnv: Add xscom- prefix to pervasive-control region name
-anything here worth to pick for qemu-stable, or is
-all this "small enough" for this?
+So, thinking about this ... both UNPLUG_ALL and "over-UNPLUG" (exceeding 
+the request) will happen in sane environment currently very rarely. In 
+many setups never at all.
 
-Thanks,
+We could likely limit them to "once every 60s" without causing real 
+harm. Would that sufficient to mitigate the problem? How often would you 
+usually have to retry in order to make it fly?
 
-/mjt
+-- 
+Cheers,
+
+David / dhildenb
+
 
