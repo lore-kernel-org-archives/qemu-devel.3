@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E48CFD6ACFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 17:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B841BD6ACF7
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 18:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGMHv-0001VD-8D; Wed, 27 Nov 2024 12:57:19 -0500
+	id 1tGMNB-0002YX-Do; Wed, 27 Nov 2024 13:02:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tGMHt-0001Ur-GT
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 12:57:17 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tGMN8-0002Y8-VR
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 13:02:42 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tGMHs-0004Zd-0O
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 12:57:17 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-21210fe8775so9786195ad.1
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 09:57:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tGMN7-00070Q-BH
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 13:02:42 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-53dd57589c8so1169903e87.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 10:02:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732730234; x=1733335034; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1732730559; x=1733335359; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vdZlD9NB2xYXVFjy0+o/KWhM2VuxzZXpl7hl6+ZRDEU=;
- b=kyhTMsBx/14CiF87UboijEXeIizQ/8ugKSJ+yOLCBFpb8Mikn0WFKL3nrMUJ7Y/Tt1
- IsL5XqzYraGm3hp/shdMopgmdY4Q1wZLEmlIWjN9O+zQq8M/IwwoxV6nMhbpAK2HX55E
- muZ+7btyarLFR1Vi1KjZaSqcqvJcpzaG0Cv/3PpnmTiIwESQQHY5i/kzntYOoqricVcH
- GaSGtu67EtTS+3cuSuxeWZERzMT8IX0GYP81edJC3/EMX3Djbvsw79OjnqOFrjGGtyBp
- IhSrut/KjgftQMwqO87OlNJVmcGa/rW0zQjW1lwYE7L1w/Mp8fAK/HanOZu9Uz8xtnxt
- HPpQ==
+ bh=L7Df7KDuOmQvd77tLFPYQcSTR3lrxDvF7uYvnrx0U/U=;
+ b=Nbwk7atHAXW0BK6fz2ijQa9OhP6/5Zxl5ghJikzDPFizym3lbLjj1vRjW/402YA+hn
+ U0yvBk/Tu84/rX+EbIUMFH9ClisfLFjp7iZC8/jUspKdgO62hzV4Nh4tb/FAmkJoEsUf
+ Aupv2LadQONyn6Ck63v10oJCUzFjERee5rmf3IviZVde4JKVnSwkX6arvmIoFEAJAfDl
+ ztorG6/83JiDeV9XYsm6XHaNWxZWWGPDDK//I9UFuPi/zc2gDnidPXRkNKyDjmuVX9eC
+ 6Q915ybh8cMVZCYCDa9oTHp1u34hXa1abwKpjbqImRlPRZuugogiw/gxPuMmhNQUY5tW
+ OSuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732730234; x=1733335034;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1732730559; x=1733335359;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vdZlD9NB2xYXVFjy0+o/KWhM2VuxzZXpl7hl6+ZRDEU=;
- b=hg93GQchCnW22e+9zkS641R1Hicu3IHM3bXzCCKVF8I0mTNn1CXiqqH1uzTafaTtHr
- isfTNgqftosAZLqkF+LkdIyhMNlvI43f2qzt9RJ9M5D7xsVPQF8snz03vUeHvyAGlDZZ
- 264KYAZ/uDyN3SgSV9fX2ZvW3q4yAdN0ylgE/mmmsiMzxdD5+1kl7WfyZ7c4MGW8LUX/
- dRyvd99CQv67stO7BqjyApAT8OKoAZEuhNuFeklDcICY1riuO9fL8jn+b/g63Pvt1z9B
- YQ0xsxawDMRVQ7eTue5zffPjc7KFosuufqTPLsTPtw0C8Wb+U/hV8kaFwLl4HY8zFwQM
- DYyg==
+ bh=L7Df7KDuOmQvd77tLFPYQcSTR3lrxDvF7uYvnrx0U/U=;
+ b=hMyVEXln1mFS+IbA+bgOmDw2Lb0FjA+rojM6AgNCuLaX818YEU3bvp6t+wWJEF2iSD
+ 4m1ey3d+dSRdDOiQvprDmU1Ox5UXoSfziNX6HplsSKbMt/RXnsNfvGAnA4EkAmKSO6a7
+ S8bUnVcbay/54KA0nMApfwnZgaLkGeHBwZPFFyiY/ynCUd/0N7TEw1EvmKFtFIsrTNH8
+ kJrkw/FFmhvmBg8CrDYk8YgcWxdsLN6B6yrGvyEH5n+1nPmTffqJWCyBGmK9+qP20BuC
+ 8P75xk72gEuqPNrBsJlGQJmcS3WYUVaF+5oKMBrA2AZ9aMofXagjEc0rwl/aDv/65uib
+ Xm0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVF3cPvZ+yOsi0usgZJdiLk1bD7HyW8hNYZVFvjj8kGlj74eyISPnR89mNIAVhDn0vq6fAWinO7v/VF@nongnu.org
-X-Gm-Message-State: AOJu0Yx6ppPyO4GnlDQZriVySVYEui4FKF8Jbmy0nkkXdiPKySpRSvkB
- i14D9QFGIYpR06dkPyV2G7A3VyRLNJMwKLW/TbAGYuhckkl2HDhFkj7eVAK1Ohk=
-X-Gm-Gg: ASbGnctf8Veop9Ul5iTgUq9Xo2j3fs/TGYRLp+kreuFHgWlFTeXpWNy8Sc56NHACoDo
- 4ydf8Ec3daBrMijb7u1S2o/XNhHVkYxogM7zHbhJ+6lfZAF9uwS6OyZVeXPhS936zWwTQAZEZOv
- ft+akEqJpaOpoksFnCpac+xkYv0ZPQP5Jx3VKOFC1YpAkVddAdW/VVQ4JJVQZpdkXs5DvCgMidF
- PZQSfwEHg83e2Kt3/5jaLEbiVX5gviZSB42Z07Nn5kxVtjolb8bn1bsHIom4CLt7Oq3I5yYJy7Y
- BhZ4ZzIlqkidFriqci5X6g==
-X-Google-Smtp-Source: AGHT+IEFUtLSLs0Bm87YoL9paLAh7tAYruGRjONjKhgkkQvnadYrlwgajZpkNKYqwvad0e8uSNuVQQ==
-X-Received: by 2002:a17:902:f541:b0:212:9ac9:e3e2 with SMTP id
- d9443c01a7336-2151d32fa20mr3885575ad.14.1732730233813; 
- Wed, 27 Nov 2024 09:57:13 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2129dc20ac2sm106016725ad.231.2024.11.27.09.57.13
+ AJvYcCWNPkcO4YCPsbqejTjr7BSDmPb3TcVZvHnF3qrsYEIQwBrXRKHsGeEJzNfIbR/V+vuvEKMdUAsyM/PH@nongnu.org
+X-Gm-Message-State: AOJu0YyNUjrvU/KwZ5QBW62+LfbngT/W+0OPWW8S9P9aO5BnsNXt9VUm
+ jq92BYiLfB1liuLu4uX5dpUG/3RkKFZtiIQ+Tj4zE7VhvIRL4R07BeoRHaI5FrA=
+X-Gm-Gg: ASbGncsUwey4/mASgTiBqZZrS6g32pVaGBTKi1oA+aFJF+CqkDNIbFD0r2Z2EjHjfmt
+ cy7WPwICrXGCuDYWBftQ5aUCpuEkpJ0f3mZRDoJh+MJpfbQP51Gs5ikefEweCt5ytLwmSGllUa0
+ Nd0qadEZke2TqUFtfFlv1JYqcWdAC5xPZZVpSXQ9lTIX+gAhGBEbBocAIeQGfNJ2i96ATRQFFTj
+ WzF9ErmT1zkTFzxsWFAaETaUs00N7t1VFmrQDSepdQmQveFiZtod4C249taNO/um68R
+X-Google-Smtp-Source: AGHT+IHfE+glPgRy2aGWvI3BFWqJsogvQe8HXAraWwU69qXBzoWw0OXoTEzdQzygZGN/jh3EJCfPHQ==
+X-Received: by 2002:a05:6512:12cc:b0:53d:ed28:b0b1 with SMTP id
+ 2adb3069b0e04-53df509ebf0mr109986e87.23.1732730559165; 
+ Wed, 27 Nov 2024 10:02:39 -0800 (PST)
+Received: from [192.168.170.227] ([91.209.212.66])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-53dd2445838sm2354371e87.21.2024.11.27.10.02.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Nov 2024 09:57:13 -0800 (PST)
-Message-ID: <7355ede4-390b-4870-a59a-a611350e9e3f@linaro.org>
-Date: Wed, 27 Nov 2024 09:57:12 -0800
+ Wed, 27 Nov 2024 10:02:37 -0800 (PST)
+Message-ID: <90b56207-a602-454f-9d3a-82de83a8f2a8@linaro.org>
+Date: Wed, 27 Nov 2024 12:02:27 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] plugins: optimize cpu_index code generation
+Subject: Re: [PULL 15/42] tests/functional: enable pre-emptive caching of
+ assets
+To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Camilla Conte <cconte@redhat.com>
+References: <20240904103923.451847-1-thuth@redhat.com>
+ <20240904103923.451847-16-thuth@redhat.com>
+ <66bf4784-f1e4-479f-83db-2d4f91c10e48@linaro.org>
+ <Z0YF9i2pwBkznkCD@redhat.com>
+ <CAFEAcA-ematCTyj0SN2=e3mGHvp0VWjN1GV-Tu5Rkf-V721L1w@mail.gmail.com>
+ <8ff5ef91-1a4b-498e-a948-37444d699f94@redhat.com>
+ <7c62e46b-26c8-48e7-b8ec-b7478146a8d1@linaro.org>
+ <ce5825ff-53f5-4cf9-aa6d-e0d28639e664@redhat.com>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20241126190203.3094635-1-pierrick.bouvier@linaro.org>
- <e5c7e738-3650-444a-bfa0-af6fff4e586f@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <e5c7e738-3650-444a-bfa0-af6fff4e586f@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <ce5825ff-53f5-4cf9-aa6d-e0d28639e664@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,45 +112,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+On 11/27/24 00:29, Thomas Huth wrote:
+> On 26/11/2024 23.54, Richard Henderson wrote:
+>> On 11/26/24 11:52, Thomas Huth wrote:
+>>> I think we want to continue to maek failing downloads as test failures, otherwise we'll 
+>>> never notice when an asset is not available from the internet anymore (since SKIPs just 
+>>> get ignored).
+>>
+>> I disagree.  Download failures are not rare.
+> 
+> That's not what I said / meant. Sure, servers can have hiccups and downloads can fail, but 
+> that's what we have the cache for. So having a working cache is essential.
+> 
+> OTOH, if you simply mark tests as SKIP if the download fail, we'll likely miss if an asset 
+> vanishes completely, since some people already have it in their cache and the remaining 
+> people will likely just ignore skipped tests.
+If the cache is populated, we will *not* miss if an asset vanishes, because we won't ever 
+try the URL.
 
-On 11/27/24 09:53, Richard Henderson wrote:
-> On 11/26/24 13:02, Pierrick Bouvier wrote:
->> @@ -266,6 +266,19 @@ static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
->>    
->>        assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
->>        qemu_rec_mutex_lock(&plugin.lock);
->> +
->> +    /*
->> +     * We want to flush tb when a second cpu appear.
->> +     * When generating plugin code, we optimize cpu_index for num_vcpus == 1.
->> +     */
->> +    if (plugin.num_vcpus == 1) {
->> +        qemu_rec_mutex_unlock(&plugin.lock);
->> +        start_exclusive();
->> +        qemu_rec_mutex_lock(&plugin.lock);
->> +        tb_flush(cpu);
->> +        end_exclusive();
->> +    }
-> 
-> We already did this when creating the new thread.
-> Though we're using slightly different tests:
-> 
->           /*
->            * If this is our first additional thread, we need to ensure we
->            * generate code for parallel execution and flush old translations.
->            * Do this now so that the copy gets CF_PARALLEL too.
->            */
->           if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
->               tcg_cflags_set(cpu, CF_PARALLEL);
->               tb_flush(cpu);
->           }
-> 
-> 
-> r~
+If the cache is unpopulated, and the download fails, then we cannot run the test. 
+Indicating FAIL is *useless* because there's nothing that we can do about it, and we also 
+skip additional tests that CI could be running.  If we skip, then we simply defer the test 
+to the next CI run.  This isn't perfect, but it really is better.
 
-I noticed that it was redundant (for user-mode at least), but it seemed 
-too implicit to rely on this.
-As well, I didn't observe such a flush in system-mode, does it work the 
-same as user-mode (regarding the CF_PARALLEL flag)?
+Honestly, flaky test failures are the *worst*, because those quickly get ignored too.
+Download failures go into the "flaky" bucket.
+
+
+r~
 
