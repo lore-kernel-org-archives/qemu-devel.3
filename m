@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 961A1D6ACC0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F626D6ACC4
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 12:18:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGGz7-0004cy-RB; Wed, 27 Nov 2024 07:17:35 -0500
+	id 1tGGzE-0004lg-NZ; Wed, 27 Nov 2024 07:17:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGGyq-0004cQ-Hh
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:17:19 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGGz0-0004dQ-Uj
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:17:33 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGGyi-0008JO-C9
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:17:13 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-434ab114753so4053155e9.0
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 04:17:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGGyy-0008NI-FK
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 07:17:26 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-38242abf421so4453221f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 04:17:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732709826; x=1733314626; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732709842; x=1733314642; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3BxEjvnBnJkyOT5moaMUVcAM+eLwUr9AkrsxmW/0bSo=;
- b=lgZ491cqTVGJel2/e9m3f1obYBwgFhkfwJGKq3as/kf14dq51Q6YFlq20jnXIUDgGU
- TWeaBl0PcYba1i3bJLD3jE9gxq1MLPfbohhIb6VgJE6rD23TjNDanWBquppwxSletZhM
- ckWNwTShDYJ+to6YjC1DQlGHmRIAOvFdcB1QPaWkkj3bXtk3/T0v6KVdwd7mDxY2xxpe
- fDp4k9Sn8i9iQG7kEiMYNjKOmMlFVHLsZrdz7yRHDVZHe289DOhclofl7QrVQrqbzdoR
- g2p0T1Q4QyVfGZHodr3OF/oAiu8YWTVRbNRNqodJiVhCnhbWGekYMNHrrGKzbhdd5gIK
- sG/w==
+ bh=xBB0CLhlW2tPrLDje8K+xxZrR9BoLbGaTyc8yxD5eis=;
+ b=ekfz73OnZ1zAv5WMLVJRgf7I15usIUT9am531a3vipJSljnu9ZSd4UNxUsakibxI/W
+ bB67nWeYLGJKTWUVV5Ez9+F+bSNcx4b9JNcQApw8caVrT/VNnT5T+l/sUIIFnk5qHeEO
+ TeuyrW/LiePScfty6QpjYnMl5hOA/Pb823dmnxxps4W/ns++IIPdI2vveoC5H++LQ9j3
+ 0twXXzX/OZAQs7oCCvClOSkKMI4CQbCe+CQyOHatVAkkefgyWgsPaFgwaHUE4KLIa748
+ BGCvuidXsTKo1h9f+j3Wu4YggWMG/BOUcL1B0phXpHGkIrOB4xzL6Wvgu3uowR3Rpshw
+ DHqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732709826; x=1733314626;
+ d=1e100.net; s=20230601; t=1732709842; x=1733314642;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3BxEjvnBnJkyOT5moaMUVcAM+eLwUr9AkrsxmW/0bSo=;
- b=EoqZhVqRd94bHcHrHpVoUfv2Qb9DDXuP689ug1I/rTrWMDMtzSlBZlDyYEuGw+EhwE
- vIEMVHFOgY6nqJzsRov2hhlt2zgEVlleqXqG6kkK2tN7qBJFXw78BqZhKqIzZ+z3+mJo
- NtuoS/KakRhUkAr7GOq/Ws8DNxzN80JFK69nxB+LLq+GANBkg03afwOvyJML5ESvn+DA
- Le6hyI4U8rHpC0GHopltkO1wovCq8dI3DophMvIzWxVQ3Ix3lzkV7R59pfqjLsbIdxq6
- bs/vXSBXINwgFz9hrFuNbnVKwfKwOqBZIEQtxRB4jIFknUC/K5OhsQFOdqT2s8HHzV9H
- 0unA==
-X-Gm-Message-State: AOJu0YyZmBwKkVDzhOWou3+hpRW4ndp648PLEx9hRHqv5Fl1qQYG2kBc
- Fo5rHpd/ODeFg3diXnM5NWeCgmiMlxvIh+clpVAX+p4nEV2GHvILqw3ENG6esutuZJVxiYK94NF
- C
-X-Gm-Gg: ASbGncsZaOq1ierXiYVfcXajAXH6riFfa7zNMs1gOkJesI6zzVfNP/pK0SX6k+UKWZC
- ouPTTJnZNQC8xPZf+RXToqhUcwfsMpH++YKtfL9QouQ5WKUvl8V4exXHwjXSh20L7rlLr0XRhuA
- te5HF18sN+nTkl8lKYFDsuGBxMVm/Ofc9RRFaL5ErUrG1t7rgupKSwZULwD9xQJc7UUHhbMWcoK
- DQ/8QXWM9OnelplARmXhJFfpSAsYWvW8ebrNhf9pHLcOREILnNm/y3qzAUqNNIgsmZM9KuQreCi
- 9HXs/33n8AfgUhhHaNdmHuPa08fGGHPwcWZWoiu31SY=
-X-Google-Smtp-Source: AGHT+IG2Pxc7/F2DjMgho0eUIWCImEyRJJ0EJnierZX3aYz9KyZUOReeHeKxX1iQqcstykPWPXBQTg==
-X-Received: by 2002:a5d:64a9:0:b0:385:c872:49f4 with SMTP id
- ffacd0b85a97d-385c8724b03mr1406229f8f.32.1732709826427; 
- Wed, 27 Nov 2024 04:17:06 -0800 (PST)
+ bh=xBB0CLhlW2tPrLDje8K+xxZrR9BoLbGaTyc8yxD5eis=;
+ b=ok5mevwBXgTQvaD28Y5Q3rqUzX7IP0Cqa7/vy3X7FG5xRy07n6tLv9yhsRI2hr23w9
+ g2dB4T2QEvKVnHoRmZUxgTqxRw0Y3AhIKuBC008yBvB4Yi70dgbB+5mEDHlktd8F8HAL
+ rALbdFbjXqzWtV7QR5/HzbhRvoF5e7OZXG7xuqDiAROrA5gM4Kq6crKODYF9Rjq2TK+e
+ rRgXpNftnNDy7CBLqbr8ZtVcvJ3dbblXP8r7lZM4iA85RMUUgpQnlFqvR21BkWo17XxL
+ wanz9iDf9ugB1dKZF3FTZlnf/KHfIH6VcvUhP3eK1TRpMwC/zUgPs8KcvrfmNVgUfvkx
+ Td4A==
+X-Gm-Message-State: AOJu0Yx8XoJV9Y/muE3snDl5SnXa2uqt6eNlA5CI0meo+ki+fXcBGmuV
+ 0tcvwCMaDAKjwq6doWkcygOodC8Yqd2+6PVXg+SY3ZCYc+/ghLfHTiNu96zHTwBdd8MH+6oM7A2
+ t
+X-Gm-Gg: ASbGncuosQubcIP8C36dW0MlqNG0P1jKgvHSRprYA/+0pUCjhxPfC5zigdiUVD6aSHS
+ FPppQjXArfFxR4v3rqGCHDGqdlL6/WvfwjiJ1cZjzFIchLrhm/j8xG7g+iU+z3Bp1RfA553iaDH
+ jvWi/EUG1yHaf5LgAMbc57tTgHUeB852uGLSHwZexLmyktLpKmbd/+pmhvBK16rlrYGBGeGTP2M
+ n+41XeZFruPORCO9cZpvXkJTEDusbg3RetkXG2VFiASdDyQqst7GgGNt6EYNnSYxzT22f05woCL
+ Ax5pvpCaXWD9Z/4TTf+SIuNtzRzplpfwyUm5+bTOWNY=
+X-Google-Smtp-Source: AGHT+IGlJcyJloS/k80XIS4nRahMikb9xI88w5GQVp7kXTMsTD2lTuLnuM8CvjznA+RnkFudC4O3Aw==
+X-Received: by 2002:a05:6000:4188:b0:382:49f3:4f8e with SMTP id
+ ffacd0b85a97d-385c6ebcdd1mr1351182f8f.18.1732709842163; 
+ Wed, 27 Nov 2024 04:17:22 -0800 (PST)
 Received: from localhost.localdomain
  (plb95-h02-176-184-14-96.dsl.sta.abo.bbox.fr. [176.184.14.96])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434aca7eea8sm6937285e9.34.2024.11.27.04.17.05
+ 5b1f17b1804b1-434aa7e33afsm19165815e9.36.2024.11.27.04.17.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 Nov 2024 04:17:06 -0800 (PST)
+ Wed, 27 Nov 2024 04:17:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: [PATCH-for-10.0 1/6] target/ppc: Indent ppc_tcg_ops[] with 4 spaces
-Date: Wed, 27 Nov 2024 13:16:53 +0100
-Message-ID: <20241127121658.88966-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.0 4/6] include: Expose QemuArch in 'qemu/arch_id.h'
+Date: Wed, 27 Nov 2024 13:16:56 +0100
+Message-ID: <20241127121658.88966-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241127121658.88966-1-philmd@linaro.org>
 References: <20241127121658.88966-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,54 +101,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/cpu_init.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+While QEMU architecture bitmask values are only used by
+system emulation code, they can be used in generic code
+like TCG accelerator.
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index efcb80d1c25..daf7f8a93bd 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7416,23 +7416,22 @@ static const struct SysemuCPUOps ppc_sysemu_ops = {
- #include "hw/core/tcg-cpu-ops.h"
+Move the declarations to "qemu/arch_id.h" and add the
+QemuArch type definition.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/qemu/arch_id.h     | 28 ++++++++++++++++++++++++++++
+ include/sysemu/arch_init.h | 28 +++-------------------------
+ 2 files changed, 31 insertions(+), 25 deletions(-)
+ create mode 100644 include/qemu/arch_id.h
+
+diff --git a/include/qemu/arch_id.h b/include/qemu/arch_id.h
+new file mode 100644
+index 00000000000..e3e8cf5e724
+--- /dev/null
++++ b/include/qemu/arch_id.h
+@@ -0,0 +1,28 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef QEMU_ARCH_ID_H
++#define QEMU_ARCH_ID_H
++
++typedef enum QemuArch { /* FIXME this is not an enum */
++    QEMU_ARCH_ALL = -1,
++    QEMU_ARCH_ALPHA = (1 << 0),
++    QEMU_ARCH_ARM = (1 << 1),
++    QEMU_ARCH_I386 = (1 << 3),
++    QEMU_ARCH_M68K = (1 << 4),
++    QEMU_ARCH_MICROBLAZE = (1 << 6),
++    QEMU_ARCH_MIPS = (1 << 7),
++    QEMU_ARCH_PPC = (1 << 8),
++    QEMU_ARCH_S390X = (1 << 9),
++    QEMU_ARCH_SH4 = (1 << 10),
++    QEMU_ARCH_SPARC = (1 << 11),
++    QEMU_ARCH_XTENSA = (1 << 12),
++    QEMU_ARCH_OPENRISC = (1 << 13),
++    QEMU_ARCH_TRICORE = (1 << 16),
++    QEMU_ARCH_HPPA = (1 << 18),
++    QEMU_ARCH_RISCV = (1 << 19),
++    QEMU_ARCH_RX = (1 << 20),
++    QEMU_ARCH_AVR = (1 << 21),
++    QEMU_ARCH_HEXAGON = (1 << 22),
++    QEMU_ARCH_LOONGARCH = (1 << 23),
++} QemuArch;
++
++#endif
+diff --git a/include/sysemu/arch_init.h b/include/sysemu/arch_init.h
+index 5b1c1026f3a..01106de5bcb 100644
+--- a/include/sysemu/arch_init.h
++++ b/include/sysemu/arch_init.h
+@@ -1,29 +1,7 @@
+-#ifndef QEMU_ARCH_INIT_H
+-#define QEMU_ARCH_INIT_H
++#ifndef SYSEMU_ARCH_INIT_H
++#define SYSEMU_ARCH_INIT_H
  
- static const TCGCPUOps ppc_tcg_ops = {
--  .initialize = ppc_translate_init,
--  .restore_state_to_opc = ppc_restore_state_to_opc,
 -
-+    .initialize = ppc_translate_init,
-+    .restore_state_to_opc = ppc_restore_state_to_opc,
- #ifdef CONFIG_USER_ONLY
--  .record_sigsegv = ppc_cpu_record_sigsegv,
-+    .record_sigsegv = ppc_cpu_record_sigsegv,
- #else
--  .tlb_fill = ppc_cpu_tlb_fill,
--  .cpu_exec_interrupt = ppc_cpu_exec_interrupt,
--  .cpu_exec_halt = ppc_cpu_has_work,
--  .do_interrupt = ppc_cpu_do_interrupt,
--  .cpu_exec_enter = ppc_cpu_exec_enter,
--  .cpu_exec_exit = ppc_cpu_exec_exit,
--  .do_unaligned_access = ppc_cpu_do_unaligned_access,
--  .do_transaction_failed = ppc_cpu_do_transaction_failed,
--  .debug_excp_handler = ppc_cpu_debug_excp_handler,
--  .debug_check_breakpoint = ppc_cpu_debug_check_breakpoint,
--  .debug_check_watchpoint = ppc_cpu_debug_check_watchpoint,
-+    .tlb_fill = ppc_cpu_tlb_fill,
-+    .cpu_exec_interrupt = ppc_cpu_exec_interrupt,
-+    .cpu_exec_halt = ppc_cpu_has_work,
-+    .do_interrupt = ppc_cpu_do_interrupt,
-+    .cpu_exec_enter = ppc_cpu_exec_enter,
-+    .cpu_exec_exit = ppc_cpu_exec_exit,
-+    .do_unaligned_access = ppc_cpu_do_unaligned_access,
-+    .do_transaction_failed = ppc_cpu_do_transaction_failed,
-+    .debug_excp_handler = ppc_cpu_debug_excp_handler,
-+    .debug_check_breakpoint = ppc_cpu_debug_check_breakpoint,
-+    .debug_check_watchpoint = ppc_cpu_debug_check_watchpoint,
- #endif /* !CONFIG_USER_ONLY */
- };
- #endif /* CONFIG_TCG */
+-enum {
+-    QEMU_ARCH_ALL = -1,
+-    QEMU_ARCH_ALPHA = (1 << 0),
+-    QEMU_ARCH_ARM = (1 << 1),
+-    QEMU_ARCH_I386 = (1 << 3),
+-    QEMU_ARCH_M68K = (1 << 4),
+-    QEMU_ARCH_MICROBLAZE = (1 << 6),
+-    QEMU_ARCH_MIPS = (1 << 7),
+-    QEMU_ARCH_PPC = (1 << 8),
+-    QEMU_ARCH_S390X = (1 << 9),
+-    QEMU_ARCH_SH4 = (1 << 10),
+-    QEMU_ARCH_SPARC = (1 << 11),
+-    QEMU_ARCH_XTENSA = (1 << 12),
+-    QEMU_ARCH_OPENRISC = (1 << 13),
+-    QEMU_ARCH_TRICORE = (1 << 16),
+-    QEMU_ARCH_HPPA = (1 << 18),
+-    QEMU_ARCH_RISCV = (1 << 19),
+-    QEMU_ARCH_RX = (1 << 20),
+-    QEMU_ARCH_AVR = (1 << 21),
+-    QEMU_ARCH_HEXAGON = (1 << 22),
+-    QEMU_ARCH_LOONGARCH = (1 << 23),
+-};
++#include "qemu/arch_id.h"
+ 
+ extern const uint32_t arch_type;
+ 
 -- 
 2.45.2
 
