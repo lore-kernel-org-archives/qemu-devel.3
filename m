@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E925BD609A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 05:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36BBD609A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 05:45:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGAmK-0003rc-HA; Wed, 27 Nov 2024 00:39:56 -0500
+	id 1tGAqu-0004ln-Dc; Wed, 27 Nov 2024 00:44:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tGAmJ-0003rC-BG; Wed, 27 Nov 2024 00:39:55 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <zzhangphd@gmail.com>)
+ id 1tG7Mb-0002xH-E1
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 21:01:09 -0500
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tGAmH-0002O8-QL; Wed, 27 Nov 2024 00:39:55 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5d071f70b51so1574870a12.3; 
- Tue, 26 Nov 2024 21:39:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zzhangphd@gmail.com>)
+ id 1tG7MY-0007WQ-AX
+ for qemu-devel@nongnu.org; Tue, 26 Nov 2024 21:01:09 -0500
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e388d8850d3so6108232276.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Nov 2024 18:01:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732685992; x=1733290792; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1732672864; x=1733277664; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XXw+Yt1fukKiKcNXQZr+JHMytivTBC/jlST45XFrnBk=;
- b=MlQiNeRqBhowi3OhrwIpCH5DbxPoEca2CXNiyi0k9kYJEkY1xNbxpmeqY+trZbZ9Uq
- 1woclhk6SyxzwrvXSUuQg/sipNzPlk7IA0k/6We/4ubYWE0XLrSxe+2x0ltQ9KdaUUAq
- 9k1lJ02+YUwp7OVRhpwO6IEtb1VCpUf8cXysQ3n7oVuJjxn0j3aH8nKDuMwWegODfOa6
- 97AsdeGCN2erR1FJOn/mcMt6NWXD1UazWEvb+Pht0CTRHS+F9X8cIpq4X81fMhDnqTVr
- nEN77PJ4dqTmMkNEQTsvo4KiuhM0+pVN/lcrnPCqNjLDlSWzUgAGbQtgDv3S5BJ7HSh2
- z4zw==
+ bh=/OzBLSo0MUco3fGE9PH+FLy8BRllJZbdcHycBNjbBjs=;
+ b=aWOqaZoktq+HocgJZ9MhNCnlLE2gdLW6boJMcxnCqRFf7IhLKYeEVOrJyHT116j2r7
+ EpQi9RFj+IEX/TOZLA7ZFh0jgEKCmLc5tJkKBwNY0wQkrRv5+WH1+e5p5eufFWIVbiw6
+ GH1+mnYlEDf5PUOsoLf3yeW5v/3WYGCPZwr2/hGXT+xB3jMedPHPlJhTBEEq6j/OeUnz
+ kE28srlXNW4LSZ5GrfJQg9OXWwcje8OHPifS9RZUTGvjInMGE8rI29gA7tkdKCZGYo8W
+ HlcXVV5/ZruXoSNapPQDXgFix/kep+pwzRQCs7rrN9OJLduKwgTSSKRxKdLg+fsgThS/
+ AVcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732685992; x=1733290792;
+ d=1e100.net; s=20230601; t=1732672864; x=1733277664;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XXw+Yt1fukKiKcNXQZr+JHMytivTBC/jlST45XFrnBk=;
- b=hBuj9/rqwqIWCNFejZFIyqBFi05+oibXe0UttobzP7aOj9Xw6rrdf36J39gXV/NBnQ
- uRdjbR720wcFLUNkLO+Dkh5tRlYS8yF6F6ZITXICuTsD3xGg5RLi3cF11TmDF62UKySN
- c2To8AwjEfvkR5jFCCAImInKtuNUIIFdJJ22A6W2ffKcGHnv2aqQzI2r0mNGt+17+rxi
- WWq6YpfQ309AT6M7pZOKl/7bfNx0vdAkQTviEWbIquOx7vnwxr6d3VAGDlOx38vMnrYZ
- eQVh1L3ZgvwFhLVCen/A7Eh7iQLrzCrGFf3noAILeTWs3c6/VmRZ7xYTKYiM1lPkDpmo
- Qdbw==
+ bh=/OzBLSo0MUco3fGE9PH+FLy8BRllJZbdcHycBNjbBjs=;
+ b=Ds9mV9WbwuG0wvYC5f5PdbYGCK5CzO6DONouhpV0czWLxIwzj2/2zPzMckiCWijrXb
+ XDvr5Mf8cvnQ00CO5lAmk8sd+XPaEw95g99EZPG311x7Qw6Z2TKk98RY6tiLGopZhLvN
+ y/2xIN3sc5v4q/PwcZPuHo/haEbIQA72B1Z06CAyVvOtWlOngW9ORDGHBT/jrW0sp1tu
+ 1bgcnzMaGCGOwSVadg4Xg7r1hR7d1oNsc4/zMs7WFWq9Qnx6vq2uuNPXVvaPV49tmx4k
+ M/4aev1hbUx2W/NPQ/2Ual1o8HH9nYivprbYkxbzF+rzvgOhjBModNVvux63+PWFW1TO
+ HdmA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWrRhbVE9fh3/GdkTDfQSaCjCfD9YmV+QHJ76vwjEKjZ6OAMfHsRgzov4ny91YY4Mv8x2cq4tvieV3Zww==@nongnu.org,
- AJvYcCX9q9bNoAgUsuzXDGCBYGD8PAAY9KV5TtFHKhUYur1a3TR49f1IK85AEEoZKi+zMLfuRHBmvMrpwibn@nongnu.org
-X-Gm-Message-State: AOJu0YwDtw9FOpyzJRc9F4Zvt0yS//Uu9Zc5mSHXgqPMH9bre//YBXCr
- M3fueNEwhtIG97r3FcGTpylLgMeax6L6ylncvt9RZut2maaetKFh7P9c3rzCs3vYvH4MHB2Wa1g
- 78cQ5HeJus+mNnjAAASty1NY/8RI=
-X-Gm-Gg: ASbGncs1AXcEPd8gYnbrd67ELod8P5MJfvwLtzWyATAVANIoY/8Fiv8GRIxe3KANkNx
- 1DBUDHO5C/9xeTe2CJXkHNBKvYl/4hHk=
-X-Google-Smtp-Source: AGHT+IFRrT+GeYM05jeW66nQJCVXmehVe2WZqh86XZlkLqZnAYv73NWMevXmuKyIJpjTFqIKzcuVk4r+S4G3lg4Te1A=
-X-Received: by 2002:a05:6402:43c9:b0:5cf:e3eb:5153 with SMTP id
- 4fb4d7f45d1cf-5d080bcbf86mr1295857a12.16.1732685991740; Tue, 26 Nov 2024
- 21:39:51 -0800 (PST)
+ AJvYcCVQ3ys2Q/YxYhXfrpmtT+p2Qz4EFmisNZsccYhi3xWYHdy8Phul0V0AjWNYNF3G8eU3C+6ck+D1zyn+@nongnu.org
+X-Gm-Message-State: AOJu0YxSGKti8QEmL9Z+n6h0a8eoJPfifPYwqIbMGJ8xyPSujyGv/vuJ
+ G1akP3Ym/XtGbbjA19UMa7o9vmRsM3EKnq2wF6EVxs3i/GxnQlFoi+IdgCrUlyMusrkxdHvtI8a
+ sTh09yuxvmgvdLSQmx2Q/No0jZko=
+X-Gm-Gg: ASbGncsUxWlFF13W2hKqk2mW7+nMoAlySbAfxfTSVy3eZVvXNsaOqA/Xhj+4gs5CxGM
+ +OYWo9JfP/bgMydCQ7Z2oUhr5y8OvD1m4
+X-Google-Smtp-Source: AGHT+IFLuZ8SEqPD5TAyCWwxG4wuFF50ExupWvdz4itzWz3fiYX7E16Pir1L0yRAis68PSbQvp9THncme/PWEHSvu1Y=
+X-Received: by 2002:a05:6902:2487:b0:e38:a34f:ff7b with SMTP id
+ 3f1490d57ef6-e395b8eb4d2mr1336695276.30.1732672864370; Tue, 26 Nov 2024
+ 18:01:04 -0800 (PST)
 MIME-Version: 1.0
-References: <20241121061259.4043177-1-baturo.alexey@gmail.com>
- <20241121061259.4043177-2-baturo.alexey@gmail.com>
- <CAKmqyKObuwwp7AGrUgNWO9PdzBW0f8FFTrhFBVqij8ZOy+RQAg@mail.gmail.com>
-In-Reply-To: <CAKmqyKObuwwp7AGrUgNWO9PdzBW0f8FFTrhFBVqij8ZOy+RQAg@mail.gmail.com>
-From: Alexey Baturo <baturo.alexey@gmail.com>
-Date: Wed, 27 Nov 2024 08:39:40 +0300
-Message-ID: <CAFukJ-CUUi7tC8srp3E3wtbP0LZBC5ytFgGzD+T2ywV2p0LTAg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] target/riscv: Remove obsolete pointer masking
- extension code.
-To: Alistair Francis <alistair23@gmail.com>
-Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
- dbarboza@ventanamicro.com, liwei1518@gmail.com, frank.chang@sifive.com, 
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000000b8b4e0627de657e"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=baturo.alexey@gmail.com; helo=mail-ed1-x531.google.com
+References: <20241126080213.248-1-weichenforschung@gmail.com>
+ <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
+ <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
+ <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
+ <93616a1e-3614-49ca-9515-697f1c9205b6@gmail.com>
+ <9eafe8fa-de09-40e3-9687-573255ce37de@redhat.com>
+In-Reply-To: <9eafe8fa-de09-40e3-9687-573255ce37de@redhat.com>
+From: zhi zhang <zzhangphd@gmail.com>
+Date: Wed, 27 Nov 2024 10:00:53 +0800
+Message-ID: <CAD-9bcdm+gupZQ91Q-JMjuPikVmfVhCdJuwq=ptfaipL7Peevg@mail.gmail.com>
+Subject: Re: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
+ requested_size
+To: David Hildenbrand <david@redhat.com>
+Cc: Wei Chen <weichenforschung@gmail.com>, qemu-devel@nongnu.org,
+ mst@redhat.com, yuval.yarom@rub.de, genkin@gatech.edu
+Content-Type: multipart/alternative; boundary="00000000000097ced30627db563b"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=zzhangphd@gmail.com; helo=mail-yb1-xb2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -82,6 +84,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 27 Nov 2024 00:44:38 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,77 +99,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000b8b4e0627de657e
+--00000000000097ced30627db563b
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Alistair,
+On Tue, Nov 26, 2024 at 11:52=E2=80=AFPM David Hildenbrand <david@redhat.co=
+m> wrote:
 
-You're right.
-Initially I thought it might be a good idea to do the whole process from
-scratch, but as @Daniel Henrique Barboza <dbarboza@ventanamicro.com> sugges=
-ted
-I resubmitted the series with a proper version tag and added some
-reviewed-by.
-Sorry for the confusion.
-
-Thanks
-
-=D0=BF=D0=BD, 25 =D0=BD=D0=BE=D1=8F=D0=B1. 2024=E2=80=AF=D0=B3. =D0=B2 07:0=
-1, Alistair Francis <alistair23@gmail.com>:
-
-> On Thu, Nov 21, 2024 at 4:13=E2=80=AFPM <baturo.alexey@gmail.com> wrote:
+> On 26.11.24 16:31, Wei Chen wrote:
+> >   > How can you be sure (IOW trigger) that the system will store
+> >   > "important data" like EPTs?
 > >
-> > From: Alexey Baturo <baturo.alexey@gmail.com>
+> > We cannot, but we have designed the attack (see below) to improve the
+> > possibility.
 > >
-> > Zjpm extension is finally ratified. And it's much simplier compared to
-> the experimental one.
-> > The newer version doesn't allow to specify custom mask or base for
-> pointer masking.
-> > Instead it allows only certain options for masking top bits.
+> >   > So is one magic bit really that for your experiments, one needs a
+> >   > viommu?
 > >
-> > Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
+> > Admittedly the way we accomplish a VM escape is a bit arcane.
 >
-> Wasn't this and part of this series previously reviewed?
+> That's what I imagined :)
 >
-> Alistair
+> >
+> > We require device passthrough because it pins the VM's memory down and
+> > converts them to MIGRATE_UNMOVABLE.
+>
+> Interesting, that's news to me. Can you share where GUP in the kernel
+> would do that?
 >
 
---0000000000000b8b4e0627de657e
+In /drivers/vfio/vfio_iommu_type1.c, there is a function called
+vfio_iommu_type1_pin_pages where VM's memory is pinned down.
+
+
+>
+> > Hotplugged memory will also be
+> > converted to MIGRATE_UNMOVABLE.
+>
+> But that's in the VM? Because we don't hotplug memory in the hypervisor.
+>
+
+Yes, the virtio-mem driver in the VM is modified to actively release memory
+vulnerable to Rowhammer.
+
+For more details, would you be interested in reading our paper? It was
+recently submitted to ASPLOS for publication and we are happy to share it
+with you.
+
+Regards,
+Zhi Zhang
+
+--00000000000097ced30627db563b
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi Alistair,<div><br></div><div>You&#39;re right.</div><di=
-v>Initially I thought it might be a good idea to do the whole process from =
-scratch, but as=C2=A0<a class=3D"gmail_plusreply" id=3D"plusReplyChip-0" hr=
-ef=3D"mailto:dbarboza@ventanamicro.com" tabindex=3D"-1">@Daniel Henrique Ba=
-rboza</a>=C2=A0suggested I resubmitted the series with a proper version tag=
- and added some reviewed-by.</div><div>Sorry for the confusion.</div><div><=
-br></div><div>Thanks</div></div><br><div class=3D"gmail_quote gmail_quote_c=
-ontainer"><div dir=3D"ltr" class=3D"gmail_attr">=D0=BF=D0=BD, 25 =D0=BD=D0=
-=BE=D1=8F=D0=B1. 2024=E2=80=AF=D0=B3. =D0=B2 07:01, Alistair Francis &lt;<a=
- href=3D"mailto:alistair23@gmail.com">alistair23@gmail.com</a>&gt;:<br></di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu, Nov 21, 2024 at=
- 4:13=E2=80=AFPM &lt;<a href=3D"mailto:baturo.alexey@gmail.com" target=3D"_=
-blank">baturo.alexey@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; From: Alexey Baturo &lt;<a href=3D"mailto:baturo.alexey@gmail.com" tar=
-get=3D"_blank">baturo.alexey@gmail.com</a>&gt;<br>
-&gt;<br>
-&gt; Zjpm extension is finally ratified. And it&#39;s much simplier compare=
-d to the experimental one.<br>
-&gt; The newer version doesn&#39;t allow to specify custom mask or base for=
- pointer masking.<br>
-&gt; Instead it allows only certain options for masking top bits.<br>
-&gt;<br>
-&gt; Signed-off-by: Alexey Baturo &lt;<a href=3D"mailto:baturo.alexey@gmail=
-.com" target=3D"_blank">baturo.alexey@gmail.com</a>&gt;<br>
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 26, 2024 at 11:52=E2=80=
+=AFPM David Hildenbrand &lt;<a href=3D"mailto:david@redhat.com">david@redha=
+t.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"ma=
+rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
+1ex">On 26.11.24 16:31, Wei Chen wrote:<br>
+&gt;=C2=A0 =C2=A0&gt; How can you be sure (IOW trigger) that the system wil=
+l store<br>
+&gt;=C2=A0 =C2=A0&gt; &quot;important data&quot; like EPTs?<br>
+&gt; <br>
+&gt; We cannot, but we have designed the attack (see below) to improve the<=
+br>
+&gt; possibility.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0&gt; So is one magic bit really that for your experiments,=
+ one needs a<br>
+&gt;=C2=A0 =C2=A0&gt; viommu?<br>
+&gt; <br>
+&gt; Admittedly the way we accomplish a VM escape is a bit arcane.<br>
 <br>
-Wasn&#39;t this and part of this series previously reviewed?<br>
+That&#39;s what I imagined :)<br>
 <br>
-Alistair<br>
-</blockquote></div>
+&gt; <br>
+&gt; We require device passthrough because it pins the VM&#39;s memory down=
+ and<br>
+&gt; converts them to MIGRATE_UNMOVABLE. <br>
+<br>
+Interesting, that&#39;s news to me. Can you share where GUP in the kernel <=
+br>
+would do that?<br></blockquote><div><br></div><div>In /drivers/vfio/vfio_io=
+mmu_type1.c, there is a function called vfio_iommu_type1_pin_pages where VM=
+&#39;s memory is pinned down.</div><div>=C2=A0</div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">
+<br>
+&gt; Hotplugged memory will also be<br>
+&gt; converted to MIGRATE_UNMOVABLE. <br>
+<br>
+But that&#39;s in the VM? Because we don&#39;t hotplug memory in the hyperv=
+isor.<br></blockquote><div><br></div><div>Yes, the virtio-mem driver in the=
+ VM is modified to actively release memory vulnerable to Rowhammer.</div><d=
+iv>=C2=A0</div><div>
 
---0000000000000b8b4e0627de657e--
+For more details, would you be interested in reading our paper? It was rece=
+ntly submitted to ASPLOS for publication and we are happy to share it with =
+you.
+
+</div><div><br></div><div>Regards,</div><div>Zhi Zhang</div><div><br></div>=
+</div></div>
+
+--00000000000097ced30627db563b--
 
