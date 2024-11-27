@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EDAAD609B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 09:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BFB9D609BA
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 09:17:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGE9O-00026o-Fk; Wed, 27 Nov 2024 04:15:58 -0500
+	id 1tGE9s-0002RL-8Z; Wed, 27 Nov 2024 04:16:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tGE9M-00026D-3j; Wed, 27 Nov 2024 04:15:56 -0500
+ id 1tGE9l-0002J8-6W; Wed, 27 Nov 2024 04:16:21 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tGE9K-0004K2-3h; Wed, 27 Nov 2024 04:15:55 -0500
+ id 1tGE9i-0004K2-Mt; Wed, 27 Nov 2024 04:16:20 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 27 Nov
- 2024 17:15:43 +0800
+ 2024 17:15:45 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 27 Nov 2024 17:15:43 +0800
+ Transport; Wed, 27 Nov 2024 17:15:45 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,11 +33,14 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v3 00/10] Add smc qtest testcase to support AST2700
-Date: Wed, 27 Nov 2024 17:15:33 +0800
-Message-ID: <20241127091543.1243114-1-jamin_lin@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v3 06/10] test/qtest/aspeed_smc-test: Support to test AST2600
+Date: Wed, 27 Nov 2024 17:15:39 +0800
+Message-ID: <20241127091543.1243114-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241127091543.1243114-1-jamin_lin@aspeedtech.com>
+References: <20241127091543.1243114-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
@@ -66,46 +69,85 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-change from v1:
- 1. Fix write incorrect data into flash in user mode.
- 2. Refactor aspeed smc qtest testcases to support AST2600, AST2500 and
-AST1030.
- 3. Add ast2700 smc qtest testcase to support AST2700.
+Add test_ast2600_evb function and reused testcases for AST2600 testing.
+The spi base address, flash base address and ce index of fmc_cs0 are
+0x1E620000, 0x20000000 and 0, respectively.
+The default flash model of fmc_cs0 is "mx66u51235f" whose size is 64MB,
+so set jedec_id 0xc2253a.
 
-change from v2:
-1. Introduce a new aspeed-smc-utils.c to place common testcases.
-2. Fix hardcode attach flash model of spi controllers
-3. Add reviewers suggestion and fix review issue.
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ tests/qtest/aspeed_smc-test.c | 41 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-change from v3:
-1. replace the TestData type name with AspeedSMCTestData
-2. add an 'aspeed_smc' prefix in the name of aspeed smc test routine functions
-
-Jamin Lin (10):
-  test/qtest/aspeed_smc-test: Move testcases to test_palmetto_bmc
-    function
-  test/qtest/aspeed_smc-test: Introduce a new TestData to test different
-    BMC SOCs
-  test/qtest/aspeed_smc-test: Support to test all CE pins
-  test/qtest/aspeed_smc-test: Introducing a "page_addr" data field
-  test/qtest/aspeed_smc-test: Support to test AST2500
-  test/qtest/aspeed_smc-test: Support to test AST2600
-  test/qtest/aspeed_smc-test: Support to test AST1030
-  test/qtest/aspeed_smc-test: Support write page command with QPI mode
-  test/qtest: Introduce a new aspeed-smc-utils.c to place common
-    testcases
-  test/qtest/ast2700-smc-test: Support to test AST2700
-
- tests/qtest/aspeed-smc-utils.c | 686 +++++++++++++++++++++++++++++
- tests/qtest/aspeed-smc-utils.h |  95 ++++
- tests/qtest/aspeed_smc-test.c  | 775 ++++++++-------------------------
- tests/qtest/ast2700-smc-test.c |  71 +++
- tests/qtest/meson.build        |   5 +-
- 5 files changed, 1034 insertions(+), 598 deletions(-)
- create mode 100644 tests/qtest/aspeed-smc-utils.c
- create mode 100644 tests/qtest/aspeed-smc-utils.h
- create mode 100644 tests/qtest/ast2700-smc-test.c
-
+diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
+index 0171ecf4ed..30f997679c 100644
+--- a/tests/qtest/aspeed_smc-test.c
++++ b/tests/qtest/aspeed_smc-test.c
+@@ -737,21 +737,62 @@ static void test_ast2500_evb(TestData *data)
+     qtest_add_data_func("/ast2500/smc/read_status_reg",
+                         data, test_read_status_reg);
+ }
++
++static void test_ast2600_evb(TestData *data)
++{
++    int ret;
++    int fd;
++
++    fd = g_file_open_tmp("qtest.m25p80.mx66u51235f.XXXXXX",
++                         &data->tmp_path, NULL);
++    g_assert(fd >= 0);
++    ret = ftruncate(fd, 64 * 1024 * 1024);
++    g_assert(ret == 0);
++    close(fd);
++
++    data->s = qtest_initf("-machine ast2600-evb "
++                          "-drive file=%s,format=raw,if=mtd",
++                          data->tmp_path);
++
++    /* fmc cs0 with mx66u51235f flash */
++    data->flash_base = 0x20000000;
++    data->spi_base = 0x1E620000;
++    data->jedec_id = 0xc2253a;
++    data->cs = 0;
++    data->node = "/machine/soc/fmc/ssi.0/child[0]";
++    /* beyond 16MB */
++    data->page_addr = 0x14000 * FLASH_PAGE_SIZE;
++
++    qtest_add_data_func("/ast2600/smc/read_jedec", data, test_read_jedec);
++    qtest_add_data_func("/ast2600/smc/erase_sector", data, test_erase_sector);
++    qtest_add_data_func("/ast2600/smc/erase_all",  data, test_erase_all);
++    qtest_add_data_func("/ast2600/smc/write_page", data, test_write_page);
++    qtest_add_data_func("/ast2600/smc/read_page_mem",
++                        data, test_read_page_mem);
++    qtest_add_data_func("/ast2600/smc/write_page_mem",
++                        data, test_write_page_mem);
++    qtest_add_data_func("/ast2600/smc/read_status_reg",
++                        data, test_read_status_reg);
++}
+ int main(int argc, char **argv)
+ {
+     TestData palmetto_data;
+     TestData ast2500_evb_data;
++    TestData ast2600_evb_data;
+     int ret;
+ 
+     g_test_init(&argc, &argv, NULL);
+ 
+     test_palmetto_bmc(&palmetto_data);
+     test_ast2500_evb(&ast2500_evb_data);
++    test_ast2600_evb(&ast2600_evb_data);
+     ret = g_test_run();
+ 
+     qtest_quit(palmetto_data.s);
+     qtest_quit(ast2500_evb_data.s);
++    qtest_quit(ast2600_evb_data.s);
+     unlink(palmetto_data.tmp_path);
+     unlink(ast2500_evb_data.tmp_path);
++    unlink(ast2600_evb_data.tmp_path);
+     return ret;
+ }
 -- 
 2.34.1
 
