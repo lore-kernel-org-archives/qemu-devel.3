@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD86D609CF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 10:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA4BD609CF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 10:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGFNl-0004nV-OS; Wed, 27 Nov 2024 05:34:53 -0500
+	id 1tGFNk-0004n8-NM; Wed, 27 Nov 2024 05:34:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tGFNj-0004my-TD
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 05:34:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tGFNh-0004mG-FU
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 05:34:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tGFNf-0000fz-BO
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 05:34:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tGFNf-0000gF-JX
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 05:34:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1732703686;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vw8IBeqUQXp39Kdvkmv0bVNgL1DF1cMLWAsiQ1kJL5k=;
- b=L+Flci+qtP1akHktVhAHTqRv4WZhBUid+5GTErZwlFgZDA/HqId6utXHP2x6FoDi18nDXe
- qtGekDOlSIdGDU/IEGi4OmNZpHRNwTx9VwSJ3kIWhFe9XjaClMI9DfwaKJ7OxgnNAHX2Rw
- UBC1CekqgwtA4ULrgnxkMMgq1J4K25w=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VpPQM0oOwGnPNwnhweXtwRA9G6l6Eig29zeE2L1h0Ag=;
+ b=AUOsoaYj3FfPr+wfvmQgT2Fa6z/ORHlBUVfzkBc8M+lN43ftU/QqXxFHxVxEy8ctn4QGbv
+ 2eQ3quYa3Hfd+agTn2eykR/NytvjDU10PdJPOhZMPRx9lKExmnDFr2bWzZcgzOdOw5wdAS
+ U8JI5px/RiPtP5shkpKal3hcrY8qpPE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-Mzvg6r_NPdmJ_GshGK8qRg-1; Wed,
- 27 Nov 2024 05:34:42 -0500
-X-MC-Unique: Mzvg6r_NPdmJ_GshGK8qRg-1
-X-Mimecast-MFC-AGG-ID: Mzvg6r_NPdmJ_GshGK8qRg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-353-lzDeL2n6PmyyEQjDVVj1jQ-1; Wed,
+ 27 Nov 2024 05:34:44 -0500
+X-MC-Unique: lzDeL2n6PmyyEQjDVVj1jQ-1
+X-Mimecast-MFC-AGG-ID: lzDeL2n6PmyyEQjDVVj1jQ
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9018D1955F41; Wed, 27 Nov 2024 10:34:41 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 633281955F35; Wed, 27 Nov 2024 10:34:43 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.82])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 012B81955F40; Wed, 27 Nov 2024 10:34:39 +0000 (UTC)
+ id 10FEA1956054; Wed, 27 Nov 2024 10:34:41 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 6/7] tests/functional: Remove sleep workarounds from sh4 test
-Date: Wed, 27 Nov 2024 11:34:24 +0100
-Message-ID: <20241127103425.378289-7-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 7/7] hw/pci: Remove unused pci_irq_pulse() method
+Date: Wed, 27 Nov 2024 11:34:25 +0100
+Message-ID: <20241127103425.378289-8-thuth@redhat.com>
 In-Reply-To: <20241127103425.378289-1-thuth@redhat.com>
 References: <20241127103425.378289-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,56 +83,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-These were introduced in the avocado tests to workaround read issues
-when interacting with console. They are no longer necessary and we can
-use the expected login string instead.
+Last use of pci_irq_pulse() was removed 7 years ago in commit
+5e9aa92eb1 ("hw/block: Fix pin-based interrupt behaviour of NVMe").
 
-Test always passes now. Remove skipUnless test on QEMU_TEST_FLAKY_TESTS.
-
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20241122141827.2039984-1-clg@redhat.com>
+Message-ID: <20241122103418.539-1-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/test_sh4_tuxrun.py | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ include/hw/pci/pci.h | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/tests/functional/test_sh4_tuxrun.py b/tests/functional/test_sh4_tuxrun.py
-index 352cb360ef..b33533fc7e 100755
---- a/tests/functional/test_sh4_tuxrun.py
-+++ b/tests/functional/test_sh4_tuxrun.py
-@@ -15,7 +15,7 @@
- import time
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index 135695c551..c0717e3121 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -670,16 +670,6 @@ static inline void pci_irq_deassert(PCIDevice *pci_dev)
+     pci_set_irq(pci_dev, 0);
+ }
  
- from unittest import skipUnless
--from qemu_test import Asset, exec_command_and_wait_for_pattern, exec_command
-+from qemu_test import Asset, exec_command_and_wait_for_pattern
- from qemu_test.tuxruntest import TuxRunBaselineTest
- 
- class TuxRunSh4Test(TuxRunBaselineTest):
-@@ -27,8 +27,6 @@ class TuxRunSh4Test(TuxRunBaselineTest):
-         'https://storage.tuxboot.com/20230331/sh4/rootfs.ext4.zst',
-         '3592a7a3d5a641e8b9821449e77bc43c9904a56c30d45da0694349cfd86743fd')
- 
--    # Note: some segfaults caused by unaligned userspace access
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable')
-     def test_sh4(self):
-         self.set_machine('r2d')
-         self.cpu='sh7785'
-@@ -46,10 +44,8 @@ def test_sh4(self):
-                          console_index=1)
-         self.vm.launch()
- 
--        self.wait_for_console_pattern("Welcome to TuxTest")
--        time.sleep(0.1)
--        exec_command(self, 'root')
--        time.sleep(0.1)
-+        self.wait_for_console_pattern("tuxtest login:")
-+        exec_command_and_wait_for_pattern(self, 'root', 'root@tuxtest:~#')
-         exec_command_and_wait_for_pattern(self, 'halt',
-                                           "reboot: System halted")
+-/*
+- * FIXME: PCI does not work this way.
+- * All the callers to this method should be fixed.
+- */
+-static inline void pci_irq_pulse(PCIDevice *pci_dev)
+-{
+-    pci_irq_assert(pci_dev);
+-    pci_irq_deassert(pci_dev);
+-}
+-
+ MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
+ void pci_set_power(PCIDevice *pci_dev, bool state);
  
 -- 
 2.47.0
