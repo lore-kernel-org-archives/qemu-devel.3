@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE960D6ACD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 14:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC94D6ACD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 14:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGIYO-0003j2-I7; Wed, 27 Nov 2024 08:58:04 -0500
+	id 1tGIZW-0006w1-FK; Wed, 27 Nov 2024 08:59:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYN-0003iZ-G7
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIZT-0006vO-Ct
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:59:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIYL-0007kL-7z
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:58:03 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tGIZP-00084u-WB
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 08:59:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732715880;
+ s=mimecast20190719; t=1732715947;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xc83yCJTjWUOlwbPIaTOBSqDgZomNzG9qaGscIC6VEA=;
- b=MxN4Kq6Yzltv0VlhgAZEvdMY+w0oLJ6bTCDAxYuDQu5sFoOh5ce2SlUQiG6wIG61jPlAvi
- ENvkBlpH4gD7oGMnvOiLMkngeI7MfdBV1ZnU8HpYqSWoo06mQ+8fNFg19QhtmLpePdSD/A
- yhp6/TdyaxhB7H6lzvVqWM7xKefVsp8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7mZYQc/0Beq9quMGIXTqw5aSICjDsmWEiV1q8R4CPFA=;
+ b=FIxAq9OgEItPDA9C+znYRYVXNPGPY8VRnal19lMoGlaBXERzHbnIaOMVWmC0ZvsJ7uEfsx
+ RDhxDle9gRnolDjoquayA8YduWAuRPXkLmV0jYGvTUE6rp5F20c7ZruIxIWwGJmaTrNkXR
+ 3F1bOy8NhOGDOsXGspU0PqoAqjryL/s=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-82-MRM3YBsRP2qndmx7lr4qCw-1; Wed, 27 Nov 2024 08:57:56 -0500
-X-MC-Unique: MRM3YBsRP2qndmx7lr4qCw-1
-X-Mimecast-MFC-AGG-ID: MRM3YBsRP2qndmx7lr4qCw
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38256bf4828so481746f8f.1
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 05:57:56 -0800 (PST)
+ us-mta-241-piJIlEVBMraM6AiKnoUdlw-1; Wed, 27 Nov 2024 08:57:54 -0500
+X-MC-Unique: piJIlEVBMraM6AiKnoUdlw-1
+X-Mimecast-MFC-AGG-ID: piJIlEVBMraM6AiKnoUdlw
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3824395a677so3621017f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 05:57:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732715874; x=1733320674;
+ d=1e100.net; s=20230601; t=1732715872; x=1733320672;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Xc83yCJTjWUOlwbPIaTOBSqDgZomNzG9qaGscIC6VEA=;
- b=VSIM0NYyCOtWgPJNYWma8+tIsJ5+Fa24YISWnrAbRlHmsgOijoX28crTksrxOM9h5Y
- RHFj8CEmmPGzP7WB+QBjfgc3AF17ApAlbY6prIGQGCiuBSeZSLI9w8khFCHncKwkWQMR
- dvP5RpT2lvPjKoIYc5g5OwD6/YdLX0pec0OF+1sMk69p7BjMYpoBgHboYd5Hkn3TMQv/
- aIrzLiWDRLkJTWTQ91m79Bq/DewrAAuuyb32TUOGki3JlPi8T3nKYdgEzWFOax9B8Oma
- 3ed2TycBG9dluaV/OIhuC6fYXq8vMGvOlnRAT3S9sc7rrC3iVtqPfE/qap8+RxW0A1Dl
- jwjg==
-X-Gm-Message-State: AOJu0Yw/03BiqEtIN/C11G397pRK4cOw/s/Lnbr0IEV5Osx8yW29W823
- R8eOuU6I+TydXkAuuatl47ZvUis+Au8RMjJI2n97f9cJDYurSpd0K1MPqdm2pqhiCJ81dwZFHLC
- bA1o/LO5qkslsRLkbYjKAp9/Pe8kfrph723H/Lx/nSz1B+TvmxR8gKYIC3x6c0ZHSxsEGjjYfrV
- Jq9cKF24V6jwkOiFeYfR5uJSSP6SOupwdZ
-X-Gm-Gg: ASbGncuI0DqVXXMKdqFLb4LJ6EWebgQPShwGOOrndGhEhagqG2nJo0ETv6StJv9opET
- g/Jb5qeCSu2+0WbiSuk/B+rNknCsRDWs5LptIPKHRTxLS9gPjExc8lcZ2IJvSOCD8QBfwwcbAWj
- dBfS5MHxwIemRr9WChO8fMeCgAVvuGlT04/1dC3orczs80Evxxi4Ah4O36p21v2RUkcZlUFiycz
- kosZ1cAz14fMYhCdXF1LYXe9v9TmylsYcnCnLIEqT+1
-X-Received: by 2002:a05:6000:1ac8:b0:37d:3b31:7a9d with SMTP id
- ffacd0b85a97d-385bfb14bbemr7145654f8f.23.1732715874746; 
- Wed, 27 Nov 2024 05:57:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHP2/hT+XDbnBycDKK19hbZRDr0/bQzKTJLnwPEO3Nm/VEPZW6jj1sUYvvtpxeTTQrmWUh37g==
-X-Received: by 2002:a05:6000:1ac8:b0:37d:3b31:7a9d with SMTP id
- ffacd0b85a97d-385bfb14bbemr7145618f8f.23.1732715874407; 
- Wed, 27 Nov 2024 05:57:54 -0800 (PST)
+ bh=7mZYQc/0Beq9quMGIXTqw5aSICjDsmWEiV1q8R4CPFA=;
+ b=IrHOn5Z0R81K0U1jM2HXSINzqtAxIvnSkMOo8dXXZn5oUJMncXk39LskJxyNelrv8U
+ PEVMhUCj+EelDpLLHCEzdxY5nY+CJqjPhDv2BmYcQmCC5WuUjWBI1c4meYRgu8v5E3uI
+ 0z9wde/TRlV3wXJvEvMW6Wv6DArekR3Bc/MpYTaBy/cg0qTy9hBaWjwMvH9a/6rqEj/V
+ P6LZ1vA6iYgnTNZB1Zid7Y8K+gg0D8/6aOKqVhrzD5l2vZbvJYHjz3K4lNB3xohztG0U
+ 30m2UkjYANtvx+iDqLWQUCeVfZlTe3N/KgVenb1pGR0A5Bkryg2XlKq1rztocTAb7mas
+ ec5w==
+X-Gm-Message-State: AOJu0Yz4o78nfMF8umUi4Gr666lu18c5AIH851K3SR9JP/ZX5ZTdYkBh
+ lG5qQj5K6FrYEA2G20S52kMSZFCO0SVxZbhJdUUije9NcTygLJpYCyKjPlEw+l/UZuTVCkRqi96
+ sJ3bqpOwIax6GVxGRpnSLMEtZ9Pi68iIkJfgQoud6nYclavqGG+LcHioeGiHRj29l0sRaxVNoBP
+ Mmmibl0bvSj68k9wJqMq2W/s52Tgw4fkWg
+X-Gm-Gg: ASbGncuBC7mrvGFxEoSjvYAb9CPNTRWSLCs4Eqa0ZNEuIiHG01KPAgnvoGgf2ZaiDkt
+ ZVh0JVghUng4wOHozdLuDl7NY9AsIBf9FkfNwkBtlEYl/TEBEwuMNbO/1VzdD7wWFHgQiO6o71/
+ dRTdojv26e/I5iEY8Z0yDqBkbc1QHmPHQya5flliNJ3k7OLoQzMxOGRpx8SaGpugVi4pn/ZB7kq
+ jzUGNtUYd+CciO0hpGcSBlW9igXpksyXRl3/5F1tXog
+X-Received: by 2002:a05:6000:1545:b0:382:4804:27e4 with SMTP id
+ ffacd0b85a97d-385c6ec0fa6mr2321483f8f.35.1732715872183; 
+ Wed, 27 Nov 2024 05:57:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHi3DXzRF9BpFMwyjTFSlr1FNlAAUH95J4n+5FAsT/XzxwAzNKKlX+y6JVEu6N85cEIwgNYsA==
+X-Received: by 2002:a05:6000:1545:b0:382:4804:27e4 with SMTP id
+ ffacd0b85a97d-385c6ec0fa6mr2321453f8f.35.1732715871787; 
+ Wed, 27 Nov 2024 05:57:51 -0800 (PST)
 Received: from redhat.com ([2a02:14f:1ec:7d4b:8b11:bed7:9e00:8df7])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3825fbc40a1sm16382593f8f.69.2024.11.27.05.57.52
+ ffacd0b85a97d-3825fad627bsm16397555f8f.12.2024.11.27.05.57.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Nov 2024 05:57:53 -0800 (PST)
-Date: Wed, 27 Nov 2024 08:57:51 -0500
+ Wed, 27 Nov 2024 05:57:51 -0800 (PST)
+Date: Wed, 27 Nov 2024 08:57:49 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 09/13] qapi/qom: Change Since entry for
- AcpiGenericPortProperties to 9.2
-Message-ID: <37a14f24b4ee696def42d7629598ab6da7399f65.1732715823.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 08/13] hw/acpi: Fix size of HID in
+ build_append_srat_acpi_device_handle()
+Message-ID: <13a4a6ba2bfd3cf9bd34a015929d93868d792de8.1732715823.git.mst@redhat.com>
 References: <cover.1732715823.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -88,14 +87,14 @@ Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1732715823.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.931,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,33 +114,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-This feature was only applied during the 9.2 cycle, so reflect
-that rather than 9.1.
+The size should always be 8 so hard code that. By coincidience the
+incorrect use of sizeof(char *) is 8 on 64 bit hosts, but was caught
+by CI testing with i686 as the host.
 
-Reported-by: Daniel P. Berrangé <berrange@redhat.com>
-Closes: https://lore.kernel.org/qemu-devel/ZyngEiwmYeZ-DvCy@redhat.com/
+Reported-by: Michael S. Tsirkin <mst@redhat.com>
+Closes: https://lore.kernel.org/qemu-devel/20241104110025-mutt-send-email-mst@kernel.org/
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20241107123446.902801-3-Jonathan.Cameron@huawei.com>
+Message-Id: <20241107123446.902801-2-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qapi/qom.json | 2 +-
+ hw/acpi/aml-build.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index a8beeabf1f..28ce24cd8d 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -877,7 +877,7 @@
- #     complex as there may be interleaving across multiple devices
- #     and shared links in the path.
- #
--# Since: 9.1
-+# Since: 9.2
- ##
- { 'struct': 'AcpiGenericPortProperties',
-   'data': { 'pci-bus': 'str',
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 6a76626177..72282b173e 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -1960,7 +1960,7 @@ static void build_append_srat_acpi_device_handle(GArray *table_data,
+ {
+     assert(strlen(hid) == 8);
+     /* Device Handle - ACPI */
+-    for (int i = 0; i < sizeof(hid); i++) {
++    for (int i = 0; i < 8; i++) {
+         build_append_int_noprefix(table_data, hid[i], 1);
+     }
+     build_append_int_noprefix(table_data, uid, 4);
 -- 
 MST
 
