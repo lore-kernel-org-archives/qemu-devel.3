@@ -4,94 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF74AD6D247
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 22:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D27ED6D245
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 23:05:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGQdg-0002rc-Ix; Wed, 27 Nov 2024 17:36:04 -0500
+	id 1tGR4g-0005zF-Nb; Wed, 27 Nov 2024 18:03:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGQdb-0002rF-JF
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 17:35:59 -0500
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGQdY-0005vm-Se
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 17:35:58 -0500
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-5f1e365469eso126096eaf.3
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 14:35:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732746955; x=1733351755; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OCjfmYHEOM4wwKDVojl0rhc1QWsJfJtEGK4x6oDmynI=;
- b=KwZNkKo7fYs/1MwwtJKZkgxBUMYIVWmrnjehD9zUXgJ2L2i7RLquYuDF1uHg7qKGYF
- 7a1XFcnHPuIEvQmE7JyO+z5w6lPxJBsVVR+MPlg5WIL88aZZ9KozspnofGOhX3rAM5LO
- 0K9kUem1x0T1s+GUC/iD71PIIDKEx6WH8/DXtj/3nWqc1e8wsg+pqafVRmE9BmFemB7i
- n/Zusy4+2z2UGoDCVHaWxYNpP+TR4ZlovXdTJgWidmgVnawB/NSGPgaUtEnn3gI/HYZ8
- R8pHUH0NtalmCJnrBVoY6FRgnBHE0w2pP+kVExKjPqx6g4C2kFF4AdUkvnpybV2cF0e3
- to0g==
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tGR4e-0005yh-6m
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 18:03:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tGR4c-0005Mp-Km
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 18:03:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732748631;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=B12QmkB/sHu/AYYcn0kiQkDRQSRXiLEWmIUis3o0v8w=;
+ b=Blb851pzNUccVCHz+V9CAc/e9oXDYFEFk5EFgi04O2H4UMLewsTuChcg56JVmduhiesSfX
+ 2yJGvGdAQEKsfZHzFiSjhQbjcw9s0RwGMy0Aa8/WNgvFh6Jii050+iLh2rV8Liodyfkj8i
+ wphoHw5u5b6oWlbOJ+gzxQejn7Rs/fc=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-286-l-YzFG4_PhedZdT2P-ZfNg-1; Wed, 27 Nov 2024 18:03:47 -0500
+X-MC-Unique: l-YzFG4_PhedZdT2P-ZfNg-1
+X-Mimecast-MFC-AGG-ID: l-YzFG4_PhedZdT2P-ZfNg
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3a7ace5dd02so2543495ab.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 15:03:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732746955; x=1733351755;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1732748627; x=1733353427;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OCjfmYHEOM4wwKDVojl0rhc1QWsJfJtEGK4x6oDmynI=;
- b=KLjshSD8A0j7oIV3CD/tYBv+c8ZTmHMDJwuJdJpaISuNrJ5HS1mnE9EYoGC28gZHZy
- 9SOp4aQc+C6/aDrzmdxdPSn6y2NmObkszqA5akKVxJ3H0a+VOPNdeZQrFw/+pcnPK9d8
- nAfWtNme6rSh3OkBynEX5TnkTwCk7rAB2Her9alWrU72EmqD5OoizN8KFXCTRicSCMhb
- wFLr7UTqok9dnHojV34P3eoY64ks7DsjTokmOZjaEiaydRRCoS15jFG5+/tKpUioioWG
- p68nLglEGrL5tFoyw8/9milpKohuCaynwVQ/9Rh8l2dDoB6jTLgTVIq5AOG6Boapgf0G
- yQIA==
+ bh=B12QmkB/sHu/AYYcn0kiQkDRQSRXiLEWmIUis3o0v8w=;
+ b=h1ahj6ajyVK0eSVemDXBaA2Y9EdLazSo+sHxFmP7Td2uxlPxecGrVyJcXdxcpb/eS+
+ yQJZm9pIJqaJht8VhkoKuQqoU4qxGfWdllxI87zYX7ibeThgf7h1Od1RMdqClMt6nlzO
+ PeLiBP4QmDDNZ1D4b6R7HeXiL5NWpKJtJzUsK1mHtcK0IHVLHbSkvQbzu/i80QdSiyZ3
+ DkKj4PVfOFygx2BZdeqx2igMXDnNaF/4uLY5xuLqYYt1uZgr4kTyFVa7BvZ6Y6ZiTCVc
+ Aipt2WhfLy2VD5BgvbBhckaevHoZJZ/0MCtIIrkpi0V8rdIdy8DG96VZIiOFYwi4ystI
+ 2nPg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXCw7uypDYguRZEJsZkikWokajaQQs8R59c/Hm49r1xqzqJEFxuUPM8yC39++hdmjlsU9YeSISRm3z@nongnu.org
-X-Gm-Message-State: AOJu0YzI+Mf4/PjrIxmXVcc4YG0f9Omkf0AXAl/5f9BbcTkZaJuz0I05
- JJKzyzFyB4kDZgmclV1ViwErKEh90A821buH/WHwdo1iwH5px3Ypt5C1LsXVNFP8JTtsNIn+j9l
- ozm4=
-X-Gm-Gg: ASbGncvYM+ll4CtMDDPyenWxeXqqysnro0Ww8uRVctqAKCmpFB5y34ZDQG+pBq9E9Dv
- 0gDOqOjui2nPwWSb7/WREC20lTSBlEfi8xjV0cwNRXz/a2cV9ZCcJbBDiRkU5D6tB7/wCquKMru
- wSZdNUm+6ejCuFN9BLIEPY/OJjvenGisLL/BWM53nD5XaKPd5JYfWZY4wUkdZEiufxJX439LMGO
- b2IwX87aZBHDDLBtPux9EAXqHmSWySjh2FjqZ4HfXb0P4OiS/jKyiJWLtHF+5SHUCI2PoMy9coN
- uWRBd8i5z0KkpDYdJtVtkSOJSbmP
-X-Google-Smtp-Source: AGHT+IEiQJf/MsFi34s/NENEhRnZzKei8skWU4tlXcRQIRa+2v0rObSRFAw1HoaRgui4sQZdFWgFWg==
-X-Received: by 2002:a4a:ee87:0:b0:5e1:c19d:3f4e with SMTP id
- 006d021491bc7-5f20a2017a3mr4514253eaf.8.1732746955348; 
- Wed, 27 Nov 2024 14:35:55 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f21a50408asm38178eaf.39.2024.11.27.14.35.54
+ AJvYcCWmk2jgM5fLU/7w/AZZgkm3R1DZ+KFwQILfuF9fOMfhL5Evk5Vim3TR/mDYvhXRBYw8+mSjr6MgwVbn@nongnu.org
+X-Gm-Message-State: AOJu0YwVrjYI6DG8AAK3f//luwFDMTfnCxbmpTf7qAf971CbzMa6ciRG
+ HYA9/JFfMyUdODtW3v/cVNOAZ6XcJv059dT2dvhZkRg7ceLLwn4brWwKhv2G2uvvYN27za9+atK
+ NbvS3mW1eP7R6E1ODgDIp0eCUP1gNkA4n82T13l7iFy+Tnh6n5eCP
+X-Gm-Gg: ASbGnctA1FQFnF9ADxbVZMqjMRUK2YP31KZWoDrFKAG2CfINl3u8i/+BLDhu7A17Gcs
+ lIUxyFNsKT5O/mF8xzSkh5XAStAatgd3aqNep9YlhWqJP2rH5DWl/IOZC6Cfy78Slq/hpnKxjEL
+ rBgKfecCeX0ZnwRwK6sLzB5nABNManU30uBszDx2VsooZ3uIodoiDSUYOxP7hw36C3Y83KQF94z
+ vzRDMpbhe7DkxfgvhTo23tNCNhbAhlFcTapoZJUcUl4RXrXfE8=
+X-Received: by 2002:a05:6e02:3312:b0:3a7:c5b1:a55f with SMTP id
+ e9e14a558f8ab-3a7c5b1a78bmr45534805ab.0.1732748626751; 
+ Wed, 27 Nov 2024 15:03:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGEFPvcSRcdt27+r9AKdZQMAP/ep7Xe7LOkxD0twjxGQ6lgrTqjek+6BBIEKJ0q4COQyfIBKg==
+X-Received: by 2002:a05:6e02:3312:b0:3a7:c5b1:a55f with SMTP id
+ e9e14a558f8ab-3a7c5b1a78bmr45534515ab.0.1732748626403; 
+ Wed, 27 Nov 2024 15:03:46 -0800 (PST)
+Received: from [192.168.40.164] ([70.105.235.240])
+ by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e230e5ec80sm14862173.86.2024.11.27.15.03.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Nov 2024 14:35:55 -0800 (PST)
-Message-ID: <6f265a48-eaa3-4e2d-b6d2-26e4935693ba@linaro.org>
-Date: Wed, 27 Nov 2024 16:35:51 -0600
+ Wed, 27 Nov 2024 15:03:45 -0800 (PST)
+Message-ID: <9a62fa8d-a7a0-4bc1-bccb-2fcfaa119d65@redhat.com>
+Date: Wed, 27 Nov 2024 18:03:23 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0] system/qtest: Access memory using
- cpu_physical_memory_rw() API
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20241127191914.34146-1-philmd@linaro.org>
+Subject: Re: [RFC PATCH 2/5] hw/arm/smmuv3: Add initial support for SMMUv3
+ Nested device
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241127191914.34146-1-philmd@linaro.org>
+To: Jason Gunthorpe <jgg@nvidia.com>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <20241108125242.60136-3-shameerali.kolothum.thodi@huawei.com>
+ <00e8a5d6-c926-44bb-8d11-dab4ddc4820d@redhat.com>
+ <ZzTqXCFKV9s++C2N@Asurada-Nvidia>
+ <cfe8864c-f830-4b39-b4d5-f219f5a42eea@redhat.com>
+ <d8fbaa677771425dac985438b4b1db59@huawei.com>
+ <20241127160031.GA1253388@nvidia.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <20241127160031.GA1253388@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ddutile@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,42 +125,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/27/24 13:19, Philippe Mathieu-Daudé wrote:
-> There is no vCPU within the QTest accelerator (well, they
-> are stubs doing nothing, see dummy_cpu_thread_fn).
-> Directly use the cpu_physical_memory_rw() API -- which
-> amusingly prefixed 'cpu_' does not use vCPU -- to access
-> memory. This reduces accesses to the global 'first_cpu'.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   system/qtest.c | 42 ++++++++++++++----------------------------
->   1 file changed, 14 insertions(+), 28 deletions(-)
-> 
-> diff --git a/system/qtest.c b/system/qtest.c
-> index 12703a20455..a2de9a7d5a4 100644
-> --- a/system/qtest.c
-> +++ b/system/qtest.c
-> @@ -18,6 +18,7 @@
->   #include "chardev/char-fe.h"
->   #include "exec/ioport.h"
->   #include "exec/memory.h"
-> +#include "exec/cpu-common.h"
->   #include "exec/tswap.h"
->   #include "hw/qdev-core.h"
->   #include "hw/irq.h"
-> @@ -514,23 +515,19 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
->   
->           if (words[0][5] == 'b') {
->               uint8_t data = value;
-> -            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                                &data, 1);
-> +            cpu_physical_memory_write(addr, &data, 1);
 
-This just calls address_space_write with &address_space_memory.
-I assume we'll get rid of address_space_memory too, at some point.
-But I suppose that's good enough for qtest for now.
 
-r~
+On 11/27/24 11:00 AM, Jason Gunthorpe wrote:
+> On Wed, Nov 27, 2024 at 10:21:24AM +0000, Shameerali Kolothum Thodi wrote:
+>>> For SMMUv3, NVIDIA-specific vCMDQ, it needs a parameter to state that
+>>> specifically,
+>>> since I'm concluding from reading the SMMUv3 version G.a spec, that
+>>> ECMDQ was added
+>>> to be able to assign an ECMDQ to a VM,
+>>
+>> Not sure the intention of ECMDQ as per that specification is to assign
+>> it to a VM. I think the main idea behind it is to have one Command Queue
+>> per host CPU to eliminate lock contention while submitting commands
+>> to SMMU.
+> 
+> Right
+> 
+>> AFAIK it is not safe to assign one of the ECMDQ to guest yet. I think there is no
+>> way you can associate a VMID with ECMDQ. So there is no plan to
+>> support ARM ECMDQ now.
+> 
+> Yep
+>
+'Yet' ...
+The association would be done via the VMM -- no different then what associates
+an assigned device to a VM today -- no hw-level (VM-)ID needed; a matter of exposing
+it to the VM, or not; or mapping the (virtual) CMDQ to the mapped/associated ECMDQ.
+They are purposedly mapped 64K apart from each other, enabling page-level protection,
+which I doubt is a per-CPU req for lock contention avoidance (large-cache-block
+spaced would be sufficient, even 4k; it's 64k spaced btwn ECMDQ regs .. the largest
+ARM page size.
+
+Summary: let's not assume this can't happen, and the chosen cmdline prevents it.
+
+>> NVIDIA VCMDQ is a completely vendor specific one. Perhaps ARM may come
+>> up with an assignable CMDQ in future though.
+> 
+> Yes, it is easy to imagine an ECMDQ extension that provides the same HW
+> features that VCMDQ has in future. I hope ARM will develop one.
+> 
+Right, so how to know what op is being "accel"'d wrt smmuv3.
+
+>>> ... and all needs to be per-instance ....
+>>> ... libvirt  (or any other VMM orchestrator) will need to determine
+>>> compatibility for
+>>>       live migration. e.g., can one live migrate an accel=nv-vcmdq-based VM to
+>>> a host with
+>>>       accel=ecmdq support?  only nv-vcmdq?  what if there are version diffs of
+>>> nv-vcmdq over time?
+>>>       -- apologies, but I don't know the minute details of nv-vcmdq to
+>>> determine if that's unlikely or not.
+>>
+>> Yes. This require more thought. But our first aim is get the basic smmuv3-accel
+>> support.
+> 
+> Yeah, there is no live migration support yet in the SMMU qmeu driver,
+> AFAIK?
+> 
+> When it gets done the supported options will have to be considered
+> 
+> Jason
+> 
 
 
