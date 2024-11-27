@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614D2D6ACFE
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 18:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7675CD6ACFD
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 18:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGMnJ-0006dm-5N; Wed, 27 Nov 2024 13:29:45 -0500
+	id 1tGMmr-0006Wb-64; Wed, 27 Nov 2024 13:29:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tGMnH-0006dR-4E
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 13:29:43 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tGMmq-0006Vu-Bz
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 13:29:16 -0500
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tGMnC-00022n-Gy
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 13:29:42 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tGMmm-0001sD-BO
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 13:29:14 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 20EE42118A;
- Wed, 27 Nov 2024 18:29:37 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id EF7212118A;
+ Wed, 27 Nov 2024 18:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732732177; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1732732151; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SSoeqgE9DUY9yWzH8vH6b8o836qRQri0bUnr75S0AGc=;
- b=gW6J1FpMfJCA1tzbq8jU7SsIX5KoVdnq5yvCRUNHOX8l1sQqupRHgxK0ITbj+EmEnUvc8l
- IZMR5K8MLnjubTZXI+zmoYiJQD8GrAJK3SjA5Wa/7DMOAh3woG+jVMmWRr23B7aV3tDsrA
- Oyitsm9yPnZKoKmtNwLlAml8wNMW1kM=
+ bh=8FBrlF63Y8gBQdwIaSzA2v5IOb4xYijCQHsgBcHqmd0=;
+ b=QmKzgZg0DZ/fL6rH4kmd/rz3tgj4ScrX+yUCl103iEFeL9C7IgMg2R4kht1vnsUkUU1ui9
+ Pu5rgbuXQ7IwLcQYNddLYlMUwv83hGkv9X2c8SoSPVf3OH697+uSR01Xu6jKUMNPpZqgV9
+ S+pPb+YdWrHbt8f+BvFN29NYGV5dch8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732732177;
+ s=susede2_ed25519; t=1732732151;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SSoeqgE9DUY9yWzH8vH6b8o836qRQri0bUnr75S0AGc=;
- b=tYzBLqljZjJb8MtfJzDH7tjumwswZ/JKZtYGt+QDfE9Xdn1K7f/xHJkn3dBp9dqOrdkHd6
- J8ugUNwxfXPXhSCg==
+ bh=8FBrlF63Y8gBQdwIaSzA2v5IOb4xYijCQHsgBcHqmd0=;
+ b=tQ3LuC4tB8RS/adWLdzuPlwt8IBVXlRsQSjfLtTbbJfBn60E5Mv2rQ2XKZaYCpTXzSZjW6
+ jFer3La8AjM6WpDw==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732732177; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1732732150; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SSoeqgE9DUY9yWzH8vH6b8o836qRQri0bUnr75S0AGc=;
- b=gW6J1FpMfJCA1tzbq8jU7SsIX5KoVdnq5yvCRUNHOX8l1sQqupRHgxK0ITbj+EmEnUvc8l
- IZMR5K8MLnjubTZXI+zmoYiJQD8GrAJK3SjA5Wa/7DMOAh3woG+jVMmWRr23B7aV3tDsrA
- Oyitsm9yPnZKoKmtNwLlAml8wNMW1kM=
+ bh=8FBrlF63Y8gBQdwIaSzA2v5IOb4xYijCQHsgBcHqmd0=;
+ b=lf1ZtStoGsutx2HzxtBy5NWxxYEhmasUVnORdbusnwXPkMDw5klbAKtZSBs4e0JzaCajOo
+ Y4KYAVRp4p1C/rdOEr0QGLeR1OohR8R+V2wHx9umrZn+KyI54goaCy8pNf7WI23zrmkMjU
+ KTgb7qihm9NRKM8B4/NmiX9Nw41t84M=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732732177;
+ s=susede2_ed25519; t=1732732150;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SSoeqgE9DUY9yWzH8vH6b8o836qRQri0bUnr75S0AGc=;
- b=tYzBLqljZjJb8MtfJzDH7tjumwswZ/JKZtYGt+QDfE9Xdn1K7f/xHJkn3dBp9dqOrdkHd6
- J8ugUNwxfXPXhSCg==
+ bh=8FBrlF63Y8gBQdwIaSzA2v5IOb4xYijCQHsgBcHqmd0=;
+ b=ez0eS04mLDNhn7fsSkASri2VHIWRR8zV0pFcruF3i69ksP/N4NHXXV8/mcY4xzBUAls9C/
+ XXhkiyvphdgwW0Cw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 72B6613941;
- Wed, 27 Nov 2024 18:29:35 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BE6A013941;
+ Wed, 27 Nov 2024 18:29:09 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 8DkEDg9lR2faYQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 27 Nov 2024 18:29:35 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aOjFIPVkR2faYQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 27 Nov 2024 18:29:09 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 15/17] tests/qtest/migration: Split precopy tests
-Date: Wed, 27 Nov 2024 15:28:59 -0300
-Message-Id: <20241127182901.529-16-farosas@suse.de>
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 03/17] tests/migration: Disambiguate guestperf vs. a-b
+Date: Wed, 27 Nov 2024 15:28:47 -0300
+Message-Id: <20241127182901.529-4-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20241127182901.529-1-farosas@suse.de>
 References: <20241127182901.529-1-farosas@suse.de>
@@ -86,14 +85,14 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.79 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.19)[-0.950];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.19)[-0.952];
  MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
  TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
  RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
@@ -119,2086 +118,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split the precopy tests from migration-test.c. This is the largest
-group of tests and the more difficult one to break into smaller
-groups, so move all of it.
+The current build structure for migration tests is confusing. There is
+the tests/migration directory, which contains two different guest code
+implementations, one for the qtests (a-b-{bootblock|kernel}.S) and
+another for the guestperf script (stress.c). One uses a Makefile,
+while the other uses meson.
+
+The next patches will add a new qtests/migration/ directory to hold
+qtest code which will make the situation even more confusing.
+
+Move the guest code used by qtests into a new qtests/migration/
+directory and rename the old one to tests/migration-stress.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/meson.build               |    1 +
- tests/qtest/migration-test.c          |  970 +-----------------------
- tests/qtest/migration/framework.h     |    1 +
- tests/qtest/migration/precopy-tests.c | 1007 +++++++++++++++++++++++++
- 4 files changed, 1011 insertions(+), 968 deletions(-)
- create mode 100644 tests/qtest/migration/precopy-tests.c
+ MAINTAINERS                                            |  5 +++--
+ tests/meson.build                                      |  2 +-
+ .../{migration => migration-stress}/guestperf-batch.py |  0
+ .../{migration => migration-stress}/guestperf-plot.py  |  0
+ tests/{migration => migration-stress}/guestperf.py     |  0
+ .../guestperf/__init__.py                              |  0
+ .../guestperf/comparison.py                            |  0
+ .../guestperf/engine.py                                |  0
+ .../guestperf/hardware.py                              |  0
+ .../{migration => migration-stress}/guestperf/plot.py  |  0
+ .../guestperf/progress.py                              |  0
+ .../guestperf/report.py                                |  0
+ .../guestperf/scenario.py                              |  0
+ .../{migration => migration-stress}/guestperf/shell.py |  0
+ .../guestperf/timings.py                               |  0
+ tests/{migration => migration-stress}/initrd-stress.sh |  0
+ tests/{migration => migration-stress}/meson.build      |  0
+ tests/{migration => migration-stress}/stress.c         |  0
+ tests/qtest/migration-test.c                           | 10 +++++-----
+ tests/{ => qtest}/migration/Makefile                   |  0
+ tests/{ => qtest}/migration/aarch64/Makefile           |  0
+ tests/{ => qtest}/migration/aarch64/a-b-kernel.S       |  0
+ tests/{ => qtest}/migration/aarch64/a-b-kernel.h       |  0
+ tests/{ => qtest}/migration/i386/Makefile              |  0
+ tests/{ => qtest}/migration/i386/a-b-bootblock.S       |  0
+ tests/{ => qtest}/migration/i386/a-b-bootblock.h       |  0
+ tests/{ => qtest}/migration/migration-test.h           |  0
+ tests/{ => qtest}/migration/ppc64/Makefile             |  0
+ tests/{ => qtest}/migration/ppc64/a-b-kernel.S         |  0
+ tests/{ => qtest}/migration/ppc64/a-b-kernel.h         |  0
+ tests/{ => qtest}/migration/s390x/Makefile             |  0
+ tests/{ => qtest}/migration/s390x/a-b-bios.c           |  0
+ tests/{ => qtest}/migration/s390x/a-b-bios.h           |  0
+ 33 files changed, 9 insertions(+), 8 deletions(-)
+ rename tests/{migration => migration-stress}/guestperf-batch.py (100%)
+ rename tests/{migration => migration-stress}/guestperf-plot.py (100%)
+ rename tests/{migration => migration-stress}/guestperf.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/__init__.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/comparison.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/engine.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/hardware.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/plot.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/progress.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/report.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/scenario.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/shell.py (100%)
+ rename tests/{migration => migration-stress}/guestperf/timings.py (100%)
+ rename tests/{migration => migration-stress}/initrd-stress.sh (100%)
+ rename tests/{migration => migration-stress}/meson.build (100%)
+ rename tests/{migration => migration-stress}/stress.c (100%)
+ rename tests/{ => qtest}/migration/Makefile (100%)
+ rename tests/{ => qtest}/migration/aarch64/Makefile (100%)
+ rename tests/{ => qtest}/migration/aarch64/a-b-kernel.S (100%)
+ rename tests/{ => qtest}/migration/aarch64/a-b-kernel.h (100%)
+ rename tests/{ => qtest}/migration/i386/Makefile (100%)
+ rename tests/{ => qtest}/migration/i386/a-b-bootblock.S (100%)
+ rename tests/{ => qtest}/migration/i386/a-b-bootblock.h (100%)
+ rename tests/{ => qtest}/migration/migration-test.h (100%)
+ rename tests/{ => qtest}/migration/ppc64/Makefile (100%)
+ rename tests/{ => qtest}/migration/ppc64/a-b-kernel.S (100%)
+ rename tests/{ => qtest}/migration/ppc64/a-b-kernel.h (100%)
+ rename tests/{ => qtest}/migration/s390x/Makefile (100%)
+ rename tests/{ => qtest}/migration/s390x/a-b-bios.c (100%)
+ rename tests/{ => qtest}/migration/s390x/a-b-bios.h (100%)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 1cdd8c343b..e19132bf0e 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -338,6 +338,7 @@ migration_files = [files(
-   'migration/migration-util.c',
-   'migration/compression-tests.c',
-   'migration/file-tests.c',
-+  'migration/precopy-tests.c',
-   'migration/postcopy-tests.c',
- )]
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2b1c4abed6..eb41ad5c51 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -118,7 +118,7 @@ F: pc-bios/s390-ccw.img
+ F: target/s390x/
+ F: docs/system/target-s390x.rst
+ F: docs/system/s390x/
+-F: tests/migration/s390x/
++F: tests/qtest/migration/s390x/
+ K: ^Subject:.*(?i)s390x?
+ L: qemu-s390x@nongnu.org
  
+@@ -3421,10 +3421,11 @@ F: include/qemu/userfaultfd.h
+ F: migration/
+ F: scripts/vmstate-static-checker.py
+ F: tests/vmstate-static-checker-data/
++F: tests/qtest/migration/
+ F: tests/qtest/migration-*
+ F: docs/devel/migration/
+ F: qapi/migration.json
+-F: tests/migration/
++F: tests/migration-stress/
+ F: util/userfaultfd.c
+ X: migration/rdma*
+ 
+diff --git a/tests/meson.build b/tests/meson.build
+index 907a4c1c98..f96c1be574 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -84,5 +84,5 @@ endif
+ subdir('unit')
+ subdir('qapi-schema')
+ subdir('qtest')
+-subdir('migration')
++subdir('migration-stress')
+ subdir('functional')
+diff --git a/tests/migration/guestperf-batch.py b/tests/migration-stress/guestperf-batch.py
+similarity index 100%
+rename from tests/migration/guestperf-batch.py
+rename to tests/migration-stress/guestperf-batch.py
+diff --git a/tests/migration/guestperf-plot.py b/tests/migration-stress/guestperf-plot.py
+similarity index 100%
+rename from tests/migration/guestperf-plot.py
+rename to tests/migration-stress/guestperf-plot.py
+diff --git a/tests/migration/guestperf.py b/tests/migration-stress/guestperf.py
+similarity index 100%
+rename from tests/migration/guestperf.py
+rename to tests/migration-stress/guestperf.py
+diff --git a/tests/migration/guestperf/__init__.py b/tests/migration-stress/guestperf/__init__.py
+similarity index 100%
+rename from tests/migration/guestperf/__init__.py
+rename to tests/migration-stress/guestperf/__init__.py
+diff --git a/tests/migration/guestperf/comparison.py b/tests/migration-stress/guestperf/comparison.py
+similarity index 100%
+rename from tests/migration/guestperf/comparison.py
+rename to tests/migration-stress/guestperf/comparison.py
+diff --git a/tests/migration/guestperf/engine.py b/tests/migration-stress/guestperf/engine.py
+similarity index 100%
+rename from tests/migration/guestperf/engine.py
+rename to tests/migration-stress/guestperf/engine.py
+diff --git a/tests/migration/guestperf/hardware.py b/tests/migration-stress/guestperf/hardware.py
+similarity index 100%
+rename from tests/migration/guestperf/hardware.py
+rename to tests/migration-stress/guestperf/hardware.py
+diff --git a/tests/migration/guestperf/plot.py b/tests/migration-stress/guestperf/plot.py
+similarity index 100%
+rename from tests/migration/guestperf/plot.py
+rename to tests/migration-stress/guestperf/plot.py
+diff --git a/tests/migration/guestperf/progress.py b/tests/migration-stress/guestperf/progress.py
+similarity index 100%
+rename from tests/migration/guestperf/progress.py
+rename to tests/migration-stress/guestperf/progress.py
+diff --git a/tests/migration/guestperf/report.py b/tests/migration-stress/guestperf/report.py
+similarity index 100%
+rename from tests/migration/guestperf/report.py
+rename to tests/migration-stress/guestperf/report.py
+diff --git a/tests/migration/guestperf/scenario.py b/tests/migration-stress/guestperf/scenario.py
+similarity index 100%
+rename from tests/migration/guestperf/scenario.py
+rename to tests/migration-stress/guestperf/scenario.py
+diff --git a/tests/migration/guestperf/shell.py b/tests/migration-stress/guestperf/shell.py
+similarity index 100%
+rename from tests/migration/guestperf/shell.py
+rename to tests/migration-stress/guestperf/shell.py
+diff --git a/tests/migration/guestperf/timings.py b/tests/migration-stress/guestperf/timings.py
+similarity index 100%
+rename from tests/migration/guestperf/timings.py
+rename to tests/migration-stress/guestperf/timings.py
+diff --git a/tests/migration/initrd-stress.sh b/tests/migration-stress/initrd-stress.sh
+similarity index 100%
+rename from tests/migration/initrd-stress.sh
+rename to tests/migration-stress/initrd-stress.sh
+diff --git a/tests/migration/meson.build b/tests/migration-stress/meson.build
+similarity index 100%
+rename from tests/migration/meson.build
+rename to tests/migration-stress/meson.build
+diff --git a/tests/migration/stress.c b/tests/migration-stress/stress.c
+similarity index 100%
+rename from tests/migration/stress.c
+rename to tests/migration-stress/stress.c
 diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index a2ce1c6b19..76ba820fe4 100644
+index 30bc965b28..82b9170e3c 100644
 --- a/tests/qtest/migration-test.c
 +++ b/tests/qtest/migration-test.c
-@@ -27,12 +27,6 @@
- #include "migration/migration-qmp.h"
- #include "migration/migration-util.h"
+@@ -24,7 +24,7 @@
+ #include "ppc-util.h"
  
--/*
-- * Dirtylimit stop working if dirty page rate error
-- * value less than DIRTYLIMIT_TOLERANCE_RANGE
-- */
--#define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
--
- #define ANALYZE_SCRIPT "scripts/analyze-migration.py"
+ #include "migration-helpers.h"
+-#include "tests/migration/migration-test.h"
++#include "migration/migration-test.h"
+ #ifdef CONFIG_GNUTLS
+ # include "tests/unit/crypto-tls-psk-helpers.h"
+ # ifdef CONFIG_TASN1
+@@ -138,10 +138,10 @@ static char *bootpath;
+ /* The boot file modifies memory area in [start_address, end_address)
+  * repeatedly. It outputs a 'B' at a fixed rate while it's still running.
+  */
+-#include "tests/migration/i386/a-b-bootblock.h"
+-#include "tests/migration/aarch64/a-b-kernel.h"
+-#include "tests/migration/ppc64/a-b-kernel.h"
+-#include "tests/migration/s390x/a-b-bios.h"
++#include "migration/i386/a-b-bootblock.h"
++#include "migration/aarch64/a-b-kernel.h"
++#include "migration/ppc64/a-b-kernel.h"
++#include "migration/s390x/a-b-bios.h"
  
- #if defined(__linux__)
-@@ -113,70 +107,6 @@ static void test_analyze_script(void)
- }
- #endif
- 
--static void test_precopy_unix_plain(void)
--{
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--    MigrateCommon args = {
--        .listen_uri = uri,
--        .connect_uri = uri,
--        /*
--         * The simplest use case of precopy, covering smoke tests of
--         * get-dirty-log dirty tracking.
--         */
--        .live = true,
--    };
--
--    test_precopy_common(&args);
--}
--
--static void test_precopy_unix_suspend_live(void)
--{
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--    MigrateCommon args = {
--        .listen_uri = uri,
--        .connect_uri = uri,
--        /*
--         * despite being live, the test is fast because the src
--         * suspends immediately.
--         */
--        .live = true,
--        .start.suspend_me = true,
--    };
--
--    test_precopy_common(&args);
--}
--
--static void test_precopy_unix_suspend_notlive(void)
--{
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--    MigrateCommon args = {
--        .listen_uri = uri,
--        .connect_uri = uri,
--        .start.suspend_me = true,
--    };
--
--    test_precopy_common(&args);
--}
--
--static void test_precopy_unix_dirty_ring(void)
--{
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--    MigrateCommon args = {
--        .start = {
--            .use_dirty_ring = true,
--        },
--        .listen_uri = uri,
--        .connect_uri = uri,
--        /*
--         * Besides the precopy/unix basic test, cover dirty ring interface
--         * rather than get-dirty-log.
--         */
--        .live = true,
--    };
--
--    test_precopy_common(&args);
--}
--
- #if 0
- /* Currently upset on aarch64 TCG */
- static void test_ignore_shared(void)
-@@ -240,149 +170,6 @@ static void test_mode_reboot(void)
-     test_file_common(&args, true);
- }
- 
--static void test_precopy_tcp_plain(void)
--{
--    MigrateCommon args = {
--        .listen_uri = "tcp:127.0.0.1:0",
--    };
--
--    test_precopy_common(&args);
--}
--
--static void *migrate_hook_start_switchover_ack(QTestState *from, QTestState *to)
--{
--
--    migrate_set_capability(from, "return-path", true);
--    migrate_set_capability(to, "return-path", true);
--
--    migrate_set_capability(from, "switchover-ack", true);
--    migrate_set_capability(to, "switchover-ack", true);
--
--    return NULL;
--}
--
--static void test_precopy_tcp_switchover_ack(void)
--{
--    MigrateCommon args = {
--        .listen_uri = "tcp:127.0.0.1:0",
--        .start_hook = migrate_hook_start_switchover_ack,
--        /*
--         * Source VM must be running in order to consider the switchover ACK
--         * when deciding to do switchover or not.
--         */
--        .live = true,
--    };
--
--    test_precopy_common(&args);
--}
--
--#ifndef _WIN32
--static void *migrate_hook_start_fd(QTestState *from,
--                                   QTestState *to)
--{
--    int ret;
--    int pair[2];
--
--    /* Create two connected sockets for migration */
--    ret = qemu_socketpair(PF_LOCAL, SOCK_STREAM, 0, pair);
--    g_assert_cmpint(ret, ==, 0);
--
--    /* Send the 1st socket to the target */
--    qtest_qmp_fds_assert_success(to, &pair[0], 1,
--                                 "{ 'execute': 'getfd',"
--                                 "  'arguments': { 'fdname': 'fd-mig' }}");
--    close(pair[0]);
--
--    /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to, "fd:fd-mig", "{}");
--
--    /* Send the 2nd socket to the target */
--    qtest_qmp_fds_assert_success(from, &pair[1], 1,
--                                 "{ 'execute': 'getfd',"
--                                 "  'arguments': { 'fdname': 'fd-mig' }}");
--    close(pair[1]);
--
--    return NULL;
--}
--
--static void migrate_hook_end_fd(QTestState *from,
--                                QTestState *to,
--                                void *opaque)
--{
--    QDict *rsp;
--    const char *error_desc;
--
--    /* Test closing fds */
--    /* We assume, that QEMU removes named fd from its list,
--     * so this should fail */
--    rsp = qtest_qmp(from,
--                    "{ 'execute': 'closefd',"
--                    "  'arguments': { 'fdname': 'fd-mig' }}");
--    g_assert_true(qdict_haskey(rsp, "error"));
--    error_desc = qdict_get_str(qdict_get_qdict(rsp, "error"), "desc");
--    g_assert_cmpstr(error_desc, ==, "File descriptor named 'fd-mig' not found");
--    qobject_unref(rsp);
--
--    rsp = qtest_qmp(to,
--                    "{ 'execute': 'closefd',"
--                    "  'arguments': { 'fdname': 'fd-mig' }}");
--    g_assert_true(qdict_haskey(rsp, "error"));
--    error_desc = qdict_get_str(qdict_get_qdict(rsp, "error"), "desc");
--    g_assert_cmpstr(error_desc, ==, "File descriptor named 'fd-mig' not found");
--    qobject_unref(rsp);
--}
--
--static void test_precopy_fd_socket(void)
--{
--    MigrateCommon args = {
--        .listen_uri = "defer",
--        .connect_uri = "fd:fd-mig",
--        .start_hook = migrate_hook_start_fd,
--        .end_hook = migrate_hook_end_fd,
--    };
--    test_precopy_common(&args);
--}
--
--static void *migrate_hook_start_precopy_fd_file(QTestState *from, QTestState *to)
--{
--    g_autofree char *file = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
--    int src_flags = O_CREAT | O_RDWR;
--    int dst_flags = O_CREAT | O_RDWR;
--    int fds[2];
--
--    fds[0] = open(file, src_flags, 0660);
--    assert(fds[0] != -1);
--
--    fds[1] = open(file, dst_flags, 0660);
--    assert(fds[1] != -1);
--
--
--    qtest_qmp_fds_assert_success(to, &fds[0], 1,
--                                 "{ 'execute': 'getfd',"
--                                 "  'arguments': { 'fdname': 'fd-mig' }}");
--
--    qtest_qmp_fds_assert_success(from, &fds[1], 1,
--                                 "{ 'execute': 'getfd',"
--                                 "  'arguments': { 'fdname': 'fd-mig' }}");
--
--    close(fds[0]);
--    close(fds[1]);
--
--    return NULL;
--}
--
--static void test_precopy_fd_file(void)
--{
--    MigrateCommon args = {
--        .listen_uri = "defer",
--        .connect_uri = "fd:fd-mig",
--        .start_hook = migrate_hook_start_precopy_fd_file,
--        .end_hook = migrate_hook_end_fd,
--    };
--    test_file_common(&args, true);
--}
--#endif /* _WIN32 */
--
- static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+ static void bootfile_delete(void)
  {
-     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-@@ -505,708 +292,6 @@ static void test_validate_uri_channels_none_set(void)
-     do_test_validate_uri_channel(&args);
- }
- 
--/*
-- * The way auto_converge works, we need to do too many passes to
-- * run this test.  Auto_converge logic is only run once every
-- * three iterations, so:
-- *
-- * - 3 iterations without auto_converge enabled
-- * - 3 iterations with pct = 5
-- * - 3 iterations with pct = 30
-- * - 3 iterations with pct = 55
-- * - 3 iterations with pct = 80
-- * - 3 iterations with pct = 95 (max(95, 80 + 25))
-- *
-- * To make things even worse, we need to run the initial stage at
-- * 3MB/s so we enter autoconverge even when host is (over)loaded.
-- */
--static void test_auto_converge(void)
--{
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--    MigrateStart args = {};
--    QTestState *from, *to;
--    int64_t percentage;
--
--    /*
--     * We want the test to be stable and as fast as possible.
--     * E.g., with 1Gb/s bandwidth migration may pass without throttling,
--     * so we need to decrease a bandwidth.
--     */
--    const int64_t init_pct = 5, inc_pct = 25, max_pct = 95;
--    uint64_t prev_dirty_sync_cnt, dirty_sync_cnt;
--    int max_try_count, hit = 0;
--
--    if (migrate_start(&from, &to, uri, &args)) {
--        return;
--    }
--
--    migrate_set_capability(from, "auto-converge", true);
--    migrate_set_parameter_int(from, "cpu-throttle-initial", init_pct);
--    migrate_set_parameter_int(from, "cpu-throttle-increment", inc_pct);
--    migrate_set_parameter_int(from, "max-cpu-throttle", max_pct);
--
--    /*
--     * Set the initial parameters so that the migration could not converge
--     * without throttling.
--     */
--    migrate_ensure_non_converge(from);
--
--    /* To check remaining size after precopy */
--    migrate_set_capability(from, "pause-before-switchover", true);
--
--    /* Wait for the first serial output from the source */
--    wait_for_serial("src_serial");
--
--    migrate_qmp(from, to, uri, NULL, "{}");
--
--    /* Wait for throttling begins */
--    percentage = 0;
--    do {
--        percentage = read_migrate_property_int(from, "cpu-throttle-percentage");
--        if (percentage != 0) {
--            break;
--        }
--        usleep(20);
--        g_assert_false(get_src()->stop_seen);
--    } while (true);
--    /* The first percentage of throttling should be at least init_pct */
--    g_assert_cmpint(percentage, >=, init_pct);
--
--    /*
--     * End the loop when the dirty sync count greater than 1.
--     */
--    while ((dirty_sync_cnt = get_migration_pass(from)) < 2) {
--        usleep(1000 * 1000);
--    }
--
--    prev_dirty_sync_cnt = dirty_sync_cnt;
--
--    /*
--     * The RAMBlock dirty sync count must changes in 5 seconds, here we set
--     * the timeout to 10 seconds to ensure it changes.
--     *
--     * Note that migrate_ensure_non_converge set the max-bandwidth to 3MB/s,
--     * while the qtest mem is >= 100MB, one iteration takes at least 33s (100/3)
--     * to complete; this ensures that the RAMBlock dirty sync occurs.
--     */
--    max_try_count = 10;
--    while (--max_try_count) {
--        dirty_sync_cnt = get_migration_pass(from);
--        if (dirty_sync_cnt != prev_dirty_sync_cnt) {
--            hit = 1;
--            break;
--        }
--        prev_dirty_sync_cnt = dirty_sync_cnt;
--        sleep(1);
--    }
--    g_assert_cmpint(hit, ==, 1);
--
--    /* Now, when we tested that throttling works, let it converge */
--    migrate_ensure_converge(from);
--
--    /*
--     * Wait for pre-switchover status to check last throttle percentage
--     * and remaining. These values will be zeroed later
--     */
--    wait_for_migration_status(from, "pre-switchover", NULL);
--
--    /* The final percentage of throttling shouldn't be greater than max_pct */
--    percentage = read_migrate_property_int(from, "cpu-throttle-percentage");
--    g_assert_cmpint(percentage, <=, max_pct);
--    migrate_continue(from, "pre-switchover");
--
--    qtest_qmp_eventwait(to, "RESUME");
--
--    wait_for_serial("dest_serial");
--    wait_for_migration_complete(from);
--
--    migrate_end(from, to, true);
--}
--
--static void *
--migrate_hook_start_precopy_tcp_multifd(QTestState *from,
--                                       QTestState *to)
--{
--    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--}
--
--static void *
--migrate_hook_start_precopy_tcp_multifd_zero_page_legacy(QTestState *from,
--                                                        QTestState *to)
--{
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--    migrate_set_parameter_str(from, "zero-page-detection", "legacy");
--    return NULL;
--}
--
--static void *
--migrate_hook_start_precopy_tcp_multifd_no_zero_page(QTestState *from,
--                                                    QTestState *to)
--{
--    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
--    migrate_set_parameter_str(from, "zero-page-detection", "none");
--    return NULL;
--}
--
--static void test_multifd_tcp_uri_none(void)
--{
--    MigrateCommon args = {
--        .listen_uri = "defer",
--        .start_hook = migrate_hook_start_precopy_tcp_multifd,
--        /*
--         * Multifd is more complicated than most of the features, it
--         * directly takes guest page buffers when sending, make sure
--         * everything will work alright even if guest page is changing.
--         */
--        .live = true,
--    };
--    test_precopy_common(&args);
--}
--
--static void test_multifd_tcp_zero_page_legacy(void)
--{
--    MigrateCommon args = {
--        .listen_uri = "defer",
--        .start_hook = migrate_hook_start_precopy_tcp_multifd_zero_page_legacy,
--        /*
--         * Multifd is more complicated than most of the features, it
--         * directly takes guest page buffers when sending, make sure
--         * everything will work alright even if guest page is changing.
--         */
--        .live = true,
--    };
--    test_precopy_common(&args);
--}
--
--static void test_multifd_tcp_no_zero_page(void)
--{
--    MigrateCommon args = {
--        .listen_uri = "defer",
--        .start_hook = migrate_hook_start_precopy_tcp_multifd_no_zero_page,
--        /*
--         * Multifd is more complicated than most of the features, it
--         * directly takes guest page buffers when sending, make sure
--         * everything will work alright even if guest page is changing.
--         */
--        .live = true,
--    };
--    test_precopy_common(&args);
--}
--
--static void test_multifd_tcp_channels_none(void)
--{
--    MigrateCommon args = {
--        .listen_uri = "defer",
--        .start_hook = migrate_hook_start_precopy_tcp_multifd,
--        .live = true,
--        .connect_channels = ("[ { 'channel-type': 'main',"
--                             "    'addr': { 'transport': 'socket',"
--                             "              'type': 'inet',"
--                             "              'host': '127.0.0.1',"
--                             "              'port': '0' } } ]"),
--    };
--    test_precopy_common(&args);
--}
--
--/*
-- * This test does:
-- *  source               target
-- *                       migrate_incoming
-- *     migrate
-- *     migrate_cancel
-- *                       launch another target
-- *     migrate
-- *
-- *  And see that it works
-- */
--static void test_multifd_tcp_cancel(void)
--{
--    MigrateStart args = {
--        .hide_stderr = true,
--    };
--    QTestState *from, *to, *to2;
--
--    if (migrate_start(&from, &to, "defer", &args)) {
--        return;
--    }
--
--    migrate_ensure_non_converge(from);
--    migrate_prepare_for_dirty_mem(from);
--
--    migrate_set_parameter_int(from, "multifd-channels", 16);
--    migrate_set_parameter_int(to, "multifd-channels", 16);
--
--    migrate_set_capability(from, "multifd", true);
--    migrate_set_capability(to, "multifd", true);
--
--    /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
--
--    /* Wait for the first serial output from the source */
--    wait_for_serial("src_serial");
--
--    migrate_qmp(from, to, NULL, NULL, "{}");
--
--    migrate_wait_for_dirty_mem(from, to);
--
--    migrate_cancel(from);
--
--    /* Make sure QEMU process "to" exited */
--    qtest_set_expected_status(to, EXIT_FAILURE);
--    qtest_wait_qemu(to);
--    qtest_quit(to);
--
--    /*
--     * Ensure the source QEMU finishes its cancellation process before we
--     * proceed with the setup of the next migration. The migrate_start()
--     * function and others might want to interact with the source in a way that
--     * is not possible while the migration is not canceled properly. For
--     * example, setting migration capabilities when the migration is still
--     * running leads to an error.
--     */
--    wait_for_migration_status(from, "cancelled", NULL);
--
--    args = (MigrateStart){
--        .only_target = true,
--    };
--
--    if (migrate_start(&from, &to2, "defer", &args)) {
--        return;
--    }
--
--    migrate_set_parameter_int(to2, "multifd-channels", 16);
--
--    migrate_set_capability(to2, "multifd", true);
--
--    /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", "{}");
--
--    migrate_ensure_non_converge(from);
--
--    migrate_qmp(from, to2, NULL, NULL, "{}");
--
--    migrate_wait_for_dirty_mem(from, to2);
--
--    migrate_ensure_converge(from);
--
--    wait_for_stop(from, get_src());
--    qtest_qmp_eventwait(to2, "RESUME");
--
--    wait_for_serial("dest_serial");
--    wait_for_migration_complete(from);
--    migrate_end(from, to2, true);
--}
--
--static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
--{
--    qtest_qmp_assert_success(who,
--                             "{ 'execute': 'calc-dirty-rate',"
--                             "'arguments': { "
--                             "'calc-time': %" PRIu64 ","
--                             "'mode': 'dirty-ring' }}",
--                             calc_time);
--}
--
--static QDict *query_dirty_rate(QTestState *who)
--{
--    return qtest_qmp_assert_success_ref(who,
--                                        "{ 'execute': 'query-dirty-rate' }");
--}
--
--static void dirtylimit_set_all(QTestState *who, uint64_t dirtyrate)
--{
--    qtest_qmp_assert_success(who,
--                             "{ 'execute': 'set-vcpu-dirty-limit',"
--                             "'arguments': { "
--                             "'dirty-rate': %" PRIu64 " } }",
--                             dirtyrate);
--}
--
--static void cancel_vcpu_dirty_limit(QTestState *who)
--{
--    qtest_qmp_assert_success(who,
--                             "{ 'execute': 'cancel-vcpu-dirty-limit' }");
--}
--
--static QDict *query_vcpu_dirty_limit(QTestState *who)
--{
--    QDict *rsp;
--
--    rsp = qtest_qmp(who, "{ 'execute': 'query-vcpu-dirty-limit' }");
--    g_assert(!qdict_haskey(rsp, "error"));
--    g_assert(qdict_haskey(rsp, "return"));
--
--    return rsp;
--}
--
--static bool calc_dirtyrate_ready(QTestState *who)
--{
--    QDict *rsp_return;
--    const char *status;
--    bool ready;
--
--    rsp_return = query_dirty_rate(who);
--    g_assert(rsp_return);
--
--    status = qdict_get_str(rsp_return, "status");
--    g_assert(status);
--    ready = g_strcmp0(status, "measuring");
--    qobject_unref(rsp_return);
--
--    return ready;
--}
--
--static void wait_for_calc_dirtyrate_complete(QTestState *who,
--                                             int64_t time_s)
--{
--    int max_try_count = 10000;
--    usleep(time_s * 1000000);
--
--    while (!calc_dirtyrate_ready(who) && max_try_count--) {
--        usleep(1000);
--    }
--
--    /*
--     * Set the timeout with 10 s(max_try_count * 1000us),
--     * if dirtyrate measurement not complete, fail test.
--     */
--    g_assert_cmpint(max_try_count, !=, 0);
--}
--
--static int64_t get_dirty_rate(QTestState *who)
--{
--    QDict *rsp_return;
--    const char *status;
--    QList *rates;
--    const QListEntry *entry;
--    QDict *rate;
--    int64_t dirtyrate;
--
--    rsp_return = query_dirty_rate(who);
--    g_assert(rsp_return);
--
--    status = qdict_get_str(rsp_return, "status");
--    g_assert(status);
--    g_assert_cmpstr(status, ==, "measured");
--
--    rates = qdict_get_qlist(rsp_return, "vcpu-dirty-rate");
--    g_assert(rates && !qlist_empty(rates));
--
--    entry = qlist_first(rates);
--    g_assert(entry);
--
--    rate = qobject_to(QDict, qlist_entry_obj(entry));
--    g_assert(rate);
--
--    dirtyrate = qdict_get_try_int(rate, "dirty-rate", -1);
--
--    qobject_unref(rsp_return);
--    return dirtyrate;
--}
--
--static int64_t get_limit_rate(QTestState *who)
--{
--    QDict *rsp_return;
--    QList *rates;
--    const QListEntry *entry;
--    QDict *rate;
--    int64_t dirtyrate;
--
--    rsp_return = query_vcpu_dirty_limit(who);
--    g_assert(rsp_return);
--
--    rates = qdict_get_qlist(rsp_return, "return");
--    g_assert(rates && !qlist_empty(rates));
--
--    entry = qlist_first(rates);
--    g_assert(entry);
--
--    rate = qobject_to(QDict, qlist_entry_obj(entry));
--    g_assert(rate);
--
--    dirtyrate = qdict_get_try_int(rate, "limit-rate", -1);
--
--    qobject_unref(rsp_return);
--    return dirtyrate;
--}
--
--static QTestState *dirtylimit_start_vm(void)
--{
--    QTestState *vm = NULL;
--    g_autofree gchar *cmd = NULL;
--    const char *bootpath;
--
--    bootpath = bootfile_create(qtest_get_arch(), tmpfs, false);
--    cmd = g_strdup_printf("-accel kvm,dirty-ring-size=4096 "
--                          "-name dirtylimit-test,debug-threads=on "
--                          "-m 150M -smp 1 "
--                          "-serial file:%s/vm_serial "
--                          "-drive file=%s,format=raw ",
--                          tmpfs, bootpath);
--
--    vm = qtest_init(cmd);
--    return vm;
--}
--
--static void dirtylimit_stop_vm(QTestState *vm)
--{
--    g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, "vm_serial");
--
--    qtest_quit(vm);
--    unlink(path);
--}
--
--static void test_vcpu_dirty_limit(void)
--{
--    QTestState *vm;
--    int64_t origin_rate;
--    int64_t quota_rate;
--    int64_t rate ;
--    int max_try_count = 20;
--    int hit = 0;
--
--    /* Start vm for vcpu dirtylimit test */
--    vm = dirtylimit_start_vm();
--
--    /* Wait for the first serial output from the vm*/
--    wait_for_serial("vm_serial");
--
--    /* Do dirtyrate measurement with calc time equals 1s */
--    calc_dirty_rate(vm, 1);
--
--    /* Sleep calc time and wait for calc dirtyrate complete */
--    wait_for_calc_dirtyrate_complete(vm, 1);
--
--    /* Query original dirty page rate */
--    origin_rate = get_dirty_rate(vm);
--
--    /* VM booted from bootsect should dirty memory steadily */
--    assert(origin_rate != 0);
--
--    /* Setup quota dirty page rate at half of origin */
--    quota_rate = origin_rate / 2;
--
--    /* Set dirtylimit */
--    dirtylimit_set_all(vm, quota_rate);
--
--    /*
--     * Check if set-vcpu-dirty-limit and query-vcpu-dirty-limit
--     * works literally
--     */
--    g_assert_cmpint(quota_rate, ==, get_limit_rate(vm));
--
--    /* Sleep a bit to check if it take effect */
--    usleep(2000000);
--
--    /*
--     * Check if dirtylimit take effect realistically, set the
--     * timeout with 20 s(max_try_count * 1s), if dirtylimit
--     * doesn't take effect, fail test.
--     */
--    while (--max_try_count) {
--        calc_dirty_rate(vm, 1);
--        wait_for_calc_dirtyrate_complete(vm, 1);
--        rate = get_dirty_rate(vm);
--
--        /*
--         * Assume hitting if current rate is less
--         * than quota rate (within accepting error)
--         */
--        if (rate < (quota_rate + DIRTYLIMIT_TOLERANCE_RANGE)) {
--            hit = 1;
--            break;
--        }
--    }
--
--    g_assert_cmpint(hit, ==, 1);
--
--    hit = 0;
--    max_try_count = 20;
--
--    /* Check if dirtylimit cancellation take effect */
--    cancel_vcpu_dirty_limit(vm);
--    while (--max_try_count) {
--        calc_dirty_rate(vm, 1);
--        wait_for_calc_dirtyrate_complete(vm, 1);
--        rate = get_dirty_rate(vm);
--
--        /*
--         * Assume dirtylimit be canceled if current rate is
--         * greater than quota rate (within accepting error)
--         */
--        if (rate > (quota_rate + DIRTYLIMIT_TOLERANCE_RANGE)) {
--            hit = 1;
--            break;
--        }
--    }
--
--    g_assert_cmpint(hit, ==, 1);
--    dirtylimit_stop_vm(vm);
--}
--
--static void migrate_dirty_limit_wait_showup(QTestState *from,
--                                            const int64_t period,
--                                            const int64_t value)
--{
--    /* Enable dirty limit capability */
--    migrate_set_capability(from, "dirty-limit", true);
--
--    /* Set dirty limit parameters */
--    migrate_set_parameter_int(from, "x-vcpu-dirty-limit-period", period);
--    migrate_set_parameter_int(from, "vcpu-dirty-limit", value);
--
--    /* Make sure migrate can't converge */
--    migrate_ensure_non_converge(from);
--
--    /* To check limit rate after precopy */
--    migrate_set_capability(from, "pause-before-switchover", true);
--
--    /* Wait for the serial output from the source */
--    wait_for_serial("src_serial");
--}
--
--/*
-- * This test does:
-- *  source                          destination
-- *  start vm
-- *                                  start incoming vm
-- *  migrate
-- *  wait dirty limit to begin
-- *  cancel migrate
-- *  cancellation check
-- *                                  restart incoming vm
-- *  migrate
-- *  wait dirty limit to begin
-- *  wait pre-switchover event
-- *  convergence condition check
-- *
-- * And see if dirty limit migration works correctly.
-- * This test case involves many passes, so it runs in slow mode only.
-- */
--static void test_dirty_limit(void)
--{
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--    QTestState *from, *to;
--    int64_t remaining;
--    uint64_t throttle_us_per_full;
--    /*
--     * We want the test to be stable and as fast as possible.
--     * E.g., with 1Gb/s bandwidth migration may pass without dirty limit,
--     * so we need to decrease a bandwidth.
--     */
--    const int64_t dirtylimit_period = 1000, dirtylimit_value = 50;
--    const int64_t max_bandwidth = 400000000; /* ~400Mb/s */
--    const int64_t downtime_limit = 250; /* 250ms */
--    /*
--     * We migrate through unix-socket (> 500Mb/s).
--     * Thus, expected migration speed ~= bandwidth limit (< 500Mb/s).
--     * So, we can predict expected_threshold
--     */
--    const int64_t expected_threshold = max_bandwidth * downtime_limit / 1000;
--    int max_try_count = 10;
--    MigrateCommon args = {
--        .start = {
--            .hide_stderr = true,
--            .use_dirty_ring = true,
--        },
--        .listen_uri = uri,
--        .connect_uri = uri,
--    };
--
--    /* Start src, dst vm */
--    if (migrate_start(&from, &to, args.listen_uri, &args.start)) {
--        return;
--    }
--
--    /* Prepare for dirty limit migration and wait src vm show up */
--    migrate_dirty_limit_wait_showup(from, dirtylimit_period, dirtylimit_value);
--
--    /* Start migrate */
--    migrate_qmp(from, to, args.connect_uri, NULL, "{}");
--
--    /* Wait for dirty limit throttle begin */
--    throttle_us_per_full = 0;
--    while (throttle_us_per_full == 0) {
--        throttle_us_per_full =
--            read_migrate_property_int(from,
--                                      "dirty-limit-throttle-time-per-round");
--        usleep(100);
--        g_assert_false(get_src()->stop_seen);
--    }
--
--    /* Now cancel migrate and wait for dirty limit throttle switch off */
--    migrate_cancel(from);
--    wait_for_migration_status(from, "cancelled", NULL);
--
--    /* Check if dirty limit throttle switched off, set timeout 1ms */
--    do {
--        throttle_us_per_full =
--            read_migrate_property_int(from,
--                                      "dirty-limit-throttle-time-per-round");
--        usleep(100);
--        g_assert_false(get_src()->stop_seen);
--    } while (throttle_us_per_full != 0 && --max_try_count);
--
--    /* Assert dirty limit is not in service */
--    g_assert_cmpint(throttle_us_per_full, ==, 0);
--
--    args = (MigrateCommon) {
--        .start = {
--            .only_target = true,
--            .use_dirty_ring = true,
--        },
--        .listen_uri = uri,
--        .connect_uri = uri,
--    };
--
--    /* Restart dst vm, src vm already show up so we needn't wait anymore */
--    if (migrate_start(&from, &to, args.listen_uri, &args.start)) {
--        return;
--    }
--
--    /* Start migrate */
--    migrate_qmp(from, to, args.connect_uri, NULL, "{}");
--
--    /* Wait for dirty limit throttle begin */
--    throttle_us_per_full = 0;
--    while (throttle_us_per_full == 0) {
--        throttle_us_per_full =
--            read_migrate_property_int(from,
--                                      "dirty-limit-throttle-time-per-round");
--        usleep(100);
--        g_assert_false(get_src()->stop_seen);
--    }
--
--    /*
--     * The dirty limit rate should equals the return value of
--     * query-vcpu-dirty-limit if dirty limit cap set
--     */
--    g_assert_cmpint(dirtylimit_value, ==, get_limit_rate(from));
--
--    /* Now, we have tested if dirty limit works, let it converge */
--    migrate_set_parameter_int(from, "downtime-limit", downtime_limit);
--    migrate_set_parameter_int(from, "max-bandwidth", max_bandwidth);
--
--    /*
--     * Wait for pre-switchover status to check if migration
--     * satisfy the convergence condition
--     */
--    wait_for_migration_status(from, "pre-switchover", NULL);
--
--    remaining = read_ram_property_int(from, "remaining");
--    g_assert_cmpint(remaining, <,
--                    (expected_threshold + expected_threshold / 100));
--
--    migrate_continue(from, "pre-switchover");
--
--    qtest_qmp_eventwait(to, "RESUME");
--
--    wait_for_serial("dest_serial");
--    wait_for_migration_complete(from);
--
--    migrate_end(from, to, true);
--}
--
- int main(int argc, char **argv)
- {
-     MigrationTestEnv *env;
-@@ -1222,21 +307,13 @@ int main(int argc, char **argv)
-     migration_test_add_compression(env);
-     migration_test_add_postcopy(env);
-     migration_test_add_file(env);
-+    migration_test_add_precopy(env);
- 
-     migration_test_add("/migration/bad_dest", test_baddest);
- #ifndef _WIN32
-     migration_test_add("/migration/analyze-script", test_analyze_script);
- #endif
- 
--    if (env->is_x86) {
--        migration_test_add("/migration/precopy/unix/suspend/live",
--                           test_precopy_unix_suspend_live);
--        migration_test_add("/migration/precopy/unix/suspend/notlive",
--                           test_precopy_unix_suspend_notlive);
--    }
--
--    migration_test_add("/migration/precopy/unix/plain",
--                       test_precopy_unix_plain);
-     /*
-      * Our CI system has problems with shared memory.
-      * Don't run this test until we find a workaround.
-@@ -1245,18 +322,8 @@ int main(int argc, char **argv)
-         migration_test_add("/migration/mode/reboot", test_mode_reboot);
-     }
- 
--    migration_test_add("/migration/precopy/tcp/plain", test_precopy_tcp_plain);
--
--    migration_test_add("/migration/precopy/tcp/plain/switchover-ack",
--                       test_precopy_tcp_switchover_ack);
--
-     /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
--#ifndef _WIN32
--    migration_test_add("/migration/precopy/fd/tcp",
--                       test_precopy_fd_socket);
--    migration_test_add("/migration/precopy/fd/file",
--                       test_precopy_fd_file);
--#endif
-+
-     migration_test_add("/migration/validate_uuid", test_validate_uuid);
-     migration_test_add("/migration/validate_uuid_error",
-                        test_validate_uuid_error);
-@@ -1268,39 +335,6 @@ int main(int argc, char **argv)
-                        test_validate_uri_channels_both_set);
-     migration_test_add("/migration/validate_uri/channels/none_set",
-                        test_validate_uri_channels_none_set);
--    /*
--     * See explanation why this test is slow on function definition
--     */
--    if (g_test_slow()) {
--        migration_test_add("/migration/auto_converge",
--                           test_auto_converge);
--        if (g_str_equal(env->arch, "x86_64") &&
--            env->has_kvm && env->has_dirty_ring) {
--            migration_test_add("/dirty_limit",
--                               test_dirty_limit);
--        }
--    }
--    migration_test_add("/migration/multifd/tcp/uri/plain/none",
--                       test_multifd_tcp_uri_none);
--    migration_test_add("/migration/multifd/tcp/channels/plain/none",
--                       test_multifd_tcp_channels_none);
--    migration_test_add("/migration/multifd/tcp/plain/zero-page/legacy",
--                       test_multifd_tcp_zero_page_legacy);
--    migration_test_add("/migration/multifd/tcp/plain/zero-page/none",
--                       test_multifd_tcp_no_zero_page);
--    migration_test_add("/migration/multifd/tcp/plain/cancel",
--                       test_multifd_tcp_cancel);
--
--    if (g_str_equal(env->arch, "x86_64") &&
--        env->has_kvm && env->has_dirty_ring) {
--
--        migration_test_add("/migration/dirty_ring",
--                           test_precopy_unix_dirty_ring);
--        if (qtest_has_machine("pc") && g_test_slow()) {
--            migration_test_add("/migration/vcpu_dirty_limit",
--                               test_vcpu_dirty_limit);
--        }
--    }
- 
-     ret = g_test_run();
- 
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index 6be434c6bf..52c715781f 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -223,5 +223,6 @@ static inline void migration_test_add_tls(MigrationTestEnv *env) {};
- void migration_test_add_compression(MigrationTestEnv *env);
- void migration_test_add_postcopy(MigrationTestEnv *env);
- void migration_test_add_file(MigrationTestEnv *env);
-+void migration_test_add_precopy(MigrationTestEnv *env);
- 
- #endif /* TEST_FRAMEWORK_H */
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-new file mode 100644
-index 0000000000..b709d9051d
---- /dev/null
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -0,0 +1,1007 @@
-+/*
-+ * QTest testcase for precopy migration
-+ *
-+ * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
-+ *   based on the vhost-user-test.c that is:
-+ *      Copyright (c) 2014 Virtual Open Systems Sarl.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "chardev/char.h"
-+#include "crypto/tlscredspsk.h"
-+#include "libqtest.h"
-+#include "migration/bootfile.h"
-+#include "migration/framework.h"
-+#include "migration/migration-qmp.h"
-+#include "migration/migration-util.h"
-+#include "ppc-util.h"
-+#include "qapi/qmp/qlist.h"
-+#include "qemu/module.h"
-+#include "qemu/option.h"
-+#include "qemu/range.h"
-+#include "qemu/sockets.h"
-+
-+
-+/*
-+ * Dirtylimit stop working if dirty page rate error
-+ * value less than DIRTYLIMIT_TOLERANCE_RANGE
-+ */
-+#define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
-+
-+static char *tmpfs;
-+
-+static void test_precopy_unix_plain(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-+    MigrateCommon args = {
-+        .listen_uri = uri,
-+        .connect_uri = uri,
-+        /*
-+         * The simplest use case of precopy, covering smoke tests of
-+         * get-dirty-log dirty tracking.
-+         */
-+        .live = true,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
-+static void test_precopy_unix_suspend_live(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-+    MigrateCommon args = {
-+        .listen_uri = uri,
-+        .connect_uri = uri,
-+        /*
-+         * despite being live, the test is fast because the src
-+         * suspends immediately.
-+         */
-+        .live = true,
-+        .start.suspend_me = true,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
-+static void test_precopy_unix_suspend_notlive(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-+    MigrateCommon args = {
-+        .listen_uri = uri,
-+        .connect_uri = uri,
-+        .start.suspend_me = true,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
-+static void test_precopy_unix_dirty_ring(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-+    MigrateCommon args = {
-+        .start = {
-+            .use_dirty_ring = true,
-+        },
-+        .listen_uri = uri,
-+        .connect_uri = uri,
-+        /*
-+         * Besides the precopy/unix basic test, cover dirty ring interface
-+         * rather than get-dirty-log.
-+         */
-+        .live = true,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
-+static void test_precopy_tcp_plain(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "tcp:127.0.0.1:0",
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
-+static void *migrate_hook_start_switchover_ack(QTestState *from, QTestState *to)
-+{
-+
-+    migrate_set_capability(from, "return-path", true);
-+    migrate_set_capability(to, "return-path", true);
-+
-+    migrate_set_capability(from, "switchover-ack", true);
-+    migrate_set_capability(to, "switchover-ack", true);
-+
-+    return NULL;
-+}
-+
-+static void test_precopy_tcp_switchover_ack(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "tcp:127.0.0.1:0",
-+        .start_hook = migrate_hook_start_switchover_ack,
-+        /*
-+         * Source VM must be running in order to consider the switchover ACK
-+         * when deciding to do switchover or not.
-+         */
-+        .live = true,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
-+#ifndef _WIN32
-+static void *migrate_hook_start_fd(QTestState *from,
-+                                   QTestState *to)
-+{
-+    int ret;
-+    int pair[2];
-+
-+    /* Create two connected sockets for migration */
-+    ret = qemu_socketpair(PF_LOCAL, SOCK_STREAM, 0, pair);
-+    g_assert_cmpint(ret, ==, 0);
-+
-+    /* Send the 1st socket to the target */
-+    qtest_qmp_fds_assert_success(to, &pair[0], 1,
-+                                 "{ 'execute': 'getfd',"
-+                                 "  'arguments': { 'fdname': 'fd-mig' }}");
-+    close(pair[0]);
-+
-+    /* Start incoming migration from the 1st socket */
-+    migrate_incoming_qmp(to, "fd:fd-mig", "{}");
-+
-+    /* Send the 2nd socket to the target */
-+    qtest_qmp_fds_assert_success(from, &pair[1], 1,
-+                                 "{ 'execute': 'getfd',"
-+                                 "  'arguments': { 'fdname': 'fd-mig' }}");
-+    close(pair[1]);
-+
-+    return NULL;
-+}
-+
-+static void migrate_hook_end_fd(QTestState *from,
-+                                QTestState *to,
-+                                void *opaque)
-+{
-+    QDict *rsp;
-+    const char *error_desc;
-+
-+    /* Test closing fds */
-+    /*
-+     * We assume, that QEMU removes named fd from its list,
-+     * so this should fail.
-+     */
-+    rsp = qtest_qmp(from,
-+                    "{ 'execute': 'closefd',"
-+                    "  'arguments': { 'fdname': 'fd-mig' }}");
-+    g_assert_true(qdict_haskey(rsp, "error"));
-+    error_desc = qdict_get_str(qdict_get_qdict(rsp, "error"), "desc");
-+    g_assert_cmpstr(error_desc, ==, "File descriptor named 'fd-mig' not found");
-+    qobject_unref(rsp);
-+
-+    rsp = qtest_qmp(to,
-+                    "{ 'execute': 'closefd',"
-+                    "  'arguments': { 'fdname': 'fd-mig' }}");
-+    g_assert_true(qdict_haskey(rsp, "error"));
-+    error_desc = qdict_get_str(qdict_get_qdict(rsp, "error"), "desc");
-+    g_assert_cmpstr(error_desc, ==, "File descriptor named 'fd-mig' not found");
-+    qobject_unref(rsp);
-+}
-+
-+static void test_precopy_fd_socket(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .connect_uri = "fd:fd-mig",
-+        .start_hook = migrate_hook_start_fd,
-+        .end_hook = migrate_hook_end_fd,
-+    };
-+    test_precopy_common(&args);
-+}
-+
-+static void *migrate_hook_start_precopy_fd_file(QTestState *from,
-+                                                QTestState *to)
-+{
-+    g_autofree char *file = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
-+    int src_flags = O_CREAT | O_RDWR;
-+    int dst_flags = O_CREAT | O_RDWR;
-+    int fds[2];
-+
-+    fds[0] = open(file, src_flags, 0660);
-+    assert(fds[0] != -1);
-+
-+    fds[1] = open(file, dst_flags, 0660);
-+    assert(fds[1] != -1);
-+
-+
-+    qtest_qmp_fds_assert_success(to, &fds[0], 1,
-+                                 "{ 'execute': 'getfd',"
-+                                 "  'arguments': { 'fdname': 'fd-mig' }}");
-+
-+    qtest_qmp_fds_assert_success(from, &fds[1], 1,
-+                                 "{ 'execute': 'getfd',"
-+                                 "  'arguments': { 'fdname': 'fd-mig' }}");
-+
-+    close(fds[0]);
-+    close(fds[1]);
-+
-+    return NULL;
-+}
-+
-+static void test_precopy_fd_file(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .connect_uri = "fd:fd-mig",
-+        .start_hook = migrate_hook_start_precopy_fd_file,
-+        .end_hook = migrate_hook_end_fd,
-+    };
-+    test_file_common(&args, true);
-+}
-+#endif /* _WIN32 */
-+
-+/*
-+ * The way auto_converge works, we need to do too many passes to
-+ * run this test.  Auto_converge logic is only run once every
-+ * three iterations, so:
-+ *
-+ * - 3 iterations without auto_converge enabled
-+ * - 3 iterations with pct = 5
-+ * - 3 iterations with pct = 30
-+ * - 3 iterations with pct = 55
-+ * - 3 iterations with pct = 80
-+ * - 3 iterations with pct = 95 (max(95, 80 + 25))
-+ *
-+ * To make things even worse, we need to run the initial stage at
-+ * 3MB/s so we enter autoconverge even when host is (over)loaded.
-+ */
-+static void test_auto_converge(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-+    MigrateStart args = {};
-+    QTestState *from, *to;
-+    int64_t percentage;
-+
-+    /*
-+     * We want the test to be stable and as fast as possible.
-+     * E.g., with 1Gb/s bandwidth migration may pass without throttling,
-+     * so we need to decrease a bandwidth.
-+     */
-+    const int64_t init_pct = 5, inc_pct = 25, max_pct = 95;
-+    uint64_t prev_dirty_sync_cnt, dirty_sync_cnt;
-+    int max_try_count, hit = 0;
-+
-+    if (migrate_start(&from, &to, uri, &args)) {
-+        return;
-+    }
-+
-+    migrate_set_capability(from, "auto-converge", true);
-+    migrate_set_parameter_int(from, "cpu-throttle-initial", init_pct);
-+    migrate_set_parameter_int(from, "cpu-throttle-increment", inc_pct);
-+    migrate_set_parameter_int(from, "max-cpu-throttle", max_pct);
-+
-+    /*
-+     * Set the initial parameters so that the migration could not converge
-+     * without throttling.
-+     */
-+    migrate_ensure_non_converge(from);
-+
-+    /* To check remaining size after precopy */
-+    migrate_set_capability(from, "pause-before-switchover", true);
-+
-+    /* Wait for the first serial output from the source */
-+    wait_for_serial("src_serial");
-+
-+    migrate_qmp(from, to, uri, NULL, "{}");
-+
-+    /* Wait for throttling begins */
-+    percentage = 0;
-+    do {
-+        percentage = read_migrate_property_int(from, "cpu-throttle-percentage");
-+        if (percentage != 0) {
-+            break;
-+        }
-+        usleep(20);
-+        g_assert_false(get_src()->stop_seen);
-+    } while (true);
-+    /* The first percentage of throttling should be at least init_pct */
-+    g_assert_cmpint(percentage, >=, init_pct);
-+
-+    /*
-+     * End the loop when the dirty sync count greater than 1.
-+     */
-+    while ((dirty_sync_cnt = get_migration_pass(from)) < 2) {
-+        usleep(1000 * 1000);
-+    }
-+
-+    prev_dirty_sync_cnt = dirty_sync_cnt;
-+
-+    /*
-+     * The RAMBlock dirty sync count must changes in 5 seconds, here we set
-+     * the timeout to 10 seconds to ensure it changes.
-+     *
-+     * Note that migrate_ensure_non_converge set the max-bandwidth to 3MB/s,
-+     * while the qtest mem is >= 100MB, one iteration takes at least 33s (100/3)
-+     * to complete; this ensures that the RAMBlock dirty sync occurs.
-+     */
-+    max_try_count = 10;
-+    while (--max_try_count) {
-+        dirty_sync_cnt = get_migration_pass(from);
-+        if (dirty_sync_cnt != prev_dirty_sync_cnt) {
-+            hit = 1;
-+            break;
-+        }
-+        prev_dirty_sync_cnt = dirty_sync_cnt;
-+        sleep(1);
-+    }
-+    g_assert_cmpint(hit, ==, 1);
-+
-+    /* Now, when we tested that throttling works, let it converge */
-+    migrate_ensure_converge(from);
-+
-+    /*
-+     * Wait for pre-switchover status to check last throttle percentage
-+     * and remaining. These values will be zeroed later
-+     */
-+    wait_for_migration_status(from, "pre-switchover", NULL);
-+
-+    /* The final percentage of throttling shouldn't be greater than max_pct */
-+    percentage = read_migrate_property_int(from, "cpu-throttle-percentage");
-+    g_assert_cmpint(percentage, <=, max_pct);
-+    migrate_continue(from, "pre-switchover");
-+
-+    qtest_qmp_eventwait(to, "RESUME");
-+
-+    wait_for_serial("dest_serial");
-+    wait_for_migration_complete(from);
-+
-+    migrate_end(from, to, true);
-+}
-+
-+static void *
-+migrate_hook_start_precopy_tcp_multifd(QTestState *from,
-+                                       QTestState *to)
-+{
-+    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
-+}
-+
-+static void *
-+migrate_hook_start_precopy_tcp_multifd_zero_page_legacy(QTestState *from,
-+                                                        QTestState *to)
-+{
-+    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
-+    migrate_set_parameter_str(from, "zero-page-detection", "legacy");
-+    return NULL;
-+}
-+
-+static void *
-+migrate_hook_start_precopy_tcp_multifd_no_zero_page(QTestState *from,
-+                                                    QTestState *to)
-+{
-+    migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
-+    migrate_set_parameter_str(from, "zero-page-detection", "none");
-+    return NULL;
-+}
-+
-+static void test_multifd_tcp_uri_none(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = migrate_hook_start_precopy_tcp_multifd,
-+        /*
-+         * Multifd is more complicated than most of the features, it
-+         * directly takes guest page buffers when sending, make sure
-+         * everything will work alright even if guest page is changing.
-+         */
-+        .live = true,
-+    };
-+    test_precopy_common(&args);
-+}
-+
-+static void test_multifd_tcp_zero_page_legacy(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = migrate_hook_start_precopy_tcp_multifd_zero_page_legacy,
-+        /*
-+         * Multifd is more complicated than most of the features, it
-+         * directly takes guest page buffers when sending, make sure
-+         * everything will work alright even if guest page is changing.
-+         */
-+        .live = true,
-+    };
-+    test_precopy_common(&args);
-+}
-+
-+static void test_multifd_tcp_no_zero_page(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = migrate_hook_start_precopy_tcp_multifd_no_zero_page,
-+        /*
-+         * Multifd is more complicated than most of the features, it
-+         * directly takes guest page buffers when sending, make sure
-+         * everything will work alright even if guest page is changing.
-+         */
-+        .live = true,
-+    };
-+    test_precopy_common(&args);
-+}
-+
-+static void test_multifd_tcp_channels_none(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = migrate_hook_start_precopy_tcp_multifd,
-+        .live = true,
-+        .connect_channels = ("[ { 'channel-type': 'main',"
-+                             "    'addr': { 'transport': 'socket',"
-+                             "              'type': 'inet',"
-+                             "              'host': '127.0.0.1',"
-+                             "              'port': '0' } } ]"),
-+    };
-+    test_precopy_common(&args);
-+}
-+
-+/*
-+ * This test does:
-+ *  source               target
-+ *                       migrate_incoming
-+ *     migrate
-+ *     migrate_cancel
-+ *                       launch another target
-+ *     migrate
-+ *
-+ *  And see that it works
-+ */
-+static void test_multifd_tcp_cancel(void)
-+{
-+    MigrateStart args = {
-+        .hide_stderr = true,
-+    };
-+    QTestState *from, *to, *to2;
-+
-+    if (migrate_start(&from, &to, "defer", &args)) {
-+        return;
-+    }
-+
-+    migrate_ensure_non_converge(from);
-+    migrate_prepare_for_dirty_mem(from);
-+
-+    migrate_set_parameter_int(from, "multifd-channels", 16);
-+    migrate_set_parameter_int(to, "multifd-channels", 16);
-+
-+    migrate_set_capability(from, "multifd", true);
-+    migrate_set_capability(to, "multifd", true);
-+
-+    /* Start incoming migration from the 1st socket */
-+    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
-+
-+    /* Wait for the first serial output from the source */
-+    wait_for_serial("src_serial");
-+
-+    migrate_qmp(from, to, NULL, NULL, "{}");
-+
-+    migrate_wait_for_dirty_mem(from, to);
-+
-+    migrate_cancel(from);
-+
-+    /* Make sure QEMU process "to" exited */
-+    qtest_set_expected_status(to, EXIT_FAILURE);
-+    qtest_wait_qemu(to);
-+    qtest_quit(to);
-+
-+    /*
-+     * Ensure the source QEMU finishes its cancellation process before we
-+     * proceed with the setup of the next migration. The migrate_start()
-+     * function and others might want to interact with the source in a way that
-+     * is not possible while the migration is not canceled properly. For
-+     * example, setting migration capabilities when the migration is still
-+     * running leads to an error.
-+     */
-+    wait_for_migration_status(from, "cancelled", NULL);
-+
-+    args = (MigrateStart){
-+        .only_target = true,
-+    };
-+
-+    if (migrate_start(&from, &to2, "defer", &args)) {
-+        return;
-+    }
-+
-+    migrate_set_parameter_int(to2, "multifd-channels", 16);
-+
-+    migrate_set_capability(to2, "multifd", true);
-+
-+    /* Start incoming migration from the 1st socket */
-+    migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", "{}");
-+
-+    migrate_ensure_non_converge(from);
-+
-+    migrate_qmp(from, to2, NULL, NULL, "{}");
-+
-+    migrate_wait_for_dirty_mem(from, to2);
-+
-+    migrate_ensure_converge(from);
-+
-+    wait_for_stop(from, get_src());
-+    qtest_qmp_eventwait(to2, "RESUME");
-+
-+    wait_for_serial("dest_serial");
-+    wait_for_migration_complete(from);
-+    migrate_end(from, to2, true);
-+}
-+
-+static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
-+{
-+    qtest_qmp_assert_success(who,
-+                             "{ 'execute': 'calc-dirty-rate',"
-+                             "'arguments': { "
-+                             "'calc-time': %" PRIu64 ","
-+                             "'mode': 'dirty-ring' }}",
-+                             calc_time);
-+}
-+
-+static QDict *query_dirty_rate(QTestState *who)
-+{
-+    return qtest_qmp_assert_success_ref(who,
-+                                        "{ 'execute': 'query-dirty-rate' }");
-+}
-+
-+static void dirtylimit_set_all(QTestState *who, uint64_t dirtyrate)
-+{
-+    qtest_qmp_assert_success(who,
-+                             "{ 'execute': 'set-vcpu-dirty-limit',"
-+                             "'arguments': { "
-+                             "'dirty-rate': %" PRIu64 " } }",
-+                             dirtyrate);
-+}
-+
-+static void cancel_vcpu_dirty_limit(QTestState *who)
-+{
-+    qtest_qmp_assert_success(who,
-+                             "{ 'execute': 'cancel-vcpu-dirty-limit' }");
-+}
-+
-+static QDict *query_vcpu_dirty_limit(QTestState *who)
-+{
-+    QDict *rsp;
-+
-+    rsp = qtest_qmp(who, "{ 'execute': 'query-vcpu-dirty-limit' }");
-+    g_assert(!qdict_haskey(rsp, "error"));
-+    g_assert(qdict_haskey(rsp, "return"));
-+
-+    return rsp;
-+}
-+
-+static bool calc_dirtyrate_ready(QTestState *who)
-+{
-+    QDict *rsp_return;
-+    const char *status;
-+    bool ready;
-+
-+    rsp_return = query_dirty_rate(who);
-+    g_assert(rsp_return);
-+
-+    status = qdict_get_str(rsp_return, "status");
-+    g_assert(status);
-+    ready = g_strcmp0(status, "measuring");
-+    qobject_unref(rsp_return);
-+
-+    return ready;
-+}
-+
-+static void wait_for_calc_dirtyrate_complete(QTestState *who,
-+                                             int64_t time_s)
-+{
-+    int max_try_count = 10000;
-+    usleep(time_s * 1000000);
-+
-+    while (!calc_dirtyrate_ready(who) && max_try_count--) {
-+        usleep(1000);
-+    }
-+
-+    /*
-+     * Set the timeout with 10 s(max_try_count * 1000us),
-+     * if dirtyrate measurement not complete, fail test.
-+     */
-+    g_assert_cmpint(max_try_count, !=, 0);
-+}
-+
-+static int64_t get_dirty_rate(QTestState *who)
-+{
-+    QDict *rsp_return;
-+    const char *status;
-+    QList *rates;
-+    const QListEntry *entry;
-+    QDict *rate;
-+    int64_t dirtyrate;
-+
-+    rsp_return = query_dirty_rate(who);
-+    g_assert(rsp_return);
-+
-+    status = qdict_get_str(rsp_return, "status");
-+    g_assert(status);
-+    g_assert_cmpstr(status, ==, "measured");
-+
-+    rates = qdict_get_qlist(rsp_return, "vcpu-dirty-rate");
-+    g_assert(rates && !qlist_empty(rates));
-+
-+    entry = qlist_first(rates);
-+    g_assert(entry);
-+
-+    rate = qobject_to(QDict, qlist_entry_obj(entry));
-+    g_assert(rate);
-+
-+    dirtyrate = qdict_get_try_int(rate, "dirty-rate", -1);
-+
-+    qobject_unref(rsp_return);
-+    return dirtyrate;
-+}
-+
-+static int64_t get_limit_rate(QTestState *who)
-+{
-+    QDict *rsp_return;
-+    QList *rates;
-+    const QListEntry *entry;
-+    QDict *rate;
-+    int64_t dirtyrate;
-+
-+    rsp_return = query_vcpu_dirty_limit(who);
-+    g_assert(rsp_return);
-+
-+    rates = qdict_get_qlist(rsp_return, "return");
-+    g_assert(rates && !qlist_empty(rates));
-+
-+    entry = qlist_first(rates);
-+    g_assert(entry);
-+
-+    rate = qobject_to(QDict, qlist_entry_obj(entry));
-+    g_assert(rate);
-+
-+    dirtyrate = qdict_get_try_int(rate, "limit-rate", -1);
-+
-+    qobject_unref(rsp_return);
-+    return dirtyrate;
-+}
-+
-+static QTestState *dirtylimit_start_vm(void)
-+{
-+    QTestState *vm = NULL;
-+    g_autofree gchar *cmd = NULL;
-+    const char *bootpath;
-+
-+    bootpath = bootfile_create(qtest_get_arch(), tmpfs, false);
-+    cmd = g_strdup_printf("-accel kvm,dirty-ring-size=4096 "
-+                          "-name dirtylimit-test,debug-threads=on "
-+                          "-m 150M -smp 1 "
-+                          "-serial file:%s/vm_serial "
-+                          "-drive file=%s,format=raw ",
-+                          tmpfs, bootpath);
-+
-+    vm = qtest_init(cmd);
-+    return vm;
-+}
-+
-+static void dirtylimit_stop_vm(QTestState *vm)
-+{
-+    g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, "vm_serial");
-+
-+    qtest_quit(vm);
-+    unlink(path);
-+}
-+
-+static void test_vcpu_dirty_limit(void)
-+{
-+    QTestState *vm;
-+    int64_t origin_rate;
-+    int64_t quota_rate;
-+    int64_t rate ;
-+    int max_try_count = 20;
-+    int hit = 0;
-+
-+    /* Start vm for vcpu dirtylimit test */
-+    vm = dirtylimit_start_vm();
-+
-+    /* Wait for the first serial output from the vm*/
-+    wait_for_serial("vm_serial");
-+
-+    /* Do dirtyrate measurement with calc time equals 1s */
-+    calc_dirty_rate(vm, 1);
-+
-+    /* Sleep calc time and wait for calc dirtyrate complete */
-+    wait_for_calc_dirtyrate_complete(vm, 1);
-+
-+    /* Query original dirty page rate */
-+    origin_rate = get_dirty_rate(vm);
-+
-+    /* VM booted from bootsect should dirty memory steadily */
-+    assert(origin_rate != 0);
-+
-+    /* Setup quota dirty page rate at half of origin */
-+    quota_rate = origin_rate / 2;
-+
-+    /* Set dirtylimit */
-+    dirtylimit_set_all(vm, quota_rate);
-+
-+    /*
-+     * Check if set-vcpu-dirty-limit and query-vcpu-dirty-limit
-+     * works literally
-+     */
-+    g_assert_cmpint(quota_rate, ==, get_limit_rate(vm));
-+
-+    /* Sleep a bit to check if it take effect */
-+    usleep(2000000);
-+
-+    /*
-+     * Check if dirtylimit take effect realistically, set the
-+     * timeout with 20 s(max_try_count * 1s), if dirtylimit
-+     * doesn't take effect, fail test.
-+     */
-+    while (--max_try_count) {
-+        calc_dirty_rate(vm, 1);
-+        wait_for_calc_dirtyrate_complete(vm, 1);
-+        rate = get_dirty_rate(vm);
-+
-+        /*
-+         * Assume hitting if current rate is less
-+         * than quota rate (within accepting error)
-+         */
-+        if (rate < (quota_rate + DIRTYLIMIT_TOLERANCE_RANGE)) {
-+            hit = 1;
-+            break;
-+        }
-+    }
-+
-+    g_assert_cmpint(hit, ==, 1);
-+
-+    hit = 0;
-+    max_try_count = 20;
-+
-+    /* Check if dirtylimit cancellation take effect */
-+    cancel_vcpu_dirty_limit(vm);
-+    while (--max_try_count) {
-+        calc_dirty_rate(vm, 1);
-+        wait_for_calc_dirtyrate_complete(vm, 1);
-+        rate = get_dirty_rate(vm);
-+
-+        /*
-+         * Assume dirtylimit be canceled if current rate is
-+         * greater than quota rate (within accepting error)
-+         */
-+        if (rate > (quota_rate + DIRTYLIMIT_TOLERANCE_RANGE)) {
-+            hit = 1;
-+            break;
-+        }
-+    }
-+
-+    g_assert_cmpint(hit, ==, 1);
-+    dirtylimit_stop_vm(vm);
-+}
-+
-+static void migrate_dirty_limit_wait_showup(QTestState *from,
-+                                            const int64_t period,
-+                                            const int64_t value)
-+{
-+    /* Enable dirty limit capability */
-+    migrate_set_capability(from, "dirty-limit", true);
-+
-+    /* Set dirty limit parameters */
-+    migrate_set_parameter_int(from, "x-vcpu-dirty-limit-period", period);
-+    migrate_set_parameter_int(from, "vcpu-dirty-limit", value);
-+
-+    /* Make sure migrate can't converge */
-+    migrate_ensure_non_converge(from);
-+
-+    /* To check limit rate after precopy */
-+    migrate_set_capability(from, "pause-before-switchover", true);
-+
-+    /* Wait for the serial output from the source */
-+    wait_for_serial("src_serial");
-+}
-+
-+/*
-+ * This test does:
-+ *  source                          destination
-+ *  start vm
-+ *                                  start incoming vm
-+ *  migrate
-+ *  wait dirty limit to begin
-+ *  cancel migrate
-+ *  cancellation check
-+ *                                  restart incoming vm
-+ *  migrate
-+ *  wait dirty limit to begin
-+ *  wait pre-switchover event
-+ *  convergence condition check
-+ *
-+ * And see if dirty limit migration works correctly.
-+ * This test case involves many passes, so it runs in slow mode only.
-+ */
-+static void test_dirty_limit(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-+    QTestState *from, *to;
-+    int64_t remaining;
-+    uint64_t throttle_us_per_full;
-+    /*
-+     * We want the test to be stable and as fast as possible.
-+     * E.g., with 1Gb/s bandwidth migration may pass without dirty limit,
-+     * so we need to decrease a bandwidth.
-+     */
-+    const int64_t dirtylimit_period = 1000, dirtylimit_value = 50;
-+    const int64_t max_bandwidth = 400000000; /* ~400Mb/s */
-+    const int64_t downtime_limit = 250; /* 250ms */
-+    /*
-+     * We migrate through unix-socket (> 500Mb/s).
-+     * Thus, expected migration speed ~= bandwidth limit (< 500Mb/s).
-+     * So, we can predict expected_threshold
-+     */
-+    const int64_t expected_threshold = max_bandwidth * downtime_limit / 1000;
-+    int max_try_count = 10;
-+    MigrateCommon args = {
-+        .start = {
-+            .hide_stderr = true,
-+            .use_dirty_ring = true,
-+        },
-+        .listen_uri = uri,
-+        .connect_uri = uri,
-+    };
-+
-+    /* Start src, dst vm */
-+    if (migrate_start(&from, &to, args.listen_uri, &args.start)) {
-+        return;
-+    }
-+
-+    /* Prepare for dirty limit migration and wait src vm show up */
-+    migrate_dirty_limit_wait_showup(from, dirtylimit_period, dirtylimit_value);
-+
-+    /* Start migrate */
-+    migrate_qmp(from, to, args.connect_uri, NULL, "{}");
-+
-+    /* Wait for dirty limit throttle begin */
-+    throttle_us_per_full = 0;
-+    while (throttle_us_per_full == 0) {
-+        throttle_us_per_full =
-+            read_migrate_property_int(from,
-+                                      "dirty-limit-throttle-time-per-round");
-+        usleep(100);
-+        g_assert_false(get_src()->stop_seen);
-+    }
-+
-+    /* Now cancel migrate and wait for dirty limit throttle switch off */
-+    migrate_cancel(from);
-+    wait_for_migration_status(from, "cancelled", NULL);
-+
-+    /* Check if dirty limit throttle switched off, set timeout 1ms */
-+    do {
-+        throttle_us_per_full =
-+            read_migrate_property_int(from,
-+                                      "dirty-limit-throttle-time-per-round");
-+        usleep(100);
-+        g_assert_false(get_src()->stop_seen);
-+    } while (throttle_us_per_full != 0 && --max_try_count);
-+
-+    /* Assert dirty limit is not in service */
-+    g_assert_cmpint(throttle_us_per_full, ==, 0);
-+
-+    args = (MigrateCommon) {
-+        .start = {
-+            .only_target = true,
-+            .use_dirty_ring = true,
-+        },
-+        .listen_uri = uri,
-+        .connect_uri = uri,
-+    };
-+
-+    /* Restart dst vm, src vm already show up so we needn't wait anymore */
-+    if (migrate_start(&from, &to, args.listen_uri, &args.start)) {
-+        return;
-+    }
-+
-+    /* Start migrate */
-+    migrate_qmp(from, to, args.connect_uri, NULL, "{}");
-+
-+    /* Wait for dirty limit throttle begin */
-+    throttle_us_per_full = 0;
-+    while (throttle_us_per_full == 0) {
-+        throttle_us_per_full =
-+            read_migrate_property_int(from,
-+                                      "dirty-limit-throttle-time-per-round");
-+        usleep(100);
-+        g_assert_false(get_src()->stop_seen);
-+    }
-+
-+    /*
-+     * The dirty limit rate should equals the return value of
-+     * query-vcpu-dirty-limit if dirty limit cap set
-+     */
-+    g_assert_cmpint(dirtylimit_value, ==, get_limit_rate(from));
-+
-+    /* Now, we have tested if dirty limit works, let it converge */
-+    migrate_set_parameter_int(from, "downtime-limit", downtime_limit);
-+    migrate_set_parameter_int(from, "max-bandwidth", max_bandwidth);
-+
-+    /*
-+     * Wait for pre-switchover status to check if migration
-+     * satisfy the convergence condition
-+     */
-+    wait_for_migration_status(from, "pre-switchover", NULL);
-+
-+    remaining = read_ram_property_int(from, "remaining");
-+    g_assert_cmpint(remaining, <,
-+                    (expected_threshold + expected_threshold / 100));
-+
-+    migrate_continue(from, "pre-switchover");
-+
-+    qtest_qmp_eventwait(to, "RESUME");
-+
-+    wait_for_serial("dest_serial");
-+    wait_for_migration_complete(from);
-+
-+    migrate_end(from, to, true);
-+}
-+
-+void migration_test_add_precopy(MigrationTestEnv *env)
-+{
-+    tmpfs = env->tmpfs;
-+
-+    if (env->is_x86) {
-+        migration_test_add("/migration/precopy/unix/suspend/live",
-+                           test_precopy_unix_suspend_live);
-+        migration_test_add("/migration/precopy/unix/suspend/notlive",
-+                           test_precopy_unix_suspend_notlive);
-+    }
-+
-+    migration_test_add("/migration/precopy/unix/plain",
-+                       test_precopy_unix_plain);
-+
-+    migration_test_add("/migration/precopy/tcp/plain", test_precopy_tcp_plain);
-+
-+    migration_test_add("/migration/precopy/tcp/plain/switchover-ack",
-+                       test_precopy_tcp_switchover_ack);
-+
-+#ifndef _WIN32
-+    migration_test_add("/migration/precopy/fd/tcp",
-+                       test_precopy_fd_socket);
-+    migration_test_add("/migration/precopy/fd/file",
-+                       test_precopy_fd_file);
-+#endif
-+
-+    /*
-+     * See explanation why this test is slow on function definition
-+     */
-+    if (g_test_slow()) {
-+        migration_test_add("/migration/auto_converge",
-+                           test_auto_converge);
-+        if (g_str_equal(env->arch, "x86_64") &&
-+            env->has_kvm && env->has_dirty_ring) {
-+            migration_test_add("/dirty_limit",
-+                               test_dirty_limit);
-+        }
-+    }
-+    migration_test_add("/migration/multifd/tcp/uri/plain/none",
-+                       test_multifd_tcp_uri_none);
-+    migration_test_add("/migration/multifd/tcp/channels/plain/none",
-+                       test_multifd_tcp_channels_none);
-+    migration_test_add("/migration/multifd/tcp/plain/zero-page/legacy",
-+                       test_multifd_tcp_zero_page_legacy);
-+    migration_test_add("/migration/multifd/tcp/plain/zero-page/none",
-+                       test_multifd_tcp_no_zero_page);
-+    migration_test_add("/migration/multifd/tcp/plain/cancel",
-+                       test_multifd_tcp_cancel);
-+    if (g_str_equal(env->arch, "x86_64")
-+        && env->has_kvm && env->has_dirty_ring) {
-+
-+        migration_test_add("/migration/dirty_ring",
-+                           test_precopy_unix_dirty_ring);
-+        if (qtest_has_machine("pc") && g_test_slow()) {
-+            migration_test_add("/migration/vcpu_dirty_limit",
-+                               test_vcpu_dirty_limit);
-+        }
-+    }
-+}
+diff --git a/tests/migration/Makefile b/tests/qtest/migration/Makefile
+similarity index 100%
+rename from tests/migration/Makefile
+rename to tests/qtest/migration/Makefile
+diff --git a/tests/migration/aarch64/Makefile b/tests/qtest/migration/aarch64/Makefile
+similarity index 100%
+rename from tests/migration/aarch64/Makefile
+rename to tests/qtest/migration/aarch64/Makefile
+diff --git a/tests/migration/aarch64/a-b-kernel.S b/tests/qtest/migration/aarch64/a-b-kernel.S
+similarity index 100%
+rename from tests/migration/aarch64/a-b-kernel.S
+rename to tests/qtest/migration/aarch64/a-b-kernel.S
+diff --git a/tests/migration/aarch64/a-b-kernel.h b/tests/qtest/migration/aarch64/a-b-kernel.h
+similarity index 100%
+rename from tests/migration/aarch64/a-b-kernel.h
+rename to tests/qtest/migration/aarch64/a-b-kernel.h
+diff --git a/tests/migration/i386/Makefile b/tests/qtest/migration/i386/Makefile
+similarity index 100%
+rename from tests/migration/i386/Makefile
+rename to tests/qtest/migration/i386/Makefile
+diff --git a/tests/migration/i386/a-b-bootblock.S b/tests/qtest/migration/i386/a-b-bootblock.S
+similarity index 100%
+rename from tests/migration/i386/a-b-bootblock.S
+rename to tests/qtest/migration/i386/a-b-bootblock.S
+diff --git a/tests/migration/i386/a-b-bootblock.h b/tests/qtest/migration/i386/a-b-bootblock.h
+similarity index 100%
+rename from tests/migration/i386/a-b-bootblock.h
+rename to tests/qtest/migration/i386/a-b-bootblock.h
+diff --git a/tests/migration/migration-test.h b/tests/qtest/migration/migration-test.h
+similarity index 100%
+rename from tests/migration/migration-test.h
+rename to tests/qtest/migration/migration-test.h
+diff --git a/tests/migration/ppc64/Makefile b/tests/qtest/migration/ppc64/Makefile
+similarity index 100%
+rename from tests/migration/ppc64/Makefile
+rename to tests/qtest/migration/ppc64/Makefile
+diff --git a/tests/migration/ppc64/a-b-kernel.S b/tests/qtest/migration/ppc64/a-b-kernel.S
+similarity index 100%
+rename from tests/migration/ppc64/a-b-kernel.S
+rename to tests/qtest/migration/ppc64/a-b-kernel.S
+diff --git a/tests/migration/ppc64/a-b-kernel.h b/tests/qtest/migration/ppc64/a-b-kernel.h
+similarity index 100%
+rename from tests/migration/ppc64/a-b-kernel.h
+rename to tests/qtest/migration/ppc64/a-b-kernel.h
+diff --git a/tests/migration/s390x/Makefile b/tests/qtest/migration/s390x/Makefile
+similarity index 100%
+rename from tests/migration/s390x/Makefile
+rename to tests/qtest/migration/s390x/Makefile
+diff --git a/tests/migration/s390x/a-b-bios.c b/tests/qtest/migration/s390x/a-b-bios.c
+similarity index 100%
+rename from tests/migration/s390x/a-b-bios.c
+rename to tests/qtest/migration/s390x/a-b-bios.c
+diff --git a/tests/migration/s390x/a-b-bios.h b/tests/qtest/migration/s390x/a-b-bios.h
+similarity index 100%
+rename from tests/migration/s390x/a-b-bios.h
+rename to tests/qtest/migration/s390x/a-b-bios.h
 -- 
 2.35.3
 
