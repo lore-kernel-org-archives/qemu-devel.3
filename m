@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A213DD6ACF3
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 16:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC9D6D6ACF3
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Nov 2024 16:39:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGL3I-0000Ca-KU; Wed, 27 Nov 2024 11:38:08 -0500
+	id 1tGL3q-0000Fh-AR; Wed, 27 Nov 2024 11:38:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGL3G-0000CP-8z
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:38:06 -0500
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ id 1tGL3p-0000F6-2W
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:38:41 -0500
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGL3E-0008Kd-Nf
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:38:06 -0500
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2ffc76368c6so57495981fa.0
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 08:38:04 -0800 (PST)
+ id 1tGL3n-0008UE-Lu
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 11:38:40 -0500
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-53dd59a2bc1so6546636e87.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 08:38:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732725483; x=1733330283; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732725518; x=1733330318; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yPg2zD9msiIP4UazWNmbMVsy3mypUIus3dfRFXxnZ/E=;
- b=VNzz396X0lrUxsOoql2C3udAKQT0CJkes4zgU8JjYIpRNYjhwZKg4bbEQSQ88YcSJ2
- 4P1k9aYta8RCkhVxGxz6AN9UCr56jt2XFTqsWbgPfuCSLxApJuuDQg4r5U0xZZAW+Gyp
- xgL6WLJDRKuzy7Rdz920Xj1Eh64mtaoPf1L3V5bWxpdB+VvqqkGFKxdEErqDbdnCA2ZC
- ZGDxE/qKZW3/vB0cqWwoeeJA75KLp9etCepZ0G0af4tsycKxSo/dqPdrlXrkZ+5nDtrD
- fO+eSbFTG/wA77ut11LyRs/kWXDUMiEakzSlANM9r+yW4ekef9461bGb5bNF1tNteLIn
- scJQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OqMzsdoyJZ+OGQakis+tfg7rq3fJZU2EWVYfBTnrnhw=;
+ b=zRFDKxyQkhjR402S7GEuovXz8wAyopxP+9RtSMzwF9U/vlErnBHEQuhMt34r8ZGcgd
+ Itx3hZEESSTtsvW/L4WKTiUqztscUvZiItJnfYbVEzuA9En9U7n0bZjfkMGgHT2XvEYV
+ Sx9UgX6kRpbtGXc7iPafV5C9ucY4kkK/L9dVO9OqSpB3kBkJ4YBPhNDf+Kw2TPfVpU7X
+ rgQyln2nDmirEQlHq6O+h3+vVP5Tdq2W2Q7WnfsjH5bvlWMkHVLogr2Rqf+BE4SVrUI6
+ nHWrFFj6XHVL2QrpjqSc5FV7fHTwXdy5vBhhzKDELdzFXZoqAvZ74r5zInhr84OcmV4C
+ WTLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732725483; x=1733330283;
+ d=1e100.net; s=20230601; t=1732725518; x=1733330318;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yPg2zD9msiIP4UazWNmbMVsy3mypUIus3dfRFXxnZ/E=;
- b=UAO86Fm9ixZvNhBH6zPZKSxgatdWWW0lpd+t0acbudWxcVP/6jMkryuqOJD3U3ypCK
- Kn6NgZxyb22asDayz2It6NsAH8SFVTuJyRFeNJSwigatYw+fnnLoBZL+rvOY5Lrkr87F
- OutU5ZGJqQ3rkOPelQ2aLHmPhoLzdsh6nOlLyoPyx0Yk/P/vu40UGs3Zxim6r41tY2Mn
- enAne58mVqV+aFlvplPsVRsfvTFHNPJkXeYYmGsnkedHcqZzGG1k/Nx10LFuCF//AkB9
- R5/nNXxROxKE+IJfL2cyXANcs4dAEuOvq0go63fE2Ml2FzGD6aHE0zbi2cx9taYApJ6+
- Fcpg==
+ bh=OqMzsdoyJZ+OGQakis+tfg7rq3fJZU2EWVYfBTnrnhw=;
+ b=cZE1OkFtATTe53g2IGVSbPmu+qKSNoXXxD7GsaCUllwjkdEYf2PfNNxgRuJCMBwb3X
+ LVsWoPGHm9mVtliaD7/HWgNeJCyfojv72Wln0ry207zaedev+tYspPPqNzlRPkejv1QC
+ ywtvLJqOtDtXor83AuFWnATKXKiVeAAwNVVz6xKf7wNq8UX6e89BVIBRLRVAnOlDobU6
+ cKtSAgM1y+n+lM0xaK4q+YNAzuC9U5TqWbCVybrhPu6LXYtESvGD4WIGBGCd86zE7sIF
+ GV3DJFC6IsGJdx+Bie4QJZ0/bK3JQhadvRamsYWQylfvA8iDY3gOc8YVku3IZ3tPjJH3
+ 2/aw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXlpp2jf2FffR57EU0DQhuPFsgRNdD7Tmoy82fkZTbSdNFKwtW2xZWNXF7aGvShEFFUSm9Gmk3YkqUk@nongnu.org
-X-Gm-Message-State: AOJu0YzKSFOoaEI9rz8caWKTQuSkRMHZrT0Qd/3/QW1/sYGzd0TmfM7X
- IodnaCAE0CQjpuwgKHWkvdHB10Mzn9LUR2T9Rudhs/r+GYzELCBzMTFXxgcZNhE=
-X-Gm-Gg: ASbGncvfp4hofKdv5ZhbpAgTlb80wgYuSGtRyIDPFxBgvIrTW88uhwchl1Btp+Ut7YC
- K7FzYjU3CuStio8ILzieFKdQgsBDPTgBnj9Ze8PqRRKJNp8DFwRYbbksVjeDYd9AUIqH0Ok/3Py
- 4IW6p12Iffcnb6EwytNf3QI/CZa86Qzw2ZbPH0l99qesGtP/vnIaifft14vu0kixTE/912sOs2Y
- ZUGKHGBmwRTHVc+s+I9bwxGf2a9PYqFt0lrDHQGU8cal+Dwo20YZtaEYoEGUNJ1gzEr
-X-Google-Smtp-Source: AGHT+IFRTN6b5k63THkjjbG/A9CCASBLRWdCYalSYsB5b7Qj5hy6apxYsL927dgLrpY+7K2lTqzwrQ==
-X-Received: by 2002:a2e:9817:0:b0:2ff:d7e8:bbbc with SMTP id
- 38308e7fff4ca-2ffd7e8bc54mr21128171fa.27.1732725482758; 
- Wed, 27 Nov 2024 08:38:02 -0800 (PST)
+ AJvYcCW4+Z/aJd5kbYBEM2BF9kJKsm0LRndHiAk9eXqNkrUHwmqPHnlKxH7JieRgE2zIaurmQLi4aE0iXheo@nongnu.org
+X-Gm-Message-State: AOJu0YzvNECPhDdgidBNIlbOpQx0p29APsO/pgTRk/5CpSAZ/B9+WU0I
+ KrNUpeGQWrJRR/QdoSHFLYlN3IdXQbuW8/mUmxQbP2zUKXMiR16jCjsIxQzHq2Bud4XtAgAvUBh
+ uG3U=
+X-Gm-Gg: ASbGncuC/Tmicyx4Iyl8yKLoNZJRCI1Gg0X/VytiNipK2gVLxpcYeyrcezew3Pbc2Dv
+ +1IkVtiD2Iaj7CY23hU7ZEkPQLp2grhHFMs4Vkd67fjb57QD4QnnS2YshlULV23w9EG72GVTFHb
+ AR6I29qriT6LKCiu2D5PH2K8j5ajKbHyrI5F3GdOyerYemi0dbDntyxQzfwhBAh2jtYQZumIdwn
+ ZtRPNb66K5m7dwSnz0MxACnNC6ZveMiyvdVolKs5n+lCogGcLFoFz9I86PQ+R8VjIz5
+X-Google-Smtp-Source: AGHT+IE97dTHZx8N4c44nCwRBkMIi3daCTPJmSRoo9ZRnEQHBIOh2iSWPGDvck3a0l3X/4Bv/vKh+A==
+X-Received: by 2002:a05:6512:39d0:b0:53d:ec93:fbb7 with SMTP id
+ 2adb3069b0e04-53df00a9782mr2560159e87.9.1732725514386; 
+ Wed, 27 Nov 2024 08:38:34 -0800 (PST)
 Received: from [192.168.170.227] ([91.223.100.71])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2ffa53a0729sm21019591fa.118.2024.11.27.08.37.59
+ 2adb3069b0e04-53def3051c3sm337952e87.221.2024.11.27.08.38.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Nov 2024 08:38:01 -0800 (PST)
-Message-ID: <1c051d59-ffc0-4c80-ba14-a31dfe6ddf18@linaro.org>
-Date: Wed, 27 Nov 2024 10:37:55 -0600
+ Wed, 27 Nov 2024 08:38:33 -0800 (PST)
+Message-ID: <e8686e7e-c10a-411d-a485-8789247251dd@linaro.org>
+Date: Wed, 27 Nov 2024 10:38:26 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 1/6] target/ppc: Indent ppc_tcg_ops[] with 4
- spaces
+Subject: Re: [PATCH-for-10.0 2/6] accel/tcg: Declare local tcg_ops variable in
+ tcg_exec_realizefn()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>
 References: <20241127121658.88966-1-philmd@linaro.org>
- <20241127121658.88966-2-philmd@linaro.org>
+ <20241127121658.88966-3-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241127121658.88966-2-philmd@linaro.org>
+In-Reply-To: <20241127121658.88966-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,13 +106,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/27/24 06:16, Philippe Mathieu-Daudé wrote:
+> Ease reading code by declaring a local 'tcg_ops' variable.
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Acked-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   target/ppc/cpu_init.c | 29 ++++++++++++++---------------
->   1 file changed, 14 insertions(+), 15 deletions(-)
+>   accel/tcg/cpu-exec.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
+> 
+> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+> index 8163295f34b..18d9cf0ea58 100644
+> --- a/accel/tcg/cpu-exec.c
+> +++ b/accel/tcg/cpu-exec.c
+> @@ -1070,15 +1070,15 @@ int cpu_exec(CPUState *cpu)
+>   
+>   bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+>   {
+> -    static bool tcg_target_initialized;
+> +    const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+>   
+>       if (!tcg_target_initialized) {
+>           /* Check mandatory TCGCPUOps handlers */
+>   #ifndef CONFIG_USER_ONLY
+> -        assert(cpu->cc->tcg_ops->cpu_exec_halt);
+> -        assert(cpu->cc->tcg_ops->cpu_exec_interrupt);
+> +        assert(tcg_ops->cpu_exec_halt);
+> +        assert(tcg_ops->cpu_exec_interrupt);
+>   #endif /* !CONFIG_USER_ONLY */
+> -        cpu->cc->tcg_ops->initialize();
+> +        tcg_ops->initialize();
+>           tcg_target_initialized = true;
+>       }
+>   
+
 
