@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D2D3D70DEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 21:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E0ED70DEE
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 21:02:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGldg-00025B-E4; Thu, 28 Nov 2024 16:01:28 -0500
+	id 1tGleX-0002T5-LX; Thu, 28 Nov 2024 16:02:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGldb-00024r-OX
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 16:01:23 -0500
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ id 1tGleW-0002Sq-CH
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 16:02:20 -0500
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGldZ-0000J5-1k
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 16:01:23 -0500
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3ea462a98b9so661608b6e.0
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 13:01:19 -0800 (PST)
+ id 1tGleU-0000kk-OV
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 16:02:20 -0500
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-71d54fc1944so549042a34.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 13:02:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732827679; x=1733432479; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732827737; x=1733432537; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9QMW7BS8TdlcnnKlTzua1cQcGaQeyJy5BhnsmpAbUgc=;
- b=lWgkqDrd1MmKFCKzeeILmiFopMdkuu9DDHJiRybbXDnmROkk/cghi1UTVMy2hmUT0V
- Zn5TN1Bf1OVeribg09Ffkg5huRiywj0yz30TASckQ/Tr9Czg1Y6t/6oYrMCXLMQGs1BL
- C4OTM7RivVxM4hfdMrxJHHFFu1B3ayfzeuw56JK7OQ8quG+lbLtNmEYMKcEM4VKaC1CT
- JhrVtGE4JnESRF3dtuWGGT/d5YU6Hw5nIWnGEd3VmwgzLUKdjC1dQuNIpHRrQz0vTYna
- p8rJgg9f9jyjf1EaAuf4M4cz+s1BJTGfhVK0dyCxdeM7cQxBEcHupVgIZSMz+HwAt5MG
- NrIw==
+ bh=Wrp1FMfR3Ck+2oNteCaZhAzEHUvhfweRiMI3/rAKUt0=;
+ b=t/UoYOjzEGrR50ysMu2VIoaE2lYcw0MVZR4mBjXW5k5jmYx9HV4vtAxesSBmqD8gOO
+ /JPW2HUloFQ7GlcwnLfqz6IJPsIBVLOHipHcRn+euHUsLgzFvM0JTLR2ns3/GAo7pFXZ
+ 1MxDmczw1K/eM4Lp2UXURfoTJ+L6uaZ9B/UWU5ET2Y3vfOSZyTN7v3q7WjcPS5AW+CXy
+ jBbrCJEGUZn1liU8iAH8YbKukEaUcUr3RlLY6TiJbSttDHZIHpBmkn4ekSqj4WepAPHI
+ yPvEivi2AUG2z3jN6ZjmF0qI6QVT0YFeaArCmp5/B3xdw2KooAHwLTEstN4jMcKzCld5
+ odUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732827679; x=1733432479;
+ d=1e100.net; s=20230601; t=1732827737; x=1733432537;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9QMW7BS8TdlcnnKlTzua1cQcGaQeyJy5BhnsmpAbUgc=;
- b=Thu+vUh9lXVU0y88QvdN6DPaF9O6P7q4y7B3afFwYu1zrj0WsdZZHLB2bhmH38ZSZk
- pc9mNavBpY52pHcjSBKp/1RG73agOdADjKYmyag4ktziZG3UHocQjnyjIUzBnJSpqmOU
- hXSIwkVUz+NMaEHYQ065fJE2eoI16xf9DtFAjnFAB5UpBOR7L43cvhMBKlZiawuW8FuQ
- Q6Q/t813H9ygh7xKVz3Giqi7PzhTc1EZ95aLo+w7C4xLnIGr0Gf/DV+MuO5AOVQCypLN
- lwxLL/DnZ1b0mHMIE5DOQDqthgcKSc7nMOxKZOQK7JMjfRgf8H4IbpNZ20yWNziAiQTp
- kh8g==
-X-Gm-Message-State: AOJu0YxroMqycAWPK9hwdgsmJXdrOEFJdzHGA/cWZMKDO6Lq+jwaXlrn
- vJYjWSvjmFiLnP1KUMSeT6lHHWTsWgfjXS5U8QTCTJnk79zhfkQkD5UULeQ1QHKZhHQeSS/W/lG
- EIMM=
-X-Gm-Gg: ASbGncunglrL9FMY5Vs7HzIuk2KJCCjoX7bCQnSXIfHnrBQdleSVwVCnPTZ9ABM13Ha
- Xq6tYao58+3H/zMyMNiGt8e8ftbCNGndldZApgVn9ANOc+Kv0yIKTPpj6Qv4o4Cou/KS3XJ+OPP
- yesccunh25GkNrnZXId1OPYBOWGDKSuflucJPmJqC6P+HnnyqxHdI0694H5eKp1WeBb+hHULjgz
- IKJHXwqWh5DM/Sxb4tca7WaWkqOm397D+M/cEfH0TtbtcKjxIcGjK7T3iL5kpdR1OY=
-X-Google-Smtp-Source: AGHT+IGhw4L3Rh1cq443Dsle9SY6WyGhhW1X3q0fPdYdKe56blq6bTGmDffQQ6N2gv7SC5piPyW/sw==
-X-Received: by 2002:a05:6808:180d:b0:3e5:e347:55c7 with SMTP id
- 5614622812f47-3ea6dbcf293mr9477292b6e.11.1732827678935; 
- Thu, 28 Nov 2024 13:01:18 -0800 (PST)
+ bh=Wrp1FMfR3Ck+2oNteCaZhAzEHUvhfweRiMI3/rAKUt0=;
+ b=pb9Ob7GL7xzxdBO4RG3cx/D56panWFiP3ppcA9Bl06IxdYeHS8rR9Zg7R/ptM/77I0
+ YCnBYu5Ji4hrcIgodgotMXR2jOn1X2HeREFYHRNyC6tQXdU9BkmHdCkVbIpNVoPXhvV8
+ W1ACjuN2QXj4NBBuI8M0NbRiXTIp264AzyXkPmW+0uS6VGX5wveh0bMdIhtJG3xKf9vw
+ eQGB+v9pZssc2pMUCNgdr8jgb/UWiP1LgX+I7WbipthChnSn6x5fBcjUNwLiwU+ebNmq
+ SjzJXmDZy6ZhWr48oB22CB+Bz0fJqrdMzzHOL8o0/B1HJrpiEWAAqRhiXLNsodHA1XcC
+ 7cqw==
+X-Gm-Message-State: AOJu0YztGdrJN55emf6umE6fS0nE93C/DtjNjz6eypblCcXoYPc4Lr/q
+ WSBEoPPAYaoRFCHbq2ziKRYEnz2wvmlHYPYCsLg4tZ+1TEfy7AIPFbKWy1ax43Cgp7Nr7fnq4Ah
+ EPpw=
+X-Gm-Gg: ASbGncte1xnRYL51mGhGLitfL1qVKtrLEEoUBxwcfww+mBCkQf9XV6a5UWdQO6/VCXu
+ mySavu9DxbjyON+UrbvSIJocPwI5fML0YEgkSvoMSqhFgnQqif6Jx5iH/U9/3jQf0AOkieFirhT
+ 78Uw63ScLCGt9GYsRZbKbU3MHH6iMX2mkP/d00LDVK7CKb+BVmsPDBYgZrWsR/Jq7qKSjcx+48k
+ IndjLp3kOOc/2AyiZod4K1PmEXGpEIrTaINckbt8scpIn1VQU1vNPjOC/9KH5D/ZKg=
+X-Google-Smtp-Source: AGHT+IGXYB4GMfHUtctF33z53+PWwDPIqE8L7GUIYDnvPhZGbWxDlq16f89AUnx34zQeLj5v7W4Jjg==
+X-Received: by 2002:a05:6830:44a5:b0:71d:5249:59ab with SMTP id
+ 46e09a7af769-71d65c7b0c1mr6479125a34.6.1732827737449; 
+ Thu, 28 Nov 2024 13:02:17 -0800 (PST)
 Received: from [172.20.3.167] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ea860e897csm415296b6e.23.2024.11.28.13.01.17
+ 46e09a7af769-71d725d873esm465622a34.54.2024.11.28.13.02.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 13:01:18 -0800 (PST)
-Message-ID: <a42fa828-c9be-43f3-bb2d-9896fb795b77@linaro.org>
-Date: Thu, 28 Nov 2024 15:01:16 -0600
+ Thu, 28 Nov 2024 13:02:16 -0800 (PST)
+Message-ID: <65b86333-3d97-4149-a33d-53372fd50004@linaro.org>
+Date: Thu, 28 Nov 2024 15:02:14 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] win32: remove usage of attribute gcc_struct
+Subject: Re: [PATCH v3 2/3] docs/devel/style: add a section about bitfield,
+ and disallow them for packed structures
 To: qemu-devel@nongnu.org
 References: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
- <20241128201510.869974-2-pierrick.bouvier@linaro.org>
+ <20241128201510.869974-3-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128201510.869974-2-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241128201510.869974-3-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -102,29 +103,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/28/24 14:15, Pierrick Bouvier wrote:
-> This attribute is not recognized by clang.
-> 
-> An investigation has been performed to ensure this attribute has no
-> effect on layout of structures we use in QEMU [1], so it's safe to
-> remove now.
-> 
-> In the future, we'll forbid introducing new bitfields in packed struct,
-> as they are the one potentially impacted by this change.
-> 
-> [1] https://lore.kernel.org/qemu-devel/66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org/
-> 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   meson.build                               | 5 -----
->   include/qemu/compiler.h                   | 7 +------
->   scripts/cocci-macro-file.h                | 6 +-----
->   subprojects/libvhost-user/libvhost-user.h | 6 +-----
->   4 files changed, 3 insertions(+), 21 deletions(-)
+>   docs/devel/style.rst | 20 ++++++++++++++++++++
+>   1 file changed, 20 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
 r~
+
+> 
+> diff --git a/docs/devel/style.rst b/docs/devel/style.rst
+> index 2f68b500798..2d73e6a8f7a 100644
+> --- a/docs/devel/style.rst
+> +++ b/docs/devel/style.rst
+> @@ -416,6 +416,26 @@ definitions instead of typedefs in headers and function prototypes; this
+>   avoids problems with duplicated typedefs and reduces the need to include
+>   headers from other headers.
+>   
+> +Bitfields
+> +---------
+> +
+> +C bitfields can be a cause of non-portability issues, especially under windows
+> +where `MSVC has a different way to lay them out than gcc
+> +<https://gcc.gnu.org/onlinedocs/gcc/x86-Type-Attributes.html>`_, and on big and
+> +little endian hosts.
+> +
+> +For this reason, we disallow usage of bitfields in packed structures and in any
+> +structures which are supposed to exactly match a specific layout in guest
+> +memory. Some existing code may use it, and we carefully ensured the layout was
+> +the one expected.
+> +
+> +We also suggest avoiding bitfields even in structures where the exact
+> +layout does not matter, unless you can show that they provide a significant
+> +memory usage or usability benefit.
+> +
+> +We encourage the usage of ``include/hw/registerfields.h`` as a safe replacement
+> +for bitfields.
+> +
+>   Reserved namespaces in C and POSIX
+>   ----------------------------------
+>   
+
 
