@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1F21D70DEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BEDD70DED
 	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 20:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGkvC-0001Io-0i; Thu, 28 Nov 2024 15:15:30 -0500
+	id 1tGkv8-0001Fd-T9; Thu, 28 Nov 2024 15:15:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tGkv9-0001Ft-5M
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:15:27 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1tGkv7-0001Cv-2f
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:15:25 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tGkv6-0001mJ-KI
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:15:26 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2ee50ffcf14so131938a91.0
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 12:15:24 -0800 (PST)
+ id 1tGkv5-0001ll-Cg
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:15:24 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2ea8b039ddcso871240a91.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 12:15:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732824923; x=1733429723; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Cw+i/RTnE1TOqvWRDHCHN95wIYPbil6+hZz5wFKKxjY=;
- b=JgoxDV4WyTSsbUyHbjbeA4eV9g0A6v+lWKpsUMZcsrJDxgBxL8eLqLuWi3wTvEDAoW
- ropXzZj5X64w4h8838Kqmp7Jkx98SHIJEmsG7j4OnMOKBEa2/1AxFXbIJJTkLxqMdV6E
- h1pvFGJI8BThcNSSIRTt7sRxfm5lU8HhdXmJBfkWlTIjiZ9tRSs5m80JflGH47OBXML0
- UqdEmv9vkNvtGc98qkpOzPJQ++A6wxMttGCXrlQVM5uhVb5OflKQWoILcn8t+hlTIeuR
- EGtnySWJU22ariCQRAHKKlbJ4ecmRbv4VQuBgEvZ0k/OOuxTXAC4BqCxPLP5B8Ed0uoq
- 74HA==
+ d=linaro.org; s=google; t=1732824921; x=1733429721; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=J64KCprhNBy6RA3jYobVf//TxYpHgQixgdih1H4HzWw=;
+ b=qtko9NSrABkfHUPzA33O4PhO3tb5G3P9LeP2umNpk/G8d752do4j3h0ouJW2IN7kb2
+ 3xbK1YfSm8tdU5HcuyiL2SgOX5VuPkeBUD+zjWRakbRDVQ08geMzrKO3WdlEzvGFOpzG
+ PXN6NnrBcOYm+hePokcjO6A531FMwe/3Rp1qNdQ+m1z9p2NfWCl2uApTjpab+Zi8kupL
+ JS+25UBpBpZSQ5QN0rCPah6RkpEx6TaTarbWio6xEcQV+fZNIO88g7JvaBrxCnCiRY2k
+ Ik0U7pJku45kfozk/EuSU2EF2gvpNmRq/MC9Xgcx55Y1/YOKqBr5Z6+TLbnS9H44XKcq
+ LFnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732824923; x=1733429723;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Cw+i/RTnE1TOqvWRDHCHN95wIYPbil6+hZz5wFKKxjY=;
- b=FfDPfCXvLwvbx+FCFJ2Mz38jmwhFBNlv/9s8ESdM/Caonn6BgCD9ZFIxSbBUKQOzxA
- eBqf+4chG8oSmz7q6t91nbbKS/vVy0CxPhIBRFjuVL92TvVU5zX+WDnT+lnAccEWJjWg
- QK1ymXMTWow/ainp9WTywXpORzAgpN1htv051MJcCS13GqKeTkDyYPAdbwmxxpflLWNJ
- eY242cCOWHv9SZB6O8CzGiRG3V7oQDzsfh72KlieVyZ7cIhMbJTbKob94TwTxz60NEfJ
- oAStHs6HaGlOpMNIxwvNHk/Um2GOKcWl3myI9JvZVAQTO/Vv7o2Ly5++VdNv7KrfANce
- x8TA==
-X-Gm-Message-State: AOJu0YzYr69NpbOiKQ0AgcBbcDIMfxy3AnVjGe5S7llIv5s1FwRPKodE
- mih0cd/XNpXMVR8bUdfPZ864pIjGmATkXbrI+nUUC8COdy/Khzh/X3qRVHxKy8iWRitJZ38TPfm
- xUMY=
-X-Gm-Gg: ASbGncvKGRdFIxlVa+TFGkINtRcCRf4rXcTwWSlrFKsmmT1VFkyA/porlfceaco9vvN
- xUe4KSYkC7o3R4wNgu4TkUpBN3jf1OX0Yx1r3ZJwmUMekxF7zK52Aj8tMs8P7HTa0CFfT9KC/hQ
- FppQ71JDxj1An2bIBICUeTCN5gG/z1T0rArE+1w4Q+uZ0UTj5vj8RTAqda00aFavMhw7fDxTTw1
- fcnSSHEDhhnurYC6Qb7TAXxMXY3S16sKyqDjgJUeNnM8LVUxlYSf/fTUHpTYOSUjfFWjv/izBcK
- i/3Fg1eU2xATHg==
-X-Google-Smtp-Source: AGHT+IGUkkRsIWbgqIrl/CWoZkmRUDQipCAzO3Uwq7QfeYmDRCedAnnRp7cVFOEB3h6Du0O6hLImGg==
-X-Received: by 2002:a17:90b:38cd:b0:2ea:8f02:719d with SMTP id
- 98e67ed59e1d1-2ee25b0875amr6470479a91.16.1732824923125; 
- Thu, 28 Nov 2024 12:15:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732824921; x=1733429721;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J64KCprhNBy6RA3jYobVf//TxYpHgQixgdih1H4HzWw=;
+ b=ebnf0+g2VAibRuS6G+8tN6i9RqZQETpqQd6syyE77XveEk2GrZKcKxEmW7ESlhdZem
+ UsTOCCPFhw7bVJahol7O2eic00pK2dN8iNv+4pQq/WEIeZh1zMSBxIDP2Iq8qq7yTost
+ cPkw84EaicGnW4REV2b62WrQ9biDH263F/luFAfmGBNdR4AL3xwlqTr5XwLTfRq2rm0l
+ vmBYx/dVxxy2eBUlEeg7wLGnIIp1Hb+IpkUe3XppS2bWLEzeMyHpj2CGydw0T+olzzm8
+ rdWtRl+eNdqYcD9Mh3A+C92cUNOpjZi5JgExYWrxS/NejWecUmbJPxrUDYuFGLMtUJhA
+ wVPw==
+X-Gm-Message-State: AOJu0Yxww+xDap+sRzsZZ6k8yscoS50eW4Kv41FX8cfeW03L7AXvX1Kd
+ INveG6T70/0fk6axvbjMz58kyXtDBlrGEned8G03VfLYStqrOciMGu9z705L0cXMQb9FZhQjGWL
+ zmFU=
+X-Gm-Gg: ASbGncuIJ+6yTswF2sg2n4iHbhOQIaZce7Cs1rjZd9XVMsm38mBgBQ4eWBpfd3itodc
+ zBY6vBc2mmgARmqCBT/9vX89SAEi5Cr8ZNaF3cjMLNbcJpzB5Pi8zbK5DEFW6Z/KWLJIR9fvxs5
+ ubYDhl+JyD9UTeSNTcQTMwld4+2dAwAP5j4gvk013WTjnMOgvbf++ukUMukspzSh0vW461T2AQZ
+ KTgZ2G2AweJS+83FJkLv7UZ7244ErWf10XXw8X7hIZcH9MlSOWzlzhb2PU/udJEuzvwPGCyNoFV
+ 9kzplbRk9S4PbA==
+X-Google-Smtp-Source: AGHT+IF+JEiNCIQFYFMnbD7q9jK/gdfGek/lWOi1UidEkpPOz27MyiLvQtM//cWCHRlRyd1pvZDVdw==
+X-Received: by 2002:a17:90b:3c87:b0:2ea:3aeb:ecca with SMTP id
+ 98e67ed59e1d1-2ee097c2965mr9600509a91.31.1732824921225; 
+ Thu, 28 Nov 2024 12:15:21 -0800 (PST)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ee0fb10049sm3912861a91.43.2024.11.28.12.15.22
+ 98e67ed59e1d1-2ee0fb10049sm3912861a91.43.2024.11.28.12.15.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Nov 2024 12:15:22 -0800 (PST)
+ Thu, 28 Nov 2024 12:15:20 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -76,17 +75,15 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH v3 2/3] docs/devel/style: add a section about bitfield,
- and disallow them for packed structures
-Date: Thu, 28 Nov 2024 12:15:09 -0800
-Message-Id: <20241128201510.869974-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 0/3] Enable clang build on Windows
+Date: Thu, 28 Nov 2024 12:15:07 -0800
+Message-Id: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
-References: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,42 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- docs/devel/style.rst | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+For now, it was only possible to build plugins using GCC on Windows. However,
+windows-aarch64 only supports Clang.
+This biggest roadblock was to get rid of gcc_struct attribute, which is not
+supported by Clang. After investigation, we proved it was safe to drop it.
 
-diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-index 2f68b500798..2d73e6a8f7a 100644
---- a/docs/devel/style.rst
-+++ b/docs/devel/style.rst
-@@ -416,6 +416,26 @@ definitions instead of typedefs in headers and function prototypes; this
- avoids problems with duplicated typedefs and reduces the need to include
- headers from other headers.
- 
-+Bitfields
-+---------
-+
-+C bitfields can be a cause of non-portability issues, especially under windows
-+where `MSVC has a different way to lay them out than gcc
-+<https://gcc.gnu.org/onlinedocs/gcc/x86-Type-Attributes.html>`_, and on big and
-+little endian hosts.
-+
-+For this reason, we disallow usage of bitfields in packed structures and in any
-+structures which are supposed to exactly match a specific layout in guest
-+memory. Some existing code may use it, and we carefully ensured the layout was
-+the one expected.
-+
-+We also suggest avoiding bitfields even in structures where the exact
-+layout does not matter, unless you can show that they provide a significant
-+memory usage or usability benefit.
-+
-+We encourage the usage of ``include/hw/registerfields.h`` as a safe replacement
-+for bitfields.
-+
- Reserved namespaces in C and POSIX
- ----------------------------------
- 
+Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and aarch64
+hosts.
+
+v1 contained warning fixes and various bits that have been upstreamed already.
+The only bits left in this series are the gcc_struct removal, and fixing the
+plugins build with clang.
+
+This series is for 10.0, as we decided to not include the gcc_struct removal is
+9.2 release.
+
+v1: https://patchew.org/QEMU/20241031040426.772604-1-pierrick.bouvier@linaro.org/
+
+v2:
+- drop attribute gcc_struct instead of using -mno-ms-bitfields option
+- add a section about bitfields in documentation
+
+v3:
+- explain why gcc_struct attribute matters in packed structs in commit message
+- reword the bitfields documentation with suggestions given
+
+Pierrick Bouvier (3):
+  win32: remove usage of attribute gcc_struct
+  docs/devel/style: add a section about bitfield, and disallow them for
+    packed structures
+  plugins: enable linking with clang/lld
+
+ docs/devel/style.rst                      | 20 +++++++++++++++++++
+ meson.build                               |  6 +++---
+ include/qemu/compiler.h                   |  7 +------
+ scripts/cocci-macro-file.h                |  6 +-----
+ subprojects/libvhost-user/libvhost-user.h |  6 +-----
+ contrib/plugins/meson.build               |  2 +-
+ plugins/meson.build                       | 24 +++++++++++++++++++----
+ tests/tcg/plugins/meson.build             |  3 +--
+ 8 files changed, 48 insertions(+), 26 deletions(-)
+
 -- 
 2.39.5
 
