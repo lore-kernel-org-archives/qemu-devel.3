@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BEDD70DED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 20:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792E7D70DEF
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 20:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGkv8-0001Fd-T9; Thu, 28 Nov 2024 15:15:26 -0500
+	id 1tGkvO-0001NK-Ja; Thu, 28 Nov 2024 15:15:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tGkv7-0001Cv-2f
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:15:25 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1tGkvB-0001Ij-Ip
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:15:29 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tGkv5-0001ll-Cg
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:15:24 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2ea8b039ddcso871240a91.0
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 12:15:22 -0800 (PST)
+ id 1tGkv7-0001mf-KJ
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:15:29 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2ea45dac86eso927555a91.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 12:15:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732824921; x=1733429721; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=J64KCprhNBy6RA3jYobVf//TxYpHgQixgdih1H4HzWw=;
- b=qtko9NSrABkfHUPzA33O4PhO3tb5G3P9LeP2umNpk/G8d752do4j3h0ouJW2IN7kb2
- 3xbK1YfSm8tdU5HcuyiL2SgOX5VuPkeBUD+zjWRakbRDVQ08geMzrKO3WdlEzvGFOpzG
- PXN6NnrBcOYm+hePokcjO6A531FMwe/3Rp1qNdQ+m1z9p2NfWCl2uApTjpab+Zi8kupL
- JS+25UBpBpZSQ5QN0rCPah6RkpEx6TaTarbWio6xEcQV+fZNIO88g7JvaBrxCnCiRY2k
- Ik0U7pJku45kfozk/EuSU2EF2gvpNmRq/MC9Xgcx55Y1/YOKqBr5Z6+TLbnS9H44XKcq
- LFnA==
+ d=linaro.org; s=google; t=1732824924; x=1733429724; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=D/WE4DdwfNtGJC4bBQHDV6Up1JyJz8d62bKAZjE6uOc=;
+ b=AQdOrZSwBgh7kGOZQvr/cSxqvFk/QeVW+U0DcTekW4TJsg5xU24tQJNezPBLRfJsCX
+ 1umzAkPDaQ0PMbF/7To6kYQqO9rr2KZkBIQkSz8MoaWfhXIE7YKnk5h5qJzLJRVajxQy
+ jMM/Obe7R6keL7aKYUqDW9sGTpl9BtQCgTxXBIDwfBBh0dBVJtYZOjZaEMc0iCCMqHnI
+ mcxYQzVWCbBYUH7+Ao9Ddfq7TrGJJH3XchcPjjRtwxh4fAWX+r0mfHmFJvhrCyeGPfgw
+ +iLK3rfpl3YuroSuJf/jXjob8pzBJWDg2/0voMhlAD7mPK05ISTDckUBRG0SYBG0Y0/q
+ VevA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732824921; x=1733429721;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=J64KCprhNBy6RA3jYobVf//TxYpHgQixgdih1H4HzWw=;
- b=ebnf0+g2VAibRuS6G+8tN6i9RqZQETpqQd6syyE77XveEk2GrZKcKxEmW7ESlhdZem
- UsTOCCPFhw7bVJahol7O2eic00pK2dN8iNv+4pQq/WEIeZh1zMSBxIDP2Iq8qq7yTost
- cPkw84EaicGnW4REV2b62WrQ9biDH263F/luFAfmGBNdR4AL3xwlqTr5XwLTfRq2rm0l
- vmBYx/dVxxy2eBUlEeg7wLGnIIp1Hb+IpkUe3XppS2bWLEzeMyHpj2CGydw0T+olzzm8
- rdWtRl+eNdqYcD9Mh3A+C92cUNOpjZi5JgExYWrxS/NejWecUmbJPxrUDYuFGLMtUJhA
- wVPw==
-X-Gm-Message-State: AOJu0Yxww+xDap+sRzsZZ6k8yscoS50eW4Kv41FX8cfeW03L7AXvX1Kd
- INveG6T70/0fk6axvbjMz58kyXtDBlrGEned8G03VfLYStqrOciMGu9z705L0cXMQb9FZhQjGWL
- zmFU=
-X-Gm-Gg: ASbGncuIJ+6yTswF2sg2n4iHbhOQIaZce7Cs1rjZd9XVMsm38mBgBQ4eWBpfd3itodc
- zBY6vBc2mmgARmqCBT/9vX89SAEi5Cr8ZNaF3cjMLNbcJpzB5Pi8zbK5DEFW6Z/KWLJIR9fvxs5
- ubYDhl+JyD9UTeSNTcQTMwld4+2dAwAP5j4gvk013WTjnMOgvbf++ukUMukspzSh0vW461T2AQZ
- KTgZ2G2AweJS+83FJkLv7UZ7244ErWf10XXw8X7hIZcH9MlSOWzlzhb2PU/udJEuzvwPGCyNoFV
- 9kzplbRk9S4PbA==
-X-Google-Smtp-Source: AGHT+IF+JEiNCIQFYFMnbD7q9jK/gdfGek/lWOi1UidEkpPOz27MyiLvQtM//cWCHRlRyd1pvZDVdw==
-X-Received: by 2002:a17:90b:3c87:b0:2ea:3aeb:ecca with SMTP id
- 98e67ed59e1d1-2ee097c2965mr9600509a91.31.1732824921225; 
- Thu, 28 Nov 2024 12:15:21 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732824924; x=1733429724;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=D/WE4DdwfNtGJC4bBQHDV6Up1JyJz8d62bKAZjE6uOc=;
+ b=gEfil7Ol0gOZTaGQLIVAaCJxeiGLj6msjaSOi3jabZISecGlpf4Qzlf1VO8OO53N7Q
+ +paQXdo5OuGNmFdoG3EP52tZDX5r2Gz8IKK7lE0BueAsTojXIaLt1/6JU7a2pXkNM6JR
+ ZeX4NrC7ttDvnoqyQXscoZ3EkD6RGPCG67FCE5IPvNZunahUcAwosHJ5NCH3DF5TyWwy
+ v8Qi8AeedINXy9EfK+V1tEWIYPvPKiOBNtYOvehF4yI9Sbq81detoCFv43WdOyFrxRQF
+ eDF0ca2zpC4VZ85h91DttbJbfiuWa1ugbXI0fNOikAI6Qi6cN6M7fCztRXeI9QkOQk05
+ eBfQ==
+X-Gm-Message-State: AOJu0Yx41L58ScMaApfq866HN7rSkRK5NMbKfq1JsceJLiQuSJ0owFZh
+ pKDOPYTUs+q13AFBs+PZBNsRrfjOWZdoibOfLtVEZKfR2NXNufHDpkIyth5CmF/F9BNLoRs5fxa
+ I2sQ=
+X-Gm-Gg: ASbGncsoOzzaBajEvf7Zq8ZB187//gykDCCK9RK9YH9nFIhkDnlBT1gdP/ZSrNs7HCJ
+ dooQg56ZLBPssv3p6HJKQZf9ET+q6yLCjolg4WmDj1plTzK46P1CWXtcFS17hyfRCwPg9rgRtqt
+ ZPrGO+qDl7ehjqui+7sRE5LqGrfgfKMQzyPTvp9TUp9svCEdcIuZrqGjm4fsPMXt7KuTPV5kv1w
+ 1b1M6HXIMDCBtchbgK5SGbOKBLTs/5N1YyVeiYjXXTsnsScvIugcxpiLnmDPXjipXjdQEBzHiaS
+ k8HGlTs6kVgzGQ==
+X-Google-Smtp-Source: AGHT+IEc4/QEHN4luw0cd9jmF7OPCym+gMlxgj0UeiM+RCbpeUilJvm+VPinObdpQACqZ7psos2NHQ==
+X-Received: by 2002:a17:90b:3e86:b0:2ea:9309:757e with SMTP id
+ 98e67ed59e1d1-2ee08e9fa32mr10969501a91.9.1732824924110; 
+ Thu, 28 Nov 2024 12:15:24 -0800 (PST)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ee0fb10049sm3912861a91.43.2024.11.28.12.15.20
+ 98e67ed59e1d1-2ee0fb10049sm3912861a91.43.2024.11.28.12.15.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Nov 2024 12:15:20 -0800 (PST)
+ Thu, 28 Nov 2024 12:15:23 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -75,15 +76,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH v3 0/3] Enable clang build on Windows
-Date: Thu, 28 Nov 2024 12:15:07 -0800
-Message-Id: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 3/3] plugins: enable linking with clang/lld
+Date: Thu, 28 Nov 2024 12:15:10 -0800
+Message-Id: <20241128201510.869974-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
+References: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,47 +108,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For now, it was only possible to build plugins using GCC on Windows. However,
-windows-aarch64 only supports Clang.
-This biggest roadblock was to get rid of gcc_struct attribute, which is not
-supported by Clang. After investigation, we proved it was safe to drop it.
+Windows uses a special mechanism to enable plugins to work (DLL delay
+loading). Option for lld is different than ld.
 
-Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and aarch64
-hosts.
+MSYS2 clang based environment use lld by default, so restricting to this
+config on Windows is safe, and will avoid false bug reports.
 
-v1 contained warning fixes and various bits that have been upstreamed already.
-The only bits left in this series are the gcc_struct removal, and fixing the
-plugins build with clang.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ meson.build                   |  5 +++++
+ contrib/plugins/meson.build   |  2 +-
+ plugins/meson.build           | 24 ++++++++++++++++++++----
+ tests/tcg/plugins/meson.build |  3 +--
+ 4 files changed, 27 insertions(+), 7 deletions(-)
 
-This series is for 10.0, as we decided to not include the gcc_struct removal is
-9.2 release.
-
-v1: https://patchew.org/QEMU/20241031040426.772604-1-pierrick.bouvier@linaro.org/
-
-v2:
-- drop attribute gcc_struct instead of using -mno-ms-bitfields option
-- add a section about bitfields in documentation
-
-v3:
-- explain why gcc_struct attribute matters in packed structs in commit message
-- reword the bitfields documentation with suggestions given
-
-Pierrick Bouvier (3):
-  win32: remove usage of attribute gcc_struct
-  docs/devel/style: add a section about bitfield, and disallow them for
-    packed structures
-  plugins: enable linking with clang/lld
-
- docs/devel/style.rst                      | 20 +++++++++++++++++++
- meson.build                               |  6 +++---
- include/qemu/compiler.h                   |  7 +------
- scripts/cocci-macro-file.h                |  6 +-----
- subprojects/libvhost-user/libvhost-user.h |  6 +-----
- contrib/plugins/meson.build               |  2 +-
- plugins/meson.build                       | 24 +++++++++++++++++++----
- tests/tcg/plugins/meson.build             |  3 +--
- 8 files changed, 48 insertions(+), 26 deletions(-)
-
+diff --git a/meson.build b/meson.build
+index 97cefb7cdd7..f286fb4f4a0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -354,6 +354,11 @@ elif host_os == 'sunos'
+   qemu_common_flags += '-D__EXTENSIONS__'
+ elif host_os == 'haiku'
+   qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
++elif host_os == 'windows'
++  # plugins use delaylib, and clang needs to be used with lld to make it work.
++  if compiler.get_id() == 'clang' and compiler.get_linker_id() != 'ld.lld'
++    error('On windows, you need to use lld with clang - use msys2 clang64/clangarm64 env')
++  endif
+ endif
+ 
+ # Choose instruction set (currently x86-only)
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 63a32c2b4f0..484b9a808c8 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -12,7 +12,7 @@ if get_option('plugins')
+       t += shared_module(i, files(i + '.c') + 'win32_linker.c',
+                         include_directories: '../../include/qemu',
+                         link_depends: [win32_qemu_plugin_api_lib],
+-                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
++                        link_args: win32_qemu_plugin_api_link_flags,
+                         dependencies: glib)
+     else
+       t += shared_module(i, files(i + '.c'),
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 98542e926f8..d60be2a4d6d 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -17,14 +17,15 @@ if not enable_modules
+       capture: true,
+       command: ['sed', '-ne', 's/^[[:space:]]*\\(qemu_.*\\);/_\\1/p', '@INPUT@'])
+     emulator_link_args += ['-Wl,-exported_symbols_list,plugins/qemu-plugins-ld64.symbols']
++  elif host_os == 'windows' and meson.get_compiler('c').get_id() == 'clang'
++    # LLVM/lld does not support exporting specific symbols. However, it works
++    # out of the box with dllexport/dllimport attribute we set in the code.
+   else
+     emulator_link_args += ['-Xlinker', '--dynamic-list=' + qemu_plugin_symbols.full_path()]
+   endif
+ endif
+ 
+ if host_os == 'windows'
+-  dlltool = find_program('dlltool', required: true)
+-
+   # Generate a .lib file for plugins to link against.
+   # First, create a .def file listing all the symbols a plugin should expect to have
+   # available in qemu
+@@ -33,12 +34,27 @@ if host_os == 'windows'
+     output: 'qemu_plugin_api.def',
+     capture: true,
+     command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
++
+   # then use dlltool to assemble a delaylib.
++  # The delaylib will have an "imaginary" name (qemu.exe), that is used by the
++  # linker file we add with plugins (win32_linker.c) to identify that we want
++  # to find missing symbols in current program.
++  win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
++  if meson.get_compiler('c').get_id() == 'clang'
++    # With LLVM/lld, delaylib is specified at link time (-delayload)
++    dlltool = find_program('llvm-dlltool', required: true)
++    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
++    win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
++  else
++    # With gcc/ld, delay lib is built with a specific delay parameter.
++    dlltool = find_program('dlltool', required: true)
++    dlltool_cmd = [dlltool, '--input-def', '@INPUT@',
++                   '--output-delaylib', '@OUTPUT@', '--dllname', 'qemu.exe']
++  endif
+   win32_qemu_plugin_api_lib = configure_file(
+     input: win32_plugin_def,
+     output: 'libqemu_plugin_api.a',
+-    command: [dlltool, '--input-def', '@INPUT@',
+-              '--output-delaylib', '@OUTPUT@', '--dllname', 'qemu.exe']
++    command: dlltool_cmd
+   )
+ endif
+ specific_ss.add(files(
+diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+index f847849b1b7..87a17d67bd4 100644
+--- a/tests/tcg/plugins/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -5,9 +5,8 @@ if get_option('plugins')
+       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
+                         include_directories: '../../../include/qemu',
+                         link_depends: [win32_qemu_plugin_api_lib],
+-                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
++                        link_args: win32_qemu_plugin_api_link_flags,
+                         dependencies: glib)
+-
+     else
+       t += shared_module(i, files(i + '.c'),
+                         include_directories: '../../../include/qemu',
 -- 
 2.39.5
 
