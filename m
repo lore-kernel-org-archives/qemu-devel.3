@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FBD4D70DE9
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 17:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C627D70DE9
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 17:55:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGiiK-0001Dj-6o; Thu, 28 Nov 2024 12:54:04 -0500
+	id 1tGijH-0002HR-HO; Thu, 28 Nov 2024 12:55:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGiiH-0001DZ-Co
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:54:01 -0500
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ id 1tGij3-0002Ei-R7
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:54:53 -0500
+Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGiiG-0005KP-5F
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:54:01 -0500
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-46678a11ef1so6400491cf.0
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 09:53:59 -0800 (PST)
+ id 1tGij1-0005UC-Ln
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:54:48 -0500
+Received: by mail-qv1-xf33.google.com with SMTP id
+ 6a1803df08f44-6d882699271so343176d6.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 09:54:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732816439; x=1733421239; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732816485; x=1733421285; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=w8NePUAiHOQKFb6vb1a9Xa9aQMqXYszOS7fQtmHeI0w=;
- b=Y+yRSoLiHTvuhxsmNbuDAaarH1ErklfGZ3sGrQd6/qs6k745xprFiFw9kSmbZreUDV
- 5hnGdEz8PKEqx3edRf6SvPoYQHP72T+pIxEB9xdDNg2YLMO9xWv8mqNukaOJ/EOl/9jX
- YeyC2k6WtLD9RQnakq188d0cUKvguRM3AtB3eibJihK4x2RCYLNHuUDvLODaI83zprgX
- eYd9+0PuD6uRFn0Wi7A4NAPyaLZVxT8ypOogTS00Dg83z6qE9dvquOzDlr2cJwkdWgSS
- 5lCXcR2HNwBXIVtWF3UsX+i+49Zx9pkuXDV/TXhV1EYQYURVXZ0Y6sjKbbykhTGtgjag
- S3AQ==
+ bh=amyzT4C0uKpVuwCHXukCFWEMz/fRNnJpM9RjlD+hmOM=;
+ b=uOcNczHJbfKzYZDyGq2s/3qSEsse89oKDfS2ZMj9AH3Jyu6gGd0WoqkkT3hWFRX9kP
+ IcyBvCiF1bVBeIAoaX0oW5l6LqG0UJlUXZz4X/JjpGYk4lA4TFkifgP+TgkwbO7vw9+e
+ lbEy2EMxzgx834fh5NJupKvs+VoV54HG7Sx4m3ixyyJ0aeVTxelQU7pCm0wHhCIZz0Aw
+ DqBsbll7B/OaDjuPXPxEUT2me7RpW/G4rhsf0QuQiHZkTPM0rF9JjyAgUkGVzM4qwmKZ
+ aV4Qtl7ANd4dNmDMyhi98u+RE+vnq5EZqkCQhJAjgvALHag+jhqTnSKiKl1s45daIw6y
+ Z5fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732816439; x=1733421239;
+ d=1e100.net; s=20230601; t=1732816485; x=1733421285;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w8NePUAiHOQKFb6vb1a9Xa9aQMqXYszOS7fQtmHeI0w=;
- b=RV6sqMY5qa66H7erJ9uC2jVavnGt/U8vjwB55jIESuLWwWScnYGs2dXiNgYmQpoA0z
- zGVvF6RmIj8C9WUMzL73gQ2VpSJkyQuT4P6Nul56bgTBs205uX/mmnF2KM3qaZ8n4NMe
- 9wsyY8vHUv4DAEiGcTjBxgYYMB/AXHkHgYCZQiP9VutYPvCFgytQEEMU51lzgnd0KuoF
- vvMwPoB+nBoePKmtF4FOUFaLYE6G2GhdPncGKr7CIKB7/F2Tbp/KyLATLUEYdtKmAKtB
- tgTLGlwuQjWP0Fw0ydj4HzUzsTvgf9oh1KVyWbebsN6d07kN0wUXjPifs5H3576FaJVl
- ni3w==
+ bh=amyzT4C0uKpVuwCHXukCFWEMz/fRNnJpM9RjlD+hmOM=;
+ b=TwxzLVFI4eh9l8Vb5ND7xzfyB4naKOHeBIygRLbPajP39+Y+3SCN4X5VB7pFhGjmnB
+ Ys7GubPag5AwgxYXf9SJoDjNuUcwRa0Fag0oeRDxZnswAufrIPbt3OjjR7GfX7gwOGah
+ yzL0Tbj8t6QOH+rxnJyLe8PM1Kyh5Dnt6sQkPS7mzRyufVJWXw4pFGahVDKlVHPSIF0x
+ +LjIHhFpLHppyzX5xenzleplih5LRqutB2KppCxtPEapDK5KCauA7LpfRhX42G5M4kxk
+ o5AnJlo+0wY91imUeu3GCeaIm2ii6kiG4OBSHJGKxYxXzR8n0fsh5fNh4nD4tW41NJCT
+ OD6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpkd2VWuENiM37uXFUD+Bi/+5uILbnkHqoKxXkrb8u37IiRI158aEaIfY7tQeOMmseh6IEIjIasLOj@nongnu.org
-X-Gm-Message-State: AOJu0Yyg0+S29QHMSIOwnd6ngL9+rJDnRjGDOvdcs1NRQJieZiQjDqzx
- RxiJLXeHW/Ll1ZWXZsNGgYhsKt/LRnIOhgbJvLSxoaUqchr2mzNKtYh1aCU6wM4=
-X-Gm-Gg: ASbGncv5wahZ+RVPMJ4SnNAJnmhCyqrZi20NbHRa3NkIKCZpv4FE9B9XUZTpTxoedZC
- q0OgvqjUjaqn+swrhz4yQfajygmWkk/U97dhjyKH3p0nA/41FEOFwsRiKV3MPxO8WsnD1+ERs9X
- FcwmQJ8eKJ27bX7oCcjms3D6HVs2nFg/VM/35ZyAPpUQJVLqMvuxRL/0QDyCcYKOHo47cWfGIio
- HmXFZmc2GA7kl4Kht+aKuaMkwibuh9xtKJcu2Ib6gkgQT5WHRIuOpNKIc+nKz89r9o=
-X-Google-Smtp-Source: AGHT+IGTl+gP/HpTu0bUjnZjzTGERff/0XCh9n9uWdl6TkJCb2qt1zY65Pge9ck4El3ZN9UQ/ejZWQ==
-X-Received: by 2002:ac8:5d05:0:b0:461:1fc4:1016 with SMTP id
- d75a77b69052e-466b34d39bcmr105210681cf.7.1732816439050; 
- Thu, 28 Nov 2024 09:53:59 -0800 (PST)
+ AJvYcCWOBJbC0FLPk9a0chTkSyQHMeGNpT5HFBOUV5IZGLCWxM+KYBMQuvp8j2top9p9BPMoVKyKIEPgKT++@nongnu.org
+X-Gm-Message-State: AOJu0Yyz/Zdl+F1Q7eYf4s6ASBGipFNfmiFQZki3NCWYXTYuvqG9q4vz
+ tTHved1cOlc/xvFl5MbFfp914YbtFgIpBDUD/i5I+RJc4ItYqSK+HM6dMoQ97AI/k6G6P8fkzzs
+ 99to=
+X-Gm-Gg: ASbGnctSkZkhln+T5gqppT/sTG6GkHwyAxKXOb8VIkbzghuRP1qqjWZLlHLxFb9Ma0c
+ oIFp1H4EQYI7ahqwNisKJcR/qIdzHMTm+7GNA3X5JAkNfQjFRvKAYwxyuiyfXs0at2ELiga3nnt
+ fJUNDgtVjoncrAJuPmstKBVRw+G5jfeVSlvRwJKzjHiS1F2vpu30W15J40RZpl8XVMhDMxJ+iTZ
+ X89p2kCw5dUv/fJL9QsEg8gC5qslNTjV12gb1lSYOck8s7Ezske5qPr6uMGpEF+O0w=
+X-Google-Smtp-Source: AGHT+IHAiNFFkgV29691jWbqjJ5iGq0mUCCJIf4O2fN8k0UbASobxObIMNQ7SqUJKbAZDc3QdY5/XA==
+X-Received: by 2002:a05:6214:27c1:b0:6d4:254f:1c8e with SMTP id
+ 6a1803df08f44-6d864d9421cmr115493926d6.37.1732816485370; 
+ Thu, 28 Nov 2024 09:54:45 -0800 (PST)
 Received: from [172.20.3.167] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-466c4055062sm8621801cf.6.2024.11.28.09.53.58
+ 6a1803df08f44-6d8751635ebsm8537456d6.22.2024.11.28.09.54.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 09:53:58 -0800 (PST)
-Message-ID: <493ac55a-81c1-4e57-a129-2f32ce8f2b3c@linaro.org>
-Date: Thu, 28 Nov 2024 11:53:55 -0600
+ Thu, 28 Nov 2024 09:54:44 -0800 (PST)
+Message-ID: <53178bb1-404e-482c-a0c0-6c0634cec043@linaro.org>
+Date: Thu, 28 Nov 2024 11:54:41 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0 20/25] target/sparc: Set Float3NaNPropRule
+Subject: Re: [PATCH for-10.0 21/25] target/mips: Set Float3NaNPropRule
  explicitly
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20241128104310.3452934-1-peter.maydell@linaro.org>
- <20241128104310.3452934-21-peter.maydell@linaro.org>
+ <20241128104310.3452934-22-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128104310.3452934-21-peter.maydell@linaro.org>
+In-Reply-To: <20241128104310.3452934-22-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x835.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf33.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -103,14 +104,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/28/24 04:43, Peter Maydell wrote:
-> Set the Float3NaNPropRule explicitly for SPARC, and remove the
+> Set the Float3NaNPropRule explicitly for Arm, and remove the
 > ifdef from pickNaNMulAdd().
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/sparc/cpu.c             | 2 ++
->   fpu/softfloat-specialize.c.inc | 2 --
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   target/mips/fpu_helper.h       | 4 ++++
+>   target/mips/msa.c              | 3 +++
+>   fpu/softfloat-specialize.c.inc | 8 +-------
+>   3 files changed, 8 insertions(+), 7 deletions(-)
+
+Yay.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
