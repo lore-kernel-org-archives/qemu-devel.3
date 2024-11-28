@@ -4,152 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7F3D3B9BD
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 04:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB96D3B9BD
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 04:47:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGWOw-0003rA-QK; Wed, 27 Nov 2024 23:45:14 -0500
+	id 1tGWQs-00050g-5m; Wed, 27 Nov 2024 23:47:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tGWOv-0003qO-3U; Wed, 27 Nov 2024 23:45:13 -0500
-Received: from mail-mw2nam10on20612.outbound.protection.outlook.com
- ([2a01:111:f403:2412::612]
- helo=NAM10-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tGWOt-0004Sa-9P; Wed, 27 Nov 2024 23:45:12 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CWN4Ke2Mxa5Sewn3BnLwKTeyuuuysglEPKQSXBCPH3JPuwYsRgETox1EAFdUpH4adBqQLVDb8IJ/X1nnzIBBzDVsiaAkoA93BCQ28oRS7znqFeqkOQBoGL4CFLNECmuek5I5CIidu70Q/AyKsyMw/8e3/IoyZ2F0AaPfx+1GrgknBKNtBwFIXhlL68MT17tJO05b2+jnHKILTvrxpkIBc8qIz4SMWVgnflwEModiBw+vvr18VR/L4WCmsm6GmPq2aeh1CCX528JHz5LS/hVrWopxY4p3FIytqrLF4rALMZ3QeWA6H8UiFA4Hk0ZtJIDW90C7SXedjfHkUtM2jApmtA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=24CnnwibTqkFzsMTAhCYYzYkRFfzYLM494as2uUvg/U=;
- b=WFmU5k0fylCayd4UxT33lXFRixgE/9L9inKUbdFPcLtTcrlKyYtQl84xPNoVbrT769e4HxFdjcY1c+53NI7lsUhzsRK4YPPVU0dXTF2MHOKTczapkpxp5F+qvhNhQ9MQ+gLl3hpEQ+bawVaqBS6mGRHkbncSkZ65IXo9aEF+IWV9EQPR2Wk+b3jj9PbejlD3sk49k+8kqoXk4rSTe+Zo0sOC9hiCsd0I5qItsxGTFb99KIHdNcTknHY2wZ/gGt+VNEkyVEyArPJqXNNO9tWV4Mu6d0IqUIPYBNtOvEhG1Zn3N+EFpKgs/0rdVMfcFKQHpVNjuNcMKgRySV8AVQJAhw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=24CnnwibTqkFzsMTAhCYYzYkRFfzYLM494as2uUvg/U=;
- b=Xp+EYpatRwQGwIczFbhylyVWKbMcbKFmPtNpe8yQmOXyu7kqxyUugDsEIodIj/coNNBgFK07NTdE9o+UfRY04TOam07UteELdCfahlzWZAWGlp3SyO5JRJUVaK5VO7uhm3rD6rzP7Oo5qzKvoNYfyVutooTC5ED3XDdkYVA+KL7bHDVt+EhAep8JMPWSNoGJkoCNLpBnLue6RkUQKxkPLOAF3V7miiGNyKjQct2JAwQSLpy7wGw4hFkBkKvL5Pf5rFj9+3ls20FHpYjrh0/EGoG2/p22KA3uwng5jW/1yEtvSSANhGWeroMXfbNFEkFphBPwJwbh2P85ANi/V6Ixzw==
-Received: from CH0P221CA0024.NAMP221.PROD.OUTLOOK.COM (2603:10b6:610:11c::20)
- by DS0PR12MB6654.namprd12.prod.outlook.com (2603:10b6:8:d1::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8182.21; Thu, 28 Nov
- 2024 04:44:59 +0000
-Received: from CH1PEPF0000AD7E.namprd04.prod.outlook.com
- (2603:10b6:610:11c:cafe::9) by CH0P221CA0024.outlook.office365.com
- (2603:10b6:610:11c::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8207.12 via Frontend Transport; Thu,
- 28 Nov 2024 04:44:59 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CH1PEPF0000AD7E.mail.protection.outlook.com (10.167.244.87) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8207.12 via Frontend Transport; Thu, 28 Nov 2024 04:44:59 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 27 Nov
- 2024 20:44:50 -0800
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 27 Nov
- 2024 20:44:49 -0800
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Wed, 27 Nov 2024 20:44:48 -0800
-Date: Wed, 27 Nov 2024 20:44:47 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Donald Dutile <ddutile@redhat.com>
-CC: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>, "Eric
- Auger" <eric.auger@redhat.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "jgg@nvidia.com" <jgg@nvidia.com>, Linuxarm
- <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: Re: [RFC PATCH 2/5] hw/arm/smmuv3: Add initial support for SMMUv3
- Nested device
-Message-ID: <Z0f1P/Tie2Yhe1dv@Asurada-Nvidia>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <20241108125242.60136-3-shameerali.kolothum.thodi@huawei.com>
- <00e8a5d6-c926-44bb-8d11-dab4ddc4820d@redhat.com>
- <ZzTqXCFKV9s++C2N@Asurada-Nvidia>
- <cfe8864c-f830-4b39-b4d5-f219f5a42eea@redhat.com>
- <d8fbaa677771425dac985438b4b1db59@huawei.com>
- <04c73d87-35ce-4e11-a906-17c1e2961387@redhat.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tGWQq-0004w6-Nu; Wed, 27 Nov 2024 23:47:12 -0500
+Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tGWQp-0005G6-3j; Wed, 27 Nov 2024 23:47:12 -0500
+Received: by mail-vs1-xe31.google.com with SMTP id
+ ada2fe7eead31-4aef56c5cf9so103458137.0; 
+ Wed, 27 Nov 2024 20:47:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1732769229; x=1733374029; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tSIbx3HdbhsA3qTAos5PpU9eba5valjXPmSUDFRjD28=;
+ b=a9CmRGREbFP1tbrXOqAIqcdRcDIA3aU9l3I0XxU1o/+SCoZ5WludrIT9Xwun0iynlH
+ sCGuXy/+QOaq7lNDuulx5dp0qSAOn2Va+2a7T0HSfTAVwguJD48cMyvvda09q3Z7Oftd
+ m4yxpx609Bm4B4LwGWXwCiBJOi876gU/YJTqRKZezHqF56RhRYpEgkqzoKgwA3QJW+u7
+ FC3aw7eP907aV/AmdTXjkD+yH1dFD1mqoYaur0HrLUSD9QbMBhFpZm8XLMsHUt97df2A
+ 60oaXxCcYTQ6dS892dPkAi8YiGYjagb6vRpnFY/ni7ofWWaoOv6jCjX21/fGzYOC69bN
+ FuoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732769229; x=1733374029;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tSIbx3HdbhsA3qTAos5PpU9eba5valjXPmSUDFRjD28=;
+ b=MvlWvtMTrz+VfqgFiF4rfZ9jiTJ3ychOC6TxEI0oL9aqdFxs0Iwy7e0Cj1O+r7V7AM
+ IQohqpqPEj7cIpw4xvcuk5Jgxdjaqhdg+lrStNXQWPCJJQn5IcangRs0aZYYN5srUh7a
+ mW2qrQJHm0P3nLmsQjqsK9jpLC/Apuf2DLuOl4MuGr1eDtHO+K6x6Cx58RFKuJZkoRal
+ gQzUt+1K8Lg7fD6hjaGpUdIGP2RDxy8Nh8YdhjvZa7BrTnUNQQjZF/vGkxlXSIODTu42
+ zC16WJFXRloGkwBba7H5116TV4k5nAq9BTVCuVdTbw9j7UxCMTI+qLYj8RvKxfnZG57r
+ uOHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVw3oZdgHa8GGFg4QjLjqRzYWg+Q169uYK7Nvl1c4hn5MNMz+GWonufQq367ixr5hZ45sm//P8prvVd@nongnu.org
+X-Gm-Message-State: AOJu0YyLSjb3iFRdlncD7f6T3L6lmFrDEs2VthofgyXWNiQsKZiR2j30
+ vVkv1vAJRAJpRm1MOE76riPAMCzLFaSq++ydFtV6oE2bI1IjtdmqKJmdtIdxBvVCj65KZi2mtWl
+ GgRrxwmxo9sYt4Ko4Ywcn7PvUGXs=
+X-Gm-Gg: ASbGnctOugF3vM8Al/U1MomzsY+iZ+mmCxQeJtS9lIryzPpJkO/fTopK05QGTPYCCAJ
+ KvEV23iZXzJhxPnowdo4jGDiZKQqjydGvYSJ5Ho98y6KlofNjUc9MRL0/n+jIEg==
+X-Google-Smtp-Source: AGHT+IGki4MacOAyqeSaiBd71uvd/r3XhLLn1HPn1L0a/OQ5bs4+O2eKgtJyX0Cwt1KgJ7dlltilO3uPfsZm9CuAgNE=
+X-Received: by 2002:a05:6102:a50:b0:4af:4ec3:cd17 with SMTP id
+ ada2fe7eead31-4af4ec3ceaemr5491280137.0.1732769229528; Wed, 27 Nov 2024
+ 20:47:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <04c73d87-35ce-4e11-a906-17c1e2961387@redhat.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD7E:EE_|DS0PR12MB6654:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8561447f-a3f5-4203-2935-08dd0f676a63
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|82310400026|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?/CH/vfNCcJUiVd58rzBGYyBgXL4FOQdivjTRlPn3tHM8G6pmfQN6aCSuq27Y?=
- =?us-ascii?Q?1xOP0tnAq92GqXv9+/sHsmPWerd4uS0+4/CTY94cvKpvEetoevvHz081Wie1?=
- =?us-ascii?Q?rTJfNPtNtUy2kKwo7VoKtSJklSsJq8WU7nic/i8pMIb5EpmeiND0TDhr544S?=
- =?us-ascii?Q?QaVoz22NWdH6mkPuZmJSpacCsqqx8G1LHXHgGSNhau/DeFCKnGT9UlIaR1u+?=
- =?us-ascii?Q?D1ovitVhCkdiuBHYC4WnFTYBObLHdvb4OVShUO5/oOwgc8tUrY2r+56Bv7kV?=
- =?us-ascii?Q?XwmSh0MqIc/I8gDpaMf2SnU38p43Plue1lL5xHlzPgn77zeLspdQqK8I4cn/?=
- =?us-ascii?Q?aKKdwCr5tw4cn2Dy2ne4LTJ1Eus5Sd5X3zr+yKNed0RTD52E8TazJ72omH8j?=
- =?us-ascii?Q?7D/9SbXhZOYqjxnENNlwM0E7NxTPUk2HCrpi4stmkbhmLU/pbhR1pqXAOOE8?=
- =?us-ascii?Q?lk56dRZg2qPY8ARdkff+2GoIKqYP+jKNejhKTzSLEoCAoCzJk9MUruw2shPq?=
- =?us-ascii?Q?EPUa6C8ZKY1LqKJjNXQP82mewenkUqxrMUAZmFKYVV1wHSHhWCVMh3Z2N946?=
- =?us-ascii?Q?Q5nYXmasjErTMtMlBkU1UiI1GkoFrRYLJEYEG42C+u8hLmwxCOILaZP0ieRc?=
- =?us-ascii?Q?r28SMDmybP5cofZuMbNQnlgFVxnZQg9A7UimqjE9YwEkq46JDbGWXtMXkmcQ?=
- =?us-ascii?Q?u/IhgnI/y+A1hf9p94woGBfQPxBAZD99oNs1BteCD+kj0FjD1dB4UNfT1KjE?=
- =?us-ascii?Q?DyKuQlIAdbeF/AaSP7CMEyXWhd28j26T8nLnU6+XNKHkGAdtjeU7Go57t4kZ?=
- =?us-ascii?Q?/87ph37pA3nNzQO4p2ntRQ0OeaVfluVdGoemi59hbt50wm/crLPJfndbLXPZ?=
- =?us-ascii?Q?N2GuQBZDy91hJDhY1B6B70i4C3hfDEGE6B8fYLRdwki7p6FQo2X+M5JkFFVD?=
- =?us-ascii?Q?0gG2sbom514PzQcf739f1S22/2UIuIeL+5ulBeiBeFYEkZP4vUhFmlYbaBnb?=
- =?us-ascii?Q?hXK78Kg0RVQGqMt3+Oimv4YM0Ql0TRRk4C+LPxUrv8f0nXdM1nEeopvE2zXk?=
- =?us-ascii?Q?aABliWmvaugoQT1HATg9a/VhCq2MYS1cE//vuRsFnIPfa+rzXTYfTiomc6DT?=
- =?us-ascii?Q?AVp5mcIq0xPLWLGNgq9L/XKwveCkwNNlAa/5paJ68zLH5LP6wQ9j30hcbRIQ?=
- =?us-ascii?Q?LuR4phYWjG+pLybw5srXqCzKbAkLPQz0O6Ahbp4eLWEm3ZQCKKBXMNOU3uX8?=
- =?us-ascii?Q?BRy32tHovG6tSPwBsm9E/taEFt98XDxLHcs2VGcjvZxF9jZfYoGRIDUW12W6?=
- =?us-ascii?Q?moSo932bWgQ+S7bs0kMVrMIxO3M5JLoN+EcDTuPyb1hIDC4Nk5Ibzp+mDFep?=
- =?us-ascii?Q?/XlrO32NaPFiVuO/UTHCIUflksJB21qsu5w4gMzAdFYgTWNcAHDIm0SwsZeT?=
- =?us-ascii?Q?tHGIIBuGCZz+go6nnH3+LlhWAnVelEa9?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(82310400026)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Nov 2024 04:44:59.5691 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8561447f-a3f5-4203-2935-08dd0f676a63
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD7E.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6654
-Received-SPF: softfail client-ip=2a01:111:f403:2412::612;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <tencent_6FF30F7E2E640BEE260FD6523B6BA5486908@qq.com>
+ <CAKmqyKMP093GyTEHdAPzaV9+O_pFSv0svQRb-31QTvn9i4fxMA@mail.gmail.com>
+ <tencent_B97DED0E6971DEDD2F960CC63DFF414A2A05@qq.com>
+ <CAKmqyKO6Wjknoc1sXVm6d0BGzwcuF7VBqJdg_a1gh=6zz=KZNQ@mail.gmail.com>
+ <tencent_E6B51EACA466D65291C0E6BDFD34C8EADC09@qq.com>
+ <CAKmqyKNOXNpfekTPNOyHyYEuCXKOewCeTSFZAHpsxuC7gUzpGQ@mail.gmail.com>
+ <tencent_3335F7F1076629E3B507A48979413F43B207@qq.com>
+In-Reply-To: <tencent_3335F7F1076629E3B507A48979413F43B207@qq.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 28 Nov 2024 14:46:43 +1000
+Message-ID: <CAKmqyKNS3GWKpatFMchYJM31PtgjLn9YX+m_L8Nv=qXNMXhWmw@mail.gmail.com>
+Subject: Re: [PATCH] include virtualization mode as part of priv
+To: Yanfeng <yfliu2008@qq.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe31.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,38 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 27, 2024 at 11:29:06PM -0500, Donald Dutile wrote:
-> On 11/27/24 5:21 AM, Shameerali Kolothum Thodi wrote:
-> > > > W.r.t naming, maybe something related to "hardware-accelerated"?
-> > > > 
-> > > Given that 'accel' has been used for hw-acceleration elsewhere, that seems
-> > > like a reasonable 'mode'.
-> > > But, it needs a paramater to state was is being accelerated.
-> > > i.e., the more global 'accel=kvm' has 'kvm'.
-> > 
-> > I was thinking more like calling this hw accelerated nested SMMUv3 emulation
-> > as 'smmuv3-accel'.  This avoids confusion with the already existing
-> > 'iommu=smmuv3' that also has a nested emulation support.
-> > 
-> > ie,
-> > -device arm-smmuv3-accel,id=smmuv1,bus=pcie.1 \
-> > 
-..
-> I -think- you are saying below, that we have to think a bit more about this
-> device tagging.  I'm thinking more like
->  - device arm-smmuv3,accel=<vcmdq>,id=smmu1,bus=pcie.1 \
+On Thu, Nov 28, 2024 at 2:27=E2=80=AFPM Yanfeng <yfliu2008@qq.com> wrote:
+>
+> On Thu, 2024-11-28 at 14:10 +1000, Alistair Francis wrote:
+> > On Thu, Nov 28, 2024 at 2:05=E2=80=AFPM Yanfeng <yfliu2008@qq.com> wrot=
+e:
+> > >
+> > > Alistair.
+> > >
+> > > My initial `git send-email" on Ubuntu 22.04 wasn't lukcy:
+> > >
+> > > ```shell
+> > > $ git send-email
+> > > git: 'send-email' is not a git command. See 'git --help'.
+> > > ```
+> > >
+> > > I need time to find a solution.
+> >
+> > You will need to install git-send-email (or something like that)
+>
+> Yes, now the "git send-email" exists and I will see how to use it correct=
+ly.
+>
+> >
+> > >
+> > > As for seperate `virt` thing, my concern is that though the V and P s=
+tatus
+> > > looks
+> > > orthogonal, they are not so independent (e.g. `P=3D3` implies `V=3D0`=
+). Having
+> > > them
+> > > in one `priv` register tells user that that they should be operated t=
+ogether
+> > > using one command.
+> >
+> > True, but how can a user know what bit 8 means?
+>
+> Good point. Can we mention it in the user document for `priv` register?
 
-I wonder if we really need a "vcmdq" enabling/disabling option?
+AFAIK we don't really have a place to document that. Which is why a
+"virt" register would help as it's self documenting.
 
-Jason's suggested approach for a vIOMMU allocation is to retry-
-on-failure, so my draft patches allocate a TEGRA241_CMDQV type
-of vIOMMU first, and then fall back to a regular SMMUV3 type if
-it fails. So, a host that doesn't have a VCMDQ capability could
-still work with the fallback/default pathway.
+Alistair
 
-Otherwise, we'd need to expose some sysfs node as you mentioned
-in the other reply, for libvirt to set or hide a "vcmdq" option.
-
-Thanks
-Nicolin
+>
+> I used bit(8) at my first try and it worked from GDB command line. Actual=
+ly I
+> also tried bit(4) but found GDB command takes that bit as part of P value=
+ so I
+> withdrawed back to bit(8).
+>
+> >
 
