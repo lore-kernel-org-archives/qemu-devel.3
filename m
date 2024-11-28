@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E94D70DE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 18:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33387D70DEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 18:14:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGipB-0007Gs-Hi; Thu, 28 Nov 2024 13:01:09 -0500
+	id 1tGj0u-0000nm-FA; Thu, 28 Nov 2024 13:13:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGipA-0007GX-Rh
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 13:01:08 -0500
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ id 1tGj0p-0000nJ-3h
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 13:13:12 -0500
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGip8-0000Al-Cg
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 13:01:08 -0500
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-71d5984e56fso438590a34.3
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 10:01:05 -0800 (PST)
+ id 1tGj0n-0007YV-Hj
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 13:13:10 -0500
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-5ee9dbf1b47so1003527eaf.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 10:13:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732816865; x=1733421665; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732817588; x=1733422388; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KmkZA6KgNVQz3pwIYP98e5o7gc7bTLHdjWUErsnrUN4=;
- b=rtXYZF5Ftr5lSzqkaumyS7YRuhMTGov5q6bvsy08I8exC40Z+EFxp5I+XMd+LqlNvA
- k2roorABeINgsXoXxQ+zk9MiNiMuWQOidnx3uVaiy/cMiSIKBnCEzhrkt+HE84pc08Nz
- pNgCOyLza/tpvvFgqEG37Kd13jGUPNFdGIBTm06prQC9+vibyEH/GRcCjsG7aQF8KuxT
- I+cp0uSK8QXNTI99q7MMfvGs4VXAwHQtSGnhdN7MF9FdHRwPQt58x4iny0mIEZ1XDaTf
- 4kvqEeB/4yzYTi0d5NxjerMxg2Kecw4INPJCeBCxP98tSPuC9HEU/ovs11iX5CWm2kfs
- XGpQ==
+ bh=HWVhMHKiHIZ4cMOKLHT1DDD/tII1X73lG8ZIYKCTD58=;
+ b=L36NMelMDLb/iZYFokdCOVPHP3kl6JQLP+ukPttbVyKjXxMZDCyoNrc+mODK5BqT0F
+ rVWeKlI8VnGkiQDGroXefXYFl5oxbSfje8zDKE/hktsT/FzOPkyaDmIsXlSu7BBzfIKv
+ TxDjBjji8VsRjmbo2fsRgN5rgnngFa4wiSy2SAh8zNcDPe+UWAhUASmklfUQXGNd5ACz
+ 5ax8wx5rBywx+QlYKcIcg+zWYGEVrqdvx1/gJXmrCfPiYLSd2awQ/q1ujzugdSYZYX5W
+ m6gwSDlvTpilNfUH3nnRFmcZPHdQNJt49q1Uy31E1h4fQYbFS1ZE1+ewnWMyvkwVnZOB
+ hE7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732816865; x=1733421665;
+ d=1e100.net; s=20230601; t=1732817588; x=1733422388;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KmkZA6KgNVQz3pwIYP98e5o7gc7bTLHdjWUErsnrUN4=;
- b=HIYLUGKw/jB6FGTuQoVwEZX9oYQ2xtL3/aGPXoZ7JmdZDyIA9/N5c4X5vBvNnKHD5v
- Vjfhi2wQM2cqUWD/pyI21I790CjKuECCqIUnb0QiMQVp1OA+KFViASMU3zG8QiM0VClw
- fZqH9FXPmwjejI0q4g26aerEAEhtA+HEKoSWLr+3Al3AXLvCVoUIy+h/v7/vwQ8fFO0i
- r3hAoAwHLOACOiSshTumnQdzHA40X0sY2ubDmHz3Qr/6lrltOZhJXH+CueB67+osH+7j
- zVBmGYAljCQfysmaGfzvzgPoK+A+YGmeN8Iz2f52ICv/p4MZgGjZIlhYJzWzKngUM6xf
- vcwg==
-X-Gm-Message-State: AOJu0YzdFBx6ETwVt/NQ4+cnNRHGp/I3fFUXGTcPlLU7DJT7A9Irf06L
- lw6cM4Mpu2TMz405ucym5LnaOmwqk4YT20cLbV+GECYWtmfJU0Cx/VstwPoMXAX44i6S+YSt8w1
- 2nE0=
-X-Gm-Gg: ASbGncuMkkUVe4LATsfKxNPWLcBKrRutyt+euQOHT7r5Aq/1XINNZ8EPz56fPqksuqh
- //U/hEhH+LB2wu9DvVFszSc7ZOyIO+svXMQS8zH4xbLNLcdcc4xkmj/yh0AgagUp6/Yuz32xi8b
- yeF4rfDJYzyvqrgE4kPrFWZ13IWDRoyqMitHa+uvNbsiONtZfmT3GmiZsSTE310HbeyFbJnblqf
- 3YrrnS7HloBgvIdzQ1v+x8Qt03MGNc1fW9dfxJIM0LMc7tkdZqkg8o51VYx0R8a2pE=
-X-Google-Smtp-Source: AGHT+IEcPD5he/ezfMotK8DRS9i49IQNgVFe+R4c6qBXsWsnqQ8tvt+diSEGfDtm3te53Us9iiT+ew==
-X-Received: by 2002:a05:6830:6a9a:b0:70f:3720:16bb with SMTP id
- 46e09a7af769-71d65cf342dmr4662117a34.19.1732816864720; 
- Thu, 28 Nov 2024 10:01:04 -0800 (PST)
+ bh=HWVhMHKiHIZ4cMOKLHT1DDD/tII1X73lG8ZIYKCTD58=;
+ b=hOErQzuIc18rCUGzOabymisV7S9S1fTaA3lxGrrYkCLfs1L71e5mc5GqN7On6OT6cH
+ xeHYNrsOIabRkl2P3nqGDv9WkDzmoaHvnYkDrRWDinKEyNRvryNtBkzpEbql6Fu/VWn9
+ FdSlI2pipGX9bWlQ58lpxAyF5wNt0/mwAkowPC2R9aMsHN91vqd9L1hQM7FwDksjydcz
+ +QA+SiZWgC0CyqBxGRkDum4Pft4S+28M4Sm8KfHAV+U86ka74jnqWgO7FL40EQjA4749
+ J57tZOg0La/gFHTMuc0sI7UTBblGHcGG87uYtGiY/6rUzfYlm5BEX8LvUkWa5rplRxa2
+ /e2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfm/NWKTENtwtokM3uqZg9DwOUwYTtAL35fBoVyWic2BORb/7vaoaBm1ZvCsCvQyktmQY5rt+VVz4W@nongnu.org
+X-Gm-Message-State: AOJu0YyfO7pcNP2kjnyk3dfF+A4ecgrt7lzenqD8Rwwa4TpthDK7aByn
+ x775yK2HhYmiqM67MANKcoBKq2JigWJ3DpaXU7DuAgNN/85unttBUESROiNoEI8=
+X-Gm-Gg: ASbGncvE3H9j25/c6UCuV5sR08nF8viIR1fY30zbk26ZTej6h1FTHdfDl9DQZcodd/n
+ LTDok9TaZ8bG1STq9OH/h39kk2Gg/N+95GHNfFc3TuzvVk1uQe+YMOOjfX8zFGTCi44U9Vj3HnQ
+ bIa3HFE5Kw2CT7M6czPhFEbLGUyTzfSxmIx+wMn9PG/TxegnfidsfboocYZMpJDwlm3pcjUIXps
+ Jq/4qXL8fLWMHQFh6qUgnRc2UpD0O4Adu217vRUBMQhErLKnj3LXZSVpsh096WfbtQ=
+X-Google-Smtp-Source: AGHT+IF5f9v8LKLbJ69XF5/9FR/sat8j2yettNvtdFpwj1uYH5i5lhEhxXYdIEA76jxkRQBSubhonw==
+X-Received: by 2002:a05:6871:e7cd:b0:29d:f773:6f24 with SMTP id
+ 586e51a60fabf-29df7739d04mr1614261fac.13.1732817587996; 
+ Thu, 28 Nov 2024 10:13:07 -0800 (PST)
 Received: from [172.20.3.167] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71d725d900dsm402044a34.57.2024.11.28.10.01.03
- for <qemu-devel@nongnu.org>
+ 46e09a7af769-71d7c820850sm37578a34.73.2024.11.28.10.13.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 10:01:03 -0800 (PST)
-Message-ID: <eac37ef8-4df8-481c-badf-2fbcea447404@linaro.org>
-Date: Thu, 28 Nov 2024 12:01:01 -0600
+ Thu, 28 Nov 2024 10:13:07 -0800 (PST)
+Message-ID: <bd910b04-b05c-4325-a82e-ed864fe46d82@linaro.org>
+Date: Thu, 28 Nov 2024 12:13:05 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] riscv/gdb: add virt mode debug interface
-To: qemu-devel@nongnu.org
-References: <tencent_B52B1EB0A504D6F690B6E6F3FD3AC9BCDC09@qq.com>
- <8734jbh21e.fsf@draig.linaro.org>
+Subject: Re: [RFC PATCH] softfloat: Allow runtime choice of default NaN value
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20241128145455.3742294-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <8734jbh21e.fsf@draig.linaro.org>
+In-Reply-To: <20241128145455.3742294-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -101,44 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/28/24 08:21, Alex Bennée wrote:
-> Yanfeng Liu <yfliu2008@qq.com> writes:
+On 11/28/24 08:54, Peter Maydell wrote:
+> Currently we hardcode the default NaN value in parts64_default_nan()
+> using a compile-time ifdef ladder. This is awkward for two cases:
+>   * for single-QEMU-binary we can't hard-code target-specifics like this
+>   * for Arm FEAT_AFP the default NaN value depends on FPCR.AH
+>     (specifically the sign bit is different)
 > 
->> This adds `virt` virtual register on debug interface so that users
->> can access current virtualization mode for debugging purposes.
->>
->> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
->> ---
->>   gdb-xml/riscv-32bit-virtual.xml |  1 +
->>   gdb-xml/riscv-64bit-virtual.xml |  1 +
->>   target/riscv/gdbstub.c          | 18 ++++++++++++------
->>   3 files changed, 14 insertions(+), 6 deletions(-)
->>
->> diff --git a/gdb-xml/riscv-32bit-virtual.xml b/gdb-xml/riscv-32bit-virtual.xml
->> index 905f1c555d..d44b6ca2dc 100644
->> --- a/gdb-xml/riscv-32bit-virtual.xml
->> +++ b/gdb-xml/riscv-32bit-virtual.xml
->> @@ -8,4 +8,5 @@
->>   <!DOCTYPE feature SYSTEM "gdb-target.dtd">
->>   <feature name="org.gnu.gdb.riscv.virtual">
->>     <reg name="priv" bitsize="32"/>
->> +  <reg name="virt" bitsize="32"/>
->>   </feature>
->> diff --git a/gdb-xml/riscv-64bit-virtual.xml b/gdb-xml/riscv-64bit-virtual.xml
->> index 62d86c237b..7c9b63d5b6 100644
->> --- a/gdb-xml/riscv-64bit-virtual.xml
->> +++ b/gdb-xml/riscv-64bit-virtual.xml
->> @@ -8,4 +8,5 @@
->>   <!DOCTYPE feature SYSTEM "gdb-target.dtd">
->>   <feature name="org.gnu.gdb.riscv.virtual">
->>     <reg name="priv" bitsize="64"/>
->> +  <reg name="virt" bitsize="64"/>
->>   </feature>
+> Add a field to float_status to specify the default NaN value; fall
+> back to the old ifdef behaviour if these are not set.
 > 
-> I assume these are mirrored in gdb not a QEMU only extension?
+> The default NaN value is specified by setting a uint8_t to a
+> pattern corresponding to the sign and upper fraction parts of
+> the NaN; the lower bits of the fraction are set from bit 0 of
+> the pattern.
+> 
+> This is an RFC to ask for opinions on whether this is the right
+> way to let the target set its default NaN. I can't decide whether
+> I think encoding it into a uint8_t like that is clever, or merely
+> too clever :-)
 
-No, we're making this up fresh.  This needs to go into a new feature, at minimum.
-But buy-in from upstream gdb is always better.
+I think that's perfectly fine.
+
+>   #elif defined(TARGET_HEXAGON)
+> -    sign = 1;
+> -    frac = ~0ULL;
+> +        /*
+> +         * Sign bit set, all frac bits set. This is an odd special case,
+> +         * where our value doesn't match up with the snan_bit_is_one setting.
+> +         * This is because for Hexagon the returned value is always -1,
+> +         * not a real NaN value.
+> +         */
+> +        dnan_pattern = 0b11111111;
+
+It's a real (signalling) nan value -- the oddity is that the default nan is not quiet.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
