@@ -4,57 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2BB5D690F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 11:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03E88D690FA
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 11:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGcIq-0000fQ-G9; Thu, 28 Nov 2024 06:03:20 -0500
+	id 1tGcMZ-0003X6-9E; Thu, 28 Nov 2024 06:07:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tugy@chinatelecom.cn>)
- id 1tGcIh-0000dx-Mt; Thu, 28 Nov 2024 06:03:12 -0500
-Received: from smtpnm6-12.21cn.com ([182.42.119.59] helo=chinatelecom.cn)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tugy@chinatelecom.cn>)
- id 1tGcId-0003Al-DT; Thu, 28 Nov 2024 06:03:11 -0500
-HMM_SOURCE_IP: 192.168.137.232:0.1841577584
-HMM_ATTACHE_NUM: 0000
-HMM_SOURCE_TYPE: SMTP
-Received: from clientip-139.200.108.9 (unknown [192.168.137.232])
- by chinatelecom.cn (HERMES) with SMTP id 8B651110001B3;
- Thu, 28 Nov 2024 18:53:30 +0800 (CST)
-X-189-SAVE-TO-SEND: +tugy@chinatelecom.cn
-Received: from  ([139.200.108.9])
- by gateway-ssl-dep-6977f57994-b9pvf with ESMTP id
- e2d79c8f05d146fd81dec2eac2d5e3ae for eblake@redhat.com; 
- Thu, 28 Nov 2024 18:53:33 CST
-X-Transaction-ID: e2d79c8f05d146fd81dec2eac2d5e3ae
-X-Real-From: tugy@chinatelecom.cn
-X-Receive-IP: 139.200.108.9
-X-MEDUSA-Status: 0
-From: tugy@chinatelecom.cn
-To: eblake@redhat.com, armbru@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org,
-	tugy@chinatelecom.cn
-Subject: [PATCH 1/2] crpyto: support encryt and decrypt parallelly using
- thread pool
-Date: Thu, 28 Nov 2024 18:51:21 +0800
-Message-Id: <7fea2c563ffafa2128fb5af07e98c8fa1aca9441.1732789721.git.tugy@chinatelecom.cn>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1732789721.git.tugy@chinatelecom.cn>
-References: <cover.1732789721.git.tugy@chinatelecom.cn>
-In-Reply-To: <cover.1732789721.git.tugy@chinatelecom.cn>
-References: <cover.1732789721.git.tugy@chinatelecom.cn>
-Received-SPF: pass client-ip=182.42.119.59; envelope-from=tugy@chinatelecom.cn;
- helo=chinatelecom.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tGcMT-0003W4-29
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 06:07:05 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tGcMM-0005oq-Hb
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 06:07:02 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5d01db666ceso837130a12.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 03:06:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732792015; x=1733396815; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8kNjCRSoXw2jqQFwpOaavwKDFP4GzOqvpfROk6xC3N4=;
+ b=TP2zoSAm/jipZkA17Sor8QdKYZpGcbDLqblorBi92fc43FG9nR3ltzIqvzCMCk/8Gr
+ l8hSydpfPjhd4KQ39JoudsujcVuvT26MfVzEzN+UOhvQ2iqDJsY6BQ1hJ2IgjK9FWvXx
+ te64vH+JjeYYfZdzHH0WZ/XIa2jPWprbkXuLXYG2vxlSzgYOD+kdjTTjw/EuL9vtOH+T
+ v/vmOhujieYqBoJsDEaNLB6FXAw0PuxSM1iID4hNBwjFiwFd73Gp3m1gx7k/cD+PGNfg
+ A6LIR68GDJgixLuF2qMPRO9d53bghtoLX59c25OfJk0L1EXAl6PC1kqTJFJTyPF9PduN
+ V9Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732792015; x=1733396815;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8kNjCRSoXw2jqQFwpOaavwKDFP4GzOqvpfROk6xC3N4=;
+ b=ngrTPKKp3OGkFIwYl7ob4cWa4GK6vSvqNB8ZcxyZkkQeW1Y87X1xjV6oftJEUmrMzj
+ fY1pKeYkZ9Lc9d64GLQedZ0/5HbmfCiqKHIphgblYjwhEgn4IFz+kSLD5CmIv0hfxUCs
+ 0QCtY+211ki75egATavyX2V0++YwnwZ+pKAYoKU6OuSOf5mBOUJbmIqjxH+jDtkUibTC
+ 4A/6W1GgZgOmrBeAHpmneveK1Xp0OdUleuBmEzCv3nNTyKYg1w9no9Ov1Zjwb594hGfT
+ uUmbvb2OmSuEhMSRu2PPAwG2ZMETnrAm2vd47WX+BuhBJviwhpej8+r5eQhRRyDYC18y
+ doxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVA2aw+4yvtZ5OnsIZnw4kbt4AqHvUUSGXbL7M7LHkXQI0hfIBUx9dh8KdsBpE2OranPCFVBRsCplDP@nongnu.org
+X-Gm-Message-State: AOJu0YwupBVazyFHHg2xFsNmnrM/CO3uueHZL/ed3zjqKGZsN5Mmx9ic
+ AZ/ZNtDDOagHGHbX8yAL19A9gBvOXJ9Flhf3+HaDRubxvlphnsqTYN6Rc5z4eUlLvvDd/8vJbxW
+ w7kgBX2qdh0wPTG3nLBAgsPpqO5maD5HVbsc5uw==
+X-Gm-Gg: ASbGncvaqCJUvbTMIaxKhBVStIWraZYVrcgHfyhPlTq+q4SE4sTz6D3iM5paEtJXExM
+ 2tKjjdSZ8jlxm2dHmflFv2zUSAlUo7j11
+X-Google-Smtp-Source: AGHT+IEo13wQbIF3z3AAwBM2bi/j5Ye6dnd/ySq80ABX3xotUry3K7QB9GrlqhSFrpDxSgQBLeR2FNRmvCdEuUj+xrE=
+X-Received: by 2002:a05:6402:40c6:b0:5cf:f82:ecef with SMTP id
+ 4fb4d7f45d1cf-5d080b8c951mr6241892a12.2.1732792015459; Thu, 28 Nov 2024
+ 03:06:55 -0800 (PST)
+MIME-Version: 1.0
+References: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
+ <2e956389-289a-4806-8985-ab846d808736@kaod.org>
+ <b520adf4-12f1-4261-a48f-bb74589bb31d@linaro.org>
+ <a7c967ce-6bc0-47e0-aa25-cc89dab29cfb@kaod.org>
+In-Reply-To: <a7c967ce-6bc0-47e0-aa25-cc89dab29cfb@kaod.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 28 Nov 2024 11:06:44 +0000
+Message-ID: <CAFEAcA9e5PFNoNh4u7paY5k5RnMgJ-3c++eGJd4u8CjjvDCvYw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Introduce a new Write Protected pin inverted
+ property
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee <steven_lee@aspeedtech.com>, 
+ Troy Lee <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>, 
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>, 
+ "open list:SD (Secure Card)" <qemu-block@nongnu.org>, troy_lee@aspeedtech.com,
+ yunlin.tang@aspeedtech.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,163 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guoyi Tu <tugy@chinatelecom.cn>
+On Wed, 27 Nov 2024 at 11:26, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
+>
+>
+> > Having to modify sdhci.c internals is dubious, since inversion
+> > occurs out of this block. If this is the soc/board layer, isn't
+> > better to model at this level? Smth like:
+> >
+> > -- >8 --
+> > diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+> > index be3eb70cdd7..aad9be66b75 100644
+> > --- a/hw/arm/aspeed_ast2600.c
+> > +++ b/hw/arm/aspeed_ast2600.c
+> > @@ -559,8 +559,9 @@ static void aspeed_soc_ast2600_realize(DeviceState =
+*dev, Error **errp)
+> >       }
+> >       aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdhci), 0,
+> >                       sc->memmap[ASPEED_DEV_SDHCI]);
+> > +    irq =3D aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI);
+> >       sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci), 0,
+> > -                       aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI));
+> > +                       sc->sdhci_wp_inverted ? qemu_irq_invert(irq) : =
+irq);
+> >
+> >       /* eMMC */
+> >       if (!sysbus_realize(SYS_BUS_DEVICE(&s->emmc), errp)) {
+> > ---
+>
+> Nice ! I didn't know about qemu_irq_invert().
 
-Currently, disk I/O encryption and decryption operations are performed sequentially
-in the main thread or IOthread. When the number of I/O requests increases,
-this becomes a performance bottleneck.
+I am not a fan of qemu_irq_invert(). It's one of those ancient
+pre-QOM APIs that we ideally would get rid of at some point.
+Two problems with it:
 
-To address this issue, this patch using the thread pool to perform I/O encryption
-and decryption in parallel to improving overall efficiency.
+(1) It allocates and returns a qemu_irq directly,
+so in the patch above you're effectively leaking that
+allocation. (Not a big deal since the SoC object is going to
+be around for the life of the QEMU process, but probably
+the clang leak-sanitizer will complain.)
 
-Signed-off-by: Guoyi Tu <tugy@chinatelecom.cn>
----
- block/crypto.c | 103 ++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 97 insertions(+), 6 deletions(-)
+(2) It calls qemu_irq_raise() directly, immediately. This is
+kind of bogus in a realize function, where you're not supposed
+to be raising IRQ lines yet; it also doesn't do anything about
+reset, so if the device on the other end *did* care about seeing
+that 0->1 transition then it will be broken on system-reset
+because the transition won't happen. (Handling "device is supposed
+to have an asserted-as-1 line coming out of reset" is not
+something that we do very well in QEMU generally. In theory
+3-phase reset is supposed to help with this by letting you do
+the assert-the-line in the reset-exit phase, but in practice we
+typically just don't model the line-assertion at all and
+trust that the reset state of the device on the far end is
+what it ought to be anyway...)
 
-diff --git a/block/crypto.c b/block/crypto.c
-index 80b2dba17a..c085f331ce 100644
---- a/block/crypto.c
-+++ b/block/crypto.c
-@@ -22,6 +22,7 @@
- 
- #include "block/block_int.h"
- #include "block/qdict.h"
-+#include "block/thread-pool.h"
- #include "sysemu/block-backend.h"
- #include "crypto/block.h"
- #include "qapi/opts-visitor.h"
-@@ -40,6 +41,7 @@ struct BlockCrypto {
-     QCryptoBlock *block;
-     bool updating_keys;
-     BdrvChild *header;  /* Reference to the detached LUKS header */
-+    bool encrypt_in_parallel;
- };
- 
- 
-@@ -460,6 +462,94 @@ static int block_crypto_reopen_prepare(BDRVReopenState *state,
-     return 0;
- }
- 
-+
-+typedef struct CryptoAIOData {
-+    QCryptoBlock *block;
-+    uint64_t offset;
-+    uint8_t *buf;
-+    size_t len;
-+    bool encrypt;
-+    Error **errp;
-+} CryptoAIOData;
-+
-+
-+static int handle_aiocb_encdec(void *opaque)
-+{
-+    CryptoAIOData *aiocb = opaque;
-+
-+    if (aiocb->encrypt) {
-+        if (qcrypto_block_encrypt(aiocb->block, aiocb->offset,
-+                                  aiocb->buf, aiocb->len, aiocb->errp) < 0) {
-+            return -EIO;
-+        }
-+    } else {
-+        if (qcrypto_block_decrypt(aiocb->block, aiocb->offset,
-+                                  aiocb->buf, aiocb->len, aiocb->errp) < 0) {
-+            return -EIO;
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+
-+static int coroutine_fn block_crypto_submit_co(BlockDriverState *bs, uint64_t offset,
-+                                               uint8_t *buf, size_t len, bool encrypt,
-+                                               Error **errp)
-+{
-+    BlockCrypto *crypto = bs->opaque;
-+    CryptoAIOData acb;
-+
-+    acb = (CryptoAIOData) {
-+        .block = crypto->block,
-+        .offset = offset,
-+        .buf = buf,
-+        .len = len,
-+        .encrypt = encrypt,
-+        .errp = errp,
-+    };
-+    return thread_pool_submit_co(handle_aiocb_encdec, &acb);
-+}
-+
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+block_crypto_encrypt(BlockDriverState *bs, uint64_t offset,
-+                     uint8_t *buf, size_t len, Error **errp)
-+{
-+    BlockCrypto *crypto = bs->opaque;
-+    int ret = 0;
-+
-+    if (crypto->encrypt_in_parallel) {
-+        ret = block_crypto_submit_co(bs, offset, buf, len, true, errp);
-+    } else {
-+        if (qcrypto_block_encrypt(crypto->block, offset, buf, len, errp) < 0) {
-+            ret = -EIO;
-+        }
-+    }
-+
-+    return ret;
-+}
-+
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+block_crypto_decrypt(BlockDriverState *bs, uint64_t offset,
-+                     uint8_t *buf, size_t len, Error **errp)
-+{
-+    BlockCrypto *crypto = bs->opaque;
-+    int ret = 0;
-+
-+    if (crypto->encrypt_in_parallel) {
-+        ret = block_crypto_submit_co(bs, offset, buf, len, false, errp);
-+    } else {
-+        if (qcrypto_block_decrypt(crypto->block, offset, buf, len, errp) < 0) {
-+            ret = -EIO;
-+        }
-+    }
-+
-+    return ret;
-+}
-+
-+
- /*
-  * 1 MB bounce buffer gives good performance / memory tradeoff
-  * when using cache=none|directsync.
-@@ -508,9 +598,10 @@ block_crypto_co_preadv(BlockDriverState *bs, int64_t offset, int64_t bytes,
-             goto cleanup;
-         }
- 
--        if (qcrypto_block_decrypt(crypto->block, offset + bytes_done,
--                                  cipher_data, cur_bytes, NULL) < 0) {
--            ret = -EIO;
-+        ret = block_crypto_decrypt(bs, offset + bytes_done,
-+                                   cipher_data, cur_bytes, NULL);
-+
-+        if (ret < 0) {
-             goto cleanup;
-         }
- 
-@@ -565,9 +656,9 @@ block_crypto_co_pwritev(BlockDriverState *bs, int64_t offset, int64_t bytes,
- 
-         qemu_iovec_to_buf(qiov, bytes_done, cipher_data, cur_bytes);
- 
--        if (qcrypto_block_encrypt(crypto->block, offset + bytes_done,
--                                  cipher_data, cur_bytes, NULL) < 0) {
--            ret = -EIO;
-+        ret = block_crypto_encrypt(bs, offset + bytes_done,
-+                                   cipher_data, cur_bytes, NULL);
-+        if (ret < 0) {
-             goto cleanup;
-         }
- 
--- 
-2.17.1
+I would not recommend using qemu_irq_invert() in new code.
 
+I guess in an ideal world we'd implement a QOM object
+that encapsulated the the "not gate" logic, similar to
+TYPE_OR_IRQ. (Though for TYPE_OR_IRQ we made the mistake
+of making it inherit from TYPE_DEVICE, not TYPE_SYSBUS_DEVICE,
+so it doesn't get reset properly on system reset and so
+the "what happens to the output on reset" is still not
+really correct.)
+
+thanks
+-- PMM
 
