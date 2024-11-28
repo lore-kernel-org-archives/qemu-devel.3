@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A2AD70DED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 19:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3376D70DEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 19:07:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGjoH-0007V8-Gf; Thu, 28 Nov 2024 14:04:21 -0500
+	id 1tGjr7-0001ew-PQ; Thu, 28 Nov 2024 14:07:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tGjo8-0007T0-7R
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 14:04:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tGjo3-00014j-P5
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 14:04:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732820642;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DiAuo9+wcwyjELbBvX9cPcyNm6cXW718y3hyCUiqNXA=;
- b=NTWuHkdsF+udxQlxI2C4/kkHvfFCFfpUNKY6ssEIYPdvyi5WxX9J3u8+mv4gKFA58cHkG8
- pB+7PzpBkku9G5WzuLXlmILo9/oP9qPLft4KiOonrm2v/A0ZIaUuLiw/Wx1e7h+jlyjhT8
- fHuAjMfkWxbzDrPRYG2Rnu8LmQ9eKqo=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-274-Kz18RYt5Pu6luq37s5tIaw-1; Thu, 28 Nov 2024 14:04:00 -0500
-X-MC-Unique: Kz18RYt5Pu6luq37s5tIaw-1
-X-Mimecast-MFC-AGG-ID: Kz18RYt5Pu6luq37s5tIaw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-385dc37cb3eso87949f8f.0
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 11:04:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1tGjr3-0001eO-NT
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 14:07:10 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1tGjr1-0002XP-It
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 14:07:09 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2ee4980f085so231182a91.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 11:07:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1732820819; x=1733425619;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=+bdT7cryshk73Z7rWwiV/etY/KAKdWdiNT6xbiDjOp8=;
+ b=YAyQ297YXAz+WdUB34QzxYkTtpAnbB7IgeJqVNA/A/+iNkcHAyTybH3KZ7nD6C53as
+ YCSLQ2gl/0UhuOvL+7J2HEUzJGhyMmGI1e3oyRt/wFIl9bgk/aPjmGDQkI19jIa2auJZ
+ Sla6WJg4pigillM0/mPBtLuaufTNDANFZHhIm+Fyilv7xIULXlxkalP/4bzT1QNkp/pS
+ lQmlx6hBqBiL/Q5gUG4zg/2ZaR7XtlN5mtCoO/EcOmZCk9ovYj3lGlKUsWz+iWd9o526
+ Wx2KWw/kfXoRde3W6xHRgqhc31JmqrFcrYTRBaNJzW7ZaVSS/LZxCLdrsQPJ9AhVRzZh
+ CjqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732820638; x=1733425438;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DiAuo9+wcwyjELbBvX9cPcyNm6cXW718y3hyCUiqNXA=;
- b=CwKh4xtH2vSDx9Zy0+gJrqtaECBiTd0diO/RdF+0xdGNFTQwzVBQukkRaVnxfAHcUF
- NiLixCSewK7kw76gE7DLOl5gfT8TNJkueTnZw+njqlY0yCkYzuPVMi3alg+wHJS5Vlff
- d3r7dV8iwQipFu8xgx/BA+D0ubha11fl2K8AH8W2FfHYOtnaoDG4BVjo7FMUSVPQXIme
- qdEk2zWk+zOCs3+fCLTjIGd5hKj4GZJCCSo8Ikq5DEXFQ32vKZNhEewiOSoEAJpmgsVe
- uVFgVFsOfbjM7htIu94v34U7ajV2cNekEHq3OwTcQzckd3J2tmtzLmGRZy6CFFudNGjO
- WpPQ==
-X-Gm-Message-State: AOJu0Yxuwvc/T1wuSoTrcKI8dzh5wuXMFM2Nt5nPZZHSp3wNxbaR/lPj
- coJw095aIWx/QWLyLVm5HSM5OtimodjOf4PBEU3zA+V08uqmeKpv07wvmkzgQX92wtoQYPJnxbG
- Me/6VpKIr1v4j0c0Huf6q4MvFtWKhPTdvvGBKIaOgRrwpT+HJmufAzsktI/a2XjtMfqTwucEdb5
- sdu09a84UZFeGtj29C9YHBBvs/22ItzPNdlge6
-X-Gm-Gg: ASbGncvuQKz3Nef0mYKXkPVFH30DAmwi8q0E+T0DjhFwx0igeD+LcYRi1On78aalqb/
- zGrzrijdmtE2p4kV1F4CYaa6bFmMMM+/ZUMV/z+fHvFLDwrWdGryoeqlcsptCPhhM/nzkQ1wwBG
- 0z5NydC5FqafaH6VYX0vCNnAYHgA4+dEwONegOehKeJ8U5muL6i5/dX605/tR1zj2SR6Ff4BqdO
- 1iYblQT7nxiOA7MQURFsDN4nu3Yir61I8PuudhDN1uwuUwqQnCgPBc=
-X-Received: by 2002:a5d:64ac:0:b0:382:4421:811a with SMTP id
- ffacd0b85a97d-385c6ef3978mr6899122f8f.49.1732820638630; 
- Thu, 28 Nov 2024 11:03:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFe4vlitL7OyaXrAhfVGYjuVUBrA3iM7RWhR3APnmitCGqK52qW8/BVP3bMq8qqJWA5j7KZBg==
-X-Received: by 2002:a5d:64ac:0:b0:382:4421:811a with SMTP id
- ffacd0b85a97d-385c6ef3978mr6899086f8f.49.1732820638233; 
- Thu, 28 Nov 2024 11:03:58 -0800 (PST)
-Received: from [192.168.10.47] ([151.49.236.146])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385ccd3690dsm2316944f8f.35.2024.11.28.11.03.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Nov 2024 11:03:57 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Guenter Roeck <linux@roeck-us.net>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fiona Ebner <f.ebner@proxmox.com>, qemu-stable@nongnu.org
-Subject: [PULL 3/3] scsi: megasas: Internal cdbs have 16-byte length
-Date: Thu, 28 Nov 2024 20:03:49 +0100
-Message-ID: <20241128190349.541014-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241128190349.541014-1-pbonzini@redhat.com>
-References: <20241128190349.541014-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1732820819; x=1733425619;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+bdT7cryshk73Z7rWwiV/etY/KAKdWdiNT6xbiDjOp8=;
+ b=gcEqpdEB9loMQYhA4PrfG5xiWOGH8wlJJceI6xwcJ05/ohPilSEDdSIQvjU/eGPykK
+ 6tUN3RnRG8/mjfwbEKI/u/S3YNlcevSf5kB1G7PtxWvQwzEeduzlklq4o1DRSwRUv4t7
+ ln9UctjWsiWXTDLU8+zjkimitgcBCbwZd5U84hCsgyM2/gNIRTn1pHn9HlOLfU3CSw6A
+ xw49GMWYJBgdK5x20kor6t0ZryGpJ8e3VpPzfOV1mfZXdvXzJli7OlKSZh5DnCFyWz97
+ A6I1YDe2Ag5zXPNIin2uifkFthXH3YPR5VHBz5B0ExZukTFd2U9NyCuu3CqWCpUgno/N
+ /WKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVD7rOTHHOK1qTu1NJVhETe4nzPCybqOxd3PJE/LQ+606UaYdZyF2IMPznEec4FMcMAxz6pK6j3D7Up@nongnu.org
+X-Gm-Message-State: AOJu0YyqKf5Y3SynGtx5PUJQMaYJixiI82QKKGQK/S+JwBYVnbLVv+GK
+ l3PVrCes3bNzsFudp9mLg7lWciXm5JPWANf/fOwHZ94kgBIdv0VtH5NnyssvVQ3RxNZVIi3eqF2
+ oPUiUn+rxTrP2qc6akrfwhHdFLASfbPrWUHj2
+X-Gm-Gg: ASbGncvKjgj5g+mH6u5xCQsFsj7GFfSKryyZ3MrNKpaXIymyfneW2diM3t6JH8Ptbfx
+ ZL+RZY0HR/OviRzMztWHdKFHLeG5SIKY=
+X-Google-Smtp-Source: AGHT+IETqFmDBJ51a/UjIriTDnpzITx8e9HRHkxCnqHR1i4T26vNY3vFP2smDLjFoeUQ47T1TKQlYkArGvYf3tp/YqQ=
+X-Received: by 2002:a17:90b:4e8e:b0:2ea:4578:46e0 with SMTP id
+ 98e67ed59e1d1-2ee08ec815amr10685317a91.17.1732820819201; Thu, 28 Nov 2024
+ 11:06:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20241113144923.41225-1-phil@philjordan.eu>
+ <b772f6e7-e506-4f87-98d1-5cbe59402b2b@redhat.com>
+ <ed2246ca-3ede-918c-d18d-f47cf8758d8c@amd.com>
+ <CABgObfYhQDmjh4MJOaqeAv0=cFUR=iaoLeSoGYh9iMnjDKM2aA@mail.gmail.com>
+ <CAGCz3vtTgo6YdgBxO+5b-W04m3k1WhdiaqH1_ojgj_ywjZmV7A@mail.gmail.com>
+ <e9404dd2-56d2-4c6d-81f2-76060c4b4067@linaro.org>
+In-Reply-To: <e9404dd2-56d2-4c6d-81f2-76060c4b4067@linaro.org>
+From: Phil Dennis-Jordan <lists@philjordan.eu>
+Date: Thu, 28 Nov 2024 20:06:47 +0100
+Message-ID: <CAGCz3vtxjKH0H8BL4ES_phNK8=Dy4Jzg3d7dLyNxuBQaSjTPQA@mail.gmail.com>
+Subject: Re: [PATCH] i386/kvm: Fix kvm_enable_x2apic link error in non-KVM
+ builds
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Shukla,
+ Santosh" <santosh.shukla@amd.com>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, mtosatti@redhat.com, suravee.suthikulpanit@amd.com
+Content-Type: multipart/alternative; boundary="000000000000636c870627fdc9f7"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=lists@philjordan.eu; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,73 +100,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
+--000000000000636c870627fdc9f7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Host drivers do not necessarily set cdb_len in megasas io commands.
-With commits 6d1511cea0 ("scsi: Reject commands if the CDB length
-exceeds buf_len") and fe9d8927e2 ("scsi: Add buf_len parameter to
-scsi_req_new()"), this results in failures to boot Linux from affected
-SCSI drives because cdb_len is set to 0 by the host driver.
-Set the cdb length to its actual size to solve the problem.
+On Thu, 28 Nov 2024 at 17:46, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g>
+wrote:
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Link: https://lore.kernel.org/r/20230228171129.4094709-1-linux@roeck-us.net
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/scsi/megasas.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+> On 28/11/24 17:38, Phil Dennis-Jordan wrote:
+> > Paolo, could we please apply either Sairaj and Santosh's fix at
+> > https://patchew.org/QEMU/20241114114509.15350-1-sarunkod@amd.com/
+> > <https://patchew.org/QEMU/20241114114509.15350-1-sarunkod@amd.com/>
+> > or mine to fix this link error? As neither patch has so far been merged=
+,
+> > 9.2.0-rc2 still fails to build on macOS, at least on my local systems.
+> > I'm not sure why CI builds aren't jumping up and down about this, but
+> > neither the Xcode 15.2 nor 16.1 toolchains are happy on macOS 14.7/arm6=
+4.
+>
+> Just curious, is your build configured with --enable-hvf --enable-tcg?
+>
+>
+It's my understanding that both HVF and TCG are enabled by default when
+building on macOS - they both show up as "YES" in the ./configure output,
+and the relevant -accel works; at any rate, specifying them explicitly made
+no difference with regard to this link error. Your question did however
+prompt me to dig a little deeper and check which of my test configurations
+was affected.
 
-diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
-index 221b06d6aaf..b33229d71a4 100644
---- a/hw/scsi/megasas.c
-+++ b/hw/scsi/megasas.c
-@@ -1781,7 +1781,7 @@ static int megasas_handle_io(MegasasState *s, MegasasCmd *cmd, int frame_cmd)
-     uint8_t cdb[16];
-     int len;
-     struct SCSIDevice *sdev = NULL;
--    int target_id, lun_id, cdb_len;
-+    int target_id, lun_id;
- 
-     lba_count = le32_to_cpu(cmd->frame->io.header.data_len);
-     lba_start_lo = le32_to_cpu(cmd->frame->io.lba_lo);
-@@ -1790,7 +1790,6 @@ static int megasas_handle_io(MegasasState *s, MegasasCmd *cmd, int frame_cmd)
- 
-     target_id = cmd->frame->header.target_id;
-     lun_id = cmd->frame->header.lun_id;
--    cdb_len = cmd->frame->header.cdb_len;
- 
-     if (target_id < MFI_MAX_LD && lun_id == 0) {
-         sdev = scsi_device_find(&s->bus, 0, target_id, lun_id);
-@@ -1805,15 +1804,6 @@ static int megasas_handle_io(MegasasState *s, MegasasCmd *cmd, int frame_cmd)
-         return MFI_STAT_DEVICE_NOT_FOUND;
-     }
- 
--    if (cdb_len > 16) {
--        trace_megasas_scsi_invalid_cdb_len(
--            mfi_frame_desc(frame_cmd), 1, target_id, lun_id, cdb_len);
--        megasas_write_sense(cmd, SENSE_CODE(INVALID_OPCODE));
--        cmd->frame->header.scsi_status = CHECK_CONDITION;
--        s->event_count++;
--        return MFI_STAT_SCSI_DONE_WITH_ERROR;
--    }
--
-     cmd->iov_size = lba_count * sdev->blocksize;
-     if (megasas_map_sgl(s, cmd, &cmd->frame->io.sgl)) {
-         megasas_write_sense(cmd, SENSE_CODE(TARGET_FAILURE));
-@@ -1824,7 +1814,7 @@ static int megasas_handle_io(MegasasState *s, MegasasCmd *cmd, int frame_cmd)
- 
-     megasas_encode_lba(cdb, lba_start, lba_count, is_write);
-     cmd->req = scsi_req_new(sdev, cmd->index,
--                            lun_id, cdb, cdb_len, cmd);
-+                            lun_id, cdb, sizeof(cdb), cmd);
-     if (!cmd->req) {
-         trace_megasas_scsi_req_alloc_failed(
-             mfi_frame_desc(frame_cmd), target_id, lun_id);
--- 
-2.47.0
+It looks like the critical setting is --enable-debug. I think that changes
+the exact optimisation level (not -O0 but less aggressive than the
+default), so it's not unreasonable that this would change the compiler
+pass(es) for eliminating constant conditional branches.
 
+So yeah, when I build latest master/staging with --enable-debug on macOS
+and my --target-list includes x86_64, QEMU fails to link with an undefined
+symbol error for _kvm_enable_x2apic. This happens on both arm64 and x86-64
+hosts, and with various Xcode 15.x and 16.y toolchains.
+
+I have to admit I'm personally not a big fan of relying on the optimiser
+for removing references to these symbols, but restructuring the conditional
+expression like in Sairaj and Santosh's patch seems to allow even the
+optimisation level used for debug builds to do it, so I guess I can't argue
+with the result. :-)
+
+Phil
+
+--000000000000636c870627fdc9f7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">On Thu, 28 Nov 2024 at 17:46, Philippe Ma=
+thieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org=
+</a>&gt; wrote:</div><div class=3D"gmail_quote"><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">On 28/11/24 17:38, Phil Dennis-Jordan wrote:<br>
+&gt; Paolo, could we please apply either Sairaj and Santosh&#39;s fix at<br=
+>
+&gt; <a href=3D"https://patchew.org/QEMU/20241114114509.15350-1-sarunkod@am=
+d.com/" rel=3D"noreferrer" target=3D"_blank">https://patchew.org/QEMU/20241=
+114114509.15350-1-sarunkod@amd.com/</a> <br>
+&gt; &lt;<a href=3D"https://patchew.org/QEMU/20241114114509.15350-1-sarunko=
+d@amd.com/" rel=3D"noreferrer" target=3D"_blank">https://patchew.org/QEMU/2=
+0241114114509.15350-1-sarunkod@amd.com/</a>&gt;<br>
+&gt; or mine to fix this link error? As neither patch has so far been merge=
+d, <br>
+&gt; 9.2.0-rc2 still fails to build on macOS, at least on my local systems.=
+ <br>
+&gt; I&#39;m not sure why CI builds aren&#39;t jumping up and down about th=
+is, but <br>
+&gt; neither the Xcode 15.2 nor 16.1 toolchains are happy on macOS 14.7/arm=
+64.<br>
+<br>
+Just curious, is your build configured with --enable-hvf --enable-tcg?<br>
+<br></blockquote><div><br></div><div>It&#39;s my understanding that both HV=
+F and TCG are enabled by default when building on macOS - they both show up=
+ as &quot;YES&quot; in the ./configure output, and the relevant -accel work=
+s; at any rate, specifying them explicitly made no difference with regard t=
+o this link error. Your question did however prompt me to dig a little deep=
+er and check which of my test configurations was affected.</div><div><br></=
+div><div>It looks like the critical setting is --enable-debug. I think that=
+ changes the exact optimisation level (not -O0 but less aggressive than the=
+ default), so it&#39;s not unreasonable that this would change the compiler=
+ pass(es) for eliminating constant conditional branches.</div><div><br></di=
+v><div>So yeah, when I build latest master/staging with --enable-debug on m=
+acOS and my --target-list includes x86_64, QEMU fails to link with an undef=
+ined symbol error for _kvm_enable_x2apic. This happens on both arm64 and x8=
+6-64 hosts, and with various Xcode 15.x and 16.y toolchains.</div><div><br>=
+</div><div>I have to admit I&#39;m personally not a big fan of relying on t=
+he optimiser for removing references to these symbols, but restructuring th=
+e conditional expression like in Sairaj and Santosh&#39;s patch seems to al=
+low even the  optimisation level used for debug builds to do it, so I guess=
+ I can&#39;t argue with the result. :-)</div><div><br></div><div>Phil</div>=
+<div><br></div></div></div>
+
+--000000000000636c870627fdc9f7--
 
