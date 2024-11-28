@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A85C7D6910A
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2732AD6910C
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:27:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGeXt-0007xi-Ti; Thu, 28 Nov 2024 08:27:02 -0500
+	id 1tGeXD-0007n7-5n; Thu, 28 Nov 2024 08:26:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGeXi-0007uH-Ni
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:26:51 -0500
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ id 1tGeX6-0007mB-CJ
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:26:12 -0500
+Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGeXh-0002eq-9O
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:26:50 -0500
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-29afb4ab611so408209fac.3
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:26:48 -0800 (PST)
+ id 1tGeX0-0002Ew-7d
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:26:10 -0500
+Received: by mail-oa1-x2e.google.com with SMTP id
+ 586e51a60fabf-29737adb604so426020fac.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:26:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732800408; x=1733405208; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732800364; x=1733405164; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Tq0MXRtExZOr+Ret9bpxEjXx/ga6SNtoZEJTk6h68Gw=;
- b=C1Vnif2Mx6hZHNsmTwJvb36AE/FoIS2wArDwEx7MRem+TSgC1N4MT5gJKvBm8gxSgf
- CTaPasIm2a6fUi+fd0TlBPIhcaX2b3hEyvy+Rlv+6Wauw9NqQDbpZ3OAtqtLi0YhHHcO
- 3YmLPGULm91Q+3PjQuPW+3t2hriNzkvZ9THkREaLKyyOpqM1ox2MmqMMNGXM78Hn1xZh
- OdNkGOAIN7BVUqmaV0UNSoU+wExk/PLDbGVNaVr+fNkRlLuMn3bUNM94ylR66F4J2KDf
- IT547f23NbA2+jVkzfcDtgsIUUjYOsx5L4szeg+0fXiAC+4rttCJzWjlI8W8FnAs0Q0G
- N2kg==
+ bh=77b6evkQsMGCzAy1q3Bsxgf2tyj5Tagv4erAZvqqo5k=;
+ b=j7yjIdlm5z9p/s1+/wuhYPaeXtgOlcKVuBk5BqxUvyXhjiTCde3nDwH3IlN6yv0yJo
+ rf9VovxoPmqEIAwJm/C8YaShzW0cQX4tEz7eIPgAY4URHO/pAgCZ6oZYaMdkQpmn2uee
+ JQ7H46vasTsRUvlJG5eVxtz/z81lBwHEJSffQxXX+X7CzYbUE8UpXn9rvldDYRKwFTnU
+ vTui+b0lA91JRGR9p8gozqkjNhPwfF9ARwuEiaW5Z1A6CIa7S3/CNhcZ1To6Q9C7fwDC
+ MlJcVe/cMpPBUb45K3U0IcKdm3HtpCHvneJubg0elk/V6sFY2dpLT/TqBDx5GaaWbHo0
+ DTEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732800408; x=1733405208;
+ d=1e100.net; s=20230601; t=1732800364; x=1733405164;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Tq0MXRtExZOr+Ret9bpxEjXx/ga6SNtoZEJTk6h68Gw=;
- b=DTQj/eKcDHLaCwMGFUk99jFue256hRPTdFGCfqlXrckrhadzxMbKgFaL3ck+HnOgNs
- 1vSbccL6VbxeHHjp+A51NPebIDl/9hZ3v8veZtmlAfgVuYk94nnc36dbLH08zdLNxN8e
- Fp2CYnFnGfp7FoK4B0SRfRASu+8UwZ9IK3JSYvoQzgQ9kTcrHAiN8fODX2e78aPJnlQw
- pimW8Gk8qWOF9c4pYb6C4IkTlS310/e7NuwIwyt1MbKhMEtJ+Kyy71J8Zsuw6VWrt28Y
- raVeCecDBIo9cE2XQMt9WajZQ7mTKg886o8IZ1ONvQc06J7I31pGbix4PGW0XCFBnJH7
- 1kbg==
+ bh=77b6evkQsMGCzAy1q3Bsxgf2tyj5Tagv4erAZvqqo5k=;
+ b=IdS4PK34kshGiJFWYf1qy5I+8tQy4+ix1dT/I9KQPi0NRjZF/7WvhbNKWS0iZ3Lfd8
+ wztMC8tenCRC31qg/if+BoQV6VZnW9xO1OdQMdnmJyVJkszPa+tpuNlzJKD4xv+f5jIM
+ yZR9dLnPuv/blV2RU8h2tFrdzlG9Hw5K0+7pnN/hhHTpsvxYKWncbOrY9UBpYHfipZlE
+ 9lNisVc7g7NgRcQWFWtljEn8+swKrem7n0BzSS6tPxQz0NaM6F625YlwvFx9EsjImrDz
+ tG4lyvZ85qgzhuyx4MvhWgDSiSKYx9Mey0C63nYPkGMLc7tjdFT50S1pn7K/YOKbDruQ
+ m0ig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVKYfmi8M5AaY+g/XjhQaHDWU/nSB5o14KOnCKtUyLjW9A7J+9pO0E3QIT8iTk+F2Luf/omYgOFeXk@nongnu.org
-X-Gm-Message-State: AOJu0YyxU8CID5R5f5WIqGv58zFqM1VyF9h1uWYhPZ9siBE7Hbpj9WR8
- 72j/goWDFokJh9GXDsORm6rNFS2gbwuN60bNjFj7vT0S2nT0NzB52y4cxiOQSTveHomlOWkCQkJ
- PWhw=
-X-Gm-Gg: ASbGncufNfii9Kjub9GojiVV7PerPFy9E4H3iGEg8d4LryZstwRps8IOV1hVwjo6AIl
- uFcp8WRlJLBmAWzSASumHgYuOOiPf6vd1YNqXXWexl3pWwcEK17Bbni7R6A66TtvSZYHnGy/nnK
- aJ41jK98DOVuxwQ1L6RuMuZPtWzsr/H0ReNQYv0NUxAeduOzfQuPtNFEISS9fwFgl5uzKeq07Kv
- +0vb8TueABH05dE/U8QD8msOmFW7/dYvOKUydeVUf6rZO2HZxJZwMmIfiFaSY3RF6Zvg3Ubr4Jq
- RiKpx85Z+OIjWZH8runlbr3Wivzs
-X-Google-Smtp-Source: AGHT+IEUmQBhJZND9aPrWD6clhdeoE9cfM862/n2/IbF2+c+hjmWsRyFB57dRsqAhdiMwjQCJknBmg==
-X-Received: by 2002:a05:6870:a7a1:b0:296:7b65:2fac with SMTP id
- 586e51a60fabf-29dc3fa25b4mr6327859fac.3.1732800408069; 
- Thu, 28 Nov 2024 05:26:48 -0800 (PST)
+ AJvYcCXWKaEzW3W/Igemon6jo1lMccrocW327xQkvsAvIu7siCz2V7N4E5SyzZKzifQyQ8038m3tPKEb0mOF@nongnu.org
+X-Gm-Message-State: AOJu0YybhMQZTQC9nIv4WPDv9gGMr/MI45clGmqFBy0HPXosp0VgWWrW
+ PJUt+D44fzIwhGsFI+o4r84qsZe+cO9oyLhbYRUDTOXlzkmbCobRCxTftjs5kBU=
+X-Gm-Gg: ASbGncunxTxxB58XNEoIiKz4nedBERX5P/ltmhhE9ZZmp+CsYIpykE9nf2hQpL/x3wY
+ aIQR/NmJHk+G83FnDrZ54H8rb9wqxcjCUU1Ynywo5s8HDvWoG1zWqLv4VJrJdp0AbA5nAdccb54
+ /SlpJiOVEYFLRMteCMZUMLG8BoZlxEHkc8gAugw6zCjsVDaJ2s+NqmcdRqUjloBJOmT5AYZbjny
+ Fq9RlkY8/6XGloThClOO2Qi9j3pN65FUCCg+8uMxnebo6kYERJSDzDCyHQjo+vVl+Gymxg/5u1M
+ lhW++2z8iSYfm9THvArSXfEksJtc
+X-Google-Smtp-Source: AGHT+IF0oyf/Q6jqV9WZ3ZJCevjHHI/HTDzMXyFaE50tN/W0x6kyBC/iq1BXhu0wkt8dZCTFQ9a5lw==
+X-Received: by 2002:a05:6870:2f15:b0:296:a1fc:91b5 with SMTP id
+ 586e51a60fabf-29dc3fa43b7mr6245953fac.8.1732800364205; 
+ Thu, 28 Nov 2024 05:26:04 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29de8f24b1bsm402091fac.4.2024.11.28.05.26.46
+ 586e51a60fabf-29de8f31cefsm396693fac.2.2024.11.28.05.26.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 05:26:47 -0800 (PST)
-Message-ID: <f9a1d7c1-c01c-4f2f-a5e3-02dcf3edce70@linaro.org>
-Date: Thu, 28 Nov 2024 07:26:45 -0600
+ Thu, 28 Nov 2024 05:26:03 -0800 (PST)
+Message-ID: <61327755-e626-4185-913d-bc6298a58482@linaro.org>
+Date: Thu, 28 Nov 2024 07:26:01 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0 04/25] tests/fp: Explicitly set inf-zero-nan rule
+Subject: Re: [PATCH for-10.0 03/25] softfloat: Allow runtime choice of inf * 0
+ + NaN result
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20241128104310.3452934-1-peter.maydell@linaro.org>
- <20241128104310.3452934-5-peter.maydell@linaro.org>
+ <20241128104310.3452934-4-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128104310.3452934-5-peter.maydell@linaro.org>
+In-Reply-To: <20241128104310.3452934-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,16 +104,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/28/24 04:42, Peter Maydell wrote:
-> Explicitly set a rule in the softfloat tests for the inf-zero-nan
-> muladd special case.  In meson.build we put -DTARGET_ARM in fpcflags,
-> and so we should select here the Arm rule of
-> float_infzeronan_dnan_if_qnan.
-> ---
->   tests/fp/fp-bench.c | 5 +++++
->   tests/fp/fp-test.c  | 5 +++++
->   2 files changed, 10 insertions(+)
+> +/*
+> + * Rule for result of fused multiply-add 0 * Inf + NaN.
+> + * This must be a NaN, but implementations differ on whether this
+> + * is the input NaN or the default NaN.
+> + *
+> + * You don't need to set this if default_nan_mode is enabled.
+> + * When not in default-NaN mode, it is an error for the target
+> + * not to set the rule in float_status if it uses muladd, and we
+> + * will assert if we need to handle an input NaN and no rule was
+> + * selected.
+> + */
+> +typedef enum __attribute__((__packed__)) {
+> +    /* No propagation rule specified */
+> +    float_infzeronan_none = 0,
+> +    /* Result is never the default NaN (so always the input NaN) */
+> +    float_infzeronan_dnan_never = 0,
 
+Both 0?
+
+Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
