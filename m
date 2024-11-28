@@ -4,87 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3376D70DEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 19:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33121D70DEE
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 19:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGjr7-0001ew-PQ; Thu, 28 Nov 2024 14:07:14 -0500
+	id 1tGkKx-0005pU-Qb; Thu, 28 Nov 2024 14:38:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1tGjr3-0001eO-NT
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 14:07:10 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1tGjr1-0002XP-It
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 14:07:09 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2ee4980f085so231182a91.2
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 11:07:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1732820819; x=1733425619;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+bdT7cryshk73Z7rWwiV/etY/KAKdWdiNT6xbiDjOp8=;
- b=YAyQ297YXAz+WdUB34QzxYkTtpAnbB7IgeJqVNA/A/+iNkcHAyTybH3KZ7nD6C53as
- YCSLQ2gl/0UhuOvL+7J2HEUzJGhyMmGI1e3oyRt/wFIl9bgk/aPjmGDQkI19jIa2auJZ
- Sla6WJg4pigillM0/mPBtLuaufTNDANFZHhIm+Fyilv7xIULXlxkalP/4bzT1QNkp/pS
- lQmlx6hBqBiL/Q5gUG4zg/2ZaR7XtlN5mtCoO/EcOmZCk9ovYj3lGlKUsWz+iWd9o526
- Wx2KWw/kfXoRde3W6xHRgqhc31JmqrFcrYTRBaNJzW7ZaVSS/LZxCLdrsQPJ9AhVRzZh
- CjqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732820819; x=1733425619;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+bdT7cryshk73Z7rWwiV/etY/KAKdWdiNT6xbiDjOp8=;
- b=gcEqpdEB9loMQYhA4PrfG5xiWOGH8wlJJceI6xwcJ05/ohPilSEDdSIQvjU/eGPykK
- 6tUN3RnRG8/mjfwbEKI/u/S3YNlcevSf5kB1G7PtxWvQwzEeduzlklq4o1DRSwRUv4t7
- ln9UctjWsiWXTDLU8+zjkimitgcBCbwZd5U84hCsgyM2/gNIRTn1pHn9HlOLfU3CSw6A
- xw49GMWYJBgdK5x20kor6t0ZryGpJ8e3VpPzfOV1mfZXdvXzJli7OlKSZh5DnCFyWz97
- A6I1YDe2Ag5zXPNIin2uifkFthXH3YPR5VHBz5B0ExZukTFd2U9NyCuu3CqWCpUgno/N
- /WKg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVD7rOTHHOK1qTu1NJVhETe4nzPCybqOxd3PJE/LQ+606UaYdZyF2IMPznEec4FMcMAxz6pK6j3D7Up@nongnu.org
-X-Gm-Message-State: AOJu0YyqKf5Y3SynGtx5PUJQMaYJixiI82QKKGQK/S+JwBYVnbLVv+GK
- l3PVrCes3bNzsFudp9mLg7lWciXm5JPWANf/fOwHZ94kgBIdv0VtH5NnyssvVQ3RxNZVIi3eqF2
- oPUiUn+rxTrP2qc6akrfwhHdFLASfbPrWUHj2
-X-Gm-Gg: ASbGncvKjgj5g+mH6u5xCQsFsj7GFfSKryyZ3MrNKpaXIymyfneW2diM3t6JH8Ptbfx
- ZL+RZY0HR/OviRzMztWHdKFHLeG5SIKY=
-X-Google-Smtp-Source: AGHT+IETqFmDBJ51a/UjIriTDnpzITx8e9HRHkxCnqHR1i4T26vNY3vFP2smDLjFoeUQ47T1TKQlYkArGvYf3tp/YqQ=
-X-Received: by 2002:a17:90b:4e8e:b0:2ea:4578:46e0 with SMTP id
- 98e67ed59e1d1-2ee08ec815amr10685317a91.17.1732820819201; Thu, 28 Nov 2024
- 11:06:59 -0800 (PST)
-MIME-Version: 1.0
-References: <20241113144923.41225-1-phil@philjordan.eu>
- <b772f6e7-e506-4f87-98d1-5cbe59402b2b@redhat.com>
- <ed2246ca-3ede-918c-d18d-f47cf8758d8c@amd.com>
- <CABgObfYhQDmjh4MJOaqeAv0=cFUR=iaoLeSoGYh9iMnjDKM2aA@mail.gmail.com>
- <CAGCz3vtTgo6YdgBxO+5b-W04m3k1WhdiaqH1_ojgj_ywjZmV7A@mail.gmail.com>
- <e9404dd2-56d2-4c6d-81f2-76060c4b4067@linaro.org>
-In-Reply-To: <e9404dd2-56d2-4c6d-81f2-76060c4b4067@linaro.org>
-From: Phil Dennis-Jordan <lists@philjordan.eu>
-Date: Thu, 28 Nov 2024 20:06:47 +0100
-Message-ID: <CAGCz3vtxjKH0H8BL4ES_phNK8=Dy4Jzg3d7dLyNxuBQaSjTPQA@mail.gmail.com>
-Subject: Re: [PATCH] i386/kvm: Fix kvm_enable_x2apic link error in non-KVM
- builds
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Shukla,
- Santosh" <santosh.shukla@amd.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, mtosatti@redhat.com, suravee.suthikulpanit@amd.com
-Content-Type: multipart/alternative; boundary="000000000000636c870627fdc9f7"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::1029;
- envelope-from=lists@philjordan.eu; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+ (Exim 4.90_1)
+ (envelope-from <c81e7219e0736f80bfd3553676a19e2992cff41d@kylie.crudebyte.com>)
+ id 1tGkKq-0005nh-Ii; Thu, 28 Nov 2024 14:37:57 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <c81e7219e0736f80bfd3553676a19e2992cff41d@kylie.crudebyte.com>)
+ id 1tGkKp-0001ai-0Y; Thu, 28 Nov 2024 14:37:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=sZ1E9BcYHFsRPyZxFsRdJMwSjmBFK1SLraoUCBW0/70=; b=ZhMPu
+ j39Ti84RLdDnZat4MKffb/WE/Bq3mYl0pKgav84zVbbWbQ0YobugTZ2sURuvtA42LCbVjU8r2rzLr
+ l/+GT2HOtj9vyiasj4xGmlkr70nlRW25AsHo8X9g3npfcV0HJZhdZpkzNWU8AVIb0cGWUxZW6Ujgb
+ 524Ts9YGl9uhQD7ZX+2LcWHkkFhrdmcl4b5DtjjISff5w5gGMspS4T14cWPDl8ApKpI7DREOqGfsa
+ 2e4szqcS4FgQthRDFU17yLw2iQSBT1M1SAlxBH5nZrGCYAUoptzlS4himyfWa5ut25IOEbT9sTV8e
+ IixA1MbTsMyCviABXd/ySR9zJxUkp5Y0Ll7Q1pR9AJ9Gp4pi73xXiXP3b5GoMummvh3EZ9Dmc5KHb
+ MUhprQG0/mVOUvRei0wB40ALcXCzCjys2inIy8THYc+bAqqBKxy1f9JxP2dXb68/dk5kawS07nidS
+ as+Lbw2zTg490b7Poswf7IUxwUKslCa4XQABX9vTmrEIh8xxbnBEZ+FK4f9qSCJ4FRbVW+Epq/cFj
+ D2Dc33uM6ZqSD55DsgVxtujzsIBhp5f5PeZok9JEUO0bKF8BZC2oosnkbtNdjHByeuJxqvhNGMgpv
+ IIlZxj5IO2Kc40bVxfnzU48qI0IB2jfZQ6qssFDm7kEdjen5aBikNIO6MG4rro=;
+Message-Id: <c81e7219e0736f80bfd3553676a19e2992cff41d.1732820037.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1732820037.git.qemu_oss@crudebyte.com>
+References: <cover.1732820037.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Thu, 28 Nov 2024 19:53:58 +0100
+Subject: [PULL for-9.2 6/7] 9pfs: fix 'Tgetattr' after unlink
+To: qemu-devel@nongnu.org,
+    Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org,
+    Greg Kurz <groug@kaod.org>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=c81e7219e0736f80bfd3553676a19e2992cff41d@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,100 +68,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000636c870627fdc9f7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+With a valid file ID (FID) of an open file, it should be possible to send
+a 'Tgettattr' 9p request and successfully receive a 'Rgetattr' response,
+even if the file has been removed in the meantime. Currently this would
+fail with ENOENT.
 
-On Thu, 28 Nov 2024 at 17:46, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g>
-wrote:
+I.e. this fixes the following misbehaviour with a 9p Linux client:
 
-> On 28/11/24 17:38, Phil Dennis-Jordan wrote:
-> > Paolo, could we please apply either Sairaj and Santosh's fix at
-> > https://patchew.org/QEMU/20241114114509.15350-1-sarunkod@amd.com/
-> > <https://patchew.org/QEMU/20241114114509.15350-1-sarunkod@amd.com/>
-> > or mine to fix this link error? As neither patch has so far been merged=
-,
-> > 9.2.0-rc2 still fails to build on macOS, at least on my local systems.
-> > I'm not sure why CI builds aren't jumping up and down about this, but
-> > neither the Xcode 15.2 nor 16.1 toolchains are happy on macOS 14.7/arm6=
-4.
->
-> Just curious, is your build configured with --enable-hvf --enable-tcg?
->
->
-It's my understanding that both HVF and TCG are enabled by default when
-building on macOS - they both show up as "YES" in the ./configure output,
-and the relevant -accel works; at any rate, specifying them explicitly made
-no difference with regard to this link error. Your question did however
-prompt me to dig a little deeper and check which of my test configurations
-was affected.
+  open("/home/tst/filename", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
+  unlink("/home/tst/filename") = 0
+  fstat(3, 0x23aa1a8) = -1 ENOENT (No such file or directory)
 
-It looks like the critical setting is --enable-debug. I think that changes
-the exact optimisation level (not -O0 but less aggressive than the
-default), so it's not unreasonable that this would change the compiler
-pass(es) for eliminating constant conditional branches.
+Expected results:
 
-So yeah, when I build latest master/staging with --enable-debug on macOS
-and my --target-list includes x86_64, QEMU fails to link with an undefined
-symbol error for _kvm_enable_x2apic. This happens on both arm64 and x86-64
-hosts, and with various Xcode 15.x and 16.y toolchains.
+  open("/home/tst/filename", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
+  unlink("/home/tst/filename") = 0
+  fstat(3, {st_mode=S_IFREG|0600, st_size=0, ...}) = 0
 
-I have to admit I'm personally not a big fan of relying on the optimiser
-for removing references to these symbols, but restructuring the conditional
-expression like in Sairaj and Santosh's patch seems to allow even the
-optimisation level used for debug builds to do it, so I guess I can't argue
-with the result. :-)
+This is because 9p server is always using a path name based lstat() call
+which fails as soon as the file got removed. So to fix this, use fstat()
+whenever we have an open file descriptor already.
 
-Phil
+Fixes: 00ede4c2529b ("virtio-9p: getattr server implementation...")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/103
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Message-Id: <4c41ad47f449a5cc8bfa9285743e029080d5f324.1732465720.git.qemu_oss@crudebyte.com>
+---
+ hw/9pfs/9p.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---000000000000636c870627fdc9f7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 851e36b9a1..578517739a 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -1596,7 +1596,13 @@ static void coroutine_fn v9fs_getattr(void *opaque)
+         retval = -ENOENT;
+         goto out_nofid;
+     }
+-    retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
++    if ((fidp->fid_type == P9_FID_FILE && fidp->fs.fd != -1) ||
++        (fidp->fid_type == P9_FID_DIR && fidp->fs.dir.stream))
++    {
++        retval = v9fs_co_fstat(pdu, fidp, &stbuf);
++    } else {
++        retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
++    }
+     if (retval < 0) {
+         goto out;
+     }
+-- 
+2.30.2
 
-<div dir=3D"ltr"><div dir=3D"ltr">On Thu, 28 Nov 2024 at 17:46, Philippe Ma=
-thieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org=
-</a>&gt; wrote:</div><div class=3D"gmail_quote"><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">On 28/11/24 17:38, Phil Dennis-Jordan wrote:<br>
-&gt; Paolo, could we please apply either Sairaj and Santosh&#39;s fix at<br=
->
-&gt; <a href=3D"https://patchew.org/QEMU/20241114114509.15350-1-sarunkod@am=
-d.com/" rel=3D"noreferrer" target=3D"_blank">https://patchew.org/QEMU/20241=
-114114509.15350-1-sarunkod@amd.com/</a> <br>
-&gt; &lt;<a href=3D"https://patchew.org/QEMU/20241114114509.15350-1-sarunko=
-d@amd.com/" rel=3D"noreferrer" target=3D"_blank">https://patchew.org/QEMU/2=
-0241114114509.15350-1-sarunkod@amd.com/</a>&gt;<br>
-&gt; or mine to fix this link error? As neither patch has so far been merge=
-d, <br>
-&gt; 9.2.0-rc2 still fails to build on macOS, at least on my local systems.=
- <br>
-&gt; I&#39;m not sure why CI builds aren&#39;t jumping up and down about th=
-is, but <br>
-&gt; neither the Xcode 15.2 nor 16.1 toolchains are happy on macOS 14.7/arm=
-64.<br>
-<br>
-Just curious, is your build configured with --enable-hvf --enable-tcg?<br>
-<br></blockquote><div><br></div><div>It&#39;s my understanding that both HV=
-F and TCG are enabled by default when building on macOS - they both show up=
- as &quot;YES&quot; in the ./configure output, and the relevant -accel work=
-s; at any rate, specifying them explicitly made no difference with regard t=
-o this link error. Your question did however prompt me to dig a little deep=
-er and check which of my test configurations was affected.</div><div><br></=
-div><div>It looks like the critical setting is --enable-debug. I think that=
- changes the exact optimisation level (not -O0 but less aggressive than the=
- default), so it&#39;s not unreasonable that this would change the compiler=
- pass(es) for eliminating constant conditional branches.</div><div><br></di=
-v><div>So yeah, when I build latest master/staging with --enable-debug on m=
-acOS and my --target-list includes x86_64, QEMU fails to link with an undef=
-ined symbol error for _kvm_enable_x2apic. This happens on both arm64 and x8=
-6-64 hosts, and with various Xcode 15.x and 16.y toolchains.</div><div><br>=
-</div><div>I have to admit I&#39;m personally not a big fan of relying on t=
-he optimiser for removing references to these symbols, but restructuring th=
-e conditional expression like in Sairaj and Santosh&#39;s patch seems to al=
-low even the  optimisation level used for debug builds to do it, so I guess=
- I can&#39;t argue with the result. :-)</div><div><br></div><div>Phil</div>=
-<div><br></div></div></div>
-
---000000000000636c870627fdc9f7--
 
