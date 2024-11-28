@@ -4,90 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E73BD69113
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 14:11:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 680ABD69112
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 14:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGfEW-0003Zt-Fn; Thu, 28 Nov 2024 09:11:04 -0500
+	id 1tGfGk-00058X-Hw; Thu, 28 Nov 2024 09:13:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGfES-0003Z9-4i
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 09:11:02 -0500
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1tGfGi-000588-1X
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 09:13:20 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGfEM-0004Iw-HD
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 09:10:55 -0500
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-3ea6b011b27so960543b6e.0
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 06:10:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1tGfGg-0005ub-E6
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 09:13:19 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2142214abd2so6644585ad.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 06:13:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732803053; x=1733407853; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ptky6Rhm6bxaDAiNB7LggL4vOL/natgxKCtj1JtuPi0=;
- b=L8OAUZ+iJfpSFmtsNs/4yGhwlK0fPkupNmnOvSyOcv/tjCN3XlEFxhKy8kS857R4ib
- zGCiw8MZuEV3KgtqfuJTgmDK3FPyM0aY7vSAffIjpxAloRsM/S7pZKXASNxxfK6lAw7e
- zKyjiaZKa8UWBvORSBU0c+OfAbyL5mGn7/qcFw62fQ/mltbndwZJ2kELesXYhT//VCq1
- h/DEVfliZJhFzOifUH/ushffWU61CS29oIPI5C0OTY8z7LM2FPyKf/cOmMok8VhNg52g
- 7HnnBXcIQ8Xu6WNsTJMWuExSdaJNSGbFyMLM5siXEj2XIMO9yIuQeUNEHqMS5TexMoFj
- jNTw==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1732803197; x=1733407997;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eaTDHyYGUwurrDx3I7AZnQtNa0ZJXKnA6MuUrQ8NqEw=;
+ b=g6MP2DxEsKdzCUPOd+1rdLDxc8kp3pUrlsTHqx70EM+YZiWWw7khfsi8R8fdR9KwEz
+ 8x5rXW6IqebtbxYUCGKa6ytxraLvcB3IPPT4djGyOGaIERdVj2pcm9rO/H4nZwrRuEHk
+ FI1FYon2ZDpvQe8SkABekKpxtTQFiRFDv5VWdou5Jq+lp8iK/U3b/cq3qE//iW7FgNkK
+ 59AIm2l35lMF+r80+82EMTbwxQrFm0xrflGuvu27ANUb0Yoi5B/X+LuO9lOH1x/xbDXd
+ 3FJI+BNX2z+N1r1v4Xc3+jMJP7FRqS1DLzO7GPcDz0xhx2u+3pCl3c/NIeWNoZHAEGVv
+ SP+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732803053; x=1733407853;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ptky6Rhm6bxaDAiNB7LggL4vOL/natgxKCtj1JtuPi0=;
- b=pyWrWzHZ3m9ZFIFuU0qlWRVQVbE81DmHIBu8wGPxiajEpQn2ioJ1M8xHCcZS92Cygd
- wwl1Z2PGU1lLbiSM3qJ+J2bHEXLRFxY6YWmJfhrYt+g+WH9yTX/DSZdwf8EF1ZFTH3Rv
- qs6e51xadInO07QdBwTccrmHs+/+q3ol/LeitNhYKVUC/oqSwmAv6cGUnRKayae1vz1U
- tJZK1gxsYLlTbwhQdTmg1/i1BndkyNUL1xYeTwkD2ERmasOiIIJMQyvJ7ma7S4Ubi7W/
- QWeWsix7ITAVPa4+bdWb2yPGpK4WilYf/bRcupAxUAValraD965jKLyWBmLgyF9OL0LU
- xZBA==
+ d=1e100.net; s=20230601; t=1732803197; x=1733407997;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eaTDHyYGUwurrDx3I7AZnQtNa0ZJXKnA6MuUrQ8NqEw=;
+ b=JHV3ICCfY9C+E2qe3M2mpxfH1dGtPp5SPWO45g3AY9rqAkyk6FGYZavn8pznh0b5VE
+ QWQmhaSMuErNws1DBw2vujUMuInr703aXNlxKljPxvVT5+cSrHgAstxwyyuxQ0lCgUjR
+ hE47cLnaP5b4qmVN7ls6lzdi+0USl6nVdkS2zrNG6b82B6fZp6BShA6BMGzAUDnn+h8y
+ zZ/dsDWEdmxgh8gFtIVoGkYt8+9sNWPoskaX1d78PGij0nkpJJZHk8i85UXKoQ56CeBa
+ kNbfQWPjeH3zrE9Ysk1Y+sCIjxcaD9TlQBDUEo2algt7EihDJ1Gt6O4JkiMnbQVtVRoS
+ vNOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnQHJSI1yHEMbRkSr0EIUxxH2X0HqajvfXEwns/oXSweE47ndsJ77Q9JQNhwgaMpg0qRZ850hKHdF8@nongnu.org
-X-Gm-Message-State: AOJu0YzA77oXck2TUVC9eduErq5Hqgul56wrI9UfO+D5oqdB2k65aLAV
- Fk2GlVDKxemmXbxvnFnBmm2hdENlsB4v75481iNChlSDOQPbKbmsgdVDITPc+pwdce6lvK1jVd8
- nbNU=
-X-Gm-Gg: ASbGncvJ0jFYbwWFQU0iCCcW+CMvmQL+aUonMFz3Tb2Cvw0w9JnPew98W1dUVVfH/Xg
- u91GL35sQnZ7IciKyQmC8IhXKqiZbhoEtTrvL89AZgCmk9NQX1CXWKxKZ1yWcS15E2aH7W03j8q
- JvoG2q/2RknjVRw6VYzGBCJZuTxLeVdKU1Bm8jXOVSkMGlDF0HppTkTYgRdomcVDL6Mlda0scTZ
- pPxI1sDcJJV2iRoi20Wlc/HvCIBl8WLQiJ22FDQ/AcHZ9OYcx9La+JhMYfi5S3YtXQ=
-X-Google-Smtp-Source: AGHT+IHciyaEQ3VeEGVfmfRLaIQWpUHWWle0eigfFPvma/WNDJ+4fn4h9+kbOtLXp8WJ94bYeHpZeQ==
-X-Received: by 2002:a05:6808:1314:b0:3e5:f7c1:757b with SMTP id
- 5614622812f47-3ea814ee598mr1741466b6e.9.1732803053159; 
- Thu, 28 Nov 2024 06:10:53 -0800 (PST)
-Received: from [172.20.3.167] ([187.217.227.247])
+ AJvYcCWDSbVHwf14+5MkvGMvQie/GOwQirTn1jMiq5f5LUvndVH5AAohqfA2Ro/vgxig0SG6xeLOWr3YT1uY@nongnu.org
+X-Gm-Message-State: AOJu0YzFriOF+MerDdMYWf8ep7iyaWDjtKB9ePIISbjroytSeQJUUDMt
+ xK6baYOycARKDZbBa8SmjO35GBA3s2RvykULK8fBGw+KLNXhmdRgxlXtNBuBT1I=
+X-Gm-Gg: ASbGncsP4UPduTl4ljcfpJ5xhoK5tkA7cPEqmnfUeOiUnEImdG+dNiz2EPWB8zdCV9v
+ 3SLXBZUMSKToMKgzlFLWoUGroT6SJf5KvJRFvCPZHUzGqaFZ5n9xt43aqRtuvfiryFw7HVFNyHa
+ j7/vqwXioLwRaMKRjFzR6oELfMAK5AVu2ORfHpmriLdrqJ05R9PN66pymQxo4RntMXtkWZA/Cda
+ 6eBZM8yx1j9GGb7ks/2QoVbhifi9q3Q3Li9kNJ+8XhjOXSQuz8=
+X-Google-Smtp-Source: AGHT+IHXOSHBhQUDm4GJm/ij9WavbCZ/Ey4VnnTNbr+VuXy2Vlmxy6eDYCsj5qn3ExauY40+Wp3C6g==
+X-Received: by 2002:a17:902:d54e:b0:212:5b57:80ed with SMTP id
+ d9443c01a7336-21501087642mr100730045ad.11.1732803196949; 
+ Thu, 28 Nov 2024 06:13:16 -0800 (PST)
+Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ea86211436sm266305b6e.34.2024.11.28.06.10.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 06:10:52 -0800 (PST)
-Message-ID: <521528f1-74d4-4987-a4c1-cd354c60161f@linaro.org>
-Date: Thu, 28 Nov 2024 08:10:49 -0600
+ d9443c01a7336-215218f452csm13829005ad.48.2024.11.28.06.13.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Nov 2024 06:13:16 -0800 (PST)
+From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
+To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>
+Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
+ qemu-devel@nongnu.org, Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH v6 3/9] target/riscv: Implement Ssdbltrp sret,
+ mret and mnret behavior
+Date: Thu, 28 Nov 2024 15:12:23 +0100
+Message-ID: <20241128141230.284320-4-cleger@rivosinc.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241128141230.284320-1-cleger@rivosinc.com>
+References: <20241128141230.284320-1-cleger@rivosinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0 13/25] target/hppa: Set FloatInfZeroNaNRule
- explicitly
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20241128104310.3452934-1-peter.maydell@linaro.org>
- <20241128104310.3452934-14-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128104310.3452934-14-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=cleger@rivosinc.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,21 +108,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/28/24 04:42, Peter Maydell wrote:
-> Set the FloatInfZeroNaNRule explicitly for the HPPA target,
-> so we can remove the ifdef from pickNaNMulAdd().
-> 
-> As this is the last target to be converted to explicitly setting
-> the rule, we can remove the fallback code in pickNaNMulAdd()
-> entirely.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/hppa/fpu_helper.c       |  2 ++
->   fpu/softfloat-specialize.c.inc | 13 +------------
->   2 files changed, 3 insertions(+), 12 deletions(-)
+When the Ssdbltrp extension is enabled, SSTATUS.SDT field is cleared
+when executing sret. When executing mret/mnret, SSTATUS.SDT is cleared
+when returning to U, VS or VU and VSSTATUS.SDT is cleared when returning
+to VU from HS.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/op_helper.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-r~
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index a4b625fcd9..eeacb2d1a1 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -287,6 +287,18 @@ target_ulong helper_sret(CPURISCVState *env)
+                         get_field(mstatus, MSTATUS_SPIE));
+     mstatus = set_field(mstatus, MSTATUS_SPIE, 1);
+     mstatus = set_field(mstatus, MSTATUS_SPP, PRV_U);
++
++    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
++        if (riscv_has_ext(env, RVH)) {
++            target_ulong prev_vu = get_field(env->hstatus, HSTATUS_SPV) &&
++                                   prev_priv == PRV_U;
++            /* Returning to VU from HS, vsstatus.sdt = 0 */
++            if (!env->virt_enabled && prev_vu) {
++                env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
++            }
++        }
++        mstatus = set_field(mstatus, MSTATUS_SDT, 0);
++    }
+     if (env->priv_ver >= PRIV_VERSION_1_12_0) {
+         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
+     }
+@@ -297,7 +309,6 @@ target_ulong helper_sret(CPURISCVState *env)
+         target_ulong hstatus = env->hstatus;
+ 
+         prev_virt = get_field(hstatus, HSTATUS_SPV);
+-
+         hstatus = set_field(hstatus, HSTATUS_SPV, 0);
+ 
+         env->hstatus = hstatus;
+@@ -337,6 +348,22 @@ static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
+         riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC());
+     }
+ }
++static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
++                                   target_ulong prev_priv,
++                                   target_ulong prev_virt)
++{
++    /* If returning to U, VS or VU, sstatus.sdt = 0 */
++    if (prev_priv == PRV_U || (prev_virt &&
++        (prev_priv == PRV_S || prev_priv == PRV_U))) {
++        mstatus = set_field(mstatus, MSTATUS_SDT, 0);
++        /* If returning to VU, vsstatus.sdt = 0 */
++        if (prev_virt && prev_priv == PRV_U) {
++            env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
++        }
++    }
++
++    return mstatus;
++}
+ 
+ target_ulong helper_mret(CPURISCVState *env)
+ {
+@@ -354,6 +381,9 @@ target_ulong helper_mret(CPURISCVState *env)
+     mstatus = set_field(mstatus, MSTATUS_MPP,
+                         riscv_has_ext(env, RVU) ? PRV_U : PRV_M);
+     mstatus = set_field(mstatus, MSTATUS_MPV, 0);
++    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
++        mstatus = ssdbltrp_mxret(env, mstatus, prev_priv, prev_virt);
++    }
+     if ((env->priv_ver >= PRIV_VERSION_1_12_0) && (prev_priv != PRV_M)) {
+         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
+     }
+@@ -395,6 +425,9 @@ target_ulong helper_mnret(CPURISCVState *env)
+     if (prev_priv < PRV_M) {
+         env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, false);
+     }
++    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
++        env->mstatus = ssdbltrp_mxret(env, env->mstatus, prev_priv, prev_virt);
++    }
+ 
+     if (riscv_has_ext(env, RVH) && prev_virt) {
+         riscv_cpu_swap_hypervisor_regs(env);
+-- 
+2.45.2
+
 
