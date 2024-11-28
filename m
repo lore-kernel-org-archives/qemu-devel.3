@@ -4,54 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53D14D6D254
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 02:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99271D6D255
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 02:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGTzK-0005kU-Bu; Wed, 27 Nov 2024 21:10:38 -0500
+	id 1tGUVx-00035U-6H; Wed, 27 Nov 2024 21:44:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tGTzG-0005jA-PU
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 21:10:34 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tGTzB-0006v8-W7
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 21:10:34 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxieAR0UdnFFRKAA--.13853S3;
- Thu, 28 Nov 2024 10:10:25 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCxNMAQ0UdnfNJqAA--.46399S3;
- Thu, 28 Nov 2024 10:10:24 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>,
-	Huacai Chen <chenhuacai@kernel.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Igor Mammedov <imammedo@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH 1/5] hw/intc/loongson_ipi: Add more output parameter for
- cpu_by_arch_id
-Date: Thu, 28 Nov 2024 10:10:20 +0800
-Message-Id: <20241128021024.662057-2-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20241128021024.662057-1-maobibo@loongson.cn>
-References: <20241128021024.662057-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tGUVv-000351-AX; Wed, 27 Nov 2024 21:44:19 -0500
+Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tGUVt-0003UN-Lr; Wed, 27 Nov 2024 21:44:19 -0500
+Received: by mail-ua1-x932.google.com with SMTP id
+ a1e0cc1a2514c-85714347e80so72220241.3; 
+ Wed, 27 Nov 2024 18:44:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1732761856; x=1733366656; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yIlUWADJlRT4ztwFtZSIi/GZf1do5i7FpkNdxWQTtc4=;
+ b=hl3zLWxt6QvW3tF1ngJfmMxgkiXMUagqOf3AmSN6KlWyQXd0O12BzYCcp+n8vSJwyE
+ Y1TsncjwTT34sg+hsjxr04kYLu5NV5E8+wKaCJBRFqV6mkrKMyXA5GdPV2UkKUEOcw8n
+ Pqh2JTX+oJ50TP4UDyxaM01yU/PtCoFqGNEXCyqkI/mMyAAEjrugKUoXI5kUuy9ot7Aq
+ d87oq6Gm3XGV5qB0PIjG8o0xPcNJ519sBoAyrAtpnTPsyQ9odeDpo+KfIxo5QOW/5LH9
+ CvH5p2T0DuHAm8ZxeM122rutec/qDwlKRRU95gvD5OcfPkKdcEx3bncLMtcDcegwjkG0
+ BANw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732761856; x=1733366656;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yIlUWADJlRT4ztwFtZSIi/GZf1do5i7FpkNdxWQTtc4=;
+ b=CGYDWMiJQdeB61U+WVgcS3cL9T1ogZuvJF/1WNYwRZ22VshOGoP9rYIzd8LjviIuYp
+ /C40kr2COH6jYAiNpOArC/sbj87T1HX5hNVB5JJ9MnVq0KOwkipBfdiubBYGwQUqnq8w
+ BI1BRY9dM7+xd7BTBnULZu/O+wpQmLsRCO1rlp2B9E51VLLBNubzqNDute8KvK60fh6j
+ bbH/1IYQ5buk7ph0qkAlrabFNxFZ+C5qK9RwdOT2Y/BzL/kXDWJsJuSN9IYNEUvLam7C
+ Q2WS0O1vPaK9DFgH93ZR6qYNTG8pR4D/2rt9mYqFBmnddHTVXN45TpsXxrLBs5IbIoUf
+ dm7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUaWGQTw7jnvdO8dZsQbTF7hy3PKeSsCFjrTfNy2TUIFnSVd9ivhlkLKmT2EtTusHd2iddjg0KgYnpE@nongnu.org
+X-Gm-Message-State: AOJu0YyoeNn72mvBXnmCQQyzFzTpq+ksKGVxr+H6lwdk9h+q4hGEgIgM
+ G5F25u3PlwkrukFId4BYMiqsDODme4RduHXd+zC0hkevROqnerhQlavGAbgFmvZ2URFS58b4WoE
+ oo9p85JtnU4eSt+75AJH9epEC+38=
+X-Gm-Gg: ASbGncs6Zb99mLuSg3yCwy9mbxiPryPnwmogz8yA9M21LXApT4XUqYSy2p525ovp2JP
+ I8q+X83hcfLgIrN+h9sg8r4SrFG7DBYstw/KIrDF7crPmITNKtL3sV4ay5GAGRw==
+X-Google-Smtp-Source: AGHT+IHXvVPFBp1k2cZdDgIWgqsOIofSoHFfhubLGzaqI7sCdd7uIOkwRPC427O1aVWOql5Xu281UHvXwxRtmor4ijk=
+X-Received: by 2002:a05:6102:d88:b0:4ad:641f:e63a with SMTP id
+ ada2fe7eead31-4af448f7eefmr6639995137.2.1732761856014; Wed, 27 Nov 2024
+ 18:44:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxNMAQ0UdnfNJqAA--.46399S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <tencent_6FF30F7E2E640BEE260FD6523B6BA5486908@qq.com>
+ <CAKmqyKMP093GyTEHdAPzaV9+O_pFSv0svQRb-31QTvn9i4fxMA@mail.gmail.com>
+ <tencent_B97DED0E6971DEDD2F960CC63DFF414A2A05@qq.com>
+In-Reply-To: <tencent_B97DED0E6971DEDD2F960CC63DFF414A2A05@qq.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 28 Nov 2024 12:43:49 +1000
+Message-ID: <CAKmqyKO6Wjknoc1sXVm6d0BGzwcuF7VBqJdg_a1gh=6zz=KZNQ@mail.gmail.com>
+Subject: Re: [PATCH] include virtualization mode as part of priv
+To: Yanfeng <yfliu2008@qq.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,182 +98,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add logic cpu index output parameter for function cpu_by_arch_id,
-CPUState::cpu_index is logic cpu slot index for possible_cpus.
-However it is logic cpu index with LoongsonIPICommonState::IPICore,
-here hide access for CPUState::cpu_index directly, it comes from
-function cpu_by_arch_id().
+On Thu, Nov 28, 2024 at 11:43=E2=80=AFAM Yanfeng <yfliu2008@qq.com> wrote:
+>
+> On Thu, 2024-11-28 at 10:39 +1000, Alistair Francis wrote:
+> > On Thu, Nov 28, 2024 at 12:09=E2=80=AFAM Yanfeng <yfliu2008@qq.com> wro=
+te:
+> > >
+> > >
+> > > When debugging hypervisor extension based programs, it is convenient =
+to see
+> > > the
+> > > current virtualization mode from GDB debugger.
+> > >
+> > > This patch shares the virtualization mode as part of the existing "pr=
+iv"
+> > > virtual
+> > > register, or more specifically via bit(8).
+> >
+> > Interesting concept. This seems fine to me, I don't think this will
+> > break any existing user.
+> >
+> > Another option though is to add a "virt" virtual register, which might
+> > be easier for people to figure out as it isn't obvious from GDB what
+> > bit 8 means. That might be a better approach as then it's really clear
+> > what the register means.
+> >
+> > >
+> > >
+> > > > From 0d82561b11e1c2835f14ba5460cfff52f0087530 Mon Sep 17 00:00:00 2=
+001
+> > > From: Yanfeng Liu <yfliu2008@qq.com>
+> > > Date: Mon, 18 Nov 2024 08:03:15 +0800
+> > > Subject: [PATCH] riscv/gdb: share virt mode via priv register
+> >
+> > It seems like something strange happened when you submitted the patch.
+> > Can you fix this up?
+> >
+> I prepared a patch file via the following steps:
+>
+>  - Did  `git format-patch --stdout -1 > /tmp/patch`,
+>  - Pasted the /tmp/patch content to email composer window,
+>  - Filled in email receipts, subject line and a few lines before the patc=
+h
+> context in composer window.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/intc/loongarch_ipi.c               | 19 +++++++++++++++----
- hw/intc/loongson_ipi.c                | 23 ++++++++++++++++++++++-
- hw/intc/loongson_ipi_common.c         | 21 ++++++++++++---------
- include/hw/intc/loongson_ipi_common.h |  3 ++-
- 4 files changed, 51 insertions(+), 15 deletions(-)
+You should use `git send-email` instead, see the QEMU documentation
+for more details:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#submitting-y=
+our-patches
 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index 2ae1a42c46..c5ecd68952 100644
---- a/hw/intc/loongarch_ipi.c
-+++ b/hw/intc/loongarch_ipi.c
-@@ -36,17 +36,28 @@ static CPUArchId *find_cpu_by_archid(MachineState *ms, uint32_t id)
-     return found_cpu;
- }
- 
--static CPUState *loongarch_cpu_by_arch_id(int64_t arch_id)
-+static int loongarch_cpu_by_arch_id(LoongsonIPICommonState *lics,
-+                                    int64_t arch_id, int *index, CPUState **pcs)
- {
-     MachineState *machine = MACHINE(qdev_get_machine());
-     CPUArchId *archid;
-+    CPUState *cs;
- 
-     archid = find_cpu_by_archid(machine, arch_id);
--    if (archid) {
--        return CPU(archid->cpu);
-+    if (archid && archid->cpu) {
-+        cs = archid->cpu;
-+        if (index) {
-+            *index = cs->cpu_index;
-+        }
-+
-+        if (pcs) {
-+            *pcs = cs;
-+        }
-+
-+        return MEMTX_OK;
-     }
- 
--    return NULL;
-+    return MEMTX_ERROR;
- }
- 
- static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index 4e08f03510..885916e9cd 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -19,6 +19,27 @@ static AddressSpace *get_iocsr_as(CPUState *cpu)
-     return NULL;
- }
- 
-+static int loongson_cpu_by_arch_id(LoongsonIPICommonState *lics,
-+                                   int64_t arch_id, int *index, CPUState **pcs)
-+{
-+    CPUState *cs;
-+
-+    cs = cpu_by_arch_id(arch_id);
-+    if (cs == NULL) {
-+        return MEMTX_ERROR;
-+    }
-+
-+    if (index) {
-+        *index = cs->cpu_index;
-+    }
-+
-+    if (pcs) {
-+        *pcs = cs;
-+    }
-+
-+    return MEMTX_OK;
-+}
-+
- static const MemoryRegionOps loongson_ipi_core_ops = {
-     .read_with_attrs = loongson_ipi_core_readl,
-     .write_with_attrs = loongson_ipi_core_writel,
-@@ -74,7 +95,7 @@ static void loongson_ipi_class_init(ObjectClass *klass, void *data)
-     device_class_set_parent_unrealize(dc, loongson_ipi_unrealize,
-                                       &lic->parent_unrealize);
-     licc->get_iocsr_as = get_iocsr_as;
--    licc->cpu_by_arch_id = cpu_by_arch_id;
-+    licc->cpu_by_arch_id = loongson_cpu_by_arch_id;
- }
- 
- static const TypeInfo loongson_ipi_types[] = {
-diff --git a/hw/intc/loongson_ipi_common.c b/hw/intc/loongson_ipi_common.c
-index a6ce0181f6..2f574947ef 100644
---- a/hw/intc/loongson_ipi_common.c
-+++ b/hw/intc/loongson_ipi_common.c
-@@ -105,16 +105,17 @@ static MemTxResult mail_send(LoongsonIPICommonState *ipi,
-     uint32_t cpuid;
-     hwaddr addr;
-     CPUState *cs;
-+    int cpu, ret;
- 
-     cpuid = extract32(val, 16, 10);
--    cs = licc->cpu_by_arch_id(cpuid);
--    if (cs == NULL) {
-+    ret = licc->cpu_by_arch_id(ipi, cpuid, &cpu, &cs);
-+    if (ret != MEMTX_OK) {
-         return MEMTX_DECODE_ERROR;
-     }
- 
-     /* override requester_id */
-     addr = SMP_IPI_MAILBOX + CORE_BUF_20 + (val & 0x1c);
--    attrs.requester_id = cs->cpu_index;
-+    attrs.requester_id = cpu;
-     return send_ipi_data(ipi, cs, val, addr, attrs);
- }
- 
-@@ -125,16 +126,17 @@ static MemTxResult any_send(LoongsonIPICommonState *ipi,
-     uint32_t cpuid;
-     hwaddr addr;
-     CPUState *cs;
-+    int cpu, ret;
- 
-     cpuid = extract32(val, 16, 10);
--    cs = licc->cpu_by_arch_id(cpuid);
--    if (cs == NULL) {
-+    ret = licc->cpu_by_arch_id(ipi, cpuid, &cpu, &cs);
-+    if (ret != MEMTX_OK) {
-         return MEMTX_DECODE_ERROR;
-     }
- 
-     /* override requester_id */
-     addr = val & 0xffff;
--    attrs.requester_id = cs->cpu_index;
-+    attrs.requester_id = cpu;
-     return send_ipi_data(ipi, cs, val, addr, attrs);
- }
- 
-@@ -148,6 +150,7 @@ MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr, uint64_t val,
-     uint32_t cpuid;
-     uint8_t vector;
-     CPUState *cs;
-+    int cpu, ret;
- 
-     addr &= 0xff;
-     trace_loongson_ipi_write(size, (uint64_t)addr, val);
-@@ -178,11 +181,11 @@ MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr, uint64_t val,
-         cpuid = extract32(val, 16, 10);
-         /* IPI status vector */
-         vector = extract8(val, 0, 5);
--        cs = licc->cpu_by_arch_id(cpuid);
--        if (cs == NULL || cs->cpu_index >= ipi->num_cpu) {
-+        ret = licc->cpu_by_arch_id(ipi, cpuid, &cpu, &cs);
-+        if (ret != MEMTX_OK || cpu >= ipi->num_cpu) {
-             return MEMTX_DECODE_ERROR;
-         }
--        loongson_ipi_core_writel(&ipi->cpu[cs->cpu_index], CORE_SET_OFF,
-+        loongson_ipi_core_writel(&ipi->cpu[cpu], CORE_SET_OFF,
-                                  BIT(vector), 4, attrs);
-         break;
-     default:
-diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
-index df9d9c5168..2f1646a5f9 100644
---- a/include/hw/intc/loongson_ipi_common.h
-+++ b/include/hw/intc/loongson_ipi_common.h
-@@ -44,7 +44,8 @@ struct LoongsonIPICommonClass {
-     DeviceRealize parent_realize;
-     DeviceUnrealize parent_unrealize;
-     AddressSpace *(*get_iocsr_as)(CPUState *cpu);
--    CPUState *(*cpu_by_arch_id)(int64_t id);
-+    int (*cpu_by_arch_id)(LoongsonIPICommonState *lics, int64_t id,
-+                          int *index, CPUState **pcs);
- };
- 
- MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr, uint64_t *data,
--- 
-2.39.3
+>
+> I am wondering if the lines added before the formatted patch content in l=
+ast
+> step caused trouble?
+> When resending email, should I use [patch v2] in subject line? I guess it=
+ is
+> unnecessary as it is the same patch.
 
+Ideally I think a "virt" virtual register would be a better approach,
+so if you could do that instead and send a v2 that would be great :)
+
+Alistair
 
