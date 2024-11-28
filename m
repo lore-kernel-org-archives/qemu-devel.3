@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A64DD70DE9
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 17:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FBD4D70DE9
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 17:54:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGihy-0000Ym-56; Thu, 28 Nov 2024 12:53:42 -0500
+	id 1tGiiK-0001Dj-6o; Thu, 28 Nov 2024 12:54:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGihr-0000NK-Lc
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:53:37 -0500
-Received: from mail-qk1-x731.google.com ([2607:f8b0:4864:20::731])
+ id 1tGiiH-0001DZ-Co
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:54:01 -0500
+Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGihq-00055e-Bi
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:53:35 -0500
-Received: by mail-qk1-x731.google.com with SMTP id
- af79cd13be357-7b6882c33acso38585585a.2
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 09:53:34 -0800 (PST)
+ id 1tGiiG-0005KP-5F
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:54:01 -0500
+Received: by mail-qt1-x835.google.com with SMTP id
+ d75a77b69052e-46678a11ef1so6400491cf.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 09:53:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732816413; x=1733421213; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732816439; x=1733421239; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=uwh9NRPBRxCOQxGG9l7X9o7ggn6fwIeLzSFnBN4DZis=;
- b=Cb07amiD5loYbxRExlk9kt4iIj32JAiEi/ThkdZ0Q3rytuT9ZgYm/p2WYzIZJoaWhk
- zZUqZ/uIgBtcfuPdtnYkGOilEck2WKQ8HYm59NTxw6+uwZhWBd9tKJAMjivFVIhY4o+1
- iaUNSRR4LEvBVOZRYmnB12CvhfuBa40L3jAzkFF/qzdE6mE0OQ9GX+QCMh4MD0xxeiuI
- 7+Rtxi7hGauRJTqEh8qmkNSRXYa/XcQxTDBH/KP4ToKJtB68OyFPEQZ8xbXEGQPPIVSU
- kG9uL2/UPXPsM4AiQILYD19yeanAxish3IvewIY94h4DluNZlhJKMgSScKi5Xcrywtyw
- apTA==
+ bh=w8NePUAiHOQKFb6vb1a9Xa9aQMqXYszOS7fQtmHeI0w=;
+ b=Y+yRSoLiHTvuhxsmNbuDAaarH1ErklfGZ3sGrQd6/qs6k745xprFiFw9kSmbZreUDV
+ 5hnGdEz8PKEqx3edRf6SvPoYQHP72T+pIxEB9xdDNg2YLMO9xWv8mqNukaOJ/EOl/9jX
+ YeyC2k6WtLD9RQnakq188d0cUKvguRM3AtB3eibJihK4x2RCYLNHuUDvLODaI83zprgX
+ eYd9+0PuD6uRFn0Wi7A4NAPyaLZVxT8ypOogTS00Dg83z6qE9dvquOzDlr2cJwkdWgSS
+ 5lCXcR2HNwBXIVtWF3UsX+i+49Zx9pkuXDV/TXhV1EYQYURVXZ0Y6sjKbbykhTGtgjag
+ S3AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732816413; x=1733421213;
+ d=1e100.net; s=20230601; t=1732816439; x=1733421239;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uwh9NRPBRxCOQxGG9l7X9o7ggn6fwIeLzSFnBN4DZis=;
- b=H63qm8TLUkvnl4e+i73qwz2qhaeRJqAML3ev8jqqH5b4M8OhW36txT/QL6m1u/RaDX
- CDsotprm5YCwHml0FrC6Vrtq2IBkSIPYGLm4iBwmpra/MpYxNTyQHGBzl4mqzr7PcyPE
- i5/pnYSRWPjmNe23ApO2awFOSM2jYhiHDcWI8a5inPJIaZxOr4lWezvTbX+/dG0rfl5S
- jFZ99dZeEBPQeXbuPxjv85mKJU11ejffOpkho1kiudjLgYkmCbzxHF1akj9ypi3ePeS7
- XbPKDt4plKzYqZlYuqBJJfyntUZ+B10Tedgh0LSSvBHQ0XQbPMOtg/ooWMwTOJAO2ljP
- ZIQw==
+ bh=w8NePUAiHOQKFb6vb1a9Xa9aQMqXYszOS7fQtmHeI0w=;
+ b=RV6sqMY5qa66H7erJ9uC2jVavnGt/U8vjwB55jIESuLWwWScnYGs2dXiNgYmQpoA0z
+ zGVvF6RmIj8C9WUMzL73gQ2VpSJkyQuT4P6Nul56bgTBs205uX/mmnF2KM3qaZ8n4NMe
+ 9wsyY8vHUv4DAEiGcTjBxgYYMB/AXHkHgYCZQiP9VutYPvCFgytQEEMU51lzgnd0KuoF
+ vvMwPoB+nBoePKmtF4FOUFaLYE6G2GhdPncGKr7CIKB7/F2Tbp/KyLATLUEYdtKmAKtB
+ tgTLGlwuQjWP0Fw0ydj4HzUzsTvgf9oh1KVyWbebsN6d07kN0wUXjPifs5H3576FaJVl
+ ni3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUx1tiMnRetQDKz2I/n4CXU6yr5zknalzPWRONSy7VjyaxJjvQWQadh3fhTQPQralqgzUl1/1jqzQJ3@nongnu.org
-X-Gm-Message-State: AOJu0Yzq+MnvCxRXJWNH7+0S12P9T2H9HiIiHyD9oavNJ6I6AOgBlGFD
- dkI+s4XwK0YKcRCJUnz11ByPHnK58p8YZiqbcGd9HSMLzlhGS5H7662R7mcKveE=
-X-Gm-Gg: ASbGnctib6WB/cXx64b1nLC+mjjwKQvaIszviNsDAnHHpr4O0hy+bDZteH2nrmmzdMT
- yAz74hoLWOFjFG3F3Ufy1QAKzPMO4xW+9J4vFhaDokNURqH6ycDMPX9FUpJHuJKfyg7q06n+WrR
- kBhKjBNS1/Mwnb1L4qeC1zvzwAIgssfn38s0s2p/xK7SxwLRWNfSjQn1ldT6o8spE2iKQYL77Yg
- x9ze6cqDQ9DGFHDVhztTkBagrOWtWYtic8KSaOjLKE/fVmo5n9GUCXXbL6dhkidSi0=
-X-Google-Smtp-Source: AGHT+IG1lVMg+bFqD3y5XfTbrJwLLHsWdk88XmgX6OLlzftb/muuceOrcQvayfual+DNriwewKZuSA==
-X-Received: by 2002:a05:620a:2b82:b0:7ae:6ba2:faba with SMTP id
- af79cd13be357-7b67c2cec89mr1035017885a.28.1732816413488; 
- Thu, 28 Nov 2024 09:53:33 -0800 (PST)
+ AJvYcCVpkd2VWuENiM37uXFUD+Bi/+5uILbnkHqoKxXkrb8u37IiRI158aEaIfY7tQeOMmseh6IEIjIasLOj@nongnu.org
+X-Gm-Message-State: AOJu0Yyg0+S29QHMSIOwnd6ngL9+rJDnRjGDOvdcs1NRQJieZiQjDqzx
+ RxiJLXeHW/Ll1ZWXZsNGgYhsKt/LRnIOhgbJvLSxoaUqchr2mzNKtYh1aCU6wM4=
+X-Gm-Gg: ASbGncv5wahZ+RVPMJ4SnNAJnmhCyqrZi20NbHRa3NkIKCZpv4FE9B9XUZTpTxoedZC
+ q0OgvqjUjaqn+swrhz4yQfajygmWkk/U97dhjyKH3p0nA/41FEOFwsRiKV3MPxO8WsnD1+ERs9X
+ FcwmQJ8eKJ27bX7oCcjms3D6HVs2nFg/VM/35ZyAPpUQJVLqMvuxRL/0QDyCcYKOHo47cWfGIio
+ HmXFZmc2GA7kl4Kht+aKuaMkwibuh9xtKJcu2Ib6gkgQT5WHRIuOpNKIc+nKz89r9o=
+X-Google-Smtp-Source: AGHT+IGTl+gP/HpTu0bUjnZjzTGERff/0XCh9n9uWdl6TkJCb2qt1zY65Pge9ck4El3ZN9UQ/ejZWQ==
+X-Received: by 2002:ac8:5d05:0:b0:461:1fc4:1016 with SMTP id
+ d75a77b69052e-466b34d39bcmr105210681cf.7.1732816439050; 
+ Thu, 28 Nov 2024 09:53:59 -0800 (PST)
 Received: from [172.20.3.167] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b6849c5a6dsm74355885a.117.2024.11.28.09.53.32
+ d75a77b69052e-466c4055062sm8621801cf.6.2024.11.28.09.53.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 09:53:32 -0800 (PST)
-Message-ID: <f2f78c3e-1b44-4645-89f4-50cf013c1ed0@linaro.org>
-Date: Thu, 28 Nov 2024 11:53:30 -0600
+ Thu, 28 Nov 2024 09:53:58 -0800 (PST)
+Message-ID: <493ac55a-81c1-4e57-a129-2f32ce8f2b3c@linaro.org>
+Date: Thu, 28 Nov 2024 11:53:55 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0 19/25] target/s390x: Set Float3NaNPropRule
+Subject: Re: [PATCH for-10.0 20/25] target/sparc: Set Float3NaNPropRule
  explicitly
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20241128104310.3452934-1-peter.maydell@linaro.org>
- <20241128104310.3452934-20-peter.maydell@linaro.org>
+ <20241128104310.3452934-21-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128104310.3452934-20-peter.maydell@linaro.org>
+In-Reply-To: <20241128104310.3452934-21-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::731;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x731.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x835.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -103,14 +103,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/28/24 04:43, Peter Maydell wrote:
-> Set the Float3NaNPropRule explicitly for s390x, and remove the
+> Set the Float3NaNPropRule explicitly for SPARC, and remove the
 > ifdef from pickNaNMulAdd().
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/s390x/cpu.c             | 1 +
+>   target/sparc/cpu.c             | 2 ++
 >   fpu/softfloat-specialize.c.inc | 2 --
->   2 files changed, 1 insertion(+), 2 deletions(-)
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
