@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE7D1D6910A
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC34CD6910A
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:31:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGebC-0003HC-RQ; Thu, 28 Nov 2024 08:30:26 -0500
+	id 1tGec2-00041Y-JK; Thu, 28 Nov 2024 08:31:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGebA-000396-Pd
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:30:24 -0500
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ id 1tGeba-0003sB-MD
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:30:50 -0500
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGeb9-00054n-Ap
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:30:24 -0500
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-297078d8eaeso864834fac.1
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:30:22 -0800 (PST)
+ id 1tGebZ-0005La-97
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:30:50 -0500
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3ea5120dd60so425696b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:30:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732800622; x=1733405422; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732800648; x=1733405448; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TqtScC740xmd5u7iaeC83AA3tKDiDpqWYQrYgBVMH1o=;
- b=X/175QvDX0gg6ghqq+cuYznAW1jqBUbZNyAgk5h96v79NKI8rKMdrRp1slQjQz2AGf
- Y9h1tCUl/3AuBJ28h9w0aEyPdsRMyxfmjZIAni2Ca5TPFCMkHiUuYi5HbDoQrCMHThC+
- PwwXwi4KN7S/Z7aJ5OX2l7jwz2Dg8cGE2kEhqT9xg4IHcn0wnQp/6Evo0j7CwAMzOFNc
- GXqTqlaVxbPSWXNSNDGaYFAZg7Rrp1glyUVcv9YO4imKmjGOAlefvTeY8Yd4DLLy9FQz
- 92BHWf/Q1sER+v9mwYTFxAOdIVDifXTi3keyAMPUxA/3C2vATHH2wkFL5aeQVikVrDN2
- YDwg==
+ bh=fSpYDDH9l0If/a1fpCW9mlAE23CU/TLawJ/+yG0XF0Y=;
+ b=df6kNafqzjdtNuV5F7e96xREk/l0cbbx3gP7eIEjWoUq00YjsLqEMKFE+3OThzMmkV
+ yYRGF0kRLNLJsbde2z28g7XwIMPYgUnGPBLP6LXKXP2Dh3G1sNr0numH4Cg1zYh1CBVO
+ 8T0UzvcMdoWAxK3bfpSlVn6FKHoSKn9fvJhaboKG1Bb1P0YcI4LkQJxiWR2on6ZdagzK
+ G5t58d92rVtKRGEWSPRvSu3fWdBT/zluu07oRgz9zl3Y3q0gmqpCsmnPgfv64G9DKwhu
+ dsyynj28j3mpEMT5c9aaDjxA4lrl8mkhhrsa4NVwetx1QnKOqLWBs2uyUjMrL5UDZ3wy
+ 5sUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732800622; x=1733405422;
+ d=1e100.net; s=20230601; t=1732800648; x=1733405448;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TqtScC740xmd5u7iaeC83AA3tKDiDpqWYQrYgBVMH1o=;
- b=o57NKWSBm0KPNr0+PNzK/RTcISEj3Qlale8Mx4dVmnYP/vwj/vtsKtmnwqgUsKrMp9
- 5F3/XlHmx3rEihiM6QW9PLswt7WlCXEljqECEv+CjABBvIT8/7pWdvIjvK2JRyg1+mch
- EZpHsZoDYNjCTevs1/P8MtNXkz4R7o0JmFzSaAOb+3WuHbHuhxCeehkz32/pnzOfTO74
- c81gUaT7X7bWJXUEBAvGvIX1uSPdt7rZ+1wztzjrUOcxA+11L+tl5DPIH3iJzVs+V46a
- vwO6eC1VgG7EBjOcr14cZMDjOFO98ImntYXAANRsqhEISpHTmOmMrSgGB/kTmc8hepNz
- pXEw==
+ bh=fSpYDDH9l0If/a1fpCW9mlAE23CU/TLawJ/+yG0XF0Y=;
+ b=e/P2Pg6iKZ1eQCXOx1ekZ2sKnSxkQVqwXeSqlP3wUO6OzGH/hHfSWKbjPgVO2Dvceu
+ F3StZeugA/vlmSb6j/F4DW/F9+3ihC1yLGk4cwymTtj1KRHa97fOsBiByALIT+iii+g4
+ HfPdbXXFQbBXpVC+TmMoxAqPsWHEVwU3/XRTzKMexsw81tnL9FSnlkPHANQruTU0oLmA
+ OQugPyftsFVuFpFxltkia7vvech9GNFwPSjI9x5kKcszVDOxZOtfsvOloelQc6QfXjoM
+ SZJ/7//Cd1NQ+wZQ+EuGc8bsSNk5T/yXtVWx697Q2Gd5TtP2LeUc7PlvpVe9WPNzLClq
+ k+6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5OsewNhUi2zfsED3svzM3kJ5RhHln4Y0LJ92Qz12xUEzhMRihp0eG4wc1xnZeNXHSC0kKmnaByQIU@nongnu.org
-X-Gm-Message-State: AOJu0Yxw61D2dzuWtb/0hJtV56hFipY0mlftka/KN6gy7MN+c0h1eRdo
- mWY1+l6hLJwPIIWjj66xmPbCTox/iDh/rEZdJkfn6BsTgIcFrFlPPspvu32LyH5czfz6Gl271bf
- alcM=
-X-Gm-Gg: ASbGnctb6DNswWU3XrT6v6h2AtMzhkt72FFGsET3er/9VmRDiGNh8clEe5gp92i4rDj
- K/7y251yQ/AXxE1LBcLLYVHVizbhJWje6kPdpBLKYTx+PmaNdoYlCORECYP9IyjSqDmuTonyBf/
- A9FeRY/LG6z//tPDs9s0T6g0KQNtgOHsMXvWSJC/cDjOfZ7ImaPlyCqxZdGBhEzFPTw3lD6eDN5
- bbK8qErazfOLx21nLKQ57a3bN98gIZ9rUZtRo1fV0zkJBVEG6OeWb6VBR2r0l78bCR5Uc8e5x+d
- CZ2rD56UebJ0+dQtnZCHRoUef/Wk
-X-Google-Smtp-Source: AGHT+IFFezvgwq65WNzdGeBNQjUHKiOOh1xaSs0ds/WBgMS/YD4L4mI/cRC4wvNWnS63xbyRjTa95A==
-X-Received: by 2002:a05:6870:828a:b0:287:6f4:1ac5 with SMTP id
- 586e51a60fabf-29dc418fdfamr6786035fac.20.1732800621797; 
- Thu, 28 Nov 2024 05:30:21 -0800 (PST)
+ AJvYcCXPw5YCgzlW+WtMkPQAHFbe9shM9OhQ3DPxGXH+iB8JPzXZoAOwnXr8jglkyHU1VETN7eb/6I6JyCuc@nongnu.org
+X-Gm-Message-State: AOJu0YwtyJ7oh2byhjqtEQ3CPeFiWoPBBSPvCn97KOUNWOx3chDybBQ8
+ aTGdfVp8ONhae2PDAEH9O2lShqLqxqrmVPCrxFAjbvDdIiNzTtZgnLPvfdNmxPA=
+X-Gm-Gg: ASbGncuxadJr3PXh3De5Dsna8Jy5K7qPBCtUW0UfsUywuDcnimrkdN6BDL2jODlOHRU
+ ewCA8OgLaS/c0JvOvYpU8xp9zdPe8sLGCQhYdRRRWK3pWAHwFBynCoK+dajsAXhEPOWqjzXkgVW
+ RJl8jOgDw1LzIiZUaKMEHPin++Q/FRV/XMZd8ZXE3LWgtVzJmxFcYSlONlYZ6Jo1I7RzhhiZXQ7
+ GxYLG1bfxQ4LOlkFy+1RckBu9r3ChoZIR3cawJCufFk9rP56SoaGv6wkykaJstbgebx506bXBX7
+ j6diidfaowOWa0H6lQa8tnZICCoD
+X-Google-Smtp-Source: AGHT+IGYbiyepWZIDi/qwsuJQLRsIbT3gYKRzgwwDm8B5abbBYt7BMSgpoqGaQQqcsBLpvftU6nBcw==
+X-Received: by 2002:a05:6808:1a28:b0:3e6:777:a799 with SMTP id
+ 5614622812f47-3ea6dc250f8mr6185157b6e.25.1732800647839; 
+ Thu, 28 Nov 2024 05:30:47 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71d7255e6e2sm291024a34.32.2024.11.28.05.30.20
+ 46e09a7af769-71d7255e6bfsm293088a34.31.2024.11.28.05.30.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 05:30:21 -0800 (PST)
-Message-ID: <3448897b-c51a-43dc-8793-fc6c2a73304e@linaro.org>
-Date: Thu, 28 Nov 2024 07:30:19 -0600
+ Thu, 28 Nov 2024 05:30:47 -0800 (PST)
+Message-ID: <72a7a50b-b87e-403d-b27e-881c26bc5c05@linaro.org>
+Date: Thu, 28 Nov 2024 07:30:45 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0 09/25] target/sparc: Set FloatInfZeroNaNRule
+Subject: Re: [PATCH for-10.0 10/25] target/xtensa: Set FloatInfZeroNaNRule
  explicitly
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20241128104310.3452934-1-peter.maydell@linaro.org>
- <20241128104310.3452934-10-peter.maydell@linaro.org>
+ <20241128104310.3452934-11-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128104310.3452934-10-peter.maydell@linaro.org>
+In-Reply-To: <20241128104310.3452934-11-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,14 +104,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/28/24 04:42, Peter Maydell wrote:
-> Set the FloatInfZeroNaNRule explicitly for the SPARC target,
+> Set the FloatInfZeroNaNRule explicitly for the xtensa target,
 > so we can remove the ifdef from pickNaNMulAdd().
 > 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/sparc/cpu.c             | 2 ++
->   fpu/softfloat-specialize.c.inc | 3 +--
->   2 files changed, 3 insertions(+), 2 deletions(-)
+>   target/xtensa/cpu.c            | 2 ++
+>   fpu/softfloat-specialize.c.inc | 2 +-
+>   2 files changed, 3 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
