@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292FCD69105
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 12:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 513E8D69104
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGe6l-0006AC-Lx; Thu, 28 Nov 2024 07:58:59 -0500
+	id 1tGeAm-0008E3-Vl; Thu, 28 Nov 2024 08:03:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGe6j-0006A0-Tq
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 07:58:58 -0500
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tGeAK-00085o-Eo
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:02:48 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGe6h-00011Q-Al
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 07:58:57 -0500
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-5ee645cf763so317526eaf.2
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 04:58:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tGeAG-0002ux-EQ
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:02:39 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2eb1433958dso583595a91.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:02:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732798733; x=1733403533; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1732798953; x=1733403753; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/NCzGmnBhpIg9O/nO+yGhpiPPlY+xWJuGozNhuOek5o=;
- b=aD1Cq7dqW5TKTKLLEqlGlBBd4QO7aGD503o17V9OlzSc9OHKYc3fvmlxBm4D+4z3Kw
- MbmS8TnBoGn9K4zETmVrULg60C/TO9C6qUQxMQCgbVdiVe7EPx2vAUV2xdMDSgxyADhd
- rwSjWGFjYnPrRm4STFqZ/rLdCzWXsc8d9j8GKYxEs/2LSQHsSyORQr5jMcC079NTNFgp
- Hm5jkJ+KBDwHQmWl9LzF3Vg8krdD5DCy1lQq381PPhDEOBgNyGO6RBXtdwJTUk0PBnSJ
- lK0oGfDUeDr0BxVcb/mw9Lf8U01aYPKomTKOR2zwkeHAcRSysUl7ZyPrLOr0nN84fEN/
- unsw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ChZRcupK90z3tHsfjdw/s47aIhOGMbgfXfo7ZaM8Npw=;
+ b=R+nqChRTeTD62DohmPEXySL2YcyRP75TjktsuZySnbW5K5Q7Wklk99LTKqCUWItgbG
+ +a+nyljqh2qhAXHH7rMGPiK87N7ItAvWdhWItvrdtFHuRdros5eoSNGFr0moXkyZb3Xw
+ fUBPZsXhTsX+pr5GKguZ61kEtGYheab9EXZA2+sfnIyXwFLrwjkU/Bch06mHPpUjwGdl
+ uy9Y3omHWIbHeKh5xhK8gfOOHJgPAgZmuKNmymTnv4IFQTQfHGnt0z1W7lUopceOnIKY
+ dK4V1fRkH8+ZFu2OUIDmAIV2Bnsihjm6eT9OIv/btNLjwXGtoGnkew5Lx18eK68uSpK6
+ U6vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732798733; x=1733403533;
+ d=1e100.net; s=20230601; t=1732798953; x=1733403753;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/NCzGmnBhpIg9O/nO+yGhpiPPlY+xWJuGozNhuOek5o=;
- b=gW5MoPUxXXXnumbNlxcKxTNQbEvBD4Y4oMVOg2lfxXkuHirXZuun2lL5UAhs/gJkUR
- OIKwJV8uvrHY0eHqRkSXNemSgWwkLzQYrvYGJ0CxAhbluBu0RU4Pv6Ryn8vCDlqbiNee
- fqE/iWIVCaez3/6kV96puwYawOXCyuotmdAfAMp5QIzsJOGbfuI5Og77nagahDDu1yFJ
- d1V1eOxgux8vjabOq89ibcMcNzrb/VTGqJPNhkx3Vbyv+gD+vjnE8tslhSK7m8wPyDUb
- DHSwYaRcKnAqWywOT9Ewm4jk8tuUYUONMvauFKvswalU4XTB9sSPBED5RO8djvlN+TWC
- 3U5w==
-X-Gm-Message-State: AOJu0YyfO2wMIDl+MoIxCGx7ye+i7Fdfla4IsLtFhQTk1z+mtydtnUEx
- Z9F+Nz0a3n9gHy4awdrU52ObK0g3qDJAdB4lpzZcIhEd12SP7lUelfCPuU6ic4NlbrqYsFfrbvs
- kH1E=
-X-Gm-Gg: ASbGncuPOsEPFapgHpIX+IVU6igvhM3Ww6W6a4PZhzfsZv2PJHStH6FGvGvC6ygKhof
- ELRXaS3jK6QJwARBbme9JmlgRrHkLBwmVacfQbLkZdiFkhyARE4LfBoRzq5x3+l6itwNnDFWAHX
- hHdCGbn5pnRceoGmTLJbdZlSLd2OpB53gB0DJDl3Ak0aCqwQcjmYYxRbL3t/sWaW+cc2clNT+Mv
- upBE8oqEFvvLaB9ZYI1EyVG2sDY/nNhgJ6uK6WbHv7maOk8ztOhDJeNuTNIDnetvsCiyL4Latls
- qhn8VDkz2SSxCR5vFz5O9Vfa3F4b
-X-Google-Smtp-Source: AGHT+IE1uUQHGgW1PE7s7tR/WtVS+ctAwsMW/7vjkkhykUAN1QN4GWwlqBkTTdAD4Zt7fVXAQNlFyg==
-X-Received: by 2002:a05:6820:2183:b0:5ee:ebcb:e6e9 with SMTP id
- 006d021491bc7-5f20a168f5cmr3811778eaf.5.1732798733254; 
- Thu, 28 Nov 2024 04:58:53 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f21a3a920dsm287820eaf.20.2024.11.28.04.58.52
- for <qemu-devel@nongnu.org>
+ bh=ChZRcupK90z3tHsfjdw/s47aIhOGMbgfXfo7ZaM8Npw=;
+ b=CFMD5zgSypBtfVe1Nh8zc+6T2E0kY/X9gnS9276/3xQchwqQrk53WftrzU9aHRHOWW
+ gowRRkbByLvff788H2I8DzxSW57EN+MJtvdPHFdXoTUt7jVBQ8wRuR96i5+zIZcjhdpn
+ riywXbWYQ+lwXVVevdqZXcVVnlOaan6wrFc44bilRMb6sy03MLAloqF9RjfUclWM/W9s
+ SoIBkJnXu17PsU/V5wauGkLpONhR1CQKzpBce/hsMcNApouKJz1UJbW9CQepkOUDiK1O
+ MLzUuOrrasUkV+XnPfXPHtdkhUn6ZzOYfFQg/gtVkYgdkC4bQWQv2+CkNXC0tqId6YPq
+ KSKA==
+X-Gm-Message-State: AOJu0Yxh6ZwoQKXAcnd3HBP9NTFSilaljjpdgfp50DhIIpDvAKSMLLRj
+ UxFK3umgmRa/PpNw3of17e2lHbX/ES4WsDLBYPmxvRYwwOqySfd8CeefqNYv21A=
+X-Gm-Gg: ASbGncuaKDcCt2BEJvT7S7xNlHpqSvNpbar1YN/c0M/fgiEjCCXWz9hs886RG3mfORn
+ BBz62U0e0jM6Po4Fvja7kQQt2x/5Huv/qYnK/31LXR5/ObedPXzYoBSei1dyJVpzeSWbZkfsuKM
+ oFdUGLqQln7y0gA8Wipu0OrRY3/0OydibDnsfeIW3zwQdqWt6aOq6WQm9jWKvETEC8dyDALKuE7
+ Thj6G1vAfHU2s0UZ07ioJyPQhJ0cyU7zjM66s/K1sA2pQ9fudyc09uMOJ3Krs4=
+X-Google-Smtp-Source: AGHT+IE3FIy/nwTcOC3MVOp8r2Nh8+b4cfqdG+aveg22eODYB7yGdZrtxwRFRRQQghM1Ipa2CQT7Aw==
+X-Received: by 2002:a17:90b:17ce:b0:2ea:3836:33de with SMTP id
+ 98e67ed59e1d1-2ee08fca651mr10207601a91.20.1732798952888; 
+ Thu, 28 Nov 2024 05:02:32 -0800 (PST)
+Received: from [192.168.68.110] ([187.101.65.72])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ee0f5b61adsm3411235a91.0.2024.11.28.05.02.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 04:58:52 -0800 (PST)
-Message-ID: <c6ea5acc-e07f-4eb8-ad8a-b339f27c9102@linaro.org>
-Date: Thu, 28 Nov 2024 06:58:50 -0600
+ Thu, 28 Nov 2024 05:02:32 -0800 (PST)
+Message-ID: <1f2a4b6f-7a70-4f61-a073-f6c953003d32@ventanamicro.com>
+Date: Thu, 28 Nov 2024 10:02:28 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2] target/riscv: Avoid bad shift in
- riscv_cpu_do_interrupt()
-To: qemu-devel@nongnu.org
-References: <20241128103831.3452572-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH] include virtualization mode as part of priv
+To: Yanfeng <yfliu2008@qq.com>, Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <tencent_6FF30F7E2E640BEE260FD6523B6BA5486908@qq.com>
+ <CAKmqyKMP093GyTEHdAPzaV9+O_pFSv0svQRb-31QTvn9i4fxMA@mail.gmail.com>
+ <tencent_B97DED0E6971DEDD2F960CC63DFF414A2A05@qq.com>
+ <CAKmqyKO6Wjknoc1sXVm6d0BGzwcuF7VBqJdg_a1gh=6zz=KZNQ@mail.gmail.com>
+ <tencent_E6B51EACA466D65291C0E6BDFD34C8EADC09@qq.com>
+ <CAKmqyKNOXNpfekTPNOyHyYEuCXKOewCeTSFZAHpsxuC7gUzpGQ@mail.gmail.com>
+ <tencent_3335F7F1076629E3B507A48979413F43B207@qq.com>
+ <CAKmqyKNS3GWKpatFMchYJM31PtgjLn9YX+m_L8Nv=qXNMXhWmw@mail.gmail.com>
+ <tencent_F74852576B25481AF3647E0F647DEEEA0F08@qq.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128103831.3452572-1-peter.maydell@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <tencent_F74852576B25481AF3647E0F647DEEEA0F08@qq.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc36.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,30 +109,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/28/24 04:38, Peter Maydell wrote:
-> In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
-> cs->exception as a shift value.  However this value can be larger
-> than 31, which means that "1 << cause" is undefined behaviour,
-> because we do the shift on an 'int' type.
+
+
+On 11/28/24 3:39 AM, Yanfeng wrote:
+> On Thu, 2024-11-28 at 14:46 +1000, Alistair Francis wrote:
+>> On Thu, Nov 28, 2024 at 2:27 PM Yanfeng <yfliu2008@qq.com> wrote:
+>>>
+>>> On Thu, 2024-11-28 at 14:10 +1000, Alistair Francis wrote:
+>>>> On Thu, Nov 28, 2024 at 2:05 PM Yanfeng <yfliu2008@qq.com> wrote:
+>>>>>
+>>>>> Alistair.
+>>>>>
+>>>>> My initial `git send-email" on Ubuntu 22.04 wasn't lukcy:
+>>>>>
+>>>>> ```shell
+>>>>> $ git send-email
+>>>>> git: 'send-email' is not a git command. See 'git --help'.
+>>>>> ```
+>>>>>
+>>>>> I need time to find a solution.
+>>>>
+>>>> You will need to install git-send-email (or something like that)
+>>>
+>>> Yes, now the "git send-email" exists and I will see how to use it correctly.
+>>>
+>>>>
+>>>>>
+>>>>> As for seperate `virt` thing, my concern is that though the V and P
+>>>>> status
+>>>>> looks
+>>>>> orthogonal, they are not so independent (e.g. `P=3` implies `V=0`).
+>>>>> Having
+>>>>> them
+>>>>> in one `priv` register tells user that that they should be operated
+>>>>> together
+>>>>> using one command.
+>>>>
+>>>> True, but how can a user know what bit 8 means?
+>>>
+>>> Good point. Can we mention it in the user document for `priv` register?
+>>
+>> AFAIK we don't really have a place to document that. Which is why a
+>> "virt" register would help as it's self documenting.
 > 
-> This causes the undefined behaviour sanitizer to complain
-> on one of the check-tcg tests:
+> Okay, I will try adding a `virt` virtual register in a [PATCH v2] later.
+
+Can you please also change the patch title/subject to:
+
+"riscv: include virtualization mode as part of priv"
+
+Adding 'riscv' at the beginning will help people from the common qemu-devel ML to
+identify which subsystem/arch this patch is aimed at.
+
+
+Thanks,
+
+Daniel
+
+
+
+>>
+>> Alistair
+>>
+>>>
+>>> I used bit(8) at my first try and it worked from GDB command line. Actually
+>>> I
+>>> also tried bit(4) but found GDB command takes that bit as part of P value so
+>>> I
+>>> withdrawed back to bit(8).
+>>>
+>>>
 > 
-> $ UBSAN_OPTIONS=print_stacktrace=1:abort_on_error=1:halt_on_error=1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -device loader,file=build/clang/tests/tcg/riscv64-softmmu/issue1060
-> ../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63 is too large for 32-bit type 'int'
->      #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
->      #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
-> 
-> In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
 
-Semihosting is completely artificial and should never be injected.
-The maximum "real" cause is
-
-     RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT = 0x17,
-
-We ought to hoist the handling of RISCV_EXCP_SEMIHOST higher in the function, before these 
-calculations.
-
-
-r~
 
