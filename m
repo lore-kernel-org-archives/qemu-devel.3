@@ -4,169 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD584D690F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 10:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F59CD690EF
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 10:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGbX4-0003FW-Lj; Thu, 28 Nov 2024 05:13:58 -0500
+	id 1tGbbz-0004Zx-W5; Thu, 28 Nov 2024 05:19:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tGbX3-0003FM-UJ
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 05:13:57 -0500
-Received: from mail-mw2nam12on2054.outbound.protection.outlook.com
- ([40.107.244.54] helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tGbbx-0004ZY-MM
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 05:19:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tGbX1-0001ps-PV
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 05:13:57 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RH36lGsQw9X0N4QM0uYCsXy8+PQJX4FKUTdPYrzmMGddjvya32KJieu0bC3BJstCP4/GNC+48DFhLf6NIhl7u6OvmMI4OnBd/FZssh+VAW80ncbGeDSWEXytB4BwHCnFB64LiZI9lEN1p0bYo6lba1WKXeMxpoONU9oV187BHqEy6qq4+9FQKSB8KomesEApQqK95pC3yFw93QuanMnm7tj7Kxtq9YTRJ7htRGOBgyWCdj7f57yZbc22wohENILDe7XaI8QshfiAwClVYmJcoo/K5nv7OBrPuMfDSv6dTI7xz/Zg6h/gUbLVWT1dtJ1XF9z2U1DZk50ynpP0UE6Y0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1MV7kBUzuB5QfpBKMpQYmK8VTVkXxJ02satfcnXdtyM=;
- b=qgcKrpXElvjxaA1zTR2yjz7SXrizEYB10TsWZMGQ995hfUdb6X9OlRCoksVXt8U9cx11ILbrHDFc5Kxs7+szSU6wxKxSkm2VxJEXcHX9sKL3r2LRCvnCwc1PduMArREPRPyARFqo24g2+e+qA8KiI2ZVE1DtYM22x3R5OcqQ4MzqKXSbj0mqk0LSISu19vB4TQpJ8tANHqjS0p2HcenSXisekABsxuGqnvO7E1voU2RJIvKW7GtSjDUbSj4OtFovaYKEYKNOu48gpnVVQ9XPD8rKBl1rGl/5YXybsp9GJ13eyiOfsQFa0B98NtJ0r0/4PXi6IBuHk9jV4TcENJH0iA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1MV7kBUzuB5QfpBKMpQYmK8VTVkXxJ02satfcnXdtyM=;
- b=AkrLljzBwxZP121d59cadOal3AuevoAoHrYD5UDgmM/HqYzrPGLR0KgnEAtM3fdKQS74FyyRCpGKwber++FdoMdzvlZYIkRSjSAb3VbXLG1wpat0Omn7GqCrAfyYcsyfIlw0Ckz+yX98xghfvcWWyolVvr6bbWZIHA8tdESt9nsfpLdwaF8Fztr5aq05hZHuFtrKyZDXaj5rYKVo/8m2yufnFFv1Edc7Jl2Hw+K/40nw0kDjKSoDTrNQGL+xEy7MjojtzXvIZGeIqvIcRzjPLbukv2b2tkrF7aG2GaTWriVF39/F1d9yfJThI0xsaEHLAcyT4VUgB5TiVFTvMhZm4Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by DS7PR12MB8252.namprd12.prod.outlook.com (2603:10b6:8:ee::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8182.21; Thu, 28 Nov 2024 10:08:48 +0000
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8207.014; Thu, 28 Nov 2024
- 10:08:48 +0000
-Message-ID: <e1ea0647-e71b-4278-8cf6-15c52b14f6b7@nvidia.com>
-Date: Thu, 28 Nov 2024 12:08:42 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/24] thread-pool: Implement generic (non-AIO) pool
- support
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <babda1bbe43024baaa4a9ac855f7930b6679f2b7.1731773021.git.maciej.szmigiero@oracle.com>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <babda1bbe43024baaa4a9ac855f7930b6679f2b7.1731773021.git.maciej.szmigiero@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0228.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:1a6::17) To DM6PR12MB5549.namprd12.prod.outlook.com
- (2603:10b6:5:209::13)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tGbbv-0004zw-Pp
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 05:19:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732789136;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/JLf2w6cLMlLNL0mFX+BbTfeyhqbBt0ODC2WEyLqrmw=;
+ b=KMAAUIVwP96QALXjkKrYwv1n7AIufMqL7H7kHksX96A05pNZ1EwUSkcD/NfUDz52gxJ0PA
+ X9k5GmUDVAKBtYgk9wHkVCSrKLIOoOsiePz7Jlm/Smn5MLoooBs7Y/k7USFWjt46/7olmx
+ 0U5Ltn/KyC4rJdEqnTxIEOOR5mNhk10=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-678-JRsOUseLNd6a--SWYD_nuw-1; Thu, 28 Nov 2024 05:18:55 -0500
+X-MC-Unique: JRsOUseLNd6a--SWYD_nuw-1
+X-Mimecast-MFC-AGG-ID: JRsOUseLNd6a--SWYD_nuw
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385b87aee0aso354866f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 02:18:54 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732789134; x=1733393934;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/JLf2w6cLMlLNL0mFX+BbTfeyhqbBt0ODC2WEyLqrmw=;
+ b=h4r4ac0Kcg5+3nB/0QgliakUmEiYRvSKmTIk060oVXQJXx4BF/GJunvbwlwl8vlH8t
+ 3GCGW+eVNorx/BL6JIxjwgy5G9xbji94PbYQavfifeCNz/5rpOUMOqpzdhN0YkpbXY+l
+ fOUnK6ZQMCcNwk7mdXOr8Mwh0TfYi3uUexbAsTZz89tCgu89TMRy5V2D/0i8J+1dulhW
+ fc3y3IHZNDeGHO013DMtJCak5yYzko1KjLbhLFhDDli4S0nU40vJ5UJWDdisKO8FPipq
+ 4lUNNTu7WEmSnKQ7LelDmMfvs6FqrYlcJzOcTmnrlfiOyoT1779VHRQDVv7IYprvoUg1
+ kaTA==
+X-Gm-Message-State: AOJu0Ywm5Io6MwZqJ/sORt26O5bRFgpGxo9tvlUtBudn9e8aI5YQ7LxL
+ sG9f+rSakVo3DvtgHPcEfeNjKNHWafOuAwYUS3ReY6UbXQBojsAgrapoi3onBhJtBm3RhDBfWgb
+ OmPobO4mDAn2iXBV/RYqIo5++XKBSjnrTjQX5mLYaTR2fXCjKMEQQFEFdN2VSHvn9Qh/2e+7riY
+ Hf71RupPy+uFVUTPUNxNnoWFZ6i5U=
+X-Gm-Gg: ASbGncvw47PR96KNg/HdKix6cDXVvD1sZZKeDsAgF0OXwMC5f4V9rVukMp9ayIPIDvc
+ 9rzLB9mIZ9fEXThTsqbF3wgv/yNWcKNDsvQ==
+X-Received: by 2002:a05:6000:400b:b0:382:5066:324c with SMTP id
+ ffacd0b85a97d-385c6ef3a53mr5579002f8f.54.1732789133672; 
+ Thu, 28 Nov 2024 02:18:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH93ZGUd5XKnefyML+kNuyRKOnzfzGOmIATVND/3m19EZU2KtFmaxefzv0BJWGUJuiKoUt5um/kIDFOkEIX1DM=
+X-Received: by 2002:a05:6000:400b:b0:382:5066:324c with SMTP id
+ ffacd0b85a97d-385c6ef3a53mr5578978f8f.54.1732789133322; Thu, 28 Nov 2024
+ 02:18:53 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|DS7PR12MB8252:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1ff9b73a-1175-4eed-2ceb-08dd0f94a65f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NHNVWndQekpWMHhwaGpnTUdnak9jWndnL2huTjVkV3NRZnV5ZjRpaXgrdUIr?=
- =?utf-8?B?RWtDZmhyLzBtSmZoVFJxQVBCQnpnQy8zK0gvWEZDS3BNY21LYVI1QVpSc1Bo?=
- =?utf-8?B?QVJRSFFOeVltcVk5SVhMZ3ZtaHVvMm9VM0IvaU92c3FIdUlla3RpNndERmZ1?=
- =?utf-8?B?MDlLQjZMdHZWU3VsU3Z3aWpsS01LdnZJUC9WTGw0QzRGZ0hVTW5jYTQrUnlo?=
- =?utf-8?B?Q2dIQ1QzQjZCMlFoaVZZQ3E5dnE4TWFxcWowVWlsdjZZSnFDaSszbHlTU0hx?=
- =?utf-8?B?c1VOYjNGYVE1eGtxbnd3VXMwcVJqQlpQdy9ud3BjQUljZ3dVVnZHVjloU2dz?=
- =?utf-8?B?TytSM2pkcnNzQ1M4dk1ValJ1cWNkOEpyR1lPV1NxNEp2NmRJRVN1MWw5aE1E?=
- =?utf-8?B?Vi91WUZvanVnWWRKZ3JTUFUySmpjSDFiZ01IeThQU0xWRUlyWnZrZTkyUi92?=
- =?utf-8?B?ZklWVXZKMEhyT0ZySGprSEhFRGQveWpEWG1QKzhTTlpaUFNaNjkwVzNURUlF?=
- =?utf-8?B?S2pIWDNVdFlYWnJ4elBvdjM3UXFmNTY3U1Q1TXhvRzNUbUpPMG45TzdhWXlj?=
- =?utf-8?B?aStpOFNaSVFTdWlKUWNVa05Tb0JNeTgvRnVTR09SUFdKRUFWM3htTEtBdGZY?=
- =?utf-8?B?T01rV0o0OVpvL1NlNkJUNmkyV0hjSG1kQ1hHSGtFQzFubzZ5WHhVQ3FaVTA5?=
- =?utf-8?B?MU1FWm5BT05nSFE3ZEd4L2dmSnRxQXFpcUVHY3BJNmJHZ0pUbDNGU2dtdjl5?=
- =?utf-8?B?NjA5SHI3R2ZmV2RsMU04NnpIU1hRUThXRUdLYzhPZDhsWHBFd3pnT0JiZ3Jn?=
- =?utf-8?B?d2o0TVVtRjFyN3Nabk1YKzFzS1U2Qkhnbk9lVnRLZlpaZVUzMjY3L05DUlhN?=
- =?utf-8?B?MUtxSjFoOE96ZUcwUzZ0dDFVdGlmR2pvVVpkZGtSOHg4QzJ1Yms3YSsrZ0VZ?=
- =?utf-8?B?R3dlVENSY2hVMVphdVU2Wm15YlZ0dmlEb1NINHhtWm9qQzY4dXpwdjFBS0li?=
- =?utf-8?B?akhLdU1qc3l6RmEwdGNWQ29Uc0l0RmhWemJsdnNkMDUrTXBFYmw3dXJCUjh4?=
- =?utf-8?B?aWVKM0NlQzQxUUMzeFdRaHlaRUFMbi8zU243T0VSTDlIQnJlb0JMZm50VjZI?=
- =?utf-8?B?RmFIeWtqRzJWYnUzNUJJZ1U4YlRwWWtjclp0eG00eFM1SzEreGZ3ZFNmMTJq?=
- =?utf-8?B?eE9FTnlWZzJPdTFLbU1YbkFPSlFHWU0rSlVHcFVqU3NiTFNsSytsZzI3ak5a?=
- =?utf-8?B?SlZLTG5YeVkxbVN2R3VDcDZyVjFEeDVHbTR6T2UwMVhVTnZLRXVhK1ZVamdy?=
- =?utf-8?B?b21aaks1WlVmMWRCby94ZWRVcXlSREhGN2NZS0UxaW1HczVqdVV0ZWhLanJX?=
- =?utf-8?B?SVA3UGQ5RGMwZ0pQb1JrK3ZZOHJ0RmVlKzVqMVkrZ3FiQm9LM0M1RVJFbTdl?=
- =?utf-8?B?anN2R2hzclpOdUxpNkx5TjQxQVVOWWxZR3NyaDl6MGFuTFZvNzhwWS9BWWhs?=
- =?utf-8?B?bGpyUERtaUpJYkZ6YlY0Rk5BeTNpSDNmRVAzOXR0Sy9xR3NqZEM4RGg0OUVv?=
- =?utf-8?B?OWFBVnJSQlZ1bXFWNlp0YWJtaFZQK2lmYjJUK1FZaURpNkJjSzRHT2F2OGtV?=
- =?utf-8?B?OG9pc3FOZmFvellLNzhWV25FZ011eFlvdHBnditxc2x6ZHJIWElaaG9CbHJs?=
- =?utf-8?B?ZjZYbzF2VXdpNW5OYU9OQXErMURuRm10S0RnR3pmQ0k0aXFoWVRBVEU5RkRu?=
- =?utf-8?B?TFhKQURxeXFXTnA1WEE5T25WSDcyZjZJSTcxZGpONjUwdit6Yk5KdHJQQVJv?=
- =?utf-8?B?dlNsdWxCd2JXN3dFaXBJdz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MUtTTnFyaWZrY1NOSVlYb3NJYkhEeEE0QTNwZlI1WVc1QjArTXkrbmNqenRM?=
- =?utf-8?B?dHBCRmZJN0ZvLytINzM5RXFDTC9lYjZWTHVSakJqSXBDTVJlamJIUkVjeFJn?=
- =?utf-8?B?WWhHQzl5UkdqSUxFbzZvU0RwQ1FvUlpzbnlaSnU1ZUt4eUVaL0R1dGVuSngx?=
- =?utf-8?B?dWxhbHV4YU92Yis3MVk3NU92Njc1UFdaRlZtT2gxanFndStiTlJZbFM2RE4y?=
- =?utf-8?B?UzVWckU3bDl4cENPZFpHVlhLK05RelhYdUZQR3ZyZkJiTzR3YmNKY0VobFlz?=
- =?utf-8?B?bGZQRXlXRFRRUDdobWx1c0VQWU9Cd3l2WFRnVXZCSmdldk41SG5YREJ6dDE4?=
- =?utf-8?B?ZTF0OGhzSkcrZXFZMkRjbEN5V2djMTBZQmFVKzFQdFdnWlRKdWF6OFBkeDdK?=
- =?utf-8?B?OWtLUG5zRXpkalhEZ1RSVG1xeWNoSi95TXRrOVJRdmdTT3BZVkpHTUNueFo0?=
- =?utf-8?B?TXlwbHYra0Rpb25Eb3EwVXNjbjFONDFWem8xeHRWSkVEaVZPT3pVSC9mU2dh?=
- =?utf-8?B?eGNLS2crMVp1N2h2VWM3eUNMZSsrSHpDV2kwSFk5SkNGbi9yZGVicDdlanhL?=
- =?utf-8?B?bG9MdjBZLzVZNUR4SFFIVHdqSEpqMSsvNVhjN2ZHd1MzcTNKY0wxWFZ4byts?=
- =?utf-8?B?elRTc0pzNjZMYjAyaGVmM3JFZEJJemdDU3BqQ2J4UVlxUVJzWTJFcjhER2hy?=
- =?utf-8?B?TFRWeGMzMGVDS0xxZzFvTDNjRk9WY2NlOGRLaVp4RzNNT2liNzhYeitsckpP?=
- =?utf-8?B?cU9XbmFRajRNOTRhd0hwNTk4YTFVbGpyNkg2S0huZC81ZjRJWFFqcnN4SFBQ?=
- =?utf-8?B?cDZBWWNyQ2xteXlOZDhqUXJGbmtnOUFKZS91SFk0bTFyaUhYNFNzQlNLQk9L?=
- =?utf-8?B?aXlrWUdtVzBvS3NFQUlLckNrOHZKeHpuS282WjVPbnFFa0Ntb2J2a2dBeUFN?=
- =?utf-8?B?SGZMWnJRenEyV3UyVTVoMWd2WDE0YjFtQTRQc0JvcUlhaEV4NDBLNndEWGJL?=
- =?utf-8?B?ajlMNVp0cCtwR05JWENuRnRoRWJxdzR3MzZDUzdMWE4xclFQOU1IMzk1WEVk?=
- =?utf-8?B?YkliNkt2WTVub2dCZWcxRTJWZmRLWjNORHFpM2xUSEFyTjhOL0hRSnRqeUNJ?=
- =?utf-8?B?L2tCYnNyQnl2ZW93SHBrckFoeCtzMy9SWTVmS0RXeks5SWxLY1lOQUk1SEUz?=
- =?utf-8?B?Y1R6Y2o4aHVTYytKbC9DcUt6RThTNHdTWjNUUVM1R0dFeXI0Z0pyeGh3ejA1?=
- =?utf-8?B?dU9qbkR4RjYxdXRKU3MrekpoMXFmV0lxRGwvaUdoUnZMYk10cU9qZVBPZzNj?=
- =?utf-8?B?bDZPNTBtVW5xMjA2aWlNMlZjR3hXOGJYSXh6bVIvNi90ZmY1ZDRnbUhpRWl4?=
- =?utf-8?B?OHhNT3RTQ0xIa2U4Mk84c3FFaktXVDhxMVdDYVM0aExOMmtBV3hGcWREZFFK?=
- =?utf-8?B?MWM0RTcwQmVLdkRVdmhYY2dOKy9ZMklnT2hsUlJOWk14SDNWYlZCTmRxZTNT?=
- =?utf-8?B?TERqMFN6WkcxVm1UbjNQQmFvTWMzT1ZZWXg1alB6K3ViR1VONlh3aTZFRVM4?=
- =?utf-8?B?N3ZRWFdlTDNEQTlhUFg2Z1NTTWc0OUM5Mm9UbVoyL1FEZURRRmJOdDVkN0cy?=
- =?utf-8?B?WkZPaW9Ma00xYTBHTkdFaVlzSnNFc0t1KytUc0tQVmM1ZVlPem82aGFvUzl4?=
- =?utf-8?B?cmFzSDRNWFBobHptbmhTRHFaS3FidVQveGtZVU9TdmVrWndtRHhaT3ZuODFD?=
- =?utf-8?B?R3BJQkExa1dOaUwzcEdnSFRpaGZxV1BVc3Bnem1hMmsrQnpsTVV6eWd4U1ds?=
- =?utf-8?B?TmNrTEx5ZDhQL0ZnczhhUFhEYmhubE0yMTUybHhjWXdmWFF1ZlVtZUlwczJt?=
- =?utf-8?B?cnc2U3RqbTRtQnhRZXZwV0Q0K2F6T2tmL2lNV0ZUVFloQ0NHTW9NbGVjY0tL?=
- =?utf-8?B?UEtDMDUwS2hIcm1NemEwUEtpeUNMdk1xdW5HWGt1WjBTbHZTcGpPd0pQNm56?=
- =?utf-8?B?dHFIaWplMFZIVFJ3enFiY25zSGFqeStGVGk0R0srU2E2a01KVzFOUFdCL1ZQ?=
- =?utf-8?B?RDJOR1lOTDdZM2NqajhNSmhlaFd1U0hBSHJhMUdSa1RkaExMZlR1b2E2cXh1?=
- =?utf-8?Q?YjYAF2AtAwmrrZe8LRR0dGX2R?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1ff9b73a-1175-4eed-2ceb-08dd0f94a65f
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Nov 2024 10:08:47.9693 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: R8G05GYdvJw6ZCc6w8CVL3Un/VDMipHwkwz4MTRlGumxAezI18inhjYiJm6pi7pciK0oA9g/WLvP0M6LXQ2KPQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8252
-Received-SPF: softfail client-ip=40.107.244.54;
- envelope-from=avihaih@nvidia.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20241126115748.118683-1-ppandit@redhat.com>
+ <20241126115748.118683-4-ppandit@redhat.com>
+ <87ed2xn16y.fsf@suse.de>
+ <CAE8KmOwfzFyBWfq_Vhr-hjT4jGQQqi6_gZwkNGtd8SVLxhi0QQ@mail.gmail.com>
+ <875xo8n4ue.fsf@suse.de>
+In-Reply-To: <875xo8n4ue.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Thu, 28 Nov 2024 15:48:36 +0530
+Message-ID: <CAE8KmOzfaxzxTCMoF6miOG5fYFaikmz7sm9UeuAe6u1Optz8fg@mail.gmail.com>
+Subject: Re: [PATCH v1 3/4] migration: refactor ram_save_target_page functions
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.931,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,163 +103,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Maciej,
-
-On 17/11/2024 21:19, Maciej S. Szmigiero wrote:
-> External email: Use caution opening links or attachments
+On Wed, 27 Nov 2024 at 19:42, Fabiano Rosas <farosas@suse.de> wrote:
+> From e9110360eb0efddf6945f37c518e3cc38d12b600 Mon Sep 17 00:00:00 2001
+> From: Fabiano Rosas <farosas@suse.de>
+> Date: Wed, 27 Nov 2024 11:03:04 -0300
+> Subject: [PATCH] migration: Rationalize multifd flushes from ram code
 >
+> We currently have a mess of conditionals to achieve the correct
+> combination of multifd local flushes, where we sync the local
+> (send/recv) multifd threads between themselves, and multifd remote
+> flushes, where we put a flag on the stream to inform the recv side to
+> perform a local flush.
 >
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> On top of that we also have the multifd_flush_after_each_section
+> property, which is there to provide backward compatibility from when
+> we used to flush after every vmstate section.
 >
-> Migration code wants to manage device data sending threads in one place.
+> And lastly, there's the mapped-ram feature which always wants the
+> non-backward compatible behavior and also does not support extraneous
+> flags on the stream (such as the MULTIFD_FLUSH flag).
 >
-> QEMU has an existing thread pool implementation, however it is limited
-> to queuing AIO operations only and essentially has a 1:1 mapping between
-> the current AioContext and the AIO ThreadPool in use.
+> Move the conditionals into a separate function that encapsulates and
+> explains the whole situation.
 >
-> Implement generic (non-AIO) ThreadPool by essentially wrapping Glib's
-> GThreadPool.
->
-> This brings a few new operations on a pool:
-> * thread_pool_wait() operation waits until all the submitted work requests
-> have finished.
->
-> * thread_pool_set_max_threads() explicitly sets the maximum thread count
-> in the pool.
->
-> * thread_pool_adjust_max_threads_to_work() adjusts the maximum thread count
-> in the pool to equal the number of still waiting in queue or unfinished work.
->
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->   include/block/thread-pool.h |   9 +++
->   util/thread-pool.c          | 109 ++++++++++++++++++++++++++++++++++++
->   2 files changed, 118 insertions(+)
+>  migration/ram.c | 198 ++++++++++++++++++++++++++++++++++++++----------
+>  1 file changed, 157 insertions(+), 41 deletions(-)
 >
-> diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
-> index 6f27eb085b45..3f9f66307b65 100644
-> --- a/include/block/thread-pool.h
-> +++ b/include/block/thread-pool.h
-> @@ -38,5 +38,14 @@ BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
->   int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg);
->   void thread_pool_update_params(ThreadPoolAio *pool, struct AioContext *ctx);
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 05ff9eb328..caaaae6fdc 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -1277,6 +1277,149 @@ static int ram_save_page(RAMState *rs, PageSearchStatus *pss)
+>      return pages;
+>  }
 >
-> +typedef struct ThreadPool ThreadPool;
+> +enum RamMultifdFlushSpots {
+> +    FLUSH_SAVE_SETUP,
+> +    FLUSH_SAVE_ITER,
+> +    FLUSH_DIRTY_BLOCK,
+> +    FLUSH_SAVE_COMPLETE,
 > +
-> +ThreadPool *thread_pool_new(void);
-> +void thread_pool_free(ThreadPool *pool);
-> +void thread_pool_submit(ThreadPool *pool, ThreadPoolFunc *func,
-> +                        void *opaque, GDestroyNotify opaque_destroy);
-> +void thread_pool_wait(ThreadPool *pool);
-> +bool thread_pool_set_max_threads(ThreadPool *pool, int max_threads);
-> +bool thread_pool_adjust_max_threads_to_work(ThreadPool *pool);
->
->   #endif
-> diff --git a/util/thread-pool.c b/util/thread-pool.c
-> index 908194dc070f..d80c4181c897 100644
-> --- a/util/thread-pool.c
-> +++ b/util/thread-pool.c
-> @@ -374,3 +374,112 @@ void thread_pool_free_aio(ThreadPoolAio *pool)
->       qemu_mutex_destroy(&pool->lock);
->       g_free(pool);
->   }
-> +
-> +struct ThreadPool { /* type safety */
-> +    GThreadPool *t;
-> +    size_t unfinished_el_ctr;
-> +    QemuMutex unfinished_el_ctr_mutex;
-> +    QemuCond unfinished_el_ctr_zero_cond;
+> +    FLUSH_LOAD_POSTCOPY_EOS,
+> +    FLUSH_LOAD_POSTCOPY_FLUSH,
+> +    FLUSH_LOAD_PRECOPY_EOS,
+> +    FLUSH_LOAD_PRECOPY_FLUSH,
 > +};
 > +
-> +typedef struct {
-> +    ThreadPoolFunc *func;
-> +    void *opaque;
-> +    GDestroyNotify opaque_destroy;
-> +} ThreadPoolElement;
-> +
-> +static void thread_pool_func(gpointer data, gpointer user_data)
+> +static int ram_multifd_flush(QEMUFile *f, enum RamMultifdFlushSpots spot)
 > +{
-> +    ThreadPool *pool = user_data;
-> +    g_autofree ThreadPoolElement *el = data;
+> +    int ret;
+> +    bool always_flush, do_local_flush, do_remote_flush;
+> +    bool mapped_ram = migrate_mapped_ram();
 > +
-> +    el->func(el->opaque);
-> +
-> +    if (el->opaque_destroy) {
-> +        el->opaque_destroy(el->opaque);
-> +    }
-> +
-> +    QEMU_LOCK_GUARD(&pool->unfinished_el_ctr_mutex);
-> +
-> +    assert(pool->unfinished_el_ctr > 0);
-> +    pool->unfinished_el_ctr--;
-> +
-> +    if (pool->unfinished_el_ctr == 0) {
-> +        qemu_cond_signal(&pool->unfinished_el_ctr_zero_cond);
-> +    }
-> +}
-> +
-> +ThreadPool *thread_pool_new(void)
-> +{
-> +    ThreadPool *pool = g_new(ThreadPool, 1);
-> +
-> +    pool->unfinished_el_ctr = 0;
-> +    qemu_mutex_init(&pool->unfinished_el_ctr_mutex);
-> +    qemu_cond_init(&pool->unfinished_el_ctr_zero_cond);
-> +
-> +    pool->t = g_thread_pool_new(thread_pool_func, pool, 0, TRUE, NULL);
-> +    /*
-> +     * g_thread_pool_new() can only return errors if initial thread(s)
-> +     * creation fails but we ask for 0 initial threads above.
-> +     */
-> +    assert(pool->t);
-> +
-> +    return pool;
-> +}
-> +
-> +void thread_pool_free(ThreadPool *pool)
-> +{
-> +    g_thread_pool_free(pool->t, FALSE, TRUE);
-> +
-> +    qemu_cond_destroy(&pool->unfinished_el_ctr_zero_cond);
-> +    qemu_mutex_destroy(&pool->unfinished_el_ctr_mutex);
-> +
-> +    g_free(pool);
-> +}
-> +
-> +void thread_pool_submit(ThreadPool *pool, ThreadPoolFunc *func,
-> +                        void *opaque, GDestroyNotify opaque_destroy)
-> +{
-> +    ThreadPoolElement *el = g_new(ThreadPoolElement, 1);
-> +
-> +    el->func = func;
-> +    el->opaque = opaque;
-> +    el->opaque_destroy = opaque_destroy;
-> +
-> +    WITH_QEMU_LOCK_GUARD(&pool->unfinished_el_ctr_mutex) {
-> +        pool->unfinished_el_ctr++;
+> +    if (!migrate_multifd()) {
+> +        return 0;
 > +    }
 > +
 > +    /*
-> +     * Ignore the return value since this function can only return errors
-> +     * if creation of an additional thread fails but even in this case the
-> +     * provided work is still getting queued (just for the existing threads).
+> +     * For backward compatibility, whether to flush multifd after each
+> +     * section is sent. This is mutually exclusive with a
+> +     * RAM_SAVE_FLAG_MULTIFD_FLUSH on the stream
 > +     */
-> +    g_thread_pool_push(pool->t, el, NULL);
+> +    always_flush = migrate_multifd_flush_after_each_section();
+> +
+> +    /*
+> +     * Save side flushes
+> +     */
+> +
+> +    do_local_flush = false;
+> +
+> +    switch (spot) {
+> +    case FLUSH_SAVE_SETUP:
+> +        assert(!bql_locked());
+> +        do_local_flush = true;
+> +        break;
+> +
+> +    case FLUSH_SAVE_ITER:
+> +        /*
+> +         * This flush is not necessary, only do for backward
+> +         * compatibility. Mapped-ram assumes the new scheme.
+> +         */
+> +        do_local_flush = always_flush && !mapped_ram;
+> +        break;
+> +
+> +    case FLUSH_DIRTY_BLOCK:
+> +        /*
+> +         * This is the flush that's actually required, always do it
+> +         * unless we're emulating the old behavior.
+> +         */
+> +        do_local_flush = !always_flush || mapped_ram;
+> +        break;
+> +
+> +    case FLUSH_SAVE_COMPLETE:
+> +        do_local_flush = true;
+> +        break;
+> +
+> +    default:
+> +        break;
+> +    }
+> +
+> +    if (do_local_flush) {
+> +        ret = multifd_ram_flush_and_sync();
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+> +    }
+> +
+> +    /*
+> +     * There's never a remote flush with mapped-ram because any flags
+> +     * put on the stream (aside from RAM_SAVE_FLAG_MEM_SIZE and
+> +     * RAM_SAVE_FLAG_EOS) break mapped-ram's assumption that ram pages
+> +     * can be read contiguously from the stream.
+> +     *
+> +     * On the recv side, there's no local flush, even at EOS because
+> +     * mapped-ram does its own flush after loading the ramblock.
+> +     */
+> +    if (mapped_ram) {
+> +        return 0;
+> +    }
+> +
+> +    do_remote_flush = false;
+> +
+> +    /* Save side remote flush */
+> +    switch (spot) {
+> +    case FLUSH_SAVE_SETUP:
+> +        do_remote_flush = !always_flush;
+> +        break;
+> +
+> +    case FLUSH_SAVE_ITER:
+> +        do_remote_flush = false;
+> +        break;
+> +
+> +    case FLUSH_DIRTY_BLOCK:
+> +        do_remote_flush = do_local_flush;
+> +        break;
+> +
+> +    case FLUSH_SAVE_COMPLETE:
+> +        do_remote_flush = false;
+> +        break;
+> +
+> +    default:
+> +        break;
+> +    }
+> +
+> +    /* Put a flag on the stream to trigger a remote flush */
+> +    if (do_remote_flush) {
+> +        qemu_put_be64(f, RAM_SAVE_FLAG_MULTIFD_FLUSH);
+> +        qemu_fflush(f);
+> +    }
+> +
+> +    /*
+> +     * Load side flushes.
+> +     */
+> +
+> +    do_local_flush = false;
+> +
+> +    switch (spot) {
+> +    case FLUSH_LOAD_PRECOPY_EOS:
+> +    case FLUSH_LOAD_POSTCOPY_EOS:
+> +        do_local_flush = always_flush;
+> +        break;
+> +
+> +    case FLUSH_LOAD_PRECOPY_FLUSH:
+> +    case FLUSH_LOAD_POSTCOPY_FLUSH:
+> +        do_local_flush = true;
+> +        break;
+> +
+> +    default:
+> +        break;
+> +    }
+> +
+> +    if (do_local_flush) {
+> +        multifd_recv_sync_main();
+> +    }
+> +
+> +    return 0;
 > +}
 > +
-> +void thread_pool_wait(ThreadPool *pool)
-> +{
-> +    QEMU_LOCK_GUARD(&pool->unfinished_el_ctr_mutex);
+>  static int ram_save_multifd_page(RAMBlock *block, ram_addr_t offset)
+>  {
+>      if (!multifd_queue_page(block, offset)) {
+> @@ -1323,19 +1466,10 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
+>          pss->page = 0;
+>          pss->block = QLIST_NEXT_RCU(pss->block, next);
+>          if (!pss->block) {
+> -            if (migrate_multifd() &&
+> -                (!migrate_multifd_flush_after_each_section() ||
+> -                 migrate_mapped_ram())) {
+> -                QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
+> -                int ret = multifd_ram_flush_and_sync();
+> -                if (ret < 0) {
+> -                    return ret;
+> -                }
+> -
+> -                if (!migrate_mapped_ram()) {
+> -                    qemu_put_be64(f, RAM_SAVE_FLAG_MULTIFD_FLUSH);
+> -                    qemu_fflush(f);
+> -                }
+> +            int ret = ram_multifd_flush(rs->pss[RAM_CHANNEL_PRECOPY].pss_channel,
+> +                                        FLUSH_DIRTY_BLOCK);
+> +            if (ret < 0) {
+> +                return ret;
+>              }
+>
+>              /* Hit the end of the list */
+> @@ -3065,18 +3199,13 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>      }
+>
+>      bql_unlock();
+> -    ret = multifd_ram_flush_and_sync();
+> +    ret = ram_multifd_flush(f, FLUSH_SAVE_SETUP);
+>      bql_lock();
+>      if (ret < 0) {
+>          error_setg(errp, "%s: multifd synchronization failed", __func__);
+>          return ret;
+>      }
+>
+> -    if (migrate_multifd() && !migrate_multifd_flush_after_each_section()
+> -        && !migrate_mapped_ram()) {
+> -        qemu_put_be64(f, RAM_SAVE_FLAG_MULTIFD_FLUSH);
+> -    }
+> -
+>      qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
+>      ret = qemu_fflush(f);
+>      if (ret < 0) {
+> @@ -3209,12 +3338,10 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
+>
+>  out:
+>      if (ret >= 0 && migration_is_running()) {
+> -        if (migrate_multifd() && migrate_multifd_flush_after_each_section() &&
+> -            !migrate_mapped_ram()) {
+> -            ret = multifd_ram_flush_and_sync();
+> -            if (ret < 0) {
+> -                return ret;
+> -            }
 > +
-> +    if (pool->unfinished_el_ctr > 0) {
-> +        qemu_cond_wait(&pool->unfinished_el_ctr_zero_cond,
-> +                       &pool->unfinished_el_ctr_mutex);
-> +        assert(pool->unfinished_el_ctr == 0);
-> +    }
+> +        ret = ram_multifd_flush(f, FLUSH_SAVE_ITER);
+> +        if (ret < 0) {
+> +            return ret;
+>          }
+>
+>          qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
+> @@ -3283,7 +3410,7 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+>          }
+>      }
+>
+> -    ret = multifd_ram_flush_and_sync();
+> +    ret = ram_multifd_flush(f, FLUSH_SAVE_COMPLETE);
+>      if (ret < 0) {
+>          return ret;
+>      }
+> @@ -3797,14 +3924,11 @@ int ram_load_postcopy(QEMUFile *f, int channel)
+>              }
+>              break;
+>          case RAM_SAVE_FLAG_MULTIFD_FLUSH:
+> -            multifd_recv_sync_main();
+> +            ram_multifd_flush(f, FLUSH_LOAD_POSTCOPY_FLUSH);
+>              break;
+>          case RAM_SAVE_FLAG_EOS:
+>              /* normal exit */
+> -            if (migrate_multifd() &&
+> -                migrate_multifd_flush_after_each_section()) {
+> -                multifd_recv_sync_main();
+> -            }
+> +            ram_multifd_flush(f, FLUSH_LOAD_POSTCOPY_EOS);
+>              break;
+>          default:
+>              error_report("Unknown combination of migration flags: 0x%x"
+> @@ -4237,19 +4361,11 @@ static int ram_load_precopy(QEMUFile *f)
+>              }
+>              break;
+>          case RAM_SAVE_FLAG_MULTIFD_FLUSH:
+> -            multifd_recv_sync_main();
+> +            ram_multifd_flush(f, FLUSH_LOAD_PRECOPY_FLUSH);
+>              break;
+>          case RAM_SAVE_FLAG_EOS:
+>              /* normal exit */
+> -            if (migrate_multifd() &&
+> -                migrate_multifd_flush_after_each_section() &&
+> -                /*
+> -                 * Mapped-ram migration flushes once and for all after
+> -                 * parsing ramblocks. Always ignore EOS for it.
+> -                 */
+> -                !migrate_mapped_ram()) {
+> -                multifd_recv_sync_main();
+> -            }
+> +            ram_multifd_flush(f, FLUSH_LOAD_PRECOPY_EOS);
+>              break;
+>          case RAM_SAVE_FLAG_HOOK:
+>              ret = rdma_registration_handle(f);
+> --
+> 2.35.3
+>
 
-Shouldn't we put the condition in a while loop and remove the assert (as 
-the wait may wake up spuriously)?
+* This does not seem to solve for complexity. When reading/following
+code, it is easier to see 3-4 conditions and work them to check if the
+full expression is 'true' or 'false', that is not doable here.
 
-Thanks.
+* fflush(1) is just flushing buffered content into (or out of) the
+stream IIUC, why do we have to tie it to a specific spot? At any time
+it is going to do the same thing: flush available data to (or out of)
+the stream.
+
+* Could we separate out send side fflush(1) from the receive side
+fflush(1) operations? Writing a flag in the stream on the send side to
+trigger fflush(1) on the receive side is weird; Data stream need not
+say when to fflush(1). Let the sender and receiver decide when they
+want to fflush(1) and fsync(1) data, no? Maybe that'll help to
+reduce/solve the complexity of long conditionals? ie. if we are able
+to fflush(1) and fsync(1) without any condition?
+
+Thank you.
+---
+  - Prasad
 
 
