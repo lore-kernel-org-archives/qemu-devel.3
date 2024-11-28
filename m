@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA653D6D253
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 02:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D857D6D254
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 02:11:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGTzJ-0005kC-Ac; Wed, 27 Nov 2024 21:10:37 -0500
+	id 1tGTzI-0005jv-2X; Wed, 27 Nov 2024 21:10:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tGTzG-0005jB-PT
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 21:10:34 -0500
+ id 1tGTzE-0005iw-V4
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 21:10:32 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tGTzC-0006vI-Gx
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 21:10:33 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tGTzC-0006v7-0b
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 21:10:32 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxQK8S0UdnJVRKAA--.55590S3;
- Thu, 28 Nov 2024 10:10:26 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxPOIR0UdnGFRKAA--.13898S3;
+ Thu, 28 Nov 2024 10:10:25 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCxNMAQ0UdnfNJqAA--.46399S7;
- Thu, 28 Nov 2024 10:10:26 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMCxNMAQ0UdnfNJqAA--.46399S4;
+ Thu, 28 Nov 2024 10:10:25 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
 	Huacai Chen <chenhuacai@kernel.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Igor Mammedov <imammedo@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH 5/5] hw/intc/loongarch_ipi: Optimize function cpu_by_arch_id
-Date: Thu, 28 Nov 2024 10:10:24 +0800
-Message-Id: <20241128021024.662057-6-maobibo@loongson.cn>
+Subject: [PATCH 2/5] hw/intc/loongarch_ipi: Add basic hotplug framework
+Date: Thu, 28 Nov 2024 10:10:21 +0800
+Message-Id: <20241128021024.662057-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20241128021024.662057-1-maobibo@loongson.cn>
 References: <20241128021024.662057-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxNMAQ0UdnfNJqAA--.46399S7
+X-CM-TRANSID: qMiowMCxNMAQ0UdnfNJqAA--.46399S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,79 +66,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is cpu mapping from physical cpu id inside, cpu_by_arch_id
-can be optimized from cpu mapping table.
+LoongArch ipi can send interrupt to multiple CPUs, interrupt routing
+to CPU comes from destination physical cpu id. Here hotplug interface
+is added for IPI object, sot that logic cpu mapping from physical cpu
+id can be setup.
+
+Here only basic hotplug framework is added, it is stub function.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/intc/loongarch_ipi.c | 47 ++++++++++-------------------------------
- 1 file changed, 11 insertions(+), 36 deletions(-)
+ hw/intc/loongarch_ipi.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
 diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index 579c9c830b..7fd237bd14 100644
+index c5ecd68952..7ea65bcef3 100644
 --- a/hw/intc/loongarch_ipi.c
 +++ b/hw/intc/loongarch_ipi.c
-@@ -17,49 +17,24 @@ static AddressSpace *get_iocsr_as(CPUState *cpu)
-     return LOONGARCH_CPU(cpu)->env.address_space_iocsr;
+@@ -7,6 +7,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/boards.h"
++#include "qemu/error-report.h"
+ #include "hw/intc/loongarch_ipi.h"
+ #include "target/loongarch/cpu.h"
+ 
+@@ -60,12 +61,39 @@ static int loongarch_cpu_by_arch_id(LoongsonIPICommonState *lics,
+     return MEMTX_ERROR;
  }
  
--static int archid_cmp(const void *a, const void *b)
--{
--   CPUArchId *archid_a = (CPUArchId *)a;
--   CPUArchId *archid_b = (CPUArchId *)b;
--
--   return archid_a->arch_id - archid_b->arch_id;
--}
--
--static CPUArchId *find_cpu_by_archid(MachineState *ms, uint32_t id)
--{
--    CPUArchId apic_id, *found_cpu;
--
--    apic_id.arch_id = id;
--    found_cpu = bsearch(&apic_id, ms->possible_cpus->cpus,
--                        ms->possible_cpus->len,
--                        sizeof(*ms->possible_cpus->cpus),
--                        archid_cmp);
--
--    return found_cpu;
--}
--
- static int loongarch_cpu_by_arch_id(LoongsonIPICommonState *lics,
-                                     int64_t arch_id, int *index, CPUState **pcs)
- {
--    MachineState *machine = MACHINE(qdev_get_machine());
--    CPUArchId *archid;
--    CPUState *cs;
--
--    archid = find_cpu_by_archid(machine, arch_id);
--    if (archid && archid->cpu) {
--        cs = archid->cpu;
--        if (index) {
--            *index = cs->cpu_index;
--        }
-+    LoongarchIPIState *lis = LOONGARCH_IPI(lics);
- 
--        if (pcs) {
--            *pcs = cs;
--        }
-+    if ((arch_id >= MAX_PHY_ID) || (lis->cs[arch_id] == NULL)) {
-+        return MEMTX_ERROR;
-+    }
++static void loongarch_cpu_plug(HotplugHandler *hotplug_dev,
++                               DeviceState *dev, Error **errp)
++{
++    Object *obj = OBJECT(dev);
 +
-+    if (index) {
-+        *index = lis->present_cpu[arch_id];
++    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
++        warn_report("LoongArch IPI: Invalid %s device type",
++                                       object_get_typename(obj));
++        return;
 +    }
++}
++
++static void loongarch_cpu_unplug(HotplugHandler *hotplug_dev,
++                                 DeviceState *dev, Error **errp)
++{
++    Object *obj = OBJECT(dev);
++
++    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
++        warn_report("LoongArch IPI: Invalid %s device type",
++                                       object_get_typename(obj));
++        return;
++    }
++}
++
+ static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
+ {
+     LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
++    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
  
--        return MEMTX_OK;
-+    if (pcs) {
-+        *pcs = lis->cs[arch_id];
-     }
- 
--    return MEMTX_ERROR;
-+    return MEMTX_OK;
+     licc->get_iocsr_as = get_iocsr_as;
+     licc->cpu_by_arch_id = loongarch_cpu_by_arch_id;
++    hc->plug = loongarch_cpu_plug;
++    hc->unplug = loongarch_cpu_unplug;
  }
  
- static void loongarch_cpu_plug(HotplugHandler *hotplug_dev,
+ static const TypeInfo loongarch_ipi_types[] = {
+@@ -73,6 +101,10 @@ static const TypeInfo loongarch_ipi_types[] = {
+         .name               = TYPE_LOONGARCH_IPI,
+         .parent             = TYPE_LOONGSON_IPI_COMMON,
+         .class_init         = loongarch_ipi_class_init,
++        .interfaces         = (InterfaceInfo[]) {
++            { TYPE_HOTPLUG_HANDLER },
++            { }
++        }
+     }
+ };
+ 
 -- 
 2.39.3
 
