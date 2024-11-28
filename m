@@ -4,80 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 180A6D6D252
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 01:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F28BD6D251
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 01:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGT6i-00076s-KN; Wed, 27 Nov 2024 20:14:12 -0500
+	id 1tGTSi-0001QK-5q; Wed, 27 Nov 2024 20:36:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tGT6g-00076E-CZ
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 20:14:10 -0500
-Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tGT6e-00021A-Pc
- for qemu-devel@nongnu.org; Wed, 27 Nov 2024 20:14:10 -0500
-Received: by mail-vs1-xe34.google.com with SMTP id
- ada2fe7eead31-4ad564437edso634361137.1
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 17:14:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732756447; x=1733361247; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=apjStlXCNnpZt+SI7x8ae4BDBjJCBtLZNu3DEV7pymU=;
- b=A0qrztoTuuHAvfZEsOo+hIMwawgn7IYdkuxCX8wVhm0czDBMSvzTmaQCDFMF10ODYb
- 3DorFSoeY6/qmSAeuUBf+8Jk4KR+duAxwTMA8Q+efB2dMNsSHfPO532IkBGE3HlWYwxU
- 46HfB2OP7niCo2oC309CCCbANgQ6baCu0FfG8x7Jv4RzL2VtObixna6u7Uz5Zh3RCA6W
- 4PlwQ8mXb9vuTp531WPKyNDD8rRiDQBC6sj4PlCgVcuAl5qdFvqzpVRzIkxEmLRSOm1c
- fcNuwaRWr5ZTOR0+NAUGLbhXE1udms00/YfnbXcX7C6qb1HBD18xXYkqylKTWQCKh2Og
- aFpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732756447; x=1733361247;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=apjStlXCNnpZt+SI7x8ae4BDBjJCBtLZNu3DEV7pymU=;
- b=b5uDZijL2RUHBQeXqQZuqHjpm7XWBvR7pIcolD6lIGoYMhyv0G7idnhmFSJofSP8St
- qz0eV6ZWbFt54MWINTCaAZlUHLMPJKmp63+uIsBZK2PtVHBaqI7qtYk+huqYdByPrEUg
- SzcOFb5GQWjjV3l3MtCjUZJhLQc31r7NlgLq/rELVoP8Xq6i+xgI0dqEXu97e4dBotyM
- 9W+LIWC4hCnsMB4OdQOtDgaeMDCOFxjs7HIJNmK8U6zQJOHoduIgm7wbufRFOwvh5Ilt
- 1Pf26eidLmGE/v6OlkC21PSZZhLBI80UTWaRGxK+iphQALfmHDMtKFiAkhzsvWmhU9nZ
- PYfA==
-X-Gm-Message-State: AOJu0YxMAkGn4yjnahbadQmpo27GVyngvVKRrSaO4fS5xwNpHlWE3BYd
- QcLWd33gU6+UQ4Meq4DCkJPhBWGsFjtrHyxLhyCux9utPKtEhIjVz7JtOZXP7wZLQoQ0nW4kjzs
- t0KG1CpBrXquBKPAfSig3NySUijs=
-X-Gm-Gg: ASbGncuRebIOzGumFB8B2QaJOId0gu5QjQ7icE+L2Qgkih8IlO1QXTbiwegN/cx/QZ+
- aGnRbU+cYhzkvTOp5vO6CZK4I8VQFSwPrUm54CvfavzE9J8T20qEiX2pSKE/mgw==
-X-Google-Smtp-Source: AGHT+IF0jLCDp7toF/DQA+mJQblvaYmXAeJhbyMb+G/UzX2mlycbPkR1gf1k/vHlW3TqPCtHEPrLz/1LSsH0g+63Ssk=
-X-Received: by 2002:a05:6102:298e:b0:4af:5afb:6926 with SMTP id
- ada2fe7eead31-4af5afb6ff9mr6770137.2.1732756446835; Wed, 27 Nov 2024 17:14:06
- -0800 (PST)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tGTSe-0001Q5-5i
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 20:36:52 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tGTSa-0006pc-UU
+ for qemu-devel@nongnu.org; Wed, 27 Nov 2024 20:36:51 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Cx764myUdni09KAA--.40862S3;
+ Thu, 28 Nov 2024 09:36:39 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMDxPEciyUdnTslqAA--.45762S3;
+ Thu, 28 Nov 2024 09:36:36 +0800 (CST)
+Subject: Re: [PATCH] tests/functional: Fix the running test case causes
+ loongarch64 to hang
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ <philmd@linaro.org>
+Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2e_Berrang=c3=a9?= <berrange@redhat.com>,
+ Song Gao <gaosong@loongson.cn>, "Jason A . Donenfeld" <Jason@zx2c4.com>,
+ peter.maydell@linaro.org
+References: <20241127013438.2206426-1-lixianglai@loongson.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <6eca5a68-4e3d-b64a-cde2-b275252cc59d@loongson.cn>
+Date: Thu, 28 Nov 2024 09:35:57 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <CAEe4h_KP4Sz1creWtuOk+dMVbA02sbJnycu+Ai3u_tsL=FdZyA@mail.gmail.com>
-In-Reply-To: <CAEe4h_KP4Sz1creWtuOk+dMVbA02sbJnycu+Ai3u_tsL=FdZyA@mail.gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 28 Nov 2024 11:13:40 +1000
-Message-ID: <CAKmqyKOfcG=ga_Y8vHh5fQY2+KFR3z=_67-krhrveKB16Dvm2g@mail.gmail.com>
-Subject: Re: Request for Technical Guidance on Custom RISC-V64 Architecture
- with Linux OS
-To: Mohammad Javad Sekonji <mjavadsekonji@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe34.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20241127013438.2206426-1-lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMDxPEciyUdnTslqAA--.45762S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Ww4DGFWkAF1UJw1ktrW8AFc_yoW5JFyDpF
+ 1xZF4jkrnxJrWDA3y0gas29Fy0qrWrWF1xWr43trW09rZ8XFyvvr13K3W8t34UWw1ruayr
+ ZF97Wry8XF15AagCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUPYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYI
+ kI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWU
+ AwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMx
+ k0xIA0c2IEe2xFo4CEbIxvr21lc7CjxVAaw2AFwI0_JF0_Jw1l42xK82IYc2Ij64vIr41l
+ 4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_Jrv_JF1lx2IqxVAqx4xG67AKxV
+ WUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI
+ 7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r
+ 1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI
+ 42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1tC7UUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.901,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,76 +86,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 25, 2024 at 10:38=E2=80=AFPM Mohammad Javad Sekonji
-<mjavadsekonji@gmail.com> wrote:
->
-> Dear QEMU developer team
->
-> I hope this email finds you well. My name is Mohammad Javad Sekonji, and =
-I am a master=E2=80=99s student specializing in electronic digital systems.=
- I am currently working on a project involving the installation and operati=
-on of a Linux operating system (preferably Debian Sid) on a custom RISC-V64=
- architecture with specific hardware modifications. My goal is to use QEMU =
-to emulate the system and compare its performance and behavior to the stand=
-ard RISC-V64 architecture.
->
-> I have successfully completed a similar process for a standard RISC-V64 s=
-etup and am familiar with the general workflow. However, I would like to co=
-nfirm whether it is technically feasible to implement such a setup on a cus=
-tomized RISC-V64 architecture and, if so, to understand any additional cons=
-iderations or steps that might be required for this process.
->
-> To provide more context about the customizations I am planning:
->
-> Architectural level: I am considering replacing the standard architecture=
- with variations such as RISC-V BOOM, 2-stage pipelines, 5-stage pipelines,=
- Rocket, and similar designs.
+Hi Thomas and Philippe,
 
-Hello,
+Could you do me a favor to merge this bugfix?
 
-QEMU is an emulator. It is emulating the RV64 instruction set (and
-extensions) on your host (which I would guess is x86). It is basically
-processing the RV64 instruction and decoding it to relevant x86
-instructions and then running those.
+Gao Song is offline and cannot work on computer. I have no merge 
+permission and I am applying maintainer permission.
 
-BOOM, Rocket or other CPU designs are instead CPU hardware designs, in
-VHDL, Verilog or other design languages. They are unrelated to QEMU.
-QEMU can model the same extensions that the hardware supports, but
-QEMU can not model the actual CPU designs. For that you would want
-something like Verilator or an FPGA. This also applies to pipeline
-stages, QEMU isn't modelling the CPU, but instead translating
-instructions.
+Regards
+Bibo Mao
 
-So QEMU is not going to help model variations in the CPU design.
+On 2024/11/27 上午9:34, Xianglai Li wrote:
+> There is a bug in the process of resolving the serial port base address
+> in the fdt of the loongarch VM UEFI. When both serial port information
+> and rng-seed information are chosen in the fdt, there is a probability
+> that the serial port base address cannot be resolved correctly.
+> This problem can be fixed by updating UEFI.
+> 
+> issue link:
+> https://gitlab.com/qemu-project/qemu/-/issues/2686
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Daniel P. Berrangé <berrange@redhat.com>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+> Cc: <peter.maydell@linaro.org>
+> Cc: Xianglai Li <lixianglai@loongson.cn>
+> 
+>   tests/functional/test_loongarch64_virt.py | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/tests/functional/test_loongarch64_virt.py b/tests/functional/test_loongarch64_virt.py
+> index 2b8baa2c2a..b7d9abf933 100755
+> --- a/tests/functional/test_loongarch64_virt.py
+> +++ b/tests/functional/test_loongarch64_virt.py
+> @@ -18,16 +18,16 @@ class LoongArchMachine(QemuSystemTest):
+>   
+>       ASSET_KERNEL = Asset(
+>           ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
+> -         'releases/download/2024-05-30/vmlinuz.efi'),
+> +         'releases/download/2024-11-26/vmlinuz.efi'),
+>           '08b88a45f48a5fd92260bae895be4e5175be2397481a6f7821b9f39b2965b79e')
+>       ASSET_INITRD = Asset(
+>           ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
+> -         'releases/download/2024-05-30/ramdisk'),
+> +         'releases/download/2024-11-26/ramdisk'),
+>           '03d6fb6f8ee64ecac961120a0bdacf741f17b3bee2141f17fa01908c8baf176a')
+>       ASSET_BIOS = Asset(
+>           ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
+> -         'releases/download/2024-05-30/QEMU_EFI.fd'),
+> -        '937c1e7815e2340150c194a9f8f0474259038a3d7b8845ed62cc08163c46bea1')
+> +         'releases/download/2024-11-26/QEMU_EFI.fd'),
+> +        'f55fbf5d92e885844631ae9bfa8887f659bbb4f6ef2beea9e9ff8bc0603b6697')
+>   
+>       def wait_for_console_pattern(self, success_message, vm=None):
+>           wait_for_console_pattern(self, success_message,
+> 
 
-> Microarchitectural level: I am exploring modifications to components like=
- the branch predictor and other similar elements.
-
-The same here. QEMU doesn't have branch predictors or other hardware
-only things, it only models what the software sees.
-
->
-> Given these planned changes, I would be grateful if you could share your =
-thoughts on any specific considerations or potential challenges I should an=
-ticipate. Additionally, if there are resources or examples you recommend fo=
-r implementing such customizations and conducting performance comparisons, =
-they would be immensely helpful.
-
-Don't use QEMU for this. Your best bet is to use Verilator to model
-the hardware changes. Although I'm no expert in hardware design.
-
-Alistair
-
->
-> Given your expertise in embedded systems and related areas, I was hoping =
-to seek your guidance on the matter or any relevant resources you might rec=
-ommend. Your insight would be invaluable to the success of this project.
->
-> Thank you very much for your time and assistance. Please let me know if y=
-ou need any additional details about the project. I look forward to your re=
-sponse.
->
-> Best regards,
-> Mohammad Javad Sekonji
-> Master=E2=80=99s Student of Electronic Digital Systems
 
