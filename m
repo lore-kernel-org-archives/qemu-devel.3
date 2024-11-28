@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A19D69108
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C7ED69107
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGeEz-0001TW-S2; Thu, 28 Nov 2024 08:07:30 -0500
+	id 1tGeFa-0001cu-0E; Thu, 28 Nov 2024 08:08:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tGeEs-0001Sy-Tq
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:07:24 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tGeFY-0001cd-7e
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:08:04 -0500
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tGeEl-0006NT-VU
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:07:19 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-21260209c68so13214115ad.0
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:07:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tGeFW-0006nj-6k
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:08:03 -0500
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-5f1e560d973so430627eaf.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:08:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1732799234; x=1733404034; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732799280; x=1733404080; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8dpaRP1FK3GFDdZ1Xraj3M8knnV+25CMqr5GGhebrHQ=;
- b=G4bZqBUGl98uTydCKbX1GetS/7CzqtPHcan3rA033WXdpNO8CU0jSVpdYLcO6rZXOi
- oA7EzbKtHNmp0x7Yhi+mHbzGDt5xVn0oODwFIe2chbsZUNODybRenvj7t2yVTa6bOnIn
- /eolp18bFq0G61S1EhxTzOXLlXL9xocjEnp0CjRhFGIK6saueoCGDQl++DkrOwNVPw6h
- gc5jLZCQNu42K7fV/n8gLAGx/Cjx1mZsqmMh96MTvnhd1iFcKtvWfR2PSG4iMvOpTbIE
- iS4aQvjX9DEglos140a5GkwfAYisHvIutKOOAIQMqaYaaiouDEynl3oUXRd9CS9g1Lqs
- eFuw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SjZo32ga+iaM5ZFyJOsM6N1jqR5pVG9O8XSaJsR/NHE=;
+ b=S9PSMvQZeA+zD5pEIppFBPDf5tm1+Mi6wifhwXutWTMcMSHPLPRbZHUwT2cOO9YaDe
+ 49WLxDw6nyw9U1FA1IUqSa7+s1Yk6QAtqbcNg6A87sH5IijaHE4rx0l4GoHfXhg1EWlc
+ tTEQ40qzUx/LMooYx+qrTV4nFfp/t8IbdMCDAD73uN6PlmDhUzcJNGu6MKf3N/RQK6/q
+ 1aWDk+ATNtXfPg5i0g++DmBf8gR+m6EYoir+0UVQM3pUjUM6iXyWwHbabDEBbDibIr3R
+ h/OdwzJscD9aiM+/GlNx6gRaEZSiLFCWuu2wmQjd2+vJ1MVLGk5IRMd2h/cx67/bYZoe
+ 7R4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732799234; x=1733404034;
+ d=1e100.net; s=20230601; t=1732799280; x=1733404080;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8dpaRP1FK3GFDdZ1Xraj3M8knnV+25CMqr5GGhebrHQ=;
- b=czfYJJRAFUoHMGwpROQRN7CRPuTrIoB1n0MZ4TJbRTj2r2Mg169aseDC0Eubrdt2sY
- DaxBsSiFLft44p2yxLkl0ZT7RHohnBCq3DBCN2AOqFPJ1bHT0pu2IsCw26bTw9bWzT7b
- TvsZcTkCHTIPM2HX4kVSE11YJRBrjkRn8gBgjkjQdqCE3vFyBXXqwgLLrvwqu0McRmaC
- 1iyiVEXTb6uWNantstH949GJ8OvZUvVRSZN+uBMYaZiqqOmFBs1xO2W00snDDYW46Q87
- IWxPL67hS0yguXzQ1Fiu6N4xIn7NvVi+8ZB1WshZQbs4AnxuDlZHcbgwih7H+QeHM+X+
- hq1w==
+ bh=SjZo32ga+iaM5ZFyJOsM6N1jqR5pVG9O8XSaJsR/NHE=;
+ b=WdXlnu5eEJ/gCub2BAOu0xBjnW/uvIf6IgwOOwl2oxopS8Ylx0XmDsLuR+Q97jIW/H
+ dsh741DX67naEd4s9sspezl6pSKVRZjbSlEuGfy+IibsRSsLJ9tRU+u9+MpeTwca5bua
+ 3aliATXzbZFUmcGP+aF+FsxyCgYT8pCHjjoLrkfHLW3o4V5EcrYSi3mPDL7GqTRWRQXr
+ afYQaUKYKueCPfb/wGZTceY/64KWCjH1q4bQ4vp+khc/8XLZDXncfeM1gUTvKBKquHEm
+ ksW7RI+2HtJDLhfluYbRvFlPuumMiYjPS/9jIKsebqGFbRXI85DXyi1xqXT4rIJTk8/1
+ xPZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVk7QKvgadColQ7pcXHcsAMXLQN9hujn7a/hLiYyckZQV6Uq0KyoRvMwWATDqfapZx+OOGwWiWdJvlG@nongnu.org
-X-Gm-Message-State: AOJu0YwSLbST8vuDt6K59wqJXkh19Kl3CupcnWZOO605E0U7sEWUx338
- Zt+92WCSlLot0OC/+JPBjhoWUwb6pqiEba7Ww7Qb/PP4sHNKKft9zAhuEo4r824t3NVdnsgeOm8
- Y
-X-Gm-Gg: ASbGncvgm8jT0qwaSup5IPWEkm6FYLmdfjEiz8m7Hq1NI9Zp6Tjfu2YBBpYe+esbNdB
- CtGJ7ETKnULQeqJ4UDAVZiplzKVIavHR3gBv7qEt3be5+Qify4fjDBSyc1igIcbopzc8A+l+Vmh
- CyhPcxAo8C3n4+cC5mn5MxH/P6OhwWTL/Ek8kmgLoDee2/D5/gt4lQ6PgrXXYls6tTcBYH7jJ/w
- w/1pNs8BfhqVHuoJHeRVcyxBk8B4+1M/PsS4BEZiq9fVzD04gPeh7Q4cRKzPYw=
-X-Google-Smtp-Source: AGHT+IEwbPbXZhMMFrv3tFifwjQcz3r/PRnf7sUcD1EvADC6myQwAwi1+/rxQqt2Wcj1BEQhtDovuA==
-X-Received: by 2002:a17:902:f541:b0:20c:5d5a:af6f with SMTP id
- d9443c01a7336-2151d300374mr56843145ad.10.1732799234518; 
- Thu, 28 Nov 2024 05:07:14 -0800 (PST)
-Received: from [192.168.68.110] ([187.101.65.72])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215219059fesm12907425ad.68.2024.11.28.05.07.11
+ AJvYcCWgCqk0SA9yYgMH8Bn5hI2yE1yJIvI7l5M6rT1/lQwSug6/iZrp/HlRZDtxrA7tGyOj+izejJ/1PDOe@nongnu.org
+X-Gm-Message-State: AOJu0Yzmf+Z7TazAxX2gr28KkxV/G6DOdp891S4VnPn87xkOeejrF5Ih
+ ALqJ96K2bA6eo16JSloklEwtFQG8Xd2Qo0GkVTZpEb0gwuY+8sLXlM8FOFw1a4x51VJAelVFEsH
+ CZe0=
+X-Gm-Gg: ASbGncuxj4+WpkCqLSFH0ugVSH4/U6ym2VK68EOH4gkgGj/yRsojaQ0xNjWwOqiiOt9
+ q5BtZbm1g+rW8h3PYpTHFoluxsd8S8ZaVQHc0DvdC6cj/ESR7/5oVn3m559IQJMCc55qg7d+/04
+ SuwAbKlEuRVnudHLdrfUFVemGZ8JxNfrBWIhbCNXdCPy1ksLzlU6ohPps8FdmWjwil7vePsnu5m
+ k/hrOMWcZ6RQs4gf+5qMcS5JyZeNTXKSrB7ZhOtqRJAo55W0a4pC65cAUk1LKXjzS1x7MpK0Jwl
+ E8/KE3sYwxnAADtpmatxbIdgjgsD
+X-Google-Smtp-Source: AGHT+IFpLYaUVrTkK9fc2RmOvCW4gO4ktdzjnxVExQS/JM52+/X+pY6nEl3LGrkL6D0KH44UE6MKKA==
+X-Received: by 2002:a05:6820:50e:b0:5f1:dc89:fa85 with SMTP id
+ 006d021491bc7-5f2179fa1eemr1667881eaf.3.1732799280508; 
+ Thu, 28 Nov 2024 05:08:00 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-71d7255f7bfsm288268a34.38.2024.11.28.05.07.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 05:07:14 -0800 (PST)
-Message-ID: <88cf1e67-eab9-45d3-b2e9-a42b5b58a364@ventanamicro.com>
-Date: Thu, 28 Nov 2024 10:07:10 -0300
+ Thu, 28 Nov 2024 05:07:59 -0800 (PST)
+Message-ID: <9ab8dd47-d9ff-4a1c-83de-71f4c04c8967@linaro.org>
+Date: Thu, 28 Nov 2024 07:07:57 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] hw/riscv: Support to load DTB after 3GB memory on
- 64-bit system.
-To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20241120153935.24706-1-jim.shu@sifive.com>
- <20241120153935.24706-2-jim.shu@sifive.com>
+Subject: Re: [PATCH for-10.0 01/25] fpu: handle raising Invalid for infzero in
+ pick_nan_muladd
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20241128104310.3452934-1-peter.maydell@linaro.org>
+ <20241128104310.3452934-2-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20241120153935.24706-2-jim.shu@sifive.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241128104310.3452934-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,151 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/20/24 12:39 PM, Jim Shu wrote:
-> Larger initrd image will overlap the DTB at 3GB address. Since 64-bit
-> system doesn't have 32-bit addressable issue, we just load DTB to the end
-> of dram in 64-bit system.
+On 11/28/24 04:42, Peter Maydell wrote:
+> For IEEE fused multiply-add, the (0 * inf) + NaN case should raise
+> Invalid for the multiplication of 0 by infinity.  Currently we handle
+> this in the per-architecture ifdef ladder in pickNaNMulAdd().
+> However, since this isn't really architecture specific we can hoist
+> it up to the generic code.
 > 
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> For the cases where the infzero test in pickNaNMulAdd was
+> returning 2, we can delete the check entirely and allow the
+> code to fall into the normal pick-a-NaN handling, because this
+> will return 2 anyway (input 'c' being the only NaN in this case).
+> For the cases where infzero was returning 3 to indicate "return
+> the default NaN", we must retain that "return 3".
+> 
+> For Arm, this looks like it might be a behaviour change because we
+> used to set float_flag_invalid | float_flag_invalid_imz only if C is
+> a quiet NaN.  However, it is not, because Arm target code never looks
+> at float_flag_invalid_imz, and for the (0 * inf) + SNaN case we
+> already raised float_flag_invalid via the "abc_mask &
+> float_cmask_snan" check in pick_nan_muladd.
+> 
+> For any target architecture using the "default implementation" at the
+> bottom of the ifdef, this is a behaviour change but will be fixing a
+> bug (where we failed to raise the Invalid exception for (0 * inf +
+> QNaN).  The architectures using the default case are:
+>   * hppa
+>   * sh4
+>   * tricore
+> 
+> The Tricore and SH4 CPU architecture manuals are clear that this
+> should have raised Invalid; HPPA is a bit vaguer but still seems
+> clear enough.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
+>   fpu/softfloat-parts.c.inc      | 13 +++++++------
+>   fpu/softfloat-specialize.c.inc | 29 +----------------------------
+>   2 files changed, 8 insertions(+), 34 deletions(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   hw/riscv/boot.c            | 14 +++++++++-----
->   hw/riscv/microchip_pfsoc.c |  4 ++--
->   hw/riscv/sifive_u.c        |  4 ++--
->   hw/riscv/spike.c           |  4 ++--
->   hw/riscv/virt.c            |  2 +-
->   include/hw/riscv/boot.h    |  2 +-
->   6 files changed, 17 insertions(+), 13 deletions(-)
-> 
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 2e319168db..d36d3a7104 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -293,7 +293,7 @@ out:
->    * The FDT is fdt_packed() during the calculation.
->    */
->   uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-> -                                MachineState *ms)
-> +                                MachineState *ms, RISCVHartArrayState *harts)
->   {
->       int ret = fdt_pack(ms->fdt);
->       hwaddr dram_end, temp;
-> @@ -317,11 +317,15 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
->   
->       /*
->        * We should put fdt as far as possible to avoid kernel/initrd overwriting
-> -     * its content. But it should be addressable by 32 bit system as well.
-> -     * Thus, put it at an 2MB aligned address that less than fdt size from the
-> -     * end of dram or 3GB whichever is lesser.
-> +     * its content. But it should be addressable by 32 bit system as well in RV32.
-> +     * Thus, put it near to the end of dram in RV64, and put it near to the end
-> +     * of dram or 3GB whichever is lesser in RV32.
->        */
-> -    temp = (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram_end;
-> +    if (!riscv_is_32bit(harts)) {
-> +        temp = dram_end;
-> +    } else {
-> +        temp = (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram_end;
-> +    }
->   
->       return QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
->   }
-> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-> index f9a3b43d2e..ba8b0a2c26 100644
-> --- a/hw/riscv/microchip_pfsoc.c
-> +++ b/hw/riscv/microchip_pfsoc.c
-> @@ -519,7 +519,7 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
->       bool kernel_as_payload = false;
->       target_ulong firmware_end_addr, kernel_start_addr;
->       uint64_t kernel_entry;
-> -    uint32_t fdt_load_addr;
-> +    uint64_t fdt_load_addr;
->       DriveInfo *dinfo = drive_get(IF_SD, 0, 0);
->   
->       /* Sanity check on RAM size */
-> @@ -625,7 +625,7 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
->           /* Compute the fdt load address in dram */
->           fdt_load_addr = riscv_compute_fdt_addr(memmap[MICROCHIP_PFSOC_DRAM_LO].base,
->                                                  memmap[MICROCHIP_PFSOC_DRAM_LO].size,
-> -                                               machine);
-> +                                               machine, &s->soc.u_cpus);
->           riscv_load_fdt(fdt_load_addr, machine->fdt);
->   
->           /* Load the reset vector */
-> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-> index c5e74126b1..05467e833a 100644
-> --- a/hw/riscv/sifive_u.c
-> +++ b/hw/riscv/sifive_u.c
-> @@ -519,7 +519,7 @@ static void sifive_u_machine_init(MachineState *machine)
->       const char *firmware_name;
->       uint32_t start_addr_hi32 = 0x00000000;
->       int i;
-> -    uint32_t fdt_load_addr;
-> +    uint64_t fdt_load_addr;
->       uint64_t kernel_entry;
->       DriveInfo *dinfo;
->       BlockBackend *blk;
-> @@ -606,7 +606,7 @@ static void sifive_u_machine_init(MachineState *machine)
->   
->       fdt_load_addr = riscv_compute_fdt_addr(memmap[SIFIVE_U_DEV_DRAM].base,
->                                              memmap[SIFIVE_U_DEV_DRAM].size,
-> -                                           machine);
-> +                                           machine, &s->soc.u_cpus);
->       riscv_load_fdt(fdt_load_addr, machine->fdt);
->   
->       if (!riscv_is_32bit(&s->soc.u_cpus)) {
-> diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-> index fceb91d946..acd7ab1ae1 100644
-> --- a/hw/riscv/spike.c
-> +++ b/hw/riscv/spike.c
-> @@ -201,7 +201,7 @@ static void spike_board_init(MachineState *machine)
->       hwaddr firmware_load_addr = memmap[SPIKE_DRAM].base;
->       target_ulong kernel_start_addr;
->       char *firmware_name;
-> -    uint32_t fdt_load_addr;
-> +    uint64_t fdt_load_addr;
->       uint64_t kernel_entry;
->       char *soc_name;
->       int i, base_hartid, hart_count;
-> @@ -317,7 +317,7 @@ static void spike_board_init(MachineState *machine)
->   
->       fdt_load_addr = riscv_compute_fdt_addr(memmap[SPIKE_DRAM].base,
->                                              memmap[SPIKE_DRAM].size,
-> -                                           machine);
-> +                                           machine, &s->soc[0]);
->       riscv_load_fdt(fdt_load_addr, machine->fdt);
->   
->       /* load the reset vector */
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 45a8c4f819..761bce3304 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -1424,7 +1424,7 @@ static void virt_machine_done(Notifier *notifier, void *data)
->   
->       fdt_load_addr = riscv_compute_fdt_addr(memmap[VIRT_DRAM].base,
->                                              memmap[VIRT_DRAM].size,
-> -                                           machine);
-> +                                           machine, &s->soc[0]);
->       riscv_load_fdt(fdt_load_addr, machine->fdt);
->   
->       /* load the reset vector */
-> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-> index f778b560de..34a80c5ff4 100644
-> --- a/include/hw/riscv/boot.h
-> +++ b/include/hw/riscv/boot.h
-> @@ -49,7 +49,7 @@ target_ulong riscv_load_kernel(MachineState *machine,
->                                  bool load_initrd,
->                                  symbol_fn_t sym_cb);
->   uint64_t riscv_compute_fdt_addr(hwaddr dram_start, uint64_t dram_size,
-> -                                MachineState *ms);
-> +                                MachineState *ms, RISCVHartArrayState *harts);
->   void riscv_load_fdt(hwaddr fdt_addr, void *fdt);
->   void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts,
->                                  hwaddr saddr,
-
+r~
 
