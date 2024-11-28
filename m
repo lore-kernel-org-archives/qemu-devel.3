@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6376CD66BA0
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 05:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C08B0D65553
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 06:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGXVy-0005uT-Ot; Thu, 28 Nov 2024 00:56:34 -0500
+	id 1tGXse-0000qi-UF; Thu, 28 Nov 2024 01:20:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGXVw-0005u0-BD
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 00:56:32 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
+ id 1tGXsc-0000qF-JL
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 01:19:58 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGXVu-0007SQ-Q6
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 00:56:32 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-382588b7a5cso346577f8f.3
- for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 21:56:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
+ id 1tGXsZ-0004F4-Re
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 01:19:57 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7252f48acf2so373026b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Nov 2024 22:19:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732773389; x=1733378189; darn=nongnu.org;
+ d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1732774792; x=1733379592;
+ darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=H3BXALnEdBpezR5ooHd3A8l+sflJjR5GewzPJet6mbw=;
- b=Zpu/2OVO+GtCL+IeeEq9Vwwy6HPlDTUsr11qcQVCtCzJXzMZNqNlFphmaSfuxM6Yun
- dBIw18XX6hz3q0jeLykfrtCJaeS5Pc+u8e28SMut4FtX3eacyKQn2dUtBvOX8ErbVMIl
- h0ClxVy1eREAA6Xd0W0Ub/SZ1pEaBjCW4cULkxWwROGWPl83sDK/RxixMroHYeZ3F3BQ
- mLHY7NV4J+bzk4kiH6AU7l/8/FGTHZlUAtgH5K21b3DzhvbR4WbQZFk2PX+WN4ca+Y9d
- lomn+n15D2g+DbhZxXD/vrqYtza/l0jU9QVYWPLgkpa2S5YX36wNolmC4PlNFknqtigx
- d94Q==
+ bh=8ustl/oHEJAHix7s5U2EiLiN0GkSFJzc5OICssttx0U=;
+ b=zb3R0W7hORcsSrREDmdcXrULnRmIcB/yDvUOOYax99dAoyq2K75qrGjisaP9W1Qn/A
+ bnUwdKcpAR9IuqcBeEKz9KQT4z5W0fMDGORY5popGKlXkmmBwXITNSLcPC49/j76GGtU
+ 143hPvRYjvf6Oe4M/tkHO/Y5mHal/qP+U04E4OHbRJhlKMo00EVe/TrKUk6TGL0F3nSn
+ BeMOBk6kv3biG8dIbcdnOn1FwrM+Mx9OwPzZXba0AfIYVTv0gazT9keACirCEzNV0oyR
+ pCDcDciDl9AtOpi6XkTmstxrksxtypWt+H6jKW+v3MLYVHrIezaCFuiVeoExBKcnwLq1
+ 6dsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732773389; x=1733378189;
+ d=1e100.net; s=20230601; t=1732774792; x=1733379592;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H3BXALnEdBpezR5ooHd3A8l+sflJjR5GewzPJet6mbw=;
- b=MfwJ9hKDyg/Jsr0Kp2qkDz6H5NegCdJfA9yeYgVTdx5rSpdBGHCjbAMYvCDWgqZije
- WFD4X2v+TzAG2VTcEliTrat4641DYRYo40jnVmlPiuODVqH1qn5ANM6holvrCFHzrKkF
- 9e7EVOIwVSkNQE8wmwdBf7RJ0pPjkJCQ4WD/UEf0fcgrVwVsxBIjZF+TQInOy0EDg1ad
- bGj9ZIQCUQeB/RzPc/78AJTOVxUauVv+cNuQbYQHpq3GwAJve94KxpdEqUVv+B7hZla+
- vwc/70bOlqdl5LEvSRzttjNU26BYppudabPH6UvwBq3/LUq+Xup51oALRblmIgI22rJY
- SCWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW++/h3Xkt9AoHaohtiTeHUxE75SV7qsT5IVWjxPQNvo3qO447ynaRAmVHx2U7w8RPdQLC+QOshhws5@nongnu.org
-X-Gm-Message-State: AOJu0YwfLjAha0XB0R8zCiZsecbmFJHWTqg6ihe6+a1H7ptHumHoIUkJ
- qhJ6fcYtPdjZgHbJar7VxaOx1Y12GsixRGdQGuVZpqZy6bBtg20mcQB3DYcFjeY=
-X-Gm-Gg: ASbGncsxkP+0JCWZmESTWSY2x/Vd8v/u4jXg4IwC7YcjwbrqIaZecLjbMM+4J6znrYF
- n9eQnpLVl2Qg2kQ1r2vJfUQlgRBdxSRi/xZ3a7jS7pdCU3SlbDPbZU1b+w1jwVX//XLZ0IQXT81
- q8C4zn8p+jh/pa/fuAegq2Hs3W/X+HZwMt1rZ3JSVNWg2YP8ggtV2J2YzobNRHoTJTzHIbxB6K+
- pL0rQNAMjSMwf61S3PpDZHIx9G2tNtgIvi9mqFdtimpGcqHklAGOZ5IFk8MItbU+0cL60z7u20x
- 8kehatN4Swjyp+0P5jib/F3nvjEZ7r4yJwIINSY=
-X-Google-Smtp-Source: AGHT+IH8AEK7Fbdq33p5HzSbY3POvsuwE4ChHEwOB7owyKVXuyDFVYU5+Dpm6GJLgy+nCVetLtM/rg==
-X-Received: by 2002:a5d:5888:0:b0:382:4378:4652 with SMTP id
- ffacd0b85a97d-385c6edd47bmr4206674f8f.45.1732773388638; 
- Wed, 27 Nov 2024 21:56:28 -0800 (PST)
-Received: from [192.168.69.146] (vil69-h02-176-184-48-210.dsl.sta.abo.bbox.fr.
- [176.184.48.210]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385ccd68958sm690059f8f.67.2024.11.27.21.56.26
+ bh=8ustl/oHEJAHix7s5U2EiLiN0GkSFJzc5OICssttx0U=;
+ b=K1u3RLMApaLmpfo4WR4xPtC/631BvcZWbLauQiZLqqeYZjg9N2mY2dh0nGBd3Bt+Qk
+ DeWtUvaw4g8gaotW6aGkcgCl4t5AqS8V89h4k2STENvagXxsW7yeNHioeomMvkVjraDo
+ oqWQl6wqlJMRCe4XWIpKWB5N2FUXd+x1oodDzgFP6EtwvOpRpA3xzDQD0PCw+uLQea2C
+ CcOGOoqGZD/vVopkcoFOUbhWKKpA8+TZdzTAMdvqxvx6npzGzBY6cLBUm0s9MfCjUYrV
+ li5ujFqa9SsBHjjn7KFC8aTF166gEnvC8zth4BTflQXSWoKs7OP7cLfWqrD77heqs+w2
+ XysQ==
+X-Gm-Message-State: AOJu0Yy1AL63MBnt0q1cw/wZB4pYz0qiYYWbbuCrRwKhCW9mpdGMVjNk
+ QoXEv7UM+8QYygQHSq7D8xaVgnkJ7XCup+Jn8xjUAn8OsckayVN3it+U/IhBRAM=
+X-Gm-Gg: ASbGnctml3BCz3DXuazVjkgLkhDkuKd5tt8Uov9rJmseOpxhN0Whd1I5ypKITs5gd3S
+ PaNYwyFbJDy62yRrhVNTDsk2R4+Xm3HulrHmZep9c19CMfos16NzFQj9LYnfDJudFA306m+3AeQ
+ 8K7YY3jEryEsafBoEHnwmfeKCYKDdn/N91Zv86bBljMFBvMLftFw6Un2NADPiGPrGReaaAB2cMy
+ AFB4inK8zDi3PkMX/+DzD47CaD3bEyMpXgFUdT2u9FkyQR/cAcfUFgEGoTiM98WVhVQrEaWv9g=
+X-Google-Smtp-Source: AGHT+IEMdlyOmMEp30Vf/CuuK2xvP8WSab0S53c8jrEhfh4/0dhtd4kaheJnn9Gxp+HKScl5f16flQ==
+X-Received: by 2002:a17:902:e843:b0:20e:95c9:4ed5 with SMTP id
+ d9443c01a7336-2150108ca27mr88113975ad.7.1732774791975; 
+ Wed, 27 Nov 2024 22:19:51 -0800 (PST)
+Received: from [10.16.166.2] (napt.igel.co.jp. [219.106.231.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2152191afe9sm5793825ad.106.2024.11.27.22.19.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Nov 2024 21:56:28 -0800 (PST)
-Message-ID: <82f7fc8e-d0b3-4d2d-af70-b724955de19a@linaro.org>
-Date: Thu, 28 Nov 2024 06:56:25 +0100
+ Wed, 27 Nov 2024 22:19:51 -0800 (PST)
+Message-ID: <1499e05e-acf6-4e4f-8929-e8bec5b92fac@igel.co.jp>
+Date: Thu, 28 Nov 2024 15:19:45 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0] system/qtest: Access memory using
- cpu_physical_memory_rw() API
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20241127191914.34146-1-philmd@linaro.org>
- <6f265a48-eaa3-4e2d-b6d2-26e4935693ba@linaro.org>
+Subject: Re: [RFC PATCH 0/5] support unaligned access to xHCI Capability
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, its@irrelevant.dk,
+ foss@defmacro.it, qemu-block@nongnu.org, pbonzini@redhat.com,
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org, farosas@suse.de,
+ lvivier@redhat.com
+References: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
+ <0ace2747-efc8-4c0a-9d9f-68f255f1e3a5@igel.co.jp>
+ <CAFEAcA8oDPD7xdhMC__Rp3WOzSdm9CnSHw-bepvQnxK3BMzVOg@mail.gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <6f265a48-eaa3-4e2d-b6d2-26e4935693ba@linaro.org>
+From: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
+In-Reply-To: <CAFEAcA8oDPD7xdhMC__Rp3WOzSdm9CnSHw-bepvQnxK3BMzVOg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,56 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/11/24 23:35, Richard Henderson wrote:
-> On 11/27/24 13:19, Philippe Mathieu-Daudé wrote:
->> There is no vCPU within the QTest accelerator (well, they
->> are stubs doing nothing, see dummy_cpu_thread_fn).
->> Directly use the cpu_physical_memory_rw() API -- which
->> amusingly prefixed 'cpu_' does not use vCPU -- to access
->> memory. This reduces accesses to the global 'first_cpu'.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   system/qtest.c | 42 ++++++++++++++----------------------------
->>   1 file changed, 14 insertions(+), 28 deletions(-)
->>
->> diff --git a/system/qtest.c b/system/qtest.c
->> index 12703a20455..a2de9a7d5a4 100644
->> --- a/system/qtest.c
->> +++ b/system/qtest.c
->> @@ -18,6 +18,7 @@
->>   #include "chardev/char-fe.h"
->>   #include "exec/ioport.h"
->>   #include "exec/memory.h"
->> +#include "exec/cpu-common.h"
->>   #include "exec/tswap.h"
->>   #include "hw/qdev-core.h"
->>   #include "hw/irq.h"
->> @@ -514,23 +515,19 @@ static void qtest_process_command(CharBackend 
->> *chr, gchar **words)
->>           if (words[0][5] == 'b') {
->>               uint8_t data = value;
->> -            address_space_write(first_cpu->as, addr, 
->> MEMTXATTRS_UNSPECIFIED,
->> -                                &data, 1);
->> +            cpu_physical_memory_write(addr, &data, 1);
-> 
-> This just calls address_space_write with &address_space_memory.
-> I assume we'll get rid of address_space_memory too, at some point.
+Hi, thank you for your comment.
 
-Certainly, but one thing at a time ;) For the first prototype
-I'm focusing on being able to instantiate vCPUs from different
-target architecture in "any machine we have now" (even if it
-doesn't make much sense). I'll then move to HW modelling, likely
-starting by vCPU Clusters and then address spaces.
+On 2024/11/27 20:23, Peter Maydell wrote:
+> On Wed, 27 Nov 2024 at 04:34, Tomoyuki HIROSE
+> <tomoyuki.hirose@igel.co.jp> wrote:
+>> I would be happy to receive your comments.
+>> ping.
+> Hi; this one is on my to-review list (along, sadly, with 23 other
+> series); I had a quick look a while back and it seemed good
+> (the testing support you've added looks great), but I need
+> to sit down and review the implementation more carefully.
+>
+> The one concern I did have was the big long list of macro
+> invocations in the memaccess-testdev device. I wonder if it
+> would be more readable and more compact to fill in MemoryRegionOps
+> structs at runtime using loops in C code, rather than trying to do
+> it all at compile time with macros ?
 
-> But I suppose that's good enough for qtest for now.
+I also want to do as you say. But I don't know how to generate
+MemoryRegionOps structs at runtime. We need to set read/write function
+to each structs, but I don't know a simple method how to generate a
+function at runtime. Sorry for my lack C knowledge. Do you know about
+any method how to generate a function at runtime in C ?
 
-Little win: less first_cpu accesses. What really bother me in
-this file are the endianness mentions (and tswap calls).
-
-> 
-> r~
-> 
-
+> thanks
+> -- PMM
+Thanks,
+Hirose
 
