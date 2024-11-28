@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D49F2D6910B
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 575DCD6910B
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGeYa-0000N3-Kk; Thu, 28 Nov 2024 08:27:44 -0500
+	id 1tGeZ7-0001IP-PU; Thu, 28 Nov 2024 08:28:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGeYW-0000Cg-F6
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:27:41 -0500
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ id 1tGeZ6-0001I0-08
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:28:16 -0500
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGeYV-0003HH-30
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:27:40 -0500
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-2958ddf99a7so741326fac.2
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:27:38 -0800 (PST)
+ id 1tGeZ4-0003ZZ-Eb
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:28:15 -0500
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-2958ddf99a7so741643fac.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:28:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732800458; x=1733405258; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732800493; x=1733405293; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VVAeRceBg4kDWa8wyC1N1NSLrLPkwpjqK1gwXg59Xms=;
- b=nD/b1m56YqyZlaPzgLZHKVCSegA9dVu6I/g8Nl5sUzvoZHNQL/Q0CGMJT1nVmR/4PT
- 3ix94hMxu1zpzYSGF7fBDwlxmYtOfoLcySSJP8Bvc2FjcFbghUmJfyGqqzBaHc3PQgY4
- DMpIH393fF/U6HNEKVhjglir1b0jqVo2/gsasmh9v+8uKQ8YsLS6R8lIp9jeYpzzigIP
- TZZwaa7OokoWto/f41jw2GZhOo0TmoXoIe2Dxw9Shf2iUgmyAn9WikygcKXz09tDegGq
- uSCOwbrbqFIYscfpgNNihdti7fVBbuVhHg7ws6DCLVY9Z8BQv9Mk8vu2+hp3MsxoT7ZE
- 60Ng==
+ bh=GRfuUem/bc9wY//Ia1wliDkJKWzCtTfbKUBOEj9Szxo=;
+ b=xOD+xU8rwpQ7/A3jm/EBj6VyTSYNdlhFzrQob3Cdn8EqZuGCxD0k3A2gtFJ6Ror1AO
+ hfktkzGaJ/Sy+2cqdiT2NjLPkxQuhZ0Om6249to/4TI40hVP+XFfgxTtKkgJUvKd6sY/
+ 4xvvqYPJ72krKvD/bo5BcUDElvRPHM2JgxNrMuSPJk9gWR4PKPc133Uzdb+t9f+yD4l1
+ kEuQra+RltCh9ewryoWFrE6yOWP3ZsZ+TP1oAvqI+viBnxxtuoPb5Vxa4V0oc2GZhuMG
+ wMeu+PEc2WBoDnX4aI/UGv3K7BPx+ZgkVdCVn/Xt8rcmW1qLPxL6L7EwLijbzY7UZqDG
+ qjfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732800458; x=1733405258;
+ d=1e100.net; s=20230601; t=1732800493; x=1733405293;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VVAeRceBg4kDWa8wyC1N1NSLrLPkwpjqK1gwXg59Xms=;
- b=SSJaILFewh84H5XwreDlFF1giLoNjcbw/jZZaQaKaU2QMoXIyFjQ77IVLShWV/45d9
- EA5jGELqcaHtWZ0OJdnz5IVOOdAT7UQrDxOgEsSEL0pdUKm6dgOmEWoS6yekKmIMcrjY
- x7S1K9XkRE0RaiFtEe+vMUZxeY1qcCdgJ8m6xWHMpxf3RMfaTF+YpGMSeCHbUarWzdsm
- K1oqhl1XS1olXCMbAeXa55z9DMfYlQ4NDlOGK71zuA2QtKx01NM1LvBJZoMz2rHBdTfv
- 5i5MzZ1PK2Mmvjyq2Mgu1Gz62zt7STC4WdTt3HqQXtHH1nw16cOxzYimBThId5ecTi+t
- ESBg==
+ bh=GRfuUem/bc9wY//Ia1wliDkJKWzCtTfbKUBOEj9Szxo=;
+ b=FK4FW2qyxneLqlrvTzLZf8cjF65Vc+7zTQU/z3CEQw6Du22jUunGupxpMdPbJ4IriT
+ 6HqXZQ9crb9CyzU3o38blPba0o/yU7vr60ykWUJQX651hKoFeUeM0VT9Fq734jaluDOY
+ MLpgDAjT7Tw4TaW+Hwbtgmzal1ya9SPDS1iFCINI0Ci2ovZcijyyYV7pnZlmYQDnyJMR
+ ccCAxqPWNVi7teP5cUaWQ0QWcsDoqXh9j+O7hr6pyVJZG4waAJkYBJaDWUuwgDG8WwQx
+ Cz2M0xFMkkZ0A0Oad1qPhVouASUtyNNXoGLI1M5prC+Ui96JemBR51gOKE+wP6bSFZjw
+ B3ZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVcXyL2FjekGCroHGZke+f/jrujYcfjp6Oxo12WDs+F3kTzGfoKiKJ3aTmeMhc6Nbv1TVIxfzDbwli7@nongnu.org
-X-Gm-Message-State: AOJu0YwH6mlpb0hEm+WidXVNv6CfnITW2sAXV+Ow4wfxumPRJn0dJAFF
- jBdfS9+j2CWKNSWYW1z6keTE4q7mnx7KMgcRrH2Ja24yX3XlOlr4Nnt7T8lqVYeNahU8ce66IUj
- LJzk=
-X-Gm-Gg: ASbGnct9LTLsCWadCJjiFmHNePxu5lT77t5/xIF2j9awvY2pVs99nk9jlgyIfeu+wsH
- XCVdXfekXdInA+uOx+xBok9duW/47gSLzEalpY1MazyYnp1+Q7IwNAqo3zI4ja6Qv/KkWacgt9H
- ofIzTGs9QjgrFDvU1ad3grB0ZbM8iamFvdE6dvDC/C1OKUb7r0c1vYVCys1+ExmfcC7+aVe31o5
- 6zxhrEWB8/YCBfTriIxaOsaORDExYkXIqRo7opIV3jRR8uDH1qyO83yJfoxfBksn+b1W7aNQXhA
- JJ6eWMF0acFtam6fKpmcmH1i2IiM
-X-Google-Smtp-Source: AGHT+IFPSBYRpj+v6mCACr4cCuhw6fECoX6x7+XTai5x1zXl/0nYEi4hYHjG+6piY0hfbum8yjxhPA==
-X-Received: by 2002:a05:6808:13d1:b0:3e8:1f54:6446 with SMTP id
- 5614622812f47-3ea6dc21eb9mr6860287b6e.24.1732800456980; 
- Thu, 28 Nov 2024 05:27:36 -0800 (PST)
+ AJvYcCU2dRj4b6srxB8LVwWkNT+9BO6sa96njwIv2ir7tiWh1F4mUN3Oq3F72zz3YDW+KXevLNYanpaNdsPD@nongnu.org
+X-Gm-Message-State: AOJu0YxoAI9NFoL/FdS5muUqNaqvLzgUNzYt++9OTRzHL9cRkyW1LUBm
+ E6TspSWvxYGRDpPrgScqxhnAN0ltq7d9X1fXJD0U32ERxBe1IwMI+XVpRRZTLr0=
+X-Gm-Gg: ASbGncsc1l3VhgoEB+qlLFOujwyqt8gjATxYa3A5ccmxgkWjyH+RcbXWaXwJu7wn+pZ
+ A8gVL3aQj5XLtNfCuQNo+8wLYyILuhKQz4Uk5kiJSOEdRk0m2umREMUSdOPhK3FjVX4eRfuT1sZ
+ +Bg4K11OperOLMif3k6Ff20khRC9OnImOXArEvHGFziPvy+ohp4l06iOap26cI7JJWqNnMFhEJn
+ mSDee8Jnkl/tPXSsAqdLwi1Re3Qxkm8AUjICqi+Q6Od/lEZonsTy5uFxjQDVStwHbZrchS/5iR6
+ K/QSH2eeVUNufrQcerkFIV/zrw/a
+X-Google-Smtp-Source: AGHT+IECCQUaS2c8AA7LnC3Lkke5P9U/YRJA5pMSDk4X4gOYGv7R/tWCxTGv9gOJYkOS4/bOIWPyYw==
+X-Received: by 2002:a05:6870:ab07:b0:297:2bdc:f533 with SMTP id
+ 586e51a60fabf-29dc43056fdmr7288089fac.31.1732800493070; 
+ Thu, 28 Nov 2024 05:28:13 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ea86095b6fsm246250b6e.15.2024.11.28.05.27.36
+ 586e51a60fabf-29de902d0a3sm397253fac.20.2024.11.28.05.28.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 05:27:36 -0800 (PST)
-Message-ID: <34abf8ba-6194-4028-b6eb-61c036630346@linaro.org>
-Date: Thu, 28 Nov 2024 07:27:34 -0600
+ Thu, 28 Nov 2024 05:28:12 -0800 (PST)
+Message-ID: <b58ff496-ffbf-49cc-9668-c01f8a568867@linaro.org>
+Date: Thu, 28 Nov 2024 07:28:10 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0 05/25] target/arm: Set FloatInfZeroNaNRule
+Subject: Re: [PATCH for-10.0 06/25] target/s390: Set FloatInfZeroNaNRule
  explicitly
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20241128104310.3452934-1-peter.maydell@linaro.org>
- <20241128104310.3452934-6-peter.maydell@linaro.org>
+ <20241128104310.3452934-7-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128104310.3452934-6-peter.maydell@linaro.org>
+In-Reply-To: <20241128104310.3452934-7-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,14 +104,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/28/24 04:42, Peter Maydell wrote:
-> Set the FloatInfZeroNaNRule explicitly for the Arm target,
-> so we can remove the ifdef from pickNaNMulAdd().
+> Set the FloatInfZeroNaNRule explicitly for s390, so we
+> can remove the ifdef from pickNaNMulAdd().
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/cpu.c               | 3 +++
->   fpu/softfloat-specialize.c.inc | 8 +-------
->   2 files changed, 4 insertions(+), 7 deletions(-)
+>   target/s390x/cpu.c             | 2 ++
+>   fpu/softfloat-specialize.c.inc | 2 --
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
