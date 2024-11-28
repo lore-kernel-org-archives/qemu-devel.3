@@ -4,43 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117ECD70DE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 18:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4923BD70DEC
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 18:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGjQQ-000714-Hx; Thu, 28 Nov 2024 13:39:38 -0500
+	id 1tGjQU-00072a-3A; Thu, 28 Nov 2024 13:39:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1tGjQL-0006yN-Qy; Thu, 28 Nov 2024 13:39:34 -0500
+ id 1tGjQN-0006zX-NA; Thu, 28 Nov 2024 13:39:35 -0500
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1tGjQI-00060M-I4; Thu, 28 Nov 2024 13:39:33 -0500
+ id 1tGjQI-00060L-Ge; Thu, 28 Nov 2024 13:39:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=XJ42Z62QlzdbZHtaE5BzFMve5MgZ1kwBIfta+yFGPaM=; b=Q6NGYyHZQ0p6
- 9oVMRMdoDgOfvXkPRiT6VhdI3z5YCYk2mkVE3B28jg+RYJkTQIs4jmJFpIjiMFW0QkPhpgFXjpHun
- DvYFlchkC60doKRxtInGbkpN86vtPxHUwSZjGl/yj9IUAoZzYXM0IEyJXsBdUQS9RNf8hIRJa0d5A
- x2ozFE0gfFwL2SH2FZQCr8E7Ceht/ULX+T9Q6VzIpHHtxbhG3SvNBusbjQScq9HOncNmtB+8mIHB9
- fdkCdRA+gzbCEP3GhEU71JWH70Mz3y3xQsf9NVUrPdeiAi0iFNBCtcDA+gJIsenJX9+0WuMWseiUa
- ByWsjlXY0LiG5waHsXcxWA==;
+ Content-Type; bh=la37xOII2HRiH1HmDA02HBweU8rL8bIazJB8BwYjRMA=; b=j5ErPhIf62re
+ WhNB/jmkMukb1J86WCmCxg2yuTwncSBVAA1wp6u0n+WCVqmPrA0PZ0nbOS+/yTZwTiXY21XPPCF84
+ MbYs57VNAdF45cad/Hy2GyhsRMZQGtl5FMqYsXadsbe+CsK248NwzHXa7o9X2KI473sUQJ6TTWDCh
+ MMK8laTCTOripF6JCbMG5NQ+b4SDC7mE7edEJ45UHAhQnCZFK1NCtMFn0+0JSvvvzCAQi1f8AcE+q
+ X4bS//RVXGJFpDG9u9PJIGuJQhGbsN4YRqWPprK7yYS++dtg3THPc2KXwnJNuoq7a2i7MwpHU1T4Z
+ vfYnRJ1IZC7n0OjIERzf1A==;
 Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=iris.sw.ru)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1tGjPo-00E2DN-1t;
- Thu, 28 Nov 2024 19:39:10 +0100
+ (envelope-from <den@openvz.org>) id 1tGjPn-00E2DN-24;
+ Thu, 28 Nov 2024 19:39:09 +0100
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: den@openvz.org, Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 3/6] preallocate: rework preallocate_truncate_to_real_size()
-Date: Thu, 28 Nov 2024 19:25:50 +0100
-Message-ID: <20241128183911.837699-4-den@openvz.org>
+Subject: [PATCH v3 0/6] block/preallocate: fix image truncation logic
+Date: Thu, 28 Nov 2024 19:25:47 +0100
+Message-ID: <20241128183911.837699-1-den@openvz.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241128183911.837699-1-den@openvz.org>
-References: <20241128183911.837699-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=130.117.225.111; envelope-from=den@openvz.org;
@@ -69,85 +67,39 @@ From:  "Denis V. Lunev" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The filter is not enabled if s->data_end is negative. In this case it
-would be useless completely to initialize s->file_end inside
-preallocate_truncate_to_real_size() without setting s->data_end.
-Here are we are going to reset the state and disable the filter as
-we are either in the process of switching to the read-only state or
-the driver is being closed.
+Recent QEMU changes around preallocate_set_perm mandates that it is not
+possible to poll on aio_context inside this function anymore. Thus
+truncate operation has been moved inside bottom half. This bottom half
+is scheduled from preallocate_set_perm() and that is all.
 
-Now the driver is disabled unconditionally even on the error and this is
-pretty much correct. In the worst case the image would be a bit longer
-and that is all.
+This approach proven to be problematic in a lot of places once
+additional operations are executed over preallocate filter in
+production. The code validates that permissions have been really changed
+just after the call to the set operation.
 
-The patch also adds redundant check for bs->open_flags into this helper
-for the convinience.
+A lot of time has been spent since the previous series in order to
+stabilize changes with a whole product regression. This is reflected
+with some unit tests added. Without this series 2 out of 3 are broken.
+
+In general, the approach has been changed. We should not have image
+truncate inside permission handling routines. That would be quite
+incorrect and wrong, f.e. we potentially have truncate() executed
+once we returned from bdrv_inactivate() and the ownership of the image
+does not belong to us anymore.
+
+It should be noted that the life cycle of the image length is quite
+similar to one of the CBT and thus places where CBT is handled should
+provide a good hint. This is just a guideline note.
+
+Thus the most noticeable change is an addition of preallocate_inactivate()
+callback and cleanup of all asynchronous stuff.
+
+Changes from v2:
+- the series has been completely rethinked
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 CC: Kevin Wolf <kwolf@redhat.com>
 CC: Hanna Reitz <hreitz@redhat.com>
----
- block/preallocate.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
-
-diff --git a/block/preallocate.c b/block/preallocate.c
-index d0ed56eecb..65c1ff5d78 100644
---- a/block/preallocate.c
-+++ b/block/preallocate.c
-@@ -179,12 +179,11 @@ preallocate_truncate_to_real_size(BlockDriverState *bs, Error **errp)
-     BDRVPreallocateState *s = bs->opaque;
-     int ret;
- 
--    if (s->file_end < 0) {
--        s->file_end = bdrv_getlength(bs->file->bs);
--        if (s->file_end < 0) {
--            error_setg_errno(errp, -s->file_end, "Failed to get file length");
--            return s->file_end;
--        }
-+    if (!(bs->open_flags & BDRV_O_RDWR)) {
-+        return 0;
-+    }
-+    if (s->data_end < 0) {
-+        return 0;
-     }
- 
-     if (s->data_end < s->file_end) {
-@@ -192,11 +191,9 @@ preallocate_truncate_to_real_size(BlockDriverState *bs, Error **errp)
-                             NULL);
-         if (ret < 0) {
-             error_setg_errno(errp, -ret, "Failed to drop preallocation");
--            s->file_end = ret;
--            return ret;
-         }
--        s->file_end = s->data_end;
-     }
-+    s->data_end = s->file_end = s->zero_start = -EINVAL;
- 
-     return 0;
- }
-@@ -211,9 +208,7 @@ static void preallocate_close(BlockDriverState *bs)
-     qemu_bh_cancel(s->drop_resize_bh);
-     qemu_bh_delete(s->drop_resize_bh);
- 
--    if (s->data_end >= 0) {
--        preallocate_truncate_to_real_size(bs, NULL);
--    }
-+    preallocate_truncate_to_real_size(bs, NULL);
- }
- 
- 
-@@ -528,8 +523,6 @@ preallocate_drop_resize(BlockDriverState *bs, Error **errp)
-      * change the child, so mark all states invalid. We'll regain control if a
-      * parent requests write access again.
-      */
--    s->data_end = s->file_end = s->zero_start = -EINVAL;
--
-     bdrv_child_refresh_perms(bs, bs->file, NULL);
- 
-     return 0;
--- 
-2.45.2
-
 
