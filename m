@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B8DBD70DE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 18:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E77D70DEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 18:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGjQa-00074Z-FJ; Thu, 28 Nov 2024 13:39:48 -0500
+	id 1tGjQW-000735-Rc; Thu, 28 Nov 2024 13:39:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1tGjQN-0006zV-MZ; Thu, 28 Nov 2024 13:39:35 -0500
+ id 1tGjQN-0006zW-NH; Thu, 28 Nov 2024 13:39:35 -0500
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1tGjQI-00060N-Jo; Thu, 28 Nov 2024 13:39:33 -0500
+ id 1tGjQI-00060J-HN; Thu, 28 Nov 2024 13:39:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=fk8PGJQHc/q4BIWFO0ftad01xvv3zgbb9jJTTEfmY/w=; b=Pw9ExQjRBGPv
- Kn1P/KK5HdgCpMk+Nwp3alqJL3iFBYXqfwv8B/qLQZR9GSBYI1aGLcas2aKtv5YGSXlmqnqt4xjv/
- RAnXcZsN9dD8/dSl/s/T/Qg5cFZOmwEZwDRS22fmdDQywssVhpD/q7PUX0XEXxismcg+zfhIbUUpb
- KJI8oSaUDnAWkq+PsUe01jDozvkK8OieKLD6SDVO6OHspyjLRqwIH5iIjVjcXBO5sYHrvp6jVuCVP
- EK03ij9UO4VJoLc4np80e5OMkLph7XDzOgNzDCMG5BXRF4aCNi3h/ErtDO2g9ECohWzSrFV4FuN+A
- kauMtxXGAKlzRSxOITf08w==;
+ Content-Type; bh=eFKiUc6Dqon9qjQmOVmuIQxOp19FJBFUFGirXOnfNrE=; b=aPHeyWz1z4gU
+ zve7/yxfXxeEtK5LB5WXNzFm9OgeV7yXQ1aa3lwIIh8Tey/pPqRjyu7EBgXmzLuHFChL5+TkkOtlI
+ 0NVbM/Dw1LggV5Fck5cxnTe/qqEIkn+r1S/Hu83QlkKgDi7dvu6ChF1kQjow1Ev2LqScWCaSSr2lO
+ gtLaXsNbfm+9tXDFt/BeIwW5MD89neQ43IEkQkpB1IfWFQExA10zorms7bM7sbch1NNCBngOt47DA
+ NlXMgMkdvCDMwywuGFzeOJ0XFizjXHyIB9o2YectRUVZEM+wh3OkHMFbX8bF0OeklCfXanuJkYGsh
+ 2dqEBLGGM0yvpTUmJNcy5Q==;
 Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=iris.sw.ru)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1tGjPp-00E2DN-0c;
+ (envelope-from <den@openvz.org>) id 1tGjPo-00E2DN-0n;
  Thu, 28 Nov 2024 19:39:10 +0100
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: den@openvz.org, Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 5/6] preallocate: simplify preallocate_drop_resize
-Date: Thu, 28 Nov 2024 19:25:52 +0100
-Message-ID: <20241128183911.837699-6-den@openvz.org>
+Subject: [PATCH 2/6] preallocate: do not enable filter inside
+ preallocate_co_getlength()
+Date: Thu, 28 Nov 2024 19:25:49 +0100
+Message-ID: <20241128183911.837699-3-den@openvz.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241128183911.837699-1-den@openvz.org>
 References: <20241128183911.837699-1-den@openvz.org>
@@ -69,9 +70,8 @@ From:  "Denis V. Lunev" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Once permission change process is normalized, there is no need to have
-permission update inside preallocate_drop_resize() and
-preallocate_truncate_to_real_size() could be merged into the caller.
+Let us auto-enable it inside handle_write() and truncate(), i.e. on the
+actual write operation. This just makes things more relaxing.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -79,77 +79,35 @@ CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 CC: Kevin Wolf <kwolf@redhat.com>
 CC: Hanna Reitz <hreitz@redhat.com>
 ---
- block/preallocate.c | 36 ++----------------------------------
- 1 file changed, 2 insertions(+), 34 deletions(-)
+ block/preallocate.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/block/preallocate.c b/block/preallocate.c
-index c448258c42..886b1311f2 100644
+index c14e6a530d..d0ed56eecb 100644
 --- a/block/preallocate.c
 +++ b/block/preallocate.c
-@@ -77,8 +77,6 @@ typedef struct BDRVPreallocateState {
-      */
- } BDRVPreallocateState;
+@@ -494,20 +494,13 @@ static int coroutine_fn GRAPH_RDLOCK preallocate_co_flush(BlockDriverState *bs)
+ static int64_t coroutine_fn GRAPH_RDLOCK
+ preallocate_co_getlength(BlockDriverState *bs)
+ {
+-    int64_t ret;
+     BDRVPreallocateState *s = bs->opaque;
  
--static int preallocate_drop_resize(BlockDriverState *bs, Error **errp);
+     if (s->data_end >= 0) {
+         return s->data_end;
+     }
+ 
+-    ret = bdrv_co_getlength(bs->file->bs);
 -
- #define PREALLOCATE_OPT_PREALLOC_ALIGN "prealloc-align"
- #define PREALLOCATE_OPT_PREALLOC_SIZE "prealloc-size"
- static QemuOptsList runtime_opts = {
-@@ -169,7 +167,7 @@ static int preallocate_open(BlockDriverState *bs, QDict *options, int flags,
+-    if (has_prealloc_perms(bs)) {
+-        s->file_end = s->zero_start = s->data_end = ret;
+-    }
+-
+-    return ret;
++    return bdrv_co_getlength(bs->file->bs);
  }
  
  static int GRAPH_RDLOCK
--preallocate_truncate_to_real_size(BlockDriverState *bs, Error **errp)
-+preallocate_drop_resize(BlockDriverState *bs, Error **errp)
- {
-     BDRVPreallocateState *s = bs->opaque;
-     int ret;
-@@ -198,7 +196,7 @@ static void preallocate_close(BlockDriverState *bs)
-     GLOBAL_STATE_CODE();
-     GRAPH_RDLOCK_GUARD_MAINLOOP();
- 
--    preallocate_truncate_to_real_size(bs, NULL);
-+    preallocate_drop_resize(bs, NULL);
- }
- 
- 
-@@ -488,36 +486,6 @@ preallocate_co_getlength(BlockDriverState *bs)
-     return bdrv_co_getlength(bs->file->bs);
- }
- 
--static int GRAPH_RDLOCK
--preallocate_drop_resize(BlockDriverState *bs, Error **errp)
--{
--    BDRVPreallocateState *s = bs->opaque;
--    int ret;
--
--    if (s->data_end < 0) {
--        return 0;
--    }
--
--    /*
--     * Before switching children to be read-only, truncate them to remove
--     * the preallocation and let them have the real size.
--     */
--    ret = preallocate_truncate_to_real_size(bs, errp);
--    if (ret < 0) {
--        return ret;
--    }
--
--    /*
--     * We'll drop our permissions and will allow other users to take write and
--     * resize permissions (see preallocate_child_perm). Anyone will be able to
--     * change the child, so mark all states invalid. We'll regain control if a
--     * parent requests write access again.
--     */
--    bdrv_child_refresh_perms(bs, bs->file, NULL);
--
--    return 0;
--}
--
- static void preallocate_child_perm(BlockDriverState *bs, BdrvChild *c,
-     BdrvChildRole role, BlockReopenQueue *reopen_queue,
-     uint64_t perm, uint64_t shared, uint64_t *nperm, uint64_t *nshared)
 -- 
 2.45.2
 
