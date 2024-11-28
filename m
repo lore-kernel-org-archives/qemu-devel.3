@@ -4,90 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE2E7D6D251
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 01:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B63D6D253
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 01:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGTTd-0001iv-Lo; Wed, 27 Nov 2024 20:37:53 -0500
+	id 1tGTZP-0003G3-JJ; Wed, 27 Nov 2024 20:43:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tGTTV-0001dH-55; Wed, 27 Nov 2024 20:37:45 -0500
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tGTTS-00078S-S0; Wed, 27 Nov 2024 20:37:44 -0500
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-51532deb8a4so83097e0c.0; 
- Wed, 27 Nov 2024 17:37:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732757861; x=1733362661; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6vaRMqPS2LxmZO96IyUfKDwpd4ogUpeKQd6xajVtamE=;
- b=WvmvNwSmcRpmEdBVXmfLnhZPLlh5Ej6ABIq1VTpCam+ybGKXfJyUmSK+sEmMV62Ezx
- kPsJ1+GHXyvKhWjfOdh5xidqBGg+sHdHMxp1e6eLysSid3WYfMMyPevxS8vctee+kKmW
- S/H538mKoJK8XBIIOBEL61PuLIKZaY1BSpM5C4AGwnb7GEzpeSnfOIUvm7ymaDImzaMG
- z15pMYFbRzMesvuMuds9H4Nz8nrCSUjL43Z5b8XImt+gjkYYM4xbvH/Fmrg/tcgpadTI
- w5Yf0lMav04iIqEYuNG5rUr47EWf/SXLhOo2dXlpyDE7O6TBiUsumi+QinHXAvtwcvVY
- lxUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732757861; x=1733362661;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6vaRMqPS2LxmZO96IyUfKDwpd4ogUpeKQd6xajVtamE=;
- b=IMoXSfpnH1NSUSoezb6usgZnG/WTfDrLqealHeDjbb0I9OIkIDYsILmZe7B+FinRf4
- 5g9t1r5+mcacPPsMtp0/PnqucjpYtIMALr/Bl6rNCcT+vq6O1rJFyEaTr+yv4tsNSpgY
- IGPD/dBqikSdaMgqzyXf0YIkiKAXGMpIhl/mFJgvpsFWzghRiG8+Soo/1HboHZyFYlxy
- /HKHQhXgFzgPIefanpnBcHc/FQ9Y70MUTwugOoZLHy1LlFF/z6Y9hc7yabk2cTfd7YaF
- Lx3bohCBSscsSMw9UYlAgVNC8GfsIBCUMi+1R74ac2TqZnnpKsKBYL4UO+01udAmjxI+
- /+cA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOoLnCnW3slcdWL5VbL2s9WwZYNRF596SPeuWNCzz02HmqYOXVRjUpa1KJ55JRz5OohuWTi/TVF8HY@nongnu.org
-X-Gm-Message-State: AOJu0YyjDs95xnLOfucGXdM1htjy8RZW++5vRiWUuA3APwQ6xUWyJuOU
- i0dQN4CZI7CsErK920Ss3UWb1aUx8MoMNwBFvTZWO0Ixsox8m9aFh3K9KrbYablr50wAojuwYsx
- kdfA7O77Rb1vscyGlSwrpmOPexVI=
-X-Gm-Gg: ASbGncteLqYfahs47Kb1DI3ltnqM4hSvP0YFOhJeUBx8jacEPoSnlOP+MoW/AXafKC7
- 9Dl5RIq75BBgsy/COieqi2q9/Bf6UyzCko8PRKH0GdQdYFmsnq4J8LV9Tr9OxBQ==
-X-Google-Smtp-Source: AGHT+IEYuE46ZvFkKwGO/MVe+NiPa8802CEXduLa21FgST0gwXiO2KVVqPwonqX+jv8/QnA8O9EYcklvLUlSKFy7Zr4=
-X-Received: by 2002:a05:6102:dd0:b0:4af:3bbd:b047 with SMTP id
- ada2fe7eead31-4af44a4713amr7922684137.17.1732757860876; Wed, 27 Nov 2024
- 17:37:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1tGTZI-0003Fd-On; Wed, 27 Nov 2024 20:43:44 -0500
+Received: from out203-205-221-210.mail.qq.com ([203.205.221.210])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1tGTZF-0001hj-3e; Wed, 27 Nov 2024 20:43:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1732758203; bh=Y3pkN5qk0NwNN5+Bv1hlViANC9e8USj6uMh8BVfMDpY=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=pkImjuiTOyWPp0RuHoawbcNQ5ekKy5KMQCkWQGm90Y4CXIJuvd1KyLVIYKdZTCtJL
+ pmxAOLkouIASn1Y/gP2B86PnB3cykRBoFzd/gJCpVzUb+gQgWG9lKdNmCgQmJrFr33
+ 4aCQLVsVOdPvdVj/w1JV1Y8bvWUAvvzLkFww02fw=
+Received: from [192.168.1.13] ([61.139.23.214])
+ by newxmesmtplogicsvrszb21-0.qq.com (NewEsmtp) with SMTP
+ id AD518EB3; Thu, 28 Nov 2024 09:43:21 +0800
+X-QQ-mid: xmsmtpt1732758201t1fy8q5xf
+Message-ID: <tencent_B97DED0E6971DEDD2F960CC63DFF414A2A05@qq.com>
+X-QQ-XMAILINFO: MJf32pulH4817O09VOkGlfgy/mIdKvppOruy0AbEhM79iY5sM5ilk3UTp13Xyv
+ LZJfbycQG2WCr0sItHw6vu492H2rXKC8EytCSYAo2sqwVyjOtA4uG860F/+BxF4liOjP9M/onmx4
+ /OEz7S+AxBJnH+1odtjZe4nLSUwwo052FOxJpQ28nXjuqJ/L2iF0c4ZVK+7KGryq0fKaBgi+QpX4
+ XLHR+gpCimE59D5tRVAxEL319bMONXZyl3B2ZiBjPyJhlqUB/Edfhw4PFy83TxeXShWSJT4OMUWA
+ gMR8Klf1diOnsFmEg9HfDcTGVsM8L0zSzgmbtjibjR13U3deK34H/56Z1778jXOknONzm3wnXo2b
+ 5bK35V16sIXoGvLncdR0xdKZbfq7OpI6DN84GQn4Mqjh6wa/viqEtPN8s+C4P1/o8Ps47XGpATGR
+ K0gDkalNmuPXxLWS0HDeT+gYqGBKilfkxGT8CotCsyWQMqN5y96Fl4nnhfWRw2c1/oYW/f4b/A00
+ 0/hRPwuFes+NBNfEBJFNTs/Ro4xWZSyuf1j+0gy2KmyC2DUHxz3nJvN2fo+xbvtq6GFAm3hG0oi1
+ oA7wUr1raHaLd9d2N+PSKFu1xQSOsjm6Iu18do2AUI0PJrP5Z24MkCkWW80/c+jb+hTG5swBc7Fs
+ k12y9DhBpFV4AUq43ZaGNIQ/74sly2tgGl44efiuhMFAPUn5DuJCgtL7rVFHEg+aCqV1RXA3CVNp
+ eFtz+mVV4dnWpDYz+XWMmA1MwX/+lfwXMHR0I+3FyLqcHBKSWRAV/eI5CrWpjzO1DilXG9+fcgC8
+ klcBBx31IIJyTv1oU0nZR7xJ1hAmgv2ZuT1vdE2qCQgIFEwWbZZJadEeqrZEUpGBdUaecdSLzHn0
+ o8PWhHPcBJHPYQt8Jy+8tmUmBXcI96uZ2m50FVKaui0NeNtnFA4oGfUd5xw3zrrTBUHI2M6DYI0j
+ QUnxbGqYcxcU1/X8MWRw==
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-OQ-MSGID: <178f67b31d13bf33c1a94395acef91bead530853.camel@qq.com>
+Subject: Re: [PATCH] include virtualization mode as part of priv
+From: Yanfeng <yfliu2008@qq.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>, Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Alistair Francis <alistair.francis@wdc.com>
+Date: Thu, 28 Nov 2024 09:43:20 +0800
+In-Reply-To: <CAKmqyKMP093GyTEHdAPzaV9+O_pFSv0svQRb-31QTvn9i4fxMA@mail.gmail.com>
+References: <tencent_6FF30F7E2E640BEE260FD6523B6BA5486908@qq.com>
+ <CAKmqyKMP093GyTEHdAPzaV9+O_pFSv0svQRb-31QTvn9i4fxMA@mail.gmail.com>
+Content-Type: multipart/mixed; boundary="=-K7e02pMMS878C5HgoH4+"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-References: <20241114091332.108811-1-cleger@rivosinc.com>
- <20241114091332.108811-2-cleger@rivosinc.com>
- <CAKmqyKO+v0AyvTER4a3JMzEN=b+NSa=BYdULt6=cGmmj46b_Jw@mail.gmail.com>
- <7c88eba0-c010-4aef-ad57-ede292129aff@rivosinc.com>
- <CAKmqyKMH_YAgomy325ZmpGCNkDMrb5pwJU9GBgNicFAsAc0J6A@mail.gmail.com>
- <1868e353-6c40-4cfb-a00f-4afdde68baea@rivosinc.com>
-In-Reply-To: <1868e353-6c40-4cfb-a00f-4afdde68baea@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 28 Nov 2024 11:37:14 +1000
-Message-ID: <CAKmqyKPomWUDWAtXSPtFMszRwYggG-sR+_erw4aOyxHRmHMW0A@mail.gmail.com>
-Subject: Re: [PATCH v5 1/9] target/riscv: fix henvcfg potentially containing
- stale bits
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>, 
- Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=203.205.221.210; envelope-from=yfliu2008@qq.com;
+ helo=out203-205-221-210.mail.qq.com
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.931, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,248 +84,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 6:28=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger@riv=
-osinc.com> wrote:
->
->
->
-> On 20/11/2024 06:02, Alistair Francis wrote:
-> > On Tue, Nov 19, 2024 at 9:27=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger=
-@rivosinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 19/11/2024 05:16, Alistair Francis wrote:
-> >>> On Thu, Nov 14, 2024 at 7:14=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleg=
-er@rivosinc.com> wrote:
-> >>>>
-> >>>> With the current implementation, if we had the current scenario:
-> >>>> - set bit x in menvcfg
-> >>>> - set bit x in henvcfg
-> >>>> - clear bit x in menvcfg
-> >>>> then, the internal variable env->henvcfg would still contain bit x d=
-ue
-> >>>> to both a wrong menvcfg mask used in write_henvcfg() as well as a
-> >>>> missing update of henvcfg upon menvcfg update.
-> >>>> This can lead to some wrong interpretation of the context. In order =
-to
-> >>>> update henvcfg upon menvcfg writing, call write_henvcfg() after writ=
-ing
-> >>>> menvcfg and fix the mask computation used in write_henvcfg() that is
-> >>>> used to mesk env->menvcfg value (which could still lead to some stal=
-e
-> >>>> bits). The same mechanism is also applied for henvcfgh writing.
-> >>>>
-> >>>> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <cleger@rivosinc.com>
-> >>>> ---
-> >>>>  target/riscv/csr.c | 40 +++++++++++++++++++++++++++++++++++-----
-> >>>>  1 file changed, 35 insertions(+), 5 deletions(-)
-> >>>>
-> >>>> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> >>>> index b84b436151..73ac4d5449 100644
-> >>>> --- a/target/riscv/csr.c
-> >>>> +++ b/target/riscv/csr.c
-> >>>> @@ -2345,6 +2345,8 @@ static RISCVException read_menvcfg(CPURISCVSta=
-te *env, int csrno,
-> >>>>      return RISCV_EXCP_NONE;
-> >>>>  }
-> >>>>
-> >>>> +static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
-> >>>> +                                    target_ulong val);
-> >>>>  static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-> >>>>                                      target_ulong val)
-> >>>>  {
-> >>>> @@ -2357,6 +2359,7 @@ static RISCVException write_menvcfg(CPURISCVSt=
-ate *env, int csrno,
-> >>>>                  (cfg->ext_svadu ? MENVCFG_ADUE : 0);
-> >>>>      }
-> >>>>      env->menvcfg =3D (env->menvcfg & ~mask) | (val & mask);
-> >>>> +    write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
-> >>>>
-> >>>>      return RISCV_EXCP_NONE;
-> >>>>  }
-> >>>> @@ -2368,6 +2371,8 @@ static RISCVException read_menvcfgh(CPURISCVSt=
-ate *env, int csrno,
-> >>>>      return RISCV_EXCP_NONE;
-> >>>>  }
-> >>>>
-> >>>> +static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
-> >>>> +                                    target_ulong val);
-> >>>>  static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
-> >>>>                                       target_ulong val)
-> >>>>  {
-> >>>> @@ -2378,6 +2383,7 @@ static RISCVException write_menvcfgh(CPURISCVS=
-tate *env, int csrno,
-> >>>>      uint64_t valh =3D (uint64_t)val << 32;
-> >>>>
-> >>>>      env->menvcfg =3D (env->menvcfg & ~mask) | (valh & mask);
-> >>>> +    write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
-> >>>>
-> >>>>      return RISCV_EXCP_NONE;
-> >>>>  }
-> >>>> @@ -2435,6 +2441,7 @@ static RISCVException write_henvcfg(CPURISCVSt=
-ate *env, int csrno,
-> >>>>                                      target_ulong val)
-> >>>>  {
-> >>>>      uint64_t mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE |=
- HENVCFG_CBZE;
-> >>>> +    uint64_t henvcfg_mask =3D mask, menvcfg_mask;
-> >>>>      RISCVException ret;
-> >>>>
-> >>>>      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
-> >>>> @@ -2443,10 +2450,24 @@ static RISCVException write_henvcfg(CPURISCV=
-State *env, int csrno,
-> >>>>      }
-> >>>>
-> >>>>      if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
-> >>>> -        mask |=3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HE=
-NVCFG_ADUE);
-> >>>> +        /*
-> >>>> +         * Since henvcfg depends on a menvcfg subset, we want to cl=
-ear all the
-> >>>> +         * menvcfg supported feature (whatever their state is) befo=
-re enabling
-> >>>> +         * some new one using the provided value. Not doing so woul=
-d result in
-> >>>> +         * keeping stale menvcfg bits in henvcfg value if a bit was=
- enabled in
-> >>>> +         * menvcfg and then disabled before updating henvcfg for in=
-stance.
-> >>>> +         */
-> >>>> +        menvcfg_mask =3D HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADU=
-E;
-> >>>> +        mask |=3D env->menvcfg & menvcfg_mask;
-> >>>> +        henvcfg_mask |=3D menvcfg_mask;
-> >>>>      }
-> >>>>
-> >>>> -    env->henvcfg =3D (env->henvcfg & ~mask) | (val & mask);
-> >>>> +    /*
-> >>>> +     * 'henvcfg_mask' contains all supported bits (both in henvcfg =
-and menvcfg
-> >>>> +     * common bits) and 'mask' contains henvcfg exclusive bits as w=
-ell as
-> >>>> +     * menvcfg enabled bits only.
-> >>>> +     */
-> >>>> +    env->henvcfg =3D (env->henvcfg & ~henvcfg_mask) | (val & mask);
-> >>>
-> >>> Won't `env->henvcfg & ~henvcfg_mask` still contain the stale data?
-> >>> `henvcfg_mask` isn't based on the current value of `env->menvcfg`
-> >>
-> >> Hey Alistair,
-> >>
-> >> That's the point, env->henvcfg is cleared with henvcfg_mask which
-> >> contains the set of HENVCFG_* and MENVCFG_* "raw" bits so that the new
-> >> value that is written does not contain any menvcfg stale bits. "mask"
-> >> however is actually masked with menvcfg value to ensure the new bits
-> >> that are going to be written won't contain any incoherent bits.
-> >
-> > I'm not sure I follow...
-> >
-> > The commit message says:
-> >
-> > """
-> > - set bit x in menvcfg
-> > - set bit x in henvcfg
-> > - clear bit x in menvcfg
-> > """
-> >
-> > Which to me means henvcfg should be cleared when a bit in menvcfg is
-> > cleared. But env->henvcfg is instead cleared based on `henvcfg_mask`
-> > which isn't affected by menvcfg.
->
-> Hey Alistair,
->
-> Let's take some real example (MENVCFG_PBMTE for instance.) Let's assume
-> menvcfg/henvcfg are 0 and the following sequence:
->
-> - Set MENVCFG_PBMTE in menvcfg (menvcfg =3D MENVCFG_PBMTE)
-> - Set HENVCFG_PBMTE in henvcfg (henvcfg =3D HENVCFG_PBMTE)
-> - Clear MENVCFG_PBMTE in menvcfg (menvcfg =3D 0)
->
-> On such sequence, we should clear HENVCFG_PBMTE in henvcfg. When using
-> the existing code, henvcfg_write() does so:
->
-> mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE;
-> mask |=3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE);
->
-> So our mask =3D (HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE |
-> HENVCFG_CBZE) and does not contains HENVCFG_PBMTE.
->
-> Finally:
->
-> env->henvcfg =3D (env->henvcfg & ~mask) | (val & mask);
->
-> Then env->henvcfg & ~(HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE |
-> HENVCFG_CBZE | HENVCFG_STCE | HENVCFG_ADUE) will yield henvcfg =3D
-> HENVCFG_PBMTE (which is obviously not what we want) | val & mask.
->
-> >
-> > So clearing a bit in menvcfg will only not allow a bit to be set, but
-> > not clear any existing bits
->
-> Let's take again the current patch and what it does with the same sequenc=
-e:
->
-> - Set MENVCFG_PBMTE in menvcfg (menvcfg =3D MENVCFG_PBMTE)
-> - Set HENVCFG_PBMTE in henvcfg (henvcfg =3D HENVCFG_PBMTE)
-> - Clear MENVCFG_PBMTE in menvcfg (menvcfg =3D 0)
->
-> henvcfg_mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CB=
-ZE;
-> mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE;
->
-> henvcfg_mask |=3D (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE);
-> /* Only keep the enabled bits from menvcfg */
-> mask |=3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE);
->
-> So mask =3D (HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE)
-> which rightfully does not contain HENVCFG_PBMTE so the value to be
-> written will be  correctly cleared from that bit.
->
-> Finally, when it comes to write the final value we'll have the following:
->
-> env->henvcfg =3D (env->henvcfg & ~henvcfg_mask) | (val & mask);
->
-> Which yield
->
-> henvcfg & ~(HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE |
-> HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE) | val & (HENVCFG_FIOM |
-> HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE | HENVCFG_STCE | HENVCFG_ADUE=
-)
->
-> So henvcfg HENVCFG_PBMTE bit is correctly cleared and not allowed to be
-> set by the written value. But I might be missing something.
+--=-K7e02pMMS878C5HgoH4+
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ah ok!
+On Thu, 2024-11-28 at 10:39 +1000, Alistair Francis wrote:
+> On Thu, Nov 28, 2024 at 12:09=E2=80=AFAM Yanfeng <yfliu2008@qq.com> wrote=
+:
+> >=20
+> >=20
+> > When debugging hypervisor extension based programs, it is convenient to=
+ see
+> > the
+> > current virtualization mode from GDB debugger.
+> >=20
+> > This patch shares the virtualization mode as part of the existing "priv=
+"
+> > virtual
+> > register, or more specifically via bit(8).
+>=20
+> Interesting concept. This seems fine to me, I don't think this will
+> break any existing user.
+>=20
+> Another option though is to add a "virt" virtual register, which might
+> be easier for people to figure out as it isn't obvious from GDB what
+> bit 8 means. That might be a better approach as then it's really clear
+> what the register means.
+>=20
+> >=20
+> >=20
+> > > From 0d82561b11e1c2835f14ba5460cfff52f0087530 Mon Sep 17 00:00:00 200=
+1
+> > From: Yanfeng Liu <yfliu2008@qq.com>
+> > Date: Mon, 18 Nov 2024 08:03:15 +0800
+> > Subject: [PATCH] riscv/gdb: share virt mode via priv register
+>=20
+> It seems like something strange happened when you submitted the patch.
+> Can you fix this up?
+>=20
+I prepared a patch file via the following steps:
 
-That makes sense, sorry I took so long to wrap my head around this one.
+ - Did  `git format-patch --stdout -1 > /tmp/patch`,=C2=A0
+ - Pasted the /tmp/patch content to email composer window,=C2=A0
+ - Filled in email receipts, subject line and a few lines before the patch
+context in composer window.
 
-Although now that we are basically clearing henvcfg on each write, do
-we ever need the ` (env->henvcfg & ~henvcfg_mask) | ` can't we just
-overwrite it each time?
+I am wondering if the lines added before the formatted patch content in las=
+t
+step caused trouble?
+When resending email, should I use [patch v2] in subject line? I guess it i=
+s
+unnecessary as it is the same patch.=C2=A0
 
-Also, this will need a rebase on:
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next as there
-are now more operations in write_henvcfg()
+I included it as attachment here as well, hoping it helps.
 
-Alistair
+Regards,
+yf
+=20
+> Alistair
+>=20
+> >=20
+> > This shares virtualization mode together with privilege mode
+> > via the `priv` virtual register over the debug interface.
+> >=20
+> > Check logs with gdb-multiarch 12.1:
+> >=20
+> > ```
+> > (gdb) info registers priv
+> > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x101=
+=C2=A0=C2=A0=C2=A0 prv:1 [Supervisor]
+> > (gdb) set $priv =3D 1
+> > (gdb) info registers priv
+> > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x1=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:1 [Supervisor]
+> > (gdb) set $priv =3D 0x101
+> > (gdb) info registers priv
+> > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x101=
+=C2=A0=C2=A0=C2=A0 prv:1 [Supervisor]
+> > (gdb)
+> > ```
+> >=20
+> > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+> > ---
+> > =C2=A0target/riscv/cpu_bits.h |=C2=A0 4 ++++
+> > =C2=A0target/riscv/gdbstub.c=C2=A0 | 15 +++++++++++++--
+> > =C2=A02 files changed, 17 insertions(+), 2 deletions(-)
+> >=20
+> > diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> > index 385a2c67c2..cc6dece51a 100644
+> > --- a/target/riscv/cpu_bits.h
+> > +++ b/target/riscv/cpu_bits.h
+> > @@ -623,6 +623,10 @@ typedef enum {
+> > =C2=A0#define PRV_RESERVED 2
+> > =C2=A0#define PRV_M 3
+> >=20
+> > +/* Share virtualization mode as part of priv register */
+> > +#define PRV_V=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (1 << 8)
+> > +
+> > +
+> > =C2=A0/* RV32 satp CSR field masks */
+> > =C2=A0#define SATP32_MODE=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 0x80000000
+> > =C2=A0#define SATP32_ASID=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 0x7fc00000
+> > diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> > index c07df972f1..d9e6ad969a 100644
+> > --- a/target/riscv/gdbstub.c
+> > +++ b/target/riscv/gdbstub.c
+> > @@ -212,8 +212,14 @@ static int riscv_gdb_get_virtual(CPUState *cs,
+> > GByteArray
+> > *buf, int n)
+> > =C2=A0#else
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 RISCVCPU *cpu =3D RISC=
+V_CPU(cs);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPURISCVState *env =3D=
+ &cpu->env;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target_ulong ret =3D env->p=
+riv;
+> >=20
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return gdb_get_regl(buf, en=
+v->priv);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* include virtualization m=
+ode */
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env->virt_enabled) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret=
+ |=3D PRV_V;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return gdb_get_regl(buf, re=
+t);
+> > =C2=A0#endif
+> > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> > =C2=A0=C2=A0=C2=A0=C2=A0 return 0;
+> > @@ -225,11 +231,16 @@ static int riscv_gdb_set_virtual(CPUState *cs, ui=
+nt8_t
+> > *mem_buf, int n)
+> > =C2=A0#ifndef CONFIG_USER_ONLY
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 RISCVCPU *cpu =3D RISC=
+V_CPU(cs);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPURISCVState *env =3D=
+ &cpu->env;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target_ulong val =3D ldtul_=
+p(mem_buf);
+> >=20
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env->priv =3D ldtul_p(mem_b=
+uf) & 0x3;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env->priv =3D val & 0x3;
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env->priv =3D=3D P=
+RV_RESERVED) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 env->priv =3D PRV_S;
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Update virtualization mo=
+de */
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env->virt_enabled =3D (env-=
+>priv !=3D PRV_M && (val & PRV_V) !=3D 0);
+> > =C2=A0#endif
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return sizeof(target_u=
+long);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> > --
+> > 2.34.1
+> >=20
+> >=20
+> >=20
 
->
-> Thanks,
->
-> Cl=C3=A9ment
->
-> >
-> > Alistair
-> >
-> >>
-> >> I guess this still needs a few more explanations if that is not clear
-> >> enough, sorry for that.
-> >>
-> >> Thanks,
-> >>
-> >> Cl=C3=A9ment
-> >>>
-> >>> Alistair
->
+
+--=-K7e02pMMS878C5HgoH4+
+Content-Disposition: attachment; filename="virt-in-priv.patch"
+Content-Type: text/x-patch; name="virt-in-priv.patch"; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+RnJvbSAwZDgyNTYxYjExZTFjMjgzNWYxNGJhNTQ2MGNmZmY1MmYwMDg3NTMwIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBZYW5mZW5nIExpdSA8eWZsaXUyMDA4QHFxLmNvbT4KRGF0ZTog
+TW9uLCAxOCBOb3YgMjAyNCAwODowMzoxNSArMDgwMApTdWJqZWN0OiBbUEFUQ0hdIHJpc2N2L2dk
+Yjogc2hhcmUgdmlydCBtb2RlIHZpYSBwcml2IHJlZ2lzdGVyCgpUaGlzIHNoYXJlcyB2aXJ0dWFs
+aXphdGlvbiBtb2RlIHRvZ2V0aGVyIHdpdGggcHJpdmlsZWdlIG1vZGUKdmlhIHRoZSBgcHJpdmAg
+dmlydHVhbCByZWdpc3RlciBvdmVyIHRoZSBkZWJ1ZyBpbnRlcmZhY2UuCgpDaGVjayBsb2dzIHdp
+dGggZ2RiLW11bHRpYXJjaCAxMi4xOgoKYGBgCihnZGIpIGluZm8gcmVnaXN0ZXJzIHByaXYKcHJp
+diAgICAgICAgICAgMHgxMDEJcHJ2OjEgW1N1cGVydmlzb3JdCihnZGIpIHNldCAkcHJpdiA9IDEK
+KGdkYikgaW5mbyByZWdpc3RlcnMgcHJpdgpwcml2ICAgICAgICAgICAweDEJcHJ2OjEgW1N1cGVy
+dmlzb3JdCihnZGIpIHNldCAkcHJpdiA9IDB4MTAxCihnZGIpIGluZm8gcmVnaXN0ZXJzIHByaXYK
+cHJpdiAgICAgICAgICAgMHgxMDEJcHJ2OjEgW1N1cGVydmlzb3JdCihnZGIpCmBgYAoKU2lnbmVk
+LW9mZi1ieTogWWFuZmVuZyBMaXUgPHlmbGl1MjAwOEBxcS5jb20+Ci0tLQogdGFyZ2V0L3Jpc2N2
+L2NwdV9iaXRzLmggfCAgNCArKysrCiB0YXJnZXQvcmlzY3YvZ2Ric3R1Yi5jICB8IDE1ICsrKysr
+KysrKysrKystLQogMiBmaWxlcyBjaGFuZ2VkLCAxNyBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9u
+cygtKQoKZGlmZiAtLWdpdCBhL3RhcmdldC9yaXNjdi9jcHVfYml0cy5oIGIvdGFyZ2V0L3Jpc2N2
+L2NwdV9iaXRzLmgKaW5kZXggMzg1YTJjNjdjMi4uY2M2ZGVjZTUxYSAxMDA2NDQKLS0tIGEvdGFy
+Z2V0L3Jpc2N2L2NwdV9iaXRzLmgKKysrIGIvdGFyZ2V0L3Jpc2N2L2NwdV9iaXRzLmgKQEAgLTYy
+Myw2ICs2MjMsMTAgQEAgdHlwZWRlZiBlbnVtIHsKICNkZWZpbmUgUFJWX1JFU0VSVkVEIDIKICNk
+ZWZpbmUgUFJWX00gMwogCisvKiBTaGFyZSB2aXJ0dWFsaXphdGlvbiBtb2RlIGFzIHBhcnQgb2Yg
+cHJpdiByZWdpc3RlciAqLworI2RlZmluZSBQUlZfViAgICAgICAgICAgICAgICAoMSA8PCA4KQor
+CisKIC8qIFJWMzIgc2F0cCBDU1IgZmllbGQgbWFza3MgKi8KICNkZWZpbmUgU0FUUDMyX01PREUg
+ICAgICAgICAweDgwMDAwMDAwCiAjZGVmaW5lIFNBVFAzMl9BU0lEICAgICAgICAgMHg3ZmMwMDAw
+MApkaWZmIC0tZ2l0IGEvdGFyZ2V0L3Jpc2N2L2dkYnN0dWIuYyBiL3RhcmdldC9yaXNjdi9nZGJz
+dHViLmMKaW5kZXggYzA3ZGY5NzJmMS4uZDllNmFkOTY5YSAxMDA2NDQKLS0tIGEvdGFyZ2V0L3Jp
+c2N2L2dkYnN0dWIuYworKysgYi90YXJnZXQvcmlzY3YvZ2Ric3R1Yi5jCkBAIC0yMTIsOCArMjEy
+LDE0IEBAIHN0YXRpYyBpbnQgcmlzY3ZfZ2RiX2dldF92aXJ0dWFsKENQVVN0YXRlICpjcywgR0J5
+dGVBcnJheSAqYnVmLCBpbnQgbikKICNlbHNlCiAgICAgICAgIFJJU0NWQ1BVICpjcHUgPSBSSVND
+Vl9DUFUoY3MpOwogICAgICAgICBDUFVSSVNDVlN0YXRlICplbnYgPSAmY3B1LT5lbnY7CisgICAg
+ICAgIHRhcmdldF91bG9uZyByZXQgPSBlbnYtPnByaXY7CiAKLSAgICAgICAgcmV0dXJuIGdkYl9n
+ZXRfcmVnbChidWYsIGVudi0+cHJpdik7CisgICAgICAgIC8qIGluY2x1ZGUgdmlydHVhbGl6YXRp
+b24gbW9kZSAqLworCisgICAgICAgIGlmIChlbnYtPnZpcnRfZW5hYmxlZCkgeworICAgICAgICAg
+ICAgcmV0IHw9IFBSVl9WOworICAgICAgICB9CisgICAgICAgIHJldHVybiBnZGJfZ2V0X3JlZ2wo
+YnVmLCByZXQpOwogI2VuZGlmCiAgICAgfQogICAgIHJldHVybiAwOwpAQCAtMjI1LDExICsyMzEs
+MTYgQEAgc3RhdGljIGludCByaXNjdl9nZGJfc2V0X3ZpcnR1YWwoQ1BVU3RhdGUgKmNzLCB1aW50
+OF90ICptZW1fYnVmLCBpbnQgbikKICNpZm5kZWYgQ09ORklHX1VTRVJfT05MWQogICAgICAgICBS
+SVNDVkNQVSAqY3B1ID0gUklTQ1ZfQ1BVKGNzKTsKICAgICAgICAgQ1BVUklTQ1ZTdGF0ZSAqZW52
+ID0gJmNwdS0+ZW52OworICAgICAgICB0YXJnZXRfdWxvbmcgdmFsID0gbGR0dWxfcChtZW1fYnVm
+KTsKIAotICAgICAgICBlbnYtPnByaXYgPSBsZHR1bF9wKG1lbV9idWYpICYgMHgzOworICAgICAg
+ICBlbnYtPnByaXYgPSB2YWwgJiAweDM7CiAgICAgICAgIGlmIChlbnYtPnByaXYgPT0gUFJWX1JF
+U0VSVkVEKSB7CiAgICAgICAgICAgICBlbnYtPnByaXYgPSBQUlZfUzsKICAgICAgICAgfQorCisg
+ICAgICAgIC8qIFVwZGF0ZSB2aXJ0dWFsaXphdGlvbiBtb2RlICovCisKKyAgICAgICAgZW52LT52
+aXJ0X2VuYWJsZWQgPSAoZW52LT5wcml2ICE9IFBSVl9NICYmICh2YWwgJiBQUlZfVikgIT0gMCk7
+CiAjZW5kaWYKICAgICAgICAgcmV0dXJuIHNpemVvZih0YXJnZXRfdWxvbmcpOwogICAgIH0KLS0g
+CjIuMzQuMQoK
+
+
+--=-K7e02pMMS878C5HgoH4+--
+
 
