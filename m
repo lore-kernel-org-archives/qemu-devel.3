@@ -4,157 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD931D69104
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 12:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E2D3D69104
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 12:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGdzM-0000GE-VK; Thu, 28 Nov 2024 07:51:20 -0500
+	id 1tGe0g-0000zN-Cm; Thu, 28 Nov 2024 07:52:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
- id 1tGdzH-0000FE-Td; Thu, 28 Nov 2024 07:51:16 -0500
-Received: from mail-bn7nam10on2060b.outbound.protection.outlook.com
- ([2a01:111:f403:2009::60b]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
- id 1tGdzE-0004xi-1B; Thu, 28 Nov 2024 07:51:15 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=twGGnD5ylq9HJaTLF7yLJTN2H7ddKWIekNLrE4kGE0llAZLeWKAQ5Yw3WmC70LXObncOkHxCjKfBog3Bre02ApIg0fSchYWPaOpy1wuwduKdWuhQPpFA5JzHGd1NjCzff4+cvwN/qtmlTuYfBzP4fwH7mM0x7s15ehfEr0S9vMJA69bCiUtNZum+rM30IMiAqmSytSzlpBsB+fa8Gbx7X+dTorJrrcemOqjix5T4dRNKd776Yp7wfj/aA9c6eOaJssHvwXCt3GThlCs9YZhMFP4Jqq7Akem5PCH2zLnT/xCnOSmsXvFv8ZzKzZpCwXE+oxvDYE4g8/BYH9Z9z5UJ2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9B8cNvV+U839EqTD3Zc5EaCkf7fYkH0SQS6ve1kr6TQ=;
- b=xNofgczaOMF78o7LbuJcCeFghgTn1ulekkFpZTaSWjXvZ8dVDJAVEilzXEitALiBSYWOYgi03GW7igr/SWcKHIqzZFGYYx2qviF17Xicyn6CX7beMZnH5dxxuEM21ZPr57XDh5ZJTbPV5XFhK+U7MD/fWWL7Gj+madpOwF9hwCW01rincaQgbiNNNzmOUXNXtvbaJYFScRmAR2+IfUueQfs7yjuLF+MtEoogmiE68hNKE+OvfMOgmJ6sojoV2qtikNKqHarNzyRrp6p6Bar9jZ5oEkBxZIGkJAIQInacBt5UuRFTzH4DnPDBBy6fJJ+F7B+g7rBuFBCT0UCsM4VVXw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9B8cNvV+U839EqTD3Zc5EaCkf7fYkH0SQS6ve1kr6TQ=;
- b=Wi2Lf+7GEMgaDCNBWJatjaSwaTsp9+VCoPNGgAXHBaCAA1vJkvMFzYxHXRya81TPDYF9KrmquZRpvdzbUUUwSWIWU8luF+eAurvT5GcnbE7mWRnupf6YQKU6yMAKFRmpsCXQrDIqxGcKmSGCBVlWi+OmafTQkAlYZPxpNJRIKtJFvT4u9EZUUwkzzmJ/LWRIq051/1CMvpOokp/iumQPZ74yazDtMa7+rLhocOGAztrrg2KqpRcLR8UHZ5P24f6bBgBDZlEKjaIn/NczOOQnEUp1kaRQizTY6Jt8oYg0tmD28aP/ujLBVqdB49WRWRNjl69lvfBNu2OYfpeqAGxXEA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by LV3PR12MB9141.namprd12.prod.outlook.com (2603:10b6:408:1a7::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8182.23; Thu, 28 Nov
- 2024 12:51:06 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8207.010; Thu, 28 Nov 2024
- 12:51:06 +0000
-Date: Thu, 28 Nov 2024 08:51:05 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Donald Dutile <ddutile@redhat.com>
-Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Nicolin Chen <nicolinc@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
- jiangkunkun <jiangkunkun@huawei.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: Re: [RFC PATCH 2/5] hw/arm/smmuv3: Add initial support for SMMUv3
- Nested device
-Message-ID: <20241128125105.GB1253388@nvidia.com>
-References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
- <20241108125242.60136-3-shameerali.kolothum.thodi@huawei.com>
- <00e8a5d6-c926-44bb-8d11-dab4ddc4820d@redhat.com>
- <ZzTqXCFKV9s++C2N@Asurada-Nvidia>
- <cfe8864c-f830-4b39-b4d5-f219f5a42eea@redhat.com>
- <d8fbaa677771425dac985438b4b1db59@huawei.com>
- <20241127160031.GA1253388@nvidia.com>
- <9a62fa8d-a7a0-4bc1-bccb-2fcfaa119d65@redhat.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9a62fa8d-a7a0-4bc1-bccb-2fcfaa119d65@redhat.com>
-X-ClientProxiedBy: BL0PR02CA0131.namprd02.prod.outlook.com
- (2603:10b6:208:35::36) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tGe0e-0000z8-LQ
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 07:52:40 -0500
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tGe0c-0005hX-SH
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 07:52:40 -0500
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-296252514c2so787650fac.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 04:52:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1732798357; x=1733403157; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sONac1UZTPlQJ79ugVwCXUUdJC3EvN/RS0YEjiIkD+A=;
+ b=m8rBYITrzKCDO7HhiwhMreOgR+PDf4YlQRxzpOV3vORXGnSCbBBMuJRQLf4HXtLpOU
+ ASE9EeHY9OlBQA8Ch97CeM6oXH4CKam8QGHbobZ5G5AMo6e3sqphYRWzqkhhVWMrFAvy
+ pms6Asi+oA0unshD8u0H9U1Hwg9un06lO1veIT4WJKxTSZE7yMAkEks0keGn+mwK9p+y
+ VRktqnVr6+olzdTwMztEeylHT6GRP0puosnClfs+9YSQnb1v2z3uOudyviRZsSbUNVGg
+ xNgIHYuHhtqPf0mE0j2vOzVSUQ71YGa4+6c4KmqRHgD+RJRk/TWK8LrknPsO/V09oIpX
+ EsaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732798357; x=1733403157;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sONac1UZTPlQJ79ugVwCXUUdJC3EvN/RS0YEjiIkD+A=;
+ b=NxQ9gUjHdTRN5HL2lrukV6INm9qSLiIMvkTPR2osQVpWuNzQBpyFPQ/92wefhxXfy2
+ PKtyGUuQLG0Fnmm+rP9/44Gh4uf83M0e4nW6MKBpikTgeggXN+eldM+LLFjCOJv+WrAg
+ 2SLSyrWuzGsVfs+SDdmeHjE2HN/dAyPrG2Z4abidvztaiMRN/VAhUZ80AAZH80fAu5BJ
+ WFDfzCopdasBWpbF1n3GLuOrT8EL9hM/7QnNzalNrqxVRzTEUeZ89or6reNST4hspsFJ
+ 8SqHrOk4E4ov9Cl7kA+PMR/r5S4WeSOAxzJho19l1mQykWRWYg8qzkkhtUUAk7xx2PoU
+ Ky/g==
+X-Gm-Message-State: AOJu0Yw9CMUvpkkvFf2X5Lljh+/NsTWyRmaEJ8fnHN9gSroqg3WYUum3
+ B6teiV1GCT8jOgB/4nMmZNeNWmpRWXPT84wiLgx2L47heMQB4xagxM6w1IRHGy9IjPPJeCzjZFY
+ PSjs=
+X-Gm-Gg: ASbGncsvi81kbRUDo7/S1m1/8NGc+gIQ/TbfgbUzId2Dbxkk52QZNAniRnxzP9DP+A5
+ oknAaGc3gs6yNElz/lTp1lLMpHfFLNfPCgE/2WD27kljj4Xn53nI9wTyvbgA7mAg7NCtxyC0jtH
+ +rYbx5Wtc4SQJC2WZPgsIR7A20XUt01vC+gnc+cCztoC4eR48Nvan5g/yxxHECf+vUL3zvJQqLq
+ oLJMzWliVL4K/CGJZUFQ8OkmEB711vLmV8exxPNJfo6sA4lyeat2z1SHpiD4t9OQI7Xpi3JWu+M
+ FFKTNGyMDMFQJ95vJsSdc7etzXht
+X-Google-Smtp-Source: AGHT+IGwIxSXG2XsBke5Om0WA5f5lfpZHW5rlP0v2MV3Qa/I5hdapAG692Qg0i2Bc9F7NudBssNIHg==
+X-Received: by 2002:a05:6870:f61b:b0:296:fff8:817 with SMTP id
+ 586e51a60fabf-29dc43933f5mr7290312fac.35.1732798357306; 
+ Thu, 28 Nov 2024 04:52:37 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-71d725432b6sm295531a34.20.2024.11.28.04.52.36
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Nov 2024 04:52:36 -0800 (PST)
+Message-ID: <60013b3f-c886-405c-9d32-9834aec0cd2a@linaro.org>
+Date: Thu, 28 Nov 2024 06:52:33 -0600
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|LV3PR12MB9141:EE_
-X-MS-Office365-Filtering-Correlation-Id: c0bddc2c-028a-4718-fa17-08dd0fab52bc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Xed4DyACX7B/BAobuPLzBNYTqEYkVDNeCpGPZqPVWM0FQ//OpLGNJ7+cHMBo?=
- =?us-ascii?Q?dVdAl72fKW5byu3pti8AEPuj6XYSjnRJPw/5/WSeQNaw4HWxUZxo9dSt1TV2?=
- =?us-ascii?Q?Z4tlGG/lnaV4Wn8D1p5TVi5AoG7W91JhNlJOMHTyssAPn6xtJTOwIrVzx4F9?=
- =?us-ascii?Q?ARkh6EHtD/8u8q8kID94TacDtx3nM097Qv2dozs7ashtqz/B1heHPtly2hSC?=
- =?us-ascii?Q?Mccdc9fJBayKFVwnzvl3/mEcXPxzkHzposAs/XthM3CBYO0IX3CzBI1VBqWh?=
- =?us-ascii?Q?lQxZwtLGnhYDNnhMW/zr/oMnflxbzNUeLYcbMXLOWhVvh4HGmEXJAbM+alnJ?=
- =?us-ascii?Q?zEFenE6kzUSn7Gy4393L1LqjPq7vItFQUC18QpQsdwbAbqJibtBVj9uFkzB2?=
- =?us-ascii?Q?9NqPyMjKWVsUhKvrcgKzA7l9qOT9+/NR3QaGh9WUbv5jSjE8oTbEwETWqoa0?=
- =?us-ascii?Q?4U+HAjtvCD0k9CoZSteh1vxluP8VOUB1hHkk1QHQ+o9/993CwiBXYIZivUHB?=
- =?us-ascii?Q?KFcwX46g5bJPsM3c3OWnA5UBlnJ9LK6wsbvrs9suNR05ADhcuHpd5Wr4vP7l?=
- =?us-ascii?Q?QhNtqYEig0D9JoViiskw4FxOVzX6dBEB151qrAw2zx8jzj5vRPizDTrlfIqb?=
- =?us-ascii?Q?5zog2panI2o03SbNH3fbqPCFEM584h0U34qie6H4OIxY2aidvMnpSzDT50rD?=
- =?us-ascii?Q?LxJzvaq3m2OK1Dt06BwoLbG7p36IMT5jpTqy/JXmNYdFuAmv1+D7W7z9PFaN?=
- =?us-ascii?Q?aS8/dixpgS50gU+iIdRVTXjd4jiyT2TBNqkJ2rvfRe8Q5ifX2X/UjsqULnEz?=
- =?us-ascii?Q?2KYxmSMHl+8HVO2dItRUapt7mR3qjS/cOS3aD/7b92DCCil0VJUFuwKSIIAU?=
- =?us-ascii?Q?mqx4ut4xhAYojGTWHblLlWUJ4CgdHxD51FYtRyLFLyOEJUDtxbtbnPYib16x?=
- =?us-ascii?Q?ADd3ru66EDBzL9GQOCSFlcCPTp3eK4RXeNp0zxMH/f06W8WudG1teVAVZGFn?=
- =?us-ascii?Q?T5SYAVC7DhVzxeh5QseGsmguFwBp8fjq7pQW2Fyba3MpENZy34Re6fZVGhv3?=
- =?us-ascii?Q?Egm06uD802mkW13sbHkY7D7anHx4eFu5p6iX5OrECcGSxLUbIjwX2xzNDBme?=
- =?us-ascii?Q?LLNwV71VGfsqqeYWLkgraJZIqsU+vRRv+wzeu6S5oG45JKvNicti7Xg/QsrE?=
- =?us-ascii?Q?6qfPyotbUsIr1pqXdASaZXjg1Cv4ntPBxwpIW1j5BToBiKYE1Q1/FQ8ZYcQ8?=
- =?us-ascii?Q?yKHQgLHw5FDFK8kSF2+mSHzYuXvo16eQ6EAknXtkqpme9INSE4Ybfw2o7Dx6?=
- =?us-ascii?Q?YDZNjXWLCkCrP4iX1CWNUApp9zuVLFumbj2kEMvjN4gI2A=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB8659.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?N8DiW2hn6vh2mJLyl0HU09gTTJcZ0iN9nUz5xUxv/Kb+7KsnUqUVOYGLzFY0?=
- =?us-ascii?Q?pYl0xoQo7/i6BMKgpkbveU/lWJ+0mTaZuRx3Sc0kjcLAtLKToVN2ABQPA1uo?=
- =?us-ascii?Q?ODegrXqUmBLzE1eKQPRrzHZL9yHEszRgSeZGX0oK8OXOzbQyjIJRUflf28tw?=
- =?us-ascii?Q?llopfiyl/doc4oqdKSsmpUaX6afrj9IFYXlyYLTElA387ZaYHTHHMonLFqnX?=
- =?us-ascii?Q?P70TYs97G63ZT6qVJS7becK0kPmWoLjOGEEF1NF9kcOWqxUboPLrw0mjihS6?=
- =?us-ascii?Q?WfXrFpH4MXPd/AFynbc8OFGzlrEIH+yqelk3RQQwfRZS9KZXvyLQ4pTJkOzZ?=
- =?us-ascii?Q?H5zYjXaFRTEg8NoxZkwE4zvQLv5ai0dAKPnkMil8DI/9z+dndMdHtCCJ5k09?=
- =?us-ascii?Q?kROlahY/U1/+JY2YK3TptoffxJTE5mcatngZrfCkhdC2ss8obQgKTwBvSiDl?=
- =?us-ascii?Q?IV1e8TI9jx1NyPA/iqDxE2eHRkrRR0fXizU5f8rBCdLAN3JAHnuyAmo5UxKI?=
- =?us-ascii?Q?urQ6Ztmg8Ra9HwmWBNsN0azIpGZbjn7mWya/qArTnWkP2xltJ8QnJS1DwOpz?=
- =?us-ascii?Q?vFs8qzR94JxQtk/jmjY02L1QnrJlzjEsOgPxUmOExxqaFMXq6zC1YydsLdag?=
- =?us-ascii?Q?JEwP1dL2NYfUqLIVPuHAp5Eb1dz5UinTu2RVX/WwULLYxx3+BDRYDFJjbK+N?=
- =?us-ascii?Q?sLLWgWu4P+eVxicJJ05ka0TFat3SvcnMEO6XuMrz9NoSvLPgqLfBUrjHiYsU?=
- =?us-ascii?Q?DZdnHOhwIOTk+PUB09OcsyVg78jynt0X408E7m9D4wuJtkhC5L9YIKVoTkgB?=
- =?us-ascii?Q?MkFyUzN+BOZo74+UKYJ0WBslx/FbGHMGhO5jcG0tl3Shiwic+Nf4lVrQAjVW?=
- =?us-ascii?Q?OwcVYbtDsWGUJjCng8jsbxOGioOGm9WDWssDDBosMmgBxnIpelOUjqBYzdhl?=
- =?us-ascii?Q?dAQ6xwFxJl0EFFa938i8L/KIBJFXIlnWtQKxwLh0v996WvUoip6lgmNRMXfT?=
- =?us-ascii?Q?ogPVJMjaFT+gTWBSR9w5YGAxxbp1B2pq6FiqIXT7YZhFXMKEafXqyeKR0dIX?=
- =?us-ascii?Q?ZvB3zFwJDBZfd9Wg6jWOzv+yrtNVAZbt2ACb8yiYy0XkVQ3y/YSQRxPaVn6v?=
- =?us-ascii?Q?2YljuJK9MiXPDf+QEiA+OxyBGrjNMOzTwawP06vI7CkmeFJsl/+JJ5oCq/cT?=
- =?us-ascii?Q?aghWWFMltJOZLjHe1LRMwH2z6Fm1WTiKEBD/fMnaLTDpbxSglhyS/JuPlRle?=
- =?us-ascii?Q?QK4hAjAxi2wuXkCsFATfjDgFpqLZKyJHZmC0/0S1uebKtOUoQbIHkpG+oIMA?=
- =?us-ascii?Q?KMCcdkoQYATuKqlD7h406nV+Ac+W9iDEMqy0VwNs+wA2+a2BYfREUJr7JEh5?=
- =?us-ascii?Q?rROtKp+ZdTYoy99aSlQM3+Uz3MzpLqKzPufum0r11xGGGaHT0mXFzGej5PGL?=
- =?us-ascii?Q?4TXj6I1imx7GBpHZlBkdw6YE6m+eRjnVxxeYMDuB7GSS/2p516v/35HN6pQs?=
- =?us-ascii?Q?Z+/HXIy7giFYhPvEJimE6GNvpvKp6GrWJbaaoIE1Uey0VwXyhPGDzVNHCmr4?=
- =?us-ascii?Q?sCYnQQvd7RGX4mGT1h8=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c0bddc2c-028a-4718-fa17-08dd0fab52bc
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Nov 2024 12:51:06.0100 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wQ68abZMyQcxEX0L1RiINpRVRwykhrB3/umCBMJXz14sAt9nS+ifZphIsAkIK3Z4
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9141
-Received-SPF: softfail client-ip=2a01:111:f403:2009::60b;
- envelope-from=jgg@nvidia.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/11] target/riscv: Support generic CSR indirect access
+To: qemu-devel@nongnu.org
+References: <20241117-counter_delegation-v3-0-476d6f36e3c8@rivosinc.com>
+ <20241117-counter_delegation-v3-4-476d6f36e3c8@rivosinc.com>
+ <3db7857b-0987-49f4-b39e-0cf69c3888b0@ventanamicro.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <3db7857b-0987-49f4-b39e-0cf69c3888b0@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,19 +103,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 27, 2024 at 06:03:23PM -0500, Donald Dutile wrote:
+On 11/28/24 05:52, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 11/17/24 10:15 PM, Atish Patra wrote:
+>> From: Kaiwen Xue <kaiwenx@rivosinc.com>
+>>
+>> This adds the indirect access registers required by sscsrind/smcsrind
+>> and the operations on them. Note that xiselect and xireg are used for
+>> both AIA and sxcsrind, and the behavior of accessing them depends on
+>> whether each extension is enabled and the value stored in xiselect.
+>>
+>> Co-developed-by: Atish Patra <atishp@rivosinc.com>
+>> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+>> Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
+>> ---
+>>   target/riscv/cpu_bits.h |  28 ++++++++-
+>>   target/riscv/csr.c      | 149 ++++++++++++++++++++++++++++++++++++++++++++++--
+>>   2 files changed, 171 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+>> index 385a2c67c24b..e13c5420a251 100644
+>> --- a/target/riscv/cpu_bits.h
+>> +++ b/target/riscv/cpu_bits.h
+>> @@ -173,6 +173,13 @@
+>>   #define CSR_MISELECT        0x350
+>>   #define CSR_MIREG           0x351
+>> +/* Machine Indirect Register Alias */
+>> +#define CSR_MIREG2          0x352
+>> +#define CSR_MIREG3          0x353
+>> +#define CSR_MIREG4          0x355
+>> +#define CSR_MIREG5          0x356
+>> +#define CSR_MIREG6          0x357
+>> +
+>>   /* Machine-Level Interrupts (AIA) */
+>>   #define CSR_MTOPEI          0x35c
+>>   #define CSR_MTOPI           0xfb0
+>> @@ -222,6 +229,13 @@
+>>   #define CSR_SISELECT        0x150
+>>   #define CSR_SIREG           0x151
+>> +/* Supervisor Indirect Register Alias */
+>> +#define CSR_SIREG2          0x152
+>> +#define CSR_SIREG3          0x153
+>> +#define CSR_SIREG4          0x155
+>> +#define CSR_SIREG5          0x156
+>> +#define CSR_SIREG6          0x157
+>> +
+>>   /* Supervisor-Level Interrupts (AIA) */
+>>   #define CSR_STOPEI          0x15c
+>>   #define CSR_STOPI           0xdb0
+>> @@ -288,6 +302,13 @@
+>>   #define CSR_VSISELECT       0x250
+>>   #define CSR_VSIREG          0x251
+>> +/* Virtual Supervisor Indirect Alias */
+>> +#define CSR_VSIREG2         0x252
+>> +#define CSR_VSIREG3         0x253
+>> +#define CSR_VSIREG4         0x255
+>> +#define CSR_VSIREG5         0x256
+>> +#define CSR_VSIREG6         0x257
+>> +
+>>   /* VS-Level Interrupts (H-extension with AIA) */
+>>   #define CSR_VSTOPEI         0x25c
+>>   #define CSR_VSTOPI          0xeb0
+>> @@ -863,10 +884,13 @@ typedef enum RISCVException {
+>>   #define ISELECT_IMSIC_EIE63                0xff
+>>   #define ISELECT_IMSIC_FIRST                ISELECT_IMSIC_EIDELIVERY
+>>   #define ISELECT_IMSIC_LAST                 ISELECT_IMSIC_EIE63
+>> -#define ISELECT_MASK                       0x1ff
+>> +#define ISELECT_MASK_AIA                   0x1ff
+>> +
+>> +/* MISELECT, SISELECT, and VSISELECT bits (AIA) */
+>> +#define ISELECT_MASK_SXCSRIND              0xfff
+>>   /* Dummy [M|S|VS]ISELECT value for emulating [M|S|VS]TOPEI CSRs */
+>> -#define ISELECT_IMSIC_TOPEI                (ISELECT_MASK + 1)
+>> +#define ISELECT_IMSIC_TOPEI                (ISELECT_MASK_AIA + 1)
+>>   /* IMSIC bits (AIA) */
+>>   #define IMSIC_TOPEI_IID_SHIFT              16
+>> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+>> index c91a26a52ef6..57e9c9e25f02 100644
+>> --- a/target/riscv/csr.c
+>> +++ b/target/riscv/csr.c
+>> @@ -306,6 +306,17 @@ static RISCVException aia_any32(CPURISCVState *env, int csrno)
+>>       return any32(env, csrno);
+>>   }
+>> +static RISCVException csrind_any(CPURISCVState *env, int csrno)
+>> +{
+>> +    RISCVCPU *cpu = env_archcpu(env);
+> 
+> It is desirable to avoid env_archcpu() calls because it's a bit costly.
 
-> The association would be done via the VMM -- no different then what associates
-> an assigned device to a VM today -- no hw-level (VM-)ID needed; a matter of exposing
-> it to the VM, or not; or mapping the (virtual) CMDQ to the mapped/associated ECMDQ.
-> They are purposedly mapped 64K apart from each other, enabling page-level protection,
-> which I doubt is a per-CPU req for lock contention avoidance (large-cache-block
-> spaced would be sufficient, even 4k; it's 64k spaced btwn ECMDQ regs .. the largest
-> ARM page size.
+No, it's not.  You're thinking of RISCV_CPU, with the qom dynamic cast assert.
+env_archcpu is one subtraction.
 
-There are commands a VM could stuff on the ECMQ that would harm the
-hypervisor. Without VMID isolation you can't use ECMDQ like this
-today.
 
-Jason
+> If you're
+> doing something else with the RISCVCPU pointer then it is what it is, but if you
+> want it just to access cpu_cfg you can use riscv_cpu_cfg(env).
+
+... but using riscv_cpu_cfg is still a good idea here.  :-)
+
+
+r~
 
