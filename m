@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A915D70DE9
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 17:52:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A0C7D70DE9
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 17:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGigf-0007dJ-Uk; Thu, 28 Nov 2024 12:52:22 -0500
+	id 1tGigp-0007ie-Hc; Thu, 28 Nov 2024 12:52:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGige-0007as-M3
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:52:20 -0500
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGign-0007i8-L9
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:52:29 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGigc-0004LK-R9
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:52:20 -0500
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-7b66e94bfb8so72663485a.3
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 09:52:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGigl-0004O2-RX
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:52:29 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-434a852bb6eso9674075e9.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 09:52:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732816338; x=1733421138; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0BsGpLJot4thl7mneZbDcBlSGLyHsqkIkpI8t6CMwes=;
- b=DGJVBzIIcSMWVU4Y8SJm4khM02nlBt7dpRWcE0NCVr6XtuhHBbgYWSIPBXbWr6ICJz
- 2OxEh228iaoHRbJiPnSODdGO0h8JW9nnDDENGaI2o3QjP1lREdU+f2N+IKtw4VYp3yeC
- VQdH5mD99NNBtk/Ovt4kxgvyBwpvve3Q+tQF8Zp7xF3o77XQM/gFPDikpIW0MJoHFLXD
- W8CMVM/jQ5154c+s3/VNQG1Sn5CrrBN1oECJwMLWJXjHI5lm56lh+EjbRDRpPzurzscQ
- j8lw1OKFPCg+kqeK9mOxMWpMt8qxwD84SO7HWrAZ/3BEAJ6QZryHd5UhKDlL6lS027D3
- xgIw==
+ d=linaro.org; s=google; t=1732816346; x=1733421146; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=u+IsHVrjSzPn9IoEqVOtBC65NeNmlEiYEpz17kxhMns=;
+ b=xlNqQHPd8LXd0mFn2p8m5t0ox/XcVlkMQU44VflY3pgbMfPxZ3AO5pGUmKOQRQUqav
+ xTisH7002nXF7xefk9QrY+WHQclLseFDFcBByabJlTa4zUo4CicmFGYgstwIAQsOSJ/h
+ yZ3WDyOJLozlIHHloPc9nSygkPF4LW4BtSxHMhfmDF2qFmDOWFV9+jPCc6AiLVr0ypyG
+ PF72CEijZXMaDXbafh1cLIY+dk624JqeZUofKoFatU2PT+Ewx8Hs9qleON7+Qri47wcH
+ JDr6GEcUEpWR1sArZyMTg94yVd2Z41fw0pJPlE6vKjeYJAvEDT3l3YQkknlBvr78BfFY
+ o/bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732816338; x=1733421138;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0BsGpLJot4thl7mneZbDcBlSGLyHsqkIkpI8t6CMwes=;
- b=H3RXmcoSUxWLQ2kJLKnrGSil6m2oiiA/B9q2hxahPKZSt6Ssc93oWIvo4++NrmqP5M
- 0kaI9RRineoXrNsTSb/ImHdfeGMicCZ9DKVbaiMgWB0HXa8vpiD9nm+UEQi52fu6Ruu+
- L6HxPnRZtV2J4pxKRXrXXcX8GFRCWkHeLOPqV2ZagLdeozh445bHCRS/Rw2sEP918kgn
- VPyl/HauCRBUZRwFeEfRTwrCXcZo70l4UO+tnjAaU7nNTwE9OAsWD4Ys4AtR/2LSzsi0
- iadOmtdECP8+4uzDFUuzC5TmdqTkauyxKIHEzW9txWHcS7Xcy3Thxh+xO1noYo3bSaOT
- fwpw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzLKFxGKM0zk3GZzh/xAFGFrkzhMx74dTonVZurpeTGyggj6Ht1UILt4tvQ6uMPdiJPy1ObsUGGtb7@nongnu.org
-X-Gm-Message-State: AOJu0YyFxFjgyHMqBlO/KlrNfcU1oeZ+ml9BNup1MGFFV5eMwYQWhbMU
- nZzwLharCmsmhGdHKc5heJbnWjWpb6bVqQK52WANfdMJbyMPw9CBjxE5URfFdMY=
-X-Gm-Gg: ASbGncuPO9MNqFYKf/yMsnpUWEX6XXLVtbCjp0QTf4mA8U6r5ddqrQRLJN1LldQfe1X
- K5fk0wjaWszb4tifA5rGWmskHlNCpUxPJnPFzfam7HdnaxwxZbYfEtnhrxGPwldT7RvjJxWYt3x
- 23T6rIOTJ+xSkjs4nwIVpX4Yr/FoLC+7P93xnrSx8DGgfDNyZMa1V6y+sb3ojsOzrGl4mri71QL
- LQt7hNdHZ0Ctmo3EyiyxFMsTYqA3BcuSHG8WD4t+JtNjBDZrixWRfTQx5JdzZEAm3Y=
-X-Google-Smtp-Source: AGHT+IEJzMMPB8o44DKubop8SNi/M2P4IhPGxAXItIloSXauKaxTJVK0LfUoNtAaCC3qxcLU8IPNRA==
-X-Received: by 2002:a05:620a:372c:b0:7b1:8cda:6f4c with SMTP id
- af79cd13be357-7b67c256c62mr944949185a.3.1732816337827; 
- Thu, 28 Nov 2024 09:52:17 -0800 (PST)
-Received: from [172.20.3.167] ([187.217.227.247])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8751f54ecsm8494636d6.77.2024.11.28.09.52.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 09:52:17 -0800 (PST)
-Message-ID: <41dcce00-700a-44db-bd04-84ed7e7e75e1@linaro.org>
-Date: Thu, 28 Nov 2024 11:52:14 -0600
+ d=1e100.net; s=20230601; t=1732816346; x=1733421146;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=u+IsHVrjSzPn9IoEqVOtBC65NeNmlEiYEpz17kxhMns=;
+ b=ag3guiQeZXuGuSckiG1MqCWlJqaiDHuV6rIkSdhhEyipYunX3dKXyNeC35bFguMQLn
+ hg+cNtW06hX/r8WNIMdP42CIuChW5ALKqlQPLsQNPDso8bslZIzCkQOVd3wF9qSbjhpY
+ HbaTXvrnXH91+YSlLpZ8yLniK2axW9x7BrI+BUIr4HbkJNtgKOq/pnfRgjxdOXfCq43V
+ vcM8c7zdMEGKGt1Ol2eRXPaco7DYfQRxnXq2THpTx2+dZoFz0/rb8hlswZFDs85zNFm1
+ ZHFCAhVLXyru414Rrtq3A81AbfKBl7tkxR5NPM45D7TekkX6IIos9fyshK2oCgzrrD4I
+ lO4Q==
+X-Gm-Message-State: AOJu0YzKhVdjJJshkCP0xxt6PhS6kq3hlCn2QjZJ2Xx1sDVTmq3R4Yha
+ vlYK0AvY1GsXeVXPOnOf/ZrtyF0FLksmCF1vGUi6hpRKqcyUmelVU0h08F6QcTzEGdKiM1dF45T
+ P
+X-Gm-Gg: ASbGncuhNeU7LjcHN/IYrjjIy0j6fRPY1168hF8kfcAkaxef3iJDxTbwVdaiAf/GLnU
+ EFasb3W/VaKF/Bzxh+O1g+kGpc/HQMN48ry6ciTHk4961Rsv1Pjz62F7jjYfsv8p9weH+r4cA6n
+ W9z06R4iNyZjqeKMWyg9K2DF9DbSWUkO2OHgJo2OHJIiHIt2Nc0HW/5V5m0AAXYpOUCvEWS5vdr
+ gcEEgkfmA2jtwqRTsHf2pkvDIhPTeMGS5mkVhNaIUtvaHMYHLOidU83ZElBnXA/IbELrfQGnti8
+ DYYOnv/KrYKwswq4WJgBosDZGXG9wg==
+X-Google-Smtp-Source: AGHT+IFXBwRsBXBcgBGdlHJVJK5jnWNpEeOyCkn+Xy8aduXn5gykLjUUpGMMBy5TFlK/nohkItVsQw==
+X-Received: by 2002:a05:600c:3489:b0:434:a39b:5e44 with SMTP id
+ 5b1f17b1804b1-434a9dcff98mr82345175e9.17.1732816345873; 
+ Thu, 28 Nov 2024 09:52:25 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434aa76b52bsm59924195e9.18.2024.11.28.09.52.25
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 28 Nov 2024 09:52:25 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/display/vga: Do not reset 'big_endian_fb' in
+ vga_common_reset()
+Date: Thu, 28 Nov 2024 18:52:23 +0100
+Message-ID: <20241128175223.15604-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0 17/25] target/loongarch: Set Float3NaNPropRule
- explicitly
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20241128104310.3452934-1-peter.maydell@linaro.org>
- <20241128104310.3452934-18-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128104310.3452934-18-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x734.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,17 +100,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/28/24 04:43, Peter Maydell wrote:
-> Set the Float3NaNPropRule explicitly for loongarch, and remove the
-> ifdef from pickNaNMulAdd().
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/loongarch/tcg/fpu_helper.c | 1 +
->   fpu/softfloat-specialize.c.inc    | 2 --
->   2 files changed, 1 insertion(+), 2 deletions(-)
+The 'pci-vga' device allow setting a 'big-endian-framebuffer'
+property since commit 3c2784fc864 ("vga: Expose framebuffer
+byteorder as a QOM property"). Similarly, the 'virtio-vga'
+device since commit 8be61ce2ce3 ("virtio-vga: implement
+big-endian-framebuffer property").
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Both call vga_common_reset() in their reset handler, respectively
+pci_secondary_vga_reset() and virtio_vga_base_reset_hold(), which
+reset 'big_endian_fb', overwritting the property. This is not
+correct: the hardware is expected to keep its configured
+endianness during resets.
 
-r~
+Move 'big_endian_fb' assignment from vga_common_reset() to
+vga_common_init() which is called once when the common VGA state
+is initialized.
+
+'default_endian_fb' value is always target_words_bigendian(),
+remove it as it isn't very useful.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/display/vga_int.h | 1 -
+ hw/display/vga.c     | 5 ++---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
+index f77c1c11457..5dcdecfd422 100644
+--- a/hw/display/vga_int.h
++++ b/hw/display/vga_int.h
+@@ -135,7 +135,6 @@ typedef struct VGACommonState {
+     bool full_update_text;
+     bool full_update_gfx;
+     bool big_endian_fb;
+-    bool default_endian_fb;
+     bool global_vmstate;
+     /* hardware mouse cursor support */
+     uint32_t invalidated_y_table[VGA_MAX_HEIGHT / 32];
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index 892fedc8dce..6dbbbf49073 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -1873,7 +1873,6 @@ void vga_common_reset(VGACommonState *s)
+     s->cursor_start = 0;
+     s->cursor_end = 0;
+     s->cursor_offset = 0;
+-    s->big_endian_fb = s->default_endian_fb;
+     memset(s->invalidated_y_table, '\0', sizeof(s->invalidated_y_table));
+     memset(s->last_palette, '\0', sizeof(s->last_palette));
+     memset(s->last_ch_attr, '\0', sizeof(s->last_ch_attr));
+@@ -2117,7 +2116,7 @@ static bool vga_endian_state_needed(void *opaque)
+      * default one, thus ensuring backward compatibility for
+      * migration of the common case
+      */
+-    return s->default_endian_fb != s->big_endian_fb;
++    return s->big_endian_fb != target_words_bigendian();
+ }
+ 
+ static const VMStateDescription vmstate_vga_endian = {
+@@ -2265,7 +2264,7 @@ bool vga_common_init(VGACommonState *s, Object *obj, Error **errp)
+      * into a device attribute set by the machine/platform to remove
+      * all target endian dependencies from this file.
+      */
+-    s->default_endian_fb = target_words_bigendian();
++    s->big_endian_fb = target_words_bigendian();
+ 
+     vga_dirty_log_start(s);
+ 
+-- 
+2.45.2
+
 
