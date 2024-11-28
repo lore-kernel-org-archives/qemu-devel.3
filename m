@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E5ED690F8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBAEAD690FA
 	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 10:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGc0k-0003Yj-UN; Thu, 28 Nov 2024 05:44:39 -0500
+	id 1tGbzU-0001uu-20; Thu, 28 Nov 2024 05:43:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tGbzu-0002AQ-RU
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 05:43:49 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tGbzS-0001tC-6d
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 05:43:18 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tGbzc-0000dH-WD
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 05:43:37 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43497839b80so3819875e9.2
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 02:43:28 -0800 (PST)
+ id 1tGbzO-0000PF-JP
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 05:43:17 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-434a1833367so4046305e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 02:43:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732790607; x=1733395407; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bWS/GNsFs6Pu4pBOarLJaqHWrc7CmHsdY5ILX0uFeec=;
- b=qSlcYqIdLutkhsSMfs+9qzz3lUqqPcL0bxd3YAvW5EVxOJk+oGOEme538Sz1PArV8G
- aE10a27kBDZmS3pP8tLfXsjPM7rBCQMR7jdEFpiooUBYfLVXnXWDlFURrkz6LXrsts9w
- 3n1vU5snljTxDxRd4UgV65x/SfZLMDJQE9iqNr0A2oJUJZ+rZddoXmHV18iaqiZOyVdG
- wUWkGQmkPIlbWqVFcALJOlBCFjSd03YalXw5Qod7Jsnz27o2wSNkFP/62Kkn4lCULRvG
- fcNtanW4haGyXUYpmiAAWoSQoBmDSOJgHRJOpUAwQb5XU8OjVlcPNgpH7PdDNflsAQaQ
- tzqw==
+ d=linaro.org; s=google; t=1732790593; x=1733395393; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=oYk4E/ewRoQTnBgSxniNQvwpaGZ6rvHTwiB73W6YXQM=;
+ b=V5TYq7gjwis/2NKNQmArYXGRYm3wUwxZQTPbRTrP8TtUWr7WA3mS2nA1SSwpWKyELd
+ 4bF2zO2ypU9u1iLMWiOV7l9v3hK0LiPGoxK13pOfHBIhbrDryqFHTYX31c3s4kSdA0tM
+ 2/a+TdbssDDXi5J63cacnzO2oMijlrKXrf7p62KP6lCj0AtVAmBTredo3TkfWim5vfAH
+ n/UVwhTRACw/6o2oSTLmVI6jMS3qsUx2tGtroFSORL7qxtJ1czIjN/jAY8f/Xf2cD03I
+ 6SUIF6iLqD6qMvT2VeN/aGsEGG6H5+xa9dANYzvh6OSG73Bi3quwOOSylXtNE3A5KU+F
+ tvjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732790607; x=1733395407;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bWS/GNsFs6Pu4pBOarLJaqHWrc7CmHsdY5ILX0uFeec=;
- b=pXc80NWlT0M4d8Nm06Bm0fyvWtsoNE9z124y3Xhc9UqICi+GAhLudDPod4gSr7tSe/
- vAA128S9/mhbHL9723qLcROTmyeuoGg1WjwdFSQkiHPYh8+gmDWIpjYzHK4kDAQopXsO
- rizxnjTLaHlsQdw5u3Ubp8GkFLAha0EnKBgUh4kj6zelTJ7frTFosKah+ZFn1Sk1QmPT
- PNJov+c3CQ2eEu+Z7CM0Bq3e/+7WtERXK1PiAGI37+0WhOHQIM8Sta89iiIlMkyAUBSw
- eGDO4JrYQUikLx39jPJY004WcA+sSujwpqE7otmSesywjvbZ1AUSiyAOtLFbwCEUTvYF
- Mpiw==
-X-Gm-Message-State: AOJu0YzufOMQeT2RvTRk5Ot9lLIgv4SKi0zdejUsvdZu2hJ8IposHRmA
- ZNwbYK8cRwXA6DfZmleYcIk4z7YAgx7rsyfbPTsDBbFJmd0cg718hHKEYDKajdnpIiXX3cs8kXZ
- N
-X-Gm-Gg: ASbGncurU+N6uy9gaiMY+jFekyBSJy5US/WILCW4TAUPJlCBfNuU3vhtcE324cEr0qr
- 9u48fBVf2+bhjDvvbDA8FSVhEdBpulsisKrMEezpvktAyYz8p3kCJNTYRm+sSRU5iVX+edelyWe
- cu1MwLj4ghWfRbvVbiPK+9P7tOmWLWs9ghzgexzX6iBOpIS39bkDVssIx6VURukl66Jw9uDVuEJ
- cKmI+hS4oDd3Oa31oRN03eHV6qNG57L19JhzGmWWh5z8z38VSZRKyc=
-X-Google-Smtp-Source: AGHT+IGyNWzgLyZWnKL8/dUfy9pyTYenNBT+T45tCtsyt5xK6UxFlG0jFs6wCg5GyXMMCyWimSPO1g==
-X-Received: by 2002:a05:6000:1fad:b0:382:4b83:d4c0 with SMTP id
- ffacd0b85a97d-385c6eb7aacmr5799987f8f.3.1732790607241; 
- Thu, 28 Nov 2024 02:43:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732790593; x=1733395393;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oYk4E/ewRoQTnBgSxniNQvwpaGZ6rvHTwiB73W6YXQM=;
+ b=oFsii/8dXNu4q/7JQ3gcUdJbG2RqDPiGVEYeho5TZbhk7UWMyewN+Z+YzUyaWb7Rvl
+ Z19zIdThwmaxeamhgM/EDE4G6Ce9t0CI3CB2CqqF4MwHrSstbCdFbQf8NfLBQqqSYcJd
+ 2etHFb6UKcIVYpB45xhQuGrAbMjQuaAOIZ36vai+9gvkHP+F2Ujw/kfE2qUMreeUfupD
+ 1PEX5CIeWT5miPFdc9WYqb9hRCReVAQOMTtwSUjWYOHvQtlPMWAsWjkT2IYTNgUO1GWX
+ yvUGLg1VaB+VsqGzjKbMABNoD4qIZEYG4ZrSDCYrlR56IEWl5Amif7bVckPr6LfYE5eR
+ 4ybw==
+X-Gm-Message-State: AOJu0YwmTLq3KV01ilNGVwdGfXccirFU7TjhjkY0AXTZpzJ4AeqkIyeZ
+ tO92pCEC8lOWNHvgXW5TUJDR2Kh8dxbW/4/Bi6L4QzZKFmh1wefKHtZpnSlJn+8v/5zHFzYN0RL
+ l
+X-Gm-Gg: ASbGncuA7CITB/Cnnb4eR9wErzZ9xXRt/OwjMbrk4qZpiqylc3GoLYUFAO/IxaRtbmc
+ 7OOB5o5eY0nhPFc2zCjy3TgoFMAWPx30dmV8/ijgVuE24n4q3I+WbHxNhbnYBkiQdmyBJXitKiD
+ NxGyPfAl1t+6eyENYI0iBT7KGJkYSGrB4Xp8sDCGKaBeVflp+ttnXbis0S1Q7qslyngrfFL8odS
+ C02WNJWA61AC4W+B9HkVdyKnmjveAPtGbbjFcbzAEF4lqpLWnUsAy0=
+X-Google-Smtp-Source: AGHT+IFkuO7dI1m1sjtGwwDC6v8OH5tPS+P3BTWrlwOrTAYP6u2lYPXY+a46HLuX0BG285SHONUlDQ==
+X-Received: by 2002:a05:600c:5123:b0:434:9dcb:2f84 with SMTP id
+ 5b1f17b1804b1-434afb8decdmr22239075e9.2.1732790592652; 
+ Thu, 28 Nov 2024 02:43:12 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385ccd68958sm1292959f8f.67.2024.11.28.02.43.26
+ ffacd0b85a97d-385ccd68958sm1292959f8f.67.2024.11.28.02.43.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Nov 2024 02:43:26 -0800 (PST)
+ Thu, 28 Nov 2024 02:43:12 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
@@ -78,16 +77,15 @@ Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH for-10.0 16/25] target/arm: Set Float3NaNPropRule explicitly
-Date: Thu, 28 Nov 2024 10:43:01 +0000
-Message-Id: <20241128104310.3452934-17-peter.maydell@linaro.org>
+Subject: [PATCH for-10.0 00/25] fpu: Make pickNaNMulAdd behaviour runtime
+ selected
+Date: Thu, 28 Nov 2024 10:42:45 +0000
+Message-Id: <20241128104310.3452934-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241128104310.3452934-1-peter.maydell@linaro.org>
-References: <20241128104310.3452934-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,57 +108,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the Float3NaNPropRule explicitly for Arm, and remove the
-ifdef from pickNaNMulAdd().
+This patchset does the same thing we already did for pickNaN() to
+pickNaNMulAdd() -- it replaces the compile-time ifdef ladder that
+selected target-specific NaN propagation behaviour with checking some
+runtime selectable settings in the float_status.  The motivation is:
+ * this will let us have multiple targets in one QEMU binary
+ * the Arm FEAT_AFP architectural feature includes letting
+   the guest select a NaN propagation rule at runtime
+                 
+The current ifdef ladder merges two different kinds of
+implementation-specific behaviour:
+ * handling of the (inf * zero) + NaN special case
+ * selection of a NaN to propagate when more than one input is a NaN
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/cpu.c               | 5 +++++
- fpu/softfloat-specialize.c.inc | 8 +-------
- 2 files changed, 6 insertions(+), 7 deletions(-)
+The refactoring splits these out into two different settings, because
+what a target chose for one of them isn't correlated with its
+choice on the other one.
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index ead39793985..c81f6df3fca 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -173,6 +173,10 @@ void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook,
-  *  * tininess-before-rounding
-  *  * 2-input NaN propagation prefers SNaN over QNaN, and then
-  *    operand A over operand B (see FPProcessNaNs() pseudocode)
-+ *  * 3-input NaN propagation prefers SNaN over QNaN, and then
-+ *    operand C over A over B (see FPProcessNaNs3() pseudocode,
-+ *    but note that for QEMU muladd is a * b + c, whereas for
-+ *    the pseudocode function the arguments are in the order c, a, b.
-  *  * 0 * Inf + NaN returns the default NaN if the input NaN is quiet,
-  *    and the input NaN if it is signalling
-  */
-@@ -180,6 +184,7 @@ static void arm_set_default_fp_behaviours(float_status *s)
- {
-     set_float_detect_tininess(float_tininess_before_rounding, s);
-     set_float_2nan_prop_rule(float_2nan_prop_s_ab, s);
-+    set_float_3nan_prop_rule(float_3nan_prop_s_cab, s);
-     set_float_infzeronan_rule(float_infzeronan_dnan_if_qnan, s);
- }
- 
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index d7c0c90ea65..9b5243c9529 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -502,13 +502,7 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
-     }
- 
-     if (rule == float_3nan_prop_none) {
--#if defined(TARGET_ARM)
--        /*
--         * This looks different from the ARM ARM pseudocode, because the ARM ARM
--         * puts the operands to a fused mac operation (a*b)+c in the order c,a,b
--         */
--        rule = float_3nan_prop_s_cab;
--#elif defined(TARGET_MIPS)
-+#if defined(TARGET_MIPS)
-         if (snan_bit_is_one(status)) {
-             rule = float_3nan_prop_s_abc;
-         } else {
+Mostly this series is not intended to have any guest visible behaviour
+changes. There is one exception: the "default implementation" at the
+bottom of the old ifdef ladder did not raise Invalid for the (0 * inf)
++ NaN case. This is definitely not correct, and basically any targets
+using that part of the ifdef ladder had a bug because they didn't
+implement their actual correct behaviour. The architectures using the
+default case are i386, hppa, sh4 and tricore, and they will now raise
+the Invalid exception in this case. (I checked the architecture manuals
+for those architectures and they all say it should raise Invalid.)
+Fixing this bug in the first patch means we don't need to have runtime
+selection of a behaviour that's not actually what these targets do.
+(It also means we can reorder the code to avoid calling pickNaNMulAdd()
+for any target which sets default_nan_mode, as we do for pickNaN().)
+
+The rest of the patchset is structured like the pickNaN() refactoring
+-- introduce the runtime selection field in the float_status word, but
+leave the ifdef ladder in place as fallback, then convert each target
+one at at time.  We do the info-zero-nan setting first, then the NaN
+propagation order setting.
+
+Finally, once we're done we can remove the use_first_nan field, which
+was an Xtensa-specific way to select the NaN propagation rules at
+runtime.
+
+Tested with 'make check-functional' and 'make check-avocado'
+and 'make check-tcg'.
+
+thanks
+-- PMM
+
+Peter Maydell (25):
+  fpu: handle raising Invalid for infzero in pick_nan_muladd
+  fpu: Check for default_nan_mode before calling pickNaNMulAdd
+  softfloat: Allow runtime choice of inf * 0 + NaN result
+  tests/fp: Explicitly set inf-zero-nan rule
+  target/arm: Set FloatInfZeroNaNRule explicitly
+  target/s390: Set FloatInfZeroNaNRule explicitly
+  target/ppc: Set FloatInfZeroNaNRule explicitly
+  target/mips: Set FloatInfZeroNaNRule explicitly
+  target/sparc: Set FloatInfZeroNaNRule explicitly
+  target/xtensa: Set FloatInfZeroNaNRule explicitly
+  target/x86: Set FloatInfZeroNaNRule explicitly
+  target/loongarch: Set FloatInfZeroNaNRule explicitly
+  target/hppa: Set FloatInfZeroNaNRule explicitly
+  softfloat: Allow runtime choice of NaN propagation for muladd
+  tests/fp: Explicitly set 3-NaN propagation rule
+  target/arm: Set Float3NaNPropRule explicitly
+  target/loongarch: Set Float3NaNPropRule explicitly
+  target/ppc: Set Float3NaNPropRule explicitly
+  target/s390x: Set Float3NaNPropRule explicitly
+  target/sparc: Set Float3NaNPropRule explicitly
+  target/mips: Set Float3NaNPropRule explicitly
+  target/xtensa: Set Float3NaNPropRule explicitly
+  target/i386: Set Float3NaNPropRule explicitly
+  target/hppa: Set Float3NaNPropRule explicitly
+  fpu: Remove use_first_nan field from float_status
+
+ include/fpu/softfloat-helpers.h   |  27 +++-
+ include/fpu/softfloat-types.h     |  61 ++++++++-
+ target/mips/fpu_helper.h          |  13 ++
+ target/arm/cpu.c                  |   8 ++
+ target/hppa/fpu_helper.c          |  10 ++
+ target/i386/tcg/fpu_helper.c      |   9 ++
+ target/loongarch/tcg/fpu_helper.c |   6 +
+ target/mips/msa.c                 |   7 +
+ target/ppc/cpu_init.c             |  15 +++
+ target/s390x/cpu.c                |   3 +
+ target/sparc/cpu.c                |   4 +
+ target/xtensa/cpu.c               |   2 +
+ target/xtensa/fpu_helper.c        |   3 +-
+ tests/fp/fp-bench.c               |   6 +
+ tests/fp/fp-test.c                |   6 +
+ fpu/softfloat-parts.c.inc         |  19 ++-
+ fpu/softfloat-specialize.c.inc    | 206 ++++++++----------------------
+ 17 files changed, 236 insertions(+), 169 deletions(-)
+
 -- 
 2.34.1
 
