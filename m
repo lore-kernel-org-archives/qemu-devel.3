@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7362DD70DE9
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 17:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2204D70DE9
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 17:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGieS-0005t4-Vx; Thu, 28 Nov 2024 12:50:05 -0500
+	id 1tGig7-00075l-Uo; Thu, 28 Nov 2024 12:51:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGieR-0005sW-KF
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:50:03 -0500
-Received: from mail-qk1-x731.google.com ([2607:f8b0:4864:20::731])
+ id 1tGig7-00075c-3Z
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:51:47 -0500
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGieQ-0003ST-8q
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:50:03 -0500
-Received: by mail-qk1-x731.google.com with SMTP id
- af79cd13be357-7b6882c33acso38431385a.2
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 09:50:01 -0800 (PST)
+ id 1tGig2-0004Bk-V1
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 12:51:44 -0500
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-46679337c24so7470651cf.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 09:51:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732816201; x=1733421001; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732816302; x=1733421102; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Il86g7favyiV4mzRUzJ1MkQP3ZltQBmZOtmp6q9wD3Q=;
- b=Z8LHcoDH3rUHSfgBqjAuiu2boL0fJm52P1fOCMur+HfvFujzwVhbjNUXNBytsgxFpM
- s0QUVnIZJ323iVvUwxLntwfhAsuQhoxQpf3Y1IFD2SNkl9f0LLDbj8Rlo5d8n+P7NE4X
- sZOZaTXxbQ1rNvm9v3QVDCN8xQoUrxmHFf8mTvuFUBYUfbnBvMh8r61sMQIe0kyMYx7B
- wcJUa0kCIAvGfhMXUgmC1Q5bb+F7ZigeEDrCrDSE8YBXUP2+8uEChcdtO+bry1VIXjpY
- 9jjWqUTk+YvVxqhF3r91t5Ui9QUSMO6dN+4QfZNl7m/PxV/yZCnMBIT7asibnHGwGH1A
- fs5A==
+ bh=0KhQQm7LAZ1ZYok6sL3wypZ2K4GD3eehY6zXsDXtQ+M=;
+ b=ZyTXz4WtFUAbbTh0mrY3s/3hLOW4tGv2dnm5P769iGQECJKrKGFpd3VPwOHYTl/KZF
+ llQihOI6gpLxF2z72bWEC1tr8VN84Xc44N2UK1DJlykgz4F9+MD1Zzhp3qjhAU/MsDkS
+ +gKT1sQmlyNZ5vooBf+oHfCTc6+Ly/FrEJFNNMhgTu/5ehZ2hUoB136SEl5MTlyXMyVu
+ r9Q/lvBmAfO475sWfAnqU/hIYB9wxn6T9K2i2xpvJb3v+9S3JepAmElCOmewu3CwAfyO
+ UJPFnrsl22AcYz9zuyqs0CrsV9ypp+LwhGO8LIDjFKLuI8TfaFCuczNYb5ERSBE6MdUK
+ lAOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732816201; x=1733421001;
+ d=1e100.net; s=20230601; t=1732816302; x=1733421102;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Il86g7favyiV4mzRUzJ1MkQP3ZltQBmZOtmp6q9wD3Q=;
- b=Q6VKrOWJDshpo5pp2nKe2fHvuBBij7TIpryug1R0YDQNiSkAIO8kjI5V1wcPVYnOjx
- zuf43aZIhcXxaHCxf9HJczsMG8D6fHUEv/AX4XIjjMiUbdPxx5RE+oGeRTLEgvrHgkit
- xiW4l02fjc45iB9Y37F3RO3ZXcxIObko+Lu0nfpR8LmV/lAdRM07VxQFKqgnzsMI5oe3
- x6bXYzWdeTY2fuC9ufWkm0fV3pViLEaMPErHmbGC8++lwQY1JWYpkpq5vqv7LHyCoKPX
- rIhVZD+qENe94Ya+gboI5Q+/kxNnxn4Tu4/4FPGLCNNkQqZ7vD5jCbjExR+cac9d27Ns
- K9uw==
+ bh=0KhQQm7LAZ1ZYok6sL3wypZ2K4GD3eehY6zXsDXtQ+M=;
+ b=OOr8p+Ke8Bsm5JXim07li5WtZ8wKRWv13bBAV821YsgiECAXjLHm62mIqWDWDm000v
+ ZiJk5Z9oIJx8x5vzAoedrC3nS/qS29CxWYSjI0aZJAwTgXNgAhg7xIyUl04Ryub1/VQr
+ 4vEGKyy2sHVuGhkl3wMeXbz/29Cd4lN5ooIHusB++KeRW9CHdFd53DlGDbYeQ0vVQtMa
+ AuxKF3MfQuxrhAUVyfdKV8/+A/pFuoJS/+yYRata+S+lzb46EMBXt5T3wRnknl40nUVN
+ PwasF6PEPhYh9EUBg5NyPzZTT2RKRlSb4atWEcezfO0jAieeSOOGYV5SXrufxAyqaALn
+ TgSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVOgyerddsU+o8Ou3C5ymvcXTyR5FuJYPUbQFPeSABF6ueoB6l0M1wPKcmrl+KddI6mRfsJZmhTceuH@nongnu.org
-X-Gm-Message-State: AOJu0YyO0Zui6TaClwKr+E27fmj+rsIDu9mDmIsK/NciqFz/Rt5wLQMq
- QEhgnlA/TBiKGS5SE7BuYgw06gZRDjny/opEQXG3zH+bKMpmTlciOXevZZzphQ17XiZq3WgAuhK
- SoLE=
-X-Gm-Gg: ASbGncuj29v0YqQsof/FdAkU61q/eK36Bv8qY6hwM69RYiwjYrheWcxFxDEOThDd5Yp
- CWZBZ9aNI7F+OZoO9UUjseGdiQmv2UyJClk9wy15e+5S6oOGVlVKI1wsjgqsOyT1DFKWK65xIfZ
- XieJIxLT6DAjmZbV38dfrbBLNxt6g/edTs7MtOaE4TZnj+ufa3hAH6emZLuWxGzdj/yLLLzq5/T
- A/1ExTLHcwmzE2cbr+lLjauBp6H1GbVi2qaShpg03kEgfRyawGvUbS2tIvxC/gw38o=
-X-Google-Smtp-Source: AGHT+IEe9OxZLuEYb3C9t7wnfyIhn8PHLBRUSXPrYjNQN5c6GBUT45mF1nfPnoi0IyXWU3KZ8i9Mxw==
-X-Received: by 2002:a05:6214:130f:b0:6d4:2910:7f12 with SMTP id
- 6a1803df08f44-6d864dabbc7mr102345656d6.41.1732816201208; 
- Thu, 28 Nov 2024 09:50:01 -0800 (PST)
+ AJvYcCUHOwJSdhUidJMo9RZyG0Um/VeSXOctp87RRxUk/QSco6EoIXZzuwR2LM0hNz2A3UJlzhHWmiRB21aM@nongnu.org
+X-Gm-Message-State: AOJu0Yyhf+VSap/O/g055yPfwPDpwfd85RuCNs+kaE6TJr9HzdZjNs1Y
+ 6C2HAYOTY5WZdQ/SFLkFclqY4tBbjA/F2iWp3mLaAKDFuE5g1Uk/bVzUuzkJ5XkE1vbxY416NUQ
+ MEL0=
+X-Gm-Gg: ASbGncsT42/u2x3l2cJx7iL6SsYRysutH6E6bh1aAk1WNy4D67RTjFzPJTfU1QgiIut
+ DOy3Kufkst3Z1O5gDEiYOO5CkyxR1525OPnt5hTNUf25MF/tugVkcIGJhU4yhtfF6i6MNmhzMr8
+ b3bhj7XHaoatzuGwW5J9sjRyIvfYnf2KmmZdyNtST5rssEbNqv1IkVfFOYxXOlrMNUMDBBt8umr
+ dRhHinQSJMJ+qaX691DSIH3yq1OQu4NX4CWYuA+zZH/q6I9NrlAA7BHeCD3IS5W3IM=
+X-Google-Smtp-Source: AGHT+IHg2Mvk0YNpM8z6udoCixz1DHZVoQpfavij0YKlofNfP7xyPdZSc+QqTgy3Pug04krGTrP/YA==
+X-Received: by 2002:a05:622a:180e:b0:463:4bb6:bfe2 with SMTP id
+ d75a77b69052e-466b366f08emr132244041cf.50.1732816301860; 
+ Thu, 28 Nov 2024 09:51:41 -0800 (PST)
 Received: from [172.20.3.167] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d875221e88sm8503396d6.110.2024.11.28.09.50.00
+ d75a77b69052e-466c4054d16sm8615921cf.14.2024.11.28.09.51.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 09:50:00 -0800 (PST)
-Message-ID: <41d8860a-04b7-4d1e-b242-87b5c9d0f8a7@linaro.org>
-Date: Thu, 28 Nov 2024 11:49:58 -0600
+ Thu, 28 Nov 2024 09:51:41 -0800 (PST)
+Message-ID: <6febabb6-0ec3-48c1-95e7-b0ba1a8ea8a1@linaro.org>
+Date: Thu, 28 Nov 2024 11:51:38 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0 15/25] tests/fp: Explicitly set 3-NaN propagation
- rule
+Subject: Re: [PATCH for-10.0 16/25] target/arm: Set Float3NaNPropRule
+ explicitly
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20241128104310.3452934-1-peter.maydell@linaro.org>
- <20241128104310.3452934-16-peter.maydell@linaro.org>
+ <20241128104310.3452934-17-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128104310.3452934-16-peter.maydell@linaro.org>
+In-Reply-To: <20241128104310.3452934-17-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::731;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x731.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x829.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,15 +104,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/28/24 04:43, Peter Maydell wrote:
-> Explicitly set a rule in the softfloat tests for propagating NaNs in
-> the muladd case.  In meson.build we put -DTARGET_ARM in fpcflags, and
-> so we should select here the Arm rule of float_3nan_prop_s_cab.
+> Set the Float3NaNPropRule explicitly for Arm, and remove the
+> ifdef from pickNaNMulAdd().
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   tests/fp/fp-bench.c | 1 +
->   tests/fp/fp-test.c  | 1 +
->   2 files changed, 2 insertions(+)
+>   target/arm/cpu.c               | 5 +++++
+>   fpu/softfloat-specialize.c.inc | 8 +-------
+>   2 files changed, 6 insertions(+), 7 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
