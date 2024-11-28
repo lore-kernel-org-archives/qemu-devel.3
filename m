@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21A0D69108
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6D0D69108
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 13:10:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGeGw-0002ii-3l; Thu, 28 Nov 2024 08:09:30 -0500
+	id 1tGeHa-00039I-JE; Thu, 28 Nov 2024 08:10:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGeGv-0002iY-8a
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:09:29 -0500
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tGeHY-00036Z-3U
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:10:08 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tGeGt-0007xH-Ab
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:09:28 -0500
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3ea48624a2aso407696b6e.2
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:09:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tGeHW-0000I6-6u
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 08:10:07 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21260cfc918so4869815ad.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 05:10:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732799365; x=1733404165; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1732799404; x=1733404204; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CoAYwGdQfTMB67AD/o304evZvUiG9cVjmQS7+iXnYcs=;
- b=NrJUWtdEYlkg2PrkM28yKRWTp4BuTsCakguemh1b4v6NamxdnuTonBTb5tI2W8mH7Z
- NHCb/0kMkGsNhLeLyplghKTsxQDkLVilRo9jH0udjSaHZzTbU59BsDP/4AqCOS2/rqLV
- kp3l67PecFTJytGhzDByjMwe9WAwxQfK9lc+e14qHJmY2ppTofpjx5kZhNeMKH/cCHpf
- 0qDpUXtWEErzG7KOFvUYW+m/KJ2vR4324bjkG/9lNRFmRZriQg866iAcIersvIYPWkfC
- DsmO1fWJsc+AJ2f0smvEZJd7QiWJBmbzCxS/lY9caneIJaGDXRaCRfXaKES8gahpz5Mk
- /6fA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zUTka3/ByFwzBJ54bcJNSWNm6zfJKIYYIQy11SV94rk=;
+ b=pdftz+aoVzSkHaz0UcdtEf2muozGNxwFjaM1Q+G08Uc89LopGbh+yLhBWN1gFt4JgQ
+ pMBOtECMNsqke08bXukdSWptRtDs3APVZmyZz006OxXEeIEIIm/eMhukbpvQw98GMBI8
+ ExeiwKai/QQO63cLMrwsqxVMFBNQrYd0x+svFrZMtOyILU4JYMihE7ZshJrDj6JYdMvK
+ JbgRxdJZ4H1jo0Tl61XQFWn+y9Pfc1Nf60Y/nrutabeKcKyvdh4CbB1uF3JdEGx4t6pS
+ T0melWAUtniq/vgEE9Z3eEYbyW5xmYWL9qJMeOxnNKZXfoF0Tz6+RuEw7xEkcFoh5I7R
+ ap7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732799365; x=1733404165;
+ d=1e100.net; s=20230601; t=1732799404; x=1733404204;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CoAYwGdQfTMB67AD/o304evZvUiG9cVjmQS7+iXnYcs=;
- b=iAsfNwuR1OgvgpoBhJubgKAl1n5owEwsLSrSbVCnLJO69IoTDSggAwF4rli8j3F9rU
- QpKXWjVbPSouOOQJ6p79zqtNjfq9snt/ZCxkmWlRf0USdllctKlZmf1CyrHDa9o+9ftz
- sLyStQntYzsdd64p7Z0xPmHGkdFxB2ccMtVuStuvddqsYnOesSb2/WZn/8puYDp/vqNX
- 0zeNgg3rDfZiepxsf+rXphzEySQN43aFcNGAg9FsTB0jZ9fPdy+Sui87nNyyYPL19NKV
- 4QA/NV10WCqd+xw5P+4lk0ZLOjCwjGAkFevL4R1O74NyXzo2vElcX2Dl353rRBrqxwFZ
- dlHA==
+ bh=zUTka3/ByFwzBJ54bcJNSWNm6zfJKIYYIQy11SV94rk=;
+ b=W9y7j3vrtqrDKB5D3wysv+L6tx1g/E71j2seK39T7Q3uteiMX29YpFrbjXQKV1cAPR
+ rYCGtqQZ9mFa7yAnVz/q7bS76+LYyYihAyqy/XdN3fH3a+5uKIMqRcH7oiSyjs09xeVh
+ /VPSV0s6HHiaCYWOSjs2xPhmyX7WUAkcVrOTkd25ogueuGl5gFjHaVwnrPY+FnmEiLQA
+ 68+RYuadwfWY1R+a1yqM6+IdwOwe/oWMicBh4yBWkpjArhDzd1F7i6z8HAfhZEXwJutc
+ TahQJlmviqKnktV4Mca29w31Kb5wsaAOC5ZG+U2VKz2IZpeSxznAfwNeKcLRrktZUMXe
+ gENQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/oZvJ9rDEZDPXtnGUK/wwx6WBoVCoKRCen902N+3MhLQcIf+fglyTtFdwsjebkQU7axx1/KG2ej7D@nongnu.org
-X-Gm-Message-State: AOJu0Yx8t5LC1CQFgp1quj78GrzOq+A0mNO4Wkq00y1YMQuHiFPr3y/Y
- 8Albg+9SsFROINR+n4ml8n5Ae2sVfKCj4d/8ESwlO++kVsLnu6G9LzBY4dc3Re0=
-X-Gm-Gg: ASbGnctHCH3aNhrOA1+ZrMFkuaMrHe5q0I/nSFTHDzwj0fYaRTb6vV7FvprP/NtVtgF
- B3XjmKrdPjH/RxkwuyOO5VF986MsC6I7ccdJhjE5HZ8hXwz/IIaFqlXrlZTaKCODI5CtSuUdVVw
- KwgONZlV8w7tdlfPGa70cvaL4aR9Nk7qG7Ic4Af0PUighDCjRXqzkKYv7SE1xAoJ883btdsSC28
- +IOE4A63ET2G4e2mTR5U4kBvkltCJ6JCllTkuBaJJeLwBdHsK9ucfRgWHk7q0PDfktjLxPH/gWt
- ncDsQPcCHiwFHE892oAlisMIGxtX
-X-Google-Smtp-Source: AGHT+IGFCH43szl157jMwZppst4rMoA7YnQvd4N4lZq61shnnVBC7AuoVQjiRUVvtJFIOlrNwRYF1Q==
-X-Received: by 2002:a05:6808:148b:b0:3e7:b3d9:4109 with SMTP id
- 5614622812f47-3ea6dc22e7cmr7139276b6e.22.1732799364827; 
- Thu, 28 Nov 2024 05:09:24 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ea8621131bsm245873b6e.36.2024.11.28.05.09.23
+ AJvYcCXgwoztruoPyD96H6SaQyLvlE2s6cZXtxN/Sx/nT5iBEeD/k+zJWkdgvaxrEQTwgKSD8qEo0y+0pBsp@nongnu.org
+X-Gm-Message-State: AOJu0YxElI8u6F2jx6q1k7/eX6ibCN5aW+FYtN34kdNhMb/GSG1OmL4y
+ A5AYcijd95O+L21un/+txLSVC3oIR6vSymeJhc5zWjTO91lv27DghASHI+IzsXN9LRJp0QwynrD
+ I
+X-Gm-Gg: ASbGncv4LSDjjG3nWVyITY350hxukbCTNmr4OMSw7qJupXPXEo6cjN9tT4/cxcOUfUB
+ t87o+gMflzFYRdObyCeEnGtUzYdkzv1QERNl4qoFKAf8ru+JStol7+zVWWullkAhjjHTvgbINB5
+ 6U4S/MWU+UN5YjaEJ8lfl5E5Un4jZU3KaP+f86KUKWD97tw9s2TXKCK5TMX+rXy+uFj8BOd2B+d
+ sdIaum0alvdKBT/ugdJIsQcDNB2tJnXC+HW5QNShs2zgL6veV3aL0fX9Aey2yc=
+X-Google-Smtp-Source: AGHT+IHDQ8qmmioq3JlkSAUtI1vqm+AaW79kmx3GQOY15or3uiQOTD3VPC5IWDHLoPFmBLvRp/B2hQ==
+X-Received: by 2002:a17:902:f545:b0:212:12a2:4007 with SMTP id
+ d9443c01a7336-21501857891mr81615565ad.34.1732799404478; 
+ Thu, 28 Nov 2024 05:10:04 -0800 (PST)
+Received: from [192.168.68.110] ([187.101.65.72])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-215219851d1sm12967795ad.191.2024.11.28.05.10.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 05:09:24 -0800 (PST)
-Message-ID: <edcfabc6-0c42-42fb-9980-303909f73e53@linaro.org>
-Date: Thu, 28 Nov 2024 07:09:21 -0600
+ Thu, 28 Nov 2024 05:10:04 -0800 (PST)
+Message-ID: <4a90b96b-fd8c-426a-aae7-fccba441feb3@ventanamicro.com>
+Date: Thu, 28 Nov 2024 10:10:00 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0 02/25] fpu: Check for default_nan_mode before
- calling pickNaNMulAdd
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20241128104310.3452934-1-peter.maydell@linaro.org>
- <20241128104310.3452934-3-peter.maydell@linaro.org>
+Subject: Re: [PATCH v4 3/3] hw/riscv: Add the checking if DTB overlaps to
+ kernel or initrd
+To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20241120153935.24706-1-jim.shu@sifive.com>
+ <20241120153935.24706-4-jim.shu@sifive.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241128104310.3452934-3-peter.maydell@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20241120153935.24706-4-jim.shu@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,26 +106,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/28/24 04:42, Peter Maydell wrote:
-> If the target sets default_nan_mode then we're always going to return
-> the default NaN, and pickNaNMulAdd() no longer has any side effects.
-> For consistency with pickNaN(), check for default_nan_mode before
-> calling pickNaNMulAdd().
+
+
+On 11/20/24 12:39 PM, Jim Shu wrote:
+> DTB is placed to the end of memory, so we will check if the start
+> address of DTB overlaps to the address of kernel/initrd.
 > 
-> When we convert pickNaNMulAdd() to allow runtime selection of the NaN
-> propagation rule, this means we won't have to make the targets which
-> use default_nan_mode also set a propagation rule.
-> 
-> Since RiscV always uses default_nan_mode, this allows us to remove
-> its ifdef case from pickNaNMulAdd().
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
 > ---
->   fpu/softfloat-parts.c.inc      | 8 ++++++--
->   fpu/softfloat-specialize.c.inc | 9 +++++++--
->   2 files changed, 13 insertions(+), 4 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-r~
+>   hw/riscv/boot.c         | 25 ++++++++++++++++++++++++-
+>   include/hw/riscv/boot.h |  3 +++
+>   2 files changed, 27 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index 81d27f935e..bc8074fec8 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -70,6 +70,7 @@ char *riscv_plic_hart_config_string(int hart_count)
+>   void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts)
+>   {
+>       info->kernel_size = 0;
+> +    info->initrd_size = 0;
+>       info->is_32bit = riscv_is_32bit(harts);
+>   }
+>   
+> @@ -213,6 +214,9 @@ static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info)
+>           }
+>       }
+>   
+> +    info->initrd_start = start;
+> +    info->initrd_size = size;
+> +
+>       /* Some RISC-V machines (e.g. opentitan) don't have a fdt. */
+>       if (fdt) {
+>           end = start + size;
+> @@ -309,6 +313,7 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+>       int ret = fdt_pack(ms->fdt);
+>       hwaddr dram_end, temp;
+>       int fdtsize;
+> +    uint64_t dtb_start, dtb_start_limit;
+>   
+>       /* Should only fail if we've built a corrupted tree */
+>       g_assert(ret == 0);
+> @@ -319,6 +324,17 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+>           exit(1);
+>       }
+>   
+> +    if (info->initrd_size) {
+> +        /* If initrd is successfully loaded, place DTB after it. */
+> +        dtb_start_limit = info->initrd_start + info->initrd_size;
+> +    } else if (info->kernel_size) {
+> +        /* If only kernel is successfully loaded, place DTB after it. */
+> +        dtb_start_limit = info->image_high_addr;
+> +    } else {
+> +        /* Otherwise, do not check DTB overlapping */
+> +        dtb_start_limit = 0;
+> +    }
+> +
+>       /*
+>        * A dram_size == 0, usually from a MemMapEntry[].size element,
+>        * means that the DRAM block goes all the way to ms->ram_size.
+> @@ -338,7 +354,14 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+>           temp = (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram_end;
+>       }
+>   
+> -    return QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
+> +    dtb_start = QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
+> +
+> +    if (dtb_start_limit && (dtb_start < dtb_start_limit)) {
+> +        error_report("No enough memory to place DTB after kernel/initrd");
+> +        exit(1);
+> +    }
+> +
+> +    return dtb_start;
+>   }
+>   
+>   /*
+> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+> index 06b51ed086..7d59b2e6c6 100644
+> --- a/include/hw/riscv/boot.h
+> +++ b/include/hw/riscv/boot.h
+> @@ -32,6 +32,9 @@ typedef struct RISCVBootInfo {
+>       hwaddr image_low_addr;
+>       hwaddr image_high_addr;
+>   
+> +    hwaddr initrd_start;
+> +    ssize_t initrd_size;
+> +
+>       bool is_32bit;
+>   } RISCVBootInfo;
+>   
+
 
