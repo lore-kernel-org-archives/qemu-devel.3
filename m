@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46AA8D70DEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 20:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE43D70DEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 20:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGkyT-0004an-TT; Thu, 28 Nov 2024 15:18:53 -0500
+	id 1tGlMN-0007ys-Pc; Thu, 28 Nov 2024 15:43:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tGkyN-0004Zj-59
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:18:50 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1tGlML-0007yb-BD
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:43:33 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tGkyJ-0003As-U7
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:18:45 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7252f48acf2so832711b3a.2
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 12:18:43 -0800 (PST)
+ id 1tGlMJ-0008Cl-R6
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 15:43:33 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-7fbbe0fb0b8so789097a12.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 12:43:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732825122; x=1733429922; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1732826610; x=1733431410; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=P7VRDmje80mrxSrRS6Ou3eyEO9NianrFT4SNXjj6PF4=;
- b=blDCaAxv20VpWsFiptmOFLhb1lprLQU8j9b6ZsKMV08+rH2I0cqH5QZzuUWnhxN5qs
- MOg8zSi0esORUeeOyWfhNeb+CreAuosIrvEnM97M1QZ+z/34OCfuDnDSH5Oiq3W9u6pY
- Q99mm8g6opXN2iP+q6N398ISdV+LBqZbFtbvxgdS1BhoYdXP6YeTqC8GmQwibLvzd87s
- ijkpcx0Y9ZBzXZp9n5Lc68d91ybQX+S+fbksvqb+JfMwR5U0e+a1HEiZ8q4PUjJxx6O9
- OFamq6R37UUCTqs1C9XSPqKkH2p/XP1rmMxwr+3CgdcHAfWysnAaeYayOGAMD7McgrTE
- 9Cpg==
+ bh=YEgnz4LDHoycxkm56teE7uf6HIwUU1q3lt5ISgYJLL8=;
+ b=jGlFHfNbJWnufqfguShMOn53L6AvWrCDHEI7hkBiHBmm9HTsGM9rACw0NFXA3hHDwZ
+ ybfnCpYQG0UCQ/KmB3z/VfxmNvXm8fBF21gbtM/u9tWh2EwamwnqdHM6eDqa/wSuA7qG
+ gpGUbM/Ef3Wi+9TjnOaDB99/T8ETmzAlTDIAZSfFRgyvA8YL7qIk2t9PHA9k8xgsFbVQ
+ vC0CAFnEOtjnTTX23WtpAeYBmhuXn8feSpRqGBeqZCmP4BN3vlTwCT3wDetzYc8p/CWe
+ w0XL/gAFu8sVrfWWh0lnJ14hfUDhKWUXQMcjWYYTRAclY+KSYWxTGjxh79rQOjlLY/Le
+ YBeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732825122; x=1733429922;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1732826610; x=1733431410;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P7VRDmje80mrxSrRS6Ou3eyEO9NianrFT4SNXjj6PF4=;
- b=CebL+D0KJcgwelcxCgeWgw68CAJHB/3tEZotsi8/reI1QJWNtRuvYi2cjTRsEC4y8m
- U3G2LPCQgkxyEJ9niDPqoJMPv1uR3nGarrLM9Rh+LMN9c/g5OPDL28xcAHvQ3sxcvCHE
- EH7uDu7T57gYl6iMZN6YQVTphWSKa+LLsD3YzA0p48E8oPexIMAiiZGOq1aENVBRxrbc
- o9q6TwBWVLORzcZS+7jlr68l5GiBfloZElIhCzYL6D2fxnuj/x3jkxGYL+z++mkFX5AO
- Ejn/aiDlNBHjYEXZnNUV+cR3Tt3HBNlt21EZGzVLB4o3mB/g8dhMi4iAxfGEC+Wq7LQp
- NNoA==
-X-Gm-Message-State: AOJu0YwGuupAn+VUmRmGDqCo/BWO9KEnbA81sn+AU/9AthHSF37K7hZX
- Bg0BU+liUjbw2q/8SHciFk91TK0fT8NUFIj8CD81l3/Irnv0pCuofgiyAntvI+HpG5i31fUizji
- QOq4=
-X-Gm-Gg: ASbGnctnREUsafExYbhTi/8imR+SNd33Wnd4tXItYMoeBrSyWrr6++LuzgZorEHLye3
- W9x2vqvK1CuKR2H4waZlbekph6cI/v7SnylL992XKJSfwwMnX0otLUVdlHqg0qTgEbDDEBLKzgh
- oHbkLW3yAhComGIUxn50f0QKFzlxlmQlQJ7N7zea7Pd2vOWop3ERUU/JrJl4Iy73zA1rks6qktd
- rnaSmJ9jNyjlviKD5Zgz8/pzIy94DtE7BIycYLubbjq45ZDocZZrr4f+1dBmchWacOt+T6NDcAG
- JPb2sZaVlS6Qvno4DZ0VrA==
-X-Google-Smtp-Source: AGHT+IGgUK727SUUvFIPaTxpdg5ubx2YmiEMFbxErVyFnHBHggw5MO2sKpU8WltenZeqalvHNoN8Qw==
-X-Received: by 2002:a05:6a00:4f88:b0:724:e582:19fd with SMTP id
- d2e1a72fcca58-7252ffdd0bemr12617691b3a.3.1732825122094; 
- Thu, 28 Nov 2024 12:18:42 -0800 (PST)
+ bh=YEgnz4LDHoycxkm56teE7uf6HIwUU1q3lt5ISgYJLL8=;
+ b=p9nyNIHjBrk7l1u/dsn/esU5/cYk8R3DUsFwa7WUG/cz+DiLubo//ao0sadjFZHKk/
+ BJM65O/9NDJdg7yyToyxgf6SWhL59Gau4+OFjI3z8cYFASY3h6KZ2HiNzd52xFknIaoL
+ zPiMXIggm75eh5vXV2g/wpHTmM/+HZ/bNpQ2yTi5GFEeMNoUAS31YINxVnyBcH1GR2c7
+ gkcO2PAIy/wnHmgHyt4jMSchZPqpfNFefbdUMSgo21tkSkTxb2D991NbsMIBfJlpbblv
+ 0r8wWHs0EqnUK1s5IIcmJQQIT1ep7ZL6Y5/WDKQcyllD5z6vExdSwgiENHxzegCAfdAj
+ J5lw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUlmt5CYxxWXbRng/6aw+l7kMj3CNRKe4aKGik5mIF39G3ZINOfT96yG2mJ138b3azqZWpDiHDfC+4l@nongnu.org
+X-Gm-Message-State: AOJu0YxStD7fcSi9T1I5902ZNbO0HW/SbYd2T8NCuGzG7SjNYNiiazJ1
+ 8Y3M5r8dBtWxoLvf9078vnr1wC8MST9UHc5cyJNlUwZNkwGO3qo+dm7LWu+TeIfCCcGTLCuhvv2
+ 6WEk=
+X-Gm-Gg: ASbGnctW5SCJLAEhMSzf2rp56Gx0YS2SLXE59HKzIddWuqXpYE2jFe0Tp+EWP83d6Cq
+ COBSB1p41SOnlPYm8K5vvNmKDlxMPDrhENN3oI/lLm5gsFQBjHhAzrRQ+BB3Q+DH94hQmQnfLF0
+ jtV+dGiE9z5x3kAbhlRTZ9k7STmSP9xKJ3iImje86+iuRCA8nwd1MXOpofYXU2FRScmrKfecuCw
+ ykBvHIOom1grXTg5KN5qzfiUIELpNXfnFDm7bWzyZC17j2A9b55e3+5OpraH19RA6qZsfbIdGTU
+ tuOV67l7Oa7gJOzjC8Lx+g==
+X-Google-Smtp-Source: AGHT+IGifS/r/GZ47aL6E3SKeNZ9wYqRipeGECA1ZB1NWhutpbBFfHxmAuIz3IBf0otCf9oP09X07w==
+X-Received: by 2002:a17:90b:3a84:b0:2ea:59c6:d6ed with SMTP id
+ 98e67ed59e1d1-2ee097bafb9mr10927586a91.30.1732826610095; 
+ Thu, 28 Nov 2024 12:43:30 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7fc9c2e1b2fsm1765066a12.20.2024.11.28.12.18.41
+ 98e67ed59e1d1-2ee0fa30736sm3907957a91.7.2024.11.28.12.43.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 12:18:41 -0800 (PST)
-Message-ID: <7be5475a-749c-432f-b8f9-dd47bf3efa0e@linaro.org>
-Date: Thu, 28 Nov 2024 12:18:40 -0800
+ Thu, 28 Nov 2024 12:43:29 -0800 (PST)
+Message-ID: <584ed0f3-c237-4b1d-b023-2674952746a2@linaro.org>
+Date: Thu, 28 Nov 2024 12:43:28 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/12] docs/system/arm/orangepi: update links
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, alex.bennee@linaro.org,
- Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>
-References: <20241122225049.1617774-1-pierrick.bouvier@linaro.org>
- <20241122225049.1617774-9-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] plugins: optimize cpu_index code generation
 Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20241126190203.3094635-1-pierrick.bouvier@linaro.org>
+ <e5c7e738-3650-444a-bfa0-af6fff4e586f@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241122225049.1617774-9-pierrick.bouvier@linaro.org>
+In-Reply-To: <e5c7e738-3650-444a-bfa0-af6fff4e586f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,35 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/22/24 14:50, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   docs/system/arm/orangepi.rst | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+On 11/27/24 09:53, Richard Henderson wrote:
+> On 11/26/24 13:02, Pierrick Bouvier wrote:
+>> @@ -266,6 +266,19 @@ static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
+>>    
+>>        assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
+>>        qemu_rec_mutex_lock(&plugin.lock);
+>> +
+>> +    /*
+>> +     * We want to flush tb when a second cpu appear.
+>> +     * When generating plugin code, we optimize cpu_index for num_vcpus == 1.
+>> +     */
+>> +    if (plugin.num_vcpus == 1) {
+>> +        qemu_rec_mutex_unlock(&plugin.lock);
+>> +        start_exclusive();
+>> +        qemu_rec_mutex_lock(&plugin.lock);
+>> +        tb_flush(cpu);
+>> +        end_exclusive();
+>> +    }
 > 
-> diff --git a/docs/system/arm/orangepi.rst b/docs/system/arm/orangepi.rst
-> index 9afa54213b0..db87e81fec4 100644
-> --- a/docs/system/arm/orangepi.rst
-> +++ b/docs/system/arm/orangepi.rst
-> @@ -119,7 +119,7 @@ Orange Pi PC images
->   Note that the mainline kernel does not have a root filesystem. You may provide it
->   with an official Orange Pi PC image from the official website:
->   
-> -  http://www.orangepi.org/downloadresources/
-> +  http://www.orangepi.org/html/serviceAndSupport/index.html
->   
->   Another possibility is to run an Armbian image for Orange Pi PC which
->   can be downloaded from:
-> @@ -213,7 +213,7 @@ including the Orange Pi PC. NetBSD 9.0 is known to work best for the Orange Pi P
->   board and provides a fully working system with serial console, networking and storage.
->   For the Orange Pi PC machine, get the 'evbarm-earmv7hf' based image from:
->   
-> -  https://cdn.netbsd.org/pub/NetBSD/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz
-> +  https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz
->   
->   The image requires manually installing U-Boot in the image. Build U-Boot with
->   the orangepi_pc_defconfig configuration as described in the previous section.
+> We already did this when creating the new thread.
+> Though we're using slightly different tests:
+> 
+>           /*
+>            * If this is our first additional thread, we need to ensure we
+>            * generate code for parallel execution and flush old translations.
+>            * Do this now so that the copy gets CF_PARALLEL too.
+>            */
+>           if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
+>               tcg_cflags_set(cpu, CF_PARALLEL);
+>               tb_flush(cpu);
+>           }
+> 
 
-www.orangepi.org website is available again, and after checking, they 
-don't support https. So this change is correct, and we should stick to http.
+After removing the explicit flush, and relying on flush to honor 
+CF_PARALLEL flags, I ran into random errors on values expected by 
+'inline' plugin, when running a program that spawns multiple threads.
+
+It seems that, when spawning them at once, we may execute old code 
+waiting for the flush to happen.
+
+> 
+> r~
+
 
