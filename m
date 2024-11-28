@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3D71D69113
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 14:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5200CD69113
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 14:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGfGb-00056P-Bm; Thu, 28 Nov 2024 09:13:14 -0500
+	id 1tGfHQ-0005vf-LU; Thu, 28 Nov 2024 09:14:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1tGfGU-00053j-PA
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 09:13:11 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tGfHL-0005dl-4e
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 09:13:59 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1tGfGR-0005kV-Kw
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 09:13:04 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-21263dbbbc4so8496415ad.1
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 06:13:03 -0800 (PST)
+ id 1tGfHH-000669-JM
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 09:13:57 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-724d8422f37so804067b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 06:13:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1732803182; x=1733407982;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1732803234; x=1733408034;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C4JUFLTOJhJslmXjXCGh+2VEFVmYCejzSQzv/yR+Yn0=;
- b=vIkFETEstjkOlotQ7m8WscOZeWQd0wUhXoRCJVt7MnxHfzMU4R/wuVJHnzRrNbOFs+
- 0CZGGhD3NBlka+OxSxst3ZD0z6e/Trz8omCHXqnUYtD4rA2GZIw2kVxTwmLVajJ3g6zK
- qnconk+tf/JhHiT3wt+Hd2mq0inrXXZ+3cbFxBEDurE9Zlxajk+krpZsV01TeIr/0GjB
- ZmQLW6MCRip15rY2VNRW926oj+NE9/T1Is8JiX3ZG5W3bUCETarI42CbnnubBAAssfRX
- NomHEnhl8ddJ+Ma/gveXciF0cIIX1KmkvE+7PRdPbX9BW5lk8g9ESaBWLCAZbuWmj6dF
- yzwA==
+ bh=6Nv58FYpnM7owBpC7KsSmszH2TLrrLmHRGoBsSTg858=;
+ b=1xyLNQIlqMre0v5m1LxLF+vUs2ANCuCw3sGCJi6jz/IzE67+O8Ugj6gGyVrx85hEaw
+ QFQPHE11E4uUwXXfFE6JforaNNzjS4U0esbWof13dmzediWPPXbdJyhPOgfPrbmAt6nf
+ t6akI96yRJQ7hh24Z5MYkSecxAa8W/iFA6toaGmJtQHbTyVCbs143AcpuuFfAx7fCi2T
+ Ukr8MZJqmjuPm2dzjSclRpUeCHUIvvEvS0xkaPCeR0nnIF257zPdKug2YjSFytaQTGa1
+ s+pDpyG3GLEmpOZ2zoifKbxJgl3pq4D09wOtJ4rxqVj+0S7PaheuL/PVVIYnLI1k/F/a
+ fGrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732803182; x=1733407982;
+ d=1e100.net; s=20230601; t=1732803234; x=1733408034;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C4JUFLTOJhJslmXjXCGh+2VEFVmYCejzSQzv/yR+Yn0=;
- b=J44DqBGBBW/xD9XXfS7zQbLnpYcSzU+t8m8M2nNiRmYRZXfH0jIqXyFueES9FncGlW
- oAJVkedz3VSLI25awrNtD8MyyR6I4iDJMIzO2TGtyMTFMMAEoxp0ehBnsi88U8bGRHG9
- vSalk4gXydvqlKOn6aGeDbXPmaYRgp5MmrdM8q2/yLnSnfznViy+wjt9bZZ0NakIlej2
- EDi1gOQdTRDB/Ozjwvx3V72kQNj2OzdiW7epaGb6k+A3YXDJ/6HuvwEyH0k8aEGZwYo+
- ZzTvhq28JJGD6ui/KthkU9mEUehQJ72PtYkBS6EiySEAQbDPwMTJeN7mToG4WPg1FOU9
- AJOw==
+ bh=6Nv58FYpnM7owBpC7KsSmszH2TLrrLmHRGoBsSTg858=;
+ b=VaTAwXV25KtMvgJRIwcbnYkCitzBDfvCOLLiG6MXU2RNV1JVoy3Rb+Hl1auJzZN9/O
+ ldByeDC7FyUDunLJIj8B98XeRptnA3CRT46fSmvGpmsyLxtnzmdr4WLM3Jnl27BsCpHH
+ JBt5wpDXsNgMP7k5q1PI9C5svLRTqnBYnoyFQ0nSAFffSAVOIGCvUgmRQ9x4Y/ImCX+9
+ m5qnZisemPFF7F9lO9egeiD2KgLzSzsiu68kxdKzzmrKcCRcK02TaWwa7NXwowI+wIsT
+ dkAuVO7ftSjLDKVBmPvViziUjyuo5FVHvgE5nhtHaD0X2Aljp2VPuznNg8gZeATfrLHk
+ LdwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYUgLRqil50bVFD+t/cV+7HS2wM2mp/FUeZGNdL1caMmnmek7zx50GtBJfwcyxZWV1TFelmrXqAG4A@nongnu.org
-X-Gm-Message-State: AOJu0Ywc/GkjYKSHwKLi8QIWXf3sdb6U6Ir4PcvAPi+/pOR245nL/m1G
- bpxg4M3seynjTV4BCkv2H1whnCyWeOSke+zBSd3qhF+hori9Bl5Jupz6vmVyoNE=
-X-Gm-Gg: ASbGncvpkqm9/mi7uCDoKCvdKquL9VHY4dYOesIjzXgr8IG6oHNRhnynxDC1nA40pLH
- p/mu13mYRluWY4OGq6rrblMOk1I4NBdPLUUggoemQ/j2XOOKgXN+OmP4XYAPcqu7vAaXlG6gMAQ
- 3WB+s3Vz7WnxRf6dcBuQQPKgz+Z26mrJnFJRM9+BYoHOgBLPPyPAaDfSlXt8LAS+Afy6tDB0jkM
- zJjhScTTkhe+Efapbyy4I1+aRojV902hS1hmPdfY9lJRt7593Y=
-X-Google-Smtp-Source: AGHT+IEBvrCQoPSVZ9VjdSgKjU7C86n9zuigE2JYsVRZBB5oQ1RemhVbYcsZR4FVdgb24Mqkqw2tiQ==
-X-Received: by 2002:a17:902:ea08:b0:212:63db:bb15 with SMTP id
- d9443c01a7336-21501b593b5mr106675755ad.38.1732803182166; 
- Thu, 28 Nov 2024 06:13:02 -0800 (PST)
+ AJvYcCU9KAMBnRKDKj5Tw47PTwzMvnqV+uNCzA/ZbAsKprolnRJunAH6kvKv4hEhkNYtgrW1Py72tLdaX/NB@nongnu.org
+X-Gm-Message-State: AOJu0Yzhm6b8Jjf1KB8frCMtY+khs8wmHE83EtmvCs7h6NQ8UCU+bTds
+ nMXgTLgWGSR8MuzaR4+Nmb3GSMiEwUI6VvlzhBEtuJgTE1p6tRLdoipVlTAsjd8=
+X-Gm-Gg: ASbGncus5ittUNRZdE6Gq12kHcIILd0hzvymM1FtvgrxMGzvh9ZGFndA5MWGQ0QdPbG
+ lRjPxX+dvP18LFagg/8q7RRZlO+QDDYqJPWgEuUfykXNur+9ot0UWUQ3Cm8sbs+jZw0AKxrfSLm
+ 8/U1mZlxVwZ/GPNmjP1Kv7aXijgzsxzTSwnU+PUc96o2pZmsAivC7uDSUuGdFaTD87nDWtz9VAO
+ P+fzbnZETBI95WoZcoHr2TzQRPd3Fpoh1dzhS4eYB8BvfeSoIE=
+X-Google-Smtp-Source: AGHT+IEaFeEFh3xOHmzfPqrm/lV9EtxNF4t/TvFa+7dvmIHZuqdpmaKlYGYQ7CRQqbzNjIYM1Z0XhQ==
+X-Received: by 2002:a17:902:e84a:b0:20c:6b11:deef with SMTP id
+ d9443c01a7336-21501e5c036mr96258615ad.48.1732803234036; 
+ Thu, 28 Nov 2024 06:13:54 -0800 (PST)
 Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215218f452csm13829005ad.48.2024.11.28.06.12.55
+ d9443c01a7336-215218f452csm13829005ad.48.2024.11.28.06.13.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Nov 2024 06:13:01 -0800 (PST)
+ Thu, 28 Nov 2024 06:13:53 -0800 (PST)
 From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
 To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -75,18 +75,17 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
  qemu-devel@nongnu.org, Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v6 1/9] target/riscv: fix henvcfg potentially containing stale
- bits
-Date: Thu, 28 Nov 2024 15:12:21 +0100
-Message-ID: <20241128141230.284320-2-cleger@rivosinc.com>
+Subject: [PATCH v6 8/9] target/riscv: Implement Smdbltrp behavior
+Date: Thu, 28 Nov 2024 15:12:28 +0100
+Message-ID: <20241128141230.284320-9-cleger@rivosinc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241128141230.284320-1-cleger@rivosinc.com>
 References: <20241128141230.284320-1-cleger@rivosinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=cleger@rivosinc.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=cleger@rivosinc.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,80 +107,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the current implementation, if we had the following scenario:
-- Set bit x in menvcfg
-- Set bit x in henvcfg
-- Clear bit x in menvcfg
-then, the internal variable env->henvcfg would still contain bit x due
-to both a wrong menvcfg mask used in write_henvcfg() as well as a
-missing update of henvcfg upon menvcfg update.
-This can lead to some wrong interpretation of the context. In order to
-update henvcfg upon menvcfg writing, call write_henvcfg() after writing
-menvcfg. Clearing henvcfg upon writing the new value is also needed in
-write_henvcfg() as well as clearing henvcfg upper part when writing it
-with write_henvcfgh().
+When the Smsdbltrp ISA extension is enabled, if a trap happens while
+MSTATUS.MDT is already set, it will trigger an abort or an NMI is the
+Smrnmi extension is available.
 
 Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ target/riscv/cpu_helper.c | 56 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 40 insertions(+), 16 deletions(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5d8d0d7514..98c683df60 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2383,6 +2383,8 @@ static RISCVException read_menvcfg(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 0525bfad48..f46be166f6 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1835,6 +1835,23 @@ static target_ulong promote_load_fault(target_ulong orig_cause)
+     /* if no promotion, return original cause */
+     return orig_cause;
  }
++
++static void riscv_do_nmi(CPURISCVState *env, target_ulong cause, bool virt)
++{
++    env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
++    env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPV, virt);
++    env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPP, env->priv);
++    env->mncause = cause;
++    env->mnepc = env->pc;
++    env->pc = env->rnmi_irqvec;
++
++    if (cpu_get_fcfien(env)) {
++        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPELP, env->elp);
++    }
++
++    riscv_cpu_set_mode(env, PRV_M, false);
++}
++
+ /*
+  * Handle Traps
+  *
+@@ -1874,22 +1891,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     bool nnmi_excep = false;
  
-+static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
-+                                    target_ulong val);
- static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-                                     target_ulong val)
- {
-@@ -2403,6 +2405,7 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+     if (cpu->cfg.ext_smrnmi && env->rnmip && async) {
+-        env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
+-        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPV,
+-                                  env->virt_enabled);
+-        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPP,
+-                                  env->priv);
+-        env->mncause = cause | ((target_ulong)1U << (TARGET_LONG_BITS - 1));
+-        env->mnepc = env->pc;
+-        env->pc = env->rnmi_irqvec;
+-
+-        if (cpu_get_fcfien(env)) {
+-            env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPELP, env->elp);
+-        }
+-
+-        /* Trapping to M mode, virt is disabled */
+-        riscv_cpu_set_mode(env, PRV_M, false);
+-
++        riscv_do_nmi(env, cause | ((target_ulong)1U << (TARGET_LONG_BITS - 1)),
++                     virt);
+         return;
+     }
+ 
+@@ -2101,11 +2104,32 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+             /* Trapping to M mode, virt is disabled */
+             virt = false;
          }
-     }
-     env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
-+    write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
++        /*
++         * If the hart encounters an exception while executing in M-mode,
++         * with the mnstatus.NMIE bit clear, the program counter is set to
++         * the RNMI exception trap handler address.
++         */
++        nnmi_excep = cpu->cfg.ext_smrnmi &&
++                     !get_field(env->mnstatus, MNSTATUS_NMIE) &&
++                     !async;
  
-     return RISCV_EXCP_NONE;
- }
-@@ -2414,6 +2417,8 @@ static RISCVException read_menvcfgh(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
-+                                    target_ulong val);
- static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
-                                      target_ulong val)
- {
-@@ -2424,6 +2429,7 @@ static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
-     uint64_t valh = (uint64_t)val << 32;
- 
-     env->menvcfg = (env->menvcfg & ~mask) | (valh & mask);
-+    write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
- 
-     return RISCV_EXCP_NONE;
- }
-@@ -2513,7 +2519,7 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
-         }
-     }
- 
--    env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
-+    env->henvcfg = val & mask;
- 
-     return RISCV_EXCP_NONE;
- }
-@@ -2546,7 +2552,7 @@ static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
-         return ret;
-     }
- 
--    env->henvcfg = (env->henvcfg & ~mask) | (valh & mask);
-+    env->henvcfg = (env->henvcfg & 0xFFFFFFFF) | (valh & mask);
-     return RISCV_EXCP_NONE;
- }
- 
+         s = env->mstatus;
+         s = set_field(s, MSTATUS_MPIE, get_field(s, MSTATUS_MIE));
+         s = set_field(s, MSTATUS_MPP, env->priv);
+         s = set_field(s, MSTATUS_MIE, 0);
++        if (cpu->cfg.ext_smdbltrp) {
++            if (env->mstatus & MSTATUS_MDT) {
++                assert(env->priv == PRV_M);
++                if (!cpu->cfg.ext_smrnmi || nnmi_excep) {
++                    cpu_abort(CPU(cpu), "M-mode double trap\n");
++                } else {
++                    riscv_do_nmi(env, cause, false);
++                    return;
++                }
++            }
++
++            s = set_field(s, MSTATUS_MDT, 1);
++        }
+         env->mstatus = s;
+         mxlen = 16 << riscv_cpu_mxl(env);
+         env->mcause = cause | ((target_ulong)async << (mxlen - 1));
 -- 
 2.45.2
 
