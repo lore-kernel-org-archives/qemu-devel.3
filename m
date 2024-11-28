@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFAF6D69104
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 12:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292FCD69105
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Nov 2024 12:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGe6p-0006Ap-Ni; Thu, 28 Nov 2024 07:59:03 -0500
+	id 1tGe6l-0006AC-Lx; Thu, 28 Nov 2024 07:58:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tGe6n-0006AV-V3
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 07:59:02 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tGe6j-0006A0-Tq
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 07:58:58 -0500
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tGe6m-000142-Bc
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 07:59:01 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-720cb6ac25aso660554b3a.3
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 04:58:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tGe6h-00011Q-Al
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 07:58:57 -0500
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5ee645cf763so317526eaf.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 04:58:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1732798739; x=1733403539; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732798733; x=1733403533; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NBB9y1QxF3FeAhPNni7HuWH6Mijkm1BWd+FZvP1ekYo=;
- b=SZtsXm6I8hGR87UMBlO2REytMQk84VkPhJ8TFyjOsTw2888fCCkfRoF1LUif2b8t41
- 1iSVV2ZM7EDaJftguPqnF0NV7m6Jv9Az+i/NisFI1NSaLbCX/b5q4G3t25XlqDehiyVP
- SpUhxwF84YYfz3oMplmXYjXDAROfUHfBom7gH27r6PqZfB4FH6baSKI6H2t/tqtB2lHy
- kzlV1EGfwBcT0HvthI6eCAdH8Rx/t2hVJjH/nFcTEL8fuv128+c4xltFUrCROOFSsJ7C
- gw69VjadLFbAD7QQZBspV5fgX0ujh7GEiWJ28NAkiyLu3oyM80vUO2uObjq8TmHQN8Nd
- ihgw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/NCzGmnBhpIg9O/nO+yGhpiPPlY+xWJuGozNhuOek5o=;
+ b=aD1Cq7dqW5TKTKLLEqlGlBBd4QO7aGD503o17V9OlzSc9OHKYc3fvmlxBm4D+4z3Kw
+ MbmS8TnBoGn9K4zETmVrULg60C/TO9C6qUQxMQCgbVdiVe7EPx2vAUV2xdMDSgxyADhd
+ rwSjWGFjYnPrRm4STFqZ/rLdCzWXsc8d9j8GKYxEs/2LSQHsSyORQr5jMcC079NTNFgp
+ Hm5jkJ+KBDwHQmWl9LzF3Vg8krdD5DCy1lQq381PPhDEOBgNyGO6RBXtdwJTUk0PBnSJ
+ lK0oGfDUeDr0BxVcb/mw9Lf8U01aYPKomTKOR2zwkeHAcRSysUl7ZyPrLOr0nN84fEN/
+ unsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732798739; x=1733403539;
+ d=1e100.net; s=20230601; t=1732798733; x=1733403533;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NBB9y1QxF3FeAhPNni7HuWH6Mijkm1BWd+FZvP1ekYo=;
- b=wimcqIZ+XniI5VfPdYr0DhcK4az/lxOxysnpGgqRIxaNWYy9FaRrWAKejPuwrAJG0X
- hdNIEUFcuNw2OPzVlcKeC4SQmsXZ1alu0QOll7MWtWo4xCyaSNdY3TeGUrfo/BvL2C8N
- QsVJ4+rUGIv0tT+w6EG6wumr38PBHj5riOdFB/KcKIRbPtt5akvs6feo7bcdHq/3GiAA
- 7DE5kM94Xrf2rTAwpyGpkCgu3vqC5y56IHJMxeEsK0iIuymxCATh1qCEksQGaUvEGvU0
- xYdZ09OLRZA9os+t72zQw4u7xhHb9K3pYG6ekuy7mCZiuE7P5VGnag8qDlSXGQ8IRJGL
- DEFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCUZ7cXeaiXO7ZspGVxvzfsLkIUQH48zdvCtzY/f2HYLOkjisKflNTtaVEfJogIxTvhfEYxdWAciCC@nongnu.org
-X-Gm-Message-State: AOJu0Yy2ExClQ0Cx1mISK8FLaA1GlQ5Rpi/RkWcYe3c+45Vs178KjzEK
- e6rDfGFSL/kkAXh2hP/C3qjfejXpYF5KeRzLRLjxEJ8/g5mCZqqIf1zw/jAmfKQ=
-X-Gm-Gg: ASbGncvWskm1TP3OpbxkbfsCWVymb174fgEb9J19Ni3LSu0Mwk/AV/Is4Fc+e/ISRHp
- L7V8oltvHNxsiKU70iiseZHXVgv1tuTsaVOba1PDCN2ovxvZ7sOwBKXKccVH7SCkmSuZcz6goET
- ax6t3qbqgc4Wwi0aKtrpRtNVOayGlc+k2+DhYMs7WUo0d0grJvlYpM47CyhPvtYagt0JzjszwO4
- GOA3f/O+PddrPC7WKSdVG2okFKuYLbaB7Bl5GTrdt06YHw1y+/+lKtaCjrzsJ4=
-X-Google-Smtp-Source: AGHT+IFFJCwiEvfdGt13JpsM89I+fjT572beMjTWhOq1jjQpSMpvXaKwWYcfPSdxXQeZRMzAwLQemA==
-X-Received: by 2002:a05:6a00:845:b0:71e:1722:d02c with SMTP id
- d2e1a72fcca58-7252ffcbf9amr9660383b3a.3.1732798738649; 
- Thu, 28 Nov 2024 04:58:58 -0800 (PST)
-Received: from [192.168.68.110] ([187.101.65.72])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725417fc064sm1434698b3a.130.2024.11.28.04.58.56
+ bh=/NCzGmnBhpIg9O/nO+yGhpiPPlY+xWJuGozNhuOek5o=;
+ b=gW5MoPUxXXXnumbNlxcKxTNQbEvBD4Y4oMVOg2lfxXkuHirXZuun2lL5UAhs/gJkUR
+ OIKwJV8uvrHY0eHqRkSXNemSgWwkLzQYrvYGJ0CxAhbluBu0RU4Pv6Ryn8vCDlqbiNee
+ fqE/iWIVCaez3/6kV96puwYawOXCyuotmdAfAMp5QIzsJOGbfuI5Og77nagahDDu1yFJ
+ d1V1eOxgux8vjabOq89ibcMcNzrb/VTGqJPNhkx3Vbyv+gD+vjnE8tslhSK7m8wPyDUb
+ DHSwYaRcKnAqWywOT9Ewm4jk8tuUYUONMvauFKvswalU4XTB9sSPBED5RO8djvlN+TWC
+ 3U5w==
+X-Gm-Message-State: AOJu0YyfO2wMIDl+MoIxCGx7ye+i7Fdfla4IsLtFhQTk1z+mtydtnUEx
+ Z9F+Nz0a3n9gHy4awdrU52ObK0g3qDJAdB4lpzZcIhEd12SP7lUelfCPuU6ic4NlbrqYsFfrbvs
+ kH1E=
+X-Gm-Gg: ASbGncuPOsEPFapgHpIX+IVU6igvhM3Ww6W6a4PZhzfsZv2PJHStH6FGvGvC6ygKhof
+ ELRXaS3jK6QJwARBbme9JmlgRrHkLBwmVacfQbLkZdiFkhyARE4LfBoRzq5x3+l6itwNnDFWAHX
+ hHdCGbn5pnRceoGmTLJbdZlSLd2OpB53gB0DJDl3Ak0aCqwQcjmYYxRbL3t/sWaW+cc2clNT+Mv
+ upBE8oqEFvvLaB9ZYI1EyVG2sDY/nNhgJ6uK6WbHv7maOk8ztOhDJeNuTNIDnetvsCiyL4Latls
+ qhn8VDkz2SSxCR5vFz5O9Vfa3F4b
+X-Google-Smtp-Source: AGHT+IE1uUQHGgW1PE7s7tR/WtVS+ctAwsMW/7vjkkhykUAN1QN4GWwlqBkTTdAD4Zt7fVXAQNlFyg==
+X-Received: by 2002:a05:6820:2183:b0:5ee:ebcb:e6e9 with SMTP id
+ 006d021491bc7-5f20a168f5cmr3811778eaf.5.1732798733254; 
+ Thu, 28 Nov 2024 04:58:53 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5f21a3a920dsm287820eaf.20.2024.11.28.04.58.52
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 04:58:58 -0800 (PST)
-Message-ID: <fca701ec-a3b8-4db1-a14f-73d72fcb85b2@ventanamicro.com>
-Date: Thu, 28 Nov 2024 09:58:55 -0300
+ Thu, 28 Nov 2024 04:58:52 -0800 (PST)
+Message-ID: <c6ea5acc-e07f-4eb8-ad8a-b339f27c9102@linaro.org>
+Date: Thu, 28 Nov 2024 06:58:50 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/11] target/riscv: Add configuration for
- S[m|s]csrind, Smcdeleg/Ssccfg
-To: Atish Patra <atishp@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: kaiwenxue1@gmail.com, palmer@dabbelt.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com,
- alistair.francis@wdc.com
-References: <20241117-counter_delegation-v3-0-476d6f36e3c8@rivosinc.com>
- <20241117-counter_delegation-v3-11-476d6f36e3c8@rivosinc.com>
+Subject: Re: [PATCH for-9.2] target/riscv: Avoid bad shift in
+ riscv_cpu_do_interrupt()
+To: qemu-devel@nongnu.org
+References: <20241128103831.3452572-1-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20241117-counter_delegation-v3-11-476d6f36e3c8@rivosinc.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241128103831.3452572-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,36 +102,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/17/24 10:15 PM, Atish Patra wrote:
-> Add configuration options so that they can be enabled/disabld from
-> qemu commandline.
+On 11/28/24 04:38, Peter Maydell wrote:
+> In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
+> cs->exception as a shift value.  However this value can be larger
+> than 31, which means that "1 << cause" is undefined behaviour,
+> because we do the shift on an 'int' type.
 > 
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   target/riscv/cpu.c | 4 ++++
->   1 file changed, 4 insertions(+)
+> This causes the undefined behaviour sanitizer to complain
+> on one of the check-tcg tests:
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 410ca2e3a666..2a4f285a974f 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1477,6 +1477,10 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->       /* Defaults for standard extensions */
->       MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
->       MULTI_EXT_CFG_BOOL("smcntrpmf", ext_smcntrpmf, false),
-> +    MULTI_EXT_CFG_BOOL("smcsrind", ext_smcsrind, false),
-> +    MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
-> +    MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
-> +    MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
->       MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
->       MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
->       MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
+> $ UBSAN_OPTIONS=print_stacktrace=1:abort_on_error=1:halt_on_error=1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -device loader,file=build/clang/tests/tcg/riscv64-softmmu/issue1060
+> ../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63 is too large for 32-bit type 'int'
+>      #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
+>      #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
 > 
+> In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
 
+Semihosting is completely artificial and should never be injected.
+The maximum "real" cause is
+
+     RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT = 0x17,
+
+We ought to hoist the handling of RISCV_EXCP_SEMIHOST higher in the function, before these 
+calculations.
+
+
+r~
 
