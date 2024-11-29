@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C0A3D729E9
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 15:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07653D729E7
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 15:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH3BU-00026A-R2; Fri, 29 Nov 2024 10:45:33 -0500
+	id 1tH3Br-0002Up-Ce; Fri, 29 Nov 2024 10:45:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tH3BR-0001wD-0j
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 10:45:29 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1tH3Bc-0002KC-H6
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 10:45:40 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tH3BN-0002Mv-RF
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 10:45:28 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5d0062e9c80so2465825a12.2
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 07:45:24 -0800 (PST)
+ id 1tH3Ba-0002Q9-IR
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 10:45:40 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5cedf5fe237so2224165a12.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 07:45:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732895123; x=1733499923; darn=nongnu.org;
+ d=linaro.org; s=google; t=1732895137; x=1733499937; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zWdZccxwTuNLCK+pE6JIXS7NaFlznnTkcu60RPmmRbM=;
- b=PWzEhp10YDN5pKkfCD5VaSmRkUmPwEOtw9lpKZZRE22mBReBoHP2i9l14d06TPttDA
- PVU/6zDTiSJ5+EKFWPaEShoY7H5mj6EF5PqxbBsfyJsz6yjZDh8Tulcn60rzAjKFldK1
- mfXM6upMpKRN4s5FXmdj29U4zM4tImDeeHosXF0Y3Jhib8ndt52fSaWlDwP/ygHgigPp
- yW2pA3KELZD9r/+XE2MHZNVgdyw4tHYvlE4/Zo5gAyOtP+pJ1VA3BGMREhsTjWNkTnw+
- KHGtUBqXGsYHiRZIWG7/N5UQaEbPCl2yl0u3mXNArNKdunS+TcCTHeSAKRyrY3g7Y1de
- jYow==
+ bh=xY0FKEodQHPz/11pBa7OFxejnwb9hbb/WI5ABs1FEHQ=;
+ b=mdPh37Tirvb04rwHGy77ZKo9f6tblxZfXOQevyp6h7oqLdnXvjLHI8N4n1ouaDtB1z
+ WtQbiJzVwnFf/iY/1BKEFteMoYVlwLl+tnHCTS6N7+5kyugXvlDmFqbXwvNATCjUTn+M
+ xIksrgV/3hUTSPWiYybryA1FMFQ+kkDNX5DTyXf0K4ZuAP+LA7Vf59dNdCx3TwqLtwDc
+ n0RTMIqiE4IPzNiG+BjOAwviyEk8MU/vf3eJFKHfKmKizurrIrwnR5nndNeOqDib9mPI
+ +o902bjyrVscnVVh2KI2uytvvJuPKIUaTWAuZ7gNQk2mPhst19ocDBP7umy1/f/BSkqY
+ lFuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732895123; x=1733499923;
+ d=1e100.net; s=20230601; t=1732895137; x=1733499937;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zWdZccxwTuNLCK+pE6JIXS7NaFlznnTkcu60RPmmRbM=;
- b=GddNxidn+Y3KlKUPFXcDkTP3NyVj0KfiTzR63/C2eGVwcnUjnQzz8uGZ6BxXhFrv+y
- qxodBMYY+aZ3EmI0Uy4SI7RIo50R9OT0lSFfppK2GubpXs+x+Vjbx9kKpdYVGNMjib1i
- wRt+evNZaYmGI7Clgnm0YW+24JUT6WQ6de17e4nPjcA+7vqtXjn++LwA5fibT2YJ729o
- I1z2xcoFMEKbFCFVk22AAvgfep6XBNPBRaN4IfqupaUIJlN5wrxSRpgf/pWP5l+S3bGR
- xqG8eJY4PhCGTTggJKFxpNR/pQ0OTfZs8jTvfXA/1OjSi6egvlsWYYK1PrD2fg3vcmjU
- UCSg==
-X-Gm-Message-State: AOJu0YzOJNhxZcgdr9K91q+Okw+4hhkpWFlVgyr39vFhPLzvkYS4F/if
- Fk6SK1WNhKnbXNvgQ3fW5MKHmer0Kdxx2Dnrz1t2wpkW+RIXVgRN1H9keiKaM1ajApbjNB4hBL8
- 2PgiW31EHP8we3K7HNbRPyND+pYbVYu3+7J4j5onUXbj3avtZ
-X-Gm-Gg: ASbGncsjO4iI+a2qV8MHP0XGIQIQfD7qfE/G9sxQ0mlisxo3wC3SlNPi+KiqUJ4Uyo1
- TlqN5WqQLv8uw1zEt8lZktqP2ytxweOVF
-X-Google-Smtp-Source: AGHT+IFDMjCqVkys5o4OE1vJY3TcHVRWg7pMuUH3Lq6N5CLl4Vef99FoHeegTcCamekNRPJAWB/EsduwNV0kNNrzTIA=
-X-Received: by 2002:a05:6402:d0e:b0:5d0:224b:d54e with SMTP id
- 4fb4d7f45d1cf-5d080c5de01mr10197659a12.33.1732895123601; Fri, 29 Nov 2024
- 07:45:23 -0800 (PST)
+ bh=xY0FKEodQHPz/11pBa7OFxejnwb9hbb/WI5ABs1FEHQ=;
+ b=JaJW+jEmyaRwhbBVTxEY4L4Gy8R0t+siqeeSmkzUSRQZ9QoS9MkhT+MXxcoA818f44
+ zyDgtAXgHwhOJV9r4/NyGWt3yyQ8+D/mIONnJf2FBSdYUIDcEEhRrsMO8vlwIpmhZnpY
+ MhpQkFx0+ZBWWXjSMRxhbDu/M+MqTcSPnhRf5rkx8uV15ZiUxdeCdDrXmIMq5DMdeCdN
+ XvXviRqMUOX5pwreffz566N7Ub8s3cksamoyBk/kuYaS8utdDI9m/4/1pO4eE7hHMLH/
+ X0cz2mI/ur0cAkSAtHnc+gafj6gJZSWQ8rDREJv05HZV1j4aHMiCL2LUG1CJ4Z4YauRl
+ OzFw==
+X-Gm-Message-State: AOJu0YwyMGlHxrf+/iySH0ECcFGU/A92+jcubyoW8MDKg3YjFTX26Vqv
+ 9hkNfLonzg0PqWqH5+HfIvItcfj+AP/cPTNjNMYSO782Pz4jvadcQQar6rbSxOtjs8kdw1HInH0
+ 0YBEBZy8XMea/6qaJWXBoskp4s0e3A8qM/LtLTg==
+X-Gm-Gg: ASbGncuebOGgXdvfDcNZ9EBrAfF1BqdADfrUevdxsqEfb+EalnbgO15leBed2F7FE9u
+ 2/dDmj+5mnEwnARi/6NBosPKp2OpSjDbj
+X-Google-Smtp-Source: AGHT+IGOkDFVvXN7vxGRixQ2d+8EHIzAgluxMOLFNGofe595di13w5kPt57ZBs3yhMIiMXymc0bERLwwyWYp6nUu4pc=
+X-Received: by 2002:a05:6402:13d1:b0:5ce:fa47:2597 with SMTP id
+ 4fb4d7f45d1cf-5d080b989cbmr10731242a12.9.1732895137042; Fri, 29 Nov 2024
+ 07:45:37 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1732820037.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1732820037.git.qemu_oss@crudebyte.com>
+References: <20241128190349.541014-1-pbonzini@redhat.com>
+In-Reply-To: <20241128190349.541014-1-pbonzini@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 29 Nov 2024 15:45:12 +0000
-Message-ID: <CAFEAcA9OARF143-ZiRWoidh71_1Nk6_sbZbOhvVNbCevu9m1Pg@mail.gmail.com>
-Subject: Re: [PULL for-9.2 0/7] 9p queue 2024-11-28
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>
+Date: Fri, 29 Nov 2024 15:45:26 +0000
+Message-ID: <CAFEAcA-PFWSv88Hy3BzOHD6oc3+0NpA2FCA1NEHjcAXUpqL_UA@mail.gmail.com>
+Subject: Re: [PULL 0/3] Bugfixes for QEMU 9.2 rc3
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,8 +89,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 28 Nov 2024 at 18:59, Christian Schoenebeck
-<qemu_oss@crudebyte.com> wrote:
+On Thu, 28 Nov 2024 at 19:05, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
 > The following changes since commit 24602b77f5658ae8377958c15fdef2f44affc743:
 >
@@ -98,20 +97,17 @@ On Thu, 28 Nov 2024 at 18:59, Christian Schoenebeck
 >
 > are available in the Git repository at:
 >
->   https://github.com/cschoenebeck/qemu.git tags/pull-9p-20241128
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
 >
-> for you to fetch changes up to eaab44ccc59b83d8dff60fca3361a9b98ec7fee6:
+> for you to fetch changes up to 3abb67323aeecf06a27191076ab50424ec21f334:
 >
->   tests/9p: also check 'Tgetattr' in 'use-after-unlink' test (2024-11-28 18:54:00 +0100)
->
-> ----------------------------------------------------------------
-> * Fix open-unlink-fstat idiom on Linux guests.
->
-> * Add test to verify this behaviour.
->
-> * Cleanup patches.
+>   scsi: megasas: Internal cdbs have 16-byte length (2024-11-28 18:02:22 +0100)
 >
 > ----------------------------------------------------------------
+> * amd_iommu: fix clang failure on non-KVM targets
+> * target/i386/hvf: fix advertised 1G page support
+> * megasas: fix CDB length
+>
 
 
 Applied, thanks.
