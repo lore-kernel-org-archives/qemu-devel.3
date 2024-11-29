@@ -4,113 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C162AD6EC04
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 12:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5234D6EC07
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 13:20:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH06N-0003bc-EI; Fri, 29 Nov 2024 07:28:03 -0500
+	id 1tH0uS-0001u8-9T; Fri, 29 Nov 2024 08:19:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tH06L-0003b8-H7
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 07:28:01 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tH0uO-0001tc-Mg
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:19:44 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tH06J-0008E8-5C
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 07:28:01 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tH0uN-0005kr-1h
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:19:44 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0E09E1F38F;
- Fri, 29 Nov 2024 12:27:54 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 487DD21134;
+ Fri, 29 Nov 2024 13:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732883274; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1732886380; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/G6Ue4MKmA9n9SMCII0nKZPRr+tlsxWupEt1VyDfNdQ=;
- b=0MqJjbvaJZe9Qv430fJ7GPrbttMssA44WZApWubTyOry5Lv3/plwpxIYYDeiuEFQ7QWQdF
- UpLpN/YJNZNoUx/Vh6qnjx3SN0KygLaYhkHLyMAlCj7S8/r0FdvEHUZC79LHp1MxPafRXF
- hSWY3wzaqyrzF/0PPSwENo6XcMfTe+Y=
+ bh=pqFCi2SQT9VtrOf3vYF6ZliVF0o4ppfImsi9vt/yK0Y=;
+ b=QqCzs7R/NHUkJvG0FmIn9TmuQKT+B7EOgZ8XNX3fmuLcNSdOtMY5RSDpwINdWqtTzS3zV2
+ FzAEn+vmdmcLtqmyrtyIaCzCR3aSyvohX0jRyceQ2gppZsULQryEH3dSbsHdZRKRhRXrjg
+ tX5X39WMegs75Wno8J5+WYtjMUYkKy0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732883274;
+ s=susede2_ed25519; t=1732886380;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/G6Ue4MKmA9n9SMCII0nKZPRr+tlsxWupEt1VyDfNdQ=;
- b=KH+85nlv5CD1b8DTYRG80MwT0jCLEDvdQ44QY3JIjzh+2MT8yN7R5LV+g21bZKHIcQUHdB
- 5ZaeUDxo+Ght8gBw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0MqJjbva;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=KH+85nlv
+ bh=pqFCi2SQT9VtrOf3vYF6ZliVF0o4ppfImsi9vt/yK0Y=;
+ b=Dknu0qSkljG5bkXy2yVaKRK6hclQtsQoZwsa60DkYYdbAcHT0Oj+E9p3pR6jcAgKVowUnp
+ E+ieSdIL+0QLZaCA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FDB24+r4;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Gaz2tr3Q
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732883274; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1732886379; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/G6Ue4MKmA9n9SMCII0nKZPRr+tlsxWupEt1VyDfNdQ=;
- b=0MqJjbvaJZe9Qv430fJ7GPrbttMssA44WZApWubTyOry5Lv3/plwpxIYYDeiuEFQ7QWQdF
- UpLpN/YJNZNoUx/Vh6qnjx3SN0KygLaYhkHLyMAlCj7S8/r0FdvEHUZC79LHp1MxPafRXF
- hSWY3wzaqyrzF/0PPSwENo6XcMfTe+Y=
+ bh=pqFCi2SQT9VtrOf3vYF6ZliVF0o4ppfImsi9vt/yK0Y=;
+ b=FDB24+r4Gx0aktxh5D9uVzkqWL+2ZrneCVP9XgBVbK006kK6KcsiRkC/awu1pkDGvMvo+b
+ Tou52wtXS9ep/en1nuL3N42ZuhDtfxnKzJ3NVQltLtxMljUIO711FwKdVwCeFI6McIh/ko
+ KCQZ1HuJjipqJd8hBARrB6unSSHTj+g=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732883274;
+ s=susede2_ed25519; t=1732886379;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/G6Ue4MKmA9n9SMCII0nKZPRr+tlsxWupEt1VyDfNdQ=;
- b=KH+85nlv5CD1b8DTYRG80MwT0jCLEDvdQ44QY3JIjzh+2MT8yN7R5LV+g21bZKHIcQUHdB
- 5ZaeUDxo+Ght8gBw==
+ bh=pqFCi2SQT9VtrOf3vYF6ZliVF0o4ppfImsi9vt/yK0Y=;
+ b=Gaz2tr3QhfF7EVLVhdHwmv+Y3Dp2CWInZ6goh8x28nO5ma6EVK8GMiNPLkHMMB6lctZphs
+ cKwL1ipjPOT5CEBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8AED1133F3;
- Fri, 29 Nov 2024 12:27:53 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BFD6C139AA;
+ Fri, 29 Nov 2024 13:19:38 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id PTLBE0mzSWe0CwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 29 Nov 2024 12:27:53 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id FUalIGq/SWc/HQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 29 Nov 2024 13:19:38 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel?=
- =?utf-8?Q?_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH v3 0/5] Guestperf: miscellaneous refinement and enrichment
-In-Reply-To: <CAK9dgmZvj4W2EBxp1_TcdYs3q2aqaRZGZCAk=FRJk-PaB9y_fw@mail.gmail.com>
-References: <cover.1729562974.git.yong.huang@smartx.com>
- <87sesmdfl4.fsf@suse.de>
- <CAK9dgmZvj4W2EBxp1_TcdYs3q2aqaRZGZCAk=FRJk-PaB9y_fw@mail.gmail.com>
-Date: Fri, 29 Nov 2024 09:27:50 -0300
-Message-ID: <87v7w6jkc9.fsf@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH v3 03/17] tests/migration: Disambiguate guestperf vs. a-b
+In-Reply-To: <20241127182901.529-4-farosas@suse.de>
+References: <20241127182901.529-1-farosas@suse.de>
+ <20241127182901.529-4-farosas@suse.de>
+Date: Fri, 29 Nov 2024 10:19:36 -0300
+Message-ID: <87serajhxz.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 0E09E1F38F
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 487DD21134
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
  MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -134,110 +127,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yong Huang <yong.huang@smartx.com> writes:
+Fabiano Rosas <farosas@suse.de> writes:
 
-> On Wed, Oct 23, 2024 at 11:06=E2=80=AFPM Fabiano Rosas <farosas@suse.de> =
-wrote:
+> The current build structure for migration tests is confusing. There is
+> the tests/migration directory, which contains two different guest code
+> implementations, one for the qtests (a-b-{bootblock|kernel}.S) and
+> another for the guestperf script (stress.c). One uses a Makefile,
+> while the other uses meson.
 >
->> yong.huang@smartx.com writes:
->>
->> > From: Hyman Huang <yong.huang@smartx.com>
->> >
->> > v3:
->> > 1. Remove the two redundant assignments in [PATCH v2 2/5] suggested by
->> Daniel
->> >
->> > Please review, thanks
->> > Yong
->> >
->> > v2:
->> > 1. Update the MAINTAINERS section suggested by Fabiano Rosas
->> > 2. Ensure the dependencies when build the initrd-stress.img suggested =
-by
->> Daniel
->> > 3. Fix some bugs
->> >
->> > v1:
->> > The previous patchset:
->> >
->> https://lore.kernel.org/qemu-devel/cover.1722957352.git.yong.huang@smart=
-x.com/
->> > does not made the necessary changes and tests for the upstream version.
->> >
->> > This patchset works for that:
->> > 1. Move the guestperf to scripts directory suggested by Fabiano Rosas
->> > 2. Make initrd-stress.img built by default suggested by Fabiano Rosas
->> > 3. Make the necessary changes to adapt the latest multifd behavior
->> > 4. A nitpick for multifd migration
->> > 5. Support multifd compression option
->> >
->> > Hyman Huang (5):
->> >   tests/migration: Move the guestperf tool to scripts directory
->> >   tests/migration: Make initrd-stress.img built by default
->> >   guestperf: Support deferred migration for multifd
->> >   guestperf: Nitpick the inconsistent parameters
->> >   guestperf: Introduce multifd compression option
->> >
->> >  MAINTAINERS                                   |  5 +++
->> >  .../migration/guestperf-batch.py              |  0
->> >  .../migration/guestperf-plot.py               |  0
->> >  {tests =3D> scripts}/migration/guestperf.py     |  0
->> >  .../migration/guestperf/__init__.py           |  0
->> >  .../migration/guestperf/comparison.py         | 15 ++++++++-
->> >  .../migration/guestperf/engine.py             | 33 ++++++++++++++++---
->> >  .../migration/guestperf/hardware.py           |  0
->> >  .../migration/guestperf/plot.py               |  0
->> >  .../migration/guestperf/progress.py           |  0
->> >  .../migration/guestperf/report.py             |  0
->> >  .../migration/guestperf/scenario.py           |  7 ++--
->> >  .../migration/guestperf/shell.py              |  3 ++
->> >  .../migration/guestperf/timings.py            |  0
->> >  tests/migration/meson.build                   | 30 +++++++++--------
->> >  15 files changed, 73 insertions(+), 20 deletions(-)
->> >  rename {tests =3D> scripts}/migration/guestperf-batch.py (100%)
->> >  rename {tests =3D> scripts}/migration/guestperf-plot.py (100%)
->> >  rename {tests =3D> scripts}/migration/guestperf.py (100%)
->> >  rename {tests =3D> scripts}/migration/guestperf/__init__.py (100%)
->> >  rename {tests =3D> scripts}/migration/guestperf/comparison.py (89%)
->> >  rename {tests =3D> scripts}/migration/guestperf/engine.py (93%)
->> >  rename {tests =3D> scripts}/migration/guestperf/hardware.py (100%)
->> >  rename {tests =3D> scripts}/migration/guestperf/plot.py (100%)
->> >  rename {tests =3D> scripts}/migration/guestperf/progress.py (100%)
->> >  rename {tests =3D> scripts}/migration/guestperf/report.py (100%)
->> >  rename {tests =3D> scripts}/migration/guestperf/scenario.py (93%)
->> >  rename {tests =3D> scripts}/migration/guestperf/shell.py (98%)
->> >  rename {tests =3D> scripts}/migration/guestperf/timings.py (100%)
->>
->> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->>
->>
->> Thinking out loud a little bit, it's still somewhat obscure from which
->> directory this script should be called. None of these invocations work:
->>
->> $ ./scripts/migration/guestperf.py
->>
->> $ ./build/scripts/migration/guestperf.py
->>
->> $ cd scripts/migration
->> $ ./guestperf.py
->>
->> $ cd build/scripts/migration
->> $ ./guestperf.py
->>
->> Failed to open file =E2=80=9Ctests/migration/initrd-stress.img=E2=80=9D:=
- open() failed:
->> No such file or directory
->>
->> This is the only one that works:
->> $ cd build
->> $ ./scripts/migration/guestperf.py
->>
->> Maybe we could improve that somehow in the future.
->>
->>
-> This patchset could be queued now,
-> Or after refining the documents mentioned above later?
+> The next patches will add a new qtests/migration/ directory to hold
+> qtest code which will make the situation even more confusing.
+>
+> Move the guest code used by qtests into a new qtests/migration/
+> directory and rename the old one to tests/migration-stress.
+>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-I think it's ok. Let me just rebase this on top of the other series that
-touches the tests/migration/ directory. I'll repost soon.
+Please squash this in:
+
+-->8--
+From 9f8a693e31be198e1e052d86be99ffaaa0a3e8a8 Mon Sep 17 00:00:00 2001
+From: Fabiano Rosas <farosas@suse.de>
+Date: Fri, 29 Nov 2024 10:05:21 -0300
+Subject: [PATCH] fixup! tests/migration: Disambiguate guestperf vs. a-b
+
+---
+ tests/migration-stress/guestperf/shell.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tests/migration-stress/guestperf/shell.py b/tests/migration-stress/guestperf/shell.py
+index c85d89efec..046afeb84e 100644
+--- a/tests/migration-stress/guestperf/shell.py
++++ b/tests/migration-stress/guestperf/shell.py
+@@ -46,7 +46,8 @@ def __init__(self):
+         parser.add_argument("--binary", dest="binary", default="/usr/bin/qemu-system-x86_64")
+         parser.add_argument("--dst-host", dest="dst_host", default="localhost")
+         parser.add_argument("--kernel", dest="kernel", default="/boot/vmlinuz-%s" % platform.release())
+-        parser.add_argument("--initrd", dest="initrd", default="tests/migration/initrd-stress.img")
++        parser.add_argument("--initrd", dest="initrd",
++                            default="tests/migration-stress/initrd-stress.img")
+         parser.add_argument("--transport", dest="transport", default="unix")
+ 
+ 
+-- 
+2.35.3
+
 
