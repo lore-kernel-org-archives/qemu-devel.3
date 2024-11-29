@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65613D729E9
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 15:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F90BD729E9
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 15:52:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH3HL-0004Jh-2S; Fri, 29 Nov 2024 10:51:35 -0500
+	id 1tH3HJ-0004J8-BD; Fri, 29 Nov 2024 10:51:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tH3HH-0004IS-9R
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tH3HG-0004IC-Jt
  for qemu-devel@nongnu.org; Fri, 29 Nov 2024 10:51:31 -0500
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tH3HF-0004G9-JS
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 10:51:31 -0500
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-53de7321675so2165000e87.2
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 07:51:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732895487; x=1733500287; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=l6GbRsi4xYGNJmdLMTpuhoNW1mMD7LaCmhGSt+KTelE=;
- b=a1sW/bJnZnHBU5PBPiyp6C555eRZr0rAnCChwca1CKlezl9Sd9Hn4+OWKQw1wH2DQV
- Xv4Nzms4XFCoWPZIMJfZGymY2gVNmdOiZ6diZZzhgo1fRaMPM7BNPv89++4N/QpobWjm
- BlVMCudlZ8l0J8N4ErDFDE2vQOAu3/jigBckOlvON5FsDRNi9W1L/E6xvs9W50yo97ar
- VI2qUPBlKLPEBRlAjDgAatKbZd6FX9+D4wPrSfHB+IvyoOHXj3IYFc7t5Ck3L+RmVg14
- Msbd9RVNm+cU1wd5pfhHXOIdHBdrMbkCLTLIkq0uIpP6E5vuIPbR2aKST1+bwPm07IcF
- Xbrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732895487; x=1733500287;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l6GbRsi4xYGNJmdLMTpuhoNW1mMD7LaCmhGSt+KTelE=;
- b=bm/Jz5BUjxfJZwQCsrRvsK9iJ+O+An/7BfHwTFg+FNRiFYtQz595b0pu3YPxCrofCk
- RKL3KfM22tZz8afVb0juYuH5c/+scBIsvSx/OtwNLNiMe87m5glHCPC1rel1PqrMVaJv
- qnN90xTmZKl6a6Jrev18spKg/4EkMRIxfgjI9nb1I9RL+BJR3WfkwlIeFb+/FgYoXj1d
- /bchYhJjLQuw6GIlaX6t4eG4DQ4ZRIozzHSsdImiNwurvZQyL3a3GGdHBDHS/pD/GS0L
- zMihZWlXHGtSrSdT3re/N29XgVxpvieTdRKcarX0dcRxCf98CxT8hX3eU0VIqCETKaWY
- V8bw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUs0ODDZah7vyrFICi5u3bDYsRbJX74zBiJhfmMzb2eVMwE/OIVakUMPXWutKtKz9BAuig5TnJzdnFJ@nongnu.org
-X-Gm-Message-State: AOJu0YwGu3L8toYwn39lSpVMXrwaMJaHOlj1ZInynroiOXj8jftK/yVt
- fpv09P4lkxRVbQxWUtQZZdut9Jof0wMUjk52RkAcqMlehi8xnN4MhyQ+ztkGLLk=
-X-Gm-Gg: ASbGncv7dpYvWL+P4ljisbv0nh9BxxI+xHFboKtB4BgzUcxWUbBZMVDz3mdIdzsQYPZ
- arBRqIt9zRV0ri0E6PpDOdsOVxNWcBr3w+Q35jDvmCn8dQcv+qyKB8w4jMPkA31MvHqNRKYovUV
- ezYtSjyzr1aIJ+LACbuutMQ+AGogqc6YIMlxCJg7j7y7kxHIsgots95Q1bcNiki9pm5ahXBVB8z
- WpmHQkinJ4Enni0JrwEJJ9Uq86alm40v6OQWYB8YBPgyGQBkpbrrfSVUn05tLIAXA==
-X-Google-Smtp-Source: AGHT+IFKW8cymzU6xEaEBXVBhlzG16+Lr5c3OANtasHaI+TJygDXYCZOPaNkb4Pr+2BBsGH7dO/M0w==
-X-Received: by 2002:a05:6512:ac7:b0:53d:e50a:7032 with SMTP id
- 2adb3069b0e04-53df00ff78amr7179877e87.44.1732895486725; 
- Fri, 29 Nov 2024 07:51:26 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.147.124])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa5997d413asm185768966b.59.2024.11.29.07.51.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Nov 2024 07:51:26 -0800 (PST)
-Message-ID: <38e7ffed-9579-4c8f-a4de-12b57c5e03cd@linaro.org>
-Date: Fri, 29 Nov 2024 16:51:24 +0100
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tH3HE-0004GA-SV
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 10:51:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732895487;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8GJVdazRf21ux4iTl+yQ/9gjpKS7isQK/8RyegOC2SY=;
+ b=h7zP6nQtgUkpDrmZlPJoC1JCD2l4oVVVkGa0y3kp6le8+49ZjX/jvIBSIuGErcT7wBCGt0
+ FeyWSXiuvfc0Tyh5HqXadeIs4sFoTRGBP0Ixm6sXQDrXZmm25J4RDc1v8QlFGkApSgNSWb
+ FOk5fm3lfsmo7CEY0bH2CJ2m6qDRix0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-Zf6NAUy_PLaWPTeSmpfhhQ-1; Fri,
+ 29 Nov 2024 10:51:24 -0500
+X-MC-Unique: Zf6NAUy_PLaWPTeSmpfhhQ-1
+X-Mimecast-MFC-AGG-ID: Zf6NAUy_PLaWPTeSmpfhhQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A74DE19560B7; Fri, 29 Nov 2024 15:51:20 +0000 (UTC)
+Received: from localhost (dhcp-192-244.str.redhat.com [10.33.192.244])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16249195605A; Fri, 29 Nov 2024 15:51:17 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: eric.auger@redhat.com, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
+ armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [RFC 18/21] arm/cpu: Introduce a customizable kvm host cpu model
+In-Reply-To: <CAFEAcA-Pi4GRXyY3Lf-rCYk0CDZ5cT22orHT6JDxK14k9JMkng@mail.gmail.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20241025101959.601048-1-eric.auger@redhat.com>
+ <20241025101959.601048-19-eric.auger@redhat.com>
+ <ZxuX4i9NjVRizB72@redhat.com>
+ <cb6c8f62-c5dc-416d-865f-fbdf96164dac@redhat.com>
+ <Zxub7ol4p8P_sWF8@redhat.com>
+ <CAFEAcA_wQu17y0PyQwxw0wuf2H5y2VE5aX16nLP2-u7QUP2ggA@mail.gmail.com>
+ <Zx-9WxXkmkMuGIlQ@redhat.com>
+ <CAFEAcA9w0mb5bcU8p+fScQony-=oqLmNurGWpnL_sBneQCzxUg@mail.gmail.com>
+ <Zx_EGxj2aqc_2-kY@redhat.com>
+ <63c232c2-a325-48d6-8ed4-753a7c6e3b4e@redhat.com>
+ <87ikstn8sc.fsf@redhat.com> <87frnwmn2v.fsf@redhat.com>
+ <b7f25d3b-6ba7-4924-9383-74c1169dfe86@redhat.com>
+ <87ldx2krdp.fsf@redhat.com>
+ <CAFEAcA-Pi4GRXyY3Lf-rCYk0CDZ5cT22orHT6JDxK14k9JMkng@mail.gmail.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Fri, 29 Nov 2024 16:51:15 +0100
+Message-ID: <87frnakpho.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] amd_iommu: Fix kvm_enable_x2apic link error with clang in
- non-KVM builds
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, Suravee.Suthikulpanit@amd.com, Vasant.Hegde@amd.com, 
- Santosh Shukla <santosh.shukla@amd.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20241114114509.15350-1-sarunkod@amd.com>
- <11a21260-cf71-495e-94bf-461fc0f39686@linaro.org>
-Content-Language: en-US
-In-Reply-To: <11a21260-cf71-495e-94bf-461fc0f39686@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +107,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/11/24 11:29, Philippe Mathieu-Daudé wrote:
-> On 14/11/24 12:45, Sairaj Kodilkar wrote:
->> Commit b12cb3819 (amd_iommu: Check APIC ID > 255 for XTSup) throws
->> linking error for the `kvm_enable_x2apic` when kvm is disabled
->> and Clang is used for compilation.
->>
->> This issue comes up because Clang does not remove the function callsite
->> (kvm_enable_x2apic in this case) during optimization when if condition
->> have variable. Intel IOMMU driver solves this issue by creating separate
->> if condition for checking variables, which causes call site being
->> optimized away by virtue of `kvm_irqchip_is_split()` being defined as 0.
->> Implement same solution for the AMD driver.
->>
->> Fixes: b12cb3819baf (amd_iommu: Check APIC ID > 255 for XTSup)
->> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
->> Signed-off-by: Santosh Shukla <santosh.shukla@amd.com>
->> Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
->> ---
->>   hw/i386/amd_iommu.c | 8 +++++---
->>   1 file changed, 5 insertions(+), 3 deletions(-)
-> 
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> And queued, thanks.
+On Fri, Nov 29 2024, Peter Maydell <peter.maydell@linaro.org> wrote:
 
-Already merged by Paolo as commit 0266aef8cd6. Noticing that
-earlier would have saved me some time.
+> On Fri, 29 Nov 2024 at 15:10, Cornelia Huck <cohuck@redhat.com> wrote:
+>> The good news is that in many cases we only have differences in bits
+>> that map to a feature (and are actually writable in current KVM.) The
+>> bad news is that we have a number of exceptions.
+>>
+>> Comparison #1:
+>>
+>> ID_AA64DFR0
+>> f010307009      #of breakpoints:7
+>> f010305009      #of breakpoints:5
+>>
+>> BRPs does not match to any feature (but has a different meaning when we
+>> have FEAT_Debugv8p9 and 16+ breakpoints)
+>> [this is a whole can of worms in general]
+>>
+>> ID_AA64MMFR0
+>> 2100022200101026        FEAT_ECV, FEAT_FGT, 4PB
+>> 0000022200101125        mixed endian, 256TB
+>>
+>> FEAT_ECV -> may be 1 or 2 in ECV, with different capabilities (I guess
+>> we would need to allow something like FEAT_ECV=2 to expess this?)
+>
+> This one was an unfortunate oversight; I expect that there
+> will be a separate feature name for the =2 case in some future
+> spec release. But as you note for FEAT_BBM below, not
+> every different ID field value always has its own FEAT_ name.
+> (FEAT_HAFDBS is another -- it allows ID_AA64MMFR1_EL1.HAFDBS to
+> be 1 or 2.)
+
+Ah yes, I actually noticed FEAT_HAFDBS as well.
+
+>
+>> support for mixed endian -> indicated in BigEnd, no feature (how
+>> relevant is this in practice?)
+>
+> ID_AA64MMFR0_EL1.BigEnd == 1 is FEAT_MixedEnd. Relevant if your
+> guest or its userspace wants to use big-endian, which is probably
+> approximately nobody in a KVM context but is theoretically possible.
+
+Ok, that one I missed in the list; if there's a feature, we should be
+able to use it.
+
+>
+>> PARange (52 bits/4PB vs 48 bits/256TB) -> no feature, but some values
+>> depend on other features -- we care about this when creating a cpu, but
+>> migrating to another system with a mismatched range would be
+>> problematic, unless configuration outside of the cpu model would take
+>> care of it
+>>
+>> Comparison #2:
+>>
+>> ID_AA64PFR0
+>> 1101011021111111        FEAT_AMUv1, GIC v3.0/4.0
+>> 1101001020111111
+>>
+>> GIC == 1 indicates GIC CPU sysreg interface for 3.0/4.0, but no feature
+>> (I'm not quite sure how we handle this in QEMU)
+>
+> We basically defer GIC emulation almost entirely to the
+> kernel (which will set the GIC bit in the ID registers
+> according to whether userspace asked it for a GIC or not).
+>
+>> ID_AA64MMFR1
+>> 1000000010312122        FEAT_ECBHB, !FEAT_ETS2, FEAT_PAN3, FEAT_HPDS2, FEAT_HAFDBS
+>> 0000001010211120        !FEAT_ETS2, FEAT_PAN2, FEAT_HPDS
+>>
+>> both ETS == 0 and ETS == 1 indicate that FEAT_ETS2 is not implememented
+>> (ETS == 2 would indicate FEAT_ETS2) -- I guess we would want to
+>> standardize on ETS == 0
+>> FEAT_PAN3 implies FEAT_PAN2, and FEAT_HPDS2 implies FEAT_HPDS2, so
+>> probably fine
+>
+> Yes, in general if the number in the field gets bigger
+> this should be a backwards-compatible improvement in
+> the feature.
+
+Indeed, I hope that this will be the case for new features.
+
 
