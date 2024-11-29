@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E87DD729E7
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B1B2D729E7
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:36:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH4qI-0003XV-RM; Fri, 29 Nov 2024 12:31:46 -0500
+	id 1tH4ql-0003mJ-IF; Fri, 29 Nov 2024 12:32:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tH4qG-0003Wy-N8
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:31:44 -0500
+ id 1tH4qa-0003gu-LT
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:32:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tH4qF-0000s0-2h
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:31:44 -0500
+ id 1tH4qY-0000zl-TN
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:32:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732901502;
+ s=mimecast20190719; t=1732901521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DpH98FjxHZ1UVnVesB0HAAW6c+0dIFSrTacLuFyVkfg=;
- b=L7VPcpRcU/czl12HMekpXfhcYH9D05gt997jb0W+SRCLiMfUpZojOu3ns0vOo8YOv3XlbK
- 9jIL+hPKxqHMX7HSsHIZi4lCCg+LygRtDtxbbOGo/G0ZlrmWQkqCpGAqI91I4ZaH/LiSSs
- eVJM/M+1E2aLm4O075BFoFB9PucciMc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=dnJ+lYLaMza6tRgAJE0L1DHXO/QbfU3aKuloURpEffM=;
+ b=L1voWmTMaaFFhFhhbfuMchyPYGaDsXLGA7soXJC1FgYYXTjvB2QTFT5L4CiJHZPEHg8Uxu
+ WHQiZgr46XtCo7HWpKh1EqYezUReXrpS6G6ulf3ZSiqznEGP7rwsAaa8ZsI/Qt8Zxg5NEJ
+ YZgog+Fabvxku7cb2+/Kf8VD91gEOb8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-FtXx4xptOdO7FA-MwmeH2A-1; Fri,
- 29 Nov 2024 12:31:39 -0500
-X-MC-Unique: FtXx4xptOdO7FA-MwmeH2A-1
-X-Mimecast-MFC-AGG-ID: FtXx4xptOdO7FA-MwmeH2A
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-CFegBAP7MfGi21H4-MC30w-1; Fri,
+ 29 Nov 2024 12:31:59 -0500
+X-MC-Unique: CFegBAP7MfGi21H4-MC30w-1
+X-Mimecast-MFC-AGG-ID: CFegBAP7MfGi21H4-MC30w
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F192E1955EA9; Fri, 29 Nov 2024 17:31:37 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E5A011955EB3; Fri, 29 Nov 2024 17:31:58 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.37])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F1B371955F41; Fri, 29 Nov 2024 17:31:35 +0000 (UTC)
+ id 4E2F41955F41; Fri, 29 Nov 2024 17:31:57 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 05/22] tests/functional: remove duplicated 'which' function
- impl
-Date: Fri, 29 Nov 2024 17:31:03 +0000
-Message-ID: <20241129173120.761728-6-berrange@redhat.com>
+Subject: [PATCH 13/22] tests/functional: switch over to using
+ self.socket_dir(...)
+Date: Fri, 29 Nov 2024 17:31:11 +0000
+Message-ID: <20241129173120.761728-14-berrange@redhat.com>
 In-Reply-To: <20241129173120.761728-1-berrange@redhat.com>
 References: <20241129173120.761728-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,111 +88,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Put the 'which' function into shared code.
+This removes direct creation of temporary dirs
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/__init__.py |  2 +-
- tests/functional/qemu_test/cmd.py      | 10 ++++++++++
- tests/functional/test_acpi_bits.py     | 13 +------------
- tests/functional/test_ppc64_hv.py      | 13 +------------
- 4 files changed, 13 insertions(+), 25 deletions(-)
+ tests/functional/test_arm_aspeed.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 67f87be9c4..8fddddbe67 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -10,6 +10,6 @@
- from .config import BUILD_DIR
- from .cmd import has_cmd, has_cmds, run_cmd, is_readable_executable_file, \
-     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
--    exec_command, exec_command_and_wait_for_pattern, get_qemu_img
-+    exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
- from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
- from .linuxkernel import LinuxKernelTest
-diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-index 11c8334a7c..4106f1ee7c 100644
---- a/tests/functional/qemu_test/cmd.py
-+++ b/tests/functional/qemu_test/cmd.py
-@@ -18,6 +18,16 @@
- 
- from .config import BUILD_DIR
- 
-+def which(tool):
-+    """ looks up the full path for @tool, returns None if not found
-+        or if @tool does not have executable permissions.
-+    """
-+    paths=os.getenv('PATH')
-+    for p in paths.split(os.path.pathsep):
-+        p = os.path.join(p, tool)
-+        if os.path.exists(p) and os.access(p, os.X_OK):
-+            return p
-+    return None
- 
- def has_cmd(name, args=None):
-     """
-diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_acpi_bits.py
-index 6fc49a30bc..4162faf414 100755
---- a/tests/functional/test_acpi_bits.py
-+++ b/tests/functional/test_acpi_bits.py
-@@ -49,7 +49,7 @@
- )
- from qemu.machine import QEMUMachine
- from unittest import skipIf
--from qemu_test import QemuBaseTest, Asset
-+from qemu_test import QemuBaseTest, Asset, which
- 
- deps = ["xorriso", "mformat"] # dependent tools needed in the test setup/box.
- supported_platforms = ['x86_64'] # supported test platforms.
-@@ -57,17 +57,6 @@
- # default timeout of 120 secs is sometimes not enough for bits test.
- BITS_TIMEOUT = 200
- 
--def which(tool):
--    """ looks up the full path for @tool, returns None if not found
--        or if @tool does not have executable permissions.
--    """
--    paths=os.getenv('PATH')
--    for p in paths.split(os.path.pathsep):
--        p = os.path.join(p, tool)
--        if os.path.exists(p) and os.access(p, os.X_OK):
--            return p
--    return None
--
- def missing_deps():
-     """ returns True if any of the test dependent tools are absent.
-     """
-diff --git a/tests/functional/test_ppc64_hv.py b/tests/functional/test_ppc64_hv.py
-index 53bae90401..cc77cd22b1 100755
---- a/tests/functional/test_ppc64_hv.py
-+++ b/tests/functional/test_ppc64_hv.py
-@@ -11,7 +11,7 @@
- 
- from unittest import skipIf, skipUnless
- from qemu_test import (QemuSystemTest, Asset, wait_for_console_pattern,
--                       exec_command)
-+                       exec_command, which)
+diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+index c4869011db..ca223ac8f0 100755
+--- a/tests/functional/test_arm_aspeed.py
++++ b/tests/functional/test_arm_aspeed.py
+@@ -9,7 +9,6 @@
  import os
  import time
  import subprocess
-@@ -19,17 +19,6 @@
+-import tempfile
  
- deps = ["xorriso"] # dependent tools needed in the test setup/box.
+ from qemu_test import (LinuxKernelTest, Asset,
+                        exec_command_and_wait_for_pattern,
+@@ -228,8 +227,8 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
  
--def which(tool):
--    """ looks up the full path for @tool, returns None if not found
--        or if @tool does not have executable permissions.
--    """
--    paths=os.getenv('PATH')
--    for p in paths.split(os.path.pathsep):
--        p = os.path.join(p, tool)
--        if os.path.exists(p) and os.access(p, os.X_OK):
--            return p
--    return None
--
- def missing_deps():
-     """ returns True if any of the test dependent tools are absent.
-     """
+         tpmstate_dir = self.scratch_file('swtpmstate')
+         os.mkdir(tpmstate_dir)
+-        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
+-        socket = os.path.join(tpmstate_dir.name, 'swtpm-socket')
++        socket_dir = self.socket_dir()
++        socket = os.path.join(socket_dir.name, 'swtpm-socket')
+ 
+         # We must put the TPM state dir in /tmp/, not the build dir,
+         # because some distros use AppArmor to lock down swtpm and
 -- 
 2.46.0
 
