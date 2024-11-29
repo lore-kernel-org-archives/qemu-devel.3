@@ -4,91 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB97AD6EBFF
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 11:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FDDCD6EC04
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 12:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGzNA-0001r5-0E; Fri, 29 Nov 2024 06:41:20 -0500
+	id 1tH01o-0000qv-Nx; Fri, 29 Nov 2024 07:23:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGzN9-0001qw-5r
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 06:41:19 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGzN7-0005hH-2A
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 06:41:18 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-434a10588f3so11139325e9.1
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 03:41:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732880475; x=1733485275; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/o+BS+OcIItedzzG1AU2rEt3OTvDpG5A87iPkWMu5Rw=;
- b=df1JmmMwvVSrqQaIZXpUB30wyDT4TgznRFB/O5vJ+wIViPgZEqMIwdOlB5Bb/6NAKs
- GSxE4k4K8MzCW4Q8AcFsM5htj5blWd2ktPmJKdBCcdpRzmzwcMHjNMFMHjMg+mQn2oDm
- eDX+18sp83whdhGRwg8Ocz3aK4IXwnpLDr/NGfOAhKaIAWsLXsrl8mu0IOvxxz1x7oUg
- ztEygHSEaCU4DnsqP9QFDq52sCrSq5FEGLXRvM+oEtp4qHWLABpvSmyYqo+yJQ1oSGM1
- YsBc8Q/NloOrsVzrEmcZR5wC8Q+uN+/0yJo8XNmLFfrAgLQvJNlXORTvWHuW7DcbrD1G
- HmRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732880475; x=1733485275;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/o+BS+OcIItedzzG1AU2rEt3OTvDpG5A87iPkWMu5Rw=;
- b=aPvKZubGdjebluKgwrIFKMSsLeFhTOTRhCuHtOfjZ2xoJd5CH/V0VOJtZ+S+Y9om8p
- N7wgocH94t7vHNdFCr5L9ophCudRSjc1ThJSPAS77n+4d3E4/A8IIye8YIFanfmQYvUE
- 1uX3ATgGGBb/asym4W8f6Sk67/y8ko1/ymHa5MCqULiKAsZIXO/SFdoQT5SmaQvbdn75
- u5QeLyH7hraENDGNBOVkK3RI6XAMUmKFbIb5k6VNyHRMZT1u1aTTMdvP8sr85vvKgURy
- JFE1b40piEAFxtm/mGJGrANArY6aSpNMReDuzVvDDYXEiRTfpdXPfWR+nxGwMDl8Wxuy
- CDJw==
-X-Gm-Message-State: AOJu0YykLMfdDvkxA/4xuPraQ4BgTymI1p4WaJhv5d0RMkE9mp/KDp2H
- ODJ9bCprr4H4aUOHo2uDKztMBNYztLrICal62g/iv3NabHjmjlnEJw0Bg6qoFqvXh/GNjJg7Pvo
- i
-X-Gm-Gg: ASbGncsLiyafx6wqSyJShBQ4pfBOuLOl18CDziH4P/8ulJW2XHVwQZQIE/HpoDAwAam
- y2QOEHpBMV8LtEItX91ja0feGKmLnuNzzgHe9EJpSjBBOXwVdYL57VL+uA2L9bqk+YcYg8DfLHz
- 2xC4n2DyI8KVn8wU3jSclIdczSvgCND5NoQKQbjHxqUEApCaF6g3Qmfv4+cFKrJSkwWC84Y2HQD
- pSoPj0AJ9GZ/1aDrh+Sx2uq0rNhVP3KMImfQz1TDnAWxvXx4umhI3fXbIERa+NEbctjTi2iswyW
- lFn8l98RZRuO7iMTVJ8A89tEvIqYhw==
-X-Google-Smtp-Source: AGHT+IE1lcy+shPR/HEchi9kcSQgIZ8rQ6wiHT9NE9NxJwz3N+RDB/IwwOJHwIOhJ+qOiw3unJ0miQ==
-X-Received: by 2002:a05:600c:1f06:b0:431:2b66:44f7 with SMTP id
- 5b1f17b1804b1-434a9df7a8dmr114281755e9.31.1732880474951; 
- Fri, 29 Nov 2024 03:41:14 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434aa763a59sm81750635e9.11.2024.11.29.03.41.13
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 29 Nov 2024 03:41:14 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tH01l-0000qS-FY
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 07:23:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tH01g-000688-9p
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 07:23:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732882988;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=K1WXGKctx1LOvuuy6yZ9bMenoyYk3Lr4CXvA4oBUo3A=;
+ b=iQH0oAzvMN7y59DPzNgoyWe+bSHhEJJc/+phHD/cnqvrlp0W4q3OcP5cdJk79udyG/vbq+
+ 5yKuy97Il4qOKWhbvKSKya8cAHLj4wOQAp+xVS6kuxDY4mTcDK/ot36vkBgWBHy8n99w4d
+ LEh/7FLXZIBxi+vFuiC1cdrDf9kRsmU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-TqxiQqRIMiuJ7ZKMFnW1hA-1; Fri,
+ 29 Nov 2024 07:23:07 -0500
+X-MC-Unique: TqxiQqRIMiuJ7ZKMFnW1hA-1
+X-Mimecast-MFC-AGG-ID: TqxiQqRIMiuJ7ZKMFnW1hA
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C3371955D4C; Fri, 29 Nov 2024 12:23:06 +0000 (UTC)
+Received: from kaapi.redhat.com (unknown [10.67.24.141])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9EB6E195608A; Fri, 29 Nov 2024 12:23:02 +0000 (UTC)
+From: Prasad Pandit <ppandit@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Daniel Hoffman <dhoff749@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>, Vasant.Hegde@amd.com,
- Richard Henderson <richard.henderson@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Zhao Liu <zhao1.liu@intel.com>,
- Santosh Shukla <santosh.shukla@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH-for-9.2] hw/i386/amd_iommu: Fix XTSup feature check when KVM
- is not available
-Date: Fri, 29 Nov 2024 12:41:13 +0100
-Message-ID: <20241129114113.33215-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+Cc: peterx@redhat.com, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH v2 0/3] Allow to enable multifd and postcopy migration together
+Date: Fri, 29 Nov 2024 17:52:53 +0530
+Message-ID: <20241129122256.96778-1-ppandit@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,83 +81,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When building with debug on a host which doesn't provide KVM,
-we get:
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-    C compiler for the host machine: clang (clang 16.0.0 "Apple clang
-    version 16.0.0 (clang-1600.0.26.4)")
-    C linker for the host machine: clang ld64 1115.7.3
-    Host machine cpu family: aarch64
-    Host machine cpu: aarch64
-       Compilation
-         host CPU                        : aarch64
-         host endianness                 : little
-         C compiler                      : clang
-         Host C compiler                 : clang
-         C++ compiler                    : NO
-         Objective-C compiler            : clang
-         Rust support                    : NO
-         CFLAGS                          : -g -O0
-       User defined options
-         optimization                    : 0
-    ...
-    [1589/1590] Linking target qemu-system-x86_64-unsigned
-    Undefined symbols for architecture arm64:
-       "_kvm_enable_x2apic", referenced from:
-           _amdvi_sysbus_realize in hw_i386_amd_iommu.c.o
-    ld: symbol(s) not found for architecture arm64
+Hello,
 
-In commit 9926cf34de5 ("target/i386: Allow elision of
-kvm_enable_x2apic()") we removed this symbol stub globally
-(debug and optimized build profiles). All code wanted to
-access it must be protected by a check on kvm_enabled().
-See the similar check in x86_cpus_init() added by commit
-c04cfb4596a ("hw/i386: fix short-circuit logic with
-non-optimizing builds").
+* Currently Multifd and Postcopy migration can not be used together.
+  QEMU shows "Postcopy is not yet compatible with multifd" message.
 
-In order to fix this linking error, protect the whole
-block checking the XTSup feature with a check on whether
-KVM is enabled.
+  When migrating guests with large (100's GB) RAM, Multifd threads
+  help to accelerate migration, but inability to use it with the
+  Postcopy mode delays guest start up on the destination side.
 
-Since x86_cpus_init() already checks APIC ID > 255 imply
-kernel support for irqchip and X2APIC, remove the confuse
-and unlikely reachable "AMD IOMMU xtsup=on requires support
-on the KVM side" message.
+* This patch series allows to enable both Multifd and Postcopy
+  migration together. Precopy and Multifd threads work during
+  the initial guest (RAM) transfer. When migration moves to the
+  Postcopy phase, Multifd threads are restrained and the Postcopy
+  threads start to request pages from the source side.
 
-Fix a type in "configuration" in error message.
+* This series removes magic value (4-bytes) introduced in the
+  previous series for the Postcopy channel. And refactoring of
+  the 'ram_save_target_page' function is made independent of
+  the multifd & postcopy change.
 
-Fixes: b12cb3819baf (amd_iommu: Check APIC ID > 255 for XTSup)
-Reported-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+  v1: https://lore.kernel.org/qemu-devel/20241126115748.118683-1-ppandit@redhat.com/T/#u
+  v0: https://lore.kernel.org/qemu-devel/20241029150908.1136894-1-ppandit@redhat.com/T/#u
+
+
+Thank you.
 ---
-Alternative fix to:
-- https://lore.kernel.org/qemu-devel/20241113144923.41225-1-phil@philjordan.eu/
-- https://lore.kernel.org/qemu-devel/20241114114509.15350-1-sarunkod@amd.com/
----
- hw/i386/amd_iommu.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+Prasad Pandit (3):
+  migration/multifd: move macros to multifd header
+  migration: refactor ram_save_target_page functions
+  migration: enable multifd and postcopy together
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 13af7211e11..39b6d6ef295 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1652,13 +1652,8 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion_overlap(&s->mr_sys, AMDVI_INT_ADDR_FIRST,
-                                         &s->mr_ir, 1);
- 
--    /* AMD IOMMU with x2APIC mode requires xtsup=on */
--    if (x86ms->apic_id_limit > 255 && !s->xtsup) {
--        error_report("AMD IOMMU with x2APIC confguration requires xtsup=on");
--        exit(EXIT_FAILURE);
--    }
--    if (s->xtsup && kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
--        error_report("AMD IOMMU xtsup=on requires support on the KVM side");
-+    if (kvm_enabled() && x86ms->apic_id_limit > 255 && !s->xtsup) {
-+        error_report("AMD IOMMU with x2APIC configuration requires xtsup=on");
-         exit(EXIT_FAILURE);
-     }
- 
+ migration/migration.c      | 90 +++++++++++++++++++++++---------------
+ migration/multifd-nocomp.c |  3 +-
+ migration/multifd.c        |  5 ---
+ migration/multifd.h        |  5 +++
+ migration/options.c        |  5 ---
+ migration/ram.c            | 73 +++++++++----------------------
+ 6 files changed, 82 insertions(+), 99 deletions(-)
+
 -- 
-2.45.2
+2.47.1
 
 
