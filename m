@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27646D729E7
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 061D5D729ED
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH4qI-0003XU-SC; Fri, 29 Nov 2024 12:31:47 -0500
+	id 1tH4rP-0004z4-Ox; Fri, 29 Nov 2024 12:32:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tH4qH-0003X7-Du
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:31:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tH4qx-00046T-QQ
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:32:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tH4qF-0000sM-GB
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:31:45 -0500
+ id 1tH4qw-00017Y-Cb
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:32:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732901502;
+ s=mimecast20190719; t=1732901545;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=41MScyuoH6TE7bbmCTMEw2wCRLMzaMVg00srWkvrbS0=;
- b=cBftoLBxxJCjtEO2Id9pmQvkiouNuJatnIIVIV2PQTioydM2vPPLGPV8y3JuzV5WzCm3Xv
- PfY03W2RzTUtoUAG2jVZSWCumQi36prRQkFm90tx1tZgjhbmlRJwAd140cLaGxYCrUqCLh
- JeSu1xNj5KiKMMZEHyhDpns8aV8P17Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=xL5Wxr2F74R3RQEXwSYCoWJhnI9k2JMIAfjAihei9rU=;
+ b=DvBtAgZ3tH16cVO3V1qntehplsFkmzS1sGq2WjpLVk6qC8LEXQ+OBG8r0XW6MbHnQ1Ydcz
+ e+gq0tMiFGnni33/ydbZi7tJ808NK+Ynr5YNpPxGTYOQu5DCZ/O+MBI75AbbfEnXFtWF4J
+ XpTbjJ5nNpRxw385IzOAB7oN+gFpLmI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-79IKLt3LNnOVWUWdANY1sA-1; Fri,
- 29 Nov 2024 12:31:41 -0500
-X-MC-Unique: 79IKLt3LNnOVWUWdANY1sA-1
-X-Mimecast-MFC-AGG-ID: 79IKLt3LNnOVWUWdANY1sA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-400-SpRAWYlVMeS0UrB2rcE9dQ-1; Fri,
+ 29 Nov 2024 12:32:20 -0500
+X-MC-Unique: SpRAWYlVMeS0UrB2rcE9dQ-1
+X-Mimecast-MFC-AGG-ID: SpRAWYlVMeS0UrB2rcE9dQ
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4FB261955EB1; Fri, 29 Nov 2024 17:31:40 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56B931955EA9; Fri, 29 Nov 2024 17:32:19 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.37])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 746471955F2D; Fri, 29 Nov 2024 17:31:38 +0000 (UTC)
+ id 13CE21955F2F; Fri, 29 Nov 2024 17:32:16 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 06/22] tests/functional: introduce some helpful decorators
-Date: Fri, 29 Nov 2024 17:31:04 +0000
-Message-ID: <20241129173120.761728-7-berrange@redhat.com>
+Subject: [PATCH 21/22] tests/functional: add 'uncompress' to QemuBaseTest
+Date: Fri, 29 Nov 2024 17:31:19 +0000
+Message-ID: <20241129173120.761728-22-berrange@redhat.com>
 In-Reply-To: <20241129173120.761728-1-berrange@redhat.com>
 References: <20241129173120.761728-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,163 +87,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reduce repeated boilerplate with some helper decorators:
-
- @skipIfNotPlatform("x86_64", "aarch64")
-
-  => Skip unless the build host platform matches
-
- @skipIfMissingCommands("mkisofs", "losetup")
-
-  => Skips unless all listed commands are found in $PATH
-
- @skipIfMissingImports("numpy", "cv2")
-
-  => Skips unless all listed modules can be imported
-
- @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
-
-  => Skips unless env var requests flaky tests with the
-     reason documented in the referenced gitlab bug
-
- @skipBigData
-
-  => Skips unless env var permits tests creating big data files
-
- @skipUntrustedTest
-
-  => Skips unless env var permits tests which are potentially
-     dangerous to the host
+This helper wrappers utils.uncompress, forcing the use of the scratch
+directory, to ensure any uncompressed files are cleaned at test
+termination.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/__init__.py   |   3 +
- tests/functional/qemu_test/decorators.py | 105 +++++++++++++++++++++++
- 2 files changed, 108 insertions(+)
- create mode 100644 tests/functional/qemu_test/decorators.py
+ tests/functional/qemu_test/testcase.py | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 8fddddbe67..7dee3522f2 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -13,3 +13,6 @@
-     exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
- from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
- from .linuxkernel import LinuxKernelTest
-+from .decorators import skipIfMissingCommands, skipIfNotMachine, \
-+    skipFlakyTest, skipUntrustedTest, skipBigDataTest, \
-+    skipIfMissingImports
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-new file mode 100644
-index 0000000000..d25fec7b2d
---- /dev/null
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -0,0 +1,105 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Decorators useful in functional tests
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 31d06f0172..5c088a2442 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -29,7 +29,8 @@
+ from .cmd import run_cmd
+ from .config import BUILD_DIR
+ from .utils import (archive_extract as utils_archive_extract,
+-                    guess_archive_format)
++                    uncompress as utils_uncompress,
++                    guess_archive_format, guess_uncompress_format)
+ 
+ 
+ class QemuBaseTest(unittest.TestCase):
+@@ -41,6 +42,21 @@ class QemuBaseTest(unittest.TestCase):
+     log = None
+     logdir = None
+ 
++    def uncompress(self, input_path, format=None):
++        if type(input_path) == Asset:
++            if format is None:
++                format = guess_uncompress_format(input_path.url)
++            input_path = input_path.fetch()
++        elif format is None:
++            format = guess_uncompress_format(input_path)
 +
-+import os
-+import platform
-+from unittest import skipUnless
++        (name, ext) = os.path.splitext(input_path)
++        output_path = self.scratch_file(os.path.basename(name))
 +
-+from .cmd import which
++        utils_uncompress(input_path, output_path)
 +
-+'''
-+Decorator to skip execution of a test if the list
-+of command binaries is not available in $PATH.
-+Example:
++        return output_path
 +
-+  @skipIfMissingCommands("mkisofs", "losetup")
-+'''
-+def skipIfMissingCommands(*args):
-+    def has_cmds(cmdlist):
-+        for cmd in cmdlist:
-+            if not which(cmd):
-+                return False
-+        return True
-+
-+    return skipUnless(lambda: has_cmds(args),
-+                      'required commands(s) "%s" not installed' %
-+                      ", ".join(args))
-+
-+'''
-+Decorator to skip execution of a test if the current
-+host machine does not match one of the permitted
-+machines.
-+Example
-+
-+  @skipIfNotMachine("x86_64", "aarch64")
-+'''
-+def skipIfNotMachine(*args):
-+    return skipUnless(lambda: platform.machine() in args,
-+                        'not running on required machine(s) "%s"' %
-+                        ", ".join(args))
-+
-+'''
-+Decorator to skip execution of flaky tests, unless
-+the $QEMU_TEST_FLAKY_TESTS env var is set. A bug URL
-+must be provided that documents the observed failure
-+behaviour, so it can be tracked & re-evaluated in future.
-+
-+Historical tests may be providing "None" as the bug_url
-+but this should not be done for new test.
-+
-+Example:
-+
-+  @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
-+'''
-+def skipFlakyTest(bug_url):
-+    if bug_url is None:
-+        bug_url = "FIXME: reproduce flaky test and file bug report or remove"
-+    return skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'),
-+                      f'Test is unstable: {bug_url}')
-+
-+'''
-+Decorator to skip execution of tests which are likely
-+to execute untrusted commands on the host, or commands
-+which process untrusted code, unles the
-+$QEMU_TEST_ALLOW_UNTRUSTED_CODE env var is set.
-+Example:
-+
-+  @skipUntrustedTest()
-+'''
-+def skipUntrustedTest():
-+    return skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'),
-+                      'Test runs untrusted code / processes untrusted data')
-+
-+'''
-+Decorator to skip execution of tests which need large
-+data storage on the host, unless the
-+$QEMU_TEST_ALLOW_LARGE_STORAGE env var is set
-+
-+Example:
-+
-+  @skipBigDataTest()
-+'''
-+def skipBigDataTest():
-+    return skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'),
-+                      'Test required large host storage space')
-+
-+'''
-+Decorator to skip execution of a test if the list
-+of python imports is not available.
-+Example:
-+
-+  @skipIfMissingImports("numpy", "cv2")
-+'''
-+def skipIfMissingImports(*args):
-+    def has_imports(importlist):
-+        for impname in importlist:
-+            try:
-+                import impname
-+            except ImportError:
-+                return False
-+        return True
-+
-+    return skipUnless(lambda: has_imports(args),
-+                      'required imports(s) "%s" not installed' %
-+                      ", ".join(args))
+     '''
+     @params archive: filename, Asset, or file-like object to extract
+     @params sub_dir: optional sub-directory to extract into
 -- 
 2.46.0
 
