@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F966D6EBFD
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 10:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3928AD6EBFD
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 10:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGyJG-0005rl-N2; Fri, 29 Nov 2024 05:33:14 -0500
+	id 1tGyJH-0005rr-DG; Fri, 29 Nov 2024 05:33:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tGyJF-0005rM-0Q
+ id 1tGyJF-0005rO-3l
  for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:33:13 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1tGyJD-0001UK-I0
+ id 1tGyJD-0001UW-Kt
  for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:33:12 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-aa520699becso244647166b.1
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 02:33:10 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a9f1d76dab1so304762566b.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 02:33:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732876389; x=1733481189; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Cy9E1tkGPvaNC8VOXWREs1/OqKDZktAvXmcLeAepa2M=;
- b=GOViZBJZ2fnwfJb4ANZu4gNRW9GyLShNP6JfnUxnDImB0gzBXBKU+JbZeUNy9PIl+R
- dbXoDMM0mXgFaCeZaKZkg9mabblotL4YNrtvWAWmGN+ASLLZBY/6H4pxU2GG48E0dZay
- BbV37gm8JFjMOkRdlEZUi3Ibj68bfT3k2IZf67m7TzRz/K2ulZx7YIDNYKGWwsxQpIWe
- pzTR9xyCAEzKY5yYEHsEsp9o8Kfi2aBXGI/48GGZIhLZqI7S9iyNzQi/4uxb0iqrzQ/W
- lVQx2pXqJq8boTP8tJRM8UBJJ2nFQWancxNVq3Z3CfTsJk826f86/rpJ4HSjfWbzKHi5
- hpxQ==
+ d=gmail.com; s=20230601; t=1732876390; x=1733481190; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dXJ6HW1nN5mggE0fLVWeH4H4Bs/Jql1OpaGTmx1GQo8=;
+ b=mephaf4kb4izOnqoPNPr6b/Z0zaUiG61Jmo+hWD0oMAg2i0gB7NYTnX5Gv2QXR5XEM
+ 96WN6nDWo1XeZWPEaWx3T7E/GOcXebBo3/V42I5Cvak7Qf00yX8KibPMw85xXJOMU6Eg
+ gysSaQVsp2YYpE0ylGBv4dSluxPbNNoZjPIFjm4RkLNOmkyMoCFpIwl0FrvuGmQ+vT6M
+ WzmwVcdm0rU2RZDHjQW61XEFVaWybLtTKSuHEfVevTUmaD/aad0Yf0brCrZMZl0Y+7xZ
+ Gd/PW0XrC8RtYH9Gojn6yrxj7n8BWztgmse7SeUg+i/YKaT0E+j+eJtgc0H/aN8d324g
+ ydhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732876389; x=1733481189;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Cy9E1tkGPvaNC8VOXWREs1/OqKDZktAvXmcLeAepa2M=;
- b=Krfa0ZvCWmg/DABjb4FKa6o3PxnDY75nBoEuE/59J2S7v12MzZaBthvzjhmrME8UNU
- 6eVl9iALflkK2z7rcEzqxEvRIt5qq8jIs3avE9syWlWHMX2gkHyGs4XprFjbLEGTu+uM
- NzzynjzM2hu2PGyr04LyWrvjNw74Otcz4D4Mcgc6L5NhSTI9fCDphYg20wMyaSfD7Vd2
- A62DsalZvWNLIRoQbFV0mWo37gwwwLOpDapGtBXG1MNc+QtLJWgcwV7SdvdyrqipRVQu
- xxrBFw2pjfgSEbgotf0vB4QlYzazp4wBPmJ0CExmNsq94HUExgynmzEHeBMnEObA0pL2
- QGqQ==
+ d=1e100.net; s=20230601; t=1732876390; x=1733481190;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dXJ6HW1nN5mggE0fLVWeH4H4Bs/Jql1OpaGTmx1GQo8=;
+ b=G9o567OZalqcoTurrL43ZkD2g//MRGyoYJrIiUW7pW0HAKGCQNQHc0YyojBGZR4ays
+ +X+BMsBIqcofnisU1qpx22dpnqH0f3wDmdoVF7T2VQwYjnNQ2uMOe4UkI7IxybMu1TPU
+ g2gHYqbixHIAcMZ+A42fNVYx28Mhpo7jCXbtQ/TBN77VTRSxbkKw9iAcUli31JwGsm6U
+ +qfxqbqSTVRGWThuwrKOPEzeuB4e/ftEwynW/5S9wiU9FXh30Wq//TMfoOhaScVO15kR
+ 3QfkKIs+3+70PnPn6cEbJ/oWrQTi6UvYz28+yVIO6TajRlDtkrQay7G8gtlJZMKHK4gJ
+ o3AA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXKoqAF7kEdOVtkEDi2bX6kmUzLFwSdttBXQiCkg2/IffUXvSq7MC+sb5qjUpnRYIj9Ha68YNOmzRCm@nongnu.org
-X-Gm-Message-State: AOJu0Yy79q6P0CphfEg8kJlRKX4jMOO5467QD8lR+kJR6yV6TJf7fFzt
- lJF6HPDaNFJAUYlNa6Dil0U+6CFpP+HgKvo7TJDlq65xops2I4Fx
-X-Gm-Gg: ASbGnctvk9EKv6YFcp3yp5/kcdNJymCS3dPbwDrC95AB9zYfJN/yxqkMCmCpFixcSgC
- cB1x8l5XaDQIMwD4fQwUPHDpZs5YSW5Ei3XUaNRDlftroqvdVUw69P8+vaigd3e9p/KQyb1KlEY
- 4BVPwYFcgD5dHyRNRTX28zMDss8FFaLKgl8SM284zpKzOC30M8FCOlTyk1HgKgAAZWJX0lFX+dB
- B77/t7gaj6A0zEp0GAQCA3PWo4Fe830PmmKR4EyS+X/2dmfQWYHWXZUTIM=
-X-Google-Smtp-Source: AGHT+IHPsyFb3QgYHQZqaDmBhTe3vTFOA6lVb9ds2uPNkMdmCkKdDB1vnisoVQ7txx9Tm3w/j0Umxw==
-X-Received: by 2002:a17:907:778b:b0:aa5:485e:b7e1 with SMTP id
- a640c23a62f3a-aa580f01b78mr933193566b.16.1732876389287; 
+ AJvYcCXasb646ZrHC7bSOdpy3lEgIOcyYKJwuzcOZLQ7nRGdh09G7deQ6QnkRLBDPdhuhXawlopLVg+HhjHB@nongnu.org
+X-Gm-Message-State: AOJu0YwErLpjXgzKS6pSIVmvmKDWN+5tW+mbEwq3qMzi32Vm9JteRr+J
+ YKWc5sH51rz+ww/bROCoDQkBFD+BBL8JdkhVZX+mxXDBXIx/R47E
+X-Gm-Gg: ASbGnctQFH7q3MfTGv5y3t+ARtldbBCERbiDhC1dDxWKVOV9r1sFE7acwY8LNQLlHxR
+ Esvjcyet18fGm49Xw0iBPzTLfxDfogFgQLtrwGLqmwnmylFYYE+tlaG0jcRCFA86HbRSuqTLb98
+ HSQ4iYJM9o99nsOEvzfl31ATqwAmJNnihtfKDFWRKBt7QfRsMysbrpGTU5dbd2nFy7t3re3kfS4
+ X4zxM9DBsNSGTEPiZ9wiLrdxrT4TXXCivROUJMQdpjItCtYHHPWw0nPgic=
+X-Google-Smtp-Source: AGHT+IEQVv6woXeDsHkvJ5y2fGtiXtJqlAK2NvGRMO6u74vpDHUqaK/QeiXzyahSd72ojN8vlkaang==
+X-Received: by 2002:a17:906:310e:b0:a9a:76d:e86c with SMTP id
+ a640c23a62f3a-aa58107180emr1033661366b.49.1732876389923; 
  Fri, 29 Nov 2024 02:33:09 -0800 (PST)
 Received: from think.fritz.box ([2a02:8109:8384:1400:4166:755a:3476:5f1c])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa599953c81sm160300266b.184.2024.11.29.02.33.08
+ a640c23a62f3a-aa599953c81sm160300266b.184.2024.11.29.02.33.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Nov 2024 02:33:08 -0800 (PST)
+ Fri, 29 Nov 2024 02:33:09 -0800 (PST)
 From: Roman Penyaev <r.peniaev@gmail.com>
 To: 
 Cc: Roman Penyaev <r.peniaev@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v3 0/2] chardev/char-mux: tweak mux bitset operations
-Date: Fri, 29 Nov 2024 11:32:37 +0100
-Message-Id: <20241129103239.464061-1-r.peniaev@gmail.com>
+Subject: [PATCH v3 1/2] chardev/char-mux: shift unsigned long to avoid 32-bit
+ overflow
+Date: Fri, 29 Nov 2024 11:32:38 +0100
+Message-Id: <20241129103239.464061-2-r.peniaev@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241129103239.464061-1-r.peniaev@gmail.com>
+References: <20241129103239.464061-1-r.peniaev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,35 +106,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Patchset tweaks bitset operations by changing a constant to unsigned
-long, introduces a static compile check and simplifies bitset operations.
-Also resolves Coverity CID 1563776.
+Allthough the size of MAX_MUX is equal to 4 and likely will never
+change, this patch changes type of constant to unsigned long to
+be on the safe side.
 
-v2..v3:
-* Multiply (sizeof(d->mux_bitset) * BITS_PER_BYTE) to get number
-  of bits (thanks Paolo Bonzini for noticing that)
-* Rebase on latest master
-
-v1..v2:
-  * Rebase on latest master, incorporate review tags.
-
-Roman Penyaev (2):
-  chardev/char-mux: shift unsigned long to avoid 32-bit overflow
-  chardev/char-mux: make boolean bit check instead of find_next_bit()
-
- chardev/char-mux.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
-
+Also add a static compile check that MAX_MUX never bigger than
+`sizeof(d->mux_bitset) * BITS_PER_BYTE`.
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Reviewed-by: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Cc: qemu-devel@nongnu.org
+---
+ chardev/char-mux.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-
-
+diff --git a/chardev/char-mux.c b/chardev/char-mux.c
+index bda5c45e6058..9d67b8bd9ab8 100644
+--- a/chardev/char-mux.c
++++ b/chardev/char-mux.c
+@@ -316,6 +316,8 @@ bool mux_chr_attach_frontend(MuxChardev *d, CharBackend *b,
+ {
+     unsigned int bit;
+ 
++    QEMU_BUILD_BUG_ON(MAX_MUX > (sizeof(d->mux_bitset) * BITS_PER_BYTE));
++
+     bit = find_next_zero_bit(&d->mux_bitset, MAX_MUX, 0);
+     if (bit >= MAX_MUX) {
+         error_setg(errp,
+@@ -325,7 +327,7 @@ bool mux_chr_attach_frontend(MuxChardev *d, CharBackend *b,
+         return false;
+     }
+ 
+-    d->mux_bitset |= (1 << bit);
++    d->mux_bitset |= (1ul << bit);
+     d->backends[bit] = b;
+     *tag = bit;
+ 
+@@ -341,7 +343,7 @@ bool mux_chr_detach_frontend(MuxChardev *d, unsigned int tag)
+         return false;
+     }
+ 
+-    d->mux_bitset &= ~(1 << bit);
++    d->mux_bitset &= ~(1ul << bit);
+     d->backends[bit] = NULL;
+ 
+     return true;
 -- 
 2.34.1
 
