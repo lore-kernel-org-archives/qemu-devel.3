@@ -4,118 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5234D6EC07
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 13:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DDE4D6EC07
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 13:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH0uS-0001u8-9T; Fri, 29 Nov 2024 08:19:48 -0500
+	id 1tH11D-0002xv-Kg; Fri, 29 Nov 2024 08:26:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tH0uO-0001tc-Mg
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:19:44 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tH0uN-0005kr-1h
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:19:44 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 487DD21134;
- Fri, 29 Nov 2024 13:19:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732886380; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pqFCi2SQT9VtrOf3vYF6ZliVF0o4ppfImsi9vt/yK0Y=;
- b=QqCzs7R/NHUkJvG0FmIn9TmuQKT+B7EOgZ8XNX3fmuLcNSdOtMY5RSDpwINdWqtTzS3zV2
- FzAEn+vmdmcLtqmyrtyIaCzCR3aSyvohX0jRyceQ2gppZsULQryEH3dSbsHdZRKRhRXrjg
- tX5X39WMegs75Wno8J5+WYtjMUYkKy0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732886380;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pqFCi2SQT9VtrOf3vYF6ZliVF0o4ppfImsi9vt/yK0Y=;
- b=Dknu0qSkljG5bkXy2yVaKRK6hclQtsQoZwsa60DkYYdbAcHT0Oj+E9p3pR6jcAgKVowUnp
- E+ieSdIL+0QLZaCA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FDB24+r4;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Gaz2tr3Q
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1732886379; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pqFCi2SQT9VtrOf3vYF6ZliVF0o4ppfImsi9vt/yK0Y=;
- b=FDB24+r4Gx0aktxh5D9uVzkqWL+2ZrneCVP9XgBVbK006kK6KcsiRkC/awu1pkDGvMvo+b
- Tou52wtXS9ep/en1nuL3N42ZuhDtfxnKzJ3NVQltLtxMljUIO711FwKdVwCeFI6McIh/ko
- KCQZ1HuJjipqJd8hBARrB6unSSHTj+g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1732886379;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pqFCi2SQT9VtrOf3vYF6ZliVF0o4ppfImsi9vt/yK0Y=;
- b=Gaz2tr3QhfF7EVLVhdHwmv+Y3Dp2CWInZ6goh8x28nO5ma6EVK8GMiNPLkHMMB6lctZphs
- cKwL1ipjPOT5CEBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BFD6C139AA;
- Fri, 29 Nov 2024 13:19:38 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id FUalIGq/SWc/HQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 29 Nov 2024 13:19:38 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH v3 03/17] tests/migration: Disambiguate guestperf vs. a-b
-In-Reply-To: <20241127182901.529-4-farosas@suse.de>
-References: <20241127182901.529-1-farosas@suse.de>
- <20241127182901.529-4-farosas@suse.de>
-Date: Fri, 29 Nov 2024 10:19:36 -0300
-Message-ID: <87serajhxz.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1tH11B-0002xl-SS
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:26:46 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1tH119-0000bn-CK
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:26:45 -0500
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c08:f69e:0:640:3ef4:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id CBE92610AF;
+ Fri, 29 Nov 2024 16:26:33 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:a409::1:12] (unknown
+ [2a02:6b8:b081:a409::1:12])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id VQb7NM1IdiE0-BJHmwVsd; Fri, 29 Nov 2024 16:26:32 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1732886792;
+ bh=NUSxPfXEY6EwxxtF0lWDS8vBlLCqiaBJcHCjgosdbjk=;
+ h=Cc:To:Subject:From:Date:Message-ID;
+ b=QtBzdtJFIGLTTB5yqWeHzkDs8wWmXcl76Z7FS9M8Z1kvajohY7KUFarLJZT+MRBp3
+ wSd+UqGg0cYmML5LEhH/DJq+LdXE3G31rHxiPaDAm9y7N+0d4kTg1p+4s3NiqElZGw
+ 1daA1x0quuatDgHPhEys6cqjd3lsLnZWMQpUd16I=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <0d1fb30f-0b45-4797-82da-4c1d2e801499@yandex-team.ru>
+Date: Fri, 29 Nov 2024 16:26:31 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 487DD21134
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [BUG] qemu crashes on assertion in cpu_asidx_from_attrs when cpu is
+ in smm mode
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, mtosatti@redhat.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ yc-core@yandex-team.ru, Daniil Tatianin <d-tatianin@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -127,50 +79,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+Hi all!
 
-> The current build structure for migration tests is confusing. There is
-> the tests/migration directory, which contains two different guest code
-> implementations, one for the qtests (a-b-{bootblock|kernel}.S) and
-> another for the guestperf script (stress.c). One uses a Makefile,
-> while the other uses meson.
->
-> The next patches will add a new qtests/migration/ directory to hold
-> qtest code which will make the situation even more confusing.
->
-> Move the guest code used by qtests into a new qtests/migration/
-> directory and rename the old one to tests/migration-stress.
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+First, I see this issue: https://gitlab.com/qemu-project/qemu/-/issues/1198. where some kvm/hardware failure leads to guest crash, and finally to this assertion:
 
-Please squash this in:
+    cpu_asidx_from_attrs: Assertion `ret < cpu->num_ases && ret >= 0' failed.
 
--->8--
-From 9f8a693e31be198e1e052d86be99ffaaa0a3e8a8 Mon Sep 17 00:00:00 2001
-From: Fabiano Rosas <farosas@suse.de>
-Date: Fri, 29 Nov 2024 10:05:21 -0300
-Subject: [PATCH] fixup! tests/migration: Disambiguate guestperf vs. a-b
+But in the ticket the talk is about the guest crash and fixing the kernel, not about the final QEMU assertion (which definitely show that something should be fixed in QEMU code too).
 
----
- tests/migration-stress/guestperf/shell.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tests/migration-stress/guestperf/shell.py b/tests/migration-stress/guestperf/shell.py
-index c85d89efec..046afeb84e 100644
---- a/tests/migration-stress/guestperf/shell.py
-+++ b/tests/migration-stress/guestperf/shell.py
-@@ -46,7 +46,8 @@ def __init__(self):
-         parser.add_argument("--binary", dest="binary", default="/usr/bin/qemu-system-x86_64")
-         parser.add_argument("--dst-host", dest="dst_host", default="localhost")
-         parser.add_argument("--kernel", dest="kernel", default="/boot/vmlinuz-%s" % platform.release())
--        parser.add_argument("--initrd", dest="initrd", default="tests/migration/initrd-stress.img")
-+        parser.add_argument("--initrd", dest="initrd",
-+                            default="tests/migration-stress/initrd-stress.img")
-         parser.add_argument("--transport", dest="transport", default="unix")
- 
- 
+We've faced same stack one time:
+
+(gdb) bt
+#0  raise () from /lib/x86_64-linux-gnu/libc.so.6
+#1  abort () from /lib/x86_64-linux-gnu/libc.so.6
+#2  ?? () from /lib/x86_64-linux-gnu/libc.so.6
+#3  __assert_fail () from /lib/x86_64-linux-gnu/libc.so.6
+#4  cpu_asidx_from_attrs  at ../hw/core/cpu-sysemu.c:76
+#5  cpu_memory_rw_debug  at ../softmmu/physmem.c:3529
+#6  x86_cpu_dump_state  at ../target/i386/cpu-dump.c:560
+#7  kvm_cpu_exec  at ../accel/kvm/kvm-all.c:3000
+#8  kvm_vcpu_thread_fn  at ../accel/kvm/kvm-accel-ops.c:51
+#9  qemu_thread_start  at ../util/qemu-thread-posix.c:505
+#10 start_thread () from /lib/x86_64-linux-gnu/libpthread.so.0
+#11 clone () from /lib/x86_64-linux-gnu/libc.so.6
+
+
+And what I see:
+
+static inline int x86_asidx_from_attrs(CPUState *cs, MemTxAttrs attrs)
+{
+     return !!attrs.secure;
+}
+
+int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs)
+{
+     int ret = 0;
+
+     if (cpu->cc->sysemu_ops->asidx_from_attrs) {
+         ret = cpu->cc->sysemu_ops->asidx_from_attrs(cpu, attrs);
+         assert(ret < cpu->num_ases && ret >= 0);         <<<<<<<<<<<<<<<<<
+     }
+     return ret;
+}
+
+(gdb) p cpu->num_ases
+$3 = 1
+
+(gdb) fr 5
+#5  0x00005578c8814ba3 in cpu_memory_rw_debug (cpu=c...
+(gdb) p attrs
+$6 = {unspecified = 0, secure = 1, user = 0, memory = 0, requester_id = 0, byte_swap = 0, target_tlb_bit0 = 0, target_tlb_bit1 = 0, target_tlb_bit2 = 0}
+
+so .secure is 1, therefore ret is 1, in the same time num_ases is 1 too and assertion fails.
+
+
+
+Where is .secure from?
+
+static inline MemTxAttrs cpu_get_mem_attrs(CPUX86State *env)
+{
+     return ((MemTxAttrs) { .secure = (env->hflags & HF_SMM_MASK) != 0 });
+}
+
+Ok, it means we in SMM mode.
+
+
+
+On the other hand, it seems that num_ases seems to be always 1 for x86:
+
+vsementsov@vsementsov-lin:~/work/src/qemu/yc-7.2$ git grep 'num_ases = '
+cpu.c:    cpu->num_ases = 0;
+softmmu/cpus.c:        cpu->num_ases = 1;
+target/arm/cpu.c:        cs->num_ases = 3 + has_secure;
+target/arm/cpu.c:        cs->num_ases = 1 + has_secure;
+target/i386/tcg/sysemu/tcg-cpu.c:    cs->num_ases = 2;
+
+
+So, something is wrong around cpu->num_ases and x86_asidx_from_attrs() which may return more in SMM mode.
+
+
+The stack starts in
+//7  0x00005578c882f539 in kvm_cpu_exec (cpu=cpu@entry=0x5578ca2eb340) at ../accel/kvm/kvm-all.c:3000
+     if (ret < 0) {
+         cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
+         vm_stop(RUN_STATE_INTERNAL_ERROR);
+     }
+
+So that was some kvm error, and we decided to call cpu_dump_state(). And it crashes. cpu_dump_state() is also called from hmp_info_registers, so I can reproduce the crash with a tiny patch to master (as only CPU_DUMP_CODE path calls cpu_memory_rw_debug(), as it is in kvm_cpu_exec()):
+
+diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+index ff01cf9d8d..dcf0189048 100644
+--- a/monitor/hmp-cmds-target.c
++++ b/monitor/hmp-cmds-target.c
+@@ -116,7 +116,7 @@ void hmp_info_registers(Monitor *mon, const QDict *qdict)
+          }
+
+          monitor_printf(mon, "\nCPU#%d\n", cs->cpu_index);
+-        cpu_dump_state(cs, NULL, CPU_DUMP_FPU);
++        cpu_dump_state(cs, NULL, CPU_DUMP_CODE);
+      }
+  }
+
+
+Than run
+
+yes "info registers" | ./build/qemu-system-x86_64 -accel kvm -monitor stdio \
+    -global driver=cfi.pflash01,property=secure,value=on \
+    -blockdev "{'driver': 'file', 'filename': '/usr/share/OVMF/OVMF_CODE_4M.secboot.fd', 'node-name': 'ovmf-code', 'read-only': true}" \
+    -blockdev "{'driver': 'file', 'filename': '/usr/share/OVMF/OVMF_VARS_4M.fd', 'node-name': 'ovmf-vars', 'read-only': true}" \
+    -machine q35,smm=on,pflash0=ovmf-code,pflash1=ovmf-vars -m 2G -nodefaults
+
+And after some time (less than 20 seconds for me) it leads to
+
+qemu-system-x86_64: ../hw/core/cpu-sysemu.c:76: cpu_asidx_from_attrs: Assertion `ret < cpu->num_ases && ret >= 0' failed.
+Aborted (core dumped)
+
+
+I've no idea how to correctly fix this bug, but I hope that my reproducer and investigation will help a bit.
+
 -- 
-2.35.3
-
+Best regards,
+Vladimir
 
