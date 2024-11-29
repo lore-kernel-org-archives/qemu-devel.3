@@ -4,92 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47BFFD6EBF1
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 10:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBEB0D6EBF1
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 10:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGxmI-0004pd-4H; Fri, 29 Nov 2024 04:59:10 -0500
+	id 1tGxu7-0007Nv-Sl; Fri, 29 Nov 2024 05:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tGxmF-0004p2-9c
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 04:59:07 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tGxu5-0007Mn-B6
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:07:13 -0500
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tGxmB-0003xU-Kz
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 04:59:06 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43494a20379so15365925e9.0
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 01:59:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tGxtz-0007G5-1t
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:07:12 -0500
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-296b0d23303so652768fac.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 02:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732874342; x=1733479142; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0hI/xxTgjum7R5i6Ad97JEX8w3FQEhDpVP9eXMuQUKU=;
- b=hPDbYVFW0Xl8/xs0riBGXdG47pLzdyX68CHMcrM7KCI7g29xyjjBuLzEHAVYBPyK+a
- lGOual2xyCmjzlHFCxgustu+WwsWjjp9EDPu88RN5ad8GrixvXHYFL4fsUQjj1s74PuO
- Zwn/1zyD5pQF9E/QFFogEuad/ml5Daez3SDyJ6Qz0seQuzQVMvoi/aQ9F6rNXBqJ/oM+
- 0Zmt/z1v9N+Vg1/OmYKlbDtMl2opwUUsa+b9EGmNRar+OH56FhuDYsdNV1Pe5bUHcZuu
- U0EwQGUYAWur2XlE5EQET5r/6E+k/RrIYgyfaB1E6NZkMKcjyZu5xSZPYX+F8kx9DLTZ
- LJug==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1732874826; x=1733479626;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gCouXFAgRSPl1keET6ZkquD/rEcwBqF+lmz+skZPw6A=;
+ b=xISABsxOcWZcNJs4hP+I3MmYZ5ACUCMPPAHcF+4LMjpQwZzP6EbhJSC9lWrlk9NHrp
+ gun4D1xii79RWFPlXeul2gBgzmu5levDuzFa45OYl9D+cF7vQ89aqzt6OmR7e7mICSPQ
+ WW3aEE0oXIQeq6/qXmL4CRh8fHk7zSZdCDaM9Yy2XzIecz3W65Q1p0W6neQPFBrbGh+e
+ j/kBeGTYZ1+yDToTdajmiVB6Mz8ARZ8MKwibWVn/UCfUeT5XmKytVS0Ne3oYV51pVoUv
+ 5OSBC2aD5CFibsYR1dQkZfRF1NjyAVrd9hUIoJegvvAVL5fXCSG+4TPPM/GA5sFlIL3p
+ ElnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732874342; x=1733479142;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0hI/xxTgjum7R5i6Ad97JEX8w3FQEhDpVP9eXMuQUKU=;
- b=mR9kOU/ZqRMcOc4MqXJa9RRJgtMPlDucI6orhdw//5fRUx7zjnJxPiYpQsuqezYEpE
- IIML6Vn6E8RcAqHsWxn6h2526VlIFX/YlS5x4tG1KpDU79ZrQbvC7u47kVjJWXBBAkuW
- rITb7bnvmaGNq8lCpYSXb3DPWYRaQfM4+OBPu+uINVVX1c/AL3WW61dFWIWwqVnuJvYb
- vmFRyOaZLcxBvnquODHSrWXBgMfNugWRXvgb7JGt4dsSxx915JkMKDSOrYsHTAN2kK1X
- +ld3ulZOBtprqsjUMWZJ3Echilbqcb5zpAG62tNvJhZaT9stsV1ZQF5zJgS+LTYSVbbN
- Ij5w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWHlxoIf1AolF4krw6XwRDF1qM+crcNWEhqleLGD4MfxRqT+NUYrXQMY1Bi6+2qWeBp4uSD2/ZgmP1@nongnu.org
-X-Gm-Message-State: AOJu0YwJKYNuEwOsknSC3cfN2yp5G2ZHtmyqv5Tva27au69dkM0dfzKi
- n/0dNyGVS2x11L3yKKGEu5/uXQCDykeQKtEGKbrCi6YM5Dw3S5lW9fPZDPCYv3ojYMsiS0trpuu
- 07QU=
-X-Gm-Gg: ASbGncujQwjZmLwEbpFg2txkOg6OxZ8TfBamyG5KJsl0HkS0qKcIZNh4+xu+v3weneH
- LoOIqOlZ3mnLgF6mQCyDv85QtMPVSfV4ZZVq+hH6mGmBFuVpUeuFyt0pNfPRE8beckBPXy52kkf
- x5OG+rD69vlCxbF/3UFKCanaHoVmDdn8Yi64cwtNa2itcgoa8IuuN8tCWLRjbUUuBBG63YKJwyP
- qKwNl9ryWbx07ElpAPdkvzMEFb7nSNhRCbgPAbqEIDHbmZm
-X-Google-Smtp-Source: AGHT+IE+QjE//GjxQG5ehLPNQ7Y/5dFBdFL7WdGne2/KQihWP4rnsuxbBbj2ZHn2imVQF/3GpjCCrw==
-X-Received: by 2002:a05:600c:524d:b0:434:9be8:6cb5 with SMTP id
- 5b1f17b1804b1-434a9dd0052mr113841215e9.17.1732874341658; 
- Fri, 29 Nov 2024 01:59:01 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385df63255bsm988347f8f.86.2024.11.29.01.59.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Nov 2024 01:59:01 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3778D5F858;
- Fri, 29 Nov 2024 09:59:00 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Yanfeng <yfliu2008@qq.com>
-Cc: qemu-riscv@nongnu.org,  qemu-devel@nongnu.org,  alistair.francis@wdc.com
-Subject: Re: [PATCH v2] riscv/gdb: add virt mode debug interface
-In-Reply-To: <tencent_CA6E4D0C897F3ED0EF988CCE5DF541442A05@qq.com> (Yanfeng's
- message of "Fri, 29 Nov 2024 10:11:22 +0800")
-References: <tencent_B52B1EB0A504D6F690B6E6F3FD3AC9BCDC09@qq.com>
- <8734jbh21e.fsf@draig.linaro.org>
- <tencent_CA6E4D0C897F3ED0EF988CCE5DF541442A05@qq.com>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Fri, 29 Nov 2024 09:59:00 +0000
-Message-ID: <87r06ufjiz.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1732874826; x=1733479626;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gCouXFAgRSPl1keET6ZkquD/rEcwBqF+lmz+skZPw6A=;
+ b=MPrp48nQ+kqsq9uFrhZRjESPmNKr0eVJEJfkRHjv2/oGnfjHZW20GsptXnaUv3zqCT
+ hVAMNQWBOGePZRsp7Uy4hBfA6HIcbRHT/c13iElGLgda+9N4V75rwuH4T942z6SFf7hG
+ D7nM6XpY7Ml6BaxwrOwyPY6BB+uN8sK4Z8OKpH+1F9UB/ziMd0yTsjm0bGcdQn3Vhanr
+ 3XVThIdlA3JAHOGObI6nznA4p5RnhttBWXESgLGtP0pqxKwyMrYpDDb2DFupvwOSdd5j
+ 1ryxNkz6+KnoUYV4bMYLFCpIvAe1tBGlJB2Ar7O6bftPC5ylhBdMm9R24NYhvv0e4RNz
+ cBXg==
+X-Gm-Message-State: AOJu0YwrJfL46GIxuGRAVgjj0s6H2M6OoAqJadvfdk6jC/aqTczmkGTr
+ QqvK4IZMyDRoSwatSiNzUSIuJzSkC7oK+/F4+cPjQHR1J66kys71wU39uKT4pPU=
+X-Gm-Gg: ASbGncv8leNHt5gvxrvRf8ULYE8EKi3JjpDLCCUIS7pnp5DviONs3LH0v6RNRgtP2lW
+ 0QIh7+dS1TcmQ1LMuEt85q++tyiMhKS3N1X3OrNy5rP0AQeW7uYspHeviOrAwWSpCHWaoPpJqfH
+ +kYo1OICi7mqs9SMtI++4mO1XqTqS/eZrkfo8HbA7wR7Mo2KKOQuylEG8ZUEShRCuiZmlS4jfuF
+ abjx9dISIr8SHHDrV89/xKaY87K/gOz2UYMdkVGCxVhcIUJGw3Nrs2k6xJiIYc=
+X-Google-Smtp-Source: AGHT+IE7kIXPRULV2nI6TLB2X/tZGptm2AV7iggYIw35ECvsHew13TO4kyo6wDmBZ3Db4i8k+O9Pew==
+X-Received: by 2002:a05:6870:3c05:b0:270:1352:6c10 with SMTP id
+ 586e51a60fabf-29dc4370a0dmr8903020fac.37.1732874825608; 
+ Fri, 29 Nov 2024 02:07:05 -0800 (PST)
+Received: from [157.82.207.167] ([157.82.207.167])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-29de92c4564sm938780fac.26.2024.11.29.02.06.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Nov 2024 02:07:05 -0800 (PST)
+Message-ID: <6dc2b6a9-d7b4-43f8-95fd-4fc8699db68a@daynix.com>
+Date: Fri, 29 Nov 2024 19:06:58 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 01/15] ui & main loop: Redesign of system-specific
+ main thread event handling
+To: Phil Dennis-Jordan <phil@philjordan.eu>
+Cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org,
+ pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com,
+ stefanha@redhat.com, mst@redhat.com, slp@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
+ chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
+ philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
+ marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
+ qemu-block@nongnu.org, qemu-riscv@nongnu.org, balaton@eik.bme.hu
+References: <20241127150249.50767-1-phil@philjordan.eu>
+ <20241127150249.50767-2-phil@philjordan.eu>
+ <0533bb69-6f3a-4ebf-ae0c-99b569e61ba3@daynix.com>
+ <CAAibmn26tZneZHytkYCgd4oT8Yx465i=3wu8cYXTwu3Ki8pAJw@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAAibmn26tZneZHytkYCgd4oT8Yx465i=3wu8cYXTwu3Ki8pAJw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x2d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,98 +113,470 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yanfeng <yfliu2008@qq.com> writes:
+On 2024/11/29 4:43, Phil Dennis-Jordan wrote:
+> 
+> 
+> On Thu, 28 Nov 2024 at 12:17, Akihiko Odaki <akihiko.odaki@daynix.com 
+> <mailto:akihiko.odaki@daynix.com>> wrote:
+> 
+>     On 2024/11/28 0:02, Phil Dennis-Jordan wrote:
+>      > macOS's Cocoa event handling must be done on the initial (main)
+>     thread
+>      > of the process. Furthermore, if library or application code uses
+>      > libdispatch, the main dispatch queue must be handling events on
+>     the main
+>      > thread as well.
+>      >
+>      > So far, this has affected Qemu in both the Cocoa and SDL UIs,
+>     although
+>      > in different ways: the Cocoa UI replaces the default qemu_main
+>     function
+>      > with one that spins Qemu's internal main event loop off onto a
+>      > background thread. SDL (which uses Cocoa internally) on the other
+>     hand
+>      > uses a polling approach within Qemu's main event loop. Events are
+>      > polled during the SDL UI's dpy_refresh callback, which happens to run
+>      > on the main thread by default.
+>      >
+>      > As UIs are mutually exclusive, this works OK as long as nothing else
+>      > needs platform-native event handling. In the next patch, a new
+>     device is
+>      > introduced based on the ParavirtualizedGraphics.framework in macOS.
+>      > This uses libdispatch internally, and only works when events are
+>     being
+>      > handled on the main runloop. With the current system, it works when
+>      > using either the Cocoa or the SDL UI. However, it does not when
+>     running
+>      > headless. Moreover, any attempt to install a similar scheme to the
+>      > Cocoa UI's main thread replacement fails when combined with the SDL
+>      > UI.
+>      >
+>      > This change tidies up main thread management to be more flexible.
+>      >
+>      >   * The qemu_main global function pointer is a custom function
+>     for the
+>      >     main thread, and it may now be NULL. When it is, the main thread
+>      >     runs the main Qemu loop. This represents the traditional setup.
+>      >   * When non-null, spawning the main Qemu event loop on a separate
+>      >     thread is now done centrally rather than inside the Cocoa UI
+>     code.
+>      >   * For most platforms, qemu_main is indeed NULL by default, but on
+>      >     Darwin, it defaults to a function that runs the CFRunLoop.
+>      >   * The Cocoa UI sets qemu_main to a function which runs the
+>      >     NSApplication event handling runloop, as is usual for a Cocoa
+>     app.
+>      >   * The SDL UI overrides the qemu_main function to NULL, thus
+>      >     specifying that Qemu's main loop must run on the main
+>      >     thread.
+>      >   * The GTK UI also overrides the qemu_main function to NULL.
+>      >   * For other UIs, or in the absence of UIs, the platform's default
+>      >     behaviour is followed.
+>      >
+>      > This means that on macOS, the platform's runloop events are always
+>      > handled, regardless of chosen UI. The new PV graphics device will
+>      > thus work in all configurations. There is no functional change on
+>     other
+>      > operating systems.
+>      >
+>      > Implementing this via a global function pointer variable is a bit
+>      > ugly, but it's probably worth investigating the existing UI
+>     thread rule
+>      > violations in the SDL (e.g. #2537) and GTK+ back-ends. Fixing those
+>      > issues might precipitate requirements similar but not identical
+>     to those
+>      > of the Cocoa UI; hopefully we'll see some kind of pattern emerge,
+>     which
+>      > can then be used as a basis for an overhaul. (In fact, it may turn
+>      > out to be simplest to split the UI/native platform event thread
+>     from the
+>      > QEMU main event loop on all platforms, with any UI or even none
+>     at all.)
+>      >
+>      > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu
+>     <mailto:phil@philjordan.eu>>
+>      > ---
+>      >
+>      > v5:
+>      >
+>      >   * Simplified the way of setting/clearing the main loop by going
+>     back
+>      >     to setting qemu_main directly, but narrowing the scope of what it
+>      >     needs to do, and it can now be NULL.
+>      >
+>      > v6:
+>      >
+>      >   * Folded function qemu_run_default_main_on_new_thread's code into
+>      >     main()
+>      >   * Removed whitespace changes left over on lines near code removed
+>      >     between v4 and v5
+>      >
+>      > v9:
+>      >
+>      >   * Set qemu_main to NULL for GTK UI as well.
+>      >
+>      > v10:
+>      >
+>      >   * Added comments clarifying the functionality and purpose of
+>     qemu_main.
+>      >
+>      > v11:
+>      >
+>      >   * Removed the qemu_main_fn typedef again.
+>      >   * Consolidation of main, qemu_default_main, and
+>     call_qemu_default_main
+>      >     so that the latter has been eliminated altogether.
+>      >   * Reinstated the #include <SDL.h> directive, added comment saying
+>      >     why it's needed.
+>      >   * Improved the comment on the qemu_main global variable.
+>      >   * Expanded the commit message.
+>      >
+>      >   include/qemu-main.h | 14 +++++++++++-
+>      >   system/main.c       | 37 +++++++++++++++++++++++++++----
+>      >   ui/cocoa.m          | 54 ++++++++++
+>     +----------------------------------
+>      >   ui/gtk.c            |  8 +++++++
+>      >   ui/sdl2.c           |  4 ++++
+>      >   5 files changed, 71 insertions(+), 46 deletions(-)
+>      >
+>      > diff --git a/include/qemu-main.h b/include/qemu-main.h
+>      > index 940960a7dbc..a926def7526 100644
+>      > --- a/include/qemu-main.h
+>      > +++ b/include/qemu-main.h
+>      > @@ -5,7 +5,19 @@
+>      >   #ifndef QEMU_MAIN_H
+>      >   #define QEMU_MAIN_H
+>      >
+>      > -int qemu_default_main(void);
+>      > +/*
+>      > + * The function to run on the main (initial) thread of the process.
+>      > + * NULL means QEMU's main event loop.
+>      > + * When non-NULL, QEMU's main event loop will run on a purposely
+>     created
+>      > + * thread, after which the provided function pointer will be
+>     invoked on
+>      > + * the initial thread.
+>      > + * This is useful on platforms which treat the main thread as
+>     special
+>      > + * (macOS/Darwin) and/or require all UI API calls to occur from a
+>      > + * specific thread. Those platforms can initialise it to a
+>     specific function,
+> 
+>     Although the change from v10 looks good, I have a few comments:
+> 
+>     Here, it says "require all UI API calls to occur from a specific
+>     thread", but it is clearer to say "require all UI API calls to occur
+>     from *the main thread*". If we only need to ensure all UI API calls to
+>     occur from one thread, arranging all calls to happen in the thread
+>     running QEMU's main loop is sufficient. This variable is necessary only
+>     when the thread is the one that called main().
+> 
+> 
+> Is there a simple way to reliably run a block of code on the thread 
+> running QEMU's main loop? (*) BHs will run on any thread that's blocked 
+> in AIO_WAIT_WHILE(NULL, …) or similar, so those are not suitable. 
+> Apparently GTK+ on Win32 requires all API calls to originate from one 
+> thread, but it doesn't need to be the main thread, which is why I chose 
+> that phrasing. But I suppose if that's the only restriction, the UI can 
+> spawn its own thread and leave the main thread alone.
 
-> On Thu, 2024-11-28 at 14:21 +0000, Alex Benn=C3=A9e wrote:
->> Yanfeng Liu <yfliu2008@qq.com> writes:
->>=20
->> > This adds `virt` virtual register on debug interface so that users
->> > can access current virtualization mode for debugging purposes.
->> >=20
->> > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
->> > ---
->> > =C2=A0gdb-xml/riscv-32bit-virtual.xml |=C2=A0 1 +
->> > =C2=A0gdb-xml/riscv-64bit-virtual.xml |=C2=A0 1 +
->> > =C2=A0target/riscv/gdbstub.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 | 18 ++++++++++++------
->> > =C2=A03 files changed, 14 insertions(+), 6 deletions(-)
->> >=20
->> > diff --git a/gdb-xml/riscv-32bit-virtual.xml b/gdb-xml/riscv-32bit-
->> > virtual.xml
->> > index 905f1c555d..d44b6ca2dc 100644
->> > --- a/gdb-xml/riscv-32bit-virtual.xml
->> > +++ b/gdb-xml/riscv-32bit-virtual.xml
->> > @@ -8,4 +8,5 @@
->> > =C2=A0<!DOCTYPE feature SYSTEM "gdb-target.dtd">
->> > =C2=A0<feature name=3D"org.gnu.gdb.riscv.virtual">
->> > =C2=A0=C2=A0 <reg name=3D"priv" bitsize=3D"32"/>
->> > +=C2=A0 <reg name=3D"virt" bitsize=3D"32"/>
->> > =C2=A0</feature>
->> > diff --git a/gdb-xml/riscv-64bit-virtual.xml b/gdb-xml/riscv-64bit-
->> > virtual.xml
->> > index 62d86c237b..7c9b63d5b6 100644
->> > --- a/gdb-xml/riscv-64bit-virtual.xml
->> > +++ b/gdb-xml/riscv-64bit-virtual.xml
->> > @@ -8,4 +8,5 @@
->> > =C2=A0<!DOCTYPE feature SYSTEM "gdb-target.dtd">
->> > =C2=A0<feature name=3D"org.gnu.gdb.riscv.virtual">
->> > =C2=A0=C2=A0 <reg name=3D"priv" bitsize=3D"64"/>
->> > +=C2=A0 <reg name=3D"virt" bitsize=3D"64"/>
->> > =C2=A0</feature>
->>=20
->> I assume these are mirrored in gdb not a QEMU only extension?
->
-> So far I think it is a QEMU extension and the `gdb-multiarch` doesn't tre=
-at is
-> specially. My tests shows it basically works:
->
-> ```
-> (gdb) ir virt
-> priv           0x3	prv:3 [Machine]
-> virt           0x0	0
-> (gdb) set $priv =3D 2
-> (gdb) ir virt
-> priv           0x1	prv:1 [Supervisor]
-> virt           0x0	0
-> (gdb) set $virt =3D 1
-> (gdb) ir virt
-> priv           0x1	prv:1 [Supervisor]
-> virt           0x1	1
-> (gdb) set $virt =3D 0
-> (gdb) ir virt
-> priv           0x1	prv:1 [Supervisor]
-> virt           0x0	0
-> (gdb) set $virt =3D 1
-> (gdb) ir virt
-> priv           0x1	prv:1 [Supervisor]
-> virt           0x1	1
-> (gdb) set $priv =3D 3
-> (gdb) ir virt
-> priv           0x3	prv:3 [Machine]
-> virt           0x0	0
-> ```
+Setting qemu_main does not help in such a case because BHs may still run 
+on other threads so it needs another approach.
 
-A gdbstub test case would be useful for this although I don't know if
-the RiscV check-tcg tests switch mode at all.
+I think iohandler_get_aio_context() does what we want, but it is not 
+intended to be used to identify the thread to run the UI so using it is 
+like a hack. Spawning a thread dedicated for UI is more appropriate.
 
->
-> As I am rather new to QEMU, please teach how we can add it as a QEMU only
-> extension.
+> 
+> (*) This would be good to know for fixing this bug https://gitlab.com/ 
+> qemu-project/qemu/-/issues/2537 <https://gitlab.com/qemu-project/qemu/-/ 
+> issues/2537> where the SDL UI code causes a hang by calling into 
+> SDL_SetWindowSize() from a CPU thread. My current thinking on that one 
+> is to use SDL_PushEvent() with a custom event type generated by 
+> SDL_RegisterEvents(), which then will be handled via the standard SDL 
+> event polling mechanism; but that seems awkward.
+I think it's totally fine. If SDL (backed by Cocoa) insists to own the 
+main thread, let it do so.
 
-You don't need to extend the XML from GDB, you can build a specific one
-for QEMU extensions. For example:
+> 
+>      > + * while UI implementations may reset it to NULL during their
+>     init if they
+>      > + * will handle system and UI events on the main thread via
+>     QEMU's own main
+>      > + * event loop.> + */
+>      >   extern int (*qemu_main)(void);
+>      >
+>      >   #endif /* QEMU_MAIN_H */
+>      > diff --git a/system/main.c b/system/main.c
+>      > index 9b91d21ea8c..668d0ecfe8c 100644
+>      > --- a/system/main.c
+>      > +++ b/system/main.c
+>      > @@ -24,26 +24,55 @@
+>      >
+>      >   #include "qemu/osdep.h"
+>      >   #include "qemu-main.h"
+>      > +#include "qemu/main-loop.h"
+>      >   #include "sysemu/sysemu.h"
+>      >
+>      >   #ifdef CONFIG_SDL
+>      > +/*
+>      > + * SDL insists on wrapping the main() function with its own
+>     implementation on
+>      > + * some platforms; it does so via a macro that renames our main
+>     function, so
+>      > + * <SDL.h> must be #included here even with no SDL code called
+>     from this file.
+>      > + */
+>      >   #include <SDL.h>
+>      >   #endif
+>      >
+>      > -int qemu_default_main(void)
+>      > +#ifdef CONFIG_DARWIN
+>      > +#include <CoreFoundation/CoreFoundation.h>
+>      > +#endif
+>      > +
+>      > +static void *qemu_default_main(void *opaque)
+>      >   {
+>      >       int status;
+>      >
+>      > +    bql_lock();
+>      >       status = qemu_main_loop();
+>      >       qemu_cleanup(status);
+>      > +    bql_unlock();
+>      >
+>      > -    return status;
+>      > +    exit(status);
+>      >   }
+>      >
+>      > -int (*qemu_main)(void) = qemu_default_main;
+>      > +int (*qemu_main)(void);
+>      > +
+>      > +#ifdef CONFIG_DARWIN
+>      > +static int os_darwin_cfrunloop_main(void)
+>      > +{
+>      > +    CFRunLoopRun();
+>      > +    g_assert_not_reached();
+>      > +}
+>      > +int (*qemu_main)(void) = os_darwin_cfrunloop_main;
+>      > +#endif
+>      >
+>      >   int main(int argc, char **argv)
+>      >   {
+>      >       qemu_init(argc, argv);
+>      > -    return qemu_main();
+>      > +    bql_unlock();
+>      > +    if (qemu_main) {
+>      > +        QemuThread main_loop_thread;
+>      > +        qemu_thread_create(&main_loop_thread, "qemu_main",
+>      > +                           qemu_default_main, NULL,
+>     QEMU_THREAD_DETACHED);
+>      > +        return qemu_main();
+>      > +    } else {
+>      > +        qemu_default_main(NULL);
+>      > +    }
+>      >   }
+>      > diff --git a/ui/cocoa.m b/ui/cocoa.m
+>      > index 4c2dd335323..30b8920d929 100644
+>      > --- a/ui/cocoa.m
+>      > +++ b/ui/cocoa.m
+>      > @@ -73,6 +73,8 @@
+>      >       int height;
+>      >   } QEMUScreen;
+>      >
+>      > +@class QemuCocoaPasteboardTypeOwner;
+>      > +
+>      >   static void cocoa_update(DisplayChangeListener *dcl,
+>      >                            int x, int y, int w, int h);
+>      >
+>      > @@ -107,6 +109,7 @@ static void
+>     cocoa_switch(DisplayChangeListener *dcl,
+>      >   static NSInteger cbchangecount = -1;
+>      >   static QemuClipboardInfo *cbinfo;
+>      >   static QemuEvent cbevent;
+>      > +static QemuCocoaPasteboardTypeOwner *cbowner;
+>      >
+>      >   // Utility functions to run specified code block with the BQL held
+>      >   typedef void (^CodeBlock)(void);
+>      > @@ -1321,8 +1324,10 @@ - (void) dealloc
+>      >   {
+>      >       COCOA_DEBUG("QemuCocoaAppController: dealloc\n");
+>      >
+>      > -    if (cocoaView)
+>      > -        [cocoaView release];
+>      > +    [cocoaView release];
+>      > +    [cbowner release];
+>      > +    cbowner = nil;
+>      > +
+>      >       [super dealloc];
+>      >   }
+>      >
+>      > @@ -1938,8 +1943,6 @@ - (void)pasteboard:(NSPasteboard *)sender
+>     provideDataForType:(NSPasteboardType)t
+>      >
+>      >   @end
+>      >
+>      > -static QemuCocoaPasteboardTypeOwner *cbowner;
+>      > -
+>      >   static void cocoa_clipboard_notify(Notifier *notifier, void *data);
+>      >   static void cocoa_clipboard_request(QemuClipboardInfo *info,
+>      >                                       QemuClipboardType type);
+>      > @@ -2002,43 +2005,8 @@ static void
+>     cocoa_clipboard_request(QemuClipboardInfo *info,
+>      >       }
+>      >   }
+>      >
+>      > -/*
+>      > - * The startup process for the OSX/Cocoa UI is complicated, because
+>      > - * OSX insists that the UI runs on the initial main thread, and
+>     so we
+>      > - * need to start a second thread which runs the qemu_default_main():
+>      > - * in main():
+>      > - *  in cocoa_display_init():
+>      > - *   assign cocoa_main to qemu_main
+>      > - *   create application, menus, etc
+>      > - *  in cocoa_main():
+>      > - *   create qemu-main thread
+>      > - *   enter OSX run loop
+>      > - */
+>      > -
+>      > -static void *call_qemu_main(void *opaque)
+>      > -{
+>      > -    int status;
+>      > -
+>      > -    COCOA_DEBUG("Second thread: calling qemu_default_main()\n");
+>      > -    bql_lock();
+>      > -    status = qemu_default_main();
+>      > -    bql_unlock();
+>      > -    COCOA_DEBUG("Second thread: qemu_default_main() returned,
+>     exiting\n");
+>      > -    [cbowner release];
+>      > -    exit(status);
+>      > -}
+>      > -
+>      >   static int cocoa_main(void)
+>      >   {
+>      > -    QemuThread thread;
+>      > -
+>      > -    COCOA_DEBUG("Entered %s()\n", __func__);
+>      > -
+>      > -    bql_unlock();
+>      > -    qemu_thread_create(&thread, "qemu_main", call_qemu_main,
+>      > -                       NULL, QEMU_THREAD_DETACHED);
+>      > -
+>      > -    // Start the main event loop
+>      >       COCOA_DEBUG("Main thread: entering OSX run loop\n");
+>      >       [NSApp run];
+>      >       COCOA_DEBUG("Main thread: left OSX run loop, which should
+>     never happen\n");
+>      > @@ -2120,8 +2088,6 @@ static void cocoa_display_init(DisplayState
+>     *ds, DisplayOptions *opts)
+>      >
+>      >       COCOA_DEBUG("qemu_cocoa: cocoa_display_init\n");
+>      >
+>      > -    qemu_main = cocoa_main;
+>      > -
+>      >       // Pull this console process up to being a fully-fledged
+>     graphical
+>      >       // app with a menubar and Dock icon
+>      >       ProcessSerialNumber psn = { 0, kCurrentProcess };
+>      > @@ -2185,6 +2151,12 @@ static void
+>     cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+>      >       qemu_clipboard_peer_register(&cbpeer);
+>      >
+>      >       [pool release];
+>      > +
+>      > +    /*
+>      > +     * The Cocoa UI will run the NSApplication runloop on the
+>     main thread
+>      > +     * rather than the default Core Foundation one.
+>      > +     */
+>      > +    qemu_main = cocoa_main;
+>      >   }
+>      >
+>      >   static QemuDisplay qemu_display_cocoa = {
+>      > diff --git a/ui/gtk.c b/ui/gtk.c
+>      > index bf9d3dd679a..5e6ee5c12a2 100644
+>      > --- a/ui/gtk.c
+>      > +++ b/ui/gtk.c
+>      > @@ -38,6 +38,7 @@
+>      >   #include "qemu/cutils.h"
+>      >   #include "qemu/error-report.h"
+>      >   #include "qemu/main-loop.h"
+>      > +#include "qemu-main.h"
+>      >
+>      >   #include "ui/console.h"
+>      >   #include "ui/gtk.h"
+>      > @@ -2485,6 +2486,13 @@ static void gtk_display_init(DisplayState
+>     *ds, DisplayOptions *opts)
+>      >   #ifdef CONFIG_GTK_CLIPBOARD
+>      >       gd_clipboard_init(s);
+>      >   #endif /* CONFIG_GTK_CLIPBOARD */
+>      > +
+>      > +    /*
+>      > +     * GTK+ calls must happen on the main thread at least on
+>     some platforms,
+>      > +     * and on macOS the main runloop is polled via GTK+'s event
+>     handling.
+>      > +     * Don't allow QEMU's event loop to be moved off the main
+>     thread.
+>      > +     */
+>      > +    qemu_main = NULL;
+>      >   }
+>      >
+>      >   static void early_gtk_display_init(DisplayOptions *opts)
+>      > diff --git a/ui/sdl2.c b/ui/sdl2.c
+>      > index bd4f5a9da14..44ab2762262 100644
+>      > --- a/ui/sdl2.c
+>      > +++ b/ui/sdl2.c
+>      > @@ -34,6 +34,7 @@
+>      >   #include "sysemu/sysemu.h"
+>      >   #include "ui/win32-kbd-hook.h"
+>      >   #include "qemu/log.h"
+>      > +#include "qemu-main.h"
+>      >
+>      >   static int sdl2_num_outputs;
+>      >   static struct sdl2_console *sdl2_console;
+>      > @@ -965,6 +966,9 @@ static void sdl2_display_init(DisplayState
+>     *ds, DisplayOptions *o)
+>      >       }
+>      >
+>      >       atexit(sdl_cleanup);
+>      > +
+>      > +    /* SDL's event polling (in dpy_refresh) must happen on the
+>     main thread. */
+> 
+>     ui/gtk.c and ui/sdl2.c have the same background so the comments should
+>     also be identical except names.
+> 
+> 
+> Well, GTK doesn't currently do this, which is why it doesn't work on 
+> macOS, but hopefully this patch will be merged in some form, at which 
+> point it will:
+> 
+> https://patchew.org/QEMU/20241121162146.53643-1-charmitro@posteo.net/ 
+> <https://patchew.org/QEMU/20241121162146.53643-1-charmitro@posteo.net/>
+> 
+> But yeah, thanks to this patch we know that's a solution for GTK as 
+> well, and I can update the comment.
 
-    gdb_feature_builder_init(&param.builder,
-                             &cpu->dyn_sysreg_feature.desc,
-                             "org.qemu.gdb.arm.sys.regs",
-                             "system-registers.xml",
-                             base_reg);
+I only meant that SDL is not different from GTK in terms that its call 
+and event handling needs to be done in the main thread.
 
-This exports all the system registers QEMU knows about and GDB can
-access generically. Note the id is org.qemu..., indicating its our
-schema not gdbs.
+I was not paying attention to the mention of dpy_refresh(). It is 
+another topic whether dpy_refresh() is the best place for event 
+handling, and I don't think so. dpy_refresh() is triggered when 
+refreshing the display output, but event handling is not specific to the 
+display output so it is awkward to handle events there.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+The best approach is to do the same with ui/cocoa; override qemu_main to 
+dedicate the main thread for the UI and decouple the UI from the BQL by 
+calling GTK with g_main_context_invoke(), which corresponds to 
+SDL_RegisterEvents() in SDL.
+
+> 
+>      > +    qemu_main = NULL;
+>      >   }
+>      >
+>      >   static QemuDisplay qemu_display_sdl2 = {
+> 
+
 
