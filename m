@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A93DFD729ED
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61834D729E7
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH4rr-0007MT-He; Fri, 29 Nov 2024 12:33:23 -0500
+	id 1tH4rF-0004Qx-7D; Fri, 29 Nov 2024 12:32:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tH4rp-00076R-3j
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:33:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tH4qk-0003n0-10
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:32:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tH4rn-0001pS-9D
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:33:20 -0500
+ id 1tH4qi-00014z-7V
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:32:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732901598;
+ s=mimecast20190719; t=1732901530;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=od46fyFHGQSX2N+7OwKJhq2uBvXEJxe08brTaemqLHY=;
- b=f5R1woGaZdDGGMaQQZ35UJh+/SjxuNiCK1YpQuNtnl2PpdczgXZLqOTY8mr6Zi8CTa4z99
- iQZipSrPsij2GvOalkv20XQXTN1pE7zjRH4Aq5LGu5BaEFyTFTKtRZXGrWHleyGkIuoSlI
- Ep8xoame6RRnrqFvQW+kEetLCDMu3Ns=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Sux808zrkHdt32pEDIjc5mJX+mxJhiB1+QIujRoog80=;
+ b=amMR0dIDeZkyuHmFaXBPj1Xd5KTBCVxhdL/7WFCf+k4ilCtkeo8imoRuscl4CLx8r8DdVB
+ o3uKI/KG9n5W8GOURDthNgxfJDHeAs5atYVmaZhtAmb933zd2WZ16wsp6cljfaZ/8XyBv9
+ nyOy00FkQrlRdhv5ifxiM2ZoicbqIf8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-OvL5WP_HP1yKahp_l6qOPQ-1; Fri,
- 29 Nov 2024 12:32:09 -0500
-X-MC-Unique: OvL5WP_HP1yKahp_l6qOPQ-1
-X-Mimecast-MFC-AGG-ID: OvL5WP_HP1yKahp_l6qOPQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-T67vVfZUPj-UE3jTXE-vMw-1; Fri,
+ 29 Nov 2024 12:32:07 -0500
+X-MC-Unique: T67vVfZUPj-UE3jTXE-vMw-1
+X-Mimecast-MFC-AGG-ID: T67vVfZUPj-UE3jTXE-vMw
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48A0719560A5; Fri, 29 Nov 2024 17:32:08 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22C481956095; Fri, 29 Nov 2024 17:32:06 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.37])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9B51B1955F41; Fri, 29 Nov 2024 17:32:06 +0000 (UTC)
+ id 112FB1955F2D; Fri, 29 Nov 2024 17:32:03 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 17/22] tests/functional: generalize archive_extract
-Date: Fri, 29 Nov 2024 17:31:15 +0000
-Message-ID: <20241129173120.761728-18-berrange@redhat.com>
+Subject: [PATCH 16/22] tests/functional: add common deb_extract helper
+Date: Fri, 29 Nov 2024 17:31:14 +0000
+Message-ID: <20241129173120.761728-17-berrange@redhat.com>
 In-Reply-To: <20241129173120.761728-1-berrange@redhat.com>
 References: <20241129173120.761728-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,73 +87,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are many types of archives that the tests deal with, and
-'archive_extract' suggests it can cope with any, rather than only
-tar files. Rename the existing method to 'tar_extract' and add a
-new method that can dynamically extract any zip, tar or cpio file
-based on file extension.
+This mirrors the existing archive_extract, cpio_extract and zip_extract
+helpers
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/utils.py | 31 +++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ tests/functional/qemu_test/linuxkernel.py | 15 +++++----------
+ tests/functional/qemu_test/utils.py       | 13 +++++++++++++
+ 2 files changed, 18 insertions(+), 10 deletions(-)
 
+diff --git a/tests/functional/qemu_test/linuxkernel.py b/tests/functional/qemu_test/linuxkernel.py
+index a6525f9dd6..fb6a158d36 100644
+--- a/tests/functional/qemu_test/linuxkernel.py
++++ b/tests/functional/qemu_test/linuxkernel.py
+@@ -6,8 +6,8 @@
+ import os
+ 
+ from .testcase import QemuSystemTest
+-from .cmd import run_cmd, wait_for_console_pattern
+-from .utils import archive_extract
++from .cmd import wait_for_console_pattern
++from .utils import deb_extract
+ 
+ class LinuxKernelTest(QemuSystemTest):
+     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+@@ -37,16 +37,11 @@ def extract_from_deb(self, deb_path, path):
+         :param path: path within the deb archive of the file to be extracted
+         :returns: path of the extracted file
+         """
+-        cwd = os.getcwd()
+-        os.chdir(self.workdir)
+-        (stdout, stderr, ret) = run_cmd(['ar', 't', deb_path])
+-        file_path = stdout.split()[2]
+-        run_cmd(['ar', 'x', deb_path, file_path])
+-        archive_extract(file_path, self.workdir)
+-        os.chdir(cwd)
++        relpath = os.path.relpath(path, '/')
++        deb_extract(deb_path, self.workdir, member="." + path)
+         # Return complete path to extracted file.  Because callers to
+         # extract_from_deb() specify 'path' with a leading slash, it is
+         # necessary to use 'relative_to()' to turn it into a relative
+         # path for joining to the scratch dir
+-        return os.path.normpath(self.scratch_file(os.path.relpath(path, '/')))
++        return os.path.normpath(self.scratch_file(relpath))
+ 
 diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
-index bafe7fb80e..8c1df8f8c2 100644
+index 41bd1df666..bafe7fb80e 100644
 --- a/tests/functional/qemu_test/utils.py
 +++ b/tests/functional/qemu_test/utils.py
-@@ -14,6 +14,7 @@
- import shutil
+@@ -15,6 +15,8 @@
  import subprocess
  import tarfile
-+import zipfile
  
- from .cmd import run_cmd
- 
-@@ -38,7 +39,33 @@ def image_pow2ceil_expand(path):
-             with open(path, 'ab+') as fd:
-                 fd.truncate(size_aligned)
- 
--def archive_extract(archive, dest_dir, member=None):
-+def archive_extract(archive, dest_dir, format=None, member=None):
-+    if format == "tar":
-+        tar_extract(archive, dest_dir, member)
-+    elif format == "zip":
-+        zip_extract(archive, dest_dir, member)
-+    elif format == "cpio":
-+        if member is not None:
-+            raise Exception("Unable to filter cpio extraction")
-+        cpio_extract(archive, dest_dir)
-+    elif format == "deb":
-+        deb_extract(archive, dest_dir, "./" + member)
-+    else:
-+        raise Exception(f"Unknown archive format {format}")
++from .cmd import run_cmd
 +
-+def guess_archive_format(path):
-+    if ".tar." in path or path.endswith("tgz"):
-+        return "tar"
-+    elif path.endswith(".zip"):
-+        return "zip"
-+    elif path.endswith(".cpio"):
-+        return "cpio"
-+    elif path.endswith(".deb") or path.endswith(".udeb"):
-+        return "deb"
-+    else:
-+        raise Exception(f"Unknown archive format for {path}")
-+
-+def tar_extract(archive, dest_dir, member=None):
-     with tarfile.open(archive) as tf:
-         if hasattr(tarfile, 'data_filter'):
-             tf.extraction_filter = getattr(tarfile, 'data_filter',
-@@ -62,7 +89,7 @@ def deb_extract(archive, dest_dir, member=None):
-         (stdout, stderr, ret) = run_cmd(['ar', 't', archive])
-         file_path = stdout.split()[2]
-         run_cmd(['ar', 'x', archive, file_path])
--        archive_extract(file_path, dest_dir, member)
-+        archive_extract(file_path, dest_dir, format="tar", member=member)
-     finally:
-         os.chdir(cwd)
+ """
+ Round up to next power of 2
+ """
+@@ -53,6 +55,17 @@ def zip_extract(archive, dest_dir, member=None):
+         else:
+             zf.extractall(path=dest_dir)
  
++def deb_extract(archive, dest_dir, member=None):
++    cwd = os.getcwd()
++    os.chdir(dest_dir)
++    try:
++        (stdout, stderr, ret) = run_cmd(['ar', 't', archive])
++        file_path = stdout.split()[2]
++        run_cmd(['ar', 'x', archive, file_path])
++        archive_extract(file_path, dest_dir, member)
++    finally:
++        os.chdir(cwd)
++
+ def gzip_uncompress(gz_path, output_path):
+     if os.path.exists(output_path):
+         return
 -- 
 2.46.0
 
