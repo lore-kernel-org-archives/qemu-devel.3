@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE4BD6EBFA
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 10:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FE0D6EBF7
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 10:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGy42-0002QW-Oh; Fri, 29 Nov 2024 05:17:30 -0500
+	id 1tGy44-0002Qu-TF; Fri, 29 Nov 2024 05:17:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGy40-0002QA-Bj
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:17:28 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGy43-0002Qj-Nc
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:17:31 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGy3y-0002gB-V8
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:17:28 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3824aef833bso1231247f8f.0
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 02:17:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGy42-0002j8-6Y
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:17:31 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-434a1639637so15842175e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 02:17:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732875443; x=1733480243; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=TRQ5OhXrEBPPuxw5v4nWbYuMta+PmkN5FPYtcXKbsD0=;
- b=q3Vq9ZpuSBNoPTtYL+siJ1qg1MnBN0nner5FL+2o+nnDNqJJ+j56B2OTY9QzT5oii4
- MkDtzVb3XrXawwO9w1I3Os042ES3SnUCU0jlZ5prcSYtU6tXmOqrzhrR3RLTd0GJnaVt
- uM8fN++XY8l78qraAN81QqH8EQkYkEyilZDhFDjhrNVuG4HTwiZ5l56t8nSqBakLoBBK
- aq/9axT5ZAc1nmwZL8q+plGb7xh53V7C+79+brGlgHDPBzSOz7YhR26btOu4ZR/HL/km
- kp9Hhh845q3IBysd+ns7Af5re1tOCUf66t0zWgrmZ2USH8xm4DkrRNFVI0EgNKqngKvC
- B5sA==
+ d=linaro.org; s=google; t=1732875448; x=1733480248; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vnmzBmtiMniQtfyoIrkF0lH5OiNVvtRvyQ3ryvXvacc=;
+ b=UgjQDgat4fAFvvD2Me/MxnAd+TGjEB9BqQAwEKugzHNy9BFe+VBuO7TeCCf+R9vono
+ uocMVV2K0SmTeLOoZ4ae9r05a3hMw5IRIx8cbYcZxGSIQ02ZTSDGnU7H7TYm27iWr4ey
+ sVyIFN4SgItl5O8nH2Aj1vkvfYjzMT2dstc2g22UKgUmIOTHDMJS+yBekuwdK9oZi4LL
+ RTWMjvBYc+pBJhCEp21xIU+o1Os1cFTI4JwBH7g/1fTuZzCLOoyc4oKS+Zk+eebSt/Bs
+ KxpHfd3CoQMrmZZCZkZRH6vsCBX1GQMJbNRi9KmfiPSDuIHs4FXVNdb56sLg1ztFBfgz
+ 3wFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732875443; x=1733480243;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TRQ5OhXrEBPPuxw5v4nWbYuMta+PmkN5FPYtcXKbsD0=;
- b=PORTeRHmb+VYsBUmIjjQwJSr6m04ptJYM7YTA585XedsfuEnI8eQYQvA2iSVMZPz5W
- w01VjlQpNkKISXBZJuiineooJEKHg93lU2NptteFAXB14UHlVjZNBsd7AwQQMpYU2z0n
- GRQI+4dXXZoLC0d2CxXOUXvKQjc6kkcNrRkjFcsXMWmmfBEF/d0o03KO7knNh6IIKqUj
- y6HPrc6hxL/pF7rGT50b94O+6sAADldBK2ebDGMimVuXM3mTJ0itUqG+zWPCJIa0TxCI
- oxFI8wAzojanEeW04Gf5saclyr77GSFKVrZjHT2i5YK3ZfAYmwGCf6lvfJi+aWfvX4O1
- MdLA==
-X-Gm-Message-State: AOJu0YzmPBIUvxHGsxHYIshQztcp03vqhOvwOGJmVKz+zdeoi9YIpB3/
- sOcUuAWNPf6AFiJLlu5dhA6cdQgeTD/H2Q3LMk8raMVUCP3Mia7C4lzZDoYkOi4sgxlJtAR1Rfe
- Q
-X-Gm-Gg: ASbGncuzZVvcOLEsRxg597lrA+8zglz0oPxOx61kjr5FmPeyxvJUvsMxuzuN9Lq/XEM
- m4SykEFhs1rutGarAya4DfzgLAd953MUUVc+JjbnP3cU6WW/l/HkOxJQtRDaCsZUZjDILI125RX
- WyfeWkUI6GWCqYNbWe30tnnHQ/r1hZVk98twjOKDspcGvnJkm8/0IH2shWAGcxWaB0pyNw20ukM
- B+6kfU4G3GZx/xWTdRefoBOwbNAGwPcUQbD1qY6S6984emp0GLGiyrJryCQ2n+PAxjpkQwa8PL1
- IIbVxCivq3Ur8smZObu4iuPsZokF2w==
-X-Google-Smtp-Source: AGHT+IFBm5sH4dKOaQBtHqjWIidLDjEk0rMHDzbNsAYO5WtUz5mtyoIW14N7TbojB77Fo7AZ9xCabg==
-X-Received: by 2002:a05:6000:156f:b0:382:5295:b366 with SMTP id
- ffacd0b85a97d-385c6cca8d4mr9455010f8f.11.1732875443493; 
- Fri, 29 Nov 2024 02:17:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732875448; x=1733480248;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vnmzBmtiMniQtfyoIrkF0lH5OiNVvtRvyQ3ryvXvacc=;
+ b=XKEN4mC1czs+l9foh031EAmEDZAL/zp5UQgg+Qtu6lD0EeWg5qhzFsa7f2CtqUNRgk
+ H79vo2Nr9gcUFn3INJQHMiQFi/83246G0ZGKMAZJDg/7RBO03qoly5jZLc4GP3jaKTnd
+ iqbhnJqgIoYlpWkHvpZNIWD70DH+Te+6E0cYyFi4MGRgajTc26yjkMpSsdhH0z82r3Gr
+ nEcMKOFf37FBxKFVM+QZRldbY+05boszlGOYRwLXicLYMkpr8+unrIZUh6d58zopyOKn
+ DzwDNmYRjfUVoSJTWkbG9ymi4thtJ3u9/RvcVhNELzGaa4Ko/B5ylkSrCbhh/64h0Ozh
+ XyIA==
+X-Gm-Message-State: AOJu0Yw2r+Fws7mBSTXHH3JJaI/qcjamfvzABeCK6VPzRoAmeyW9dw8S
+ Rkc1Zgqj/tR7ORZ9xgKplzTiw8tl5gD0stlxEz03WVAjJnKaPSnQJPV8Qr1ZZ58Wb5RmYRa/HuL
+ X
+X-Gm-Gg: ASbGncut+lM+Dn41owKrEL1Jkekcy4z0+exZpoo6MMFraXSuzGYIWgX7+tFW+8MYIPw
+ p5PLHbSclXF0gDbcZ/kFIjZXkZAzoWpskvpT3tKVlLD1EtVQnWwU0ktdV5VbDWVESdzsLwgDe2m
+ IQcTAzkXfG8UJB4ASKI5lHrjXTJgl9PVJglTIJTOQSVTLgd+iLPBXKVq2vEpyXATHFQY4Sn8gz8
+ zQzSEs5ouLrJK5GiRfkDoq3+yGgfE7MmJc5yeXnQ8mntS1LgaIiV3dJO/b5Dg327rxK57yTxAzL
+ 3hRusU1XTBq1xcalnQ6U60Xacz0ziQ==
+X-Google-Smtp-Source: AGHT+IEfTQvmFx1GOTIKVO20DuuNjHGtof+FCxhyKH//IdyJZckcg1519tYSXiJAt+2UH0ZeA0XQCg==
+X-Received: by 2002:a05:600c:1e88:b0:434:a5d1:9905 with SMTP id
+ 5b1f17b1804b1-434a9de439bmr86903045e9.26.1732875448052; 
+ Fri, 29 Nov 2024 02:17:28 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385df488559sm1116454f8f.63.2024.11.29.02.17.22
+ 5b1f17b1804b1-434b0d9bec1sm49095455e9.5.2024.11.29.02.17.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 29 Nov 2024 02:17:23 -0800 (PST)
+ Fri, 29 Nov 2024 02:17:27 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>,
@@ -68,16 +69,18 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Benjamin Herrenschmidt <benh@kernel.crashing.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/2] hw/display/vga: Do not reset 'big_endian_fb' in
- vga_common_reset()
-Date: Fri, 29 Nov 2024 11:17:19 +0100
-Message-ID: <20241129101721.17836-1-philmd@linaro.org>
+Subject: [PATCH-for-9.2? v2 1/2] hw/display/vga: Do not reset 'big_endian_fb'
+ in vga_common_reset()
+Date: Fri, 29 Nov 2024 11:17:20 +0100
+Message-ID: <20241129101721.17836-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241129101721.17836-1-philmd@linaro.org>
+References: <20241129101721.17836-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,16 +103,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1: Split in 2 distinct patches
+The 'pci-vga' device allow setting a 'big-endian-framebuffer'
+property since commit 3c2784fc864 ("vga: Expose framebuffer
+byteorder as a QOM property"). Similarly, the 'virtio-vga'
+device since commit 8be61ce2ce3 ("virtio-vga: implement
+big-endian-framebuffer property").
 
-Philippe Mathieu-Daudé (2):
-  hw/display/vga: Do not reset 'big_endian_fb' in vga_common_reset()
-  hw/display/vga: Remove pointless VGACommonState::default_endian_fb
+Both call vga_common_reset() in their reset handler, respectively
+pci_secondary_vga_reset() and virtio_vga_base_reset_hold(), which
+reset 'big_endian_fb', overwritting the property. This is not
+correct: the hardware is expected to keep its configured
+endianness during resets.
 
- hw/display/vga_int.h | 1 -
- hw/display/vga.c     | 5 ++---
- 2 files changed, 2 insertions(+), 4 deletions(-)
+Move 'big_endian_fb' assignment from vga_common_reset() to
+vga_common_init() which is called once when the common VGA state
+is initialized.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/display/vga.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index 892fedc8dce..b074b58c90d 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -1873,7 +1873,6 @@ void vga_common_reset(VGACommonState *s)
+     s->cursor_start = 0;
+     s->cursor_end = 0;
+     s->cursor_offset = 0;
+-    s->big_endian_fb = s->default_endian_fb;
+     memset(s->invalidated_y_table, '\0', sizeof(s->invalidated_y_table));
+     memset(s->last_palette, '\0', sizeof(s->last_palette));
+     memset(s->last_ch_attr, '\0', sizeof(s->last_ch_attr));
+@@ -2266,6 +2265,7 @@ bool vga_common_init(VGACommonState *s, Object *obj, Error **errp)
+      * all target endian dependencies from this file.
+      */
+     s->default_endian_fb = target_words_bigendian();
++    s->big_endian_fb = s->default_endian_fb;
+ 
+     vga_dirty_log_start(s);
+ 
 -- 
 2.45.2
 
