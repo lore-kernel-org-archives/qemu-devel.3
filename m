@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2184D6EC12
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 14:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 562A4D6EC0E
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 14:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH1g1-0005bW-9H; Fri, 29 Nov 2024 09:08:57 -0500
+	id 1tH1iN-0006ck-KV; Fri, 29 Nov 2024 09:11:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tH1fx-0005bM-UT
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 09:08:53 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tH1iL-0006cO-CP
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 09:11:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tH1fs-0001wR-6f
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 09:08:52 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tH1iJ-0003MD-JB
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 09:11:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732889323;
+ s=mimecast20190719; t=1732889478;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IgoPeENWsph8qrdvtTj9Pw2dqqeyIUeGqULNXcXU1WY=;
- b=N8KdTHjRVD3eYTlrEAMb1h0aTsgX5GElI+snc9l4HraeLvASMrooc6xWAd0MH9aOq5Xw2w
- 3DdOaGva2JExqE+EL+DzWIzo+xZUXIcnPloU7go1iME848rKfcpXh7RdWYSZY5abWfG1+8
- KQZMFZRPbwM9WO7SJaBrz196AbEYXpI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nNT9Ub3zeAtXiKDmqBEeaIqbadfHLNHqU4RgC0TJbN4=;
+ b=e4sLsuy4b9uZhF8dwjTkVRbvJ7NPUAV1yCCnHwYZw79J4NJD5pBOX/90tSZtRvEf6SCUnn
+ 79fp6v7XIElvrkP8vALVetCELCd6WiqeBsYRDgNvojnhdNbI4zsvAyBJdyaBH3Etsug3Y3
+ RcA/3ZzBWR9N66YKnpMZidrsLvKJaTM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-glQV7mLiPUij3WA7hsemqA-1; Fri, 29 Nov 2024 09:08:41 -0500
-X-MC-Unique: glQV7mLiPUij3WA7hsemqA-1
-X-Mimecast-MFC-AGG-ID: glQV7mLiPUij3WA7hsemqA
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-385e03f54d0so246169f8f.3
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 06:08:40 -0800 (PST)
+ us-mta-695-7gw8NXmZPgi-LXOOKfbhTQ-1; Fri, 29 Nov 2024 09:11:15 -0500
+X-MC-Unique: 7gw8NXmZPgi-LXOOKfbhTQ-1
+X-Mimecast-MFC-AGG-ID: 7gw8NXmZPgi-LXOOKfbhTQ
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4349d895ef8so17470865e9.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 06:11:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732889320; x=1733494120;
+ d=1e100.net; s=20230601; t=1732889475; x=1733494275;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IgoPeENWsph8qrdvtTj9Pw2dqqeyIUeGqULNXcXU1WY=;
- b=v5o5vHeIb0skBuOpbVn8mNSXlInjXxwftfG1fE1JETRnrquNzRBWw8PK9b854JaHKo
- BpPVn4s+zNBK61GxXOfd6SoqZmMXu5DkBfAlx2jZ5BxpMhhxCsF/bW3c/MprjzPhOqvS
- QUKcZ2VLh6Ab4Cm65NL6T3Cxg86G7TiWT0NpxTn5bd9/wrCcMXCLZ1fPRyhE76NMNZ5M
- WftZsHbS9dBhWM2me86wnAslP8G4f6Y+yVTcmNLa1MePMc0RfVcwbjjMBGGpHxDP63ub
- fg0Ff9E9J8vY1pqd5Ee79MGyTonTuvgTqIfvQTQbEh7C/+dTvYSUlVVutBGuBCfJpf3p
- 4snQ==
+ bh=nNT9Ub3zeAtXiKDmqBEeaIqbadfHLNHqU4RgC0TJbN4=;
+ b=MxLaTxJzyOHf7Iw3YGDB0Kgqj+fF6t5CL81EATGJ+Gn6B1suCgS4PmteIoqTwSWNWa
+ CTBu5WW8+24UOFAY2Jm8t7w6I/SzHIAne+L9YIxC0z0WUT7tDryHcJULMzeSlJFvxHku
+ a5dGg+qY8vRw59abUYn1PiI1CDzrhjnkx7ravkhspjzcUBN6vcHx4rRFMTscYq2r/Stc
+ 8jTRa4Hm5n4FdWqLT2wiDVAZxuBg3llFx+3kWjdwbMlfT0HV1RI5fTcQ2af1UWpck92O
+ K2WMQ7fDw98Erv/ePFmluUeSK2/G/uIO0iEKh92y/F3b9EM22X1O5vfzlwBMNFCTjMVD
+ kxKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMT3LAibO3gOyOArpM/erYhjxX0ZG3s7mxP63eDKY/ygx2SxB9nj2TGMJMDTIjkyaEh8+9jXkKagrv@nongnu.org
-X-Gm-Message-State: AOJu0Yw0C3MkJiZBQV5fcu6NqH1kycUrMwM0LNFw5kfDuH3IDAXHPJP/
- P0R4f9hCa9XgxDrwP8w/1I2rKJV1TOH+ZbqPYiZiRKltDxwArwGeB10B2uxrlf6AVYPKHNXZ6F3
- lFQJWyyxA5YeJJ2UnknCcKrDpKFHjajjQrsQI6egmhKFzBS/dIx/X
-X-Gm-Gg: ASbGnct+CUkXAFX3f5A5D5WztOCHrx5ELqw3vrgc4PE+TJqaKrRc0ZJ/dP/5q1tuOuP
- a7oYeQ+tnwkotNSfCDUeCwSWRz7qJbSPetlqd+fXNvC+/aYnOTSThjVWzuUMC6Ff8za0FfIOX7S
- 0fXfQb/tHRO7RcFTM4zkEvewWgnJi/72f9mbriDCsh4+DWJWJ2EktiHO1DaWPCC99JhCvAdjAs2
- +0dkvR51U5cnRzdS4wqkJWC2ggptjFjKHqKcsuG+0tYUdqpeod9MgpF9Ub+Nf0fvMGeBUH8BKfJ
- MBLM710Xhuyx
-X-Received: by 2002:a5d:47cb:0:b0:382:4f77:5bec with SMTP id
- ffacd0b85a97d-385c6ebb82fmr11800774f8f.16.1732889318866; 
- Fri, 29 Nov 2024 06:08:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGR8Rm+CBzxL7KEjGOzjJk9ErSj85RUFKTkMLrsYSkKU3wgaylIGZDpLtqy8LkmfpWbAvFl1Q==
-X-Received: by 2002:a5d:47cb:0:b0:382:4f77:5bec with SMTP id
- ffacd0b85a97d-385c6ebb82fmr11800660f8f.16.1732889318072; 
- Fri, 29 Nov 2024 06:08:38 -0800 (PST)
+ AJvYcCWlWeJwjnfyhjHqhWljATyOGoVsaaTLdU66xnCgLadtEvzHrBzUTLCVrRurP8rZxWS7KBC+qOkfk0Yg@nongnu.org
+X-Gm-Message-State: AOJu0Yze1uTegwDulxbNrb/ec4wVPh1MhvLMTZMVDwME2K/oquEaeBZO
+ 2AjRJWpjPMvKtghAMtZw5y+gk2bMJwUmPjyChHpQ/4Zm1517a2UKZ9Qkph8bJwArikH8/U8OV1W
+ anw6jPEeQKd6VYcSSWkukikBP43jUwx4RAarf0lMnE373NVytUjPf
+X-Gm-Gg: ASbGncu8EtD5eWuF2xjeZ/T7Dfm8yEnISSBkFaVx1++ZIBztGM0/E6H0Reprve8jHRu
+ ts6liwIlnzOL4r2Zs9I+7p0VfVaJ7mP9YIVirn5e2RbgrECDwXRs7mbWRc3c6TNHSR+3EJYWXWP
+ AyHuYNTiI6zrZvof790BmbvF8ug/b2soWbJUu4EwR99YQDL5ucqkfdplgOqggVAN3cd2BddMmEC
+ qn697L9l5q+H0W+nd6GlX343Gaxo1SLfm8kslYYKz53Go0Davec8cy1e00emuiCTY8stDnv6Vt1
+ U3CILuWlAFdB
+X-Received: by 2002:a05:600c:5021:b0:434:9fac:b157 with SMTP id
+ 5b1f17b1804b1-434a9dc37aamr123257485e9.13.1732889474603; 
+ Fri, 29 Nov 2024 06:11:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGNgTaU5+6AzFhbgLzSYH+ek8J2jaNjUuNgQjCGHlKkUSiXRjtx+oF8uTcqM9dSIeqq+s/FZQ==
+X-Received: by 2002:a05:600c:5021:b0:434:9fac:b157 with SMTP id
+ 5b1f17b1804b1-434a9dc37aamr123249555e9.13.1732889466761; 
+ Fri, 29 Nov 2024 06:11:06 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385ccd68c1bsm4633365f8f.84.2024.11.29.06.08.37
+ 5b1f17b1804b1-434b0dc9707sm54638285e9.25.2024.11.29.06.11.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Nov 2024 06:08:37 -0800 (PST)
-Message-ID: <9f27f058-59f0-4056-b19a-f613418e0760@redhat.com>
-Date: Fri, 29 Nov 2024 15:08:36 +0100
+ Fri, 29 Nov 2024 06:11:04 -0800 (PST)
+Message-ID: <f0e0dd0d-17be-477d-9243-be1b068cb81f@redhat.com>
+Date: Fri, 29 Nov 2024 15:11:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 18/24] vfio/migration: Don't run load cleanup if load
- setup didn't run
+Subject: Re: [PATCH v3 19/24] vfio/migration: Add x-migration-multifd-transfer
+ VFIO property
 To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -87,7 +87,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <72424ece45968b1ae6b39750917a041867c415ab.1731773021.git.maciej.szmigiero@oracle.com>
+ <b34680f99e294532a5d095b34b5ef0e4f778b1f2.1731773021.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,7 +133,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <72424ece45968b1ae6b39750917a041867c415ab.1731773021.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <b34680f99e294532a5d095b34b5ef0e4f778b1f2.1731773021.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -164,23 +164,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 11/17/24 20:20, Maciej S. Szmigiero wrote:
 > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> It's possible for load_cleanup SaveVMHandler to get called without
-> load_setup handler being called first.
+> This property allows configuring at runtime whether to transfer the
+> particular device state via multifd channels when live migrating that
+> device.
 > 
-> Since we'll be soon running cleanup operations there that access objects
-> that need earlier initialization in load_setup let's make sure these
-> cleanups only run when load_setup handler had indeed been called
-> earlier.
+> It defaults to AUTO, which means that VFIO device state transfer via
+> multifd channels is attempted in configurations that otherwise support it.
 > 
 > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> ---
+>   hw/core/machine.c             | 1 +
+>   hw/vfio/pci.c                 | 9 +++++++++
+>   include/hw/vfio/vfio-common.h | 1 +
+>   3 files changed, 11 insertions(+)
+> 
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index ed8d39fd769f..fda0f8280edd 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -39,6 +39,7 @@
+>   GlobalProperty hw_compat_9_1[] = {
+>       { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
+>       { "migration", "send-switchover-start", "off"},
+> +    { "vfio-pci", "x-migration-multifd-transfer", "off" },
 
-tbh, that's a bit ugly. I agree it's similar to those 'bool initialized'
-attributes we have in some structs, so nothing new or really wrong.
-But it does look like a workaound for a problem or cleanups missing
-that would need time to untangle.
+Could you please move the compat changes into their own patch ?
+It's easier for backports
 
-I would prefer to avoid this change and address the issue from the
-migration subsystem if possible.
+>   };
+>   const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
+>   
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 14bcc725c301..9d547cb5cdff 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3354,6 +3354,8 @@ static void vfio_instance_init(Object *obj)
+>       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+>   }
+>   
+> +static PropertyInfo qdev_prop_on_off_auto_mutable;
+> +
+>   static Property vfio_pci_dev_properties[] = {
+>       DEFINE_PROP_PCI_HOST_DEVADDR("host", VFIOPCIDevice, host),
+>       DEFINE_PROP_UUID_NODEFAULT("vf-token", VFIOPCIDevice, vf_token),
+> @@ -3378,6 +3380,10 @@ static Property vfio_pci_dev_properties[] = {
+>                       VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
+>       DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
+>                               vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
+> +    DEFINE_PROP("x-migration-multifd-transfer", VFIOPCIDevice,
+> +                vbasedev.migration_multifd_transfer,
+> +                qdev_prop_on_off_auto_mutable, OnOffAuto,
+> +                .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
+
+What are you trying to do that DEFINE_PROP_ON_OFF_AUTO() can not satisfy ?
 
 
 Thanks,
@@ -189,64 +225,31 @@ C.
 
 
 
-
-> ---
->   hw/vfio/migration.c           | 21 +++++++++++++++++++--
->   include/hw/vfio/vfio-common.h |  1 +
->   2 files changed, 20 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 01aa11013e42..9e2657073012 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -688,16 +688,33 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
->   static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
->   {
->       VFIODevice *vbasedev = opaque;
-> +    VFIOMigration *migration = vbasedev->migration;
-> +    int ret;
-> +
-> +    assert(!migration->load_setup);
-> +
-> +    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
-> +                                   migration->device_state, errp);
-> +    if (ret) {
-> +        return ret;
-> +    }
+>       DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
+>                        vbasedev.migration_events, false),
+>       DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
+> @@ -3475,6 +3481,9 @@ static const TypeInfo vfio_pci_nohotplug_dev_info = {
 >   
-> -    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
-> -                                    vbasedev->migration->device_state, errp);
-> +    migration->load_setup = true;
+>   static void register_vfio_pci_dev_type(void)
+>   {
+> +    qdev_prop_on_off_auto_mutable = qdev_prop_on_off_auto;
+> +    qdev_prop_on_off_auto_mutable.realized_set_allowed = true;
 > +
-> +    return 0;
+>       type_register_static(&vfio_pci_dev_info);
+>       type_register_static(&vfio_pci_nohotplug_dev_info);
 >   }
->   
->   static int vfio_load_cleanup(void *opaque)
->   {
->       VFIODevice *vbasedev = opaque;
-> +    VFIOMigration *migration = vbasedev->migration;
-> +
-> +    if (!migration->load_setup) {
-> +        return 0;
-> +    }
->   
->       vfio_migration_cleanup(vbasedev);
-> +    migration->load_setup = false;
->       trace_vfio_load_cleanup(vbasedev->name);
->   
->       return 0;
 > diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index e0ce6ec3a9b3..246250ed8b75 100644
+> index 246250ed8b75..b1c03a82eec8 100644
 > --- a/include/hw/vfio/vfio-common.h
 > +++ b/include/hw/vfio/vfio-common.h
-> @@ -66,6 +66,7 @@ typedef struct VFIOMigration {
->       VMChangeStateEntry *vm_state;
->       NotifierWithReturn migration_state;
->       uint32_t device_state;
-> +    bool load_setup;
->       int data_fd;
->       void *data_buffer;
->       size_t data_buffer_size;
+> @@ -134,6 +134,7 @@ typedef struct VFIODevice {
+>       bool no_mmap;
+>       bool ram_block_discard_allowed;
+>       OnOffAuto enable_migration;
+> +    OnOffAuto migration_multifd_transfer;
+>       bool migration_events;
+>       VFIODeviceOps *ops;
+>       unsigned int num_irqs;
 > 
 
 
