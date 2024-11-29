@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB9A7D6EBFA
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 10:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E38CD6EBFC
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 10:30:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGy49-0002RS-HE; Fri, 29 Nov 2024 05:17:37 -0500
+	id 1tGyFc-00055j-CA; Fri, 29 Nov 2024 05:29:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGy48-0002RK-6d
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:17:36 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGyFb-00055a-70
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:29:27 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGy46-0002o2-Mb
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:17:35 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4349f160d62so15419025e9.2
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 02:17:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGyFZ-00084u-HP
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 05:29:26 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3823eaad37aso1770951f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 02:29:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732875452; x=1733480252; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0P3q4DMKMIpQLw5XNROBR41JdakZ6VH4T3cx52YGOPg=;
- b=dHueWyPlWUjnMqj7H8sOaR/MkZhLBx50U60mRK3zeoThxJWIUi2g5oUBR7Hwd9w28B
- nTk88c9GBk2FS27a1EetJo2bPAdvz6gRdeHjDpk1qDIMY83kxnkz2wi/Bbi3k51PiIBb
- of/RP66jIicHmGVWhtoRPjzvEhuGwug1ySDmPyLHPfWydnXVVa1IepD2+sXimjjiGm3q
- rJ9q0+BPucCc2wcTtmi4eqdAX/cuNPHbhc+5fmByXajIFmP6k0Pj17ueiM7DjP9AgUk6
- i7ZP+BEM1vDaU9j3DEGB25oNzwQamGGsCVj5PLBwDygDKyep9rdzoJGv/Jt+l2+2r9B4
- EEYw==
+ d=linaro.org; s=google; t=1732876164; x=1733480964; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uxSZoNksZ1buJ0GjhahKKfGNoA3exZAc2twnFIzXyxY=;
+ b=zsRCEeN78iZE/zZpPIg4RSyj4KwQMs3PbwPJtf6ru4E7YaMORdlv7pD5xjCgIAaueB
+ rx4fu3LTnUJQMhQo0qT7MhTJIvWk3U7WmSkE2JDJEjhxTcAxdL6JTXE+HqYzafNB8yAW
+ shFzYlNjpJ4zLi8S6jAsc7DB24Jbwi2aJut3klOHpfr7pgT3eMV51puCQWEpUCpMIFvk
+ UtE4oq+bEtooDwXyNpp+XnGWamGea2zPfvzd/3TRD77dkLRoSQodFedEFha3oc3iOQyd
+ uFD51jO3wJqhofm++IH6wLK24cKVkInVC+/6V9oAsUGyt1tNbbIK7qnHoU8eyFE15nRZ
+ d9Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732875452; x=1733480252;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0P3q4DMKMIpQLw5XNROBR41JdakZ6VH4T3cx52YGOPg=;
- b=FZdLrGBJEj+jcwILz8DMTs6QTRDp1J0c1WDoJ1b0t+Uctmwr/tIFcreXPdfYBjzVOM
- wMMrtNJgRTGf1NSipja95Z7ANA0n+QoeSY6UGUt5HeEZ64GizrTHBvti22q4QZQjmkzN
- +89m/SaE9KGT2hL2C3eBc3Km2QBATnPJtgjU/IUpelhg9rgR+Al1ixjL0PT2N5cRDP33
- 9R3ZVe9jF7r8bjxy7JTYS89477oL5bOot+emh2Zx491yWjyYUbnQ3qL7jPb1NpBQADzM
- k4r1NidXpdcSRqsAoERgxyyz4iy8ju0+CnoDrNTrz8PfslOmGKnyWxw0Kbw4XFtdAtqX
- 49qQ==
-X-Gm-Message-State: AOJu0YwJVlWVzSVtOsmnn9W6n/sB7hPtBRS92IfGdCNALZWMbSKmmh7E
- ZWfIGSmoiyjsF245xYc9+QgJ8eFo9bsp2fre5rnDoyR9v1PMEMq+e6MNbTZ8/2UM7HML9ueWk3E
- h
-X-Gm-Gg: ASbGncvLfDD0yOFfsjLmGZv3qHztX3xnvKOIJ9m7zTMUwPhe0W2BUs4eYnQGCYKJJmX
- UXHTzN0SUM8d+XXp0u1OGaa/pkpQw7CG5bYrdDUkwHvtUvOlXKu0zAplSw/xpJmPgBe4u/MmXxW
- OtZOIicuFutruVimVG47JuBn0oBRuwOPhfNFIin07X6qtZWeH4q0WdhdiyTAR7UXYsVD5tiZ1bS
- kV02u2rTYY7Q+gyCPrcibkezK0SwB35eakWAIZsMgXYx2bOI2iKyEQQG3p3R6adxJDHCTqAEMOX
- qFG3gbSHI/3npv92o91VFsZC1s1BaQ==
-X-Google-Smtp-Source: AGHT+IEpljWYKLzCcG0GnushvXyC11xgQnr4hZcFwoEyq8E1xaOPI/ab5NsYSw8gVVsY46yv+lXpnw==
-X-Received: by 2002:a05:600c:6d46:b0:434:a5d1:9917 with SMTP id
- 5b1f17b1804b1-434a9de4533mr83226665e9.21.1732875452611; 
- Fri, 29 Nov 2024 02:17:32 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385ccd36557sm4036801f8f.24.2024.11.29.02.17.31
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 29 Nov 2024 02:17:32 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/2] hw/display/vga: Remove pointless
- VGACommonState::default_endian_fb
-Date: Fri, 29 Nov 2024 11:17:21 +0100
-Message-ID: <20241129101721.17836-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241129101721.17836-1-philmd@linaro.org>
-References: <20241129101721.17836-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1732876164; x=1733480964;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uxSZoNksZ1buJ0GjhahKKfGNoA3exZAc2twnFIzXyxY=;
+ b=EGxfYEq4ZWDC0sDU2VtNdylQUyJVL7EI2lRmtTVwl4xx3+WKzON31CfcYcoO+fsLZL
+ KNwLI8NE0+fwCL2AcFUIVsKI9RC+99JYtkFRoNOp5sufUVTdPSS7+jUUfqU7KaTwmbjy
+ fHqcsKdX9yE74aCSdk8CnAXuKh5llEgiipZnGieYfkzTLbIdMQhwNiCPAUtzuXjpz+9w
+ sQEHE5g6T8Ws9Z8T3XqDHchf0ZVgxGh4or5110bPV5EZy2BKEmfxtwzGmgbmvYjkVlZk
+ dqctagPxIk5k11FgYRNpiPQTqrcEFMUEC8+FZr6Du1z0DQ8WvyX7mL9DGlYeIMXeOZHr
+ BFeQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWoA94K7PGezlGRYs9/gblSvIdJ2SehMFo9GrJ8hxJKNpsHJM8LEIcmRmEX/MNkTsfCt0nkTlZzD53@nongnu.org
+X-Gm-Message-State: AOJu0Yx6kYlKiC8wPxK7q9Cu+kGnJEq3AxvdHix2rISByKhgDPJocRpr
+ EVPZpC67TMI2i6WCDhgaifMkqHK+VtYMB2Ls3wk8VP0+5CyfirZHgVWrXNcVHYo=
+X-Gm-Gg: ASbGncubwjjfTmjjsAOHGBY4PIdCzB1hSYxpcUg+Zzp96UJlLw6LK2M4ZC+is1A1gpk
+ P8AUaZLEeRnnsjxnWoK3UWq6TMB4iXje+RLdfWCRddRBVNX44BHRCSPA7d2OcdyZNJ8uB4zNTuV
+ 8dRqNDOnYDM4DfT6fbUu3ksMUiqY9/DZbR+GtWMEXVWFKyC9jfjfCA3QXixnpORUZbAt/KASyQl
+ oR7DLvLtksdL4zvxJ8t7rmkVWaAbI3ObUi/QmbfAUWAIt7sHYv+FESi3/0uSNnPgw08eZ1D1eN0
+ lomGtNF8fSjM5VEIhwr2
+X-Google-Smtp-Source: AGHT+IGHFfy7c6zN2tI3E9rDTquTyNQ/00UEtLQLmF9KvfjElSIIcUed4RWyKkDbq7mwq89ecm7oYw==
+X-Received: by 2002:a5d:584b:0:b0:382:134d:164 with SMTP id
+ ffacd0b85a97d-385cbd80a3cmr4664729f8f.19.1732876163751; 
+ Fri, 29 Nov 2024 02:29:23 -0800 (PST)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385ccd3a580sm4047945f8f.53.2024.11.29.02.29.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Nov 2024 02:29:23 -0800 (PST)
+Message-ID: <11a21260-cf71-495e-94bf-461fc0f39686@linaro.org>
+Date: Fri, 29 Nov 2024 11:29:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] amd_iommu: Fix kvm_enable_x2apic link error with clang in
+ non-KVM builds
+To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, Suravee.Suthikulpanit@amd.com, Vasant.Hegde@amd.com, 
+ Santosh Shukla <santosh.shukla@amd.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+References: <20241114114509.15350-1-sarunkod@amd.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241114114509.15350-1-sarunkod@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,51 +103,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'default_endian_fb' value is always target_words_bigendian(),
-remove it as it isn't very useful.
+On 14/11/24 12:45, Sairaj Kodilkar wrote:
+> Commit b12cb3819 (amd_iommu: Check APIC ID > 255 for XTSup) throws
+> linking error for the `kvm_enable_x2apic` when kvm is disabled
+> and Clang is used for compilation.
+> 
+> This issue comes up because Clang does not remove the function callsite
+> (kvm_enable_x2apic in this case) during optimization when if condition
+> have variable. Intel IOMMU driver solves this issue by creating separate
+> if condition for checking variables, which causes call site being
+> optimized away by virtue of `kvm_irqchip_is_split()` being defined as 0.
+> Implement same solution for the AMD driver.
+> 
+> Fixes: b12cb3819baf (amd_iommu: Check APIC ID > 255 for XTSup)
+> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+> Signed-off-by: Santosh Shukla <santosh.shukla@amd.com>
+> Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> ---
+>   hw/i386/amd_iommu.c | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/display/vga_int.h | 1 -
- hw/display/vga.c     | 5 ++---
- 2 files changed, 2 insertions(+), 4 deletions(-)
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
-index f77c1c11457..5dcdecfd422 100644
---- a/hw/display/vga_int.h
-+++ b/hw/display/vga_int.h
-@@ -135,7 +135,6 @@ typedef struct VGACommonState {
-     bool full_update_text;
-     bool full_update_gfx;
-     bool big_endian_fb;
--    bool default_endian_fb;
-     bool global_vmstate;
-     /* hardware mouse cursor support */
-     uint32_t invalidated_y_table[VGA_MAX_HEIGHT / 32];
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index b074b58c90d..6dbbbf49073 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -2116,7 +2116,7 @@ static bool vga_endian_state_needed(void *opaque)
-      * default one, thus ensuring backward compatibility for
-      * migration of the common case
-      */
--    return s->default_endian_fb != s->big_endian_fb;
-+    return s->big_endian_fb != target_words_bigendian();
- }
- 
- static const VMStateDescription vmstate_vga_endian = {
-@@ -2264,8 +2264,7 @@ bool vga_common_init(VGACommonState *s, Object *obj, Error **errp)
-      * into a device attribute set by the machine/platform to remove
-      * all target endian dependencies from this file.
-      */
--    s->default_endian_fb = target_words_bigendian();
--    s->big_endian_fb = s->default_endian_fb;
-+    s->big_endian_fb = target_words_bigendian();
- 
-     vga_dirty_log_start(s);
- 
--- 
-2.45.2
-
+And queued, thanks.
 
