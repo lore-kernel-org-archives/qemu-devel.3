@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB6BFD6EBFF
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 11:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB97AD6EBFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 11:42:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGz65-0005rY-Ld; Fri, 29 Nov 2024 06:23:41 -0500
+	id 1tGzNA-0001r5-0E; Fri, 29 Nov 2024 06:41:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGz62-0005rI-AU
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 06:23:38 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGzN9-0001qw-5r
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 06:41:19 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGz60-0005dw-GP
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 06:23:38 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-434a852bb6eso15979315e9.3
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 03:23:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tGzN7-0005hH-2A
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 06:41:18 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-434a10588f3so11139325e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 03:41:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1732879414; x=1733484214; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=184WGS+L/2J/Sc5nEtJoo2Jefox5y+0EIv3PfO9KZ2Q=;
- b=OhBTw5Vlu3BwInfG5PYu+RRaWxdizjgFJ1p/K4Nz1DHyWgvH8fDQmToFVRnG/f/9UI
- 9yL2bAVJg0dUpkgVY93oNXXkJv95d1F2aKAo3QKGQlAMOBYB+tBVtPutfnkHx5H5Ibta
- 5WxF0h1/eUuyC1dAeepi63qUVwKvebB+kiCwNiPVQsVUKdGzVyDFLi2EF6a+C5Ed8SEi
- LEvLVcri96FFFXaaUaDy8InFjXC5WQC8gbMXFEbzLq+RtipyVKxkfLPe3piSDBp66R/s
- GQB9Cz4Dq4ztyNED0zGxO7nMbyEZQM/n5+GOdzv4y9kUBxSj6svFk/GUcjAwwTG1IUmm
- AwwA==
+ d=linaro.org; s=google; t=1732880475; x=1733485275; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/o+BS+OcIItedzzG1AU2rEt3OTvDpG5A87iPkWMu5Rw=;
+ b=df1JmmMwvVSrqQaIZXpUB30wyDT4TgznRFB/O5vJ+wIViPgZEqMIwdOlB5Bb/6NAKs
+ GSxE4k4K8MzCW4Q8AcFsM5htj5blWd2ktPmJKdBCcdpRzmzwcMHjNMFMHjMg+mQn2oDm
+ eDX+18sp83whdhGRwg8Ocz3aK4IXwnpLDr/NGfOAhKaIAWsLXsrl8mu0IOvxxz1x7oUg
+ ztEygHSEaCU4DnsqP9QFDq52sCrSq5FEGLXRvM+oEtp4qHWLABpvSmyYqo+yJQ1oSGM1
+ YsBc8Q/NloOrsVzrEmcZR5wC8Q+uN+/0yJo8XNmLFfrAgLQvJNlXORTvWHuW7DcbrD1G
+ HmRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732879414; x=1733484214;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=184WGS+L/2J/Sc5nEtJoo2Jefox5y+0EIv3PfO9KZ2Q=;
- b=I5JS9wpS5D/5pvwF+6he754ppz4aBoD1SFu+5Bop7WTcmBCROdYObBRDnRimr2CGS9
- X9CpnatOj6CTLLZP0n4RQiFPCvZ8eoVuUIMfZ3zVEV4CmTt7DnGZoQXXXP3fFxHBdUb5
- vi8QEXNpeCFYDsLvL2BeZTcoo7ZBu2yeE7sNrk9gCMjEKqiWF86K1feSNnCR4+zsf9Fo
- n+mXP9HIpSKIDQCJzkxKX+RD7omRyKHhB8wK6S3VcvmibmWldtllgd3f4iYzT8c9b5YG
- Cdtf7COEBAY52AeIlGWjPwNXHUkhEbdvfpCbH9GXtyhg46g2xgidd9AxI251qorYampn
- QCLQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiECgbhkuIoDVG7ONY715Oai9cAud3tZfApOzWqR8tH1smCeexFmDICAqWZkymSzE8Rcsox7pRse2p@nongnu.org
-X-Gm-Message-State: AOJu0YwUzJTXNzBYsFoJV5r94ACCTP7kAN7L6XAPUFHNyWQ7Fa7/oK1I
- pxt9jCuabv8neaPrq+FZVbOSO0aXVMmrQImwv5dWIHoN1j8DqtXrs0j/j6IUfp0=
-X-Gm-Gg: ASbGnctK8eatD+uVRy+Kjo4lFHLohgtrvgaO4Hxz6n52sk5RQMbfS4E3HPSlF8mNppn
- Kj7M5VWHEf6yOInRXiOVifAZLQoPIRwgxHHCU7cUTmI6cOGzJnejo+3WdDH1T2LZJVq/EsdLyA9
- 3vkHEJd6VHmAtl9bmh/lv0g0eqv70cbdAYXp9LDKDZaJN2Fb1iWiGkT4GmSm94B62dBpw2YRvx+
- oUWFdgHfM5rNysfXf/NVBzm1wYPGpv2lxC2vEYVoGP3iKZiQPIhyzyxlusOxSmT6XUULW1E3jf6
- KKYOKP/zn7pTkxerwOEI
-X-Google-Smtp-Source: AGHT+IG8dMJEJw7JiYWXA+9BUjWaAXcoWJPG+TvKnEQXpzjHlDhdT2/kWGW6bheIIgc1SuJ9t7f0eQ==
-X-Received: by 2002:a05:600c:3b1a:b0:434:a160:3647 with SMTP id
- 5b1f17b1804b1-434a9dc3eb6mr100320525e9.12.1732879414322; 
- Fri, 29 Nov 2024 03:23:34 -0800 (PST)
-Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434b0dc99b3sm49706385e9.24.2024.11.29.03.23.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Nov 2024 03:23:33 -0800 (PST)
-Message-ID: <30da5962-b649-49da-98e8-0d5efbc4bbfb@linaro.org>
-Date: Fri, 29 Nov 2024 12:23:32 +0100
+ d=1e100.net; s=20230601; t=1732880475; x=1733485275;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/o+BS+OcIItedzzG1AU2rEt3OTvDpG5A87iPkWMu5Rw=;
+ b=aPvKZubGdjebluKgwrIFKMSsLeFhTOTRhCuHtOfjZ2xoJd5CH/V0VOJtZ+S+Y9om8p
+ N7wgocH94t7vHNdFCr5L9ophCudRSjc1ThJSPAS77n+4d3E4/A8IIye8YIFanfmQYvUE
+ 1uX3ATgGGBb/asym4W8f6Sk67/y8ko1/ymHa5MCqULiKAsZIXO/SFdoQT5SmaQvbdn75
+ u5QeLyH7hraENDGNBOVkK3RI6XAMUmKFbIb5k6VNyHRMZT1u1aTTMdvP8sr85vvKgURy
+ JFE1b40piEAFxtm/mGJGrANArY6aSpNMReDuzVvDDYXEiRTfpdXPfWR+nxGwMDl8Wxuy
+ CDJw==
+X-Gm-Message-State: AOJu0YykLMfdDvkxA/4xuPraQ4BgTymI1p4WaJhv5d0RMkE9mp/KDp2H
+ ODJ9bCprr4H4aUOHo2uDKztMBNYztLrICal62g/iv3NabHjmjlnEJw0Bg6qoFqvXh/GNjJg7Pvo
+ i
+X-Gm-Gg: ASbGncsLiyafx6wqSyJShBQ4pfBOuLOl18CDziH4P/8ulJW2XHVwQZQIE/HpoDAwAam
+ y2QOEHpBMV8LtEItX91ja0feGKmLnuNzzgHe9EJpSjBBOXwVdYL57VL+uA2L9bqk+YcYg8DfLHz
+ 2xC4n2DyI8KVn8wU3jSclIdczSvgCND5NoQKQbjHxqUEApCaF6g3Qmfv4+cFKrJSkwWC84Y2HQD
+ pSoPj0AJ9GZ/1aDrh+Sx2uq0rNhVP3KMImfQz1TDnAWxvXx4umhI3fXbIERa+NEbctjTi2iswyW
+ lFn8l98RZRuO7iMTVJ8A89tEvIqYhw==
+X-Google-Smtp-Source: AGHT+IE1lcy+shPR/HEchi9kcSQgIZ8rQ6wiHT9NE9NxJwz3N+RDB/IwwOJHwIOhJ+qOiw3unJ0miQ==
+X-Received: by 2002:a05:600c:1f06:b0:431:2b66:44f7 with SMTP id
+ 5b1f17b1804b1-434a9df7a8dmr114281755e9.31.1732880474951; 
+ Fri, 29 Nov 2024 03:41:14 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434aa763a59sm81750635e9.11.2024.11.29.03.41.13
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 29 Nov 2024 03:41:14 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Daniel Hoffman <dhoff749@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Vasant.Hegde@amd.com,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sairaj Kodilkar <sarunkod@amd.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Santosh Shukla <santosh.shukla@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH-for-9.2] hw/i386/amd_iommu: Fix XTSup feature check when KVM
+ is not available
+Date: Fri, 29 Nov 2024 12:41:13 +0100
+Message-ID: <20241129114113.33215-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] amd_iommu: Fix kvm_enable_x2apic link error with clang in
- non-KVM builds
-To: Sairaj Kodilkar <sarunkod@amd.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Santosh Shukla <santosh.shukla@amd.com>, Suravee.Suthikulpanit@amd.com
-Cc: pbonzini@redhat.com, Vasant.Hegde@amd.com, qemu-devel@nongnu.org
-References: <20241114114509.15350-1-sarunkod@amd.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241114114509.15350-1-sarunkod@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,130 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/11/24 12:45, Sairaj Kodilkar wrote:
-> Commit b12cb3819 (amd_iommu: Check APIC ID > 255 for XTSup) throws
-> linking error for the `kvm_enable_x2apic` when kvm is disabled
-> and Clang is used for compilation.
-> 
-> This issue comes up because Clang does not remove the function callsite
-> (kvm_enable_x2apic in this case) during optimization when if condition
-> have variable. Intel IOMMU driver solves this issue by creating separate
-> if condition for checking variables, which causes call site being
-> optimized away by virtue of `kvm_irqchip_is_split()` being defined as 0.
-> Implement same solution for the AMD driver.
-> 
-> Fixes: b12cb3819baf (amd_iommu: Check APIC ID > 255 for XTSup)
-> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-> Signed-off-by: Santosh Shukla <santosh.shukla@amd.com>
-> Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> ---
->   hw/i386/amd_iommu.c | 8 +++++---
->   1 file changed, 5 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index 13af7211e11d..af0f4da1f69e 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -1657,9 +1657,11 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
->           error_report("AMD IOMMU with x2APIC confguration requires xtsup=on");
->           exit(EXIT_FAILURE);
->       }
-> -    if (s->xtsup && kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-> -        error_report("AMD IOMMU xtsup=on requires support on the KVM side");
-> -        exit(EXIT_FAILURE);
-> +    if (s->xtsup) {
-> +        if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-> +            error_report("AMD IOMMU xtsup=on requires support on the KVM side");
-> +            exit(EXIT_FAILURE);
-> +        }
->       }
->   
->       pci_setup_iommu(bus, &amdvi_iommu_ops, s);
+When building with debug on a host which doesn't provide KVM,
+we get:
 
-Actually I think a clearer fix is:
+    C compiler for the host machine: clang (clang 16.0.0 "Apple clang
+    version 16.0.0 (clang-1600.0.26.4)")
+    C linker for the host machine: clang ld64 1115.7.3
+    Host machine cpu family: aarch64
+    Host machine cpu: aarch64
+       Compilation
+         host CPU                        : aarch64
+         host endianness                 : little
+         C compiler                      : clang
+         Host C compiler                 : clang
+         C++ compiler                    : NO
+         Objective-C compiler            : clang
+         Rust support                    : NO
+         CFLAGS                          : -g -O0
+       User defined options
+         optimization                    : 0
+    ...
+    [1589/1590] Linking target qemu-system-x86_64-unsigned
+    Undefined symbols for architecture arm64:
+       "_kvm_enable_x2apic", referenced from:
+           _amdvi_sysbus_realize in hw_i386_amd_iommu.c.o
+    ld: symbol(s) not found for architecture arm64
 
--- >8 --
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 13af7211e11..9456f494385 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1652,14 +1652,15 @@ static void amdvi_sysbus_realize(DeviceState 
-*dev, Error **errp)
-      memory_region_add_subregion_overlap(&s->mr_sys, AMDVI_INT_ADDR_FIRST,
-                                          &s->mr_ir, 1);
+In commit 9926cf34de5 ("target/i386: Allow elision of
+kvm_enable_x2apic()") we removed this symbol stub globally
+(debug and optimized build profiles). All code wanted to
+access it must be protected by a check on kvm_enabled().
+See the similar check in x86_cpus_init() added by commit
+c04cfb4596a ("hw/i386: fix short-circuit logic with
+non-optimizing builds").
 
--    /* AMD IOMMU with x2APIC mode requires xtsup=on */
--    if (x86ms->apic_id_limit > 255 && !s->xtsup) {
--        error_report("AMD IOMMU with x2APIC confguration requires 
-xtsup=on");
--        exit(EXIT_FAILURE);
--    }
--    if (s->xtsup && kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
--        error_report("AMD IOMMU xtsup=on requires support on the KVM 
-side");
--        exit(EXIT_FAILURE);
-+    if (kvm_enabled()) {
-+        if (x86ms->apic_id_limit > 255 && !s->xtsup) {
-+            error_report("AMD IOMMU with x2APIC configuration requires 
-xtsup=on");
-+            exit(EXIT_FAILURE);
-+        }
-+        if (s->xtsup && kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-+            error_report("AMD IOMMU xtsup=on requires support on the 
-KVM side");
-+            exit(EXIT_FAILURE);
-+        }
-      }
+In order to fix this linking error, protect the whole
+block checking the XTSup feature with a check on whether
+KVM is enabled.
 
-      pci_setup_iommu(bus, &amdvi_iommu_ops, s);
+Since x86_cpus_init() already checks APIC ID > 255 imply
+kernel support for irqchip and X2APIC, remove the confuse
+and unlikely reachable "AMD IOMMU xtsup=on requires support
+on the KVM side" message.
 
+Fix a type in "configuration" in error message.
+
+Fixes: b12cb3819baf (amd_iommu: Check APIC ID > 255 for XTSup)
+Reported-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
+Alternative fix to:
+- https://lore.kernel.org/qemu-devel/20241113144923.41225-1-phil@philjordan.eu/
+- https://lore.kernel.org/qemu-devel/20241114114509.15350-1-sarunkod@amd.com/
+---
+ hw/i386/amd_iommu.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-Although half of these checks are already done in x86_cpus_init():
-
-     /*
-      * Can we support APIC ID 255 or higher?  With KVM, that requires
-      * both in-kernel lapic and X2APIC userspace API.
-      *
-      * kvm_enabled() must go first to ensure that kvm_* references are
-      * not emitted for the linker to consume (kvm_enabled() is
-      * a literal `0` in configurations where kvm_* aren't defined)
-      */
-     if (kvm_enabled() && x86ms->apic_id_limit > 255 &&
-         kvm_irqchip_in_kernel() && !kvm_enable_x2apic()) {
-         error_report("current -smp configuration requires kernel "
-                      "irqchip and X2APIC API support.");
-         exit(EXIT_FAILURE);
-     }
-
-So the fix can be simplified as:
-
--- >8 --
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
 index 13af7211e11..39b6d6ef295 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -1652,13 +1652,8 @@ static void amdvi_sysbus_realize(DeviceState 
-*dev, Error **errp)
-      memory_region_add_subregion_overlap(&s->mr_sys, AMDVI_INT_ADDR_FIRST,
-                                          &s->mr_ir, 1);
-
+@@ -1652,13 +1652,8 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion_overlap(&s->mr_sys, AMDVI_INT_ADDR_FIRST,
+                                         &s->mr_ir, 1);
+ 
 -    /* AMD IOMMU with x2APIC mode requires xtsup=on */
 -    if (x86ms->apic_id_limit > 255 && !s->xtsup) {
--        error_report("AMD IOMMU with x2APIC confguration requires 
-xtsup=on");
+-        error_report("AMD IOMMU with x2APIC confguration requires xtsup=on");
 -        exit(EXIT_FAILURE);
 -    }
 -    if (s->xtsup && kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
--        error_report("AMD IOMMU xtsup=on requires support on the KVM 
-side");
+-        error_report("AMD IOMMU xtsup=on requires support on the KVM side");
 +    if (kvm_enabled() && x86ms->apic_id_limit > 255 && !s->xtsup) {
-+        error_report("AMD IOMMU with x2APIC configuration requires 
-xtsup=on");
-          exit(EXIT_FAILURE);
-      }
++        error_report("AMD IOMMU with x2APIC configuration requires xtsup=on");
+         exit(EXIT_FAILURE);
+     }
+ 
+-- 
+2.45.2
 
----
-
-WDYT?
 
