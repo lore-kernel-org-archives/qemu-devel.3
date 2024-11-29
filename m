@@ -4,68 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A444ED70E02
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 02:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D128D70E0D
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 03:34:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGqUZ-0007Q2-0v; Thu, 28 Nov 2024 21:12:23 -0500
+	id 1tGrlN-0004fT-Q4; Thu, 28 Nov 2024 22:33:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tGqUR-0007PH-Sk; Thu, 28 Nov 2024 21:12:16 -0500
-Received: from xmbghk7.mail.qq.com ([43.163.128.47])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tGqUA-0007kM-EW; Thu, 28 Nov 2024 21:12:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1732846284; bh=Sft/TtXcxXncjIHXesJa1zuFB1b6mUYiiyfkKeGhOls=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=xBnGxDTwTYNZwkU7xZSqjASZOi0Tki95DKkhhSGBsvlOBhq9ausUafmXsuoOrU2s4
- l7mIi9nXG2axkvZtbsiGaBODL0RrGe8pL2M0fcFtQCNCW/cgMJUoinQrY4Tb7U8YtH
- olpaU119LojruToxEj077mOJU5Atso1oHRvZlLqo=
-Received: from [192.168.1.13] ([61.139.23.214])
- by newxmesmtplogicsvrszc25-0.qq.com (NewEsmtp) with SMTP
- id 2D6BF2C7; Fri, 29 Nov 2024 10:11:22 +0800
-X-QQ-mid: xmsmtpt1732846282t9fjudsy8
-Message-ID: <tencent_CA6E4D0C897F3ED0EF988CCE5DF541442A05@qq.com>
-X-QQ-XMAILINFO: NGX5+lQVxpC+ql2AUZRL7hgY6F4pTFvJidUPfgGgbPF5oy7MStkV98P8leuG+j
- Gt+Zt219dARoXn/3re3r9S+OBx8X3nhUx/LoypX0Zj7Xblnrhbc7y72m5M/RtnyfL2O/8SMXxnRt
- gy9yoAaCpNEDK4V5lEdFIv7F0o7eOS+PQ8iblTPKSUqzOyTplOLfJJMiqJRRNYGOfGYqr3bkKLp2
- 9UGR1BWWKc8GFEKu7EmCS2GuqNzmWJTug8q1zR5+u1i29UFqtGOjauTxgx9ZSMhbqzfzwuKH4cCh
- mWCPFs6hOcGErGYIu52EgvJLGjyoj3ny7/kkcfqXXHLbOt3TA/mLfPezS3haDw9dtnQtfnEVAqSu
- LacP2hQp2wNOldu28oaDuGHO0eGBjLxrsaL9nHH79mptB1V/KrFUPC5i4J1CX/4gn6CRbMz7LsLh
- 1x++fiaHZOPm6eap3mgiUh9SXsfIRCVnDw7c+0CyxybJ24BU2CaV7AC8mS8GX+jsBg2HQt9TnYvm
- keMe9vxDCFRd/prXDON25U15h+8pv5CyNmm6WsvDQfXYmJB89QwsqqqBXxqZXeA/cWJ5nci2B88m
- PaUR6hUeCoZ8VHgvFFphlEsVbaa+XyEJrHR++ZZkAUe8HJPwsypqil3Yh1rJpBowcqqmbiglrSmD
- cpQXX2xWZES20FDpV/yCOrHKipNdFckaQYHHrvFgHIt6JmjVE7C9mdCPYxSW05F7qKOunN3ii3aF
- ODUC/R+yxNhXdmtISGsrHVSxqLeL/ZTJ3YqpM7x86Ad2EZfzyqLmVxBF3FM3uywJ/Za7Brz4hTSY
- jn78WjaIgMgaM7ikgR2WCYvxSq/iWP7hVHM3u7reCvLHXZak3tgG4UNhJSCP2c+j7EU3Xj57V2u9
- OWVgpXKK03rKGSreWZ0DCZ54qZTlZ8REG9cjO4r4w3l2iKG8iOd2FsAyCXBjxU1Q==
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
-X-OQ-MSGID: <3449aedb1f62485ad3ee9690c1cb39a6967d3d1f.camel@qq.com>
-Subject: Re: [PATCH v2] riscv/gdb: add virt mode debug interface
-From: Yanfeng <yfliu2008@qq.com>
-To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com
-Date: Fri, 29 Nov 2024 10:11:22 +0800
-In-Reply-To: <8734jbh21e.fsf@draig.linaro.org>
-References: <tencent_B52B1EB0A504D6F690B6E6F3FD3AC9BCDC09@qq.com>
- <8734jbh21e.fsf@draig.linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
+ id 1tGrlM-0004fA-EB
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 22:33:48 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
+ id 1tGrlK-0005O8-4G
+ for qemu-devel@nongnu.org; Thu, 28 Nov 2024 22:33:48 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2120f9ec28eso10849455ad.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 19:33:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1732851223; x=1733456023;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LrvUXtItnywxI9klLAShU7rIn2vCxhI8lFLsH+bdSXk=;
+ b=0l+pyyxMl5TnfirWHTlmz/MNvIJKKkiye/c4Y8WzZTAkjH/zLs0ccjz8AU7r3ZYk1O
+ yuc0AVJGIUdbufguewQhmEbjcJVssCQZzMYR+zRe9pvtuilsSZ4Q+IBxW1lsyNUSFgpC
+ vsk3VUlz1NK7KLh1Z1dSHfxH34Os+8YnLwa19pk0DyjEHSbVQE/Es/g28qwGnCJuQES3
+ tTCqYldsUw6j4EUZA+SgRQiAMhDiO9Psf6VBdv/MP9xMJh/uTorIGFKXD6aF6BCEF3rn
+ qv6KR89p7qUzbyisyVZzQU5INOSLcLVHOLwVfpdsEdXtdEf5Fyetwv/2T/o4Wud0InCh
+ Z5gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732851223; x=1733456023;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LrvUXtItnywxI9klLAShU7rIn2vCxhI8lFLsH+bdSXk=;
+ b=REmIiaxSFJj4edlAL94WXZ93ClFExVvAe4xNirteX4Ncsb6TGt9kWzOKRc7rcAQK1K
+ GtU0v3MNCPoSr/i9KSBH6HDrz09g1fdMX+eGX9O2KmhB97d62EPwd55BNNbAQLy4wcdF
+ 7Rw1UAHCtzB49aNss1i1RqoV8xCf8BO6wRHzCED7856bCoWnDLzckzWpNzsdNuZfUDQq
+ SXPWVs0iynAkoaYXXzPaUO0Jv9hgQSTdUp/Ct5UEjS1MH1ptHt2EzvoL8D3gMg+j6GhH
+ e78m8syjtOK3VdOod2bhjN2wNHlFU5NQZPTzCa8qEmNCInOxY/bJcuzwguChyMF6b5UY
+ y4NA==
+X-Gm-Message-State: AOJu0YyXNDYSKInUn3jic14VO6TngEY5QUYctSlt1pKTRjOzVAxwdfSZ
+ CCo5+02Vn62CRoooThmJVThXg61CnNk3zvVOKzCLJtYWbpCf8vVO/ae78zTiZic=
+X-Gm-Gg: ASbGncvbtHW/1LckVJAkhZJn5TAQlWWR6rKEMy7stX/gx4/gguP7NwAFubTjhkrOB7A
+ etDwRu+9C4hWiLZ8pJMRwPVh4s01PrBR961WHnyT8Q9L6juGFFv51wu7obb9Y5p58OKiDJ0ui3D
+ Fjjrnn4iLV5y5vcM49fGVJ+2LUl97LxO9OCyMucVOhMfMPSiul8xHeE2GtBZr4WYx51fVrwKwxs
+ NtfHvCXn8Wlwx1x4kLIknQe18+S4c2XWhVuJfTgIOwLJUt93g6moBS47ZZcR7IMsgWA96HxXyA=
+X-Google-Smtp-Source: AGHT+IG5+mNuZ9i/ApakAwtXSlyUNd5W/rNa2cvtIVRVqOma+51rCJ3zvP+lvs4EevHq1pFPWw8CCg==
+X-Received: by 2002:a17:902:d2c9:b0:205:8763:6c2d with SMTP id
+ d9443c01a7336-2151d2fde80mr93416805ad.9.1732851223174; 
+ Thu, 28 Nov 2024 19:33:43 -0800 (PST)
+Received: from [10.16.166.2] (napt.igel.co.jp. [219.106.231.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-215219b1403sm21240255ad.242.2024.11.28.19.33.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Nov 2024 19:33:42 -0800 (PST)
+Message-ID: <ce5fc614-a54c-4003-b27f-6f08e56dbf08@igel.co.jp>
+Date: Fri, 29 Nov 2024 12:33:35 +0900
 MIME-Version: 1.0
-Received-SPF: pass client-ip=43.163.128.47; envelope-from=yfliu2008@qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/5] support unaligned access to xHCI Capability
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, its@irrelevant.dk,
+ foss@defmacro.it, qemu-block@nongnu.org, pbonzini@redhat.com,
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org, farosas@suse.de,
+ lvivier@redhat.com
+References: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
+ <0ace2747-efc8-4c0a-9d9f-68f255f1e3a5@igel.co.jp>
+ <CAFEAcA8oDPD7xdhMC__Rp3WOzSdm9CnSHw-bepvQnxK3BMzVOg@mail.gmail.com>
+ <1499e05e-acf6-4e4f-8929-e8bec5b92fac@igel.co.jp>
+ <CAFEAcA85NOxbmzpCT-5jv5uvcFH2WU5zm+fRTAK-VVG6LQRLbQ@mail.gmail.com>
+Content-Language: en-US
+From: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
+In-Reply-To: <CAFEAcA85NOxbmzpCT-5jv5uvcFH2WU5zm+fRTAK-VVG6LQRLbQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,154 +106,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2024-11-28 at 14:21 +0000, Alex Benn=C3=A9e wrote:
-> Yanfeng Liu <yfliu2008@qq.com> writes:
->=20
-> > This adds `virt` virtual register on debug interface so that users
-> > can access current virtualization mode for debugging purposes.
-> >=20
-> > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
-> > ---
-> > =C2=A0gdb-xml/riscv-32bit-virtual.xml |=C2=A0 1 +
-> > =C2=A0gdb-xml/riscv-64bit-virtual.xml |=C2=A0 1 +
-> > =C2=A0target/riscv/gdbstub.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 | 18 ++++++++++++------
-> > =C2=A03 files changed, 14 insertions(+), 6 deletions(-)
-> >=20
-> > diff --git a/gdb-xml/riscv-32bit-virtual.xml b/gdb-xml/riscv-32bit-
-> > virtual.xml
-> > index 905f1c555d..d44b6ca2dc 100644
-> > --- a/gdb-xml/riscv-32bit-virtual.xml
-> > +++ b/gdb-xml/riscv-32bit-virtual.xml
-> > @@ -8,4 +8,5 @@
-> > =C2=A0<!DOCTYPE feature SYSTEM "gdb-target.dtd">
-> > =C2=A0<feature name=3D"org.gnu.gdb.riscv.virtual">
-> > =C2=A0=C2=A0 <reg name=3D"priv" bitsize=3D"32"/>
-> > +=C2=A0 <reg name=3D"virt" bitsize=3D"32"/>
-> > =C2=A0</feature>
-> > diff --git a/gdb-xml/riscv-64bit-virtual.xml b/gdb-xml/riscv-64bit-
-> > virtual.xml
-> > index 62d86c237b..7c9b63d5b6 100644
-> > --- a/gdb-xml/riscv-64bit-virtual.xml
-> > +++ b/gdb-xml/riscv-64bit-virtual.xml
-> > @@ -8,4 +8,5 @@
-> > =C2=A0<!DOCTYPE feature SYSTEM "gdb-target.dtd">
-> > =C2=A0<feature name=3D"org.gnu.gdb.riscv.virtual">
-> > =C2=A0=C2=A0 <reg name=3D"priv" bitsize=3D"64"/>
-> > +=C2=A0 <reg name=3D"virt" bitsize=3D"64"/>
-> > =C2=A0</feature>
->=20
-> I assume these are mirrored in gdb not a QEMU only extension?
+On 2024/11/28 20:15, Peter Maydell wrote:
 
-So far I think it is a QEMU extension and the `gdb-multiarch` doesn't treat=
- is
-specially. My tests shows it basically works:
+> On Thu, 28 Nov 2024 at 06:19, Tomoyuki HIROSE
+> <tomoyuki.hirose@igel.co.jp> wrote:
+>> Hi, thank you for your comment.
+>>
+>> On 2024/11/27 20:23, Peter Maydell wrote:
+>>> On Wed, 27 Nov 2024 at 04:34, Tomoyuki HIROSE
+>>> <tomoyuki.hirose@igel.co.jp> wrote:
+>>>> I would be happy to receive your comments.
+>>>> ping.
+>>> Hi; this one is on my to-review list (along, sadly, with 23 other
+>>> series); I had a quick look a while back and it seemed good
+>>> (the testing support you've added looks great), but I need
+>>> to sit down and review the implementation more carefully.
+>>>
+>>> The one concern I did have was the big long list of macro
+>>> invocations in the memaccess-testdev device. I wonder if it
+>>> would be more readable and more compact to fill in MemoryRegionOps
+>>> structs at runtime using loops in C code, rather than trying to do
+>>> it all at compile time with macros ?
+>> I also want to do as you say. But I don't know how to generate
+>> MemoryRegionOps structs at runtime. We need to set read/write function
+>> to each structs, but I don't know a simple method how to generate a
+>> function at runtime. Sorry for my lack C knowledge. Do you know about
+>> any method how to generate a function at runtime in C ?
+> Your code doesn't generate any functions in the macros, though --
+> the functions are always memaccess_testdev_{read,write}_{big,little},
+> which are defined outside any macro.
+>
+> The macros are only creating structures. Those you can populate
+> at runtime using normal assignments:
+>
+>     for (valid_max = 1; valid_max < 16; valid_max <<= 1) {
+>         [other loops on valid_min, impl_max, etc, go here]
+>         MemoryRegionOps *memops = whatever;
+>         memops->read = memaccess_testdev_read_little;
+>         memops->write = memaccess_testdev_write_little;
+>         memops->valid.max_access_size = valid_max;
+>         etc...
+>     }
+>
+> It just happens that for almost all MemoryRegionOps in
+> QEMU the contents are known at compile time and so we
+> make them static const at file scope.
 
-```
-(gdb) ir virt
-priv           0x3	prv:3 [Machine]
-virt           0x0	0
-(gdb) set $priv =3D 2
-(gdb) ir virt
-priv           0x1	prv:1 [Supervisor]
-virt           0x0	0
-(gdb) set $virt =3D 1
-(gdb) ir virt
-priv           0x1	prv:1 [Supervisor]
-virt           0x1	1
-(gdb) set $virt =3D 0
-(gdb) ir virt
-priv           0x1	prv:1 [Supervisor]
-virt           0x0	0
-(gdb) set $virt =3D 1
-(gdb) ir virt
-priv           0x1	prv:1 [Supervisor]
-virt           0x1	1
-(gdb) set $priv =3D 3
-(gdb) ir virt
-priv           0x3	prv:3 [Machine]
-virt           0x0	0
-```
+OK, thanks! I got understand. I thought MemoryRegionOps had to be
+'static const' .
+I will try to improve code so that it does not require the use of
+memaccess-testdev.h.inc .
 
-As I am rather new to QEMU, please teach how we can add it as a QEMU only
-extension.
-
->=20
-> > diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> > index c07df972f1..7399003e04 100644
-> > --- a/target/riscv/gdbstub.c
-> > +++ b/target/riscv/gdbstub.c
-> > @@ -206,14 +206,14 @@ static int riscv_gdb_set_csr(CPUState *cs, uint8_=
-t
-> > *mem_buf, int n)
-> > =C2=A0
-> > =C2=A0static int riscv_gdb_get_virtual(CPUState *cs, GByteArray *buf, i=
-nt n)
-> > =C2=A0{
-> > -=C2=A0=C2=A0=C2=A0 if (n =3D=3D 0) {
-> > +=C2=A0=C2=A0=C2=A0 if (n >=3D 0 && n <=3D 1) {
-> > =C2=A0#ifdef CONFIG_USER_ONLY
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return gdb_get_regl(bu=
-f, 0);
-> > =C2=A0#else
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 RISCVCPU *cpu =3D RISC=
-V_CPU(cs);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPURISCVState *env =3D=
- &cpu->env;
-> > =C2=A0
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return gdb_get_regl(buf, en=
-v->priv);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return gdb_get_regl(buf, n =
-? env->virt_enabled : env->priv);
->=20
-> The range checking of n and ternary op are a bit magical here. Whats
-> wrong with a good old fashioned switch/case statement?
-thanks, I can rewrite with switch statement.
->=20
-> > =C2=A0#endif
-> > =C2=A0=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0=C2=A0=C2=A0=C2=A0 return 0;
-> > @@ -221,14 +221,20 @@ static int riscv_gdb_get_virtual(CPUState *cs,
-> > GByteArray *buf, int n)
-> > =C2=A0
-> > =C2=A0static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, =
-int n)
-> > =C2=A0{
-> > -=C2=A0=C2=A0=C2=A0 if (n =3D=3D 0) {
-> > +=C2=A0=C2=A0=C2=A0 if (n >=3D 0 && n <=3D 1) {
-> > =C2=A0#ifndef CONFIG_USER_ONLY
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 RISCVCPU *cpu =3D RISC=
-V_CPU(cs);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPURISCVState *env =3D=
- &cpu->env;
-> > =C2=A0
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env->priv =3D ldtul_p(mem_b=
-uf) & 0x3;
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env->priv =3D=3D PRV_RE=
-SERVED) {
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env=
-->priv =3D PRV_S;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (n =3D=3D 0) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env=
-->priv =3D ldtul_p(mem_buf) & 0x3;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if =
-(env->priv =3D=3D PRV_RESERVED) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 env->priv =3D PRV_S;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if =
-(env->priv !=3D PRV_M) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 env->virt_enabled =3D ldtul_p(mem_buf) & 0x1;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->=20
-> ditto here.
->=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0#endif
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return sizeof(target_u=
-long);
->=20
+thanks,
+Tomoyuki HIROSE
 
 
