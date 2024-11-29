@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F16D6EC0B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DA72D6EC0D
 	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 13:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH1Sw-0007XP-Mn; Fri, 29 Nov 2024 08:55:26 -0500
+	id 1tH1Sz-0007YY-Fc; Fri, 29 Nov 2024 08:55:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tH1Su-0007WI-3A
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:55:24 -0500
+ id 1tH1Sx-0007Xu-B2
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:55:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tH1Ss-0004ly-9O
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:55:23 -0500
+ id 1tH1Sv-0004na-LJ
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 08:55:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732888520;
+ s=mimecast20190719; t=1732888525;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4q8ZDel6iQN7p7D84KEIc2Y3xpUsYoQDuwcR6Shl9fQ=;
- b=ivRTa/d/mDx+9Twp1L7ovjyj/dow0oKBdUcrHYi4aKBTgDi8nXYk8VmgdRSRu077AqSdTp
- dHGK9KSb4ogwPhm7Y0rhL8UbW76ly+9Cs/F06xF/2oTE13L3TMpsY3iGAxLQk7M5MX2vXC
- VVIJ3O1z5lQKOx9slo6on8rLok5U6MU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=6lmoXx0HT9jU7VAbahDRzLM1yjEzUQqnGfaV0xMXw3w=;
+ b=LuOqHumLw2aNoG4DAn77zz7uuUgoj2uNjFjzNi1CjcQ0JlOUj+zxHfIBCTRFNBlHYG5lAe
+ 3/GDhU+AEXLYB43DuLZ4u9sXYUEL/EMBfkKqe8yWF9KA+pAuO1S+ltH0uIyKNRFBbEauMM
+ PX/8ST3yZSxXUjyCXdnySu9RAOo1yEs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-189-0eEcy7IhMqSGyYd0BoY22A-1; Fri,
- 29 Nov 2024 08:55:17 -0500
-X-MC-Unique: 0eEcy7IhMqSGyYd0BoY22A-1
-X-Mimecast-MFC-AGG-ID: 0eEcy7IhMqSGyYd0BoY22A
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-_I2uBRTNOIG0CINRGfNFLA-1; Fri,
+ 29 Nov 2024 08:55:21 -0500
+X-MC-Unique: _I2uBRTNOIG0CINRGfNFLA-1
+X-Mimecast-MFC-AGG-ID: _I2uBRTNOIG0CINRGfNFLA
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 624A7195422C; Fri, 29 Nov 2024 13:55:16 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC8161954AF2; Fri, 29 Nov 2024 13:55:20 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.37])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4EB061955D47; Fri, 29 Nov 2024 13:55:13 +0000 (UTC)
+ id D0ECE1955D45; Fri, 29 Nov 2024 13:55:16 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -54,10 +54,10 @@ Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  "Richard W . M . Jones" <rjones@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 1/3 for 9.2] hw/virtio: fix crash in processing balloon
- stats
-Date: Fri, 29 Nov 2024 13:55:05 +0000
-Message-ID: <20241129135507.699030-2-berrange@redhat.com>
+Subject: [PATCH v2 2/3 for 9.2] tests/qtest: drop 'fuzz-' prefix from
+ virtio-balloon test
+Date: Fri, 29 Nov 2024 13:55:06 +0000
+Message-ID: <20241129135507.699030-3-berrange@redhat.com>
 In-Reply-To: <20241129135507.699030-1-berrange@redhat.com>
 References: <20241129135507.699030-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -89,83 +89,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-balloon_stats_get_all will iterate over guest stats upto the max
-VIRTIO_BALLOON_S_NR value, calling visit_type_uint64 to populate
-the QObject dict. The dict keys are obtained from the static
-array balloon_stat_names which is VIRTIO_BALLOON_S_NR in size.
+This test file is expected to be extended for arbitrary virtio-balloon
+related tests, not merely those discovered by fuzzing.
 
-Unfortunately the way that array is declared results in any
-unassigned stats getting a NULL name, which will then cause
-visit_type_uint64 to trigger an assert in qobject_output_add_obj.
-
-The balloon_stat_names array was fortunately fully populated with
-names until recently:
-
-  commit 0d2eeef77a33315187df8519491a900bde4a3d83
-  Author: Bibo Mao <maobibo@loongson.cn>
-  Date:   Mon Oct 28 10:38:09 2024 +0800
-
-    linux-headers: Update to Linux v6.12-rc5
-
-pulled a change to include/standard-headers/linux/virtio_balloon.h
-which increased VIRTIO_BALLOON_S_NR by 6, and failed to add the new
-names to balloon_stat_names.
-
-This commit fills in the missing names, and uses a static assert to
-guarantee that any future changes to VIRTIO_BALLOON_S_NR will cause
-a build failure until balloon_stat_names is updated.
-
-This problem was detected by the Cockpit Project's automated
-integration tests on QEMU 9.2.0-rc1.
-
-Fixes: https://bugzilla.redhat.com/show_bug.cgi?id=2329448
-Fixes: 0d2eeef77a33315187df8519491a900bde4a3d83
-Reported-by: Martin Pitt <mpitt@redhat.com>
-Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/virtio/virtio-balloon.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ tests/qtest/meson.build                                       | 2 +-
+ .../{fuzz-virtio-balloon-test.c => virtio-balloon-test.c}     | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+ rename tests/qtest/{fuzz-virtio-balloon-test.c => virtio-balloon-test.c} (84%)
 
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index 609e39a821..afd2ad6dd6 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -167,19 +167,33 @@ static void balloon_deflate_page(VirtIOBalloon *balloon,
-     }
- }
- 
-+/*
-+ * All stats upto VIRTIO_BALLOON_S_NR /must/ have a
-+ * non-NULL name declared here, since these are used
-+ * as keys for populating the QDict with stats
-+ */
- static const char *balloon_stat_names[] = {
-    [VIRTIO_BALLOON_S_SWAP_IN] = "stat-swap-in",
-    [VIRTIO_BALLOON_S_SWAP_OUT] = "stat-swap-out",
-    [VIRTIO_BALLOON_S_MAJFLT] = "stat-major-faults",
-    [VIRTIO_BALLOON_S_MINFLT] = "stat-minor-faults",
-    [VIRTIO_BALLOON_S_MEMFREE] = "stat-free-memory",
-+
-    [VIRTIO_BALLOON_S_MEMTOT] = "stat-total-memory",
-    [VIRTIO_BALLOON_S_AVAIL] = "stat-available-memory",
-    [VIRTIO_BALLOON_S_CACHES] = "stat-disk-caches",
-    [VIRTIO_BALLOON_S_HTLB_PGALLOC] = "stat-htlb-pgalloc",
-    [VIRTIO_BALLOON_S_HTLB_PGFAIL] = "stat-htlb-pgfail",
--   [VIRTIO_BALLOON_S_NR] = NULL
-+
-+   [VIRTIO_BALLOON_S_OOM_KILL] = "stat-oom-kills",
-+   [VIRTIO_BALLOON_S_ALLOC_STALL] = "stat-alloc-stalls",
-+   [VIRTIO_BALLOON_S_ASYNC_SCAN] = "stat-async-scans",
-+   [VIRTIO_BALLOON_S_DIRECT_SCAN] = "stat-direct-scans",
-+   [VIRTIO_BALLOON_S_ASYNC_RECLAIM] = "stat-async-reclaims",
-+
-+   [VIRTIO_BALLOON_S_DIRECT_RECLAIM] = "stat-direct-reclaims",
- };
-+G_STATIC_ASSERT(G_N_ELEMENTS(balloon_stat_names) == VIRTIO_BALLOON_S_NR);
- 
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index f2f35367ae..bd41c9da5f 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -88,7 +88,7 @@ qtests_i386 = \
+   (config_all_devices.has_key('CONFIG_MEGASAS_SCSI_PCI') ? ['fuzz-megasas-test'] : []) +    \
+   (config_all_devices.has_key('CONFIG_LSI_SCSI_PCI') ? ['fuzz-lsi53c895a-test'] : []) +     \
+   (config_all_devices.has_key('CONFIG_VIRTIO_SCSI') ? ['fuzz-virtio-scsi-test'] : []) +     \
+-  (config_all_devices.has_key('CONFIG_VIRTIO_BALLOON') ? ['fuzz-virtio-balloon-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_VIRTIO_BALLOON') ? ['virtio-balloon-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_Q35') ? ['q35-test'] : []) +                          \
+   (config_all_devices.has_key('CONFIG_SB16') ? ['fuzz-sb16-test'] : []) +                   \
+   (config_all_devices.has_key('CONFIG_SDHCI_PCI') ? ['fuzz-sdcard-test'] : []) +            \
+diff --git a/tests/qtest/fuzz-virtio-balloon-test.c b/tests/qtest/virtio-balloon-test.c
+similarity index 84%
+rename from tests/qtest/fuzz-virtio-balloon-test.c
+rename to tests/qtest/virtio-balloon-test.c
+index ecb597fbee..6bea33b590 100644
+--- a/tests/qtest/fuzz-virtio-balloon-test.c
++++ b/tests/qtest/virtio-balloon-test.c
+@@ -1,5 +1,5 @@
  /*
-  * reset_stats - Mark all items in the stats array as unset
+- * QTest fuzzer-generated testcase for virtio balloon device
++ * QTest test cases for virtio balloon device
+  *
+  * Copyright (c) 2024 Gao Shiyuan <gaoshiyuan@baidu.com>
+  *
+@@ -30,7 +30,7 @@ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+ 
+-    qtest_add_func("fuzz/virtio/oss_fuzz_71649", oss_fuzz_71649);
++    qtest_add_func("virtio-balloon/oss_fuzz_71649", oss_fuzz_71649);
+ 
+     return g_test_run();
+ }
 -- 
 2.46.0
 
