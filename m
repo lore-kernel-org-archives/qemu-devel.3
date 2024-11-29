@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B455CD729EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0BD9D729EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:15:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH4a0-0007qi-PE; Fri, 29 Nov 2024 12:14:56 -0500
+	id 1tH4aW-00084g-VG; Fri, 29 Nov 2024 12:15:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tH4Zt-0007qO-GH
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:14:51 -0500
+ id 1tH4aT-00082j-OY
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:15:25 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tH4Zq-0002CB-93
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:14:48 -0500
+ id 1tH4aR-0002bh-9z
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:15:25 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tH4Zc-00000002z5K-12Us; Fri, 29 Nov 2024 18:14:32 +0100
-Message-ID: <7f47724d-f42a-4dc4-9f4c-2fad8e55e115@maciej.szmigiero.name>
-Date: Fri, 29 Nov 2024 18:14:26 +0100
+ id 1tH4aN-00000002z5b-1qRo; Fri, 29 Nov 2024 18:15:19 +0100
+Message-ID: <fd69d0ef-67de-4ac8-b00e-a68c4e2ae62f@maciej.szmigiero.name>
+Date: Fri, 29 Nov 2024 18:15:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 17/24] migration: Add save_live_complete_precopy_thread
- handler
+Subject: Re: [PATCH v3 18/24] vfio/migration: Don't run load cleanup if load
+ setup didn't run
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
@@ -38,8 +38,8 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <87f31f02484d33e9a3bf1df08b0c8a9fa5fa9fe0.1731773021.git.maciej.szmigiero@oracle.com>
- <bac4bc49-4db2-4188-b449-1f324ab32074@redhat.com>
+ <72424ece45968b1ae6b39750917a041867c415ab.1731773021.git.maciej.szmigiero@oracle.com>
+ <9f27f058-59f0-4056-b19a-f613418e0760@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <bac4bc49-4db2-4188-b449-1f324ab32074@redhat.com>
+In-Reply-To: <9f27f058-59f0-4056-b19a-f613418e0760@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=145.239.82.108;
@@ -110,210 +110,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.11.2024 15:03, Cédric Le Goater wrote:
+On 29.11.2024 15:08, Cédric Le Goater wrote:
 > On 11/17/24 20:20, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> This SaveVMHandler helps device provide its own asynchronous transmission
->> of the remaining data at the end of a precopy phase via multifd channels,
->> in parallel with the transfer done by save_live_complete_precopy handlers.
+>> It's possible for load_cleanup SaveVMHandler to get called without
+>> load_setup handler being called first.
 >>
->> These threads are launched only when multifd device state transfer is
->> supported.
->>
->> Management of these threads in done in the multifd migration code,
->> wrapping them in the generic thread pool.
+>> Since we'll be soon running cleanup operations there that access objects
+>> that need earlier initialization in load_setup let's make sure these
+>> cleanups only run when load_setup handler had indeed been called
+>> earlier.
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->> ---
->>   include/migration/misc.h         |  8 +++
->>   include/migration/register.h     | 23 +++++++++
->>   include/qemu/typedefs.h          |  4 ++
->>   migration/multifd-device-state.c | 85 ++++++++++++++++++++++++++++++++
->>   migration/savevm.c               | 33 ++++++++++++-
->>   5 files changed, 152 insertions(+), 1 deletion(-)
->>
->> diff --git a/include/migration/misc.h b/include/migration/misc.h
->> index 43558d9198f7..67014122dcff 100644
->> --- a/include/migration/misc.h
->> +++ b/include/migration/misc.h
->> @@ -114,4 +114,12 @@ bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
->>                                   char *data, size_t len);
->>   bool migration_has_device_state_support(void);
->> +void
->> +multifd_spawn_device_state_save_thread(SaveLiveCompletePrecopyThreadHandler hdlr,
->> +                                       char *idstr, uint32_t instance_id,
->> +                                       void *opaque);
->> +
->> +void multifd_abort_device_state_save_threads(void);
->> +int multifd_join_device_state_save_threads(void);
->> +
->>   #endif
->> diff --git a/include/migration/register.h b/include/migration/register.h
->> index 761e4e4d8bcb..ab702e0a930b 100644
->> --- a/include/migration/register.h
->> +++ b/include/migration/register.h
->> @@ -105,6 +105,29 @@ typedef struct SaveVMHandlers {
->>        */
->>       int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
->> +    /* This runs in a separate thread. */
->> +
->> +    /**
->> +     * @save_live_complete_precopy_thread
->> +     *
->> +     * Called at the end of a precopy phase from a separate worker thread
->> +     * in configurations where multifd device state transfer is supported
->> +     * in order to perform asynchronous transmission of the remaining data in
->> +     * parallel with @save_live_complete_precopy handlers.
->> +     * When postcopy is enabled, devices that support postcopy will skip this
->> +     * step.
->> +     *
->> +     * @idstr: this device section idstr
->> +     * @instance_id: this device section instance_id
->> +     * @abort_flag: flag indicating that the migration core wants to abort
->> +     * the transmission and so the handler should exit ASAP. To be read by
->> +     * qatomic_read() or similar.
->> +     * @opaque: data pointer passed to register_savevm_live()
->> +     *
->> +     * Returns zero to indicate success and negative for error
->> +     */
->> +    SaveLiveCompletePrecopyThreadHandler save_live_complete_precopy_thread;
->> +
->>       /* This runs both outside and inside the BQL.  */
->>       /**
->> diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
->> index 8c8ea5c2840d..926baaad211f 100644
->> --- a/include/qemu/typedefs.h
->> +++ b/include/qemu/typedefs.h
->> @@ -132,5 +132,9 @@ typedef struct IRQState *qemu_irq;
->>    */
->>   typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
->>   typedef int (*MigrationLoadThread)(bool *abort_flag, void *opaque);
->> +typedef int (*SaveLiveCompletePrecopyThreadHandler)(char *idstr,
->> +                                                    uint32_t instance_id,
->> +                                                    bool *abort_flag,
->> +                                                    void *opaque);
->>   #endif /* QEMU_TYPEDEFS_H */
->> diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
->> index bcbea926b6be..74a4aef346c8 100644
->> --- a/migration/multifd-device-state.c
->> +++ b/migration/multifd-device-state.c
->> @@ -9,12 +9,17 @@
->>   #include "qemu/osdep.h"
->>   #include "qemu/lockable.h"
->> +#include "block/thread-pool.h"
->>   #include "migration/misc.h"
->>   #include "multifd.h"
->>   #include "options.h"
->>   static QemuMutex queue_job_mutex;
->> +static ThreadPool *send_threads;
->> +static int send_threads_ret;
->> +static bool send_threads_abort;
->> +
->>   static MultiFDSendData *device_state_send;
->>   void multifd_device_state_send_setup(void)
->> @@ -22,6 +27,10 @@ void multifd_device_state_send_setup(void)
->>       qemu_mutex_init(&queue_job_mutex);
->>       device_state_send = multifd_send_data_alloc();
->> +
->> +    send_threads = thread_pool_new();
->> +    send_threads_ret = 0;
->> +    send_threads_abort = false;
->>   }
->>   void multifd_device_state_clear(MultiFDDeviceState_t *device_state)
->> @@ -32,6 +41,7 @@ void multifd_device_state_clear(MultiFDDeviceState_t *device_state)
->>   void multifd_device_state_send_cleanup(void)
->>   {
->> +    g_clear_pointer(&send_threads, thread_pool_free);
->>       g_clear_pointer(&device_state_send, multifd_send_data_free);
->>       qemu_mutex_destroy(&queue_job_mutex);
->> @@ -106,3 +116,78 @@ bool migration_has_device_state_support(void)
->>       return migrate_multifd() && !migrate_mapped_ram() &&
->>           migrate_multifd_compression() == MULTIFD_COMPRESSION_NONE;
->>   }
->> +
->> +struct MultiFDDSSaveThreadData {
->> +    SaveLiveCompletePrecopyThreadHandler hdlr;
->> +    char *idstr;
->> +    uint32_t instance_id;
->> +    void *handler_opaque;
->> +};
->> +
->> +static void multifd_device_state_save_thread_data_free(void *opaque)
->> +{
->> +    struct MultiFDDSSaveThreadData *data = opaque;
->> +
->> +    g_clear_pointer(&data->idstr, g_free);
->> +    g_free(data);
->> +}
->> +
->> +static int multifd_device_state_save_thread(void *opaque)
->> +{
->> +    struct MultiFDDSSaveThreadData *data = opaque;
->> +    int ret;
->> +
->> +    ret = data->hdlr(data->idstr, data->instance_id, &send_threads_abort,
->> +                     data->handler_opaque);
->> +    if (ret && !qatomic_read(&send_threads_ret)) {
->> +        /*
->> +         * Racy with the above read but that's okay - which thread error
->> +         * return we report is purely arbitrary anyway.
->> +         */
->> +        qatomic_set(&send_threads_ret, ret);
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +void
->> +multifd_spawn_device_state_save_thread(SaveLiveCompletePrecopyThreadHandler hdlr,
->> +                                       char *idstr, uint32_t instance_id,
->> +                                       void *opaque)
->> +{
->> +    struct MultiFDDSSaveThreadData *data;
->> +
->> +    assert(migration_has_device_state_support());
->> +
->> +    data = g_new(struct MultiFDDSSaveThreadData, 1);
->> +    data->hdlr = hdlr;
->> +    data->idstr = g_strdup(idstr);
->> +    data->instance_id = instance_id;
->> +    data->handler_opaque = opaque;
->> +
->> +    thread_pool_submit(send_threads,
->> +                       multifd_device_state_save_thread,
->> +                       data, multifd_device_state_save_thread_data_free);
->> +
->> +    /*
->> +     * Make sure that this new thread is actually spawned immediately so it
->> +     * can start its work right now.
->> +     */
->> +    thread_pool_adjust_max_threads_to_work(send_threads);
->> +}
->> +
->> +void multifd_abort_device_state_save_threads(void)
->> +{
->> +    assert(migration_has_device_state_support());
->> +
->> +    qatomic_set(&send_threads_abort, true);
->> +}
->> +
->> +int multifd_join_device_state_save_threads(void)
->> +{
->> +    assert(migration_has_device_state_support());
->> +
->> +    thread_pool_wait(send_threads);
->> +
->> +    return send_threads_ret;
->> +}
 > 
-> There is a lot in common with the load_thread part in patch 8. I think
-> more code could be shared.
+> tbh, that's a bit ugly. I agree it's similar to those 'bool initialized'
+> attributes we have in some structs, so nothing new or really wrong.
+> But it does look like a workaound for a problem or cleanups missing
+> that would need time to untangle.
+> 
+> I would prefer to avoid this change and address the issue from the
+> migration subsystem if possible.
 
-I will have a second look whether some code can be indeed shared with
-load threads here when I will be preparing the next version of this
-patch set.
+While it would be pretty simple to only call {load,save}_cleanup
+SaveVMHandlers when the relevant {load,save}_setup handler was
+successfully called first this would amount to a change of these
+handler semantics.
 
+This would risk introducing regressions - for example vfio_save_setup()
+doesn't clean up (free) newly allocated migration->data_buffer
+if vfio_migration_set_state() were to fail later in this handler
+and relies on an unconstitutional call to vfio_save_cleanup() in
+order to clean it up.
+
+There might be similar issues in other drivers too.
+
+> Thanks,
+> 
 > C.
 
 Thanks,
