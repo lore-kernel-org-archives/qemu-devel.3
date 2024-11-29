@@ -4,57 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69C8BD6EC15
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 14:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA21D729E6
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 15:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH29N-0003JU-C6; Fri, 29 Nov 2024 09:39:17 -0500
+	id 1tH2c3-0003oo-8a; Fri, 29 Nov 2024 10:08:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tH29L-0003IZ-Qz
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 09:39:16 -0500
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ (Exim 4.90_1) (envelope-from <jvilaca@redhat.com>)
+ id 1tH2AT-000404-Dg
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 09:40:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tH29K-0005yB-9D
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 09:39:15 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 42223A43E63;
- Fri, 29 Nov 2024 14:37:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC217C4CECF;
- Fri, 29 Nov 2024 14:39:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1732891144;
- bh=oR7mFu4Wwhx1slZASJe1AsJDdyPKqTADjzMhvy6/VLQ=;
- h=From:To:Cc:Subject:Date:From;
- b=ntJzVOka6XOS+gfZttijGjDIvc1D6wi0fItcHZEPouvw6zGp/3dRyemzFsP0Zaq9R
- 1a1nRudfHxF8FqBG5LKspn8uL4+6THEFLHM1/74p63kn8vOZwhNRomVs58a4EGvw8/
- 67YxrsgPy/nUNkdOWFJOiDBxO9ghRwuAoP4mN8ygEy0DYeA8TPHfyVOF1hfoCYDJCb
- 0ZuSwSa315zJeZn+81/ui2T+Ga9N49jA9hup4y4ALFxTazTzynEEjrm4yAZxgd/9AY
- 83kq5kieXSUl53cf7vVVAYfOFfBqpLPqu1MeR51p2r6GOpSS8Vmp1kBVDV25MhTj1+
- 7QvY/9T4n339A==
-From: deller@kernel.org
-To: Laurent Vivier <laurent@vivier.eu>,
-	qemu-devel@nongnu.org
-Cc: deller@gmx.de
-Subject: [PATCH 0/6] linux-user: Add support for various missing netlink
- sockopt entries
-Date: Fri, 29 Nov 2024 15:38:55 +0100
-Message-ID: <20241129143901.11291-1-deller@kernel.org>
-X-Mailer: git-send-email 2.47.0
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <jvilaca@redhat.com>)
+ id 1tH2AR-0006m8-TR
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 09:40:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1732891217;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=mf9B2RjgbULpV/473cL3Yo/CITdYJuQzB5zWhNqYFCs=;
+ b=cwkXzEYQBTwNyQCSlkKGTT1S5lf5PTxSJTw0Nb9zzqVS9g4CqH6roGKTRGV63d5vsm2wva
+ YIZV3h1KmaocIREZg1ShHwW2su2b4r5eGpk8vdQfSrPTVWx7f0pgjhC5pn3CR9+/B+7nns
+ KKP4EOuqeIpygDu52TvQIi/sBS7bmRY=
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-547-_0bESrm5M3Sxy9R8VllN7A-1; Fri, 29 Nov 2024 09:39:04 -0500
+X-MC-Unique: _0bESrm5M3Sxy9R8VllN7A-1
+X-Mimecast-MFC-AGG-ID: _0bESrm5M3Sxy9R8VllN7A
+Received: by mail-ot1-f71.google.com with SMTP id
+ 46e09a7af769-71d418d1977so1232837a34.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 06:39:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732891143; x=1733495943;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mf9B2RjgbULpV/473cL3Yo/CITdYJuQzB5zWhNqYFCs=;
+ b=bv4k37mArlsHzX7snmnZc5Eh7StUUpBIyrl8E07o1b7RNt/r0sRuskbvIuBndSBvvz
+ jc9t6+D49jP58m1UnF6AjH6jRc4wlSdQk5bVl7h+4GoZtZpSRmvISGQ7kSE5kc21H8Zw
+ /31OshoqTrqIcN4xFiU0N7wzUpRZhB893rlG1M1J8enzJbkJY99AB58Jbu+NUXC5ui6G
+ MHyMsX0FjeLnqYkiU7nEWc9cm+pTPcdM/+V0kMjZrVqOrToscmSkL/ebn7FkqF7uPTK5
+ i+dhtfEGDu14HF3jLgNvQBs+GJCj+E+zUd+8xnyU592xt+u6WMdnsTWeI+gLMp+rp31Q
+ m6TQ==
+X-Gm-Message-State: AOJu0YyJaBdKgi4mJBBc1qq/i126UdAPJnO8Zq//MzVl7fqwDm2hPqnk
+ MZ9PFGFmg8dYbHUtPqfj8gakqfY4/7HC389wt22/XnZHos96hMR8HhJ+zEMod1RtWKu/P77c4dM
+ pqmpWoUXye0QIlKeoKXFakBnslZ5HIgXF1e0uJh/ZJa3QvLe1l7R7unbC8zHXN5h73DAhpuEvEB
+ 8+r/kdxCL+CyEMytFgnHsj2wDpLiurNn+KcD1ztQ==
+X-Gm-Gg: ASbGncuJ+1G86C7t69HowOdArl8LsiJWwpiEQQ/UecJfjVL4ArdqK6/hZW3tMW4vWXm
+ KfvWNOY/U4IA2nQlnh4EQi8Hof5oSXRPdVr2mzqJRgy56P/bzbcZkhnLSWL6FHog=
+X-Received: by 2002:a05:6830:441e:b0:71d:5c89:e505 with SMTP id
+ 46e09a7af769-71d65c8b284mr10312182a34.9.1732891143738; 
+ Fri, 29 Nov 2024 06:39:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFReddHrwGiO0qEo4/WHxA8iFOAr6LEiGoCSnM5tiQB+ohNtbcCn6yxuc2zBVsx/HKJ30v3V0/7botyxTVBJCM=
+X-Received: by 2002:a05:6830:441e:b0:71d:5c89:e505 with SMTP id
+ 46e09a7af769-71d65c8b284mr10312153a34.9.1732891143401; Fri, 29 Nov 2024
+ 06:39:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=deller@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+From: =?UTF-8?B?Sm/Do28gVmlsYcOnYQ==?= <jvilaca@redhat.com>
+Date: Fri, 29 Nov 2024 14:38:52 +0000
+Message-ID: <CAOw09wu31aROKJaYA7igHR_toegozssDXsTBNuUhusoRX+Yvng@mail.gmail.com>
+Subject: How to query the number of processes queueing for the CPU inside the
+ VM
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000000983b706280e29b7"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jvilaca@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 29 Nov 2024 10:08:54 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,33 +96,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+--0000000000000983b706280e29b7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This patchset adds various missing sockopt calls, so that qemu linux-user
-is able to successfully build the debian gupnp package in a chroot.
+In KubeVirt, through libvirt, we need to know the number of processes
+queued for the CPU inside the VM.
 
-Tested with a 32-bit big-endian hppa linux-user chroot running on a phyiscal
-x86-64 little-endian host.
+Can we get this information through the qemu-guest-agent?
 
-This fixes debian's bug report:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1044651
+--=20
+kind regards,
+Jo=C3=A3o Vila=C3=A7a
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+--0000000000000983b706280e29b7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Helge Deller (6):
-  linux-user: netlink: Add missing IFA_PROTO to
-    host_to_target_data_addr_rtattr()
-  linux-user: Use unique error messages for cmsg parsing
-  linux-user: netlink: Add IP_PKTINFO cmsg parsing
-  linux-user: netlink: Add emulation of IP_MULTICAST_IF
-  linux-user: netlink: add netlink neighbour emulation
-  linux-user: netlink: Add missing QEMU_IFLA entries
+<div dir=3D"ltr"><div>In KubeVirt, through libvirt, we need to know the num=
+ber of processes queued for the CPU inside the VM.<br><br>Can we get this i=
+nformation through the qemu-guest-agent?</div><div><br></div><span class=3D=
+"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_sign=
+ature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><font color=3D"#=
+888888" face=3D"arial, sans-serif">kind regards,<br><div>Jo=C3=A3o Vila=C3=
+=A7a</div><div><br></div></font></div></div></div>
 
- linux-user/fd-trans.c | 137 +++++++++++++++++++++++++++++++++++++++++-
- linux-user/syscall.c  |  29 +++++++--
- 2 files changed, 161 insertions(+), 5 deletions(-)
-
--- 
-2.47.0
+--0000000000000983b706280e29b7--
 
 
