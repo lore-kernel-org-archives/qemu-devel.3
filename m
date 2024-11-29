@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0BD9D729EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:15:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4478DD729E7
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 17:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH4aW-00084g-VG; Fri, 29 Nov 2024 12:15:30 -0500
+	id 1tH4aj-0008LU-15; Fri, 29 Nov 2024 12:15:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tH4aT-00082j-OY
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:15:25 -0500
+ id 1tH4af-0008Fk-BP
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:15:38 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tH4aR-0002bh-9z
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:15:25 -0500
+ id 1tH4ad-0002fm-Fj
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 12:15:36 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tH4aN-00000002z5b-1qRo; Fri, 29 Nov 2024 18:15:19 +0100
-Message-ID: <fd69d0ef-67de-4ac8-b00e-a68c4e2ae62f@maciej.szmigiero.name>
-Date: Fri, 29 Nov 2024 18:15:14 +0100
+ id 1tH4aY-00000002z5l-3hyY; Fri, 29 Nov 2024 18:15:30 +0100
+Message-ID: <3ba62755-6f36-4707-8c18-8803dbd4f55b@maciej.szmigiero.name>
+Date: Fri, 29 Nov 2024 18:15:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 18/24] vfio/migration: Don't run load cleanup if load
- setup didn't run
+Subject: Re: [PATCH v3 19/24] vfio/migration: Add x-migration-multifd-transfer
+ VFIO property
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <72424ece45968b1ae6b39750917a041867c415ab.1731773021.git.maciej.szmigiero@oracle.com>
- <9f27f058-59f0-4056-b19a-f613418e0760@redhat.com>
+ <b34680f99e294532a5d095b34b5ef0e4f778b1f2.1731773021.git.maciej.szmigiero@oracle.com>
+ <f0e0dd0d-17be-477d-9243-be1b068cb81f@redhat.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <9f27f058-59f0-4056-b19a-f613418e0760@redhat.com>
+In-Reply-To: <f0e0dd0d-17be-477d-9243-be1b068cb81f@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=145.239.82.108;
@@ -110,40 +110,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.11.2024 15:08, Cédric Le Goater wrote:
+On 29.11.2024 15:11, Cédric Le Goater wrote:
 > On 11/17/24 20:20, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> It's possible for load_cleanup SaveVMHandler to get called without
->> load_setup handler being called first.
+>> This property allows configuring at runtime whether to transfer the
+>> particular device state via multifd channels when live migrating that
+>> device.
 >>
->> Since we'll be soon running cleanup operations there that access objects
->> that need earlier initialization in load_setup let's make sure these
->> cleanups only run when load_setup handler had indeed been called
->> earlier.
+>> It defaults to AUTO, which means that VFIO device state transfer via
+>> multifd channels is attempted in configurations that otherwise support it.
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   hw/core/machine.c             | 1 +
+>>   hw/vfio/pci.c                 | 9 +++++++++
+>>   include/hw/vfio/vfio-common.h | 1 +
+>>   3 files changed, 11 insertions(+)
+>>
+>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>> index ed8d39fd769f..fda0f8280edd 100644
+>> --- a/hw/core/machine.c
+>> +++ b/hw/core/machine.c
+>> @@ -39,6 +39,7 @@
+>>   GlobalProperty hw_compat_9_1[] = {
+>>       { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
+>>       { "migration", "send-switchover-start", "off"},
+>> +    { "vfio-pci", "x-migration-multifd-transfer", "off" },
 > 
-> tbh, that's a bit ugly. I agree it's similar to those 'bool initialized'
-> attributes we have in some structs, so nothing new or really wrong.
-> But it does look like a workaound for a problem or cleanups missing
-> that would need time to untangle.
+> Could you please move the compat changes into their own patch ?
+> It's easier for backports
 > 
-> I would prefer to avoid this change and address the issue from the
-> migration subsystem if possible.
+>>   };
+>>   const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index 14bcc725c301..9d547cb5cdff 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -3354,6 +3354,8 @@ static void vfio_instance_init(Object *obj)
+>>       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+>>   }
+>> +static PropertyInfo qdev_prop_on_off_auto_mutable;
+>> +
+>>   static Property vfio_pci_dev_properties[] = {
+>>       DEFINE_PROP_PCI_HOST_DEVADDR("host", VFIOPCIDevice, host),
+>>       DEFINE_PROP_UUID_NODEFAULT("vf-token", VFIOPCIDevice, vf_token),
+>> @@ -3378,6 +3380,10 @@ static Property vfio_pci_dev_properties[] = {
+>>                       VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
+>>       DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
+>>                               vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
+>> +    DEFINE_PROP("x-migration-multifd-transfer", VFIOPCIDevice,
+>> +                vbasedev.migration_multifd_transfer,
+>> +                qdev_prop_on_off_auto_mutable, OnOffAuto,
+>> +                .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
+> 
+> What are you trying to do that DEFINE_PROP_ON_OFF_AUTO() can not satisfy ?
+> 
 
-While it would be pretty simple to only call {load,save}_cleanup
-SaveVMHandlers when the relevant {load,save}_setup handler was
-successfully called first this would amount to a change of these
-handler semantics.
+DEFINE_PROP_ON_OFF_AUTO() property isn't runtime-mutable so using it
+would mean that the source VM would need to already decide at startup
+time whether it wants to do a multifd device state transfer.
 
-This would risk introducing regressions - for example vfio_save_setup()
-doesn't clean up (free) newly allocated migration->data_buffer
-if vfio_migration_set_state() were to fail later in this handler
-and relies on an unconstitutional call to vfio_save_cleanup() in
-order to clean it up.
+Source VM can run for a long time before being migrated so it is
+desirable to have a fallback mechanism to the old way of transferring
+VFIO device state if it turns to be necessary for some reason.
 
-There might be similar issues in other drivers too.
+After all, ordinary migration parameters can be adjusted at the run time
+too.
 
 > Thanks,
 > 
