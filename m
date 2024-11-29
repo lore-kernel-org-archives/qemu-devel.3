@@ -4,92 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D128D70E0D
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 03:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACA6D6EBE0
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 07:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tGrlN-0004fT-Q4; Thu, 28 Nov 2024 22:33:49 -0500
+	id 1tGv3b-00065e-ES; Fri, 29 Nov 2024 02:04:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1tGrlM-0004fA-EB
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 22:33:48 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1tGrlK-0005O8-4G
- for qemu-devel@nongnu.org; Thu, 28 Nov 2024 22:33:48 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2120f9ec28eso10849455ad.1
- for <qemu-devel@nongnu.org>; Thu, 28 Nov 2024 19:33:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1732851223; x=1733456023;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LrvUXtItnywxI9klLAShU7rIn2vCxhI8lFLsH+bdSXk=;
- b=0l+pyyxMl5TnfirWHTlmz/MNvIJKKkiye/c4Y8WzZTAkjH/zLs0ccjz8AU7r3ZYk1O
- yuc0AVJGIUdbufguewQhmEbjcJVssCQZzMYR+zRe9pvtuilsSZ4Q+IBxW1lsyNUSFgpC
- vsk3VUlz1NK7KLh1Z1dSHfxH34Os+8YnLwa19pk0DyjEHSbVQE/Es/g28qwGnCJuQES3
- tTCqYldsUw6j4EUZA+SgRQiAMhDiO9Psf6VBdv/MP9xMJh/uTorIGFKXD6aF6BCEF3rn
- qv6KR89p7qUzbyisyVZzQU5INOSLcLVHOLwVfpdsEdXtdEf5Fyetwv/2T/o4Wud0InCh
- Z5gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732851223; x=1733456023;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LrvUXtItnywxI9klLAShU7rIn2vCxhI8lFLsH+bdSXk=;
- b=REmIiaxSFJj4edlAL94WXZ93ClFExVvAe4xNirteX4Ncsb6TGt9kWzOKRc7rcAQK1K
- GtU0v3MNCPoSr/i9KSBH6HDrz09g1fdMX+eGX9O2KmhB97d62EPwd55BNNbAQLy4wcdF
- 7Rw1UAHCtzB49aNss1i1RqoV8xCf8BO6wRHzCED7856bCoWnDLzckzWpNzsdNuZfUDQq
- SXPWVs0iynAkoaYXXzPaUO0Jv9hgQSTdUp/Ct5UEjS1MH1ptHt2EzvoL8D3gMg+j6GhH
- e78m8syjtOK3VdOod2bhjN2wNHlFU5NQZPTzCa8qEmNCInOxY/bJcuzwguChyMF6b5UY
- y4NA==
-X-Gm-Message-State: AOJu0YyXNDYSKInUn3jic14VO6TngEY5QUYctSlt1pKTRjOzVAxwdfSZ
- CCo5+02Vn62CRoooThmJVThXg61CnNk3zvVOKzCLJtYWbpCf8vVO/ae78zTiZic=
-X-Gm-Gg: ASbGncvbtHW/1LckVJAkhZJn5TAQlWWR6rKEMy7stX/gx4/gguP7NwAFubTjhkrOB7A
- etDwRu+9C4hWiLZ8pJMRwPVh4s01PrBR961WHnyT8Q9L6juGFFv51wu7obb9Y5p58OKiDJ0ui3D
- Fjjrnn4iLV5y5vcM49fGVJ+2LUl97LxO9OCyMucVOhMfMPSiul8xHeE2GtBZr4WYx51fVrwKwxs
- NtfHvCXn8Wlwx1x4kLIknQe18+S4c2XWhVuJfTgIOwLJUt93g6moBS47ZZcR7IMsgWA96HxXyA=
-X-Google-Smtp-Source: AGHT+IG5+mNuZ9i/ApakAwtXSlyUNd5W/rNa2cvtIVRVqOma+51rCJ3zvP+lvs4EevHq1pFPWw8CCg==
-X-Received: by 2002:a17:902:d2c9:b0:205:8763:6c2d with SMTP id
- d9443c01a7336-2151d2fde80mr93416805ad.9.1732851223174; 
- Thu, 28 Nov 2024 19:33:43 -0800 (PST)
-Received: from [10.16.166.2] (napt.igel.co.jp. [219.106.231.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215219b1403sm21240255ad.242.2024.11.28.19.33.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Nov 2024 19:33:42 -0800 (PST)
-Message-ID: <ce5fc614-a54c-4003-b27f-6f08e56dbf08@igel.co.jp>
-Date: Fri, 29 Nov 2024 12:33:35 +0900
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1tGv3W-00065L-Cy
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 02:04:46 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1tGv3S-0004Fl-6V
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 02:04:46 -0500
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8AxbeJ4Z0ln+V1LAA--.15520S3;
+ Fri, 29 Nov 2024 15:04:24 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowMDxvkd1Z0lngKRsAA--.48099S3;
+ Fri, 29 Nov 2024 15:04:23 +0800 (CST)
+Subject: Re: [PATCH v4 0/6] hw/loongarch/virt: Add cpu hotplug support
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20241112021738.1952851-1-maobibo@loongson.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <633e93eb-cc99-58e8-74c0-6977c6dd2e19@loongson.cn>
+Date: Fri, 29 Nov 2024 15:02:49 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/5] support unaligned access to xHCI Capability
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, kbusch@kernel.org, its@irrelevant.dk,
- foss@defmacro.it, qemu-block@nongnu.org, pbonzini@redhat.com,
- peterx@redhat.com, david@redhat.com, philmd@linaro.org, farosas@suse.de,
- lvivier@redhat.com
-References: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
- <0ace2747-efc8-4c0a-9d9f-68f255f1e3a5@igel.co.jp>
- <CAFEAcA8oDPD7xdhMC__Rp3WOzSdm9CnSHw-bepvQnxK3BMzVOg@mail.gmail.com>
- <1499e05e-acf6-4e4f-8929-e8bec5b92fac@igel.co.jp>
- <CAFEAcA85NOxbmzpCT-5jv5uvcFH2WU5zm+fRTAK-VVG6LQRLbQ@mail.gmail.com>
+In-Reply-To: <20241112021738.1952851-1-maobibo@loongson.cn>
+Content-Type: multipart/alternative;
+ boundary="------------C8EAE0B8CF490B1EE69F4675"
 Content-Language: en-US
-From: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
-In-Reply-To: <CAFEAcA85NOxbmzpCT-5jv5uvcFH2WU5zm+fRTAK-VVG6LQRLbQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-CM-TRANSID: qMiowMDxvkd1Z0lngKRsAA--.48099S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoWxCr4fKryxGrW8Wryxtw13Awc_yoWrXr4rpr
+ WIyF15KryDGr97Aw1fJ3WrZF9Ygr1kGa12qas3AryIkw4UWr1Yvr1Syr909F45u3yvqF4r
+ Zr15Kr1j9a15ZabCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnRJUUUyCb4IE77IF4wAF
+ F20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r
+ 1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAF
+ wI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67
+ AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4UJVWxJr1le2I262IYc4CY6c8I
+ j28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAv7VC0I7IYx2IY67AKxVWUGVWUXw
+ Av7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0
+ xIA0c2IEe2xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
+ 1lx2IqxVAqx4xG67AKxVWUGVWUWwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
+ 14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+ IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+ 87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0x
+ ZFpf9x07UAWrXUUUUU=
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
+ NICE_REPLY_A=-3.164, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,58 +83,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/11/28 20:15, Peter Maydell wrote:
+This is a multi-part message in MIME format.
+--------------C8EAE0B8CF490B1EE69F4675
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> On Thu, 28 Nov 2024 at 06:19, Tomoyuki HIROSE
-> <tomoyuki.hirose@igel.co.jp> wrote:
->> Hi, thank you for your comment.
->>
->> On 2024/11/27 20:23, Peter Maydell wrote:
->>> On Wed, 27 Nov 2024 at 04:34, Tomoyuki HIROSE
->>> <tomoyuki.hirose@igel.co.jp> wrote:
->>>> I would be happy to receive your comments.
->>>> ping.
->>> Hi; this one is on my to-review list (along, sadly, with 23 other
->>> series); I had a quick look a while back and it seemed good
->>> (the testing support you've added looks great), but I need
->>> to sit down and review the implementation more carefully.
->>>
->>> The one concern I did have was the big long list of macro
->>> invocations in the memaccess-testdev device. I wonder if it
->>> would be more readable and more compact to fill in MemoryRegionOps
->>> structs at runtime using loops in C code, rather than trying to do
->>> it all at compile time with macros ?
->> I also want to do as you say. But I don't know how to generate
->> MemoryRegionOps structs at runtime. We need to set read/write function
->> to each structs, but I don't know a simple method how to generate a
->> function at runtime. Sorry for my lack C knowledge. Do you know about
->> any method how to generate a function at runtime in C ?
-> Your code doesn't generate any functions in the macros, though --
-> the functions are always memaccess_testdev_{read,write}_{big,little},
-> which are defined outside any macro.
->
-> The macros are only creating structures. Those you can populate
-> at runtime using normal assignments:
->
->     for (valid_max = 1; valid_max < 16; valid_max <<= 1) {
->         [other loops on valid_min, impl_max, etc, go here]
->         MemoryRegionOps *memops = whatever;
->         memops->read = memaccess_testdev_read_little;
->         memops->write = memaccess_testdev_write_little;
->         memops->valid.max_access_size = valid_max;
->         etc...
->     }
->
-> It just happens that for almost all MemoryRegionOps in
-> QEMU the contents are known at compile time and so we
-> make them static const at file scope.
+Hello everyone, I have a question about cpu hotplug to consult you.
 
-OK, thanks! I got understand. I thought MemoryRegionOps had to be
-'static const' .
-I will try to improve code so that it does not require the use of
-memaccess-testdev.h.inc .
+When I start qemu with the following parameters:
+/usr/bin/qemu-system-loongarch64 \
+-machine virt  \
+-accel tcg \
+-bios /usr/share/edk2/loongarch64/QEMU_EFI.fd \
+-m size=1048576k \
+-smp 1,maxcpus=4,cores=1,threads=1,sockets=4  \
+-nographic \
+-monitor telnet:localhost:4444,server,nowait \
+-incoming tcp:0:6666 \
+-serial stdio
 
-thanks,
-Tomoyuki HIROSE
+The virtual machine is not running directly and is in the migration state,
+At this point I insert a cpu using the following command:
+telnet 127.0.0.1 4444
+(qemu)  device_add 
+la464-loongarch-cpu,socket-id=1,core-id=0,thread-id=0,id=cpu-1
+
+I found that the ged device sends an interrupt signal to the interrupt 
+controller,
+My understanding is that the current machine is not in the running state,
+whether the ged device should send interrupt signal in this state?
+
+The "current_run_state" is  RUN_STATE_INMIGRATE,
+And The "machine_phase" is PHASE_MACHINE_READY in qemu.
+
+So do we need to add a conditional on current_run_state to the 
+acpi_cpu_plug_cb function?
+For example:
+
+@@ -258,7 +258,8 @@ void acpi_cpu_plug_cb(HotplugHandler *hotplug_dev,
+      }
+
+      cdev->cpu = CPU(dev);
+-    if (dev->hotplugged) {
++    if (dev->hotplugged &&
++        runstate_check(RUN_STATE_RUNNING)) {
+          cdev->is_inserting = true;
+          acpi_send_event(DEVICE(hotplug_dev), ACPI_CPU_HOTPLUG_STATUS);
+      }
+
+
+> LoongArch cpu hotplug is based on ACPI GED device, there is a little
+> change about ipi and extioi device, the value of num-cpu property is
+> maximum cpu number rather than present cpu number.
+>
+> It can be verified with qemu command:
+>    qemu-system-loongarch64 -smp 2,maxcpus=16,sockets=4,cores=4,threads=1
+> and vcpu can be added or remove with hmp command:
+>    device_add la464-loongarch-cpu,socket-id=0,core-id=2,thread-id=0,id=cpu-2
+>    device_del cpu-2
+>
+> ---
+> v3 ... v4:
+>    1. For cold-plug CPUs, move socket-id/core-id/thread-id property
+>       setting from preplug function to CPU object creating loop, since
+>       there is topo information calculation already in CPU object creating
+>       loop.
+>    2. Init interrupt pin of CPU object in cpu plug interface for both
+>       cold-plug CPUs and hot-plug CPUs.
+>    3. Apply the patch based on latest qemu version.
+>
+> v2 ... v3:
+>    1. Use qdev_realize_and_unref() with qdev_realize() and object_unref().
+>    2. Set vcpus_count with 1 since vcpu object is created for every thread.
+>    3. Remove property hw-id, use internal variable hw_id to differentiate
+>       cold-plug cpus and hot-plug cpus.
+>    4. Add generic function virt_init_cpu_irq() to init interrupt pin
+>       of CPU object, used by both cold-plug and hot-plug CPUs
+>
+> v1 ... v2:
+>    1. Add new property hw-id, property hw-id is set for cold-added CPUs,
+>       and property socket-id/core-id/thread-id is set for hot-added CPUs.
+>       The two properties can be generated from each other.
+>    2. Use general hotplug api such as hotplug_handler_pre_plug etc
+>    3. Reorganize the patch order, split the patch set into 4 small
+>       patches.
+> ---
+> Bibo Mao (6):
+>    hw/loongarch/virt: Add CPU topology support
+>    hw/loongarch/virt: Implement cpu plug interface
+>    hw/loongarch/virt: Add generic function to init interrupt pin of CPU
+>    hw/loongarch/virt: Init interrupt pin of CPU during plug interface
+>    hw/loongarch/virt: Update the ACPI table for hotplug cpu
+>    hw/loongarch/virt: Enable cpu hotplug feature on virt machine
+>
+>   docs/system/loongarch/virt.rst |  31 +++
+>   hw/loongarch/Kconfig           |   1 +
+>   hw/loongarch/acpi-build.c      |  35 ++-
+>   hw/loongarch/virt.c            | 374 ++++++++++++++++++++++++++++-----
+>   include/hw/loongarch/virt.h    |   3 +
+>   target/loongarch/cpu.c         |  25 +++
+>   target/loongarch/cpu.h         |  17 ++
+>   7 files changed, 428 insertions(+), 58 deletions(-)
+>
+>
+> base-commit: 134b443512825bed401b6e141447b8cdc22d2efe
+
+
+--------------C8EAE0B8CF490B1EE69F4675
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    Hello everyone, I have a question about cpu hotplug to consult you.<br>
+    <br>
+    When I start qemu with the following parameters:<br>
+    /usr/bin/qemu-system-loongarch64 \<br>
+    -machine virt  \<br>
+    -accel tcg \<br>
+    -bios /usr/share/edk2/loongarch64/QEMU_EFI.fd \<br>
+    -m size=1048576k \<br>
+    -smp 1,maxcpus=4,cores=1,threads=1,sockets=4  \<br>
+    -nographic \<br>
+    -monitor telnet:localhost:4444,server,nowait \<br>
+    -incoming tcp:0:6666 \<br>
+    -serial stdio<br>
+    <br>
+    The virtual machine is not running directly and is in the migration
+    state,<br>
+    At this point I insert a cpu using the following command:<br>
+    telnet 127.0.0.1 4444<br>
+    (qemu)  device_add
+    la464-loongarch-cpu,socket-id=1,core-id=0,thread-id=0,id=cpu-1 <br>
+    <br>
+    I found that the ged device sends an interrupt signal to the
+    interrupt controller,<br>
+    My understanding is that the current machine is not in the running
+    state, <br>
+    whether the ged device should send interrupt signal in this state?<br>
+    <br>
+    The "current_run_state" is  RUN_STATE_INMIGRATE,<br>
+    And The "machine_phase" is PHASE_MACHINE_READY in qemu.<br>
+    <br>
+    So do we need to add a conditional on current_run_state to the
+    acpi_cpu_plug_cb function?<span style="color: rgb(90, 117, 224);
+      font-family: PingFangSC-Regular, &quot;Microsoft YaHei&quot;,
+      Segoe UI Variable Static Display; font-size: 16px; font-style:
+      normal; font-variant-ligatures: normal; font-variant-caps: normal;
+      font-weight: 400; letter-spacing: normal; orphans: 2; text-align:
+      start; text-indent: 0px; text-transform: none; widows: 2;
+      word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space:
+      normal; background-color: rgb(255, 255, 255);
+      text-decoration-thickness: initial; text-decoration-style:
+      initial; text-decoration-color: initial; display: inline
+      !important; float: none;"><br>
+    </span>For example:<br>
+    <br>
+    @@ -258,7 +258,8 @@ void acpi_cpu_plug_cb(HotplugHandler
+    *hotplug_dev,<br>
+         }<br>
+     <br>
+         cdev-&gt;cpu = CPU(dev);<br>
+    -    if (dev-&gt;hotplugged) {<br>
+    +    if (dev-&gt;hotplugged &amp;&amp;<br>
+    +        runstate_check(RUN_STATE_RUNNING)) {<br>
+             cdev-&gt;is_inserting = true;<br>
+             acpi_send_event(DEVICE(hotplug_dev),
+    ACPI_CPU_HOTPLUG_STATUS);<br>
+         }<br>
+    <br>
+    <br>
+    <blockquote type="cite"
+      cite="mid:20241112021738.1952851-1-maobibo@loongson.cn">
+      <pre class="moz-quote-pre" wrap="">LoongArch cpu hotplug is based on ACPI GED device, there is a little
+change about ipi and extioi device, the value of num-cpu property is
+maximum cpu number rather than present cpu number.
+
+It can be verified with qemu command:
+  qemu-system-loongarch64 -smp 2,maxcpus=16,sockets=4,cores=4,threads=1
+and vcpu can be added or remove with hmp command:
+  device_add la464-loongarch-cpu,socket-id=0,core-id=2,thread-id=0,id=cpu-2
+  device_del cpu-2
+
+---
+v3 ... v4:
+  1. For cold-plug CPUs, move socket-id/core-id/thread-id property
+     setting from preplug function to CPU object creating loop, since
+     there is topo information calculation already in CPU object creating
+     loop.
+  2. Init interrupt pin of CPU object in cpu plug interface for both
+     cold-plug CPUs and hot-plug CPUs.
+  3. Apply the patch based on latest qemu version.
+
+v2 ... v3:
+  1. Use qdev_realize_and_unref() with qdev_realize() and object_unref().
+  2. Set vcpus_count with 1 since vcpu object is created for every thread.
+  3. Remove property hw-id, use internal variable hw_id to differentiate
+     cold-plug cpus and hot-plug cpus.
+  4. Add generic function virt_init_cpu_irq() to init interrupt pin
+     of CPU object, used by both cold-plug and hot-plug CPUs
+
+v1 ... v2:
+  1. Add new property hw-id, property hw-id is set for cold-added CPUs,
+     and property socket-id/core-id/thread-id is set for hot-added CPUs.
+     The two properties can be generated from each other.
+  2. Use general hotplug api such as hotplug_handler_pre_plug etc
+  3. Reorganize the patch order, split the patch set into 4 small
+     patches.
+---
+Bibo Mao (6):
+  hw/loongarch/virt: Add CPU topology support
+  hw/loongarch/virt: Implement cpu plug interface
+  hw/loongarch/virt: Add generic function to init interrupt pin of CPU
+  hw/loongarch/virt: Init interrupt pin of CPU during plug interface
+  hw/loongarch/virt: Update the ACPI table for hotplug cpu
+  hw/loongarch/virt: Enable cpu hotplug feature on virt machine
+
+ docs/system/loongarch/virt.rst |  31 +++
+ hw/loongarch/Kconfig           |   1 +
+ hw/loongarch/acpi-build.c      |  35 ++-
+ hw/loongarch/virt.c            | 374 ++++++++++++++++++++++++++++-----
+ include/hw/loongarch/virt.h    |   3 +
+ target/loongarch/cpu.c         |  25 +++
+ target/loongarch/cpu.h         |  17 ++
+ 7 files changed, 428 insertions(+), 58 deletions(-)
+
+
+base-commit: 134b443512825bed401b6e141447b8cdc22d2efe
+</pre>
+    </blockquote>
+    <br>
+  </body>
+</html>
+
+--------------C8EAE0B8CF490B1EE69F4675--
 
 
