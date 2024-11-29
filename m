@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1975D729F3
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 18:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 886C3D729F1
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 18:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH5LB-00041l-E9; Fri, 29 Nov 2024 13:03:41 -0500
+	id 1tH5LA-00041L-Ib; Fri, 29 Nov 2024 13:03:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tH5L6-000417-TL
+ id 1tH5L5-00040x-HW
  for qemu-devel@nongnu.org; Fri, 29 Nov 2024 13:03:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tH5L5-0006NF-FR
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 13:03:36 -0500
+ id 1tH5L3-0006N0-0P
+ for qemu-devel@nongnu.org; Fri, 29 Nov 2024 13:03:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732903414;
+ s=mimecast20190719; t=1732903411;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ojufsuB566tnZ5C6giuV7h4t8CKcRsp0Kt6yZG9sXHw=;
- b=WKykog2cHAff7ELF0NHQoQOENO1rb9C1jBxCOEKy8Lgm2YRFq3edXj6VGPxpYquTHy7S3F
- FCapG8DJnPXqjHb0TipycmoOvfllZjCQC2UGRKT8Mz1BEqlYVCIT0oRbpM74xGuULEu9UM
- CmpHFqceR9ie21vA1tYe+Ch1Gl2wDLU=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=txmoSWE8e5T93IXqpxgk2/+iJKR+cNOF9vWFQCCOL8E=;
+ b=ADbvUpM5We9M8JRUxvU80vyS6XJs102saG8x2eHydCKPiJi4yyLsuMC1XO8QfBH1YWBuFJ
+ TMP7odOVxzolyuV7qARzP9XoP0odgIvk5CY1heBDlbaYRoB90J1OOlVeM6AZ17ysejItF3
+ DtMbeEE6+WhKRNZYOtmTDZgWzNavqFw=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-U5oLiCWPM1yGz7Fg7JOSHg-1; Fri, 29 Nov 2024 13:03:32 -0500
-X-MC-Unique: U5oLiCWPM1yGz7Fg7JOSHg-1
-X-Mimecast-MFC-AGG-ID: U5oLiCWPM1yGz7Fg7JOSHg
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-aa5449e1d9cso132041366b.2
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 10:03:32 -0800 (PST)
+ us-mta-663-GhuwSi9XPKC18kY5GyJC0g-1; Fri, 29 Nov 2024 13:03:30 -0500
+X-MC-Unique: GhuwSi9XPKC18kY5GyJC0g-1
+X-Mimecast-MFC-AGG-ID: GhuwSi9XPKC18kY5GyJC0g
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aa5438c6b13so131157666b.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 10:03:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732903411; x=1733508211;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ojufsuB566tnZ5C6giuV7h4t8CKcRsp0Kt6yZG9sXHw=;
- b=An1wzd/PQwt2Ggsc2MrreqnCUeWOidId6JQTDOZ7QzB02dLn/wPLF1YIeKmtG8lIvX
- XBpabUgM0phkq0UDidj778rYRW4SJIEStIyaBDcZydhPFdZMKFr8E3TrbrClsmBYdOhp
- MERnrCpx6lMuAwudtYqQ5DClGtxgHSU9tPZx94y2t29VgY9Ep0uBMgVfHTiH10Z27KEo
- q1YGJfHbMuelpJ/SxKypZmDxWQHX0RDZ5pBGMt5tHpwWDwJjtEq5YUViBD9CIGxgbQWu
- 4CPd0fHlb1I/murgGYmbGj9aCyI+S0apI2F9zrtNY8J/WvWrnvVt5eMOmFFUxAQTrZJH
- +DGw==
-X-Gm-Message-State: AOJu0Yx+VqM2S5bzbCNWnmqB2lN7kUSjJCxZ4+EYiTTOX9e6Ys8E/9IB
- zfeUlyRRH7N87IriZ55WRCU9YjU9zUxtdv19tlHS96Im31TiNCRBO35UuhfXFNoN0dKJwnU97OD
- tc22M76JOcst40RbRprnFnzS3Zf/QfcDyxRZqC7wTlHsNlC56PHISoz1If3J4lfm2TTibqMJIMP
- DHXRi8u85aHoyJF47xqlVoLgfQGbK3YVCXM6Uo
-X-Gm-Gg: ASbGncuFD5fEL8eYQaP89LufPpgft/lL+irmwsSkhYdmXfREzcwAdF/KG8bWWa1A0rA
- 6FJpFQZBsSgyIqUOv8/dYUM3e/Nghv5tUuWMxETGOw9kNgMTMfFRpvv4Y77LQLEYBRZWc2aPqNJ
- hQt0IQyGNBcf/O3g4HOuEXQzPgaS0dBhoqArSIvZLrHcU8Pty0TAB99IfxOQifnbozpc9HZ+uJn
- SC1X85SuMqCTvFzNahWZR6pPvwbLYV7T+47qdx3ciKdchzx4WOF
-X-Received: by 2002:a17:907:93c1:b0:aa4:ce81:6d92 with SMTP id
- a640c23a62f3a-aa5810559abmr993052866b.38.1732903410946; 
- Fri, 29 Nov 2024 10:03:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFcaH98g/aKOXkcSAzeimGrYvz9gdVa/ULmk9tzYCDKi+YAb46/bKejxaa6n1dzchG/qIy62A==
-X-Received: by 2002:a17:907:93c1:b0:aa4:ce81:6d92 with SMTP id
- a640c23a62f3a-aa5810559abmr993043966b.38.1732903410235; 
- Fri, 29 Nov 2024 10:03:30 -0800 (PST)
+ d=1e100.net; s=20230601; t=1732903408; x=1733508208;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=txmoSWE8e5T93IXqpxgk2/+iJKR+cNOF9vWFQCCOL8E=;
+ b=nhL9zFmrgY1GYhD/2P+aChc+1WwLMztYJUBDJwP4/BnkbqdX7WCokjj0QFnovTHdLe
+ mB2JHFJ2i6FDWITcdeeSIW2R/XiYZquDJ20eyrmfyu83sl3uJIaiwpENjTZaIJs2KHUZ
+ VhlbKSdQY6L6ADODLPrcvv9yKHlwKop7Y1H8cQIIyCrZfuV9HnIkuCrb9wDURqTLF3de
+ I+jT+2Mpyi/sHaMKR4dvP33/+xr+RsaELCMtqTCp8DSzbzXfxpVIDnJ6PCmLA3B7BVue
+ SlLTJ8LMrpDAWg+2V6VSQ5hroBnBCBckphaEuSZ0MFNInCA6EaKCzLbVwQ4Lc8QgZFDE
+ aKMw==
+X-Gm-Message-State: AOJu0Yy3qmTZLVbA9Pq3/Gb5BK2GLDs++Hpb+jQNz5fmBF+keuCg0qab
+ Mj740sZ8cd5OrmIleEbSnE6D6lYUdIUCChbmvIozeej7tS1dPg0WpbEhtP3vGo2VIg5yLP/DLjR
+ m8yCjADt88b3/XDaGbdYjdKM0rqUFDrKEXyMbR7f0Z9UBB9aZTYyu6+M3fOlFz7XDYy6vGnn7F2
+ UUo7z47K2LBGvki7yPSy048Vy+niQes8wPloKg
+X-Gm-Gg: ASbGncullq2n2p2JbPf6I0ThHCH0c4tSwXhf50HIcCRNXCL6Y2a6hx6dkAH2HsFAtxS
+ g+N6qXVQz5+Pm6IbcGe2Qh7jENe8AQWKPdJGwZRBPbmYpn1aAYS59xCrlNZaw2VCZUnWixFNPfB
+ diYaNtrpQ2kIVtIB6NTxttgGVpNKUhNHP0rsbxxS1hkXeS9ojKqN16UmrnxO/esxG7OoFFA7XgD
+ 0DxEQrWD+g2gYGDazzkq+e+/CoR3aDIeUNW8Orfy63+eL2Zx5xS
+X-Received: by 2002:a17:906:3d21:b0:aa5:3fa9:e90c with SMTP id
+ a640c23a62f3a-aa580f56c51mr960384766b.32.1732903408558; 
+ Fri, 29 Nov 2024 10:03:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGViFSVSGcicjNcYg41K6EGGYqp9bTcFti+jTjCPAQb7O0DqpEcbhjMCznZAKC5sykWD1rEJA==
+X-Received: by 2002:a17:906:3d21:b0:aa5:3fa9:e90c with SMTP id
+ a640c23a62f3a-aa580f56c51mr960377866b.32.1732903408017; 
+ Fri, 29 Nov 2024 10:03:28 -0800 (PST)
 Received: from [192.168.1.84] ([93.56.170.251])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa5997ff0d5sm194080466b.85.2024.11.29.10.03.28
+ a640c23a62f3a-aa59990a757sm194702966b.161.2024.11.29.10.03.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Nov 2024 10:03:28 -0800 (PST)
+ Fri, 29 Nov 2024 10:03:27 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH 1/3] clock: clear callback on unparent
-Date: Fri, 29 Nov 2024 19:03:24 +0100
-Message-ID: <20241129180326.722436-2-pbonzini@redhat.com>
+Subject: [PATCH 0/3] qdev-clock: miscellaneous cleanups
+Date: Fri, 29 Nov 2024 19:03:23 +0100
+Message-ID: <20241129180326.722436-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241129180326.722436-1-pbonzini@redhat.com>
-References: <20241129180326.722436-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,106 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/hw/clock.h   |  8 --------
- hw/core/clock.c      | 22 +++++++++++++++++-----
- hw/core/qdev-clock.c |  5 +----
- 3 files changed, 18 insertions(+), 17 deletions(-)
+These are some simple patches that I made while studying qdev clocks.
+The main change is removing the callback on unparent rather than
+finalization, because finalization is too late and the callbacks (if they
+were called) would operate on a device that's been already partly
+dismantled.
 
-diff --git a/include/hw/clock.h b/include/hw/clock.h
-index eb58599131c..a279bd4ba5e 100644
---- a/include/hw/clock.h
-+++ b/include/hw/clock.h
-@@ -141,14 +141,6 @@ Clock *clock_new(Object *parent, const char *name);
- void clock_set_callback(Clock *clk, ClockCallback *cb,
-                         void *opaque, unsigned int events);
- 
--/**
-- * clock_clear_callback:
-- * @clk: the clock to delete the callback from
-- *
-- * Unregister the callback registered with clock_set_callback.
-- */
--void clock_clear_callback(Clock *clk);
--
- /**
-  * clock_set_source:
-  * @clk: the clock.
-diff --git a/hw/core/clock.c b/hw/core/clock.c
-index cbe7b1bc469..391095eb4e5 100644
---- a/hw/core/clock.c
-+++ b/hw/core/clock.c
-@@ -44,16 +44,12 @@ Clock *clock_new(Object *parent, const char *name)
- void clock_set_callback(Clock *clk, ClockCallback *cb, void *opaque,
-                         unsigned int events)
- {
-+    assert(OBJECT(clk)->parent);
-     clk->callback = cb;
-     clk->callback_opaque = opaque;
-     clk->callback_events = events;
- }
- 
--void clock_clear_callback(Clock *clk)
--{
--    clock_set_callback(clk, NULL, NULL, 0);
--}
--
- bool clock_set(Clock *clk, uint64_t period)
- {
-     if (clk->period == period) {
-@@ -168,6 +164,16 @@ static void clock_period_prop_get(Object *obj, Visitor *v, const char *name,
-     visit_type_uint64(v, name, &period, errp);
- }
- 
-+static void clock_unparent(Object *obj)
-+{
-+    /*
-+     * Callback are registered by the parent, which might die anytime after
-+     * it's unparented the children.  Avoid having a callback to a deleted
-+     * object in case the clock is still referenced somewhere else (eg: by
-+     * a clock output).
-+     */
-+    clock_set_callback(CLOCK(obj), NULL, NULL, 0);
-+}
- 
- static void clock_initfn(Object *obj)
- {
-@@ -200,11 +206,17 @@ static void clock_finalizefn(Object *obj)
-     g_free(clk->canonical_path);
- }
- 
-+static void clock_class_init(ObjectClass *klass, void *data)
-+{
-+    klass->unparent = clock_unparent;
-+}
-+
- static const TypeInfo clock_info = {
-     .name              = TYPE_CLOCK,
-     .parent            = TYPE_OBJECT,
-     .instance_size     = sizeof(Clock),
-     .instance_init     = clock_initfn,
-+    .class_init        = clock_class_init,
-     .instance_finalize = clock_finalizefn,
- };
- 
-diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
-index 82799577f3e..ca65685c04e 100644
---- a/hw/core/qdev-clock.c
-+++ b/hw/core/qdev-clock.c
-@@ -87,11 +87,8 @@ void qdev_finalize_clocklist(DeviceState *dev)
-         if (!ncl->output && !ncl->alias) {
-             /*
-              * We kept a reference on the input clock to ensure it lives up to
--             * this point so we can safely remove the callback.
--             * It avoids having a callback to a deleted object if ncl->clock
--             * is still referenced somewhere else (eg: by a clock output).
-+             * this point; it is used by the monitor to show the frequency.
-              */
--            clock_clear_callback(ncl->clock);
-             object_unref(OBJECT(ncl->clock));
-         }
-         g_free(ncl->name);
+Patches 2 and 3 instead are just cleanups.
+
+Paolo
+
+Paolo Bonzini (3):
+  clock: clear callback on unparent
+  clock: treat outputs and inputs the same in NamedClockList
+  clock: inline most of qdev_init_clocklist
+
+ include/hw/clock.h   |  8 -----
+ hw/core/clock.c      | 22 +++++++++---
+ hw/core/qdev-clock.c | 86 +++++++++++++++-----------------------------
+ 3 files changed, 46 insertions(+), 70 deletions(-)
+
 -- 
 2.47.0
 
