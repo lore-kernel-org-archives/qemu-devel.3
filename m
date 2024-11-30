@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6390D735F4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9EE4D735F3
 	for <qemu-devel@archiver.kernel.org>; Sat, 30 Nov 2024 06:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHGjR-0003Fl-O6; Sat, 30 Nov 2024 01:13:29 -0500
+	id 1tHGj5-0003Cc-8L; Sat, 30 Nov 2024 01:13:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tHGjP-0003FA-Qr
- for qemu-devel@nongnu.org; Sat, 30 Nov 2024 01:13:27 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1tHGj1-0003Bu-8q
+ for qemu-devel@nongnu.org; Sat, 30 Nov 2024 01:13:03 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tHGjO-0001y7-80
- for qemu-devel@nongnu.org; Sat, 30 Nov 2024 01:13:27 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7fc41dab8e3so1672060a12.3
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 22:13:25 -0800 (PST)
+ id 1tHGix-0001qm-Fk
+ for qemu-devel@nongnu.org; Sat, 30 Nov 2024 01:13:02 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-212581a0b33so21001455ad.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 22:12:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1732947204; x=1733552004;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1732947173; x=1733551973;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xStmvMus9MgEzCXx/nEWzr58YQNuNR1BqlwJ+N/QWGA=;
- b=XtSP5fhU6Frx8WHGl/3iifYKBgeTzDNEknCTxtLYdOB7xoERRefYqpftbKJSAlAGTU
- wgMLT4SxYQ/tzXD7WsU3f8+/0+jTHYfhMtBY3ZDnBFkVzfHXHlp9un+E9tbdYiv034qS
- ZC8PxnYhFe/YEW3S44G6a1fSSPzFuXdlo1fgN3FiXV3msXX/MWCI9ctI3HUXzn8VdHD5
- af/9HMmZNW6B9bG/aAo9Okp51WomIidf31pp5LCmsFVslnfuFSMCSdS5SpjIREBfZ2MQ
- 8sGQOTIck1PDAOhdN/qdBtqQSHZC+0GqiLqL8fM5IubAsmJpqxucGTEk+8YyeI9bT33D
- rlxQ==
+ bh=0cSOkNFUc4ZXADQXD91Veo1S7vpMMbKlSC76D0xMA+M=;
+ b=UPya3VdAxviY50Ha7ggpzcK4vQh9s1m/UV0ZwH+aOUSKLXnY788VYKmm96zEWpYMzj
+ 54A3cxg6by8E+NUk+X2WC8oXmyVeQU5fZk9UhptZR7szMT+ZDPo+hOlis9m+mZ2KTYzc
+ OO+Ptlh1JTYcYoWfK44Si7QndssJk2N//mXz3fnf2pvu18bifGEbcVCIrvDi0oQHOS6B
+ 5UsPt94VvkDfgxM05MpI28eBWdnJCi0lHz2g56iDE7jYwF5P1FSajIFyzIe2Vu4/zwac
+ 4Tr++nh+OeZdg2eVtzVlTlh5zKM9CHcrEWS+K4VpEwEb9CdrLKkY/yCNPgh0GCIqxCFF
+ 8p5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732947204; x=1733552004;
+ d=1e100.net; s=20230601; t=1732947173; x=1733551973;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xStmvMus9MgEzCXx/nEWzr58YQNuNR1BqlwJ+N/QWGA=;
- b=eFBQNh+0ftn8rdRnr5NlXy3lsFbGpcEvFKV7EHF9DeLtRG3iQ2nC7KYF98wMsde61S
- j33MZ5jXpd18RClZPX6i6dTNl2GbwnUv4/Vd8zN2v71gwdINA0UtI1SZUrYzqS9A7xOF
- pj/WLWPNSRizin7LQH8lX1EbqF81PcedzEi8yLHz8TVG1/DiTloxc3FnORBY1vUksVld
- xDoTuqfO8jpWI0p6dXlDKmNWip2OOO8fK9UyrFd98EzPral9e70DMVTAedPSjSy0Fghc
- wJ+KTwWqP15c85c7Ueh9tpVYszY1smwygRyGQvkPIUDxHXHVFGIvq+hA5aCULjGuEag+
- u90g==
+ bh=0cSOkNFUc4ZXADQXD91Veo1S7vpMMbKlSC76D0xMA+M=;
+ b=asbTTpSK3zJbGBMNXr6b2UujBLlk6/iikb16DkbIKWlG5mJO8RN+x4YtW7MMbscNsF
+ vOOdrNCEqGQfH+its2LT8zDjOTJZvfKBAEVwWpBbiLJ7ug3XctpLbB08OiqhE/jJdkL3
+ bMqcVylZylAdGNnfNQtrzwWjaFloHoGJtoNgAt9lUkQdZidKJYBvGFqnnwOw+iXqGWkV
+ 2kYtEee7HpBHdtCvgLOu/4kXsDhVc98rJiUmVHszZPmuRyyM8t2c/nQY0X1fAacsG8zf
+ qZEfiVRTBzo2tvNP8enUjy9GiYPmYclnKq3t13/5ehfLL/8Z+Zwl+VSl2Ytb0r9b8FCi
+ p9fQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBbYCnZ9d1bDGHG/uWbbmLmpDGxYB29t8ci1130K8DdCFPyqANm/qajyYuKyYCczK9pKUp/CGm4Y0y@nongnu.org
-X-Gm-Message-State: AOJu0YxZXJOL0qDYgFn4kvhZPnASKiiRO9O07yVn6mhaKLsvjyb/pUkD
- ZXTKkeeSUV5Q1w+LmpED0+/std3JM2EqPT01ep5vqwXsvLw5oITj7/bUOidW4lM=
-X-Gm-Gg: ASbGncvjUfxqL4cOGRyZk6s3XSUq4w1ZkmQ3CZ8rbhcWxqKLUZ3ci+0C5ftn2mn3zyb
- puWSNSIxTx9IvMRb5r0Q0EZn//TNyn2t9lKeuGtdleqtMxVEdQQf1567GswawBkCFEZmgbvuk5V
- yrKh3zH0qlNIhTYsj2Hp43rWM2gF/W1oAuFBWe0Pt380p0DQrE2ne6t4FvJO5aGCUbfeOOp1/eo
- q/e69V/ivo7XU0fhLWmZHcyns8ZAFwqNTFcacfit1/i/aijprzVcWyvrJaGzgM=
-X-Google-Smtp-Source: AGHT+IFpf59s0NU8wlUNNR9e+oBxL0iyxDRPGCW/zwdhJpZ/1qFUVg5a8z0YHBA+/uCkM0ZZCKsNeg==
-X-Received: by 2002:a05:6a21:789b:b0:1db:f68a:d943 with SMTP id
- adf61e73a8af0-1e0e0ac3600mr19037693637.17.1732947204635; 
- Fri, 29 Nov 2024 22:13:24 -0800 (PST)
+ AJvYcCXreAA5PnvWTVRFIKvux82XDdQqpaTSXGRof03Aik10jBGFDfr+q947zRlttXr8USpQQVUOuSZIUI0a@nongnu.org
+X-Gm-Message-State: AOJu0YwqKHrsOgwTvrT1LegEtpLLOCunoTI2nduCPPdK7VqKRy+3hrEF
+ rikqxOmx8rqD7QDEGaapd5Ymhn7I1z3ug47O5gY6ErEAQP1iB70e7okFTPA+5n0=
+X-Gm-Gg: ASbGncvkv3zIhiZ8Y7x5r09MbCRY22ewPa5mgV4lhf8MhKkZjxRCezNeuU8G9y78qhi
+ ByCpaL0RYlmbQJ0qj55D0291TVCq0pg9FhmQ3ALgekm3LTMe3cNwvm8BsBCylRVhQE6okftMj1e
+ wRQiXidVKQmEUzJLeMoWkDtv2SdG0q8bbqzYRmDrtZOlsFJvwDZMD70RpF+08ATK7r1T3hNlNw2
+ WO+cqrkrA2vT9spmmxIhjrPdQcafVVv1Mwmn+cENL9joAkbXcVp+gyzlptImtE=
+X-Google-Smtp-Source: AGHT+IH0oC4UmyAaoHAK1nvtKwW0Qu8ft5D0ON9uM7oWSetdswmnPntsyMYmJ7EjIbwKBakP5uX1NA==
+X-Received: by 2002:a17:903:2381:b0:20c:89b1:e76c with SMTP id
+ d9443c01a7336-2150138506cmr193276565ad.30.1732947173233; 
+ Fri, 29 Nov 2024 22:12:53 -0800 (PST)
 Received: from [157.82.207.167] ([157.82.207.167])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7254176f4c4sm4620630b3a.60.2024.11.29.22.13.18
+ d9443c01a7336-215219672e7sm40136055ad.130.2024.11.29.22.12.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Nov 2024 22:13:24 -0800 (PST)
-Message-ID: <8b8907e8-cc08-4dd5-991c-496637d39b61@daynix.com>
-Date: Sat, 30 Nov 2024 15:13:16 +0900
+ Fri, 29 Nov 2024 22:12:52 -0800 (PST)
+Message-ID: <28237c12-4420-405f-9d30-d1578e0155c2@daynix.com>
+Date: Sat, 30 Nov 2024 15:12:46 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 02/15] hw/display/apple-gfx: Introduce
- ParavirtualizedGraphics.Framework support
+Subject: Re: [PATCH v12 01/15] ui & main loop: Redesign of system-specific
+ main thread event handling
 To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
 Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
  rad@semihalf.com, quic_llindhol@quicinc.com, stefanha@redhat.com,
@@ -81,17 +81,16 @@ Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
  alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
  dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
  marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org, balaton@eik.bme.hu,
- Alexander Graf <graf@amazon.com>
+ qemu-block@nongnu.org, qemu-riscv@nongnu.org, balaton@eik.bme.hu
 References: <20241129152506.59390-1-phil@philjordan.eu>
- <20241129152506.59390-3-phil@philjordan.eu>
+ <20241129152506.59390-2-phil@philjordan.eu>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241129152506.59390-3-phil@philjordan.eu>
+In-Reply-To: <20241129152506.59390-2-phil@philjordan.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -114,37 +113,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/11/30 0:24, Phil Dennis-Jordan wrote:
-> MacOS provides a framework (library) that allows any vmm to implement a
-> paravirtualized 3d graphics passthrough to the host metal stack called
-> ParavirtualizedGraphics.Framework (PVG). The library abstracts away
-> almost every aspect of the paravirtualized device model and only provides
-> and receives callbacks on MMIO access as well as to share memory address
-> space between the VM and PVG.
+> macOS's Cocoa event handling must be done on the initial (main) thread
+> of the process. Furthermore, if library or application code uses
+> libdispatch, the main dispatch queue must be handling events on the main
+> thread as well.
 > 
-> This patch implements a QEMU device that drives PVG for the VMApple
-> variant of it.
+> So far, this has affected Qemu in both the Cocoa and SDL UIs, although
+> in different ways: the Cocoa UI replaces the default qemu_main function
+> with one that spins Qemu's internal main event loop off onto a
+> background thread. SDL (which uses Cocoa internally) on the other hand
+> uses a polling approach within Qemu's main event loop. Events are
+> polled during the SDL UI's dpy_refresh callback, which happens to run
+> on the main thread by default.
 > 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
-> Co-authored-by: Alexander Graf <graf@amazon.com>
+> As UIs are mutually exclusive, this works OK as long as nothing else
+> needs platform-native event handling. In the next patch, a new device is
+> introduced based on the ParavirtualizedGraphics.framework in macOS.
+> This uses libdispatch internally, and only works when events are being
+> handled on the main runloop. With the current system, it works when
+> using either the Cocoa or the SDL UI. However, it does not when running
+> headless. Moreover, any attempt to install a similar scheme to the
+> Cocoa UI's main thread replacement fails when combined with the SDL
+> UI.
 > 
-> Subsequent changes:
+> This change tidies up main thread management to be more flexible.
 > 
->   * Cherry-pick/rebase conflict fixes, API use updates.
->   * Moved from hw/vmapple/ (useful outside that machine type)
->   * Overhaul of threading model, many thread safety improvements.
->   * Asynchronous rendering.
->   * Memory and object lifetime fixes.
->   * Refactoring to split generic and (vmapple) MMIO variant specific
->     code.
+>   * The qemu_main global function pointer is a custom function for the
+>     main thread, and it may now be NULL. When it is, the main thread
+>     runs the main Qemu loop. This represents the traditional setup.
+>   * When non-null, spawning the main Qemu event loop on a separate
+>     thread is now done centrally rather than inside the Cocoa UI code.
+>   * For most platforms, qemu_main is indeed NULL by default, but on
+>     Darwin, it defaults to a function that runs the CFRunLoop.
+>   * The Cocoa UI sets qemu_main to a function which runs the
+>     NSApplication event handling runloop, as is usual for a Cocoa app.
+>   * The SDL UI overrides the qemu_main function to NULL, thus
+>     specifying that Qemu's main loop must run on the main
+>     thread.
+>   * The GTK UI also overrides the qemu_main function to NULL.
+>   * For other UIs, or in the absence of UIs, the platform's default
+>     behaviour is followed.
 > 
-> Implementation wise, most of the complexity lies in the differing threading
-> models of ParavirtualizedGraphics.framework, which uses libdispatch and
-> internal locks, versus QEMU, which heavily uses the BQL, especially during
-> memory-mapped device I/O. Great care has therefore been taken to prevent
-> deadlocks by never calling into PVG methods while holding the BQL, and
-> similarly never acquiring the BQL in a callback from PVG. Different strategies
-> have been used (libdispatch, blocking and non-blocking BHs, RCU, etc.)
-> depending on the specific requirements at each framework entry and exit point.
+> This means that on macOS, the platform's runloop events are always
+> handled, regardless of chosen UI. The new PV graphics device will
+> thus work in all configurations. There is no functional change on other
+> operating systems.
+> 
+> Implementing this via a global function pointer variable is a bit
+> ugly, but it's probably worth investigating the existing UI thread rule
+> violations in the SDL (e.g. #2537) and GTK+ back-ends. Fixing those
+> issues might precipitate requirements similar but not identical to those
+> of the Cocoa UI; hopefully we'll see some kind of pattern emerge, which
+> can then be used as a basis for an overhaul. (In fact, it may turn
+> out to be simplest to split the UI/native platform event thread from the
+> QEMU main event loop on all platforms, with any UI or even none at all.)
 > 
 > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 
