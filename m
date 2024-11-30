@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4451D735FC
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Nov 2024 09:56:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C095D735F8
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Nov 2024 10:00:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHKCO-0008Lw-Q0; Sat, 30 Nov 2024 04:55:37 -0500
+	id 1tHKGn-0001W0-KG; Sat, 30 Nov 2024 05:00:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tHKCA-0008KF-Iq
- for qemu-devel@nongnu.org; Sat, 30 Nov 2024 04:55:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tHKGk-0001Uc-Pw
+ for qemu-devel@nongnu.org; Sat, 30 Nov 2024 05:00:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tHKC8-0007aI-KS
- for qemu-devel@nongnu.org; Sat, 30 Nov 2024 04:55:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tHKGj-0000wH-44
+ for qemu-devel@nongnu.org; Sat, 30 Nov 2024 05:00:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732960517;
+ s=mimecast20190719; t=1732960802;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XlYy4UL1FzJmOtVbC4eHpG9OBhhofcf3ZZXPjwJfRrI=;
- b=JtXAGav5hPRAIc97KQDwFCbGkmtYAgeb/ZKK5YUKG3TO+Jnh6sYyf3WyKFsRbaeRxsSMPj
- 3NgzfYho2/Bh4wpOY0d447r6V3Rdsk6XFzBoyRadI5/SJecjl6wDwmo7aT+gNYrS9VagTp
- i9xvyltipvXwSVFHicuFcft/73k7fuE=
+ bh=5H9MczYwI5N2ZfSxLXvjJtZrOYiTZnYvOSslVprutvo=;
+ b=OeuBnwManwBOI5oFY5aOE4zOiTUoswHA7NCuVv6wKriMPk6FgSh1wGGUMD83W+aPbT2arq
+ +3i92lfA0SMTRtK+ODGhaDCCup1Z/shXxGLKsBcZRwL8teKNW24yDd05XHFWaJmIBjA7sm
+ YBZBtbCossQeW8Y0QmUxNjOYT+GpgJA=
 Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
  [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364-z_Bhl71jNxqDhuCEiWRQUQ-1; Sat, 30 Nov 2024 04:55:16 -0500
-X-MC-Unique: z_Bhl71jNxqDhuCEiWRQUQ-1
-X-Mimecast-MFC-AGG-ID: z_Bhl71jNxqDhuCEiWRQUQ
+ us-mta-275-di91bJqzO9umlhbnM48Jkg-1; Sat, 30 Nov 2024 04:59:58 -0500
+X-MC-Unique: di91bJqzO9umlhbnM48Jkg-1
+X-Mimecast-MFC-AGG-ID: di91bJqzO9umlhbnM48Jkg
 Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5d0b61f9d3cso379500a12.1
- for <qemu-devel@nongnu.org>; Sat, 30 Nov 2024 01:55:16 -0800 (PST)
+ 4fb4d7f45d1cf-5d0c9402f82so404824a12.3
+ for <qemu-devel@nongnu.org>; Sat, 30 Nov 2024 01:59:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732960515; x=1733565315;
+ d=1e100.net; s=20230601; t=1732960797; x=1733565597;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XlYy4UL1FzJmOtVbC4eHpG9OBhhofcf3ZZXPjwJfRrI=;
- b=lJSdJHo8m9/0OPi1u7Q0cOOgE5HILAs5u7wpxUa4hTjyXUpnuNVpG/In2aqWAlVF7j
- 9Q+rwuqtx31l7jaDGIsr4Mcc17wmkBc4m/+gCoqB5BJamyyKFLFgYyqYBe8TKTroWRzO
- yLSlDidGdjRIEvd5V16322uvtmbFW2/DC+CdSgLvigpgZY9aVp2Zrx5KJl1Gth5lhCbx
- XsI69nAwTNe/W36yYKOArkZKOfH2utQVM+0fFU0VB2Hy1ZdA7HVWeh6UdhFUmdJ2mwo/
- GWpC/7zFjcnjO5zx2TJYuF23RGno/qc2ugDueg5/UTMNC48adokjVCzpw8pZNunKgTbA
- df2A==
+ bh=5H9MczYwI5N2ZfSxLXvjJtZrOYiTZnYvOSslVprutvo=;
+ b=H1qa5NpBNJ6IS/leYfcHcVYJBp4NV+tJx8zwiG90+2i3dQ/XPtQQYC36MMjdBLWcXh
+ GoLtBXUXPZ8ZBx0JpmjHmcdcDXHwamIW1/hqgRTwApOCm/I336Ab/tJpTJZJdvPxUi5Q
+ 099N+KzKNlj+eO59QFQPUWaD2T2WYDYPnczMmS2FTwxtie06lAr5zgQzTLEyK/MNvtLG
+ S+DALwosamJMdZddu0aKpPxnSZPk5GWfFtQuY8FnXmzZoiG47gCPA9w/lSRXNBP3HpER
+ cPF4lzt5IvHxNHspS/B4zJ8Y/gkP/o8cK4M80NF9UbWrf1Dw7NTVco6VXueuR/MmpQxX
+ dC2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbzZxYuE+VU71ALTHn2X7fD5g6fgadp6IP/aSEtz4d0oXE/2oIcK330QPQa2yleOB+TniYDHIBVFHA@nongnu.org
-X-Gm-Message-State: AOJu0Yy1Ejr7+FvVpeji7Xp0SCPZ0Kdx3WxOkE9qAC6ruClTERyxt3UV
- K0xyy/aUBfAqhxoVq8iC8/rroBqxOuzWfvQ983FC5dJLgN1sGK21OTGhaaWouu1kS5XhzbZ22r/
- apW1EqRbDhX9pcOS14DApQpXWntQTJXoRG4DB2smMat2w+WIGRi86
-X-Gm-Gg: ASbGncvVvbVAVXmMXZfCxNfLb9Hipy3DEQhR3+f4xiB3IzV5Zhd5zNg6wQ90t5sv2Ou
- 1t6LuqECp90QGy7N6GwjvYORRtJkYQ16+QUQ4mIPcS/mWTclTuL8jn4dRzpgF2XDbHjzM+WuzqY
- vRqi6f29LD1C0MAQDiDGaHUUY8+ItCDR38Kz38DFPC72Y8sWE4VRjyVUUcuSR6dGP5ex2GeJyz+
- 3ZkBP0gaKFqDf3OJF1cnIHQZ3wEuTI74F+/nRIt4eemnUKK5NslfYZsYn9ObSoF7Vpi09lfw3+k
- DXjmDQ==
-X-Received: by 2002:aa7:d889:0:b0:5d0:c697:1f02 with SMTP id
- 4fb4d7f45d1cf-5d0c6971f0dmr4422326a12.17.1732960515025; 
- Sat, 30 Nov 2024 01:55:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF8P1VfraNCXx3GvM5YfCOdIwOgFBTcw81RbABtX97E6fI1R2FTKrWaEQpPJBYC5HxeBv95ww==
-X-Received: by 2002:aa7:d889:0:b0:5d0:c697:1f02 with SMTP id
- 4fb4d7f45d1cf-5d0c6971f0dmr4422303a12.17.1732960514680; 
- Sat, 30 Nov 2024 01:55:14 -0800 (PST)
+ AJvYcCUpKQa9iPDX4/hPp7eDCznU1FKbdKylv8kIMRurRSWJFccLi1p79odi+L8pZwixUpZbhC9mSqc1ckxR@nongnu.org
+X-Gm-Message-State: AOJu0YyRnFE/9kP+jxMsRpp53FJmApuiNycnyJZbhuWDH2HdvGdtR2da
+ TPIT3c0tiE5hU2ZV1xagPMONiWahhZjC5WwM2lV7dzeaM/FWtjbwZ0ApMJE34qZoRJjm5E0Jsnq
+ eoohYm+jX2+Rqo/3Q17c3dZ+lMvtzyvLUPj3k0NlNCIUoS2uGwta2
+X-Gm-Gg: ASbGncuPs9yqbRC9etAYVZMQdkqEKKf9KTqWWp4EY0XfQRBeVjfEP9xEA6XNlHZ0Vqw
+ SO0geUFBz1sQ4HV2Lum0gDyPhbguF0eMwBoMH7lYxS2VzeIkIycGseIreIczTjL7hDS+tM+EuyT
+ EWtoBYvzug/VavIBQru7+8OLPNF1txXK4iBB5CxG3wak2CxBXy5IXZVN/yBqMKeok/CMI+X+5bu
+ UKnf0nAk2Cct9Zq9h2woluxfYLMF4JHVoamEIAqH1vAHzT36RihbmJxjTTut1/NOr2FopVOFuQ4
+ VpUuYg==
+X-Received: by 2002:a17:906:32c2:b0:aa5:37b4:cd60 with SMTP id
+ a640c23a62f3a-aa580ef0df5mr1128411766b.6.1732960797298; 
+ Sat, 30 Nov 2024 01:59:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEqWJ/AiJ5o4DsdemryVa3tJw4iPLIh5WmkhDRfh/kgnnsDQtvj6D/pZJaP3F59AEwONUD6BA==
+X-Received: by 2002:a17:906:32c2:b0:aa5:37b4:cd60 with SMTP id
+ a640c23a62f3a-aa580ef0df5mr1128410866b.6.1732960796950; 
+ Sat, 30 Nov 2024 01:59:56 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-143.web.vodafone.de.
  [109.42.48.143]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa5999734ccsm262752466b.204.2024.11.30.01.55.13
+ a640c23a62f3a-aa5996c192fsm267812666b.27.2024.11.30.01.59.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 30 Nov 2024 01:55:14 -0800 (PST)
-Message-ID: <1620ec63-7f79-4248-8aa1-785ba65a2f28@redhat.com>
-Date: Sat, 30 Nov 2024 10:55:12 +0100
+ Sat, 30 Nov 2024 01:59:56 -0800 (PST)
+Message-ID: <c854cfed-137e-46ba-bb1c-393f3bed685c@redhat.com>
+Date: Sat, 30 Nov 2024 10:59:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/22] tests/functional: increase timeouts for arm sx1 test
+Subject: Re: [PATCH 02/22] tests/functional: remove unused system imports
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20241129173120.761728-1-berrange@redhat.com>
- <20241129173120.761728-2-berrange@redhat.com>
+ <20241129173120.761728-3-berrange@redhat.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,17 +127,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241129173120.761728-2-berrange@redhat.com>
+In-Reply-To: <20241129173120.761728-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.93,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,46 +155,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/11/2024 18.30, Daniel P. Berrangé wrote:
-> When under high load the test VM does not complete running in the
-> default 30 second timeout. Double it to give more headroom.
-> 
+On 29/11/2024 18.31, Daniel P. Berrangé wrote:
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/test_arm_sx1.py | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tests/functional/test_arm_sx1.py b/tests/functional/test_arm_sx1.py
-> index 2d86405831..2292317946 100755
-> --- a/tests/functional/test_arm_sx1.py
-> +++ b/tests/functional/test_arm_sx1.py
-> @@ -44,7 +44,7 @@ def test_arm_sx1_initrd(self):
->           self.vm.add_args('-no-reboot')
->           self.launch_kernel(zimage_path,
->                              initrd=initrd_path)
-> -        self.vm.wait()
-> +        self.vm.wait(timeout=60)
->   
->       def test_arm_sx1_sd(self):
->           self.set_machine('sx1')
-> @@ -55,7 +55,7 @@ def test_arm_sx1_sd(self):
->           self.vm.add_args('-snapshot')
->           self.vm.add_args('-drive', f'format=raw,if=sd,file={sd_fs_path}')
->           self.launch_kernel(zimage_path)
-> -        self.vm.wait()
-> +        self.vm.wait(timeout=60)
->   
->       def test_arm_sx1_flash(self):
->           self.set_machine('sx1')
-> @@ -66,7 +66,7 @@ def test_arm_sx1_flash(self):
->           self.vm.add_args('-snapshot')
->           self.vm.add_args('-drive', f'format=raw,if=pflash,file={flash_path}')
->           self.launch_kernel(zimage_path)
-> -        self.vm.wait()
-> +        self.vm.wait(timeout=60)
+>   tests/functional/test_aarch64_sbsaref.py       | 1 -
+>   tests/functional/test_acpi_bits.py             | 1 -
+>   tests/functional/test_m68k_mcf5208evb.py       | 2 --
+>   tests/functional/test_microblaze_s3adsp1800.py | 1 -
+>   tests/functional/test_mips64el_loongson3v.py   | 1 -
+>   tests/functional/test_or1k_sim.py              | 2 --
+>   tests/functional/test_s390x_topology.py        | 1 -
+>   tests/functional/test_sh4_tuxrun.py            | 4 ----
+>   tests/functional/test_sh4eb_r2d.py             | 1 -
+>   tests/functional/test_virtio_version.py        | 2 --
+>   10 files changed, 16 deletions(-)
 
-Ah! I think I've seen this test sometimes failing, too, good to know that it 
-was likely just this simple reason!
+Out of curiosity: Is there a way to check for this with a program, or did 
+you check it manually?
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
