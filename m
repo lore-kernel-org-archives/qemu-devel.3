@@ -4,142 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E84DD735FF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Nov 2024 10:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7F1D73605
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Nov 2024 12:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHKm2-0008Fw-Hu; Sat, 30 Nov 2024 05:32:26 -0500
+	id 1tHMuZ-0001t4-CK; Sat, 30 Nov 2024 07:49:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tHKm0-0008Fn-VN
- for qemu-devel@nongnu.org; Sat, 30 Nov 2024 05:32:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tHKls-0003XU-Rv
- for qemu-devel@nongnu.org; Sat, 30 Nov 2024 05:32:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732962735;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BuScY0i44dwMhBJDwp697o2jc2BBxoMz2hYfn8Y2Fmo=;
- b=eXWwiTboWwbThRtZIOiC6GTkCgSAKmfQ+u4+hSZVXTWHm6TFcpCA7Fm0BbwDIslj+a26G9
- 4+KCpQBilBxvCsjDCmhBF7ec1n3hpmtyh4+grk5FCPn78gKtO72zMmmQ7AtzcyNbXg4Lcm
- UTeTlnrj1eYVr1wmEroa45UrOt05+uY=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12-cq7QGIzbORGzA5tA4cZ93Q-1; Sat, 30 Nov 2024 05:32:11 -0500
-X-MC-Unique: cq7QGIzbORGzA5tA4cZ93Q-1
-X-Mimecast-MFC-AGG-ID: cq7QGIzbORGzA5tA4cZ93Q
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5cffa805c94so1811576a12.1
- for <qemu-devel@nongnu.org>; Sat, 30 Nov 2024 02:32:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <weichenforschung@gmail.com>)
+ id 1tHMuV-0001sn-DD
+ for qemu-devel@nongnu.org; Sat, 30 Nov 2024 07:49:22 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <weichenforschung@gmail.com>)
+ id 1tHMuR-00064p-Ku
+ for qemu-devel@nongnu.org; Sat, 30 Nov 2024 07:49:17 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e398484b60bso1500124276.1
+ for <qemu-devel@nongnu.org>; Sat, 30 Nov 2024 04:49:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1732970953; x=1733575753; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=QQvv4UVdk4i78gOtbFUdxLqjFieG9PK4nXAck+NJ1QI=;
+ b=TLAI1W2hE1SbfsDxtsl7a5ijATQaCmNc6a2pmfhYkxHfTK18zMr1hf81Olr3yLklHM
+ rNfA37tBtcGPo+xXqIprb1vPfKW1iyaApoG6aMDLwIffPvzS8gZUb8UYKUZ3EYIbYf/e
+ C7tMxdUil4SI78NXX35oYBmcr+KOes1+9UzolbNtDut70RQKPa+Bf92KbIkoYMFVFw4Q
+ KiKzKKcrk5MKRtfOhDclb5uimKlTrDIZXWaAzfuTZjYKCOkYHXHNImXCZM+K6Peun8Ai
+ BOx5pEtr1ncdHhCQeQAriqlCc6UsyegzzlYjf9Bd1+bfY5fUpGCxgmZ7IH7C7Rm3cKtQ
+ 3/+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732962730; x=1733567530;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BuScY0i44dwMhBJDwp697o2jc2BBxoMz2hYfn8Y2Fmo=;
- b=QJO/DbHUQbOe9Trq/ixKUptNVnf7gBYZUln4HJENjsKasDqnnMnHpapLG4CTB20fXA
- 1XhK1u0QbV0yqdNMuo5cnKWojEt0/HTLIk4bWMyERTP1XplHAq0WTIsSQ+ZFzdcWqSV6
- pSaJ0aZyGKxXaNgJaM32E1+kMQg6xfnALq2xfokkbJe4PcgCoVKKrNucrREMBRBsB/k7
- /4s3ZP8cmDW7rXdrrxuwgHc981JHEgriuf7GJxHaIQcj0R08ULETYzbJV0OkCHfQWWCo
- ZZWFib1BDjsxsDu7/mg1jgycm1jKc4EFLW6rLDraF/lCYVp2U2Zeo6ixDy6Aw7ru5Xwz
- KErg==
+ d=1e100.net; s=20230601; t=1732970953; x=1733575753;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QQvv4UVdk4i78gOtbFUdxLqjFieG9PK4nXAck+NJ1QI=;
+ b=Z6VO2S6k6v1YpNMHecWdL3VVXuarcOUl7EHMB+iinAsP+4WNxQkZx3llrxR24kPJN7
+ /5pKj3Ysu7Em8PbVORm6b6qgr9XRbUaW7EaqVhcEAi4Ft0CYIxJx00/hXoFz8TNvGOfC
+ GTi7T+C5ndtmriNEK1RkXVf1qbohttWN1VeouNUf4YJBRJq3gMn5RpM8xx25sqOOqkag
+ H0A5MnqOQ85aLZMn38Gfx6cR11FMQNgKHOcRzJwSyL/e9i/eI5O8fVm79IYV51mIQ72v
+ IDiECxYBkye17rP92nf53iOVGjYEIhSmiRr9tZrN337vcHg3G5IO7Vof6Gy5fDU/uAKG
+ uJCw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQEOFfOYQyIAAC3eMMdzHK/bPpJL/fDB+1x1/mvIxKXfSyf3uZdxtHZZS3FSPlAIsbg+uoz4/P6yWh@nongnu.org
-X-Gm-Message-State: AOJu0YzEkDM+1L9VRWmDfybID9BO6r1a/bM0iSqVFvN1V6w14Mu8CfvH
- bgZrctD16fpygcD2OSy0D8R8d0QjXD9MvD3mIXoEhSVVGfhXS3VhoMLATrCMy8+yzNvYPRxii4S
- picutkBoIMOKg3FhLzjLbYcJCL8Wl4SurOZE2iSIBQzoEMcHUfMK9
-X-Gm-Gg: ASbGnctaqQQtPBkmBm/2PWrIxsHlBgxjbwWiXX5a761V6oDzjGz4ArvrmKfoXl0eY3t
- qR6Y2Ka8Mysg3uu6x+GcBKPuEITxc/08XLN82IhoD9j8hK3BnaFfTmk1IFqoXYUlSuiyPF8d1JG
- 5m10npF1jTCgFjs1EBJN6wBV0bH9122X6OBm/fAcaN0NL34jjOhkUkWhhc6Rbgmq+U7ZK2tMD3s
- A3EsodaOg3J5mKmvyhvG69w1bAHhpsJWQoei0ZgJF7NQwtC0ox5AY3hM8G2eA+yigcO1grhi3cL
- QyblBA==
-X-Received: by 2002:a05:6402:3891:b0:5d0:96db:da4d with SMTP id
- 4fb4d7f45d1cf-5d096dbdad8mr11042204a12.18.1732962730677; 
- Sat, 30 Nov 2024 02:32:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEvtR8vBwhqtEdQO/drjAJazwNUL6qI8SNjCke3T+zp2tkABB/hmo67zMb8DzPrSDVuGCZ7lw==
-X-Received: by 2002:a05:6402:3891:b0:5d0:96db:da4d with SMTP id
- 4fb4d7f45d1cf-5d096dbdad8mr11042192a12.18.1732962730307; 
- Sat, 30 Nov 2024 02:32:10 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-143.web.vodafone.de.
- [109.42.48.143]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d097eb9bbcsm2662565a12.79.2024.11.30.02.32.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 30 Nov 2024 02:32:09 -0800 (PST)
-Message-ID: <71168aed-9952-4dfe-afbb-be28bc2f6501@redhat.com>
-Date: Sat, 30 Nov 2024 11:32:07 +0100
+ AJvYcCWUZVSOHZc6JQ0LknFF1ZWl3R625/MioirfB62W0yU/cFXaHJ3pUpv5NgTfh0UpEuDT0L9Wo1Udgue9@nongnu.org
+X-Gm-Message-State: AOJu0YzQxMwfWVTfd9XjnV2NrxRC34xPjq10BYS9n7gGJaBfh711yWKD
+ GWthIdZtq13Trnan3BVrHQgwigdjmDvlFJLd8oa+/qnY6ZmmEgYB8cWYMb65YJePgrm8tqy9Q4G
+ bVXxvQU4XVN7iZKxPM8+04xVlLbY=
+X-Gm-Gg: ASbGncsy67b96eWsrDdby91+SCDHECbUzsEXt6HXdrHD7Mcx48Z7xczmNS3QOZPHbZD
+ djzyF1y/fQCIdLV468BaljjmKuuOpzM3N
+X-Google-Smtp-Source: AGHT+IFmK7qugSlPtl0YhWuofSHgjYuhTzyT2QtHbKRG8zlRDkaXXUEt1ge6LBMvhacEiFI+yJWiX5/4o3o2ju7JHC8=
+X-Received: by 2002:a05:6902:2b07:b0:e2b:e0ba:d50 with SMTP id
+ 3f1490d57ef6-e395b870e93mr14067696276.5.1732970953637; Sat, 30 Nov 2024
+ 04:49:13 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/22] tests/functional: remove redundant 'rmtree' call
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20241129173120.761728-1-berrange@redhat.com>
- <20241129173120.761728-15-berrange@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241129173120.761728-15-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20241126080213.248-1-weichenforschung@gmail.com>
+ <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
+ <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
+ <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
+ <93616a1e-3614-49ca-9515-697f1c9205b6@gmail.com>
+ <9eafe8fa-de09-40e3-9687-573255ce37de@redhat.com>
+ <CAD-9bcdm+gupZQ91Q-JMjuPikVmfVhCdJuwq=ptfaipL7Peevg@mail.gmail.com>
+ <a140606e-5f86-4e8b-a818-2db2493ab8a6@redhat.com>
+In-Reply-To: <a140606e-5f86-4e8b-a818-2db2493ab8a6@redhat.com>
+From: Wei Chen <weichenforschung@gmail.com>
+Date: Sat, 30 Nov 2024 20:48:58 +0800
+Message-ID: <CALOevrNCBHRKYOKcBftssHPOtoY1HVy3xz4DFfYZ4_e99hLrHg@mail.gmail.com>
+Subject: Re: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
+ requested_size
+To: David Hildenbrand <david@redhat.com>
+Cc: zhi zhang <zzhangphd@gmail.com>, qemu-devel@nongnu.org, mst@redhat.com, 
+ yuval.yarom@rub.de, genkin@gatech.edu
+Content-Type: multipart/alternative; boundary="000000000000190b0d062820be1c"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=weichenforschung@gmail.com; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,35 +100,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/11/2024 18.31, Daniel P. Berrangé wrote:
-> Everything in the scratch directory is automatically purged. Calling
-> 'rmtree' again breaks the ability to optionally preserve the scratch
-> directory contents.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/test_sh4eb_r2d.py | 3 ---
->   1 file changed, 3 deletions(-)
-> 
-> diff --git a/tests/functional/test_sh4eb_r2d.py b/tests/functional/test_sh4eb_r2d.py
-> index dd2500dc33..38ee55cf4c 100755
-> --- a/tests/functional/test_sh4eb_r2d.py
-> +++ b/tests/functional/test_sh4eb_r2d.py
-> @@ -4,8 +4,6 @@
->   #
->   # SPDX-License-Identifier: GPL-2.0-or-later
->   
-> -import shutil
-> -
->   from qemu_test import (LinuxKernelTest, Asset,
->                          exec_command_and_wait_for_pattern)
->   from qemu_test.utils import archive_extract
-> @@ -25,7 +23,6 @@ def test_sh4eb_r2d(self):
->                              initrd=self.scratch_file('sh4eb', 'initramfs.cpio.gz'),
->                              console_index=1, wait_for='Type exit when done')
->           exec_command_and_wait_for_pattern(self, 'exit', 'Restarting system')
-> -        shutil.rmtree(self.scratch_file('sh4eb'))
+--000000000000190b0d062820be1c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> That doesn't explain the full story about MIGRATE_UNMOVABLE. I assume
+> one precondition is missing in your explanation.
 
+I have double-checked the source code. My initial description of the
+process seems somewhat imprecise. vIOMMU does not convert pages to
+UNMOVABLE during pinning, it is that pinning causes page faults, and the
+fault handler allocates UNMOVABLE pages. (vaddr_get_pfns() calls
+__gup_longterm_locked(), who then calls memalloc_pin_save(), and it
+implicitly removes the __GFP_MOVABLE flag.)
+
+Therefore, there is no requirement of ZONE_MOVABLE and MIGRATE_CMA.
+
+
+Best regards,
+Wei Chen
+
+On Wed, Nov 27, 2024 at 5:37=E2=80=AFPM David Hildenbrand <david@redhat.com=
+> wrote:
+
+> On 27.11.24 03:00, zhi zhang wrote:
+> >
+> >
+> > On Tue, Nov 26, 2024 at 11:52=E2=80=AFPM David Hildenbrand <david@redha=
+t.com
+> > <mailto:david@redhat.com>> wrote:
+> >
+> >     On 26.11.24 16:31, Wei Chen wrote:
+> >      >   > How can you be sure (IOW trigger) that the system will store
+> >      >   > "important data" like EPTs?
+> >      >
+> >      > We cannot, but we have designed the attack (see below) to improv=
+e
+> the
+> >      > possibility.
+> >      >
+> >      >   > So is one magic bit really that for your experiments, one
+> needs a
+> >      >   > viommu?
+> >      >
+> >      > Admittedly the way we accomplish a VM escape is a bit arcane.
+> >
+> >     That's what I imagined :)
+> >
+> >      >
+> >      > We require device passthrough because it pins the VM's memory
+> >     down and
+> >      > converts them to MIGRATE_UNMOVABLE.
+> >
+> >     Interesting, that's news to me. Can you share where GUP in the kern=
+el
+> >     would do that?
+> >
+> >
+> > In /drivers/vfio/vfio_iommu_type1.c, there is a function called
+> > vfio_iommu_type1_pin_pages where VM's memory is pinned down.
+>
+> That doesn't explain the full story about MIGRATE_UNMOVABLE. I assume
+> one precondition is missing in your explanation.
+>
+> VFIO will call pin_user_pages_remote(FOLL_LONGTERM). Two cases:
+>
+> a) Memory is already allocated (which would mostly be MIGRATE_MOVABLE,
+> because it's ordinary user memory). We'll simply longterm pin the memory
+> without changing the migratetype.
+>
+> b) Memory is not allocated yet. We'll call
+> faultin_page()->handle_mm_fault(). There is no FOLL_LONGTERM
+> special-casing, so you'll mostly get MIGRATE_MOVABLE.
+>
+>
+> Now, there is one corner case: we disallow longterm pinning on
+> ZONE_MOVABLE and MIGRATE_CMA. In case our user space allocation ended up
+> on there, check_and_migrate_movable_pages() would detect that the memory
+> resides on ZONE_MOVABLE or MIGRATE_CMA, and allocate a destination page
+> in migrate_longterm_unpinnable_folios() using "GFP_USER | __GFP_NOWARN".
+>
+> So I assume one precondition is that your hypervisor has at least some
+> ZONE_MOVABLE or CMA memory? Otherwise I don't see how you would reliably
+> get MIGRATE_UNMOVABLE.
+>
+> >
+> >
+> >      > Hotplugged memory will also be
+> >      > converted to MIGRATE_UNMOVABLE.
+> >
+> >     But that's in the VM? Because we don't hotplug memory in the
+> hypervisor.
+> >
+> >
+> > Yes, the virtio-mem driver in the VM is modified to actively release
+> > memory vulnerable to Rowhammer.
+>
+> I think I now understand that statement: Memory to-be-hotplugged to the
+> VM will be migrated to MIGRATE_UNMOVABLE during longterm pinning, if it
+> resides on ZONE_MOVABLE or MIGRATE_CMA.
+>
+> > For more details, would you be interested in reading our paper? It was
+> > recently submitted to ASPLOS for publication and we are happy to share
+> > it with you.
+>
+> Yes, absolutely! Please send a private mail :)
+>
+> --
+> Cheers,
+>
+> David / dhildenb
+>
+>
+
+--000000000000190b0d062820be1c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">&gt; That doesn&#39;t explain the full st=
+ory about MIGRATE_UNMOVABLE. I assume<br>&gt; one precondition is missing i=
+n your explanation.<br><br>I have double-checked the source code. My initia=
+l description of the<br>process seems somewhat imprecise. vIOMMU does not c=
+onvert pages to<br>UNMOVABLE during pinning, it is that pinning causes page=
+ faults, and the<br>fault handler allocates UNMOVABLE pages. (vaddr_get_pfn=
+s() calls<br>__gup_longterm_locked(), who then calls memalloc_pin_save(), a=
+nd it<br>implicitly removes the __GFP_MOVABLE flag.)<br><br>Therefore, ther=
+e is no requirement of ZONE_MOVABLE and MIGRATE_CMA.</div><div dir=3D"ltr">=
+<br></div><div dir=3D"ltr"><br></div><div>Best regards,</div><div>Wei Chen<=
+br></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"l=
+tr" class=3D"gmail_attr">On Wed, Nov 27, 2024 at 5:37=E2=80=AFPM David Hild=
+enbrand &lt;<a href=3D"mailto:david@redhat.com">david@redhat.com</a>&gt; wr=
+ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 27.11.24=
+ 03:00, zhi zhang wrote:<br>
+&gt; <br>
+&gt; <br>
+&gt; On Tue, Nov 26, 2024 at 11:52=E2=80=AFPM David Hildenbrand &lt;<a href=
+=3D"mailto:david@redhat.com" target=3D"_blank">david@redhat.com</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:david@redhat.com" target=3D"_blank">david=
+@redhat.com</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0On 26.11.24 16:31, Wei Chen wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0&gt; How can you be sure (IOW tri=
+gger) that the system will store<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0&gt; &quot;important data&quot; l=
+ike EPTs?<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; We cannot, but we have designed the attack (s=
+ee below) to improve the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; possibility.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0&gt; So is one magic bit really t=
+hat for your experiments, one needs a<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0&gt; viommu?<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Admittedly the way we accomplish a VM escape =
+is a bit arcane.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0That&#39;s what I imagined :)<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; We require device passthrough because it pins=
+ the VM&#39;s memory<br>
+&gt;=C2=A0 =C2=A0 =C2=A0down and<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; converts them to MIGRATE_UNMOVABLE.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Interesting, that&#39;s news to me. Can you share w=
+here GUP in the kernel<br>
+&gt;=C2=A0 =C2=A0 =C2=A0would do that?<br>
+&gt; <br>
+&gt; <br>
+&gt; In /drivers/vfio/vfio_iommu_type1.c, there is a function called <br>
+&gt; vfio_iommu_type1_pin_pages where VM&#39;s memory is pinned down.<br>
+<br>
+That doesn&#39;t explain the full story about MIGRATE_UNMOVABLE. I assume <=
+br>
+one precondition is missing in your explanation.<br>
+<br>
+VFIO will call pin_user_pages_remote(FOLL_LONGTERM). Two cases:<br>
+<br>
+a) Memory is already allocated (which would mostly be MIGRATE_MOVABLE, <br>
+because it&#39;s ordinary user memory). We&#39;ll simply longterm pin the m=
+emory <br>
+without changing the migratetype.<br>
+<br>
+b) Memory is not allocated yet. We&#39;ll call <br>
+faultin_page()-&gt;handle_mm_fault(). There is no FOLL_LONGTERM <br>
+special-casing, so you&#39;ll mostly get MIGRATE_MOVABLE.<br>
+<br>
+<br>
+Now, there is one corner case: we disallow longterm pinning on <br>
+ZONE_MOVABLE and MIGRATE_CMA. In case our user space allocation ended up <b=
+r>
+on there, check_and_migrate_movable_pages() would detect that the memory <b=
+r>
+resides on ZONE_MOVABLE or MIGRATE_CMA, and allocate a destination page <br=
+>
+in migrate_longterm_unpinnable_folios() using &quot;GFP_USER | __GFP_NOWARN=
+&quot;.<br>
+<br>
+So I assume one precondition is that your hypervisor has at least some <br>
+ZONE_MOVABLE or CMA memory? Otherwise I don&#39;t see how you would reliabl=
+y <br>
+get MIGRATE_UNMOVABLE.<br>
+<br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Hotplugged memory will also be<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; converted to MIGRATE_UNMOVABLE.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0But that&#39;s in the VM? Because we don&#39;t hotp=
+lug memory in the hypervisor.<br>
+&gt; <br>
+&gt; <br>
+&gt; Yes, the virtio-mem driver in the VM is modified to actively release <=
+br>
+&gt; memory vulnerable to Rowhammer.<br>
+<br>
+I think I now understand that statement: Memory to-be-hotplugged to the <br=
+>
+VM will be migrated to MIGRATE_UNMOVABLE during longterm pinning, if it <br=
+>
+resides on ZONE_MOVABLE or MIGRATE_CMA.<br>
+<br>
+&gt; For more details, would you be interested in reading our paper? It was=
+ <br>
+&gt; recently submitted to ASPLOS for publication and we are happy to share=
+ <br>
+&gt; it with you.<br>
+<br>
+Yes, absolutely! Please send a private mail :)<br>
+<br>
+-- <br>
+Cheers,<br>
+<br>
+David / dhildenb<br>
+<br>
+</blockquote></div></div>
+
+--000000000000190b0d062820be1c--
 
