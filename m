@@ -4,88 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BD7D729F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Nov 2024 18:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8255CD735E4
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Nov 2024 00:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tH63P-00044Z-KA; Fri, 29 Nov 2024 13:49:23 -0500
+	id 1tHB8K-00079U-E7; Fri, 29 Nov 2024 19:14:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jvilaca@redhat.com>)
- id 1tH63M-000447-Ex
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 13:49:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1tHB8H-000792-BE; Fri, 29 Nov 2024 19:14:45 -0500
+Received: from out203-205-221-153.mail.qq.com ([203.205.221.153])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jvilaca@redhat.com>)
- id 1tH63K-0006Er-JW
- for qemu-devel@nongnu.org; Fri, 29 Nov 2024 13:49:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1732906155;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2yZBIADuNRBVwjO9ucT9y/I86XtW5PuLAHlgFGjHx1w=;
- b=gBQnAIUTub8a/oOLwOqELi/N1NHpviQJXIgMFkK2KT1KBk7ebTQx5j4B+AB9oiAhT79I2P
- ok+YjZynB3FJmEnZ9eYK+yshiKI8ERuelhXGeEt+ACn3pPu2ehLAh+GuWqGo2UjHBQXs8o
- HdpQOUhgcvmVx5VGJmt3xEPTLFU7SX8=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-aNKsvZnhOPm8mKcO0Ap-UA-1; Fri, 29 Nov 2024 13:49:14 -0500
-X-MC-Unique: aNKsvZnhOPm8mKcO0Ap-UA-1
-X-Mimecast-MFC-AGG-ID: aNKsvZnhOPm8mKcO0Ap-UA
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-3ea3f5aff1eso1395182b6e.0
- for <qemu-devel@nongnu.org>; Fri, 29 Nov 2024 10:49:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732906153; x=1733510953;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2yZBIADuNRBVwjO9ucT9y/I86XtW5PuLAHlgFGjHx1w=;
- b=KrLH12jA+fkXaStS7+IbJGcAjElS+16YHDlB1zez3mlbr4xzpMfWPB6NfaS4ApNscS
- iWPod810Ylm4gNpO7yPWKy/H4uTvxMSRzQ3vB+Y6awDnWU0EhzvNhDsubPViwjQGRFEg
- kfdTd0iBYHwmhTRgdrTgR3XBA2/2jqoCWmrbueMgB4BjMKsmm7keCn7p4VnbWc+tezhQ
- a6ygML0T/31uGWLVFa7eoonJxGbpHBS5EuscOEEnD2I66LsUO1RWgFfA1ZPS9mlVxzXW
- 33KmrLudURJ+qNmw0oWHFb45PDxYbKAh/I4+jz33dCJVVVK2bKcGXSJh9paGLyHjOC+O
- dbKA==
-X-Gm-Message-State: AOJu0YyFfBs+d0KrCc4Dma/G2dSaqMVo0mB2Fb8JraneLaReR5hhZEO8
- 1xAlgtOxw3fCJ7u5XKlHBV3DMYj0ChXYUdMEEOhqwtFOnX7Tob+lwHJeiEdiSPPmEgr2qfYJ+df
- FVPjxhDt+FCucGeETWm+pCELeZVaDDSpFLbaBxewf5fIzAT8qKknxKHi1nZ5B4UTeUoYdAcaojU
- 9AZoWT8EpI4qIR9Oc7XGxM7HJBIvc=
-X-Gm-Gg: ASbGncvMvQxDDHML9T19azAYw8T1V6EtvKiCYLWmRakaL0+OmotsUl1JO0yXas6gdtv
- nYF7jR76575I1MHotparkUmHYrXptz7mC6ecLpxr92BqLI1jzlrrZtooIaTXDAKg=
-X-Received: by 2002:a05:6808:191c:b0:3ea:6244:71f7 with SMTP id
- 5614622812f47-3ea6dd9caa5mr10251822b6e.38.1732906153134; 
- Fri, 29 Nov 2024 10:49:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHYDaLSMtHit7wSyUxhPd48/Bw8UkKxUB8ArI1s84RREVqMHvHICd/zdSoscLVLEEK3Etec4ESjHbS1obxeZuc=
-X-Received: by 2002:a05:6808:191c:b0:3ea:6244:71f7 with SMTP id
- 5614622812f47-3ea6dd9caa5mr10251812b6e.38.1732906152767; Fri, 29 Nov 2024
- 10:49:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1tHB8D-0002xU-Kq; Fri, 29 Nov 2024 19:14:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1732925649; bh=ER5pIegvlpZLk+d+vPNMrBTU83T1dELzHMtnQ33VELc=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=x8stGMlbL2osqKDiImXYVrqZNpET7ddVk6jk5tkAJQhmX5s/nbthAANmicfQoqtRX
+ DOrKSut8YuHpjIxekU5W/GNoZDQ85NTzYiMmnq3cD4PoVItWRb1gTT6rtGyaZ4QBZ+
+ cqllTzSNz1dgAFBdzbMj8UFDBqEDgmqqF7aBYhuA=
+Received: from [192.168.1.13] ([220.167.31.77])
+ by newxmesmtplogicsvrsza36-0.qq.com (NewEsmtp) with SMTP
+ id 387B90B6; Sat, 30 Nov 2024 08:14:07 +0800
+X-QQ-mid: xmsmtpt1732925647tzdse6i7p
+Message-ID: <tencent_AADD9A1292CD7CB89F16999E7BDD03895406@qq.com>
+X-QQ-XMAILINFO: NsEIGfsQmVV+LfzZuP+f31ynLVv3aiE4XmE7GUIBTNFptEIqSyEmr95KWX5hWC
+ TyCKMpE8vlDb/3sS2o7Hth7kH9hwuxvgLWUaIrQCOlMB1OKok8C3lRRaoWKuIc99Zr6/+2XvOsTf
+ 9poMYoT1vDlUsuIoFZytiRginQHZtWAgOtRR9ZJKi54Pp+120xrwy+tfrR9yKDoIkr1+yRvK3FBC
+ tdFa+a59Mg9AC37/Fof8wiwdbJZtUKBes4//yIo1k0LPh+gxPjUQbzzeWE4sDCMrCyqoGU95Kgcu
+ M9+Q+8CGEU1Ic1SGxwxE8Qe2rqvuAeuiIgbzD+HS+cJo9a3W3jo5EHZxaO3NA88bI6PXIy90SItZ
+ cc35ASnsajPqSLuV14o9x5jSlD5Wh/nEe5g8hCszXH66W4mDYLShsQxsWLjIkq2bVxZ2gsO97xvs
+ SaU1cUS0PUNKW9vZUG4TUGPHf3QvIt7CpBLsRn7c72uxDFSDCaKIxs1LUN+ZxgYNHugxTu2R+njL
+ ywWjga5cXDoroylE+U0btI68fM5KiNNrjDLJDi/2slEkGvvYfNTIyhZvYJx0zZo8GvKGGbtrWsym
+ i7LabCDszu6aw9d8OBNwTZa1kLhPqQKQR/G6bXdjQEwbU5vyUZPfb8j8lE/lbZqd+K7PQgp1pgt3
+ 1/kHecMRJ1RPF3T+zyp695kM62IPAiCBKDet47yDOZY8GjW42OWIw3826gwynLxnUZridXy0RInm
+ 4LoVksKIc2z7DPYPtKix12g76aMo7unpzfwvvIUSNbRrc+rGRfK6vZ0DjmDCLNkF8lFzdC3dKrC0
+ 40sb7T6WUJaskeHiyypxP64R9wcGB81Qog1L/4LHzWXW1NPGuksWg0+xNo/tmVAudW8s5o+5ghyT
+ hiMldqvYKYRyuwqOw1UY+39kX7Dw2lQcWdBUl5fGvQkifxA5SOoodA8tBxhp7Fr2gzjHhC7D+gO9
+ nDbhSmgoBmKQiBRAJ7iHioE41QRru/
+X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
+X-OQ-MSGID: <f5c9906651aaf0ef084bef152651e1d556b7a9f0.camel@qq.com>
+Subject: Re: [PATCH v2] riscv/gdb: add virt mode debug interface
+From: Yanfeng Liu <yfliu2008@qq.com>
+To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com
+Date: Sat, 30 Nov 2024 08:14:07 +0800
+In-Reply-To: <87r06ufjiz.fsf@draig.linaro.org>
+References: <tencent_B52B1EB0A504D6F690B6E6F3FD3AC9BCDC09@qq.com>
+ <8734jbh21e.fsf@draig.linaro.org>
+ <tencent_CA6E4D0C897F3ED0EF988CCE5DF541442A05@qq.com>
+ <87r06ufjiz.fsf@draig.linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-References: <CAOw09wu31aROKJaYA7igHR_toegozssDXsTBNuUhusoRX+Yvng@mail.gmail.com>
- <Z0na9lvoTM2V4iFY@redhat.com>
-In-Reply-To: <Z0na9lvoTM2V4iFY@redhat.com>
-From: =?UTF-8?B?Sm/Do28gVmlsYcOnYQ==?= <jvilaca@redhat.com>
-Date: Fri, 29 Nov 2024 18:49:02 +0000
-Message-ID: <CAOw09wsgvYs48-vBMVKSrPdUAWkYN9xWww=gL7wjbZbHNsRuDw@mail.gmail.com>
-Subject: Re: How to query the number of processes queueing for the CPU inside
- the VM
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000aa52a4062811a7f2"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jvilaca@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=203.205.221.153; envelope-from=yfliu2008@qq.com;
+ helo=out203-205-221-153.mail.qq.com
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.93, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,151 +85,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000aa52a4062811a7f2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Fri, 2024-11-29 at 09:59 +0000, Alex Benn=C3=A9e wrote:
+> Yanfeng <yfliu2008@qq.com> writes:
+>=20
+> > On Thu, 2024-11-28 at 14:21 +0000, Alex Benn=C3=A9e wrote:
+> > > Yanfeng Liu <yfliu2008@qq.com> writes:
+> > >=20
+> > > > This adds `virt` virtual register on debug interface so that users
+> > > > can access current virtualization mode for debugging purposes.
+> > > >=20
+> > > > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+> > > > ---
+> > > > =C2=A0gdb-xml/riscv-32bit-virtual.xml |=C2=A0 1 +
+> > > > =C2=A0gdb-xml/riscv-64bit-virtual.xml |=C2=A0 1 +
+> > > > =C2=A0target/riscv/gdbstub.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 | 18 ++++++++++++------
+> > > > =C2=A03 files changed, 14 insertions(+), 6 deletions(-)
+> > > >=20
+> > > > diff --git a/gdb-xml/riscv-32bit-virtual.xml b/gdb-xml/riscv-32bit-
+> > > > virtual.xml
+> > > > index 905f1c555d..d44b6ca2dc 100644
+> > > > --- a/gdb-xml/riscv-32bit-virtual.xml
+> > > > +++ b/gdb-xml/riscv-32bit-virtual.xml
+> > > > @@ -8,4 +8,5 @@
+> > > > =C2=A0<!DOCTYPE feature SYSTEM "gdb-target.dtd">
+> > > > =C2=A0<feature name=3D"org.gnu.gdb.riscv.virtual">
+> > > > =C2=A0=C2=A0 <reg name=3D"priv" bitsize=3D"32"/>
+> > > > +=C2=A0 <reg name=3D"virt" bitsize=3D"32"/>
+> > > > =C2=A0</feature>
+> > > > diff --git a/gdb-xml/riscv-64bit-virtual.xml b/gdb-xml/riscv-64bit-
+> > > > virtual.xml
+> > > > index 62d86c237b..7c9b63d5b6 100644
+> > > > --- a/gdb-xml/riscv-64bit-virtual.xml
+> > > > +++ b/gdb-xml/riscv-64bit-virtual.xml
+> > > > @@ -8,4 +8,5 @@
+> > > > =C2=A0<!DOCTYPE feature SYSTEM "gdb-target.dtd">
+> > > > =C2=A0<feature name=3D"org.gnu.gdb.riscv.virtual">
+> > > > =C2=A0=C2=A0 <reg name=3D"priv" bitsize=3D"64"/>
+> > > > +=C2=A0 <reg name=3D"virt" bitsize=3D"64"/>
+> > > > =C2=A0</feature>
+> > >=20
+> > > I assume these are mirrored in gdb not a QEMU only extension?
+> >=20
+> > So far I think it is a QEMU extension and the `gdb-multiarch` doesn't t=
+reat
+> > is
+> > specially. My tests shows it basically works:
+> >=20
+> > ```
+> > (gdb) ir virt
+> > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x3=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0prv:3 [Machine]
+> > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00
+> > (gdb) set $priv =3D 2
+> > (gdb) ir virt
+> > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x1=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0prv:1 [Supervisor]
+> > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00
+> > (gdb) set $virt =3D 1
+> > (gdb) ir virt
+> > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x1=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0prv:1 [Supervisor]
+> > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x1=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A01
+> > (gdb) set $virt =3D 0
+> > (gdb) ir virt
+> > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x1=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0prv:1 [Supervisor]
+> > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00
+> > (gdb) set $virt =3D 1
+> > (gdb) ir virt
+> > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x1=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0prv:1 [Supervisor]
+> > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x1=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A01
+> > (gdb) set $priv =3D 3
+> > (gdb) ir virt
+> > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x3=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0prv:3 [Machine]
+> > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00
+> > ```
+>=20
+> A gdbstub test case would be useful for this although I don't know if
+> the RiscV check-tcg tests switch mode at all.
+>=20
+> >=20
+> > As I am rather new to QEMU, please teach how we can add it as a QEMU on=
+ly
+> > extension.
+>=20
+> You don't need to extend the XML from GDB, you can build a specific one
+> for QEMU extensions. For example:
+>=20
+> =C2=A0=C2=A0=C2=A0 gdb_feature_builder_init(&param.builder,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 &cpu->dyn_sysreg_feature.desc,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 "org.qemu.gdb.arm.sys.regs",
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 "system-registers.xml",
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 base_reg);
+>=20
+> This exports all the system registers QEMU knows about and GDB can
+> access generically. Note the id is org.qemu..., indicating its our
+> schema not gdbs.
+Thanks for teaching, I need time to digest. I guess more feature builder AP=
+Is
+are needed (like append_reg) and the getter/setter callbacks might be at a
+different place.
 
-That's exactly it. How can we proceed to get it into guest-get-cpustat?
+BTW, compared to adding virtual register `virt`, how do you think if we sha=
+re
+the V bit as part of existing `priv` register?
 
-On Fri, Nov 29, 2024 at 3:17=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com>
-wrote:
+Or maybe we shall talk to GDB community to get their opinions? If they agre=
+e to
+add a few words about V bit here
+https://sourceware.org/gdb/current/onlinedocs/gdb.html/RISC_002dV-Features.=
+html,
+then it saves us a lot.=20
 
-> On Fri, Nov 29, 2024 at 02:38:52PM +0000, Jo=C3=A3o Vila=C3=A7a wrote:
-> > In KubeVirt, through libvirt, we need to know the number of processes
-> > queued for the CPU inside the VM.
-> >
-> > Can we get this information through the qemu-guest-agent?
->
-> The only CPU stats related command in QGA is 'guest-get-cpustat's
-> returning:
->
-> # @user: Time spent in user mode
-> #
-> # @nice: Time spent in user mode with low priority (nice)
-> #
-> # @system: Time spent in system mode
-> #
-> # @idle: Time spent in the idle task
-> #
-> # @iowait: Time waiting for I/O to complete (since Linux 2.5.41)
-> #
-> # @irq: Time servicing interrupts (since Linux 2.6.0-test4)
-> #
-> # @softirq: Time servicing softirqs (since Linux 2.6.0-test4)
-> #
-> # @steal: Stolen time by host (since Linux 2.6.11)
-> #
-> # @guest: ime spent running a virtual CPU for guest operating systems
-> #     under the  control of the Linux kernel (since Linux 2.6.24)
-> #
-> # @guestnice: Time spent running a niced guest (since Linux 2.6.33)
->
-> none of which match your rquest
->
-> Essentially what you're asking for seems to be the "load average" which
-> is a measure of waiting runnable tasks, over some period (1, 5, 15 minute=
-s
-> typically).
->
-> I imagine guest-get-cpustat could be enhanced to include load info withou=
-t
-> too much work.
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
+>=20
 
---=20
-kind regards,
-Jo=C3=A3o Vila=C3=A7a
 
---000000000000aa52a4062811a7f2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">That&#39;s exactly it. How can we proceed to=C2=A0get=C2=
-=A0it into=C2=A0guest-get-cpustat?</div><br><div class=3D"gmail_quote"><div=
- dir=3D"ltr" class=3D"gmail_attr">On Fri, Nov 29, 2024 at 3:17=E2=80=AFPM D=
-aniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrange@=
-redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">On Fri, Nov 29, 2024 at 02:38:52PM +0000, Jo=C3=A3o Vila=C3=A7a =
-wrote:<br>
-&gt; In KubeVirt, through libvirt, we need to know the number of processes<=
-br>
-&gt; queued for the CPU inside the VM.<br>
-&gt; <br>
-&gt; Can we get this information through the qemu-guest-agent?<br>
-<br>
-The only CPU stats related command in QGA is &#39;guest-get-cpustat&#39;s<b=
-r>
-returning:<br>
-<br>
-# @user: Time spent in user mode<br>
-#<br>
-# @nice: Time spent in user mode with low priority (nice)<br>
-#<br>
-# @system: Time spent in system mode<br>
-#<br>
-# @idle: Time spent in the idle task<br>
-#<br>
-# @iowait: Time waiting for I/O to complete (since Linux 2.5.41)<br>
-#<br>
-# @irq: Time servicing interrupts (since Linux 2.6.0-test4)<br>
-#<br>
-# @softirq: Time servicing softirqs (since Linux 2.6.0-test4)<br>
-#<br>
-# @steal: Stolen time by host (since Linux 2.6.11)<br>
-#<br>
-# @guest: ime spent running a virtual CPU for guest operating systems<br>
-#=C2=A0 =C2=A0 =C2=A0under the=C2=A0 control of the Linux kernel (since Lin=
-ux 2.6.24)<br>
-#<br>
-# @guestnice: Time spent running a niced guest (since Linux 2.6.33)<br>
-<br>
-none of which match your rquest<br>
-<br>
-Essentially what you&#39;re asking for seems to be the &quot;load average&q=
-uot; which<br>
-is a measure of waiting runnable tasks, over some period (1, 5, 15 minutes<=
-br>
-typically).<br>
-<br>
-I imagine guest-get-cpustat could be enhanced to include load info without<=
-br>
-too much work.<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
-s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
-oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
-nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
-"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
-https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
-=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
-ignature"><div dir=3D"ltr"><font color=3D"#888888" face=3D"arial, sans-seri=
-f">kind regards,<br><div>Jo=C3=A3o Vila=C3=A7a</div><div><br></div></font><=
-/div></div>
 
---000000000000aa52a4062811a7f2--
+
 
 
