@@ -4,87 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7F1D73605
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Nov 2024 12:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C849D73604
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Nov 2024 14:03:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHMuZ-0001t4-CK; Sat, 30 Nov 2024 07:49:23 -0500
+	id 1tHO35-0006fQ-2O; Sat, 30 Nov 2024 09:02:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <weichenforschung@gmail.com>)
- id 1tHMuV-0001sn-DD
- for qemu-devel@nongnu.org; Sat, 30 Nov 2024 07:49:22 -0500
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tHO2z-0006ek-UK
+ for qemu-devel@nongnu.org; Sat, 30 Nov 2024 09:02:10 -0500
+Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <weichenforschung@gmail.com>)
- id 1tHMuR-00064p-Ku
- for qemu-devel@nongnu.org; Sat, 30 Nov 2024 07:49:17 -0500
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e398484b60bso1500124276.1
- for <qemu-devel@nongnu.org>; Sat, 30 Nov 2024 04:49:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tHO2w-00069G-Cf
+ for qemu-devel@nongnu.org; Sat, 30 Nov 2024 09:02:09 -0500
+Received: by mail-oa1-x2f.google.com with SMTP id
+ 586e51a60fabf-296c237a121so1677191fac.2
+ for <qemu-devel@nongnu.org>; Sat, 30 Nov 2024 06:02:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1732970953; x=1733575753; darn=nongnu.org;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1732975321; x=1733580121;
+ darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QQvv4UVdk4i78gOtbFUdxLqjFieG9PK4nXAck+NJ1QI=;
- b=TLAI1W2hE1SbfsDxtsl7a5ijATQaCmNc6a2pmfhYkxHfTK18zMr1hf81Olr3yLklHM
- rNfA37tBtcGPo+xXqIprb1vPfKW1iyaApoG6aMDLwIffPvzS8gZUb8UYKUZ3EYIbYf/e
- C7tMxdUil4SI78NXX35oYBmcr+KOes1+9UzolbNtDut70RQKPa+Bf92KbIkoYMFVFw4Q
- KiKzKKcrk5MKRtfOhDclb5uimKlTrDIZXWaAzfuTZjYKCOkYHXHNImXCZM+K6Peun8Ai
- BOx5pEtr1ncdHhCQeQAriqlCc6UsyegzzlYjf9Bd1+bfY5fUpGCxgmZ7IH7C7Rm3cKtQ
- 3/+Q==
+ bh=QOj0Rpo+xPE6R2mMCfYl3o5FNz3TtlkydvfKu1XUPaQ=;
+ b=WE1XKDriXeThJzsfX+DZsMkdnTlYOBAPDrDwvixPJRHr3B7w0aWMVgzSat1XAQgOPi
+ dkEZHQgQK/gGg0cEcSKFPPWXaP+a2ODfFj3Igne1LFmj6mq3c+2NZUv1BaB3IY30+XM6
+ OyaTHKhuCUEa44ATfrTHmbPPIrPzgsewFr5p2VXFwni5t51w1fDHP2nDSa6nM6pWLY+d
+ y2b8XmRrm08ZHmJohWaQrw5bfbzwLKNOYauHShmwOZ1XFFqykkeN7rbuZKxEJb4ZlrsZ
+ NxQ2FdH4DkFcIJYQIGuHwOIIsu0vJS2SkKHMi6v8cgPF+X9AwG5CZo/FeKhFpxk8+Tr3
+ AfGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1732970953; x=1733575753;
+ d=1e100.net; s=20230601; t=1732975321; x=1733580121;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QQvv4UVdk4i78gOtbFUdxLqjFieG9PK4nXAck+NJ1QI=;
- b=Z6VO2S6k6v1YpNMHecWdL3VVXuarcOUl7EHMB+iinAsP+4WNxQkZx3llrxR24kPJN7
- /5pKj3Ysu7Em8PbVORm6b6qgr9XRbUaW7EaqVhcEAi4Ft0CYIxJx00/hXoFz8TNvGOfC
- GTi7T+C5ndtmriNEK1RkXVf1qbohttWN1VeouNUf4YJBRJq3gMn5RpM8xx25sqOOqkag
- H0A5MnqOQ85aLZMn38Gfx6cR11FMQNgKHOcRzJwSyL/e9i/eI5O8fVm79IYV51mIQ72v
- IDiECxYBkye17rP92nf53iOVGjYEIhSmiRr9tZrN337vcHg3G5IO7Vof6Gy5fDU/uAKG
- uJCw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWUZVSOHZc6JQ0LknFF1ZWl3R625/MioirfB62W0yU/cFXaHJ3pUpv5NgTfh0UpEuDT0L9Wo1Udgue9@nongnu.org
-X-Gm-Message-State: AOJu0YzQxMwfWVTfd9XjnV2NrxRC34xPjq10BYS9n7gGJaBfh711yWKD
- GWthIdZtq13Trnan3BVrHQgwigdjmDvlFJLd8oa+/qnY6ZmmEgYB8cWYMb65YJePgrm8tqy9Q4G
- bVXxvQU4XVN7iZKxPM8+04xVlLbY=
-X-Gm-Gg: ASbGncsy67b96eWsrDdby91+SCDHECbUzsEXt6HXdrHD7Mcx48Z7xczmNS3QOZPHbZD
- djzyF1y/fQCIdLV468BaljjmKuuOpzM3N
-X-Google-Smtp-Source: AGHT+IFmK7qugSlPtl0YhWuofSHgjYuhTzyT2QtHbKRG8zlRDkaXXUEt1ge6LBMvhacEiFI+yJWiX5/4o3o2ju7JHC8=
-X-Received: by 2002:a05:6902:2b07:b0:e2b:e0ba:d50 with SMTP id
- 3f1490d57ef6-e395b870e93mr14067696276.5.1732970953637; Sat, 30 Nov 2024
- 04:49:13 -0800 (PST)
+ bh=QOj0Rpo+xPE6R2mMCfYl3o5FNz3TtlkydvfKu1XUPaQ=;
+ b=BgKvpaA5jz7QyRv+DwF197Dw4+ekrjcO567fyRbzk9wPrKYYmUjFgtzmsuf0jE1rIW
+ dAwlVDqvsG1tWyLPHrWXnjAu/KzH4L4MMDAQurtUtWs/kl8p7zn0TtrAwIGfFhdisUMd
+ lF+hlQFhOheEid3eoRM2B9GhZrT05mfZ/4m7/rrdjgCn1gccskEAXQwiNPPUfu9n5uCa
+ rfQfpxWJtvuXnoBLFjcas2RohOH9abNvXLs6zdj9TwzHnMGZi9YgZYAOJUzybQagnbj0
+ yqqAFlvc5iNOjMSNzxQgOB7+rgtnsvMJGLw6Dh/EiWFFqvL3RaaaHR7RtfJWiQ0AXE7D
+ YB0g==
+X-Gm-Message-State: AOJu0YwhUKJ03uQg1xpVxaNA/OmRA1ZfIknu3QtN7ag1mcjxVrlbMnP4
+ r8vkjZDZqCUaC73FDwU0oNA27VjPHxb0FsiCkUrpqKjOkSA4WQ+QW4cid7KE2onhG1H/pnQv6oh
+ b8R9EojmvKKFO6B9nqBPTq57KAcTlHmww9FIkJw==
+X-Gm-Gg: ASbGncuP/2Fp+/T3y20dNA+4KSKsNZzyndRzReeLVnuJ77VqsoWA8bULBvGguDH/vjE
+ PPYANINhCDZd4Vv4/TBDxEilDMgxDFsHC
+X-Google-Smtp-Source: AGHT+IFUT9dHLxrrllN+0jeRyHjPvWLUAQCSwz88oq8pQtv9QRVqJTQXqVPelFHR315pTPvRWhGL+MW0LVcWib8s5Sk=
+X-Received: by 2002:a05:6871:799f:b0:254:bd24:de83 with SMTP id
+ 586e51a60fabf-29dc4012c99mr11053373fac.12.1732975319259; Sat, 30 Nov 2024
+ 06:01:59 -0800 (PST)
 MIME-Version: 1.0
-References: <20241126080213.248-1-weichenforschung@gmail.com>
- <2ac194a7-9790-4aa7-bb41-65f8bb21f616@redhat.com>
- <f02565f6-c584-44d0-944f-26c062cc2be9@gmail.com>
- <553cf07a-a603-402d-8e86-b4ada42a2dcd@redhat.com>
- <93616a1e-3614-49ca-9515-697f1c9205b6@gmail.com>
- <9eafe8fa-de09-40e3-9687-573255ce37de@redhat.com>
- <CAD-9bcdm+gupZQ91Q-JMjuPikVmfVhCdJuwq=ptfaipL7Peevg@mail.gmail.com>
- <a140606e-5f86-4e8b-a818-2db2493ab8a6@redhat.com>
-In-Reply-To: <a140606e-5f86-4e8b-a818-2db2493ab8a6@redhat.com>
-From: Wei Chen <weichenforschung@gmail.com>
-Date: Sat, 30 Nov 2024 20:48:58 +0800
-Message-ID: <CALOevrNCBHRKYOKcBftssHPOtoY1HVy3xz4DFfYZ4_e99hLrHg@mail.gmail.com>
-Subject: Re: [PATCH] hw/virtio/virtio-mem: Prohibit unplugging when size <=
- requested_size
-To: David Hildenbrand <david@redhat.com>
-Cc: zhi zhang <zzhangphd@gmail.com>, qemu-devel@nongnu.org, mst@redhat.com, 
- yuval.yarom@rub.de, genkin@gatech.edu
-Content-Type: multipart/alternative; boundary="000000000000190b0d062820be1c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=weichenforschung@gmail.com; helo=mail-yb1-xb34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1729562974.git.yong.huang@smartx.com>
+ <87sesmdfl4.fsf@suse.de>
+ <CAK9dgmZvj4W2EBxp1_TcdYs3q2aqaRZGZCAk=FRJk-PaB9y_fw@mail.gmail.com>
+ <87v7w6jkc9.fsf@suse.de> <87plmejgtb.fsf@suse.de>
+In-Reply-To: <87plmejgtb.fsf@suse.de>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Sat, 30 Nov 2024 22:01:43 +0800
+Message-ID: <CAK9dgmbHL+O34+E3ykDdAunap+Ruubm7ysisrMags6TN25BiNQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] Guestperf: miscellaneous refinement and enrichment
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000004f8c03062821c2b9"
+Received-SPF: pass client-ip=2001:4860:4864:20::2f;
+ envelope-from=yong.huang@smartx.com; helo=mail-oa1-x2f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,243 +93,346 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000190b0d062820be1c
+--0000000000004f8c03062821c2b9
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-> That doesn't explain the full story about MIGRATE_UNMOVABLE. I assume
-> one precondition is missing in your explanation.
+On Fri, Nov 29, 2024 at 9:44=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wro=
+te:
 
-I have double-checked the source code. My initial description of the
-process seems somewhat imprecise. vIOMMU does not convert pages to
-UNMOVABLE during pinning, it is that pinning causes page faults, and the
-fault handler allocates UNMOVABLE pages. (vaddr_get_pfns() calls
-__gup_longterm_locked(), who then calls memalloc_pin_save(), and it
-implicitly removes the __GFP_MOVABLE flag.)
+> Fabiano Rosas <farosas@suse.de> writes:
+>
+> > Yong Huang <yong.huang@smartx.com> writes:
+> >
+> >> On Wed, Oct 23, 2024 at 11:06=E2=80=AFPM Fabiano Rosas <farosas@suse.d=
+e> wrote:
+> >>
+> >>> yong.huang@smartx.com writes:
+> >>>
+> >>> > From: Hyman Huang <yong.huang@smartx.com>
+> >>> >
+> >>> > v3:
+> >>> > 1. Remove the two redundant assignments in [PATCH v2 2/5] suggested
+> by
+> >>> Daniel
+> >>> >
+> >>> > Please review, thanks
+> >>> > Yong
+> >>> >
+> >>> > v2:
+> >>> > 1. Update the MAINTAINERS section suggested by Fabiano Rosas
+> >>> > 2. Ensure the dependencies when build the initrd-stress.img
+> suggested by
+> >>> Daniel
+> >>> > 3. Fix some bugs
+> >>> >
+> >>> > v1:
+> >>> > The previous patchset:
+> >>> >
+> >>>
+> https://lore.kernel.org/qemu-devel/cover.1722957352.git.yong.huang@smartx=
+.com/
+> >>> > does not made the necessary changes and tests for the upstream
+> version.
+> >>> >
+> >>> > This patchset works for that:
+> >>> > 1. Move the guestperf to scripts directory suggested by Fabiano Ros=
+as
+> >>> > 2. Make initrd-stress.img built by default suggested by Fabiano Ros=
+as
+> >>> > 3. Make the necessary changes to adapt the latest multifd behavior
+> >>> > 4. A nitpick for multifd migration
+> >>> > 5. Support multifd compression option
+> >>> >
+> >>> > Hyman Huang (5):
+> >>> >   tests/migration: Move the guestperf tool to scripts directory
+> >>> >   tests/migration: Make initrd-stress.img built by default
+> >>> >   guestperf: Support deferred migration for multifd
+> >>> >   guestperf: Nitpick the inconsistent parameters
+> >>> >   guestperf: Introduce multifd compression option
+> >>> >
+> >>> >  MAINTAINERS                                   |  5 +++
+> >>> >  .../migration/guestperf-batch.py              |  0
+> >>> >  .../migration/guestperf-plot.py               |  0
+> >>> >  {tests =3D> scripts}/migration/guestperf.py     |  0
+> >>> >  .../migration/guestperf/__init__.py           |  0
+> >>> >  .../migration/guestperf/comparison.py         | 15 ++++++++-
+> >>> >  .../migration/guestperf/engine.py             | 33
+> ++++++++++++++++---
+> >>> >  .../migration/guestperf/hardware.py           |  0
+> >>> >  .../migration/guestperf/plot.py               |  0
+> >>> >  .../migration/guestperf/progress.py           |  0
+> >>> >  .../migration/guestperf/report.py             |  0
+> >>> >  .../migration/guestperf/scenario.py           |  7 ++--
+> >>> >  .../migration/guestperf/shell.py              |  3 ++
+> >>> >  .../migration/guestperf/timings.py            |  0
+> >>> >  tests/migration/meson.build                   | 30 +++++++++------=
+--
+> >>> >  15 files changed, 73 insertions(+), 20 deletions(-)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf-batch.py (100%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf-plot.py (100%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf.py (100%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/__init__.py (100%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/comparison.py (89%=
+)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/engine.py (93%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/hardware.py (100%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/plot.py (100%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/progress.py (100%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/report.py (100%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/scenario.py (93%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/shell.py (98%)
+> >>> >  rename {tests =3D> scripts}/migration/guestperf/timings.py (100%)
+> >>>
+> >>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> >>>
+> >>>
+> >>> Thinking out loud a little bit, it's still somewhat obscure from whic=
+h
+> >>> directory this script should be called. None of these invocations wor=
+k:
+> >>>
+> >>> $ ./scripts/migration/guestperf.py
+> >>>
+> >>> $ ./build/scripts/migration/guestperf.py
+> >>>
+> >>> $ cd scripts/migration
+> >>> $ ./guestperf.py
+> >>>
+> >>> $ cd build/scripts/migration
+> >>> $ ./guestperf.py
+> >>>
+> >>> Failed to open file =E2=80=9Ctests/migration/initrd-stress.img=E2=80=
+=9D: open() failed:
+> >>> No such file or directory
+> >>>
+> >>> This is the only one that works:
+> >>> $ cd build
+> >>> $ ./scripts/migration/guestperf.py
+> >>>
+> >>> Maybe we could improve that somehow in the future.
+> >>>
+> >>>
+> >> This patchset could be queued now,
+> >> Or after refining the documents mentioned above later?
+> >
+> > I think it's ok. Let me just rebase this on top of the other series tha=
+t
+> > touches the tests/migration/ directory. I'll repost soon.
+>
+> Well, not so fast, the CI doesn't like the addition of stress.c:
+>
+> https://gitlab.com/farosas/qemu/-/jobs/8504697373
+> clang: error: argument unused during compilation: '-pie'
 
-Therefore, there is no requirement of ZONE_MOVABLE and MIGRATE_CMA.
 
-
-Best regards,
-Wei Chen
-
-On Wed, Nov 27, 2024 at 5:37=E2=80=AFPM David Hildenbrand <david@redhat.com=
-> wrote:
-
-> On 27.11.24 03:00, zhi zhang wrote:
-> >
-> >
-> > On Tue, Nov 26, 2024 at 11:52=E2=80=AFPM David Hildenbrand <david@redha=
-t.com
-> > <mailto:david@redhat.com>> wrote:
-> >
-> >     On 26.11.24 16:31, Wei Chen wrote:
-> >      >   > How can you be sure (IOW trigger) that the system will store
-> >      >   > "important data" like EPTs?
-> >      >
-> >      > We cannot, but we have designed the attack (see below) to improv=
-e
-> the
-> >      > possibility.
-> >      >
-> >      >   > So is one magic bit really that for your experiments, one
-> needs a
-> >      >   > viommu?
-> >      >
-> >      > Admittedly the way we accomplish a VM escape is a bit arcane.
-> >
-> >     That's what I imagined :)
-> >
-> >      >
-> >      > We require device passthrough because it pins the VM's memory
-> >     down and
-> >      > converts them to MIGRATE_UNMOVABLE.
-> >
-> >     Interesting, that's news to me. Can you share where GUP in the kern=
-el
-> >     would do that?
-> >
-> >
-> > In /drivers/vfio/vfio_iommu_type1.c, there is a function called
-> > vfio_iommu_type1_pin_pages where VM's memory is pinned down.
->
-> That doesn't explain the full story about MIGRATE_UNMOVABLE. I assume
-> one precondition is missing in your explanation.
->
-> VFIO will call pin_user_pages_remote(FOLL_LONGTERM). Two cases:
->
-> a) Memory is already allocated (which would mostly be MIGRATE_MOVABLE,
-> because it's ordinary user memory). We'll simply longterm pin the memory
-> without changing the migratetype.
->
-> b) Memory is not allocated yet. We'll call
-> faultin_page()->handle_mm_fault(). There is no FOLL_LONGTERM
-> special-casing, so you'll mostly get MIGRATE_MOVABLE.
->
->
-> Now, there is one corner case: we disallow longterm pinning on
-> ZONE_MOVABLE and MIGRATE_CMA. In case our user space allocation ended up
-> on there, check_and_migrate_movable_pages() would detect that the memory
-> resides on ZONE_MOVABLE or MIGRATE_CMA, and allocate a destination page
-> in migrate_longterm_unpinnable_folios() using "GFP_USER | __GFP_NOWARN".
->
-> So I assume one precondition is that your hypervisor has at least some
-> ZONE_MOVABLE or CMA memory? Otherwise I don't see how you would reliably
-> get MIGRATE_UNMOVABLE.
->
-> >
-> >
-> >      > Hotplugged memory will also be
-> >      > converted to MIGRATE_UNMOVABLE.
-> >
-> >     But that's in the VM? Because we don't hotplug memory in the
-> hypervisor.
-> >
-> >
-> > Yes, the virtio-mem driver in the VM is modified to actively release
-> > memory vulnerable to Rowhammer.
->
-> I think I now understand that statement: Memory to-be-hotplugged to the
-> VM will be migrated to MIGRATE_UNMOVABLE during longterm pinning, if it
-> resides on ZONE_MOVABLE or MIGRATE_CMA.
->
-> > For more details, would you be interested in reading our paper? It was
-> > recently submitted to ASPLOS for publication and we are happy to share
-> > it with you.
->
-> Yes, absolutely! Please send a private mail :)
->
-> --
-> Cheers,
->
-> David / dhildenb
->
+> https://gitlab.com/farosas/qemu/-/jobs/8504697378
+> undefined reference to `_DYNAMIC'
 >
 
---000000000000190b0d062820be1c
+OK, I'll fix that once I have time.
+
+Thanks,
+Yong
+
+--=20
+Best regards
+
+--0000000000004f8c03062821c2b9
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">&gt; That doesn&#39;t explain the full st=
-ory about MIGRATE_UNMOVABLE. I assume<br>&gt; one precondition is missing i=
-n your explanation.<br><br>I have double-checked the source code. My initia=
-l description of the<br>process seems somewhat imprecise. vIOMMU does not c=
-onvert pages to<br>UNMOVABLE during pinning, it is that pinning causes page=
- faults, and the<br>fault handler allocates UNMOVABLE pages. (vaddr_get_pfn=
-s() calls<br>__gup_longterm_locked(), who then calls memalloc_pin_save(), a=
-nd it<br>implicitly removes the __GFP_MOVABLE flag.)<br><br>Therefore, ther=
-e is no requirement of ZONE_MOVABLE and MIGRATE_CMA.</div><div dir=3D"ltr">=
-<br></div><div dir=3D"ltr"><br></div><div>Best regards,</div><div>Wei Chen<=
-br></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"l=
-tr" class=3D"gmail_attr">On Wed, Nov 27, 2024 at 5:37=E2=80=AFPM David Hild=
-enbrand &lt;<a href=3D"mailto:david@redhat.com">david@redhat.com</a>&gt; wr=
-ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
- 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 27.11.24=
- 03:00, zhi zhang wrote:<br>
-&gt; <br>
-&gt; <br>
-&gt; On Tue, Nov 26, 2024 at 11:52=E2=80=AFPM David Hildenbrand &lt;<a href=
-=3D"mailto:david@redhat.com" target=3D"_blank">david@redhat.com</a> <br>
-&gt; &lt;mailto:<a href=3D"mailto:david@redhat.com" target=3D"_blank">david=
-@redhat.com</a>&gt;&gt; wrote:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0On 26.11.24 16:31, Wei Chen wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0&gt; How can you be sure (IOW tri=
-gger) that the system will store<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0&gt; &quot;important data&quot; l=
-ike EPTs?<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; We cannot, but we have designed the attack (s=
-ee below) to improve the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; possibility.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0&gt; So is one magic bit really t=
-hat for your experiments, one needs a<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0&gt; viommu?<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Admittedly the way we accomplish a VM escape =
-is a bit arcane.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0That&#39;s what I imagined :)<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; We require device passthrough because it pins=
- the VM&#39;s memory<br>
-&gt;=C2=A0 =C2=A0 =C2=A0down and<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; converts them to MIGRATE_UNMOVABLE.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Interesting, that&#39;s news to me. Can you share w=
-here GUP in the kernel<br>
-&gt;=C2=A0 =C2=A0 =C2=A0would do that?<br>
-&gt; <br>
-&gt; <br>
-&gt; In /drivers/vfio/vfio_iommu_type1.c, there is a function called <br>
-&gt; vfio_iommu_type1_pin_pages where VM&#39;s memory is pinned down.<br>
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_at=
+tr">On Fri, Nov 29, 2024 at 9:44=E2=80=AFPM Fabiano Rosas &lt;<a href=3D"ma=
+ilto:farosas@suse.de">farosas@suse.de</a>&gt; wrote:<br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1p=
+x;border-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1=
+ex">Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de" target=3D"_blank">=
+farosas@suse.de</a>&gt; writes:<br>
 <br>
-That doesn&#39;t explain the full story about MIGRATE_UNMOVABLE. I assume <=
-br>
-one precondition is missing in your explanation.<br>
-<br>
-VFIO will call pin_user_pages_remote(FOLL_LONGTERM). Two cases:<br>
-<br>
-a) Memory is already allocated (which would mostly be MIGRATE_MOVABLE, <br>
-because it&#39;s ordinary user memory). We&#39;ll simply longterm pin the m=
-emory <br>
-without changing the migratetype.<br>
-<br>
-b) Memory is not allocated yet. We&#39;ll call <br>
-faultin_page()-&gt;handle_mm_fault(). There is no FOLL_LONGTERM <br>
-special-casing, so you&#39;ll mostly get MIGRATE_MOVABLE.<br>
-<br>
-<br>
-Now, there is one corner case: we disallow longterm pinning on <br>
-ZONE_MOVABLE and MIGRATE_CMA. In case our user space allocation ended up <b=
+&gt; Yong Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=3D"_bla=
+nk">yong.huang@smartx.com</a>&gt; writes:<br>
+&gt;<br>
+&gt;&gt; On Wed, Oct 23, 2024 at 11:06=E2=80=AFPM Fabiano Rosas &lt;<a href=
+=3D"mailto:farosas@suse.de" target=3D"_blank">farosas@suse.de</a>&gt; wrote=
+:<br>
+&gt;&gt;<br>
+&gt;&gt;&gt; <a href=3D"mailto:yong.huang@smartx.com" target=3D"_blank">yon=
+g.huang@smartx.com</a> writes:<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; &gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx=
+.com" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt; v3:<br>
+&gt;&gt;&gt; &gt; 1. Remove the two redundant assignments in [PATCH v2 2/5]=
+ suggested by<br>
+&gt;&gt;&gt; Daniel<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt; Please review, thanks<br>
+&gt;&gt;&gt; &gt; Yong<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt; v2:<br>
+&gt;&gt;&gt; &gt; 1. Update the MAINTAINERS section suggested by Fabiano Ro=
+sas<br>
+&gt;&gt;&gt; &gt; 2. Ensure the dependencies when build the initrd-stress.i=
+mg suggested by<br>
+&gt;&gt;&gt; Daniel<br>
+&gt;&gt;&gt; &gt; 3. Fix some bugs<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt; v1:<br>
+&gt;&gt;&gt; &gt; The previous patchset:<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; <a href=3D"https://lore.kernel.org/qemu-devel/cover.1722957352=
+.git.yong.huang@smartx.com/" rel=3D"noreferrer" target=3D"_blank">https://l=
+ore.kernel.org/qemu-devel/cover.1722957352.git.yong.huang@smartx.com/</a><b=
 r>
-on there, check_and_migrate_movable_pages() would detect that the memory <b=
-r>
-resides on ZONE_MOVABLE or MIGRATE_CMA, and allocate a destination page <br=
->
-in migrate_longterm_unpinnable_folios() using &quot;GFP_USER | __GFP_NOWARN=
-&quot;.<br>
+&gt;&gt;&gt; &gt; does not made the necessary changes and tests for the ups=
+tream version.<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt; This patchset works for that:<br>
+&gt;&gt;&gt; &gt; 1. Move the guestperf to scripts directory suggested by F=
+abiano Rosas<br>
+&gt;&gt;&gt; &gt; 2. Make initrd-stress.img built by default suggested by F=
+abiano Rosas<br>
+&gt;&gt;&gt; &gt; 3. Make the necessary changes to adapt the latest multifd=
+ behavior<br>
+&gt;&gt;&gt; &gt; 4. A nitpick for multifd migration<br>
+&gt;&gt;&gt; &gt; 5. Support multifd compression option<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt; Hyman Huang (5):<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0tests/migration: Move the guestperf tool to s=
+cripts directory<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0tests/migration: Make initrd-stress.img built=
+ by default<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0guestperf: Support deferred migration for mul=
+tifd<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0guestperf: Nitpick the inconsistent parameter=
+s<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0guestperf: Introduce multifd compression opti=
+on<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0|=C2=A0 5 +++<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf-batch.py=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 0<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf-plot.py=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
+&gt;&gt;&gt; &gt;=C2=A0 {tests =3D&gt; scripts}/migration/guestperf.py=C2=
+=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/__init__.py=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/comparison.py=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0| 15 ++++++++-<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/engine.py=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 33 ++++++++++++++++---<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/hardware.py=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/plot.py=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/progress.py=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/report.py=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/scenario.py=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 7 ++--<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/shell.py=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 ++<br>
+&gt;&gt;&gt; &gt;=C2=A0 .../migration/guestperf/timings.py=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 0<br>
+&gt;&gt;&gt; &gt;=C2=A0 tests/migration/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 30 +++++++++--------<br>
+&gt;&gt;&gt; &gt;=C2=A0 15 files changed, 73 insertions(+), 20 deletions(-)=
 <br>
-So I assume one precondition is that your hypervisor has at least some <br>
-ZONE_MOVABLE or CMA memory? Otherwise I don&#39;t see how you would reliabl=
-y <br>
-get MIGRATE_UNMOVABLE.<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf-=
+batch.py (100%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf-=
+plot.py (100%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf.=
+py (100%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+__init__.py (100%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+comparison.py (89%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+engine.py (93%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+hardware.py (100%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+plot.py (100%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+progress.py (100%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+report.py (100%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+scenario.py (93%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+shell.py (98%)<br>
+&gt;&gt;&gt; &gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/=
+timings.py (100%)<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; Reviewed-by: Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.=
+de" target=3D"_blank">farosas@suse.de</a>&gt;<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; Thinking out loud a little bit, it&#39;s still somewhat obscur=
+e from which<br>
+&gt;&gt;&gt; directory this script should be called. None of these invocati=
+ons work:<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; $ ./scripts/migration/guestperf.py<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; $ ./build/scripts/migration/guestperf.py<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; $ cd scripts/migration<br>
+&gt;&gt;&gt; $ ./guestperf.py<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; $ cd build/scripts/migration<br>
+&gt;&gt;&gt; $ ./guestperf.py<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; Failed to open file =E2=80=9Ctests/migration/initrd-stress.img=
+=E2=80=9D: open() failed:<br>
+&gt;&gt;&gt; No such file or directory<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; This is the only one that works:<br>
+&gt;&gt;&gt; $ cd build<br>
+&gt;&gt;&gt; $ ./scripts/migration/guestperf.py<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; Maybe we could improve that somehow in the future.<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;<br>
+&gt;&gt; This patchset could be queued now,<br>
+&gt;&gt; Or after refining the documents mentioned above later?<br>
+&gt;<br>
+&gt; I think it&#39;s ok. Let me just rebase this on top of the other serie=
+s that<br>
+&gt; touches the tests/migration/ directory. I&#39;ll repost soon.<br>
 <br>
-&gt; <br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Hotplugged memory will also be<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; converted to MIGRATE_UNMOVABLE.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0But that&#39;s in the VM? Because we don&#39;t hotp=
-lug memory in the hypervisor.<br>
-&gt; <br>
-&gt; <br>
-&gt; Yes, the virtio-mem driver in the VM is modified to actively release <=
-br>
-&gt; memory vulnerable to Rowhammer.<br>
+Well, not so fast, the CI doesn&#39;t like the addition of stress.c:<br>
 <br>
-I think I now understand that statement: Memory to-be-hotplugged to the <br=
->
-VM will be migrated to MIGRATE_UNMOVABLE during longterm pinning, if it <br=
->
-resides on ZONE_MOVABLE or MIGRATE_CMA.<br>
+<a href=3D"https://gitlab.com/farosas/qemu/-/jobs/8504697373" rel=3D"norefe=
+rrer" target=3D"_blank">https://gitlab.com/farosas/qemu/-/jobs/8504697373</=
+a><br>
+clang: error: argument unused during compilation: &#39;-pie&#39;=C2=A0</blo=
+ckquote><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left-width:1px;border-left-style:solid;border-left-color:rgb(204,20=
+4,204);padding-left:1ex">
 <br>
-&gt; For more details, would you be interested in reading our paper? It was=
- <br>
-&gt; recently submitted to ASPLOS for publication and we are happy to share=
- <br>
-&gt; it with you.<br>
-<br>
-Yes, absolutely! Please send a private mail :)<br>
-<br>
--- <br>
-Cheers,<br>
-<br>
-David / dhildenb<br>
-<br>
-</blockquote></div></div>
+<a href=3D"https://gitlab.com/farosas/qemu/-/jobs/8504697378" rel=3D"norefe=
+rrer" target=3D"_blank">https://gitlab.com/farosas/qemu/-/jobs/8504697378</=
+a><br>
+undefined reference to `_DYNAMIC&#39;<br>
+</blockquote></div><div><br clear=3D"all"></div><div><div style=3D"font-fam=
+ily:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">OK, I&#39=
+;ll fix that once I have time.</div><br></div><div><div style=3D"font-famil=
+y:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">Thanks,=C2=
+=A0</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" cl=
+ass=3D"gmail_default">Yong</div></div><div><br></div><span class=3D"gmail_s=
+ignature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><=
+div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font=
+></div></div></div>
 
---000000000000190b0d062820be1c--
+--0000000000004f8c03062821c2b9--
 
