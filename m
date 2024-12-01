@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C7CAD49773
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 15:07:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8DBD49775
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 15:07:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHlX9-0001bq-ER; Sun, 01 Dec 2024 10:06:51 -0500
+	id 1tHlX9-0001bW-4S; Sun, 01 Dec 2024 10:06:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlX6-0001Zp-OP
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:48 -0500
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ id 1tHlX3-0001We-IA
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:45 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlX4-0004Le-Je
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:48 -0500
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-29e61fcc3d2so174790fac.2
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:06:46 -0800 (PST)
+ id 1tHlX1-0004KF-Ny
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:45 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3ea369fdb0cso1893963b6e.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:06:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733065605; x=1733670405; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733065602; x=1733670402; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VmXfcGZY+uOUXXSUJkFqHvnMcpF+Gs5GFplkRxYn1Z4=;
- b=mOj4xZQLBMTnsZdMnBgwQY+QfATpbQ60VjyrHChuLkslZlJ9y6cBJsWf+pR9mzFKkW
- EvL3Q/PwNL3ZBJ3kcFDGEFiZ1aoQIFkoBU93hZgyYczEOVY0uZZARAX/c6fosuPkMAKt
- pTSbYI0D+ZeF+VhZlHwuryovZHZa2SRK9d1zvF62ExFAoYdrRzO2uepcL1Sacvfxt0Qo
- 5a0jK2GxK4+ypkeM3rzaa9eo1V6EUUnNib4ntlZWirRz5m7Rhz8LIYssUMemBkgx2Xfg
- 4tiRg3GaDeRaTycXKIL4G+RLN6TxQd5bo60VUxlRUSV8idTF/wW82KLYPV/NHjurT7Sb
- uCnw==
+ bh=T5/xoahRU3amiYGGR5zPHyc0xxRVZolbI3oRaPb2Uwc=;
+ b=m0N0L/aODJdhXD4nxi66F3frlncwiLEgGX2hE5UwhXfTtdx1CjT9Zpiw+1j/JTy/tk
+ 0s7crFgF7QS6LbmqpSFtflUkSKE7XBqkFHTw4gys6ZzG2L63IniyKlwNn5V/tZb7kECY
+ HbAyOYa4KWlswHuAQLl60wrUlE2atICoAjcF/HWfH44F5z/fbEyuc/CSmjGfXagF0l1e
+ GjQkQJLDSSGSPFd5wQ8Wf7mEj8Azag4gOFpELCo2bl3HxjeQ7x5F+xnngOOccXCEYn3H
+ jUsAiumNFIzORs3QddpcWORztwF//gKVuupF48j3jrKkP+BlzrrJmZQYVr2Ol8IZprBC
+ Jn4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733065605; x=1733670405;
+ d=1e100.net; s=20230601; t=1733065602; x=1733670402;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VmXfcGZY+uOUXXSUJkFqHvnMcpF+Gs5GFplkRxYn1Z4=;
- b=pwgfWFwTuTNPTXU0UD9aZuQN5ZVQ8gj2O4p5wS6JS2CR+h21e4Q7RW/wkR2lG/UO2Q
- PIJW32m135+dCl7K4vnV6OhmDbBhYPpV074rRX6rSnGv01oxhXgkvqVuKc6FSyWKzVfq
- yVEMDZrRq58HvZI0sLGhpX4B+X75gEgHtblOWP6/Jt4Wysku9AgIGuc3KgcpSaW9kHNO
- iF2S+Br8/TQJ8FyiAC4roTDWqq6Bm2O8NWOXSAaBQcseG/hgrWZYNZ6wdHVnONJdw+wP
- HEKI2oDrFbRC42wk2fSP9UFGrQE7s+vb9fDPq5rl5aDCMb9xOewEbPR6BBBZ1tLPkcmd
- ruDg==
-X-Gm-Message-State: AOJu0YzKm3N09zP8FMKZtv5rwMLNJ76+PaKadHenUyC7U+bd+eKY4Swn
- Myf9GVHVj3mBwlXy/ovHUs756BrdZLb3tN/dcWwtaiwzJ0Z6D4H20wZEAmNjbr5JDgPOP8GB3o+
- zPqc=
-X-Gm-Gg: ASbGncvyerS0ZJKvY8lYW0/zOddmk7gdVWbDtFvv3ZW3bsAX+U7384YRmg9tLu3hdxR
- rfBVeafJpkaL3Iqy7Peh5YVeB5XDWTrAaSyYXx1SdERze9v0klk2w5U++8ptdXMvjRhAgLn3g5B
- XtDPQw22+3zW/3CFjDwm1vwsPcC0Ik2uJIg4MMpTvZ7TH/4TMJ5c/79wVOOO4rlRE7jnbNFMx6U
- 2j1kYCqBZNH18+5YPDzTwhtCQLu3G0UiokUhHl2MqoOkOqCzCDc3WL5zQjBWBQGCTraeQ4QRF4U
- 7qQbGEQmE3q+4P+yg5EQ5sSc113icJztJuoq
-X-Google-Smtp-Source: AGHT+IE6I1P7oIHOMxAR5CA+FzCHbpq2M935z2BNgm1gGEoM65Qh+esw/C42bDCC2xkGFun7Tl8Fnw==
-X-Received: by 2002:a05:6871:7b08:b0:29e:5897:e9ed with SMTP id
- 586e51a60fabf-29e5897ed21mr1399903fac.35.1733065605487; 
- Sun, 01 Dec 2024 07:06:45 -0800 (PST)
+ bh=T5/xoahRU3amiYGGR5zPHyc0xxRVZolbI3oRaPb2Uwc=;
+ b=oqolC2xNfO/2IFB+N9ivpcHfsEZjvploLk86C3MxdKzKcPpOFeaoqTArh4udrevLFD
+ NRT2kJnmSwIgyuMUstnI23FJGZ7N6isnjLe+bbqNWmzEhjuMbkrbxjMmyGZ6ld4VkwTg
+ z7By9F5s38z94Fu0QRWTqdyky9rxSti7JXRuV89pRewClV2sHxy+u68K3j7mZmody2Zq
+ FNCb5//jLnd+cn34J56qq5DAxwUztnRhWgr32bNsHomhayDIU9R0JVBWg2S/+3kWaIHc
+ rsBBPeO4CoGASpBHNLDIK4+SXAU1JE/GMlFJwwZV3sHF+dECDVeDLU5MIqjy8YD+Schy
+ WUxA==
+X-Gm-Message-State: AOJu0Yxb0aE3iqjMsqlSuP6Kkxq7AWHu/BDM4rDJhBDbfzw3UTzdGhxO
+ 9qFUH7xB5q+XAc+Z3h9foOp5MWxCB+ofbiv3njDlYquSz7QoLl5BPojM/pN0smVy4Rzz71X8YF3
+ Iq9E=
+X-Gm-Gg: ASbGncsG7RjhsRX0o7njsFHHWVmIZ5GMy/N9AzG/KrYxojfydo2T5S16qW5oEn9UoSJ
+ 6bgsQuvuf/OA4j8NV6USRgYy9VBxBd4vUr6RVrC/Rz46xs/9vIcuGpQE73Oxp2Gh/5vZ8O8zS4u
+ jU9dSU2I/D0Oc8N7covQx5dlX/AXpavtH+fX9ziIP8QGOPyQoADblsPOcokSCvYeqA9ZfdFxIM2
+ K69aTiuIjDLDauCfy3ueDSwycIaMAHDHCsSiJMK6KzUjqiuLbB24PWazvMPbjhJeisaHRsgMreP
+ /i+EmsVcRDnM0qjQj4bkBO1cG82L8nBQzzZD
+X-Google-Smtp-Source: AGHT+IH1N2kzK804ozyA6gmoRHe0zPMpBB0lfYkL7xiSwwW3cV03dd5vO6OqbpGUTNXn69GgoJ+izQ==
+X-Received: by 2002:a05:6830:65c1:b0:717:d558:ca70 with SMTP id
+ 46e09a7af769-71d65c8a574mr16000450a34.7.1733065602183; 
+ Sun, 01 Dec 2024 07:06:42 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71d7254473asm1822220a34.27.2024.12.01.07.06.44
+ 46e09a7af769-71d7254473asm1822220a34.27.2024.12.01.07.06.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Dec 2024 07:06:45 -0800 (PST)
+ Sun, 01 Dec 2024 07:06:41 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 32/67] target/arm: Convert FJCVTZS to decodetree
-Date: Sun,  1 Dec 2024 09:05:31 -0600
-Message-ID: <20241201150607.12812-33-richard.henderson@linaro.org>
+Subject: [PATCH 29/67] target/arm: Convert FRINT{32,
+ 64}[ZX] (scalar) to decodetree
+Date: Sun,  1 Dec 2024 09:05:28 -0600
+Message-ID: <20241201150607.12812-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241201150607.12812-1-richard.henderson@linaro.org>
 References: <20241201150607.12812-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,91 +100,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Remove handle_fp_1src_single and handle_fp_1src_double as
+these were the last insns decoded by those functions.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 41 +++++++++++++++++-----------------
- target/arm/tcg/a64.decode      |  2 ++
- 2 files changed, 22 insertions(+), 21 deletions(-)
+ target/arm/tcg/translate-a64.c | 150 ++++-----------------------------
+ target/arm/tcg/a64.decode      |   5 ++
+ 2 files changed, 21 insertions(+), 134 deletions(-)
 
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 68bef0963b..90e1567ad1 100644
+index b713c7d184..679bdd826c 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -8718,6 +8718,26 @@ TRANS(FCVTZU_g, do_fcvt_g, a, FPROUNDING_ZERO, false)
- TRANS(FCVTAS_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, true)
- TRANS(FCVTAU_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, false)
+@@ -8429,112 +8429,23 @@ static const FPScalar1 f_scalar_bfcvt = {
+ };
+ TRANS_FEAT(BFCVT_s, aa64_bf16, do_fp1_scalar, a, &f_scalar_bfcvt, -1)
  
-+static bool trans_FJCVTZS(DisasContext *s, arg_FJCVTZS *a)
-+{
-+    if (!dc_isar_feature(aa64_jscvt, s)) {
-+        return false;
-+    }
-+    if (fp_access_check(s)) {
-+        TCGv_i64 t = read_fp_dreg(s, a->rn);
-+        TCGv_ptr fpstatus = fpstatus_ptr(FPST_FPCR);
-+
-+        gen_helper_fjcvtzs(t, t, fpstatus);
-+
-+        tcg_gen_ext32u_i64(cpu_reg(s, a->rd), t);
-+        tcg_gen_extrh_i64_i32(cpu_ZF, t);
-+        tcg_gen_movi_i32(cpu_CF, 0);
-+        tcg_gen_movi_i32(cpu_NF, 0);
-+        tcg_gen_movi_i32(cpu_VF, 0);
-+    }
-+    return true;
-+}
-+
- static void handle_fmov(DisasContext *s, int rd, int rn, int type, bool itof)
- {
-     /* FMOV: gpr to or from float, double, or top half of quad fp reg,
-@@ -8779,20 +8799,6 @@ static void handle_fmov(DisasContext *s, int rd, int rn, int type, bool itof)
-     }
- }
- 
--static void handle_fjcvtzs(DisasContext *s, int rd, int rn)
+-/* Floating-point data-processing (1 source) - single precision */
+-static void handle_fp_1src_single(DisasContext *s, int opcode, int rd, int rn)
 -{
--    TCGv_i64 t = read_fp_dreg(s, rn);
--    TCGv_ptr fpstatus = fpstatus_ptr(FPST_FPCR);
+-    void (*gen_fpst)(TCGv_i32, TCGv_i32, TCGv_ptr);
+-    TCGv_i32 tcg_op, tcg_res;
+-    TCGv_ptr fpst;
+-    int rmode = -1;
++static const FPScalar1 f_scalar_frint32 = {
++    NULL,
++    gen_helper_frint32_s,
++    gen_helper_frint32_d,
++};
++TRANS_FEAT(FRINT32Z_s, aa64_frint, do_fp1_scalar, a,
++           &f_scalar_frint32, FPROUNDING_ZERO)
++TRANS_FEAT(FRINT32X_s, aa64_frint, do_fp1_scalar, a, &f_scalar_frint32, -1)
+ 
+-    tcg_op = read_fp_sreg(s, rn);
+-    tcg_res = tcg_temp_new_i32();
 -
--    gen_helper_fjcvtzs(t, t, fpstatus);
+-    switch (opcode) {
+-    case 0x10: /* FRINT32Z */
+-        rmode = FPROUNDING_ZERO;
+-        gen_fpst = gen_helper_frint32_s;
+-        break;
+-    case 0x11: /* FRINT32X */
+-        gen_fpst = gen_helper_frint32_s;
+-        break;
+-    case 0x12: /* FRINT64Z */
+-        rmode = FPROUNDING_ZERO;
+-        gen_fpst = gen_helper_frint64_s;
+-        break;
+-    case 0x13: /* FRINT64X */
+-        gen_fpst = gen_helper_frint64_s;
+-        break;
+-    default:
+-    case 0x0: /* FMOV */
+-    case 0x1: /* FABS */
+-    case 0x2: /* FNEG */
+-    case 0x3: /* FSQRT */
+-    case 0x6: /* BFCVT */
+-    case 0x8: /* FRINTN */
+-    case 0x9: /* FRINTP */
+-    case 0xa: /* FRINTM */
+-    case 0xb: /* FRINTZ */
+-    case 0xc: /* FRINTA */
+-    case 0xf: /* FRINTI */
+-    case 0xe: /* FRINTX */
+-        g_assert_not_reached();
+-    }
 -
--    tcg_gen_ext32u_i64(cpu_reg(s, rd), t);
--    tcg_gen_extrh_i64_i32(cpu_ZF, t);
--    tcg_gen_movi_i32(cpu_CF, 0);
--    tcg_gen_movi_i32(cpu_NF, 0);
--    tcg_gen_movi_i32(cpu_VF, 0);
+-    fpst = fpstatus_ptr(FPST_FPCR);
+-    if (rmode >= 0) {
+-        TCGv_i32 tcg_rmode = gen_set_rmode(rmode, fpst);
+-        gen_fpst(tcg_res, tcg_op, fpst);
+-        gen_restore_rmode(tcg_rmode, fpst);
+-    } else {
+-        gen_fpst(tcg_res, tcg_op, fpst);
+-    }
+-
+-    write_fp_sreg(s, rd, tcg_res);
 -}
 -
- /* Floating point <-> integer conversions
-  *   31   30  29 28       24 23  22  21 20   19 18 16 15         10 9  5 4  0
-  * +----+---+---+-----------+------+---+-------+-----+-------------+----+----+
-@@ -8847,13 +8853,6 @@ static void disas_fp_int_conv(DisasContext *s, uint32_t insn)
-             break;
- 
-         case 0b00111110: /* FJCVTZS */
--            if (!dc_isar_feature(aa64_jscvt, s)) {
--                goto do_unallocated;
--            } else if (fp_access_check(s)) {
--                handle_fjcvtzs(s, rd, rn);
--            }
--            break;
+-/* Floating-point data-processing (1 source) - double precision */
+-static void handle_fp_1src_double(DisasContext *s, int opcode, int rd, int rn)
+-{
+-    void (*gen_fpst)(TCGv_i64, TCGv_i64, TCGv_ptr);
+-    TCGv_i64 tcg_op, tcg_res;
+-    TCGv_ptr fpst;
+-    int rmode = -1;
 -
-         default:
-         do_unallocated:
-             unallocated_encoding(s);
+-    tcg_op = read_fp_dreg(s, rn);
+-    tcg_res = tcg_temp_new_i64();
+-
+-    switch (opcode) {
+-    case 0x10: /* FRINT32Z */
+-        rmode = FPROUNDING_ZERO;
+-        gen_fpst = gen_helper_frint32_d;
+-        break;
+-    case 0x11: /* FRINT32X */
+-        gen_fpst = gen_helper_frint32_d;
+-        break;
+-    case 0x12: /* FRINT64Z */
+-        rmode = FPROUNDING_ZERO;
+-        gen_fpst = gen_helper_frint64_d;
+-        break;
+-    case 0x13: /* FRINT64X */
+-        gen_fpst = gen_helper_frint64_d;
+-        break;
+-    default:
+-    case 0x0: /* FMOV */
+-    case 0x1: /* FABS */
+-    case 0x2: /* FNEG */
+-    case 0x3: /* FSQRT */
+-    case 0x8: /* FRINTN */
+-    case 0x9: /* FRINTP */
+-    case 0xa: /* FRINTM */
+-    case 0xb: /* FRINTZ */
+-    case 0xc: /* FRINTA */
+-    case 0xf: /* FRINTI */
+-    case 0xe: /* FRINTX */
+-        g_assert_not_reached();
+-    }
+-
+-    fpst = fpstatus_ptr(FPST_FPCR);
+-    if (rmode >= 0) {
+-        TCGv_i32 tcg_rmode = gen_set_rmode(rmode, fpst);
+-        gen_fpst(tcg_res, tcg_op, fpst);
+-        gen_restore_rmode(tcg_rmode, fpst);
+-    } else {
+-        gen_fpst(tcg_res, tcg_op, fpst);
+-    }
+-
+-    write_fp_dreg(s, rd, tcg_res);
+-}
++static const FPScalar1 f_scalar_frint64 = {
++    NULL,
++    gen_helper_frint64_s,
++    gen_helper_frint64_d,
++};
++TRANS_FEAT(FRINT64Z_s, aa64_frint, do_fp1_scalar, a,
++           &f_scalar_frint64, FPROUNDING_ZERO)
++TRANS_FEAT(FRINT64X_s, aa64_frint, do_fp1_scalar, a, &f_scalar_frint64, -1)
+ 
+ static void handle_fp_fcvt(DisasContext *s, int opcode,
+                            int rd, int rn, int dtype, int ntype)
+@@ -8635,35 +8546,6 @@ static void disas_fp_1src(DisasContext *s, uint32_t insn)
+         break;
+     }
+ 
+-    case 0x10 ... 0x13: /* FRINT{32,64}{X,Z} */
+-        if (type > 1 || !dc_isar_feature(aa64_frint, s)) {
+-            goto do_unallocated;
+-        }
+-        /* fall through */
+-    case 0x0 ... 0x3:
+-    case 0x8 ... 0xc:
+-    case 0xe ... 0xf:
+-        /* 32-to-32 and 64-to-64 ops */
+-        switch (type) {
+-        case 0:
+-            if (!fp_access_check(s)) {
+-                return;
+-            }
+-            handle_fp_1src_single(s, opcode, rd, rn);
+-            break;
+-        case 1:
+-            if (!fp_access_check(s)) {
+-                return;
+-            }
+-            handle_fp_1src_double(s, opcode, rd, rn);
+-            break;
+-        case 3:
+-        default:
+-            goto do_unallocated;
+-        }
+-        break;
+-
+-    case 0x6:
+     default:
+     do_unallocated:
+         unallocated_encoding(s);
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 427924ad95..7b83d06d0d 100644
+index 476989c1b4..e828834c16 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -1363,6 +1363,8 @@ FCVTZU_g        . 0011110 .. 111001 000000 ..... .....  @icvt
- FCVTAS_g        . 0011110 .. 100100 000000 ..... .....  @icvt
- FCVTAU_g        . 0011110 .. 100101 000000 ..... .....  @icvt
+@@ -1340,6 +1340,11 @@ FRINTI_s        00011110 .. 1 001111 10000 ..... .....      @rr_hsd
  
-+FJCVTZS         0 0011110 01 111110 000000 ..... .....  @rr
+ BFCVT_s         00011110 10 1 000110 10000 ..... .....      @rr_s
+ 
++FRINT32Z_s      00011110 0. 1 010000 10000 ..... .....      @rr_sd
++FRINT32X_s      00011110 0. 1 010001 10000 ..... .....      @rr_sd
++FRINT64Z_s      00011110 0. 1 010010 10000 ..... .....      @rr_sd
++FRINT64X_s      00011110 0. 1 010011 10000 ..... .....      @rr_sd
 +
- # Floating-point data processing (1 source)
+ # Floating-point Immediate
  
- FMOV_s          00011110 .. 1 000000 10000 ..... .....      @rr_hsd
+ FMOVI_s         0001 1110 .. 1 imm:8 100 00000 rd:5         esz=%esz_hsd
 -- 
 2.43.0
 
