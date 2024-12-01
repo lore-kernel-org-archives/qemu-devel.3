@@ -4,86 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4268DD4976C
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 12:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE19D4976E
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 13:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHitm-0001N2-OL; Sun, 01 Dec 2024 07:18:02 -0500
+	id 1tHk6H-0004Nh-Lg; Sun, 01 Dec 2024 08:35:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tHitg-0001MY-PD
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 07:17:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tHitc-0006ri-Pv
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 07:17:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733055468;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GfM+hv+UmRrO0wcCc3aaf+FTe3Isw++/K+lNX65f+zU=;
- b=eWVeFptXcWhSZpzWZ1qCOkQbgysAoMKS06BVrW6/9c3YOlcRTHzFVx7fAH3t2ZNoAK5dxK
- +WE403Pj6NzvKv+5ctjyc5rhNH4eL+gdvZVHs4VFxNeKZ5KEoQXUwMckyx/txdVogZuSik
- HyseO33xvzrVJFDIW9XRSPQ5jZgpypI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-663-dgWMCFjzMEGn3AUIRW3V1A-1; Sun, 01 Dec 2024 07:17:45 -0500
-X-MC-Unique: dgWMCFjzMEGn3AUIRW3V1A-1
-X-Mimecast-MFC-AGG-ID: dgWMCFjzMEGn3AUIRW3V1A
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385dc37cb3eso1190710f8f.0
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 04:17:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tHk6F-0004N9-5r
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 08:34:59 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tHk6D-0007Zd-I0
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 08:34:58 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-aa531a70416so224917866b.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 05:34:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733060096; x=1733664896; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=NGCMlNJwJWoPBUMYqj5ryk/jTzepTBn3oHHeeRGVIxM=;
+ b=YfR5H/3B54eGCnkz4H1r04AU38zuIRLec/A+SgMCAlrnUzvsN1E6T8U1RlU3RKdI9P
+ VuQ+ECD+8rKTHokG/YLeEEOJrV7qqbDE12hujq1JZN7itYzfRkbzt9g6tihSBgzZ7Muv
+ cJMGF+kGin7H6gQWHcgQpSleOYFJ/VPynBKamm2NaEwvqAhb4GzG68Vv2ZVpUIK8xdJN
+ cyhN4bRiXURsDEQwTQZfcERAXV3OhKKHQyMIvrlIdspuZO9wvzHxTHHwIuLIEFD7+tPH
+ ZvtbUUeDw+kjSHv/FbD8ffjuOLmP1KI3tyQPBQxHCPsNK8dl00iL+IQYqAojHrcVRjsn
+ 7RGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733055463; x=1733660263;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GfM+hv+UmRrO0wcCc3aaf+FTe3Isw++/K+lNX65f+zU=;
- b=HnBK1rcYrib+vp+LXmQybG+BgHHnEyBXmNQx9HM+jGiIhlRp8Fawe7xyR3u1uqJhLP
- WVTs7deO86IAda27vnZa7pp/Csei6MTzEikxzS3DljEk9KCEHChWWYtzrihWlgjmjP5m
- wUCO4Sgohj2mpCpCZTQfQ1ltjz4yUWQXxdgynCiFXjfiYLy2GQNol0RLzyIvPnV/KVrX
- hhdNXaQttClWjh6Kgwebq2ZCVgSADPFs4u2NNb0iIIJ+zwFqidvicDJuApWh0KZp7Ymw
- s34RJQZBzrNmDwfHMYPSDc58CJ6FmqQZUzfr/mbeecaU2zPahbmHZ8K2yrJw2mnSBtEK
- 0Jyg==
-X-Gm-Message-State: AOJu0YxHqsWOnEz0hk+uK6bSYHIFsL6/TNaMZDiTcrqBcwJB/CR4FkeY
- 61ZKS3S0OohH9XM8KzuvXcu/zOVAP6Pg+TyinZ5kcU+saAkUk5TwaNwxuOT2OMa5+uUIiLmBMlt
- tWNSvZUHmKnu3pjeol+Aul4jRK+S9vpAYt74ZxtOdVPeroHHSymnSBYsuOLncWXSyxrsjJCq/mZ
- 17I2j0ftjLnd8A6xA2UTzi+VaPnl7ct6InbzmU6g==
-X-Gm-Gg: ASbGncsNLK+jO1A/hhJSJCVtskRleAF9H0FzhoAkU8COtLFkNQ5H5N0sc05tpLEWcKY
- WqySLLq39ZhHsN8rXU9BgUEih5RGsQiJQ
-X-Received: by 2002:a5d:6481:0:b0:385:df4e:366f with SMTP id
- ffacd0b85a97d-385df4e3bdfmr8266601f8f.38.1733055463030; 
- Sun, 01 Dec 2024 04:17:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFkQw47DE0EnM3j7nTNOLGY/qU4MDXyFc++EM7IhIZlADxr9N7xvQdRT32GJOn2TRKJFmERNpFOFR1DmYqejNM=
-X-Received: by 2002:a5d:6481:0:b0:385:df4e:366f with SMTP id
- ffacd0b85a97d-385df4e3bdfmr8266582f8f.38.1733055462674; Sun, 01 Dec 2024
- 04:17:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733060096; x=1733664896;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NGCMlNJwJWoPBUMYqj5ryk/jTzepTBn3oHHeeRGVIxM=;
+ b=CMaOsqjjKHZ9xjxfqb7nUl+ht/IhPx5BWdbhvxZLAHM4Vy+eEFPLd1nwK7OIigghLf
+ zabRZREJ/AgB9tVL+AAeb88qOAd1fmPKQp3ZLP5Hfw7WxskVPkOWyr7l10MSVTACOUsn
+ P/LL2zaIF06HjZXb3Y9Z4VNrpfZiS2pF113QTqEhzwzphwiFaVFvmEKOAW7S71ocYhKx
+ foUfEq6wxSBb1gLCKwJ1XzWQnDsL96ozIy0DCD45tRKJvb0EkCOhO3U8XK/BlHcw2EcF
+ XemYKbDO/EGF/h/gmh0Xf4qxAzSXYW1MUkWkJnbNM+Pp+J234/dy6VYC9M7IGML7I9QY
+ TL2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU4GPDKLVGrkLUV11yxpej7IntHi5vvWnWd7+PPREYwxHZZkna6ZF2LHTAmv0ycHPYOoEjaxyPi0WkA@nongnu.org
+X-Gm-Message-State: AOJu0YxM6yyCMzbtSprL/iekX/BwO5un+zG+Gam6jkL+/QooAb6Xl3b7
+ B1mhkxbdnQrHiJEWLDx4xais5h7N1Z7WW/fJSMniBh0x5rz+Mgc5p1dlKCI8+t0=
+X-Gm-Gg: ASbGncv7wRBApQAinHNOB1D2H7Y3XzZaXk/qMDv/pQRn4ax1T8nx56+Up5pDnGkhVg3
+ U4QHQ1msTUgRMFgVpYW+K9ZQffziTHWWdkRYfS1wfTFJ5dou/rsvBtiePKcQlS18mfDy43BcDkF
+ SQ1csEA5MBLtzI6bJTFaHKbGaCqt+PtTuUkd/Tf65W9aHRXbhFcisHptFrR4MhX62LOioTLzW4y
+ jnyoifNg5PCiRb9WtpGDE2DV6K1Dk5yfOsx3pPX50Z1hKVS5FIdWcjhd3M7ePpSyFd4utZJ7LyR
+ DSG5cjM+S9BtAR2Tf/S9iBflqzLl
+X-Google-Smtp-Source: AGHT+IFHZqpJqSlEtwdeIDHp6W4GiXOVY24VRNGVAeNSPU88fdKNrEXs5cfmhllQnQH3wfEOvZZm3Q==
+X-Received: by 2002:a05:6402:401a:b0:5d0:ccce:34b2 with SMTP id
+ 4fb4d7f45d1cf-5d0ccce8ba0mr9020357a12.29.1733060095554; 
+ Sun, 01 Dec 2024 05:34:55 -0800 (PST)
+Received: from [192.168.210.26] (83.11.10.28.ipv4.supernova.orange.pl.
+ [83.11.10.28]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa59990a9dfsm394070566b.157.2024.12.01.05.34.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 01 Dec 2024 05:34:55 -0800 (PST)
+Message-ID: <4b3180bd-8054-4431-a594-0445ce4837aa@linaro.org>
+Date: Sun, 1 Dec 2024 14:34:51 +0100
 MIME-Version: 1.0
-References: <ab7626bb-7c77-49c9-8dc8-86d79b095e3a@pbonzini.local>
-In-Reply-To: <ab7626bb-7c77-49c9-8dc8-86d79b095e3a@pbonzini.local>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sun, 1 Dec 2024 13:16:00 +0100
-Message-ID: <CABgObfbdhNE6OY1JTLkYOj+7e+P+vY2s8XoSTFUPQAR9KdqJSA@mail.gmail.com>
-Subject: Re: Rust in QEMU roadmap
-To: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/functional/aarch64: add tests for FEAT_RME
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Troy Lee <leetroy@gmail.com>, Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, alex.bennee@linaro.org,
+ Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB
+Organization: Linaro
+In-Reply-To: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,67 +113,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 26, 2024 at 6:48=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
-> Callbacks
-> '''''''''
->
-> This is the least mature of the "urgent" changes, and perhaps the more
-> important to have a good design for.  PL011 has callbacks for character
-> devices and memory regions, but other usecases include timers, bottom
-> halves and interrupt sinks (aka GPIO inputs).
+W dniu 28.11.2024 o 22:37, Pierrick Bouvier pisze:
+> This boot an OP-TEE environment, and launch a nested guest VM inside it
+> using the Realms feature. We do it for virt and sbsa-ref platforms.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Ok, I have an idea that should make it possible to write something like thi=
-s:
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index 5c048cfac6d..b975a1560df 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -13,6 +13,8 @@ endif
+>   test_timeouts = {
+>     'aarch64_aspeed' : 600,
+>     'aarch64_raspi4' : 480,
 
-pub struct Timer {
-    t: *mut QEMUTimer,
-}
+> +  'aarch64_rme_virt' : 720,
 
-impl Timer {
-    // FnCall is QEMU-specific and contains all the magic.
-    unsafe extern "C" fn rust_timer_cb<
-        'a, T, F: FnCall<(&'a T,)>>(opaque: *mut c_void) {
-        // The argument to F::call is a tuple, otherwise this is fairly exp=
-ected
-        F::call((unsafe { &*(opaque.cast::<T>()) },))
-    }
+Took 2974.95s on M1 Pro macbook.
 
-    #[inline]
-    fn new_ns<'a, T, F: FnCall<(&'a T,)>>(
-        clk: QEMUClockType,
-        _cb: F,
-        opaque: &'a T,
-    ) -> Timer {
-        let cb: unsafe extern "C" fn(*mut c_void) =3D rust_timer_cb::<'a, T=
-, F>;
-        Timer {
-            t: unsafe { bindings::timer_new_ns(clk, cb, opaque) },
-        }
-    }
-}
+> +  'aarch64_rme_sbsaref' : 720,
 
-and then the caller can simply write
+This one needed 2288.29s.
 
-   self.timer =3D Timer::new_ns(QEMU_CLOCK_VIRTUAL, Self::timer_update, sel=
-f);
+>     'aarch64_sbsaref_alpine' : 720,
 
-The idea is that the compiler will generate a different version of
-rust_timer_cb for every value of the second argument (which is unused,
-except inasmuch as it helps the compiler know what "F::call" means).
-In the code above "unsafe" is only needed for the unavoidable casts
-and FFI calls, while the device has no unsafe at all. I haven't
-written the timer bindings but the basic idea is like the above. It
-can be expanded once Zhao posts his HPET conversion.
+Have to check cause timed out.
 
-It may also be possible to use macros to make things a little less
-verbose, but I'm tending to err on the side of explicitness for now.
+>     'aarch64_sbsaref_freebsd' : 720,
 
-I'm also not sure about the applicability of this trick to character
-devices and memory regions, since those have multiple callbacks and/or
-callbacks in structs rather than function parameters. However, for
-timers this is a good option I think.
+331.65s
 
-Paolo
+So RME tests probably need longer timeouts or would not run at all.
 
+
+> +++ b/tests/functional/test_aarch64_rme_sbsaref.py
+
+> +        self.vm.add_args('-accel', 'tcg')
+
+That's default value so can be skipped.
+
+> +        self.vm.add_args('-cpu', 'max,x-rme=on')
+
+> +        self.vm.add_args('-m', '2G')
+
+I sent patch to bump default memsize to 2G recently.
+
+> +        self.vm.add_args('-M', 'sbsa-ref')
+> +        self.vm.add_args('-drive', f'file={pflash0},format=raw,if=pflash')
+> +        self.vm.add_args('-drive', f'file={pflash1},format=raw,if=pflash')
+> +        self.vm.add_args('-drive', f'file=fat:rw:{virtual},format=raw')
+
+> +        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
+> +        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
+
+sbsa-ref is fully emulated target. There is AHCI controller built-in so 
+only "-drive" argument should be needed (no "-device" one).
+
+> +        self.vm.add_args('-device', 'virtio-9p-pci,fsdev=shr0,mount_tag=shr0')
+> +        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
+
+> +        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
+> +        self.vm.add_args('-netdev', 'user,id=net0')
+
+e1000e is built-in already
+
+
+As both virt and sbsa-ref tests do "more or less" the same stuff then it 
+would be good to make common file/class and reuse it both tests by 
+adding hardware differences.
 
