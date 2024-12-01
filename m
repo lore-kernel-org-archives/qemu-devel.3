@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F87D49771
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 15:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F65ED49779
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 16:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHlWt-0001Oj-UA; Sun, 01 Dec 2024 10:06:35 -0500
+	id 1tHmQG-00033q-H9; Sun, 01 Dec 2024 11:03:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlWo-0001KB-4J
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:30 -0500
-Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tHmQD-00033G-Rj
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 11:03:45 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlWm-0004Am-Ds
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:29 -0500
-Received: by mail-ot1-x336.google.com with SMTP id
- 46e09a7af769-71d4c462ab1so1139968a34.0
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:06:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tHmQ8-0005yQ-5k
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 11:03:42 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-434a83c6b01so29345895e9.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 08:03:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733065587; x=1733670387; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e1OIFt6Wa9ivuGHrhRCcysL/gALDZ16yEs6HdTP8v7U=;
- b=HG+FMbOgfKTAyK5sTeeqbKd6jIyKdhAcbpVUR1CaWh5GieImoLrLhALzvzBynj4Tm7
- ODQjtOEDpMT912HmiVS0tyRnO/3F5Bgvga80MToX2GsdH/Yo76MBmP2OBAjIjTV91QA0
- Pi+NULxMsLLvwVbZynIAyInRGaHjSNbPzDRhhrbVMYv3r56i50pm4pm6Ual92lMN6c2/
- HCiMxSB3ZqR+mnTpRnG1imkw6u7NTPfIr130SwxZ9IgxIw+RwLZaM48beKMUC9CWd+Kj
- p6lhhXHD+bl8yxfSUB1wapOCrWd4JCh8SeKotSxPjbeGG+REQ3Z2nZi/C+F4cGbWFjdQ
- f0Ew==
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1733069010; x=1733673810;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+wTHBUrXI8QFBkDCD6L4J77EtzYe3TetwP1qRxIJJLM=;
+ b=MPUunlX9GgY4NEo5tnRw5+wZUFdT+lOA8blABMajfJRXCIL56BXrqzofiUsGetG1DA
+ I0zDsNrfXSg1IlHB/kFLVSfeqSKOyDzH3P9+NuDzSyY+H7IITNr3P+nfBBpbTmjnZWg9
+ aNnUX+drYsD3a2umKN6/Bq9wE5I4TiMJZ3Q+PIXvfYaJ1SglIVB7FQsIpBTwQIxim+Pi
+ 59JziX+CRGifmwd8xxNVzSdAgsBiCrAQP1lBpC4V7uVdJT6+41jYbKwWV0ZTKdqZUc5P
+ k+WgFDuisUQDSp5h0RZeD5ug4OJN/hOXmnZiu+mHtI7bF7pUnRvj0L2if8Z2b6JKHwBP
+ N7GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733065587; x=1733670387;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=e1OIFt6Wa9ivuGHrhRCcysL/gALDZ16yEs6HdTP8v7U=;
- b=rBE4/2vxgnqX72pjz5bS04ngp2IlHny+G9/JWzN+ptAYIdAUXU3wwchwWcMgmjxAKm
- 1vsDdNsv1Q2Dt67LAXo1J2jjOc3msyqGd2SqH9Noy/PVXHi4qHzV2PkuYKnYuKUG7pqz
- 6GaGVe7II8heQ/sGndqXuLnWg3UqAG+hFfcsZpcYoS7/Uu+tginIk9lpXBnbrYKvyqql
- rLtgLXkmxknlEPZ5Ho4zeeBVBF8tVchANLgLjiMaj8r9+HNGAsjEBFB81vw5NoNWALMH
- HyKCXk2sJTdfWjweefbdJVKJOgrRRes6KC7g6NpgLYJyPQU1ZvQxV3gGp7N2rVHDQMCR
- tfVA==
-X-Gm-Message-State: AOJu0YwbpGUc1Yz+BTRkXemOXHfcS5fLBVU10oPMWbBAPV5xTqjimA4J
- +Jynj31QGxTMGgXFM8ychbN8b8kHRKpY/9xS63i2j7oaLWUUGNsqHRhvEMA1CHOyxN6MRBNwXoG
- Yvzg=
-X-Gm-Gg: ASbGncvdgn3Y5XqRRk1yAZRHRFUtxfjemsGO8EiWEZq6pPKnmpZeqkCMHCC/mHkXbW9
- Z2I1x8uf30zaPTFc6MtZ2vyDlZYNB5D22jCukCIqV91XgTJzEbX5FL8KeSswKm+G5yreW74agua
- kmJ8TW6dv0HgheuuEZ7u8bGT7YuQ+j6MI8nfO3Grc6YuBoJtZLMVlYLgqg8MdjeXxZm6M9lMO4k
- FLIiJWT2e7suV5jfrW97AOZvr9ir7DiL3e0TZVoeDty023AMwMUpmnK6OaaTX+UgarPGxmqBFc0
- +TagqUUU3GVAmOSyuaz9DURbWFi/jOzsa9uM
-X-Google-Smtp-Source: AGHT+IHrXLf5JSll7TjMegVZmyNopQg/6IRPU9wgp7nev6lKtpgU1GdeCzg/DqKWws9SVopLydW2KQ==
-X-Received: by 2002:a05:6830:7199:b0:71d:5043:1026 with SMTP id
- 46e09a7af769-71d65c932demr13944881a34.9.1733065586925; 
- Sun, 01 Dec 2024 07:06:26 -0800 (PST)
-Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71d7254473asm1822220a34.27.2024.12.01.07.06.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Dec 2024 07:06:26 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1733069010; x=1733673810;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+wTHBUrXI8QFBkDCD6L4J77EtzYe3TetwP1qRxIJJLM=;
+ b=bNp/sEsoFDGdwtqiL07NZN+UCUEBzHC9q8T4TRvj7BFYE83X44kSanXwbHFN3/FdIt
+ IpnZgyYUZJ2w/7L7DPjrgaWQJOimdxy71nGiw4VSGvQ8Dz9Ui4lUbQIsoVu4gB2GoNux
+ u+yI1BBqD7EciW+Fq66V3dT1M4bE65Cv4Ew8FWcDKNcQzDYbPEuFN7CFYnUJnCMh6zH9
+ 81a8vBIcfOuruqPdpivpkiGBWaB4pb9em3RbmcjLhZ1X5CAvx3M9lON1liNEdHEMuI9z
+ C1LABenT0thp86DPDf6TEDbLHvlNoydyUMUbXtFkbnCHoy0mgGmwIFc3L3lDFIjukgXS
+ lpKQ==
+X-Gm-Message-State: AOJu0YxAUkv70jnXs3QQq0lFv5DsVsX8FAQxHptx4nyM8u1MNbJ1GQpp
+ Q3dO6k7jvtRRNjBHOuN0eJxfFZvS7OLfuKrdET3pGspsoUhvRoCNvo4PBthzHRfdOWUeqwOzw+M
+ =
+X-Gm-Gg: ASbGncvPbuaP5q7gMVKeEmIEpQQBo4P+BBGN+I0zMgsqZv7xiv6POrLmwoUIWrNQxs8
+ HthsFml99i/nARDH5s5Szvf3F7gbZKf5Q/jz+WcZaTfcvHUUbDf/xWQ1xrVuGBEdx1UNcbmQHkv
+ Vt8rmu5cscbjZBtfvVbbAWPs5RksSEUo4EOG2WCLN/Qo3fMB5I8oO2b29XT6pBkHmU1naZtS5A2
+ 5DY3BehyFY6ENNILtnyX9rTsSE01cxsAIve4nQXghLm60g6MUOi8ZbbfLtzuYmJFa1xUmMGyAtq
+ QUV73F41Ss4cIEE++EvK3YmmeA==
+X-Google-Smtp-Source: AGHT+IFzLxd8tyKsemw29qa1bYxzgtvHcYWZflIZ9k1n2ySQrPwAnsX1qUByB5MSInITYkUyORdEpA==
+X-Received: by 2002:a05:600c:3b14:b0:434:a734:d268 with SMTP id
+ 5b1f17b1804b1-434a9dc02a3mr181069465e9.14.1733069009594; 
+ Sun, 01 Dec 2024 08:03:29 -0800 (PST)
+Received: from localhost.localdomain (h082218084190.host.wavenet.at.
+ [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434b0d9bef8sm120393605e9.7.2024.12.01.08.03.28
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 01 Dec 2024 08:03:29 -0800 (PST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH 15/67] target/arm: Convert disas_adc_sbc to decodetree
-Date: Sun,  1 Dec 2024 09:05:14 -0600
-Message-ID: <20241201150607.12812-16-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241201150607.12812-1-richard.henderson@linaro.org>
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
+Cc: richard.henderson@linaro.org, philmd@linaro.org, thuth@redhat.com,
+ zhao1.liu@intel.com, imammedo@redhat.com, akihiko.odaki@daynix.com,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH RFC-for-10.0] hw/usb/hcd-xhci-pci: Use event ring 0 if
+ interrupter mapping unsupported
+Date: Sun,  1 Dec 2024 17:03:16 +0100
+Message-Id: <20241201160316.96121-1-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: neutral client-ip=2a00:1450:4864:20::32c;
+ envelope-from=phil@philjordan.eu; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,113 +99,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This includes ADC, SBC, ADCS, SBCS.
+This change addresses an edge case that trips up macOS guest drivers
+for PCI based XHCI controllers.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+The XHCI specification, section 4.17.1 specifies that "If Interrupter
+Mapping is not supported, the Interrupter Target field shall be
+ignored by the xHC and all Events targeted at Interrupter 0."
+
+The PCI XHCI controller supports MSI(-X) and maxintrs is therefore
+reasonably set to 16. The specification does not address whether
+interrupter mapping should be considered "supported" if the guest
+driver does not enable MSI(-X) via the PCI configuration area, possibly
+because the PCI host bus does not support it.
+
+QEMU's XHCI device has so far not specially addressed this case, and
+no interrupt is generated for events delivered to event rings 1 and
+above. The macOS guest driver does not get along with this
+interpretation, so many events are not delivered to the guest OS when
+MSI(-X) is off.
+
+This patch changes the xhci_event() function such that event ring 0
+is always used when numintrs is 1 (as per spec section 4.17.1) or
+if neither MSI nor MSI-X are enabled. The latter is checked by adding
+a new, optional intr_mapping_supported function pointer field supplied
+by the concrete XHCI controller implementation. The PCI implementation's
+supplied function calls msix_enabled and msi_enabled accordingly.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2705
 ---
- target/arm/tcg/translate-a64.c | 43 +++++++++++++---------------------
- target/arm/tcg/a64.decode      |  6 +++++
- 2 files changed, 22 insertions(+), 27 deletions(-)
+I've been chasing this problem for a while, and I've finally figured
+out the cause, and I think an acceptable solution. I've explained the
+problem and quoted the relevant sections of the XHCI spec in more
+detail in the linked GitLab issue:
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 99ff787c61..d7747fcf57 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -8017,42 +8017,34 @@ TRANS(SMSUBL, do_muladd, a, true, true, MO_SL)
- TRANS(UMADDL, do_muladd, a, true, false, MO_UL)
- TRANS(UMSUBL, do_muladd, a, true, true, MO_UL)
- 
--/* Add/subtract (with carry)
-- *  31 30 29 28 27 26 25 24 23 22 21  20  16  15       10  9    5 4   0
-- * +--+--+--+------------------------+------+-------------+------+-----+
-- * |sf|op| S| 1  1  0  1  0  0  0  0 |  rm  | 0 0 0 0 0 0 |  Rn  |  Rd |
-- * +--+--+--+------------------------+------+-------------+------+-----+
-- */
--
--static void disas_adc_sbc(DisasContext *s, uint32_t insn)
-+static bool do_adc_sbc(DisasContext *s, arg_rrr_sf *a,
-+                       bool is_sub, bool setflags)
- {
--    unsigned int sf, op, setflags, rm, rn, rd;
-     TCGv_i64 tcg_y, tcg_rn, tcg_rd;
- 
--    sf = extract32(insn, 31, 1);
--    op = extract32(insn, 30, 1);
--    setflags = extract32(insn, 29, 1);
--    rm = extract32(insn, 16, 5);
--    rn = extract32(insn, 5, 5);
--    rd = extract32(insn, 0, 5);
-+    tcg_rd = cpu_reg(s, a->rd);
-+    tcg_rn = cpu_reg(s, a->rn);
- 
--    tcg_rd = cpu_reg(s, rd);
--    tcg_rn = cpu_reg(s, rn);
--
--    if (op) {
-+    if (is_sub) {
-         tcg_y = tcg_temp_new_i64();
--        tcg_gen_not_i64(tcg_y, cpu_reg(s, rm));
-+        tcg_gen_not_i64(tcg_y, cpu_reg(s, a->rm));
-     } else {
--        tcg_y = cpu_reg(s, rm);
-+        tcg_y = cpu_reg(s, a->rm);
-     }
- 
-     if (setflags) {
--        gen_adc_CC(sf, tcg_rd, tcg_rn, tcg_y);
-+        gen_adc_CC(a->sf, tcg_rd, tcg_rn, tcg_y);
-     } else {
--        gen_adc(sf, tcg_rd, tcg_rn, tcg_y);
-+        gen_adc(a->sf, tcg_rd, tcg_rn, tcg_y);
-     }
-+    return true;
+https://gitlab.com/qemu-project/qemu/-/issues/2705
+
+The fix provided is I think the simplest one in terms of lines of code,
+but it's also a little ugly, as we're constantly checking msix_enabled
+and msi_enabled via a callback function. Granted, we're already doing
+that in xhci_pci_intr_raise and xhci_pci_intr_update, but this adds
+a bunch more calls.
+
+The main alternative I can see is to "push" the state of whether
+interrupter mapping is supported: provide a custom config_write
+implementation for the PCI device, and every time the configuration
+area is updated, evaluate whether or not this means that MSI or MSI-X
+are enabled and update a corresponding flag inside XHCIState. We could
+even use this opportunity to switch out different .intr_raise and
+.intr_update functions depending on which interrupt delivery mechanism
+is active in the PCI device.
+
+
+ hw/usb/hcd-xhci-pci.c | 9 +++++++++
+ hw/usb/hcd-xhci.c     | 5 +++++
+ hw/usb/hcd-xhci.h     | 5 +++++
+ 3 files changed, 19 insertions(+)
+
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index a039f5778a6..21802211cf7 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -81,6 +81,14 @@ static bool xhci_pci_intr_raise(XHCIState *xhci, int n, bool level)
+     return false;
  }
  
-+TRANS(ADC, do_adc_sbc, a, false, false)
-+TRANS(SBC, do_adc_sbc, a, true, false)
-+TRANS(ADCS, do_adc_sbc, a, false, true)
-+TRANS(SBCS, do_adc_sbc, a, true, true)
++static bool xhci_pci_intr_mapping_supported(XHCIState *xhci)
++{
++    XHCIPciState *s = container_of(xhci, XHCIPciState, xhci);
++    PCIDevice *pci_dev = PCI_DEVICE(s);
 +
- /*
-  * Rotate right into flags
-  *  31 30 29                21       15          10      5  4      0
-@@ -8305,10 +8297,6 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
-     switch (op2) {
-     case 0x0:
-         switch (op3) {
--        case 0x00: /* Add/subtract (with carry) */
--            disas_adc_sbc(s, insn);
--            break;
--
-         case 0x01: /* Rotate right into flags */
-         case 0x21:
-             disas_rotate_right_into_flags(s, insn);
-@@ -8322,6 +8310,7 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
-             break;
++    return msix_enabled(pci_dev) || msi_enabled(pci_dev);
++}
++
+ static void xhci_pci_reset(DeviceState *dev)
+ {
+     XHCIPciState *s = XHCI_PCI(dev);
+@@ -118,6 +126,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
+     object_property_set_link(OBJECT(&s->xhci), "host", OBJECT(s), NULL);
+     s->xhci.intr_update = xhci_pci_intr_update;
+     s->xhci.intr_raise = xhci_pci_intr_raise;
++    s->xhci.intr_mapping_supported = xhci_pci_intr_mapping_supported;
+     if (!qdev_realize(DEVICE(&s->xhci), NULL, errp)) {
+         return;
+     }
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index d85adaca0dc..a2a878e4594 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -644,6 +644,11 @@ static void xhci_event(XHCIState *xhci, XHCIEvent *event, int v)
+     dma_addr_t erdp;
+     unsigned int dp_idx;
  
-         default:
-+        case 0x00: /* Add/subtract (with carry) */
-             goto do_unallocated;
-         }
-         break;
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index c6609749ae..34bff988f7 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -746,6 +746,12 @@ ADDS_ext        . 01 01011001 ..... ... ... ..... .....  @addsub_ext
- SUBS_ext        . 11 01011001 ..... ... ... ..... .....  @addsub_ext
++    if (xhci->numintrs == 1 ||
++        (xhci->intr_mapping_supported && !xhci->intr_mapping_supported(xhci))) {
++        v = 0; /* Per section 4.17.1 */
++    }
++
+     if (v >= xhci->numintrs) {
+         DPRINTF("intr nr out of range (%d >= %d)\n", v, xhci->numintrs);
+         return;
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index fe16d7ad055..6e901de6e6b 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -193,6 +193,11 @@ typedef struct XHCIState {
+     uint32_t max_pstreams_mask;
+     void (*intr_update)(XHCIState *s, int n, bool enable);
+     bool (*intr_raise)(XHCIState *s, int n, bool level);
++    /*
++     * Device supports Interrupter Mapping per section 4.17.1 of XHCI spec.
++     * If NULL, assume true if numintrs > 1.
++     */
++    bool (*intr_mapping_supported)(XHCIState *s);
+     DeviceState *hostOpaque;
  
- # Add/subtract (carry)
-+
-+ADC             . 00 11010000 ..... 000000 ..... .....  @rrr_sf
-+ADCS            . 01 11010000 ..... 000000 ..... .....  @rrr_sf
-+SBC             . 10 11010000 ..... 000000 ..... .....  @rrr_sf
-+SBCS            . 11 11010000 ..... 000000 ..... .....  @rrr_sf
-+
- # Rotate right into flags
- # Evaluate into flags
- # Conditional compare (regster)
+     /* Operational Registers */
 -- 
-2.43.0
+2.39.5 (Apple Git-154)
 
 
