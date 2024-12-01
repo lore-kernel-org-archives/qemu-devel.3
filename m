@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CCD5D49773
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FA2D49771
 	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 15:14:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHlX2-0001W8-Jq; Sun, 01 Dec 2024 10:06:44 -0500
+	id 1tHlWz-0001Sl-4P; Sun, 01 Dec 2024 10:06:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlWz-0001TM-Ov
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:41 -0500
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+ id 1tHlWs-0001Nv-S4
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:34 -0500
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlWy-0004Ia-4S
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:41 -0500
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-5f1f81e51b1so1423173eaf.3
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:06:39 -0800 (PST)
+ id 1tHlWq-0004DE-N6
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:34 -0500
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-71d51a9a42bso1484270a34.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:06:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733065599; x=1733670399; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733065591; x=1733670391; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Oa8jCHWcHUduOv5ySi+C3ZNEUi60S76SFi2t2Jixe3U=;
- b=ooMvb3KqilpflaykpaWLKzzTXmYv9/rLTlxIo1Vl8wfOEEbZ/PXTH+IFb7+xKhOfRd
- JZbW9stHQcfmVnpELWzXBISlSLGEXNZZa1yyHlHr1PapRST/ib503j8KJRXn8a+o43+2
- hDASQcrBQ5cyYO9jK4+uSnuP6ixxX/Ku7JCBe2keMGDUaE1JQJ6tcFttk1NimeVRznt7
- f5eUjckn2tMRWcmmrxehkn16BMyS5QyEW4P9SIa86T5aLNW/kisjSbTnRX5PtVCY6e5x
- lOAZnpsx25OV9Ovaeine/OSZLTnZxc4gCnp6bdO+oev6OMdhTYm72ZEcu2uippBuWrN/
- v5Eg==
+ bh=8/e/LG5UrhiLtD4WGU52HpCFQh7KQHX53bSZj6MYyvY=;
+ b=KpBhIxfx5AEgdG9VADFO3GxqgIivfL9Wz02Lfs1YAG4nUaQreD96UmP+h41i1NR6Mt
+ Q9ce+0hfilkEJNuikxYGsKNPDTwom6DdQj8u5heHfIyhvOCcayAGp2jjMOqZJqj1Bt+w
+ /jDIOZ7lnSHNV8ICHBYIng8HQ3bCM61R4roRPflnK2DdGzPjwaNTVeHiF2oueLEOgO7F
+ axI42/tfbq7hzreGexp9veIBpBp1cTfDzNUEWFQ7Ypq1NpMlxr7+0dPmC4UDaB9jB3VY
+ ezY8P4izI0GsVxmbcNMwxKEYKiLN1qY1ysEmgk6/EaG0c3diDHTjq9XUTKHc+PTeIuzm
+ m0VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733065599; x=1733670399;
+ d=1e100.net; s=20230601; t=1733065591; x=1733670391;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Oa8jCHWcHUduOv5ySi+C3ZNEUi60S76SFi2t2Jixe3U=;
- b=fRFH3/ZDjdu40YQnL4pv4SP+hnpas8A+Kj5PiqTxiAZjZSViEO8/FG4m4xGTA3IjmD
- izivYp/cEr1Ny+9/QA9tgrGNDYgQYDljvf9yh43tpCko/uy1LJXmWdFVj/zgOjaKeo3T
- 9CMLKyw+Wq0n0aaBlarN1BLnGJT/I9w7BLMkhd1gnpu1r46kuZ+211vtY0UuWtluAHiZ
- uCHCaPm+zisPLyWs7vw3yU3PKfnOwWIczHI1/Ya51/E7V+jT51cxR5WwBgXAgwL4cZsA
- ow6y7XXWfoRTkF54qykrJxx9IyfucziwYjTmxqgaiOz0MwuX+VcFhZxd1c30ufXDue4T
- I6ow==
-X-Gm-Message-State: AOJu0YyBjpGkuQqk4swv0sf3kyEI36ci31PoMQBGjI7EaYYZa6PjRZzF
- 3IISNiQrlizoLgv+UVgLm7zcnSutj6I/bUsgbcBh/WHsuLU2VnzMWtswzJ2OfDS5eg+lAO6SpWb
- Ul5Q=
-X-Gm-Gg: ASbGncswn5LV8nMB3bDqrexvCMXHlZI81lXRncJs9nDrowBQo4s92WYbGqZ26D7XgkO
- ZaAQJqTWcSzad1VI2ONmodYrwILaNwwXz0u0HHZHcAWg1EJXBcu6bZ/DVGJVeTN7izGYSafQbNX
- +bA2m4dc8t4kMUU4t6lWFtRjPLpXbeBhOtizfVFWs0z5yTapy5Ndg9gNdecGlsAmjkCxyGXkQU2
- llKTmtJjpOCIwDy/MdWcQUBkpuJBlyiLkS5I2nigR9UVPczDbMhD0+ivIajNJmr6ExwWnXzKMBW
- hjKzCZPVClOynjSqyrVLv9NH2k95sl+6QYxg
-X-Google-Smtp-Source: AGHT+IGCdewSCExyTvibmpMzeQHEUdpOYzum3VL6Kor+ZT1jXPgYRqOyqvpA9BD44ieuV4YDpT+3dA==
-X-Received: by 2002:a05:6830:6a8d:b0:70f:7123:1f34 with SMTP id
- 46e09a7af769-71d65d36c77mr14382124a34.30.1733065598991; 
- Sun, 01 Dec 2024 07:06:38 -0800 (PST)
+ bh=8/e/LG5UrhiLtD4WGU52HpCFQh7KQHX53bSZj6MYyvY=;
+ b=htmQcYj8mp1TKtTJNeybrVy6NtLw6/uf6XHnSSl8UcvdqIxx9XlbLYKptlK3oVx4aF
+ NLattXTNf6VgPbPddphZ+UoKwT69hcpeZaXT/LH1mpATXdjwsRE5tyNnCAOBqyY7sQxb
+ oF0qUa+acK+PKnV3pcEjTjGCWvjJ04doO8Zn/2UvR8NU6dWhwpEw3g/yo2ahRepFbEtj
+ ZyBjOXRFEVg9XXV0oLbRZAZFfq193+7QL1U6uaWgIgMiyQhXWJ6cLQBhgxlgbODA9uUT
+ lFC1hGLcNTDm0F2OrPuGzdKBwfZO4z4arVJI3Zc9IdXvCk+5xQIdVACVMns6ZhCCdsVH
+ fWkQ==
+X-Gm-Message-State: AOJu0Yz7mjjivMHfFcKN5cfGK7pirbUroqN4teUHmijY0uWf9SAETsmi
+ GhW5CSwhLjz7NX8pquDHI3v/jYlHF9WcAVIqsvro1agnLtEg/zyrXhFIFTDgYeB5KAUq5yaSHcq
+ ocVo=
+X-Gm-Gg: ASbGncvSpm9PIYoTKNZdXZNCNsN+0vf87I3eypiUFwNbyS0jj6RVhMrIfNyqNV6/rQQ
+ mK7zVZKp9kMhYAd1tsaYRz+KdhLa92F7WAqg8RM8HYgk74pjcCR/i9wQmqM4ppXW9cHq/VmA9y3
+ 5HJqcmgb/41JTP8agQ1X6LBRTeD31v1F/vn4rCfhGjxAxq+X3+P7HRTnYDZcrUHqDeD6t+xB3uk
+ e+S8Cb+52pu1+rGQUHwo3V2g1AJEHHssQHQz79qeh+EhSSkC8CgKjDr3Bb+r74hDdct/aw0g1jE
+ VfdkTWf/Pt8wWFq9RKhrXhpEBDhR80f3+Pvy
+X-Google-Smtp-Source: AGHT+IGB1gu6pilbTki+GbCPvMDfrdxFQc2GcllWTtSgXHbamnZ+VJ/xJ32fv4JtGUFcEAeCu1x3eQ==
+X-Received: by 2002:a05:6830:7308:b0:71d:5f22:aff3 with SMTP id
+ 46e09a7af769-71d65c6f968mr14370787a34.4.1733065591477; 
+ Sun, 01 Dec 2024 07:06:31 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71d7254473asm1822220a34.27.2024.12.01.07.06.38
+ 46e09a7af769-71d7254473asm1822220a34.27.2024.12.01.07.06.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Dec 2024 07:06:38 -0800 (PST)
+ Sun, 01 Dec 2024 07:06:31 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 26/67] target/arm: Convert FSQRT (scalar) to decodetree
-Date: Sun,  1 Dec 2024 09:05:25 -0600
-Message-ID: <20241201150607.12812-27-richard.henderson@linaro.org>
+Subject: [PATCH 19/67] target/arm: Convert disas_cond_select to decodetree
+Date: Sun,  1 Dec 2024 09:05:18 -0600
+Message-ID: <20241201150607.12812-20-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241201150607.12812-1-richard.henderson@linaro.org>
 References: <20241201150607.12812-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,147 +99,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This includes CSEL, CSINC, CSINV, CSNEG.  Remove disas_data_proc_reg,
+as these were the last insns decoded by that function.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 70 +++++++++++++++++++++++++++++-----
- target/arm/tcg/a64.decode      |  1 +
- 2 files changed, 61 insertions(+), 10 deletions(-)
+ target/arm/tcg/translate-a64.c | 84 ++++++----------------------------
+ target/arm/tcg/a64.decode      |  3 ++
+ 2 files changed, 17 insertions(+), 70 deletions(-)
 
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 4d945f2d5b..750db921cd 100644
+index 56a445a3c2..9c6365f5ef 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -8348,6 +8348,63 @@ static const FPScalar1Int f_scalar_fneg = {
- };
- TRANS(FNEG_s, do_fp1_scalar_int, a, &f_scalar_fneg)
+@@ -8171,39 +8171,17 @@ static bool trans_CCMP(DisasContext *s, arg_CCMP *a)
+     return true;
+ }
  
-+typedef struct FPScalar1 {
-+    void (*gen_h)(TCGv_i32, TCGv_i32, TCGv_ptr);
-+    void (*gen_s)(TCGv_i32, TCGv_i32, TCGv_ptr);
-+    void (*gen_d)(TCGv_i64, TCGv_i64, TCGv_ptr);
-+} FPScalar1;
-+
-+static bool do_fp1_scalar(DisasContext *s, arg_rr_e *a,
-+                          const FPScalar1 *f, int rmode)
-+{
-+    TCGv_i32 tcg_rmode = NULL;
-+    TCGv_ptr fpst;
-+    TCGv_i64 t64;
-+    TCGv_i32 t32;
-+    int check = fp_access_check_scalar_hsd(s, a->esz);
-+
-+    if (check <= 0) {
-+        return check == 0;
-+    }
-+
-+    fpst = fpstatus_ptr(a->esz == MO_16 ? FPST_FPCR_F16 : FPST_FPCR);
-+    if (rmode >= 0) {
-+        tcg_rmode = gen_set_rmode(rmode, fpst);
-+    }
-+
-+    switch (a->esz) {
-+    case MO_64:
-+        t64 = read_fp_dreg(s, a->rn);
-+        f->gen_d(t64, t64, fpst);
-+        write_fp_dreg(s, a->rd, t64);
-+        break;
-+    case MO_32:
-+        t32 = read_fp_sreg(s, a->rn);
-+        f->gen_s(t32, t32, fpst);
-+        write_fp_sreg(s, a->rd, t32);
-+        break;
-+    case MO_16:
-+        t32 = read_fp_hreg(s, a->rn);
-+        f->gen_h(t32, t32, fpst);
-+        write_fp_sreg(s, a->rd, t32);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (rmode >= 0) {
-+        gen_restore_rmode(tcg_rmode, fpst);
-+    }
-+    return true;
-+}
-+
-+static const FPScalar1 f_scalar_fsqrt = {
-+    gen_helper_vfp_sqrth,
-+    gen_helper_vfp_sqrts,
-+    gen_helper_vfp_sqrtd,
-+};
-+TRANS(FSQRT_s, do_fp1_scalar, a, &f_scalar_fsqrt, -1)
-+
- /* Floating-point data-processing (1 source) - half precision */
- static void handle_fp_1src_half(DisasContext *s, int opcode, int rd, int rn)
+-/* Conditional select
+- *   31   30  29  28             21 20  16 15  12 11 10 9    5 4    0
+- * +----+----+---+-----------------+------+------+-----+------+------+
+- * | sf | op | S | 1 1 0 1 0 1 0 0 |  Rm  | cond | op2 |  Rn  |  Rd  |
+- * +----+----+---+-----------------+------+------+-----+------+------+
+- */
+-static void disas_cond_select(DisasContext *s, uint32_t insn)
++static bool trans_CSEL(DisasContext *s, arg_CSEL *a)
  {
-@@ -8356,10 +8413,6 @@ static void handle_fp_1src_half(DisasContext *s, int opcode, int rd, int rn)
-     TCGv_i32 tcg_res = tcg_temp_new_i32();
+-    unsigned int sf, else_inv, rm, cond, else_inc, rn, rd;
+-    TCGv_i64 tcg_rd, zero;
++    TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
++    TCGv_i64 zero = tcg_constant_i64(0);
+     DisasCompare64 c;
  
-     switch (opcode) {
--    case 0x3: /* FSQRT */
--        fpst = fpstatus_ptr(FPST_FPCR_F16);
--        gen_helper_vfp_sqrth(tcg_res, tcg_op, fpst);
--        break;
-     case 0x8: /* FRINTN */
-     case 0x9: /* FRINTP */
-     case 0xa: /* FRINTM */
-@@ -8386,6 +8439,7 @@ static void handle_fp_1src_half(DisasContext *s, int opcode, int rd, int rn)
-     case 0x0: /* FMOV */
-     case 0x1: /* FABS */
-     case 0x2: /* FNEG */
-+    case 0x3: /* FSQRT */
-         g_assert_not_reached();
+-    if (extract32(insn, 29, 1) || extract32(insn, 11, 1)) {
+-        /* S == 1 or op2<1> == 1 */
+-        unallocated_encoding(s);
+-        return;
+-    }
+-    sf = extract32(insn, 31, 1);
+-    else_inv = extract32(insn, 30, 1);
+-    rm = extract32(insn, 16, 5);
+-    cond = extract32(insn, 12, 4);
+-    else_inc = extract32(insn, 10, 1);
+-    rn = extract32(insn, 5, 5);
+-    rd = extract32(insn, 0, 5);
++    a64_test_cc(&c, a->cond);
+ 
+-    tcg_rd = cpu_reg(s, rd);
+-
+-    a64_test_cc(&c, cond);
+-    zero = tcg_constant_i64(0);
+-
+-    if (rn == 31 && rm == 31 && (else_inc ^ else_inv)) {
++    if (a->rn == 31 && a->rm == 31 && (a->else_inc ^ a->else_inv)) {
+         /* CSET & CSETM.  */
+-        if (else_inv) {
++        if (a->else_inv) {
+             tcg_gen_negsetcond_i64(tcg_invert_cond(c.cond),
+                                    tcg_rd, c.value, zero);
+         } else {
+@@ -8211,53 +8189,23 @@ static void disas_cond_select(DisasContext *s, uint32_t insn)
+                                 tcg_rd, c.value, zero);
+         }
+     } else {
+-        TCGv_i64 t_true = cpu_reg(s, rn);
+-        TCGv_i64 t_false = read_cpu_reg(s, rm, 1);
+-        if (else_inv && else_inc) {
++        TCGv_i64 t_true = cpu_reg(s, a->rn);
++        TCGv_i64 t_false = read_cpu_reg(s, a->rm, 1);
++
++        if (a->else_inv && a->else_inc) {
+             tcg_gen_neg_i64(t_false, t_false);
+-        } else if (else_inv) {
++        } else if (a->else_inv) {
+             tcg_gen_not_i64(t_false, t_false);
+-        } else if (else_inc) {
++        } else if (a->else_inc) {
+             tcg_gen_addi_i64(t_false, t_false, 1);
+         }
+         tcg_gen_movcond_i64(c.cond, tcg_rd, c.value, zero, t_true, t_false);
      }
  
-@@ -8404,9 +8458,6 @@ static void handle_fp_1src_single(DisasContext *s, int opcode, int rd, int rn)
-     tcg_res = tcg_temp_new_i32();
- 
-     switch (opcode) {
--    case 0x3: /* FSQRT */
--        gen_fpst = gen_helper_vfp_sqrts;
--        break;
-     case 0x6: /* BFCVT */
-         gen_fpst = gen_helper_bfcvt;
-         break;
-@@ -8442,6 +8493,7 @@ static void handle_fp_1src_single(DisasContext *s, int opcode, int rd, int rn)
-     case 0x0: /* FMOV */
-     case 0x1: /* FABS */
-     case 0x2: /* FNEG */
-+    case 0x3: /* FSQRT */
-         g_assert_not_reached();
+-    if (!sf) {
++    if (!a->sf) {
+         tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
      }
- 
-@@ -8469,9 +8521,6 @@ static void handle_fp_1src_double(DisasContext *s, int opcode, int rd, int rn)
-     tcg_res = tcg_temp_new_i64();
- 
-     switch (opcode) {
--    case 0x3: /* FSQRT */
--        gen_fpst = gen_helper_vfp_sqrtd;
+-}
+-
+-/*
+- * Data processing - register
+- *  31  30 29  28      25    21  20  16      10         0
+- * +--+---+--+---+-------+-----+-------+-------+---------+
+- * |  |op0|  |op1| 1 0 1 | op2 |       |  op3  |         |
+- * +--+---+--+---+-------+-----+-------+-------+---------+
+- */
+-static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
+-{
+-    int op1 = extract32(insn, 28, 1);
+-    int op2 = extract32(insn, 21, 4);
+-
+-    if (!op1) {
+-        goto do_unallocated;
+-    }
+-
+-    switch (op2) {
+-    case 0x4: /* Conditional select */
+-        disas_cond_select(s, insn);
 -        break;
-     case 0x8: /* FRINTN */
-     case 0x9: /* FRINTP */
-     case 0xa: /* FRINTM */
-@@ -8504,6 +8553,7 @@ static void handle_fp_1src_double(DisasContext *s, int opcode, int rd, int rn)
-     case 0x0: /* FMOV */
-     case 0x1: /* FABS */
-     case 0x2: /* FNEG */
-+    case 0x3: /* FSQRT */
-         g_assert_not_reached();
-     }
+-
+-    default:
+-    do_unallocated:
+-    case 0x0:
+-    case 0x2: /* Conditional compare */
+-    case 0x6: /* Data-processing */
+-    case 0x8 ... 0xf: /* (3 source) */
+-        unallocated_encoding(s);
+-        break;
+-    }
++    return true;
+ }
  
+ static void handle_fp_compare(DisasContext *s, int size,
+@@ -11212,10 +11160,6 @@ static bool btype_destination_ok(uint32_t insn, bool bt, int btype)
+ static void disas_a64_legacy(DisasContext *s, uint32_t insn)
+ {
+     switch (extract32(insn, 25, 4)) {
+-    case 0x5:
+-    case 0xd:      /* Data processing - register */
+-        disas_data_proc_reg(s, insn);
+-        break;
+     case 0x7:
+     case 0xf:      /* Data processing - SIMD and floating point */
+         disas_data_proc_simd_fp(s, insn);
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index fca64c63c3..9e5ea14683 100644
+index b339adee6f..3bc2767106 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -1327,6 +1327,7 @@ FMINV_s         0110 1110 10 11000 01111 10 ..... .....     @rr_q1e2
- FMOV_s          00011110 .. 1 000000 10000 ..... .....      @rr_hsd
- FABS_s          00011110 .. 1 000001 10000 ..... .....      @rr_hsd
- FNEG_s          00011110 .. 1 000010 10000 ..... .....      @rr_hsd
-+FSQRT_s         00011110 .. 1 000011 10000 ..... .....      @rr_hsd
+@@ -766,6 +766,9 @@ SETF16          0 01 11010000 00000 010010 rn:5 01101
+ CCMP            sf:1 op:1 1 11010010 y:5 cond:4 imm:1 0 rn:5 0 nzcv:4
  
- # Floating-point Immediate
+ # Conditional select
++
++CSEL            sf:1 else_inv:1 011010100 rm:5 cond:4 0 else_inc:1 rn:5 rd:5
++
+ # Data Processing (3-source)
  
+ &rrrr           rd rn rm ra
 -- 
 2.43.0
 
