@@ -4,100 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE19D4976E
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 13:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C7CAD49773
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 15:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHk6H-0004Nh-Lg; Sun, 01 Dec 2024 08:35:01 -0500
+	id 1tHlX9-0001bq-ER; Sun, 01 Dec 2024 10:06:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1tHk6F-0004N9-5r
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 08:34:59 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tHlX6-0001Zp-OP
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:48 -0500
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1tHk6D-0007Zd-I0
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 08:34:58 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-aa531a70416so224917866b.0
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 05:34:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tHlX4-0004Le-Je
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:48 -0500
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-29e61fcc3d2so174790fac.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:06:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733060096; x=1733664896; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=NGCMlNJwJWoPBUMYqj5ryk/jTzepTBn3oHHeeRGVIxM=;
- b=YfR5H/3B54eGCnkz4H1r04AU38zuIRLec/A+SgMCAlrnUzvsN1E6T8U1RlU3RKdI9P
- VuQ+ECD+8rKTHokG/YLeEEOJrV7qqbDE12hujq1JZN7itYzfRkbzt9g6tihSBgzZ7Muv
- cJMGF+kGin7H6gQWHcgQpSleOYFJ/VPynBKamm2NaEwvqAhb4GzG68Vv2ZVpUIK8xdJN
- cyhN4bRiXURsDEQwTQZfcERAXV3OhKKHQyMIvrlIdspuZO9wvzHxTHHwIuLIEFD7+tPH
- ZvtbUUeDw+kjSHv/FbD8ffjuOLmP1KI3tyQPBQxHCPsNK8dl00iL+IQYqAojHrcVRjsn
- 7RGw==
+ d=linaro.org; s=google; t=1733065605; x=1733670405; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VmXfcGZY+uOUXXSUJkFqHvnMcpF+Gs5GFplkRxYn1Z4=;
+ b=mOj4xZQLBMTnsZdMnBgwQY+QfATpbQ60VjyrHChuLkslZlJ9y6cBJsWf+pR9mzFKkW
+ EvL3Q/PwNL3ZBJ3kcFDGEFiZ1aoQIFkoBU93hZgyYczEOVY0uZZARAX/c6fosuPkMAKt
+ pTSbYI0D+ZeF+VhZlHwuryovZHZa2SRK9d1zvF62ExFAoYdrRzO2uepcL1Sacvfxt0Qo
+ 5a0jK2GxK4+ypkeM3rzaa9eo1V6EUUnNib4ntlZWirRz5m7Rhz8LIYssUMemBkgx2Xfg
+ 4tiRg3GaDeRaTycXKIL4G+RLN6TxQd5bo60VUxlRUSV8idTF/wW82KLYPV/NHjurT7Sb
+ uCnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733060096; x=1733664896;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NGCMlNJwJWoPBUMYqj5ryk/jTzepTBn3oHHeeRGVIxM=;
- b=CMaOsqjjKHZ9xjxfqb7nUl+ht/IhPx5BWdbhvxZLAHM4Vy+eEFPLd1nwK7OIigghLf
- zabRZREJ/AgB9tVL+AAeb88qOAd1fmPKQp3ZLP5Hfw7WxskVPkOWyr7l10MSVTACOUsn
- P/LL2zaIF06HjZXb3Y9Z4VNrpfZiS2pF113QTqEhzwzphwiFaVFvmEKOAW7S71ocYhKx
- foUfEq6wxSBb1gLCKwJ1XzWQnDsL96ozIy0DCD45tRKJvb0EkCOhO3U8XK/BlHcw2EcF
- XemYKbDO/EGF/h/gmh0Xf4qxAzSXYW1MUkWkJnbNM+Pp+J234/dy6VYC9M7IGML7I9QY
- TL2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4GPDKLVGrkLUV11yxpej7IntHi5vvWnWd7+PPREYwxHZZkna6ZF2LHTAmv0ycHPYOoEjaxyPi0WkA@nongnu.org
-X-Gm-Message-State: AOJu0YxM6yyCMzbtSprL/iekX/BwO5un+zG+Gam6jkL+/QooAb6Xl3b7
- B1mhkxbdnQrHiJEWLDx4xais5h7N1Z7WW/fJSMniBh0x5rz+Mgc5p1dlKCI8+t0=
-X-Gm-Gg: ASbGncv7wRBApQAinHNOB1D2H7Y3XzZaXk/qMDv/pQRn4ax1T8nx56+Up5pDnGkhVg3
- U4QHQ1msTUgRMFgVpYW+K9ZQffziTHWWdkRYfS1wfTFJ5dou/rsvBtiePKcQlS18mfDy43BcDkF
- SQ1csEA5MBLtzI6bJTFaHKbGaCqt+PtTuUkd/Tf65W9aHRXbhFcisHptFrR4MhX62LOioTLzW4y
- jnyoifNg5PCiRb9WtpGDE2DV6K1Dk5yfOsx3pPX50Z1hKVS5FIdWcjhd3M7ePpSyFd4utZJ7LyR
- DSG5cjM+S9BtAR2Tf/S9iBflqzLl
-X-Google-Smtp-Source: AGHT+IFHZqpJqSlEtwdeIDHp6W4GiXOVY24VRNGVAeNSPU88fdKNrEXs5cfmhllQnQH3wfEOvZZm3Q==
-X-Received: by 2002:a05:6402:401a:b0:5d0:ccce:34b2 with SMTP id
- 4fb4d7f45d1cf-5d0ccce8ba0mr9020357a12.29.1733060095554; 
- Sun, 01 Dec 2024 05:34:55 -0800 (PST)
-Received: from [192.168.210.26] (83.11.10.28.ipv4.supernova.orange.pl.
- [83.11.10.28]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa59990a9dfsm394070566b.157.2024.12.01.05.34.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Dec 2024 05:34:55 -0800 (PST)
-Message-ID: <4b3180bd-8054-4431-a594-0445ce4837aa@linaro.org>
-Date: Sun, 1 Dec 2024 14:34:51 +0100
+ d=1e100.net; s=20230601; t=1733065605; x=1733670405;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VmXfcGZY+uOUXXSUJkFqHvnMcpF+Gs5GFplkRxYn1Z4=;
+ b=pwgfWFwTuTNPTXU0UD9aZuQN5ZVQ8gj2O4p5wS6JS2CR+h21e4Q7RW/wkR2lG/UO2Q
+ PIJW32m135+dCl7K4vnV6OhmDbBhYPpV074rRX6rSnGv01oxhXgkvqVuKc6FSyWKzVfq
+ yVEMDZrRq58HvZI0sLGhpX4B+X75gEgHtblOWP6/Jt4Wysku9AgIGuc3KgcpSaW9kHNO
+ iF2S+Br8/TQJ8FyiAC4roTDWqq6Bm2O8NWOXSAaBQcseG/hgrWZYNZ6wdHVnONJdw+wP
+ HEKI2oDrFbRC42wk2fSP9UFGrQE7s+vb9fDPq5rl5aDCMb9xOewEbPR6BBBZ1tLPkcmd
+ ruDg==
+X-Gm-Message-State: AOJu0YzKm3N09zP8FMKZtv5rwMLNJ76+PaKadHenUyC7U+bd+eKY4Swn
+ Myf9GVHVj3mBwlXy/ovHUs756BrdZLb3tN/dcWwtaiwzJ0Z6D4H20wZEAmNjbr5JDgPOP8GB3o+
+ zPqc=
+X-Gm-Gg: ASbGncvyerS0ZJKvY8lYW0/zOddmk7gdVWbDtFvv3ZW3bsAX+U7384YRmg9tLu3hdxR
+ rfBVeafJpkaL3Iqy7Peh5YVeB5XDWTrAaSyYXx1SdERze9v0klk2w5U++8ptdXMvjRhAgLn3g5B
+ XtDPQw22+3zW/3CFjDwm1vwsPcC0Ik2uJIg4MMpTvZ7TH/4TMJ5c/79wVOOO4rlRE7jnbNFMx6U
+ 2j1kYCqBZNH18+5YPDzTwhtCQLu3G0UiokUhHl2MqoOkOqCzCDc3WL5zQjBWBQGCTraeQ4QRF4U
+ 7qQbGEQmE3q+4P+yg5EQ5sSc113icJztJuoq
+X-Google-Smtp-Source: AGHT+IE6I1P7oIHOMxAR5CA+FzCHbpq2M935z2BNgm1gGEoM65Qh+esw/C42bDCC2xkGFun7Tl8Fnw==
+X-Received: by 2002:a05:6871:7b08:b0:29e:5897:e9ed with SMTP id
+ 586e51a60fabf-29e5897ed21mr1399903fac.35.1733065605487; 
+ Sun, 01 Dec 2024 07:06:45 -0800 (PST)
+Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-71d7254473asm1822220a34.27.2024.12.01.07.06.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 01 Dec 2024 07:06:45 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH 32/67] target/arm: Convert FJCVTZS to decodetree
+Date: Sun,  1 Dec 2024 09:05:31 -0600
+Message-ID: <20241201150607.12812-33-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241201150607.12812-1-richard.henderson@linaro.org>
+References: <20241201150607.12812-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional/aarch64: add tests for FEAT_RME
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Troy Lee <leetroy@gmail.com>, Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, alex.bennee@linaro.org,
- Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, Joel Stanley <joel@jms.id.au>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Language: pl-PL, en-GB
-Organization: Linaro
-In-Reply-To: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,73 +99,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 28.11.2024 o 22:37, Pierrick Bouvier pisze:
-> This boot an OP-TEE environment, and launch a nested guest VM inside it
-> using the Realms feature. We do it for virt and sbsa-ref platforms.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-a64.c | 41 +++++++++++++++++-----------------
+ target/arm/tcg/a64.decode      |  2 ++
+ 2 files changed, 22 insertions(+), 21 deletions(-)
 
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 5c048cfac6d..b975a1560df 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -13,6 +13,8 @@ endif
->   test_timeouts = {
->     'aarch64_aspeed' : 600,
->     'aarch64_raspi4' : 480,
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 68bef0963b..90e1567ad1 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -8718,6 +8718,26 @@ TRANS(FCVTZU_g, do_fcvt_g, a, FPROUNDING_ZERO, false)
+ TRANS(FCVTAS_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, true)
+ TRANS(FCVTAU_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, false)
+ 
++static bool trans_FJCVTZS(DisasContext *s, arg_FJCVTZS *a)
++{
++    if (!dc_isar_feature(aa64_jscvt, s)) {
++        return false;
++    }
++    if (fp_access_check(s)) {
++        TCGv_i64 t = read_fp_dreg(s, a->rn);
++        TCGv_ptr fpstatus = fpstatus_ptr(FPST_FPCR);
++
++        gen_helper_fjcvtzs(t, t, fpstatus);
++
++        tcg_gen_ext32u_i64(cpu_reg(s, a->rd), t);
++        tcg_gen_extrh_i64_i32(cpu_ZF, t);
++        tcg_gen_movi_i32(cpu_CF, 0);
++        tcg_gen_movi_i32(cpu_NF, 0);
++        tcg_gen_movi_i32(cpu_VF, 0);
++    }
++    return true;
++}
++
+ static void handle_fmov(DisasContext *s, int rd, int rn, int type, bool itof)
+ {
+     /* FMOV: gpr to or from float, double, or top half of quad fp reg,
+@@ -8779,20 +8799,6 @@ static void handle_fmov(DisasContext *s, int rd, int rn, int type, bool itof)
+     }
+ }
+ 
+-static void handle_fjcvtzs(DisasContext *s, int rd, int rn)
+-{
+-    TCGv_i64 t = read_fp_dreg(s, rn);
+-    TCGv_ptr fpstatus = fpstatus_ptr(FPST_FPCR);
+-
+-    gen_helper_fjcvtzs(t, t, fpstatus);
+-
+-    tcg_gen_ext32u_i64(cpu_reg(s, rd), t);
+-    tcg_gen_extrh_i64_i32(cpu_ZF, t);
+-    tcg_gen_movi_i32(cpu_CF, 0);
+-    tcg_gen_movi_i32(cpu_NF, 0);
+-    tcg_gen_movi_i32(cpu_VF, 0);
+-}
+-
+ /* Floating point <-> integer conversions
+  *   31   30  29 28       24 23  22  21 20   19 18 16 15         10 9  5 4  0
+  * +----+---+---+-----------+------+---+-------+-----+-------------+----+----+
+@@ -8847,13 +8853,6 @@ static void disas_fp_int_conv(DisasContext *s, uint32_t insn)
+             break;
+ 
+         case 0b00111110: /* FJCVTZS */
+-            if (!dc_isar_feature(aa64_jscvt, s)) {
+-                goto do_unallocated;
+-            } else if (fp_access_check(s)) {
+-                handle_fjcvtzs(s, rd, rn);
+-            }
+-            break;
+-
+         default:
+         do_unallocated:
+             unallocated_encoding(s);
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 427924ad95..7b83d06d0d 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -1363,6 +1363,8 @@ FCVTZU_g        . 0011110 .. 111001 000000 ..... .....  @icvt
+ FCVTAS_g        . 0011110 .. 100100 000000 ..... .....  @icvt
+ FCVTAU_g        . 0011110 .. 100101 000000 ..... .....  @icvt
+ 
++FJCVTZS         0 0011110 01 111110 000000 ..... .....  @rr
++
+ # Floating-point data processing (1 source)
+ 
+ FMOV_s          00011110 .. 1 000000 10000 ..... .....      @rr_hsd
+-- 
+2.43.0
 
-> +  'aarch64_rme_virt' : 720,
-
-Took 2974.95s on M1 Pro macbook.
-
-> +  'aarch64_rme_sbsaref' : 720,
-
-This one needed 2288.29s.
-
->     'aarch64_sbsaref_alpine' : 720,
-
-Have to check cause timed out.
-
->     'aarch64_sbsaref_freebsd' : 720,
-
-331.65s
-
-So RME tests probably need longer timeouts or would not run at all.
-
-
-> +++ b/tests/functional/test_aarch64_rme_sbsaref.py
-
-> +        self.vm.add_args('-accel', 'tcg')
-
-That's default value so can be skipped.
-
-> +        self.vm.add_args('-cpu', 'max,x-rme=on')
-
-> +        self.vm.add_args('-m', '2G')
-
-I sent patch to bump default memsize to 2G recently.
-
-> +        self.vm.add_args('-M', 'sbsa-ref')
-> +        self.vm.add_args('-drive', f'file={pflash0},format=raw,if=pflash')
-> +        self.vm.add_args('-drive', f'file={pflash1},format=raw,if=pflash')
-> +        self.vm.add_args('-drive', f'file=fat:rw:{virtual},format=raw')
-
-> +        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
-> +        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
-
-sbsa-ref is fully emulated target. There is AHCI controller built-in so 
-only "-drive" argument should be needed (no "-device" one).
-
-> +        self.vm.add_args('-device', 'virtio-9p-pci,fsdev=shr0,mount_tag=shr0')
-> +        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
-
-> +        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
-> +        self.vm.add_args('-netdev', 'user,id=net0')
-
-e1000e is built-in already
-
-
-As both virt and sbsa-ref tests do "more or less" the same stuff then it 
-would be good to make common file/class and reuse it both tests by 
-adding hardware differences.
 
