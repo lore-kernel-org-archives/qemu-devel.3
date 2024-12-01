@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF1FD49771
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 15:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F87D49771
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 15:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHlc9-0005hO-DW; Sun, 01 Dec 2024 10:12:01 -0500
+	id 1tHlWt-0001Oj-UA; Sun, 01 Dec 2024 10:06:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlae-0000Zq-I1
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:10:28 -0500
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ id 1tHlWo-0001KB-4J
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:30 -0500
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlac-0005KS-CA
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:10:28 -0500
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-5f1e573e65dso868123eaf.0
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:10:25 -0800 (PST)
+ id 1tHlWm-0004Am-Ds
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:29 -0500
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-71d4c462ab1so1139968a34.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:06:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733065825; x=1733670625; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733065587; x=1733670387; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iAu5ADHYyflekp458M9CFRgqyCjo4WkfS6Rrrf0k32Q=;
- b=Z0N/u/4zB54mlib1FDCw61LcVAZ3RlacQONA/3hKMZW60y3ICLkOv9QlmbnklGfGsS
- MJmreqEbrUmtFxCiDZQ0JBAdpFOUoYQrstsYfqaZytU+Hw7DTFFMQOXysjqTU9Qb5CS2
- RTbFJBOSUFpl7K7eGWp2t8m4GQR90aHcjrW8yHnqTqR+VCJbg3nEJrDBbEpHMiOKZR1S
- Prx57B9gIkxUFjfiOR671YcN1aIANBZw3Dx500GW/fSbQEwZOmhoeg4yQR96xixsT/Ks
- GzovGsJweJB0eno36wAaSqUE5Eel/aQckm7+y0FOUwlHpoP7cfFQS57YcNAAwJrs+53M
- ZeDA==
+ bh=e1OIFt6Wa9ivuGHrhRCcysL/gALDZ16yEs6HdTP8v7U=;
+ b=HG+FMbOgfKTAyK5sTeeqbKd6jIyKdhAcbpVUR1CaWh5GieImoLrLhALzvzBynj4Tm7
+ ODQjtOEDpMT912HmiVS0tyRnO/3F5Bgvga80MToX2GsdH/Yo76MBmP2OBAjIjTV91QA0
+ Pi+NULxMsLLvwVbZynIAyInRGaHjSNbPzDRhhrbVMYv3r56i50pm4pm6Ual92lMN6c2/
+ HCiMxSB3ZqR+mnTpRnG1imkw6u7NTPfIr130SwxZ9IgxIw+RwLZaM48beKMUC9CWd+Kj
+ p6lhhXHD+bl8yxfSUB1wapOCrWd4JCh8SeKotSxPjbeGG+REQ3Z2nZi/C+F4cGbWFjdQ
+ f0Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733065825; x=1733670625;
+ d=1e100.net; s=20230601; t=1733065587; x=1733670387;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iAu5ADHYyflekp458M9CFRgqyCjo4WkfS6Rrrf0k32Q=;
- b=VC5D1dTu9PeT+1rEiWW4ews668uMZNDRaoskqnB4t3CeoRCXE06yHL2lRBUabXRNEF
- Df88ODDMvb9S2qPd6Mfb2a73gNTzEaBZYumP7MGEuVE18WKc0k7aBAXDDKF06r6k/2Or
- 1P8NDL6lAU/auZyyp2t8kpc4DES1/AVFWGwKwKFnG3CQgjQGS0soeJTTclOUAeeiKDQ+
- 16yTURT/kJ5Wayx4rBUMKq5kgL8nCjYhUvd+QxaCCpWInXilKJ9R43a/1Z3GiaVXrpQ5
- Up3Ol/5TOWx/EC/8g67ZWOZIF23qPLMlPzZ2bH6xB/1o5Ie5c4p7OO746cg9HeOoeWnP
- gIAg==
-X-Gm-Message-State: AOJu0Yx8cWaF9V3iEFQo0C7dHQg1hXpYuJZ7keNkrXd9EeDL82C2h13M
- ZFRsbe/dDcuPzpC7ZuQAHGZAnHfXSNGru9K4CwAtF7+1dhiSkvNFEEMNFK9DYfy1fnu6KUqJwFH
- V64w=
-X-Gm-Gg: ASbGnctbuaYjVeUoIQXEv9ytwgiP2SAaO4hlIMMmknk3+2LEU1u9r3sDUjOeBLE/bC4
- wsD4WsipFP0gV6gdgkft0vCQ288lgaSZMO4kIaRYZBULWouvuEYRZFOGkecePl8uoZXgR/G5Wrg
- j+GzjowjTBLXg1IX8Q/72ycsULjXy3/ht24dd4YDs/B7/FgPXdBg9fmcxdCqRPrDE0r/CakYj43
- An8tdzAMqxoZEiZ4/aICu5L4qG77xQPNgNUgrW8agGeNEmkoThRhILgxdetBNwBFGwEiFKnqpKC
- WMojg2OEEFl/uNnMMON2/Sc+bmSB5hZwOhLt
-X-Google-Smtp-Source: AGHT+IHa6dSzgNa/oqPv9s1bh6fgBnMvCqEUlqQ7sAGKf4xOtivzV80MGJs+byWSNuw4bBYr82ySQg==
-X-Received: by 2002:a05:6830:442b:b0:710:ea11:3d35 with SMTP id
- 46e09a7af769-71d65ca98bcmr16344581a34.15.1733065825115; 
- Sun, 01 Dec 2024 07:10:25 -0800 (PST)
+ bh=e1OIFt6Wa9ivuGHrhRCcysL/gALDZ16yEs6HdTP8v7U=;
+ b=rBE4/2vxgnqX72pjz5bS04ngp2IlHny+G9/JWzN+ptAYIdAUXU3wwchwWcMgmjxAKm
+ 1vsDdNsv1Q2Dt67LAXo1J2jjOc3msyqGd2SqH9Noy/PVXHi4qHzV2PkuYKnYuKUG7pqz
+ 6GaGVe7II8heQ/sGndqXuLnWg3UqAG+hFfcsZpcYoS7/Uu+tginIk9lpXBnbrYKvyqql
+ rLtgLXkmxknlEPZ5Ho4zeeBVBF8tVchANLgLjiMaj8r9+HNGAsjEBFB81vw5NoNWALMH
+ HyKCXk2sJTdfWjweefbdJVKJOgrRRes6KC7g6NpgLYJyPQU1ZvQxV3gGp7N2rVHDQMCR
+ tfVA==
+X-Gm-Message-State: AOJu0YwbpGUc1Yz+BTRkXemOXHfcS5fLBVU10oPMWbBAPV5xTqjimA4J
+ +Jynj31QGxTMGgXFM8ychbN8b8kHRKpY/9xS63i2j7oaLWUUGNsqHRhvEMA1CHOyxN6MRBNwXoG
+ Yvzg=
+X-Gm-Gg: ASbGncvdgn3Y5XqRRk1yAZRHRFUtxfjemsGO8EiWEZq6pPKnmpZeqkCMHCC/mHkXbW9
+ Z2I1x8uf30zaPTFc6MtZ2vyDlZYNB5D22jCukCIqV91XgTJzEbX5FL8KeSswKm+G5yreW74agua
+ kmJ8TW6dv0HgheuuEZ7u8bGT7YuQ+j6MI8nfO3Grc6YuBoJtZLMVlYLgqg8MdjeXxZm6M9lMO4k
+ FLIiJWT2e7suV5jfrW97AOZvr9ir7DiL3e0TZVoeDty023AMwMUpmnK6OaaTX+UgarPGxmqBFc0
+ +TagqUUU3GVAmOSyuaz9DURbWFi/jOzsa9uM
+X-Google-Smtp-Source: AGHT+IHrXLf5JSll7TjMegVZmyNopQg/6IRPU9wgp7nev6lKtpgU1GdeCzg/DqKWws9SVopLydW2KQ==
+X-Received: by 2002:a05:6830:7199:b0:71d:5043:1026 with SMTP id
+ 46e09a7af769-71d65c932demr13944881a34.9.1733065586925; 
+ Sun, 01 Dec 2024 07:06:26 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f21a4cd78fsm1807008eaf.32.2024.12.01.07.10.24
+ 46e09a7af769-71d7254473asm1822220a34.27.2024.12.01.07.06.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Dec 2024 07:10:24 -0800 (PST)
+ Sun, 01 Dec 2024 07:06:26 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 67/67] target/arm: Convert FCVTL to decodetree
-Date: Sun,  1 Dec 2024 09:06:06 -0600
-Message-ID: <20241201150607.12812-68-richard.henderson@linaro.org>
+Subject: [PATCH 15/67] target/arm: Convert disas_adc_sbc to decodetree
+Date: Sun,  1 Dec 2024 09:05:14 -0600
+Message-ID: <20241201150607.12812-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241201150607.12812-1-richard.henderson@linaro.org>
 References: <20241201150607.12812-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,294 +99,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove lookup_disas_fn, handle_2misc_widening,
-disas_simd_two_reg_misc, disas_data_proc_simd,
-disas_data_proc_simd_fp, disas_a64_legacy, as
-this is the final insn to be converted.
+This includes ADC, SBC, ADCS, SBCS.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 202 +++------------------------------
- target/arm/tcg/a64.decode      |   2 +
- 2 files changed, 18 insertions(+), 186 deletions(-)
+ target/arm/tcg/translate-a64.c | 43 +++++++++++++---------------------
+ target/arm/tcg/a64.decode      |  6 +++++
+ 2 files changed, 22 insertions(+), 27 deletions(-)
 
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 78ad72061d..8f93fc2737 100644
+index 99ff787c61..d7747fcf57 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -1465,31 +1465,6 @@ static inline void gen_check_sp_alignment(DisasContext *s)
-      */
- }
+@@ -8017,42 +8017,34 @@ TRANS(SMSUBL, do_muladd, a, true, true, MO_SL)
+ TRANS(UMADDL, do_muladd, a, true, false, MO_UL)
+ TRANS(UMSUBL, do_muladd, a, true, true, MO_UL)
  
--/*
-- * This provides a simple table based table lookup decoder. It is
-- * intended to be used when the relevant bits for decode are too
-- * awkwardly placed and switch/if based logic would be confusing and
-- * deeply nested. Since it's a linear search through the table, tables
-- * should be kept small.
-- *
-- * It returns the first handler where insn & mask == pattern, or
-- * NULL if there is no match.
-- * The table is terminated by an empty mask (i.e. 0)
+-/* Add/subtract (with carry)
+- *  31 30 29 28 27 26 25 24 23 22 21  20  16  15       10  9    5 4   0
+- * +--+--+--+------------------------+------+-------------+------+-----+
+- * |sf|op| S| 1  1  0  1  0  0  0  0 |  rm  | 0 0 0 0 0 0 |  Rn  |  Rd |
+- * +--+--+--+------------------------+------+-------------+------+-----+
 - */
--static inline AArch64DecodeFn *lookup_disas_fn(const AArch64DecodeTable *table,
--                                               uint32_t insn)
--{
--    const AArch64DecodeTable *tptr = table;
 -
--    while (tptr->mask) {
--        if ((insn & tptr->mask) == tptr->pattern) {
--            return tptr->disas_fn;
--        }
--        tptr++;
--    }
--    return NULL;
--}
--
- /*
-  * The instruction disassembly implemented here matches
-  * the instruction encoding classifications in chapter C4
-@@ -9520,8 +9495,7 @@ static gen_helper_gvec_2_ptr * const f_frsqrte[] = {
- };
- TRANS(FRSQRTE_v, do_gvec_op2_fpst, a->esz, a->q, a->rd, a->rn, 0, f_frsqrte)
- 
--static void handle_2misc_widening(DisasContext *s, int opcode, bool is_q,
--                                  int size, int rn, int rd)
-+static bool trans_FCVTL_v(DisasContext *s, arg_qrr_e *a)
+-static void disas_adc_sbc(DisasContext *s, uint32_t insn)
++static bool do_adc_sbc(DisasContext *s, arg_rrr_sf *a,
++                       bool is_sub, bool setflags)
  {
-     /* Handle 2-reg-misc ops which are widening (so each size element
-      * in the source becomes a 2*size element in the destination.
-@@ -9529,173 +9503,43 @@ static void handle_2misc_widening(DisasContext *s, int opcode, bool is_q,
-      */
-     int pass;
+-    unsigned int sf, op, setflags, rm, rn, rd;
+     TCGv_i64 tcg_y, tcg_rn, tcg_rd;
  
--    if (size == 3) {
-+    if (!fp_access_check(s)) {
-+        return true;
-+    }
-+
-+    if (a->esz == MO_64) {
-         /* 32 -> 64 bit fp conversion */
-         TCGv_i64 tcg_res[2];
--        int srcelt = is_q ? 2 : 0;
-+        TCGv_i32 tcg_op = tcg_temp_new_i32();
-+        int srcelt = a->q ? 2 : 0;
+-    sf = extract32(insn, 31, 1);
+-    op = extract32(insn, 30, 1);
+-    setflags = extract32(insn, 29, 1);
+-    rm = extract32(insn, 16, 5);
+-    rn = extract32(insn, 5, 5);
+-    rd = extract32(insn, 0, 5);
++    tcg_rd = cpu_reg(s, a->rd);
++    tcg_rn = cpu_reg(s, a->rn);
  
-         for (pass = 0; pass < 2; pass++) {
--            TCGv_i32 tcg_op = tcg_temp_new_i32();
-             tcg_res[pass] = tcg_temp_new_i64();
+-    tcg_rd = cpu_reg(s, rd);
+-    tcg_rn = cpu_reg(s, rn);
 -
--            read_vec_element_i32(s, tcg_op, rn, srcelt + pass, MO_32);
-+            read_vec_element_i32(s, tcg_op, a->rn, srcelt + pass, MO_32);
-             gen_helper_vfp_fcvtds(tcg_res[pass], tcg_op, tcg_env);
-         }
-         for (pass = 0; pass < 2; pass++) {
--            write_vec_element(s, tcg_res[pass], rd, pass, MO_64);
-+            write_vec_element(s, tcg_res[pass], a->rd, pass, MO_64);
-         }
+-    if (op) {
++    if (is_sub) {
+         tcg_y = tcg_temp_new_i64();
+-        tcg_gen_not_i64(tcg_y, cpu_reg(s, rm));
++        tcg_gen_not_i64(tcg_y, cpu_reg(s, a->rm));
      } else {
-         /* 16 -> 32 bit fp conversion */
--        int srcelt = is_q ? 4 : 0;
-+        int srcelt = a->q ? 4 : 0;
-         TCGv_i32 tcg_res[4];
-         TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
-         TCGv_i32 ahp = get_ahp_flag();
- 
-         for (pass = 0; pass < 4; pass++) {
-             tcg_res[pass] = tcg_temp_new_i32();
--
--            read_vec_element_i32(s, tcg_res[pass], rn, srcelt + pass, MO_16);
-+            read_vec_element_i32(s, tcg_res[pass], a->rn, srcelt + pass, MO_16);
-             gen_helper_vfp_fcvt_f16_to_f32(tcg_res[pass], tcg_res[pass],
-                                            fpst, ahp);
-         }
-         for (pass = 0; pass < 4; pass++) {
--            write_vec_element_i32(s, tcg_res[pass], rd, pass, MO_32);
-+            write_vec_element_i32(s, tcg_res[pass], a->rd, pass, MO_32);
-         }
+-        tcg_y = cpu_reg(s, rm);
++        tcg_y = cpu_reg(s, a->rm);
      }
--}
--
--/* AdvSIMD two reg misc
-- *   31  30  29 28       24 23  22 21       17 16    12 11 10 9    5 4    0
-- * +---+---+---+-----------+------+-----------+--------+-----+------+------+
-- * | 0 | Q | U | 0 1 1 1 0 | size | 1 0 0 0 0 | opcode | 1 0 |  Rn  |  Rd  |
-- * +---+---+---+-----------+------+-----------+--------+-----+------+------+
-- */
--static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
--{
--    int size = extract32(insn, 22, 2);
--    int opcode = extract32(insn, 12, 5);
--    bool u = extract32(insn, 29, 1);
--    bool is_q = extract32(insn, 30, 1);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--
--    switch (opcode) {
--    case 0xc ... 0xf:
--    case 0x16 ... 0x1f:
--    {
--        /* Floating point: U, size[1] and opcode indicate operation;
--         * size[0] indicates single or double precision.
--         */
--        int is_double = extract32(size, 0, 1);
--        opcode |= (extract32(size, 1, 1) << 5) | (u << 6);
--        size = is_double ? 3 : 2;
--        switch (opcode) {
--        case 0x17: /* FCVTL, FCVTL2 */
--            if (!fp_access_check(s)) {
--                return;
--            }
--            handle_2misc_widening(s, opcode, is_q, size, rn, rd);
--            return;
--        default:
--        case 0x16: /* FCVTN, FCVTN2 */
--        case 0x36: /* BFCVTN, BFCVTN2 */
--        case 0x56: /* FCVTXN, FCVTXN2 */
--        case 0x2f: /* FABS */
--        case 0x6f: /* FNEG */
--        case 0x7f: /* FSQRT */
--        case 0x18: /* FRINTN */
--        case 0x19: /* FRINTM */
--        case 0x38: /* FRINTP */
--        case 0x39: /* FRINTZ */
--        case 0x59: /* FRINTX */
--        case 0x79: /* FRINTI */
--        case 0x58: /* FRINTA */
--        case 0x1e: /* FRINT32Z */
--        case 0x1f: /* FRINT64Z */
--        case 0x5e: /* FRINT32X */
--        case 0x5f: /* FRINT64X */
--        case 0x1d: /* SCVTF */
--        case 0x5d: /* UCVTF */
--        case 0x1a: /* FCVTNS */
--        case 0x1b: /* FCVTMS */
--        case 0x3a: /* FCVTPS */
--        case 0x3b: /* FCVTZS */
--        case 0x5a: /* FCVTNU */
--        case 0x5b: /* FCVTMU */
--        case 0x7a: /* FCVTPU */
--        case 0x7b: /* FCVTZU */
--        case 0x5c: /* FCVTAU */
--        case 0x1c: /* FCVTAS */
--        case 0x2c: /* FCMGT (zero) */
--        case 0x2d: /* FCMEQ (zero) */
--        case 0x2e: /* FCMLT (zero) */
--        case 0x6c: /* FCMGE (zero) */
--        case 0x6d: /* FCMLE (zero) */
--        case 0x3d: /* FRECPE */
--        case 0x7d: /* FRSQRTE */
--        case 0x3c: /* URECPE */
--        case 0x7c: /* URSQRTE */
--            unallocated_encoding(s);
--            return;
--        }
--        break;
--    }
--    default:
--    case 0x0: /* REV64 */
--    case 0x1: /* REV16, REV32 */
--    case 0x2: /* SADDLP, UADDLP */
--    case 0x3: /* SUQADD, USQADD */
--    case 0x4: /* CLS, CLZ */
--    case 0x5: /* CNT, NOT, RBIT */
--    case 0x6: /* SADALP, UADALP */
--    case 0x7: /* SQABS, SQNEG */
--    case 0x8: /* CMGT, CMGE */
--    case 0x9: /* CMEQ, CMLE */
--    case 0xa: /* CMLT */
--    case 0xb: /* ABS, NEG */
--    case 0x12: /* XTN, XTN2, SQXTUN, SQXTUN2 */
--    case 0x13: /* SHLL, SHLL2 */
--    case 0x14: /* SQXTN, SQXTN2, UQXTN, UQXTN2 */
--        unallocated_encoding(s);
--        return;
--    }
--    g_assert_not_reached();
--}
--
--/* C3.6 Data processing - SIMD, inc Crypto
-- *
-- * As the decode gets a little complex we are using a table based
-- * approach for this part of the decode.
-- */
--static const AArch64DecodeTable data_proc_simd[] = {
--    /* pattern  ,  mask     ,  fn                        */
--    { 0x0e200800, 0x9f3e0c00, disas_simd_two_reg_misc },
--    { 0x00000000, 0x00000000, NULL }
--};
--
--static void disas_data_proc_simd(DisasContext *s, uint32_t insn)
--{
--    /* Note that this is called with all non-FP cases from
--     * table C3-6 so it must UNDEF for entries not specifically
--     * allocated to instructions in that table.
--     */
--    AArch64DecodeFn *fn = lookup_disas_fn(&data_proc_simd[0], insn);
--    if (fn) {
--        fn(s, insn);
--    } else {
--        unallocated_encoding(s);
--    }
--}
--
--/* C3.6 Data processing - SIMD and floating point */
--static void disas_data_proc_simd_fp(DisasContext *s, uint32_t insn)
--{
--    if (extract32(insn, 28, 1) == 1 && extract32(insn, 30, 1) == 0) {
--        unallocated_encoding(s); /* in decodetree */
--    } else {
--        /* SIMD, including crypto */
--        disas_data_proc_simd(s, insn);
--    }
-+    clear_vec_high(s, true, a->rd);
+ 
+     if (setflags) {
+-        gen_adc_CC(sf, tcg_rd, tcg_rn, tcg_y);
++        gen_adc_CC(a->sf, tcg_rd, tcg_rn, tcg_y);
+     } else {
+-        gen_adc(sf, tcg_rd, tcg_rn, tcg_y);
++        gen_adc(a->sf, tcg_rd, tcg_rn, tcg_y);
+     }
 +    return true;
  }
  
- static bool trans_OK(DisasContext *s, arg_OK *a)
-@@ -9761,20 +9605,6 @@ static bool btype_destination_ok(uint32_t insn, bool bt, int btype)
-     return false;
- }
- 
--/* C3.1 A64 instruction index by encoding */
--static void disas_a64_legacy(DisasContext *s, uint32_t insn)
--{
--    switch (extract32(insn, 25, 4)) {
--    case 0x7:
--    case 0xf:      /* Data processing - SIMD and floating point */
--        disas_data_proc_simd_fp(s, insn);
--        break;
--    default:
--        unallocated_encoding(s);
--        break;
--    }
--}
++TRANS(ADC, do_adc_sbc, a, false, false)
++TRANS(SBC, do_adc_sbc, a, true, false)
++TRANS(ADCS, do_adc_sbc, a, false, true)
++TRANS(SBCS, do_adc_sbc, a, true, true)
++
+ /*
+  * Rotate right into flags
+  *  31 30 29                21       15          10      5  4      0
+@@ -8305,10 +8297,6 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
+     switch (op2) {
+     case 0x0:
+         switch (op3) {
+-        case 0x00: /* Add/subtract (with carry) */
+-            disas_adc_sbc(s, insn);
+-            break;
 -
- static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
-                                           CPUState *cpu)
- {
-@@ -9977,7 +9807,7 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     if (!disas_a64(s, insn) &&
-         !disas_sme(s, insn) &&
-         !disas_sve(s, insn)) {
--        disas_a64_legacy(s, insn);
-+        unallocated_encoding(s);
-     }
+         case 0x01: /* Rotate right into flags */
+         case 0x21:
+             disas_rotate_right_into_flags(s, insn);
+@@ -8322,6 +8310,7 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
+             break;
  
-     /*
+         default:
++        case 0x00: /* Add/subtract (with carry) */
+             goto do_unallocated;
+         }
+         break;
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 5090b857e6..47ca635315 100644
+index c6609749ae..34bff988f7 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -1866,6 +1866,8 @@ FRSQRTE_v       0.10 1110 1.1 00001 11011 0 ..... .....     @qrr_sd
- URECPE_v        0.00 1110 101 00001 11001 0 ..... .....     @qrr_s
- URSQRTE_v       0.10 1110 101 00001 11001 0 ..... .....     @qrr_s
+@@ -746,6 +746,12 @@ ADDS_ext        . 01 01011001 ..... ... ... ..... .....  @addsub_ext
+ SUBS_ext        . 11 01011001 ..... ... ... ..... .....  @addsub_ext
  
-+FCVTL_v         0.00 1110 0.1 00001 01111 0 ..... .....     @qrr_sd
+ # Add/subtract (carry)
 +
- &fcvt_q         rd rn esz q shift
- @fcvtq_h        . q:1 . ...... 001 .... ...... rn:5 rd:5    \
-                 &fcvt_q esz=1 shift=%fcvt_f_sh_h
++ADC             . 00 11010000 ..... 000000 ..... .....  @rrr_sf
++ADCS            . 01 11010000 ..... 000000 ..... .....  @rrr_sf
++SBC             . 10 11010000 ..... 000000 ..... .....  @rrr_sf
++SBCS            . 11 11010000 ..... 000000 ..... .....  @rrr_sf
++
+ # Rotate right into flags
+ # Evaluate into flags
+ # Conditional compare (regster)
 -- 
 2.43.0
 
