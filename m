@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECBE3D49771
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 15:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FC4D49771
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 15:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHlWx-0001RO-Tb; Sun, 01 Dec 2024 10:06:39 -0500
+	id 1tHlWf-0001Cf-DG; Sun, 01 Dec 2024 10:06:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlWr-0001N0-HZ
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:33 -0500
-Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
+ id 1tHlWb-00019j-Dt
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:17 -0500
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tHlWp-0004CE-HA
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:33 -0500
-Received: by mail-oo1-xc29.google.com with SMTP id
- 006d021491bc7-5f1e560d973so1728814eaf.0
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:06:31 -0800 (PST)
+ id 1tHlWY-00041d-Ai
+ for qemu-devel@nongnu.org; Sun, 01 Dec 2024 10:06:17 -0500
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-5f1e560d973so1728689eaf.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 07:06:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733065590; x=1733670390; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733065571; x=1733670371; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qSeN8uV754VeQZXFsQOC17BF2SkJdmbFae/IrzP2P+g=;
- b=s14hPMbnBiLRtKasd6mjyAAYJ++bKXlWdjkJtFjOlq7EKpIAuHqvpiCd/cCtRHfzsY
- fUCd5j76Hi71/vB9rS8zoqVfi8YiBPjMNLP4Cvyf2HzmzFwIAsNsSZUkbTBep2k6+p6d
- Wtkz4vfJTHsskHOO7fM+V3kJ5p+xxftW9qG8eDDJuaap914o6l0V2JQa4SalMqyIAWTC
- AeBEHScE5YPKOyph1uxmYrtFQZDmY1b3+coCRjc5VMTcj/jJ13GNOrvzxp3RIxghOQJX
- hlB1HO2swRagZQvApL8zRjYGiyARoWcoiLiYxGpAdFvSoclozSjsE+ROI6ioDlPoCIhL
- 3QPg==
+ bh=eYsIv+bnK6/Aj793jyUAXVCI8JVh6W1VGa4MYQzPl5A=;
+ b=YSMLcSnq2btQhpR6t6o0J81v0KGSmu9uMnD6lUhKueO+uK5mKH+HTWD5y0BopCHBZW
+ G2+XN7lF5FseBpLXWJqDaAaGZ8u7tOcxiZ7s2t1MXa26dq2ugwGKjVkQozqkQCUYRKpn
+ T0t5mAiMx8Dhj8osCLYD5C9M/aGMt9xb0JtMKkBAPagiGsijcQw+D7rg//RgA+ef+7Xm
+ jhVjccKfuh3a0nTqVqebwqlOK1D/g0Z54aqKjUyIbwWUjx+nCo8J3lvlBpTr4k+Pynr3
+ USNF/cbM6mC5cIvdqrDKmdwz1N4vsoen5+C+YTrfwV9i0CStS/ecAbSCQVRlnV1rknDH
+ kcOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733065590; x=1733670390;
+ d=1e100.net; s=20230601; t=1733065571; x=1733670371;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qSeN8uV754VeQZXFsQOC17BF2SkJdmbFae/IrzP2P+g=;
- b=pxn5glV3wL677c+gBQI5aA5mt86k7lmv9PYYOsdxYCSupFWOWZRaSum9ltSpB9Usv5
- /T2idpis671ePhMSIhWxcpNWhSjiOOLUICMFcBYeqqIw3Ak0vtpxK8OtHlJOEq2z2X1X
- plUm9Jhd4YlyFWlibFynJ1q0bmP/t7n3AfLjAZDDHCQJnQtCiWSt9GlJE7BxVdlh8L+p
- SuqHlSWmStHI9RCN0GokN+o7+bhXLZIV+9zyWyLqOW14FXHiuVhUpT77tXZupz7s83lk
- M2+kVuuHbZR9C0OTi98IR8V/h2CKvDc6BAGE+9GOsEdKFehF01XbkBDXeQACA/YiWIB8
- bdYQ==
-X-Gm-Message-State: AOJu0Yy0ZwlhZ3pVYVKKKtrcFOAfmofWj5jTfH1WVtqdt0VaLm00XYhT
- w8rfUINTyQkn+sHrtqeOQEDTIwN/GJ0DkNp2Qvjrpwmzrr+Wua7br9KyLof4Xw4qhbAKwuQgYzt
- 1H4s=
-X-Gm-Gg: ASbGnctpHa0/ZjYjaomX3RGMWmIsLZTDZq8JNo78y4Fh20UacK/NNtReX9Uv1vEahwh
- tUDVM1O77zSumdZhKMP7ERKXtnyJkc/Oa9sjWALOKDKk8i3oA3xX/6UCQiJ5uOd0y1c9NmwdCMO
- Ywa3HAklZZJjws1t+TdGni90C4uJF0xJvas0GUXRKZtYw9Ss/2NOHp+I4DjzjKVSpCsLN4pi2H+
- CmLmGxFlgJ6pHrOtcp2bBMxqZpg+DIsR9iYBbl7VikFx0zAv6tbfOn6W+6XAifbN6WJTtPNdH7A
- Td8NksRPj+nnuBhc0IzXCTOdE2FcL+qxKZDB
-X-Google-Smtp-Source: AGHT+IGvFF46ZzfcURwY1aNLMp6/hPpLsVmiUD0sGwArrRcK+FEFAL3ZtFUB/mbw4EeCCUrfQdEAEg==
-X-Received: by 2002:a05:6820:20c:b0:5f1:ed20:b7b2 with SMTP id
- 006d021491bc7-5f217a1ad3fmr8661770eaf.4.1733065590212; 
- Sun, 01 Dec 2024 07:06:30 -0800 (PST)
+ bh=eYsIv+bnK6/Aj793jyUAXVCI8JVh6W1VGa4MYQzPl5A=;
+ b=cZ/1aErVZuqdjDoIHVxAPOKaKI9iCVDuDMBUuQ8//EQ/6rHpHVgnLUdoSulQapMS6d
+ KBhZNN2Ygr4beaB4rZ8VGImAbQpVw3bSCVdSgQxE1d5wUqgXhqOTOUV/VyxeJJXR6s2g
+ f6zgo+5Gl6fO2dcEyLOuu82b1TLgacFlW/AuQ9leqbtYsf50MaWVIUKiotY/imOnvGrD
+ sZo3GKNt5d8NA+e3F6SpdhuWQrGEgu2ligwfd97/WxSVZDMQvGce5MUQD9MMBRhpN8Ey
+ O1UAzLjpJ3GIh8yKaku7JyzGsWOIMtTXOJle9F6r8j4Gf2VRNA3Tv9xNh8bHsZRclh2g
+ Msmg==
+X-Gm-Message-State: AOJu0YwpQwuxLIIorWgkh0tQ7KeJjK3NlIxsCQY11qg7sdhtQbvpdWO+
+ CsKxrIXSJCnxYrFG0IVewMFSKO+/Z6+1WeNVhKiq/heF94dm/Jf3556V5XV5BagcT6GYIDctbQX
+ 1mws=
+X-Gm-Gg: ASbGncteop5mNKvM9Zy6oRf+I5ehacOgxNxqN0W8JpbyL2X1SjHwOpej+xCtf91zzds
+ i/JHF43+U/9Hys9F7JDGI28CICuNK4ygG250hEr7izhz2y7FLAwBwsutaMB3rL4EcQpTvRqFvXI
+ 06xZMln2wu7i7c6+pFcih9f2d5tE0Bv+i9qONDlO1sogKCKzBgduc/bLkWlpsW8IhlWBgoR/AnE
+ AlNloh3or4jSgJX0NIe+S0ACKAg6268+H05qtjsSTLd8qctzk3V92A9AX8ULJ7PfmW81Q62+441
+ 4wJ8rMQ+H261siFirGh+qwdj6flGgrkvoJ6b
+X-Google-Smtp-Source: AGHT+IHJ8Igc7hp8h2fmmqjepwXU/16dQk8eklavF7iXdJt5n9u2N7DvsPnePkFF3H/zbV10Y/vmgA==
+X-Received: by 2002:a05:6830:dc1:b0:71d:53ed:c2ce with SMTP id
+ 46e09a7af769-71d70bc63eemr10128671a34.2.1733065571070; 
+ Sun, 01 Dec 2024 07:06:11 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71d7254473asm1822220a34.27.2024.12.01.07.06.29
+ 46e09a7af769-71d7254473asm1822220a34.27.2024.12.01.07.06.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Dec 2024 07:06:29 -0800 (PST)
+ Sun, 01 Dec 2024 07:06:10 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 18/67] target/arm: Convert CCMP, CCMN to decodetree
-Date: Sun,  1 Dec 2024 09:05:17 -0600
-Message-ID: <20241201150607.12812-19-richard.henderson@linaro.org>
+Subject: [PATCH 01/67] target/arm: Use ### to separate 3rd-level sections in
+ a64.decode
+Date: Sun,  1 Dec 2024 09:05:00 -0600
+Message-ID: <20241201150607.12812-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241201150607.12812-1-richard.henderson@linaro.org>
 References: <20241201150607.12812-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,148 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We already use ### for 4.1.92 Data Processing (immediate),
+but not the two following two third-level sections:
+4.1.93 Branches, and 4.1.94 Loads and stores.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 66 +++++++++++-----------------------
- target/arm/tcg/a64.decode      |  6 ++--
- 2 files changed, 25 insertions(+), 47 deletions(-)
+ target/arm/tcg/a64.decode | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 774689641d..56a445a3c2 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -8092,68 +8092,46 @@ static bool do_setf(DisasContext *s, int rn, int shift)
- TRANS_FEAT(SETF8, aa64_condm_4, do_setf, a->rn, 24)
- TRANS_FEAT(SETF16, aa64_condm_4, do_setf, a->rn, 16)
- 
--/* Conditional compare (immediate / register)
-- *  31 30 29 28 27 26 25 24 23 22 21  20    16 15  12  11  10  9   5  4 3   0
-- * +--+--+--+------------------------+--------+------+----+--+------+--+-----+
-- * |sf|op| S| 1  1  0  1  0  0  1  0 |imm5/rm | cond |i/r |o2|  Rn  |o3|nzcv |
-- * +--+--+--+------------------------+--------+------+----+--+------+--+-----+
-- *        [1]                             y                [0]       [0]
-- */
--static void disas_cc(DisasContext *s, uint32_t insn)
-+/* CCMP, CCMN */
-+static bool trans_CCMP(DisasContext *s, arg_CCMP *a)
- {
--    unsigned int sf, op, y, cond, rn, nzcv, is_imm;
--    TCGv_i32 tcg_t0, tcg_t1, tcg_t2;
--    TCGv_i64 tcg_tmp, tcg_y, tcg_rn;
-+    TCGv_i32 tcg_t0 = tcg_temp_new_i32();
-+    TCGv_i32 tcg_t1 = tcg_temp_new_i32();
-+    TCGv_i32 tcg_t2 = tcg_temp_new_i32();
-+    TCGv_i64 tcg_tmp = tcg_temp_new_i64();
-+    TCGv_i64 tcg_rn, tcg_y;
-     DisasCompare c;
--
--    if (!extract32(insn, 29, 1)) {
--        unallocated_encoding(s);
--        return;
--    }
--    if (insn & (1 << 10 | 1 << 4)) {
--        unallocated_encoding(s);
--        return;
--    }
--    sf = extract32(insn, 31, 1);
--    op = extract32(insn, 30, 1);
--    is_imm = extract32(insn, 11, 1);
--    y = extract32(insn, 16, 5); /* y = rm (reg) or imm5 (imm) */
--    cond = extract32(insn, 12, 4);
--    rn = extract32(insn, 5, 5);
--    nzcv = extract32(insn, 0, 4);
-+    unsigned nzcv;
- 
-     /* Set T0 = !COND.  */
--    tcg_t0 = tcg_temp_new_i32();
--    arm_test_cc(&c, cond);
-+    arm_test_cc(&c, a->cond);
-     tcg_gen_setcondi_i32(tcg_invert_cond(c.cond), tcg_t0, c.value, 0);
- 
-     /* Load the arguments for the new comparison.  */
--    if (is_imm) {
--        tcg_y = tcg_temp_new_i64();
--        tcg_gen_movi_i64(tcg_y, y);
-+    if (a->imm) {
-+        tcg_y = tcg_constant_i64(a->y);
-     } else {
--        tcg_y = cpu_reg(s, y);
-+        tcg_y = cpu_reg(s, a->y);
-     }
--    tcg_rn = cpu_reg(s, rn);
-+    tcg_rn = cpu_reg(s, a->rn);
- 
-     /* Set the flags for the new comparison.  */
--    tcg_tmp = tcg_temp_new_i64();
--    if (op) {
--        gen_sub_CC(sf, tcg_tmp, tcg_rn, tcg_y);
-+    if (a->op) {
-+        gen_sub_CC(a->sf, tcg_tmp, tcg_rn, tcg_y);
-     } else {
--        gen_add_CC(sf, tcg_tmp, tcg_rn, tcg_y);
-+        gen_add_CC(a->sf, tcg_tmp, tcg_rn, tcg_y);
-     }
- 
--    /* If COND was false, force the flags to #nzcv.  Compute two masks
-+    /*
-+     * If COND was false, force the flags to #nzcv.  Compute two masks
-      * to help with this: T1 = (COND ? 0 : -1), T2 = (COND ? -1 : 0).
-      * For tcg hosts that support ANDC, we can make do with just T1.
-      * In either case, allow the tcg optimizer to delete any unused mask.
-      */
--    tcg_t1 = tcg_temp_new_i32();
--    tcg_t2 = tcg_temp_new_i32();
-     tcg_gen_neg_i32(tcg_t1, tcg_t0);
-     tcg_gen_subi_i32(tcg_t2, tcg_t0, 1);
- 
-+    nzcv = a->nzcv;
-     if (nzcv & 8) { /* N */
-         tcg_gen_or_i32(cpu_NF, cpu_NF, tcg_t1);
-     } else {
-@@ -8190,6 +8168,7 @@ static void disas_cc(DisasContext *s, uint32_t insn)
-             tcg_gen_and_i32(cpu_VF, cpu_VF, tcg_t2);
-         }
-     }
-+    return true;
- }
- 
- /* Conditional select
-@@ -8266,10 +8245,6 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
-     }
- 
-     switch (op2) {
--    case 0x2: /* Conditional compare */
--        disas_cc(s, insn); /* both imm and reg forms */
--        break;
--
-     case 0x4: /* Conditional select */
-         disas_cond_select(s, insn);
-         break;
-@@ -8277,6 +8252,7 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
-     default:
-     do_unallocated:
-     case 0x0:
-+    case 0x2: /* Conditional compare */
-     case 0x6: /* Data-processing */
-     case 0x8 ... 0xf: /* (3 source) */
-         unallocated_encoding(s);
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 1228c41679..b339adee6f 100644
+index 331a8e180c..197437ba8e 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -761,8 +761,10 @@ RMIF            1 01 11010000 imm:6 00001 rn:5 0 mask:4
- SETF8           0 01 11010000 00000 000010 rn:5 01101
- SETF16          0 01 11010000 00000 010010 rn:5 01101
+@@ -161,7 +161,7 @@ UBFM            . 10 100110 . ...... ...... ..... ..... @bitfield_32
+ EXTR            1 00 100111 1 0 rm:5 imm:6 rn:5 rd:5     &extract sf=1
+ EXTR            0 00 100111 0 0 rm:5 0 imm:5 rn:5 rd:5   &extract sf=0
  
--# Conditional compare (regster)
--# Conditional compare (immediate)
-+# Conditional compare
-+
-+CCMP            sf:1 op:1 1 11010010 y:5 cond:4 imm:1 0 rn:5 0 nzcv:4
-+
- # Conditional select
- # Data Processing (3-source)
+-# Branches
++### Branches
  
+ %imm26   0:s26 !function=times_4
+ @branch         . ..... .......................... &i imm=%imm26
+@@ -291,7 +291,7 @@ HLT             1101 0100 010 ................ 000 00 @i16
+ # DCPS2         1101 0100 101 ................ 000 10 @i16
+ # DCPS3         1101 0100 101 ................ 000 11 @i16
+ 
+-# Loads and stores
++### Loads and stores
+ 
+ &stxr           rn rt rt2 rs sz lasr
+ &stlr           rn rt sz lasr
 -- 
 2.43.0
 
