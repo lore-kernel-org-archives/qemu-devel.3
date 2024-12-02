@@ -4,98 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CF89E69E95
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFBEE69E98
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 22:03:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIEUP-00076x-7K; Mon, 02 Dec 2024 17:01:57 -0500
+	id 1tIEUN-00076R-G1; Mon, 02 Dec 2024 17:01:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tIEUN-00076n-Ou
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 17:01:55 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tIEUJ-00075a-Sa
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 17:01:51 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tIEUL-0003dS-IQ
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 17:01:55 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tIEUI-0003cU-7H
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 17:01:51 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 572CF1F387;
- Mon,  2 Dec 2024 22:01:52 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id BFC9F2117B;
+ Mon,  2 Dec 2024 22:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733176912; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1733176908; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=siRO2ER29XgC/MLznmevspyWks+406KbmDeRkQWUaPI=;
- b=WucXY2W81bBktZ56JDcp3wnI1un0vmucUWe/2XhqkpGw77k3qV5+oVxdJ8mxPe+MO9ml9X
- rtUVW1i1yVpnCH02JZceonFXtlVDzSyMND++vfR+iih7BQR+TqvZuP371fwonLtl50b/uN
- X/CBRLZrTIolUgjnZZgrkOtHU4FGu0c=
+ bh=cdxYBEqgn4kOXDr/O55Bx/l2mCvnSz1Da+lplp0fIH8=;
+ b=tDaM8YxMqygXHcpFG8It6pKZ/3K+WYiWLZ/X1HDayR447nIKdTOPahkW6AVRnuCY1eTXmj
+ fE3125Mv34oZwmmrF25K59SMvfAkGaJp5iz+8BNorBfkAz1VuxK7P8bFnVo38/CYwFNk25
+ bZUUB0ZZN5cclegj+F6dOmXJKlJdWak=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733176912;
+ s=susede2_ed25519; t=1733176908;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=siRO2ER29XgC/MLznmevspyWks+406KbmDeRkQWUaPI=;
- b=bjt0X6j8yjmu7KpR3ZfX5MpcMdzkG7T3VOiQIMVZSEu4uX4hCFEnvLcyagnIAQrdniYRCb
- J1VXg36V8Xw+hOCA==
-Authentication-Results: smtp-out2.suse.de;
-	none
+ bh=cdxYBEqgn4kOXDr/O55Bx/l2mCvnSz1Da+lplp0fIH8=;
+ b=sgvREuEAzX2/iy2FOILIyX5xhQYoDUFs4b9yv+6Qd6b3UFlDb/dxJ3Bv0L1u6US/RiCo1P
+ MlmGB3RS3gDIaVDg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tDaM8YxM;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=sgvREuEA
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733176912; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1733176908; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=siRO2ER29XgC/MLznmevspyWks+406KbmDeRkQWUaPI=;
- b=WucXY2W81bBktZ56JDcp3wnI1un0vmucUWe/2XhqkpGw77k3qV5+oVxdJ8mxPe+MO9ml9X
- rtUVW1i1yVpnCH02JZceonFXtlVDzSyMND++vfR+iih7BQR+TqvZuP371fwonLtl50b/uN
- X/CBRLZrTIolUgjnZZgrkOtHU4FGu0c=
+ bh=cdxYBEqgn4kOXDr/O55Bx/l2mCvnSz1Da+lplp0fIH8=;
+ b=tDaM8YxMqygXHcpFG8It6pKZ/3K+WYiWLZ/X1HDayR447nIKdTOPahkW6AVRnuCY1eTXmj
+ fE3125Mv34oZwmmrF25K59SMvfAkGaJp5iz+8BNorBfkAz1VuxK7P8bFnVo38/CYwFNk25
+ bZUUB0ZZN5cclegj+F6dOmXJKlJdWak=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733176912;
+ s=susede2_ed25519; t=1733176908;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=siRO2ER29XgC/MLznmevspyWks+406KbmDeRkQWUaPI=;
- b=bjt0X6j8yjmu7KpR3ZfX5MpcMdzkG7T3VOiQIMVZSEu4uX4hCFEnvLcyagnIAQrdniYRCb
- J1VXg36V8Xw+hOCA==
+ bh=cdxYBEqgn4kOXDr/O55Bx/l2mCvnSz1Da+lplp0fIH8=;
+ b=sgvREuEAzX2/iy2FOILIyX5xhQYoDUFs4b9yv+6Qd6b3UFlDb/dxJ3Bv0L1u6US/RiCo1P
+ MlmGB3RS3gDIaVDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2173D13A31;
- Mon,  2 Dec 2024 22:01:50 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8E1EB13A31;
+ Mon,  2 Dec 2024 22:01:47 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 8LsiNk4uTmdlIAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 02 Dec 2024 22:01:50 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ICOeFEsuTmdlIAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 02 Dec 2024 22:01:47 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 6/6] tests/qtest/migration: Add a cancel test
-Date: Mon,  2 Dec 2024 19:01:37 -0300
-Message-Id: <20241202220137.32584-7-farosas@suse.de>
+Subject: [PATCH 4/6] migration: Make sure postcopy recovery doesn't hang when
+ cancelling
+Date: Mon,  2 Dec 2024 19:01:35 -0300
+Message-Id: <20241202220137.32584-5-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20241202220137.32584-1-farosas@suse.de>
 References: <20241202220137.32584-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Queue-Id: BFC9F2117B
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ FROM_HAS_DN(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -119,292 +131,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qmp_migrate_cancel() command is poorly tested and code inspection
-reveals that there might be concurrency issues with its usage. Add a
-test that runs a migration and calls qmp_migrate_cancel() at specific
-moments.
-
-In order to make the test more deterministic, instead of calling
-qmp_migrate_cancel() at random moments during migration, do it after
-the migration status change events are seen.
-
-The expected result is that qmp_migrate_cancel() on the source ends
-migration on the source with the "cancelled" state and ends migration
-on the destination with the "failed" state.
+Make sure postcopy recovery doesn't hang when calling
+qmp_migrate_cancel() and also doesn't pause the migration once more.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration-test.c | 243 +++++++++++++++++++++++++++++++++++
- 1 file changed, 243 insertions(+)
+ migration/migration.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 74d3000198..48942289bf 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -23,6 +23,8 @@
- #include "qapi/qmp/qlist.h"
- #include "ppc-util.h"
- 
-+#include "qapi-types-migration.h"
-+
- #include "migration-helpers.h"
- #include "tests/migration/migration-test.h"
- #ifdef CONFIG_GNUTLS
-@@ -3774,6 +3776,234 @@ static bool kvm_dirty_ring_supported(void)
- #endif
- }
- 
-+static void test_cancel_src_after_failed(QTestState *from, QTestState *to,
-+                                         const char *uri, const char *phase)
-+{
-+    /*
-+     * No migrate_incoming_qmp() at the start to force source into
-+     * failed state during migrate_qmp().
-+     */
-+
-+    wait_for_serial("src_serial");
-+    migrate_ensure_converge(from);
-+
-+    migrate_qmp(from, to, uri, NULL, "{}");
-+
-+    migration_event_wait(from, phase);
-+    migrate_cancel(from);
-+
-+    /* cancelling will not move the migration out of 'failed' */
-+
-+    wait_for_migration_status(from, "failed",
-+                              (const char * []) { "completed", NULL });
-+
-+    /*
-+     * Not waiting for the destination because it never started
-+     * migration.
-+     */
-+}
-+
-+static void test_cancel_src_after_cancelled(QTestState *from, QTestState *to,
-+                                            const char *uri, const char *phase)
-+{
-+    migrate_incoming_qmp(to, uri, "{ 'exit-on-error': false }");
-+
-+    wait_for_serial("src_serial");
-+    migrate_ensure_converge(from);
-+
-+    migrate_qmp(from, to, uri, NULL, "{}");
-+
-+    /* To move to cancelled/cancelling */
-+    migrate_cancel(from);
-+    migration_event_wait(from, phase);
-+
-+    /* The migrate_cancel under test */
-+    migrate_cancel(from);
-+
-+    wait_for_migration_status(from, "cancelled",
-+                              (const char * []) { "completed", NULL });
-+
-+    wait_for_migration_status(to, "failed",
-+                              (const char * []) { "completed", NULL });
-+}
-+
-+static void test_cancel_src_after_complete(QTestState *from, QTestState *to,
-+                                           const char *uri, const char *phase)
-+{
-+    migrate_incoming_qmp(to, uri, "{ 'exit-on-error': false }");
-+
-+    wait_for_serial("src_serial");
-+    migrate_ensure_converge(from);
-+
-+    migrate_qmp(from, to, uri, NULL, "{}");
-+
-+    migration_event_wait(from, phase);
-+    migrate_cancel(from);
-+
-+    /*
-+     * qmp_migrate_cancel() exits early if migration is not running
-+     * anymore, the status will not change to cancelled.
-+     */
-+    wait_for_migration_complete(from);
-+    wait_for_migration_complete(to);
-+}
-+
-+static void test_cancel_src_after_none(QTestState *from, QTestState *to,
-+                                       const char *uri, const char *phase)
-+{
-+    /*
-+     * Test that cancelling without a migration happening does not
-+     * affect subsequent migrations
-+     */
-+    migrate_cancel(to);
-+
-+    wait_for_serial("src_serial");
-+    migrate_cancel(from);
-+
-+    migrate_incoming_qmp(to, uri, "{ 'exit-on-error': false }");
-+
-+    migrate_ensure_converge(from);
-+    migrate_qmp(from, to, uri, NULL, "{}");
-+
-+    wait_for_migration_complete(from);
-+    wait_for_migration_complete(to);
-+}
-+
-+static void test_cancel_src_after_postcopy(QTestState *from, QTestState *to,
-+                                           const char *uri, const char *phase)
-+{
-+    bool postcopy_active = g_str_equal(phase, "postcopy-active");
-+    bool postcopy_paused = g_str_equal(phase, "postcopy-paused");
-+    bool postcopy_recover = g_str_equal(phase, "postcopy-recover-setup") ||
-+        g_str_equal(phase, "postcopy-recover");
-+
-+    migrate_set_capability(from, "postcopy-ram", true);
-+    migrate_set_capability(to, "postcopy-ram", true);
-+
-+    migrate_incoming_qmp(to, uri, "{ 'exit-on-error': false }");
-+
-+    wait_for_serial("src_serial");
-+    migrate_ensure_non_converge(from);
-+
-+    migrate_qmp(from, to, uri, NULL, "{}");
-+
-+    migration_event_wait(from, "active");
-+
-+    /* Turn postcopy speed down, 4K/s is slow enough on any machines */
-+    migrate_set_parameter_int(from, "max-postcopy-bandwidth", 4096);
-+    qtest_qmp_assert_success(from, "{ 'execute': 'migrate-start-postcopy' }");
-+
-+    if (!postcopy_active) {
-+        migration_event_wait(from, "postcopy-active");
-+        migration_event_wait(to, "postcopy-active");
-+
-+        wait_for_stop(from, &src_state);
-+        qtest_qmp_eventwait(to, "RESUME");
-+
-+        migrate_pause(from);
-+    }
-+
-+    if (postcopy_recover) {
-+        migration_event_wait(to, "postcopy-paused");
-+        migration_event_wait(from, "postcopy-paused");
-+
-+        migrate_recover(to, uri);
-+        migrate_qmp(from, to, uri, NULL, "{'resume': true}");
-+    }
-+
-+    migration_event_wait(from, phase);
-+    migrate_cancel(from);
-+    migration_event_wait(from, "cancelling");
-+
-+    wait_for_migration_status(from, "cancelled",
-+                              (const char * []) { "completed", NULL });
-+
-+    if (postcopy_paused || postcopy_recover) {
-+        /*
-+         * Cancelling on source is not detectable by the destination,
-+         * so it remains paused.
-+         */
-+        migration_event_wait(to, "postcopy-paused");
-+    } else {
-+        wait_for_migration_status(to, "failed",
-+                                  (const char * []) { "completed", NULL });
-+    }
-+}
-+
-+static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
-+                                           const char *uri, const char *phase)
-+{
-+    migrate_set_capability(from, "pause-before-switchover", true);
-+    migrate_set_capability(to, "pause-before-switchover", true);
-+
-+    migrate_set_parameter_int(from, "multifd-channels", 2);
-+    migrate_set_parameter_int(to, "multifd-channels", 2);
-+    migrate_set_capability(from, "multifd", true);
-+    migrate_set_capability(to, "multifd", true);
-+
-+    migrate_incoming_qmp(to, uri, "{ 'exit-on-error': false }");
-+
-+    wait_for_serial("src_serial");
-+    migrate_ensure_converge(from);
-+
-+    migrate_qmp(from, to, uri, NULL, "{}");
-+
-+    migration_event_wait(from, phase);
-+    migrate_cancel(from);
-+    migration_event_wait(from, "cancelling");
-+
-+    wait_for_migration_status(from, "cancelled",
-+                              (const char * []) { "completed", NULL });
-+
-+    wait_for_migration_status(to, "failed",
-+                              (const char * []) { "completed", NULL });
-+}
-+
-+static void test_cancel_src_after_status(void *opaque)
-+{
-+    const char *test_path = opaque;
-+    g_autofree char *phase = g_path_get_basename(test_path);
-+    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-+    QTestState *from, *to;
-+    MigrateStart args = {
-+        .hide_stderr = true,
-+    };
-+
-+    if (test_migrate_start(&from, &to, "defer", &args)) {
-+        return;
-+    }
-+
-+    if (g_str_has_prefix(phase, "postcopy")) {
-+        if (!ufd_version_check()) {
-+            g_test_skip("No postcopy support. "
-+                        "Cannot test migrate_cancel in postcopy states");
-+            goto out;
-+        }
-+
-+        test_cancel_src_after_postcopy(from, to, uri, phase);
-+
-+    } else if (g_str_equal(phase, "cancelling") ||
-+               g_str_equal(phase, "cancelled")) {
-+        test_cancel_src_after_cancelled(from, to, uri, phase);
-+
-+    } else if (g_str_equal(phase, "completed")) {
-+        test_cancel_src_after_complete(from, to, uri, phase);
-+
-+    } else if (g_str_equal(phase, "failed")) {
-+        test_cancel_src_after_failed(from, to, uri, phase);
-+
-+    } else if (g_str_equal(phase, "none")) {
-+        test_cancel_src_after_none(from, to, uri, phase);
-+
-+    } else {
-+        /* any state that comes before pre-switchover */
-+        test_cancel_src_pre_switchover(from, to, uri, phase);
-+    }
-+
-+out:
-+    test_migrate_end(from, to, false);
-+}
-+
- int main(int argc, char **argv)
- {
-     bool has_kvm, has_tcg;
-@@ -4034,6 +4264,19 @@ int main(int argc, char **argv)
+diff --git a/migration/migration.c b/migration/migration.c
+index 07fbb5c9f4..8a61cc26d7 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1531,6 +1531,8 @@ static void migrate_fd_cancel(MigrationState *s, MigrationIncomingState *mis)
+             qemu_sem_post(&s->pause_sem);
+         } else if (old_state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+             qemu_sem_post(&s->postcopy_pause_sem);
++        } else if (old_state == MIGRATION_STATUS_POSTCOPY_RECOVER) {
++            qemu_sem_post(&s->rp_state.rp_sem);
          }
+         migrate_set_state(&s->state, old_state, MIGRATION_STATUS_CANCELLING);
+     } while (s->state != MIGRATION_STATUS_CANCELLING);
+@@ -2148,6 +2150,10 @@ void qmp_migrate_continue(MigrationStatus state, Error **errp)
+ 
+ int migration_rp_wait(MigrationState *s)
+ {
++    if (qatomic_read(&s->state) == MIGRATION_STATUS_CANCELLING) {
++        return -1;
++    }
++
+     /* If migration has failure already, ignore the wait */
+     if (migrate_has_error(s)) {
+         return -1;
+@@ -2160,6 +2166,10 @@ int migration_rp_wait(MigrationState *s)
+         return -1;
      }
  
-+    for (int i = MIGRATION_STATUS_NONE; i < MIGRATION_STATUS__MAX; i++) {
-+        switch (i) {
-+        case MIGRATION_STATUS_DEVICE: /* happens too fast */
-+        case MIGRATION_STATUS_WAIT_UNPLUG: /* no support in tests */
-+        case MIGRATION_STATUS_COLO: /* no support in tests */
-+            continue;
-+        default:
-+            migration_test_add_suffix("/migration/cancel/src/after/",
-+                                      MigrationStatus_str(i),
-+                                      test_cancel_src_after_status);
-+        }
++    if (qatomic_read(&s->state) == MIGRATION_STATUS_CANCELLING) {
++        return -1;
 +    }
 +
-     ret = g_test_run();
+     return 0;
+ }
  
-     g_assert_cmpint(ret, ==, 0);
+@@ -3023,6 +3033,9 @@ static MigThrError postcopy_pause(MigrationState *s)
+                 trace_postcopy_pause_continued();
+                 return MIG_THR_ERR_RECOVERED;
+             } else {
++                if (s->state == MIGRATION_STATUS_CANCELLING) {
++                    return MIG_THR_ERR_FATAL;
++                }
+                 /*
+                  * Something wrong happened during the recovery, let's
+                  * pause again. Pause is always better than throwing
 -- 
 2.35.3
 
