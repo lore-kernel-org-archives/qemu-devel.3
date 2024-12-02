@@ -4,90 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE4C7D78326
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 14:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1290CD78326
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 14:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI7AT-0007QJ-SX; Mon, 02 Dec 2024 09:12:53 -0500
+	id 1tI7B9-0008Cm-Ti; Mon, 02 Dec 2024 09:13:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tI7AR-0007Px-AT
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 09:12:51 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tI7AP-00062n-R3
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 09:12:51 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-385df8815fcso1840178f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 06:12:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733148768; x=1733753568; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IvdTaGkelmY0IEVR7fsxRrmAClGwINqYQ/rxeg7ayYU=;
- b=u6OjmIzYL2lY5oWJRnd42OUS815IxrPpQ0LTlaLa7DgVTfm+EENjYaGDC04rP/hah9
- SNoYiWTVYgLQfDU4W7TVa1TODlxlxYCISbjmM34suqvHYa3COoqcCK+PHgdf/OlwqG3A
- X+5U1fLYX2W4dyLsOM/S1m74MceNmxQdPg/R2IhdHRWelAgqhxKdsdQrN1MK4kWRePti
- XGDsNOXbHqiGou/l/fOkoHZ8O6Y2zZU3m/3MKGX+wUSRtIsijZJTzN0PU6QyGsTCjFQY
- +es139z841U6Da1wtTkgI5QnJftuSWr6GR5X5rEOt6cxGi9xlJbQGY2RpTp2pMxdNEZK
- TDiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733148768; x=1733753568;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IvdTaGkelmY0IEVR7fsxRrmAClGwINqYQ/rxeg7ayYU=;
- b=Kca6Uw4P+X196pCkeSOuwPoCq96bCOPiir/suOJuxn4uaPRmxjmw2Dcpp4bpQEVWor
- pAj5f90I0J/mn73VGeCt1Y2EJlnTn37Sl30/IUCB8X6/yh5IEQvw9h+GbRysnhDXcaPx
- yG9vn+oU/Nd2UnuxBloUwGouWuI7s4fS3Yc7eiRZ/0mSmosdfvdyRTOp0x//OKXTH1ZY
- aQrGDT/ltaM8+EhJjL639FbxGj2FrRiskrbYMkLUZYdK4ji38v69Yurx8m+VuVM5SMDO
- HnvzRKLR4s/9SjQYrc1/8m7CgQcMUw7lP5FyK3mvJ+uHGoqwx5PCJcDnrKfuvdHb8/Bc
- ky/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLSk3oAjl3Vq0k/CtY4KWhspdf2Qmt3yqaV26hDdWNZrB4TQK/hTiMz6V1wh2kDhoabdWSmGqw79t1@nongnu.org
-X-Gm-Message-State: AOJu0Yz1UidnLDzFQ4pIKHi6h3J/MeUxdDR6n6bWxIjp3Vwj5AXuxbPy
- 1OJFAFtV1BM4eOdH0n6vpBdKQFV2QVLRsat0O+XSb/D/UjTyBymIBXXfDEeRAr0=
-X-Gm-Gg: ASbGncvKnw0jBUWnc3KZWDJ7V30Xh//TktMGYqKdxGHMg+QLinCRb0oRz4O3DbKaSGD
- qZ1WX0/vRxuYf6uT/xf6ZcYvPpRzZbzLqeMJKq+NpaIXl/7/ZixPg9O5xSyl6YxUCrs6riWSBD8
- VHWPuTaEFepbm9804q3jPcuueK21jLPR46PcVmO+Wf+3b8mLf8DeyiGzWvQFWRsNDsmN9+r7FcB
- Jd39OnuXDcIR6+OwnLHz+r2q0o3mwm6DnILtGeDMuuNhzjO9fL9ZIjyz0xCkplgyGisRiklMODi
- cIQf11KIIsTqnoHtLRFI+d7OyF/ikA==
-X-Google-Smtp-Source: AGHT+IGkLFRgn5S57ug2NpKdbC1TVh8IaWVBQQo/ingtKmOkji3/1ykoAbISPv3kBGlyiYijDBYLHw==
-X-Received: by 2002:a5d:6d86:0:b0:385:f69a:7e5f with SMTP id
- ffacd0b85a97d-385f69a81c2mr2240001f8f.38.1733148766652; 
- Mon, 02 Dec 2024 06:12:46 -0800 (PST)
-Received: from [192.168.68.213] (72.red-95-127-54.dynamicip.rima-tde.net.
- [95.127.54.72]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dc169d79sm10717623f8f.92.2024.12.02.06.12.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 06:12:45 -0800 (PST)
-Message-ID: <c808724c-8024-4c65-9c15-0f6a733a4319@linaro.org>
-Date: Mon, 2 Dec 2024 15:12:42 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/67] target/arm: Use ### to separate 3rd-level sections
- in a64.decode
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-2-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1tI2ys-0005LE-Vl
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:44:39 -0500
+Received: from netsrv01.beckhoff.com ([62.159.14.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1tI2yq-0006n8-V3
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:44:38 -0500
+Received: from 172.17.5.170 by netsrv01.beckhoff.com (Tls12, Aes256, Sha384,
+ DiffieHellmanEllipticKey384); Mon, 02 Dec 2024 09:44:33 GMT
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
+ t=1733132673; bh=ZHm57GGY5XBx4rN/vOhNS9uxgD2GxC/q7D+VwS6/jaE=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=ed25519-sha256; b=
+ tc7hpSdJUDvRuxJphK2uZZsjXtjpjzXpR9tqo474dUrnW7iC9JuwucSoFCpIoBd9rrqMeSfo20I9rXz1jDA4Cg==
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
+ t=1733132673; bh=ZHm57GGY5XBx4rN/vOhNS9uxgD2GxC/q7D+VwS6/jaE=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=rsa-sha256; b=
+ t7XFvEJU5sIRJpp//b40pPPtqc6T2AxPy1XvZI7Hm6HLYNmuAkvW0+GE9TyoLjgUi+Znt5uGg9ZRwFJ4aXgPD1J5+TRiURhKor43j/B7kGuVe719X0YXSmjHNzuHvgmmY2Gi9TRAurQKygsAfqK87bReLyMZrjdcMXsNLN/6Rv2Qd9HyJ1CyOvkg7sEmAe2pzh75oNUW7krq/NllaAhKCZgEIbBIb7YjPqa1bn9zPD1+21RwCPN+W/JT/i5T7+8Mb9PAZRzwTc5YV4biy9n/q/1V5JTScVrhyNl5zUQe1lBbVtXopTiN1PTfGounx69zhX+VH+bSdYcQOAxqkVnW+A==
+Received: from ex04.beckhoff.com (172.17.5.170) by ex04.beckhoff.com
+ (172.17.5.170) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 2 Dec
+ 2024 10:44:32 +0100
+Received: from ex04.beckhoff.com ([fe80::492d:bba8:c8de:8ce3]) by
+ ex04.beckhoff.com ([fe80::492d:bba8:c8de:8ce3%6]) with mapi id
+ 15.01.2507.039; Mon, 2 Dec 2024 10:44:32 +0100
+From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
+To: "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "clg@redhat.com" <clg@redhat.com>, "alex.williamson@redhat.com"
+ <alex.williamson@redhat.com>
+Subject: Re: [PATCH 7/8] vfio/igd: emulate BDSM in mmio bar0 for gen 6-10
+ devices
+Thread-Topic: [PATCH 7/8] vfio/igd: emulate BDSM in mmio bar0 for gen 6-10
+ devices
+Thread-Index: AQHbRAt990ufnNPokkm98yjl3zmZ5bLSpLkA
+Date: Mon, 2 Dec 2024 09:44:32 +0000
+Message-ID: <483493629a375a9e35308527ffe0d8887b413111.camel@beckhoff.com>
+References: <20241201160938.44355-1-tomitamoeko@gmail.com>
+ <20241201160938.44355-8-tomitamoeko@gmail.com>
+In-Reply-To: <20241201160938.44355-8-tomitamoeko@gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241201150607.12812-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.17.130.225]
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="=-5UrqnThG953bpGdDJEZi"
+MIME-Version: 1.0
+Received-SPF: pass client-ip=62.159.14.10; envelope-from=C.Koehne@beckhoff.com;
+ helo=netsrv01.beckhoff.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 02 Dec 2024 09:13:31 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,59 +88,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/12/24 16:05, Richard Henderson wrote:
-> We already use ### for 4.1.92 Data Processing (immediate),
-> but not the two following two third-level sections:
-> 4.1.93 Branches, and 4.1.94 Loads and stores.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/tcg/a64.decode | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-> index 331a8e180c..197437ba8e 100644
-> --- a/target/arm/tcg/a64.decode
-> +++ b/target/arm/tcg/a64.decode
-> @@ -161,7 +161,7 @@ UBFM            . 10 100110 . ...... ...... ..... ..... @bitfield_32
->   EXTR            1 00 100111 1 0 rm:5 imm:6 rn:5 rd:5     &extract sf=1
->   EXTR            0 00 100111 0 0 rm:5 0 imm:5 rn:5 rd:5   &extract sf=0
->   
-> -# Branches
-> +### Branches
->   
->   %imm26   0:s26 !function=times_4
->   @branch         . ..... .......................... &i imm=%imm26
-> @@ -291,7 +291,7 @@ HLT             1101 0100 010 ................ 000 00 @i16
->   # DCPS2         1101 0100 101 ................ 000 10 @i16
->   # DCPS3         1101 0100 101 ................ 000 11 @i16
->   
-> -# Loads and stores
-> +### Loads and stores
->   
->   &stxr           rn rt rt2 rs sz lasr
->   &stlr           rn rt sz lasr
+--=-5UrqnThG953bpGdDJEZi
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-I'd include in this patch (from next one):
+T24gTW9uLCAyMDI0LTEyLTAyIGF0IDAwOjA5ICswODAwLCBUb21pdGEgTW9la28gd3JvdGU6Cj4g
+77u/Q0FVVElPTjogRXh0ZXJuYWwgRW1haWwhIQo+IEEgcmVjZW50IGNvbW1pdCBpbiBpOTE1IGRy
+aXZlciBbMV0gY2xhaW1zIHRoZSBCRFNNIHJlZ2lzdGVyIGF0IDB4MTA4MGMwCj4gb2YgbW1pbyBi
+YXIwIGhhcyBiZWVuIHRoZXJlIHNpbmNlIGdlbiA2LiBNaXJyb3IgdGhpcyByZWdpc3RlciB0byB0
+aGUgMzIKPiBiaXQgQkRTTSByZWdpc3RlciBhdCAweDVjIGluIHBjaSBjb25maWcgc3BhY2UgZm9y
+IGdlbjYtMTAgZGV2aWNlcy4KPiAKPiBbMV0KPiBodHRwczovL25vc3BhbXByb3h5d2VicC5iZWNr
+aG9mZi5jb20vZW5Rc2lnL2xpbms/aWQ9QkFnQUFBQWk5NkJkTWNKVjdya0FBQUJ5NEwzWS1uMUg0
+TTVFcmszdG9aZE1PbWhGbWM0SFVwandfWUctRzQtR2N3bVZkUzh3Q19wVXlLSDZwN3g5X08tNkhw
+cnZ5djltYmJXaF9qMnc1RTZ6TEFyUzNjckMxMTU0YUVZVFJGY3JJQkxQTUlvRUF2OWlURVJYRTJY
+QjBFMjYwTzNwa21tbzFVSk9NVWhiX2ZJNU9VVDMtNjhqbmtxNFF3VE5nYm53bWJWUm5MMkF5QU0x
+cGp1WnFvcVA2R1A5eTVlNk9nb2NXLUJKcDBRdEhPM2VQOU5icVR1ZmlmQUFNZktsVTdla0FaTFdm
+UHplanRxd2F3Mgo+IMKgCj4gCj4gU2lnbmVkLW9mZi1ieTogVG9taXRhIE1vZWtvIDx0b21pdGFt
+b2Vrb0BnbWFpbC5jb20+Cj4gLS0tCj4gwqBody92ZmlvL2lnZC5jIHwgMjYgKysrKysrKysrKysr
+KysrKysrLS0tLS0tLS0KPiDCoDEgZmlsZSBjaGFuZ2VkLCAxOCBpbnNlcnRpb25zKCspLCA4IGRl
+bGV0aW9ucygtKQo+IAo+IGRpZmYgLS1naXQgYS9ody92ZmlvL2lnZC5jIGIvaHcvdmZpby9pZ2Qu
+Ywo+IGluZGV4IDA3NzAwZGNlMzAuLjNmZDgyMjI0MWQgMTAwNjQ0Cj4gLS0tIGEvaHcvdmZpby9p
+Z2QuYwo+ICsrKyBiL2h3L3ZmaW8vaWdkLmMKPiBAQCAtNDgyLDcgKzQ4Miw4IEBAIHN0YXRpYyBj
+b25zdCBNZW1vcnlSZWdpb25PcHMgdmZpb19pZ2RfcXVpcmtfbWlycm9yXyMjbmFtZSA9IHvCoMKg
+wqDCoMKgwqDCoMKgwqDCoCBcCj4gwqB9Owo+IMKgCj4gwqBWRklPX0lHRF9RVUlSS19NSVJST1Jf
+UkVHKElHRF9HTUNILCBnZ2MpCj4gLVZGSU9fSUdEX1FVSVJLX01JUlJPUl9SRUcoSUdEX0JEU01f
+R0VOMTEsIGJkc20pCj4gK1ZGSU9fSUdEX1FVSVJLX01JUlJPUl9SRUcoSUdEX0JEU00sIGJkc20p
+Cj4gK1ZGSU9fSUdEX1FVSVJLX01JUlJPUl9SRUcoSUdEX0JEU01fR0VOMTEsIGJkc202NCkKPiDC
+oAo+IMKgdm9pZCB2ZmlvX3Byb2JlX2lnZF9iYXIwX3F1aXJrKFZGSU9QQ0lEZXZpY2UgKnZkZXYs
+IGludCBucikKPiDCoHsKPiBAQCAtNTA2LDcgKzUwNyw3IEBAIHZvaWQgdmZpb19wcm9iZV9pZ2Rf
+YmFyMF9xdWlyayhWRklPUENJRGV2aWNlICp2ZGV2LCBpbnQgbnIpCj4gwqDCoMKgwqDCoCAqIGlu
+dG8gTU1JTyBzcGFjZSBhbmQgcmVhZCBmcm9tIE1NSU8gc3BhY2UgYnkgdGhlIFdpbmRvd3MgZHJp
+dmVyLgo+IMKgwqDCoMKgwqAgKi8KPiDCoMKgwqDCoCBnZW4gPSBpZ2RfZ2VuKHZkZXYpOwo+IC3C
+oMKgwqAgaWYgKGdlbiA8IDExKSB7Cj4gK8KgwqDCoCBpZiAoZ2VuIDwgNikgewoKVGhpcyBhbHNv
+IGNhdXNlcyB0aGUgR0dDIHJlZ2lzdGVyIHRvIGJlIG1pcnJvcmVkIGZvciBnZW4gNiBhbmQgbGF0
+ZXIuIElzIHRoaXMgaW50ZW5kZWQ/IElmIHNvLCB5b3UKc2hvdWxkIG1lbnRpb24gaXQgaW4gdGhl
+IGNvbW1pdCBtZXNzYWdlIGFzIHdlbGwuCgo+IMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuOwo+IMKg
+wqDCoMKgIH0KPiDCoAo+IEBAIC01MjAsMTIgKzUyMSwyMSBAQCB2b2lkIHZmaW9fcHJvYmVfaWdk
+X2JhcjBfcXVpcmsoVkZJT1BDSURldmljZSAqdmRldiwgaW50IG5yKQo+IMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIElHRF9HR0NfTU1JT19PRkZTRVQsICZxdWlyay0+bWVtWzBdLAo+IMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIDEpOwo+IMKgCj4gLcKgwqDCoCBtZW1vcnlfcmVnaW9uX2luaXRfaW8o
+JnF1aXJrLT5tZW1bMV0sIE9CSkVDVCh2ZGV2KSwKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgJnZmaW9faWdkX3F1aXJrX21pcnJvcl9iZHNtLCB2
+ZGV2LAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCAidmZpby1pZ2QtYmRzbS1xdWlyayIsIDgpOwo+IC3CoMKgwqAgbWVtb3J5X3JlZ2lvbl9hZGRf
+c3VicmVnaW9uX292ZXJsYXAodmRldi0+YmFyc1swXS5yZWdpb24ubWVtLAo+IC3CoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgSUdEX0JEU01fTU1JT19PRkZTRVQsICZxdWlyay0+bWVtWzFdLAo+IC3CoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgMSk7Cj4gK8KgwqDCoCBpZiAoZ2VuIDwgMTEpIHsKPiArwqDCoMKg
+wqDCoMKgwqAgbWVtb3J5X3JlZ2lvbl9pbml0X2lvKCZxdWlyay0+bWVtWzFdLCBPQkpFQ1QodmRl
+diksCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgJnZmaW9faWdkX3F1aXJrX21pcnJvcl9iZHNtLCB2ZGV2LAo+ICvCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICJ2ZmlvLWln
+ZC1iZHNtLXF1aXJrIiwgNCk7Cj4gK8KgwqDCoMKgwqDCoMKgIG1lbW9yeV9yZWdpb25fYWRkX3N1
+YnJlZ2lvbl9vdmVybGFwKHZkZXYtPmJhcnNbMF0ucmVnaW9uLm1lbSwKPiArwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgSUdEX0JEU01fTU1JT19PRkZTRVQsCj4gK8KgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgICZxdWlyay0+bWVtWzFdLCAxKTsKPiArwqDCoMKgIH0gZWxzZSB7Cj4g
+K8KgwqDCoMKgwqDCoMKgIG1lbW9yeV9yZWdpb25faW5pdF9pbygmcXVpcmstPm1lbVsxXSwgT0JK
+RUNUKHZkZXYpLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgICZ2ZmlvX2lnZF9xdWlya19taXJyb3JfYmRzbTY0LCB2ZGV2LAo+ICvC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+ICJ2ZmlvLWlnZC1iZHNtLXF1aXJrIiwgOCk7Cj4gK8KgwqDCoMKgwqDCoMKgIG1lbW9yeV9yZWdp
+b25fYWRkX3N1YnJlZ2lvbl9vdmVybGFwKHZkZXYtPmJhcnNbMF0ucmVnaW9uLm1lbSwKPiArwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgSUdEX0JEU01fTU1JT19PRkZTRVQsCj4gK8KgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICZxdWlyay0+bWVtWzFdLCAxKTsKPiArwqDCoMKgIH0K
+PiDCoAo+IMKgwqDCoMKgIFFMSVNUX0lOU0VSVF9IRUFEKCZ2ZGV2LT5iYXJzW25yXS5xdWlya3Ms
+IHF1aXJrLCBuZXh0KTsKPiDCoH0KCi0tIApLaW5kIHJlZ2FyZHMsCkNvcnZpbgpkaXNhYmxlLWRp
+c2NsYWltZXItQkFERQoKCgo=
 
-+### Data Processing (register)
-+
-+# Data Processing (2-source)
-+# Data Processing (1-source)
-+# Logical (shifted reg)
-+# Add/subtract (shifted reg)
-+# Add/subtract (extended reg)
-+# Add/subtract (carry)
-+# Rotate right into flags
-+# Evaluate into flags
-+# Conditional compare (regster)
-+# Conditional compare (immediate)
-+# Conditional select
-+# Data Processing (3-source)
 
-Because it looks (to me) out of context in in the next one.
-Anyway,
+--=-5UrqnThG953bpGdDJEZi
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmdNgYEACgkQ2FTaVjFe
+AmoY3A/8Dd9XXg/69Pb4iKE89Y3vRqykbzLKVMbhr3i3k0Pgl9FdJVimrsUyXw0D
+leYpgrgU1zRJRiqdwmtGPFgf9rNPrJC8Yzwsnxh+L053qzv7VjbBmcCDcahouN80
+lTAkdFd3DOW8x2b9wryvfxUd5gSegZOh2IWGurXzE7uKurLqfnbYYQd114WXkcLI
+uJVgVWdz3BHhEEDVqbZsDWKuW3kKgsPkkTzS8tlmYI8SOooqGZPg00U518wn+bf5
+qzgUFB8AhK8EmnwyLkkOZxzK7DBjwsFrDsKVFr+D466l6hFYqgMGqtQPad7IHVFs
+/5OecLtib6u/c/7HC9xIW9+dqllI66uAvbFfI0UwQNwAbVQFdWl8D2FeRFOclnyt
+080cpLrUdUf0mMpDkmFmIRl/ZPRCUouIVJTzb0EQFA1bfIuLnp9H/Gginy6VRioX
+IcvHoNt/1sncJNallK8SFT03fQjpJ5EfAapj7PBfRYgw3J5GESzqYRvwCttdnqUH
+oqkYEB3QhP/MNkFucxQ7Mkql4b8UMpeZKViknOeMF7+u+e8xLRf0Wszce7UrImbX
+mjkn1LRoRQ/4zancIEvPNT5SWDmkUySMaxZFUNiNrogAJTaXAjyzBVBfnQIip1jc
+VAhb5yI802DzMdceuUCzWEIrkrbGpC9J/z4CCsw3KfBCcIDOTvs=
+=49rD
+-----END PGP SIGNATURE-----
+
+--=-5UrqnThG953bpGdDJEZi--
 
 
