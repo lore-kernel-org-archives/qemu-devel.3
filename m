@@ -4,98 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA45FD78322
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E9FD78321
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:40:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Uf-0002Ac-Mn; Mon, 02 Dec 2024 08:29:42 -0500
+	id 1tI6bg-00080f-5P; Mon, 02 Dec 2024 08:36:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6Gq-0002ht-6X
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:30 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6GY-0003NV-4z
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:23 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-385dfb168cbso1805752f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733145278; x=1733750078; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F9P3Zyg8EWDd8Ipp5Pjnvse0G07D293rwdAJ1WyzXl4=;
- b=K3Uar6D9jDn935gVUS/K3XuqOaAeoIE9Y08KA8se4kghYofFPzypz9slIGW/2US56A
- ZrpK7Bc06XUuVWPlIOm6cyU609T90o2vM1aofBHBDbYovnokHZ+5wR3fpTdxr3Oqb2oz
- XM0CEignuPdU/54AZuIA/OEfg8FsNYngNh7hmDmLalUJiCQWAqe4JHx9xNNQoAsTE9jp
- P6yfzk8gp9ZxQ0WKj9DYCWxZlFcjaiaz1a/rwxTx86jjA2y6d/EACPXuSlXZz5Gv5pf3
- /uZITmIizSGKkapFvFEsSpmuotbGjyO8O8302nWVqhJ24sRbmMdCSdHY66sCQNA1KjBj
- f6Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733145278; x=1733750078;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=F9P3Zyg8EWDd8Ipp5Pjnvse0G07D293rwdAJ1WyzXl4=;
- b=G3k4+LE4O84JIj18LHCVDQO13fZ2p04dpDryjkIYRTQaI5R5xAAOYLbbK5Ltd43u7O
- gbWXw3EO7bsjPFH790UA33DiO0xVXFoLcQUX+8A3AkmHgaFQTNGnC3cVd2OooYN1/CFv
- 8qmPzLGZLPOq/aepIGu+aO4yWu+SpXCPri48zrGQvcjgcS8P6jPheSAa0krY6Tk9sWNw
- QIfVBxYgEJ5zla1s6f08JS8+BDZK6KvarwxmQu/4R+UtjoGWFc42GO07W4j14drxT52V
- rtVex2hAKVz/HX+ftJFc2ouriMkZyLijOy3OdNbCbPLb7xAzetGAUyjKnOR18bEQfoCl
- +QJA==
-X-Gm-Message-State: AOJu0YzCZJ/1Ti1ROUapG8VqtjDEGdWabgiamZ3hg/n4RJuW19K6Spsx
- tAxrAESH9TrPGN3BGviSRhEr5hN7GVaLyAPEDz6nEHTHIFh8/eDa3QTAOKohbKhkJ62OhcnkpF7
- n
-X-Gm-Gg: ASbGncuhr+YknIozkoe1UKauNvieSeb+c287oTDCQTjmFGNylqE1EKNO839urbwRpK1
- zS+eT+1nkm1xb4Q5K/c9qI1FG82ZBWZFJNYBklD/HqIGYH0bnC104X/zrzR9XL96mkzNAO5hRG2
- j4WkKvIZkzdrrIBFf/ipxgk8e9Vyg20XqS2JhgwoGtc+n2+uz8dhFSrKjElQTH+ABa0Cglpl6/w
- 53oseBm5Xe4AeZ35E1x4xmq9zPq0ESRlUJe9QDI1q8aTVJDXY05GjA=
-X-Google-Smtp-Source: AGHT+IFL61A+tairJzPOItayh6olQ1F+IieedrTB8+3a6uLQVDTHerrpGpRDJzdWMxXPxCl7i8SUAA==
-X-Received: by 2002:a05:6000:2d04:b0:385:e30a:394b with SMTP id
- ffacd0b85a97d-385e30a3bdcmr6032714f8f.16.1733145277754; 
- Mon, 02 Dec 2024 05:14:37 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Dec 2024 05:14:37 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tI6Ln-00081j-Re
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:41 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tI6Li-0005n9-JI
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:28 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26WwEN012851;
+ Mon, 2 Dec 2024 13:20:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=n8GAaLWehzVdaQSW0sNL/nudX90REaKNsDMkGSNfea0=; b=
+ Jv7Dgvg95RLlIl4HAF60VxuJkDXlx0WXTNfXzEFicnWI4KUkyXN9ORgS9T5SarS2
+ yQqSozzAJPvPKB7rRx9dBhVRyqoGzvsbkBMJ+fiMAwQIxDqY1wLhX+bDXsA581r+
+ OioTeihSAL51YEAMjqBhJQ6TPhVEaR1/N45qBJ2xPmET9T1FZXrXAryT6K1nKOWB
+ PQTCfHq49p7VZtY4CzJ7lznXSWSe1WN7+PgHTXHG8mfOCcsqfmoNn13yq7TyKj7G
+ +OvJnM05qCQSIphMu8uykSTxd1ZPaSN7YIwxqZEFMy4bgYbynsS93JmFV7wr43Oc
+ arG4xDDN65hoyfinErSTHw==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437s4c3348-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 02 Dec 2024 13:20:22 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 4B2DIXe5032684; Mon, 2 Dec 2024 13:20:21 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 437s56jtra-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 02 Dec 2024 13:20:21 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCEr032806;
+ Mon, 2 Dec 2024 13:20:20 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 437s56jthv-11; Mon, 02 Dec 2024 13:20:20 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Song Gao <gaosong@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 for-10.0 31/54] target/m68k: Init local float_status from
- env fp_status in gdb get/set reg
-Date: Mon,  2 Dec 2024 13:13:24 +0000
-Message-Id: <20241202131347.498124-32-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
-References: <20241202131347.498124-1-peter.maydell@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V4 10/19] migration: cpr channel
+Date: Mon,  2 Dec 2024 05:20:02 -0800
+Message-Id: <1733145611-62315-11-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2024-12-02_09,2024-12-02_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxlogscore=999
+ spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2411120000 definitions=main-2412020116
+X-Proofpoint-ORIG-GUID: XlFtZckGl6MIUh_6UZDggTBP5DKiiIY3
+X-Proofpoint-GUID: XlFtZckGl6MIUh_6UZDggTBP5DKiiIY3
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,45 +105,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In cf_fpu_gdb_get_reg() and cf_fpu_gdb_set_reg() we do the conversion
-from float64 to floatx80 using a scratch float_status, because we
-don't want the conversion to affect the CPU's floating point exception
-status. Currently we use a zero-initialized float_status. This will
-get steadily more awkward as we add config knobs to float_status
-that the target must initialize. Avoid having to add any of that
-configuration here by instead initializing our local float_status
-from the env->fp_status.
+Add the 'cpr' channel type, and stash the incoming cpr channel for use
+in a subsequent patch.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- target/m68k/helper.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/migration/cpr.h |  3 +++
+ migration/cpr.c         | 15 +++++++++++++++
+ qapi/migration.json     |  3 ++-
+ system/vl.c             |  6 ++++++
+ 4 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 9bfc6ae97c0..beefeb7069c 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -36,7 +36,8 @@ static int cf_fpu_gdb_get_reg(CPUState *cs, GByteArray *mem_buf, int n)
-     CPUM68KState *env = &cpu->env;
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 201d66d..e833fae 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -17,6 +17,9 @@ void cpr_save_fd(const char *name, int id, int fd);
+ void cpr_delete_fd(const char *name, int id);
+ int cpr_find_fd(const char *name, int id);
  
-     if (n < 8) {
--        float_status s = {};
-+        /* Use scratch float_status so any exceptions don't change CPU state */
-+        float_status s = env->fp_status;
-         return gdb_get_reg64(mem_buf, floatx80_to_float64(env->fregs[n].d, &s));
-     }
-     switch (n) {
-@@ -56,7 +57,8 @@ static int cf_fpu_gdb_set_reg(CPUState *cs, uint8_t *mem_buf, int n)
-     CPUM68KState *env = &cpu->env;
++void cpr_set_cpr_channel(MigrationChannel *channel);
++MigrationChannel *cpr_get_cpr_channel(void);
++
+ int cpr_state_save(MigrationChannel *channel, Error **errp);
+ int cpr_state_load(Error **errp);
+ void cpr_state_close(void);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index 1e2878c..f4a795f 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -116,6 +116,21 @@ QIOChannel *cpr_state_ioc(void)
+     return qemu_file_get_ioc(cpr_state_file);
+ }
  
-     if (n < 8) {
--        float_status s = {};
-+        /* Use scratch float_status so any exceptions don't change CPU state */
-+        float_status s = env->fp_status;
-         env->fregs[n].d = float64_to_floatx80(ldq_be_p(mem_buf), &s);
-         return 8;
-     }
++static MigrationChannel *cpr_channel;
++
++void cpr_set_cpr_channel(MigrationChannel *channel)
++{
++    if (cpr_channel) {
++        qapi_free_MigrationChannel(cpr_channel);
++    }
++    cpr_channel = channel;
++}
++
++MigrationChannel *cpr_get_cpr_channel(void)
++{
++    return cpr_channel;
++}
++
+ int cpr_state_save(MigrationChannel *channel, Error **errp)
+ {
+     int ret;
+diff --git a/qapi/migration.json b/qapi/migration.json
+index a605dc2..a26960b 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1578,11 +1578,12 @@
+ # The migration channel-type request options.
+ #
+ # @main: Main outbound migration channel.
++# @cpr: cpr state channel.
+ #
+ # Since: 8.1
+ ##
+ { 'enum': 'MigrationChannelType',
+-  'data': [ 'main' ] }
++  'data': [ 'main', 'cpr' ] }
+ 
+ ##
+ # @MigrationChannel:
+diff --git a/system/vl.c b/system/vl.c
+index 2c24c60..40e049e 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -77,6 +77,7 @@
+ #include "hw/block/block.h"
+ #include "hw/i386/x86.h"
+ #include "hw/i386/pc.h"
++#include "migration/cpr.h"
+ #include "migration/misc.h"
+ #include "migration/snapshot.h"
+ #include "sysemu/tpm.h"
+@@ -1834,6 +1835,11 @@ static void incoming_option_parse(const char *str)
+         qobject_unref(obj);
+         visit_type_MigrationChannel(v, "channel", &channel, &error_fatal);
+         visit_free(v);
++
++        if (channel->channel_type == MIGRATION_CHANNEL_TYPE_CPR) {
++            cpr_set_cpr_channel(channel);
++            return;
++        }
+     } else if (!strcmp(str, "defer")) {
+         channel = NULL;
+     } else {
 -- 
-2.34.1
+1.8.3.1
 
 
