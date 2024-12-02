@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 123BED78322
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7660D78321
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Zv-0005Ps-6h; Mon, 02 Dec 2024 08:35:07 -0500
+	id 1tI6Vv-0004Ix-Hc; Mon, 02 Dec 2024 08:31:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6Lo-00081l-J9
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:41 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6Li-0005nX-Ni
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:29 -0500
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26X3oZ015184;
- Mon, 2 Dec 2024 13:20:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=rPSayIr1as1CoNo4I53Fie8Y5xVuvIsQZGh4MXjNa5c=; b=
- eIWwuVdqyf2Q5Z1NqcHm7LSjT6NKwBZltyBCkNJMBmrX8aCSZ83/ReeNwUh5TRQO
- RfHSOxqkzHqOty3w0N0VpupLcalGX7qcTrvOiZChydf8s8QXdk5xdQQ9Lv7HdLjb
- ESOnmHOvTC+mbkq3KROTw5OmMED5uTfegFAtel54QhOT2rVLTEGhFlJ/iY0xtyPY
- 7Oij1jwtCbtuPSB/PhnAGWYZmhvzA6SeMcA5ZleN9ciMrvToiE26pB/bQq9VbYKj
- 1GOmjrhyRLT13cZ0/eMblgpoJ9jyuJhjiveyCOppZkf3duzH1Tc3kcGQvoXX+flp
- Ajt+2hKdLWJxnGUkd+2xQQ==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437smab02u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:22 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4B2CQxAM032065; Mon, 2 Dec 2024 13:20:21 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 437s56jtrs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:21 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCEt032806;
- Mon, 2 Dec 2024 13:20:21 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 437s56jthv-12; Mon, 02 Dec 2024 13:20:21 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI6Gk-0002bl-Vr
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:23 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI6GU-0003Mc-PP
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:12 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-434ab938e37so26679275e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733145275; x=1733750075; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wdqAdxMo/Zjt+7gjYfOwzXdT/5QjRbRXYw8xftE2ZL0=;
+ b=sgmIvl9uV5v2tKz5CA5wywE2NnKdE0T801pKtAK8ld+4ZLRW/ri+1PSzNcYGyGG7zW
+ lQNSq3uyIbx5/ewdpQ7lGeSvXbKjXVuW5Iq+bTwC3eygMGd1HJweXe93BQW8rA7wpB7U
+ aa+cdrDjawOrUOU40mBhdFAgxDsbwIYQYlpf48MEGewogoaqUkORk5p1ajAHmofUSeoK
+ MeguhGtyW+quw1VOnN60+aXyCOMOqQirj8BIir6M/GsP0Q5ykfMItyrhz/BpFhA65of2
+ Ct/8LI4bCK5mrnAcfATO9pQyStHPFsU70S4IlYQ1YkTUOBfytuizwtRU9QSLfwJVst5j
+ vwBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733145275; x=1733750075;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wdqAdxMo/Zjt+7gjYfOwzXdT/5QjRbRXYw8xftE2ZL0=;
+ b=DWcUOQ7EaAJCJEWHnG9CIyWmTFsJ4CqVxxSYfwnBiUkfmbtK/jNJ5FDLpvoYrBXuX9
+ 24bR59BA/4Y2JHJMBYZmO2q1X77V/FjoOWHsH657hRHUq5rOIy073DOotJbSItSnHnQq
+ y9llahmZGpY/o3KmSThXEtdfz8pIYhV6Lq9aMbOS6GQmVDenDgPU9DpxXT4t2GI7D2XB
+ ItmqLF5Ek6TY+enaze/r9KhaL45BnstFm7FFXd8ONHciINEaxIKbK8h731D6fOgmBD3r
+ nHAUqLLEHE8h+JKp0LSgih8lloKZer2Pk7Cw4nZqMwlhyGdieK2EtBMTQEqunblXdvk7
+ NS5A==
+X-Gm-Message-State: AOJu0YwgwK1dYUGFK8tX85OQZK8Kb0CXVxdnQ655jDfiipI2UfCfq7LD
+ ROJbKzY8muzoKfG8fbwegY3u9zB6Eh8nUUbBBznLf2oIbIBxugsqcrnt+4N3eYFZEaycDwUbBsN
+ Y
+X-Gm-Gg: ASbGncvOjCDWnLvUo32WzZGYt+NqWYoc81ahqyM40B1Y0cs4i2rqofc9hWAzYldIj+j
+ t53yHOq1Y3XUr97rl/ZwzuhBLfDV49+ZuWz0y1/LOhki6DkDQ5FhwSUlPHCxXFoWaFXLKlimKDk
+ lfO/bISo+gbwzfOJENo95Ki00RSAxcEU1AIPEtt9m7W8mvj89osEb28xYt/9xqSjymXvhHgeGtq
+ q4E7OgHY0OjbLgOi93H2G70QFau8ISIBbrlyVvT2VsYna20dJ4uTVk=
+X-Google-Smtp-Source: AGHT+IHpLBkZrKDuWdn+SfRe1n4Bcn7GFrx0fDmm6XZ9hZ1GnazAJ/+blc2Smc6txIX9PHI2+r8AzQ==
+X-Received: by 2002:a05:6000:2806:b0:385:ec89:2f07 with SMTP id
+ ffacd0b85a97d-385ec8930bamr3048801f8f.32.1733145275036; 
+ Mon, 02 Dec 2024 05:14:35 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Dec 2024 05:14:34 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 11/19] migration: SCM_RIGHTS for QEMUFile
-Date: Mon,  2 Dec 2024 05:20:03 -0800
-Message-Id: <1733145611-62315-12-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2024-12-02_09,2024-12-02_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxlogscore=999
- spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2411120000 definitions=main-2412020116
-X-Proofpoint-ORIG-GUID: PIeb2vryjAh79XhXqFEUGuZ3qUdcKQNJ
-X-Proofpoint-GUID: PIeb2vryjAh79XhXqFEUGuZ3qUdcKQNJ
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH v2 for-10.0 28/54] softfloat: Create floatx80 default NaN from
+ parts64_default_nan
+Date: Mon,  2 Dec 2024 13:13:21 +0000
+Message-Id: <20241202131347.498124-29-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
+References: <20241202131347.498124-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,191 +111,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define functions to put/get file descriptors to/from a QEMUFile, for qio
-channels that support SCM_RIGHTS.  Maintain ordering such that
-  put(A), put(fd), put(B)
-followed by
-  get(A), get(fd), get(B)
-always succeeds.  Other get orderings may succeed but are not guaranteed.
+We create our 128-bit default NaN by calling parts64_default_nan()
+and then adjusting the result.  We can do the same trick for creating
+the floatx80 default NaN, which lets us drop a target ifdef.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+floatx80 is used only by:
+ i386
+ m68k
+ arm nwfpe old floating-point emulation emulation support
+    (which is essentially dead, especially the parts involving floatx80)
+ PPC (only in the xsrqpxp instruction, which just rounds an input
+    value by converting to floatx80 and back, so will never generate
+    the default NaN)
+
+The floatx80 default NaN as currently implemented is:
+ m68k: sign = 0, exp = 1...1, int = 1, frac = 1....1
+ i386: sign = 1, exp = 1...1, int = 1, frac = 10...0
+
+These are the same as the parts64_default_nan for these architectures.
+
+This is technically a possible behaviour change for arm linux-user
+nwfpe emulation emulation, because the default NaN will now have the
+sign bit clear.  But we were already generating a different floatx80
+default NaN from the real kernel emulation we are supposedly
+following, which appears to use an all-bits-1 value:
+ https://elixir.bootlin.com/linux/v6.12/source/arch/arm/nwfpe/softfloat-specialize#L267
+
+This won't affect the only "real" use of the nwfpe emulation, which
+is ancient binaries that used it as part of the old floating point
+calling convention; that only uses loads and stores of 32 and 64 bit
+floats, not any of the floatx80 behaviour the original hardware had.
+We also get the nwfpe float64 default NaN value wrong:
+ https://elixir.bootlin.com/linux/v6.12/source/arch/arm/nwfpe/softfloat-specialize#L166
+so if we ever cared about this obscure corner the right fix would be
+to correct that so nwfpe used its own default-NaN setting rather
+than the Arm VFP one.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- migration/qemu-file.c  | 83 +++++++++++++++++++++++++++++++++++++++++++++++---
- migration/qemu-file.h  |  2 ++
- migration/trace-events |  2 ++
- 3 files changed, 83 insertions(+), 4 deletions(-)
+ fpu/softfloat-specialize.c.inc | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index b6d2f58..728c7dd 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -37,6 +37,11 @@
- #define IO_BUF_SIZE 32768
- #define MAX_IOV_SIZE MIN_CONST(IOV_MAX, 64)
- 
-+typedef struct FdEntry {
-+    QTAILQ_ENTRY(FdEntry) entry;
-+    int fd;
-+} FdEntry;
-+
- struct QEMUFile {
-     QIOChannel *ioc;
-     bool is_writable;
-@@ -51,6 +56,9 @@ struct QEMUFile {
- 
-     int last_error;
-     Error *last_error_obj;
-+
-+    bool can_pass_fd;
-+    QTAILQ_HEAD(, FdEntry) fds;
- };
- 
- /*
-@@ -109,6 +117,8 @@ static QEMUFile *qemu_file_new_impl(QIOChannel *ioc, bool is_writable)
-     object_ref(ioc);
-     f->ioc = ioc;
-     f->is_writable = is_writable;
-+    f->can_pass_fd = qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS);
-+    QTAILQ_INIT(&f->fds);
- 
-     return f;
- }
-@@ -310,6 +320,10 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-     int len;
-     int pending;
-     Error *local_error = NULL;
-+    g_autofree int *fds = NULL;
-+    size_t nfd = 0;
-+    int **pfds = f->can_pass_fd ? &fds : NULL;
-+    size_t *pnfd = f->can_pass_fd ? &nfd : NULL;
- 
-     assert(!qemu_file_is_writable(f));
- 
-@@ -325,10 +339,9 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-     }
- 
-     do {
--        len = qio_channel_read(f->ioc,
--                               (char *)f->buf + pending,
--                               IO_BUF_SIZE - pending,
--                               &local_error);
-+        struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
-+        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
-+                                     &local_error);
-         if (len == QIO_CHANNEL_ERR_BLOCK) {
-             if (qemu_in_coroutine()) {
-                 qio_channel_yield(f->ioc, G_IO_IN);
-@@ -348,9 +361,65 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-         qemu_file_set_error_obj(f, len, local_error);
-     }
- 
-+    for (int i = 0; i < nfd; i++) {
-+        FdEntry *fde = g_new0(FdEntry, 1);
-+        fde->fd = fds[i];
-+        QTAILQ_INSERT_TAIL(&f->fds, fde, entry);
-+    }
-+
-     return len;
- }
- 
-+int qemu_file_put_fd(QEMUFile *f, int fd)
-+{
-+    int ret = 0;
-+    QIOChannel *ioc = qemu_file_get_ioc(f);
-+    Error *err = NULL;
-+    struct iovec iov = { (void *)" ", 1 };
-+
-+    /*
-+     * Send a dummy byte so qemu_fill_buffer on the receiving side does not
-+     * fail with a len=0 error.  Flush first to maintain ordering wrt other
-+     * data.
-+     */
-+
-+    qemu_fflush(f);
-+    if (qio_channel_writev_full(ioc, &iov, 1, &fd, 1, 0, &err) < 1) {
-+        error_report_err(error_copy(err));
-+        qemu_file_set_error_obj(f, -EIO, err);
-+        ret = -1;
-+    }
-+    trace_qemu_file_put_fd(f->ioc->name, fd, ret);
-+    return ret;
-+}
-+
-+int qemu_file_get_fd(QEMUFile *f)
-+{
-+    int fd = -1;
-+    FdEntry *fde;
-+
-+    if (!f->can_pass_fd) {
-+        Error *err = NULL;
-+        error_setg(&err, "%s does not support fd passing", f->ioc->name);
-+        error_report_err(error_copy(err));
-+        qemu_file_set_error_obj(f, -EIO, err);
-+        goto out;
-+    }
-+
-+    /* Force the dummy byte and its fd passenger to appear. */
-+    qemu_peek_byte(f, 0);
-+
-+    fde = QTAILQ_FIRST(&f->fds);
-+    if (fde) {
-+        qemu_get_byte(f);       /* Drop the dummy byte */
-+        fd = fde->fd;
-+        QTAILQ_REMOVE(&f->fds, fde, entry);
-+    }
-+out:
-+    trace_qemu_file_get_fd(f->ioc->name, fd);
-+    return fd;
-+}
-+
- /** Closes the file
-  *
-  * Returns negative error value if any error happened on previous operations or
-@@ -361,11 +430,17 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-  */
- int qemu_fclose(QEMUFile *f)
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 5fbc953e71e..9f913ce20ab 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -227,17 +227,17 @@ static void parts128_silence_nan(FloatParts128 *p, float_status *status)
+ floatx80 floatx80_default_nan(float_status *status)
  {
-+    FdEntry *fde, *next;
-     int ret = qemu_fflush(f);
-     int ret2 = qio_channel_close(f->ioc, NULL);
-     if (ret >= 0) {
-         ret = ret2;
-     }
-+    QTAILQ_FOREACH_SAFE(fde, &f->fds, entry, next) {
-+        warn_report("qemu_fclose: received fd %d was never claimed", fde->fd);
-+        close(fde->fd);
-+        g_free(fde);
-+    }
-     g_clear_pointer(&f->ioc, object_unref);
-     error_free(f->last_error_obj);
-     g_free(f);
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index 11c2120..3e47a20 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -79,5 +79,7 @@ size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-                           off_t pos);
+     floatx80 r;
++    /*
++     * Extrapolate from the choices made by parts64_default_nan to fill
++     * in the floatx80 format. We assume that floatx80's explicit
++     * integer bit is always set (this is true for i386 and m68k,
++     * which are the only real users of this format).
++     */
++    FloatParts64 p64;
++    parts64_default_nan(&p64, status);
  
- QIOChannel *qemu_file_get_ioc(QEMUFile *file);
-+int qemu_file_put_fd(QEMUFile *f, int fd);
-+int qemu_file_get_fd(QEMUFile *f);
+-    /* None of the targets that have snan_bit_is_one use floatx80.  */
+-    assert(!snan_bit_is_one(status));
+-#if defined(TARGET_M68K)
+-    r.low = UINT64_C(0xFFFFFFFFFFFFFFFF);
+-    r.high = 0x7FFF;
+-#else
+-    /* X86 */
+-    r.low = UINT64_C(0xC000000000000000);
+-    r.high = 0xFFFF;
+-#endif
++    r.high = 0x7FFF | (p64.sign << 15);
++    r.low = (1ULL << DECOMPOSED_BINARY_POINT) | p64.frac;
+     return r;
+ }
  
- #endif
-diff --git a/migration/trace-events b/migration/trace-events
-index 89c0244..9388f81 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -88,6 +88,8 @@ put_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
- 
- # qemu-file.c
- qemu_file_fclose(void) ""
-+qemu_file_put_fd(const char *name, int fd, int ret) "ioc %s, fd %d -> status %d"
-+qemu_file_get_fd(const char *name, int fd) "ioc %s -> fd %d"
- 
- # ram.c
- get_queued_page(const char *block_name, uint64_t tmp_offset, unsigned long page_abs) "%s/0x%" PRIx64 " page_abs=0x%lx"
 -- 
-1.8.3.1
+2.34.1
 
 
