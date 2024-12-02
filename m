@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E82D7831F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 872D6D78321
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Xe-0007iz-06; Mon, 02 Dec 2024 08:32:48 -0500
+	id 1tI6Zb-0003yt-OR; Mon, 02 Dec 2024 08:34:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6MA-0008CM-VD
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:56 -0500
+ id 1tI6Lj-0007yN-4L
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:37 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6M3-0005qY-VC
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:49 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B2DJCO7023886;
- Mon, 2 Dec 2024 13:20:28 GMT
+ id 1tI6Lc-0005h1-N9
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:25 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26XFUh013671;
+ Mon, 2 Dec 2024 13:20:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=TWNSOPxczOSPwzHxzQ0Ytn0JQ6tNKAw9ubDxtoSqYm8=; b=
- XEsicbX1eO48bnUrJrE1LZehYmQQESXCamQDAGSIrDy9Be7tskN2nAQOoxnoh+cX
- 9nRTT25fwCJ4BaMCeO4dtI8BIHrgJRD1atSSxYFyI2RrVbINRs7CJ5yM2/B+QWfm
- UgOj5I2saHJqy55aL/gbq4HJ3pwKgkScEGVSp0KguI/FFP2/A5M4cMS8waRflFJn
- 8UQcCIo4G9rfIt0PC1+iXkARVUzs6/VIENa7dhwAG1TnQCJ8H4ZHm2zOveUzXEvC
- A9ZmYE1677zlHTkgBJGpVUv+1++/pQzWv1bfQrBXm5iMvIh9Xk18JPhtui1SzNaT
- +JFkKq8yNBY9uAOgYs/79w==
+ corp-2023-11-20; bh=l/Vc2l6s/DVzvU00oZ5/69o+yzZSdPoGvqx3QUG7o8A=; b=
+ MPO5KDeKHzJtOdQfIUoEJY+e0LKNTtKs+VUYw0GXNc8r5+MmAsy3uulpJCNg+xPx
+ fKXY+LNrZ52dVMpP7PLSHS5ZmIGUgcqaSM3G7AAAVm23xs+y4324JPhPjSuh7z9I
+ tUzgCk1G1kaeJfW1glXpST2GkTzDXxlA786HMslb5gxEh1NuXpB+XFipSVKPVpub
+ qywvjEh0F+zxId2RIzKBgr1Rf9phq0BBD/Xfgy1CWt+R0cpefSgiyLeWA6YlcO+t
+ UbZ7QWSsSZRI+3pHHNNCYQJmjUTXshCMMY0Tj43AzvWOGW7daaJwHqlOl7rFuFgX
+ 2xpWcnk7UYUREgqKvViTtA==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437trbk4c3-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437s4c333w-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:28 +0000 (GMT)
+ Mon, 02 Dec 2024 13:20:16 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4B2D44PA032669; Mon, 2 Dec 2024 13:20:27 GMT
+ with ESMTP id 4B2BcwcH032644; Mon, 2 Dec 2024 13:20:16 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 437s56jtv5-1
+ 437s56jtmm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:27 +0000
+ Mon, 02 Dec 2024 13:20:15 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCF9032806;
- Mon, 2 Dec 2024 13:20:26 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCEf032806;
+ Mon, 2 Dec 2024 13:20:15 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 437s56jthv-19; Mon, 02 Dec 2024 13:20:26 +0000
+ ESMTP id 437s56jthv-5; Mon, 02 Dec 2024 13:20:15 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 18/19] migration-test: cpr-transfer
-Date: Mon,  2 Dec 2024 05:20:10 -0800
-Message-Id: <1733145611-62315-19-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 04/19] machine: aux-ram-share option
+Date: Mon,  2 Dec 2024 05:19:56 -0800
+Message-Id: <1733145611-62315-5-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
 References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2411120000 definitions=main-2412020116
-X-Proofpoint-GUID: h5VqSifPlv8pnPAx06l9C18Cklmn0JpG
-X-Proofpoint-ORIG-GUID: h5VqSifPlv8pnPAx06l9C18Cklmn0JpG
+X-Proofpoint-ORIG-GUID: _V1EcolF7YMQF8qT4u5Y8zj1wa8s8qDi
+X-Proofpoint-GUID: _V1EcolF7YMQF8qT4u5Y8zj1wa8s8qDi
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -31
@@ -105,128 +105,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a migration test for cpr-transfer mode.  Defer the connection to the
-target monitor, else the test hangs because in cpr-transfer mode QEMU does
-not listen for monitor connections until we send the migrate command to
-source QEMU.
+Allocate auxilliary guest RAM as an anonymous file that is shareable
+with an external process.  This option applies to memory allocated as
+a side effect of creating various devices. It does not apply to
+memory-backend-objects, whether explicitly specified on the command
+line, or implicitly created by the -m command line option.
 
-To test -incoming defer, send a migrate incoming command to the target,
-after sending the migrate command to the source, as required by
-cpr-transfer mode.
+This option is intended to support new migration modes, in which the
+memory region can be transferred in place to a new QEMU process, by sending
+the memfd file descriptor to the process.  Memory contents are preserved,
+and if the mode also transfers device descriptors, then pages that are
+locked in memory for DMA remain locked.  This behavior is a pre-requisite
+for supporting vfio, vdpa, and iommufd devices with the new modes.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- tests/qtest/migration-test.c | 72 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 71 insertions(+), 1 deletion(-)
+ hw/core/machine.c   | 18 ++++++++++++++++++
+ include/hw/boards.h |  1 +
+ qemu-options.hx     | 15 +++++++++++++++
+ system/physmem.c    |  3 +++
+ 4 files changed, 37 insertions(+)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 8bc665d..4eb641c 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -1729,6 +1729,7 @@ static void test_precopy_common(MigrateCommon *args)
- {
-     QTestState *from, *to;
-     void *data_hook = NULL;
-+    const char *connect_uri;
- 
-     if (test_migrate_start(&from, &to, args->listen_uri, &args->start)) {
-         return;
-@@ -1766,11 +1767,16 @@ static void test_precopy_common(MigrateCommon *args)
-         goto finish;
-     }
- 
--    migrate_qmp(from, to, args->connect_uri, args->connect_channels, "{}");
-+    /* If has channels, then connect_uri is only used for listen defer */
-+    connect_uri = args->connect_channels ? NULL : args->connect_uri;
-+    migrate_qmp(from, to, connect_uri, args->connect_channels, "{}");
- 
-     if (args->start.defer_target_connect) {
-         qtest_connect_deferred(to);
-         qtest_qmp_handshake(to);
-+        if (!strcmp(args->listen_uri, "defer")) {
-+            migrate_incoming_qmp(to, args->connect_uri, "{}");
-+        }
-     }
- 
-     if (args->result != MIG_TEST_SUCCEED) {
-@@ -2415,6 +2421,66 @@ static void test_multifd_file_mapped_ram_fdset_dio(void)
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index a35c4a8..b299b40 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -437,6 +437,20 @@ static void machine_set_mem_merge(Object *obj, bool value, Error **errp)
+     ms->mem_merge = value;
  }
- #endif /* !_WIN32 */
  
-+static void *test_mode_transfer_start(QTestState *from, QTestState *to)
++static bool machine_get_aux_ram_share(Object *obj, Error **errp)
 +{
-+    migrate_set_parameter_str(from, "mode", "cpr-transfer");
-+    return NULL;
++    MachineState *ms = MACHINE(obj);
++
++    return ms->aux_ram_share;
 +}
 +
-+/*
-+ * cpr-transfer mode cannot use the target monitor prior to starting the
-+ * migration, and cannot connect synchronously to the monitor, so defer
-+ * the target connection.
-+ */
-+static void test_mode_transfer_common(bool incoming_defer)
++static void machine_set_aux_ram_share(Object *obj, bool value, Error **errp)
 +{
-+    g_autofree char *cpr_path = g_strdup_printf("%s/cpr.sock", tmpfs);
-+    g_autofree char *mig_path = g_strdup_printf("%s/migsocket", tmpfs);
-+    g_autofree char *uri = g_strdup_printf("unix:%s", mig_path);
++    MachineState *ms = MACHINE(obj);
 +
-+    const char *opts = "-machine aux-ram-share=on -nodefaults";
-+    g_autofree char *opts_target = g_strdup_printf(
-+        "-incoming \\{\\\'channel-type\\\':\\\'cpr\\\',"
-+        "\\\'addr\\\':\\{\\\'transport\\\':\\\'socket\\\',"
-+        "\\\'type\\\':\\\'unix\\\',\\\'path\\\':\\\'%s\\\'\\}\\} %s",
-+        cpr_path, opts);
-+
-+    g_autofree char *channels = g_strdup_printf(
-+        "[ { 'channel-type': 'main',"
-+        "    'addr': { 'transport': 'socket',"
-+        "              'type': 'unix',"
-+        "              'path': '%s' } },"
-+        "  { 'channel-type': 'cpr',"
-+        "    'addr': { 'transport': 'socket',"
-+        "              'type': 'unix',"
-+        "              'path': '%s' } } ]",
-+        mig_path, cpr_path);
-+
-+    MigrateCommon args = {
-+        .start.opts_source = opts,
-+        .start.opts_target = opts_target,
-+        .start.defer_target_connect = true,
-+        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
-+                                " -machine memory-backend=pc.ram",
-+        .listen_uri = incoming_defer ? "defer" : uri,
-+        .connect_uri = incoming_defer ? uri : NULL,
-+        .connect_channels = channels,
-+        .start_hook = test_mode_transfer_start,
-+    };
-+
-+    test_precopy_common(&args);
++    ms->aux_ram_share = value;
 +}
 +
-+static void test_mode_transfer(void)
-+{
-+    test_mode_transfer_common(NULL);
-+}
-+
-+static void test_mode_transfer_defer(void)
-+{
-+    test_mode_transfer_common(true);
-+}
-+
- static void test_precopy_tcp_plain(void)
+ static bool machine_get_usb(Object *obj, Error **errp)
  {
-     MigrateCommon args = {
-@@ -3905,6 +3971,10 @@ int main(int argc, char **argv)
-         migration_test_add("/migration/mode/reboot", test_mode_reboot);
-     }
+     MachineState *ms = MACHINE(obj);
+@@ -1129,6 +1143,10 @@ static void machine_class_init(ObjectClass *oc, void *data)
+     object_class_property_set_description(oc, "mem-merge",
+         "Enable/disable memory merge support");
  
-+    migration_test_add("/migration/mode/transfer", test_mode_transfer);
-+    migration_test_add("/migration/mode/transfer/defer",
-+                       test_mode_transfer_defer);
++    object_class_property_add_bool(oc, "aux-ram-share",
++                                   machine_get_aux_ram_share,
++                                   machine_set_aux_ram_share);
 +
-     migration_test_add("/migration/precopy/file/mapped-ram",
-                        test_precopy_file_mapped_ram);
-     migration_test_add("/migration/precopy/file/mapped-ram/live",
+     object_class_property_add_bool(oc, "usb",
+         machine_get_usb, machine_set_usb);
+     object_class_property_set_description(oc, "usb",
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 36fbb9b..922ecd4 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -410,6 +410,7 @@ struct MachineState {
+     bool enable_graphics;
+     ConfidentialGuestSupport *cgs;
+     HostMemoryBackend *memdev;
++    bool aux_ram_share;
+     /*
+      * convenience alias to ram_memdev_id backend memory region
+      * or to numa container memory region
+diff --git a/qemu-options.hx b/qemu-options.hx
+index dacc979..02b9118 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -38,6 +38,9 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+     "                nvdimm=on|off controls NVDIMM support (default=off)\n"
+     "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
+     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
++#ifdef CONFIG_POSIX
++    "                aux-ram-share=on|off allocate auxiliary guest RAM as shared (default: off)\n"
++#endif
+     "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
+     "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n",
+     QEMU_ARCH_ALL)
+@@ -101,6 +104,18 @@ SRST
+         Enables or disables ACPI Heterogeneous Memory Attribute Table
+         (HMAT) support. The default is off.
+ 
++#ifdef CONFIG_POSIX
++    ``aux-ram-share=on|off``
++        Allocate auxiliary guest RAM as an anonymous file that is
++        shareable with an external process.  This option applies to
++        memory allocated as a side effect of creating various devices.
++        It does not apply to memory-backend-objects, whether explicitly
++        specified on the command line, or implicitly created by the -m
++        command line option.
++
++        Some migration modes require aux-ram-share=on.
++#endif
++
+     ``memory-backend='id'``
+         An alternative to legacy ``-mem-path`` and ``mem-prealloc`` options.
+         Allows to use a memory backend as main RAM.
+diff --git a/system/physmem.c b/system/physmem.c
+index 36f0811..0bcb2cc 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2164,6 +2164,9 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+     new_block->flags = ram_flags;
+ 
+     if (!host && !xen_enabled()) {
++        if (!share_flags && current_machine->aux_ram_share) {
++            new_block->flags |= RAM_SHARED;
++        }
+         if ((new_block->flags & RAM_SHARED) &&
+             !qemu_ram_alloc_shared(new_block, &local_err)) {
+             goto err;
 -- 
 1.8.3.1
 
