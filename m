@@ -4,89 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 355BAD78309
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 10:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDC56D78309
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 10:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI47p-00029v-9p; Mon, 02 Dec 2024 05:57:57 -0500
+	id 1tI48g-0002xA-DI; Mon, 02 Dec 2024 05:58:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI47f-00029I-Bh
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 05:57:47 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tI48e-0002rt-1H
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 05:58:48 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI47d-0002WL-EK
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 05:57:47 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5d0ccd931a3so2771052a12.3
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 02:57:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tI48b-0002mc-PE
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 05:58:47 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-53df1e0641fso4532192e87.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 02:58:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733137064; x=1733741864; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=H/W1MgRVOSe8QGGE+aad1/X/nTuM1X5/7SpJy8wQRiM=;
- b=PZezeDtEyjZ6twJCU5J+ADtUlrpZfY00A8zLCN0ZXa2tSLWqsgkbRCiZqgco5wtA/E
- 2ymkYRAgc2OFU49ky/gEljyijGYyNevmx6gaICMwb3BySnl8uKW7ZSq1OKXOxxWQ6v0B
- yiMBa1hRjVplz+jFZFhDhDr7Om91uQQoUqS9XJE/MaRJFDK5g+mC8S2pbooUouZ1o7Js
- 6CCEnH3geqofq1Xu2ireWiFlqOpXqN6ty+T1IK6ujf8dzNjLOcfYtiqZdTuMBNj62QDy
- phGXNYWMLJOAXlKt79DGzkCusI/17bJ14KVuqnSS6aVmfKhsrflAFGp9B9f773DbZrNN
- VrdQ==
+ d=linaro.org; s=google; t=1733137124; x=1733741924; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=c8jm30HIJIHDRqV6Q97GgxCiYLshI3pxdnrd4Buw6EE=;
+ b=DoResXL3KkY3d+6VrCYfDaq/oSaD7L62tHxvwp8AN0suPcIXnghGUnTR9mFwV1nU8E
+ SzqNAQLxm37EZHaJtiQG5dyxRT2lqJYt/MBOxf1FV9wmSLAtqeKMyGGOXoFHTy+yE801
+ osbzOGLGq0d8Ew2/Ssn1Jg0kjk/DW5b8q6k2EJ84NtCDTYubu/bkPvMwxi35DGf2ANc+
+ nFB8+BgQvjns/IWLCw67shbVp0IHM7uB+iPyfyH2j5BADy7ThdTS8USGzcFvdYToX71E
+ /39B8X/vt7P+7TZqrlZRiNGGS0CMBTHAakLY1Nhsrm9bnXXEcgt/rkKAEL9TIdyTlDdO
+ A8iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733137064; x=1733741864;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1733137124; x=1733741924;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=H/W1MgRVOSe8QGGE+aad1/X/nTuM1X5/7SpJy8wQRiM=;
- b=Sei4EAWmsrdTg5ksKXV5sZQskCrumoHMeOMHZ8hgZ7KRKg7dxkhPtldsoVQoB2Cn9s
- WBlGmBurM3Qa6WW9QVegPcQOxh96RY/Qc1yg8j8seKlhJpKb7iu7d8Kv8s0196KNaZ6A
- bA8oxetanEMKRM1tOicpnAPGRdiXNJpbH+c1R65+nxsZ4gnfbXbE0CKA4e57M45GQIn4
- x32vO1MLP+tRqNWBQosG85XR59aiwE7BGrWhgDQ6QH0G3kH/yHSe/lJ2HZgZ0Pde+pTY
- 7jne8q/8HCWX2+DnakRX8/S55xLpq4SEWOMtbfDvI6JIMxoYKT2K+BM2Pjrw48b+JZsV
- tOQQ==
+ bh=c8jm30HIJIHDRqV6Q97GgxCiYLshI3pxdnrd4Buw6EE=;
+ b=RW/+V3NnqKjBdzyIf0O8yR0qCtOXuvAM3xD2QNr8bulxw+ktOQ2IxvZnq7ZPfw4bCN
+ L6J/obLCXcT4heDzvzRNR2Cd35TWz2WSzAOTScePzx/eJ665wJ0ct4SRNlOj0FHcaKQC
+ b96nqihDA6TT0JPSsyGV+aBAaoES1yzeVBEL3WMWBi3wyxT3Y3SkAnqJW+/5rLOC/WYx
+ SUYj2ml8v2ZMfWpNEjteEXCDJe9tWhcvQlh+/Uj/DbfqI4Dk0P285iArLLdUlM/LhyHa
+ PriA4iKBhxic/XwAz3MD+yp2YgXE4fSxMBfciQ4PHAxvTkxp8CALmh/bkqOgbiszfSM5
+ ppgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHJhTltlW7mi7tRXnd93Lkj/Onnm9xz0hw8d2eNfXfBYqU/iixZFXpHIqUuucnT5oT1XVxEuRvbSo3@nongnu.org
-X-Gm-Message-State: AOJu0YzmuLjrA+0sDsjP3YKd1ewQtUOonK+ZrYk2OQOU+yko1xKVsJuJ
- FUitR6Py7M9LZ28sISVxKNjGBJMiFgd+JVLGGHGdgLBDtRocvjUZad15hDawtHLL0f1qBbWAK3q
- Vgyi2ziOQ03xODfUblci5cREp4gOIV087WREwrm5ipZVZJ39T
-X-Gm-Gg: ASbGncsClqpcBe1lqYMI8cD1rjfz/DPjrNgASKunTTxpauNL5+Evsth2j1h/GzYmLI1
- l4valbNrsXpGxuo+gjUAurntZIlEAtj4S
-X-Google-Smtp-Source: AGHT+IHNci2ZpLwz83fd7J1Yh8ElgkNw6ZVFSvSNPOekzEgRjlw7nCJ/S2cycQ82rP6R3C2BxXrWxjicroUbhEpqfQc=
-X-Received: by 2002:a05:6402:4402:b0:5cf:f248:7715 with SMTP id
- 4fb4d7f45d1cf-5d080c48680mr21164623a12.23.1733137063789; Mon, 02 Dec 2024
- 02:57:43 -0800 (PST)
+ AJvYcCU7l9dCJAgWAEfxUM16uP96BQ3o0YnZVvjZlSAOl/qjmYc992Pj4lNMkMMfVluzdsKdYT+vHLbi2zPf@nongnu.org
+X-Gm-Message-State: AOJu0YxNaiJ904vVlUZxXwjZHfvQ4A4+/cYhr3EoutbEZMtM1MqClRyS
+ +jZW3MD9YnCWiKk21XncOYqKrK5/IdXJbZ9jv2z2LpY60YqcRIzPHjEZHMjoAzPxsGUSF5xXTbg
+ m1f4=
+X-Gm-Gg: ASbGncthXmh4lHsQ0ApQlZoxqiH6KvoJSzPBZCrU6d7jimepyzgBCGJQqIs2f9zgNVl
+ L940tC03WcTWioUQmUS6vz0tG+AJKdtR/5IXgA/TMXUuZ56RLbDMnNjsaPBN0Q2V6JttW9BrLWC
+ oltIuBNOrB0qNz76G2R8b0S3Ng4mHuPxPk1jzC7C6IBbSBwDMBX3MZiut7WYmZ04vTZD6qOb5HV
+ WjuAT/T+9HSGuJq8pYUyptGA6DZIXFz2PAgijK/yY36G03VPo05W+IWRjIPJuZzUq4UDRTPIPqQ
+ kOiCnPNxEanFZv3e0pyZ6N1n65h2
+X-Google-Smtp-Source: AGHT+IH7dsn19ofz+BupGbFw7tGSjLy2B6mpxA9PGkJhftfXmFKk7nrnousYCt6ixB1lc5fD+vo29w==
+X-Received: by 2002:a05:6512:3e08:b0:53d:dbec:9fca with SMTP id
+ 2adb3069b0e04-53df001abb1mr11580153e87.0.1733137123731; 
+ Mon, 02 Dec 2024 02:58:43 -0800 (PST)
+Received: from [192.168.210.26] (83.11.10.28.ipv4.supernova.orange.pl.
+ [83.11.10.28]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-53df646effdsm1434026e87.130.2024.12.02.02.58.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Dec 2024 02:58:43 -0800 (PST)
+Message-ID: <21d8399a-91bf-4599-a73d-351f9f0c147c@linaro.org>
+Date: Mon, 2 Dec 2024 11:58:42 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/functional/aarch64: add tests for FEAT_RME
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Troy Lee <leetroy@gmail.com>, Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, alex.bennee@linaro.org,
+ Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 References: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
  <4b3180bd-8054-4431-a594-0445ce4837aa@linaro.org>
  <5620efa2-98c6-4613-b866-67e91ac6acf8@linaro.org>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB
+Organization: Linaro
 In-Reply-To: <5620efa2-98c6-4613-b866-67e91ac6acf8@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 2 Dec 2024 10:57:33 +0000
-Message-ID: <CAFEAcA-xa1AKf2GAv7go5wdu+Td=4jf7Nriin-Oe3S6qEV6X0g@mail.gmail.com>
-Subject: Re: [PATCH v2] tests/functional/aarch64: add tests for FEAT_RME
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Troy Lee <leetroy@gmail.com>, Alistair Francis <alistair@alistair23.me>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, alex.bennee@linaro.org, 
- Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, 
- Joel Stanley <joel@jms.id.au>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,58 +116,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Dec 2024 at 18:09, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
+W dniu 1.12.2024 o 19:09, Pierrick Bouvier pisze:
 > Hi Marcin,
->
+> 
 > On 12/1/24 05:34, Marcin Juszkiewicz wrote:
-> > W dniu 28.11.2024 o 22:37, Pierrick Bouvier pisze:
-> >> This boot an OP-TEE environment, and launch a nested guest VM inside it
-> >> using the Realms feature. We do it for virt and sbsa-ref platforms.
-> >>
-> >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> >
-> >> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> >> index 5c048cfac6d..b975a1560df 100644
-> >> --- a/tests/functional/meson.build
-> >> +++ b/tests/functional/meson.build
-> >> @@ -13,6 +13,8 @@ endif
-> >>    test_timeouts = {
-> >>      'aarch64_aspeed' : 600,
-> >>      'aarch64_raspi4' : 480,
-> >
-> >> +  'aarch64_rme_virt' : 720,
-> >
-> > Took 2974.95s on M1 Pro macbook.
-> >
-> >> +  'aarch64_rme_sbsaref' : 720,
-> >
-> > This one needed 2288.29s.
-> >
-> >>      'aarch64_sbsaref_alpine' : 720,
-> >
-> > Have to check cause timed out.
-> >
-> >>      'aarch64_sbsaref_freebsd' : 720,
-> >
-> > 331.65s
-> >
-> > So RME tests probably need longer timeouts or would not run at all.
-> >
->
+
+>> So RME tests probably need longer timeouts or would not run at all.
+>>
+> 
 > By any chance, are you running those tests in debug mode?
-> It seems to me that CI is running functional tests with optimized
-> builds, so I'm not sure we want to support debug "times" here.
 
-We do need to support debug times, because a common developer
-use case is "doing a debug build, run 'make check-functional'
-to check whether anything is broken. The debug times also
-are useful because the CI runners can have highly variable
-performance -- if a test is slow enough to hit the timeout
-for a debug build locally, it's probably going to also hit
-the timeout at least sometimes in CI.
+zOMG, thanks! Turned out that I left "--enable-debug" in my local build 
+and forgot to remove it.
 
-thanks
--- PMM
+90s vs 2974s is a difference ;D
+
+>>> +++ b/tests/functional/test_aarch64_rme_sbsaref.py
+>>
+>>> +        self.vm.add_args('-accel', 'tcg')
+>>
+>> That's default value so can be skipped.
+>>> +        self.vm.add_args('-m', '2G')
+>>
+>> I sent patch to bump default memsize to 2G recently.
+>>
+> 
+> Is that merged already, or will be later?
+
+Still in review queue.
+
+>>> +        self.vm.add_args('-M', 'sbsa-ref')
+>>> +        self.vm.add_args('-drive', 
+>>> f'file={pflash0},format=raw,if=pflash')
+>>> +        self.vm.add_args('-drive', 
+>>> f'file={pflash1},format=raw,if=pflash')
+>>> +        self.vm.add_args('-drive', f'file=fat:rw:{virtual},format=raw')
+>>
+>>> +        self.vm.add_args('-drive', 
+>>> f'format=raw,if=none,file={drive},id=hd0')
+>>> +        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
+>>
+>> sbsa-ref is fully emulated target. There is AHCI controller built-in so
+>> only "-drive" argument should be needed (no "-device" one).
+>>
+> 
+> I followed official instructions from Jean Philippe to build RME stack, 
+> and I think it's better to keep them in sync.
+
+OK.
+
+>>> +        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
+>>> +        self.vm.add_args('-netdev', 'user,id=net0')
+>>
+>> e1000e is built-in already
+>>
+> 
+> This is needed, because without this, there is an explicit wait for a 
+> network interface when booting. Adding this device allows to skip it.
+
+Thanks.
+
+>> As both virt and sbsa-ref tests do "more or less" the same stuff then it
+>> would be good to make common file/class and reuse it both tests by
+>> adding hardware differences.
+> 
+> I was thinking that at the beginning, but most of the config is 
+> different. The only common part is the nested guest test.
+> 
+> However, I didn't see any other tests that were importing functions from 
+> other files, and since we want to keep those two tests in separate files 
+> (to allow parallelism), the most pragmatic solution was to duplicate.
+
+Fetching firmware on sbsa-ref is done in separate to not duplicate it. 
+Which gave me idea.
+
+> Overall, tests files should be as simple as possible, even if the price 
+> is to repeat a few lines.
+> If you have a cleaner solution, I'm open to implement it.
 
