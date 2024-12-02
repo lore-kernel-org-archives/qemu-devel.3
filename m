@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56191D78320
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA0ABD7831F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6a3-0005o3-FD; Mon, 02 Dec 2024 08:35:15 -0500
+	id 1tI6Zq-00056D-Jd; Mon, 02 Dec 2024 08:35:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6M4-00086G-FD
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:50 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1tI6Lj-0007yO-55
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:37 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6Lw-0005qA-MQ
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:42 -0500
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26XFUj013671;
- Mon, 2 Dec 2024 13:20:26 GMT
+ id 1tI6Lf-0005k0-6Y
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:26 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26WwQG005193;
+ Mon, 2 Dec 2024 13:20:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=dZPhlS1YCwPtdJZdfwGT937kznXrOYhmpvBlJatq8KE=; b=
- Y21MOLlapQfGTqYB8Ua5K3l25FJN5c9vgAFwwU9OKliSX86xfsH3EqdV44k/ju/9
- IsI3T5gvYR5H+/oi9rzHITD24ke7zgXpY1ItEkQ6/FWt9Y4anh61JGfNz9zth2kS
- s5aW4uZrxTYPQ/xhc8SPaK63SNxQMgc8tmvc9ugyVv9xFGlrA0O4AWFMOfVDsMvU
- Xl8HnxZ06NNsdtnkQjgqAdVgWg3Z92M8fxZd/WDUIOzu9k1QxRv7JIzvdEjI9fZt
- fGZVrtqo/4GgXw67PYeGG7aZdFsLuFX62zuKM3SRKe+saoi9t96OWpJlyDJWAlub
- P/r4lTJxujmMLix7ha5zJQ==
+ corp-2023-11-20; bh=TXd9jXCmZXqRMNmbI/fqeBAMqJD3CKnnnlbau9xifCM=; b=
+ fFHffPgTcYhrPE7duNa+qmImNPwsFeedQowGUoSYv5FLICxKe614ysdJxRGphdp/
+ 2r3jtKyTdtO14130YmzsRmn16CgnmSaEYNDM6Uwv6Q06/jQHTnMQrYUMT7tmbTW9
+ po1n9hgnaXEpV2MSFkw8QhMkLlWPK0VQ/sgv/+h+5BH8F7vHA0WcYwsI4zUpJpX0
+ bcGpJe3DaGFeaf+HUHEwvI6kR4HSOrm+mHlXEyF9zAjgdFHO1XNQlW35uqgyxK7c
+ mfYG0Ivxy4hNDkE2HscfwGF54vUyPu9DtqktyrEt+cY6clEW8qOJhB3wH52fl9+T
+ 2vUYqJ5f6AC3SJYI7gIlDg==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437s4c334h-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437tk8txgr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:26 +0000 (GMT)
+ Mon, 02 Dec 2024 13:20:19 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4B2CLJX9032060; Mon, 2 Dec 2024 13:20:25 GMT
+ with ESMTP id 4B2CmKYO032740; Mon, 2 Dec 2024 13:20:18 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 437s56jtua-1
+ 437s56jtpd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:25 +0000
+ Mon, 02 Dec 2024 13:20:18 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCF5032806;
- Mon, 2 Dec 2024 13:20:25 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCEl032806;
+ Mon, 2 Dec 2024 13:20:18 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 437s56jthv-17; Mon, 02 Dec 2024 13:20:24 +0000
+ ESMTP id 437s56jthv-8; Mon, 02 Dec 2024 13:20:17 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 16/19] tests/qtest: defer connection
-Date: Mon,  2 Dec 2024 05:20:08 -0800
-Message-Id: <1733145611-62315-17-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 07/19] hostmem-memfd: preserve for cpr
+Date: Mon,  2 Dec 2024 05:19:59 -0800
+Message-Id: <1733145611-62315-8-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
 References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
@@ -78,10 +78,10 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2411120000 definitions=main-2412020116
-X-Proofpoint-ORIG-GUID: -19NQH7eSHqUd1Rz7qJ7uX4l6-6qlLk1
-X-Proofpoint-GUID: -19NQH7eSHqUd1Rz7qJ7uX4l6-6qlLk1
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Proofpoint-ORIG-GUID: 62KhHrDx2vfPcxHKQHwhPP2732f-48nA
+X-Proofpoint-GUID: 62KhHrDx2vfPcxHKQHwhPP2732f-48nA
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
@@ -105,283 +105,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an option to defer making the connecting to the monitor and qtest
-sockets when calling qtest_init_with_env.  The client makes the connection
-later by calling qtest_connect_deferred and qtest_qmp_handshake.
-
-A test cannot specify port=0 for a deferred connection, because qmp_migrate
-cannot query for the assigned port, because the monitor is not connected
-yet.  However, even if the test does not specify port=0, qmp_migrate ->
-migrate_set_ports unconditionally queries connection parameters.
-Modify migrate_set_ports to only query when port=0.
+Preserve memory-backend-memfd memory objects during cpr-transfer.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Acked-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/libqtest.c          | 80 +++++++++++++++++++++++++----------------
- tests/qtest/libqtest.h          | 19 +++++++++-
- tests/qtest/migration-helpers.c | 19 +++++-----
- tests/qtest/migration-test.c    |  4 +--
- 4 files changed, 80 insertions(+), 42 deletions(-)
+ backends/hostmem-memfd.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 817fd7a..31c4032 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -75,6 +75,8 @@ struct QTestState
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 1bcae4b..497d63b 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -17,6 +17,7 @@
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+ #include "qom/object.h"
++#include "migration/cpr.h"
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ 
+@@ -33,15 +34,19 @@ static bool
+ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
  {
-     int fd;
-     int qmp_fd;
-+    int sock;
-+    int qmpsock;
-     pid_t qemu_pid;  /* our child QEMU process */
-     int wstatus;
- #ifdef _WIN32
-@@ -442,18 +444,19 @@ static QTestState *G_GNUC_PRINTF(2, 3) qtest_spawn_qemu(const char *qemu_bin,
-     return s;
- }
+     HostMemoryBackendMemfd *m = MEMORY_BACKEND_MEMFD(backend);
+-    g_autofree char *name = NULL;
++    g_autofree char *name = host_memory_backend_get_name(backend);
++    int fd = cpr_find_fd(name, 0);
+     uint32_t ram_flags;
+-    int fd;
  
-+static char *qtest_socket_path(const char *suffix)
-+{
-+    return g_strdup_printf("%s/qtest-%d.%s", g_get_tmp_dir(), getpid(), suffix);
-+}
-+
- static QTestState *qtest_init_internal(const char *qemu_bin,
--                                       const char *extra_args)
-+                                       const char *extra_args,
-+                                       bool defer_connect)
- {
-     QTestState *s;
-     int sock, qmpsock, i;
--    gchar *socket_path;
--    gchar *qmp_socket_path;
--
--    socket_path = g_strdup_printf("%s/qtest-%d.sock",
--                                  g_get_tmp_dir(), getpid());
--    qmp_socket_path = g_strdup_printf("%s/qtest-%d.qmp",
--                                      g_get_tmp_dir(), getpid());
-+    g_autofree gchar *socket_path = qtest_socket_path("sock");
-+    g_autofree gchar *qmp_socket_path = qtest_socket_path("qmp");
- 
-     /*
-      * It's possible that if an earlier test run crashed it might
-@@ -485,22 +488,17 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
-     qtest_client_set_rx_handler(s, qtest_client_socket_recv_line);
-     qtest_client_set_tx_handler(s, qtest_client_socket_send);
- 
--    s->fd = socket_accept(sock);
--    if (s->fd >= 0) {
--        s->qmp_fd = socket_accept(qmpsock);
--    }
--    unlink(socket_path);
--    unlink(qmp_socket_path);
--    g_free(socket_path);
--    g_free(qmp_socket_path);
--
--    g_assert(s->fd >= 0 && s->qmp_fd >= 0);
--
-     s->rx = g_string_new("");
-     for (i = 0; i < MAX_IRQ; i++) {
-         s->irq_level[i] = false;
+     if (!backend->size) {
+         error_setg(errp, "can't create backend with size 0");
+         return false;
      }
  
-+    s->sock = sock;
-+    s->qmpsock = qmpsock;
-+    if (!defer_connect) {
-+        qtest_connect_deferred(s);
++    if (fd >= 0) {
++        goto have_fd;
 +    }
 +
-     /*
-      * Stopping QEMU for debugging is not supported on Windows.
-      *
-@@ -515,34 +513,54 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
+     fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+                            m->hugetlb, m->hugetlbsize, m->seal ?
+                            F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+@@ -49,9 +54,10 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     if (fd == -1) {
+         return false;
      }
- #endif
++    cpr_save_fd(name, 0, fd);
  
-+   return s;
-+}
-+
-+void qtest_connect_deferred(QTestState *s)
-+{
-+    g_autofree gchar *socket_path = qtest_socket_path("sock");
-+    g_autofree gchar *qmp_socket_path = qtest_socket_path("qmp");
-+
-+    g_assert(s->sock >= 0 && s->qmpsock >= 0);
-+    s->fd = socket_accept(s->sock);
-+    if (s->fd >= 0) {
-+        s->qmp_fd = socket_accept(s->qmpsock);
-+    }
-+    unlink(socket_path);
-+    unlink(qmp_socket_path);
-+    g_assert(s->fd >= 0 && s->qmp_fd >= 0);
-+    s->sock = s->qmpsock = -1;
-     /* ask endianness of the target */
--
-     s->big_endian = qtest_query_target_endianness(s);
--
--   return s;
- }
- 
- QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
- {
--    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args);
-+    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args, false);
- }
- 
--QTestState *qtest_init_with_env(const char *var, const char *extra_args)
-+void qtest_qmp_handshake(QTestState *s)
- {
--    QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args);
--    QDict *greeting;
--
-     /* Read the QMP greeting and then do the handshake */
--    greeting = qtest_qmp_receive(s);
-+    QDict *greeting = qtest_qmp_receive(s);
-     qobject_unref(greeting);
-     qobject_unref(qtest_qmp(s, "{ 'execute': 'qmp_capabilities' }"));
-+}
- 
-+QTestState *qtest_init_with_env(const char *var, const char *extra_args,
-+                                bool defer_connect)
-+{
-+    QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args,
-+                                        defer_connect);
-+    if (!defer_connect) {
-+        qtest_qmp_handshake(s);
-+    }
-     return s;
- }
- 
- QTestState *qtest_init(const char *extra_args)
- {
--    return qtest_init_with_env(NULL, extra_args);
-+    return qtest_init_with_env(NULL, extra_args, false);
- }
- 
- QTestState *qtest_vinitf(const char *fmt, va_list ap)
-@@ -1523,7 +1541,7 @@ static struct MachInfo *qtest_get_machines(const char *var)
- 
-     silence_spawn_log = !g_test_verbose();
- 
--    qts = qtest_init_with_env(qemu_var, "-machine none");
-+    qts = qtest_init_with_env(qemu_var, "-machine none", false);
-     response = qtest_qmp(qts, "{ 'execute': 'query-machines' }");
-     g_assert(response);
-     list = qdict_get_qlist(response, "return");
-@@ -1578,7 +1596,7 @@ static struct CpuModel *qtest_get_cpu_models(void)
- 
-     silence_spawn_log = !g_test_verbose();
- 
--    qts = qtest_init_with_env(NULL, "-machine none");
-+    qts = qtest_init_with_env(NULL, "-machine none", false);
-     response = qtest_qmp(qts, "{ 'execute': 'query-cpu-definitions' }");
-     g_assert(response);
-     list = qdict_get_qlist(response, "return");
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index beb96b1..db76f2c 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -60,13 +60,15 @@ QTestState *qtest_init(const char *extra_args);
-  * @var: Environment variable from where to take the QEMU binary
-  * @extra_args: Other arguments to pass to QEMU.  CAUTION: these
-  * arguments are subject to word splitting and shell evaluation.
-+ * @defer_connect: do not connect to qemu monitor and qtest socket.
-  *
-  * Like qtest_init(), but use a different environment variable for the
-  * QEMU binary.
-  *
-  * Returns: #QTestState instance.
-  */
--QTestState *qtest_init_with_env(const char *var, const char *extra_args);
-+QTestState *qtest_init_with_env(const char *var, const char *extra_args,
-+                                bool defer_connect);
- 
- /**
-  * qtest_init_without_qmp_handshake:
-@@ -78,6 +80,21 @@ QTestState *qtest_init_with_env(const char *var, const char *extra_args);
- QTestState *qtest_init_without_qmp_handshake(const char *extra_args);
- 
- /**
-+ * qtest_connect_deferred:
-+ * @s: #QTestState instance to connect
-+ * Connect to qemu monitor and qtest socket, after deferring them in
-+ * qtest_init_with_env.  Does not handshake with the monitor.
-+ */
-+void qtest_connect_deferred(QTestState *s);
-+
-+/**
-+ * qtest_qmp_handshake:
-+ * @s: #QTestState instance to operate on.
-+ * Perform handshake after connecting to qemu monitor.
-+ */
-+void qtest_qmp_handshake(QTestState *s);
-+
-+/**
-  * qtest_init_with_serial:
-  * @extra_args: other arguments to pass to QEMU.  CAUTION: these
-  * arguments are subject to word splitting and shell evaluation.
-diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-index 3f8ba7f..9f39401 100644
---- a/tests/qtest/migration-helpers.c
-+++ b/tests/qtest/migration-helpers.c
-@@ -127,25 +127,28 @@ migrate_get_connect_qdict(QTestState *who)
- 
- static void migrate_set_ports(QTestState *to, QList *channel_list)
- {
--    QDict *addr;
-+    g_autoptr(QDict) addr = NULL;
-     QListEntry *entry;
-     const char *addr_port = NULL;
- 
--    addr = migrate_get_connect_qdict(to);
--
-     QLIST_FOREACH_ENTRY(channel_list, entry) {
-         QDict *channel = qobject_to(QDict, qlist_entry_obj(entry));
-         QDict *addrdict = qdict_get_qdict(channel, "addr");
- 
--        if (qdict_haskey(addrdict, "port") &&
--            qdict_haskey(addr, "port") &&
--            (strcmp(qdict_get_str(addrdict, "port"), "0") == 0)) {
-+        if (!qdict_haskey(addrdict, "port") ||
-+            strcmp(qdict_get_str(addrdict, "port"), "0")) {
-+            continue;
-+        }
-+
-+        if (!addr) {
-+            addr = migrate_get_connect_qdict(to);
-+        }
-+
-+        if (qdict_haskey(addr, "port")) {
-             addr_port = qdict_get_str(addr, "port");
-             qdict_put_str(addrdict, "port", addr_port);
-         }
-     }
--
--    qobject_unref(addr);
- }
- 
- bool migrate_watch_for_events(QTestState *who, const char *name,
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 64e1c50..b7001b0 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -844,7 +844,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-                                  args->opts_source ? args->opts_source : "",
-                                  ignore_stderr);
-     if (!args->only_target) {
--        *from = qtest_init_with_env(QEMU_ENV_SRC, cmd_source);
-+        *from = qtest_init_with_env(QEMU_ENV_SRC, cmd_source, false);
-         qtest_qmp_set_event_callback(*from,
-                                      migrate_watch_for_events,
-                                      &src_state);
-@@ -865,7 +865,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-                                  shmem_opts ? shmem_opts : "",
-                                  args->opts_target ? args->opts_target : "",
-                                  ignore_stderr);
--    *to = qtest_init_with_env(QEMU_ENV_DST, cmd_target);
-+    *to = qtest_init_with_env(QEMU_ENV_DST, cmd_target, false);
-     qtest_qmp_set_event_callback(*to,
-                                  migrate_watch_for_events,
-                                  &dst_state);
++have_fd:
+     backend->aligned = true;
+-    name = host_memory_backend_get_name(backend);
+     ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
+     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+     ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
 -- 
 1.8.3.1
 
