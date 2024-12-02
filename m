@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6FBD4979F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 06:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E674D10DA0
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 06:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHzfk-0007te-TE; Mon, 02 Dec 2024 01:12:40 -0500
+	id 1tHzkm-0000Ie-C0; Mon, 02 Dec 2024 01:17:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tHzfg-0007tS-Uh
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 01:12:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tHzkk-0000Ht-HS; Mon, 02 Dec 2024 01:17:50 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tHzfc-0003P9-E7
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 01:12:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733119945;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7z4C4qXWu4847BgXLaVdx6k9c1sivKtGDzMQzZfE5+c=;
- b=RLJHiSRewLO/pY9RYxSxQKJZKfVk4SsMB7didpkxWVH+IBTsOK2l+cRdSiagijnmYz8DoA
- b0rPv2qIjBfseTVcKalOCm1nK+W+bLfFoS/CQMdizOYzc6Dj30EUbqD+j0KfFMtQ7BEnqO
- igKoLaq2G2mIQMjebNC3MS9W1cnf2MY=
-Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
- [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-299-Hud5LhyeMVSktBJ28gsmtg-1; Mon, 02 Dec 2024 01:12:23 -0500
-X-MC-Unique: Hud5LhyeMVSktBJ28gsmtg-1
-X-Mimecast-MFC-AGG-ID: Hud5LhyeMVSktBJ28gsmtg
-Received: by mail-oa1-f72.google.com with SMTP id
- 586e51a60fabf-29e5d14524cso120845fac.0
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 22:12:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733119943; x=1733724743;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7z4C4qXWu4847BgXLaVdx6k9c1sivKtGDzMQzZfE5+c=;
- b=pCG4hVCQ7kJtRPdSEUsnqjnkBFK6A+lhMnzclNj5s+/wAg/uiiRkkgKzWvxnKkOHTp
- kIK8uM7oVeGPmv2yYyhxl3N8xwmQNh4NzPUN5sXWev+5c3Na9MWemVY5ICvzbV/7J0Yv
- 8XLiS2hE9rlv03L1Veuip9ziLum1u+N1nDXWoxpzNvurtJtS0/+VEL2yJb+HccKeOH32
- BuR8TmyEzbr6U8XRmsyn1ZYJOiY+WbvDHHRLgiVlNy3ByKcwRtLn0wHAPwC+mH59DNxQ
- D6Rv1zleUlG/zy0K1u6b1r+UnEK8ib7knU4hckkRSfAk6ozR73bkNahtI48oficKoIha
- GzDg==
-X-Gm-Message-State: AOJu0Yw272v9E65Wv5dW3wEnU3D245M44ewa+y66ln/rXEKS2ir0ZskX
- 1gbFSQ0yOe5u5C1khq5a6T/EJ8fleoHvoOinz1BKaIat6Ru6S27wS+HvSW5FAA4e6kLUEdxVv1b
- t2WGdvc5y2cQjk/sc8l163rVFui3exDNxmJWVYt53Gy7jMQ3GQTjQ
-X-Gm-Gg: ASbGnctaqcG06dhIpf6XWwyiRhuJ2Xc+9tQzWVB1eRkaxuoRnHIc26a8RBUuO4XGqQC
- euu7XECs5VKhwAXTXZ5/B/rGnCYUqViV3nHDrcQesi4/gn5/cWmfYM7ypVC4rwDA9Gn0qQKzaHW
- 67+P1Y1d9X0lCnfBzK0u8HSAAen8pYSCc943uwImgpWrLn3qwCcBFdjxJ+t6yDugirvbcO5Udla
- M8mxMMJRWXDLpmc/xypOzkq/Am3p8h6QDE7W5MqPW1CTlzhyMljaQ==
-X-Received: by 2002:a05:6820:1c82:b0:5e3:b1fe:b1a with SMTP id
- 006d021491bc7-5f20a171476mr4351683eaf.2.1733119942969; 
- Sun, 01 Dec 2024 22:12:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEbIyolYTxR7RbEA932Q0FDkPxUZvmvVAnkw+Xn8csTqFEGWrJGrvXN4PsHMybdOUHsJtP5fQ==
-X-Received: by 2002:a05:6820:1c82:b0:5e3:b1fe:b1a with SMTP id
- 006d021491bc7-5f20a171476mr4351675eaf.2.1733119942569; 
- Sun, 01 Dec 2024 22:12:22 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f21a3ab1d3sm2138869eaf.23.2024.12.01.22.12.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Dec 2024 22:12:22 -0800 (PST)
-Date: Sun, 1 Dec 2024 23:12:20 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: qemu-devel@nongnu.org, Corvin =?UTF-8?B?S8O2aG5l?=
- <c.koehne@beckhoff.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
- <clg@redhat.com>
-Subject: Re: [PATCH 1/8] vfio/igd: fix GTT stolen memory size calculation
- for gen 7
-Message-ID: <20241201231220.02358a6b.alex.williamson@redhat.com>
-In-Reply-To: <20241201221129.03ea9577.alex.williamson@redhat.com>
-References: <20241201160938.44355-1-tomitamoeko@gmail.com>
- <20241201160938.44355-2-tomitamoeko@gmail.com>
- <20241201221129.03ea9577.alex.williamson@redhat.com>
-Organization: Red Hat
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tHzki-0004wy-GZ; Mon, 02 Dec 2024 01:17:50 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4CABABBBED;
+ Mon,  2 Dec 2024 09:17:38 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B2FDF17F446;
+ Mon,  2 Dec 2024 09:17:38 +0300 (MSK)
+Message-ID: <21b4db5b-0674-4ff6-8ba3-e17c5ee3addd@tls.msk.ru>
+Date: Mon, 2 Dec 2024 09:17:38 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/6] ppc-for-9.2-2 queue
+To: Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harsh.prateek.bora@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20241126171235.362916-1-npiggin@gmail.com>
+ <e18a1d0a-7970-4985-80d7-99d0801d22b0@tls.msk.ru>
+ <CAEuJdmoqatx0Crrd7hBFmO7sALuK2Cq8koUYwiGvMSZHZUmY7g@mail.gmail.com>
+ <D60Z5O1ZUVYA.3LX968A8RVHMN@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <D60Z5O1ZUVYA.3LX968A8RVHMN@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,64 +107,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Dec 2024 22:11:29 -0700
-Alex Williamson <alex.williamson@redhat.com> wrote:
-
-> On Mon,  2 Dec 2024 00:09:31 +0800
-> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+02.12.2024 08:44, Nicholas Piggin wrote:
+> On Wed Nov 27, 2024 at 11:22 PM AEST, Harsh Prateek Bora wrote:
+>> Hi Michael,
+>>
+>> On Wed, 27 Nov, 2024, 3:14 pm Michael Tokarev, <mjt@tls.msk.ru> wrote:
+>>
+>>> 26.11.2024 20:12, Nicholas Piggin:
+>>>
+>>>> * Assorted small ppc fixes
+>>>>
+>>>> ----------------------------------------------------------------
+>>>> BALATON Zoltan (1):
+>>>>         hw/ppc/pegasos2: Fix IRQ routing from pci.0
+>>>>
+>>>> Glenn Miles (1):
+>>>>         target/ppc: Fix THREAD_SIBLING_FOREACH for multi-socket
+>>>>
+>>>> Harsh Prateek Bora (1):
+>>>>         ppc/spapr: fix drc index mismatch for partially enabled vcpus
+>>>>
+>>
+>>
+>> I think at least this ^^^ can be picked for stable.
+>> Nick may confirm about other patches.
 > 
-> > Both intel documentation [1][2] and i915 driver shows GGMS represents
-> > GTT stolen memory size in multiple of 1MB, not 2MB starting from gen 8.
-> > 
-> > [1] https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/3rd-gen-core-desktop-vol-2-datasheet.pdf
-> > [2] https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4th-gen-core-family-desktop-vol-2-datasheet.pdf
-> > 
-> > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> > ---
-> >  hw/vfio/igd.c | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> > index 4047f4f071..e40e601026 100644
-> > --- a/hw/vfio/igd.c
-> > +++ b/hw/vfio/igd.c
-> > @@ -268,7 +268,7 @@ static int vfio_igd_gtt_max(VFIOPCIDevice *vdev)
-> >  
-> >      gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
-> >      ggms = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
-> > -    if (gen > 6) {
-> > +    if (gen > 7) {
-> >          ggms = 1 << ggms;
-> >      }
-> >  
-> > @@ -678,7 +678,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
-> >  
-> >      /* Determine the size of stolen memory needed for GTT */
-> >      ggms_mb = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
-> > -    if (gen > 6) {
-> > +    if (gen > 7) {
-> >          ggms_mb = 1 << ggms_mb;
-> >      }
-> >    
-> 
-> I'd argue this should be rolled into patch 4.  It's not really fixing
-> anything because igd_gen() can't return anything between 6 and 8.  This
-> only allows for several device versions that we currently consider to
-> be gen 6 to align with i915 kernel driver generation by calling them
-> generation 7.  We'd previously lumped them into generation 6 because
-> there's no functional difference we care about here between 6 & 7.
-> 
-> In the next patch you replace this '1 << ggms_mb' with '*= 2', which
-> would be equivalent to 'ggms_mb << 1' and matches your description that
-> the increment is doubled.  Is there a separate bug fix that needs to be
-> pulled out here?
-> 
-> Also, please send a cover letter for any series longer than a single
-> patch and please configure your tools to thread the series.  Thanks,
+> I would say these two as well.
 
-Disregard this latter comment, I just wasn't copied on the cover letter
-and didn't have it in my inbox to root the thread.  Thanks,
+Thank you both for help!
 
-Alex
+> target/ppc: Fix non-maskable interrupt while halted
+> target/ppc: Fix THREAD_SIBLING_FOREACH for multi-socket
 
+I picked the 3 mentioned changes to stable series.
+
+With the last one there's a small issue though:
+
+  2fc0a78a57 target/ppc: Fix THREAD_SIBLING_FOREACH for multi-socket
+
+It fixes an issue introduced in v8.0.0-2045-gb769d4c8f4, so
+should be picked up for 8.2.x.  But this one lacks:
+  v9.0.0-2635-gfeb37fdc82 ppc: Add a core_index to CPUPPCState for SMT vCPUs
+  v9.0.0-2638-gc26504afd5 ppc/pnv: Add a big-core mode that joins two regular cores
+
+What do you suggest to do with 8.2.x in this case?
+
+Thanks,
+
+/mjt
 
