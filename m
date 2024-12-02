@@ -4,100 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB55D10DCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 09:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B10AED10DCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 09:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI2Sk-0006Ae-1E; Mon, 02 Dec 2024 04:11:26 -0500
+	id 1tI2b1-0000BJ-9L; Mon, 02 Dec 2024 04:19:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1tI2Sc-00069s-Ou; Mon, 02 Dec 2024 04:11:18 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2az-0000B3-O8
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:19:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1tI2Sb-0006p3-5n; Mon, 02 Dec 2024 04:11:18 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B23bLY4014033;
- Mon, 2 Dec 2024 09:11:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=zhsp8mSWhFuapcoc/
- 8Lyqxhgye/GcnVptf9lMJnYsnw=; b=PWQcGeJBXQ/wMkoU0RRpsnCfY6kA9UuA8
- rjhDxuniDrep36lzxU8/gaWgZ+ObCSfI7Ld1T8Fpf2ZXjbRd9+gPYXVClWe6vNXt
- SEnA4vQpJrBXx4o5RJiRLDSTytZ0sZkAXCTqt5lZktn+IoUsBCS82ENl/DtAbmVA
- rqZIifLOI2oY69kjuNKTiIPFRyIYQyq4X6mWMrMDo9oNGj6t4VY8WmIQogHyyo3J
- jJaqgrdx02b+lIRIS6szgmXy3WUWbPUPUAHzt6sW/vA9yjMZdlqCjnRke3cXazA1
- mjAVdAlDMiDjUAJMzGSVfxLt5Uu3/uyYtWoNCRWplZa4u6/LeBjXw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 437s4hqs9e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Dec 2024 09:11:09 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4B2918SQ031217;
- Mon, 2 Dec 2024 09:11:09 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 437s4hqs9c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Dec 2024 09:11:09 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B25TKYV020366;
- Mon, 2 Dec 2024 09:11:08 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 438d1s24rs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Dec 2024 09:11:08 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B29B7cg15401644
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 2 Dec 2024 09:11:07 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BBC245805A;
- Mon,  2 Dec 2024 09:11:07 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2967A58068;
- Mon,  2 Dec 2024 09:11:07 +0000 (GMT)
-Received: from gfwr515.rchland.ibm.com (unknown [9.10.239.103])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  2 Dec 2024 09:11:07 +0000 (GMT)
-From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-To: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
- saif.abrar@linux.vnet.ibm.com
-Subject: [PATCH v3 2/2] hw/nvme: Add property for user-specified IEEE-OUI ID
-Date: Mon,  2 Dec 2024 03:10:49 -0600
-Message-Id: <20241202091049.2250-3-saif.abrar@linux.vnet.ibm.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241202091049.2250-1-saif.abrar@linux.vnet.ibm.com>
-References: <20241202091049.2250-1-saif.abrar@linux.vnet.ibm.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2ax-00006C-9E
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:19:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733131193;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=+affJrMHMT1VUrYSH4K6ny2yWHIycRqrMVg8+CbaE/U=;
+ b=M66NWVtibf/XjszPaqyhNJkl/caKtwLgbnYlkEmfjs9/tXeEPEpT+SWq9bsvGeGBYwubNa
+ yiKKUP3q5aPCBK/o4XIq5UhXDMKpuR1j7enRdOal/roVQBZrbHTsSEWyWKNRLdeMYI2GR0
+ 2GCpCA/5arbnBcBO+eNKeKz3wwWTf04=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-398-utIyY3hINVeN7wCAkgpVNw-1; Mon, 02 Dec 2024 04:19:52 -0500
+X-MC-Unique: utIyY3hINVeN7wCAkgpVNw-1
+X-Mimecast-MFC-AGG-ID: utIyY3hINVeN7wCAkgpVNw
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4349df2d87dso38137665e9.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 01:19:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733131191; x=1733735991;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+affJrMHMT1VUrYSH4K6ny2yWHIycRqrMVg8+CbaE/U=;
+ b=t3KNzdNIgdsjG4xAzj+kqVsHzIsr61UQwnKUp9P1vWm9c1JBq6ksaCWExcimaXxz3w
+ ilYEir6wtTlNMzmqEEgStQfjSK1IT5m7C2cHDQDRRl8QPmiN7b1KxFH86pj5Q5DIqv+v
+ vLzO035HBqnE3P+VK+VT89nDiroS6tAZhElWenHTithr6Aa0SEoZvW0gx9e4QGy+qqAW
+ +SSnuLIyZcGfq7+2JeTGsN54ZpfHYfTioKtm1li7FUxZ2l9at/GlBTMCN/vifXWa9tvO
+ wlVuTIzYGb/iMdkKyv8CtBWMMGY6CRF2ijxu0L/G47LoSQZxU688SsxHi15Ggut4IlzX
+ Hj1w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVxxfz7UfUM49c5s5ilRYVHKVEFkJcNLeCnShMJjZB/UsiQ853qEdEmN76XKIWqiHRfwpCMUvI/xt3B@nongnu.org
+X-Gm-Message-State: AOJu0YxwEJotctygvrkYYaEK9oFDuJcvIDL7Ph/x19s+HkYao0WLz0CG
+ mPTAHF2RVkAGgZFNp8pOLbG8+782aBMPuHLoBofBQ+luIAwyS1bRSvzpn2HTYoEuBcUTa9JGKiK
+ FUXKpr9XgsUDqX8DdAJM+o3h4O17NnQG8Oqag1SZMEx9VkyOCB8zj
+X-Gm-Gg: ASbGncsfEtH9HwLN68P0PmpRJlq/302G75T2bVOjBMV1ix+58athoEYnIRbnYT+hzLw
+ +joAw8zOr71lnkTdEz8tpV+twvc8eZdA7iq1Dxh8ebh7vA4n2CScXDGXSUopAuKocfTZdlOHdNf
+ xokm86lj4PRXBrzYwZcgcjGcdio2nD2Qa5zHd3ziDqLpJIJ0mvz7G8BL0kMeatuKqpONfaeVCk1
+ NLxplYr1ybEXc/UcinY5zFB+6i+UFWhsC0G8JGXQbtgLDsTwWvfh2qxqyEGR34EdJJUs1KIP64=
+X-Received: by 2002:a05:600c:4686:b0:434:a986:11cf with SMTP id
+ 5b1f17b1804b1-434a9dc3030mr232087185e9.8.1733131190804; 
+ Mon, 02 Dec 2024 01:19:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHczI6D8OKFQwHccT7GcdmMvlJXq+nlKc3jhEQu86kswk9mBUTAWnSRLvvvXsdAEhCnHxXWZA==
+X-Received: by 2002:a05:600c:4686:b0:434:a986:11cf with SMTP id
+ 5b1f17b1804b1-434a9dc3030mr232086915e9.8.1733131190404; 
+ Mon, 02 Dec 2024 01:19:50 -0800 (PST)
+Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434aa7d25d1sm177514775e9.31.2024.12.02.01.19.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Dec 2024 01:19:50 -0800 (PST)
+Message-ID: <7a10e700-67dc-4619-bf6e-76bac44e88cc@redhat.com>
+Date: Mon, 2 Dec 2024 10:19:47 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/22] tests/functional: add helpers for building file
+ paths
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20241129173120.761728-1-berrange@redhat.com>
+ <20241129173120.761728-9-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241129173120.761728-9-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: AtJd0yHU9lyZg1OtS88_GsrJdcHXKaVM
-X-Proofpoint-ORIG-GUID: UbqbPl7gfJ0-h1GZSGVJEptrGpFUKSTT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 suspectscore=0
- adultscore=0 mlxscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0
- impostorscore=0 phishscore=0 spamscore=0 malwarescore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412020079
-Received-SPF: none client-ip=148.163.158.5;
- envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,81 +155,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-User-specified IEEE-OUI ID (Identify Controller bytes 75:73)
-is to be specified in LE format.
-(e.g. ieee_oui=0xABCDEF => Byte[73]=0xEF, Byte[74]=0xCD, Byte[75]=0xAB)
+On 29/11/2024 18.31, Daniel P. Berrangé wrote:
+> Add helper methods that construct paths for
+> 
+>   * log files - to be preserved at the end of a test
+>   * scratch files - to be purged at the end of a test
+>   * build files - anything relative to the build root
+>   * data files - anything relative to the functional test source root
+>   * socket files - a short temporary dir to avoid UNIX socket limits
+> 
+> These are to be used instead of direct access to the self.workdir,
+> or self.logdir variables, or any other place where paths are built
+> manually.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/functional/qemu_test/testcase.py | 86 ++++++++++++++++++++++++++
+>   1 file changed, 86 insertions(+)
+> 
+> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+> index 90ae59eb54..fb62052817 100644
+> --- a/tests/functional/qemu_test/testcase.py
+> +++ b/tests/functional/qemu_test/testcase.py
+> @@ -13,10 +13,12 @@
+>   
+>   import logging
+>   import os
+> +from pathlib import Path
+>   import pycotap
+>   import shutil
+>   import subprocess
+>   import sys
+> +import tempfile
+>   import unittest
+>   import uuid
+>   
+> @@ -37,9 +39,93 @@ class QemuBaseTest(unittest.TestCase):
+>       log = None
+>       logdir = None
+>   
+> +    def socket_dir(self):
+> +        if self.socketdir is None:
+> +            self.socketdir = tempfile.TemporaryDirectory(
+> +                prefix="qemu_func_test_sock_")
+> +        return self.socketdir
+> +
+> +    '''
+> +    @params args list of zero or more subdirectories or file
+> +
+> +    Construct a path for accessing a data file located
+> +    relative to the source directory that is the root for
+> +    functional tests.
+> +
+> +    @args may be an empty list to reference the root dir
+> +    itself, may be a single element to reference a file in
+> +    the root directory, or may be multiple elements to
+> +    reference a file nested below. The path components
+> +    will be joined using the platform appropriate path
+> +    separator.
+> +
+> +    Returns: a qualified path
+> +    '''
+> +    def data_file(self, *args):
+> +        return str(Path(Path(__file__).parent.parent, *args))
+> +
+> +    '''
+> +    @params args list of zero or more subdirectories or file
+> +
+> +    Construct a path for accessing a data file located
+> +    relative to the build directory root.
+> +
+> +    @args may be an empty list to reference the build dir
+> +    itself, may be a single element to reference a file in
+> +    the build directory, or may be multiple elements to
+> +    reference a file nested below. The path components
+> +    will be joined using the platform appropriate path
+> +    separator.
+> +
+> +    Returns: a qualified path
+> +    '''
+> +    def build_file(self, *args):
+> +        return str(Path(BUILD_DIR, *args))
+> +
+> +    '''
+> +    @params args list of zero or more subdirectories or file
+> +
+> +    Construct a path for accessing/creating a scratch file
+> +    located relative to a temporary directory dedicated to
+> +    this test case. The directory and its contents will be
+> +    purged upon completion of the test.
+> +
+> +    @args may be an empty list to reference the scratch dir
+> +    itself, may be a single element to reference a file in
+> +    the scratch directory, or may be multiple elements to
+> +    reference a file nested below. The path components
+> +    will be joined using the platform appropriate path
+> +    separator.
+> +
+> +    Returns: a qualified path
+> +    '''
+> +    def scratch_file(self, *args):
+> +        return str(Path(self.workdir, *args))
+> +
+> +    '''
+> +    @params args list of zero or more subdirectories or file
+> +
+> +    Construct a path for accessing/creating a log file
+> +    located relative to a temporary directory dedicated to
+> +    this test case. The directory and its log files will be
+> +    preserved upon completion of the test.
+> +
+> +    @args may be an empty list to reference the log dir
+> +    itself, may be a single element to reference a file in
+> +    the log directory, or may be multiple elements to
+> +    reference a file nested below. The path components
+> +    will be joined using the platform appropriate path
+> +    separator.
+> +
+> +    Returns: a pathlib.Path object
 
-Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
----
-This is a new commit for setting IEEE-OUI ID.
+Looks like it is rather returning a string?
 
- hw/nvme/ctrl.c | 24 ++++++++++++++++++++++++
- hw/nvme/nvme.h |  2 ++
- 2 files changed, 26 insertions(+)
+> +    '''
+> +    def log_file(self, *args):
+> +        return str(Path(self.logdir, *args))
+> +
+>       def setUp(self, bin_prefix):
+>           self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+>           self.arch = self.qemu_bin.split('-')[-1]
+> +        self.socketdir = None
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index e1aaab01bc..cf7b487a67 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8708,6 +8708,10 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-         id->ieee[0] = 0xb3;
-         id->ieee[1] = 0x02;
-         id->ieee[2] = 0x00;
-+    } else if (n->params.ieee_oui) {
-+        id->ieee[0] = extract32(n->params.ieee_oui, 0,  8);
-+        id->ieee[1] = extract32(n->params.ieee_oui, 8,  8);
-+        id->ieee[2] = extract32(n->params.ieee_oui, 16, 8);
-     } else {
-         id->ieee[0] = 0x00;
-         id->ieee[1] = 0x54;
-@@ -8925,6 +8929,24 @@ static void nvme_exit(PCIDevice *pci_dev)
-     memory_region_del_subregion(&n->bar0, &n->iomem);
- }
- 
-+static void nvme_prop_ieee_set(Object *obj, Visitor *v, const char *name,
-+        void *opaque, Error **errp)
-+{
-+    Property *prop = opaque;
-+    uint32_t *val = object_field_prop_ptr(obj, prop);
-+    if (!visit_type_uint32(v, name, val, errp)) {
-+        return;
-+    }
-+}
-+
-+static const PropertyInfo nvme_prop_ieee = {
-+    .name  = "uint32",
-+    .description = "IEEE OUI: Identify Controller bytes 75:73\
-+ in LE format. (e.g. ieee_oui=0xABCDEF => Byte[73]=0xEF, Byte[74]=0xCD,\
-+ Byte[75]=0xAB)",
-+    .set = nvme_prop_ieee_set,
-+};
-+
- static Property nvme_props[] = {
-     DEFINE_BLOCK_PROPERTIES(NvmeCtrl, namespace.blkconf),
-     DEFINE_PROP_LINK("pmrdev", NvmeCtrl, pmr.dev, TYPE_MEMORY_BACKEND,
-@@ -8968,6 +8990,8 @@ static Property nvme_props[] = {
-     DEFINE_PROP_UINT16("id_subsys_vendor", NvmeCtrl,
-                                                     params.id_subsys_vendor, 0),
-     DEFINE_PROP_UINT16("id_subsys", NvmeCtrl, params.id_subsys, 0),
-+    DEFINE_PROP("ieee_oui", NvmeCtrl, params.ieee_oui, nvme_prop_ieee,
-+                                                                      uint32_t),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 79404b3129..f26bf7052c 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -558,6 +558,8 @@ typedef struct NvmeParams {
-     uint16_t id_device;
-     uint16_t id_subsys_vendor;
-     uint16_t id_subsys;
-+
-+    uint32_t ieee_oui;
- } NvmeParams;
- 
- typedef struct NvmeCtrl {
--- 
-2.39.5
+Should we also delete the socketdir during teardown again?
+
+  Thomas
 
 
