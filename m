@@ -4,98 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEFDD78320
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA10D7831F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6YZ-0000tQ-Tf; Mon, 02 Dec 2024 08:33:44 -0500
+	id 1tI6bR-0007YR-56; Mon, 02 Dec 2024 08:36:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6Gv-0002lE-Kn
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:30 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6GY-0003My-Ho
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:29 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-385dbf79881so1912366f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733145277; x=1733750077; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qFtiFfBBznBZexAeUlFNfBbsHlolyVwbUxMya82sU1M=;
- b=atwcCUNsmOBDsC+M+FRdwBqZuSxxilKsxhyx5LOt69Q7s8YaHAoFxWhy/Bsr1nmR0b
- BrKqXH5OfJZ1cLtkBgomZ8FCTi5Eu9C/Wwx3qC/4vqtD/yyDKnzP7juQhqG3YxoYNSZM
- CeBXUeesd89xBO43byd1Gk2Wico5Y8WqX9AIMxuXeIg9J4YexPHZyXTZsHWdiefizjr6
- /VExT/T4E1/tXt7p/wz9+qvmkHWWm305+pJ523HjHxI3Mlg+0IJiEcgVPDwqcUYLL4qz
- yoQQEb+ZDGozAHDnlMsrW+OJg8CZdWqvsuePIm2Zz0KPI31n7zEZOdPKwf2GKnmU3bM1
- 8RBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733145277; x=1733750077;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qFtiFfBBznBZexAeUlFNfBbsHlolyVwbUxMya82sU1M=;
- b=CfrnItUHRMUgjOTadW6KLrefFL+7wxD9DnrRhv4SlwOU7uVA8DzcT8cMbJDvhifjgp
- 2fKQjxTZiTl45d80fZguai3KL/oX39xXoLzF9PY13daL4mJvXri6eIeSmP/8uEAK375O
- 9ovuCVTnsdDHcajWQjTfzU/QnHqNsY9WkNXOnhvZDaTsLdYFNQN/89An9aIorN1CybHK
- UyRvr0bELTjs3jgBJ1lMTtmjua19jDIo0y5hLqde9ebqlo0pzQn8u+Z1t6jZXbbEQncV
- MAGpLtIuslzITZ/5LkTgcyJQoH4Wty7WdOTZNfWJFBuaf+a9UXzwz6+8wUjw6LsSBme0
- wTjA==
-X-Gm-Message-State: AOJu0YwT4tm5wJloGQ9HTZaV3MaUD3ChbCc9VuzDetVkdCh0Lxoq5FSy
- 36dsVMygbDKeEVBVGPC/OAhmUQbXbG5w2JoK93m1IJPNJlA/lM1MA0LD9UEC2x42JDIMvi4bL86
- 7
-X-Gm-Gg: ASbGncvF7Ervm/lKte+33xDeN2KmpM0+A+/vKl/fmz9YTNN2b40YI/iHlV/YG8vNCFG
- tW30wcuiyaGfq48Idb/QPzgfYgrIlNHcTVFbB21o9u0Z0N5iVpNrHpzFH+FfUH4FN8N9YudpZM1
- 40LdJIeJL+YOpgpzAyS6ji1R8q2J1N0K2WuAJEn/Q/JpX//kveD9PEZOidhTOUDGuTPt2642jT5
- hUoaPYgiqnzyviTwl0imlp0LcFdjuYL1jylPB1QIGCfaBCXWm0A2RY=
-X-Google-Smtp-Source: AGHT+IGjX11e3JO3ZTyjG7BP/tYm806Bq6OhPURR2FI+K91cwS7FWrHu5iiVUqs5CI0AS29PsM5q0A==
-X-Received: by 2002:a5d:64ed:0:b0:382:444f:4eb0 with SMTP id
- ffacd0b85a97d-385cbd7c36fmr16352829f8f.13.1733145276812; 
- Mon, 02 Dec 2024 05:14:36 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Dec 2024 05:14:36 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tI6Lj-0007yH-1q
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:37 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tI6Lc-0005he-ND
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:23 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26XMLB013787;
+ Mon, 2 Dec 2024 13:20:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=76RsVoAGMj38dWsNKVn+ivLB7EnCOcYrTG3VXeLBVB4=; b=
+ DLU0A8jG4MEPweEjVAEWpSRkrgx7aSt888pb4+cuIEml+itdCNpRAcwqJ+qBM0qB
+ iAe4Zf3hiyTMO+CoNuHU58IEQ+IQEsp1DFO/SWl7WQDkSJpS3xPhA2HhkZsI4+rl
+ WywqYti7yPikUxOHTcdxMVpkG3joju4suNX4ess8C3OGggcAolyqMBrPjmMAUzUB
+ QamsMWH0aeczeHcrZOnNx2fVTWYuoS0aCvuE0hCT95d4dZihTnchws5UC8xNvCAR
+ V5sh7ofvjb6H8xSOia2m4oDthE3L2VTobhdEB6IXuX97byZRJMVK9kI5d56SWbz1
+ AvQ5d6phpc8ODNezBf9afQ==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437s4c3342-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 02 Dec 2024 13:20:18 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 4B2DIXe3032684; Mon, 2 Dec 2024 13:20:17 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 437s56jtnq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 02 Dec 2024 13:20:17 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCEj032806;
+ Mon, 2 Dec 2024 13:20:17 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 437s56jthv-7; Mon, 02 Dec 2024 13:20:17 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Song Gao <gaosong@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 for-10.0 30/54] target/m68k: In frem helper,
- initialize local float_status from env->fp_status
-Date: Mon,  2 Dec 2024 13:13:23 +0000
-Message-Id: <20241202131347.498124-31-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
-References: <20241202131347.498124-1-peter.maydell@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V4 06/19] physmem: preserve ram blocks for cpr
+Date: Mon,  2 Dec 2024 05:19:58 -0800
+Message-Id: <1733145611-62315-7-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2024-12-02_09,2024-12-02_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxlogscore=999
+ spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2411120000 definitions=main-2412020116
+X-Proofpoint-ORIG-GUID: HF56IY68lu2-gGBrqXRGeOzuzecSzKEX
+X-Proofpoint-GUID: HF56IY68lu2-gGBrqXRGeOzuzecSzKEX
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,43 +105,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the frem helper, we have a local float_status because we want to
-execute the floatx80_div() with a custom rounding mode.  Instead of
-zero-initializing the local float_status and then having to set it up
-with the m68k standard behaviour (including the NaN propagation rule
-and copying the rounding precision from env->fp_status), initialize
-it as a complete copy of env->fp_status. This will avoid our having
-to add new code in this function for every new config knob we add
-to fp_status.
+Save the memfd for ramblocks in CPR state, along with a name that
+uniquely identifies it.  The block's idstr is not yet set, so it
+cannot be used for this purpose.  Find the saved memfd in new QEMU when
+creating a block.  If the block size is larger in new QEMU, extend the
+block using fallocate, and the extra space will be useable after a guest
+reset.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- target/m68k/fpu_helper.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ system/physmem.c | 36 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
 
-diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
-index a605162b71f..e3f4a188501 100644
---- a/target/m68k/fpu_helper.c
-+++ b/target/m68k/fpu_helper.c
-@@ -615,15 +615,13 @@ void HELPER(frem)(CPUM68KState *env, FPReg *res, FPReg *val0, FPReg *val1)
+diff --git a/system/physmem.c b/system/physmem.c
+index 0bcb2cc..aa095a3 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -70,6 +70,7 @@
  
-     fp_rem = floatx80_rem(val1->d, val0->d, &env->fp_status);
-     if (!floatx80_is_any_nan(fp_rem)) {
--        float_status fp_status = { };
-+        /* Use local temporary fp_status to set different rounding mode */
-+        float_status fp_status = env->fp_status;
-         uint32_t quotient;
-         int sign;
+ #include "qemu/pmem.h"
  
-         /* Calculate quotient directly using round to nearest mode */
--        set_float_2nan_prop_rule(float_2nan_prop_ab, &fp_status);
-         set_float_rounding_mode(float_round_nearest_even, &fp_status);
--        set_floatx80_rounding_precision(
--            get_floatx80_rounding_precision(&env->fp_status), &fp_status);
-         fp_quot.d = floatx80_div(val1->d, val0->d, &fp_status);
++#include "migration/cpr.h"
+ #include "migration/vmstate.h"
  
-         sign = extractFloatx80Sign(fp_quot.d);
+ #include "qemu/range.h"
+@@ -1661,6 +1662,19 @@ void qemu_ram_unset_idstr(RAMBlock *block)
+     }
+ }
+ 
++static char *cpr_name(RAMBlock *block)
++{
++    MemoryRegion *mr = block->mr;
++    const char *mr_name = memory_region_name(mr);
++    g_autofree char *id = mr->dev ? qdev_get_dev_path(mr->dev) : NULL;
++
++    if (id) {
++        return g_strdup_printf("%s/%s", id, mr_name);
++    } else {
++        return g_strdup(mr_name);
++    }
++}
++
+ size_t qemu_ram_pagesize(RAMBlock *rb)
+ {
+     return rb->page_size;
+@@ -2080,8 +2094,18 @@ static bool qemu_ram_alloc_shared(RAMBlock *new_block, Error **errp)
+ {
+     size_t max_length = new_block->max_length;
+     MemoryRegion *mr = new_block->mr;
+-    const char *name = memory_region_name(mr);
+-    int fd;
++    g_autofree char *name = cpr_name(new_block);
++    int fd = cpr_find_fd(name, 0);
++
++    if (fd >= 0) {
++        if (lseek(fd, 0, SEEK_END) < max_length && ftruncate(fd, max_length)) {
++            error_setg_errno(errp, errno,
++                             "cannot grow ram block %s fd %d to %ld bytes",
++                             name, fd, max_length);
++            goto err;
++        }
++        goto have_fd;
++    }
+ 
+     if (qemu_memfd_available()) {
+         fd = qemu_memfd_create(name, max_length + mr->align, 0, 0, 0, errp);
+@@ -2111,7 +2135,9 @@ static bool qemu_ram_alloc_shared(RAMBlock *new_block, Error **errp)
+             return true;
+         }
+     }
++    cpr_save_fd(name, 0, fd);
+ 
++have_fd:
+     new_block->mr->align = QEMU_VMALLOC_ALIGN;
+     new_block->host = file_ram_alloc(new_block, max_length, fd, false, 0, errp);
+ 
+@@ -2122,6 +2148,8 @@ static bool qemu_ram_alloc_shared(RAMBlock *new_block, Error **errp)
+         return true;
+     }
+ 
++err:
++    cpr_delete_fd(name, 0);
+     close(fd);
+     return false;
+ }
+@@ -2234,6 +2262,8 @@ static void reclaim_ramblock(RAMBlock *block)
+ 
+ void qemu_ram_free(RAMBlock *block)
+ {
++    g_autofree char *name = NULL;
++
+     if (!block) {
+         return;
+     }
+@@ -2244,6 +2274,8 @@ void qemu_ram_free(RAMBlock *block)
+     }
+ 
+     qemu_mutex_lock_ramlist();
++    name = cpr_name(block);
++    cpr_delete_fd(name, 0);
+     QLIST_REMOVE_RCU(block, next);
+     ram_list.mru_block = NULL;
+     /* Write list before version */
 -- 
-2.34.1
+1.8.3.1
 
 
