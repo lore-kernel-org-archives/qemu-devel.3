@@ -4,79 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 327A8D78321
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDB93D78321
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6c8-0000PS-Du; Mon, 02 Dec 2024 08:37:24 -0500
+	id 1tI6Zz-0005bs-Qj; Mon, 02 Dec 2024 08:35:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tI6Ty-0007te-RT
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:28:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tI6Lw-00082N-Mj
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:47 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tI6Tv-0000d4-FU
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:28:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733146133;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zojyDTFFNA31NzoYHYk4d7/O949Hqy/DPojAHqPHPD8=;
- b=O/E5RxATRtEGLT+SISMESyqUWMC+07WmohL4/AcDc5DyLG0+Ht8DmazmU+YkNOkjdx3z19
- 6J/j3qsIOtxetoWv65zkZUbN7DR6WZM6D5eAgZKV0QO9GjKfh95dIkb1Gz27671S2GqA9R
- RSiy/EIhfi7C7FsMCF9jbSgV5VGMFoc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-GvSbtMb_PFGdhn2IckdhZg-1; Mon,
- 02 Dec 2024 08:28:50 -0500
-X-MC-Unique: GvSbtMb_PFGdhn2IckdhZg-1
-X-Mimecast-MFC-AGG-ID: GvSbtMb_PFGdhn2IckdhZg
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8394C1944DDE; Mon,  2 Dec 2024 13:28:49 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.143])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BCFA91955D45; Mon,  2 Dec 2024 13:28:47 +0000 (UTC)
-Date: Mon, 2 Dec 2024 13:28:44 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH 18/22] tests/functional: add 'archive_extract' to
- QemuBaseTest
-Message-ID: <Z022DImyDM5PP2nn@redhat.com>
-References: <20241129173120.761728-1-berrange@redhat.com>
- <20241129173120.761728-19-berrange@redhat.com>
- <9277a627-13d6-4d0f-9802-dec6b2606cbe@redhat.com>
- <Z02kTzobRDeEYHQR@redhat.com>
- <808c81b0-c64a-4a32-9683-c96b51145da3@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <808c81b0-c64a-4a32-9683-c96b51145da3@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tI6Ll-0005oI-1K
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:32 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B2DIY85012846;
+ Mon, 2 Dec 2024 13:20:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=kIJQkFkP2pXfWartjKaoYqVVOADcqox68MZZCrXT9F8=; b=
+ Y8J33yU5ZY870LFpOqAyQpl70jUSPbEcxvLe7FNkOdgXkuS1OsEvjBn8vI+/KPGV
+ PkyNPkxlFbICPhovyHZGhdFqY53eDEJ/FbRb/KsOv6/TyCienLOyJr9v8hb/Mxuz
+ pPoFNJ4m9mDtgluONlEUW6eEeWpcv9Ve/TVzi+ArD+rTcPNnp5042uwr8VKLT80N
+ /YcWigTLbt1M8PQq+piB0Tgz5eEZ47qUEHbe+wO8SifZAo2HzvmJeuZO1iBpW4j1
+ yo8kMzoUCa1Mjtw7YMhcuMzbMQVL+aLvZ4+o8zUz+guXEvWSarNRiIVKdtpHYQ22
+ 0o16pqUOFbCR98R7ALo8tg==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437s4c334d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 02 Dec 2024 13:20:25 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 4B2CjRJA032128; Mon, 2 Dec 2024 13:20:24 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 437s56jtt8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 02 Dec 2024 13:20:24 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCF1032806;
+ Mon, 2 Dec 2024 13:20:23 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 437s56jthv-15; Mon, 02 Dec 2024 13:20:23 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V4 14/19] migration: cpr-transfer mode
+Date: Mon,  2 Dec 2024 05:20:06 -0800
+Message-Id: <1733145611-62315-15-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2024-12-02_09,2024-12-02_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxlogscore=999
+ spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2411120000 definitions=main-2412020116
+X-Proofpoint-ORIG-GUID: cmWpJV6Jw1wxJDjedXcLB531kSvVA0-V
+X-Proofpoint-GUID: cmWpJV6Jw1wxJDjedXcLB531kSvVA0-V
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,113 +102,477 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 02, 2024 at 01:52:46PM +0100, Thomas Huth wrote:
-> On 02/12/2024 13.13, Daniel P. Berrangé wrote:
-> > On Mon, Dec 02, 2024 at 11:30:28AM +0100, Thomas Huth wrote:
-> > > On 29/11/2024 18.31, Daniel P. Berrangé wrote:
-> > > > This helper wrappers utils.archive_extract, forcing the use of the
-> > > > scratch directory, to ensure any extracted files are cleaned at test
-> > > > termination. If a specific member is requested, then the path to the
-> > > > extracted file is also returned.
-> > > > 
-> > > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > > > ---
-> > > >    tests/functional/qemu_test/testcase.py | 36 ++++++++++++++++++++++++++
-> > > >    1 file changed, 36 insertions(+)
-> > > > 
-> > > > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> > > > index 2f32742387..31d06f0172 100644
-> > > > --- a/tests/functional/qemu_test/testcase.py
-> > > > +++ b/tests/functional/qemu_test/testcase.py
-> > > > @@ -28,6 +28,8 @@
-> > > >    from .asset import Asset
-> > > >    from .cmd import run_cmd
-> > > >    from .config import BUILD_DIR
-> > > > +from .utils import (archive_extract as utils_archive_extract,
-> > > > +                    guess_archive_format)
-> > > >    class QemuBaseTest(unittest.TestCase):
-> > > > @@ -39,6 +41,40 @@ class QemuBaseTest(unittest.TestCase):
-> > > >        log = None
-> > > >        logdir = None
-> > > > +    '''
-> > > > +    @params archive: filename, Asset, or file-like object to extract
-> > > > +    @params sub_dir: optional sub-directory to extract into
-> > > > +    @params member: optional member file to limit extraction to
-> > > > +
-> > > > +    Extracts @archive into the scratch directory, or a
-> > > > +    directory beneath named by @sub_dir. All files are
-> > > > +    extracted unless @member specifies a limit.
-> > > > +
-> > > > +    If @member is non-None, returns the fully qualified
-> > > > +    path to @member
-> > > > +    '''
-> > > > +    def archive_extract(self, archive, format=None, sub_dir=None, member=None):
-> > > > +        if type(archive) == Asset:
-> > > > +            if format is None:
-> > > > +                format = guess_archive_format(archive.url)
-> > > > +            archive = archive.fetch()
-> > > > +        elif format is None:
-> > > > +            format = guess_archive_format(archive)
-> > > > +
-> > > > +        if member is not None:
-> > > > +            if os.path.isabs(member):
-> > > > +                member = os.path.relpath(member, '/')
-> > > > +
-> > > > +        if sub_dir is None:
-> > > > +            utils_archive_extract(archive, self.scratch_file(), format, member)
-> > > > +        else:
-> > > > +            utils_archive_extract(archive, self.scratch_file(sub_dir),
-> > > > +                                  format, member)
-> > > > +
-> > > > +        if member is not None:
-> > > > +            return self.scratch_file(member)
-> > > > +        return None
-> > > 
-> > > Ah, ok, so the guessing is done here ...
-> > > 
-> > > But somehow it feels wrong to have a "archive_extract" function in the
-> > > QemuBaseTest class that also does asset fetching under the hood.
-> > > 
-> > > Could you maybe rather move this into the asset.py file and rename the
-> > > function to "fetch_and_extract()" to make it clearer what it does?
-> > 
-> > We can't move it into asset.py because not all callers are passing in an
-> > Asset object - there are some cases where we've just got a local file.
-> > eg when the asset we extracted contains other archives that need to be
-> > extracted.
-> 
-> Couldn't those spots rather use the function from utils.py directly for the
-> second extraction?
-> 
-> Anyway, I guess now it's likely better to keep it here since you want to
-> have access to self.scratch_file() in this function, too.
-> But maybe you could still at least rename it to fetch_and_extract() to make
-> it more obvious what it all about?
+Add the cpr-transfer migration mode.  Usage:
+  qemu-system-$arch -machine aux-ram-share=on ...
 
-I wanted to de-emphasize the 'fetch' concept, to make use of assets look
-and work no different from local files.
+  start new QEMU with "-incoming <main-uri> -incoming <cpr-channel>"
 
-In practice they are all local files, with no fetching taking place, as
-the test suite arranges for everything to be pre-fetched into the local
-cache. THe only time a "fetch" would ever happen during execution is if
-you had directly invoked a python file, with an empt ycache.
+  Issue commands to old QEMU:
+    migrate_set_parameter mode cpr-transfer
 
-IOW, from the POV of the executing test case, an Asset object is no more
-than a wrapper around a local filename.
+    {"execute": "migrate", ...
+        {"channel-type": "main"...}, {"channel-type": "cpr"...} ... }
 
-Hmm, in fact I wonder if we shouldn't implement the 'str' method to
-directly return the local filename, so we can pass Asset object instances
-to any method that expects a filename.
+The migrate command stops the VM, saves CPR state to cpr-channel, saves
+normal migration state to main-uri, and old QEMU enters the postmigrate
+state.  The user starts new QEMU on the same host as old QEMU, with the
+same arguments as old QEMU, plus two -incoming options.  Guest RAM is
+preserved in place, albeit with new virtual addresses in new QEMU.
 
-With regards,
-Daniel
+This mode requires a second migration channel of type "cpr", in the
+channel arguments on the outgoing side, and in a second -incoming
+command-line parameter on the incoming side.
+
+Memory-backend objects must have the share=on attribute, but
+memory-backend-epc is not supported.  The VM must be started with
+the '-machine aux-ram-share=on' option, which allows anonymous
+memory to be transferred in place to the new process.  The memfds
+are kept open by sending the descriptors to new QEMU via the CPR
+channel, which must support SCM_RIGHTS, and they are mmap'd in new QEMU.
+
+The implementation splits qmp_migrate into start and finish functions.
+Start sends CPR state to new QEMU, which responds by closing the CPR
+channel.  Old QEMU detects the HUP then calls finish, which connects
+the main migration channel.
+
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ migration/cpr.c           |  23 +++++++---
+ migration/migration.c     | 107 +++++++++++++++++++++++++++++++++++++++++++++-
+ migration/migration.h     |   2 +
+ migration/options.c       |  12 +++++-
+ migration/ram.c           |   2 +
+ migration/vmstate-types.c |   1 +
+ qapi/migration.json       |  37 +++++++++++++++-
+ stubs/vmstate.c           |   7 +++
+ system/vl.c               |   6 +++
+ 9 files changed, 188 insertions(+), 9 deletions(-)
+
+diff --git a/migration/cpr.c b/migration/cpr.c
+index f4a795f..560546d 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -45,7 +45,7 @@ static const VMStateDescription vmstate_cpr_fd = {
+         VMSTATE_UINT32(namelen, CprFd),
+         VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
+         VMSTATE_INT32(id, CprFd),
+-        VMSTATE_INT32(fd, CprFd),
++        VMSTATE_FD(fd, CprFd),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -139,8 +139,14 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+ 
+     trace_cpr_state_save(MigMode_str(mode));
+ 
+-    /* set f based on mode in a later patch in this series */
+-    return 0;
++    if (mode == MIG_MODE_CPR_TRANSFER) {
++        f = cpr_transfer_output(channel, errp);
++    } else {
++        return 0;
++    }
++    if (!f) {
++        return -1;
++    }
+ 
+     qemu_put_be32(f, QEMU_CPR_FILE_MAGIC);
+     qemu_put_be32(f, QEMU_CPR_FILE_VERSION);
+@@ -170,8 +176,15 @@ int cpr_state_load(Error **errp)
+     QEMUFile *f;
+     MigMode mode = 0;
+ 
+-    /* set f and mode based on other parameters later in this patch series */
+-    return 0;
++    if (cpr_channel) {
++        mode = MIG_MODE_CPR_TRANSFER;
++        f = cpr_transfer_input(cpr_channel, errp);
++    } else {
++        return 0;
++    }
++    if (!f) {
++        return -1;
++    }
+ 
+     trace_cpr_state_load(MigMode_str(mode));
+ 
+diff --git a/migration/migration.c b/migration/migration.c
+index a5cf148..81a1ced 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -76,6 +76,7 @@
+ static NotifierWithReturnList migration_state_notifiers[] = {
+     NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_NORMAL),
+     NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_REBOOT),
++    NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_TRANSFER),
+ };
+ 
+ /* Messages sent on the return path from destination to source */
+@@ -109,6 +110,7 @@ static int migration_maybe_pause(MigrationState *s,
+ static void migrate_fd_cancel(MigrationState *s);
+ static bool close_return_path_on_source(MigrationState *s);
+ static void migration_completion_end(MigrationState *s);
++static void migrate_hup_delete(MigrationState *s);
+ 
+ static void migration_downtime_start(MigrationState *s)
+ {
+@@ -204,6 +206,12 @@ migration_channels_and_transport_compatible(MigrationAddress *addr,
+         return false;
+     }
+ 
++    if (migrate_mode() == MIG_MODE_CPR_TRANSFER &&
++        addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
++        error_setg(errp, "Migration requires streamable transport (eg unix)");
++        return false;
++    }
++
+     return true;
+ }
+ 
+@@ -319,6 +327,7 @@ void migration_cancel(const Error *error)
+         qmp_cancel_vcpu_dirty_limit(false, -1, NULL);
+     }
+     migrate_fd_cancel(current_migration);
++    migrate_hup_delete(current_migration);
+ }
+ 
+ void migration_shutdown(void)
+@@ -419,6 +428,7 @@ void migration_incoming_state_destroy(void)
+         mis->postcopy_qemufile_dst = NULL;
+     }
+ 
++    cpr_set_cpr_channel(NULL);
+     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+ }
+ 
+@@ -720,6 +730,9 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+     } else {
+         error_setg(errp, "unknown migration protocol: %s", uri);
+     }
++
++    /* Close cpr socket to tell source that we are listening */
++    cpr_state_close();
+ }
+ 
+ static void process_incoming_migration_bh(void *opaque)
+@@ -1395,6 +1408,8 @@ static void migrate_fd_cleanup(MigrationState *s)
+     s->vmdesc = NULL;
+ 
+     qemu_savevm_state_cleanup();
++    cpr_state_close();
++    migrate_hup_delete(s);
+ 
+     close_return_path_on_source(s);
+ 
+@@ -1506,6 +1521,7 @@ static void migrate_fd_error(MigrationState *s, const Error *error)
+ static void migrate_fd_cancel(MigrationState *s)
+ {
+     int old_state ;
++    bool setup = (s->state == MIGRATION_STATUS_SETUP);
+ 
+     trace_migrate_fd_cancel();
+ 
+@@ -1550,6 +1566,17 @@ static void migrate_fd_cancel(MigrationState *s)
+             s->block_inactive = false;
+         }
+     }
++
++    /*
++     * If qmp_migrate_finish has not been called, then there is no path that
++     * will complete the cancellation.  Do it now.
++     */
++    if (setup && !s->to_dst_file) {
++        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_CANCELLED);
++        cpr_state_close();
++        migrate_hup_delete(s);
++        vm_resume(s->vm_old_state);
++    }
+ }
+ 
+ void migration_add_notifier_mode(NotifierWithReturn *notify,
+@@ -1662,7 +1689,9 @@ bool migration_thread_is_self(void)
+ 
+ bool migrate_mode_is_cpr(MigrationState *s)
+ {
+-    return s->parameters.mode == MIG_MODE_CPR_REBOOT;
++    MigMode mode = s->parameters.mode;
++    return mode == MIG_MODE_CPR_REBOOT ||
++           mode == MIG_MODE_CPR_TRANSFER;
+ }
+ 
+ int migrate_init(MigrationState *s, Error **errp)
+@@ -2037,6 +2066,40 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+     return true;
+ }
+ 
++static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
++                               Error **errp);
++
++static void migrate_hup_add(MigrationState *s, QIOChannel *ioc, GSourceFunc cb,
++                            void *opaque)
++{
++        s->hup_source = qio_channel_create_watch(ioc, G_IO_HUP);
++        g_source_set_callback(s->hup_source, cb, opaque, NULL);
++        g_source_attach(s->hup_source, NULL);
++}
++
++static void migrate_hup_delete(MigrationState *s)
++{
++    if (s->hup_source) {
++        g_source_destroy(s->hup_source);
++        g_source_unref(s->hup_source);
++        s->hup_source = NULL;
++    }
++}
++
++static gboolean qmp_migrate_finish_cb(QIOChannel *channel,
++                                      GIOCondition cond,
++                                      void *opaque)
++{
++    MigrationAddress *addr = opaque;
++
++    qmp_migrate_finish(addr, false, NULL);
++
++    cpr_state_close();
++    migrate_hup_delete(migrate_get_current());
++    qapi_free_MigrationAddress(addr);
++    return G_SOURCE_REMOVE;
++}
++
+ void qmp_migrate(const char *uri, bool has_channels,
+                  MigrationChannelList *channels, bool has_detach, bool detach,
+                  bool has_resume, bool resume, Error **errp)
+@@ -2047,6 +2110,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+     g_autoptr(MigrationChannel) channel = NULL;
+     MigrationAddress *addr = NULL;
+     MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
++    MigrationChannel *cpr_channel = NULL;
+ 
+     /*
+      * Having preliminary checks for uri and channel
+@@ -2067,6 +2131,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+             }
+             channelv[type] = channels->value;
+         }
++        cpr_channel = channelv[MIGRATION_CHANNEL_TYPE_CPR];
+         addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
+         if (!addr) {
+             error_setg(errp, "Channel list has no main entry");
+@@ -2087,12 +2152,52 @@ void qmp_migrate(const char *uri, bool has_channels,
+         return;
+     }
+ 
++    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
++        error_setg(errp, "missing 'cpr' migration channel");
++        return;
++    }
++
+     resume_requested = has_resume && resume;
+     if (!migrate_prepare(s, resume_requested, errp)) {
+         /* Error detected, put into errp */
+         return;
+     }
+ 
++    if (cpr_state_save(cpr_channel, &local_err)) {
++        goto out;
++    }
++
++    /*
++     * For cpr-transfer, the target may not be listening yet on the migration
++     * channel, because first it must finish cpr_load_state.  The target tells
++     * us it is listening by closing the cpr-state socket.  Wait for that HUP
++     * event before connecting in qmp_migrate_finish.
++     *
++     * The HUP could occur because the target fails while reading CPR state,
++     * in which case the target will not listen for the incoming migration
++     * connection, so qmp_migrate_finish will fail to connect, and then recover.
++     */
++    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER) {
++        migrate_hup_add(s, cpr_state_ioc(), (GSourceFunc)qmp_migrate_finish_cb,
++                        QAPI_CLONE(MigrationAddress, addr));
++
++    } else {
++        qmp_migrate_finish(addr, resume_requested, errp);
++    }
++
++out:
++    if (local_err) {
++        migrate_fd_error(s, local_err);
++        error_propagate(errp, local_err);
++    }
++}
++
++static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
++                               Error **errp)
++{
++    MigrationState *s = migrate_get_current();
++    Error *local_err = NULL;
++
+     if (!resume_requested) {
+         if (!yank_register_instance(MIGRATION_YANK_INSTANCE, errp)) {
+             return;
+diff --git a/migration/migration.h b/migration/migration.h
+index 5cd0f29..bdae228 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -471,6 +471,8 @@ struct MigrationState {
+     bool switchover_acked;
+     /* Is this a rdma migration */
+     bool rdma_migration;
++
++    GSource *hup_source;
+ };
+ 
+ void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+diff --git a/migration/options.c b/migration/options.c
+index ad8d698..bb24bc9 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -22,6 +22,7 @@
+ #include "qapi/qmp/qnull.h"
+ #include "sysemu/runstate.h"
+ #include "migration/colo.h"
++#include "migration/cpr.h"
+ #include "migration/misc.h"
+ #include "migration.h"
+ #include "migration-stats.h"
+@@ -745,9 +746,16 @@ uint64_t migrate_max_postcopy_bandwidth(void)
+ 
+ MigMode migrate_mode(void)
+ {
+-    MigrationState *s = migrate_get_current();
+-    MigMode mode = s->parameters.mode;
++    MigMode mode;
+ 
++    /*
++     * cpr_channel is only set during the early cpr-transfer loading stage,
++     * after which it is cleared.
++     */
++    if (cpr_get_cpr_channel()) {
++        return MIG_MODE_CPR_TRANSFER;
++    }
++    mode = migrate_get_current()->parameters.mode;
+     assert(mode >= 0 && mode < MIG_MODE__MAX);
+     return mode;
+ }
+diff --git a/migration/ram.c b/migration/ram.c
+index 05ff9eb..fa6a909 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -216,7 +216,9 @@ static bool postcopy_preempt_active(void)
+ 
+ bool migrate_ram_is_ignored(RAMBlock *block)
+ {
++    MigMode mode = migrate_mode();
+     return !qemu_ram_is_migratable(block) ||
++           mode == MIG_MODE_CPR_TRANSFER ||
+            (migrate_ignore_shared() && qemu_ram_is_shared(block)
+                                     && qemu_ram_is_named_file(block));
+ }
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index f31deb3..2210f0c 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -15,6 +15,7 @@
+ #include "qemu-file.h"
+ #include "migration.h"
+ #include "migration/vmstate.h"
++#include "migration/client-options.h"
+ #include "qemu/error-report.h"
+ #include "qemu/queue.h"
+ #include "trace.h"
+diff --git a/qapi/migration.json b/qapi/migration.json
+index a26960b..1bc963f 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -614,9 +614,44 @@
+ #     or COLO.
+ #
+ #     (since 8.2)
++#
++# @cpr-transfer: This mode allows the user to transfer a guest to a
++#     new QEMU instance on the same host with minimal guest pause
++#     time, by preserving guest RAM in place, albeit with new virtual
++#     addresses in new QEMU.
++#
++#     The user starts new QEMU on the same host as old QEMU, with the
++#     the same arguments as old QEMU, plus the -incoming option.  The
++#     user issues the migrate command to old QEMU, which stops the VM,
++#     saves state to the migration channels, and enters the
++#     postmigrate state.  Execution resumes in new QEMU.
++#
++#     This mode requires a second migration channel type "cpr" in the
++#     channel arguments on the outgoing side.  The channel must be a
++#     type, such as unix socket, that supports SCM_RIGHTS.  However,
++#     the cpr channel cannot be added to the list of channels for a
++#     migrate-incoming command, because it must be read before new
++#     QEMU opens a monitor.  Instead, the user passes the channel as a
++#     second -incoming command-line argument to new QEMU using JSON
++#     syntax.
++#
++#     Memory-backend objects must have the share=on attribute, but
++#     memory-backend-epc is not supported.  The VM must be started
++#     with the '-machine aux-ram-share=on' option.
++#
++#     The incoming migration channel cannot be a file type, and for
++#     the tcp type, the port cannot be 0 (meaning dynamically choose
++#     a port).
++#
++#     When using -incoming defer, you must issue the migrate command
++#     to old QEMU before issuing any monitor commands to new QEMU.
++#     However, new QEMU does not open and read the migration stream
++#     until you issue the migrate incoming command.
++#
++#     (since 10.0)
+ ##
+ { 'enum': 'MigMode',
+-  'data': [ 'normal', 'cpr-reboot' ] }
++  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
+ 
+ ##
+ # @ZeroPageDetection:
+diff --git a/stubs/vmstate.c b/stubs/vmstate.c
+index 8513d92..c190762 100644
+--- a/stubs/vmstate.c
++++ b/stubs/vmstate.c
+@@ -1,5 +1,7 @@
+ #include "qemu/osdep.h"
+ #include "migration/vmstate.h"
++#include "qapi/qapi-types-migration.h"
++#include "migration/client-options.h"
+ 
+ int vmstate_register_with_alias_id(VMStateIf *obj,
+                                    uint32_t instance_id,
+@@ -21,3 +23,8 @@ bool vmstate_check_only_migratable(const VMStateDescription *vmsd)
+ {
+     return true;
+ }
++
++MigMode migrate_mode(void)
++{
++    return MIG_MODE_NORMAL;
++}
+diff --git a/system/vl.c b/system/vl.c
+index 40e049e..d965be8 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3741,6 +3741,12 @@ void qemu_init(int argc, char **argv)
+ 
+     qemu_create_machine(machine_opts_dict);
+ 
++    /*
++     * Load incoming CPR state before any devices are created, because it
++     * contains file descriptors that are needed in device initialization code.
++     */
++    cpr_state_load(&error_fatal);
++
+     suspend_mux_open();
+ 
+     qemu_disable_default_devices();
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+1.8.3.1
 
 
