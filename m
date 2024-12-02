@@ -4,78 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 727A8D4977B
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Dec 2024 18:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B39DD49793
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 01:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHosy-0000LW-5a; Sun, 01 Dec 2024 13:41:36 -0500
+	id 1tHvGx-00008p-T9; Sun, 01 Dec 2024 20:30:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tHosu-0000L1-Cx
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 13:41:32 -0500
-Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tHosq-0005q2-Bc
- for qemu-devel@nongnu.org; Sun, 01 Dec 2024 13:41:30 -0500
-Received: by mail-vk1-xa2e.google.com with SMTP id
- 71dfb90a1353d-51532deb867so730001e0c.0
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 10:41:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1733078486; x=1733683286;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MvlyvbHT3p72WD9hYAfRiva3dqGd6ecZPtG56Rj/bQA=;
- b=bcXxCTDDBYK2QEnqup+3nrb+Jz9wM5p+oXREtLQ1NA88O+pUxh2Ohe/SqGuFmVjcbo
- wfCknTT8dkds2cR9O79vKh13urEqDDQgE0JFz+4BflqFMNeJc84M/Fo5x0D82QtxctbV
- Ot9lM6GOkudBx7mYO9eLDkSEhhmbLUIxoz1EV+Evk5dJ2+PPXsAm9nfyoFp2umPQq2ix
- n6+FN+lD+Azs/K45H3os/yReCV8oITfOSxLnrfmOkz44Gq8bmcoOsNiw21GMT4N/VKPP
- YjycHJxdUGqzgi0bg9ru3oYRYc4PhrmvSjqIxn13k+YV7P8hv/6lCXb7Fg93G2y+KKGA
- Hg8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733078486; x=1733683286;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MvlyvbHT3p72WD9hYAfRiva3dqGd6ecZPtG56Rj/bQA=;
- b=JNI9j5N2+VVor21R5aDm0L7j0exMAqxlWGa8gXcZQ77H1Y/RhVtQzGFKuVd7ZZUFEr
- SNjVtjA0nx1sxupf+RRcTEnTwxAABxb4n3mw7CWKyaxWRsKuRwCZ3J7OQ1TcbNzjghHr
- H35nr//1W9sB+5GU0hBBqtjImcw2g+LFPAAyU38778y08alKdGhaLLStFLPv6k9r2Xgg
- NUwPnbyBwXqUxIYcOd8+etQcjXTNb49zAnRGp2hCJrG3D/gfRgmA254HGAJttGrjOhPK
- 8ad1LIyvcGLSZYIQmruRJyGf41kahmBRlqQprTeLCQZAVBoB8Y4JjwwFGLBROMcOQVy2
- xXpA==
-X-Gm-Message-State: AOJu0Yz71qddTyCGOiBfMRaeNtCrXVHxawmFAkppnxqp9U0t3GXHMfCO
- +fLjriaI/zGTBN/KQKZ+6KpORHFDNgsOH2Osg3LgNH2z4nR9g7sPhHoAmEcJJVCJtmlSqKGwx87
- +APQPFmj3K555WcQeHvjEkYzx1cNwAdSvY+wy
-X-Gm-Gg: ASbGncvnWWbUT8UmBJLmT5Kau4TLJ91gusm4mJSFahJ+fGqJlkAgAqUhxj05EOYCUc9
- dGPDcMZ6jF+ptxZYTEtMiXa7FCTE2ucg=
-X-Google-Smtp-Source: AGHT+IEiiCqGRJfUBtrjziq9sxxhbeDZ3r3sFfBHbrqiwSfIAUqhCxNdYrtikZQZPMSDGAkqG2iMpS23nJvScv4X4A4=
-X-Received: by 2002:a05:6102:374e:b0:4af:958:97d5 with SMTP id
- ada2fe7eead31-4af44a69739mr22032458137.25.1733078485652; Sun, 01 Dec 2024
- 10:41:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
+ id 1tHvGl-00007S-Dt; Sun, 01 Dec 2024 20:30:35 -0500
+Received: from mail-sh0chn02on20728.outbound.protection.partner.outlook.cn
+ ([2406:e500:4420:2::728]
+ helo=CHN02-SH0-obe.outbound.protection.partner.outlook.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
+ id 1tHvGf-0002mq-Md; Sun, 01 Dec 2024 20:30:35 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=c0Q6IQqIODLkA/fbH2n5Bay9EWCBlYWg+glxqaQXIyUg0Ab1A8rxvstAKoRlpb01yg4wRKKVUN3TnxNlZp95hTq/RTIbCYmv2T9JdBeCsV07IECGVDVyvrRL+SHhCEvCuR+CCcENxktGV3Rdj/yzlP776Jf3i3RPjRph01OryPCafY8lfCPgYk5dTOScymRuDHmUsr6Yk+EJhkRANWbXkcMc73dNY2H9zAja0U92OSFe6oqg0RXOJvtFvitbw9N5/SaXexHMhFpy08QoFu4pN2lZwXObVuQkISIqWzI1Xq74P0SdDzNhZIvGBDXe6MWRiD2bEk33GWVafARFaUQNfg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RTEpCS4YrSxoAxMEPK/LcHBg/Aa71JEBf6w40V8yd8A=;
+ b=Si0tnvOLiXM77S513v4MD7wYPf38muWp0mfU8lyJisecz4GwgdRAKN7qW+utfYZEbrMY6EJtnSRWDUjpyR4C9+oCYp8D8soBY/0hySWebnHvYHylefNzhNEPJ4R7tkooGu5UQ6ztgv9K5MO80r/MNCCj4R5djuwVMOldXI2oDkV/i46+ltEbKejMoz0B+Lb6E3pHrxb/c/5aaJ3ZdWMs8RksPbOIHojvf38WNAKu0F7u2O5lmUZleIc/RVzP3tgNVLdS2j8YUokWXoPgtYd7/2RMMlPV1bshygj9Fi6rt5fHpPDzgj0/9QOTBwn7x0le1Tbd1VQ1i0imZ4FoYcS98Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=starfivetech.com; dmarc=pass action=none
+ header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
+Received: from NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c510:12::10) by NT0PR01MB1133.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c510:6::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.13; Mon, 2 Dec
+ 2024 01:30:33 +0000
+Received: from NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
+ ([fe80::affa:7fe4:57c8:11ce]) by
+ NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn ([fe80::affa:7fe4:57c8:11ce%6])
+ with mapi id 15.20.8207.010; Mon, 2 Dec 2024 01:30:33 +0000
+From: JeeHeng Sia <jeeheng.sia@starfivetech.com>
+To: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>
+CC: "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "anisinha@redhat.com" <anisinha@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
+ "sunilvl@ventanamicro.com" <sunilvl@ventanamicro.com>, "palmer@dabbelt.com"
+ <palmer@dabbelt.com>, "alistair.francis@wdc.com" <alistair.francis@wdc.com>,
+ "bin.meng@windriver.com" <bin.meng@windriver.com>, "liwei1518@gmail.com"
+ <liwei1518@gmail.com>, "dbarboza@ventanamicro.com"
+ <dbarboza@ventanamicro.com>, "zhiwei_liu@linux.alibaba.com"
+ <zhiwei_liu@linux.alibaba.com>, "gaosong@loongson.cn" <gaosong@loongson.cn>,
+ "jiaxun.yang@flygoat.com" <jiaxun.yang@flygoat.com>, "maobibo@loongson.cn"
+ <maobibo@loongson.cn>
+Subject: RE: [PATCH v6 0/3] Upgrade ACPI SPCR table to support SPCR table
+ revision 4 format
+Thread-Topic: [PATCH v6 0/3] Upgrade ACPI SPCR table to support SPCR table
+ revision 4 format
+Thread-Index: AQHbKNzUOkVQiFLvLkuI8r9ZO8B5sLLSYY1w
+Date: Mon, 2 Dec 2024 01:30:33 +0000
+Message-ID: <NT0PR01MB1278358D85002212C3FE0A539C35A@NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn>
+References: <20241028015744.624943-1-jeeheng.sia@starfivetech.com>
+In-Reply-To: <20241028015744.624943-1-jeeheng.sia@starfivetech.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=starfivetech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: NT0PR01MB1278:EE_|NT0PR01MB1133:EE_
+x-ms-office365-filtering-correlation-id: c6f1ad79-4f4a-45d5-1307-08dd1270eaaa
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|41320700013|7416014|38070700018|7053199007; 
+x-microsoft-antispam-message-info: MWpuf3IhRgh5+j1y4VQsFiHnAxWUozXedvAys73DfEPYmzX+86yCWs63JrWlSat2dzPYVbnRJ72nmjRooFpMyL1+INUex/UOh+d1cDgZjYWnr+P586+2g1dNXtWE3yXRCUGKebrS4wfRyjnzZqF5LuCwQt0CyYqY6FErYln2EYSyfxyyVX8uHVTopm8/2RyfSY/QWwmMqFENuAxwcLDbKy3exre01gjY7140sJED1mSBfoJjaMh/JM1pUew4uf04vRdPcbZiaM/6KJ8LRZycuxMQvScdGG6WYedqSmrVsS5tFSdM4llKLYfm5PoZfFaZtjBHKwgZvgB2FtZVTN9qf/1ybBF4IFwxZw0wC3EwUqMQcEmw1VIHg1VmA74Y/eJZuZiStOTMQCEqDuDxUg5FGFml53HG6tBc7gzX2dVua2G2/f6L4/Q5MAKZaDCkrX16SZbtkyr0MObptKJjyL0uXEjv9fpiMv4xBFQdcltR6fNXtOH23mKkcgqbSN7DZ0AZap/gqgysxDX/1wjPOYbjuldGZ603Ridg0iocNQWxSmDeA5fO85TyQZtwUVwyT0PPAjPBEv9lFgB+hV8s567G+/dLqS9Z6dYImbM2Mnv+qUfiofvwPyHXCo29OAOtgqP3
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(41320700013)(7416014)(38070700018)(7053199007);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?XSNSxhKYUAtPmCAjtlVNnoKAS/aKWWsJpxxFg13M/A6r0Azdx5q1xD/vE4RO?=
+ =?us-ascii?Q?oXl5UUgRAoFvkbwoCWbYuWVsmMeP3qEcstaaI1fQsxWYKkRwjy+iTBFWK04P?=
+ =?us-ascii?Q?yaqP49cfco8P5pU4vl2jybpEdPd/puWIjMLyqav5o1Z732PVXMmWK9i29c5j?=
+ =?us-ascii?Q?QwiW27kMIyKtniDk+tu2D/pLsDV7GLYuZAxQCOrjGBhUbZqzX/Ll6DntKIwI?=
+ =?us-ascii?Q?vaiLQYST+jHh/GLbj/W0+g/aMRAl92IKchQjLQFAfNu6bADnINpGniByaPuF?=
+ =?us-ascii?Q?twrGb1rcTDsUZw1NrdqtEWr6B+aNyBSyaF7w/XvtZreCjwM6CTLJxmkKcPev?=
+ =?us-ascii?Q?ltY6f3ruhWlRrA0j01q11hj2Y1k7XZUN+4A5qbx4gwz05rxOjgkAmfYLl5od?=
+ =?us-ascii?Q?Oeuvn6GypoRImDmcCVB+Rq7lbyoFgk1no9MMshYRE0HNnd+7nSQy5Hnpd5S5?=
+ =?us-ascii?Q?G03+d7Dwyw4uOEQi/oDZ8ScMD/kagNPQ7fJ1hTuWlI5rgIh6oWXGQniPvICn?=
+ =?us-ascii?Q?OxoWSadfx0/VZtoomGQftIEMBwKTsvA+aP6WOcPHOEmyZh3Bq2uRUDzCsLzX?=
+ =?us-ascii?Q?1wivBAA9IZ8u9DgtsGte/xAxMZ5yTPDLBj9wxJujvYKl+FqcHFgJTbn2H0M1?=
+ =?us-ascii?Q?U/eqVPLZS4VLLrHVTMpbIQ8fzL/32UdjaIPxjnl/NMelCfcung4/pSXy9BK4?=
+ =?us-ascii?Q?7ZCW8K53GpSScLXPcY8duRq9KthftNtwhUlzHnb9AoOTXrvAGB3byP+gGPS/?=
+ =?us-ascii?Q?+LPJ/0p/Yv9UEsGHgsl5JhUCw/S7xxN0yg3aypOzxWMRX41RdibuWhcqIoPg?=
+ =?us-ascii?Q?XNU7DmvXUSFcu1QvX3PR877rCcku39wL2aqdjEYJ4rZX43OeXgwE/MzCeD15?=
+ =?us-ascii?Q?MSAb8aAFKcbjLgvLjtcdWigACEskn5nYIF1vrAc9MZvMdLiimbtzQefXtr19?=
+ =?us-ascii?Q?kAOHVr2c+fmZPXuosqfTMJ0uS/E5PwVOu+rF4ahIWl/bAQq9iJWMJcN7nLWi?=
+ =?us-ascii?Q?v6dWuGv0EBymIeiM1uI4sK1aDcSl5BBxrIoyy0nyOMrX812kqgsbqFvoj9sL?=
+ =?us-ascii?Q?AHonIlkIJvWTP0PVrD2Q1/HmITfTeDciTXhkQIR7mInpcJOaQ6HqZoacpTsI?=
+ =?us-ascii?Q?nGr4iv+Fv2tJl69fkl9tiUhchk+n1PY/gcUJ9agIpJipZh5Oy5bT0X3Oa6S8?=
+ =?us-ascii?Q?Oy8R8yb2Ax78a1IcsEHeag2idpgZN09UcVwUVlvyWIdP+vJpiKk3+HjbgSob?=
+ =?us-ascii?Q?/GSjn5aTAb7z8NOAF8GSf8lcbAqQpiUlY8opXU+v3jvzqYPu8elfNMTRR1dR?=
+ =?us-ascii?Q?PapJUOS1cxw+gvhNEYJUO/Nb+IQSfuT382ckBBHmvNd8COHCReRCBsW/R4yn?=
+ =?us-ascii?Q?KlVU8X8rDPtISBPk/gihu0FLCP+sHcJ017EZkLoGZtH2HrUoHU0Nw3tIiRQG?=
+ =?us-ascii?Q?NJfHckTczS4vm7uWGj+/h2MPluTCSREyoicLfiCgdsFYbw6vrJQCcPcskkYQ?=
+ =?us-ascii?Q?GQhCcTuIvrs5/h2DMgBwYeu2mw/Re4hNB59zdzRZlz3JfCh9BzLzdLfOgHBL?=
+ =?us-ascii?Q?fCLwp8e0Az0SfI0vW71VIfxwkeUa7guCaJ2JTcL+HFqTvqxkykTPom0ByfBd?=
+ =?us-ascii?Q?/A=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20241129152506.59390-1-phil@philjordan.eu>
- <20241129152506.59390-16-phil@philjordan.eu>
- <aa724c83-df51-48a4-a697-586b90ed3f0e@daynix.com>
-In-Reply-To: <aa724c83-df51-48a4-a697-586b90ed3f0e@daynix.com>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Sun, 1 Dec 2024 19:41:15 +0100
-Message-ID: <CAAibmn0hssDfmG19d7qxww=Ko9VWy6SugPUe7j9mOZkzenbuWQ@mail.gmail.com>
-Subject: Re: [PATCH v12 15/15] hw/vmapple/vmapple: Add vmapple machine type
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000817144062839c7c8"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::a2e;
- envelope-from=phil@philjordan.eu; helo=mail-vk1-xa2e.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+X-OriginatorOrg: starfivetech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: NT0PR01MB1278.CHNPR01.prod.partner.outlook.cn
+X-MS-Exchange-CrossTenant-Network-Message-Id: c6f1ad79-4f4a-45d5-1307-08dd1270eaaa
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Dec 2024 01:30:33.8535 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Ud5GkHogrXZzJyxgaCZkhtNG84rvQVdrWVR5qnhgOZ9kcbDAuo3xrkwwqOdzNgwCFC6b+3aNvvUC8iCWnx3+LnyVRUA102i8PjQxqvCEgVI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: NT0PR01MB1133
+Received-SPF: pass client-ip=2406:e500:4420:2::728;
+ envelope-from=jeeheng.sia@starfivetech.com;
+ helo=CHN02-SH0-obe.outbound.protection.partner.outlook.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,151 +146,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000817144062839c7c8
-Content-Type: text/plain; charset="UTF-8"
 
-Thanks for testing, and thank you for putting all that effort into repeated
-reviews!
 
-I now also have a solution for the keyboard/mouse/USB issue in case you
-want to re-test with that applied on top.
-https://patchew.org/QEMU/20241201160316.96121-1-phil@philjordan.eu/
+> -----Original Message-----
+> From: JeeHeng Sia <jeeheng.sia@starfivetech.com>
+> Sent: Monday, 28 October, 2024 9:58 AM
+> To: qemu-arm@nongnu.org; qemu-devel@nongnu.org; qemu-riscv@nongnu.org
+> Cc: mst@redhat.com; imammedo@redhat.com; anisinha@redhat.com; peter.mayde=
+ll@linaro.org; JeeHeng Sia
+> <jeeheng.sia@starfivetech.com>; shannon.zhaosl@gmail.com; sunilvl@ventana=
+micro.com; palmer@dabbelt.com;
+> alistair.francis@wdc.com; bin.meng@windriver.com; liwei1518@gmail.com; db=
+arboza@ventanamicro.com;
+> zhiwei_liu@linux.alibaba.com; gaosong@loongson.cn; jiaxun.yang@flygoat.co=
+m; maobibo@loongson.cn
+> Subject: [PATCH v6 0/3] Upgrade ACPI SPCR table to support SPCR table rev=
+ision 4 format
+>=20
+> Update the SPCR table to accommodate the SPCR Table revision 4 [1].
+> The SPCR table has been modified to adhere to the revision 4 format [2].
+>=20
+> Meanwhile, the virt SPCR golden reference file for RISC-V have been updat=
+ed to
+> accommodate the SPCR Table revision 4.
+>=20
+> [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/=
+serial-port-console-redirection-table
+> [2]: https://github.com/acpica/acpica/pull/931
+>=20
+> Changes in v6:
+> - Added Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> - Rebase and update the build_spcr() function for the LoongArch virt mach=
+ine.
+>=20
+> Changes in v5:
+> - Reverted the SPCR table revision history for the ARM architecture.
+> - Corrected the output of the SPCR Table diff.
+>=20
+> Changes in v4:
+> - Remove the SPCR table revision 4 update for the ARM architecture.
+>=20
+> Changes in v3:
+> - Rebased on the latest QEMU.
+> - Added Acked-by: Alistair Francis <alistair.francis@wdc.com>
+>=20
+> Changes in v2:
+> - Utilizes a three-patch approach to modify the ACPI pre-built binary
+>   files required by the Bios-Table-Test.
+> - Rebases and incorporates changes to support both ARM and RISC-V ACPI
+>   pre-built binary files.
+>=20
+> Sia Jee Heng (3):
+>   qtest: allow SPCR acpi table changes
+>   hw/acpi: Upgrade ACPI SPCR table to support SPCR table revision 4
+>     format
+>   tests/qtest/bios-tables-test: Update virt SPCR golden reference for
+>     RISC-V
+>=20
+>  hw/acpi/aml-build.c               |  20 ++++++++++++++++----
+>  hw/arm/virt-acpi-build.c          |   8 ++++++--
+>  hw/loongarch/acpi-build.c         |   6 +++++-
+>  hw/riscv/virt-acpi-build.c        |  12 +++++++++---
+>  include/hw/acpi/acpi-defs.h       |   7 +++++--
+>  include/hw/acpi/aml-build.h       |   2 +-
+>  tests/data/acpi/riscv64/virt/SPCR | Bin 80 -> 90 bytes
+>  7 files changed, 42 insertions(+), 13 deletions(-)
+>=20
+Hi Alistair,
 
-All the best,
-Phil
+These patches were submitted last month, and there are no further review co=
+mments from others.
+May I know if there are any concerns about merging the patch series?
+>=20
+> base-commit: cea8ac78545a83e1f01c94d89d6f5a3f6b5c05d2
+> --
+> 2.43.0
 
-On Sat, 30 Nov 2024 at 07:33, Akihiko Odaki <akihiko.odaki@daynix.com>
-wrote:
-
-> On 2024/11/30 0:25, Phil Dennis-Jordan wrote:
-> > From: Alexander Graf <graf@amazon.com>
-> >
-> > Apple defines a new "vmapple" machine type as part of its proprietary
-> > macOS Virtualization.Framework vmm. This machine type is similar to the
-> > virt one, but with subtle differences in base devices, a few special
-> > vmapple device additions and a vastly different boot chain.
-> >
-> > This patch reimplements this machine type in QEMU. To use it, you
-> > have to have a readily installed version of macOS for VMApple,
-> > run on macOS with -accel hvf, pass the Virtualization.Framework
-> > boot rom (AVPBooter) in via -bios, pass the aux and root volume as pflash
-> > and pass aux and root volume as virtio drives. In addition, you also
-> > need to find the machine UUID and pass that as -M vmapple,uuid=
-> parameter:
-> >
-> > $ qemu-system-aarch64 -accel hvf -M vmapple,uuid=0x1234 -m 4G \
-> >      -bios
-> /System/Library/Frameworks/Virtualization.framework/Versions/A/Resources/AVPBooter.vmapple2.bin
-> >      -drive file=aux,if=pflash,format=raw \
-> >      -drive file=root,if=pflash,format=raw \
-> >      -drive file=aux,if=none,id=aux,format=raw \
-> >      -device vmapple-virtio-aux,drive=aux \
-> >      -drive file=root,if=none,id=root,format=raw \
-> >      -device vmapple-virtio-root,drive=root
-> >
-> > With all these in place, you should be able to see macOS booting
-> > successfully.
-> >
-> > Known issues:
-> >   - Keyboard and mouse/tablet input is laggy. The reason for this is
-> >     either that macOS's XHCI driver is broken when the device/platform
-> >     does not support MSI/MSI-X, or there's some unfortunate interplay
-> >     with Qemu's XHCI implementation in this scenario.
-> >   - Currently only macOS 12 guests are supported. The boot process for
-> >     13+ will need further investigation and adjustment.
-> >
-> > Signed-off-by: Alexander Graf <graf@amazon.com>
-> > Co-authored-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> > Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->
-> Finally I confirmed macOS 12 boots on M2 MacBook Air. Thank you for
-> keeping working on this series!
->
-> Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->
-
---000000000000817144062839c7c8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Thanks for testing, and thank you for putting all tha=
-t effort into repeated reviews!</div><div><br></div><div>I now also have a =
-solution for the keyboard/mouse/USB issue in case you want to re-test with =
-that applied on top.</div><div><a href=3D"https://patchew.org/QEMU/20241201=
-160316.96121-1-phil@philjordan.eu/" target=3D"_blank">https://patchew.org/Q=
-EMU/20241201160316.96121-1-phil@philjordan.eu/</a></div><div><br></div><div=
->All the best,</div><div>Phil<br></div></div><br><div class=3D"gmail_quote"=
-><div dir=3D"ltr" class=3D"gmail_attr">On Sat, 30 Nov 2024 at 07:33, Akihik=
-o Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com" target=3D"_blank">a=
-kihiko.odaki@daynix.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">On 2024/11/30 0:25, Phil Dennis-Jordan wrote:<br>
-&gt; From: Alexander Graf &lt;<a href=3D"mailto:graf@amazon.com" target=3D"=
-_blank">graf@amazon.com</a>&gt;<br>
-&gt; <br>
-&gt; Apple defines a new &quot;vmapple&quot; machine type as part of its pr=
-oprietary<br>
-&gt; macOS Virtualization.Framework vmm. This machine type is similar to th=
-e<br>
-&gt; virt one, but with subtle differences in base devices, a few special<b=
-r>
-&gt; vmapple device additions and a vastly different boot chain.<br>
-&gt; <br>
-&gt; This patch reimplements this machine type in QEMU. To use it, you<br>
-&gt; have to have a readily installed version of macOS for VMApple,<br>
-&gt; run on macOS with -accel hvf, pass the Virtualization.Framework<br>
-&gt; boot rom (AVPBooter) in via -bios, pass the aux and root volume as pfl=
-ash<br>
-&gt; and pass aux and root volume as virtio drives. In addition, you also<b=
-r>
-&gt; need to find the machine UUID and pass that as -M vmapple,uuid=3D para=
-meter:<br>
-&gt; <br>
-&gt; $ qemu-system-aarch64 -accel hvf -M vmapple,uuid=3D0x1234 -m 4G \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 -bios /System/Library/Frameworks/Virtualization.fr=
-amework/Versions/A/Resources/AVPBooter.vmapple2.bin<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 -drive file=3Daux,if=3Dpflash,format=3Draw \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 -drive file=3Droot,if=3Dpflash,format=3Draw \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 -drive file=3Daux,if=3Dnone,id=3Daux,format=3Draw =
-\<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 -device vmapple-virtio-aux,drive=3Daux \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 -drive file=3Droot,if=3Dnone,id=3Droot,format=3Dra=
-w \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 -device vmapple-virtio-root,drive=3Droot<br>
-&gt; <br>
-&gt; With all these in place, you should be able to see macOS booting<br>
-&gt; successfully.<br>
-&gt; <br>
-&gt; Known issues:<br>
-&gt;=C2=A0 =C2=A0- Keyboard and mouse/tablet input is laggy. The reason for=
- this is<br>
-&gt;=C2=A0 =C2=A0 =C2=A0either that macOS&#39;s XHCI driver is broken when =
-the device/platform<br>
-&gt;=C2=A0 =C2=A0 =C2=A0does not support MSI/MSI-X, or there&#39;s some unf=
-ortunate interplay<br>
-&gt;=C2=A0 =C2=A0 =C2=A0with Qemu&#39;s XHCI implementation in this scenari=
-o.<br>
-&gt;=C2=A0 =C2=A0- Currently only macOS 12 guests are supported. The boot p=
-rocess for<br>
-&gt;=C2=A0 =C2=A0 =C2=A013+ will need further investigation and adjustment.=
-<br>
-&gt; <br>
-&gt; Signed-off-by: Alexander Graf &lt;<a href=3D"mailto:graf@amazon.com" t=
-arget=3D"_blank">graf@amazon.com</a>&gt;<br>
-&gt; Co-authored-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjord=
-an.eu" target=3D"_blank">phil@philjordan.eu</a>&gt;<br>
-&gt; Signed-off-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjorda=
-n.eu" target=3D"_blank">phil@philjordan.eu</a>&gt;<br>
-&gt; Reviewed-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.=
-com" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;<br>
-<br>
-Finally I confirmed macOS 12 boots on M2 MacBook Air. Thank you for <br>
-keeping working on this series!<br>
-<br>
-Tested-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com" ta=
-rget=3D"_blank">akihiko.odaki@daynix.com</a>&gt;<br>
-</blockquote></div>
-
---000000000000817144062839c7c8--
 
