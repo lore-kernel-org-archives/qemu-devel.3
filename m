@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DD8D10DDD
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 09:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED2FD10DDD
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 09:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI2j2-0002Om-9S; Mon, 02 Dec 2024 04:28:16 -0500
+	id 1tI2na-0003Pu-OZ; Mon, 02 Dec 2024 04:32:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2hv-0002Ll-20
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:27:07 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2nZ-0003Pk-Ko
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:32:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2ht-00022e-Dc
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:27:06 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2nX-0003dW-Od
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:32:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733131623;
+ s=mimecast20190719; t=1733131974;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jSwf9zoW9tugDylWKOukYJEwQVnPPGTd3FLh/Hzbbe4=;
- b=KabmUbtLbptl8/p65+VrXlBZUmfs+UObPjSqdrE6yum8QqoGwlnc14Gfyg+ouHnHaFOpEf
- aB6+OTldopPfH8J8RG6nYR9QgXgx4EeziFO0omerEjpYYbZS9q3ZSyODu2mCLnHeqTk7nY
- Ywc9vsOzG5mXAp+mpiO5kPCXMvhVb/Q=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AIe4RP5UkBFU4RsofwTi7BsrdY9vZeVw78P8xyUUiOw=;
+ b=VXwnbudh8CjLLKa6OrHVkCtkn+S5k4kmI0c44TzJkpFNIIFApaHYUDR/cgJ/JCY3rswt2T
+ EyCm+rF4FMXtfvZkTkAlb6wxkNgFQwONTjRGsJn4B3g4JbPv84Q5Vk2OzfIFlE/M4mGKci
+ 8UMv70Q94oqhLWuT5sS9ndgUYZ0aQKg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-67-Nhmj9I9eNA-e3P0Ey0S6iA-1; Mon, 02 Dec 2024 04:27:02 -0500
-X-MC-Unique: Nhmj9I9eNA-e3P0Ey0S6iA-1
-X-Mimecast-MFC-AGG-ID: Nhmj9I9eNA-e3P0Ey0S6iA
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-434a4ad78a1so33441595e9.0
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 01:27:02 -0800 (PST)
+ us-mta-613-gFySRTCvMhC_q1yvSP5kEg-1; Mon, 02 Dec 2024 04:32:53 -0500
+X-MC-Unique: gFySRTCvMhC_q1yvSP5kEg-1
+X-Mimecast-MFC-AGG-ID: gFySRTCvMhC_q1yvSP5kEg
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-434a90febb8so21722335e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 01:32:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733131621; x=1733736421;
+ d=1e100.net; s=20230601; t=1733131972; x=1733736772;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jSwf9zoW9tugDylWKOukYJEwQVnPPGTd3FLh/Hzbbe4=;
- b=RXPRpKANnsWYzRJZzYHfRWXfGCPehFDvXYFybBUWHzsc3osBdSveuQYpjXhUrF2BPS
- 8yBbeoVvJw/acetUoR1MoQ1xy2cunBD3Xj3aKtO4H67cztY5sZaju+XYAbE+XEu06erM
- 5C/rWq1ZfsLeHkrFFrnP7RDKpPBE5tF5UlhRBfH0q+bC4SFTQapvFOpvqttd2Cuu1bhL
- shOxVHUz1Px0FnqkXs9zx/SNJd1IJe1TYueLR/hMAruEKFRYGWmKu8qv0Z7aZ0bx3QRt
- TPHJ+07ugyBTvvTUwLUs6jll+RrYEt+U1NwZyn6859bgqRXilcQBpLkualWU1IS9YrQ+
- sy9g==
+ bh=AIe4RP5UkBFU4RsofwTi7BsrdY9vZeVw78P8xyUUiOw=;
+ b=U0JzkifrgPN+Tm0FIjHvz729Xwl9bqeZfgwi869uMEy0rKZD6+66HhiMmptBUoRYFU
+ ccCZCxALHI56Jdceoy8D/dbB47DEvghsPosdtQU3lgsIxov/SHcPHLDAUqrM0nzbGD1C
+ jrVr7eShj7iRPR/hwnA1+L6GTV3QOWFMCQ9ERb83q9iFpBs6wATzsPh4awgGa5ZrPbcq
+ 2DDw+vvix3YpxQt5qw54c/uwf/JwNMJZDJTv+lL+D9zxCtgsGy1DfK38nbztGQusq2dm
+ /iIXpvi5v16Q+TyBUuhZdt9UvJQAiMMz90QCcR62XLZvoBoPM2rmj/uhOqG9Vydvja+3
+ X1LQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYwcBtvyfAteWK539trChv+rUxtb6v7EPoEeKtxNCok0ashjAJxEpDwyhDzclQm0tggQA5xW5S4bXF@nongnu.org
-X-Gm-Message-State: AOJu0Yx12e9Zys9rhW1ARaJfwK791aGADMVJB64x27fJ0WUs8c6W4wrZ
- dADV7bRsAPy+4ttZ3y42DikCEl4+GlqjflG0Qc1jsrMW7UiNA7hHbt9FXLr8S2ZiLzxkV8E0tLs
- G4+UUFc1ASsxQb6o767Mr4Ks090PSGGD5TMzY5Vz9lbaogxznLrdBPJBVmsiCti8=
-X-Gm-Gg: ASbGncv5moFgtmbiQWbO6g6rHsNDuV27aUK2eKWXGq3N00gz34gyvzn8iARFjD1ND2/
- TYX1Hiq3xHa21cuWNryg7xD0JIH3WGZwlkflTHDwkeUMUtWMKrq0CMuFFudFu11vMQlMuWhb51u
- CAvmXG2fKTTwNdbnp7a4Sv+xHR7ZYSMayNGfsule2kOUcJmlM2oY3oMlgHDfVQ4FGV03y0vkznt
- sqFRDDzhXPa4y9DVxMuAsgq5Hvb9FGiCCRUJBPI6tazh+d5eNYRnR1lwLSglCAqTVQk/YjTpVk=
-X-Received: by 2002:a05:600c:5102:b0:431:59ab:15cf with SMTP id
- 5b1f17b1804b1-434a9dc8227mr187388845e9.19.1733131621216; 
- Mon, 02 Dec 2024 01:27:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGveG09cKQWe25M1B7u+ynnzDkn5QqqxBnBRs1P0+13hgh5jvjp5e/mngfqLFP5a3xT67NhHw==
-X-Received: by 2002:a05:600c:5102:b0:431:59ab:15cf with SMTP id
- 5b1f17b1804b1-434a9dc8227mr187388645e9.19.1733131620849; 
- Mon, 02 Dec 2024 01:27:00 -0800 (PST)
+ AJvYcCULoedsiyNUaIIHiuOh1kPyLbY3nYqsiJEV6DxCeZJLOPpExCmIQ+s6YnWSPhEypERD34eMvUmRcniC@nongnu.org
+X-Gm-Message-State: AOJu0YzN+E/iBbXvp5yvFRvohGUxct81uz8R0xcfUp2bQ5eFuR/lyJ4i
+ zzMYPfsZEWxK7JxCkWu3FMWUFMppOUgLNLXLkeCih9PoRmEdDcgRGN6G8Cw6GC2DdnZ0SJQ3rZy
+ jq9O0VdshTiespdBXKkJ+s4MOQp4WozcWh74saF+m8yriamaBJc9F
+X-Gm-Gg: ASbGncv2qVXu3ceX6Pdc5aRmXYdBBgQpW6l6xYP8cPZ82l/HBvOvQIeEt5X64+h+5CK
+ 4qgBG35558Z7n3IHrTzwOYKZgle8V+gMG+8/nC6RJq+OwN9ly47RKeV/Tn/a3VthQII2rKdR/nk
+ 67woR8theFTIc4Ys9Sdbfjr/yZ9N+xQ2D8TMYh+EwnCIC1dASrv/IDHHsIVmOZIx2GoQdiZwMrq
+ x/hP0pb3/2sKKzpkrSW7Nl2C7A98zCyL9UwkA7UPmq6pmRGksE6GkWl3RBxD8Sm/kw1Wnow8AU=
+X-Received: by 2002:a05:600c:1c98:b0:431:55c1:f440 with SMTP id
+ 5b1f17b1804b1-434a9df7882mr228194945e9.30.1733131972149; 
+ Mon, 02 Dec 2024 01:32:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH5aV23EOMZHTHHEokOzRgMT1SxhYJ1Glzt9h1dIhgXW4rsvhNyUS695gT/57WHlHNd0RYCGg==
+X-Received: by 2002:a05:600c:1c98:b0:431:55c1:f440 with SMTP id
+ 5b1f17b1804b1-434a9df7882mr228194555e9.30.1733131971708; 
+ Mon, 02 Dec 2024 01:32:51 -0800 (PST)
 Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434b0d9bc5asm144523785e9.2.2024.12.02.01.27.00
+ 5b1f17b1804b1-434aa7e4fe1sm176296135e9.38.2024.12.02.01.32.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 01:27:00 -0800 (PST)
-Message-ID: <a3e41776-4253-4c1d-b3bf-37d4702a871a@redhat.com>
-Date: Mon, 2 Dec 2024 10:26:59 +0100
+ Mon, 02 Dec 2024 01:32:50 -0800 (PST)
+Message-ID: <544db3ce-f37b-4c09-85f5-b6ad96708292@redhat.com>
+Date: Mon, 2 Dec 2024 10:32:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/22] tests/functional: switch over to using
- self.build_file(...)
+Subject: Re: [PATCH 11/22] tests/functional: switch over to using
+ self.data_file(...)
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anirban Sinha <anisinha@redhat.com>
 References: <20241129173120.761728-1-berrange@redhat.com>
- <20241129173120.761728-11-berrange@redhat.com>
+ <20241129173120.761728-12-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,7 +128,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241129173120.761728-11-berrange@redhat.com>
+In-Reply-To: <20241129173120.761728-12-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -156,100 +157,77 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/11/2024 18.31, Daniel P. Berrangé wrote:
-> This removes direct access of the 'BUILD_DIR' variable.
+> This removes direct path manipulation to figure out the source dir
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/qemu_test/testcase.py | 4 ++--
->   tests/functional/test_aarch64_virt.py  | 6 +++---
->   tests/functional/test_virtio_gpu.py    | 9 ++++-----
->   3 files changed, 9 insertions(+), 10 deletions(-)
+>   tests/functional/test_acpi_bits.py | 22 +++++++---------------
+>   1 file changed, 7 insertions(+), 15 deletions(-)
 > 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 5b1e6ba04f..2f32742387 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -127,8 +127,8 @@ def setUp(self, bin_prefix):
->           self.arch = self.qemu_bin.split('-')[-1]
->           self.socketdir = None
+> diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_acpi_bits.py
+> index 4de5fae37e..948b134b16 100755
+> --- a/tests/functional/test_acpi_bits.py
+> +++ b/tests/functional/test_acpi_bits.py
+> @@ -41,7 +41,6 @@
+>   import tempfile
+>   import zipfile
 >   
-> -        self.outputdir = os.path.join(BUILD_DIR, 'tests', 'functional',
-> -                                      self.arch, self.id())
-> +        self.outputdir = self.build_file('tests', 'functional',
-> +                                         self.arch, self.id())
->           self.workdir = os.path.join(self.outputdir, 'scratch')
->           os.makedirs(self.workdir, exist_ok=True)
+> -from pathlib import Path
+>   from typing import (
+>       List,
+>       Optional,
+> @@ -122,7 +121,6 @@ class AcpiBitsTest(QemuBaseTest): #pylint: disable=too-many-instance-attributes
+>       def __init__(self, *args, **kwargs):
+>           super().__init__(*args, **kwargs)
+>           self._vm = None
+> -        self._baseDir = None
 >   
-> diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
-> index 07b78f6a84..29eeb8e32d 100755
-> --- a/tests/functional/test_aarch64_virt.py
-> +++ b/tests/functional/test_aarch64_virt.py
-> @@ -14,7 +14,7 @@
->   import os
->   import logging
+>           self._debugcon_addr = '0x403'
+>           self._debugcon_log = 'debugcon-log.txt'
+> @@ -137,26 +135,22 @@ def _print_log(self, log):
+>       def copy_bits_config(self):
+>           """ copies the bios bits config file into bits.
+>           """
+> -        config_file = 'bits-cfg.txt'
+> -        bits_config_dir = os.path.join(self._baseDir, 'acpi-bits',
+> -                                       'bits-config')
+> +        bits_config_file = self.data_file('acpi-bits',
+> +                                          'bits-config',
+> +                                          'bits-cfg.txt')
+>           target_config_dir = os.path.join(self.workdir,
+>                                            'bits-%d' %self.BITS_INTERNAL_VER,
+>                                            'boot')
+> -        self.assertTrue(os.path.exists(bits_config_dir))
+> +        self.assertTrue(os.path.exists(bits_config_file))
+>           self.assertTrue(os.path.exists(target_config_dir))
+> -        self.assertTrue(os.access(os.path.join(bits_config_dir,
+> -                                               config_file), os.R_OK))
+> -        shutil.copy2(os.path.join(bits_config_dir, config_file),
+> -                     target_config_dir)
+> +        shutil.copy2(bits_config_file, target_config_dir)
+>           self.logger.info('copied config file %s to %s',
+> -                         config_file, target_config_dir)
+> +                         bits_config_file, target_config_dir)
 >   
-> -from qemu_test import (BUILD_DIR, QemuSystemTest, Asset, exec_command,
-> +from qemu_test import (QemuSystemTest, Asset, exec_command,
->                          wait_for_console_pattern, get_qemu_img, run_cmd)
+>       def copy_test_scripts(self):
+>           """copies the python test scripts into bits. """
 >   
+> -        bits_test_dir = os.path.join(self._baseDir, 'acpi-bits',
+> -                                     'bits-tests')
+> +        bits_test_dir = self.data_file('acpi-bits', 'bits-tests')
+>           target_test_dir = os.path.join(self.workdir,
+>                                          'bits-%d' %self.BITS_INTERNAL_VER,
+>                                          'boot', 'python')
+> @@ -259,8 +253,6 @@ def setUp(self): # pylint: disable=arguments-differ
+>           super().setUp('qemu-system-')
+>           self.logger = self.log
 >   
-> @@ -52,8 +52,8 @@ def test_alpine_virt_tcg_gic_max(self):
->                            "mte=on,"
->                            "gic-version=max,iommu=smmuv3")
->           self.vm.add_args("-smp", "2", "-m", "1024")
-> -        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
-> -                                               'edk2-aarch64-code.fd'))
-> +        self.vm.add_args('-bios', self.build_file('pc-bios',
-> +                                                  'edk2-aarch64-code.fd'))
->           self.vm.add_args("-drive", f"file={iso_path},media=cdrom,format=raw")
->           self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
->           self.vm.add_args('-object', 'rng-random,id=rng0,filename=/dev/urandom')
-> diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
-> index c4562618d9..39dcf376dd 100755
-> --- a/tests/functional/test_virtio_gpu.py
-> +++ b/tests/functional/test_virtio_gpu.py
-> @@ -6,8 +6,7 @@
->   # later.  See the COPYING file in the top-level directory.
->   
->   
-> -from qemu_test import (BUILD_DIR, QemuSystemTest, Asset,
-> -                       wait_for_console_pattern,
-> +from qemu_test import (QemuSystemTest, Asset, wait_for_console_pattern,
->                          exec_command_and_wait_for_pattern,
->                          is_readable_executable_file)
->   from qemu.utils import kvm_available
-> @@ -17,12 +16,12 @@
->   import subprocess
->   
->   
-> -def pick_default_vug_bin():
-> +def pick_default_vug_bin(test):
->       relative_path = "./contrib/vhost-user-gpu/vhost-user-gpu"
->       if is_readable_executable_file(relative_path):
->           return relative_path
+> -        self._baseDir = Path(__file__).parent
+> -
+>           prebuiltDir = os.path.join(self.workdir, 'prebuilt')
+>           if not os.path.isdir(prebuiltDir):
+>               os.mkdir(prebuiltDir, mode=0o775)
 
-I wonder whether we should drop the above two lines of special casing and 
-always use the code below instead?
-
-> -    bld_dir_path = os.path.join(BUILD_DIR, relative_path)
-> +    bld_dir_path = test.build_file(relative_path)
-
-... then you could also get rid of the hard-coded slashes in relative_path?
-
->       if is_readable_executable_file(bld_dir_path):
->           return bld_dir_path
->   
-> @@ -85,7 +84,7 @@ def test_vhost_user_vga_virgl(self):
->           # FIXME: should check presence of vhost-user-gpu, virgl, memfd etc
->           self.require_accelerator('kvm')
->   
-> -        vug = pick_default_vug_bin()
-> +        vug = pick_default_vug_bin(self)
->           if not vug:
->               self.skipTest("Could not find vhost-user-gpu")
->   
-
-Anyway:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
