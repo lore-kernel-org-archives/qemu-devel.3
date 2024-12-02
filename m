@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB96CD7831C
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 17:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3067D7833D
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 17:37:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIAL2-0003Ar-A4; Mon, 02 Dec 2024 12:36:00 -0500
+	id 1tIAMT-0004Fa-1J; Mon, 02 Dec 2024 12:37:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIAKz-00039w-Tm
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:35:57 -0500
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1tIAMR-0004FQ-Qv
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:37:27 -0500
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIAKy-0002xh-Ff
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:35:57 -0500
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3ea5a7a5e48so2070347b6e.0
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 09:35:56 -0800 (PST)
+ id 1tIAMQ-0003QT-GC
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:37:27 -0500
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-71d5984e56fso2075910a34.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 09:37:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733160955; x=1733765755; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733161045; x=1733765845; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KQaS6G5sWjWl5o89iyiD/S3VMa8218keGp35CHhEoGo=;
- b=ZF9VsbhfIGnZPvRcdOpOuhAedow4t0DzYvujjJ7agTEtPAtQRjOcna3yPS6p01OxeB
- 2gjhaZRcrR5cn0MUoN7Y+bPUOqrB91w1XcuooBRAn8oKCPLKXZKl2QjSWlz63KPX3Dds
- XgqFKoH6Mj4CIcK4lIyVVPklcNtA95arRntoZJCbvTsyW7LFi1RLYOiRddKm+HgCZkZk
- U9/SS2v0MqJySze5aTjjkouqf7RpfW58zXfjnU+omWq56JeQaD4cs4ihQHrzordN9tP6
- nTGJAG0uAWwc/L15he1+h7jsXEoD1fN2YgKSTltKGWBuE1rOEDBFI/XDiScSSgp0sKJl
- kG5A==
+ bh=cj6DjLsVzrTs0OwxAUo6lMhTrJNFWKCyIz6kx3m8Z14=;
+ b=pIrQt4x2U0gxz7brz7z5xQSQ8F9Vwh4A0FORcZEYrwa2vOD3yfwBjN5093V6nL0K4O
+ c+7lT5d6aG+3nLJZKkODdnWt+mY47N0iA5rnIT01iDk4udZkFoDwOsZQGGSdv++35kEb
+ bAnKASZUdR0PPaZiZtFi8MYea7lVSS78FacaUeXiC2Sj71nHLHP/ztX+shmf5hyIw56S
+ SROFScz7/7ZSnJt4RA5ve8FLXVslxTw8m5F6pRmzra7C1mNcO5jHRMoHVnONFjWd7lqW
+ XSp7vVDyL87KF//zOzptmlAeT8MR2rYNcRKcR8FygD0+DYMmqIBdRO26TjSmml759LqL
+ 9B5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733160955; x=1733765755;
+ d=1e100.net; s=20230601; t=1733161045; x=1733765845;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KQaS6G5sWjWl5o89iyiD/S3VMa8218keGp35CHhEoGo=;
- b=eAkVCiaEBtT5PG1Y4BHbAyRsoKZsAgExmYZDuzoDZWj7emAjKMKJq1JnqfdB8nPNya
- 5CiOH0UbkN6Frk2QUVxf/wyAwC53pkNDj4mSOGvCSGETCeEnQ1YmYRXTQ/LLmp9Xq2ke
- lDxMNtQTWnhydvwIlJAW6ilHnoeG5zxTNLbeD1nEMv+E+d+48TveQJ4ftAqCGTlnA/K3
- mdc8GPHW0lfF4PDdY2F7FSH/R2mHOA7PBIYyxbkkyhq7ixQT0v/obGQN2GkSjPUad/EH
- SvYHo70K28QhSC9UpRdcHiib7WSrN0lvMmLdpmYyU6PTD6KbRXqt6oQzGDwpA9EMreLT
- Q4LA==
+ bh=cj6DjLsVzrTs0OwxAUo6lMhTrJNFWKCyIz6kx3m8Z14=;
+ b=k9A3BdZUGbzDrPG3uYsodHt01Rz7ILUibmjNvf0NmBnNzL4cH5C1WQ1J/CMt50yu5/
+ 4ExiHGEBqZbbBlTtG9ujE3qB0lZTmuo06ha3TvPRNLDtbCw07wEwWRIIaeoCY8JhsUVo
+ PwHmbpSJj1Oqa/nxbT7b1k2XGsTqNBh9Op6pXzjDR5qKRbNg7h6h72boKKAj8/B3pAx/
+ kSlH/oyjedX3NgMQXFV21yuwTVvePNZqFMLZJZbdO0AZyPJpdhQ6kOwx7ac3J9B2zDed
+ 8xpmNwRaIHyDOyOCoGgDfoeRQGirGPZM9XTp8lEYzrIL4DhDUbTSZ6SG/6z3Pflr/WJ4
+ 34ug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVH1D1ZOAQMcd39Vt3A8ciunXcVwLwpD4QMuobL6I6IaZ6vPKBB2AbxOf6NUfFACPuSMxCSEUppv/l6@nongnu.org
-X-Gm-Message-State: AOJu0Yz0WNVOGKk/56YJ1kNuhRbiKl5l3r2PQmherERLoYvblro1iDM9
- fHcBQjfTy0c2lmZb9lexi8JiO1ZZA9XNrdBJKVvjik0aUqAqQGB3CQtqOOilwg6Oj81xAL2wLDK
- tFGE=
-X-Gm-Gg: ASbGnct1bYTkNLwDkT4HUoMMFnMNA2dUZfIXAdrv1HSVvC0HRwX96/8CveEOxcN9Faf
- H+wg/RFDay+CyIefGLUpSl/F7RYMzvFVo6Z0E0yt8v2ud+6Efi/iVcFYdcR9t/rwhN+iDRp3ayy
- CXCcKjhyP+wnzyGSckyw4IFVfqETUR2eyZ+rdzhH3+xa9CWw01Dvo5FtYk/xIFvw+eZkJaO5ZzJ
- Epy7h4aSSHHHsnpxTqpGVNoPxTdLB7Uz8NJAEDA4XdveMN44yeqi3kyXBJR9qCHz4ou6gA=
-X-Google-Smtp-Source: AGHT+IEFOfZzA6JDT6CibGBIHYQ87eMyj2t6FDBIIlnySe9NOUGOgfoviraXRcKyGFVq7Zbp5QxXLw==
-X-Received: by 2002:a05:6808:1a28:b0:3ea:5413:1a24 with SMTP id
- 5614622812f47-3ea6dbcea00mr20139775b6e.13.1733160955332; 
- Mon, 02 Dec 2024 09:35:55 -0800 (PST)
+ AJvYcCVUOSF+axIUZCmu/uHiR/lSd6sKmdxlQ3GnBEWwTLxHzRtnejK+PlnS4c0omyjbSVj4md6gT7dMovNW@nongnu.org
+X-Gm-Message-State: AOJu0Yy4uwVLIQ78n4QCPuktkomY+Vksvs7bkFeEY1fPSVa/qQVRV/En
+ YBlVLMF59jywsi6uaWXOVJyBkl5MDgQ4Cer6FUXnO7b+SeQt6i51j3A7mhCyWkRGNEqbZeS2pQX
+ pEvM=
+X-Gm-Gg: ASbGncuPV7Bl3hV5tyuTwahXIAL0Nf9kmewU6oiWv8IPJTRlDGuXH9pfAOriEPTJ8R1
+ ZB8000ewtAqcNRji+j+pbZc+yNxRItuMSga/ptj/cMdy99MD06bkiiiDh4q3EaVQiB2zqRm/cCp
+ NcsAn6UE4y3jDDY8dSueFcafAx5FJD+8FeOhK3NdBbMFeo1nl1VhzFojOF5o38Z/atY1dTPOQXE
+ h0r3Mp/7K7ZUSKtqKTGeJNrqv8P1xtfhhxourvK9xTJDoTwFucD/ZP2/0Ttm0sdkMdYpBk=
+X-Google-Smtp-Source: AGHT+IEDODl6kv5fwypqBzNIXsYrrVpXa5jNyLznfY+yZ5U9wbR+1+yh2DjR5v2MsUVA0UORUXvxLQ==
+X-Received: by 2002:a05:6830:25d0:b0:71d:5f22:afec with SMTP id
+ 46e09a7af769-71d65c9542bmr13067459a34.12.1733161045189; 
+ Mon, 02 Dec 2024 09:37:25 -0800 (PST)
 Received: from [192.168.170.227] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ea86095b6fsm2327506b6e.15.2024.12.02.09.35.54
+ 46e09a7af769-71d725d8639sm2331853a34.51.2024.12.02.09.37.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 09:35:54 -0800 (PST)
-Message-ID: <cbbbeab8-bc05-48b6-94d2-409b62327a1a@linaro.org>
-Date: Mon, 2 Dec 2024 11:35:52 -0600
+ Mon, 02 Dec 2024 09:37:24 -0800 (PST)
+Message-ID: <04949680-afc3-44f4-9c91-ea0b3be25f2b@linaro.org>
+Date: Mon, 2 Dec 2024 11:37:22 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 for-10.0 48/54] target/s390x: Set default NaN pattern
+Subject: Re: [PATCH v2 for-10.0 49/54] target/sparc: Set default NaN pattern
  explicitly
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20241202131347.498124-1-peter.maydell@linaro.org>
- <20241202131347.498124-49-peter.maydell@linaro.org>
+ <20241202131347.498124-50-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241202131347.498124-49-peter.maydell@linaro.org>
+In-Reply-To: <20241202131347.498124-50-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,26 +104,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/2/24 07:13, Peter Maydell wrote:
-> Set the default NaN pattern explicitly for s390x.
+> Set the default NaN pattern explicitly for SPARC, and remove
+> the ifdef from parts64_default_nan.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/s390x/cpu.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-> index e74055bad79..adb27504ad5 100644
-> --- a/target/s390x/cpu.c
-> +++ b/target/s390x/cpu.c
-> @@ -209,6 +209,8 @@ static void s390_cpu_reset_hold(Object *obj, ResetType type)
->           set_float_3nan_prop_rule(float_3nan_prop_s_abc, &env->fpu_status);
->           set_float_infzeronan_rule(float_infzeronan_dnan_always,
->                                     &env->fpu_status);
-> +        /* Default NaN value: sign bit clear, frac msb set */
-> +        set_float_default_nan_pattern(0b01000000, &env->fpu_status);
->          /* fall through */
->       case RESET_TYPE_S390_CPU_NORMAL:
->           env->psw.mask &= ~PSW_MASK_RI;
+>   target/sparc/cpu.c             | 2 ++
+>   fpu/softfloat-specialize.c.inc | 5 +----
+>   2 files changed, 3 insertions(+), 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
