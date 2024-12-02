@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCC0ED78318
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 12:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CBFD78316
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 12:53:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI5oW-0002QK-7g; Mon, 02 Dec 2024 07:46:10 -0500
+	id 1tI5vC-00050A-9g; Mon, 02 Dec 2024 07:53:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI5oE-0002PD-Gz
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 07:45:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI5v9-0004zl-6h
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 07:52:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI5oB-00023g-04
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 07:45:48 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI5v6-0004fE-GW
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 07:52:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733143545;
+ s=mimecast20190719; t=1733143974;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4s6ISwIIFCtddtWNdMr3i7tzh2F5qtk1IT46LH/vzkU=;
- b=AoWDzDpPp+vvSWF1ODtxbQFI53t3W53LwTak+MopO9yLt17if3tvwFHKNSwGhq/vZIonpQ
- 8nzeQ9BFJ//Bh2thm5H5pJSUsSlD5nfS6xhexgoSSbhCDpLeGjr+rkwbcpRHSM0ScqMVO1
- QD04UbJHOEEh5xVWJheBz01ocrz25yw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HgonlbE6d9TF6j0R1tNUZiAPFRqbCHhphB/0Vk1DF6k=;
+ b=VrPEkqvARodx7bUUnrGgyKkoQmjmAj5BBRlkWrOHNiPYdsONVLIi75dHjlVJm+RPtQn2Xu
+ B8CnaLHwXUzXHk8jNnRdXTGKgwDoGGyQ8809r8H1QE7zy1qpPKJbKRdArnopsWOBoXmMBS
+ umMx7juFvgQ6vrvjaRK9UGe4kXOT+mU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-50-CTroFFeRNQmzlfzPJWdMIg-1; Mon, 02 Dec 2024 07:45:43 -0500
-X-MC-Unique: CTroFFeRNQmzlfzPJWdMIg-1
-X-Mimecast-MFC-AGG-ID: CTroFFeRNQmzlfzPJWdMIg
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43499388faaso29449145e9.3
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 04:45:43 -0800 (PST)
+ us-mta-479-Ma5ROlZlPKGUF1Vzs0NkkQ-1; Mon, 02 Dec 2024 07:52:50 -0500
+X-MC-Unique: Ma5ROlZlPKGUF1Vzs0NkkQ-1
+X-Mimecast-MFC-AGG-ID: Ma5ROlZlPKGUF1Vzs0NkkQ
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4349f32c9a6so34339775e9.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 04:52:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733143542; x=1733748342;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4s6ISwIIFCtddtWNdMr3i7tzh2F5qtk1IT46LH/vzkU=;
- b=Hc1G96YjK6FBajz2BfZbIy+yp2dZPsbroPdktL6PVIbT+owAtEpmzUdW1LixrdZras
- SVSm+kjqmjjBCA2oMnIy8Dlpyk8S+9pUxJmCH3j4vZ92dauEo1bf505+KlJuwks3vhoE
- 8Bixemnz789y1uPPEe00G4e+GjM0I4sQJrYgqQBzLyIlTDeGBS5KmhMUvbQBE8qMl/qP
- /EJATZCJA85qteemg63kgfB3uIf3Gf8l0ZluJASnkZQR3FJ+v5+YsZnW0fvIDdIgp574
- ll8Oqe0e0ID3G+ZMi7GybzXKq6Sq5NzM8hq/ifLLJEwN9QcQtu6edfcWTitTo8t+FALZ
- Dvvw==
-X-Gm-Message-State: AOJu0YzK1CYNXD6mwYHhV6/ys8xUMz5dFzhqah/Yss7WrjNiD05VvK5h
- /ikOCr7RAiLhjt4+wVlboNR0ssv/44SHvpdrh6OArDdYTY0F5q763ddawv/t6zODqADqdPfkAQR
- 1ZE7ffakvVkVHV8Dc3VLHe+6goQr4L0z4QOtF8+iQNAvZsXmtNTyx
-X-Gm-Gg: ASbGnct5gBvPzffXpQBRmH0MyBY3WTyprXuXFHdCRKWWrbimL60eD22U8vwiz0BGaby
- GwCz1gbjXSBrcBnRWUOHl1WLA/MCl7jtNJQT+OFc9iul9qYcDwJATae5bk68qVNQuKgaXBG4ooC
- oWRk9BaS2vZW33N+i0mElE06BpsBFC41P+V32n0V2qeIQ9cZ/JQPggKgdr4csoaaaqQ87KJRvwk
- P2mPqR3800+Y1QiYOWAHoqeMkBZJ+bbWHBeX+WHwgdnb6QcxvtGFOGli7QEjaRjx1jcXpHVwd0=
-X-Received: by 2002:a05:6000:401e:b0:385:f6c7:90c6 with SMTP id
- ffacd0b85a97d-385f6c792f1mr1775854f8f.20.1733143542658; 
- Mon, 02 Dec 2024 04:45:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE0ypULkKNJPJOQSlGBiXR2qRs0a2cXzeGjzEk1B4dUdMOVCLBP2a8x23PNGE6yvtCkyTTqOQ==
-X-Received: by 2002:a05:6000:401e:b0:385:f6c7:90c6 with SMTP id
- ffacd0b85a97d-385f6c792f1mr1775812f8f.20.1733143542194; 
- Mon, 02 Dec 2024 04:45:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733143969; x=1733748769;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HgonlbE6d9TF6j0R1tNUZiAPFRqbCHhphB/0Vk1DF6k=;
+ b=Fi5WCsmEc0qfmbvQznOVwZdOlo9kfrBnmvbzxgxNQPnBMrs6F4GbAYHcaUZlM2snnM
+ gUeW+v0jjN3CiTdh2/O4mKsK6+93G1OKpMXBiDVFGu0lIuDtmf1hu43miltfR9S3r00I
+ p8CT5qlG61Ve+dXUxeCVRIA3efhL1tcpFkHCzPZNeyo1VWjG+2tgIVFJLwFZpk9dSD/A
+ Q0r5G0Z1POuecBexk1WigJVMy+0ILoKZ9Id/uTqb9fDVdaumvEBS1JwYsv5cUwE6rvOW
+ N6bYJZXWiqgFJa1lbAcZ4UEcxISUDRRHOMg0PSOukU0S+Y6gFp7EaW9G03VeV4DO40Dn
+ kJUQ==
+X-Gm-Message-State: AOJu0Yx1Wpp2pJe73jezF45+3E9b59oR2baFAjCrsskBor27D84u1I0Y
+ 9YBjjo+YN5kI7KogS3yDoQl2ywpFJYsimI9f0Gyqjib6D72TE53VEavN6z/1H6jnNaBvpxtXNMD
+ sN388el4LfQY3+zTHKSFRUp0TddDdGdw3i1epkHQrhXbB77uW+8aC
+X-Gm-Gg: ASbGncvukJDHXu/7JjR86ZVi8amT1BhM1cux8gCUnAxrbAVZtb5ClfTXVmA9x3ELjxy
+ TUUptoRyEebtIV2+fhHocyOcjGrnrmAq4QY1D5GGXGDCW/am9Wcoq+yTOq4ElVZ4A9oo7BVF7TI
+ mfv1kslZPTqgUkLeVd5ofpDI5tKXVr6ocB9/BS5Py3MtHWG4vxakAPhVYsRW4SSVVmyxeXyjsJd
+ ZGT3RJmDNriEp6XUJ0ZGKL8xwqguLOygPp1gta8zL1l6NZc0lyOVD/yMC4IsFLZThf4TRyTarY=
+X-Received: by 2002:a05:600c:3b24:b0:434:a75b:5f59 with SMTP id
+ 5b1f17b1804b1-434a9dbb06cmr231440465e9.3.1733143968942; 
+ Mon, 02 Dec 2024 04:52:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHoD1yRRrAAudpAM1vza9yS26iBHNpFN6bJjVD7beKpQXLtfDqEuCN0ZzJiX+0JBaet4K1IIg==
+X-Received: by 2002:a05:600c:3b24:b0:434:a75b:5f59 with SMTP id
+ 5b1f17b1804b1-434a9dbb06cmr231440175e9.3.1733143968562; 
+ Mon, 02 Dec 2024 04:52:48 -0800 (PST)
 Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385db37debdsm11035493f8f.2.2024.12.02.04.45.41
+ 5b1f17b1804b1-434b0f70d9csm154614105e9.38.2024.12.02.04.52.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 04:45:41 -0800 (PST)
-Message-ID: <3f5fdaef-61a1-4dc3-afec-e05bf34d384d@redhat.com>
-Date: Mon, 2 Dec 2024 13:45:40 +0100
+ Mon, 02 Dec 2024 04:52:47 -0800 (PST)
+Message-ID: <808c81b0-c64a-4a32-9683-c96b51145da3@redhat.com>
+Date: Mon, 2 Dec 2024 13:52:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/22] tests/functional: remove duplicated 'which'
- function impl
+Subject: Re: [PATCH 18/22] tests/functional: add 'archive_extract' to
+ QemuBaseTest
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20241129173120.761728-1-berrange@redhat.com>
- <20241129173120.761728-6-berrange@redhat.com>
- <23b4e458-b46d-4b7f-a6a0-16e58e3e5f2a@redhat.com>
- <Z02djVGVj-ZX2kV9@redhat.com>
-Content-Language: en-US
+ <20241129173120.761728-19-berrange@redhat.com>
+ <9277a627-13d6-4d0f-9802-dec6b2606cbe@redhat.com>
+ <Z02kTzobRDeEYHQR@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -126,17 +126,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <Z02djVGVj-ZX2kV9@redhat.com>
+In-Reply-To: <Z02kTzobRDeEYHQR@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -154,44 +154,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/12/2024 12.44, Daniel P. Berrangé wrote:
-> On Sat, Nov 30, 2024 at 11:16:30AM +0100, Thomas Huth wrote:
+On 02/12/2024 13.13, Daniel P. Berrangé wrote:
+> On Mon, Dec 02, 2024 at 11:30:28AM +0100, Thomas Huth wrote:
 >> On 29/11/2024 18.31, Daniel P. Berrangé wrote:
->>> Put the 'which' function into shared code.
+>>> This helper wrappers utils.archive_extract, forcing the use of the
+>>> scratch directory, to ensure any extracted files are cleaned at test
+>>> termination. If a specific member is requested, then the path to the
+>>> extracted file is also returned.
 >>>
 >>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 >>> ---
->>>    tests/functional/qemu_test/__init__.py |  2 +-
->>>    tests/functional/qemu_test/cmd.py      | 10 ++++++++++
->>>    tests/functional/test_acpi_bits.py     | 13 +------------
->>>    tests/functional/test_ppc64_hv.py      | 13 +------------
->>>    4 files changed, 13 insertions(+), 25 deletions(-)
+>>>    tests/functional/qemu_test/testcase.py | 36 ++++++++++++++++++++++++++
+>>>    1 file changed, 36 insertions(+)
+>>>
+>>> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+>>> index 2f32742387..31d06f0172 100644
+>>> --- a/tests/functional/qemu_test/testcase.py
+>>> +++ b/tests/functional/qemu_test/testcase.py
+>>> @@ -28,6 +28,8 @@
+>>>    from .asset import Asset
+>>>    from .cmd import run_cmd
+>>>    from .config import BUILD_DIR
+>>> +from .utils import (archive_extract as utils_archive_extract,
+>>> +                    guess_archive_format)
+>>>    class QemuBaseTest(unittest.TestCase):
+>>> @@ -39,6 +41,40 @@ class QemuBaseTest(unittest.TestCase):
+>>>        log = None
+>>>        logdir = None
+>>> +    '''
+>>> +    @params archive: filename, Asset, or file-like object to extract
+>>> +    @params sub_dir: optional sub-directory to extract into
+>>> +    @params member: optional member file to limit extraction to
+>>> +
+>>> +    Extracts @archive into the scratch directory, or a
+>>> +    directory beneath named by @sub_dir. All files are
+>>> +    extracted unless @member specifies a limit.
+>>> +
+>>> +    If @member is non-None, returns the fully qualified
+>>> +    path to @member
+>>> +    '''
+>>> +    def archive_extract(self, archive, format=None, sub_dir=None, member=None):
+>>> +        if type(archive) == Asset:
+>>> +            if format is None:
+>>> +                format = guess_archive_format(archive.url)
+>>> +            archive = archive.fetch()
+>>> +        elif format is None:
+>>> +            format = guess_archive_format(archive)
+>>> +
+>>> +        if member is not None:
+>>> +            if os.path.isabs(member):
+>>> +                member = os.path.relpath(member, '/')
+>>> +
+>>> +        if sub_dir is None:
+>>> +            utils_archive_extract(archive, self.scratch_file(), format, member)
+>>> +        else:
+>>> +            utils_archive_extract(archive, self.scratch_file(sub_dir),
+>>> +                                  format, member)
+>>> +
+>>> +        if member is not None:
+>>> +            return self.scratch_file(member)
+>>> +        return None
 >>
->> None of the callers really seem to be interested in the location of the
->> command, only whether it is available in the $PATH or not ... so could we
->> maybe rather drop this function and use the has_cmd() function everywhere
->> instead?
+>> Ah, ok, so the guessing is done here ...
 >>
->> Hmm, thinking about it twice - has_cmd() uses the "which" program
->> internally, but AFAIK this program is optional in Linux installations
->> nowadays ... so maybe it's still a good idea to move our Python which() to
->> cmd.py, but has_cmd() should maybe rather be changed to use it, too?
+>> But somehow it feels wrong to have a "archive_extract" function in the
+>> QemuBaseTest class that also does asset fetching under the hood.
+>>
+>> Could you maybe rather move this into the asset.py file and rename the
+>> function to "fetch_and_extract()" to make it clearer what it does?
 > 
-> This reminds me I meant to ask about 'has_cmd' - it looks rather
-> over-engineered to me to be trying to invoke the command with
-> args.
-> 
-> Perhaps there was some reason to check support for individual
-> args in the past, but none of the current tests need that AFAICT.
-> 
-> So if anything I'd be looking to delete 'has_cmd' and 'has_cmds'
-> entirely, and rely only on the pure python 'which'.
+> We can't move it into asset.py because not all callers are passing in an
+> Asset object - there are some cases where we've just got a local file.
+> eg when the asset we extracted contains other archives that need to be
+> extracted.
 
-Deleting has_cmd is fine for me, too! Especially since this function already 
-caused confusion in the past (see 
-https://gitlab.com/qemu-project/qemu/-/commit/59d100243d23451e66d2274d34edab7be6dab473 
-).
+Couldn't those spots rather use the function from utils.py directly for the 
+second extraction?
+
+Anyway, I guess now it's likely better to keep it here since you want to 
+have access to self.scratch_file() in this function, too.
+But maybe you could still at least rename it to fetch_and_extract() to make 
+it more obvious what it all about?
 
   Thomas
+
+
+> Per comments on the previous patch though, I could push this logic down
+> into the lower method.
+> 
+> With regards,
+> Daniel
 
 
