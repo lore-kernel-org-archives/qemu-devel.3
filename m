@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A17EAD7832F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 15:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29180D7832F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 15:40:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI8Ub-00086M-FY; Mon, 02 Dec 2024 10:37:45 -0500
+	id 1tI8WK-0000Uo-Bw; Mon, 02 Dec 2024 10:39:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=059b58481=graf@amazon.de>)
- id 1tI8UO-00082i-58
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 10:37:33 -0500
-Received: from smtp-fw-52003.amazon.com ([52.119.213.152])
+ id 1tI8WI-0000Ub-6c
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 10:39:30 -0500
+Received: from smtp-fw-33001.amazon.com ([207.171.190.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=059b58481=graf@amazon.de>)
- id 1tI8UL-0001l0-OR
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 10:37:31 -0500
+ id 1tI8WG-0002Dq-Po
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 10:39:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1733153850; x=1764689850;
+ t=1733153968; x=1764689968;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=9ypauYx+rmA7o+v6oQXb1DJayLbzLUy5WJV0av+Jzjw=;
- b=g9GZso10iIKb541fev7OVdox+q1Yk9+8yMRQOIf7sgJVfX2qiTT6YWaZ
- yOI8LorqquDxQ2h89DIgXxD6WvEtFNCcOLt7+STIA6BGmEX89vauhbbK2
- BUdW7bRqnOGnArDOXX8OUo67LPRtkPoidjpBWkJWxN9bMiSYzxJjjRnXK k=;
-X-IronPort-AV: E=Sophos;i="6.12,202,1728950400"; d="scan'208";a="45951957"
-Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.124.125.6])
- by smtp-border-fw-52003.iad7.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2024 15:37:26 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [10.0.21.151:7051]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.22.41:2525]
+ bh=Pozak5lK3svxFrHwYzwzhIMl8EUoO1/1JfsL2sm/bV4=;
+ b=dGCmvmcRyxpDjnjl3UC4KMejl4WuQc5Pc9FtRy4r1d/Tkb/HkQRynHRi
+ lCkfjpIyt36q61R8iT5x9n7+earQ0gJpKRIl9tjPIegcADvUP4k7kvGio
+ EP7td5rClKbPvT5pHOcfOOjBCFMeunzfELHYkNEFD5t7+CXd4Kp2chYt9 w=;
+X-IronPort-AV: E=Sophos;i="6.12,202,1728950400"; d="scan'208";a="389928658"
+Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
+ by smtp-border-fw-33001.sea14.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2024 15:39:19 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [10.0.21.151:59316]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.14.147:2525]
  with esmtp (Farcaster)
- id 4c7f3d0f-05d9-4bbb-a755-e69d7d718b41; Mon, 2 Dec 2024 15:37:25 +0000 (UTC)
-X-Farcaster-Flow-ID: 4c7f3d0f-05d9-4bbb-a755-e69d7d718b41
+ id db8baf12-342b-4eef-8973-6291098d86f6; Mon, 2 Dec 2024 15:39:19 +0000 (UTC)
+X-Farcaster-Flow-ID: db8baf12-342b-4eef-8973-6291098d86f6
 Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Mon, 2 Dec 2024 15:37:25 +0000
+ Mon, 2 Dec 2024 15:39:17 +0000
 Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
  (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34; Mon, 2 Dec 2024
- 15:37:24 +0000
-Message-ID: <71578735-157b-4347-98cb-f899be535809@amazon.com>
-Date: Mon, 2 Dec 2024 16:37:22 +0100
+ 15:39:15 +0000
+Message-ID: <44ec59ba-2f36-4482-9b56-05b583199603@amazon.com>
+Date: Mon, 2 Dec 2024 16:39:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] device/virtio-nsm: Support string data for extendPCR
+Subject: Re: [PATCH] eif: Use stateful qcrypto apis
 To: Dorjoy Chowdhury <dorjoychy111@gmail.com>, <qemu-devel@nongnu.org>
-CC: <pbonzini@redhat.com>
-References: <20241109123208.24281-1-dorjoychy111@gmail.com>
+CC: <pbonzini@redhat.com>, <berrange@redhat.com>
+References: <20241109123039.24180-1-dorjoychy111@gmail.com>
 Content-Language: en-US
 From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <20241109123208.24281-1-dorjoychy111@gmail.com>
+In-Reply-To: <20241109123039.24180-1-dorjoychy111@gmail.com>
 X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D042UWB003.ant.amazon.com (10.13.139.135) To
+X-ClientProxiedBy: EX19D045UWC004.ant.amazon.com (10.13.139.203) To
  EX19D020UWC004.ant.amazon.com (10.13.138.149)
 Content-Type: text/plain; charset="utf-8"; format="flowed"
 Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=52.119.213.152;
- envelope-from=prvs=059b58481=graf@amazon.de; helo=smtp-fw-52003.amazon.com
+Received-SPF: pass client-ip=207.171.190.10;
+ envelope-from=prvs=059b58481=graf@amazon.de; helo=smtp-fw-33001.amazon.com
 X-Spam_score_int: -72
 X-Spam_score: -7.3
 X-Spam_bar: -------
@@ -89,48 +89,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ck9uIDA5LjExLjI0IDEzOjMyLCBEb3Jqb3kgQ2hvd2RodXJ5IHdyb3RlOgo+IE5TTSBkZXZpY2Ug
-aW4gQVdTIE5pdHJvIEVuY2xhdmVzIHN1cHBvcnRzIGV4dGVuZGluZyB3aXRoIGJvdGgKPiBieXRl
-c3RyaW5nIGFuZCBzdHJpbmcgZGF0YS4KPgo+IFNpZ25lZC1vZmYtYnk6IERvcmpveSBDaG93ZGh1
-cnkgPGRvcmpveWNoeTExMUBnbWFpbC5jb20+CgoKUmV2aWV3ZWQtYnk6IEFsZXhhbmRlciBHcmFm
-IDxncmFmQGFtYXpvbi5jb20+CgpBbGV4CgoKPiAtLS0KPiAgIGh3L3ZpcnRpby92aXJ0aW8tbnNt
-LmMgfCAyMSArKysrKysrKysrKysrKy0tLS0tLS0KPiAgIDEgZmlsZSBjaGFuZ2VkLCAxNCBpbnNl
-cnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQo+Cj4gZGlmZiAtLWdpdCBhL2h3L3ZpcnRpby92aXJ0
-aW8tbnNtLmMgYi9ody92aXJ0aW8vdmlydGlvLW5zbS5jCj4gaW5kZXggYTNkYjhlZWYzZS4uNjgz
-MGZjZmUxNyAxMDA2NDQKPiAtLS0gYS9ody92aXJ0aW8vdmlydGlvLW5zbS5jCj4gKysrIGIvaHcv
-dmlydGlvL3ZpcnRpby1uc20uYwo+IEBAIC00NDQsNyArNDQ0LDcgQEAgc3RhdGljIGJvb2wgaGFu
-ZGxlX2Rlc2NyaWJlX3BjcihWaXJ0SU9OU00gKnZuc20sIHN0cnVjdCBpb3ZlYyAqcmVxdWVzdCwK
-PiAgICAqICAgICAgIGtleSA9IFN0cmluZygiaW5kZXgiKSwKPiAgICAqICAgICAgIHZhbHVlID0g
-VWludDgocGNyKSwKPiAgICAqICAgICAgIGtleSA9IFN0cmluZygiZGF0YSIpLAo+IC0gKiAgICAg
-ICB2YWx1ZSA9IEJ5dGVfU3RyaW5nKGRhdGEpLAo+ICsgKiAgICAgICB2YWx1ZSA9IEJ5dGVfU3Ry
-aW5nKGRhdGEpIHx8IFN0cmluZyhkYXRhKSwKPiAgICAqICAgICB9Cj4gICAgKiAgIH0KPiAgICAq
-IH0KPiBAQCAtNTA0LDE0ICs1MDQsMjEgQEAgc3RhdGljIGVudW0gTlNNUmVzcG9uc2VUeXBlcyBn
-ZXRfbnNtX2V4dGVuZF9wY3JfcmVxKHVpbnQ4X3QgKnJlcSwgc2l6ZV90IGxlbiwKPgo+ICAgICAg
-ICAgICBpZiAoY2Jvcl9zdHJpbmdfbGVuZ3RoKHBhaXJbaV0ua2V5KSA9PSA0ICYmCj4gICAgICAg
-ICAgICAgICBtZW1jbXAoc3RyLCAiZGF0YSIsIDQpID09IDApIHsKPiAtICAgICAgICAgICAgaWYg
-KCFjYm9yX2lzYV9ieXRlc3RyaW5nKHBhaXJbaV0udmFsdWUpKSB7Cj4gKyAgICAgICAgICAgIGlm
-IChjYm9yX2lzYV9ieXRlc3RyaW5nKHBhaXJbaV0udmFsdWUpKSB7Cj4gKyAgICAgICAgICAgICAg
-ICBzdHIgPSBjYm9yX2J5dGVzdHJpbmdfaGFuZGxlKHBhaXJbaV0udmFsdWUpOwo+ICsgICAgICAg
-ICAgICAgICAgaWYgKCFzdHIpIHsKPiArICAgICAgICAgICAgICAgICAgICBnb3RvIGNsZWFudXA7
-Cj4gKyAgICAgICAgICAgICAgICB9Cj4gKyAgICAgICAgICAgICAgICBuc21fcmVxLT5kYXRhX2xl
-biA9IGNib3JfYnl0ZXN0cmluZ19sZW5ndGgocGFpcltpXS52YWx1ZSk7Cj4gKyAgICAgICAgICAg
-IH0gZWxzZSBpZiAoY2Jvcl9pc2Ffc3RyaW5nKHBhaXJbaV0udmFsdWUpKSB7Cj4gKyAgICAgICAg
-ICAgICAgICBzdHIgPSBjYm9yX3N0cmluZ19oYW5kbGUocGFpcltpXS52YWx1ZSk7Cj4gKyAgICAg
-ICAgICAgICAgICBpZiAoIXN0cikgewo+ICsgICAgICAgICAgICAgICAgICAgIGdvdG8gY2xlYW51
-cDsKPiArICAgICAgICAgICAgICAgIH0KPiArICAgICAgICAgICAgICAgIG5zbV9yZXEtPmRhdGFf
-bGVuID0gY2Jvcl9zdHJpbmdfbGVuZ3RoKHBhaXJbaV0udmFsdWUpOwo+ICsgICAgICAgICAgICB9
-IGVsc2Ugewo+ICAgICAgICAgICAgICAgICAgIGdvdG8gY2xlYW51cDsKPiAgICAgICAgICAgICAg
-IH0KPiAtICAgICAgICAgICAgc3RyID0gY2Jvcl9ieXRlc3RyaW5nX2hhbmRsZShwYWlyW2ldLnZh
-bHVlKTsKPiAtICAgICAgICAgICAgaWYgKCFzdHIpIHsKPiAtICAgICAgICAgICAgICAgIGdvdG8g
-Y2xlYW51cDsKPiAtICAgICAgICAgICAgfQo+IC0gICAgICAgICAgICBuc21fcmVxLT5kYXRhX2xl
-biA9IGNib3JfYnl0ZXN0cmluZ19sZW5ndGgocGFpcltpXS52YWx1ZSk7Cj4gICAgICAgICAgICAg
-ICAvKgo+ICAgICAgICAgICAgICAgICogbnNtX3JlcS0+ZGF0YV9sZW4gd2lsbCBiZSBzbWFsbGVy
-IHRoYW4gTlNNX1JFUVVFU1RfTUFYX1NJWkUgYXMKPiAgICAgICAgICAgICAgICAqIHdlIGFscmVh
-ZHkgY2hlY2sgZm9yIHRoZSBtYXggcmVxdWVzdCBzaXplIGJlZm9yZSBwcm9jZXNzaW5nCj4gLS0K
-PiAyLjM5LjUKPgoKCgpBbWF6b24gV2ViIFNlcnZpY2VzIERldmVsb3BtZW50IENlbnRlciBHZXJt
-YW55IEdtYkgKS3JhdXNlbnN0ci4gMzgKMTAxMTcgQmVybGluCkdlc2NoYWVmdHNmdWVocnVuZzog
-Q2hyaXN0aWFuIFNjaGxhZWdlciwgSm9uYXRoYW4gV2Vpc3MKRWluZ2V0cmFnZW4gYW0gQW10c2dl
-cmljaHQgQ2hhcmxvdHRlbmJ1cmcgdW50ZXIgSFJCIDI1Nzc2NCBCClNpdHo6IEJlcmxpbgpVc3Qt
-SUQ6IERFIDM2NSA1MzggNTk3Cg==
+Ck9uIDA5LjExLjI0IDEzOjMwLCBEb3Jqb3kgQ2hvd2RodXJ5IHdyb3RlOgo+IFdlIHdlcmUgc3Rv
+cmluZyB0aGUgcG9pbnRlcnMgdG8gYnVmZmVycyBpbiBhIEdMaXN0IGR1ZSB0byBsYWNrIG9mCj4g
+c3RhdGVmdWwgY3J5cHRvIGFwaXMgYW5kIGluc3RlYWQgZG9pbmcgdGhlIGZpbmFsIGhhc2ggY29t
+cHV0YXRpb24gYXQKPiB0aGUgZW5kIGFmdGVyIHdlIGhhZCBhbGwgdGhlIG5lY2Vzc2FyeSBidWZm
+ZXJzLiBOb3cgdGhhdCB3ZSBoYXZlIHRoZQo+IHN0YXRlZnVsIHFjcnlwdG8gYXBpcyBhdmFpbGFi
+bGUsIHdlIGNhbiBpbnN0ZWFkIHVwZGF0ZSB0aGUgaGFzaGVzCj4gaW5saW5lIGluIHRoZSByZWFk
+X2VpZl8qIGZ1bmN0aW9ucyB3aGljaCBtYWtlcyB0aGUgY29kZSBtdWNoIHNpbXBsZXIuCj4KPiBT
+aWduZWQtb2ZmLWJ5OiBEb3Jqb3kgQ2hvd2RodXJ5IDxkb3Jqb3ljaHkxMTFAZ21haWwuY29tPgoK
+ClJldmlld2VkLWJ5OiBBbGV4YW5kZXIgR3JhZiA8Z3JhZkBhbWF6b24uY29tPgoKQWxleAoKCgoK
+CkFtYXpvbiBXZWIgU2VydmljZXMgRGV2ZWxvcG1lbnQgQ2VudGVyIEdlcm1hbnkgR21iSApLcmF1
+c2Vuc3RyLiAzOAoxMDExNyBCZXJsaW4KR2VzY2hhZWZ0c2Z1ZWhydW5nOiBDaHJpc3RpYW4gU2No
+bGFlZ2VyLCBKb25hdGhhbiBXZWlzcwpFaW5nZXRyYWdlbiBhbSBBbXRzZ2VyaWNodCBDaGFybG90
+dGVuYnVyZyB1bnRlciBIUkIgMjU3NzY0IEIKU2l0ejogQmVybGluClVzdC1JRDogREUgMzY1IDUz
+OCA1OTcK
 
 
