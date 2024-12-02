@@ -4,100 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A9AD78333
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 15:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E3BD7832F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 16:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI8oN-0004SW-JC; Mon, 02 Dec 2024 10:58:11 -0500
+	id 1tI8py-0005Ve-RM; Mon, 02 Dec 2024 10:59:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1tI8oM-0004SH-GI; Mon, 02 Dec 2024 10:58:10 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1tI8oK-0007br-Pj; Mon, 02 Dec 2024 10:58:10 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B2AcqmQ019533;
- Mon, 2 Dec 2024 15:58:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=xZQ69x
- aoMi3/lep/8B0Spc4dK/U0wslRbBIr2NlAxPQ=; b=QQVrv/FspMRWy2N6+o0I1e
- itt0mkuSPgPAQgj3XScTl/9F84F9kpJ8KfJ0oX42OdM+I1TjpYgxyqyeNuqXmEWN
- 7mHtUqWdFf18DJqh3BW4cFOUF4nMPq15SFW8/3on+A64ls4Wwb08BfNb2NtcdXSF
- jJQ3WY5SYx3ELiC41VX7calvQLXJGxccjaGr/lWd79+tXetWaZr916EBz6Y9VYLA
- NStljwRZO1BiN23o47YSR+B7E2PzjpA/ZPOAGPkH46wshskpQTWEnLZFjr/E7u6v
- HlM7PzVrJl5Ol5/civw7NHtuFroXbj5fj9JEA4rOuJT+/ZDVvvufc+0kCXSzox1w
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 438kfge5kf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Dec 2024 15:58:04 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26gxai023634;
- Mon, 2 Dec 2024 15:58:03 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 438e1mtkvh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 02 Dec 2024 15:58:03 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B2Fw29i51053028
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 2 Dec 2024 15:58:03 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DFC1758059;
- Mon,  2 Dec 2024 15:58:02 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25BC75805C;
- Mon,  2 Dec 2024 15:58:02 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  2 Dec 2024 15:58:02 +0000 (GMT)
-Message-ID: <d3d73795-3f59-490c-9e54-c6c358af62d0@linux.ibm.com>
-Date: Mon, 2 Dec 2024 10:58:01 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tI8px-0005VQ-6X
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 10:59:49 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tI8pv-0007zj-Lz
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 10:59:48 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-385e35912f1so1840031f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 07:59:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733155186; x=1733759986; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rQMiE8O0P6rRP4Job7Sirgdtnr3QXw+GiQuNRYlcJhc=;
+ b=nOF/WQ77B7j8gVblXovKYPTlzY8aiIIjJ6eS14vMG81Te8dcXuYruSC776YdVQvji2
+ 97asA8lAq31S/QEk5G/LjQGWRX944gdV7SHD+pv47XzavgWpbOXYzVMe8U7Zi3PaUDXp
+ atdBiDz66fovfeds3BlfReBoFsKU6qmJl++wEuGAI/6Xy6ipACxfo5uBZFSlWMNNjm9u
+ WH7KaXt8jOMCLdjtSb96JzQtR7WteQc4cEEK4m5YyMKD1PMzdWxddxBl0RnEnENFKJcq
+ b5rd5hHxoP8qCEK4HHxc/zxqQUMKjaAt7TlFqPmDF9Id83MPwLV9MKLKKwUMdtJsz09G
+ 9ADQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733155186; x=1733759986;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rQMiE8O0P6rRP4Job7Sirgdtnr3QXw+GiQuNRYlcJhc=;
+ b=NLTRV70uPdqD+cST/815UHHt5Ouqm5DXrTUswx5fJo3+ufDr+AiBuPwC1yqFCNqEvp
+ CXfd4BdAUtXaQilKZh3V4GXrNKkofja7+9ZZGW3Kjw3c1X4MBPGZwc47cnd7AygJoTEr
+ umjwNwFEfAkuoIg+oI/EQZQvMPTRHO2ufPY/UIQyYZp2FBD4aqXxHMGRi+Qee8RBgUbC
+ QpKb4WsH6iHyvDqB1WDvCAPZzFpI2yCCeLrugitNaHuCpAxewOsRuCKHA90+fTuAENVL
+ ecbRfkDMSPlHsPgO6FeCKjJ3IoQzqPJfGQDbIlcqymppPpSD2zCtqmddWjbEpE6x2/fu
+ WHqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUM4ExXnxQk0hfSdyNB4nYb2iwMc7TD8dAY+D/0/hSdf5DL5Ff22Z51fMzxh8sCD2vaOFwWo1Bc6BrT@nongnu.org
+X-Gm-Message-State: AOJu0YwsuUSJyRlqJhEkQWd97GadYZe9TJyY4hvxtlK/HY/e9RCNh9VD
+ WpsTjh2IHu+Z084L7eanaUVO8w2ccAMFnJscGA42yCBTPLozhQ0wN3DiRE7Ifhg=
+X-Gm-Gg: ASbGncud2+JeFmbbYqzGb+0jyeetSTWNZMwvcAkpGQqJCW4K6EqKVDkV5cdQV1jd9lf
+ Q0IqbQMSJ/5sZ6+Ze60WLvN/ZSAx+Bnc8Vj/gjRSFXEJUu62200k/4yZVYccRHvD17pKJdf/6R5
+ GzLkbV1sKnSxfQg6sdeI4LCx8qloNAITdQSILLG2/MGaqo+e4tKJYL3oma+PaZafTakaCdIlPZM
+ nU54Fhy9qFsP6H75tyuT4/IsF2vyDH0fr5g8wI7LBqAIv2bUiDwkCkddvMZZfnoIZ+NOvPmLnVm
+ XzPTtVa9DTNLYlaGXcfsKWcE4noypA==
+X-Google-Smtp-Source: AGHT+IHa9mBRBHdEd/83uN+mpDjqOj274RqeD/ugPZI72S5AFLtF+uPd9klrVmTKG7pXh9ilLJ3paA==
+X-Received: by 2002:a05:6000:1acc:b0:382:4cc3:7def with SMTP id
+ ffacd0b85a97d-385c6eb6eb1mr19119367f8f.7.1733155185819; 
+ Mon, 02 Dec 2024 07:59:45 -0800 (PST)
+Received: from [192.168.68.213] (72.red-95-127-54.dynamicip.rima-tde.net.
+ [95.127.54.72]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385e940fef3sm6501783f8f.42.2024.12.02.07.59.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Dec 2024 07:59:45 -0800 (PST)
+Message-ID: <21367b78-f88d-4ead-9ed5-62ee5d82f9ae@linaro.org>
+Date: Mon, 2 Dec 2024 16:59:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 25/26] target/arm/kvm-rme: Add measurement log
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: peter.maydell@linaro.org, richard.henderson@linaro.org, philmd@linaro.org, 
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, alex.bennee@linaro.org,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-27-jean-philippe@linaro.org>
- <02b90518-2996-4231-bee9-43ce313669b0@linux.ibm.com>
- <Z0XREyMovNyB4s6t@redhat.com> <20241126162149.GC956991@myrica>
+Subject: Re: [PATCH 2/3] clock: treat outputs and inputs the same in
+ NamedClockList
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20241129180326.722436-1-pbonzini@redhat.com>
+ <20241129180326.722436-3-pbonzini@redhat.com>
 Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20241126162149.GC956991@myrica>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241129180326.722436-3-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: e_Dqq_xwypzIbdYGytPkyHoRdqonJ3CH
-X-Proofpoint-GUID: e_Dqq_xwypzIbdYGytPkyHoRdqonJ3CH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- spamscore=0 clxscore=1011 malwarescore=0 bulkscore=0 adultscore=0
- priorityscore=1501 mlxlogscore=999 impostorscore=0 phishscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412020133
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,65 +101,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/26/24 11:21 AM, Jean-Philippe Brucker wrote:
-> On Tue, Nov 26, 2024 at 01:45:55PM +0000, Daniel P. Berrangé wrote:
->> On Mon, Nov 25, 2024 at 05:23:44PM -0500, Stefan Berger wrote:
->>>
->>>
->>> On 11/25/24 2:56 PM, Jean-Philippe Brucker wrote:
->>>> Create an event log, in the format defined by Trusted Computing Group
->>>> for TPM2. It contains information about the VMM, the Realm parameters,
->>>> any data loaded into guest memory before boot and the initial vCPU
->>>> state.
->>>>
->>>> The guest can access this log from RAM and send it to a verifier, to
->>>> help the verifier independently compute the Realm Initial Measurement,
->>>> and check that the data we load into guest RAM is known-good images.
->>>> Without this log, the verifier has to guess where everything is loaded>
->>> and in what order.
->>>
->>> Typically these logs are backed by extensions of TPM PCRs and when you send
->>> a log to a verifier you send a TPM quote along with it for the verifer to
->>> replay the log and check the TPM quote. Also, early code in the firmware is
->>> typically serving as a root of trust that starts the chain of measurements
->>> of code and data, first measuring itself and then other parts of the
->>> firmware before it jumps into the other parts. Now here you seem to just
->>> have a log and no PCR extensions and therefore no quote over PCRs can be
->>> used.
+On 29/11/24 19:03, Paolo Bonzini wrote:
+> Leave around a reference not just for inputs but also for outputs.
+> This is a better choice because in principle the monitor could walk
+> the NamedClockList after the clocks have been unparented (which would
+> free them) and before qdev_finalize_clocklist().
 > 
-> Indeed, in our case it's the trusted hypervisor (RMM) that provides the
-> equivalent to TPM quote and PCRs. In more details:
-> 
-> 1. QEMU loads images into guest RAM by calling KVM, which calls RMM.
-> 2. RMM calculates a hash of the image content, adds it to a rolling hash
->     the "Realm Initial Measurement" (RIM), which I believe is equivalent to
->     a PCR.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   hw/core/qdev-clock.c | 10 +---------
+>   1 file changed, 1 insertion(+), 9 deletions(-)
 
-I am not familiar with RIM. A link to read more about it would be helpful.
-
-> 3. During remote attestation, the guest sends evidence containing this RIM
->     signed by the root of trust, along with a signed token identifying the
->     platform (hardware, firmware, RMM).
-
-Is this a well known manufacturer key that one would expect for 
-signature verification or is it locally created?
-
-> 4. The verifier checks the signature and the platform token, so it trusts
->     the RMM and the RIM.
-> 
->>> Then what prevents anyone from faking this log and presenting a
->>> completely fake log to the verifier?
-> 
-> Absolutely, the verifier does not trust the content of the log, it only
-> uses the log as helper to try to reconstruct the RIM. For example a log
-> event says "I loaded image XYZ at address A", then the verifier searches
-> image XYZ in its database of known-good images, calculates the hash that
-> would result from loading that image at address A. Any malformed event in
-
-Hopefully just calculating a hash over the image will do and the 
-location an image was loaded to, like address A (relocation?), doesn't 
-matter...
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
