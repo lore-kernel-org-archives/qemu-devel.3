@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA0ABD7831F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEFDD78320
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Zq-00056D-Jd; Mon, 02 Dec 2024 08:35:02 -0500
+	id 1tI6YZ-0000tQ-Tf; Mon, 02 Dec 2024 08:33:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6Lj-0007yO-55
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:37 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6Lf-0005k0-6Y
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:26 -0500
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26WwQG005193;
- Mon, 2 Dec 2024 13:20:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=TXd9jXCmZXqRMNmbI/fqeBAMqJD3CKnnnlbau9xifCM=; b=
- fFHffPgTcYhrPE7duNa+qmImNPwsFeedQowGUoSYv5FLICxKe614ysdJxRGphdp/
- 2r3jtKyTdtO14130YmzsRmn16CgnmSaEYNDM6Uwv6Q06/jQHTnMQrYUMT7tmbTW9
- po1n9hgnaXEpV2MSFkw8QhMkLlWPK0VQ/sgv/+h+5BH8F7vHA0WcYwsI4zUpJpX0
- bcGpJe3DaGFeaf+HUHEwvI6kR4HSOrm+mHlXEyF9zAjgdFHO1XNQlW35uqgyxK7c
- mfYG0Ivxy4hNDkE2HscfwGF54vUyPu9DtqktyrEt+cY6clEW8qOJhB3wH52fl9+T
- 2vUYqJ5f6AC3SJYI7gIlDg==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437tk8txgr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:19 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4B2CmKYO032740; Mon, 2 Dec 2024 13:20:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 437s56jtpd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:18 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCEl032806;
- Mon, 2 Dec 2024 13:20:18 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 437s56jthv-8; Mon, 02 Dec 2024 13:20:17 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI6Gv-0002lE-Kn
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:30 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI6GY-0003My-Ho
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:29 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-385dbf79881so1912366f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733145277; x=1733750077; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qFtiFfBBznBZexAeUlFNfBbsHlolyVwbUxMya82sU1M=;
+ b=atwcCUNsmOBDsC+M+FRdwBqZuSxxilKsxhyx5LOt69Q7s8YaHAoFxWhy/Bsr1nmR0b
+ BrKqXH5OfJZ1cLtkBgomZ8FCTi5Eu9C/Wwx3qC/4vqtD/yyDKnzP7juQhqG3YxoYNSZM
+ CeBXUeesd89xBO43byd1Gk2Wico5Y8WqX9AIMxuXeIg9J4YexPHZyXTZsHWdiefizjr6
+ /VExT/T4E1/tXt7p/wz9+qvmkHWWm305+pJ523HjHxI3Mlg+0IJiEcgVPDwqcUYLL4qz
+ yoQQEb+ZDGozAHDnlMsrW+OJg8CZdWqvsuePIm2Zz0KPI31n7zEZOdPKwf2GKnmU3bM1
+ 8RBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733145277; x=1733750077;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qFtiFfBBznBZexAeUlFNfBbsHlolyVwbUxMya82sU1M=;
+ b=CfrnItUHRMUgjOTadW6KLrefFL+7wxD9DnrRhv4SlwOU7uVA8DzcT8cMbJDvhifjgp
+ 2fKQjxTZiTl45d80fZguai3KL/oX39xXoLzF9PY13daL4mJvXri6eIeSmP/8uEAK375O
+ 9ovuCVTnsdDHcajWQjTfzU/QnHqNsY9WkNXOnhvZDaTsLdYFNQN/89An9aIorN1CybHK
+ UyRvr0bELTjs3jgBJ1lMTtmjua19jDIo0y5hLqde9ebqlo0pzQn8u+Z1t6jZXbbEQncV
+ MAGpLtIuslzITZ/5LkTgcyJQoH4Wty7WdOTZNfWJFBuaf+a9UXzwz6+8wUjw6LsSBme0
+ wTjA==
+X-Gm-Message-State: AOJu0YwT4tm5wJloGQ9HTZaV3MaUD3ChbCc9VuzDetVkdCh0Lxoq5FSy
+ 36dsVMygbDKeEVBVGPC/OAhmUQbXbG5w2JoK93m1IJPNJlA/lM1MA0LD9UEC2x42JDIMvi4bL86
+ 7
+X-Gm-Gg: ASbGncvF7Ervm/lKte+33xDeN2KmpM0+A+/vKl/fmz9YTNN2b40YI/iHlV/YG8vNCFG
+ tW30wcuiyaGfq48Idb/QPzgfYgrIlNHcTVFbB21o9u0Z0N5iVpNrHpzFH+FfUH4FN8N9YudpZM1
+ 40LdJIeJL+YOpgpzAyS6ji1R8q2J1N0K2WuAJEn/Q/JpX//kveD9PEZOidhTOUDGuTPt2642jT5
+ hUoaPYgiqnzyviTwl0imlp0LcFdjuYL1jylPB1QIGCfaBCXWm0A2RY=
+X-Google-Smtp-Source: AGHT+IGjX11e3JO3ZTyjG7BP/tYm806Bq6OhPURR2FI+K91cwS7FWrHu5iiVUqs5CI0AS29PsM5q0A==
+X-Received: by 2002:a5d:64ed:0:b0:382:444f:4eb0 with SMTP id
+ ffacd0b85a97d-385cbd7c36fmr16352829f8f.13.1733145276812; 
+ Mon, 02 Dec 2024 05:14:36 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Dec 2024 05:14:36 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 07/19] hostmem-memfd: preserve for cpr
-Date: Mon,  2 Dec 2024 05:19:59 -0800
-Message-Id: <1733145611-62315-8-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2024-12-02_09,2024-12-02_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxlogscore=999
- spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2411120000 definitions=main-2412020116
-X-Proofpoint-ORIG-GUID: 62KhHrDx2vfPcxHKQHwhPP2732f-48nA
-X-Proofpoint-GUID: 62KhHrDx2vfPcxHKQHwhPP2732f-48nA
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH v2 for-10.0 30/54] target/m68k: In frem helper,
+ initialize local float_status from env->fp_status
+Date: Mon,  2 Dec 2024 13:13:23 +0000
+Message-Id: <20241202131347.498124-31-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
+References: <20241202131347.498124-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,61 +111,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Preserve memory-backend-memfd memory objects during cpr-transfer.
+In the frem helper, we have a local float_status because we want to
+execute the floatx80_div() with a custom rounding mode.  Instead of
+zero-initializing the local float_status and then having to set it up
+with the m68k standard behaviour (including the NaN propagation rule
+and copying the rounding precision from env->fp_status), initialize
+it as a complete copy of env->fp_status. This will avoid our having
+to add new code in this function for every new config knob we add
+to fp_status.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Acked-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- backends/hostmem-memfd.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ target/m68k/fpu_helper.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index 1bcae4b..497d63b 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -17,6 +17,7 @@
- #include "qemu/module.h"
- #include "qapi/error.h"
- #include "qom/object.h"
-+#include "migration/cpr.h"
+diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
+index a605162b71f..e3f4a188501 100644
+--- a/target/m68k/fpu_helper.c
++++ b/target/m68k/fpu_helper.c
+@@ -615,15 +615,13 @@ void HELPER(frem)(CPUM68KState *env, FPReg *res, FPReg *val0, FPReg *val1)
  
- OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+     fp_rem = floatx80_rem(val1->d, val0->d, &env->fp_status);
+     if (!floatx80_is_any_nan(fp_rem)) {
+-        float_status fp_status = { };
++        /* Use local temporary fp_status to set different rounding mode */
++        float_status fp_status = env->fp_status;
+         uint32_t quotient;
+         int sign;
  
-@@ -33,15 +34,19 @@ static bool
- memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
- {
-     HostMemoryBackendMemfd *m = MEMORY_BACKEND_MEMFD(backend);
--    g_autofree char *name = NULL;
-+    g_autofree char *name = host_memory_backend_get_name(backend);
-+    int fd = cpr_find_fd(name, 0);
-     uint32_t ram_flags;
--    int fd;
+         /* Calculate quotient directly using round to nearest mode */
+-        set_float_2nan_prop_rule(float_2nan_prop_ab, &fp_status);
+         set_float_rounding_mode(float_round_nearest_even, &fp_status);
+-        set_floatx80_rounding_precision(
+-            get_floatx80_rounding_precision(&env->fp_status), &fp_status);
+         fp_quot.d = floatx80_div(val1->d, val0->d, &fp_status);
  
-     if (!backend->size) {
-         error_setg(errp, "can't create backend with size 0");
-         return false;
-     }
- 
-+    if (fd >= 0) {
-+        goto have_fd;
-+    }
-+
-     fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
-                            m->hugetlb, m->hugetlbsize, m->seal ?
-                            F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
-@@ -49,9 +54,10 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     if (fd == -1) {
-         return false;
-     }
-+    cpr_save_fd(name, 0, fd);
- 
-+have_fd:
-     backend->aligned = true;
--    name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-     ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+         sign = extractFloatx80Sign(fp_quot.d);
 -- 
-1.8.3.1
+2.34.1
 
 
