@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA43ED78322
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E16D78322
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Zv-0005Oq-4U; Mon, 02 Dec 2024 08:35:07 -0500
+	id 1tI6Yd-0001Ak-Ck; Mon, 02 Dec 2024 08:33:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6Lo-00081m-O8
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:41 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6Lj-0005nw-5X
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:30 -0500
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26X0YZ008619;
- Mon, 2 Dec 2024 13:20:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=7OQmLlx/PoPLowHM1tzFKaWQQg/KV0GS0o4j8Vd8xL0=; b=
- JlwHAyXfXuj7MYbpLxfW5WGSB/kEy7XVH4whlSSNSr1ypcFjbJyjQcgtc4ptP9Yk
- 4LUT/TcUYgRGwK4vmevurtpWCSRMRiYFzp56IwS7r0jwEJ5CLBxtE/ygi2tI1YjD
- rmqBu8vtHSphCDysf3xc/oqcRiTzDoeAE2DK1igVwRLMb+wgRzTBtipV6OMhYd7s
- 40+hzyFEJheOCqpJaCdouSdA9Om0PpxfBxlZKAwYRNSr+5v+rVHHDRVR93BlwkCk
- Kid7TI8T8MIvGGx9EsUyRr6tpLfwItNr6XirvsNa2Qt6j6S907vHCdMAIsXySDg7
- d+uDPOT4kofXcJOVWrEORA==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437s9ytymk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:23 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4B2CFJhN032114; Mon, 2 Dec 2024 13:20:22 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 437s56jts5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:22 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCEv032806;
- Mon, 2 Dec 2024 13:20:22 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 437s56jthv-13; Mon, 02 Dec 2024 13:20:21 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI6HB-0003Iu-Cg
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:49 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI6GZ-0003CZ-1r
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:38 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-434acf1f9abso38904465e9.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733145249; x=1733750049; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uAvUlUwIT6mon/4ZVWSLpgO6VDhWersS5LUlGU6M2Ag=;
+ b=hRopcZuPcswnNGhkXpoSRR8R5Y3zE99SgaCXyQGfyZWKsSOiPjWu1mMXz89sHoy/6G
+ JTa9SEPc+rQLp8fQJ3aNp5pm5nCpVWPbyLht7HCAPG6WEr1OssdGWRPOun7Uqnbdi5wO
+ WyuYdoomVrgBGp/iMi0DR3Eq2+E5G5LQVMHS8kecF5lVt4zCJtbX0EEqC9ZfSijWy+c4
+ 5+tpxbC/yhiSDf7uKHkJwT5vj7U4qgSVdZVkpqaEToskNJmrXIq1bcQGei5wxxyxXt1B
+ 6rFa6k9Sei0ktXJk25ufIzQVIiED03PRXKqacqFGKBuuD2q/5eF5HBaH9aBTJ4vmJ7An
+ C3iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733145249; x=1733750049;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uAvUlUwIT6mon/4ZVWSLpgO6VDhWersS5LUlGU6M2Ag=;
+ b=juuxeZHHRHrh9m8xfdART51JfopRtpAK01y5ooe/v7N6O2ftZibrtgtolqFTrc6vON
+ uM3EpjEha7UHCV96Cbk+NSHunkspTZyAAg6AfIbcBnhJmnu+mS2t0LfmPkhCpNEg06uc
+ uQSl5gM7fMSv+xLECDv8+T4obhKvbsLabtGDOQ/GvBs1IckV7Dusd74FcBQvO8O26hks
+ TCwVlY6GsSlLefr8KXUl4CgNMl3tEFMhMolrZKAE46WWTj9H9f/ChKNa+RJLpQ5FUjb4
+ kbfNcI2PJmq3bgaNigIO9Aedez8dbVpucZ2dnnlIxIg/u8jhgQY1nLw1bqr2YOVt2GeY
+ 7iEw==
+X-Gm-Message-State: AOJu0YybnCTuv3lKw1uncPub9R62XdVhQNmnDEWnBw7z193gD10Aq+UX
+ q1SScs8DhXnn24xVc3f/j7gjlGWyHD/eFVkLehqEcETZmdhAI8dXXvng7IJDYDFQJgNMla+b6jO
+ m
+X-Gm-Gg: ASbGncuxTHQ0xkaQsTGxGlXOeW4/Qkz9G3mHb6HDTud24bDKtNnyxrlmtxD4Z+ZkJ5/
+ 23UEay804Hdy5Psrmokri+bLDHy3m9p8lEqKk/uoK+v9lfxRsOHBr4BhrX9QDolYSVEO6xqyF0C
+ mu8IbDTaPEUjMo1vWHn0q5t+9p2AaYbfOf/wHezjGidCDqORbuZR+mu7qza5j9zEIksRdB3m2Hb
+ Cba2In3V81TNxKs8njpJEa2jby6GJXZJdtEFj9fD6ZC9bMmk4+wOBY=
+X-Google-Smtp-Source: AGHT+IE5iv5s3mrYdQc2+fXd2f07qSrhY020mcYzc/+Y1BJ5GlK97WEz6OPBovtSk3AryeNH6ag8Ug==
+X-Received: by 2002:a05:6000:4710:b0:385:e013:73f0 with SMTP id
+ ffacd0b85a97d-385e0137516mr12146642f8f.59.1733145248867; 
+ Mon, 02 Dec 2024 05:14:08 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Dec 2024 05:14:08 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 12/19] migration: VMSTATE_FD
-Date: Mon,  2 Dec 2024 05:20:04 -0800
-Message-Id: <1733145611-62315-13-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2024-12-02_09,2024-12-02_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxlogscore=999
- spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2411120000 definitions=main-2412020116
-X-Proofpoint-GUID: M2o9xaSHQbRZAE62WGbzUFVWho6UTEfi
-X-Proofpoint-ORIG-GUID: M2o9xaSHQbRZAE62WGbzUFVWho6UTEfi
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH v2 for-10.0 10/54] target/xtensa: Set FloatInfZeroNaNRule
+ explicitly
+Date: Mon,  2 Dec 2024 13:13:03 +0000
+Message-Id: <20241202131347.498124-11-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
+References: <20241202131347.498124-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,92 +111,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define VMSTATE_FD for declaring a file descriptor field in a
-VMStateDescription.
+Set the FloatInfZeroNaNRule explicitly for the xtensa target,
+so we can remove the ifdef from pickNaNMulAdd().
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/migration/vmstate.h |  9 +++++++++
- migration/vmstate-types.c   | 23 +++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ target/xtensa/cpu.c            | 2 ++
+ fpu/softfloat-specialize.c.inc | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index f313f2f..a1dfab4 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -230,6 +230,7 @@ extern const VMStateInfo vmstate_info_uint8;
- extern const VMStateInfo vmstate_info_uint16;
- extern const VMStateInfo vmstate_info_uint32;
- extern const VMStateInfo vmstate_info_uint64;
-+extern const VMStateInfo vmstate_info_fd;
- 
- /** Put this in the stream when migrating a null pointer.*/
- #define VMS_NULLPTR_MARKER (0x30U) /* '0' */
-@@ -902,6 +903,9 @@ extern const VMStateInfo vmstate_info_qlist;
- #define VMSTATE_UINT64_V(_f, _s, _v)                                  \
-     VMSTATE_SINGLE(_f, _s, _v, vmstate_info_uint64, uint64_t)
- 
-+#define VMSTATE_FD_V(_f, _s, _v)                                  \
-+    VMSTATE_SINGLE(_f, _s, _v, vmstate_info_fd, int32_t)
-+
- #ifdef CONFIG_LINUX
- 
- #define VMSTATE_U8_V(_f, _s, _v)                                   \
-@@ -936,6 +940,9 @@ extern const VMStateInfo vmstate_info_qlist;
- #define VMSTATE_UINT64(_f, _s)                                        \
-     VMSTATE_UINT64_V(_f, _s, 0)
- 
-+#define VMSTATE_FD(_f, _s)                                            \
-+    VMSTATE_FD_V(_f, _s, 0)
-+
- #ifdef CONFIG_LINUX
- 
- #define VMSTATE_U8(_f, _s)                                         \
-@@ -1009,6 +1016,8 @@ extern const VMStateInfo vmstate_info_qlist;
- #define VMSTATE_UINT64_TEST(_f, _s, _t)                                  \
-     VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_uint64, uint64_t)
- 
-+#define VMSTATE_FD_TEST(_f, _s, _t)                                            \
-+    VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_fd, int32_t)
- 
- #define VMSTATE_TIMER_PTR_TEST(_f, _s, _test)                             \
-     VMSTATE_POINTER_TEST(_f, _s, _test, vmstate_info_timer, QEMUTimer *)
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index e83bfcc..f31deb3 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -314,6 +314,29 @@ const VMStateInfo vmstate_info_uint64 = {
-     .put  = put_uint64,
- };
- 
-+/* File descriptor communicated via SCM_RIGHTS */
-+
-+static int get_fd(QEMUFile *f, void *pv, size_t size,
-+                  const VMStateField *field)
-+{
-+    int32_t *v = pv;
-+    *v = qemu_file_get_fd(f);
-+    return 0;
-+}
-+
-+static int put_fd(QEMUFile *f, void *pv, size_t size,
-+                  const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    int32_t *v = pv;
-+    return qemu_file_put_fd(f, *v);
-+}
-+
-+const VMStateInfo vmstate_info_fd = {
-+    .name = "fd",
-+    .get  = get_fd,
-+    .put  = put_fd,
-+};
-+
- static int get_nullptr(QEMUFile *f, void *pv, size_t size,
-                        const VMStateField *field)
- 
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 6f9039abaee..3163b758235 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -133,6 +133,8 @@ static void xtensa_cpu_reset_hold(Object *obj, ResetType type)
+     reset_mmu(env);
+     cs->halted = env->runstall;
+ #endif
++    /* For inf * 0 + NaN, return the input NaN */
++    set_float_infzeronan_rule(float_infzeronan_dnan_never, &env->fp_status);
+     set_no_signaling_nans(!dfpu, &env->fp_status);
+     xtensa_use_first_nan(env, !dfpu);
+ }
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 7e57e85348b..3062d19402d 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -489,7 +489,7 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+         /*
+          * Temporarily fall back to ifdef ladder
+          */
+-#if defined(TARGET_XTENSA) || defined(TARGET_HPPA) || \
++#if defined(TARGET_HPPA) || \
+     defined(TARGET_I386) || defined(TARGET_LOONGARCH)
+         /*
+          * For LoongArch systems that conform to IEEE754-2008, the (inf,zero,nan)
 -- 
-1.8.3.1
+2.34.1
 
 
