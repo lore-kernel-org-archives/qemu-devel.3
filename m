@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B30D78320
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B9ED7831F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:38:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6YT-0000OV-CE; Mon, 02 Dec 2024 08:33:37 -0500
+	id 1tI6UT-0000mc-6A; Mon, 02 Dec 2024 08:29:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6Gz-0002z6-P6
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:33 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1tI6Gl-0002cA-3v
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:23 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6GY-0003Gw-Nu
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:33 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-434ab938e37so26677425e9.0
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:25 -0800 (PST)
+ id 1tI6GW-0003N9-Tq
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:16 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-385e06af753so1546861f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733145265; x=1733750065; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733145277; x=1733750077; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D7hgTTAcAvvo63kNZS2ll5arN5VoViH9sR+6kv3WAC0=;
- b=iydRV8ew3QGAeyT4E0h018WIL+xrxgWgij9lczJcgUM50zSjUIi3Yr3Hsueahc1sri
- y90B8hwo3DSZTl/hts5SdwTnV5Ct23KUdfTEQS34WsujziCevXsoxCMXuz3op8yTCl6Q
- J1UvdYTWRwNlK+dCkkXgRbhJd5xDTOriTbhnEMOHcKFOhs0WJdm2MjfmMqkOm0q6bROb
- DTGPxNdw1Fq7gxGTZdPrynHOQ/ofKvpO5YltKR8ot7+0FQ5sPoNMIMfQh0ivYzvZi54t
- iHS0ShtXBzDLD5f9PVkvYKnKQSCtsULylXRYh3/TuzmcaCymJvJCMM/jB+mm3YcnL14g
- TjAA==
+ bh=y0Xx5AyANaS6WVZhR0dQwQ3Dsfoy1K8k2mwf7TXf+0Q=;
+ b=pn7j5F7MxljhAZcshslSRKChxuW/28uW28iSKscwQRhLg+R2SyiZuoQmoxEWMx6pRR
+ uhIv1Qa7dKbK0EKq4lsnoofjRHHNxdOaKuBD3gqYn+7PZXFsAaFHrmgpbUhn5cH1TOdB
+ ZWtKTGRSBOMTHgz941HE3I+cqtN/JzYyFIaCph1REBVxSvj4Ae2lkc6XxyT2ei94IqCM
+ 52zbtyJs3nGUkrv/V6+hQMAEmx/iylGc0mbjVsOvUS4sUmDeIR1deMVf38zfPK3b9yQ9
+ 2u2vwwHAWfbotBwTmegttbyoPZmY59jfsrV+W2GIAUKbKOU+HS0nyI5WIJVKOcoQHeK3
+ 70wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733145265; x=1733750065;
+ d=1e100.net; s=20230601; t=1733145277; x=1733750077;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D7hgTTAcAvvo63kNZS2ll5arN5VoViH9sR+6kv3WAC0=;
- b=WNv9ZZl4JNxL8Y30xyvyofO7uolYmhodBOrcIC/UhcKAHgRV+lI1bLWwbk8zgap+Dv
- cHx+B8DItNC1DGtNnhISCgW95/txplBTMjqFeM5MNWzKWk+9TcgL5ekXR3Yem3t6Q5G0
- zI19cT5WcR3wsuhB6YLhKgh1Tbgl0W/EW9GB5X1WJ1nirhsjcfvw/69IeqztzFd1sGk9
- 3VXHcTi/otkdVczZOLbup1WXrzmIu0d8BGBNRmZLYy+wfjyGTnMddGQYbqOVQ1cvkA1r
- 3k2UYWDPkRZqnedtxg4Wr/tDO5iK8Z05EdhVCzLOv3j0Xne7YHyYxODtI3g1q7gRNPcg
- d10A==
-X-Gm-Message-State: AOJu0Yx7b64ulCOuBvUg24Fl6EWgtexSHFbRpRkAGYbDbzvylpsNtyMD
- 7HTC/FYioCiKzsVarxk3/2eJ3qkaV2RC/uovu7uYHCVOuURN4et/O/j4vuvJ2MH8bMZabCTK6qu
- j
-X-Gm-Gg: ASbGncugjsjOaFsTcjaC8SYMKAJRWQqi33LVnl022BQ6fSI/QYpVPZAZv/cNeMTP4Rr
- XgtdaR5HOTO0K+JRL62mpY6nCNcZ4vq9bzrcpICuW7Tpq38Dc8IJXWGHPoR11w2cxgZ0NlyEO3c
- ga+8HG4fqQX4wDFwIo9Fu1po8aGE0CjbIF9a79v+F3P1wdtSKbU/cCiBOnp3vJ00tMcqZUYx6pM
- yS4llh7pbT3EcTuIlcxTpYuWJRtRFengF+xvTPqbkhpg1s27VgQN3M=
-X-Google-Smtp-Source: AGHT+IEemo/kgleI2mLyCGQ61C0ZarnpS72GAYORVMtATpCawhtbXLGDqOMXKJ50Nry8KpGTlsLeDQ==
-X-Received: by 2002:a05:6000:4020:b0:382:6f3:a20f with SMTP id
- ffacd0b85a97d-385c6eb7c84mr16653095f8f.11.1733145259733; 
- Mon, 02 Dec 2024 05:14:19 -0800 (PST)
+ bh=y0Xx5AyANaS6WVZhR0dQwQ3Dsfoy1K8k2mwf7TXf+0Q=;
+ b=spUu6StNBS8dYsY1xLvA1uSPzzncYQ/PZiijocBv/s/TA1njmGMo610+sYFtCKoUhK
+ IV+omU0LVvA9ppI8tHwXeTNnA3SlSrVituUqa/8ilyhJplk23h6imgsE7xgHRMTzp7T8
+ H+6saVNWmNJUrGHWg1rCmDukWZVpM7uCyaPZsf0PYYrnG5WS2CUB8UJHLn1H1Ozyjafc
+ nq+afNPEiMF0h3wh1usbxe8uEUvWaP/9A16+wFWyZtVqEThGZalFxlgoDJUPQpmAgeW8
+ WvhL6n2bdP0S0zstun261SqAE8udqhXSP2jgxC/jkIHDwjvNRzSPxdkGBJEC0tblQg/6
+ WCpw==
+X-Gm-Message-State: AOJu0YxGdLBUfnEVGS4OyLBZ6zELne2f4sIDafatHq9bp/zP256ojgQz
+ k+2Db8Nk2JElGzToWwwZ6gTtbqTxnhHrM498sSlJSumwQn2+HrqajOdvaoDoefROkFfQiBu1Yms
+ O
+X-Gm-Gg: ASbGncvRjVbcyrXDHDVyRZTh8Woo22CtCvnasE3WmXxR7MRtcs1Dmo+4C6evcsZ0X9r
+ jjB8QjmKg/MhTBlmrkoYzoFbHOMm19r6cUmwvvc8FA3Bl1pjMd5WthVh8q0LWGO3GXloLyzVgos
+ MfCHtqpHmPcZF6vJv43Y63oYliMRJCy4tB2oCp5Wyiaq8dHCdbqOsEGxde3U9qaHeTkixGoIWik
+ 3AmBqTTyJ+M593IOp0t8xRzgPmkqP6qn1iyjMndNxofodc23xNQXA4=
+X-Google-Smtp-Source: AGHT+IF7/dDg8KXtRoJE3fE/ctSGSHBQI+1um0ZFXkjxt7vXDSSfH94Og34g1HVsiH7CtOchKtbbog==
+X-Received: by 2002:a5d:5f8d:0:b0:385:f2a2:50df with SMTP id
+ ffacd0b85a97d-385f2a253a2mr3340910f8f.27.1733145275906; 
+ Mon, 02 Dec 2024 05:14:35 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.18
+ ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Dec 2024 05:14:19 -0800 (PST)
+ Mon, 02 Dec 2024 05:14:35 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
@@ -78,16 +78,17 @@ Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 for-10.0 19/54] target/ppc: Set Float3NaNPropRule explicitly
-Date: Mon,  2 Dec 2024 13:13:12 +0000
-Message-Id: <20241202131347.498124-20-peter.maydell@linaro.org>
+Subject: [PATCH v2 for-10.0 29/54] target/loongarch: Use normal float_status
+ in fclass_s and fclass_d helpers
+Date: Mon,  2 Dec 2024 13:13:22 +0000
+Message-Id: <20241202131347.498124-30-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
 References: <20241202131347.498124-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,52 +111,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the Float3NaNPropRule explicitly for PPC, and remove the
-ifdef from pickNaNMulAdd().
+In target/loongarch's helper_fclass_s() and helper_fclass_d() we pass
+a zero-initialized float_status struct to float32_is_quiet_nan() and
+float64_is_quiet_nan(), with the cryptic comment "for
+snan_bit_is_one".
+
+This pattern appears to have been copied from target/riscv, where it
+is used because the functions there do not have ready access to the
+CPU state struct. The comment presumably refers to the fact that the
+main reason the is_quiet_nan() functions want the float_state is
+because they want to know about the snan_bit_is_one config.
+
+In the loongarch helpers, though, we have the CPU state struct
+to hand. Use the usual env->fp_status here. This avoids our needing
+to track that we need to update the initializer of the local
+float_status structs when the core softfloat code adds new
+options for targets to configure their behaviour.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/ppc/cpu_init.c          | 8 ++++++++
- fpu/softfloat-specialize.c.inc | 6 ------
- 2 files changed, 8 insertions(+), 6 deletions(-)
+It would be nice to get the riscv fclass_s etc also not to use a
+stunt float_status, but plumbing the env through would require
+fiddling with the macro magic, and in practice for the is_quiet_nan
+functions it works out OK.
+---
+ target/loongarch/tcg/fpu_helper.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index f18908a643a..eb9d7b13701 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7270,6 +7270,14 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
-      */
-     set_float_2nan_prop_rule(float_2nan_prop_ab, &env->fp_status);
-     set_float_2nan_prop_rule(float_2nan_prop_ab, &env->vec_status);
-+    /*
-+     * NaN propagation for fused multiply-add:
-+     * if fRA is a NaN return it; otherwise if fRB is a NaN return it;
-+     * otherwise return fRC. Note that muladd on PPC is (fRA * fRC) + frB
-+     * whereas QEMU labels the operands as (a * b) + c.
-+     */
-+    set_float_3nan_prop_rule(float_3nan_prop_acb, &env->fp_status);
-+    set_float_3nan_prop_rule(float_3nan_prop_acb, &env->vec_status);
-     /*
-      * For PPC, the (inf,zero,qnan) case sets InvalidOp, but we prefer
-      * to return an input NaN if we have one (ie c) rather than generating
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index d610f460026..173b9eadb57 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -511,12 +511,6 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
-         } else {
-             rule = float_3nan_prop_s_cab;
-         }
--#elif defined(TARGET_PPC)
--        /*
--         * If fRA is a NaN return it; otherwise if fRB is a NaN return it;
--         * otherwise return fRC. Note that muladd on PPC is (fRA * fRC) + frB
--         */
--        rule = float_3nan_prop_acb;
- #elif defined(TARGET_S390X)
-         rule = float_3nan_prop_s_abc;
- #elif defined(TARGET_SPARC)
+diff --git a/target/loongarch/tcg/fpu_helper.c b/target/loongarch/tcg/fpu_helper.c
+index 37a48599366..aea5e0fe5e6 100644
+--- a/target/loongarch/tcg/fpu_helper.c
++++ b/target/loongarch/tcg/fpu_helper.c
+@@ -359,8 +359,7 @@ uint64_t helper_fclass_s(CPULoongArchState *env, uint64_t fj)
+     } else if (float32_is_zero_or_denormal(f)) {
+         return sign ? 1 << 4 : 1 << 8;
+     } else if (float32_is_any_nan(f)) {
+-        float_status s = { }; /* for snan_bit_is_one */
+-        return float32_is_quiet_nan(f, &s) ? 1 << 1 : 1 << 0;
++        return float32_is_quiet_nan(f, &env->fp_status) ? 1 << 1 : 1 << 0;
+     } else {
+         return sign ? 1 << 3 : 1 << 7;
+     }
+@@ -378,8 +377,7 @@ uint64_t helper_fclass_d(CPULoongArchState *env, uint64_t fj)
+     } else if (float64_is_zero_or_denormal(f)) {
+         return sign ? 1 << 4 : 1 << 8;
+     } else if (float64_is_any_nan(f)) {
+-        float_status s = { }; /* for snan_bit_is_one */
+-        return float64_is_quiet_nan(f, &s) ? 1 << 1 : 1 << 0;
++        return float64_is_quiet_nan(f, &env->fp_status) ? 1 << 1 : 1 << 0;
+     } else {
+         return sign ? 1 << 3 : 1 << 7;
+     }
 -- 
 2.34.1
 
