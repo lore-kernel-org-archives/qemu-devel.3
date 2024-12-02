@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88607D10DCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 09:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DD8D10DDD
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 09:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI2eA-00011I-N7; Mon, 02 Dec 2024 04:23:14 -0500
+	id 1tI2j2-0002Om-9S; Mon, 02 Dec 2024 04:28:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2dg-0000z4-1W
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:22:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2hv-0002Ll-20
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:27:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2de-0000ij-Fb
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:22:43 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2ht-00022e-Dc
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 04:27:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733131361;
+ s=mimecast20190719; t=1733131623;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=v71rrZAVgoeuk8eOTKKFrs1ALtQh48qht+60poJ7J1U=;
- b=Iu6QVWdPKLN+5ZEaxADoUs5WmqQ1FAyG2+IE/4oeoPeBlDu3nyOX2IY86Dvg/1PMnRR5U/
- ki6YZg/JZs3htm6aFBAR2g1x5U7xPp6FBkDXUis0Tz8wXWq1zKgN74LlPTcy0VMz3ZJxq5
- 5mzg2Ydx0BFxwrMvkQ9sNBoBxJJMFHg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jSwf9zoW9tugDylWKOukYJEwQVnPPGTd3FLh/Hzbbe4=;
+ b=KabmUbtLbptl8/p65+VrXlBZUmfs+UObPjSqdrE6yum8QqoGwlnc14Gfyg+ouHnHaFOpEf
+ aB6+OTldopPfH8J8RG6nYR9QgXgx4EeziFO0omerEjpYYbZS9q3ZSyODu2mCLnHeqTk7nY
+ Ywc9vsOzG5mXAp+mpiO5kPCXMvhVb/Q=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-rLgDdIDiPF-zkrSE_EvkRQ-1; Mon, 02 Dec 2024 04:22:38 -0500
-X-MC-Unique: rLgDdIDiPF-zkrSE_EvkRQ-1
-X-Mimecast-MFC-AGG-ID: rLgDdIDiPF-zkrSE_EvkRQ
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4349df2d87dso38167315e9.2
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 01:22:38 -0800 (PST)
+ us-mta-67-Nhmj9I9eNA-e3P0Ey0S6iA-1; Mon, 02 Dec 2024 04:27:02 -0500
+X-MC-Unique: Nhmj9I9eNA-e3P0Ey0S6iA-1
+X-Mimecast-MFC-AGG-ID: Nhmj9I9eNA-e3P0Ey0S6iA
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-434a4ad78a1so33441595e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 01:27:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733131357; x=1733736157;
+ d=1e100.net; s=20230601; t=1733131621; x=1733736421;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=v71rrZAVgoeuk8eOTKKFrs1ALtQh48qht+60poJ7J1U=;
- b=BQWE7P8p45OrghWC5wCaZPsRknvdbnZ3ovQjJF4ABM/YP/Ru4RXQEdc2ayLptFLVJi
- DMewhnLxNXb+Vb0R6Sz0JkRfsKyQ3VQR9i53lsgXNXLt66QPYEBuzonkwQ6xp2BeA6Lf
- mmsu9/7cgquk/ff8gmc5KGyz4kbS33Xdei4zzjGKbRXbkqXYU9zgQKfylHxvTQydPR/y
- oz89tqSrLD4Kzo81hxs4yxxlj0QJuV1GomzPHcn1kAHAjDtnMd5SKAxo4YqM0Mwzsoib
- IIidYHrAMf3ZmB+G9HEZ8SaT4pQHGChpqOD3H5q62A0new8RPSt0jiZv49dIDDw2vr+8
- FR0A==
+ bh=jSwf9zoW9tugDylWKOukYJEwQVnPPGTd3FLh/Hzbbe4=;
+ b=RXPRpKANnsWYzRJZzYHfRWXfGCPehFDvXYFybBUWHzsc3osBdSveuQYpjXhUrF2BPS
+ 8yBbeoVvJw/acetUoR1MoQ1xy2cunBD3Xj3aKtO4H67cztY5sZaju+XYAbE+XEu06erM
+ 5C/rWq1ZfsLeHkrFFrnP7RDKpPBE5tF5UlhRBfH0q+bC4SFTQapvFOpvqttd2Cuu1bhL
+ shOxVHUz1Px0FnqkXs9zx/SNJd1IJe1TYueLR/hMAruEKFRYGWmKu8qv0Z7aZ0bx3QRt
+ TPHJ+07ugyBTvvTUwLUs6jll+RrYEt+U1NwZyn6859bgqRXilcQBpLkualWU1IS9YrQ+
+ sy9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXJ+CnsoLaXyymDiJjhi/5uyXnlTV9m5nhS2J8A46CPyYprTF+aa+f7y9xPIsldiZs9014So6wR+1Md@nongnu.org
-X-Gm-Message-State: AOJu0YxIwyunCw45EnrW+CEbibqKUGdqSzeVBRbZWUawhuGNg+4ZI6Sq
- oLHbn1xVvYKBWtT1kH5ue48EddFQ+G2nMMGpDE6RM7w779KzGMY8u7NlSeu2XY1cEu8Dr1wV3m5
- M8UKeaFxul5bsS7L3EsCuYsprcsIYXZidZtpGgvTOU9zedMDqeBmfUd6O+JeQJK8=
-X-Gm-Gg: ASbGncvbi3MsggZFoVIPHBbPLKhYQbtx7kdN6dr9DT92PE7I79TlFvsa/XkEWvjvnJi
- jEjMLjYQ5q/XowQwi3oThpnTPcPHD+17nRxfm4AW8QX56kbDkJJgIuc1sZ+rxCGk+9pLVrzKYj5
- QjBxyTvOQX+wRM3OD51f4Gg02pAo0dpAKyi3jP5RnbBGd9SVLJhhLa0QYa/EY96T7KudtIrKdMF
- qKjSkGLAIhItw0LLxms07MwyY1IihxLY0bhp6MoqnrjGbG2r0D77X+BOF8Tj+h/9lAAhqLwQkQ=
-X-Received: by 2002:a05:600c:3585:b0:434:a04d:1670 with SMTP id
- 5b1f17b1804b1-434a9d4f86dmr252386435e9.0.1733131357546; 
- Mon, 02 Dec 2024 01:22:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEHq5Cv3Bn5HRe3h60D5zD3F5KYYzDbh2D4e4CxVPcmOQUQI+ZxHJmO03bD/1HmOpx4PtAbjQ==
-X-Received: by 2002:a05:600c:3585:b0:434:a04d:1670 with SMTP id
- 5b1f17b1804b1-434a9d4f86dmr252386255e9.0.1733131357237; 
- Mon, 02 Dec 2024 01:22:37 -0800 (PST)
+ AJvYcCVYwcBtvyfAteWK539trChv+rUxtb6v7EPoEeKtxNCok0ashjAJxEpDwyhDzclQm0tggQA5xW5S4bXF@nongnu.org
+X-Gm-Message-State: AOJu0Yx12e9Zys9rhW1ARaJfwK791aGADMVJB64x27fJ0WUs8c6W4wrZ
+ dADV7bRsAPy+4ttZ3y42DikCEl4+GlqjflG0Qc1jsrMW7UiNA7hHbt9FXLr8S2ZiLzxkV8E0tLs
+ G4+UUFc1ASsxQb6o767Mr4Ks090PSGGD5TMzY5Vz9lbaogxznLrdBPJBVmsiCti8=
+X-Gm-Gg: ASbGncv5moFgtmbiQWbO6g6rHsNDuV27aUK2eKWXGq3N00gz34gyvzn8iARFjD1ND2/
+ TYX1Hiq3xHa21cuWNryg7xD0JIH3WGZwlkflTHDwkeUMUtWMKrq0CMuFFudFu11vMQlMuWhb51u
+ CAvmXG2fKTTwNdbnp7a4Sv+xHR7ZYSMayNGfsule2kOUcJmlM2oY3oMlgHDfVQ4FGV03y0vkznt
+ sqFRDDzhXPa4y9DVxMuAsgq5Hvb9FGiCCRUJBPI6tazh+d5eNYRnR1lwLSglCAqTVQk/YjTpVk=
+X-Received: by 2002:a05:600c:5102:b0:431:59ab:15cf with SMTP id
+ 5b1f17b1804b1-434a9dc8227mr187388845e9.19.1733131621216; 
+ Mon, 02 Dec 2024 01:27:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGveG09cKQWe25M1B7u+ynnzDkn5QqqxBnBRs1P0+13hgh5jvjp5e/mngfqLFP5a3xT67NhHw==
+X-Received: by 2002:a05:600c:5102:b0:431:59ab:15cf with SMTP id
+ 5b1f17b1804b1-434a9dc8227mr187388645e9.19.1733131620849; 
+ Mon, 02 Dec 2024 01:27:00 -0800 (PST)
 Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434b0f32837sm147853645e9.33.2024.12.02.01.22.36
+ 5b1f17b1804b1-434b0d9bc5asm144523785e9.2.2024.12.02.01.27.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 01:22:36 -0800 (PST)
-Message-ID: <b3c9a838-a48b-4f06-86e2-4cfb92a6116d@redhat.com>
-Date: Mon, 2 Dec 2024 10:22:35 +0100
+ Mon, 02 Dec 2024 01:27:00 -0800 (PST)
+Message-ID: <a3e41776-4253-4c1d-b3bf-37d4702a871a@redhat.com>
+Date: Mon, 2 Dec 2024 10:26:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/22] tests/functional: switch over to using
- self.log_file(...)
+Subject: Re: [PATCH 10/22] tests/functional: switch over to using
+ self.build_file(...)
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20241129173120.761728-1-berrange@redhat.com>
- <20241129173120.761728-10-berrange@redhat.com>
+ <20241129173120.761728-11-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,7 +127,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241129173120.761728-10-berrange@redhat.com>
+In-Reply-To: <20241129173120.761728-11-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -156,14 +156,100 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/11/2024 18.31, Daniel P. Berrangé wrote:
-> This removes direct access of the 'self.logdir' variable.
+> This removes direct access of the 'BUILD_DIR' variable.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/qemu_test/testcase.py | 9 ++++-----
->   tests/functional/test_virtio_gpu.py    | 4 +---
->   2 files changed, 5 insertions(+), 8 deletions(-)
+>   tests/functional/qemu_test/testcase.py | 4 ++--
+>   tests/functional/test_aarch64_virt.py  | 6 +++---
+>   tests/functional/test_virtio_gpu.py    | 9 ++++-----
+>   3 files changed, 9 insertions(+), 10 deletions(-)
+> 
+> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+> index 5b1e6ba04f..2f32742387 100644
+> --- a/tests/functional/qemu_test/testcase.py
+> +++ b/tests/functional/qemu_test/testcase.py
+> @@ -127,8 +127,8 @@ def setUp(self, bin_prefix):
+>           self.arch = self.qemu_bin.split('-')[-1]
+>           self.socketdir = None
+>   
+> -        self.outputdir = os.path.join(BUILD_DIR, 'tests', 'functional',
+> -                                      self.arch, self.id())
+> +        self.outputdir = self.build_file('tests', 'functional',
+> +                                         self.arch, self.id())
+>           self.workdir = os.path.join(self.outputdir, 'scratch')
+>           os.makedirs(self.workdir, exist_ok=True)
+>   
+> diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
+> index 07b78f6a84..29eeb8e32d 100755
+> --- a/tests/functional/test_aarch64_virt.py
+> +++ b/tests/functional/test_aarch64_virt.py
+> @@ -14,7 +14,7 @@
+>   import os
+>   import logging
+>   
+> -from qemu_test import (BUILD_DIR, QemuSystemTest, Asset, exec_command,
+> +from qemu_test import (QemuSystemTest, Asset, exec_command,
+>                          wait_for_console_pattern, get_qemu_img, run_cmd)
+>   
+>   
+> @@ -52,8 +52,8 @@ def test_alpine_virt_tcg_gic_max(self):
+>                            "mte=on,"
+>                            "gic-version=max,iommu=smmuv3")
+>           self.vm.add_args("-smp", "2", "-m", "1024")
+> -        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
+> -                                               'edk2-aarch64-code.fd'))
+> +        self.vm.add_args('-bios', self.build_file('pc-bios',
+> +                                                  'edk2-aarch64-code.fd'))
+>           self.vm.add_args("-drive", f"file={iso_path},media=cdrom,format=raw")
+>           self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
+>           self.vm.add_args('-object', 'rng-random,id=rng0,filename=/dev/urandom')
+> diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
+> index c4562618d9..39dcf376dd 100755
+> --- a/tests/functional/test_virtio_gpu.py
+> +++ b/tests/functional/test_virtio_gpu.py
+> @@ -6,8 +6,7 @@
+>   # later.  See the COPYING file in the top-level directory.
+>   
+>   
+> -from qemu_test import (BUILD_DIR, QemuSystemTest, Asset,
+> -                       wait_for_console_pattern,
+> +from qemu_test import (QemuSystemTest, Asset, wait_for_console_pattern,
+>                          exec_command_and_wait_for_pattern,
+>                          is_readable_executable_file)
+>   from qemu.utils import kvm_available
+> @@ -17,12 +16,12 @@
+>   import subprocess
+>   
+>   
+> -def pick_default_vug_bin():
+> +def pick_default_vug_bin(test):
+>       relative_path = "./contrib/vhost-user-gpu/vhost-user-gpu"
+>       if is_readable_executable_file(relative_path):
+>           return relative_path
 
+I wonder whether we should drop the above two lines of special casing and 
+always use the code below instead?
+
+> -    bld_dir_path = os.path.join(BUILD_DIR, relative_path)
+> +    bld_dir_path = test.build_file(relative_path)
+
+... then you could also get rid of the hard-coded slashes in relative_path?
+
+>       if is_readable_executable_file(bld_dir_path):
+>           return bld_dir_path
+>   
+> @@ -85,7 +84,7 @@ def test_vhost_user_vga_virgl(self):
+>           # FIXME: should check presence of vhost-user-gpu, virgl, memfd etc
+>           self.require_accelerator('kvm')
+>   
+> -        vug = pick_default_vug_bin()
+> +        vug = pick_default_vug_bin(self)
+>           if not vug:
+>               self.skipTest("Could not find vhost-user-gpu")
+>   
+
+Anyway:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
