@@ -4,98 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22342D78323
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A61DD78323
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Yc-00014O-4w; Mon, 02 Dec 2024 08:33:46 -0500
+	id 1tI6Zr-00059J-2W; Mon, 02 Dec 2024 08:35:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6Gz-0002xM-6F
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:33 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6GY-0003Bd-Kq
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:32 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-382610c7116so2821526f8f.0
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733145245; x=1733750045; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q4kNtCiwJHe+Pk4Qi2sHCtONsH6gpm3d9+pTiscaZow=;
- b=CJKipe4cr5uo13n37A+kP615eP86lXChGTbfyx+j7T9jHnkOkcnPCd9ekigPDtCsG2
- blQncN0AhoJ79arvRkJnVpu3xzoEueaonB56FJz41es/SRaKJJVHAa0z+Bt02sZeokUd
- 9/mgsxp4zxT/bgk0pjnppsODtESfG3wukNLvQZK4niBk0aRUryPESbV6Uyu/fWyYiry0
- LT+eSn8R80HhoCtKySj6B5ttgqA/CDpk4V1QPsyHNVYjmZ25XJJ9C3Hu2CH8HOF3ClUi
- vNV1ilVMW1VB+HqXFCD46+buvDxpX0MnehEQgwlVjCh161sA7KNKa2uVNL6Jv6yg88OT
- Xc/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733145245; x=1733750045;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=q4kNtCiwJHe+Pk4Qi2sHCtONsH6gpm3d9+pTiscaZow=;
- b=mSHS/6tU0sEVU8kYx0ije1+AJSf32o4ECg7k7tjcglPYYYx+BHe/cfnpYX7WznK7X8
- VVIgjfd/mHOVeKGQ+wSCyoQaeFZB79t8IPQBi7GvFo+02xWjfvNP5IU3ygyaT8nX2VJ2
- JD+0j8UXzlFtoBO5e+SuTdskinApqPwuseR3eiTyyT+ha8xE3ccAn1AuExvlOiVANQ1l
- qCzoWJWA1Wapdv+7/XZrBxhaSSOwd4uBOqRcLmcO0rCDiSA25UdJe8AZ5OlaSJD2JL+z
- 4lAnL3iSThHv7r6zbcFBkU4TMCciMCK5GIbjDebOidAjS2LZKb9ZMISXaxkCSe5kPSYq
- KOHA==
-X-Gm-Message-State: AOJu0YznX4xkjjEIDcTbbglIeXh8KywSTqU14pzMwUtke+LItljHvY2k
- dQ7kCwRz6dRXBYaGV0xewcuzojWGzLhIu3Uj4djroG/BMkCTasTyYK20dVh+3RJsStLPnEoApTD
- d
-X-Gm-Gg: ASbGncvWx8dUVO9c0VXFrGVDnkHGrs5Zg3gaG745OTSERxQv6mDIt5mm0T1mH/kG6LX
- KF9adXsSPCaRgWRzpM/5rhfIUrHXUW6HhSJX/Qa9y+uIpIb23UHJ7k2RVOiZP5giwgV5Pg8nUNh
- Zris3bD4OHz042kiyJ/dGIAe8ryVFJsG/UD8l7rQ+nQXiTnEL9QiHpuqDNt+HRYj8t2UgAh0Y0U
- IwdpJWmUEaau/OufgS5CsjTjQkaIX67F+S0MLoV0ClqEE1OIfFyMFQ=
-X-Google-Smtp-Source: AGHT+IGd2Yn0QVxN56A7BlMwFtqVEZnLl3ztItNlndvu0+AAcffqEeZuYQTc1zSsEDdvnH9FAJZOEg==
-X-Received: by 2002:a5d:5983:0:b0:385:f409:b42 with SMTP id
- ffacd0b85a97d-385f4090e8bmr2787900f8f.53.1733145240053; 
- Mon, 02 Dec 2024 05:14:00 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.13.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Dec 2024 05:13:59 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tI6Ln-00081k-S2
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:41 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tI6Lg-0005mX-Nb
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:28 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B2DIY83012846;
+ Mon, 2 Dec 2024 13:20:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=rq8NerJdvkXQsuBr1MGXnTxqN79ZMc4lonX0yPws4+o=; b=
+ oRFzjM3OylhpQ84GYimDxD3twmioTXOVTrGaljPfOKyJGCs8KVajJ4Gzadhnd3AU
+ Q0gH570PFGod3IJAghpa6hmx2KRdu2XgXVPErBasm7MZJrUAVl1SXYneqV4yopQ+
+ lnrLpAFeXZ9bBVRoF7vzWoGjkVSgc7XShl6zjPFBq2b77llv94I4+TVWZgoywVF8
+ B2LSgcIE7h4ypyn+K+nIbgGUMES348mQRJkqA2/VftVJR8k1ZyXeDUoaBEvZG+tH
+ 8NoUcY4CblbMshZ2PlWfhwYP8xk+TtHr7AsSXsj4dXvtkpGRIrwvQfgD9bzYhZhQ
+ Isao3uzbI5xFed+w8Z0w6w==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437s4c3347-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 02 Dec 2024 13:20:21 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 4B2CmKYQ032740; Mon, 2 Dec 2024 13:20:20 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 437s56jtqm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 02 Dec 2024 13:20:20 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCEp032806;
+ Mon, 2 Dec 2024 13:20:19 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 437s56jthv-10; Mon, 02 Dec 2024 13:20:19 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Song Gao <gaosong@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 for-10.0 08/54] target/mips: Set FloatInfZeroNaNRule
- explicitly
-Date: Mon,  2 Dec 2024 13:13:01 +0000
-Message-Id: <20241202131347.498124-9-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
-References: <20241202131347.498124-1-peter.maydell@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V4 09/19] migration: incoming channel
+Date: Mon,  2 Dec 2024 05:20:01 -0800
+Message-Id: <1733145611-62315-10-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2024-12-02_09,2024-12-02_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxlogscore=999
+ spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2411120000 definitions=main-2412020116
+X-Proofpoint-ORIG-GUID: A3pdK6DAAW_0IoLvDL9HdR45Wd6R0WUt
+X-Proofpoint-GUID: A3pdK6DAAW_0IoLvDL9HdR45Wd6R0WUt
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,85 +105,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the FloatInfZeroNaNRule explicitly for the MIPS target,
-so we can remove the ifdef from pickNaNMulAdd().
+Extend the -incoming option to allow an @MigrationChannel to be specified.
+This allows channels other than 'main' to be described on the command
+line, which will be needed for CPR.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- target/mips/fpu_helper.h       |  9 +++++++++
- target/mips/msa.c              |  4 ++++
- fpu/softfloat-specialize.c.inc | 16 +---------------
- 3 files changed, 14 insertions(+), 15 deletions(-)
+ include/migration/misc.h |  2 ++
+ migration/migration.c    | 18 ++++++++++++++----
+ migration/migration.h    |  2 --
+ qemu-options.hx          | 17 +++++++++++++++++
+ system/vl.c              | 35 +++++++++++++++++++++++++++++++++--
+ 5 files changed, 66 insertions(+), 8 deletions(-)
 
-diff --git a/target/mips/fpu_helper.h b/target/mips/fpu_helper.h
-index 7c3c7897b45..be66f2f813a 100644
---- a/target/mips/fpu_helper.h
-+++ b/target/mips/fpu_helper.h
-@@ -28,6 +28,7 @@ static inline void restore_flush_mode(CPUMIPSState *env)
- static inline void restore_snan_bit_mode(CPUMIPSState *env)
- {
-     bool nan2008 = env->active_fpu.fcr31 & (1 << FCR31_NAN2008);
-+    FloatInfZeroNaNRule izn_rule;
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 804eb23..259d4aa 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -106,4 +106,6 @@ bool migration_incoming_postcopy_advised(void);
+ /* True if background snapshot is active */
+ bool migration_in_bg_snapshot(void);
+ 
++bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
++                       Error **errp);
+ #endif
+diff --git a/migration/migration.c b/migration/migration.c
+index 83dabc7..a5cf148 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2046,6 +2046,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+     MigrationState *s = migrate_get_current();
+     g_autoptr(MigrationChannel) channel = NULL;
+     MigrationAddress *addr = NULL;
++    MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
  
      /*
-      * With nan2008, SNaNs are silenced in the usual way.
-@@ -35,6 +36,14 @@ static inline void restore_snan_bit_mode(CPUMIPSState *env)
-      */
-     set_snan_bit_is_one(!nan2008, &env->active_fpu.fp_status);
-     set_default_nan_mode(!nan2008, &env->active_fpu.fp_status);
-+    /*
-+     * For MIPS systems that conform to IEEE754-1985, the (inf,zero,nan)
-+     * case sets InvalidOp and returns the default NaN.
-+     * For MIPS systems that conform to IEEE754-2008, the (inf,zero,nan)
-+     * case sets InvalidOp and returns the input value 'c'.
-+     */
-+    izn_rule = nan2008 ? float_infzeronan_dnan_never : float_infzeronan_dnan_always;
-+    set_float_infzeronan_rule(izn_rule, &env->active_fpu.fp_status);
- }
+      * Having preliminary checks for uri and channel
+@@ -2056,12 +2057,21 @@ void qmp_migrate(const char *uri, bool has_channels,
+     }
  
- static inline void restore_fp_status(CPUMIPSState *env)
-diff --git a/target/mips/msa.c b/target/mips/msa.c
-index 9dffc428f5c..cc152db27f9 100644
---- a/target/mips/msa.c
-+++ b/target/mips/msa.c
-@@ -74,4 +74,8 @@ void msa_reset(CPUMIPSState *env)
- 
-     /* set proper signanling bit meaning ("1" means "quiet") */
-     set_snan_bit_is_one(0, &env->active_tc.msa_fp_status);
+     if (channels) {
+-        /* To verify that Migrate channel list has only item */
+-        if (channels->next) {
+-            error_setg(errp, "Channel list has more than one entries");
++        for ( ; channels; channels = channels->next) {
++            MigrationChannelType type = channels->value->channel_type;
 +
-+    /* Inf * 0 + NaN returns the input NaN */
-+    set_float_infzeronan_rule(float_infzeronan_dnan_never,
-+                              &env->active_tc.msa_fp_status);
++            if (channelv[type]) {
++                error_setg(errp, "Channel list has more than one %s entry",
++                           MigrationChannelType_str(type));
++                return;
++            }
++            channelv[type] = channels->value;
++        }
++        addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
++        if (!addr) {
++            error_setg(errp, "Channel list has no main entry");
+             return;
+         }
+-        addr = channels->value->addr;
+     }
+ 
+     if (uri) {
+diff --git a/migration/migration.h b/migration/migration.h
+index 0956e92..5cd0f29 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -522,8 +522,6 @@ bool check_dirty_bitmap_mig_alias_map(const BitmapMigrationNodeAliasList *bbm,
+                                       Error **errp);
+ 
+ void migrate_add_address(SocketAddress *address);
+-bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
+-                       Error **errp);
+ int foreach_not_ignored_block(RAMBlockIterFunc func, void *opaque);
+ 
+ #define qemu_ram_foreach_block \
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 02b9118..fab50ce 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4937,10 +4937,17 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
+     "-incoming exec:cmdline\n" \
+     "                accept incoming migration on given file descriptor\n" \
+     "                or from given external command\n" \
++    "-incoming @MigrationChannel\n" \
++    "                accept incoming migration on the channel\n" \
+     "-incoming defer\n" \
+     "                wait for the URI to be specified via migrate_incoming\n",
+     QEMU_ARCH_ALL)
+ SRST
++The -incoming option specifies the migration channel for an incoming
++migration.  It may be used multiple times to specify multiple
++migration channel types.  The channel type is specified in @MigrationChannel,
++and is 'main' for all other forms of -incoming.
++
+ ``-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]``
+   \ 
+ ``-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]``
+@@ -4960,6 +4967,16 @@ SRST
+     Accept incoming migration as an output from specified external
+     command.
+ 
++``-incoming @MigrationChannel``
++    Accept incoming migration on the channel.  See the QAPI documentation
++    for the syntax of the @MigrationChannel data element.  For example:
++    ::
++
++        -incoming '{"channel-type": "main",
++                    "addr": { "transport": "socket",
++                              "type": "unix",
++                              "path": "my.sock" }}'
++
+ ``-incoming defer``
+     Wait for the URI to be specified via migrate\_incoming. The monitor
+     can be used to change settings (such as migration parameters) prior
+diff --git a/system/vl.c b/system/vl.c
+index 4151a79..2c24c60 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -123,6 +123,7 @@
+ #include "qapi/qapi-visit-block-core.h"
+ #include "qapi/qapi-visit-compat.h"
+ #include "qapi/qapi-visit-machine.h"
++#include "qapi/qapi-visit-migration.h"
+ #include "qapi/qapi-visit-ui.h"
+ #include "qapi/qapi-commands-block-core.h"
+ #include "qapi/qapi-commands-migration.h"
+@@ -159,6 +160,7 @@ typedef struct DeviceOption {
+ static const char *cpu_option;
+ static const char *mem_path;
+ static const char *incoming;
++static MigrationChannelList *incoming_channels;
+ static const char *loadvm;
+ static const char *accelerators;
+ static bool have_custom_ram_size;
+@@ -1821,6 +1823,35 @@ static void object_option_add_visitor(Visitor *v)
+     QTAILQ_INSERT_TAIL(&object_opts, opt, next);
  }
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 2023b2bd632..db9a466e05b 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -489,21 +489,7 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
-         /*
-          * Temporarily fall back to ifdef ladder
-          */
--#if defined(TARGET_MIPS)
--        if (snan_bit_is_one(status)) {
--            /*
--             * For MIPS systems that conform to IEEE754-1985, the (inf,zero,nan)
--             * case sets InvalidOp and returns the default NaN
--             */
--            rule = float_infzeronan_dnan_always;
--        } else {
--            /*
--             * For MIPS systems that conform to IEEE754-2008, the (inf,zero,nan)
--             * case sets InvalidOp and returns the input value 'c'
--             */
--            rule = float_infzeronan_dnan_never;
--        }
--#elif defined(TARGET_SPARC) || \
-+#if defined(TARGET_SPARC) || \
-     defined(TARGET_XTENSA) || defined(TARGET_HPPA) || \
-     defined(TARGET_I386) || defined(TARGET_LOONGARCH)
-         /*
+ 
++static void incoming_option_parse(const char *str)
++{
++    MigrationChannel *channel;
++
++    if (str[0] == '{') {
++        QObject *obj = qobject_from_json(str, &error_fatal);
++        Visitor *v = qobject_input_visitor_new(obj);
++
++        qobject_unref(obj);
++        visit_type_MigrationChannel(v, "channel", &channel, &error_fatal);
++        visit_free(v);
++    } else if (!strcmp(str, "defer")) {
++        channel = NULL;
++    } else {
++        migrate_uri_parse(str, &channel, &error_fatal);
++    }
++
++    /* New incoming spec replaces the previous */
++
++    if (incoming_channels) {
++        qapi_free_MigrationChannelList(incoming_channels);
++    }
++    if (channel) {
++        incoming_channels = g_new0(MigrationChannelList, 1);
++        incoming_channels->value = channel;
++    }
++    incoming = str;
++}
++
+ static void object_option_parse(const char *str)
+ {
+     QemuOpts *opts;
+@@ -2730,7 +2761,7 @@ void qmp_x_exit_preconfig(Error **errp)
+     if (incoming) {
+         Error *local_err = NULL;
+         if (strcmp(incoming, "defer") != 0) {
+-            qmp_migrate_incoming(incoming, false, NULL, true, true,
++            qmp_migrate_incoming(NULL, true, incoming_channels, true, true,
+                                  &local_err);
+             if (local_err) {
+                 error_reportf_err(local_err, "-incoming %s: ", incoming);
+@@ -3477,7 +3508,7 @@ void qemu_init(int argc, char **argv)
+                 if (!incoming) {
+                     runstate_set(RUN_STATE_INMIGRATE);
+                 }
+-                incoming = optarg;
++                incoming_option_parse(optarg);
+                 break;
+             case QEMU_OPTION_only_migratable:
+                 only_migratable = 1;
 -- 
-2.34.1
+1.8.3.1
 
 
