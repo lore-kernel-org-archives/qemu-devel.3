@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB71E69E90
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 20:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03FF3E69E93
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 20:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIDDo-00022E-Sz; Mon, 02 Dec 2024 15:40:45 -0500
+	id 1tIDGS-00045H-Px; Mon, 02 Dec 2024 15:43:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIDDi-00021z-Vt
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 15:40:39 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIDGR-00044y-93
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 15:43:27 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIDDh-0005cM-GH
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 15:40:38 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5ced377447bso7496690a12.1
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 12:40:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIDGP-0006Sy-S4
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 15:43:27 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-aa549d9dffdso772127466b.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 12:43:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733172035; x=1733776835; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BuTlSgZfbP0ZAQXYagEGb5OS1Rg8bdaBraFE+cBHSvA=;
- b=S6aHNrHvjmSIeO0VaJZtu2YwxhgZ7Ni/GV/kzbDcK+jkhpeJ8KHL+nWmg4+ysN5RZ2
- s0f9cTJsgVTTE9a5ajp+zceOROIP2n1tZSY7XfZw62NU5BssOLYexxcQbHwKkegvoXNr
- z4iYA3P9e37Vt6A1IegO+tUEklIDPQ9gaJFoWn0cYF0AvQQlUrMpo83vFBo1om4gGvI/
- FmC6T+GMM9mWRxnBxEA9qY6SDj9zIU6gm5WwnBLdDmXEya3rq5IvyT/HvgkX0NaF2fFi
- cpWHsboBk5nsak1aSybSDe58xQACgTDSEekdiPPebvHUDI48G8v/ewkcfbPjC7vlyNld
- aYyQ==
+ d=linaro.org; s=google; t=1733172204; x=1733777004; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rT3mm95OmWnv3iBreJ/r0Ks3/htZcxapOJ2qRIMwQQg=;
+ b=rqEWZRG9TIXihQ+ZdTSMxSx0N+RtLm4ZkuLKQdTXTdzD6+J4P+V/cpHjIPIebiO+16
+ PAaArK1vBY4u/ZgpaxHRAVKZkDarBU6BqeSUZ6bby7VSfSIt3Q9LWH9fsr9b+WegYy9n
+ LBpg+86ToYhsvBT4LCbYt5ynkfIlPNHf7sX2PX5gTBjcja7J0LMgRiYDQCtaTC+2g/un
+ ubr8cIXen6y7jS6lm07gy/gtGIINPyRuxLS802tiGYFHNvmOnYq4fYhKWU01ZwyhyCTN
+ KMh64gTAgCO+144ahQyKtWUsGN7GlO48xsbWERVPZeFLrY+A9gfiPu8ov/I7BhcCLCxX
+ jRQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733172035; x=1733776835;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BuTlSgZfbP0ZAQXYagEGb5OS1Rg8bdaBraFE+cBHSvA=;
- b=BIJu5jatfYPPWu+rZoUfQ+zHnn/m4kcw+u7r8MdtWmuBDUkW7g/04q9TWOdw3/hvqp
- yYmAkEInbdKCLcU0IbpD02gsBhz8csq7CRFrqQ3928PxX//mEWtAucgY7+dMJkkwfQwE
- bkefLcXBfgr/Xxjdhw6UGtctAwqY6OPJs0hv6ON1mizmepnJQSpLETMFMKTeFBVTqHbI
- yGr9WE2zm5hVYwTWulSbCnmvbmbo/MSgqRu0EYr1OvQ1IEgs7o9na70fezChe+OdMiU/
- V8z/BEnyzmDeyV30Ht2HcPqp4GlRHef8nXi+oXaY9eBqqaEdoU97yeSGDmtNhPowAG7F
- dyHg==
-X-Gm-Message-State: AOJu0YyK1KnetM5+nqamDtdDQTXwToogcdbQ86dcQtYEeMEOmeYSSWNg
- OU6R4ozuC2C66NA1SrEx/Tr+hJTmSfxjhzCFdWHgmWYdXWRb2xueq816xd8VgErxKkAYHQrDjJy
- i4Ts=
-X-Gm-Gg: ASbGnctJOoi8FgWy3rFH5QxsmpeErl3RTseqMyXl4UDTp9NR84T36dudWTfFbOgaPl/
- TNopIiLBbiC3EzE85hv/Qa8ZzJPdmbpGAA9m4PNXGx7RrR3g+eT0IhHoLe1stT0v3AbUXm4hPIZ
- 0JeIfTtIgEHSHTrubI9GJEuJxcaTyfnVUGygYmJr99CTCkiiqp5jmxGFFKeGp2QSwoIZfU4p6/b
- RRabqFtwTTBOLUPQXVCCOe6Z3mmsg9Y6h+Eh3HM4cXdIEHrKZQUVUN7fs01jupZlVRZgaRx
-X-Google-Smtp-Source: AGHT+IF54HKZJFDWztzWc40kpidTw4GKOYC29LzmdfOoWAddeOSfEek+1U8U4ljojmBSb9aVSgWNGQ==
-X-Received: by 2002:a05:6402:1f0c:b0:5d0:c9e6:309d with SMTP id
- 4fb4d7f45d1cf-5d0c9e6323cmr13451504a12.1.1733172035517; 
- Mon, 02 Dec 2024 12:40:35 -0800 (PST)
-Received: from localhost.localdomain ([176.176.160.129])
+ d=1e100.net; s=20230601; t=1733172204; x=1733777004;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rT3mm95OmWnv3iBreJ/r0Ks3/htZcxapOJ2qRIMwQQg=;
+ b=Yd1lhQ/JNFk8mrHbV9vN3oD/KHgGCvVSMiq/oNUXhd8ySGM9Js7/WxZZSEGHdpzODg
+ asFa+gTvNOwSGl55mobnJ7X1VRANVvDBCSHULj8+JY4aB5UN2vHwuSo4HdUDKcxU569P
+ eHO2vM8bQHyAUAxh88TYi9o3QMjo+UL8zl5vazh3hW05E+rFZT8Rh7qUWdOPOdwE6YSl
+ a2Sm5/kuw6uHzFb4eRWZCR9wC36yyAEsCNzM7uMnZZqVrAvH02wh5AP6MRTr7HlInEuD
+ r/ZmKaozLzRAgmbCKRf+WU8XPBwIaKU/P+C01hxYh3PVtyC2VVV122O3t3LjtURFY0r9
+ lIYw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzUewwof1x7QwWWKXcgHPCHW0wnBeuATa+k+QyfenY9GTxcOW9BoivYvKspKKHgODT9PLpoeVgJdIe@nongnu.org
+X-Gm-Message-State: AOJu0YxAirH0Za5eWNWBY1z/F+gEU1b9h4RECJBksZ622bhn9LqUHfB/
+ iZlpVOUMXxmogxZVd5NNIWjYkAO1AHQpkPcLVejDMfKHGR1+2pkM0CsTa4n8T74=
+X-Gm-Gg: ASbGnctSe4RrrhBPes3LFLjm17cebQ04/BtfmCqjVP+wwfVbcWjg4J2Yf3BX3bt058M
+ hQJpubtj+lYnKNHJxTJpMXKjZssDfMY0K3T8S6OysdIIGhZQlAQi5ZmgJd4xZy5FBgC6Jksdkx/
+ fO+JVoXWsy0IcZjwpgnmnojr9cDL7OqxsIxqIwxxFazYyEx0kCIJjeKKIgaLdASva9SBDKUl9sU
+ o561jbcSZqM80j8eXOyJfDg7RzUKnxhepnjF7cxy+4Jm7Caye2sWPNgtdTbl0309g==
+X-Google-Smtp-Source: AGHT+IG/KfbCR0CKU3zFbS3tNFfc7wgq2N6XhxQRAsG1c/mzMAGGBTbwSz/URD69jDMpu4SVG1rK3Q==
+X-Received: by 2002:a17:906:c395:b0:aa5:27d4:980a with SMTP id
+ a640c23a62f3a-aa581081aeamr2061707266b.49.1733172204036; 
+ Mon, 02 Dec 2024 12:43:24 -0800 (PST)
+Received: from [192.168.69.223] ([176.176.160.129])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d0eb2d116csm1578300a12.61.2024.12.02.12.40.33
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Dec 2024 12:40:34 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.2? 2/2] tests/functional/test_empty_cpu_model: Use QTest
- accelerator
-Date: Mon,  2 Dec 2024 21:40:19 +0100
-Message-ID: <20241202204020.55665-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241202204020.55665-1-philmd@linaro.org>
-References: <20241202204020.55665-1-philmd@linaro.org>
+ a640c23a62f3a-aa59994b837sm539297766b.176.2024.12.02.12.43.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Dec 2024 12:43:23 -0800 (PST)
+Message-ID: <014e9959-4995-4bf2-9a2c-ace318673804@linaro.org>
+Date: Mon, 2 Dec 2024 21:43:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] MAINTAINERS: update email addr for Brian Cain
+To: Brian Cain <bcain@quicinc.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
+ quic_mathbern@quicinc.com, stefanha@redhat.com, ale@rev.ng, anjo@rev.ng,
+ quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com, alex.bennee@linaro.org,
+ quic_mburton@quicinc.com, Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20241123164641.364748-1-bcain@quicinc.com>
+ <20241123164641.364748-2-bcain@quicinc.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241123164641.364748-2-bcain@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,36 +103,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When testing with a HVF-only binary, we get:
+On 23/11/24 17:46, Brian Cain wrote:
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> 
+> Also: add mapping for "quic_bcain@quicinc.com" which was ~briefly
+> used for some replies to mailing list traffic.
+> 
+> Signed-off-by: Brian Cain <bcain@quicinc.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   .mailmap    | 2 ++
+>   MAINTAINERS | 2 +-
+>   2 files changed, 3 insertions(+), 1 deletion(-)
 
-   3/12 qemu:func-quick+func-aarch64 / func-aarch64-empty_cpu_model                              ERROR            0.62s   exit status 1
-  stderr:
-  Traceback (most recent call last):
-    File "tests/functional/test_empty_cpu_model.py", line 21, in test
-      self.assertRegex(self.vm.get_log(), r'-cpu option cannot be empty')
-  AssertionError: Regex didn't match: '-cpu option cannot be empty' not found in 'qemu-system-aarch64: No accelerator selected and no default accelerator available\n'
-
-Explicit the QTest accelerator to be able to run the test.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/functional/test_empty_cpu_model.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/tests/functional/test_empty_cpu_model.py b/tests/functional/test_empty_cpu_model.py
-index 0081b06d85a..16ce1892d84 100755
---- a/tests/functional/test_empty_cpu_model.py
-+++ b/tests/functional/test_empty_cpu_model.py
-@@ -13,7 +13,7 @@
- 
- class EmptyCPUModel(QemuSystemTest):
-     def test(self):
--        self.vm.add_args('-S', '-display', 'none', '-machine', 'none', '-cpu', '')
-+        self.vm.add_args('-S', '-display', 'none', '-machine', 'none,accel=qtest', '-cpu', '')
-         self.vm.set_qmp_monitor(enabled=False)
-         self.vm.launch()
-         self.vm.wait()
--- 
-2.45.2
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
