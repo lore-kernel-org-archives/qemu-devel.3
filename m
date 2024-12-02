@@ -4,91 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F1A6E69E82
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 18:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E38FDE69E82
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 18:23:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIAtR-0008Lo-O4; Mon, 02 Dec 2024 13:11:33 -0500
+	id 1tIB4w-0001OG-VL; Mon, 02 Dec 2024 13:23:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tIAtQ-0008LT-E4
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 13:11:32 -0500
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tIB4v-0001Ny-Bd
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 13:23:25 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tIAtO-0004gD-8E
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 13:11:32 -0500
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-21568166415so17189335ad.2
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 10:11:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tIB4t-0007l9-MT
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 13:23:25 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-385dbf79881so2203991f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 10:23:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733163088; x=1733767888; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=I3ZdXvs0VzUrGWJT20O6Ep+wHnMXQP5EJfdF7Vv6R8U=;
- b=OHqArBYfDJtHXHIoXcIp57Jki5JxGFPe8fEB+Q9b130OFsNdPouU8ecDxBqolYwxoD
- xsdiYJ7hPEo0eM5mKtvT/nXNfZqUJ8CsBp3sdeRS8X1Kl2bxLbJsiKGEn7KrUD9KQasQ
- mXtCNTBCg/fqVgWC0LgE2uEJmYLcRUydm64fN8PaXwKNjezL/p6GitQnDqU5G9iHhJpL
- sCMvZqokYda77fIlpJMd85z950Av+BKAUX02bx4oAsnniAr1+PiWPPIFkZ7PPILxboVj
- cuYJopRWPel4thcog4Edxz+DAd3yoZor2OmjMwlGq8E4QhLV9qOCfY5g9xn98UVCP3py
- qtng==
+ d=linaro.org; s=google; t=1733163799; x=1733768599; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9BLqvomvrOhRVHWAomKgFPlzcG1WvnnH7KNzYDnVq1k=;
+ b=ARFvDpZAn+2Vvdqk4xK1M1r+dwZvkmtHLmpHRKCnSmNMV9I26NMJf8Pks3MOHYT6JN
+ 8bV82wvl6byLwKxQ4IuQa8R2dzdZQjDCvs0iOksaSSfxc5SBS9QIUOeyY4QwIZndoEVn
+ W2OI/namy3g0FQwqwA+iJDwnnsETpJQ405aa9wi98/QimorizCbk14cd9FxKxNksaJA4
+ bhybY6tjFn+8A5X44qb8blaP91Nq34KvL7Giwy0f2d64JqaiMJNlv1CN9swB7Z+laQy2
+ K/vT+q/xRoEmSD95CPR3PB/+7OLvAZ30h+56ea9SCqzJynFXme59AJMP7rejZ4wKIMe4
+ R4ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733163088; x=1733767888;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I3ZdXvs0VzUrGWJT20O6Ep+wHnMXQP5EJfdF7Vv6R8U=;
- b=opYZOg+rZnE8pAkhXS3tFCHlX77x+OjLM3fzE7IE1yvQ/2McHz+bZCtaOnmQsf9Xld
- mclDcw3Gqod2PIDWWSX6LM1EkT8UsDKuvZCHcYNBRKElOZOx9+IK8AU9aYsPm3Q25q5X
- iYNgtXMkXoszvlG468Y5fhdEOtBf89Q7uP9JOmlm46VbC3r6AwzloU6dq4vk7J6Dg6hK
- uXKZdYUBDMWImvBJBqTHMEyZPTN9VCK0UjQTT06yx/022Sp6QHe4BHF5+cwi05Nh+r56
- 6SrdUM3ryuFcqbh1Mi47+l7pu1yXZebjCraUlxtPyBS70JyquOeuiZ6fJsay4tqDZjVc
- 2HZA==
+ d=1e100.net; s=20230601; t=1733163799; x=1733768599;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9BLqvomvrOhRVHWAomKgFPlzcG1WvnnH7KNzYDnVq1k=;
+ b=kRtXpYNWgmumdq1p5d2GG673DglIP+GPhKTJ7gWaYWjnTqfoVA8m5/03bziZn6K7Kh
+ tkJcbZQ1HkP22wyEKgchh1RVwnF+jM3BREMZ5Em3nONMVxyRJ5fNLg1sY/aEzsIza7ce
+ ZJmNyRTkt6nJw6k/KGfoQCBT2IcNUPiBNwAxTVjyQ5/9HmICBOw2oJr4aigYeS82MddK
+ gka0RFj2+gbWSbVl5CD96qr6nHjBdYxPVjUzkvdlSmiYSWMqPbvSqtJ9MACe8Ed17E0p
+ fYIvoEM61FjDueowu763hranrKN+muG62zsUm3992MA7RrAgC+QHr/ts8fEGx3grk0se
+ 6hvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUIqangL+kpB/ajFCQpKmw+SEDVBPFy2h7ngzkj20cjK5wFRMNn86FK7y+VwBo3Mh0sqqixyr1fW9s/@nongnu.org
-X-Gm-Message-State: AOJu0Yz0eVIaXPvg63/aLKhNHTwGZ8kP0+sSRlazWBgEU5vFsw9mFgSq
- qfrW9UvpWAG3zdWx4sLfm1vH1vF4sftES2Nn7kYW9xr/vyRlook=
-X-Gm-Gg: ASbGncs8PLeILA0SkVuLguhE30ZnxXAXxDhKS+OYeYqY+rLehc/oQLTCcTgnAaXQyGa
- DLx/bF/1OpZZNyrk4w1kw7cIMmS4iVyhXVQeTlHfnI+BO7Yp6cfpWzZiLst4rxafAnjGkMXon2j
- CYu2mcjM9Z0ZcpJFnnNpK3e/IhBbA9qQmEIcmEo6HZhiyysqsNGjmFVt9eSkQXhZVwJskouWSKR
- dlRugJp1JHSM6DnYu0/pA5iuwGm0fCrXQa/edBVj6cUrECFcvhRM+M=
-X-Google-Smtp-Source: AGHT+IFplwnKBMnCzdA6Y5NQBNFbtIerDci/bI0Cjsd4X8VivPY6MPLV27Efv6LWAbNATs8iHJQ7Aw==
-X-Received: by 2002:a17:903:2308:b0:215:5aba:7a8f with SMTP id
- d9443c01a7336-2155aba8f8amr172157555ad.46.1733163087620; 
- Mon, 02 Dec 2024 10:11:27 -0800 (PST)
-Received: from [192.168.0.163] ([116.231.112.6])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215a6fd6f57sm13373215ad.127.2024.12.02.10.11.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 10:11:27 -0800 (PST)
-Message-ID: <5bd50f06-9c5d-4747-a793-43fad8400f50@gmail.com>
-Date: Tue, 3 Dec 2024 02:11:24 +0800
+ AJvYcCU4nMfhWRaqG36qvqta7W6KwxbQaZqt4A9Sa15CPK1JhwjQyUTsa2DJmJyufNLB59fTzcm8uitro1vw@nongnu.org
+X-Gm-Message-State: AOJu0Yzk+Kb7l2+IoWBcTfDifYewoDnf5n/y6oPHeqWiY0oN00WTtWrN
+ oYDleV+j0O43xP+GC7WsnvMNTIXE3zWky+Scpgud4kLM7rzEywP0yfGsgCRk5Uc=
+X-Gm-Gg: ASbGnct1rpqoPOUWjBcEleDrvBA/Z0iliEYgkad0zRTsQM0AueV1Ys4WAnAT0oZ+gMC
+ 1ARlNAlrN0tX3p35p4tEUfm3y9O9N/mT1xKf8fiTpHeTlGX7AcAinpHiaK8bvIQ2cPhROv+8HKe
+ f+vmAforttI1R0NgU6hBvuP86RsWFRsBqRAbMqPl0WUe7RUrJx6uuRPXg+tmqwz50BBDeuEUGvY
+ LCAW7+yaqFv59QaqpOKtFC0gDj7+YG0qeyh2aqzEX13IIyH
+X-Google-Smtp-Source: AGHT+IG9uq3KCQAuJG1+IYQ5Ic8K44TjqEMsJMjld2Zi35e8jHwkugaShR530KezSDPGomA0+vU6rg==
+X-Received: by 2002:a05:6000:401e:b0:385:f89a:401c with SMTP id
+ ffacd0b85a97d-385f89a40f4mr2703726f8f.17.1733163799441; 
+ Mon, 02 Dec 2024 10:23:19 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385d7f103e0sm11608604f8f.19.2024.12.02.10.23.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Dec 2024 10:23:18 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id ED1A25F767;
+ Mon,  2 Dec 2024 18:23:17 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  Marcin Juszkiewicz
+ <marcin.juszkiewicz@linaro.org>,  qemu-devel@nongnu.org,  =?utf-8?Q?C?=
+ =?utf-8?Q?=C3=A9dric?= Le Goater
+ <clg@kaod.org>,  Troy Lee <leetroy@gmail.com>,  Alistair Francis
+ <alistair@alistair23.me>,  Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,  qemu-arm@nongnu.org,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Steven Lee <steven_lee@aspeedtech.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,  Joel Stanley
+ <joel@jms.id.au>,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v2] tests/functional/aarch64: add tests for FEAT_RME
+In-Reply-To: <fd7ad48e-1e72-4735-8064-7039eedc00ae@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 2 Dec 2024 09:31:24 -0800")
+References: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
+ <4b3180bd-8054-4431-a594-0445ce4837aa@linaro.org>
+ <5620efa2-98c6-4613-b866-67e91ac6acf8@linaro.org>
+ <CAFEAcA-xa1AKf2GAv7go5wdu+Td=4jf7Nriin-Oe3S6qEV6X0g@mail.gmail.com>
+ <fd7ad48e-1e72-4735-8064-7039eedc00ae@linaro.org>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Mon, 02 Dec 2024 18:23:17 +0000
+Message-ID: <87ser6c5be.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] vfio/igd: add x-igd-gms option back to set DSM region
- size for guest
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <C.Koehne@beckhoff.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "clg@redhat.com" <clg@redhat.com>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>
-References: <20241201160938.44355-1-tomitamoeko@gmail.com>
- <20241201160938.44355-9-tomitamoeko@gmail.com>
- <352b53107d7d6666f7d307afebb81da744690e2f.camel@beckhoff.com>
-Content-Language: en-US
-From: Tomita Moeko <tomitamoeko@gmail.com>
-In-Reply-To: <352b53107d7d6666f7d307afebb81da744690e2f.camel@beckhoff.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,81 +116,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
+> On 12/2/24 02:57, Peter Maydell wrote:
+>> On Sun, 1 Dec 2024 at 18:09, Pierrick Bouvier
+>> <pierrick.bouvier@linaro.org> wrote:
+>>>
+>>> Hi Marcin,
+>>>
+>>> On 12/1/24 05:34, Marcin Juszkiewicz wrote:
+>>>> W dniu 28.11.2024 o 22:37, Pierrick Bouvier pisze:
+>>>>> This boot an OP-TEE environment, and launch a nested guest VM inside =
+it
+>>>>> using the Realms feature. We do it for virt and sbsa-ref platforms.
+>>>>>
+>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>
+>>>>> diff --git a/tests/functional/meson.build b/tests/functional/meson.bu=
+ild
+>>>>> index 5c048cfac6d..b975a1560df 100644
+>>>>> --- a/tests/functional/meson.build
+>>>>> +++ b/tests/functional/meson.build
+>>>>> @@ -13,6 +13,8 @@ endif
+>>>>>     test_timeouts =3D {
+>>>>>       'aarch64_aspeed' : 600,
+>>>>>       'aarch64_raspi4' : 480,
+>>>>
+>>>>> +  'aarch64_rme_virt' : 720,
+>>>>
+>>>> Took 2974.95s on M1 Pro macbook.
+>>>>
+>>>>> +  'aarch64_rme_sbsaref' : 720,
+>>>>
+>>>> This one needed 2288.29s.
+>>>>
+>>>>>       'aarch64_sbsaref_alpine' : 720,
+>>>>
+>>>> Have to check cause timed out.
+>>>>
+>>>>>       'aarch64_sbsaref_freebsd' : 720,
+>>>>
+>>>> 331.65s
+>>>>
+>>>> So RME tests probably need longer timeouts or would not run at all.
+>>>>
+>>>
+>>> By any chance, are you running those tests in debug mode?
+>>> It seems to me that CI is running functional tests with optimized
+>>> builds, so I'm not sure we want to support debug "times" here.
+>> We do need to support debug times, because a common developer
+>> use case is "doing a debug build, run 'make check-functional'
+>> to check whether anything is broken. The debug times also
+>> are useful because the CI runners can have highly variable
+>> performance -- if a test is slow enough to hit the timeout
+>> for a debug build locally, it's probably going to also hit
+>> the timeout at least sometimes in CI.
+>>=20
+>
+> I understand the scenario, but given how slow debug builds are, it
+> would probably be faster to advise developer to recompile in release
+> mode.
+> The overall time of compile + test is slower than waiting for debug.
+>
+> Beyond using a debugger, what is the advantage to compile with -O0?
 
-On 12/2/24 17:48, Corvin Köhne wrote:
-> On Mon, 2024-12-02 at 00:09 +0800, Tomita Moeko wrote:
->> ﻿CAUTION: External Email!!
->> DSM region is likely to store framebuffer in Windows, a small DSM
->> region may cause display issues (e.g. half of the screen is black).
->> By default, QEMU uses host's original value, which is determined by
->> DVMT Pre-Allocated option in Intel FSP of host bios. Some vendors
->> do not expose this config item to users. In such cases, x-igd-gms
->> option can be used to manually set the data stolen memory size for
->> guest.
->>
->> When DVMT Pre-Allocated option is available in host BIOS, user should
->> set DSM region size there instead of using x-igd-gms option.
->>
->> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
->> ---
->>  hw/vfio/igd.c | 17 +++++++++++++++++
->>  1 file changed, 17 insertions(+)
->>
->> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
->> index 3fd822241d..614223123b 100644
->> --- a/hw/vfio/igd.c
->> +++ b/hw/vfio/igd.c
->> @@ -712,6 +712,23 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->>  
->>      QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
->>  
->> +    /*
->> +     * Allow user to override dsm size using x-igd-gms option, in multiples of
->> +     * 32MiB. This option should only be used when the desired size cannot be
->> +     * set from DVMT Pre-Allocated option in host BIOS.
->> +     */
->> +    if (vdev->igd_gms) {
->> +        if (gen < 8 && vdev->igd_gms <= 0x10) {
->> +            gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
->> +            gmch |= vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
->> +        } else if (vdev->igd_gms <= 0x40) {
->> +            gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
->> +            gmch |= vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
->> +        } else {
->> +            error_report("Unsupported IGD GMS value 0x%x", vdev->igd_gms);
->> +        }
->> +    }
->> +
->>      ggms_size = igd_gtt_memory_size(gen, gmch);
->>      gms_size = igd_stolen_memory_size(gen, gmch);
->>  
-> 
-> As mentioned in my commit removing the x-igd-gms option, I've seen issues on Windows guest when
-> setting a wrong gms value. I can try to recheck this.
-> 
+--enable-debug
 
-What's the windows GPU driver version you're using? I am using latest
-32.0.101.6299. My DVMT Pre-allocated is 64M in BIOS. When using
-default value, with a 4K display, strange behaviors were discovered
-during my tests, like the lower half (actuall about 1/3) of the
-screen is black, 3D mark only runs at 2560*1440 and the refresh rate
-was limited to 30Hz.  Restarting guest won't fix this, but when I
-forcefully set the GMS size in emulated GGC to 128M, these issue
-disappears. That's why I suspect DSM may contain framebuffer.
+  - enables -00 with -g3 for symbols
+  - and enables additional checks to validate TCG
 
-Per my result, it seems windows guest is using the DSM as something
-like dedicated VRAM, and GPU itself can handle guest physical address
-internally.
+You can use --enable-debug-info for just debug info without the overhead.
 
-The OVMF firmware I use is
-https://github.com/tomitamoeko/edk2/commits/igd-pt-adl/
-with GOP driver extracted from bios image from motherboard vendor.
+>
+>> thanks
+>> -- PMM
 
-I'm also wondering why the BAR4 quirks were implemented before, GTT
-are not located in DSM, but in GGMS size below BDSM. This region is
-inaccessible directly, reading it via /dev/mem immediately hangs the
-system. The only way to access GTT is via MMIO BAR0.
-
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
