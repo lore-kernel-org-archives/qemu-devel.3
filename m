@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBB5D78337
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 17:13:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7D5D78339
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 17:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI9zV-0004WH-Fq; Mon, 02 Dec 2024 12:13:45 -0500
+	id 1tIA2j-0005Ns-G5; Mon, 02 Dec 2024 12:17:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tI9zT-0004W4-VM
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:13:44 -0500
-Received: from mail-qv1-xf2f.google.com ([2607:f8b0:4864:20::f2f])
+ id 1tIA2h-0005Nj-Sc
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:17:03 -0500
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tI9zS-00059J-9p
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:13:43 -0500
-Received: by mail-qv1-xf2f.google.com with SMTP id
- 6a1803df08f44-6d8adbda583so4756696d6.0
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 09:13:41 -0800 (PST)
+ id 1tIA2g-0006Df-AD
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:17:03 -0500
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-4668978858aso32329711cf.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 09:17:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733159621; x=1733764421; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733159820; x=1733764620; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=L5YiWs8jxur0kYUMgy9gwjB23eVA0y2WWsEd6C/VWvU=;
- b=I2Nqrh9IWIoavaXNkDBD3FKIUXDP+MUHF0gBjqVxFfS7CG8gyR2qlXsjFY0hdVk86g
- WMnZHTtx2b9zTe5eoFIjFa1Z7UBiKSKezgSjUTsuWs2hgGwqYO43pqJtd9t9QYG/60yq
- IxBsf96koG5LoUsdQmB5uEAuJnHu5GKe30000ytte51+prciAUVjyv81EWMWKJyIPErW
- FPhVRnf+5ieJ1+/fcTsBJMdXNmAlsV29qOUcZTfUjlDLbQoHriteRLHy5sFfKx9S67Dk
- odhQ8Pyk3M6e8u8X9vlvwOdgaTp0BOhf2b8fYVMp1yodyCaU3okSoFaaI+aUb1r/h9vK
- bbuQ==
+ bh=VaOPkThrxi3YLKAvg1L/DfXQJ+dlLIhrSRg/rmrlYx4=;
+ b=qaXi1854+K7MXOZtRqbboA4xlqNgQCpW6Cj156HT9/0uZ/zCpxxLMJj9qepjsiMgTK
+ sJCD6r6aH6TJbJmH6vW+GTL0ZC7C1i8Mepc9wY1vah2JrLohAHU5GjD95B26GupDl+rx
+ Nove615v8OmFxnPcqFQQqHlBCqCSPdhnBch57JCgAJWfKgQCKPMSDBbhktpE5JkVkWGY
+ LTUgDEenlRiwZKwEOABYXQ48WaEKrjY+Cb7FmbJiSBwoXHPbzFmNcN2UbPj+/5daKBHb
+ CZfm05mnbqr2gzQEnZl6TS927TuMlHnjsJVy2OWU3uDAelZJ/Kn3jhQLRKtP4fpxVK7i
+ avhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733159621; x=1733764421;
+ d=1e100.net; s=20230601; t=1733159820; x=1733764620;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=L5YiWs8jxur0kYUMgy9gwjB23eVA0y2WWsEd6C/VWvU=;
- b=HKbYDlPpGdwFDP9w77kCqiqIs/J5tsCJPmqMZbUvZQn6iaK5wkXOUnRTsvL+M84U21
- HUhLjJ4fCseaSPNqoknlYej4/JVN1q0UhtXkTo0cTm5spfgVT01D5KT5EqzR2O/Gq6vN
- IzvdmbjRkXt87XUr+kRt4MeS9m45IbEnZXUEw0AkR5wlBrO1BZXHAspNrK3uw2mAqjty
- TVys5ExbzUuAS2RRHzQ8COuEydNrNfogAYxw1jeRzVWGRZdkh1rwNknYcc9Z33nGtURZ
- ubAJnR0F/fzgsx4QlmaAEYjbCexufx1qhEKGMiNVeml2taCAqIB0adio9dTuWv7u/HnK
- Zn9w==
+ bh=VaOPkThrxi3YLKAvg1L/DfXQJ+dlLIhrSRg/rmrlYx4=;
+ b=g8WGmoDg3QND2NQc7zoXlPb13xpixaZnJNbplLuG9ZZis/KXiQSuHkOZUp+lwVqbfi
+ L+9ruHps0HWIk5+eBGgdV2IJGHI7qbgo3RrbNWVHCFSJ+FhiB7sLhMBdYLybbCQnD210
+ JjnEIZ0FWuy14BNvb63O9+4didsI3tmSFGuOSTX1wqh6FZiFqK0lDTTNfUymZ5U/byI/
+ fdKsFmv9e9JW6Ylvnlp1+9XwxmLKVZXxgLOCQzL6cNEcS7/dxOw1RVcYbFz9PbKfNj+6
+ HhVcdWbjN/ZOZViWpM+sLslN2CETDHNhc9p583FhksTpge6VCEPb9QmamH4JE1RAybuM
+ Yy5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzXw5SKhnHxvYgk7joscWpSU+snc1MOdkbLiUyVqyX4iQcbuK2WIcESoop6Q44o3iA65ssFhl8yuNK@nongnu.org
-X-Gm-Message-State: AOJu0YzvQ9+b1YKAxFzNxIzwJ9TQZU+HkojI0MS7qIUl7BU2lpnKnywJ
- RqlDs3N0Tl+uUg7PTiNbsJ3ypoHx7ZgeqKlV0lCWWYTpBILe1mLniO3HywtxoqxFeQyLKA/buEI
- zPtw=
-X-Gm-Gg: ASbGncvYjqa4fTmOy3pK2GA/bJ8gsDBKZFwe2YtVpMYgig4gGIuc+oIcAx7GeVNpTt0
- n1XQdG+j0hmzPl05ziu9YAim4WJZC4Du9bAlHE2YMVVBEQBGQ3jwfAbqbc1sUUrgAQZcXOJHfG3
- 1zvugtNRxlORPCZ5Wfe5KAZBCVmJjq++Vsn7Oz2X/jqE2qqsrH7SkqwbhAD6+GnxYhF9PdkC7nx
- CzIrMxWVKI9vYxlakiPYmrk9+vhQ/5djeo4ewnkD2QiZcAYM88b8GVMLRjloQlABklmAO0=
-X-Google-Smtp-Source: AGHT+IEpLUAfIw/svrZZX718C9evidtC47fD2y/dpOistVP6qK2KorTnzG2rMo/BfSY21gXdtrU11Q==
-X-Received: by 2002:a05:6214:2308:b0:6d4:1662:348c with SMTP id
- 6a1803df08f44-6d864d36f32mr389011706d6.17.1733159621020; 
- Mon, 02 Dec 2024 09:13:41 -0800 (PST)
+ AJvYcCU80RGV2hCzSMNcbEvcmVxx9r/hLgy02MpZk7/iUmnPLkhBuVYdjyOYEbVNQ6/BdeA8iGrY8KInRY+f@nongnu.org
+X-Gm-Message-State: AOJu0Yz2MCMKLM684oHqlMGs749qFeoQqsgzCojnMfp47z+L0n09FUNy
+ W+Rjz4HAaT6n+zOflIdVx+ZeBl/Ne7MTbXG8wOstEfxcGDD8p5nvSgU4I9gYYgQ=
+X-Gm-Gg: ASbGnct4xpkXdJQbyVQDqKEJpj6SikzMVR/WX6ZlpOEr5lJPLRWbsiJBNziJHf8dsJ0
+ or4+9cxRrgACq5z3effrEtf6UeNkQEzSLwOnoOjrZp5BpiUrHY/Sh/62vwN5I6TTxO0i4GDp6Hp
+ XugmR6Wo/4ulFJ8ZEZ8lKNwIoHZY7mQPdSWyD0g0/FKdMSNEATC3cuq4mtEyXAG+atu5DGTlOQ0
+ GRvXM5cN7+6l5QlU7nZGq5a4EjNp3gh4h3lxWOO95EhVrN91YT4wi4YuM8Xx3pFXWfn1sU=
+X-Google-Smtp-Source: AGHT+IFKHlrHmTHePpvXo4RCXXgp3IIQZXJ2r5aRmtMIQRSTPZRXPpxUmd6n8il2mVK+R0je+bWaXg==
+X-Received: by 2002:a05:6214:d6a:b0:6d8:a092:47f6 with SMTP id
+ 6a1803df08f44-6d8a09248b2mr111716026d6.46.1733159819943; 
+ Mon, 02 Dec 2024 09:16:59 -0800 (PST)
 Received: from [192.168.170.227] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d88f8c2129sm31810226d6.126.2024.12.02.09.13.39
+ af79cd13be357-7b684942096sm422898585a.49.2024.12.02.09.16.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 09:13:40 -0800 (PST)
-Message-ID: <5739bd44-5f4e-48a4-98a0-e2c4217b02fe@linaro.org>
-Date: Mon, 2 Dec 2024 11:13:35 -0600
+ Mon, 02 Dec 2024 09:16:59 -0800 (PST)
+Message-ID: <0e419e07-7a43-404d-9b58-119e9728ec69@linaro.org>
+Date: Mon, 2 Dec 2024 11:16:56 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 for-10.0 15/54] softfloat: Allow runtime choice of NaN
- propagation for muladd
+Subject: Re: [PATCH v2 for-10.0 27/54] target/m68k: Don't pass NULL
+ float_status to floatx80_default_nan()
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20241202131347.498124-1-peter.maydell@linaro.org>
- <20241202131347.498124-16-peter.maydell@linaro.org>
+ <20241202131347.498124-28-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241202131347.498124-16-peter.maydell@linaro.org>
+In-Reply-To: <20241202131347.498124-28-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,35 +103,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/2/24 07:13, Peter Maydell wrote:
-> IEEE 758 does not define a fixed rule for which NaN to pick as the
-> result if both operands of a 3-operand fused multiply-add operation
-> are NaNs.  As a result different architectures have ended up with
-> different rules for propagating NaNs.
+> Currently m68k_cpu_reset_hold() calls floatx80_default_nan(NULL)
+> to get the NaN bit pattern to reset the FPU registers. This
+> works because it happens that our implementation of
+> floatx80_default_nan() doesn't actually look at the float_status
+> pointer except for TARGET_MIPS. However, this isn't guaranteed,
+> and to be able to remove the ifdef in floatx80_default_nan()
+> we're going to need a real float_status here.
 > 
-> QEMU currently hardcodes the NaN propagation logic into the binary
-> because pickNaNMulAdd() has an ifdef ladder for different targets.
-> We want to make the propagation rule instead be selectable at
-> runtime, because:
->   * this will let us have multiple targets in one QEMU binary
->   * the Arm FEAT_AFP architectural feature includes letting
->     the guest select a NaN propagation rule at runtime
-> 
-> In this commit we add an enum for the propagation rule, the field in
-> float_status, and the corresponding getters and setters.  We change
-> pickNaNMulAdd to honour this, but because all targets still leave
-> this field at its default 0 value, the fallback logic will pick the
-> rule type with the old ifdef ladder.
-> 
-> It's valid not to set a propagation rule if default_nan_mode is
-> enabled, because in that case there's no need to pick a NaN; all the
-> callers of pickNaNMulAdd() catch this case and skip calling it.
+> Rearrange m68k_cpu_reset_hold() so that we initialize env->fp_status
+> earlier, and thus can pass it to floatx80_default_nan().
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   include/fpu/softfloat-helpers.h |  11 +++
->   include/fpu/softfloat-types.h   |  55 +++++++++++
->   fpu/softfloat-specialize.c.inc  | 167 ++++++++------------------------
->   3 files changed, 107 insertions(+), 126 deletions(-)
+>   target/m68k/cpu.c | 12 +++++++-----
+>   1 file changed, 7 insertions(+), 5 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
