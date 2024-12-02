@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB0B6D78321
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D1ED78320
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:34:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Xy-000894-Fp; Mon, 02 Dec 2024 08:33:07 -0500
+	id 1tI6UY-0001Os-34; Mon, 02 Dec 2024 08:29:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6Gq-0002iA-DJ
+ id 1tI6Gv-0002jQ-SQ
  for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:30 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6GY-0003a5-3y
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:23 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-37ed3bd6114so2866865f8f.2
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:58 -0800 (PST)
+ id 1tI6GY-0003Ok-Fj
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:27 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-385eed29d17so794146f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733145297; x=1733750097; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733145281; x=1733750081; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SF+s3/3GUKM6ErlG9DZAUNNlPEUN5YnIqVqgW7tQx0c=;
- b=Z+tZk3nSo22vKc0EMsaq6/13fVH2u0DY/zCRA6nkILH/acnqBEF+z1Y5GRsuSo7VWB
- MKtdu4dw5zdQrAM+M39rAtnSSHyudsugPmlcGyLgfHJrEImrBSiUaso0hWLheooJYFLB
- PX+eqzySgZscyZI0I7+WQWOfr+3WP0SsBaVcYHOXjaxp2Zjme4qP0nOZ0cM6xYoxBLY+
- U4Kxp/kmI/OC1Bj+XKw7M18vc1O65GbXhW0qlAReeESkbh4wAGMhsigXAuGQSUGQELX/
- ytAMF8495u6wACCOx40A34B28ud0DxYSZlbJ2E4bwQKFo93Ap8abYQPhouGxIgmTwxHG
- rq/Q==
+ bh=yKV708lbVufub1eS0i2nRrYGl0qdKJsRNu5HvpEXaMM=;
+ b=limuPtMsqKdefUjQNTmRKUjAfc4lUDIGStfKIJHTgerxmEhPGku+ZFJKbNcPhIbX73
+ xN6/un/uRBj/4EN1xsQm6mZ/UYqZTW9IBIcxOGhRvyLaS2d9It2B+StnIBR+6he8Ew5J
+ aeMPCkd+HkFP8XXsT4hh0i5CxSYHOuSLa58k2AEV8nWWlvdzJXIZDl/+zM56ahDdRerk
+ ZXzDZAla1dLK7l4YEYOWy/InULIuXhmAzR4FNbmgSHW04saYOH6rP3mvqNzW9G/bOoYW
+ 9JGsFv6lxHdFmy+TIh+5LyKZgTOj3Luq451N2kr9M8lORPeF9w4D4yxXoDXVhL4aiUml
+ zorg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733145297; x=1733750097;
+ d=1e100.net; s=20230601; t=1733145281; x=1733750081;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SF+s3/3GUKM6ErlG9DZAUNNlPEUN5YnIqVqgW7tQx0c=;
- b=oAQdvifOGu8CbfHZqG0Qq7y2LoIuXMfo/5k4RwERkHB8N8eHVHA3NNRBYyiylXC++v
- axK2nn1A/JbuA3LHEo3Wj2WyJGeNZdxVG/C3JdUR9E4A1xmg9m5lUUwYqFV1tRCFkMpI
- fbLMD087VFJA9aaPeBpBg+XZ89V6IFrir2DZwe9O4R1GGbOGnSmc+YpxmxLNHpuH45xG
- wip5Cxy6r2VH0FZomnBBnzWa+umdeyDsPvvN2AK5dNTfynmMogTH0jQO7hdMyIO2eogc
- H4VT2E7HpCKhZCpkM/3msUJLpjrcU+exwigiAmC41PWIhly8cMb1SuAVk/1g07117tzR
- Gwlw==
-X-Gm-Message-State: AOJu0Yx3av3iiYqWM2Auz53Yv2ZJmqAh2TCxYLKOXhlAg4bQzUackfV7
- GkBZj/Uvra9K3jasQlETZq2S0/5SVCopNZz8kO6cHKn73HAERuz4gX6gE05t+rRmDQuLMxSP2sp
- Y
-X-Gm-Gg: ASbGncsBA59krX1l6bt5y4h+alqfeo91/3vfeYcc82/KFURBvhTysuo4IeSiWeyqcjO
- lp2d1Ce97n7fZ+ez+nJtxiNI5TmqKOtNiuA2N1KPTNmF2mesE6bT+J6e6nqQEmeTPdXlh8C1NL+
- OqiXekzIgMz8K8cNf0cxPfpI8w69dEt4nbtDY3/VoJpT9f1+SRyYL0t2AuhQsPx4hNC06zahiR3
- 9JbUKOp3WiPS8Gs2uFpb5wyWcBcMqmFvsSuEPWJn8C/XwgHXXrkf30=
-X-Google-Smtp-Source: AGHT+IHZbR8myEJqrFSbtsWW3Ke9b1O77ziqMLQJzRs9zmdRAxpEkQbXVz1J5DH5fUiXKa5Y7BrB/Q==
-X-Received: by 2002:a05:6000:381:b0:382:5177:3a4f with SMTP id
- ffacd0b85a97d-385c6edc3ccmr16561180f8f.49.1733145297319; 
- Mon, 02 Dec 2024 05:14:57 -0800 (PST)
+ bh=yKV708lbVufub1eS0i2nRrYGl0qdKJsRNu5HvpEXaMM=;
+ b=AlT72e2kbkbCXISUxBJa4lveJfxfVlVcce+SmHwavJNDOYU/+oma5o2n+SsOJoOsWc
+ A7CKINh7H/2rr9tdAwB7LFOHXlRCnD9Hhw8BpczBPh/+V4VaxmeSJLRgaah/Sbz0g2+U
+ CU1Px2eiNrEJzhExyAGutf2v6TpJ7+LSUE4a3ncBak6WBSMklewQJTEGM6bciJuDFMZO
+ EeVzyy3i1/VJJpDSDYiCpSIQGMsB/p4ce6vDtbUuoT6H25qtRLVp8xuCVV8H2hZlZKdc
+ wn5guZPxOjx2Kos9rtk2NVTekTTdI+N8U/XzhfSdljL3gMHAvUwubmEA6zLIlyKkAriH
+ z85g==
+X-Gm-Message-State: AOJu0YywJi1f6ZUYvZFL8sj2QRMufUusFm/huClgVt8wjzibGFVzoD7T
+ GofiF82jSRQtnCWZC+B+k+R3lDXTuPrlQ6LkscQMmRbDLa9fUt/gNwQicwTAiMotcQsrwlQbwkB
+ I
+X-Gm-Gg: ASbGncs/7csB+xz7prkPR4l+vZuxvyR9hcKovkJFNEfZpoM1XTZVarBUrxEF70VfPaw
+ 5YNHOU8TYCuWnrNm+RcTPj3YFX58vYmR3d79pvx+g5LuyNRXcwTdIYbTnCxmTCnsTD/aktqDsi0
+ Jt/WgxJpj9LIHBplZrE90s50hOcNA2KWsbr8XJhQsL4y7tYXww73jWJLcyXKclUsEOBdadGYjXe
+ FjUu6BcV6IYbVldTeFtJGUE2DKZ2TkgivSSES4I436oNdidg9Z3Gbw=
+X-Google-Smtp-Source: AGHT+IFELuFkVQJehEVSKgoZXY73udDUueU5hfLBaI5Ys4CGnWxhP2s0m/NuLhCYSvhKN/52NWLe5A==
+X-Received: by 2002:a05:6000:42ca:b0:385:f0dc:c9fd with SMTP id
+ ffacd0b85a97d-385f0dccb93mr2451898f8f.27.1733145280733; 
+ Mon, 02 Dec 2024 05:14:40 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.56
+ ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Dec 2024 05:14:56 -0800 (PST)
+ Mon, 02 Dec 2024 05:14:40 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
@@ -78,17 +78,17 @@ Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 for-10.0 51/54] target/hexagon: Set default NaN pattern
- explicitly
-Date: Mon,  2 Dec 2024 13:13:44 +0000
-Message-Id: <20241202131347.498124-52-peter.maydell@linaro.org>
+Subject: [PATCH v2 for-10.0 34/54] fpu: Allow runtime choice of default NaN
+ value
+Date: Mon,  2 Dec 2024 13:13:27 +0000
+Message-Id: <20241202131347.498124-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
 References: <20241202131347.498124-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,52 +111,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the default NaN pattern explicitly for hexagon.
-Remove the ifdef from parts64_default_nan(); the only
-remaining unconverted targets all use the default case.
+Currently we hardcode the default NaN value in parts64_default_nan()
+using a compile-time ifdef ladder. This is awkward for two cases:
+ * for single-QEMU-binary we can't hard-code target-specifics like this
+ * for Arm FEAT_AFP the default NaN value depends on FPCR.AH
+   (specifically the sign bit is different)
+
+Add a field to float_status to specify the default NaN value; fall
+back to the old ifdef behaviour if these are not set.
+
+The default NaN value is specified by setting a uint8_t to a
+pattern corresponding to the sign and upper fraction parts of
+the NaN; the lower bits of the fraction are set from bit 0 of
+the pattern.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/hexagon/cpu.c           | 2 ++
- fpu/softfloat-specialize.c.inc | 5 -----
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ include/fpu/softfloat-helpers.h | 11 +++++++
+ include/fpu/softfloat-types.h   | 10 ++++++
+ fpu/softfloat-specialize.c.inc  | 55 ++++++++++++++++++++-------------
+ 3 files changed, 54 insertions(+), 22 deletions(-)
 
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 020038fc490..c9aa9408ec8 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -286,6 +286,8 @@ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
- 
-     set_default_nan_mode(1, &env->fp_status);
-     set_float_detect_tininess(float_tininess_before_rounding, &env->fp_status);
-+    /* Default NaN value: sign bit set, all frac bits set */
-+    set_float_default_nan_pattern(0b11111111, &env->fp_status);
+diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
+index 10a6763532c..dceee23c823 100644
+--- a/include/fpu/softfloat-helpers.h
++++ b/include/fpu/softfloat-helpers.h
+@@ -93,6 +93,12 @@ static inline void set_float_infzeronan_rule(FloatInfZeroNaNRule rule,
+     status->float_infzeronan_rule = rule;
  }
  
- static void hexagon_cpu_disas_set_info(CPUState *s, disassemble_info *info)
++static inline void set_float_default_nan_pattern(uint8_t dnan_pattern,
++                                                 float_status *status)
++{
++    status->default_nan_pattern = dnan_pattern;
++}
++
+ static inline void set_flush_to_zero(bool val, float_status *status)
+ {
+     status->flush_to_zero = val;
+@@ -154,6 +160,11 @@ static inline FloatInfZeroNaNRule get_float_infzeronan_rule(float_status *status
+     return status->float_infzeronan_rule;
+ }
+ 
++static inline uint8_t get_float_default_nan_pattern(float_status *status)
++{
++    return status->default_nan_pattern;
++}
++
+ static inline bool get_flush_to_zero(float_status *status)
+ {
+     return status->flush_to_zero;
+diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+index 84ba4ed20e6..79ca44dcc30 100644
+--- a/include/fpu/softfloat-types.h
++++ b/include/fpu/softfloat-types.h
+@@ -303,6 +303,16 @@ typedef struct float_status {
+     /* should denormalised inputs go to zero and set the input_denormal flag? */
+     bool flush_inputs_to_zero;
+     bool default_nan_mode;
++    /*
++     * The pattern to use for the default NaN. Here the high bit specifies
++     * the default NaN's sign bit, and bits 6..0 specify the high bits of the
++     * fractional part. The low bits of the fractional part are copies of bit 0.
++     * The exponent of the default NaN is (as for any NaN) always all 1s.
++     * Note that a value of 0 here is not a valid NaN. The target must set
++     * this to the correct non-zero value, or we will assert when trying to
++     * create a default NaN.
++     */
++    uint8_t default_nan_pattern;
+     /*
+      * The flags below are not used on all specializations and may
+      * constant fold away (see snan_bit_is_one()/no_signalling_nans() in
 diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 06185237d0f..5954a6213b9 100644
+index 9f913ce20ab..b1ec534983c 100644
 --- a/fpu/softfloat-specialize.c.inc
 +++ b/fpu/softfloat-specialize.c.inc
-@@ -136,10 +136,6 @@ static void parts64_default_nan(FloatParts64 *p, float_status *status)
-     uint8_t dnan_pattern = status->default_nan_pattern;
+@@ -133,35 +133,46 @@ static void parts64_default_nan(FloatParts64 *p, float_status *status)
+ {
+     bool sign = 0;
+     uint64_t frac;
++    uint8_t dnan_pattern = status->default_nan_pattern;
  
-     if (dnan_pattern == 0) {
--#if defined(TARGET_HEXAGON)
--        /* Sign bit set, all frac bits set. */
--        dnan_pattern = 0b11111111;
--#else
-         /*
-          * This case is true for Alpha, ARM, MIPS, OpenRISC, PPC, RISC-V,
-          * S390, SH4, TriCore, and Xtensa.  Our other supported targets
-@@ -152,7 +148,6 @@ static void parts64_default_nan(FloatParts64 *p, float_status *status)
-             /* sign bit clear, set frac msb */
-             dnan_pattern = 0b01000000;
-         }
--#endif
-     }
-     assert(dnan_pattern != 0);
++    if (dnan_pattern == 0) {
+ #if defined(TARGET_SPARC) || defined(TARGET_M68K)
+-    /* !snan_bit_is_one, set all bits */
+-    frac = (1ULL << DECOMPOSED_BINARY_POINT) - 1;
+-#elif defined(TARGET_I386) || defined(TARGET_X86_64) \
++        /* Sign bit clear, all frac bits set */
++        dnan_pattern = 0b01111111;
++#elif defined(TARGET_I386) || defined(TARGET_X86_64)    \
+     || defined(TARGET_MICROBLAZE)
+-    /* !snan_bit_is_one, set sign and msb */
+-    frac = 1ULL << (DECOMPOSED_BINARY_POINT - 1);
+-    sign = 1;
++        /* Sign bit set, most significant frac bit set */
++        dnan_pattern = 0b11000000;
+ #elif defined(TARGET_HPPA)
+-    /* snan_bit_is_one, set msb-1.  */
+-    frac = 1ULL << (DECOMPOSED_BINARY_POINT - 2);
++        /* Sign bit clear, msb-1 frac bit set */
++        dnan_pattern = 0b00100000;
+ #elif defined(TARGET_HEXAGON)
+-    sign = 1;
+-    frac = ~0ULL;
++        /* Sign bit set, all frac bits set. */
++        dnan_pattern = 0b11111111;
+ #else
+-    /*
+-     * This case is true for Alpha, ARM, MIPS, OpenRISC, PPC, RISC-V,
+-     * S390, SH4, TriCore, and Xtensa.  Our other supported targets
+-     * do not have floating-point.
+-     */
+-    if (snan_bit_is_one(status)) {
+-        /* set all bits other than msb */
+-        frac = (1ULL << (DECOMPOSED_BINARY_POINT - 1)) - 1;
+-    } else {
+-        /* set msb */
+-        frac = 1ULL << (DECOMPOSED_BINARY_POINT - 1);
+-    }
++        /*
++         * This case is true for Alpha, ARM, MIPS, OpenRISC, PPC, RISC-V,
++         * S390, SH4, TriCore, and Xtensa.  Our other supported targets
++         * do not have floating-point.
++         */
++        if (snan_bit_is_one(status)) {
++            /* sign bit clear, set all frac bits other than msb */
++            dnan_pattern = 0b00111111;
++        } else {
++            /* sign bit clear, set frac msb */
++            dnan_pattern = 0b01000000;
++        }
+ #endif
++    }
++    assert(dnan_pattern != 0);
++
++    sign = dnan_pattern >> 7;
++    /*
++     * Place default_nan_pattern [6:0] into bits [62:56],
++     * and replecate bit [0] down into [55:0]
++     */
++    frac = deposit64(0, DECOMPOSED_BINARY_POINT - 7, 7, dnan_pattern);
++    frac = deposit64(frac, 0, DECOMPOSED_BINARY_POINT - 7, -(dnan_pattern & 1));
  
+     *p = (FloatParts64) {
+         .cls = float_class_qnan,
 -- 
 2.34.1
 
