@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBDB5D7831F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 121F9D78320
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:33:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Uk-0002iH-6G; Mon, 02 Dec 2024 08:29:46 -0500
+	id 1tI6WV-0006Ls-UG; Mon, 02 Dec 2024 08:31:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6Gl-0002bn-0p
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:23 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1tI6Gu-0002jW-2r
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:30 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6GU-0003OS-QO
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:12 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-385eb7ee7e2so757597f8f.3
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:40 -0800 (PST)
+ id 1tI6GY-0003Th-Gl
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:27 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-385e87b25f0so948997f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733145280; x=1733750080; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733145287; x=1733750087; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Yn+C6iEiC0sRjTP+yU6n2XqVtvMbEiwrywPK2VrWnnM=;
- b=mhkl/zF65pW9PwQsyeJE28ziqpbX481pQsTvJMEZnXF9wswOroM4Tr+hpggbW8R+s+
- K9DXcIxVY3qnbNs2j07CvY0+9HU+C3UgTeiBCJpiXg+ORyoHR9BHouhDmh4Ylz/MXQ/g
- E9H7fd/vYwaF/79BIwblAIcHLkkW8kdAmM97qn+YKPEkgoujVIdYXXEjvUfRfSuzDwQg
- lU6WeIJVATeUzM5amEMr5j1ylzKlxAfVnH+D4Vwm21nB5+8YUYpOFjV356BHgDGeNXrr
- z/fLhEmw+kRSHbu42OQGaQfBxWvciskxpBfsMHxVcj5Q5rHtis0L8CLsdjYtks3d5O++
- bPgw==
+ bh=mc9TdQ5B4JVTfGpbGlyL+6fSC7bsW93adDUcKdH34tw=;
+ b=UnO6jmJa5KVxEjgL7NCcul8zA1vvh40JnoJ/vOvACxuZMJiCLtg9bwBmcoD/NsKupw
+ F660wV2ualRAQps7a9zvCle07DUecmqgXjiiBUgS6p0ShWMGPqCvstyQ05W6qElw0jNc
+ OetmvtppnUc2h8+z8zC1FrreudVVIPTo0LsurLpNUPjnjbSc9qt+m4ei3zr7ducP1gq7
+ 3JyplxcgcFAf7QxqlTOTyfEnooM28mbFEOQYwKCD2Zy0OHRjAGtIQZWsybIhJ0rXqDyd
+ 3Z9yoccZ9C8UuMwGfMtOs0ugGFq3eQrW5gg/1gxoaTcnI1eGOcoWh9nY6rtnA6XFePc6
+ eJaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733145280; x=1733750080;
+ d=1e100.net; s=20230601; t=1733145287; x=1733750087;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Yn+C6iEiC0sRjTP+yU6n2XqVtvMbEiwrywPK2VrWnnM=;
- b=GLyfo5LyHuB5hzPzInKBy0mc/ifs3ZczajKsyS3HSODbGq7KY/xaV8Oj8GazC74F9K
- i9ozQ8II9nqMLrL2WkCAQeKYYvT0i/unaRjD1dO7ZOCFr4E0RNf+pmBebIlXL536rdNh
- mqcIT+B56jVfRaRZooaEbrIRW7NlX70HbVAo6mry/PBPdy/a+y8bzHUNh7vyLJkMcTlV
- E2iKB9ILXFU0BABtpb0J9zJWh2K7B8R4YF52t+InsvjwANslGln6ilydvsSjKRKwCop+
- kn8tBBifp0FeeeREqBHsHYM9E/m1RvHzhxaz+/5g9U7gPywxB7FYabWW6/Gw17IOTW1j
- s24A==
-X-Gm-Message-State: AOJu0Yzs91aGxhUFP4SCvloW1vSy5MOfebDfH87QlBQhHflHfKCWd1Kj
- m0R5ePj2Owq8vE/qqtSqFq/nuqV38vh7jEaZ0TXF2anlRz4QNVTQ57s0kD06AbAA7aC0ZeWBiQu
- P
-X-Gm-Gg: ASbGncsvmlY9pov9Dt0c/ilFHeNfC3S7jJh9PdSpmLApQ8x3talKZMfCxodLwzuEvt5
- SWKj7L4siPtomDmdg/tS5f9b/NFYAbWEwObZxxuR62+HZ15w6SWS8+91vYIeaFxGn66sDBBkPGz
- /X3uxhyS816iYnigVwNnidxit5ApBL4ydmO6u71sDEb7YRxflTYFpl8VS4/RYuIbA5aEKlCYQ2E
- 3Ri8O0qHw+ibRtKODGkJ7B72JSZLm1DGV6ZYLWA2Byg5jytOcjj/ss=
-X-Google-Smtp-Source: AGHT+IGgrbQVdk/2k8ryRWS9HxyA+sh5LcHmOVIRwbYvPZqSLOeoonYWeClB9HtUkPgQEiQBvTpmKA==
-X-Received: by 2002:a5d:47cb:0:b0:382:4f68:1f63 with SMTP id
- ffacd0b85a97d-385c6eb8478mr20884855f8f.7.1733145279747; 
- Mon, 02 Dec 2024 05:14:39 -0800 (PST)
+ bh=mc9TdQ5B4JVTfGpbGlyL+6fSC7bsW93adDUcKdH34tw=;
+ b=qyUGqwvViAT9GLl7tS4lZGsfqzqT+YY3R//c+Kwai6y+SclUHjBLYAggt8tC7HsNlf
+ 4HCX294wfVkBKnnOlQ6fGuq5LHuidJSrWzrPYHPsHiqYGPEDvQvv3CBW7TOzwciYeyvb
+ FnEIZlYdZ7ES2o1RBVVr1drerSh1kaR0WrkXIZQWcc+JYvF4FqU+r9iDMX1pQlMa+z/0
+ A+gbE872oeeZ4Pv860EllmOodIJCZ+GM/vIGuRRSa/TLAYd7ChZhkHZ3Ll0iR78qte0S
+ MJQ/n5Bvy3lEHa6NwdOJ8GyASLuvigQh/SjnqE6n0fNCXijlcTyBVCO1V918HDsSs5VH
+ ZRJQ==
+X-Gm-Message-State: AOJu0YzCMMLlRn4NY2S4qmOd85kgg1wOLwCSwcoEKeKTBKCNBqHRYiSI
+ 7GnX+Vb2bhSNDEpZGrieCHA1L4o1uUD4/xWal6IVd33tQmNwAD2X4AKy15jtZa1+XJqePHU17Yx
+ O
+X-Gm-Gg: ASbGncu8WehT4WdtSJ9tSsCblzJTtox6Bo9HXg6qiMNutWTRZQYy+w7/GitXmT0aK7L
+ ipbMdrMbU/1SiRdQ8fPC7bZYP0Qs3oKexcrUXfK2UgGF+3F6BH/5xs1BQyfwDTCNWTusxGA5ZBY
+ 1moxPpdb/aYaHMRzUUhP6O7RBCD0eucs7Mw49dFk1z7vqOIQr+Vf71r8lCXQEZWI/YQKAGzO0/l
+ lW1Q5gFr30rjQOgtkaOZwqSQe1eipvi6IZgF8gPu7LQDZ0DZ+M+K0E=
+X-Google-Smtp-Source: AGHT+IE7TZ9HLEylyGxlNLd8UOKgZcyVAZG/YDCLYYUz45z1whmCbtIPbHtQM9QMqlWtZ+JyMGgcIQ==
+X-Received: by 2002:a5d:64c7:0:b0:385:f7e5:de88 with SMTP id
+ ffacd0b85a97d-385f7e5dfe3mr1852046f8f.3.1733145286878; 
+ Mon, 02 Dec 2024 05:14:46 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.38
+ ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Dec 2024 05:14:39 -0800 (PST)
+ Mon, 02 Dec 2024 05:14:46 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
@@ -78,24 +78,24 @@ Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 for-10.0 33/54] target/ppc: Use env->fp_status in
- helper_compute_fprf functions
-Date: Mon,  2 Dec 2024 13:13:26 +0000
-Message-Id: <20241202131347.498124-34-peter.maydell@linaro.org>
+Subject: [PATCH v2 for-10.0 41/54] target/loongarch: Set default NaN pattern
+ explicitly
+Date: Mon,  2 Dec 2024 13:13:34 +0000
+Message-Id: <20241202131347.498124-42-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
 References: <20241202131347.498124-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,35 +111,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the helper_compute_fprf functions, we pass a dummy float_status
-in to the is_signaling_nan() function. This is unnecessary, because
-we have convenient access to the CPU env pointer here and that
-is already set up with the correct values for the snan_bit_is_one
-and no_signaling_nans config settings. is_signaling_nan() doesn't
-ever update the fp_status with any exception flags, so there is
-no reason not to use env->fp_status here.
-
-Use env->fp_status instead of the dummy fp_status.
+Set the default NaN pattern explicitly for loongarch.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/ppc/fpu_helper.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ target/loongarch/tcg/fpu_helper.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/ppc/fpu_helper.c b/target/ppc/fpu_helper.c
-index 230466a87f3..d93cfed17b4 100644
---- a/target/ppc/fpu_helper.c
-+++ b/target/ppc/fpu_helper.c
-@@ -155,8 +155,7 @@ void helper_compute_fprf_##tp(CPUPPCState *env, tp arg)           \
-     } else if (tp##_is_infinity(arg)) {                           \
-         fprf = neg ? 0x09 << FPSCR_FPRF : 0x05 << FPSCR_FPRF;     \
-     } else {                                                      \
--        float_status dummy = { };  /* snan_bit_is_one = 0 */      \
--        if (tp##_is_signaling_nan(arg, &dummy)) {                 \
-+        if (tp##_is_signaling_nan(arg, &env->fp_status)) {        \
-             fprf = 0x00 << FPSCR_FPRF;                            \
-         } else {                                                  \
-             fprf = 0x11 << FPSCR_FPRF;                            \
+diff --git a/target/loongarch/tcg/fpu_helper.c b/target/loongarch/tcg/fpu_helper.c
+index aea5e0fe5e6..a83acf64b08 100644
+--- a/target/loongarch/tcg/fpu_helper.c
++++ b/target/loongarch/tcg/fpu_helper.c
+@@ -38,6 +38,8 @@ void restore_fp_status(CPULoongArchState *env)
+      */
+     set_float_infzeronan_rule(float_infzeronan_dnan_never, &env->fp_status);
+     set_float_3nan_prop_rule(float_3nan_prop_s_cab, &env->fp_status);
++    /* Default NaN: sign bit clear, msb frac bit set */
++    set_float_default_nan_pattern(0b01000000, &env->fp_status);
+ }
+ 
+ int ieee_ex_to_loongarch(int xcpt)
 -- 
 2.34.1
 
