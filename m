@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC46D10DBC
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 08:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7EAD10DCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 08:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI1mU-00084I-Vb; Mon, 02 Dec 2024 03:27:46 -0500
+	id 1tI2Fk-0003Wi-LJ; Mon, 02 Dec 2024 03:58:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI1mT-00083o-CN
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 03:27:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2FM-0003Sf-Ig
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 03:57:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI1mQ-0001CM-Np
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 03:27:45 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tI2FK-0003CA-7p
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 03:57:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733128059;
+ s=mimecast20190719; t=1733129852;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Gikd+g9TTHlt9zFaPPtOippFHjVFapF4C1AbD6Oagn0=;
- b=XdUzW1MVn0ev/hosj0YK/QmDqDNNbLSCyb0lmhjLkTQ0LgYpE4MbqBwfx3FEurFM9VXGd7
- gq1Yo5zmDlHNZYiCsLvPh8bsgz7Gv6QUYZpim/doelrJaCzQgM4C0SvOejwTBncVRMnPXd
- cyGOKhlxj4ROPxXMwIGLgxKBGzn05UQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tOfBKuDORpC+jGQy58MM9q+xpm6EIRWd5FAviJqx1Lc=;
+ b=b4AdJXwC2Ri7JMyd+Nr+o7yEfHpX4G1qtN7OhBrEn8c/NKPoi30yxyZbab1codgnRn3Szn
+ nonOPuN/Zwn6EH/cQ4plKN/X0MLpqqC2HNaNqWk7+iOD/q+DlkPvN9MY2STFmsdjCBoLwE
+ Fmu/7iXOxftvU5Q3wyIiRgL/6NyEI0U=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-486-XDy6hhnIMA6pQXjb7cv6sw-1; Mon, 02 Dec 2024 03:27:37 -0500
-X-MC-Unique: XDy6hhnIMA6pQXjb7cv6sw-1
-X-Mimecast-MFC-AGG-ID: XDy6hhnIMA6pQXjb7cv6sw
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-434a90fecfeso29280275e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 00:27:37 -0800 (PST)
+ us-mta-65-eCheAaeDMJyaoAAf6XojOA-1; Mon, 02 Dec 2024 03:57:30 -0500
+X-MC-Unique: eCheAaeDMJyaoAAf6XojOA-1
+X-Mimecast-MFC-AGG-ID: eCheAaeDMJyaoAAf6XojOA
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385e49efd59so702869f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 00:57:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733128056; x=1733732856;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Gikd+g9TTHlt9zFaPPtOippFHjVFapF4C1AbD6Oagn0=;
- b=UJRgKypTMeNLbQQIFPLDzkhI03u86l5D8rZfYjcTRexwFIPS/Uau4pkEKZJO2wek9B
- Xcini1dRJiKGZSdvW5ZuLKewzvG4+h4xw+/WW2BkShkFTSbEGKxKAPO3geTWmswO/rQF
- D0hTtUrUPGnLnp6AMP0wm71wTVYo4Zbov8CI8Npo3eIrEvFs5jCesa4IFyxMHOU2vu5s
- Zz51EXNDaQ+9LfaoGIKkmcr53xoNrMa7saKYcHgwbbuBk5RkCUdXWW/PZSBc3dMjrZR6
- 40gWh0+aqUJIHj8NPf6F6YjLWs6X0de83KXS2+LL3lrUcvOrESLy1ZT8Y3JOIxCPDeRO
- 5cLA==
+ d=1e100.net; s=20230601; t=1733129849; x=1733734649;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tOfBKuDORpC+jGQy58MM9q+xpm6EIRWd5FAviJqx1Lc=;
+ b=cVQpeGn8k/ICC80zGPL40Mm9iDRZc2IhbXe1pjajdoEQFTIh3Wic/tuzjn1oN6/fBo
+ BqFoO+p/3q81rCJ7TlNiNEFei+stoF8mNZjyuOrhNy+9paTfNI9KXr6NupKbswBsDSDy
+ fut5I2ZDu10VHHUmUKmkcg8n3c1MyW59NN0JbQwiUJzQpMOq+2sow326Hdons0Sz/iCd
+ yMNtPE5KCmlhD2dScBkW4fnqrRj5gjIi2b5rVGPbXAgcp5Z2xJEdI7TXX8ue1xqkjICY
+ z3AkutQ2EJZmopsiqAk8cUT96GdO8cjO6U6rsmVhSuSf9A2uAtx7ckFP5QuFdhfe7RgU
+ k5jg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLF/wKYQMqd1smvKaPYxUCEM9GBJCwTw7Cb0beEODZhhu652Ktzw4wEXtKU/C4fVXuWu9rmv6KQZny@nongnu.org
-X-Gm-Message-State: AOJu0YxEE/sJVDbp/fIGEsUIX4enT74QkLPH2qgjqPYWGGRJIfjWkEi/
- EFfXjdc5MA1MbMiCglhl0pXmQzGGdyrwp+o5eaeHEbPoqmTrH/ZGf9dgsHVLO7oiqaXvzoG+9IW
- +PtIYBKnSuGrXOZN2KE4X+e3ALX4xwT0X7Mg/i3mSPaykvKdAjMyq
-X-Gm-Gg: ASbGncssZShD95P7LKuUOdFzvQQY4q0JhBQ5jzYlUH5cC/zfxAurYlGdRWLUZr+KIi2
- 96LupMy5zqvRYotSj3fW04HT5H6N6RSPACtIJARhbUOlv5lAbXLUJZmtQ/mskq9iW3wGNeQbWju
- gz/E04YEH8V0A8vYt7RWXleFotXtfcHcg/RwyX4ED4DxF3AJAxSD7ZrWz9M9ezAgpkb3Gs+Erc0
- BEDWYb4b3FN+kKn1qIpIkWFvxxfYNb6KRBJ2Kig0Z48X+nIlSk2DXJYQWkO1XgVR7zwzk5qRr0=
-X-Received: by 2002:a05:600c:4747:b0:431:586e:7e7 with SMTP id
- 5b1f17b1804b1-434a9dbc646mr165862125e9.1.1733128056144; 
- Mon, 02 Dec 2024 00:27:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGfRajvcQgXz1bMA5aOt7KjAM71F30b84LucXoS8wEgl9S9JEaWBR/PWux4HUkuP5k+L4VPWw==
-X-Received: by 2002:a05:600c:4747:b0:431:586e:7e7 with SMTP id
- 5b1f17b1804b1-434a9dbc646mr165861975e9.1.1733128055771; 
- Mon, 02 Dec 2024 00:27:35 -0800 (PST)
+ AJvYcCV7DX0jcSl0Q6sbTOdbwHPk6qHooj5kHeYjP1FlOXhdt4U794Ic0+Taz+aCGlp3VMLfugRVzUFxzH5h@nongnu.org
+X-Gm-Message-State: AOJu0YxefAxIIaRT3G1C9rIvlWgU32a9RqdvKbbxprp82Jz0uSM5qp6s
+ SPGd890rFlxmRm+7bnV3g+bobEIx1LmGfLS8KLrZoCUsvY2Mx2pi7W1BZGqa9L6Zy1t0OnqSj9a
+ Ey9jTMmy9lsKtDqQkytyHbz5dHrMOsx9F4hdiQ9jStDLvfGdUAcFd
+X-Gm-Gg: ASbGncu0MM5RIKEk4wcXElnXTX1Q7rWeWWoZvuebafLpwfLM/SaQFIBwu5WsSy/KBJ8
+ PnTsumCIVWOUVH10+NFQHALK8ShlgC63BbHJn+nJ0t4hQ22wUrxodlKyTbmSuS6Q//lkPh1Dwgx
+ 7/vppdsDXHp1NIXxgZSOyNBnMTKOfEGttj4gT0IrURGKlmjThNUDf/w377SVDvubLYFcD5u7iWK
+ p19V2VbjHXYMhxXcie99Bbm4FbEX2+S+adNB3Sv2XrxQqOXO0qNHBdQm3ztDE239Jgx3aEdn2I=
+X-Received: by 2002:a05:6000:2a9:b0:382:5010:c8cd with SMTP id
+ ffacd0b85a97d-385c6ed7749mr16332289f8f.44.1733129849037; 
+ Mon, 02 Dec 2024 00:57:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE08gm1bLx4C6hn3AM36y3jMhdwDhYvUtX6cnaPoIDtBto6U7kQe59ivXBY6xG86/fbc2pgtw==
+X-Received: by 2002:a05:6000:2a9:b0:382:5010:c8cd with SMTP id
+ ffacd0b85a97d-385c6ed7749mr16332262f8f.44.1733129848663; 
+ Mon, 02 Dec 2024 00:57:28 -0800 (PST)
 Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434b0dc9707sm145491015e9.25.2024.12.02.00.27.34
+ 5b1f17b1804b1-434a5d56da3sm131980225e9.0.2024.12.02.00.57.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 00:27:35 -0800 (PST)
-Message-ID: <3cc78a57-98c0-4dec-89f3-3b277603ae78@redhat.com>
-Date: Mon, 2 Dec 2024 09:27:34 +0100
+ Mon, 02 Dec 2024 00:57:28 -0800 (PST)
+Message-ID: <9b02f469-1fc0-40ad-ad7c-34bce61865dc@redhat.com>
+Date: Mon, 2 Dec 2024 09:57:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/22] tests/functional: introduce some helpful decorators
+Subject: Re: [PATCH 07/22] tests/functional: switch to new test skip decorators
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20241129173120.761728-1-berrange@redhat.com>
- <20241129173120.761728-7-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20241129173120.761728-8-berrange@redhat.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -126,17 +126,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241129173120.761728-7-berrange@redhat.com>
+In-Reply-To: <20241129173120.761728-8-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,186 +155,76 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/11/2024 18.31, Daniel P. Berrangé wrote:
-> Reduce repeated boilerplate with some helper decorators:
+> This ensures consistency of behaviour across all the tests, and requires
+> that we provide gitlab bug links when marking a test to be skipped due
+> to unreliability.
 > 
->   @skipIfNotPlatform("x86_64", "aarch64")
-> 
->    => Skip unless the build host platform matches
-> 
->   @skipIfMissingCommands("mkisofs", "losetup")
-> 
->    => Skips unless all listed commands are found in $PATH
-> 
->   @skipIfMissingImports("numpy", "cv2")
-> 
->    => Skips unless all listed modules can be imported
-> 
->   @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
-> 
->    => Skips unless env var requests flaky tests with the
->       reason documented in the referenced gitlab bug
-> 
->   @skipBigData
-> 
->    => Skips unless env var permits tests creating big data files
-> 
->   @skipUntrustedTest
-> 
->    => Skips unless env var permits tests which are potentially
->       dangerous to the host
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+> diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+> index 068740a813..db872ff05e 100755
+> --- a/tests/functional/test_arm_aspeed.py
+> +++ b/tests/functional/test_arm_aspeed.py
+> @@ -13,7 +13,9 @@
+>   
+>   from qemu_test import (LinuxKernelTest, Asset,
+>                          exec_command_and_wait_for_pattern,
+> -                       interrupt_interactive_console_until_pattern, has_cmd)
+> +                       interrupt_interactive_console_until_pattern,
+> +                       skipIfMissingCommands,
+> +)
 
-That are good ideas! And certainly less error prone than specifying the 
-names of the environment variables over and over again.
+In the other files, you placed the final ")" at the end of the previous line 
+instead?
 
-> diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-> index 8fddddbe67..7dee3522f2 100644
-> --- a/tests/functional/qemu_test/__init__.py
-> +++ b/tests/functional/qemu_test/__init__.py
-> @@ -13,3 +13,6 @@
->       exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
->   from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
->   from .linuxkernel import LinuxKernelTest
-> +from .decorators import skipIfMissingCommands, skipIfNotMachine, \
-> +    skipFlakyTest, skipUntrustedTest, skipBigDataTest, \
-> +    skipIfMissingImports
-> diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-> new file mode 100644
-> index 0000000000..d25fec7b2d
-> --- /dev/null
-> +++ b/tests/functional/qemu_test/decorators.py
-> @@ -0,0 +1,105 @@
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +#
-> +# Decorators useful in functional tests
-> +
-> +import os
-> +import platform
+> diff --git a/tests/functional/test_m68k_nextcube.py b/tests/functional/test_m68k_nextcube.py
+> index 0124622c40..82d3d335d0 100755
+> --- a/tests/functional/test_m68k_nextcube.py
+> +++ b/tests/functional/test_m68k_nextcube.py
+> @@ -10,16 +10,9 @@
+>   import os
+>   import time
+>   
+> -from qemu_test import QemuSystemTest, Asset
+> -from unittest import skipUnless
+> -
+> +from qemu_test import QemuSystemTest, Asset, skipIfMissingImports
+>   from qemu_test.tesseract import tesseract_available, tesseract_ocr
+> -
+> -PIL_AVAILABLE = True
+> -try:
+> -    from PIL import Image
+> -except ImportError:
+> -    PIL_AVAILABLE = False
 > +from unittest import skipUnless
-> +
-> +from .cmd import which
-> +
-> +'''
-> +Decorator to skip execution of a test if the list
-> +of command binaries is not available in $PATH.
-> +Example:
-> +
-> +  @skipIfMissingCommands("mkisofs", "losetup")
-> +'''
-> +def skipIfMissingCommands(*args):
-> +    def has_cmds(cmdlist):
-> +        for cmd in cmdlist:
-> +            if not which(cmd):
-> +                return False
-> +        return True
-> +
-> +    return skipUnless(lambda: has_cmds(args),
-> +                      'required commands(s) "%s" not installed' %
 
-s/commands(s)/command(s)/ ?
+I think you could also replace the other skipUnless() in this file nowadays: 
+The version check here was only useful in the days when most distros still 
+shipped Tesseract v3, but these days are gone, we don't support any of those 
+distros anymore. So I think it should be fine to use skipIfMissingCommands 
+here now instead.
 
-> +                      ", ".join(args))
-> +
-> +'''
-> +Decorator to skip execution of a test if the current
-> +host machine does not match one of the permitted
-> +machines.
-> +Example
-> +
-> +  @skipIfNotMachine("x86_64", "aarch64")
-> +'''
-> +def skipIfNotMachine(*args):
-> +    return skipUnless(lambda: platform.machine() in args,
-> +                        'not running on required machine(s) "%s"' %
+Anyway, I'm also fine if we keep it for now (we still can adjust it later), 
+so with at least the ")" nit fixed:
 
-plural sounds strange here (like all machines would be required at the same 
-time), I'd maybe say "not running on one of the required machine(s)" ?
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-> +                        ", ".join(args))
-> +
-> +'''
-> +Decorator to skip execution of flaky tests, unless
-> +the $QEMU_TEST_FLAKY_TESTS env var is set. A bug URL
-
-Since it is the "official" documentation of this decorator, I'd maybe rather 
-use the full words: "environment variable" instead of "env var"
-
-> +must be provided that documents the observed failure
-> +behaviour, so it can be tracked & re-evaluated in future.
-> +
-> +Historical tests may be providing "None" as the bug_url
-> +but this should not be done for new test.
-> +
-> +Example:
-> +
-> +  @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
-> +'''
-> +def skipFlakyTest(bug_url):
-> +    if bug_url is None:
-> +        bug_url = "FIXME: reproduce flaky test and file bug report or remove"
-> +    return skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'),
-> +                      f'Test is unstable: {bug_url}')
-> +
-> +'''
-> +Decorator to skip execution of tests which are likely
-> +to execute untrusted commands on the host, or commands
-> +which process untrusted code, unles the
-
-s/unles/unless/
-
-> +$QEMU_TEST_ALLOW_UNTRUSTED_CODE env var is set.
-> +Example:
-> +
-> +  @skipUntrustedTest()
-> +'''
-> +def skipUntrustedTest():
-> +    return skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'),
-> +                      'Test runs untrusted code / processes untrusted data')
-> +
-> +'''
-> +Decorator to skip execution of tests which need large
-> +data storage on the host, unless the
-> +$QEMU_TEST_ALLOW_LARGE_STORAGE env var is set
-
-Maybe we should also provide some direction what is meant with large 
-storage. I've seen some tests that are skipped since they create a disk file 
-with 128 MiB. And others are always executed though they create a disk file 
-with 512 MiB or even more. What would be a good recommendation here?
-(My gut feeling is maybe ~ 1 GiB? Or better less?)
-
-> +Example:
-> +
-> +  @skipBigDataTest()
-> +'''
-> +def skipBigDataTest():
-> +    return skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'),
-> +                      'Test required large host storage space')
-
-s/required/requires/ ?
-(the other decorators use present tense, too)
-
-> +'''
-> +Decorator to skip execution of a test if the list
-> +of python imports is not available.
-> +Example:
-> +
-> +  @skipIfMissingImports("numpy", "cv2")
-> +'''
-> +def skipIfMissingImports(*args):
-> +    def has_imports(importlist):
-> +        for impname in importlist:
-> +            try:
-> +                import impname
-> +            except ImportError:
-> +                return False
-> +        return True
-> +
-> +    return skipUnless(lambda: has_imports(args),
-> +                      'required imports(s) "%s" not installed' %
-
-s/imports(s)/import(s)/ ?
-
-> +                      ", ".join(args))
-
-  Thomas
+>   class NextCubeMachine(QemuSystemTest):
+> @@ -43,12 +36,13 @@ def check_bootrom_framebuffer(self, screenshot_path):
+>           self.vm.cmd('human-monitor-command',
+>                       command_line='screendump %s' % screenshot_path)
+>   
+> -    @skipUnless(PIL_AVAILABLE, 'Python PIL not installed')
+> +    @skipIfMissingImports("PIL")
+>       def test_bootrom_framebuffer_size(self):
+>           self.set_machine('next-cube')
+>           screenshot_path = os.path.join(self.workdir, "dump.ppm")
+>           self.check_bootrom_framebuffer(screenshot_path)
+>   
+> +        from PIL import Image
+>           width, height = Image.open(screenshot_path).size
+>           self.assertEqual(width, 1120)
+>           self.assertEqual(height, 832)
+...
 
 
