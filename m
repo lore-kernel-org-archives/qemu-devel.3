@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2602FE69E94
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB33E69E90
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 20:41:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIDDY-00020q-V3; Mon, 02 Dec 2024 15:40:28 -0500
+	id 1tIDDf-00021W-7H; Mon, 02 Dec 2024 15:40:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIDDX-00020a-8C
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 15:40:27 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIDDd-00021L-Iz
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 15:40:33 -0500
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIDDV-0005Yh-JR
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 15:40:26 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-aa560a65fd6so809942066b.0
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 12:40:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIDDb-0005c4-VQ
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 15:40:33 -0500
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-53de84e4005so5454218e87.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 12:40:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733172023; x=1733776823; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iP7yF5GPIVTV0GRtgGJcyPA+z3a6BZgq6N3Cha32UkI=;
- b=nelolVYZg/iJYIGD0yEKW6TrD7AQ/I57fowSz6seeE4Uey+GOX4ZpYRlQLGYCR8zrF
- /AK6kpevjhiPyXIdLVjruQc3ypIBKI0K3PAwC1U8YutCHnzTvRU73x6Xw1h+OzaNK6rY
- U6+9ykKBHPxEosbaMCEVbTYDDqQtNi5QakK9bwgAjhXJP7WFTWVK0+wXQt6S3bzCj2GV
- PmZuiWXsDiSRFa4GIiRiVst1EAJ3WG77LepGUh0OAj6XJdYbgMEIYsy8FItUw6Bw6qq8
- 8ryrl69CJzvJbj8wJo2KDLjv3ZJxv2/bl5LFiOLEL/nSO91OOC5kbTUeC/1ufElTZyye
- OGuQ==
+ d=linaro.org; s=google; t=1733172029; x=1733776829; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=F2XoDAWdORdsMKiHDSiAyc0B9Se24JUBVtjW/pCowaE=;
+ b=ETtWKxg/L6IGA3baNerVJQUI/dqQVC3gLbiEk8EFx/MIoTIMYDANcDWfD/0YjxLTw7
+ VTcFetCSREiUNo/dmL7TzVFRkyIH4Ji1Izg2MrFwuKsxStcJr/G6J/fRn501o7SihV9A
+ pXrGURG0RytQaI9VnR25w/quECFtCECnP4zjOT+Z/6CIhW95RZBBk6NfQNNNF9KXUGRi
+ ULC4408mxaTR071f40+GXt54TQ1EXwew81PV88wy8K8k6TVqrT8/2N63kX97sNhhH+we
+ gXARCV8/MI45SN8LRgLObCHEs0JJaaC9xoEwV5mS+uJLfiAENCaGos2w3zXKC6jeTi1G
+ aIWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733172023; x=1733776823;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iP7yF5GPIVTV0GRtgGJcyPA+z3a6BZgq6N3Cha32UkI=;
- b=nUbozYfdfuLP9pEnxmKU8nMJGh/EqVVCpdRCrha0kgpZq1eZFXG6HkjILqDP9d66wb
- sGpq6EZbimSruLisDCO8w3O737kgZ9Ik6TYUNs62dBIbddEvNq3iBT3qVzA8fwzTOs/l
- nncckYOvBCK/udXYCRI0vKy+OYDRRweABpGoOWopJALI3p7RzIcQvbc/TGHfy4UOKYae
- celQKPnASsVVLLvsju1t4HWLlGoAgHCQy0Opz8bPXtygFiYH/n8sKGCSs4P3sTi/giZf
- yRqsyuAn/JYRWJPnJFXpbax0JIYuzv89+9eXm5HYlAliDBOUi8hiUA34cZcPmVIeymQz
- 618g==
-X-Gm-Message-State: AOJu0Yyi8LszgqjuNTbi0nvR7ozT5KK53vW2rt0RQEiwiBRBUYYwvN91
- f8kcj41N2yMk5W4Qu04xXdTQjeR8zwIbfPZKNdblnUlaJaPmJqgX+h+v/7SxPm3hZCBKjfvS66E
- XDIo=
-X-Gm-Gg: ASbGnct+SEhgJ0nN++NcO0IOWwuoo+OozaR6BWXPr6fHODX9aFbH2gbt0sNxMKB5ozg
- 03tLH+I+CpblxLRQvovUzkC0h7WdvfSxJBdGefMzH6Yqw2dSSRBKmSDkC/jh1xfvemyXiTN/W6s
- zIGi2YOnHPfmkQ5Jwfs3bPLOuxeorHiyoSKEcRZnCLdZ25QCwYtlH6F73KxKyN9mS9GHGYq8vHn
- LgACNAZ33yuserwuku+HOvkrdzj1ojYuWegWd3kn57AfSA+ey6P/jChCHifr2TD864OIiDL
-X-Google-Smtp-Source: AGHT+IEh7OftC3eNwNLUWGxserCHzyPx0WrfQPCo5twtNar87A8t79sWPRMUfrdPvFt79HS41wWL7A==
-X-Received: by 2002:a17:906:1bb1:b0:aa5:26ac:18e2 with SMTP id
- a640c23a62f3a-aa59466fda2mr1767260966b.23.1733172023443; 
- Mon, 02 Dec 2024 12:40:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733172029; x=1733776829;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=F2XoDAWdORdsMKiHDSiAyc0B9Se24JUBVtjW/pCowaE=;
+ b=VoNa5eyRbViqNFVTJbKoVNOQcbj4xJZ18NZXlHGHRk14Ee4bfD4VypPQwUwNBs+Mvc
+ Gx6O1Fo6AEPNfWstEz4rnl8q1uQshMgnAXGjWMW7+vB1Fx4MdT7PtTsugcoAsOifMN9/
+ DwT97T+YkxUJWOdgGAYBww/bScfpx6ehOhL3l6YU+qFuSME0jXvOGAlfBkqpOfxBBbwh
+ eu9UQHDGiSq7/EWAhR+i9uF4nx5PFeE/PJBS7efzKKUZ8kWr147J5CiLbS9SIGeSnLKJ
+ euZshyiJYEk8m2EKfymoRkKt46jvAuqCun2uV3YCON+/Lkc6Mp/igNaQtX12a4/SYAIv
+ GvDg==
+X-Gm-Message-State: AOJu0YxekKDP8AnKF2xgE06/yQSXTUSUrB3hrOcB8nq+htm3gy0jT5/n
+ 6BGzfk/8zO8SWrfnw0G9OTpkGoRGE524U3sSfiz2Q5T2HFBSSM+nibr2Qs9NlypUpnU38w1XpKF
+ BzeA=
+X-Gm-Gg: ASbGncsBf+ntwU7lv6L9S0am1RPAo4G7C67qL5pRMjEBG+stJa98CJ9uvrZYtLCs2k7
+ LIGdsH36vklADWdBhrd3DzcP20xhj4HZcxrmf9TEVYpAnfgc6ttD4SHz27vcHc1s8ZGIN3oj57P
+ welLGnt1ezDVjVVkRVUfPjibyVJ6qh9Eoqm+aMtaSSkDHBfwAx7mFhG5T4Y+LYGTIqzB8LmRxqD
+ PVy0oaHo2JSzI4mDyLBNN50Fgk2ZrwvV82vATFPolFmgpMc1fkQvAZobgUcDQ8nYuWSWmJW
+X-Google-Smtp-Source: AGHT+IGg4cOsDt79qCOwN3NcxhdyGA82BcfLjhbtDpBvRFyrQ6k5pa5Xs7ay8BwNkBGLv0U3eSFuaw==
+X-Received: by 2002:a05:6512:b19:b0:53d:d136:c2dd with SMTP id
+ 2adb3069b0e04-53df0108f94mr14054372e87.41.1733172029468; 
+ Mon, 02 Dec 2024 12:40:29 -0800 (PST)
 Received: from localhost.localdomain ([176.176.160.129])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa5998e6da2sm547112166b.102.2024.12.02.12.40.21
+ a640c23a62f3a-aa59991f11esm541817266b.167.2024.12.02.12.40.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 02 Dec 2024 12:40:22 -0800 (PST)
+ Mon, 02 Dec 2024 12:40:29 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -68,16 +69,18 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.2? 0/2] tests/functional: Fix tests failing when TCG is
- not available on macOS
-Date: Mon,  2 Dec 2024 21:40:17 +0100
-Message-ID: <20241202204020.55665-1-philmd@linaro.org>
+Subject: [PATCH-for-9.2? 1/2] tests/functional/test_version: Use QTest
+ accelerator
+Date: Mon,  2 Dec 2024 21:40:18 +0100
+Message-ID: <20241202204020.55665-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241202204020.55665-1-philmd@linaro.org>
+References: <20241202204020.55665-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,17 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Explicit the QTest accelerator to have these 2 tests
-pass on macOS when only HVF is built in.
+When testing with a HVF-only binary, we get:
 
-Philippe Mathieu-Daudé (2):
-  tests/functional/test_version: Use QTest accelerator
-  tests/functional/test_empty_cpu_model: Use QTest accelerator
+   3/12 qemu:func-quick+func-aarch64 / func-aarch64-version                                      ERROR            0.29s   exit status 1
+  stderr:
+  Traceback (most recent call last):
+    File "tests/functional/test_version.py", line 22, in test_qmp_human_info_version
+      self.vm.launch()
+    File "machine/machine.py", line 461, in launch
+      raise VMLaunchFailure(
+  qemu.machine.machine.VMLaunchFailure: ConnectError: Failed to establish session: EOFError
+      Exit code: 1
+      Command: build/qemu-system-aarch64 -display none -vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -machine none -nodefaults
+      Output: qemu-system-aarch64: No accelerator selected and no default accelerator available
 
- tests/functional/test_empty_cpu_model.py | 2 +-
- tests/functional/test_version.py         | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Explicit the QTest accelerator to be able to run the HMP command.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/functional/test_version.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/functional/test_version.py b/tests/functional/test_version.py
+index 3ab3b67f7e3..477d3908d8a 100755
+--- a/tests/functional/test_version.py
++++ b/tests/functional/test_version.py
+@@ -17,7 +17,7 @@
+ class Version(QemuSystemTest):
+ 
+     def test_qmp_human_info_version(self):
+-        self.set_machine('none')
++        self.set_machine('none,accel=qtest')
+         self.vm.add_args('-nodefaults')
+         self.vm.launch()
+         res = self.vm.cmd('human-monitor-command',
 -- 
 2.45.2
 
