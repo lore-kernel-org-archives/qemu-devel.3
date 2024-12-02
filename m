@@ -4,90 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D34FD10DA0
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 06:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6FBD4979F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 06:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tHzYb-00064e-KF; Mon, 02 Dec 2024 01:05:17 -0500
+	id 1tHzfk-0007te-TE; Mon, 02 Dec 2024 01:12:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
- id 1tHzYZ-00063t-OC
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 01:05:15 -0500
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
- id 1tHzYX-0000za-4A
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 01:05:15 -0500
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-53dd2fdcebcso4200674e87.0
- for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 22:05:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733119511; x=1733724311; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GisRIIVFJOhNsOFfrYvIqLASrIH2WPDMnI3BEboU0qQ=;
- b=Ei/jTBY01wiMY81/POpRdnfBnKW9h2gHm5kHitHAhdQP8+MVZTqrQ+gMtkbzhIO7Nx
- eUcjtAbCtKHOc8w4nZaFCsojIGrvAZKXY1SBpSPCNfHqtaGHWf/NlFjNtS8N+2W0BcKS
- qFcdRjwkSO0+R/4+Oo8ucDzD5mDGKS3UM5ObwaOXn4pFanzLKYKGpYYckzHDSmL1p5Xv
- kHLLZcM7AaCyVmtDTGbUUcAWpKJ/bqBd97IGXuOKMx17iz0DkPN272i2sNgPn3uBQ1P/
- 6sN85RplktKbkLUE2KJPLfDmeViA59nE8BRbW0rnH80Eu1RqVCmXpq9W9yrdUn7NyMGe
- hSBA==
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tHzfg-0007tS-Uh
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 01:12:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tHzfc-0003P9-E7
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 01:12:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733119945;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7z4C4qXWu4847BgXLaVdx6k9c1sivKtGDzMQzZfE5+c=;
+ b=RLJHiSRewLO/pY9RYxSxQKJZKfVk4SsMB7didpkxWVH+IBTsOK2l+cRdSiagijnmYz8DoA
+ b0rPv2qIjBfseTVcKalOCm1nK+W+bLfFoS/CQMdizOYzc6Dj30EUbqD+j0KfFMtQ7BEnqO
+ igKoLaq2G2mIQMjebNC3MS9W1cnf2MY=
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
+ [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-299-Hud5LhyeMVSktBJ28gsmtg-1; Mon, 02 Dec 2024 01:12:23 -0500
+X-MC-Unique: Hud5LhyeMVSktBJ28gsmtg-1
+X-Mimecast-MFC-AGG-ID: Hud5LhyeMVSktBJ28gsmtg
+Received: by mail-oa1-f72.google.com with SMTP id
+ 586e51a60fabf-29e5d14524cso120845fac.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Dec 2024 22:12:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733119511; x=1733724311;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GisRIIVFJOhNsOFfrYvIqLASrIH2WPDMnI3BEboU0qQ=;
- b=DT6wlIKDy+1kdLaHi8kXarJ6ZUEPquEtP1ioB6UaXUCXCCINZ/VEIfUwNfvlf80jsW
- oZ16PsQCm7/h+yLsmtvsLYpOhlFpYlqLF55AtHMEt8kA9UGYLglMDMs2QyveKOkjgUuU
- Z+zpYy0SZRKUhxBN0iblaEQQxJdgPBQ4O7hiU69OuoEBIb1WHJ2tJwzohvs9FjZJgThx
- RmHmBjxrfx/rm+kEzy2FJZxsrbe4v0CcW3ev4wob0+uk2XSM9mpXkdUWwbrESqosopd2
- keEFNNag2iJCTRo7ns2zTMGhYC5Lt6hNJXtXo/O6UVLSfCzsNtzSaBBgS5yVfb/pQO1A
- vlUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6t7RngGeB0CN7jbWNx7CQjry2F/EXytlt4xduXTybQ1aalSDevN8pRPQvva1yp+eu8EUODLKC0VGo@nongnu.org
-X-Gm-Message-State: AOJu0YzTCn5z7wqO+CZ0ZAh9qreKNCMiZnMv3fOoFSE4EqysTe5ItDv8
- Zup0xWs7gvk5bZHYpvhywMPZ8AllTwAkZDsYKCWsnAzZUGXipMKhJBny2O8XvUlKYReBouzyxYw
- 8cuuOuu9KQ/UvhaAq2M8SlLMjIKaU4kQ5+fH0Nw==
-X-Gm-Gg: ASbGncvJWM4nLxoFinub/RcDkWW7qlIQLcFtfQ8Xn/657nI+VV3MnTzH2xw3hfZvAlm
- 2GNVU/WrLziTWQV+lavAXDmGpuMgPLw==
-X-Google-Smtp-Source: AGHT+IHfo9w45R8AY9ijuZAOoYGY0sjCl4GYDdqD59pLe8hl6xMQSLhnHjwmX0EgBdU9Gl90ghPiCFh2l10MyS3et9Q=
-X-Received: by 2002:a05:6512:3da9:b0:53d:cb91:2f3e with SMTP id
- 2adb3069b0e04-53df00d1afbmr11467790e87.22.1733119510609; Sun, 01 Dec 2024
- 22:05:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733119943; x=1733724743;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7z4C4qXWu4847BgXLaVdx6k9c1sivKtGDzMQzZfE5+c=;
+ b=pCG4hVCQ7kJtRPdSEUsnqjnkBFK6A+lhMnzclNj5s+/wAg/uiiRkkgKzWvxnKkOHTp
+ kIK8uM7oVeGPmv2yYyhxl3N8xwmQNh4NzPUN5sXWev+5c3Na9MWemVY5ICvzbV/7J0Yv
+ 8XLiS2hE9rlv03L1Veuip9ziLum1u+N1nDXWoxpzNvurtJtS0/+VEL2yJb+HccKeOH32
+ BuR8TmyEzbr6U8XRmsyn1ZYJOiY+WbvDHHRLgiVlNy3ByKcwRtLn0wHAPwC+mH59DNxQ
+ D6Rv1zleUlG/zy0K1u6b1r+UnEK8ib7knU4hckkRSfAk6ozR73bkNahtI48oficKoIha
+ GzDg==
+X-Gm-Message-State: AOJu0Yw272v9E65Wv5dW3wEnU3D245M44ewa+y66ln/rXEKS2ir0ZskX
+ 1gbFSQ0yOe5u5C1khq5a6T/EJ8fleoHvoOinz1BKaIat6Ru6S27wS+HvSW5FAA4e6kLUEdxVv1b
+ t2WGdvc5y2cQjk/sc8l163rVFui3exDNxmJWVYt53Gy7jMQ3GQTjQ
+X-Gm-Gg: ASbGnctaqcG06dhIpf6XWwyiRhuJ2Xc+9tQzWVB1eRkaxuoRnHIc26a8RBUuO4XGqQC
+ euu7XECs5VKhwAXTXZ5/B/rGnCYUqViV3nHDrcQesi4/gn5/cWmfYM7ypVC4rwDA9Gn0qQKzaHW
+ 67+P1Y1d9X0lCnfBzK0u8HSAAen8pYSCc943uwImgpWrLn3qwCcBFdjxJ+t6yDugirvbcO5Udla
+ M8mxMMJRWXDLpmc/xypOzkq/Am3p8h6QDE7W5MqPW1CTlzhyMljaQ==
+X-Received: by 2002:a05:6820:1c82:b0:5e3:b1fe:b1a with SMTP id
+ 006d021491bc7-5f20a171476mr4351683eaf.2.1733119942969; 
+ Sun, 01 Dec 2024 22:12:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEbIyolYTxR7RbEA932Q0FDkPxUZvmvVAnkw+Xn8csTqFEGWrJGrvXN4PsHMybdOUHsJtP5fQ==
+X-Received: by 2002:a05:6820:1c82:b0:5e3:b1fe:b1a with SMTP id
+ 006d021491bc7-5f20a171476mr4351675eaf.2.1733119942569; 
+ Sun, 01 Dec 2024 22:12:22 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5f21a3ab1d3sm2138869eaf.23.2024.12.01.22.12.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 01 Dec 2024 22:12:22 -0800 (PST)
+Date: Sun, 1 Dec 2024 23:12:20 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: qemu-devel@nongnu.org, Corvin =?UTF-8?B?S8O2aG5l?=
+ <c.koehne@beckhoff.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
+ <clg@redhat.com>
+Subject: Re: [PATCH 1/8] vfio/igd: fix GTT stolen memory size calculation
+ for gen 7
+Message-ID: <20241201231220.02358a6b.alex.williamson@redhat.com>
+In-Reply-To: <20241201221129.03ea9577.alex.williamson@redhat.com>
+References: <20241201160938.44355-1-tomitamoeko@gmail.com>
+ <20241201160938.44355-2-tomitamoeko@gmail.com>
+ <20241201221129.03ea9577.alex.williamson@redhat.com>
+Organization: Red Hat
 MIME-Version: 1.0
-References: <ZyRUcGKKS6NbIV5O@Asurada-Nvidia>
- <20241101115501.GS10193@nvidia.com>
-In-Reply-To: <20241101115501.GS10193@nvidia.com>
-From: Zhangfei Gao <zhangfei.gao@linaro.org>
-Date: Mon, 2 Dec 2024 14:04:58 +0800
-Message-ID: <CABQgh9E3ba1F_4bTxkzRmt0sDmyVR+hbxocnqSvrvwerFZwiug@mail.gmail.com>
-Subject: Re: nested-smmuv3 topic for QEMU/libvirt, Nov 2024
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Nicolin Chen <nicolinc@nvidia.com>, 
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Eric Auger <eric.auger@redhat.com>, Mostafa Saleh <smostafa@google.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Moritz Fischer <mdf@kernel.org>, 
- Michael Shavit <mshavit@google.com>, Andrea Bolognani <abologna@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- nathanc@nvidia.com, 
- arighi@nvidia.com, ianm@nvidia.com, jan@nvidia.com, mochs@nvidia.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,33 +112,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Nico
+On Sun, 1 Dec 2024 22:11:29 -0700
+Alex Williamson <alex.williamson@redhat.com> wrote:
 
-On Fri, 1 Nov 2024 at 19:55, Jason Gunthorpe <jgg@nvidia.com> wrote:
->
-> On Thu, Oct 31, 2024 at 09:09:20PM -0700, Nicolin Chen wrote:
->
-> > FWIW, Robin requested a different solution for MSI mapping [1], v.s.
-> > the RMR one that we have been using since Eric's work. I drafted a
-> > few VFIO/IOMMUFD patches for that,
->
-> I also talked to MarcZ about this at LPC and he seems willing to
-> consider it. It took a bit to explain everything though. So I think we
-> should try in Nov/Dec
+> On Mon,  2 Dec 2024 00:09:31 +0800
+> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+> 
+> > Both intel documentation [1][2] and i915 driver shows GGMS represents
+> > GTT stolen memory size in multiple of 1MB, not 2MB starting from gen 8.
+> > 
+> > [1] https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/3rd-gen-core-desktop-vol-2-datasheet.pdf
+> > [2] https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4th-gen-core-family-desktop-vol-2-datasheet.pdf
+> > 
+> > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> > ---
+> >  hw/vfio/igd.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> > index 4047f4f071..e40e601026 100644
+> > --- a/hw/vfio/igd.c
+> > +++ b/hw/vfio/igd.c
+> > @@ -268,7 +268,7 @@ static int vfio_igd_gtt_max(VFIOPCIDevice *vdev)
+> >  
+> >      gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
+> >      ggms = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+> > -    if (gen > 6) {
+> > +    if (gen > 7) {
+> >          ggms = 1 << ggms;
+> >      }
+> >  
+> > @@ -678,7 +678,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+> >  
+> >      /* Determine the size of stolen memory needed for GTT */
+> >      ggms_mb = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+> > -    if (gen > 6) {
+> > +    if (gen > 7) {
+> >          ggms_mb = 1 << ggms_mb;
+> >      }
+> >    
+> 
+> I'd argue this should be rolled into patch 4.  It's not really fixing
+> anything because igd_gen() can't return anything between 6 and 8.  This
+> only allows for several device versions that we currently consider to
+> be gen 6 to align with i915 kernel driver generation by calling them
+> generation 7.  We'd previously lumped them into generation 6 because
+> there's no functional difference we care about here between 6 & 7.
+> 
+> In the next patch you replace this '1 << ggms_mb' with '*= 2', which
+> would be equivalent to 'ggms_mb << 1' and matches your description that
+> the increment is doubled.  Is there a separate bug fix that needs to be
+> pulled out here?
+> 
+> Also, please send a cover letter for any series longer than a single
+> patch and please configure your tools to thread the series.  Thanks,
 
-When boot qemu, reports this
+Disregard this latter comment, I just wasn't copied on the cover letter
+and didn't have it in my inbox to root the thread.  Thanks,
 
-qemu-system-aarch64: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
-qemu-system-aarch64: vfio_container_dma_map(0xaaaadd30f110,
-0x8000200000, 0x10000, 0xffffb8031000) = -14 (Bad address)
-qemu-system-aarch64: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
-qemu-system-aarch64: vfio_container_dma_map(0xaaaadd2bc310,
-0x8000200000, 0x10000, 0xffffb8031000) = -14 (Bad address)
-qemu-system-aarch64: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
-qemu-system-aarch64: vfio_container_dma_map(0xaaaadcf90000,
-0x8000200000, 0x10000, 0xffffb8031000) = -14 (Bad address)
+Alex
 
-Will this also be solved in the new MSI mapping patchset?
-
-Thanks
 
