@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15470D3B7FA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 18:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F1A6E69E82
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 18:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIAky-0006dc-3h; Mon, 02 Dec 2024 13:02:48 -0500
+	id 1tIAtR-0008Lo-O4; Mon, 02 Dec 2024 13:11:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tIAkw-0006dP-AM
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 13:02:46 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tIAkt-0001mN-Nf
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 13:02:46 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2D799BC645;
- Mon,  2 Dec 2024 21:02:37 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 41B8518031E;
- Mon,  2 Dec 2024 21:02:38 +0300 (MSK)
-Message-ID: <725e3857-8cff-4b1d-902c-65c8d9a7ca10@tls.msk.ru>
-Date: Mon, 2 Dec 2024 21:02:38 +0300
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tIAtQ-0008LT-E4
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 13:11:32 -0500
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tIAtO-0004gD-8E
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 13:11:32 -0500
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-21568166415so17189335ad.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 10:11:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733163088; x=1733767888; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=I3ZdXvs0VzUrGWJT20O6Ep+wHnMXQP5EJfdF7Vv6R8U=;
+ b=OHqArBYfDJtHXHIoXcIp57Jki5JxGFPe8fEB+Q9b130OFsNdPouU8ecDxBqolYwxoD
+ xsdiYJ7hPEo0eM5mKtvT/nXNfZqUJ8CsBp3sdeRS8X1Kl2bxLbJsiKGEn7KrUD9KQasQ
+ mXtCNTBCg/fqVgWC0LgE2uEJmYLcRUydm64fN8PaXwKNjezL/p6GitQnDqU5G9iHhJpL
+ sCMvZqokYda77fIlpJMd85z950Av+BKAUX02bx4oAsnniAr1+PiWPPIFkZ7PPILxboVj
+ cuYJopRWPel4thcog4Edxz+DAd3yoZor2OmjMwlGq8E4QhLV9qOCfY5g9xn98UVCP3py
+ qtng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733163088; x=1733767888;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I3ZdXvs0VzUrGWJT20O6Ep+wHnMXQP5EJfdF7Vv6R8U=;
+ b=opYZOg+rZnE8pAkhXS3tFCHlX77x+OjLM3fzE7IE1yvQ/2McHz+bZCtaOnmQsf9Xld
+ mclDcw3Gqod2PIDWWSX6LM1EkT8UsDKuvZCHcYNBRKElOZOx9+IK8AU9aYsPm3Q25q5X
+ iYNgtXMkXoszvlG468Y5fhdEOtBf89Q7uP9JOmlm46VbC3r6AwzloU6dq4vk7J6Dg6hK
+ uXKZdYUBDMWImvBJBqTHMEyZPTN9VCK0UjQTT06yx/022Sp6QHe4BHF5+cwi05Nh+r56
+ 6SrdUM3ryuFcqbh1Mi47+l7pu1yXZebjCraUlxtPyBS70JyquOeuiZ6fJsay4tqDZjVc
+ 2HZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIqangL+kpB/ajFCQpKmw+SEDVBPFy2h7ngzkj20cjK5wFRMNn86FK7y+VwBo3Mh0sqqixyr1fW9s/@nongnu.org
+X-Gm-Message-State: AOJu0Yz0eVIaXPvg63/aLKhNHTwGZ8kP0+sSRlazWBgEU5vFsw9mFgSq
+ qfrW9UvpWAG3zdWx4sLfm1vH1vF4sftES2Nn7kYW9xr/vyRlook=
+X-Gm-Gg: ASbGncs8PLeILA0SkVuLguhE30ZnxXAXxDhKS+OYeYqY+rLehc/oQLTCcTgnAaXQyGa
+ DLx/bF/1OpZZNyrk4w1kw7cIMmS4iVyhXVQeTlHfnI+BO7Yp6cfpWzZiLst4rxafAnjGkMXon2j
+ CYu2mcjM9Z0ZcpJFnnNpK3e/IhBbA9qQmEIcmEo6HZhiyysqsNGjmFVt9eSkQXhZVwJskouWSKR
+ dlRugJp1JHSM6DnYu0/pA5iuwGm0fCrXQa/edBVj6cUrECFcvhRM+M=
+X-Google-Smtp-Source: AGHT+IFplwnKBMnCzdA6Y5NQBNFbtIerDci/bI0Cjsd4X8VivPY6MPLV27Efv6LWAbNATs8iHJQ7Aw==
+X-Received: by 2002:a17:903:2308:b0:215:5aba:7a8f with SMTP id
+ d9443c01a7336-2155aba8f8amr172157555ad.46.1733163087620; 
+ Mon, 02 Dec 2024 10:11:27 -0800 (PST)
+Received: from [192.168.0.163] ([116.231.112.6])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-215a6fd6f57sm13373215ad.127.2024.12.02.10.11.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Dec 2024 10:11:27 -0800 (PST)
+Message-ID: <5bd50f06-9c5d-4747-a793-43fad8400f50@gmail.com>
+Date: Tue, 3 Dec 2024 02:11:24 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3 for 9.2] hw/virtio: fix crash in processing balloon
- stats
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Martin Pitt <mpitt@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20241129135507.699030-1-berrange@redhat.com>
- <20241129135507.699030-2-berrange@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20241129135507.699030-2-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 8/8] vfio/igd: add x-igd-gms option back to set DSM region
+ size for guest
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <C.Koehne@beckhoff.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "clg@redhat.com" <clg@redhat.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>
+References: <20241201160938.44355-1-tomitamoeko@gmail.com>
+ <20241201160938.44355-9-tomitamoeko@gmail.com>
+ <352b53107d7d6666f7d307afebb81da744690e2f.camel@beckhoff.com>
+Content-Language: en-US
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <352b53107d7d6666f7d307afebb81da744690e2f.camel@beckhoff.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,43 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-29.11.2024 16:55, Daniel P. Berrangé wrote:
-> balloon_stats_get_all will iterate over guest stats upto the max
-> VIRTIO_BALLOON_S_NR value, calling visit_type_uint64 to populate
-> the QObject dict. The dict keys are obtained from the static
-> array balloon_stat_names which is VIRTIO_BALLOON_S_NR in size.
-> 
-> Unfortunately the way that array is declared results in any
-> unassigned stats getting a NULL name, which will then cause
-> visit_type_uint64 to trigger an assert in qobject_output_add_obj.
-> 
-> The balloon_stat_names array was fortunately fully populated with
-> names until recently:
-> 
->    commit 0d2eeef77a33315187df8519491a900bde4a3d83
->    Author: Bibo Mao <maobibo@loongson.cn>
->    Date:   Mon Oct 28 10:38:09 2024 +0800
-> 
->      linux-headers: Update to Linux v6.12-rc5
-> 
-> pulled a change to include/standard-headers/linux/virtio_balloon.h
-> which increased VIRTIO_BALLOON_S_NR by 6, and failed to add the new
-> names to balloon_stat_names.
-> 
-> This commit fills in the missing names, and uses a static assert to
-> guarantee that any future changes to VIRTIO_BALLOON_S_NR will cause
-> a build failure until balloon_stat_names is updated.
-> 
-> This problem was detected by the Cockpit Project's automated
-> integration tests on QEMU 9.2.0-rc1.
-> 
-> Fixes: https://bugzilla.redhat.com/show_bug.cgi?id=2329448
-> Fixes: 0d2eeef77a33315187df8519491a900bde4a3d83
-> Reported-by: Martin Pitt <mpitt@redhat.com>
-> Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-/mjt
+On 12/2/24 17:48, Corvin Köhne wrote:
+> On Mon, 2024-12-02 at 00:09 +0800, Tomita Moeko wrote:
+>> ﻿CAUTION: External Email!!
+>> DSM region is likely to store framebuffer in Windows, a small DSM
+>> region may cause display issues (e.g. half of the screen is black).
+>> By default, QEMU uses host's original value, which is determined by
+>> DVMT Pre-Allocated option in Intel FSP of host bios. Some vendors
+>> do not expose this config item to users. In such cases, x-igd-gms
+>> option can be used to manually set the data stolen memory size for
+>> guest.
+>>
+>> When DVMT Pre-Allocated option is available in host BIOS, user should
+>> set DSM region size there instead of using x-igd-gms option.
+>>
+>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+>> ---
+>>  hw/vfio/igd.c | 17 +++++++++++++++++
+>>  1 file changed, 17 insertions(+)
+>>
+>> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+>> index 3fd822241d..614223123b 100644
+>> --- a/hw/vfio/igd.c
+>> +++ b/hw/vfio/igd.c
+>> @@ -712,6 +712,23 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>>  
+>>      QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
+>>  
+>> +    /*
+>> +     * Allow user to override dsm size using x-igd-gms option, in multiples of
+>> +     * 32MiB. This option should only be used when the desired size cannot be
+>> +     * set from DVMT Pre-Allocated option in host BIOS.
+>> +     */
+>> +    if (vdev->igd_gms) {
+>> +        if (gen < 8 && vdev->igd_gms <= 0x10) {
+>> +            gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
+>> +            gmch |= vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
+>> +        } else if (vdev->igd_gms <= 0x40) {
+>> +            gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
+>> +            gmch |= vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
+>> +        } else {
+>> +            error_report("Unsupported IGD GMS value 0x%x", vdev->igd_gms);
+>> +        }
+>> +    }
+>> +
+>>      ggms_size = igd_gtt_memory_size(gen, gmch);
+>>      gms_size = igd_stolen_memory_size(gen, gmch);
+>>  
+> 
+> As mentioned in my commit removing the x-igd-gms option, I've seen issues on Windows guest when
+> setting a wrong gms value. I can try to recheck this.
+> 
+
+What's the windows GPU driver version you're using? I am using latest
+32.0.101.6299. My DVMT Pre-allocated is 64M in BIOS. When using
+default value, with a 4K display, strange behaviors were discovered
+during my tests, like the lower half (actuall about 1/3) of the
+screen is black, 3D mark only runs at 2560*1440 and the refresh rate
+was limited to 30Hz.  Restarting guest won't fix this, but when I
+forcefully set the GMS size in emulated GGC to 128M, these issue
+disappears. That's why I suspect DSM may contain framebuffer.
+
+Per my result, it seems windows guest is using the DSM as something
+like dedicated VRAM, and GPU itself can handle guest physical address
+internally.
+
+The OVMF firmware I use is
+https://github.com/tomitamoeko/edk2/commits/igd-pt-adl/
+with GOP driver extracted from bios image from motherboard vendor.
+
+I'm also wondering why the BAR4 quirks were implemented before, GTT
+are not located in DSM, but in GGMS size below BDSM. This region is
+inaccessible directly, reading it via /dev/mem immediately hangs the
+system. The only way to access GTT is via MMIO BAR0.
+
+
 
