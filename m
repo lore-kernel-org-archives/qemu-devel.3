@@ -4,71 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5AF2D78321
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2772D78321
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:50:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6lJ-00065x-Hx; Mon, 02 Dec 2024 08:46:53 -0500
+	id 1tI6oQ-0007Ou-5r; Mon, 02 Dec 2024 08:50:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6lI-00065X-I5
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:46:52 -0500
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tI6oN-0007MH-ND
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:50:03 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6lG-00070t-Ph
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:46:52 -0500
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2ffa8092e34so46000931fa.1
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:46:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tI6oM-0007ZJ-0K
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:50:03 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-434a95095efso30667485e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:50:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733147208; x=1733752008; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GVRIpEznl8oDcQBXG13TIiy7xFGZv25yp13RR2IH8Fk=;
- b=loR9WnT/41qIFxWNkOOvBKWDsksmmxlrVIfaslyBmkcGAt/P4j4FO9YIaNndplEY+r
- cMAs3FVKhri5zrPuTgvOPcLL1C8cPX2vltCqaFb+Udl+2ChCZ8eruA9INhBwjuI6O1s8
- 3sNGv8IVM6Y3piCcmYTjuDUA8a9vW6/KUNwJVE/WmwaDkHT+BxoeIO5G+KXFocQD/P4C
- iPVE+S0D/wVTERWN/1eVlz6/PzXDB7S5xoeeO7CybnxvWLW7CV8NyjzbaKu8Z9QXp/Mg
- 54LgOXqO8Y2EvoLKX4HGsWNO6mcdwMX2rFG0aEv4+ta3rA+Zd2LQV1TfZZw9GIZuTcPl
- K1RQ==
+ d=linaro.org; s=google; t=1733147400; x=1733752200; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rmX0g0MGNNVbRpmpyn/uwOzxAYd3z26y3Y9icJ1a8Uc=;
+ b=iN3QzQWbBcF63G7XLudAmwBnaSYvoQNur8FOyPP6Ni2GVbZQNfSlgJAq3whf1MiZ+v
+ 3OxYFak2C/RRIHCrDwsZ4pWmi08Vgtt+JOZ5SrRxseO20AXl9vc8a0Rue7SJtnTBFkRj
+ GKeJeDQb0dapHUjP9zGLcT/B5tkd6+pkTLgk/JwCtgmQ4wmdwznWn9ogKC9m70DNuadz
+ DIhno0lNlX3WmQaJov+zZ/d+vDy2MEp6wJKPAY6V1wHfcHS0dpdRlCjgGqMOdGSYllgr
+ wZs4r9LeXzBbbM/8VzmoQmc9YmGYTMZyckNl9f6+h5lZFV1T5fDCvLDkOixhbCwAgOye
+ oiHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733147208; x=1733752008;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GVRIpEznl8oDcQBXG13TIiy7xFGZv25yp13RR2IH8Fk=;
- b=Cze8l8KGyacs+0pk36Qz74DlpOnE9w+3HlhasjK7Dp25AyQbUu7YlN9h2fQFd2HXxB
- b15sVbys9m1X3cpovSXSfvXpEh4UYkILNSH5u+GRXYi509DV8keYWxS/JTVZQVARC8Yz
- F8aqw3sc0kT+jrqmyAj2LnfFOcl/hMRETCi1Aod/KOpWWKEA9uzkZPIuevYWHwYPEn4p
- Taoi2sCVgFAW23S+UeZTCIiFwtr985v/F+KWjQJ5YSCIoWFTWou1gwnmhAje3MWpXzlZ
- wnZA2z+4yX6hi8L/SlkmknEv+MdyPnzI4DqQONsAqweOcfLPkMFWtgwZxQmrC7LCjuVi
- EXyA==
-X-Gm-Message-State: AOJu0YxiGV0KkSmktk5QW1BlaaiRl1GA/pdNNAqlXOpoiyDhu1mOAdAB
- ZCEbJSIKeRQQmBGCV8ZLISuNVEtxFuyQ1VzxBJc3wQwwyJKEPzxjJRaSpBXWg9A1i1fT4XQPVpM
- O0k+qQtiFvxK+kp6tILlYFA57OIWOuXSgylBFfFn2sswsO+pd
-X-Gm-Gg: ASbGnctsrsQ7+qHY41jsuumy4Jh/JGNM2/sPNFWnlws5Hipc+6vBXb94/CDeQarkx9x
- yCRlucSt9vjd0xckUpVbhAYC0YtY054JO
-X-Google-Smtp-Source: AGHT+IGF6SyGJghqTcFtw6y6tsOXfnOtLkboLVge9m9V1cNnMBEgkVXOEKUlf/kuVb4uiJ8N91H0H/Y+MDb0Szf8aXg=
-X-Received: by 2002:a2e:bc22:0:b0:2fb:62ad:89fe with SMTP id
- 38308e7fff4ca-2ffd604941emr108380741fa.16.1733147208471; Mon, 02 Dec 2024
- 05:46:48 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733147400; x=1733752200;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rmX0g0MGNNVbRpmpyn/uwOzxAYd3z26y3Y9icJ1a8Uc=;
+ b=Lw4r8MtcjjD/8zcpogYNc+Zy7EGKAVvFISA3J7LCFjjPkP8uAZ/1WZUMxSxCMBOztj
+ R40UJ7y+z3hDnVVnLG31LsfjOzPfjT7oX5T6uqXJbS63bIEXpc1oNEyn2vF3RPwvFvAp
+ PUG7UjMqzbUb6kYq17NG6oUenIa5pClnF+q1UJZUUKecgoe+O8VJaKLpzx58J9pXQvzk
+ CVCpAP9sUBJ/CEpHojtaK9lBnAIbA7CmBrcafdBWfc+vMcKZBshrDkk8DS9S+Lp7ygS0
+ WhHH/TiGoVMe9txG6Usb/AbA0bdG/H/ijkpbXhHW0ypbryTv59PbiL2BNfASg8Pvb11K
+ Fk+w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0aS/3BiM4l4wOrVWamgydcqMbLSHecLodQ+hEOtIKUwnAkWdCICza5XJU9G+odfMV87UsfzHOP1/n@nongnu.org
+X-Gm-Message-State: AOJu0YwUCigDvSaexHhErYQpOEvOdC4JZzaP2qlp/qNolRcWwe/cjA/h
+ ZC9NJ2X5H/E+zvt9/Uq/YYbHoSw0OzeEeBCgmHxLh1PfyXvtP1X4zJvbK979apc=
+X-Gm-Gg: ASbGncu2T9JYajOaO3vQhQo85Z9HfUML4ak7wRHnudh6dVJKN22lBhRDymROXqNPmnM
+ lVUsa/NFHz+PZ7+aEeI++C6evuo3rV/BdiuxL8+LlKQ9BAf68a+0aawYFjdJhH3E4psjbX3IKbS
+ alFn/KLw4/18sMjRjMPq8TO1iKrZaxi26wYz6MrbQkU9gABSZH+wOaHEJebDrkagqdr3CGrh6FB
+ 1xqkxTwdgbaq0h510igd1VhYakTLOibPnJfC6S1FRDanfnMM89AOlFVwolCGADFAspORJ0p8C6f
+ GERE/7Dtx7Mzdmt3PBtyatEnmtTzNg==
+X-Google-Smtp-Source: AGHT+IEoxFtRO93UDD7FAJTxOIW72VUHEBg9mEG6unYQonOmYQv7xtcHMM1r2jxCf+h3fxeSYMN8xA==
+X-Received: by 2002:a05:600c:2d4b:b0:42c:baf1:4c7 with SMTP id
+ 5b1f17b1804b1-434afb94427mr141024645e9.4.1733147400170; 
+ Mon, 02 Dec 2024 05:50:00 -0800 (PST)
+Received: from [192.168.68.213] (72.red-95-127-54.dynamicip.rima-tde.net.
+ [95.127.54.72]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434aa7e4df1sm183942675e9.39.2024.12.02.05.49.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Dec 2024 05:49:59 -0800 (PST)
+Message-ID: <e0fda20b-56c2-4195-bc64-a75104e277a0@linaro.org>
+Date: Mon, 2 Dec 2024 14:49:56 +0100
 MIME-Version: 1.0
-References: <20241128103831.3452572-1-peter.maydell@linaro.org>
- <c6ea5acc-e07f-4eb8-ad8a-b339f27c9102@linaro.org>
-In-Reply-To: <c6ea5acc-e07f-4eb8-ad8a-b339f27c9102@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 2 Dec 2024 13:46:37 +0000
-Message-ID: <CAFEAcA_GA+UKqj6izUXY_snEECJc6buNiKrgA9yXXAW8skqcBg@mail.gmail.com>
-Subject: Re: [PATCH for-9.2] target/riscv: Avoid bad shift in
- riscv_cpu_do_interrupt()
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x231.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/67] target/arm: Convert UDIV, SDIV to decodetree
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20241201150607.12812-1-richard.henderson@linaro.org>
+ <20241201150607.12812-3-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241201150607.12812-3-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,45 +101,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 28 Nov 2024 at 12:59, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/28/24 04:38, Peter Maydell wrote:
-> > In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
-> > cs->exception as a shift value.  However this value can be larger
-> > than 31, which means that "1 << cause" is undefined behaviour,
-> > because we do the shift on an 'int' type.
-> >
-> > This causes the undefined behaviour sanitizer to complain
-> > on one of the check-tcg tests:
-> >
-> > $ UBSAN_OPTIONS=print_stacktrace=1:abort_on_error=1:halt_on_error=1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -device loader,file=build/clang/tests/tcg/riscv64-softmmu/issue1060
-> > ../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63 is too large for 32-bit type 'int'
-> >      #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
-> >      #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
-> >
-> > In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
->
-> Semihosting is completely artificial and should never be injected.
-> The maximum "real" cause is
->
->      RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT = 0x17,
->
-> We ought to hoist the handling of RISCV_EXCP_SEMIHOST higher in the function, before these
-> calculations.
+On 1/12/24 16:05, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/tcg/translate-a64.c | 64 +++++++++++++++++-----------------
+>   target/arm/tcg/a64.decode      | 22 ++++++++++++
+>   2 files changed, 54 insertions(+), 32 deletions(-)
 
-Perhaps so, but looking at
-https://github.com/riscv/riscv-aia/releases/download/1.0/riscv-interrupts-1.0.pdf
-it says that mvien, mie, etc are 64-bit registers and the
-cause value can be validly greater than 31. So we need to
-use the ULL suffix here. And if we're doing that, then it's
-harmless to also calculate these booleans even in the
-semihosting case, because we don't look at them then.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-So I think we definitely need this patch, and whether
-to refactor the code to move the bool initializers around
-is a separate question.
-
-thanks
--- PMM
 
