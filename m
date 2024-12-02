@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8D0D78321
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:37:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A16D78320
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Zz-0005cA-So; Mon, 02 Dec 2024 08:35:12 -0500
+	id 1tI6Ye-0001Mf-OS; Mon, 02 Dec 2024 08:33:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6Lw-00082O-OX
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:47 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tI6Ln-0005qF-IN
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:20:36 -0500
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B26WwwF016645;
- Mon, 2 Dec 2024 13:20:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=ozP1Yoc6awP/psqrTDYAdBGKGPDf1Mz9oBrsbPNytDw=; b=
- fzXFce+07enPsPQSRKuwKmpbVPXORGergurXJHBzwqzE9pPE6mt729vxhQPRzPoj
- bGiyowvYgJD9QqmO1apQxZEXZPrDLkG+nbN6ojp8nTdoC9xlVWj6Bx80D5mi2OsK
- yxqIfwK/dFcLT35uxf/ShEi0Lgn7KrBb04auoISLhuxuR7JFEATLpgKXCZQm2+da
- CrGzqjB1Av4KQ9D/swEuRBra9Ed32GxGekISyUjzgbz2arQMwa204PwOKFNdskm2
- HdVUSXn2xPjFP6OEH4Lb+MRaPmC3B1UYVcMwJfu1l9gvQL6TJHcubcdl9Pxti7q2
- uuOHV/KzH/fuzuvpk34A4A==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437u8t2xtw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:25 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4B2C2cLu032113; Mon, 2 Dec 2024 13:20:24 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 437s56jttr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 02 Dec 2024 13:20:24 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4B2DKCF3032806;
- Mon, 2 Dec 2024 13:20:24 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 437s56jthv-16; Mon, 02 Dec 2024 13:20:24 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI6H3-00033l-2P
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:38 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI6GY-0003EW-TE
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:36 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-434a736518eso53475065e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733145255; x=1733750055; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I1o8XZNdx+7TX2Hd+GlCvP6YeG8j6TyLd31LJRVrH9U=;
+ b=XWxwHwcf2W2NDuErBMhXqVtSpPUEAySQHSDIFRXVd4jGnQathLuzce3hFfiABubNBM
+ ym+DQGcMduvkiQIf5e5xY/fyaEasUJRdhr54GfV/cFqY0eQG4X1NXFMsfDdnNnJLYFyw
+ c9OPJGpAQY/pwSx3zSQO30OmFZVK+MmmTizfyyH2n48vOb9XfAHsYWcgeJKeWWxHEdrr
+ jYie/btJAaGfFQebyGqxke26Zn1jTLc3ZhEC06azm5CMoo7uZuTx7Mv2u4Jykx2HrTaJ
+ 590ctuy8gzjRAebsKww0Bv0DA4olR60mGKRdYEahUv6wyXg1XqYnUe0WnCoMZ6yN52P4
+ 0FZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733145255; x=1733750055;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=I1o8XZNdx+7TX2Hd+GlCvP6YeG8j6TyLd31LJRVrH9U=;
+ b=H2E2hIOzEusJ0PQLEuO9if39ftXUDkJ6tVbtgpGvvSgTI0fru1VfgQaE0E3cqlKGqh
+ JTqxceUf8zL3m8h90dp+KTC0XCJGrUrRcu+52vVQAOF9MLljEhOJMcCXxKwOqKgmnBSY
+ /IHt0Pb/R/0TKdQ+0C8cIq1nm4jFnVlBPLCrq1TRbjan2rpUgVuDzqmuF0HUL6cpNCOE
+ DtOhcaqyYuiZXlEoKH2xC/FMPIG+rmk93BuiOvNmMVSZ/ALoFOgdDq5H74QWP2CcT3Ni
+ Ok2pwlS/yKcBG52N2KC4d8eiQR4dmQzx7mLZRphwcoA0ZD8HDHiutEG9fhdAqg1cGUHf
+ hfAg==
+X-Gm-Message-State: AOJu0YzXf7zZzJ+IxyMOvOyxUZgpfFvwJskUveTxnu6A24+fDaVMlBv6
+ 9M9HOJJ/L0W2AjpTzk5gaH/IFnqZv7PwFh+9wi61Dx6T7Rg6rk5NzGWwRPJ4APZttIiBxFvsZPz
+ D
+X-Gm-Gg: ASbGncuxFMO/jEQLoR3Iy3cQ1H1AOPlrakqpfSZTWNTPf5dYAW51VdS4PCxjv65ld+G
+ srfJ8ky1fu8W7MuTkemBLo87tvrESrSqhhMYyJQkJ6z7UFlekJ8rq7oYe0RCTcR0e2C06nuriM1
+ mAepLLNuEBB1QpuOFRU/I6NhpkLmCZyG1E7GErN7llnQJo4apjVR6+1Zavp66gMtQSnJvr/Uh9Z
+ XPI4MaMVvXqLb10nnL1kch7fx8v+s0AUrGZS1A3/Ql5FJzlk9hxkh0=
+X-Google-Smtp-Source: AGHT+IHC0YjjZ9AQjXw67UBGp3IT7FRgmD1pMeQ/h0Fw/MRF7TXN1I7D+96J+L1KlfsQ3kwY/1WEJQ==
+X-Received: by 2002:a05:600c:5024:b0:434:a1d3:a321 with SMTP id
+ 5b1f17b1804b1-434a9dbb663mr276864655e9.3.1733145255500; 
+ Mon, 02 Dec 2024 05:14:15 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Dec 2024 05:14:15 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 15/19] tests/migration-test: memory_backend
-Date: Mon,  2 Dec 2024 05:20:07 -0800
-Message-Id: <1733145611-62315-16-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2024-12-02_09,2024-12-02_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxlogscore=999
- spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2411120000 definitions=main-2412020116
-X-Proofpoint-ORIG-GUID: YhYZAIzkvm0W5JLO-YZkL-nLDP6f7yEo
-X-Proofpoint-GUID: YhYZAIzkvm0W5JLO-YZkL-nLDP6f7yEo
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH v2 for-10.0 16/54] tests/fp: Explicitly set 3-NaN propagation
+ rule
+Date: Mon,  2 Dec 2024 13:13:09 +0000
+Message-Id: <20241202131347.498124-17-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
+References: <20241202131347.498124-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,84 +111,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow each migration test to define its own memory backend, replacing
-the standard "-m <size>" specification.
+Explicitly set a rule in the softfloat tests for propagating NaNs in
+the muladd case.  In meson.build we put -DTARGET_ARM in fpcflags, and
+so we should select here the Arm rule of float_3nan_prop_s_cab.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/qtest/migration-test.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ tests/fp/fp-bench.c | 1 +
+ tests/fp/fp-test.c  | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 74d3000..64e1c50 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -609,6 +609,11 @@ typedef struct {
-     const char *opts_target;
-     /* suspend the src before migrating to dest. */
-     bool suspend_me;
-+    /*
-+     * Format string for the main memory backend, containing one %s where the
-+     * size is plugged in.  If omitted, "-m %s" is used.
-+     */
-+    const char *memory_backend;
- } MigrateStart;
+diff --git a/tests/fp/fp-bench.c b/tests/fp/fp-bench.c
+index fde64836194..39d80c9038f 100644
+--- a/tests/fp/fp-bench.c
++++ b/tests/fp/fp-bench.c
+@@ -493,6 +493,7 @@ static void run_bench(void)
+      * doesn't specify match those used by the Arm architecture.
+      */
+     set_float_2nan_prop_rule(float_2nan_prop_s_ab, &soft_status);
++    set_float_3nan_prop_rule(float_3nan_prop_s_cab, &soft_status);
+     set_float_infzeronan_rule(float_infzeronan_dnan_if_qnan, &soft_status);
  
- /*
-@@ -727,6 +732,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-     const char *memory_size;
-     const char *machine_alias, *machine_opts = "";
-     g_autofree char *machine = NULL;
-+    g_autofree char *memory_backend = NULL;
+     f = bench_funcs[operation][precision];
+diff --git a/tests/fp/fp-test.c b/tests/fp/fp-test.c
+index 251c278ede9..f290d523ab1 100644
+--- a/tests/fp/fp-test.c
++++ b/tests/fp/fp-test.c
+@@ -940,6 +940,7 @@ void run_test(void)
+      * doesn't specify match those used by the Arm architecture.
+      */
+     set_float_2nan_prop_rule(float_2nan_prop_s_ab, &qsf);
++    set_float_3nan_prop_rule(float_3nan_prop_s_cab, &qsf);
+     set_float_infzeronan_rule(float_infzeronan_dnan_if_qnan, &qsf);
  
-     if (args->use_shmem) {
-         if (!g_file_test("/dev/shm", G_FILE_TEST_IS_DIR)) {
-@@ -802,6 +808,12 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-             memory_size, shmem_path);
-     }
- 
-+    if (args->memory_backend) {
-+        memory_backend = g_strdup_printf(args->memory_backend, memory_size);
-+    } else {
-+        memory_backend = g_strdup_printf("-m %s ", memory_size);
-+    }
-+
-     if (args->use_dirty_ring) {
-         kvm_opts = ",dirty-ring-size=4096";
-     }
-@@ -820,12 +832,12 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-     cmd_source = g_strdup_printf("-accel kvm%s -accel tcg "
-                                  "-machine %s,%s "
-                                  "-name source,debug-threads=on "
--                                 "-m %s "
-+                                 "%s "
-                                  "-serial file:%s/src_serial "
-                                  "%s %s %s %s %s",
-                                  kvm_opts ? kvm_opts : "",
-                                  machine, machine_opts,
--                                 memory_size, tmpfs,
-+                                 memory_backend, tmpfs,
-                                  arch_opts ? arch_opts : "",
-                                  arch_source ? arch_source : "",
-                                  shmem_opts ? shmem_opts : "",
-@@ -841,13 +853,13 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-     cmd_target = g_strdup_printf("-accel kvm%s -accel tcg "
-                                  "-machine %s,%s "
-                                  "-name target,debug-threads=on "
--                                 "-m %s "
-+                                 "%s "
-                                  "-serial file:%s/dest_serial "
-                                  "-incoming %s "
-                                  "%s %s %s %s %s",
-                                  kvm_opts ? kvm_opts : "",
-                                  machine, machine_opts,
--                                 memory_size, tmpfs, uri,
-+                                 memory_backend, tmpfs, uri,
-                                  arch_opts ? arch_opts : "",
-                                  arch_target ? arch_target : "",
-                                  shmem_opts ? shmem_opts : "",
+     genCases_setLevel(test_level);
 -- 
-1.8.3.1
+2.34.1
 
 
