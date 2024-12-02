@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5318D3B7FA
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 17:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA19FD7833E
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 17:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIAYh-0002kT-Us; Mon, 02 Dec 2024 12:50:07 -0500
+	id 1tIAee-0003jo-Dc; Mon, 02 Dec 2024 12:56:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIAYg-0002jW-2R
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:50:06 -0500
-Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
+ id 1tIAeb-0003jU-RQ
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:56:13 -0500
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIAYd-0006hr-L7
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:50:04 -0500
-Received: by mail-oa1-x2f.google.com with SMTP id
- 586e51a60fabf-29e5aedbebdso851675fac.0
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 09:50:02 -0800 (PST)
+ id 1tIAeY-0008Uu-NM
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 12:56:13 -0500
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e397269c68fso3602842276.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 09:56:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733161802; x=1733766602; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733162169; x=1733766969; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=afXHuXR2chpuSmtZdTMIHMhVYOc7rp2QIukSzs6GX1U=;
- b=cfHiaeq2cMulTAaO4FM9IZSS5hXptKeYK6LAT1icINuDIAi8sAQYNdqAjHcLOl9fNf
- CuM0pSV6NIWANCMA9WoBCU9dRn46pXWehxYUPPM8WhAwGpuK0+H/P1++pLAx+bt4EaNS
- jIxaWzLQHQTp2pLRuoI/Acb7ZGxjU9b0DVp/b1C8/+3d0LKA0qi8dc767gOA8njwokhB
- Ckmw8k+EMkGqlBFk3R7QiOCL7RQ66ZXtjBcOEZW8aPKkzC94PjRQFn+CU/laqmYuPEO6
- 1ttNWzcTfIHcRApilB6BFKlzGMEtOAyQ9cQU3Xf9gXDqF2NxtPGtDJIrgmCcVmGUbJJT
- bF0Q==
+ bh=1RnQY+VXTgzU1N4LJf3TPk5wngPXdj30nDDGBwg7Zms=;
+ b=BkWjouSjqCga1ahEUv72BD+gCbS/1p6diVemr2odezJQvlpwge1CCaz1QGTmFyrHUn
+ BPP/LNbFKc2aLOn5mQjWzQCyFmL2rWH5QfSnBbdfEv0aN9myCUIW1+duwhVVD8P6xGL3
+ FpdgXJAKa7vVq+ob2LdzaaFesdpT2oWhAOIGMBl8S+w4ScNLwvr9JsHWOsgAheu57YLq
+ k4+wNW4Tq7tXYWEUxnX7kqxU4wPx86xp/fkAF7mq1sknBLkQw0WAsaod54ajjTh0rmJq
+ Hw9rwvylbrynHn97SUnjbeRkqpbsCnmjxvxkZvSykQrZOT/mcX2WvbZHFp+g4AXgJDr9
+ 529Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733161802; x=1733766602;
+ d=1e100.net; s=20230601; t=1733162169; x=1733766969;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=afXHuXR2chpuSmtZdTMIHMhVYOc7rp2QIukSzs6GX1U=;
- b=v/DfPKXbraii/dZnq5AtaT0+k5RUSAexVXGAsLXY+4VtlGlYKE4ccXQIm7oaXDKA7Q
- zK3Y6jfS/NepytIpHzKdlCUHbuagNW6u4rWstmMekJDH+/3ztaEr1BLpQwmEZPzxR3H1
- 4p2aLQpTqBxWkIdqyQznQwO3p0VjWcCJYy5TGbRj4ouTObhextQ25iLKaDQQtk/uP5x4
- PEd+lxH+6QiNjrtJdEUZIJXQKMzn1hkisrWrUvZX3Pxa8qJEH96Qq3L4AFSXkL5hKLo8
- z3S4u8JyYP3eM26ggzLwClN8YMEvftPFavCR4Y5WoDm7WZDNOMlB9MO1LRb5H8htWOwI
- x/8A==
+ bh=1RnQY+VXTgzU1N4LJf3TPk5wngPXdj30nDDGBwg7Zms=;
+ b=V+kltKGZv/BiRUJLa0waZH4PvyMxWeVLeTnEKlnMx6dg+9q5KVDcvhRrRn51edRg5Q
+ DaSR0ZpyeHSbVklv5oP9pfprDcWjTDmkswJkNInvGTCrHJYCoarc6RFuT/hhKrcMHc/6
+ 96nMPB/hWVHAHMxVaVTPr6xDXX6ykFhxPaoDU318yCREI8tr/aebWGjz6poTsYQcVOkE
+ IGmM0ICu++6DjPQEXEKEs5QW9qQ+wiuTRt8Hr7R9YMKsNYwxzN+MlFg2QNjujpaeyBXz
+ /dRHGl19LCWR5UTsFPo8grNiKaKc7/x/YTVJmTTWxJ8jaYvP6T03kvGput1eKzTfX53Z
+ WVIA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUB/r3oZJ1ktKqGBP4XNmcT1DSm9/bszwlkE7Zkh7AoArVfoGPuDSTKaE4qvOsSua3PkSsVA1nY9AFm@nongnu.org
-X-Gm-Message-State: AOJu0Yzd/SVr4vkZvxZh1DLqmb9S3vAh0d8GGjcNB0HnNY9Itj3KuFUw
- D4UVsWDPWC/LfFBOJU9bOk1M0KUucKNQlxnmyXNLOErpW5CQq6nhZTzDsJnAjlc=
-X-Gm-Gg: ASbGncss03NDiQtk0YRbRvTnD7Px+/wJXmnFeqEe3WIJN/cjAM7+nxFX1F7aUSFR102
- nULB5QBafEJVAoX5jGIXzQpmFQ82ZiQ/qOQvHbGgioj/s3LRWNPIogHDgw4i29Rhb7MDmQXhAQL
- HMOYuDby1/HciZilWKQlqWpvkrf0QXM+B+Qd+A0Aujms6wOeXUSJyB2OKzTEJ903C0lLWt2SimH
- xAeaUxanWBKQXJTCkOf60wS+t9LQxBYvNCqNuXvQ9BKQnFEcurc9ZchQF5EULMk565H9eA=
-X-Google-Smtp-Source: AGHT+IHYffnxkL/kdsXahEc3zTts96I0xDFyQbG5BFUq9svjcwS0DFTZ145JH/tm1KSiAfCYvQd+HA==
-X-Received: by 2002:a05:6870:5306:b0:29e:5aeb:ea06 with SMTP id
- 586e51a60fabf-29e5aebf56cmr5717843fac.41.1733161801659; 
- Mon, 02 Dec 2024 09:50:01 -0800 (PST)
+ AJvYcCWqWN27W3GuMpCIZZqXvcoEHeb4tWhVms8XqhN/zWYUWVZ96srNLteX5B1nCGw/hZydlLze46W41kuN@nongnu.org
+X-Gm-Message-State: AOJu0Yz86/a6XwraLjvjG+Ij0NeR4huXNPXTsXzIfBEdUkPHlGWe4Ef/
+ 0kosCMKXJswX8FCCw79yg5W+YKecjI/rJV5T9etCOntL9tI+bAjbBG9WEHGU8h4=
+X-Gm-Gg: ASbGncupru3fGCWkRHwk9rP6sUvO0D593Tgthx18nlIUtzbzWlWNoxJini9ie0UbjtD
+ /BuHgYdhamPST4+rvv/YGEgDG6pBUoyGJZUNdAWOky0S0KVZ4DbpgnqVfMqEJfP97BTI6EeyONO
+ 8IvRthYadriQpb0Q+Xeadofr7zKzm2bVdTrt2f3+W2D4fA9r3pwY85pMio6J6+E0RbyA/ZH4U2k
+ csNTonqEVDMaX98CBKM5u5L6Ka6XcCFxcnNd4l40Bt89csky85VeGidL/fpGBmWpRsOwew=
+X-Google-Smtp-Source: AGHT+IGzw/EDxT44tpOQWp5F5thRj6e6aYrSMYC/eizCgeWcEaFKqJQ6rytcm7GCY/fQ0f3pOhNL2A==
+X-Received: by 2002:a05:6902:2b07:b0:e33:13ab:52c1 with SMTP id
+ 3f1490d57ef6-e395b9364famr24753840276.35.1733162169019; 
+ Mon, 02 Dec 2024 09:56:09 -0800 (PST)
 Received: from [192.168.170.227] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29e520e34fbsm1302895fac.13.2024.12.02.09.49.59
+ 6a1803df08f44-6d8903b3a65sm32059646d6.18.2024.12.02.09.56.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 09:50:01 -0800 (PST)
-Message-ID: <c626df3b-3994-4898-a97c-e4d4a45c6636@linaro.org>
-Date: Mon, 2 Dec 2024 11:49:57 -0600
+ Mon, 02 Dec 2024 09:56:08 -0800 (PST)
+Message-ID: <b89bb087-58f2-4039-8c11-59f373fb2b6d@linaro.org>
+Date: Mon, 2 Dec 2024 11:56:05 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/67] target/arm: Convert CRC32, CRC32C to decodetree
+Subject: Re: [PATCH 36/67] target/arm: Introduce gen_gvec_cls, gen_gvec_clz
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
 References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-5-richard.henderson@linaro.org>
- <59d6b035-8be3-43bb-849d-5664bcd34795@linaro.org>
+ <20241201150607.12812-37-richard.henderson@linaro.org>
+ <c0aa6a8b-59f4-4d3a-83c5-aff885a2eaf8@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <59d6b035-8be3-43bb-849d-5664bcd34795@linaro.org>
+In-Reply-To: <c0aa6a8b-59f4-4d3a-83c5-aff885a2eaf8@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yb1-xb30.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,26 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/24 08:01, Philippe Mathieu-Daudé wrote:
->> -    if (!dc_isar_feature(aa64_crc32, s)
->> -        || (sf == 1 && sz != 3)
->> -        || (sf == 0 && sz == 3)) {
+On 12/2/24 10:29, Philippe Mathieu-Daudé wrote:
+> On 1/12/24 16:05, Richard Henderson wrote:
+>> Add gvec interfaces for CLS and CLZ operations.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/arm/tcg/translate.h      |  5 +++++
+>>   target/arm/tcg/gengvec.c        | 35 +++++++++++++++++++++++++++++++++
+>>   target/arm/tcg/translate-a64.c  | 29 +++++++--------------------
+>>   target/arm/tcg/translate-neon.c | 29 ++-------------------------
+>>   4 files changed, 49 insertions(+), 49 deletions(-)
 > 
-> We are not checking the sf bit anymore, is that intended?
-
-Yes.
-
->> +CRC32           0 00 11010110 ..... 0100 00 ..... ..... @rrr_b
->> +CRC32           0 00 11010110 ..... 0100 01 ..... ..... @rrr_h
->> +CRC32           0 00 11010110 ..... 0100 10 ..... ..... @rrr_s
->> +CRC32           1 00 11010110 ..... 0100 11 ..... ..... @rrr_d
+> 
+>> +void gen_gvec_cls(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+>> +                  uint32_t opr_sz, uint32_t max_sz)
+>> +{
+>> +    static const GVecGen2 g[] = {
+>> +        { .fni4 = gen_helper_neon_cls_s8,
+>> +          .vece = MO_8 },
+>> +        { .fni4 = gen_helper_neon_cls_s16,
+>> +          .vece = MO_16 },
+>> +        { .fni4 = tcg_gen_clrsb_i32,
+> 
+> Why do we have tcg_gen_clrsb_i32(), ...
+> 
+>> +          .vece = MO_32 },
+>> +    };
+>> +    assert(vece <= MO_32);
+>> +    tcg_gen_gvec_2(rd_ofs, rn_ofs, opr_sz, max_sz, &g[vece]);
+>> +}
 >> +
->> +CRC32C          0 00 11010110 ..... 0101 00 ..... ..... @rrr_b
->> +CRC32C          0 00 11010110 ..... 0101 01 ..... ..... @rrr_h
->> +CRC32C          0 00 11010110 ..... 0101 10 ..... ..... @rrr_s
->> +CRC32C          1 00 11010110 ..... 0101 11 ..... ..... @rrr_d
+>> +static void gen_clz32_i32(TCGv_i32 d, TCGv_i32 n)
+> 
+> ... but not tcg_gen_clz32_i32()?
 
-We are forcing sf (bit 31) to match sz (bits 10:11) in decode.
+The tcg_gen_clz_i32 primitive has a third argument to specify the result for n == 0. 
+Passing that third argument is exactly what gen_clz32_i32 is doing.
 
 
 r~
