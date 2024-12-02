@@ -4,24 +4,24 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF2CEE69E8B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5474E69E8C
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 19:42:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tICJ5-00066t-Vy; Mon, 02 Dec 2024 14:42:08 -0500
+	id 1tICJ0-00066L-JE; Mon, 02 Dec 2024 14:42:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tICIz-00065o-CA
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tICIz-00065m-8K
  for qemu-devel@nongnu.org; Mon, 02 Dec 2024 14:42:01 -0500
 Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tICIw-0005tG-Fk
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tICIw-0005tE-EB
  for qemu-devel@nongnu.org; Mon, 02 Dec 2024 14:42:01 -0500
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id EDA3A180C05
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 9A0AC18043B
  for <qemu-devel@nongnu.org>; Mon,  2 Dec 2024 20:41:54 +0100 (CET)
-Received: (qmail 24777 invoked by uid 990); 2 Dec 2024 19:41:54 -0000
+Received: (qmail 24763 invoked by uid 990); 2 Dec 2024 19:41:54 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
@@ -30,36 +30,33 @@ Received: from unknown (HELO unkown) (::1)
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
 Cc: Julian Ganz <neither@nut.email>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
-Date: Mon,  2 Dec 2024 20:41:37 +0100
-Message-ID: <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [RFC PATCH v3 10/11] target/sparc: call plugin trap callbacks
+Date: Mon,  2 Dec 2024 20:41:36 +0100
+Message-ID: <51c6069c8a2d50d70d21a10c167066e5f0aa096a.1733063076.git.neither@nut.email>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1733063076.git.neither@nut.email>
 References: <cover.1733063076.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: ----
-X-Rspamd-Report: REPLY(-4) SUSPICIOUS_RECIPS(1.5) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) BAYES_HAM(-2.999999) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -4.099999
+X-Rspamd-Bar: -----
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.997331) MID_CONTAINS_FROM(1)
+ MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
+X-Rspamd-Score: -5.597331
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=QtNoualSp5HK6fG+v1BpfCUxVztYUqkQxOY+K+yjyko=;
- b=CG74BC7/MzXp7v0ggJFuEg1UG+J9u58DLlQhXqDVmS9ZK82LLgejy6kWi7It27WoNtSpJ5cQE2
- eNuVUuN40Zo2Y/VdxSaHF59mgnm1AJwPrP/uB9fmdDX0R9MnLiThdeOLolnMXKouoHvhvnpOQDHZ
- o5Um+PrQMx97rmGAaEFYtMUPa7uGSmWKFppCC1Ea8ejXLv894KGn0fVpzBMKps2f3Oi2ihwKAsLy
- LhjtnaC+xHUnzqvE8CsU8iH3pyQoi7lYB16Glip9HCzxxA051ATF4iVG7VZBuHIwpaN2QHDD85S5
- lrtY3pErn77TymZVkAZSRna0Vzuk8BxXSbJi9rDRM0IQb7Zuw1RDp/qGHbfITPKLXQzUqVWkTEWP
- roxnBoELl9HOHqn9Q+l2QNWnVFGV9iS2nvFjDvqe4trlOYvCu0guqslC3xCeFyqwN45O9pIKtaLm
- BF2qGVEGL7yWO4EC1gs9WEi/eg1KW0T54wbhAmhJjSZN8kW6MTpRDj/kJwZGTXnZ6wnHr3lSEu/c
- LhA428EQwSIePTA/dQo2O5ezeZ9UWelCKY1anDjip1s7to8BCVaAF+6wpEAfoNjONPVcnjkRGNix
- SwyhNygbFbH5nEi7d+Rt5ju1pmB07bVQTsrpxD6eX52bxy4OqbEmIbLkYZPgApbwO0Fls53wXU3E
- c=
+ bh=eSQdBohJLxjuj+kUUKx0s/tIbRONVYZrlcGAeQZ/qZ8=;
+ b=pKJ+TnM6ikj6JciNMVJ3o577JdXH+5cErtvdAuTp+n+jYpazKFIdaAH4TPjJC6wASw2W4SacSs
+ kPEdgnfOOUBcJqd4gWL9PPmegnb283b8viLjIpwMU53jDxDwDZ7VzOkSmotG9Pi0VoZgud/mx6H3
+ R4rvriOdiTbzOOhDSXLByX4UyeQvfQauh4QkaHX3ihyXvcfyWVK2y5dCoRLNYcdX+Jk4uQZRBJ+X
+ m6uydibpB3heoAqh/74TAxLGIaGfCxC7Lh2Q0iJ/RWWXv9mc9F4HYJZVS+WTo8nhNuodcpky6f/5
+ kvbVDvNiYNvOt7CsTdJq4B28QFCm5LIE/7rZlsdKBaZ5/30/QynYtz7m7vOFja6uqnMAkz2Zb8zb
+ 56JniMgdwrnrBMLQsBYvyph3FACcT1OZ/HsRu6J94v3usoOo/qLQtPAT9w2us51hrSsCZFt3rpav
+ kTzcW+2nfT3IffUb8N2wvPRpAa8kipkv5GFBReW1X1tmv0Njzfy1HH4gASmnmUwM2Jp5kUOs6Bvo
+ xpKPStTM7ptxdNAyvgzilYF1bxpSM9aQxS0X3saFYOedY1RSSAfbcXUMah13alX4SMxxhfygDYA+
+ S9wdmwS2b8nAjmtZr/GszeUOC1Ej11ynII7jcysofKO9Uss0bhBLPNgoXWnWuLatPho15PYmqOrK
+ w=
 Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
  helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
@@ -84,130 +81,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently introduced plugin API for the registration of callbacks for
-discontinuity events, specifically for interrupts, exceptions and host
-call events. The callback receives, among other information, the VCPU
-index and the PC after the event. This change introduces a test plugin
-asserting that particular behaviour.
----
- tests/tcg/plugins/discons.c   | 95 +++++++++++++++++++++++++++++++++++
- tests/tcg/plugins/meson.build |  2 +-
- 2 files changed, 96 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/plugins/discons.c
+We recently introduced API for registering callbacks for trap related
+events as well as the corresponding hook functions. Due to differences
+between architectures, the latter need to be called from target specific
+code.
 
-diff --git a/tests/tcg/plugins/discons.c b/tests/tcg/plugins/discons.c
-new file mode 100644
-index 0000000000..54e52f563a
---- /dev/null
-+++ b/tests/tcg/plugins/discons.c
-@@ -0,0 +1,95 @@
-+/*
-+ * Copyright (C) 2024, Julian Ganz <neither@nut.email>
-+ *
-+ * License: GNU GPL, version 2 or later.
-+ *   See the COPYING file in the top-level directory.
-+ */
-+#include <stdio.h>
+This change places hooks for SPARC (32bit and 64bit) targets. We treat
+any interrupt other than EXTINT and IVEC as exceptions as they appear to
+be synchroneous events.
+---
+ target/sparc/int32_helper.c |  7 +++++++
+ target/sparc/int64_helper.c | 10 ++++++++++
+ 2 files changed, 17 insertions(+)
+
+diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
+index f2dd8bcb2e..86b21eecb6 100644
+--- a/target/sparc/int32_helper.c
++++ b/target/sparc/int32_helper.c
+@@ -24,6 +24,7 @@
+ #include "exec/cpu_ldst.h"
+ #include "exec/log.h"
+ #include "sysemu/runstate.h"
++#include "qemu/plugin.h"
+ 
+ static const char * const excp_names[0x80] = {
+     [TT_TFAULT] = "Instruction Access Fault",
+@@ -172,4 +173,10 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+         env->qemu_irq_ack(env, intno);
+     }
+ #endif
 +
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+struct cpu_state {
-+    uint64_t next_pc;
-+    bool has_next;
-+};
-+
-+static struct qemu_plugin_scoreboard *states;
-+
-+static bool abort_on_mismatch;
-+
-+static void vcpu_discon(qemu_plugin_id_t id, unsigned int vcpu_index,
-+                        enum qemu_plugin_discon_type type, uint64_t from_pc,
-+                        uint64_t to_pc)
-+{
-+    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
-+    state->next_pc = to_pc;
-+    state->has_next = true;
-+}
-+
-+static void insn_exec(unsigned int vcpu_index, void *userdata)
-+{
-+    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
-+    uint64_t pc = (uint64_t) userdata;
-+    GString* report;
-+
-+    if (state->has_next) {
-+        if (state->next_pc != pc) {
-+            report = g_string_new("Trap target PC mismatch\n");
-+            g_string_append_printf(report,
-+                                   "Expected:    %"PRIx64"\nEncountered: %"
-+                                   PRIx64"\n",
-+                                   state->next_pc, pc);
-+            qemu_plugin_outs(report->str);
-+            if (abort_on_mismatch) {
-+                g_abort();
-+            }
-+            g_string_free(report, true);
-+        }
-+        state->has_next = false;
++    if (intno == TT_EXTINT) {
++        qemu_plugin_vcpu_interrupt_cb(cs, env->regwptr[9], env->pc);
++    } else {
++        qemu_plugin_vcpu_exception_cb(cs, env->regwptr[9], env->pc);
 +    }
-+}
+ }
+diff --git a/target/sparc/int64_helper.c b/target/sparc/int64_helper.c
+index bd14c7a0db..9f0e7206d3 100644
+--- a/target/sparc/int64_helper.c
++++ b/target/sparc/int64_helper.c
+@@ -23,6 +23,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/log.h"
+ #include "trace.h"
++#include "qemu/plugin.h"
+ 
+ #define DEBUG_PCALL
+ 
+@@ -253,6 +254,15 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+     }
+     env->npc = env->pc + 4;
+     cs->exception_index = -1;
 +
-+static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    size_t i;
-+    size_t n_insns = qemu_plugin_tb_n_insns(tb);
-+
-+    for (i = 0; i < n_insns; i++) {
-+        struct qemu_plugin_insn * insn = qemu_plugin_tb_get_insn(tb, i);
-+        uint64_t pc = qemu_plugin_insn_vaddr(insn);
-+        qemu_plugin_register_vcpu_insn_exec_cb(insn, insn_exec,
-+                                               QEMU_PLUGIN_CB_NO_REGS,
-+                                               (void*) pc);
++    switch (intno) {
++    case TT_EXTINT:
++    case TT_IVEC:
++        qemu_plugin_vcpu_interrupt_cb(cs, tsptr->tpc, env->pc);
++        break;
++    default:
++        qemu_plugin_vcpu_exception_cb(cs, tsptr->tpc, env->pc);
 +    }
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info,
-+                                           int argc, char **argv)
-+{
-+    int i;
-+
-+    for (i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "abort") == 0) {
-+            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &abort_on_mismatch)) {
-+                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-+                return -1;
-+            }
-+        } else {
-+            fprintf(stderr, "option parsing failed: %s\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    states = qemu_plugin_scoreboard_new(sizeof(struct cpu_state));
-+
-+    qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_ALL,
-+                                        vcpu_discon);
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index f847849b1b..f057238da1 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -1,6 +1,6 @@
- t = []
- if get_option('plugins')
--  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'syscall']
-+  foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'syscall']
-     if host_os == 'windows'
-       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
-                         include_directories: '../../../include/qemu',
+ }
+ 
+ trap_state *cpu_tsptr(CPUSPARCState* env)
 -- 
 2.45.2
 
