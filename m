@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4C61D78322
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA45FD78322
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 13:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI6Uf-00029i-Mg; Mon, 02 Dec 2024 08:29:42 -0500
+	id 1tI6Uf-0002Ac-Mn; Mon, 02 Dec 2024 08:29:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6Gl-0002bv-1V
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:23 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1tI6Gq-0002ht-6X
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:30 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tI6GU-0003UD-P4
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:13 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43494a20379so34266495e9.0
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:49 -0800 (PST)
+ id 1tI6GY-0003NV-4z
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 08:15:23 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-385dfb168cbso1805752f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 05:14:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733145288; x=1733750088; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733145278; x=1733750078; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vygoGC00xfYC/uInMNcn40F6CC96Rh4moS0oHLIBbXA=;
- b=ERypsltw8lLUWYHz7vw0lyBDboowStiR6nmRXWuIPpQ+8O9blOZayfrFU92SQdKhOK
- XPcqKEEZoTmggjFFPVJ9NwcdbGnnQQRf8HH6mhEiuOznoLCg5N+xHg/3Dgcwxs3TptqO
- CwS9nlGljXRNel0nBFl72DwKDYyimYLfjp9JHR6+71MD7BABz8mQTq334hmg1PAA0WF4
- UW5OAYOWPQwh5affbp+yaTFh5rkzF5bySGrSn6o9gZd/SOC6GLiPnEmBxhn/jaW9cg2n
- yE5X4vQEpZffZsZfKAMLFFcIskce6Tf+54rcZeHrQNwhlIDpg65uSosL5CoNAczbovKN
- ciKA==
+ bh=F9P3Zyg8EWDd8Ipp5Pjnvse0G07D293rwdAJ1WyzXl4=;
+ b=K3Uar6D9jDn935gVUS/K3XuqOaAeoIE9Y08KA8se4kghYofFPzypz9slIGW/2US56A
+ ZrpK7Bc06XUuVWPlIOm6cyU609T90o2vM1aofBHBDbYovnokHZ+5wR3fpTdxr3Oqb2oz
+ XM0CEignuPdU/54AZuIA/OEfg8FsNYngNh7hmDmLalUJiCQWAqe4JHx9xNNQoAsTE9jp
+ P6yfzk8gp9ZxQ0WKj9DYCWxZlFcjaiaz1a/rwxTx86jjA2y6d/EACPXuSlXZz5Gv5pf3
+ /uZITmIizSGKkapFvFEsSpmuotbGjyO8O8302nWVqhJ24sRbmMdCSdHY66sCQNA1KjBj
+ f6Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733145288; x=1733750088;
+ d=1e100.net; s=20230601; t=1733145278; x=1733750078;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vygoGC00xfYC/uInMNcn40F6CC96Rh4moS0oHLIBbXA=;
- b=qDhwGijfpFaqLCMfl/i7spEDJEq7gQCUWG5Q+thLPakjQ3wdKdRrgs4DDPHbrpxMFb
- sNNJvPrll4CTlf7OOIIgAG+hiJNtlTii9yh70bbRk6L5RJ9VJQI8y92Ihnuq5ml/QGec
- Z7TLr5NPDcc+P6jXJeQqVW6KoLHB5oI6FK8duy9zvzhghdnr8kxzv4XTrAq1l1/xNDpE
- vFQb2SDTAEb6EhbWR8oyPgFnwdF1eqHDlbu8KinvJwefTiI3l1P4vsBuTWbzh6PwJMWq
- T5S4Kfz8a6E9H1lsxGb2/8Z6CVCtwMxsViZHCoCdxqlMDetW/dtrSdxuC8p7moUMDzdR
- Q3zQ==
-X-Gm-Message-State: AOJu0Yxvr9MneN7ucOizSI0u9nnj0FGc98hPBQV/cEuQcwN0eAOKRz5E
- sgUc/6/zGx/zkBKkSsPjNpKu49PkpIM1Gejv/wATC8GJauWrLGc9BcBcbPSyXMJKwJpR6MdAcLB
- 7
-X-Gm-Gg: ASbGncsn9mR9iV6naG8xAoV9j1ZYuaDiMErk1CR0d1gAxLrx+MAGbdXaVT4VOHOti3n
- oyMZhJ4ipznHfTWDhjTD7PWWHv2MiwjBhGx6hxiTM4dN/a+CyFBhDOcMDDwxHELft+lryQFFcZb
- cPs8/u6CrwmTqbpQRv8VqVUNn2j0yh0WqyIbtDlOylT9czdY27VY6VyXCRB5vxiWdcMSwvaZxLt
- ndC/A/rhWgD3bEVyzPU2jRkVdK8Ca5J9ZT+xOwngfwOqYHAB1p/E5Y=
-X-Google-Smtp-Source: AGHT+IHdUF2LtH6AI9ENX2DDk4Q1y9wiIXG/PfUs/1Qp2CqVtbJMKv9t9Hc11c+RWxXGdhxqR/Yb+w==
-X-Received: by 2002:a05:600c:4686:b0:434:a962:2a8c with SMTP id
- 5b1f17b1804b1-434a9df6af9mr189221625e9.22.1733145288636; 
- Mon, 02 Dec 2024 05:14:48 -0800 (PST)
+ bh=F9P3Zyg8EWDd8Ipp5Pjnvse0G07D293rwdAJ1WyzXl4=;
+ b=G3k4+LE4O84JIj18LHCVDQO13fZ2p04dpDryjkIYRTQaI5R5xAAOYLbbK5Ltd43u7O
+ gbWXw3EO7bsjPFH790UA33DiO0xVXFoLcQUX+8A3AkmHgaFQTNGnC3cVd2OooYN1/CFv
+ 8qmPzLGZLPOq/aepIGu+aO4yWu+SpXCPri48zrGQvcjgcS8P6jPheSAa0krY6Tk9sWNw
+ QIfVBxYgEJ5zla1s6f08JS8+BDZK6KvarwxmQu/4R+UtjoGWFc42GO07W4j14drxT52V
+ rtVex2hAKVz/HX+ftJFc2ouriMkZyLijOy3OdNbCbPLb7xAzetGAUyjKnOR18bEQfoCl
+ +QJA==
+X-Gm-Message-State: AOJu0YzCZJ/1Ti1ROUapG8VqtjDEGdWabgiamZ3hg/n4RJuW19K6Spsx
+ tAxrAESH9TrPGN3BGviSRhEr5hN7GVaLyAPEDz6nEHTHIFh8/eDa3QTAOKohbKhkJ62OhcnkpF7
+ n
+X-Gm-Gg: ASbGncuhr+YknIozkoe1UKauNvieSeb+c287oTDCQTjmFGNylqE1EKNO839urbwRpK1
+ zS+eT+1nkm1xb4Q5K/c9qI1FG82ZBWZFJNYBklD/HqIGYH0bnC104X/zrzR9XL96mkzNAO5hRG2
+ j4WkKvIZkzdrrIBFf/ipxgk8e9Vyg20XqS2JhgwoGtc+n2+uz8dhFSrKjElQTH+ABa0Cglpl6/w
+ 53oseBm5Xe4AeZ35E1x4xmq9zPq0ESRlUJe9QDI1q8aTVJDXY05GjA=
+X-Google-Smtp-Source: AGHT+IFL61A+tairJzPOItayh6olQ1F+IieedrTB8+3a6uLQVDTHerrpGpRDJzdWMxXPxCl7i8SUAA==
+X-Received: by 2002:a05:6000:2d04:b0:385:e30a:394b with SMTP id
+ ffacd0b85a97d-385e30a3bdcmr6032714f8f.16.1733145277754; 
+ Mon, 02 Dec 2024 05:14:37 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.47
+ ffacd0b85a97d-385dea1e4ebsm10160157f8f.1.2024.12.02.05.14.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Dec 2024 05:14:48 -0800 (PST)
+ Mon, 02 Dec 2024 05:14:37 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
@@ -78,17 +78,17 @@ Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 for-10.0 43/54] target/mips: Set default NaN pattern
- explicitly
-Date: Mon,  2 Dec 2024 13:13:36 +0000
-Message-Id: <20241202131347.498124-44-peter.maydell@linaro.org>
+Subject: [PATCH v2 for-10.0 31/54] target/m68k: Init local float_status from
+ env fp_status in gdb get/set reg
+Date: Mon,  2 Dec 2024 13:13:24 +0000
+Message-Id: <20241202131347.498124-32-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241202131347.498124-1-peter.maydell@linaro.org>
 References: <20241202131347.498124-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,47 +111,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the default NaN pattern explicitly for MIPS. Note that this
-is our only target which currently changes the default NaN
-at runtime (which it was previously doing indirectly when it
-changed the snan_bit_is_one setting).
+In cf_fpu_gdb_get_reg() and cf_fpu_gdb_set_reg() we do the conversion
+from float64 to floatx80 using a scratch float_status, because we
+don't want the conversion to affect the CPU's floating point exception
+status. Currently we use a zero-initialized float_status. This will
+get steadily more awkward as we add config knobs to float_status
+that the target must initialize. Avoid having to add any of that
+configuration here by instead initializing our local float_status
+from the env->fp_status.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/mips/fpu_helper.h | 7 +++++++
- target/mips/msa.c        | 3 +++
- 2 files changed, 10 insertions(+)
+ target/m68k/helper.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/target/mips/fpu_helper.h b/target/mips/fpu_helper.h
-index 8ca0ca7ea39..6ad1e466cfd 100644
---- a/target/mips/fpu_helper.h
-+++ b/target/mips/fpu_helper.h
-@@ -47,6 +47,13 @@ static inline void restore_snan_bit_mode(CPUMIPSState *env)
-     set_float_infzeronan_rule(izn_rule, &env->active_fpu.fp_status);
-     nan3_rule = nan2008 ? float_3nan_prop_s_cab : float_3nan_prop_s_abc;
-     set_float_3nan_prop_rule(nan3_rule, &env->active_fpu.fp_status);
-+    /*
-+     * With nan2008, the default NaN value has the sign bit clear and the
-+     * frac msb set; with the older mode, the sign bit is clear, and all
-+     * frac bits except the msb are set.
-+     */
-+    set_float_default_nan_pattern(nan2008 ? 0b01000000 : 0b00111111,
-+                                  &env->active_fpu.fp_status);
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 9bfc6ae97c0..beefeb7069c 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -36,7 +36,8 @@ static int cf_fpu_gdb_get_reg(CPUState *cs, GByteArray *mem_buf, int n)
+     CPUM68KState *env = &cpu->env;
  
- }
+     if (n < 8) {
+-        float_status s = {};
++        /* Use scratch float_status so any exceptions don't change CPU state */
++        float_status s = env->fp_status;
+         return gdb_get_reg64(mem_buf, floatx80_to_float64(env->fregs[n].d, &s));
+     }
+     switch (n) {
+@@ -56,7 +57,8 @@ static int cf_fpu_gdb_set_reg(CPUState *cs, uint8_t *mem_buf, int n)
+     CPUM68KState *env = &cpu->env;
  
-diff --git a/target/mips/msa.c b/target/mips/msa.c
-index 93a9a87d76d..fc77bfc7b9a 100644
---- a/target/mips/msa.c
-+++ b/target/mips/msa.c
-@@ -81,4 +81,7 @@ void msa_reset(CPUMIPSState *env)
-     /* Inf * 0 + NaN returns the input NaN */
-     set_float_infzeronan_rule(float_infzeronan_dnan_never,
-                               &env->active_tc.msa_fp_status);
-+    /* Default NaN: sign bit clear, frac msb set */
-+    set_float_default_nan_pattern(0b01000000,
-+                                  &env->active_tc.msa_fp_status);
- }
+     if (n < 8) {
+-        float_status s = {};
++        /* Use scratch float_status so any exceptions don't change CPU state */
++        float_status s = env->fp_status;
+         env->fregs[n].d = float64_to_floatx80(ldq_be_p(mem_buf), &s);
+         return 8;
+     }
 -- 
 2.34.1
 
