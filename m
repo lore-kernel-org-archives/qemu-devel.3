@@ -4,82 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A833D78333
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 16:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B9E3D78333
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Dec 2024 16:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tI9Mo-0006wC-Fn; Mon, 02 Dec 2024 11:33:46 -0500
+	id 1tI9Us-0008Mk-B9; Mon, 02 Dec 2024 11:42:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tI9Mn-0006vk-Hj
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 11:33:45 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI9Uq-0008MP-Rp
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 11:42:04 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tI9Mm-00023V-0w
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 11:33:45 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-385e5db74d3so1553692f8f.0
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 08:33:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tI9Un-0004CM-QK
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 11:42:04 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-53de84e4005so5093423e87.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 08:42:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733157222; x=1733762022; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E6bWi0hV0u86tHnyEyjfthQ/EHZlzOgl3N8j1p49Dsc=;
- b=TtX1nd2rCxARTi3kaM+lvKdeSkWhGLyerbeceLz2wVlCJ2Ke5hl40FG+kMh42m18CB
- pv7UidvKv1puQH3Bpl/VjSHDMgmBZkWwXJj+c4Ln/IC4j32FtZ7aPcGPMjOO6hOKO3pQ
- wz4AwqdlYxnCfvoPXjXBlP9+vilDI63+epxj04krjd1GS595b0poljjHzUZ/7w4R8gkN
- LIuP18RXNByLQFupj3WVIAecbjKAD3uI4PoO88MxX7mEvqHkxBL5z1Ov16kdPADNKcr7
- LRJjHk6LL19Rmm6s045Qm+iAnd/CpU5mfc5Nx5tBwLw5t057p3nKGeYqw5cpxsHO60kl
- y0Sg==
+ d=linaro.org; s=google; t=1733157720; x=1733762520; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=niCxHgrW547P+DwWlzcdEfanGs/sn3sh4I4rrLd0AnI=;
+ b=Uud6hWG97bO8Jh89iSKdnG+dR0yI/DqQ4nGWk8tCMoi89qgV3F75/jpO+ev/mR366V
+ o5/X5nCTgWw53HScyfD6XOAehfFttOC62sdRQtFeU0x9A14i4lgklnAmpvJx6F0X5lmt
+ o1gC7BUYFxB9qvGIXoiEIn1S25W3ppx7MMfGstHGdzA/3NVAD3q1hgq+I/y8mPaNqHhD
+ MT/43CR/1rywU0JFKAAKHamsVkk6Ov9Na0pTimZDnpx1wDhPfua9vRnE7GbL9ls6QG7Z
+ 26QeH9noORyonHph8q30VXaqeDGCBdo1TsgjRWKHbG6LCtICqrjJJYPaz1KrPUd448Fp
+ g3XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733157222; x=1733762022;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E6bWi0hV0u86tHnyEyjfthQ/EHZlzOgl3N8j1p49Dsc=;
- b=cwts76Nn6smXXD0f4tXtMB5DPyaADQlC/UjHyPPjProL6ppKbHvhRDPB0yQhiC8+LH
- um8Rz9xcLC2s0OuGdYOOlhhlxJ5p6bpnZd3j1EARDgKw+r4X2+mQxy+QICj1u1RVczFn
- MCpUYbXTy+pw0qgGgzVZRuGpqiHsSRbOc1Mf+cl6WbA5Nc4SmO6aWq8HFoZMAsAC9nfd
- ywMMkUQXY5A98Z4NthyHZzqQW52r25XygGXjLdgNgO0JMWsjmdZp4KeSmihCkET1p1zY
- 8fVN+d2x1DV1Kf1rojWZr5nin+57e7FcrfBOSsnOYHBvKK8cpEXvbROUJ9mb8RZr6DcS
- hTvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0IHWgNMWfyzB3TyV1PW8mYXS1lyuzle0YfIXMoUYlNaOtrBT6bA2NBGYlwvhp+QXAvvSQQ/MQ7o9m@nongnu.org
-X-Gm-Message-State: AOJu0Yw/pH7hB6kqo7o1Fh92oUBax6yzPZoGX2Yrm+hebvni0lC6TglX
- /0nobp9TGWM1kla+XBM/Y9v0SsCsPKyGNp3ASlIzpGz2A1qIeYICHzVkJdkk4I6vudUUkviHrq1
- YdVI=
-X-Gm-Gg: ASbGncvaNeS5bx0BqAdGNtd7GH4Zj2yCay0fep2fgUbKbhnLjExbcOffe53AuHoqeFt
- AC8kVwVqeFsyXrq0A4k4XWejaW3Q/VxttCpzw+zroHUVOmOLfop3VzWNbRTzpGfP/OW0oUu7/WB
- GCKxWwEk3KGXM1K+af0qgise0n5OVwWH7OhpvMC1u8gywxFXzTXvW2qmCQkLvA9IyUgecwj3v/l
- 24QSS62M8kjGhPUPQ/71xh1yGSYPARm0CymJj3qgbsBfvJkG9/hJPSgt8Bx9F1DN11JVZw5KZlS
- FIcoanj42ShcQJui42l2cftrWP1ddw==
-X-Google-Smtp-Source: AGHT+IEMQcUUmSpZJce89qmpTe3APWtQb0rFX9O9KjJlMGxiHe4OlboVLsXd5Rb4EF73UeFRv67yJg==
-X-Received: by 2002:a05:6000:1568:b0:385:e2d6:8942 with SMTP id
- ffacd0b85a97d-385e2d68a13mr7424822f8f.54.1733157222033; 
- Mon, 02 Dec 2024 08:33:42 -0800 (PST)
-Received: from [192.168.68.213] (72.red-95-127-54.dynamicip.rima-tde.net.
- [95.127.54.72]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434aa74f18bsm194172825e9.4.2024.12.02.08.33.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 08:33:41 -0800 (PST)
-Message-ID: <0cbd29d9-6e60-424e-bfc1-38b55e1fa31b@linaro.org>
-Date: Mon, 2 Dec 2024 17:33:38 +0100
+ d=1e100.net; s=20230601; t=1733157720; x=1733762520;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=niCxHgrW547P+DwWlzcdEfanGs/sn3sh4I4rrLd0AnI=;
+ b=KS4HHX9wFEPJDUbdG46Hhu+B8FB4JyH2ap0qaeU5hPR8cVxrZ4V2auoFgk9IAQRaBH
+ xtiaoy89hMD2DsEskccIuLemrFlEf3LfibviUHcFKzUV4QckeRG4GukbUpC21tnJHie9
+ Lffbj/WsGiBdOh/LSNR/UcymQMzAuF/PzHFrnsBifas/SPqVcP8l8ortjPikpqkQrz1j
+ c1QJGQgG1I7KQ1TyEOZx1/tah1mOYaX0hHdduIEaHbRv7bRQGAB8EoYRA+nUEDikyRqF
+ YZfp8V3fkZ6afYl8tae1NbMlJbNqnTviIbDtOzE4A+EqaHPBeNPS+Z0bQIR6GpViJP+b
+ udXw==
+X-Gm-Message-State: AOJu0YzhnRYo2JRlUeg+icUM1OONsKpQIRRaxZ5nMESeya8O3FKdH7LB
+ Ji5e63Es4POWcoinZhNyCJrO9LEqher/pof68x9ySdp3ZlNC8T+M7+nppzijVfaU6sWgFAMtq98
+ FTLmbfYkjKThcAY7h1/zHA0dhPMzVr3MyHg2hqA==
+X-Gm-Gg: ASbGncu2MOvhdZPxojOhYgT4Wh1hWqhU9sEZJx2OLdpRNkaAixJQxJOoVQK+82zcNrx
+ v1j5l0SN57NpRXwowJ06vE2V5P4Z+EY1d
+X-Google-Smtp-Source: AGHT+IE6WpPqH+qVCHLDVYdFwYMi6opljVcWWZdsVHdAYiflF2n+OHYk/xg+2cOc0zBhDOL0IBlGfFb9BHTBK/e5W8Q=
+X-Received: by 2002:a05:6512:b15:b0:539:e317:b05f with SMTP id
+ 2adb3069b0e04-53df00de3a9mr13537385e87.28.1733157719524; Mon, 02 Dec 2024
+ 08:41:59 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 47/67] target/arm: Introduce clear_vec
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-48-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241201150607.12812-48-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+References: <20241119112903.1010350-1-berrange@redhat.com>
+ <20241119112903.1010350-3-berrange@redhat.com>
+In-Reply-To: <20241119112903.1010350-3-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 2 Dec 2024 16:41:48 +0000
+Message-ID: <CAFEAcA9osyiBuFNz6i=WwbJqgg_Gby3OALCvXdhoG1tJJnZLLw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] scripts: validate SPDX license choices
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,15 +92,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/12/24 16:05, Richard Henderson wrote:
-> In a couple of places, clearing the entire vector before storing one
-> element is the easiest solution.  Wrap that into a helper function.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, 19 Nov 2024 at 11:29, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> We expect all new code to be contributed with the "GPL-2.0-or-later"
+> license tag. Divergance is permitted if the new file is derived from
+
+"divergence"
+
+> pre-existing code under a different license, whether from elsewhere
+> in QEMU codebase, or outside.
+>
+> Issue a warning if the declared license is not "GPL-2.0-or-later",
+> and an error if the license is not one of the handful of the
+> expected licenses to prevent unintended proliferation. The warning
+> asks users to explain their unusual choice of license in the commit
+> message.
+
+Should we update LICENSE (or something under docs/devel ?) to
+state our policy ?
+
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
->   target/arm/tcg/translate-a64.c | 21 ++++++++++++---------
->   1 file changed, 12 insertions(+), 9 deletions(-)
+>  scripts/checkpatch.pl | 68 +++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 68 insertions(+)
+>
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index d946121b8e..b507da8e2b 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -1353,6 +1353,69 @@ sub checkfilename {
+>         }
+>  }
+>
+> +sub checkspdx {
+> +    my ($file, $expr) =3D @_;
+> +
+> +    # Imported Linux headers probably have SPDX tags, but if they
+> +    # don't we're not requiring contributors to fix this, as these
+> +    # files are not expected to be modified locally in QEMU
+> +    if ($file =3D~ m,include/standard-headers, ||
+> +       $file =3D~ m,linux-headers,) {
+> +       return;
+> +    }
+> +
+> +    my $origexpr =3D $expr;
+> +
+> +    # Flatten sub-expressions
+> +    $expr =3D~ s/\(|\)/ /g;
+> +    $expr =3D~ s/OR|AND/ /g;
+> +
+> +    # Merge WITH exceptions to the license
+> +    $expr =3D~ s/\s+WITH\s+/-WITH-/g;
+> +
+> +    # Cull more leading/trailing whitespace
+> +    $expr =3D~ s/^\s*//g;
+> +    $expr =3D~ s/\s*$//g;
+> +
+> +    my @bits =3D split / +/, $expr;
+> +
+> +    my $prefer =3D "GPL-2.0-or-later";
+> +    my @valid =3D qw(
+> +       LGPL-2.0-or-later
+> +       LGPL-2.1-or-later
+> +       GPL-2.0-only
+> +       LGPL-2.0-only
+> +       LGPL-2.0-only
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Lists LGPL-2.0-only twice ? I'm guessing the second should be 2.1.
 
+I'm not sure we really want to allow more LGPL-2.0-only
+code...we don't have a reason like we do with GPL-2.0-only
+where the reason is "code from the kernel", and I feel like
+LGPL-2.0-only is quite rare anyway, and at least sometimes
+a mistake where the author meant LGPL-2.1-only or GPL-2.0-only.
+But maybe this list should be generous enough to only warn,
+not error, for code copied within QEMU.
+
+AFAICT the only code we have that is LGPL-2.0-only is
+util/error.c. But that also refers to our COPYING.LIB,
+which is LGPL2.1. In 2011, 12 years after the publication
+of LGPL2.1, did Anthony Liguori *really* mean to use
+LGPL2.0 only? Answers on a postcard :-)
+
+> +       BSD-2-Clause
+> +       BSD-3-Clause
+> +       MIT
+> +       );
+> +
+> +    my $nonpreferred =3D 0;
+> +    my @unknown =3D ();
+> +    foreach my $bit (@bits) {
+> +       if ($bit eq $prefer) {
+> +           next;
+> +       }
+> +       if (grep /^$bit$/, @valid) {
+> +           $nonpreferred =3D 1;
+> +       } else {
+> +           push @unknown, $bit;
+> +       }
+> +    }
+> +    if (@unknown) {
+> +       ERROR("Saw unacceptable licenses '" . join(',', @unknown) .
+> +             "', valid choices for QEMU are:\n" . join("\n", $prefer, @v=
+alid));
+> +    }
+> +
+> +    if ($nonpreferred) {
+> +       WARN("Saw acceptable license '$origexpr' but note '$prefer' is pr=
+eferred " .
+> +            "for new files unless the code is derived from a source with=
+ an " .
+> +            "existed declared license that must be followed. Please expl=
+ain " .
+> +            "license choice in the commit message");
+> +    }
+> +}
+> +
+>  sub process {
+>         my $filename =3D shift;
+>
+> @@ -1641,6 +1704,11 @@ sub process {
+>                     }
+>                 }
+>
+> +# Check SPDX-License-Identifier references a permitted license
+> +               if ($rawline =3D~ m,SPDX-License-Identifier: (.*?)(\*/)?\=
+s*$,) {
+> +                   &checkspdx($realfile, $1);
+> +               }
+> +
+
+The code changes look OK to me.
+
+thanks
+-- PMM
 
