@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B65A7E64A81
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2722E64A81
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIR8d-0000PE-4N; Tue, 03 Dec 2024 06:32:20 -0500
+	id 1tIR8y-0000uA-1A; Tue, 03 Dec 2024 06:32:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8R-0000BZ-Fx
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:11 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8w-0000th-Mn
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:38 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8P-0000Zu-Kh
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:07 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4349fd77b33so44086345e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:32:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8u-0000bT-Ty
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:38 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-385d6e36de7so4640220f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:32:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733225524; x=1733830324; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733225555; x=1733830355; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j6jtl4bH2aw1ntBc/Q9c6zL2bli8TxIIjMRIPbMQt+E=;
- b=BW565gGQLSELBoMheP/JMpfHRO6JYKUxfRwoC2G6RZ2TqZcFI4OXd5kautigg4UZZK
- 5nyqlkUn6NdEdgpOt8m7i2VLA4o8mK1WKU2y8xXcE0gYZR6yl+huiqWZ2uwDc1Ieok9C
- VhZoI9HnP9/wcbG1ulFlx17n/3sgaxZWZnmPdDfwy82ZLi+Lrn1kUVqx+y6a1A2FqoZJ
- mOvqX5Rc6WWnxrj5VN4IVf7XmndK8MgeidKFGw0mh+61CCaDU+iQMZNXnZspuAk3KY0i
- ST2KZNfFSM2LQSYFv4qMHdW7+V4qCMi8IzkxxPzy8xDvUNu0u/yx4Ni0fImpHS+rZlDU
- tdDg==
+ bh=mkPA+7sTb+zksQscjRLpnKKKt+PKAd6deC8dAij30IE=;
+ b=he16EbLc2a+EOpPulgqlAJROAgVrftDkh2xSSUDHVkk/c2BWnpz8i7u7X8fNeAm8rH
+ hkjlzVk7hCyFcZS5D9G7KwnnB6YRWBwSvtCHEb0tRlNbKeTtrai/m8lmXXkSb0vJ3vf+
+ 9Osje6UHtHBbCNLIOdsOBy2szTfvrt5w0PhbxQMM5rGd1Wfx0sR5gn/tZOUiwcCoclIm
+ qchnjGonl8mn6lCC4vjF4VJYOlzj83nPy5eoPLoZFxQOCNIPv1cTLqF8PVFiqp0zeUGs
+ iUMzK0QCCOpu55EUFUu0wyE5nt00pc22zkFtGEe3Tx5Xp+yzTeXpOaC2bFOpdj4XstqV
+ CBiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733225524; x=1733830324;
+ d=1e100.net; s=20230601; t=1733225555; x=1733830355;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j6jtl4bH2aw1ntBc/Q9c6zL2bli8TxIIjMRIPbMQt+E=;
- b=MHD3G6iCNTNVqPqbFJjV5VkspTlgIkreokBqMCsg6lhckXHwQ4Wv2RCWKc8z11MBRZ
- nnzsS6uUHe8rZ7m8K9ubX7p45wei/tXPk2XPX4qkKWQv74WiWf2NqEMHtC1Io8qMJIIi
- jB7LuOWdeIcrPUovR8NQp76Kl84oIQ67dQn4nMaZlxpWh1zUFG+mN6yOVVzIpNIT3qXT
- wrVBGhZ1mHcmtlN9Judfh9aGY7xSWXBpjcBWXBujbjVFQyjJvTDk2iLOxw9vP4TWZGBH
- YjaSC7/QymAMqeD6gWyl4OiBrcj+UM4VSCOpPykWTQlSZNVVE/gDOr9mzf57wmLyhIwz
- XpjA==
-X-Gm-Message-State: AOJu0YyuZXxKewd8qXE9dkBZf8v7OyLtcpVKZfpgWrhKJiZCOuNq0yro
- EAd2C7kC+Vz11FWFIiBGZNhrGEd0leSva1XBJFwvYVkjn4mfIbu1p8nKOSMZScT9KgZHVAYpnvy
- h2rI=
-X-Gm-Gg: ASbGncuwfs4tEtOoktoizQt52+S1To8LrLmNMexR3ricNbC2ls/hWVvDpElvcUc9d8t
- eiOmI/oM5DQlCgRC78OvYJ2jtq1st9MXgXAwXa5wQljiI6V8jZXKlLsf/5+RIWgW9pmEkaiZiBJ
- SB5XBegTBYt3rz0VqIh58Prf4KU6lDTARBlVg7SjW6aagsrPBo2Hhl6nB9gbISqNE5VZ01LnyiD
- gB4OUsFa+AMEtSaQ8S3+tAoKIZnAKAeSPv40pAQKSNQXshUGcRwW/+4M1no5RhZne5maFD/
-X-Google-Smtp-Source: AGHT+IGXp+Y1EQ2//qthmZhv5T8E0FY1fVEZ3aqTLN2cfHck2Lrsk3F1/bYv+QlLZ7N0L+0/FYnEFQ==
-X-Received: by 2002:a05:600c:1553:b0:431:93dd:8e77 with SMTP id
- 5b1f17b1804b1-434d0a16c18mr19991785e9.31.1733225523724; 
- Tue, 03 Dec 2024 03:32:03 -0800 (PST)
+ bh=mkPA+7sTb+zksQscjRLpnKKKt+PKAd6deC8dAij30IE=;
+ b=j5DcnChWKRTMNvLrcA5PE7MXoMVcJIucPZuYdqhDjK0JYKiUKEC3y7p+gFkAAVcZcL
+ kk0iy0/FpSqDZNdiaRwWIoy9+Eacww0cQKHRE2wO/TR5v4b3eQAVb587GMydOmC9FoI7
+ 1mtbpBFkhEqE4P4HhNzGki9Ng4ZTejMFmUqre0nuTJdzitYjjCKnSVrgYnhnN1kIGzCe
+ SrJLciNKvlGx9fvz+IzYIYEHfODoFynycVo7oLZf5rPVIsnD87fRjVYanU9vGCqWVapN
+ dhXgQyMpUOlo2Z/FlW6YMVOOXYnLw/onE9BTd+UJmEcwNm8TvzLjeJutM2fISlvn0Jlh
+ W7Jg==
+X-Gm-Message-State: AOJu0Yz+RhpUHnNW9hwlG5da3qh5Lgf17UjlWDtFavlWds/vjEmjokOW
+ db8VI7xRyHTo+GUqvZMQ1WRXU7D5/eIxrTWq0Zh0/4TzemKqS/irVAv9lxoFwDET4nblSE98xAL
+ LGoY=
+X-Gm-Gg: ASbGncvYY14cVMK4lVi3nCQ/wptoiRgsh/xOjgz8JoncZoE8nE7ByXfVm2ENoD9Tw2m
+ h5S/+h3E7A1mdAMq/SpZNmjRNM3lRUCunmTQ9qNpWdN6L6JTYJk7H381T/PvlibwTW5b0SalG71
+ Q3EqNjAkE/xZrEQmKa4DWCGRvz09ZimspXsJh7iqOt0v5odDa1NtdivJwnmIRv7uNWQ5ac3V/EI
+ 9KmpRqAj/3VKk/Av1lZuCov8igqtVoFEpnj0EGwLTHB4dxfmQrbDtYLzvJaUPamPrda/Kmh
+X-Google-Smtp-Source: AGHT+IEsSvHBK/KirKh/PQovDt/62PmlOWWNREJ3zaV7YejD4DXKamWNWsjA7XfJ01hHxxPGPdlMgQ==
+X-Received: by 2002:a5d:5f84:0:b0:385:f1ac:3ac9 with SMTP id
+ ffacd0b85a97d-385fd3ea448mr2064523f8f.17.1733225554837; 
+ Tue, 03 Dec 2024 03:32:34 -0800 (PST)
 Received: from localhost.localdomain ([176.187.209.146])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434b0f70ea8sm191267755e9.40.2024.12.03.03.32.02
+ ffacd0b85a97d-385df50fa9bsm12523649f8f.72.2024.12.03.03.32.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 03:32:03 -0800 (PST)
+ Tue, 03 Dec 2024 03:32:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>,
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Martin Pitt <mpitt@redhat.com>,
+ "Richard W . M . Jones" <rjones@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 04/13] MAINTAINERS: add myself as the maintainer for LoongArch
- VirtMachine
-Date: Tue,  3 Dec 2024 12:31:31 +0100
-Message-ID: <20241203113140.63513-5-philmd@linaro.org>
+Subject: [PULL 10/13] hw/virtio: fix crash in processing balloon stats
+Date: Tue,  3 Dec 2024 12:31:37 +0100
+Message-ID: <20241203113140.63513-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241203113140.63513-1-philmd@linaro.org>
 References: <20241203113140.63513-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,33 +102,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Song Gao is will be sick leave for a long time, I apply for maintainer
-for LoongArch Virt Machine during this period, LoongArch TCG keeps unchanged
-since I am not familiar with it. The maintainer duty will transfer to him
-after he comes back to work.
+balloon_stats_get_all will iterate over guest stats upto the max
+VIRTIO_BALLOON_S_NR value, calling visit_type_uint64 to populate
+the QObject dict. The dict keys are obtained from the static
+array balloon_stat_names which is VIRTIO_BALLOON_S_NR in size.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241112073714.1953481-1-maobibo@loongson.cn>
+Unfortunately the way that array is declared results in any
+unassigned stats getting a NULL name, which will then cause
+visit_type_uint64 to trigger an assert in qobject_output_add_obj.
+
+The balloon_stat_names array was fortunately fully populated with
+names until recently:
+
+  commit 0d2eeef77a33315187df8519491a900bde4a3d83
+  Author: Bibo Mao <maobibo@loongson.cn>
+  Date:   Mon Oct 28 10:38:09 2024 +0800
+
+    linux-headers: Update to Linux v6.12-rc5
+
+pulled a change to include/standard-headers/linux/virtio_balloon.h
+which increased VIRTIO_BALLOON_S_NR by 6, and failed to add the new
+names to balloon_stat_names.
+
+This commit fills in the missing names, and uses a static assert to
+guarantee that any future changes to VIRTIO_BALLOON_S_NR will cause
+a build failure until balloon_stat_names is updated.
+
+This problem was detected by the Cockpit Project's automated
+integration tests on QEMU 9.2.0-rc1.
+
+Fixes: https://bugzilla.redhat.com/show_bug.cgi?id=2329448
+Fixes: 0d2eeef77a3 ("linux-headers: Update to Linux v6.12-rc5")
+Reported-by: Martin Pitt <mpitt@redhat.com>
+Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20241129135507.699030-2-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ hw/virtio/virtio-balloon.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2b1c4abed65..3d6194684f1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1199,6 +1199,7 @@ LoongArch Machines
- ------------------
- Virt
- M: Song Gao <gaosong@loongson.cn>
-+M: Bibo Mao <maobibo@loongson.cn>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- S: Maintained
- F: docs/system/loongarch/virt.rst
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index 609e39a821f..afd2ad6dd62 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -167,19 +167,33 @@ static void balloon_deflate_page(VirtIOBalloon *balloon,
+     }
+ }
+ 
++/*
++ * All stats upto VIRTIO_BALLOON_S_NR /must/ have a
++ * non-NULL name declared here, since these are used
++ * as keys for populating the QDict with stats
++ */
+ static const char *balloon_stat_names[] = {
+    [VIRTIO_BALLOON_S_SWAP_IN] = "stat-swap-in",
+    [VIRTIO_BALLOON_S_SWAP_OUT] = "stat-swap-out",
+    [VIRTIO_BALLOON_S_MAJFLT] = "stat-major-faults",
+    [VIRTIO_BALLOON_S_MINFLT] = "stat-minor-faults",
+    [VIRTIO_BALLOON_S_MEMFREE] = "stat-free-memory",
++
+    [VIRTIO_BALLOON_S_MEMTOT] = "stat-total-memory",
+    [VIRTIO_BALLOON_S_AVAIL] = "stat-available-memory",
+    [VIRTIO_BALLOON_S_CACHES] = "stat-disk-caches",
+    [VIRTIO_BALLOON_S_HTLB_PGALLOC] = "stat-htlb-pgalloc",
+    [VIRTIO_BALLOON_S_HTLB_PGFAIL] = "stat-htlb-pgfail",
+-   [VIRTIO_BALLOON_S_NR] = NULL
++
++   [VIRTIO_BALLOON_S_OOM_KILL] = "stat-oom-kills",
++   [VIRTIO_BALLOON_S_ALLOC_STALL] = "stat-alloc-stalls",
++   [VIRTIO_BALLOON_S_ASYNC_SCAN] = "stat-async-scans",
++   [VIRTIO_BALLOON_S_DIRECT_SCAN] = "stat-direct-scans",
++   [VIRTIO_BALLOON_S_ASYNC_RECLAIM] = "stat-async-reclaims",
++
++   [VIRTIO_BALLOON_S_DIRECT_RECLAIM] = "stat-direct-reclaims",
+ };
++G_STATIC_ASSERT(G_N_ELEMENTS(balloon_stat_names) == VIRTIO_BALLOON_S_NR);
+ 
+ /*
+  * reset_stats - Mark all items in the stats array as unset
 -- 
 2.45.2
 
