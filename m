@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA93CE6C616
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 08:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88AABE6C619
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 08:35:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIO0x-0004S3-PZ; Tue, 03 Dec 2024 03:12:11 -0500
+	id 1tION4-0002A1-LH; Tue, 03 Dec 2024 03:35:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIO0v-0004Rn-Mn
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:12:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIO0u-000138-2h
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:12:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733213527;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U+wwFyIUU5avq2gAWwmP9/waa5PL61MA0EX17PoZE+k=;
- b=PMMexuKLboAd8j9w95HO+9G+7+eGTJObMTNXVoQLM/bw3Xiip0uQRpLKxqwGbY2EUrnRBW
- H7eRkkSCdnTFiVOsh6i4P+9wg+gJPNUbolT1wryyOClnVUoJYTO3bClzHHyVyeaGX7rGJS
- N/yPUdNqn5xT70Jv0dQDFQhkNN6p2XU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-XBi4polhNjONIYpmfptAMg-1; Tue,
- 03 Dec 2024 03:12:05 -0500
-X-MC-Unique: XBi4polhNjONIYpmfptAMg-1
-X-Mimecast-MFC-AGG-ID: XBi4polhNjONIYpmfptAMg
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC0C719560BC; Tue,  3 Dec 2024 08:12:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.37])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 025471955D45; Tue,  3 Dec 2024 08:12:01 +0000 (UTC)
-Date: Tue, 3 Dec 2024 08:11:58 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH 11/22] tests/functional: switch over to using
- self.data_file(...)
-Message-ID: <Z069ThRGuxIH1YVt@redhat.com>
-References: <20241129173120.761728-1-berrange@redhat.com>
- <20241129173120.761728-12-berrange@redhat.com>
- <544db3ce-f37b-4c09-85f5-b6ad96708292@redhat.com>
- <CAK3XEhMJLQ9TE+_pGHk=bkyV6GsDbC15VTavKgWHs75j7=7Big@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tION2-00029Y-W4
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:35:01 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tION1-0004Dd-0H
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:35:00 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-53df6322ea7so8946825e87.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 00:34:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733214896; x=1733819696; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cXhmZFZ2wYMPP+KqgqlRsWgRPB4GDgQF4G7WusQflsQ=;
+ b=zPvIHGYOJgidxX+kjpcP9skSHJYnIzQ6e2JnR51HlnHtb18oQBN6dW9qoaGzEoGsbV
+ jN7Q6y4+L6W5InUWRzhRFqGAjuLFBMVCmehmHxBzQqa00yoKCxhGHcIZNO9qbc+GBX/v
+ NR+O30n6z+IgDiIfFHje6u/7jPlZKsC5JZD9c4L3E11OVHE2X7drueozOccFp/yhItJc
+ NSrOCMdYKjUWvoFXHgCUWeM699zDu/P1CrbZzX94o0dHU6dmUpujcOBUkyHrJoFho9qU
+ PNdBtYttpUPrs+Vlp0CP+Qi5Gstuv6U5cvmsF1DDROu8/+qg2e/7PtmQpVBmZE0xsgaI
+ b+NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733214896; x=1733819696;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cXhmZFZ2wYMPP+KqgqlRsWgRPB4GDgQF4G7WusQflsQ=;
+ b=KHzb/K1L1kvfirUqoGjJEJBJ2/o7BHlC7vd6YiOGhZWlW5P4qcHCpGYHQf67xOFIxn
+ pSSUooJoOOQkHCXmkrg5tLWJ13LeLpf0xh6rbM5wD+Gwa7mvOQUvKqGEb4HFNiWf7qn2
+ 958T6t++yvotjrH6/pGIpkiZPDEujcDwAY+FPAxRybp08mGQCoSVZqxfAyxsesDayEEg
+ nn+UIipeR4A1qkXvg8yp2MEAqc2HJR5UHueJNuTNKaLIWmnBp48DVURCyP/+S0l9IyCq
+ lGnFcuFW7s+v1qkOesvgk8AkG4P355L/9ZlH2FVHZs2V7jJ4a3zCECh5AjEOmAQXEvYY
+ KwjQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWoZHawoKOU42dJyCMz3N/CKpvLNwQl+oQv7IWhSP3Ugx85B7t+FtMEaMK2sXbWKkWitj64v0+nChV@nongnu.org
+X-Gm-Message-State: AOJu0YxC6O2JnPaGtWpcdOOeoET6B1tJ6/lEeuH+5Hq0kGQzXQBxjt+x
+ GQk1A8dujkcTIILM8FlJfszLnc/4aVX2kAbYPC0kheSuh+uXEmZAfHNbE1HyeJo=
+X-Gm-Gg: ASbGncvuwbvzABzQaphA4877OR1thsPKaXPlNcrrQhtVSJ4199gA/psTQhXIOijgo+a
+ CrQgkYjfWaNAUq/EfzCfJvBgxfyW7aaRgtysw9zEaERTKbj3m5rBg11Lpj6A/ZM4jZ4uwcqMJZx
+ OzHOn3aB9XML3LM7d+oj7l38UJB8K+1mKOWWhJInYAJPLN+cr5EiFmMjjX0rSHsFHeokSHycuzb
+ 71h5oC0CKnFHLcvMW94xS/bTAoR79qR47o3ON6/r1ihTKde++UM/lbBXWDuVdPZkw==
+X-Google-Smtp-Source: AGHT+IEp5PD/s5FHXnCMuKVRACbPB1lyzPEVVbrqWbkx8pZZ0+aLxfEQK1fdpjpBv8IHv6dvoqfwhQ==
+X-Received: by 2002:a05:6512:3d26:b0:53d:dc3c:2595 with SMTP id
+ 2adb3069b0e04-53e12a319f3mr1274219e87.44.1733214896329; 
+ Tue, 03 Dec 2024 00:34:56 -0800 (PST)
+Received: from [192.168.69.223] ([176.187.209.146])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa5996c19fasm587299266b.34.2024.12.03.00.34.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Dec 2024 00:34:55 -0800 (PST)
+Message-ID: <6d74743c-d79a-4bc5-8c82-fa35bdacc469@linaro.org>
+Date: Tue, 3 Dec 2024 09:34:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.2? 0/2] tests/functional: Fix tests failing when TCG
+ is not available on macOS
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20241202204020.55665-1-philmd@linaro.org>
+ <9c4408cd-5fee-4242-ba6b-ebf2bb680d83@redhat.com>
+ <50f8076d-aa90-4b47-884c-ac3937ceec89@linaro.org>
+ <ce9fcfd6-b196-4dd3-b42f-e5f3c5beb37d@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ce9fcfd6-b196-4dd3-b42f-e5f3c5beb37d@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAK3XEhMJLQ9TE+_pGHk=bkyV6GsDbC15VTavKgWHs75j7=7Big@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,63 +103,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 03, 2024 at 11:09:14AM +0530, Ani Sinha wrote:
-> On Mon, Dec 2, 2024 at 3:02 PM Thomas Huth <thuth@redhat.com> wrote:
-> >
-> > On 29/11/2024 18.31, Daniel P. Berrangé wrote:
-> > > This removes direct path manipulation to figure out the source dir
-> > >
-> > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > > ---
-> > >   tests/functional/test_acpi_bits.py | 22 +++++++---------------
-> > >   1 file changed, 7 insertions(+), 15 deletions(-)
-> > >
-> > > diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_acpi_bits.py
-> > > index 4de5fae37e..948b134b16 100755
-> > > --- a/tests/functional/test_acpi_bits.py
-> > > +++ b/tests/functional/test_acpi_bits.py
-> > > @@ -41,7 +41,6 @@
-> > >   import tempfile
-> > >   import zipfile
-> > >
-> > > -from pathlib import Path
-> > >   from typing import (
-> > >       List,
-> > >       Optional,
-> > > @@ -122,7 +121,6 @@ class AcpiBitsTest(QemuBaseTest): #pylint: disable=too-many-instance-attributes
-> > >       def __init__(self, *args, **kwargs):
-> > >           super().__init__(*args, **kwargs)
-> > >           self._vm = None
-> > > -        self._baseDir = None
-> > >
-> > >           self._debugcon_addr = '0x403'
-> > >           self._debugcon_log = 'debugcon-log.txt'
-> > > @@ -137,26 +135,22 @@ def _print_log(self, log):
-> > >       def copy_bits_config(self):
-> > >           """ copies the bios bits config file into bits.
-> > >           """
-> > > -        config_file = 'bits-cfg.txt'
-> > > -        bits_config_dir = os.path.join(self._baseDir, 'acpi-bits',
-> > > -                                       'bits-config')
-> > > +        bits_config_file = self.data_file('acpi-bits',
+On 3/12/24 07:11, Thomas Huth wrote:
+> On 02/12/2024 22.01, Philippe Mathieu-Daudé wrote:
+>> On 2/12/24 21:56, Thomas Huth wrote:
+>>> On 02/12/2024 21.40, Philippe Mathieu-Daudé wrote:
+>>>> Explicit the QTest accelerator to have these 2 tests
+>>>> pass on macOS when only HVF is built in.
+>>>
+>>> Could we maybe rather add something like this at the top of tests/ 
+>>> functional/meson.build :
+>>>
+>>> if 'CONFIG_TCG' not in config_all and 'CONFIG_KVM' not in config_all
+>>>    subdir_done()
+>>> endif
+>>
+>> I'd rather not:
+>> - these tests don't need anything of TCG/KVM/HVF
+>> - we can run functional tests using QTest [*]
 > 
-> I do not understand, Where is data_file coming from? AFAICS its not
-> there in QemuBaseTest or QemuSystemTest or unittest.TestCase
-> https://docs.python.org/3/library/unittest.html#unittest.TestCase
+> Ok, but then please switch to "-accel qtest" instead of "- 
+> machine ...,accel=qtest" since the latter is legacy and might go away 
+> sometime in the future.
+
+Doh I thought it was the opposite :/ Sure!
+
 > 
-> what am I missing or failing to see?
-
-It is coming from patch 6 :-)
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>   Thanks,
+>    Thomas
+> 
 
 
