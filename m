@@ -4,88 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07426E64A81
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:34:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E9AFE64A80
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:43:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIR8n-0000gF-Kg; Tue, 03 Dec 2024 06:32:29 -0500
+	id 1tIRIg-0000cn-OF; Tue, 03 Dec 2024 06:42:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8l-0000eB-MG
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:27 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8k-0000as-23
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:27 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-385f06d0c8eso1462623f8f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:32:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733225544; x=1733830344; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KV+7GY90q7nCs2B4ZjKF0flW7Qs4QTHZjk/KQDAdUzg=;
- b=DKWTq6Je5KjJX+h801XNTMLG845h780GM/1HQHatx/sA5w/4POvIUBzFTqwqKKMduL
- jr0gWATevUTqYkK4DsLx8mpZh6VKjxqj0YeQaVs4LzpyFBGCJWiWTvyAyGNKi/4MGAW9
- eQ+bKpUqo2q/w9W3jevfcaiBCO7FZ7SfCYZHirsCpokzDYKasD7NDuCnE6OLHCWOcxhO
- JSXTfH+ccc+C1FztBuqKRFjz286PxPDuDVHZQM8/7FuK+JUr7S1ccf4kqyR6IPdPcyqs
- IhjCjiH6I51UJiYIqIfF5auC/f5gcVjjFf0sjqg3Tfs034H+sKw/WrHEEO0qsXcBbVui
- KdrQ==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tIRIe-0000c6-9g
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:42:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tIRIc-0001T2-9G
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:42:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733226156;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kdV+kCaE9Lyhdv1F9WhU4L/Nk8QckqLF6OR7JQI+70U=;
+ b=inG4WTVIc/IJRHF3pupt5HVjYvRGriUGXBRDzXURuIi6Up0FQIgEX/yyYQ5zvSOQLIJFlx
+ die/GCxlKZijQUzF9bVPv/rIty/88zbA7WY+X/sX0frDlX6yx6QP8z8yW3p7iZMy+sKA8d
+ w2p0UbvjplsjETAdc6uQ0C+Xr6S1tys=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-620-mv-H8Vb6Mhy6RoiTQzas6A-1; Tue, 03 Dec 2024 06:42:35 -0500
+X-MC-Unique: mv-H8Vb6Mhy6RoiTQzas6A-1
+X-Mimecast-MFC-AGG-ID: mv-H8Vb6Mhy6RoiTQzas6A
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-434a5ca6a67so39789645e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:42:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733225544; x=1733830344;
+ d=1e100.net; s=20230601; t=1733226154; x=1733830954;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KV+7GY90q7nCs2B4ZjKF0flW7Qs4QTHZjk/KQDAdUzg=;
- b=KRCRnVoS+YrNmwiu+kGqwNt9Tda8vH8hfJsnz2DDznnxcSoKtEPQMWwwEnaQSIMHfw
- mgzc21MaFW76jSTHnm8mI54Fa/DGy9zuUktd6BI3gtRTSihaOsgfM8pCZGBx3rnO5xVE
- 91rYBruFkoK9pWutDPPSfSf9zKGjqhSV4SMc3CnUjiGivXXjhFDgrq/aunj4f/EPJqNx
- FANM77S1huQrOv6hOdos9uNpVMAh26/yX77Nk0T1HI2ame9LWmxBWfkeTj8RIVZfm5W2
- qMB91io3nh9i74pkQ607uD1Zd7IlvS3Mq6i0ccJLIATvbx6sxICvLa97c/Ggbq81WwMM
- ugAQ==
-X-Gm-Message-State: AOJu0YzHBourDcEwjUn0HYYroy8i93ARVxy0H/8dMbvPiRTFmd9qqtFb
- vnYzpdOR38YAjRUqawdbeo1lcviXHTB1uriXE6yFn+lcZNVhIggQW4p5c2ZMhZU6z3L3YrmRnje
- OBu8=
-X-Gm-Gg: ASbGncuC6UEmTv80msHzRjWsiCcHsSX1IIvgNmoy7jRGh0vh47T6ZG1CgcXJKNv7llL
- 8xalZmEaWDX8Vxsjp37tp/Z3nXu0mN6YmuLmdki8PCKf8n0mqMSUdDdK9jRiIIqq6AD7NJxbybx
- 0lCXIHtQYAPuXbvGQ85Xj/Kry1fCZlDflswJAG+1U1jGRM8Np53qkH9EQQj1gegSjWYew2UIdHk
- v1EWDlT7gUIW4QG90ghiwQUym2jdZtAampDO+5Kh/2xcXyyAbrKl5bYg844XY3URHtU0yoM
-X-Google-Smtp-Source: AGHT+IFe/zsGEFqAIcb2SE0WjPZdATlKo2/5b0UzqQymNiqdUccyDBy3vC30l2rcBkTeXw2L0C0lTg==
-X-Received: by 2002:a05:6000:156c:b0:382:4eef:270 with SMTP id
- ffacd0b85a97d-385fd3e9678mr1913180f8f.16.1733225544264; 
- Tue, 03 Dec 2024 03:32:24 -0800 (PST)
-Received: from localhost.localdomain ([176.187.209.146])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385ee60549dsm6885508f8f.34.2024.12.03.03.32.23
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 03:32:23 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/13] target/riscv: Avoid bad shift in riscv_cpu_do_interrupt()
-Date: Tue,  3 Dec 2024 12:31:35 +0100
-Message-ID: <20241203113140.63513-9-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241203113140.63513-1-philmd@linaro.org>
-References: <20241203113140.63513-1-philmd@linaro.org>
+ bh=kdV+kCaE9Lyhdv1F9WhU4L/Nk8QckqLF6OR7JQI+70U=;
+ b=IeGKGEwG1iVw1a66Zz59F2nKXV4CeHjsrhoXL6kFSalWcUTNV0o2rDC08LmQLRX95w
+ Ofdb/XsLhtKoSMqioDbYjow+DTtbzbl356TgsPI6MtK2Hh96aWHv18DtkFTgodbrd8d/
+ qtgep8r8Q8oqoBEze/QJigideXAHbpiYAbSHgL+t9dfuoByUHkFzEFaK0Xm25Kg8XoPA
+ AdVa4kZ2izAvwQxbGV2lIqP2X43tcMnHI+ru3Zrtrf2UoflIN9+pJm+iY4ybipB+cJJW
+ OQyObQ3fxy1mM0SMkyBvbLW0nVPIPxBqqhe7sEhRP/6l7fHyA0DPH1u4/G7FjNhNU+WU
+ WkRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVqJFMfF5/6NBCONkQfRK8rkqA4Ak6BAE0mKf8vLSCRZMrlvgMiKW87ENROG2xA/8XXV7tyIundNbs@nongnu.org
+X-Gm-Message-State: AOJu0Yxc/iNYANjOyhx71WdEJh1VVS5xR5adU/PlJ4xSLZ+52m3Xr9xq
+ vYpURwMGIPibDtFooRFZkX/jqNerGJ1cPDKHUqRu8fYNzECpIFNv016Ib4ooIiBef0QNXmHn42Q
+ X0sdVq78xjRWCFdhuiO22T3IvlD1cWNE8j/ktOPS0Ytmz44uyZaP4
+X-Gm-Gg: ASbGncsix2wOWBIjE38MFTTmmKBBWx/F/1VavCvkt1LThJcnU3QmV5Z4zJM5fkndICM
+ DV3CNTwqoUSrh8XjZCeEScJyG6nrbzABXlPD55ZnIxIfagScFEuL7EErncHuBKVDp4f/GvRPTTU
+ PeANzFkeGBpQvUf8UvDJNUvxkNWkgCr9ZyrnJYHU09rSpSnJ8fplZyjow2393Xtr4M6M/VLwsJ0
+ mljrQJqpbofagkNXcIfY8ME3Q2drRf/3Vad9wL37/VJBtMbyPC9cuJfWyKAP7FkkVMvzQN9KRqD
+ 1OBHDlCSz7YslforVszXhQ==
+X-Received: by 2002:a05:600c:4708:b0:434:a75b:5f6c with SMTP id
+ 5b1f17b1804b1-434d09bf679mr21243065e9.10.1733226153856; 
+ Tue, 03 Dec 2024 03:42:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFxNIMxmum8ZNVHTxSVk7U02XMS5k10BcA7udiCBF1F18eXmzrvQxBopFgxD6upbMlqusfpMA==
+X-Received: by 2002:a05:600c:4708:b0:434:a75b:5f6c with SMTP id
+ 5b1f17b1804b1-434d09bf679mr21242765e9.10.1733226153544; 
+ Tue, 03 Dec 2024 03:42:33 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434b0dc9827sm185133725e9.26.2024.12.03.03.42.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Dec 2024 03:42:33 -0800 (PST)
+Date: Tue, 3 Dec 2024 12:42:32 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 08/15] acpi/ghes: make the GHES record generation
+ more generic
+Message-ID: <20241203124232.7948b2fb@imammedo.users.ipa.redhat.com>
+In-Reply-To: <b3845a8c78ef36c633d5e20af868de4ed16650a4.1732266152.git.mchehab+huawei@kernel.org>
+References: <cover.1732266152.git.mchehab+huawei@kernel.org>
+ <b3845a8c78ef36c633d5e20af868de4ed16650a4.1732266152.git.mchehab+huawei@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,57 +115,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+On Fri, 22 Nov 2024 10:11:25 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
-cs->exception as a shift value.  However this value can be larger
-than 31, which means that "1 << cause" is undefined behaviour,
-because we do the shift on an 'int' type.
+> Split the code into separate functions to allow using the
+> common CPER filling code by different error sources.
+> 
+> The generic code was moved to ghes_record_cper_errors(),
+> and ghes_gen_err_data_uncorrectable_recoverable() now contains
+> only a logic to fill the Generic Error Data part of the record,
+> as described at:
+> 
+> 	ACPI 6.2: 18.3.2.7.1 Generic Error Data
+> 
+> The remaining code to generate a memory error now belongs to
+> acpi_ghes_record_errors() function.
+> 
+> A further patch will give it a better name.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+[...]
 
-This causes the undefined behaviour sanitizer to complain
-on one of the check-tcg tests:
-
-$ UBSAN_OPTIONS=print_stacktrace=1:abort_on_error=1:halt_on_error=1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -device loader,file=build/clang/tests/tcg/riscv64-softmmu/issue1060
-../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63 is too large for 32-bit type 'int'
-    #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
-    #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
-
-In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
-
-Use 1ULL instead to ensure that the shift is in range.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual interrupt and IRQ filtering support.")
-Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual interrupt and IRQ filtering support.")
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241128103831.3452572-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/riscv/cpu_helper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 0a3ead69eab..45806f5ab0f 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1802,10 +1802,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-     bool async = !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
-     target_ulong cause = cs->exception_index & RISCV_EXCP_INT_MASK;
-     uint64_t deleg = async ? env->mideleg : env->medeleg;
--    bool s_injected = env->mvip & (1 << cause) & env->mvien &&
--        !(env->mip & (1 << cause));
--    bool vs_injected = env->hvip & (1 << cause) & env->hvien &&
--        !(env->mip & (1 << cause));
-+    bool s_injected = env->mvip & (1ULL << cause) & env->mvien &&
-+        !(env->mip & (1ULL << cause));
-+    bool vs_injected = env->hvip & (1ULL << cause) & env->hvien &&
-+        !(env->mip & (1ULL << cause));
-     target_ulong tval = 0;
-     target_ulong tinst = 0;
-     target_ulong htval = 0;
--- 
-2.45.2
+> -    return ret;
+> +    read_ack_register = cpu_to_le64(0);
+> +    /*
+> +     * Clear the Read Ack Register, OSPM will write it to 1 when
+                                                 ^^^^^^^^^^^^^ typo?
+> +     * it acknowledges this error.
+> +     */
+> +    cpu_physical_memory_write(read_ack_register_addr,
+> +        &read_ack_register, sizeof(uint64_t));
+> +
+> +    /* Write the generic error data entry into guest memory */
+> +    cpu_physical_memory_write(error_block_addr, cper, len);
+> +
+> +    return;
+> +}
+[...]
 
 
