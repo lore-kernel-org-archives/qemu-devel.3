@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCFA6E69EAF
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA4CE69E9F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIQj2-0001gZ-Gi; Tue, 03 Dec 2024 06:05:52 -0500
+	id 1tIQlm-0003wJ-BT; Tue, 03 Dec 2024 06:08:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tIQj0-0001gP-OK
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:05:50 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tIQiz-0005yN-3Y
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:05:50 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-385e075255fso2534883f8f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:05:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733223946; x=1733828746; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=PUdiko2I8J6xrlSMSAA1aTL8jewTc3HgG5WTz9aLd/M=;
- b=eCwr2+kL9NjrYs3RNO4Uzg7Q1KFm0fuJggryu47lGdPhX8ry7PjVE5zQ0+3sFN6h/R
- q1CZuZojdh2ku4sZqkZkEIQ3g3RKhzFw3YFQbdC8Ts0nRyWIU21Qij+iiGCCCr9w/hZM
- anIX5dENp4kDMIf3ZkMldWLDN2Ll3eraxOPGgppNyO17pYmNmZnwkNmCJSqDeDCjtbn4
- nLWq4vh9RUfmzxU6iSpnMigIVtG9zemBLcZwBmHRH/9DuDnMTGLmS9GQlW4D+xnIJ29C
- wXiBGRgF1EIpyoHX0XlTknla17PsgJGNu2rr9f36nOVLHyjSF0S14shSbkmIEDhA9/uj
- BGmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733223946; x=1733828746;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PUdiko2I8J6xrlSMSAA1aTL8jewTc3HgG5WTz9aLd/M=;
- b=gFY3wLxAzn6HmRLf7lO6uCpGYcBp4qCy4cH2wbM+NjTWBsT1tckN45KoFXIsLtJ6W6
- 3GF/gnzWbeNyijKFfJpfjVLvQVQQD7mtqTm1OpAGBHV2l7PZtmZbn+B0xuNWEUW9BBFj
- fU/fvbeM9dKCrAXWc21PclgbJyhzAq82eosanRvcI+rRfI98KTJIDNYEsoiYIkFKA/nz
- M8Yr4dNY+1X6+8XGdNF3NiTAQlwarSaElxXFsCGKvb1pNujshtXukCbdROMxPvCaLF4X
- s8QiQMKD/n4QHTW/pJS8OTaTb5wFq/pZL3x8ZvOrnj5sD/2hPn1bObI/h3kzedzi41Dg
- n/pA==
-X-Gm-Message-State: AOJu0Yw595hMF2TP9NqlrMsKUb9uDbAztTfFXwoGiIG5ZqX16yy/soAt
- M4+SctGmPHTRShZCJM81EEJ5QFNGWDaxKT0MvrSe6edG/f+3HHihFUBcmQ==
-X-Gm-Gg: ASbGncvf0OsZdx9qfwzUFA8AHWd5YkkD/wjvDwfKhdc0dj+fNHn6dTg2LNhTx9TrlOe
- EcKdunG1MSvyvdSowx6gvQ12AZtyZVQQnywOp02qXRAP/wmgjtTogjuRWWMt43T0W0dTFHLHf0S
- ayTL4DUJrMcOB00G9oSE+JHzIZqrwddcXs9ObivUmonQ33dTLgrWZjJtU2ssAwDL+KbjDX9g88e
- IIVzjYPo49lcIu0/P8FQS9UyjeR/Gu5HNpvYjOoQvPSfQUpnRwRA3BRLk0EFr6ifnUd+fK7mJ35
- lUpqQ0lzI16zVA==
-X-Google-Smtp-Source: AGHT+IFbbLoeVTjNWJ73pcGXeIrHHC+0nDE38UizNhc0T1dKiN5azIh0Qc+Du6mMx98OfLfiVcHUYA==
-X-Received: by 2002:a5d:47c9:0:b0:385:e013:73f0 with SMTP id
- ffacd0b85a97d-385fd42df50mr1865800f8f.59.1733223946186; 
- Tue, 03 Dec 2024 03:05:46 -0800 (PST)
-Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
- [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dece67dasm12756259f8f.8.2024.12.03.03.05.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 03:05:45 -0800 (PST)
-From: Stafford Horne <shorne@gmail.com>
-To: QEMU Development <qemu-devel@nongnu.org>
-Cc: Stafford Horne <shorne@gmail.com>
-Subject: [PATCH v3 0/2] OpenRISC fixes for 9.2.0
-Date: Tue,  3 Dec 2024 11:05:34 +0000
-Message-ID: <20241203110536.402131-1-shorne@gmail.com>
-X-Mailer: git-send-email 2.47.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tIQlk-0003vu-J0
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:08:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tIQli-0006Cj-MJ
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:08:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733224117;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=gVrncpTVy2Tx3GTDsT+1piyz47cr7SCUqh7htMZUHVc=;
+ b=bYHP6N8ZkeXFlLqHWd0jcG8zMehUwF0dPET0Eu3HoqWBOZFMccpsHw01o9Z0P8NBDPj4ai
+ VxQ6ob+G0RFLRAomxl72YANVr0l98rxoDz4ls5fvBMk+3Jmd9mOn6jTPcpz8R2ET0kA+G4
+ 9U+Oyw07QVGvOjOAtTgRJxgJh61nsLA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-oo7bFmRrMzysSOmTR1Sd4g-1; Tue,
+ 03 Dec 2024 06:08:34 -0500
+X-MC-Unique: oo7bFmRrMzysSOmTR1Sd4g-1
+X-Mimecast-MFC-AGG-ID: oo7bFmRrMzysSOmTR1Sd4g
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C0E80195608B; Tue,  3 Dec 2024 11:08:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.37])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0FDD1956089; Tue,  3 Dec 2024 11:08:29 +0000 (UTC)
+Date: Tue, 3 Dec 2024 11:08:25 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: "Gao,Shiyuan" <gaoshiyuan@baidu.com>
+Cc: "eduardo@habkost.net" <eduardo@habkost.net>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "mst@redhat.com" <mst@redhat.com>,
+ "zhao1.liu@intel.com" <zhao1.liu@intel.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 1/1] pcie-root-port: Fast PCIe root ports for new machine
+Message-ID: <Z07mqQsWJ299QmAs@redhat.com>
+References: <BB513C15-DFE1-40B0-91B6-914D70D3EFB2@baidu.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=shorne@gmail.com; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <BB513C15-DFE1-40B0-91B6-914D70D3EFB2@baidu.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,31 +86,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series has 2 fixes for OpenRISC that came in over that past few months.
+On Tue, Dec 03, 2024 at 10:58:22AM +0000, Gao,Shiyuan via wrote:
+> > Some hardware devices now support PCIe 5.0, so change the default
+> > speed of the PCIe root port on new machine types.
+> >
+> > For passthrough Nvidia H20, this will be able to increase the h2d/d2h
+> > bandwidth ~17%.
+> >
+> > Origin:
+> > [CUDA Bandwidth Test] - Starting...
+> > Running on...
+> >
+> > Device 0: NVIDIA H20
+> > Quick Mode
+> >
+> > Host to Device Bandwidth, 1 Device(s)
+> > PINNED Memory Transfers
+> >    Transfer Size (Bytes)    Bandwidth(MB/s)
+> >    33554432            45915.4
+> >
+> > Device to Host Bandwidth, 1 Device(s)
+> > PINNED Memory Transfers
+> >    Transfer Size (Bytes)    Bandwidth(MB/s)
+> >    33554432            45980.3
+> >
+> > Device to Device Bandwidth, 1 Device(s)
+> > PINNED Memory Transfers
+> >    Transfer Size (Bytes)    Bandwidth(MB/s)
+> >    33554432            1842886.8
+> >
+> > Result = PASS
+> >
+> > With this patch:
+> > [CUDA Bandwidth Test] - Starting...
+> > Running on...
+> >
+> > Device 0: NVIDIA H20
+> > Quick Mode
+> >
+> > Host to Device Bandwidth, 1 Device(s)
+> > PINNED Memory Transfers
+> >    Transfer Size (Bytes)	Bandwidth(MB/s)
+> >    33554432			53682.0
+> >
+> > Device to Host Bandwidth, 1 Device(s)
+> > PINNED Memory Transfers
+> >    Transfer Size (Bytes)	Bandwidth(MB/s)
+> >    33554432			53766.0
+> >
+> > Device to Device Bandwidth, 1 Device(s)
+> > PINNED Memory Transfers
+> >    Transfer Size (Bytes)	Bandwidth(MB/s)
+> >    33554432			1842555.1
+> >
+> > Result = PASS
+> >
+> > Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+> > ---
+> > hw/core/machine.c                  | 1 +
+> > hw/pci-bridge/gen_pcie_root_port.c | 2 +-
+> > 2 files changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/core/machine.c b/hw/core/machine.c
+> > index a35c4a8fae..afef55626d 100644
+> > --- a/hw/core/machine.c
+> > +++ b/hw/core/machine.c
+> > @@ -38,6 +38,7 @@
+> >
+> > GlobalProperty hw_compat_9_1[] = {
+> >      { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
+> > +    { "pcie-root-port", "x-speed", "16" },
+> > };
+> > const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
+> >
+> > diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+> > index 784507c826..c24ce1f2d1 100644
+> > --- a/hw/pci-bridge/gen_pcie_root_port.c
+> > +++ b/hw/pci-bridge/gen_pcie_root_port.c
+> > @@ -142,7 +142,7 @@ static Property gen_rp_props[] = {
+> >      DEFINE_PROP_SIZE("pref64-reserve", GenPCIERootPort,
+> >                       res_reserve.mem_pref_64, -1),
+> >      DEFINE_PROP_PCIE_LINK_SPEED("x-speed", PCIESlot,
+> > -                                speed, PCIE_LINK_SPEED_16),
+> > +                                speed, PCIE_LINK_SPEED_32),
+> >      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
+> >                                  width, PCIE_LINK_WIDTH_32),
+> >      DEFINE_PROP_END_OF_LIST()
+> > --
+> > 2.34.1
+> 
+> Ping.
 
-Since v2:
- - Update the commit message of the serial@90000000 patch to indicate the
-   changes from v2.
-Since v1:
- - Use DIVIDE_ROUND_UP instead of open coding as pointed out by Richard
- - Fix off-by-1 bug in TTCR patch pointed out by Richard
- - Fix commit message and reverse registration order as pointed out by Peter.
+There was a question from Jonathan Cameron on the original posting of this
+patch that is awaiting your answer....
 
+Regardless, at this time in the release cycle its too late for 9.2, so this
+patch would likely need to be adapted for the 10.0 release and to use the
+hw_compat_9_2 that will then be added.
 
-Ahmad Fatoum (1):
-  hw/openrisc/openrisc_sim: keep serial@90000000 as default
-
-Joel Holdsworth (1):
-  hw/openrisc: Fixed undercounting of TTCR in continuous mode
-
- hw/openrisc/cputimer.c     | 26 +++++++++++++++-----------
- hw/openrisc/openrisc_sim.c | 26 ++++++++++++++++++++------
- 2 files changed, 35 insertions(+), 17 deletions(-)
-
+With regards,
+Daniel
 -- 
-2.47.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
