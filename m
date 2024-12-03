@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE4BD4979A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 10:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C31DD7833F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 10:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIPhn-0007VJ-Ju; Tue, 03 Dec 2024 05:00:31 -0500
+	id 1tIPkG-0000VH-Um; Tue, 03 Dec 2024 05:03:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIPhl-0007Ui-0g
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:00:29 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIPhj-00079Z-HY
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:00:28 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-385e2880606so3377325f8f.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 02:00:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733220026; x=1733824826; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Mou40D0ZjD2Lf1VQwRddwv9731DnFFHuY1Fb6AhznBU=;
- b=gb0NjVPV0uHoLLftcv+dgNLjneuRJPWrUsEJHOLjZrkKZQywPPocKmdWqf1vpdYuCs
- UrOITPYiXqaXZ2OhGKAAfHpi7ZSE8B7yCzYbKPV/6JDoXRdhUXLPJMvMOPlFVG33n3vb
- 2LHSmUxstpkD6P5sXg5NqthMHfFAzApduoiTkIHfN9OM2B5caf1c+NSXsjwLkWR2F2Dh
- VoK8wL6+AulUHXf1rwfNG365qD1H7n712tBlaAhBdbWA7Iz+glwKkoJX221PrzKVSGg5
- Il8E0BYjQA2DGSDOTxhaU7U4/6xyHYbPpPMM10V3rCipjiqBZcAXFex7TktflAw5EM5+
- M0nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733220026; x=1733824826;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Mou40D0ZjD2Lf1VQwRddwv9731DnFFHuY1Fb6AhznBU=;
- b=nnCXD1Fkp/uLtAZM+EmL1eRgpmr72BFeC072AgX7NCq7h9brD5rkhwGaB+Q1tgHk88
- zVxL0dvQ+n1VweOE5IIOiDUvPUOQD8lI2lN8+nARunYPfUOM0azcS6k+1Ez7SUpjlpaw
- cpGcvqCAUsWtyM7QxurVBCT9v7s4o9c0STCUtlZtR3vkNje8NQIWDXVASJYGcfBfwJw7
- WBs9cZBL63Fu9Iv29JTPF/erOuWs4X2JgYDRcxzvD1RBN0ECR1QUOqkOiBlaD4zfdBtX
- 5xjlk1H/Dc8lN4IbbtwB7aD8YaXE7qVKtsZ+Yn4gat1UyJoc9wZuVa0GmJ7LXUeycrGI
- ZZ5Q==
-X-Gm-Message-State: AOJu0YyPI/ivH7pszPPF1Zu2HIgv/l2E9rW/v4y0MaFpEtG8wXlncnAi
- UiFU6/I9zTYKCOQMV7ABNuSK24TCnvzXKZyaT023IdGzeja+n9Hl7ObpJBoFJ3M=
-X-Gm-Gg: ASbGncv4vJU0hT17vrDi30YiKr3quensxy2/GMMt/XJnHmqeESH06I+KqBBbjVpswPE
- AJKa1w0CQj2jq5t+ChnwpNJnbDE6lHc5sA/blfIeS8E+QRncTRBCqgvuENHPXYm/dDdcwV6mpS8
- AonOj3mP1SfUP1GuXhN1I7TFbKuv1O8RDhakzwlp9qVG5ZpaBgY2dFzQV0kozMBR68QlwH2D6ph
- 49cpaTaavfZEn968asEgJ0LZr8ZHq0POct0l23tl68Ggp9R/4mBDXtNeaQLXbACbg==
-X-Google-Smtp-Source: AGHT+IE9vxZfRp24W90RJX0+iLYHphI7Leo+DbgvnW1oVtIyTYr8wsT4fzpvKsL/PjdyubjEmCbDIQ==
-X-Received: by 2002:a05:6000:4024:b0:385:f062:c2d4 with SMTP id
- ffacd0b85a97d-385fd435560mr1562279f8f.37.1733220025994; 
- Tue, 03 Dec 2024 02:00:25 -0800 (PST)
-Received: from [192.168.69.223] ([176.187.209.146])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385db7f86dasm13053820f8f.66.2024.12.03.02.00.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 02:00:25 -0800 (PST)
-Message-ID: <0ca2c3e9-2ea6-4cd1-9f97-56068b48d870@linaro.org>
-Date: Tue, 3 Dec 2024 11:00:24 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tIPkE-0000Uu-Dy
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:03:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tIPkB-0007J2-DT
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:03:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733220177;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZKf6r369rHnf2u9jCTDPcLjD9loWMUYulW2zrdihdWE=;
+ b=ekCFZunaRN/fe+Hbt8JzN7otFsx52PDiZyGezWvdB5J48a1wsLRWYWOxmXx5M93ltWYZcX
+ oBDVyd+e7XT9D5IBwdI65FrscD73I2VxyGlIqY0PXBGdNmpXia+9y/5mlBCQGv/JgKk07k
+ JmL2qvJZgn2FvHIMPTqufJm14Q+GO8w=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-nfPLfC9lNJGtfIgrukY9iQ-1; Tue,
+ 03 Dec 2024 05:02:54 -0500
+X-MC-Unique: nfPLfC9lNJGtfIgrukY9iQ-1
+X-Mimecast-MFC-AGG-ID: nfPLfC9lNJGtfIgrukY9iQ
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C19D1954193; Tue,  3 Dec 2024 10:02:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.37])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D3481956052; Tue,  3 Dec 2024 10:02:50 +0000 (UTC)
+Date: Tue, 3 Dec 2024 10:02:46 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH-for-9.2? v2 1/2] tests/functional/test_version: Use QTest
+ accelerator
+Message-ID: <Z07XRkf2cs-IOyq_@redhat.com>
+References: <20241203091036.59898-1-philmd@linaro.org>
+ <20241203091036.59898-2-philmd@linaro.org>
+ <Z07M4jpxZo9Ns0Rj@redhat.com>
+ <884bb70b-bb7a-4676-ab74-fd19a2758955@linaro.org>
+ <9124df54-a9a7-401b-8b0e-b81ac4dab365@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] qemu-options: Remove mentions of legacy '-machine
- foo,accel=bar'
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
- Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-References: <20241203092153.60590-1-philmd@linaro.org>
- <20241203092153.60590-8-philmd@linaro.org> <Z07VR-YvVCxdTua_@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z07VR-YvVCxdTua_@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <9124df54-a9a7-401b-8b0e-b81ac4dab365@linaro.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,35 +92,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/24 10:54, Daniel P. Berrangé wrote:
-> On Tue, Dec 03, 2024 at 10:21:53AM +0100, Philippe Mathieu-Daudé wrote:
->> Since commit 6f6e1698a68 ("vl: configure accelerators from -accel
->> options") we prefer the '-accel bar' command line option.
->>
->> The new form started to be documented in commit 8d4e9146b35 ("tcg:
->> add options for enabling MTTCG"); it is safe to remove the mentions
->> of the legacy option.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   qemu-options.hx | 9 ---------
->>   1 file changed, 9 deletions(-)
-
-
-> I'm not convinced we should be removing documentation for options that
-> currently exist and remain supported.
+On Tue, Dec 03, 2024 at 10:38:26AM +0100, Philippe Mathieu-Daudé wrote:
+> On 3/12/24 10:26, Philippe Mathieu-Daudé wrote:
+> > On 3/12/24 10:18, Daniel P. Berrangé wrote:
+> > > On Tue, Dec 03, 2024 at 10:10:35AM +0100, Philippe Mathieu-Daudé wrote:
+> > > > When testing with a HVF-only binary, we get:
+> > > > 
+> > > >     3/12 qemu:func-quick+func-aarch64 / func-aarch64-
+> > > > version                                      ERROR           
+> > > > 0.29s   exit status 1
+> > > >    stderr:
+> > > >    Traceback (most recent call last):
+> > > >      File "tests/functional/test_version.py", line 22, in
+> > > > test_qmp_human_info_version
+> > > >        self.vm.launch()
+> > > >      File "machine/machine.py", line 461, in launch
+> > > >        raise VMLaunchFailure(
+> > > >    qemu.machine.machine.VMLaunchFailure: ConnectError: Failed to
+> > > > establish session: EOFError
+> > > >        Exit code: 1
+> > > >        Command: build/qemu-system-aarch64 -display none -vga
+> > > > none - chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control
+> > > > -machine none -nodefaults
+> > > >        Output: qemu-system-aarch64: No accelerator selected and
+> > > > no default accelerator available
+> > > > 
+> > > > Explicit the QTest accelerator to be able to run the HMP command.
+> > > > 
+> > > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > > > ---
+> > > >   tests/functional/test_version.py | 1 +
+> > > >   1 file changed, 1 insertion(+)
+> > > > 
+> > > > diff --git a/tests/functional/test_version.py
+> > > > b/tests/functional/ test_version.py
+> > > > index 3ab3b67f7e3..d3da796991f 100755
+> > > > --- a/tests/functional/test_version.py
+> > > > +++ b/tests/functional/test_version.py
+> > > > @@ -18,6 +18,7 @@ class Version(QemuSystemTest):
+> > > >       def test_qmp_human_info_version(self):
+> > > >           self.set_machine('none')
+> > > > +        self.vm.add_args('-accel', 'qtest')
+> > > 
+> > > IMHO this is wrong. The functional tests are there to test the
+> > > real functional behaviour under an actual accelerator not qtest.
+> > 
+> > It works using '-accel hvf'. The issue is:
+> > 
+> >    "No accelerator selected and no default accelerator available"
+> > 
+> > So we should select HVF over QTest by default? I tend to not
+> > enforce any default because we always get troubles with them,
+> > what is today's default is unlikely tomorrow's one.
 > 
-> The documentation should be updated to say that we prefer use of '-accel'
-> instead at least.
+> So by using:
 > 
-> Beyond that, what is our long term intention with '-machine accel=xxx' ?
+> -- >8 --
+> diff --git a/system/vl.c b/system/vl.c
+> index 54998fdbc7e..2f855d83fbb 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -2362,6 +2362,7 @@ static void configure_accelerators(const char
+> *progname)
+>              /* Select the default accelerator */
+>              bool have_tcg = accel_find("tcg");
+>              bool have_kvm = accel_find("kvm");
+> +            bool have_hvf = accel_find("hvf");
 > 
-> Is this a case where we are happy to leave '-machine accel=' as syntax
-> sugar forever ?  Or is this a case where we want to deprecate it and
-> eventually remove its impl (and thus the documention here)
+>              if (have_tcg && have_kvm) {
+>                  if (g_str_has_suffix(progname, "kvm")) {
+> @@ -2374,6 +2375,8 @@ static void configure_accelerators(const char
+> *progname)
+>                  accelerators = "kvm";
+>              } else if (have_tcg) {
+>                  accelerators = "tcg";
+> +            } else if (have_hvf) {
+> +                accelerators = "hvf";
+>              } else {
+>                  error_report("No accelerator selected and"
+>                               " no default accelerator available");
+> 
+> ---
+> 
+> All test suites pass on my HVF-only build directory. If this is
+> OK with you then this is also OK for me.
 
-Right, we should deprecate and then remove.
+If all the functional tests pass with HVF that is a good stamp of approval
+for the quality & usefulness of HVF, and should justify enabling it by
+default IMHO.
+
+I might even suggest that we should flip to rank HVF above TCG, on the
+principal that HW accelerator is preferrable when available.
+
+I don't think we slip this into 9.2 at this stage in -rcNN, but perhaps
+do this early in 10.0 and propose for stable (TCG preferred over HVF),
+then flip the TCG & HVF ordering to prefer HVF for remainder of 10.x
+and the future
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
