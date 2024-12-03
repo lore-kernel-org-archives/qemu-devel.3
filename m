@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA580E74ACF
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30170E74AD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIZGu-0001j7-Ga; Tue, 03 Dec 2024 15:13:24 -0500
+	id 1tIZQx-0004O1-Rd; Tue, 03 Dec 2024 15:23:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tIZGs-0001iQ-JY
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:13:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tIZGq-0004C5-Jk
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:13:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733256796;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=baFhHHqQ78cO1EQshAvl0BS04HctJYE7yUT0FUl0jHw=;
- b=arUT4FTr5F9Hn3DRMIKLx1ce16boEENfPmPSZCWVT6bniNsh8CV3hQx9tkgcqs76syhwCv
- 1GfcGZ8blCeRlx5b/EmKkz5yHjbyxSf5tHkT9el5ZkMDlUfHzYnj3Ytx1tLMAu098/XYC9
- 7KWklC6rLPZEmp3zOs7kPPTLecBdia0=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-599-4RaqFQtaNweL1FS5CoXH0g-1; Tue, 03 Dec 2024 15:12:08 -0500
-X-MC-Unique: 4RaqFQtaNweL1FS5CoXH0g-1
-X-Mimecast-MFC-AGG-ID: 4RaqFQtaNweL1FS5CoXH0g
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-83b7cce903cso25850639f.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:12:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tIZQw-0004Nc-KB; Tue, 03 Dec 2024 15:23:46 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tIZQu-0006BQ-OT; Tue, 03 Dec 2024 15:23:46 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-385de59c1a0so4459122f8f.2; 
+ Tue, 03 Dec 2024 12:23:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733257423; x=1733862223; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vWr3B4C8bAj6BivScsjyL8ezvL1IyxopWhrxQL4rFc0=;
+ b=AdoQt1+vqnwEFz5/CihrWVGOuWiShIz1pjtRjy31u8/F6T3ZzeJB8Ui9ZoNc8ziHxv
+ e1sdG1zflsI9qYco5vuiPFj1G+9dt9VqicTVfSGMLsCpLnQYXgvcFtCilEq/CounkXNs
+ aqO7F+dSLnulWccUEeATCHKGqIBRfGvjGOlNinCCBgisZKVK6M9RA8ZFtHwxygCf+016
+ d5LSkUGviCpM6zGZmkPyHyRNL1EQIPmf914fSPLUIhWlzYOwhKZ+4ToKRIKDCZ1hgXWC
+ BHVdLrvZgkWsFHPJ7IlYgxe94AZNnhOpL4Udze9rHOSMWAEahRlihLYXXQk6AQGIIxkv
+ 5OMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733256727; x=1733861527;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1733257423; x=1733862223;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=baFhHHqQ78cO1EQshAvl0BS04HctJYE7yUT0FUl0jHw=;
- b=BMEybv9O7G8sE24T4iqjOlCh2YynvjfIfjXQLAd0BZzMXAoOiTMFSFOW+4SLyGLwyi
- rPmPEPe2DO9Mkp0vVMaLEwiOaoDHS1REuyOBXaVOHObhdOnZgluDlpduejB/fIrrUbGR
- AYxBOyzxL+SSNG8GoPwsmSyQbZDy5FwULq5ZBAONVDouSU+FQHOa6QBJkobOnOIyVBsU
- sdZ5cHIEoLux+RfUnunVhf49/fQM7DN1yw6opq4yv/X9LIYv13Exafo6ZeCDOu7lxe8E
- 0OPF9N805siXaDX0PaJLv6XtT6XZFyDMJyxmRHPH2oz8Ew8x3DAEFBSMxSfFAF/GoSKU
- jIiw==
-X-Gm-Message-State: AOJu0YykzljgilVSk3Urr85ZbRpXHywezElrpXw3xt1RYJWSJwoPVWS5
- Ao+obZfTEFbgyFCJHzBoyflW3aOFwymr4mkkzjEZ3gO+DHqaoqZVeQDoDg2bsFpWPZ3sewG5pfF
- mFc/heK59mJWIK+fSeOuBRClBxvRJ4aW1CxzQsTjP7hAfTdHhmicK
-X-Gm-Gg: ASbGncsaB5aJ1ko/y3kRb6ASBiMKfVdiU0ik3MlWso9fgy2c/Kg7HUpew7R9ujXM8Dt
- pXbM7tFuUcVGH6d8Cy6O58z9t587Y8zf+cNPj0BPfwKqZHp89rLQnHs03zCotbL2ceZHakaMK/M
- s0qKby1QFXCNaLuQ2/AaJZbEeJI5T9dcNDs/1/bZESxOv9vnM5GsGdlk206anJ9BpOrjdyzTSuA
- mBikzEYsZIHsfw22wXdg1NvQZ9WLIOU2p9r03RbTOJV0DovC5SUpg==
-X-Received: by 2002:a05:6e02:12ea:b0:3a7:e23c:d86c with SMTP id
- e9e14a558f8ab-3a7f9ab0d08mr10373115ab.6.1733256727439; 
- Tue, 03 Dec 2024 12:12:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH2dKY09oMwEtvnWMrgJUgXN8pfgTZyjhpRX+/q1ljN9mysYi1XRYm5irBMlCMJyZzhuyLSkQ==
-X-Received: by 2002:a05:6e02:12ea:b0:3a7:e23c:d86c with SMTP id
- e9e14a558f8ab-3a7f9ab0d08mr10373045ab.6.1733256727030; 
- Tue, 03 Dec 2024 12:12:07 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e230e77c42sm2689015173.133.2024.12.03.12.12.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 12:12:06 -0800 (PST)
-Date: Tue, 3 Dec 2024 13:12:05 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
- <clg@redhat.com>, Corvin =?UTF-8?B?S8O2aG5l?= <c.koehne@beckhoff.com>
-Subject: Re: [PATCH v2 0/9] vfio/igd: Enable legacy mode on more devices
-Message-ID: <20241203131205.1391d69a.alex.williamson@redhat.com>
-In-Reply-To: <20241203133548.38252-1-tomitamoeko@gmail.com>
-References: <20241203133548.38252-1-tomitamoeko@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=vWr3B4C8bAj6BivScsjyL8ezvL1IyxopWhrxQL4rFc0=;
+ b=XHHQ9O/Ll4bMUad9pn1+qSm2rABgQ7WbUv68YbgKTGgZ01hdbMnkBe3EWpvUwhu2/b
+ 6fa27YaWBUChrDCA2V6o05cMM9ydSXQCYnpyFL8Wq6oHATNoEWcmM8eTKQaplgrx5Oza
+ 7etGEbFfZoPbOrkpQ8l3kyRjxL82aJ25vrZr3YGmZtDm7uxO1q56mkrgzNGTqcA9Mv1/
+ pa7Q3KJcMahqBoXLvxCNTXd5+2pd4afhAHQgfE7kadqm/kEJuqIyDY30KdURX20PR1/D
+ NbocbRqsTOrjwy6/aDoL1NAySiw7KpLFlo6VhbRs7OPPkfHvaRaV86Infc5O8dDcorth
+ dQOw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQQJdoam/jh0FndJ3sARujxzwclZZMn7UtBXRmdJtUpaqLuyxGC4sV831ymkZXYYLSC0SVVGcLjg==@nongnu.org,
+ AJvYcCW+aIq9HPYl1h+CaDOVRUhXheRrF5dyv4mXNF+JeKLLOx2TvLh2hQ8RsKeGDK1E64eSRFTGHfiWRQygMw==@nongnu.org
+X-Gm-Message-State: AOJu0YxmpiwGSQXbGiAamtr2WlnqL5j2f9I0qEEyFAxhIpS0kMMFpYbN
+ a0lphAp6iGK7ufaaKev96CcUKoNQJ5Qf6DZfkv+xyBjztYvkne0ObN8wQA==
+X-Gm-Gg: ASbGncvm+bXDf0zGO2V7N0u29c/u6LmpRIq0JOumug6+cDUWSxY7xZJQIMT7QTnbJ0a
+ 0mK9krKcFFnC35OW9zC9kDY+U+y+jjjvFCQp5tq8lq/SF8t4Uq02KG3BgwEUMf0zHVxknCCptV7
+ 4OQ/ueajfRavUHPxDqtlZBSlhHBdJmSr4cJeRmIQGNineq2zXE7KZncJdFkhZhJP/aobJH60/uN
+ NevUEpurBql2VwpZiUnGZdkeSGRVsZxCblb/oFfsXAhE53ivXvlqB8+hYvUAa4yklT2BqmWncJv
+ HGLnxp/G6QH5hh097wntkT0=
+X-Google-Smtp-Source: AGHT+IE2VK1egadmLfqT9AZwTvVt10/zBqtRrvmSY1jD61vRGH9/CoH6AgdjMpaPVl7emCoPUXbLLw==
+X-Received: by 2002:a05:6000:2aa:b0:385:f349:fffb with SMTP id
+ ffacd0b85a97d-385fd42a35fmr3288219f8f.45.1733257422614; 
+ Tue, 03 Dec 2024 12:23:42 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-002-242-014-218.2.242.pool.telefonica.de.
+ [2.242.14.218]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385e17574ebsm12074198f8f.30.2024.12.03.12.23.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Dec 2024 12:23:42 -0800 (PST)
+Date: Tue, 03 Dec 2024 20:23:42 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Jamin Lin via <qemu-devel@nongnu.org>,
+ =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: jamin_lin@aspeedtech.com, troy_lee@aspeedtech.com,
+ yunlin.tang@aspeedtech.com
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_3/6=5D_hw=3Asdhci?=
+ =?US-ASCII?Q?=3A_Introduce_a_new_=22capareg=22_?=
+ =?US-ASCII?Q?class_member_to_set_the_different_Capability_Registers=2E?=
+In-Reply-To: <20241203021500.3986213-4-jamin_lin@aspeedtech.com>
+References: <20241203021500.3986213-1-jamin_lin@aspeedtech.com>
+ <20241203021500.3986213-4-jamin_lin@aspeedtech.com>
+Message-ID: <94E62126-BB97-465A-9021-2FB365E677A8@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,90 +110,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  3 Dec 2024 21:35:39 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-> This patchset extends the support of legacy mode igd passthrough to
-> all Intel Gen 11 and 12 devices (including Ice Lake, Jasper Lake,
-> Rocket Lake, Alder Lake and Raptor Lake), and emulates GGC register
-> in MMIO BAR0 for better compatibiltiy (It is tested Windows and GOP
-> driver will read this MMIO register).
-> 
-> It also replaces magic numbers with macros to improve readability,
-> and aligns behavior (BDSM registor mirroring and GGMS calculation for
-> gen7) with i915 driver to avoid possible issues.
-> 
-> The x-igd-gms option removed in 971ca22f041b ("vfio/igd: don't set
-> stolen memory size to zero") is also added back so that data stolen
-> memory size can be specified for guest. It is tested that GMS may
-> related to framebuffer size, a small GMS value may cause display issues
-> like blackscreen. It can be changed by DVMT Pre-allocated option in
-> host BIOS, but not all BIOS comes with this option. Having it in QEMU
-> helps resolves such issues.
-> 
-> This patchset was verified on Intel i9-12900K CPU(UHD 770, 8086:4680)
-> with custom OVMF firmware [1] and IntelGopDriver extracted from host
-> bios. IGD device works well in both Windows and Linux guests, and
-> scored 726 in 3DMark Time Spy Graphics on Windows guest.
-> 
-> [1] https://github.com/tomitamoeko/edk2/commits/igd-pt-adl/
-> 
-> Btw, IO BAR4 seems never be used by guest, and it the IO BAR itself
-> is not working on Gen11+ devices in my experiments. There is no hints
-> about that in old commit message and mailing list. It would be greatly
-> appreciated if someone shares the background.
 
-The quirks related to BAR4 access are generally for the vBIOS, we
-wouldn't expect guest OS level drivers to use them.  IIRC this is
-handling moving the stolen memory from the HPA to the GPA when the
-vBIOS is writing the GTT.
+Am 3=2E Dezember 2024 02:14:57 UTC schrieb Jamin Lin via <qemu-devel@nongn=
+u=2Eorg>:
+>Currently, it set the hardcode value of capability registers to all ASPEE=
+D SOCs
+>However, the value of capability registers should be different for all AS=
+PEED
+>SOCs=2E For example: the bit 28 of the Capability Register 1 should be 1 =
+for
+>64-bits System Bus support for AST2700=2E
+>
+>Introduce a new "capareg" class member whose data type is uint_64 to set =
+the
+>different Capability Registers to all ASPEED SOCs=2E
+>
+>The value of Capability Register is "0x0000000001e80080" for AST2400 and
+>AST2500=2E The value of Capability Register is "0x0000000701f80080" for A=
+ST2600=2E
+>
+>Signed-off-by: Jamin Lin <jamin_lin@aspeedtech=2Ecom>
+>---
+> hw/arm/aspeed_ast2400=2Ec      |  3 +-
+> hw/arm/aspeed_ast2600=2Ec      |  7 ++--
+> hw/sd/aspeed_sdhci=2Ec         | 72 +++++++++++++++++++++++++++++++-----
+> include/hw/sd/aspeed_sdhci=2Eh | 12 +++++-
+> 4 files changed, 78 insertions(+), 16 deletions(-)
+>
+>diff --git a/hw/arm/aspeed_ast2400=2Ec b/hw/arm/aspeed_ast2400=2Ec
+>index ecc81ecc79=2E=2E3c1b419945 100644
+>--- a/hw/arm/aspeed_ast2400=2Ec
+>+++ b/hw/arm/aspeed_ast2400=2Ec
+>@@ -224,7 +224,8 @@ static void aspeed_ast2400_soc_init(Object *obj)
+>     snprintf(typename, sizeof(typename), "aspeed=2Egpio-%s", socname);
+>     object_initialize_child(obj, "gpio", &s->gpio, typename);
+>=20
+>-    object_initialize_child(obj, "sdc", &s->sdhci, TYPE_ASPEED_SDHCI);
+>+    snprintf(typename, sizeof(typename), "aspeed=2Esdhci-%s", socname);
+>+    object_initialize_child(obj, "sdc", &s->sdhci, typename);
+>=20
+>     object_property_set_int(OBJECT(&s->sdhci), "num-slots", 2, &error_ab=
+ort);
+>=20
+>diff --git a/hw/arm/aspeed_ast2600=2Ec b/hw/arm/aspeed_ast2600=2Ec
+>index c40d3d8443=2E=2Eb5703bd064 100644
+>--- a/hw/arm/aspeed_ast2600=2Ec
+>+++ b/hw/arm/aspeed_ast2600=2Ec
+>@@ -236,8 +236,8 @@ static void aspeed_soc_ast2600_init(Object *obj)
+>     snprintf(typename, sizeof(typename), "aspeed=2Egpio-%s-1_8v", socnam=
+e);
+>     object_initialize_child(obj, "gpio_1_8v", &s->gpio_1_8v, typename);
+>=20
+>-    object_initialize_child(obj, "sd-controller", &s->sdhci,
+>-                            TYPE_ASPEED_SDHCI);
+>+    snprintf(typename, sizeof(typename), "aspeed=2Esdhci-%s", socname);
+>+    object_initialize_child(obj, "sd-controller", &s->sdhci, typename);
+>=20
+>     object_property_set_int(OBJECT(&s->sdhci), "num-slots", 2, &error_ab=
+ort);
+>=20
+>@@ -247,8 +247,7 @@ static void aspeed_soc_ast2600_init(Object *obj)
+>                                 &s->sdhci=2Eslots[i], TYPE_SYSBUS_SDHCI)=
+;
+>     }
+>=20
+>-    object_initialize_child(obj, "emmc-controller", &s->emmc,
+>-                            TYPE_ASPEED_SDHCI);
+>+    object_initialize_child(obj, "emmc-controller", &s->emmc, typename);
+>=20
+>     object_property_set_int(OBJECT(&s->emmc), "num-slots", 1, &error_abo=
+rt);
+>=20
+>diff --git a/hw/sd/aspeed_sdhci=2Ec b/hw/sd/aspeed_sdhci=2Ec
+>index acd6538261=2E=2E93f5571021 100644
+>--- a/hw/sd/aspeed_sdhci=2Ec
+>+++ b/hw/sd/aspeed_sdhci=2Ec
+>@@ -148,6 +148,7 @@ static void aspeed_sdhci_realize(DeviceState *dev, Er=
+ror **errp)
+> {
+>     SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);
+>     AspeedSDHCIState *sdhci =3D ASPEED_SDHCI(dev);
+>+    AspeedSDHCIClass *asc =3D ASPEED_SDHCI_GET_CLASS(sdhci);
+>=20
+>     /* Create input irqs for the slots */
+>     qdev_init_gpio_in_named_with_opaque(DEVICE(sbd), aspeed_sdhci_set_ir=
+q,
+>@@ -167,7 +168,7 @@ static void aspeed_sdhci_realize(DeviceState *dev, Er=
+ror **errp)
+>         }
+>=20
+>         if (!object_property_set_uint(sdhci_slot, "capareg",
+>-                                      ASPEED_SDHCI_CAPABILITIES, errp)) =
+{
+>+                                      asc->capareg, errp)) {
+>             return;
+>         }
+>=20
+>@@ -218,13 +219,66 @@ static void aspeed_sdhci_class_init(ObjectClass *cl=
+assp, void *data)
+>     device_class_set_props(dc, aspeed_sdhci_properties);
+> }
+>=20
+>-static const TypeInfo aspeed_sdhci_types[] =3D {
+>-    {
+>-        =2Ename           =3D TYPE_ASPEED_SDHCI,
+>-        =2Eparent         =3D TYPE_SYS_BUS_DEVICE,
+>-        =2Einstance_size  =3D sizeof(AspeedSDHCIState),
+>-        =2Eclass_init     =3D aspeed_sdhci_class_init,
+>-    },
 
-Maybe that brings up an interesting topic.  Traditionally "legacy mode"
-IGD assignment has been only for 440fx machines with SeaBIOS and last I
-was aware edk2 wasn't willing to accept the same hack for the BDSM as
-we had put into SeaBIOS, instead indicating that it should be
-implemented in the device ROM.  Your branch in [1] above seems to
-indicate edk2 does now have assigned IGD specific code.
+Why not just extend this array? It's made for registering multiple types, =
+exactly what this patch is introducing=2E
 
-Are these patches developing full stack support of these new devices,
-from BIOS hand-off, through pre-boot environments, and through to guest
-OS drivers, or are we only concerned that the guest OS level driver
-lights up a display?
+>+static const TypeInfo aspeed_sdhci_info =3D {
+>+    =2Ename           =3D TYPE_ASPEED_SDHCI,
+>+    =2Eparent         =3D TYPE_SYS_BUS_DEVICE,
+>+    =2Einstance_size  =3D sizeof(AspeedSDHCIState),
+>+    =2Eclass_init     =3D aspeed_sdhci_class_init,
+>+    =2Eclass_size =3D sizeof(AspeedSDHCIClass),
+>+    =2Eabstract =3D true,
+>+};
+>+
+>+static void aspeed_2400_sdhci_class_init(ObjectClass *klass, void *data)
+>+{
+>+    DeviceClass *dc =3D DEVICE_CLASS(klass);
+>+    AspeedSDHCIClass *asc =3D ASPEED_SDHCI_CLASS(klass);
+>+
+>+    dc->desc =3D "ASPEED 2400 SDHCI Controller";
+>+    asc->capareg =3D 0x0000000001e80080;
+>+}
+>+
+>+static const TypeInfo aspeed_2400_sdhci_info =3D {
+>+    =2Ename =3D TYPE_ASPEED_2400_SDHCI,
+>+    =2Eparent =3D TYPE_ASPEED_SDHCI,
+>+    =2Eclass_init =3D aspeed_2400_sdhci_class_init,
+>+};
+>+
+>+static void aspeed_2500_sdhci_class_init(ObjectClass *klass, void *data)
+>+{
+>+    DeviceClass *dc =3D DEVICE_CLASS(klass);
+>+    AspeedSDHCIClass *asc =3D ASPEED_SDHCI_CLASS(klass);
+>+
+>+    dc->desc =3D "ASPEED 2500 SDHCI Controller";
+>+    asc->capareg =3D 0x0000000001e80080;
+>+}
+>+
+>+static const TypeInfo aspeed_2500_sdhci_info =3D {
+>+    =2Ename =3D TYPE_ASPEED_2500_SDHCI,
+>+    =2Eparent =3D TYPE_ASPEED_SDHCI,
+>+    =2Eclass_init =3D aspeed_2500_sdhci_class_init,
+> };
+>=20
+>-DEFINE_TYPES(aspeed_sdhci_types)
+>+static void aspeed_2600_sdhci_class_init(ObjectClass *klass, void *data)
+>+{
+>+    DeviceClass *dc =3D DEVICE_CLASS(klass);
+>+    AspeedSDHCIClass *asc =3D ASPEED_SDHCI_CLASS(klass);
+>+
+>+    dc->desc =3D "ASPEED 2600 SDHCI Controller";
+>+    asc->capareg =3D 0x0000000701f80080;
+>+}
+>+
+>+static const TypeInfo aspeed_2600_sdhci_info =3D {
+>+    =2Ename =3D TYPE_ASPEED_2600_SDHCI,
+>+    =2Eparent =3D TYPE_ASPEED_SDHCI,
+>+    =2Eclass_init =3D aspeed_2600_sdhci_class_init,
+>+};
+>+
+>+static void aspeed_sdhci_register_types(void)
+>+{
+>+    type_register_static(&aspeed_sdhci_info);
+>+    type_register_static(&aspeed_2400_sdhci_info);
+>+    type_register_static(&aspeed_2500_sdhci_info);
+>+    type_register_static(&aspeed_2600_sdhci_info);
+>+}
+>+
+>+type_init(aspeed_sdhci_register_types);
+>diff --git a/include/hw/sd/aspeed_sdhci=2Eh b/include/hw/sd/aspeed_sdhci=
+=2Eh
+>index 057bc5f3d1=2E=2E8083797e25 100644
+>--- a/include/hw/sd/aspeed_sdhci=2Eh
+>+++ b/include/hw/sd/aspeed_sdhci=2Eh
+>@@ -13,9 +13,11 @@
+> #include "qom/object=2Eh"
+>=20
+> #define TYPE_ASPEED_SDHCI "aspeed=2Esdhci"
+>-OBJECT_DECLARE_SIMPLE_TYPE(AspeedSDHCIState, ASPEED_SDHCI)
+>+#define TYPE_ASPEED_2400_SDHCI TYPE_ASPEED_SDHCI "-ast2400"
+>+#define TYPE_ASPEED_2500_SDHCI TYPE_ASPEED_SDHCI "-ast2500"
+>+#define TYPE_ASPEED_2600_SDHCI TYPE_ASPEED_SDHCI "-ast2600"
+>+OBJECT_DECLARE_TYPE(AspeedSDHCIState, AspeedSDHCIClass, ASPEED_SDHCI)
+>=20
+>-#define ASPEED_SDHCI_CAPABILITIES 0x01E80080
+> #define ASPEED_SDHCI_NUM_SLOTS    2
+> #define ASPEED_SDHCI_NUM_REGS     (ASPEED_SDHCI_REG_SIZE / sizeof(uint32=
+_t))
+> #define ASPEED_SDHCI_REG_SIZE     0x100
+>@@ -32,4 +34,10 @@ struct AspeedSDHCIState {
+>     uint32_t regs[ASPEED_SDHCI_NUM_REGS];
+> };
+>=20
+>+struct AspeedSDHCIClass {
+>+    SysBusDeviceClass parent_class;
+>+
+>+    uint64_t capareg;
+>+};
 
-If you're using q35 and OVMF then you must be operating in the realm of
-the mythical "Universal Pass-through" mode that I thought Intel had
-abandoned.  It seems like we need an update to docs/igd-assign.txt as
-it's likely very out of date based on recent improvements here and by
-Corvin.
+The struct seems not AST-specific and could be turned into a base class fo=
+r all SDHCI device models, no? That way one could also add further device-s=
+pecific constants other than capareg=2E
 
-Also, are you proposing the noted edk2 change upstream?  It seems like
-edk2 would need some sort of device version detection to know whether
-to use a 32 or 64-bit BDSM value.  Thanks,
+Best regards,
+Bernhard
 
-Alex
-
-> Changelog:
-> v2:
-> * Droped "vfio/igd: fix GTT stolen memory size calculation for gen 7".
-> * Fixed conditions when calculating GGMS size.
-> * Added Gemini Lake and Comet Lake device ids.
-> * Splited mirroring register declaration macro into a new patch.
-> * Minor fixes.
-> Link: https://lore.kernel.org/qemu-devel/20241201160938.44355-1-tomitamoeko@gmail.com/
-> 
-> Tomita Moeko (9):
->   vfio/igd: remove unsupported device ids
->   vfio/igd: align generation with i915 kernel driver
->   vfio/igd: canonicalize memory size calculations
->   vfio/igd: add Gemini Lake and Comet Lake device ids
->   vfio/igd: add Alder/Raptor/Rocket/Ice/Jasper Lake device ids
->   vfio/igd: add macro for declaring mirrored registers
->   vfio/igd: emulate GGC register in mmio bar0
->   vfio/igd: emulate BDSM in mmio bar0 for gen 6-10 devices
->   vfio/igd: add x-igd-gms option back to set DSM region size for guest
-> 
->  hw/vfio/igd.c | 248 ++++++++++++++++++++++++++++++--------------------
->  1 file changed, 151 insertions(+), 97 deletions(-)
-> 
-
+>+
+> #endif /* ASPEED_SDHCI_H */
 
