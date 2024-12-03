@@ -4,60 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A68E64A85
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 12:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF00E64A87
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 12:32:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIRuX-0004b5-2J; Tue, 03 Dec 2024 07:21:49 -0500
+	id 1tIS3Z-0006Fw-WE; Tue, 03 Dec 2024 07:31:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tIRuU-0004aZ-7u
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 07:21:46 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tIS3V-0006FH-H0
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 07:31:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tIRuR-0007Cy-VD
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 07:21:45 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3A2684E602B;
- Tue, 03 Dec 2024 13:21:38 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id p-rOuaGTwGPl; Tue,  3 Dec 2024 13:21:36 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4C7A14E6013; Tue, 03 Dec 2024 13:21:36 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4A09E757B1C;
- Tue, 03 Dec 2024 13:21:36 +0100 (CET)
-Date: Tue, 3 Dec 2024 13:21:36 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Gerd Hoffmann <kraxel@redhat.com>
-cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH-for-9.2? v2 1/2] hw/display/vga: Do not reset
- 'big_endian_fb' in vga_common_reset()
-In-Reply-To: <yqxiqgaazxuvvtx3onfqlndx2t2sa3i7iykufkl56r45iwyusj@xatjov5qiea2>
-Message-ID: <43be4405-89a6-009a-de91-dbf3bba1b560@eik.bme.hu>
-References: <20241129101721.17836-1-philmd@linaro.org>
- <20241129101721.17836-2-philmd@linaro.org>
- <21c5e930-d7ee-4dd8-a238-862f4db87849@linaro.org>
- <2f6a993cd0e12c2bf903440f9f921d7af58bee36.camel@kernel.crashing.org>
- <yqxiqgaazxuvvtx3onfqlndx2t2sa3i7iykufkl56r45iwyusj@xatjov5qiea2>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tIS3T-0000BJ-I4
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 07:31:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733229061;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6cpQFTA2BF9+klYfKL9FlmwQ6lgl6kKlJpFFDMlYwyY=;
+ b=dYwJRLhmwBbpQpXvkjjG4yGT59DO+7rg6KixbKsECRXn5kJ+WbEjv+mVVIAyzFjMtG4hks
+ dlqQsuwU2coR0a7p8yb245nipuaeOKtuV5+ttwTWoc58iCIhZvBglc/H/eExRhTyfF7rwr
+ k9Xzsl/f6nuj9U9TfQRMDCwEGyulsoI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-whFSqmr3OMaNBf5lrJgrrA-1; Tue,
+ 03 Dec 2024 07:30:58 -0500
+X-MC-Unique: whFSqmr3OMaNBf5lrJgrrA-1
+X-Mimecast-MFC-AGG-ID: whFSqmr3OMaNBf5lrJgrrA
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB4AB19560AB; Tue,  3 Dec 2024 12:30:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.37])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A5E4819560A3; Tue,  3 Dec 2024 12:30:53 +0000 (UTC)
+Date: Tue, 3 Dec 2024 12:30:49 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Yong Huang <yong.huang@smartx.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 0/5] Guestperf: miscellaneous refinement and enrichment
+Message-ID: <Z075-ZPW9dzzCKJn@redhat.com>
+References: <cover.1729562974.git.yong.huang@smartx.com>
+ <87sesmdfl4.fsf@suse.de>
+ <CAK9dgmZvj4W2EBxp1_TcdYs3q2aqaRZGZCAk=FRJk-PaB9y_fw@mail.gmail.com>
+ <87v7w6jkc9.fsf@suse.de> <87plmejgtb.fsf@suse.de>
+ <CAK9dgmbHL+O34+E3ykDdAunap+Ruubm7ysisrMags6TN25BiNQ@mail.gmail.com>
+ <Z04PTe4kCVWEQbPL@x1n> <Z06866qR0z9n2BgP@redhat.com>
+ <875xo1j6ub.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <875xo1j6ub.fsf@suse.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,38 +91,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Dec 2024, Gerd Hoffmann wrote:
->  Hi,
->
->> For bochs and ati, there's a register to configure it as well, so there
->> *may* be an expectation that it gets reset there, I'm less certain.
->
-> The default is there for backward compatibility reasons and it should
-> default to machine byte order so you get something working even in case
-> the guest does not explicitly set the byte order via register.  Which
-> should be increasingly rare these days, the register was added in
-> (checking git log) 2014: commit b5682aa4ca79 ("vga-pci: add qext region
-> to mmio")
->
-> The only case I'm aware of where the byte order is actually switched is
-> booting a ppc64le guest in a pseries machine, where the opal firmware
-> runs in bigendian mode and the linux kernel runs in little endian mode.
->
-> So here the changed reset behavior could actually make a difference, but
-> you will only notice if the opal firmware does *not* set the byte order
-> register.
+On Tue, Dec 03, 2024 at 09:20:44AM -0300, Fabiano Rosas wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Mon, Dec 02, 2024 at 02:49:33PM -0500, Peter Xu wrote:
+> >> On Sat, Nov 30, 2024 at 10:01:43PM +0800, Yong Huang wrote:
+> >> > On Fri, Nov 29, 2024 at 9:44 PM Fabiano Rosas <farosas@suse.de> wrote:
+> >> For the stress.c warnings/error, I saw another one warning with gcc when
+> >> built it locally, then I found Fabiano's CI run also has it:
+> >> 
+> >> https://gitlab.com/farosas/qemu/-/jobs/8504697347
+> >> 
+> >> Which has:
+> >> 
+> >> [3381/3611] Linking target tests/migration/stress
+> >> /usr/bin/ld: /usr/lib64/libglib-2.0.a(gutils.c.o): in function `g_get_user_database_entry':
+> >> (.text+0xeb): warning: Using 'getpwnam_r' in statically linked applications requires at runtime the shared libraries from the glibc version used for linkign
+> >> /usr/bin/ld: (.text+0x2be): warning: Using 'getpwuid' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+> >> /usr/bin/ld: (.text+0x134): warning: Using 'getpwuid_r' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+> >> 
+> >> Feel free to look at it too if you like. Nothing should be relevant to your
+> >> changes, so I think it could be there for a while when compilers upgrade.
+> >
+> > Those messages are mostly harmless, especially in the stress scenario, and
+> > can't practically be eliminated:
+> >
+> >   https://gitlab.gnome.org/GNOME/glib/-/issues/2019
+> 
+> Although harmless, we can't have them showing up during the
+> build. Should we go back to not building stress.c by default? Another
+> option (which I prefer) would be to stop using glib in stress.c, it
+> doesn't look like it would be much work to do that. 
 
-I'm not sure about ati-vga but I set the vga.big_endian_fb on mode switch 
-if the guest uses big endian mode. I've added this for MacOS 9 I think 
-which does use that. I've also put some notes on what I've found different 
-drivers use in commit 8bb9a2b26d83a. AFAIK the ati chip starts as little 
-endian so maybe reseting it in ati_vga_reset() if vga_common_reset() does 
-not do that any more may be needed but I can't tell for sure that's why I 
-did not comment on this patch so far.
+FYI they already show up in QEMU builds if you are building qemu-user as
+static binaries, which is what you want for binfmt usage.  The main
+diff is that in this case they'll show up by default for anyone who has
+glib-static available.  Is that a big problem ?
 
-Regards,
-BALATON Zoltan
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
