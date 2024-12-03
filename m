@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF7FD7833F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 10:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE4BD4979A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 10:01:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIPgx-0007CO-3B; Tue, 03 Dec 2024 04:59:39 -0500
+	id 1tIPhn-0007VJ-Ju; Tue, 03 Dec 2024 05:00:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIPgu-0007Br-RS
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:59:36 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIPhl-0007Ui-0g
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:00:29 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIPgm-0006t2-NX
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:59:30 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-434a2033562so43323335e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 01:59:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIPhj-00079Z-HY
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:00:28 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-385e2880606so3377325f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 02:00:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733219967; x=1733824767; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733220026; x=1733824826; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jn71q+BYmRY3Un6hrVzIXXO71Ml4MawXlVXT1Vh5wTI=;
- b=u9W988u6QaZxwYYX05nB0h0RRm/SnIBD4QE+WMGRiknoSFO3oIDv1YFeBZDiC9xVGW
- vVWeMxpTuw2S1EvIBIJkLfa6ufkIC74taASOLtXUzPasnLVMF78uNGS8+Z6NpHxXpeOl
- TQ1SqqyReGmGIGOwezoFhAEeQKhastk9Niuwz1T8U68nFxWJ/d55YXtBWTroK4NYEggf
- bWf9vFTbCoHYPw2o0RbxsThXGS//oRr2n0u5JK9p+vHvmytmGY4rFHegHNSG/t5uzYzi
- N6aIlhY2cuNMyFsKu24smWKjSKNPq+dipxaP/n15BogCwwzMIhXMpo5g32uwaXp7qGh0
- eyxQ==
+ bh=Mou40D0ZjD2Lf1VQwRddwv9731DnFFHuY1Fb6AhznBU=;
+ b=gb0NjVPV0uHoLLftcv+dgNLjneuRJPWrUsEJHOLjZrkKZQywPPocKmdWqf1vpdYuCs
+ UrOITPYiXqaXZ2OhGKAAfHpi7ZSE8B7yCzYbKPV/6JDoXRdhUXLPJMvMOPlFVG33n3vb
+ 2LHSmUxstpkD6P5sXg5NqthMHfFAzApduoiTkIHfN9OM2B5caf1c+NSXsjwLkWR2F2Dh
+ VoK8wL6+AulUHXf1rwfNG365qD1H7n712tBlaAhBdbWA7Iz+glwKkoJX221PrzKVSGg5
+ Il8E0BYjQA2DGSDOTxhaU7U4/6xyHYbPpPMM10V3rCipjiqBZcAXFex7TktflAw5EM5+
+ M0nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733219967; x=1733824767;
+ d=1e100.net; s=20230601; t=1733220026; x=1733824826;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jn71q+BYmRY3Un6hrVzIXXO71Ml4MawXlVXT1Vh5wTI=;
- b=MJUFS7splgmLkMR2IkpE6LvVbq7U0DEEUlbNFMM6y4h/jwPmEC/qzddCpXEgSVwTsF
- DLh51g9uHL4r3V0n6zASwYAuolu5qACR5kmrqdeaJbWXL03URCZQAZU0fXB6aKURhjF9
- y1YPXSAKlztr7nTYCeQykCpCZ/NmfZqG9GzuCSP0QD65z+BjBA4Vmc4o6AnVhksiO0UA
- yPV0DVYfTf/jPLMIig87iNtbmcNcZwvfUoyUll1WwHE6XO0nydVWEpZ4ZeInCD+8FoJq
- wiuHRRQ/tnjGTO+/YHbXFh91hykgrMWnHl3wfpsWj8Fmy1YlYCsgY2xaN2GAQStrA+J5
- /IZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXn1NOTJ0Qa1fpSg5MeZPV/dT4mkREmScsWOy/SnoV6yQ3uTl34JTUHi18yizuXY9R3KWw/QxMym1n+@nongnu.org
-X-Gm-Message-State: AOJu0YyhvABqOapgImPT8JYhKxT+c2FO+oxIzcpMvC8wysQ3znJ9oPlO
- 8z8hngUp+SiZo2T4riYm1lguyV6uzLUL9kxHmV3ctIx7QdPgzhsiTi8oz7Rv+wQ=
-X-Gm-Gg: ASbGnctcAdIyIaL1yKcYxbDlIF69wLxtZoo6VQkrqbdF/Kj+k6RkzQLYaFRQ2zSkNkR
- KcdUtsjfdf3JlGluVKDUwhi8eENT2RlXAnDFbN0mZtGcuUEpkqan6yvq1ZtItD41f4SwfiH1pN9
- qsjZwU/LqjjNFcZUHdye1M7dmUZ4pV1tLF2q7O4O2UN9sV+E2mEudihEI8ylnsABr7O1Tr0ent+
- AFm2O/NF/ZVb8h6nYIqxS2EvOXG8L6sBuuDwj586oiAy2Jv7IsJAXjkP0YttvLLLw==
-X-Google-Smtp-Source: AGHT+IGihepYzmjeq6nk4ZmcjGTDlGqlZVonMtA8Ntv9cpeSveskm+Grswfj/AbJFEcgR6GiW44zdw==
-X-Received: by 2002:a05:6000:1446:b0:385:f092:e16 with SMTP id
- ffacd0b85a97d-385fd54df09mr1393301f8f.55.1733219966725; 
- Tue, 03 Dec 2024 01:59:26 -0800 (PST)
+ bh=Mou40D0ZjD2Lf1VQwRddwv9731DnFFHuY1Fb6AhznBU=;
+ b=nnCXD1Fkp/uLtAZM+EmL1eRgpmr72BFeC072AgX7NCq7h9brD5rkhwGaB+Q1tgHk88
+ zVxL0dvQ+n1VweOE5IIOiDUvPUOQD8lI2lN8+nARunYPfUOM0azcS6k+1Ez7SUpjlpaw
+ cpGcvqCAUsWtyM7QxurVBCT9v7s4o9c0STCUtlZtR3vkNje8NQIWDXVASJYGcfBfwJw7
+ WBs9cZBL63Fu9Iv29JTPF/erOuWs4X2JgYDRcxzvD1RBN0ECR1QUOqkOiBlaD4zfdBtX
+ 5xjlk1H/Dc8lN4IbbtwB7aD8YaXE7qVKtsZ+Yn4gat1UyJoc9wZuVa0GmJ7LXUeycrGI
+ ZZ5Q==
+X-Gm-Message-State: AOJu0YyPI/ivH7pszPPF1Zu2HIgv/l2E9rW/v4y0MaFpEtG8wXlncnAi
+ UiFU6/I9zTYKCOQMV7ABNuSK24TCnvzXKZyaT023IdGzeja+n9Hl7ObpJBoFJ3M=
+X-Gm-Gg: ASbGncv4vJU0hT17vrDi30YiKr3quensxy2/GMMt/XJnHmqeESH06I+KqBBbjVpswPE
+ AJKa1w0CQj2jq5t+ChnwpNJnbDE6lHc5sA/blfIeS8E+QRncTRBCqgvuENHPXYm/dDdcwV6mpS8
+ AonOj3mP1SfUP1GuXhN1I7TFbKuv1O8RDhakzwlp9qVG5ZpaBgY2dFzQV0kozMBR68QlwH2D6ph
+ 49cpaTaavfZEn968asEgJ0LZr8ZHq0POct0l23tl68Ggp9R/4mBDXtNeaQLXbACbg==
+X-Google-Smtp-Source: AGHT+IE9vxZfRp24W90RJX0+iLYHphI7Leo+DbgvnW1oVtIyTYr8wsT4fzpvKsL/PjdyubjEmCbDIQ==
+X-Received: by 2002:a05:6000:4024:b0:385:f062:c2d4 with SMTP id
+ ffacd0b85a97d-385fd435560mr1562279f8f.37.1733220025994; 
+ Tue, 03 Dec 2024 02:00:25 -0800 (PST)
 Received: from [192.168.69.223] ([176.187.209.146])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385e0d4778dsm11412369f8f.45.2024.12.03.01.59.25
+ ffacd0b85a97d-385db7f86dasm13053820f8f.66.2024.12.03.02.00.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 01:59:26 -0800 (PST)
-Message-ID: <cb079b65-e5fc-4667-aa63-9ff347666b6e@linaro.org>
-Date: Tue, 3 Dec 2024 10:59:24 +0100
+ Tue, 03 Dec 2024 02:00:25 -0800 (PST)
+Message-ID: <0ca2c3e9-2ea6-4cd1-9f97-56068b48d870@linaro.org>
+Date: Tue, 3 Dec 2024 11:00:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] binfmt: Don't consider riscv{32,64} part of the same
- family
-To: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org,
- qemu-riscv <qemu-riscv@nongnu.org>
-Cc: Laurent Vivier <laurent@vivier.eu>,
- David Abdurachmanov <davidlt@rivosinc.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mark Corbin <mark@dibsco.co.uk>
-References: <20241203094702.124748-1-abologna@redhat.com>
+Subject: Re: [PATCH 7/7] qemu-options: Remove mentions of legacy '-machine
+ foo,accel=bar'
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+References: <20241203092153.60590-1-philmd@linaro.org>
+ <20241203092153.60590-8-philmd@linaro.org> <Z07VR-YvVCxdTua_@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241203094702.124748-1-abologna@redhat.com>
+In-Reply-To: <Z07VR-YvVCxdTua_@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,74 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Andrea,
+On 3/12/24 10:54, Daniel P. Berrangé wrote:
+> On Tue, Dec 03, 2024 at 10:21:53AM +0100, Philippe Mathieu-Daudé wrote:
+>> Since commit 6f6e1698a68 ("vl: configure accelerators from -accel
+>> options") we prefer the '-accel bar' command line option.
+>>
+>> The new form started to be documented in commit 8d4e9146b35 ("tcg:
+>> add options for enabling MTTCG"); it is safe to remove the mentions
+>> of the legacy option.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   qemu-options.hx | 9 ---------
+>>   1 file changed, 9 deletions(-)
 
-On 3/12/24 10:47, Andrea Bolognani wrote:
-> Currently the script won't generate a configuration file that
-> sets up qemu-user-riscv32 on riscv64, likely under the
-> assumption that 64-bit RISC-V machines can natively run 32-bit
 
-I'm confused by the "machines" description used for user emulation.
-
-> RISC-V code.
+> I'm not convinced we should be removing documentation for options that
+> currently exist and remain supported.
 > 
-> However this functionality, while theoretically possible, in
-> practice is missing from most commonly available RISC-V hardware
-> and not enabled at the distro level. So qemu-user-riscv32 really
-> is the only option to run riscv32 binaries on riscv64.
-
-We have definitions such ELF_ARCH/ELF_PLATFORM/ELF_MACHINE to
-parse ELF header and select the best CPU / flags. Maybe RISC-V
-lacks them?
-
-BTW we should expose that for linux-user as target_arch_elf.h,
-like bsd-user does, that would reduce all these #ifdef'ry in
-linux-user/elfload.c...
-
+> The documentation should be updated to say that we prefer use of '-accel'
+> instead at least.
 > 
-> Make riscv32 and riscv64 each its own family, so that the
-> configuration file we need to make 32-on-64 userspace emulation
-> work gets generated.
-
-Does this patch aim for 9.2? Otherwise FYI  I'm working on unifying
-32/64-bit targets, maybe for 10.0...
-
+> Beyond that, what is our long term intention with '-machine accel=xxx' ?
 > 
-> Link: https://src.fedoraproject.org/rpms/qemu/pull-request/72
-> Thanks: David Abdurachmanov <davidlt@rivosinc.com>
-> Thanks: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
-> ---
->   scripts/qemu-binfmt-conf.sh | 7 ++-----
->   1 file changed, 2 insertions(+), 5 deletions(-)
-> 
-> diff --git a/scripts/qemu-binfmt-conf.sh b/scripts/qemu-binfmt-conf.sh
-> index 6ef9f118d9..e38b767c24 100755
-> --- a/scripts/qemu-binfmt-conf.sh
-> +++ b/scripts/qemu-binfmt-conf.sh
-> @@ -110,11 +110,11 @@ hppa_family=hppa
->   
->   riscv32_magic='\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'
->   riscv32_mask='\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
-> -riscv32_family=riscv
-> +riscv32_family=riscv32
->   
->   riscv64_magic='\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'
->   riscv64_mask='\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
-> -riscv64_family=riscv
-> +riscv64_family=riscv64
->   
->   xtensa_magic='\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x5e\x00'
->   xtensa_mask='\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
-> @@ -168,9 +168,6 @@ qemu_get_family() {
->       sparc*)
->           echo "sparc"
->           ;;
-> -    riscv*)
-> -        echo "riscv"
-> -        ;;
->       loongarch*)
->           echo "loongarch"
->           ;;
+> Is this a case where we are happy to leave '-machine accel=' as syntax
+> sugar forever ?  Or is this a case where we want to deprecate it and
+> eventually remove its impl (and thus the documention here)
 
+Right, we should deprecate and then remove.
 
