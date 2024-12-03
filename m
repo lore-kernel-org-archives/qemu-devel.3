@@ -4,102 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E9AFE64A80
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47FA8E64A80
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:51:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIRIg-0000cn-OF; Tue, 03 Dec 2024 06:42:42 -0500
+	id 1tIRPz-0002tv-ER; Tue, 03 Dec 2024 06:50:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tIRIe-0000c6-9g
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:42:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tIRIc-0001T2-9G
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:42:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733226156;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kdV+kCaE9Lyhdv1F9WhU4L/Nk8QckqLF6OR7JQI+70U=;
- b=inG4WTVIc/IJRHF3pupt5HVjYvRGriUGXBRDzXURuIi6Up0FQIgEX/yyYQ5zvSOQLIJFlx
- die/GCxlKZijQUzF9bVPv/rIty/88zbA7WY+X/sX0frDlX6yx6QP8z8yW3p7iZMy+sKA8d
- w2p0UbvjplsjETAdc6uQ0C+Xr6S1tys=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-mv-H8Vb6Mhy6RoiTQzas6A-1; Tue, 03 Dec 2024 06:42:35 -0500
-X-MC-Unique: mv-H8Vb6Mhy6RoiTQzas6A-1
-X-Mimecast-MFC-AGG-ID: mv-H8Vb6Mhy6RoiTQzas6A
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-434a5ca6a67so39789645e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:42:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tIRPu-0002qE-7o
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:50:11 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tIRPs-0002O8-K1
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:50:09 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5cece886771so9580565a12.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:50:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733226604; x=1733831404; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=a0U68q73lW+pS6rFsjZzAewbIGZOTioH4eI5YcSNmaM=;
+ b=NWRIRoOb2E9Fd+vM6I9dudlbZt6Cac3+rOe7AqH0+cwPSqQ/27QdhvB6lLFUZbhVqx
+ Ou7umnCfcUL0l8uCvNtaX1tr6HSKdxTS5nT9VjcJyK4IiCSax514qPtWEenDmvAA83Yy
+ 3GA8zIKZdbwbCuDdq0WO3UVkeRU9r3AIYrkx9GA3Rzm3hlgSJOapL9DBMFGJiJ66qNtF
+ 3piaPqXGBLW/mV4ZjNuQ05uRB09ikdq1XwcQZOPj1xVuW0MSL8z2/Dky/RwwWC4fUq5E
+ z8IyAFg4Zy777C/v4iV+9LiV0gU4RqC46MPPeMbWD+3jJuIu1QZvOcoR/Xb9x7cdYiBg
+ Axew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733226154; x=1733830954;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kdV+kCaE9Lyhdv1F9WhU4L/Nk8QckqLF6OR7JQI+70U=;
- b=IeGKGEwG1iVw1a66Zz59F2nKXV4CeHjsrhoXL6kFSalWcUTNV0o2rDC08LmQLRX95w
- Ofdb/XsLhtKoSMqioDbYjow+DTtbzbl356TgsPI6MtK2Hh96aWHv18DtkFTgodbrd8d/
- qtgep8r8Q8oqoBEze/QJigideXAHbpiYAbSHgL+t9dfuoByUHkFzEFaK0Xm25Kg8XoPA
- AdVa4kZ2izAvwQxbGV2lIqP2X43tcMnHI+ru3Zrtrf2UoflIN9+pJm+iY4ybipB+cJJW
- OQyObQ3fxy1mM0SMkyBvbLW0nVPIPxBqqhe7sEhRP/6l7fHyA0DPH1u4/G7FjNhNU+WU
- WkRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVVqJFMfF5/6NBCONkQfRK8rkqA4Ak6BAE0mKf8vLSCRZMrlvgMiKW87ENROG2xA/8XXV7tyIundNbs@nongnu.org
-X-Gm-Message-State: AOJu0Yxc/iNYANjOyhx71WdEJh1VVS5xR5adU/PlJ4xSLZ+52m3Xr9xq
- vYpURwMGIPibDtFooRFZkX/jqNerGJ1cPDKHUqRu8fYNzECpIFNv016Ib4ooIiBef0QNXmHn42Q
- X0sdVq78xjRWCFdhuiO22T3IvlD1cWNE8j/ktOPS0Ytmz44uyZaP4
-X-Gm-Gg: ASbGncsix2wOWBIjE38MFTTmmKBBWx/F/1VavCvkt1LThJcnU3QmV5Z4zJM5fkndICM
- DV3CNTwqoUSrh8XjZCeEScJyG6nrbzABXlPD55ZnIxIfagScFEuL7EErncHuBKVDp4f/GvRPTTU
- PeANzFkeGBpQvUf8UvDJNUvxkNWkgCr9ZyrnJYHU09rSpSnJ8fplZyjow2393Xtr4M6M/VLwsJ0
- mljrQJqpbofagkNXcIfY8ME3Q2drRf/3Vad9wL37/VJBtMbyPC9cuJfWyKAP7FkkVMvzQN9KRqD
- 1OBHDlCSz7YslforVszXhQ==
-X-Received: by 2002:a05:600c:4708:b0:434:a75b:5f6c with SMTP id
- 5b1f17b1804b1-434d09bf679mr21243065e9.10.1733226153856; 
- Tue, 03 Dec 2024 03:42:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFxNIMxmum8ZNVHTxSVk7U02XMS5k10BcA7udiCBF1F18eXmzrvQxBopFgxD6upbMlqusfpMA==
-X-Received: by 2002:a05:600c:4708:b0:434:a75b:5f6c with SMTP id
- 5b1f17b1804b1-434d09bf679mr21242765e9.10.1733226153544; 
- Tue, 03 Dec 2024 03:42:33 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434b0dc9827sm185133725e9.26.2024.12.03.03.42.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 03:42:33 -0800 (PST)
-Date: Tue, 3 Dec 2024 12:42:32 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 08/15] acpi/ghes: make the GHES record generation
- more generic
-Message-ID: <20241203124232.7948b2fb@imammedo.users.ipa.redhat.com>
-In-Reply-To: <b3845a8c78ef36c633d5e20af868de4ed16650a4.1732266152.git.mchehab+huawei@kernel.org>
-References: <cover.1732266152.git.mchehab+huawei@kernel.org>
- <b3845a8c78ef36c633d5e20af868de4ed16650a4.1732266152.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1733226604; x=1733831404;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=a0U68q73lW+pS6rFsjZzAewbIGZOTioH4eI5YcSNmaM=;
+ b=JoC+OJUUXqDlvJcMiAueY+SapvyL8DXonF/CpiQcvcX+N9gUOng8BklYyqU8Y++9ku
+ EDZs5+amKQZu/I5YthCr59AFNKgaC/pU2lLmkQkdXXPk1EQvJx3a2JGJskGiHYp4Xirt
+ ZXoymHBradHVEIB0QVgwG5w2eXbYz2sgNe5E8p02y1wNgDMZ/nLcrrukg64rtvUame4d
+ +016xheXYanCefSY6ZhhNxn7fW4wdUkTVE+IGtp/sXKlzlHpdZslYeH2O4Tfg5lmn4K9
+ EAo9x0HQsWJADQl0HQlf8J8p2QF+Y0tS7XSifjZB9LCxCP5lfErWoOjb4Wyd35Y6+Lpb
+ Fhiw==
+X-Gm-Message-State: AOJu0Yw5A9u8kvOB7CA3QuaiatrYISZiWNecd5HL+As0ZyB/Qr9IdLgu
+ CwbqYerIiT8WFwFM1IWPgUMYkDVcoi+5o52A0zgCVgKNTU3GoOz6EHzf7Jpj22KpQq1TNJHda4K
+ YjVJIxonWcbjC3ss+7X6V0sna1U/EYyph5Sw37w==
+X-Gm-Gg: ASbGncuINiVbz5M5LZ6+64nsqAGt2l59qv9dl8PCA29OUJqKtDdVjkCCVsJGYvWIQmC
+ bDllTOz3k2USugR8OtPMvWAzIZt8a0aKQ
+X-Google-Smtp-Source: AGHT+IG9dFH1Eb7MOUTeFN1SRRudcD1dIuScX3yF0L0sDVI5lqPkJiYNsn3RfRU8hX+6OaWaf/U0gjl+l7PVrjijk1M=
+X-Received: by 2002:a05:6402:4409:b0:5d0:b1c4:7081 with SMTP id
+ 4fb4d7f45d1cf-5d10c22f097mr2426610a12.4.1733226603063; Tue, 03 Dec 2024
+ 03:50:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241201150607.12812-1-richard.henderson@linaro.org>
+ <20241201150607.12812-43-richard.henderson@linaro.org>
+In-Reply-To: <20241201150607.12812-43-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 3 Dec 2024 11:49:52 +0000
+Message-ID: <CAFEAcA8CbQXg7D22SCyqT0oJAPZ1g7_yWJENZX3wKBOmp4r58Q@mail.gmail.com>
+Subject: Re: [PATCH 42/67] target/arm: Convert handle_rev to decodetree
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,43 +90,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Nov 2024 10:11:25 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-
-> Split the code into separate functions to allow using the
-> common CPER filling code by different error sources.
-> 
-> The generic code was moved to ghes_record_cper_errors(),
-> and ghes_gen_err_data_uncorrectable_recoverable() now contains
-> only a logic to fill the Generic Error Data part of the record,
-> as described at:
-> 
-> 	ACPI 6.2: 18.3.2.7.1 Generic Error Data
-> 
-> The remaining code to generate a memory error now belongs to
-> acpi_ghes_record_errors() function.
-> 
-> A further patch will give it a better name.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+On Sun, 1 Dec 2024 at 15:16, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> This includes REV16, REV32, REV64.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-[...]
 
-> -    return ret;
-> +    read_ack_register = cpu_to_le64(0);
-> +    /*
-> +     * Clear the Read Ack Register, OSPM will write it to 1 when
-                                                 ^^^^^^^^^^^^^ typo?
-> +     * it acknowledges this error.
-> +     */
-> +    cpu_physical_memory_write(read_ack_register_addr,
-> +        &read_ack_register, sizeof(uint64_t));
-> +
-> +    /* Write the generic error data entry into guest memory */
-> +    cpu_physical_memory_write(error_block_addr, cper, len);
-> +
-> +    return;
-> +}
-[...]
+> @@ -10070,10 +10003,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+>      TCGv_ptr tcg_fpstatus;
+>
+>      switch (opcode) {
+> -    case 0x0: /* REV64, REV32 */
+> -    case 0x1: /* REV16 */
+> -        handle_rev(s, opcode, u, is_q, size, rn, rd);
+> -        return;
+>      case 0x12: /* XTN, XTN2, SQXTUN, SQXTUN2 */
+>      case 0x14: /* SQXTN, SQXTN2, UQXTN, UQXTN2 */
+>          if (size == 3) {
+> @@ -10276,6 +10205,8 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+>          break;
+>      }
+>      default:
+> +    case 0x0: /* REV64 */
+> +    case 0x1: /* REV16, REV32 */
 
+REV32 is case 0x0, not 0x1, per the comments deleted above.
+
+>      case 0x3: /* SUQADD, USQADD */
+>      case 0x4: /* CLS, CLZ */
+>      case 0x5: /* CNT, NOT, RBIT */
+> diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+> index 4f8231d07a..2531809096 100644
+> --- a/target/arm/tcg/a64.decode
+> +++ b/target/arm/tcg/a64.decode
+> @@ -73,6 +73,7 @@
+>
+>  @qrr_b          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=0
+>  @qrr_h          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=1
+> +@qrr_bh         . q:1 ...... . esz:1 ...... ...... rn:5 rd:5  &qrr_e
+>  @qrr_e          . q:1 ...... esz:2 ...... ...... rn:5 rd:5  &qrr_e
+>
+>  @qrrr_b         . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=0
+> @@ -1657,3 +1658,7 @@ CMGE0_v         0.10 1110 ..1 00000 10001 0 ..... .....     @qrr_e
+>  CMEQ0_v         0.00 1110 ..1 00000 10011 0 ..... .....     @qrr_e
+>  CMLE0_v         0.10 1110 ..1 00000 10011 0 ..... .....     @qrr_e
+>  CMLT0_v         0.00 1110 ..1 00000 10101 0 ..... .....     @qrr_e
+> +
+> +REV16_v         0.00 1110 001 00000 00011 0 ..... .....     @qrr_b
+> +REV32_v         0.10 1110 0.1 00000 00011 0 ..... .....     @qrr_bh
+> +REV64_v         0.00 1110 ..1 00000 00001 0 ..... .....     @qrr_e
+
+This doesn't look quite right -- in the decode table in C4.1.96.21,
+2-reg misc REV32 is opcode 00000, like REV64, not 00001 like REV16.
+
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -1660,5 +1660,5 @@ CMLE0_v         0.10 1110 ..1 00000 10011 0
+..... .....     @qrr_e
+ CMLT0_v         0.00 1110 ..1 00000 10101 0 ..... .....     @qrr_e
+
+ REV16_v         0.00 1110 001 00000 00011 0 ..... .....     @qrr_b
+-REV32_v         0.10 1110 0.1 00000 00011 0 ..... .....     @qrr_bh
++REV32_v         0.10 1110 0.1 00000 00001 0 ..... .....     @qrr_bh
+ REV64_v         0.00 1110 ..1 00000 00001 0 ..... .....     @qrr_e
+
+should I think be the right fixup.
+
+thanks
+-- PMM
 
