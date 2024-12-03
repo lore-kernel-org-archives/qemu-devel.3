@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56DD7E69E88
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 10:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DCA3E69E9F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 10:25:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIQ4K-0007Zw-Up; Tue, 03 Dec 2024 05:23:48 -0500
+	id 1tIQ65-0000Me-95; Tue, 03 Dec 2024 05:25:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIQ4I-0007ZS-1W
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:23:46 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIQ60-0000Kx-TD
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:25:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIQ4G-0001JU-Hd
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:23:45 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIQ5z-0001c2-Db
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:25:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733221423;
+ s=mimecast20190719; t=1733221530;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kmyxVJ+YUkcgpMOIJZRmGj3gv31AXTUXR3Mg+4OB2T0=;
- b=dwlktHBupXvfVnzHUbOVNwXSA0UKg3dv1c6lWCuw5sfp9Pu/Oww2b+ag85Ikjp/HbEPBJ5
- DC9cVlE9eHwB1DYEbn9dKieaYPEM5J+3toH8hoMYoEE5XKkMYqGRNyiReDCOs2S0C1XeVA
- 8JS4mVuLyv0LTkf2WciQCyU0Pqh8UEs=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9RD4AGEHDHwzQlUUYYm0x1kn9o+vBEiZ5DFCqwxpxGM=;
+ b=i1vszHJ9mniwcwhQtyz4lzoe24eArY679EOXZw6/JPj6M7cPGu0A1inp0mHZU4qqXq2XTN
+ aKBXkiErtuBhL81zCMVBn82eSPrXkAcT7D+ev1P56NekptyiOO6Or5+wbu+e8U87QnSAxk
+ gRZvbgUo/Zz7bBZPsueEANOgqLHJvx8=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-407-YuDDSeWTOBShULhnhfvgpQ-1; Tue, 03 Dec 2024 05:23:40 -0500
-X-MC-Unique: YuDDSeWTOBShULhnhfvgpQ-1
-X-Mimecast-MFC-AGG-ID: YuDDSeWTOBShULhnhfvgpQ
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-6ef6e33c182so48525357b3.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 02:23:40 -0800 (PST)
+ us-mta-59-9IxbYWXnM2CLqlYEP5ZRAA-1; Tue, 03 Dec 2024 05:25:29 -0500
+X-MC-Unique: 9IxbYWXnM2CLqlYEP5ZRAA-1
+X-Mimecast-MFC-AGG-ID: 9IxbYWXnM2CLqlYEP5ZRAA
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-6ef590f5321so63104447b3.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 02:25:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733221419; x=1733826219;
+ d=1e100.net; s=20230601; t=1733221529; x=1733826329;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kmyxVJ+YUkcgpMOIJZRmGj3gv31AXTUXR3Mg+4OB2T0=;
- b=LsXYUKiZ16xrBoPodyYpy5i9j5WS31R/cyaq4BaTGTC9ZOQ4d7LmEfvZlhsSvV+6jo
- wUFalAjhsaAZN8ptnfXyYy8KNgKiD44qWRxPTZjNStCXc+9Il1elEpp1ldtm1gVOrNg4
- Ds6jGibJVCTwvSIx76xt61iXwSaMuCwzVswmFVSS3ITj6xea2hadv/qJjFT+yDLSVriH
- UWl/Mcjla5XnWps90w5Kj/HLHS55kY8X1JiiudUPq+0/3m2L8eLB5IJAkW1/hr3A3SAh
- 6XAuT7ccZSbV0vD0dOZomxWs3y04oEj8r3iRa3EBGKH6TZHU9wJ8Wy0d7nvxcQiKtst2
- Jxag==
+ bh=9RD4AGEHDHwzQlUUYYm0x1kn9o+vBEiZ5DFCqwxpxGM=;
+ b=M5dIuP9eMVDGHR6BeJFC/g2X1jaG4erD7awfIcWBiO6oSrDQf6GdTRJyw1YR48OZ0Y
+ w/AB9FNGGQWafWxhkEyq+OlegStiqiGgTlGrHY5P/j07h9tm5yyKISnInJnogydOojsp
+ nkWHSYzPyIxp7Vxe3G1WP1opcgf/Fl/6aV7LQXCZc4nDPaaGTm+n1LsV5hpNvSJl6CK2
+ FUo4pMftbOa0DCB/XZGs3LIKJ5G68ct8a1yVFvgvtmmbaXu1FX2ARtCHDff0PiJoLL34
+ AKGOKqyawxDUDXqe+zSUgZodkNzlasWYSU4V/I6DCoUCNtP6h9POO5BB14A9UaUjktwf
+ /nWQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjKwRlBiByMX8QenVmntCvftPl1kHtpCuTQLPxvmaPZpjylhpdL4Gv/hDlOhfAtAavEl+TBa8sAotq@nongnu.org
-X-Gm-Message-State: AOJu0YzHFgQ2Yfuy4recioBvoZ96N3o6+Ax1O/8K3+P6tHNWpUUw7IRd
- aQ9ebmYq+GfbnbnIMftVjn4Y/AD/vS2qPNrBVLkK6osqSaMAk5w1cqZw1nlNq/GtyizBY5WQY0A
- y3XlOIr1LqzRcjbYYWvrOM//NTebKnuib66rTT4Y2YtGuHyUtH1d5
-X-Gm-Gg: ASbGncuyRD+PlYdfB+GAPxQ/XaAI+P782dfsZv/P5usqUr7EW+Jf03xbz+fxhNpuKUW
- C8G2T8a8ZqP28j9L/mDMB9XXGn/rhgrCaEu2vQ7SVkYjBu2Pz7Ma+fnGo22AWOz/2RODfk/m9UP
- NiO6hf0y5xjUo7LWGn+kxrdPrYP7UCX2MRshh2DN9VV+HA2waglfKttO9Eb8DNizJ6uE3LZ7lCZ
- Jna5yF+gqcCwXH4pOZ7lA09VagpBVNoyOAya8ZnTKvHLE7kKEYRQKna/D9p5qrcxE5c5r/YGif0
- oQsw7A==
-X-Received: by 2002:a05:690c:498c:b0:6ef:6d37:1844 with SMTP id
- 00721157ae682-6eface0165amr26104377b3.7.1733221419700; 
- Tue, 03 Dec 2024 02:23:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHhLH5mlnPSZDMavmUUFnJVktKyJMWmluLB4C8Hy0mLsNN/3vDHojrXbS5zn/OAP8RhyeXzIw==
-X-Received: by 2002:a05:690c:498c:b0:6ef:6d37:1844 with SMTP id
- 00721157ae682-6eface0165amr26104227b3.7.1733221419366; 
- Tue, 03 Dec 2024 02:23:39 -0800 (PST)
+ AJvYcCXE1rvhmb+GEqlpO4dpAeWmIRpKGcusTMmEp8PjzhS/ggpPVwa5BLIL4e9XG972ceIr9vMLAdA8zIJz@nongnu.org
+X-Gm-Message-State: AOJu0YxNa/ii5ayhutkVO4KDeOGV/xawQHZQ5EPBean27aFNtYcVPfBd
+ DfsnY/W6fvoFb51Ris8H+CHD9tk6j+l5mplxgdv79wyvxya7zCK5S42SlK9nVhRYcNPsiqyYVwe
+ Dq6RErDqbFHHRsrJfuVPYCMxjr3hBOJAQe0q3ayDo93tZsSZg2fO2Lvp+gJTuDmE=
+X-Gm-Gg: ASbGncvQgLq2lIauNEErFc9TRjdnlIb2MjNd39H60XEe/udZfBAbNBo/3gARY68Zi1a
+ sZaACwf1bLQX65vsgNT1FdZ/yu5NIEuM1j6XuMqW0lpB8HlxUvJ/P91KGCnhyVndVswR8N2zCbB
+ fxszKzMR4upBfPtej8GT208TlMVu76N8eAz6gUio+4ay88vYuu7vLshrR3n1QLVWR81jCy3Cl6i
+ kBiZcqfayn89IwMav40WwvkIl4BH6D79c4RHanCxTC6TksGJWkOUG2DdvoUBamCLC8PU7dtMVI0
+ T1bTlg==
+X-Received: by 2002:a05:690c:7082:b0:6ef:7372:1131 with SMTP id
+ 00721157ae682-6efad347d99mr29596017b3.41.1733221528929; 
+ Tue, 03 Dec 2024 02:25:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHCzHlHtzf8vt0HkFH4QdgEQXGf7HxTcee32BcaMWjQ+E3LVW6GJQ+e9gCjohaYy4zSxRVU4Q==
+X-Received: by 2002:a05:690c:7082:b0:6ef:7372:1131 with SMTP id
+ 00721157ae682-6efad347d99mr29595887b3.41.1733221528714; 
+ Tue, 03 Dec 2024 02:25:28 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-199.web.vodafone.de.
  [109.42.51.199]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d87fe890a3sm53397756d6.29.2024.12.03.02.23.36
+ 6a1803df08f44-6d875221e2csm59512626d6.108.2024.12.03.02.25.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 02:23:39 -0800 (PST)
-Message-ID: <a4f32fe4-37e8-4695-a2d2-46943b4893d7@redhat.com>
-Date: Tue, 3 Dec 2024 11:23:34 +0100
+ Tue, 03 Dec 2024 02:25:28 -0800 (PST)
+Message-ID: <dbaeb043-11b6-4dc1-bac9-2995638f2833@redhat.com>
+Date: Tue, 3 Dec 2024 11:25:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] tests/functional/test_virtio_gpu: Remove legacy
- '-machine foo,accel=bar'
+Subject: Re: [PATCH 3/7] tests/qtest/fuzz: Remove legacy '-machine
+ foo,accel=bar'
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -85,7 +85,7 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
  Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org
 References: <20241203092153.60590-1-philmd@linaro.org>
- <20241203092153.60590-3-philmd@linaro.org>
+ <20241203092153.60590-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,7 +130,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241203092153.60590-3-philmd@linaro.org>
+In-Reply-To: <20241203092153.60590-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -163,49 +163,17 @@ On 03/12/2024 10.21, Philippe Mathieu-Daudé wrote:
 > options") we prefer the '-accel bar' command line option.
 > 
 > Replace '-machine foo,accel=bar' -> '-machine foo -accel bar' in
-> functional tests.
+> fuzzer scripts and tests.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   tests/functional/test_virtio_gpu.py | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
-> index d5027487ac4..cc0ec234861 100755
-> --- a/tests/functional/test_virtio_gpu.py
-> +++ b/tests/functional/test_virtio_gpu.py
-> @@ -61,7 +61,8 @@ def test_virtio_vga_virgl(self):
->           self.vm.set_console()
->           self.vm.add_args("-cpu", "host")
->           self.vm.add_args("-m", "2G")
-> -        self.vm.add_args("-machine", "pc,accel=kvm")
-> +        self.vm.add_args('-accel', 'kvm')
-> +        self.vm.add_args("-machine", "pc")
+>   tests/qtest/fuzz/generic_fuzz.c                | 2 +-
+>   tests/qtest/fuzz/i440fx_fuzz.c                 | 2 +-
+>   tests/qtest/fuzz/qos_fuzz.c                    | 2 +-
+>   scripts/oss-fuzz/output_reproducer.py          | 2 --
+>   scripts/oss-fuzz/reorder_fuzzer_qtest_trace.py | 6 +++---
+>   5 files changed, 6 insertions(+), 8 deletions(-)
 
-While you're at it, could you please change this test to use 
-"self.set_machine('pc')" at the very beginning of the test function instead 
-of using -machine pc here? That way the test gets properly skipped in case 
-the machine is not available in the QEMU binary.
-
-  Thanks,
-   Thomas
-
-
->           self.vm.add_args("-device", "virtio-vga-gl")
->           self.vm.add_args("-display", "egl-headless")
->           self.vm.add_args(
-> @@ -118,10 +119,11 @@ def test_vhost_user_vga_virgl(self):
->           )
->   
->           self.vm.set_console()
-> +        self.vm.add_args('-accel', 'kvm')
->           self.vm.add_args("-cpu", "host")
->           self.vm.add_args("-m", "2G")
->           self.vm.add_args("-object", "memory-backend-memfd,id=mem,size=2G")
-> -        self.vm.add_args("-machine", "pc,memory-backend=mem,accel=kvm")
-> +        self.vm.add_args("-machine", "pc,memory-backend=mem")
->           self.vm.add_args("-chardev", "socket,id=vug,fd=%d" % qemu_sock.fileno())
->           self.vm.add_args("-device", "vhost-user-vga,chardev=vug")
->           self.vm.add_args("-display", "egl-headless")
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
