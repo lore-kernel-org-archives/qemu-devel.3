@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21AEE74AC6
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 17:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A9EE74AC3
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 17:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIWsp-0003Tx-LC; Tue, 03 Dec 2024 12:40:23 -0500
+	id 1tIWzB-0004kM-UI; Tue, 03 Dec 2024 12:46:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIWsn-0003Tf-24
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:40:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIWsi-0004DY-Sh
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:40:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733247612;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZlzMFlCMjVs0k53de37fr+TddL7nNhW/tfpVbRKTUbA=;
- b=e6zOkNykfLEAzW9Veu8jbDIf5HlMqPlGTtTkJwGUiPfIKgtNUxNRtyx3YAr+GDABZ1QGag
- F86lmqq4P5aRIwCpgFtmHWo8NdCbsoQxrxx3r2T9WCEGUbWiq9N84eF6B36bpJoTNKq7h9
- mOVzfCRribVAncamY2KgIBroePSZ6Vc=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-663-rA8hG7BfOtGA0EtTCldCHA-1; Tue, 03 Dec 2024 12:40:10 -0500
-X-MC-Unique: rA8hG7BfOtGA0EtTCldCHA-1
-X-Mimecast-MFC-AGG-ID: rA8hG7BfOtGA0EtTCldCHA
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-843e4d7c601so493095039f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 09:40:10 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733247610; x=1733852410;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tIWzA-0004jl-9F
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:46:56 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tIWz8-0004tv-B4
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:46:56 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0bde80b4bso5682959a12.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 09:46:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733248012; x=1733852812; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZlzMFlCMjVs0k53de37fr+TddL7nNhW/tfpVbRKTUbA=;
- b=RuPLc/uw2QTQ0sXHxOg3plytGh19MGEBcCERGubDsc9uY4dpcZegzK9YeRGKAxE+em
- ms2FLqnvCcwQWJvjLKrl8lcN7hZ1xYV4Env5clJcw+PJvuV2F6Dwf0rKs1mC8UnbXivW
- l8PoqSlEIuVovMRPUnW5RXEakQAtibV9f7XTl74iRIMwRWW6Gx5M7FXZ9VX27jPuN1X0
- VpvS9YcCHtYYU6mc++cqJCuGElh43DNwBX0k9Wc/O9bOgBwq5uAH66QsArMSZGH4Z8Fo
- O0Ncwf+pAcsH3WaqNTdB0UtWBw6qThR2IAjjENsIWQ7ZD63eYml01EJmbQ9sQldLgVdj
- peuA==
+ bh=9rIgzebc7Ut/Z/kOC4QNifJHH66qu4x+BvNy4EkN7pA=;
+ b=jZJXJo1AnSuYfYI3sKIcp7iuGQNUpp0apVdYpLTyTUfxTEQtQY/GgeeC63wn06GtvZ
+ 76zCd5Snij3+u0wyLZfIa0z1J8QZS796YWfLO9EKYtyAWvm4Z/jpi1SW1HyKRHF3/4jc
+ zDlzjP9XEdjj3V64LmRcVkgUbTIAKRQOsrHX8l71wEWvfe2eW9ozANZHwAYxxqHYEPUh
+ aDde384GS1bl08w5oRMxOwuhSMyPp4FAcUvoWzhBtzzm3e+UT5zDeo1jde7qMXMbLZPY
+ yzZrPZK76B2khJ8lamfLKD/l68I471lTi/rU9+J+5TSmD9ZIS6PToxO5O+CqKo8bp2C4
+ ehBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733248012; x=1733852812;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9rIgzebc7Ut/Z/kOC4QNifJHH66qu4x+BvNy4EkN7pA=;
+ b=Sjb9j+zp3586140kLLoKsaleUvO9gRoxN0vmCe8AyRVJ1WdAZR7iLkugPL6KEgoZOb
+ AYWn5FdDm2mEqI5vjBLxzGkUpmb5SxBnOznYD0hOOXRxFA89TqT0UL8OdESKs95Zs/OV
+ itagHGztfHCzh1SYJdvXos3RT+zaa9YgIDnuiPsticFOEB7EAoiRwb7LSaDoRpA6Phvi
+ T2Xl/rootyGMQOwH5A/uEyx0pzqoUq7LbKbq89ORKUkNbYfzovuym5d4hmAJ1kERvmet
+ L68fYsB9QN5j63M61CEGg0CxiRRCU116IyJ1nyjLu5BkFS8V31mWSi8p0ExkdAYo4fEI
+ 9ZMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkNDwdHFt9dWwv2Gc6yqiRoHMe+In8rzik7sHTPWsdoxrn08d7v/T57NzSV+fwFZ/OclJZxTtegWJl@nongnu.org
-X-Gm-Message-State: AOJu0Yz4+hh6BD/NzK1dVA4zK+qVD7GPAdkHaVwgbwbQni1s0ZIhoHrS
- 9qdOhlAC6QONCiN2yBs9aOG+PvKwMNcjTIqfsPqFakkaNbPDcunSFv2zGU7T3u+91WMOotYFYxb
- OGVjll0obX1kXWefZU7Tlro1qSWxZkPH4VTm3fP7j+5iJePfhOj3m
-X-Gm-Gg: ASbGncv7etRYiJwJkmLwOTA5HVo9BxlNbMgXZ2tZzjA2fENlgIUiiWKeMQbzBMchYea
- nAk2euzCOS/X8qjGgmHHavugru1sdFTqbM3ZwwrRZkTubpoRce7Bxg4iw4++JxP5KfktYGs3Icy
- qW8qSi4isBX3daepueICj0/Rj3xV2eP7cc78O6lO80Qhj8H0bVe3HRyH5Dxe4vcZhFIPAlcWCIw
- MTpUKGeRxyVb1pmcu61VvM+O77afHMcPT6IMaFFVXhzqkiDbhBFUtzIAhvHNacSxq+Mvmam3u4B
- l5BpKl1Dd3M=
-X-Received: by 2002:a05:6602:3405:b0:841:a1c0:c058 with SMTP id
- ca18e2360f4ac-8445b577d49mr488323239f.9.1733247609835; 
- Tue, 03 Dec 2024 09:40:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEIrwGU/viAEngg91wVuvN0ih9G8T0zL7VQ3E5hRKY5ZwWYv80ZquCRxJmCWuEhFUDax3vouQ==
-X-Received: by 2002:a05:6602:3405:b0:841:a1c0:c058 with SMTP id
- ca18e2360f4ac-8445b577d49mr488321139f.9.1733247609520; 
- Tue, 03 Dec 2024 09:40:09 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e230e6165bsm2671597173.109.2024.12.03.09.40.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 09:40:08 -0800 (PST)
-Date: Tue, 3 Dec 2024 12:40:06 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Yong Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 0/5] Guestperf: miscellaneous refinement and enrichment
-Message-ID: <Z09CdpY4C5Eq6OxI@x1n>
-References: <87sesmdfl4.fsf@suse.de>
- <CAK9dgmZvj4W2EBxp1_TcdYs3q2aqaRZGZCAk=FRJk-PaB9y_fw@mail.gmail.com>
- <87v7w6jkc9.fsf@suse.de> <87plmejgtb.fsf@suse.de>
- <CAK9dgmbHL+O34+E3ykDdAunap+Ruubm7ysisrMags6TN25BiNQ@mail.gmail.com>
- <Z04PTe4kCVWEQbPL@x1n> <Z06866qR0z9n2BgP@redhat.com>
- <875xo1j6ub.fsf@suse.de> <Z075-ZPW9dzzCKJn@redhat.com>
- <8734j4kiuq.fsf@suse.de>
+ AJvYcCW2GBDiJtOdi63hnB/b6lcvUB1eLSY5AQ5MWrlWyWUiKnGiCCuWRTpRr1Odj2ftjf0vYK/kz+APmEy+@nongnu.org
+X-Gm-Message-State: AOJu0YxzlE0jJVZPvfF7A7sl/xA36TPS0UNRRxMEqYbyST27WoJFnx8A
+ VEYs27lvAFDLpaWfjEBgtpUm0j4bnll0rbFlu22yPkBIlm0H/nB7x1wKsbSicWj00VFkLNjww6i
+ wsK+U9zeKt3RhHQsZgNJliuIQl7ZV3JsSt25NVQ==
+X-Gm-Gg: ASbGncszCKORT5woWB9JXftIMr95x2kRDxqtELyiHGLZiYnd9e0tmawpO9RQHC7QzIt
+ 1R8qm9++Kob5nm4NzY695AF1L8cVFfXqm
+X-Google-Smtp-Source: AGHT+IEn6BDoT6C1oeYvB9vs7b3ZLGw5e/k6Wnc9bxvUP5fvHSXE01jTBFQtKS7wkaZc4D1BHtAMXXurj6JzzGoo4Ww=
+X-Received: by 2002:a05:6402:3506:b0:5d0:d2ba:bf33 with SMTP id
+ 4fb4d7f45d1cf-5d10cb5cc9dmr3646909a12.19.1733248012345; Tue, 03 Dec 2024
+ 09:46:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8734j4kiuq.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241118172357.475281-1-pierrick.bouvier@linaro.org>
+ <20241118172357.475281-6-pierrick.bouvier@linaro.org>
+ <CAFEAcA-UkmPvyNW_6o22-WhaLxnnji55UsBp3UcPA-gYH7kvVg@mail.gmail.com>
+ <87zflcbs0l.fsf@draig.linaro.org>
+In-Reply-To: <87zflcbs0l.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 3 Dec 2024 17:46:41 +0000
+Message-ID: <CAFEAcA_Mmf0fH8biPaZz9c1bw6UdmEvVWhdjUduzPTqH4njnhQ@mail.gmail.com>
+Subject: Re: [PATCH 5/7] docs: add a codebase section
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Andrew Melnychenko <andrew@daynix.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eric Blake <eblake@redhat.com>, 
+ qemu-arm@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ manos.pitsidianakis@linaro.org, qemu-block@nongnu.org, 
+ Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk <kkostiuk@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ gustavo.romero@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,26 +110,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 03, 2024 at 10:15:57AM -0300, Fabiano Rosas wrote:
-> We shouldn't be adding warnings to the build like that. When building
-> static binaries, I'd assume the person at least knows there's a -static
-> in there somewhere. If you're just building the system binaries and
-> warnings start to show up, that's not good. Since this is just a side
-> script that's very infrequently used, I don't think it justifies the
-> extra warning.
+On Tue, 3 Dec 2024 at 17:22, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Peter Maydell <peter.maydell@linaro.org> writes:
+>
+> > On Mon, 18 Nov 2024 at 17:24, Pierrick Bouvier
+> > <pierrick.bouvier@linaro.org> wrote:
+> >>
+> >> Present the various parts of QEMU and organization of codebase.
+> >>
+> >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> >
+> > I like this; it's something I've thought for a while would
+> > be good to have, but which I never got round to trying to
+> > put together. Thanks for doing this!
+> >
+> > Mostly my comments below are spelling/typo nits and
+> > other minor stuff.
+> >
+> >> ---
+> >>  docs/about/emulation.rst               |   2 +
+> >>  docs/codebase/index.rst                | 211 ++++++++++++++++++++++++=
++
+> >>  docs/devel/decodetree.rst              |   2 +
+> >>  docs/devel/ebpf_rss.rst                |   2 +
+> >>  docs/devel/index-internals.rst         |   2 +
+> >>  docs/devel/migration/main.rst          |   2 +
+> >>  docs/devel/qapi-code-gen.rst           |   1 +
+> >>  docs/devel/testing/main.rst            |   9 +-
+> >>  docs/devel/testing/qtest.rst           |   2 +
+> >>  docs/index.rst                         |   3 +
+> >>  docs/interop/qemu-ga.rst               |   2 +
+> >>  docs/system/qemu-block-drivers.rst.inc |   2 +
+> >>  docs/tools/qemu-storage-daemon.rst     |   2 +
+> >>  docs/user/main.rst                     |   6 +
+> >>  14 files changed, 247 insertions(+), 1 deletion(-)
+> >>  create mode 100644 docs/codebase/index.rst
+> >>
+> <snip>
+> >> +  Block devices and `image formats<disk images>` implementation.
+> >> +* `bsd-user <https://gitlab.com/qemu-project/qemu/-/tree/master/bsd-u=
+ser>`_:
+> >> +  `BSD User mode<bsd-user-mode>`.
+> >> +* build: Where the code built goes!
+> >
+> > The built code doesn't have to be in 'build'. We could say:
+> >
+> >  * build: You can tell the QEMU build system to put the built code
+> >    anywhere you like. By default it will go into a directory named
+> >    ``build``. Sometimes documentation will assume this default
+> >    for convenience when describing command lines; you can always
+> >    replace it with the path to your build tree.
+> >
+> > ?
+>
+> I always recommend creating a builds directory and having multiple build
+> trees under it:
 
-Yeah this could be a valid point.
+Indeed, that's what I like to do too, but I don't think this
+document is the right place to make that kind of recommendation.
 
-The main issue is I believe 99.999999% of people building qemu will not use
-stress.c and the initrd at all.  It means we could start burning some tiny
-little more cpus all over the worlds for nothing.. the added warning is a
-bad extra side effect of that.
-
-So I wonder if it would make more sense to only build stress.c manually
-like before, until some of the stress test would be put into either 'make
-check' or CI flows.  Then we decide whether to fix the warning or not.
-
--- 
-Peter Xu
-
+-- PMM
 
