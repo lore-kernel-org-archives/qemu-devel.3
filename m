@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2015BE6C609
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 05:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB917E6C609
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 05:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tILdH-0000TX-3O; Tue, 03 Dec 2024 00:39:35 -0500
+	id 1tILeM-0000vT-MG; Tue, 03 Dec 2024 00:40:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tILdE-0000T3-NC
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 00:39:33 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tILeA-0000qP-6Q
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 00:40:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tILdD-0000zc-4g
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 00:39:32 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tILe8-0001F6-KY
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 00:40:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733204368;
+ s=mimecast20190719; t=1733204427;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EE09bRY3Z5qzF1yJsQpqXG7p20Ne+pVMiR4seqkx+tU=;
- b=EjNJdnq0CMabHtigfI4JqCylVX6izXHlAc84FEneMUYRh5IPD5muBViwR5S1yMkQeEtMN2
- R5jW8InM2J71YJgNVM4J606925RcAY/hWWuOPFtpj+bWaTtjvqXfxNwu3qnWvJ1hpLkjNy
- QtqmyahOc1r+dUEQzqNgGidhzijHgSg=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FNqoGgCARsKysr/5lm5xSMJoqfRZ+Pb9heP9IAcjfSA=;
+ b=GVw9gQgZZOgUqAp4EpCfXptMvUfjSsBfeFfDvMHy6xb0CqCUhdPobjqwm34WD6LdZoJigr
+ kAfrjrrhrdj+ckHM0bfx1qcs4LZXpso59u9bskmAYCLR0UV7ISBdaypdlG2Ho08AViNixz
+ ACQtLtAaPLiA2X4dBAMStLaRTauwv6E=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-scODmEYSPvu9YXH9oztA3g-1; Tue, 03 Dec 2024 00:39:27 -0500
-X-MC-Unique: scODmEYSPvu9YXH9oztA3g-1
-X-Mimecast-MFC-AGG-ID: scODmEYSPvu9YXH9oztA3g
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5d09962822bso3404196a12.1
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 21:39:26 -0800 (PST)
+ us-mta-44-G1gpjrXcNNe86gYynYTrXQ-1; Tue, 03 Dec 2024 00:40:22 -0500
+X-MC-Unique: G1gpjrXcNNe86gYynYTrXQ-1
+X-Mimecast-MFC-AGG-ID: G1gpjrXcNNe86gYynYTrXQ
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-434a0bf9914so37216995e9.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 21:40:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733204366; x=1733809166;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EE09bRY3Z5qzF1yJsQpqXG7p20Ne+pVMiR4seqkx+tU=;
- b=vh1flYwdrw4qij81V+NbLoO9rZ9N5GNXWeEysDeRqS3mRZ9QmlUqFVT84/DqqZ7sgg
- M1UIbQW1DfQYgAhDwPbtNsihk2GUI03aJ+Hb0XDAXRFghcfTiWzBQSPTiEC1TU0TpTdW
- 2OP/oB02BsPGG7ZqtRhAJa4am2Vll1YaLGmUmmO4E2tCZtwz6wCERhN0jbxA9f0q45qr
- ot/JaobtF3lXJT0qNg/rAfa1zzxps5I9tLL0FHLktYfpNK6UCsUu6YQM9BkO3wXFiL+W
- PNrDovxhy4zIS27qNS8MhM67b+wu2AMBFgmMEcb1hEi7Rpa5kzXSK3riO9WrHRK4N/Yd
- BCdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVM3khcrJlgO1IDusIQjhbeNazPyqVDdLauNRoUcwmFmti4hLtb7yrfh5mO+dJPrkgZyN8+chP6jhQx@nongnu.org
-X-Gm-Message-State: AOJu0YxI76thwQimbEVVmUhDKewnJIzDeIsVfpbqZ/m5ngnRqDJSLQYn
- h03feYS1IMs83l7qHtYprm45jL20mhT2LqXicYAVAP4Z1UWH09RNAQz6Ke7xFkGXbgzOhV2ddAE
- C0M65K9/Wt16gI60f8kdae6wk4vHEkdsQhRMvlE3RmT4JVHhwrxdIPAUcqz6aiLESW8Zfgf6cov
- wbcx/RJpNRiVfeG63UFn/n0NdTOd0=
-X-Gm-Gg: ASbGnct36X4levleD3eof3OUmhV1EcjhzvUvPkNapsjebBw36qwhMvIXxnAAD3PCBj1
- 4URmJo7cZiBj8cu4uYLgwSfwCnnZJDI5Bkw==
-X-Received: by 2002:a05:6402:40d5:b0:5d0:ca24:916b with SMTP id
- 4fb4d7f45d1cf-5d10cb55ae5mr826791a12.11.1733204365891; 
- Mon, 02 Dec 2024 21:39:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG8pNwALeCTEieiqOP146Lzeq3pcKzFSKCCOHYOfNAp5E+oZl75IguDkdQSwIfzgbEECsoTBLUG3BgnAL6bS7c=
-X-Received: by 2002:a05:6402:40d5:b0:5d0:ca24:916b with SMTP id
- 4fb4d7f45d1cf-5d10cb55ae5mr826771a12.11.1733204365521; Mon, 02 Dec 2024
- 21:39:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733204421; x=1733809221;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FNqoGgCARsKysr/5lm5xSMJoqfRZ+Pb9heP9IAcjfSA=;
+ b=oVFM377+LHJnLADHApBCR0Sap4WGMt/YTdBS2kb2rY58x0P0bUnMocdBc2xBm1lVkY
+ 4ky0SoDaixPyX9XvL3lecC/40qAQESeG9CFkZRr8gh+K4q0jJ0iyFaQqBdPa6OvQnHfG
+ 5QdXer8IHpYnTlf7sOVCJu/+9oHj6mZGmR3Yu8aEwS3OYXf/GSXNes3ptZX6pMD/s/+v
+ LNEhvToqkGNk+m5V56PTghu+h4PdzmzSTVWE/i0mUP3fMaY03QsAkZfMGtqikcvgiM0P
+ Wn8O/GYdalpD96VRhwjblPVATziGDxHMSJH44y8uSJ9x/ActKVzrRwNVV7HeGfygpLcs
+ N9qw==
+X-Gm-Message-State: AOJu0YxX9jERgPblr6vFsI09wic8kow2iaDx+cKdWiUc1jop2aHqLFgJ
+ 91Z1+QuBBrR4GwxDmOVRTZIXkuW9E85PM/X808WB1Um01hI8EkjXgyfBdmRpjWs6UZHyJmUhi8z
+ 61A7PakDzVauOvDf0mUqakkTDNWFFfAjo0MZ6shd63uap/afzXNimFoeqfsgYQLaX0FVT2T4EIO
+ cWxnSZipC7sevcwGlhHtCRYc5s0H8=
+X-Gm-Gg: ASbGnctLX13g2KsvRvIcQfJbwuFWlcoTmUkBZ8y6/Y2YDyBqYI0if5Pnphjl+8xleo3
+ p/DdEyCj/5kwoXrpqzXLr7+YDwFWjjmQERA==
+X-Received: by 2002:a05:600c:3ba5:b0:434:a83c:6a39 with SMTP id
+ 5b1f17b1804b1-434d09b147fmr10118315e9.3.1733204421226; 
+ Mon, 02 Dec 2024 21:40:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGfRYeY47m+uLSAibu0hj+zrqhusc4sIebgdyfZ1mODPTDJ3U6s4BMQ3yaKBwDGG6Ev02NmjmwNNaIOmxAt5Bs=
+X-Received: by 2002:a05:600c:3ba5:b0:434:a83c:6a39 with SMTP id
+ 5b1f17b1804b1-434d09b147fmr10118205e9.3.1733204420974; Mon, 02 Dec 2024
+ 21:40:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20241129173120.761728-1-berrange@redhat.com>
- <20241129173120.761728-12-berrange@redhat.com>
- <544db3ce-f37b-4c09-85f5-b6ad96708292@redhat.com>
-In-Reply-To: <544db3ce-f37b-4c09-85f5-b6ad96708292@redhat.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Tue, 3 Dec 2024 11:09:14 +0530
-Message-ID: <CAK3XEhMJLQ9TE+_pGHk=bkyV6GsDbC15VTavKgWHs75j7=7Big@mail.gmail.com>
-Subject: Re: [PATCH 11/22] tests/functional: switch over to using
- self.data_file(...)
-To: Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+References: <20241126115748.118683-1-ppandit@redhat.com>
+ <20241126115748.118683-4-ppandit@redhat.com>
+ <87ed2xn16y.fsf@suse.de>
+ <CAE8KmOwfzFyBWfq_Vhr-hjT4jGQQqi6_gZwkNGtd8SVLxhi0QQ@mail.gmail.com>
+ <875xo8n4ue.fsf@suse.de>
+ <CAE8KmOzfaxzxTCMoF6miOG5fYFaikmz7sm9UeuAe6u1Optz8fg@mail.gmail.com>
+ <87y113jy18.fsf@suse.de>
+ <CAE8KmOygGSr=DuWdeVppgxq9UN2XG0fmMEV+nO=Q=QXQb4m8oA@mail.gmail.com>
+ <87a5dejhre.fsf@suse.de>
+In-Reply-To: <87a5dejhre.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 3 Dec 2024 11:10:04 +0530
+Message-ID: <CAE8KmOzvCvZfh=6pxFSvfyk4pbCn3JQpivLkybWo+NTs5czfiw@mail.gmail.com>
+Subject: Re: [PATCH v1 3/4] migration: refactor ram_save_target_page functions
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -108,52 +107,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 2, 2024 at 3:02=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrote=
-:
+Hello Fabiano,
+
+On Mon, 2 Dec 2024 at 19:42, Fabiano Rosas <farosas@suse.de> wrote:
+> >   ...multifd_send/_recv_sync_main();    <= do the 'flush' and
+> > 'sync' mean the same thing here?
 >
-> On 29/11/2024 18.31, Daniel P. Berrang=C3=A9 wrote:
-> > This removes direct path manipulation to figure out the source dir
-> >
-> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > ---
-> >   tests/functional/test_acpi_bits.py | 22 +++++++---------------
-> >   1 file changed, 7 insertions(+), 15 deletions(-)
-> >
-> > diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test=
-_acpi_bits.py
-> > index 4de5fae37e..948b134b16 100755
-> > --- a/tests/functional/test_acpi_bits.py
-> > +++ b/tests/functional/test_acpi_bits.py
-> > @@ -41,7 +41,6 @@
-> >   import tempfile
-> >   import zipfile
-> >
-> > -from pathlib import Path
-> >   from typing import (
-> >       List,
-> >       Optional,
-> > @@ -122,7 +121,6 @@ class AcpiBitsTest(QemuBaseTest): #pylint: disable=
-=3Dtoo-many-instance-attributes
-> >       def __init__(self, *args, **kwargs):
-> >           super().__init__(*args, **kwargs)
-> >           self._vm =3D None
-> > -        self._baseDir =3D None
-> >
-> >           self._debugcon_addr =3D '0x403'
-> >           self._debugcon_log =3D 'debugcon-log.txt'
-> > @@ -137,26 +135,22 @@ def _print_log(self, log):
-> >       def copy_bits_config(self):
-> >           """ copies the bios bits config file into bits.
-> >           """
-> > -        config_file =3D 'bits-cfg.txt'
-> > -        bits_config_dir =3D os.path.join(self._baseDir, 'acpi-bits',
-> > -                                       'bits-config')
-> > +        bits_config_file =3D self.data_file('acpi-bits',
+> No, that patch is indeed inconsistent in the terminology, good point.
+> Well, flush and sync are not reserved terms, we can use them however we
+> see fit. As long as it's consistent, of course.
+>
 
-I do not understand, Where is data_file coming from? AFAICS its not
-there in QemuBaseTest or QemuSystemTest or unittest.TestCase
-https://docs.python.org/3/library/unittest.html#unittest.TestCase
+* It'll help to define what 'flush' does and what 'sync' does in the
+Multifd context and how they differ from each other. Maybe here or
+code comments or both places or somewhere. Knowing their intended
+meaning will help while reading code, reviewing patches and also avoid
+confusion.
 
-what am I missing or failing to see?
+Thank you.
+---
+  - Prasad
 
 
