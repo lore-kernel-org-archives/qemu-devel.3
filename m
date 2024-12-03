@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0552E74AC3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 16:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB09E74AC3
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 16:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIViu-0005mR-G9; Tue, 03 Dec 2024 11:26:05 -0500
+	id 1tIVo6-0007ij-CN; Tue, 03 Dec 2024 11:31:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
- id 1tIVin-0005kx-Cv; Tue, 03 Dec 2024 11:25:57 -0500
-Received: from mail-gw02.astralinux.ru ([195.16.41.108])
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1tIVns-0007hc-QD
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 11:31:14 -0500
+Received: from netsrv01.beckhoff.com ([62.159.14.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
- id 1tIVik-0007qi-PE; Tue, 03 Dec 2024 11:25:56 -0500
-Received: from gca-msk-a-srv-ksmg01.astralinux.ru (localhost [127.0.0.1])
- by mail-gw02.astralinux.ru (Postfix) with ESMTP id 158521FA08;
- Tue,  3 Dec 2024 19:25:44 +0300 (MSK)
-Received: from new-mail.astralinux.ru (gca-yc-ruca-srv-mail03.astralinux.ru
- [10.177.185.108])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mail-gw02.astralinux.ru (Postfix) with ESMTPS;
- Tue,  3 Dec 2024 19:25:41 +0300 (MSK)
-Received: from localhost.localdomain (unknown [10.198.4.245])
- by new-mail.astralinux.ru (Postfix) with ESMTPA id 4Y2mGp2FhJz1gywd;
- Tue,  3 Dec 2024 19:25:36 +0300 (MSK)
-From: Anastasia Belova <abelova@astralinux.ru>
-To: Joel Stanley <joel@jms.id.au>,
-	qemu-devel@nongnu.org
-Cc: Anastasia Belova <abelova@astralinux.ru>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- sdl.qemu@linuxtesting.org
-Subject: [PATCH] hw/timer/nrf51_timer: prevent integer overflow
-Date: Tue,  3 Dec 2024 19:25:23 +0300
-Message-ID: <20241203162525.75156-1-abelova@astralinux.ru>
-X-Mailer: git-send-email 2.47.0
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1tIVnq-0000A2-Fa
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 11:31:12 -0500
+Received: from 172.17.5.170 by netsrv01.beckhoff.com (Tls12, Aes256, Sha384,
+ DiffieHellmanEllipticKey384); Tue, 03 Dec 2024 16:30:57 GMT
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
+ t=1733243457; bh=k5A8LeEF2I6jPC9H+0sOfYCj4UvAWkDcDmbCVcEVRSI=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=ed25519-sha256; b=
+ 2b7bIuKCD1iRUqqq16dn/h4Fv8Rr37VqmwTh18JSRZkH1+RDkaFATwU4h5Fw6pXbY3MYjmmTwH/Tt9VEiTyRDw==
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
+ t=1733243457; bh=k5A8LeEF2I6jPC9H+0sOfYCj4UvAWkDcDmbCVcEVRSI=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=rsa-sha256; b=
+ DF7hT7Sg9RS2nUIjc0V1iQ8Toe8QOME2r/+nQARqxSOkUuo5qyS52K3HIse8+8iYGU62kN0kceieQL1I5YvDAJ/OShzJCZjxg195Wz9AgsVcQZpQwjDLfSMHK0EKSCN/8bZePPEmhjpc+eiQXV3ACtSu3inu+fNkc6oKZ2L6UHO9RywzDvbBerLvYRpvVQz08/YhyhUio57Hsvr2MNKjTPflPLFcr1Pmk+5c/SN5b78t23jTFQzHwzIEle6IslTUbY/aBIasp3Kl08mA9zVBdU/fECxhcEjfSWypkTGfKo7wTU/J9ZH8oINNv7tQLFD7tEjk2Ax3klmZXUqxqoWEtQ==
+Received: from ex04.beckhoff.com (172.17.5.170) by ex04.beckhoff.com
+ (172.17.5.170) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 3 Dec
+ 2024 17:30:56 +0100
+Received: from ex04.beckhoff.com ([fe80::492d:bba8:c8de:8ce3]) by
+ ex04.beckhoff.com ([fe80::492d:bba8:c8de:8ce3%6]) with mapi id
+ 15.01.2507.039; Tue, 3 Dec 2024 17:30:56 +0100
+From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
+To: "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "clg@redhat.com" <clg@redhat.com>, "alex.williamson@redhat.com"
+ <alex.williamson@redhat.com>
+Subject: Re: [PATCH v2 9/9] vfio/igd: add x-igd-gms option back to set DSM
+ region size for guest
+Thread-Topic: [PATCH v2 9/9] vfio/igd: add x-igd-gms option back to set DSM
+ region size for guest
+Thread-Index: AQHbRYhddLgSIFSlVECr5GhAxaeGIbLUpaAA
+Date: Tue, 3 Dec 2024 16:30:56 +0000
+Message-ID: <fb3afcb5ea495e96c6aa9e657cb413ab47c15026.camel@beckhoff.com>
+References: <20241203133548.38252-1-tomitamoeko@gmail.com>
+ <20241203133548.38252-10-tomitamoeko@gmail.com>
+In-Reply-To: <20241203133548.38252-10-tomitamoeko@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.17.130.158]
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="=-3kqb/cyjPnardjAdCREO"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-KSMG-AntiPhishing: NotDetected
-X-KSMG-AntiSpam-Auth: dkim=none
-X-KSMG-AntiSpam-Envelope-From: abelova@astralinux.ru
-X-KSMG-AntiSpam-Info: LuaCore: 44 0.3.44
- 5149b91aab9eaefa5f6630aab0c7a7210c633ab6,
- {Tracking_from_domain_doesnt_match_to}, astralinux.ru:7.1.1;
- d41d8cd98f00b204e9800998ecf8427e.com:7.1.1; new-mail.astralinux.ru:7.1.1;
- 127.0.0.199:7.1.2, FromAlignment: s
-X-KSMG-AntiSpam-Interceptor-Info: scan successful
-X-KSMG-AntiSpam-Lua-Profiles: 189586 [Dec 03 2024]
-X-KSMG-AntiSpam-Method: none
-X-KSMG-AntiSpam-Rate: 0
-X-KSMG-AntiSpam-Status: not_detected
-X-KSMG-AntiSpam-Version: 6.1.1.7
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.0.7854,
- bases: 2024/12/03 11:06:00 #26930054
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 1
-Received-SPF: pass client-ip=195.16.41.108; envelope-from=abelova@astralinux.ru;
- helo=mail-gw02.astralinux.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=62.159.14.10; envelope-from=C.Koehne@beckhoff.com;
+ helo=netsrv01.beckhoff.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,32 +87,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both counter and tick are uint32_t and the result
-of their addition may not fit this type. Add
-explicit casting to uint64_t.
+--=-3kqb/cyjPnardjAdCREO
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+On Tue, 2024-12-03 at 21:35 +0800, Tomita Moeko wrote:
+> =EF=BB=BFCAUTION: External Email!!
+> DSM region is likely to store framebuffer in Windows, a small DSM
+> region may cause display issues (e.g. half of the screen is black).
+> By default, QEMU uses host's original value, which is determined by
+> DVMT Pre-Allocated option in Intel FSP of host bios. Some vendors
+> do not expose this config item to users. In such cases, x-igd-gms
+> option can be used to manually set the data stolen memory size for
+> guest.
+>=20
+> When DVMT Pre-Allocated option is available in host BIOS, user should
+> set DSM region size there instead of using x-igd-gms option.
+>=20
 
-Fixes: c5a4829c08 ("hw/timer/nrf51_timer: Add nRF51 Timer peripheral")
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
----
- hw/timer/nrf51_timer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It might be worth linking the commit which has removed x-igd-gms and mentio=
+n
+that the behaviour changed slightly. Previously, the DSM region size was se=
+t to
+0 if x-igd-gms was unset. This patch keeps the host value if x-igd-gms is u=
+nset.
 
-diff --git a/hw/timer/nrf51_timer.c b/hw/timer/nrf51_timer.c
-index 35b0e62d5b..b5ff235eb8 100644
---- a/hw/timer/nrf51_timer.c
-+++ b/hw/timer/nrf51_timer.c
-@@ -44,7 +44,7 @@ static uint32_t update_counter(NRF51TimerState *s, int64_t now)
- {
-     uint32_t ticks = ns_to_ticks(s, now - s->update_counter_ns);
- 
--    s->counter = (s->counter + ticks) % BIT(bitwidths[s->bitmode]);
-+    s->counter = ((uint64_t)s->counter + ticks) % BIT(bitwidths[s->bitmode]);
-     /*
-      * Only advance the sync time to the timestamp of the last tick,
-      * not all the way to 'now', so we don't lose time if we do
--- 
-2.47.0
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> ---
+> =C2=A0hw/vfio/igd.c | 17 +++++++++++++++++
+> =C2=A01 file changed, 17 insertions(+)
+>=20
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index e464cd6949..0814730f40 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -717,6 +717,23 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, =
+int
+> nr)
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk,=
+ next);
+> =C2=A0
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * Allow user to override dsm size using x-igd-g=
+ms option, in multiples
+> of
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * 32MiB. This option should only be used when t=
+he desired size cannot be
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * set from DVMT Pre-Allocated option in host BI=
+OS.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 if (vdev->igd_gms) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (gen < 8 && vdev->igd_gms =
+<=3D 0x10) {
+
+This doesn't work as intended for values larger than 0x10. For those values=
+,
+qemu ignores the generation and set GMS as it would be a gen 8 or later dev=
+ice.
+
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gmch =
+&=3D ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gmch =
+|=3D vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else if (vdev->igd_gms <=3D=
+ 0x40) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gmch =
+&=3D ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gmch =
+|=3D vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error=
+_report("Unsupported IGD GMS value 0x%x", vdev->igd_gms);
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 }
+> +
+> =C2=A0=C2=A0=C2=A0=C2=A0 ggms_size =3D igd_gtt_memory_size(gen, gmch);
+> =C2=A0=C2=A0=C2=A0=C2=A0 gms_size =3D igd_stolen_memory_size(gen, gmch);
+> =C2=A0
+
+--=20
+Kind regards,
+Corvin
+
+--=-3kqb/cyjPnardjAdCREO
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmdPMkAACgkQ2FTaVjFe
+Ampcgg/9GH2Hqy3M2Rk5wON6PDiu/Wbgy2POh5ZURwiujzDGI7imEmLdHNK048AT
+MHZVLtn9ki82EbyM7gAxd79FFn4FfK3rRgehcPD/DRoxEytspli8LEERPvygugnR
+NEMRkGUu3Ht9YwFVyUF6P+9mq23ISXh6k9dS6TcsXp3/Ldk0ARHVg8mU8DbUHLfC
+hzYWTZRjt4yL5M++m6eXPOc9pOiH81CUWyN0K6wjlnwlhvyKPsXQBNlu3wvqpF4u
+mDXPpApxVAj9RlRGd3+VSh7yDNxBcvc7QQONyjC556cqzYnB6pDoAIqYQ/9oYpuh
+3/Xca8liOddO6m90JiatfKEu5bMVFOJYXh5xPqmmT4usXjsMNO6yGwrJSSCHMwoR
+x5feVGncvj4z+5P/vd5pT++kUYSSc9RcbLqLbUYbj6bY52fuWiAuxSJC8Vcf3QxZ
+2gNDCtN9Mm+7aITsDFDgJVUF+sU44DSfBBiDSMqeYkr9qnIP1N65n1ZQyluRRtrc
+e+pTAGfE7XXnVC4ChVm9O6+KVwwS/Ek2Y/1wpvEQuYCGVt1tIb4XcdKVzX8GxzgW
+HC/o5MY8GsbtsGJ4UJCLdeB1R1bKphySet6vnXWnVhEFvrHRBU1wIPD81woUufcD
+Wp9B9EmmEyJ7ghLs76/iuvdW5bkMCRVzHZ/6Yvl2WVNpkXDn+gw=
+=3XJW
+-----END PGP SIGNATURE-----
+
+--=-3kqb/cyjPnardjAdCREO--
 
 
