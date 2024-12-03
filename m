@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE8BE74AC3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 16:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E34D2E74AC4
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 16:50:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIW32-0002da-Ng; Tue, 03 Dec 2024 11:46:52 -0500
+	id 1tIW5x-0004OU-1d; Tue, 03 Dec 2024 11:49:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tIW2v-0002Z4-2p
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 11:46:47 -0500
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ id 1tIW5s-0004OG-6c
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 11:49:48 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tIW2s-0003eM-Va
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 11:46:44 -0500
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2ffc80318c9so60450281fa.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 08:46:42 -0800 (PST)
+ id 1tIW5q-0003yV-MC
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 11:49:47 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-385e2880606so3767278f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 08:49:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733244401; x=1733849201; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733244585; x=1733849385; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=gu6IFtHi6NhS1YbAIlb98eMw8DAkKkiLvZulg8F6074=;
- b=RR0+Bilh9igXLTUoQBfoubDhogMqPbJ9IjodsLUsnu8IvJDmtjLkUqBJCu3A7GDiQ+
- jYWlK5COAPNXhIk4WPcKFFa0HIqdjNb7qXJpcMeaw64G2fn9DHN6pHlark9gSQCSbU5k
- NrSqYHT9T9DMN4KKbWDXl2rAkADkY9bjhkZZ9XkXBhUQxwb/4krWaKqtjMsMWz7JhlI3
- 8pW5e/mca2dB6JV/4Tomwba4nH44a9fvn04TITdxk1PtVTYcA68S5k0WdAIHEZeF0yAd
- MYzZF80p5ID66TPFNx4IUFtYD/3UUCJm8LX7b+2yXwjNGdqmnYHlnIujI2EYesEpA4O/
- lkPg==
+ bh=i1hMtiGHDBEgnbtVAkEEcj2ceq9cb3BWZuBAEBlVxrY=;
+ b=N++JwswCWNwJYj3ClrGYFGiOxT32VGB+l8MHnDw+uikXJ3Cccs7AbJgKz3O3j6U1CB
+ V9YQ/JYoxYGJRpExDSvzg8JPcaYO7wy6l3X60yVl0GmjZOlvfCCwMwwlj+JoRHD2jWNp
+ YW3rD53056UlrWLRfbtpZn19CxL3a22mQ/6cRiTCYreIGHdJRn4KdEioEGEUoxztPvQg
+ uqvlgtEMPXfVx+XXrHkzOlvV17wWSV3x3Vp/AU0rUfagzODt0Q0oIi6Qkgo1GDcGnUxO
+ P/JE2xqB1+wq9CikcJtMAQ+ixCMFLGL7x38MsBndpck0wfXAUX+nXi+1vaF3qCRPC0VF
+ O3Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733244401; x=1733849201;
+ d=1e100.net; s=20230601; t=1733244585; x=1733849385;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gu6IFtHi6NhS1YbAIlb98eMw8DAkKkiLvZulg8F6074=;
- b=gXMfeMNVB0nJDABo6y3k8G8K4G66xCB5IMSDABdtUBPU2LRilljslzlJzkwKlcQHI4
- 0ftgB9GlAqDnwDkvKP4eUqtiUvfNLkLhIN5wO8Ku5UgpGDJZcS5cbY8ezBuV1eZcQoYj
- 3LOGayYcq+0E0Cvgk2zo44jeCzWoY+VeVhnfw407lWNIsf55a5r3h6huA5jiPW0GaCBl
- tZnyvDmmm930QWhwJ9yEsWxjADcqLPoXF/Lps3EGIjnIOpdad1QdfzRSRF8ekCwAi4Nm
- ygBACn9k/RQT9Cni4I0csl4uIRPoi4A0fmABbrSi5vmcbjTJ6P8nVaDeFE0pOjDN5KW2
- ExGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWqq0G5NwC7X3Te1LPmtkCIl65lEVHgMYg3c04dd9A2LkLHdLYxlnIwgKkjAdk7Spq6clVZ3wNlbmLs@nongnu.org
-X-Gm-Message-State: AOJu0Ywp08Ned3m1/idREYu9xcIwghQqc0s1Q1KpFIGKLZoiiG9sNCLA
- xPYxsKXvfNCwyXpX61/tzHEHaTMTko1ru7rTeGPUTD5zshkoi8yXT4FfYUK3XcMXEo7dKRNrL1x
- kl558kjhlSTmIIpJ2jaZYUwUBeaI50qd9xGFmKA==
-X-Gm-Gg: ASbGncsoDRxi2RWizS0Cdyf8YOtDPDh1UPinrjKRrhiuv3oeUOPiuF6C1+1KQEF0dVf
- 8NKTsJDNM6KEHZcFqpdqTslRyfSVKVfQV
-X-Google-Smtp-Source: AGHT+IGdtrc+qhIaKBg5Q9kBcX67gHJV5fyWnKwnqmfmMlYpZy37iyoGBi/H8hNyHqWsdrtWGIQpP2WL6xkieIUHNjE=
-X-Received: by 2002:a2e:a98f:0:b0:2ff:e5fc:fd0a with SMTP id
- 38308e7fff4ca-30009c12978mr20821791fa.23.1733244400798; Tue, 03 Dec 2024
- 08:46:40 -0800 (PST)
+ bh=i1hMtiGHDBEgnbtVAkEEcj2ceq9cb3BWZuBAEBlVxrY=;
+ b=UgXysSL5G8qq763bUAY3r07RRRe47+h2Xm5BM2Cv2EoNAJQYzfuVwzBYH+Pk0LZBTX
+ w8Xq1WQ3k80qZN72aev0e5ez1SYTOazDyge4NUUdkyvD0bAnc3rI9+p92s1fvHxZk6KM
+ 6y0E+304FmI5VuUuZODbvzxxfb3rmSQvJfvyffW6CrKAPnCDbJZZPSzJoMlA5a6bIhlB
+ 8WMm6N2zQZY4e7x3bmSCDAuSpmM/sPNXe9QYzPcb+z7HEgpV9ddrq9VdQi2nrwFP1Hy2
+ ekA27VvrnffsgVTlqQUWQPWC8FyhC+2wJsFl1cKjG4DvboLGVGm9KYyLTxsGMLVfBeWR
+ fzsg==
+X-Gm-Message-State: AOJu0YzJpbrNXgwUgBXcBOSptd9n9kfpJXvRWATv0YUzNYq8Iu/A7JMT
+ SKZ0RUCQReJ8GBZZxh4jzVnUz5zpTjos2Ppr2OYlXHivw9AnUsni+icGruRvWIzi0Gzouuo5xVZ
+ Fyh02goBbyvW0IDoyoE1KGb2XYOS3czj1nmdPsw==
+X-Gm-Gg: ASbGncsPXg8qL85zidGDufVAI4H8VOhYHrVoVyS6YP0OP27RbH4Ka6YC/kShwTXuFil
+ ZOePZm+bMHgblasKBmtwwQcBwCjHPWPc7
+X-Google-Smtp-Source: AGHT+IHWPdnTm2fGuQ9VVypibcSnlMUQRKBNEuGZFuszfPxBG2uUxHfp6/prwdNe73XTbd38yB+aq0fKsdPjRdrfLII=
+X-Received: by 2002:a5d:6d08:0:b0:385:f17b:de5a with SMTP id
+ ffacd0b85a97d-385fd3f2ccamr3411160f8f.28.1733244584833; Tue, 03 Dec 2024
+ 08:49:44 -0800 (PST)
 MIME-Version: 1.0
-References: <20241203162525.75156-1-abelova@astralinux.ru>
-In-Reply-To: <20241203162525.75156-1-abelova@astralinux.ru>
+References: <20241203111513.402641-1-shorne@gmail.com>
+In-Reply-To: <20241203111513.402641-1-shorne@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Dec 2024 16:46:29 +0000
-Message-ID: <CAFEAcA-y2-k8HnTHwTzqL4MGqrTAC1AKD5iP1s9XOTk0OrVYTg@mail.gmail.com>
-Subject: Re: [PATCH] hw/timer/nrf51_timer: prevent integer overflow
-To: Anastasia Belova <abelova@astralinux.ru>
-Cc: Joel Stanley <joel@jms.id.au>, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- sdl.qemu@linuxtesting.org
+Date: Tue, 3 Dec 2024 16:49:34 +0000
+Message-ID: <CAFEAcA-GN-vpzCay18YVagOjd0Gr=eN=CbfV5H1jzxMNd=40Cw@mail.gmail.com>
+Subject: Re: [PULL 0/2] OpenRISC updates for 9.2.0
+To: Stafford Horne <shorne@gmail.com>
+Cc: QEMU Development <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,38 +89,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Dec 2024 at 16:25, Anastasia Belova <abelova@astralinux.ru> wrote:
+On Tue, 3 Dec 2024 at 11:16, Stafford Horne <shorne@gmail.com> wrote:
 >
-> Both counter and tick are uint32_t and the result
-> of their addition may not fit this type. Add
-> explicit casting to uint64_t.
+> The following changes since commit f0a5a31c33a8109061c2493e475c8a2f4d022432:
 >
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>   Update version for v9.2.0-rc0 release (2024-11-13 21:44:45 +0000)
 >
-> Fixes: c5a4829c08 ("hw/timer/nrf51_timer: Add nRF51 Timer peripheral")
-> Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-> ---
->  hw/timer/nrf51_timer.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> are available in the Git repository at:
 >
-> diff --git a/hw/timer/nrf51_timer.c b/hw/timer/nrf51_timer.c
-> index 35b0e62d5b..b5ff235eb8 100644
-> --- a/hw/timer/nrf51_timer.c
-> +++ b/hw/timer/nrf51_timer.c
-> @@ -44,7 +44,7 @@ static uint32_t update_counter(NRF51TimerState *s, int64_t now)
->  {
->      uint32_t ticks = ns_to_ticks(s, now - s->update_counter_ns);
+>   https://github.com/stffrdhrn/qemu.git tags/pull-or1k-20241203
 >
-> -    s->counter = (s->counter + ticks) % BIT(bitwidths[s->bitmode]);
-> +    s->counter = ((uint64_t)s->counter + ticks) % BIT(bitwidths[s->bitmode]);
+> for you to fetch changes up to 3eb43aeb164f1f83c97ff693c7d464b49755110c:
+>
+>   hw/openrisc: Fixed undercounting of TTCR in continuous mode (2024-12-03 10:59:25 +0000)
+>
+> ----------------------------------------------------------------
+> OpenRISC updates for 9.2.0
+>
+> This series has 2 fixes:
+>  - Fix to keep serial@90000000 as default
+>  - Fixed undercounting of TTCR in continuous mode
+>
 
-Can you explain when adding the cast makes a difference?
-Since s->counter is 32 bits and ticks is 32 bits and
-the RHS of the % is a power of 2, it's not clear to
-me that keeping the top 32 bits in the addition and then
-discarding it after the % is any different from only
-taking the bottom 32 bits of the addition.
 
-thanks
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
 -- PMM
 
