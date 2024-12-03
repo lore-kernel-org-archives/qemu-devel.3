@@ -4,96 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FA4EE69E9F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 10:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6618E69E9D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 10:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIQ9t-0001XH-AM; Tue, 03 Dec 2024 05:29:33 -0500
+	id 1tIQEg-0002eB-I2; Tue, 03 Dec 2024 05:34:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tIQ9r-0001WU-4i
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:29:31 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tIQ9p-0001q6-Ln
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:29:30 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5d0c8ba475bso3900958a12.1
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 02:29:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733221768; x=1733826568; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=f0Q8uqfRhDvrNswbuG1OfIJbALNB3zPXNZJaDrH+yhU=;
- b=Ejt/hAZNWD3ak74+JWjJgeu0atoJIJcLZDYAsm4G09hJDA3d9AfaoO9OqeJM4EM+hv
- +6V7m02kzr/qbgtQb9p3+uVd6P1s5yHSj0eI2yzlhgLYnlPfIqGuXTUYAblUE5AjqIJO
- 7YihNJ9klvjrVBSeM3ZXTTEv7ZXvBEZ1BMZsun6E3tXtsjNKa3egE+Rfh/NwztqUsago
- 6BoXGCFcDjKqeVgQ5b5rZthkvjmvlIoRU7VMeFp705Svk+H011KNazY2/TTSZq5eUg1z
- WA+0GlHvSegPvNWmeskX/FkV7bad0JxaGYYLUhnEHZgK4S4SWzgzGdrU4nJ9Q/U/hCMU
- sm6A==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIQEf-0002de-6z
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:34:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIQEd-0002O0-Tu
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 05:34:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733222067;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=c8+mtyeu29sdyoeKiIX8Wc5RPqMhIGCC9Pt4TP7ecf4=;
+ b=SJXO4yW3mz3beMuWQc2JD8qio3fugZFyvMBtyRCNFUkiJVDTbxhnZHMgqqwXorsrPHxqgk
+ EOcL9KVYUY4RRkItJ4ypthLwYcgY7MtKp8Mji2V5g3Z7thgmzURl/KHxHpg1bZNESq7RQS
+ 7K5QUMxMjqufTXEQsIn+Qpd96nEISro=
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-462-GT0Sx5WTPQe-xNiaW-lUbA-1; Tue, 03 Dec 2024 05:34:22 -0500
+X-MC-Unique: GT0Sx5WTPQe-xNiaW-lUbA-1
+X-Mimecast-MFC-AGG-ID: GT0Sx5WTPQe-xNiaW-lUbA
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-3e6594fde2cso3977981b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 02:34:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733221768; x=1733826568;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1733222061; x=1733826861;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=f0Q8uqfRhDvrNswbuG1OfIJbALNB3zPXNZJaDrH+yhU=;
- b=aygbdPU3VARJNT35bbLNKtVZ8zcIg7pP1cMWl+53DKFHq//CZPeppLqHwQh+WoIxnI
- EKMsdhTRzlMn8G60K0dKiw+fzQ5TdFt8CIfPnHp+MiXOTySL21xkx6oFS4UFEIogMvGe
- lECi3B950IN94IKafDhi8hjgEnDWCYhjNAqM28mXjEDLsHZFgQcBxyDWmO3ROCG0jOZK
- EqoEmCIkXvdxL6GvaufDjeiTIHPfV6/FlhOTzxY4AD3YtP+VyXAkPRMNcET6VGjNrt9l
- 23Zg5q0QfT13NJaOyfDePtouPspwJMq0xzXX0WsfFIiXCYSDoZDG8gFIHoFDstLDT3Ip
- s3LQ==
+ bh=c8+mtyeu29sdyoeKiIX8Wc5RPqMhIGCC9Pt4TP7ecf4=;
+ b=hLYvtG6RqCDM1MvuNF/xOWpMtYUBWwrhiQSoGywW/GEDE16o4eO6JeWJxqsfWy6gnZ
+ RLVMx1Ror591whcey4J7NDawdmqiJLuLPgEgQ3u/id1H2epchwc0bcM1LRK2CIuKbk1Q
+ BYgR8p34lmTWWpURR38eenT9GavAtZmYp4wkIF6+6Bv5kJVyY5Sf6kzLu5e+IG1gLa1Y
+ a2bUijxObtAZTpCsVR9xhF1m3l5/dylRVRct93vbu6xal765KyHabfcJQjXl2l/8zCfI
+ Cg3nonQZfVYPEBa37IC7I0izqQM8dSqYH6kJ3o8iF2D54NlGu/cOXpcySsCP2VGNU39Y
+ iNjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrVMtOeqA38EQgNWWNp4vdHJVeCU0Ddyxjcw5pSfYSVum0HnlOzlt2N6MbVRAi1oKuIwYmIaaOksib@nongnu.org
-X-Gm-Message-State: AOJu0YymMyASSI0bEVmJef37Chddm8U2eqFQ6/Yc8xGInC+PCmyI7YqC
- mNp+JSIIW3BJxUgQoJDHA2Pj+G2lHwQT6YNjfkst4qxa7du31Zcux1YbLeqFX7Gb4/MYj+t3PKM
- FnNPkMgXyqUrHib6CcjyYhQoiRJr+UgnO6QKAWg==
-X-Gm-Gg: ASbGncvB41RF57+OERv8dfcyRNQFnN3LexXwMDE1SZGft6IdPns+uNxLNvmoo8snZhh
- mull4g1vUijOS/t4wgXJo39zlTBMq4kZ2
-X-Google-Smtp-Source: AGHT+IGdeUQhGG6ILfuNeFl9J7s4bUy31TXtHRR0DuA6BHZtnhUZ0fTuANdTNGF5Krndlgn3AkMU6lEJf3qwCkiO7nA=
-X-Received: by 2002:a05:6402:270c:b0:5d0:d311:dd4 with SMTP id
- 4fb4d7f45d1cf-5d10cb81b94mr1276216a12.22.1733221767859; Tue, 03 Dec 2024
- 02:29:27 -0800 (PST)
+ AJvYcCUqdfg2he1SMgy+q1Pd5x/PEWrBO65Ngf74/OZC7Xs9Hjpb9Hk6ws1KAbaO4TFjDYgM0Y0bg6HCWYg8@nongnu.org
+X-Gm-Message-State: AOJu0Yz6/G9XwbM/wocKz2Fqfddmz5Lck2r2+wYOJhs2HnXj4rvs5i2q
+ Pdcpson9dEcjbeVRBMqLLiI3nAPJibs+fAQvp7poIoXgtEAQWNDx17TMbO+UPIAW4+FEnDAv4el
+ /CAIDpJnJ3rFF6FgY1zx0kfYEE8A1YZXERvMAHDtYga5ky+wk56Zj
+X-Gm-Gg: ASbGncuTLN6+yxjYGMmNFJjUn9EHdogL9cIgMKPQ3iJkD0cg9LsMJK8wFbxQ/GrbkhP
+ ymjsWY3L+1MTfoqu+kDduoyLzyiI3BH2aZBBNSjAPdxOWazbAbd0x5MyUQvxRh9MgiZITwH+XMD
+ CUvefT5sMDQM8p5vYwvdxE7zXKJY0DKGDaCAOrdeghquzz3SMgPHvg/wYaGfI8ZQ3z5A4GG2Tgf
+ duEUvrtahmTF7xOol5Z0LLwP4tS6KW8f+onSYrXGgn14Y8eKDPE5U1TJCuPDDrzWVvduvAE6ONR
+ nXpqPw==
+X-Received: by 2002:a05:6808:e8b:b0:3ea:50a8:4559 with SMTP id
+ 5614622812f47-3eae4f3644dmr2105743b6e.11.1733222061683; 
+ Tue, 03 Dec 2024 02:34:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGuIhxr1AdwQWCioyz4uSMKD/Tml3jp2xw56cENHvBd4LkbxW9BtfirqUCqNBfExKytFJdHMw==
+X-Received: by 2002:a05:6808:e8b:b0:3ea:50a8:4559 with SMTP id
+ 5614622812f47-3eae4f3644dmr2105729b6e.11.1733222061475; 
+ Tue, 03 Dec 2024 02:34:21 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-199.web.vodafone.de.
+ [109.42.51.199]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d896a2a706sm36364946d6.112.2024.12.03.02.34.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Dec 2024 02:34:21 -0800 (PST)
+Message-ID: <0715a97a-5b59-45c9-acd0-a1357a6ffa86@redhat.com>
+Date: Tue, 3 Dec 2024 11:34:16 +0100
 MIME-Version: 1.0
-References: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
- <4b3180bd-8054-4431-a594-0445ce4837aa@linaro.org>
- <5620efa2-98c6-4613-b866-67e91ac6acf8@linaro.org>
- <CAFEAcA-xa1AKf2GAv7go5wdu+Td=4jf7Nriin-Oe3S6qEV6X0g@mail.gmail.com>
- <fd7ad48e-1e72-4735-8064-7039eedc00ae@linaro.org>
- <87ser6c5be.fsf@draig.linaro.org>
- <a26e2a3d-d915-4e84-9b8e-dd5935049f31@linaro.org>
- <CAFEAcA9q7advmbws+xx6Mgcg-=072tBfdRReSSqymYz6p9zENg@mail.gmail.com>
- <b16724af-0758-41b0-afdf-8a6eb138dd64@linaro.org>
-In-Reply-To: <b16724af-0758-41b0-afdf-8a6eb138dd64@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Dec 2024 10:29:17 +0000
-Message-ID: <CAFEAcA-iAkyN7hPJ=ttEBwNDFwOTO8fC1H1RKSLv6uM0qzsCkg@mail.gmail.com>
-Subject: Re: [PATCH v2] tests/functional/aarch64: add tests for FEAT_RME
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Troy Lee <leetroy@gmail.com>, Alistair Francis <alistair@alistair23.me>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, 
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Niek Linnenbank <nieklinnenbank@gmail.com>, Joel Stanley <joel@jms.id.au>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/7] accel/kvm: Remove mentions of legacy '-machine
+ foo,accel=bar'
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org
+References: <20241203092153.60590-1-philmd@linaro.org>
+ <20241203092153.60590-7-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241203092153.60590-7-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,47 +158,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Dec 2024 at 20:09, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> On 12/2/24 11:56, Peter Maydell wrote:
-> > On Mon, 2 Dec 2024 at 18:36, Pierrick Bouvier
-> > <pierrick.bouvier@linaro.org> wrote:
-> >> Maybe our enable-debug should produced optimized builds by default, and
-> >> we could have a new --enable-debug-unopt for the "I need to use a
-> >> debugger" use case. Would save a lot of time for devs, and in CI where
-> >> minutes are precious.
-> >
-> > The whole point of --enable-debug is "I might need to use a debugger"
-> > (or a sanitizer, or anything else where you care about debug info).
-> > If you want the optimized builds, that's the default.
-> >
->
-> It seems like we associate debug info to "I might need to use a
-> debugger". But, it's not the only use case.
-> Sanitizers for example, are usable with optimizations enabled as well
-> (with some caveats, as some errors might be optimized out).
+On 03/12/2024 10.21, Philippe Mathieu-Daudé wrote:
+> Since commit 6f6e1698a68 ("vl: configure accelerators from -accel
+> options") we prefer the '-accel bar' command line option.
+> 
+> Update the documentation when KVM is referred to.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   docs/bypass-iommu.txt            | 3 ++-
+>   docs/nvdimm.txt                  | 2 +-
+>   docs/specs/tpm.rst               | 2 +-
+>   docs/system/arm/cpu-features.rst | 2 +-
+>   docs/system/cpu-hotplug.rst      | 2 +-
+>   docs/system/ppc/powernv.rst      | 2 +-
+>   docs/system/ppc/pseries.rst      | 4 ++--
+>   scripts/device-crash-test        | 2 +-
+>   8 files changed, 10 insertions(+), 9 deletions(-)
 
-Yes, it's the caveats that are the problem. If compilers
-supported an optimization mode that guaranteed not to break
-the debug illusion for backtracing, interactive debug, etc,
-then we could use it. But the best they do is -O0, so that's
-what we use. (-Og sounds like it ought to be what we want,
-but unfortunately it still leaves you with "value optimized
-out" errors in debuggers, so it's no good.)
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-> I don't have anything against what --enable-debug does, but supporting
-> this for tests (and CI) because people *might* use it is a mistake IMHO.
-> It's an opinion beyond the current series use case.
-
-If your test is hitting the timeouts for --enable-debug on
-a local dev machine then it has a high chance of hitting the
-timeouts in CI in a non-debug build because of the "noisy
-neighbour" problem where a CI job runs massively slower than
-usual. The fix is to make sure the timeout is high enough not
-to be hit in a debug build, and wherever possible to have tests
-that are cut down so they have short runtimes.
-
-thanks
--- PMM
 
