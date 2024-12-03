@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8240EE6C5F8
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 03:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030C7E6C5F7
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 03:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIJjn-0007t1-Je; Mon, 02 Dec 2024 22:38:12 -0500
+	id 1tIJk2-0007yj-7s; Mon, 02 Dec 2024 22:38:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1tIJjk-0007sf-Uz
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 22:38:08 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tIJjz-0007y0-UD
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 22:38:23 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1tIJjj-0005Xc-Cl
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 22:38:08 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2127d4140bbso47260805ad.1
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 19:38:06 -0800 (PST)
+ id 1tIJjy-0005ar-GM
+ for qemu-devel@nongnu.org; Mon, 02 Dec 2024 22:38:23 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-215b13e9ccbso9768685ad.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 19:38:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1733197085; x=1733801885; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/3TPIP1MGkGKOb8JzFkJI971Z6VFGcV7XVTJlNqAnrw=;
- b=VWm/wg6hzSq3dD8XxiCQO6X5uurLfyfzIhAqlj8j3rQ6KvxW/A8cS2pEa2UCKRzXOB
- uu52Nf+xUfbxuzXOsZHzJNWo2t2NjMa35AyKXme51QVM8+j+vmwRJKZ9Qa7u3U/z/Blf
- gQupzAZbP760CWVvUH08/cRwfI6/kTnYSpb+wBTAAScElW4jE3JnRmktw+coACi8on8u
- R7oD/H0ET9P4fbxRWKYntYtUAGAaQfhUOTdeiQpTfaMoJoOSOAAIs9ewCetgh1qoeABz
- IIqESe1S98TPjOf01Iyl7NEyxFVkD3iNYoWXz58Cpl4EKmlGHh26AUEUNm7dMZqm/8Ph
- dslQ==
+ d=sifive.com; s=google; t=1733197101; x=1733801901; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6+unVT0iJ51qHfPa5G/FCD6L8b3hBokRmjj3mo3WsF0=;
+ b=XVLMS7SBUPWYQbdoiCxUCRb3t/5uQtjRr1kqj9lTWXqVjuiX07V7B7Y4OoHTwGcPuG
+ Cw07FznL06sHkc+nIM+7AlFq6KRn0eRNc3Jm86NSCmsgUUqARZjXVo7G/D9sVS4qDkuJ
+ 4Fs/mOdH6yoU/9/YumXw5EnmpxVSetkaJyjwJ6d9hRpfhy04h5clV1zmaYcPG4ARehtz
+ YR4nm8zsswya3XdctCVOzikxYb634yA/EMzh35j8bUYgEHvgTLnuKpeNqKW6HFaFjM+j
+ LhsFTUb80rcae7279cdrqX4WDDwMNLc0pEWuHZNrqHtyQQYMTwt9+cghDshM79L+9+yC
+ XSWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733197085; x=1733801885;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/3TPIP1MGkGKOb8JzFkJI971Z6VFGcV7XVTJlNqAnrw=;
- b=h1J8GG/k9Ovtonq6vGlzk0hQwgg/CdDtrMYdMyxiZ7S6xJhht1lT8bAWlj32OcFigR
- HiZDVxgJZruxCQXa7JKXn5PjiHNiiJzGlFf1xObYONPUJo9gSx5lqvqJib2QUqfsE+db
- PvQAzS9MYVkJzqYsndP9HEQ9BAkYozkA/X/E39n0vF6jMqZNjgzoVEqk5ceY/AMjbkLc
- DEqygtGMK6f0ZsCFJePeVw7nyCx4pBJcH0uQvMCjzr0Kz962pYJvwco9txjJTD7vHf17
- MBxHlKZ+euu4+UT5q5UPvnRGNYUyB5cdRR1mhYxUF0R4Om3XCSMwlnLnCPOg9fZAxKx1
- 1YQQ==
-X-Gm-Message-State: AOJu0YyHPhVv5p94DpDPZqLTV9hyOG5WlAi0L05ns93TxCFy5zDkl5sI
- WOLG+XIyMlDgzKusBuGTY4jNM/IVZIJAg+SI6kbS68G5tWPe4chAvGpk/E2V+Do+KvdyHGYbfQH
- hcrMjWwDhET9z2D44/JP1VphILFjBBVv3gY89+M1hvvBOa4F9GVCxa/8IXBbWRy2FJbW69+2nLY
- a1AAe9TLsPLKx9/rK7vHkV0PRibi7omTMtBIQ=
-X-Gm-Gg: ASbGnctqFA1SdufudToLt7DWOY7L9e5sKXYcdLApbGWaUzQgsjO9aE989Fp83wRO0gt
- 0g0xlT0+XcLhlUirymiTe6nLAZyJfkYNgNFfwk6ToxBQg1VX3VvRFPaxVHVsw20z3M4K5X+0iFc
- hH0BwTjm9Ac8OFcRPq6OPbYOTekl5DKkpdqMnS72f4yofVJ5zLHc/f2dVM3N3YHloK7AqqzMO8Z
- TE7IDiBCGskJfMUrKoQ41bRtK8AeXilzSp08j2WBdmazEKuZWqGJTct8TDpmfC2zRMjPS4SGGN6
- 8lKLKExr
-X-Google-Smtp-Source: AGHT+IELX0Ll3gFDL/7CHwx3ZBteJw3RKl5qUgKPu9SncvBkus+155PrU4EWVsHuQCoJMtQZ4vAUWg==
-X-Received: by 2002:a17:902:cec4:b0:215:6b4c:89fa with SMTP id
- d9443c01a7336-215bcfc4dc0mr11140185ad.8.1733197085175; 
- Mon, 02 Dec 2024 19:38:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733197101; x=1733801901;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6+unVT0iJ51qHfPa5G/FCD6L8b3hBokRmjj3mo3WsF0=;
+ b=vR4mvuqhQX1Bq717nkfJl5WTg2Ycdjx61QhJClOa1HLhGOwWTsKpRN9L26TpVD+NwX
+ E+2BK713pX4KlsVyyM0QRCreNb9v5yNtL5ug/M/cvlcsBzoobnMwkjfoyv5QkJW9SmTO
+ e6oyhLdIeabCLyiJD1fIv5mxbPKe+x2K+kiTHH3PIP2xMGycSw3YlfWbauxod0QvdHwL
+ j/jDsGYyuRNIHw7tJIzMGUCksqOFoRrCGvO4rS5Xv0OZoZuGJ0HqA58VGzJCZn2aMMH1
+ 9okDrePpF1vgByhlaaKwEiQ1PkZNrP2xljd+CxNXZUh0V2kXnnAXpmScKSPg7r1aIaCp
+ Co8A==
+X-Gm-Message-State: AOJu0YwiqPtee7qC0Wrk410ZC1EpMeIEwdhDYZSqefp2hkUIB+6Ca12Y
+ O5Zt26ViqTqV7mSWb7UBzPOqp9HUEPjZSl2oV9jmgOHH94AsnbWQ01O1RT7aDSHK1gzJXY4/MPz
+ ytrHcjR9y4KsiBDdt/0lmvnowfFC+eqKfUeYAWDGY8o5G1ZBkVVa6nPc9mZ93h2ikNtYK8y1XrX
+ e1rDHSHD7UMCTxkHeObylvAcDcZ3DEC9fnsI5hEA==
+X-Gm-Gg: ASbGncvgcC9ErqwaRP9tjvxVGWsw+dnn1dP3oBmQy98yIGC/pulXdz9R7fnxrZB5acJ
+ ZWhv2Pm9bOv7N+cT8pJvvaAb4kzTRZf0hInutiD5rkHY5TbOiZqhQTIt6rkabDKcteMlp1xZd9/
+ vQbQaggUeBAxaGs3B/xSq4VSOptEPuU4bBjo53owA/mRgVKzijCDVBosL1VvQilWxVDFw4exVmR
+ o0gvv3hP//bD8GSqLebYvZ5/noDEruCQFUFh4LR2ZjiGfffL1AuawrfrHJZo1Y7QCMMYfnB3h/y
+ lFCBtRiy
+X-Google-Smtp-Source: AGHT+IF54AoRZSJTTdV3rrBFyBeOMkXnmI3hPNSBNW1iG7cEI8X5C1ycKaeDLOBAh+umz6H6YnODQQ==
+X-Received: by 2002:a17:903:2310:b0:215:58f0:2606 with SMTP id
+ d9443c01a7336-215bcfbce9amr15371325ad.2.1733197100285; 
+ Mon, 02 Dec 2024 19:38:20 -0800 (PST)
 Received: from hsinchu36-syssw02.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21566732e1fsm47111135ad.134.2024.12.02.19.38.03
+ d9443c01a7336-21566732e1fsm47111135ad.134.2024.12.02.19.38.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Dec 2024 19:38:04 -0800 (PST)
+ Mon, 02 Dec 2024 19:38:19 -0800 (PST)
 From: "Fea.Wang" <fea.wang@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -72,14 +73,16 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, "Fea.Wang" <fea.wang@sifive.com>
-Subject: [PATCH v5 0/6] Introduce svukte ISA extension
-Date: Tue,  3 Dec 2024 11:49:26 +0800
-Message-Id: <20241203034932.25185-1-fea.wang@sifive.com>
+Subject: [PATCH v5 6/6] target/riscv: Check svukte is not enabled in RV32
+Date: Tue,  3 Dec 2024 11:49:32 +0800
+Message-Id: <20241203034932.25185-7-fea.wang@sifive.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241203034932.25185-1-fea.wang@sifive.com>
+References: <20241203034932.25185-1-fea.wang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=fea.wang@sifive.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=fea.wang@sifive.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,56 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Svukte ISA extension has been approved for fast-track development.
-https://lf-riscv.atlassian.net/browse/RVS-2977 
-And there are Linux patches for the Svukte that are under review.
-https://lore.kernel.org/kvm/20240920-dev-maxh-svukte-rebase-v1-0-7864a88a62bd@sifive.com/T/#mf70fcb22cd2987ad268c0efee9b8583197d3cb4f
+The spec explicitly says svukte doesn't support RV32. So check that it
+is not enabled in RV32.
 
-Svukte provides a means to make user-mode accesses to supervisor memory
-raise page faults in constant time, mitigating attacks that attempt to
-discover the supervisor software's address-space layout.
+Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+---
+ target/riscv/tcg/tcg-cpu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Refer to the draft of svukte extension from:
-https://github.com/riscv/riscv-isa-manual/pull/1564
-
-base-commit: 2209cae121e5da3cfbdb9dd4b06d52d0ef66ea69
-
-[v5] 
-* Update the warning log and the commit message
-
-[v4]
-* Add a svukte extension check in RV32.
-* Refine the code.
-
-[v3]
-* Fix some typos
-* Refine code by separating a function into two dedicated functions.
-* Follow the riscv,isa order
-
-[v2]
-* Refactor the code
-
-[v1]
-* Add svukte extension
-
-Fea.Wang (6):
-  target/riscv: Add svukte extension capability variable
-  target/riscv: Support senvcfg[UKTE] bit when svukte extension is
-    enabled
-  target/riscv: Support hstatus[HUKTE] bit when svukte extension is
-    enabled
-  target/riscv: Check memory access to meet svukte rule
-  target/riscv: Expose svukte ISA extension
-  target/riscv: Check svukte is not enabled in RV32
-
- target/riscv/cpu.c         |  2 ++
- target/riscv/cpu_bits.h    |  2 ++
- target/riscv/cpu_cfg.h     |  1 +
- target/riscv/cpu_helper.c  | 55 ++++++++++++++++++++++++++++++++++++++
- target/riscv/csr.c         |  7 +++++
- target/riscv/tcg/tcg-cpu.c |  5 ++++
- 6 files changed, 72 insertions(+)
-
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index c62c221696..3b99c8c9e3 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -652,6 +652,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         return;
+     }
+ 
++    if (mcc->misa_mxl_max == MXL_RV32 && cpu->cfg.ext_svukte) {
++        error_setg(errp, "svukte is not supported for RV32");
++        return;
++    }
++
+     /*
+      * Disable isa extensions based on priv spec after we
+      * validated and set everything we need.
 -- 
 2.34.1
 
