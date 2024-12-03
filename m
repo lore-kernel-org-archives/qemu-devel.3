@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE461E64A93
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C82EE64A9F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIT4Y-00080g-PF; Tue, 03 Dec 2024 08:36:14 -0500
+	id 1tIT4h-00082K-EP; Tue, 03 Dec 2024 08:36:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tIT4X-00080N-Hu
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:36:13 -0500
+ id 1tIT4g-00082A-0q
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:36:22 -0500
 Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tIT4T-0001Fl-NI
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:36:13 -0500
+ id 1tIT4a-0001GR-LE
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:36:21 -0500
 Received: by mail-pl1-x642.google.com with SMTP id
- d9443c01a7336-2155157c31fso29323255ad.1
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 05:36:09 -0800 (PST)
+ d9443c01a7336-215b45a40d8so10810865ad.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 05:36:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733232968; x=1733837768; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=zmI9g/pOOT7yYV6SSPmEYet4Klt+90zecwroUxkyTHU=;
- b=RIXUDHZ23iSzoiCuVilW1xRiR1YtqL/TSuDvxS5dfznfJYChcrPicz6APARXrJ4KX+
- h3xfVdr7dE8MejOuWcTjvKiBQGkATkCyC4ktJMqUo0GFS0H0rvwLmVzFdPR7EmkqK4fJ
- 9upQCC3nXnpfqODyQwe1P018FZUYQ6fVHkpmFbKeS3N0sxfhBx2NnlMLb5sGSOM1ndTo
- GWZSMLPl0OVHKvqdvLdid1/WPD5x7jtciYaxE1JMVQLyONAc+sMpbvsfbFoO7IDKhF06
- Vg5DtjPMZ90oJabYtTBI0NZ+k5gMnb+6Dbuij4zBvQIwPjxyK+d6gfIVrUtrKC3P69fm
- av+A==
+ d=gmail.com; s=20230601; t=1733232975; x=1733837775; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jbedGQpZbiZzLccaIV/JwHJY9jlVFHdqI1I9GJ45Gm8=;
+ b=Q+edaSTwIDqdoHUmXtAkF57PHUtZxPyGBm9gLyae9Ky2Y2wWF8lE8gT/6H74KvB5pf
+ 2RhLZkfin1DJxzonCzPwqBxHPH7BzFYxf1TlRiNknvsNg+AHS8nvEsdEdPQbCf0EUiak
+ doY5mSfar9AA5fsKdSOdCPm6xJ9c4+0ed9aP9IYoVikvtmJfN0BlLlciTO0yq+l32BiM
+ GoM4LpYER7BsixuYHP/1MzmjLD3hYNaJRQePmudAslpDfobAp/Rm5XafuyvLHp4MptCX
+ /9L/AvYZGVnbl4DFyLWrP2TIpdZetsLwW25z/JrH3Law+2cMyXP8jJk2P5s1PMuV2w5V
+ XOcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733232968; x=1733837768;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zmI9g/pOOT7yYV6SSPmEYet4Klt+90zecwroUxkyTHU=;
- b=HEXuL81QZaJHmjb2rQoAn2CmbmQurUspWMwVEDM3pw4Mh4z7zUZeyoasB9GKzeR4DX
- Qo7Bhp+q7yGGArUiYiExYKpLwwVQNIQh4ye2r0QJ9aPyWCD7ckdQHlqAr8Uo5+UWbANY
- jkWKE9wqeEEnJSXIBqwGWZMu7HMfMm71yZzaqsedM4OVXz3XgCsGTpT8NiGCstuvbV+g
- FuuSnVQDNXYqST4WHnDVFJG5n5l1ugzSEprqajLEWwSOQZSs3B6AJTVnM6GQtKveZTVQ
- MuC14muavbdUncrPK6dHAZTRIwhoD/O04Yc0kxsImgeqpaIsc+w9QzMzftRqO7/5Yr7J
- jRtA==
-X-Gm-Message-State: AOJu0YzyAVgBjQ5MxExXlx2KT8jmIGtpL1f3dOzke7USqi4AJe6YU0Ir
- 7jJeq8ndTaYYc+SEIpuZH5gT7Ar/i0fMoFTdEoqx08WoRUMpSacmIqDXtgKzOA==
-X-Gm-Gg: ASbGncvob/bT0AVcLL1w+B37TgTQNjqUyrRyzUNCRHcrIeIJiutKffyZrQHiAP/4QW5
- +pCtxRGuoFh9D3Ox4TNH2klARJOgyOfZzvt0Rr56SsJLA7LM5Kvyaha61h0CBj7wRd7UEpAizfq
- Uh5RbjMj3jcY1SZxElzbn9G+mVupyfhfW2g4Zf6jwuaPj4QPhB1Hv3VnuW0sJYiZ0LbCo0wWwxJ
- KX0mHhqpl49GxPh+BfM1ITH5wEX1by9I6or5HBjWs8DPDEUd0CHv9k3VT4=
-X-Google-Smtp-Source: AGHT+IHGx5y4qwghcabBpNR9C/Xx+7kvRX/Oz+5IW63TsL2HLZDZMvxuFlj80i+gMSnEL56IhJN4RA==
-X-Received: by 2002:a17:902:f610:b0:215:bd3e:613b with SMTP id
- d9443c01a7336-215bd3e62bfmr40671415ad.27.1733232967511; 
- Tue, 03 Dec 2024 05:36:07 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733232975; x=1733837775;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jbedGQpZbiZzLccaIV/JwHJY9jlVFHdqI1I9GJ45Gm8=;
+ b=cPUuZ5D6LWDhFXlACV511hzB9CmxmV98QXlCHmD+l67p902Yl4KV6cdmW5LG2iL/uV
+ UpPJtHTzJIfaWkNKiUz2alk7DbqOJF/nBWKtHbKJXMhDcpPdV61QNAzIeg9j/UHwbZdX
+ XnH/mCVnWM642m5qlldCiq8g1RHKndCFCXPvuJggcl3CsRzfZgacAAmekByody7xIyRt
+ XYnhBxhq/SPebhYizoRUxBxr3U01A5ckO+FVX1MbVQxIm1eCK1WTvL9zi3aYSaynoBIr
+ 9s5h+1x88LO1yo31cjzd1P90h1lOBafkqctmaeONlwEZmw4gYjkZRc93kYcaIBckxJFC
+ U7UA==
+X-Gm-Message-State: AOJu0Ywqgm031e8JVN37YdiVz5PheBdgN7fM5SncqzkfBNDqrqpTDKVn
+ tt8Sg5irogNEunomOHhs5mn3GgVn00skKV2utZfkZLXP3skoqx9lCMzFxyUUaA==
+X-Gm-Gg: ASbGncvNcPQpzIhEmMML4KG9ivBWJ6mMMjzOBmaXemFmmX67hsrD+hP9VR+NPNTkmyp
+ rp9qo3X5yJpt5ZcIyHqxDm0AjbWhl9Q/Z/7iXTei3nxqtOZuKq0UslPnj2fPAeotofhjDld0nF2
+ 5o5yYBzlAhMUFiCiZo3wI53w1TZJIaX3fzwQlPAz3RVuH5M8s7b2yopQV0IN8AtvMNQgJqXjm6x
+ MK0bN2ipjX1f2tWpg1K9mvH2MXMNy8MkhgFCPV4J9O7aFbq/Ctwlj5R1fQ=
+X-Google-Smtp-Source: AGHT+IGPCCuc+PArskTh6njoIEoxM5kniM4GjGvmHycMHU+hoWVHnJeosKkArWVSQvx0Z6zPW7Pniw==
+X-Received: by 2002:a17:903:1d2:b0:215:a96d:ec2c with SMTP id
+ d9443c01a7336-215bd0e654fmr35187245ad.28.1733232974709; 
+ Tue, 03 Dec 2024 05:36:14 -0800 (PST)
 Received: from kotori-desktop.lan ([116.231.112.6])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215810cf18esm44183975ad.242.2024.12.03.05.36.05
+ d9443c01a7336-215810cf18esm44183975ad.242.2024.12.03.05.36.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 05:36:07 -0800 (PST)
+ Tue, 03 Dec 2024 05:36:14 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v2 0/9] vfio/igd: Enable legacy mode on more devices
-Date: Tue,  3 Dec 2024 21:35:39 +0800
-Message-ID: <20241203133548.38252-1-tomitamoeko@gmail.com>
+Subject: [PATCH v2 3/9] vfio/igd: canonicalize memory size calculations
+Date: Tue,  3 Dec 2024 21:35:42 +0800
+Message-ID: <20241203133548.38252-4-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241203133548.38252-1-tomitamoeko@gmail.com>
+References: <20241203133548.38252-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
  envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x642.google.com
@@ -98,59 +100,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset extends the support of legacy mode igd passthrough to
-all Intel Gen 11 and 12 devices (including Ice Lake, Jasper Lake,
-Rocket Lake, Alder Lake and Raptor Lake), and emulates GGC register
-in MMIO BAR0 for better compatibiltiy (It is tested Windows and GOP
-driver will read this MMIO register).
+Add helper functions igd_gtt_memory_size() and igd_stolen_size() for
+calculating GTT stolen memory and Data stolen memory size in bytes,
+and use macros to replace the hardware-related magic numbers for
+better readability.
 
-It also replaces magic numbers with macros to improve readability,
-and aligns behavior (BDSM registor mirroring and GGMS calculation for
-gen7) with i915 driver to avoid possible issues.
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+ hw/vfio/igd.c | 99 ++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 55 insertions(+), 44 deletions(-)
 
-The x-igd-gms option removed in 971ca22f041b ("vfio/igd: don't set
-stolen memory size to zero") is also added back so that data stolen
-memory size can be specified for guest. It is tested that GMS may
-related to framebuffer size, a small GMS value may cause display issues
-like blackscreen. It can be changed by DVMT Pre-allocated option in
-host BIOS, but not all BIOS comes with this option. Having it in QEMU
-helps resolves such issues.
-
-This patchset was verified on Intel i9-12900K CPU(UHD 770, 8086:4680)
-with custom OVMF firmware [1] and IntelGopDriver extracted from host
-bios. IGD device works well in both Windows and Linux guests, and
-scored 726 in 3DMark Time Spy Graphics on Windows guest.
-
-[1] https://github.com/tomitamoeko/edk2/commits/igd-pt-adl/
-
-Btw, IO BAR4 seems never be used by guest, and it the IO BAR itself
-is not working on Gen11+ devices in my experiments. There is no hints
-about that in old commit message and mailing list. It would be greatly
-appreciated if someone shares the background.
-
-Changelog:
-v2:
-* Droped "vfio/igd: fix GTT stolen memory size calculation for gen 7".
-* Fixed conditions when calculating GGMS size.
-* Added Gemini Lake and Comet Lake device ids.
-* Splited mirroring register declaration macro into a new patch.
-* Minor fixes.
-Link: https://lore.kernel.org/qemu-devel/20241201160938.44355-1-tomitamoeko@gmail.com/
-
-Tomita Moeko (9):
-  vfio/igd: remove unsupported device ids
-  vfio/igd: align generation with i915 kernel driver
-  vfio/igd: canonicalize memory size calculations
-  vfio/igd: add Gemini Lake and Comet Lake device ids
-  vfio/igd: add Alder/Raptor/Rocket/Ice/Jasper Lake device ids
-  vfio/igd: add macro for declaring mirrored registers
-  vfio/igd: emulate GGC register in mmio bar0
-  vfio/igd: emulate BDSM in mmio bar0 for gen 6-10 devices
-  vfio/igd: add x-igd-gms option back to set DSM region size for guest
-
- hw/vfio/igd.c | 248 ++++++++++++++++++++++++++++++--------------------
- 1 file changed, 151 insertions(+), 97 deletions(-)
-
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 2ede72d243..b5bfdc6580 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -106,6 +106,51 @@ typedef struct VFIOIGDQuirk {
+ #define IGD_BDSM 0x5c /* Base Data of Stolen Memory */
+ #define IGD_BDSM_GEN11 0xc0 /* Base Data of Stolen Memory of gen 11 and later */
+ 
++#define IGD_GMCH_GEN6_GMS_SHIFT     3       /* SNB_GMCH in i915 */
++#define IGD_GMCH_GEN6_GMS_MASK      0x1f
++#define IGD_GMCH_GEN6_GGMS_SHIFT    8
++#define IGD_GMCH_GEN6_GGMS_MASK     0x3
++#define IGD_GMCH_GEN8_GMS_SHIFT     8       /* BDW_GMCH in i915 */
++#define IGD_GMCH_GEN8_GMS_MASK      0xff
++#define IGD_GMCH_GEN8_GGMS_SHIFT    6
++#define IGD_GMCH_GEN8_GGMS_MASK     0x3
++
++static uint64_t igd_gtt_memory_size(int gen, uint16_t gmch)
++{
++    uint64_t ggms;
++
++    if (gen < 8) {
++        ggms = (gmch >> IGD_GMCH_GEN6_GGMS_SHIFT) & IGD_GMCH_GEN6_GGMS_MASK;
++    } else {
++        ggms = (gmch >> IGD_GMCH_GEN8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS_MASK;
++        ggms *= 2;
++    }
++
++    return ggms * MiB;
++}
++
++static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
++{
++    uint64_t gms;
++
++    if (gen < 8) {
++        gms = (gmch >> IGD_GMCH_GEN6_GMS_SHIFT) & IGD_GMCH_GEN6_GMS_MASK;
++    } else {
++        gms = (gmch >> IGD_GMCH_GEN8_GMS_SHIFT) & IGD_GMCH_GEN8_GMS_MASK;
++    }
++
++    if (gen < 9) {
++            return gms * 32 * MiB;
++    } else {
++        if (gms < 0xf0) {
++            return gms * 32 * MiB;
++        } else {
++            return (gms - 0xf0 + 1) * 4 * MiB;
++        }
++    }
++
++    return 0;
++}
+ 
+ /*
+  * The rather short list of registers that we copy from the host devices.
+@@ -254,17 +299,10 @@ static int vfio_pci_igd_lpc_init(VFIOPCIDevice *vdev,
+ static int vfio_igd_gtt_max(VFIOPCIDevice *vdev)
+ {
+     uint32_t gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
+-    int ggms, gen = igd_gen(vdev);
+-
+-    gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
+-    ggms = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+-    if (gen >= 8) {
+-        ggms = 1 << ggms;
+-    }
+-
+-    ggms *= MiB;
++    int gen = igd_gen(vdev);
++    uint64_t ggms_size = igd_gtt_memory_size(gen, gmch);
+ 
+-    return (ggms / (4 * KiB)) * (gen < 8 ? 4 : 8);
++    return (ggms_size / (4 * KiB)) * (gen < 8 ? 4 : 8);
+ }
+ 
+ /*
+@@ -471,30 +509,6 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
+ }
+ 
+-static int igd_get_stolen_mb(int gen, uint32_t gmch)
+-{
+-    int gms;
+-
+-    if (gen < 8) {
+-        gms = (gmch >> 3) & 0x1f;
+-    } else {
+-        gms = (gmch >> 8) & 0xff;
+-    }
+-
+-    if (gen < 9) {
+-        if (gms > 0x10) {
+-            error_report("Unsupported IGD GMS value 0x%x", gms);
+-            return 0;
+-        }
+-        return gms * 32;
+-    } else {
+-        if (gms < 0xf0)
+-            return gms * 32;
+-        else
+-            return (gms - 0xf0) * 4 + 4;
+-    }
+-}
+-
+ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+ {
+     g_autofree struct vfio_region_info *rom = NULL;
+@@ -504,7 +518,8 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+     VFIOQuirk *quirk;
+     VFIOIGDQuirk *igd;
+     PCIDevice *lpc_bridge;
+-    int i, ret, ggms_mb, gms_mb = 0, gen;
++    int i, ret, gen;
++    uint64_t ggms_size, gms_size;
+     uint64_t *bdsm_size;
+     uint32_t gmch;
+     uint16_t cmd_orig, cmd;
+@@ -666,13 +681,8 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+ 
+     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
+ 
+-    /* Determine the size of stolen memory needed for GTT */
+-    ggms_mb = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+-    if (gen >= 8) {
+-        ggms_mb = 1 << ggms_mb;
+-    }
+-
+-    gms_mb = igd_get_stolen_mb(gen, gmch);
++    ggms_size = igd_gtt_memory_size(gen, gmch);
++    gms_size = igd_stolen_memory_size(gen, gmch);
+ 
+     /*
+      * Request reserved memory for stolen memory via fw_cfg.  VM firmware
+@@ -683,7 +693,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+      * config offset 0x5C.
+      */
+     bdsm_size = g_malloc(sizeof(*bdsm_size));
+-    *bdsm_size = cpu_to_le64((ggms_mb + gms_mb) * MiB);
++    *bdsm_size = cpu_to_le64(ggms_size + gms_size);
+     fw_cfg_add_file(fw_cfg_find(), "etc/igd-bdsm-size",
+                     bdsm_size, sizeof(*bdsm_size));
+ 
+@@ -734,5 +744,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+                      vdev->vbasedev.name);
+     }
+ 
+-    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, ggms_mb + gms_mb);
++    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
++                                    (ggms_size + gms_size) / MiB);
+ }
 -- 
 2.45.2
 
