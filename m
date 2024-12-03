@@ -4,114 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D8C2E64AB3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 14:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E3DE64AB1
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 14:29:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tITo8-000530-Rl; Tue, 03 Dec 2024 09:23:20 -0500
+	id 1tITt0-0006D2-As; Tue, 03 Dec 2024 09:28:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tITo3-00052W-SY
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:23:16 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tITsy-0006CU-PT
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:28:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tITo2-00076O-5e
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:23:15 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B39qgGW025995
- for <qemu-devel@nongnu.org>; Tue, 3 Dec 2024 14:23:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- loL9GD0yaXXX4wyFSE8I5O1/akGN2cKek5zUbS5gSl8=; b=EgMWwvpGNbywyv5g
- mcfja/V/KvtyPq6idDNKSiZbs4eCu+hj2alzj2DyKCE6dydCp2JpdVCxqXP/Kn26
- 5n5lTfc80cRLwu/k2qCtjvwEWp2S388AxNRU9ya9g9X5dydKL2xx5PnHmk1ziN9R
- 9KtTs/Q21v5JFJiVQWAoPVKJ5z3Eq8IoqT//CUcyjfir/zB8z25UVDnhUUsNkGZO
- TZ8LV5y0rSPRpIcx/9ikvUvPXXsEhe59+ICqQkW4N7zAV6+TfTcuU7hskLLMXd15
- hVv79RYrsHs14RLqYvo15zWsUAS2jKLymeajaPUKZ0PFBCFWHhVwON0kb/S5GMRk
- EYMP3Q==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439yr9gm29-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 14:23:09 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b677151a03so692322685a.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 06:23:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tITsw-0007v1-Pb
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:28:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733236093;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ybki3++20ZneNRichpifz6iFVj8rps0/Qqc3a46AbZ0=;
+ b=cfvepXHVrd4K/OHRBGjhTcFcT1lrmHyLtyrJ8j9jyQEZ0APAzEprjQPAhu/trV/P4gdd/u
+ CrEOsPAnOsYOr4daY/Ks4jThy9SQJNVY7bIKXmgZMN5hUQHcMknVO9ms1e359wABFDsS0D
+ /jzW2PqXAfyVrtoLhMq7jOCsSnyv20Q=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-15-DlUl3tyaOUe2nyuLEeIhgA-1; Tue, 03 Dec 2024 09:28:12 -0500
+X-MC-Unique: DlUl3tyaOUe2nyuLEeIhgA-1
+X-Mimecast-MFC-AGG-ID: DlUl3tyaOUe2nyuLEeIhgA
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-841acf1782fso64806439f.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 06:28:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733235788; x=1733840588;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=loL9GD0yaXXX4wyFSE8I5O1/akGN2cKek5zUbS5gSl8=;
- b=wvwHSE03HPw2l2GQyJAjFMX4zmvWOxOhGtWjr1kcx1vqzOuutG0TnwzXvjmkV5zKKw
- xuBCN2HnJzHG6Z9vjdkz/FCPwOx3GzDDhsIylb8aKQbOj4eJdp4wSRxI6G3j3Tr/xGBm
- KDQ7gOqMBoBrgiQS/uKPrq5DgzDpZcTviONYFkZI0EzejoSxA5+IJK6y9rRzBuB84j6l
- 3oUelqnhFKon9qRiALfWHB2R+pOM/LEKKM9OfOypy9fAUMTcfmpSQd+JTL7hKFhOIC9O
- tJ1Ta78oVrIDw0tlNHSp0yzlagbO+hrTPF1F8B7rw6edNs61HEb/5Vp9VHP+QvuHYST0
- He6Q==
+ d=1e100.net; s=20230601; t=1733236091; x=1733840891;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ybki3++20ZneNRichpifz6iFVj8rps0/Qqc3a46AbZ0=;
+ b=NHIPmetWDAt4lSRXQFqSZ7kfJbAHALWJSKwO4r4riOicF/UDmjUXuPemu4WWo7kcfF
+ KgTEYna7qj6gR1NWg17r71/DYyyAl6do8Lv5Nd5lAPaFvIY6chJlN+A11OtaXA7LM4YB
+ jIveuseqpw1pRKVPZOv2G9H4BEzlDD2o6ZWR56Avct+Ntuhky3aXsEGtEJESERw66w10
+ Jm81TedKgkbCfXs8Kt3SF1lLBzaUPOFEXVrtn0//tDZ6k7J6ZAsGSWYebzcCm6YfJpKZ
+ a64vvBZ9UgtYPoUTkHhHtBPDOPwalw9HTpQD9rOk5xSuynPgNjfcI3I8jepCCQ14hsQW
+ p1Dg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPMI6fccUIXWuI1fUcdbnt4R2QfTFKF4OD2jVVe7//RqBEIDPvUfvv8yR7DJRvlUu3yMrgshUseSTl@nongnu.org
-X-Gm-Message-State: AOJu0Yx9XDozf0L+dmAYIYPHhhervuz4YPylcY8oYi35D+O8e6dNsA/6
- ZqL8Z0Y80p2r1vq7oLHIXee0v1IwnhYJtRDFIBsqJnwgthskO1ixXI7kvYPnGREpJ+J3cfWOzoU
- XaJ+gRZKDYcNxLOVum6WZ6qlNr2Iz3holKA9Mg0/YVaa9jXDxIkEppA==
-X-Gm-Gg: ASbGncslJHa4J4o8HQTwWvFZG5vvOZX/d4POkKQwt6+Zvh4KaCjZCleKoMwiRymRanS
- HLT+q4xaGT7bwh7UQaRRhi8mariWDM/YHf2rrZhCnoPeR/JmAkFCefG6b2TkPnnMH0CXGjRGkI6
- MYEUyun6bb4HsVOK4H7WBl5Z4dURyu8KKtywHJF7Neq4m2G05eSf9X9xWtOviEgfmh1MIomHf9d
- FwwcfGBy0rB73+9VxYx4XAo3htMasKJsHdvKvGhXg27s3c6GjN26DC2zh+XPQnYjg0Si65SlVK4
- 8qFajjqVodUyTlczb8cqCoENd9yteAKnbYaLC0RhYIga699zuDo=
-X-Received: by 2002:a05:620a:4607:b0:7ae:5c67:e19c with SMTP id
- af79cd13be357-7b6a621bd9emr362820785a.55.1733235788464; 
- Tue, 03 Dec 2024 06:23:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFTHirvIdXIBeIp0XmAZVeDDFkVdL2UdzmTOm+4boFKEG8jmki5gm5iebwJnmceUYYQeeQf/A==
-X-Received: by 2002:a05:620a:4607:b0:7ae:5c67:e19c with SMTP id
- af79cd13be357-7b6a621bd9emr362817285a.55.1733235788116; 
- Tue, 03 Dec 2024 06:23:08 -0800 (PST)
-Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b6849c5a56sm514068985a.129.2024.12.03.06.22.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 06:23:05 -0800 (PST)
-Message-ID: <c559ec82-2ed2-4d38-93b4-9b5076181c9b@oss.qualcomm.com>
-Date: Tue, 3 Dec 2024 08:22:51 -0600
+ AJvYcCWY7IYf+dYVG16P/bvWKWpAhXQYJWEeA4DBBWNVxYy/Awh922Buxh1YU9mkKUvwV/3EjW2mgMKCZy/N@nongnu.org
+X-Gm-Message-State: AOJu0YwltHVKGVIJc0BzBOtZOf6F3xO4QgO9QF99tFP4l1jH1fqP41cr
+ wVeIOnkMBDAO09b5Kw0bzHT0Pq6vxs4S4XpIcb7bot2s5h/p18z4JZ1KmJnXuVINkgwF0kdPdgq
+ CqQc+cK89paLKu6R2iDF1FJt1JK3+Vu+dFkCIF5IhUMcDgdKu2N0b
+X-Gm-Gg: ASbGncu7AkVxxodgsvneiKPJFJoq1mU+fxq1vLGntRv+bbsUmtefgB19ZK5Yigq2kuL
+ RNGgGGL9TSVfHFFo4mgqLHpIBdTQvS/i+ioTCCxk6QSLvGoQVDSsKxUn+jVFMteXsSAFrTofWeP
+ Bdhr4uIcPELr0IvUfLu9ua2Gia7876ZRJldMBXFLKF6m9P5oXuyhainGsVfpmaf6yr6AqHnKvws
+ AIowIWBjQ+csjloP7vguGwZ80o6h4rgTdhNO3ffjm3+y8DJs959Xg==
+X-Received: by 2002:a05:6602:2cd4:b0:83a:acc8:5faf with SMTP id
+ ca18e2360f4ac-8445b806751mr77748139f.5.1733236091393; 
+ Tue, 03 Dec 2024 06:28:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE0vypiv1lgKIZP5/RfI9q8zcNYKv0+qQC26MczKnKu+iWmRtYEZOWvv3QoeBP+WQU8N1hveA==
+X-Received: by 2002:a05:6602:2cd4:b0:83a:acc8:5faf with SMTP id
+ ca18e2360f4ac-8445b806751mr77747639f.5.1733236091088; 
+ Tue, 03 Dec 2024 06:28:11 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e230da998dsm2536506173.3.2024.12.03.06.28.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Dec 2024 06:28:10 -0800 (PST)
+Date: Tue, 3 Dec 2024 07:28:09 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Sebastian Ott <sebott@redhat.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, qemu-devel@nongnu.org, Zhenyu Zhang <zhenyzha@redhat.com>
+Subject: Re: [PATCH v2] pci: ensure valid link status bits for downstream ports
+Message-ID: <20241203072809.3431fe80.alex.williamson@redhat.com>
+In-Reply-To: <20241203121928.14861-1-sebott@redhat.com>
+References: <20241203121928.14861-1-sebott@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] MAINTAINERS: update email addr for Brian Cain
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Brian Cain <bcain@quicinc.com>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
- quic_mathbern@quicinc.com, stefanha@redhat.com, ale@rev.ng,
- anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com,
- alex.bennee@linaro.org, quic_mburton@quicinc.com
-References: <20241123164641.364748-1-bcain@quicinc.com>
- <20241123164641.364748-2-bcain@quicinc.com>
- <014e9959-4995-4bf2-9a2c-ace318673804@linaro.org>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <014e9959-4995-4bf2-9a2c-ace318673804@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: Ai5YK8eld3GEbDM1w8sE1EKGVsb7wuvU
-X-Proofpoint-GUID: Ai5YK8eld3GEbDM1w8sE1EKGVsb7wuvU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0
- clxscore=1011 priorityscore=1501 mlxlogscore=559 phishscore=0
- lowpriorityscore=0 malwarescore=0 mlxscore=0 suspectscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412030123
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -129,28 +110,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue,  3 Dec 2024 13:19:28 +0100
+Sebastian Ott <sebott@redhat.com> wrote:
 
-On 12/2/2024 2:43 PM, Philippe Mathieu-Daudé wrote:
-> On 23/11/24 17:46, Brian Cain wrote:
->> From: Brian Cain <brian.cain@oss.qualcomm.com>
->>
->> Also: add mapping for "quic_bcain@quicinc.com" which was ~briefly
->> used for some replies to mailing list traffic.
->>
->> Signed-off-by: Brian Cain <bcain@quicinc.com>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   .mailmap    | 2 ++
->>   MAINTAINERS | 2 +-
->>   2 files changed, 3 insertions(+), 1 deletion(-)
->
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->
-Forgive my ignorance here -- this T-b is - stronger than a R-b? or 
-weaker than a R-b?  Or wholly orthogonal to R-b?
+> PCI hotplug for downstream endpoints on arm fails because Linux'
+> PCIe hotplug driver doesn't like the QEMU provided LNKSTA:
+> 
+>   pcieport 0000:08:01.0: pciehp: Slot(2): Card present
+>   pcieport 0000:08:01.0: pciehp: Slot(2): Link Up
+>   pcieport 0000:08:01.0: pciehp: Slot(2): Cannot train link: status 0x2000
+> 
+> There's 2 cases where LNKSTA isn't setup properly:
+> * the downstream device has no express capability
+> * max link width of the bridge is 0
+> 
+> Move the sanity checks added via 88c869198aa63
+> ("pci: Sanity test minimum downstream LNKSTA") outside of the
+> branch to make sure downstream ports always have a valid LNKSTA.
+> 
+> Signed-off-by: Sebastian Ott <sebott@redhat.com>
+> Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
+> ---
+>  hw/pci/pcie.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
 
-Should I still seek a R-b before making a pull request with this change?
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
 
--Brian
+
+> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+> index 0b455c8654..1b12db6fa2 100644
+> --- a/hw/pci/pcie.c
+> +++ b/hw/pci/pcie.c
+> @@ -1113,18 +1113,22 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
+>          if ((lnksta & PCI_EXP_LNKSTA_NLW) > (lnkcap & PCI_EXP_LNKCAP_MLW)) {
+>              lnksta &= ~PCI_EXP_LNKSTA_NLW;
+>              lnksta |= lnkcap & PCI_EXP_LNKCAP_MLW;
+> -        } else if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
+> -            lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
+>          }
+>  
+>          if ((lnksta & PCI_EXP_LNKSTA_CLS) > (lnkcap & PCI_EXP_LNKCAP_SLS)) {
+>              lnksta &= ~PCI_EXP_LNKSTA_CLS;
+>              lnksta |= lnkcap & PCI_EXP_LNKCAP_SLS;
+> -        } else if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
+> -            lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
+>          }
+>      }
+>  
+> +    if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
+> +        lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
+> +    }
+> +
+> +    if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
+> +        lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
+> +    }
+> +
+>      pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA,
+>                                   PCI_EXP_LNKSTA_CLS | PCI_EXP_LNKSTA_NLW);
+>      pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA, lnksta &
 
 
