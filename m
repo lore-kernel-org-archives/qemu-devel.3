@@ -4,47 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55469E74AC3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FCA6E74AC3
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIY2Y-0004BU-09; Tue, 03 Dec 2024 13:54:31 -0500
+	id 1tIY3o-0004xC-H7; Tue, 03 Dec 2024 13:55:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY2I-00049D-Pn
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:54:16 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY3i-0004uG-9o
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:55:44 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY2F-00014S-UJ
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:54:13 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY3g-0001Ki-Di
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:55:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=cEB1PDmY5RYSSsabqHrHtSNULaAQVd4CqyH2gctk1Hk=; b=pBtcYSj8oyZoc6f
- gziW0Mq1fzJ32Vh/eH/RYW6bUJ+m+TpQjw7lzlJ4VCgcx9l9R6sXwyngdFUocWWPoNSIEFIyLCefk
- Om94uEbKQPr6r0wPcrbn6kI4EYJLCw/pWuUTJhgGUO6onqeWu+8TrthrnXpup3v4a87oK+ffYWoFU
- SI=;
-Date: Tue, 3 Dec 2024 19:57:10 +0100
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
- richard.henderson@linaro.org, alex.bennee@linaro.org
-Subject: Re: [RFC PATCH v1 37/43] target/hexagon: Make HVX vector args.
- restrict *
-Message-ID: <baawemaxxlh7kjecgw6zi6b6lk4i6m3ckq62teao6bctcoblzx@ncy5pot3loed>
+ List-Help; bh=oHbrP/BozD/jXWwFZMeh9b/n5BqTPmqxwWpXUyYO/L8=; b=u6rZEWqV6K4ss3F
+ Ib7xgms3pmzaah/buMwOy5Zq/joHGKsKJ7YJ/GC/ZkVk6tDHAgYRh5bw1jwpTy6Mf/LhWLln8LZDI
+ KnoFc0GdloQZL0kgfVdn1BnKO+o2Y3ByMLS25ND0E/FJCKPJtcKd6D4hkmPsFUhjRIUeAib/VFIMI
+ GI=;
+Date: Tue, 3 Dec 2024 19:58:43 +0100
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, 
+ bcain@quicinc.com, richard.henderson@linaro.org, alex.bennee@linaro.org, 
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [RFC PATCH v1 00/43] Introduce helper-to-tcg
+Message-ID: <drtoe2le3d3ewaefgo6c5tsmvi3mkwwgoikv5iw5n4ivnwox4l@4zwasgbjv4pq>
 References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-38-anjo@rev.ng>
- <30a70eef-01ac-46a2-8e34-458c579dcf27@linaro.org>
- <689a4c48-af1f-44b1-9575-56c75ec0b830@redhat.com>
+ <73638525-4f0d-45a1-bdf8-f271fcc015d0@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <689a4c48-af1f-44b1-9575-56c75ec0b830@redhat.com>
+In-Reply-To: <73638525-4f0d-45a1-bdf8-f271fcc015d0@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -71,34 +68,50 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/11/24, Paolo Bonzini wrote:
-> On 11/25/24 12:36, Philippe Mathieu-Daudé wrote:
-> > > +#define QeV      (*(MMQReg * restrict)(QeV_void))
-> > > +#define QdV      (*(MMQReg * restrict)(QdV_void))
-> > > +#define QsV      (*(MMQReg * restrict)(QsV_void))
-> > > +#define QtV      (*(MMQReg * restrict)(QtV_void))
-> > > +#define QuV      (*(MMQReg * restrict)(QuV_void))
-> > > +#define QvV      (*(MMQReg * restrict)(QvV_void))
-> > > +#define QxV      (*(MMQReg * restrict)(QxV_void))
-> > >   #endif
-> > 
-> > Maybe we need to fix scripts/checkpatch.pl along?
-> > 
-> > ERROR: "foo * bar" should be "foo *bar"
-> > #31: FILE: target/hexagon/mmvec/macros.h:26:
-> > +#define VdV      (*(MMVector * restrict)(VdV_void))
-> > 
-> > ERROR: "foo * bar" should be "foo *bar"
-> > #32: FILE: target/hexagon/mmvec/macros.h:27:
-> > +#define VsV      (*(MMVector * restrict)(VsV_void))
-> > 
-> > ERROR: "foo * bar" should be "foo *bar"
-> > #33: FILE: target/hexagon/mmvec/macros.h:28:
-> > +#define VuV      (*(MMVector * restrict)(VuV_void))
+On 25/11/24, Philippe Mathieu-Daudé wrote:
+> On 21/11/24 02:49, Anton Johansson wrote:
 > 
-> I think checkpatch.pl has a point here. :)
+> >   create mode 100644 subprojects/helper-to-tcg/README.md
+> >   create mode 100755 subprojects/helper-to-tcg/get-llvm-ir.py
+> >   create mode 100644 subprojects/helper-to-tcg/include/CmdLineOptions.h
+> >   create mode 100644 subprojects/helper-to-tcg/include/Error.h
+> >   create mode 100644 subprojects/helper-to-tcg/include/FunctionAnnotation.h
+> >   create mode 100644 subprojects/helper-to-tcg/include/PrepareForOptPass.h
+> >   create mode 100644 subprojects/helper-to-tcg/include/PrepareForTcgPass.h
+> >   create mode 100644 subprojects/helper-to-tcg/include/TcgGlobalMap.h
+> >   create mode 100644 subprojects/helper-to-tcg/meson.build
+> >   create mode 100644 subprojects/helper-to-tcg/meson_options.txt
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.h
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/IdentityMap.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/IdentityMap.h
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/TransformGEPs.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/TransformGEPs.h
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PseudoInst.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PseudoInst.h
+> >   create mode 100644 subprojects/helper-to-tcg/passes/PseudoInst.inc
+> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgEmit.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgEmit.h
+> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgGenPass.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgGenPass.h
+> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgTempAllocationPass.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgTempAllocationPass.h
+> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgType.h
+> >   create mode 100644 subprojects/helper-to-tcg/passes/llvm-compat.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/passes/llvm-compat.h
+> >   create mode 100644 subprojects/helper-to-tcg/pipeline/Pipeline.cpp
+> >   create mode 100644 subprojects/helper-to-tcg/tests/cpustate.c
+> >   create mode 100644 subprojects/helper-to-tcg/tests/ldst.c
+> >   create mode 100644 subprojects/helper-to-tcg/tests/meson.build
+> >   create mode 100644 subprojects/helper-to-tcg/tests/scalar.c
+> >   create mode 100644 subprojects/helper-to-tcg/tests/tcg-global-mappings.h
+> >   create mode 100644 subprojects/helper-to-tcg/tests/vector.c
+> 
+> Just wondering, could we name the subproject C++ headers using the .hpp
+> suffix to have checkpatch easily skip them?
 
-I'll switch to `*restrict`!:)
-
+Oh sure, not a problem.
 //Anton
 
