@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F074E64ABB
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CA9E64ABB
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIV0R-0006KV-5I; Tue, 03 Dec 2024 10:40:07 -0500
+	id 1tIV1T-0007pf-PA; Tue, 03 Dec 2024 10:41:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV0O-0006H6-3K
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:40:04 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV1S-0007pW-Q0
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:41:10 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV0M-00012l-2x
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:40:03 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-434a736518eso70285375e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:40:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV1R-0001Lv-6g
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:41:10 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-434a45f05feso70221645e9.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:41:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733240400; x=1733845200; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733240467; x=1733845267; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CgxWjMbGVj36P5iujF8l+0H0BqFxjJd0qrVoacn97/8=;
- b=ZxqtiQCiveKnkj+9+8wXa0apn0z1QXSnYPgXrYhRr4YUP7P1Moyo0mOisLoEL7HDRI
- +tXpjrErOuRKTLdvMMxkfyxxg87otYN1z5MdTUawP1QojNi5GvIEyPG+gxh4f5ybr9Qu
- srkameQmsxSKrrm03ElCfXclwfzmaZacW+2feBLAbORkAtWdhIEDtdcShJ34EaFz9bSQ
- Axat44z/YKyGiJM/77D7llfgZ170WCvkhatYGqsTl8qWA3nFwzqm1CvDft2gISTJO2FV
- VB0A6u5ew/0BNKWRcqCX4iUVejSFDr7zwOb9wXdd0zv24iCn/1I1NxU/61lHqqzXWX1E
- yByg==
+ bh=bDSUW474SdnuQtMJmEqC/3X7zs3mhxM+2xIzR0qbT6M=;
+ b=qGriy1wYv9DOXTq6QADmubLu1No/tEZJrWlVTQGSJY9VGMbJ7MVRxKGxapzr1PPs0y
+ JimSaaOM4xvAsQZd/80qgqEyndLS3F62hioNYFAa4IzKex7zv756JgCqBOwgunPc72mp
+ RYFl+y0rNLtav4gR0gdtNG8KAgLHI1+2tocWWJ3tIMrAb1EIXy1yh2xj22vIHaYKl+H1
+ aMWrMTT79Ip/fciG+JBe+7jrE5G70Ib64Z38MOrRJ7LG94gUWzTLOMqEmmbn4B2uCiOQ
+ VhUEtTLOz+CYYvjWTp03Z2XJ/OxfudjFNcfxt7q/y9n28m8wjSNlwujRgPTtnt+xYuCl
+ 6pAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733240400; x=1733845200;
+ d=1e100.net; s=20230601; t=1733240467; x=1733845267;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CgxWjMbGVj36P5iujF8l+0H0BqFxjJd0qrVoacn97/8=;
- b=risVh7+gLJMTkwEk5yWp1M+ip2+q+dyaiyK4CVFnNZfL+KSwcJxizzs8WiaBASwSyX
- hbBbnGbjnjLkH9bNlmExXd6y4X4NtrZnCxVe9yNnVps/is3h3NwL1CICtQj+fWvAbNOZ
- S0JYnMrTN9lfRj26yWHItabxIl6MP1XBxq9pRcGWrFOaNe9Q/CF6HI/xU6AGEFyKFECM
- dylXCmlNJRzieMpI70EIKSCa2fpqnWtgpM5kpE9WNYSJxQT0IISLx8EBpC5hGFrlrzeD
- 5Bdy674U+CrTPcpI9trTy/W2o3Ivf2YFIv00cwQJNu+vRE2mLOwUeMMjDKry/Va0zBVp
- y59w==
-X-Gm-Message-State: AOJu0Yz345nC+XA0DE8uZLnFlFZVUXdDciSLqyZRalWWMHNCo99ybB+j
- NfZK/6F07u74RhnQ+XlEQcokQkyk/CdDJf4aHnuMKBFZDjyYNUKcCnl+YMn0TUH8JnOkCcLiBFd
- Gs4I=
-X-Gm-Gg: ASbGncvZxeOY1ba38/Kak793pr/CnskMyA0kRbXlC/CDFio8AlzBgvwVQOtdcYLivhm
- +BDTJgiscSGJvsz+f5g/vF9C5B4iYP/JCGmlymU25SOhmWBUbbBWU6Bxtfs+yhftXwpM6U4ybKl
- CSDwILaPuD8cSDTeDwmiKTf6b+uwTfnL4idSNpqIcOcmVcoG2v3J2BIKYB37qqwbI0Yt9u8WeQR
- //xhgoWA3fE/A0l7iOSPWtmtCQkfamQs9CukyMACemn1WTXNZ9DI0ihC9YopV8aig==
-X-Google-Smtp-Source: AGHT+IGNGavK/uPJuyqA0ePAazUm/85Zy+h/qTZitvu+chiaoap9ZNBQWdRBCBT5rvjRvAMcGPPJMA==
-X-Received: by 2002:a05:600c:1c93:b0:434:a734:d279 with SMTP id
- 5b1f17b1804b1-434d09d092fmr31617385e9.16.1733240400020; 
- Tue, 03 Dec 2024 07:40:00 -0800 (PST)
+ bh=bDSUW474SdnuQtMJmEqC/3X7zs3mhxM+2xIzR0qbT6M=;
+ b=MrL6vQLhLcHHg21JJqimW6nTg/NLAEa+AoXZKX4ctry+f7yfCvgJ1SYkBaIuuX1t1N
+ XgMev7lsVQ7iU3SuhNKYCswKXv6/g5Z8Gg74R+AyReLfh87Shtkg9sOd9xLFObkhzjYz
+ Sl40z4HPhNsFCSq8qKOqLKCeDY10yowCUmqP3Lf/YjaS2KC8PiU6vRB4Bd0jQYVy2a9P
+ sscqsSnwoKnZHKLqHaWVLyRfrATt9vzK8eBwriCdT/R6gnln0fRFyPVo1L38uO4Rpptf
+ H6np/pVMapkmZg2VvojMZhc2SgAK3iJqSVc8Dr0495eP/+i12XTbc2C+Ce9tZxwLAG4T
+ csIA==
+X-Gm-Message-State: AOJu0YzOz37Q7jEH/geHzMRbWSuHzQMmIqorS+YDXTCnB5T1CE9MBC0w
+ tFJi7bLfHuq9NYIbGkcgECQbx5E17RRm4M9JtSx8nV2kzW1965Kcxw9YsTLlfRlVJoD5mb6s3iK
+ 6ttw=
+X-Gm-Gg: ASbGncsnO/8VPl3GkkVvsAjve7YWDF64NDj97HEQxJyCBEAUr6yFWXXzZJpEYK0XqiS
+ xKvob1FW8uJ208ksSLkoVKyYCEI79s9hA0/Fh/3zi9za5QoF8FgT8v9hsqwtkbSFvI+vPm3bAj/
+ gIescnOQmKCLPE3cYv2DykO6X0+y8KOcAsxmZ5SHPzITrTZzKTK4fjutmUTRbRBX/+qBwLP/gRC
+ tgrb7Faxb0aHun5EljmGc+8THyDs+lenK9YyvM9iaIJaZJ/E7eC1mP2tWYPJt9yOQ==
+X-Google-Smtp-Source: AGHT+IFiuesmIZDclYq9mK2l9fTnmEXONmwpwprDRAFvJmhhfk2AQhn3GyOmlKj2KFA6h1/Ola4sWg==
+X-Received: by 2002:a05:600c:4f8f:b0:431:557e:b40c with SMTP id
+ 5b1f17b1804b1-434d0a23f90mr27541745e9.27.1733240467181; 
+ Tue, 03 Dec 2024 07:41:07 -0800 (PST)
 Received: from [192.168.69.223] ([176.187.209.146])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434aa7e5b9csm225279815e9.43.2024.12.03.07.39.58
+ 5b1f17b1804b1-434b0f7dccasm192640975e9.43.2024.12.03.07.41.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 07:39:59 -0800 (PST)
-Message-ID: <86548da4-836f-4408-a377-b805b696a0e8@linaro.org>
-Date: Tue, 3 Dec 2024 16:39:58 +0100
+ Tue, 03 Dec 2024 07:41:06 -0800 (PST)
+Message-ID: <677503ca-017e-45c9-b278-cbd6bc765f5b@linaro.org>
+Date: Tue, 3 Dec 2024 16:41:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.2] ui/cocoa: Temporarily ignore annoying deprecated
- declaration warnings
+Subject: Re: [PATCH] meson: Add missing SDL dependency to system/main.c
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20241121131954.98949-1-philmd@linaro.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Akihiko Odaki <akihiko.odaki@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20241120114943.85080-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241121131954.98949-1-philmd@linaro.org>
+In-Reply-To: <20241120114943.85080-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,37 +101,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/11/24 14:19, Philippe Mathieu-Daudé wrote:
-> These warnings are breaking some build configurations since 2 months
-> now (https://gitlab.com/qemu-project/qemu/-/issues/2575):
+On 20/11/24 12:49, Philippe Mathieu-Daudé wrote:
+> When building QEMU configure with --disable-gtk --disable-cocoa
+> on macOS we get:
 > 
->    ui/cocoa.m:662:14: error: 'CVDisplayLinkCreateWithCGDisplay' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
->      662 |         if (!CVDisplayLinkCreateWithCGDisplay(display, &displayLink)) {
->          |              ^
->    /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked deprecated here
->       89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
->          |                    ^
->    ui/cocoa.m:663:29: error: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
->      663 |             CVTime period = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
->          |                             ^
->    /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:182:18: note: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' has been explicitly marked deprecated here
->      182 | CV_EXPORT CVTime CVDisplayLinkGetNominalOutputVideoRefreshPeriod( CVDisplayLinkRef CV_NONNULL displayLink );
->          |                  ^
->    ui/cocoa.m:664:13: error: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
->      664 |             CVDisplayLinkRelease(displayLink);
->          |             ^
->    /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
->      249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
->          |                ^
->    3 errors generated.
+>    ../system/main.c:30:10: fatal error: 'SDL.h' file not found
+>       30 | #include <SDL.h>
+>          |          ^~~~~~~
+>    1 error generated.
 > 
-> For the next release, ignore the warnings using #pragma directives.
-> At least until we figure the correct new API usage.
+> Fix by adding the SDL dependency to main.c it's CFLAGS contains
+> the SDL include directory.
 > 
+> Fixes: 64ed6f92ff ("meson: link emulators without Makefile.target")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   ui/cocoa.m | 5 +++++
->   1 file changed, 5 insertions(+)
+> Looking at commit 88c39c8693 ("Simplify softmmu/main.c") I wonder
+> if this header is still required.
+> ---
+>   meson.build | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Patch queued.
 
