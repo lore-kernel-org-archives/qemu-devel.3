@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4854AE64A80
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF1FE64A80
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:33:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIR98-0001J3-Re; Tue, 03 Dec 2024 06:32:50 -0500
+	id 1tIR8f-0000VY-PM; Tue, 03 Dec 2024 06:32:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR96-0001I1-VY
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:49 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8b-0000LI-SH
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:18 -0500
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR95-0000cT-2j
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:48 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-385e075255fso2556740f8f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:32:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8a-0000aP-7W
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:17 -0500
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-53de880c77eso6361633e87.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:32:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733225565; x=1733830365; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733225534; x=1733830334; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LP08ovgAlxy3zJSGfhanCL3pqQJtbHP67JCIcBXaArA=;
- b=vEsN5IWOSA7SlEP54JXgEnJJxYXtekQxA01y9zailEZ4FV0Z5PKKU9kJLmoxDhsLRM
- zwQhwQu4oO8Tu2C+O9pMlH/NZYVFa3I9dttqM/Izzd1y4I5LyDmDtytozpboWLNLBNqH
- AIwmUNMyyDc3gy5izXfdO7yz0o3iQGmAgZ8+qs2RFX0qjv67CTKiwuNt4fmyYqlJxgkC
- trvw5b1RIPhUhzWygCtdnBmV47syDl8xB2dHFmIeDhWCjVl3wQEjbug2F3I9S1FnLlBZ
- CI7JuIIz9allUN+hBVaQcwyOqhTcz2Jr0osafXZAg4xOhHq1zvbVQamnDda+Jjict2AF
- F+yg==
+ bh=0oJ3H34REbMvqjovorF+2XA/kIyPhomBUF8Hcx8gznY=;
+ b=f90BlEz+XsVQMef1E/SGHvUiiG3QK/7TPbfJ3QMuzcptygXsUEuCUWqtb8jNTdnzhL
+ QurNL+xNRH0NJj3jJxnAYu3mUiTdXzqtogZnAG+h1+iWL7dwNWXW9hW0lst/0Y2hUwSC
+ Gze8x7jikSBtZaSQiNfhhFC0sQS+cqxTSjA9nA0b68zawWWj6z9vz7MdrlGWbTbZqPk6
+ fFBrUD35lkRHa1L9EIX5ca/nFogvJqEy3zPE4mtOzUafP9FEuo6uw4bZ4qlp02wqsOhr
+ ouNEZQ7fkztnEATFxRGJf/eF6tNKe4f5UBfODfZb/Yg8DzF5ZKVwRcB+iFKXSkndj0/V
+ p/hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733225565; x=1733830365;
+ d=1e100.net; s=20230601; t=1733225534; x=1733830334;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LP08ovgAlxy3zJSGfhanCL3pqQJtbHP67JCIcBXaArA=;
- b=hYl4IeJx3vrLAIFxuWi3wPEnQJJXqYtkJyN6gzEhpaY8Xog3syDgC39+48I8o224E4
- d8Dqq0klj7WFU9mm1b4mgG77386oNvft4I4Qms0ri/F+P4lBvuCGyWXbXl2/zExwaC7T
- uxiDZ/cizcuvk2eu2IPiBOELiQ9TBLCSOpifoRbC0+SIWzyAHSplVzBw/1VQ4Z8nzSmb
- 0CXb7tdvIVg5ySWh7SccXLJ5SkGHAE0LCVhcGJ/SdAE5syInnlRPjZJdLXMdCa6giprl
- qQSY9/a/BbAsBgjyjTgy9VpCqmCxeDKHbVO57h7hnFyI1YazzOeZ0UqbJb4RhnLZlhS+
- lQCg==
-X-Gm-Message-State: AOJu0YxEwvYTGGACSmWPtbvdX9IRAiNNqkLe2z4Bzra2ujWmvsqk4PaV
- 8lcMg/ezIlduXBoBqagaXIxPhZ0ptcZREI+azu8W+DvHAj5ENxiW9qXku9EIVnjUaKZ93vFGeY6
- PFMs=
-X-Gm-Gg: ASbGncvN50WEGJnnqBiMgRzZ4dPj5+HykSMQxHZsXA56ccmtB1qEPQ+H+U86V36s8G+
- aJsP37CnLKHLUR1kvC8JGcdvcDBiyM5vIG449dSX3ZCEXC2bspKnyUQnefKGAdjeivK6zG2uBDF
- WGZYE/4nW2n40FyLz6epyost8UedkRTKXOyqO3wPLynfJkJb/fMvFaE+yfcpxhA8RLv+cJHhcvM
- uUTsjNbNZswHJ44MudG2cXpvieu08YcV+Y4pX2kbArlN53EWmbQB5sC8BlxbWDQKHo7XdKy
-X-Google-Smtp-Source: AGHT+IFvBel2HK3LiP4sazkdE4lBw/uzfYHrMwsLpHF0i4+dspVlm6VJ+hQkESIvTuTUo4fuFPBL6w==
-X-Received: by 2002:a05:6000:789:b0:385:f44a:a3b with SMTP id
- ffacd0b85a97d-385fd42108amr1763074f8f.41.1733225565138; 
- Tue, 03 Dec 2024 03:32:45 -0800 (PST)
+ bh=0oJ3H34REbMvqjovorF+2XA/kIyPhomBUF8Hcx8gznY=;
+ b=tyAIClt1o3AApg4G92azLQtYKjaECSKo+8kBi31889befJDtkckcTYQzzYrGDFUGox
+ BfByVQQEJaRHZwSUJRdsRamM3HhOifQFZNEdWMEwrYkNAdKP+InGroogARdElACGGRFS
+ M1GRwk8xRaSgl8fvpn1ub0AC1rteqqUfq41CYAdeR8vv8klDFRTxOENcS5WXU5cN3/qp
+ 9yxnuRuUbuDlgLQSAxHqV2aQggYV5TFBXtZMxf4kZeRopwr9iT1CXd1A+dvWfEwOQCkN
+ 9msXEM++genLW5lazNtZqnusUaxg4i/guYMy/x7A1oPT89odjICndUVDYAvitEjmdsUw
+ G3Dw==
+X-Gm-Message-State: AOJu0Yzl+SFuMZrXk4jRBKmj8c1z73iIRN63S9Tfk0p7v+yY/bP/eRX3
+ qxLcXfRa1+uaadJSb2y8V0TJm5FM5qGH+f+HJLGIDQqqjILsQSLjTfk4xdPjYAwBiGQyimPjavz
+ J9JU=
+X-Gm-Gg: ASbGncvqa4eWsOQ0J4v7fOHAgrTeRuzZvxv7ISx3CjJAgvEbBe85fmmarIQaUeLbKXK
+ x8MgE2Yi/qXptH10Bs7fr7sPKhJK1pQh+QAVowQhfxnXlk4E2TeEKxWFGI9sNaBjWrgeLXPwUa2
+ 9v2gG7ytX7Hn5w58wnfdE7MzFO5h938JCVGLZgBSLWUdvOt/11Wn+bq8joKGgs9BJO66AJsoKKB
+ Wk/+jPsQpHBj4K9hXHfVFDyF10VSV54xA9rtZ/e6O3SnzXET9tA6DCqJ9B0ZKOnKekarkd0
+X-Google-Smtp-Source: AGHT+IFNdN3s03OSyilShrap3bJHPlqpUz+VxnyixofSr5MSlcZTPJGvR/kmxUNN72deveUA7VjUvQ==
+X-Received: by 2002:a05:6512:224e:b0:533:43e2:6ac4 with SMTP id
+ 2adb3069b0e04-53e12a28294mr1264949e87.49.1733225533807; 
+ Tue, 03 Dec 2024 03:32:13 -0800 (PST)
 Received: from localhost.localdomain ([176.187.209.146])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434b0dbe4ccsm184300625e9.13.2024.12.03.03.32.44
+ 5b1f17b1804b1-434aa74efbesm217218755e9.7.2024.12.03.03.32.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 03:32:44 -0800 (PST)
+ Tue, 03 Dec 2024 03:32:13 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, "Michael S . Tsirkin" <mst@redhat.com>,
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>, Brian Cain <bcain@quicinc.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 12/13] tests/qtest: add test for querying balloon guest stats
-Date: Tue,  3 Dec 2024 12:31:39 +0100
-Message-ID: <20241203113140.63513-13-philmd@linaro.org>
+Subject: [PULL 06/13] MAINTAINERS: update email addr for Brian Cain
+Date: Tue,  3 Dec 2024 12:31:33 +0100
+Message-ID: <20241203113140.63513-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241203113140.63513-1-philmd@linaro.org>
 References: <20241203113140.63513-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,63 +98,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 
-This test would have identified the crash caused by the addition of new
-balloon stats fields.
+Also: add mapping for "quic_bcain@quicinc.com" which was ~briefly
+used for some replies to mailing list traffic.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20241129135507.699030-4-berrange@redhat.com>
+Signed-off-by: Brian Cain <bcain@quicinc.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241123164641.364748-2-bcain@quicinc.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/qtest/virtio-balloon-test.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ MAINTAINERS | 2 +-
+ .mailmap    | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/virtio-balloon-test.c b/tests/qtest/virtio-balloon-test.c
-index 6bea33b5901..ecdd363b06c 100644
---- a/tests/qtest/virtio-balloon-test.c
-+++ b/tests/qtest/virtio-balloon-test.c
-@@ -8,6 +8,7 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3d6194684f1..f92be047756 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -226,7 +226,7 @@ F: target/avr/
+ F: tests/functional/test_avr_mega2560.py
  
- #include "qemu/osdep.h"
- #include "libqtest.h"
-+#include "standard-headers/linux/virtio_balloon.h"
- 
- /*
-  * https://gitlab.com/qemu-project/qemu/-/issues/2576
-@@ -26,11 +27,30 @@ static void oss_fuzz_71649(void)
-     qtest_quit(s);
- }
- 
-+static void query_stats(void)
-+{
-+    QTestState *s = qtest_init("-device virtio-balloon,id=balloon"
-+                               " -nodefaults");
-+    QDict *ret = qtest_qmp_assert_success_ref(
-+        s,
-+        "{ 'execute': 'qom-get', 'arguments': "     \
-+        "{ 'path': '/machine/peripheral/balloon', " \
-+        "  'property': 'guest-stats' } }");
-+    QDict *stats = qdict_get_qdict(ret, "stats");
-+
-+    /* We expect 1 entry in the dict for each known kernel stat */
-+    assert(qdict_size(stats) == VIRTIO_BALLOON_S_NR);
-+
-+    qobject_unref(ret);
-+    qtest_quit(s);
-+}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
- 
-     qtest_add_func("virtio-balloon/oss_fuzz_71649", oss_fuzz_71649);
-+    qtest_add_func("virtio-balloon/query-stats", query_stats);
- 
-     return g_test_run();
- }
+ Hexagon TCG CPUs
+-M: Brian Cain <bcain@quicinc.com>
++M: Brian Cain <bcain@oss.qualcomm.com>
+ S: Supported
+ F: target/hexagon/
+ X: target/hexagon/idef-parser/
+diff --git a/.mailmap b/.mailmap
+index ef1b8a53f44..727ce204b2d 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -75,6 +75,8 @@ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com> <aleksandar.rikalo@rt-rk.com>
+ Alexander Graf <agraf@csgraf.de> <agraf@suse.de>
+ Ani Sinha <anisinha@redhat.com> <ani@anisinha.ca>
+ Anthony Liguori <anthony@codemonkey.ws> Anthony Liguori <aliguori@us.ibm.com>
++Brian Cain <brian.cain@oss.qualcomm.com> <bcain@quicinc.com>
++Brian Cain <brian.cain@oss.qualcomm.com> <quic_bcain@quicinc.com>
+ Christian Borntraeger <borntraeger@linux.ibm.com> <borntraeger@de.ibm.com>
+ Damien Hedde <damien.hedde@dahe.fr> <damien.hedde@greensocs.com>
+ Filip Bozuta <filip.bozuta@syrmia.com> <filip.bozuta@rt-rk.com.com>
 -- 
 2.45.2
 
