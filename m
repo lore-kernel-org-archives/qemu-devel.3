@@ -4,79 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36A55D7833F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 09:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF7FD7833F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 10:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIPc0-0005Q8-97; Tue, 03 Dec 2024 04:54:32 -0500
+	id 1tIPgx-0007CO-3B; Tue, 03 Dec 2024 04:59:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIPby-0005Pr-Cz
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:54:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIPbw-0006QZ-Rw
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:54:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733219667;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=l3VcSU2FOCO6z2TK0iPyybiLDyV7PIhM+xSHQeNdxLM=;
- b=Kfp5pq/z9Und/9eafakMYKJVASJ+fPNjrrVG40srUvIQu3atY6J96teyAX1Dx68LfD9DpT
- ykSHo6VdtPKcWSLwdvfEB4wr3Xp6VAmPhSBGB5AzFDog59N+RADYBln9P6TlDqG3Jha48c
- BxOHw1mHJOFydiIqpw6B5UaRkcKXRFc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-19-YxXr4IOQPeeG_3ecYmygPg-1; Tue,
- 03 Dec 2024 04:54:22 -0500
-X-MC-Unique: YxXr4IOQPeeG_3ecYmygPg-1
-X-Mimecast-MFC-AGG-ID: YxXr4IOQPeeG_3ecYmygPg
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95DD5195608A; Tue,  3 Dec 2024 09:54:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.37])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39021195608A; Tue,  3 Dec 2024 09:54:18 +0000 (UTC)
-Date: Tue, 3 Dec 2024 09:54:15 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
- Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 7/7] qemu-options: Remove mentions of legacy '-machine
- foo,accel=bar'
-Message-ID: <Z07VR-YvVCxdTua_@redhat.com>
-References: <20241203092153.60590-1-philmd@linaro.org>
- <20241203092153.60590-8-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIPgu-0007Br-RS
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:59:36 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIPgm-0006t2-NX
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:59:30 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-434a2033562so43323335e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 01:59:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733219967; x=1733824767; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jn71q+BYmRY3Un6hrVzIXXO71Ml4MawXlVXT1Vh5wTI=;
+ b=u9W988u6QaZxwYYX05nB0h0RRm/SnIBD4QE+WMGRiknoSFO3oIDv1YFeBZDiC9xVGW
+ vVWeMxpTuw2S1EvIBIJkLfa6ufkIC74taASOLtXUzPasnLVMF78uNGS8+Z6NpHxXpeOl
+ TQ1SqqyReGmGIGOwezoFhAEeQKhastk9Niuwz1T8U68nFxWJ/d55YXtBWTroK4NYEggf
+ bWf9vFTbCoHYPw2o0RbxsThXGS//oRr2n0u5JK9p+vHvmytmGY4rFHegHNSG/t5uzYzi
+ N6aIlhY2cuNMyFsKu24smWKjSKNPq+dipxaP/n15BogCwwzMIhXMpo5g32uwaXp7qGh0
+ eyxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733219967; x=1733824767;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jn71q+BYmRY3Un6hrVzIXXO71Ml4MawXlVXT1Vh5wTI=;
+ b=MJUFS7splgmLkMR2IkpE6LvVbq7U0DEEUlbNFMM6y4h/jwPmEC/qzddCpXEgSVwTsF
+ DLh51g9uHL4r3V0n6zASwYAuolu5qACR5kmrqdeaJbWXL03URCZQAZU0fXB6aKURhjF9
+ y1YPXSAKlztr7nTYCeQykCpCZ/NmfZqG9GzuCSP0QD65z+BjBA4Vmc4o6AnVhksiO0UA
+ yPV0DVYfTf/jPLMIig87iNtbmcNcZwvfUoyUll1WwHE6XO0nydVWEpZ4ZeInCD+8FoJq
+ wiuHRRQ/tnjGTO+/YHbXFh91hykgrMWnHl3wfpsWj8Fmy1YlYCsgY2xaN2GAQStrA+J5
+ /IZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXn1NOTJ0Qa1fpSg5MeZPV/dT4mkREmScsWOy/SnoV6yQ3uTl34JTUHi18yizuXY9R3KWw/QxMym1n+@nongnu.org
+X-Gm-Message-State: AOJu0YyhvABqOapgImPT8JYhKxT+c2FO+oxIzcpMvC8wysQ3znJ9oPlO
+ 8z8hngUp+SiZo2T4riYm1lguyV6uzLUL9kxHmV3ctIx7QdPgzhsiTi8oz7Rv+wQ=
+X-Gm-Gg: ASbGnctcAdIyIaL1yKcYxbDlIF69wLxtZoo6VQkrqbdF/Kj+k6RkzQLYaFRQ2zSkNkR
+ KcdUtsjfdf3JlGluVKDUwhi8eENT2RlXAnDFbN0mZtGcuUEpkqan6yvq1ZtItD41f4SwfiH1pN9
+ qsjZwU/LqjjNFcZUHdye1M7dmUZ4pV1tLF2q7O4O2UN9sV+E2mEudihEI8ylnsABr7O1Tr0ent+
+ AFm2O/NF/ZVb8h6nYIqxS2EvOXG8L6sBuuDwj586oiAy2Jv7IsJAXjkP0YttvLLLw==
+X-Google-Smtp-Source: AGHT+IGihepYzmjeq6nk4ZmcjGTDlGqlZVonMtA8Ntv9cpeSveskm+Grswfj/AbJFEcgR6GiW44zdw==
+X-Received: by 2002:a05:6000:1446:b0:385:f092:e16 with SMTP id
+ ffacd0b85a97d-385fd54df09mr1393301f8f.55.1733219966725; 
+ Tue, 03 Dec 2024 01:59:26 -0800 (PST)
+Received: from [192.168.69.223] ([176.187.209.146])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385e0d4778dsm11412369f8f.45.2024.12.03.01.59.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Dec 2024 01:59:26 -0800 (PST)
+Message-ID: <cb079b65-e5fc-4667-aa63-9ff347666b6e@linaro.org>
+Date: Tue, 3 Dec 2024 10:59:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] binfmt: Don't consider riscv{32,64} part of the same
+ family
+To: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org,
+ qemu-riscv <qemu-riscv@nongnu.org>
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ David Abdurachmanov <davidlt@rivosinc.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mark Corbin <mark@dibsco.co.uk>
+References: <20241203094702.124748-1-abologna@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241203094702.124748-1-abologna@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241203092153.60590-8-philmd@linaro.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,72 +102,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 03, 2024 at 10:21:53AM +0100, Philippe Mathieu-Daudé wrote:
-> Since commit 6f6e1698a68 ("vl: configure accelerators from -accel
-> options") we prefer the '-accel bar' command line option.
+Hi Andrea,
+
+On 3/12/24 10:47, Andrea Bolognani wrote:
+> Currently the script won't generate a configuration file that
+> sets up qemu-user-riscv32 on riscv64, likely under the
+> assumption that 64-bit RISC-V machines can natively run 32-bit
+
+I'm confused by the "machines" description used for user emulation.
+
+> RISC-V code.
 > 
-> The new form started to be documented in commit 8d4e9146b35 ("tcg:
-> add options for enabling MTTCG"); it is safe to remove the mentions
-> of the legacy option.
+> However this functionality, while theoretically possible, in
+> practice is missing from most commonly available RISC-V hardware
+> and not enabled at the distro level. So qemu-user-riscv32 really
+> is the only option to run riscv32 binaries on riscv64.
+
+We have definitions such ELF_ARCH/ELF_PLATFORM/ELF_MACHINE to
+parse ELF header and select the best CPU / flags. Maybe RISC-V
+lacks them?
+
+BTW we should expose that for linux-user as target_arch_elf.h,
+like bsd-user does, that would reduce all these #ifdef'ry in
+linux-user/elfload.c...
+
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Make riscv32 and riscv64 each its own family, so that the
+> configuration file we need to make 32-on-64 userspace emulation
+> work gets generated.
+
+Does this patch aim for 9.2? Otherwise FYI  I'm working on unifying
+32/64-bit targets, maybe for 10.0...
+
+> 
+> Link: https://src.fedoraproject.org/rpms/qemu/pull-request/72
+> Thanks: David Abdurachmanov <davidlt@rivosinc.com>
+> Thanks: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
 > ---
->  qemu-options.hx | 9 ---------
->  1 file changed, 9 deletions(-)
+>   scripts/qemu-binfmt-conf.sh | 7 ++-----
+>   1 file changed, 2 insertions(+), 5 deletions(-)
 > 
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index dacc9790a4b..11f0aab1470 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -27,8 +27,6 @@ ERST
->  DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->      "-machine [type=]name[,prop[=value][,...]]\n"
->      "                selects emulated machine ('-machine help' for list)\n"
-> -    "                property accel=accel1[:accel2[:...]] selects accelerator\n"
-> -    "                supported accelerators are kvm, xen, hvf, nvmm, whpx or tcg (default: tcg)\n"
->      "                vmport=on|off|auto controls emulation of vmport (default: auto)\n"
->      "                dump-guest-core=on|off include guest memory in a core dump (default=on)\n"
->      "                mem-merge=on|off controls memory merge support (default: on)\n"
-> @@ -59,13 +57,6 @@ SRST
->  
->      Supported machine properties are:
->  
-> -    ``accel=accels1[:accels2[:...]]``
-> -        This is used to enable an accelerator. Depending on the target
-> -        architecture, kvm, xen, hvf, nvmm, whpx or tcg can be available.
-> -        By default, tcg is used. If there is more than one accelerator
-> -        specified, the next one is used if the previous one fails to
-> -        initialize.
-> -
-
-I'm not convinced we should be removing documentation for options that
-currently exist and remain supported.
-
-The documentation should be updated to say that we prefer use of '-accel'
-instead at least.
-
-Beyond that, what is our long term intention with '-machine accel=xxx' ?
-
-Is this a case where we are happy to leave '-machine accel=' as syntax
-sugar forever ?  Or is this a case where we want to deprecate it and
-eventually remove its impl (and thus the documention here)
-
->      ``vmport=on|off|auto``
->          Enables emulation of VMWare IO port, for vmmouse etc. auto says
->          to select the value based on accel and i8042. For accel=xen or
-> -- 
-> 2.45.2
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> diff --git a/scripts/qemu-binfmt-conf.sh b/scripts/qemu-binfmt-conf.sh
+> index 6ef9f118d9..e38b767c24 100755
+> --- a/scripts/qemu-binfmt-conf.sh
+> +++ b/scripts/qemu-binfmt-conf.sh
+> @@ -110,11 +110,11 @@ hppa_family=hppa
+>   
+>   riscv32_magic='\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'
+>   riscv32_mask='\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
+> -riscv32_family=riscv
+> +riscv32_family=riscv32
+>   
+>   riscv64_magic='\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'
+>   riscv64_mask='\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
+> -riscv64_family=riscv
+> +riscv64_family=riscv64
+>   
+>   xtensa_magic='\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x5e\x00'
+>   xtensa_mask='\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
+> @@ -168,9 +168,6 @@ qemu_get_family() {
+>       sparc*)
+>           echo "sparc"
+>           ;;
+> -    riscv*)
+> -        echo "riscv"
+> -        ;;
+>       loongarch*)
+>           echo "loongarch"
+>           ;;
 
 
