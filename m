@@ -4,87 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A4EAE64AB7
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 14:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 491B7E64ABA
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 14:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIUHp-0003si-PF; Tue, 03 Dec 2024 09:54:01 -0500
+	id 1tIUJu-0004vA-Vo; Tue, 03 Dec 2024 09:56:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIUHn-0003sT-Dj
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:53:59 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1tIUJt-0004ub-6d
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:56:09 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIUHl-0002SO-Mh
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:53:59 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-385eb7ee7e2so1471640f8f.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 06:53:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1tIUJr-0002lv-KT
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:56:08 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-724d23df764so4914240b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 06:56:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733237636; x=1733842436; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733237766; x=1733842566; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hP9xuVwFVjgtlUuY9OZlNjvreRqkwhQFYaN3gT97eGQ=;
- b=irc+43YTQrtowiRZys77r4BIJTyvpNpk4mWDizFsktcIsrjQkMpYJALHlpL/sz2XYT
- NciCmyZatXZLtHfS4IBgMn5PYABPHHjyZxSD0G0uCEhEMQy2bFR9U50cqvcZZWhUe5Ha
- kVuUzv2HZRh6D90a0cfImUfLZUFX8q8ZRIPG4eWDHicHFBNARqLZ8VPv974ewj0QCEOU
- 8ujSrKpXEOnp6h1Z2IWKvNiq3PX1XTCzjrLdWHGT3uVBR9EzWggPvhaOkS+jl7i5Do8r
- 77kGEwszv2wlQnWmNevq1I39TvqngyKqpNPiAbiAaXFUDghTGcf7esXWPgyLvjuliQbO
- i5qw==
+ bh=q+kc96z5ScfmNUcRJ2QkY4fyC2is1v5rmCpXPKmqZAU=;
+ b=EarQsWUXXFQXORBAHCL+PwK5K90kJR+y0jEOUhN24khPXrgHNYzr+j0oLycFuCIbtU
+ 63Qe/AyWSAkc8XdAUGucox7gHUhhA6XYNdRAuIRPGx6yLrLJ4O3RNoyZc9qey5CnPCNa
+ UDQhScy4Dp82VDl6zmpTcq8qzmsOPb7IX6klnJd+Oj470jBuCRKvN4Zqr+duD3tUSpXi
+ SUl9RLfIYDaSp/YJfArcI4ClCdAaxIunwvSInWycS+E7DMSvdO7ZEbZRfjy3m85g4MT6
+ IbUB5JAbhwHniHIeq+jVPIW3FH2yuBDP4V8qO945cHuwbUSi4fHtoYN8VspnJN3ytlOk
+ Jeuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733237636; x=1733842436;
+ d=1e100.net; s=20230601; t=1733237766; x=1733842566;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hP9xuVwFVjgtlUuY9OZlNjvreRqkwhQFYaN3gT97eGQ=;
- b=dhHazIJu3sxBxOYPlC3RLsnkc3P5t/kKHxxe6m3/WzdYw+2EpJY3Yulw5+5yFFVGH3
- 8bTd+NvN8l82+AqInAOPHfLmhKfP1sxC25EwRbMriVHwF5tELgWcJ18UKU/Sno6K3Ekp
- +aYUhdYk3t27lb/hV/JqIYbzuPTWegYr6FuBD9B1DjAq8eXZa3429mEXUvsHHP3/cpJy
- 5tKKxfGmYM5q6Vq79dCtGP7BZHCJwzJPLjWt7FM12VTfxhQQ2B067V5tMczSft+cT56I
- BWsJn1GA0gn8/u0IxpTMiURtNIjaFhdyWzregYgsASYeuZwleCsTm8HhuH9N1xMaQ863
- EfAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVT0XIeUfZgM1VE9/kKLNebWLFAQUYQu5F0p2lP4JW2Uwf828dtVEMJC16L8EXXfCpTTQBTk4xZzCia@nongnu.org
-X-Gm-Message-State: AOJu0Yy2PVG/xN3AflevqQ44KuCTORSBnUlSVWtqGad4zsyopCFpY+L+
- BAaPgYGSMVyEOAGOY2Qqtqe20W9U0UkKsRahjIyznrx0V8Xyp4gwvuR701eQ7bY=
-X-Gm-Gg: ASbGncvC4LxEqzxo0gMusOzH+c27tgtaY700KWa7aqjb1QxmvFImoW0l8VzKzAdXEp1
- i1OYBjnM0L+1HWPqx8d4a4uTMaR12D4/bG1XOUWV9c1VNfyy5DKjWySu8K1lsK81z9lnwjFydZd
- 4lGg1XDGgpugExFtyz3r7wAEQSbXQsOSRXX19FJmmkZhO8NVS0F8yK/fmdYMG8BrWhNT4rP7L2R
- 0UTZ/SkYPwLWIi0y6PkIkek53f6qO3E5zF4MoiJkpyG6mPDoPOKUlvtKyeXlOOwhQ==
-X-Google-Smtp-Source: AGHT+IFA6p7W30LCr8jweUtq/l3Sj4A4r59kbjW765hFbef3LqYHZby6CO9g7TwVBOZGLSHa//EZmQ==
-X-Received: by 2002:a5d:588f:0:b0:385:f1bc:765c with SMTP id
- ffacd0b85a97d-385fd3ccaf6mr2555261f8f.6.1733237635734; 
- Tue, 03 Dec 2024 06:53:55 -0800 (PST)
-Received: from [192.168.69.223] ([176.187.209.146])
+ bh=q+kc96z5ScfmNUcRJ2QkY4fyC2is1v5rmCpXPKmqZAU=;
+ b=WFQZNsTIhn+1weUB0nlpU0jp7ibRqGu0TD9+wB8LQ4i19DWCElinD1xmFBj0I/pgSJ
+ 6aITEGLFtb099NxZx/bHjiIGpCl9IffOXd90a0zggdzxkGsK1eZdP2KfAUs0WJ/e/6fS
+ fPsi7SHTYgg7uG9JYQi9/+GLKNg2SOyWk83+EN8HAl99IvToj6d5YgHJC3dSAkb7wFiI
+ kSGxVY3r9IpAsPsIU5E3iiZRoqHIT5KFEVrvF5EzuqfkmJPLq7mlH3PhSgcROBULooyY
+ ArEs19yTd0EEefEJuq4qsIw7osz2Ld6aB1VjtJrZQl7a8oAgVxkQ1UFlQ2lxI77x4OzJ
+ gRdw==
+X-Gm-Message-State: AOJu0Yzf19brA4kQ2oOmOy5+uAa3maWQ8yMPJY33UiVovW6Vqq0yBLoM
+ qBHsna7XnrlVz6//OLFzmh/GzyAs+u4aVnp/EdVgVlsDnBLajKGASeSYkRLEL5I=
+X-Gm-Gg: ASbGnct8wYmRXgT985TU/iRTJH4CylCdAq2aq/A8qT0eBSbUl10UPaX09Yd8fBVVYO9
+ Q9Z39UNUGNdaGDUCbV3g4/QUvv3wkewIg5KQOyucagJKrRv9kAg0OVNx9sFRFFzzCjLLF9n41+c
+ G8dvUDSIja0YVGepGA5pBnvpRR7l1XKa2BT77DLAA+ghpEbdL0FGYz/XX4UruYKcL43NiVh4Ajf
+ rzniY4yvjvNr3UbriLlNBJdJWsNX3LFuWKnJijBXqMRTwS6+XgjVAG6s5PIfs4=
+X-Google-Smtp-Source: AGHT+IGbeMGGFGQuKV7fKZKB/Gz+zvE+3N9o1GPUk4FHnrEyjZfW3356o9XW6Bm9pwji2oW4zgWuSw==
+X-Received: by 2002:a05:6a00:3d06:b0:71e:7cb2:57e7 with SMTP id
+ d2e1a72fcca58-7257fa5b914mr3061343b3a.10.1733237765705; 
+ Tue, 03 Dec 2024 06:56:05 -0800 (PST)
+Received: from [192.168.0.102] ([179.93.129.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385d7264f27sm14843597f8f.80.2024.12.03.06.53.53
+ d2e1a72fcca58-725418148bfsm10558936b3a.164.2024.12.03.06.56.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 06:53:55 -0800 (PST)
-Message-ID: <d06babd3-5aa9-4a6f-a265-45170edc7039@linaro.org>
-Date: Tue, 3 Dec 2024 15:53:52 +0100
+ Tue, 03 Dec 2024 06:56:05 -0800 (PST)
+Message-ID: <f043b94a-278f-4009-87b9-9b2ba4b80c42@linaro.org>
+Date: Tue, 3 Dec 2024 11:55:59 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] MAINTAINERS: update email addr for Brian Cain
-To: Peter Maydell <peter.maydell@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: Brian Cain <bcain@quicinc.com>, qemu-devel@nongnu.org,
- richard.henderson@linaro.org, quic_mathbern@quicinc.com,
- stefanha@redhat.com, ale@rev.ng, anjo@rev.ng, quic_mliebel@quicinc.com,
- ltaylorsimpson@gmail.com, alex.bennee@linaro.org, quic_mburton@quicinc.com
-References: <20241123164641.364748-1-bcain@quicinc.com>
- <20241123164641.364748-2-bcain@quicinc.com>
- <014e9959-4995-4bf2-9a2c-ace318673804@linaro.org>
- <c559ec82-2ed2-4d38-93b4-9b5076181c9b@oss.qualcomm.com>
- <CAFEAcA_C5HXvMzVXQvQEpcFS67AZCa0dJL0Ek4X4tXtQfA6z+g@mail.gmail.com>
+Subject: Re: [PATCH v2] tests/functional/aarch64: add tests for FEAT_RME
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Troy Lee <leetroy@gmail.com>, Alistair Francis <alistair@alistair23.me>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, alex.bennee@linaro.org,
+ Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
+ <4b3180bd-8054-4431-a594-0445ce4837aa@linaro.org>
+ <5620efa2-98c6-4613-b866-67e91ac6acf8@linaro.org>
+ <21d8399a-91bf-4599-a73d-351f9f0c147c@linaro.org>
+ <CAFEAcA-4_tnm9iPCf_3E4HKKXJ9h6w9oMiYaN0Y4s9wmpji3Jg@mail.gmail.com>
+ <6cd6b3fd-8362-4fa8-b6e5-e0e3aded3215@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_C5HXvMzVXQvQEpcFS67AZCa0dJL0Ek4X4tXtQfA6z+g@mail.gmail.com>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <6cd6b3fd-8362-4fa8-b6e5-e0e3aded3215@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,56 +114,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/24 15:31, Peter Maydell wrote:
-> On Tue, 3 Dec 2024 at 14:23, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->>
->>
->> On 12/2/2024 2:43 PM, Philippe Mathieu-Daudé wrote:
->>> On 23/11/24 17:46, Brian Cain wrote:
->>>> From: Brian Cain <brian.cain@oss.qualcomm.com>
->>>>
->>>> Also: add mapping for "quic_bcain@quicinc.com" which was ~briefly
->>>> used for some replies to mailing list traffic.
->>>>
->>>> Signed-off-by: Brian Cain <bcain@quicinc.com>
->>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->>>> ---
->>>>    .mailmap    | 2 ++
->>>>    MAINTAINERS | 2 +-
->>>>    2 files changed, 3 insertions(+), 1 deletion(-)
+Hi Pierrick,
+
+On 12/2/24 14:33, Pierrick Bouvier wrote:
+> On 12/2/24 03:04, Peter Maydell wrote:
+>> On Mon, 2 Dec 2024 at 10:58, Marcin Juszkiewicz
+>> <marcin.juszkiewicz@linaro.org> wrote:
 >>>
->>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> W dniu 1.12.2024 o 19:09, Pierrick Bouvier pisze:
+>>>> Hi Marcin,
+>>>>
+>>>> On 12/1/24 05:34, Marcin Juszkiewicz wrote:
 >>>
->> Forgive my ignorance here -- this T-b is - stronger than a R-b? or
->> weaker than a R-b?  Or wholly orthogonal to R-b?
+>>>>> So RME tests probably need longer timeouts or would not run at all.
+>>>>>
+>>>>
+>>>> By any chance, are you running those tests in debug mode?
+>>>
+>>> zOMG, thanks! Turned out that I left "--enable-debug" in my local build
+>>> and forgot to remove it.
+>>>
+>>> 90s vs 2974s is a difference ;D
+>>
+>> That is a particularly awful debug-to-non-debug performance
+>> difference; it might be worth looking into what exactly
+>> is causing it.
+>>
 > 
-> They mean different things -- T-b says "I tested this patch
-> and it works for me", and R-b says "I looked at the code
-> change and think it's a good change with no bugs".
+> Indeed.
 > 
-> T-b is a slightly odd thing to have on a MAINTAINERS
-> change, though I'm guessing Philippe might mean they tested
-> that the .mailmap change affected the commits the way it
-> was supposed to.
+> This test boots a nested VM (using kvm, not tcg), do you any idea why such use case could be so slow with QEMU?
 
-I tested oss.qualcomm.com is a valid MX and we can send
-emails to it.
+It's not "really" using kvm acceleration right?
 
-Then I looked at the recent github changes from quicinc
-around oss.qualcomm.com, and that this email was posted
-from your bcain@quicinc.com address. For that I could have
-used a R-b tag I guess 🤷
+It's using kvm but the kvm module in the host kernel is actually running
+fully emulated in QEMU system mode (-accel tcg is being passed to it).
 
-> 
->> Should I still seek a R-b before making a pull request with this change?
-> 
-> Philippe put this into his pullreq he just sent out, so you
-> don't need to do anything more on your end.
+So I understand it's "all TCG" in the end and no HW acceleration is ever used in the tests.
 
-Yes, sorry I forgot to notify you here first.
 
-> 
-> thanks
-> -- PMM
+Cheers,
+Gustavo
 
 
