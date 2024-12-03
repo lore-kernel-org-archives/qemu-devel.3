@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D8FE64ABB
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD8C4E74AC1
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:54:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIV3F-0000Ut-OF; Tue, 03 Dec 2024 10:43:02 -0500
+	id 1tIVDl-00038o-Pl; Tue, 03 Dec 2024 10:53:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV3A-0000PZ-Me
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:42:56 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIVDV-00037p-8V
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:53:38 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV39-0001ZA-7t
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:42:56 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-385eed29d17so1775010f8f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:42:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIVDT-0002eB-Of
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:53:37 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-aa545dc7105so892067266b.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:53:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733240573; x=1733845373; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733241214; x=1733846014; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wOdRSxLkZWYqYuusmuaS5IxGsMnnjBO43S0fLPPvzcY=;
- b=MM1/m9CFjE7kM51XzhT3q2pfoNMSFilV3oFQdynGk8XlODunYNCZo5lDm4RLC+KtpR
- Y6qCzcm/1gWmAz2o9eX68VkJlp/9zDocuyJ7i5HWmqGxZ+tW9sspIhhmK63PN3kMzbq1
- zB3VBhSYMuBEqKttrPVEJWyHAvpyD+cK+6ftZKxz238QRAUZ2xXMMliVpzJqGgwODyAA
- 8GNugwc4b6gUYsocCwUcUG+IruUj1DO4xmHqii3/SHCvOLX27pecU2xiA6eJcNgXB7TN
- PVlIizgS6R8XoEl9HMwGMywQhZ2ruAw4SiGVOQuvicRuGrTCVEcxgnxU7DYfMTFXOmPH
- F2/g==
+ bh=CDqrEJs5OhNeWJiBb9sU9ED27wZyZSyw4yGh+delQvg=;
+ b=YvlM548cYvUQEt+v/Rh8f5UadXU5Iv2CqhgFtX6KlUPo8OByHvq2LMxYji+htufUqZ
+ TMFAX69f7br3vj2kdsa40MzjsokJIFC5GOWw/bqZE7dcVG0Dj7jxdKu40yT5+c9ocHWB
+ 7sLgP9wfORDuodaGFqDurHftw+rL6wlYDqdc3yJBfIlV5hZoBbPt/17yhm1NekKB7vhv
+ hcaVl9WED2DnDS29GThxT3qMr0BN+WaRmzTBmsrReRBG657J1s3fzxt1a5j7Tz4Z8+kZ
+ lO74AMIUjx1OIwXmAZt7saa3fVzfUBVnrt0wdr60gVpMYtoBS3l7DlPGEo/d5aDA0y0g
+ iVnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733240573; x=1733845373;
+ d=1e100.net; s=20230601; t=1733241214; x=1733846014;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wOdRSxLkZWYqYuusmuaS5IxGsMnnjBO43S0fLPPvzcY=;
- b=Dd8xTipKzTdCflnGDkj/91eb6C2JqYO0268Cmw04NT/KhhA+O2QyWuFmcOYz20AMLb
- iG6idr4bB0KYN0rqXbEtEF/3KRs+0+vn0M4DNuT4Wfbntl5YTaZdsjqghhEzvteK5Yxi
- 3RgyXSga0FonD22qryQFGM/EzXoA61zR8V77CobdnptVNKOQjHRiz57F5SlK5273ivVr
- kkgGCRVbSGtp/LdCRdE54OqKpeFaWszIiZyb+dxyrHfVrAbRxKcv6i1XsiGeW8T9Tjlp
- k1pNHRw0TLCHOQmyhkL8eGzGJ9vbgqGkTl1jgfQE4iaSC+2tLdmPn8R4uLl3N+Ve2Oj/
- AkOw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUuibiHmhB3kyPFbSgEy4h3s+MitnmkxEU7qgYGkJmI87/K4C4MoRKKKl5mbUeUl+1E0tUJ3T0htM7E@nongnu.org
-X-Gm-Message-State: AOJu0YxbJO/yCztt5ikQH/s1KeDm8RnQE8RMaaIUFy+Ja3muvSs5NQMh
- c3ZdzlZPHMBunutr6NUXq9Iox/jHksvDmP1w3hBzd7/3qUwpEdOBCXl1n81G0etATJxzmTJOr1q
- na9g=
-X-Gm-Gg: ASbGncukKDXF0b3onlt09Q76tLbRa5sNbzPmXSYE1WoHRPo/qqL0AW7kR4aHNShsJ5Z
- byrxAk8txvOIDV+x+Wlp5A3V/AWcQvOKgE/vSBk6FZnxI0s3Z/ftrSDDhOg5t9ccZcVjMbek/GI
- 9Q1Gl95REcjNXaiUXmbxPuPA/zc9rK7WRK6tXa01mDW4XCAgMFBsUFuYL/t7mVoTkic8g4XWD1Y
- p1nQBv1DJZDfEskb0koIrLLgVyVpNApy8vCQ5G3IzcWrdbOn6XVjMwRnl+XbKf3ZA==
-X-Google-Smtp-Source: AGHT+IGRAaxp1tGbXIpVugHJEQbPg8jZXnlne5+GINUp/wX/BgfL12yPIPPFqXtrySK2VI6lPY9Ntg==
-X-Received: by 2002:a05:6000:79d:b0:385:f2d2:2ef0 with SMTP id
- ffacd0b85a97d-385fd53ece7mr2812053f8f.41.1733240573479; 
- Tue, 03 Dec 2024 07:42:53 -0800 (PST)
+ bh=CDqrEJs5OhNeWJiBb9sU9ED27wZyZSyw4yGh+delQvg=;
+ b=cjAgEr6VpkOBQxeD0hRnjXgnHgiHRpB0/TTb+bVMdmXQtRwIX9607GiE/B5IA4CQJn
+ YASGtv8LJqPBKkDxdg5KXxL0UyOYqNKiPCLt72RAYRQX/lfm4+Uc8WxpSUTL7ewXtwyT
+ +31ghNbLWd4P2A0kEbpn/y3SmovQOfv/FebxrcQWjuM7+X8ZAAjlWWbtEMFdtmROlqhU
+ V453I/FndJYhfERphqWfbhJibRYDKrzIFgOWmGsuLc/eFdnbRC56rqbZXtuxrs95Pb5H
+ Gi/Q1oPlf+QtCdeyE8SqpX09ZpTzSRnFj8kK+1XRaG+B8+2HmF44OhllC1r5cx8UwF3f
+ gB3A==
+X-Gm-Message-State: AOJu0YwpQCqT1tFUpCLt+AazDHBHhf4L7gXu17tVyHCD/gYmuIfuzBKe
+ v+ys0xJEyaA3zssgyHQJk2rYnk1k8EP4RkyMYm7E61ir+djcHd5bpF6nIiOheKvRvtMwo4sG+ex
+ ppHM=
+X-Gm-Gg: ASbGnctKKMjNERynOg4fTSsRmTya24aa+/8RkjsUy+hxgppCmuuhYVJQXGV6LksKtcE
+ yqd6tjwugtooX/fSsTcvpHNukRS9J2We3ZflA8lxit8qbGV9MBwKzP2ucRgVob5/gCqkJjkAeGI
+ hoD2k8vaS3Jr+sqiOwaGRKYt5zkOUB++jFI7WmI3pQoYrMq48v7Xe3XVHEs0lnK3hDC+QqrvY9h
+ HawChNtAu5RmS4UTZp3ln+Hi8+cw0BSpBKsHq8Mw+fbl5jxyNuCYtMLo6fO2cnH+Q==
+X-Google-Smtp-Source: AGHT+IG3c9b2k3ackyoL47hmqGNY0K+1IrKO4aic6XfSainBKk7w6lyhZxKNK4ZdNufmG1I5GSTWSg==
+X-Received: by 2002:a17:906:3150:b0:a99:5f16:3539 with SMTP id
+ a640c23a62f3a-aa5f7ab68ebmr259380266b.0.1733241213709; 
+ Tue, 03 Dec 2024 07:53:33 -0800 (PST)
 Received: from [192.168.69.223] ([176.187.209.146])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dd99504csm13874738f8f.85.2024.12.03.07.42.52
+ a640c23a62f3a-aa5998e64d0sm627641966b.93.2024.12.03.07.53.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 07:42:53 -0800 (PST)
-Message-ID: <ce4d9bce-e80e-44de-9e0e-013122a2f293@linaro.org>
-Date: Tue, 3 Dec 2024 16:42:51 +0100
+ Tue, 03 Dec 2024 07:53:33 -0800 (PST)
+Message-ID: <06569135-161a-483b-8677-36bb55a26679@linaro.org>
+Date: Tue, 3 Dec 2024 16:53:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3 for 9.2] hw/virtio: fix crash in virtio-balloon and
- test it
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: David Hildenbrand <david@redhat.com>, Laurent Vivier
- <lvivier@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Martin Pitt <mpitt@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20241129135507.699030-1-berrange@redhat.com>
- <24ae6e7a-1cba-4898-bfbb-5f5d3e5c3256@redhat.com>
- <6bf49e96-8939-4ee3-aa4c-4ff5ae5e4e21@linaro.org>
- <20241203030839-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH v3] system: Select HVF by default when no other
+ accelerator is available
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20241203094232.62232-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241203030839-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20241203094232.62232-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,24 +100,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/24 09:08, Michael S. Tsirkin wrote:
-> On Mon, Dec 02, 2024 at 08:50:55PM +0100, Philippe Mathieu-Daudé wrote:
->> Hi,
->>
->> On 2/12/24 18:05, David Hildenbrand wrote:
->>> On 29.11.24 14:55, Daniel P. Berrangé wrote:
->>>> See patch 1 for the background info on the problem
->>>>
->>>> Changed in v2:
->>>>
->>>>    * Add qtest coverage for the crash scenario
->>>>
->>>> Daniel P. Berrangé (3):
->>>>     hw/virtio: fix crash in processing balloon stats
->>>>     tests/qtest: drop 'fuzz-' prefix from virtio-balloon test
->>>>     tests/qtest: add test for querying balloon guest stats
+On 3/12/24 10:42, Philippe Mathieu-Daudé wrote:
+> When testing with a HVF-only binary, we get:
+> 
+>     3/12 qemu:func-quick+func-aarch64 / func-aarch64-version                                      ERROR            0.29s   exit status 1
+>    stderr:
+>    Traceback (most recent call last):
+>      File "tests/functional/test_version.py", line 22, in test_qmp_human_info_version
+>        self.vm.launch()
+>      File "machine/machine.py", line 461, in launch
+>        raise VMLaunchFailure(
+>    qemu.machine.machine.VMLaunchFailure: ConnectError: Failed to establish session: EOFError
+>        Exit code: 1
+>        Command: build/qemu-system-aarch64 -display none -vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -machine none -nodefaults
+>        Output: qemu-system-aarch64: No accelerator selected and no default accelerator available
+> 
+> Fix by checking for HVF in configure_accelerators() and using
+> it by default when no other accelerator is available.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> v2 was https://lore.kernel.org/qemu-devel/20241203091036.59898-1-philmd@linaro.org/
+> ---
+>   system/vl.c | 3 +++
+>   1 file changed, 3 insertions(+)
 
- > Series:> Acked-by: Michael S. Tsirkin <mst@redhat.com>
-
-Series queued, thanks.
+Patch queued.
 
