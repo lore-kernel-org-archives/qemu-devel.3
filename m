@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F69E64A93
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B389E64A93
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tISv9-0003DN-Eg; Tue, 03 Dec 2024 08:26:31 -0500
+	id 1tISxw-0004f1-FT; Tue, 03 Dec 2024 08:29:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tISv6-0003Cw-Qx; Tue, 03 Dec 2024 08:26:29 -0500
-Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tISxo-0004eV-R9
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:29:18 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tISv5-00082e-9z; Tue, 03 Dec 2024 08:26:28 -0500
-Received: by mail-vs1-xe35.google.com with SMTP id
- ada2fe7eead31-4afa53874beso19217137.3; 
- Tue, 03 Dec 2024 05:26:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tISxm-0008Sz-4u
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:29:15 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-aa535eed875so852166166b.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 05:29:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733232386; x=1733837186; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q87dO8RRG7w5S/b1b8HX20PymG1OnRpkoYVv5xlmZhI=;
- b=cmQ3dJmxAp9jgNZQR1a1Rbz9WAT2C3foF+Bsn7E7xtAvLMYUVShZwdLO+JGBOPqeMP
- +6rn38OyoahP7HFYEU9kEeL7Qi3AWNNkVGC3wgyuzYNUFxxawrduSuvmnEBAocKd+QjF
- ti7m7GFQil4hxyJrE3HsPk4vKEjSkP7UDYqSkPq0W6YssRdDPbqYYQEFsE7fyL4S9HIV
- zdsim8Li5wMLkgSJlwjOLuQWfliKL89pqc8g1d4vek9atywfDHs59pZ46NoaCJrYylSq
- 1G5+3ihrYF34AS+jKKP96aSgEoXsrLTmf7SxKUFG8iB+AXEb3F5h8F2l4l1qo6okXyfL
- pRaA==
+ d=ventanamicro.com; s=google; t=1733232552; x=1733837352; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=VkZ13KIMxJcXUbvPjbseD3nKfMhy2O8KK4HhBV/DeKg=;
+ b=pSOfmCLqt0CkG24ZMFJb2iqtNi9l26Ieg4xH7pa3Bl+eQllx0XOxiXQvCjQskLUdBv
+ huut6AafTpBsIIZbrAfuypZc1ZK+LsIeH+USAkWbcVI4HYmZMABP80ZLJynmizAbTQXI
+ 39A8fNvBCVUhOqHP4kU6IZWFjpvEWDIlw2UABCLOMP5geHUJrEGqSvl2JUVzIvD4Ss5r
+ B9Wah3FwcawLtcNec7AkqC7f+cbFTMAH/xc+QPPUTDQ0hNGIszSXxtv6kIXvLEWg+v8i
+ tF4RDVW/tGu2wMONx74XbImA7f+JSxW1Ekypn79ScK6eKQnW+wxV5uBC0ez6b0rVsvFU
+ PaeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733232386; x=1733837186;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q87dO8RRG7w5S/b1b8HX20PymG1OnRpkoYVv5xlmZhI=;
- b=aJpbeTd5/ut+DJYfEtDqyla8BFELHPD3bUxh8ZRk3jvb7hY6y14EhVNIEa3aMFZkBb
- nRg9Zw0qQJdRZ/9S0R/SvQ0QkL5S0xH33exQEtSqtd2+CONfNl5AyMs39R87azLfO2ck
- jsp7erPEIkADVk1qPHDTsyeou0hSv0X8rTurJ0ni41jWWzZ5VlvQtwvYX/0/RabZV7xg
- dl3vu6iMp8Kmnb5QGvobJ/6k1uqZqF/8sBtKhYG1HQ1Eu+UfZcA3X6A5epud54PomvGr
- xvba0zvUSrS5SgxKqF/PTmdzpaDumDP/LRLG2NHzvzhyfCYV83ouROvO3/Z1T68FDXD2
- Z/fw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOiJKVhU6MWE29wsTKRHNtEMZsZO58hxfQw40htzYSiEzIbjRfEgr9xZ0MfnwvNQhneJnQyv1jl0da/A==@nongnu.org
-X-Gm-Message-State: AOJu0YyC6t3XQ4TOwNiUYm1ShkA3rYGWXBNoxLsxjsPW9mSg7GkzmnXD
- SrLS78Svbdbz2ahFksUiGwO7HIi8eYpboHxiA/CzdbMUV5H3DyDjr+6+vhGPuFlThLinvE/l0n5
- C+QPRtRf7/dPH/FD8VhB6NYQhQ4A=
-X-Gm-Gg: ASbGnctY4f3JauYxTvQI/WtgfFGy/6VoDzSbZgq+leqvy425Gs255vLLKjNBupBdKsX
- 9icX4uOSk9Q8nqsbipGaHb9xV9I/xQxlx
-X-Google-Smtp-Source: AGHT+IHYCnFTF4S/85zmeh8MkFtgsWIgVpwRwFYya+PZkKzwdD9VDRDSQxKsvCxdSpy2yUhM+anR4oqaBDfDyDnYPcU=
-X-Received: by 2002:a05:6122:4382:b0:50c:55f4:b529 with SMTP id
- 71dfb90a1353d-515bf525a49mr3690065e0c.8.1733232385735; Tue, 03 Dec 2024
- 05:26:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733232552; x=1733837352;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VkZ13KIMxJcXUbvPjbseD3nKfMhy2O8KK4HhBV/DeKg=;
+ b=poi50rRm7BBs+Qdcbjq3RAaAjSuUFA3Vlb077htccC7laiLM1NqMPgFmuEnR6DwfCM
+ 9pKzf7icqw+dk6iUql8aG0zDdtLAlfUa/aLtXiIAAcD/SUMncjwpJpNVBghQp8bi5/sH
+ L0ugWrhByfhs5VWoIZdY3vWC124OajDDs7kt1HwG2BAXKo2a+TZ8/1O/CJ2AX81/ntNm
+ kgp5QtBcHkFSR97OyqEzAUEWedvz8Bf5OaZ77RK/4XkJa0tTeSlFIntDT0yT5ANghOOy
+ eeGi4ZUepC+9REhRxM0/Xvv/Td2qVlegCa0n32jAnNuMlr7Hl2fcfxwoGOeEwbhyBc5C
+ hVlA==
+X-Gm-Message-State: AOJu0YyNSkb22wgsenuDt3hTEF3gm4vC8Au0crIwvBpX0wR8d8gln2ct
+ 3xIQhA6CHoUiZJIKHjxtOaasdjAAeFz6FPFS4B5yoEuhXdBSWE5AFNEgyLrQ3EQ=
+X-Gm-Gg: ASbGncuZA7HpZ3xlqJOuqYR9j7ybQbjTz42C6RLGsLvBOiuhX2koy2aKHL22giBHx9D
+ puF1oPbolf9bOXlJpWnj9XVGlzL4GPymn8VbL4mgF5Jb4eGJuBssyg3ahxVy/4X8iyYUOVVZqZH
+ dZB7O0bn4mIw3ksF2l+8dUVxFsQM8F9Rm79PXAy7RxoHCjGnoDy+cMTBcGsETmYYSOVDRNf0igk
+ zXURKGdQhdSN+2xmmCv4/Kf3axNEb4IaDhA+URV3DZHoTU37awuo+UIUveZNCErDglhW1akYIMv
+ VTONLRU0kFwODZWiaOTMRhHhzlYgBsqBr4k=
+X-Google-Smtp-Source: AGHT+IG2/KCH92B7Ea761kPCnSeCNWr/SxkZdDynqq8nPZhJLxsng43GtTIdl55tPqhK3+/yXgBIpA==
+X-Received: by 2002:a17:906:18a9:b0:aa5:3982:660f with SMTP id
+ a640c23a62f3a-aa5f7da0fcdmr204898366b.27.1733232552025; 
+ Tue, 03 Dec 2024 05:29:12 -0800 (PST)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa5998e6337sm614294266b.117.2024.12.03.05.29.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Dec 2024 05:29:11 -0800 (PST)
+Date: Tue, 3 Dec 2024 14:29:10 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH for-10.0 2/9] target/riscv: add ssstateen
+Message-ID: <20241203-a559b7cc1b7fcb5e41b1c6f1@orel>
+References: <20241113171755.978109-1-dbarboza@ventanamicro.com>
+ <20241113171755.978109-3-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-References: <20241203113140.63513-1-philmd@linaro.org>
- <20241203113140.63513-9-philmd@linaro.org>
-In-Reply-To: <20241203113140.63513-9-philmd@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 3 Dec 2024 22:25:59 +0900
-Message-ID: <CAKmqyKPAVbh_3OXwtvax9MwNZXYvfNCuCu7jH6oCFjjdwzL9Fw@mail.gmail.com>
-Subject: Re: [PULL 08/13] target/riscv: Avoid bad shift in
- riscv_cpu_do_interrupt()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-stable <qemu-stable@nongnu.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe35.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241113171755.978109-3-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,75 +101,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 3, 2024 at 8:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
->
-> From: Peter Maydell <peter.maydell@linaro.org>
->
-> In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
-> cs->exception as a shift value.  However this value can be larger
-> than 31, which means that "1 << cause" is undefined behaviour,
-> because we do the shift on an 'int' type.
->
-> This causes the undefined behaviour sanitizer to complain
-> on one of the check-tcg tests:
->
-> $ UBSAN_OPTIONS=3Dprint_stacktrace=3D1:abort_on_error=3D1:halt_on_error=
-=3D1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -=
-device loader,file=3Dbuild/clang/tests/tcg/riscv64-softmmu/issue1060
-> ../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63=
- is too large for 32-bit type 'int'
->     #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu=
--from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
->     #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-f=
-rom-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
->
-> In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
->
-> Use 1ULL instead to ensure that the shift is in range.
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual interrupt and IRQ fi=
-ltering support.")
-> Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual interrupt and IRQ f=
-iltering support.")
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Message-ID: <20241128103831.3452572-1-peter.maydell@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On Wed, Nov 13, 2024 at 02:17:48PM -0300, Daniel Henrique Barboza wrote:
+> ssstateen is defined in RVA22 as:
+> 
+> "Supervisor-mode view of the state-enable extension. The supervisor-mode
+> (sstateen0-3) and hypervisor-mode (hstateen0-3) state-enable registers
+> must be provided."
+> 
+> Add ssstateen as a named feature that is available if we also have
+> smstateen.
 
-Thanks! I was just about to prep this, thanks for beating me to it :)
+While I can't find justification for adding the 'ssstateen' name
+(afaict there's no ambiguous behavior or CSR definitions with
+'smstateen', so Sha requiring smstateen should be sufficient), it's
+already ratified, so into the alphabet soup it must go.
 
-qemu-stable@nongnu.org this should be backported where it applies
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
-Alistair
+Thanks,
+drew
 
+> 
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  target/riscv/cpu_helper.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 0a3ead69eab..45806f5ab0f 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1802,10 +1802,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->      bool async =3D !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
->      target_ulong cause =3D cs->exception_index & RISCV_EXCP_INT_MASK;
->      uint64_t deleg =3D async ? env->mideleg : env->medeleg;
-> -    bool s_injected =3D env->mvip & (1 << cause) & env->mvien &&
-> -        !(env->mip & (1 << cause));
-> -    bool vs_injected =3D env->hvip & (1 << cause) & env->hvien &&
-> -        !(env->mip & (1 << cause));
-> +    bool s_injected =3D env->mvip & (1ULL << cause) & env->mvien &&
-> +        !(env->mip & (1ULL << cause));
-> +    bool vs_injected =3D env->hvip & (1ULL << cause) & env->hvien &&
-> +        !(env->mip & (1ULL << cause));
->      target_ulong tval =3D 0;
->      target_ulong tinst =3D 0;
->      target_ulong htval =3D 0;
-> --
-> 2.45.2
->
->
+>  target/riscv/cpu.c         | 2 ++
+>  target/riscv/cpu_cfg.h     | 1 +
+>  target/riscv/tcg/tcg-cpu.c | 9 ++++++++-
+>  3 files changed, 11 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index f219f0c3b5..4ad91722a0 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -191,6 +191,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>      ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
+>      ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+>      ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
+> +    ISA_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
+>      ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+>      ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+>      ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
+> @@ -1607,6 +1608,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+>   */
+>  const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+>      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+> +    MULTI_EXT_CFG_BOOL("ssstateen", ext_ssstateen, true),
+>  
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index 59d6fc445d..c7bf455614 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -139,6 +139,7 @@ struct RISCVCPUConfig {
+>      /* Named features  */
+>      bool ext_svade;
+>      bool ext_zic64b;
+> +    bool ext_ssstateen;
+>  
+>      /*
+>       * Always 'true' booleans for named features
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index cd83968166..0b9be2b0d3 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -204,10 +204,15 @@ static void riscv_cpu_enable_named_feat(RISCVCPU *cpu, uint32_t feat_offset)
+>        * All other named features are already enabled
+>        * in riscv_tcg_cpu_instance_init().
+>        */
+> -    if (feat_offset == CPU_CFG_OFFSET(ext_zic64b)) {
+> +    switch (feat_offset) {
+> +    case CPU_CFG_OFFSET(ext_zic64b):
+>          cpu->cfg.cbom_blocksize = 64;
+>          cpu->cfg.cbop_blocksize = 64;
+>          cpu->cfg.cboz_blocksize = 64;
+> +        break;
+> +    case CPU_CFG_OFFSET(ext_ssstateen):
+> +        cpu->cfg.ext_smstateen = true;
+> +        break;
+>      }
+>  }
+>  
+> @@ -343,6 +348,8 @@ static void riscv_cpu_update_named_features(RISCVCPU *cpu)
+>      cpu->cfg.ext_zic64b = cpu->cfg.cbom_blocksize == 64 &&
+>                            cpu->cfg.cbop_blocksize == 64 &&
+>                            cpu->cfg.cboz_blocksize == 64;
+> +
+> +    cpu->cfg.ext_ssstateen = cpu->cfg.ext_smstateen;
+>  }
+>  
+>  static void riscv_cpu_validate_g(RISCVCPU *cpu)
+> -- 
+> 2.47.0
+> 
+> 
 
