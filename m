@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144F9E6C617
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 08:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51D11E6C617
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 08:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIOS7-00046w-AR; Tue, 03 Dec 2024 03:40:15 -0500
+	id 1tIOXs-00062Y-MP; Tue, 03 Dec 2024 03:46:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIOS5-00046D-Jh
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:40:13 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tIOXq-00060M-JI
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:46:10 -0500
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIOS2-0005B3-Dv
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:40:12 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5d0e75dd846so2780648a12.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 00:40:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733215208; x=1733820008; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=o6/zb/veCkx9SB91tVjl6GkFGPbtBPargb60SM0fqHE=;
- b=iN6yFMCPKAXRL+/Z67y5PlySHIpOAkKexSvYEpNdNIHM4Szu1XsE85K1TNkROMwGaG
- 6bCYOh8lqnbGV4brfWnmSuKUTV+lz5cfW5m/DYuVc3xwGkvbuqa43Q3/83p7HgL3HvB6
- fwrR5X67940rtyDvc3erW7n0MRmgRYSKQtzHKyfYdAwqWdppV4Pe5Mx5LyYlvWFlI66G
- 00FkB2XvOfZmZdiq0o7JoZZtJ8rzUP9yxXv0TZ95JJvEUNKZZzINacSNLw4ibHDRskIc
- 8bLoExSRQLiQmrkCHWOCcXxgihW+yOiUxkKt8bcHldnMxGZRzDFIIlr+HImL7odYBWNM
- 17QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733215208; x=1733820008;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o6/zb/veCkx9SB91tVjl6GkFGPbtBPargb60SM0fqHE=;
- b=pSHargwV/E+rFfYcC9ibXlelTl1TMKibK5myCNlaSag+zoVkU0nrornsOOJFrcZH45
- Tjz96dReeMsfmz5kOP+HUOnRMDvaEkYWpySvuZUv1AJ/C8Cr3aBWlvqjU7AWZ/wTl6Qv
- P91/AG5j0HvDLtDjxSMsXCTQHoml9qadpxOcZCJexl9ahkVOr3zx8NHEs1frbp3f2XSY
- 3Kw/muXZd7b2aJ+o9bsprmmnAk8O0CRrK9vBdM8B1my9WScl6LSWhTiwQtCwthDt7ObP
- hRAEIbRC/DOiJhqiAQlVE4vON5z1IfjPtbpwExvpiovyz20cIRhsCOuuMQI/Z/5/KpLM
- P6mQ==
-X-Gm-Message-State: AOJu0YzyiwOaPh+5ukV6J6pGZ0PZezh2+7UU4AGE5bH0Mp43h0gmGIuM
- SroZNjUB0C2tdHZYP19sKftK9+8vtG1bdDuAvm0M0d/5I4KpPkFqU4pOYZ/GhnY=
-X-Gm-Gg: ASbGncuM6ZnIY0njF77lABNEdtgHzCzFWeyeOLTWYcm9drDpuJuCaqRpI70z3ytmOBU
- EvtpxnlDCGd4ILDIvyTW5sNXMZ9i/Gh8h+0/vUL9euz4OLwWgbNPCyiyvZSXBiZIlPNfTlnq1yT
- NVDy0NTQBoI8wf98vml8wTsHTnYDa/tSwIFxBHByuNb1kr6MREoqrZmA1FUarLeYszk1FqqQuJW
- QmwHYdgECgA87KgW/E5KFv2dZXBpO04ljpluhR/Ptw4DUvGZ3WXv2LNdZwuKkuizQ==
-X-Google-Smtp-Source: AGHT+IGLOVbZJ/jztPYBOQR5wNpq9a5znl4vYKqAINQPYjEThbq8U4XKCzPalOsFp+uFzgWG+WBrHg==
-X-Received: by 2002:a17:906:3ca2:b0:aa5:2237:67af with SMTP id
- a640c23a62f3a-aa5f7ccee6amr97719466b.9.1733215208411; 
- Tue, 03 Dec 2024 00:40:08 -0800 (PST)
-Received: from [192.168.69.223] ([176.187.209.146])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa59991f215sm586668766b.158.2024.12.03.00.40.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 00:40:07 -0800 (PST)
-Message-ID: <6334bba6-bbe8-404d-94b8-684c7acc43d9@linaro.org>
-Date: Tue, 3 Dec 2024 09:40:06 +0100
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tIOXp-0006Dp-03
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:46:10 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 463C1180C3C
+ for <qemu-devel@nongnu.org>; Tue,  3 Dec 2024 09:45:56 +0100 (CET)
+Received: (qmail 2369 invoked by uid 990); 3 Dec 2024 08:45:56 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Tue, 03 Dec 2024 09:45:56 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2] target/riscv: Avoid bad shift in
- riscv_cpu_do_interrupt()
-To: Alistair Francis <alistair23@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-References: <20241128103831.3452572-1-peter.maydell@linaro.org>
- <CAKmqyKOYjhdp1fNSnqGdhyFJF2Ywhi16q_h3+LaATFuFFqoHpg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAKmqyKOYjhdp1fNSnqGdhyFJF2Ywhi16q_h3+LaATFuFFqoHpg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+Date: Tue, 03 Dec 2024 08:45:55 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <181b9b53a258257df1b24e7bfb8b0e6fc590c25f@nut.email>
+TLS-Required: No
+Subject: Re: [RFC PATCH v3 01/11] plugins: add types for callbacks related to
+ certain discontinuities
+To: qemu-devel@nongnu.org
+In-Reply-To: <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
+References: <cover.1733063076.git.neither@nut.email>
+ <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
+X-Rspamd-Bar: ---
+X-Rspamd-Report: BAYES_HAM(-3) MIME_GOOD(-0.1)
+X-Rspamd-Score: -3.1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:subject:date;
+ bh=WyZz+dEcn8hSgA8haBBWbpT0nCmtP7CXyXsL4TtD8OQ=;
+ b=FG5R9HIGH/bY0f7Q2wNmZkKniK1pSPATezUBS6K3E+uEEV3iYAe87nnrBqV0Ni1LmgIMlOsf/p
+ NMtZ7Mn55ss4sOjtKUsUrDIKTtVK1nEaBKgtmUe4qyZCG6LzvCmZJi9G8LUPYO5RU6hjb/HGb1H4
+ t3XIjAr63z7US4RAt73yh+F6HjICZ8kwILHQo30td//e2J4BirQFxzqLDaeBg3gAsa2ffvWNbGmq
+ wqpfNFM2tXvRRPdl8d5jnL4Ly+cC/MtpNfLJeBQRyls5Uzk5frtjLJfGWDLO0QMc0ZOVKI8/TojF
+ HAjm1LmGXwfaf2bQTvlhYsLGgYHfMDsW0KVE8KOAO4GG6QMZ0akLZA19fM+t3Bp6zc+s1PjHbsTF
+ 6X6XwAGdSwJUg3H4EzSqlja8acmmAob4E8c3+Ypc/qQe8xrU6ldv35Yh1dLWTEzOQkQv3MSUGCXJ
+ RZefqIIT3Aq+HZvhD8gGy+O0smH+7H6sY1je16SWwAApMuJo3iQ04YlbU8gx7zuFU8jnJ4w82VFT
+ 70Vcb0vyA5ZFj60ba7b+op7GYMRRfRXC3iYgBEShHH3HnAwEqPGl9P04rgx0sMck+SeEp+zvwg1G
+ AeoOLvMfQRVeaCcEV16wjnqaRe0VIIn34yu5rLC4gTqXf6ToSPhx3fJWalIev38N3HPhEHxMgcrA
+ c=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,38 +80,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+Hi,
 
-On 3/12/24 07:31, Alistair Francis wrote:
-> On Thu, Nov 28, 2024 at 7:39 PM Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
->> cs->exception as a shift value.  However this value can be larger
->> than 31, which means that "1 << cause" is undefined behaviour,
->> because we do the shift on an 'int' type.
->>
->> This causes the undefined behaviour sanitizer to complain
->> on one of the check-tcg tests:
->>
->> $ UBSAN_OPTIONS=print_stacktrace=1:abort_on_error=1:halt_on_error=1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -device loader,file=build/clang/tests/tcg/riscv64-softmmu/issue1060
->> ../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63 is too large for 32-bit type 'int'
->>      #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
->>      #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
->>
->> In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
->>
->> Use 1ULL instead to ensure that the shift is in range.
->>
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> 
-> Thanks!
-> 
-> Applied to riscv-to-apply.next
+December 2, 2024 at 8:26 PM, "Julian Ganz" wrote:
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index 0fba36ae02..9c67374b7e 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -154,6 +154,49 @@ typedef void (*qemu_plugin_vcpu_simple_cb_t)(qemu_=
+plugin_id_t id,
+<snip>
+> +/**
+> + * typedef qemu_plugin_vcpu_discon_cb_t - vcpu discontinuity callback
+> + * @vcpu_index: the current vcpu context
+> + * @type: the type of discontinuity
+> + * @from_pc: the source of the discontinuity, e.g. the PC before the
+> + * transition
+> + * @to_pc: the PC pointing to the next instruction to be executed
+> + *
+> + * The excact semantics of @from_pc depends on @the type of discontinu=
+ity. For
+> + * interrupts, @from_pc will point to the next instruction which would=
+ have
+> + * been executed. For exceptions and host calls, @from_pc will point t=
+o the
+> + * instruction that caused the exception or issued the host call. Note=
+ that
+> + * in the case of exceptions, the instruction is not retired and thus =
+not
+> + * observable via general instruction exec callbacks. The same may be =
+the case
+> + * for some host calls such as hypervisor call "exceptions".
 
-Since next release PRs are due in less than 4h, I'll take this
-patch via my hw-misc tree (I already ran various tests with it).
+Some more notes about this bit: I originally tried to make the from_pc
+semantics independent from the type of event, i.e. either of the two
+cases. I obviously did not succeed in doing so. As, in most cases, the
+instruction pointed to by from_pc is not observable via exec callbacks
+I could also not test this behaviour in the testing plugin (see patch
+11). I am therefore in favor for dropping the from_pc for the next
+iteration of this patch series.
+
+> + */
+> +typedef void (*qemu_plugin_vcpu_discon_cb_t)(qemu_plugin_id_t id,
+> + unsigned int vcpu_index,
+> + enum qemu_plugin_discon_type type,
+> + uint64_t from_pc, uint64_t to_pc);
+> +
+>  /**
+>  * qemu_plugin_uninstall() - Uninstall a plugin
+>  * @id: this plugin's opaque ID
+> --=20
+>=202.45.2
+>
 
 Regards,
-
-Phil.
+Julian
 
