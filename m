@@ -4,86 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04479E6C5E4
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 00:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C40BDE6C5E4
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 01:03:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIGbx-0004NY-Cg; Mon, 02 Dec 2024 19:17:53 -0500
+	id 1tIHIt-0001jQ-SJ; Mon, 02 Dec 2024 20:02:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIGbv-0004N2-4l
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 19:17:51 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIGbr-0003JK-TL
- for qemu-devel@nongnu.org; Mon, 02 Dec 2024 19:17:50 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7250906bc63so3639627b3a.1
- for <qemu-devel@nongnu.org>; Mon, 02 Dec 2024 16:17:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733185066; x=1733789866; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xtafg9Dir4y2uIChFSy3qfJKxJ0Jsy/rXD79IqfNsb4=;
- b=nNAzjYqJCRtWoXKsMA5lawkJ96TTu5x2xfdrOtP/RnKE9wUtYLTqN6zzv11dpmqrvI
- lf9SC7RMwH89o4Qwzdy3jUTXq3+36Or5KzW5bEJ8LuwkK0icY1fveZITxCq2eYMxDi2h
- zq4Gx6jVsI87oG3le2ieOWDVT0NhYJJ1g4JPRlu8YA1mH9E0CWcfr7n2+gTleIfd4YVY
- /LSMJRm8jFbllt2NnJ9jZiiYJT3Bci9vDU7LC6XNEy1rCwn0hwigHYO8NKQUfPJKTrpi
- dsQiOcgd5n6+dUBxpXwlYTzL+rUtXg9vuJ2beqSjzwQF7SV+k7VVMezbvGfPNmfM3U1c
- iWHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733185066; x=1733789866;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xtafg9Dir4y2uIChFSy3qfJKxJ0Jsy/rXD79IqfNsb4=;
- b=bJm4bcCZRkC4/AtqBOSDXltMjxdM0Ec0qJO9pGh7bAUVSci1Op/72NPF+gHnitnGip
- PDeIMRok1vVLACGQQFUdHOuDmq00JdMXoFD//0UDpxTXGBnpNyvFw8BpoUuYVRvOhONG
- 1v2p2D7hduP+w1As1PIwvQjlbZpmduYhGFAm1FQFJ3BMbG0JXa3pZZ7F99W4U07x5rjH
- 3UtLEbqLaqyWjPU365I4igzpgIdIi6YwHSRsvJexMnz6AzeN2NBvC6kKQQ1OIlXFEzFI
- J1WWaGjF/hq6obV68w5EXCXb0/KmxGwgWUKwQmy3BD7yaojGRIUzX4RMKqvqNKmSIbgS
- v1AQ==
-X-Gm-Message-State: AOJu0YypziFic4Q8rbNc1gCDd21gBzdDIo+JDVmTN5Puo6i9Syge7BEZ
- T831lZwssPCbDhZxPP2zYElucQ52x7tOdcG1M1hTKaGLX6PtK6cfRENwgSBcAOSUgyiN74JnyrE
- ZBR4uHA==
-X-Gm-Gg: ASbGncuWfjsXHrV5yBLzNXPTOBzpINjZwUQ5fkv28eSDd9D6zTiC5aEg6u+p4kRa+D2
- SpwfWsrcQkmULDVrgjkmUgcsR7C2I1OR8OuxFMLJelodUdyXddaZVeBnKakkBmauyTMhLcJMvhW
- a1f/vVsj+KKwKcXFL03CrjaIbErCOSq6gv6OUf0SKnP4fj314IA7HKLHfnNb6trCH2O1KPPzPIS
- Ytkzh4dOYdhxo8oATvmdKb/YqIqgYNXRy6Zse48gkvkI4rCznJq+YGY0j/vno+wv7gfTd7sXshC
- Owh2Vk9U
-X-Google-Smtp-Source: AGHT+IFTO30fnQ0nbsGpYUOrwVB+dfbfFpyxs1U0OsNewsPtItxdEOHLWMfQpgP50canlFkBB/YdRw==
-X-Received: by 2002:a17:902:e809:b0:215:758c:52ea with SMTP id
- d9443c01a7336-215bd8435dbmr6172185ad.9.1733185066062; 
- Mon, 02 Dec 2024 16:17:46 -0800 (PST)
-Received: from pc.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21527a4375asm80704875ad.138.2024.12.02.16.17.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Dec 2024 16:17:45 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: marcin.juszkiewicz@linaro.org, gustavo.romero@linaro.org,
- qemu-arm@nongnu.org, alex.bennee@linaro.org, jean-philippe@linaro.org,
- mathieu.poirier@linaro.org, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3] tests/functional/aarch64: add tests for FEAT_RME
-Date: Mon,  2 Dec 2024 16:17:41 -0800
-Message-Id: <20241203001741.2068452-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1tIHIe-0001hm-VP; Mon, 02 Dec 2024 20:02:02 -0500
+Received: from mail-me3aus01olkn20801.outbound.protection.outlook.com
+ ([2a01:111:f403:2818::801]
+ helo=AUS01-ME3-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1tIHIb-0003No-J8; Mon, 02 Dec 2024 20:01:59 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kqIDNRRGcMcFjR655/dm27Aa67AWBhSQsjMOGWZKJ3ZuvSKIsLBVcL6Nyr5SYG93o89xhU2qIfsMaROMxuyjPxmHD1qPFGaKltA7zTL0Q0N8FF5Qu6lOqDnzl2nz1jFQmw11GJvHF21RQBNYbOnrC2gFGpOTdxulygq1OI4/xMMEhZjBSMIJUhByfu58gAqIAjuns3rWVSX5PwmqvIm0SIlPtpgHd6VeyTxuncx6eZJyApqC+J/9KeSFhxV7zgac/x/LnP1z+UpiecfRqd3xJ+e8+iJYr0qcsCBPWJSC2dP+j68bqLt0XDK5IJCuIw/Kp8BM4TAMMfkGxaKygZDSWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HQJkaxU9x0tapBtY9ZmlYA5Q1rKV56eCxYirX5E+lp8=;
+ b=LysN2JpyyvbC0h7EQK53XRhXaaZWsn3QoQOzeMHeNxFDv2w7eHkoq5jnm8E4rgLX2W1McsS8Mkizjt0tX7gziAO/blrnxmgC3usxkum4gyRi1nNTFeaDW0uGo11S0vKT4W5aOroephjlK4PU+GG4J+1SABy4IuWUMRbRrDcOTsqTh5BkA1LrGT0I1eZAZj1+tg85QUQwjHpP8edJx6i+v+NPKRk8aPrqsdLxyaM6QnwSwIH/lAYvPtW32vpiQlx1llYuIltRXPbc7enjuFC3W8DaoSFQkVwiUEONqODGyxn1eC0QcSa3gz8VYbvINVSf74LURPksW+U7cVqSMIxLKg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HQJkaxU9x0tapBtY9ZmlYA5Q1rKV56eCxYirX5E+lp8=;
+ b=rN11ZB/bCwOiOdkMTVh2V9EqZq+3IIHgSSgnHTl/fVHGWv/ZrVpfX0OURgjy0bXPbu1fvnfIqx6QztiEQGWjq6mPCmRajr5hkPpEv1SUKkkRi8VTXsPCfxdtlwSBcVf9dRFJCT+KdXVBMOWEWb0CgW2SO6/fbYoSONZwFtcvAmM8osilGSnlcWw772NQpWQ+sLOQbCYOyVV07KtKjmKJWFnb0brmWiq/HyRkeaIjppLMxMiDzR99r8xfTZf36wBu1lr+EzG1cBegDiW0IpZ+V7HFrX09ZRdwgOCokxDOR8Vs6yw2b6PfyZjjbXHDfLFTnEBnmFz+aBJI0T+u+OfmGA==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by SY8P300MB0210.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:267::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.17; Tue, 3 Dec
+ 2024 01:01:47 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%4]) with mapi id 15.20.8207.017; Tue, 3 Dec 2024
+ 01:01:47 +0000
+References: <20241202110609.36775-1-pbonzini@redhat.com>
+ <20241202110609.36775-2-pbonzini@redhat.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH v2 1/2] rust: add BQL-enforcing Cell variant
+Date: Tue, 03 Dec 2024 09:01:15 +0800
+In-reply-to: <20241202110609.36775-2-pbonzini@redhat.com>
+Message-ID: <SY0P300MB102656EAEE4C02500675056395362@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain
+X-ClientProxiedBy: KL1PR01CA0126.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:4::18) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <87h67linpw.fsf@hotmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY8P300MB0210:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8aa8c2c4-1ee7-4ec9-a627-08dd13360ff8
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|15080799006|7092599003|8060799006|19110799003|461199028|5072599009|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?U5Eb/Jj1qIdoip/QgaGlcqccYmJsWtq8tmFYOeNLGXTVuCNm2dRlcYX6GW9C?=
+ =?us-ascii?Q?y5uKM0UMQjCXBZ2r0Pn1hbm+sdxps2K5tKiezIFkFfUfpNgXYkjmZJKKrn10?=
+ =?us-ascii?Q?XOzSm1Ii7jjTAGvGVBZvNmNVBJWK/b0MoraJzxRuz4QNG+6Fa0nH4Y3xm1WP?=
+ =?us-ascii?Q?dvQ4BozVzp2PzdXxkOzjkBj69vYCZkUCvuj1sPwpAr+wCW/sRTQxrYdrAVvl?=
+ =?us-ascii?Q?m7zthwG3CvCI4YCyf2E4kVkYCFoTaPVzJgT6Xz/jA0qMf8hE10bLeUkdaHiQ?=
+ =?us-ascii?Q?23PDXmHQsa8NQETbn6xvAReNvjflnxW0wgc76SxYUe+pX9oHHFteOTmLwa7P?=
+ =?us-ascii?Q?7v2gPGB6wqVgpAnOOGm8JzfdpK73wp2XNqmt07HfScPY/dINNrrc8NPeGL3a?=
+ =?us-ascii?Q?UMWOFHuJgTdaDMKrSPrr+lsXm7Guu83qn1tjZ2k/Ty5SvkgLp186futstopA?=
+ =?us-ascii?Q?Uz0J8NnWEJfm0NwRi+yYyd8RdX3Xny//Yh7vs2NDSKXbKqeMMGOLbi+/ZcWa?=
+ =?us-ascii?Q?aVYDkjQ68AKEllbVtDsRrPGy8zBfxTboIMjr8eddJQpPiAoysqQU4yb2o0V+?=
+ =?us-ascii?Q?i0iHdUmmB1XEoLm+xu7kS28cLc0O85pe7TBiLLCgUUWtlYujDq+IfBMztkG5?=
+ =?us-ascii?Q?LB8QRQmbRgDg5QU7ci4G9nfnTGxccvlP9rWvNf8Pa0KvGhcHfLvZYL6w8xAf?=
+ =?us-ascii?Q?LAlpLHDojEObzNYR4MQEMMe/M8vS9meZtFh8mLT6RQiQuJxxoBqDGrVZi1w8?=
+ =?us-ascii?Q?jnR4sirE0kbvfEVBzQqAhyfs4KlTOoAivYVE8dwbEV2WH7gM2PljBIkU2JHS?=
+ =?us-ascii?Q?Fos85uwVfy8/iWvRzCH0Al+t0UVxYq9r7uALmtHp9cs+W1pWvOR0e0qrtIvZ?=
+ =?us-ascii?Q?yKUHIaipCfZQy2AjbDG5tkPHzLxbSySTx2SVcp4N+pY78iToW8iwzlzPYQAl?=
+ =?us-ascii?Q?qUaZgJiJBdKexLK0Fihkl7JYvXtjlxIcx8t5CRiPzrPZyPSNfFlK/DFSkPfH?=
+ =?us-ascii?Q?+iWRTtV0dzPZWPKkAJUlhK40qB9+ZHG+FWTh2vLobwhI4Jg=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?xd9VI6Uru0utlS3RXjYr0okz55LrERax87RSDJZFGyEvnZcaIfqKweiKdydD?=
+ =?us-ascii?Q?fJhIlWSa+oLI6VqCylzexjg6eba9XVJ804vTA3ye4dvUa4AskxgD2Xau97wH?=
+ =?us-ascii?Q?E/T2Tl2a3Ydt/g9ZpZ6jAmEno/RkNZgEJ/te+RsgzJ75ZPlvFVL9UBMoZy+w?=
+ =?us-ascii?Q?WqnWSCDH1PZ1xPpIO2UWNMEoXpt6E3dYJMzzejHIGlKiHMG3hN6/wZY0DLt1?=
+ =?us-ascii?Q?Idp00dt2wwaLBi/h7FPQkssD1vnMypNzd+V9liVvZ10LfDpHWi+lyx65KFaa?=
+ =?us-ascii?Q?4xsN9KDWTxRwkULm1yAvM24fF4fpHFxPb0AFYdRbwsSOhvWBtFDK42DknyvG?=
+ =?us-ascii?Q?TkD16Ml/Fo76554B0LSfBbAQzW0587ibUwszd3B0wVnA5jzYugNwsQxAy/HJ?=
+ =?us-ascii?Q?qpnorg5Xn+pKSdARTUoEnKGqZYd+r6/SMDa1cqUJasROmZEpU2SCR5Q5lUuS?=
+ =?us-ascii?Q?nnsAlhSb9f9ZaIAmyHwFLqVe+kquAdVo9YeKscBr6i7J5ZqMpIKeqQZDJx3p?=
+ =?us-ascii?Q?kEuFbsYK4mnkAfNG6Bm4SYroI7cUvZosDQyZfinbDkrTKqbM0Z54Sjp+JN5g?=
+ =?us-ascii?Q?/1e+FvhkyBpVFZGsp6ySl7ZKGxrnyhKf7z1ZfAqvvCjKnXHBZ+WW9yf3byMf?=
+ =?us-ascii?Q?s/gMqmcGS8pGzYM/h/PBYukwg2DasD9btsCx+qjDXX2S/CoPqyjJAOpXmW7F?=
+ =?us-ascii?Q?mdI/gTZv2l/Fig/3rGXn4yt807xlkepppDtxBj/O2RssUzqMn8925pY/J9Ze?=
+ =?us-ascii?Q?AGhlZMu5km+5Z0qRrUbmy8DSI25P+2nd6PsDJ7S6/pJ2drWAuQLU19y0ieWA?=
+ =?us-ascii?Q?P0+EWXu791Dftd7InqeRj1u7U9K975Q6GtP1O+vz+dY5w8Yw7cL+1YcmIVX+?=
+ =?us-ascii?Q?NEoYQZ9L78eIcl/GblydPD0J9J2y10EConIsaCZgdq4F8FmV6Nhz3WQGO7DC?=
+ =?us-ascii?Q?qfhSB9OF+thl4/cRP2CFZ+NG3bWxvp3Kr0eQxkxzsWc6qzhWpicxOcm7Q1dE?=
+ =?us-ascii?Q?qGDBneAhFXW7jWC/5z2r1yn8phGBtGlebB3JsPQiN8/9s5MkJKrfrFHhLs2k?=
+ =?us-ascii?Q?bLpbaivnjUwLop5o/dzAwostQxrXMG8HgmANsnTrdEL3kb3+MbBUH4C18qTI?=
+ =?us-ascii?Q?++3gwakD/avdRVbBafZYCOx9I2w15LLjUIYRn2exNULgW8LNWra0FmxkKEf8?=
+ =?us-ascii?Q?8GAdxisxyzqGDuNbDWXZsGTMtk21qUEYZCgZYHlgXlFitGWLP0BaXzjxCvk?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8aa8c2c4-1ee7-4ec9-a627-08dd13360ff8
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Dec 2024 01:01:47.8555 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0210
+Received-SPF: pass client-ip=2a01:111:f403:2818::801;
+ envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-ME3-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,239 +139,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This boot an OP-TEE environment, and launch a nested guest VM inside it
-using the Realms feature. We do it for virt and sbsa-ref platforms.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
------
+> QEMU objects usually have their pointer shared with the "outside
+> world" very early in their lifetime, for example when they create their
+> MemoryRegions.  Because at this point it is not valid anymore to
+> create a &mut reference to the device, individual parts of the
+> device struct must be made mutable in a controlled manner.
+>
+> QEMU's Big Lock (BQL) effectively turns multi-threaded code into
+> single-threaded code while device code runs, as long as the BQL is not
+> released while the device is borrowed (because C code could sneak in and
+> mutate the device).  We can then introduce custom interior mutability primitives
+> that are semantically similar to the standard library's (single-threaded)
+> Cell and RefCell, but account for QEMU's threading model.  Accessing
+> the "BqlCell" or borrowing the "BqlRefCell" requires proving that the
+> BQL is held, and attempting to access without the BQL is a runtime panic,
+> similar to RefCell's already-borrowed panic.
+>
+> With respect to naming I also considered omitting the "Bql" prefix or
+> moving it to the module, e.g.  qemu_api::bql::{Cell, RefCell}.  However,
+> this could easily lead to mistakes and confusion; for example rustc could
+> suggest the wrong import, leading to subtle bugs.
+>
+> As a start introduce the an equivalent of Cell.  Almost all of the code
+> was taken from Rust's standard library, while removing unstable features
+> and probably-unnecessary functionality that constitute a large of the
+> original code.  A lot of what's left is documentation, as well as unit
+> tests in the form of doctests.  These are not yet integrated in "make
+> check" but can be run with "cargo test --doc".
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-v2:
-- move test to its own file
-- add sbsa test
-- check output of `cca-workload-attestation report`
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
 
-v3:
-- build and run test with cca-v4 images
-- factorize nested guest test between both tests
-- remove accel tcg option as it is the default when running tests
-Note: It's a long test and there is a work in progress to understand why
-debug build is so slow (x12 vs optimized).
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- tests/functional/meson.build                 |   4 +
- tests/functional/test_aarch64_rme_sbsaref.py |  70 +++++++++++++
- tests/functional/test_aarch64_rme_virt.py    | 100 +++++++++++++++++++
- 3 files changed, 174 insertions(+)
- create mode 100755 tests/functional/test_aarch64_rme_sbsaref.py
- create mode 100755 tests/functional/test_aarch64_rme_virt.py
-
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 5c048cfac6d..b975a1560df 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -13,6 +13,8 @@ endif
- test_timeouts = {
-   'aarch64_aspeed' : 600,
-   'aarch64_raspi4' : 480,
-+  'aarch64_rme_virt' : 720,
-+  'aarch64_rme_sbsaref' : 720,
-   'aarch64_sbsaref_alpine' : 720,
-   'aarch64_sbsaref_freebsd' : 720,
-   'aarch64_tuxrun' : 240,
-@@ -52,6 +54,8 @@ tests_aarch64_system_thorough = [
-   'aarch64_aspeed',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-+  'aarch64_rme_virt',
-+  'aarch64_rme_sbsaref',
-   'aarch64_sbsaref',
-   'aarch64_sbsaref_alpine',
-   'aarch64_sbsaref_freebsd',
-diff --git a/tests/functional/test_aarch64_rme_sbsaref.py b/tests/functional/test_aarch64_rme_sbsaref.py
-new file mode 100755
-index 00000000000..398562c166f
---- /dev/null
-+++ b/tests/functional/test_aarch64_rme_sbsaref.py
-@@ -0,0 +1,70 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Realms environment on sbsa-ref machine and a
-+# nested guest VM using it.
-+#
-+# Copyright (c) 2024 Linaro Ltd.
-+#
-+# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import time
-+import os
-+import logging
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import exec_command, wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test.utils import archive_extract
-+from test_aarch64_rme_virt import test_realms_guest
-+
-+class Aarch64RMESbsaRefMachine(QemuSystemTest):
-+
-+    # Stack is built with OP-TEE build environment from those instructions:
-+    # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
-+    # https://github.com/pbo-linaro/qemu-rme-stack
-+    ASSET_RME_STACK_SBSA = Asset(
-+        ('https://fileserver.linaro.org/s/KJyeBxL82mz2r7F/'
-+         'download/rme-stack-op-tee-4.2.0-cca-v4-sbsa.tar.gz'),
-+         'dd9ab28ec869bdf3b5376116cb3689103b43433fd5c4bca0f4a8d8b3c104999e')
-+
-+    # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
-+    # and launching a nested VM using it.
-+    def test_aarch64_rme_sbsaref(self):
-+        stack_path_tar_gz = self.ASSET_RME_STACK_SBSA.fetch()
-+        archive_extract(stack_path_tar_gz, self.workdir)
-+
-+        self.set_machine('sbsa-ref')
-+        self.vm.set_console()
-+        self.require_accelerator('tcg')
-+
-+        rme_stack = os.path.join(self.workdir,
-+                                 'rme-stack-op-tee-4.2.0-cca-v4-sbsa')
-+        pflash0 = os.path.join(rme_stack, 'images', 'SBSA_FLASH0.fd')
-+        pflash1 = os.path.join(rme_stack, 'images', 'SBSA_FLASH1.fd')
-+        virtual = os.path.join(rme_stack, 'images', 'disks', 'virtual')
-+        drive = os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ext4')
-+
-+        self.vm.add_args('-cpu', 'max,x-rme=on')
-+        self.vm.add_args('-m', '2G')
-+        self.vm.add_args('-M', 'sbsa-ref')
-+        self.vm.add_args('-drive', f'file={pflash0},format=raw,if=pflash')
-+        self.vm.add_args('-drive', f'file={pflash1},format=raw,if=pflash')
-+        self.vm.add_args('-drive', f'file=fat:rw:{virtual},format=raw')
-+        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
-+        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
-+        self.vm.add_args('-device', 'virtio-9p-pci,fsdev=shr0,mount_tag=shr0')
-+        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
-+        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
-+        self.vm.add_args('-netdev', 'user,id=net0')
-+
-+        self.vm.launch()
-+        # Wait for host VM boot to complete.
-+        wait_for_console_pattern(self, 'Welcome to Buildroot')
-+        exec_command_and_wait_for_pattern(self, 'root', '#')
-+
-+        test_realms_guest(self)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional/test_aarch64_rme_virt.py
-new file mode 100755
-index 00000000000..be240c691c2
---- /dev/null
-+++ b/tests/functional/test_aarch64_rme_virt.py
-@@ -0,0 +1,100 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Realms environment on virt machine and a nested
-+# guest VM using it.
-+#
-+# Copyright (c) 2024 Linaro Ltd.
-+#
-+# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import time
-+import os
-+import logging
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import exec_command, wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test.utils import archive_extract
-+
-+def test_realms_guest(test_rme_instance):
-+
-+    # Boot the (nested) guest VM
-+    exec_command(test_rme_instance,
-+                 'qemu-system-aarch64 -M virt,gic-version=3 '
-+                 '-cpu host -enable-kvm -m 512M '
-+                 '-M confidential-guest-support=rme0 '
-+                 '-object rme-guest,id=rme0 '
-+                 '-device virtio-net-pci,netdev=net0,romfile= '
-+                 '-netdev user,id=net0 '
-+                 '-kernel /mnt/out/bin/Image '
-+                 '-initrd /mnt/out-br/images/rootfs.cpio '
-+                 '-serial stdio')
-+    # Detect Realm activation during (nested) guest boot.
-+    wait_for_console_pattern(test_rme_instance,
-+                             'SMC_RMI_REALM_ACTIVATE')
-+    # Wait for (nested) guest boot to complete.
-+    wait_for_console_pattern(test_rme_instance,
-+                             'Welcome to Buildroot')
-+    exec_command_and_wait_for_pattern(test_rme_instance, 'root', '#')
-+    # query (nested) guest cca report
-+    exec_command(test_rme_instance, 'cca-workload-attestation report')
-+    wait_for_console_pattern(test_rme_instance,
-+                             '"cca-platform-hash-algo-id": "sha-256"')
-+    wait_for_console_pattern(test_rme_instance,
-+                             '"cca-realm-hash-algo-id": "sha-512"')
-+    wait_for_console_pattern(test_rme_instance,
-+                             '"cca-realm-public-key-hash-algo-id": "sha-256"')
-+
-+class Aarch64RMEVirtMachine(QemuSystemTest):
-+
-+    # Stack is built with OP-TEE build environment from those instructions:
-+    # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
-+    # https://github.com/pbo-linaro/qemu-rme-stack
-+    ASSET_RME_STACK_VIRT = Asset(
-+        ('https://fileserver.linaro.org/s/iaRsNDJp2CXHMSJ/'
-+         'download/rme-stack-op-tee-4.2.0-cca-v4-qemu_v8.tar.gz'),
-+         '1851adc232b094384d8b879b9a2cfff07ef3d6205032b85e9b3a4a9ae6b0b7ad')
-+
-+    # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
-+    # and launching a nested VM using it.
-+    def test_aarch64_rme_virt(self):
-+        stack_path_tar_gz = self.ASSET_RME_STACK_VIRT.fetch()
-+        archive_extract(stack_path_tar_gz, self.workdir)
-+
-+        self.set_machine('virt')
-+        self.vm.set_console()
-+        self.require_accelerator('tcg')
-+
-+        rme_stack = os.path.join(self.workdir,
-+                                 'rme-stack-op-tee-4.2.0-cca-v4-qemu_v8')
-+        kernel = os.path.join(rme_stack, 'out', 'bin', 'Image')
-+        bios = os.path.join(rme_stack, 'out', 'bin', 'flash.bin')
-+        drive = os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ext4')
-+
-+        self.vm.add_args('-cpu', 'max,x-rme=on')
-+        self.vm.add_args('-m', '2G')
-+        self.vm.add_args('-M', 'virt,acpi=off,'
-+                         'virtualization=on,'
-+                         'secure=on,'
-+                         'gic-version=3')
-+        self.vm.add_args('-bios', bios)
-+        self.vm.add_args('-kernel', kernel)
-+        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
-+        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
-+        self.vm.add_args('-device', 'virtio-9p-device,fsdev=shr0,mount_tag=shr0')
-+        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
-+        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
-+        self.vm.add_args('-netdev', 'user,id=net0')
-+        self.vm.add_args('-append', 'root=/dev/vda')
-+
-+        self.vm.launch()
-+        # Wait for host VM boot to complete.
-+        wait_for_console_pattern(self, 'Welcome to Buildroot')
-+        exec_command_and_wait_for_pattern(self, 'root', '#')
-+
-+        test_realms_guest(self)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.39.5
-
+--
+Best Regards
+Junjie Mao
 
