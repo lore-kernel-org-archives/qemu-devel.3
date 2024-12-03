@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8894E74AC8
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F664E74AC3
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIXqr-0008RO-Tn; Tue, 03 Dec 2024 13:42:25 -0500
+	id 1tIXuX-0000tZ-Am; Tue, 03 Dec 2024 13:46:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXqp-0008RA-FX
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:42:23 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXuP-0000sw-Ma
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:46:10 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXqn-00082u-Px
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:42:23 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXuN-0008TH-N1
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:46:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=XQ9b/Ny8PW80gAuT3odncp7phVqU47bzPbxWoHfK2vo=; b=btt3HJx/HbszE6x
- 6qNmAh6JMcjTMs/C7gBITEehZn7LM1A6Vb6jnDFd0uGZygief0pRSGLSk3uM64d/akuHGn1/IVd+6
- pHS/PAs5ncuJBNymDdat3Z8AQg94ZKoYhLGtB7GYzKHL7ivLMMT1htYVyJWuSPcradiUPZqbdb6vj
- Ww=;
-Date: Tue, 3 Dec 2024 19:45:23 +0100
+ List-Help; bh=D1M2LitLHQ1QQnmXOaPJF3c4lB+K0gkPJwBIkRgWw0g=; b=f+Id1O5JS5wxVi5
+ b44q4npI9snSxx1zAOJmUNuf3bLbaR3/M+PDECjfC/aW+M1nNTkP43o7DVEZImAtzLScqD0ZGMG/V
+ Hk3O+XEx05ZaqdBh9v1nOCldBe0XKPj82fjqSGWg2n+Q++1+J5Ja5uB/b0owFV+pusr4862n7OerW
+ 68=;
+Date: Tue, 3 Dec 2024 19:49:05 +0100
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, 
  bcain@quicinc.com, philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [RFC PATCH v1 05/43] tcg: Add helper function dispatcher and
- hook tcg_gen_callN
-Message-ID: <szh7qwurfs5jmonqvuy7ibtcywccr7mlnkmjxbrp226pwrm6dt@qaq66cdtbnxr>
+Subject: Re: [RFC PATCH v1 09/43] helper-to-tcg: Introduce get-llvm-ir.py
+Message-ID: <gteafxkqq6lk2nnqascf5jvtzsp5pnacdgn7243ua7jscjrvsz@7jevdtobocw3>
 References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-6-anjo@rev.ng>
- <1e4bfa65-715a-4ac8-958f-48f0f6301218@linaro.org>
+ <20241121014947.18666-10-anjo@rev.ng>
+ <6b087061-fb11-4ac5-aecc-43f3324060df@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1e4bfa65-715a-4ac8-958f-48f0f6301218@linaro.org>
+In-Reply-To: <6b087061-fb11-4ac5-aecc-43f3324060df@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -70,45 +69,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/11/24, Richard Henderson wrote:
 > On 11/20/24 19:49, Anton Johansson wrote:
-> > Adds a function pointer to the TCGContext which may be set by targets via
-> > the TARGET_HELPER_DISPATCHER macro.  The dispatcher is function
-> > 
-> >    (void *func, TCGTemp *ret, int nargs, TCGTemp **args) -> bool
-> > 
-> > which allows targets to hook the generation of helper calls in TCG and
-> > take over translation.  Specifically, this will be used by helper-to-tcg
-> > to replace helper function translation, without having to modify frontends.
+> > Introduces a new python helper script to convert a set of QEMU .c files to
+> > LLVM IR .ll using clang.  Compile flags are found by looking at
+> > compile_commands.json, and llvm-link is used to link together all LLVM
+> > modules into a single module.
 > > 
 > > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > > ---
-> >   accel/tcg/translate-all.c | 4 ++++
-> >   include/tcg/tcg.h         | 4 ++++
-> >   tcg/tcg.c                 | 5 +++++
-> >   3 files changed, 13 insertions(+)
+> >   subprojects/helper-to-tcg/get-llvm-ir.py | 143 +++++++++++++++++++++++
+> >   1 file changed, 143 insertions(+)
+> >   create mode 100755 subprojects/helper-to-tcg/get-llvm-ir.py
 > 
-> I guess I'll have to read further to understand this, but my first reaction
-> is: why would we not modify how the gen_helper_* functions are defined
-> instead?
+> Is this not something that can be done in meson?
 
-Hmm this might be a better idea, and we could call the generated could
-directly without having to go through a massive switch statement.  What
-I have in mind is something like
-
-    #if !glue(OVERRIDE_HELPER_, name) \
-    #define DEF_HELPER_FLAGS_1(name, flags, ret, t1)                        \
-    extern TCGHelperInfo glue(helper_info_, name);                          \
-    static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
-        dh_arg_decl(t1, 1))                                                 \
-    {                                                                       \
-        tcg_gen_call1(glue(helper_info_,name).func,                         \
-                      &glue(helper_info_,name), dh_retvar(ret),             \
-                      dh_arg(t1, 1));                                       \
-    }                                                                       \
-    #endif
-
-and we could emit gen_helper_* for helpers which are translated and
-redefine OVERRIDE_HELPER_* to 1 (would have to be defaulted to 0
-somewhere else).
+Possibly, I'll look into it, not sure it would be simpler though.
 
 //Anton
 
