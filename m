@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E57E64AA6
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63614E64A9E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIT4b-00081O-J1; Tue, 03 Dec 2024 08:36:17 -0500
+	id 1tIT4m-000842-SM; Tue, 03 Dec 2024 08:36:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tIT4Z-00081D-SS
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:36:15 -0500
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ id 1tIT4k-00083T-HY
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:36:26 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tIT4Y-0001GD-AQ
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:36:15 -0500
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-215909152c5so21624295ad.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 05:36:13 -0800 (PST)
+ id 1tIT4i-0001HS-RZ
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:36:26 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-215b9a754fbso8803955ad.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 05:36:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733232973; x=1733837773; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733232983; x=1733837783; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3C9mQ0zqKyWU81Xua9U9FrEq7qcjZ+Cm0wPCJfJYfvI=;
- b=iaMFG3G1iZcbsrgmz5LNdZpIkFoLOm0/5Qyhsw0zonFMHC2ZKd7aYm0EqTxzumbLMb
- OoeQbqdPaROqOacJ6lp9wWRWMm2VBnaz0EU132XlkiEQUyRyFCFLe4J6n69DC5QVWctE
- 9bwY3QYMqWbmfZ6oFmn86zuvzNex6wXwYs7+EmUidUXLJ6dQR+LqScdF3j9RHh4G7fNb
- H57FTSV1CQbUJhpNLrQbLvbTU65sT8YJVZQ7ceFvq1phL5EUKjlJefEYfO0xYi/XeHtl
- QY2Ju47WzgZLt5EVQZ4mV511VPSF1f+4eGlmODv5c6UMHXEiPddb2gk+OkByy+BCVbsj
- JcKA==
+ bh=WqEk4QSdK+ADWOaMOo65vdWqo7DUiTKvO758XSd7V+E=;
+ b=KDE0RaR//01gKbsg6khpDeXfxT0keJWMuRcnmfp9O2sMr9llWLSL6e5k6t/wGsTFsQ
+ /QheXcQ6sx720UhMLMiMIzx1tKXU46/xXtmF0FCI6MzFAvrz2sDzAU6keWMrgC1qQEtH
+ xaVfamN7f60r9ovPQ2vNuoaZp9FFMzdY3bYxqb0k3P4psNcwTMpsuaslxLLjnvSqdL++
+ 8Kgopdx7F8KgkBxASrVSMzpCJGohOr/o0FIFHVKJeRWg2KWBinDPWScCuOTkGt6iYliC
+ cVGMdGhjioOJj85wXiWdUuwCfVhblKF8c66mUcbpi2pwvtAhedM2rLP3CwxBHZhDa31o
+ mo5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733232973; x=1733837773;
+ d=1e100.net; s=20230601; t=1733232983; x=1733837783;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3C9mQ0zqKyWU81Xua9U9FrEq7qcjZ+Cm0wPCJfJYfvI=;
- b=HMC8vSTqnC7rzz1Oemxotu7T4ZNAyUB39qSvE223gqaRZdqZR4MSFey5sXlIpINniI
- s/QYTdshPpQUlVsBLdPDCJpCcBibd5tqduvm+qO2vShjsYlVjCnsNH9iky/DspmrkkGU
- PicnQrz0W0ZGr9g/FQ2DqdZ3bifDI6r/4fk1oJqoUj3eFPvfoxHH0k23u36/0lynao0G
- pLw2rB7zUoD7m0ewaC5RQO2qUc9MxiwIPv99OerWk8otoo3JELFrEqREcZmv55mJ2L2H
- 9Yq7AnIWBqJYE5E6D42rKY/ijRueHbvLVnrJ4Q/7dxJ3IdOKtQObJ9NCF8asU2nlK9KO
- WHzA==
-X-Gm-Message-State: AOJu0Yz8dcFBg4gIzVkPXwOsDpwPo2dOfXhEMXjbDxUrNgKdHWo9JLhx
- MXKxFx68EpN0mbmW4f8LzTfL5QmzCOJQbgEwb/xJ1lX3Vr1NgqMdiMu17+PGTg==
-X-Gm-Gg: ASbGncs6boA2pF/NAtdTlt6TmQoFWuA340r9iVZ/0a8b0XYgmVP7IqQfNf3CCWtU0pU
- rzSU4Y7udL/QpwZ5SNhy1MuDtEvxPrrMo3/QNqsZJQTuX7LgpdooewQ5sO1h/L/6+MaiZMjTAKg
- xtlZrtuWxMAZf1FMF7aF+xjwfMxaLBiEU5gI9h+o3GA3zi3h8aniqfPxqn94Jno6+jjRWykCufb
- XuknT+nVi2hsumWk5rwL8POUXsDRRnbDx8/KkjCqzIMDEgG2zCL3+KKYkg=
-X-Google-Smtp-Source: AGHT+IFzNrbbJ1dlMtfrKzVGEX6Y/ASTpr9pRVL8CXZLJU12ehycssWo+z1vGI/ZrB6H9aTGe6zL/A==
-X-Received: by 2002:a17:902:ea07:b0:215:75a5:f72b with SMTP id
- d9443c01a7336-215bd266391mr31549235ad.53.1733232972631; 
- Tue, 03 Dec 2024 05:36:12 -0800 (PST)
+ bh=WqEk4QSdK+ADWOaMOo65vdWqo7DUiTKvO758XSd7V+E=;
+ b=INgNKbF7NX6tNDYYk3lFeDbN5lSmS3jCfShhY4u5BSCWANxLxR3LLw13eckI3HxMIf
+ Yqyxlnn4QcjqkABbmqjCgbiIgVgwBkHxE64Tnyk3MQtZt5cqRtlwfZS2vEKdykPcIhVe
+ NdzYANZul3L0c29EfO0L2fAidwKd60PW8gugPEuKlPVpB9EYor1COdRyaeNVu7Yj724x
+ av9m1KlsgDwo658hKBrv0W59oNV+l426ImtABpnNOCi2ikLBYqSzBgdwYZKjjrX/kKms
+ FRuUnYA1yYjVi6sz9Ddg5CgQZnkNTrztkrOob7u4dfR1CKIcSw/C6RXtjtLeGoaXbesD
+ PURg==
+X-Gm-Message-State: AOJu0YycySl0ONAW9fcCsb9NtMGHHbamNLT7lOneteoQoyFYyZaUcET0
+ TKwf81Z9X0AmXq1K1wamLG/8Zfa8qUiQE/YcVxuqxxOoQDgR8UhUqlDnivrLJA==
+X-Gm-Gg: ASbGncuUCy2GKWJ0uBLvNus5JvHGNaZcy3dh6FaDfCsD9GNERAoE3Xsol+GcuNfQbxa
+ n9yx9nkXxCrxGDxnd8dVTVTx/fx29hKjRSwz3VrGM7xKe1846sVjhciea4rL7DipTZYFn+jdXY8
+ 86yhEAEb083Qef+GZv5DgyZM4B5yqXqFNmyIa7SMLupQ2SFv3TW+Fxw8BgxGbKT71ENr6mTDjdr
+ RxC6AsSGSwD1uGfM97d1Au4s+WfsWzrvdLcwX8KHn3J/OourfaSxwzuNxc=
+X-Google-Smtp-Source: AGHT+IEYiVCkVYMPqwfp7JdomS9h8enpXN2aA2H25ejNtXt45LIjaAtdgRI1ctC8tkv1eX1vTKeBZQ==
+X-Received: by 2002:a17:903:32cc:b0:215:6e07:e0c9 with SMTP id
+ d9443c01a7336-215bd25580bmr32592225ad.53.1733232983215; 
+ Tue, 03 Dec 2024 05:36:23 -0800 (PST)
 Received: from kotori-desktop.lan ([116.231.112.6])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215810cf18esm44183975ad.242.2024.12.03.05.36.10
+ d9443c01a7336-215810cf18esm44183975ad.242.2024.12.03.05.36.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 05:36:12 -0800 (PST)
+ Tue, 03 Dec 2024 05:36:22 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v2 2/9] vfio/igd: align generation with i915 kernel driver
-Date: Tue,  3 Dec 2024 21:35:41 +0800
-Message-ID: <20241203133548.38252-3-tomitamoeko@gmail.com>
+Subject: [PATCH v2 7/9] vfio/igd: emulate GGC register in mmio bar0
+Date: Tue,  3 Dec 2024 21:35:46 +0800
+Message-ID: <20241203133548.38252-8-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241203133548.38252-1-tomitamoeko@gmail.com>
 References: <20241203133548.38252-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,94 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define the igd device generations according to i915 kernel driver to
-avoid confusion, and adjust comment placement to clearly reflect the
-relationship between ids and devices.
+The GGC register at 0x50 of pci config space is a mirror of the same
+register at 0x108040 of mmio bar0 [1]. i915 driver also reads that
+register from mmio bar0 instead of config space. As GGC is programmed
+and emulated by qemu, the mmio address should also be emulated, in the
+same way of BDSM register.
 
-The condition of how GTT stolen memory size is calculated is changed
-accordingly as GGMS is in multiple of 2 starting from gen 8.
+[1] 4.1.28, 12th Generation Intel Core Processors Datasheet Volume 2
+    https://www.intel.com/content/www/us/en/content-details/655259
 
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- hw/vfio/igd.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ hw/vfio/igd.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 6ba3045bf3..2ede72d243 100644
+index 522845c509..bc18fc8cc0 100644
 --- a/hw/vfio/igd.c
 +++ b/hw/vfio/igd.c
-@@ -59,33 +59,33 @@
-  */
- static int igd_gen(VFIOPCIDevice *vdev)
- {
--    if ((vdev->device_id & 0xfff) == 0xa84) {
--        return 8; /* Broxton */
-+    /*
-+     * Device IDs for Broxton/Apollo Lake are 0x0a84, 0x1a84, 0x1a85, 0x5a84
-+     * and 0x5a85
-+     */
-+    if ((vdev->device_id & 0xffe) == 0xa84) {
-+        return 9;
+@@ -483,8 +483,10 @@ static const MemoryRegionOps vfio_igd_quirk_mirror_##name = {           \
+     .endianness = DEVICE_LITTLE_ENDIAN,                                 \
+ };
+ 
++VFIO_IGD_QUIRK_MIRROR_REG(IGD_GMCH, ggc)
+ VFIO_IGD_QUIRK_MIRROR_REG(IGD_BDSM_GEN11, bdsm)
+ 
++#define IGD_GGC_MMIO_OFFSET     0x108040
+ #define IGD_BDSM_MMIO_OFFSET    0x1080C0
+ 
+ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+@@ -513,9 +515,16 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
      }
  
-     switch (vdev->device_id & 0xff00) {
--    /* SandyBridge, IvyBridge, ValleyView, Haswell */
--    case 0x0100:
--    case 0x0400:
--    case 0x0a00:
--    case 0x0c00:
--    case 0x0d00:
--    case 0x0f00:
-+    case 0x0100:    /* SandyBridge, IvyBridge */
-         return 6;
--    /* BroadWell, CherryView, SkyLake, KabyLake */
--    case 0x1600:
--    case 0x1900:
--    case 0x2200:
--    case 0x5900:
-+    case 0x0400:    /* Haswell */
-+    case 0x0a00:    /* Haswell */
-+    case 0x0c00:    /* Haswell */
-+    case 0x0d00:    /* Haswell */
-+    case 0x0f00:    /* Valleyview/Bay Trail */
-+        return 7;
-+    case 0x1600:    /* Broadwell */
-+    case 0x2200:    /* Cherryview */
-         return 8;
--    /* CoffeeLake */
--    case 0x3e00:
-+    case 0x1900:    /* Skylake */
-+    case 0x5900:    /* Kaby Lake */
-+    case 0x3e00:    /* Coffee Lake */
-         return 9;
--    /* ElkhartLake */
--    case 0x4500:
-+    case 0x4500:    /* Elkhart Lake */
-         return 11;
--    /* TigerLake */
--    case 0x9A00:
-+    case 0x9A00:    /* Tiger Lake */
-         return 12;
-     }
+-    quirk = vfio_quirk_alloc(1);
++    quirk = vfio_quirk_alloc(2);
+     quirk->data = vdev;
  
-@@ -258,7 +258,7 @@ static int vfio_igd_gtt_max(VFIOPCIDevice *vdev)
- 
-     gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
-     ggms = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
--    if (gen > 6) {
-+    if (gen >= 8) {
-         ggms = 1 << ggms;
-     }
- 
-@@ -668,7 +668,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
- 
-     /* Determine the size of stolen memory needed for GTT */
-     ggms_mb = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
--    if (gen > 6) {
-+    if (gen >= 8) {
-         ggms_mb = 1 << ggms_mb;
-     }
- 
++    memory_region_init_io(&quirk->mem[0], OBJECT(vdev),
++                          &vfio_igd_quirk_mirror_ggc, vdev,
++                          "vfio-igd-ggc-quirk", 2);
++    memory_region_add_subregion_overlap(vdev->bars[0].region.mem,
++                                        IGD_GGC_MMIO_OFFSET, &quirk->mem[0],
++                                        1);
++
+     memory_region_init_io(&quirk->mem[1], OBJECT(vdev),
+                           &vfio_igd_quirk_mirror_bdsm, vdev,
+                           "vfio-igd-bdsm-quirk", 8);
 -- 
 2.45.2
 
