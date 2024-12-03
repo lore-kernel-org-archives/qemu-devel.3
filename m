@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1526E74ACF
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33CC4E74ACF
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:40:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIZgi-0001QM-6t; Tue, 03 Dec 2024 15:40:04 -0500
+	id 1tIZh6-0001c8-6c; Tue, 03 Dec 2024 15:40:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIZga-0001KX-1c
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:39:56 -0500
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ id 1tIZgi-0001SM-WE
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:40:06 -0500
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIZgX-0003AR-GI
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:39:54 -0500
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-3ead60cedb7so1477411b6e.1
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:39:53 -0800 (PST)
+ id 1tIZgh-0003CB-D3
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:40:04 -0500
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-3ea49cc8b88so3034783b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:40:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733258392; x=1733863192; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733258400; x=1733863200; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YMdz/R/XzxtV9sRyJPrRUrTNoKD74mGu1MDMytu4Vg0=;
- b=TTiIIk6NaGfk3LhEM/KLPoJQXiWM5kDXTRN650gvoqBggpK8Qk+oUu1hyIz9lE2E9C
- xK2G+aJLKjKoLhBrziUZ/51eR5pUuNlA2JsQPp1HcnpWHFCRXUKCRySXr3C7GsWICXuM
- 81Nx5JIkD4uFhyBP4hFCqhAhU9opK88Q72dr/onvcZWgTPHqGt48YY1vz9AIw8jRH0Gm
- E2OHdy80yCeTJJp+TFnIivsd6WUL1vuhj51uXuIWSNtJn5E3K10pwbInro7vaCddolER
- zfTVLkAi+ULPWPSAHv5cMGsUeV0+h32tKIdid5Y5I2TPAQssmrDKWDNHW9IcQSuaJklf
- yTIQ==
+ bh=KydR7DthtTuF26Sa++zJDQx95A57XILxzyCBnopfb7Y=;
+ b=vzGecq+LZKxbqMgehCDzmK0dbnPbzPu+FG/gjxG1geq1Lprl52OX+Bc7kv8tJ83Yu8
+ OvKrT3PtjcDk3vO4U3Ds54WeS0zajM31SXWwZEOiwromhdjKz+HGLCD60YXqO7aFZDW4
+ M8X7m0Zhl3fcY13yURWJhWzY2b2bg3nC1aUVJaF7ZxauOOWpLao2w4HnlpN/qFfxytW8
+ SVgP9zDSiFu/vT3hgFelneBJkd8cDt/koieSfa37zT1IUqo19xNVIwYZrK/BqZDByK+k
+ o5dd6yMTGtZ6/zhfRHETn9cF6krz998fxNvFPGHyAe/ffIKWwtC5sc4WYFHGocfdVII8
+ mUFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733258392; x=1733863192;
+ d=1e100.net; s=20230601; t=1733258400; x=1733863200;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YMdz/R/XzxtV9sRyJPrRUrTNoKD74mGu1MDMytu4Vg0=;
- b=bkhQ0WZsON8uB3XCcdY7NQWpPMj7GLkZAXhc4HNCJESQWzAcdrol4Eglezywx13QWJ
- +aeC/knCBKnvZBFlQYLgXAlQBBxmeLHpAh8qbIooOMamSDOtZ5EbomEuDB1pjFm5ZaMO
- ZdC6LOER8uvSxMm8hr3KUpaM+Me2Mt1dkctqt4e/uECBX4qu2RjnBs53m4ic6eX+PtpP
- Kf/QLHZ0XcFfh817l/CunsD8+ZvB6VH66HIcbOXAdIBIfGL30s5u1MIaTZ/Pr/eifa+W
- tBDRT7ORMs66cgbXAgY9qUaxm6NRZlVmo0wehxYPjCanzZiPj0HqCXCth716syVZZ0pK
- v7BA==
-X-Gm-Message-State: AOJu0YyiGe36MYNIsQgWEZWYk/yxUDDl42HM46RohNCE9wGWbjbK5K4G
- ZiLm1s+t8ctcQ+0ZDe5g2D8ka6tFTA+Nz47hjYX24opOXURwHmxDUmHMeseKgtZJIiUvhD097G1
- z8Ns=
-X-Gm-Gg: ASbGncvawp/8hlufWCVKZzRyOVyMEq/C+aNpL1uboTqVuVoDUaM83cwoJ1sutgv9iE7
- ZhZO56GZOSiA1V5B/KG44ALFmRHFQkBStl7BND/v5H6D/BdlPlz5eN9ZAvXmBUI5qOKNeOHLXEL
- ThGTubd4pF/2XQ3PbKUpRdLg4CIjEmnmqfS51xSMJ01GUFAf66qigk1rthowonAPkUsNj/Bboi5
- sS/YJ1B4FiqmrakiwG9dXXCC58Lef1/l3ybDz7unP4raYb3X5Fs1eNbwo71mf3syHU7L2h7zJfq
- 4OQ24T4+snMFiy8/Ly9Z/YPL8BPkaCPWHyAk
-X-Google-Smtp-Source: AGHT+IFeU7g93isJmMqUzcz0qL/hCV0STZ1GuM0JBtlmegJowVUa+9eDBbc9lV+DAkaUnfyD+4TAmw==
-X-Received: by 2002:a05:6870:ed8d:b0:287:4904:7125 with SMTP id
- 586e51a60fabf-29e885f8734mr4425833fac.14.1733258392167; 
- Tue, 03 Dec 2024 12:39:52 -0800 (PST)
+ bh=KydR7DthtTuF26Sa++zJDQx95A57XILxzyCBnopfb7Y=;
+ b=rtn44EsQYqTq6bMv1jbsxXl2QhXdGDF8chVNAQs06l4z/QnIh++GdwLE7SHzG6xVmA
+ u0CDTN8EpoKykXAvNNZvd0t7n41z1n/RuT3VzeWD8cwO4nWi0rkU86UiSyDvQpCLn+Xw
+ ff2n3wjL3jI0dFCKBOigX2qTNwB0OGKqIZvDat9/i9BiQRXK/BBK0PKlHEwI3tMjNnF7
+ EovgBwN/SBwBDpJmjWpHSCFo9XoL/G9NMdtJrEBB7pNXPjgyfEAy28jJBiu8/E9zC/Qa
+ dnSNLuxRGdw994POX0NHNK4Ou/vAwyAFFe277eZpQzZXcDDE25WXz/hMLPVrfxwITqo9
+ O2pg==
+X-Gm-Message-State: AOJu0YxkrV4dJXRaGieHNWr0sgAh4p5+wsbBYz6v8NzyCGWvl265x29T
+ BlDt41iv1p8Itj58+g3mEfQsTnS8T1xt/jhFs5jeuMKZpPhlXrc76b66yp9pNDpDm8pgqA4Un23
+ ZK9g=
+X-Gm-Gg: ASbGnct+6HyMNSdSlCXv6o5QOX5q3fNf4KeERqc5gbYSRl+I+aWH4ZtF3T6sETo+YB0
+ 58313Wg4EqIw2bGm0R3Aa0peXLIBCvYJEfOVRMCMBSHYuDhDNQHD9z4gCQbnA9MW0iEfz/ocIVA
+ KJT4AgmPN7KYrqcKNpofyGBTqsN6uTZIg9bbrQ7JlPYmfUgtxPWypfigwzMdfIGMsS5uPcwXOlq
+ Rj6iK+p/qS9mbIEeSYgjStbgHaQUTOpLIqsEm7VhRHU4JZqGFnVCaiUxdttN/7DKQMO1tLi6UTK
+ +eaf75Cn9fKBpSB7GaK6vDg1pp5rJmfdnOLZ
+X-Google-Smtp-Source: AGHT+IEmBZelmxcyorYQDlDbrjlVFtWUngVzI4bXUe5KgnJqx2l+83M8zRiQT1hqUMC0wfpUSXHb4g==
+X-Received: by 2002:a05:6808:191e:b0:3e7:9f1f:b84a with SMTP id
+ 5614622812f47-3eae4f87a19mr3559095b6e.21.1733258400045; 
+ Tue, 03 Dec 2024 12:40:00 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29e3ae09f25sm2684018fac.49.2024.12.03.12.39.51
+ 586e51a60fabf-29e3ae09f25sm2684018fac.49.2024.12.03.12.39.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 12:39:51 -0800 (PST)
+ Tue, 03 Dec 2024 12:39:59 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH 01/11] target/arm: Copy entire float_status in is_ebf
-Date: Tue,  3 Dec 2024 14:39:38 -0600
-Message-ID: <20241203203949.483774-2-richard.henderson@linaro.org>
+Subject: [PATCH 09/11] softfloat: Share code between parts_pick_nan cases
+Date: Tue,  3 Dec 2024 14:39:46 -0600
+Message-ID: <20241203203949.483774-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241203203949.483774-1-richard.henderson@linaro.org>
 References: <20241203203949.483774-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that float_status has a bunch of fp parameters,
-it is easier to copy an existing structure than create
-one from scratch.  Begin by copying the structure that
-corresponds to the FPSR and make only the adjustments
-required for BFloat16 semantics.
+Remember if there was an SNaN, and use that to simplify
+float_2nan_prop_s_{ab,ba} to only the snan component.
+Then, fall through to the corresponding
+float_2nan_prop_{ab,ba} case to handle any remaining
+nans, which must be quiet.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/vec_helper.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ fpu/softfloat-parts.c.inc | 32 ++++++++++++--------------------
+ 1 file changed, 12 insertions(+), 20 deletions(-)
 
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index e825d501a2..ad6f26545a 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -2813,25 +2813,19 @@ bool is_ebf(CPUARMState *env, float_status *statusp, float_status *oddstatusp)
-      * no effect on AArch32 instructions.
-      */
-     bool ebf = is_a64(env) && env->vfp.fpcr & FPCR_EBF;
--    *statusp = (float_status){
--        .tininess_before_rounding = float_tininess_before_rounding,
--        .float_rounding_mode = float_round_to_odd_inf,
--        .flush_to_zero = true,
--        .flush_inputs_to_zero = true,
--        .default_nan_mode = true,
--    };
-+
-+    *statusp = env->vfp.fp_status;
-+    set_default_nan_mode(true, statusp);
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index de51097dcf..099f1c48ef 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -39,10 +39,12 @@ static void partsN(return_nan)(FloatPartsN *a, float_status *s)
+ static FloatPartsN *partsN(pick_nan)(FloatPartsN *a, FloatPartsN *b,
+                                      float_status *s)
+ {
++    bool have_snan = false;
+     int cmp, which;
  
-     if (ebf) {
--        float_status *fpst = &env->vfp.fp_status;
--        set_flush_to_zero(get_flush_to_zero(fpst), statusp);
--        set_flush_inputs_to_zero(get_flush_inputs_to_zero(fpst), statusp);
--        set_float_rounding_mode(get_float_rounding_mode(fpst), statusp);
--
-         /* EBF=1 needs to do a step with round-to-odd semantics */
-         *oddstatusp = *statusp;
-         set_float_rounding_mode(float_round_to_odd, oddstatusp);
-+    } else {
-+        set_flush_to_zero(true, statusp);
-+        set_flush_inputs_to_zero(true, statusp);
-+        set_float_rounding_mode(float_round_to_odd_inf, statusp);
+     if (is_snan(a->cls) || is_snan(b->cls)) {
+         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
++        have_snan = true;
      }
--
-     return ebf;
- }
  
+     if (s->default_nan_mode) {
+@@ -57,30 +59,20 @@ static FloatPartsN *partsN(pick_nan)(FloatPartsN *a, FloatPartsN *b,
+ 
+     switch (s->float_2nan_prop_rule) {
+     case float_2nan_prop_s_ab:
+-        if (is_snan(a->cls)) {
+-            which = 0;
+-        } else if (is_snan(b->cls)) {
+-            which = 1;
+-        } else if (is_qnan(a->cls)) {
+-            which = 0;
+-        } else {
+-            which = 1;
++        if (have_snan) {
++            which = is_snan(a->cls) ? 0 : 1;
++            break;
+         }
+-        break;
+-    case float_2nan_prop_s_ba:
+-        if (is_snan(b->cls)) {
+-            which = 1;
+-        } else if (is_snan(a->cls)) {
+-            which = 0;
+-        } else if (is_qnan(b->cls)) {
+-            which = 1;
+-        } else {
+-            which = 0;
+-        }
+-        break;
++        /* fall through */
+     case float_2nan_prop_ab:
+         which = is_nan(a->cls) ? 0 : 1;
+         break;
++    case float_2nan_prop_s_ba:
++        if (have_snan) {
++            which = is_snan(b->cls) ? 1 : 0;
++            break;
++        }
++        /* fall through */
+     case float_2nan_prop_ba:
+         which = is_nan(b->cls) ? 1 : 0;
+         break;
 -- 
 2.43.0
 
