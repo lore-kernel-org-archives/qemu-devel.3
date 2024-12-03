@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EEEBE6C61A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 09:22:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C671E6C61A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 09:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIP6j-0005ZH-Vi; Tue, 03 Dec 2024 04:22:14 -0500
+	id 1tIP6x-0005fs-AZ; Tue, 03 Dec 2024 04:22:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIP6h-0005YL-9c
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:22:11 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIP6s-0005eR-Pb
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:22:22 -0500
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIP6e-0002ev-Q6
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:22:11 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5d0bf77af4dso4365781a12.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 01:22:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIP6r-0002gR-8i
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:22:22 -0500
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-53de92be287so7765032e87.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 01:22:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733217727; x=1733822527; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733217738; x=1733822538; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QhfmnQV2U1yeLbQ0YN69JuJChLdIfKrfDAxolXgPuaM=;
- b=uRhwpA7ilvMbYlQdYPP3UH4zf3LyoyZavwMwXOKCx733SvjQ5oKsp0f4ft1R7kRJUh
- OzMKbxbK7IxOga66hne5FwGPk2/57EhqMa/FArcpdAl2nSMvIx0RO6HF50+TVUmFPt/L
- SjH+42QnHnIrAZmNzsUJryRd8z3uy6Wt2tjzgbRnHyDVWSxTji/Ab4x04RpkUbzQwi26
- y9CFkwidMQae0toyegW5X7x6RIcyuup9LGdEWAoZwfNhfWLyTX+8iDPsdK0qqQJSCxmT
- VZgGbI9brR78ZOx/JvckZaIgxYBzDj44uYCHOYwEO7uo8PAJNKJ5uoKrTKuFVbkhiDis
- k+6w==
+ bh=7Z0cleQPrNy9NjZu27Yx3P0Ha1Flw6gQBqfbwRAF2Ak=;
+ b=Pc4YCdmPZUhHTeD1/Km4Uw7qWk2LiwV/pRWaVuzftMIiyyV6jPshU9VzHM1sB27s+M
+ pvDDdsENBb9xrMuRdaJBp4kSsdKrpjozJC2rZTN+HV192ThE8aSxb+m9nkfOIh1Q50Ck
+ zA+PuMZJoeVNf96jk4fbBSXgBZhW0VOQbn03s1aKCr2Cs82BiuEV//6RkeYlCM+E8Kxb
+ ziqZrlCqejENofkhyUJqPhhXeSg2ElhLT2KoaBlrJK4MXgnCn5geBnGSSFWdjABV1U9h
+ umWNFheXy6xv3Elwacy35DhqTAKBJck+9t2VtEgrFCUbIN7sNbc5+o6EdK1ah7XfBPgd
+ HDow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733217727; x=1733822527;
+ d=1e100.net; s=20230601; t=1733217738; x=1733822538;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QhfmnQV2U1yeLbQ0YN69JuJChLdIfKrfDAxolXgPuaM=;
- b=BbDgDp7P5zVhg3rlGXDrpxXaPsayT1hYbm2YDbbYym8cEP3WSLUqq5sqxKhdqZ0fUX
- WJDb5Hz/eoxZY61ZigD3X8enpWW/KVnl+Z7u+l/Yu3yxngUgJugyDWdlFE0ZCjdU5n9a
- x50iJhkdAi0RQWTH6DOBo9IUnV6dguer9n1cT88ayTJY2NNW5SwVKn76p1Bfwy2JUA7O
- TclVfmFCuLudzHbf3e1+SxvMr1NFCFLtSOT0r6nQ5ivMkLHliFm8mORS4EMjGnuESJTw
- 7kJ1diMeTmp0I6mmSOksBDAfxDzGpHKZpC/be/Slitpcucvdzghr4oFlNHTkj7TEGVBm
- 3maA==
-X-Gm-Message-State: AOJu0YwgHjIdqCJxHZ/9fUsagn30FG0hln4XgKt1eaqymCBYUE07xXGJ
- egjOTCLemNUjmdb8mablphc15TkuGcM2OFyzkRiO1H4aoL0BAEWOuK1tIHjm/u7IqMM+6UCJnjN
- 5Ous=
-X-Gm-Gg: ASbGnctlAoIRoF48uqVXa9T6FN4++TIeEuy9nWU/5Zq3yWqOJA/ZYafhPbBegp2SNMx
- Wjrz1l4Fivl1siYgU7+Z4EWhd+ZKjY5cvOvzbys5sFmoeQE9xcvVwpeUys6E0QWW/eDpw6bXCo5
- YbzK9G+KdBOqF+XZ3O4PXZAsUToCqnRSWL5I3x7mezWs8WSVi9mTySOePhiODRKccyPoFPAVemv
- SozBlmWphyMKqST6WfWaWP6a3JTEhXfAyXSHd+YzYDabkcOAvfCMSBVqr6tHX6YNghmqaZK
-X-Google-Smtp-Source: AGHT+IExs5Yi7XHHfGv+VoO8nUw6diCtB41A7VJ/kLqxsUAKXSiS5Jv3sEFudcXPJVh9yDPwSljpgA==
-X-Received: by 2002:a05:6402:518c:b0:5d0:abb8:799 with SMTP id
- 4fb4d7f45d1cf-5d10cb4e1ccmr1719770a12.7.1733217727075; 
- Tue, 03 Dec 2024 01:22:07 -0800 (PST)
+ bh=7Z0cleQPrNy9NjZu27Yx3P0Ha1Flw6gQBqfbwRAF2Ak=;
+ b=riSl0sINd1TfHipVo+1PmFCZrQQJ0nUL1ei+yk0wTo+n5nFGbp9UekWokQKSTYtmzI
+ KJ+5dubeR3s5WEHl2jtLNQipGOPmQ8ZX3dfAeD7P8i3o0hpTph6bTkZEw2hshcu5aFCK
+ v27oSife/WleuIL08bUTw4exHz5vje8l3e8o0+JP85hcemjRMzT0Pdvi0eabui0USWW3
+ ER4MHiI99QiK/Gbj+YdPzvAbL7dybf5CJ9lOW+C+e36yUZ2VwrngatK3UWG/PJVrqSZB
+ ryBkmT/a43ybhIDDMfs41lMRfHru2gevfJ+3i78YvXQIy2EhXKO2401M2YehoATDEQWf
+ JcZg==
+X-Gm-Message-State: AOJu0YySavVTg2eUAxI9ErKI014n3hWDco233HCzqstmQaWGnpT4/iBn
+ W+erGawdfDYCWo3Np20lcJHQOjYEDLOcecqSOq/4wgWUfamJPs6oB4KtfCuz/1RBWHHNYnBH3zJ
+ 4Jyo=
+X-Gm-Gg: ASbGncuLyXND1jbESm3z9WLKL/97TLOqRb3XR6oVOci1lMGy6WYjEvwAL7yMhHmHULI
+ R7lRSnyAqPTyzOYbmrfThnpFeb3HeiFXfWYhWc54fXN3E8hn0DYqTspoH2tJdwibE6RhaRKS3yi
+ mUB24PWssnVnTWZ61srkc41Q11BsXH/DEpoM02btAwAsjwMSwpMtDogn4YpCutliORNj/7NwCJO
+ /UwYwOHBVWXBs5ZFaBwO11RtAD8ewO5WWyKLuzgX9Akm69NVWYtAfEsuy5TjkP4o7RxOuwR
+X-Google-Smtp-Source: AGHT+IFKXdzCHgoYrbBgxEetwk2wWIxXomwv6Wa0ZHXf5sB1MUtHIOwB2t+dSu80nFR8vz7SoiVkxQ==
+X-Received: by 2002:a05:6512:124f:b0:53d:ed0a:8113 with SMTP id
+ 2adb3069b0e04-53e129fef1amr1251543e87.14.1733217738255; 
+ Tue, 03 Dec 2024 01:22:18 -0800 (PST)
 Received: from localhost.localdomain ([176.187.209.146])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d0c8dc9b8asm3868557a12.17.2024.12.03.01.22.05
+ a640c23a62f3a-aa5997d5625sm600599666b.63.2024.12.03.01.22.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 01:22:06 -0800 (PST)
+ Tue, 03 Dec 2024 01:22:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -69,18 +69,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/7] tests/functional/test_virtio_gpu: Remove legacy '-machine
- foo, accel=bar'
-Date: Tue,  3 Dec 2024 10:21:48 +0100
-Message-ID: <20241203092153.60590-3-philmd@linaro.org>
+Subject: [PATCH 4/7] scripts/device-crash-test: Remove legacy '-machine foo,
+ accel=bar'
+Date: Tue,  3 Dec 2024 10:21:50 +0100
+Message-ID: <20241203092153.60590-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241203092153.60590-1-philmd@linaro.org>
 References: <20241203092153.60590-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,40 +107,40 @@ Since commit 6f6e1698a68 ("vl: configure accelerators from -accel
 options") we prefer the '-accel bar' command line option.
 
 Replace '-machine foo,accel=bar' -> '-machine foo -accel bar' in
-functional tests.
+the device-crash-test script.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/functional/test_virtio_gpu.py | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ scripts/device-crash-test | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
-index d5027487ac4..cc0ec234861 100755
---- a/tests/functional/test_virtio_gpu.py
-+++ b/tests/functional/test_virtio_gpu.py
-@@ -61,7 +61,8 @@ def test_virtio_vga_virgl(self):
-         self.vm.set_console()
-         self.vm.add_args("-cpu", "host")
-         self.vm.add_args("-m", "2G")
--        self.vm.add_args("-machine", "pc,accel=kvm")
-+        self.vm.add_args('-accel', 'kvm')
-+        self.vm.add_args("-machine", "pc")
-         self.vm.add_args("-device", "virtio-vga-gl")
-         self.vm.add_args("-display", "egl-headless")
-         self.vm.add_args(
-@@ -118,10 +119,11 @@ def test_vhost_user_vga_virgl(self):
-         )
+diff --git a/scripts/device-crash-test b/scripts/device-crash-test
+index da8b56edd99..2b139e29ba0 100755
+--- a/scripts/device-crash-test
++++ b/scripts/device-crash-test
+@@ -295,7 +295,10 @@ class QemuBinaryInfo(object):
+         self._machine_info = {}
  
-         self.vm.set_console()
-+        self.vm.add_args('-accel', 'kvm')
-         self.vm.add_args("-cpu", "host")
-         self.vm.add_args("-m", "2G")
-         self.vm.add_args("-object", "memory-backend-memfd,id=mem,size=2G")
--        self.vm.add_args("-machine", "pc,memory-backend=mem,accel=kvm")
-+        self.vm.add_args("-machine", "pc,memory-backend=mem")
-         self.vm.add_args("-chardev", "socket,id=vug,fd=%d" % qemu_sock.fileno())
-         self.vm.add_args("-device", "vhost-user-vga,chardev=vug")
-         self.vm.add_args("-display", "egl-headless")
+         dbg("devtype: %r", devtype)
+-        args = ['-S', '-machine', 'none,accel=kvm:tcg']
++        args = ['-S',
++                '-machine', 'none',
++                '-accel', 'kvm:tcg',
++               ]
+         dbg("querying info for QEMU binary: %s", binary)
+         vm = QEMUMachine(binary=binary, args=args)
+         vm.launch()
+@@ -358,7 +361,9 @@ def checkOneCase(args, testcase):
+ 
+     dbg("will test: %r", testcase)
+ 
+-    args = ['-S', '-machine', '%s,accel=%s' % (machine, accel),
++    args = ['-S',
++            '-machine', machine,
++            '-accel', accel,
+             '-device', qemuOptsEscape(device)]
+     cmdline = ' '.join([binary] + args)
+     dbg("will launch QEMU: %s", cmdline)
 -- 
 2.45.2
 
