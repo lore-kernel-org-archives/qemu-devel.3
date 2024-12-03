@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21CE2E74AC8
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F820E74AC3
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:48:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIXvd-0001iI-8S; Tue, 03 Dec 2024 13:47:21 -0500
+	id 1tIXw9-00023n-6R; Tue, 03 Dec 2024 13:47:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXvb-0001hk-CN
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:47:19 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXw4-0001xn-Bd
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:47:48 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXvZ-00006m-Vk
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:47:19 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXvz-00008O-PH
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:47:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=keCj+pI9sEPA/mbo64Y4U0SaqQ/Buxo9VXYUOLPDB1k=; b=HIaBMqPj9EXh0Pr
- YZ9t2wUUOHHzMgm4gXx+sKzJrASfkiyYhN7AuEvxosvtDdd4ye52ucLZxdjP5ZUNsSH//aevgC3WS
- g2sGhCG9UZxroVL+Ey3y9XdTJNq3BrBSS11L5Bi/5L6X6cNXA1Aj2etjlyFMw0bzlU7ABcK1TSIUG
- x8=;
-Date: Tue, 3 Dec 2024 19:50:20 +0100
+ List-Help; bh=CklkM6S5h4Kst2DXfb2+yNUzhSDwHpfm+sATlT6rj5c=; b=KFuhrwVIR3J1vZr
+ 0kQt7l7YtP7KZhM7+2UGJXgg4tovmFp0WoMsFcBU9lzZ0K5ypvqE0ZT2MffmHlmLqNsC2xxlWnqI/
+ 2f9YeL++heTdqRr7cM26zTam6Wz8sO8HLRObCf3wFk2z7f449qZOoaaJCpBZPFCkkOpRIAcH0VQ7P
+ 1I=;
+Date: Tue, 3 Dec 2024 19:50:45 +0100
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, 
  bcain@quicinc.com, philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [RFC PATCH v1 28/43] helper-to-tcg: Introduce TcgType.h
-Message-ID: <w2jmg53tnm3xuloqeegutumt5yf6rl3q5dnfaucd5rjcfi25uj@kyz7y5wk2cdq>
+Subject: Re: [RFC PATCH v1 34/43] target/hexagon: Add get_tb_mmu_index()
+Message-ID: <uk4zvjo7222a5yox57yt5bdqwzz2u5dw7htd4oyl7eg4lizfid@xrrzbkeq7sfz>
 References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-29-anjo@rev.ng>
- <974f626c-4f51-481e-8e7c-93e8624b1424@linaro.org>
+ <20241121014947.18666-35-anjo@rev.ng>
+ <cef19610-7578-4e5f-809e-ab449fc7b710@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <974f626c-4f51-481e-8e7c-93e8624b1424@linaro.org>
+In-Reply-To: <cef19610-7578-4e5f-809e-ab449fc7b710@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -68,29 +68,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/11/24, Richard Henderson wrote:
-> On 11/20/24 19:49, Anton Johansson via wrote:
-> > Adds a struct representing everything a LLVM value might map to in TCG,
-> > this includes:
+> On 11/20/24 19:49, Anton Johansson wrote:
+> > Adds a functions to return the current mmu index given tb_flags of the
+> > current translation block.  Required by helper-to-tcg in order to
+> > retrieve the mmu index for memory operations without changing the
+> > signature of helper functions.
 > > 
-> >    * TCGv (IrValue);
-> >    * TCGv_ptr (IrPtr);
-> >    * TCGv_env (IrEnv);
-> >    * TCGLabel (IrLabel);
-> >    * tcg_constant_*() (IrConst);
-> >    * 123123ull (IrImmediate);
-> >    * intptr_t gvec_vector (IrPtrToOffset).
+> > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > ---
+> >   target/hexagon/cpu.h | 12 ++++++++++++
+> >   1 file changed, 12 insertions(+)
+> > 
+> > diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+> > index 764f3c38cc..7be4b5769e 100644
+> > --- a/target/hexagon/cpu.h
+> > +++ b/target/hexagon/cpu.h
+> > @@ -153,6 +153,18 @@ static inline void cpu_get_tb_cpu_state(CPUHexagonState *env, vaddr *pc,
+> >       }
+> >   }
+> > +// Returns the current mmu index given tb_flags of the current translation
+> > +// block.  Required by helper-to-tcg in order to retrieve the mmu index for
+> > +// memory operations without changing the signature of helper functions.
+> > +static inline int get_tb_mmu_index(uint32_t flags)
+> > +{
+> > +#ifdef CONFIG_USER_ONLY
+> > +    return MMU_USER_IDX;
+> > +#else
+> > +#error System mode not supported on Hexagon yet
+> > +#endif
+> > +}
+> > +
+> >   typedef HexagonCPU ArchCPU;
+> >   void hexagon_translate_init(void);
 > 
-> Why would you map TCGv (the TARGET_LONG_BITS alias) rather than the base
-> TCGv_i32 and TCGv_i64 types?  This seems like it would be more natural
-> within LLVM, and take advantage of whatever optimization that you're
-> allowing LLVM to do.
+> I suggest placing this somewhere other than cpu.h, as it's private to the
+> translator and its generated code.
 
-No you are correct, we map
-
-  IrValue + 32-bit size -> TCGv_i32
-  IrValue + 64-bit size -> TCGv_i64
-
-I was a bit vague in the commit message.
+Makes sense!
 
 //Anton
 
