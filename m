@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C776E74AD1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F4FCE74AD2
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:42:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIZh3-0001bp-DJ; Tue, 03 Dec 2024 15:40:25 -0500
+	id 1tIZgu-0001Yu-3z; Tue, 03 Dec 2024 15:40:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIZgd-0001LU-2h
+ id 1tIZgd-0001LT-2E
  for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:40:00 -0500
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIZga-0003B7-VH
+ id 1tIZga-0003As-UV
  for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:39:58 -0500
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-29e61fcc3d2so2551078fac.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:39:56 -0800 (PST)
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-29e5bf419ebso1564515fac.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:39:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1733258395; x=1733863195; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VtJU01uIPGdmdncl+3eL+uuul8VbLmsEdgS8yMmO9ow=;
- b=VbhBZIMAD/9Q6LJbcateQyqFgJJcYmArYdsGIRKYMX4smux/tHs3e6f9wBcdmGJ/mH
- i0LMp8xypiszFbkdi2F4/t/B8j3eEeZHYmqwAgPc3ZGbynFWAapWHrwwyx7PoVONHUWg
- StAQwfAKpPE8R2jhDFsF/3X6mXmJSmuU/S0DFsF9wHDjmUjtWGDLx/D5R+YDufduK1l8
- evZ7SqofsAOXr3CgiPgj3l6beOylWkmbGTVHfaNlaU7E8C45P7praVaUTd8dPQFO6miq
- LtfHcnxwqgY6anexMJUgd+4h05FceI+afHxNuGXX05yM0Quh1SY9vbKTuwRfj7ZeuOa/
- ArGg==
+ bh=HxoUNyLc0dEDDQUspYmsgb0BaeY/3JixWBMZpMBDUos=;
+ b=p/drL0ThAQJr0KFGIuGN9wo88HHdKek9SKBBvVsiAUvsgbDMiEPqANFG/Thu6Ls15+
+ IRz3+vyQMTwNAeRjSVpjdM1Amm1JzyGuZuGVjavg2kvxmeIXG5bk6TAyUDf8uRNejLT9
+ 9pt/8JGfh97I5Lsn0sb7vorj1K7K6N6HKnPOt73YcZEKwLzPKt2pdq8vqcDyrBvcMESL
+ zo5KDY3S4bMfLLY7Anxfm167NBJ2tzbsWG9joGELIJc0z/1hz1oaeer8KNKTA2vcavJ8
+ 5bT71ITohoF0HgM0ztoT9ScG6j3E5SRpz8yP+l+nqQ5bscKNlyASJxsK/WIyvIK8Fbok
+ IrrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1733258395; x=1733863195;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VtJU01uIPGdmdncl+3eL+uuul8VbLmsEdgS8yMmO9ow=;
- b=bkiVeUdsFW6wkphJZEQrG2uSoS2rNO6cqAJD+m+yVWvHYA4ZRJ6jdzcEEDwjBtiIij
- vYo0IpfsBOiMpgFAjjYKAenMEJwytLGtMM7Ybo+qo/MT16RiHBNKspimDgfFYlR4O/x+
- SDBZbWyA44SQIuyZ6IHcAQucc3E1fwzg4nlsyAMMUvO9Exw/6UXi9rUdMX+esRwMTQmc
- xFndwD2DxV/EMvvcHl1JBgror7+c2AtLcbnvy4Xi/bOYBeeRu4WjR/lGJqk2vDGwVlpD
- 3kunL/WfX4QETOk4MXKMvVMzOpaM/av9bI6rsVKW8cHZQ0edJpYorg4if1V75xRNAljC
- SYjA==
-X-Gm-Message-State: AOJu0YyWZE1+3/LbQRROaJaylWAVRvmUrF8Mtra7EXfnFJn+l94/nEaq
- vOPUldwhI6ngCiJI81vKWuzE5Dqufg7hL2tXzBn6Gtg+n4DobqFu10jcfgIQ8jXUChq+hQZ8rgP
- A2SM=
-X-Gm-Gg: ASbGncu0xL2LjRxX1bbo8IKITudx8WaFBjZAPfGEX+aSwjThu27tyo6t6NeazrlZNws
- e6yO4/sTMaPoWl+TowvRgcYclKW2Cj7kIbcE4L9vK/6kSJ1F+fYC6HJ8wk2aCMTV2lhhLR7YRgu
- eKWR2nMVFIDIYCKslU0KwMIZSgF58Uu76N5Md1WaiAKLOMO50x5xKGngQ/FxtoUmJp8tN2LeUAA
- QmL+5Rph9jKiNH1oZB0njNSvV5aEvD1GFdpV/tNpsPmHJHfOA8Qc6AMSX7XOPW9gfWbDzwfXEzx
- tICCfhqtczStROAbEb+Tr+bSFfTn/0BjRTc3
-X-Google-Smtp-Source: AGHT+IGKfv25Si/v1HbhMq25gnbOpgjiiCcSQRK37M2u77qAl/UUYV07Y0m6oHKfAOjDw649ocJwrg==
-X-Received: by 2002:a05:6870:4944:b0:29d:c5e8:e41f with SMTP id
- 586e51a60fabf-29e88576409mr4735052fac.5.1733258395680; 
- Tue, 03 Dec 2024 12:39:55 -0800 (PST)
+ bh=HxoUNyLc0dEDDQUspYmsgb0BaeY/3JixWBMZpMBDUos=;
+ b=Ej3dl1yMs+MqzNNX4RyT651tWu1kmbSYrXYnRGQla2dCBlcV3ASa3QUq5ThfFljuoO
+ syTUmvdbblRHwJwOAO8SYAWl4187Njw8KWRhBGpipUz6Hf+NWS9ZVCd8UAY8s57oOBRx
+ 69RZTNyHZwh/aegWOIthhs/5I8V2eNz7wbXkJMGOekfyKAdRc95DQarMerR5TBsTn8nG
+ xxGPQlHJJR/fni0LTYHbiits3yXW6AGPF6RLElXAC8vpE7tUqy9pnYh7vQ0ub7R08FMw
+ ec6lFk2MNx6C1DCpXBT0miHJOrOy1Ro0stwD/bX9hzpMOhqEOLAEqfVwc1l4eWIcbY7/
+ E7qg==
+X-Gm-Message-State: AOJu0YxjOvyRFu9338/DD98lrGM9r0guMJWiicpwzYL8N4QLjD8VE6CT
+ 3+VSkS41bLYMPejqQPUeGKfvHnyl9jaBBjLJBMYHg63GmV7pki9DMu7elgC+ibpXF7Vxz+5ZWC4
+ Q4iI=
+X-Gm-Gg: ASbGncuAFjJenIWjnbEhW96VktYNpgfaCQaph+f3Ps69C/p0Nl0JQVPmYUzQjqLxd0r
+ ZjinwZnR0NmVG9HpN5n09he9BVRmTd+4Pfe1UvUDFb90x8QwRrjt91H7B2qxTibtf6Ect/AsCXB
+ NLbnU28mqu2KhkVl/D9Jn6M9SQH71Vlqgz/uQwXd5y13v2syeQrihlks5nwG/AeES7btMrm5/a0
+ VnhuS6m5axOKGNoCBkk9H5GE2SH4gLIow0mqoDvTIzHZTPPDTZJie8PDHg9fVrI8mXyycFX63IE
+ Et/3bNy/CX19+1zx7qdDQc0o8IPxFQcTBKne
+X-Google-Smtp-Source: AGHT+IHw0JjOX1V0fqvxXRzTILTt6i2QT+U9+bCt0KRJphsKKMLfnwWZKYrodyC/1xWO6gPPt1RT7Q==
+X-Received: by 2002:a05:6871:10d:b0:29e:20c4:2217 with SMTP id
+ 586e51a60fabf-29e888949cfmr4315626fac.33.1733258394905; 
+ Tue, 03 Dec 2024 12:39:54 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29e3ae09f25sm2684018fac.49.2024.12.03.12.39.55
+ 586e51a60fabf-29e3ae09f25sm2684018fac.49.2024.12.03.12.39.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 12:39:55 -0800 (PST)
+ Tue, 03 Dec 2024 12:39:54 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH 05/11] softfloat: Pad array size in pick_nan_muladd
-Date: Tue,  3 Dec 2024 14:39:42 -0600
-Message-ID: <20241203203949.483774-6-richard.henderson@linaro.org>
+Subject: [PATCH 04/11] softfloat: Remove which from parts_pick_nan_muladd
+Date: Tue,  3 Dec 2024 14:39:41 -0600
+Message-ID: <20241203203949.483774-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241203203949.483774-1-richard.henderson@linaro.org>
 References: <20241203203949.483774-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,29 +99,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While all indices into val[] should be in [0-2], the mask
-applied is two bits.  To help static analysis see there is
-no possibility of read beyond the end of the array, pad the
-array to 4 entries, with the final being (implicitly) NULL.
+Assign the pointer return value to 'a' directly,
+rather than going through an intermediary index.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat-parts.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fpu/softfloat-parts.c.inc | 32 ++++++++++----------------------
+ 1 file changed, 10 insertions(+), 22 deletions(-)
 
 diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 77f16ac158..06cfc6abb5 100644
+index 6423e12406..77f16ac158 100644
 --- a/fpu/softfloat-parts.c.inc
 +++ b/fpu/softfloat-parts.c.inc
-@@ -100,7 +100,7 @@ static FloatPartsN *partsN(pick_nan_muladd)(FloatPartsN *a, FloatPartsN *b,
+@@ -65,9 +65,9 @@ static FloatPartsN *partsN(pick_nan_muladd)(FloatPartsN *a, FloatPartsN *b,
+                                             FloatPartsN *c, float_status *s,
+                                             int ab_mask, int abc_mask)
+ {
+-    int which;
+     bool infzero = (ab_mask == float_cmask_infzero);
+     bool have_snan = (abc_mask & float_cmask_snan);
++    FloatPartsN *ret;
+ 
+     if (unlikely(have_snan)) {
+         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
+@@ -98,42 +98,30 @@ static FloatPartsN *partsN(pick_nan_muladd)(FloatPartsN *a, FloatPartsN *b,
+         default:
+             g_assert_not_reached();
          }
-         ret = c;
+-        which = 2;
++        ret = c;
      } else {
--        FloatPartsN *val[3] = { a, b, c };
-+        FloatPartsN *val[R_3NAN_1ST_MASK + 1] = { a, b, c };
+-        FloatClass cls[3] = { a->cls, b->cls, c->cls };
++        FloatPartsN *val[3] = { a, b, c };
          Float3NaNPropRule rule = s->float_3nan_prop_rule;
  
          assert(rule != float_3nan_prop_none);
+         if (have_snan && (rule & R_3NAN_SNAN_MASK)) {
+             /* We have at least one SNaN input and should prefer it */
+             do {
+-                which = rule & R_3NAN_1ST_MASK;
++                ret = val[rule & R_3NAN_1ST_MASK];
+                 rule >>= R_3NAN_1ST_LENGTH;
+-            } while (!is_snan(cls[which]));
++            } while (!is_snan(ret->cls));
+         } else {
+             do {
+-                which = rule & R_3NAN_1ST_MASK;
++                ret = val[rule & R_3NAN_1ST_MASK];
+                 rule >>= R_3NAN_1ST_LENGTH;
+-            } while (!is_nan(cls[which]));
++            } while (!is_nan(ret->cls));
+         }
+     }
+ 
+-    switch (which) {
+-    case 0:
+-        break;
+-    case 1:
+-        a = b;
+-        break;
+-    case 2:
+-        a = c;
+-        break;
+-    default:
+-        g_assert_not_reached();
++    if (is_snan(ret->cls)) {
++        parts_silence_nan(ret, s);
+     }
+-    if (is_snan(a->cls)) {
+-        parts_silence_nan(a, s);
+-    }
+-    return a;
++    return ret;
+ 
+  default_nan:
+     parts_default_nan(a, s);
 -- 
 2.43.0
 
