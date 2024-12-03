@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5154E64AB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22033E64ABB
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIUek-0008E2-QP; Tue, 03 Dec 2024 10:17:42 -0500
+	id 1tIUpZ-0001Mx-2z; Tue, 03 Dec 2024 10:28:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tIUeb-0008DU-3R; Tue, 03 Dec 2024 10:17:38 -0500
-Received: from mgamail.intel.com ([192.198.163.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tIUeW-0006gn-EJ; Tue, 03 Dec 2024 10:17:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733239048; x=1764775048;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=OyuUlNUCgMno9JjOurrYBOYFzufUAZ+RlmQeR5Bbibk=;
- b=IN+eVGdK3LRRDVG2azagSgnxUy5BATkU6wTiXnSNR9OOQSuIUlliCuCc
- W7hpqdi8lum0Ew/FEt/9ZKfQZumqIXrbanKpV232EsOu2PJd29GDJALDM
- C3OaUp/x7xJEGa8iZc78UhobsfIzU+6hAhvZuKDgCy9Jhfbhhmmb8EU3W
- CLyOco0bghy2QxcgpxlqqCrTxujRBN1z3ao9asNhMg+Z+DFnx+zYAnPYw
- qVeNqwAWkT3KYXUqeIYvG6F+CUN3k1wpVgLBdYRmU2mS6N3wBfxr0OueC
- xeQnKPO7WHUN4GvQI4CQ+0P/aK5C18OCjcx7UpySJx9mI+hgFuhuyi5sV g==;
-X-CSE-ConnectionGUID: 3sQVuOzASA6EHrbBzwrrFw==
-X-CSE-MsgGUID: hTK8giGuQuOCjKlnuHpaIg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11275"; a="37396350"
-X-IronPort-AV: E=Sophos;i="6.12,205,1728975600"; d="scan'208";a="37396350"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Dec 2024 07:17:25 -0800
-X-CSE-ConnectionGUID: W+tk+/GxTqqjwikhHRLDcw==
-X-CSE-MsgGUID: S+e9PtWKSOOSfVEnKkLn8g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,205,1728975600"; d="scan'208";a="93561735"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa006.jf.intel.com with ESMTP; 03 Dec 2024 07:17:23 -0800
-Date: Tue, 3 Dec 2024 23:35:34 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, pbonzini@redhat.com,
- imammedo@redhat.com, xieyongji@bytedance.com,
- chaiwen.cc@bytedance.com, qemu-stable@nongnu.org,
- Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for logical
- processors in the physical package
-Message-ID: <Z08lRiqdjca2Tcn9@intel.com>
-References: <20241009035638.59330-1-xuchuangxclwt@bytedance.com>
- <cc83fc31-7a77-4e32-a861-3c1dc8592a04@intel.com>
- <2f6b952d-4c21-4db5-9a8a-84a0c10feca8@bytedance.com>
- <a48fcd78-d1c4-4359-bc18-d04147a93f50@intel.com>
- <ZwyRsq4EIooifRvb@intel.com>
- <bbcfcbbd-1666-4e97-ae18-f47202d89009@intel.com>
- <ZxDS4L8vSr3HfFIh@intel.com>
- <b43557f7-49ff-43bb-8a8c-887b8220e1e8@intel.com>
- <Z060VQVV6ONK9Qd2@intel.com>
- <f59cd973-b38b-4ee6-8baf-70019c26122e@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tIUpX-0001Md-EL
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:28:51 -0500
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tIUpV-00085o-PU
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:28:51 -0500
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-2689e7a941fso3081844fac.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:28:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733239728; x=1733844528; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ddVbX959t4yeE1SQjP6kfnD8JqKG7wqHgvg1qP3In/8=;
+ b=mF9A1GJjKhLaeWwfABF97k/3wNlJwDItEHed0COEPcPaCFucENRGRMtMvA511iSKSk
+ rZlY3xJb/CFgAcYdTRytqWarFy+lxXlK9C52FvWCYe6yDP2AlvsM867fnAsxuJW+48fi
+ lK0MNlnpVm+P1YpQl+BIQjwtzk+SBvTUHNMjD/oLLKQXLJJ7cyHWedaxLGeiO9rBSw2N
+ 5f/nPRxK+zEKWX4p9I7Oxw5gEPw+Px+rhUdYLiYv65DcZwLImQJZVV4dHAml87B2f3zB
+ zjx6qXsLKRI48Ki44QPsFw0b/f4/20jARiBlO3Kjohef8XVHuxcaJlXsjsN1Ox4UErvt
+ 3Wvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733239728; x=1733844528;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ddVbX959t4yeE1SQjP6kfnD8JqKG7wqHgvg1qP3In/8=;
+ b=dx/krlAyVEcRu/SoxFJljCmOLmWSeBm16Xwgp2WPGumIrIEXCNrStmVSoLdB7HpeTY
+ qOUzVriVITqbkAzWJcaQppL40BWvV043WfHy9SRukDYkyau3qWITgNpyTMuUFiyqBgPW
+ G/5TetGnN6c8f2/jLnXSr9Av+lOAXbKaeqxL5NTsd8xq4wxbHL4d9zdEumYC7DcRBAYK
+ 9HNCDO87n9vSRoKjM0UKDzFbrUqF/ifA/B8u3LFEwZtnWOBMY0jjufd8xW8ynnQMB9WP
+ o2jj04jGpMvw2DZJ8gfkJdlYiLHffCyT4usiWR12ZjhdzswvF4Da55FpivdojUsJfwE8
+ 0Grg==
+X-Gm-Message-State: AOJu0Yx4M8j+QvVUXOsDZKMIHjiEF3gzF46zMD8OepYo1FhdeC/BqFyV
+ BujdjuqrsewETgwKL/Ovk1aQxGCgp67clAWyvuIRK2u3qfNmJ2798OLvZ9BgtyY=
+X-Gm-Gg: ASbGncse4orvsiy2sSksWjtRTvdSEHouTMYAFDyKnkk/Lt6tRtcAlMkvzPihyc5SSpa
+ IWObFpghGlPDMzfZSCRNiHEav7ouOdoeJ/16mctzuJbiiB942yo0lnCKg34pK25aeyIAhYKInPI
+ 37VhE0lbhk5nw8BFjiEKFzcUqHkLjfTWLD2Fmn9ILIax9mUXfPRbaZAwIJ79rFfuBkQG/5OAvy4
+ yz788yLxfXRkr8fC28DHBvObXb8Kv80SaAdriFQyssaN2WF4lRF52FCsF5QytLwFcxqUQXnpUNX
+ DJkjvnoOKD+44D+x/S00A56qd+p/
+X-Google-Smtp-Source: AGHT+IHlKH9g/gb2k0nqK9pBkZEHdZjTBjLzHcp3UKimP4eYyzflG4IuEu1zwbk6GgDHnF2MSKqM6w==
+X-Received: by 2002:a05:6870:71c3:b0:29e:67e0:408b with SMTP id
+ 586e51a60fabf-29e8870d1efmr2536006fac.22.1733239728221; 
+ Tue, 03 Dec 2024 07:28:48 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-29e2d2c4fd5sm2822924fac.30.2024.12.03.07.28.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Dec 2024 07:28:47 -0800 (PST)
+Message-ID: <b0a41fbf-0ec6-47cc-805d-e762d99ddf82@linaro.org>
+Date: Tue, 3 Dec 2024 09:28:45 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f59cd973-b38b-4ee6-8baf-70019c26122e@intel.com>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 28/67] target/arm: Convert BFCVT to decodetree
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20241201150607.12812-1-richard.henderson@linaro.org>
+ <20241201150607.12812-29-richard.henderson@linaro.org>
+ <CAFEAcA9Aww0m_TPdbL53DPPnWqA=BU1TzjGLvQi-EokKyzkdfQ@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA9Aww0m_TPdbL53DPPnWqA=BU1TzjGLvQi-EokKyzkdfQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,55 +102,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 03, 2024 at 11:04:12PM +0800, Xiaoyao Li wrote:
-> Date: Tue, 3 Dec 2024 23:04:12 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for
->  logical processors in the physical package
+On 12/3/24 08:05, Peter Maydell wrote:
+> On Sun, 1 Dec 2024 at 15:11, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/arm/tcg/translate-a64.c | 24 ++++++------------------
+>>   target/arm/tcg/a64.decode      |  3 +++
+>>   2 files changed, 9 insertions(+), 18 deletions(-)
+>>
+>> @@ -8661,21 +8664,6 @@ static void disas_fp_1src(DisasContext *s, uint32_t insn)
+>>           break;
+>>
+>>       case 0x6:
+>> -        switch (type) {
+>> -        case 1: /* BFCVT */
 > 
-> On 12/3/2024 3:33 PM, Zhao Liu wrote:
-> > > However, back to the patch, I think we cannot change it as this patch
-> > > directly. Instead, we need a compat_props for the changed behavior, because
-> > > this isn't a bug fix and it introduces guest-visible differences.
-> > 
-> > This is a fix, not a new feature, so compat_props is not needed.
+> Here we decode BFCVT when the 'ftype' field (bits [23:22]) is 0b01...
 > 
-> Fix what? QEMU behaves as it for so many years and if the guest OS uses the
-> algorithm recommended by SDM, there is no issue.
-
-I've spent a lot time to explain why current behavior doesn't match the
-SDM and real machine's implementation.
-
-> > > For ancient Intel CPUs, EBX[23:16] did represent the number of Logical
-> > > processor per package. I believe this should be the reason why QEMU
-> > > implemented it as is:
-> > > 
-> > >    - on SDM version 013, EBX[23:16]: Number of logical processors per
-> > > physical processor; two for the Pentium 4 processor supporting
-> > > Hyper-Threading Technology.
-> > > 
-> > >    - on SDM version 015, it changed to: Number of initial APIC IDs reserved
-> > > for this physical package. Normally, this is the number of logical
-> > > processors per physical package.
-> > > 
-> > >    - on SDM version 016, it changed to: Maximum number of logical processors
-> > > in this physical package.
-> > > 
-> > >    - finally, starting from SDM version 026, it changed to what reads now:
-> > > Maximum number of addressable IDs for logical processors in this physical
-> > > package.
-> > 
-> > And this is an architecturally defined CPUID, so SDM ensures backward
-> > compatibility.
+>> -            if (!dc_isar_feature(aa64_bf16, s)) {
+>> -                goto do_unallocated;
+>> -            }
+>> -            if (!fp_access_check(s)) {
+>> -                return;
+>> -            }
+>> -            handle_fp_1src_single(s, opcode, rd, rn);
+>> -            break;
+>> -        default:
+>> -            goto do_unallocated;
+>> -        }
+>> -        break;
+>> -
+>>       default:
+>>       do_unallocated:
+>>           unallocated_encoding(s);
+>> diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+>> index fbfdf96eb3..476989c1b4 100644
+>> --- a/target/arm/tcg/a64.decode
+>> +++ b/target/arm/tcg/a64.decode
+>> @@ -45,6 +45,7 @@
+>>   &qrrrr_e        q rd rn rm ra esz
+>>
+>>   @rr_h           ........ ... ..... ...... rn:5 rd:5     &rr_e esz=1
+>> +@rr_s           ........ ... ..... ...... rn:5 rd:5     &rr_e esz=2
+>>   @rr_d           ........ ... ..... ...... rn:5 rd:5     &rr_e esz=3
+>>   @rr_sd          ........ ... ..... ...... rn:5 rd:5     &rr_e esz=%esz_sd
+>>   @rr_hsd         ........ ... ..... ...... rn:5 rd:5     &rr_e esz=%esz_hsd
+>> @@ -1337,6 +1338,8 @@ FRINTA_s        00011110 .. 1 001100 10000 ..... .....      @rr_hsd
+>>   FRINTX_s        00011110 .. 1 001110 10000 ..... .....      @rr_hsd
+>>   FRINTI_s        00011110 .. 1 001111 10000 ..... .....      @rr_hsd
+>>
+>> +BFCVT_s         00011110 10 1 000110 10000 ..... .....      @rr_s
 > 
-> SDM ensure the backwards compatibility by recommending to round the number
-> up to the power-of 2 when using it to calculate the topology with legacy
-> method.
+> ...but this decode pattern has them as 0b10.
+> 
+> 
+> --- a/target/arm/tcg/a64.decode
+> +++ b/target/arm/tcg/a64.decode
+> @@ -1338,7 +1338,7 @@ FRINTA_s        00011110 .. 1 001100 10000 .....
+> .....      @rr_hsd
+>   FRINTX_s        00011110 .. 1 001110 10000 ..... .....      @rr_hsd
+>   FRINTI_s        00011110 .. 1 001111 10000 ..... .....      @rr_hsd
+> 
+> -BFCVT_s         00011110 10 1 000110 10000 ..... .....      @rr_s
+> +BFCVT_s         00011110 01 1 000110 10000 ..... .....      @rr_s
+> 
+>   # Floating-point Immediate
+> 
+> should fix this.
 
-Please, *always* refer the latest SDM.
+Yep, thanks.  Fixed.
 
-Regarding historical changes, older machines didn't have spare APIC ID
-slots, so the actual number is the same as the maximum number of
-addressable IDs.
 
+r~
 
