@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C671E6C61A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 09:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EEBE6C61A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 09:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIP6x-0005fs-AZ; Tue, 03 Dec 2024 04:22:27 -0500
+	id 1tIP76-0005o4-8b; Tue, 03 Dec 2024 04:22:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIP6s-0005eR-Pb
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:22:22 -0500
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIP74-0005nV-FF
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:22:34 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIP6r-0002gR-8i
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:22:22 -0500
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-53de92be287so7765032e87.1
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 01:22:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIP71-0002hv-Nf
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:22:34 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-53dd8b7796dso5610668e87.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 01:22:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733217738; x=1733822538; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733217750; x=1733822550; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7Z0cleQPrNy9NjZu27Yx3P0Ha1Flw6gQBqfbwRAF2Ak=;
- b=Pc4YCdmPZUhHTeD1/Km4Uw7qWk2LiwV/pRWaVuzftMIiyyV6jPshU9VzHM1sB27s+M
- pvDDdsENBb9xrMuRdaJBp4kSsdKrpjozJC2rZTN+HV192ThE8aSxb+m9nkfOIh1Q50Ck
- zA+PuMZJoeVNf96jk4fbBSXgBZhW0VOQbn03s1aKCr2Cs82BiuEV//6RkeYlCM+E8Kxb
- ziqZrlCqejENofkhyUJqPhhXeSg2ElhLT2KoaBlrJK4MXgnCn5geBnGSSFWdjABV1U9h
- umWNFheXy6xv3Elwacy35DhqTAKBJck+9t2VtEgrFCUbIN7sNbc5+o6EdK1ah7XfBPgd
- HDow==
+ bh=PKNytw/ebCVRIpsQ9YAUBfkaMh3JJAq/QjBPjtgiz7g=;
+ b=C4ES/bYd6CIO8uWhG9jWpVePaXTZZq2eN9nOGUP8DL/8HnrM+Wj9fCOsfBiIzZsKE8
+ GB1J3Aem2YBIPebnZUlMENgLt+HMgSpTVk2q3SDW8In3QMI7xV0+gdFJOsdQ6uw0+WcX
+ y2Qp5MUddxt7+LSsEftfszqEH3k5bOWm59hyCWR5sppvy6+KmwQ1Fz573LWT9O1AQOrZ
+ XGhMJ5Lj96HRdS8pk/0xGGgGN2klsK7VR41jKSuxbdda31ZPLBtqwLeWIT2AGl3qBZJf
+ qveoX0NKHtFowIeLcCGApOQrodsDZ/Xvou1wpjMrQpFjyZfLGBjRhtWcxyOYOKfQqmEW
+ Zosg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733217738; x=1733822538;
+ d=1e100.net; s=20230601; t=1733217750; x=1733822550;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7Z0cleQPrNy9NjZu27Yx3P0Ha1Flw6gQBqfbwRAF2Ak=;
- b=riSl0sINd1TfHipVo+1PmFCZrQQJ0nUL1ei+yk0wTo+n5nFGbp9UekWokQKSTYtmzI
- KJ+5dubeR3s5WEHl2jtLNQipGOPmQ8ZX3dfAeD7P8i3o0hpTph6bTkZEw2hshcu5aFCK
- v27oSife/WleuIL08bUTw4exHz5vje8l3e8o0+JP85hcemjRMzT0Pdvi0eabui0USWW3
- ER4MHiI99QiK/Gbj+YdPzvAbL7dybf5CJ9lOW+C+e36yUZ2VwrngatK3UWG/PJVrqSZB
- ryBkmT/a43ybhIDDMfs41lMRfHru2gevfJ+3i78YvXQIy2EhXKO2401M2YehoATDEQWf
- JcZg==
-X-Gm-Message-State: AOJu0YySavVTg2eUAxI9ErKI014n3hWDco233HCzqstmQaWGnpT4/iBn
- W+erGawdfDYCWo3Np20lcJHQOjYEDLOcecqSOq/4wgWUfamJPs6oB4KtfCuz/1RBWHHNYnBH3zJ
- 4Jyo=
-X-Gm-Gg: ASbGncuLyXND1jbESm3z9WLKL/97TLOqRb3XR6oVOci1lMGy6WYjEvwAL7yMhHmHULI
- R7lRSnyAqPTyzOYbmrfThnpFeb3HeiFXfWYhWc54fXN3E8hn0DYqTspoH2tJdwibE6RhaRKS3yi
- mUB24PWssnVnTWZ61srkc41Q11BsXH/DEpoM02btAwAsjwMSwpMtDogn4YpCutliORNj/7NwCJO
- /UwYwOHBVWXBs5ZFaBwO11RtAD8ewO5WWyKLuzgX9Akm69NVWYtAfEsuy5TjkP4o7RxOuwR
-X-Google-Smtp-Source: AGHT+IFKXdzCHgoYrbBgxEetwk2wWIxXomwv6Wa0ZHXf5sB1MUtHIOwB2t+dSu80nFR8vz7SoiVkxQ==
-X-Received: by 2002:a05:6512:124f:b0:53d:ed0a:8113 with SMTP id
- 2adb3069b0e04-53e129fef1amr1251543e87.14.1733217738255; 
- Tue, 03 Dec 2024 01:22:18 -0800 (PST)
+ bh=PKNytw/ebCVRIpsQ9YAUBfkaMh3JJAq/QjBPjtgiz7g=;
+ b=uIuFiAHO6NAU56guFW4rba27OXOKguySnzrMcHo/H2D/x9Pid2L4a6K77EA4ekyibq
+ ZQovNjKXSBBWZfk0zSjWiNizwXY3ydaetoWvF19Tk3NkGvXNhQ/JGDzJLfUNq5ct2AXs
+ GYrXehenvGYeOmclrFWqKUr/ruslGylx4ppxZc/TobewEg8EnuQ3UQ5rcZatpNFSJnST
+ mTSDiQvXJ5hwN6HeCKUmkAVpIyav+1hfCXlhj8VxpPc2c0QNcK9dwM/PTzDTQ/azZAaa
+ R/LGCEkkQ3jlw6jmwwSZDs/KJa5Lu77BLRZmFVA7EAklPEXTcmYHUzpNw91zV+XhNvYH
+ o1XQ==
+X-Gm-Message-State: AOJu0YzkHjb9aBrpOHmDfjQG5+R8O/U3xCjA2yr6tvvvx12xS4oiVE9i
+ nN1MQn6dGHsa+x9ijLQmeuLYfuivtf77tI5bQxTXNWThxmGh56hDQpg2qNwNMZIB9qsIZsIziTW
+ /HGU=
+X-Gm-Gg: ASbGncu0RvfdHJEfvcpzAPSh/cwtNMnI6aE3kGrSEUpSHSxk6ZdYPe1+HToLRlzTTlk
+ u/gmMnjEhSTmmuBz8WRP9xWYSp3si32QUPAWSj7NRSXVL8QcsUcB5a9SJPTTBw/pByN7a/FAYOT
+ 6R9eGJ/7DXMVaTA75frdCHcyTWm1f9ry2YrlIYqjpd+uSuyah8owt8DQFIzGlLveqCk5sB6fsPf
+ Lztm/BVTfOSAAurXdOei4upzrFdaMQOXWacmm4tzH2ckYisW8PzWcAR+olDiA6YQMfzaWQ0
+X-Google-Smtp-Source: AGHT+IFcpj6QzfB53oly3i7BN3QSlvt4/aDJxnH7tiR3CcVRsSurQ5wh0JwIqkBOrHoycPMN8RfEuA==
+X-Received: by 2002:a05:6512:3096:b0:53d:a273:7da6 with SMTP id
+ 2adb3069b0e04-53e12a290b4mr863155e87.57.1733217749670; 
+ Tue, 03 Dec 2024 01:22:29 -0800 (PST)
 Received: from localhost.localdomain ([176.187.209.146])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa5997d5625sm600599666b.63.2024.12.03.01.22.16
+ a640c23a62f3a-aa5998e6a1asm591445466b.98.2024.12.03.01.22.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 01:22:17 -0800 (PST)
+ Tue, 03 Dec 2024 01:22:29 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -69,18 +69,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/7] scripts/device-crash-test: Remove legacy '-machine foo,
+Subject: [PATCH 6/7] accel/kvm: Remove mentions of legacy '-machine foo,
  accel=bar'
-Date: Tue,  3 Dec 2024 10:21:50 +0100
-Message-ID: <20241203092153.60590-5-philmd@linaro.org>
+Date: Tue,  3 Dec 2024 10:21:52 +0100
+Message-ID: <20241203092153.60590-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241203092153.60590-1-philmd@linaro.org>
 References: <20241203092153.60590-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,41 +106,128 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Since commit 6f6e1698a68 ("vl: configure accelerators from -accel
 options") we prefer the '-accel bar' command line option.
 
-Replace '-machine foo,accel=bar' -> '-machine foo -accel bar' in
-the device-crash-test script.
+Update the documentation when KVM is referred to.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- scripts/device-crash-test | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ docs/bypass-iommu.txt            | 3 ++-
+ docs/nvdimm.txt                  | 2 +-
+ docs/specs/tpm.rst               | 2 +-
+ docs/system/arm/cpu-features.rst | 2 +-
+ docs/system/cpu-hotplug.rst      | 2 +-
+ docs/system/ppc/powernv.rst      | 2 +-
+ docs/system/ppc/pseries.rst      | 4 ++--
+ scripts/device-crash-test        | 2 +-
+ 8 files changed, 10 insertions(+), 9 deletions(-)
 
+diff --git a/docs/bypass-iommu.txt b/docs/bypass-iommu.txt
+index e6677bddd32..2ef0e0f6a65 100644
+--- a/docs/bypass-iommu.txt
++++ b/docs/bypass-iommu.txt
+@@ -51,7 +51,8 @@ And we got:
+ x86 architecture:
+ 
+ qemu-system-x86_64 \
+- -machine q35,accel=kvm,default_bus_bypass_iommu=true \
++ -accel kvm \
++ -machine q35,default_bus_bypass_iommu=true \
+  -device pxb-pcie,bus_nr=0x10,id=pci.10,bus=pcie.0,addr=0x3 \
+  -device pxb-pcie,bus_nr=0x20,id=pci.20,bus=pcie.0,addr=0x4,bypass_iommu=true \
+  -device intel-iommu \
+diff --git a/docs/nvdimm.txt b/docs/nvdimm.txt
+index fd7773dc5ab..d589c3a9b77 100644
+--- a/docs/nvdimm.txt
++++ b/docs/nvdimm.txt
+@@ -228,7 +228,7 @@ which allows the platform to communicate what features it supports related to
+ NVDIMM data persistence.  Users can provide a persistence value to a guest via
+ the optional "nvdimm-persistence" machine command line option:
+ 
+-    -machine pc,accel=kvm,nvdimm,nvdimm-persistence=cpu
++    -machine pc,nvdimm,nvdimm-persistence=cpu
+ 
+ There are currently two valid values for this option:
+ 
+diff --git a/docs/specs/tpm.rst b/docs/specs/tpm.rst
+index 1ad36ad7099..c50bb1cec01 100644
+--- a/docs/specs/tpm.rst
++++ b/docs/specs/tpm.rst
+@@ -329,7 +329,7 @@ In case a pSeries machine is emulated, use the following command line:
+ 
+ .. code-block:: console
+ 
+-  qemu-system-ppc64 -display sdl -machine pseries,accel=kvm \
++  qemu-system-ppc64 -display sdl -accel kvm -machine pseries \
+     -m 1024 -bios slof.bin -boot menu=on \
+     -nodefaults -device VGA -device pci-ohci -device usb-kbd \
+     -chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock \
+diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+index a5fb929243c..4aed91a987d 100644
+--- a/docs/system/arm/cpu-features.rst
++++ b/docs/system/arm/cpu-features.rst
+@@ -329,7 +329,7 @@ SVE CPU Property Examples
+   3) When KVM is enabled, implicitly enable all host CPU supported vector
+      lengths with the ``host`` CPU type::
+ 
+-     $ qemu-system-aarch64 -M virt,accel=kvm -cpu host
++     $ qemu-system-aarch64 -M virt -accel kvm -cpu host
+ 
+   4) Only enable the 128-bit vector length::
+ 
+diff --git a/docs/system/cpu-hotplug.rst b/docs/system/cpu-hotplug.rst
+index cc50937c36c..64314ccfd6f 100644
+--- a/docs/system/cpu-hotplug.rst
++++ b/docs/system/cpu-hotplug.rst
+@@ -12,7 +12,7 @@ vCPU hotplug
+     allow vCPU hotplug)::
+ 
+       $ qemu-system-x86_64 -display none -no-user-config -m 2048 \
+-          -nodefaults -monitor stdio -machine pc,accel=kvm,usb=off \
++          -nodefaults -monitor stdio -accel kvm -machine pc,usb=off \
+           -smp 1,maxcpus=2 -cpu IvyBridge-IBRS \
+           -qmp unix:/tmp/qmp-sock,server=on,wait=off
+ 
+diff --git a/docs/system/ppc/powernv.rst b/docs/system/ppc/powernv.rst
+index de7a807ac76..689f9c81a02 100644
+--- a/docs/system/ppc/powernv.rst
++++ b/docs/system/ppc/powernv.rst
+@@ -63,7 +63,7 @@ powernv. kvm-pr in theory could be used as a valid accel option but
+ this isn't supported by kvm-pr at this moment.
+ 
+ To spare users from dealing with not so informative errors when attempting
+-to use accel=kvm, the powernv machine will throw an error informing that
++to use '-accel kvm', the powernv machine will throw an error informing that
+ KVM is not supported. This can be revisited in the future if kvm-pr (or
+ any other KVM alternative) is usable as KVM accel for this machine.
+ 
+diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
+index bbc51aa7fcd..3b18d2ee1ef 100644
+--- a/docs/system/ppc/pseries.rst
++++ b/docs/system/ppc/pseries.rst
+@@ -164,9 +164,9 @@ Currently, there are two implementations of KVM on Power, ``kvm_hv.ko`` and
+ If a host supports both KVM modes, and both KVM kernel modules are loaded, it is
+ possible to switch between the two modes with the ``kvm-type`` parameter:
+ 
+-* Use ``qemu-system-ppc64 -M pseries,accel=kvm,kvm-type=PR`` to use the
++* Use ``qemu-system-ppc64 -accel kvm -M pseries,kvm-type=PR`` to use the
+   ``kvm_pr.ko`` kernel module.
+-* Use ``qemu-system-ppc64 -M pseries,accel=kvm,kvm-type=HV`` to use ``kvm_hv.ko``
++* Use ``qemu-system-ppc64 -accel kvm -M pseries,kvm-type=HV`` to use ``kvm_hv.ko``
+   instead.
+ 
+ KVM-PR
 diff --git a/scripts/device-crash-test b/scripts/device-crash-test
-index da8b56edd99..2b139e29ba0 100755
+index 2b139e29ba0..2c6fd7c6f6e 100755
 --- a/scripts/device-crash-test
 +++ b/scripts/device-crash-test
-@@ -295,7 +295,10 @@ class QemuBinaryInfo(object):
-         self._machine_info = {}
+@@ -147,7 +147,7 @@ ERROR_RULE_LIST = [
+     # "spapr-cpu-core needs a pseries machine"
+     {'machine':'(?!pseries).*', 'device':'.*-spapr-cpu-core', 'expected':True},
  
-         dbg("devtype: %r", devtype)
--        args = ['-S', '-machine', 'none,accel=kvm:tcg']
-+        args = ['-S',
-+                '-machine', 'none',
-+                '-accel', 'kvm:tcg',
-+               ]
-         dbg("querying info for QEMU binary: %s", binary)
-         vm = QEMUMachine(binary=binary, args=args)
-         vm.launch()
-@@ -358,7 +361,9 @@ def checkOneCase(args, testcase):
+-    # KVM-specific devices shouldn't be tried without accel=kvm:
++    # KVM-specific devices shouldn't be tried without '-accel kvm':
+     {'accel':'(?!kvm).*', 'device':'kvmclock', 'expected':True},
  
-     dbg("will test: %r", testcase)
- 
--    args = ['-S', '-machine', '%s,accel=%s' % (machine, accel),
-+    args = ['-S',
-+            '-machine', machine,
-+            '-accel', accel,
-             '-device', qemuOptsEscape(device)]
-     cmdline = ' '.join([binary] + args)
-     dbg("will launch QEMU: %s", cmdline)
+     # xen-specific machines and devices:
 -- 
 2.45.2
 
