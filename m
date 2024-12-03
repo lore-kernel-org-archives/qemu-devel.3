@@ -4,172 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FB1E64AB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5154E64AB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIUcO-0007Y8-R7; Tue, 03 Dec 2024 10:15:16 -0500
+	id 1tIUek-0008E2-QP; Tue, 03 Dec 2024 10:17:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tIUcM-0007Xw-On
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:15:15 -0500
-Received: from mail-dm6nam12on2049.outbound.protection.outlook.com
- ([40.107.243.49] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tIUeb-0008DU-3R; Tue, 03 Dec 2024 10:17:38 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tIUcK-0006Sk-3c
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:15:14 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LazJpG8TvWS0/I3FjXSTsm3dvQFEcM0K7lh8VcfPlPMQ3EkPWLZxmxrv6Dj+YEVNXsMaBQ3lat67v/fWgIoD9t0GazYQklC6uV96FqBn0dJiEQMhg/+9xWhN2yqWjwWnqBVN9MNqocL2PPlUSGm4MCoFEFYDIyyI/1ITIdKo1E6aLoH/Ua3AwkraVUmkUxvlZi2jYmi5Phvy2OqLdTsFhVDcyzLqNSiWVBf7Wxe/A+E6Jn8sKOVjiuVyUYMPr7H9CbOXmh2cV9BUXHwHosF/0jJu8xpVN1cQIHriVOu7y/ssd2iRflvGX4OibHdJELgwd+NoCo3daTVTIiuKpDRtuA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1Vgfhucy+ZWKq6k89MjyxJq8znKvm6uXjlCztr8P83w=;
- b=angmtMvk1j5dRXLJONdah8W6HaKVTOaYWMzJeLqNSCUG+BExRUDsVnfamEZKU9pCN6WG0fiNJ0TKOJHYVapRzOXbVif6iktGq5mDlLHgwTiyR3uHMu8H28o0Td33KBjbCJ1R24bbwUReygQnyQloX1Ph+j7BjaQaA10cfjcw8xLci2RAD2EVxw2db/1+TC8YcVU17jxdafleO5jDNxK+DUF5LOyHQc6fLSuWUdAg2aXrb+PPsIC7tF84p0j3YehKNYweKAlPktAa5koNMax7fazqrKccMVZEPxKA0SLsYHC9E65DpG8D9ajIUGlM0gxCDv6d3GpqtP/O1inCaLdAKw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1Vgfhucy+ZWKq6k89MjyxJq8znKvm6uXjlCztr8P83w=;
- b=JGw4tR91uI+cdLb5K9CIaqzknKCuKfJlaEDXR8LzNS+lEijV0RfzN4rOe4pXdhDbS+d7W1ZSyjHgvm3IHmaMSWzLwdcFh6efwh9J7FPj6g21iskPpVoX6g3ua0vGrHTkEUrfC1PUh5vozdJq5f0zSiagV0mVt0p9i0/oMWtKJwxeuGUgis9ODangGJfrMBILT1PoRKHlUhc3vaFaHtFyoEbSPjewBq9KzOUHMPNtiv5wyjGs6Z83NDl0LR0kQ4sOI8XPtdVTnmGmh6yDvzey64yX7JoxJOPszzOVk1bNsKeuN1COZGcECBaKDR3SY6VoWiivXQ6/198I7a0dzbKeBw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by BL1PR12MB5995.namprd12.prod.outlook.com (2603:10b6:208:39b::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.18; Tue, 3 Dec
- 2024 15:10:02 +0000
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8207.017; Tue, 3 Dec 2024
- 15:10:02 +0000
-Message-ID: <1fbd277d-c3e0-48f6-81b1-2a5ae97ed9a0@nvidia.com>
-Date: Tue, 3 Dec 2024 17:09:55 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 18/24] vfio/migration: Don't run load cleanup if load
- setup didn't run
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <72424ece45968b1ae6b39750917a041867c415ab.1731773021.git.maciej.szmigiero@oracle.com>
- <9f27f058-59f0-4056-b19a-f613418e0760@redhat.com>
- <fd69d0ef-67de-4ac8-b00e-a68c4e2ae62f@maciej.szmigiero.name>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <fd69d0ef-67de-4ac8-b00e-a68c4e2ae62f@maciej.szmigiero.name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR5P281CA0054.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:f0::7) To DM6PR12MB5549.namprd12.prod.outlook.com
- (2603:10b6:5:209::13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tIUeW-0006gn-EJ; Tue, 03 Dec 2024 10:17:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733239048; x=1764775048;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=OyuUlNUCgMno9JjOurrYBOYFzufUAZ+RlmQeR5Bbibk=;
+ b=IN+eVGdK3LRRDVG2azagSgnxUy5BATkU6wTiXnSNR9OOQSuIUlliCuCc
+ W7hpqdi8lum0Ew/FEt/9ZKfQZumqIXrbanKpV232EsOu2PJd29GDJALDM
+ C3OaUp/x7xJEGa8iZc78UhobsfIzU+6hAhvZuKDgCy9Jhfbhhmmb8EU3W
+ CLyOco0bghy2QxcgpxlqqCrTxujRBN1z3ao9asNhMg+Z+DFnx+zYAnPYw
+ qVeNqwAWkT3KYXUqeIYvG6F+CUN3k1wpVgLBdYRmU2mS6N3wBfxr0OueC
+ xeQnKPO7WHUN4GvQI4CQ+0P/aK5C18OCjcx7UpySJx9mI+hgFuhuyi5sV g==;
+X-CSE-ConnectionGUID: 3sQVuOzASA6EHrbBzwrrFw==
+X-CSE-MsgGUID: hTK8giGuQuOCjKlnuHpaIg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11275"; a="37396350"
+X-IronPort-AV: E=Sophos;i="6.12,205,1728975600"; d="scan'208";a="37396350"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Dec 2024 07:17:25 -0800
+X-CSE-ConnectionGUID: W+tk+/GxTqqjwikhHRLDcw==
+X-CSE-MsgGUID: S+e9PtWKSOOSfVEnKkLn8g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,205,1728975600"; d="scan'208";a="93561735"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa006.jf.intel.com with ESMTP; 03 Dec 2024 07:17:23 -0800
+Date: Tue, 3 Dec 2024 23:35:34 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, pbonzini@redhat.com,
+ imammedo@redhat.com, xieyongji@bytedance.com,
+ chaiwen.cc@bytedance.com, qemu-stable@nongnu.org,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+Message-ID: <Z08lRiqdjca2Tcn9@intel.com>
+References: <20241009035638.59330-1-xuchuangxclwt@bytedance.com>
+ <cc83fc31-7a77-4e32-a861-3c1dc8592a04@intel.com>
+ <2f6b952d-4c21-4db5-9a8a-84a0c10feca8@bytedance.com>
+ <a48fcd78-d1c4-4359-bc18-d04147a93f50@intel.com>
+ <ZwyRsq4EIooifRvb@intel.com>
+ <bbcfcbbd-1666-4e97-ae18-f47202d89009@intel.com>
+ <ZxDS4L8vSr3HfFIh@intel.com>
+ <b43557f7-49ff-43bb-8a8c-887b8220e1e8@intel.com>
+ <Z060VQVV6ONK9Qd2@intel.com>
+ <f59cd973-b38b-4ee6-8baf-70019c26122e@intel.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|BL1PR12MB5995:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4a910741-fec1-4d1e-a23a-08dd13ac8f42
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?K1pVc3hYaDA3WXhyL3lCTXRORllhV3F6OHJHNkJvMmRvRzFvdXA0WTVSTHJU?=
- =?utf-8?B?dTg0VW5BKzdCNmJNaDRJNit1Z29Ka3FGb3k0YmJ1Y2kxSEZsK3dhcWJkU0J0?=
- =?utf-8?B?am5tS2w1dFVMQXlCaVhoYWc4a1hpZlpDV0JDUTdmaERhZVYyN0hUUnRjSHlI?=
- =?utf-8?B?QkJTdkpydmpTTWNrR3ZvdEhhcG56YVNndGpOYU52TGFzVFhDVmE1ejdQckdG?=
- =?utf-8?B?WFgzZ1hVRHJxaWt6QitmZkcxMkg5d1BKaWsvTGdJWkNiWkVQT3gzSG51QVM5?=
- =?utf-8?B?R3M1Z0RsemNxRWlzR1NHdWhidkswbmZ5REdKWW1lZllNT3k1WmQ4UDEwK2Ja?=
- =?utf-8?B?M1pqbnpDdWgrQ0FLa2hNR3YyZCt5WHVEQXpSVE9JbmNxSGxVWXQzYzYwSHYz?=
- =?utf-8?B?NFVZNDQ5OEZIMyswSnlTYndma0lxa2ROSzBZbUpUTERkTSsxQ3llRmdYdHpP?=
- =?utf-8?B?aHVibTRocEdVN3VjdmZ0ZXlZRnR6eFRKeXBMTWFJQlVrN044aTRyYlM2WDYy?=
- =?utf-8?B?WFNMZjRWUFh3MUFNYzc4WDZySlkzMUdjSFg4UTlPYTJReXFQdHZ0cTdTRGhX?=
- =?utf-8?B?MWtzMWN5YXlMSkZuTkRPMGhoSGh1ajJ6YjJXT2t4TlpKTzVkNVB4MUY5MmJu?=
- =?utf-8?B?clNRbW5KZk9SSzVzTHAzdlI2MEEvYjl1ak1mbE1YQmtDcGJrd2k1MEZFMHh4?=
- =?utf-8?B?Z0hpUGIycy9DUkRva21nV2pJZU9LSElsZWJHQmhoem0rN2d5NTlBSnNWbzcw?=
- =?utf-8?B?OHJVMVZUeEd4YkJ1NzUyMFVnWGdCSFgvMEZ5aUROSCtCcThEcE1RZUZFZDV4?=
- =?utf-8?B?WTc2b0wrTW1BWWdSZTk4bENnbW0zTmxmVENxdFptK0lBdGRKZUtWVzV3Zmpx?=
- =?utf-8?B?VDNhM2NOVUJKdHhPZkZiL0FYY0NmeVdhcHdRMWlBaGlXRnJ5bDhaZXJEVnNv?=
- =?utf-8?B?cUVOMk9UVXhBRDFGd1BkTjlRRzJjVklOeWVvVzJPd2JFWjlaaE1GWjJqZHN1?=
- =?utf-8?B?enFvUmkyV25FWUVWRkM0c3ZzR2ZEQ0NKYk5aM1NnUDl4YUYvTVkrWm9IWm5r?=
- =?utf-8?B?Q2M5MEJqVE5VaFcxYlFJTU14Z2MzbmozajRDaDI2NTQ1bk40T2FhZm11b2lu?=
- =?utf-8?B?bXVXYnhUSDN6ZkxoanJqTGZXZURqZmxxZSszY2xYRGhrSTNySVJYTXJtanV6?=
- =?utf-8?B?Wms0eXdPcFZiR2Zvc1N2SGc2RnFhcFRNV3M4SzZ4WTI1QlhzQ3BHa2o2SlFl?=
- =?utf-8?B?eVQ0M0FWWG1uaHhFRnRzUmZpMXRWczZTWHI3TkI2eGxhVkhmZ0xhL2JocENT?=
- =?utf-8?B?SFZZT0d4SGpJV045Nno2TUlNTUpSd01QcEdncWdWTmJVN0k5dWdUOURrZVFj?=
- =?utf-8?B?ZlhoNWloc2p4US9aNmJFZ1FPc3FwdE5wM2E3bkRrdEhSZXNZNk9abERYY0Y4?=
- =?utf-8?B?am55SVZlR2YrL3JpUEV5eU1BT0o5V2ZFaWN1NU4wbUxkbFJQTmcveWJ1YUFl?=
- =?utf-8?B?dkpBOWNuZFRwb2x1TldTY1pEV2ZjckMyWTlYbkFtdGlwV21Ga0tRaUNsd2Vi?=
- =?utf-8?B?bmg4MDNCWGRGYTZEN0xQLy9vR1JjV05udDRBOHlxcm1EK2dpTTNhUGxaWFVJ?=
- =?utf-8?B?YU5Qbm5aNE1hTXVhNzc5VWVlRXdFRlBuTDdKQUMyb2kwYzk3RW00ekZTZGRH?=
- =?utf-8?B?NUVDLzZNMGtVZUlDK3UrY3Z4b1RZbk53UHFVRTQ0RHVvYjNnNVJna21WMGVY?=
- =?utf-8?B?ZEZ2cmRqeWxXK3RnNDVHQmpRY09PbTl0ZXRZS2NiekRFWFlMQlYyUXExR1kr?=
- =?utf-8?B?TkJ6WjVSMlYxZXVOaWZuQT09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?L1Ryck84b29QWjZQdVRBOW8yU3lLVXVGVEFvZTYxazYrcnJhWnZKVDAxcE9S?=
- =?utf-8?B?MDNBRytSMWhjUGxmdjJtMnhoYXhDdWcyQk14ZnpsUUNsYWhCeHNrN1ViRzE4?=
- =?utf-8?B?dUNkbkkwMEdLaTFqblBVZ2wwMDc5TTdLd0I3M2RJOUY2c2p6Uno0VGNsbzhw?=
- =?utf-8?B?TFlsbFNEdTNzS2hqQUJEOGpWMnJyY21YWXJ0TTV2UHR0ZS9Hdk9lOTA5ODcw?=
- =?utf-8?B?VEMzc1dUVDU3WnptbkplTVVVd3FwQlgxMW5kb0NHaGtrM3RrWkVROTJ6cG1M?=
- =?utf-8?B?Y3pCdFRsOGpLbStSTjJHUFF3bHk5cWU5N3ZXbjJxbWNnaUF2RXlMVDZMTG9t?=
- =?utf-8?B?eWp4V1NNdE9WWWhNQ2ltTUUxN3MzejZheU9sdW5GYmdNRW9BSkE5OGhCSjRv?=
- =?utf-8?B?bjZLZUp0cFNZK3dXVmNBa3BVSTRtZ3AyRkZ0cDllcW50S2VXQlllK2x0ZGEx?=
- =?utf-8?B?dzhyOFFnYjRGQXk3bklwM21WK3QvYnBNbWpYN1dnOUdmYkVvMFJZYzlQMTY0?=
- =?utf-8?B?R0p1WDBuejNQUngxV1BYZEZONXN1Q1UxdUZJaDRDakxIK09VYnEzQUZPenRt?=
- =?utf-8?B?eDMwUkUxOC9ha0xRamhWTEQ3SGQxRmdIZ2RtQkR2aGoraUFZc3ZaM1FlY2dw?=
- =?utf-8?B?aGo0MVowVzRJWEQwTGptU2pnbE0zdzNBUGNERStKVS9wN2RaRVBmb3c5MHov?=
- =?utf-8?B?T2wycXFtamFHQXBUSFBpamk1S2pBT3RiVzR1RjdNRmlvUEd4RGRLTWJTU3JQ?=
- =?utf-8?B?eGVYZ3diSkExdnh0djdyOWRjbTdBYmU4RWNtcGhJZ2l5TGFwQ0FSbDFidnhF?=
- =?utf-8?B?S09KdHFZbmFKdk95TTI3TG01Mkw2aUhTYVhLWG1CWHQvSXIxV1dmZTBDd3pR?=
- =?utf-8?B?RUEyV01uUG1UU1VMMUYyNDVRM1VxQThiYkRsaVk4dDQ2V0FXT0J2dmpWbld5?=
- =?utf-8?B?V2tsZ3Y5TFRvM1F2MkF3ejhMNlZLL1dGWWhKZit3QjdINis1KytRUk5yS293?=
- =?utf-8?B?M2xqcEVZeTBna0x1UWhnQ3A2Mm93U2tOdW9FZlVUelNqVC9qc3ZURWlUQ0pT?=
- =?utf-8?B?U29wZ1Fad3dLK0Z3UkRYRE1KMkhhc29UeVBOTk96bHQ0NGZSbTB5S2VBem91?=
- =?utf-8?B?VEdMUlkyL2wvcE1JRFlQMW1wSzBURjFFZXNFcnMzUU9MS1IyT0VCTWNBSHlC?=
- =?utf-8?B?ZzRUMnIwZkZmR2ExUWRKdDV2ZGRlK2o2cnRyd3lyV3RVM2d6b0FyTGx3QUx2?=
- =?utf-8?B?ajlKRXNTeU9yd2M3blJLZE5zMUtsOE00azBrVHRhNlh4b0h3ODRZbnlibUlm?=
- =?utf-8?B?ekxQR29TTERLTmh0cHk4eGN3aUw3SHdMb1M4UkZjWDZoWDJrYU9LSHB4RzBw?=
- =?utf-8?B?bE9tdmNQZmZwekVna3V4VXIvYTFVUG9Wd0pZM2JkZlhwODk0Tk1INlVVODc2?=
- =?utf-8?B?UGZtODZUaDJ4dUZHTEEyZWZ2VXlhblR2YjdOVWE1eFlwdXlxYXlWdnNkRkxn?=
- =?utf-8?B?c0Y3Y2ZIZVA1Ynh1dnNvVU10alp2RkRpMWlzdyt0YVhuOEVPaENlVnBRcG9C?=
- =?utf-8?B?dzFPYkdkTjNFT1JrQXl5UmtpOTdZUm43VDczQ1RiM2xVdTlXZmM3bWxPOVVz?=
- =?utf-8?B?MmNHQktrb3VGQ0ZKaGdaTXJ0YWlkeU9aQUg4Tk0wUXpITzZqNnl6bDZxWjdV?=
- =?utf-8?B?YlJJS21WS3FCSVZHUlo5cFhIb21HRk80V05iSWtxWTF1b3pVdUcwdS9pMnBN?=
- =?utf-8?B?NTJXU2VQcGxSMWdLTVJGeWpJSytkaHpWK3ZNY3N4Q1JUeWJ2OGdQWUREQk9r?=
- =?utf-8?B?SHBxY0FlenNpcStDZGJleHhXRTAwTkorWDVCV1VZQ2Z6TFZsdjhlajgwaUw0?=
- =?utf-8?B?Y01Vd09UNUNjeXJrYlMvRlM0VlBqMzJDdkZRa1luUUxTeDhLeExBSzkwSmFZ?=
- =?utf-8?B?dUFiM2I1dURyZitJLzVSVHBrNG94M0NGRFVVWC9nZWJMeW5QcHdXQ3FGSU54?=
- =?utf-8?B?RFJFaER0V1BDMjEyZ0sxcDY3Q2I2TXRrMHB1RUJHd1RiK0xIYkFPL2t4YVJD?=
- =?utf-8?B?ZE5PczdiUkMvbEh2WHJaRTlQcmkyQXo2NGNadi9jMzBUSnJJM2E1Z0JYTWx2?=
- =?utf-8?Q?kBcB/kn12JouFTxhf+Vcof8P+?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4a910741-fec1-4d1e-a23a-08dd13ac8f42
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Dec 2024 15:10:01.8467 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HtZgRdk2eihzRRpT+Ej9704YwFYyJMQO7iLfxmOfy8NJ0m6YszvuQVUMHnw8nQ0s1Ul5slrMvrAeuR69jWfseA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5995
-Received-SPF: softfail client-ip=40.107.243.49;
- envelope-from=avihaih@nvidia.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f59cd973-b38b-4ee6-8baf-70019c26122e@intel.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -185,57 +94,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Dec 03, 2024 at 11:04:12PM +0800, Xiaoyao Li wrote:
+> Date: Tue, 3 Dec 2024 23:04:12 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for
+>  logical processors in the physical package
+> 
+> On 12/3/2024 3:33 PM, Zhao Liu wrote:
+> > > However, back to the patch, I think we cannot change it as this patch
+> > > directly. Instead, we need a compat_props for the changed behavior, because
+> > > this isn't a bug fix and it introduces guest-visible differences.
+> > 
+> > This is a fix, not a new feature, so compat_props is not needed.
+> 
+> Fix what? QEMU behaves as it for so many years and if the guest OS uses the
+> algorithm recommended by SDM, there is no issue.
 
-On 29/11/2024 19:15, Maciej S. Szmigiero wrote:
-> External email: Use caution opening links or attachments
->
->
-> On 29.11.2024 15:08, Cédric Le Goater wrote:
->> On 11/17/24 20:20, Maciej S. Szmigiero wrote:
->>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>
->>> It's possible for load_cleanup SaveVMHandler to get called without
->>> load_setup handler being called first.
->>>
->>> Since we'll be soon running cleanup operations there that access 
->>> objects
->>> that need earlier initialization in load_setup let's make sure these
->>> cleanups only run when load_setup handler had indeed been called
->>> earlier.
->>>
->>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>
->> tbh, that's a bit ugly. I agree it's similar to those 'bool initialized'
->> attributes we have in some structs, so nothing new or really wrong.
->> But it does look like a workaound for a problem or cleanups missing
->> that would need time to untangle.
->>
->> I would prefer to avoid this change and address the issue from the
->> migration subsystem if possible.
->
-> While it would be pretty simple to only call {load,save}_cleanup
-> SaveVMHandlers when the relevant {load,save}_setup handler was
-> successfully called first this would amount to a change of these
-> handler semantics.
->
-> This would risk introducing regressions - for example vfio_save_setup()
-> doesn't clean up (free) newly allocated migration->data_buffer
-> if vfio_migration_set_state() were to fail later in this handler
-> and relies on an unconstitutional call to vfio_save_cleanup() in
-> order to clean it up.
->
-> There might be similar issues in other drivers too.
+I've spent a lot time to explain why current behavior doesn't match the
+SDM and real machine's implementation.
 
-We can put all objects related to multifd load in their own struct (as 
-suggested by Cedric in patch #22) and allocate the struct only if 
-multifd device state transfer is used.
-Then in the cleanup flow we clean the struct only if it was allocated.
+> > > For ancient Intel CPUs, EBX[23:16] did represent the number of Logical
+> > > processor per package. I believe this should be the reason why QEMU
+> > > implemented it as is:
+> > > 
+> > >    - on SDM version 013, EBX[23:16]: Number of logical processors per
+> > > physical processor; two for the Pentium 4 processor supporting
+> > > Hyper-Threading Technology.
+> > > 
+> > >    - on SDM version 015, it changed to: Number of initial APIC IDs reserved
+> > > for this physical package. Normally, this is the number of logical
+> > > processors per physical package.
+> > > 
+> > >    - on SDM version 016, it changed to: Maximum number of logical processors
+> > > in this physical package.
+> > > 
+> > >    - finally, starting from SDM version 026, it changed to what reads now:
+> > > Maximum number of addressable IDs for logical processors in this physical
+> > > package.
+> > 
+> > And this is an architecturally defined CPUID, so SDM ensures backward
+> > compatibility.
+> 
+> SDM ensure the backwards compatibility by recommending to round the number
+> up to the power-of 2 when using it to calculate the topology with legacy
+> method.
 
-This way we don't need to add the load_setup flag and we can keep the 
-SaveVMHandlers semantics as is.
+Please, *always* refer the latest SDM.
 
-Do you think this will be OK?
-
-Thanks.
+Regarding historical changes, older machines didn't have spare APIC ID
+slots, so the actual number is the same as the maximum number of
+addressable IDs.
 
 
