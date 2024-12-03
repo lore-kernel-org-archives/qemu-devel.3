@@ -4,97 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30170E74AD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A9CEE74AD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:29:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIZQx-0004O1-Rd; Tue, 03 Dec 2024 15:23:47 -0500
+	id 1tIZVb-0006RV-80; Tue, 03 Dec 2024 15:28:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tIZQw-0004Nc-KB; Tue, 03 Dec 2024 15:23:46 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tIZQu-0006BQ-OT; Tue, 03 Dec 2024 15:23:46 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-385de59c1a0so4459122f8f.2; 
- Tue, 03 Dec 2024 12:23:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733257423; x=1733862223; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vWr3B4C8bAj6BivScsjyL8ezvL1IyxopWhrxQL4rFc0=;
- b=AdoQt1+vqnwEFz5/CihrWVGOuWiShIz1pjtRjy31u8/F6T3ZzeJB8Ui9ZoNc8ziHxv
- e1sdG1zflsI9qYco5vuiPFj1G+9dt9VqicTVfSGMLsCpLnQYXgvcFtCilEq/CounkXNs
- aqO7F+dSLnulWccUEeATCHKGqIBRfGvjGOlNinCCBgisZKVK6M9RA8ZFtHwxygCf+016
- d5LSkUGviCpM6zGZmkPyHyRNL1EQIPmf914fSPLUIhWlzYOwhKZ+4ToKRIKDCZ1hgXWC
- BHVdLrvZgkWsFHPJ7IlYgxe94AZNnhOpL4Udze9rHOSMWAEahRlihLYXXQk6AQGIIxkv
- 5OMQ==
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tIZVU-0006Q9-Tz
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:28:29 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tIZVT-0001eS-2w
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:28:28 -0500
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3E5ptu020064
+ for <qemu-devel@nongnu.org>; Tue, 3 Dec 2024 20:28:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 4nq07f50q8vTray9O2DDg3hEek1STsIsOr959p/US28=; b=XkeAC2vs6sLJrHoD
+ KqRkqCX64JRIMrNHyFCVbZtMMEXB3Xk9djAj065QZ4arhNeVNshxZnu56R1OXJb9
+ 2ZNZETtQqFfGl5FrgyW2XWEVHcikHXkoo/cQFtZlwlVfR0OIQqzq+NSZSmr7yGmD
+ VSor3B7Ikzc9v9GATm32MSSGDpQNJ+U+q3vvFzwdZRB+qAA3zUcRyaAlTPpVtrT+
+ KUHKjv0V9pmrDGHiTdWn5h7ZfGjbK9AKMRvPwl6S94swxLJQxhnxi6EFxazKWEDp
+ 4KXQS7PDlU/Ml8QUKq+1L5ICWqVZsuFHpXveSJpsUS9tcFhEZkPQkkrvwQY5Xxrb
+ yIpBwA==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43a3ex90tb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 20:28:24 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b68b264f71so725738285a.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:28:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733257423; x=1733862223;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vWr3B4C8bAj6BivScsjyL8ezvL1IyxopWhrxQL4rFc0=;
- b=XHHQ9O/Ll4bMUad9pn1+qSm2rABgQ7WbUv68YbgKTGgZ01hdbMnkBe3EWpvUwhu2/b
- 6fa27YaWBUChrDCA2V6o05cMM9ydSXQCYnpyFL8Wq6oHATNoEWcmM8eTKQaplgrx5Oza
- 7etGEbFfZoPbOrkpQ8l3kyRjxL82aJ25vrZr3YGmZtDm7uxO1q56mkrgzNGTqcA9Mv1/
- pa7Q3KJcMahqBoXLvxCNTXd5+2pd4afhAHQgfE7kadqm/kEJuqIyDY30KdURX20PR1/D
- NbocbRqsTOrjwy6/aDoL1NAySiw7KpLFlo6VhbRs7OPPkfHvaRaV86Infc5O8dDcorth
- dQOw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQQJdoam/jh0FndJ3sARujxzwclZZMn7UtBXRmdJtUpaqLuyxGC4sV831ymkZXYYLSC0SVVGcLjg==@nongnu.org,
- AJvYcCW+aIq9HPYl1h+CaDOVRUhXheRrF5dyv4mXNF+JeKLLOx2TvLh2hQ8RsKeGDK1E64eSRFTGHfiWRQygMw==@nongnu.org
-X-Gm-Message-State: AOJu0YxmpiwGSQXbGiAamtr2WlnqL5j2f9I0qEEyFAxhIpS0kMMFpYbN
- a0lphAp6iGK7ufaaKev96CcUKoNQJ5Qf6DZfkv+xyBjztYvkne0ObN8wQA==
-X-Gm-Gg: ASbGncvm+bXDf0zGO2V7N0u29c/u6LmpRIq0JOumug6+cDUWSxY7xZJQIMT7QTnbJ0a
- 0mK9krKcFFnC35OW9zC9kDY+U+y+jjjvFCQp5tq8lq/SF8t4Uq02KG3BgwEUMf0zHVxknCCptV7
- 4OQ/ueajfRavUHPxDqtlZBSlhHBdJmSr4cJeRmIQGNineq2zXE7KZncJdFkhZhJP/aobJH60/uN
- NevUEpurBql2VwpZiUnGZdkeSGRVsZxCblb/oFfsXAhE53ivXvlqB8+hYvUAa4yklT2BqmWncJv
- HGLnxp/G6QH5hh097wntkT0=
-X-Google-Smtp-Source: AGHT+IE2VK1egadmLfqT9AZwTvVt10/zBqtRrvmSY1jD61vRGH9/CoH6AgdjMpaPVl7emCoPUXbLLw==
-X-Received: by 2002:a05:6000:2aa:b0:385:f349:fffb with SMTP id
- ffacd0b85a97d-385fd42a35fmr3288219f8f.45.1733257422614; 
- Tue, 03 Dec 2024 12:23:42 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-002-242-014-218.2.242.pool.telefonica.de.
- [2.242.14.218]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385e17574ebsm12074198f8f.30.2024.12.03.12.23.42
+ d=1e100.net; s=20230601; t=1733257703; x=1733862503;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4nq07f50q8vTray9O2DDg3hEek1STsIsOr959p/US28=;
+ b=UlbU4LMk/RyL1oDP2bbJRGjOvMRTVXYz4cjKZec7dLibiru7J4kRdGw3ytUdylRbfb
+ eDVnkeJ9VHx+w/GQHojyptKVy3P5/z4EABsBoklUQOta4wsN7g33X0JCQMXmZKCx+yoY
+ sh+dLdJuR8Hq6wlfqL6TQMwvueH2Rqx8Q5wxKnVVm0Dog13eqpcEr8xkcWm1mNUbzr8J
+ LVDl51QJ5gLC56RvgJPI9/wI/YdbuV9XSM1SrDAkJPYj0EibmO/a/3l0GeAs7FiPoywS
+ RFLq7UFAy1lBuXr+T+ueLYRi0QDIxMczqOR0j+Ew5sMvR0aSgG3qh8mvKXlBSETxxVu9
+ ltQA==
+X-Gm-Message-State: AOJu0Yxu3INEo0HbH6IplgH5ojGbG2963o6FvYT9GPY47gz33SMRkl1l
+ TRN5uHMgQYqQo9ecUU8dda0FvaAHYv6v3Sic1xM8EDaSz7MEF3HAhU31J5uu3u4XDMKdzGYSiv8
+ aJST/25+/uTCb/EY37PcGyJzdh58JZAY6/c9SrtjebkLblyI2tOJLcA==
+X-Gm-Gg: ASbGncv2hoGK4UjRSdSXFEP7juEwgNj954fWG8YCXKZt/trGx/yGVoqZ5Mpo3kCGmnX
+ wHc5Zd7b7L6uDY0h4ONlhrK76wqaTr3DnmcimH6vxoMIlh/+wbL73AC4Jjrfmtfa80uKaRVpoMz
+ XQex5rULzdA13K8uoN+XoRLbcb1+WkpZiYsRloezjiWMdlYG2kGqiAnI+l/W76VIEfaX2iBXUdQ
+ Tma7kyqq3JrnTCqDf63zV4dTjrZfSD73QVbVzcwpTWzN3KH+nXRLSLWim0GsnvPyDybWQbE0kEH
+ ay/GsSGdvEbSBJmSsxnh9DEHdlOpGoaE
+X-Received: by 2002:a05:620a:2685:b0:7a4:d685:caa9 with SMTP id
+ af79cd13be357-7b6abb9fe45mr232353885a.48.1733257703605; 
+ Tue, 03 Dec 2024 12:28:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFhUuiWU9qS9C1CdOFMaZeZWGM77Cr1yN9nHLCIEkno64Rd+/lgYOZHIJKnKJzGxN9xpbJ1pQ==
+X-Received: by 2002:a05:620a:2685:b0:7a4:d685:caa9 with SMTP id
+ af79cd13be357-7b6abb9fe45mr232349485a.48.1733257703165; 
+ Tue, 03 Dec 2024 12:28:23 -0800 (PST)
+Received: from [10.222.168.90] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b684946dadsm541120085a.60.2024.12.03.12.28.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 12:23:42 -0800 (PST)
-Date: Tue, 03 Dec 2024 20:23:42 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Jamin Lin via <qemu-devel@nongnu.org>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: jamin_lin@aspeedtech.com, troy_lee@aspeedtech.com,
- yunlin.tang@aspeedtech.com
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_3/6=5D_hw=3Asdhci?=
- =?US-ASCII?Q?=3A_Introduce_a_new_=22capareg=22_?=
- =?US-ASCII?Q?class_member_to_set_the_different_Capability_Registers=2E?=
-In-Reply-To: <20241203021500.3986213-4-jamin_lin@aspeedtech.com>
-References: <20241203021500.3986213-1-jamin_lin@aspeedtech.com>
- <20241203021500.3986213-4-jamin_lin@aspeedtech.com>
-Message-ID: <94E62126-BB97-465A-9021-2FB365E677A8@gmail.com>
+ Tue, 03 Dec 2024 12:28:22 -0800 (PST)
+Message-ID: <2ee450df-b06c-420a-9e52-44b781423c6f@oss.qualcomm.com>
+Date: Tue, 3 Dec 2024 14:28:20 -0600
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 36/43] target/hexagon: Add temporary vector storage
+To: Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com,
+ bcain@quicinc.com, philmd@linaro.org, alex.bennee@linaro.org
+References: <20241121014947.18666-1-anjo@rev.ng>
+ <20241121014947.18666-37-anjo@rev.ng>
+ <eaf906e2-3973-466b-8a2e-f7749e844968@linaro.org>
+ <gcp5xcypulziy2ixslvsiekwidedztxydvypyc6faz2ssbzx2i@ibcmjqjzgxwp>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <gcp5xcypulziy2ixslvsiekwidedztxydvypyc6faz2ssbzx2i@ibcmjqjzgxwp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: N_extQEE55JJAyIL9tSx3kMODumM06Wg
+X-Proofpoint-GUID: N_extQEE55JJAyIL9tSx3kMODumM06Wg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 lowpriorityscore=0
+ mlxlogscore=999 clxscore=1011 phishscore=0 adultscore=0 suspectscore=0
+ malwarescore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412030169
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,219 +127,55 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+On 12/3/2024 12:56 PM, Anton Johansson via wrote:
+> On 22/11/24, Richard Henderson wrote:
+>> On 11/20/24 19:49, Anton Johansson wrote:
+>>> Temporary vectors in helper-to-tcg generated code are allocated from an
+>>> array of bytes in CPUArchState, specified with --temp-vector-block.
+>>>
+>>> This commits adds such a block of memory to CPUArchState, if
+>>> CONFIG_HELPER_TO_TCG is set.
+>>>
+>>> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>>> ---
+>>>    target/hexagon/cpu.h | 4 ++++
+>>>    1 file changed, 4 insertions(+)
+>>>
+>>> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+>>> index 7be4b5769e..fa6ac83e01 100644
+>>> --- a/target/hexagon/cpu.h
+>>> +++ b/target/hexagon/cpu.h
+>>> @@ -97,6 +97,10 @@ typedef struct CPUArchState {
+>>>        MMVector future_VRegs[VECTOR_TEMPS_MAX] QEMU_ALIGNED(16);
+>>>        MMVector tmp_VRegs[VECTOR_TEMPS_MAX] QEMU_ALIGNED(16);
+>>> +#ifdef CONFIG_HELPER_TO_TCG
+>>> +    uint8_t tmp_vmem[4096] QEMU_ALIGNED(16);
+>>> +#endif
+>>> +
+>>>        MMQReg QRegs[NUM_QREGS] QEMU_ALIGNED(16);
+>>>        MMQReg future_QRegs[NUM_QREGS] QEMU_ALIGNED(16);
+>> Wow.  Do you really require 4k in temp storage?
+> No, 4k is overkill used during testing.  But consider that Hexagon uses
+> 128- and 256-byte vectors in some cases so if the emitted code uses say
+> 5 temporaries in its computation we end up at 1280 bytes as an upper
+> bound.
 
-Am 3=2E Dezember 2024 02:14:57 UTC schrieb Jamin Lin via <qemu-devel@nongn=
-u=2Eorg>:
->Currently, it set the hardcode value of capability registers to all ASPEE=
-D SOCs
->However, the value of capability registers should be different for all AS=
-PEED
->SOCs=2E For example: the bit 28 of the Capability Register 1 should be 1 =
-for
->64-bits System Bus support for AST2700=2E
+Per-packet there should be a maximum of one temporary.  But per-TB it's 
+unbound.  Could we/should we have some guidance to put the brakes on 
+translation early if we encounter ~N temp references?
+
+But maybe that's not needed since the temp space can be reused within a 
+TB among packets.
+
 >
->Introduce a new "capareg" class member whose data type is uint_64 to set =
-the
->different Capability Registers to all ASPEED SOCs=2E
+> Two ideas here, we can:
 >
->The value of Capability Register is "0x0000000001e80080" for AST2400 and
->AST2500=2E The value of Capability Register is "0x0000000701f80080" for A=
-ST2600=2E
+>    1. Allow users to specify an upper bound on vector memory, and abort
+>       translation of helpers that surpass this, and;
 >
->Signed-off-by: Jamin Lin <jamin_lin@aspeedtech=2Ecom>
->---
-> hw/arm/aspeed_ast2400=2Ec      |  3 +-
-> hw/arm/aspeed_ast2600=2Ec      |  7 ++--
-> hw/sd/aspeed_sdhci=2Ec         | 72 +++++++++++++++++++++++++++++++-----
-> include/hw/sd/aspeed_sdhci=2Eh | 12 +++++-
-> 4 files changed, 78 insertions(+), 16 deletions(-)
+>    2. Emit maximum number of bytes used for vector temporaries to a
+>       macro.
 >
->diff --git a/hw/arm/aspeed_ast2400=2Ec b/hw/arm/aspeed_ast2400=2Ec
->index ecc81ecc79=2E=2E3c1b419945 100644
->--- a/hw/arm/aspeed_ast2400=2Ec
->+++ b/hw/arm/aspeed_ast2400=2Ec
->@@ -224,7 +224,8 @@ static void aspeed_ast2400_soc_init(Object *obj)
->     snprintf(typename, sizeof(typename), "aspeed=2Egpio-%s", socname);
->     object_initialize_child(obj, "gpio", &s->gpio, typename);
->=20
->-    object_initialize_child(obj, "sdc", &s->sdhci, TYPE_ASPEED_SDHCI);
->+    snprintf(typename, sizeof(typename), "aspeed=2Esdhci-%s", socname);
->+    object_initialize_child(obj, "sdc", &s->sdhci, typename);
->=20
->     object_property_set_int(OBJECT(&s->sdhci), "num-slots", 2, &error_ab=
-ort);
->=20
->diff --git a/hw/arm/aspeed_ast2600=2Ec b/hw/arm/aspeed_ast2600=2Ec
->index c40d3d8443=2E=2Eb5703bd064 100644
->--- a/hw/arm/aspeed_ast2600=2Ec
->+++ b/hw/arm/aspeed_ast2600=2Ec
->@@ -236,8 +236,8 @@ static void aspeed_soc_ast2600_init(Object *obj)
->     snprintf(typename, sizeof(typename), "aspeed=2Egpio-%s-1_8v", socnam=
-e);
->     object_initialize_child(obj, "gpio_1_8v", &s->gpio_1_8v, typename);
->=20
->-    object_initialize_child(obj, "sd-controller", &s->sdhci,
->-                            TYPE_ASPEED_SDHCI);
->+    snprintf(typename, sizeof(typename), "aspeed=2Esdhci-%s", socname);
->+    object_initialize_child(obj, "sd-controller", &s->sdhci, typename);
->=20
->     object_property_set_int(OBJECT(&s->sdhci), "num-slots", 2, &error_ab=
-ort);
->=20
->@@ -247,8 +247,7 @@ static void aspeed_soc_ast2600_init(Object *obj)
->                                 &s->sdhci=2Eslots[i], TYPE_SYSBUS_SDHCI)=
-;
->     }
->=20
->-    object_initialize_child(obj, "emmc-controller", &s->emmc,
->-                            TYPE_ASPEED_SDHCI);
->+    object_initialize_child(obj, "emmc-controller", &s->emmc, typename);
->=20
->     object_property_set_int(OBJECT(&s->emmc), "num-slots", 1, &error_abo=
-rt);
->=20
->diff --git a/hw/sd/aspeed_sdhci=2Ec b/hw/sd/aspeed_sdhci=2Ec
->index acd6538261=2E=2E93f5571021 100644
->--- a/hw/sd/aspeed_sdhci=2Ec
->+++ b/hw/sd/aspeed_sdhci=2Ec
->@@ -148,6 +148,7 @@ static void aspeed_sdhci_realize(DeviceState *dev, Er=
-ror **errp)
-> {
->     SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);
->     AspeedSDHCIState *sdhci =3D ASPEED_SDHCI(dev);
->+    AspeedSDHCIClass *asc =3D ASPEED_SDHCI_GET_CLASS(sdhci);
->=20
->     /* Create input irqs for the slots */
->     qdev_init_gpio_in_named_with_opaque(DEVICE(sbd), aspeed_sdhci_set_ir=
-q,
->@@ -167,7 +168,7 @@ static void aspeed_sdhci_realize(DeviceState *dev, Er=
-ror **errp)
->         }
->=20
->         if (!object_property_set_uint(sdhci_slot, "capareg",
->-                                      ASPEED_SDHCI_CAPABILITIES, errp)) =
-{
->+                                      asc->capareg, errp)) {
->             return;
->         }
->=20
->@@ -218,13 +219,66 @@ static void aspeed_sdhci_class_init(ObjectClass *cl=
-assp, void *data)
->     device_class_set_props(dc, aspeed_sdhci_properties);
-> }
->=20
->-static const TypeInfo aspeed_sdhci_types[] =3D {
->-    {
->-        =2Ename           =3D TYPE_ASPEED_SDHCI,
->-        =2Eparent         =3D TYPE_SYS_BUS_DEVICE,
->-        =2Einstance_size  =3D sizeof(AspeedSDHCIState),
->-        =2Eclass_init     =3D aspeed_sdhci_class_init,
->-    },
-
-Why not just extend this array? It's made for registering multiple types, =
-exactly what this patch is introducing=2E
-
->+static const TypeInfo aspeed_sdhci_info =3D {
->+    =2Ename           =3D TYPE_ASPEED_SDHCI,
->+    =2Eparent         =3D TYPE_SYS_BUS_DEVICE,
->+    =2Einstance_size  =3D sizeof(AspeedSDHCIState),
->+    =2Eclass_init     =3D aspeed_sdhci_class_init,
->+    =2Eclass_size =3D sizeof(AspeedSDHCIClass),
->+    =2Eabstract =3D true,
->+};
->+
->+static void aspeed_2400_sdhci_class_init(ObjectClass *klass, void *data)
->+{
->+    DeviceClass *dc =3D DEVICE_CLASS(klass);
->+    AspeedSDHCIClass *asc =3D ASPEED_SDHCI_CLASS(klass);
->+
->+    dc->desc =3D "ASPEED 2400 SDHCI Controller";
->+    asc->capareg =3D 0x0000000001e80080;
->+}
->+
->+static const TypeInfo aspeed_2400_sdhci_info =3D {
->+    =2Ename =3D TYPE_ASPEED_2400_SDHCI,
->+    =2Eparent =3D TYPE_ASPEED_SDHCI,
->+    =2Eclass_init =3D aspeed_2400_sdhci_class_init,
->+};
->+
->+static void aspeed_2500_sdhci_class_init(ObjectClass *klass, void *data)
->+{
->+    DeviceClass *dc =3D DEVICE_CLASS(klass);
->+    AspeedSDHCIClass *asc =3D ASPEED_SDHCI_CLASS(klass);
->+
->+    dc->desc =3D "ASPEED 2500 SDHCI Controller";
->+    asc->capareg =3D 0x0000000001e80080;
->+}
->+
->+static const TypeInfo aspeed_2500_sdhci_info =3D {
->+    =2Ename =3D TYPE_ASPEED_2500_SDHCI,
->+    =2Eparent =3D TYPE_ASPEED_SDHCI,
->+    =2Eclass_init =3D aspeed_2500_sdhci_class_init,
-> };
->=20
->-DEFINE_TYPES(aspeed_sdhci_types)
->+static void aspeed_2600_sdhci_class_init(ObjectClass *klass, void *data)
->+{
->+    DeviceClass *dc =3D DEVICE_CLASS(klass);
->+    AspeedSDHCIClass *asc =3D ASPEED_SDHCI_CLASS(klass);
->+
->+    dc->desc =3D "ASPEED 2600 SDHCI Controller";
->+    asc->capareg =3D 0x0000000701f80080;
->+}
->+
->+static const TypeInfo aspeed_2600_sdhci_info =3D {
->+    =2Ename =3D TYPE_ASPEED_2600_SDHCI,
->+    =2Eparent =3D TYPE_ASPEED_SDHCI,
->+    =2Eclass_init =3D aspeed_2600_sdhci_class_init,
->+};
->+
->+static void aspeed_sdhci_register_types(void)
->+{
->+    type_register_static(&aspeed_sdhci_info);
->+    type_register_static(&aspeed_2400_sdhci_info);
->+    type_register_static(&aspeed_2500_sdhci_info);
->+    type_register_static(&aspeed_2600_sdhci_info);
->+}
->+
->+type_init(aspeed_sdhci_register_types);
->diff --git a/include/hw/sd/aspeed_sdhci=2Eh b/include/hw/sd/aspeed_sdhci=
-=2Eh
->index 057bc5f3d1=2E=2E8083797e25 100644
->--- a/include/hw/sd/aspeed_sdhci=2Eh
->+++ b/include/hw/sd/aspeed_sdhci=2Eh
->@@ -13,9 +13,11 @@
-> #include "qom/object=2Eh"
->=20
-> #define TYPE_ASPEED_SDHCI "aspeed=2Esdhci"
->-OBJECT_DECLARE_SIMPLE_TYPE(AspeedSDHCIState, ASPEED_SDHCI)
->+#define TYPE_ASPEED_2400_SDHCI TYPE_ASPEED_SDHCI "-ast2400"
->+#define TYPE_ASPEED_2500_SDHCI TYPE_ASPEED_SDHCI "-ast2500"
->+#define TYPE_ASPEED_2600_SDHCI TYPE_ASPEED_SDHCI "-ast2600"
->+OBJECT_DECLARE_TYPE(AspeedSDHCIState, AspeedSDHCIClass, ASPEED_SDHCI)
->=20
->-#define ASPEED_SDHCI_CAPABILITIES 0x01E80080
-> #define ASPEED_SDHCI_NUM_SLOTS    2
-> #define ASPEED_SDHCI_NUM_REGS     (ASPEED_SDHCI_REG_SIZE / sizeof(uint32=
-_t))
-> #define ASPEED_SDHCI_REG_SIZE     0x100
->@@ -32,4 +34,10 @@ struct AspeedSDHCIState {
->     uint32_t regs[ASPEED_SDHCI_NUM_REGS];
-> };
->=20
->+struct AspeedSDHCIClass {
->+    SysBusDeviceClass parent_class;
->+
->+    uint64_t capareg;
->+};
-
-The struct seems not AST-specific and could be turned into a base class fo=
-r all SDHCI device models, no? That way one could also add further device-s=
-pecific constants other than capareg=2E
-
-Best regards,
-Bernhard
-
->+
-> #endif /* ASPEED_SDHCI_H */
+> //Anton
+>
 
