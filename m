@@ -4,119 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44A81E64AB6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B0EE64AB8
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:03:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIUPk-0007ja-8C; Tue, 03 Dec 2024 10:02:12 -0500
+	id 1tIUPr-0007mh-V8; Tue, 03 Dec 2024 10:02:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tIUPj-0007hn-6h
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:02:11 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tIUPf-0003XZ-9N
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:02:10 -0500
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3E5mnI020044
- for <qemu-devel@nongnu.org>; Tue, 3 Dec 2024 15:02:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 0QRuMr/Lfpvfj4fJvGCIYOswyEK6/mWfdLPMEpGH2a4=; b=ByAFgAl981lI+pbu
- M+4VXolv9shjPSqWT5JmmgsCszJ4rdL0Ps6pbzPQMVoyy9QWyaOsR9f7Yp9Cafh5
- rzwoqpp/ImL3rw7QVUlwGTRB82qIuiQU1YkrEWUjg7ZaeH9NbY3fNlq3W1Yluls3
- xArLJQgFSgp9+uzD2AiZbIXPvx7blLwWgHg1KGscn2OwOYSWBWsCFx7JCeRr/rNR
- Clnr1z/VjdAMjUzUbuECRO/J0P30hvAbrDizc2cd/CLRAztsi57NXwyYZy05fWVg
- SMQn47B+G+iWTnsw5lMdeSLxT20nHa4k97oSsaeFYhDBwXWyY17tg1P5aWBsHbdN
- PgUrdw==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43a3ex844e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 15:02:00 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6d87cf1f89cso97616686d6.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:02:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1tIUPl-0007k0-59
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:02:13 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1tIUPj-0003Yl-A8
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:02:12 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-7251ace8bc0so4682189b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:02:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733238130; x=1733842930; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gqLzY+IRT6La492ly8emVrBu9C8joyzHbon3Upe0vEo=;
+ b=fqwzmzvjeHIwBCOHUbcl4Imukc/bFVH6qEc3QXwHhP9FajKx62yQMu+Yj7yVvYcgST
+ DKq9YvAZl/sFYNzO9srnxxmCQSxOt2DAhCt/v0hqD/3/vd2O4bMDG8nEbCQMYFrPo8Jd
+ zuSkRZBljigwYI+Ku7k+KHRfn1kTRghGWmVdnMlQ4524ZJIZPIHhFSuwouUpCjeEf1Ya
+ DazEx6OMltb/11Fl+bARf4GABXJbHzmL4Olu93SkQKV8mNcfokPCJ5RaVxY98Stw4Pxc
+ bYks3mza/LN1tVlEL6O+LyfbnSfTfM3v95FQSeJr2RT6qeSHyjzw5ckje2+BXCCH/i4Z
+ 2j3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733238119; x=1733842919;
+ d=1e100.net; s=20230601; t=1733238130; x=1733842930;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0QRuMr/Lfpvfj4fJvGCIYOswyEK6/mWfdLPMEpGH2a4=;
- b=BB0y7mNEZOv93g+yJocF0ln2h0uYChiHoQnBa77NG5gnAJS1esHxomnxXuV2CNNwz1
- KiwHObSKez5IIiHPj4uGjXnP4yBLQY1vjYkVLxr7UzJ9cAhrxIw25vUdQdm+7wXHPo+e
- k1yX/Am7nM2+NAc8+rC+lrB1Qh4RXmvXvc5Yw02OJWctNrs5LSp1/BtvtEZE/9cLQ0zc
- OKghrW+GGqD11n9b4VPdr/EQAzHxUGLHE4j3BSZS+QItd+sDbgyK0ObPyaFJMeXJ3s3S
- BVcKgsJxNsSYrqt/ln0Ak9/nH01uHGIiBormhSzRozY+DJiZY72xRKXoAC9egANW9GlY
- BPGA==
+ bh=gqLzY+IRT6La492ly8emVrBu9C8joyzHbon3Upe0vEo=;
+ b=F5uRap9AJENGT7eF9he7MUQt86PbNDwQ56joe4kO2fk8rTsd5uTT5C9Q/qjTOF4xBi
+ FRwj/QGXj9MhenSmwxhy3QYZbSgrDlzXCbsvUuIrGRWds6m7IhZ2/DHM0yWxqS5HBOFx
+ slOAo49zMiT/Fy0WN5wTybC1TQ0TMBODywCRudHS38IgEg2KA7VwDo0qurXnT78XOrpT
+ +s0PlKsypq+lbOd+DVondQ9lG7HD81XzJcgEDZzjsNGjEKvsEFghApob/8XFGL4qZQAp
+ xUq+QD5/x27F+Dp3TkZlC0fB/JFHS18d24OOEbd3LliIbIOfOBwXbkx/eeRMlesiOG9D
+ ockw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWPRaCsPCE2QsExUXupBX4r0tKG2CwzoD0FWz7j/14YrnLn8aaG6BZ6iz6ckjZ/Y6N8iz7ApEyZoE8@nongnu.org
-X-Gm-Message-State: AOJu0YwtTTtRjzwyC9olHIAyIV3PiT11oxzitc5reTLdod+259KX+SAp
- e/klhX6yhTbg5SSu8jdSRADVHg3w7lMlxyxYKhIeezM5B60+NUEtTixI710Blw/FydN0UxGXjf/
- KL/UNmCbj3qTY5Qj0dWQ5KYI1+dqALEalZzsTn/USxgusTgnr/95yLg==
-X-Gm-Gg: ASbGnctl3xKhjIaCSs+IohE2kYkNFHCjTsVjDAm4Nu+UbR/MHIeXiLAEbq2M70y020H
- TXqGHx/xSeHxrt/74urGg6QO8wytWjyY2eODsgnm8L+fBX5j+gwuvJjXVlARTqIC+5s+IJDF1lj
- p8XyR46wD+bw19xwghZkMGuiJUrMA11EJ58GaBqzfpHxzocVQnzMa+/sX33CGHdcXuS+/7/FPw2
- 4LQJCOrfI08qeOdJ4mVvmr3UsMCesYhw1OB/e75NOc2FfKh56IgXCg1Em23j+vqCym+EP/Q8DyW
- MwKiE6vAeYSDMDHV4X/vY65WLYOe8KY4RPP7gVU2KXGDJGkrpdk=
-X-Received: by 2002:a05:6214:240d:b0:6d8:a258:68bb with SMTP id
- 6a1803df08f44-6d8b72cf660mr35383246d6.6.1733238119496; 
- Tue, 03 Dec 2024 07:01:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHm8ell3sNMG264RiPbskY4kK7Zv9rNEU56A0O9PDuSmiQx+8HD4o+KENAQgA8MRBmk4ZE20Q==
-X-Received: by 2002:a05:6214:240d:b0:6d8:a258:68bb with SMTP id
- 6a1803df08f44-6d8b72cf660mr35382836d6.6.1733238119078; 
- Tue, 03 Dec 2024 07:01:59 -0800 (PST)
-Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8c271ef14sm3023686d6.22.2024.12.03.07.01.57
+ AJvYcCW8OcStm5YSYMJSoHyXJVTu5cbN9RmyOP9fSm05bZAfd8FTbYLevkAONPi7HLiXoeDXEtIDQ7HXmkU4@nongnu.org
+X-Gm-Message-State: AOJu0Yzi/t677F6IvYvm1txFDx6PcoszNUFxTUnmtT9kJifO7XxeyZIM
+ ifbaEZPVwV3LdfVd9VDcD6/9LlluvFewEyrnjqLg4I2+0/WUt7GGJZnQU7MCfVg=
+X-Gm-Gg: ASbGncuUuJ2TCDVUkafYoeEmK78SPwh6BijpQIm2V3x7m0xxSuqfF32s7dTN8U+di98
+ R2pf9TtwQtDR2INHJuiEAyQHurjE/79lHIun0JxhsMWeb6cyxV5zuqzP8XHNt6Kf5oDQp8oqB3u
+ G6Eyb9HfgShODVhK2+SaRQWzHT28Ro/g6OZCrHGqLJJp8x6g1OXdR6lZps7ejGDbp1t372zsi2n
+ FBew8YKE9JRz8AP1BZloiZwW1ml/VzYzNchnZvWCW7btoHl4sME5NoPiGiAoVc=
+X-Google-Smtp-Source: AGHT+IFWWU0xifEh7JdWX7yIRoUB0hrkclGAfnre4R7nIjlYOnzio2yHi8j0x90cYJ3CgcOIWA5hmg==
+X-Received: by 2002:a17:90b:4fc6:b0:2ee:b8ac:73b7 with SMTP id
+ 98e67ed59e1d1-2ef0262bc0fmr4182124a91.16.1733238129347; 
+ Tue, 03 Dec 2024 07:02:09 -0800 (PST)
+Received: from [192.168.0.102] ([179.93.129.106])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2eeb2956718sm4700862a91.44.2024.12.03.07.02.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 07:01:58 -0800 (PST)
-Message-ID: <30601832-c8df-4d28-af97-cf9f2bdf775d@oss.qualcomm.com>
-Date: Tue, 3 Dec 2024 09:01:56 -0600
+ Tue, 03 Dec 2024 07:02:08 -0800 (PST)
+Message-ID: <b9e375ad-2b71-48a4-8e97-2cdced17ea79@linaro.org>
+Date: Tue, 3 Dec 2024 12:02:03 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] MAINTAINERS: update email addr for Brian Cain
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Brian Cain <bcain@quicinc.com>, qemu-devel@nongnu.org,
- richard.henderson@linaro.org, quic_mathbern@quicinc.com,
- stefanha@redhat.com, ale@rev.ng, anjo@rev.ng, quic_mliebel@quicinc.com,
- ltaylorsimpson@gmail.com, alex.bennee@linaro.org, quic_mburton@quicinc.com
-References: <20241123164641.364748-1-bcain@quicinc.com>
- <20241123164641.364748-2-bcain@quicinc.com>
- <014e9959-4995-4bf2-9a2c-ace318673804@linaro.org>
- <c559ec82-2ed2-4d38-93b4-9b5076181c9b@oss.qualcomm.com>
- <CAFEAcA_C5HXvMzVXQvQEpcFS67AZCa0dJL0Ek4X4tXtQfA6z+g@mail.gmail.com>
- <d06babd3-5aa9-4a6f-a265-45170edc7039@linaro.org>
+Subject: Re: [PATCH v2] tests/functional/aarch64: add tests for FEAT_RME
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Troy Lee <leetroy@gmail.com>, Alistair Francis <alistair@alistair23.me>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
+ <4b3180bd-8054-4431-a594-0445ce4837aa@linaro.org>
+ <5620efa2-98c6-4613-b866-67e91ac6acf8@linaro.org>
+ <CAFEAcA-xa1AKf2GAv7go5wdu+Td=4jf7Nriin-Oe3S6qEV6X0g@mail.gmail.com>
+ <fd7ad48e-1e72-4735-8064-7039eedc00ae@linaro.org>
+ <87ser6c5be.fsf@draig.linaro.org>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <d06babd3-5aa9-4a6f-a265-45170edc7039@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <87ser6c5be.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 2WRi8QyG-y2or2LX18KgIyxrtFDH2jPS
-X-Proofpoint-GUID: 2WRi8QyG-y2or2LX18KgIyxrtFDH2jPS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 lowpriorityscore=0
- mlxlogscore=558 clxscore=1011 phishscore=0 adultscore=0 suspectscore=0
- malwarescore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412030128
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,66 +117,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Alex,
 
-On 12/3/2024 8:53 AM, Philippe Mathieu-Daudé wrote:
-> On 3/12/24 15:31, Peter Maydell wrote:
->> On Tue, 3 Dec 2024 at 14:23, Brian Cain <brian.cain@oss.qualcomm.com> 
->> wrote:
->>>
->>>
->>> On 12/2/2024 2:43 PM, Philippe Mathieu-Daudé wrote:
->>>> On 23/11/24 17:46, Brian Cain wrote:
->>>>> From: Brian Cain <brian.cain@oss.qualcomm.com>
->>>>>
->>>>> Also: add mapping for "quic_bcain@quicinc.com" which was ~briefly
->>>>> used for some replies to mailing list traffic.
->>>>>
->>>>> Signed-off-by: Brian Cain <bcain@quicinc.com>
->>>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->>>>> ---
->>>>>    .mailmap    | 2 ++
->>>>>    MAINTAINERS | 2 +-
->>>>>    2 files changed, 3 insertions(+), 1 deletion(-)
+On 12/2/24 15:23, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+> 
+>> On 12/2/24 02:57, Peter Maydell wrote:
+>>> On Sun, 1 Dec 2024 at 18:09, Pierrick Bouvier
+>>> <pierrick.bouvier@linaro.org> wrote:
 >>>>
->>>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> Hi Marcin,
 >>>>
->>> Forgive my ignorance here -- this T-b is - stronger than a R-b? or
->>> weaker than a R-b?  Or wholly orthogonal to R-b?
+>>>> On 12/1/24 05:34, Marcin Juszkiewicz wrote:
+>>>>> W dniu 28.11.2024 o 22:37, Pierrick Bouvier pisze:
+>>>>>> This boot an OP-TEE environment, and launch a nested guest VM inside it
+>>>>>> using the Realms feature. We do it for virt and sbsa-ref platforms.
+>>>>>>
+>>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>>
+>>>>>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+>>>>>> index 5c048cfac6d..b975a1560df 100644
+>>>>>> --- a/tests/functional/meson.build
+>>>>>> +++ b/tests/functional/meson.build
+>>>>>> @@ -13,6 +13,8 @@ endif
+>>>>>>      test_timeouts = {
+>>>>>>        'aarch64_aspeed' : 600,
+>>>>>>        'aarch64_raspi4' : 480,
+>>>>>
+>>>>>> +  'aarch64_rme_virt' : 720,
+>>>>>
+>>>>> Took 2974.95s on M1 Pro macbook.
+>>>>>
+>>>>>> +  'aarch64_rme_sbsaref' : 720,
+>>>>>
+>>>>> This one needed 2288.29s.
+>>>>>
+>>>>>>        'aarch64_sbsaref_alpine' : 720,
+>>>>>
+>>>>> Have to check cause timed out.
+>>>>>
+>>>>>>        'aarch64_sbsaref_freebsd' : 720,
+>>>>>
+>>>>> 331.65s
+>>>>>
+>>>>> So RME tests probably need longer timeouts or would not run at all.
+>>>>>
+>>>>
+>>>> By any chance, are you running those tests in debug mode?
+>>>> It seems to me that CI is running functional tests with optimized
+>>>> builds, so I'm not sure we want to support debug "times" here.
+>>> We do need to support debug times, because a common developer
+>>> use case is "doing a debug build, run 'make check-functional'
+>>> to check whether anything is broken. The debug times also
+>>> are useful because the CI runners can have highly variable
+>>> performance -- if a test is slow enough to hit the timeout
+>>> for a debug build locally, it's probably going to also hit
+>>> the timeout at least sometimes in CI.
+>>>
 >>
->> They mean different things -- T-b says "I tested this patch
->> and it works for me", and R-b says "I looked at the code
->> change and think it's a good change with no bugs".
+>> I understand the scenario, but given how slow debug builds are, it
+>> would probably be faster to advise developer to recompile in release
+>> mode.
+>> The overall time of compile + test is slower than waiting for debug.
 >>
->> T-b is a slightly odd thing to have on a MAINTAINERS
->> change, though I'm guessing Philippe might mean they tested
->> that the .mailmap change affected the commits the way it
->> was supposed to.
->
-> I tested oss.qualcomm.com is a valid MX and we can send
-> emails to it.
->
-> Then I looked at the recent github changes from quicinc
-> around oss.qualcomm.com, and that this email was posted
-> from your bcain@quicinc.com address. For that I could have
-> used a R-b tag I guess 🤷
->
-Ok, tyvm Peter and Phil for the explanation :)
+>> Beyond using a debugger, what is the advantage to compile with -O0?
+> 
+> --enable-debug
+> 
+>    - enables -00 with -g3 for symbols
+>    - and enables additional checks to validate TCG
+
+hm, do we ever used -g3 for --enable-debug?
+
+https://gitlab.com/qemu-project/qemu/-/blob/master/configure?ref_type=heads#L749
+
+I'd love to use -g3 instead of only -g for having the macro symbols.
+
+In my builds I use --extra-cflags="-g3" to have it but would like to drop it.
+
+unless I'm missing some other change in the flags down the lane...
 
 
->>
->>> Should I still seek a R-b before making a pull request with this 
->>> change?
->>
->> Philippe put this into his pullreq he just sent out, so you
->> don't need to do anything more on your end.
->
-> Yes, sorry I forgot to notify you here first.
->
-Thanks for picking it up ;)
+Cheers,
+Gustavo
 
-
+> You can use --enable-debug-info for just debug info without the overhead.
+> 
 >>
->> thanks
->> -- PMM
->
+>>> thanks
+>>> -- PMM
+> 
+
 
