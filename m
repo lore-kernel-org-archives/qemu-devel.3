@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8923DE69EA6
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:40:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F074E64ABB
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIV08-0006C2-Aa; Tue, 03 Dec 2024 10:39:48 -0500
+	id 1tIV0R-0006KV-5I; Tue, 03 Dec 2024 10:40:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV06-0006Bn-Bd
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:39:46 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV0O-0006H6-3K
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:40:04 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV04-0000yB-RY
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:39:46 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-434a1fe2b43so51221225e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:39:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV0M-00012l-2x
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:40:03 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-434a736518eso70285375e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:40:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733240383; x=1733845183; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733240400; x=1733845200; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wD5Ww32SqsbLurZC3NteIq86Z3QBn4l0SlXxCzvawy8=;
- b=trQsbMDLsjOvu4jUWLhNu4J7e2g1cz+CSPSGqoDlg7XXOhiFoMHL7wtrvkxe13RTSW
- F/ByZWgDRVIOGewLWLDvYDDRhzI+U/9mXk+q7zTzZvNoIC6+sS8ngKS72n7MEAI/TKAH
- IaAFfClDfYCC3vMsr5JvzWFtJ1JF+iY6loFuhevAXUTYJQR1/Nr3jcMzPJYcW7eupDb9
- Xe08KaEUCg1KdFjjmFqVK4hesAV2gUoLwI11tFkL1R0F46ga246dvwdckx6xFLX5Tt27
- PFb4XCEvpsFaGGvgsFK4rpgLMcipgAYCXX9UL85SWwCjoynINZPkihRa5SfblbzditL7
- ktwA==
+ bh=CgxWjMbGVj36P5iujF8l+0H0BqFxjJd0qrVoacn97/8=;
+ b=ZxqtiQCiveKnkj+9+8wXa0apn0z1QXSnYPgXrYhRr4YUP7P1Moyo0mOisLoEL7HDRI
+ +tXpjrErOuRKTLdvMMxkfyxxg87otYN1z5MdTUawP1QojNi5GvIEyPG+gxh4f5ybr9Qu
+ srkameQmsxSKrrm03ElCfXclwfzmaZacW+2feBLAbORkAtWdhIEDtdcShJ34EaFz9bSQ
+ Axat44z/YKyGiJM/77D7llfgZ170WCvkhatYGqsTl8qWA3nFwzqm1CvDft2gISTJO2FV
+ VB0A6u5ew/0BNKWRcqCX4iUVejSFDr7zwOb9wXdd0zv24iCn/1I1NxU/61lHqqzXWX1E
+ yByg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733240383; x=1733845183;
+ d=1e100.net; s=20230601; t=1733240400; x=1733845200;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wD5Ww32SqsbLurZC3NteIq86Z3QBn4l0SlXxCzvawy8=;
- b=dGjxnFRXjkZgFk6DUwz7mg6+MJSDbRpXiiE2bQI6H8TRA1uY04XnmfQb06cpcnhWHn
- GGwR/wXU+uIBKI7OgKppkuE736F6BWklmE7qiyGYo2H95eSLE143baaVhIwsb0TyUAhf
- FgIxKELa3S/UjeLWlMRnbRkVNrkczNyVMZj5BZro0Tqdx9YfAOyTap/w05NB9g017QYq
- NEbaEY+u6cdHuCGMxA6sXOiDeAWyGk7OUmER4DjbpYQGtyy8CgC1biynBwTZE+xTxO7r
- ko8yRy5/ym0exS14oz5ZfPJuYD3ZdCY0xQ97zQRiTbyl8I3Y+owdOE47kPWV41Mk2WsK
- fO9w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUj3t0I97jlnU3GAxEInbPYMaThQXuCada6xMPV/jFmPbubf6EN68SlwC9ECIRZXW0hRNt4D+0bZnTD@nongnu.org
-X-Gm-Message-State: AOJu0YzdIesyf3FbSb/0WCieEzoBi4odlyXZh7ky0/5dc4wax7sJj89B
- c1gLB8SPynRUveT8SYizBWE66M+ycBqcye7NCWWzrEcK290kQxIH/tWZprZgloA=
-X-Gm-Gg: ASbGncsCj5FsXiQEYVcctYMPh6xnvwlk3j7ZZoyMZkeDz8oQZp44SNMtn6XhDvhvik2
- 3tmVDD5PZnPJED7rYocr2cKK6sziz3TP9hbpzUtUkwOgNHElbOo67VmM0gTkMJFexTiVEHrhLFl
- pP+vx6eTs3nk69OznDLFFeWw6N+zDY6x0JvVOl4ZStlNKb6wWwAHjSskgMgm74XX+NGRZdkPE4k
- XzxGHCqrmC8zO9b6hG9T/raLnNtQ3IXPRwoX3T57So1RNVk3K7mnIemmQ1fzENELw==
-X-Google-Smtp-Source: AGHT+IG5lTiZpLGWsDAfbvU/2a+K/4jrPX1DXjGGbL3KCUZszSzHPNUwbRBYK5UMebEmCmSneI0nUg==
-X-Received: by 2002:a05:600c:3509:b0:434:9c60:95a3 with SMTP id
- 5b1f17b1804b1-434d09b50b1mr26758815e9.11.1733240383108; 
- Tue, 03 Dec 2024 07:39:43 -0800 (PST)
+ bh=CgxWjMbGVj36P5iujF8l+0H0BqFxjJd0qrVoacn97/8=;
+ b=risVh7+gLJMTkwEk5yWp1M+ip2+q+dyaiyK4CVFnNZfL+KSwcJxizzs8WiaBASwSyX
+ hbBbnGbjnjLkH9bNlmExXd6y4X4NtrZnCxVe9yNnVps/is3h3NwL1CICtQj+fWvAbNOZ
+ S0JYnMrTN9lfRj26yWHItabxIl6MP1XBxq9pRcGWrFOaNe9Q/CF6HI/xU6AGEFyKFECM
+ dylXCmlNJRzieMpI70EIKSCa2fpqnWtgpM5kpE9WNYSJxQT0IISLx8EBpC5hGFrlrzeD
+ 5Bdy674U+CrTPcpI9trTy/W2o3Ivf2YFIv00cwQJNu+vRE2mLOwUeMMjDKry/Va0zBVp
+ y59w==
+X-Gm-Message-State: AOJu0Yz345nC+XA0DE8uZLnFlFZVUXdDciSLqyZRalWWMHNCo99ybB+j
+ NfZK/6F07u74RhnQ+XlEQcokQkyk/CdDJf4aHnuMKBFZDjyYNUKcCnl+YMn0TUH8JnOkCcLiBFd
+ Gs4I=
+X-Gm-Gg: ASbGncvZxeOY1ba38/Kak793pr/CnskMyA0kRbXlC/CDFio8AlzBgvwVQOtdcYLivhm
+ +BDTJgiscSGJvsz+f5g/vF9C5B4iYP/JCGmlymU25SOhmWBUbbBWU6Bxtfs+yhftXwpM6U4ybKl
+ CSDwILaPuD8cSDTeDwmiKTf6b+uwTfnL4idSNpqIcOcmVcoG2v3J2BIKYB37qqwbI0Yt9u8WeQR
+ //xhgoWA3fE/A0l7iOSPWtmtCQkfamQs9CukyMACemn1WTXNZ9DI0ihC9YopV8aig==
+X-Google-Smtp-Source: AGHT+IGNGavK/uPJuyqA0ePAazUm/85Zy+h/qTZitvu+chiaoap9ZNBQWdRBCBT5rvjRvAMcGPPJMA==
+X-Received: by 2002:a05:600c:1c93:b0:434:a734:d279 with SMTP id
+ 5b1f17b1804b1-434d09d092fmr31617385e9.16.1733240400020; 
+ Tue, 03 Dec 2024 07:40:00 -0800 (PST)
 Received: from [192.168.69.223] ([176.187.209.146])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434b0d9bc91sm199500635e9.9.2024.12.03.07.39.41
+ 5b1f17b1804b1-434aa7e5b9csm225279815e9.43.2024.12.03.07.39.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 07:39:42 -0800 (PST)
-Message-ID: <d310853a-2d74-4fdc-bbbb-85d2a2c43fc4@linaro.org>
-Date: Tue, 3 Dec 2024 16:39:41 +0100
+ Tue, 03 Dec 2024 07:39:59 -0800 (PST)
+Message-ID: <86548da4-836f-4408-a377-b805b696a0e8@linaro.org>
+Date: Tue, 3 Dec 2024 16:39:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/core/machine: diagnose wrapping of maxmem
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost
- <eduardo@habkost.net>, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20241127114057.255995-1-berrange@redhat.com>
+Subject: Re: [PATCH-for-9.2] ui/cocoa: Temporarily ignore annoying deprecated
+ declaration warnings
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20241121131954.98949-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241127114057.255995-1-berrange@redhat.com>
+In-Reply-To: <20241121131954.98949-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,19 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/11/24 12:40, Daniel P. Berrangé wrote:
-> The 'maxmem' parameter parsed on the command line is held in uint64_t
-> and then assigned to the MachineState field that is 'ram_addr_t'. This
-> assignment will wrap on 32-bit hosts, silently changing the user's
-> config request if it were over-sized.
+On 21/11/24 14:19, Philippe Mathieu-Daudé wrote:
+> These warnings are breaking some build configurations since 2 months
+> now (https://gitlab.com/qemu-project/qemu/-/issues/2575):
 > 
-> Improve the existing diagnositics for validating 'size', and add the
-> same diagnostics for 'maxmem'
+>    ui/cocoa.m:662:14: error: 'CVDisplayLinkCreateWithCGDisplay' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
+>      662 |         if (!CVDisplayLinkCreateWithCGDisplay(display, &displayLink)) {
+>          |              ^
+>    /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked deprecated here
+>       89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
+>          |                    ^
+>    ui/cocoa.m:663:29: error: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
+>      663 |             CVTime period = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
+>          |                             ^
+>    /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:182:18: note: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' has been explicitly marked deprecated here
+>      182 | CV_EXPORT CVTime CVDisplayLinkGetNominalOutputVideoRefreshPeriod( CVDisplayLinkRef CV_NONNULL displayLink );
+>          |                  ^
+>    ui/cocoa.m:664:13: error: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
+>      664 |             CVDisplayLinkRelease(displayLink);
+>          |             ^
+>    /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+>      249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
+>          |                ^
+>    3 errors generated.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> For the next release, ignore the warnings using #pragma directives.
+> At least until we figure the correct new API usage.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/core/machine.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
+>   ui/cocoa.m | 5 +++++
+>   1 file changed, 5 insertions(+)
 
-Patch queued, thanks.
+Patch queued.
 
