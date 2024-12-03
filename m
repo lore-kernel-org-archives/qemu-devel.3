@@ -4,62 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12EBBE64AAD
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42CE0E64AAD
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 14:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tITQw-0005h3-58; Tue, 03 Dec 2024 08:59:22 -0500
+	id 1tITX9-0007bZ-Su; Tue, 03 Dec 2024 09:05:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tITQu-0005gY-Hv; Tue, 03 Dec 2024 08:59:20 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tITQs-0003rQ-4w; Tue, 03 Dec 2024 08:59:20 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 7C9D65C5A62;
- Tue,  3 Dec 2024 13:58:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45B7C4CECF;
- Tue,  3 Dec 2024 13:59:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1733234354;
- bh=ybwMmLDPih2y8EAfYC3azst4Q0MnjEVlliaSDkdXsSs=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=VwjlDOVH1n7GGba7TRDsopIvkZvmZhHN4moFJ8pONrGP65YgmBbrAlLMXLT1jRsuf
- 5n2il0PqOsQw8KbrdZEOWXf9jVJkycCPzXiGa3NUvDtM3YKeCSXbWFxF9C0gK08VHD
- TCwXGR/3gd9GZcqBTTUv2RB0WayGtg92RbnvGBY0IfFM01PeTlY/DORc7SEnH8gY3Z
- KvZwIIT3c3Om1idwXQeRRxLga8wLtNdD2E7P8LMu8rYhNeWbMaq0wSILeNqrVvtFUH
- 9PM8PFeY5/HUOP1BbV694KCSPA5p3GR4R+9Njum62JEPVQ8jUmWJCP5V6SyQN8AvT7
- s+vG4B/35zmIw==
-Date: Tue, 3 Dec 2024 14:59:08 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, Shannon
- Zhao <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao
- Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 0/5] Change ghes driver to use HEST-based offsets
-Message-ID: <20241203145908.06aee888@foz.lan>
-In-Reply-To: <20241203130310.0bde48c0@imammedo.users.ipa.redhat.com>
-References: <cover.1732281080.git.mchehab+huawei@kernel.org>
- <20241203130310.0bde48c0@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tITX3-0007aI-C0
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:05:41 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tITX1-0004fx-Ki
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:05:40 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5cec9609303so6611143a12.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 06:05:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733234735; x=1733839535; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=J72XsEq6Vvpiq4g9h+RfkaNdrqHWq3b771Pk0AeaAtc=;
+ b=KCxOpLSnEeYy8awQ+HlgkUmEprrXBoOmoxq7Ml27wVJNknx1xxPd0oe913vavOJfAw
+ +Y1aKRQl6cMdgSAcX4DUXdYYNBi5nA610/Fyn8AAByjpa79f9L/LEKu8Cc8I4BqWsbd/
+ epGb3HtVcZtMCdjIMGkldz3Q5srznwviIOmD9y9KDij6rN7LwySxZROtVlHG/JafkSdF
+ 0n5UhkK9fO5kBLmDTbsIMHkdf1+obPOLICQMV6M69hSYTdI5Abhtkfk48Ey+U3qxtTOA
+ jEJSprwOgA1Ye6CdkbsCnvJlOll6CiriaktHIcjwbomutfCY4VeQeVXtjxrAq2qk7aw8
+ nMMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733234735; x=1733839535;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J72XsEq6Vvpiq4g9h+RfkaNdrqHWq3b771Pk0AeaAtc=;
+ b=OV47BVivmu31j3elmk9z126TW3ZFt5pQrofzB0/xzebt6V7sCBDyTGiloVMVaGQ1uZ
+ GAqNoZe30QNAOzXQAk4rGCtdVZ1TBrrxMRmyFHCevWoesmhiKG5nab8Yi4lTmyIGB2mw
+ rcDKaP82LKWx8eiP5GrDMh9sMNhOWyOaJuFo6S85rT445KmH6ITWZJB99j0DGpr9okxU
+ RnMRAEm2JVIwGUzXOV8hpVemHtiH5NA0w0elf7Sy3plb2AHVOZRdDJjibeYL3no9Ee/z
+ TZaTdSw/gqjumU92ro//8tocXQ2nhTVuHgqswFtehoDHfKa9tQ29dUC7lXdT1jEgkzup
+ dk3Q==
+X-Gm-Message-State: AOJu0YxwnYnTi8p6DoRGqgzFg0V1U/7OrBLFsDI77hnUo+Q1QlJOiVuB
+ LnqUpGTwz2i+ykjbm6jyhb0h18DeJj7/t7HBA4UZEZ9VaxOZuo9jD5pkSamVUzjkTV/sTOndHE2
+ ORqa0A+OU86B5nIzZUk7K09e9UzHDBYARorBj6A==
+X-Gm-Gg: ASbGnctsrxk/KeemgDSO8oaBRa8Yf4D76VniJrUHVdNJ8o3vcJMORhbwkqbusJtaCPU
+ VmvFcciMCkQI31ozidgpfD8/R/9LR55U/
+X-Google-Smtp-Source: AGHT+IEmvaAkGpQ8q/mzPs54JUoEuoSAePDf/aib0qNDigkC0vALjR44H/RMq7UfoO5e3q8at2umBC5ZUBD8w08DJog=
+X-Received: by 2002:a05:6402:4405:b0:5d0:f088:c675 with SMTP id
+ 4fb4d7f45d1cf-5d10cb7ca92mr1819247a12.21.1733234734706; Tue, 03 Dec 2024
+ 06:05:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -100
-X-Spam_score: -10.1
-X-Spam_bar: ----------
-X-Spam_report: (-10.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20241201150607.12812-1-richard.henderson@linaro.org>
+ <20241201150607.12812-29-richard.henderson@linaro.org>
+In-Reply-To: <20241201150607.12812-29-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 3 Dec 2024 14:05:23 +0000
+Message-ID: <CAFEAcA9Aww0m_TPdbL53DPPnWqA=BU1TzjGLvQi-EokKyzkdfQ@mail.gmail.com>
+Subject: Re: [PATCH 28/67] target/arm: Convert BFCVT to decodetree
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,85 +90,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Tue, 3 Dec 2024 13:03:10 +0100
-Igor Mammedov <imammedo@redhat.com> escreveu:
+On Sun, 1 Dec 2024 at 15:11, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/translate-a64.c | 24 ++++++------------------
+>  target/arm/tcg/a64.decode      |  3 +++
+>  2 files changed, 9 insertions(+), 18 deletions(-)
+>
+> @@ -8661,21 +8664,6 @@ static void disas_fp_1src(DisasContext *s, uint32_t insn)
+>          break;
+>
+>      case 0x6:
+> -        switch (type) {
+> -        case 1: /* BFCVT */
 
-> On Fri, 22 Nov 2024 14:14:10 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > This  series was part of the previous PR to add generic error injection
-> > support on GHES. It depends on a cleanup patch series sent earlier
-> > today:
-> > 
-> > 	https://lore.kernel.org/qemu-devel/cover.1732266152.git.mchehab+huawei@kernel.org/T/#t
-> > 
-> > It contains the changes of the math used to calculate offsets at HEST table 
-> > and hardware_error firmware file. It prepares for the addition of GHES
-> > error injection.
-> > 
-> > The first patch was previously at the cleanup series. It prepares
-> > the logic to support multiple sources.
-> > 
-> > The second patch adds a new firmware file to store HEST address.
-> > 
-> > The third patch use the new firmware to calculate offsets using
-> > HEST table.
-> > 
-> > Patches 4 and 5 add migration support. They assume that this
-> > series will be merged for qemu 9.2 (maybe it is too late for that,
-> > as QEMU is now on soft freeze). 
-> > 
-> > I tested migration using both virt-9.1 and virt-9.2 machines
-> > on qemu 9.2.
-> > 
-> > I also tested migration with:
-> >   
-> 
-> > 	qemu-9.1 -M virt-9.1 -cpu cortex-a57 => qemu-9.2 -M virt-9.1 -cpu cortex-a57
-> > 	qemu-9.2 -M virt-9.1 -cpu cortex-a57 => qemu-9.1 -M virt-9.1 -cpu cortex-a57  
-> was that with HEST enabled (it's 'ras' machine option),
-> It would be better to provide full CLI used 
+Here we decode BFCVT when the 'ftype' field (bits [23:22]) is 0b01...
 
-Yes. This is the full command line I'm using for virt-9.2 (urls sanitized):
+> -            if (!dc_isar_feature(aa64_bf16, s)) {
+> -                goto do_unallocated;
+> -            }
+> -            if (!fp_access_check(s)) {
+> -                return;
+> -            }
+> -            handle_fp_1src_single(s, opcode, rd, rn);
+> -            break;
+> -        default:
+> -            goto do_unallocated;
+> -        }
+> -        break;
+> -
+>      default:
+>      do_unallocated:
+>          unallocated_encoding(s);
+> diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+> index fbfdf96eb3..476989c1b4 100644
+> --- a/target/arm/tcg/a64.decode
+> +++ b/target/arm/tcg/a64.decode
+> @@ -45,6 +45,7 @@
+>  &qrrrr_e        q rd rn rm ra esz
+>
+>  @rr_h           ........ ... ..... ...... rn:5 rd:5     &rr_e esz=1
+> +@rr_s           ........ ... ..... ...... rn:5 rd:5     &rr_e esz=2
+>  @rr_d           ........ ... ..... ...... rn:5 rd:5     &rr_e esz=3
+>  @rr_sd          ........ ... ..... ...... rn:5 rd:5     &rr_e esz=%esz_sd
+>  @rr_hsd         ........ ... ..... ...... rn:5 rd:5     &rr_e esz=%esz_hsd
+> @@ -1337,6 +1338,8 @@ FRINTA_s        00011110 .. 1 001100 10000 ..... .....      @rr_hsd
+>  FRINTX_s        00011110 .. 1 001110 10000 ..... .....      @rr_hsd
+>  FRINTI_s        00011110 .. 1 001111 10000 ..... .....      @rr_hsd
+>
+> +BFCVT_s         00011110 10 1 000110 10000 ..... .....      @rr_s
 
-~/qemu/build/qemu-system-aarch64 -m 4g,maxmem=8G,slots=8 -monitor stdio -no-reboot -bios ~/emulator/QEMU_EFI-silent.fd -kernel ~/kernel/arm64_build/arch/arm64/boot/Image.gz -device pcie-root-port,id=root_port1 -device virtio-blk-pci,drive=hd -device virtio-net-pci,netdev=mynet,id=bob -drive if=none,file=~/emulator/debian.qcow2,format=qcow2,id=hd -object memory-backend-ram,size=4G,id=mem0 -netdev type=user,id=mynet,hostfwd=tcp::5555-:22 -qmp tcp:localhost:4445,server=on,wait=off -M virt-9.2,nvdimm=on,gic-version=3,ras=on -cpu max -smp 4 -numa node,nodeid=0,cpus=0-3,memdev=mem0 -append 'earlycon nomodeset root=/dev/vda1 fsck.mode=skip tp_printk maxcpus=4'
-
-And this is for virt-9.1:
-
-~/qemu/build/qemu-system-aarch64 -m 4g,maxmem=8G,slots=8 -monitor stdio -no-reboot -bios ~/emulator/QEMU_EFI-silent.fd -kernel ~/kernel/arm64_build/arch/arm64/boot/Image.gz -device pcie-root-port,id=root_port1 -device virtio-blk-pci,drive=hd -device virtio-net-pci,netdev=mynet,id=bob -drive if=none,file=~/emulator/debian.qcow2,format=qcow2,id=hd -object memory-backend-ram,size=4G,id=mem0 -netdev type=user,id=mynet,hostfwd=tcp::5555-:22 -qmp tcp:localhost:4445,server=on,wait=off -M virt-9.1,nvdimm=on,gic-version=3,ras=on -cpu max -smp 4 -numa node,nodeid=0,cpus=0-3,memdev=mem0 -append 'earlycon nomodeset root=/dev/vda1 fsck.mode=skip tp_printk maxcpus=4'
-
-I opted to use a shorter version just bolding the difference, as the above
-are a lot harder to see the differences.
-
-
-> 
-> > 
-> > ---
-> > 
-> > v2:
-> >   - some whitespace and comment changes
-> >   - patch 3/6 (acpi/ghes: rename the function which gets hw error offsets)
-> >     was merged on the cleanup series.
-> > 
-> > Mauro Carvalho Chehab (5):
-> >   acpi/ghes: Prepare to support multiple sources on ghes
-> >   acpi/ghes: add a firmware file with HEST address
-> >   acpi/ghes: Use HEST table offsets when preparing GHES records
-> >   acpi/generic_event_device: Update GHES migration to cover hest addr
-> >   acpi/generic_event_device: add logic to detect if HEST addr is
-> >     available
-> > 
-> >  hw/acpi/generic_event_device.c |  30 +++++++
-> >  hw/acpi/ghes.c                 | 156 +++++++++++++++++++++++++++++----
-> >  hw/arm/virt-acpi-build.c       |  33 ++++++-
-> >  hw/core/machine.c              |   2 +
-> >  include/hw/acpi/ghes.h         |  23 +++--
-> >  5 files changed, 216 insertions(+), 28 deletions(-)
-> >   
-> 
+...but this decode pattern has them as 0b10.
 
 
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -1338,7 +1338,7 @@ FRINTA_s        00011110 .. 1 001100 10000 .....
+.....      @rr_hsd
+ FRINTX_s        00011110 .. 1 001110 10000 ..... .....      @rr_hsd
+ FRINTI_s        00011110 .. 1 001111 10000 ..... .....      @rr_hsd
 
-Thanks,
-Mauro
+-BFCVT_s         00011110 10 1 000110 10000 ..... .....      @rr_s
++BFCVT_s         00011110 01 1 000110 10000 ..... .....      @rr_s
+
+ # Floating-point Immediate
+
+should fix this.
+
+thanks
+-- PMM
 
