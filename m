@@ -4,90 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0120E74AD0
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03344E74ACF
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIZCW-0006f8-3I; Tue, 03 Dec 2024 15:08:52 -0500
+	id 1tIZG1-0000wr-Ah; Tue, 03 Dec 2024 15:12:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIZCT-0006d2-CY
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:08:49 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIZCQ-0003HR-FS
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:08:47 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-385e2c52c21so2425554f8f.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:08:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733256524; x=1733861324; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1Z+oPOY9zkW5nSvF8Evg7C1/iJ6Xb0OH2wlMJp2C/qo=;
- b=YLV+bVm+CDkPYgz/oNo/X5B1LzpiKtLPA1L1DECw989piUmWhVt3sxoqSMGyx2rFRM
- RhQweMZl2VCyh1o0bTzrPEsROQKHDwB7JV6RJ/I3TkYs+DPpUYfpyCxlRxbChhL6eQsg
- yg1AXBCzA4Btk5nVtrDLkBCaCKDx7hLsdc3phpuz+3pbFc8oOD1kCtIUjB85YArxadrf
- vMoaTljs0G0LFNBF45NaqSdxY+GXdxm84ZLNiasTtnUo14LubNyvoVSWzisgOQJ5uIPc
- 8knvXmivopHF8pMirJmF0OkV3cs4zhlLZFxp/CzBwYWr+O1kWCuK29w9TEs/MGJSVc4P
- mYQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733256524; x=1733861324;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1Z+oPOY9zkW5nSvF8Evg7C1/iJ6Xb0OH2wlMJp2C/qo=;
- b=BtiSN9z5+96sHaT3L+S7yOU2ukZSfIrdoF+iItmZygpV8D+c19sW7F+KfBA1wRMrB4
- WSiSyGNGCvUJVL7E2iOv7M8W19alYCPinCD75w44++eWk9pwXIR5sL6J9KkL/Zo4j2W6
- WONoN9bk/QhJVLMpQPpUXCp2Q51t38Ohr6GgQilrS0Jw6XD7y6nzY1a+iX0F8FCdyg4a
- SH2FL8Xt9plJ9vMBpKxzZQk/exQuGFfsnLkiWKgiXEqRMHaZfeQp20pgfIumFTFp1L3g
- h26Fu6MXnKrHb355JSPhz0zozg0jGhaK8+WMIHcPVlPPThi4FBGpW48Kw69UNx4dvIas
- YqkA==
-X-Gm-Message-State: AOJu0YxX/XVkiEQPZ6wYtcdOUjKDZIDun7k3CEqGmfQ+EewnNaL+tNAU
- Z8fGM1j/IuXvnZKHo38hT2L3WGg9MBktWXMsMiJ0EursiwGTkQU6iyTJSD7928T9mhPHtJPJ3K9
- V
-X-Gm-Gg: ASbGncu25O710Q8NInoaDJt2Ew/KSt0Fswvpj79/LtVl3PbvwNvTNMNJGkIZGEIRX1j
- FklL6svF3XCMPKY79bK3TI2vnKPiqpPSKQBaEf428F6UbQQiPaEckl/2TuyQOaq07Khtmf4Dpg4
- QlmlEIvsUIdoc9O315O90I4cRfFhr7HyDBlHZb9jHH1oIzLjljBc8ljCbyaQerbtr4nkpuGK8kK
- yZBz46KV4w2zK/ugGpVUDly2fRJJ6n7ATBFNRo0+o/08HeaiyIj0fQs3MqV7q6Ppqq9CvaIEN0T
- LQ==
-X-Google-Smtp-Source: AGHT+IF4fQBFsW+NxSAbs2sW/fx5c+t0fCV00XJKeHtclBhrZEnCA1P0iSmfPf4+zcf1Z+IAPSERkw==
-X-Received: by 2002:a05:6000:1a88:b0:385:e9ca:4e2a with SMTP id
- ffacd0b85a97d-385fd3f2168mr3266300f8f.4.1733256524368; 
- Tue, 03 Dec 2024 12:08:44 -0800 (PST)
-Received: from localhost.localdomain ([176.187.209.146])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385e3c21ba7sm10804489f8f.53.2024.12.03.12.08.42
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 12:08:43 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/2] target/riscv: Include missing headers in 'internals.h'
-Date: Tue,  3 Dec 2024 21:08:28 +0100
-Message-ID: <20241203200828.47311-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241203200828.47311-1-philmd@linaro.org>
-References: <20241203200828.47311-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIZFx-0000wU-JB
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:12:25 -0500
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIZFu-00042E-3P
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:12:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+ :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=/J0JMvaTWmaVrQLGSJf5Fi9XlogJsqUxyO7OgljwyNQ=; b=nJ7hdeInilRycMN
+ 4xQAbjJj/9zKd8HfUMdLXatD4EfU4xipO6seYRccBy3jPKlkhbAQGPSI+XSMzCNUxm3+64MquqX+K
+ E+NMTpzXlbvzvPQ155+0CNsLr7GtfxglWcJxrYv70Cdwr4FJEEU7mBLLxmaIQe4zuREyi0PcbPl1g
+ RY=;
+Date: Tue, 3 Dec 2024 21:15:23 +0100
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, 
+ bcain@quicinc.com, philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [RFC PATCH v1 03/43] accel/tcg: Add gvec size changing operations
+Message-ID: <kxrtubx3f4yyzhlzzpgvuqvvutcbu3fclo3pgigjgpaauhxkfm@uvvdaentlh43>
+References: <20241121014947.18666-1-anjo@rev.ng>
+ <20241121014947.18666-4-anjo@rev.ng>
+ <b2986b74-2c74-491b-90a1-9ec79367c2e8@linaro.org>
+ <v5pkpmxto7vtshg7a5mifaozrzn6n5d7raknvydad3oxk67jeu@i4jydb4wylpb>
+ <e4910c71-8220-404b-bb43-0b885914e183@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e4910c71-8220-404b-bb43-0b885914e183@linaro.org>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,44 +64,149 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than relying on implicit includes, explicit them,
-in order to avoid when refactoring unrelated headers:
+On 03/12/24, Richard Henderson wrote:
+> On 12/3/24 12:08, Anton Johansson wrote:
+> > On 22/11/24, Richard Henderson wrote:
+> > > On 11/20/24 19:49, Anton Johansson wrote:
+> > > > Adds new functions to the gvec API for truncating, sign- or zero
+> > > > extending vector elements.  Currently implemented as helper functions,
+> > > > these may be mapped onto host vector instructions in the future.
+> > > > 
+> > > > For the time being, allows translation of more complicated vector
+> > > > instructions by helper-to-tcg.
+> > > > 
+> > > > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > > > ---
+> > > >    accel/tcg/tcg-runtime-gvec.c     | 41 +++++++++++++++++
+> > > >    accel/tcg/tcg-runtime.h          | 22 +++++++++
+> > > >    include/tcg/tcg-op-gvec-common.h | 18 ++++++++
+> > > >    tcg/tcg-op-gvec.c                | 78 ++++++++++++++++++++++++++++++++
+> > > >    4 files changed, 159 insertions(+)
+> > > > 
+> > > > diff --git a/accel/tcg/tcg-runtime-gvec.c b/accel/tcg/tcg-runtime-gvec.c
+> > > > index afca89baa1..685c991e6a 100644
+> > > > --- a/accel/tcg/tcg-runtime-gvec.c
+> > > > +++ b/accel/tcg/tcg-runtime-gvec.c
+> > > > @@ -1569,3 +1569,44 @@ void HELPER(gvec_bitsel)(void *d, void *a, void *b, void *c, uint32_t desc)
+> > > >        }
+> > > >        clear_high(d, oprsz, desc);
+> > > >    }
+> > > > +
+> > > > +#define DO_SZ_OP1(NAME, DSTTY, SRCTY)                                      \
+> > > > +void HELPER(NAME)(void *d, void *a, uint32_t desc)                         \
+> > > > +{                                                                          \
+> > > > +    intptr_t oprsz = simd_oprsz(desc);                                     \
+> > > > +    intptr_t elsz = oprsz/sizeof(DSTTY);                                   \
+> > > > +    intptr_t i;                                                            \
+> > > > +                                                                           \
+> > > > +    for (i = 0; i < elsz; ++i) {                                           \
+> > > > +        SRCTY aa = *((SRCTY *) a + i);                                     \
+> > > > +        *((DSTTY *) d + i) = aa;                                           \
+> > > > +    }                                                                      \
+> > > > +    clear_high(d, oprsz, desc);                                            \
+> > > 
+> > > This formulation is not valid.
+> > > 
+> > > (1) Generic forms must *always* operate strictly on columns.  This
+> > > formulation is either expanding a narrow vector to a wider vector or
+> > > compressing a wider vector to a narrow vector.
+> > > 
+> > > (2) This takes no care for byte ordering of the data between columns.  This
+> > > is where sticking strictly to columns helps, in that we can assume that data
+> > > is host-endian *within the column*, but we cannot assume anything about the
+> > > element indexing of ptr + i.
+> > 
+> > Concerning (1) and (2), is this a limitation imposed on generic vector
+> > ops. to simplify mapping to host vector instructions where
+> > padding/alignment of elements might differ?  From my understanding, the
+> > helper above should be fine since we can assume contiguous elements?
+> 
+> This is a limitation imposed on generic vector ops, because different
+> target/arch/ represent their vectors in different ways.
+> 
+> For instance, Arm and RISC-V chunk the vector in to host-endian uint64_t,
+> with the chunks indexed little-endian.  But PPC puts the entire 128-bit
+> vector in host-endian bit ordering, so the uint64_t chunks are host-endian.
+> 
+> On a big-endian host, ptr+1 may be addressing element i-1 or i-7 instead of i+1.
 
-  target/riscv/internals.h:49:15: error: use of undeclared identifier 'PRV_S'
-     49 |         ret = PRV_S;
-        |               ^
-  target/riscv/internals.h:93:9: error: call to undeclared function 'env_archcpu'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     93 |     if (env_archcpu(env)->cfg.ext_zfinx) {
-        |         ^
-  target/riscv/internals.h:101:15: error: unknown type name 'float32'; did you mean 'float'?
-    101 | static inline float32 check_nanbox_s(CPURISCVState *env, uint64_t f)
-        |               ^~~~~~~
-        |               float
+Ah, I see the problem now thanks for the explanation:)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/riscv/internals.h | 3 +++
- 1 file changed, 3 insertions(+)
+> > I see, I don't think we can make this work for Hexagon vector ops., as
+> > an example consider V6_vadduwsat which performs an unsigned saturated
+> > add of 32-bit elements, currently we emit
+> > 
+> >      void emit_V6_vadduwsat(intptr_t vec2, intptr_t vec7, intptr_t vec6) {
+> >          VectorMem mem = {0};
+> >          intptr_t vec5 = temp_new_gvec(&mem, 256);
+> >          tcg_gen_gvec_zext(MO_64, MO_32, vec5, vec7, 256, 128, 256);
+> > 
+> >          intptr_t vec1 = temp_new_gvec(&mem, 256);
+> >          tcg_gen_gvec_zext(MO_64, MO_32, vec1, vec6, 256, 128, 256);
+> > 
+> >          tcg_gen_gvec_add(MO_64, vec1, vec1, vec5, 256, 256);
+> > 
+> >          intptr_t vec3 = temp_new_gvec(&mem, 256);
+> >          tcg_gen_gvec_dup_imm(MO_64, vec3, 256, 256, 4294967295ull);
+> > 
+> >          tcg_gen_gvec_umin(MO_64, vec1, vec1, vec3, 256, 256);
+> > 
+> >          tcg_gen_gvec_trunc(MO_32, MO_64, vec2, vec1, 128, 256, 128);
+> >      }
+> > 
+> > so we really do rely on the size-changing property of zext here, the
+> > input vectors are 128-byte and we expand them to 256-byte.  We could
+> > expand vector operations within the instruction to the largest vector
+> > size, but would need to zext and trunc to destination and source
+> > registers anyway.
+> Yes, well, this is the output of llvm though, yes?
 
-diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-index ddbdee885bc..76934eaa7b5 100644
---- a/target/riscv/internals.h
-+++ b/target/riscv/internals.h
-@@ -19,7 +19,10 @@
- #ifndef RISCV_CPU_INTERNALS_H
- #define RISCV_CPU_INTERNALS_H
- 
-+#include "exec/cpu-common.h"
- #include "hw/registerfields.h"
-+#include "fpu/softfloat-types.h"
-+#include "target/riscv/cpu_bits.h"
- 
- /*
-  * The current MMU Modes are:
--- 
-2.45.2
+Yes
 
+> Did you forget to describe TCG's native saturating operations to the
+> compiler? tcg_gen_gvec_usadd performs exactly this operation.
+> 
+> And if you'd like to improve llvm, usadd(a, b) equals umin(a, ~b) + b.
+> Fewer operations without having to change vector sizes.
+> Similarly for unsigned saturating subtract: ussub(a, b) equals umax(a, b) - b.
+
+In this case LLVM wasn't able to optimize it to a llvm.uadd.sat
+intrinsic, in which case we would have emitted tcg_gen_gvec_usadd I
+believe.  We can manually optimize the above pattern to a llvm.uadd.sat
+to avoid extra size changes.
+
+This might be fixed in future LLVM versions, but otherwise seems like a
+reasonable change to push upstream.
+
+The point is that we have a lot of Hexagon instructions where size
+changes are probably unavoidable, another example is V6_vshuffh which
+takes in a <16 x i16> vector and shuffles the upper <8xi16> into the upper
+16-bits of a <8 x i32> vector
+
+    void emit_V6_vshuffh(intptr_t vec3, intptr_t vec7) {
+        VectorMem mem = {0};
+        intptr_t vec2 = temp_new_gvec(&mem, 128);
+        tcg_gen_gvec_zext(MO_32, MO_16, vec2, vec7, 128, 64, 128);
+
+        intptr_t vec0 = temp_new_gvec(&mem, 128);
+        tcg_gen_gvec_zext(MO_32, MO_16, vec0, (vec7 + 64ull), 128, 64, 128);
+
+        intptr_t vec1 = temp_new_gvec(&mem, 128);
+        tcg_gen_gvec_shli(MO_32, vec1, vec0, 16, 128, 128);
+        tcg_gen_gvec_or(MO_32, vec3, vec1, vec2, 128, 128);
+    }
+
+Not to bloat the email too much with examples, you can see 3 more here
+
+  https://pad.rev.ng/11IvAKhiRy2cPwC7MX9nXA
+
+Maybe we rely on the target defining size-changing operations if they
+are needed?
+
+//Anton
 
