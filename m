@@ -4,56 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8FFE64A8A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F69E64A93
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tISod-0001G3-96; Tue, 03 Dec 2024 08:19:47 -0500
+	id 1tISv9-0003DN-Eg; Tue, 03 Dec 2024 08:26:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tISoa-0001Fa-PP
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:19:45 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tISoY-0007CB-G3
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:19:44 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Y2h4s1BXWz6K5lY;
- Tue,  3 Dec 2024 21:16:45 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 0BB681400F4;
- Tue,  3 Dec 2024 21:19:39 +0800 (CST)
-Received: from A2303104131.china.huawei.com (10.203.177.241) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 3 Dec 2024 14:19:35 +0100
-To: <qemu-devel@nongnu.org>
-CC: <philmd@linaro.org>, <kraxel@redhat.com>, <imammedo@redhat.com>,
- <wangzhou1@hisilicon.com>, <linuxarm@huawei.com>
-Subject: [PATCH v3] fw_cfg: Don't set callback_opaque NULL in
- fw_cfg_modify_bytes_read()
-Date: Tue, 3 Dec 2024 13:18:06 +0000
-Message-ID: <20241203131806.37548-1-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: git-send-email 2.12.0.windows.1
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tISv6-0003Cw-Qx; Tue, 03 Dec 2024 08:26:29 -0500
+Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tISv5-00082e-9z; Tue, 03 Dec 2024 08:26:28 -0500
+Received: by mail-vs1-xe35.google.com with SMTP id
+ ada2fe7eead31-4afa53874beso19217137.3; 
+ Tue, 03 Dec 2024 05:26:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733232386; x=1733837186; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Q87dO8RRG7w5S/b1b8HX20PymG1OnRpkoYVv5xlmZhI=;
+ b=cmQ3dJmxAp9jgNZQR1a1Rbz9WAT2C3foF+Bsn7E7xtAvLMYUVShZwdLO+JGBOPqeMP
+ +6rn38OyoahP7HFYEU9kEeL7Qi3AWNNkVGC3wgyuzYNUFxxawrduSuvmnEBAocKd+QjF
+ ti7m7GFQil4hxyJrE3HsPk4vKEjSkP7UDYqSkPq0W6YssRdDPbqYYQEFsE7fyL4S9HIV
+ zdsim8Li5wMLkgSJlwjOLuQWfliKL89pqc8g1d4vek9atywfDHs59pZ46NoaCJrYylSq
+ 1G5+3ihrYF34AS+jKKP96aSgEoXsrLTmf7SxKUFG8iB+AXEb3F5h8F2l4l1qo6okXyfL
+ pRaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733232386; x=1733837186;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Q87dO8RRG7w5S/b1b8HX20PymG1OnRpkoYVv5xlmZhI=;
+ b=aJpbeTd5/ut+DJYfEtDqyla8BFELHPD3bUxh8ZRk3jvb7hY6y14EhVNIEa3aMFZkBb
+ nRg9Zw0qQJdRZ/9S0R/SvQ0QkL5S0xH33exQEtSqtd2+CONfNl5AyMs39R87azLfO2ck
+ jsp7erPEIkADVk1qPHDTsyeou0hSv0X8rTurJ0ni41jWWzZ5VlvQtwvYX/0/RabZV7xg
+ dl3vu6iMp8Kmnb5QGvobJ/6k1uqZqF/8sBtKhYG1HQ1Eu+UfZcA3X6A5epud54PomvGr
+ xvba0zvUSrS5SgxKqF/PTmdzpaDumDP/LRLG2NHzvzhyfCYV83ouROvO3/Z1T68FDXD2
+ Z/fw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOiJKVhU6MWE29wsTKRHNtEMZsZO58hxfQw40htzYSiEzIbjRfEgr9xZ0MfnwvNQhneJnQyv1jl0da/A==@nongnu.org
+X-Gm-Message-State: AOJu0YyC6t3XQ4TOwNiUYm1ShkA3rYGWXBNoxLsxjsPW9mSg7GkzmnXD
+ SrLS78Svbdbz2ahFksUiGwO7HIi8eYpboHxiA/CzdbMUV5H3DyDjr+6+vhGPuFlThLinvE/l0n5
+ C+QPRtRf7/dPH/FD8VhB6NYQhQ4A=
+X-Gm-Gg: ASbGnctY4f3JauYxTvQI/WtgfFGy/6VoDzSbZgq+leqvy425Gs255vLLKjNBupBdKsX
+ 9icX4uOSk9Q8nqsbipGaHb9xV9I/xQxlx
+X-Google-Smtp-Source: AGHT+IHYCnFTF4S/85zmeh8MkFtgsWIgVpwRwFYya+PZkKzwdD9VDRDSQxKsvCxdSpy2yUhM+anR4oqaBDfDyDnYPcU=
+X-Received: by 2002:a05:6122:4382:b0:50c:55f4:b529 with SMTP id
+ 71dfb90a1353d-515bf525a49mr3690065e0c.8.1733232385735; Tue, 03 Dec 2024
+ 05:26:25 -0800 (PST)
 MIME-Version: 1.0
+References: <20241203113140.63513-1-philmd@linaro.org>
+ <20241203113140.63513-9-philmd@linaro.org>
+In-Reply-To: <20241203113140.63513-9-philmd@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 3 Dec 2024 22:25:59 +0900
+Message-ID: <CAKmqyKPAVbh_3OXwtvax9MwNZXYvfNCuCu7jH6oCFjjdwzL9Fw@mail.gmail.com>
+Subject: Re: [PULL 08/13] target/riscv: Avoid bad shift in
+ riscv_cpu_do_interrupt()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-stable <qemu-stable@nongnu.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.203.177.241]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe35.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) AC_FROM_MANY_DOTS=2.497, BAYES_00=-1.9,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,77 +95,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On arm/virt platform, Chen Xiang reported a Guest crash while
-attempting the below steps,
+On Tue, Dec 3, 2024 at 8:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
+>
+> From: Peter Maydell <peter.maydell@linaro.org>
+>
+> In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
+> cs->exception as a shift value.  However this value can be larger
+> than 31, which means that "1 << cause" is undefined behaviour,
+> because we do the shift on an 'int' type.
+>
+> This causes the undefined behaviour sanitizer to complain
+> on one of the check-tcg tests:
+>
+> $ UBSAN_OPTIONS=3Dprint_stacktrace=3D1:abort_on_error=3D1:halt_on_error=
+=3D1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -=
+device loader,file=3Dbuild/clang/tests/tcg/riscv64-softmmu/issue1060
+> ../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63=
+ is too large for 32-bit type 'int'
+>     #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu=
+-from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
+>     #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-f=
+rom-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
+>
+> In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
+>
+> Use 1ULL instead to ensure that the shift is in range.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual interrupt and IRQ fi=
+ltering support.")
+> Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual interrupt and IRQ f=
+iltering support.")
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Message-ID: <20241128103831.3452572-1-peter.maydell@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-1. Launch the Guest with nvdimm=on
-2. Hot-add a NVDIMM dev
-3. Reboot
-4. Guest boots fine.
-5. Reboot again.
-6. Guest boot fails.
+Thanks! I was just about to prep this, thanks for beating me to it :)
 
-QEMU_EFI reports the below error:
-ProcessCmdAddPointer: invalid pointer value in "etc/acpi/tables"
-OnRootBridgesConnected: InstallAcpiTables: Protocol Error
+qemu-stable@nongnu.org this should be backported where it applies
 
-Debugging shows that on first reboot(after hot adding NVDIMM),
-Qemu updates the etc/table-loader len,
+Alistair
 
-qemu_ram_resize()
-  fw_cfg_modify_file()
-     fw_cfg_modify_bytes_read()
-
-And in fw_cfg_modify_bytes_read() we set the "callback_opaque" for
-the key entry to NULL. Because of this, on the second reboot,
-virt_acpi_build_update() is called with a NULL "build_state" and
-returns without updating the ACPI tables. This seems to be
-upsetting the firmware.
-
-To fix this, don't change the callback_opaque in fw_cfg_modify_bytes_read().
-
-Fixes: bdbb5b1706d165 ("fw_cfg: add fw_cfg_machine_reset function")
-Reported-by: chenxiang <chenxiang66@hisilicon.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
----
-Hi,
-
-I forgot to follow-up on the v2 and it never got picked up.
-Thanks to Wangzhou who recently re-run the tests and found that
-the problem mentioned above still exists. Hence resending the v2.
-
-v2-->v3:
- -Just rebase.
-
-v2: https://lore.kernel.org/qemu-devel/20220908160354.2023-1-shameerali.kolothum.thodi@huawei.com/
-v1: https://lore.kernel.org/all/20220825161842.841-1-shameerali.kolothum.thodi@huawei.com/
-
-Thanks,
-Shameer
----
- hw/nvram/fw_cfg.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index b644577734..74edb1e4cf 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -730,7 +730,6 @@ static void *fw_cfg_modify_bytes_read(FWCfgState *s, uint16_t key,
-     ptr = s->entries[arch][key].data;
-     s->entries[arch][key].data = data;
-     s->entries[arch][key].len = len;
--    s->entries[arch][key].callback_opaque = NULL;
-     s->entries[arch][key].allow_write = false;
- 
-     return ptr;
--- 
-2.34.1
-
+> ---
+>  target/riscv/cpu_helper.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 0a3ead69eab..45806f5ab0f 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1802,10 +1802,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      bool async =3D !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
+>      target_ulong cause =3D cs->exception_index & RISCV_EXCP_INT_MASK;
+>      uint64_t deleg =3D async ? env->mideleg : env->medeleg;
+> -    bool s_injected =3D env->mvip & (1 << cause) & env->mvien &&
+> -        !(env->mip & (1 << cause));
+> -    bool vs_injected =3D env->hvip & (1 << cause) & env->hvien &&
+> -        !(env->mip & (1 << cause));
+> +    bool s_injected =3D env->mvip & (1ULL << cause) & env->mvien &&
+> +        !(env->mip & (1ULL << cause));
+> +    bool vs_injected =3D env->hvip & (1ULL << cause) & env->hvien &&
+> +        !(env->mip & (1ULL << cause));
+>      target_ulong tval =3D 0;
+>      target_ulong tinst =3D 0;
+>      target_ulong htval =3D 0;
+> --
+> 2.45.2
+>
+>
 
