@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C16AE6C60C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C858EE6C60C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:42:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIMYK-00073A-BK; Tue, 03 Dec 2024 01:38:32 -0500
+	id 1tIMc4-000082-SD; Tue, 03 Dec 2024 01:42:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIMYI-00072o-MN; Tue, 03 Dec 2024 01:38:30 -0500
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ id 1tIMc0-000064-1t; Tue, 03 Dec 2024 01:42:20 -0500
+Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIMYH-0000lE-19; Tue, 03 Dec 2024 01:38:30 -0500
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-5151e429d53so1254252e0c.3; 
- Mon, 02 Dec 2024 22:38:28 -0800 (PST)
+ id 1tIMbx-0001YZ-N4; Tue, 03 Dec 2024 01:42:19 -0500
+Received: by mail-vs1-xe29.google.com with SMTP id
+ ada2fe7eead31-4af07a8d444so1441326137.1; 
+ Mon, 02 Dec 2024 22:42:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733207908; x=1733812708; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733208136; x=1733812936; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xlsJTtN2ccMKjdZ/mBLmdZ+5gE94B/Sq5qpzr0/DHrU=;
- b=FPwC67zJUJLLcY4WLZ4oMUQ4ebBw0Lo6B3tsRJ645yweGWSfvw8pdTlAy9IoOFyj9C
- UPH0DMVNNR4p1TN7lNch3mnscRbNkGXHGkHbbgjS//hY8hm/jLLS+VI9+zQs1G5jUHNw
- qF0pQplAuctWGMuxxjJoPh7VAaWZfXcDuxA9WpMGUnXwr+mX91WUd/B27UnzqKVPF1JE
- g/kQl77JWUYktRXQkh995cHkSCKJ2AHRarU23WSkMYjckB+rouPofLXaA6dram+NMiru
- vfrngpG9mdY1N7DU95wVdi+9NTBnvmbsxZn3IPVrp3YJ9KKcDu3FJe0U/aAwFysvVAGu
- sMeA==
+ bh=l7WSgdaI9Vei3L38FTN8uRBPdv3lshCzYNxTE30v9d8=;
+ b=ia0uxXodWG6MrQgUoE6RXjTF8qYmSy7f8SvEERIsnKGTy4w1hEoL3Xj6MBPrr1EvpE
+ t6vUnIcgb3O1ZAzIXzbhpORxLKr/xDjuWLa2dL6CHV2ndrvJin331hT1Twps7NXorkCj
+ /yxpL6pYWQo56ABgsZ3/OM85qhrwC1jW0spwApXvtmAKMxaBDRHJ+2wvgkYhCY0Hopa0
+ 73jtzupY7j1dKLVxggkITP+fYvLLGFOjSod/B2Gj6+yZfKTGac7FE6QhhPq85NPFTqRf
+ Oyfk4x0hcBMKcRcvQYJXWta84AzySMslLgWzB9obknv/TMCz1ljn1CpaHSfSpbw2467O
+ fwwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733207908; x=1733812708;
+ d=1e100.net; s=20230601; t=1733208136; x=1733812936;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xlsJTtN2ccMKjdZ/mBLmdZ+5gE94B/Sq5qpzr0/DHrU=;
- b=VvbSyHQx3tuLfNhb3I0cGYRFR+jjxo1KpLox6ONAGcIppBCGfN1Jbef3VPBkWpjqSF
- KFkFmpW9IjP0PReyT1U1zftdC6XAb3jZQhQKLfx9hj06cnAGw520EDduwAAhgEEEGMUW
- zw0wYHXGcMZCGLYNi9wF7i/nEWkET2bSX0ZeSKNJryGHLBTF0jblqpsoxPoz+A3Ss6ps
- azipAbX1nCfCVowYo2Vic2Lto33Z7q/29gzjMP6BGYdMhcHwVapowzOfdm+4ZfyhOnm7
- 5043g7Yi8erNEQrAVvDy/WbKTdCiM2NYz22GkMAF9c3HodizvDXy7ioRRGyI4RSkjz5/
- Mw6A==
+ bh=l7WSgdaI9Vei3L38FTN8uRBPdv3lshCzYNxTE30v9d8=;
+ b=Q6xJnxuSzTd2zKn2YfvWYgJu2aFh/unSteFiEnQzgHj65kW+1TUQT2NhIbvInRjWZC
+ WHHhJximcEqwMKcPu3hWKI5Ebb2+FvEm3Aj8itgYo9oP76tli9qHJgoDz/SrwE9MFdR0
+ pvJxtDNWycAxj28mBcJ6V/kmMNAz2Go7ykgIf6Qq50yPQeXMIvKlTDJoC1GpqWfcbYkB
+ pW8fEIr9kbNz6fhN15erx9gRBXZT51aBBEpMCSQfbaqKJfIBn8K3nIqHyZ5ysnN9AWRH
+ d8rpkLUg9N2OBUjDNYtsvhTMiGJTv1/MlW/EKR+SgYwRbBFUBlWzP/AAl9zgYhmNS6ii
+ GgDQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4XxDoyzolZnonk4nf/+Un9aI9qnR+2TOQeZ2Bh/74UWGbwJdq7hfFqdTdPVXwzKOq5MfBI24+BohW@nongnu.org
-X-Gm-Message-State: AOJu0Yxlm+JfS42xgKZT25oNSrK18Zx5oDHTH4w04a8MJXBzoRS3VAGN
- XlUu7JxDzJnrtGRt1rb8kJ6pGGEaRUbQKvbM5vQe5uMfAAyOrM6BHYUGAEod87Lh1K+uxImT2KX
- WgLs9+fY4XTiTqazFmcJvOj3tXNI=
-X-Gm-Gg: ASbGncuyT3CK3Utwoun+H+4bcra5LeZqH2DES8dELdWWMsyjOvs/CTQxRuNuS2qUM9y
- ImRMGYJadV6OtlF4YUsx0toV3N565vVy0
-X-Google-Smtp-Source: AGHT+IGafPN6zJTsXs0dJQeBA8eIly6PHsTVGsMxefpEx4X0NxC0yqtBvx6a4t3mq5xN6Qr39QoPTtKkRHjRTT/cplM=
-X-Received: by 2002:a05:6122:3716:b0:50d:4b8d:6745 with SMTP id
- 71dfb90a1353d-515bf1367dfmr2193943e0c.0.1733207907673; Mon, 02 Dec 2024
- 22:38:27 -0800 (PST)
+ AJvYcCW+BgdEMWzNFebBfuAqO++mEVCVWS07iekffbXy1ho2E++NO5i/j/E3iM9h0ofyiUJw6vwcl68HmyMf@nongnu.org
+X-Gm-Message-State: AOJu0YxGw+H6XsHMNFc3fFv/4xVjJcw2btEIkSp3/eMfwro6sMJiZ9Ys
+ oEFEuUsJKcnRA9pa8Tdx2Cbo1F0uHD46otRmlHccBoZOJShYoeXupezplqUeH2Y+pH1bohf6tB0
+ gf66VsrTzz+tsBlGh75jTaIIO5eA=
+X-Gm-Gg: ASbGncsvc0iRkPWrwb8kizexBFOa9j606MchuBUCfo+aYd1v4VjoVHOt4s6mUhoCiZz
+ jl8UImlmX7Xk9FxCR0g2QfabPDvgQIryu
+X-Google-Smtp-Source: AGHT+IHwwa/89VTS5mL0qA3wY4fUEoH83f7n+ARJJISGI6cs4TV2QPrO1awOeEuRugUgu+3AH9cBmW+Mj0WlN4rMBf0=
+X-Received: by 2002:a05:6102:4406:b0:4ad:4f26:105e with SMTP id
+ ada2fe7eead31-4af973bbfb1mr2170631137.24.1733208136275; Mon, 02 Dec 2024
+ 22:42:16 -0800 (PST)
 MIME-Version: 1.0
 References: <20241120153935.24706-1-jim.shu@sifive.com>
- <20241120153935.24706-2-jim.shu@sifive.com>
-In-Reply-To: <20241120153935.24706-2-jim.shu@sifive.com>
+ <20241120153935.24706-3-jim.shu@sifive.com>
+In-Reply-To: <20241120153935.24706-3-jim.shu@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 3 Dec 2024 15:38:01 +0900
-Message-ID: <CAKmqyKOrpJRgZunuvHZ6ifZSxM5Ug+YUP-hdmBAeL4NYZQDSjw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/3] hw/riscv: Support to load DTB after 3GB memory on
- 64-bit system.
+Date: Tue, 3 Dec 2024 15:41:49 +0900
+Message-ID: <CAKmqyKMrYGE=GJAQSMT_cOjEukfzKwdC-jNOiq_b3TO0n0NsTw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] hw/riscv: Add a new struct RISCVBootInfo
 To: Jim Shu <jim.shu@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -74,8 +73,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe29.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,9 +101,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Nov 21, 2024 at 12:41=E2=80=AFAM Jim Shu <jim.shu@sifive.com> wrote=
 :
 >
-> Larger initrd image will overlap the DTB at 3GB address. Since 64-bit
-> system doesn't have 32-bit addressable issue, we just load DTB to the end
-> of dram in 64-bit system.
+> Add a new struct RISCVBootInfo to sync boot information between multiple
+> boot functions.
 >
 > Signed-off-by: Jim Shu <jim.shu@sifive.com>
 
@@ -113,155 +111,457 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/boot.c            | 14 +++++++++-----
->  hw/riscv/microchip_pfsoc.c |  4 ++--
->  hw/riscv/sifive_u.c        |  4 ++--
->  hw/riscv/spike.c           |  4 ++--
->  hw/riscv/virt.c            |  2 +-
->  include/hw/riscv/boot.h    |  2 +-
->  6 files changed, 17 insertions(+), 13 deletions(-)
+>  hw/riscv/boot.c            | 65 ++++++++++++++++++++++----------------
+>  hw/riscv/microchip_pfsoc.c | 11 ++++---
+>  hw/riscv/opentitan.c       |  4 ++-
+>  hw/riscv/sifive_e.c        |  4 ++-
+>  hw/riscv/sifive_u.c        | 12 ++++---
+>  hw/riscv/spike.c           | 12 ++++---
+>  hw/riscv/virt.c            | 13 +++++---
+>  include/hw/riscv/boot.h    | 25 ++++++++++-----
+>  8 files changed, 90 insertions(+), 56 deletions(-)
 >
 > diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 2e319168db..d36d3a7104 100644
+> index d36d3a7104..81d27f935e 100644
 > --- a/hw/riscv/boot.c
 > +++ b/hw/riscv/boot.c
-> @@ -293,7 +293,7 @@ out:
+> @@ -67,9 +67,15 @@ char *riscv_plic_hart_config_string(int hart_count)
+>      return g_strjoinv(",", (char **)vals);
+>  }
+>
+> -target_ulong riscv_calc_kernel_start_addr(RISCVHartArrayState *harts,
+> +void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *hart=
+s)
+> +{
+> +    info->kernel_size =3D 0;
+> +    info->is_32bit =3D riscv_is_32bit(harts);
+> +}
+> +
+> +target_ulong riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+>                                            target_ulong firmware_end_addr=
+) {
+> -    if (riscv_is_32bit(harts)) {
+> +    if (info->is_32bit) {
+>          return QEMU_ALIGN_UP(firmware_end_addr, 4 * MiB);
+>      } else {
+>          return QEMU_ALIGN_UP(firmware_end_addr, 2 * MiB);
+> @@ -175,7 +181,7 @@ target_ulong riscv_load_firmware(const char *firmware=
+_filename,
+>      exit(1);
+>  }
+>
+> -static void riscv_load_initrd(MachineState *machine, uint64_t kernel_ent=
+ry)
+> +static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info=
+)
+>  {
+>      const char *filename =3D machine->initrd_filename;
+>      uint64_t mem_size =3D machine->ram_size;
+> @@ -196,7 +202,7 @@ static void riscv_load_initrd(MachineState *machine, =
+uint64_t kernel_entry)
+>       * halfway into RAM, and for boards with 1GB of RAM or more we put
+>       * the initrd at 512MB.
+>       */
+> -    start =3D kernel_entry + MIN(mem_size / 2, 512 * MiB);
+> +    start =3D info->image_low_addr + MIN(mem_size / 2, 512 * MiB);
+>
+>      size =3D load_ramdisk(filename, start, mem_size - start);
+>      if (size =3D=3D -1) {
+> @@ -215,14 +221,14 @@ static void riscv_load_initrd(MachineState *machine=
+, uint64_t kernel_entry)
+>      }
+>  }
+>
+> -target_ulong riscv_load_kernel(MachineState *machine,
+> -                               RISCVHartArrayState *harts,
+> -                               target_ulong kernel_start_addr,
+> -                               bool load_initrd,
+> -                               symbol_fn_t sym_cb)
+> +void riscv_load_kernel(MachineState *machine,
+> +                       RISCVBootInfo *info,
+> +                       target_ulong kernel_start_addr,
+> +                       bool load_initrd,
+> +                       symbol_fn_t sym_cb)
+>  {
+>      const char *kernel_filename =3D machine->kernel_filename;
+> -    uint64_t kernel_load_base, kernel_entry;
+> +    ssize_t kernel_size;
+>      void *fdt =3D machine->fdt;
+>
+>      g_assert(kernel_filename !=3D NULL);
+> @@ -234,21 +240,28 @@ target_ulong riscv_load_kernel(MachineState *machin=
+e,
+>       * the (expected) load address load address. This allows kernels to =
+have
+>       * separate SBI and ELF entry points (used by FreeBSD, for example).
+>       */
+> -    if (load_elf_ram_sym(kernel_filename, NULL, NULL, NULL,
+> -                         NULL, &kernel_load_base, NULL, NULL, 0,
+> -                         EM_RISCV, 1, 0, NULL, true, sym_cb) > 0) {
+> -        kernel_entry =3D kernel_load_base;
+> +    kernel_size =3D load_elf_ram_sym(kernel_filename, NULL, NULL, NULL, =
+NULL,
+> +                                   &info->image_low_addr, &info->image_h=
+igh_addr,
+> +                                   NULL, 0, EM_RISCV, 1, 0, NULL, true, =
+sym_cb);
+> +    if (kernel_size > 0) {
+> +        info->kernel_size =3D kernel_size;
+>          goto out;
+>      }
+>
+> -    if (load_uimage_as(kernel_filename, &kernel_entry, NULL, NULL,
+> -                       NULL, NULL, NULL) > 0) {
+> +    kernel_size =3D load_uimage_as(kernel_filename, &info->image_low_add=
+r,
+> +                                 NULL, NULL, NULL, NULL, NULL);
+> +    if (kernel_size > 0) {
+> +        info->kernel_size =3D kernel_size;
+> +        info->image_high_addr =3D info->image_low_addr + kernel_size;
+>          goto out;
+>      }
+>
+> -    if (load_image_targphys_as(kernel_filename, kernel_start_addr,
+> -                               current_machine->ram_size, NULL) > 0) {
+> -        kernel_entry =3D kernel_start_addr;
+> +    kernel_size =3D load_image_targphys_as(kernel_filename, kernel_start=
+_addr,
+> +                                         current_machine->ram_size, NULL=
+);
+> +    if (kernel_size > 0) {
+> +        info->kernel_size =3D kernel_size;
+> +        info->image_low_addr =3D kernel_start_addr;
+> +        info->image_high_addr =3D info->image_low_addr + kernel_size;
+>          goto out;
+>      }
+>
+> @@ -257,23 +270,21 @@ target_ulong riscv_load_kernel(MachineState *machin=
+e,
+>
+>  out:
+>      /*
+> -     * For 32 bit CPUs 'kernel_entry' can be sign-extended by
+> +     * For 32 bit CPUs 'image_low_addr' can be sign-extended by
+>       * load_elf_ram_sym().
+>       */
+> -    if (riscv_is_32bit(harts)) {
+> -        kernel_entry =3D extract64(kernel_entry, 0, 32);
+> +    if (info->is_32bit) {
+> +        info->image_low_addr =3D extract64(info->image_low_addr, 0, 32);
+>      }
+>
+>      if (load_initrd && machine->initrd_filename) {
+> -        riscv_load_initrd(machine, kernel_entry);
+> +        riscv_load_initrd(machine, info);
+>      }
+>
+>      if (fdt && machine->kernel_cmdline && *machine->kernel_cmdline) {
+>          qemu_fdt_setprop_string(fdt, "/chosen", "bootargs",
+>                                  machine->kernel_cmdline);
+>      }
+> -
+> -    return kernel_entry;
+>  }
+>
+>  /*
+> @@ -293,7 +304,7 @@ out:
 >   * The FDT is fdt_packed() during the calculation.
 >   */
 >  uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-> -                                MachineState *ms)
-> +                                MachineState *ms, RISCVHartArrayState *h=
+> -                                MachineState *ms, RISCVHartArrayState *h=
 arts)
+> +                                MachineState *ms, RISCVBootInfo *info)
 >  {
 >      int ret =3D fdt_pack(ms->fdt);
 >      hwaddr dram_end, temp;
-> @@ -317,11 +317,15 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, h=
-waddr dram_size,
->
->      /*
->       * We should put fdt as far as possible to avoid kernel/initrd overw=
-riting
-> -     * its content. But it should be addressable by 32 bit system as wel=
-l.
-> -     * Thus, put it at an 2MB aligned address that less than fdt size fr=
-om the
-> -     * end of dram or 3GB whichever is lesser.
-> +     * its content. But it should be addressable by 32 bit system as wel=
-l in RV32.
-> +     * Thus, put it near to the end of dram in RV64, and put it near to =
+> @@ -321,7 +332,7 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwa=
+ddr dram_size,
+>       * Thus, put it near to the end of dram in RV64, and put it near to =
 the end
-> +     * of dram or 3GB whichever is lesser in RV32.
+>       * of dram or 3GB whichever is lesser in RV32.
 >       */
-> -    temp =3D (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram=
-_end;
-> +    if (!riscv_is_32bit(harts)) {
-> +        temp =3D dram_end;
-> +    } else {
-> +        temp =3D (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : =
+> -    if (!riscv_is_32bit(harts)) {
+> +    if (!info->is_32bit) {
+>          temp =3D dram_end;
+>      } else {
+>          temp =3D (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : =
 dram_end;
-> +    }
->
->      return QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
->  }
 > diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-> index f9a3b43d2e..ba8b0a2c26 100644
+> index ba8b0a2c26..a302965b6d 100644
 > --- a/hw/riscv/microchip_pfsoc.c
 > +++ b/hw/riscv/microchip_pfsoc.c
-> @@ -519,7 +519,7 @@ static void microchip_icicle_kit_machine_init(Machine=
+> @@ -521,6 +521,7 @@ static void microchip_icicle_kit_machine_init(Machine=
 State *machine)
->      bool kernel_as_payload =3D false;
->      target_ulong firmware_end_addr, kernel_start_addr;
 >      uint64_t kernel_entry;
-> -    uint32_t fdt_load_addr;
-> +    uint64_t fdt_load_addr;
+>      uint64_t fdt_load_addr;
 >      DriveInfo *dinfo =3D drive_get(IF_SD, 0, 0);
+> +    RISCVBootInfo boot_info;
 >
 >      /* Sanity check on RAM size */
-> @@ -625,7 +625,7 @@ static void microchip_icicle_kit_machine_init(Machine=
-State *machine)
+>      if (machine->ram_size < mc->default_ram_size) {
+> @@ -615,17 +616,19 @@ static void microchip_icicle_kit_machine_init(Machi=
+neState *machine)
+>      firmware_end_addr =3D riscv_find_and_load_firmware(machine, firmware=
+_name,
+>                                                       &firmware_load_addr=
+, NULL);
+>
+> +    riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
+>      if (kernel_as_payload) {
+> -        kernel_start_addr =3D riscv_calc_kernel_start_addr(&s->soc.u_cpu=
+s,
+> +        kernel_start_addr =3D riscv_calc_kernel_start_addr(&boot_info,
+>                                                           firmware_end_ad=
+dr);
+>
+> -        kernel_entry =3D riscv_load_kernel(machine, &s->soc.u_cpus,
+> -                                         kernel_start_addr, true, NULL);
+> +        riscv_load_kernel(machine, &boot_info, kernel_start_addr,
+> +                          true, NULL);
+> +        kernel_entry =3D boot_info.image_low_addr;
+>
 >          /* Compute the fdt load address in dram */
 >          fdt_load_addr =3D riscv_compute_fdt_addr(memmap[MICROCHIP_PFSOC_=
 DRAM_LO].base,
 >                                                 memmap[MICROCHIP_PFSOC_DR=
 AM_LO].size,
-> -                                               machine);
-> +                                               machine, &s->soc.u_cpus);
+> -                                               machine, &s->soc.u_cpus);
+> +                                               machine, &boot_info);
 >          riscv_load_fdt(fdt_load_addr, machine->fdt);
 >
 >          /* Load the reset vector */
+> diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+> index e2830e9dc2..57f899464b 100644
+> --- a/hw/riscv/opentitan.c
+> +++ b/hw/riscv/opentitan.c
+> @@ -81,6 +81,7 @@ static void opentitan_machine_init(MachineState *machin=
+e)
+>      OpenTitanState *s =3D OPENTITAN_MACHINE(machine);
+>      const MemMapEntry *memmap =3D ibex_memmap;
+>      MemoryRegion *sys_mem =3D get_system_memory();
+> +    RISCVBootInfo boot_info;
+>
+>      if (machine->ram_size !=3D mc->default_ram_size) {
+>          char *sz =3D size_to_str(mc->default_ram_size);
+> @@ -102,8 +103,9 @@ static void opentitan_machine_init(MachineState *mach=
+ine)
+>          riscv_load_firmware(machine->firmware, &firmware_load_addr, NULL=
+);
+>      }
+>
+> +    riscv_boot_info_init(&boot_info, &s->soc.cpus);
+>      if (machine->kernel_filename) {
+> -        riscv_load_kernel(machine, &s->soc.cpus,
+> +        riscv_load_kernel(machine, &boot_info,
+>                            memmap[IBEX_DEV_RAM].base,
+>                            false, NULL);
+>      }
+> diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+> index 5a1959f2a9..ebcd33ab95 100644
+> --- a/hw/riscv/sifive_e.c
+> +++ b/hw/riscv/sifive_e.c
+> @@ -78,6 +78,7 @@ static void sifive_e_machine_init(MachineState *machine=
+)
+>      SiFiveEState *s =3D RISCV_E_MACHINE(machine);
+>      MemoryRegion *sys_mem =3D get_system_memory();
+>      int i;
+> +    RISCVBootInfo boot_info;
+>
+>      if (machine->ram_size !=3D mc->default_ram_size) {
+>          char *sz =3D size_to_str(mc->default_ram_size);
+> @@ -113,8 +114,9 @@ static void sifive_e_machine_init(MachineState *machi=
+ne)
+>      rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
+>                            memmap[SIFIVE_E_DEV_MROM].base, &address_space=
+_memory);
+>
+> +    riscv_boot_info_init(&boot_info, &s->soc.cpus);
+>      if (machine->kernel_filename) {
+> -        riscv_load_kernel(machine, &s->soc.cpus,
+> +        riscv_load_kernel(machine, &boot_info,
+>                            memmap[SIFIVE_E_DEV_DTIM].base,
+>                            false, NULL);
+>      }
 > diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-> index c5e74126b1..05467e833a 100644
+> index 05467e833a..0a77faaf6e 100644
 > --- a/hw/riscv/sifive_u.c
 > +++ b/hw/riscv/sifive_u.c
-> @@ -519,7 +519,7 @@ static void sifive_u_machine_init(MachineState *machi=
+> @@ -525,6 +525,7 @@ static void sifive_u_machine_init(MachineState *machi=
 ne)
->      const char *firmware_name;
->      uint32_t start_addr_hi32 =3D 0x00000000;
->      int i;
-> -    uint32_t fdt_load_addr;
-> +    uint64_t fdt_load_addr;
->      uint64_t kernel_entry;
->      DriveInfo *dinfo;
 >      BlockBackend *blk;
-> @@ -606,7 +606,7 @@ static void sifive_u_machine_init(MachineState *machi=
+>      DeviceState *flash_dev, *sd_dev, *card_dev;
+>      qemu_irq flash_cs, sd_cs;
+> +    RISCVBootInfo boot_info;
+>
+>      /* Initialize SoC */
+>      object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RISCV_=
+U_SOC);
+> @@ -590,12 +591,13 @@ static void sifive_u_machine_init(MachineState *mac=
+hine)
+>      firmware_end_addr =3D riscv_find_and_load_firmware(machine, firmware=
+_name,
+>                                                       &start_addr, NULL);
+>
+> +    riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
+>      if (machine->kernel_filename) {
+> -        kernel_start_addr =3D riscv_calc_kernel_start_addr(&s->soc.u_cpu=
+s,
+> +        kernel_start_addr =3D riscv_calc_kernel_start_addr(&boot_info,
+>                                                           firmware_end_ad=
+dr);
+> -
+> -        kernel_entry =3D riscv_load_kernel(machine, &s->soc.u_cpus,
+> -                                         kernel_start_addr, true, NULL);
+> +        riscv_load_kernel(machine, &boot_info, kernel_start_addr,
+> +                          true, NULL);
+> +        kernel_entry =3D boot_info.image_low_addr;
+>      } else {
+>         /*
+>          * If dynamic firmware is used, it doesn't know where is the next=
+ mode
+> @@ -606,7 +608,7 @@ static void sifive_u_machine_init(MachineState *machi=
 ne)
 >
 >      fdt_load_addr =3D riscv_compute_fdt_addr(memmap[SIFIVE_U_DEV_DRAM].b=
 ase,
 >                                             memmap[SIFIVE_U_DEV_DRAM].siz=
 e,
-> -                                           machine);
-> +                                           machine, &s->soc.u_cpus);
+> -                                           machine, &s->soc.u_cpus);
+> +                                           machine, &boot_info);
 >      riscv_load_fdt(fdt_load_addr, machine->fdt);
 >
 >      if (!riscv_is_32bit(&s->soc.u_cpus)) {
 > diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-> index fceb91d946..acd7ab1ae1 100644
+> index acd7ab1ae1..c3ad16d316 100644
 > --- a/hw/riscv/spike.c
 > +++ b/hw/riscv/spike.c
-> @@ -201,7 +201,7 @@ static void spike_board_init(MachineState *machine)
->      hwaddr firmware_load_addr =3D memmap[SPIKE_DRAM].base;
->      target_ulong kernel_start_addr;
->      char *firmware_name;
-> -    uint32_t fdt_load_addr;
-> +    uint64_t fdt_load_addr;
->      uint64_t kernel_entry;
+> @@ -206,6 +206,7 @@ static void spike_board_init(MachineState *machine)
 >      char *soc_name;
 >      int i, base_hartid, hart_count;
-> @@ -317,7 +317,7 @@ static void spike_board_init(MachineState *machine)
+>      bool htif_custom_base =3D false;
+> +    RISCVBootInfo boot_info;
+>
+>      /* Check socket count limit */
+>      if (SPIKE_SOCKETS_MAX < riscv_socket_count(machine)) {
+> @@ -300,13 +301,14 @@ static void spike_board_init(MachineState *machine)
+>      create_fdt(s, memmap, riscv_is_32bit(&s->soc[0]), htif_custom_base);
+>
+>      /* Load kernel */
+> +    riscv_boot_info_init(&boot_info, &s->soc[0]);
+>      if (machine->kernel_filename) {
+> -        kernel_start_addr =3D riscv_calc_kernel_start_addr(&s->soc[0],
+> +        kernel_start_addr =3D riscv_calc_kernel_start_addr(&boot_info,
+>                                                           firmware_end_ad=
+dr);
+>
+> -        kernel_entry =3D riscv_load_kernel(machine, &s->soc[0],
+> -                                         kernel_start_addr,
+> -                                         true, htif_symbol_callback);
+> +        riscv_load_kernel(machine, &boot_info, kernel_start_addr,
+> +                          true, htif_symbol_callback);
+> +        kernel_entry =3D boot_info.image_low_addr;
+>      } else {
+>         /*
+>          * If dynamic firmware is used, it doesn't know where is the next=
+ mode
+> @@ -317,7 +319,7 @@ static void spike_board_init(MachineState *machine)
 >
 >      fdt_load_addr =3D riscv_compute_fdt_addr(memmap[SPIKE_DRAM].base,
 >                                             memmap[SPIKE_DRAM].size,
-> -                                           machine);
-> +                                           machine, &s->soc[0]);
+> -                                           machine, &s->soc[0]);
+> +                                           machine, &boot_info);
 >      riscv_load_fdt(fdt_load_addr, machine->fdt);
 >
 >      /* load the reset vector */
 > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 45a8c4f819..761bce3304 100644
+> index 761bce3304..9190d1c3aa 100644
 > --- a/hw/riscv/virt.c
 > +++ b/hw/riscv/virt.c
-> @@ -1424,7 +1424,7 @@ static void virt_machine_done(Notifier *notifier, v=
+> @@ -1366,6 +1366,7 @@ static void virt_machine_done(Notifier *notifier, v=
 oid *data)
+>      uint64_t fdt_load_addr;
+>      uint64_t kernel_entry =3D 0;
+>      BlockBackend *pflash_blk0;
+> +    RISCVBootInfo boot_info;
+>
+>      /*
+>       * An user provided dtb must include everything, including
+> @@ -1414,17 +1415,19 @@ static void virt_machine_done(Notifier *notifier,=
+ void *data)
+>          }
+>      }
+>
+> +    riscv_boot_info_init(&boot_info, &s->soc[0]);
+> +
+>      if (machine->kernel_filename && !kernel_entry) {
+> -        kernel_start_addr =3D riscv_calc_kernel_start_addr(&s->soc[0],
+> +        kernel_start_addr =3D riscv_calc_kernel_start_addr(&boot_info,
+>                                                           firmware_end_ad=
+dr);
+> -
+> -        kernel_entry =3D riscv_load_kernel(machine, &s->soc[0],
+> -                                         kernel_start_addr, true, NULL);
+> +        riscv_load_kernel(machine, &boot_info, kernel_start_addr,
+> +                          true, NULL);
+> +        kernel_entry =3D boot_info.image_low_addr;
+>      }
 >
 >      fdt_load_addr =3D riscv_compute_fdt_addr(memmap[VIRT_DRAM].base,
 >                                             memmap[VIRT_DRAM].size,
-> -                                           machine);
-> +                                           machine, &s->soc[0]);
+> -                                           machine, &s->soc[0]);
+> +                                           machine, &boot_info);
 >      riscv_load_fdt(fdt_load_addr, machine->fdt);
 >
 >      /* load the reset vector */
 > diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-> index f778b560de..34a80c5ff4 100644
+> index 34a80c5ff4..06b51ed086 100644
 > --- a/include/hw/riscv/boot.h
 > +++ b/include/hw/riscv/boot.h
-> @@ -49,7 +49,7 @@ target_ulong riscv_load_kernel(MachineState *machine,
->                                 bool load_initrd,
->                                 symbol_fn_t sym_cb);
->  uint64_t riscv_compute_fdt_addr(hwaddr dram_start, uint64_t dram_size,
-> -                                MachineState *ms);
-> +                                MachineState *ms, RISCVHartArrayState *h=
+> @@ -27,11 +27,20 @@
+>  #define RISCV32_BIOS_BIN    "opensbi-riscv32-generic-fw_dynamic.bin"
+>  #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
+>
+> +typedef struct RISCVBootInfo {
+> +    ssize_t kernel_size;
+> +    hwaddr image_low_addr;
+> +    hwaddr image_high_addr;
+> +
+> +    bool is_32bit;
+> +} RISCVBootInfo;
+> +
+>  bool riscv_is_32bit(RISCVHartArrayState *harts);
+>
+>  char *riscv_plic_hart_config_string(int hart_count);
+>
+> -target_ulong riscv_calc_kernel_start_addr(RISCVHartArrayState *harts,
+> +void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *hart=
+s);
+> +target_ulong riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+>                                            target_ulong firmware_end_addr=
+);
+>  target_ulong riscv_find_and_load_firmware(MachineState *machine,
+>                                            const char *default_machine_fi=
+rmware,
+> @@ -43,13 +52,13 @@ char *riscv_find_firmware(const char *firmware_filena=
+me,
+>  target_ulong riscv_load_firmware(const char *firmware_filename,
+>                                   hwaddr *firmware_load_addr,
+>                                   symbol_fn_t sym_cb);
+> -target_ulong riscv_load_kernel(MachineState *machine,
+> -                               RISCVHartArrayState *harts,
+> -                               target_ulong firmware_end_addr,
+> -                               bool load_initrd,
+> -                               symbol_fn_t sym_cb);
+> -uint64_t riscv_compute_fdt_addr(hwaddr dram_start, uint64_t dram_size,
+> -                                MachineState *ms, RISCVHartArrayState *h=
 arts);
+> +void riscv_load_kernel(MachineState *machine,
+> +                       RISCVBootInfo *info,
+> +                       target_ulong kernel_start_addr,
+> +                       bool load_initrd,
+> +                       symbol_fn_t sym_cb);
+> +uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+> +                                MachineState *ms, RISCVBootInfo *info);
 >  void riscv_load_fdt(hwaddr fdt_addr, void *fdt);
 >  void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayStat=
 e *harts,
