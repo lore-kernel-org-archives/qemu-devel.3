@@ -4,101 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2785E6C60B
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E058E6C60C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIMRU-000098-8z; Tue, 03 Dec 2024 01:31:28 -0500
+	id 1tIMRc-0000Bk-3I; Tue, 03 Dec 2024 01:31:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tIMRS-00007v-Ik; Tue, 03 Dec 2024 01:31:26 -0500
-Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tIMRQ-0008Ck-SI; Tue, 03 Dec 2024 01:31:26 -0500
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal
- [10.202.2.51])
- by mailfout.stl.internal (Postfix) with ESMTP id AA5CA1140114;
- Tue,  3 Dec 2024 01:31:22 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-11.internal (MEProxy); Tue, 03 Dec 2024 01:31:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1733207482; x=
- 1733293882; bh=hHah4oq2cP49nUb7gn6Y3tToILMu0YicReswh8YBkac=; b=K
- 2uMi5NTZQLEfwC9HZuH1MVdBHjbU/rUvvGi0hVvMBvHHQsf8wtDrf8/HAnDPdaw7
- XfJhpxn19VZgDkUQsMz+j5VURUKsiyd1dvWA705p0wJXn+O2aB6myR7nejbvm+mn
- C6e6auTYDWIUHplijAYLMwtXstWMznS4+KJL9B/amglZiZ/GL8trqHluPJ/2xEcb
- wVbcr6H+uVnWTFCfWzKAG/xMzCwYX9+fhpkHcOQf5cl+5z53cgp1hdUMdpS7sZIp
- G0BdEZFNG+Z985BY19mA/zHaRVB9IQTTQp9FWZm/GvmTT/twzyJS2rL0Zc0mUQX+
- Fib1wJniT+oPVMcdWdTpQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; t=1733207482; x=1733293882; bh=h
- Hah4oq2cP49nUb7gn6Y3tToILMu0YicReswh8YBkac=; b=Or2uJTat/VCi6k0YL
- s6Ra96N0Q28+Gk2cAEXfQtzm5hrvp2v+YlVyXTWgCnvYTzrd3ntIkYsFGbY3UwiH
- jnfyGGgMx+5sGhqABKvQX7m3rDwGanUNQ9BF/HtDSU6ZSQxqnUay5Rj79hhOMfbn
- v1d0kxTUpoFbF6ax1IBC8TicnQz0ujr76twP44UDvnebninAvu06bksDgGNW6cp5
- 0vWSGbxpGtHJ4yy5snWkabHkHWrZA3kJuuUtRuoRCmltfqcZK9W4wcge31TU7NXs
- MCbOFMT3K7vf+d951Up4SKNBkn16ooY70re0d/p2ARjsZuZBE0bGD6AsU31XYSmo
- DdCLQ==
-X-ME-Sender: <xms:uKVOZ1NK44AaMsKXJ1KEqrJrw1jciooMOEmjfhco_2qKWTq_ioKvew>
- <xme:uKVOZ39TB9zPeYcqNmGF2nE_4zRyveTb9ELVqquQrOlbB5kCIkpXauuo8EoLrBYuU
- cjRbPHlbkXZkIBOYPc>
-X-ME-Received: <xmr:uKVOZ0T_llZXk7wbDg5PdK229Sh_PRdNHMRk95pSHRwtejJ1K2-lmbipw5uS5MPEkyR47_uXpW7t0yo2lllSE7A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedugdduiecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
- tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
- hsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecu
- hfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrug
- hkqeenucggtffrrghtthgvrhhnpeejgfeilefgieevheekueevheehkeefveegiefgheef
- gfejjeehffefgedujedugeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
- grihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthho
- peekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnh
- honhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhinhgr
- rhhordhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpd
- hrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdhrtghpthht
- ohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepkhgsuhhstghhsehkvg
- hrnhgvlhdrohhrghdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughkpdhr
- tghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:uKVOZxs0NRdmCxoA68uDel5RIMRKFkFB0U-elgQmDKfjMVhtkQyvhg>
- <xmx:uKVOZ9c1n11YRkIo1ZaBAF5Jsf9kwz5RFeRsk9fQpCXvDAw6G6j9pw>
- <xmx:uKVOZ92yQ3yyJ2pID_gXZPAPVhWyj13VPX6hhRKmjn7JnSps0ZcaBg>
- <xmx:uKVOZ59H37fMNCaEIkDk3969ep7lWnNOKs11sDEW-6WrFuWQJmXTGA>
- <xmx:uqVOZ8xA1Iwnd9wB4wVAw0Q6EXELevu9BhCCKtHVJotSz3tHvuJ7B6_X>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 01:31:19 -0500 (EST)
-From: Klaus Jensen <its@irrelevant.dk>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
- Jesper Wendel Devantier <foss@defmacro.it>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- qemu-block@nongnu.org
-Subject: [PULL 1/4] hw/nvme: fix msix_uninit with exclusive bar
-Date: Tue,  3 Dec 2024 07:31:08 +0100
-Message-ID: <20241203063112.9135-2-its@irrelevant.dk>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241203063112.9135-1-its@irrelevant.dk>
-References: <20241203063112.9135-1-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tIMRa-0000B1-IV; Tue, 03 Dec 2024 01:31:34 -0500
+Received: from mail-vs1-xe33.google.com ([2607:f8b0:4864:20::e33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tIMRZ-0008EX-1z; Tue, 03 Dec 2024 01:31:34 -0500
+Received: by mail-vs1-xe33.google.com with SMTP id
+ ada2fe7eead31-4aefdbf8134so1197414137.2; 
+ Mon, 02 Dec 2024 22:31:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733207491; x=1733812291; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=51e6sQVFtPJq/fpzqreSigR1j2ToG7DiQDj/JiDYmeE=;
+ b=Uns72N7K78CRNpCQS6UXlG7lPkvK3ExCErVk/vUOWiggjj8qfeGmPdh27CpSSStJHg
+ cn6XY6iHNUbLF+KMcI3loDqUkG9yx+EzQEHh5UGNft9q7h4eK+XaH4ziO2uIR6ZlMip/
+ 5uM7BWwQ42f7bi95RJaugGkXiY+wslEYGIGtK3PvTfUA+d8DK7LXUV567L5Ehuo9ejRR
+ RhxfHo2k+b2XinNHB3H0uw0IdhCCwxLu+8hs5ZAiOvKrbkwraf0hLjSQTYyse6nCniUG
+ 5NG7usNn48nb5UCBMXqyeUmmIYCorXeZ1CWe9aLsyUGE6ENB7uBliksFaTjeDIacBnFv
+ YvJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733207491; x=1733812291;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=51e6sQVFtPJq/fpzqreSigR1j2ToG7DiQDj/JiDYmeE=;
+ b=SgYkPS8PQrdmh9RyUn547ms2lJ/dX8P3IztcE9Ps6z8kcxw+STLa2ddJeqoftyYWbG
+ 1nBu4doUvFxN008VgxLH/CMjBn08GtF3JAG+btJFzy1ReLGpeOZ6/ZdTO8cBa92Kz7hG
+ yd8JCCfuQbcll8rOP2eXoz7V8dLLhyAhQjz4QPZ3X1L5RHvPqVGPIILKgEIx1AeLvuxJ
+ sqtHIJsgviMhUTQ9vmkwtQCsWWls5thoCVT7h+g3J3+MFc8IgZm6Xe7dXP6MxzXMLtPm
+ E4xepcBhcML1rKpLXN3racODhtwLvICQ1obVxHredWYbcX1dm7GCX6SFWTQyMl2FbfFt
+ /w6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWefAed4oketnSkktLkG1uEKMpjXdKP+WoUPN1HwGBl7ak+cgFRxoLwCeEwPUZIVq4dEi12SQ9Iv+rB@nongnu.org
+X-Gm-Message-State: AOJu0YzNEAzug2L3qrrX8t9lSqNIsvpv6QLn6wL1QZDRw7AO+oq641gu
+ v9pQnlIdQa5pZa4+RbR+kjOy1wD0y1IeZoG3jUil72Px7qWziUqV5s7Eecsp+KoVJKkV+eIanuY
+ RuC2rtujZBzf6bMCeN6Z9EzGkDUA=
+X-Gm-Gg: ASbGncvi1tHemRJcysB/E9Aj4DJcWpyRJS5LzMiJuky6nUxhcs+dI8FYiFW5fE7jWzR
+ 8ZIb148vG9LTAHbceCjd7BkfwnMd/HWel
+X-Google-Smtp-Source: AGHT+IGtaq20FQ+nAGp+2AO8fkuENF7tv8k5U255kXq3on0N5HAQBvZu4Q151Hvz6z1UH6SlbOwvh0XLUudpqfHEEHU=
+X-Received: by 2002:a05:6102:a4a:b0:4a3:a014:38aa with SMTP id
+ ada2fe7eead31-4af9723815fmr2407407137.11.1733207491294; Mon, 02 Dec 2024
+ 22:31:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.150; envelope-from=its@irrelevant.dk;
- helo=fout-b7-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241128103831.3452572-1-peter.maydell@linaro.org>
+In-Reply-To: <20241128103831.3452572-1-peter.maydell@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 3 Dec 2024 15:31:05 +0900
+Message-ID: <CAKmqyKOYjhdp1fNSnqGdhyFJF2Ywhi16q_h3+LaATFuFFqoHpg@mail.gmail.com>
+Subject: Re: [PATCH for-9.2] target/riscv: Avoid bad shift in
+ riscv_cpu_do_interrupt()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e33;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe33.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,40 +97,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+On Thu, Nov 28, 2024 at 7:39=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> In riscv_cpu_do_interrupt() we use the 'cause' value we got out of
+> cs->exception as a shift value.  However this value can be larger
+> than 31, which means that "1 << cause" is undefined behaviour,
+> because we do the shift on an 'int' type.
+>
+> This causes the undefined behaviour sanitizer to complain
+> on one of the check-tcg tests:
+>
+> $ UBSAN_OPTIONS=3Dprint_stacktrace=3D1:abort_on_error=3D1:halt_on_error=
+=3D1 ./build/clang/qemu-system-riscv64 -M virt -semihosting -display none -=
+device loader,file=3Dbuild/clang/tests/tcg/riscv64-softmmu/issue1060
+> ../../target/riscv/cpu_helper.c:1805:38: runtime error: shift exponent 63=
+ is too large for 32-bit type 'int'
+>     #0 0x55f2dc026703 in riscv_cpu_do_interrupt /mnt/nvmedisk/linaro/qemu=
+-from-laptop/qemu/build/clang/../../target/riscv/cpu_helper.c:1805:38
+>     #1 0x55f2dc3d170e in cpu_handle_exception /mnt/nvmedisk/linaro/qemu-f=
+rom-laptop/qemu/build/clang/../../accel/tcg/cpu-exec.c:752:9
+>
+> In this case cause is RISCV_EXCP_SEMIHOST, which is 0x3f.
+>
+> Use 1ULL instead to ensure that the shift is in range.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-Commit fa905f65c554 introduced a machine compatibility parameter to
-enable an exclusive bar for msix. It failed to account for this when
-cleaning up. Make sure that if an exclusive bar is enabled, we use the
-proper cleanup routine.
+Thanks!
 
-Cc: qemu-stable@nongnu.org
-Fixes: fa905f65c554 ("hw/nvme: add machine compatibility parameter to enable msix exclusive bar")
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Applied to riscv-to-apply.next
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 69bce20f6692..13898d58278e 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8904,7 +8904,12 @@ static void nvme_exit(PCIDevice *pci_dev)
-         pcie_sriov_pf_exit(pci_dev);
-     }
- 
--    msix_uninit(pci_dev, &n->bar0, &n->bar0);
-+    if (n->params.msix_exclusive_bar && !pci_is_vf(pci_dev)) {
-+        msix_uninit_exclusive_bar(pci_dev);
-+    } else {
-+        msix_uninit(pci_dev, &n->bar0, &n->bar0);
-+    }
-+
-     memory_region_del_subregion(&n->bar0, &n->iomem);
- }
- 
--- 
-2.45.2
+Alistair
 
+> ---
+>  target/riscv/cpu_helper.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 0a3ead69eab..45806f5ab0f 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1802,10 +1802,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      bool async =3D !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
+>      target_ulong cause =3D cs->exception_index & RISCV_EXCP_INT_MASK;
+>      uint64_t deleg =3D async ? env->mideleg : env->medeleg;
+> -    bool s_injected =3D env->mvip & (1 << cause) & env->mvien &&
+> -        !(env->mip & (1 << cause));
+> -    bool vs_injected =3D env->hvip & (1 << cause) & env->hvien &&
+> -        !(env->mip & (1 << cause));
+> +    bool s_injected =3D env->mvip & (1ULL << cause) & env->mvien &&
+> +        !(env->mip & (1ULL << cause));
+> +    bool vs_injected =3D env->hvip & (1ULL << cause) & env->hvien &&
+> +        !(env->mip & (1ULL << cause));
+>      target_ulong tval =3D 0;
+>      target_ulong tinst =3D 0;
+>      target_ulong htval =3D 0;
+> --
+> 2.34.1
+>
+>
 
