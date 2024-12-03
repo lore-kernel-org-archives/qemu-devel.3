@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21CB4E6C60D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BB5E6C60F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 07:16:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIMhh-0002da-Cn; Tue, 03 Dec 2024 01:48:13 -0500
+	id 1tIN8g-0006bC-Sz; Tue, 03 Dec 2024 02:16:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIMhg-0002dO-MH; Tue, 03 Dec 2024 01:48:12 -0500
-Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIMhf-0002Am-2y; Tue, 03 Dec 2024 01:48:12 -0500
-Received: by mail-vs1-xe35.google.com with SMTP id
- ada2fe7eead31-4af5ed9c8b4so1143509137.2; 
- Mon, 02 Dec 2024 22:48:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733208489; x=1733813289; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tsE41Wm2hcZFOmELsf8nNYdr/O/I+HF0V0VgCgbozrw=;
- b=lzyUa9Bm2xfhS4AAtXMn/kpFMg50xT3wlEWg5nKvke8a4hvNLAQalXhc0s0OXdBCqi
- F0R2P0XYpHIrK9f6FWB4ZQqdqccVClo0BJaqHLVc833poBFsSApfkEtZ8SPJIj/v6i5v
- sDhP5o2p21NpdPv2oK/wQcSRuC5Gm5sS9HBBKoj6l63dyWXdX69CWpPa5QWF2FMAjp9z
- sJ6ZDmmB5UMgH1k0k2oXcMAu8nngkWdmTzX4Lumvti72ZwN0ZXVOz5EZYO/a5ru/MtmM
- WC3OswAXHO6xBkczUN9RvH6kKgH/X+Hnr92XC8dBcEBTKJWg3hS+QVsLCIdZJdPlaDmP
- 7xfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733208489; x=1733813289;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tsE41Wm2hcZFOmELsf8nNYdr/O/I+HF0V0VgCgbozrw=;
- b=F+XAXiD89P78StZo8Kw+dnZ4aV1o8Z4Hc3HbAeDvx/f6N2WF7PIsnnOU2FYv4/TPer
- bI221cmkVSe4/kSrqT0Gy/AfE26FL0+kA4YbIuXR16utIH90tSnU3T4jKLQg/YWOMVmT
- IUXp36NrzLkczsYlkbWwaCHTz/bKyqKNgVxI9uiAATrRjn74YIJ4NZ4HZtN3cCQV8ql0
- aPVuBf2Eo/BO5gi8DEldbDtPc5cP3WrH0JJ6I2CSNRvYC+UjFTsCcgXPIX7AFq+HrVkz
- AuX7GvBCdeollwKHniviOXqTdQRHzf5Svn6wQAtW8LAfIs7WU57eFI7mPtIQrb9EJOQ2
- zcwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9AcE5cE348pETW2/T4E2hviPIA6EWra3r6c8o1J82DlotH6gEAGmilymc8on4COdArymuN/gyVTHd@nongnu.org
-X-Gm-Message-State: AOJu0Yzh39huL6jhAA6NzC6bjf+vDrr5ilxRwdIWM8N+RReQQncUDqaF
- OkuIUmROx7UbVJIfbEO0XKPvR6vzjlbh3WxMhGh5kQw095rLLsJugJNoObQNTrt1LTh3vRXjI0J
- 1bOdpNwzuZwW9yQKXh46c8M25pcI=
-X-Gm-Gg: ASbGncskdbUcs/GDo4YMyWBUpcvjmHClxOSRSrL4mgSdK9TmWX8Q4p08ngBxWOW6o9Q
- gK5rc3wWkg6TQhL9oUr7+/4BKIEMvhzdD
-X-Google-Smtp-Source: AGHT+IHRY9YGyP/h5+BP+NpOi4Wed6KMaSmwXGg6xcTGLni5jkuzfoSOtL5SBpq4uHfuxWGQxFM/FLqb2ctj+kyRSaw=
-X-Received: by 2002:a05:6102:c92:b0:4af:958:97d5 with SMTP id
- ada2fe7eead31-4af9729e406mr1760742137.25.1733208489728; Mon, 02 Dec 2024
- 22:48:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tIN8F-0006Qm-Vp; Tue, 03 Dec 2024 02:15:41 -0500
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tIN8D-0006vk-BR; Tue, 03 Dec 2024 02:15:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733210137; x=1764746137;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=ozA8pvxK7Z3OttOaLFyMztzPGG0614j9/FWPg+mmF3A=;
+ b=QjI0yuW1+fXUr3d9m7jdNemJS/Cwzb2MsiJ6Vz+zrG+EPcmSyKO9Z+0R
+ NTeNCB2InJv/1lrRn9Te2Onx1U+pTObwPY9egGtAu0oywb3X9hTSRZEXY
+ fJ91LFt7MG8tR7Py8lhe0IxTrrivqRfyJVc2HCzovD5Nn+3VYg+unYkX/
+ jr8FIismnx/hPcUdZhqR8Xc1cZQnW7d7FFbZjhzbtmkGiQzLMMvxegPE5
+ ex4V544fMKHMyS5TtJ+DISr5Om2GbGJk7l8995IsrTYyYAlIr+dMyNM32
+ JY3qdbk7jMfcb1GoVQW5aAwyqnt6FhXX0vgXHP9EWtNAQEJbBjuGOKD5n A==;
+X-CSE-ConnectionGUID: wFYkO5sRTPCM8NykvoodoQ==
+X-CSE-MsgGUID: 0vs+Uo6+SkacTesDAqFpaw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11274"; a="50933644"
+X-IronPort-AV: E=Sophos;i="6.12,204,1728975600"; d="scan'208";a="50933644"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Dec 2024 23:15:32 -0800
+X-CSE-ConnectionGUID: XzjBPNCXSumMFBLvMifBLA==
+X-CSE-MsgGUID: yB6p+8A3QaClp8uC3P1KuA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,204,1728975600"; d="scan'208";a="93750981"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa007.jf.intel.com with ESMTP; 02 Dec 2024 23:15:30 -0800
+Date: Tue, 3 Dec 2024 15:33:41 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, pbonzini@redhat.com,
+ imammedo@redhat.com, xieyongji@bytedance.com,
+ chaiwen.cc@bytedance.com, qemu-stable@nongnu.org,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+Message-ID: <Z060VQVV6ONK9Qd2@intel.com>
+References: <20241009035638.59330-1-xuchuangxclwt@bytedance.com>
+ <cc83fc31-7a77-4e32-a861-3c1dc8592a04@intel.com>
+ <2f6b952d-4c21-4db5-9a8a-84a0c10feca8@bytedance.com>
+ <a48fcd78-d1c4-4359-bc18-d04147a93f50@intel.com>
+ <ZwyRsq4EIooifRvb@intel.com>
+ <bbcfcbbd-1666-4e97-ae18-f47202d89009@intel.com>
+ <ZxDS4L8vSr3HfFIh@intel.com>
+ <b43557f7-49ff-43bb-8a8c-887b8220e1e8@intel.com>
 MIME-Version: 1.0
-References: <20241120153935.24706-1-jim.shu@sifive.com>
-In-Reply-To: <20241120153935.24706-1-jim.shu@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 3 Dec 2024 15:47:43 +0900
-Message-ID: <CAKmqyKOBVuxvKMV7ihZVQRNepnJjxwgrxLdxeCrR6Sam+gnsrA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] Support 64-bit address of initrd
-To: Jim Shu <jim.shu@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe35.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b43557f7-49ff-43bb-8a8c-887b8220e1e8@intel.com>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,55 +92,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 12:40=E2=80=AFAM Jim Shu <jim.shu@sifive.com> wrote=
-:
->
-> Support to load DTB after 3GB on RV64 system, so that larger initrd
-> doesn't be overlapped to DTB. DTB loading now will check if overlapping
-> to kernel/initrd and report this error.
->
-> Verify the patch via running 4GB initramfs on the virt machine.
->
->
-> Changes for v4:
->
->   - Update the comments of loading DTB in 64-bit CPU
->   - Align image_[low|high]_addr's type with initrd_start (hwaddr)
->   - Fix commit 2 to avoid unnecessary change .h file of board
->
-> Changes for v3:
->
->   - Change struct RISCVBootInfo from machine state to local variables.
->
-> Changes for v2:
->
->   - Add DTB overlapping checking and struct RISCVBootInfo
->   - Remove the commit to change #address-cell of 'initrd-[start|end]'
->
-> Jim Shu (3):
->   hw/riscv: Support to load DTB after 3GB memory on 64-bit system.
->   hw/riscv: Add a new struct RISCVBootInfo
->   hw/riscv: Add the checking if DTB overlaps to kernel or initrd
+> However, back to the patch, I think we cannot change it as this patch
+> directly. Instead, we need a compat_props for the changed behavior, because
+> this isn't a bug fix and it introduces guest-visible differences.
 
-Thanks!
+This is a fix, not a new feature, so compat_props is not needed.
 
-Applied to riscv-to-apply.next
+> For ancient Intel CPUs, EBX[23:16] did represent the number of Logical
+> processor per package. I believe this should be the reason why QEMU
+> implemented it as is:
+> 
+>   - on SDM version 013, EBX[23:16]: Number of logical processors per
+> physical processor; two for the Pentium 4 processor supporting
+> Hyper-Threading Technology.
+> 
+>   - on SDM version 015, it changed to: Number of initial APIC IDs reserved
+> for this physical package. Normally, this is the number of logical
+> processors per physical package.
+> 
+>   - on SDM version 016, it changed to: Maximum number of logical processors
+> in this physical package.
+> 
+>   - finally, starting from SDM version 026, it changed to what reads now:
+> Maximum number of addressable IDs for logical processors in this physical
+> package.
 
-Alistair
+And this is an architecturally defined CPUID, so SDM ensures backward
+compatibility.
 
->
->  hw/riscv/boot.c            | 100 +++++++++++++++++++++++++------------
->  hw/riscv/microchip_pfsoc.c |  13 +++--
->  hw/riscv/opentitan.c       |   4 +-
->  hw/riscv/sifive_e.c        |   4 +-
->  hw/riscv/sifive_u.c        |  14 +++---
->  hw/riscv/spike.c           |  14 +++---
->  hw/riscv/virt.c            |  13 +++--
->  include/hw/riscv/boot.h    |  28 ++++++++---
->  8 files changed, 127 insertions(+), 63 deletions(-)
->
-> --
-> 2.17.1
->
->
+Regards,
+Zhao
+
 
