@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61911E64A81
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4472DE64A80
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 11:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIR8D-00005i-NV; Tue, 03 Dec 2024 06:31:53 -0500
+	id 1tIR8W-0000BS-Po; Tue, 03 Dec 2024 06:32:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8B-00005N-NK
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:31:51 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8M-00007u-Jq
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:03 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8A-0000Yc-4U
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:31:51 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-385e96a285eso1511468f8f.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:31:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIR8K-0000ZZ-Eu
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 06:32:02 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-385d7f19f20so2402508f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 03:32:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733225508; x=1733830308; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733225519; x=1733830319; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GEQJbcE86qikHlXktFZRneXT4XN3T75O47zRCAyenRc=;
- b=QxGJW/xc0/2s4tmVFtFyDJN7GzksIcO8UH4libWr3hGOsv/5EbisYtL5TsTZwZotdY
- X30mtPshnXfH6BOHKR4gIcNboyj51w4O8ylmvcZjhrvOqL2WpDeDBoul5lbnw7A/riDf
- fXCINM70TGFeUyHFbwBCBykOUeezWDO1ZvFTWLN9k+YwgTACvitAJufRPFDCJAJayDSZ
- u16+K09wKPLZLDkA81Zr7LopSJ8g1kqK34iVK0nbE7i3o5N6Mkn9s8bgjAuTJNdmK9yk
- s8mWS3LHWG32vgT9mc9Ep4S1wbveVO+6mVr2If98oMUz5DYR9fVGxJ21BFsVGlRkjeNq
- LAnw==
+ bh=oU20d9+ticWenlMt5qSEyuabqKxdhpNZ4aYUuZ3tAj0=;
+ b=jf3BFouz66Dhxe+w9UaceZCGMCoUREu3kg+rbWzuzUFEu+nzhaqTf2Xu0uCqn7P603
+ iJ1G/2SCmurQWoMSES03TOAn2IIbX5hIgQ+znkbig+Pdze2kXOAB/a35ddw4R67BRFth
+ TMZUaVHVLEzovbwAMBQgz9nbK2ZwmVXlKBtJeY1+wKlmypGlwN3moKYy9IcAn5Npuh1/
+ bDtQWwaaOf8rZj/289eulxU558jwKLJ5J6a80obDLFe6NXVTu67lN7GBnFC98W1v+nUl
+ S4FgLra0P6OQmZkb1Ct+HKIenDBWuJ07n/p8qUo9t6oyqNrITvsMWmQV4oec1Uuh3R4Z
+ Fzgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733225508; x=1733830308;
+ d=1e100.net; s=20230601; t=1733225519; x=1733830319;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GEQJbcE86qikHlXktFZRneXT4XN3T75O47zRCAyenRc=;
- b=J2K7W8JS64olVB3gHDnSZr2i2Zcayf9E3b+iqt6yoATboeYLYl1VHSsXDuKYXtJSTZ
- zVHdw+JGOqmp1/nUuRCr1gdJ6bJygSlWpeaVtQLK3L8wycbFZaSpM3syzq9Uf3a2ueq1
- V6D3Qkuy1kbdt8xufhP9cEv4vDOylL3e9YpibGUG516yxPNOFphNp6oKZB57ubdoMesb
- NYEZLmhF5F7IHTLGLguLyu5t4fPPTURhoBFZsUvYVg1ww5OpKJCtPczMAvFLiPKjXhWQ
- fHPo7Nakw7XJmNdJz7cIbS/YxEJbhifDGrJlFEXX9oGVe4NQ0vbYL84+yCy4m37yZk17
- UeWA==
-X-Gm-Message-State: AOJu0Yw+8dICTxugskcgaQkc/00cUFCOziyNH7SJbd+ZbwOlU5hwNo8A
- OZYUTxiaTK5LRjNa98xfKge9NEYTi99zEU096adWz+aGtCrYQO3E20dEW64CKc/mHfGET7fwCch
- 7R0I=
-X-Gm-Gg: ASbGnctakigovJpIt9PwnOSixiZwCJ+SfxXt0cQ0MIZ7kj1CO66lhH4isOeuhN1ip1n
- m6OyMpI3E1sDoAdYMrv9dh3q5RokgeH6N/8pC7WUi6S8FbKhJriqq9QmYYv5t7HwNDlLX51b++o
- hd7eIRllp7reZiiEe88pJyCiRUIyRFhv1VMAKe/ZRI0MvwRzHKN4UJF00elCP9Ep5vRRUhooHvH
- 8upYLNnkj6LEjae6J69ye7x0YheAZE4dk2C1v0rdBw+i8MsRL0x8gs8aAVLx5KTV712dE0w
-X-Google-Smtp-Source: AGHT+IHNJgQIZ6HsSqWeIi/FHFZ/lL//XyJvuN5mYC3QJaMQsuSrXgfqt5X6MJbkZMhCQx2qIuzq/A==
-X-Received: by 2002:a05:6000:1f8a:b0:385:f0d2:c34 with SMTP id
- ffacd0b85a97d-385fd423f8dmr1694907f8f.49.1733225508290; 
- Tue, 03 Dec 2024 03:31:48 -0800 (PST)
+ bh=oU20d9+ticWenlMt5qSEyuabqKxdhpNZ4aYUuZ3tAj0=;
+ b=p5v1VNqRLPbpqWRRJ8EovsCGh+m7ox7Vbs+mGzzyjdZtFMBCGibgdgPF5oFpwzQPV7
+ v6FQWxcEtYFSLsOEYB5Lbu4dnQjYnVcfVpO37vFVMDy4UTWfMS1tjfS/CnmQZ6KemQmX
+ hg0x6iFHruOuqESyWfcRwkQTOa4L7j9f8anB/iKhy96pwie+cw2c31Mt6gEK1uTbw+yb
+ Ac9mDBEp7//p/X/KGE936hHQ3MoKqG5lQ8kGL8+xczgTpQlfCLyxHwgduOgjjn98OU/H
+ TxA90bh+0MWGnX+9Ut237ODmrgY4xGy2nE7txbe6/kGBw3AqHvZbndJdRyzXBcJbF3ar
+ z5aQ==
+X-Gm-Message-State: AOJu0Yy+Y08r25r5gfsDDe7P5CUuhOlR4MZsafnviYw8MI5yNAVFKkJv
+ UNHxCmtrbZfAaRrj0+6m+cMafisX/xB/pT5+Wpmmj1tY9wd/jCmEf73wY/ScnPwj61P5sNuKsjL
+ lSz0=
+X-Gm-Gg: ASbGncvWKZB/yF01ISHu+V2abaQmEqEbYjfrv3ZOSS82hpN6zd0qZ457ehvYrZ+aJfN
+ Rn1nGePWVSAZ7tHal4y2e00icq4uTXLhI4iCe6PvJumeot/01zyOmKxv5NXpzWOJAj+0VlaozHU
+ DzPMgDxXI+qkMUiXIk/6wQkvMj3Ltezhy6lKW4/lAxrLTuzajORweuYvVx+x6NcsWcLoRFKWM2U
+ +b0Kqw/LI5XQLwn5aX/q96OP0HZAzBTUsuiKjKhBXn2LGCjIP7Mk7VQxuwGTwhxuy2KXCS5
+X-Google-Smtp-Source: AGHT+IEtZWmegdICLI9aWtlYbudzUo9oMZeYY9rnzYt4FNGp82Yy25Z3gmDGzD1WC42+1GQOp4FHDA==
+X-Received: by 2002:a05:6000:1866:b0:385:e429:e59e with SMTP id
+ ffacd0b85a97d-385fd424daamr1880609f8f.52.1733225518677; 
+ Tue, 03 Dec 2024 03:31:58 -0800 (PST)
 Received: from localhost.localdomain ([176.187.209.146])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385e1bba97esm10618562f8f.91.2024.12.03.03.31.47
+ ffacd0b85a97d-385e86f5dd2sm9167687f8f.18.2024.12.03.03.31.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 03:31:47 -0800 (PST)
+ Tue, 03 Dec 2024 03:31:58 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Joel Holdsworth <jholdsworth@nvidia.com>,
- Stafford Horne <shorne@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/13] hw/openrisc: Fixed undercounting of TTCR in continuous
- mode
-Date: Tue,  3 Dec 2024 12:31:28 +0100
-Message-ID: <20241203113140.63513-2-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PULL 03/13] ui/cocoa: Temporarily ignore annoying deprecated
+ declaration warnings
+Date: Tue,  3 Dec 2024 12:31:30 +0100
+Message-ID: <20241203113140.63513-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241203113140.63513-1-philmd@linaro.org>
 References: <20241203113140.63513-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,115 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Holdsworth <jholdsworth@nvidia.com>
+These warnings are breaking some build configurations since 2 months
+now (https://gitlab.com/qemu-project/qemu/-/issues/2575):
 
-In the existing design, TTCR is prone to undercounting when running in
-continuous mode. This manifests as a timer interrupt appearing to
-trigger a few cycles prior to the deadline set in SPR_TTMR_TP.
+  ui/cocoa.m:662:14: error: 'CVDisplayLinkCreateWithCGDisplay' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
+    662 |         if (!CVDisplayLinkCreateWithCGDisplay(display, &displayLink)) {
+        |              ^
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked deprecated here
+     89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
+        |                    ^
+  ui/cocoa.m:663:29: error: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
+    663 |             CVTime period = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
+        |                             ^
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:182:18: note: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' has been explicitly marked deprecated here
+    182 | CV_EXPORT CVTime CVDisplayLinkGetNominalOutputVideoRefreshPeriod( CVDisplayLinkRef CV_NONNULL displayLink );
+        |                  ^
+  ui/cocoa.m:664:13: error: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
+    664 |             CVDisplayLinkRelease(displayLink);
+        |             ^
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
+    249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
+        |                ^
+  3 errors generated.
 
-When the timer triggers, the virtual time delta in nanoseconds between
-the time when the timer was set, and when it triggers is calculated.
-This nanoseconds value is then divided by TIMER_PERIOD (50) to compute
-an increment of cycles to apply to TTCR.
+For the next release, ignore the warnings using #pragma directives.
+At least until we figure the correct new API usage.
 
-However, this calculation rounds down the number of cycles causing the
-undercounting.
-
-A simplistic solution would be to instead round up the number of cycles,
-however this will result in the accumulation of timing error over time.
-
-This patch corrects the issue by calculating the time delta in
-nanoseconds between when the timer was last reset and the timer event.
-This approach allows the TTCR value to be rounded up, but without
-accumulating error over time.
-
-Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
-[stafford: Incremented version in vmstate_or1k_timer, checkpatch fixes]
-Signed-off-by: Stafford Horne <shorne@gmail.com>
-Message-ID: <20241203110536.402131-3-shorne@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Message-Id: <20241121131954.98949-1-philmd@linaro.org>
 ---
- hw/openrisc/cputimer.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ ui/cocoa.m | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/openrisc/cputimer.c b/hw/openrisc/cputimer.c
-index 835986c4dbe..87aa3533237 100644
---- a/hw/openrisc/cputimer.c
-+++ b/hw/openrisc/cputimer.c
-@@ -29,7 +29,8 @@
- /* Tick Timer global state to allow all cores to be in sync */
- typedef struct OR1KTimerState {
-     uint32_t ttcr;
--    uint64_t last_clk;
-+    uint32_t ttcr_offset;
-+    uint64_t clk_offset;
- } OR1KTimerState;
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 4c2dd335323..dd88115dc6f 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -639,6 +639,9 @@ - (void) updateBounds
+     [self setBoundsSize:NSMakeSize(screen.width, screen.height)];
+ }
  
- static OR1KTimerState *or1k_timer;
-@@ -37,6 +38,8 @@ static OR1KTimerState *or1k_timer;
- void cpu_openrisc_count_set(OpenRISCCPU *cpu, uint32_t val)
++#pragma clang diagnostic push
++#pragma clang diagnostic ignored "-Wdeprecated-declarations"
++
+ - (void) updateUIInfoLocked
  {
-     or1k_timer->ttcr = val;
-+    or1k_timer->ttcr_offset = val;
-+    or1k_timer->clk_offset = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+     /* Must be called with the BQL, i.e. via updateUIInfo */
+@@ -685,6 +688,8 @@ - (void) updateUIInfoLocked
+     dpy_set_ui_info(dcl.con, &info, TRUE);
  }
  
- uint32_t cpu_openrisc_count_get(OpenRISCCPU *cpu)
-@@ -53,9 +56,8 @@ void cpu_openrisc_count_update(OpenRISCCPU *cpu)
-         return;
-     }
-     now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    or1k_timer->ttcr += (uint32_t)((now - or1k_timer->last_clk)
--                                    / TIMER_PERIOD);
--    or1k_timer->last_clk = now;
-+    or1k_timer->ttcr = or1k_timer->ttcr_offset +
-+        DIV_ROUND_UP(now - or1k_timer->clk_offset, TIMER_PERIOD);
- }
- 
- /* Update the next timeout time as difference between ttmr and ttcr */
-@@ -69,7 +71,7 @@ void cpu_openrisc_timer_update(OpenRISCCPU *cpu)
-     }
- 
-     cpu_openrisc_count_update(cpu);
--    now = or1k_timer->last_clk;
-+    now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
- 
-     if ((cpu->env.ttmr & TTMR_TP) <= (or1k_timer->ttcr & TTMR_TP)) {
-         wait = TTMR_TP - (or1k_timer->ttcr & TTMR_TP) + 1;
-@@ -110,7 +112,8 @@ static void openrisc_timer_cb(void *opaque)
-     case TIMER_NONE:
-         break;
-     case TIMER_INTR:
--        or1k_timer->ttcr = 0;
-+        /* Zero the count by applying a negative offset to the counter */
-+        or1k_timer->ttcr_offset -= (cpu->env.ttmr & TTMR_TP);
-         break;
-     case TIMER_SHOT:
-         cpu_openrisc_count_stop(cpu);
-@@ -137,17 +140,18 @@ static void openrisc_count_reset(void *opaque)
- /* Reset the global timer state. */
- static void openrisc_timer_reset(void *opaque)
++#pragma clang diagnostic pop
++
+ - (void) updateUIInfo
  {
--    or1k_timer->ttcr = 0x00000000;
--    or1k_timer->last_clk = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    OpenRISCCPU *cpu = opaque;
-+    cpu_openrisc_count_set(cpu, 0);
- }
- 
- static const VMStateDescription vmstate_or1k_timer = {
-     .name = "or1k_timer",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(ttcr, OR1KTimerState),
--        VMSTATE_UINT64(last_clk, OR1KTimerState),
-+        VMSTATE_UINT32(ttcr_offset, OR1KTimerState),
-+        VMSTATE_UINT64(clk_offset, OR1KTimerState),
-         VMSTATE_END_OF_LIST()
-     }
- };
+     if (!allow_events) {
 -- 
 2.45.2
 
