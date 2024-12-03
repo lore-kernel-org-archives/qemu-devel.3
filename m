@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F196E6C60C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21CB4E6C60D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIMgO-0001zd-Jc; Tue, 03 Dec 2024 01:46:52 -0500
+	id 1tIMhh-0002da-Cn; Tue, 03 Dec 2024 01:48:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tIMgM-0001yq-ML; Tue, 03 Dec 2024 01:46:50 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tIMhg-0002dO-MH; Tue, 03 Dec 2024 01:48:12 -0500
+Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tIMgJ-00023M-HQ; Tue, 03 Dec 2024 01:46:50 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-aa52edbcb63so1074721166b.1; 
- Mon, 02 Dec 2024 22:46:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tIMhf-0002Am-2y; Tue, 03 Dec 2024 01:48:12 -0500
+Received: by mail-vs1-xe35.google.com with SMTP id
+ ada2fe7eead31-4af5ed9c8b4so1143509137.2; 
+ Mon, 02 Dec 2024 22:48:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733208404; x=1733813204; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1733208489; x=1733813289; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pEmizadDx6J+cd+C8N8GvCofp2vnx235szKbmoXfH9c=;
- b=NlDjSpKzdl5eTmzsKqToM+iJ6DZ6bbNdMamaDyNBQHFCvZkjbyE2Kq65NjNQfeUnBY
- nGl1BYA642jp2iNf+/EjCafkdu09+NJQ1jEvPzGig4aGyZbWslEBvF5yOmKuvGdRJIN6
- 0EcJB8tCKCYVny6SC3agh+parAmuzg4vmb6wLJxBy9PIP1upJ48HmKxY4KOwCfH7RskK
- VY4N9K0X/RaXGAwkKnqN3/faK1bf0IQlEHFOvVXXA81DQU37ynX/ptd8I6sJ5KTFgu2t
- 7dA8JcfrsuFdAl9YxhftpD85wzFsmQ3sj21K5DYFsSyCfiVFtSa1Nu+1N7iAZ3sxY55I
- oHXQ==
+ bh=tsE41Wm2hcZFOmELsf8nNYdr/O/I+HF0V0VgCgbozrw=;
+ b=lzyUa9Bm2xfhS4AAtXMn/kpFMg50xT3wlEWg5nKvke8a4hvNLAQalXhc0s0OXdBCqi
+ F0R2P0XYpHIrK9f6FWB4ZQqdqccVClo0BJaqHLVc833poBFsSApfkEtZ8SPJIj/v6i5v
+ sDhP5o2p21NpdPv2oK/wQcSRuC5Gm5sS9HBBKoj6l63dyWXdX69CWpPa5QWF2FMAjp9z
+ sJ6ZDmmB5UMgH1k0k2oXcMAu8nngkWdmTzX4Lumvti72ZwN0ZXVOz5EZYO/a5ru/MtmM
+ WC3OswAXHO6xBkczUN9RvH6kKgH/X+Hnr92XC8dBcEBTKJWg3hS+QVsLCIdZJdPlaDmP
+ 7xfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733208404; x=1733813204;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1733208489; x=1733813289;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pEmizadDx6J+cd+C8N8GvCofp2vnx235szKbmoXfH9c=;
- b=eI1V8He0HcpHH8grvShQ39RivBMjsK/W00kD53dohjCZYfTba+jMjD7hYYBzWDS943
- v+aGKDPNeLMoW201rlIm2Hzq4k7QcKcSsLAjP0YKTciqYONTa3luSoxCpUu1/+G+1oza
- PsZl+LW/9XZjlPSmigtHRVEnKrYlXLnZVtYD8ZCCtUgHpEbPnIsm6/K4vb/m6mqIaGy0
- zQ8PSmS4NakHUcnM7ssMiJy4R50jKyN3AH5XUz2/zQ8BU1QdkMGh2i0x4Pb7rS5r0AbI
- Q0FfVZ27LjIwgh32swTcNN5PyTDCztSkODce7ulFO3ygPNvuLV8wq9iLKBt4K0uodTLh
- XvaA==
+ bh=tsE41Wm2hcZFOmELsf8nNYdr/O/I+HF0V0VgCgbozrw=;
+ b=F+XAXiD89P78StZo8Kw+dnZ4aV1o8Z4Hc3HbAeDvx/f6N2WF7PIsnnOU2FYv4/TPer
+ bI221cmkVSe4/kSrqT0Gy/AfE26FL0+kA4YbIuXR16utIH90tSnU3T4jKLQg/YWOMVmT
+ IUXp36NrzLkczsYlkbWwaCHTz/bKyqKNgVxI9uiAATrRjn74YIJ4NZ4HZtN3cCQV8ql0
+ aPVuBf2Eo/BO5gi8DEldbDtPc5cP3WrH0JJ6I2CSNRvYC+UjFTsCcgXPIX7AFq+HrVkz
+ AuX7GvBCdeollwKHniviOXqTdQRHzf5Svn6wQAtW8LAfIs7WU57eFI7mPtIQrb9EJOQ2
+ zcwA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFxQXxoft0cVc9Ii3VfiB9uTmgbBcAUqHJnffbUv/nEDSNl81liZqiaKmmQp1OwpqqCDRRZexn3CKgpg==@nongnu.org,
- AJvYcCWgGRz1faNYwKAfwqQrS1rRzylCGAbjPP3I75IZRiR275KuCtIq6v7n4MesaHpUN3IM1t7fHXj73hm0@nongnu.org
-X-Gm-Message-State: AOJu0Yxt/mGhDUOA1nZI7pQHmY00/Ellm6/Q+Ci6yBO5w6OMYi22ATew
- dx68G5b6HNSOxyQF0Io2dZ/J7T0OAQfPyV9xeVwebC2mXYrQR8Fw
-X-Gm-Gg: ASbGncswps0uSOLBzspf67eOuJbJNCO9hiqUUaQLMQvhGJZFTNYeeCeozdqQh5Dv6dU
- OtY0M743mq/rH8CJAYIiexBduoafRrwVrRduZP0fA33oKlUm4Gsb/UiYcqIOS6CyMAL0aSPjFIl
- 95TcCQmSlsOtwsfjzJw51L7S5So7UZPQeZKw8i65GJea3HCpiwO5A+EEKTeIzPFQ07i73mB6J7g
- g6yYOjvo0qmdLQE3fua3hYP2Hgo4/zBjkvDlscGlX4wIjz/udZqKCflj/tBVckP3zHDFiYYZBkH
- nUVBQEbJrejFkXPkGli07e8=
-X-Google-Smtp-Source: AGHT+IFNvKAE9yf/l7vRgS4axRmA3zBenwc8kfyEGC5yTolzK5PsxEVmNiNWzTtrjxFh9u3ihcwz4Q==
-X-Received: by 2002:a17:906:292a:b0:aa5:c9c:31c5 with SMTP id
- a640c23a62f3a-aa5f72cc7f6mr115996166b.17.1733208403906; 
- Mon, 02 Dec 2024 22:46:43 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-002-242-014-218.2.242.pool.telefonica.de.
- [2.242.14.218]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa5996c19b5sm576589866b.5.2024.12.02.22.46.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Dec 2024 22:46:43 -0800 (PST)
-Date: Tue, 03 Dec 2024 06:46:42 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Beniamino Galvani <b.galvani@gmail.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH] hw/ide/ahci: Check for PCI device once in ahci_init()
-In-Reply-To: <20241121100152.65476-1-philmd@linaro.org>
-References: <20241121100152.65476-1-philmd@linaro.org>
-Message-ID: <D1B09E85-E00F-4E8F-8332-51CB33A97E44@gmail.com>
+ AJvYcCU9AcE5cE348pETW2/T4E2hviPIA6EWra3r6c8o1J82DlotH6gEAGmilymc8on4COdArymuN/gyVTHd@nongnu.org
+X-Gm-Message-State: AOJu0Yzh39huL6jhAA6NzC6bjf+vDrr5ilxRwdIWM8N+RReQQncUDqaF
+ OkuIUmROx7UbVJIfbEO0XKPvR6vzjlbh3WxMhGh5kQw095rLLsJugJNoObQNTrt1LTh3vRXjI0J
+ 1bOdpNwzuZwW9yQKXh46c8M25pcI=
+X-Gm-Gg: ASbGncskdbUcs/GDo4YMyWBUpcvjmHClxOSRSrL4mgSdK9TmWX8Q4p08ngBxWOW6o9Q
+ gK5rc3wWkg6TQhL9oUr7+/4BKIEMvhzdD
+X-Google-Smtp-Source: AGHT+IHRY9YGyP/h5+BP+NpOi4Wed6KMaSmwXGg6xcTGLni5jkuzfoSOtL5SBpq4uHfuxWGQxFM/FLqb2ctj+kyRSaw=
+X-Received: by 2002:a05:6102:c92:b0:4af:958:97d5 with SMTP id
+ ada2fe7eead31-4af9729e406mr1760742137.25.1733208489728; Mon, 02 Dec 2024
+ 22:48:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+References: <20241120153935.24706-1-jim.shu@sifive.com>
+In-Reply-To: <20241120153935.24706-1-jim.shu@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 3 Dec 2024 15:47:43 +0900
+Message-ID: <CAKmqyKOBVuxvKMV7ihZVQRNepnJjxwgrxLdxeCrR6Sam+gnsrA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/3] Support 64-bit address of initrd
+To: Jim Shu <jim.shu@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe35.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,97 +97,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-Am 21=2E November 2024 10:01:52 UTC schrieb "Philippe Mathieu-Daud=C3=A9" =
-<philmd@linaro=2Eorg>:
->object_dynamic_cast() is expensive; IRQ helpers are certainly
->a bad place to call it=2E Since the device type won't change at
->runtime, resolve it once when the AHCI context is initialized
->in ahci_init()=2E
+On Thu, Nov 21, 2024 at 12:40=E2=80=AFAM Jim Shu <jim.shu@sifive.com> wrote=
+:
 >
->Reported-by: Peter Xu <peterx@redhat=2Ecom>
->Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->---
-> include/hw/ide/ahci=2Eh |  2 +-
-> hw/ide/ahci=2Ec         | 17 +++++------------
-> 2 files changed, 6 insertions(+), 13 deletions(-)
+> Support to load DTB after 3GB on RV64 system, so that larger initrd
+> doesn't be overlapped to DTB. DTB loading now will check if overlapping
+> to kernel/initrd and report this error.
 >
->diff --git a/include/hw/ide/ahci=2Eh b/include/hw/ide/ahci=2Eh
->index ba31e75ff9=2E=2Ef6d977610d 100644
->--- a/include/hw/ide/ahci=2Eh
->+++ b/include/hw/ide/ahci=2Eh
->@@ -37,7 +37,7 @@ typedef struct AHCIControlRegs {
-> } AHCIControlRegs;
->=20
-> typedef struct AHCIState {
->-    DeviceState *container;
->+    PCIDevice *pci_dev;
->=20
->     AHCIDevice *dev;
->     AHCIControlRegs control_regs;
->diff --git a/hw/ide/ahci=2Ec b/hw/ide/ahci=2Ec
->index 0eb24304ee=2E=2Ef2eb3b527b 100644
->--- a/hw/ide/ahci=2Ec
->+++ b/hw/ide/ahci=2Ec
->@@ -181,14 +181,10 @@ static uint32_t ahci_port_read(AHCIState *s, int po=
-rt, int offset)
->=20
-> static void ahci_irq_raise(AHCIState *s)
-> {
->-    DeviceState *dev_state =3D s->container;
->-    PCIDevice *pci_dev =3D (PCIDevice *) object_dynamic_cast(OBJECT(dev_=
-state),
->-                                                           TYPE_PCI_DEVI=
-CE);
->-
->     trace_ahci_irq_raise(s);
->=20
->-    if (pci_dev && msi_enabled(pci_dev)) {
->-        msi_notify(pci_dev, 0);
->+    if (s->pci_dev && msi_enabled(s->pci_dev)) {
->+        msi_notify(s->pci_dev, 0);
->     } else {
->         qemu_irq_raise(s->irq);
->     }
->@@ -196,13 +192,9 @@ static void ahci_irq_raise(AHCIState *s)
->=20
-> static void ahci_irq_lower(AHCIState *s)
-> {
->-    DeviceState *dev_state =3D s->container;
->-    PCIDevice *pci_dev =3D (PCIDevice *) object_dynamic_cast(OBJECT(dev_=
-state),
->-                                                           TYPE_PCI_DEVI=
-CE);
->-
->     trace_ahci_irq_lower(s);
->=20
->-    if (!pci_dev || !msi_enabled(pci_dev)) {
->+    if (!s->pci_dev || !msi_enabled(s->pci_dev)) {
->         qemu_irq_lower(s->irq);
->     }
-> }
+> Verify the patch via running 4GB initramfs on the virt machine.
+>
+>
+> Changes for v4:
+>
+>   - Update the comments of loading DTB in 64-bit CPU
+>   - Align image_[low|high]_addr's type with initrd_start (hwaddr)
+>   - Fix commit 2 to avoid unnecessary change .h file of board
+>
+> Changes for v3:
+>
+>   - Change struct RISCVBootInfo from machine state to local variables.
+>
+> Changes for v2:
+>
+>   - Add DTB overlapping checking and struct RISCVBootInfo
+>   - Remove the commit to change #address-cell of 'initrd-[start|end]'
+>
+> Jim Shu (3):
+>   hw/riscv: Support to load DTB after 3GB memory on 64-bit system.
+>   hw/riscv: Add a new struct RISCVBootInfo
+>   hw/riscv: Add the checking if DTB overlaps to kernel or initrd
 
-By always triggering the "irq" property, it might be possible to push out =
-the above two methods to the caller, i=2Ee=2E the parent PCI device=2E This=
- would make this device model independent from PCI, essentially turning it =
-into an "IP block"=2E At the same time this eliminates the need for the dyn=
-amic casts and AFAICS would also fix the missing PCI dependency in the Kcon=
-fig file=2E I could send a patch=2E
+Thanks!
 
-Best regards,
-Bernhard
+Applied to riscv-to-apply.next
 
->@@ -1608,7 +1600,8 @@ static const IDEDMAOps ahci_dma_ops =3D {
->=20
-> void ahci_init(AHCIState *s, DeviceState *qdev)
-> {
->-    s->container =3D qdev;
->+    s->pci_dev =3D (PCIDevice *)object_dynamic_cast(OBJECT(qdev), TYPE_P=
-CI_DEVICE);
->+
->     /* XXX BAR size should be 1k, but that breaks, so bump it to 4k for =
-now */
->     memory_region_init_io(&s->mem, OBJECT(qdev), &ahci_mem_ops, s,
->                           "ahci", AHCI_MEM_BAR_SIZE);
+Alistair
+
+>
+>  hw/riscv/boot.c            | 100 +++++++++++++++++++++++++------------
+>  hw/riscv/microchip_pfsoc.c |  13 +++--
+>  hw/riscv/opentitan.c       |   4 +-
+>  hw/riscv/sifive_e.c        |   4 +-
+>  hw/riscv/sifive_u.c        |  14 +++---
+>  hw/riscv/spike.c           |  14 +++---
+>  hw/riscv/virt.c            |  13 +++--
+>  include/hw/riscv/boot.h    |  28 ++++++++---
+>  8 files changed, 127 insertions(+), 63 deletions(-)
+>
+> --
+> 2.17.1
+>
+>
 
