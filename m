@@ -4,113 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A9CEE74AD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED6BCE74ACF
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIZVb-0006RV-80; Tue, 03 Dec 2024 15:28:35 -0500
+	id 1tIZZB-0007Rm-4q; Tue, 03 Dec 2024 15:32:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tIZVU-0006Q9-Tz
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:28:29 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tIZVT-0001eS-2w
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:28:28 -0500
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3E5ptu020064
- for <qemu-devel@nongnu.org>; Tue, 3 Dec 2024 20:28:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4nq07f50q8vTray9O2DDg3hEek1STsIsOr959p/US28=; b=XkeAC2vs6sLJrHoD
- KqRkqCX64JRIMrNHyFCVbZtMMEXB3Xk9djAj065QZ4arhNeVNshxZnu56R1OXJb9
- 2ZNZETtQqFfGl5FrgyW2XWEVHcikHXkoo/cQFtZlwlVfR0OIQqzq+NSZSmr7yGmD
- VSor3B7Ikzc9v9GATm32MSSGDpQNJ+U+q3vvFzwdZRB+qAA3zUcRyaAlTPpVtrT+
- KUHKjv0V9pmrDGHiTdWn5h7ZfGjbK9AKMRvPwl6S94swxLJQxhnxi6EFxazKWEDp
- 4KXQS7PDlU/Ml8QUKq+1L5ICWqVZsuFHpXveSJpsUS9tcFhEZkPQkkrvwQY5Xxrb
- yIpBwA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43a3ex90tb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 20:28:24 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b68b264f71so725738285a.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:28:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIZZ8-0007RZ-Oo
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:32:15 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIZZ2-0002I4-7b
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:32:13 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-724e113c821so5451167b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:32:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733257926; x=1733862726; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=r+GD/ej76sPsT8FfH7l0PmXspXKI1rpi26C0CD8lSS4=;
+ b=ZXz4LuhufPecbBjVvxuQiqi3o8kHoULpOuQgW6ASEWY9852t6R4i3G6u21VtpGcCJH
+ us0VZuC79VYRBueyabs11/UiN2oi9zI73WAdY64YryjIgGGb+Q2jy/l4cJnYmHEfvx4T
+ ixydgLidWE7vV/JBG5jjI4TnZ9Jnt3f/gzzhQdzYVOWzgCB0o8TL9MFiMdEYLuFyQO8w
+ gGmdQ9R4c7xTuxCWXZrkeZ5KarHICvE01vWsSjxWP2dODfLXlm2Jz0LcECpistlhM98K
+ It7b6lAKM80rQo0WNyDunCBANNAVhQwj0CdYRb1ZPZl+OjnDUs6wTYTJv8STo9E4pb44
+ snvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733257703; x=1733862503;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1733257926; x=1733862726;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4nq07f50q8vTray9O2DDg3hEek1STsIsOr959p/US28=;
- b=UlbU4LMk/RyL1oDP2bbJRGjOvMRTVXYz4cjKZec7dLibiru7J4kRdGw3ytUdylRbfb
- eDVnkeJ9VHx+w/GQHojyptKVy3P5/z4EABsBoklUQOta4wsN7g33X0JCQMXmZKCx+yoY
- sh+dLdJuR8Hq6wlfqL6TQMwvueH2Rqx8Q5wxKnVVm0Dog13eqpcEr8xkcWm1mNUbzr8J
- LVDl51QJ5gLC56RvgJPI9/wI/YdbuV9XSM1SrDAkJPYj0EibmO/a/3l0GeAs7FiPoywS
- RFLq7UFAy1lBuXr+T+ueLYRi0QDIxMczqOR0j+Ew5sMvR0aSgG3qh8mvKXlBSETxxVu9
- ltQA==
-X-Gm-Message-State: AOJu0Yxu3INEo0HbH6IplgH5ojGbG2963o6FvYT9GPY47gz33SMRkl1l
- TRN5uHMgQYqQo9ecUU8dda0FvaAHYv6v3Sic1xM8EDaSz7MEF3HAhU31J5uu3u4XDMKdzGYSiv8
- aJST/25+/uTCb/EY37PcGyJzdh58JZAY6/c9SrtjebkLblyI2tOJLcA==
-X-Gm-Gg: ASbGncv2hoGK4UjRSdSXFEP7juEwgNj954fWG8YCXKZt/trGx/yGVoqZ5Mpo3kCGmnX
- wHc5Zd7b7L6uDY0h4ONlhrK76wqaTr3DnmcimH6vxoMIlh/+wbL73AC4Jjrfmtfa80uKaRVpoMz
- XQex5rULzdA13K8uoN+XoRLbcb1+WkpZiYsRloezjiWMdlYG2kGqiAnI+l/W76VIEfaX2iBXUdQ
- Tma7kyqq3JrnTCqDf63zV4dTjrZfSD73QVbVzcwpTWzN3KH+nXRLSLWim0GsnvPyDybWQbE0kEH
- ay/GsSGdvEbSBJmSsxnh9DEHdlOpGoaE
-X-Received: by 2002:a05:620a:2685:b0:7a4:d685:caa9 with SMTP id
- af79cd13be357-7b6abb9fe45mr232353885a.48.1733257703605; 
- Tue, 03 Dec 2024 12:28:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFhUuiWU9qS9C1CdOFMaZeZWGM77Cr1yN9nHLCIEkno64Rd+/lgYOZHIJKnKJzGxN9xpbJ1pQ==
-X-Received: by 2002:a05:620a:2685:b0:7a4:d685:caa9 with SMTP id
- af79cd13be357-7b6abb9fe45mr232349485a.48.1733257703165; 
- Tue, 03 Dec 2024 12:28:23 -0800 (PST)
-Received: from [10.222.168.90] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b684946dadsm541120085a.60.2024.12.03.12.28.21
+ bh=r+GD/ej76sPsT8FfH7l0PmXspXKI1rpi26C0CD8lSS4=;
+ b=OHtVHwSHTbd00b8ar5zbZIryV7wXF5nfmn0YKSK6W7cdlpBZThUQs1lsnwUg7Zbizj
+ RwEy6ND1iacYHT6Uh7sirVlpVid232HjlwwTivKj4HaxJFP4qCjtOI+5cKxACzz+BTc3
+ 3oT/61Yee3ujfeadWklju3Rr6HrkkIggkF86rMHmbdOOFVqWAy/JGzjzmywxRi3bXFgQ
+ e+ruhrjWGacy7UQwNr9wjIifVoqBu29d+tZBh0dtpfb0zuv8Jge3bOaRM1VQwutUmqg3
+ TcS3E4WYVM/T6Ps9ZbcITduHhyOV494debYATn7TVv4ecn5eMrbT4i5alYRpMdQXiz/x
+ cNtA==
+X-Gm-Message-State: AOJu0YwmUfrpA19VVPnTCZV7ovvtoNGGE0bhKqcUqSxv0I/B/iIHCpZ+
+ 3F1R3xzFFLfCMVWH9pZ7Pl2uM1yLntyQe367nd9NxKM0Mw5E0ZhkS+mYOiR5PQ0=
+X-Gm-Gg: ASbGncs8JrLhYOqIEDYQRlIEO/3cZubNX//W32CKbYFoFOLCAFhmUmmK8kaoCmffN56
+ v5ny8DgKmGLf+bRCGZL5voutVUyrqXCyEW+nEt9tmVgjmCmmcLB/llORoTObzQHjBl5h0NZPsu1
+ tbB9odrCRfD3VGm8y8iUmrvMdAbmY+iF2Jpo9p68/LBAWIbvsiJGAGbf4pJ5db+vxVHzQM7yeGn
+ cgPG9T+uCFxaS9nG0ke6bb969ZII9KxWQkIjKwXMb67KrRkdKVEJvmGc+WeZ4g1d+bSFUf/0GHx
+ cG4BZJB7ls+Zbgb13Zw7NA==
+X-Google-Smtp-Source: AGHT+IHfKFy0UY9YsNggL4y6mPFU5avJNxoMrc4oYr4zLuji8cVJfqC+fQXNTwcGtzcRKllDJ0O+Ag==
+X-Received: by 2002:a17:902:dac8:b0:215:a190:ba10 with SMTP id
+ d9443c01a7336-215bd0c2a98mr53150935ad.15.1733257925993; 
+ Tue, 03 Dec 2024 12:32:05 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2152191ba31sm99459185ad.110.2024.12.03.12.32.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 12:28:22 -0800 (PST)
-Message-ID: <2ee450df-b06c-420a-9e52-44b781423c6f@oss.qualcomm.com>
-Date: Tue, 3 Dec 2024 14:28:20 -0600
+ Tue, 03 Dec 2024 12:32:05 -0800 (PST)
+Message-ID: <bdefc0ac-311b-4820-913f-e21d753890fa@linaro.org>
+Date: Tue, 3 Dec 2024 12:32:04 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 36/43] target/hexagon: Add temporary vector storage
-To: Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com,
- bcain@quicinc.com, philmd@linaro.org, alex.bennee@linaro.org
-References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-37-anjo@rev.ng>
- <eaf906e2-3973-466b-8a2e-f7749e844968@linaro.org>
- <gcp5xcypulziy2ixslvsiekwidedztxydvypyc6faz2ssbzx2i@ibcmjqjzgxwp>
+Subject: Re: [PATCH 6/7] docs: add a glossary
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <gcp5xcypulziy2ixslvsiekwidedztxydvypyc6faz2ssbzx2i@ibcmjqjzgxwp>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ alex.bennee@linaro.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-arm@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
+ manos.pitsidianakis@linaro.org, qemu-block@nongnu.org,
+ Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk
+ <kkostiuk@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, gustavo.romero@linaro.org
+References: <20241118172357.475281-1-pierrick.bouvier@linaro.org>
+ <20241118172357.475281-7-pierrick.bouvier@linaro.org>
+ <CAFEAcA9JdLxi5cr-Z2-YX6Q8nv=j0O3k=f9u6gS-CzSf5BH7Ug@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA9JdLxi5cr-Z2-YX6Q8nv=j0O3k=f9u6gS-CzSf5BH7Ug@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: N_extQEE55JJAyIL9tSx3kMODumM06Wg
-X-Proofpoint-GUID: N_extQEE55JJAyIL9tSx3kMODumM06Wg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 lowpriorityscore=0
- mlxlogscore=999 clxscore=1011 phishscore=0 adultscore=0 suspectscore=0
- malwarescore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412030169
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,56 +115,551 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/3/24 09:37, Peter Maydell wrote:
+> On Mon, 18 Nov 2024 at 17:24, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   docs/devel/control-flow-integrity.rst |   2 +
+>>   docs/devel/multi-thread-tcg.rst       |   2 +
+>>   docs/glossary/index.rst               | 238 ++++++++++++++++++++++++++
+>>   docs/index.rst                        |   1 +
+>>   docs/system/arm/virt.rst              |   2 +
+>>   docs/system/images.rst                |   2 +
+>>   docs/tools/qemu-nbd.rst               |   2 +
+>>   7 files changed, 249 insertions(+)
+>>   create mode 100644 docs/glossary/index.rst
+> 
+> I think this is a good idea; we've had at least one bug
+> report from a user pointing out that we had a term in
+> our docs which we didn't define ("block driver"):
+> https://gitlab.com/qemu-project/qemu/-/issues/2611
+> I have some comments on specific entries below.
+> 
 
-On 12/3/2024 12:56 PM, Anton Johansson via wrote:
-> On 22/11/24, Richard Henderson wrote:
->> On 11/20/24 19:49, Anton Johansson wrote:
->>> Temporary vectors in helper-to-tcg generated code are allocated from an
->>> array of bytes in CPUArchState, specified with --temp-vector-block.
->>>
->>> This commits adds such a block of memory to CPUArchState, if
->>> CONFIG_HELPER_TO_TCG is set.
->>>
->>> Signed-off-by: Anton Johansson <anjo@rev.ng>
->>> ---
->>>    target/hexagon/cpu.h | 4 ++++
->>>    1 file changed, 4 insertions(+)
->>>
->>> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
->>> index 7be4b5769e..fa6ac83e01 100644
->>> --- a/target/hexagon/cpu.h
->>> +++ b/target/hexagon/cpu.h
->>> @@ -97,6 +97,10 @@ typedef struct CPUArchState {
->>>        MMVector future_VRegs[VECTOR_TEMPS_MAX] QEMU_ALIGNED(16);
->>>        MMVector tmp_VRegs[VECTOR_TEMPS_MAX] QEMU_ALIGNED(16);
->>> +#ifdef CONFIG_HELPER_TO_TCG
->>> +    uint8_t tmp_vmem[4096] QEMU_ALIGNED(16);
->>> +#endif
->>> +
->>>        MMQReg QRegs[NUM_QREGS] QEMU_ALIGNED(16);
->>>        MMQReg future_QRegs[NUM_QREGS] QEMU_ALIGNED(16);
->> Wow.  Do you really require 4k in temp storage?
-> No, 4k is overkill used during testing.  But consider that Hexagon uses
-> 128- and 256-byte vectors in some cases so if the emitted code uses say
-> 5 temporaries in its computation we end up at 1280 bytes as an upper
-> bound.
+And people can be free to add new entries later. However, we should 
+resist the temptation to add too many details. It should stay simple and 
+understandable, even if not all technical nuances are not represented.
 
-Per-packet there should be a maximum of one temporary.  But per-TB it's 
-unbound.  Could we/should we have some guidance to put the brakes on 
-translation early if we encounter ~N temp references?
+>> diff --git a/docs/devel/control-flow-integrity.rst b/docs/devel/control-flow-integrity.rst
+>> index e6b73a4fe1a..3d5702fa4cc 100644
+>> --- a/docs/devel/control-flow-integrity.rst
+>> +++ b/docs/devel/control-flow-integrity.rst
+>> @@ -1,3 +1,5 @@
+>> +.. _cfi:
+>> +
+>>   ============================
+>>   Control-Flow Integrity (CFI)
+>>   ============================
+>> diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread-tcg.rst
+>> index d706c27ea74..7fd0a07633d 100644
+>> --- a/docs/devel/multi-thread-tcg.rst
+>> +++ b/docs/devel/multi-thread-tcg.rst
+>> @@ -4,6 +4,8 @@
+>>     This work is licensed under the terms of the GNU GPL, version 2 or
+>>     later. See the COPYING file in the top-level directory.
+>>
+>> +.. _mttcg:
+>> +
+>>   ==================
+>>   Multi-threaded TCG
+>>   ==================
+>> diff --git a/docs/glossary/index.rst b/docs/glossary/index.rst
+>> new file mode 100644
+>> index 00000000000..a2d4f3eae16
+>> --- /dev/null
+>> +++ b/docs/glossary/index.rst
+> 
+> I guess it makes sense to give this its own subdir, since we want
+> it to come at the end of the manual. The other option would be
+> to put it directly into docs/.
+> 
 
-But maybe that's not needed since the temp space can be reused within a 
-TB among packets.
+ From your comment, it's not clear for me if it's ok as it is, or if you 
+want a change.
+Can you elaborate on that?
 
->
-> Two ideas here, we can:
->
->    1. Allow users to specify an upper bound on vector memory, and abort
->       translation of helpers that surpass this, and;
->
->    2. Emit maximum number of bytes used for vector temporaries to a
->       macro.
->
-> //Anton
->
+>> @@ -0,0 +1,238 @@
+>> +.. _Glossary:
+>> +
+>> +--------
+>> +Glossary
+>> +--------
+>> +
+>> +This section of the manual presents *simply* acronyms and terms QEMU developers
+>> +use.
+> 
+> What's "simply" intended to mean here?
+> 
+
+"in a straightforward or plain manner".
+I can remove this word if you think it does not serve any purpose.
+
+>> +
+>> +Accelerator
+>> +-----------
+>> +
+>> +A specific API used to accelerate execution of guest instructions. It can be
+>> +hardware-based, through a virtualization API provided by the host OS (kvm, hvf,
+>> +whpx, ...) or software-based (tcg). See this description of `supported
+> 
+> Comma after ')'.
+> 
+
+Thanks.
+
+>> +accelerators<Accelerators>`.
+>> +
+>> +Board
+>> +-----
+> 
+> I think the correct term here is "machine" -- that's what the
+> command line option is named, it's what the QOM class is, etc.
+> So the major glossary entry should be "Machine". Some people
+> (including me!) and some of the documentation uses "board" as a
+> synonym for "machine", so we should have a glossary entry for
+> "board", but it should just say "Another name for 'machine'" and
+> xref to the "machine" entry.
+> 
+
+It's a good point. I thought the same when I wrote it (and finally chose 
+Board). I'll rename it to machine and add the board entry to point to it.
+
+>> +
+>> +QEMU system defines board models for various architectures. It's a description
+>> +of a SoC (system-on-chip) with various devices pre-configured, and can be
+>> +selected with the option ``-machine`` of qemu-system.
+> 
+> SoCs are not the same as boards.
+> 
+> We could say something like:
+> 
+> QEMU's system emulation models many different types of hardware.
+> A machine model (sometimes called a board model) is the model
+> of a complete virtual system with RAM, one or more CPUs, and
+> various devices.
+> 
+> We could also put in a link to
+> https://www.qemu.org/docs/master/system/targets.html
+> which is where we document what our machine types are.
+> 
+
+How do you distinguish a SoC and cpu? Is a SoC cpu + devices?
+Isn't a board/machine a set of SoC + devices attached?
+
+The definition does not say a board is a SoC, but maybe the wording is 
+confusing.
+
+>> +For virtual machines, you'll use ``virt`` board model, designed for this use
+>> +case. As an example, for Arm architecture, you can find the `model code
+>> +<https://gitlab.com/qemu-project/qemu/-/blob/master/hw/arm/virt.c>`_ and
+>> +associated `documentation <arm-virt>`.
+> 
+> I think I would delete this paragraph. 'virt' is only the
+> board type for virtual machines for some architectures; on
+> x86 it doesn't exist for, example. Our user facing
+> docs (that link above) are where we should suggest what
+> the best machine type to use is. And the codebase-guide
+> page is where we would say where machine type source code is.
+> 
+
+Ok.
+
+>> +
+>> +Block
+>> +-----
+>> +
+>> +Block drivers are the available `disk formats <block-drivers>` available, and
+>> +block devices `(see Block device section on options page)<sec_005finvocation>`
+>> +are using them to implement disks for a virtual machine.
+> 
+> Block drivers aren't just disk formats; there are some filter
+> drivers too. Somebody on the block side could probably
+> provide a better definition here.
+> 
+
+I'm open to a more exact definition. The two terms (drivers and devices) 
+seem to overlap on some parts, so I came up with this trivial definition.
+
+>> +
+>> +CFI
+>> +---
+>> +
+>> +Control Flow Integrity is a hardening technique used to prevent exploits
+>> +targeting QEMU by detecting unexpected branches during execution. QEMU `actively
+>> +supports<cfi>` being compiled with CFI enabled.
+>> +
+>> +Device
+>> +------
+>> +
+>> +QEMU is able to emulate a CPU, and all the hardware interacting with it,
+>> +including many devices. When QEMU runs a virtual machine using a hardware-based
+>> +accelerator, it is responsible for emulating, using software, all devices.
+> 
+> This definition doesn't actually define what a device is :-)
+> 
+
+Indeed :)
+Should we explain what is a computer device?
+The goal was just to say that QEMU can emulate hardware interacting with 
+the cpu, which could be a possible definition. So people can associate 
+that QEMU devices are nothing else than a "normal" computer device.
+
+>> +
+>> +EDK2
+>> +----
+>> +
+>> +EDK2, as known as `TianoCore <https://www.tianocore.org/>`_, is an open source
+>> +implementation of UEFI standard. It's ran by QEMU to support UEFI for virtual
+>> +machines.
+> 
+> Replace last sentence with
+> "QEMU virtual machines that boot a UEFI BIOS usually use EDK2."
+> ?
+> 
+>> +
+>> +gdbstub
+>> +-------
+>> +
+>> +QEMU implements a `gdb server <GDB usage>`, allowing gdb to attach to it and
+>> +debug a running virtual machine, or a program in user-mode. This allows to debug
+>> +a given architecture without having access to hardware.
+> 
+> "allows debugging the guest code that is running inside QEMU."
+> 
+>> +
+>> +glib2
+>> +-----
+>> +
+>> +`GLib2 <https://docs.gtk.org/glib/>`_ is one of the most important library we
+> 
+> "libraries"
+> 
+>> +are using through the codebase. It provides many data structures, macros, string
+>> +and thread utilities and portable functions across different OS. It's required
+>> +to build QEMU.
+>> +
+>> +Guest agent
+>> +-----------
+>> +
+>> +`QEMU Guest agent <qemu-ga>` is a daemon intended to be executed by guest
+> 
+> "The QEMU Guest Agent"
+> 
+> "intended to be run within virtual machines. It provides various services"
+> 
+>> +virtual machines and providing various services to help QEMU to interact with
+>> +it.
+>> +
+>> +Guest/Host
+>> +----------
+> 
+> Make these two separate glossary entries, which cross reference each other.
+> 
+>> +
+>> +Guest is the architecture of the virtual machine, which is emulated.
+> 
+> "Sometimes this is called the 'target' architecture, but that term
+> can be ambiguous."
+> 
+>> +Host is the architecture on which QEMU is running on, which is native.
+> 
+> 
+> We could also have an entry for Target
+> 
+>   The term "target" can be ambiguous. In most places in QEMU it is used
+>   as a synonym for "guest"; for example the code for emulating Arm CPUs
+>   is in ``target/arm/``. However in the TCG subsystem "target" refers
+>   to the architecture which QEMU is running on, i.e. the "host".
+> 
+
+It's a good point, and a very confusing one.
+I'll add it and a link to docs/devel/tcg-ops.rst, that clarifies this 
+for TCG.
+
+> 
+>> +
+>> +Hypervisor
+>> +----------
+>> +
+>> +The formal definition of an hypervisor is a program than can be used to manage a
+>> +virtual machine. QEMU itself is an hypervisor.
+> 
+> "a hypervisor". QEMU isn't really a hypervisor, though...
+> 
+
+It's a shortcut, and I'm open to change it. It brings an interesting 
+question though.
+
+Technically, QEMU interacts with hypervisor APIs built in various OSes. 
+On the other hand, when we use TCG, it's an emulator instead.
+
+But as you can't use KVM/hvf/whpx by itself, how do you name the program 
+interacting with it, and emulating the rest of the VM?
+
+The correct word is probably "virtualizer", but from searching on 
+Internet, it seems that "vmm" and "virtualizer" are considered the same 
+as an "hypervisor". The difference is subtle, and maybe we have an 
+opportunity here to clarify it.
+
+> 
+>> +
+>> +In the context of QEMU, an hypervisor is an API, provided by the Host OS,
+>> +allowing to execute virtual machines. Linux implementation is KVM (and supports
+>> +Xen as well). For MacOS, it's HVF. Windows defines WHPX. And NetBSD provides
+>> +NVMM.
+>> +
+>> +Migration
+>> +---------
+>> +
+>> +QEMU can save and restore the execution of a virtual machine, including across
+>> +different machines. This is provided by the `Migration framework<migration>`.
+> 
+> "between different host systems".
+> 
+>> +
+>> +NBD
+>> +---
+>> +
+>> +`QEMU Network Block Device server <qemu-nbd>` is a tool that can be used to
+> 
+> "The QEMU ..."
+> 
+>> +mount and access QEMU images, providing functionality similar to a loop device.
+>> +
+>> +Mailing List
+>> +------------
+>> +
+>> +This is `where <https://wiki.qemu.org/Contribute/MailingLists>`_ all the
+>> +development happens! Changes are posted as series, that all developers can
+>> +review and share feedback for.
+>> +
+>> +For reporting issues, our `GitLab
+>> +<https://gitlab.com/qemu-project/qemu/-/issues>`_ tracker is the best place.
+>> +
+>> +MMU / softmmu
+>> +-------------
+>> +
+>> +The Memory Management Unit is responsible for translating virtual addresses to
+>> +physical addresses and managing memory protection. QEMU system mode is named
+>> +"softmmu" precisely because it implements this in software, including a TLB
+>> +(Translation lookaside buffer), for the guest virtual machine.
+>> +
+>> +QEMU user-mode does not implement a full software MMU, but "simply" translates
+>> +virtual addresses by adding a specific offset, and relying on host MMU/OS
+>> +instead.
+>> +
+>> +Monitor / QMP / HMP
+>> +-------------------
+>> +
+>> +`QEMU Monitor <QEMU monitor>` is a text interface which can be used to interact
+> 
+> "The QEMU Monitor"
+> 
+>> +with a running virtual machine.
+>> +
+>> +QMP stands for QEMU Monitor Protocol and is a json based interface.
+>> +HMP stands for Human Monitor Protocol and is a set of text commands available
+>> +for users who prefer natural language to json.
+>> +
+>> +MTTCG
+>> +-----
+>> +
+>> +Multiple cpus support was first implemented using a round-robin algorithm
+> 
+> "Multiple CPU support"
+> 
+>> +running on a single thread. Later on, `Multi-threaded TCG <mttcg>` was developed
+>> +to benefit from multiple cores to speed up execution.
+>> +
+>> +Plugins
+>> +-------
+>> +
+>> +`TCG Plugins <TCG Plugins>` is an API used to instrument guest code, in system
+>> +and user mode. The end goal is to have a similar set of functionality compared
+>> +to `DynamoRIO <https://dynamorio.org/>`_ or `valgrind <https://valgrind.org/>`_.
+>> +
+>> +One key advantage of QEMU plugins is that they can be used to perform
+>> +architecture agnostic instrumentation.
+>> +
+>> +Patchwork
+>> +---------
+>> +
+>> +`Patchwork <https://patchew.org/QEMU/>`_ is a website that tracks
+>> +patches on the Mailing List.
+> 
+> Patchwork and patchew are different systems. Patchew's URL is
+> https://patchew.org/QEMU/
+> 
+> (There is a patchwork instance that tracks qemu-devel patches,
+> at https://patchwork.kernel.org/project/qemu-devel/list/ , but
+> I'm not aware of any developers that are actively using it, so
+> I don't think it merits being mentioned in the glossary.)
+> 
+
+I've been confused by that, and just thought it was two different 
+instances (fork me if you can) of the "same" thing.
+How would you define patchew?
+When we say patchwork, do we implicitely mean patchew?
+
+if I understand currently, patchew is what we want to mention in our 
+doc? (and mention it's not associated to patchwork).
+
+>> +
+>> +PR
+>> +--
+>> +
+>> +Once a series is reviewed and accepted by a subsystem maintainer, it will be
+>> +included in a PR (Pull Request) that the project maintainer will merge into QEMU
+>> +main branch, after running tests.
+> 
+> I think we could probably also usefully say
+> 
+> "The QEMU project doesn't currently expect most developers to
+> directly submit pull requests."
+> 
+> just to flag up that our development model isn't like the
+> currently-popular github/gitlab one where a PR is how you
+> send contributions.
+> 
+
+This is interesting.
+
+For the majority of developers nowadays, a PR is a GitHub/GitLab PR.
+Despite the fact we use the original PR meaning (in git terms), it's 
+probably confusing when new comers hear pull request.
+
+>> +
+>> +QCOW
+>> +----
+>> +
+>> +QEMU Copy On Write is a disk format developed by QEMU. It provides transparent
+>> +compression, automatic extension, and many other advantages over a raw image.
+> 
+> We want to be a bit careful here, because the "qcow" format
+> is not something we recommend for new use -- "qcow2" is what
+> you actually want.
+> 
+> https://www.qemu.org/docs/master/system/qemu-block-drivers.html#cmdoption-image-formats-arg-qcow2
+> 
+
+Sounds good.
+
+For my personal knowledge: during this work I discovered that we had 
+qcow3. From what I understood, it seems to be included in what we called 
+qcow2 today. Is that correct?
+
+>> +
+>> +QEMU
+>> +----
+>> +
+>> +`QEMU (Quick Emulator) <https://www.qemu.org/>`_ is a generic and open source
+>> +machine emulator and virtualizer.
+>> +
+>> +QOM
+>> +---
+>> +
+>> +`QEMU Object Model <qom>` is an object oriented API used to define various
+>> +devices and hardware in the QEMU codebase.
+>> +
+>> +Record/replay
+>> +-------------
+>> +
+>> +`Record/replay <replay>` is a feature of QEMU allowing to have a deterministic
+>> +and reproducible execution of a virtual machine.
+>> +
+>> +Rust
+>> +----
+>> +
+>> +`A new programming language <https://www.rust-lang.org/>`_, memory safe by
+>> +default. We didn't see a more efficient way to create debates and tensions in
+>> +a community of C programmers since the birth of C++.
+> 
+> :-)  but I think we should probably avoid the joke in our docs.
+> 
+
+I had one smile, I'm happy to remove it now :).
+
+More seriously, I can complete after "memory safe by default", "The QEMU 
+community is currently working to integrate Rust in the codebase for 
+various subsystems".
+
+>> +
+>> +System mode
+>> +-----------
+>> +
+>> +QEMU System mode emulates a full machine, including its cpu, memory and devices.
+>> +It can be accelerated to hardware speed by using one of the hypervisors QEMU
+>> +supports. It is referenced as softmmu as well.
+> 
+> https://www.qemu.org/docs/master/about/index.html already has
+> text defining system emulation and user emulation, so we don't
+> really need to re-invent new phrasing for those here.
+> 
+
+I can repeat the definition we have there:
+"System Emulation provides a virtual model of an entire machine (CPU, 
+memory and emulated devices) to run a guest OS. In this mode the CPU may 
+be fully emulated, or it may work with a hypervisor such as KVM, Xen or 
+Hypervisor.Framework to allow the guest to run directly on the host CPU."
+
+However, I think mentioning softmmu is important, as it's a common 
+confusing name (to the new comer) coming from target list.
+
+>> +
+>> +TCG
+>> +---
+>> +
+>> +`Tiny Code Generator <tcg>` is an intermediate representation (IR) used to run
+>> +guest instructions on host cpu, with both architectures possibly being
+>> +different.
+> 
+> I would say
+> 
+>    TCG is the QEMU Tiny Code Generator; it is the JIT system we use
+>    to emulate a guest CPU in software.
+> 
+> That's enough for users to understand what it means (I hope); if
+> they want to know more specifics like about the intermediate
+> representation they can follow the link.
+> 
+
+I'm ok with your definition, TCG is wider than the IR we use.
+
+>> +
+>> +It is one of the accelerator supported by QEMU, and supports a lot of
+> 
+> "accelerators"
+> 
+>> +guest/host architectures.
+>> +
+>> +User mode
+>> +---------
+>> +
+>> +QEMU User mode allows to run programs for a guest architecture, on a host
+>> +architecture, by translating system calls and using TCG. It is available for
+>> +Linux and BSD.
+>> +
+>> +VirtIO
+>> +------
+>> +
+>> +VirtIO is an open standard used to define and implement virtual devices with a
+>> +minimal overhead, defining a set of data structures and hypercalls (similar to
+>> +system calls, but targeting an hypervisor, which happens to be QEMU in our
+>> +case). It's designed to be more efficient than emulating a real device, by
+>> +minimizing the amount of interactions between a guest VM and its hypervisor.
+>> +
+>> +vhost-user
+>> +----------
+>> +
+>> +`Vhost-user <vhost_user>` is an interface used to implement VirtIO devices
+>> +outside of QEMU itself.
+> 
+> thanks
+> -- PMM
+
+Thanks for your review Peter!
+
+Pierrick
 
