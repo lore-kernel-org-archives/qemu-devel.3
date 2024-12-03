@@ -4,69 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B09F5D7833F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 09:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36A55D7833F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 09:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIPUz-0004CI-Ez; Tue, 03 Dec 2024 04:47:17 -0500
+	id 1tIPc0-0005Q8-97; Tue, 03 Dec 2024 04:54:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1tIPUw-0004Bp-H1
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:47:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tIPby-0005Pr-Cz
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:54:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1tIPUu-0005Y4-U6
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:47:14 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tIPbw-0006QZ-Rw
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 04:54:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733219230;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=wQuV7vfBKaxksYeKbeM94kD1z8a+EjnT3WNfjoz/Bc8=;
- b=SIk8tWXQINKCR2ctK7NrHDayxR6LjFAMZU/9nNpseM97uGNVwII/pocF5nBnebGH5Bzi6g
- 3osXZXVjZu6s4vyNgcKjv47sANG4wjdLHWTdWJ6fr4kCyRskVLOAgZ8Kfp7xMx7wWjq/mx
- bMf0zuaanS9eqRy2e93Psgn7NG4AeO8=
+ s=mimecast20190719; t=1733219667;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=l3VcSU2FOCO6z2TK0iPyybiLDyV7PIhM+xSHQeNdxLM=;
+ b=Kfp5pq/z9Und/9eafakMYKJVASJ+fPNjrrVG40srUvIQu3atY6J96teyAX1Dx68LfD9DpT
+ ykSHo6VdtPKcWSLwdvfEB4wr3Xp6VAmPhSBGB5AzFDog59N+RADYBln9P6TlDqG3Jha48c
+ BxOHw1mHJOFydiIqpw6B5UaRkcKXRFc=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-YvfOMC2aPeGrTc9rJGWn9w-1; Tue,
- 03 Dec 2024 04:47:08 -0500
-X-MC-Unique: YvfOMC2aPeGrTc9rJGWn9w-1
-X-Mimecast-MFC-AGG-ID: YvfOMC2aPeGrTc9rJGWn9w
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-19-YxXr4IOQPeeG_3ecYmygPg-1; Tue,
+ 03 Dec 2024 04:54:22 -0500
+X-MC-Unique: YxXr4IOQPeeG_3ecYmygPg-1
+X-Mimecast-MFC-AGG-ID: YxXr4IOQPeeG_3ecYmygPg
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 221511944DC5; Tue,  3 Dec 2024 09:47:07 +0000 (UTC)
-Received: from harajuku.usersys.redhat.com.homenet.telecomitalia.it (unknown
- [10.45.226.31])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CDD030000DF; Tue,  3 Dec 2024 09:47:04 +0000 (UTC)
-From: Andrea Bolognani <abologna@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- David Abdurachmanov <davidlt@rivosinc.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] binfmt: Don't consider riscv{32,64} part of the same family
-Date: Tue,  3 Dec 2024 10:47:02 +0100
-Message-ID: <20241203094702.124748-1-abologna@redhat.com>
+ id 95DD5195608A; Tue,  3 Dec 2024 09:54:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.37])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39021195608A; Tue,  3 Dec 2024 09:54:18 +0000 (UTC)
+Date: Tue, 3 Dec 2024 09:54:15 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 7/7] qemu-options: Remove mentions of legacy '-machine
+ foo,accel=bar'
+Message-ID: <Z07VR-YvVCxdTua_@redhat.com>
+References: <20241203092153.60590-1-philmd@linaro.org>
+ <20241203092153.60590-8-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=abologna@redhat.com;
+In-Reply-To: <20241203092153.60590-8-philmd@linaro.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,60 +89,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the script won't generate a configuration file that
-sets up qemu-user-riscv32 on riscv64, likely under the
-assumption that 64-bit RISC-V machines can natively run 32-bit
-RISC-V code.
+On Tue, Dec 03, 2024 at 10:21:53AM +0100, Philippe Mathieu-Daudé wrote:
+> Since commit 6f6e1698a68 ("vl: configure accelerators from -accel
+> options") we prefer the '-accel bar' command line option.
+> 
+> The new form started to be documented in commit 8d4e9146b35 ("tcg:
+> add options for enabling MTTCG"); it is safe to remove the mentions
+> of the legacy option.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  qemu-options.hx | 9 ---------
+>  1 file changed, 9 deletions(-)
+> 
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index dacc9790a4b..11f0aab1470 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -27,8 +27,6 @@ ERST
+>  DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+>      "-machine [type=]name[,prop[=value][,...]]\n"
+>      "                selects emulated machine ('-machine help' for list)\n"
+> -    "                property accel=accel1[:accel2[:...]] selects accelerator\n"
+> -    "                supported accelerators are kvm, xen, hvf, nvmm, whpx or tcg (default: tcg)\n"
+>      "                vmport=on|off|auto controls emulation of vmport (default: auto)\n"
+>      "                dump-guest-core=on|off include guest memory in a core dump (default=on)\n"
+>      "                mem-merge=on|off controls memory merge support (default: on)\n"
+> @@ -59,13 +57,6 @@ SRST
+>  
+>      Supported machine properties are:
+>  
+> -    ``accel=accels1[:accels2[:...]]``
+> -        This is used to enable an accelerator. Depending on the target
+> -        architecture, kvm, xen, hvf, nvmm, whpx or tcg can be available.
+> -        By default, tcg is used. If there is more than one accelerator
+> -        specified, the next one is used if the previous one fails to
+> -        initialize.
+> -
 
-However this functionality, while theoretically possible, in
-practice is missing from most commonly available RISC-V hardware
-and not enabled at the distro level. So qemu-user-riscv32 really
-is the only option to run riscv32 binaries on riscv64.
+I'm not convinced we should be removing documentation for options that
+currently exist and remain supported.
 
-Make riscv32 and riscv64 each its own family, so that the
-configuration file we need to make 32-on-64 userspace emulation
-work gets generated.
+The documentation should be updated to say that we prefer use of '-accel'
+instead at least.
 
-Link: https://src.fedoraproject.org/rpms/qemu/pull-request/72
-Thanks: David Abdurachmanov <davidlt@rivosinc.com>
-Thanks: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Andrea Bolognani <abologna@redhat.com>
----
- scripts/qemu-binfmt-conf.sh | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Beyond that, what is our long term intention with '-machine accel=xxx' ?
 
-diff --git a/scripts/qemu-binfmt-conf.sh b/scripts/qemu-binfmt-conf.sh
-index 6ef9f118d9..e38b767c24 100755
---- a/scripts/qemu-binfmt-conf.sh
-+++ b/scripts/qemu-binfmt-conf.sh
-@@ -110,11 +110,11 @@ hppa_family=hppa
- 
- riscv32_magic='\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'
- riscv32_mask='\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
--riscv32_family=riscv
-+riscv32_family=riscv32
- 
- riscv64_magic='\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'
- riscv64_mask='\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
--riscv64_family=riscv
-+riscv64_family=riscv64
- 
- xtensa_magic='\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x5e\x00'
- xtensa_mask='\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'
-@@ -168,9 +168,6 @@ qemu_get_family() {
-     sparc*)
-         echo "sparc"
-         ;;
--    riscv*)
--        echo "riscv"
--        ;;
-     loongarch*)
-         echo "loongarch"
-         ;;
+Is this a case where we are happy to leave '-machine accel=' as syntax
+sugar forever ?  Or is this a case where we want to deprecate it and
+eventually remove its impl (and thus the documention here)
+
+>      ``vmport=on|off|auto``
+>          Enables emulation of VMWare IO port, for vmmouse etc. auto says
+>          to select the value based on accel and i8042. For accel=xen or
+> -- 
+> 2.45.2
+> 
+
+With regards,
+Daniel
 -- 
-2.47.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
