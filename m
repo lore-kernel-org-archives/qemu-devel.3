@@ -4,54 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03344E74ACF
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA580E74ACF
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 20:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIZG1-0000wr-Ah; Tue, 03 Dec 2024 15:12:30 -0500
+	id 1tIZGu-0001j7-Ga; Tue, 03 Dec 2024 15:13:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIZFx-0000wU-JB
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:12:25 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tIZGs-0001iQ-JY
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:13:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIZFu-00042E-3P
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:12:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
- :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=/J0JMvaTWmaVrQLGSJf5Fi9XlogJsqUxyO7OgljwyNQ=; b=nJ7hdeInilRycMN
- 4xQAbjJj/9zKd8HfUMdLXatD4EfU4xipO6seYRccBy3jPKlkhbAQGPSI+XSMzCNUxm3+64MquqX+K
- E+NMTpzXlbvzvPQ155+0CNsLr7GtfxglWcJxrYv70Cdwr4FJEEU7mBLLxmaIQe4zuREyi0PcbPl1g
- RY=;
-Date: Tue, 3 Dec 2024 21:15:23 +0100
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, 
- bcain@quicinc.com, philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [RFC PATCH v1 03/43] accel/tcg: Add gvec size changing operations
-Message-ID: <kxrtubx3f4yyzhlzzpgvuqvvutcbu3fclo3pgigjgpaauhxkfm@uvvdaentlh43>
-References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-4-anjo@rev.ng>
- <b2986b74-2c74-491b-90a1-9ec79367c2e8@linaro.org>
- <v5pkpmxto7vtshg7a5mifaozrzn6n5d7raknvydad3oxk67jeu@i4jydb4wylpb>
- <e4910c71-8220-404b-bb43-0b885914e183@linaro.org>
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tIZGq-0004C5-Jk
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 15:13:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733256796;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=baFhHHqQ78cO1EQshAvl0BS04HctJYE7yUT0FUl0jHw=;
+ b=arUT4FTr5F9Hn3DRMIKLx1ce16boEENfPmPSZCWVT6bniNsh8CV3hQx9tkgcqs76syhwCv
+ 1GfcGZ8blCeRlx5b/EmKkz5yHjbyxSf5tHkT9el5ZkMDlUfHzYnj3Ytx1tLMAu098/XYC9
+ 7KWklC6rLPZEmp3zOs7kPPTLecBdia0=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-599-4RaqFQtaNweL1FS5CoXH0g-1; Tue, 03 Dec 2024 15:12:08 -0500
+X-MC-Unique: 4RaqFQtaNweL1FS5CoXH0g-1
+X-Mimecast-MFC-AGG-ID: 4RaqFQtaNweL1FS5CoXH0g
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-83b7cce903cso25850639f.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 12:12:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733256727; x=1733861527;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=baFhHHqQ78cO1EQshAvl0BS04HctJYE7yUT0FUl0jHw=;
+ b=BMEybv9O7G8sE24T4iqjOlCh2YynvjfIfjXQLAd0BZzMXAoOiTMFSFOW+4SLyGLwyi
+ rPmPEPe2DO9Mkp0vVMaLEwiOaoDHS1REuyOBXaVOHObhdOnZgluDlpduejB/fIrrUbGR
+ AYxBOyzxL+SSNG8GoPwsmSyQbZDy5FwULq5ZBAONVDouSU+FQHOa6QBJkobOnOIyVBsU
+ sdZ5cHIEoLux+RfUnunVhf49/fQM7DN1yw6opq4yv/X9LIYv13Exafo6ZeCDOu7lxe8E
+ 0OPF9N805siXaDX0PaJLv6XtT6XZFyDMJyxmRHPH2oz8Ew8x3DAEFBSMxSfFAF/GoSKU
+ jIiw==
+X-Gm-Message-State: AOJu0YykzljgilVSk3Urr85ZbRpXHywezElrpXw3xt1RYJWSJwoPVWS5
+ Ao+obZfTEFbgyFCJHzBoyflW3aOFwymr4mkkzjEZ3gO+DHqaoqZVeQDoDg2bsFpWPZ3sewG5pfF
+ mFc/heK59mJWIK+fSeOuBRClBxvRJ4aW1CxzQsTjP7hAfTdHhmicK
+X-Gm-Gg: ASbGncsaB5aJ1ko/y3kRb6ASBiMKfVdiU0ik3MlWso9fgy2c/Kg7HUpew7R9ujXM8Dt
+ pXbM7tFuUcVGH6d8Cy6O58z9t587Y8zf+cNPj0BPfwKqZHp89rLQnHs03zCotbL2ceZHakaMK/M
+ s0qKby1QFXCNaLuQ2/AaJZbEeJI5T9dcNDs/1/bZESxOv9vnM5GsGdlk206anJ9BpOrjdyzTSuA
+ mBikzEYsZIHsfw22wXdg1NvQZ9WLIOU2p9r03RbTOJV0DovC5SUpg==
+X-Received: by 2002:a05:6e02:12ea:b0:3a7:e23c:d86c with SMTP id
+ e9e14a558f8ab-3a7f9ab0d08mr10373115ab.6.1733256727439; 
+ Tue, 03 Dec 2024 12:12:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH2dKY09oMwEtvnWMrgJUgXN8pfgTZyjhpRX+/q1ljN9mysYi1XRYm5irBMlCMJyZzhuyLSkQ==
+X-Received: by 2002:a05:6e02:12ea:b0:3a7:e23c:d86c with SMTP id
+ e9e14a558f8ab-3a7f9ab0d08mr10373045ab.6.1733256727030; 
+ Tue, 03 Dec 2024 12:12:07 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e230e77c42sm2689015173.133.2024.12.03.12.12.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Dec 2024 12:12:06 -0800 (PST)
+Date: Tue, 3 Dec 2024 13:12:05 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
+ <clg@redhat.com>, Corvin =?UTF-8?B?S8O2aG5l?= <c.koehne@beckhoff.com>
+Subject: Re: [PATCH v2 0/9] vfio/igd: Enable legacy mode on more devices
+Message-ID: <20241203131205.1391d69a.alex.williamson@redhat.com>
+In-Reply-To: <20241203133548.38252-1-tomitamoeko@gmail.com>
+References: <20241203133548.38252-1-tomitamoeko@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e4910c71-8220-404b-bb43-0b885914e183@linaro.org>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,149 +105,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/12/24, Richard Henderson wrote:
-> On 12/3/24 12:08, Anton Johansson wrote:
-> > On 22/11/24, Richard Henderson wrote:
-> > > On 11/20/24 19:49, Anton Johansson wrote:
-> > > > Adds new functions to the gvec API for truncating, sign- or zero
-> > > > extending vector elements.  Currently implemented as helper functions,
-> > > > these may be mapped onto host vector instructions in the future.
-> > > > 
-> > > > For the time being, allows translation of more complicated vector
-> > > > instructions by helper-to-tcg.
-> > > > 
-> > > > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > > > ---
-> > > >    accel/tcg/tcg-runtime-gvec.c     | 41 +++++++++++++++++
-> > > >    accel/tcg/tcg-runtime.h          | 22 +++++++++
-> > > >    include/tcg/tcg-op-gvec-common.h | 18 ++++++++
-> > > >    tcg/tcg-op-gvec.c                | 78 ++++++++++++++++++++++++++++++++
-> > > >    4 files changed, 159 insertions(+)
-> > > > 
-> > > > diff --git a/accel/tcg/tcg-runtime-gvec.c b/accel/tcg/tcg-runtime-gvec.c
-> > > > index afca89baa1..685c991e6a 100644
-> > > > --- a/accel/tcg/tcg-runtime-gvec.c
-> > > > +++ b/accel/tcg/tcg-runtime-gvec.c
-> > > > @@ -1569,3 +1569,44 @@ void HELPER(gvec_bitsel)(void *d, void *a, void *b, void *c, uint32_t desc)
-> > > >        }
-> > > >        clear_high(d, oprsz, desc);
-> > > >    }
-> > > > +
-> > > > +#define DO_SZ_OP1(NAME, DSTTY, SRCTY)                                      \
-> > > > +void HELPER(NAME)(void *d, void *a, uint32_t desc)                         \
-> > > > +{                                                                          \
-> > > > +    intptr_t oprsz = simd_oprsz(desc);                                     \
-> > > > +    intptr_t elsz = oprsz/sizeof(DSTTY);                                   \
-> > > > +    intptr_t i;                                                            \
-> > > > +                                                                           \
-> > > > +    for (i = 0; i < elsz; ++i) {                                           \
-> > > > +        SRCTY aa = *((SRCTY *) a + i);                                     \
-> > > > +        *((DSTTY *) d + i) = aa;                                           \
-> > > > +    }                                                                      \
-> > > > +    clear_high(d, oprsz, desc);                                            \
-> > > 
-> > > This formulation is not valid.
-> > > 
-> > > (1) Generic forms must *always* operate strictly on columns.  This
-> > > formulation is either expanding a narrow vector to a wider vector or
-> > > compressing a wider vector to a narrow vector.
-> > > 
-> > > (2) This takes no care for byte ordering of the data between columns.  This
-> > > is where sticking strictly to columns helps, in that we can assume that data
-> > > is host-endian *within the column*, but we cannot assume anything about the
-> > > element indexing of ptr + i.
-> > 
-> > Concerning (1) and (2), is this a limitation imposed on generic vector
-> > ops. to simplify mapping to host vector instructions where
-> > padding/alignment of elements might differ?  From my understanding, the
-> > helper above should be fine since we can assume contiguous elements?
+On Tue,  3 Dec 2024 21:35:39 +0800
+Tomita Moeko <tomitamoeko@gmail.com> wrote:
+
+> This patchset extends the support of legacy mode igd passthrough to
+> all Intel Gen 11 and 12 devices (including Ice Lake, Jasper Lake,
+> Rocket Lake, Alder Lake and Raptor Lake), and emulates GGC register
+> in MMIO BAR0 for better compatibiltiy (It is tested Windows and GOP
+> driver will read this MMIO register).
 > 
-> This is a limitation imposed on generic vector ops, because different
-> target/arch/ represent their vectors in different ways.
+> It also replaces magic numbers with macros to improve readability,
+> and aligns behavior (BDSM registor mirroring and GGMS calculation for
+> gen7) with i915 driver to avoid possible issues.
 > 
-> For instance, Arm and RISC-V chunk the vector in to host-endian uint64_t,
-> with the chunks indexed little-endian.  But PPC puts the entire 128-bit
-> vector in host-endian bit ordering, so the uint64_t chunks are host-endian.
+> The x-igd-gms option removed in 971ca22f041b ("vfio/igd: don't set
+> stolen memory size to zero") is also added back so that data stolen
+> memory size can be specified for guest. It is tested that GMS may
+> related to framebuffer size, a small GMS value may cause display issues
+> like blackscreen. It can be changed by DVMT Pre-allocated option in
+> host BIOS, but not all BIOS comes with this option. Having it in QEMU
+> helps resolves such issues.
 > 
-> On a big-endian host, ptr+1 may be addressing element i-1 or i-7 instead of i+1.
-
-Ah, I see the problem now thanks for the explanation:)
-
-> > I see, I don't think we can make this work for Hexagon vector ops., as
-> > an example consider V6_vadduwsat which performs an unsigned saturated
-> > add of 32-bit elements, currently we emit
-> > 
-> >      void emit_V6_vadduwsat(intptr_t vec2, intptr_t vec7, intptr_t vec6) {
-> >          VectorMem mem = {0};
-> >          intptr_t vec5 = temp_new_gvec(&mem, 256);
-> >          tcg_gen_gvec_zext(MO_64, MO_32, vec5, vec7, 256, 128, 256);
-> > 
-> >          intptr_t vec1 = temp_new_gvec(&mem, 256);
-> >          tcg_gen_gvec_zext(MO_64, MO_32, vec1, vec6, 256, 128, 256);
-> > 
-> >          tcg_gen_gvec_add(MO_64, vec1, vec1, vec5, 256, 256);
-> > 
-> >          intptr_t vec3 = temp_new_gvec(&mem, 256);
-> >          tcg_gen_gvec_dup_imm(MO_64, vec3, 256, 256, 4294967295ull);
-> > 
-> >          tcg_gen_gvec_umin(MO_64, vec1, vec1, vec3, 256, 256);
-> > 
-> >          tcg_gen_gvec_trunc(MO_32, MO_64, vec2, vec1, 128, 256, 128);
-> >      }
-> > 
-> > so we really do rely on the size-changing property of zext here, the
-> > input vectors are 128-byte and we expand them to 256-byte.  We could
-> > expand vector operations within the instruction to the largest vector
-> > size, but would need to zext and trunc to destination and source
-> > registers anyway.
-> Yes, well, this is the output of llvm though, yes?
-
-Yes
-
-> Did you forget to describe TCG's native saturating operations to the
-> compiler? tcg_gen_gvec_usadd performs exactly this operation.
+> This patchset was verified on Intel i9-12900K CPU(UHD 770, 8086:4680)
+> with custom OVMF firmware [1] and IntelGopDriver extracted from host
+> bios. IGD device works well in both Windows and Linux guests, and
+> scored 726 in 3DMark Time Spy Graphics on Windows guest.
 > 
-> And if you'd like to improve llvm, usadd(a, b) equals umin(a, ~b) + b.
-> Fewer operations without having to change vector sizes.
-> Similarly for unsigned saturating subtract: ussub(a, b) equals umax(a, b) - b.
+> [1] https://github.com/tomitamoeko/edk2/commits/igd-pt-adl/
+> 
+> Btw, IO BAR4 seems never be used by guest, and it the IO BAR itself
+> is not working on Gen11+ devices in my experiments. There is no hints
+> about that in old commit message and mailing list. It would be greatly
+> appreciated if someone shares the background.
 
-In this case LLVM wasn't able to optimize it to a llvm.uadd.sat
-intrinsic, in which case we would have emitted tcg_gen_gvec_usadd I
-believe.  We can manually optimize the above pattern to a llvm.uadd.sat
-to avoid extra size changes.
+The quirks related to BAR4 access are generally for the vBIOS, we
+wouldn't expect guest OS level drivers to use them.  IIRC this is
+handling moving the stolen memory from the HPA to the GPA when the
+vBIOS is writing the GTT.
 
-This might be fixed in future LLVM versions, but otherwise seems like a
-reasonable change to push upstream.
+Maybe that brings up an interesting topic.  Traditionally "legacy mode"
+IGD assignment has been only for 440fx machines with SeaBIOS and last I
+was aware edk2 wasn't willing to accept the same hack for the BDSM as
+we had put into SeaBIOS, instead indicating that it should be
+implemented in the device ROM.  Your branch in [1] above seems to
+indicate edk2 does now have assigned IGD specific code.
 
-The point is that we have a lot of Hexagon instructions where size
-changes are probably unavoidable, another example is V6_vshuffh which
-takes in a <16 x i16> vector and shuffles the upper <8xi16> into the upper
-16-bits of a <8 x i32> vector
+Are these patches developing full stack support of these new devices,
+from BIOS hand-off, through pre-boot environments, and through to guest
+OS drivers, or are we only concerned that the guest OS level driver
+lights up a display?
 
-    void emit_V6_vshuffh(intptr_t vec3, intptr_t vec7) {
-        VectorMem mem = {0};
-        intptr_t vec2 = temp_new_gvec(&mem, 128);
-        tcg_gen_gvec_zext(MO_32, MO_16, vec2, vec7, 128, 64, 128);
+If you're using q35 and OVMF then you must be operating in the realm of
+the mythical "Universal Pass-through" mode that I thought Intel had
+abandoned.  It seems like we need an update to docs/igd-assign.txt as
+it's likely very out of date based on recent improvements here and by
+Corvin.
 
-        intptr_t vec0 = temp_new_gvec(&mem, 128);
-        tcg_gen_gvec_zext(MO_32, MO_16, vec0, (vec7 + 64ull), 128, 64, 128);
+Also, are you proposing the noted edk2 change upstream?  It seems like
+edk2 would need some sort of device version detection to know whether
+to use a 32 or 64-bit BDSM value.  Thanks,
 
-        intptr_t vec1 = temp_new_gvec(&mem, 128);
-        tcg_gen_gvec_shli(MO_32, vec1, vec0, 16, 128, 128);
-        tcg_gen_gvec_or(MO_32, vec3, vec1, vec2, 128, 128);
-    }
+Alex
 
-Not to bloat the email too much with examples, you can see 3 more here
+> Changelog:
+> v2:
+> * Droped "vfio/igd: fix GTT stolen memory size calculation for gen 7".
+> * Fixed conditions when calculating GGMS size.
+> * Added Gemini Lake and Comet Lake device ids.
+> * Splited mirroring register declaration macro into a new patch.
+> * Minor fixes.
+> Link: https://lore.kernel.org/qemu-devel/20241201160938.44355-1-tomitamoeko@gmail.com/
+> 
+> Tomita Moeko (9):
+>   vfio/igd: remove unsupported device ids
+>   vfio/igd: align generation with i915 kernel driver
+>   vfio/igd: canonicalize memory size calculations
+>   vfio/igd: add Gemini Lake and Comet Lake device ids
+>   vfio/igd: add Alder/Raptor/Rocket/Ice/Jasper Lake device ids
+>   vfio/igd: add macro for declaring mirrored registers
+>   vfio/igd: emulate GGC register in mmio bar0
+>   vfio/igd: emulate BDSM in mmio bar0 for gen 6-10 devices
+>   vfio/igd: add x-igd-gms option back to set DSM region size for guest
+> 
+>  hw/vfio/igd.c | 248 ++++++++++++++++++++++++++++++--------------------
+>  1 file changed, 151 insertions(+), 97 deletions(-)
+> 
 
-  https://pad.rev.ng/11IvAKhiRy2cPwC7MX9nXA
-
-Maybe we rely on the target defining size-changing operations if they
-are needed?
-
-//Anton
 
