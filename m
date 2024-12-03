@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127F2E6C60C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FBA9E6C60C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIMVN-00054L-Ul; Tue, 03 Dec 2024 01:35:30 -0500
+	id 1tIMWJ-00068e-Bo; Tue, 03 Dec 2024 01:36:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIMVL-0004zM-3l; Tue, 03 Dec 2024 01:35:27 -0500
-Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
+ id 1tIMWF-00067Z-Qq; Tue, 03 Dec 2024 01:36:25 -0500
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIMVH-0000Ul-Rt; Tue, 03 Dec 2024 01:35:26 -0500
-Received: by mail-vs1-xe32.google.com with SMTP id
- ada2fe7eead31-4af3bfbb721so1475210137.3; 
- Mon, 02 Dec 2024 22:35:21 -0800 (PST)
+ id 1tIMWD-0000ax-Fm; Tue, 03 Dec 2024 01:36:23 -0500
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-514ec8ea37bso1233538e0c.0; 
+ Mon, 02 Dec 2024 22:36:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733207720; x=1733812520; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733207780; x=1733812580; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0yf9BrlfRqGaSlUzr1jGwQcQsL8td33Mhp6K4QzBJhI=;
- b=Z++Fo1iULNQmDgGb+lND/whVMV0aMoOLE6z0Zt1Gd34G6VOgbf6dfIECAY+cdTmbCX
- wFN4VTUz17/1JP7JSvysKm6FUsFXBZ0F5aaZlN8vybPj9DNKa+txmLRj/lDhCn/P1Os+
- aPx+XiAQFvU/w7GeLMCLfsOf3dv8wmzjQKAmFfYuOqE93ONkWq4RvBrZCjbd5UZU4RuN
- 2XObgf/AcWYXvDmFvSVs/Cq4fXOBwl7cPnmZx4PIC1yvpwbrjggHfWGHC9ZwM/AAsktk
- VbnCWReuqnG2puzaX3UjqBUdmqDQ19BANZbMVWwvrw+52TIZT70m21+nnK8grqSddHu+
- ifRA==
+ bh=xY+kP7hz7PssZVmf49SEHTMuyYr94FiKVNhhoAYt/k0=;
+ b=nU1xUJNgrJpgqBOByu4ZDaElIUlWoApqzHXImgi6aQmNVzBBsJhcqdBhEQg16Ckc6C
+ JOPHLZB9fZqa+ESM63v3THfNvF0KYSM2mmyXVyhXfMJ0LVnyhuNoqySYZqA2/bM4xttt
+ wp3sb3obX/vo86Usq4MTRndf3uL5/Gxb2WkbbPZEPGUdU7eNLzdB4RGLgBKg0kiTf13I
+ wnjFSgb6gmkEnwwp0i9kAq9GekOjZJ6j1OYYdQHbscQ+SLMGk7x5tS7pS///rDVKUBLQ
+ 5p0a1cKVoTUJO4lr1C7wDjQy4ZPNFZGzjAiHwX6/6fiXWrAa4lHnQSiZTH4DeCG7zu8C
+ a+sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733207720; x=1733812520;
+ d=1e100.net; s=20230601; t=1733207780; x=1733812580;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0yf9BrlfRqGaSlUzr1jGwQcQsL8td33Mhp6K4QzBJhI=;
- b=BKSL9Xpfu7VxNb1N7o/W5g3za21RmWSvYUqcoZ9phYSRe9px5Et6EPezNNP7bOWhZm
- xma1N5GESCtnss2TVufUuQIVbuhzT8XZC8R2xNGBIGNrSKS8Hls7yuJfcKqqtSnAK+zA
- Nbw4rWzKW/QfZzzKdZ1RcoulwFvGLhE+6mpWRHfMFe3XWIwrx9eXiplpbWrA5OMrB0nS
- 3XsrjN9SjdNFTjoEigTY96MWFYJrF3Kg1DcLRrb4DXHcrQV2DSqT3cr0lOJInfyWpBjr
- qHzZPa3FYyqUAE9DsM7cC9fSY0IENvn8fDwktWNAgNDgNz69lIFwI7mo0c+4jEL9h3jr
- t05A==
+ bh=xY+kP7hz7PssZVmf49SEHTMuyYr94FiKVNhhoAYt/k0=;
+ b=XmfcpRDQ0BscXe45jUX/abLRbqC+5/HJoycFPexCVMQDS0cwBh1CXrWq+RJl4v8zJm
+ p/o4V5bEZRl3Ko7JSIBbu2l8QQC/IrWcq/fGGB70Zh4E7ymKo6P9DwejLCG/bo5mwWej
+ bEoRoDXfK75wfWad2+mgklYtX2F0VAXfFXACt5tCgjk6/bkHuaq3KntiZDJtxs8JA/yj
+ hKF75USppOJTEhP7mul5tkv+uGsivPPVPXy5aw9hM14iWC13bhnjNuVQWvyugtLm8CBb
+ +6FE1FVwToIgl0ff/TmXPoHDe5AH9f9kBcMF4y9GpIt+sMQzRypqiINLhO4KMGA10M62
+ t3Sg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMkNAW5BXsSlembRaWp+DKmAzzQ6bZX1dYkExbcwiU+/LGrrj6LBqcNiWcU1PhEhOOmhNbkja0ODy11w==@nongnu.org,
- AJvYcCUccVSEsUpD50CUKqrwx3ikxrNbCxMAkW79sLBivcMMxDR2lsxZ/KqMobM5AZyIcfoiehqA2ood1uWg@nongnu.org
-X-Gm-Message-State: AOJu0YxZ4Aix/eMA4Qh36ApiS1C5kde6Im5r93RKxmrZp7zMe1hZn4o4
- slcv2jv3BSlviLHPj7JD+Ln/Mem0jlhM3+Qn31LMzbfvXCOEq1ESHB/Y7zysvaBTeoUKYL2uzwb
- /6tfqER+SNOraQQyk4VxWpu/B+aA=
-X-Gm-Gg: ASbGncs3OrV0XuXU+9Olcp7KLeiYdplGU4uatFArHfjacNMkdj4MHE95pASrKZxYMCF
- nSeQlIX1wULpNwq8ktXfLoYcoQl4EkL8x
-X-Google-Smtp-Source: AGHT+IEVZuP7zTwpONNfk//+eNwjlEQxeqrce473tOGHxeVApdtCripUS9k2pOQq/HC6Dck3tgz3TxFxdibH5rservY=
-X-Received: by 2002:a05:6102:a4a:b0:4af:4a71:e35 with SMTP id
- ada2fe7eead31-4af97391601mr2064585137.27.1733207720447; Mon, 02 Dec 2024
- 22:35:20 -0800 (PST)
+ AJvYcCV+6pqKgvOtl5rEoPbeiX+kLqtV73mFfSOob2LNeXKBLLuY4Bp6ejDlasBYVvOlfL5cwPYgDGK3WgNG@nongnu.org
+X-Gm-Message-State: AOJu0YxSuodc1BYaWBMvjP/FsQf3/P8vr7sD5OIEuqjr8Ddz2+F/qx5p
+ f+2dMCvoZ/MD+jnvN0F/F8VpT8iG1HRYVRpe9YqPtA+zjL5Tb+doTaV+hvvS/DlQizqsAxp5k3a
+ UWvwZTAK5yW5GacbY5eryLkV1O4M=
+X-Gm-Gg: ASbGncsNhZ4SJyUSN966nzOI2jX7yp5Y4UUlIOLCR8qY+/6xEk4IBu5/5aBs/ut16E2
+ UvzqeHO1JSXGeyqW6sjXVsUFQ1qsX9+zf
+X-Google-Smtp-Source: AGHT+IGuX72dsU43T+kxJhk789gJga6H1gZ5heTsPzf8LDuKMbNEsKdrR/h/RLAJk9MVb5uQb4Qoa54Rx3dVOsohiF4=
+X-Received: by 2002:a05:6122:2511:b0:515:4fab:301a with SMTP id
+ 71dfb90a1353d-515bf3092e6mr1970335e0c.5.1733207779835; Mon, 02 Dec 2024
+ 22:36:19 -0800 (PST)
 MIME-Version: 1.0
-References: <20241028015744.624943-1-jeeheng.sia@starfivetech.com>
-In-Reply-To: <20241028015744.624943-1-jeeheng.sia@starfivetech.com>
+References: <20241129154304.34946-1-philmd@linaro.org>
+In-Reply-To: <20241129154304.34946-1-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 3 Dec 2024 15:34:54 +0900
-Message-ID: <CAKmqyKMdtaK30S0OkaTKTY+6q-nMkpfNQyC0LCC05EfutBoXgQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] Upgrade ACPI SPCR table to support SPCR table
- revision 4 format
-To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, 
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- gaosong@loongson.cn, jiaxun.yang@flygoat.com, maobibo@loongson.cn
+Date: Tue, 3 Dec 2024 15:35:53 +0900
+Message-ID: <CAKmqyKNbL6QpN_jsHTptB1Oa=bFRuR3rNsfjsXrmti2V9=h_Bw@mail.gmail.com>
+Subject: Re: [PATCH-for-10.0 0/3] hw/char/riscv_htif: Remove tswap64() calls
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, qemu-riscv@nongnu.org, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,48 +98,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 28, 2024 at 10:59=E2=80=AFAM Sia Jee Heng
-<jeeheng.sia@starfivetech.com> wrote:
+On Sat, Nov 30, 2024 at 12:44=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> Update the SPCR table to accommodate the SPCR Table revision 4 [1].
-> The SPCR table has been modified to adhere to the revision 4 format [2].
+> Trying to make sense of these tswap64 calls I
+> figured this device could be simplified.
 >
-> Meanwhile, the virt SPCR golden reference file for RISC-V have been updat=
-ed to
-> accommodate the SPCR Table revision 4.
+> Tested using 'make check-{qtest,functional}'
+> on both big/little endian hosts, no failure but
+> I'm not sure the code path is covered.
 >
-> [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/=
-serial-port-console-redirection-table
-> [2]: https://github.com/acpica/acpica/pull/931
->
-> Changes in v6:
-> - Added Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> - Rebase and update the build_spcr() function for the LoongArch virt mach=
-ine.
->
-> Changes in v5:
-> - Reverted the SPCR table revision history for the ARM architecture.
-> - Corrected the output of the SPCR Table diff.
->
-> Changes in v4:
-> - Remove the SPCR table revision 4 update for the ARM architecture.
->
-> Changes in v3:
-> - Rebased on the latest QEMU.
-> - Added Acked-by: Alistair Francis <alistair.francis@wdc.com>
->
-> Changes in v2:
-> - Utilizes a three-patch approach to modify the ACPI pre-built binary
->   files required by the Bios-Table-Test.
-> - Rebases and incorporates changes to support both ARM and RISC-V ACPI
->   pre-built binary files.
->
-> Sia Jee Heng (3):
->   qtest: allow SPCR acpi table changes
->   hw/acpi: Upgrade ACPI SPCR table to support SPCR table revision 4
->     format
->   tests/qtest/bios-tables-test: Update virt SPCR golden reference for
->     RISC-V
+> Philippe Mathieu-Daud=C3=A9 (3):
+>   MAINTAINERS: Cover RISC-V HTIF interface
+>   hw/char/riscv_htif: Explicit little-endian implementation
+>   hw/char/riscv_htif: Clarify MemoryRegionOps expect 32-bit accesses
 
 Thanks!
 
@@ -149,19 +120,12 @@ Applied to riscv-to-apply.next
 Alistair
 
 >
->  hw/acpi/aml-build.c               |  20 ++++++++++++++++----
->  hw/arm/virt-acpi-build.c          |   8 ++++++--
->  hw/loongarch/acpi-build.c         |   6 +++++-
->  hw/riscv/virt-acpi-build.c        |  12 +++++++++---
->  include/hw/acpi/acpi-defs.h       |   7 +++++--
->  include/hw/acpi/aml-build.h       |   2 +-
->  tests/data/acpi/riscv64/virt/SPCR | Bin 80 -> 90 bytes
->  7 files changed, 42 insertions(+), 13 deletions(-)
+>  MAINTAINERS          |  2 ++
+>  hw/char/riscv_htif.c | 15 ++++++++++-----
+>  2 files changed, 12 insertions(+), 5 deletions(-)
 >
->
-> base-commit: cea8ac78545a83e1f01c94d89d6f5a3f6b5c05d2
 > --
-> 2.43.0
+> 2.45.2
 >
 >
 
