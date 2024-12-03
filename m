@@ -4,77 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599DBE74AC3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 16:50:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37B48E74AC6
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 17:24:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIW6E-0004QA-FY; Tue, 03 Dec 2024 11:50:10 -0500
+	id 1tIWcm-0006XU-9Y; Tue, 03 Dec 2024 12:23:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tIW6C-0004Pv-ES
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 11:50:08 -0500
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tIW6A-0004Bw-1K
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 11:50:08 -0500
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2ffced84ba8so56108351fa.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 08:50:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733244603; x=1733849403; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=npXND+pX0oipabSNbkcpsz8Pha27Q+AoCH/sH6eJPD4=;
- b=Zlv3YKJDCTLmaUd2f5cqSB3Luv9ZLXgoFwbPphJJKXELcLDR3I6/m0mtvQuVTrTlpj
- fnU6+9hXZqABpU/xm6tMYIQtc2O4qmSHW6vZe+EOLtKuFB2HLUTdakjIwJ+UMH8rC4vj
- 3/vMGqTA3ikSBJKHRmOTw3UDTKlJjKKrzW3fRSDYeT7oW0XhKZY5uv1/XrCVU+Vzd/nH
- caANrh8A/ZKIOXIo2ZqpXTvPj5wBG2+QuA/PvflgiJkcG67j4e/5A9fSpw/gCvTE/thd
- 4hUhjkGVsHqJnv7C8+DbxWdZhdNtu08RtMdBg0vvxhdwlHl4eLuP9tYzlncBnicLesP1
- Zj9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733244603; x=1733849403;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=npXND+pX0oipabSNbkcpsz8Pha27Q+AoCH/sH6eJPD4=;
- b=PflxMZI+eYN2NTZnTCSCkYd7H6xIC3CwgCiKEY2YVA5VVTrwaquslpoxKrMKqUEa8y
- 0UAkqVonpqIwuXWGWVZQkOEIdtF0r8PXNqt0uBn+T1q5+ymLIBaRCrwsCvX14tYPoBtV
- 32JfM2BiwzQde4wFSJ62x49+5/bVK5RFIkPRJQ5PzOl85SwndUyoUQUbx6xVZ40McSNK
- oqHIaR2/oM3ohvZ0oeMbu/7Nj8yN/PDXLoIzOnezHZpgzHiwxl/SO92wAuzH4FDkmpxL
- Q4TUfoiHS5G0AUXxfL/1GjLqcRIJrQmxKgrkCXAx8DGUZhEp76xlovPVpu2319nbcFp7
- ZHtw==
-X-Gm-Message-State: AOJu0YytcFLzMZEsPbEASYleU5zHPWZFfQ8D17jHKXn19etWCW0qDQ6m
- JUEkqWDqsjqTSxwiNGuGOfq9/OxtOvR8jt9oTZTR0DBdnksgQzCL3MiTL8p3DRrQeP+OPem1zCd
- 2TpbfpVtGQuTIPlrKj1SrKnqGOeCZFOtcYcmE3s5wk6OjZJv2
-X-Gm-Gg: ASbGncsR1iLb+/lyh2lGpnHC23i1MU+TJLP4d3ePegxBS80L/oFRyTXfpeAjfwwGBlE
- aXKAHQ6BW47y2+nc+jjv0EFNNoauV+lB4
-X-Google-Smtp-Source: AGHT+IGDW8vJCdDucIDk2XbC2pl1eOvrVJQNsrK6IJmTOnBL6st/Y7y+1pRMhS+iPYUcaoGgyN8y5w9swJC+ByYq5fE=
-X-Received: by 2002:a2e:bd82:0:b0:2fb:5ebe:ed40 with SMTP id
- 38308e7fff4ca-30009c3443dmr20122551fa.15.1733244603354; Tue, 03 Dec 2024
- 08:50:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tIWck-0006Wq-28
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:23:46 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tIWcf-0001K2-Oj
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:23:45 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Y2nVD1RF9z6K9Db;
+ Wed,  4 Dec 2024 01:20:36 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 89BE41401F4;
+ Wed,  4 Dec 2024 01:23:30 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 3 Dec
+ 2024 18:23:30 +0100
+Date: Tue, 3 Dec 2024 17:23:28 +0000
+To: Hongjian Fan <hongjian.fan@seagate.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, <fan.ni@samsung.com>
+Subject: Re: [PATCH] hw/mem: support zero memory size CXL device
+Message-ID: <20241203172328.00001a00@huawei.com>
+In-Reply-To: <20241202230310.1531219-1-hongjian.fan@seagate.com>
+References: <20241202230310.1531219-1-hongjian.fan@seagate.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20241203113140.63513-1-philmd@linaro.org>
-In-Reply-To: <20241203113140.63513-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Dec 2024 16:49:52 +0000
-Message-ID: <CAFEAcA-7FHseHZwt4odOpM5z5BJ+MEX_WVyvOgk=aBK0S_5oeA@mail.gmail.com>
-Subject: Re: [PULL 00/13] Misc fixes for 2024-12-03
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,64 +65,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Dec 2024 at 11:32, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> The following changes since commit eb22a064455aeebc105cc89bf77f48aa18b529=
-38:
->
->   Merge tag 'pull-request-2024-12-02' of https://gitlab.com/thuth/qemu in=
-to staging (2024-12-02 16:16:15 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/philmd/qemu.git tags/hw-misc-20241203
->
-> for you to fetch changes up to 964d2a0cf8136cdafc07f6fd847ebf897965dc35:
->
->   system: Select HVF by default when no other accelerator is available (2=
-024-12-03 12:28:06 +0100)
->
-> ----------------------------------------------------------------
-> Misc fixes for QEMU v9.2.0
->
-> ----------------------------------------------------------------
->
-> Ahmad Fatoum (1):
->   hw/openrisc/openrisc_sim: keep serial@90000000 as default
->
-> Bibo Mao (1):
->   MAINTAINERS: add myself as the maintainer for LoongArch VirtMachine
->
-> Brian Cain (1):
->   MAINTAINERS: update email addr for Brian Cain
->
-> Daniel P. Berrang=C3=A9 (4):
->   hw/core/machine: diagnose wrapping of maxmem
->   hw/virtio: fix crash in processing balloon stats
->   tests/qtest: drop 'fuzz-' prefix from virtio-balloon test
->   tests/qtest: add test for querying balloon guest stats
->
-> Joel Holdsworth (1):
->   hw/openrisc: Fixed undercounting of TTCR in continuous mode
->
-> Peter Maydell (1):
->   target/riscv: Avoid bad shift in riscv_cpu_do_interrupt()
->
-> Philippe Mathieu-Daud=C3=A9 (4):
->   ui/cocoa: Temporarily ignore annoying deprecated declaration warnings
->   meson: Add missing SDL dependency to system/main.c
->   hw/display/vga: Do not reset 'big_endian_fb' in vga_common_reset()
->   system: Select HVF by default when no other accelerator is available
+On Mon,  2 Dec 2024 17:03:11 -0600
+Hongjian Fan <hongjian.fan@seagate.com> wrote:
+
+> According to CXL 3.1 specification, 8.1.3.8 DVSEC CXL Range Registers "A CXL.mem-capable device is permitted to report zero memory size."
+> This patch will allow a CXL type3 device to be initialized with zero memory size, when there is no memory device property provided ( neither volatile, persistent, nor dynamic region).
+Wrap at less than 75 chars.
+
+I'm curious.  Why do you want to emulate such a device?
+
+There are many things the CXL spec allows that we don't emulate.
+I'd normally count this as just another one of those.
+
+Jonathan
 
 
-Applied, thanks.
+> 
+> Signed-off-by: Hongjian Fan <hongjian.fan@seagate.com>
+> ---
+>  hw/mem/cxl_type3.c | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 5cf754b38f..35caa186ca 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -159,7 +159,12 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+>      int len = 0;
+>  
+>      if (!ct3d->hostpmem && !ct3d->hostvmem && !ct3d->dc.num_regions) {
+> -        return 0;
+> +        // zero memory size device. Build one entry with size 0
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+Comment syntax /* */
 
--- PMM
+> +        table = g_malloc0(CT3_CDAT_NUM_ENTRIES * sizeof(*table));
+> +        ct3_build_cdat_entries_for_mr(&(table[0]), dsmad_handle++,
+> +                                0, false, false, 0);
+> +        *cdat_table = g_steal_pointer(&table);
+> +        return CT3_CDAT_NUM_ENTRIES;
+>      }
+>  
+>      if (ct3d->hostvmem) {
+> @@ -712,8 +717,11 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+>  
+>      if (!ct3d->hostmem && !ct3d->hostvmem && !ct3d->hostpmem
+>          && !ct3d->dc.num_regions) {
+> -        error_setg(errp, "at least one memdev property must be set");
+> -        return false;
+> +        // no memdev property provided. Default to zero memory size device
+> +        ct3d->cxl_dstate.pmem_size = 0;
+> +        ct3d->cxl_dstate.vmem_size = 0;
+> +        ct3d->cxl_dstate.static_mem_size = 0;
+> +        return true;
+>      } else if (ct3d->hostmem && ct3d->hostpmem) {
+>          error_setg(errp, "[memdev] cannot be used with new "
+>                           "[persistent-memdev] property");
+
 
