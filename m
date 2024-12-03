@@ -4,97 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E418E74AC3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E08DE74AC8
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 19:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIY6x-00079L-3p; Tue, 03 Dec 2024 13:59:03 -0500
+	id 1tIY9y-00087H-9s; Tue, 03 Dec 2024 14:02:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1tIY6q-0006yY-Ma
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:58:57 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY9x-000879-3L
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 14:02:09 -0500
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1tIY6l-0001ZY-HU
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:58:53 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3G5UUc010254;
- Tue, 3 Dec 2024 18:58:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- uAsa1SBLvThLxog17lenkZd9LW8Kyc7ZkeXKhd7db70=; b=VYNjYabkJUIwTx2F
- FUpkThadK/npvPOM0jyqfs5Arneijr5G4F7oIojC8LxziLLVR9CAatBJNMGezEVI
- 04Fobqa9kUZ+zcmy/g3KbRbRqQrttk2Ga0jvmU3eQ7IIW/BH03B9mqPdaYLq1q72
- RnvgkzezTsq2E6+bD7/fJS2Cxb6S17Pa6vnntaIq/FUkf2pJ8wJBdcN4jPulTHHS
- maDsizjWa/yKwHraBCRIO9WYW5AWMPipfJ/f7s98zPs41ZdXqAJNU+94e58JI0L9
- 23d5z9k+qnDVJGtv66TnTT6PTmkENjyZDfjD+Zw6BW6+/ybb3bEQEv20geHlc7hA
- DdHAAg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439v7yt170-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Dec 2024 18:58:47 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
- [10.47.97.35])
- by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B3Iwl2W007194
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 3 Dec 2024 18:58:47 GMT
-Received: from [10.111.174.1] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Dec 2024
- 10:58:45 -0800
-Message-ID: <b5f00bbb-7125-4fb7-8f6a-bd9343642d42@quicinc.com>
-Date: Tue, 3 Dec 2024 12:58:35 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 37/43] target/hexagon: Make HVX vector args.
- restrict *
-To: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>
-CC: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>, <ale@rev.ng>, <ltaylorsimpson@gmail.com>,
- <bcain@quicinc.com>, <richard.henderson@linaro.org>,
- <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY9u-00020d-Av
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 14:02:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=O0+lBKty7D0NaVgsn7Mgh/tEf3xXvtploIQ+VVqiCG0=; b=CWE2Vbq7njOS7g5
+ iDsBQvSa7cOiN26bcOEbYAywlJeO7sDd55O8QKSfU5E+IFgviXtpI/ePTc/v2s12fsk+ZKrakAjnB
+ dYyiMJ+fPMzQb+I6ycL16pn8k9aySJDZ/aQ9BOjA8JjnKIhlNZYGQknDSEESQ4YHk/dxKSq8N2Tcm
+ YE=;
+Date: Tue, 3 Dec 2024 20:05:05 +0100
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
+ philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [RFC PATCH v1 01/43] Add option to enable/disable helper-to-tcg
+Message-ID: <vsk3f7dzcxyubzycaj2xacw6xsn43tqkrkjhywalif3jfndc2v@lyhm4f63grxi>
 References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-38-anjo@rev.ng>
- <30a70eef-01ac-46a2-8e34-458c579dcf27@linaro.org>
- <689a4c48-af1f-44b1-9575-56c75ec0b830@redhat.com>
- <baawemaxxlh7kjecgw6zi6b6lk4i6m3ckq62teao6bctcoblzx@ncy5pot3loed>
-Content-Language: en-US
-From: Brian Cain <quic_bcain@quicinc.com>
-In-Reply-To: <baawemaxxlh7kjecgw6zi6b6lk4i6m3ckq62teao6bctcoblzx@ncy5pot3loed>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+ <20241121014947.18666-2-anjo@rev.ng>
+ <c478cbc8-6684-4a8d-bd88-724d48098c36@linaro.org>
+ <240aa88b-7ac4-4852-9c40-4fb5d8fbd89a@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: 7mqYtDneUle1po9vaAryp3AT6sYfsg2Y
-X-Proofpoint-GUID: 7mqYtDneUle1po9vaAryp3AT6sYfsg2Y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxscore=0
- impostorscore=0 adultscore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 suspectscore=0 mlxlogscore=526 malwarescore=0
- bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412030157
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_bcain@quicinc.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <240aa88b-7ac4-4852-9c40-4fb5d8fbd89a@redhat.com>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,44 +65,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 22/11/24, Paolo Bonzini wrote:
+> On 11/22/24 18:30, Richard Henderson wrote:
+> > On 11/20/24 19:49, Anton Johansson wrote:
+> > > Adds a meson option for enabling/disabling helper-to-tcg along with a
+> > > CONFIG_* definition.
+> > > 
+> > > CONFIG_* will in future commits be used to conditionally include the
+> > > helper-to-tcg subproject, and to remove unneeded code/memory when
+> > > helper-to-tcg is not in use.
+> > > 
+> > > Current meson option is limited to Hexagon, as helper-to-tcg will be
+> > > included as a subproject from target/hexagon.  This will change in the
+> > > future if multiple frontends adopt helper-to-tcg.
+> > > 
+> > > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > > ---
+> > >   meson.build                   | 7 +++++++
+> > >   meson_options.txt             | 2 ++
+> > >   scripts/meson-buildoptions.sh | 5 +++++
+> > >   3 files changed, 14 insertions(+)
+> > 
+> > Looks ok.  Could probably stand another set of meson eyes.
+> > 
+> > Acked-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> /me bows
+> 
+> Since the subproject has a pretty hefty (and specific) set of
+> dependencies, please make this a "feature" option.  This allows
+> subprojects/helper-to-tcg to disable itself if it cannot find
+> a dependency or otherwise invokes error(), without breaking the
+> build.  The --enable-hexagon-helper-to-tcg flag however *will*
+> force the subproject to be buildable, just like all other
+> QEMU feature options.
+> 
+> Something like this:
+> 
+> 
+> ########################
+> # Target configuration #
+> ########################
+> 
+> # a bit gross to hardcode hexagon, but acceptable given the name of the option
+> helper_to_tcg = subproject('helper-to-tcg', get_option('hexagon_helper_to_tcg') \
+>    .disable_auto_if('hexagon-linux-user' not in target_dirs))
+> 
+> 
+> and replace helper_to_tcg_enabled throughout with helper_to_tcg.found().
+> 
+> > > +  if helper_to_tcg_enabled
+> > > +    config_target += {
+> > > +      'CONFIG_HELPER_TO_TCG': 'y',
+> > > +    }
+> > > +  endif
+> 
+> Here I would add instead add CONFIG_HELPER_TO_TCG (maybe renamed to
+> TARGET_HELPER_TO_TCG) in configs/targets/) and add before the loop:
+> 
+> ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR', 'TARGET_ARCH' ]
+> if not helper_to_tcg.found()
+>   # do not define it if it is not usable
+>   ignored += ['TARGET_HELPER_TO_TCG']
+> endif
+> 
+> Paolo
+> 
 
-On 12/3/2024 12:57 PM, Anton Johansson via wrote:
-> On 25/11/24, Paolo Bonzini wrote:
->> On 11/25/24 12:36, Philippe Mathieu-Daudé wrote:
->>>> +#define QeV      (*(MMQReg * restrict)(QeV_void))
->>>> +#define QdV      (*(MMQReg * restrict)(QdV_void))
->>>> +#define QsV      (*(MMQReg * restrict)(QsV_void))
->>>> +#define QtV      (*(MMQReg * restrict)(QtV_void))
->>>> +#define QuV      (*(MMQReg * restrict)(QuV_void))
->>>> +#define QvV      (*(MMQReg * restrict)(QvV_void))
->>>> +#define QxV      (*(MMQReg * restrict)(QxV_void))
->>>>    #endif
->>> Maybe we need to fix scripts/checkpatch.pl along?
->>>
->>> ERROR: "foo * bar" should be "foo *bar"
->>> #31: FILE: target/hexagon/mmvec/macros.h:26:
->>> +#define VdV      (*(MMVector * restrict)(VdV_void))
->>>
->>> ERROR: "foo * bar" should be "foo *bar"
->>> #32: FILE: target/hexagon/mmvec/macros.h:27:
->>> +#define VsV      (*(MMVector * restrict)(VsV_void))
->>>
->>> ERROR: "foo * bar" should be "foo *bar"
->>> #33: FILE: target/hexagon/mmvec/macros.h:28:
->>> +#define VuV      (*(MMVector * restrict)(VuV_void))
->> I think checkpatch.pl has a point here. :)
-> I'll switch to `*restrict`!:)
+Makes sense, appreciate it!:) There's always something new to learn about meson
 
-
-With this change to fix checkpatch,
-
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-
-
->
-> //Anton
->
+//Anton
 
