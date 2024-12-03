@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78EC8E6C60D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0817E6C60B
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 06:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIMRY-0000Ai-TQ; Tue, 03 Dec 2024 01:31:32 -0500
+	id 1tIMRY-00009y-4X; Tue, 03 Dec 2024 01:31:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tIMRW-00009J-DD; Tue, 03 Dec 2024 01:31:30 -0500
+ id 1tIMRV-00009A-Oz; Tue, 03 Dec 2024 01:31:29 -0500
 Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tIMRS-0008D9-51; Tue, 03 Dec 2024 01:31:30 -0500
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal
- [10.202.2.43])
- by mailfout.stl.internal (Postfix) with ESMTP id DC0411140120;
- Tue,  3 Dec 2024 01:31:24 -0500 (EST)
+ id 1tIMRU-0008Dj-9h; Tue, 03 Dec 2024 01:31:29 -0500
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfout.stl.internal (Postfix) with ESMTP id 0D3F61140151;
+ Tue,  3 Dec 2024 01:31:27 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Tue, 03 Dec 2024 01:31:25 -0500
+ by phl-compute-06.internal (MEProxy); Tue, 03 Dec 2024 01:31:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1733207484; x=
- 1733293884; bh=hbBVSV9xWSk05cpTGufFRYoJ/rmXTFdWFCfj28mgebw=; b=n
- 7tj9VqcZb7opHxW+YlALo4yFi1uXhMSy9auOV/hO33puPKgK+Ku/+vI5KyPkZyGk
- JuOjE4HdskAYkibIDs+iucs44gRD3jh2qoaQvEZh7sh97jumxKKWksZnKbCHdy4k
- 0zRgz+DF//u7FpY/aZqJSyFLltcZ2rCgPGJrM+Phqb+6WO3EaxwOBeudvR7W81X4
- 6RCfdl25F+6KVNHtkz2eWgoASLCD/it0ma8wJWy9M17+m2tocY4Z4qFeVRvEvcj0
- fT9tNSPkYw7oFOUeV9xP4KoDqZe/tYFTtImhT/7dfTth31OVgpYhp9YH9kkRzW5K
- 4qSyKxZHL3mMPECOP8zfg==
+ :reply-to:subject:subject:to:to; s=fm3; t=1733207486; x=
+ 1733293886; bh=klFTB9dqy/Ul1ii3Nfs6pPyOKPDqyo7MID2lSw63fCs=; b=A
+ dneuFeOYSFo1u/zAcQJW8P6rd5rm5gmMR1sdYKOgBYIYJBZx2ReNm/Ky9XJS8Ki4
+ 4NuP3X7niUhF3DnVBogveIwh5nwBvJQOtT/zcOAWKlPc2MZGXUmhWAlbhXAYhm65
+ jUPMldDev9jgPbs6yU2mXuWa8cn159WrezHmLudvJNmWWuMgtH7EC7+gxuzjJXU0
+ FCQMu2IFnADKF/mshM9jEBGVc9wghXr4qYbg8QCjoO+DcfG8zjx2wuGVsv05DMbE
+ QGf1efef91odhWmDvcGgUcHh2VTKwdhM3kO4vYrLE9XVWMFGH0obLkNLYLP00azp
+ jOTHDiv4w9ZMCj7/W+mwg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; t=1733207484; x=1733293884; bh=h
- bBVSV9xWSk05cpTGufFRYoJ/rmXTFdWFCfj28mgebw=; b=d1pD3w6BIEwPkBp6f
- kQM1nT2532CnMjDlX7PCezhDLPGDy+PafIjfQTOQ93fg8PmPVhWy+q1qtzNsGvmt
- wUM3O1zfYMTe4o2lvMP6VIEYfLQ5Xl4sRKFNneONCJ3apzzaBhCTyTeAO1Oi+zlb
- 7E8aurOw6fapZgpSine7IMB3qRT/LTyZ8Bfw4H2NJR4xcBZ6AUYjsVCUGDbumJdp
- kSgr6XIP3S3PnxJLCUvR70HnlVkBd4el3bDAgc0PnzT12MR0EKRUiDY3VqDaZLna
- voCoTEfIe3Y5zUzVayy4q1APkNUMkDgvdTci3wbpyOsKD7lw8M/2VMpWWlE8FkKW
- yYXHA==
-X-ME-Sender: <xms:vKVOZx3cFBuBwGnZNQlCGpYruwNhQsyqGeQcT-ewZlLBcTqtLwkVtg>
- <xme:vKVOZ4HiVZ5i9Z01b37QpM14YhofVxce-RKU-23uGVmCKZydBtaLW40T_6-jWtYDD
- b_5Z-NEgwK8U-UnI9k>
-X-ME-Received: <xmr:vKVOZx6vXTh5slXiZIOIUok-3uVB0bgOx8hFXarlzRVNEpTz4oylkpkubCG6kCBslTKfHUr8FiZMyH1wmELiLLw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedugdduiecutefuodetggdotefrodftvf
+ :x-me-sender:x-sasl-enc; s=fm1; t=1733207486; x=1733293886; bh=k
+ lFTB9dqy/Ul1ii3Nfs6pPyOKPDqyo7MID2lSw63fCs=; b=wWiexdHkTWmTZAhdy
+ bjNcUsRz05Vjfe9h6VJTg/YRBH2RsgVkESQZW8iGASr3+jVIglmFlQH0/0CZHXli
+ 0wv/kF5hj/e9ZYqEwGeNw7oN2sZLXSMgEVFxMtzg7VWgFz8jPnAPU3e6XIxMzBnj
+ jj6Dcye2Vqr9qP796SNaEiEq6HdT4N1jZodTTknsRqz4kH5YxbA+YnaSMqlDaaTh
+ 3QFzMmN3C+Bn87skpke1M0aDSNeSzeQsz6YCokB9aQmdVzzmhbbG5rS/xmb28e8K
+ mal8J+RZdZFQ1JjSWxXErBq7ZLAXFUYG9ccuBsYX0NeXPaUGLou8nYQuHJWGgz4g
+ rgxnQ==
+X-ME-Sender: <xms:vqVOZ7FwlNtafLo2TSV2ElHlq8fcY7gG4YhQA37dApJguStg2-1aog>
+ <xme:vqVOZ4UdlYQMPOaEW1MUqJCYZHZRFm3f3zA4hwPsy_1-Y7AfOxqS48Fmqkn46XXTp
+ fMZtZFL1Xc-8br7PRg>
+X-ME-Received: <xmr:vqVOZ9Jn_-9ROiV8YfsIPftfWBG4dxU6I9140bjrldjkZw_hvwei_aNcJGfd9XacxeBMwa8fhDmYhrF72rSlq6c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedugddujecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
  tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
  hsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecu
@@ -66,14 +66,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedugdduiecutefuodetggdote
  hrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepkhgsuhhs
  tghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhssehirhhrvghlvghvrghnth
  drughkpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:vKVOZ-3vw-PFTf-UbVYGDwy9F4N1JRP7792cuB4UjQVIqCfrhV74KQ>
- <xmx:vKVOZ0Hau_RYh9li7SVgtpD0CHwopl4o05nhIVqm55gUrqg3Bva-mg>
- <xmx:vKVOZ__v5Az-LW2SQ-eUz5Cq1OSKOVMqXiJASQFE3KwpVaE1lq_UHA>
- <xmx:vKVOZxnbygBKy7Mi2_KWLohUWkd_LNfaAcJkftvpnhbecfa6MIFAFg>
- <xmx:vKVOZ_0OcdQM461StdkRUGBzymRIU-TIGQog-et0cs41LHbIzKOTc-bw>
+X-ME-Proxy: <xmx:vqVOZ5FMgb06hQICn4rF8808y-5MQ9LQYrR8RRM55zwzC-5Nduz5AQ>
+ <xmx:vqVOZxWkx2ociaw-uUJhWDZxGXUsbi_iLIEE0q0-P5OaVRRgOeS9kw>
+ <xmx:vqVOZ0NXrs56UjcPKbF57IQDIKbaifEf5F5Drvv7lABIoZjbvRYL7g>
+ <xmx:vqVOZw3rAqGGwvKylKqn3V2V3USeG0TCuXrYTE70vs80-ARaSusMPQ>
+ <xmx:vqVOZwETxQaozpCp2vhLFi510lHB-CqYGhGEQJMkod09HopGPYwh7MFV>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 01:31:23 -0500 (EST)
+ 3 Dec 2024 01:31:25 -0500 (EST)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -81,9 +81,10 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Jesper Wendel Devantier <foss@defmacro.it>,
  Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
  qemu-block@nongnu.org
-Subject: [PULL 2/4] hw/nvme: fix use/unuse of msix vectors
-Date: Tue,  3 Dec 2024 07:31:09 +0100
-Message-ID: <20241203063112.9135-3-its@irrelevant.dk>
+Subject: [PULL 3/4] hw/nvme: SR-IOV VFs must hardwire pci interrupt pin
+ register to zero
+Date: Tue,  3 Dec 2024 07:31:10 +0100
+Message-ID: <20241203063112.9135-4-its@irrelevant.dk>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241203063112.9135-1-its@irrelevant.dk>
 References: <20241203063112.9135-1-its@irrelevant.dk>
@@ -116,40 +117,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Klaus Jensen <k.jensen@samsung.com>
 
-Only call msix_{un,}use_vector() when interrupts are actually enabled
-for a completion queue.
+The PCI Interrupt Pin Register does not apply to VFs and MUST be
+hardwired to zero.
 
+Fixes: 44c2c09488db ("hw/nvme: Add support for SR-IOV")
 Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/nvme/ctrl.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 13898d58278e..a38f460a7859 100644
+index a38f460a7859..61c114c66d15 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -5423,7 +5423,7 @@ static void nvme_free_cq(NvmeCQueue *cq, NvmeCtrl *n)
-         event_notifier_set_handler(&cq->notifier, NULL);
-         event_notifier_cleanup(&cq->notifier);
-     }
--    if (msix_enabled(pci)) {
-+    if (msix_enabled(pci) && cq->irq_enabled) {
-         msix_vector_unuse(pci, cq->vector);
-     }
-     if (cq->cqid) {
-@@ -5464,9 +5464,10 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
- {
-     PCIDevice *pci = PCI_DEVICE(n);
- 
--    if (msix_enabled(pci)) {
-+    if (msix_enabled(pci) && irq_enabled) {
-         msix_vector_use(pci, vector);
+@@ -656,6 +656,12 @@ static void nvme_irq_check(NvmeCtrl *n)
+     if (msix_enabled(pci)) {
+         return;
      }
 +
-     cq->ctrl = n;
-     cq->cqid = cqid;
-     cq->size = size;
++    /* vfs does not implement intx */
++    if (pci_is_vf(pci)) {
++        return;
++    }
++
+     if (~intms & n->irq_status) {
+         pci_irq_assert(pci);
+     } else {
+@@ -8544,7 +8550,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+     unsigned nr_vectors;
+     int ret;
+ 
+-    pci_conf[PCI_INTERRUPT_PIN] = 1;
++    pci_conf[PCI_INTERRUPT_PIN] = pci_is_vf(pci_dev) ? 0 : 1;
+     pci_config_set_prog_interface(pci_conf, 0x2);
+ 
+     if (n->params.use_intel_id) {
 -- 
 2.45.2
 
