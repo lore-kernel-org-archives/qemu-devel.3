@@ -4,66 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E26EE74AC3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 17:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DB3CE74AC6
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 17:38:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIWm3-0001U8-Jf; Tue, 03 Dec 2024 12:33:24 -0500
+	id 1tIWqH-0002aK-NR; Tue, 03 Dec 2024 12:37:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+68102b93a2418d07942c+7772+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tIWm0-0001Td-Oe
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:33:20 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+68102b93a2418d07942c+7772+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tIWlu-0003JI-R1
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:33:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:Date:Cc:To:
- From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:In-Reply-To:References;
- bh=ibMLdFn5vmScuZACaT5plYx6Ajqc/C3q5JaMW6sKCDk=; b=gm4dnqI14a5dcB0xnRgIIl09rs
- ZFHa4+oPukOBSfxwvaThvTVbhWz9LIsUqxxBnUR6CwGip6wLvBU4DD7NxNOkW6+l5TP1vHVwDAHhv
- OqamJoAGiYTV9EMAT27nAutsC715JiNbCVXfpXTjsUTRooHwQsbOz9QRE1YxP/iOYCpIN8wYoTjnW
- GE+k08CCfjkN7tz6PRFilc87rCJIslXz0bpl11KitAo/KtY9+7pSIu13KTikOFa889qBYkRii3YPg
- Enpk/ByxIUmeP7xSMveEzDyqs54WDJIxdluTXm5P4Bo9JXGMkvrdA1oc+jjqZzJmUAle588zuZlnB
- ldY+PEOQ==;
-Received: from 54-240-197-235.amazon.com ([54.240.197.235]
- helo=u09cd745991455d.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tIWlk-00000009zFc-0Ph8; Tue, 03 Dec 2024 17:33:05 +0000
-Message-ID: <7bdd6feab5bb6c32c9c83ef3d184882c2499baa6.camel@infradead.org>
-Subject: [PATCH v5] hw/acpi: Add vmclock device
-From: David Woodhouse <dwmw2@infradead.org>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov
- <imammedo@redhat.com>,  Ani Sinha <anisinha@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Peter Hilber <peter.hilber@opensynergy.com>,
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>, paul <paul@xen.org>
-Date: Tue, 03 Dec 2024 17:33:04 +0000
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-tq/VJcCt7xVguTp9F/fi"
-User-Agent: Evolution 3.52.3-0ubuntu1 
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tIWqD-0002ZE-VQ
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:37:42 -0500
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tIWq8-0003nG-6J
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 12:37:41 -0500
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2ffc81cee68so60090321fa.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 09:37:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733247454; x=1733852254; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nRkbnzOTQAns4CXPYF9lLr7SoxzPcsBCfO+M1ee3joU=;
+ b=oBNU3mngzbu3iNuKvIM2TbJQC9w/9LRARiRNw3ItyUEuIkiAgpVVFbZ+Pk3Mz5213I
+ 0JMdwTIIVp0aBBV+52Yu3DIjwIEJb7mlUTSCl/Rc83tQR+Xz7YBagEWsa/mGiKdygZKS
+ R9kqZp1hz0zvTYcXWszJ4+0UpDUnfz8dSP8VrqDMkD6xAuQwZHE0Ex8ZVcB43W4iT417
+ QLz8CTzUzUD+QjqqxHmHj9feBATBkMCfluGdnmUhxkHmg4BM9NryfhHl+bt6bfNPh9mH
+ EbEvaXtvJsbgnOCDPLPBfJi9fxQldzc1F0yuOsQWkevd62mw9x+leHVqqkQCoIq45yJj
+ KnvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733247454; x=1733852254;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nRkbnzOTQAns4CXPYF9lLr7SoxzPcsBCfO+M1ee3joU=;
+ b=UbXdtRPiGSe3l7qXkzVZGTBitFS+i+UGV7WJmjj18yIAmkPrVV/Xed7nDWfobIo7OP
+ y1npVjx+ZJBeVERjOY2Br14rzwEQpdj+rKadXq3nRrpb+hKZcO1giodx1JOe/kArirE6
+ HAqCQn+emvkHccZ2JwGX53vLHIroZ7y1bCxoeVJvxhVLmai2jlroer3p9ZG3dI5gS+LT
+ yHZgmcBj8BHjjGU0RRB2Huaqq8FsD6swBHSkPCXU7PgTfggrkPHgU4Hm16mU3gGMETho
+ ZH/zimT9RMC0FS80gHlRhFEfuMJmwl7jFkVQKKtp0woCgH1Ad2qQqZSVtUyayONXC/l5
+ Lf6A==
+X-Gm-Message-State: AOJu0Yy7bkjMvTJIdn2oos/e6bWls9nGPTkkFTCED8ss9ywm/7oJPC/J
+ iDNHXxRpst95OMuVTWZP8ABer5kqiD1zV/9zHSBs007qMEZLwbvwVyCrgaaEdCI/0hFor3N28ZU
+ HmfYrmFbeOZ0Ebh3BKQCEHD5ipOVSzT/p3Uejsg==
+X-Gm-Gg: ASbGnctAV0sr59x1SqrT+MFugdcSu4uhvG6WVA18eGBA3axDl/zxnHlwqy2kDK7YFIg
+ /pCV37eDcEz1yPfkVkeeyNAUf2kiYIOLO
+X-Google-Smtp-Source: AGHT+IEJdZ7XZPRsLEur/t3l/bq/qjI4UPtlxtswNiRac9VzSHkdReieCP+jS2K+821ntSPIiuJ2XaL0a6HV08CrEfM=
+X-Received: by 2002:a2e:bc06:0:b0:2ff:59fa:44f0 with SMTP id
+ 38308e7fff4ca-30009c0cacemr25598581fa.3.1733247453515; Tue, 03 Dec 2024
+ 09:37:33 -0800 (PST)
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+68102b93a2418d07942c+7772+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241118172357.475281-1-pierrick.bouvier@linaro.org>
+ <20241118172357.475281-7-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241118172357.475281-7-pierrick.bouvier@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 3 Dec 2024 17:37:22 +0000
+Message-ID: <CAFEAcA9JdLxi5cr-Z2-YX6Q8nv=j0O3k=f9u6gS-CzSf5BH7Ug@mail.gmail.com>
+Subject: Re: [PATCH 6/7] docs: add a glossary
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Andrew Melnychenko <andrew@daynix.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ alex.bennee@linaro.org, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eric Blake <eblake@redhat.com>, 
+ qemu-arm@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ manos.pitsidianakis@linaro.org, qemu-block@nongnu.org, 
+ Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk <kkostiuk@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ gustavo.romero@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,748 +105,441 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 18 Nov 2024 at 17:24, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  docs/devel/control-flow-integrity.rst |   2 +
+>  docs/devel/multi-thread-tcg.rst       |   2 +
+>  docs/glossary/index.rst               | 238 ++++++++++++++++++++++++++
+>  docs/index.rst                        |   1 +
+>  docs/system/arm/virt.rst              |   2 +
+>  docs/system/images.rst                |   2 +
+>  docs/tools/qemu-nbd.rst               |   2 +
+>  7 files changed, 249 insertions(+)
+>  create mode 100644 docs/glossary/index.rst
 
---=-tq/VJcCt7xVguTp9F/fi
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I think this is a good idea; we've had at least one bug
+report from a user pointing out that we had a term in
+our docs which we didn't define ("block driver"):
+https://gitlab.com/qemu-project/qemu/-/issues/2611
+I have some comments on specific entries below.
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+> diff --git a/docs/devel/control-flow-integrity.rst b/docs/devel/control-flow-integrity.rst
+> index e6b73a4fe1a..3d5702fa4cc 100644
+> --- a/docs/devel/control-flow-integrity.rst
+> +++ b/docs/devel/control-flow-integrity.rst
+> @@ -1,3 +1,5 @@
+> +.. _cfi:
+> +
+>  ============================
+>  Control-Flow Integrity (CFI)
+>  ============================
+> diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread-tcg.rst
+> index d706c27ea74..7fd0a07633d 100644
+> --- a/docs/devel/multi-thread-tcg.rst
+> +++ b/docs/devel/multi-thread-tcg.rst
+> @@ -4,6 +4,8 @@
+>    This work is licensed under the terms of the GNU GPL, version 2 or
+>    later. See the COPYING file in the top-level directory.
+>
+> +.. _mttcg:
+> +
+>  ==================
+>  Multi-threaded TCG
+>  ==================
+> diff --git a/docs/glossary/index.rst b/docs/glossary/index.rst
+> new file mode 100644
+> index 00000000000..a2d4f3eae16
+> --- /dev/null
+> +++ b/docs/glossary/index.rst
 
-The vmclock device addresses the problem of live migration with
-precision clocks. The tolerances of a hardware counter (e.g. TSC) are
-typically around =C2=B150PPM. A guest will use NTP/PTP/PPS to discipline th=
-at
-counter against an external source of 'real' time, and track the precise
-frequency of the counter as it changes with environmental conditions.
+I guess it makes sense to give this its own subdir, since we want
+it to come at the end of the manual. The other option would be
+to put it directly into docs/.
 
-When a guest is live migrated, anything it knows about the frequency of
-the underlying counter becomes invalid. It may move from a host where
-the counter running at -50PPM of its nominal frequency, to a host where
-it runs at +50PPM. There will also be a step change in the value of the
-counter, as the correctness of its absolute value at migration is
-limited by the accuracy of the source and destination host's time
-synchronization.
+> @@ -0,0 +1,238 @@
+> +.. _Glossary:
+> +
+> +--------
+> +Glossary
+> +--------
+> +
+> +This section of the manual presents *simply* acronyms and terms QEMU developers
+> +use.
 
-The device exposes a shared memory region to guests, which can be mapped
-all the way to userspace. In the first phase, this merely advertises a
-'disruption_marker', which indicates that the guest should throw away any
-NTP synchronization it thinks it has, and start again.
+What's "simply" intended to mean here?
 
-Because the region can be exposed all the way to userspace, applications
-can still use time from a fast vDSO 'system call', and check the
-disruption marker to be sure that their timestamp is indeed truthful.
+> +
+> +Accelerator
+> +-----------
+> +
+> +A specific API used to accelerate execution of guest instructions. It can be
+> +hardware-based, through a virtualization API provided by the host OS (kvm, hvf,
+> +whpx, ...) or software-based (tcg). See this description of `supported
 
-The structure also allows for the precise time, as known by the host, to
-be exposed directly to guests so that they don't have to wait for NTP to
-resync from scratch.
+Comma after ')'.
 
-The values and fields are based on the nascent virtio-rtc specification,
-and the intent is that a version (hopefully precisely this version) of
-this structure will be included as an optional part of that spec. In the
-meantime, a simple ACPI device along the lines of VMGENID is perfectly
-sufficient and is compatible with what's being shipped in certain
-commercial hypervisors.
+> +accelerators<Accelerators>`.
+> +
+> +Board
+> +-----
 
-Linux guest support was merged into the 6.13-rc1 kernel:
-https://git.kernel.org/torvalds/c/205032724226
+I think the correct term here is "machine" -- that's what the
+command line option is named, it's what the QOM class is, etc.
+So the major glossary entry should be "Machine". Some people
+(including me!) and some of the documentation uses "board" as a
+synonym for "machine", so we should have a glossary entry for
+"board", but it should just say "Another name for 'machine'" and
+xref to the "machine" entry.
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
----
-This is basically unchanged since the last time the structure was
-changed in July, apart from fairly trivial cosmetic changes and now
-importing the header file from Linux.
+> +
+> +QEMU system defines board models for various architectures. It's a description
+> +of a SoC (system-on-chip) with various devices pre-configured, and can be
+> +selected with the option ``-machine`` of qemu-system.
 
+SoCs are not the same as boards.
 
-v5:
- =E2=80=A2 Trivial simplification to AML generation.
- =E2=80=A2 Import vmclock-abi.h from Linux now the guest support is merged.
+We could say something like:
 
-v4:
- =E2=80=A2 Trivial checkpatch fixes and comment improvements.
+QEMU's system emulation models many different types of hardware.
+A machine model (sometimes called a board model) is the model
+of a complete virtual system with RAM, one or more CPUs, and
+various devices.
 
-v3:
- =E2=80=A2 Add comment that vmclock-abi.h will come from the Linux kernel
-   headers once it gets merged there.
+We could also put in a link to
+https://www.qemu.org/docs/master/system/targets.html
+which is where we document what our machine types are.
 
-v2:
- =E2=80=A2 Change esterror/maxerror fields to nanoseconds.
- =E2=80=A2 Change to officially assigned AMZNC10C ACPI HID.
- =E2=80=A2 Fix little-endian handling of fields in update.
+> +For virtual machines, you'll use ``virt`` board model, designed for this use
+> +case. As an example, for Arm architecture, you can find the `model code
+> +<https://gitlab.com/qemu-project/qemu/-/blob/master/hw/arm/virt.c>`_ and
+> +associated `documentation <arm-virt>`.
 
- hw/acpi/Kconfig                              |   5 +
- hw/acpi/meson.build                          |   1 +
- hw/acpi/vmclock.c                            | 184 +++++++++++++++++++
- hw/i386/Kconfig                              |   1 +
- hw/i386/acpi-build.c                         |  10 +-
- include/hw/acpi/vmclock.h                    |  34 ++++
- include/standard-headers/linux/vmclock-abi.h | 182 ++++++++++++++++++
- scripts/update-linux-headers.sh              |   1 +
- 8 files changed, 417 insertions(+), 1 deletion(-)
- create mode 100644 hw/acpi/vmclock.c
- create mode 100644 include/hw/acpi/vmclock.h
- create mode 100644 include/standard-headers/linux/vmclock-abi.h
+I think I would delete this paragraph. 'virt' is only the
+board type for virtual machines for some architectures; on
+x86 it doesn't exist for, example. Our user facing
+docs (that link above) are where we should suggest what
+the best machine type to use is. And the codebase-guide
+page is where we would say where machine type source code is.
 
-diff --git a/hw/acpi/Kconfig b/hw/acpi/Kconfig
-index e07d3204eb..1d4e9f0845 100644
---- a/hw/acpi/Kconfig
-+++ b/hw/acpi/Kconfig
-@@ -60,6 +60,11 @@ config ACPI_VMGENID
-     default y
-     depends on PC
-=20
-+config ACPI_VMCLOCK
-+    bool
-+    default y
-+    depends on PC
-+
- config ACPI_VIOT
-     bool
-     depends on ACPI
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index c8854f4d48..73f02b9691 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -15,6 +15,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_NVDIMM', if_false: files('=
-acpi-nvdimm-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCI', if_true: files('pci.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'), if_false: fi=
-les('cxl-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_VMGENID', if_true: files('vmgenid.c'))
-+acpi_ss.add(when: 'CONFIG_ACPI_VMCLOCK', if_true: files('vmclock.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('generic_event_=
-device.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_HMAT', if_true: files('hmat.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'), if_false: =
-files('ghes-stub.c'))
-diff --git a/hw/acpi/vmclock.c b/hw/acpi/vmclock.c
-new file mode 100644
-index 0000000000..541c06c22b
---- /dev/null
-+++ b/hw/acpi/vmclock.c
-@@ -0,0 +1,184 @@
-+/*
-+ * Virtual Machine Clock Device
-+ *
-+ * Copyright =C2=A9 2024 Amazon.com, Inc. or its affiliates. All Rights Re=
-served.
-+ *
-+ * Authors: David Woodhouse <dwmw2@infradead.org>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or late=
-r.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "hw/i386/e820_memory_layout.h"
-+#include "hw/acpi/acpi.h"
-+#include "hw/acpi/aml-build.h"
-+#include "hw/acpi/vmclock.h"
-+#include "hw/nvram/fw_cfg.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "migration/vmstate.h"
-+#include "sysemu/reset.h"
-+
-+#include "standard-headers/linux/vmclock-abi.h"
-+
-+void vmclock_build_acpi(VmclockState *vms, GArray *table_data,
-+                        BIOSLinker *linker, const char *oem_id)
-+{
-+    Aml *ssdt, *dev, *scope, *crs;
-+    AcpiTable table =3D { .sig =3D "SSDT", .rev =3D 1,
-+                        .oem_id =3D oem_id, .oem_table_id =3D "VMCLOCK" };
-+
-+    /* Put VMCLOCK into a separate SSDT table */
-+    acpi_table_begin(&table, table_data);
-+    ssdt =3D init_aml_allocator();
-+
-+    scope =3D aml_scope("\\_SB");
-+    dev =3D aml_device("VCLK");
-+    aml_append(dev, aml_name_decl("_HID", aml_string("AMZNC10C")));
-+    aml_append(dev, aml_name_decl("_CID", aml_string("VMCLOCK")));
-+    aml_append(dev, aml_name_decl("_DDN", aml_string("VMCLOCK")));
-+
-+    /* Simple status method */
-+    aml_append(dev, aml_name_decl("_STA", aml_int(0xf)));
-+
-+    crs =3D aml_resource_template();
-+    aml_append(crs, aml_qword_memory(AML_POS_DECODE,
-+                                     AML_MIN_FIXED, AML_MAX_FIXED,
-+                                     AML_CACHEABLE, AML_READ_ONLY,
-+                                     0xffffffffffffffffULL,
-+                                     vms->physaddr,
-+                                     vms->physaddr + VMCLOCK_SIZE - 1,
-+                                     0, VMCLOCK_SIZE));
-+    aml_append(dev, aml_name_decl("_CRS", crs));
-+    aml_append(scope, dev);
-+    aml_append(ssdt, scope);
-+
-+    g_array_append_vals(table_data, ssdt->buf->data, ssdt->buf->len);
-+    acpi_table_end(linker, &table);
-+    free_aml_allocator();
-+}
-+
-+static void vmclock_update_guest(VmclockState *vms)
-+{
-+    uint64_t disruption_marker;
-+    uint32_t seq_count;
-+
-+    if (!vms->clk) {
-+        return;
-+    }
-+
-+    seq_count =3D le32_to_cpu(vms->clk->seq_count) | 1;
-+    vms->clk->seq_count =3D cpu_to_le32(seq_count);
-+    /* These barriers pair with read barriers in the guest */
-+    smp_wmb();
-+
-+    disruption_marker =3D le64_to_cpu(vms->clk->disruption_marker);
-+    disruption_marker++;
-+    vms->clk->disruption_marker =3D cpu_to_le64(disruption_marker);
-+
-+    /* These barriers pair with read barriers in the guest */
-+    smp_wmb();
-+    vms->clk->seq_count =3D cpu_to_le32(seq_count + 1);
-+}
-+
-+/*
-+ * After restoring an image, we need to update the guest memory to notify
-+ * it of clock disruption.
-+ */
-+static int vmclock_post_load(void *opaque, int version_id)
-+{
-+    VmclockState *vms =3D opaque;
-+
-+    vmclock_update_guest(vms);
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_vmclock =3D {
-+    .name =3D "vmclock",
-+    .version_id =3D 1,
-+    .minimum_version_id =3D 1,
-+    .post_load =3D vmclock_post_load,
-+    .fields =3D (const VMStateField[]) {
-+        VMSTATE_UINT64(physaddr, VmclockState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static void vmclock_handle_reset(void *opaque)
-+{
-+    VmclockState *vms =3D VMCLOCK(opaque);
-+
-+    if (!memory_region_is_mapped(&vms->clk_page)) {
-+        memory_region_add_subregion_overlap(get_system_memory(),
-+                                            vms->physaddr,
-+                                            &vms->clk_page, 0);
-+    }
-+}
-+
-+static void vmclock_realize(DeviceState *dev, Error **errp)
-+{
-+    VmclockState *vms =3D VMCLOCK(dev);
-+
-+    /*
-+     * Given that this function is executing, there is at least one VMCLOC=
-K
-+     * device. Check if there are several.
-+     */
-+    if (!find_vmclock_dev()) {
-+        error_setg(errp, "at most one %s device is permitted", TYPE_VMCLOC=
-K);
-+        return;
-+    }
-+
-+    vms->physaddr =3D VMCLOCK_ADDR;
-+
-+    e820_add_entry(vms->physaddr, VMCLOCK_SIZE, E820_RESERVED);
-+
-+    memory_region_init_ram(&vms->clk_page, OBJECT(dev), "vmclock_page",
-+                           VMCLOCK_SIZE, &error_abort);
-+    memory_region_set_enabled(&vms->clk_page, true);
-+    vms->clk =3D memory_region_get_ram_ptr(&vms->clk_page);
-+    memset(vms->clk, 0, VMCLOCK_SIZE);
-+
-+    vms->clk->magic =3D cpu_to_le32(VMCLOCK_MAGIC);
-+    vms->clk->size =3D cpu_to_le16(VMCLOCK_SIZE);
-+    vms->clk->version =3D cpu_to_le16(1);
-+
-+    /* These are all zero and thus default, but be explicit */
-+    vms->clk->clock_status =3D VMCLOCK_STATUS_UNKNOWN;
-+    vms->clk->counter_id =3D VMCLOCK_COUNTER_INVALID;
-+
-+    qemu_register_reset(vmclock_handle_reset, vms);
-+
-+    vmclock_update_guest(vms);
-+}
-+
-+static Property vmclock_device_properties[] =3D {
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void vmclock_device_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc =3D DEVICE_CLASS(klass);
-+
-+    dc->vmsd =3D &vmstate_vmclock;
-+    dc->realize =3D vmclock_realize;
-+    device_class_set_props(dc, vmclock_device_properties);
-+    dc->hotpluggable =3D false;
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+}
-+
-+static const TypeInfo vmclock_device_info =3D {
-+    .name          =3D TYPE_VMCLOCK,
-+    .parent        =3D TYPE_DEVICE,
-+    .instance_size =3D sizeof(VmclockState),
-+    .class_init    =3D vmclock_device_class_init,
-+};
-+
-+static void vmclock_register_types(void)
-+{
-+    type_register_static(&vmclock_device_info);
-+}
-+
-+type_init(vmclock_register_types)
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 32818480d2..d34ce07b21 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -43,6 +43,7 @@ config PC
-     select SERIAL_ISA
-     select ACPI_PCI
-     select ACPI_VMGENID
-+    select ACPI_VMCLOCK
-     select VIRTIO_PMEM_SUPPORTED
-     select VIRTIO_MEM_SUPPORTED
-     select HV_BALLOON_SUPPORTED
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 9fcc2897b8..941af69ed3 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -43,6 +43,7 @@
- #include "sysemu/tpm.h"
- #include "hw/acpi/tpm.h"
- #include "hw/acpi/vmgenid.h"
-+#include "hw/acpi/vmclock.h"
- #include "hw/acpi/erst.h"
- #include "hw/acpi/piix4.h"
- #include "sysemu/tpm_backend.h"
-@@ -2432,7 +2433,7 @@ void acpi_build(AcpiBuildTables *tables, MachineState=
- *machine)
-     uint8_t *u;
-     GArray *tables_blob =3D tables->table_data;
-     AcpiSlicOem slic_oem =3D { .id =3D NULL, .table_id =3D NULL };
--    Object *vmgenid_dev;
-+    Object *vmgenid_dev, *vmclock_dev;
-     char *oem_id;
-     char *oem_table_id;
-=20
-@@ -2505,6 +2506,13 @@ void acpi_build(AcpiBuildTables *tables, MachineStat=
-e *machine)
-                            tables->vmgenid, tables->linker, x86ms->oem_id)=
-;
-     }
-=20
-+    vmclock_dev =3D find_vmclock_dev();
-+    if (vmclock_dev) {
-+        acpi_add_table(table_offsets, tables_blob);
-+        vmclock_build_acpi(VMCLOCK(vmclock_dev), tables_blob, tables->link=
-er,
-+                           x86ms->oem_id);
-+    }
-+
-     if (misc.has_hpet) {
-         acpi_add_table(table_offsets, tables_blob);
-         build_hpet(tables_blob, tables->linker, x86ms->oem_id,
-diff --git a/include/hw/acpi/vmclock.h b/include/hw/acpi/vmclock.h
-new file mode 100644
-index 0000000000..5605605812
---- /dev/null
-+++ b/include/hw/acpi/vmclock.h
-@@ -0,0 +1,34 @@
-+#ifndef ACPI_VMCLOCK_H
-+#define ACPI_VMCLOCK_H
-+
-+#include "hw/acpi/bios-linker-loader.h"
-+#include "hw/qdev-core.h"
-+#include "qemu/uuid.h"
-+#include "qom/object.h"
-+
-+#define TYPE_VMCLOCK    "vmclock"
-+
-+#define VMCLOCK_ADDR    0xfeffb000
-+#define VMCLOCK_SIZE    0x1000
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(VmclockState, VMCLOCK)
-+
-+struct vmclock_abi;
-+
-+struct VmclockState {
-+    DeviceState parent_obj;
-+    MemoryRegion clk_page;
-+    uint64_t physaddr;
-+    struct vmclock_abi *clk;
-+};
-+
-+/* returns NULL unless there is exactly one device */
-+static inline Object *find_vmclock_dev(void)
-+{
-+    return object_resolve_path_type("", TYPE_VMCLOCK, NULL);
-+}
-+
-+void vmclock_build_acpi(VmclockState *vms, GArray *table_data,
-+                        BIOSLinker *linker, const char *oem_id);
-+
-+#endif
-diff --git a/include/standard-headers/linux/vmclock-abi.h b/include/standar=
-d-headers/linux/vmclock-abi.h
-new file mode 100644
-index 0000000000..15b0316cb4
---- /dev/null
-+++ b/include/standard-headers/linux/vmclock-abi.h
-@@ -0,0 +1,182 @@
-+/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Cl=
-ause) */
-+
-+/*
-+ * This structure provides a vDSO-style clock to VM guests, exposing the
-+ * relationship (or lack thereof) between the CPU clock (TSC, timebase, ar=
-ch
-+ * counter, etc.) and real time. It is designed to address the problem of
-+ * live migration, which other clock enlightenments do not.
-+ *
-+ * When a guest is live migrated, this affects the clock in two ways.
-+ *
-+ * First, even between identical hosts the actual frequency of the underly=
-ing
-+ * counter will change within the tolerances of its specification (typical=
-ly
-+ * =C2=B150PPM, or 4 seconds a day). This frequency also varies over time =
-on the
-+ * same host, but can be tracked by NTP as it generally varies slowly. Wit=
-h
-+ * live migration there is a step change in the frequency, with no warning=
-.
-+ *
-+ * Second, there may be a step change in the value of the counter itself, =
-as
-+ * its accuracy is limited by the precision of the NTP synchronization on =
-the
-+ * source and destination hosts.
-+ *
-+ * So any calibration (NTP, PTP, etc.) which the guest has done on the sou=
-rce
-+ * host before migration is invalid, and needs to be redone on the new hos=
-t.
-+ *
-+ * In its most basic mode, this structure provides only an indication to t=
-he
-+ * guest that live migration has occurred. This allows the guest to know t=
-hat
-+ * its clock is invalid and take remedial action. For applications that ne=
-ed
-+ * reliable accurate timestamps (e.g. distributed databases), the structur=
-e
-+ * can be mapped all the way to userspace. This allows the application to =
-see
-+ * directly for itself that the clock is disrupted and take appropriate
-+ * action, even when using a vDSO-style method to get the time instead of =
-a
-+ * system call.
-+ *
-+ * In its more advanced mode. this structure can also be used to expose th=
-e
-+ * precise relationship of the CPU counter to real time, as calibrated by =
-the
-+ * host. This means that userspace applications can have accurate time
-+ * immediately after live migration, rather than having to pause operation=
-s
-+ * and wait for NTP to recover. This mode does, of course, rely on the
-+ * counter being reliable and consistent across CPUs.
-+ *
-+ * Note that this must be true UTC, never with smeared leap seconds. If a
-+ * guest wishes to construct a smeared clock, it can do so. Presenting a
-+ * smeared clock through this interface would be problematic because it
-+ * actually messes with the apparent counter *period*. A linear smearing
-+ * of 1 ms per second would effectively tweak the counter period by 1000PP=
-M
-+ * at the start/end of the smearing period, while a sinusoidal smear would
-+ * basically be impossible to represent.
-+ *
-+ * This structure is offered with the intent that it be adopted into the
-+ * nascent virtio-rtc standard, as a virtio-rtc that does not address the =
-live
-+ * migration problem seems a little less than fit for purpose. For that
-+ * reason, certain fields use precisely the same numeric definitions as in
-+ * the virtio-rtc proposal. The structure can also be exposed through an A=
-CPI
-+ * device with the CID "VMCLOCK", modelled on the "VMGENID" device except =
-for
-+ * the fact that it uses a real _CRS to convey the address of the structur=
-e
-+ * (which should be a full page, to allow for mapping directly to userspac=
-e).
-+ */
-+
-+#ifndef __VMCLOCK_ABI_H__
-+#define __VMCLOCK_ABI_H__
-+
-+#include "standard-headers/linux/types.h"
-+
-+struct vmclock_abi {
-+	/* CONSTANT FIELDS */
-+	uint32_t magic;
-+#define VMCLOCK_MAGIC	0x4b4c4356 /* "VCLK" */
-+	uint32_t size;		/* Size of region containing this structure */
-+	uint16_t version;	/* 1 */
-+	uint8_t counter_id; /* Matches VIRTIO_RTC_COUNTER_xxx except INVALID */
-+#define VMCLOCK_COUNTER_ARM_VCNT	0
-+#define VMCLOCK_COUNTER_X86_TSC		1
-+#define VMCLOCK_COUNTER_INVALID		0xff
-+	uint8_t time_type; /* Matches VIRTIO_RTC_TYPE_xxx */
-+#define VMCLOCK_TIME_UTC			0	/* Since 1970-01-01 00:00:00z */
-+#define VMCLOCK_TIME_TAI			1	/* Since 1970-01-01 00:00:00z */
-+#define VMCLOCK_TIME_MONOTONIC			2	/* Since undefined epoch */
-+#define VMCLOCK_TIME_INVALID_SMEARED		3	/* Not supported */
-+#define VMCLOCK_TIME_INVALID_MAYBE_SMEARED	4	/* Not supported */
-+
-+	/* NON-CONSTANT FIELDS PROTECTED BY SEQCOUNT LOCK */
-+	uint32_t seq_count;	/* Low bit means an update is in progress */
-+	/*
-+	 * This field changes to another non-repeating value when the CPU
-+	 * counter is disrupted, for example on live migration. This lets
-+	 * the guest know that it should discard any calibration it has
-+	 * performed of the counter against external sources (NTP/PTP/etc.).
-+	 */
-+	uint64_t disruption_marker;
-+	uint64_t flags;
-+	/* Indicates that the tai_offset_sec field is valid */
-+#define VMCLOCK_FLAG_TAI_OFFSET_VALID		(1 << 0)
-+	/*
-+	 * Optionally used to notify guests of pending maintenance events.
-+	 * A guest which provides latency-sensitive services may wish to
-+	 * remove itself from service if an event is coming up. Two flags
-+	 * indicate the approximate imminence of the event.
-+	 */
-+#define VMCLOCK_FLAG_DISRUPTION_SOON		(1 << 1) /* About a day */
-+#define VMCLOCK_FLAG_DISRUPTION_IMMINENT	(1 << 2) /* About an hour */
-+#define VMCLOCK_FLAG_PERIOD_ESTERROR_VALID	(1 << 3)
-+#define VMCLOCK_FLAG_PERIOD_MAXERROR_VALID	(1 << 4)
-+#define VMCLOCK_FLAG_TIME_ESTERROR_VALID	(1 << 5)
-+#define VMCLOCK_FLAG_TIME_MAXERROR_VALID	(1 << 6)
-+	/*
-+	 * If the MONOTONIC flag is set then (other than leap seconds) it is
-+	 * guaranteed that the time calculated according this structure at
-+	 * any given moment shall never appear to be later than the time
-+	 * calculated via the structure at any *later* moment.
-+	 *
-+	 * In particular, a timestamp based on a counter reading taken
-+	 * immediately after setting the low bit of seq_count (and the
-+	 * associated memory barrier), using the previously-valid time and
-+	 * period fields, shall never be later than a timestamp based on
-+	 * a counter reading taken immediately before *clearing* the low
-+	 * bit again after the update, using the about-to-be-valid fields.
-+	 */
-+#define VMCLOCK_FLAG_TIME_MONOTONIC		(1 << 7)
-+
-+	uint8_t pad[2];
-+	uint8_t clock_status;
-+#define VMCLOCK_STATUS_UNKNOWN		0
-+#define VMCLOCK_STATUS_INITIALIZING	1
-+#define VMCLOCK_STATUS_SYNCHRONIZED	2
-+#define VMCLOCK_STATUS_FREERUNNING	3
-+#define VMCLOCK_STATUS_UNRELIABLE	4
-+
-+	/*
-+	 * The time exposed through this device is never smeared. This field
-+	 * corresponds to the 'subtype' field in virtio-rtc, which indicates
-+	 * the smearing method. However in this case it provides a *hint* to
-+	 * the guest operating system, such that *if* the guest OS wants to
-+	 * provide its users with an alternative clock which does not follow
-+	 * UTC, it may do so in a fashion consistent with the other systems
-+	 * in the nearby environment.
-+	 */
-+	uint8_t leap_second_smearing_hint; /* Matches VIRTIO_RTC_SUBTYPE_xxx */
-+#define VMCLOCK_SMEARING_STRICT		0
-+#define VMCLOCK_SMEARING_NOON_LINEAR	1
-+#define VMCLOCK_SMEARING_UTC_SLS	2
-+	uint16_t tai_offset_sec; /* Actually two's complement signed */
-+	uint8_t leap_indicator;
-+	/*
-+	 * This field is based on the VIRTIO_RTC_LEAP_xxx values as defined
-+	 * in the current draft of virtio-rtc, but since smearing cannot be
-+	 * used with the shared memory device, some values are not used.
-+	 *
-+	 * The _POST_POS and _POST_NEG values allow the guest to perform
-+	 * its own smearing during the day or so after a leap second when
-+	 * such smearing may need to continue being applied for a leap
-+	 * second which is now theoretically "historical".
-+	 */
-+#define VMCLOCK_LEAP_NONE	0x00	/* No known nearby leap second */
-+#define VMCLOCK_LEAP_PRE_POS	0x01	/* Positive leap second at EOM */
-+#define VMCLOCK_LEAP_PRE_NEG	0x02	/* Negative leap second at EOM */
-+#define VMCLOCK_LEAP_POS	0x03	/* Set during 23:59:60 second */
-+#define VMCLOCK_LEAP_POST_POS	0x04
-+#define VMCLOCK_LEAP_POST_NEG	0x05
-+
-+	/* Bit shift for counter_period_frac_sec and its error rate */
-+	uint8_t counter_period_shift;
-+	/*
-+	 * Paired values of counter and UTC at a given point in time.
-+	 */
-+	uint64_t counter_value;
-+	/*
-+	 * Counter period, and error margin of same. The unit of these
-+	 * fields is 1/2^(64 + counter_period_shift) of a second.
-+	 */
-+	uint64_t counter_period_frac_sec;
-+	uint64_t counter_period_esterror_rate_frac_sec;
-+	uint64_t counter_period_maxerror_rate_frac_sec;
-+
-+	/*
-+	 * Time according to time_type field above.
-+	 */
-+	uint64_t time_sec;		/* Seconds since time_type epoch */
-+	uint64_t time_frac_sec;		/* Units of 1/2^64 of a second */
-+	uint64_t time_esterror_nanosec;
-+	uint64_t time_maxerror_nanosec;
-+};
-+
-+#endif /*  __VMCLOCK_ABI_H__ */
-diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers=
-.sh
-index 99a8d9fa4c..8913e4fb99 100755
---- a/scripts/update-linux-headers.sh
-+++ b/scripts/update-linux-headers.sh
-@@ -258,6 +258,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
-          "$hdrdir/include/linux/kernel.h" \
-          "$hdrdir/include/linux/kvm_para.h" \
-          "$hdrdir/include/linux/vhost_types.h" \
-+         "$hdrdir/include/linux/vmclock-abi.h" \
-          "$hdrdir/include/linux/sysinfo.h"; do
-     cp_portable "$i" "$output/include/standard-headers/linux"
- done
---=20
-2.47.0
+> +
+> +Block
+> +-----
+> +
+> +Block drivers are the available `disk formats <block-drivers>` available, and
+> +block devices `(see Block device section on options page)<sec_005finvocation>`
+> +are using them to implement disks for a virtual machine.
+
+Block drivers aren't just disk formats; there are some filter
+drivers too. Somebody on the block side could probably
+provide a better definition here.
+
+> +
+> +CFI
+> +---
+> +
+> +Control Flow Integrity is a hardening technique used to prevent exploits
+> +targeting QEMU by detecting unexpected branches during execution. QEMU `actively
+> +supports<cfi>` being compiled with CFI enabled.
+> +
+> +Device
+> +------
+> +
+> +QEMU is able to emulate a CPU, and all the hardware interacting with it,
+> +including many devices. When QEMU runs a virtual machine using a hardware-based
+> +accelerator, it is responsible for emulating, using software, all devices.
+
+This definition doesn't actually define what a device is :-)
+
+> +
+> +EDK2
+> +----
+> +
+> +EDK2, as known as `TianoCore <https://www.tianocore.org/>`_, is an open source
+> +implementation of UEFI standard. It's ran by QEMU to support UEFI for virtual
+> +machines.
+
+Replace last sentence with
+"QEMU virtual machines that boot a UEFI BIOS usually use EDK2."
+?
+
+> +
+> +gdbstub
+> +-------
+> +
+> +QEMU implements a `gdb server <GDB usage>`, allowing gdb to attach to it and
+> +debug a running virtual machine, or a program in user-mode. This allows to debug
+> +a given architecture without having access to hardware.
+
+"allows debugging the guest code that is running inside QEMU."
+
+> +
+> +glib2
+> +-----
+> +
+> +`GLib2 <https://docs.gtk.org/glib/>`_ is one of the most important library we
+
+"libraries"
+
+> +are using through the codebase. It provides many data structures, macros, string
+> +and thread utilities and portable functions across different OS. It's required
+> +to build QEMU.
+> +
+> +Guest agent
+> +-----------
+> +
+> +`QEMU Guest agent <qemu-ga>` is a daemon intended to be executed by guest
+
+"The QEMU Guest Agent"
+
+"intended to be run within virtual machines. It provides various services"
+
+> +virtual machines and providing various services to help QEMU to interact with
+> +it.
+> +
+> +Guest/Host
+> +----------
+
+Make these two separate glossary entries, which cross reference each other.
+
+> +
+> +Guest is the architecture of the virtual machine, which is emulated.
+
+"Sometimes this is called the 'target' architecture, but that term
+can be ambiguous."
+
+> +Host is the architecture on which QEMU is running on, which is native.
 
 
+We could also have an entry for Target
 
---=-tq/VJcCt7xVguTp9F/fi
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQxMjAzMTczMzA0WjAvBgkqhkiG9w0BCQQxIgQgbh3mKz4H
-5ZehxWZgs0ww0fk4LXp8UCS05xsJBORDOJQwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgAlakBe5C1g7WMUphR76JnTfTgS3c9aaIzx
-eOZXDeVfLh+MqXOOH6qT0HdejZmX/UTQ++f7ZO49NkoittWzzAglymxzJLfxcRatMCDjO1amGuJJ
-lEEWJcSOvFw8TYHGtUa18tusqGeDhAm7DYb5hBhV1XT6ocK1HCpOLNYl1P/xfAmhcO+sFWGFT0+F
-dFom0zHaV/256PSGYiZ4vQ5MuHRlMqUwHUE/QWINViPAN/C8k2XWX+coWpmwjIVlUtzw/g8L7CNF
-umKTNbGASadHzQzKB+uGA/zeK7jlopfn8KHnjRRe5FQbSKhmpFlZhz1I7LwdrO9UDLlNEZB0UMPJ
-bkccLOCGhkkpZYa2hc17ZISIe0h0nDEh0Ce7zKG488U+YK2KfIinhRHB2S8JJtHtbIKV2wfgqnYr
-bsRWWFamz09iBnc8BABtPcgAlYHlU55j74+WUix1zER+ovLRqJ8XNFqckx7Arr1L4CVp3zAaQmhd
-VNSW5Y53ybBsG82t/8qOsa3jzilkYUNTYIbfdDFgS1y80fS/Ps2TUwfxAWwOOvab5gUUTOTPTD4O
-m07RgzUK1fn4d9hjS9MEVF+47fjcrTapaeyekTVcFrWCnqo95b4c5YBPQn3jp3Id5wGK4F1iPC9E
-lbyQ2u5byWl7wgH0vTLR1KsFrkMw988VwMP3pP7bUgAAAAAAAA==
+ The term "target" can be ambiguous. In most places in QEMU it is used
+ as a synonym for "guest"; for example the code for emulating Arm CPUs
+ is in ``target/arm/``. However in the TCG subsystem "target" refers
+ to the architecture which QEMU is running on, i.e. the "host".
 
 
---=-tq/VJcCt7xVguTp9F/fi--
+> +
+> +Hypervisor
+> +----------
+> +
+> +The formal definition of an hypervisor is a program than can be used to manage a
+> +virtual machine. QEMU itself is an hypervisor.
+
+"a hypervisor". QEMU isn't really a hypervisor, though...
+
+
+> +
+> +In the context of QEMU, an hypervisor is an API, provided by the Host OS,
+> +allowing to execute virtual machines. Linux implementation is KVM (and supports
+> +Xen as well). For MacOS, it's HVF. Windows defines WHPX. And NetBSD provides
+> +NVMM.
+> +
+> +Migration
+> +---------
+> +
+> +QEMU can save and restore the execution of a virtual machine, including across
+> +different machines. This is provided by the `Migration framework<migration>`.
+
+"between different host systems".
+
+> +
+> +NBD
+> +---
+> +
+> +`QEMU Network Block Device server <qemu-nbd>` is a tool that can be used to
+
+"The QEMU ..."
+
+> +mount and access QEMU images, providing functionality similar to a loop device.
+> +
+> +Mailing List
+> +------------
+> +
+> +This is `where <https://wiki.qemu.org/Contribute/MailingLists>`_ all the
+> +development happens! Changes are posted as series, that all developers can
+> +review and share feedback for.
+> +
+> +For reporting issues, our `GitLab
+> +<https://gitlab.com/qemu-project/qemu/-/issues>`_ tracker is the best place.
+> +
+> +MMU / softmmu
+> +-------------
+> +
+> +The Memory Management Unit is responsible for translating virtual addresses to
+> +physical addresses and managing memory protection. QEMU system mode is named
+> +"softmmu" precisely because it implements this in software, including a TLB
+> +(Translation lookaside buffer), for the guest virtual machine.
+> +
+> +QEMU user-mode does not implement a full software MMU, but "simply" translates
+> +virtual addresses by adding a specific offset, and relying on host MMU/OS
+> +instead.
+> +
+> +Monitor / QMP / HMP
+> +-------------------
+> +
+> +`QEMU Monitor <QEMU monitor>` is a text interface which can be used to interact
+
+"The QEMU Monitor"
+
+> +with a running virtual machine.
+> +
+> +QMP stands for QEMU Monitor Protocol and is a json based interface.
+> +HMP stands for Human Monitor Protocol and is a set of text commands available
+> +for users who prefer natural language to json.
+> +
+> +MTTCG
+> +-----
+> +
+> +Multiple cpus support was first implemented using a round-robin algorithm
+
+"Multiple CPU support"
+
+> +running on a single thread. Later on, `Multi-threaded TCG <mttcg>` was developed
+> +to benefit from multiple cores to speed up execution.
+> +
+> +Plugins
+> +-------
+> +
+> +`TCG Plugins <TCG Plugins>` is an API used to instrument guest code, in system
+> +and user mode. The end goal is to have a similar set of functionality compared
+> +to `DynamoRIO <https://dynamorio.org/>`_ or `valgrind <https://valgrind.org/>`_.
+> +
+> +One key advantage of QEMU plugins is that they can be used to perform
+> +architecture agnostic instrumentation.
+> +
+> +Patchwork
+> +---------
+> +
+> +`Patchwork <https://patchew.org/QEMU/>`_ is a website that tracks
+> +patches on the Mailing List.
+
+Patchwork and patchew are different systems. Patchew's URL is
+https://patchew.org/QEMU/
+
+(There is a patchwork instance that tracks qemu-devel patches,
+at https://patchwork.kernel.org/project/qemu-devel/list/ , but
+I'm not aware of any developers that are actively using it, so
+I don't think it merits being mentioned in the glossary.)
+
+> +
+> +PR
+> +--
+> +
+> +Once a series is reviewed and accepted by a subsystem maintainer, it will be
+> +included in a PR (Pull Request) that the project maintainer will merge into QEMU
+> +main branch, after running tests.
+
+I think we could probably also usefully say
+
+"The QEMU project doesn't currently expect most developers to
+directly submit pull requests."
+
+just to flag up that our development model isn't like the
+currently-popular github/gitlab one where a PR is how you
+send contributions.
+
+> +
+> +QCOW
+> +----
+> +
+> +QEMU Copy On Write is a disk format developed by QEMU. It provides transparent
+> +compression, automatic extension, and many other advantages over a raw image.
+
+We want to be a bit careful here, because the "qcow" format
+is not something we recommend for new use -- "qcow2" is what
+you actually want.
+
+https://www.qemu.org/docs/master/system/qemu-block-drivers.html#cmdoption-image-formats-arg-qcow2
+
+> +
+> +QEMU
+> +----
+> +
+> +`QEMU (Quick Emulator) <https://www.qemu.org/>`_ is a generic and open source
+> +machine emulator and virtualizer.
+> +
+> +QOM
+> +---
+> +
+> +`QEMU Object Model <qom>` is an object oriented API used to define various
+> +devices and hardware in the QEMU codebase.
+> +
+> +Record/replay
+> +-------------
+> +
+> +`Record/replay <replay>` is a feature of QEMU allowing to have a deterministic
+> +and reproducible execution of a virtual machine.
+> +
+> +Rust
+> +----
+> +
+> +`A new programming language <https://www.rust-lang.org/>`_, memory safe by
+> +default. We didn't see a more efficient way to create debates and tensions in
+> +a community of C programmers since the birth of C++.
+
+:-)  but I think we should probably avoid the joke in our docs.
+
+> +
+> +System mode
+> +-----------
+> +
+> +QEMU System mode emulates a full machine, including its cpu, memory and devices.
+> +It can be accelerated to hardware speed by using one of the hypervisors QEMU
+> +supports. It is referenced as softmmu as well.
+
+https://www.qemu.org/docs/master/about/index.html already has
+text defining system emulation and user emulation, so we don't
+really need to re-invent new phrasing for those here.
+
+> +
+> +TCG
+> +---
+> +
+> +`Tiny Code Generator <tcg>` is an intermediate representation (IR) used to run
+> +guest instructions on host cpu, with both architectures possibly being
+> +different.
+
+I would say
+
+  TCG is the QEMU Tiny Code Generator; it is the JIT system we use
+  to emulate a guest CPU in software.
+
+That's enough for users to understand what it means (I hope); if
+they want to know more specifics like about the intermediate
+representation they can follow the link.
+
+> +
+> +It is one of the accelerator supported by QEMU, and supports a lot of
+
+"accelerators"
+
+> +guest/host architectures.
+> +
+> +User mode
+> +---------
+> +
+> +QEMU User mode allows to run programs for a guest architecture, on a host
+> +architecture, by translating system calls and using TCG. It is available for
+> +Linux and BSD.
+> +
+> +VirtIO
+> +------
+> +
+> +VirtIO is an open standard used to define and implement virtual devices with a
+> +minimal overhead, defining a set of data structures and hypercalls (similar to
+> +system calls, but targeting an hypervisor, which happens to be QEMU in our
+> +case). It's designed to be more efficient than emulating a real device, by
+> +minimizing the amount of interactions between a guest VM and its hypervisor.
+> +
+> +vhost-user
+> +----------
+> +
+> +`Vhost-user <vhost_user>` is an interface used to implement VirtIO devices
+> +outside of QEMU itself.
+
+thanks
+-- PMM
 
