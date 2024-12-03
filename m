@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92065E6C60B
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 05:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD5EE6C609
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 05:56:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tILsL-0003Ho-62; Tue, 03 Dec 2024 00:55:09 -0500
+	id 1tILtg-0003vH-Ko; Tue, 03 Dec 2024 00:56:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tILsI-0003FU-Mo; Tue, 03 Dec 2024 00:55:06 -0500
-Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
+ id 1tILte-0003ub-F1; Tue, 03 Dec 2024 00:56:30 -0500
+Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tILsH-0002hl-1y; Tue, 03 Dec 2024 00:55:06 -0500
-Received: by mail-vs1-xe2f.google.com with SMTP id
- ada2fe7eead31-4af4da7d22fso1623384137.0; 
- Mon, 02 Dec 2024 21:55:03 -0800 (PST)
+ id 1tILtd-0002yS-4K; Tue, 03 Dec 2024 00:56:30 -0500
+Received: by mail-vs1-xe2a.google.com with SMTP id
+ ada2fe7eead31-4af16d741dfso1070051137.3; 
+ Mon, 02 Dec 2024 21:56:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733205303; x=1733810103; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733205387; x=1733810187; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0UJL41LN7bOgTFb/UcyJ339NvrJyg7EnCLjS1qR13O8=;
- b=E8XqYkSicAfPHHX0swWD7S1StHcfzUUQetCm5BaY+R+VBCWGmkRmJ0PRqqLOTb7KKz
- BFdrEqlNl5YngpQhb5ysMc307vCKDCsVy/Hx0nsWxsI18VifjUq6VnhHwIpIr/eX24uV
- 4o3TkM2QiIU2hypjdbAooffnTnbMPwlF1B4wnz90AqiRyxqz6xaUKOyAVJUmJH5SFeqh
- 1X/HqMR/tEYATw5vHxol+RmdKFZLnAeXN/ZEZFid6VbHbRne9/65elnpk+vs4IMfEZ6z
- JJQiha/1XLCr+djEL1LFlqUTAAW4CI3cv9hALYblMzIEUafxfLI53zeS4tBHZhw9VZVL
- AMxQ==
+ bh=HCinEncFBuiY4obiFoWp8FUfxul26qD2FivgdMUgdvk=;
+ b=hwSmakeKPbLH9mvi1P/RIHLxfm8dH/dhNeULBdPKd5Bz48gJWXF/3akNPQ5+gXyPYo
+ /s8zry5VdfJjgGRZjXsre9LGKohRXEzjO7YT+RZcmbdvikLn3XgDpCHZmQ08VgCm+yMX
+ M49VTeVgW99+axjoLKUGP0dB37wzpw9YQLw2raYOAMPMqpZEWBzc6RtTCTPXZPJxdnmm
+ Ed7qmvb8zJImvmgiaK+O6l+VWBiYZeBZuWPIjO3oWR1ySh5zQfH2rv2YIYaRGb9iTtS1
+ KaVFrPgYIYZOZTYRx1YCZmB8GMB9R8hQbeQedQnP3dquhPzqAJWpAZo3W65Wmseyv1gP
+ q2bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733205303; x=1733810103;
+ d=1e100.net; s=20230601; t=1733205387; x=1733810187;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0UJL41LN7bOgTFb/UcyJ339NvrJyg7EnCLjS1qR13O8=;
- b=YyxqWKxaXrRXWLVoKN94LZfWKTGWt0BSnqlFt7IYwWHwEA1ufPo4fQUuWVL1VSMSmV
- 8FNNyjPD8YvCrlkHOHGdPKTPwVjJ86m9onnrHuRhTigzWHb9+4cgAFf+Hm7Qnri47NMm
- 33pXCVmXFSdxkFQzPAhJvhsz17BdvE3hnk0+ldhi7VJewsXpGKmfDSkMyEQUt0jofCS4
- mS/zhDHls6hLQjOL0BbZMy9HCpMqzAun80vAenHMLxOTc2FJf+fTgzhv8DUqUUxGBrGG
- 66Hw8EkSD3xlSwMtcU9OKN7ForBELUp84gsqo0KXn6zwhluVEkufn5umeq3RWpXRoPqB
- Xv0w==
+ bh=HCinEncFBuiY4obiFoWp8FUfxul26qD2FivgdMUgdvk=;
+ b=eb+CXb/iKAyeWZF4sddbDmLFyuEICDyvLrKFx0zIT4WNU34UVXrpxEoCd/W171gWPB
+ Gn9TqVPOrt2f/xVUJ2V2hA7yfNgejc4Y8kUytvb5Vdwwlth5PTim6C3XGrlMwUghl5gS
+ pnZv0D9T+T0keAu+2uzCGoQxdhUIv5c/8NyfnMQZ9LVphj0DSB6zJCjtX+xXx2L4Rb9a
+ V3yRwRKZHoInLHlz1nzx2f/Xexxx3zpO5VT6eQQC5fSWZB4sJGDnzKEfa9uKFK85sdqY
+ PmTm5oQiBVZoHbSpbvCGxgpB2LguR2J72+a/Vhn7FiaJbpe3aa4ovWLMFekuY3trsSor
+ 0xaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX77Gxq9yZLzfKVC7cp38FT993DFL2ZOWDyYTH19msB4+Yg/oDN6t5rEjtwU8PR+P4Nax3KLRDA89cj@nongnu.org
-X-Gm-Message-State: AOJu0YxeG2JgMbly2Gy761H1G6pJo4LmhHyd3gGBBZVRjQGvMGqXyWSu
- nOraIz+xN8ktfnnQlb6i9upHgjjvKGPkbJsy/ZIRljhFYLBkDvfNkhRA2ZlEzo7gT4Ml9aJz3eN
- WAyV51Pun1Uq6Gvu0Az8V+1/2Alw=
-X-Gm-Gg: ASbGncvwKJueEMH3qqmxsHAgu9bsUoVSanJuJurq+/3LYwj/eOffnoybBxhk0XzKqql
- kQfhpoo7VGeMyEcXpCDMwTkR62VeL7rjk
-X-Google-Smtp-Source: AGHT+IE/9gIT/rufhj/XYORe0+UfbuyXSCsg1mFd3I0N9k9t+3kb8w7uXA6PdJjK1nSiJxENlTdFjbJqvBdfBCfy104=
-X-Received: by 2002:a05:6102:2925:b0:4af:5f8d:660 with SMTP id
- ada2fe7eead31-4af96db79e2mr2286567137.0.1733205303005; Mon, 02 Dec 2024
- 21:55:03 -0800 (PST)
+ AJvYcCUNCJxAXCNncie7l9TnqYYHWR15PD/z017DcmNHZ5y3hGa1iOuZgt2DR+T/gwmalWpkzAYp74fO3AgS@nongnu.org
+X-Gm-Message-State: AOJu0Yzj/nBrNNs6LE/R3vRL7+yhTCnDqTurx/Wy4nm9a7RbHKDz9E5m
+ 9a85OTYwL+NoTgAf/v1e6VvITOip3SC7dGVdh5SlsIIpM0xZYzOdgqnXEL2Sj3v6LSt/UUJwdGe
+ 7HwRxP8KGEAqPLXKj0Vynee43Rgc=
+X-Gm-Gg: ASbGnctqpAO80cy/vLZVC2ujJtZ6l/LjsHoYT0UIlQnkhCQD6dFqU89mDiBwL/viyZc
+ EFTh+MRcN1K3KFTHXyHPlyndWuZaI6v+K
+X-Google-Smtp-Source: AGHT+IHwPnSgfLOhxzj4VRGvA1gpvPpyUg9qyOKbvNuG+svemZF39k/mUzYPCKZTQjLZPfcqBsCCWY/CkVtP5n2m4dM=
+X-Received: by 2002:a05:6102:6cc:b0:4af:56d1:5ccc with SMTP id
+ ada2fe7eead31-4af971b8c56mr2232203137.14.1733205387591; Mon, 02 Dec 2024
+ 21:56:27 -0800 (PST)
 MIME-Version: 1.0
 References: <20241129154304.34946-1-philmd@linaro.org>
- <20241129154304.34946-3-philmd@linaro.org>
-In-Reply-To: <20241129154304.34946-3-philmd@linaro.org>
+ <20241129154304.34946-4-philmd@linaro.org>
+In-Reply-To: <20241129154304.34946-4-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 3 Dec 2024 14:54:35 +0900
-Message-ID: <CAKmqyKN9kBakQqrXL4X6B1E0M_svmXMG25K=ZoRw=YEkdZrHTA@mail.gmail.com>
-Subject: Re: [PATCH-for-10.0 2/3] hw/char/riscv_htif: Explicit little-endian
- implementation
+Date: Tue, 3 Dec 2024 14:56:00 +0900
+Message-ID: <CAKmqyKN8VryKSyN5040o2Q21AuxQmCRjXuiSk1JCBv_e1TotpQ@mail.gmail.com>
+Subject: Re: [PATCH-for-10.0 3/3] hw/char/riscv_htif: Clarify MemoryRegionOps
+ expect 32-bit accesses
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
  Alistair Francis <alistair.francis@wdc.com>, 
@@ -75,8 +75,8 @@ Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,67 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Nov 30, 2024 at 12:43=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+On Sat, Nov 30, 2024 at 12:45=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> Since our RISC-V system emulation is only built for little
-> endian, the HTIF device aims to interface with little endian
-> memory accesses, thus we can explicit htif_mm_ops:endianness
-> being DEVICE_LITTLE_ENDIAN.
->
-> In that case tswap64() is equivalent to le64_to_cpu(), as in
-> "convert this 64-bit little-endian value into host cpu order".
-> Replace to simplify.
+> Looking at htif_mm_ops[] read/write handlers, we notice they
+> expect 32-bit values to accumulate into to the 'fromhost' and
+> 'tohost' 64-bit variables. Explicit by setting the .impl
+> min/max fields.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  hw/char/riscv_htif.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
+> Notes
+>
+> 1/ these variables belong to HTIFState but are declared statically!
+>
+>   static uint64_t fromhost_addr, tohost_addr, begin_sig_addr, end_sig_add=
+r;
+>
+> 2/ I believe a 64-bit implementation would simplify the logic.
+>
+> 3/ This is a non-QOM device model!
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  hw/char/riscv_htif.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
 > diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-> index 0345088e8b3..3f84d8d6738 100644
+> index 3f84d8d6738..db69b5e3ca7 100644
 > --- a/hw/char/riscv_htif.c
 > +++ b/hw/char/riscv_htif.c
-> @@ -29,7 +29,7 @@
->  #include "qemu/timer.h"
->  #include "qemu/error-report.h"
->  #include "exec/address-spaces.h"
-> -#include "exec/tswap.h"
-> +#include "qemu/bswap.h"
->  #include "sysemu/dma.h"
->  #include "sysemu/runstate.h"
->
-> @@ -212,11 +212,11 @@ static void htif_handle_tohost_write(HTIFState *s, =
-uint64_t val_written)
->              } else {
->                  uint64_t syscall[8];
->                  cpu_physical_memory_read(payload, syscall, sizeof(syscal=
-l));
-> -                if (tswap64(syscall[0]) =3D=3D PK_SYS_WRITE &&
-> -                    tswap64(syscall[1]) =3D=3D HTIF_DEV_CONSOLE &&
-> -                    tswap64(syscall[3]) =3D=3D HTIF_CONSOLE_CMD_PUTC) {
-> +                if (le64_to_cpu(syscall[0]) =3D=3D PK_SYS_WRITE &&
-> +                    le64_to_cpu(syscall[1]) =3D=3D HTIF_DEV_CONSOLE &&
-> +                    le64_to_cpu(syscall[3]) =3D=3D HTIF_CONSOLE_CMD_PUTC=
-) {
->                      uint8_t ch;
-> -                    cpu_physical_memory_read(tswap64(syscall[2]), &ch, 1=
-);
-> +                    cpu_physical_memory_read(le64_to_cpu(syscall[2]), &c=
-h, 1);
->                      /*
->                       * XXX this blocks entire thread. Rewrite to use
->                       * qemu_chr_fe_write and background I/O callbacks
-> @@ -324,6 +324,7 @@ static void htif_mm_write(void *opaque, hwaddr addr,
->  static const MemoryRegionOps htif_mm_ops =3D {
+> @@ -325,6 +325,10 @@ static const MemoryRegionOps htif_mm_ops =3D {
 >      .read =3D htif_mm_read,
 >      .write =3D htif_mm_write,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+>      .endianness =3D DEVICE_LITTLE_ENDIAN,
+> +    .impl =3D {
+> +        .min_access_size =3D 4,
+> +        .max_access_size =3D 4,
+> +    },
 >  };
 >
 >  HTIFState *htif_mm_init(MemoryRegion *address_space, Chardev *chr,
