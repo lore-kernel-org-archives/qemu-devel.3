@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FCA6E74AC3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 619AEE74AC8
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIY3o-0004xC-H7; Tue, 03 Dec 2024 13:55:48 -0500
+	id 1tIY5C-0005q7-EJ; Tue, 03 Dec 2024 13:57:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY3i-0004uG-9o
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:55:44 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY56-0005pn-KT
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:57:10 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY3g-0001Ki-Di
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:55:41 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY54-0001P0-HI
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:57:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=oHbrP/BozD/jXWwFZMeh9b/n5BqTPmqxwWpXUyYO/L8=; b=u6rZEWqV6K4ss3F
- Ib7xgms3pmzaah/buMwOy5Zq/joHGKsKJ7YJ/GC/ZkVk6tDHAgYRh5bw1jwpTy6Mf/LhWLln8LZDI
- KnoFc0GdloQZL0kgfVdn1BnKO+o2Y3ByMLS25ND0E/FJCKPJtcKd6D4hkmPsFUhjRIUeAib/VFIMI
- GI=;
-Date: Tue, 3 Dec 2024 19:58:43 +0100
+ List-Help; bh=JtQuQXgxX8XivLgD9rn7O6D+5V+sd7qLOheO0wYYznU=; b=qtvSr2Up08tSj+i
+ deWq9Jyet4lRY6feZQIwHo+62wUMJ0/ZoK6fci2kBFBMNmyeaPxrTnCFU48E9jn2xHIou59SCy103
+ mNFhNl710WV3Jt7q//GlmP0C1nQ4pR5XzGXQhsOWj4pAeJrtqIdo0HXS6fat5t+WoeyKN440WN6YJ
+ x0=;
+Date: Tue, 3 Dec 2024 20:00:05 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, 
- bcain@quicinc.com, richard.henderson@linaro.org, alex.bennee@linaro.org, 
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [RFC PATCH v1 00/43] Introduce helper-to-tcg
-Message-ID: <drtoe2le3d3ewaefgo6c5tsmvi3mkwwgoikv5iw5n4ivnwox4l@4zwasgbjv4pq>
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, bcain@quicinc.com,
+ alex.bennee@linaro.org
+Subject: Re: [RFC PATCH v1 08/43] include/helper-to-tcg: Introduce annotate.h
+Message-ID: <b6agwi4yjkq5cly3fzx2o5cygwoton7gujw4oecjxhepozchaw@njgrsygxz3ec>
 References: <20241121014947.18666-1-anjo@rev.ng>
- <73638525-4f0d-45a1-bdf8-f271fcc015d0@linaro.org>
+ <20241121014947.18666-9-anjo@rev.ng>
+ <0cc41877-c1fe-42ba-9a5f-b84563f25ba0@linaro.org>
+ <97cd2bab-d2e2-4998-81ed-2a359f4019b4@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <73638525-4f0d-45a1-bdf8-f271fcc015d0@linaro.org>
+In-Reply-To: <97cd2bab-d2e2-4998-81ed-2a359f4019b4@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -69,49 +71,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/11/24, Philippe Mathieu-Daudé wrote:
-> On 21/11/24 02:49, Anton Johansson wrote:
+> On 22/11/24 19:12, Richard Henderson wrote:
+> > On 11/20/24 19:49, Anton Johansson wrote:
+> > > Wrap __attribute__((annotate(str))) in a macro for convenient
+> > > function annotations.  Will be used in future commits to tag functions
+> > > for translation by helper-to-tcg, and to specify which helper function
+> > > arguments correspond to immediate or vector values.
+> > > 
+> > > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > > ---
+> > >   include/helper-to-tcg/annotate.h | 28 ++++++++++++++++++++++++++++
+> > >   1 file changed, 28 insertions(+)
+> > >   create mode 100644 include/helper-to-tcg/annotate.h
+> > 
+> > Is this really specific to helper-to-tcg, or might it be used for
+> > something else in the future?  In other words, does it belong in
+> > include/qemu/compiler.h?
 > 
-> >   create mode 100644 subprojects/helper-to-tcg/README.md
-> >   create mode 100755 subprojects/helper-to-tcg/get-llvm-ir.py
-> >   create mode 100644 subprojects/helper-to-tcg/include/CmdLineOptions.h
-> >   create mode 100644 subprojects/helper-to-tcg/include/Error.h
-> >   create mode 100644 subprojects/helper-to-tcg/include/FunctionAnnotation.h
-> >   create mode 100644 subprojects/helper-to-tcg/include/PrepareForOptPass.h
-> >   create mode 100644 subprojects/helper-to-tcg/include/PrepareForTcgPass.h
-> >   create mode 100644 subprojects/helper-to-tcg/include/TcgGlobalMap.h
-> >   create mode 100644 subprojects/helper-to-tcg/meson.build
-> >   create mode 100644 subprojects/helper-to-tcg/meson_options.txt
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForOptPass/PrepareForOptPass.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/CanonicalizeIR.h
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/IdentityMap.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/IdentityMap.h
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/PrepareForTcgPass.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/TransformGEPs.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PrepareForTcgPass/TransformGEPs.h
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PseudoInst.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PseudoInst.h
-> >   create mode 100644 subprojects/helper-to-tcg/passes/PseudoInst.inc
-> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgEmit.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgEmit.h
-> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgGenPass.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgGenPass.h
-> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgTempAllocationPass.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgTempAllocationPass.h
-> >   create mode 100644 subprojects/helper-to-tcg/passes/backend/TcgType.h
-> >   create mode 100644 subprojects/helper-to-tcg/passes/llvm-compat.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/passes/llvm-compat.h
-> >   create mode 100644 subprojects/helper-to-tcg/pipeline/Pipeline.cpp
-> >   create mode 100644 subprojects/helper-to-tcg/tests/cpustate.c
-> >   create mode 100644 subprojects/helper-to-tcg/tests/ldst.c
-> >   create mode 100644 subprojects/helper-to-tcg/tests/meson.build
-> >   create mode 100644 subprojects/helper-to-tcg/tests/scalar.c
-> >   create mode 100644 subprojects/helper-to-tcg/tests/tcg-global-mappings.h
-> >   create mode 100644 subprojects/helper-to-tcg/tests/vector.c
-> 
-> Just wondering, could we name the subproject C++ headers using the .hpp
-> suffix to have checkpatch easily skip them?
+> We already have there QEMU_ANNOTATE() since end of 2022
+> (use in commit cbdbc47cee, QEMU macro in d79b9202e4).
 
-Oh sure, not a problem.
+Oh this is very nice! I'll use QEMU_ANNOTATE() then! Thanks:)
+
 //Anton
 
