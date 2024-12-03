@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F820E74AC3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0574AE74AC8
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 18:53:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIXw9-00023n-6R; Tue, 03 Dec 2024 13:47:53 -0500
+	id 1tIY1H-0003k3-Hd; Tue, 03 Dec 2024 13:53:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXw4-0001xn-Bd
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:47:48 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY1B-0003eF-Ro
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:53:06 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIXvz-00008O-PH
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:47:45 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tIY18-0000lx-Ep
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 13:53:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=CklkM6S5h4Kst2DXfb2+yNUzhSDwHpfm+sATlT6rj5c=; b=KFuhrwVIR3J1vZr
- 0kQt7l7YtP7KZhM7+2UGJXgg4tovmFp0WoMsFcBU9lzZ0K5ypvqE0ZT2MffmHlmLqNsC2xxlWnqI/
- 2f9YeL++heTdqRr7cM26zTam6Wz8sO8HLRObCf3wFk2z7f449qZOoaaJCpBZPFCkkOpRIAcH0VQ7P
- 1I=;
-Date: Tue, 3 Dec 2024 19:50:45 +0100
+ List-Help; bh=v3PoHTf/4Z/AjnlRHwTw6gE8NWBMPO5n5omaGD5JVgg=; b=dIvi6D+FooXwj9i
+ sU5s1OzbeBcI8TVYw4CTsyflAQZlS/y76wTdNGsGv+M5VFwDVms4wZJvsRNmPNY9GSikoX6zweN0w
+ zrnSb1qyS1c1zh7rYouFtC1Z0jZBYudnB5NuaC+lA+NgTtqEv5Pp6soetHPZ7mMyowmTvrQGOKFFl
+ 8o=;
+Date: Tue, 3 Dec 2024 19:56:03 +0100
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, ale@rev.ng, ltaylorsimpson@gmail.com, 
  bcain@quicinc.com, philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [RFC PATCH v1 34/43] target/hexagon: Add get_tb_mmu_index()
-Message-ID: <uk4zvjo7222a5yox57yt5bdqwzz2u5dw7htd4oyl7eg4lizfid@xrrzbkeq7sfz>
+Subject: Re: [RFC PATCH v1 36/43] target/hexagon: Add temporary vector storage
+Message-ID: <gcp5xcypulziy2ixslvsiekwidedztxydvypyc6faz2ssbzx2i@ibcmjqjzgxwp>
 References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-35-anjo@rev.ng>
- <cef19610-7578-4e5f-809e-ab449fc7b710@linaro.org>
+ <20241121014947.18666-37-anjo@rev.ng>
+ <eaf906e2-3973-466b-8a2e-f7749e844968@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cef19610-7578-4e5f-809e-ab449fc7b710@linaro.org>
+In-Reply-To: <eaf906e2-3973-466b-8a2e-f7749e844968@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -69,42 +69,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/11/24, Richard Henderson wrote:
 > On 11/20/24 19:49, Anton Johansson wrote:
-> > Adds a functions to return the current mmu index given tb_flags of the
-> > current translation block.  Required by helper-to-tcg in order to
-> > retrieve the mmu index for memory operations without changing the
-> > signature of helper functions.
+> > Temporary vectors in helper-to-tcg generated code are allocated from an
+> > array of bytes in CPUArchState, specified with --temp-vector-block.
+> > 
+> > This commits adds such a block of memory to CPUArchState, if
+> > CONFIG_HELPER_TO_TCG is set.
 > > 
 > > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > > ---
-> >   target/hexagon/cpu.h | 12 ++++++++++++
-> >   1 file changed, 12 insertions(+)
+> >   target/hexagon/cpu.h | 4 ++++
+> >   1 file changed, 4 insertions(+)
 > > 
 > > diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-> > index 764f3c38cc..7be4b5769e 100644
+> > index 7be4b5769e..fa6ac83e01 100644
 > > --- a/target/hexagon/cpu.h
 > > +++ b/target/hexagon/cpu.h
-> > @@ -153,6 +153,18 @@ static inline void cpu_get_tb_cpu_state(CPUHexagonState *env, vaddr *pc,
-> >       }
-> >   }
-> > +// Returns the current mmu index given tb_flags of the current translation
-> > +// block.  Required by helper-to-tcg in order to retrieve the mmu index for
-> > +// memory operations without changing the signature of helper functions.
-> > +static inline int get_tb_mmu_index(uint32_t flags)
-> > +{
-> > +#ifdef CONFIG_USER_ONLY
-> > +    return MMU_USER_IDX;
-> > +#else
-> > +#error System mode not supported on Hexagon yet
+> > @@ -97,6 +97,10 @@ typedef struct CPUArchState {
+> >       MMVector future_VRegs[VECTOR_TEMPS_MAX] QEMU_ALIGNED(16);
+> >       MMVector tmp_VRegs[VECTOR_TEMPS_MAX] QEMU_ALIGNED(16);
+> > +#ifdef CONFIG_HELPER_TO_TCG
+> > +    uint8_t tmp_vmem[4096] QEMU_ALIGNED(16);
 > > +#endif
-> > +}
 > > +
-> >   typedef HexagonCPU ArchCPU;
-> >   void hexagon_translate_init(void);
+> >       MMQReg QRegs[NUM_QREGS] QEMU_ALIGNED(16);
+> >       MMQReg future_QRegs[NUM_QREGS] QEMU_ALIGNED(16);
 > 
-> I suggest placing this somewhere other than cpu.h, as it's private to the
-> translator and its generated code.
+> Wow.  Do you really require 4k in temp storage?
 
-Makes sense!
+No, 4k is overkill used during testing.  But consider that Hexagon uses
+128- and 256-byte vectors in some cases so if the emitted code uses say
+5 temporaries in its computation we end up at 1280 bytes as an upper
+bound.
+
+Two ideas here, we can:
+
+  1. Allow users to specify an upper bound on vector memory, and abort
+     translation of helpers that surpass this, and;
+
+  2. Emit maximum number of bytes used for vector temporaries to a
+     macro.
 
 //Anton
 
