@@ -4,94 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4ADCE64A85
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 12:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 577C1E64A85
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 12:21:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIRsW-0002ie-3p; Tue, 03 Dec 2024 07:19:44 -0500
+	id 1tIRtd-0003Tl-QS; Tue, 03 Dec 2024 07:20:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1tIRsU-0002iG-88
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 07:19:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1tIRsR-0006qE-Sw
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 07:19:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733228377;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=fYbMlh2KrQvHJ8alP8dwH3CcsP4voIyLKOxOhu3uBqY=;
- b=PoS+ZepvhtXei0QrZrfDhLLiKLtxIgOUmRT/JRVHQuNtbkPUfO6Niz60BcT/0/cyz9ItHr
- KfdQYbWApzuhjac6mncdmqpCzymgZdj+v3PXYf7Y6/UUKzSvWgSrCtBIDvS0cP5bgqDees
- RS9krbRh4JyMxNN4hZ26LX06z3YDe6Q=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-woeL8iJYPu-RQOa7RD5lGg-1; Tue, 03 Dec 2024 07:19:36 -0500
-X-MC-Unique: woeL8iJYPu-RQOa7RD5lGg-1
-X-Mimecast-MFC-AGG-ID: woeL8iJYPu-RQOa7RD5lGg
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7b67a8cd4d2so706601685a.1
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 04:19:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733228376; x=1733833176;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fYbMlh2KrQvHJ8alP8dwH3CcsP4voIyLKOxOhu3uBqY=;
- b=OzySgG62RsE/bMuCIgivu5v7BUl8xPKmTmfTGCipHY2F8fGEBTEj0FnkZLIgwY7tMJ
- jK/DtAEmmn1onxmzWv5AhvF8O9iyRniEVBnl4FrBZoURsdZYnoazHVJacUrkeQ0uIUNf
- 7v/BLDRu2M7izueQmm2gUyjsCwzUpGaRjknTIXgM8f5Ddr6N1wT+86v3WF7Eiym7Q0Va
- lw4Xn6EtEbmoQDJ3zK8P+vQL01ycEnvhg1sr+zXUP+h21FAxleVsQGS06QA0//W7U5y0
- et7rnpWViH/rj2QbJuPkScOdSXViL5BTPf/yYrCYAzvZHRd8bo7NRbesm4csDwmVkZP+
- JH/g==
-X-Gm-Message-State: AOJu0YzThiTAZT291RIgNaOgwCR15VLsawz4HF8c8SptkIgpAFfilDnq
- 2lpR535KCAFfH7FuzSnwHlZn0OWJJVFnu4SMGWCBgvWGpkmTQ6ihljO6hgm/ReCQwIsiNdletBd
- RDTimVltILOunn3HYSr7H6QIPGTy7cxHk+kiyP8oDoLcIFFvYZacr
-X-Gm-Gg: ASbGncsqWOFmld+AYwSNJuXkC4jKEGIjiMSHwUmmG+qdpGimGvpOL+zHdoq72xCXJ3/
- 4gY3Htv6fI7vz8l8WQErA6h68im5j50gaQqO9e8n0+Hsr2zqWrsP8W+TCgzNq3Y4ZHKRrOeeYQU
- F2NWXaUBFh+uGvBOqaRgzIpMPjF1OxJRdd0unptg6rJc3MTV7wVDJba4Hzzht0BrEbdXffxIorS
- B5SjC5SZOK+wtKslvyCD9h2T+RHzP7VkSEgD+V6AHo7TInleS+uAC4jjUo8OmHVmYwbMbwy0839
- WaJJlGk4LWHK7kYEM3yZaRF3OtnsyfNFUcFw
-X-Received: by 2002:a05:620a:4108:b0:7b6:913f:3df3 with SMTP id
- af79cd13be357-7b6a61ca1d2mr235272585a.47.1733228376402; 
- Tue, 03 Dec 2024 04:19:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHhBmOiBqlA6CAHNu/sB+PO1xSri1XTEQ42ZFtQgifXbwpHV81jboli47uspTkz+IRBWzR7Fw==
-X-Received: by 2002:a05:620a:4108:b0:7b6:913f:3df3 with SMTP id
- af79cd13be357-7b6a61ca1d2mr235271285a.47.1733228376140; 
- Tue, 03 Dec 2024 04:19:36 -0800 (PST)
-Received: from rh.redhat.com
- (p200300f6af0bca008282df582fad0b68.dip0.t-ipconnect.de.
- [2003:f6:af0b:ca00:8282:df58:2fad:b68])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b6849aac52sm504203285a.92.2024.12.03.04.19.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 04:19:35 -0800 (PST)
-From: Sebastian Ott <sebott@redhat.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Sebastian Ott <sebott@redhat.com>,
- Zhenyu Zhang <zhenyzha@redhat.com>
-Subject: [PATCH v2] pci: ensure valid link status bits for downstream ports
-Date: Tue,  3 Dec 2024 13:19:28 +0100
-Message-ID: <20241203121928.14861-1-sebott@redhat.com>
-X-Mailer: git-send-email 2.47.0
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tIRtc-0003TI-4r
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 07:20:52 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tIRta-00077y-9c
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 07:20:51 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id DC3CC1F445;
+ Tue,  3 Dec 2024 12:20:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733228448; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XPT0VQpyim30XrqbiJF5XjnfgfiRaPqibvHaxUJDHWQ=;
+ b=DZLxYjExv7/TgDm5KJJrMp0Qr5TNKttOJMKuN6o1nkDVHYBKdz8vAet5v2uL9GzplTCUVN
+ NHEJVH4+ckYaL4Q1IKrPcowRlyBnyAeB/KzsXfy/WBNcBTKRLD2OrzOF0sQF02hK9cCGsE
+ AlcJE5Qb4xm3DvfFX9AphI8cs61vCIk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733228448;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XPT0VQpyim30XrqbiJF5XjnfgfiRaPqibvHaxUJDHWQ=;
+ b=1obVTjHrMJtcUMxdcoWO4TVu308Dx91cqdHS/UlgyK852S5zwAiaplEgZsweLO7fKT7D1A
+ d6JLsV54Ez8Uq9CA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733228447; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XPT0VQpyim30XrqbiJF5XjnfgfiRaPqibvHaxUJDHWQ=;
+ b=y+tKGiv7CIpxBEYTmhf9Q8Og7nDNRmIylvrKW8ShKuoHR6gR/YPzfR+m8em1vxsT3eNE8f
+ eB+EE8poML3tZLgvfuB1nWbbMjsVOlRXhNFmjGUZg/pEVbXTFrhsvLPPzLE7tz6as46Ugv
+ /BHNP5iTEv7Kd4udIEpbrXnvRotRCH0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733228447;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XPT0VQpyim30XrqbiJF5XjnfgfiRaPqibvHaxUJDHWQ=;
+ b=S93MAcHJpHahj5RRa1tl/1O92W5G5JLQ35yNt/WvGcv2sU+wfh1zJ/X9uNne7dczgOsKcN
+ 9KFEopoy0+AXVCDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 61DA213A15;
+ Tue,  3 Dec 2024 12:20:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id f20zCp/3TmdPCQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 03 Dec 2024 12:20:47 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Peter Xu
+ <peterx@redhat.com>
+Cc: Yong Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 0/5] Guestperf: miscellaneous refinement and enrichment
+In-Reply-To: <Z06866qR0z9n2BgP@redhat.com>
+References: <cover.1729562974.git.yong.huang@smartx.com>
+ <87sesmdfl4.fsf@suse.de>
+ <CAK9dgmZvj4W2EBxp1_TcdYs3q2aqaRZGZCAk=FRJk-PaB9y_fw@mail.gmail.com>
+ <87v7w6jkc9.fsf@suse.de> <87plmejgtb.fsf@suse.de>
+ <CAK9dgmbHL+O34+E3ykDdAunap+Ruubm7ysisrMags6TN25BiNQ@mail.gmail.com>
+ <Z04PTe4kCVWEQbPL@x1n> <Z06866qR0z9n2BgP@redhat.com>
+Date: Tue, 03 Dec 2024 09:20:44 -0300
+Message-ID: <875xo1j6ub.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCPT_COUNT_THREE(0.00)[4]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,59 +123,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCI hotplug for downstream endpoints on arm fails because Linux'
-PCIe hotplug driver doesn't like the QEMU provided LNKSTA:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-  pcieport 0000:08:01.0: pciehp: Slot(2): Card present
-  pcieport 0000:08:01.0: pciehp: Slot(2): Link Up
-  pcieport 0000:08:01.0: pciehp: Slot(2): Cannot train link: status 0x2000
+> On Mon, Dec 02, 2024 at 02:49:33PM -0500, Peter Xu wrote:
+>> On Sat, Nov 30, 2024 at 10:01:43PM +0800, Yong Huang wrote:
+>> > On Fri, Nov 29, 2024 at 9:44=E2=80=AFPM Fabiano Rosas <farosas@suse.de=
+> wrote:
+>> For the stress.c warnings/error, I saw another one warning with gcc when
+>> built it locally, then I found Fabiano's CI run also has it:
+>>=20
+>> https://gitlab.com/farosas/qemu/-/jobs/8504697347
+>>=20
+>> Which has:
+>>=20
+>> [3381/3611] Linking target tests/migration/stress
+>> /usr/bin/ld: /usr/lib64/libglib-2.0.a(gutils.c.o): in function `g_get_us=
+er_database_entry':
+>> (.text+0xeb): warning: Using 'getpwnam_r' in statically linked applicati=
+ons requires at runtime the shared libraries from the glibc version used fo=
+r linkign
+>> /usr/bin/ld: (.text+0x2be): warning: Using 'getpwuid' in statically link=
+ed applications requires at runtime the shared libraries from the glibc ver=
+sion used for linking
+>> /usr/bin/ld: (.text+0x134): warning: Using 'getpwuid_r' in statically li=
+nked applications requires at runtime the shared libraries from the glibc v=
+ersion used for linking
+>>=20
+>> Feel free to look at it too if you like. Nothing should be relevant to y=
+our
+>> changes, so I think it could be there for a while when compilers upgrade.
+>
+> Those messages are mostly harmless, especially in the stress scenario, and
+> can't practically be eliminated:
+>
+>   https://gitlab.gnome.org/GNOME/glib/-/issues/2019
 
-There's 2 cases where LNKSTA isn't setup properly:
-* the downstream device has no express capability
-* max link width of the bridge is 0
-
-Move the sanity checks added via 88c869198aa63
-("pci: Sanity test minimum downstream LNKSTA") outside of the
-branch to make sure downstream ports always have a valid LNKSTA.
-
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
----
- hw/pci/pcie.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 0b455c8654..1b12db6fa2 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -1113,18 +1113,22 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
-         if ((lnksta & PCI_EXP_LNKSTA_NLW) > (lnkcap & PCI_EXP_LNKCAP_MLW)) {
-             lnksta &= ~PCI_EXP_LNKSTA_NLW;
-             lnksta |= lnkcap & PCI_EXP_LNKCAP_MLW;
--        } else if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
--            lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
-         }
- 
-         if ((lnksta & PCI_EXP_LNKSTA_CLS) > (lnkcap & PCI_EXP_LNKCAP_SLS)) {
-             lnksta &= ~PCI_EXP_LNKSTA_CLS;
-             lnksta |= lnkcap & PCI_EXP_LNKCAP_SLS;
--        } else if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
--            lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
-         }
-     }
- 
-+    if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
-+        lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
-+    }
-+
-+    if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
-+        lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
-+    }
-+
-     pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA,
-                                  PCI_EXP_LNKSTA_CLS | PCI_EXP_LNKSTA_NLW);
-     pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA, lnksta &
--- 
-2.42.0
+Although harmless, we can't have them showing up during the
+build. Should we go back to not building stress.c by default? Another
+option (which I prefer) would be to stop using glib in stress.c, it
+doesn't look like it would be much work to do that.=20
 
 
