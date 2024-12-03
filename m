@@ -4,99 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3E5E64ABB
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8923DE69EA6
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 15:40:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIUs4-0004aY-3z; Tue, 03 Dec 2024 10:31:28 -0500
+	id 1tIV08-0006C2-Aa; Tue, 03 Dec 2024 10:39:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tIUs2-0004Wz-04
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:31:26 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV06-0006Bn-Bd
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:39:46 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tIUs0-0000Aq-1a
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:31:25 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-aa55171d73cso1186976266b.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:31:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIV04-0000yB-RY
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 10:39:46 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-434a1fe2b43so51221225e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 07:39:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733239882; x=1733844682; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9G5vw0Q1hHCT+GpjGi54EBWFYEF9GHjKcNrof/uRrvA=;
- b=gR96lEsAeX8R8VeegFrb8kfqBSzPAIMEdoEq0MfLQj69iBBa8Ejbr0fnEP0z0kQ5AK
- /kH8yiJtJjgL7Vx2nkREsRStADsVBtqx4VAinVhEFR3Q57LIs5d135rxkKR1+mLhndLS
- dAvCfihlBwr+vmMYpZxpqQjIVUjZoKWKr9taW8v3kmMRcuii9bWgmspiexBzsnZndq3z
- 3vzxl/sz+0l+xApKh0vPfxEacgrGxrsTn/o38FmWDcJGfpL0eqreHwxr4N77+aAfwB1D
- Twnt8jPKTRiws/fmOHXkhybqrt3YhzuhgviuOkLwRA7HRXVdiMEfy4/UMWdRT6q2v4r4
- HACA==
+ d=linaro.org; s=google; t=1733240383; x=1733845183; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wD5Ww32SqsbLurZC3NteIq86Z3QBn4l0SlXxCzvawy8=;
+ b=trQsbMDLsjOvu4jUWLhNu4J7e2g1cz+CSPSGqoDlg7XXOhiFoMHL7wtrvkxe13RTSW
+ F/ByZWgDRVIOGewLWLDvYDDRhzI+U/9mXk+q7zTzZvNoIC6+sS8ngKS72n7MEAI/TKAH
+ IaAFfClDfYCC3vMsr5JvzWFtJ1JF+iY6loFuhevAXUTYJQR1/Nr3jcMzPJYcW7eupDb9
+ Xe08KaEUCg1KdFjjmFqVK4hesAV2gUoLwI11tFkL1R0F46ga246dvwdckx6xFLX5Tt27
+ PFb4XCEvpsFaGGvgsFK4rpgLMcipgAYCXX9UL85SWwCjoynINZPkihRa5SfblbzditL7
+ ktwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733239882; x=1733844682;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9G5vw0Q1hHCT+GpjGi54EBWFYEF9GHjKcNrof/uRrvA=;
- b=WsUcEtPSB5Rreqg3dg8RVHO9yGDRaEjh4RfSUpBCGejoFGvBmkInXj2IbrE/Lvt/cM
- 7z5ke6m1KMbikVaAcfpNgyxEkON6Gi7AQqr+lWSBVquAhZRRr898GS65LK0s3+3TY1FS
- ZO8UIBzJ4560Oxbrm9aKWvY+8H3r90qkVeV3Nc9wWDlWVyXLGReobVWLk+7zT1FpV99f
- 51IZ+j2esH12evuv1lK4Jlmu5I/4oAUAXUIXOCv02KNESy9vgZTtINfDSBeETO8qTE7I
- 4QDx3yeB1DleuIILDdbHfnzGHYXF5t8uX894768X6eg8TkebrGLOmJOBU9GYsV97cdYp
- fWSA==
+ d=1e100.net; s=20230601; t=1733240383; x=1733845183;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wD5Ww32SqsbLurZC3NteIq86Z3QBn4l0SlXxCzvawy8=;
+ b=dGjxnFRXjkZgFk6DUwz7mg6+MJSDbRpXiiE2bQI6H8TRA1uY04XnmfQb06cpcnhWHn
+ GGwR/wXU+uIBKI7OgKppkuE736F6BWklmE7qiyGYo2H95eSLE143baaVhIwsb0TyUAhf
+ FgIxKELa3S/UjeLWlMRnbRkVNrkczNyVMZj5BZro0Tqdx9YfAOyTap/w05NB9g017QYq
+ NEbaEY+u6cdHuCGMxA6sXOiDeAWyGk7OUmER4DjbpYQGtyy8CgC1biynBwTZE+xTxO7r
+ ko8yRy5/ym0exS14oz5ZfPJuYD3ZdCY0xQ97zQRiTbyl8I3Y+owdOE47kPWV41Mk2WsK
+ fO9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUF/8fy/Nj2A6nRFYNPyP+qo9hWkXerPLOLyez1ff2hyrhwtMO+D3HK1qx9ImxbPRQCOXQ2vFTUp0Kf@nongnu.org
-X-Gm-Message-State: AOJu0YwMyIbaRRCwZ9Rew6KgJ3kkpYh2EIMHCwteKsB6fXIeZ8Nswi/U
- rIkT9/dUoCIk3xHcvwguQU1nTLs5Q1omJ/CIy8A6rdfzyabh5y3NgxtABAVMPow=
-X-Gm-Gg: ASbGncupRJ12zzlxlpnZqWEAcj4SHEmRGtZ6OclT26xl9GbTq+ahZ4L4mbaLnmaCSQN
- H0KxamT73z9UxzAWAnmxVo7GKmBMafqw5jZ7wolSoohF1SkheJWFQkdnNTH4xtOYXGHTWjqScTl
- HlzGZ+KSeKqBmw2Ze+sxXYFY6kl+8c2OCpMloyvc1p7pUVra+nuiV4WwA2tpETeLZSulo+lf1fI
- rBweOkqEywwCv1nuPYm1ii0yUYZ8hY6QB7s6XwGWpVfbAp6
-X-Google-Smtp-Source: AGHT+IGnC4/ZViz2f2iAGo8NiK6ReCBffZCtpUXTfklQifFsxWtQ932Pim7xVgT+Aj7KPxExTb7NjA==
-X-Received: by 2002:a17:907:784a:b0:aa5:3c57:c407 with SMTP id
- a640c23a62f3a-aa5f72cb6b8mr312657366b.16.1733239882183; 
- Tue, 03 Dec 2024 07:31:22 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa5996c1408sm622166466b.15.2024.12.03.07.31.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 07:31:21 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 827EA5F89C;
- Tue,  3 Dec 2024 15:31:20 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>,  Marcin Juszkiewicz
- <marcin.juszkiewicz@linaro.org>,  qemu-devel@nongnu.org,  =?utf-8?Q?C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater
- <clg@kaod.org>,  Troy Lee <leetroy@gmail.com>,  Alistair Francis
- <alistair@alistair23.me>,  Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>,  qemu-arm@nongnu.org,  Paolo
- Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Steven Lee <steven_lee@aspeedtech.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,  Joel Stanley
- <joel@jms.id.au>,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH v2] tests/functional/aarch64: add tests for FEAT_RME
-In-Reply-To: <b9e375ad-2b71-48a4-8e97-2cdced17ea79@linaro.org> (Gustavo
- Romero's message of "Tue, 3 Dec 2024 12:02:03 -0300")
-References: <20241128213729.1021961-1-pierrick.bouvier@linaro.org>
- <4b3180bd-8054-4431-a594-0445ce4837aa@linaro.org>
- <5620efa2-98c6-4613-b866-67e91ac6acf8@linaro.org>
- <CAFEAcA-xa1AKf2GAv7go5wdu+Td=4jf7Nriin-Oe3S6qEV6X0g@mail.gmail.com>
- <fd7ad48e-1e72-4735-8064-7039eedc00ae@linaro.org>
- <87ser6c5be.fsf@draig.linaro.org>
- <b9e375ad-2b71-48a4-8e97-2cdced17ea79@linaro.org>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Tue, 03 Dec 2024 15:31:20 +0000
-Message-ID: <87bjxsdbqv.fsf@draig.linaro.org>
+ AJvYcCUj3t0I97jlnU3GAxEInbPYMaThQXuCada6xMPV/jFmPbubf6EN68SlwC9ECIRZXW0hRNt4D+0bZnTD@nongnu.org
+X-Gm-Message-State: AOJu0YzdIesyf3FbSb/0WCieEzoBi4odlyXZh7ky0/5dc4wax7sJj89B
+ c1gLB8SPynRUveT8SYizBWE66M+ycBqcye7NCWWzrEcK290kQxIH/tWZprZgloA=
+X-Gm-Gg: ASbGncsCj5FsXiQEYVcctYMPh6xnvwlk3j7ZZoyMZkeDz8oQZp44SNMtn6XhDvhvik2
+ 3tmVDD5PZnPJED7rYocr2cKK6sziz3TP9hbpzUtUkwOgNHElbOo67VmM0gTkMJFexTiVEHrhLFl
+ pP+vx6eTs3nk69OznDLFFeWw6N+zDY6x0JvVOl4ZStlNKb6wWwAHjSskgMgm74XX+NGRZdkPE4k
+ XzxGHCqrmC8zO9b6hG9T/raLnNtQ3IXPRwoX3T57So1RNVk3K7mnIemmQ1fzENELw==
+X-Google-Smtp-Source: AGHT+IG5lTiZpLGWsDAfbvU/2a+K/4jrPX1DXjGGbL3KCUZszSzHPNUwbRBYK5UMebEmCmSneI0nUg==
+X-Received: by 2002:a05:600c:3509:b0:434:9c60:95a3 with SMTP id
+ 5b1f17b1804b1-434d09b50b1mr26758815e9.11.1733240383108; 
+ Tue, 03 Dec 2024 07:39:43 -0800 (PST)
+Received: from [192.168.69.223] ([176.187.209.146])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434b0d9bc91sm199500635e9.9.2024.12.03.07.39.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Dec 2024 07:39:42 -0800 (PST)
+Message-ID: <d310853a-2d74-4fdc-bbbb-85d2a2c43fc4@linaro.org>
+Date: Tue, 3 Dec 2024 16:39:41 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/core/machine: diagnose wrapping of maxmem
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20241127114057.255995-1-berrange@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241127114057.255995-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,105 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
+On 27/11/24 12:40, Daniel P. Berrangé wrote:
+> The 'maxmem' parameter parsed on the command line is held in uint64_t
+> and then assigned to the MachineState field that is 'ram_addr_t'. This
+> assignment will wrap on 32-bit hosts, silently changing the user's
+> config request if it were over-sized.
+> 
+> Improve the existing diagnositics for validating 'size', and add the
+> same diagnostics for 'maxmem'
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   hw/core/machine.c | 10 +++++++++-
+>   1 file changed, 9 insertions(+), 1 deletion(-)
 
-> Hi Alex,
->
-> On 12/2/24 15:23, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>=20
->>> On 12/2/24 02:57, Peter Maydell wrote:
->>>> On Sun, 1 Dec 2024 at 18:09, Pierrick Bouvier
->>>> <pierrick.bouvier@linaro.org> wrote:
->>>>>
->>>>> Hi Marcin,
->>>>>
->>>>> On 12/1/24 05:34, Marcin Juszkiewicz wrote:
->>>>>> W dniu 28.11.2024 o 22:37, Pierrick Bouvier pisze:
->>>>>>> This boot an OP-TEE environment, and launch a nested guest VM insid=
-e it
->>>>>>> using the Realms feature. We do it for virt and sbsa-ref platforms.
->>>>>>>
->>>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>>>
->>>>>>> diff --git a/tests/functional/meson.build b/tests/functional/meson.=
-build
->>>>>>> index 5c048cfac6d..b975a1560df 100644
->>>>>>> --- a/tests/functional/meson.build
->>>>>>> +++ b/tests/functional/meson.build
->>>>>>> @@ -13,6 +13,8 @@ endif
->>>>>>>      test_timeouts =3D {
->>>>>>>        'aarch64_aspeed' : 600,
->>>>>>>        'aarch64_raspi4' : 480,
->>>>>>
->>>>>>> +  'aarch64_rme_virt' : 720,
->>>>>>
->>>>>> Took 2974.95s on M1 Pro macbook.
->>>>>>
->>>>>>> +  'aarch64_rme_sbsaref' : 720,
->>>>>>
->>>>>> This one needed 2288.29s.
->>>>>>
->>>>>>>        'aarch64_sbsaref_alpine' : 720,
->>>>>>
->>>>>> Have to check cause timed out.
->>>>>>
->>>>>>>        'aarch64_sbsaref_freebsd' : 720,
->>>>>>
->>>>>> 331.65s
->>>>>>
->>>>>> So RME tests probably need longer timeouts or would not run at all.
->>>>>>
->>>>>
->>>>> By any chance, are you running those tests in debug mode?
->>>>> It seems to me that CI is running functional tests with optimized
->>>>> builds, so I'm not sure we want to support debug "times" here.
->>>> We do need to support debug times, because a common developer
->>>> use case is "doing a debug build, run 'make check-functional'
->>>> to check whether anything is broken. The debug times also
->>>> are useful because the CI runners can have highly variable
->>>> performance -- if a test is slow enough to hit the timeout
->>>> for a debug build locally, it's probably going to also hit
->>>> the timeout at least sometimes in CI.
->>>>
->>>
->>> I understand the scenario, but given how slow debug builds are, it
->>> would probably be faster to advise developer to recompile in release
->>> mode.
->>> The overall time of compile + test is slower than waiting for debug.
->>>
->>> Beyond using a debugger, what is the advantage to compile with -O0?
->> --enable-debug
->>    - enables -00 with -g3 for symbols
->>    - and enables additional checks to validate TCG
->
-> hm, do we ever used -g3 for --enable-debug?
->
-> https://gitlab.com/qemu-project/qemu/-/blob/master/configure?ref_type=3Dh=
-eads#L749
->
-> I'd love to use -g3 instead of only -g for having the macro symbols.
-
-Hmm yeah, I tend to use extra-cflags with it as well.
-
->
-> In my builds I use --extra-cflags=3D"-g3" to have it but would like to dr=
-op it.
->
-> unless I'm missing some other change in the flags down the lane...
->
->
-> Cheers,
-> Gustavo
->
->> You can use --enable-debug-info for just debug info without the overhead.
->>=20
->>>
->>>> thanks
->>>> -- PMM
->>=20
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Patch queued, thanks.
 
