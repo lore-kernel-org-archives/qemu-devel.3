@@ -4,93 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88AABE6C619
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 08:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D97BE6C617
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 08:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tION4-0002A1-LH; Tue, 03 Dec 2024 03:35:02 -0500
+	id 1tIOOW-0002wF-5N; Tue, 03 Dec 2024 03:36:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tION2-00029Y-W4
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:35:01 -0500
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tIOOU-0002vo-72
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:36:30 -0500
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tION1-0004Dd-0H
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:35:00 -0500
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-53df6322ea7so8946825e87.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 00:34:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733214896; x=1733819696; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cXhmZFZ2wYMPP+KqgqlRsWgRPB4GDgQF4G7WusQflsQ=;
- b=zPvIHGYOJgidxX+kjpcP9skSHJYnIzQ6e2JnR51HlnHtb18oQBN6dW9qoaGzEoGsbV
- jN7Q6y4+L6W5InUWRzhRFqGAjuLFBMVCmehmHxBzQqa00yoKCxhGHcIZNO9qbc+GBX/v
- NR+O30n6z+IgDiIfFHje6u/7jPlZKsC5JZD9c4L3E11OVHE2X7drueozOccFp/yhItJc
- NSrOCMdYKjUWvoFXHgCUWeM699zDu/P1CrbZzX94o0dHU6dmUpujcOBUkyHrJoFho9qU
- PNdBtYttpUPrs+Vlp0CP+Qi5Gstuv6U5cvmsF1DDROu8/+qg2e/7PtmQpVBmZE0xsgaI
- b+NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733214896; x=1733819696;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cXhmZFZ2wYMPP+KqgqlRsWgRPB4GDgQF4G7WusQflsQ=;
- b=KHzb/K1L1kvfirUqoGjJEJBJ2/o7BHlC7vd6YiOGhZWlW5P4qcHCpGYHQf67xOFIxn
- pSSUooJoOOQkHCXmkrg5tLWJ13LeLpf0xh6rbM5wD+Gwa7mvOQUvKqGEb4HFNiWf7qn2
- 958T6t++yvotjrH6/pGIpkiZPDEujcDwAY+FPAxRybp08mGQCoSVZqxfAyxsesDayEEg
- nn+UIipeR4A1qkXvg8yp2MEAqc2HJR5UHueJNuTNKaLIWmnBp48DVURCyP/+S0l9IyCq
- lGnFcuFW7s+v1qkOesvgk8AkG4P355L/9ZlH2FVHZs2V7jJ4a3zCECh5AjEOmAQXEvYY
- KwjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXWoZHawoKOU42dJyCMz3N/CKpvLNwQl+oQv7IWhSP3Ugx85B7t+FtMEaMK2sXbWKkWitj64v0+nChV@nongnu.org
-X-Gm-Message-State: AOJu0YxC6O2JnPaGtWpcdOOeoET6B1tJ6/lEeuH+5Hq0kGQzXQBxjt+x
- GQk1A8dujkcTIILM8FlJfszLnc/4aVX2kAbYPC0kheSuh+uXEmZAfHNbE1HyeJo=
-X-Gm-Gg: ASbGncvuwbvzABzQaphA4877OR1thsPKaXPlNcrrQhtVSJ4199gA/psTQhXIOijgo+a
- CrQgkYjfWaNAUq/EfzCfJvBgxfyW7aaRgtysw9zEaERTKbj3m5rBg11Lpj6A/ZM4jZ4uwcqMJZx
- OzHOn3aB9XML3LM7d+oj7l38UJB8K+1mKOWWhJInYAJPLN+cr5EiFmMjjX0rSHsFHeokSHycuzb
- 71h5oC0CKnFHLcvMW94xS/bTAoR79qR47o3ON6/r1ihTKde++UM/lbBXWDuVdPZkw==
-X-Google-Smtp-Source: AGHT+IEp5PD/s5FHXnCMuKVRACbPB1lyzPEVVbrqWbkx8pZZ0+aLxfEQK1fdpjpBv8IHv6dvoqfwhQ==
-X-Received: by 2002:a05:6512:3d26:b0:53d:dc3c:2595 with SMTP id
- 2adb3069b0e04-53e12a319f3mr1274219e87.44.1733214896329; 
- Tue, 03 Dec 2024 00:34:56 -0800 (PST)
-Received: from [192.168.69.223] ([176.187.209.146])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa5996c19fasm587299266b.34.2024.12.03.00.34.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 00:34:55 -0800 (PST)
-Message-ID: <6d74743c-d79a-4bc5-8c82-fa35bdacc469@linaro.org>
-Date: Tue, 3 Dec 2024 09:34:54 +0100
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tIOOS-0004ZD-O3
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 03:36:29 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id AE6CD180445
+ for <qemu-devel@nongnu.org>; Tue,  3 Dec 2024 09:36:25 +0100 (CET)
+Received: (qmail 22918 invoked by uid 990); 3 Dec 2024 08:36:25 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Tue, 03 Dec 2024 09:36:25 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.2? 0/2] tests/functional: Fix tests failing when TCG
- is not available on macOS
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20241202204020.55665-1-philmd@linaro.org>
- <9c4408cd-5fee-4242-ba6b-ebf2bb680d83@redhat.com>
- <50f8076d-aa90-4b47-884c-ac3937ceec89@linaro.org>
- <ce9fcfd6-b196-4dd3-b42f-e5f3c5beb37d@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ce9fcfd6-b196-4dd3-b42f-e5f3c5beb37d@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
+Date: Tue, 03 Dec 2024 08:36:25 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <b4c01153c63444c11c81d70bb2588fb09fcee925@nut.email>
+TLS-Required: No
+Subject: Re: [RFC PATCH v3 00/11] tcg-plugins: add hooks for discontinuities
+To: qemu-devel@nongnu.org
+In-Reply-To: <cover.1733063076.git.neither@nut.email>
+References: <cover.1733063076.git.neither@nut.email>
+X-Rspamd-Bar: --
+X-Rspamd-Report: BAYES_HAM(-2.691828) MIME_GOOD(-0.1)
+X-Rspamd-Score: -2.791828
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:subject:date;
+ bh=lXAIEgzLl6mcBe5xaBlygup4nKSGfgCVL++yWC+a5qM=;
+ b=VeyDrM/XETO5W/KyPkon7pDO5d1i805Z3p5FLJOBVwfxszshyyY56V/zRqc4U9qok1IFp8EcUI
+ vlasoBsWBBI95hKLqRNxW9xGCXXIvpfsEo4fBlwbOon+QuOEUheJKo0qPmKpKaiMGg+Cc010xgBC
+ M48dGihcCrtkz8LuDpnbfgYc/xX3VTB66OSqn5ibfgpNQaty1SGVS2mVOmWoOLnuVHJeNxhP+QXV
+ YWkUpBvNZtc08yMW9XxMdTarWjpVy9eFQIS32+N/0xcq8X2FBTL2Och2Yd2o0D/j4hK4LNTf39O6
+ 9F43jhHVNblHmkDg6HgJrN51mCj7tfqsLGKCG/BdBhVbFVxsIoV454Wn4nPmw65PLbgQ5s+MjrHH
+ dxFS0b6DE02bDLx8Ogzx6RSmli8iRSpMuFBV/V5EK0pDBERSZD9FwBaf0/E36pfyMm1yPvtse/rb
+ jaXy8pAdAsLqliSMR/77BbSekBA2r3Dd7AR+ONdwMZNX6TIL9IQpTRVgBRrqfYC2QZ6w49b7vRfo
+ zH0tFVeXn+s60eTZaHGhGCFx+zkJemPwv5aAZhKL9JuIkYJvY+5ANgwUjqIDGWh5GwtWfTKTgUQr
+ phuOoD7Byh99L5oqFEi8ummsYPi16nbQzPHD5TnYJCqmBNHYOhYYlhKBo/83lo++9hH98RN9Jo0U
+ 4=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,33 +78,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/24 07:11, Thomas Huth wrote:
-> On 02/12/2024 22.01, Philippe Mathieu-Daudé wrote:
->> On 2/12/24 21:56, Thomas Huth wrote:
->>> On 02/12/2024 21.40, Philippe Mathieu-Daudé wrote:
->>>> Explicit the QTest accelerator to have these 2 tests
->>>> pass on macOS when only HVF is built in.
->>>
->>> Could we maybe rather add something like this at the top of tests/ 
->>> functional/meson.build :
->>>
->>> if 'CONFIG_TCG' not in config_all and 'CONFIG_KVM' not in config_all
->>>    subdir_done()
->>> endif
->>
->> I'd rather not:
->> - these tests don't need anything of TCG/KVM/HVF
->> - we can run functional tests using QTest [*]
-> 
-> Ok, but then please switch to "-accel qtest" instead of "- 
-> machine ...,accel=qtest" since the latter is legacy and might go away 
-> sometime in the future.
+Hi,
 
-Doh I thought it was the opposite :/ Sure!
+I just realized that I forgot to run the checkpatch script on the
+patches again before sending and did not include the Sign-Off. Sorry
+about that.
 
-> 
->   Thanks,
->    Thomas
-> 
-
+Regards,
+Julian Ganz
 
