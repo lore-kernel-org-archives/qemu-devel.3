@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 819B9E64AA3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E765E64AA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 13:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tITC2-0008FH-Td; Tue, 03 Dec 2024 08:44:00 -0500
+	id 1tITBp-0008D8-Pw; Tue, 03 Dec 2024 08:43:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tITBz-0008Ea-Eo
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:43:55 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1tITBm-0008Cl-Mi
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:43:42 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tITBx-0002Fm-01
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:43:55 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5cece886771so9799254a12.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 05:43:52 -0800 (PST)
+ id 1tITBk-0002Ep-T3
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 08:43:42 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5cecbddb574so6560736a12.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 05:43:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733233431; x=1733838231; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733233419; x=1733838219; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kam1F/qEZ7VKMdr+MkV+t/FmwgnY48JaJnpbN0LYgGk=;
- b=p/5vkpOLJM2esvqYV6WbT4X9KhTNyPA/KwX9qACy/tH1m9qOacMzfudL48uuQMM408
- AAq+u6qcDuuYlwbB6uL1tjeSwd13YyIOHok6XWF2CYtiacwwzW1KxqypIrjPE//Io0VQ
- wBN6p6K22NbvUSklwsVMVBOpoh2ZRJLNTAUeAlHB4igglxrE+tl1ATavyuO6Sj/LQsm2
- C00pFyi9Y+q/NeyhC3MIlvmpwY7K7No2SbTmJOb6GVYENWVxVnRmbI052CXIJrX6huqw
- 9y2kO1zEO9iw+R9fiXIzCQ3+ZJnXkrbZTT5RbSdAAyZkIRPzPDukn9FI2jIlr5XdQ4pW
- kV/w==
+ bh=g5WMSQkt52jkcd7ALnyI8L67NEhq/qeoF7cjP8SFnzY=;
+ b=xaaUhNdW6/fhPx0O7CG2mJ777bp0T3o09spVUniqtoEe194VB0VvAMUH/8rcHBxcQI
+ WjMy6lpwvoFfm4Cc0+cMk1y1z14OaaGkR4QDM/e1+mezfi9N+LlE4IEejdWQ698zS3+X
+ 9oRDN2efv72wJL2/KQOmv7tuxHX6ZVpNpFV9T4aM/8RtZqr1mHnRVYn+EZKvADEKEkFF
+ ovDw+p8Ter5HHoeXL2B0Zr9rCEuwpD4lvrF6cSCrahgdfm5RUI6d1/leurE9uMQY08wO
+ mLLBtX1TbihSzjUKCAo+CoYp0OWiDExtRpqeOn7qxwxXiiGzJv2yxlLDXPx5TcgThr5D
+ 5xxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733233431; x=1733838231;
+ d=1e100.net; s=20230601; t=1733233419; x=1733838219;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kam1F/qEZ7VKMdr+MkV+t/FmwgnY48JaJnpbN0LYgGk=;
- b=LjREkyrpk0eKFB6AljykEslGPpldx02v9icdSzGnc/FCEVeN7e8u5xI5KmFZHqy9AN
- ZG1XA1Kw/4fithAk1Jg+sKkDFDEsWkgTk5DO471zBKKS/Yh7Y8oMY8uBIyV2gsqfbzt3
- Culn4LUKh36m5+LbuDDky2fvWndB+zIoa2B+8xIT5vHOXo/ygqYeP3C0Xb/BBb9grXGo
- OPDkaCh8Eteq5F+97bd9eUkheJidJlx3AanpPMAgHjkQpc07zsNAFHleRcfmqhavH284
- FpcyLGL9AbAVO5UqmVicIRaPM33Tb5VWLKcH4znYzZ5+4gPTYQh53tD5iNnWs055yFjU
- D67g==
-X-Gm-Message-State: AOJu0Yzx3rAXFYTMDOt9ZVtqy/rDVHQSx7kBXY9I8TRHiPTRE7WuiRdp
- oTGxQklVOz03/D9+l3JBzGinNwCoGHkAEpNlFl+6M6D59uwe8NlzVGrC06Ag4ioEaPiqDDjJnU+
- bmFuDk1pdAOr2J4hvaCKc6OdY6Cm+PMVtBF6ilDr1hwMCOaIB
-X-Gm-Gg: ASbGncsm+VJk0LBMlNdoGsv9GWLdryK0rH5hpOmHgGp579UUciuv3+MQ2Qbgo3ypBvi
- ZwwBThWry7E2hyMlS64fyh26EZ/+wavvb
-X-Google-Smtp-Source: AGHT+IGLZSUB3651OxTjP9BnIYJXYoPR0hRomYdilj6VSeBDEjSZ1+EwtCMVjxFSYu7WB3t9We8IJZx2TJr/rOeXb1Q=
-X-Received: by 2002:a05:6402:5009:b0:5d0:f8e9:6796 with SMTP id
- 4fb4d7f45d1cf-5d0f8e96a49mr8450608a12.2.1733233431364; Tue, 03 Dec 2024
- 05:43:51 -0800 (PST)
+ bh=g5WMSQkt52jkcd7ALnyI8L67NEhq/qeoF7cjP8SFnzY=;
+ b=DH8ODNBqd0V4rDppSG5HtTA7T8hVPtAgU6b9z24Rt++9+36j+TmY2E5HopPcKBdlIJ
+ bY87FrVeO6iQ45ArqS+GIy58Wguz/meok+3jABW/WrDSt2C92MkIBgXDKwpAgpa2LKSk
+ MzwfyhsmVWP28xAXWuq8wsahuspBaitN767a2Z+UvzrwL4cW0Zfqb+nuaSX8QI+iyvZS
+ OSaJwI1y556lFrHbw5S2VFV3Gb4GC3FdHcep4/SXO/OrQS+e1ZkRLSjpUviT5vdnGleY
+ B2JgBkjdgGcD85aFy8tde5QPwt9T6xiMZS1mbVs/rkzO90eWxAVAdmtqd3wErSMjmywp
+ w93g==
+X-Gm-Message-State: AOJu0YwPthI4F5W7nGbH+Yl2XwPFt2Gw8vN5pEhmDlcAxg3x3cSblwrm
+ lE+lE4Yw5lSa+69Ahx/YRIGNh5HFwK6u0io29QhehZ1blnZMSxGikvpZC342goDzfeXsp5/zrUc
+ ufOlEqAeNhdX+LJ9tD1QkVJsBbALexdhIDUaUPg==
+X-Gm-Gg: ASbGnct/S6/Z20JhE2aUhyQX4iV/vNyCoW/lX7WMJTftRwgpRv4apzDuMDZOGp6+KUP
+ 8iP5N/uWAKlNzp10YTPkrOZAdUtKJ63u8
+X-Google-Smtp-Source: AGHT+IEH6+l8SpJB4WKzUVd7CyMPrKf7y0SoB7UfhwXSL3GG6KaXQv8y2ZrkCdgdXAx1xuguwe3cjizuiHeLcr7+iQo=
+X-Received: by 2002:a05:6402:42c9:b0:5d0:d30b:d53e with SMTP id
+ 4fb4d7f45d1cf-5d10cb5d891mr2121837a12.19.1733233419024; Tue, 03 Dec 2024
+ 05:43:39 -0800 (PST)
 MIME-Version: 1.0
-References: <20241203063112.9135-1-its@irrelevant.dk>
-In-Reply-To: <20241203063112.9135-1-its@irrelevant.dk>
+References: <20241202212957.570277-1-peterx@redhat.com>
+In-Reply-To: <20241202212957.570277-1-peterx@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Dec 2024 13:43:40 +0000
-Message-ID: <CAFEAcA_N72LvxtNCh51XEN7USq5OWXpuH_yWYwVcMXWGLUOU7Q@mail.gmail.com>
-Subject: Re: [PULL 0/4] nvme queue
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>
+Date: Tue, 3 Dec 2024 13:43:28 +0000
+Message-ID: <CAFEAcA8a7D_5fBW0PzpFov2KN6KwvjCWwaqCSsZa4kZBtaYaqw@mail.gmail.com>
+Subject: Re: [PULL 0/1] Migration 20241202 patches
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,11 +89,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Dec 2024 at 06:31, Klaus Jensen <its@irrelevant.dk> wrote:
->
-> From: Klaus Jensen <k.jensen@samsung.com>
->
-> Hi,
+On Mon, 2 Dec 2024 at 21:30, Peter Xu <peterx@redhat.com> wrote:
 >
 > The following changes since commit eb22a064455aeebc105cc89bf77f48aa18b52938:
 >
@@ -101,14 +97,16 @@ On Tue, 3 Dec 2024 at 06:31, Klaus Jensen <its@irrelevant.dk> wrote:
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20241203
+>   https://gitlab.com/peterx/qemu.git tags/migration-20241202-pull-request
 >
-> for you to fetch changes up to 6651f8f2e5051f6750c2534ab3151339b3c476a2:
+> for you to fetch changes up to 3b83e663611c628bb04ae84a4f7ee49bdb68138b:
 >
->   hw/nvme: take a reference on the subsystem on vf realization (2024-12-03 07:28:27 +0100)
+>   migration: correct multifd receive thread name (2024-12-02 14:20:44 -0500)
 >
 > ----------------------------------------------------------------
-> nvme queue
+> Migration pull for 9.2-rc3
+>
+> - Prasad's one fix on thread name typo
 >
 
 
