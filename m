@@ -4,90 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61B10E64AB3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 14:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D8C2E64AB3
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Dec 2024 14:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tITak-0001CL-AC; Tue, 03 Dec 2024 09:09:30 -0500
+	id 1tITo8-000530-Rl; Tue, 03 Dec 2024 09:23:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tITab-0001BP-6D
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:09:23 -0500
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tITaZ-00054t-Cb
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:09:20 -0500
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-29e842cb9b4so656448fac.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 06:09:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733234958; x=1733839758; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4pt7pRc1nF+Cn4GnirVTuoBBpwLi4yWegrkLdcf7NhE=;
- b=IkUR9WjMStI0B4RyHelLkuofwn8lPO9175vGyks+bpzVeaptKk6RXUfltybmnrd9BU
- Ff9nf58ZzVX1meuLnAs+nXvBGUXFpH37OKjcGK2EWOlqIVuT+F5FOxAh6RI+tCUO4cpm
- sPAtV3sYYez3R8k7C0ezSwI/z4Htky+/JVn+CBuzZDokdC45cvkVsxoPtMA9CTdoWz0J
- cZD/qphlbjMheFoFt1Ka6Mjt2KmCJLDIG/Y4b8Pi02g2NgomKf8XsmqL8EiVwtPPoM1y
- zGOti0cMFBgV7k+4F1Wnr2I3XEWJ1/8yL6+898436LTH6WT4KJTvregV3Wx1N0p5YIy0
- NU/A==
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tITo3-00052W-SY
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:23:16 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tITo2-00076O-5e
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 09:23:15 -0500
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B39qgGW025995
+ for <qemu-devel@nongnu.org>; Tue, 3 Dec 2024 14:23:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ loL9GD0yaXXX4wyFSE8I5O1/akGN2cKek5zUbS5gSl8=; b=EgMWwvpGNbywyv5g
+ mcfja/V/KvtyPq6idDNKSiZbs4eCu+hj2alzj2DyKCE6dydCp2JpdVCxqXP/Kn26
+ 5n5lTfc80cRLwu/k2qCtjvwEWp2S388AxNRU9ya9g9X5dydKL2xx5PnHmk1ziN9R
+ 9KtTs/Q21v5JFJiVQWAoPVKJ5z3Eq8IoqT//CUcyjfir/zB8z25UVDnhUUsNkGZO
+ TZ8LV5y0rSPRpIcx/9ikvUvPXXsEhe59+ICqQkW4N7zAV6+TfTcuU7hskLLMXd15
+ hVv79RYrsHs14RLqYvo15zWsUAS2jKLymeajaPUKZ0PFBCFWHhVwON0kb/S5GMRk
+ EYMP3Q==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439yr9gm29-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 14:23:09 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b677151a03so692322685a.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 06:23:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733234958; x=1733839758;
+ d=1e100.net; s=20230601; t=1733235788; x=1733840588;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4pt7pRc1nF+Cn4GnirVTuoBBpwLi4yWegrkLdcf7NhE=;
- b=s5DqkQ84zd5wk4GZn0EeJEsQIGxdIGDwnzgajYZlH43Cvi44vTL2pvAHjOm+w7my0Y
- EE30Xk21NW0ODu49PPgYaRkll/thxJrgd7c+W0vzUj0V4zMNHP2TfZD+DVGEtQLh+Rnj
- wb0/U1JVC0HfaODX8YfhC5G2BmEN7wKmxnwDNDSvpX6m0IJ3ilCI2TdpCZaIs5aD4j/O
- Cx+A7QweG7Fqs6kmYAhqT2bG6bE4muGtBRwdigGORB75KzwMFvf/9C0El4DsdwTGTcVO
- ty24BWnP+bo1QVgzdFMAnwykHLVABWKHIY3JjLaWBXSoOpuiq9Xy+6niinEqBoXzot8P
- X26g==
-X-Gm-Message-State: AOJu0YzLPayl4fFbW28nZ0ryUJOgEe7f40IZ4q92TXudtrCCpCn6dnb7
- 2jpn6nL/AwIUPSUVHpRru1rPAvMGOtj4lZqwpcGxyvQdjrnPAH6rA6AdST/VYKUZM1irzACaf/m
- Fp1Q=
-X-Gm-Gg: ASbGncuzsMZydqVcweVetjcTscROajXWPMWhcGsQ2JvuCzRd8Kcf9J8TVaS6iYXzt4i
- xJPTGeWOrNUVAqRSaEUNbRDjxt72wVwHP8tcVCGboQTjjY+BAO68EpHHuU+1pd4c9/n2l5jkCvO
- h0pFr8i9NsY12ePf2kshMyu+k8LkyVdoVEEzpISMrBMQccXzgyA3iMhObBAZrH72tSxxkYuziS+
- 2TDsXbbaSud57NY7djFcpc3Yngp25rbofiPTF3gkKX4r5Q9ztOIrikJR7XvGw8AiOrGuf83Pd5P
- EJmP6jUKMGpivwwsopMyatZWGuCq
-X-Google-Smtp-Source: AGHT+IGBcZ2JS1QzMhrHXPEunI05yz05+qGTEYvegjZiJFNN34AFTo+yG3+1UQGYG042X7599JDJJw==
-X-Received: by 2002:a05:6870:5d94:b0:29e:62a6:de9 with SMTP id
- 586e51a60fabf-29e8868bd80mr2631445fac.17.1733234957916; 
- Tue, 03 Dec 2024 06:09:17 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71d725476fesm2844656a34.28.2024.12.03.06.09.16
+ bh=loL9GD0yaXXX4wyFSE8I5O1/akGN2cKek5zUbS5gSl8=;
+ b=wvwHSE03HPw2l2GQyJAjFMX4zmvWOxOhGtWjr1kcx1vqzOuutG0TnwzXvjmkV5zKKw
+ xuBCN2HnJzHG6Z9vjdkz/FCPwOx3GzDDhsIylb8aKQbOj4eJdp4wSRxI6G3j3Tr/xGBm
+ KDQ7gOqMBoBrgiQS/uKPrq5DgzDpZcTviONYFkZI0EzejoSxA5+IJK6y9rRzBuB84j6l
+ 3oUelqnhFKon9qRiALfWHB2R+pOM/LEKKM9OfOypy9fAUMTcfmpSQd+JTL7hKFhOIC9O
+ tJ1Ta78oVrIDw0tlNHSp0yzlagbO+hrTPF1F8B7rw6edNs61HEb/5Vp9VHP+QvuHYST0
+ He6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPMI6fccUIXWuI1fUcdbnt4R2QfTFKF4OD2jVVe7//RqBEIDPvUfvv8yR7DJRvlUu3yMrgshUseSTl@nongnu.org
+X-Gm-Message-State: AOJu0Yx9XDozf0L+dmAYIYPHhhervuz4YPylcY8oYi35D+O8e6dNsA/6
+ ZqL8Z0Y80p2r1vq7oLHIXee0v1IwnhYJtRDFIBsqJnwgthskO1ixXI7kvYPnGREpJ+J3cfWOzoU
+ XaJ+gRZKDYcNxLOVum6WZ6qlNr2Iz3holKA9Mg0/YVaa9jXDxIkEppA==
+X-Gm-Gg: ASbGncslJHa4J4o8HQTwWvFZG5vvOZX/d4POkKQwt6+Zvh4KaCjZCleKoMwiRymRanS
+ HLT+q4xaGT7bwh7UQaRRhi8mariWDM/YHf2rrZhCnoPeR/JmAkFCefG6b2TkPnnMH0CXGjRGkI6
+ MYEUyun6bb4HsVOK4H7WBl5Z4dURyu8KKtywHJF7Neq4m2G05eSf9X9xWtOviEgfmh1MIomHf9d
+ FwwcfGBy0rB73+9VxYx4XAo3htMasKJsHdvKvGhXg27s3c6GjN26DC2zh+XPQnYjg0Si65SlVK4
+ 8qFajjqVodUyTlczb8cqCoENd9yteAKnbYaLC0RhYIga699zuDo=
+X-Received: by 2002:a05:620a:4607:b0:7ae:5c67:e19c with SMTP id
+ af79cd13be357-7b6a621bd9emr362820785a.55.1733235788464; 
+ Tue, 03 Dec 2024 06:23:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFTHirvIdXIBeIp0XmAZVeDDFkVdL2UdzmTOm+4boFKEG8jmki5gm5iebwJnmceUYYQeeQf/A==
+X-Received: by 2002:a05:620a:4607:b0:7ae:5c67:e19c with SMTP id
+ af79cd13be357-7b6a621bd9emr362817285a.55.1733235788116; 
+ Tue, 03 Dec 2024 06:23:08 -0800 (PST)
+Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b6849c5a56sm514068985a.129.2024.12.03.06.22.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 06:09:17 -0800 (PST)
-Message-ID: <54d6068b-49f6-42c5-aff6-dd4fa61579ff@linaro.org>
-Date: Tue, 3 Dec 2024 08:09:14 -0600
+ Tue, 03 Dec 2024 06:23:05 -0800 (PST)
+Message-ID: <c559ec82-2ed2-4d38-93b4-9b5076181c9b@oss.qualcomm.com>
+Date: Tue, 3 Dec 2024 08:22:51 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 42/67] target/arm: Convert handle_rev to decodetree
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-43-richard.henderson@linaro.org>
- <CAFEAcA8CbQXg7D22SCyqT0oJAPZ1g7_yWJENZX3wKBOmp4r58Q@mail.gmail.com>
+Subject: Re: [PATCH 1/1] MAINTAINERS: update email addr for Brian Cain
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brian Cain <bcain@quicinc.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
+ quic_mathbern@quicinc.com, stefanha@redhat.com, ale@rev.ng,
+ anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com
+References: <20241123164641.364748-1-bcain@quicinc.com>
+ <20241123164641.364748-2-bcain@quicinc.com>
+ <014e9959-4995-4bf2-9a2c-ace318673804@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAFEAcA8CbQXg7D22SCyqT0oJAPZ1g7_yWJENZX3wKBOmp4r58Q@mail.gmail.com>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <014e9959-4995-4bf2-9a2c-ace318673804@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: Ai5YK8eld3GEbDM1w8sE1EKGVsb7wuvU
+X-Proofpoint-GUID: Ai5YK8eld3GEbDM1w8sE1EKGVsb7wuvU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0
+ clxscore=1011 priorityscore=1501 mlxlogscore=559 phishscore=0
+ lowpriorityscore=0 malwarescore=0 mlxscore=0 suspectscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412030123
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,78 +129,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/24 05:49, Peter Maydell wrote:
-> On Sun, 1 Dec 2024 at 15:16, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
+
+On 12/2/2024 2:43 PM, Philippe Mathieu-Daudé wrote:
+> On 23/11/24 17:46, Brian Cain wrote:
+>> From: Brian Cain <brian.cain@oss.qualcomm.com>
 >>
->> This includes REV16, REV32, REV64.
+>> Also: add mapping for "quic_bcain@quicinc.com" which was ~briefly
+>> used for some replies to mailing list traffic.
 >>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Brian Cain <bcain@quicinc.com>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 >> ---
-> 
->> @@ -10070,10 +10003,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
->>       TCGv_ptr tcg_fpstatus;
->>
->>       switch (opcode) {
->> -    case 0x0: /* REV64, REV32 */
->> -    case 0x1: /* REV16 */
->> -        handle_rev(s, opcode, u, is_q, size, rn, rd);
->> -        return;
->>       case 0x12: /* XTN, XTN2, SQXTUN, SQXTUN2 */
->>       case 0x14: /* SQXTN, SQXTN2, UQXTN, UQXTN2 */
->>           if (size == 3) {
->> @@ -10276,6 +10205,8 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
->>           break;
->>       }
->>       default:
->> +    case 0x0: /* REV64 */
->> +    case 0x1: /* REV16, REV32 */
-> 
-> REV32 is case 0x0, not 0x1, per the comments deleted above.
-> 
->>       case 0x3: /* SUQADD, USQADD */
->>       case 0x4: /* CLS, CLZ */
->>       case 0x5: /* CNT, NOT, RBIT */
->> diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
->> index 4f8231d07a..2531809096 100644
->> --- a/target/arm/tcg/a64.decode
->> +++ b/target/arm/tcg/a64.decode
->> @@ -73,6 +73,7 @@
->>
->>   @qrr_b          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=0
->>   @qrr_h          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=1
->> +@qrr_bh         . q:1 ...... . esz:1 ...... ...... rn:5 rd:5  &qrr_e
->>   @qrr_e          . q:1 ...... esz:2 ...... ...... rn:5 rd:5  &qrr_e
->>
->>   @qrrr_b         . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=0
->> @@ -1657,3 +1658,7 @@ CMGE0_v         0.10 1110 ..1 00000 10001 0 ..... .....     @qrr_e
->>   CMEQ0_v         0.00 1110 ..1 00000 10011 0 ..... .....     @qrr_e
->>   CMLE0_v         0.10 1110 ..1 00000 10011 0 ..... .....     @qrr_e
->>   CMLT0_v         0.00 1110 ..1 00000 10101 0 ..... .....     @qrr_e
->> +
->> +REV16_v         0.00 1110 001 00000 00011 0 ..... .....     @qrr_b
->> +REV32_v         0.10 1110 0.1 00000 00011 0 ..... .....     @qrr_bh
->> +REV64_v         0.00 1110 ..1 00000 00001 0 ..... .....     @qrr_e
-> 
-> This doesn't look quite right -- in the decode table in C4.1.96.21,
-> 2-reg misc REV32 is opcode 00000, like REV64, not 00001 like REV16.
-> 
-> --- a/target/arm/tcg/a64.decode
-> +++ b/target/arm/tcg/a64.decode
-> @@ -1660,5 +1660,5 @@ CMLE0_v         0.10 1110 ..1 00000 10011 0
-> ..... .....     @qrr_e
->   CMLT0_v         0.00 1110 ..1 00000 10101 0 ..... .....     @qrr_e
-> 
->   REV16_v         0.00 1110 001 00000 00011 0 ..... .....     @qrr_b
-> -REV32_v         0.10 1110 0.1 00000 00011 0 ..... .....     @qrr_bh
-> +REV32_v         0.10 1110 0.1 00000 00001 0 ..... .....     @qrr_bh
->   REV64_v         0.00 1110 ..1 00000 00001 0 ..... .....     @qrr_e
-> 
-> should I think be the right fixup.
+>>   .mailmap    | 2 ++
+>>   MAINTAINERS | 2 +-
+>>   2 files changed, 3 insertions(+), 1 deletion(-)
+>
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>
+Forgive my ignorance here -- this T-b is - stronger than a R-b? or 
+weaker than a R-b?  Or wholly orthogonal to R-b?
 
-Yep, my bad.  I remember "fixing" the comment, because I thought it was off.  I must have 
-been tired, or something.  Odd that this passes risu... maybe we're missing a pattern.
+Should I still seek a R-b before making a pull request with this change?
 
+-Brian
 
-r~
 
