@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B8DE7716F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B955E77171
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 08:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIkWk-0001M0-DX; Wed, 04 Dec 2024 03:14:30 -0500
+	id 1tIkWf-0001Kv-BZ; Wed, 04 Dec 2024 03:14:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=RR0m=S5=kaod.org=clg@ozlabs.org>)
- id 1tIkWd-0001KF-OP; Wed, 04 Dec 2024 03:14:23 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1tIkWd-0001KG-Rb; Wed, 04 Dec 2024 03:14:23 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=RR0m=S5=kaod.org=clg@ozlabs.org>)
- id 1tIkWb-0003tj-KE; Wed, 04 Dec 2024 03:14:23 -0500
+ id 1tIkWb-0003u2-H7; Wed, 04 Dec 2024 03:14:23 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y39K54qTLz4xfp;
- Wed,  4 Dec 2024 19:14:01 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y39K94y9gz4xfr;
+ Wed,  4 Dec 2024 19:14:05 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y39Jz3Zcsz4x63;
- Wed,  4 Dec 2024 19:13:55 +1100 (AEDT)
-Message-ID: <ef648e28-7407-4ec2-b1bc-353f756e9d81@kaod.org>
-Date: Wed, 4 Dec 2024 09:13:54 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y39K6272Cz4xfm;
+ Wed,  4 Dec 2024 19:14:01 +1100 (AEDT)
+Message-ID: <15f4670c-967e-49a7-9032-c9233848c7ef@kaod.org>
+Date: Wed, 4 Dec 2024 09:14:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/7] hw/sd/aspeed_sdhci: Fix coding style
+Subject: Re: [PATCH v3 2/7] hw/arm/aspeed: Fix coding style
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -40,7 +40,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
 References: <20241204080523.4025780-1-jamin_lin@aspeedtech.com>
- <20241204080523.4025780-2-jamin_lin@aspeedtech.com>
+ <20241204080523.4025780-3-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -85,16 +85,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241204080523.4025780-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <20241204080523.4025780-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=RR0m=S5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,27 +126,22 @@ C.
 
 
 > ---
->   hw/sd/aspeed_sdhci.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+>   hw/arm/aspeed_ast2600.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
-> index 98d5460905..acd6538261 100644
-> --- a/hw/sd/aspeed_sdhci.c
-> +++ b/hw/sd/aspeed_sdhci.c
-> @@ -87,10 +87,12 @@ static void aspeed_sdhci_write(void *opaque, hwaddr addr, uint64_t val,
->           sdhci->regs[TO_REG(addr)] = (uint32_t)val & ~ASPEED_SDHCI_INFO_RESET;
->           break;
->       case ASPEED_SDHCI_SDIO_140:
-> -        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg, 0, 32, val);
-> +        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg,
-> +                                            0, 32, val);
->           break;
->       case ASPEED_SDHCI_SDIO_144:
-> -        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg, 32, 32, val);
-> +        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg,
-> +                                            32, 32, val);
->           break;
->       case ASPEED_SDHCI_SDIO_148:
->           sdhci->slots[0].maxcurr = deposit64(sdhci->slots[0].maxcurr,
+> diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+> index be3eb70cdd..c40d3d8443 100644
+> --- a/hw/arm/aspeed_ast2600.c
+> +++ b/hw/arm/aspeed_ast2600.c
+> @@ -541,7 +541,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
+>           return;
+>       }
+> -    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0, sc->memmap[ASPEED_DEV_GPIO]);
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
+> +                    sc->memmap[ASPEED_DEV_GPIO]);
+>       sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
+>                          aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
+>   
 
 
