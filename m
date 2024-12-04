@@ -4,98 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B9B5E7716C
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 02:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BABE7716B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 02:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIesg-0004sI-0N; Tue, 03 Dec 2024 21:12:46 -0500
+	id 1tIetc-0000HG-1L; Tue, 03 Dec 2024 21:13:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tIesX-0004e6-MX
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:12:39 -0500
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tIesV-0005UV-AN
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:12:37 -0500
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-6ef7f8d4f30so37380077b3.1
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 18:12:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1733278354; x=1733883154; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K+SlF2FR3ZV2vuRhtIQV4BC/j1/AENizpBsFIvnrz4w=;
- b=ZSYR9QAcTD8BO11Sh+YXTpwXM0zYrbA0v+9wUQNnjM0i4gQhsejmcS0u0SkLttKe9v
- zP7h0M37aK/BY+kDm7qOn3xVzRLyu2WrFwiq79Af8HA8p60WDXN+oYvBY8waJ5i7LBCq
- 2SQz+pi1rP7PZbKc0yU/kS8SgcKHN/Rt/BOwaPIaGj0NqjkGZMXJdyI5cWi7yRmuPgda
- Iw5bwfxun3PhxHbjbha7SQlTIozIphW7tHf8t02m5afP8f832INvHNYpyteaWuRifWh6
- SVkAs6dxLtzuyihxcT+3KyMSV/mxOLKVpq+qFw7hD5Ttu9GB+ecjgunzALsYO6cQBEGr
- 1Dlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733278354; x=1733883154;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=K+SlF2FR3ZV2vuRhtIQV4BC/j1/AENizpBsFIvnrz4w=;
- b=o2jjlIkqCLNhSC+ldqqpv/8fjZ+CG1N57U2/Y19lCZA18fUSNQKFzdPN3Rs9WcPmBg
- kTrgn8ZIDpA1PBFx38q/d88bFz6VXUM8vOpH1c8qIPplsKuoOSBA6F33NIfyyrTo+2ZI
- 3ArbikQ6sWlrU9KcbS3V2X62CwNu3Sk7hpZ6AusCMLmh8loy6veuQfeayfC9SMNnDNz0
- /uSqh1u99QJknxUdNP8UFqwsKW9YVwfUAunQCTrUSV7Qi3uL1A5j0ZVZOKoTiMHfrksZ
- NOxswCh7+UDwNSB1nq0wmbTFCa4L8NhyA/KIYT9HAeEe8uDQGBaz2OTeMe0Rv5A1V4Sg
- rXAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXl4YnWPdeb8f9zFNvw3lmlUTRWQ+gN/p+4iN5PNIN7xngN3c/SFybh4/C4gqUYyL5x4LCK5fRKdAtj@nongnu.org
-X-Gm-Message-State: AOJu0Yx/45jFLO4KMXZLGu7gZnNhcE0295JpR5+xhhw+9rPEklCMQmzc
- aitavXNZ2/EVx4dhhBFpc+GHS1CBhh40sBBstAzZJbLfkp62qD+nlLu4JUXxdYI=
-X-Gm-Gg: ASbGncteNF/Vs/J29KsihvuzkSZJQAqQ0H+OPtwo3l/2kAN0qpDwXZKXeG6ne8/FNY5
- mVbbfgoEknwOeb1clSUunw+ktG2TO9OyEosxI7klmoKSfbS6UJrox/ygGJuY4Pw3ehtAQDyVemj
- NO+ET155ZE7fnu6Zfr9w5CsvfpRflCABsz1OPu2EM9kBdUDiI5gfWRMblCeHRu3nsM+o0kNtsci
- jXLDsTDTZahQKq9VE+rfQXdaGqCokqiwiunT6Utj8wb3OVRo/3eUyY3PP3HQK8RAFo1Vi0oKyz0
- rpfs11kscphCRKZ1dg==
-X-Google-Smtp-Source: AGHT+IHMmCdTgFZZzIJmqPh1ukpmVNGX7GxYw+6bF0TIGKu/gY4wNSUNvmxD4Axnb5hYbf6g9nZj9Q==
-X-Received: by 2002:a05:690c:4809:b0:6ef:6c57:ddae with SMTP id
- 00721157ae682-6efad1de4f3mr70543377b3.34.1733278353903; 
- Tue, 03 Dec 2024 18:12:33 -0800 (PST)
-Received: from DY4X0N7X05.bytedance.net
- ([2601:646:8900:323:644e:288b:2b6d:d94c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d87ec537ebsm63488986d6.30.2024.12.03.18.12.30
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 18:12:33 -0800 (PST)
-From: Yichen Wang <yichen.wang@bytedance.com>
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- "Shivam Kumar" <shivam.kumar1@nutanix.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- "Yichen Wang" <yichen.wang@bytedance.com>
-Subject: [PATCH v8 12/12] migration/doc: Add DSA zero page detection doc
-Date: Tue,  3 Dec 2024 18:11:41 -0800
-Message-Id: <20241204021142.24184-13-yichen.wang@bytedance.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20241204021142.24184-1-yichen.wang@bytedance.com>
-References: <20241204021142.24184-1-yichen.wang@bytedance.com>
+ (Exim 4.90_1) (envelope-from <hongjian.fan@seagate.com>)
+ id 1tIetU-0008N4-3f
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:13:36 -0500
+Received: from esa.hc4959-67.iphmx.com ([139.138.35.140])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hongjian.fan@seagate.com>)
+ id 1tIetR-0005Xu-CS
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:13:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=seagate.com; i=@seagate.com; q=dns/txt; s=stxiport;
+ t=1733278413; x=1764814413;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=+7s5YxCcPou4+jptJ5a/8KpnpHkVJl7MhtJ/XXpRI7U=;
+ b=cJi4n4CUK0Kc2sXGHaUJ2Qw268wFQgqlpmozJPttdYMabLdP9Rxxnj4U
+ SG+nDo3Zin3zKxJA+Ngd60LVL+3su1aAtpUN9MdP8fS1b5/QdWCnMIh3U
+ 94KFVLuNoMw8H8TYtuxSiuoj1y9XEkBBcUec1/A+njv6qh58K/XPCIggz 4=;
+X-CSE-ConnectionGUID: lSjEudgYSVK3A6voXpuDsw==
+X-CSE-MsgGUID: 8Muekj57SSqy3AI0zJk1cA==
+Received: from mail-dm6nam11lp2173.outbound.protection.outlook.com (HELO
+ NAM11-DM6-obe.outbound.protection.outlook.com) ([104.47.57.173])
+ by ob1.hc4959-67.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Dec 2024 18:13:26 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EYqEhA8PTchMAqkhPZCxqZY9XZ/P5OZMmm6zRi6QKHSs/YyOISyaUojvTUo3QVWGaGneTOrBabBRK5Y1QlJbzUwgPWePBvvt6NEgX0hTEe48mjwQBz3NuvUM8LaDPxnEa896MDCKp8RhEckNbgPF2QnF+8MEiKbgSwZJMb+iT45cypCH3/ydPkWyt9Bkt5UncojkY0ebjM0wKtdKko1HNAr/pMOiMUQT0LK5n8nTLh4q9+YQnkDV0r5y4RA1yCPqZc7dWay+LySyOeNNHpo1e6lsocOGlvRwOZni7gugvF0h3TzGyhqYUdfg7RE763g8b8LBs3vcNBkjaFLXvYTj1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KfLP6VNH5k9Lq6gOZ7wCWaVDzYSts8l/dxvWw+CZ7sE=;
+ b=IBaq4Sr13iXt01lRZBoRqHc3lluMp4rtGHxvTB/gG2KblCYVBXPID3YamQAGDUEzpoiv7k/5WYCOtv3zUtuUl6+hrfns1igj9cTj3Hor0dBJIZOzEkzB7V3OYcgTeplxcXwmg2jIY9o7h4IECRKAKFuiMh8HEv/XwlhrWLjvJzm4CAaIupDbg4MESW7xI0ll68yAek5K2msdRYg27S12caOUx8ONH7Izy15Q8Xp2rew+LBmAik/59VN8qoft58W+YsXTLhuhHT5wO9Ze3mH4dyTVSrrjkHL8z6siv5iZZ9vN1x2yJQDtYIBP1XeMP9mAZmzlg9OZxfo6fosaJxLFwg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 134.204.222.52) smtp.rcpttodomain=nongnu.org smtp.mailfrom=seagate.com;
+ dmarc=fail (p=reject sp=reject pct=100) action=oreject
+ header.from=seagate.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seagate.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KfLP6VNH5k9Lq6gOZ7wCWaVDzYSts8l/dxvWw+CZ7sE=;
+ b=fbXFOkJAjj5AJpuc5U0ip1CZizRbII01DaEtjXxg/LERXf0cM4+LZ96vZWTKcWjteDmpGgEYMKMPFuUD6GOaMOTS3ThJ5UQPWbRyYN75JxftWG6SGKHEjaxjmSJJCus1GjRWGFmkEt9HzswNF5G5RRTb9/cyfne32QvzJLVnH2M=
+Received: from CH2PR12CA0022.namprd12.prod.outlook.com (2603:10b6:610:57::32)
+ by DM4PR20MB4872.namprd20.prod.outlook.com (2603:10b6:8:a5::6) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8230.9; Wed, 4 Dec 2024 02:13:24 +0000
+Received: from CH2PEPF00000140.namprd02.prod.outlook.com
+ (2603:10b6:610:57:cafe::6f) by CH2PR12CA0022.outlook.office365.com
+ (2603:10b6:610:57::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8207.19 via Frontend Transport; Wed,
+ 4 Dec 2024 02:13:24 +0000
+X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
+ 134.204.222.52) smtp.mailfrom=seagate.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=oreject header.from=seagate.com;
+Received: from lcopzesaa001.seagate.com (134.204.222.52) by
+ CH2PEPF00000140.mail.protection.outlook.com (10.167.244.72) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8230.7 via Frontend Transport; Wed, 4 Dec 2024 02:13:24 +0000
+X-CSE-ConnectionGUID: QSggXAh+SO693vznrlQilQ==
+X-CSE-MsgGUID: t1fcy6QVTDGr+VTzuxJJJg==
+Received: from lcopiesaa001.seagate.com ([10.230.120.52])
+ by lcopzesaa001.seagate.com with ESMTP; 03 Dec 2024 18:17:01 -0800
+X-CSE-ConnectionGUID: pxKNXXo9SIW51BBl0feTtQ==
+X-CSE-MsgGUID: hVHhVBbPQoW39jRpKYsiZw==
+X-IronPort-AV: E=Sophos;i="6.12,206,1728975600"; d="scan'208";a="112360643"
+STX-Internal-Mailhost: TRUE
+Received: from mag-tester2.shk.minn.seagate.com ([10.52.21.5])
+ by lcopiesaa001.seagate.com with ESMTP; 03 Dec 2024 18:13:07 -0800
+From: Hongjian Fan <hongjian.fan@seagate.com>
+To: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ jonathan.cameron@huawei.com
+Cc: fan.ni@samsung.com,
+	Hongjian Fan <hongjian.fan@seagate.com>
+Subject: [PATCH v2] hw/mem: support zero memory size CXL device
+Date: Tue,  3 Dec 2024 20:26:19 -0600
+Message-Id: <20241204022618.1572959-1-hongjian.fan@seagate.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241203172328.00001a00@huawei.com>
+References: <20241203172328.00001a00@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=yichen.wang@bytedance.com; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000140:EE_|DM4PR20MB4872:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 1b5a1e53-02d8-46f0-41c5-08dd14093b98
+STX-Hosted-IronPort-Oubound: True
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|376014|1800799024|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?MY/4IxtWG9s1R2H0ZH5nS6FcJoUnmuomOHtHVjqfCMBqcCyU2dz7T8qB7qT+?=
+ =?us-ascii?Q?lbs/q3OxcLcKPKGictTNPCWCBUDTBZu1HQ5ACcDcZ3L0+TUrUWbjk4UCKhSJ?=
+ =?us-ascii?Q?daWiFk0Zlm/k+xuE+LRofoxFqoU6CBNqe+2M6XlmAOr29brg+wh35VS7JkLt?=
+ =?us-ascii?Q?T1bA2wWShFzjwWJHs5CsPXlg7mruMzClWoK2oSvSVeeg/w59bTuYe7TdQZea?=
+ =?us-ascii?Q?f2r9s48zW5KzvKmFIWe8XHXm+Qxyp4D383ckN6QfS3OQMNphEufkj+0qkV9h?=
+ =?us-ascii?Q?pGxgpwSQQMpLMbgtcVMwGE9NmZEN2LEi3wojzM0jxcsXvTPiwofC/naKuQ+4?=
+ =?us-ascii?Q?4fysM7PzkB5p8zXTXH1MEDHsQEvtfYjaGY0Gpkd6AGpa6UH5VRpK+IhqRxL5?=
+ =?us-ascii?Q?RJaHSXPZP8VB50tQPQ+xhpyuembI8Mpn6reWl39GWkzrJFqnFScSzzmj6S7n?=
+ =?us-ascii?Q?gcr5aLbgMFS1EC9eAGaS0OKHyN4ocL6qPYNg2jGliBewlEgYkglu3B/5h+p1?=
+ =?us-ascii?Q?hAg6Fzs35s7MlVSmKk5MQaw/x+1p54XfRyppkvZmGtWViEFlenrM3k3baZM3?=
+ =?us-ascii?Q?FFYgI3lBrqaVw9lQbfXzzjmLF8l12QIq9KMO0C4Ur/ayJ3MlLMaopMW1wpr+?=
+ =?us-ascii?Q?bbqzOsHACTwXn52yyMkBiU7gGY/r4XPj83k4GmD8gzVpgOAW5PTuZuZDzWpF?=
+ =?us-ascii?Q?O9yzWfOHJqQZx4fIT0uSyMCEgt2ipQC/SDRpMu0hyZS+HTuhB2FAN3T5pk52?=
+ =?us-ascii?Q?9RA87q0jHDrzPI7x8f7vHrlqQ0QojDAardj5NNys5+++JxTw1pFukSCKbb1T?=
+ =?us-ascii?Q?d5DwdEhks6C3Fs7Qal85ECMH/EJEYeSw8qqULzCJxW0+0C1BJZ/kqSO2lO8q?=
+ =?us-ascii?Q?dKy8q6+G0TlqNWEqAu9TSJMoHCAVVWTrLhKyMUcuqWCJS3N8O4mlocWPbfbr?=
+ =?us-ascii?Q?ZqFslWZrvXV36FXLhzJR5jL7xmAWv9EUhv4W697YBLOZ1I8RLDyRcpP1vU6S?=
+ =?us-ascii?Q?eHsiw5KmKcQw43Nla9uIQbNefjwDlkvJVr2JBQuMQHQNRZ0i7kJQE+mpQyhz?=
+ =?us-ascii?Q?Rwf3fFL1bwtTPi87samqep8ZHWu+ALgU78s+FYwn8MA0fkXXXauvMTErzmhm?=
+ =?us-ascii?Q?Zvrq/WwUf0jSvFL/DrC4QZeodFubrD6TynONvfJaaIB6ASj2jT6IgPN2BS/A?=
+ =?us-ascii?Q?d4jH8HlmsNnkM+Te71DpiVuW1Bh7U0d8Wfasawp4SMVjayJDc6pdamoN3Qrs?=
+ =?us-ascii?Q?VWaHNAG4ytx39vzqeLOOcFdTXlBNaUmR57pDoBy6mCvkJ0x8GJRKsf/R74HU?=
+ =?us-ascii?Q?RW1v6WsOPJQZcl/GTE1+9RG5yBAsrjN0CQfHqthIpHe52IgUvNPb23Yaj5rt?=
+ =?us-ascii?Q?8m28FebGcHTKrlEoP5UeHYice8I4iUQOas6B1d4xDbWt4ySn0hMjHT1NakYH?=
+ =?us-ascii?Q?KvRvHaTev57SIDjdEBakLQX5Kvshu8a1?=
+X-Forefront-Antispam-Report: CIP:134.204.222.52; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:lcopzesaa001.seagate.com; PTR:InfoDomainNonexistent;
+ CAT:NONE; SFS:(13230040)(36860700013)(376014)(1800799024)(82310400026);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: QWlURbg0OFNZTOiZ8X4ax1nMfM6U+qIKJu8f+psDOhiVQGw8JON8EM5KThrWf+oHDz8TWOu6NoRzl4054LFEN9f5wg5B6tA/2+cFJbf1kd+kWcrSRuLaY5oYGtEfJKjROA5clpu0MEqZgZd8TkzJTQyoAxGF/+Yhy9XOXw824O+OSQ65RHX7LuJ8mMB5/UQsGILz4bTKunqm7oWtJ41/LcIL0ipoVPIy82YI1+1IGq5tY4SsyP0JDskHd1JVBms9VZFE08NFLL/V143v1ol7HXwGSDOfbNwySOWSwLIy22zi5O1C6fAnaa4TDAHzMO5AZHLD28a3xHSvTEPPRJAhuN4OqSr1gYC+X95tqPpLfK8NIwI/Lv7TkINEjFjmApmudfcDDHpx3z8yJNKFGhLQy64j7ldFtM19L6MKYgjyyzax3oq5mUIKzDslZEpMkibvuocCFoAAgPLDbvpoUDgRpHmQS1GWm5aJ81LZm6LL9rCPz3FwZyXV7VfrA+r6L58ZhMFRNOhFLEsnfrjP5DEK4uHIqB4noTi1lwbOnec9lZ+kMtfcMMK2Hj7FDHgiJnrklIRm8VyiOmsGpoMLfwGh+p0cPfpYkWrKh3naaFmyhyX9Ob2qmbS9amBQ+evTRjGG
+X-OriginatorOrg: seagate.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2024 02:13:24.2011 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1b5a1e53-02d8-46f0-41c5-08dd14093b98
+X-MS-Exchange-CrossTenant-Id: d466216a-c643-434a-9c2e-057448c17cbe
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=d466216a-c643-434a-9c2e-057448c17cbe; Ip=[134.204.222.52];
+ Helo=[lcopzesaa001.seagate.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF00000140.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR20MB4872
+Received-SPF: pass client-ip=139.138.35.140;
+ envelope-from=hongjian.fan@seagate.com; helo=esa.hc4959-67.iphmx.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,323 +167,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yuan Liu <yuan1.liu@intel.com>
+This patch allows a CXL type3 device to be initialized with zero memory
+size, when there is no memory device property provided.
 
-Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Hongjian Fan <hongjian.fan@seagate.com>
 ---
- .../migration/dsa-zero-page-detection.rst     | 290 ++++++++++++++++++
- docs/devel/migration/features.rst             |   1 +
- 2 files changed, 291 insertions(+)
- create mode 100644 docs/devel/migration/dsa-zero-page-detection.rst
+ hw/mem/cxl_type3.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/docs/devel/migration/dsa-zero-page-detection.rst b/docs/devel/migration/dsa-zero-page-detection.rst
-new file mode 100644
-index 0000000000..1279fcdd99
---- /dev/null
-+++ b/docs/devel/migration/dsa-zero-page-detection.rst
-@@ -0,0 +1,290 @@
-+=============================
-+DSA-Based Zero Page Detection
-+=============================
-+Intel Data Streaming Accelerator(``DSA``) is introduced in Intel's 4th
-+generation Xeon server, aka Sapphire Rapids(``SPR``). One of the things
-+DSA can do is to offload memory comparison workload from CPU to DSA accelerator
-+hardware.
-+
-+The main advantages of using DSA to accelerate zero pages detection include
-+
-+1. Reduces CPU usage in multifd live migration workflow across all use cases.
-+
-+2. Reduces migration total time in some use cases.
-+
-+
-+DSA-Based Zero Page Detection Introduction
-+==========================================
-+
-+::
-+
-+
-+  +----------------+       +------------------+
-+  | MultiFD Thread |       |accel-config tool |
-+  +-+--------+-----+       +--------+---------+
-+    |        |                      |
-+    |        |  Open DSA            | Setup DSA
-+    |        |  Work Queues         | Resources
-+    |        |       +-----+-----+  |
-+    |        +------>|idxd driver|<-+
-+    |                +-----+-----+
-+    |                      |
-+    |                      |
-+    |                +-----+-----+
-+    +----------------+DSA Devices|
-+      Submit jobs    +-----------+
-+      via enqcmd
-+
-+
-+DSA Introduction
-+----------------
-+Intel Data Streaming Accelerator (DSA) is a high-performance data copy and
-+transformation accelerator that is integrated in Intel Xeon processors,
-+targeted for optimizing streaming data movement and transformation operations
-+common with applications for high-performance storage, networking, persistent
-+memory, and various data processing applications.
-+
-+For more ``DSA`` introduction, please refer to `DSA Introduction
-+<https://www.intel.com/content/www/us/en/products/docs/accelerator-engines/data-streaming-accelerator.html>`_
-+
-+For ``DSA`` specification, please refer to `DSA Specification
-+<https://cdrdv2-public.intel.com/671116/341204-intel-data-streaming-accelerator-spec.pdf>`_
-+
-+For ``DSA`` user guide, please refer to `DSA User Guide
-+<https://www.intel.com/content/www/us/en/content-details/759709/intel-data-streaming-accelerator-user-guide.html>`_
-+
-+DSA Device Management
-+---------------------
-+
-+The number of ``DSA`` devices will vary depending on the Xeon product model.
-+On a ``SPR`` server, there can be a maximum of 8 ``DSA`` devices, with up to
-+4 devices per socket.
-+
-+By default, all ``DSA`` devices are disabled and need to be configured and
-+enabled by users manually.
-+
-+Check the number of devices through the following command
-+
-+.. code-block:: shell
-+
-+  #lspci -d 8086:0b25
-+  6a:01.0 System peripheral: Intel Corporation Device 0b25
-+  6f:01.0 System peripheral: Intel Corporation Device 0b25
-+  74:01.0 System peripheral: Intel Corporation Device 0b25
-+  79:01.0 System peripheral: Intel Corporation Device 0b25
-+  e7:01.0 System peripheral: Intel Corporation Device 0b25
-+  ec:01.0 System peripheral: Intel Corporation Device 0b25
-+  f1:01.0 System peripheral: Intel Corporation Device 0b25
-+  f6:01.0 System peripheral: Intel Corporation Device 0b25
-+
-+
-+DSA Device Configuration And Enabling
-+-------------------------------------
-+
-+The ``accel-config`` tool is used to enable ``DSA`` devices and configure
-+``DSA`` hardware resources(work queues and engines). One ``DSA`` device
-+has 8 work queues and 4 processing engines, multiple engines can be assigned
-+to a work queue via ``group`` attribute.
-+
-+For ``accel-config`` installation, please refer to `accel-config installation
-+<https://github.com/intel/idxd-config>`_
-+
-+One example of configuring and enabling an ``DSA`` device.
-+
-+.. code-block:: shell
-+
-+  #accel-config config-engine dsa0/engine0.0 -g 0
-+  #accel-config config-engine dsa0/engine0.1 -g 0
-+  #accel-config config-engine dsa0/engine0.2 -g 0
-+  #accel-config config-engine dsa0/engine0.3 -g 0
-+  #accel-config config-wq dsa0/wq0.0 -g 0 -s 128 -p 10 -b 1 -t 128 -m shared -y user -n app1 -d user
-+  #accel-config enable-device dsa0
-+  #accel-config enable-wq dsa0/wq0.0
-+
-+- The ``DSA`` device index is 0, use ``ls -lh /sys/bus/dsa/devices/dsa*``
-+  command to query the ``DSA`` device index.
-+
-+- 4 engines and 1 work queue are configured in group 0, so that all zero-page
-+  detection jobs submitted to this work queue can be processed by all engines
-+  simultaneously.
-+
-+- Set work queue attributes including the work mode, work queue size and so on.
-+
-+- Enable the ``dsa0`` device and work queue ``dsa0/wq0.0``
-+
-+.. note::
-+
-+   1. ``DSA`` device driver is Intel Data Accelerator Driver (idxd), it is
-+      recommended that the minimum version of Linux kernel is 5.18.
-+
-+   2. Only ``DSA`` shared work queue mode is supported, it needs to add
-+      ``"intel_iommu=on,sm_on"`` parameter to kernel command line.
-+
-+For more detailed configuration, please refer to `DSA Configuration Samples
-+<https://github.com/intel/idxd-config/tree/stable/Documentation/accfg>`_
-+
-+
-+Performances
-+============
-+We use two Intel 4th generation Xeon servers for testing.
-+
-+::
-+
-+    Architecture:        x86_64
-+    CPU(s):              192
-+    Thread(s) per core:  2
-+    Core(s) per socket:  48
-+    Socket(s):           2
-+    NUMA node(s):        2
-+    Vendor ID:           GenuineIntel
-+    CPU family:          6
-+    Model:               143
-+    Model name:          Intel(R) Xeon(R) Platinum 8457C
-+    Stepping:            8
-+    CPU MHz:             2538.624
-+    CPU max MHz:         3800.0000
-+    CPU min MHz:         800.0000
-+
-+We perform multifd live migration with below setup:
-+
-+1. VM has 100GB memory.
-+
-+2. Use the new migration option multifd-set-normal-page-ratio to control the
-+   total size of the payload sent over the network.
-+
-+3. Use 8 multifd channels.
-+
-+4. Use tcp for live migration.
-+
-+5. Use CPU to perform zero page checking as the baseline.
-+
-+6. Use one DSA device to offload zero page checking to compare with the baseline.
-+
-+7. Use "perf sched record" and "perf sched timehist" to analyze CPU usage.
-+
-+
-+A) Scenario 1: 50% (50GB) normal pages on an 100GB vm
-+-----------------------------------------------------
-+
-+::
-+
-+	CPU usage
-+
-+	|---------------|---------------|---------------|---------------|
-+	|		|comm		|runtime(msec)	|totaltime(msec)|
-+	|---------------|---------------|---------------|---------------|
-+	|Baseline	|live_migration	|5657.58	|		|
-+	|		|multifdsend_0	|3931.563	|		|
-+	|		|multifdsend_1	|4405.273	|		|
-+	|		|multifdsend_2	|3941.968	|		|
-+	|		|multifdsend_3	|5032.975	|		|
-+	|		|multifdsend_4	|4533.865	|		|
-+	|		|multifdsend_5	|4530.461	|		|
-+	|		|multifdsend_6	|5171.916	|		|
-+	|		|multifdsend_7	|4722.769	|41922		|
-+	|---------------|---------------|---------------|---------------|
-+	|DSA		|live_migration	|6129.168	|		|
-+	|		|multifdsend_0	|2954.717	|		|
-+	|		|multifdsend_1	|2766.359	|		|
-+	|		|multifdsend_2	|2853.519	|		|
-+	|		|multifdsend_3	|2740.717	|		|
-+	|		|multifdsend_4	|2824.169	|		|
-+	|		|multifdsend_5	|2966.908	|		|
-+	|		|multifdsend_6	|2611.137	|		|
-+	|		|multifdsend_7	|3114.732	|		|
-+	|		|dsa_completion	|3612.564	|32568		|
-+	|---------------|---------------|---------------|---------------|
-+
-+Baseline total runtime is calculated by adding up all multifdsend_X
-+and live_migration threads runtime. DSA offloading total runtime is
-+calculated by adding up all multifdsend_X, live_migration and
-+dsa_completion threads runtime. 41922 msec VS 32568 msec runtime and
-+that is 23% total CPU usage savings.
-+
-+::
-+
-+	Latency
-+	|---------------|---------------|---------------|---------------|---------------|---------------|
-+	|		|total time	|down time	|throughput	|transferred-ram|total-ram	|
-+	|---------------|---------------|---------------|---------------|---------------|---------------|
-+	|Baseline	|10343 ms	|161 ms		|41007.00 mbps	|51583797 kb	|102400520 kb	|
-+	|---------------|---------------|---------------|---------------|-------------------------------|
-+	|DSA offload	|9535 ms	|135 ms		|46554.40 mbps	|53947545 kb	|102400520 kb	|
-+	|---------------|---------------|---------------|---------------|---------------|---------------|
-+
-+Total time is 8% faster and down time is 16% faster.
-+
-+
-+B) Scenario 2: 100% (100GB) zero pages on an 100GB vm
-+-----------------------------------------------------
-+
-+::
-+
-+	CPU usage
-+	|---------------|---------------|---------------|---------------|
-+	|		|comm		|runtime(msec)	|totaltime(msec)|
-+	|---------------|---------------|---------------|---------------|
-+	|Baseline	|live_migration	|4860.718	|		|
-+	|	 	|multifdsend_0	|748.875	|		|
-+	|		|multifdsend_1	|898.498	|		|
-+	|		|multifdsend_2	|787.456	|		|
-+	|		|multifdsend_3	|764.537	|		|
-+	|		|multifdsend_4	|785.687	|		|
-+	|		|multifdsend_5	|756.941	|		|
-+	|		|multifdsend_6	|774.084	|		|
-+	|		|multifdsend_7	|782.900	|11154		|
-+	|---------------|---------------|-------------------------------|
-+	|DSA offloading	|live_migration	|3846.976	|		|
-+	|		|multifdsend_0	|191.880	|		|
-+	|		|multifdsend_1	|166.331	|		|
-+	|		|multifdsend_2	|168.528	|		|
-+	|		|multifdsend_3	|197.831	|		|
-+	|		|multifdsend_4	|169.580	|		|
-+	|		|multifdsend_5	|167.984	|		|
-+	|		|multifdsend_6	|198.042	|		|
-+	|		|multifdsend_7	|170.624	|		|
-+	|		|dsa_completion	|3428.669	|8700		|
-+	|---------------|---------------|---------------|---------------|
-+
-+Baseline total runtime is 11154 msec and DSA offloading total runtime is
-+8700 msec. That is 22% CPU savings.
-+
-+::
-+
-+	Latency
-+	|--------------------------------------------------------------------------------------------|
-+	|		|total time	|down time	|throughput	|transferred-ram|total-ram   |
-+	|---------------|---------------|---------------|---------------|---------------|------------|
-+	|Baseline	|4867 ms	|20 ms		|1.51 mbps	|565 kb		|102400520 kb|
-+	|---------------|---------------|---------------|---------------|----------------------------|
-+	|DSA offload	|3888 ms	|18 ms		|1.89 mbps	|565 kb		|102400520 kb|
-+	|---------------|---------------|---------------|---------------|---------------|------------|
-+
-+Total time 20% faster and down time 10% faster.
-+
-+
-+How To Use DSA In Migration
-+===========================
-+
-+The migration parameter ``accel-path`` is used to specify the resource
-+allocation for DSA. After the user configures
-+``zero-page-detection=dsa-accel``, one or more DSA work queues need to be
-+specified for migration.
-+
-+The following example shows two DSA work queues for zero page detection
-+
-+.. code-block:: shell
-+
-+   migrate_set_parameter zero-page-detection=dsa-accel
-+   migrate_set_parameter accel-path=dsa:/dev/dsa/wq0.0 dsa:/dev/dsa/wq1.0
-+
-+.. note::
-+
-+  Accessing DSA resources requires ``sudo`` command or ``root`` privileges
-+  by default. Administrators can modify the DSA device node ownership
-+  so that QEMU can use DSA with specified user permissions.
-+
-+  For example:
-+
-+  #chown -R qemu /dev/dsa
-+
-diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
-index 8f431d52f9..ea2893d80f 100644
---- a/docs/devel/migration/features.rst
-+++ b/docs/devel/migration/features.rst
-@@ -15,3 +15,4 @@ Migration has plenty of features to support different use cases.
-    qpl-compression
-    uadk-compression
-    qatzip-compression
-+   dsa-zero-page-detection
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 5cf754b38f..4c9d6b8f17 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -159,7 +159,12 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+     int len = 0;
+ 
+     if (!ct3d->hostpmem && !ct3d->hostvmem && !ct3d->dc.num_regions) {
+-        return 0;
++        /* zero memory size device. Build one entry with size 0 */
++        table = g_malloc0(CT3_CDAT_NUM_ENTRIES * sizeof(*table));
++        ct3_build_cdat_entries_for_mr(&(table[0]), dsmad_handle++,
++                                0, false, false, 0);
++        *cdat_table = g_steal_pointer(&table);
++        return CT3_CDAT_NUM_ENTRIES;
+     }
+ 
+     if (ct3d->hostvmem) {
+@@ -712,8 +717,11 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+ 
+     if (!ct3d->hostmem && !ct3d->hostvmem && !ct3d->hostpmem
+         && !ct3d->dc.num_regions) {
+-        error_setg(errp, "at least one memdev property must be set");
+-        return false;
++        /* no memdev property provided. Default to zero memory size device */
++        ct3d->cxl_dstate.pmem_size = 0;
++        ct3d->cxl_dstate.vmem_size = 0;
++        ct3d->cxl_dstate.static_mem_size = 0;
++        return true;
+     } else if (ct3d->hostmem && ct3d->hostpmem) {
+         error_setg(errp, "[memdev] cannot be used with new "
+                          "[persistent-memdev] property");
 -- 
-Yichen Wang
+2.25.1
 
 
