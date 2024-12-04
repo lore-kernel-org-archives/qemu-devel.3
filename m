@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7E66E77171
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 19:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9E3E77170
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 19:49:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvMS-0004lY-1J; Wed, 04 Dec 2024 14:48:36 -0500
+	id 1tIvMN-0004ke-H3; Wed, 04 Dec 2024 14:48:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIvMQ-0004lO-OM
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:48:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tIvML-0004jo-3S
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:48:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIvMP-0000l2-C9
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:48:34 -0500
+ id 1tIvMJ-0000jt-As
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:48:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733341712;
+ s=mimecast20190719; t=1733341704;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TQZu752Uua3cjXdoo1kRCjjKLnWnBdf2d4Uu0TqbPIo=;
- b=cm6BdzET/+JiLFIhYy32wqCaWEZt53xXCaeSF9xHebI/6V/XjVeLeucoktp9kMolrBMozq
- b6+ahbSLuLTEmoE4SD3q1MMeFiyz9ukavyQSgTG5pxLdK9e+qWY4+Zpd0jDINyxKrAqiUe
- JeQI/yLJ0YmPiiqD5GBjSJAAwJ3Q94A=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=fSJdFkEwo+Mxi8nyJIexAIU/JjFIPGnRrQ4lzO7W7SU=;
+ b=JH2gdn0bdgo8RPqdgv+6qMyuFFmFr7n4LWUxCp/usKSha4Fb9QWl/17mQzTC0mm0LYqO1A
+ WMlgPtg/bZ6PkYu9en/PzOpNfQAJ4tAVCFj8sN6HEB9ZU6RFoyrTiVp75CAPnWmHfZ2g9+
+ ArSuiUsqd7bmlPFkv9dWXmgFghfO1Zs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-XToCfc3JN-KzhWGogcNcHg-1; Wed,
- 04 Dec 2024 14:48:27 -0500
-X-MC-Unique: XToCfc3JN-KzhWGogcNcHg-1
-X-Mimecast-MFC-AGG-ID: XToCfc3JN-KzhWGogcNcHg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-326-m3OS8msDO-m_GCySoUEtkQ-1; Wed,
+ 04 Dec 2024 14:48:19 -0500
+X-MC-Unique: m3OS8msDO-m_GCySoUEtkQ-1
+X-Mimecast-MFC-AGG-ID: m3OS8msDO-m_GCySoUEtkQ
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C0E91964CD5; Wed,  4 Dec 2024 19:48:27 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D79E7195422C; Wed,  4 Dec 2024 19:48:18 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.92])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E9B3219560A2; Wed,  4 Dec 2024 19:48:24 +0000 (UTC)
+ id 10EE319560A2; Wed,  4 Dec 2024 19:48:16 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 6/7] tests: update libvirt-ci submodule for newer ccache
-Date: Wed,  4 Dec 2024 19:48:06 +0000
-Message-ID: <20241204194807.1472261-7-berrange@redhat.com>
+Subject: [PATCH 3/7] gitlab: clean packages in cirrus tasks
+Date: Wed,  4 Dec 2024 19:48:03 +0000
+Message-ID: <20241204194807.1472261-4-berrange@redhat.com>
 In-Reply-To: <20241204194807.1472261-1-berrange@redhat.com>
 References: <20241204194807.1472261-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -87,47 +87,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This update pulls in ccache4 for FreeBSD, to match other platforms
+The FreeBSD VM is somewhat low on disk space after all QEMU build deps
+are installed and a full QEMU build performed. Purging the package
+manager cache is a simple thing that reclaims about 1 GB of space.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .gitlab-ci.d/cirrus/freebsd-14.vars | 2 +-
- tests/lcitool/libvirt-ci            | 2 +-
- tests/vm/generated/freebsd.json     | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ .gitlab-ci.d/cirrus.yml       | 2 ++
+ .gitlab-ci.d/cirrus/build.yml | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/.gitlab-ci.d/cirrus/freebsd-14.vars b/.gitlab-ci.d/cirrus/freebsd-14.vars
-index 0a7ac5e0e1..0997c47af5 100644
---- a/.gitlab-ci.d/cirrus/freebsd-14.vars
-+++ b/.gitlab-ci.d/cirrus/freebsd-14.vars
-@@ -11,6 +11,6 @@ MAKE='/usr/local/bin/gmake'
- NINJA='/usr/local/bin/ninja'
- PACKAGING_COMMAND='pkg'
- PIP3='/usr/local/bin/pip'
--PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
-+PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache4 cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
- PYPI_PKGS=''
- PYTHON='/usr/local/bin/python3'
-diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-index 9ad3f70bde..0f11966131 160000
---- a/tests/lcitool/libvirt-ci
-+++ b/tests/lcitool/libvirt-ci
-@@ -1 +1 @@
--Subproject commit 9ad3f70bde9865d5ad18f36d256d472e72b5cbf3
-+Subproject commit 0f119661317333038e91b6fb9d0381a6934dcd0c
-diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
-index 3cb7fb7060..81fc38d798 100644
---- a/tests/vm/generated/freebsd.json
-+++ b/tests/vm/generated/freebsd.json
-@@ -13,7 +13,7 @@
-     "bzip2",
-     "ca_root_nss",
-     "capstone4",
--    "ccache",
-+    "ccache4",
-     "cmocka",
-     "ctags",
-     "curl",
+diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+index 16411f3d2b..2bd3cb35c9 100644
+--- a/.gitlab-ci.d/cirrus.yml
++++ b/.gitlab-ci.d/cirrus.yml
+@@ -42,6 +42,7 @@ x64-freebsd-14-build:
+     CIRRUS_VM_RAM: 8G
+     UPDATE_COMMAND: pkg update; pkg upgrade -y
+     INSTALL_COMMAND: pkg install -y
++    CLEAN_COMMAND: pkg clean -y --all
+     CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
+     TEST_TARGETS: check
+ 
+@@ -54,6 +55,7 @@ aarch64-macos-build:
+     CIRRUS_VM_IMAGE_NAME: ghcr.io/cirruslabs/macos-runner:sonoma
+     UPDATE_COMMAND: brew update
+     INSTALL_COMMAND: brew install
++    CLEAN_COMMAND: brew cleanup --prune=all
+     PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
+     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+     CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
+diff --git a/.gitlab-ci.d/cirrus/build.yml b/.gitlab-ci.d/cirrus/build.yml
+index 41abd0b31a..9983ab0690 100644
+--- a/.gitlab-ci.d/cirrus/build.yml
++++ b/.gitlab-ci.d/cirrus/build.yml
+@@ -21,6 +21,7 @@ build_task:
+   install_script:
+     - @UPDATE_COMMAND@
+     - @INSTALL_COMMAND@ @PKGS@
++    - @CLEAN_COMMAND@
+     - if test -n "@PYPI_PKGS@" ; then PYLIB=$(@PYTHON@ -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; @PIP3@ install @PYPI_PKGS@ ; fi
+   clone_script:
+     - git clone --depth 100 "$CI_REPOSITORY_URL" .
 -- 
 2.46.0
 
