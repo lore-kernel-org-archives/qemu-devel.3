@@ -4,92 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE5AE77170
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 19:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20315E77170
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 19:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIumL-0004is-Nl; Wed, 04 Dec 2024 14:11:18 -0500
+	id 1tIunE-0005dV-0G; Wed, 04 Dec 2024 14:12:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tIumH-0004cB-SZ
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:11:13 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tIun6-0005aI-5V; Wed, 04 Dec 2024 14:12:04 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tIum7-0005rm-Uj
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:11:06 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-432d86a3085so906155e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 11:11:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733339462; x=1733944262; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=xJkr6X6iGm4jU0kNLf3h/3QCpkTdenPRAEhvG0eZ02w=;
- b=ITK5e2PBBRaGu8xm6vJaMpKu0ffsq51NC65nkdMy1BsFCvXGvbAnTtC5yFCwM/Tn7R
- T81+Tp5TLHKvxLl7MBZleZpaqbX5nmIwj80ZLKiwGTQeIbbMCO/avSCAMuK8V82M5u+r
- WoiHyC6LyznzlU64QOj/8CgHLr80CqU+MuwdVS34JJaHJrNc9GCWcZK1MYuhumA4Q0Ml
- v29r4DHqeF67Ou66xp5v4OQEkhN69gNqXBNXGShNdjR9xGZCWky2G/d8XMs3ddJf5HRB
- 17pV48yBq/Sj2HQKSYumthpsAp9PBNCc4nib/NsNBCRWtljIKXYApZ8RZeZ68YoqN7JT
- OeZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733339462; x=1733944262;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xJkr6X6iGm4jU0kNLf3h/3QCpkTdenPRAEhvG0eZ02w=;
- b=CVv3J66VrI0I0BJyR+sp9pbd8tZE9TKAt3VQ539IHHyRUzGkXzqa17qKScBXyanXfJ
- hXqvXPbLBq+18SeBrNkRbp7gClizpXLVUpAmIVP9UB6PX7i0QMKn1wcl+Q+Idp8khGLI
- qdDpzONBU1BALy8XeyUvC0FE/FZLBjYxxvtzGSgjQYP+k/9lCZh6o3IToXks7ALzZHVo
- 6Ux59Nqi6v0H74LGc+lwnklcyBCRPlGVYJiXDdaz3FAtC6u2sMoVDxluBQeAw0SM6hdn
- nhNEgkr28bQ/+RNOsk6P+A2SDP3XFcFeoc6yCYbxFkeCsR4atSleBo7316SEc3crrzZW
- eWlA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNA0DVdgPhw72zACgHh8OnrSXi5GQhocTTFcmkzJ6JBAVd06aXP3h+ID7GNFVvUglUrDJ9FEmtAdT3@nongnu.org
-X-Gm-Message-State: AOJu0YzAocaz4DJhuoQ98iiAfu5XT/2wcu7JmslqYjqcTudq6IBgb7vP
- dtNuKpWOVGsr9TH1Vl42sO6JQzIJ+CFLKBJWq52inyNTtK4wgZ+2KGfVWpddxD0=
-X-Gm-Gg: ASbGnctF6kzxamoqhyMgUANoP+jmsDqSQQQT/MUHcJz8mBdz0b0gZ/9VwLj6/4azQBY
- aR3IwElLNWoB4u0sAcrt9X5uk0kmkMMXXiWbYIag7LKCVzr1pRr8vS4A3F4mp39lV9TRU5et15Y
- 4ei9S8KIE3MFdB1G8rs2jsMioYB59nePNqw2WgFCzshZaZJzwkB8AWE3q+I6FaV//i4dUAq6Wa6
- Ma+f7OkOnZY8d+zvG+EV8xrEXsTlmA03LUCgvUx0Kyx7wZq
-X-Google-Smtp-Source: AGHT+IFSE7EbJ7GAFFLFXXCfbtDYu0IPP92EWaIzpH84TAUFzF3WLmk7cmqpWzWQfvclNGQGSrizKw==
-X-Received: by 2002:a5d:6c6d:0:b0:385:f984:2cbc with SMTP id
- ffacd0b85a97d-385fd3f2d32mr6248857f8f.34.1733339462119; 
- Wed, 04 Dec 2024 11:11:02 -0800 (PST)
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d52c0bfasm34420985e9.32.2024.12.04.11.11.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 11:11:01 -0800 (PST)
-Date: Wed, 4 Dec 2024 19:11:25 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, peter.maydell@linaro.org,
- richard.henderson@linaro.org, philmd@linaro.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, alex.bennee@linaro.org,
- Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v3 10/26] target/arm/kvm-rme: Add Realm Personalization
- Value parameter
-Message-ID: <20241204191125.GD2349278@myrica>
-References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-12-jean-philippe@linaro.org>
- <87wmgqsbp1.fsf@pond.sub.org> <Z0XDfyDWc3OZSoj0@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tIumz-0005zS-N8; Wed, 04 Dec 2024 14:12:00 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 067891F38E;
+ Wed,  4 Dec 2024 19:11:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733339515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cXtup8iuTaj6WKTZiGBZLEIrwgPvH9DzzNLTP4pCi6g=;
+ b=r4OnxhzE1zRdb3MtPX7qcNZKFDHOW9gnr+bDkq56ShVp68REY5C9U01iCLgA6y0D4Inv2V
+ aCLIGytzdbxfa8mJPK09D7JE0TYSkzpMQvu8WkX7b2Fsya4GsjH5EqIdAJLvqZ3tO2moIP
+ e+O5EFRCMq6Gdu4F8mBEMOAUhS99Aqs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733339515;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cXtup8iuTaj6WKTZiGBZLEIrwgPvH9DzzNLTP4pCi6g=;
+ b=6GjOygjoDmB9w8JGogiwqHSUDA49N+ePXurg1GXvMAJ33a7k3R8NU5IPBNs098qkaRmhbs
+ GtU5poC6DFjfClCg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=r4OnxhzE;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=6GjOygjo
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733339515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cXtup8iuTaj6WKTZiGBZLEIrwgPvH9DzzNLTP4pCi6g=;
+ b=r4OnxhzE1zRdb3MtPX7qcNZKFDHOW9gnr+bDkq56ShVp68REY5C9U01iCLgA6y0D4Inv2V
+ aCLIGytzdbxfa8mJPK09D7JE0TYSkzpMQvu8WkX7b2Fsya4GsjH5EqIdAJLvqZ3tO2moIP
+ e+O5EFRCMq6Gdu4F8mBEMOAUhS99Aqs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733339515;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cXtup8iuTaj6WKTZiGBZLEIrwgPvH9DzzNLTP4pCi6g=;
+ b=6GjOygjoDmB9w8JGogiwqHSUDA49N+ePXurg1GXvMAJ33a7k3R8NU5IPBNs098qkaRmhbs
+ GtU5poC6DFjfClCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7CCBA13974;
+ Wed,  4 Dec 2024 19:11:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uhTJEHqpUGdvMgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 04 Dec 2024 19:11:54 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, =?utf-8?Q?Daniel_P_=2E?=
+ =?utf-8?Q?_Berrang=C3=A9?=
+ <berrange@redhat.com>, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ peterx@redhat.com, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH RFC 09/11] tests/qtest/migration: Don't use hardcoded
+ strings for -serial
+In-Reply-To: <20241204005138.702289-10-peterx@redhat.com>
+References: <20241204005138.702289-1-peterx@redhat.com>
+ <20241204005138.702289-10-peterx@redhat.com>
+Date: Wed, 04 Dec 2024 16:11:51 -0300
+Message-ID: <87ldwvi7pk.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z0XDfyDWc3OZSoj0@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 067891F38E
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[11];
+ MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,111 +128,334 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 26, 2024 at 12:47:59PM +0000, Daniel P. Berrangé wrote:
-> On Tue, Nov 26, 2024 at 08:20:42AM +0100, Markus Armbruster wrote:
-> > Jean-Philippe Brucker <jean-philippe@linaro.org> writes:
-> > 
-> > > The Realm Personalization Value (RPV) is provided by the user to
-> > > distinguish Realms that have the same initial measurement.
-> > >
-> > > The user provides up to 64 hexadecimal bytes. They are stored into the
-> > > RPV in the same order, zero-padded on the right.
-> > >
-> > > Cc: Eric Blake <eblake@redhat.com>
-> > > Cc: Markus Armbruster <armbru@redhat.com>
-> > > Cc: Daniel P. Berrangé <berrange@redhat.com>
-> > > Cc: Eduardo Habkost <eduardo@habkost.net>
-> > > Acked-by: Markus Armbruster <armbru@redhat.com>
-> > > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > > ---
-> > > v2->v3: Fix documentation
-> > > ---
-> > >  qapi/qom.json        |  15 ++++++
-> > >  target/arm/kvm-rme.c | 111 +++++++++++++++++++++++++++++++++++++++++++
-> > >  2 files changed, 126 insertions(+)
-> > >
-> > > diff --git a/qapi/qom.json b/qapi/qom.json
-> > > index a8beeabf1f..f982850bca 100644
-> > > --- a/qapi/qom.json
-> > > +++ b/qapi/qom.json
-> > > @@ -1068,6 +1068,19 @@
-> > >    'data': { '*cpu-affinity': ['uint16'],
-> > >              '*node-affinity': ['uint16'] } }
-> > >  
-> > > +##
-> > > +# @RmeGuestProperties:
-> > > +#
-> > > +# Properties for rme-guest objects.
-> > > +#
-> > > +# @personalization-value: Realm personalization value, as a 64-byte
-> > > +#     hex string. This optional parameter allows to uniquely identify
-> > > +#     the VM instance during attestation. (default: 0)
-> > 
-> > QMP commonly uses base64 for encoding binary data.  Any particular
-> > reason to deviate?
-> > 
-> > Is the "hex string" to be mapped to binary in little or big endian?  Not
-> > an issue with base64.
-> 
-> Agreed, using base64 is preferrable for consistency.
+Peter Xu <peterx@redhat.com> writes:
 
-Ack
+> From: Fabiano Rosas <farosas@suse.de>
+>
+> Stop using hardcoded strings for -serial so we can in the next patches
+> perform more than one migration in a row. Having the serial path
+> hardcoded means we cannot reuse the code when dst becomes the new src.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Link: https://lore.kernel.org/r/20241125144612.16194-3-farosas@suse.de
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  tests/qtest/migration-helpers.h |  2 +
+>  tests/qtest/migration-helpers.c |  8 ++++
+>  tests/qtest/migration-test.c    | 68 ++++++++++++++++++---------------
+>  3 files changed, 48 insertions(+), 30 deletions(-)
+>
+> diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
+> index 72dba369fb..c7a36a33d6 100644
+> --- a/tests/qtest/migration-helpers.h
+> +++ b/tests/qtest/migration-helpers.h
+> @@ -20,6 +20,7 @@ typedef struct QTestMigrationState {
+>      bool resume_seen;
+>      bool suspend_seen;
+>      bool suspend_me;
+> +    char *serial;
+>  } QTestMigrationState;
+>  
+>  bool migrate_watch_for_events(QTestState *who, const char *name,
+> @@ -64,5 +65,6 @@ static inline bool probe_o_direct_support(const char *tmpfs)
+>  #endif
+>  void migration_test_add(const char *path, void (*fn)(void));
+>  void migration_event_wait(QTestState *s, const char *target);
+> +char *migrate_get_unique_serial(const char *tmpfs);
+>  
+>  #endif /* MIGRATION_HELPERS_H */
+> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+> index 3f8ba7fa8e..7c0b54ce0e 100644
+> --- a/tests/qtest/migration-helpers.c
+> +++ b/tests/qtest/migration-helpers.c
+> @@ -528,3 +528,11 @@ void migration_event_wait(QTestState *s, const char *target)
+>          qobject_unref(response);
+>      } while (!found);
+>  }
+> +
+> +char *migrate_get_unique_serial(const char *tmpfs)
+> +{
+> +    static int i;
+> +
+> +    assert(i < INT_MAX);
+> +    return g_strdup_printf("%s/serial_%d", tmpfs, i++);
+> +}
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index eafc2da806..1452778c81 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -192,9 +192,8 @@ static void bootfile_create(char *dir, bool suspend_me)
+>   * we get an 'A' followed by an endless string of 'B's
+>   * but on the destination we won't have the A (unless we enabled suspend/resume)
+>   */
+> -static void wait_for_serial(const char *side)
+> +static void wait_for_serial(const char *serialpath)
+>  {
+> -    g_autofree char *serialpath = g_strdup_printf("%s/%s", tmpfs, side);
+>      FILE *serialfile = fopen(serialpath, "r");
+>  
+>      do {
+> @@ -216,7 +215,7 @@ static void wait_for_serial(const char *side)
+>              break;
+>  
+>          default:
+> -            fprintf(stderr, "Unexpected %d on %s serial\n", readvalue, side);
+> +            fprintf(stderr, "Unexpected %d on %s\n", readvalue, serialpath);
+>              g_assert_not_reached();
+>          }
+>      } while (true);
+> @@ -818,16 +817,17 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+>  
+>          src_state = (QTestMigrationState) { };
+>          src_state.suspend_me = args->suspend_me;
+> +        src_state.serial = migrate_get_unique_serial(tmpfs);
+>  
+>          cmd_source = g_strdup_printf("-accel kvm%s -accel tcg "
+>                                       "-machine %s,%s "
+>                                       "-name source,debug-threads=on "
+>                                       "-m %s "
+> -                                     "-serial file:%s/src_serial "
+> +                                     "-serial file:%s "
+>                                       "%s %s %s %s %s",
+>                                       kvm_opts ? kvm_opts : "",
+>                                       machine, machine_opts,
+> -                                     memory_size, tmpfs,
+> +                                     memory_size, src_state.serial,
+>                                       arch_opts ? arch_opts : "",
+>                                       arch_source ? arch_source : "",
+>                                       shmem_opts ? shmem_opts : "",
+> @@ -841,17 +841,18 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+>      }
+>  
+>      dst_state = (QTestMigrationState) { };
+> +    dst_state.serial = migrate_get_unique_serial(tmpfs);
+>  
+>      cmd_target = g_strdup_printf("-accel kvm%s -accel tcg "
+>                                   "-machine %s,%s "
+>                                   "-name target,debug-threads=on "
+>                                   "-m %s "
+> -                                 "-serial file:%s/dest_serial "
+> +                                 "-serial file:%s "
+>                                   "-incoming %s "
+>                                   "%s %s %s %s %s",
+>                                   kvm_opts ? kvm_opts : "",
+>                                   machine, machine_opts,
+> -                                 memory_size, tmpfs, uri,
+> +                                 memory_size, dst_state.serial, uri,
+>                                   arch_opts ? arch_opts : "",
+>                                   arch_target ? arch_target : "",
+>                                   shmem_opts ? shmem_opts : "",
+> @@ -911,8 +912,10 @@ static void test_migrate_end(QTestState *from, QTestState *to, bool test_dest)
+>      qtest_quit(to);
+>  
+>      cleanup("migsocket");
+> -    cleanup("src_serial");
+> -    cleanup("dest_serial");
+> +    unlink(src_state.serial);
+> +    g_free(src_state.serial);
+> +    unlink(dst_state.serial);
+> +    g_free(dst_state.serial);
+>      cleanup(FILE_TEST_FILENAME);
+>  }
+>  
+> @@ -1290,7 +1293,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+>                               "                'port': '0' } } ] } }");
+>  
+>      /* Wait for the first serial output from the source */
+> -    wait_for_serial("src_serial");
+> +    wait_for_serial(src_state.serial);
+>      wait_for_suspend(from, &src_state);
+>  
+>      migrate_qmp(from, to, NULL, NULL, "{}");
+> @@ -1314,7 +1317,7 @@ static void migrate_postcopy_complete(QTestState *from, QTestState *to,
+>      }
+>  
+>      /* Make sure we get at least one "B" on destination */
+> -    wait_for_serial("dest_serial");
+> +    wait_for_serial(dst_state.serial);
+>  
+>      if (uffd_feature_thread_id) {
+>          read_blocktime(to);
+> @@ -1719,7 +1722,7 @@ static void test_precopy_common(MigrateCommon *args)
+>  
+>      /* Wait for the first serial output from the source */
+>      if (args->result == MIG_TEST_SUCCEED) {
+> -        wait_for_serial("src_serial");
+> +        wait_for_serial(src_state.serial);
+>          wait_for_suspend(from, &src_state);
+>      }
+>  
+> @@ -1796,7 +1799,7 @@ static void test_precopy_common(MigrateCommon *args)
+>              qtest_qmp_assert_success(to, "{'execute': 'system_wakeup'}");
+>          }
+>  
+> -        wait_for_serial("dest_serial");
+> +        wait_for_serial(dst_state.serial);
+>      }
+>  
+>  finish:
+> @@ -1871,7 +1874,7 @@ static void test_file_common(MigrateCommon *args, bool stop_src)
+>      }
+>  
+>      migrate_ensure_converge(from);
+> -    wait_for_serial("src_serial");
+> +    wait_for_serial(src_state.serial);
+>  
+>      if (stop_src) {
+>          qtest_qmp_assert_success(from, "{ 'execute' : 'stop'}");
+> @@ -1898,7 +1901,7 @@ static void test_file_common(MigrateCommon *args, bool stop_src)
+>      }
+>      wait_for_resume(to, &dst_state);
+>  
+> -    wait_for_serial("dest_serial");
+> +    wait_for_serial(dst_state.serial);
+>  
+>      if (check_offset) {
+>          file_check_offset_region();
+> @@ -2041,7 +2044,7 @@ static void test_ignore_shared(void)
+>      migrate_set_capability(to, "x-ignore-shared", true);
+>  
+>      /* Wait for the first serial output from the source */
+> -    wait_for_serial("src_serial");
+> +    wait_for_serial(src_state.serial);
+>  
+>      migrate_qmp(from, to, uri, NULL, "{}");
+>  
+> @@ -2051,7 +2054,7 @@ static void test_ignore_shared(void)
+>  
+>      qtest_qmp_eventwait(to, "RESUME");
+>  
+> -    wait_for_serial("dest_serial");
+> +    wait_for_serial(dst_state.serial);
+>      wait_for_migration_complete(from);
+>  
+>      /* Check whether shared RAM has been really skipped */
+> @@ -2669,7 +2672,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+>      migrate_set_capability(from, "validate-uuid", true);
+>  
+>      /* Wait for the first serial output from the source */
+> -    wait_for_serial("src_serial");
+> +    wait_for_serial(src_state.serial);
+>  
+>      migrate_qmp(from, to, uri, NULL, "{}");
+>  
+> @@ -2733,7 +2736,7 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+>      }
+>  
+>      /* Wait for the first serial output from the source */
+> -    wait_for_serial("src_serial");
+> +    wait_for_serial(src_state.serial);
+>  
+>      /*
+>       * 'uri' and 'channels' validation is checked even before the migration
+> @@ -2823,7 +2826,7 @@ static void test_migrate_auto_converge(void)
+>      migrate_set_capability(from, "pause-before-switchover", true);
+>  
+>      /* Wait for the first serial output from the source */
+> -    wait_for_serial("src_serial");
+> +    wait_for_serial(src_state.serial);
+>  
+>      migrate_qmp(from, to, uri, NULL, "{}");
+>  
+> @@ -2885,7 +2888,7 @@ static void test_migrate_auto_converge(void)
+>  
+>      qtest_qmp_eventwait(to, "RESUME");
+>  
+> -    wait_for_serial("dest_serial");
+> +    wait_for_serial(dst_state.serial);
+>      wait_for_migration_complete(from);
+>  
+>      test_migrate_end(from, to, true);
+> @@ -3296,7 +3299,7 @@ static void test_multifd_tcp_cancel(void)
+>      migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
+>  
+>      /* Wait for the first serial output from the source */
+> -    wait_for_serial("src_serial");
+> +    wait_for_serial(src_state.serial);
+>  
+>      migrate_qmp(from, to, NULL, NULL, "{}");
+>  
+> @@ -3307,7 +3310,8 @@ static void test_multifd_tcp_cancel(void)
+>      /* Make sure QEMU process "to" exited */
+>      qtest_set_expected_status(to, EXIT_FAILURE);
+>      qtest_wait_qemu(to);
+> -    qtest_quit(to);
+> +    unlink(dst_state.serial);
+> +    g_free(dst_state.serial);
+>  
+>      /*
+>       * Ensure the source QEMU finishes its cancellation process before we
+> @@ -3345,7 +3349,7 @@ static void test_multifd_tcp_cancel(void)
+>      wait_for_stop(from, &src_state);
+>      qtest_qmp_eventwait(to2, "RESUME");
+>  
+> -    wait_for_serial("dest_serial");
+> +    wait_for_serial(dst_state.serial);
+>      wait_for_migration_complete(from);
+>      test_migrate_end(from, to2, true);
+>  }
+> @@ -3488,13 +3492,16 @@ static QTestState *dirtylimit_start_vm(void)
+>      QTestState *vm = NULL;
+>      g_autofree gchar *cmd = NULL;
+>  
+> +    src_state = (QTestMigrationState) { };
+> +    src_state.serial = migrate_get_unique_serial(tmpfs);
+> +
+>      bootfile_create(tmpfs, false);
+>      cmd = g_strdup_printf("-accel kvm,dirty-ring-size=4096 "
+>                            "-name dirtylimit-test,debug-threads=on "
+>                            "-m 150M -smp 1 "
+> -                          "-serial file:%s/vm_serial "
+> +                          "-serial file:%s "
+>                            "-drive file=%s,format=raw ",
+> -                          tmpfs, bootpath);
+> +                          src_state.serial, bootpath);
+>  
+>      vm = qtest_init(cmd);
+>      return vm;
+> @@ -3503,7 +3510,8 @@ static QTestState *dirtylimit_start_vm(void)
+>  static void dirtylimit_stop_vm(QTestState *vm)
+>  {
+>      qtest_quit(vm);
+> -    cleanup("vm_serial");
+> +    unlink(src_state.serial);
+> +    g_free(src_state.serial);
+>  }
+>  
+>  static void test_vcpu_dirty_limit(void)
+> @@ -3519,7 +3527,7 @@ static void test_vcpu_dirty_limit(void)
+>      vm = dirtylimit_start_vm();
+>  
+>      /* Wait for the first serial output from the vm*/
+> -    wait_for_serial("vm_serial");
+> +    wait_for_serial(src_state.serial);
+>  
+>      /* Do dirtyrate measurement with calc time equals 1s */
+>      calc_dirty_rate(vm, 1);
+> @@ -3612,7 +3620,7 @@ static void migrate_dirty_limit_wait_showup(QTestState *from,
+>      migrate_set_capability(from, "pause-before-switchover", true);
+>  
+>      /* Wait for the serial output from the source */
+> -    wait_for_serial("src_serial");
+> +    wait_for_serial(src_state.serial);
+>  }
+>  
+>  /*
+> @@ -3751,7 +3759,7 @@ static void test_migrate_dirty_limit(void)
+>  
+>      qtest_qmp_eventwait(to, "RESUME");
+>  
+> -    wait_for_serial("dest_serial");
+> +    wait_for_serial(dst_state.serial);
+>      wait_for_migration_complete(from);
+>  
+>      test_migrate_end(from, to, true);
 
-> 
-> > 
-> > Nitpick: (default: all-zero), please, for consistency with similar
-> > documentation in SevSnpGuestProperties.
-> > 
-> > > +#
-> > > +# Since: 9.3
-> 
-> There is never any x.3 version of QEMU, as we bump the major
-> version once a year. IOW, next release you could target this
-> for will be 10.0
+There's a preexisting issue in the dirty_limit test of not doing cleanup
+between the two migrations that it does, causing (with this patch) one
+of the serial files to get left behind, which breaks make check
+SPEED=slow because the test directory cannot be removed.
 
-Ok good to know
-
-Thanks,
-Jean
-
-> 
-> > > +##
-> > > +{ 'struct': 'RmeGuestProperties',
-> > > +  'data': { '*personalization-value': 'str' } }
-> > >  
-> > >  ##
-> > >  # @ObjectType:
-> > > @@ -1121,6 +1134,7 @@
-> > >      { 'name': 'pr-manager-helper',
-> > >        'if': 'CONFIG_LINUX' },
-> > >      'qtest',
-> > > +    'rme-guest',
-> > >      'rng-builtin',
-> > >      'rng-egd',
-> > >      { 'name': 'rng-random',
-> > 
-> > The commit message claims the patch adds a parameter.  It actually adds
-> > an entire object type.
-> 
-> The object should be added to qom.json earlier in this series when
-> the RmeGuest class is defined, then this patch would merely be adding
-> the parameter.
-> 
-> > 
-> > > @@ -1195,6 +1209,7 @@
-> > >        'pr-manager-helper':          { 'type': 'PrManagerHelperProperties',
-> > >                                        'if': 'CONFIG_LINUX' },
-> > >        'qtest':                      'QtestProperties',
-> > > +      'rme-guest':                  'RmeGuestProperties',
-> > >        'rng-builtin':                'RngProperties',
-> > >        'rng-egd':                    'RngEgdProperties',
-> > >        'rng-random':                 { 'type': 'RngRandomProperties',
-> 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-> 
+Just an FYI. I'm fixing that on master and we can update this patch
+afterward.
 
