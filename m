@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC7A5E7716B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 15:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41C5E7716E
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 16:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIrm1-0007cE-8p; Wed, 04 Dec 2024 10:58:45 -0500
+	id 1tIrm3-0007dr-Ca; Wed, 04 Dec 2024 10:58:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1tIrlw-0007bM-Sb
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 10:58:41 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ id 1tIrly-0007bg-ME; Wed, 04 Dec 2024 10:58:43 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1tIrlt-00074u-UK
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 10:58:40 -0500
+ id 1tIrlw-000757-06; Wed, 04 Dec 2024 10:58:42 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 30DFC5C6185;
- Wed,  4 Dec 2024 15:57:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB00CC4CECD;
- Wed,  4 Dec 2024 15:58:27 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 5A772A4086D;
+ Wed,  4 Dec 2024 15:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249CCC4CED2;
+ Wed,  4 Dec 2024 15:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1733327907;
- bh=wU6bEN0SPz/LlKhqMAmMkomSPYpkFTOMIKtUFlzjV24=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Wq0sP/uYRy6wBHCyaOxRnQnXx7qltJQxOLT4nHQXa89WS6mb34iS7kgNrSln2eLXA
- 24tHjTnarFcxmtL1b6E/aAtz487ZGnTQlLB7/aGNBTR1QjHi3jtI4h/8t/05pQxs1T
- no99A0ICF78fPZmvBY0+p3qWP3TU8rdd/87m1SoM6UwNpHtXumes6mlWSJh9ZRiph9
- 9jL5PsKnwZYKQ6VW0PQcTLEy501+ieKjkuVNF88VC+idjI3C+AG9qt/7nDLw692t/J
- 17lx14rVz/61/q+LJ5fI9jUwiCJmiPIqVdEOYh0FYaj/Eb1Za98oQOqBj+iPEAUUFq
- 28rwySq7sDjEQ==
+ s=k20201202; t=1733327909;
+ bh=jueMBi9DqtcIAo8jCb8vFwaEcMnWhMI0+nsU7Naunbo=;
+ h=From:To:Cc:Subject:Date:From;
+ b=GhUknTQVxI50Jxwu9VmhFjNs3op+lf/OTVA8FmnQWxFzTsMOfExv7I1rAuKrd9a36
+ oQ68qTKjBhtWueYPiTTACBtwrN4hliJm9ufJeh4FT2jGtfTcF9fzamauhRheIlmT4O
+ YULaUG/LU8ictiFlD4Qo+kQlfJB4xCvfKr7gjvjtb7aUS/TlyY4MJ90+yZxGL+8bNn
+ 6+ujN+JnuvLIIpNY2V8KCWA2CKqLSlTfRDka+kbtMJM9O/AWMFD7EvNm+PpHjJ1qlE
+ 74T8z2Octji2s4cr6q40rrr7z7CDy4zI/jtc3l+H1M55FE8rPdOt+laRsCt6lg1Eso
+ 3AjlS6gKJYtkQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab@kernel.org>) id 1tIrlf-00000000HZ1-3WaO;
+ (envelope-from <mchehab@kernel.org>) id 1tIrlf-00000000HYp-3B0D;
  Wed, 04 Dec 2024 16:58:23 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- linux-kernel@vger.kernel.org, qemu-devel@nongnu.org,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v3 4/5] acpi/generic_event_device: Update GHES migration to
- cover hest addr
-Date: Wed,  4 Dec 2024 16:57:58 +0100
-Message-ID: <9be1bc41db1705a23ade82ecfcb978e6e0db273a.1733327276.git.mchehab+huawei@kernel.org>
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v3 0/5] Change ghes driver to use HEST-based offsets
+Date: Wed,  4 Dec 2024 16:57:54 +0100
+Message-ID: <cover.1733327276.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <cover.1733327276.git.mchehab+huawei@kernel.org>
-References: <cover.1733327276.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab@kernel.org; helo=dfw.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=mchehab@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -73
 X-Spam_score: -7.4
 X-Spam_bar: -------
@@ -77,63 +78,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GHES migration logic at GED should now support HEST table
-location too.
+This  series was part of the previous PR to add generic error injection
+support on GHES. It depends on a cleanup patch series sent earlier
+today:
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+    https://lore.kernel.org/qemu-devel/cover.1733297707.git.mchehab+huawei@kernel.org/T/#t
+
+It contains the changes of the math used to calculate offsets at HEST table 
+and hardware_error firmware file. It prepares for the addition of GHES
+error injection.
+
+The first patch was previously at the cleanup series. It prepares
+the logic to support multiple sources.
+
+The second patch adds a new firmware file to store HEST address.
+
+The third patch use the new firmware to calculate offsets using
+HEST table.
+
+Patches 4 and 5 add migration support. They assume that this
+series will be merged for qemu 9.2 (maybe it is too late for that,
+as QEMU is now on soft freeze). 
+
+I tested migration using both virt-9.1 and virt-9.2 machines
+on qemu 9.2.
+
+I also tested migration with:
+
+	qemu-9.1 -M virt-9.1 -cpu cortex-a57 => qemu-9.2 -M virt-9.1 -cpu cortex-a57
+	qemu-9.2 -M virt-9.1 -cpu cortex-a57 => qemu-9.1 -M virt-9.1 -cpu cortex-a57 
+
+The full qemu command when test backward-compatibility when running virt-9.1 is:
+
+
+~/qemu/build/qemu-system-aarch64 \
+-m 4g,maxmem=8G,slots=8 -monitor stdio -no-reboot -bios ~/emulator/QEMU_EFI-silent.fd -kernel~/kernel/arm64_build/arch/arm64/boot/Image.gz -device pcie-root-port,id=root_port1 -device virtio-blk-pci,drive=hd -device virtio-net-pci,netdev=mynet,id=bob -drive if=none,file=~/emulator/debian.qcow2,format=qcow2,id=hd -object memory-backend-ram,size=4G,id=mem0 -netdev type=user,id=mynet,hostfwd=tcp::5555-:22 -qmp tcp:localhost:4445,server=on,wait=off -M virt-9.1,nvdimm=on,gic-version=3,ras=on -cpu max -smp 4 -numa node,nodeid=0,cpus=0-3,memdev=mem0 -append 'earlycon nomodeset root=/dev/vda1 fsck.mode=skip tp_printk maxcpus=4'
+
+(I actually call it from two different directories, one with qemu-9.1 and the other one with qemu-9.2.
+
+For tests on qemu-9.2 with virt-9.2, I used a similar command:
+
+~/qemu/build/qemu-system-aarch64 -m 4g,maxmem=8G,slots=8 -monitor stdio -no-reboot -bios ~/emulator/QEMU_EFI-silent.fd -kernel ~/kernel/arm64_build/arch/arm64/boot/Image.gz -device pcie-root-port,id=root_port1 -device virtio-blk-pci,drive=hd -device virtio-net-pci,netdev=mynet,id=bob -drive if=none,file=~/emulator/debian.qcow2,format=qcow2,id=hd -object memory-backend-ram,size=4G,id=mem0 -netdev type=user,id=mynet,hostfwd=tcp::5555-:22 -qmp tcp:localhost:4445,server=on,wait=off -M virt-9.2,nvdimm=on,gic-version=3,ras=on -cpu max -smp 4 -numa node,nodeid=0,cpus=0-3,memdev=mem0 -append 'earlycon nomodeset root=/dev/vda1 fsck.mode=skip tp_printk maxcpus=4'
+
 ---
- hw/acpi/generic_event_device.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 17baf36132a8..c1116dd8d7ae 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -387,6 +387,34 @@ static const VMStateDescription vmstate_ghes_state = {
-     }
- };
- 
-+static const VMStateDescription vmstate_hest = {
-+    .name = "acpi-hest",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(hest_addr_le, AcpiGhesState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static bool hest_needed(void *opaque)
-+{
-+    AcpiGedState *s = opaque;
-+    return s->ghes_state.hest_addr_le;
-+}
-+
-+static const VMStateDescription vmstate_hest_state = {
-+    .name = "acpi-ged/hest",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = hest_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
-+                       vmstate_hest, AcpiGhesState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static const VMStateDescription vmstate_acpi_ged = {
-     .name = "acpi-ged",
-     .version_id = 1,
-@@ -399,6 +427,7 @@ static const VMStateDescription vmstate_acpi_ged = {
-         &vmstate_memhp_state,
-         &vmstate_cpuhp_state,
-         &vmstate_ghes_state,
-+        &vmstate_hest_state,
-         NULL
-     }
- };
+v3: did some minor cleanups at the code, as suggested by Jonathan Cameron.
+
+v2:
+  - some whitespace and comment changes
+  - patch 3/6 (acpi/ghes: rename the function which gets hw error offsets)
+    was merged on the cleanup series.
+
+Mauro Carvalho Chehab (5):
+  acpi/ghes: Prepare to support multiple sources on ghes
+  acpi/ghes: add a firmware file with HEST address
+  acpi/ghes: Use HEST table offsets when preparing GHES records
+  acpi/generic_event_device: Update GHES migration to cover hest addr
+  acpi/generic_event_device: add logic to detect if HEST addr is
+    available
+
+ hw/acpi/generic_event_device.c |  30 +++++++
+ hw/acpi/ghes.c                 | 160 +++++++++++++++++++++++++++++----
+ hw/arm/virt-acpi-build.c       |  33 ++++++-
+ hw/core/machine.c              |   2 +
+ include/hw/acpi/ghes.h         |  23 +++--
+ 5 files changed, 220 insertions(+), 28 deletions(-)
+
 -- 
 2.47.1
+
 
 
