@@ -4,104 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59110E7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 09:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E7AE7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 09:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIlcR-0003qg-3P; Wed, 04 Dec 2024 04:24:27 -0500
+	id 1tIlhj-0005Fk-3m; Wed, 04 Dec 2024 04:29:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tIlcM-0003qQ-Vf
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 04:24:23 -0500
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1tIlhh-0005CJ-QA
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 04:29:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tIlcK-0001jW-1t
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 04:24:22 -0500
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1tIlhg-0006IH-52
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 04:29:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733304258;
+ s=mimecast20190719; t=1733304591;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0rA3Q8pSqM1dSDp1IjUijqveaLItTi22vCFk780D7MI=;
- b=EuoFP7BmFw7dg1jT8/mUAbJ2CC6Mjmmxv/NNqS+m7qxjnmZgWhM6JIwkQchKfGyeRNsj6i
- 3oz3x/Lfa6psOw0z+gh+xpfbyQ44G1kQ9VSEE85/e8BOXfEV4wmS+/k8PeJcRxh5zAxRyH
- Vo9K72dOgaDx9LG9931hBwGPsfPW074=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dicWub2SQBAtsK8i16eRhXFVuTql6558Wl7544FMwRs=;
+ b=FvwmCZrtn99yqQY7OU2CiCukJmlxYwujF8BmasPR1dpVzzqATV3ssMRrDYz/oxepg/fi/n
+ ch0WpGmN1V1h2Md1uLrv1Tti+f07SCQthnG++LBzem+g+UIhPkckNXPtz4O2zgoe4EsnYi
+ vHhxTuB96XOvN9vVpBs2+8ZVUJdeMRk=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-101-jVfhPaorNOCrJ1A62OJrxg-1; Wed, 04 Dec 2024 04:24:17 -0500
-X-MC-Unique: jVfhPaorNOCrJ1A62OJrxg-1
-X-Mimecast-MFC-AGG-ID: jVfhPaorNOCrJ1A62OJrxg
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-53e1ef4d176so201570e87.2
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 01:24:16 -0800 (PST)
+ us-mta-3-DsCcYoV7NFi1uxtRXrfidA-1; Wed, 04 Dec 2024 04:29:49 -0500
+X-MC-Unique: DsCcYoV7NFi1uxtRXrfidA-1
+X-Mimecast-MFC-AGG-ID: DsCcYoV7NFi1uxtRXrfidA
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d884e46548so76938356d6.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 01:29:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733304255; x=1733909055;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0rA3Q8pSqM1dSDp1IjUijqveaLItTi22vCFk780D7MI=;
- b=cW+Yz5diwJFfvG0ekQjtbabjaCH8hNX+hzzO18OQxOqjKJsW2W172Su4RCbcKpQeva
- UGZKqufBm7JTnE/qSi4W/Gtr3Nf/sSOja4NjjbfyERz19YAyXUKISGnVhemIGdJmvgHV
- mN4uKa5Cl6ncswzpD2swtn3unIenK41AhM9QCWwZqqThuNcdFxp+KAq5daRgSJCFcnVv
- tZo9Bw4MsIeb18cCjoGDBpnFeNdx4wb35NjfqeDW0yHnsNY7dOEDD8GZE2rB+eh/wP6T
- +RZzux6tWCtsiF1uJNajKIQQ1qoTeDZNlgmvY03Jn1LVpPyJayJEpL1mBmMAMTRCg/of
- 8vBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6niyfw9mg0yO5PFlrjpdb7KuKIAGF9bpb6dd4MBOKMZ6/DQd+ZOSxaN6NledRxUuagytkKYdEj3Pa@nongnu.org
-X-Gm-Message-State: AOJu0Yyu9YoLT4nhrMIgTzuf7Hs50HFVoBPW9pXJQu8J/K3CtsnNlUTT
- Ctu67Rx2ojWHCY2qZmkJm7tdO4lyvv4J0l3MJRonw5n/oyu3tvDlNXhyTJTVUL8/0aYsFY9GXLu
- 9eqvFQVRi2zdrBemeQqYq/PDWkTdtef+YuRRe3F3sIAKTwE4XzXPk
-X-Gm-Gg: ASbGnct98EtmxQDFQVJbPTvvIm3wx+cUVBXFxwxHvG9slR+6wUntSsbIm98VmMohTxQ
- nmij3qYLcdIHxE2v4RpdsJG8MIJq9o3YKyCMmGFHk3XM8v2Q99d1s7CI/QXtDa6zrT1rDjktPW5
- 9NLpQDfZoEWpS5pxSOsooSo0KEAvpFlT9H0uvNz7L/zQwFhVyBO9tO16r1SoAjh5Nun+1AfYTj7
- 7Xt6+Ibd4OgQYaYNYrQQHXDoKZobHXFdpUD4jUUFDic5YGDrevnt5SGbBQlc5Ln8Ol1heDIymQ7
- umYywqjCcDJZpYxtsJGDkg==
-X-Received: by 2002:a05:6512:10c5:b0:53e:1c3d:d1ae with SMTP id
- 2adb3069b0e04-53e1c3dd2c2mr1189001e87.29.1733304255440; 
- Wed, 04 Dec 2024 01:24:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEsbNZvNHIYi3juR1bGlOd7p4wtzrVDLahVmik9+1Qp9w7qDv8Yeu/UFp2p0lFOTQ8AFCDHtw==
-X-Received: by 2002:a05:6512:10c5:b0:53e:1c3d:d1ae with SMTP id
- 2adb3069b0e04-53e1c3dd2c2mr1188975e87.29.1733304255025; 
- Wed, 04 Dec 2024 01:24:15 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-u.redhat.com.
- [213.175.37.12]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d526b312sm18181805e9.6.2024.12.04.01.24.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 01:24:14 -0800 (PST)
-Date: Wed, 4 Dec 2024 10:24:13 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 13/15] acpi/ghes: move offset calculus to a separate
- function
-Message-ID: <20241204102413.31c8d76d@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20241204095635.512a44d5@foz.lan>
-References: <cover.1732266152.git.mchehab+huawei@kernel.org>
- <e5661a6383449675b28e15c8479ebca42c939368.1732266152.git.mchehab+huawei@kernel.org>
- <20241203125143.7171892a@imammedo.users.ipa.redhat.com>
- <20241203144730.47b8ca86@foz.lan>
- <20241204085440.4640a476@imammedo.users.ipa.redhat.com>
- <20241204095635.512a44d5@foz.lan>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1733304589; x=1733909389;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dicWub2SQBAtsK8i16eRhXFVuTql6558Wl7544FMwRs=;
+ b=c8npX9N55IfNQlUtF2zXCUWr+5XMgY3SrJ1pBOZ6cBlkZz1AIbOIFw6p6WOiCLBGi2
+ eK6w1xwq6ScZXibbz1lyFAEMlhv7z6r5Z4QiIxude8nTN0VfoA8NTa9sXsjvWK2TjHlx
+ mKc/DZxFg3vajX6eaQCRjAC5aYSdOB85EE932CqWMDuCkwFFy41MWUReUlE0P2APlMgx
+ +Wy6N+qdX+oM2GaR3kB5iJ1OJ9lHV9Adh+Y7w9Nge0zKBJmoYOkYr8GhMWqS5WPtKwkh
+ Aug+SVZZi9UMksHhu6Qyc6A/zMCIJOgckNwwxt/+IuHD5+kUBiDm62tO3Di6d+o5sunC
+ FWJg==
+X-Gm-Message-State: AOJu0Yxdl8nZjy/yD/y225prScBoopqnI+CzLCuxH6VyAlm4Z+/v3OMy
+ ekb7SUUP+cPsSyZuZ0+NVoaqQWb1KURiS2e+TZMgtVIRShPagoc6wu7RmP+YAJUzSILErR52kKU
+ vCIxoeJ6sQRPvKkH6qYNCaam3hYzA3YSqF65ZMUIZ+vLjTKJrEtSdbExfzLGCcLziuFen7ctlH7
+ kx7JfJnAYcv8vTZsysUFkheyj2pbA=
+X-Gm-Gg: ASbGnctCl6n72qY8Rw68L0n/8MjnTPmrT/z0dAhx3IEm/vDre55tb7njPZKDGaXXwAf
+ QDWAHmEAAuBRKNl6cM7La8c+1ylzHwNND5A==
+X-Received: by 2002:a05:6214:d44:b0:6d8:a48e:a027 with SMTP id
+ 6a1803df08f44-6d8b72e377dmr97575676d6.2.1733304589159; 
+ Wed, 04 Dec 2024 01:29:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHq3BY7QGltLJUUCwQzlja2B0XdfGAPVFzQSASwb4dy/HQ61Gz/tnfaf5/ngah5rIhVGrWIGlP3AlsDCqI4LqE=
+X-Received: by 2002:a05:6214:d44:b0:6d8:a48e:a027 with SMTP id
+ 6a1803df08f44-6d8b72e377dmr97575546d6.2.1733304588909; Wed, 04 Dec 2024
+ 01:29:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+References: <cover.1730713917.git.mprivozn@redhat.com>
+ <780bf01dec69fa68b8fe5a9c09187b124e0a56ec.1730713917.git.mprivozn@redhat.com>
+In-Reply-To: <780bf01dec69fa68b8fe5a9c09187b124e0a56ec.1730713917.git.mprivozn@redhat.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Wed, 4 Dec 2024 11:29:38 +0200
+Message-ID: <CAPMcbCrLTp=G_bzt+Li82DQnWXBGEs0Kw00z8gSv9XWjan1aYg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] qga: Don't access global variable in run_agent_once()
+To: Michal Privoznik <mprivozn@redhat.com>
+Cc: qemu-devel@nongnu.org, michael.roth@amd.com
+Content-Type: multipart/alternative; boundary="0000000000004f517f06286e6c68"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,98 +99,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Dec 2024 09:56:35 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+--0000000000004f517f06286e6c68
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Em Wed, 4 Dec 2024 08:54:40 +0100
-> Igor Mammedov <imammedo@redhat.com> escreveu:
-> 
-> > On Tue, 3 Dec 2024 14:47:30 +0100
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > Em Tue, 3 Dec 2024 12:51:43 +0100
-> > > Igor Mammedov <imammedo@redhat.com> escreveu:
-> > >     
-> > > > On Fri, 22 Nov 2024 10:11:30 +0100
-> > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> > > >       
-> > > > > Currently, CPER address location is calculated as an offset of
-> > > > > the hardware_errors table. It is also badly named, as the
-> > > > > offset actually used is the address where the CPER data starts,
-> > > > > and not the beginning of the error source.
-> > > > > 
-> > > > > Move the logic which calculates such offset to a separate
-> > > > > function, in preparation for a patch that will be changing the
-> > > > > logic to calculate it from the HEST table.
-> > > > > 
-> > > > > While here, properly name the variable which stores the cper
-> > > > > address.
-> > > > > 
-> > > > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > > ---
-> > > > >  hw/acpi/ghes.c | 41 ++++++++++++++++++++++++++++++++---------
-> > > > >  1 file changed, 32 insertions(+), 9 deletions(-)
-> > > > > 
-> > > > > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> > > > > index 87fd3feedd2a..d99697b20164 100644
-> > > > > --- a/hw/acpi/ghes.c
-> > > > > +++ b/hw/acpi/ghes.c
-> > > > > @@ -364,10 +364,37 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> > > > >      ags->present = true;
-> > > > >  }
-> > > > >  
-> > > > > +static void get_hw_error_offsets(uint64_t ghes_addr,
-> > > > > +                                 uint64_t *cper_addr,
-> > > > > +                                 uint64_t *read_ack_register_addr)
-> > > > > +{        
-> > > > 
-> > > >       
-> > > > > +    if (!ghes_addr) {
-> > > > > +        return;
-> > > > > +    }        
-> > > > 
-> > > > why do we need this check?      
-> > > 
-> > > It is a safeguard measure to avoid crashes and OOM access. If fw_cfg 
-> > > callback doesn't fill it properly, this will be zero.    
-> > 
-> > shouldn't happen, but yeah it firmware job to write back addr
-> > which might happen for whatever reason (a bug for example).
-> >  
-> 
-> The main reason I added it is that, after the second series, it could 
-> also happen if there's something wrong with the backward compat logic.
-> 
-> So, both here and after switching to HEST-based offsets, I opted
-> to explicitly test.
-> 
-> > Perhaps push this up to the stack, so we don't have to deal
-> > with scattered checks in ghes code.
-> > 
-> > kvm_arch_on_sigbus_vcpu() looks like a goo candidate for check
-> > and warn_once if that ever happens.
-> > It already calls acpi_ghes_present() which resolves GED device
-> > and then later we duplicate this job in ghes_record_cper_errors()
-> > 
-> > so maybe rename acpi_ghes_present to something like AcpiGhesState* acpi_ghes_get_state()
-> > and call it instead. And then move ghes_addr check/warn_once there.
-> > This way the rest of ghes code won't have to deal handling practically
-> > impossible error conditions that cause reader to wonder why it might happen.  
-> 
-> I'll look on it. Yet, if ok for you, I would prefer dealing with this
-> once we have a bigger picture, e.g. once we merge those tree series:
-> 
-> 	- cleanup series (this one);
-> 	- HEST offset (I'll be sending a new version today);
-ok, lets revisit this point after this series.
-Since at this point we should have a clean picture of how new code
-works.
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 
-> 	- error_inject.
-> 
-> Thanks,
-> Mauro
-> 
+On Mon, Nov 4, 2024 at 11:54=E2=80=AFAM Michal Privoznik <mprivozn@redhat.c=
+om>
+wrote:
+
+> The run_agent_once() function is already given GAState via an
+> argument. There's no need to access the global ga_state variable
+> which points to the argument anyways (thanks to
+> initialize_agent()). Worse, some parts of the function use the
+> argument and the other use the global variable.  Stick with the
+> function argument.
+>
+> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+> ---
+>  qga/main.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/qga/main.c b/qga/main.c
+> index 50186760bf..4a695235f0 100644
+> --- a/qga/main.c
+> +++ b/qga/main.c
+> @@ -1519,7 +1519,7 @@ static int run_agent_once(GAState *s)
+>          return EXIT_FAILURE;
+>      }
+>
+> -    g_main_loop_run(ga_state->main_loop);
+> +    g_main_loop_run(s->main_loop);
+>
+>      if (s->channel) {
+>          ga_channel_free(s->channel);
+> --
+> 2.45.2
+>
+>
+
+--0000000000004f517f06286e6c68
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
+v class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gma=
+il_attr">On Mon, Nov 4, 2024 at 11:54=E2=80=AFAM Michal Privoznik &lt;<a hr=
+ef=3D"mailto:mprivozn@redhat.com">mprivozn@redhat.com</a>&gt; wrote:<br></d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">The run_agent_once() f=
+unction is already given GAState via an<br>
+argument. There&#39;s no need to access the global ga_state variable<br>
+which points to the argument anyways (thanks to<br>
+initialize_agent()). Worse, some parts of the function use the<br>
+argument and the other use the global variable.=C2=A0 Stick with the<br>
+function argument.<br>
+<br>
+Signed-off-by: Michal Privoznik &lt;<a href=3D"mailto:mprivozn@redhat.com" =
+target=3D"_blank">mprivozn@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0qga/main.c | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/qga/main.c b/qga/main.c<br>
+index 50186760bf..4a695235f0 100644<br>
+--- a/qga/main.c<br>
++++ b/qga/main.c<br>
+@@ -1519,7 +1519,7 @@ static int run_agent_once(GAState *s)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return EXIT_FAILURE;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 g_main_loop_run(ga_state-&gt;main_loop);<br>
++=C2=A0 =C2=A0 g_main_loop_run(s-&gt;main_loop);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0if (s-&gt;channel) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ga_channel_free(s-&gt;channel);<br>
+-- <br>
+2.45.2<br>
+<br>
+</blockquote></div>
+
+--0000000000004f517f06286e6c68--
 
 
