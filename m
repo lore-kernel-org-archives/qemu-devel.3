@@ -4,88 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8E77E7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 21:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 700E8E7716F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 21:00:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIwTK-0001a8-SD; Wed, 04 Dec 2024 15:59:46 -0500
+	id 1tIwTq-00020j-KH; Wed, 04 Dec 2024 16:00:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIwTF-0001ZE-P0
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:59:41 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tIwTi-0001xI-Cq
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 16:00:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIwTE-0007kI-EO
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:59:41 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tIwTg-0007z0-Ee
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 16:00:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733345979;
+ s=mimecast20190719; t=1733346006;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ruVMgMMv7L+ciADoWUpIMBDbq7xXjqzdGoK/07rCxs0=;
- b=B5MQFerOZ0UIgotNLlRKf3vt+QzChCX8s1oPKqFm1T6If/Ol7Ilqt9WoDmaXD5gRquJ1Xa
- mABu2I9toDYiyDmli81q05Vkjp4dOG+grVn+5X09rHzg+Dzp7dD2vhsQfFTqC5AzH3VFTq
- kZ3Aw4dyvCRVZzXwYzzoFMnyjbgNRig=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-7BbbBWShNJmfFnrqkSXUGA-1; Wed, 04 Dec 2024 15:59:38 -0500
-X-MC-Unique: 7BbbBWShNJmfFnrqkSXUGA-1
-X-Mimecast-MFC-AGG-ID: 7BbbBWShNJmfFnrqkSXUGA
-Received: by mail-il1-f199.google.com with SMTP id
- e9e14a558f8ab-3a7a1e95f19so1362145ab.1
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:59:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733345977; x=1733950777;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ruVMgMMv7L+ciADoWUpIMBDbq7xXjqzdGoK/07rCxs0=;
- b=YvhCRewaGagJRTCWIG9gHrlJDeGvFtMw9tQSs5sRqGIwIm/Y1F36bTK03dwH9g5OmV
- M6LDLCZwXPRE9AzJcjCxDmI6Daggeb4KDG3qnQQRlS3AO0ZM0CAypY+p6qa31TzZ/Xle
- J8tRHVEWyRtFDDdVmzMa8CVOqYHFtIEzmlF4etQ7PtwR0vZp7dzDFYFbU4C81k5wsrm4
- Son0Qw542wgMQlfVJwI5XdaRWiDKUEuLCRJGsuojK4gstppldrmkMzPbroFY7BbsqeR3
- PL+Ex9Kw8phlXprUv2I++3ZecZIOkcvtzaGXp4ypVv0gukWbLIdf9h/Ag3iBlsZLXV1P
- lyaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXt8KL+KgBPkqBL5fw8wXQQukegOyTb4SNlS4nZuotTG9sevs4cRd3OGwYRi09aZyZM73HBX/7OVrWh@nongnu.org
-X-Gm-Message-State: AOJu0Yzou/ztcX0VYvh4oUViRmJuTwk5r3bAnR5KwFZ4vnHErvhITOQR
- hNRY4Zo0IczV3UeAg/ko/GXlLzPtTEbxJ+F6xchyIvwNmpjveoTGwgheA+M8/1dM2K5IPfG/27v
- uR9rkG3pv316lHOJFx7HFD2yOwhKub/9NmzSYwr3L8QW9dRBv0Ufe
-X-Gm-Gg: ASbGncvX9UAIcMs9lnL5SJysawj+c9PY//Fwb60/wlr76bWwPAh1es0NWoq14cMImsX
- w38kZx8XGKyJvUuRcdv4jqbcg38jpYUGj2i8jjqTS5jEBPwEcBGSdvJmHg4vtZeU7/TIsc3pYvm
- q8sdxCJLh3pf4xjaCBpHeQ1TSlXBmSyxYc6LMc7fU0A5KrvPiXtEylFZJb5dgkmA5mPqulAevrW
- qDOr0MG/ppqNZ6tozfuV2o8po3FvwBeocy8pGLuWbdryxn1TnVUhgRbeh6Jz+o3by2QH0P4fzE7
- sXy5UUhoDWc=
-X-Received: by 2002:a05:6e02:178b:b0:3a7:7558:a6ea with SMTP id
- e9e14a558f8ab-3a7f9a3bb35mr87292115ab.10.1733345977538; 
- Wed, 04 Dec 2024 12:59:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHUZQLhH5wNJVEmOE5gfrk9u3MlVjJveLBVSmbBhWx6eU30lN7WTgjMFsZdttiO+xp+BVIGUQ==
-X-Received: by 2002:a05:6e02:178b:b0:3a7:7558:a6ea with SMTP id
- e9e14a558f8ab-3a7f9a3bb35mr87291945ab.10.1733345977201; 
- Wed, 04 Dec 2024 12:59:37 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3a808da27fcsm131155ab.19.2024.12.04.12.59.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 12:59:36 -0800 (PST)
-Date: Wed, 4 Dec 2024 15:59:34 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/6] migration: Kick postcopy threads on cancel
-Message-ID: <Z1DCtkR-bmJlQLd9@x1n>
-References: <20241202220137.32584-1-farosas@suse.de>
- <20241202220137.32584-3-farosas@suse.de> <Z1Ch8HpiKMoqILDM@x1n>
- <87r06ni84z.fsf@suse.de> <Z1Cv4JM8IbYeiDpR@x1n>
- <Z1C1V25wydbBlsMb@redhat.com> <87ikrzi3m6.fsf@suse.de>
+ bh=ZywQik/6l4KAU9M97CtFrru79vCLsIvhORnbfzPcNIw=;
+ b=Z6RpHwrCRsBEcQaoZMJ0CGdusW01SnPWjTrHhDDUyvf2929UUDzNDEmzbVoDCeBORwBhuw
+ sejm5updU+LHo/0E6G7SuA7WYRaB7v5s1D9CKSTuJN0ZSll1+blYvRQ4OLs8qWLuj8rAAC
+ 6/3yjfNtng4pVsXGfi7vHw1Lu+zn5xs=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-292-vyYR9NHwOu-R1l3D4vP4AQ-1; Wed,
+ 04 Dec 2024 16:00:03 -0500
+X-MC-Unique: vyYR9NHwOu-R1l3D4vP4AQ-1
+X-Mimecast-MFC-AGG-ID: vyYR9NHwOu-R1l3D4vP4AQ
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6AE4C195608A; Wed,  4 Dec 2024 21:00:01 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.246])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BB6D21956094; Wed,  4 Dec 2024 21:00:00 +0000 (UTC)
+Date: Wed, 4 Dec 2024 15:59:59 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Mads Ynddal <mads@ynddal.dk>
+Subject: Re: [PATCH] 9pfs: improve v9fs_walk() tracing
+Message-ID: <20241204205959.GB48585@fedora>
+References: <E1tIPPo-006ldP-Uk@kylie.crudebyte.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="gbVHhgPSQO/7aLDJ"
 Content-Disposition: inline
-In-Reply-To: <87ikrzi3m6.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <E1tIPPo-006ldP-Uk@kylie.crudebyte.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -110,36 +85,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 04, 2024 at 05:40:17PM -0300, Fabiano Rosas wrote:
-> To be clear, I'm not arguing against cancel. I'm just pointing out that
-> it's silly because it's just like pressing C-c in the shell in the
-> middle of something. What's the expected end state? Completely
-> unspecified. I don't find it at all "elegant" that we treat cancel like
-> error and just let the code carry on stumbling and exit
-> eventually. Because then we have this C-c arriving at random moments in
-> the middle of stuff. The way we do "exiting" in multifd is way more
-> maintainable. If that flag is set, then let's exit, otherwise everything
-> should work.
 
-If taking the example of C-c, then "migration during postcopy" is exactly
-"TASK_UNINTERRUPTIBLE".. :) IOW, "hanging death" the C-c is the correct and
-expected behavior for UNINTERRUPTIBLE tasks.
+--gbVHhgPSQO/7aLDJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[...]
+On Tue, Dec 03, 2024 at 10:14:28AM +0100, Christian Schoenebeck wrote:
+> 'Twalk' is the most important request type in the 9p protocol to look out
+> for when debugging 9p communication. That's because it is the only part
+> of the 9p protocol which actually deals with human-readable path names,
+> whereas all other 9p request types work on numeric file IDs (FIDs) only.
+>=20
+> Improve tracing of 'Twalk' requests, e.g. let's say client wanted to walk
+> to "/home/bob/src", then improve trace output from:
+>=20
+>   v9fs_walk tag 0 id 110 fid 0 newfid 1 nwnames=3D3
+>=20
+> to:
+>=20
+>   v9fs_walk tag=3D0 id=3D110 fid=3D0 newfid=3D1 nwnames=3D3 wnames=3D{hom=
+e, bob, src}
+>=20
+> To achieve this, add a new helper function trace_v9fs_walk_wnames() which
+> converts the received V9fsString array of individual path elements into a
+> comma-separated string presentation for being passed to the tracing syste=
+m.
+> As this conversion is somewhat expensive, this new helper function returns
+> immediately if tracing of event 'v9fs_walk' is currently not enabled.
+>=20
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  CCing tracing maintainers in case they have better ideas how to do this.
 
-> > 'yank' is intended to be forceful, letting you get out of bad situations
-> > that would otherwise require you to kill the entire QEMU process, but
-> > still with possible associated risk data loss to the QEMU backends.
-> 
-> For migration specifically I don't see much difference. Yank must leave
-> QEMU in a usable state enough for a second migration to succeed,
-> otherwise it's useless.
+Thanks, Christian. Comments below but this looks fine if you prefer to
+keep it this way.
 
-Side note: when I said (in the other reply) that we should remove yank
-support on migration, I meant, we should probably deprecate that (and then
-remove it).
+>  hw/9pfs/9p.c         | 42 +++++++++++++++++++++++++++++++++++++-----
+>  hw/9pfs/trace-events |  2 +-
+>  2 files changed, 38 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index 578517739a..c08e7e492b 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -1774,6 +1774,30 @@ static bool same_stat_id(const struct stat *a, con=
+st struct stat *b)
+>      return a->st_dev =3D=3D b->st_dev && a->st_ino =3D=3D b->st_ino;
+>  }
+> =20
+> +/*
+> + * Returns a (newly allocated) comma-separated string presentation of the
+> + * passed array for logging (tracing) purpose for trace event "v9fs_walk=
+" only.
+> + * If tracing for that event is disabled, it immediately returns NULL in=
+stead.
+> + *
+> + * It is caller's responsibility to free the returned string.
+> + */
+> +static char *trace_v9fs_walk_wnames(V9fsString *wnames, size_t nwnames)
+> +{
+> +    g_autofree char **arr =3D NULL;
+> +
+> +    if (trace_event_get_state(TRACE_V9FS_WALK) &&
+> +        qemu_loglevel_mask(LOG_TRACE))
 
--- 
-Peter Xu
+There is no need to call qemu_loglevel_mask() explicitly if you use
+trace_event_get_state_backends() instead of trace_event_get_state(). The
+QEMU log backend will check qemu_loglevel_mask(LOG_TRACE) for you.
+
+> +    {
+> +        arr =3D g_malloc0_n(nwnames + 1, sizeof(char *));
+> +        for (size_t i =3D 0; i < nwnames; ++i) {
+> +            arr[i] =3D wnames[i].data;
+> +        }
+> +        return g_strjoinv(", ", arr);
+> +    }
+> +
+> +    return NULL;
+> +}
+> +
+>  static void coroutine_fn v9fs_walk(void *opaque)
+>  {
+>      int name_idx, nwalked;
+> @@ -1787,6 +1811,7 @@ static void coroutine_fn v9fs_walk(void *opaque)
+>      size_t offset =3D 7;
+>      int32_t fid, newfid;
+>      P9ARRAY_REF(V9fsString) wnames =3D NULL;
+> +    g_autofree char *trace_wnames =3D NULL;
+>      V9fsFidState *fidp;
+>      V9fsFidState *newfidp =3D NULL;
+>      V9fsPDU *pdu =3D opaque;
+> @@ -1800,11 +1825,9 @@ static void coroutine_fn v9fs_walk(void *opaque)
+>      }
+>      offset +=3D err;
+> =20
+> -    trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames);
+> -
+>      if (nwnames > P9_MAXWELEM) {
+>          err =3D -EINVAL;
+> -        goto out_nofid;
+> +        goto out_nofid_nownames;
+>      }
+>      if (nwnames) {
+>          P9ARRAY_NEW(V9fsString, wnames, nwnames);
+> @@ -1814,15 +1837,20 @@ static void coroutine_fn v9fs_walk(void *opaque)
+>          for (i =3D 0; i < nwnames; i++) {
+>              err =3D pdu_unmarshal(pdu, offset, "s", &wnames[i]);
+>              if (err < 0) {
+> -                goto out_nofid;
+> +                goto out_nofid_nownames;
+>              }
+>              if (name_is_illegal(wnames[i].data)) {
+>                  err =3D -ENOENT;
+> -                goto out_nofid;
+> +                goto out_nofid_nownames;
+>              }
+>              offset +=3D err;
+>          }
+> +        trace_wnames =3D trace_v9fs_walk_wnames(wnames, nwnames);
+> +        trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames, trace_w=
+names);
+
+This could be adjusted slightly to avoid calling trace_v9fs_walk() when
+the trace event is disabled. It's up to you but this pattern is more
+common:
+
+  if (trace_event_get_state_backends(TRACE_V9FS_WALK)) {
+      trace_wnames =3D trace_v9fs_walk_wnames(wnames, nwnames);
+      trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames, trace_wnames=
+);
+  }
+
+Now trace_v9fs_walk_wnames() doesn't need to check the trace event state
+internally.
+
+> +    } else {
+> +        trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames, "");
+>      }
+> +
+>      fidp =3D get_fid(pdu, fid);
+>      if (fidp =3D=3D NULL) {
+>          err =3D -ENOENT;
+> @@ -1957,7 +1985,11 @@ out:
+>      }
+>      v9fs_path_free(&dpath);
+>      v9fs_path_free(&path);
+> +    goto out_pdu_complete;
+> +out_nofid_nownames:
+> +    trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames, "<?>");
+>  out_nofid:
+> +out_pdu_complete:
+>      pdu_complete(pdu, err);
+>  }
+> =20
+> diff --git a/hw/9pfs/trace-events b/hw/9pfs/trace-events
+> index a12e55c165..ed9f4e7209 100644
+> --- a/hw/9pfs/trace-events
+> +++ b/hw/9pfs/trace-events
+> @@ -11,7 +11,7 @@ v9fs_stat(uint16_t tag, uint8_t id, int32_t fid) "tag %=
+d id %d fid %d"
+>  v9fs_stat_return(uint16_t tag, uint8_t id, int32_t mode, int32_t atime, =
+int32_t mtime, int64_t length) "tag %d id %d stat=3D{mode %d atime %d mtime=
+ %d length %"PRId64"}"
+>  v9fs_getattr(uint16_t tag, uint8_t id, int32_t fid, uint64_t request_mas=
+k) "tag %d id %d fid %d request_mask %"PRIu64
+>  v9fs_getattr_return(uint16_t tag, uint8_t id, uint64_t result_mask, uint=
+32_t mode, uint32_t uid, uint32_t gid) "tag %d id %d getattr=3D{result_mask=
+ %"PRId64" mode %u uid %u gid %u}"
+> -v9fs_walk(uint16_t tag, uint8_t id, int32_t fid, int32_t newfid, uint16_=
+t nwnames) "tag %d id %d fid %d newfid %d nwnames %d"
+> +v9fs_walk(uint16_t tag, uint8_t id, int32_t fid, int32_t newfid, uint16_=
+t nwnames, const char* wnames) "tag=3D%d id=3D%d fid=3D%d newfid=3D%d nwnam=
+es=3D%d wnames=3D{%s}"
+>  v9fs_walk_return(uint16_t tag, uint8_t id, uint16_t nwnames, void* qids)=
+ "tag %d id %d nwnames %d qids %p"
+>  v9fs_open(uint16_t tag, uint8_t id, int32_t fid, int32_t mode) "tag %d i=
+d %d fid %d mode %d"
+>  v9fs_open_return(uint16_t tag, uint8_t id, uint8_t type, uint32_t versio=
+n, uint64_t path, int iounit) "tag %u id %u qid=3D{type %u version %u path =
+%"PRIu64"} iounit %d"
+> --=20
+> 2.39.5
+>=20
+
+--gbVHhgPSQO/7aLDJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmdQws8ACgkQnKSrs4Gr
+c8gTsQf/dReWLsWAXDu9tJ2c2Xx3KHo28Es8PXB4rKxRwTIl0rPXnV8UW9iZopVS
+oFJNdcq56x+tv/lGti3xwoU+JrRZ4JCRo9nX87luQ7ZThjGdwCzb/3cCO/u4LtJy
+incgJtzUFPdP5aUxDWUlLOiOa96/WLZfR7F5A13bUhAL8w7AebBstEtFmKmwv1eJ
+etSAF03Io2z9jjdCDvzUGL/PvvWscIY6L7FtA4tl6+JsK3UICQY/y9n2H+ewVJH4
+2ROVUqvPpVwEdafyo2zxv468RDQlAp2Uo63ajBppsdE70tkD68bPDP6RN64IUw9h
+licDldDGzRnmuLdGI9aTTNWLx0Ypwg==
+=g01+
+-----END PGP SIGNATURE-----
+
+--gbVHhgPSQO/7aLDJ--
 
 
