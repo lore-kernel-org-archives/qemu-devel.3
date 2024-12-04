@@ -4,105 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4260E7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 22:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755FBE7716F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 22:45:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIy69-0001xP-6J; Wed, 04 Dec 2024 17:43:57 -0500
+	id 1tIy7h-0002gP-5r; Wed, 04 Dec 2024 17:45:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIy66-0001xG-FR
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:43:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIy64-0002bD-Rt
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:43:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733352231;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jL3EQTd8RBoCuosCcsbie1rmXgVsICMfWmXpYq1FCxE=;
- b=MfVJWnAs8nQF+DzwQj83y6iKTBtYSEC6qTvViRhUcxzo4UX3UR0K/cMl7HwZwfOQXRWHtC
- Edy9vexzB1IluvxRtITUSyQJZv6GbF6WT7n3YAk8j9jCB0IJbTCQh+5rrH28bBal8Dk0A7
- 4E4xL9TmSimJ+amdYwAdadfSuvpALEE=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-567-5J96-fvoPkiBU7wHdgq1ng-1; Wed, 04 Dec 2024 17:43:48 -0500
-X-MC-Unique: 5J96-fvoPkiBU7wHdgq1ng-1
-X-Mimecast-MFC-AGG-ID: 5J96-fvoPkiBU7wHdgq1ng
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-84193bb7ed1so40554439f.1
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 14:43:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIy7d-0002fn-0K
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:45:29 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIy7b-0003Nu-5x
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:45:28 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7fcc8533607so347878a12.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 14:45:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733352325; x=1733957125; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XK7SF/Q9KYBxwC/DHUQmd07jbjXrGqFMjTGR3jkWbpc=;
+ b=f3kF4469LGN9wENWZnH2b0zdssqHlbU9xJuINNNkW4qXXV8oPrbpFsYAnQvcLlmQ/A
+ KWykmiaBKJjTJo0pDc241eZkQFevmldP2tMGcwZYiDbLAzw+zw2lXzKR+8dbtdqF6lgP
+ e4Etpg4Sr6ma9UEzgIxv7L2eIcndGkD2BLtD3pMidniTCUfTwOm5IfGKbdRwhp5PklTS
+ mNVjCNT48OeHw/6Sc15TH/f6x2WVeBrRzi617er4cjBsHjCisO+znatuc3bfyPOEDVzm
+ lwU8l3y1o61+ldv30ipkgCs6WMwaGegMZzeH0auDxc6EpAcsJvHyeekImTtHJCl6fNB3
+ qWTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733352227; x=1733957027;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1733352325; x=1733957125;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jL3EQTd8RBoCuosCcsbie1rmXgVsICMfWmXpYq1FCxE=;
- b=s4RFVMAi95QPdwHJYd3dhN5QLnT8vZLvTe322mR8UG21rC0wOEAoP4uKoxcdvkEU0S
- 776J/3+unZNYH/1L9T4yhwhcMx7w396CetNrk4LiMkz961wrSFGwm+VpHHED/S/Wyn7e
- PlzbLNWtc6CZF44z/VHbL8YGtS1Gu0XTrsu12VSQHk/XsMSFRNYsB/w7/BG8KAKFv6GQ
- g6VJDUL61k0kcC1n7zekMScQqz/+3r5rEQ9xLFeAkVH7nEifBqe9aeRjxyIlYMrddSw7
- BIOL9KMibwHgeaNZzDXsI4gcwpkny3WSzCStAkXFmmbDGPfUMw389SIKS6M+q6baoWFa
- Oi3A==
+ bh=XK7SF/Q9KYBxwC/DHUQmd07jbjXrGqFMjTGR3jkWbpc=;
+ b=KC3NXsP5YFfIgSgD54WB3kExYbmEBcE5YE9jMErZU92YOVHrti+Km6JiyxF34O5rC5
+ by2AM1hnNfJtvnK+RiY4/o2nZ2BgjgWKwAoW+LHskvKzkVz4Jyc8FX507SBcLbNcIQFy
+ kDYfe/KiMwD6vl5rRTZbgUSdzEPxwj+vpYGHduGY1Mk2sw2oqWrYm2F/7BV4/ou+1pWs
+ 4pdepYBHbinvhq5hbLCzlHbG3xRj/jIAs5Ik+Opw0Xq1BIfBDG098I/+yrYgayhsgHlw
+ +ZpnVc5IDIYE6YDZb0tYiwMyrx/ERs3jnE591D00FfHy7kzTqvrY/CtpoCNLwXNgEL2f
+ /i4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrmYGg/uKQUfhgyo0uSUZumElEhCblldVtyllwmaJkcV/s8pfkKoq0GcsRYUrfUB9ovtneZWVWkL+K@nongnu.org
-X-Gm-Message-State: AOJu0Yxwa4paj7/GkK5KLmR+wrdbW/4TiTcnZ4FL30OzlBivNLM8fKHQ
- zEVld+X2886g/d0zltMzRyB0RG0kduhKUS56kfm1i5IATFaMkFOv88qecP9cXKRpc30gLtb5A/U
- Ahif6LXE0cRZbIurpcZrEmdN4hYqQLJKdhpkyOe46305pBpRS7cJ1
-X-Gm-Gg: ASbGncuyx5XjvMgw7kwyUDm/viIrvTckW7cB0gep9hm4QATSyLtQuCjJb0uXOVfNY9Y
- rr/vESHVngRXsdjioDaXRLAxkU/yuWGn5hl94DA9W+qSck3qJWXdJ9rVIRWKX+JLXYVrEQCNIMq
- EcobdBwPs8u5kfx0RqwfsA9PxvTGt0QIf6bxvkYwceE4m3+5ZW6r41I7litHUvbhUx5gxXIsGqo
- aQym81QHjXTBZJzBF0htPkdWMiglhaXA7wfB4d3uHjJjXFREJfDfIGAUUXN6SvXDI2vzNc0Nh6F
- CJWyIx+2G9Q=
-X-Received: by 2002:a05:6602:3fc3:b0:841:8d66:8aea with SMTP id
- ca18e2360f4ac-8445b53bcffmr1047311439f.2.1733352227403; 
- Wed, 04 Dec 2024 14:43:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG80OMWwFPufbrkFkpRBSn2SoDFc0eJHJdP4yd7v30ezuwSIoOYuOBL3WtE7n3ucULTfWw8HQ==
-X-Received: by 2002:a05:6602:3fc3:b0:841:8d66:8aea with SMTP id
- ca18e2360f4ac-8445b53bcffmr1047308939f.2.1733352227087; 
- Wed, 04 Dec 2024 14:43:47 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-844738d0f20sm1318539f.12.2024.12.04.14.43.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 14:43:46 -0800 (PST)
-Date: Wed, 4 Dec 2024 17:43:43 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Avihai Horon <avihaih@nvidia.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 08/24] migration: Add thread pool of optional load
- threads
-Message-ID: <Z1DbH5fwBaxtgrvH@x1n>
-References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <877b7108c9cb9064615606d4c731cb12c549b7f9.1731773021.git.maciej.szmigiero@oracle.com>
- <198ca4a4-01fd-42b4-9e1a-d2860277be9e@nvidia.com>
- <ceff9e17-b23e-472b-9f29-bf4c3c895c55@maciej.szmigiero.name>
+ AJvYcCXvKl5fdNLpUjMpJfv0lzVhKr6G8zYXZRhVkUN0jCiI1r2W4GUHFBYML1OJYi6d/qBVmITOgw0cl//H@nongnu.org
+X-Gm-Message-State: AOJu0Yx4c09jO1tRXBxQ7RtQ5TYcGw072m6RTv0ESXIVasHrvFvRe6+/
+ 2InCi73DgBaZyjsNdnUQs0Sd06gETbdYT0Ny1sZ/mZ3XiuaZtdZ3pbvD3Fp/8hU=
+X-Gm-Gg: ASbGnctDQIQNsv9VUrZvCN52Whie0oVWnQfD57gUnUODL3r720MQTOR/mRUAcLAvx6G
+ 3aHQEd0SCVQ/pDF7kgSIsS+YLV29OK0SFpn/B0D6D1LSh2mIcsG1+pcFFvOv2c5wQPEIpTfhxFU
+ +ZL67pdViPMCaUcXsdphsl2fePx9x7AuFM6qIrfgVlcG6saTZKV7n62nuGjtVwjqL1ovk4ApqUv
+ To3eSlAH2wG9gbXKDYKsFW+CgfInq4ksK6o3OX4WqtLaolqXaSvT+0oLXJWy7i6UNPfphcvgF92
+ SgntluqP4MIjF+xrXJP50w==
+X-Google-Smtp-Source: AGHT+IHk968599/R3JGnTDm2qP55jLR0beqzmQWID6U6l99EWjOsp7f86cqYSLhHUU7Zqltc/4+m8Q==
+X-Received: by 2002:a05:6a20:6a1b:b0:1db:f00e:2dfe with SMTP id
+ adf61e73a8af0-1e165412f88mr12192509637.39.1733352325245; 
+ Wed, 04 Dec 2024 14:45:25 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fd156dfe2fsm59064a12.31.2024.12.04.14.45.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Dec 2024 14:45:24 -0800 (PST)
+Message-ID: <6f182c71-2600-4bbf-ab4c-985ed7e99f71@linaro.org>
+Date: Wed, 4 Dec 2024 14:45:24 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ceff9e17-b23e-472b-9f29-bf4c3c895c55@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 01/11] plugins: add types for callbacks related to
+ certain discontinuities
+Content-Language: en-US
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+References: <cover.1733063076.git.neither@nut.email>
+ <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,82 +103,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 28, 2024 at 01:11:53PM +0100, Maciej S. Szmigiero wrote:
-> > > +static int qemu_loadvm_load_thread(void *thread_opaque)
-> > > +{
-> > > +    struct LoadThreadData *data = thread_opaque;
-> > > +    int ret;
-> > > +
-> > > +    ret = data->function(&load_threads_abort, data->opaque);
-> > > +    if (ret && !qatomic_read(&load_threads_ret)) {
-> > > +        /*
-> > > +         * Racy with the above read but that's okay - which thread error
-> > > +         * return we report is purely arbitrary anyway.
-> > > +         */
-> > > +        qatomic_set(&load_threads_ret, ret);
-> > > +    }
-> > 
-> > Can we use cmpxchg instead? E.g.:
-> > 
-> > if (ret) {
-> >      qatomic_cmpxchg(&load_threads_ret, 0, ret);
-> > }
+Hi Julian,
+
+thanks for the update!
+Comments below.
+
+On 12/2/24 11:26, Julian Ganz wrote:
+> The plugin API allows registration of callbacks for a variety of VCPU
+> related events, such as VCPU reset, idle and resume. However, traps of
+> any kind, i.e. interrupts or exceptions, were previously not covered.
+> These kinds of events are arguably quite significant and usually go hand
+> in hand with a PC discontinuity. On most platforms, the discontinuity
+> also includes a transition from some "mode" to another. Thus, plugins
+> for the analysis of (virtualized) embedded systems may benefit from or
+> even require the possiblity to perform work on the occurance of an
+> interrupt or exception.
 > 
-> cmpxchg always forces sequentially consistent ordering
-> while qatomic_read() and qatomic_set() have relaxed ordering.
+> This change introduces the concept of such a discontinuity event in the
+> form of an enumeration. Currently only traps are covered. Specifically
+> we (loosely) define interrupts, exceptions and host calls across all
+> platforms. In addition, this change introduces a type to use for
+> callback functions related to such events. Since possible modes and the
+> enumeration of interupts and exceptions vary greatly between different
+> architectures, the callback type only receives the VCPU id, the type of
+> event as well as the old and new PC.
+> ---
+>   include/qemu/plugin.h      |  1 +
+>   include/qemu/qemu-plugin.h | 43 ++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 44 insertions(+)
 > 
-> As the comment above describes, there's no need for sequential
-> consistency since which thread error is returned is arbitrary
-> anyway.
+> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+> index 9726a9ebf3..27a176b631 100644
+> --- a/include/qemu/plugin.h
+> +++ b/include/qemu/plugin.h
+> @@ -59,6 +59,7 @@ union qemu_plugin_cb_sig {
+>       qemu_plugin_udata_cb_t           udata;
+>       qemu_plugin_vcpu_simple_cb_t     vcpu_simple;
+>       qemu_plugin_vcpu_udata_cb_t      vcpu_udata;
+> +    qemu_plugin_vcpu_discon_cb_t     vcpu_discon;
+>       qemu_plugin_vcpu_tb_trans_cb_t   vcpu_tb_trans;
+>       qemu_plugin_vcpu_mem_cb_t        vcpu_mem;
+>       qemu_plugin_vcpu_syscall_cb_t    vcpu_syscall;
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index 0fba36ae02..9c67374b7e 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -154,6 +154,49 @@ typedef void (*qemu_plugin_vcpu_simple_cb_t)(qemu_plugin_id_t id,
+>   typedef void (*qemu_plugin_vcpu_udata_cb_t)(unsigned int vcpu_index,
+>                                               void *userdata);
+>   
+> +
+> +/**
+> + * enum qemu_plugin_discon_type - type of a (potential) PC discontinuity
+> + *
+> + * @QEMU_PLUGIN_DISCON_INTERRUPT: an interrupt, defined across all architectures
+> + *                                as an asynchronous event, usually originating
+> + *                                from outside the CPU
+> + * @QEMU_PLUGIN_DISCON_EXCEPTION: an exception, defined across all architectures
+> + *                                as a synchronous event in response to a
+> + *                                specific instruction being executed
+> + * @QEMU_PLUGIN_DISCON_HOSTCALL: a host call, functionally a special kind of
+> + *                               exception that is not handled by code run by
+> + *                               the vCPU but machinery outside the vCPU
+> + * @QEMU_PLUGIN_DISCON_ALL: all types of disconinuity events currently covered
+> + */
+> +enum qemu_plugin_discon_type {
+> +    QEMU_PLUGIN_DISCON_INTERRUPT = 1,
+> +    QEMU_PLUGIN_DISCON_EXCEPTION = 2,
+> +    QEMU_PLUGIN_DISCON_HOSTCALL = 4,
+> +    QEMU_PLUGIN_DISCON_ALL = 7
+> +};
 
-IMHO this is not a hot path, so mem ordering isn't an issue.  If we could
-avoid any data race we still should try to.
+Matter of style, but would be better to use:
 
-I do feel uneasy on the current design where everybody shares the "whether
-to quit" via one bool, and any thread can set it... meanwhile we can't
-stablize the first error to report later.
+enum qemu_plugin_discon_type {
+      QEMU_PLUGIN_DISCON_INTERRUPT = 1 << 0,
+      QEMU_PLUGIN_DISCON_EXCEPTION = 1 << 1,
+      QEMU_PLUGIN_DISCON_HOSTCALL = 1 << 2,
+      QEMU_PLUGIN_DISCON_ALL = -1
+};
 
-E.g., ideally we want to capture the first error no matter where it came
-from, then keep it with migrate_set_error() so that "query-migrate" on dest
-later can tell us what was wrong.  I think libvirt generally uses that.
+> +
+> +/**
+> + * typedef qemu_plugin_vcpu_discon_cb_t - vcpu discontinuity callback
+> + * @vcpu_index: the current vcpu context
+> + * @type: the type of discontinuity
+> + * @from_pc: the source of the discontinuity, e.g. the PC before the
+> + *           transition
+> + * @to_pc: the PC pointing to the next instruction to be executed
+> + *
 
-So as to support a string error, at least we'll need to allow Error** in
-the thread fn:
+Missing those parameters when building doc.
+include/qemu/qemu-plugin.h:198: warning: Function parameter or member 
+'id' not described in 'qemu_plugin_vcpu_discon_cb_t'
+include/qemu/qemu-plugin.h:289: warning: Function parameter or member 
+'type' not described in 'qemu_plugin_register_vcpu_discon_cb'
+2 warnings as Errors
 
-typedef bool (*MigrationLoadThread)(void *opaque, bool *should_quit,
-                                    Error **errp);
+> + * The excact semantics of @from_pc depends on @the type of discontinuity. For
+> + * interrupts, @from_pc will point to the next instruction which would have
+> + * been executed. For exceptions and host calls, @from_pc will point to the
+> + * instruction that caused the exception or issued the host call. Note that
+> + * in the case of exceptions, the instruction is not retired and thus not
+> + * observable via general instruction exec callbacks. The same may be the case
+> + * for some host calls such as hypervisor call "exceptions".
+> + */
+> +typedef void (*qemu_plugin_vcpu_discon_cb_t)(qemu_plugin_id_t id,
+> +                                             unsigned int vcpu_index,
+> +                                             enum qemu_plugin_discon_type type,
+> +                                             uint64_t from_pc, uint64_t to_pc);
+> +
+>   /**
+>    * qemu_plugin_uninstall() - Uninstall a plugin
+>    * @id: this plugin's opaque ID
 
-I also changed retval to bool, as I mentioned elsewhere QEMU tries to stick
-with "bool SOME_FUNCTION(..., Error **errp)" kind of error reporting.
+Overall I'm ok with what it looks like.
 
-Then any thread should only report error to qemu_loadvm_load_thread(), and
-the report should always be a local Error**, then it further reports to the
-global error.  Something like:
-
-static int qemu_loadvm_load_thread(void *thread_opaque)
-{
-    MigrationIncomingState *mis = migration_incoming_get_current();
-    struct LoadThreadData *data = thread_opaque;
-    Error *error = NULL;
-
-    if (!data->function(data->opaque, &mis->should_quit, &error)) {
-       migrate_set_error(migrate_get_current(), error);
-    }
-
-    return 0;
-}
-
-migrate_set_error() is thread-safe, and it'll only record the 1st error.
-Then the thread should only read &should_quit, and only set &error.  If we
-want, migrate_set_error() can set &should_quit.
-
-PS: I wished we have an unified place to tell whether we should quit
-incoming migration - we already have multifd_recv_state->exiting, we could
-have had a global flag like that then we can already use.  But I know I'm
-asking too much.. However would you think it make sense to still have at
-least Error** report the error and record it?
-
--- 
-Peter Xu
-
+However, it seems that your conclusion was we can't always guarantee to 
+have from_pc, and I'm not sure that the solution to simply drop it is 
+the right one.
 
