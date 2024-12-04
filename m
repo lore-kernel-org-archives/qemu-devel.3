@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F01DE77170
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 663C7E77170
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvx0-0007TA-WD; Wed, 04 Dec 2024 15:26:23 -0500
+	id 1tIvyd-0001wS-Q0; Wed, 04 Dec 2024 15:28:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvwz-0007SD-Rh
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:26:21 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvyW-0001Gx-V0
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:57 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvwx-00070Z-HW
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:26:21 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-434aafd68e9so1520005e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:26:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvyU-0001Ww-Fq
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:56 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-434aa222d96so2393035e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:27:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733343977; x=1733948777; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733344073; x=1733948873; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DPV/ubcrZI2iapAPKTXZkCgfGpvNQPE7G4ysbpy5Jw0=;
- b=dRqngvANIAybBI4plRQlxbGRt7LPEOiaCux0KvE/ZHgfjadcIpzfr0vJYNoYv20AaK
- /wZvLKovl491nwxERsQyNHincW8MTSAgH1bpoyFqa6Wsch/lUMGFjEZY/aAFsvKYXHVw
- dxCjmzXDOgGfmonYcPcLyjF7ncHNBnCJGTBuwVxkS0/cAHoIYnsVnCH3Ivdd3BPYeD2j
- 0Pd83NvnY49xelDwl3I8T8RBjRNUrDChC8wuQ4kYoIZTGQu0fEhduDxDAbgTtzpiS62o
- +2vlgpGt3n6H00hJYR4Z2kWeXqxwbVQryGLCgj6/2K+yxE8pEvlhDscguxfvj52uGaaj
- w2Yw==
+ bh=9GnnholsvXz5CZtkYpeYGZkC8DvPWibSAfIk7aKacnw=;
+ b=uYyGvG58JlzTGx5rVpLPfZ2LrWGD8dsWbtsIn9C26NLQW1zvSJnEDYLmlzbE7oEpOc
+ 5likb0GTJmdyxL/fyZw0+CXdL4HUE779RK9SPI2v+3hX18U0sGnmHhrYPsSnPD0z48gO
+ CPqp9oPbSsYLmLy+CM3EXvDQJK1tCRoMf6ov+OPavCnDsQ/66A2OG8FWqcSt2+ApJBQo
+ nbR5eq7qh/X1Twzxb8ABqe2WmEYPCz291Egwp/QPyoF2JYeaHbEWKBtFrp28O0A7IXd3
+ xRcu6EAlp8e44cVJ4HRC4zFEBJrPVfocg8RKlxRdXSzWyJHt9nny8stR1aj5lj0C11rv
+ xKBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733343977; x=1733948777;
+ d=1e100.net; s=20230601; t=1733344073; x=1733948873;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DPV/ubcrZI2iapAPKTXZkCgfGpvNQPE7G4ysbpy5Jw0=;
- b=sXbBkp6xWem9GcZkm1Sdr+5WCC6YGdnOzEMxZsVvJFoLdomkl/yTxRqdDz8O2WbTLF
- yYQKEPKH/79n+PHeyfGDEUWBQcz+a/3NXf7LehOnrjwiHhLe3fuk1Kfe3uZu9wH8Taai
- /68O2tHONU80G5kp18dCWR+kES+d3oW38pk8adWRc/YD/wVS4qV2q/IaMPWdV3cUWHI5
- 159tiQDRXZexXcVfvTQXjMZ8ctm6BQphJB04sp21rW2UB4yFbGmpjQXt8lLOdgI32ggr
- nfJEg8r96QBGri35fOfwcyV02Cat2H5/sT34n40xps6qek3w4YvJDb2x5TBWdNbkU2WC
- dHfw==
-X-Gm-Message-State: AOJu0YzBmGjh3A1c45EHJvTPH6nfIexZWtWlxtfpCocgF3DsjXBMeNEg
- YPgZNW+H0mzcDct1/UHcFta33bwjdf/4B3p2w0ULzklVmCMFngZD8qP9+U0UkgYTTQlOUH+iRPx
- o
-X-Gm-Gg: ASbGncuBb1D0qnQeUM6gWu7R6gyBBbk/am+3RVtWT04XCO27X6Z0CA26W99cZsLLHoT
- ze/2VJZkq7R+NQkXniT30FC9WXJZun19+Ie5TwC2xInoQjYtpNz0B2wMqVCK6dEq4+1+plr32VC
- m3SBCA4yyh95D+fI5rjNWxSbNhW4gTt5E2ovhBRcG3tgS/8T8Cd0GqPxm33xrZ9fMvK2lUPak56
- W7qAgzsjAdXztnWBMOAsdg1tjYUQXbZQxG8GkFwT+AyR8CzN64mTr9McbDBByHtr4B6Y1GAIuZ7
- DH+K2jIwhTAwJnchb6Oq/qBk
-X-Google-Smtp-Source: AGHT+IFeaA2c209Xgk6HxXqyhoIdq9s4nD1+pCKbz/xRkRw7GRhfUdt4Ky6Zy1ZjVBGrOnLx7SCaQA==
-X-Received: by 2002:a05:6000:698:b0:385:dea3:6059 with SMTP id
- ffacd0b85a97d-385fd429a01mr6525111f8f.49.1733343977503; 
- Wed, 04 Dec 2024 12:26:17 -0800 (PST)
+ bh=9GnnholsvXz5CZtkYpeYGZkC8DvPWibSAfIk7aKacnw=;
+ b=FtqNQ0Apnf22WADUpeEhJRH4w2dLnPqT2Kaoi2xsFu61feQVWayMq58IvkOAP0vraz
+ oEj/sT5YDREtbPr2E2Zvf3Oj1j47kgXr0GqjCTrKzHcT0FcFGNzGQNHlM0jRdquDGcID
+ G4xnNtTB5jVvxd0Q0WFUjylE5KFto3CpdWYsi3/34q4nEcmpIpbB0/hkpwXW0mJ825Il
+ gyN0BiXe774p/LtX61NqERj+PG6j0OEtn7TDKd233Ysk3JwqpDbF3rQJGbuluq0ovYtA
+ qpOEkREQAfmSUyyjSVbTQwRGSFxcmLt8fhVQTAutafQ5l4RjDac9BiPACxjAnf6Us+C8
+ C6Qw==
+X-Gm-Message-State: AOJu0YxEcn28y7IfCII51BqU906DsCpKp1S3njMxltK7UN6TEZCSWQq3
+ y0D462YkCrwZDHdF22B1bBi80WzsfFTOfgA7jbuXeqCATz1mM+BLmYNEV/WT7WuzO6jJ+pckbNy
+ d
+X-Gm-Gg: ASbGncvV6vkI2tPyEPRItlMwOszsI5PH538BaE8HY7IY3XrO2Uf4DJ9KeE/FjcWgvW/
+ VJWJ31iJJSyMoJEkm13hs0g11ufE0nc3EiA1XdIdkuyDdA9QezvCd8htsxwTiBShHxs38tTXPsc
+ ckZMrtkI7vWMCjARrqyJIJOMU8rhR/5zb2L7QyAEKn6fPcgH1HVajqQNjNy0W2jRElFLbySM1Gx
+ NShyTUinzszvM3+HDrP9IgnjLH2hZabQhhZ+/8GdeTqukvNuze9UmtZ077+SHYgrGzt/ygRtSZb
+ 7Y2mg23zb32/clnIMnGzz3AK
+X-Google-Smtp-Source: AGHT+IH75Gz0sW3RwRPCapXCchZl0B/o8f7tlDV3JT97opLeAMC3ypqemf6zEKrUgpubXhMZp4xpbQ==
+X-Received: by 2002:a05:600c:138a:b0:434:a684:984 with SMTP id
+ 5b1f17b1804b1-434d09b2f31mr80379895e9.4.1733344072767; 
+ Wed, 04 Dec 2024 12:27:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385faec0c9dsm6672009f8f.20.2024.12.04.12.26.16
+ ffacd0b85a97d-385e4617a61sm13704523f8f.3.2024.12.04.12.27.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Dec 2024 12:26:17 -0800 (PST)
+ Wed, 04 Dec 2024 12:27:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -79,18 +79,18 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair@alistair23.me>, qemu-ppc@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 02/20] hw/core/cpu: Introduce
- CPUClass::datapath_is_big_endian() handler
-Date: Wed,  4 Dec 2024 21:25:44 +0100
-Message-ID: <20241204202602.58083-3-philmd@linaro.org>
+Subject: [PATCH 13/20] target/xtensa: Implement
+ CPUClass::datapath_is_big_endian
+Date: Wed,  4 Dec 2024 21:25:55 +0100
+Message-ID: <20241204202602.58083-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241204202602.58083-1-philmd@linaro.org>
 References: <20241204202602.58083-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,45 +113,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the CPUClass::datapath_is_big_endian() handler,
-which returns whether a vCPU expects data in memory to be
-in big endian order or not.
+Implement Xtensa datapath_is_big_endian() helper via libisa.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Other accesses to xtensa_isa_internal fields don't
+call cpu_synchronize_state(), and the libisa doesn't
+provide a way to switch endianness from translation
+code. Should we add a sync just in case?
+---
+ target/xtensa/cpu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index c3ca0babcb3..91c6581f814 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -105,6 +105,8 @@ struct SysemuCPUOps;
-  * @parse_features: Callback to parse command line arguments.
-  * @reset_dump_flags: #CPUDumpFlags to use for reset logging.
-  * @has_work: Callback for checking if there is work to do.
-+ * @datapath_is_big_endian: Callback returning whether the vCPU expects
-+ *       memory data in big endian order.
-  * @mmu_index: Callback for choosing softmmu mmu index;
-  *       may be used internally by memory_rw_debug without TCG.
-  * @memory_rw_debug: Callback for GDB memory access.
-@@ -151,6 +153,7 @@ struct CPUClass {
-     ObjectClass *(*class_by_name)(const char *cpu_model);
-     void (*parse_features)(const char *typename, char *str, Error **errp);
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 6f9039abaee..7bf792fd0f4 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -40,6 +40,13 @@
+ #endif
  
-+    bool (*datapath_is_big_endian)(CPUState *cpu);
-     bool (*has_work)(CPUState *cpu);
-     int (*mmu_index)(CPUState *cpu, bool ifetch);
-     int (*memory_rw_debug)(CPUState *cpu, vaddr addr,
-@@ -750,7 +753,7 @@ int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs);
-  */
- bool cpu_virtio_is_big_endian(CPUState *cpu);
  
--#endif /* CONFIG_USER_ONLY */
-+#endif /* !CONFIG_USER_ONLY */
++static bool xtensa_cpu_datapath_is_big_endian(CPUState *cs)
++{
++    CPUXtensaState *env = cpu_env(cs);
++
++    return xtensa_isa_is_big_endian(env->config->isa);
++}
++
+ static void xtensa_cpu_set_pc(CPUState *cs, vaddr value)
+ {
+     XtensaCPU *cpu = XTENSA_CPU(cs);
+@@ -256,6 +263,7 @@ static void xtensa_cpu_class_init(ObjectClass *oc, void *data)
+                                        &xcc->parent_phases);
  
- /**
-  * cpu_list_add:
+     cc->class_by_name = xtensa_cpu_class_by_name;
++    cc->datapath_is_big_endian = xtensa_cpu_datapath_is_big_endian;
+     cc->has_work = xtensa_cpu_has_work;
+     cc->mmu_index = xtensa_cpu_mmu_index;
+     cc->dump_state = xtensa_cpu_dump_state;
 -- 
 2.45.2
 
