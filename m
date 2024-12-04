@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00934E7716F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 23:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87258E7716F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 23:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIyrz-00021R-Se; Wed, 04 Dec 2024 18:33:23 -0500
+	id 1tIysC-00022b-Fe; Wed, 04 Dec 2024 18:33:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIyrx-00021E-04
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 18:33:21 -0500
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIysA-00022E-TE
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 18:33:34 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tIyrv-0000bY-FZ
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 18:33:20 -0500
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3ea47651a10so140422b6e.0
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 15:33:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIys9-0000c6-1W
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 18:33:34 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7fc41b4c78bso223611a12.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 15:33:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733355197; x=1733959997; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=h13zZBrNXWxXS+eEesA9DkkUiKVM1BJtuwIy0tD0Yxc=;
- b=Cl9ZG6EAFy7ZAexaT9RaD6cOtpx+Efo072JJsrMfvxEwf5SaBOJgex1RgB1Iwho0lo
- HU3JeA6TmJ8rwxMPdMlZVypZovUzS90A3Vulxl2k0OOPP4bkdvAUpFnGjaUwmo/VQ825
- QctRTu5AfC1Dk1sy48aU3teePCgn4/WIOJrejbQiSmmPm/z/DJvGL4DCpapOn0gilYXV
- bJDA/szhPFgYyjgUzEJp7UZr7W2/Um2ezsZIJEe8RJIk6KGyII2Ut4sLQxYaKQXHI/Gp
- JikERbckkeqQ7pYRRbEq1R4pzCdlDxQDlnFSixws1d+sSPMyYJc+x68he+zJJY0HitFv
- AfHg==
+ d=linaro.org; s=google; t=1733355211; x=1733960011; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gfQYykK2/THiTd+2WBnIxlbpfsCXeKVB3GOSBiaRysI=;
+ b=YYQsZgpk+CHceRZsWKBVaybPH7CDuFTYV9w3LlTvjoZZPmZbj7dg1AzWBJY4hz1WAu
+ ArNVMDI0RqDvzVAoEovIkX7AJKWrOe9nq3M40k8nIzINNEmXBbHRpEqxP2J+JtBnoSkw
+ 6z9P7E+C21CTG+2H/OUApkNTaNSyfKcpAV10fKpVzvyFIXqW/RMARhLCE0E5RWRNxRIR
+ M+fswSkqEO5pIVHJ86Eo8OcfMJU1WzNA9LjPzIfoZm1VJdynUsiDe7ewPksy9nQQnnif
+ Y4U0Qyi7yrE+FfZrgN3Qs9xMS4FZdeOot9yDOPH8cDmXgMDMqCbhoGFs/q5DOfeKOd0T
+ hcJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733355197; x=1733959997;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1733355211; x=1733960011;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=h13zZBrNXWxXS+eEesA9DkkUiKVM1BJtuwIy0tD0Yxc=;
- b=Z10Xl1Vx9U9vXMU1yvg9sihjj2mYhBFguuyGqSE7Dx2rLAl8GQnLmT+x/7DqVzUks3
- A9OPG3PGxC430qr7d8rhmF0I8eMmDpA0FEFfTMCc2ECOqeSM7idygLcKAIlYrrABpzFU
- NqfriqnyA/I4vDzAvkdWHsiR5U/1uDlgtyd27CVx4nty++YgvLd42SFp/sX05LrC7v/R
- 76ZupYLcsVXiJF/LbzxZoxh5BihnKzvvyrQUg7EWl7eCoNfLHjJOEosT0f/ztD5qzRlr
- c4nROvN1SiWN6DvR5AMY75AROWlK6kZ8//HF6MSI7e5eM58d7J7a96crxa11kGJls1d0
- Ub4Q==
+ bh=gfQYykK2/THiTd+2WBnIxlbpfsCXeKVB3GOSBiaRysI=;
+ b=A6nxpxBLfDpay8r0KPONsAMQ7bVIGrshS9GbgWnAo1/+p5Hr76sPlkW987uGGporzj
+ sSWnxa0BxjSHf1UHGJtUotEROBhB2UZPZE/ppLpg+4rp7/uw1B2lgJDEkMYWs4nP7dvj
+ aHNcTrpslnd94sOr9tKvMrQHJwpy2lbsrc5SKptG5MypTsVpJjf4Rx5WdNRXY4xRfqxs
+ QgRUlnVdQlAEr3QnD4LsmXexjzJSTHNKRZbZPWDp9RM7FPMj2r3Gl5HB7M7VNzOPKgNr
+ /Ap/qFbX36pdMUc6i9zu6a1exUdERwfDhR97dhXy1pDQy2//pJeqaQYj9JhQtoxF9J9+
+ /iUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZnvZn6FPMgmUW4ufte3BS1Fvx4xWMJEyADz1OAvMb+A1Sg+7gnwF7zW4bydGWbAVZWmtK84Uido3h@nongnu.org
-X-Gm-Message-State: AOJu0Yz/82f51magweDOXImSWSMMioeRr2bL5gnLu5pLDqgdO33Im6+V
- JfZDtxxN2IQGa6zYtMV9GCBaZ7j5MbBaEIpjJw7TxsyWDjMewoKbwwGNoWjGus8=
-X-Gm-Gg: ASbGncugfdgMoBdkPBSRsiH8U71sEk9A430M7Q3GedeiMJYJH9aGxTjuFcA0E0fVQ8l
- 3iF7fEdvTdOF6SdTxxKncqi2P8TuujpArxTsBdxnxCVJzD62yI1o8mBQVEVLC0SWfBAJJVPErJz
- KT9ASgj0vO2RovlKKe0yqcYqM1c7znLeAvvKR71YtEQavwsJiwqc1WSpeDGv+mhC+KMiqrmCvax
- QsWswy0AUCedMiOSaxEZILEVmx+CEUn94zOv6M49/l343YpZcHr0sLE8cP0rIfH0M5Rnc0cCu/5
- NouLFOYWRaAMKGxhIXtMe3dgX+g7
-X-Google-Smtp-Source: AGHT+IGw0f8m6uM2auqKcamoh/yTCEJDUMLW29MvchTEZj6JOUHuLc5maFWIrB3HoWW1NDJOYPkRLQ==
-X-Received: by 2002:a05:6830:4492:b0:71d:5f1b:28c2 with SMTP id
- 46e09a7af769-71dad629ca0mr9001337a34.9.1733355197196; 
- Wed, 04 Dec 2024 15:33:17 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f2791f7199sm77034eaf.1.2024.12.04.15.33.16
+ AJvYcCVac9ktWhwggU7yYiR3eDLTU6KHH1g3oEQkwgegsOEbBnyAEp4AF0iEXBv/JtxQJTbDWg6984ZFcQ1M@nongnu.org
+X-Gm-Message-State: AOJu0YwKMx1PZHWUQ0gHenuARdXMp2zZYlgGztprsVWSyXXfe8Zy54v9
+ wCzR08k56o9xAxf4cXBlZObykS0Yh0TJiwUv6oPvh6Dkd+05zNUHbAaSPWj6hFY=
+X-Gm-Gg: ASbGncuC7ZKAr2n1H8pL/uJp6iM8VdQyaXmfRaAQuep5R9mKmGc6ct1e1EluFgAtngV
+ wrQ01dhBOASPwZOSbqS8pr/2ra+iQJguCFihhLMzFSqpUkx4m2LiQqedWXcK0W77RRLjdmL/dgo
+ fwXcnuOfIDsWBAECLN9ZYjVI+nvOwvPQ8wEFH2MTMARMqef+cMCC5IWh2IRO69wAO8yKgADhVMD
+ swaMJ9UA/LwBw1xdDHqSms9xdDvQb803lPoe/iIzc4EgQuPT0RDKeyhg93SHymYLnr97e/HPnrV
+ fvzFlfThPcHDoB0nMd2gkA==
+X-Google-Smtp-Source: AGHT+IG7Shs7V4WExL2UlKybwY34g8mBS9y9cnkdkanxnXYHEeZvGX6PQKQjA1Y+I6YGWUqoDdYdLw==
+X-Received: by 2002:a17:90b:1b0a:b0:2ef:316b:53fe with SMTP id
+ 98e67ed59e1d1-2ef316b61f7mr3573766a91.22.1733355211512; 
+ Wed, 04 Dec 2024 15:33:31 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ef45fa31f0sm119231a91.23.2024.12.04.15.33.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Dec 2024 15:33:16 -0800 (PST)
-Message-ID: <0aea264c-c284-4543-ad3f-be40f5b9afb0@linaro.org>
-Date: Wed, 4 Dec 2024 17:33:14 -0600
+ Wed, 04 Dec 2024 15:33:31 -0800 (PST)
+Message-ID: <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
+Date: Wed, 4 Dec 2024 15:33:30 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/20] exec/tswap: Rename target_words_bigendian ->
- qemu_binary_is_bigendian
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20241204202602.58083-1-philmd@linaro.org>
- <20241204202602.58083-2-philmd@linaro.org>
+Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
+ discon event's to_pc
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241204202602.58083-2-philmd@linaro.org>
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <cover.1733063076.git.neither@nut.email>
+ <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +105,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/24 14:25, Philippe Mathieu-Daudé wrote:
-> target_words_bigendian() doesn't return whether a target vCPU
-> expects data in big-endian order, but whether the*binary* has
-> been compiled with big-endian flavor by default. Rename it
-> appropriately to reduce confusion. Mechanical change doing:
-> 
->    $ sed -i -e s/target_words_bigendian/qemu_binary_is_bigendian/ \
->        $(git grep -l target_words_bigendian)
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+On 12/2/24 11:41, Julian Ganz wrote:
+> We recently introduced plugin API for the registration of callbacks for
+> discontinuity events, specifically for interrupts, exceptions and host
+> call events. The callback receives, among other information, the VCPU
+> index and the PC after the event. This change introduces a test plugin
+> asserting that particular behaviour.
 > ---
->   include/exec/tswap.h     | 18 +++++++++---------
->   cpu-target.c             |  2 +-
->   disas/disas-common.c     |  2 +-
->   hw/core/cpu-sysemu.c     |  2 +-
->   hw/core/generic-loader.c |  2 +-
->   hw/display/vga.c         |  4 ++--
->   hw/virtio/virtio.c       |  2 +-
->   system/qtest.c           |  2 +-
->   8 files changed, 17 insertions(+), 17 deletions(-)
+>   tests/tcg/plugins/discons.c   | 95 +++++++++++++++++++++++++++++++++++
+>   tests/tcg/plugins/meson.build |  2 +-
+>   2 files changed, 96 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/tcg/plugins/discons.c
+> 
+> diff --git a/tests/tcg/plugins/discons.c b/tests/tcg/plugins/discons.c
+> new file mode 100644
+> index 0000000000..54e52f563a
+> --- /dev/null
+> +++ b/tests/tcg/plugins/discons.c
+> @@ -0,0 +1,95 @@
+> +/*
+> + * Copyright (C) 2024, Julian Ganz <neither@nut.email>
+> + *
+> + * License: GNU GPL, version 2 or later.
+> + *   See the COPYING file in the top-level directory.
+> + */
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Would be nice to include a description of the plugin here.
 
-r~
+> +#include <stdio.h>
+> +
+> +#include <qemu-plugin.h>
+> +
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> +
+> +struct cpu_state {
+> +    uint64_t next_pc;
+> +    bool has_next;
+> +};
+> +
+> +static struct qemu_plugin_scoreboard *states;
+> +
+> +static bool abort_on_mismatch;
+> +
+> +static void vcpu_discon(qemu_plugin_id_t id, unsigned int vcpu_index,
+> +                        enum qemu_plugin_discon_type type, uint64_t from_pc,
+> +                        uint64_t to_pc)
+> +{
+> +    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
+> +    state->next_pc = to_pc;
+> +    state->has_next = true;
+> +}
+> +
+> +static void insn_exec(unsigned int vcpu_index, void *userdata)
+> +{
+> +    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
+> +    uint64_t pc = (uint64_t) userdata;
+> +    GString* report;
+> +
+> +    if (state->has_next) {
+> +        if (state->next_pc != pc) {
+> +            report = g_string_new("Trap target PC mismatch\n");
+> +            g_string_append_printf(report,
+> +                                   "Expected:    %"PRIx64"\nEncountered: %"
+> +                                   PRIx64"\n",
+> +                                   state->next_pc, pc);
+> +            qemu_plugin_outs(report->str);
+> +            if (abort_on_mismatch) {
+> +                g_abort();
+> +            }
+> +            g_string_free(report, true);
+> +        }
+> +        state->has_next = false;
+> +    }
+> +}
+
+When booting an arm64 vm, I get this message:
+Trap target PC mismatch
+Expected:    23faf3a80
+Encountered: 23faf3a84
+
+ From what I understand, it means that the next_pc we have is incorrect.
+
+> +
+> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> +{
+> +    size_t i;
+> +    size_t n_insns = qemu_plugin_tb_n_insns(tb);
+> +
+> +    for (i = 0; i < n_insns; i++) {
+> +        struct qemu_plugin_insn * insn = qemu_plugin_tb_get_insn(tb, i);
+> +        uint64_t pc = qemu_plugin_insn_vaddr(insn);
+> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, insn_exec,
+> +                                               QEMU_PLUGIN_CB_NO_REGS,
+> +                                               (void*) pc);
+> +    }
+ > +}> +
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> +                                           const qemu_info_t *info,
+> +                                           int argc, char **argv)
+> +{
+> +    int i;
+> +
+> +    for (i = 0; i < argc; i++) {
+> +        char *opt = argv[i];
+> +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+> +        if (g_strcmp0(tokens[0], "abort") == 0) {
+> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &abort_on_mismatch)) {
+> +                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+> +                return -1;
+> +            }
+> +        } else {
+> +            fprintf(stderr, "option parsing failed: %s\n", opt);
+> +            return -1;
+> +        }
+> +    }
+> +
+> +    states = qemu_plugin_scoreboard_new(sizeof(struct cpu_state));
+> +
+> +    qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_ALL,
+> +                                        vcpu_discon);
+> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+> +
+> +    return 0;
+> +}
+> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+> index f847849b1b..f057238da1 100644
+> --- a/tests/tcg/plugins/meson.build
+> +++ b/tests/tcg/plugins/meson.build
+> @@ -1,6 +1,6 @@
+>   t = []
+>   if get_option('plugins')
+> -  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'syscall']
+> +  foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'syscall']
+>       if host_os == 'windows'
+>         t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
+>                           include_directories: '../../../include/qemu',
+
 
