@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1537BE77171
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB6AE7716D
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 08:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIkOP-0004Fh-Iw; Wed, 04 Dec 2024 03:05:53 -0500
+	id 1tIkOW-0004HO-Vw; Wed, 04 Dec 2024 03:06:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tIkOJ-0004Dc-Rw; Wed, 04 Dec 2024 03:05:48 -0500
+ id 1tIkOP-0004Fp-Oc; Wed, 04 Dec 2024 03:05:55 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tIkOH-00082v-DR; Wed, 04 Dec 2024 03:05:46 -0500
+ id 1tIkOL-00082v-8j; Wed, 04 Dec 2024 03:05:50 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 4 Dec
- 2024 16:05:24 +0800
+ 2024 16:05:25 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 4 Dec 2024 16:05:24 +0800
+ Transport; Wed, 4 Dec 2024 16:05:25 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v3 4/7] hw:sdhci: Directly set sd_spec_version instead of
- property
-Date: Wed, 4 Dec 2024 16:05:20 +0800
-Message-ID: <20241204080523.4025780-5-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 5/7] hw/sd/aspeed_sdhci: Add AST2700 Support
+Date: Wed, 4 Dec 2024 16:05:21 +0800
+Message-ID: <20241204080523.4025780-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241204080523.4025780-1-jamin_lin@aspeedtech.com>
 References: <20241204080523.4025780-1-jamin_lin@aspeedtech.com>
@@ -67,33 +66,61 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly set sd_spec_version instead of property and remove
-unused local variable.
+Introduce a new ast2700 class to support AST2700. Add a new ast2700 SDHCI class
+init function and set the value of capability register to "0x0000000719f80080".
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/sd/aspeed_sdhci.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ hw/sd/aspeed_sdhci.c         | 16 ++++++++++++++--
+ include/hw/sd/aspeed_sdhci.h |  1 +
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
-index ccaeefa75b..4e64e2537a 100644
+index 4e64e2537a..de92f84111 100644
 --- a/hw/sd/aspeed_sdhci.c
 +++ b/hw/sd/aspeed_sdhci.c
-@@ -160,13 +160,9 @@ static void aspeed_sdhci_realize(DeviceState *dev, Error **errp)
-     sysbus_init_mmio(sbd, &sdhci->iomem);
+@@ -239,6 +239,15 @@ static void aspeed_2600_sdhci_class_init(ObjectClass *klass, void *data)
+     asc->capareg = 0x0000000701f80080;
+ }
  
-     for (int i = 0; i < sdhci->num_slots; ++i) {
--        Object *sdhci_slot = OBJECT(&sdhci->slots[i]);
-         SysBusDevice *sbd_slot = SYS_BUS_DEVICE(&sdhci->slots[i]);
++static void aspeed_2700_sdhci_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedSDHCIClass *asc = ASPEED_SDHCI_CLASS(klass);
++
++    dc->desc = "ASPEED 2700 SDHCI Controller";
++    asc->capareg = 0x0000000719f80080;
++}
++
+ static const TypeInfo aspeed_sdhci_types[] = {
+     {
+         .name           = TYPE_ASPEED_SDHCI,
+@@ -263,8 +272,11 @@ static const TypeInfo aspeed_sdhci_types[] = {
+         .parent = TYPE_ASPEED_SDHCI,
+         .class_init = aspeed_2600_sdhci_class_init,
+     },
++    {
++        .name = TYPE_ASPEED_2700_SDHCI,
++        .parent = TYPE_ASPEED_SDHCI,
++        .class_init = aspeed_2700_sdhci_class_init,
++    },
+ };
  
--        if (!object_property_set_int(sdhci_slot, "sd-spec-version", 2, errp)) {
--            return;
--        }
+ DEFINE_TYPES(aspeed_sdhci_types)
 -
-+        sdhci->slots[i].sd_spec_version = 2;
-         sdhci->slots[i].capareg = asc->capareg;
+-
+diff --git a/include/hw/sd/aspeed_sdhci.h b/include/hw/sd/aspeed_sdhci.h
+index 8083797e25..4ef1770471 100644
+--- a/include/hw/sd/aspeed_sdhci.h
++++ b/include/hw/sd/aspeed_sdhci.h
+@@ -16,6 +16,7 @@
+ #define TYPE_ASPEED_2400_SDHCI TYPE_ASPEED_SDHCI "-ast2400"
+ #define TYPE_ASPEED_2500_SDHCI TYPE_ASPEED_SDHCI "-ast2500"
+ #define TYPE_ASPEED_2600_SDHCI TYPE_ASPEED_SDHCI "-ast2600"
++#define TYPE_ASPEED_2700_SDHCI TYPE_ASPEED_SDHCI "-ast2700"
+ OBJECT_DECLARE_TYPE(AspeedSDHCIState, AspeedSDHCIClass, ASPEED_SDHCI)
  
-         if (!sysbus_realize(sbd_slot, errp)) {
+ #define ASPEED_SDHCI_NUM_SLOTS    2
 -- 
 2.34.1
 
