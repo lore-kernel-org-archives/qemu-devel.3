@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D0EE77172
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7274E7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:31:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvzY-0004Xw-9U; Wed, 04 Dec 2024 15:29:02 -0500
+	id 1tIvyW-00017H-FW; Wed, 04 Dec 2024 15:27:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvzA-000454-F4
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:28:36 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvyM-0000iP-8U
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:47 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvz7-0003aX-GA
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:28:36 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-434a8b94fb5so1437235e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:28:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvyJ-0001Ks-K4
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:45 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-434aa472617so1353735e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:27:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733344111; x=1733948911; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733344062; x=1733948862; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9cBEMnN1TXHS4bt02AxYmkT0i+FxThQSvcImr5g6Wp4=;
- b=B2fGai38bUK9ei9o/LTCXZjWHaxGueoxQg66TYG+pnCxwED/Jpjf+C2Z3xKtsd7cOA
- KDjXUgaxx/IIdh+RLpqs9eZ6IH9fYZIXPYxHxcqPiC2gQ4B5/tHmJ/ITrwbMU8GscAtZ
- Z9zcNNRk8Hri/Mj8+CNz+ikCJYdZV+mGtFWY4imOG+n30a9x01isr0p/oFeR5OVGpGHB
- 1m5WS0JpY4z5/IjRytt2YoTT3TbMBBK/KBKkKNpG0rpYwOtLFKbAlZPPcYZawNtRtBJ8
- EZgBtR/ID4TpJn83+3U4hg5qic8fNflpQ+gfSDFfHF+luH9w6pyY2/YkE0v9U0oqX9R9
- yEnQ==
+ bh=zWutDH14OyliM2KY1fyQJ86hTSYSkrVk4NaKh8Buzj4=;
+ b=DqEQNvciOkFoZV4ac9GQYzv3HLZTdD98nipn8uGlH398rnFrXG6IjWmLIWCSI7ck6C
+ Tss6W0hSiTw/MC36E24hBHA1iTTdDG/DA5ZSuVa66Z+qRpDsjKnV+fcoCW+xrIM6tnW4
+ OJP/ajP07oxDhzVXy9O0Vg2jnARQ+pPbe5jweaV8MLilrUaiY+PtKpkEJ2dPa1Nj9Fj4
+ ozQv4bYd1q/miICbXBMEOmUkGNDY5XKhPyJvPCIEIemJkYpRAdUJkcP0Y1RDYs7goXfr
+ nBNBLqP/lxmEwczRR8nYpNmL053crbQRC+Mn6Aejyn3++scB8/O3ZXiov46E6umBWQiK
+ fBiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733344111; x=1733948911;
+ d=1e100.net; s=20230601; t=1733344062; x=1733948862;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9cBEMnN1TXHS4bt02AxYmkT0i+FxThQSvcImr5g6Wp4=;
- b=Dbddkf1ufvppFkFSa3neRiYHD1ZigfmJoL0hLo5vCaWbTOnEWjce+BRnLJP+Q4Gqxa
- OrBMiUNWjBZBSObW4+K36LP6p4gS13i85Nr7s7i57T+ARyCAMVNtoxiaT3zJMkHA69sl
- hztrL3hjCTaYfMPiXHzCnoPJrSIv09ShIJt2EssC9QgqoGTpt8SPa2NKkcHRsFvxdBg0
- SvSlJzzTRvLohQ2lv6sRZWcibi9yB7pXx5H08fpN2aFCVhsoOv5qJ3ulGqz8ILkjNZJx
- n7vvu1tQ5u9NnDAkcq0in8ci49iXl3oXEzPNknz6rrgFrcqwkwBrtikUuUYN6ZCCoKoa
- SflA==
-X-Gm-Message-State: AOJu0YwR7sApB/8kYkbTQVxXgcYXVyGpKQuM7O4WTTa/0+3qnMheL9A2
- bCdEO+Qi61vNLPamf3kb4gd127R/CYAfKgceuQWBJYKJr7Ge/ymkKaDkQIxNMunkVAwoO/J8CWi
- J
-X-Gm-Gg: ASbGnctcOeGNgIl5bhz0Xq7qiMv/cSKntVqAOnUhJowU4tk21+MpvPKDQReMPm9zFwz
- u1o6Ql3o2zVz5I6Y8Xw1t1UYJmKdeYCNIQjXvDf0B8jyG1Jiq6OP07hJ3fQNnMkkwr7/TphB7JJ
- yt2HTpvV8LVRB4FMz/95lsdvx0CPFk094SMUHBLqMhv1Gu9IedAuInfurvmLyYneeCAgIl35M8A
- k8ALX4BeeVIZXYCLNTqCIaUFaxr/VxCoGjvlqwpIGvCdiIXcF6Ch903YawkN66jOGNz5GVd2dtJ
- BEJdjIZkCNrVFv8hL2BIOrW8
-X-Google-Smtp-Source: AGHT+IHGWG2XfrE5hUpZ7ULVvlqpIFSiR/ooFWD28XqCbbY4PtNRrd8I3XJJTwLLCVn1frQOSzVPFA==
-X-Received: by 2002:a05:600c:511b:b0:433:c463:62d7 with SMTP id
- 5b1f17b1804b1-434d927b5bemr5211385e9.4.1733344111609; 
- Wed, 04 Dec 2024 12:28:31 -0800 (PST)
+ bh=zWutDH14OyliM2KY1fyQJ86hTSYSkrVk4NaKh8Buzj4=;
+ b=oeGQrfxK089v3vXXKMZkPq7sMw9TnWlSveW+HWL78rPazpKvliH4aWFp0eYhbbmxNH
+ o4oHhXsZagqU7P4PjqYPZUZ0AT5PbN61h0TgKXgjREp0tX8rbAa3jQ/LFnXEp5K+19RL
+ PXcfzrLWvu0ty/kVjEGOTX2Tf9H4ZM1TFizo5c8BHs8TCaPXbbrTkW+CezIrpezAM0E6
+ /Rv1UUDXhko3OnRxvKnOoGmpU76rvD8RHV9ntPsSWpcupbE+OfVF8dn4KdhXqlhnXSFM
+ +vAb7GfGfikfyhgdR7JuTxj5e+JqSxt6KDeRRJShE4vaDkJCPkrt69QuArjzOv/oImCJ
+ h56w==
+X-Gm-Message-State: AOJu0YxqWRmCVmv0G1hskLhXrq0q9vytzrJj3aP8zFr159riRAAVO6cG
+ 1qNla/8DX5x5rzCaUhFLjRg3t3ckibyBZ25eilR6BvTXQe67HRnvp4LGemzVyLbdpytG053Np8m
+ p
+X-Gm-Gg: ASbGncvMOJk3I2UH150us3LFKWKdnmduuHickBZ5HM8bv6cx+oh0pPhoZe62Ux1KVe6
+ mp59zvf+o3tfuEEs3uOcnhzM2YOz1EOYL2CVl/fp7UfODUO1DvWLODRsym65/aOqdgiMgsoQriN
+ iyDAKd7sa+9Gsf/4THtCc+XddU032t+LdVZfI16Clqm/ijjmHkNpszvoEf2WX9kkcs9aTYNArnN
+ /TIja5h797ZSbaCtM9CDQQpfDgcxLCLUw2+t+ANQx7AIkjeS082NFr4KIHKoBd3WccZW8SrJoBq
+ ljRjt1Van3DNrVD34d5tlTj7
+X-Google-Smtp-Source: AGHT+IERrsgR2EegsKjGUlPd2gxFhYeU+ZCs7pMAENN4A6q2kGfKfkwC+dy29o1+ADoNHMpp5fQ2qA==
+X-Received: by 2002:a05:6000:a11:b0:382:4b52:ffcc with SMTP id
+ ffacd0b85a97d-385fd370b69mr7242995f8f.0.1733344061965; 
+ Wed, 04 Dec 2024 12:27:41 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d527252bsm36373915e9.2.2024.12.04.12.28.30
+ 5b1f17b1804b1-434d52c0dd4sm35612765e9.34.2024.12.04.12.27.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Dec 2024 12:28:31 -0800 (PST)
+ Wed, 04 Dec 2024 12:27:40 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -79,17 +79,17 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair@alistair23.me>, qemu-ppc@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 20/20] hw/core/cpu: Remove cpu_virtio_is_big_endian()
-Date: Wed,  4 Dec 2024 21:26:02 +0100
-Message-ID: <20241204202602.58083-21-philmd@linaro.org>
+Subject: [PATCH 11/20] target/mips: Implement CPUClass::datapath_is_big_endian
+Date: Wed,  4 Dec 2024 21:25:53 +0100
+Message-ID: <20241204202602.58083-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241204202602.58083-1-philmd@linaro.org>
 References: <20241204202602.58083-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,111 +112,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are no more calls to cpu_virtio_is_big_endian().
-Remove the method and the SysemuCPUOps::virtio_is_big_endian
-helpers altogether.
+Implement MIPS datapath_is_big_endian() handler using
+the already existing mips_env_is_bigendian() method.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h            |  9 ---------
- include/hw/core/sysemu-cpu-ops.h |  8 --------
- hw/core/cpu-sysemu.c             | 11 -----------
- target/arm/cpu.c                 |  1 -
- target/ppc/cpu_init.c            |  1 -
- 5 files changed, 30 deletions(-)
+ target/mips/cpu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5c75fe3a842..21b49800f52 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -752,15 +752,6 @@ hwaddr cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
-  */
- int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs);
- 
--/**
-- * cpu_virtio_is_big_endian:
-- * @cpu: CPU
--
-- * Returns %true if a CPU which supports runtime configurable endianness
-- * is currently big-endian.
-- */
--bool cpu_virtio_is_big_endian(CPUState *cpu);
--
- #endif /* !CONFIG_USER_ONLY */
- 
- /**
-diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-index 24d003fe041..9806a2b7ecb 100644
---- a/include/hw/core/sysemu-cpu-ops.h
-+++ b/include/hw/core/sysemu-cpu-ops.h
-@@ -72,14 +72,6 @@ typedef struct SysemuCPUOps {
-      */
-     int (*write_elf64_qemunote)(WriteCoreDumpFunction f, CPUState *cpu,
-                                 DumpState *s);
--    /**
--     * @virtio_is_big_endian: Callback to return %true if a CPU which supports
--     * runtime configurable endianness is currently big-endian.
--     * Non-configurable CPUs can use the default implementation of this method.
--     * This method should not be used by any callers other than the pre-1.0
--     * virtio devices.
--     */
--    bool (*virtio_is_big_endian)(CPUState *cpu);
- 
-     /**
-      * @legacy_vmsd: Legacy state for migration.
-diff --git a/hw/core/cpu-sysemu.c b/hw/core/cpu-sysemu.c
-index 4b85face02b..458dde692ec 100644
---- a/hw/core/cpu-sysemu.c
-+++ b/hw/core/cpu-sysemu.c
-@@ -20,7 +20,6 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "exec/tswap.h"
- #include "hw/core/sysemu-cpu-ops.h"
- 
- bool cpu_paging_enabled(const CPUState *cpu)
-@@ -122,16 +121,6 @@ int cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cpu,
-     return (*cc->sysemu_ops->write_elf64_note)(f, cpu, cpuid, opaque);
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index d0a43b6d5c7..13d0ceaa8af 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -27,6 +27,7 @@
+ #include "internal.h"
+ #include "kvm_mips.h"
+ #include "qemu/module.h"
++#include "sysemu/hw_accel.h"
+ #include "sysemu/kvm.h"
+ #include "sysemu/qtest.h"
+ #include "exec/exec-all.h"
+@@ -132,6 +133,13 @@ static vaddr mips_cpu_get_pc(CPUState *cs)
+     return cpu->env.active_tc.PC;
  }
  
--bool cpu_virtio_is_big_endian(CPUState *cpu)
--{
--    CPUClass *cc = CPU_GET_CLASS(cpu);
--
--    if (cc->sysemu_ops->virtio_is_big_endian) {
--        return cc->sysemu_ops->virtio_is_big_endian(cpu);
--    }
--    return qemu_binary_is_bigendian();
--}
--
- GuestPanicInformation *cpu_get_crash_info(CPUState *cpu)
++static bool mips_cpu_datapath_is_big_endian(CPUState *cs)
++{
++    cpu_synchronize_state(cs);
++
++    return mips_env_is_bigendian(cpu_env(cs));
++}
++
+ static bool mips_cpu_has_work(CPUState *cs)
  {
-     CPUClass *cc = CPU_GET_CLASS(cpu);
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 3061b2ac18c..0df6408ee73 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2664,7 +2664,6 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
-     .asidx_from_attrs = arm_asidx_from_attrs,
-     .write_elf32_note = arm_cpu_write_elf32_note,
-     .write_elf64_note = arm_cpu_write_elf64_note,
--    .virtio_is_big_endian = arm_cpu_datapath_is_big_endian,
-     .legacy_vmsd = &vmstate_arm_cpu,
- };
- #endif
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 9650acb4850..be0eea2ff2e 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7407,7 +7407,6 @@ static const struct SysemuCPUOps ppc_sysemu_ops = {
-     .get_phys_page_debug = ppc_cpu_get_phys_page_debug,
-     .write_elf32_note = ppc32_cpu_write_elf32_note,
-     .write_elf64_note = ppc64_cpu_write_elf64_note,
--    .virtio_is_big_endian = ppc_cpu_datapath_is_big_endian,
-     .legacy_vmsd = &vmstate_ppc_cpu,
- };
- #endif
+     CPUMIPSState *env = cpu_env(cs);
+@@ -581,6 +589,7 @@ static void mips_cpu_class_init(ObjectClass *c, void *data)
+                                        &mcc->parent_phases);
+ 
+     cc->class_by_name = mips_cpu_class_by_name;
++    cc->datapath_is_big_endian = mips_cpu_datapath_is_big_endian;
+     cc->has_work = mips_cpu_has_work;
+     cc->mmu_index = mips_cpu_mmu_index;
+     cc->dump_state = mips_cpu_dump_state;
 -- 
 2.45.2
 
