@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24EFEE7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 06:11:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF0AE7716B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 06:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIiau-0008Uz-P1; Wed, 04 Dec 2024 01:10:40 -0500
+	id 1tIicg-0000pe-0S; Wed, 04 Dec 2024 01:12:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIiat-0008Uq-4d
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 01:10:39 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIicc-0000pI-4k
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 01:12:27 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIiar-0003jQ-BT
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 01:10:38 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4349fb56260so56148745e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 22:10:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIicZ-0003sP-32
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 01:12:25 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-434a8b94fb5so2814615e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 22:12:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733292635; x=1733897435; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733292740; x=1733897540; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5C2P8jtVIKmpShQfIfQ3py2oMmwDScCdVNfkV7KTcVw=;
- b=eBrmhMlwDOzBTDi46idZfLwoY563HzfogMO3/tElbXLgg39EE+phgmHjeXYg1J4wEW
- 3DMT+yUUi7KM4OQANS6cED55mn11hBdK/bnfLREhpl7sOwoOi/zB3V+orTANpSHaLnru
- UNrzVmY8suqNwDF4fYKgqLjuk5wSIafuoKDq0VuGZX245gdKZO7cOx5wC5E0h9oNV7PM
- b1djXd409dYPjYMEnE/55KJ4HYvHFtKfnK8WzD5awuPfE9FmMtPxDBi+614Psa6Zn+T7
- Y9ic9atwvr5BEAhoh6ri0fmqBycsB71Q0jGOgilnag0/iWJpxaDTq3S/xaoyxD0ts9L7
- WUdg==
+ bh=hRrfNkXsQG4m4T/TGI/qrEl6IDV4kVgcyEmS5Vo+nzY=;
+ b=lDTHrLgoDOX6sc8R/ZFlAnAI+oLd9wrBxHpNeGqb00BjmD9gBKmR7ntPCMnyN0SL9j
+ 1BZwx39ygLD5bIoVG6fqPMV0i1ZEINeeAjyGb01xV27cFr7sXqXJLFdhiEVwG1yjdHCQ
+ B+ltuElds2urydmL3ZKW1iYUfhgkWzy60X8Y77TToD0BcpqOoA7gd+C3Ad++LTnJ+zoE
+ ImUsmKynh+ybZigkAi3WLrSMRGOLpsO8BHf35ijrnzSrV+fU1qvkk+D0+1M0ywv20rYk
+ jTgfOQVCGa1w2Ivio5x9ix4/KtUhhm/BRha/E4E8CufIIx/t7/f0H4vsqJ7N0gN846uU
+ cing==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733292635; x=1733897435;
+ d=1e100.net; s=20230601; t=1733292740; x=1733897540;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5C2P8jtVIKmpShQfIfQ3py2oMmwDScCdVNfkV7KTcVw=;
- b=Vd8ea5iORle2uJsa0f3HCqPLpiEvTh8AIMVFjrmEVgxiYJjtYBUDy0HFBugGl5k7zu
- 60I7M8enCpaSIqkNCe9TKdOqrXz/a7WiGvHvWS1Ny0ZqWOYkfPh9pCJkc1a4Vd8gkvzh
- zMy6m/7dBSx1Zt5wpvAOArqBvEM33BeBcgyR81+TvN+Vsq+KGDlQ4lL+y9kbvU+h0hay
- 8LESSKh3WOiN8hB9nesUF7y/ner+OKNx4pudwV28fY5zVVc+d94V4PgnKerbdqbMd0B/
- 0ZKMzqc1SCyiTKAata9+LOynwBmKI9G/VAh+5U89M+36VZSRB+QKalmbTPM3zKnw5cBZ
- bp6w==
+ bh=hRrfNkXsQG4m4T/TGI/qrEl6IDV4kVgcyEmS5Vo+nzY=;
+ b=XXf56USWq6VdGKz0oc37y0pLll3GUGzKB9thghIke6vtioq9r2EnKH+EbQgPDpeEO7
+ 13mnKLLGbVt7KpfmXeqtJrNufLnzFyrmP0ei7ZNgTnkksC5QQLXE1RbLd9N1qkfipFI2
+ ZYRY+shtk/ihgPw/LkgUjZPorq1olppk/ykNIoRbAXnJCY5UM4RVRPkNY5+Jqz0nY5eo
+ wDMmjHM0NHw/xsJOx7VBSZ9TdLYn8mAY2Irzj3DBeoqoKktX6iREWcbFr2OcbJwzYoLA
+ kp+jBI6VqS0MbuUIPI4ogHw40iT9j6/yBT1BoocXNoXUyf+W29G9/DUkrXlvAoSWgkvp
+ Nb1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdshmqUQvrU7ENAZW8IVVfmvquaxscEl2g37VBJjxc4qhPVr0Qn6R8qDad/eF2QAvX/GBfrMZOv19O@nongnu.org
-X-Gm-Message-State: AOJu0Yxb+TlZ0SbfBDAKNy+u8oxI+qC8sKavCw8FnJ1jWOAdXpp1a2Fr
- S6HomAKT/zy+qCeTZ+/4gD+TSrZDanKprN3ow6m9bxQ+yiZ8yBhcNZokW5ESZzD/NXcdzTemv2G
- b
-X-Gm-Gg: ASbGncsH39sHGoZk7E/wKKUdNP43yP4XyPZunONtAyR4KPrQwuRFVTndk1FXg+6pnK+
- TgPGSXmfTA70GXhPZC0aoGTh0aoB8gfHoRO+HhVry2AMFRAlXJLFM7IhWbz8hP7Ne1tQ/AjXsKY
- sm7454jTEngpuP4Ee2jE+7uAgvnz6od+D7U4ygWVmb0gyDWq/30IP1g6WgwNMUebyRarLFyOgif
- zBzuJEJJBXdAn33Bc2uFUckzqvPD7g4UGIm+lcBOjhAt6krgrTWS00zpA+wR0zAo/Byg7hJFr1/
- SI1ULLQRvEs7WQmgPLTay2y8P4KVs+A4BBR4z858LQ==
-X-Google-Smtp-Source: AGHT+IGI0lTxMCxIYKaAbK75r0GinRABhgqv1xOeKQnfKVcu1Znvu89KmUIiBCv2eXZRy3jl+DrMnQ==
-X-Received: by 2002:a05:600c:3b1b:b0:434:a734:d268 with SMTP id
- 5b1f17b1804b1-434d09c0c1fmr43745875e9.14.1733292634020; 
- Tue, 03 Dec 2024 22:10:34 -0800 (PST)
+ AJvYcCVOy2Yw5xFIxIeTpbbuFmnVsMQsf9DkYPV/SGmWpDv74gec+NsJ7LumdLpCUhjDVs5ErYJYJo21FNSu@nongnu.org
+X-Gm-Message-State: AOJu0YygegeoSI+Wn/9qy8erXpWBR0qhsVJRYy05xCNpYTABrrxqwuvp
+ v8uJDTgJd+Nzonq+xweQcss3FDzCOGdYxpZt4/s4wZZlzFisYHamk+5IPqBL7eptWms0TQ37xN5
+ +
+X-Gm-Gg: ASbGncvdSVDUgupTmdM/4VP1xpqcfRz71N/zNmANNRMugCu4C9PO1YKtMDgEQiWSMIH
+ p6MwBynZ620OEQj5chH7fT+H1Zg1wqzHunF1uT9r1pIouVOoPtnMZi0XiPumglmZpb+Nk3egHLt
+ d9jYmCp5l3U15yrn+IiUtVCzHUTN+fYDsp7RzNOSq3wzs6H0Uqg2yHXw83AaBsVCNgkBbHFP/EP
+ Y+G5L9k03iHJUzh6riNQ1njV+TGhqhFMNHX4+zGXK62Oa2rKb+N3r60GKbyCNm/G7iqvHcMS5Z8
+ VfGpzOQqalJYdAQ/QDuZ0dxMqgjhr5zkl5GlYa7LBQ==
+X-Google-Smtp-Source: AGHT+IG0fRveaMGELXXNmJi9YGCDxvBrhmFC/7uOg/KZCasObt8GqRwuIndg3Nx60GYYyGb4slSycA==
+X-Received: by 2002:a05:600c:3c9e:b0:431:559d:4103 with SMTP id
+ 5b1f17b1804b1-434d1d7f179mr37387375e9.7.1733292740217; 
+ Tue, 03 Dec 2024 22:12:20 -0800 (PST)
 Received: from [192.168.69.223] (sml13-h01-176-184-15-95.dsl.sta.abo.bbox.fr.
  [176.184.15.95]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d52a57basm12010605e9.34.2024.12.03.22.10.32
+ 5b1f17b1804b1-434d527255asm12337255e9.8.2024.12.03.22.12.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 22:10:33 -0800 (PST)
-Message-ID: <b26d372e-e1d9-42a5-9c52-1826b64bcf05@linaro.org>
-Date: Wed, 4 Dec 2024 07:10:32 +0100
+ Tue, 03 Dec 2024 22:12:19 -0800 (PST)
+Message-ID: <a9267dc0-06a3-4687-8c68-b561ec6f9455@linaro.org>
+Date: Wed, 4 Dec 2024 07:12:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/11] softfloat: Inline pickNaN
+Subject: Re: [PATCH 11/11] softfloat: Replace WHICH with RET in parts_pick_nan
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
 References: <20241203203949.483774-1-richard.henderson@linaro.org>
- <20241203203949.483774-9-richard.henderson@linaro.org>
+ <20241203203949.483774-12-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241203203949.483774-9-richard.henderson@linaro.org>
+In-Reply-To: <20241203203949.483774-12-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,14 +103,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/12/24 21:39, Richard Henderson wrote:
-> Inline pickNaN into its only caller.  This makes one assert
-> redundant with the immediately preceding IF.
+> Replace the "index" selecting between A and B with a result variable
+> of the proper type.  This improves clarity within the function.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   fpu/softfloat-parts.c.inc      | 82 +++++++++++++++++++++++++----
->   fpu/softfloat-specialize.c.inc | 96 ----------------------------------
->   2 files changed, 73 insertions(+), 105 deletions(-)
+>   fpu/softfloat-parts.c.inc | 28 +++++++++++++---------------
+>   1 file changed, 13 insertions(+), 15 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
