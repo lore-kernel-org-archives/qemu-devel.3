@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F59E7716B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 03:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 404BBE7716C
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 03:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIg3b-0001OQ-KW; Tue, 03 Dec 2024 22:28:07 -0500
+	id 1tIg35-0001Mf-8s; Tue, 03 Dec 2024 22:27:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tIg3X-0001O5-7b
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 22:28:04 -0500
+ id 1tIg33-0001MD-CV
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 22:27:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tIg3V-0005XR-4A
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 22:28:02 -0500
+ id 1tIg31-0004Vh-Bo
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 22:27:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733282878;
+ s=mimecast20190719; t=1733282847;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TjQ8zFsYJSl8Um0gvyPB4v9WvdgdLLOsNRM/YUSjH+Q=;
- b=NNNl64KNl+TCEijvHAOwJIk8LIzPrZpAoamxwUKOLprFkuRV/dwt7RCRLQB8JquWklRO2L
- JitGXymuNMypl9AsIMoOkzBLG9AE/G0QQX3B8ACrOuHamSo2FFFJ92bf8yV4LCIlv4eiEx
- 3ktpkDvFtsrwe9Ak3pyOi3MOjTaA3FI=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nWSS29+EeRcrE5t5LqlBkapCrC+hfJnqImcX4fyzlNQ=;
+ b=aSmXJCLggo8QzSn2XEkChwLShy9J6gxV2Wy5tnj2u59ezGcfZD++UeTZ8OlscVRdNg7jOW
+ +KJ+usDcTQRMyZIl2epN3rhT+dA35EZdT6Z3BZFUz4RelC/599qxpa3/7UyBXHbR7g0twY
+ LZKDUOvuLgY7bHZ9YbfBHFF6oIrjqiM=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-202-cIAudSYgP12ixjoUQnynqg-1; Tue, 03 Dec 2024 22:27:57 -0500
-X-MC-Unique: cIAudSYgP12ixjoUQnynqg-1
-X-Mimecast-MFC-AGG-ID: cIAudSYgP12ixjoUQnynqg
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2ee76edbb51so4517936a91.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 19:27:57 -0800 (PST)
+ us-mta-274-5QNOF2LTPfyiDiscsu9plg-1; Tue, 03 Dec 2024 22:27:22 -0500
+X-MC-Unique: 5QNOF2LTPfyiDiscsu9plg-1
+X-Mimecast-MFC-AGG-ID: 5QNOF2LTPfyiDiscsu9plg
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2ee964e6a50so4654758a91.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 19:27:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733282876; x=1733887676;
+ d=1e100.net; s=20230601; t=1733282839; x=1733887639;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TjQ8zFsYJSl8Um0gvyPB4v9WvdgdLLOsNRM/YUSjH+Q=;
- b=Q/DEGHPT9OQSqg6eH0KtZt35PozIr+FGgqHK6Xapl5mzNbWNUEhhhqVITwdws7rT2f
- phBq5xGvhzcWw9C+evl2vpbsxiPnGsPgMoiqwwo4fqkSAklNrbv2lwZP+ChfJcCxDFUf
- I9yQOVRY7W6qY/qfbyV2HngDKikKspxsq+nTJgpEuCXLAI4Ls7EoW9kRHZWWlL5GbMBk
- okQpUcXdzgmCnCJJc+XULpVAXHKgrwQKxq8CkgTDUFBLz5aEGkZzB7ElnRcPi25nX4zq
- ZqwxqG0VRijHXKHjFJjdOTIbCroKDSKevlLdmKQ4Ok4V+E1IYUd+Ph802EyRcG0XIA15
- 9dYw==
-X-Gm-Message-State: AOJu0YzJSg2hONNdaYAE5dQeP4G2UDQj2ajnCEGbRRRPV+fKekqnyssl
- qdYWtpSJVs2vWyFSI+qq/zCD/9D13KnU3Tzd/Ab8zXzcqkdO8K70+fRZC9ShCGPjy8yWYoVLExm
- MnC7t4IKbIvAYMuxrnQCaEG8bcS45k/27bfQ1DXMdKD+qi4iTCzQ5fLfR3DeAs1EFdrdT5pXUZK
- ZfvOldOT+VRnsHUKF1OFOeFSYPMrKk/jddD5Y=
-X-Gm-Gg: ASbGncuUAZlYPPyzrJSvIQgTBiiAKdLTeVvPhkeMJc2k7ys8lwFOoCkfnjoxj0rdmP3
- HhxtdpGyr8Tx5yoDzeBPXio/xv/XoIB2B
-X-Received: by 2002:a17:90b:384c:b0:2ee:9b09:7d3d with SMTP id
- 98e67ed59e1d1-2ef01215443mr6683991a91.19.1733282876274; 
- Tue, 03 Dec 2024 19:27:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF5IiDIek81ZoOZUJJjfhv+tmhfWo9nJ5qjcZxTOww+OUqb3BemHVpdlQKhwbCxgpTBferXwsA8mLa+UtfLVls=
-X-Received: by 2002:a17:90b:384c:b0:2ee:9b09:7d3d with SMTP id
- 98e67ed59e1d1-2ef01215443mr6683950a91.19.1733282875886; Tue, 03 Dec 2024
- 19:27:55 -0800 (PST)
+ bh=nWSS29+EeRcrE5t5LqlBkapCrC+hfJnqImcX4fyzlNQ=;
+ b=ml27IxJpI6YiiTuNtFzskmg3FZqaINiFrYtYF4NHvlbUGs8Ns3IGDtEkFUPHQFHH0p
+ l87mPRrLwZbbnFdj1BAR0HYD1W1kWC/OfTPADoRX2Zk+o8ZrRwD3cNR0eBdoiQJw3md8
+ WWKLxeHtIvi8ANgFgHBSpOne49IF7sAYbPJi+G8Au8H4AxAixIIozAvrdvCMpd/OYBJS
+ lwMtDbfc7dXSh6rVBlEFXnDCjaw2VJIm9XARH1AUDawPG/vBGkSzM1UScDqzP6dsnmSp
+ eymx6nPhTYdM3m1XH/o69uBF+oCnC4DbbvSHZTh+DLw3UeQFYZeI0yoj+jhJtTD/JtpS
+ 0Q3Q==
+X-Gm-Message-State: AOJu0YwBObYBy9nrSIq2K1xtlU7ocWTdP/K+ffbT7toixe33qcnxXS6g
+ 33T3LvwI7B6sNicj8AQSgg9BeAfgTzl15+Z2ahxLNKipl4S9V0nP0PhB3XfBS4uElCHzxZq87O3
+ UYvY2We87iy3roBOFPwxIbWL4+ct0nMfOYECCUBuANN6CYdPuCy4eO0m9Q2oqyhV3V2HzW8LlFX
+ ycPGNgBaa1OChs+KNkZ4Jd7C9RCWc=
+X-Gm-Gg: ASbGncuNZvaiNXFWgfX/MxdRd6a8IsA93TJvIxMWTfiUjj7CPuatA6vN9FH+U9rairX
+ +BBJMTghyl1qckbjbBSRe0S/PxuuPF3rr
+X-Received: by 2002:a17:90b:3803:b0:2ee:edae:75e with SMTP id
+ 98e67ed59e1d1-2ef011eb672mr6103144a91.13.1733282839122; 
+ Tue, 03 Dec 2024 19:27:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEigXtvCHCnIkvQnB2QIFEscOO/g9u4IsqPA363iaJJpLh0gJPhXMLrc7EPZWc9GWwQf45WQFdMOjgUx0oDJJk=
+X-Received: by 2002:a17:90b:3803:b0:2ee:edae:75e with SMTP id
+ 98e67ed59e1d1-2ef011eb672mr6103125a91.13.1733282838785; Tue, 03 Dec 2024
+ 19:27:18 -0800 (PST)
 MIME-Version: 1.0
 References: <20241111083457.2090664-1-zhenzhong.duan@intel.com>
- <20241111083457.2090664-16-zhenzhong.duan@intel.com>
-In-Reply-To: <20241111083457.2090664-16-zhenzhong.duan@intel.com>
+ <20241111083457.2090664-14-zhenzhong.duan@intel.com>
+In-Reply-To: <20241111083457.2090664-14-zhenzhong.duan@intel.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 4 Dec 2024 11:27:44 +0800
-Message-ID: <CACGkMEsWZbA_PeRJLSLtSFgKtFPXymP28XZoTUtK=WWA95mykg@mail.gmail.com>
-Subject: Re: [PATCH v5 15/20] tests/acpi: q35: allow DMAR acpi table changes
+Date: Wed, 4 Dec 2024 11:27:07 +0800
+Message-ID: <CACGkMEtNgA_wSLufqH3BAN43AJ+W6UJnsrRhGyDfmjbzdLQJ=w@mail.gmail.com>
+Subject: Re: [PATCH v5 13/20] intel_iommu: Add support for PASID-based device
+ IOTLB invalidation
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
  eric.auger@redhat.com, mst@redhat.com, peterx@redhat.com, jgg@nvidia.com, 
  nicolinc@nvidia.com, joao.m.martins@oracle.com, 
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com, 
- chao.p.peng@intel.com, Igor Mammedov <imammedo@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>
+ chao.p.peng@intel.com, Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
@@ -109,10 +112,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, Nov 11, 2024 at 4:39=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@inte=
 l.com> wrote:
 >
+> From: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden.com>
+>
+> Signed-off-by: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden.c=
+om>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->  tests/qtest/bios-tables-test-allowed-diff.h | 1 +
->  1 file changed, 1 insertion(+)
 
 Acked-by: Jason Wang <jasowang@redhat.com>
 
