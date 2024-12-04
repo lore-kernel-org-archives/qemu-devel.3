@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9455CE7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 02:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B96E7716C
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 02:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIesh-0004zq-Fi; Tue, 03 Dec 2024 21:12:47 -0500
+	id 1tIesE-00044V-3b; Tue, 03 Dec 2024 21:12:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tIesU-0004M6-1u
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:12:36 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ id 1tIesB-000432-Sb
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:12:15 -0500
+Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tIesR-0005Tk-0y
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:12:33 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-6ef402e4589so60808307b3.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 18:12:30 -0800 (PST)
+ id 1tIesA-0005RV-15
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:12:15 -0500
+Received: by mail-qv1-xf2e.google.com with SMTP id
+ 6a1803df08f44-6d89811946eso27480876d6.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 18:12:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1733278350; x=1733883150; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1733278333; x=1733883133; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yMUZjSVVMo2pOYihqAfV7zRvytzhfUlPnoItmHg7JkQ=;
- b=Y2uHKp+RbWMDd9L5ewSZoWoxLIV+VQcEsqkJ1p4Zm7F0tMGr+2Ls7tnjtCcrTKG9Tj
- rJ8CAE1PZWrdfUOqejCgBAiiKmjCo980Q9w1/WW4Lr5PbSXkpLx1JMSk+Yj/q8h5m0wA
- i4WFEtCYRbGNfjKdto4GOytEB5JsUO+Yji5mVhrbmCoA87DvfL5tL/SDTnLo2Kkgmbjx
- dap/J3HKu7HiZ7JeGP2jdrAerzTq7ULpr0sDvj35xj65wY5iy0c6uEl51VyhPDdXHxBJ
- 8VqXndyqVuhRjsb3gdou0v50dfy9PGrHl7hx3PbC+jbRJqYcrH24NvbG0tXbRap52X58
- G4VA==
+ bh=AmWLJIQJ8N12JbkkyHiQfgxCXrtZm1tXnIWK6/dvu9s=;
+ b=lQQPDHhnUCgHncdQhg8apmo7tBYPOVxPxI1/LRzMDnagxoYeG7PPPbuhJfq+jCUSvA
+ 3AVA5MWOAlj41GHEniIE6pjy6kkX4o1iCJnQ+aDj77gZlfl1+fXZtrIici1CvMm3owsH
+ 9dXQVo00KHR7QSNMs/jy/+yaIow/tY3zU2Kxxity1M7TiIe4vRzpxEG69UJdV/B/kyR4
+ vXSTkauOjpuWkL0JZ7/SNOyBICNFhUOdCWBmInRwvFb+00w4FsvWItf3Vi6dGe6HlKpI
+ HqYuc0O/KwI5/7je3V7lQmtS9gQYvTXL8hcmXRTUgDhCq+iTaetPltoN/KMuI2ywxhcI
+ y8mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733278350; x=1733883150;
+ d=1e100.net; s=20230601; t=1733278333; x=1733883133;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yMUZjSVVMo2pOYihqAfV7zRvytzhfUlPnoItmHg7JkQ=;
- b=E2qZY5LXU/3UO5WLXIzVNz9e6Mw7dC2ZBnZzW05SSQMqP1suwiaUbshE9CbXzUHjrC
- e3/L9ujbgoFR2dzwEZvcS9YxTN5b5vjiJc6taAljif7Fqu5SlEjnTU8Mvax1qxJIJiEv
- 5s+6yawH9NFn3iXqkwHsNdIn2L9WW5GKz3tPsitHeSJ6dDWiaHdngMzVeGm9m7eGTjg4
- xojq5NislZ+96IJAujDP8jmMbkGeeT08LauH5XiD7ZFLnipEYvIG9QPboUnCzj6KV45q
- DemoZ+SFAldRUPD6AhMSiICoZsaqyYkgfXrvODMmqqB2K4HOtRKfLR22EyrjMBjNiBVg
- K48w==
+ bh=AmWLJIQJ8N12JbkkyHiQfgxCXrtZm1tXnIWK6/dvu9s=;
+ b=Kevd8nOP83yVSgD8L3IYbCDU7mzpLn9t9OM1EIUO6MNHXivjeQeQvEEKCCRKaq/pM/
+ z8KplDuphLEpRoUKV5p3SCtFyxsdJWvDdersVyO6zD3hxex1gN1dkPdZ+4TmhCcBkT+w
+ 4uDXYzal29YByqqzbVtlEQVnMj+oQpQS9btDrqUVA8mwnAbFQ2tCzgAjMjam13UwtpqK
+ r+4J7i8bvvlQEOFJN43HB+RezthS4qJPPeq6QB5KvHXu9Am+4y2+7GHSFOye3Y0aPagT
+ ofSV+CCVp+Z68Uig5R6FinsaBQTMKSCCFsAYUvbCcEqqg5DzH5IaokwpHDTGAjOpFUxn
+ Ysjg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwLRmRpANpOBGIb388Dto2DrnH5Hto6xh+2vNw4bWwi04fMR+cRcsmkSeSPJWux7XiVvPAHvPU+pmy@nongnu.org
-X-Gm-Message-State: AOJu0YwzhUtJ/90+yxbQa8kYwdGnmqhTRh7VH5cEWwJj57YV7vguJMPa
- 2F7bTIZMzS+bndkoNDUIftn4h3G1nPSmRPPR+eBe+Kgxbwp4PdGgyvOZf272kfc=
-X-Gm-Gg: ASbGncseINQQpD+xuNelx/55BCUg4Sx/8+7XmOtL3d4BmVdm0VciH3EqoFbegCGfr3q
- y8SGO98a+UabucQFCcOOuvLLa9fDwnGr7B+2ZYXYmWaCi/+1zwe44FNBtjmShfA43dHOPXQ5Dlw
- mzfdGcAhwV1ewulVkHr5oYodTHU/qPmQB4tEYquHG+kLA7sW7rXPHfiFMOBNpbA2TU74YRNOT0x
- AtKx6EpO3xce9DiknsW7t1pEYCBRJ9AHpK0omQNOQF80XGx1Q9PL9OAKBdq5tTNN6wW+P3qN7jX
- UiLP8UcfsPHw+4cbrQ==
-X-Google-Smtp-Source: AGHT+IHLzlBpsbMLVMYog1iK9ht/ElBnpnnRjfixt+PLy/Dn4GTT53borTiQmE58VJNzX0ZpL4zf3Q==
-X-Received: by 2002:a05:690c:48c8:b0:6ee:988b:16d4 with SMTP id
- 00721157ae682-6efad1dcfefmr70261077b3.29.1733278349983; 
- Tue, 03 Dec 2024 18:12:29 -0800 (PST)
+ AJvYcCV9RoIZA5nBOjfFzHmpYwwK/adOOhVgp3UJAbqCOCR/OLNkH4TYkt3PEgp2gMwOdV4jjv9/9UWONTDD@nongnu.org
+X-Gm-Message-State: AOJu0YwqRv4N0OuL2jiKVHgTLKlhm1GuUBwE72uiPwYWV7OaBqHNxwJl
+ wDx/6QeqRDIWcEwilju+suWIMqtwgZsffPxh8exrYw8y05YEE++3grk/UW+cV2Y=
+X-Gm-Gg: ASbGncv++dZ7ol4uPZU5Oz/GivXigeBUj2shwMFQlkRZWUd2gyR1wqDO5SqCf9PcXve
+ xGjjpA03gTDq1ufizNxxFQ4Eivd+hRZAnYFtQLmYIIEiHG3RXCYRYiRDq/YUW6tTHvFLQqRUVo7
+ Aii/mDk3v5OdAve9w/UY3fhqeZNpWA6nnluL6QVALa+nQmuTse4/5SEoAz48i/xU3bl6XIkmtog
+ +9wbpgpAkoiUKjhfsgn1XxkGPdRU1NkNJULQCUfHtoanJ4XnnJ0s9UNPsp35i/HEJg6x6eP23Vw
+ rnbUNZLDIfjNS34ZtA==
+X-Google-Smtp-Source: AGHT+IH4HNXO428Jp9onbiLf0da8k0EgfQ8EREF6TkS7WE68vEyOY4euq/SBf9OcpEyOcGMaj4EuRQ==
+X-Received: by 2002:a05:6214:1312:b0:6d8:af66:6344 with SMTP id
+ 6a1803df08f44-6d8c443d31fmr45981306d6.2.1733278332962; 
+ Tue, 03 Dec 2024 18:12:12 -0800 (PST)
 Received: from DY4X0N7X05.bytedance.net
  ([2601:646:8900:323:644e:288b:2b6d:d94c])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d87ec537ebsm63488986d6.30.2024.12.03.18.12.27
+ 6a1803df08f44-6d87ec537ebsm63488986d6.30.2024.12.03.18.12.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 18:12:29 -0800 (PST)
+ Tue, 03 Dec 2024 18:12:12 -0800 (PST)
 From: Yichen Wang <yichen.wang@bytedance.com>
 To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -81,17 +81,17 @@ Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
  "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
  "Yichen Wang" <yichen.wang@bytedance.com>,
  Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH v8 11/12] migration/multifd: Add integration tests for multifd
- with Intel DSA offloading.
-Date: Tue,  3 Dec 2024 18:11:40 -0800
-Message-Id: <20241204021142.24184-12-yichen.wang@bytedance.com>
+Subject: [PATCH v8 07/12] util/dsa: Implement DSA task asynchronous submission
+ and wait for completion.
+Date: Tue,  3 Dec 2024 18:11:36 -0800
+Message-Id: <20241204021142.24184-8-yichen.wang@bytedance.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20241204021142.24184-1-yichen.wang@bytedance.com>
 References: <20241204021142.24184-1-yichen.wang@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=yichen.wang@bytedance.com; helo=mail-yw1-x112e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
+ envelope-from=yichen.wang@bytedance.com; helo=mail-qv1-xf2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,145 +116,219 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hao Xiang <hao.xiang@linux.dev>
 
-* Add test case to start and complete multifd live migration with DSA
-offloading enabled.
-* Add test case to start and cancel multifd live migration with DSA
-offloading enabled.
+* Add a DSA task completion callback.
+* DSA completion thread will call the tasks's completion callback
+on every task/batch task completion.
+* DSA submission path to wait for completion.
+* Implement CPU fallback if DSA is not able to complete the task.
 
-Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
 Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
 Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration-test.c | 80 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 79 insertions(+), 1 deletion(-)
+ include/qemu/dsa.h |  14 +++++
+ util/dsa.c         | 125 +++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 135 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 74d3000198..e1cef36143 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -611,6 +611,12 @@ typedef struct {
-     bool suspend_me;
- } MigrateStart;
- 
-+/*
-+ * It requires separate steps to configure and enable DSA device.
-+ * This test assumes that the configuration is done already.
-+ */
-+static const char *dsa_dev_path_p = "['dsa:/dev/dsa/wq4.0']";
-+
- /*
-  * A hook that runs after the src and dst QEMUs have been
-  * created, but before the migration is started. This can
-@@ -3266,7 +3272,7 @@ static void test_multifd_tcp_tls_x509_reject_anon_client(void)
-  *
-  *  And see that it works
+diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+index a9aa394e5b..4972332bdf 100644
+--- a/include/qemu/dsa.h
++++ b/include/qemu/dsa.h
+@@ -123,6 +123,20 @@ buffer_zero_batch_task_init(int batch_size);
   */
--static void test_multifd_tcp_cancel(void)
-+static void test_multifd_tcp_cancel_common(bool use_dsa)
- {
-     MigrateStart args = {
-         .hide_stderr = true,
-@@ -3286,6 +3292,11 @@ static void test_multifd_tcp_cancel(void)
-     migrate_set_capability(from, "multifd", true);
-     migrate_set_capability(to, "multifd", true);
+ void buffer_zero_batch_task_destroy(QemuDsaBatchTask *task);
  
-+    if (use_dsa) {
-+        migrate_set_parameter_str(from, "zero-page-detection", "dsa-accel");
-+        migrate_set_parameter_str(from, "accel-path", dsa_dev_path_p);
++/**
++ * @brief Performs buffer zero comparison on a DSA batch task synchronously.
++ *
++ * @param batch_task A pointer to the batch task.
++ * @param buf An array of memory buffers.
++ * @param count The number of buffers in the array.
++ * @param len The buffer length.
++ *
++ * @return Zero if successful, otherwise non-zero.
++ */
++int
++buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
++                              const void **buf, size_t count, size_t len);
++
+ #else
+ 
+ typedef struct QemuDsaBatchTask {} QemuDsaBatchTask;
+diff --git a/util/dsa.c b/util/dsa.c
+index a897ccac90..e6b7db2cf6 100644
+--- a/util/dsa.c
++++ b/util/dsa.c
+@@ -433,6 +433,42 @@ poll_completion(struct dsa_completion_record *completion,
+     return 0;
+ }
+ 
++/**
++ * @brief Helper function to use CPU to complete a single
++ *        zero page checking task.
++ *
++ * @param completion A pointer to a DSA task completion record.
++ * @param descriptor A pointer to a DSA task descriptor.
++ * @param result A pointer to the result of a zero page checking.
++ */
++static void
++task_cpu_fallback_int(struct dsa_completion_record *completion,
++                      struct dsa_hw_desc *descriptor, bool *result)
++{
++    const uint8_t *buf;
++    size_t len;
++
++    if (completion->status == DSA_COMP_SUCCESS) {
++        return;
 +    }
 +
-     /* Start incoming migration from the 1st socket */
-     migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
++    /*
++     * DSA was able to partially complete the operation. Check the
++     * result. If we already know this is not a zero page, we can
++     * return now.
++     */
++    if (completion->bytes_completed != 0 && completion->result != 0) {
++        *result = false;
++        return;
++    }
++
++    /* Let's fallback to use CPU to complete it. */
++    buf = (const uint8_t *)descriptor->src_addr;
++    len = descriptor->xfer_size;
++    *result = buffer_is_zero(buf + completion->bytes_completed,
++                             len - completion->bytes_completed);
++}
++
+ /**
+  * @brief Complete a single DSA task in the batch task.
+  *
+@@ -559,7 +595,7 @@ dsa_completion_loop(void *opaque)
+         (QemuDsaCompletionThread *)opaque;
+     QemuDsaBatchTask *batch_task;
+     QemuDsaDeviceGroup *group = thread_context->group;
+-    int ret;
++    int ret = 0;
  
-@@ -3344,6 +3355,49 @@ static void test_multifd_tcp_cancel(void)
-     test_migrate_end(from, to2, true);
- }
+     rcu_register_thread();
  
-+/*
-+ * This test does:
-+ *  source               target
-+ *                       migrate_incoming
-+ *     migrate
-+ *     migrate_cancel
-+ *                       launch another target
-+ *     migrate
-+ *
-+ *  And see that it works
-+ */
-+static void test_multifd_tcp_cancel(void)
-+{
-+    test_multifd_tcp_cancel_common(false);
-+}
-+
-+#ifdef CONFIG_DSA_OPT
-+
-+static void *test_migrate_precopy_tcp_multifd_start_dsa(QTestState *from,
-+                                                        QTestState *to)
-+{
-+    migrate_set_parameter_str(from, "zero-page-detection", "dsa-accel");
-+    migrate_set_parameter_str(from, "accel-path", dsa_dev_path_p);
-+    return test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
-+}
-+
-+static void test_multifd_tcp_zero_page_dsa(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = test_migrate_precopy_tcp_multifd_start_dsa,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
-+static void test_multifd_tcp_cancel_dsa(void)
-+{
-+    test_multifd_tcp_cancel_common(true);
-+}
-+
-+#endif
-+
- static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
+@@ -827,7 +863,6 @@ buffer_zero_batch_task_set(QemuDsaBatchTask *batch_task,
+  *
+  * @return int Zero if successful, otherwise an appropriate error code.
+  */
+-__attribute__((unused))
+ static int
+ buffer_zero_dsa_async(QemuDsaBatchTask *task,
+                       const void *buf, size_t len)
+@@ -846,7 +881,6 @@ buffer_zero_dsa_async(QemuDsaBatchTask *task,
+  * @param count The number of buffers.
+  * @param len The buffer length.
+  */
+-__attribute__((unused))
+ static int
+ buffer_zero_dsa_batch_async(QemuDsaBatchTask *batch_task,
+                             const void **buf, size_t count, size_t len)
+@@ -877,13 +911,61 @@ buffer_zero_dsa_completion(void *context)
+  *
+  * @param batch_task A pointer to the buffer zero comparison batch task.
+  */
+-__attribute__((unused))
+ static void
+ buffer_zero_dsa_wait(QemuDsaBatchTask *batch_task)
  {
-     qtest_qmp_assert_success(who,
-@@ -3774,6 +3828,20 @@ static bool kvm_dirty_ring_supported(void)
- #endif
+     qemu_sem_wait(&batch_task->sem_task_complete);
  }
  
-+#ifdef CONFIG_DSA_OPT
-+static const char *dsa_dev_path = "/dev/dsa/wq4.0";
-+static int test_dsa_setup(void)
++/**
++ * @brief Use CPU to complete the zero page checking task if DSA
++ *        is not able to complete it.
++ *
++ * @param batch_task A pointer to the batch task.
++ */
++static void
++buffer_zero_cpu_fallback(QemuDsaBatchTask *batch_task)
 +{
-+    int fd;
-+    fd = open(dsa_dev_path, O_RDWR);
-+    if (fd < 0) {
++    if (batch_task->task_type == QEMU_DSA_TASK) {
++        if (batch_task->completions[0].status == DSA_COMP_SUCCESS) {
++            return;
++        }
++        task_cpu_fallback_int(&batch_task->completions[0],
++                              &batch_task->descriptors[0],
++                              &batch_task->results[0]);
++    } else if (batch_task->task_type == QEMU_DSA_BATCH_TASK) {
++        struct dsa_completion_record *batch_completion =
++            &batch_task->batch_completion;
++        struct dsa_completion_record *completion;
++        uint8_t status;
++        bool *results = batch_task->results;
++        uint32_t count = batch_task->batch_descriptor.desc_count;
++
++        /* DSA is able to complete the entire batch task. */
++        if (batch_completion->status == DSA_COMP_SUCCESS) {
++            assert(count == batch_completion->bytes_completed);
++            return;
++        }
++
++        /*
++         * DSA encounters some error and is not able to complete
++         * the entire batch task. Use CPU fallback.
++         */
++        for (int i = 0; i < count; i++) {
++
++            completion = &batch_task->completions[i];
++            status = completion->status;
++
++            assert(status == DSA_COMP_SUCCESS ||
++                status == DSA_COMP_PAGE_FAULT_NOBOF);
++
++            task_cpu_fallback_int(completion,
++                                  &batch_task->descriptors[i],
++                                  &results[i]);
++        }
++    }
++}
++
+ /**
+  * @brief Initializes a buffer zero comparison DSA task.
+  *
+@@ -960,3 +1042,38 @@ buffer_zero_batch_task_destroy(QemuDsaBatchTask *task)
+     qemu_sem_destroy(&task->sem_task_complete);
+     qemu_vfree(task);
+ }
++
++/**
++ * @brief Performs buffer zero comparison on a DSA batch task synchronously.
++ *
++ * @param batch_task A pointer to the batch task.
++ * @param buf An array of memory buffers.
++ * @param count The number of buffers in the array.
++ * @param len The buffer length.
++ *
++ * @return Zero if successful, otherwise non-zero.
++ */
++int
++buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
++                              const void **buf, size_t count, size_t len)
++{
++    assert(batch_task != NULL);
++    assert(len != 0);
++    assert(buf != NULL);
++
++    if (count <= 0 || count > batch_task->batch_size) {
 +        return -1;
 +    }
-+    close(fd);
++
++    if (count == 1) {
++        /* DSA doesn't take batch operation with only 1 task. */
++        buffer_zero_dsa_async(batch_task, buf[0], len);
++    } else {
++        buffer_zero_dsa_batch_async(batch_task, buf, count, len);
++    }
++
++    buffer_zero_dsa_wait(batch_task);
++    buffer_zero_cpu_fallback(batch_task);
++
 +    return 0;
 +}
-+#endif
-+
- int main(int argc, char **argv)
- {
-     bool has_kvm, has_tcg;
-@@ -3986,6 +4054,16 @@ int main(int argc, char **argv)
-                        test_multifd_tcp_zero_page_legacy);
-     migration_test_add("/migration/multifd/tcp/plain/zero-page/none",
-                        test_multifd_tcp_no_zero_page);
-+
-+#ifdef CONFIG_DSA_OPT
-+    if (g_str_equal(arch, "x86_64") && test_dsa_setup() == 0) {
-+        migration_test_add("/migration/multifd/tcp/plain/zero-page/dsa",
-+                       test_multifd_tcp_zero_page_dsa);
-+        migration_test_add("/migration/multifd/tcp/plain/cancel/dsa",
-+                       test_multifd_tcp_cancel_dsa);
-+    }
-+#endif
-+
-     migration_test_add("/migration/multifd/tcp/plain/cancel",
-                        test_multifd_tcp_cancel);
-     migration_test_add("/migration/multifd/tcp/plain/zlib",
 -- 
 Yichen Wang
 
