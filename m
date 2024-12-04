@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34D0E7716B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 06:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A65E7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 06:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIifY-0002WF-I2; Wed, 04 Dec 2024 01:15:29 -0500
+	id 1tIii9-0003Wj-Hp; Wed, 04 Dec 2024 01:18:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIifO-0002Tw-VK
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 01:15:23 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIii7-0003WQ-Kg
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 01:18:07 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIifM-0004FA-JO
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 01:15:18 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-385e1fcb0e1so2272037f8f.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 22:15:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIii6-0005Hf-4W
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 01:18:07 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-385ddcfc97bso4355148f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 22:18:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733292913; x=1733897713; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733293084; x=1733897884; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UCfnhjjdX26m2YYhIWZbrWMg0XxTx4UjzICc/TjPCW0=;
- b=E5f0PBVEDIEk8l/uEh9IyyKZHQEapqNVPRWgq53GgUby9RdkUewsxGms0F+/UGqCFn
- Edg8P0/xTBfFP3kL8pKFBC9EWyDyhtPfsAYr+J/hCbvuOqKhFphOOq2jBAZgE7wXSgqX
- 0wc9DpfofHAhg/TKV+DgUCAVvvH0/w6V6ZQ1yehIOnpVJr6OBBKM0RmXNjn07keTeDmV
- dB798/PK11+f8dHvvHjRflsFizTDGO2yeTsQX3lNS2l0ZmAV7eA0eC3TI8Xn+4JW6LSy
- L8C58FE3h4AOFEerrMcM2oNU63uIwYh4epSaG0ctUBn7moICIdUVAeKoDzjgLFR9O3S8
- RgtQ==
+ bh=Troi4Kqlqh8bf//v0GHKUZIajHZoWJPuHNZwYtF2RKc=;
+ b=Zbar3AFhRHhaYoJp0L9WPCCEnT5RraMCd3yYFy7zjl+brbs454OPVu7W+BYvQ0B07E
+ GJtC41+beQPS4+OFeb9D6G7lEaly5nygO8V4vfswiQ2opoDen8c4ugAOx6Wtrpv32ap1
+ HYjDw4k8elwoHOkIFijpqkdAmBBro52pDfSfQB6gc6GCNzmkfwoAeNzxqiFJTGWKMlKb
+ OirEOD0NYr2joieWDkBQz7X1hnkF1rYSoBhfT6lsPDACVGGSirMesBE0NUcMg/at6lvg
+ /asId/IDi4be0pqJbb0YCs9IAXB1MG81vnd+LBE4xL1EdBm/ambF6llpIvfSHdZvfYMc
+ ZjuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733292913; x=1733897713;
+ d=1e100.net; s=20230601; t=1733293084; x=1733897884;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UCfnhjjdX26m2YYhIWZbrWMg0XxTx4UjzICc/TjPCW0=;
- b=Oak7/eXX9hwYcct2LC701PP91D6nc8fPPO0fRgsOdc3GmQmIwbG2Rco5RZHTZdey4I
- 7WsA9KxG+dRHyvdSLDkR6l34TsWMknEvkp00dsGWPdi+aW/wOKeqEssyIT7w84vhX0kP
- ECOpwjsy9wS8kqieUfkYmwzn0c0hnt30ahDyK6FuuzCOpsKi39xQdE+IaOIj5riifW59
- NQC1nJGdF1di16nYwTdAY/oBDrB5dpMymh9hiJH69WFK0Ub0Mi+dGnl2NdAQCVNgx6w6
- i46EBGoj361SbJt1ZkxAn7X9hR8tKPWDpC/O3efNPWlW0f2oLur1RmJwM5kk/jBN/kR+
- iZDA==
+ bh=Troi4Kqlqh8bf//v0GHKUZIajHZoWJPuHNZwYtF2RKc=;
+ b=kXbAfqk96Q5sfNHoXuYiYa/eEC3cbEeedts3SXdMaWZUhEs15VlF+UQCxw7aaJPisQ
+ OKLhmzVjU6CaC80mJNEUv2QOpoKnGltRPEcotdRMMjMXlLyJkk3BeGDVWoKkQotVlgDf
+ /EmbN0F8uUI3ATMeUTxOTtjJfc2CBEnAiaMN13GgnMXm7gSjC9CWva0y5bte/MRNYlyN
+ oJBgwYc20mArz9PX9pk0QY23tDH3RpzGUZQ/656pq3IpnUvILlx5Apfer65WhXfsLHRt
+ IpU8gRZcRRqgnkzD9EBxdd8yO4AtLsqoso96oDM3RyKjyxXs8mTXB2aC6Ysv2Z4fQSw3
+ Ln5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWzNSmc8752we8rCLwx+h023UN2aF5hWYWRODglI+8lf5SHHMVUbpjxFMS7OdUKAG9Ikv5QmncGZ9h@nongnu.org
-X-Gm-Message-State: AOJu0YwFi1EX9t1PX/Nt1HqJBRI30XviTrl+JZvxT//G0ZkSrTlzVs/G
- SlF81AJt5PBz9vYBJjOsk/ttQmwLWyvQRbBGNx0hwT7Et1xficrp28blp9PQDqs=
-X-Gm-Gg: ASbGncuFiNd5eBr1RSzMmzOKlM8XHYJ/1LHFWT11kfJDRobKu/2Q8kRrii0jmKnQuXv
- QPV8t0j6q8k1A1TQDSN8haIbEETV3zwVAPmGjqflO23P4ou/wvP/Kmfibmsr9Xf+15RRbGCuuWP
- ak/c/KhuEUlTjCX/j5seDLav6FFoJBwvDm8pQZ2zW7WCO7BHIrIar3QfJNNzny5f4euozwHfLa8
- 3cUfJHfZC8fSdeCNfiCrgFnktLYZomiWE7OlA7LSQMKtumocdu4R3F89CBix1CDbCRErtKw5iPm
- cf5+eJymBsIyucU5y0US8UUdc47aSDwNA1W7dnNDEQ==
-X-Google-Smtp-Source: AGHT+IGTU1nlxwVjXMq9EnzhGw4IAz4zx70S6Jd7f1OjM3tMLEOzYIII6IwM53UOMpMbzY6Rb+acmA==
-X-Received: by 2002:a05:6000:1885:b0:382:5010:c8de with SMTP id
- ffacd0b85a97d-38607c164f8mr2426263f8f.46.1733292913425; 
- Tue, 03 Dec 2024 22:15:13 -0800 (PST)
-Received: from [192.168.69.223] (sml13-h01-176-184-15-95.dsl.sta.abo.bbox.fr.
- [176.184.15.95]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385d97ab259sm15584815f8f.95.2024.12.03.22.15.11
+ AJvYcCXIMXXa8W3fqlcSdC80kiDJlLrbHU3K7LKCOE0n/4T5z5FlkSvJq1FdzFI1h8UNy0OqU++MC2xegGKR@nongnu.org
+X-Gm-Message-State: AOJu0Yyro+WKenPqdcj2EmPTyL4NTI5tBSM03OBj+/x58fZK/Jp0DHT6
+ FugKXaTmBVmwX7PXp6b9UxR9KlT578Mwx78TPd8EDuxaYv8UdTaEkMrbQbpCyL8=
+X-Gm-Gg: ASbGnctY4dpcmOA6ywg9svfD+fJRjGDBKOy27z6y4TPfTVnZsiq51y6l+BsjrshQRVR
+ h9XJ5h1RnyrUKWnfVfWr9VfrleUrpGEol8KSmGkZZSPQ9CNilAWI4+3d9agUu6nBVszX6QDcYuN
+ Hb9hQcPg9ruUNWBZDe4+W5gD9J4jU+JYkiYnMDc+RbaJ7OX8KHp8rtuwJZIkGcR+HkeLPTKC3B0
+ sjJ0YfE/UsT71lzvHZg4+exKW88rRy0RRlwT3U0aurx3EVcb1ETJFfHyKDjnUBO/EDWOqv9uRJ2
+ lZRqXkUJVeQzBWeNTmss
+X-Google-Smtp-Source: AGHT+IH4FoEQFBL4xXSPBrJlYcE2GjX9uwR9LzczftOgnQGKwhjg7HOOVjh2aT1SJe+Ac04lMylkBg==
+X-Received: by 2002:a05:6000:1a86:b0:385:f527:be6d with SMTP id
+ ffacd0b85a97d-385fd423e63mr4893144f8f.36.1733293084226; 
+ Tue, 03 Dec 2024 22:18:04 -0800 (PST)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385df74157asm14799455f8f.0.2024.12.03.22.18.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Dec 2024 22:15:12 -0800 (PST)
-Message-ID: <558f36d4-a113-4cb6-bd72-b93f05f2cf2d@linaro.org>
-Date: Wed, 4 Dec 2024 07:15:11 +0100
+ Tue, 03 Dec 2024 22:18:03 -0800 (PST)
+Message-ID: <915f5ad0-0ecf-4a50-9ff0-c854935b3088@linaro.org>
+Date: Wed, 4 Dec 2024 07:18:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] softfloat: Use goto for default nan case in
- pick_nan_muladd
+Subject: Re: [PATCH 04/11] softfloat: Remove which from parts_pick_nan_muladd
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
 References: <20241203203949.483774-1-richard.henderson@linaro.org>
- <20241203203949.483774-4-richard.henderson@linaro.org>
+ <20241203203949.483774-5-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241203203949.483774-4-richard.henderson@linaro.org>
+In-Reply-To: <20241203203949.483774-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,13 +102,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/12/24 21:39, Richard Henderson wrote:
-> Remove "3" as a special case for which and simply
-> branch to return the desired value.
+> Assign the pointer return value to 'a' directly,
+> rather than going through an intermediary index.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   fpu/softfloat-parts.c.inc | 20 ++++++++++----------
->   1 file changed, 10 insertions(+), 10 deletions(-)
+>   fpu/softfloat-parts.c.inc | 32 ++++++++++----------------------
+>   1 file changed, 10 insertions(+), 22 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
