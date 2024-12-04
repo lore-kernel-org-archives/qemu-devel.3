@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C45CE7716F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 08:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C30A6E77172
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 08:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIkOF-0004Cj-S3; Wed, 04 Dec 2024 03:05:45 -0500
+	id 1tIkOk-0004LZ-4k; Wed, 04 Dec 2024 03:06:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tIkO8-0004Bp-7w; Wed, 04 Dec 2024 03:05:36 -0500
+ id 1tIkOc-0004Ij-OE; Wed, 04 Dec 2024 03:06:06 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tIkO6-00082v-RC; Wed, 04 Dec 2024 03:05:35 -0500
+ id 1tIkOX-00082v-Lk; Wed, 04 Dec 2024 03:06:03 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 4 Dec
- 2024 16:05:24 +0800
+ 2024 16:05:25 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 4 Dec 2024 16:05:24 +0800
+ Transport; Wed, 4 Dec 2024 16:05:25 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,9 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v3 1/7] hw/sd/aspeed_sdhci: Fix coding style
-Date: Wed, 4 Dec 2024 16:05:17 +0800
-Message-ID: <20241204080523.4025780-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 7/7] aspeed/soc: Support eMMC for AST2700
+Date: Wed, 4 Dec 2024 16:05:23 +0800
+Message-ID: <20241204080523.4025780-8-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241204080523.4025780-1-jamin_lin@aspeedtech.com>
 References: <20241204080523.4025780-1-jamin_lin@aspeedtech.com>
@@ -66,32 +66,48 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix coding style issues from checkpatch.pl.
+Add SDHCI model for AST2700 eMMC support. The eMMC controller only support 1
+slot and registers base address is start at 0x1209_0000 and its interrupt is
+connected to GICINT 15.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/sd/aspeed_sdhci.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
-index 98d5460905..acd6538261 100644
---- a/hw/sd/aspeed_sdhci.c
-+++ b/hw/sd/aspeed_sdhci.c
-@@ -87,10 +87,12 @@ static void aspeed_sdhci_write(void *opaque, hwaddr addr, uint64_t val,
-         sdhci->regs[TO_REG(addr)] = (uint32_t)val & ~ASPEED_SDHCI_INFO_RESET;
-         break;
-     case ASPEED_SDHCI_SDIO_140:
--        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg, 0, 32, val);
-+        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg,
-+                                            0, 32, val);
-         break;
-     case ASPEED_SDHCI_SDIO_144:
--        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg, 32, 32, val);
-+        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg,
-+                                            32, 32, val);
-         break;
-     case ASPEED_SDHCI_SDIO_148:
-         sdhci->slots[0].maxcurr = deposit64(sdhci->slots[0].maxcurr,
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index baddd35ecf..23571584b2 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -391,6 +391,12 @@ static void aspeed_soc_ast2700_init(Object *obj)
+     /* Init sd card slot class here so that they're under the correct parent */
+     object_initialize_child(obj, "sd-controller.sdhci",
+                             &s->sdhci.slots[0], TYPE_SYSBUS_SDHCI);
++
++    object_initialize_child(obj, "emmc-controller", &s->emmc, typename);
++    object_property_set_int(OBJECT(&s->emmc), "num-slots", 1, &error_abort);
++
++    object_initialize_child(obj, "emmc-controller.sdhci", &s->emmc.slots[0],
++                            TYPE_SYSBUS_SDHCI);
+ }
+ 
+ /*
+@@ -701,6 +707,15 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci), 0,
+                        aspeed_soc_get_irq(s, ASPEED_DEV_SDHCI));
+ 
++    /* eMMC */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->emmc), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->emmc), 0,
++                    sc->memmap[ASPEED_DEV_EMMC]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->emmc), 0,
++                       aspeed_soc_get_irq(s, ASPEED_DEV_EMMC));
++
+     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
 -- 
 2.34.1
 
