@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E21DDE77176
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E47FAE77177
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 12:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIowy-0007zx-Qm; Wed, 04 Dec 2024 07:57:56 -0500
+	id 1tIoxE-0008BA-DG; Wed, 04 Dec 2024 07:58:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tIowl-0007z1-HP
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 07:57:39 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1tIox0-00081T-I2
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 07:57:57 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tIowg-0007WZ-R2
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 07:57:36 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-37ed3bd6114so4467711f8f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 04:57:34 -0800 (PST)
+ id 1tIoww-0000Af-K3
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 07:57:54 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385e87b25f0so533606f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 04:57:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1733317053; x=1733921853;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1733317067; x=1733921867;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1FnTMiXuPkhQQ6QNckrBef68BYhMTfBUPg6gnsrR5Ck=;
- b=0ElfBWAUAgE7f9PZhz7G9CWRXGOH+MlN4ADTz0XBtSHRYFymppJV1T7vDU39acTDmc
- kXncucj8WZTKz+IvCCDK48HOO4JmuYDNgjzY20InUxPlmqEkM+2KC3frENQCkX9i3yLc
- y9HxgT/HRH9z3Zxm7bnl5weesHcp0L5tmELBzF844koXrWe1/CudU5od1+hAcHTD7FQF
- tT8sPePT8ZYfhyxXz2X4f/8aPlBJ9sVCJPOsMIbGB5lj9nsFSvwxlfLmOENnbiwzAC5Z
- 9LPc8xdD4RT5MgMOhxqEP9Cv5yRcDWmX31+A76UdHjHXyCG9xhynlTwgVLBoYEx5TQza
- J+3Q==
+ bh=k0BdiPoCW2sPd1Y1VSCMikmuF5uV1Ceplm251HQmWDI=;
+ b=X0CEa57X2xpecqbGTsiFlb6KGu44LQyFrwGL8gmop2j7nF8IZrN4U5LltqXUvFIINa
+ SqmncoerpvmG3ZNSfzdPNISvPDmYLT9whcuYzQv3VcOT+v83v/gj6t2rVNmD7XwEjGW3
+ h0uwl79VO/GzPVW2/JaRo/3Ae2fePAylqdTutHHOykQSk6Nn5PCyMwuteLHEwYeJYrPa
+ XNm9OQVV8v/JXwX9HSmtOWisxkKMhQBbxotBu8lk/DAd1F8rXZiubxFadxMMgCy28TA2
+ g7I3iXl5MgQtUbjbIRRSd3OVjwTepQ/+D0IFsw0dfxa2qcBPwbZgQihQeATPI9ThZbdV
+ VfKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733317053; x=1733921853;
+ d=1e100.net; s=20230601; t=1733317067; x=1733921867;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1FnTMiXuPkhQQ6QNckrBef68BYhMTfBUPg6gnsrR5Ck=;
- b=IHTVSQ+ZajQatswHKG2xBQtmSEFYEN/kgAQbQPtHKfjOzR+8LkJX9uS5PzHzsUWThp
- r3p3cs4SnzD4V9yWIQPItjzXKX7Uh+JMhJ0283DzKUn28CDqsKd6EXaLNufr3wGJYsno
- 4zc6ELkU9PrHzc/w4A5mDn83UNT5jT79D3hISZDSunhCXCG5yH4HUEhtlA7vY6Ba4lv+
- 9zYrBjhHIiofHsRxb64DTLQ0WGW4WCskQHg8YipaKa7d6sDGiyH8XcX4CF7pq+RP4YFX
- Y7fEcAd4k9RoWpWIPAOhSG+N01EVuassdnNPAGL1bZapVDgFBwvVOE9shNZnUW/zdJ/6
- h6TA==
+ bh=k0BdiPoCW2sPd1Y1VSCMikmuF5uV1Ceplm251HQmWDI=;
+ b=Bu9uMXAhX87uPW2JmyXBnfPqnbKSCHMsVFWR3HtX3Swpb7jp9U0gv6ceLggfebC0E1
+ dExcuvzZB0RaU8bjQuLtEqKywKuyO3hnkto7ijI7bSR4lYkxHRmElmUJJ9ZcLBmCZwiI
+ RGBAtM2gkzOopD0WYNd735l37ILf/QfEeFBS+/Yw1KMISWZ7St7LkBsYKaX/DQpZN+95
+ kw/lJY/gDqJBu+P9Ve9p9SP+GPKsGo1cMtdR4IfbYCADKLHPnbB9AgmdXPUygSp6EHZg
+ JMLaqfnDY5QivZxzlCbGb/HO6q1T+yQJrGroF2hpEDbn5jzKyleSSjfzYvOA5JuF/7b2
+ Lapg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5aPaiORTHqWdUriZeLye7wrIfr5HGoqanFuH9t4pmFQwTgJw2aBo3MUJbM6DtQ74e9eUIRq++L7WM@nongnu.org
-X-Gm-Message-State: AOJu0Yz+xLrztPa89QSKPiF1mnaNpNBclNltMgs8pHPktBRCSphSRbry
- k4NWARsvpRIqIG4zvmXfChrN2POOtXWWbr5P9DAPyPHURLuNR+j1SPkdIh4uLho=
-X-Gm-Gg: ASbGncvXxo7gN0NEZ8YeWTAIIndQAxtJ7zEQDYFzTvLSc1NYxlw+Cczke8iKUqP08E9
- sKxStXGSbjNUWyrMR+frtEMZ3lUw24WPTB9QIIuZ453nXS+9oUTnRaR8ZyGVklCtDLE5HwHaMoO
- M+T0mndjN4TRnDA1fl02O7nHLcl9rjB0+GYTQAkpfmek6UVY08aDRKzBTDyIlelg1Zc1UPzMVGv
- 4RtHfE/upfL/aUQ9XzdgE94V8kUk0ywS9NVBH53kE4erfGVtt0FOhyT5dytFc7dCQ9X9Uu/zBj2
- I+57DA==
-X-Google-Smtp-Source: AGHT+IHXkLFcZy8q0ESesZOdwe4vvvKXPZsJb8jBgsIgEB9bwXOOGSqTey68BE/qrv5v89z2J7N7Ug==
-X-Received: by 2002:a05:6000:70d:b0:385:e17a:ce6f with SMTP id
- ffacd0b85a97d-385fd3e9d2fmr6051925f8f.24.1733317053279; 
- Wed, 04 Dec 2024 04:57:33 -0800 (PST)
+ AJvYcCVmvkxvQHrIJRcwm6aswXG5VaA823/wCD4i3LEvA6bTfTBC1EiT0eTW9gGhkZ91LtlmrQ4QLotrMg+u@nongnu.org
+X-Gm-Message-State: AOJu0Yx28wLuZnjtK3WwA4vkFssTD97gsRpCxfeBl0A+qogbaAhqlqRh
+ dZYkdwzeABpxxX40ThN+8O9k2PqnWkPDxXNhvpozI4V4ZQnDJpr27FhHw0IgkHc=
+X-Gm-Gg: ASbGnctquzsPulibpQbuvp03VrB0sbGnYqPJlQ5qTZ4g+1iRr53ml/ICZXe/A33lLpE
+ 7y/y9iADWHrtOXw+/g6uY2qjcokNlt4cOnPbUaC1YNx2QuQauYVijhaRMyfsiheKp6llXzCCTBx
+ W2TPVFbdVZLTwEH0b7mQrLPMK2iHqZSztxojPGhaJesH9M5FqlHCO8mP8ioZ7PS9nSMAyWCqDLT
+ NVlM8zE22FP4YDeh99w95vEkbXHE1ASca5DbFWmpORq6x+MiW8LgxGHZPZY0q42Qr2NiaB3y6Ea
+ Hzm9sw==
+X-Google-Smtp-Source: AGHT+IGiLay281z8PTNaBbazh+tyFb0W1NTtFnXmNW2Yil1btTT5tmrmXaW11Jss3r5JIZxo08lBDw==
+X-Received: by 2002:a05:6000:156b:b0:385:faf5:ebb8 with SMTP id
+ ffacd0b85a97d-385fd97725emr5363344f8f.7.1733317067402; 
+ Wed, 04 Dec 2024 04:57:47 -0800 (PST)
 Received: from rkanwal-XPS-15-9520.ba.rivosinc.com ([137.59.223.84])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385deeb6acdsm15826428f8f.81.2024.12.04.04.57.29
+ ffacd0b85a97d-385deeb6acdsm15826428f8f.81.2024.12.04.04.57.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 04:57:33 -0800 (PST)
+ Wed, 04 Dec 2024 04:57:47 -0800 (PST)
 From: Rajnesh Kanwal <rkanwal@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
  Rajnesh Kanwal <rkanwal@rivosinc.com>
@@ -74,9 +74,9 @@ Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
  atishp@rivosinc.com, apatel@ventanamicro.com, beeman@rivosinc.com,
  tech-control-transfer-records@lists.riscv.org, jason.chien@sifive.com,
  frank.chang@sifive.com, richard.henderson@linaro.org
-Subject: [PATCH v4 1/7] target/riscv: Remove obsolete sfence.vm instruction
-Date: Wed,  4 Dec 2024 17:56:39 +0500
-Message-Id: <20241204-b4-ctr_upstream_v3-v4-1-d3ce6bef9432@rivosinc.com>
+Subject: [PATCH v4 5/7] target/riscv: Add CTR sctrclr instruction.
+Date: Wed,  4 Dec 2024 17:56:43 +0500
+Message-Id: <20241204-b4-ctr_upstream_v3-v4-5-d3ce6bef9432@rivosinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef9432@rivosinc.com>
 References: <20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef9432@rivosinc.com>
@@ -84,8 +84,8 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 X-Mailer: b4 0.14.2
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=rkanwal@rivosinc.com; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=rkanwal@rivosinc.com; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,39 +107,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Jason Chien <jason.chien@sifive.com>
----
- target/riscv/insn32.decode                     | 1 -
- target/riscv/insn_trans/trans_privileged.c.inc | 5 -----
- 2 files changed, 6 deletions(-)
+CTR extension adds a new instruction sctrclr to quickly
+clear the recorded entries buffer.
 
+Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+---
+ target/riscv/cpu.h                             |  1 +
+ target/riscv/cpu_helper.c                      |  7 +++++++
+ target/riscv/helper.h                          |  1 +
+ target/riscv/insn32.decode                     |  1 +
+ target/riscv/insn_trans/trans_privileged.c.inc | 11 ++++++++++
+ target/riscv/op_helper.c                       | 29 ++++++++++++++++++++++++++
+ 6 files changed, 50 insertions(+)
+
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index f39ca48d37332c4e5907ca87040de420f78df2e4..85ca2bfe435d0c9d245f2690fe3bde3e076d3b2f 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -613,6 +613,7 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en);
+ 
+ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+     enum CTRType type, target_ulong prev_priv, bool prev_virt);
++void riscv_ctr_clear(CPURISCVState *env);
+ 
+ void riscv_translate_init(void);
+ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index dbdad4e29d7de0713f7530c46e9fab03d3c459a4..b1130180710b0e01e8ebe33f0974edd8d5abe56d 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -783,6 +783,13 @@ static void riscv_ctr_freeze(CPURISCVState *env, uint64_t freeze_mask,
+     }
+ }
+ 
++void riscv_ctr_clear(CPURISCVState *env)
++{
++    memset(env->ctr_src, 0x0, sizeof(env->ctr_src));
++    memset(env->ctr_dst, 0x0, sizeof(env->ctr_dst));
++    memset(env->ctr_data, 0x0, sizeof(env->ctr_data));
++}
++
+ static uint64_t riscv_ctr_priv_to_mask(target_ulong priv, bool virt)
+ {
+     switch (priv) {
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 065d82d3997b1df46a0ed1b96d33bee13c049fad..79899b9cebd6a6731370097e56cea3f5e3ee6a5e 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -131,6 +131,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_2(sret, tl, env, tl)
+ DEF_HELPER_2(mret, tl, env, tl)
++DEF_HELPER_1(ctr_clear, void, env)
+ DEF_HELPER_1(wfi, void, env)
+ DEF_HELPER_1(wrs_nto, void, env)
+ DEF_HELPER_1(tlb_flush, void, env)
 diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index e9139ec1b9cfdb2dc5029dd28430933a2b4e1442..a2b4c0ddd47ad9464b4b180fb19e6a3b64dbe4e5 100644
+index a2b4c0ddd47ad9464b4b180fb19e6a3b64dbe4e5..8188113bcc90482733f676227858829bac5c5462 100644
 --- a/target/riscv/insn32.decode
 +++ b/target/riscv/insn32.decode
-@@ -119,7 +119,6 @@ sret        0001000    00010 00000 000 00000 1110011
+@@ -114,6 +114,7 @@
+ # *** Privileged Instructions ***
+ ecall       000000000000     00000 000 00000 1110011
+ ebreak      000000000001     00000 000 00000 1110011
++sctrclr     000100000100     00000 000 00000 1110011
+ uret        0000000    00010 00000 000 00000 1110011
+ sret        0001000    00010 00000 000 00000 1110011
  mret        0011000    00010 00000 000 00000 1110011
- wfi         0001000    00101 00000 000 00000 1110011
- sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
--sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
- 
- # *** RV32I Base Instruction Set ***
- lui      ....................       ..... 0110111 @u
 diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-index ecd3b8b2c9e6c698f63c9bd3b3e5758426fcfe63..0bdfa9a0ed3313223ce9032fb24484c3887cddf9 100644
+index a5c2410cfa0779b1a928e7b89bd2ee5bb24216e4..1d7a17373e06a9f3226c1c14a54beb1a56e17b83 100644
 --- a/target/riscv/insn_trans/trans_privileged.c.inc
 +++ b/target/riscv/insn_trans/trans_privileged.c.inc
-@@ -127,8 +127,3 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
- #endif
-     return false;
+@@ -69,6 +69,17 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
+     return true;
  }
--
--static bool trans_sfence_vm(DisasContext *ctx, arg_sfence_vm *a)
--{
--    return false;
--}
+ 
++static bool trans_sctrclr(DisasContext *ctx, arg_sctrclr *a)
++{
++#ifndef CONFIG_USER_ONLY
++    if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
++        gen_helper_ctr_clear(tcg_env);
++        return true;
++    }
++#endif
++    return false;
++}
++
+ static bool trans_uret(DisasContext *ctx, arg_uret *a)
+ {
+     return false;
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index b55b7f3ac3d209d39b16075e79c2342b89bdf805..d22609347ee63be183ab253e7a0158a19ff0bf52 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -389,6 +389,35 @@ void helper_ctr_add_entry(CPURISCVState *env, target_ulong src,
+                             env->priv, env->virt_enabled);
+ }
+ 
++void helper_ctr_clear(CPURISCVState *env)
++{
++    /*
++     * It's safe to call smstateen_acc_ok() for umode access regardless of the
++     * state of bit 54 (CTR bit in case of m/hstateen) of sstateen. If the bit
++     * is zero, smstateen_acc_ok() will return the correct exception code and
++     * if it's one, smstateen_acc_ok() will return RISCV_EXCP_NONE. In that
++     * scenario the U-mode check below will handle that case.
++     */
++    RISCVException ret = smstateen_acc_ok(env, 0, SMSTATEEN0_CTR);
++    if (ret != RISCV_EXCP_NONE) {
++        riscv_raise_exception(env, ret, GETPC());
++    }
++
++    if (env->priv == PRV_U) {
++        /*
++         * One corner case is when sctrclr is executed from VU-mode and
++         * mstateen.CTR = 0, in which case we are supposed to raise
++         * RISCV_EXCP_ILLEGAL_INST. This case is already handled in
++         * smstateen_acc_ok().
++         */
++        uint32_t excep = env->virt_enabled ? RISCV_EXCP_VIRT_INSTRUCTION_FAULT :
++            RISCV_EXCP_ILLEGAL_INST;
++        riscv_raise_exception(env, excep, GETPC());
++    }
++
++    riscv_ctr_clear(env);
++}
++
+ void helper_wfi(CPURISCVState *env)
+ {
+     CPUState *cs = env_cpu(env);
 
 -- 
 2.34.1
