@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF94E7716C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B65C4E7716D
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 00:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIdcS-0003B0-Oi; Tue, 03 Dec 2024 19:51:56 -0500
+	id 1tIdcd-0003GP-82; Tue, 03 Dec 2024 19:52:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIdcK-000394-0a
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 19:51:50 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIdca-0003EW-2S
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 19:52:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIdcH-0005Kn-Qo
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 19:51:47 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIdcX-0005mR-Bp
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 19:52:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733273503;
+ s=mimecast20190719; t=1733273520;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=0fl4riJXkkfo/96dvAXYYNvSSH0WhrAGlbwismyIdZM=;
- b=QGFvOE8duz/R3dsR0McK5iAgDhqa3iYMhccgJ2lDYz0Su/xmZwrE6E35nC/fLaD90vwGDx
- lNx/mqyWy9Y8r0wfGKWp8c9BnV5iLgqjIag3SVWGJ62tidsjXGJSfJdj0hMbpfPpn9X5bd
- MAfSNAWdeTCSfXOXVpHHg8Pe0Dwvexo=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FO857v8PXpejg9RDiLcW7mg3vTpTDPgqvs32Ru5PZEU=;
+ b=cgsSaEKFm/jRc71xrQh3fpTmo3h2QCbA59L8Ryed5tgz6y8tIsYjVhsk7rfwSJF6FWiiPY
+ 6JTDdUJBrvbjTqFfe9DiF49DEasidp6u3PLPsZy0371JioSjZgbLGnR6kezRaIUpt3Rjt6
+ 7hy+i/wFP0JfrNfB2akCDtJXvWKjqEM=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-Mv-23AFRNvS9CZz_ZROqbA-1; Tue, 03 Dec 2024 19:51:42 -0500
-X-MC-Unique: Mv-23AFRNvS9CZz_ZROqbA-1
-X-Mimecast-MFC-AGG-ID: Mv-23AFRNvS9CZz_ZROqbA
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b665521dabso93600185a.0
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 16:51:42 -0800 (PST)
+ us-mta-439-vnQLAfvnNgKX0kpvKATMgQ-1; Tue, 03 Dec 2024 19:51:58 -0500
+X-MC-Unique: vnQLAfvnNgKX0kpvKATMgQ-1
+X-Mimecast-MFC-AGG-ID: vnQLAfvnNgKX0kpvKATMgQ
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b674755f8eso973410185a.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 16:51:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733273501; x=1733878301;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0fl4riJXkkfo/96dvAXYYNvSSH0WhrAGlbwismyIdZM=;
- b=m10N2yjbLpFddftJ+XWuWP0G+LtmcIwB/FFhy5Ay+QDdxhnw+vx1XyXqvIsGpC5OK0
- mDvJQf9eQQ2PThte1uIbUGQkAIq1673qzK06D2PtwdQogSMxy0O0e0LB3LruEUtJwvxG
- DHHuAdMeTHl3ul9CRO6ntGaxRmXqut8s/Ui8g9j7z/qrZHjNskRzPVwAS6A4T29ySxRR
- Lta9RpR+hFj21VYbmOkNHe8WrCTy9S2VYlaloEflh6Tbwcw+CxKkTcQnJ0tUgTInl1oF
- Fq9PT6x4JBFZ6C/SMdP3eusWM56/kHiZ9aBLbRLiAzDAoVGMqmJYjxNzzP8PC8uPF2Fp
- Jzrg==
-X-Gm-Message-State: AOJu0YwRHixjOTzXlQzJ3LX0rCqHSFIPTMspOQFTXN+xe0Gpqf0s4vK6
- dkDgfCmP8fwYE/t8Vtsq0Jzcw65ICQChrJWIE7lJ+OOHhyhlaoI3mzzCuq8wEJn+AUgZ9YoatgQ
- rm+nW2DwzQ4r/laVdiJXhzzLFjEfm+ZBX9tfGMXpfTQWTXifCchBNk9AJNJQnFkrbnixQVefcSx
- 18JUVbytTavyPybuSFm6fOsdH+cKoEaGZY5Q==
-X-Gm-Gg: ASbGnctGeoyweMXfcQeY/ihtFDEhao4BxjcdF5zKm8WNwBQ0iAqp49jGQX0u7v13pVs
- iW/thvU4J+GAc12gappJFn0zXgajJtXo3Nkqt8KAzmFz4tX/F+eO0HKBwD6E6NKWxNXwI7372yp
- 7/ub5JgYVdvMcNZ7nm11pGQbwyk/o9caj211HBz1K08iW8Ohm+HQZULPw8wRfHaSNi31ZcYSY8k
- 8ZN8BfJg4kE+pqRskIo66VFAt82DJegZGV7lYxuKH9PnwXHzQhfkoa9wmnn/vcF6m4ZaySgpm3F
- xO4RYXCezt0Vn1o4HN+dcPdflw==
-X-Received: by 2002:a05:620a:46a6:b0:7b1:1fdd:d54f with SMTP id
- af79cd13be357-7b683a8337dmr4455284885a.29.1733273501367; 
- Tue, 03 Dec 2024 16:51:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHiUF98Rg12DlKRKFA9F7XlETaUWaxwRZvTvLbkMQuWlcfC93WhPHc19OYxX09T5kjAqAUFcw==
-X-Received: by 2002:a05:620a:46a6:b0:7b1:1fdd:d54f with SMTP id
- af79cd13be357-7b683a8337dmr4455279485a.29.1733273500854; 
- Tue, 03 Dec 2024 16:51:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733273517; x=1733878317;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FO857v8PXpejg9RDiLcW7mg3vTpTDPgqvs32Ru5PZEU=;
+ b=I2bu++OonTWgtHmP65KJocWMDePR/a3pzjIcUozgLNck9e5MZCzSV6mU18lJYKYHOZ
+ RIp9iiR2NpcLFFLxO1p+d5C3rB1pmK6TZJx7lpiEosswnCt9syPp8gU8fmIp2ud9N/Dj
+ b0SSc5HFLPLSk/ppYV23uQBQBCUjB6WXSipCRtYIveasWU+E5lHcywXcnsomyPaQWd20
+ OaRQV4r01+mfqAOsUYh8l/NSSRO6I5fWlhxu0jmUZ0nQmLeFzkff2CgoTJyX3BiEoj1X
+ tpRYxTYxXfEOUqBZdhGsxGfVCk0UadFsF6SdcYoVCR7Mj+NCGI28vn28AvMWjsL5fbxX
+ V8kg==
+X-Gm-Message-State: AOJu0Yx7MBvd/7AWC5qZVlcJzZIEQruGK9fxJbbwCNFC+BvLrh+IIgDA
+ eaoSYBWMp4fHjf9IFsqE8F43qW/P57XUcPSXbuaOANVwzGTEzYia4r6rI0x9ZtVIj1j8cYlkLG1
+ 3FpOpCJpD2jVG6znSU6fN5K/grcjaQ1pO2jsEsUL8sWJuEHlHSBj1GoBPwxP00XvlQs5MH7fVxF
+ cyJUGGeHTb4n+h6WOHL7GxIGztw5G740HJlA==
+X-Gm-Gg: ASbGncvloFhhusYeBB1DEd4245PZZZ8p3J61+x6I7OsY/m03+UyukErrGqxjlGx99dd
+ zYIn6heB1XdgSUBbqqM83AbhfXolFsYuo3S7XAc24iFySif97BCJA978778kL4SF/g8yXt4nUpQ
+ JwdoSl5TJw0+6ndOE7/4pNJvDHMiFnACpuzRP69jPsp6XyNBVBzeuwfss4hiIZSthho8SiLnIlv
+ rCon8TY3YYfwBvpk8EAYO7JT1UsTs1xd+CPZ6vYkWWA0gE+XgVCXL16vjY6AyWzQM804UIhS6H+
+ TbEF4lSp3z+YnnZ0D1J63Cn9qg==
+X-Received: by 2002:a05:620a:4055:b0:7b1:49f7:90ba with SMTP id
+ af79cd13be357-7b6a5d2aaeemr445151785a.8.1733273517145; 
+ Tue, 03 Dec 2024 16:51:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE9rF+JJXp5CLxVWRXQlAO86ovXcvfXhQo2/q858VposVDTqkI5X6HSAIkJIvy6d+u5ez8+zw==
+X-Received: by 2002:a05:620a:4055:b0:7b1:49f7:90ba with SMTP id
+ af79cd13be357-7b6a5d2aaeemr445147985a.8.1733273516606; 
+ Tue, 03 Dec 2024 16:51:56 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b68492cb81sm559974785a.34.2024.12.03.16.51.39
+ af79cd13be357-7b68492cb81sm559974785a.34.2024.12.03.16.51.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 16:51:39 -0800 (PST)
+ Tue, 03 Dec 2024 16:51:55 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -78,11 +79,13 @@ Cc: qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, peterx@redhat.com,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH RFC 00/11] migration/block: disk activation rewrite
-Date: Tue,  3 Dec 2024 19:51:27 -0500
-Message-ID: <20241204005138.702289-1-peterx@redhat.com>
+Subject: [PATCH RFC 08/11] tests/qtest/migration: Move more code under
+ only_target
+Date: Tue,  3 Dec 2024 19:51:35 -0500
+Message-ID: <20241204005138.702289-9-peterx@redhat.com>
 X-Mailer: git-send-email 2.47.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20241204005138.702289-1-peterx@redhat.com>
+References: <20241204005138.702289-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
@@ -110,61 +113,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I started looking at this problem as a whole when reviewing Fabiano's
-series, especially the patch (for a QEMU crash [1]):
+From: Fabiano Rosas <farosas@suse.de>
 
-https://lore.kernel.org/r/20241125144612.16194-5-farosas@suse.de
+The only_target option's purpose is to make sure only the destination
+QTestState machine is initialized. This allows the test code to retain
+an already initialized source machine (e.g. for doing ping pong
+migration).
 
-The proposed patch could work, but it's unwanted to add such side effect to
-migration.  So I start to think about whether we can provide a cleaner
-approach, at least remove that "we must active the disk for migration"
-dependency, because migration really don't need the disks to be active..
+We have drifted from that a bit when adding new code, so move some
+lines under only_target to restore the functionality.
 
-It's also a pure wish that, if bdrv_inactivate_all() could be benign to be
-called even if all disks are already inactive.  Then problem also gone.
-After all, similar call on bdrv_activate_all() upon all-active disks is all
-fine.  I hope that wish could still be fair.
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20241125144612.16194-2-farosas@suse.de
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ tests/qtest/migration-test.c | 44 ++++++++++++++++++++----------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
 
-And when I was looking at that, I found more things spread all over the
-place on disk activation.  I decided to clean all of them up, while
-hopefully fixing the QEMU crash [1] too.
-
-So this is what I came up with as of today.  Marking RFC as of now, just to
-collect some feedbacks first.  At least I'd like to go with one more patch
-to deprecate late-block-active - not deprecating its function, but make it
-always happen (which is the default as of now for Libvirt), which should
-hopefully be migration-ABI-safe.
-
-With the help of Fabiano's test cases, I at least am sure this series works
-for the ping pong migrations, and all existing qtests.
-
-Let me know, thanks.
-
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2395
-
-Fabiano Rosas (4):
-  tests/qtest/migration: Move more code under only_target
-  tests/qtest/migration: Don't use hardcoded strings for -serial
-  tests/qtest/migration: Support cleaning up only one side of migration
-  tests/qtest/migration: Test successive migrations
-
-Peter Xu (7):
-  migration: Add helper to get target runstate
-  migration/block: Make late-block-active the default
-  migration/block: Apply late-block-active behavior to postcopy
-  migration/block: Fix possible race with block_inactive
-  migration/block: Merge block reactivations for fail/cancel
-  migration/block: Extend the migration_block_* API to dest side
-  migration/block: Apply the migration_block_* API to postcopy
-
- migration/migration.h           |  33 ++++-
- tests/qtest/migration-helpers.h |   2 +
- migration/migration.c           | 177 +++++++++++-----------
- migration/savevm.c              |  32 ++--
- tests/qtest/migration-helpers.c |   8 +
- tests/qtest/migration-test.c    | 252 +++++++++++++++++++++++++-------
- 6 files changed, 344 insertions(+), 160 deletions(-)
-
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 74d3000198..eafc2da806 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -717,7 +717,6 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+     g_autofree gchar *arch_target = NULL;
+     /* options for source and target */
+     g_autofree gchar *arch_opts = NULL;
+-    g_autofree gchar *cmd_source = NULL;
+     g_autofree gchar *cmd_target = NULL;
+     const gchar *ignore_stderr;
+     g_autofree char *shmem_opts = NULL;
+@@ -735,10 +734,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+         }
+     }
+ 
+-    dst_state = (QTestMigrationState) { };
+-    src_state = (QTestMigrationState) { };
+     bootfile_create(tmpfs, args->suspend_me);
+-    src_state.suspend_me = args->suspend_me;
+ 
+     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
+         memory_size = "150M";
+@@ -817,27 +813,35 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+ 
+     g_test_message("Using machine type: %s", machine);
+ 
+-    cmd_source = g_strdup_printf("-accel kvm%s -accel tcg "
+-                                 "-machine %s,%s "
+-                                 "-name source,debug-threads=on "
+-                                 "-m %s "
+-                                 "-serial file:%s/src_serial "
+-                                 "%s %s %s %s %s",
+-                                 kvm_opts ? kvm_opts : "",
+-                                 machine, machine_opts,
+-                                 memory_size, tmpfs,
+-                                 arch_opts ? arch_opts : "",
+-                                 arch_source ? arch_source : "",
+-                                 shmem_opts ? shmem_opts : "",
+-                                 args->opts_source ? args->opts_source : "",
+-                                 ignore_stderr);
+     if (!args->only_target) {
++        g_autofree gchar *cmd_source = NULL;
++
++        src_state = (QTestMigrationState) { };
++        src_state.suspend_me = args->suspend_me;
++
++        cmd_source = g_strdup_printf("-accel kvm%s -accel tcg "
++                                     "-machine %s,%s "
++                                     "-name source,debug-threads=on "
++                                     "-m %s "
++                                     "-serial file:%s/src_serial "
++                                     "%s %s %s %s %s",
++                                     kvm_opts ? kvm_opts : "",
++                                     machine, machine_opts,
++                                     memory_size, tmpfs,
++                                     arch_opts ? arch_opts : "",
++                                     arch_source ? arch_source : "",
++                                     shmem_opts ? shmem_opts : "",
++                                     args->opts_source ? args->opts_source : "",
++                                     ignore_stderr);
++
+         *from = qtest_init_with_env(QEMU_ENV_SRC, cmd_source);
+         qtest_qmp_set_event_callback(*from,
+                                      migrate_watch_for_events,
+                                      &src_state);
+     }
+ 
++    dst_state = (QTestMigrationState) { };
++
+     cmd_target = g_strdup_printf("-accel kvm%s -accel tcg "
+                                  "-machine %s,%s "
+                                  "-name target,debug-threads=on "
+@@ -870,7 +874,9 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+      * Always enable migration events.  Libvirt always uses it, let's try
+      * to mimic as closer as that.
+      */
+-    migrate_set_capability(*from, "events", true);
++    if (!args->only_target) {
++        migrate_set_capability(*from, "events", true);
++    }
+     migrate_set_capability(*to, "events", true);
+ 
+     return 0;
 -- 
 2.47.0
 
