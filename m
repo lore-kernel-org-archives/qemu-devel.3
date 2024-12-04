@@ -4,101 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C80ADE77171
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FDE8E77170
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:26:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvcO-00043v-My; Wed, 04 Dec 2024 15:05:04 -0500
+	id 1tIvwq-0007O5-IK; Wed, 04 Dec 2024 15:26:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIvcN-00042C-E9
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:05:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIvcM-0003MC-1s
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:05:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733342701;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=n1SinKtDXuMdQYPr28oegc+WM+nzyg47B7ZbZEtDcGc=;
- b=Youy3e4M/g1SFMvrat6EN/OKGA4WReqpfOtK/JBclf0XLrCtwkgzksqwA6+MOmGWNBuzPF
- fMs6q0LEtZA2Qm/Ll02z638XxoCMP5F7lXXUnSa4m7TD5bCyJMw0/1yZQAc57Ic++9dnfM
- FL8d0PRCWzLnC7h8roJ2G7Noeyb+lk0=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-454-Ix82q_fLPsWbv4dpLRBxPw-1; Wed, 04 Dec 2024 15:05:00 -0500
-X-MC-Unique: Ix82q_fLPsWbv4dpLRBxPw-1
-X-Mimecast-MFC-AGG-ID: Ix82q_fLPsWbv4dpLRBxPw
-Received: by mail-il1-f199.google.com with SMTP id
- e9e14a558f8ab-3a7a1e95f19so836885ab.1
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:05:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvwp-0007Nf-4t
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:26:11 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvwm-0006yY-Hp
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:26:10 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4349f160d62so1360425e9.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:26:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733343966; x=1733948766; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DhO9ZHtI42fdFY6GyTi3t0JXDrc7gbNjrWZfda3d/Ps=;
+ b=GSR/bPSZNeP62KvTHD2vgsBCCEel8fYhQ6WAbRB3jFqCQ7BJRvipPNgY1zPAIXVtqe
+ Jj+bU6p1lIhOI+EfjsJ8tF0CgMzou/SFS+1+XqKNVAsfSI/6U9xx9jCRfokSefGoRDKT
+ T2TKSX6TRTMWpt101CxWFk3I8qP6XGRqmXxm+gKxUiN6Bybxhw56+mKSeTQ3LiWn8o8C
+ d7UDPFAm+SunXPGBevlCvgRANrLf4OaEvMsVAqbKyPmW8dc6vWSy8/4D5Pi2qfPTsaXq
+ 4IZPBtxZ7Vs/oYjpB9+/ezjB+V56Qss8GKFBP3qnKephmerclH0v4KEFw6OFzqn7LrRY
+ r/Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733342699; x=1733947499;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n1SinKtDXuMdQYPr28oegc+WM+nzyg47B7ZbZEtDcGc=;
- b=bTrg3pRbyefVonRccEAYM/NPOqkey7H6IZGGnwyiG+wiuniOvciw6tI0HoFkzoWlrH
- WWC4XBxRF18Vhg3WIU8QA0FvUHeKwypqZojIKIpHnPYuoTxxceMZKOYwm7irhUoMa6yM
- U4nceWvxTgCIkBABl+zangjqrq/3OXfIqQZQqfWCtfQdTokyJp7oUovmiA5rZoyU1I2g
- AlK+3nhHb3Zfyx/XiiEXuPwyfYuQUbcTNjJEgZoZjFGm1XwGLtQu2yqCoZcrkU7qzvkO
- hWEufN3pshnmQ19tyAWB5s2VtSBNIdOdhlAo1zZu3mbgpT9dgDaccFzsxV8vjG/lw/52
- M6OA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUX5opvnP1BeB54Ehkz0RBsjeDsnMr4BeQqVK5qH6HBAhSh0+iwhh7c3XJuuZFQ+m0hCdSfzEa3mmDg@nongnu.org
-X-Gm-Message-State: AOJu0Yzoc5SMvEwnBkf2OApCa/zC9mFOlJ+e+cDMH74JcyVW2dTtvpe7
- EQ6zFV1rNqAuWh6VEKZ52OT2sV5ptav6GQXWWq2ShBDqghztPBlhgRmzQ+lHxClAaQBqEElYxLz
- /VOayTb9bZcJJ9QQgTN8Rekrr6jb158xuTd9X2k2KYki+1cF5LUot
-X-Gm-Gg: ASbGncvQu0SJ96JIV2lBkBEEdEUKKmd3eO9lqWQpdBUuJ4mRUExGhPtvnwThkn3qZIO
- 0pN1JjkRf3aEUIPB7xLf/bCOv+1ONqjvgXBc/y+VzU5e5wuK45eweGC5A6v7ffJAjukNGP02aer
- owH7dHfuA3LEgs1LhJEvSo+F6fEO+qaTUM1kUKXSuN/C7ZxQ4jmkC/qRMbZ+UxdkQICJC0iyq+z
- Y41oOCaJ8xQMttoEB4eQaYNYT4Vv+kgJIn1ErFNVlsC03TvxG//+r2xLohTC/QK1/1dILtVy6bO
- I4tvou1Lriw=
-X-Received: by 2002:a05:6e02:1d1b:b0:3a7:a4ec:6cfc with SMTP id
- e9e14a558f8ab-3a7f9a3b6a5mr93951735ab.8.1733342699515; 
- Wed, 04 Dec 2024 12:04:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlnY53XHpAQU0YORmKx5E0V+0kY+5ud30g2G5XD6I5dtlvrihQpoYkQG4ykkiHdmtJR0B3aQ==
-X-Received: by 2002:a05:6e02:1d1b:b0:3a7:a4ec:6cfc with SMTP id
- e9e14a558f8ab-3a7f9a3b6a5mr93951435ab.8.1733342699192; 
- Wed, 04 Dec 2024 12:04:59 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3a7dff088bbsm25864795ab.56.2024.12.04.12.04.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 12:04:58 -0800 (PST)
-Date: Wed, 4 Dec 2024 15:04:56 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 04/24] thread-pool: Implement generic (non-AIO) pool
- support
-Message-ID: <Z1C16M7O1Ab_w7CK@x1n>
-References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <babda1bbe43024baaa4a9ac855f7930b6679f2b7.1731773021.git.maciej.szmigiero@oracle.com>
+ d=1e100.net; s=20230601; t=1733343966; x=1733948766;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DhO9ZHtI42fdFY6GyTi3t0JXDrc7gbNjrWZfda3d/Ps=;
+ b=Hv2WPKabgIgTkxg4an9oPqs3yDE7UhkHSoysYm+Hkmh2Pc+VaLRYs3N2cM50Z7lJns
+ 4ps/RyCWo/OJoyDoPbl9I2nn4SlirXLn7m+N6hqBg+r3blA+u0Z1+cGi+DlSAJTB0uID
+ BRDQ1IPWV7HviT4Jnb1SoOGPTT0kLUUUeCrH9J/ISd/efLNqMQXufdrGbDNeXSpn4M2n
+ 3JapabNcmTXje+UbpoSoBQ99qE4H6PA8r6/PyCt8QjZ72ckVgAdIBb5E4yX1A3tN5rCp
+ K70VZJGbW6zBn8Z6a7EWxN7NVfaLl0vBfMm4U1gsdJIpWNM3lrdUYqoJWVBbzqfq0bqB
+ P8sg==
+X-Gm-Message-State: AOJu0YxiLhEdVXP7QckzkEBpCGsy+djDaaV0hADgpsqR1g5ZKuWyGPJh
+ DVGFZE/gWwR5vho/tE1Q1ec1tq9BQqlJH8SsKKpwtlNcfdSeu8G+xJ52mSfipbNWfDXIZfhJpT2
+ D
+X-Gm-Gg: ASbGnct6fkI62YaxMmeFwDaiMKb8NbIGp9WKGGtS+BZ2TZptmReMC7qH3GPdL/ZUg+Q
+ thnCDY7Srlgp0/IrsTbOH2GNZUyMXJgXX/Tta7w7cTu2yn/kcGaDtlJ4EDGXwSTUexvLGL0SgAu
+ O7dhyuyFYGOjXkdI0VL52dfpI83E4K+Q/EwGAD0iGU0+cU3B7SIiyDjbWOuN+W4PjXM+GGYmxOA
+ fJG6xGjNN05eNhqMGOP5Ulpxc7dzNGuONT/vR82ZK9r5C5dqKDVQdeuV56u7ccO14OAr2SdFwhy
+ bt6zLYBB3jObEsiE2xn4npcR
+X-Google-Smtp-Source: AGHT+IEgaVEIBtTJqUP1Vo9MgrUSnKuBcw2jaNA/Qqf/tG++Aistn89ndK7ulEqtRsEixWrxsQ87LA==
+X-Received: by 2002:a05:6000:4025:b0:385:f417:ee46 with SMTP id
+ ffacd0b85a97d-385fd3c5666mr6848938f8f.2.1733343966453; 
+ Wed, 04 Dec 2024 12:26:06 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-385e5b10478sm13671714f8f.73.2024.12.04.12.26.04
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 04 Dec 2024 12:26:05 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
+ Max Filippov <jcmvbkbc@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, qemu-riscv@nongnu.org,
+ Alistair Francis <alistair@alistair23.me>, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 00/20] target: Implement CPUClass::datapath_is_big_endian()
+ handlers
+Date: Wed,  4 Dec 2024 21:25:42 +0100
+Message-ID: <20241204202602.58083-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <babda1bbe43024baaa4a9ac855f7930b6679f2b7.1731773021.git.maciej.szmigiero@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,36 +110,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Nov 17, 2024 at 08:19:59PM +0100, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> 
-> Migration code wants to manage device data sending threads in one place.
-> 
-> QEMU has an existing thread pool implementation, however it is limited
-> to queuing AIO operations only and essentially has a 1:1 mapping between
-> the current AioContext and the AIO ThreadPool in use.
-> 
-> Implement generic (non-AIO) ThreadPool by essentially wrapping Glib's
-> GThreadPool.
-> 
-> This brings a few new operations on a pool:
-> * thread_pool_wait() operation waits until all the submitted work requests
-> have finished.
-> 
-> * thread_pool_set_max_threads() explicitly sets the maximum thread count
-> in the pool.
-> 
-> * thread_pool_adjust_max_threads_to_work() adjusts the maximum thread count
-> in the pool to equal the number of still waiting in queue or unfinished work.
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+The long term goal is to remove endianness knowledge from
+QEMU system binaries, allowing them to run vCPU in any
+endianness. For that target_words_bigendian(), TARGET_BIG_ENDIAN
+and few other things (like MO_TE) must be removed.
 
-All the comments so far make sense to me too, so if you address all of
-them, feel free to take this alone:
+Have each target implement a datapath_is_big_endian() handler
+to express whether the CPU data is expected to be accessed in
+big endian or not.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Few targets already provide a such functionality (ARM, PPC);
+for some the data endianness is exposed via a CPU bit;
+and for many the data endianness is fixed.
+
+Use this handler in 3 places: disas/, the generic-loader
+device and the VirtIO core layer.
+
+Note, a similar CPUClass::codepath_is_big_endian() helper could
+be useful for translator_ld/st_swap() API.
+
+Philippe Mathieu-Daudé (20):
+  exec/tswap: Rename target_words_bigendian -> qemu_binary_is_bigendian
+  hw/core/cpu: Introduce CPUClass::datapath_is_big_endian() handler
+  target/arm: Implement CPUClass::datapath_is_big_endian
+  target/ppc: Register CPUClass::datapath_is_big_endian
+  target/rx: Implement CPUClass::datapath_is_big_endian
+  target/sparc: Implement CPUClass::datapath_is_big_endian
+  target/riscv: Implement CPUClass::datapath_is_big_endian
+  target/sh4: Expose CPUSH4State::little_endian property
+  target/sh4: Implement CPUClass::datapath_is_big_endian
+  target/microblaze: Implement CPUClass::datapath_is_big_endian
+  target/mips: Implement CPUClass::datapath_is_big_endian
+  target/xtensa: Implement xtensa_isa_is_big_endian()
+  target/xtensa: Implement CPUClass::datapath_is_big_endian
+  target: Implement CPUClass::datapath_is_big_endian (little-endian)
+  target: Implement CPUClass::datapath_is_big_endian (big-endian)
+  hw/core/cpu: Expose cpu_datapath_is_big_endian() method
+  disas: Use cpu_datapath_is_big_endian()
+  hw/core/generic-loader: Use cpu_datapath_is_big_endian()
+  hw/virtio: Use cpu_datapath_is_big_endian()
+  hw/core/cpu: Remove cpu_virtio_is_big_endian()
+
+ include/exec/tswap.h             | 18 +++++++++---------
+ include/hw/core/cpu.h            | 22 ++++++++++++----------
+ include/hw/core/sysemu-cpu-ops.h |  8 --------
+ include/hw/xtensa/xtensa-isa.h   |  1 +
+ target/microblaze/cpu.h          |  2 ++
+ target/sh4/cpu.h                 |  6 ++++++
+ cpu-target.c                     |  2 +-
+ disas/disas-common.c             |  3 +--
+ hw/core/cpu-common.c             |  7 +++++++
+ hw/core/cpu-sysemu.c             | 11 -----------
+ hw/core/generic-loader.c         |  7 ++-----
+ hw/display/vga.c                 |  4 ++--
+ hw/virtio/virtio.c               |  4 ++--
+ system/qtest.c                   |  2 +-
+ target/alpha/cpu.c               |  6 ++++++
+ target/arm/cpu.c                 |  4 ++--
+ target/avr/cpu.c                 |  7 ++++++-
+ target/hexagon/cpu.c             |  6 ++++++
+ target/hppa/cpu.c                |  6 ++++++
+ target/i386/cpu.c                |  6 ++++++
+ target/loongarch/cpu.c           |  6 ++++++
+ target/m68k/cpu.c                |  6 ++++++
+ target/microblaze/cpu.c          | 11 +++++++++++
+ target/mips/cpu.c                |  9 +++++++++
+ target/openrisc/cpu.c            |  6 ++++++
+ target/ppc/cpu_init.c            |  8 ++++----
+ target/riscv/cpu.c               | 17 +++++++++++++++++
+ target/rx/cpu.c                  | 10 ++++++++++
+ target/s390x/cpu.c               |  6 ++++++
+ target/sh4/cpu.c                 | 16 ++++++++++++++++
+ target/sparc/cpu.c               | 15 +++++++++++++++
+ target/tricore/cpu.c             |  6 ++++++
+ target/xtensa/cpu.c              |  8 ++++++++
+ target/xtensa/xtensa-isa.c       |  7 +++++++
+ 34 files changed, 205 insertions(+), 58 deletions(-)
 
 -- 
-Peter Xu
+2.45.2
 
 
