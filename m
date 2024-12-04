@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D466E7716B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 03:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFABEE7716B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 03:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIgOc-0006oL-RJ; Tue, 03 Dec 2024 22:49:50 -0500
+	id 1tIgPv-0007Z5-0N; Tue, 03 Dec 2024 22:51:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIgOa-0006o3-39; Tue, 03 Dec 2024 22:49:49 -0500
+ id 1tIgPq-0007Yi-Vr; Tue, 03 Dec 2024 22:51:06 -0500
 Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIgOY-000514-Kt; Tue, 03 Dec 2024 22:49:47 -0500
+ id 1tIgPo-0005T5-Jx; Tue, 03 Dec 2024 22:51:05 -0500
 Received: by mail-vs1-xe2d.google.com with SMTP id
- ada2fe7eead31-4af173cd0e5so2015030137.1; 
- Tue, 03 Dec 2024 19:49:46 -0800 (PST)
+ ada2fe7eead31-4af4575ec4cso1896509137.2; 
+ Tue, 03 Dec 2024 19:51:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733284185; x=1733888985; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733284262; x=1733889062; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ro1YTfU+1s6I2NYI6E9syeDwVIyOo446grleOEQTVXM=;
- b=Jl7R+JqePp3tp4IUhQgpFFl/FJE93P4joEmMn9srwFBfcYMgMoRFCrEHAzliXp7XSO
- GdJyUpw6x0T0crxcqGblLdvgMIQYJBILzI92AY7340VQcS8NA+qws5KeZrF7d38iYgX1
- k+yBZkNHublNxzZctM5Uv/uMbmkQh0WMqmNKdaAN43nOo/HfemFnz/F146xIqtq2jKYk
- 5hJgfGVGQHECoaRQDolghxO7BvtOm2gK14LxKyhh7ViFWa2FBoonIuJjvC+vITi+BlzQ
- Wipkt88XrS+wojFro+H5gXiUaYqgWjrdrkyTV5yQEldF/JZAi8/7VLHy/J+NVhEQqJGw
- sRoA==
+ bh=UZzsZb8oq/FdI0wJd/2dX+WStWtRyD8eFDxKXtdyUsc=;
+ b=mvi1I92EpbTo9OkvHozV3Oj+lpZBvxcIRcogltIWS8nkz+seMMKtD+CGcn6ra2zpQV
+ EVWp4wx6ScVMEDLuX6md/n//dzKyO7FiLQ2Vw5ToLlfuINUHlyqbr+pCIARkXYHJUgm7
+ 9vDwcI+Gotwk0LJLDO/Zgmdstqzm+TL6KRysU4tjQVqGT260p0difQXgElMBUpoLd05H
+ 6iZWQQImyOgAV6trfv+GYDCVstH0TA2eTzbU4L8V9W0qgOKMaVtEi0Q6Ey7IZsCWV41A
+ nZWqULZzsnq6GfsAZLD9pWhy4na6miCHJ59Yei/iW8gWuuH6CTecnfwGR2ZyK96zYFlt
+ sTWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733284185; x=1733888985;
+ d=1e100.net; s=20230601; t=1733284262; x=1733889062;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ro1YTfU+1s6I2NYI6E9syeDwVIyOo446grleOEQTVXM=;
- b=fKh/qRJ4bazay8OhZAp6C4yhVreIoVhtG4jVodmlQhh7/NYF2SBSeRFJYqhTckOHiX
- 7/3JbBCqgA8dzqxUg8zYf+g15fQytT9OsbDk0RtB/gaLkERf3EtB7GoizT+ev2nTV/QG
- VUV9vMt778MTcnhDzpQNRR5CejAG7Y6m6q0/Koj0PuS8QsDMiBzvney8iwtjcg6FCsOW
- gHylfI2tUBHOV9ECFKNugDZntriDaX1yMlGL5Hiqwlo5RGPxM2KpbvwOgCLCLzHILaRB
- UKRzx3rAWvvZeePFNQ8PuPVr1zQ9kHZF6PHfGUPzGF8PLLuPiIxIK51FFJ+Iz6sGj0S8
- Jq1A==
+ bh=UZzsZb8oq/FdI0wJd/2dX+WStWtRyD8eFDxKXtdyUsc=;
+ b=gEqha3Gz5oCOwo/9gTqIojCiET1zS5veTsQfsEtN5PaoiInUOxvVZhHS4i0F2hQbtN
+ ztfJATqv6+RYqF6h0w3kKarM1gX8H9Em2qO8FXDYcFOuU3LGsCjAa+tKrV/KkPPRlDnf
+ XrHK/CBvQ8b97mOe8ZhFGu37TOGbH4BidfOf8EHAKyiQVedzjvmNJrDSS+x74a8e4kmE
+ 1vvDacxXNJMCo6MHSfGYIDmvJCPg67/cPAWJNbJYCbAy3Af3fFI6/j6yN6nZMdMA/xMe
+ lC7wGMY3GAaS7chL4RCSuWWdW9q+tW3EU6UkRSWwlG3zsa9QYI+9v0HADg1/6XkNaw13
+ Yo2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFny2GvBgEWmtzfhxspDVMP0K2+vcWgXaO/ruy3cgm+yBXO7kZDYng6kfsb63mMi8t79/vBRYwgGVV@nongnu.org
-X-Gm-Message-State: AOJu0YyypihSN8+vJo6PFvXmz3bsAjnclQfOXFkL3UJPrQIrmdfYYjAd
- dbStGjTd8FWcQ9ZypgviVjJAfH8zFgd7rSqrBOgSI2yMm0JW61AxWW9oUaXrHEg9G3Ftmf25V7W
- wtbbOesygNJ5mr7SXuPYirfloc5t/QGk3
-X-Gm-Gg: ASbGncu+lss8QM71XSFSBgVeQKgh62rhAXYy79AX80F2M+MXJSubpDJPDnYr9vZ7JjS
- Nc1M7K1zWnVg2udV2Z5K/cS4dx3Fz3Or+
-X-Google-Smtp-Source: AGHT+IGyVe7uZI7e4J57HpHnSTc3YQ1c/pz2OWW6Vh6hvLDu1TTP5sISvbk6+0dcOzlQ/biUSrzM2T2b/6Nie6J2To4=
-X-Received: by 2002:a05:6102:a53:b0:4af:5950:29bf with SMTP id
- ada2fe7eead31-4af9716285emr6966092137.1.1733284185239; Tue, 03 Dec 2024
- 19:49:45 -0800 (PST)
+ AJvYcCU29BY9kZyOPfOCKZaXFKw2S0e0gDAZ4rlIUjsEawGhW/4h0/pB2IGDR+eB8t89xH4nZgDU5klC67iN@nongnu.org
+X-Gm-Message-State: AOJu0Yy/xX5AHEKHVlbCFpSqs6qhmqcfUpcZzQwdw25BpN+FtVSbapor
+ Pt5R1D1iwyblMimxROi2blaD7/rBS5xngyzfxJbu8w85padTTUq/sMgGmcxk8NTRrFi0/dGiaWo
+ 7XbGpEYwF9BkwdPz8WT0C8nzh+TQ=
+X-Gm-Gg: ASbGncviHH5tRwC5YBPFs21+FZEzDSC4RJTTX5gxBKnfl8d1B02sdUSaJtqHqoVaLob
+ OTaTSFf57mYtZhIp5zr1SBWUeeGfPdO9v
+X-Google-Smtp-Source: AGHT+IFnkMHwpKts5GZn0FfLElxosrFnjl8U7Kd/Q6Vep0huv1wGyDW2asrb0LcqXgw2JgCm04XZ/OMQTGnLQ0p0Y9s=
+X-Received: by 2002:a05:6102:370a:b0:4af:30c3:6a2c with SMTP id
+ ada2fe7eead31-4af9723e314mr7111355137.10.1733284262043; Tue, 03 Dec 2024
+ 19:51:02 -0800 (PST)
 MIME-Version: 1.0
 References: <20241113171755.978109-1-dbarboza@ventanamicro.com>
- <20241113171755.978109-5-dbarboza@ventanamicro.com>
-In-Reply-To: <20241113171755.978109-5-dbarboza@ventanamicro.com>
+ <20241113171755.978109-6-dbarboza@ventanamicro.com>
+In-Reply-To: <20241113171755.978109-6-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 4 Dec 2024 12:49:19 +0900
-Message-ID: <CAKmqyKMw7evaYyhdNHpXXBZ2X6aiqbbjkkxs9S1KPuV0Z3rvjg@mail.gmail.com>
-Subject: Re: [PATCH for-10.0 4/9] target/riscv: add shvstvala
+Date: Wed, 4 Dec 2024 12:50:35 +0900
+Message-ID: <CAKmqyKMKVvKhSSotgJSo8xsKQf458YAWgzNEX8y16zwNA2rfPw@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 5/9] target/riscv: add shtvala
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
@@ -98,21 +98,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Nov 14, 2024 at 2:20=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> shvstvala is defined in RVA22 as:
+> shtvala is described in RVA22 as:
 >
-> "vstval must be written in all cases described above for stval."
+> "htval must be written with the faulting guest physical address
+> in all circumstances permitted by the ISA."
 >
-> By "cases describe above" the doc refer to the description of sstvala:
->
-> "stval must be written with the faulting virtual address for load,
-> store, and instruction page-fault, access-fault, and misaligned
-> exceptions, and for breakpoint exceptions other than those caused by
-> execution of the EBREAK or C.EBREAK instructions. For
-> virtual-instruction and illegal-instruction exceptions, stval must be
-> written with the faulting instruction."
->
-> We already have sstvala, and our vstval follows the same rules as stval,
-> so we can claim to support shvstvala too.
+> This is the case since commit 3067553993, so claim support for shtvala.
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
@@ -125,7 +116,7 @@ Alistair
 >  1 file changed, 1 insertion(+)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 6bfb1b1530..11a0d2d04a 100644
+> index 11a0d2d04a..7b54c50794 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
 > @@ -184,6 +184,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
@@ -133,10 +124,10 @@ Alistair
 >      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
 >      ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12)=
 ,
-> +    ISA_EXT_DATA_ENTRY(shvstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+> +    ISA_EXT_DATA_ENTRY(shtvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+>      ISA_EXT_DATA_ENTRY(shvstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
 >      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
 >      ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
->      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
 > --
 > 2.47.0
 >
