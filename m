@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B96E7716C
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 02:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4847AE7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 02:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIesE-00044V-3b; Tue, 03 Dec 2024 21:12:18 -0500
+	id 1tIerv-0003qN-It; Tue, 03 Dec 2024 21:11:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tIesB-000432-Sb
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:12:15 -0500
-Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ id 1tIert-0003q7-KW
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:11:57 -0500
+Received: from mail-qv1-xf2d.google.com ([2607:f8b0:4864:20::f2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1tIesA-0005RV-15
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:12:15 -0500
-Received: by mail-qv1-xf2e.google.com with SMTP id
- 6a1803df08f44-6d89811946eso27480876d6.2
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 18:12:13 -0800 (PST)
+ id 1tIerq-0005PA-Lp
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 21:11:57 -0500
+Received: by mail-qv1-xf2d.google.com with SMTP id
+ 6a1803df08f44-6d896be3992so19272376d6.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 18:11:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1733278333; x=1733883133; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1733278313; x=1733883113; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AmWLJIQJ8N12JbkkyHiQfgxCXrtZm1tXnIWK6/dvu9s=;
- b=lQQPDHhnUCgHncdQhg8apmo7tBYPOVxPxI1/LRzMDnagxoYeG7PPPbuhJfq+jCUSvA
- 3AVA5MWOAlj41GHEniIE6pjy6kkX4o1iCJnQ+aDj77gZlfl1+fXZtrIici1CvMm3owsH
- 9dXQVo00KHR7QSNMs/jy/+yaIow/tY3zU2Kxxity1M7TiIe4vRzpxEG69UJdV/B/kyR4
- vXSTkauOjpuWkL0JZ7/SNOyBICNFhUOdCWBmInRwvFb+00w4FsvWItf3Vi6dGe6HlKpI
- HqYuc0O/KwI5/7je3V7lQmtS9gQYvTXL8hcmXRTUgDhCq+iTaetPltoN/KMuI2ywxhcI
- y8mQ==
+ bh=/0wN4j/oJJNTRC4MBF1twlWeye36pdO8I/CrrqHAcjQ=;
+ b=frxrB2IKlmySaXuNaEAhw1cfQdcHOpzwLIm4DeokjllG88cLFk6zIDlFC2DW4StDTm
+ ZYVNda2jakU470KQiUQ81CJPCasXM+HX0Chizn6hCepwS93Ofp7D14kMkhighw37wSp/
+ sVgtfC5xGFvuX0zJb9DjTas3EanEgR1zE5Bf/Q45vjI8TSL1t21YOCX/UeufaEJVAnWm
+ ZvrUxi/Bi3rdaql4g6nzsl/mN+p7dmm9DZav8TPGMD9oeDKyaIxAD2757hDpD1cqYa3b
+ AD4SbtJKPf55auC8WUBN6fKIW/bGX7axZk0ahkEzanmDRxxWgdMGB4lYVbz3GBKipFZN
+ NVag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733278333; x=1733883133;
+ d=1e100.net; s=20230601; t=1733278313; x=1733883113;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AmWLJIQJ8N12JbkkyHiQfgxCXrtZm1tXnIWK6/dvu9s=;
- b=Kevd8nOP83yVSgD8L3IYbCDU7mzpLn9t9OM1EIUO6MNHXivjeQeQvEEKCCRKaq/pM/
- z8KplDuphLEpRoUKV5p3SCtFyxsdJWvDdersVyO6zD3hxex1gN1dkPdZ+4TmhCcBkT+w
- 4uDXYzal29YByqqzbVtlEQVnMj+oQpQS9btDrqUVA8mwnAbFQ2tCzgAjMjam13UwtpqK
- r+4J7i8bvvlQEOFJN43HB+RezthS4qJPPeq6QB5KvHXu9Am+4y2+7GHSFOye3Y0aPagT
- ofSV+CCVp+Z68Uig5R6FinsaBQTMKSCCFsAYUvbCcEqqg5DzH5IaokwpHDTGAjOpFUxn
- Ysjg==
+ bh=/0wN4j/oJJNTRC4MBF1twlWeye36pdO8I/CrrqHAcjQ=;
+ b=ksxcckKbRczC6b1xhVD8zd8Cnustp4rke4GX0MqvWLbzABCmDy+fiu/iIGD+QJnGjY
+ yYZk/Mcvm6OF3dIaxK27ve4uw1oNLT7tLlNpnudWs6XF8V1yD6dEX5diIR2fhvgP5hEn
+ T7TG2SA7xrrqeThEQIL9joWp9Y4HgUZ2vRt0iAxlK5xCABO0ZFNIsaMsfWfFixOMqNzy
+ /mN7b3xSQn2hCZCY89DOfwsiMBUj98vvumxpNaKpV+CCeEKCe+zWp9jhKgRDFMPbCGvM
+ bsVJ/ZLP5g+X6XADZkYCCZ7MLL3uDDGJeW8VK9O2+B+/4Vmqo1yVmVntoumxSDbrIrkB
+ g9+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9RoIZA5nBOjfFzHmpYwwK/adOOhVgp3UJAbqCOCR/OLNkH4TYkt3PEgp2gMwOdV4jjv9/9UWONTDD@nongnu.org
-X-Gm-Message-State: AOJu0YwqRv4N0OuL2jiKVHgTLKlhm1GuUBwE72uiPwYWV7OaBqHNxwJl
- wDx/6QeqRDIWcEwilju+suWIMqtwgZsffPxh8exrYw8y05YEE++3grk/UW+cV2Y=
-X-Gm-Gg: ASbGncv++dZ7ol4uPZU5Oz/GivXigeBUj2shwMFQlkRZWUd2gyR1wqDO5SqCf9PcXve
- xGjjpA03gTDq1ufizNxxFQ4Eivd+hRZAnYFtQLmYIIEiHG3RXCYRYiRDq/YUW6tTHvFLQqRUVo7
- Aii/mDk3v5OdAve9w/UY3fhqeZNpWA6nnluL6QVALa+nQmuTse4/5SEoAz48i/xU3bl6XIkmtog
- +9wbpgpAkoiUKjhfsgn1XxkGPdRU1NkNJULQCUfHtoanJ4XnnJ0s9UNPsp35i/HEJg6x6eP23Vw
- rnbUNZLDIfjNS34ZtA==
-X-Google-Smtp-Source: AGHT+IH4HNXO428Jp9onbiLf0da8k0EgfQ8EREF6TkS7WE68vEyOY4euq/SBf9OcpEyOcGMaj4EuRQ==
-X-Received: by 2002:a05:6214:1312:b0:6d8:af66:6344 with SMTP id
- 6a1803df08f44-6d8c443d31fmr45981306d6.2.1733278332962; 
- Tue, 03 Dec 2024 18:12:12 -0800 (PST)
+ AJvYcCXHJ704PO6JrDlwnsscwiViiF/WCGaKkowpHqQrdFEIefKSIz2PGpftMDbRQiz8KVD+W9xj6C6spATN@nongnu.org
+X-Gm-Message-State: AOJu0YygvJwNWYveN63XBawKFW89c0EiEOYhNurHS7s7GoRHS0dmF1Bo
+ bhDOTNDDY8uK4inOQTDtZb4um7LGHQV1OI26QOyp4WNaED6pALGZDVxidi42iEQ=
+X-Gm-Gg: ASbGncvyc+X90A6uu2+o9/3/VjZlH6zMB19mEI3Bk6Dmh2QdiEw4MH+1QR7dXqP8mt8
+ Fnf+CP492UJEOj6Xq5bVLp0JaVXmes1t4YI0zYP/ksgm0qySNNgFp3Xm1uIhHN9VgUCZ2jmZsrx
+ kDrsj/KizCEL7pxu34vxpCA93UsDTRSwyMKTfzBN1fRlOyWOpOCnD5Yiwy4xL+Nbi2Em5x1n6ly
+ XpidgZ0kxZzvxt3FfdiiBsZfnR03VN81HFkutQaPz1zU/fzYOqqniaI4GhNUdoEmovi7t8G4ipe
+ iBtYmn9iyGRLsU4KqQ==
+X-Google-Smtp-Source: AGHT+IEN99xczOXj8OW/XtgjGtM089VwEZOvzDW5uzYqGf7/sMYDdnkqq+ragp9D1WtsYWXJ4C/2Mw==
+X-Received: by 2002:ad4:5bc4:0:b0:6d8:ac5d:b83e with SMTP id
+ 6a1803df08f44-6d8b747b62emr97529876d6.47.1733278313526; 
+ Tue, 03 Dec 2024 18:11:53 -0800 (PST)
 Received: from DY4X0N7X05.bytedance.net
  ([2601:646:8900:323:644e:288b:2b6d:d94c])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d87ec537ebsm63488986d6.30.2024.12.03.18.12.10
+ 6a1803df08f44-6d87ec537ebsm63488986d6.30.2024.12.03.18.11.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 03 Dec 2024 18:12:12 -0800 (PST)
+ Tue, 03 Dec 2024 18:11:53 -0800 (PST)
 From: Yichen Wang <yichen.wang@bytedance.com>
 To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -79,19 +79,18 @@ To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
 Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
  "Shivam Kumar" <shivam.kumar1@nutanix.com>,
  "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- "Yichen Wang" <yichen.wang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH v8 07/12] util/dsa: Implement DSA task asynchronous submission
- and wait for completion.
-Date: Tue,  3 Dec 2024 18:11:36 -0800
-Message-Id: <20241204021142.24184-8-yichen.wang@bytedance.com>
+ "Yichen Wang" <yichen.wang@bytedance.com>
+Subject: [PATCH v8 01/12] meson: Introduce new instruction set enqcmd to the
+ build system.
+Date: Tue,  3 Dec 2024 18:11:30 -0800
+Message-Id: <20241204021142.24184-2-yichen.wang@bytedance.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20241204021142.24184-1-yichen.wang@bytedance.com>
 References: <20241204021142.24184-1-yichen.wang@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
- envelope-from=yichen.wang@bytedance.com; helo=mail-qv1-xf2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2d;
+ envelope-from=yichen.wang@bytedance.com; helo=mail-qv1-xf2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,219 +115,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hao Xiang <hao.xiang@linux.dev>
 
-* Add a DSA task completion callback.
-* DSA completion thread will call the tasks's completion callback
-on every task/batch task completion.
-* DSA submission path to wait for completion.
-* Implement CPU fallback if DSA is not able to complete the task.
+Enable instruction set enqcmd in build.
 
 Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
 Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/qemu/dsa.h |  14 +++++
- util/dsa.c         | 125 +++++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 135 insertions(+), 4 deletions(-)
+ meson.build                   | 14 ++++++++++++++
+ meson_options.txt             |  2 ++
+ scripts/meson-buildoptions.sh |  3 +++
+ 3 files changed, 19 insertions(+)
 
-diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
-index a9aa394e5b..4972332bdf 100644
---- a/include/qemu/dsa.h
-+++ b/include/qemu/dsa.h
-@@ -123,6 +123,20 @@ buffer_zero_batch_task_init(int batch_size);
-  */
- void buffer_zero_batch_task_destroy(QemuDsaBatchTask *task);
+diff --git a/meson.build b/meson.build
+index 147097c652..50df5dd3e0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3062,6 +3062,20 @@ config_host_data.set('CONFIG_AVX512BW_OPT', get_option('avx512bw') \
+     int main(int argc, char *argv[]) { return bar(argv[0]); }
+   '''), error_message: 'AVX512BW not available').allowed())
  
-+/**
-+ * @brief Performs buffer zero comparison on a DSA batch task synchronously.
-+ *
-+ * @param batch_task A pointer to the batch task.
-+ * @param buf An array of memory buffers.
-+ * @param count The number of buffers in the array.
-+ * @param len The buffer length.
-+ *
-+ * @return Zero if successful, otherwise non-zero.
-+ */
-+int
-+buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
-+                              const void **buf, size_t count, size_t len);
-+
- #else
- 
- typedef struct QemuDsaBatchTask {} QemuDsaBatchTask;
-diff --git a/util/dsa.c b/util/dsa.c
-index a897ccac90..e6b7db2cf6 100644
---- a/util/dsa.c
-+++ b/util/dsa.c
-@@ -433,6 +433,42 @@ poll_completion(struct dsa_completion_record *completion,
-     return 0;
- }
- 
-+/**
-+ * @brief Helper function to use CPU to complete a single
-+ *        zero page checking task.
-+ *
-+ * @param completion A pointer to a DSA task completion record.
-+ * @param descriptor A pointer to a DSA task descriptor.
-+ * @param result A pointer to the result of a zero page checking.
-+ */
-+static void
-+task_cpu_fallback_int(struct dsa_completion_record *completion,
-+                      struct dsa_hw_desc *descriptor, bool *result)
-+{
-+    const uint8_t *buf;
-+    size_t len;
-+
-+    if (completion->status == DSA_COMP_SUCCESS) {
-+        return;
++config_host_data.set('CONFIG_DSA_OPT', get_option('enqcmd') \
++  .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable ENQCMD') \
++  .require(cc.links('''
++    #include <stdint.h>
++    #include <cpuid.h>
++    #include <immintrin.h>
++    static int __attribute__((target("enqcmd"))) bar(void *a) {
++      uint64_t dst[8] = { 0 };
++      uint64_t src[8] = { 0 };
++      return _enqcmd(dst, src);
 +    }
++    int main(int argc, char *argv[]) { return bar(argv[argc - 1]); }
++  '''), error_message: 'ENQCMD not available').allowed())
 +
-+    /*
-+     * DSA was able to partially complete the operation. Check the
-+     * result. If we already know this is not a zero page, we can
-+     * return now.
-+     */
-+    if (completion->bytes_completed != 0 && completion->result != 0) {
-+        *result = false;
-+        return;
-+    }
-+
-+    /* Let's fallback to use CPU to complete it. */
-+    buf = (const uint8_t *)descriptor->src_addr;
-+    len = descriptor->xfer_size;
-+    *result = buffer_is_zero(buf + completion->bytes_completed,
-+                             len - completion->bytes_completed);
-+}
-+
- /**
-  * @brief Complete a single DSA task in the batch task.
-  *
-@@ -559,7 +595,7 @@ dsa_completion_loop(void *opaque)
-         (QemuDsaCompletionThread *)opaque;
-     QemuDsaBatchTask *batch_task;
-     QemuDsaDeviceGroup *group = thread_context->group;
--    int ret;
-+    int ret = 0;
- 
-     rcu_register_thread();
- 
-@@ -827,7 +863,6 @@ buffer_zero_batch_task_set(QemuDsaBatchTask *batch_task,
-  *
-  * @return int Zero if successful, otherwise an appropriate error code.
-  */
--__attribute__((unused))
- static int
- buffer_zero_dsa_async(QemuDsaBatchTask *task,
-                       const void *buf, size_t len)
-@@ -846,7 +881,6 @@ buffer_zero_dsa_async(QemuDsaBatchTask *task,
-  * @param count The number of buffers.
-  * @param len The buffer length.
-  */
--__attribute__((unused))
- static int
- buffer_zero_dsa_batch_async(QemuDsaBatchTask *batch_task,
-                             const void **buf, size_t count, size_t len)
-@@ -877,13 +911,61 @@ buffer_zero_dsa_completion(void *context)
-  *
-  * @param batch_task A pointer to the buffer zero comparison batch task.
-  */
--__attribute__((unused))
- static void
- buffer_zero_dsa_wait(QemuDsaBatchTask *batch_task)
- {
-     qemu_sem_wait(&batch_task->sem_task_complete);
- }
- 
-+/**
-+ * @brief Use CPU to complete the zero page checking task if DSA
-+ *        is not able to complete it.
-+ *
-+ * @param batch_task A pointer to the batch task.
-+ */
-+static void
-+buffer_zero_cpu_fallback(QemuDsaBatchTask *batch_task)
-+{
-+    if (batch_task->task_type == QEMU_DSA_TASK) {
-+        if (batch_task->completions[0].status == DSA_COMP_SUCCESS) {
-+            return;
-+        }
-+        task_cpu_fallback_int(&batch_task->completions[0],
-+                              &batch_task->descriptors[0],
-+                              &batch_task->results[0]);
-+    } else if (batch_task->task_type == QEMU_DSA_BATCH_TASK) {
-+        struct dsa_completion_record *batch_completion =
-+            &batch_task->batch_completion;
-+        struct dsa_completion_record *completion;
-+        uint8_t status;
-+        bool *results = batch_task->results;
-+        uint32_t count = batch_task->batch_descriptor.desc_count;
-+
-+        /* DSA is able to complete the entire batch task. */
-+        if (batch_completion->status == DSA_COMP_SUCCESS) {
-+            assert(count == batch_completion->bytes_completed);
-+            return;
-+        }
-+
-+        /*
-+         * DSA encounters some error and is not able to complete
-+         * the entire batch task. Use CPU fallback.
-+         */
-+        for (int i = 0; i < count; i++) {
-+
-+            completion = &batch_task->completions[i];
-+            status = completion->status;
-+
-+            assert(status == DSA_COMP_SUCCESS ||
-+                status == DSA_COMP_PAGE_FAULT_NOBOF);
-+
-+            task_cpu_fallback_int(completion,
-+                                  &batch_task->descriptors[i],
-+                                  &results[i]);
-+        }
-+    }
-+}
-+
- /**
-  * @brief Initializes a buffer zero comparison DSA task.
-  *
-@@ -960,3 +1042,38 @@ buffer_zero_batch_task_destroy(QemuDsaBatchTask *task)
-     qemu_sem_destroy(&task->sem_task_complete);
-     qemu_vfree(task);
- }
-+
-+/**
-+ * @brief Performs buffer zero comparison on a DSA batch task synchronously.
-+ *
-+ * @param batch_task A pointer to the batch task.
-+ * @param buf An array of memory buffers.
-+ * @param count The number of buffers in the array.
-+ * @param len The buffer length.
-+ *
-+ * @return Zero if successful, otherwise non-zero.
-+ */
-+int
-+buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
-+                              const void **buf, size_t count, size_t len)
-+{
-+    assert(batch_task != NULL);
-+    assert(len != 0);
-+    assert(buf != NULL);
-+
-+    if (count <= 0 || count > batch_task->batch_size) {
-+        return -1;
-+    }
-+
-+    if (count == 1) {
-+        /* DSA doesn't take batch operation with only 1 task. */
-+        buffer_zero_dsa_async(batch_task, buf[0], len);
-+    } else {
-+        buffer_zero_dsa_batch_async(batch_task, buf, count, len);
-+    }
-+
-+    buffer_zero_dsa_wait(batch_task);
-+    buffer_zero_cpu_fallback(batch_task);
-+
-+    return 0;
-+}
+ # For both AArch64 and AArch32, detect if builtins are available.
+ config_host_data.set('CONFIG_ARM_AES_BUILTIN', cc.compiles('''
+     #include <arm_neon.h>
+diff --git a/meson_options.txt b/meson_options.txt
+index 5eeaf3eee5..4386e8b1fc 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -125,6 +125,8 @@ option('avx2', type: 'feature', value: 'auto',
+        description: 'AVX2 optimizations')
+ option('avx512bw', type: 'feature', value: 'auto',
+        description: 'AVX512BW optimizations')
++option('enqcmd', type: 'feature', value: 'disabled',
++       description: 'ENQCMD optimizations')
+ option('keyring', type: 'feature', value: 'auto',
+        description: 'Linux keyring support')
+ option('libkeyutils', type: 'feature', value: 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index a8066aab03..ff6c66db1e 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -99,6 +99,7 @@ meson_options_help() {
+   printf "%s\n" '  auth-pam        PAM access control'
+   printf "%s\n" '  avx2            AVX2 optimizations'
+   printf "%s\n" '  avx512bw        AVX512BW optimizations'
++  printf "%s\n" '  enqcmd          ENQCMD optimizations'
+   printf "%s\n" '  blkio           libblkio block device driver'
+   printf "%s\n" '  bochs           bochs image format support'
+   printf "%s\n" '  bpf             eBPF support'
+@@ -246,6 +247,8 @@ _meson_option_parse() {
+     --disable-avx2) printf "%s" -Davx2=disabled ;;
+     --enable-avx512bw) printf "%s" -Davx512bw=enabled ;;
+     --disable-avx512bw) printf "%s" -Davx512bw=disabled ;;
++    --enable-enqcmd) printf "%s" -Denqcmd=enabled ;;
++    --disable-enqcmd) printf "%s" -Denqcmd=disabled ;;
+     --enable-gcov) printf "%s" -Db_coverage=true ;;
+     --disable-gcov) printf "%s" -Db_coverage=false ;;
+     --enable-lto) printf "%s" -Db_lto=true ;;
 -- 
 Yichen Wang
 
