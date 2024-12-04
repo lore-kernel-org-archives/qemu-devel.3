@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6823E7716B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 08:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390B8E7716B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 08:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIl0M-0002xO-NE; Wed, 04 Dec 2024 03:45:06 -0500
+	id 1tIl0P-0002zx-0U; Wed, 04 Dec 2024 03:45:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tIl0K-0002vJ-Lh; Wed, 04 Dec 2024 03:45:04 -0500
+ id 1tIl0N-0002xi-0X; Wed, 04 Dec 2024 03:45:07 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tIl0J-0006xz-Av; Wed, 04 Dec 2024 03:45:04 -0500
+ id 1tIl0L-0006xz-Ks; Wed, 04 Dec 2024 03:45:06 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 4 Dec
- 2024 16:44:53 +0800
+ 2024 16:44:54 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 4 Dec 2024 16:44:53 +0800
+ Transport; Wed, 4 Dec 2024 16:44:54 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,9 +33,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@redhat.com>
-Subject: [PATCH v4 1/6] hw/sd/aspeed_sdhci: Fix coding style
-Date: Wed, 4 Dec 2024 16:44:48 +0800
-Message-ID: <20241204084453.610660-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v4 2/6] hw/arm/aspeed: Fix coding style
+Date: Wed, 4 Dec 2024 16:44:49 +0800
+Message-ID: <20241204084453.610660-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241204084453.610660-1-jamin_lin@aspeedtech.com>
 References: <20241204084453.610660-1-jamin_lin@aspeedtech.com>
@@ -72,28 +72,23 @@ Fix coding style issues from checkpatch.pl.
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/sd/aspeed_sdhci.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/arm/aspeed_ast2600.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
-index 98d5460905..acd6538261 100644
---- a/hw/sd/aspeed_sdhci.c
-+++ b/hw/sd/aspeed_sdhci.c
-@@ -87,10 +87,12 @@ static void aspeed_sdhci_write(void *opaque, hwaddr addr, uint64_t val,
-         sdhci->regs[TO_REG(addr)] = (uint32_t)val & ~ASPEED_SDHCI_INFO_RESET;
-         break;
-     case ASPEED_SDHCI_SDIO_140:
--        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg, 0, 32, val);
-+        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg,
-+                                            0, 32, val);
-         break;
-     case ASPEED_SDHCI_SDIO_144:
--        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg, 32, 32, val);
-+        sdhci->slots[0].capareg = deposit64(sdhci->slots[0].capareg,
-+                                            32, 32, val);
-         break;
-     case ASPEED_SDHCI_SDIO_148:
-         sdhci->slots[0].maxcurr = deposit64(sdhci->slots[0].maxcurr,
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+index be3eb70cdd..c40d3d8443 100644
+--- a/hw/arm/aspeed_ast2600.c
++++ b/hw/arm/aspeed_ast2600.c
+@@ -541,7 +541,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
+         return;
+     }
+-    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0, sc->memmap[ASPEED_DEV_GPIO]);
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
++                    sc->memmap[ASPEED_DEV_GPIO]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
+                        aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
+ 
 -- 
 2.34.1
 
