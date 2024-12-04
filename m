@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755FBE7716F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 22:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 515DDE7716F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 22:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIy7h-0002gP-5r; Wed, 04 Dec 2024 17:45:33 -0500
+	id 1tIy8J-00032O-E2; Wed, 04 Dec 2024 17:46:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIy7d-0002fn-0K
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:45:29 -0500
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1tIy8B-0002z1-JQ
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:46:05 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIy7b-0003Nu-5x
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:45:28 -0500
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-7fcc8533607so347878a12.0
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 14:45:26 -0800 (PST)
+ id 1tIy8A-0003QU-1Z
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:46:03 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-215770613dbso1521435ad.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 14:46:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733352325; x=1733957125; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1733352360; x=1733957160; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XK7SF/Q9KYBxwC/DHUQmd07jbjXrGqFMjTGR3jkWbpc=;
- b=f3kF4469LGN9wENWZnH2b0zdssqHlbU9xJuINNNkW4qXXV8oPrbpFsYAnQvcLlmQ/A
- KWykmiaBKJjTJo0pDc241eZkQFevmldP2tMGcwZYiDbLAzw+zw2lXzKR+8dbtdqF6lgP
- e4Etpg4Sr6ma9UEzgIxv7L2eIcndGkD2BLtD3pMidniTCUfTwOm5IfGKbdRwhp5PklTS
- mNVjCNT48OeHw/6Sc15TH/f6x2WVeBrRzi617er4cjBsHjCisO+znatuc3bfyPOEDVzm
- lwU8l3y1o61+ldv30ipkgCs6WMwaGegMZzeH0auDxc6EpAcsJvHyeekImTtHJCl6fNB3
- qWTg==
+ bh=TLv3y8TooTZrXkX+y9Bi2qaMpM3/OPWrxBmqMaW039c=;
+ b=EoHSSZnXS3NixEcQyrebGLvoDmC7sh+mt53MzO/XM7mSkYaL327Vk+ISDGdQKOTQu8
+ bWU5IX1jPOtryjyslVdm5Sd5mHmoAr2oTmStW5B73ZPqiiAV6rJQML9/Tg0Mql0kNlD2
+ 2FFJtpfN9jQgXdWAfHiLDTtzad2cPGbY1mfNFx3B/CtQlfXMsahz9Uy8lWe4YCTC+INK
+ z5r0GwnaAHlPNkarOpRbip6hSpMfFMJIDOAlRSl7zJkkvvbAZ151x1JiD06TRw/SANqx
+ o2B8XJ6kuTAWvd+99khNPLXni1Tni1c/JHXEdsAyVWaRze9OxQDZK0PrfkVxiRlgD4bz
+ m/zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733352325; x=1733957125;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1733352361; x=1733957161;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XK7SF/Q9KYBxwC/DHUQmd07jbjXrGqFMjTGR3jkWbpc=;
- b=KC3NXsP5YFfIgSgD54WB3kExYbmEBcE5YE9jMErZU92YOVHrti+Km6JiyxF34O5rC5
- by2AM1hnNfJtvnK+RiY4/o2nZ2BgjgWKwAoW+LHskvKzkVz4Jyc8FX507SBcLbNcIQFy
- kDYfe/KiMwD6vl5rRTZbgUSdzEPxwj+vpYGHduGY1Mk2sw2oqWrYm2F/7BV4/ou+1pWs
- 4pdepYBHbinvhq5hbLCzlHbG3xRj/jIAs5Ik+Opw0Xq1BIfBDG098I/+yrYgayhsgHlw
- +ZpnVc5IDIYE6YDZb0tYiwMyrx/ERs3jnE591D00FfHy7kzTqvrY/CtpoCNLwXNgEL2f
- /i4g==
+ bh=TLv3y8TooTZrXkX+y9Bi2qaMpM3/OPWrxBmqMaW039c=;
+ b=CBE8sxT/HjsDgC02CJ9W2zssPE+MVZ4+i3TbZK1vSEZZADWk5M2oVm/cv6jN2L8K0n
+ eyv9o7owyAlCQi0ADfhLmQuqHXLUZyHayat8EI/aVOvWAC9vIonV7g+Ab4Joo6N2McgD
+ t6UGFK5WbaxDgvnjbyc2n99QDf4zCMQLmCCSMUNFsbknGd5VBqquLHD/9Mip3Fhjukkr
+ MP8GyLBbKl0dFIoec+ALWs7aYjTZlwIEeM1B9Zi+kNw3SKDokWOrHb/JZCrUfhFzPejD
+ QE9LEL3VDzNlqOagVIE6w7R2LZXydJpvpXL/E2Ao0HdbzctUHD7ALoG/xF5lOSaXYkOL
+ uq3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXvKl5fdNLpUjMpJfv0lzVhKr6G8zYXZRhVkUN0jCiI1r2W4GUHFBYML1OJYi6d/qBVmITOgw0cl//H@nongnu.org
-X-Gm-Message-State: AOJu0Yx4c09jO1tRXBxQ7RtQ5TYcGw072m6RTv0ESXIVasHrvFvRe6+/
- 2InCi73DgBaZyjsNdnUQs0Sd06gETbdYT0Ny1sZ/mZ3XiuaZtdZ3pbvD3Fp/8hU=
-X-Gm-Gg: ASbGnctDQIQNsv9VUrZvCN52Whie0oVWnQfD57gUnUODL3r720MQTOR/mRUAcLAvx6G
- 3aHQEd0SCVQ/pDF7kgSIsS+YLV29OK0SFpn/B0D6D1LSh2mIcsG1+pcFFvOv2c5wQPEIpTfhxFU
- +ZL67pdViPMCaUcXsdphsl2fePx9x7AuFM6qIrfgVlcG6saTZKV7n62nuGjtVwjqL1ovk4ApqUv
- To3eSlAH2wG9gbXKDYKsFW+CgfInq4ksK6o3OX4WqtLaolqXaSvT+0oLXJWy7i6UNPfphcvgF92
- SgntluqP4MIjF+xrXJP50w==
-X-Google-Smtp-Source: AGHT+IHk968599/R3JGnTDm2qP55jLR0beqzmQWID6U6l99EWjOsp7f86cqYSLhHUU7Zqltc/4+m8Q==
-X-Received: by 2002:a05:6a20:6a1b:b0:1db:f00e:2dfe with SMTP id
- adf61e73a8af0-1e165412f88mr12192509637.39.1733352325245; 
- Wed, 04 Dec 2024 14:45:25 -0800 (PST)
+ AJvYcCWI/eJVQcizGyELVDROEEbdopjjML9AaYpE9bPFvo4txaoCGx5pSS2+GimZaJA0zaY8How7x4Esyrr4@nongnu.org
+X-Gm-Message-State: AOJu0YyX1vAtaWJOol180aB6S/i/t78vlfMuXJFXBuDK+6ZJPNA7PuiQ
+ K8veEzczfWQRmgWD8OxW/YdGkZBHnAEdkQtRGLhHbT+BUEc0dg4SeOHBjIHfDxs=
+X-Gm-Gg: ASbGnct1Jo4biCnB0ltu3ebKTeilEcK1yTX6zD74LTHomYGqYSHZquXhZqhMHyc/HdZ
+ RDVN3Z38oB4CFG5ejVbWOKoopoqs3EwR+IWyPIMhd4eTR/dc/1OGvo2CPlpnhSZCMGum5GE9FtW
+ j9QV7i5JvjYjwlVSzKywctR6PQQpIQwLqrzi6Cl/IYR7o8Bl6CEfEfu3qolfR+PZl5CouTM7I3p
+ YOoUvQb2wpyrFU6ay726ijh77i6HiqgeZ27e/Q/81sRUXvB/1vXD8BQgjYF1FntbZd8gOYXRuZK
+ 5ottMZrRnsEYctkFxTisNA==
+X-Google-Smtp-Source: AGHT+IHoxbuVYXn3fpyqKiOjzfjego+34PrGBu5eshGGYBhNRDZFIAWg3Nago/gBeeD4xAcDQqO/4g==
+X-Received: by 2002:a17:902:dac2:b0:20f:c292:6662 with SMTP id
+ d9443c01a7336-215bd17a724mr101709475ad.51.1733352360695; 
+ Wed, 04 Dec 2024 14:46:00 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7fd156dfe2fsm59064a12.31.2024.12.04.14.45.24
+ d9443c01a7336-215f8e63329sm545565ad.59.2024.12.04.14.46.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Dec 2024 14:45:24 -0800 (PST)
-Message-ID: <6f182c71-2600-4bbf-ab4c-985ed7e99f71@linaro.org>
-Date: Wed, 4 Dec 2024 14:45:24 -0800
+ Wed, 04 Dec 2024 14:46:00 -0800 (PST)
+Message-ID: <46562dd3-6699-4b76-ae28-e6523a8152c7@linaro.org>
+Date: Wed, 4 Dec 2024 14:45:59 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 01/11] plugins: add types for callbacks related to
- certain discontinuities
+Subject: Re: [RFC PATCH v3 02/11] plugins: add API for registering
+ discontinuity callbacks
 Content-Language: en-US
 To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <cover.1733063076.git.neither@nut.email>
- <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
+ <e4af8fed4cc5449a7be04fbbf026abf267dc189b.1733063076.git.neither@nut.email>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
+In-Reply-To: <e4af8fed4cc5449a7be04fbbf026abf267dc189b.1733063076.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,123 +105,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Julian,
-
-thanks for the update!
-Comments below.
-
 On 12/2/24 11:26, Julian Ganz wrote:
 > The plugin API allows registration of callbacks for a variety of VCPU
-> related events, such as VCPU reset, idle and resume. However, traps of
-> any kind, i.e. interrupts or exceptions, were previously not covered.
-> These kinds of events are arguably quite significant and usually go hand
-> in hand with a PC discontinuity. On most platforms, the discontinuity
-> also includes a transition from some "mode" to another. Thus, plugins
-> for the analysis of (virtualized) embedded systems may benefit from or
-> even require the possiblity to perform work on the occurance of an
-> interrupt or exception.
+> related events, such as VCPU reset, idle and resume. In addition to
+> those events, we recently defined discontinuity events, which include
+> traps.
 > 
-> This change introduces the concept of such a discontinuity event in the
-> form of an enumeration. Currently only traps are covered. Specifically
-> we (loosely) define interrupts, exceptions and host calls across all
-> platforms. In addition, this change introduces a type to use for
-> callback functions related to such events. Since possible modes and the
-> enumeration of interupts and exceptions vary greatly between different
-> architectures, the callback type only receives the VCPU id, the type of
-> event as well as the old and new PC.
+> This change introduces a function to register callbacks for these
+> events. We define one distinct plugin event type for each type of
+> discontinuity, granting fine control to plugins in term of which events
+> they receive.
 > ---
->   include/qemu/plugin.h      |  1 +
->   include/qemu/qemu-plugin.h | 43 ++++++++++++++++++++++++++++++++++++++
->   2 files changed, 44 insertions(+)
+>   include/qemu/plugin-event.h |  3 +++
+>   include/qemu/qemu-plugin.h  | 15 +++++++++++++++
+>   plugins/core.c              | 15 +++++++++++++++
+>   3 files changed, 33 insertions(+)
 > 
-> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-> index 9726a9ebf3..27a176b631 100644
-> --- a/include/qemu/plugin.h
-> +++ b/include/qemu/plugin.h
-> @@ -59,6 +59,7 @@ union qemu_plugin_cb_sig {
->       qemu_plugin_udata_cb_t           udata;
->       qemu_plugin_vcpu_simple_cb_t     vcpu_simple;
->       qemu_plugin_vcpu_udata_cb_t      vcpu_udata;
-> +    qemu_plugin_vcpu_discon_cb_t     vcpu_discon;
->       qemu_plugin_vcpu_tb_trans_cb_t   vcpu_tb_trans;
->       qemu_plugin_vcpu_mem_cb_t        vcpu_mem;
->       qemu_plugin_vcpu_syscall_cb_t    vcpu_syscall;
+> diff --git a/include/qemu/plugin-event.h b/include/qemu/plugin-event.h
+> index 7056d8427b..1100dae212 100644
+> --- a/include/qemu/plugin-event.h
+> +++ b/include/qemu/plugin-event.h
+> @@ -20,6 +20,9 @@ enum qemu_plugin_event {
+>       QEMU_PLUGIN_EV_VCPU_SYSCALL_RET,
+>       QEMU_PLUGIN_EV_FLUSH,
+>       QEMU_PLUGIN_EV_ATEXIT,
+> +    QEMU_PLUGIN_EV_VCPU_INTERRUPT,
+> +    QEMU_PLUGIN_EV_VCPU_EXCEPTION,
+> +    QEMU_PLUGIN_EV_VCPU_HOSTCALL,
+>       QEMU_PLUGIN_EV_MAX, /* total number of plugin events we support */
+>   };
+>   
 > diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index 0fba36ae02..9c67374b7e 100644
+> index 9c67374b7e..f998a465e5 100644
 > --- a/include/qemu/qemu-plugin.h
 > +++ b/include/qemu/qemu-plugin.h
-> @@ -154,6 +154,49 @@ typedef void (*qemu_plugin_vcpu_simple_cb_t)(qemu_plugin_id_t id,
->   typedef void (*qemu_plugin_vcpu_udata_cb_t)(unsigned int vcpu_index,
->                                               void *userdata);
+> @@ -273,6 +273,21 @@ QEMU_PLUGIN_API
+>   void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+>                                            qemu_plugin_vcpu_simple_cb_t cb);
 >   
-> +
 > +/**
-> + * enum qemu_plugin_discon_type - type of a (potential) PC discontinuity
+> + * qemu_plugin_register_vcpu_discon_cb() - register a discontinuity callback
+> + * @id: plugin ID
+> + * @cb: callback function
 > + *
-> + * @QEMU_PLUGIN_DISCON_INTERRUPT: an interrupt, defined across all architectures
-> + *                                as an asynchronous event, usually originating
-> + *                                from outside the CPU
-> + * @QEMU_PLUGIN_DISCON_EXCEPTION: an exception, defined across all architectures
-> + *                                as a synchronous event in response to a
-> + *                                specific instruction being executed
-> + * @QEMU_PLUGIN_DISCON_HOSTCALL: a host call, functionally a special kind of
-> + *                               exception that is not handled by code run by
-> + *                               the vCPU but machinery outside the vCPU
-> + * @QEMU_PLUGIN_DISCON_ALL: all types of disconinuity events currently covered
+> + * The @cb function is called every time a vCPU receives a discontinuity event
+> + * of the specified type(s), after the vCPU was prepared to handle the event.
+> + * Preparation usually entails updating the PC to some interrupt handler or trap
+> + * vector entry.
 > + */
-> +enum qemu_plugin_discon_type {
-> +    QEMU_PLUGIN_DISCON_INTERRUPT = 1,
-> +    QEMU_PLUGIN_DISCON_EXCEPTION = 2,
-> +    QEMU_PLUGIN_DISCON_HOSTCALL = 4,
-> +    QEMU_PLUGIN_DISCON_ALL = 7
-> +};
-
-Matter of style, but would be better to use:
-
-enum qemu_plugin_discon_type {
-      QEMU_PLUGIN_DISCON_INTERRUPT = 1 << 0,
-      QEMU_PLUGIN_DISCON_EXCEPTION = 1 << 1,
-      QEMU_PLUGIN_DISCON_HOSTCALL = 1 << 2,
-      QEMU_PLUGIN_DISCON_ALL = -1
-};
-
+> +QEMU_PLUGIN_API
+> +void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
+> +                                         enum qemu_plugin_discon_type type,
+> +                                         qemu_plugin_vcpu_discon_cb_t cb);
 > +
-> +/**
-> + * typedef qemu_plugin_vcpu_discon_cb_t - vcpu discontinuity callback
-> + * @vcpu_index: the current vcpu context
-> + * @type: the type of discontinuity
-> + * @from_pc: the source of the discontinuity, e.g. the PC before the
-> + *           transition
-> + * @to_pc: the PC pointing to the next instruction to be executed
-> + *
-
-Missing those parameters when building doc.
-include/qemu/qemu-plugin.h:198: warning: Function parameter or member 
-'id' not described in 'qemu_plugin_vcpu_discon_cb_t'
-include/qemu/qemu-plugin.h:289: warning: Function parameter or member 
-'type' not described in 'qemu_plugin_register_vcpu_discon_cb'
-2 warnings as Errors
-
-> + * The excact semantics of @from_pc depends on @the type of discontinuity. For
-> + * interrupts, @from_pc will point to the next instruction which would have
-> + * been executed. For exceptions and host calls, @from_pc will point to the
-> + * instruction that caused the exception or issued the host call. Note that
-> + * in the case of exceptions, the instruction is not retired and thus not
-> + * observable via general instruction exec callbacks. The same may be the case
-> + * for some host calls such as hypervisor call "exceptions".
-> + */
-> +typedef void (*qemu_plugin_vcpu_discon_cb_t)(qemu_plugin_id_t id,
-> +                                             unsigned int vcpu_index,
-> +                                             enum qemu_plugin_discon_type type,
-> +                                             uint64_t from_pc, uint64_t to_pc);
+>   /** struct qemu_plugin_tb - Opaque handle for a translation block */
+>   struct qemu_plugin_tb;
+>   /** struct qemu_plugin_insn - Opaque handle for a translated instruction */
+> diff --git a/plugins/core.c b/plugins/core.c
+> index bb105e8e68..a89a4a0315 100644
+> --- a/plugins/core.c
+> +++ b/plugins/core.c
+> @@ -559,6 +559,21 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+>       plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_RESUME, cb);
+>   }
+>   
+> +void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
+> +                                         enum qemu_plugin_discon_type type,
+> +                                         qemu_plugin_vcpu_discon_cb_t cb)
+> +{
+> +    if (type & QEMU_PLUGIN_DISCON_INTERRUPT) {
+> +        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_INTERRUPT, cb);
+> +    }
+> +    if (type & QEMU_PLUGIN_DISCON_EXCEPTION) {
+> +        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_EXCEPTION, cb);
+> +    }
+> +    if (type & QEMU_PLUGIN_DISCON_HOSTCALL) {
+> +        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_HOSTCALL, cb);
+> +    }
+> +}
 > +
->   /**
->    * qemu_plugin_uninstall() - Uninstall a plugin
->    * @id: this plugin's opaque ID
+>   void qemu_plugin_register_flush_cb(qemu_plugin_id_t id,
+>                                      qemu_plugin_simple_cb_t cb)
+>   {
 
-Overall I'm ok with what it looks like.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-However, it seems that your conclusion was we can't always guarantee to 
-have from_pc, and I'm not sure that the solution to simply drop it is 
-the right one.
 
