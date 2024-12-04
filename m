@@ -4,68 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1AFE7716D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FDB9E7716F
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 07:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIjfk-0006Zf-11; Wed, 04 Dec 2024 02:19:45 -0500
+	id 1tIjfb-0006Tk-IW; Wed, 04 Dec 2024 02:19:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIjfV-0006Si-Iu
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 02:19:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIjfQ-0006Qi-QM
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 02:19:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIjfU-0005Gs-39
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 02:19:29 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIjfM-0005Fq-DB
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 02:19:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733296766;
+ s=mimecast20190719; t=1733296758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PGOrDdYWaOef4MfQEkI3GVDOqwz8+MMlsUiqjHR4ua0=;
- b=EZbx8n1z9HhWGckNuADJKYyZwqGNC6iZgrWSjzv6vSPDRiBzonaZOUCB88vSrxXKN0O1Vl
- oNigzS9VoQd6ohSFPcyaQrFOo0kueMsCKUrx9Am4ZLLfawD6+1pBv4jFAusrXavHDEkAD6
- IOmPhlzsB4TxFvUGP2VKx5ToCRlHyWs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=/23SJ3N6uJ9khTdyRfG9XjuzbSkzNHSY0+pMDfGEyIs=;
+ b=coeFHtQgprD5wMPDGMndWp50/BrLL5POaTC9LHNRenSjmryLIIedfUhBTlQYeKLrCZsumS
+ PK31U6psMYECrhHuscPRd69ApZ9Z5Y6fFP348r1yrdtw9YlrQ+0Kn8ZUdwrIhSTMQyIH2d
+ iM/1fg3j5LBAneF2VGufFxRuTEj2/DA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-60-95wvhMVyjKU8Wr9B4VQ-1; Wed,
- 04 Dec 2024 02:19:19 -0500
-X-MC-Unique: 60-95wvhMVyjKU8Wr9B4VQ-1
-X-Mimecast-MFC-AGG-ID: 60-95wvhMVyjKU8Wr9B4VQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-Mg0yJevCP_ymjZ6F6pPksA-1; Wed,
+ 04 Dec 2024 02:19:15 -0500
+X-MC-Unique: Mg0yJevCP_ymjZ6F6pPksA-1
+X-Mimecast-MFC-AGG-ID: Mg0yJevCP_ymjZ6F6pPksA
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14FAC1956095; Wed,  4 Dec 2024 07:19:18 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B24451955F39; Wed,  4 Dec 2024 07:19:14 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.155])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E978B1956060; Wed,  4 Dec 2024 07:19:15 +0000 (UTC)
+ id 0A6F61956054; Wed,  4 Dec 2024 07:19:12 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/5] tests/functional: Convert the vnc test
-Date: Wed,  4 Dec 2024 08:19:07 +0100
-Message-ID: <20241204071911.664057-2-thuth@redhat.com>
-In-Reply-To: <20241204071911.664057-1-thuth@redhat.com>
-References: <20241204071911.664057-1-thuth@redhat.com>
+Subject: [PATCH for-10.0 0/5] tests/functional: Convert tests with
+ find_free_ports()
+Date: Wed,  4 Dec 2024 08:19:06 +0100
+Message-ID: <20241204071911.664057-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,73 +81,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nothing thrilling in here, it's just a straight forward conversion.
+Convert the vnc and migration test that use a find_free_ports()
+function to look for a free port. Since the functional tests can
+be run in parallel, we extract the find_free_ports() function
+into a helper and provide a locking mechanism so that the tests
+don't race for the free ports (see second patch).
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/meson.build                     |  1 +
- tests/{avocado/vnc.py => functional/test_vnc.py} | 12 +++++++-----
- 2 files changed, 8 insertions(+), 5 deletions(-)
- rename tests/{avocado/vnc.py => functional/test_vnc.py} (97%)
+Thomas Huth (5):
+  tests/functional: Convert the vnc test
+  tests/functional: Extract the find_free_ports() function into a helper
+    file
+  tests/functional/test_vnc: Do not use a hard-coded VNC port
+  tests/functional/test_vnc: Remove the test_no_vnc test
+  tests/functional: Convert the migration avocado test
+
+ tests/avocado/migration.py                    | 135 ------------------
+ tests/functional/meson.build                  |  20 +++
+ tests/functional/qemu_test/ports.py           |  53 +++++++
+ tests/functional/test_migration.py            |  83 +++++++++++
+ .../vnc.py => functional/test_vnc.py}         |  70 ++++-----
+ 5 files changed, 185 insertions(+), 176 deletions(-)
+ delete mode 100644 tests/avocado/migration.py
+ create mode 100644 tests/functional/qemu_test/ports.py
+ create mode 100755 tests/functional/test_migration.py
+ rename tests/{avocado/vnc.py => functional/test_vnc.py} (74%)
  mode change 100644 => 100755
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index f50bf61a50..3d29b8245a 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -206,6 +206,7 @@ tests_x86_64_system_quick = [
-   'pc_cpu_hotplug_props',
-   'virtio_version',
-   'x86_cpu_model_versions',
-+  'vnc',
- ]
- 
- tests_x86_64_system_thorough = [
-diff --git a/tests/avocado/vnc.py b/tests/functional/test_vnc.py
-old mode 100644
-new mode 100755
-similarity index 97%
-rename from tests/avocado/vnc.py
-rename to tests/functional/test_vnc.py
-index 862c8996a8..b769d3b268
---- a/tests/avocado/vnc.py
-+++ b/tests/functional/test_vnc.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Simple functional tests for VNC functionality
- #
- # Copyright (c) 2018 Red Hat, Inc.
-@@ -11,7 +13,7 @@
- import socket
- from typing import List
- 
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- 
- 
- VNC_ADDR = '127.0.0.1'
-@@ -51,10 +53,7 @@ def find_free_ports(count: int) -> List[int]:
- 
- 
- class Vnc(QemuSystemTest):
--    """
--    :avocado: tags=vnc,quick
--    :avocado: tags=machine:none
--    """
-+
-     def test_no_vnc(self):
-         self.vm.add_args('-nodefaults', '-S')
-         self.vm.launch()
-@@ -113,3 +112,6 @@ def test_change_listen(self):
-         self.assertFalse(check_connect(a))
-         self.assertTrue(check_connect(b))
-         self.assertTrue(check_connect(c))
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
 -- 
 2.47.0
 
