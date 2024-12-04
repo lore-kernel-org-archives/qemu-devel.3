@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 234C0E7716F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 07:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F03FE7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 07:43:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIk20-0003mJ-3L; Wed, 04 Dec 2024 02:42:45 -0500
+	id 1tIk2E-0003sL-T1; Wed, 04 Dec 2024 02:42:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tIk1u-0003lL-4h; Wed, 04 Dec 2024 02:42:38 -0500
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ id 1tIk1v-0003m7-NA; Wed, 04 Dec 2024 02:42:41 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tIk1s-0006Xq-DJ; Wed, 04 Dec 2024 02:42:37 -0500
+ id 1tIk1s-0006XW-Dx; Wed, 04 Dec 2024 02:42:39 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 084B0A41C0A;
- Wed,  4 Dec 2024 07:40:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1A3C4CEE0;
+ by dfw.source.kernel.org (Postfix) with ESMTP id 82AC95C68B4;
+ Wed,  4 Dec 2024 07:41:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1408BC4CEE8;
  Wed,  4 Dec 2024 07:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1733298153;
- bh=Zdz33+JrFuLWEYr3Q523j6TOZr8k9EjWwbpOCTAVnQ8=;
+ bh=xKr5K1TW0pYorJXNz1Ksgf7p26nCCQVwbb66JoUnk8M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=WmVcEjWkke/rDeYQ2obmJhkoAGJAPkxlbZEXvMX+MLFMJIUS4MWTgCwb85UP8htJX
- w7CskJ2rHQwrZV5w+I3LLjR7Kl5inq19etKKtCEDs9PCnJDpHFCEXLZgLSyxDpRArh
- Bd7Wv+Mq3LUJ51gd2wdvL9vb7u0HAYsHdXFar9J2ZuW7wrl8u7SyZS125IoPBkj8ho
- w+zxPw3x55e3AWt6N2TZEAp5foCI8KcD4jw5Lzlh0lEHT9BjWTkyIbI0gqJl0PZjhL
- u6nGo+YMgef1b5JhO84/LP3IWWPkQxsJSu1rnDpVZQePdcnJ8nGrkl0DyKoShajIgd
- WCm1q5Ofg3VUw==
+ b=AJb+FyFMhbW4wtXckB9r/3Jrr1JZ2l2UyfBxBNzNFLE4AN118IU/Lkk7lXHo+oLT8
+ PzBexZjWcyPlYq8oTNDLBCtTtze9DEf4zsKFdJ8glRFMWEszQl426dD2pCy0Sum4BP
+ AazDt338RWog+J4kCkQm45YoFlq14mT3noEenF6fefbgG4h0G7lezRwucJLXu8/OHO
+ KMVvDFRftS8h6JX0//I/jUm8fMinNSLv4958QQY7r1vr2WD5ILKkCVIvcc8cPuprXj
+ KqJlNAX5VmdhqOy0nyjx5ijlRnbqQOSp9Qf44kTDLDfU/glPXivznc5euYpAKVxkIz
+ udDDeNfo0H8lg==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tIk1n-00000004Kiu-09La; Wed, 04 Dec 2024 08:42:31 +0100
+ id 1tIk1n-00000004KjA-0ad9; Wed, 04 Dec 2024 08:42:31 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -44,16 +44,17 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v5 04/16] acpi/ghes: better handle source_id and notification
-Date: Wed,  4 Dec 2024 08:41:12 +0100
-Message-ID: <266784293ac084e27f2b13a3855bf234eb96a9ba.1733297707.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v5 08/16] acpi/ghes: don't check if physical_address is not
+ zero
+Date: Wed,  4 Dec 2024 08:41:16 +0100
+Message-ID: <95c0fa3fc2969daf3b6bc1f007733f11b715a465.1733297707.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1733297707.git.mchehab+huawei@kernel.org>
 References: <cover.1733297707.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -73
 X-Spam_score: -7.4
 X-Spam_bar: -------
@@ -76,91 +77,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GHES has two fields that are stored on HEST error source
-blocks associated with notifications:
+The 'physical_address' value is a faulty page. As such, 0 is
+as valid as any other value.
 
-- notification type, which is a number defined at the ACPI spec
-  containing several arch-specific synchronous and assynchronous
-  types;
-- source id, which is a HW/FW defined number, used to distinguish
-  between different implemented sources.
-
-There could be several sources with the same notification type,
-which is dependent of the way each architecture maps notifications.
-
-Right now, build_ghes_v2() hardcodes a 1:1 mapping between such
-fields. Move it to two independent parameters, allowing the
-caller function to fill both.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
----
-
-Chenges from v10:
-
-- Some changes got moved to the previous patch.
-
-Changes from v8:
-- Non-rename/cleanup changes merged altogether;
-- source ID is now more generic, defined per guest target.
-  That should make easier to add support for 86.
-
+Suggested-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- hw/acpi/ghes.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ hw/acpi/ghes.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 4a6c45bcb4be..29cd7e4d8171 100644
+index edc74c38bf8a..a3dffd78b012 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -284,9 +284,13 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
- }
+@@ -400,10 +400,6 @@ int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
  
- /* Build Generic Hardware Error Source version 2 (GHESv2) */
--static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-+static void build_ghes_v2(GArray *table_data,
-+                          BIOSLinker *linker,
-+                          enum AcpiGhesNotifyType notify,
-+                          uint16_t source_id)
- {
-     uint64_t address_offset;
-+
-     /*
-      * Type:
-      * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-@@ -316,18 +320,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-         address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
-         ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
+     start_addr = le64_to_cpu(ags->ghes_addr_le);
  
--    switch (source_id) {
--    case ACPI_HEST_SRC_ID_SEA:
--        /*
--         * Notification Structure
--         * Now only enable ARMv8 SEA notification type
--         */
--        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
--        break;
--    default:
--        error_report("Not support this error source");
--        abort();
+-    if (!physical_address) {
+-        return -1;
 -    }
-+    /* Notification Structure */
-+    build_ghes_hw_error_notification(table_data, notify);
+-
+     start_addr += source_id * sizeof(uint64_t);
  
-     /* Error Status Block Length */
-     build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
-@@ -369,7 +363,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
- 
-     /* Error Source Count */
-     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
--    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-+    build_ghes_v2(table_data, linker,
-+                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
- 
-     acpi_table_end(linker, &table);
- }
+     cpu_physical_memory_read(start_addr, &error_block_addr,
 -- 
 2.47.1
 
