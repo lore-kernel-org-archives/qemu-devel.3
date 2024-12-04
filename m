@@ -4,91 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5AEE77170
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C80ADE77171
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvcN-00041b-Ee; Wed, 04 Dec 2024 15:05:03 -0500
+	id 1tIvcO-00043v-My; Wed, 04 Dec 2024 15:05:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIvcL-00040L-Jy
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:05:01 -0500
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIvcK-0003La-2d
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:05:01 -0500
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-7fd10cd5b1aso143086a12.2
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:04:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733342698; x=1733947498; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Nnv71+rW9GA7t2uIqnUeOj8gJtCmfjXmgXPNueQy4H8=;
- b=QzHmlnQkq9s9+BeV/8BoTP/Su5viMIezlda7hQXzj0o8SSorhVH1p35g54BkKYnnyX
- m7h0dqy5PvOk7ojnWk0lxHuUJN+yEewgyyYZLzHpVtH2CvHEw7+mF5YPdmJTTHv8B9+m
- nYs+a8hCxfdJ42dHgYDLFQrf+aa1W7hRUFay2vw5cLkcilO0vqnNtnJNcQpEnh49cxhs
- eGUB0t3hT4dQOjQZ8OT2cKA4mgTTdP6rDVw1TtILEM2GWF+VN7ZR98I68khkTwPaCGca
- U0M25+o1dsd7AgcrRPPOC6m+u9RSFMf+wdQgRvzJQzX8wIZf3Dh5cPLh0FEP/y7AFTey
- TQMw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIvcN-00042C-E9
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:05:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIvcM-0003MC-1s
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:05:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733342701;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=n1SinKtDXuMdQYPr28oegc+WM+nzyg47B7ZbZEtDcGc=;
+ b=Youy3e4M/g1SFMvrat6EN/OKGA4WReqpfOtK/JBclf0XLrCtwkgzksqwA6+MOmGWNBuzPF
+ fMs6q0LEtZA2Qm/Ll02z638XxoCMP5F7lXXUnSa4m7TD5bCyJMw0/1yZQAc57Ic++9dnfM
+ FL8d0PRCWzLnC7h8roJ2G7Noeyb+lk0=
+Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
+ [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-454-Ix82q_fLPsWbv4dpLRBxPw-1; Wed, 04 Dec 2024 15:05:00 -0500
+X-MC-Unique: Ix82q_fLPsWbv4dpLRBxPw-1
+X-Mimecast-MFC-AGG-ID: Ix82q_fLPsWbv4dpLRBxPw
+Received: by mail-il1-f199.google.com with SMTP id
+ e9e14a558f8ab-3a7a1e95f19so836885ab.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:05:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733342698; x=1733947498;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Nnv71+rW9GA7t2uIqnUeOj8gJtCmfjXmgXPNueQy4H8=;
- b=ON1YSNOhvXeZLk+VDtUzvHbgOTGFh7m6lheLmGzAzEJG1D4ESuuBjQjp35t2m4/fJK
- 3B70xy0ue95WiSatdyp0JMsovE8vy7XIcT7VDUBK6raEhTuUmDQe4WsFXOG4rWcQdCar
- TO5IwESDgn15++PsPbmwWnwxUAuEzBfRkuGtCfFcquF/SzvxMiuvREJA3qHyKZT6bmSj
- TzXZRF57JPr9fV/bDRFGDMaG5jjupxHIhe/7KsHdw9DtGPfb7fCA9iE4bLWp6rqd/sga
- aKJQfoW41i/oNpPAH5Des19Q8CZHLiayTU6eYI3mB6lfdEaoVyjILiBy/5vvkVADr4TF
- /v1g==
-X-Gm-Message-State: AOJu0YzkRCOZOcoFrEzT+Iedv+y8lssDOASiXmj8iqc+HyJJEdwkcE05
- OOJFW87ITZ2cyG2G5bU2O59yqvLzgZ1V6CoSk25fL/D9q3jmGLzkoF4ThH/RfEg=
-X-Gm-Gg: ASbGnculuxD1RiyeJOyNIUeLDWBOBm7iOZJ0fiXegEXUS57hTNJyLpjEJWC6KtsbuRJ
- dYjsNjpmsqf0oEp0cdZ3LsYXk6B5tbzgXuoQ2mA8b7CKzRAI+XrTlx4OwJPSsf4ttc2cAXA6A2U
- /H1ulLvg5TxKUr0uA6YV1P2YzcnEoiViwh/TvJczEt+XNQTYeHkyArxuSu3M0EJbfcZoG2zTJUv
- cIAgQEtmar7WnJL3iYba8ZItyGpsxoAIAPqLJFCzrg0k1IsdsmCzX+1MjP1a+jvweZdYCoPbtBT
- deLUnGyDa4mQY7UwA7J31Q==
-X-Google-Smtp-Source: AGHT+IGuVDDp8VLB9IPM6Tk9931pTC/c2PD9N5IN9kikQ+p67vwnXXDubjFWHYUbPdrnBQmPwk3bbA==
-X-Received: by 2002:a05:6a20:918d:b0:1e0:f495:1bd9 with SMTP id
- adf61e73a8af0-1e16bdd3296mr8455695637.8.1733342698352; 
+ d=1e100.net; s=20230601; t=1733342699; x=1733947499;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=n1SinKtDXuMdQYPr28oegc+WM+nzyg47B7ZbZEtDcGc=;
+ b=bTrg3pRbyefVonRccEAYM/NPOqkey7H6IZGGnwyiG+wiuniOvciw6tI0HoFkzoWlrH
+ WWC4XBxRF18Vhg3WIU8QA0FvUHeKwypqZojIKIpHnPYuoTxxceMZKOYwm7irhUoMa6yM
+ U4nceWvxTgCIkBABl+zangjqrq/3OXfIqQZQqfWCtfQdTokyJp7oUovmiA5rZoyU1I2g
+ AlK+3nhHb3Zfyx/XiiEXuPwyfYuQUbcTNjJEgZoZjFGm1XwGLtQu2yqCoZcrkU7qzvkO
+ hWEufN3pshnmQ19tyAWB5s2VtSBNIdOdhlAo1zZu3mbgpT9dgDaccFzsxV8vjG/lw/52
+ M6OA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUX5opvnP1BeB54Ehkz0RBsjeDsnMr4BeQqVK5qH6HBAhSh0+iwhh7c3XJuuZFQ+m0hCdSfzEa3mmDg@nongnu.org
+X-Gm-Message-State: AOJu0Yzoc5SMvEwnBkf2OApCa/zC9mFOlJ+e+cDMH74JcyVW2dTtvpe7
+ EQ6zFV1rNqAuWh6VEKZ52OT2sV5ptav6GQXWWq2ShBDqghztPBlhgRmzQ+lHxClAaQBqEElYxLz
+ /VOayTb9bZcJJ9QQgTN8Rekrr6jb158xuTd9X2k2KYki+1cF5LUot
+X-Gm-Gg: ASbGncvQu0SJ96JIV2lBkBEEdEUKKmd3eO9lqWQpdBUuJ4mRUExGhPtvnwThkn3qZIO
+ 0pN1JjkRf3aEUIPB7xLf/bCOv+1ONqjvgXBc/y+VzU5e5wuK45eweGC5A6v7ffJAjukNGP02aer
+ owH7dHfuA3LEgs1LhJEvSo+F6fEO+qaTUM1kUKXSuN/C7ZxQ4jmkC/qRMbZ+UxdkQICJC0iyq+z
+ Y41oOCaJ8xQMttoEB4eQaYNYT4Vv+kgJIn1ErFNVlsC03TvxG//+r2xLohTC/QK1/1dILtVy6bO
+ I4tvou1Lriw=
+X-Received: by 2002:a05:6e02:1d1b:b0:3a7:a4ec:6cfc with SMTP id
+ e9e14a558f8ab-3a7f9a3b6a5mr93951735ab.8.1733342699515; 
+ Wed, 04 Dec 2024 12:04:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGlnY53XHpAQU0YORmKx5E0V+0kY+5ud30g2G5XD6I5dtlvrihQpoYkQG4ykkiHdmtJR0B3aQ==
+X-Received: by 2002:a05:6e02:1d1b:b0:3a7:a4ec:6cfc with SMTP id
+ e9e14a558f8ab-3a7f9a3b6a5mr93951435ab.8.1733342699192; 
+ Wed, 04 Dec 2024 12:04:59 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3a7dff088bbsm25864795ab.56.2024.12.04.12.04.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 04 Dec 2024 12:04:58 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7fc9c3a0c3csm11763116a12.76.2024.12.04.12.04.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Dec 2024 12:04:57 -0800 (PST)
-Message-ID: <2e88ea19-fdae-429c-a674-a0fd5d91eced@linaro.org>
-Date: Wed, 4 Dec 2024 12:04:56 -0800
+Date: Wed, 4 Dec 2024 15:04:56 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 04/24] thread-pool: Implement generic (non-AIO) pool
+ support
+Message-ID: <Z1C16M7O1Ab_w7CK@x1n>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <babda1bbe43024baaa4a9ac855f7930b6679f2b7.1731773021.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] tests/functional/aarch64: add tests for FEAT_RME
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, mathieu.poirier@linaro.org,
- jean-philippe@linaro.org, marcin.juszkiewicz@linaro.org,
- gustavo.romero@linaro.org
-References: <20241203213629.2482806-1-pierrick.bouvier@linaro.org>
- <87frn3bxfg.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87frn3bxfg.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <babda1bbe43024baaa4a9ac855f7930b6679f2b7.1731773021.git.maciej.szmigiero@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,18 +114,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTIvNC8yNCAwMTozOCwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBQaWVycmljayBCb3V2
-aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBUaGlz
-IGJvb3QgYW4gT1AtVEVFIGVudmlyb25tZW50LCBhbmQgbGF1bmNoIGEgbmVzdGVkIGd1ZXN0
-IFZNIGluc2lkZSBpdA0KPj4gdXNpbmcgdGhlIFJlYWxtcyBmZWF0dXJlLiBXZSBkbyBpdCBm
-b3IgdmlydCBhbmQgc2JzYS1yZWYgcGxhdGZvcm1zLg0KPj4NCj4+IFNpZ25lZC1vZmYtYnk6
-IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4gDQo+
-IFF1ZXVlZCB0byB0ZXN0aW5nL25leHQsIHRoYW5rcy4NCj4gDQoNClRoYW5rcyBBbGV4Lg0K
-DQpGWUksIHRoaXMgdGVzdCB0cmlnZ2VycyBhIHVic2FuIGlzc3VlLCB0aGF0IEkgZml4ZWQg
-aW4gWzFdLg0KDQpBcyBQZXRlciBkaWQgZ29vZCBlZmZvcnRzIHRvIGNsZWFudXAgdWJzYW4g
-aXNzdWVzIHdlIGhhZCAobm9uZSBsZWZ0IGZyb20gDQp3aGF0IEkgdHJpZWQpLCBpdCB3b3Vs
-ZCBiZSB1bmZvcnR1bmF0ZSB0byByZWludHJvZHVjZSBvbmUgYXQgdGhlIHNhbWUgDQp0aW1l
-IHdlIG1lcmdlIHRoZSBjdXJyZW50IHBhdGNoLg0KDQpbMV0gDQpodHRwczovL2xvcmUua2Vy
-bmVsLm9yZy9xZW11LWRldmVsLzIwMjQxMjA0MTk1MTExLjI5MjExNDEtMS1waWVycmljay5i
-b3V2aWVyQGxpbmFyby5vcmcvVC8jdQ0K
+On Sun, Nov 17, 2024 at 08:19:59PM +0100, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> 
+> Migration code wants to manage device data sending threads in one place.
+> 
+> QEMU has an existing thread pool implementation, however it is limited
+> to queuing AIO operations only and essentially has a 1:1 mapping between
+> the current AioContext and the AIO ThreadPool in use.
+> 
+> Implement generic (non-AIO) ThreadPool by essentially wrapping Glib's
+> GThreadPool.
+> 
+> This brings a few new operations on a pool:
+> * thread_pool_wait() operation waits until all the submitted work requests
+> have finished.
+> 
+> * thread_pool_set_max_threads() explicitly sets the maximum thread count
+> in the pool.
+> 
+> * thread_pool_adjust_max_threads_to_work() adjusts the maximum thread count
+> in the pool to equal the number of still waiting in queue or unfinished work.
+> 
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+
+All the comments so far make sense to me too, so if you address all of
+them, feel free to take this alone:
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+-- 
+Peter Xu
+
 
