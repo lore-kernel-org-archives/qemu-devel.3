@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACEC6E7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 19:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05823E7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvPN-0000ws-Jd; Wed, 04 Dec 2024 14:51:37 -0500
+	id 1tIvXg-0002Hr-4t; Wed, 04 Dec 2024 15:00:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIvPL-0000vY-Hg
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:51:35 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIvPJ-0001Jb-Pt
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:51:35 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-215bb7bb9f9so919945ad.2
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 11:51:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733341892; x=1733946692; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hJnVqGKgE5xAxt3ubjaUh4ERJ027DT3bfz1Npiam3ec=;
- b=fQUmkMwSH9A0zRy6igpDPcE8Bhu0o+MkAgnw0fEWDXaZj+Z17SgJwsPPrFaPNTcNjY
- 1xAjYV7SR3HmVbG72/XX6HiaRK0Hg9Te8IYcZyNu9wkO0G0DAamrmqNs1gEL8zQE6Mdd
- Qi04YRBFANa43KHKCCh48bJHzh52wOiuUnCq4wjVNAjTV/MxK0pXXwqD+qL11BMNCx9j
- U8GEg8bCMrd2gUQDfluhytDKSW5ffGOCXWBJcYdvzJDGtCSexotyw2zsI86w2uRViCmf
- rBmH1wKL0Iqyw5b+qg2gl8APn9s9owaLFII1+Pmmq9HzNNm0cYAX4PRJkVjURAcjxH88
- aN6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733341892; x=1733946692;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hJnVqGKgE5xAxt3ubjaUh4ERJ027DT3bfz1Npiam3ec=;
- b=KrHO6ZOYqVO+hBrElorl4vPDhVj2EUI1kSoqfupSHbEQr+zXVYN0n2No44K5h3XsRU
- rTcWveuyjVZ4cRjNbO+nnvYyXU4xChganD0S3g6DIHCzoAtOOeoGd920dNq1+oR6OOu7
- U3VwNdA9SprPIGpBywZSDecrcjeYfpEa7NRFd3KvTOIAuJPtA7aXva24bnvVCN30ZjVa
- F8Ncue6ud0tEHPFAqaxCCj9/n5m93oY9rEJOpKkZruevuun1JnhTzYNYtzR9TpBnhuFt
- nPF4waSAtTkNgNEpD6nd+5wUGgtpuVb276Oi8nV2ipnN4mUQ0oAQArXwV20Sy5ePgqOe
- sc/w==
-X-Gm-Message-State: AOJu0YzmQIi9m0mVPT4N5AJCWe4hAg59t+MKLQARGA/yF7FG3U3idsFl
- +qu42pOnVQVNncWlBwYxj6WiZEZ8Qz/4o+AujFmj1YBtE9QwAKiQRn3hYZ0UR8w2+u5ijKM+5Nl
- fc7s=
-X-Gm-Gg: ASbGnctcSgx/z9cd8HpZmg6IIqA9CtN8XouOvIMZQ0JZ7HUQktGr3sqBj0eTm3+ZWhL
- EoIc+cuGIxONcMN7VCmRrzadDv/eRt2EN2fFAINE/cjFEaV7YCh/MLEBAqxGegeOddnLC6W+Qig
- MLpXs1ZE9TYkCrZyWKIJVpV7Qf9oWm8K1OdnicfwkVTVRwghP5WBIO5POp7rogi+jwCPCedVO/4
- pSCi/Aoj4Ky8x+oW/v52QJlfVxfdSAtTtF1s52xjtjltHZqSDwqbnmvnsWerUF2ubHmMX2qevXE
- 2etjZm8D
-X-Google-Smtp-Source: AGHT+IEc5o482XvFsTuGa+jVkcRuMmQ1DxT/XiVkWwea7w/hegSTjwLtSYRabolSZoZdjdxoHKsAYw==
-X-Received: by 2002:a17:902:e744:b0:20c:5533:36da with SMTP id
- d9443c01a7336-215d00b8806mr81359925ad.42.1733341891825; 
- Wed, 04 Dec 2024 11:51:31 -0800 (PST)
-Received: from pc.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725417fb950sm13162824b3a.121.2024.12.04.11.51.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 11:51:31 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, alex.bennee@linaro.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- peter.maydell@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] vvfat: fix ubsan issue in create_long_filename
-Date: Wed,  4 Dec 2024 11:51:11 -0800
-Message-Id: <20241204195111.2921141-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1tIvXc-0002Hd-GZ
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:00:09 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1tIvXZ-0006f5-1g
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:00:07 -0500
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B4G8WXD010206;
+ Wed, 4 Dec 2024 19:59:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 3lxBK/8e95WP7li36LPDI73MJM+bvMkDr5py8ISlvu4=; b=nMHNdv/hH7KZUeOx
+ Ci+cXOPPmyTFuPEYhhXh5M+/iSDyadp18OT8a//Rzvzr7e8lEjpHjm1g7KIYgizd
+ 62f4mlGhmCIGsVvEfzRO9xJ+Xx6qDPuTJ8UFH3NLsK2GtIzXcawYqG+Wyg7dQI44
+ kFA9B1d/oX+caD8WnAhlwCQSs2cy1lNs2zYSEggbWO6ysy/kNxvqfNZwN5CwwqBo
+ ZRMN5Znnks0WLfxsN7VjbZa3Igwj5HxWAZypnVeBYklbBjekqAg9eUJF5D9zDDGA
+ pw0jvOEOCNjvx+6vKoaFkzWHZIXsTSrYAWcHo3NazAk/L5DjaD+OClsJg+prl5S6
+ vJ3+qg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43a4by42xp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Dec 2024 19:59:58 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B4Jxvkd025046
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 4 Dec 2024 19:59:57 GMT
+Received: from [10.222.168.90] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Dec 2024
+ 11:59:56 -0800
+Message-ID: <2a964711-8387-43d6-9582-805103f4d0d7@quicinc.com>
+Date: Wed, 4 Dec 2024 13:59:55 -0600
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] Hexagon (target/hexagon) Remove HEX_DEBUG/HEX_DEBUG_LOG
+To: Taylor Simpson <ltaylorsimpson@gmail.com>, <qemu-devel@nongnu.org>
+CC: <bcain@quicinc.com>, <quic_mathbern@quicinc.com>, <sidneym@quicinc.com>,
+ <quic_mliebel@quicinc.com>, <richard.henderson@linaro.org>,
+ <philmd@linaro.org>, <ale@rev.ng>, <anjo@rev.ng>
+References: <20241105162722.66247-1-ltaylorsimpson@gmail.com>
+Content-Language: en-US
+From: Brian Cain <quic_bcain@quicinc.com>
+In-Reply-To: <20241105162722.66247-1-ltaylorsimpson@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: 7NH7CFIAimyyCq56vGKTAjVDHIqEuEEV
+X-Proofpoint-ORIG-GUID: 7NH7CFIAimyyCq56vGKTAjVDHIqEuEEV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 clxscore=1015
+ impostorscore=0 suspectscore=0 adultscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412040152
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,62 +104,456 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Found with test sbsaref introduced in [1].
 
-[1] https://patchew.org/QEMU/20241203213629.2482806-1-pierrick.bouvier@linaro.org/
+On 11/5/2024 10:27 AM, Taylor Simpson wrote:
+> All Hexagon debugging is now done with QEMU mechanisms
+> (e.g., -d in_asm) or with a connected debugger (lldb).
+>
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> Reviewed-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+> ---
 
-../block/vvfat.c:433:24: runtime error: index 14 out of bounds for type 'uint8_t [11]'
-    #0 0x56151a66b93a in create_long_filename ../block/vvfat.c:433
-    #1 0x56151a66f3d7 in create_short_and_long_name ../block/vvfat.c:725
-    #2 0x56151a670403 in read_directory ../block/vvfat.c:804
-    #3 0x56151a674432 in init_directories ../block/vvfat.c:964
-    #4 0x56151a67867b in vvfat_open ../block/vvfat.c:1258
-    #5 0x56151a3b8e19 in bdrv_open_driver ../block.c:1660
-    #6 0x56151a3bb666 in bdrv_open_common ../block.c:1985
-    #7 0x56151a3cadb9 in bdrv_open_inherit ../block.c:4153
-    #8 0x56151a3c8850 in bdrv_open_child_bs ../block.c:3731
-    #9 0x56151a3ca832 in bdrv_open_inherit ../block.c:4098
-    #10 0x56151a3cbe40 in bdrv_open ../block.c:4248
-    #11 0x56151a46344f in blk_new_open ../block/block-backend.c:457
-    #12 0x56151a388bd9 in blockdev_init ../blockdev.c:612
-    #13 0x56151a38ab2d in drive_new ../blockdev.c:1006
-    #14 0x5615190fca41 in drive_init_func ../system/vl.c:649
-    #15 0x56151aa796dd in qemu_opts_foreach ../util/qemu-option.c:1135
-    #16 0x5615190fd2b6 in configure_blockdev ../system/vl.c:708
-    #17 0x56151910a307 in qemu_create_early_backends ../system/vl.c:2004
-    #18 0x561519113fcf in qemu_init ../system/vl.c:3685
-    #19 0x56151a7e438e in main ../system/main.c:47
-    #20 0x7f72d1a46249 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
-    #21 0x7f72d1a46304 in __libc_start_main_impl ../csu/libc-start.c:360
-    #22 0x561517e98510 in _start (/home/user/.work/qemu/build/qemu-system-aarch64+0x3b9b510)
+I was wondering why I didn't see an update on this patch.  Sorry, I am 
+not sure how I missed it.
 
-The offset used can easily go beyond entry->name size. It's probably a
-bug, but I don't have the time to dive into vfat specifics for now.
 
-This change solves the ubsan issue, and is functionally equivalent, as
-anything written past the entry->name array would not be read anyway.
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- block/vvfat.c | 4 ++++
- 1 file changed, 4 insertions(+)
 
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 8ffe8b3b9bf..f2eafaa9234 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -426,6 +426,10 @@ static direntry_t *create_long_filename(BDRVVVFATState *s, const char *filename)
-         else if(offset<22) offset=14+offset-10;
-         else offset=28+offset-22;
-         entry=array_get(&(s->directory),s->directory.next-1-(i/26));
-+        /* ensure we don't write anything past entry->name */
-+        if (offset >= sizeof(entry->name)) {
-+            continue;
-+        }
-         if (i >= 2 * length + 2) {
-             entry->name[offset] = 0xff;
-         } else if (i % 2 == 0) {
--- 
-2.39.5
-
+>   target/hexagon/cpu.h       |   6 --
+>   target/hexagon/helper.h    |   3 -
+>   target/hexagon/internal.h  |  11 ----
+>   target/hexagon/translate.h |   2 -
+>   target/hexagon/genptr.c    |   7 ---
+>   target/hexagon/op_helper.c | 112 -------------------------------------
+>   target/hexagon/translate.c |  66 ----------------------
+>   target/hexagon/README      |   9 ---
+>   8 files changed, 216 deletions(-)
+>
+> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+> index 764f3c38cc..25150d5214 100644
+> --- a/target/hexagon/cpu.h
+> +++ b/target/hexagon/cpu.h
+> @@ -79,12 +79,6 @@ typedef struct CPUArchState {
+>       uint8_t slot_cancelled;
+>       target_ulong new_value_usr;
+>   
+> -    /*
+> -     * Only used when HEX_DEBUG is on, but unconditionally included
+> -     * to reduce recompile time when turning HEX_DEBUG on/off.
+> -     */
+> -    target_ulong reg_written[TOTAL_PER_THREAD_REGS];
+> -
+>       MemLog mem_log_stores[STORES_MAX];
+>   
+>       float_status fp_status;
+> diff --git a/target/hexagon/helper.h b/target/hexagon/helper.h
+> index fa0ebaf7c8..f8baa599c8 100644
+> --- a/target/hexagon/helper.h
+> +++ b/target/hexagon/helper.h
+> @@ -19,9 +19,6 @@
+>   #include "helper_protos_generated.h.inc"
+>   
+>   DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_RETURN, noreturn, env, i32)
+> -DEF_HELPER_1(debug_start_packet, void, env)
+> -DEF_HELPER_FLAGS_3(debug_check_store_width, TCG_CALL_NO_WG, void, env, int, int)
+> -DEF_HELPER_FLAGS_5(debug_commit_end, TCG_CALL_NO_WG, void, env, i32, int, int, int)
+>   DEF_HELPER_2(commit_store, void, env, int)
+>   DEF_HELPER_3(gather_store, void, env, i32, int)
+>   DEF_HELPER_1(commit_hvx_stores, void, env)
+> diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
+> index beb08cb7e3..32e96f00d9 100644
+> --- a/target/hexagon/internal.h
+> +++ b/target/hexagon/internal.h
+> @@ -20,17 +20,6 @@
+>   
+>   #include "qemu/log.h"
+>   
+> -/*
+> - * Change HEX_DEBUG to 1 to turn on debugging output
+> - */
+> -#define HEX_DEBUG 0
+> -#define HEX_DEBUG_LOG(...) \
+> -    do { \
+> -        if (HEX_DEBUG) { \
+> -            qemu_log(__VA_ARGS__); \
+> -        } \
+> -    } while (0)
+> -
+>   int hexagon_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+>   int hexagon_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
+>   int hexagon_hvx_gdb_read_register(CPUState *env, GByteArray *mem_buf, int n);
+> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+> index 00cc2bcd63..d251e2233f 100644
+> --- a/target/hexagon/translate.h
+> +++ b/target/hexagon/translate.h
+> @@ -73,7 +73,6 @@ typedef struct DisasContext {
+>       bool has_hvx_overlap;
+>       TCGv new_value[TOTAL_PER_THREAD_REGS];
+>       TCGv new_pred_value[NUM_PREGS];
+> -    TCGv pred_written;
+>       TCGv branch_taken;
+>       TCGv dczero_addr;
+>   } DisasContext;
+> @@ -271,7 +270,6 @@ extern TCGv hex_gpr[TOTAL_PER_THREAD_REGS];
+>   extern TCGv hex_pred[NUM_PREGS];
+>   extern TCGv hex_slot_cancelled;
+>   extern TCGv hex_new_value_usr;
+> -extern TCGv hex_reg_written[TOTAL_PER_THREAD_REGS];
+>   extern TCGv hex_store_addr[STORES_MAX];
+>   extern TCGv hex_store_width[STORES_MAX];
+>   extern TCGv hex_store_val32[STORES_MAX];
+> diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+> index dbae6c570a..2c5e15cfcf 100644
+> --- a/target/hexagon/genptr.c
+> +++ b/target/hexagon/genptr.c
+> @@ -100,10 +100,6 @@ void gen_log_reg_write(DisasContext *ctx, int rnum, TCGv val)
+>   
+>       gen_masked_reg_write(val, hex_gpr[rnum], reg_mask);
+>       tcg_gen_mov_tl(get_result_gpr(ctx, rnum), val);
+> -    if (HEX_DEBUG) {
+> -        /* Do this so HELPER(debug_commit_end) will know */
+> -        tcg_gen_movi_tl(hex_reg_written[rnum], 1);
+> -    }
+>   }
+>   
+>   static void gen_log_reg_write_pair(DisasContext *ctx, int rnum, TCGv_i64 val)
+> @@ -151,9 +147,6 @@ void gen_log_pred_write(DisasContext *ctx, int pnum, TCGv val)
+>       } else {
+>           tcg_gen_and_tl(pred, pred, base_val);
+>       }
+> -    if (HEX_DEBUG) {
+> -        tcg_gen_ori_tl(ctx->pred_written, ctx->pred_written, 1 << pnum);
+> -    }
+>       set_bit(pnum, ctx->pregs_written);
+>   }
+>   
+> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+> index 90e7aaa097..01d1a1b1a7 100644
+> --- a/target/hexagon/op_helper.c
+> +++ b/target/hexagon/op_helper.c
+> @@ -54,9 +54,6 @@ G_NORETURN void HELPER(raise_exception)(CPUHexagonState *env, uint32_t excp)
+>   void log_store32(CPUHexagonState *env, target_ulong addr,
+>                    target_ulong val, int width, int slot)
+>   {
+> -    HEX_DEBUG_LOG("log_store%d(0x" TARGET_FMT_lx
+> -                  ", %" PRId32 " [0x08%" PRIx32 "])\n",
+> -                  width, addr, val, val);
+>       env->mem_log_stores[slot].va = addr;
+>       env->mem_log_stores[slot].width = width;
+>       env->mem_log_stores[slot].data32 = val;
+> @@ -65,35 +62,11 @@ void log_store32(CPUHexagonState *env, target_ulong addr,
+>   void log_store64(CPUHexagonState *env, target_ulong addr,
+>                    int64_t val, int width, int slot)
+>   {
+> -    HEX_DEBUG_LOG("log_store%d(0x" TARGET_FMT_lx
+> -                  ", %" PRId64 " [0x016%" PRIx64 "])\n",
+> -                   width, addr, val, val);
+>       env->mem_log_stores[slot].va = addr;
+>       env->mem_log_stores[slot].width = width;
+>       env->mem_log_stores[slot].data64 = val;
+>   }
+>   
+> -/* Handy place to set a breakpoint */
+> -void HELPER(debug_start_packet)(CPUHexagonState *env)
+> -{
+> -    HEX_DEBUG_LOG("Start packet: pc = 0x" TARGET_FMT_lx "\n",
+> -                  env->gpr[HEX_REG_PC]);
+> -
+> -    for (int i = 0; i < TOTAL_PER_THREAD_REGS; i++) {
+> -        env->reg_written[i] = 0;
+> -    }
+> -}
+> -
+> -/* Checks for bookkeeping errors between disassembly context and runtime */
+> -void HELPER(debug_check_store_width)(CPUHexagonState *env, int slot, int check)
+> -{
+> -    if (env->mem_log_stores[slot].width != check) {
+> -        HEX_DEBUG_LOG("ERROR: %d != %d\n",
+> -                      env->mem_log_stores[slot].width, check);
+> -        g_assert_not_reached();
+> -    }
+> -}
+> -
+>   static void commit_store(CPUHexagonState *env, int slot_num, uintptr_t ra)
+>   {
+>       uint8_t width = env->mem_log_stores[slot_num].width;
+> @@ -173,91 +146,6 @@ void HELPER(commit_hvx_stores)(CPUHexagonState *env)
+>       }
+>   }
+>   
+> -static void print_store(CPUHexagonState *env, int slot)
+> -{
+> -    if (!(env->slot_cancelled & (1 << slot))) {
+> -        uint8_t width = env->mem_log_stores[slot].width;
+> -        if (width == 1) {
+> -            uint32_t data = env->mem_log_stores[slot].data32 & 0xff;
+> -            HEX_DEBUG_LOG("\tmemb[0x" TARGET_FMT_lx "] = %" PRId32
+> -                          " (0x%02" PRIx32 ")\n",
+> -                          env->mem_log_stores[slot].va, data, data);
+> -        } else if (width == 2) {
+> -            uint32_t data = env->mem_log_stores[slot].data32 & 0xffff;
+> -            HEX_DEBUG_LOG("\tmemh[0x" TARGET_FMT_lx "] = %" PRId32
+> -                          " (0x%04" PRIx32 ")\n",
+> -                          env->mem_log_stores[slot].va, data, data);
+> -        } else if (width == 4) {
+> -            uint32_t data = env->mem_log_stores[slot].data32;
+> -            HEX_DEBUG_LOG("\tmemw[0x" TARGET_FMT_lx "] = %" PRId32
+> -                          " (0x%08" PRIx32 ")\n",
+> -                          env->mem_log_stores[slot].va, data, data);
+> -        } else if (width == 8) {
+> -            HEX_DEBUG_LOG("\tmemd[0x" TARGET_FMT_lx "] = %" PRId64
+> -                          " (0x%016" PRIx64 ")\n",
+> -                          env->mem_log_stores[slot].va,
+> -                          env->mem_log_stores[slot].data64,
+> -                          env->mem_log_stores[slot].data64);
+> -        } else {
+> -            HEX_DEBUG_LOG("\tBad store width %d\n", width);
+> -            g_assert_not_reached();
+> -        }
+> -    }
+> -}
+> -
+> -/* This function is a handy place to set a breakpoint */
+> -void HELPER(debug_commit_end)(CPUHexagonState *env, uint32_t this_PC,
+> -                              int pred_written, int has_st0, int has_st1)
+> -{
+> -    bool reg_printed = false;
+> -    bool pred_printed = false;
+> -    int i;
+> -
+> -    HEX_DEBUG_LOG("Packet committed: pc = 0x" TARGET_FMT_lx "\n", this_PC);
+> -    HEX_DEBUG_LOG("slot_cancelled = %d\n", env->slot_cancelled);
+> -
+> -    for (i = 0; i < TOTAL_PER_THREAD_REGS; i++) {
+> -        if (env->reg_written[i]) {
+> -            if (!reg_printed) {
+> -                HEX_DEBUG_LOG("Regs written\n");
+> -                reg_printed = true;
+> -            }
+> -            HEX_DEBUG_LOG("\tr%d = " TARGET_FMT_ld " (0x" TARGET_FMT_lx ")\n",
+> -                          i, env->gpr[i], env->gpr[i]);
+> -        }
+> -    }
+> -
+> -    for (i = 0; i < NUM_PREGS; i++) {
+> -        if (pred_written & (1 << i)) {
+> -            if (!pred_printed) {
+> -                HEX_DEBUG_LOG("Predicates written\n");
+> -                pred_printed = true;
+> -            }
+> -            HEX_DEBUG_LOG("\tp%d = 0x" TARGET_FMT_lx "\n",
+> -                          i, env->pred[i]);
+> -        }
+> -    }
+> -
+> -    if (has_st0 || has_st1) {
+> -        HEX_DEBUG_LOG("Stores\n");
+> -        if (has_st0) {
+> -            print_store(env, 0);
+> -        }
+> -        if (has_st1) {
+> -            print_store(env, 1);
+> -        }
+> -    }
+> -
+> -    HEX_DEBUG_LOG("Next PC = " TARGET_FMT_lx "\n", env->gpr[HEX_REG_PC]);
+> -    HEX_DEBUG_LOG("Exec counters: pkt = " TARGET_FMT_lx
+> -                  ", insn = " TARGET_FMT_lx
+> -                  ", hvx = " TARGET_FMT_lx "\n",
+> -                  env->gpr[HEX_REG_QEMU_PKT_CNT],
+> -                  env->gpr[HEX_REG_QEMU_INSN_CNT],
+> -                  env->gpr[HEX_REG_QEMU_HVX_CNT]);
+> -
+> -}
+> -
+>   int32_t HELPER(fcircadd)(int32_t RxV, int32_t offset, int32_t M, int32_t CS)
+>   {
+>       uint32_t K_const = extract32(M, 24, 4);
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index 4b1bee3c6d..bce85eaeb8 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -50,7 +50,6 @@ TCGv hex_gpr[TOTAL_PER_THREAD_REGS];
+>   TCGv hex_pred[NUM_PREGS];
+>   TCGv hex_slot_cancelled;
+>   TCGv hex_new_value_usr;
+> -TCGv hex_reg_written[TOTAL_PER_THREAD_REGS];
+>   TCGv hex_store_addr[STORES_MAX];
+>   TCGv hex_store_width[STORES_MAX];
+>   TCGv hex_store_val32[STORES_MAX];
+> @@ -195,21 +194,6 @@ static void gen_exception_end_tb(DisasContext *ctx, int excp)
+>   
+>   }
+>   
+> -#define PACKET_BUFFER_LEN              1028
+> -static void print_pkt(Packet *pkt)
+> -{
+> -    GString *buf = g_string_sized_new(PACKET_BUFFER_LEN);
+> -    snprint_a_pkt_debug(buf, pkt);
+> -    HEX_DEBUG_LOG("%s", buf->str);
+> -    g_string_free(buf, true);
+> -}
+> -#define HEX_DEBUG_PRINT_PKT(pkt) \
+> -    do { \
+> -        if (HEX_DEBUG) { \
+> -            print_pkt(pkt); \
+> -        } \
+> -    } while (0)
+> -
+>   static int read_packet_words(CPUHexagonState *env, DisasContext *ctx,
+>                                uint32_t words[])
+>   {
+> @@ -235,14 +219,6 @@ static int read_packet_words(CPUHexagonState *env, DisasContext *ctx,
+>           g_assert(ctx->base.num_insns == 1);
+>       }
+>   
+> -    HEX_DEBUG_LOG("decode_packet: pc = 0x%" VADDR_PRIx "\n",
+> -                  ctx->base.pc_next);
+> -    HEX_DEBUG_LOG("    words = { ");
+> -    for (int i = 0; i < nwords; i++) {
+> -        HEX_DEBUG_LOG("0x%x, ", words[i]);
+> -    }
+> -    HEX_DEBUG_LOG("}\n");
+> -
+>       return nwords;
+>   }
+>   
+> @@ -465,11 +441,6 @@ static void gen_start_packet(DisasContext *ctx)
+>        */
+>       bitmap_zero(ctx->pregs_written, NUM_PREGS);
+>   
+> -    if (HEX_DEBUG) {
+> -        /* Handy place to set a breakpoint before the packet executes */
+> -        gen_helper_debug_start_packet(tcg_env);
+> -    }
+> -
+>       /* Initialize the runtime state for packet semantics */
+>       if (need_slot_cancelled(pkt)) {
+>           tcg_gen_movi_tl(hex_slot_cancelled, 0);
+> @@ -484,10 +455,6 @@ static void gen_start_packet(DisasContext *ctx)
+>               tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], next_PC);
+>           }
+>       }
+> -    if (HEX_DEBUG) {
+> -        ctx->pred_written = tcg_temp_new();
+> -        tcg_gen_movi_tl(ctx->pred_written, 0);
+> -    }
+>   
+>       /* Preload the predicated registers into get_result_gpr(ctx, i) */
+>       if (ctx->need_commit &&
+> @@ -635,15 +602,6 @@ static void gen_pred_writes(DisasContext *ctx)
+>       }
+>   }
+>   
+> -static void gen_check_store_width(DisasContext *ctx, int slot_num)
+> -{
+> -    if (HEX_DEBUG) {
+> -        TCGv slot = tcg_constant_tl(slot_num);
+> -        TCGv check = tcg_constant_tl(ctx->store_width[slot_num]);
+> -        gen_helper_debug_check_store_width(tcg_env, slot, check);
+> -    }
+> -}
+> -
+>   static bool slot_is_predicated(Packet *pkt, int slot_num)
+>   {
+>       for (int i = 0; i < pkt->num_insns; i++) {
+> @@ -691,25 +649,21 @@ void process_store(DisasContext *ctx, int slot_num)
+>            */
+>           switch (ctx->store_width[slot_num]) {
+>           case 1:
+> -            gen_check_store_width(ctx, slot_num);
+>               tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
+>                                  hex_store_addr[slot_num],
+>                                  ctx->mem_idx, MO_UB);
+>               break;
+>           case 2:
+> -            gen_check_store_width(ctx, slot_num);
+>               tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
+>                                  hex_store_addr[slot_num],
+>                                  ctx->mem_idx, MO_TEUW);
+>               break;
+>           case 4:
+> -            gen_check_store_width(ctx, slot_num);
+>               tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
+>                                  hex_store_addr[slot_num],
+>                                  ctx->mem_idx, MO_TEUL);
+>               break;
+>           case 8:
+> -            gen_check_store_width(ctx, slot_num);
+>               tcg_gen_qemu_st_i64(hex_store_val64[slot_num],
+>                                   hex_store_addr[slot_num],
+>                                   ctx->mem_idx, MO_TEUQ);
+> @@ -937,16 +891,6 @@ static void gen_commit_packet(DisasContext *ctx)
+>           gen_commit_hvx(ctx);
+>       }
+>       update_exec_counters(ctx);
+> -    if (HEX_DEBUG) {
+> -        TCGv has_st0 =
+> -            tcg_constant_tl(pkt->pkt_has_store_s0 && !pkt->pkt_has_dczeroa);
+> -        TCGv has_st1 =
+> -            tcg_constant_tl(pkt->pkt_has_store_s1 && !pkt->pkt_has_dczeroa);
+> -
+> -        /* Handy place to set a breakpoint at the end of execution */
+> -        gen_helper_debug_commit_end(tcg_env, tcg_constant_tl(ctx->pkt->pc),
+> -                                    ctx->pred_written, has_st0, has_st1);
+> -    }
+>   
+>       if (pkt->vhist_insn != NULL) {
+>           ctx->pre_commit = false;
+> @@ -975,7 +919,6 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
+>       ctx->pkt = &pkt;
+>       if (decode_packet(ctx, nwords, words, &pkt, false) > 0) {
+>           pkt.pc = ctx->base.pc_next;
+> -        HEX_DEBUG_PRINT_PKT(&pkt);
+>           gen_start_packet(ctx);
+>           for (i = 0; i < pkt.num_insns; i++) {
+>               ctx->insn = &pkt.insn[i];
+> @@ -1093,7 +1036,6 @@ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+>   }
+>   
+>   #define NAME_LEN               64
+> -static char reg_written_names[TOTAL_PER_THREAD_REGS][NAME_LEN];
+>   static char store_addr_names[STORES_MAX][NAME_LEN];
+>   static char store_width_names[STORES_MAX][NAME_LEN];
+>   static char store_val32_names[STORES_MAX][NAME_LEN];
+> @@ -1112,14 +1054,6 @@ void hexagon_translate_init(void)
+>           hex_gpr[i] = tcg_global_mem_new(tcg_env,
+>               offsetof(CPUHexagonState, gpr[i]),
+>               hexagon_regnames[i]);
+> -
+> -        if (HEX_DEBUG) {
+> -            snprintf(reg_written_names[i], NAME_LEN, "reg_written_%s",
+> -                     hexagon_regnames[i]);
+> -            hex_reg_written[i] = tcg_global_mem_new(tcg_env,
+> -                offsetof(CPUHexagonState, reg_written[i]),
+> -                reg_written_names[i]);
+> -        }
+>       }
+>       hex_new_value_usr = tcg_global_mem_new(tcg_env,
+>           offsetof(CPUHexagonState, new_value_usr), "new_value_usr");
+> diff --git a/target/hexagon/README b/target/hexagon/README
+> index 7ffd517d70..ca617e3364 100644
+> --- a/target/hexagon/README
+> +++ b/target/hexagon/README
+> @@ -282,10 +282,6 @@ For Hexagon Vector eXtensions (HVX), the following fields are used
+>   
+>   *** Debugging ***
+>   
+> -You can turn on a lot of debugging by changing the HEX_DEBUG macro to 1 in
+> -internal.h.  This will stream a lot of information as it generates TCG and
+> -executes the code.
+> -
+>   To track down nasty issues with Hexagon->TCG generation, we compare the
+>   execution results with actual hardware running on a Hexagon Linux target.
+>   Run qemu with the "-d cpu" option.  Then, we can diff the results and figure
+> @@ -305,8 +301,3 @@ Here are some handy places to set breakpoints
+>       The helper function for each instruction is named helper_<TAG>, so here's
+>           an example that will set a breakpoint at the start
+>           br helper_A2_add
+> -    If you have the HEX_DEBUG macro set, the following will be useful
+> -        At the start of execution of a packet for a given PC
+> -            br helper_debug_start_packet if env->gpr[41] == 0xdeadbeef
+> -        At the end of execution of a packet for a given PC
+> -            br helper_debug_commit_end if this_PC == 0xdeadbeef
 
