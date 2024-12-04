@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F25E77170
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5AEE77170
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvaE-00038J-SA; Wed, 04 Dec 2024 15:02:50 -0500
+	id 1tIvcN-00041b-Ee; Wed, 04 Dec 2024 15:05:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIvaB-00037y-BE
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:02:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIva9-0007HN-Dw
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:02:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733342562;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=MqS9h5s+zp5zuL1NTqg0gGxPzUgvRpsF12tDpRldwDU=;
- b=C6gWAzywrofLGRmdl86GDR67hiV5Cv8s7Xe51dOKZ5Ieu0LJoTXF77rhd6+exxTV9xOqIG
- gYqqY4F3jyAoHehu5340MlExbx2WFBaDN6Lj63Kj96SztzJJ9lt70gu6L+RkWnobTlSwA6
- YsIs56JxOxlfeQFateZTMfgw70WmcNQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-480-hYjsmpZVOJuhyE0JbLVSiw-1; Wed,
- 04 Dec 2024 15:02:38 -0500
-X-MC-Unique: hYjsmpZVOJuhyE0JbLVSiw-1
-X-Mimecast-MFC-AGG-ID: hYjsmpZVOJuhyE0JbLVSiw
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8989B195FCDD; Wed,  4 Dec 2024 20:02:37 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.92])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0220E3000197; Wed,  4 Dec 2024 20:02:34 +0000 (UTC)
-Date: Wed, 4 Dec 2024 20:02:31 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/6] migration: Kick postcopy threads on cancel
-Message-ID: <Z1C1V25wydbBlsMb@redhat.com>
-References: <20241202220137.32584-1-farosas@suse.de>
- <20241202220137.32584-3-farosas@suse.de> <Z1Ch8HpiKMoqILDM@x1n>
- <87r06ni84z.fsf@suse.de> <Z1Cv4JM8IbYeiDpR@x1n>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIvcL-00040L-Jy
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:05:01 -0500
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIvcK-0003La-2d
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:05:01 -0500
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-7fd10cd5b1aso143086a12.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:04:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733342698; x=1733947498; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Nnv71+rW9GA7t2uIqnUeOj8gJtCmfjXmgXPNueQy4H8=;
+ b=QzHmlnQkq9s9+BeV/8BoTP/Su5viMIezlda7hQXzj0o8SSorhVH1p35g54BkKYnnyX
+ m7h0dqy5PvOk7ojnWk0lxHuUJN+yEewgyyYZLzHpVtH2CvHEw7+mF5YPdmJTTHv8B9+m
+ nYs+a8hCxfdJ42dHgYDLFQrf+aa1W7hRUFay2vw5cLkcilO0vqnNtnJNcQpEnh49cxhs
+ eGUB0t3hT4dQOjQZ8OT2cKA4mgTTdP6rDVw1TtILEM2GWF+VN7ZR98I68khkTwPaCGca
+ U0M25+o1dsd7AgcrRPPOC6m+u9RSFMf+wdQgRvzJQzX8wIZf3Dh5cPLh0FEP/y7AFTey
+ TQMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733342698; x=1733947498;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Nnv71+rW9GA7t2uIqnUeOj8gJtCmfjXmgXPNueQy4H8=;
+ b=ON1YSNOhvXeZLk+VDtUzvHbgOTGFh7m6lheLmGzAzEJG1D4ESuuBjQjp35t2m4/fJK
+ 3B70xy0ue95WiSatdyp0JMsovE8vy7XIcT7VDUBK6raEhTuUmDQe4WsFXOG4rWcQdCar
+ TO5IwESDgn15++PsPbmwWnwxUAuEzBfRkuGtCfFcquF/SzvxMiuvREJA3qHyKZT6bmSj
+ TzXZRF57JPr9fV/bDRFGDMaG5jjupxHIhe/7KsHdw9DtGPfb7fCA9iE4bLWp6rqd/sga
+ aKJQfoW41i/oNpPAH5Des19Q8CZHLiayTU6eYI3mB6lfdEaoVyjILiBy/5vvkVADr4TF
+ /v1g==
+X-Gm-Message-State: AOJu0YzkRCOZOcoFrEzT+Iedv+y8lssDOASiXmj8iqc+HyJJEdwkcE05
+ OOJFW87ITZ2cyG2G5bU2O59yqvLzgZ1V6CoSk25fL/D9q3jmGLzkoF4ThH/RfEg=
+X-Gm-Gg: ASbGnculuxD1RiyeJOyNIUeLDWBOBm7iOZJ0fiXegEXUS57hTNJyLpjEJWC6KtsbuRJ
+ dYjsNjpmsqf0oEp0cdZ3LsYXk6B5tbzgXuoQ2mA8b7CKzRAI+XrTlx4OwJPSsf4ttc2cAXA6A2U
+ /H1ulLvg5TxKUr0uA6YV1P2YzcnEoiViwh/TvJczEt+XNQTYeHkyArxuSu3M0EJbfcZoG2zTJUv
+ cIAgQEtmar7WnJL3iYba8ZItyGpsxoAIAPqLJFCzrg0k1IsdsmCzX+1MjP1a+jvweZdYCoPbtBT
+ deLUnGyDa4mQY7UwA7J31Q==
+X-Google-Smtp-Source: AGHT+IGuVDDp8VLB9IPM6Tk9931pTC/c2PD9N5IN9kikQ+p67vwnXXDubjFWHYUbPdrnBQmPwk3bbA==
+X-Received: by 2002:a05:6a20:918d:b0:1e0:f495:1bd9 with SMTP id
+ adf61e73a8af0-1e16bdd3296mr8455695637.8.1733342698352; 
+ Wed, 04 Dec 2024 12:04:58 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fc9c3a0c3csm11763116a12.76.2024.12.04.12.04.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Dec 2024 12:04:57 -0800 (PST)
+Message-ID: <2e88ea19-fdae-429c-a674-a0fd5d91eced@linaro.org>
+Date: Wed, 4 Dec 2024 12:04:56 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z1Cv4JM8IbYeiDpR@x1n>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] tests/functional/aarch64: add tests for FEAT_RME
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, mathieu.poirier@linaro.org,
+ jean-philippe@linaro.org, marcin.juszkiewicz@linaro.org,
+ gustavo.romero@linaro.org
+References: <20241203213629.2482806-1-pierrick.bouvier@linaro.org>
+ <87frn3bxfg.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87frn3bxfg.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,116 +101,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 04, 2024 at 02:39:12PM -0500, Peter Xu wrote:
-> On Wed, Dec 04, 2024 at 04:02:36PM -0300, Fabiano Rosas wrote:
-> > Peter Xu <peterx@redhat.com> writes:
-> > 
-> > > On Mon, Dec 02, 2024 at 07:01:33PM -0300, Fabiano Rosas wrote:
-> > >> Make sure postcopy threads are released when migrate_cancel is
-> > >> issued. Kick the postcopy_pause semaphore and have the fault thread
-> > >> read 'fault_thread_quit' when joining.
-> > >> 
-> > >> While here fix the comment mentioning userfault_event_fd.
-> > >> 
-> > >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> > >
-> > > I remember when working on postcopy, I thought about failing migrate-cancel
-> > > for postcopy in general, rejecting such request.  And when working on the
-> > > recover feature, there's no concern on having it being cancelled, because
-> > > the user really shouldn't do that..
-> > >
-> > > The problem is migrate-cancel means crashing the VM on both sides when QEMU
-> > > already goes into postcopy stage.
-> > 
-> > Well, that's the sillyness of having a cancel command, you can never
-> > know what "cancel" means. The "documentation" says: "Cancel the current
-> > executing migration process", it doesn't mention anything about the
-> > consequences of such action.
-> 
-> We definitely need cancel.  It was always used in precopy, and people use
-> it a lot!
-
-Not a fair benchmark though.
-
-People use cancel alot because 'precopy' cannot complete in a
-predictable amount of time, any time guesstime can suddenly
-get much worse if the guest dirties memory differently. So
-people give up and cancel it after waiting ridiculously long
-and never being sure if it is nearing the finish.
-
-Once a migrate has been switched to 'postcopy' phase, however,
-we have what should be a highly predictable completion time,
-directly related to the amount of untransferred pages. That
-time should not get worse. The amount of time spent in the
-'postcopy' phase will depend on how long you let the migrate
-run in 'precopy' before flipping to 'postcopy'
-
-IOW, I think there's a reasonable case to be made that NOT
-having the ability to cancel while in 'postcopy' phase would
-be mostly acceptable. You give up the ability to cancel for
-a while, in exchange for a clearly determined completion
-time. 
-
-> > > If the user wants to crash the VM anyway, an easier way to do is killing on
-> > > both sides.
-> > 
-> > I don't think this is fair. We expose a "cancel" command, we better do
-> > some cancelling or instead reject the command appropriately, not expect
-> > the user to "know better".
-> 
-> That's exactly why we should fail it with a proper error message, IMHO.
-> Because the user may not really understand the impact of postcopy.
-
-Yep, I think users/apps expect "cancel" to be safe. So if it can't be
-safe at certain times, we should reject it in those time windows.
-
-> > > If the user wished to cancel, we should tell them "postcopy cannot be
-> > > cancelled, until complete".  That's probably the major reason why people
-> > > think postcopy is dangerous to use..
-> > 
-> > We could certainly add that restriction, I don't see a problem with
-> > it. That said, what is the actual use case for migrate_cancel? And how
-> > does that compare with yank? I feel like we've been kind of relying on
-> > nobody using those commands really.
-> 
-> We had "cancel" first, then "yank".  I didn't remember who merged yank,
-> especially for migration, and why it was ever needed.
-
-yank is for the case where the network connections are completely stuck,
-causing QEMU to potentially get stalled in I/O operations until a TCP
-timeout is reached. yank force unwedges any stuck I/O by aggresively
-closing the connections. It is most useful in the non-migration use
-cases though.
-
-> Migration users should have stick with "cancel" rather than "yank" - qmp
-> "yank" would "FAIL" the migration instead of showing CANCELLED, definitely
-> should avoid.  I am not aware of anybody that uses "yank" for migration at
-> all.
-> 
-> So yeah, both commands are slightly duplicated, and if we want to throw
-> one, it needs to be yank, not cancel.  I'm fine keeping both..
-
-I would say the difference is like a graceful shutdown vs pulling the
-power plug in a bare metal machine
-
-'cancel' is intended to be graceful. It should leave you with a functional
-QEMU (or refuse to run if unsafe).
-
-'yank' is intended to be forceful, letting you get out of bad situations
-that would otherwise require you to kill the entire QEMU process, but
-still with possible associated risk data loss to the QEMU backends.
-
-They have overlap, but are none the less different.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+T24gMTIvNC8yNCAwMTozOCwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBQaWVycmljayBCb3V2
+aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBUaGlz
+IGJvb3QgYW4gT1AtVEVFIGVudmlyb25tZW50LCBhbmQgbGF1bmNoIGEgbmVzdGVkIGd1ZXN0
+IFZNIGluc2lkZSBpdA0KPj4gdXNpbmcgdGhlIFJlYWxtcyBmZWF0dXJlLiBXZSBkbyBpdCBm
+b3IgdmlydCBhbmQgc2JzYS1yZWYgcGxhdGZvcm1zLg0KPj4NCj4+IFNpZ25lZC1vZmYtYnk6
+IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4gDQo+
+IFF1ZXVlZCB0byB0ZXN0aW5nL25leHQsIHRoYW5rcy4NCj4gDQoNClRoYW5rcyBBbGV4Lg0K
+DQpGWUksIHRoaXMgdGVzdCB0cmlnZ2VycyBhIHVic2FuIGlzc3VlLCB0aGF0IEkgZml4ZWQg
+aW4gWzFdLg0KDQpBcyBQZXRlciBkaWQgZ29vZCBlZmZvcnRzIHRvIGNsZWFudXAgdWJzYW4g
+aXNzdWVzIHdlIGhhZCAobm9uZSBsZWZ0IGZyb20gDQp3aGF0IEkgdHJpZWQpLCBpdCB3b3Vs
+ZCBiZSB1bmZvcnR1bmF0ZSB0byByZWludHJvZHVjZSBvbmUgYXQgdGhlIHNhbWUgDQp0aW1l
+IHdlIG1lcmdlIHRoZSBjdXJyZW50IHBhdGNoLg0KDQpbMV0gDQpodHRwczovL2xvcmUua2Vy
+bmVsLm9yZy9xZW11LWRldmVsLzIwMjQxMjA0MTk1MTExLjI5MjExNDEtMS1waWVycmljay5i
+b3V2aWVyQGxpbmFyby5vcmcvVC8jdQ0K
 
