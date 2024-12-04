@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F76AE77171
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 10:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5299E7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 10:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tImp6-0001j0-NW; Wed, 04 Dec 2024 05:41:36 -0500
+	id 1tImtj-0003Aa-8g; Wed, 04 Dec 2024 05:46:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tImp4-0001iT-Ti
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 05:41:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tImte-0003AC-M0
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 05:46:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tImp1-00027b-Nq
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 05:41:34 -0500
+ id 1tImtb-0004yy-Ad
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 05:46:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733308890;
+ s=mimecast20190719; t=1733309174;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=M7dETtT9Hmn2yejZU+CrqEVo/ZRjGNwp4sBQPBDvJAE=;
- b=Q8LSsB5TH1Qxv7idhxnCSINEnc+9i91df0390mF8r/A9r/A5AZApoMU0s8rlUaVz1BvnMt
- O97rDFfaUZo5QLX+nCLr9E9o7uShX6iv6Pi5qCRFGSh6ejsqJt2qp31Oco/pUoxjtr2hHo
- OOWY+yELHsvk7xOp2S/XFiw1UEw1WTI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PdoGhfRDjlR7Ftikb5GvZavl0RdhNSMHmwxYryBtI4o=;
+ b=GMw+T1MzaE00gsCf5e0H0sWgioGflqTTimI8W5B9hYd+gCjKxWdQOtXyK9EWrhr8GXMl4R
+ OitYxqW0VmrR2BzUW1lo5KmyK5pJy+uFnGgEqf4LXhre0plrWqIlpl9jlYoZ/hwzIKiMKD
+ uARjRfz7MrqdJpnw3kDmHzxHT3aVc8c=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-qRrP_yzHNd-dzeIuk91pnw-1; Wed,
- 04 Dec 2024 05:41:27 -0500
-X-MC-Unique: qRrP_yzHNd-dzeIuk91pnw-1
-X-Mimecast-MFC-AGG-ID: qRrP_yzHNd-dzeIuk91pnw
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-yGLuU2RXOWKLl_JOke5VAQ-1; Wed,
+ 04 Dec 2024 05:46:09 -0500
+X-MC-Unique: yGLuU2RXOWKLl_JOke5VAQ-1
+X-Mimecast-MFC-AGG-ID: yGLuU2RXOWKLl_JOke5VAQ
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EAE381955F3E; Wed,  4 Dec 2024 10:41:25 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B37991955DC8; Wed,  4 Dec 2024 10:46:08 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.92])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 817BB1956089; Wed,  4 Dec 2024 10:41:23 +0000 (UTC)
-Date: Wed, 4 Dec 2024 10:41:19 +0000
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AC6D1956048; Wed,  4 Dec 2024 10:46:07 +0000 (UTC)
+Date: Wed, 4 Dec 2024 10:46:03 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Subject: Re: [PATCH 2/5] tests/functional: Extract the find_free_ports()
  function into a helper file
-Message-ID: <Z1Axz2jQIX7kfn5C@redhat.com>
+Message-ID: <Z1Ay61hpfABc6n33@redhat.com>
 References: <20241204071911.664057-1-thuth@redhat.com>
  <20241204071911.664057-3-thuth@redhat.com>
 MIME-Version: 1.0
@@ -61,8 +61,8 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20241204071911.664057-3-thuth@redhat.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -140,6 +140,19 @@ On Wed, Dec 04, 2024 at 08:19:08AM +0100, Thomas Huth wrote:
 > +    def __exit__(self, exc_type, exc_value, traceback):
 > +        fcntl.flock(self.lock_fh, fcntl.LOCK_UN)
 > +        os.close(self.lock_fh)
+
+This code will leave '/tmp/qemu_port_lock' existing forever.... which is
+correct, because if you try to unlink it after closing, you'll introduce
+a race because the 2nd __enter__ will now be locking an unlinked file,
+and a 3rd __enter__ that comes along will create & lock an entirely new
+file.
+
+There are ways to make this safe by using stat + fstat either side of
+LOCK_EX, in a loop, to detect locking of an unlinked file. That is
+overkill though.  It is simpler to just put the lock file in the build
+directory IMHO, and thus avoid needing to care about unlinking - that'll
+be done when the user purges their build dir.
+
 > +
 > +    def check_bind(self, port: int) -> bool:
 > +        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
@@ -227,29 +240,13 @@ On Wed, Dec 04, 2024 at 08:19:08AM +0100, Thomas Huth wrote:
 > +        with Ports() as ports:
 > +            a, b, c = ports.find_free_ports(3)
 > +            self.do_test_change_listen(a, b, c)
-
-I think it would be possible to implement a decorator using "Ports"
-such that we don't need to manually wrap the methods, and just receive
-the list of port numbers as arguments.
-
-eg to make this pattern with:
-
-    @findFreePorts(3)
-    def test_change_listen(self, ports):
-         ....use 'ports' list ....
-
-Fully untested, but I think something approximately like this would
-work:
-
-   def findFreePorts(num)
-     def findFreePortsDeco(func):
-       def wrapper(*args, **kwargs):
-         with Ports() as ports:
-	   freeports = ports.find_free_ports(num)
-	   func(freeports, *args, **kwargs)
-       return wrapper
-     return findFreePortsDeco
-       
+> +
+> +
+>  if __name__ == '__main__':
+>      QemuSystemTest.main()
+> -- 
+> 2.47.0
+> 
 
 With regards,
 Daniel
