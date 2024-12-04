@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C739E7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F01DE77170
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvy9-0000Os-Nc; Wed, 04 Dec 2024 15:27:33 -0500
+	id 1tIvx0-0007TA-WD; Wed, 04 Dec 2024 15:26:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvy6-0000HO-AW
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:30 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvwz-0007SD-Rh
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:26:21 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvy3-0008Rs-Q9
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:30 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43494a20379so1934995e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:27:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvwx-00070Z-HW
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:26:21 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-434aafd68e9so1520005e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:26:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733344046; x=1733948846; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733343977; x=1733948777; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IbFwYvNsoagTIF3RGxGTKY4/+lkaBIKwukflDbrm8ec=;
- b=oHBrfr6SsSMQbt/j6NX5wd20ZGGqyEI5YuWHRMKKgBYkc0pio5Ce00gY3VLUJ89gQg
- U/JzuvVTUwha3wWQYqXdi5UGPO6B3x/zd8IactEvSvybmy+gx9HtW37JODkuvmfFB/DD
- x5emvj/G3Z/QBlpQ2/AwWWC9svvg5P7Sh4bwQXrguY3AHGPSEFGJ2iskLwb6+3tQfqqK
- 4PHBDLYlWUZwlYSG/Dg7SiA3GlpL3VSYW+UZew1nlBfCsKo3tBLwov1jpl5Ero4ycld9
- CFdhacWsEtPLMOFx7TaiG4DJM3KaVfOv5OnOtvOoyQlanmG/u99jDmUvg+q4fKPK9meQ
- h1+g==
+ bh=DPV/ubcrZI2iapAPKTXZkCgfGpvNQPE7G4ysbpy5Jw0=;
+ b=dRqngvANIAybBI4plRQlxbGRt7LPEOiaCux0KvE/ZHgfjadcIpzfr0vJYNoYv20AaK
+ /wZvLKovl491nwxERsQyNHincW8MTSAgH1bpoyFqa6Wsch/lUMGFjEZY/aAFsvKYXHVw
+ dxCjmzXDOgGfmonYcPcLyjF7ncHNBnCJGTBuwVxkS0/cAHoIYnsVnCH3Ivdd3BPYeD2j
+ 0Pd83NvnY49xelDwl3I8T8RBjRNUrDChC8wuQ4kYoIZTGQu0fEhduDxDAbgTtzpiS62o
+ +2vlgpGt3n6H00hJYR4Z2kWeXqxwbVQryGLCgj6/2K+yxE8pEvlhDscguxfvj52uGaaj
+ w2Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733344046; x=1733948846;
+ d=1e100.net; s=20230601; t=1733343977; x=1733948777;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IbFwYvNsoagTIF3RGxGTKY4/+lkaBIKwukflDbrm8ec=;
- b=eLqnO3v4113ewNYwfGqKRb8Rx8K7CnYPm1TBCB//WAdsIF4Q01wpU+OyJCKcGIEEBZ
- T+Ve5LNEmnMwpF/jkOgu0d4o1qCe3WIPV+RXkW7J5eVMbRXjGbhPAUDga94AsIqEqJnV
- zNwuKNRsLpB8S2+u1iC7VEwyEsbCO3D4jevPDeRUjR/ueypcpmi3062lUwzCPrtar1td
- hgr3JcmAwzvcBsFBSVKPX+I5mEj2QFX0/OhJHGSGQCWSPYa5SK7679uh0MG7nB5dSD/R
- BVsSo42tgRGZpNoFYpBweWthikZiPo3S2Y7wicBY94B01n6d5YxiupFYLihQM4prgv35
- 24MQ==
-X-Gm-Message-State: AOJu0Yzgq90g+CvJhLtwYx2LTJ0wng8FgHwzSzBORy9Uh9D116BOinib
- oW4Kd3D9WCsqAz2smduTwyvRz8Up0kmFhPGkK9H/Fv+ITXqpJzvHQ/2PGNvvxcwqGMrbMYuIp8B
- t
-X-Gm-Gg: ASbGncuVojNYhdfDqYe0m8C91MBJqPK6g2W+yYBf3BnfIC01dhwwAWo2HYas3k8xuVs
- LzSDVfMVVLWsEtBqoSylgVXJhbR68p9lqqgUICroT1ykcTu7aE2gAAS67ZKSw0r0whfIURwJwEw
- ywGohKDMylH6NLXUk0P5d1pjNLQdE/SNOARKX4POLHoXSVyy/s7LhqHKxwck7aP95dSbb+j8wZe
- RM+9ed2AJP7qc6DvRc9GeX8MOxM9VnfYHbz82ibN9JHHjepMSxBaDIfa94Zpn6PZIZW1lwVEehk
- SR0Qgdjecht3F/3haYPETxIh
-X-Google-Smtp-Source: AGHT+IF0QYYY+bdmr+0sAzjLTUkGP9djfjiRtX1kSayuNI9VT4nEYz0b2lj96Y+Cs1hDyCe5O63MzQ==
-X-Received: by 2002:a05:600c:3594:b0:434:a7e3:db56 with SMTP id
- 5b1f17b1804b1-434d09abf4emr70062685e9.6.1733344046119; 
- Wed, 04 Dec 2024 12:27:26 -0800 (PST)
+ bh=DPV/ubcrZI2iapAPKTXZkCgfGpvNQPE7G4ysbpy5Jw0=;
+ b=sXbBkp6xWem9GcZkm1Sdr+5WCC6YGdnOzEMxZsVvJFoLdomkl/yTxRqdDz8O2WbTLF
+ yYQKEPKH/79n+PHeyfGDEUWBQcz+a/3NXf7LehOnrjwiHhLe3fuk1Kfe3uZu9wH8Taai
+ /68O2tHONU80G5kp18dCWR+kES+d3oW38pk8adWRc/YD/wVS4qV2q/IaMPWdV3cUWHI5
+ 159tiQDRXZexXcVfvTQXjMZ8ctm6BQphJB04sp21rW2UB4yFbGmpjQXt8lLOdgI32ggr
+ nfJEg8r96QBGri35fOfwcyV02Cat2H5/sT34n40xps6qek3w4YvJDb2x5TBWdNbkU2WC
+ dHfw==
+X-Gm-Message-State: AOJu0YzBmGjh3A1c45EHJvTPH6nfIexZWtWlxtfpCocgF3DsjXBMeNEg
+ YPgZNW+H0mzcDct1/UHcFta33bwjdf/4B3p2w0ULzklVmCMFngZD8qP9+U0UkgYTTQlOUH+iRPx
+ o
+X-Gm-Gg: ASbGncuBb1D0qnQeUM6gWu7R6gyBBbk/am+3RVtWT04XCO27X6Z0CA26W99cZsLLHoT
+ ze/2VJZkq7R+NQkXniT30FC9WXJZun19+Ie5TwC2xInoQjYtpNz0B2wMqVCK6dEq4+1+plr32VC
+ m3SBCA4yyh95D+fI5rjNWxSbNhW4gTt5E2ovhBRcG3tgS/8T8Cd0GqPxm33xrZ9fMvK2lUPak56
+ W7qAgzsjAdXztnWBMOAsdg1tjYUQXbZQxG8GkFwT+AyR8CzN64mTr9McbDBByHtr4B6Y1GAIuZ7
+ DH+K2jIwhTAwJnchb6Oq/qBk
+X-Google-Smtp-Source: AGHT+IFeaA2c209Xgk6HxXqyhoIdq9s4nD1+pCKbz/xRkRw7GRhfUdt4Ky6Zy1ZjVBGrOnLx7SCaQA==
+X-Received: by 2002:a05:6000:698:b0:385:dea3:6059 with SMTP id
+ ffacd0b85a97d-385fd429a01mr6525111f8f.49.1733343977503; 
+ Wed, 04 Dec 2024 12:26:17 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d5272b78sm34941055e9.9.2024.12.04.12.27.24
+ ffacd0b85a97d-385faec0c9dsm6672009f8f.20.2024.12.04.12.26.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Dec 2024 12:27:24 -0800 (PST)
+ Wed, 04 Dec 2024 12:26:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -79,17 +79,18 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair@alistair23.me>, qemu-ppc@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 08/20] target/sh4: Expose CPUSH4State::little_endian property
-Date: Wed,  4 Dec 2024 21:25:50 +0100
-Message-ID: <20241204202602.58083-9-philmd@linaro.org>
+Subject: [PATCH 02/20] hw/core/cpu: Introduce
+ CPUClass::datapath_is_big_endian() handler
+Date: Wed,  4 Dec 2024 21:25:44 +0100
+Message-ID: <20241204202602.58083-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241204202602.58083-1-philmd@linaro.org>
 References: <20241204202602.58083-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,64 +113,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SH4 CPUs endianness is set with an external pin in a power-on reset.
+Introduce the CPUClass::datapath_is_big_endian() handler,
+which returns whether a vCPU expects data in memory to be
+in big endian order or not.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sh4/cpu.h | 6 ++++++
- target/sh4/cpu.c | 8 ++++++++
- 2 files changed, 14 insertions(+)
+ include/hw/core/cpu.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
-index d928bcf0067..2502ddba102 100644
---- a/target/sh4/cpu.h
-+++ b/target/sh4/cpu.h
-@@ -198,6 +198,12 @@ typedef struct CPUArchState {
-     /* Fields from here on are preserved over CPU reset. */
-     int id;                     /* CPU model */
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index c3ca0babcb3..91c6581f814 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -105,6 +105,8 @@ struct SysemuCPUOps;
+  * @parse_features: Callback to parse command line arguments.
+  * @reset_dump_flags: #CPUDumpFlags to use for reset logging.
+  * @has_work: Callback for checking if there is work to do.
++ * @datapath_is_big_endian: Callback returning whether the vCPU expects
++ *       memory data in big endian order.
+  * @mmu_index: Callback for choosing softmmu mmu index;
+  *       may be used internally by memory_rw_debug without TCG.
+  * @memory_rw_debug: Callback for GDB memory access.
+@@ -151,6 +153,7 @@ struct CPUClass {
+     ObjectClass *(*class_by_name)(const char *cpu_model);
+     void (*parse_features)(const char *typename, char *str, Error **errp);
  
-+    /*
-+     * The endian is set with an external pin in a power-on reset.
-+     * The endian cannot be changed dynamically.
-+     */
-+    bool little_endian;
-+
-     /* The features that we should emulate. See sh_features above.  */
-     uint32_t features;
++    bool (*datapath_is_big_endian)(CPUState *cpu);
+     bool (*has_work)(CPUState *cpu);
+     int (*mmu_index)(CPUState *cpu, bool ifetch);
+     int (*memory_rw_debug)(CPUState *cpu, vaddr addr,
+@@ -750,7 +753,7 @@ int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs);
+  */
+ bool cpu_virtio_is_big_endian(CPUState *cpu);
  
-diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
-index 8f07261dcfd..f54005644c9 100644
---- a/target/sh4/cpu.c
-+++ b/target/sh4/cpu.c
-@@ -23,6 +23,7 @@
- #include "qapi/error.h"
- #include "qemu/qemu-print.h"
- #include "cpu.h"
-+#include "hw/qdev-properties.h"
- #include "migration/vmstate.h"
- #include "exec/exec-all.h"
- #include "fpu/softfloat-helpers.h"
-@@ -231,6 +232,12 @@ static void superh_cpu_initfn(Object *obj)
-     env->movcal_backup_tail = &(env->movcal_backup);
- }
+-#endif /* CONFIG_USER_ONLY */
++#endif /* !CONFIG_USER_ONLY */
  
-+static Property superh_cpu_properties[] = {
-+    DEFINE_PROP_BOOL("little-endian", SuperHCPU,
-+                     env.little_endian, !TARGET_BIG_ENDIAN),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
- #ifndef CONFIG_USER_ONLY
- static const VMStateDescription vmstate_sh_cpu = {
-     .name = "cpu",
-@@ -270,6 +277,7 @@ static void superh_cpu_class_init(ObjectClass *oc, void *data)
- 
-     device_class_set_parent_realize(dc, superh_cpu_realizefn,
-                                     &scc->parent_realize);
-+    device_class_set_props(dc, superh_cpu_properties);
- 
-     resettable_class_set_parent_phases(rc, NULL, superh_cpu_reset_hold, NULL,
-                                        &scc->parent_phases);
+ /**
+  * cpu_list_add:
 -- 
 2.45.2
 
