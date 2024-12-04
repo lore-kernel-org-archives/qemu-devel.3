@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A0EE7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 03:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38AA9E7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 03:55:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIgSE-0000MI-GK; Tue, 03 Dec 2024 22:53:34 -0500
+	id 1tIgTY-00014t-V9; Tue, 03 Dec 2024 22:54:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIgSC-0000K2-3B; Tue, 03 Dec 2024 22:53:32 -0500
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
+ id 1tIgTW-00014M-Sd; Tue, 03 Dec 2024 22:54:54 -0500
+Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tIgSA-0006SE-DY; Tue, 03 Dec 2024 22:53:31 -0500
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-4adc672f2ffso1547006137.3; 
- Tue, 03 Dec 2024 19:53:29 -0800 (PST)
+ id 1tIgTV-0000rf-67; Tue, 03 Dec 2024 22:54:54 -0500
+Received: by mail-ua1-x92d.google.com with SMTP id
+ a1e0cc1a2514c-85b0a934a17so240798241.1; 
+ Tue, 03 Dec 2024 19:54:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733284409; x=1733889209; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733284492; x=1733889292; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dvxEmYFvNmqFukmOLQceNCl2PK01fa8aFTApEmzJLzY=;
- b=aeGlVojwQNh6jNrujs/y+X3t0oaSHx88OoKV9MeUNYR1+FQxqvGE71xckjv31hBZqO
- MZ6aIpHaQtgrA5FnFb0fRDpyHwzql/bYznnII1SHo0M2eoX3jMMSke8liPYCHoJDaqCJ
- tOkX2otXZQvPUj7NU0+jDB5eF0rpCDL0zdPzzI0G4ACrLOk2wksR8sbK9XXCLDg6/8Tw
- wXSOSIFQ7DjRQTb8Wmmn/2m8Z7IUIBORapTiv8Zk+OVp1oc3xi+RddASag5+qXDStci7
- wFJ/k6njF7V3zQ7XXPMFyqv/9F5D3hMv3oD0/3DHmnbmEgHFWrj91xMGZIvpUf43e6jS
- /tQQ==
+ bh=z+jcOg/49a40iyYN/WeXhkyR7+c+rgJMsVhXaUYeFeg=;
+ b=kS6h95yOky/QwBw4JrvlQ3CPYeMDMVs8Ze4M3K3fBdKBv4MWFespC+StIyS9yyyKBH
+ vELlanlPNE7Xc5ac6uPXtM0UVDWoeKoiSWl689E/uVY8rBKjhFoI1j1aQ7VyKGwpahWy
+ hM9QbpMg0KUEw5TgIEX1Rm9FYMwoZXds6gvP+AIdk096ouXuX5Dn37drASwXtQ4aBLQ3
+ sm1jV3oHrleUniemHBVTQLJ6u3jkxkDoPs9wS6wCOVnWrbVCZYNWNpXc7yZnzuVS8Nq6
+ q5TbosKFmQPUODZGKucmHW/7x419v283qBHTK7P7hqCJIY8HKmD4ajA5XFeMydWvSuN9
+ g6FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733284409; x=1733889209;
+ d=1e100.net; s=20230601; t=1733284492; x=1733889292;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dvxEmYFvNmqFukmOLQceNCl2PK01fa8aFTApEmzJLzY=;
- b=CgNJjnetOPlGsN+5mjP2omaEJ+ddRAmjwIOtsCC/DZrAvVCJXGQvaXk4fP3hxyIjpj
- zWlr0tGa87PasBRx2CgxG5Hi9O9kAkmGqjVa7GY1CIwL43Suky+5rqYLmrkvb4mWoGO8
- BYGGeSBbQsikT+6AS+ZlRlIMrF33vQ3ElcNq3qEDQ5+Gvh4a8FO4TJ00LPXwRvYCUEsj
- MzhMqa42Ogd6fr9p5j5dr0FdW+34iVEdNJglGl/h8uZE7dL7lcCNljzi6kC7gHX6EoUE
- 3mUA8e9m15Pz4eeFWmHTpXFZtsTVVW4NAiFQrC8dKRYzR6DQ2cpNvLp22g3KvlAEtfB3
- VtHQ==
+ bh=z+jcOg/49a40iyYN/WeXhkyR7+c+rgJMsVhXaUYeFeg=;
+ b=uYdLOd15t8XTs6AZ8fxSQltQwJQ7cP/d+mEptNY2XCWqpJWXjiypckqZ6hWWhDpEM6
+ XkJegygELKtmzBCqEilAjobe16U8YkI9A8w7U2UOsAprdCzLzvCVe2mRijE+d949qDVc
+ sqrFVvc+rKZXd4lTB8UF+NES/PiixjP/jEUbSXU+NR5gBxtn1i0nMXv6wKFjPXVUsifH
+ /RyjTLdqQGmmT/f8ud/rOZSCu8EqY1/z9rvjWQFNZAiTIEu5BBNoQJ1Su2CasvfudT/V
+ ES/IS3hCIbYpGBCQsALWl4yc+CvB0HEEptPRt/vJ4mKgCEW7/Z0jNzDCWLfTBBHGKjPF
+ t7EA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXd06pm6UL/P8naGaouaiS8mSfQhs0ryBQ2noOGUVKvm4tounOziR+I5pya2KOpaCWeumdARLmFBarB@nongnu.org
-X-Gm-Message-State: AOJu0YyAxacdKuyVrXcinuZEcVRL3TUCwR35Plnr6RHlbgfoiOcRVN/t
- w504wZLMyr/uTmzI7ql0C6AIVsXB9x9Ve/FxcwIbwmy0oubi5byYS+/Qdj7mPpManhHaFu+PRW8
- pjhcT07slMYaO7jBHBly+ox+FkkQ=
-X-Gm-Gg: ASbGncsmA6BFxCVC3ENh+4hj6WwqGKjHoEJJqrsrRQp9LlD2jatfk0VU+xZu3qsu7cf
- kF8C1X/8Ik9Nc8US8mdH46WrIyIdSN7Zk
-X-Google-Smtp-Source: AGHT+IGeLyj/mipDK2IZl0TiEY6pGnfOWGvMXSmLKufX2ILRnX7I7dr1GSXpSYt4Qnb17JaVAE9gQoN0utTqlLUKFT4=
-X-Received: by 2002:a05:6102:c09:b0:4af:1a50:bef0 with SMTP id
- ada2fe7eead31-4af9733dfdcmr6611733137.27.1733284408961; Tue, 03 Dec 2024
- 19:53:28 -0800 (PST)
+ AJvYcCUf95waT+ViIZCC0AiBNO8ZBwXAQHh+TP/STCSDSwzRB4Pn17niSyOlNMLh1xjOIddfkcCRUj5lHf1h@nongnu.org
+X-Gm-Message-State: AOJu0YzDn4GwC7lm8zGc+XOAbV8G/0hFhSzPfh7BYFMyu1p0r1jFp2jZ
+ yp3nZFE0bC3JMIQAsiqkm6rzqeH6xZutKa6iJJvcxuLWIrHkN0EEmmcNDWGnmOXssVHU5efM4PN
+ 2032Y7ip91/ugyEmxW6jsTlTedbc=
+X-Gm-Gg: ASbGncuN8ho09kVJR8We0ryiSFyhVhLvYpJnuuBkh8X1UfvodFCFRe7f/dkYadKLHy9
+ kMwEuxDwC/5iV0cMtQRAYzLAUOzqqQY8Q
+X-Google-Smtp-Source: AGHT+IEElRPQiFAKuPhh6M2KbI/DgAp4pCyjSywQRTV5X5HW0e8IynlkUuRFRtu2dFGQswTU/lfNr87V+mN2m+qunkg=
+X-Received: by 2002:a05:6122:511b:20b0:515:25f5:46f6 with SMTP id
+ 71dfb90a1353d-5156a8e0c74mr21665130e0c.4.1733284491794; Tue, 03 Dec 2024
+ 19:54:51 -0800 (PST)
 MIME-Version: 1.0
 References: <20241113171755.978109-1-dbarboza@ventanamicro.com>
- <20241113171755.978109-8-dbarboza@ventanamicro.com>
-In-Reply-To: <20241113171755.978109-8-dbarboza@ventanamicro.com>
+ <20241113171755.978109-9-dbarboza@ventanamicro.com>
+In-Reply-To: <20241113171755.978109-9-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 4 Dec 2024 12:53:02 +0900
-Message-ID: <CAKmqyKORoSDe0Fqzm9y4NEYJ8aKyG8CnV=RrOWkj7swtOR5g0g@mail.gmail.com>
-Subject: Re: [PATCH for-10.0 7/9] target/riscv: add shvsatpa
+Date: Wed, 4 Dec 2024 12:54:24 +0900
+Message-ID: <CAKmqyKOXizYgEoOpONHyQffUMWH2XdC4P_7=-cKHBCSn=qrEfQ@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 8/9] target/riscv: add shgatpa
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,11 +98,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Nov 14, 2024 at 2:20=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> shvsatpa is defined in RVA22 as:
+> shgatpa is defined in RVA22 as:
 >
-> "All translation modes supported in satp must be supported in vsatp."
+> "For each supported virtual memory scheme SvNN supported in satp, the
+> corresponding hgatp SvNNx4 mode must be supported. The hgatp mode Bare
+> must also be supported."
 >
-> This is always true in TCG so let's claim support for it.
+> Claim support for shgatpa since this is always true for TCG.
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
@@ -115,18 +117,18 @@ Alistair
 >  1 file changed, 1 insertion(+)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index ae5676976b..068b019564 100644
+> index 068b019564..fff7010647 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -185,6 +185,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+> @@ -184,6 +184,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
 >      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
 >      ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12)=
 ,
+> +    ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
 >      ISA_EXT_DATA_ENTRY(shtvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-> +    ISA_EXT_DATA_ENTRY(shvsatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+>      ISA_EXT_DATA_ENTRY(shvsatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
 >      ISA_EXT_DATA_ENTRY(shvstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
->      ISA_EXT_DATA_ENTRY(shvstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
->      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
 > --
 > 2.47.0
 >
