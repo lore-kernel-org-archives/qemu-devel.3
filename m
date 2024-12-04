@@ -4,140 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAEDE7716B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 08:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63838E7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 08:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIkjl-0007KV-5H; Wed, 04 Dec 2024 03:27:57 -0500
+	id 1tIkrS-0000gV-TJ; Wed, 04 Dec 2024 03:35:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIkjj-0007K5-Es
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 03:27:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tIkrQ-0000fr-3T; Wed, 04 Dec 2024 03:35:52 -0500
+Received: from mail-tyzapc01on2072a.outbound.protection.outlook.com
+ ([2a01:111:f403:2011::72a]
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tIkjg-0001xs-5N
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 03:27:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733300870;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gSKjYWZVoSOIivN7Op/1GLE6dzNts6ingsDI6kidN5c=;
- b=G6CGUMO/9bNTKRPT8kGPTCnhL9OVZ8KEEtIh2S0S2wv/aZKunWVgL1Go0JWHSDSOCsb6wr
- DO2xzcNZTkZAtKiur7VFMVfM2aTch7KHttqLqT93LbyiF/+offuG6/wrW6IT2frec6UxHT
- Aa5UMDNPwBdBIn0d98HRKfgEx12mO9E=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-122-A24qvsp3Nfaa-RU0_1sKdQ-1; Wed, 04 Dec 2024 03:27:49 -0500
-X-MC-Unique: A24qvsp3Nfaa-RU0_1sKdQ-1
-X-Mimecast-MFC-AGG-ID: A24qvsp3Nfaa-RU0_1sKdQ
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6d895f91a7dso58263376d6.0
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 00:27:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733300868; x=1733905668;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gSKjYWZVoSOIivN7Op/1GLE6dzNts6ingsDI6kidN5c=;
- b=pdCsFjN4HtvYEGI+lArK7vb6/Bey+wPcWK3npuUpHPwqtayxuQV9tfn/rzt0cX88Yt
- uqasTJUyKOQxPieSoeg184tWKUllUHFBHPuPxbes8ruSymI41b3yTYzakQw5btxGZfs0
- crF3O6ThpxVD4YWIqRbMaY1FioPnvdQKpvACi3J2hK+GyZkWp7opH+Mf6dkhf5BlUVcR
- X6C/Ryf9qEaFP0JZwNuxZ7WjdPJx9c3ezLFK+IbTEV9YFwjAhxMsM77LqfyYg5PdFt2j
- TtAUGiRLGh0JunSKpj+aNkDqz/44mtYHvgMyFyKHwKwDu+oNFCToeGaO9K46f4vQy4Pj
- rTpA==
-X-Gm-Message-State: AOJu0YyHHB+Szbm/wy7Gr7LZ2sH1J6sdlZyNcYQKCqHed91p5aiLRCiI
- IbtvS74z+sugWyjrwTiSFB6UHSouPfvByEGzYF3gGXPrBhsWzfYnp2or0v2SWhi8UsZH95OCsTD
- ecPGG5OMSvKsmn26nuUm8Cv1EuYq1cJTSkYt7vKf1NEJelqnt1DzfRRhN6kICSN6B7SAoD3T8zT
- FtJVVwISYAyhvk7JI7rsuuVmdd+V104tOf
-X-Gm-Gg: ASbGncuS2KXf0QG77Ef1mrwNtWqOIxP1vX1f7GXpCg+MQVNzNL1kjSp7Hz5T6Y9JMIX
- pOngItxLSskVcWGBacsF61lt48R1iRyepihigAvZB9WZNVWzt8p0yiEpThYZDWR0a6/NUd3FIWU
- iqi/wyAzc4yo0TXwHMIpyaTNIxzo3wliB3FYH1P+NVpbv03P2m4GOLNWAqdqc5Av2E6tM7lAJ/q
- wm7L1ZaKY3r6r/gvv77sWWzIkv9fnK80UFDlgGSK1n720smn58GaqCkOK6w15CA5JR6BKGciLP6
- sXZVCw==
-X-Received: by 2002:ad4:596c:0:b0:6d8:876e:ef41 with SMTP id
- 6a1803df08f44-6d8b737d420mr82736276d6.21.1733300868502; 
- Wed, 04 Dec 2024 00:27:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHiclN2pN+rRWd72nDektrrP7fPp0wPJdOUjfeMpf+PKSbLeMWfCePsabs6/ouiEXQP4vRqHA==
-X-Received: by 2002:ad4:596c:0:b0:6d8:876e:ef41 with SMTP id
- 6a1803df08f44-6d8b737d420mr82735986d6.21.1733300867978; 
- Wed, 04 Dec 2024 00:27:47 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-199.web.vodafone.de.
- [109.42.51.199]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b68492121esm592245585a.3.2024.12.04.00.27.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Dec 2024 00:27:47 -0800 (PST)
-Message-ID: <7c4d2051-db47-420b-89a0-a985a662c415@redhat.com>
-Date: Wed, 4 Dec 2024 09:27:43 +0100
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tIkrN-0005gt-3d; Wed, 04 Dec 2024 03:35:51 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SsO+yhkUayurnHpBUHTQuZgZ0cPPPOZQGrGmKc8DDOtPkpZlM1EN5j1O/cb/S1LN1tOpMs7qUeCTwLjZhzD8ehzrWEPtx7IPLKo2+gOXbJQsuHUAM5dCqVQVvTfpw+cec/6kqpyjMQFwR9dy9gbFYy36Ryn+Swq6CzAOwCnC4Xy6bI5148pSPD63KH6zKJKamaA+/WmNZHeEz6uaJKPlNV0eRxM1bymwukidxrrcCu0VYYEf1NfDazUGB2PHcUS55/gbOlOvBUuwIHKGOM4J3Dd7CsB9Kqn2ltrnFs/6XGpLZCXdfM8pQGFm6qnSuCeuRFQAvJWg4/FXrIgZnDK8yA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PLp01qVUMFcPtYzPsQkWD9IDx95nNLlL41i1pMFgHG0=;
+ b=CR0g0auNbvxYc8WRC/ezdQ8ALRcAlBkEZMzvu/YLwy7mGUdvNV1J9KZobRsXcOWElghNewBQ9/pVVWm9GYKpSCmDVImep1GkUpOXRHEAvJtwApRHD3zlJH7aNch1wiWdlyzmzPdbXYffwyiKhlWaMRQD8K8atxlv7q3NzPWGcu7DE0VXSu7WYPHf2WV/86fnRIN7E0cKZRYvYTAmExmw6yzPR1/xeXVJq3Z4bgchM2IhObbo57wHsd82L/q8vbxkxTF+vcmMVogPrMgDTBhp5BwyLaZfNxcfNu9LBx9dBI0R1WeckDd9LnHjkPkYBoLhTXQLa0zOlAPPZhklykVqSQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PLp01qVUMFcPtYzPsQkWD9IDx95nNLlL41i1pMFgHG0=;
+ b=EoFskUPAUA5XTZKJnSfCy528+7fzYdXbCygq8CHtXsU3hJQIVK7RTpu2iDHwsPyiECP0syp6EkhwMuH3v3wcqVSDteqqPfic9wmrPd67zCYNkdXA5vFL3OceuyLfY0xVqi0XSdcj2JuFl8df7SwudmaqSg7eyPeomycvl5UYKY4Qm+qP8EgakTruU+hfo8l+UYjribIEwUWXpNEdCx2Zhv6VKPjuV/4x8uXr1tgtzzWiKrDP+kMB1yBPYBlCM967RrNF8kuuzRnuQcxePUMoUjiFbyx6Qru1iWu2oDhX0U25wHe48SE8cvh9zcs7hz4BbIxPs93CcLbm1DiJgsRzBA==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ KL1PR0601MB5597.apcprd06.prod.outlook.com (2603:1096:820:c7::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.9; Wed, 4 Dec
+ 2024 08:35:39 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%7]) with mapi id 15.20.8230.000; Wed, 4 Dec 2024
+ 08:35:39 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
+ <yunlin.tang@aspeedtech.com>
+Subject: RE: [PATCH v3 3/7] hw:sdhci: Introduce a new "capareg" class member
+ to set the different Capability Registers
+Thread-Topic: [PATCH v3 3/7] hw:sdhci: Introduce a new "capareg" class member
+ to set the different Capability Registers
+Thread-Index: AQHbRiNM7yqiwN+cr0yfazgZVVXNvrLVvPcAgAAFp0A=
+Date: Wed, 4 Dec 2024 08:35:38 +0000
+Message-ID: <SI2PR06MB5041691E08C24ADDE24F328FFC372@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20241204080523.4025780-1-jamin_lin@aspeedtech.com>
+ <20241204080523.4025780-4-jamin_lin@aspeedtech.com>
+ <1b0dee29-ed90-49f6-9c61-7bc27f3b674a@kaod.org>
+In-Reply-To: <1b0dee29-ed90-49f6-9c61-7bc27f3b674a@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|KL1PR0601MB5597:EE_
+x-ms-office365-filtering-correlation-id: 733e9c06-faf2-488c-6eef-08dd143ea1bc
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?Q3FLNGowY203Ri96OVFaSWlMRUl3d243dzRqUlAvOWNtOTdmTUcxb1FGdjZw?=
+ =?utf-8?B?YU8vTFcxUmFsNjlJSnZhMGllb01tcWw3UDY4Wi9uc3I5U0JJYzhyYmFFV0hq?=
+ =?utf-8?B?MGpkcWFHMlFtdk45YzA5dFNYblROK0dUc2NvSWN2R2Nqclcrek9QUitrbmtR?=
+ =?utf-8?B?aEgvRkJmcEoweUg1RzBSL3dCcTJQcDdWMnNGelQ0S1ZWQ3RnQkh3SHREUCtH?=
+ =?utf-8?B?Z0kxY3g0MWpHZFNybEdhQkVia2hWTTVvU05WNjlBVmo3enk4TW9PV0JHOG9J?=
+ =?utf-8?B?N2lmT2FVVXU3eW9uc21GcEdxQWJ4OXU0cjlVVkgrdU01WEtoVm1EczJoQmhr?=
+ =?utf-8?B?Y1M1UVBnS1k0RzAzNlhOVmRqSDZSYXhvV08xUE9NWEFCRVBIaFBTb0liUXh4?=
+ =?utf-8?B?SDFBbEVTNzhOOFgxK1diZ041by9KbktqMkovdGhGTGxHZjJTKy9aNTB4Y1ND?=
+ =?utf-8?B?MTB4SXFsY09NbjFzcnRMdmxFN1ZVaWxKRWkxUkZvLzFOOWVWeVZqcnVvSjJZ?=
+ =?utf-8?B?VkpTNmxEUVVnQmtUbmRoSlYrUENPMkJMQ0F2dGdEVGtzMWtkMVZ2U3llYkt2?=
+ =?utf-8?B?QlJDVUpPU1JiN2lTSTlua0g0NGVIbGZIVXhLTHlSOUxDUUwzL2s2TDJnVGls?=
+ =?utf-8?B?T1JwdW95dCtWSGFrK1ZSUTNtSHBPbnZvcERsMFYxZk5PWGo0bnlFTTR1aXQr?=
+ =?utf-8?B?Tm5Wd1grbi94TDRlS20vTGpoT1BrMG9QdlVyUmNqenljVDZLOE8zeVFlSmRC?=
+ =?utf-8?B?UTl3VytKL3c2dXg2WEw4L1NCd1Q5OXpoWmpkQUIvVTZCU0tOMnh0TXdEUkE5?=
+ =?utf-8?B?NFh1Q1EyNWE1OXRPb1N4NnZhUVlyWm5YZmNHSnVZRWF6ZUw0UHdjcU9KWU9k?=
+ =?utf-8?B?bUE0bE5aSDRwREgyaUYzL2pvSGVtWFdjVUpaRnkzSXloQzRYckFkZzhVSlVq?=
+ =?utf-8?B?alMxWFA5RjRpYjlIYnJMSVlCdnRoTFc0TmJmQURmTE9pUThGSk5LQXA2Ylpo?=
+ =?utf-8?B?MU5icHI5SjZMZ2JDMHFPUHhsQWorWHF5STd1NkZ2T1BJZ2czMTNrSTdpRDdB?=
+ =?utf-8?B?QVJTSFRxL0JXbnlsVVZCaXZUWVpQaFJNQTVLK0NFd2Rxb3VucXg5MTdRd3lB?=
+ =?utf-8?B?dVhPWXFPVWJrZUcwbTI4bDBqbkNoRW1mQ3NIck0xeUNraCs3dUR2ZjRRRUcv?=
+ =?utf-8?B?M0FrTkJrdnVYS3F4SXdvUFBVWG1uRUlaUnkxR0pEZXdDMXpBL1VEODFqSGth?=
+ =?utf-8?B?cTcweHZNZi9VeDJ2VWZ1YVZIRUhnRjhvTFZpc25YaS9hdlQ3dm02MXdWT2Fu?=
+ =?utf-8?B?VEJ6RHV6NUtUaVRLdmlFR2x2ZGJVaCtVV3BLTzY2cXkwS3NvckhRYko2UWxw?=
+ =?utf-8?B?WFloMG1yM0h3RVYzR0cvMVg2WGhDdG1BRElOeDRjUktLdTNyYlFuazUvN1Yx?=
+ =?utf-8?B?dTRudVRka1U3Mk1IQUc3aXRvWCsrTmFDK1hLZG1wUHJCTW1RQ1FKMGZDYTdm?=
+ =?utf-8?B?eGFZd1IwTUlUQjlVYWlWdFRLQUFJVkxOQ29SYndiM3JaT0g2YXVzK1FYSTMy?=
+ =?utf-8?B?TFZXVTF6Wko3Rm5obHdYWUxaSjd6dkVWeCt4R2E1S0pvcDZCOFRzY0NnSHU5?=
+ =?utf-8?B?cEFBbjVNenc4bUY2VGE0OXhSODREN3JwM2lvdjZSb0liLzdkTE1TZnVYL3dp?=
+ =?utf-8?B?Qms0U3g1Vy9tUTFOYi9XZno0NWFiUnFVRXJySWJqYk1HR3A3SFZGYkplNU5I?=
+ =?utf-8?B?SWNoNW5kV3R0SHlIWDJZUTBUZHdNTVZSbmQxSHRqc1Rra1lNdTE5M3RmbTkz?=
+ =?utf-8?B?UWd0eW1mSUIwNXFVZ0ppUFg1MUFyNkxLdms4Ylo3NFdzVi8rdVdMdzRkWW1r?=
+ =?utf-8?B?aDJmNER0bENnejJIYVdnL1NQQkEvRnZNV0JlbEdpYnRJV0E9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dmpFeFROM3gxMUl3MXJiQ2RwQ0pzVzRpWUVSUVdXbzgvSkRTT1dZWStjdHIz?=
+ =?utf-8?B?WkQyNjJ3enBCODNmS0RvNEJSeWlqL2Q5ci9rdnlyOG80WWF5L1ZyQnR3amVn?=
+ =?utf-8?B?SUNmb2VhcEVWV1RISE9VNnJBczU0dzNHcDJFbGwyb25aQ0lsbHRJcmRaanI0?=
+ =?utf-8?B?a2o2Qk9nUmJ0ZHpITERLRGJGT0F0OWNMK0lsYnJHN21uOVF2VXpuVGFVR0Vm?=
+ =?utf-8?B?bndRbEphM0Era1p0dTdETkJQZmxCbHJrN3BNWHQxeEM0bEhQb3QyUWwyNno5?=
+ =?utf-8?B?ejhLSENKTXdxaVZ6MVhtTGUzdkRoT3dxa25FaS9FM29xMS9PaXMzWHVlbFU1?=
+ =?utf-8?B?cFl2UkE2VmNMOEtqdUhnVFN3Zy9aZjdaUEZuOHJod0I0TFhrbnU2YUZ2MkxU?=
+ =?utf-8?B?UWlLbERuNkx2R2IrWC9qM1hXdTJOc2xldW9YVDdkM3pLbnEwUDFQYWt4cHhr?=
+ =?utf-8?B?RkhQdWJpVW1NVlA4UXNYRjlOUVgvWXZFRlRXQWFxWEthRlFHZVV2ejFFUU5Q?=
+ =?utf-8?B?NTk5TzQ5UFNBYTVFZVBmbmFBTUlLbEk2NnJTOXpDVG1lNzhHczZzTjZ3eEV0?=
+ =?utf-8?B?NG81MmZnV04yMGNrUzVTVDdtS3dZUmJOcEZDSXhLTVZpakFyaXAwV3dHeWUz?=
+ =?utf-8?B?MG5jcy96ODV4VzZEdFZ2Z3FFem1ZVlVYakRwMEh5TzdVRWVWdkVyTHNYSUtz?=
+ =?utf-8?B?YmZacmttS1gzdGJjNlRSVDJFeUVFV2NXYzlnUnY3L00ycUNlUzNpb0ZmdnNV?=
+ =?utf-8?B?QTBJZ3JlcG1jYndMQXRLUVl1MjRycmoyTWgvL0sxWnR4Y2htZm9GbUtIUGJl?=
+ =?utf-8?B?WDdKWC9BRXh0akxna0p5VjlBRWF2UExGVmdmRjlTYXl0dXFVZUJZQ1d6UDVD?=
+ =?utf-8?B?dGhIRlNUVVNqWEhuZjl3MlAyUFFmOTNXM1ovaUhudWo5TXBjekRQeEVzbFhG?=
+ =?utf-8?B?KzIvNW92WGQ1cGpsL21DZ09qRWJpWHVSZHNCdzEyNlByN2xOTUlNYjNXY3l6?=
+ =?utf-8?B?WTIyUFhDcVJ5QUoxZHh2akZsbitVbG5RQTNoNFZEN285NmI4ZEt1VXNnZ0lp?=
+ =?utf-8?B?NndMZXIycDdBNXZXUU5Ia1VaY1lFWmJzVU91OENFOTM2L2U5OURzTkpjcUhK?=
+ =?utf-8?B?MjR6cHJVOHU4akxWNW4wUkU3b0d1RlhtL1BCMTNjSm9BbWJRYjI5WXdOUU1W?=
+ =?utf-8?B?dDE3L2lYUmhObFFGMndYcXQyNDdBQzVvNGc5RVh6WFM5R1dWTlNtcDVlNDNv?=
+ =?utf-8?B?NVdZWWFRV0UxdFlwN2hmenQ2SXFqWUVsT1ZnS0RCNkphT2F5aWw2SXR5ZTdB?=
+ =?utf-8?B?L1pMbk1kQlkrZ2lyOXFIaXE0ZGtjRHp2alVtNHBkNUx0SEZTdHZuQ000K1Fq?=
+ =?utf-8?B?c2JWajM2dnh2bUdYUHZxSG0vYlNpWkxRUGlCTjVPRlVrQnN0V0hWS2RQcWJv?=
+ =?utf-8?B?Njc4Sm5VU0lBRUZlZUN0cWtOSTNZTkRJOWsrR1RYcno4OHhLRk9Hczh6NkZ1?=
+ =?utf-8?B?ZzdxTUR5ek1qNDhNS1MrRDR5ZGIzZWtsUlM3dDFqQkphdWU0bXhoUWlId05X?=
+ =?utf-8?B?Q1NiS1VIVThjQjdjVG5qWlFVYUEvaHVaQ1RNWmhSdEtaRU1wVis3cFRsbGdM?=
+ =?utf-8?B?aFJPamg2aURrVy95TkRqS2ZMbVdRb1dDT21YN2xvWW1BdXlwanhlc0xmZndS?=
+ =?utf-8?B?QmRoUC8zWEg3Y2dLWDNiV0lUbCtqOW84ZTRVOU1tYzQ1YjRPc2V5eTZzMngv?=
+ =?utf-8?B?R3ZHdm1UazBjaWY1dVFCSDdmam53dlNiM3pjQmlHdk13TXVlNTRXQXFQekhB?=
+ =?utf-8?B?WVR4NHU5OFBINEl5UG9SMURwenNpRWdOMDlhRERzN0dlRTNZMUl1SGJwNkw5?=
+ =?utf-8?B?RU95bkZaL09oTXk2elpJUEl0OUlYc3pWb0tpeENlTWZVWXBBZnNaSkI2dFlQ?=
+ =?utf-8?B?QW5pRHdPQWc5UnljajdGLzlHNzNwNVRqRkFGU05mdFlabDlqZWVsS0huZllu?=
+ =?utf-8?B?VGQ1THUzWUpudmhaeGxaWkcrMDgybFAvdEV5MjR0bDJYVDE2SVMxSUwrYldz?=
+ =?utf-8?B?emFjYnh3NklESFpQWHFlbGI1SUs5d05yNm9HdCtBVUpLWGhOVHk4d0xsNnJM?=
+ =?utf-8?Q?DCWc7hsD3dc2WOOjdvVlSGpK+?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] tests/functional: Convert the migration avocado test
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20241204071911.664057-1-thuth@redhat.com>
- <20241204071911.664057-6-thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241204071911.664057-6-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 733e9c06-faf2-488c-6eef-08dd143ea1bc
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Dec 2024 08:35:38.9855 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: IQrV2tzMD3zPGJx7UKczeIq4+98mYtUvnHwFo9KNQC86pq/8VwgQGeXfUw84x8nuhZTrppgcENgEKTwRAI9/Ba2VzGNSXn61MwSklx3humI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR0601MB5597
+Received-SPF: pass client-ip=2a01:111:f403:2011::72a;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,330 +185,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/12/2024 08.19, Thomas Huth wrote:
-> Now that we've got a find_free_port() function in the functional
-> test framework, we can convert the migration test, too.
-> While the original avocado test was only meant to run on aarch64,
-> ppc64 and x86, we can turn this into a more generic test by now
-> and run it on all architectures that have a default machine that
-> ships with a working firmware.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/avocado/migration.py         | 135 -----------------------------
->   tests/functional/meson.build       |  19 ++++
->   tests/functional/test_migration.py |  83 ++++++++++++++++++
->   3 files changed, 102 insertions(+), 135 deletions(-)
->   delete mode 100644 tests/avocado/migration.py
->   create mode 100755 tests/functional/test_migration.py
-> 
-> diff --git a/tests/avocado/migration.py b/tests/avocado/migration.py
-> deleted file mode 100644
-> index be6234b3c2..0000000000
-> --- a/tests/avocado/migration.py
-> +++ /dev/null
-> @@ -1,135 +0,0 @@
-> -# Migration test
-> -#
-> -# Copyright (c) 2019 Red Hat, Inc.
-> -#
-> -# Authors:
-> -#  Cleber Rosa <crosa@redhat.com>
-> -#  Caio Carrara <ccarrara@redhat.com>
-> -#
-> -# This work is licensed under the terms of the GNU GPL, version 2 or
-> -# later.  See the COPYING file in the top-level directory.
-> -
-> -
-> -import tempfile
-> -import os
-> -
-> -from avocado_qemu import QemuSystemTest
-> -from avocado import skipUnless
-> -
-> -from avocado.utils.network import ports
-> -from avocado.utils import wait
-> -from avocado.utils.path import find_command
-> -
-> -
-> -class MigrationTest(QemuSystemTest):
-> -    """
-> -    :avocado: tags=migration
-> -    """
-> -
-> -    timeout = 10
-> -
-> -    @staticmethod
-> -    def migration_finished(vm):
-> -        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
-> -
-> -    def assert_migration(self, src_vm, dst_vm):
-> -        wait.wait_for(self.migration_finished,
-> -                      timeout=self.timeout,
-> -                      step=0.1,
-> -                      args=(src_vm,))
-> -        wait.wait_for(self.migration_finished,
-> -                      timeout=self.timeout,
-> -                      step=0.1,
-> -                      args=(dst_vm,))
-> -        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-> -        self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
-> -        self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-> -        self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
-> -
-> -    def do_migrate(self, dest_uri, src_uri=None):
-> -        dest_vm = self.get_vm('-incoming', dest_uri)
-> -        dest_vm.add_args('-nodefaults')
-> -        dest_vm.launch()
-> -        if src_uri is None:
-> -            src_uri = dest_uri
-> -        source_vm = self.get_vm()
-> -        source_vm.add_args('-nodefaults')
-> -        source_vm.launch()
-> -        source_vm.qmp('migrate', uri=src_uri)
-> -        self.assert_migration(source_vm, dest_vm)
-> -
-> -    def _get_free_port(self):
-> -        port = ports.find_free_port()
-> -        if port is None:
-> -            self.cancel('Failed to find a free port')
-> -        return port
-> -
-> -    def migration_with_tcp_localhost(self):
-> -        dest_uri = 'tcp:localhost:%u' % self._get_free_port()
-> -        self.do_migrate(dest_uri)
-> -
-> -    def migration_with_unix(self):
-> -        with tempfile.TemporaryDirectory(prefix='socket_') as socket_path:
-> -            dest_uri = 'unix:%s/qemu-test.sock' % socket_path
-> -            self.do_migrate(dest_uri)
-> -
-> -    @skipUnless(find_command('nc', default=False), "'nc' command not found")
-> -    def migration_with_exec(self):
-> -        """The test works for both netcat-traditional and netcat-openbsd packages."""
-> -        free_port = self._get_free_port()
-> -        dest_uri = 'exec:nc -l localhost %u' % free_port
-> -        src_uri = 'exec:nc localhost %u' % free_port
-> -        self.do_migrate(dest_uri, src_uri)
-> -
-> -
-> -@skipUnless('aarch64' in os.uname()[4], "host != target")
-> -class Aarch64(MigrationTest):
-> -    """
-> -    :avocado: tags=arch:aarch64
-> -    :avocado: tags=machine:virt
-> -    :avocado: tags=cpu:max
-> -    """
-> -
-> -    def test_migration_with_tcp_localhost(self):
-> -        self.migration_with_tcp_localhost()
-> -
-> -    def test_migration_with_unix(self):
-> -        self.migration_with_unix()
-> -
-> -    def test_migration_with_exec(self):
-> -        self.migration_with_exec()
-> -
-> -
-> -@skipUnless('x86_64' in os.uname()[4], "host != target")
-> -class X86_64(MigrationTest):
-> -    """
-> -    :avocado: tags=arch:x86_64
-> -    :avocado: tags=machine:pc
-> -    :avocado: tags=cpu:qemu64
-> -    """
-> -
-> -    def test_migration_with_tcp_localhost(self):
-> -        self.migration_with_tcp_localhost()
-> -
-> -    def test_migration_with_unix(self):
-> -        self.migration_with_unix()
-> -
-> -    def test_migration_with_exec(self):
-> -        self.migration_with_exec()
-> -
-> -
-> -@skipUnless('ppc64le' in os.uname()[4], "host != target")
-> -class PPC64(MigrationTest):
-> -    """
-> -    :avocado: tags=arch:ppc64
-> -    :avocado: tags=machine:pseries
-> -    """
-> -
-> -    def test_migration_with_tcp_localhost(self):
-> -        self.migration_with_tcp_localhost()
-> -
-> -    def test_migration_with_unix(self):
-> -        self.migration_with_unix()
-> -
-> -    def test_migration_with_exec(self):
-> -        self.migration_with_exec()
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 3d29b8245a..0558d0aa4e 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -61,6 +61,10 @@ tests_aarch64_system_thorough = [
->     'multiprocess',
->   ]
->   
-> +tests_alpha_system_quick = [
-> +  'migration',
-> +]
-> +
->   tests_alpha_system_thorough = [
->     'alpha_clipper',
->   ]
-> @@ -148,6 +152,10 @@ tests_ppc_system_thorough = [
->     'ppc_virtex_ml507',
->   ]
->   
-> +tests_ppc64_system_quick = [
-> +  'migration',
-> +]
-> +
->   tests_ppc64_system_thorough = [
->     'ppc64_e500',
->     'ppc64_hv',
-> @@ -157,6 +165,7 @@ tests_ppc64_system_thorough = [
->   ]
->   
->   tests_riscv32_system_quick = [
-> +  'migration',
->     'riscv_opensbi',
->   ]
->   
-> @@ -165,6 +174,7 @@ tests_riscv32_system_thorough = [
->   ]
->   
->   tests_riscv64_system_quick = [
-> +  'migration',
->     'riscv_opensbi',
->   ]
->   
-> @@ -191,10 +201,18 @@ tests_sh4eb_system_thorough = [
->     'sh4eb_r2d',
->   ]
->   
-> +tests_sparc_system_quick = [
-> +  'migration',
-> +]
-> +
->   tests_sparc_system_thorough = [
->     'sparc_sun4m',
->   ]
->   
-> +tests_sparc64_system_quick = [
-> +  'migration',
-> +]
-> +
->   tests_sparc64_system_thorough = [
->     'sparc64_sun4u',
->     'sparc64_tuxrun',
-> @@ -203,6 +221,7 @@ tests_sparc64_system_thorough = [
->   tests_x86_64_system_quick = [
->     'cpu_queries',
->     'mem_addr_space',
-> +  'migration',
->     'pc_cpu_hotplug_props',
->     'virtio_version',
->     'x86_cpu_model_versions',
-> diff --git a/tests/functional/test_migration.py b/tests/functional/test_migration.py
-> new file mode 100755
-> index 0000000000..9c78444f80
-> --- /dev/null
-> +++ b/tests/functional/test_migration.py
-> @@ -0,0 +1,83 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Migration test
-> +#
-> +# Copyright (c) 2019 Red Hat, Inc.
-> +#
-> +# Authors:
-> +#  Cleber Rosa <crosa@redhat.com>
-> +#  Caio Carrara <ccarrara@redhat.com>
-> +#
-> +# This work is licensed under the terms of the GNU GPL, version 2 or
-> +# later.  See the COPYING file in the top-level directory.
-> +
-> +import os
-> +import tempfile
-> +import time
-> +
-> +from qemu_test import QemuSystemTest, has_cmd
-> +from qemu_test.ports import Ports
-> +from unittest import skipUnless
-> +
-> +class MigrationTest(QemuSystemTest):
-> +
-> +    timeout = 10
-> +
-> +    @staticmethod
-> +    def migration_finished(vm):
-> +        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
-> +
-> +    def assert_migration(self, src_vm, dst_vm):
-> +
-> +        end = time.monotonic() + self.timeout
-> +        while time.monotonic() < end and not self.migration_finished(src_vm):
-> +           time.sleep(0.1)
-> +
-> +        end = time.monotonic() + self.timeout
-> +        while time.monotonic() < end and not self.migration_finished(dst_vm):
-> +           time.sleep(0.1)
-> +
-> +        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-> +        self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
-> +        self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-> +        self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
-> +
-> +    def do_migrate(self, dest_uri, src_uri=None):
-> +        dest_vm = self.get_vm('-incoming', dest_uri, name="dest-qemu")
-> +        dest_vm.add_args('-nodefaults')
-> +        dest_vm.launch()
-> +        if src_uri is None:
-> +            src_uri = dest_uri
-> +        source_vm = self.get_vm(name="source-qemu")
-> +        source_vm.add_args('-nodefaults')
-> +        source_vm.launch()
-> +        source_vm.qmp('migrate', uri=src_uri)
-> +        self.assert_migration(source_vm, dest_vm)
-> +
-> +    def _get_free_port(self, ports):
-> +        port = ports.find_free_port()
-> +        if port is None:
-> +            self.skipTest('Failed to find a free port')
-> +        return port
-> +
-> +    def test_migration_with_tcp_localhost(self):
-> +        with Ports() as ports:
-> +            dest_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
-> +            self.do_migrate(dest_uri)
-> +
-> +    def test_migration_with_unix(self):
-> +        with tempfile.TemporaryDirectory(prefix='socket_') as socket_path:
-> +            dest_uri = 'unix:%s/qemu-test.sock' % socket_path
-> +            self.do_migrate(dest_uri)
-> +
-> +    @skipUnless(*has_cmd('nc'))
-
-Note: The TemporaryDirectory socket stuff and the skipUnless should be 
-adapted to Daniel's new functions (see 
-https://lore.kernel.org/qemu-devel/20241129173120.761728-1-berrange@redhat.com/) 
-if they go in first.
-
-  Thomas
-
-
-> +    def test_migration_with_exec(self):
-> +        """The test works for both netcat-traditional and netcat-openbsd packages."""
-> +        with Ports() as ports:
-> +            free_port = self._get_free_port(ports)
-> +            dest_uri = 'exec:nc -l localhost %u' % free_port
-> +            src_uri = 'exec:nc localhost %u' % free_port
-> +            self.do_migrate(dest_uri, src_uri)
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
-
+SGkgQ2VkcmljLCANCg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHYzIDMvN10gaHc6c2RoY2k6IElu
+dHJvZHVjZSBhIG5ldyAiY2FwYXJlZyIgY2xhc3MgbWVtYmVyDQo+IHRvIHNldCB0aGUgZGlmZmVy
+ZW50IENhcGFiaWxpdHkgUmVnaXN0ZXJzDQo+IA0KPiBPbiAxMi80LzI0IDA5OjA1LCBKYW1pbiBM
+aW4gd3JvdGU6DQo+ID4gQ3VycmVudGx5LCBpdCBzZXQgdGhlIGhhcmRjb2RlIHZhbHVlIG9mIGNh
+cGFiaWxpdHkgcmVnaXN0ZXJzIHRvIGFsbA0KPiA+IEFTUEVFRCBTT0NzIEhvd2V2ZXIsIHRoZSB2
+YWx1ZSBvZiBjYXBhYmlsaXR5IHJlZ2lzdGVycyBzaG91bGQgYmUNCj4gPiBkaWZmZXJlbnQgZm9y
+IGFsbCBBU1BFRUQgU09Dcy4gRm9yIGV4YW1wbGU6IHRoZSBiaXQgMjggb2YgdGhlDQo+ID4gQ2Fw
+YWJpbGl0eSBSZWdpc3RlciAxIHNob3VsZCBiZSAxIGZvciA2NC1iaXRzIFN5c3RlbSBCdXMgc3Vw
+cG9ydCBmb3IgQVNUMjcwMC4NCj4gPg0KPiA+IEludHJvZHVjZSBhIG5ldyAiY2FwYXJlZyIgY2xh
+c3MgbWVtYmVyIHdob3NlIGRhdGEgdHlwZSBpcyB1aW50XzY0IHRvDQo+ID4gc2V0IHRoZSBkaWZm
+ZXJlbnQgQ2FwYWJpbGl0eSBSZWdpc3RlcnMgdG8gYWxsIEFTUEVFRCBTT0NzLg0KPiA+DQo+ID4g
+VGhlIHZhbHVlIG9mIENhcGFiaWxpdHkgUmVnaXN0ZXIgaXMgIjB4MDAwMDAwMDAwMWU4MDA4MCIg
+Zm9yIEFTVDI0MDANCj4gPiBhbmQgQVNUMjUwMC4gVGhlIHZhbHVlIG9mIENhcGFiaWxpdHkgUmVn
+aXN0ZXIgaXMgIjB4MDAwMDAwMDcwMWY4MDA4MCIgZm9yDQo+IEFTVDI2MDAuDQo+ID4NCj4gPiBT
+aWduZWQtb2ZmLWJ5OiBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNvbT4NCj4gPiAt
+LS0NCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0MjQwMC5jICAgICAgfCAgMyArKy0NCj4gPiAgIGh3
+L2FybS9hc3BlZWRfYXN0MjYwMC5jICAgICAgfCAgNyArKystLQ0KPiA+ICAgaHcvc2QvYXNwZWVk
+X3NkaGNpLmMgICAgICAgICB8IDUyDQo+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+Ky0tLQ0KPiA+ICAgaW5jbHVkZS9ody9zZC9hc3BlZWRfc2RoY2kuaCB8IDEyICsrKysrKystLQ0K
+PiA+ICAgNCBmaWxlcyBjaGFuZ2VkLCA2MyBpbnNlcnRpb25zKCspLCAxMSBkZWxldGlvbnMoLSkN
+Cj4gPg0KPiA+IGRpZmYgLS1naXQgYS9ody9hcm0vYXNwZWVkX2FzdDI0MDAuYyBiL2h3L2FybS9h
+c3BlZWRfYXN0MjQwMC5jIGluZGV4DQo+ID4gZWNjODFlY2M3OS4uM2MxYjQxOTk0NSAxMDA2NDQN
+Cj4gPiAtLS0gYS9ody9hcm0vYXNwZWVkX2FzdDI0MDAuYw0KPiA+ICsrKyBiL2h3L2FybS9hc3Bl
+ZWRfYXN0MjQwMC5jDQo+ID4gQEAgLTIyNCw3ICsyMjQsOCBAQCBzdGF0aWMgdm9pZCBhc3BlZWRf
+YXN0MjQwMF9zb2NfaW5pdChPYmplY3QgKm9iaikNCj4gPiAgICAgICBzbnByaW50Zih0eXBlbmFt
+ZSwgc2l6ZW9mKHR5cGVuYW1lKSwgImFzcGVlZC5ncGlvLSVzIiwgc29jbmFtZSk7DQo+ID4gICAg
+ICAgb2JqZWN0X2luaXRpYWxpemVfY2hpbGQob2JqLCAiZ3BpbyIsICZzLT5ncGlvLCB0eXBlbmFt
+ZSk7DQo+ID4NCj4gPiAtICAgIG9iamVjdF9pbml0aWFsaXplX2NoaWxkKG9iaiwgInNkYyIsICZz
+LT5zZGhjaSwgVFlQRV9BU1BFRURfU0RIQ0kpOw0KPiA+ICsgICAgc25wcmludGYodHlwZW5hbWUs
+IHNpemVvZih0eXBlbmFtZSksICJhc3BlZWQuc2RoY2ktJXMiLCBzb2NuYW1lKTsNCj4gPiArICAg
+IG9iamVjdF9pbml0aWFsaXplX2NoaWxkKG9iaiwgInNkYyIsICZzLT5zZGhjaSwgdHlwZW5hbWUp
+Ow0KPiA+DQo+ID4gICAgICAgb2JqZWN0X3Byb3BlcnR5X3NldF9pbnQoT0JKRUNUKCZzLT5zZGhj
+aSksICJudW0tc2xvdHMiLCAyLA0KPiA+ICZlcnJvcl9hYm9ydCk7DQo+ID4NCj4gPiBkaWZmIC0t
+Z2l0IGEvaHcvYXJtL2FzcGVlZF9hc3QyNjAwLmMgYi9ody9hcm0vYXNwZWVkX2FzdDI2MDAuYyBp
+bmRleA0KPiA+IGM0MGQzZDg0NDMuLmI1NzAzYmQwNjQgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvYXJt
+L2FzcGVlZF9hc3QyNjAwLmMNCj4gPiArKysgYi9ody9hcm0vYXNwZWVkX2FzdDI2MDAuYw0KPiA+
+IEBAIC0yMzYsOCArMjM2LDggQEAgc3RhdGljIHZvaWQgYXNwZWVkX3NvY19hc3QyNjAwX2luaXQo
+T2JqZWN0ICpvYmopDQo+ID4gICAgICAgc25wcmludGYodHlwZW5hbWUsIHNpemVvZih0eXBlbmFt
+ZSksICJhc3BlZWQuZ3Bpby0lcy0xXzh2IiwNCj4gc29jbmFtZSk7DQo+ID4gICAgICAgb2JqZWN0
+X2luaXRpYWxpemVfY2hpbGQob2JqLCAiZ3Bpb18xXzh2IiwgJnMtPmdwaW9fMV84diwNCj4gPiB0
+eXBlbmFtZSk7DQo+ID4NCj4gPiAtICAgIG9iamVjdF9pbml0aWFsaXplX2NoaWxkKG9iaiwgInNk
+LWNvbnRyb2xsZXIiLCAmcy0+c2RoY2ksDQo+ID4gLSAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICBUWVBFX0FTUEVFRF9TREhDSSk7DQo+ID4gKyAgICBzbnByaW50Zih0eXBlbmFtZSwgc2l6ZW9m
+KHR5cGVuYW1lKSwgImFzcGVlZC5zZGhjaS0lcyIsIHNvY25hbWUpOw0KPiA+ICsgICAgb2JqZWN0
+X2luaXRpYWxpemVfY2hpbGQob2JqLCAic2QtY29udHJvbGxlciIsICZzLT5zZGhjaSwNCj4gPiAr
+IHR5cGVuYW1lKTsNCj4gPg0KPiA+ICAgICAgIG9iamVjdF9wcm9wZXJ0eV9zZXRfaW50KE9CSkVD
+VCgmcy0+c2RoY2kpLCAibnVtLXNsb3RzIiwgMiwNCj4gPiAmZXJyb3JfYWJvcnQpOw0KPiA+DQo+
+ID4gQEAgLTI0Nyw4ICsyNDcsNyBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfc29jX2FzdDI2MDBfaW5p
+dChPYmplY3QgKm9iaikNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJnMt
+PnNkaGNpLnNsb3RzW2ldLA0KPiBUWVBFX1NZU0JVU19TREhDSSk7DQo+ID4gICAgICAgfQ0KPiA+
+DQo+ID4gLSAgICBvYmplY3RfaW5pdGlhbGl6ZV9jaGlsZChvYmosICJlbW1jLWNvbnRyb2xsZXIi
+LCAmcy0+ZW1tYywNCj4gPiAtICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRZUEVfQVNQRUVE
+X1NESENJKTsNCj4gPiArICAgIG9iamVjdF9pbml0aWFsaXplX2NoaWxkKG9iaiwgImVtbWMtY29u
+dHJvbGxlciIsICZzLT5lbW1jLA0KPiA+ICsgdHlwZW5hbWUpOw0KPiA+DQo+ID4gICAgICAgb2Jq
+ZWN0X3Byb3BlcnR5X3NldF9pbnQoT0JKRUNUKCZzLT5lbW1jKSwgIm51bS1zbG90cyIsIDEsDQo+
+ID4gJmVycm9yX2Fib3J0KTsNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9ody9zZC9hc3BlZWRfc2Ro
+Y2kuYyBiL2h3L3NkL2FzcGVlZF9zZGhjaS5jIGluZGV4DQo+ID4gYWNkNjUzODI2MS4uY2NhZWVm
+YTc1YiAxMDA2NDQNCj4gPiAtLS0gYS9ody9zZC9hc3BlZWRfc2RoY2kuYw0KPiA+ICsrKyBiL2h3
+L3NkL2FzcGVlZF9zZGhjaS5jDQo+ID4gQEAgLTE0OCw2ICsxNDgsNyBAQCBzdGF0aWMgdm9pZCBh
+c3BlZWRfc2RoY2lfcmVhbGl6ZShEZXZpY2VTdGF0ZSAqZGV2LA0KPiBFcnJvciAqKmVycnApDQo+
+ID4gICB7DQo+ID4gICAgICAgU3lzQnVzRGV2aWNlICpzYmQgPSBTWVNfQlVTX0RFVklDRShkZXYp
+Ow0KPiA+ICAgICAgIEFzcGVlZFNESENJU3RhdGUgKnNkaGNpID0gQVNQRUVEX1NESENJKGRldik7
+DQo+ID4gKyAgICBBc3BlZWRTREhDSUNsYXNzICphc2MgPSBBU1BFRURfU0RIQ0lfR0VUX0NMQVNT
+KHNkaGNpKTsNCj4gPg0KPiA+ICAgICAgIC8qIENyZWF0ZSBpbnB1dCBpcnFzIGZvciB0aGUgc2xv
+dHMgKi8NCj4gPiAgICAgICBxZGV2X2luaXRfZ3Bpb19pbl9uYW1lZF93aXRoX29wYXF1ZShERVZJ
+Q0Uoc2JkKSwNCj4gPiBhc3BlZWRfc2RoY2lfc2V0X2lycSwgQEAgLTE2NiwxMCArMTY3LDcgQEAg
+c3RhdGljIHZvaWQNCj4gYXNwZWVkX3NkaGNpX3JlYWxpemUoRGV2aWNlU3RhdGUgKmRldiwgRXJy
+b3IgKiplcnJwKQ0KPiA+ICAgICAgICAgICAgICAgcmV0dXJuOw0KPiA+ICAgICAgICAgICB9DQo+
+ID4NCj4gPiAtICAgICAgICBpZiAoIW9iamVjdF9wcm9wZXJ0eV9zZXRfdWludChzZGhjaV9zbG90
+LCAiY2FwYXJlZyIsDQo+ID4gLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+QVNQRUVEX1NESENJX0NBUEFCSUxJVElFUywNCj4gZXJycCkpIHsNCj4gPiAtICAgICAgICAgICAg
+cmV0dXJuOw0KPiA+IC0gICAgICAgIH0NCj4gPiArICAgICAgICBzZGhjaS0+c2xvdHNbaV0uY2Fw
+YXJlZyA9IGFzYy0+Y2FwYXJlZzsNCj4gDQo+IEkgdGhpbmsgd2Ugd2FudCB0byBrZWVwIDoNCj4g
+DQo+ICAgICAgICAgIGlmICghb2JqZWN0X3Byb3BlcnR5X3NldF91aW50KHNkaGNpX3Nsb3QsICJj
+YXBhcmVnIiwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYXNjLT5j
+YXBhcmVnLCBlcnJwKSkgew0KPiAgICAgICAgICAgICAgcmV0dXJuOw0KPiAgICAgICAgICB9DQo+
+IA0KPiANCkdvdCBpdC4gVGhhbmtzDQoNCj4gVGhhbmtzLA0KPiANCj4gQy4NCj4gDQo+IA0KPiA+
+DQo+ID4gICAgICAgICAgIGlmICghc3lzYnVzX3JlYWxpemUoc2JkX3Nsb3QsIGVycnApKSB7DQo+
+ID4gICAgICAgICAgICAgICByZXR1cm47DQo+ID4gQEAgLTIxOCwxMyArMjE2LDU5IEBAIHN0YXRp
+YyB2b2lkIGFzcGVlZF9zZGhjaV9jbGFzc19pbml0KE9iamVjdENsYXNzDQo+ICpjbGFzc3AsIHZv
+aWQgKmRhdGEpDQo+ID4gICAgICAgZGV2aWNlX2NsYXNzX3NldF9wcm9wcyhkYywgYXNwZWVkX3Nk
+aGNpX3Byb3BlcnRpZXMpOw0KPiA+ICAgfQ0KPiA+DQo+ID4gK3N0YXRpYyB2b2lkIGFzcGVlZF8y
+NDAwX3NkaGNpX2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKmtsYXNzLCB2b2lkDQo+ID4gKypkYXRh
+KSB7DQo+ID4gKyAgICBEZXZpY2VDbGFzcyAqZGMgPSBERVZJQ0VfQ0xBU1Moa2xhc3MpOw0KPiA+
+ICsgICAgQXNwZWVkU0RIQ0lDbGFzcyAqYXNjID0gQVNQRUVEX1NESENJX0NMQVNTKGtsYXNzKTsN
+Cj4gPiArDQo+ID4gKyAgICBkYy0+ZGVzYyA9ICJBU1BFRUQgMjQwMCBTREhDSSBDb250cm9sbGVy
+IjsNCj4gPiArICAgIGFzYy0+Y2FwYXJlZyA9IDB4MDAwMDAwMDAwMWU4MDA4MDsgfQ0KPiA+ICsN
+Cj4gPiArc3RhdGljIHZvaWQgYXNwZWVkXzI1MDBfc2RoY2lfY2xhc3NfaW5pdChPYmplY3RDbGFz
+cyAqa2xhc3MsIHZvaWQNCj4gPiArKmRhdGEpIHsNCj4gPiArICAgIERldmljZUNsYXNzICpkYyA9
+IERFVklDRV9DTEFTUyhrbGFzcyk7DQo+ID4gKyAgICBBc3BlZWRTREhDSUNsYXNzICphc2MgPSBB
+U1BFRURfU0RIQ0lfQ0xBU1Moa2xhc3MpOw0KPiA+ICsNCj4gPiArICAgIGRjLT5kZXNjID0gIkFT
+UEVFRCAyNTAwIFNESENJIENvbnRyb2xsZXIiOw0KPiA+ICsgICAgYXNjLT5jYXBhcmVnID0gMHgw
+MDAwMDAwMDAxZTgwMDgwOyB9DQo+ID4gKw0KPiA+ICtzdGF0aWMgdm9pZCBhc3BlZWRfMjYwMF9z
+ZGhjaV9jbGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywgdm9pZA0KPiA+ICsqZGF0YSkgew0K
+PiA+ICsgICAgRGV2aWNlQ2xhc3MgKmRjID0gREVWSUNFX0NMQVNTKGtsYXNzKTsNCj4gPiArICAg
+IEFzcGVlZFNESENJQ2xhc3MgKmFzYyA9IEFTUEVFRF9TREhDSV9DTEFTUyhrbGFzcyk7DQo+ID4g
+Kw0KPiA+ICsgICAgZGMtPmRlc2MgPSAiQVNQRUVEIDI2MDAgU0RIQ0kgQ29udHJvbGxlciI7DQo+
+ID4gKyAgICBhc2MtPmNhcGFyZWcgPSAweDAwMDAwMDA3MDFmODAwODA7IH0NCj4gPiArDQo+ID4g
+ICBzdGF0aWMgY29uc3QgVHlwZUluZm8gYXNwZWVkX3NkaGNpX3R5cGVzW10gPSB7DQo+ID4gICAg
+ICAgew0KPiA+ICAgICAgICAgICAubmFtZSAgICAgICAgICAgPSBUWVBFX0FTUEVFRF9TREhDSSwN
+Cj4gPiAgICAgICAgICAgLnBhcmVudCAgICAgICAgID0gVFlQRV9TWVNfQlVTX0RFVklDRSwNCj4g
+PiAgICAgICAgICAgLmluc3RhbmNlX3NpemUgID0gc2l6ZW9mKEFzcGVlZFNESENJU3RhdGUpLA0K
+PiA+ICAgICAgICAgICAuY2xhc3NfaW5pdCAgICAgPSBhc3BlZWRfc2RoY2lfY2xhc3NfaW5pdCwN
+Cj4gPiArICAgICAgICAuY2xhc3Nfc2l6ZSA9IHNpemVvZihBc3BlZWRTREhDSUNsYXNzKSwNCj4g
+PiArICAgICAgICAuYWJzdHJhY3QgPSB0cnVlLA0KPiA+ICsgICAgfSwNCj4gPiArICAgIHsNCj4g
+PiArICAgICAgICAubmFtZSA9IFRZUEVfQVNQRUVEXzI0MDBfU0RIQ0ksDQo+ID4gKyAgICAgICAg
+LnBhcmVudCA9IFRZUEVfQVNQRUVEX1NESENJLA0KPiA+ICsgICAgICAgIC5jbGFzc19pbml0ID0g
+YXNwZWVkXzI0MDBfc2RoY2lfY2xhc3NfaW5pdCwNCj4gPiArICAgIH0sDQo+ID4gKyAgICB7DQo+
+ID4gKyAgICAgICAgLm5hbWUgPSBUWVBFX0FTUEVFRF8yNTAwX1NESENJLA0KPiA+ICsgICAgICAg
+IC5wYXJlbnQgPSBUWVBFX0FTUEVFRF9TREhDSSwNCj4gPiArICAgICAgICAuY2xhc3NfaW5pdCA9
+IGFzcGVlZF8yNTAwX3NkaGNpX2NsYXNzX2luaXQsDQo+ID4gKyAgICB9LA0KPiA+ICsgICAgew0K
+PiA+ICsgICAgICAgIC5uYW1lID0gVFlQRV9BU1BFRURfMjYwMF9TREhDSSwNCj4gPiArICAgICAg
+ICAucGFyZW50ID0gVFlQRV9BU1BFRURfU0RIQ0ksDQo+ID4gKyAgICAgICAgLmNsYXNzX2luaXQg
+PSBhc3BlZWRfMjYwMF9zZGhjaV9jbGFzc19pbml0LA0KPiA+ICAgICAgIH0sDQo+ID4gICB9Ow0K
+PiA+DQo+ID4gICBERUZJTkVfVFlQRVMoYXNwZWVkX3NkaGNpX3R5cGVzKQ0KPiA+ICsNCj4gPiAr
+DQo+IA0KPiBEcm9wIHRoZSBleHRyYSBsaW5lcyBwbGVhc2UuDQo+IA0KPiANCj4gVGhhbmtzLA0K
+PiANCj4gQy4NCj4gDQo+IA0KPiANCj4gPiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9ody9zZC9hc3Bl
+ZWRfc2RoY2kuaA0KPiA+IGIvaW5jbHVkZS9ody9zZC9hc3BlZWRfc2RoY2kuaCBpbmRleCAwNTdi
+YzVmM2QxLi44MDgzNzk3ZTI1IDEwMDY0NA0KPiA+IC0tLSBhL2luY2x1ZGUvaHcvc2QvYXNwZWVk
+X3NkaGNpLmgNCj4gPiArKysgYi9pbmNsdWRlL2h3L3NkL2FzcGVlZF9zZGhjaS5oDQo+ID4gQEAg
+LTEzLDkgKzEzLDExIEBADQo+ID4gICAjaW5jbHVkZSAicW9tL29iamVjdC5oIg0KPiA+DQo+ID4g
+ICAjZGVmaW5lIFRZUEVfQVNQRUVEX1NESENJICJhc3BlZWQuc2RoY2kiDQo+ID4gLU9CSkVDVF9E
+RUNMQVJFX1NJTVBMRV9UWVBFKEFzcGVlZFNESENJU3RhdGUsIEFTUEVFRF9TREhDSSkNCj4gPiAr
+I2RlZmluZSBUWVBFX0FTUEVFRF8yNDAwX1NESENJIFRZUEVfQVNQRUVEX1NESENJICItYXN0MjQw
+MCINCj4gPiArI2RlZmluZSBUWVBFX0FTUEVFRF8yNTAwX1NESENJIFRZUEVfQVNQRUVEX1NESENJ
+ICItYXN0MjUwMCINCj4gPiArI2RlZmluZSBUWVBFX0FTUEVFRF8yNjAwX1NESENJIFRZUEVfQVNQ
+RUVEX1NESENJICItYXN0MjYwMCINCj4gPiArT0JKRUNUX0RFQ0xBUkVfVFlQRShBc3BlZWRTREhD
+SVN0YXRlLCBBc3BlZWRTREhDSUNsYXNzLA0KPiBBU1BFRURfU0RIQ0kpDQo+ID4NCj4gPiAtI2Rl
+ZmluZSBBU1BFRURfU0RIQ0lfQ0FQQUJJTElUSUVTIDB4MDFFODAwODANCj4gPiAgICNkZWZpbmUg
+QVNQRUVEX1NESENJX05VTV9TTE9UUyAgICAyDQo+ID4gICAjZGVmaW5lIEFTUEVFRF9TREhDSV9O
+VU1fUkVHUyAgICAgKEFTUEVFRF9TREhDSV9SRUdfU0laRSAvDQo+IHNpemVvZih1aW50MzJfdCkp
+DQo+ID4gICAjZGVmaW5lIEFTUEVFRF9TREhDSV9SRUdfU0laRSAgICAgMHgxMDANCj4gPiBAQCAt
+MzIsNCArMzQsMTAgQEAgc3RydWN0IEFzcGVlZFNESENJU3RhdGUgew0KPiA+ICAgICAgIHVpbnQz
+Ml90IHJlZ3NbQVNQRUVEX1NESENJX05VTV9SRUdTXTsNCj4gPiAgIH07DQo+ID4NCj4gPiArc3Ry
+dWN0IEFzcGVlZFNESENJQ2xhc3Mgew0KPiA+ICsgICAgU3lzQnVzRGV2aWNlQ2xhc3MgcGFyZW50
+X2NsYXNzOw0KPiA+ICsNCj4gPiArICAgIHVpbnQ2NF90IGNhcGFyZWc7DQo+ID4gK307DQo+ID4g
+Kw0KPiA+ICAgI2VuZGlmIC8qIEFTUEVFRF9TREhDSV9IICovDQoNCg==
 
