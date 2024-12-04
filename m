@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32963E77172
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1537BE77171
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 08:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIkOL-0004EI-Pu; Wed, 04 Dec 2024 03:05:49 -0500
+	id 1tIkOP-0004Fh-Iw; Wed, 04 Dec 2024 03:05:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tIkOE-0004CF-24; Wed, 04 Dec 2024 03:05:43 -0500
+ id 1tIkOJ-0004Dc-Rw; Wed, 04 Dec 2024 03:05:48 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tIkOB-00082v-0q; Wed, 04 Dec 2024 03:05:41 -0500
+ id 1tIkOH-00082v-DR; Wed, 04 Dec 2024 03:05:46 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 4 Dec
@@ -32,9 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v3 2/7] hw/arm/aspeed: Fix coding style
-Date: Wed, 4 Dec 2024 16:05:18 +0800
-Message-ID: <20241204080523.4025780-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 4/7] hw:sdhci: Directly set sd_spec_version instead of
+ property
+Date: Wed, 4 Dec 2024 16:05:20 +0800
+Message-ID: <20241204080523.4025780-5-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241204080523.4025780-1-jamin_lin@aspeedtech.com>
 References: <20241204080523.4025780-1-jamin_lin@aspeedtech.com>
@@ -66,27 +67,33 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix coding style issues from checkpatch.pl.
+Directly set sd_spec_version instead of property and remove
+unused local variable.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast2600.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/sd/aspeed_sdhci.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index be3eb70cdd..c40d3d8443 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -541,7 +541,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
-         return;
-     }
--    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0, sc->memmap[ASPEED_DEV_GPIO]);
-+    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
-+                    sc->memmap[ASPEED_DEV_GPIO]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
+diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
+index ccaeefa75b..4e64e2537a 100644
+--- a/hw/sd/aspeed_sdhci.c
++++ b/hw/sd/aspeed_sdhci.c
+@@ -160,13 +160,9 @@ static void aspeed_sdhci_realize(DeviceState *dev, Error **errp)
+     sysbus_init_mmio(sbd, &sdhci->iomem);
  
+     for (int i = 0; i < sdhci->num_slots; ++i) {
+-        Object *sdhci_slot = OBJECT(&sdhci->slots[i]);
+         SysBusDevice *sbd_slot = SYS_BUS_DEVICE(&sdhci->slots[i]);
+ 
+-        if (!object_property_set_int(sdhci_slot, "sd-spec-version", 2, errp)) {
+-            return;
+-        }
+-
++        sdhci->slots[i].sd_spec_version = 2;
+         sdhci->slots[i].capareg = asc->capareg;
+ 
+         if (!sysbus_realize(sbd_slot, errp)) {
 -- 
 2.34.1
 
