@@ -4,94 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C68E77170
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 18:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E23B9E7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 19:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIuN0-0005GB-4r; Wed, 04 Dec 2024 13:45:06 -0500
+	id 1tIueC-0000mo-AE; Wed, 04 Dec 2024 14:02:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIuMy-0005EF-6g
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 13:45:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIuMw-0008AI-RD
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 13:45:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733337901;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tIue8-0000mE-7q
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:02:48 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tIue2-0002zU-Hs
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:02:43 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A3CE4210FB;
+ Wed,  4 Dec 2024 19:02:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733338959; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=BOrtnZulh0GEYD1WppxtckLAjoFd+f5RTEN64bYQ6uE=;
- b=OeLEU4Rxpz1OQKLePA+dEQXIJHCjwzVcLuNKG6eUqCJzaKYwXoSCCaJNbZQcrlIdwK2U+K
- Lap3O2VFmABa2Tu4tnskbYq8hgeIudiqoSDVs3LQS9n55Gj7MsuCZ7j8lDTAqxfI3H7Jmt
- B3U8/ZvsFC+EUDB3yTvT3vi+EG+sgQs=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-536-czENFcLNM_Kj-MhjWf8IfA-1; Wed, 04 Dec 2024 13:45:00 -0500
-X-MC-Unique: czENFcLNM_Kj-MhjWf8IfA-1
-X-Mimecast-MFC-AGG-ID: czENFcLNM_Kj-MhjWf8IfA
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b6773705c9so4848085a.0
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 10:45:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733337899; x=1733942699;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BOrtnZulh0GEYD1WppxtckLAjoFd+f5RTEN64bYQ6uE=;
- b=quTF0Eau/fbJLQFiatsLNdGeo1lJqh6BhnH3Yci5AXN7jlxDz+LpigE1icLiDGoAw5
- +SMwQtddraLC/EX22hlwDCSTDG8IHADoxc+iEpqwMWgSH70TRfDInv4/i3LqFibtXhSr
- lSrDgy33e97KZoa6oyhXlSu4MZVWRC8xnYSVhYnGoDKyH6PV16yfrxlIIM72iUdB6DN/
- NOYuS3DPnfBI+KyChno1tUe0EdrfJxHS7sw0ylfr662EnRFrCDkxN97OxgMFCJLy7flV
- bXjjcNYwHX7cfodK4/MOREzACm6GtYOmtpBcdNMo9jHYYutvU21jo7g0YukFz8ni2969
- B1/A==
-X-Gm-Message-State: AOJu0Yz8RBCWVdDs/AXBrUwjNFf4ATxk709ACHpynFqGS3hTzxRqHrFg
- 3+1SapNC4f0wNpN/WxI406pIMP5w12ZNXBH8o7qytLQ8OlzqxapNYVq3QF1hlJyvGVVfjiiCbJy
- wHaCp8ZbME0tp+cSoNYX9P4XdWE0r6s7Tgyx6TH2YV+f6Xym8FD1po2ptdaIP
-X-Gm-Gg: ASbGncvRlfDmyyXL5IXrmFd/bJ92xjL9F1DRAswLBIVdqFcOuZHzjRWGW8zlsoxrCD7
- w17156zofFMZyYjfG374sC/BIJzQl41ImGml1msm3UVI/14jnDx7I4Sz0VOfvim9eS0o+pP5GMq
- nhW63kD2NU26ajo5LcGwXRcR7ZuFp7+zYwTv6ZzldUkwMR+JLXO8AhLu744UW+yi4gKGxcU1Kbc
- egw4rN9mASynvg+yEnyDxqLs+Vm64CuxsJOvdohPKnyDEaepS12871+f5gRHDfao6xUJRb6nP/Q
- oZ5+uA0ZAHA=
-X-Received: by 2002:a05:620a:248a:b0:7b1:4579:80fc with SMTP id
- af79cd13be357-7b6a6210882mr974978385a.60.1733337899605; 
- Wed, 04 Dec 2024 10:44:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF9q1fOS8611lg6ZcBAjDFAYN0K4CR9E1Yr5c5yVT4iAAhQFXC4jksnTmL6l08V4LMCLUAhrw==
-X-Received: by 2002:a05:620a:248a:b0:7b1:4579:80fc with SMTP id
- af79cd13be357-7b6a6210882mr974975685a.60.1733337899349; 
- Wed, 04 Dec 2024 10:44:59 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b6849aaea1sm635765785a.75.2024.12.04.10.44.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 10:44:58 -0800 (PST)
-Date: Wed, 4 Dec 2024 13:44:57 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH 1/6] tests/qtest/migration: Introduce
- migration_test_add_suffix
-Message-ID: <Z1CjKWlDcqtm4vU2@x1n>
+ bh=Cxprn8X+Oyg5jSWRAf4dNl//8sp7LiQJY17GcKRjCMY=;
+ b=P7H/DfeYrRIYYyOKY/ZG+yk8By3aGdau0SEwO1oDmG+ck769AkPrsbt3ofx9yrWkb3ybR+
+ poP2+ax9fZbV6jRaP1qPjM2x/QNF87kDUxuGHwrOuMVO2z9i6H/mGNAkh6RT72S4Rf4GUH
+ 9pew127Ge/LvYq5jm1gEMQk6Tj5u5Y8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733338959;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Cxprn8X+Oyg5jSWRAf4dNl//8sp7LiQJY17GcKRjCMY=;
+ b=BvNirq1xMoHzP1z0Otchc4CIFAHT1F6xQOhiO89CCUBISg3Oz1V/gE2/GzjPe2NWI4vFF0
+ Hg48ZcOwsxVfb0DQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733338959; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Cxprn8X+Oyg5jSWRAf4dNl//8sp7LiQJY17GcKRjCMY=;
+ b=P7H/DfeYrRIYYyOKY/ZG+yk8By3aGdau0SEwO1oDmG+ck769AkPrsbt3ofx9yrWkb3ybR+
+ poP2+ax9fZbV6jRaP1qPjM2x/QNF87kDUxuGHwrOuMVO2z9i6H/mGNAkh6RT72S4Rf4GUH
+ 9pew127Ge/LvYq5jm1gEMQk6Tj5u5Y8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733338959;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Cxprn8X+Oyg5jSWRAf4dNl//8sp7LiQJY17GcKRjCMY=;
+ b=BvNirq1xMoHzP1z0Otchc4CIFAHT1F6xQOhiO89CCUBISg3Oz1V/gE2/GzjPe2NWI4vFF0
+ Hg48ZcOwsxVfb0DQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 29F1813974;
+ Wed,  4 Dec 2024 19:02:38 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id zrLlN06nUGdUMAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 04 Dec 2024 19:02:38 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH 2/6] migration: Kick postcopy threads on cancel
+In-Reply-To: <Z1Ch8HpiKMoqILDM@x1n>
 References: <20241202220137.32584-1-farosas@suse.de>
- <20241202220137.32584-2-farosas@suse.de>
+ <20241202220137.32584-3-farosas@suse.de> <Z1Ch8HpiKMoqILDM@x1n>
+Date: Wed, 04 Dec 2024 16:02:36 -0300
+Message-ID: <87r06ni84z.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241202220137.32584-2-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,16 +115,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 02, 2024 at 07:01:32PM -0300, Fabiano Rosas wrote:
-> Introduce a new migration_test_add_suffix to allow programmatic
-> creation of tests based on a suffix. Pass the test name into the test
-> so it can know which variant to run.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+> On Mon, Dec 02, 2024 at 07:01:33PM -0300, Fabiano Rosas wrote:
+>> Make sure postcopy threads are released when migrate_cancel is
+>> issued. Kick the postcopy_pause semaphore and have the fault thread
+>> read 'fault_thread_quit' when joining.
+>> 
+>> While here fix the comment mentioning userfault_event_fd.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>
+> I remember when working on postcopy, I thought about failing migrate-cancel
+> for postcopy in general, rejecting such request.  And when working on the
+> recover feature, there's no concern on having it being cancelled, because
+> the user really shouldn't do that..
+>
+> The problem is migrate-cancel means crashing the VM on both sides when QEMU
+> already goes into postcopy stage.
 
--- 
-Peter Xu
+Well, that's the sillyness of having a cancel command, you can never
+know what "cancel" means. The "documentation" says: "Cancel the current
+executing migration process", it doesn't mention anything about the
+consequences of such action.
 
+>
+> If the user wants to crash the VM anyway, an easier way to do is killing on
+> both sides.
+
+I don't think this is fair. We expose a "cancel" command, we better do
+some cancelling or instead reject the command appropriately, not expect
+the user to "know better".
+
+>
+> If the user wished to cancel, we should tell them "postcopy cannot be
+> cancelled, until complete".  That's probably the major reason why people
+> think postcopy is dangerous to use..
+
+We could certainly add that restriction, I don't see a problem with
+it. That said, what is the actual use case for migrate_cancel? And how
+does that compare with yank? I feel like we've been kind of relying on
+nobody using those commands really.
+
+One truth that we have (because it's tested) is that the multifd
+migration allows migrate_cancel on the source and another migration to
+start from it.
+
+(btw, that reminds me that multifd+postcopy will probably break that
+test).
+
+>
+> Or do we have any use case this could be a valid scenario?
+
+Not that I know of. But you're the postcopy expert =)
 
