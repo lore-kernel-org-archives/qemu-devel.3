@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F61EE7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 18:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C68E77170
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 18:45:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIuMg-0004pB-87; Wed, 04 Dec 2024 13:44:47 -0500
+	id 1tIuN0-0005GB-4r; Wed, 04 Dec 2024 13:45:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIuMe-0004l8-9b
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 13:44:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIuMy-0005EF-6g
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 13:45:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIuMc-00087p-DM
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 13:44:44 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIuMw-0008AI-RD
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 13:45:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733337880;
+ s=mimecast20190719; t=1733337901;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N4nkV43GDxyeKgRGGVCpT/scHDEkKEQ/N/1GUoU5uMY=;
- b=Uxmp9tmCCWC+LZMPnoULzlE/SnSVjv7lZ4ZPniP5uhtajEpOmTRTVdzYoZW4RFVndFGZIR
- vC1jfLlK4xkTk/QJhzBIIAGkKb7/C6naYU1kS4DwVV5tzfRwWJCiLl19yrEW4Nol6UKjX6
- fS8YNnutuUCNxuhndr50guEUyZKSp/c=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BOrtnZulh0GEYD1WppxtckLAjoFd+f5RTEN64bYQ6uE=;
+ b=OeLEU4Rxpz1OQKLePA+dEQXIJHCjwzVcLuNKG6eUqCJzaKYwXoSCCaJNbZQcrlIdwK2U+K
+ Lap3O2VFmABa2Tu4tnskbYq8hgeIudiqoSDVs3LQS9n55Gj7MsuCZ7j8lDTAqxfI3H7Jmt
+ B3U8/ZvsFC+EUDB3yTvT3vi+EG+sgQs=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-xRthAEpqPMqvwzdxoJnohA-1; Wed, 04 Dec 2024 13:44:39 -0500
-X-MC-Unique: xRthAEpqPMqvwzdxoJnohA-1
-X-Mimecast-MFC-AGG-ID: xRthAEpqPMqvwzdxoJnohA
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-85636e5c41cso23459241.0
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 10:44:38 -0800 (PST)
+ us-mta-536-czENFcLNM_Kj-MhjWf8IfA-1; Wed, 04 Dec 2024 13:45:00 -0500
+X-MC-Unique: czENFcLNM_Kj-MhjWf8IfA-1
+X-Mimecast-MFC-AGG-ID: czENFcLNM_Kj-MhjWf8IfA
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6773705c9so4848085a.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 10:45:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733337878; x=1733942678;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N4nkV43GDxyeKgRGGVCpT/scHDEkKEQ/N/1GUoU5uMY=;
- b=nRzpMJZbROk7jFi9hBeme1ulLGTmaDAFTjvaerU03H/27nycXAp5Ebivi1ztBgHU56
- tk41VscKuIMpP3lgp798vbc9a4B/Xv34hBWkjm6P1REDzTwfB09xFMixwM+9iNmvc020
- Aqe6Dvs3oEVSJDrKWKTEPcgDZ/0vIiOA4X6wyIpfJaHBjBFPAfxSY0ENh0fInw5kf2Pi
- mK+TtEK3pZwcve7vthw8PS0SFvGuWISXQTDHRdXrdMQww1hEymJgXLaT+ls6fVS82ltT
- A9goHqoTHHlLe8lLJB64LdfnckErGsNvICIb7yt2FFhSl/lmOBlAFq4HZv0E/BOTkMP3
- 4T4Q==
-X-Gm-Message-State: AOJu0YyH/6iHDakxoOWDXi9W9UUBKM1Vz7JFdYCLqcpvMVAiaKbVZtGo
- fZcePoySKYWz5s41f1pqju2ECLUlMr1Gsl3JWlRjSpWHmtMWbTdyv+sOBtUemVEemEsqzgLqger
- k6ABXnsn96VPuPvZWrmHOZU57vtzOX2X8CFhcv/cfazrg2GCiQmtp
-X-Gm-Gg: ASbGnctlM769l5mf/Q23GNfR30AJLZDfDDrGHPA6EmWFNDGlv/khW54eE4juwOxyEqG
- 8tyDNAEoLNJbXRRTLNNG3rVdMzyH3WQucheSvHZhXuLNlRonK/qsLW8G+D0ncq36KkVyDSrrBCz
- DlKEqKbYoABt8zZA/KNCPJ62m3F4CL+sNpZV/fQYvlHwpNWpmR2Vhz4sGzQo60cMZQ0xZw2FDH/
- 0Wm1Z8Ag6QJSIQDlH2ZNwH6/XaTIzRnRcN3TOUX/ZIJfm1uTN3XdSjf4dYGMpR/jdAKCFR0bCAA
- MFUvIL36/bA=
-X-Received: by 2002:a05:6122:2216:b0:50d:44fd:5b68 with SMTP id
- 71dfb90a1353d-515bf673fb9mr9291367e0c.10.1733337878254; 
- Wed, 04 Dec 2024 10:44:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHO7c/uws18lR0C1Cirr69J0BsKdzJ5OWeR7zZS2hHyvWGY5Cg1b9JSDsbr/9iF+w1a+1DYHw==
-X-Received: by 2002:a05:6122:2216:b0:50d:44fd:5b68 with SMTP id
- 71dfb90a1353d-515bf673fb9mr9291346e0c.10.1733337877838; 
- Wed, 04 Dec 2024 10:44:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733337899; x=1733942699;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BOrtnZulh0GEYD1WppxtckLAjoFd+f5RTEN64bYQ6uE=;
+ b=quTF0Eau/fbJLQFiatsLNdGeo1lJqh6BhnH3Yci5AXN7jlxDz+LpigE1icLiDGoAw5
+ +SMwQtddraLC/EX22hlwDCSTDG8IHADoxc+iEpqwMWgSH70TRfDInv4/i3LqFibtXhSr
+ lSrDgy33e97KZoa6oyhXlSu4MZVWRC8xnYSVhYnGoDKyH6PV16yfrxlIIM72iUdB6DN/
+ NOYuS3DPnfBI+KyChno1tUe0EdrfJxHS7sw0ylfr662EnRFrCDkxN97OxgMFCJLy7flV
+ bXjjcNYwHX7cfodK4/MOREzACm6GtYOmtpBcdNMo9jHYYutvU21jo7g0YukFz8ni2969
+ B1/A==
+X-Gm-Message-State: AOJu0Yz8RBCWVdDs/AXBrUwjNFf4ATxk709ACHpynFqGS3hTzxRqHrFg
+ 3+1SapNC4f0wNpN/WxI406pIMP5w12ZNXBH8o7qytLQ8OlzqxapNYVq3QF1hlJyvGVVfjiiCbJy
+ wHaCp8ZbME0tp+cSoNYX9P4XdWE0r6s7Tgyx6TH2YV+f6Xym8FD1po2ptdaIP
+X-Gm-Gg: ASbGncvRlfDmyyXL5IXrmFd/bJ92xjL9F1DRAswLBIVdqFcOuZHzjRWGW8zlsoxrCD7
+ w17156zofFMZyYjfG374sC/BIJzQl41ImGml1msm3UVI/14jnDx7I4Sz0VOfvim9eS0o+pP5GMq
+ nhW63kD2NU26ajo5LcGwXRcR7ZuFp7+zYwTv6ZzldUkwMR+JLXO8AhLu744UW+yi4gKGxcU1Kbc
+ egw4rN9mASynvg+yEnyDxqLs+Vm64CuxsJOvdohPKnyDEaepS12871+f5gRHDfao6xUJRb6nP/Q
+ oZ5+uA0ZAHA=
+X-Received: by 2002:a05:620a:248a:b0:7b1:4579:80fc with SMTP id
+ af79cd13be357-7b6a6210882mr974978385a.60.1733337899605; 
+ Wed, 04 Dec 2024 10:44:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF9q1fOS8611lg6ZcBAjDFAYN0K4CR9E1Yr5c5yVT4iAAhQFXC4jksnTmL6l08V4LMCLUAhrw==
+X-Received: by 2002:a05:620a:248a:b0:7b1:4579:80fc with SMTP id
+ af79cd13be357-7b6a6210882mr974975685a.60.1733337899349; 
+ Wed, 04 Dec 2024 10:44:59 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d89ae5a767sm50391096d6.38.2024.12.04.10.44.37
+ af79cd13be357-7b6849aaea1sm635765785a.75.2024.12.04.10.44.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 10:44:37 -0800 (PST)
-Date: Wed, 4 Dec 2024 13:44:35 -0500
+ Wed, 04 Dec 2024 10:44:58 -0800 (PST)
+Date: Wed, 4 Dec 2024 13:44:57 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 5/6] migration: Fix hang after error in destination setup
- phase
-Message-ID: <Z1CjE2UYUECkRhJZ@x1n>
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH 1/6] tests/qtest/migration: Introduce
+ migration_test_add_suffix
+Message-ID: <Z1CjKWlDcqtm4vU2@x1n>
 References: <20241202220137.32584-1-farosas@suse.de>
- <20241202220137.32584-6-farosas@suse.de>
+ <20241202220137.32584-2-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241202220137.32584-6-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20241202220137.32584-2-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -110,141 +107,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 02, 2024 at 07:01:36PM -0300, Fabiano Rosas wrote:
-> If the destination side fails at migration_ioc_process_incoming()
-> before starting the coroutine, it will report the error but QEMU will
-> not exit.
+On Mon, Dec 02, 2024 at 07:01:32PM -0300, Fabiano Rosas wrote:
+> Introduce a new migration_test_add_suffix to allow programmatic
+> creation of tests based on a suffix. Pass the test name into the test
+> so it can know which variant to run.
 > 
-> Set the migration state to FAILED and exit the process if
-> exit-on-error allows.
-> 
-> CC: Thomas Huth <thuth@redhat.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2633
-> Reported-by: Daniel P. Berrangé <berrange@redhat.com>
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-(I skipped the postcopy patches as of now, until we finish the discussion
- in patch 2)
-
-> ---
->  migration/channel.c   | 11 ++++++-----
->  migration/migration.c | 31 ++++++++++++++++++-------------
->  migration/migration.h |  2 +-
->  3 files changed, 25 insertions(+), 19 deletions(-)
-> 
-> diff --git a/migration/channel.c b/migration/channel.c
-> index f9de064f3b..6d7f9172d8 100644
-> --- a/migration/channel.c
-> +++ b/migration/channel.c
-> @@ -40,13 +40,14 @@ void migration_channel_process_incoming(QIOChannel *ioc)
->  
->      if (migrate_channel_requires_tls_upgrade(ioc)) {
->          migration_tls_channel_process_incoming(s, ioc, &local_err);
-> +
-> +        if (local_err) {
-> +            error_report_err(local_err);
-> +        }
-
-What if tls processing failed here, do we have similar issue that qemu will
-stall?  Do we want to cover that too?
-
-> +
->      } else {
->          migration_ioc_register_yank(ioc);
-> -        migration_ioc_process_incoming(ioc, &local_err);
-> -    }
-> -
-> -    if (local_err) {
-> -        error_report_err(local_err);
-> +        migration_ioc_process_incoming(ioc);
->      }
->  }
->  
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 8a61cc26d7..cd88ebc875 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -943,7 +943,7 @@ static bool migration_should_start_incoming(bool main_channel)
->      return true;
->  }
->  
-> -void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-> +void migration_ioc_process_incoming(QIOChannel *ioc)
->  {
->      MigrationIncomingState *mis = migration_incoming_get_current();
->      Error *local_err = NULL;
-> @@ -966,10 +966,9 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
->           * issue is not possible.
->           */
->          ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
-> -                                          sizeof(channel_magic), errp);
-> -
-> +                                          sizeof(channel_magic), &local_err);
->          if (ret != 0) {
-> -            return;
-> +            goto err;
->          }
->  
->          default_channel = (channel_magic == cpu_to_be32(QEMU_VM_FILE_MAGIC));
-> @@ -977,8 +976,8 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
->          default_channel = !mis->from_src_file;
->      }
->  
-> -    if (multifd_recv_setup(errp) != 0) {
-> -        return;
-> +    if (multifd_recv_setup(&local_err) != 0) {
-> +        goto err;
->      }
->  
->      if (default_channel) {
-> @@ -995,18 +994,24 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
->              postcopy_preempt_new_channel(mis, f);
->          }
->          if (local_err) {
-> -            error_propagate(errp, local_err);
-> -            return;
-> +            goto err;
->          }
->      }
->  
-> -    if (migration_should_start_incoming(default_channel)) {
-> -        /* If it's a recovery, we're done */
-> -        if (postcopy_try_recover()) {
-> -            return;
-> -        }
-> +    if (migration_should_start_incoming(default_channel) &&
-> +        !postcopy_try_recover()) {
->          migration_incoming_process();
->      }
-> +
-> +    return;
-> +
-> +err:
-> +    error_report_err(local_err);
-> +    migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
-> +                      MIGRATION_STATUS_FAILED);
-> +    if (mis->exit_on_error) {
-> +        exit(EXIT_FAILURE);
-> +    }
->  }
->  
->  /**
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 0956e9274b..c367e5ea40 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -477,7 +477,7 @@ void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
->                         MigrationStatus new_state);
->  
->  void migration_fd_process_incoming(QEMUFile *f);
-> -void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
-> +void migration_ioc_process_incoming(QIOChannel *ioc);
->  void migration_incoming_process(void);
->  
->  bool  migration_has_all_channels(void);
-> -- 
-> 2.35.3
-> 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
 Peter Xu
