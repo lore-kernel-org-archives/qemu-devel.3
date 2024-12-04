@@ -4,92 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87258E7716F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 23:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ACF2E7716F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 23:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIysC-00022b-Fe; Wed, 04 Dec 2024 18:33:36 -0500
+	id 1tIywC-0003gA-Hw; Wed, 04 Dec 2024 18:37:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIysA-00022E-TE
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 18:33:34 -0500
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tIywB-0003ex-4z
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 18:37:43 -0500
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIys9-0000c6-1W
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 18:33:34 -0500
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-7fc41b4c78bso223611a12.3
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 15:33:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tIyw8-00011P-8I
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 18:37:42 -0500
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-29e585968a8so288816fac.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 15:37:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733355211; x=1733960011; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1733355459; x=1733960259; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gfQYykK2/THiTd+2WBnIxlbpfsCXeKVB3GOSBiaRysI=;
- b=YYQsZgpk+CHceRZsWKBVaybPH7CDuFTYV9w3LlTvjoZZPmZbj7dg1AzWBJY4hz1WAu
- ArNVMDI0RqDvzVAoEovIkX7AJKWrOe9nq3M40k8nIzINNEmXBbHRpEqxP2J+JtBnoSkw
- 6z9P7E+C21CTG+2H/OUApkNTaNSyfKcpAV10fKpVzvyFIXqW/RMARhLCE0E5RWRNxRIR
- M+fswSkqEO5pIVHJ86Eo8OcfMJU1WzNA9LjPzIfoZm1VJdynUsiDe7ewPksy9nQQnnif
- Y4U0Qyi7yrE+FfZrgN3Qs9xMS4FZdeOot9yDOPH8cDmXgMDMqCbhoGFs/q5DOfeKOd0T
- hcJg==
+ bh=Wm+YprTKZReL/LK+leQhteNkdpgiYwW0BQBegMkxYto=;
+ b=EHWHKM8z3MGn8nfIBkvXtwaGyUaq4YnbkbVBYr+y4YlM7EUDo/m7R/tZUcrON73tT0
+ 2F9GcyBR5XV1L5LogHZTpEktrqaG32FteyWx+6HIwfoMrWI2bpa4cD7OhD/ZinC2mjDW
+ 5W0ltVBs3yGO/pw7tR6kS8ub7s2L2VLqk2VZldwZjLYKq9+LoQi87emY7+LxklJ+DqLR
+ 2ziEzqcEs22bl9lZ243XQUtzBJHnDST9dGYB3AYwx4+Um1jFLf/Ru5LlO6LE1s8UlCEO
+ dAuSEfWzcpRGiAe1AgC8p86VH9Odh4lSWsk/l7zxvplMYZX4oCsq/osoz8VPUat/kscM
+ 4VZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733355211; x=1733960011;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1733355459; x=1733960259;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gfQYykK2/THiTd+2WBnIxlbpfsCXeKVB3GOSBiaRysI=;
- b=A6nxpxBLfDpay8r0KPONsAMQ7bVIGrshS9GbgWnAo1/+p5Hr76sPlkW987uGGporzj
- sSWnxa0BxjSHf1UHGJtUotEROBhB2UZPZE/ppLpg+4rp7/uw1B2lgJDEkMYWs4nP7dvj
- aHNcTrpslnd94sOr9tKvMrQHJwpy2lbsrc5SKptG5MypTsVpJjf4Rx5WdNRXY4xRfqxs
- QgRUlnVdQlAEr3QnD4LsmXexjzJSTHNKRZbZPWDp9RM7FPMj2r3Gl5HB7M7VNzOPKgNr
- /Ap/qFbX36pdMUc6i9zu6a1exUdERwfDhR97dhXy1pDQy2//pJeqaQYj9JhQtoxF9J9+
- /iUA==
+ bh=Wm+YprTKZReL/LK+leQhteNkdpgiYwW0BQBegMkxYto=;
+ b=oE9V3n2wXZzmyHR3V2gAt/7+8KFgCGQHjND6ibEVEcG+pFsOK5sU0s8mB1eEHRS3Up
+ RH6dspR59n8h4bF0zdxfKqSoo65BGUyLxsAD4LViFP1eQUna4f7WhP4aOFQUVDVgZvEt
+ WrjEn4kAqEC6z6DXbDau/Hvl6SOg7jMQPBYsb/tmPgfSM1saKM5jfngUP/PrircRf8sI
+ ZaGpGHxKsu7bKolDZfKhpbucbeJ6LiPNzmtBFq2kvWL38X3oED6XjyMeYGq5HzrIEO3c
+ 6Gb3EXeJ2iS2ALq02FTlglse9/NEJrdVsHrz0CBUH9HHbmOeOeNYmRWGgA8ynTlExRNc
+ LWkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVac9ktWhwggU7yYiR3eDLTU6KHH1g3oEQkwgegsOEbBnyAEp4AF0iEXBv/JtxQJTbDWg6984ZFcQ1M@nongnu.org
-X-Gm-Message-State: AOJu0YwKMx1PZHWUQ0gHenuARdXMp2zZYlgGztprsVWSyXXfe8Zy54v9
- wCzR08k56o9xAxf4cXBlZObykS0Yh0TJiwUv6oPvh6Dkd+05zNUHbAaSPWj6hFY=
-X-Gm-Gg: ASbGncuC7ZKAr2n1H8pL/uJp6iM8VdQyaXmfRaAQuep5R9mKmGc6ct1e1EluFgAtngV
- wrQ01dhBOASPwZOSbqS8pr/2ra+iQJguCFihhLMzFSqpUkx4m2LiQqedWXcK0W77RRLjdmL/dgo
- fwXcnuOfIDsWBAECLN9ZYjVI+nvOwvPQ8wEFH2MTMARMqef+cMCC5IWh2IRO69wAO8yKgADhVMD
- swaMJ9UA/LwBw1xdDHqSms9xdDvQb803lPoe/iIzc4EgQuPT0RDKeyhg93SHymYLnr97e/HPnrV
- fvzFlfThPcHDoB0nMd2gkA==
-X-Google-Smtp-Source: AGHT+IG7Shs7V4WExL2UlKybwY34g8mBS9y9cnkdkanxnXYHEeZvGX6PQKQjA1Y+I6YGWUqoDdYdLw==
-X-Received: by 2002:a17:90b:1b0a:b0:2ef:316b:53fe with SMTP id
- 98e67ed59e1d1-2ef316b61f7mr3573766a91.22.1733355211512; 
- Wed, 04 Dec 2024 15:33:31 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ef45fa31f0sm119231a91.23.2024.12.04.15.33.30
+ AJvYcCXyE8ZFeM9Faw97YNYCeNj4qmR2u//o1nfue/97Ze+0cppEafeLskANIfVZddrxwz7Csbqw8l2z5PKR@nongnu.org
+X-Gm-Message-State: AOJu0YxwCAJ5TyCybwgSFLBkYA89ftDabpAdJCa1yMc9eS7L+XY+hder
+ gsdX4hkTsSB9R/sDFORXsGHQLGNDYJV+XbtDvj74A7Bw+2Cy+Ac6dAelNFVi/1k=
+X-Gm-Gg: ASbGncsgbVXgrne/ah+/ceHZlJ3g1JwokhL5XF6IXInqhk9Jt9UGx/TQJrwz89dofSq
+ rSQ9nQrftEpcYgV4jqAxvW/X7tguf+mr/9a+3ofthFD04R4sM/1SXvmisMsYJ4QVq9GGAHA/o7Z
+ UA6LZuVrLjYMGNVinHtM7VnN0+UE72mDR10wCDsJadPTiXSKxMcsTVHTtDp6oSiySKq3rYK6dlj
+ RcFUiD4UiiIgb3aodn3BgaqyfWUcijI+LspQtHzs2RvRpUAcryokCxnQvzl0dkDpKSkDDDIzIAm
+ R+Te0Zrh7EcO76Vmm0DkSLP0YP3k
+X-Google-Smtp-Source: AGHT+IGQsmUAz55PbS5EOvlhoU2E/aJNx/BDCXWj4pV0epb2rOhhk8aiNJjl0hBDH+VvoB2qFITnFw==
+X-Received: by 2002:a05:6871:80f:b0:29e:526a:eeef with SMTP id
+ 586e51a60fabf-29e88853236mr7884885fac.34.1733355458928; 
+ Wed, 04 Dec 2024 15:37:38 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-29f569a698dsm64079fac.49.2024.12.04.15.37.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Dec 2024 15:33:31 -0800 (PST)
-Message-ID: <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
-Date: Wed, 4 Dec 2024 15:33:30 -0800
+ Wed, 04 Dec 2024 15:37:38 -0800 (PST)
+Message-ID: <0d698119-9ea0-4499-96ce-6a194d305c52@linaro.org>
+Date: Wed, 4 Dec 2024 17:37:35 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
+Subject: Re: [PATCH 03/20] target/arm: Implement
+ CPUClass::datapath_is_big_endian
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
+ <lvivier@redhat.com>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Zhao Liu <zhao1.liu@intel.com>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, David Hildenbrand <david@redhat.com>,
+ qemu-s390x@nongnu.org, Max Filippov <jcmvbkbc@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-riscv@nongnu.org,
+ Alistair Francis <alistair@alistair23.me>, qemu-ppc@nongnu.org
+References: <20241204202602.58083-1-philmd@linaro.org>
+ <20241204202602.58083-4-philmd@linaro.org>
 Content-Language: en-US
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241204202602.58083-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,140 +115,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/24 11:41, Julian Ganz wrote:
-> We recently introduced plugin API for the registration of callbacks for
-> discontinuity events, specifically for interrupts, exceptions and host
-> call events. The callback receives, among other information, the VCPU
-> index and the PC after the event. This change introduces a test plugin
-> asserting that particular behaviour.
-> ---
->   tests/tcg/plugins/discons.c   | 95 +++++++++++++++++++++++++++++++++++
->   tests/tcg/plugins/meson.build |  2 +-
->   2 files changed, 96 insertions(+), 1 deletion(-)
->   create mode 100644 tests/tcg/plugins/discons.c
+On 12/4/24 14:25, Philippe Mathieu-Daudé wrote:
+> arm_cpu_virtio_is_big_endian() already returns whether
+> the data path is in big endian. Re-use that.
 > 
-> diff --git a/tests/tcg/plugins/discons.c b/tests/tcg/plugins/discons.c
-> new file mode 100644
-> index 0000000000..54e52f563a
-> --- /dev/null
-> +++ b/tests/tcg/plugins/discons.c
-> @@ -0,0 +1,95 @@
-> +/*
-> + * Copyright (C) 2024, Julian Ganz <neither@nut.email>
-> + *
-> + * License: GNU GPL, version 2 or later.
-> + *   See the COPYING file in the top-level directory.
-> + */
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/arm/cpu.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
-Would be nice to include a description of the plugin here.
+No, this is wrong.
 
-> +#include <stdio.h>
-> +
-> +#include <qemu-plugin.h>
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-> +
-> +struct cpu_state {
-> +    uint64_t next_pc;
-> +    bool has_next;
-> +};
-> +
-> +static struct qemu_plugin_scoreboard *states;
-> +
-> +static bool abort_on_mismatch;
-> +
-> +static void vcpu_discon(qemu_plugin_id_t id, unsigned int vcpu_index,
-> +                        enum qemu_plugin_discon_type type, uint64_t from_pc,
-> +                        uint64_t to_pc)
-> +{
-> +    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
-> +    state->next_pc = to_pc;
-> +    state->has_next = true;
-> +}
-> +
-> +static void insn_exec(unsigned int vcpu_index, void *userdata)
-> +{
-> +    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
-> +    uint64_t pc = (uint64_t) userdata;
-> +    GString* report;
-> +
-> +    if (state->has_next) {
-> +        if (state->next_pc != pc) {
-> +            report = g_string_new("Trap target PC mismatch\n");
-> +            g_string_append_printf(report,
-> +                                   "Expected:    %"PRIx64"\nEncountered: %"
-> +                                   PRIx64"\n",
-> +                                   state->next_pc, pc);
-> +            qemu_plugin_outs(report->str);
-> +            if (abort_on_mismatch) {
-> +                g_abort();
-> +            }
-> +            g_string_free(report, true);
-> +        }
-> +        state->has_next = false;
-> +    }
-> +}
+(1) arm_cpu_virtio_is_big_endian really *is* specific to virtio,
+     and legacy virtio at that.  It changes based on the state of the cpu.
 
-When booting an arm64 vm, I get this message:
-Trap target PC mismatch
-Expected:    23faf3a80
-Encountered: 23faf3a84
+(2) The board-level stuff for which you appear to be intending to
+     replace qemu_binary_is_bigendian(), for arm, is *always* little-endian,
+     and has no relation to the state of the cpu.
 
- From what I understand, it means that the next_pc we have is incorrect.
+(3) I thought you were on a better track plumbing endianness through
+     properties on machine state.
 
-> +
-> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-> +{
-> +    size_t i;
-> +    size_t n_insns = qemu_plugin_tb_n_insns(tb);
-> +
-> +    for (i = 0; i < n_insns; i++) {
-> +        struct qemu_plugin_insn * insn = qemu_plugin_tb_get_insn(tb, i);
-> +        uint64_t pc = qemu_plugin_insn_vaddr(insn);
-> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, insn_exec,
-> +                                               QEMU_PLUGIN_CB_NO_REGS,
-> +                                               (void*) pc);
-> +    }
- > +}> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-> +                                           const qemu_info_t *info,
-> +                                           int argc, char **argv)
-> +{
-> +    int i;
-> +
-> +    for (i = 0; i < argc; i++) {
-> +        char *opt = argv[i];
-> +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-> +        if (g_strcmp0(tokens[0], "abort") == 0) {
-> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &abort_on_mismatch)) {
-> +                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-> +                return -1;
-> +            }
-> +        } else {
-> +            fprintf(stderr, "option parsing failed: %s\n", opt);
-> +            return -1;
-> +        }
-> +    }
-> +
-> +    states = qemu_plugin_scoreboard_new(sizeof(struct cpu_state));
-> +
-> +    qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_ALL,
-> +                                        vcpu_discon);
-> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-> +
-> +    return 0;
-> +}
-> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-> index f847849b1b..f057238da1 100644
-> --- a/tests/tcg/plugins/meson.build
-> +++ b/tests/tcg/plugins/meson.build
-> @@ -1,6 +1,6 @@
->   t = []
->   if get_option('plugins')
-> -  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'syscall']
-> +  foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'syscall']
->       if host_os == 'windows'
->         t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
->                           include_directories: '../../../include/qemu',
+
+r~
+
+> 
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 6938161b954..3061b2ac18c 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -1132,7 +1132,7 @@ static void arm_cpu_kvm_set_irq(void *opaque, int irq, int level)
+>   #endif
+>   }
+>   
+> -static bool arm_cpu_virtio_is_big_endian(CPUState *cs)
+> +static bool arm_cpu_datapath_is_big_endian(CPUState *cs)
+>   {
+>       ARMCPU *cpu = ARM_CPU(cs);
+>       CPUARMState *env = &cpu->env;
+> @@ -2664,7 +2664,7 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
+>       .asidx_from_attrs = arm_asidx_from_attrs,
+>       .write_elf32_note = arm_cpu_write_elf32_note,
+>       .write_elf64_note = arm_cpu_write_elf64_note,
+> -    .virtio_is_big_endian = arm_cpu_virtio_is_big_endian,
+> +    .virtio_is_big_endian = arm_cpu_datapath_is_big_endian,
+>       .legacy_vmsd = &vmstate_arm_cpu,
+>   };
+>   #endif
+> @@ -2709,6 +2709,7 @@ static void arm_cpu_class_init(ObjectClass *oc, void *data)
+>                                          &acc->parent_phases);
+>   
+>       cc->class_by_name = arm_cpu_class_by_name;
+> +    cc->datapath_is_big_endian = arm_cpu_datapath_is_big_endian;
+>       cc->has_work = arm_cpu_has_work;
+>       cc->mmu_index = arm_cpu_mmu_index;
+>       cc->dump_state = arm_cpu_dump_state;
 
 
