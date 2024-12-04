@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E0AE7716D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE1C4E77171
 	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:31:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIw1M-0006Yg-0x; Wed, 04 Dec 2024 15:30:52 -0500
+	id 1tIvyN-0000ew-LZ; Wed, 04 Dec 2024 15:27:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIw13-0006SN-2f
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:30:35 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvyB-0000RM-8V
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:37 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIw0z-0005M9-WA
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:30:31 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-434a2033562so1856305e9.1
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:30:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvy8-0000OB-V3
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:35 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-385dece873cso127814f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:27:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733344228; x=1733949028; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=g8dZ8N+n0dSzf9lZBkI+qDwvxZthdbNmKnyIEsAblrc=;
- b=WXT3wsdef1XHug+rfLYWP+aHdXvwUv0A9Wz7n8hE9Nd7S5GTpVizJ58mC/Z+lOSNYN
- ySKRwnt6hYjk7dtMj+GVcX5AqzB1A7t33uPpLvhQGyM3st5mSGG8vVzmZx7+TFBawDmm
- gqb1ay+mehz55PPc57jIlUXTkJNQ59aMM+f4lXkzzWx7dcJU5JLdv27km71NjYSuDTgo
- OAmmJHl36Bj2oqVMJZ7sv1szLcAPaUt8ar9rr//IWuv+DT2yqmi/jYQ+mIOogDU8amKc
- wMyQiAoqhSUX9UXkpJ4Sm8lg1yfrNnagbfcgOf37v6LRikK3SukKQph31ZCC+a7R/Ns/
- iVDQ==
+ d=linaro.org; s=google; t=1733344051; x=1733948851; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0gEXG14yGHmTwK2PkgnJuKn3fmfO28N4tNUnsroDG+o=;
+ b=Glp+Z1yU/0jga31NZn4x61NUaTQLfZabWAkdUbej0ntLhq01Qbg8L7rJYBeFC4S+s4
+ w1lZsmj15fGTG2Hhiput/kT/tkpeFmGEPUyxaEu0UJMNgmxpHj+sAAUJ58hARdlrAs6e
+ sTTLvzt7tULHWHMwCHs3EtCbNAL4DNP8wRrb1M8Jmw8TKjpIMuiN3W7oFZ1le9vcA5mc
+ xJYvkqdbWxjBHLdRQdLjJubx1zyxwT3YamIr3k+ZCZnUJrJRVHxzJqt2dsZFzBalyigJ
+ e3liYxZX1yL2hhffiui1lOvLlvS8b4P9tLFikL3T8HU/4p/Oxm0d9aHdZnFisdmOIP5w
+ 7NXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733344228; x=1733949028;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g8dZ8N+n0dSzf9lZBkI+qDwvxZthdbNmKnyIEsAblrc=;
- b=XDH1s2TtJNr3zFAdFMzb1L6SK8pOsPswF8dsWquUceg0t6gQ5E9O2DGa8jFSM61etI
- StcD9hL34XzgMs4hvgaCPAwJTr0MZyFPVbgI8gT0yI9aqdFEB7OAMfx29yFCbxKuuWHg
- pa5ZAbpsiFs93fn8TLD23NS5kH4yuVfbD28cGs3NE/pJCztHq3cEVB8jo9WGPdse878y
- piVzOKLf8/v8vLAAO+JIeqEN7H7InmAJyf/M5gm8kFttfhxF2GyQ75YShWE7+r4n6x04
- GujHnb3DWFsG8WS5ZX3WXrKLtg1R27L/SjC88LNuzEgWJqBgXuxVQui6LGUdq8jq4uUf
- ab1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVekZKrCywiDSmkR6yBJloyHPf+Hl3+bhVl/7Trep6RReHExWfk5ziQxesxlx0lUtJ+YEYPxZ3snwRB@nongnu.org
-X-Gm-Message-State: AOJu0YxypjyNzo61k93Y1zB+r4tVOfT+cHQovAdPxF0X3fQSHPP/ue0F
- /q1ho03K08+VXtdQ/FfLRolBj9AmJlUsM/wbT67W8t3EYeInWBA86JV9RIgyxHcUsEN4Rwt4+dj
- /
-X-Gm-Gg: ASbGncu19aO4Mb2dsVMFUujef8QpT/10BQEC/Dqk0NOJAiqoCtzeTaKcCea3mnqCmMe
- X9lFUpsDWEq+fGBjpzGk+FxuUIME19Kr4H/VobhAbKaeTuUA7k9G52qCUGlIny1k2DsKanUABAd
- SGYhOD9OMhNJQRusRSg1gWBkZDfn2PSiDZspokX8OitrrWQDoYwS92p6bp8pq2RhnVuc2lNp01s
- HRqaHDfvu5jUvKk/TPGOgeo0YddIS37XC/b8Pp3WgnmBlZGGcrD09vcDfQCGwKKywCg4P7Jg7bV
- BRG7yRSzkqZwb1uLAQ==
-X-Google-Smtp-Source: AGHT+IGAMclJLlVFfAG7kHLBQ+gENdpYCOZxjpL3WdDHJ1IumBMsaeT7a7WynskVdngugBQogEubFg==
-X-Received: by 2002:a05:600c:1d1c:b0:426:8884:2c58 with SMTP id
- 5b1f17b1804b1-434d58438e6mr32736175e9.4.1733344227741; 
- Wed, 04 Dec 2024 12:30:27 -0800 (PST)
-Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1733344051; x=1733948851;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0gEXG14yGHmTwK2PkgnJuKn3fmfO28N4tNUnsroDG+o=;
+ b=LsWeJ1+KTxk5c8OLW5LdIGIO81sMIucQkol2aptbB/Ct5PM01CujemZYU6Jl0WjqHY
+ IqeBbvlMQraNMXnv2c1lEB2RxjcR2A8s2KHr2DRmbvmgZ5udTckoNTx9J0mTnjvFVVdp
+ oGv1WqqiabTn2Rma7KlygibZnCUtbI3+3nwG9sTLlimhTi/++fNI3IQTT4bH/ZXNzu2s
+ 4DoueA4YNcQ6AnWtUIvHmVniQUZZc0xgjsF2i6XBVow1ZPG/WcxH9LricRpYksGWSz4k
+ iJzz32tBBudbnzYDm5PDJ/IgWGECf0COB6rJXgmxy51XClu4AUEqzP21OMT/WWRifwCn
+ 6pOQ==
+X-Gm-Message-State: AOJu0YxG7ARGxM8NB+tl8u0Pri4Dkl1FmunO5ldwzJ9yY7V/dtifNYcT
+ rlgQ+mRZSI991NSpkVKlVV5fQ3SNakzOpaX3U4zag5xNmjwP60yLW0apP42DSo24tR68yxFm0+z
+ r
+X-Gm-Gg: ASbGnctZO+XQI6yM9RuAfMSbj72s6Iv/Nqg3Ueu8Q3dCyoa9zZlCfSTw2/B/2YtK9T0
+ gQFEyImC4KeX3TmiBiNnUkZBqkKziQpJkO8102q8Xui9d/gduuAHMEDTEORCcfkd+nDZMXR+a+m
+ KpHPpV5jMYoAVnm/6Hjld2YzS5pwRt+8Nqat+EKG4s+ZQcK5uBTprXnRretMHUzQP/1H301q/+3
+ mRRHOZyy0x8nvJP9e0kmyPu5MSWvUIKTzrhLx4UMGVWOLdZEobkmD3eomQrULnJXrkg63peCBk+
+ pAy8egvIW0yMwnv6P3FJmGDL
+X-Google-Smtp-Source: AGHT+IFXYVhD80X21fzRVCtI4Kv4SHZg7u65q+NnEYqhq4wJBmfcpp42XTcYcbdPKtSgLElOINMl1g==
+X-Received: by 2002:a05:6000:1885:b0:382:5010:c8de with SMTP id
+ ffacd0b85a97d-38607c164f8mr4720969f8f.46.1733344051161; 
+ Wed, 04 Dec 2024 12:27:31 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385ccd367f9sm18907041f8f.31.2024.12.04.12.30.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Dec 2024 12:30:27 -0800 (PST)
-Message-ID: <76f6e105-cc9a-4a0e-ba31-b96c57f65e27@linaro.org>
-Date: Wed, 4 Dec 2024 21:30:25 +0100
+ ffacd0b85a97d-385d80a77a0sm17412914f8f.58.2024.12.04.12.27.29
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 04 Dec 2024 12:27:30 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
+ Max Filippov <jcmvbkbc@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, qemu-riscv@nongnu.org,
+ Alistair Francis <alistair@alistair23.me>, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 09/20] target/sh4: Implement CPUClass::datapath_is_big_endian
+Date: Wed,  4 Dec 2024 21:25:51 +0100
+Message-ID: <20241204202602.58083-10-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241204202602.58083-1-philmd@linaro.org>
+References: <20241204202602.58083-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] gitlab: force ccache to validate compiler version
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20241204194807.1472261-1-berrange@redhat.com>
- <20241204194807.1472261-8-berrange@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241204194807.1472261-8-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,20 +112,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/12/24 20:48, Daniel P. Berrangé wrote:
-> By default ccache checks the compiler 'mtime' to determine if it should
-> invalidate the cache. On FreeBSD the 'mtime' reflects when the compiler
-> package was installed, rather than when it was built. IOW, on throwaway
-> CI VMs, the 'mtime' changes on every single job and is thus useless.
-> 
-> It could validate the compiler binary content, but validating the
-> compiler version string is less CPU intensive.
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   .gitlab-ci.d/cirrus/build.yml | 1 +
->   1 file changed, 1 insertion(+)
+Implement SH4 datapath_is_big_endian() helper, returning
+the 'little_endian' property set at reset.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/sh4/cpu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index f54005644c9..69108c1676e 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -29,6 +29,13 @@
+ #include "fpu/softfloat-helpers.h"
+ #include "tcg/tcg.h"
+ 
++static bool superh_cpu_datapath_is_big_endian(CPUState *cs)
++{
++    SuperHCPU *cpu = SUPERH_CPU(cs);
++
++    return !cpu->env.little_endian;
++}
++
+ static void superh_cpu_set_pc(CPUState *cs, vaddr value)
+ {
+     SuperHCPU *cpu = SUPERH_CPU(cs);
+@@ -283,6 +290,7 @@ static void superh_cpu_class_init(ObjectClass *oc, void *data)
+                                        &scc->parent_phases);
+ 
+     cc->class_by_name = superh_cpu_class_by_name;
++    cc->datapath_is_big_endian = superh_cpu_datapath_is_big_endian;
+     cc->has_work = superh_cpu_has_work;
+     cc->mmu_index = sh4_cpu_mmu_index;
+     cc->dump_state = superh_cpu_dump_state;
+-- 
+2.45.2
 
 
