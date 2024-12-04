@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D991E7716D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 21:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6498DE7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 21:12:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIwes-0005Mj-Ir; Wed, 04 Dec 2024 16:11:42 -0500
+	id 1tIwfy-0006Mm-Ea; Wed, 04 Dec 2024 16:12:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikram.garhwal@bytedance.com>)
- id 1tIuKH-0004df-4P
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 13:42:19 -0500
-Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIwfw-0006MU-RJ
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 16:12:48 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vikram.garhwal@bytedance.com>)
- id 1tIuKE-0007wP-Rt
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 13:42:16 -0500
-Received: by mail-qk1-x736.google.com with SMTP id
- af79cd13be357-7b65f2daae6so6230085a.1
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 10:42:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tIwfv-0007kK-CP
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 16:12:48 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7fbbe0fb0b8so183287a12.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 13:12:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1733337730; x=1733942530; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733346765; x=1733951565; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HJurhTOArQPGWijqY4ldIX3NomalTmxXbM6VQAo+d5o=;
- b=JxvwWsfwLmb+nS35R9McdCvbi9RKmAVLT+NWmyHi/iKks04y0nCSw9i3xRDt716d6w
- DWlFLAJCwI4pIEyqBOsFAYxEHN6xRV6OCRcAVbo60lOm6BAHXaxt2RdWnZi6fiudynBL
- tdXwa5ZYbA9kYi/Xa//nbwi4ky17dcaHPubTZcnkrAv5NUOOSWSN6u8v1+y5LszJvjOQ
- 1w5uyQQB7gs5+V8vDo3FZraVMOhESENQrEocCePOvC8UH7wEaKrYDZ36JrQC8UenLXW5
- njY54OyQ/R0swVyzAZ2s0v879eWQSyae9O2juR25FkhNQsjXhRp9XRDW0cpEt5W1JacA
- q9Ig==
+ bh=8VxKFI/0y4LY07W6bm/GbHm9mzNlrCNc2KPV8KgQ4yg=;
+ b=crI0yPZatGlMK1OlwQLrEh/LmTizDCdmXGEWRRVNxDPEwsN/uvJUuzYuGgG6c5NJL3
+ eLwIW8ORvV+tOGO69ZEig0ifgWa2ezNJpq2oPdfsmotQEW74z1QGip/iVtwDfM+2ZSwB
+ OYdagZvKdoyAJnF7JuBKaoOVWmU/SVvTPw1nJKaWx/wgLTod3WJDOsmEJTM7+e2FoUrU
+ anxMzTQCs5OSeNPB5+ZwkpC60+Hsz6mZZjXhyFZwT/oBmngXpjtYZ9FpqYu0xBvPX1n8
+ lXhnDDziKHWeU/v/UvoPuOHu2fHEQ/l3rY8U12X81rQtRSiazFAuyb1OdHbzu3nvaaUz
+ OH5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733337730; x=1733942530;
+ d=1e100.net; s=20230601; t=1733346765; x=1733951565;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HJurhTOArQPGWijqY4ldIX3NomalTmxXbM6VQAo+d5o=;
- b=b+R8u6ircL04g4TfAn7Llojd8EpT15+AZ3QyNYNpRtxluhSm1U5OpZzjqXPF31K24W
- gJj32fPznaX7dPCjosDSuhQ4Gnj1ZrMi3AKjtFT1YDYd53s92OKJFKobatiDWXP6Kted
- GaxUvvQ4VZwKrjdrn9h+REa2DZNzigsacF5YVmkXONAqvcF1YtxyJXK6IQ+497efJ4hU
- w99vJDgsaLoDjrpeqUM3lvnL6Vx/2Q5lXvsU5KdLn3JlHST8bMgrRe6piWtbdpdrgJ45
- nTVeiY5kspXApWzn3OCaBbtw6bWnUEpi93eI3mYUhGZ766Lx6B0wlyxtj5Uxy+VZDyMS
- WjRg==
-X-Gm-Message-State: AOJu0YzI8mivYXnfOaxoLexDZSSbpW9vXMjrPKQ9PuHXpFRPj1NbFPIC
- VomERL+Wsv69mCwtdh/36ACMYTdSqP9t1lLCmhgAmTvx8p3xIUW4ngem/2RdG2YKjhO4zorYujp
- t
-X-Gm-Gg: ASbGncvyMGtCPtaIvoiKwiPDEqn01hSB2+S3lzG8uY4BK9zVlrm/v8z7IdJxqM+bcNE
- DQlZCOeaIfNx8ApLQMORhYeDdA73sJtHrzDZpwXkW00JtdsTfommZXCmtzXqE1esi/GVt2PpUhV
- oBvxsW0/WfaKDWp05VevyW1H98Elg/0LoIFtATaYDWh7zTVC+bQ7QQEfwaYt5vs5Vz6idJlE+Yi
- AFy4KqZnCfzM9I1QETlEdfDXPGkqUZJoMW9f7yr4BkCM5WHzKaDtz4GqU3b7CcAZxrw8P91mOzs
- iezLlL5FNw3I4ng=
-X-Google-Smtp-Source: AGHT+IHv0gG3XwOfc+oOjPo7zPgngwE+DDjdSvJHzvESr/qXCxrJ+fENDA2ByJWlFy4po3cQ4N3AHg==
-X-Received: by 2002:a05:620a:40d5:b0:7b6:6e7c:8efd with SMTP id
- af79cd13be357-7b6a6200dbdmr817316085a.58.1733337730566; 
- Wed, 04 Dec 2024 10:42:10 -0800 (PST)
-Received: from MXYWK0WKF9.bytedance.net ([71.18.96.10])
+ bh=8VxKFI/0y4LY07W6bm/GbHm9mzNlrCNc2KPV8KgQ4yg=;
+ b=mdtCLhy5xIAs6JLnzQOYl/GEOR5kmBLXAt8IEdn3Sw0MpHmGXPfSxUn/ZgO4tA1o4T
+ wHSle1Cq8CzBueWpnQRh7ab+sJbaYrAfs4tGjOI849RTAaxAe+VJ34EbtlLYFn4muT7E
+ 1SN9pG0D+5x60H/sj8a6DnDwdlVqLoL1P7eZb3GXXSbnt1PmWErW2bK4nTsNYRxKcDJK
+ nUtQt2+UxcFLHBEEdoi9ONYF2o4jxtNzfIFhh/Sox7HeYU+IPHHOo8eu41wQvyszfglm
+ YhnFMZW4yML0mItK1bT+BedQPZUG1KujDNJVqVJqIDfOh5NZQ5PzFU9QVWtsA4EOlB3V
+ IV2A==
+X-Gm-Message-State: AOJu0YyVue4AInkU2eQVnL0mOo1tbypTauGGNl9RNXqhc9/U+UTIAGDk
+ Di/ZQwT1lH8jGVp7SkLWq59lDJ+gMBxsI1O8pxLc1ZHv8wgfPRZ5lZHLF0EVdx4jgoiGnWU8gLZ
+ RodE=
+X-Gm-Gg: ASbGncvtDGsxTPH0MkxmEGmyI04bSTwqp/pRqC/58KXqus/eaVOBlDXPz6yVvc9wg4l
+ h7F1yGCLtZfEs1jjH8JVaS3tZJwHDDHpPPDlWo8ywdtsHD6IQu1TdVr6D7axfbxrrOosdPU4wHm
+ YOWeE8GaPzaq7oPjgSt+GV5kHMHz7g/Gob3giA/K96Dg6Yb42rgyNBnO1hUzIoHOsFABu7pyj8C
+ vv4bhUzpbO1pHGHRv/19byejBEZsta2Ir9kIWw9Bapd1oCxUatv3Thqvdp2FP+Cmtn8exuCYo22
+ TbTDKxPk
+X-Google-Smtp-Source: AGHT+IFa7NuxkjmSlj91ppu2WcILvyQUw8fQwV6FzxvpANFnQRC9Plpj+yeak7xKC4H9v/xGIFKbmQ==
+X-Received: by 2002:a17:90a:ec90:b0:2ef:19d0:2261 with SMTP id
+ 98e67ed59e1d1-2ef19d02442mr8604205a91.16.1733346765423; 
+ Wed, 04 Dec 2024 13:12:45 -0800 (PST)
+Received: from pc.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b68492121esm638278685a.3.2024.12.04.10.42.09
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Dec 2024 10:42:10 -0800 (PST)
-From: Vikram Garhwal <vikram.garhwal@bytedance.com>
+ 98e67ed59e1d1-2ef270089b8sm1905830a91.14.2024.12.04.13.12.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Dec 2024 13:12:44 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: vikram.garhwal@bytedance.com, peter.maydell@linaro.org,
- francisco.iglesias@amd.com
-Subject: [PATCH] MAINTAINERS: Add correct email address for Vikram Garhwal
-Date: Wed,  4 Dec 2024 10:42:05 -0800
-Message-Id: <20241204184205.12952-1-vikram.garhwal@bytedance.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
+Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ alex.bennee@linaro.org, Fabiano Rosas <farosas@suse.de>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 0/2] Change default pointer authentication algorithm on
+ aarch64 to impdef
+Date: Wed,  4 Dec 2024 13:12:32 -0800
+Message-Id: <20241204211234.3077434-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
- envelope-from=vikram.garhwal@bytedance.com; helo=mail-qk1-x736.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -83,7 +87,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 04 Dec 2024 16:11:39 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,35 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, maintainer role was paused due to inactive email id. Commit id:
-c009d715721861984c4987bcc78b7ee183e86d75.
+qemu-system-aarch64 default pointer authentication (QARMA5) is expensive, we
+spent up to 50% of the emulation time running it (when using TCG).
 
-Signed-off-by: Vikram Garhwal <vikram.garhwal@bytedance.com>
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+Switching to pauth-impdef=on is often given as a solution to speed up execution.
+Thus we talked about making it the new default.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index aaf0505a21..b4723eecde 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1914,6 +1914,7 @@ F: tests/qtest/fuzz-sb16-test.c
- 
- Xilinx CAN
- M: Francisco Iglesias <francisco.iglesias@amd.com>
-+M: Vikram Garhwal <vikram.garhwal@bytedance.com>
- S: Maintained
- F: hw/net/can/xlnx-*
- F: include/hw/net/xlnx-*
-@@ -2673,6 +2674,7 @@ F: include/hw/rx/
- CAN bus subsystem and hardware
- M: Pavel Pisa <pisa@cmp.felk.cvut.cz>
- M: Francisco Iglesias <francisco.iglesias@amd.com>
-+M: Vikram Garhwal <vikram.garhwal@bytedance.com>
- S: Maintained
- W: https://canbus.pages.fel.cvut.cz/
- F: net/can/*
+The first patch introduce a new property (pauth-qarma5) to allow to select
+current default algorithm.
+The second one change the default.
+
+Pierrick Bouvier (2):
+  target/arm: add new property to select pauth-qarma5
+  target/arm: change default pauth algorithm to impdef
+
+ docs/system/arm/cpu-features.rst |  7 +++++--
+ docs/system/introduction.rst     |  2 +-
+ target/arm/cpu.h                 |  1 +
+ target/arm/arm-qmp-cmds.c        |  2 +-
+ target/arm/cpu64.c               | 30 +++++++++++++++++++-----------
+ tests/qtest/arm-cpu-features.c   | 15 +++++++++++----
+ 6 files changed, 38 insertions(+), 19 deletions(-)
+
 -- 
-2.39.3 (Apple Git-145)
+2.39.5
 
 
