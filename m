@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9E3E77170
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 19:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C744E77170
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 19:49:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvMN-0004ke-H3; Wed, 04 Dec 2024 14:48:31 -0500
+	id 1tIvMU-0004m5-Hl; Wed, 04 Dec 2024 14:48:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIvML-0004jo-3S
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:48:29 -0500
+ id 1tIvMT-0004lh-2m
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:48:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tIvMJ-0000jt-As
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:48:28 -0500
+ id 1tIvMR-0000lC-Rc
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 14:48:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733341704;
+ s=mimecast20190719; t=1733341715;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fSJdFkEwo+Mxi8nyJIexAIU/JjFIPGnRrQ4lzO7W7SU=;
- b=JH2gdn0bdgo8RPqdgv+6qMyuFFmFr7n4LWUxCp/usKSha4Fb9QWl/17mQzTC0mm0LYqO1A
- WMlgPtg/bZ6PkYu9en/PzOpNfQAJ4tAVCFj8sN6HEB9ZU6RFoyrTiVp75CAPnWmHfZ2g9+
- ArSuiUsqd7bmlPFkv9dWXmgFghfO1Zs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=58MEMFtSxOumTnXGcw4/JFYIMuCLYqyGeQfZsOBCjZo=;
+ b=URE44PVRJVb26TFIO3Bg+ZNIV2htznuNXByGpLO+bNNEv9hV1CaAc6xgbeANFB1mI8b+sc
+ z9OJUYy8VPiF0ClkTK6Gv1gmBSCFGvE8Qdk0ERnsdnp9Dh3wI5C7Ukzq5WdztI4V17pYVE
+ MVJE3NK6sSHCk6c4lUyhKcVZHktZjTI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-326-m3OS8msDO-m_GCySoUEtkQ-1; Wed,
- 04 Dec 2024 14:48:19 -0500
-X-MC-Unique: m3OS8msDO-m_GCySoUEtkQ-1
-X-Mimecast-MFC-AGG-ID: m3OS8msDO-m_GCySoUEtkQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-T81mbOqoMFWra9bm-CWhOQ-1; Wed,
+ 04 Dec 2024 14:48:30 -0500
+X-MC-Unique: T81mbOqoMFWra9bm-CWhOQ-1
+X-Mimecast-MFC-AGG-ID: T81mbOqoMFWra9bm-CWhOQ
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D79E7195422C; Wed,  4 Dec 2024 19:48:18 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E5231955ED1; Wed,  4 Dec 2024 19:48:29 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.92])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 10EE319560A2; Wed,  4 Dec 2024 19:48:16 +0000 (UTC)
+ id 645D019560A2; Wed,  4 Dec 2024 19:48:27 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 3/7] gitlab: clean packages in cirrus tasks
-Date: Wed,  4 Dec 2024 19:48:03 +0000
-Message-ID: <20241204194807.1472261-4-berrange@redhat.com>
+Subject: [PATCH 7/7] gitlab: force ccache to validate compiler version
+Date: Wed,  4 Dec 2024 19:48:07 +0000
+Message-ID: <20241204194807.1472261-8-berrange@redhat.com>
 In-Reply-To: <20241204194807.1472261-1-berrange@redhat.com>
 References: <20241204194807.1472261-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -87,48 +87,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The FreeBSD VM is somewhat low on disk space after all QEMU build deps
-are installed and a full QEMU build performed. Purging the package
-manager cache is a simple thing that reclaims about 1 GB of space.
+By default ccache checks the compiler 'mtime' to determine if it should
+invalidate the cache. On FreeBSD the 'mtime' reflects when the compiler
+package was installed, rather than when it was built. IOW, on throwaway
+CI VMs, the 'mtime' changes on every single job and is thus useless.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+It could validate the compiler binary content, but validating the
+compiler version string is less CPU intensive.
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .gitlab-ci.d/cirrus.yml       | 2 ++
  .gitlab-ci.d/cirrus/build.yml | 1 +
- 2 files changed, 3 insertions(+)
+ 1 file changed, 1 insertion(+)
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index 16411f3d2b..2bd3cb35c9 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -42,6 +42,7 @@ x64-freebsd-14-build:
-     CIRRUS_VM_RAM: 8G
-     UPDATE_COMMAND: pkg update; pkg upgrade -y
-     INSTALL_COMMAND: pkg install -y
-+    CLEAN_COMMAND: pkg clean -y --all
-     CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
-     TEST_TARGETS: check
- 
-@@ -54,6 +55,7 @@ aarch64-macos-build:
-     CIRRUS_VM_IMAGE_NAME: ghcr.io/cirruslabs/macos-runner:sonoma
-     UPDATE_COMMAND: brew update
-     INSTALL_COMMAND: brew install
-+    CLEAN_COMMAND: brew cleanup --prune=all
-     PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
-     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-     CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
 diff --git a/.gitlab-ci.d/cirrus/build.yml b/.gitlab-ci.d/cirrus/build.yml
-index 41abd0b31a..9983ab0690 100644
+index 5c86278bf8..8268e9e547 100644
 --- a/.gitlab-ci.d/cirrus/build.yml
 +++ b/.gitlab-ci.d/cirrus/build.yml
-@@ -21,6 +21,7 @@ build_task:
-   install_script:
-     - @UPDATE_COMMAND@
-     - @INSTALL_COMMAND@ @PKGS@
-+    - @CLEAN_COMMAND@
-     - if test -n "@PYPI_PKGS@" ; then PYLIB=$(@PYTHON@ -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; @PIP3@ install @PYPI_PKGS@ ; fi
-   clone_script:
-     - git clone --depth 100 "$CI_REPOSITORY_URL" .
+@@ -34,6 +34,7 @@ build_task:
+     - export CCACHE_BASEDIR="$(pwd)"
+     - export CCACHE_DIR="$CCACHE_BASEDIR/ccache"
+     - export CCACHE_MAXSIZE="1000M"
++    - export CCACHE_COMPILERCHECK="string:$(clang -v 2>&1)"
+     - ccache --zero-stats
+     - ccache --show-stats
+     - mkdir build
 -- 
 2.46.0
 
