@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20C4FE77174
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 12:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85CBDE77176
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 12:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIox7-00081C-Mk; Wed, 04 Dec 2024 07:58:03 -0500
+	id 1tIoxD-00089f-EA; Wed, 04 Dec 2024 07:58:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tIowl-0007z2-Hk
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 07:57:39 -0500
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ id 1tIown-0007zN-42
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 07:57:41 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tIowf-0007Bx-LV
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 07:57:35 -0500
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-385de59c1a0so5036774f8f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 04:57:31 -0800 (PST)
+ id 1tIowl-0007t1-AX
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 07:57:40 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-434a45f05feso82141205e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 04:57:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1733317049; x=1733921849;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1733317057; x=1733921857;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Nn9w2S1HzUDyyhV3xP209KztA+EO/RuDsRBl/z8NGbw=;
- b=zNBSU1zjDSD3iGUfg0hn0gHlf/yO+7fTlPjaJHnLBwusji4BMNbisRbE1RU1Kl2uXp
- /PQsjop2gg53juLBmDFubw/OPgPtfE/dD702uyxeAA0Q67am+ayeF06Q8lxjHaLP/MJo
- HcRtgcPo4Men2qMthNhtwmOVDMD6FaZ65gtVPkcbXU/0Cym4h/X3gJ+mmx4tBwuVKYLq
- fT4qlgzmfSt/ESwoR9qVAoBjHVj7q05BDHF6yfWd+8uUVtgqww6pC3zohbouQ29+9m4n
- PNY8ptdJC8CT9nOe6cUqV1FzGeXTEckJy2yNTPU2DC05ErZWaUWPf34kNTFdsF/SD6Fq
- HYSQ==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dKK0HxgyWErZpULPkOBeN+5cbb09ulxZHM3ugRtmLQo=;
+ b=HC7MrqIzZbuAo1Ez+JgSLRdRu+RQJwwUWsf6Fxf4CeXHK2935SloRwUuym36f4diHR
+ /akd0eZ434YIUp39UW6s49fe6x7ICpnVCtf4YUCtF62P+MkIOhiOP+RKptKvfEtN7bcF
+ 14ENDrj6gweRA0nLaYeuTwQNKL3Rv9jcb0EUbyL1E6k7aMwYD1ri+VtAWuk5Z54ofs49
+ TQ0NCagP+phNnhTFtV4BOW8yh87RHDcV5bmnlwEqDYaV9v9Qm2cDBMyhyBll/6bj465i
+ ySJ4YL9ve0tuAWxOxLXIOlesqHHi0TgsaWrK2kfBZw8X5bsxTlvr6T53INaRiWLya2en
+ 0E+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733317049; x=1733921849;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Nn9w2S1HzUDyyhV3xP209KztA+EO/RuDsRBl/z8NGbw=;
- b=knwTZJtth0KGb7DvRB14ubw2xM7gFPkzhSF+oVx6sHr+r1HpS9wmR4DJldrdG810NU
- 0opuSQb/YQpHcCftTzd90+/iB7OhQn/SMlk1tv7JTMeENVzV7PMEUAhZn5IEwCz7h5wx
- yAVUlZNkcJgN2umPVAMpzyiqHvgpu7SZe0TpSH1oLCmcOkSJUq01kK2DPqn2y9zNvr7t
- jclq+lXzNHuP7QtMtnwJLdYRDa0fa9RJkMnY3CTMhcKC2ceUT+KUXU7UNeKl/f9FXDGj
- dTN5dZn/A4j6c080crU05ZiuNF79Qkd0U3XNGj5RGkWw8lUGNs2JMt5RLatv7d+DWvxK
- M6Pw==
+ d=1e100.net; s=20230601; t=1733317057; x=1733921857;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dKK0HxgyWErZpULPkOBeN+5cbb09ulxZHM3ugRtmLQo=;
+ b=v8+z8MirsqewjEu6TVl6gkN9C+C3NQkOZxr44J2o3HO4QIR3FE5F8H1HkFWtZKAZWY
+ RqIAAMehYN9AH7dJrs301xhbOlWK+bXpq7NL8LzZ7mT/jcddX2KEF0kAg+zy9R0kVU0e
+ 2jqHajKoo8o3PdKZ4YNRT+XTiDT7533nHTtlipwzGed06PnV6rMwXn7Uu3t/Q7rQsbyW
+ yNfITub7XmBEmr28vnC0uC3/jGacpEEAg2duj48K8pPJHOL9kEBqoe3Oq2Uq+g3T01dx
+ pby6DNzy1qLDZDnkuc8LPbYSl22Y+lyX27CU+4TBlRMfq+brWdd5bwQnfal7O9GT8CCA
+ glxA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZUOwoesgye+7aXTZuyVMTu/mVFrX0mgX54P25O4SW62T3DIZanDKf+VWfVINHnkWKz4H7AwePEuu3@nongnu.org
-X-Gm-Message-State: AOJu0YxHKjESYfJEAn3WpXmaLgGkUEDmf4mTK0paon0eHRFaFFJYCR7S
- 6jCDbDtULDea258EPVgeBtURiWtlH90N13FIuhQif0kiWn8WvXH/FkX8QKOBPuI=
-X-Gm-Gg: ASbGncshUYoMbvuQ3C2k+qS8wepqIlCM7OdVfxVXtiMeJ5tn/7ta3K6HmOBSufi71A7
- JaFZkuEZg/6yzgIMt7rjUYkYFoVfBdrxOmYYszNQ7XBSlhOcwT0c6UbgPyeTy0UWFhs6+noxr+q
- RlSf+ZRcfThyIcZQYlLuGWNljSqoTHI5C2TWS4x3xIdBb0gjvTjd07XircFSlF269SzDnfrr9ZV
- cxcsXb8tjFe/cLkYxqFenuFHVagNoMsHG8Ju1m5o4TEwsGalhlO9JgnBR5oLoaJpvMge2rUHR3V
- milEPw==
-X-Google-Smtp-Source: AGHT+IH7jt7YyBibHGpvkqn7FSDR3EpBa+Tcig/ZfjzWjKeu7YTsGwcbtSh6zxw/vjwT//gdiYe9Qg==
-X-Received: by 2002:a5d:47a7:0:b0:385:fa3d:199b with SMTP id
- ffacd0b85a97d-385fd42a006mr5732270f8f.40.1733317049315; 
- Wed, 04 Dec 2024 04:57:29 -0800 (PST)
+ AJvYcCWFTOZ7w1BvnBHM03SM1l+EWRkOQ4o+0L8YblccYIdP+weexMm2Hx2jwjkM7T+ns4PL0knQnql9Q5X+@nongnu.org
+X-Gm-Message-State: AOJu0YzO7NZaaK7rOy9hLN4/YFkHbXvpKCx0lWXeFyR+Hku4AwETHG8x
+ rMG24wgrbXaFZ6xEFqWTMlO7ihPmXXVhJkweC66tydMVRaAVsMp1q3UtLSeDPT0=
+X-Gm-Gg: ASbGncvy2h9YKZQm+WxUd4VrgSbMhI3ETsZUeJ21mLVbmoapvVuUQHvprV3oNHhRtjR
+ ++SAny+2HBJ/tuIh83LmFkIH2VSVf2dRjZditQMVxhD97NR/1o7ull0neUTjgnAIt6rNCHIe1vX
+ LXugmz+xVWNPTC5M4NxmX8rMfNj43oLuJzvL9jDVe70YNP5XSM22H53tRowJ3iSxsH0NfgUWKwW
+ lJcg279v/aybVtFn9Gp7jc+Y/toqPf+9pIuGfc1wvp+nEgVfh399hgU5dPZH0Lmh42NnDHUsVny
+ wrxs+A==
+X-Google-Smtp-Source: AGHT+IFUHXj7aFuWfolDkK33VgorI5QZ3Xut0WWHc0WQ/V7UWP3JtoLZVMo1xKnTFCJWPfmC43xvqQ==
+X-Received: by 2002:a05:6000:2c6:b0:385:ebaf:3824 with SMTP id
+ ffacd0b85a97d-385fd3f2d22mr6762977f8f.27.1733317057126; 
+ Wed, 04 Dec 2024 04:57:37 -0800 (PST)
 Received: from rkanwal-XPS-15-9520.ba.rivosinc.com ([137.59.223.84])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385deeb6acdsm15826428f8f.81.2024.12.04.04.57.25
+ ffacd0b85a97d-385deeb6acdsm15826428f8f.81.2024.12.04.04.57.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 04:57:29 -0800 (PST)
+ Wed, 04 Dec 2024 04:57:36 -0800 (PST)
 From: Rajnesh Kanwal <rkanwal@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
  Rajnesh Kanwal <rkanwal@rivosinc.com>
@@ -73,24 +74,25 @@ Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
  atishp@rivosinc.com, apatel@ventanamicro.com, beeman@rivosinc.com,
  tech-control-transfer-records@lists.riscv.org, jason.chien@sifive.com,
  frank.chang@sifive.com, richard.henderson@linaro.org
-Subject: [PATCH v4 0/7] target/riscv: Add support for Control Transfer
- Records Ext.
-Date: Wed,  4 Dec 2024 17:56:38 +0500
-Message-Id: <20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef9432@rivosinc.com>
+Subject: [PATCH v4 2/7] target/riscv: Add Control Transfer Records CSR
+ definitions.
+Date: Wed,  4 Dec 2024 17:56:40 +0500
+Message-Id: <20241204-b4-ctr_upstream_v3-v4-2-d3ce6bef9432@rivosinc.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef9432@rivosinc.com>
+References: <20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef9432@rivosinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-X-Change-ID: 20241029-b4-ctr_upstream_v3-7ab764c68bf1
 X-Mailer: b4 0.14.2
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=rkanwal@rivosinc.com; helo=mail-wr1-x444.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=rkanwal@rivosinc.com; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,118 +108,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series enables Control Transfer Records extension support on riscv=0D
-platform. This extension is similar to Arch LBR in x86 and BRBE in ARM.=0D
-The Extension has been stable and this series is based on v1.0_rc6 [0]=0D
-=0D
-CTR extension depends on both the implementation of S-mode and Sscsrind=0D
-extension v1.0.0 [1]. CTR access ctrsource, ctrtartget and ctrdata CSRs usi=
-ng=0D
-sscsrind extension.=0D
-=0D
-The series is based on Smcdeleg/Ssccfg counter delegation extension [2]=0D
-patches [3]. CTR itself doesn't depend on counter delegation support. This=
-=0D
-rebase is basically to include the Smcsrind patches.=0D
-=0D
-Here is the link to a quick start guide [4] to setup and run a basic perf d=
-emo=0D
-on Linux to use CTR Ext.=0D
-=0D
-Qemu patches can be found here:=0D
-https://github.com/rajnesh-kanwal/qemu/tree/b4/ctr_upstream_v4=0D
-=0D
-Opensbi patch can be found here:=0D
-https://github.com/rajnesh-kanwal/opensbi/tree/ctr_upstream_v2=0D
-=0D
-Linux kernel patches can be found here:=0D
-https://github.com/rajnesh-kanwal/linux/tree/b4/ctr_upstream_v2=0D
-=0D
-[0]: https://github.com/riscv/riscv-control-transfer-records/releases/tag/v=
-1.0_rc6=0D
-[1]: https://github.com/riscvarchive/riscv-indirect-csr-access/releases/tag=
-/v1.0.0=0D
-[2]: https://github.com/riscvarchive/riscv-smcdeleg-ssccfg/releases/tag/v1.=
-0.0=0D
-[3]: https://lore.kernel.org/all/20240217000134.3634191-1-atishp@rivosinc.c=
-om/=0D
-[4]: https://github.com/rajnesh-kanwal/linux/wiki/Running-CTR-basic-demo-on=
--QEMU-RISC%E2%80%90V-Virt-machine=0D
-=0D
-Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>=0D
----=0D
-Changelog:=0D
-=0D
-v4: Improvements based on Richard Henderson's feedback.=0D
-  - Refactored CTR related code generation to move more code into=0D
-    translation side and avoid unnecessary code execution in generated=0D
-    code.=0D
-  - Added missing code in machine.c to migrate the new state.=0D
-=0D
-v3: Improvements based on Jason Chien and Frank Chang's feedback.=0D
-  - Created single set of MACROs for CTR CSRs in cpu_bit.h=0D
-  - Some fixes in riscv_ctr_add_entry.=0D
-  - Return zero for vs/sireg4-6 for CTR 0x200 to 0x2ff range.=0D
-  - Improved extension dependency check.=0D
-  - Fixed invalid ctrctl csr selection bug in riscv_ctr_freeze.=0D
-  - Added implied rules for Smctr and Ssctr.=0D
-  - Added missing SMSTATEEN0_CTR bit in mstateen0 and hstateen0 write ops.=
-=0D
-  - Some more cosmetic changes.=0D
-  - https://lore.kernel.org/qemu-riscv/20241104-b4-ctr_upstream_v3-v3-0-32f=
-d3c48205f@rivosinc.com/=0D
-=0D
-v2: Lots of improvements based on Jason Chien's feedback including:=0D
-  - Added CTR recording for cm.jalt, cm.jt, cm.popret, cm.popretz.=0D
-  - Fixed and added more CTR extension enable checks.=0D
-  - Fixed CTR CSR predicate functions.=0D
-  - Fixed external trap xTE bit checks.=0D
-  - One fix in freeze function for VS-mode.=0D
-  - Lots of minor code improvements.=0D
-  - Added checks in sctrclr instruction helper.=0D
-  - https://lore.kernel.org/qemu-riscv/20240619152708.135991-1-rkanwal@rivo=
-sinc.com/=0D
-=0D
-v1:=0D
-  - https://lore.kernel.org/qemu-riscv/20240529160950.132754-1-rkanwal@rivo=
-sinc.com/=0D
-=0D
----=0D
-Rajnesh Kanwal (7):=0D
-      target/riscv: Remove obsolete sfence.vm instruction=0D
-      target/riscv: Add Control Transfer Records CSR definitions.=0D
-      target/riscv: Add support for Control Transfer Records extension CSRs=
-.=0D
-      target/riscv: Add support to record CTR entries.=0D
-      target/riscv: Add CTR sctrclr instruction.=0D
-      target/riscv: Add support to access ctrsource, ctrtarget, ctrdata reg=
-s.=0D
-      target/riscv: machine: Add Control Transfer Record state description=
-=0D
-=0D
- target/riscv/cpu.c                             |  26 ++-=0D
- target/riscv/cpu.h                             |  13 ++=0D
- target/riscv/cpu_bits.h                        |  94 ++++++++=0D
- target/riscv/cpu_cfg.h                         |   2 +=0D
- target/riscv/cpu_helper.c                      | 266 +++++++++++++++++++++=
-+=0D
- target/riscv/csr.c                             | 294 +++++++++++++++++++++=
-+++-=0D
- target/riscv/helper.h                          |   6 +-=0D
- target/riscv/insn32.decode                     |   2 +-=0D
- target/riscv/insn_trans/trans_privileged.c.inc |  22 +-=0D
- target/riscv/insn_trans/trans_rvi.c.inc        |  70 ++++++=0D
- target/riscv/insn_trans/trans_rvzce.c.inc      |  22 ++=0D
- target/riscv/machine.c                         |  25 +++=0D
- target/riscv/op_helper.c                       |  52 ++++-=0D
- target/riscv/tcg/tcg-cpu.c                     |  11 +=0D
- target/riscv/translate.c                       |  44 ++++=0D
- 15 files changed, 935 insertions(+), 14 deletions(-)=0D
----=0D
-base-commit: 2564f23eaefca2fc77d574c8eaf5c34138ce627f=0D
-change-id: 20241029-b4-ctr_upstream_v3-7ab764c68bf1=0D
--- =0D
-Best regards,=0D
-Rajnesh Kanwal=0D
-=0D
+The Control Transfer Records (CTR) extension provides a method to
+record a limited branch history in register-accessible internal chip
+storage.
+
+This extension is similar to Arch LBR in x86 and BRBE in ARM.
+The Extension has been stable and the latest release can be found here
+https://github.com/riscv/riscv-control-transfer-records/releases/tag/v1.0_rc5
+
+Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu_bits.h | 94 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 94 insertions(+)
+
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index 4ac065ac5e5a688d5ec9bbb8288c3deb82f05314..0cf6ef133ce9565f4a19e99f3cfd1d73da77f47a 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -247,6 +247,17 @@
+ #define CSR_SIEH            0x114
+ #define CSR_SIPH            0x154
+ 
++/* Machine-Level Control transfer records CSRs */
++#define CSR_MCTRCTL         0x34e
++
++/* Supervisor-Level Control transfer records CSRs */
++#define CSR_SCTRCTL         0x14e
++#define CSR_SCTRSTATUS      0x14f
++#define CSR_SCTRDEPTH       0x15f
++
++/* VS-Level Control transfer records CSRs */
++#define CSR_VSCTRCTL        0x24e
++
+ /* Hpervisor CSRs */
+ #define CSR_HSTATUS         0x600
+ #define CSR_HEDELEG         0x602
+@@ -344,6 +355,7 @@
+ #define SMSTATEEN0_CS       (1ULL << 0)
+ #define SMSTATEEN0_FCSR     (1ULL << 1)
+ #define SMSTATEEN0_JVT      (1ULL << 2)
++#define SMSTATEEN0_CTR      (1ULL << 54)
+ #define SMSTATEEN0_P1P13    (1ULL << 56)
+ #define SMSTATEEN0_HSCONTXT (1ULL << 57)
+ #define SMSTATEEN0_IMSIC    (1ULL << 58)
+@@ -877,6 +889,88 @@ typedef enum RISCVException {
+ #define UMTE_U_PM_INSN      U_PM_INSN
+ #define UMTE_MASK     (UMTE_U_PM_ENABLE | MMTE_U_PM_CURRENT | UMTE_U_PM_INSN)
+ 
++/* CTR control register commom fields */
++#define XCTRCTL_U              BIT_ULL(0)
++#define XCTRCTL_S              BIT_ULL(1)
++#define XCTRCTL_RASEMU         BIT_ULL(7)
++#define XCTRCTL_STE            BIT_ULL(8)
++#define XCTRCTL_BPFRZ          BIT_ULL(11)
++#define XCTRCTL_LCOFIFRZ       BIT_ULL(12)
++#define XCTRCTL_EXCINH         BIT_ULL(33)
++#define XCTRCTL_INTRINH        BIT_ULL(34)
++#define XCTRCTL_TRETINH        BIT_ULL(35)
++#define XCTRCTL_NTBREN         BIT_ULL(36)
++#define XCTRCTL_TKBRINH        BIT_ULL(37)
++#define XCTRCTL_INDCALLINH     BIT_ULL(40)
++#define XCTRCTL_DIRCALLINH     BIT_ULL(41)
++#define XCTRCTL_INDJMPINH      BIT_ULL(42)
++#define XCTRCTL_DIRJMPINH      BIT_ULL(43)
++#define XCTRCTL_CORSWAPINH     BIT_ULL(44)
++#define XCTRCTL_RETINH         BIT_ULL(45)
++#define XCTRCTL_INDLJMPINH     BIT_ULL(46)
++#define XCTRCTL_DIRLJMPINH     BIT_ULL(47)
++
++#define XCTRCTL_MASK (XCTRCTL_U | XCTRCTL_S | XCTRCTL_RASEMU |                \
++                      XCTRCTL_STE | XCTRCTL_BPFRZ | XCTRCTL_LCOFIFRZ |        \
++                      XCTRCTL_EXCINH | XCTRCTL_INTRINH | XCTRCTL_TRETINH |    \
++                      XCTRCTL_NTBREN | XCTRCTL_TKBRINH | XCTRCTL_INDCALLINH | \
++                      XCTRCTL_DIRCALLINH | XCTRCTL_INDJMPINH |                \
++                      XCTRCTL_DIRJMPINH | XCTRCTL_CORSWAPINH |                \
++                      XCTRCTL_RETINH | XCTRCTL_INDLJMPINH | XCTRCTL_DIRLJMPINH)
++
++#define XCTRCTL_INH_START         32U
++
++/* CTR mctrctl bits */
++#define MCTRCTL_M                 BIT_ULL(2)
++#define MCTRCTL_MTE               BIT_ULL(9)
++
++#define MCTRCTL_MASK              (XCTRCTL_MASK | MCTRCTL_M | MCTRCTL_MTE)
++#define SCTRCTL_MASK              XCTRCTL_MASK
++#define VSCTRCTL_MASK             XCTRCTL_MASK
++
++/* sctrstatus CSR bits. */
++#define SCTRSTATUS_WRPTR_MASK       0xFF
++#define SCTRSTATUS_FROZEN           BIT(31)
++#define SCTRSTATUS_MASK             (SCTRSTATUS_WRPTR_MASK | SCTRSTATUS_FROZEN)
++
++/* sctrdepth CSR bits. */
++#define SCTRDEPTH_MASK              0x7
++#define SCTRDEPTH_MIN               0U  /* 16 Entries. */
++#define SCTRDEPTH_MAX               4U  /* 256 Entries. */
++
++#define CTR_ENTRIES_FIRST           0x200
++#define CTR_ENTRIES_LAST            0x2ff
++
++#define CTRSOURCE_VALID             BIT(0)
++#define CTRTARGET_MISP              BIT(0)
++
++#define CTRDATA_TYPE_MASK           0xF
++#define CTRDATA_CCV                 BIT(15)
++#define CTRDATA_CCM_MASK            0xFFF0000
++#define CTRDATA_CCE_MASK            0xF0000000
++
++#define CTRDATA_MASK            (CTRDATA_TYPE_MASK | CTRDATA_CCV |  \
++                                 CTRDATA_CCM_MASK | CTRDATA_CCE_MASK)
++
++typedef enum CTRType {
++    CTRDATA_TYPE_NONE                   = 0,
++    CTRDATA_TYPE_EXCEPTION              = 1,
++    CTRDATA_TYPE_INTERRUPT              = 2,
++    CTRDATA_TYPE_EXCEP_INT_RET          = 3,
++    CTRDATA_TYPE_NONTAKEN_BRANCH        = 4,
++    CTRDATA_TYPE_TAKEN_BRANCH           = 5,
++    CTRDATA_TYPE_RESERVED_0             = 6,
++    CTRDATA_TYPE_RESERVED_1             = 7,
++    CTRDATA_TYPE_INDIRECT_CALL          = 8,
++    CTRDATA_TYPE_DIRECT_CALL            = 9,
++    CTRDATA_TYPE_INDIRECT_JUMP          = 10,
++    CTRDATA_TYPE_DIRECT_JUMP            = 11,
++    CTRDATA_TYPE_CO_ROUTINE_SWAP        = 12,
++    CTRDATA_TYPE_RETURN                 = 13,
++    CTRDATA_TYPE_OTHER_INDIRECT_JUMP    = 14,
++    CTRDATA_TYPE_OTHER_DIRECT_JUMP      = 15,
++} CTRType;
++
+ /* MISELECT, SISELECT, and VSISELECT bits (AIA) */
+ #define ISELECT_IPRIO0                     0x30
+ #define ISELECT_IPRIO15                    0x3f
+
+-- 
+2.34.1
+
 
