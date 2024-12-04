@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 332CEE7716F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 22:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C605DE7716F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 22:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIxyC-00062J-QY; Wed, 04 Dec 2024 17:35:44 -0500
+	id 1tIxyA-00061k-7J; Wed, 04 Dec 2024 17:35:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tIxy9-00061X-1V
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:35:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tIxy8-00061N-Ec
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:35:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tIxy7-00082B-Cj
+ id 1tIxy6-00080p-JD
  for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:35:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733351738;
+ s=mimecast20190719; t=1733351733;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cSUs8GewW8HzvuM0pv59YfV77x2cEuwoSXy1+sJ/hw4=;
- b=OcpHbg4TKQ+V77uCJ7wy4jlFoNZZAnzw3WpbroT9t+d1wL4lO8LWTT+jn5WLEttgBL4PAu
- VZ6udK5H/AXE2xKaZPFa2BdUmcpUuEzTpqvV/XygpgkwubDoy8g4A0pvVhAgXbPiQwRVNp
- 1bPw5ApskGGBcNjoG9tuiaOKLXqVqUU=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0BKNVDowgX4Vx7wekRlE0HaYSsFZsoS2OxJJcq8l8h4=;
+ b=WQFCw5cQ4VUM4pwx0qME8aen1nmOItf9DVwt22Bz/IEjNasfHC5XC8J9mqXncoXLwQ38Qe
+ SIRW0dZtIUA8457VeFfWg2tWcIHlcbf5j2mxRcERFAKseBjj8ii24BzPUdhwxGL4C8EK9E
+ ItyU7w7HvZG/+dAbpRcvTokRDNgaCt4=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-440-L7OyOpKqODCX0mvl9lmv4w-1; Wed, 04 Dec 2024 17:35:37 -0500
-X-MC-Unique: L7OyOpKqODCX0mvl9lmv4w-1
-X-Mimecast-MFC-AGG-ID: L7OyOpKqODCX0mvl9lmv4w
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-841acf1782fso4242239f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 14:35:36 -0800 (PST)
+ us-mta-255-56fFF9aiMMq1b_H-4HE-eA-1; Wed, 04 Dec 2024 17:35:32 -0500
+X-MC-Unique: 56fFF9aiMMq1b_H-4HE-eA-1
+X-Mimecast-MFC-AGG-ID: 56fFF9aiMMq1b_H-4HE-eA
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-843df8d3714so3758139f.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 14:35:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733351736; x=1733956536;
+ d=1e100.net; s=20230601; t=1733351732; x=1733956532;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cSUs8GewW8HzvuM0pv59YfV77x2cEuwoSXy1+sJ/hw4=;
- b=Psf/+9MeFFxbexq8L5I23CSfkrxBmIqqmGDRcseJiQCpAu1QZtB4D7hWzF8lZ+REXu
- Vj3WFgTIYoCdzSOX0D3WmSvFBVEE+WARuPtfd/x4T3zA7RGl3ww0KU+/kyN4ZNCqJynD
- jmPeATsPUKqWfZwQDgR7IdR4MjQCb0gMGkwERwqOz6lDGPEmthss0pzVtFj+LvuTeMwQ
- 4N57LxU/AUtHo5psryN67h9h6hWv3G06AouoMVDP9ln/EqdqIC33FsvoFQj96idFP7pI
- SSqOBjbcqGYPXYAqsNu5onGIuAQschHdBQcZFMFrpEUpM0XGtw13I7+nMgn5uBSlZXAG
- R5Tw==
-X-Gm-Message-State: AOJu0YyFD8OzSYWVNPquXjOwsmkdZJ0dE/Asykvk1qwqzNhi5NyDvRv7
- KoZhhaIsz14d2Tq+PQN1mHKugCXECvzqHOOlRIQXe39DbWeAXcAebCIwvXYxJPGM7dfEB9jqH16
- +sbWsCI1FEgYMCHyRqQnZhsIpnVsckAgNODxCrQaoGuA9FLbG0hG4JHdFDT/7
-X-Gm-Gg: ASbGncvz3HvmtRVwSvQeglcMvaosdWW0BO/ryp/fT5nfixixheR3lQbgbieomZhruT1
- hwXPCgiyC0QIiNjbLPM7HQYLvbsascC9lsSwhYG6vuiRyrCe0bfbmaQWZ9rpVGTQF0tc2YOAeEw
- 3Kj5YWpuuiceVN9UMwoGkNHgWx1sGwMGN3/EjRrWiZ2MWAfyEzw2QqHrmBVfJEpveWlGcFIHGdq
- cI1kVeHawPPzYVv6xPcqg7k4/awNVN0nv+f6miQJeI7yAUulWc0wg==
-X-Received: by 2002:a05:6e02:b4f:b0:3a7:81cd:5c4a with SMTP id
- e9e14a558f8ab-3a7f9ab968emr23006555ab.7.1733351736161; 
- Wed, 04 Dec 2024 14:35:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNjouLNTmqCMV/SyuPPrP/HV1DC2SLWK3xXlXyJnFB+LRAdR9U8x0PAl5cZr0uMvsQU9V9Vg==
-X-Received: by 2002:a05:6e02:b4f:b0:3a7:81cd:5c4a with SMTP id
- e9e14a558f8ab-3a7f9ab968emr23006515ab.7.1733351735871; 
- Wed, 04 Dec 2024 14:35:35 -0800 (PST)
+ bh=0BKNVDowgX4Vx7wekRlE0HaYSsFZsoS2OxJJcq8l8h4=;
+ b=WmG+DR9eJ7io4W+6VcQveh4734EmygcGflLnmzuAybwzSBzpgYZTxCFm/fVUsAQWgo
+ ZXuj3HV4MlOb2l201dQBsVj7Xs8ufX9SGSIpdU1yYlc65/zM9IsYmROuO0OtkYCvG4oh
+ 4GyLt3/Rp7J0krvXwHr+IyU6hjjMs9DFe0+yq5pbM8kC/gJoxBNA0CHzWsvdPg3+w/7x
+ QVY6nrnkrEdRIgG9Gf6P0y1/419bMD1AkB3SU7HfXI54iIlHqfRziYED4veBg24yXdEE
+ /qYcXXYFU7GIqWrEO9UzFSqQrI9lFbhM47nZOaIncK5gNVJn1f4noPOxbaI/CHNPojmR
+ MuMg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU4zHd9BFuIE8CGomnlNVqIxKXkJpxkTgHH+XCnL6jY8ls+5318zVCi3r2xPsiFz1E/l/+X+c7ZrVM7@nongnu.org
+X-Gm-Message-State: AOJu0YyG36YP5wrG0G7MishI52XUd3tzdofYC5utUMIwWhJwqoLtbkMh
+ OzccGG8vCkYVmsWfe0LlP08b/ao7cK8fzzRe/WZVithWHqTqxuCZtyAvZhSYIUcbRkYAL4n6daC
+ SaGGxMUclH8/a6+qNsegQDirx+POLG+9MS3NLYg9kLVz7J1YX19Ai
+X-Gm-Gg: ASbGncuH4vNzk53p2ZYnKf1ji21zHqGMhx/EX9kiaU1qPTW4OlxU+EKix7Q+Gguu8cr
+ /D2CrmFfj1bt1jqpXvZe3APxLvAXBOWcQGI+kMcha25TElIItloTAilWqrQzyKgZb112EnzHbWF
+ n5EzUM27XW1WuuSzURL8x613bjHeFMiyQGMMvZoX7YWyRcan9cANCARFVwaZUQiwu+gzmjZIlnh
+ AtZaf1meBNvSIWCRzHRs6A7XxG+BBeAWBM0GVOPdOlQvPfKQfoxdg==
+X-Received: by 2002:a05:6602:14ce:b0:82a:a4f0:f271 with SMTP id
+ ca18e2360f4ac-8445b7defabmr283822739f.4.1733351731693; 
+ Wed, 04 Dec 2024 14:35:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG7tNjobQY/+Sy5SSPeukaF5Nxr76hQo8HeWBnqfutTCbjizWMwF40eoIdZYYz00makoTP+PA==
+X-Received: by 2002:a05:6602:14ce:b0:82a:a4f0:f271 with SMTP id
+ ca18e2360f4ac-8445b7defabmr283821539f.4.1733351731374; 
+ Wed, 04 Dec 2024 14:35:31 -0800 (PST)
 Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e28610837fsm27341173.13.2024.12.04.14.35.35
+ 8926c6da1cb9f-4e28611c25asm26624173.46.2024.12.04.14.35.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Dec 2024 14:35:35 -0800 (PST)
-Date: Wed, 4 Dec 2024 15:35:34 -0700
+ Wed, 04 Dec 2024 14:35:30 -0800 (PST)
+Date: Wed, 4 Dec 2024 15:35:28 -0700
 From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
- <clg@redhat.com>, Corvin =?UTF-8?B?S8O2aG5l?= <c.koehne@beckhoff.com>
-Subject: Re: [PATCH v2 7/9] vfio/igd: emulate GGC register in mmio bar0
-Message-ID: <20241204153534.34e76045.alex.williamson@redhat.com>
-In-Reply-To: <20241203133548.38252-8-tomitamoeko@gmail.com>
+To: Corvin =?UTF-8?B?S8O2aG5l?= <C.Koehne@beckhoff.com>
+Cc: "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "clg@redhat.com" <clg@redhat.com>
+Subject: Re: [PATCH v2 9/9] vfio/igd: add x-igd-gms option back to set DSM
+ region size for guest
+Message-ID: <20241204153528.5059341e.alex.williamson@redhat.com>
+In-Reply-To: <fb3afcb5ea495e96c6aa9e657cb413ab47c15026.camel@beckhoff.com>
 References: <20241203133548.38252-1-tomitamoeko@gmail.com>
- <20241203133548.38252-8-tomitamoeko@gmail.com>
+ <20241203133548.38252-10-tomitamoeko@gmail.com>
+ <fb3afcb5ea495e96c6aa9e657cb413ab47c15026.camel@beckhoff.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=alex.williamson@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
@@ -109,61 +113,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  3 Dec 2024 21:35:46 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
+On Tue, 3 Dec 2024 16:30:56 +0000
+Corvin K=C3=B6hne <C.Koehne@beckhoff.com> wrote:
 
-> The GGC register at 0x50 of pci config space is a mirror of the same
-> register at 0x108040 of mmio bar0 [1]. i915 driver also reads that
-> register from mmio bar0 instead of config space. As GGC is programmed
-> and emulated by qemu, the mmio address should also be emulated, in the
-> same way of BDSM register.
-> 
-> [1] 4.1.28, 12th Generation Intel Core Processors Datasheet Volume 2
->     https://www.intel.com/content/www/us/en/content-details/655259
-> 
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> ---
->  hw/vfio/igd.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index 522845c509..bc18fc8cc0 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -483,8 +483,10 @@ static const MemoryRegionOps vfio_igd_quirk_mirror_##name = {           \
->      .endianness = DEVICE_LITTLE_ENDIAN,                                 \
->  };
->  
-> +VFIO_IGD_QUIRK_MIRROR_REG(IGD_GMCH, ggc)
->  VFIO_IGD_QUIRK_MIRROR_REG(IGD_BDSM_GEN11, bdsm)
->  
-> +#define IGD_GGC_MMIO_OFFSET     0x108040
->  #define IGD_BDSM_MMIO_OFFSET    0x1080C0
->  
->  void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-> @@ -513,9 +515,16 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->          return;
->      }
->  
-> -    quirk = vfio_quirk_alloc(1);
-> +    quirk = vfio_quirk_alloc(2);
->      quirk->data = vdev;
->  
-> +    memory_region_init_io(&quirk->mem[0], OBJECT(vdev),
-> +                          &vfio_igd_quirk_mirror_ggc, vdev,
-> +                          "vfio-igd-ggc-quirk", 2);
-> +    memory_region_add_subregion_overlap(vdev->bars[0].region.mem,
-> +                                        IGD_GGC_MMIO_OFFSET, &quirk->mem[0],
-> +                                        1);
-> +
->      memory_region_init_io(&quirk->mem[1], OBJECT(vdev),
->                            &vfio_igd_quirk_mirror_bdsm, vdev,
->                            "vfio-igd-bdsm-quirk", 8);
+> On Tue, 2024-12-03 at 21:35 +0800, Tomita Moeko wrote:
+> > =EF=BB=BFCAUTION: External Email!!
+> > DSM region is likely to store framebuffer in Windows, a small DSM
+> > region may cause display issues (e.g. half of the screen is black).
+> > By default, QEMU uses host's original value, which is determined by
+> > DVMT Pre-Allocated option in Intel FSP of host bios. Some vendors
+> > do not expose this config item to users. In such cases, x-igd-gms
+> > option can be used to manually set the data stolen memory size for
+> > guest.
+> >=20
+> > When DVMT Pre-Allocated option is available in host BIOS, user should
+> > set DSM region size there instead of using x-igd-gms option.
+> >  =20
+>=20
+> It might be worth linking the commit which has removed x-igd-gms and ment=
+ion
+> that the behaviour changed slightly. Previously, the DSM region size was =
+set to
+> 0 if x-igd-gms was unset. This patch keeps the host value if x-igd-gms is=
+ unset.
 
-Seems like trying to keep these ordered by offset is what introduced
-the bug in the previous patch.  Let's not care about that, use the next
-index and setup in index order.  Thanks,
+Yes, this is really quite confusing.  We never actually removed the
+x-igd-gms option as $Subject implies, we only gutted it from doing
+anything, *sigh*.  Let's please summarize how 971ca22f041b left the
+option but removed any implementation behind that option and this
+brings it back to provide some function.
+
+> > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> > ---
+> > =C2=A0hw/vfio/igd.c | 17 +++++++++++++++++
+> > =C2=A01 file changed, 17 insertions(+)
+> >=20
+> > diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> > index e464cd6949..0814730f40 100644
+> > --- a/hw/vfio/igd.c
+> > +++ b/hw/vfio/igd.c
+> > @@ -717,6 +717,23 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev=
+, int
+> > nr)
+> > =C2=A0
+> > =C2=A0=C2=A0=C2=A0=C2=A0 QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quir=
+k, next);
+> > =C2=A0
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Allow user to override dsm size using x-igd=
+-gms option, in multiples
+> > of
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * 32MiB. This option should only be used when=
+ the desired size cannot be
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * set from DVMT Pre-Allocated option in host =
+BIOS.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0 if (vdev->igd_gms) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (gen < 8 && vdev->igd_gm=
+s <=3D 0x10) { =20
+>=20
+> This doesn't work as intended for values larger than 0x10. For those valu=
+es,
+> qemu ignores the generation and set GMS as it would be a gen 8 or later d=
+evice.
+>=20
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gmc=
+h &=3D ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gmc=
+h |=3D vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else if (vdev->igd_gms <=
+=3D 0x40) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gmc=
+h &=3D ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gmc=
+h |=3D vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 err=
+or_report("Unsupported IGD GMS value 0x%x", vdev->igd_gms);
+
+We clearly know the upper limit of valid values for the device
+generation, can we include that in the error report?  Thanks,
 
 Alex
+
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +
+> > =C2=A0=C2=A0=C2=A0=C2=A0 ggms_size =3D igd_gtt_memory_size(gen, gmch);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 gms_size =3D igd_stolen_memory_size(gen, gmch);
+> > =C2=A0 =20
+>=20
 
 
