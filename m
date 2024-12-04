@@ -4,99 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C08AE77170
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41345E7716D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvzI-00049E-Aw; Wed, 04 Dec 2024 15:28:47 -0500
+	id 1tIw0E-0005XW-OB; Wed, 04 Dec 2024 15:29:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvz7-0003qt-MF
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:28:34 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIw02-0005IW-AA
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:29:31 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvz2-0003ZX-7V
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:28:30 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-385deda28b3so175831f8f.0
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:28:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvzx-0003gA-6V
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:29:26 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-434aa472617so1362085e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:29:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733344106; x=1733948906; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iGN5RJQrSmW9JWKBkRR1K+I3aJFNDNbHIDvyy4lFcWM=;
- b=pIzrglZtozpJ2fOjAucVrt1WNYVu1lkujLAVwDF4TKcKB5HvtkAoqdntFkQEFMz8oB
- 6rrXrlcJtk2/RrszW0SVrlGYNzobwt5bcVIiAP28UcUjNf/DBVR7Avf3yZQ/JZGwQit5
- hKRX/dadRY+n9tGznFnEhkX09c9LKYL6IL2DaErjc3AP96+mQV7iaclst+BDp2yvwb7Q
- reLWl8BIq/+tbHamWqCFvVCEljlFx3asiU9bzO3k0CIjYmWz+iMyP0ygtnr7kIf8o4bE
- 1betJPtga88SYQ+9p3o529wHoj/AHoNy/8jHYw19igkHqjTCaRJpcljKpT9VFWEsP9qD
- JvFA==
+ d=linaro.org; s=google; t=1733344163; x=1733948963; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BtLB4CHtN3EMKTvfZ13tIQ6jPNgFO8tgEUT2dy4RBn8=;
+ b=fHHiOYEp9iv4eeNlD8h3FnuyXuyKaBaFnJinMjus/mPf0B5wp4ymUBMuMlZ9ZvG1fE
+ E5D3Id+VOBX20D/Jl95T83bfmJ97h8R8BFFxEWVWDMaRjXEE5TzA7a9e1a2VLWnSH4GX
+ XRAIgrWI6Hs7RGhkvRqbaSXBquptDQ8iRbufFH/hQ/KaZI/otnoFFrY4nqOLALTVt2q5
+ MvpIK3a1kHK3uUbAo1EVOx9Xko8Xt5OMir5X4Rlv4iDCm2+b7aeOmnzw1mHBl+jYQ+9D
+ gJK0vr1iEWxOlfVDo6HF2jEc2qKmOQEsBsZShBFRNjqGJ6aaieBKsgFDyZyFQqWxxdwu
+ jt2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733344106; x=1733948906;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iGN5RJQrSmW9JWKBkRR1K+I3aJFNDNbHIDvyy4lFcWM=;
- b=WIa3PQr5XP3e/8I/P3Tz46CiqJHSbeB+F6WRjUEpWjyLmZ9/BZZq+gTanGv5ND1p4x
- /Y7C3HtaXhTxcmtIdB+vDChXM1gFWbPRoGwmRQM9zO1qsDglIB/MVUluO3xgO7dpGrqP
- rvNKNi8Niqd5msdRfjjGyg8ounznX2SiKG/JUiKPctf1DFCq7PLVSkx5pBlykPvyAJLt
- vIaJKsA9tCJO86G9jrZ2STxY08SvM49XA3e6yfQdghs89CMx5dzCWf7bLF25AplnKW7Q
- 29TkiYTkekbAnf1fo/yglBTRNtdjjJbMpHeM3yuH4zUfMDbrWgDygeARx1u6Pf+blo+B
- fUig==
-X-Gm-Message-State: AOJu0Yybgpi2yyKvJJSw28PCvjbjxoiTXZOxSf3O16X/j2rXACqCYMin
- IQ6gz/VJOOCSJvY7frSJZ4K8hKOc8/PskZpTEswxyiDMRHwIo+YSNyH7JM3C36V0AqINPlgqY29
- 6
-X-Gm-Gg: ASbGncuzSzz0QWcNdLRDUhLJMc7AuHLJ3H4oyvxarDthc3umVVRur35vPGHlLbr+kh0
- zKr3A+QBtUoUWLu60/UZCXDCIFk12eKYSw5wwn1aKoH41kD6x/iqy3CpfZECQEEMx5d5tXlIXbC
- pFit2DEK1+Js+6wy1L1Z+0azjCZ5eTv1ggTPsGu1G7IIKKA6HDohutn9jl9IApPFCnSsyRJD4gB
- ImR7xzMXTWZSbZg2cWJsP9bYnmht+CHId4OkFCynXz5oYlIDP68sgdj66yBAGYz1puWkI78kgtw
- cF1x5OQwZ1ir2X5j2Jo2W4ek
-X-Google-Smtp-Source: AGHT+IH/S3fZHlZzX/kr27toW1RLb1QXyLYo9TNenewW3f4YqXZzcSdz11tH2a+Z9U2wX82Jhc7Nkg==
-X-Received: by 2002:a05:6000:1a87:b0:385:e4a7:df0a with SMTP id
- ffacd0b85a97d-385fd436393mr5816550f8f.54.1733344106323; 
- Wed, 04 Dec 2024 12:28:26 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1733344163; x=1733948963;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BtLB4CHtN3EMKTvfZ13tIQ6jPNgFO8tgEUT2dy4RBn8=;
+ b=N656/sVKdXa/HfjiRV62yeX1geYL8WSivzihb5amzWbBx7qmHImEasz3+DtwtdWKHh
+ q8x9LLv64Let8kuNWpZMG4E/ON1x2w1E1X7V2CuVhF0C42u1RNv5TxelNB/xFNgc1ugW
+ AtPl0rI0tenicb8hsAHgANqSAs5h0T4S52ye7Os2amVLoXmqjPDcSkJjkR9MqYh4QTSy
+ v1DUBhvxESJDjtRZbz2gUZDVSFdzedOhn5AekRrDx+eBv3oJfZrsn52Mn/iiejzUB6Vd
+ 11VSaYN2IS+TZGHv7M1IEIiQJzlMLhFCrqXQ5GQymC11SqrlGg8KFdUXmIh5axgrYvvQ
+ x0Aw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTrfvOM8KpQPQcDOsMrjfHZ3PMp0s6TmexwyjEB526MSRVva7mviIowsKGKMZnfe8OmOSwYxST4SQG@nongnu.org
+X-Gm-Message-State: AOJu0Yz7l5Aw1T0hcxs6RFVCHPFgJNYCvdUZCqrodXxwe0yAdTE4SW2F
+ /StcMbIhOIKhCumid09D+I90+l92V8icaVt2qwbKf9wz2L1tSaMMW84tVT6JBK8=
+X-Gm-Gg: ASbGnctR6gzfPgPxhN1F9CZcRK3nyEwknw/ttDcwAz2BZTk3cRfL/J/HlMgzwIAgbZ4
+ pW5mf3FcfSDSpnNUdOFLrwJFYghVjcBL7/YH4tD3syseJDhu4dN4BnfxKdLT7OKpwlAoETCFhmb
+ JnOpZ8Qz5Ok/WrPeRo2U2kLLK//qqlYhuLXfYd0dBST9z6SEceGJ7kTpcLlPWvOfaIfYAikVg9N
+ gfXtEY18y2DICdLS60hpxRWLmvd4WNnAMEgxf1qZHkp9gEdWsihzwmA6v6KOefGl07kPwhdOh3E
+ COfLWB3nH2Qfx/u1wA==
+X-Google-Smtp-Source: AGHT+IF27oJ6ZBQWbyrsKoV1xo7XPqL32PmI/OtbA0a3nCZ5zz6kmohFVn0752qwrjlnbiPtUcMTnQ==
+X-Received: by 2002:a05:600c:3ba5:b0:434:a83c:6a39 with SMTP id
+ 5b1f17b1804b1-434d09b147fmr77918635e9.3.1733344163615; 
+ Wed, 04 Dec 2024 12:29:23 -0800 (PST)
+Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-385dece67dasm16908928f8f.8.2024.12.04.12.28.25
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Dec 2024 12:28:25 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
- Zhao Liu <zhao1.liu@intel.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
- Max Filippov <jcmvbkbc@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>, qemu-riscv@nongnu.org,
- Alistair Francis <alistair@alistair23.me>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 19/20] hw/virtio: Use cpu_datapath_is_big_endian()
-Date: Wed,  4 Dec 2024 21:26:01 +0100
-Message-ID: <20241204202602.58083-20-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241204202602.58083-1-philmd@linaro.org>
-References: <20241204202602.58083-1-philmd@linaro.org>
+ 5b1f17b1804b1-434d526b312sm36761735e9.6.2024.12.04.12.29.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Dec 2024 12:29:23 -0800 (PST)
+Message-ID: <a9d0bbba-1a79-424f-94aa-9d20732bdc76@linaro.org>
+Date: Wed, 4 Dec 2024 21:29:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] gitlab: purge build files from cirrus CI jobs
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20241204194807.1472261-1-berrange@redhat.com>
+ <20241204194807.1472261-5-berrange@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241204194807.1472261-5-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,32 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather that using the binary endianness, use the vCPU one.
+On 4/12/24 20:48, Daniel P. Berrangé wrote:
+> Uploading artifacts in Cirrus CI requires sufficient disk space to
+> create a tarball of the artifact files. IOW, whatever size the
+> artifacts are, double that. This results in space pressure on the
+> FreeBSD jobs due to limited disk size. Purging the .o files from
+> the meson build directory reclaims significant space.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   .gitlab-ci.d/cirrus/build.yml | 1 +
+>   1 file changed, 1 insertion(+)
 
-The target affected by this change are MIPS, MicroBlaze, SH-4
-and Xtensa. SPARC, RISC-V and RX could be affected later if
-their CPUClass::datapath_is_big_endian() handler is fully
-implemented.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/virtio/virtio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index b3dede476ed..c57845a16db 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2257,7 +2257,7 @@ static enum virtio_device_endian virtio_default_endian(void)
- 
- static enum virtio_device_endian virtio_current_cpu_endian(void)
- {
--    if (cpu_virtio_is_big_endian(current_cpu)) {
-+    if (cpu_datapath_is_big_endian(current_cpu)) {
-         return VIRTIO_DEVICE_ENDIAN_BIG;
-     } else {
-         return VIRTIO_DEVICE_ENDIAN_LITTLE;
--- 
-2.45.2
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
