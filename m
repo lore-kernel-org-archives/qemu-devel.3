@@ -4,66 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB560E7716B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 03:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F59E7716B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 03:28:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIfrq-0007do-Hk; Tue, 03 Dec 2024 22:15:58 -0500
+	id 1tIg3b-0001OQ-KW; Tue, 03 Dec 2024 22:28:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1tIfri-0007aV-TU; Tue, 03 Dec 2024 22:15:50 -0500
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1tIfrf-00009X-7M; Tue, 03 Dec 2024 22:15:50 -0500
-Received: from f9905068bba7.home.arpa (unknown [124.16.138.129])
- by APP-01 (Coremail) with SMTP id qwCowAB3fHxYyU9nAwPQBw--.15565S2;
- Wed, 04 Dec 2024 11:15:38 +0800 (CST)
-From: MollyChen <xiaoou@iscas.ac.cn>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: MollyChen <xiaoou@iscas.ac.cn>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH RESEND v1] target/riscv: add support for RV64 Xiangshan Nanhu
- CPU 
-Date: Wed,  4 Dec 2024 03:15:14 +0000
-Message-Id: <20241204031514.34531-1-xiaoou@iscas.ac.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tIg3X-0001O5-7b
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 22:28:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tIg3V-0005XR-4A
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 22:28:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733282878;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TjQ8zFsYJSl8Um0gvyPB4v9WvdgdLLOsNRM/YUSjH+Q=;
+ b=NNNl64KNl+TCEijvHAOwJIk8LIzPrZpAoamxwUKOLprFkuRV/dwt7RCRLQB8JquWklRO2L
+ JitGXymuNMypl9AsIMoOkzBLG9AE/G0QQX3B8ACrOuHamSo2FFFJ92bf8yV4LCIlv4eiEx
+ 3ktpkDvFtsrwe9Ak3pyOi3MOjTaA3FI=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-cIAudSYgP12ixjoUQnynqg-1; Tue, 03 Dec 2024 22:27:57 -0500
+X-MC-Unique: cIAudSYgP12ixjoUQnynqg-1
+X-Mimecast-MFC-AGG-ID: cIAudSYgP12ixjoUQnynqg
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2ee76edbb51so4517936a91.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 19:27:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733282876; x=1733887676;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TjQ8zFsYJSl8Um0gvyPB4v9WvdgdLLOsNRM/YUSjH+Q=;
+ b=Q/DEGHPT9OQSqg6eH0KtZt35PozIr+FGgqHK6Xapl5mzNbWNUEhhhqVITwdws7rT2f
+ phBq5xGvhzcWw9C+evl2vpbsxiPnGsPgMoiqwwo4fqkSAklNrbv2lwZP+ChfJcCxDFUf
+ I9yQOVRY7W6qY/qfbyV2HngDKikKspxsq+nTJgpEuCXLAI4Ls7EoW9kRHZWWlL5GbMBk
+ okQpUcXdzgmCnCJJc+XULpVAXHKgrwQKxq8CkgTDUFBLz5aEGkZzB7ElnRcPi25nX4zq
+ ZqwxqG0VRijHXKHjFJjdOTIbCroKDSKevlLdmKQ4Ok4V+E1IYUd+Ph802EyRcG0XIA15
+ 9dYw==
+X-Gm-Message-State: AOJu0YzJSg2hONNdaYAE5dQeP4G2UDQj2ajnCEGbRRRPV+fKekqnyssl
+ qdYWtpSJVs2vWyFSI+qq/zCD/9D13KnU3Tzd/Ab8zXzcqkdO8K70+fRZC9ShCGPjy8yWYoVLExm
+ MnC7t4IKbIvAYMuxrnQCaEG8bcS45k/27bfQ1DXMdKD+qi4iTCzQ5fLfR3DeAs1EFdrdT5pXUZK
+ ZfvOldOT+VRnsHUKF1OFOeFSYPMrKk/jddD5Y=
+X-Gm-Gg: ASbGncuUAZlYPPyzrJSvIQgTBiiAKdLTeVvPhkeMJc2k7ys8lwFOoCkfnjoxj0rdmP3
+ HhxtdpGyr8Tx5yoDzeBPXio/xv/XoIB2B
+X-Received: by 2002:a17:90b:384c:b0:2ee:9b09:7d3d with SMTP id
+ 98e67ed59e1d1-2ef01215443mr6683991a91.19.1733282876274; 
+ Tue, 03 Dec 2024 19:27:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF5IiDIek81ZoOZUJJjfhv+tmhfWo9nJ5qjcZxTOww+OUqb3BemHVpdlQKhwbCxgpTBferXwsA8mLa+UtfLVls=
+X-Received: by 2002:a17:90b:384c:b0:2ee:9b09:7d3d with SMTP id
+ 98e67ed59e1d1-2ef01215443mr6683950a91.19.1733282875886; Tue, 03 Dec 2024
+ 19:27:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAB3fHxYyU9nAwPQBw--.15565S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxXw1fZw45Gr4UtF4rXry5Arb_yoW5Xr4Upr
- 4DGa909rWDJasFka1fJF1DWrZ5Xw4ru3yag39xZa1fXF43KrW3Jr1qya4UuryDWF4rX3WI
- 93Z5CFnxCF43Ja7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUvG14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
- 6r4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26F
- 4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
- 7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
- 1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AK
- xVWUtVW8ZwCY02Avz4vE14v_Gr4l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr
- 0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY
- 17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcV
- C0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY
- 6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa
- 73UjIFyTuYvjfUn9a9DUUUU
-X-Originating-IP: [124.16.138.129]
-X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
-Received-SPF: pass client-ip=159.226.251.21; envelope-from=xiaoou@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, HK_RANDOM_ENVFROM=0.001,
- HK_RANDOM_FROM=0.826, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001,
+References: <20241111083457.2090664-1-zhenzhong.duan@intel.com>
+ <20241111083457.2090664-16-zhenzhong.duan@intel.com>
+In-Reply-To: <20241111083457.2090664-16-zhenzhong.duan@intel.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 4 Dec 2024 11:27:44 +0800
+Message-ID: <CACGkMEsWZbA_PeRJLSLtSFgKtFPXymP28XZoTUtK=WWA95mykg@mail.gmail.com>
+Subject: Re: [PATCH v5 15/20] tests/acpi: q35: allow DMAR acpi table changes
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
+ eric.auger@redhat.com, mst@redhat.com, peterx@redhat.com, jgg@nvidia.com, 
+ nicolinc@nvidia.com, joao.m.martins@oracle.com, 
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com, 
+ chao.p.peng@intel.com, Igor Mammedov <imammedo@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,77 +106,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a CPU entry for the RV64 XiangShan NANHU CPU which
-supports single-core and dual-core configurations. More
-details can be found at 
-https://docs.xiangshan.cc/zh-cn/latest/integration/overview
+On Mon, Nov 11, 2024 at 4:39=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@inte=
+l.com> wrote:
+>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+>  1 file changed, 1 insertion(+)
 
-Signed-off-by: MollyChen <xiaoou@iscas.ac.cn>
----
- target/riscv/cpu-qom.h |  1 +
- target/riscv/cpu.c     | 29 +++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+Acked-by: Jason Wang <jasowang@redhat.com>
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 62115375cd..8f6fac463c 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -49,6 +49,7 @@
- #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54")
- #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906")
- #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
-+#define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
- #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
- 
- OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index f219f0c3b5..738d833115 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -579,6 +579,34 @@ static void rv64_veyron_v1_cpu_init(Object *obj)
- #endif
- }
- 
-+static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
-+{
-+    CPURISCVState *env = &RISCV_CPU(obj)->env;
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+
-+    riscv_cpu_set_misa_ext(env, RVG | RVC | RVB | RVS | RVU);
-+    env->priv_ver = PRIV_VERSION_1_12_0;
-+
-+    /* Enable ISA extensions */
-+    cpu->cfg.ext_zbc = true;
-+    cpu->cfg.ext_zbkb = true;
-+    cpu->cfg.ext_zbkc = true;
-+    cpu->cfg.ext_zbkx = true;
-+    cpu->cfg.ext_zknd = true;
-+    cpu->cfg.ext_zkne = true;
-+    cpu->cfg.ext_zknh = true;
-+    cpu->cfg.ext_zksed = true;
-+    cpu->cfg.ext_zksh = true;
-+    cpu->cfg.ext_svinval = true;
-+
-+    cpu->cfg.mmu = true;
-+    cpu->cfg.pmp = true;
-+
-+#ifndef CONFIG_USER_ONLY
-+    set_satp_mode_max_supported(cpu, VM_1_10_SV39);
-+#endif
-+}
-+
- #ifdef CONFIG_TCG
- static void rv128_base_cpu_init(Object *obj)
- {
-@@ -2983,6 +3011,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SHAKTI_C,   MXL_RV64,  rv64_sifive_u_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_THEAD_C906, MXL_RV64,  rv64_thead_c906_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_v1_cpu_init),
-+    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU, MXL_RV64, rv64_xiangshan_nanhu_cpu_init),
- #ifdef CONFIG_TCG
-     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, rv128_base_cpu_init),
- #endif /* CONFIG_TCG */
--- 
-2.34.1
+Thanks
 
 
