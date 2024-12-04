@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A67C9E77171
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A832E77170
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 20:32:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIvyV-000143-8X; Wed, 04 Dec 2024 15:27:55 -0500
+	id 1tIvyv-0002hf-39; Wed, 04 Dec 2024 15:28:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvyI-0000Uy-07
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:43 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvyp-0002ND-9e
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:28:15 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvyF-0000yX-DK
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:27:41 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-434a044dce2so2129595e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:27:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tIvyn-0002cw-Jq
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 15:28:15 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4349e1467fbso1393715e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 12:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733344056; x=1733948856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733344089; x=1733948889; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OthQd7angO3Yu/emzCL7LUH+S5aSARcEIzo6mzzFka8=;
- b=WELlmwSjK0NpqMScJxkhVgND5CiF3ZZMT06gjH3xL0GfW14TqaEcOd6rvpX/Y/gdPa
- RKPz/JqZEJ0Kk1+kafFhAp++PGO7e6Ev6cw8+UiNJAhUPUi1y5t65a9L2zi9uRuvNo/H
- qowrzPWJ/W7PgkipixJQ9vvfRKQSDGRUdOusLK/XeWUU07S0Rtw1MnFfFmX0YjcG91wb
- PmhqXw7pszkAnxetzR+yBzx5EzE/dIwZvMJfhZIA9gX7CD0iQaPyi9/flG1Nvjle4RVn
- 4Jt2HRAMI267sErj4dGb6STezc/HJwfFmeVb2mLGEPijioJGq2Sd5Ro2Nj6mKE35vbyl
- uHfg==
+ bh=GX0z7ED1fpqqEX0e3FNGIrRnTBaZqIcam5D8KFO/APw=;
+ b=TRTYqHQEIK04Y6ULZP4l0E5gbUgQjjF3PfhBSTltnjGYwpC/JHV4jAcApQSmXyCJCA
+ W2zIRLb4VCipt856iw/ACgg71gUSPRwWnHC1+Tx4zFDQduIl98eO4zTbUOeazaEXemCW
+ 4GSC/z5Sb46hTUkXyFbux52R0A9C4G8gk3Us45PaI4kpvQGIw8QJ1aK0m2PL9AYBj1pL
+ J4MnDOsCtfS+GEk+m9/D0yx8wMazQlltqJfRMXxiFxFKKczrhCbvqAUu+XsLsTrHVWRL
+ V6J4tFj9LWGNYLslLXxIvGiyHk9cJDPzKJ/kQgCnJh0EJhP/Tfgn4X97F0/fpA1eGWi7
+ SEaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733344056; x=1733948856;
+ d=1e100.net; s=20230601; t=1733344089; x=1733948889;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OthQd7angO3Yu/emzCL7LUH+S5aSARcEIzo6mzzFka8=;
- b=e5XeoLKqhd4GTZGFCPmLHbjaJl6S6qX9bSZ4Yc38Wrj79EXiZDM0Kp3e48EcG2/q0u
- sKBqnl9sQPQmOarXy7O+lc1tAJvYjAnKKkFv66oxm8wmpWAOjFvSBE0I81HiKqCelE21
- deklYdvX92y2i8dc71Fi4jEN3S9XqayTGDuLTG2RKNB4bJ2yFDKHJdJSE29QzPfEAl6t
- XK/hIeDfgxJIYuRW4RcNhsQmlcm5dUprCTGynGlfn9lOIMHNHVf5fE9nJxTEHJv77wXj
- W4VVG3kqfz3zWJTZ5amkmQzHL1S5Nio7K6KEO/fZhFjRq77xYl0Ofvr24SrzMyC9Ssvo
- pSLQ==
-X-Gm-Message-State: AOJu0YxTFIXpgirCUG+HHt6rKVS5drN5m8ZttsnJKaPRdYgfAnzJmZnI
- r44joyHRGVIjJCkNa68F4mxbA63BDAfGB6rp3sIO3OFWWlhQ7PBikBhQEP3ykb7oa3ySsDBcmpc
- F
-X-Gm-Gg: ASbGnctYCVjOxpPhS1RDzy3SK4UF0NDwHDnhS6p94mcB/A25uPpYVtIoqAFYNQgqrNu
- wEpIAIw4clR6SoxoxeU0RUftH4mn1sZ3hCLhOLTBXElqyvWsoMBb9OH/qwzTmivgN/Jh4zk3sv3
- YMIQUVfhe1NIIkyil94tlFnXUE5Q9PGQlnhTSsA3dvZKKQ3kAs4Sc7qI4ixsveQSBqbMJ6G9BDN
- WFwT3M3liVMOFm3RLnPw2UplTztqX+pI5v1UkYpUrZ+8wRmGLv3aTlPzG9dezEfoWAh8OhEr9mI
- Y43Bh4UZ5OAsgRqi5oKyFaiD
-X-Google-Smtp-Source: AGHT+IGL1weHWkR4ZXBoHZExspgYdvLCkRNqGxIFbn/7+ohyglQiN1a7pmCzjsSY7fMDCBu9sIdPnQ==
-X-Received: by 2002:a05:600c:3103:b0:431:5c7b:e939 with SMTP id
- 5b1f17b1804b1-434d09d1d68mr81549135e9.18.1733344056242; 
- Wed, 04 Dec 2024 12:27:36 -0800 (PST)
+ bh=GX0z7ED1fpqqEX0e3FNGIrRnTBaZqIcam5D8KFO/APw=;
+ b=KmGuC4JZbcuWWhwwf59UaZwqa77BRgV7XNkxcSdo/Qzj7JD29xaH7J4iKpzP1Fn1j2
+ qhJNelo/OxsCM7oC5Hlb5/O6JnQZJZLJMLPFf2orLSWV6/T7VMyR3wo1lvMk7oaKwVzP
+ zT0f+lE7Cc2/UXnZrMhzPB0628Roy8WrQLtZ+8x8zPvDOc4Md7WItmLlAX6kMg5JeBpz
+ GuwZeXVcf6+0na+iJKUuv5Nospw/FiblPIZI9ECprS/+wRbgdtJuTSOZq61dznI2fq+N
+ HNt/Q2M4NJQYOoF70EowCtT3lvPTNIF8miuIJjJNtTbL0Y7wDyibkbksDdnBqm2o98kF
+ 2vlw==
+X-Gm-Message-State: AOJu0Yz5/EjUoVC6UysOrMPhSeBcGdDvI/TE9ktci9fLRCHrHnpybzgF
+ IgPdO1/mqpZ6lCr0uocLUP0YxgHbTYs7Wn3HB//ZJ1AQZqgNyqedHpiSii6TJ2rdIdjH1dYwyaR
+ C
+X-Gm-Gg: ASbGncvPH2h/HskpUMJmDGeu0dSohlHePZk5ozxnC09L4k+eraRbEvFafzFuAM6vN5G
+ /nS/teTENSgMLuF1neXsoILJtusC0G9TJxnJ9zlB1oGcpotT+6+2TfNQPG+fLrKKRvM7bLRTVix
+ IK7NSRM7zuYuO1qYxITBM/ZZRF5QMDaduhqggylAPliUtZkXZowu1SJxXE2WXAZEaZ4SXTTBdJC
+ HeWaCktN6MghFPsXz6hjmEkIraA4sfmr6RJX9fI81jWmcdy7y6EN+iL8VLL+CySrpwUJ/7mZa+B
+ Hx0+2bGuRqpxqgzC8c50gA3C
+X-Google-Smtp-Source: AGHT+IFQVlgKgXzi+WHSeKykqO09/qxwXPFKjgqPF3MN1t0t3YAGqhk0OGIb3lGnnbvtjy1rKap/lg==
+X-Received: by 2002:a05:600c:19d1:b0:434:a4a9:5d54 with SMTP id
+ 5b1f17b1804b1-434d09bf794mr77784015e9.10.1733344089220; 
+ Wed, 04 Dec 2024 12:28:09 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d527eeedsm35050045e9.19.2024.12.04.12.27.34
+ 5b1f17b1804b1-434d52c0cfdsm36598115e9.33.2024.12.04.12.28.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Dec 2024 12:27:35 -0800 (PST)
+ Wed, 04 Dec 2024 12:28:08 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -79,18 +79,17 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair@alistair23.me>, qemu-ppc@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 10/20] target/microblaze: Implement
- CPUClass::datapath_is_big_endian
-Date: Wed,  4 Dec 2024 21:25:52 +0100
-Message-ID: <20241204202602.58083-11-philmd@linaro.org>
+Subject: [PATCH 16/20] hw/core/cpu: Expose cpu_datapath_is_big_endian() method
+Date: Wed,  4 Dec 2024 21:25:58 +0100
+Message-ID: <20241204202602.58083-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241204202602.58083-1-philmd@linaro.org>
 References: <20241204202602.58083-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,64 +112,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the MicroBlaze datapath_is_big_endian() handler,
-returning the value of the ENDI bit.
+All target implement their CPUClass::datapath_is_big_endian()
+helper, we can expose the generic cpu_datapath_is_big_endian()
+method.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/microblaze/cpu.h |  2 ++
- target/microblaze/cpu.c | 11 +++++++++++
- 2 files changed, 13 insertions(+)
+ include/hw/core/cpu.h | 8 ++++++++
+ hw/core/cpu-common.c  | 7 +++++++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-index 3e5a3e5c605..dd6b61b34ba 100644
---- a/target/microblaze/cpu.h
-+++ b/target/microblaze/cpu.h
-@@ -412,6 +412,8 @@ void mb_tcg_init(void);
- /* Ensure there is no overlap between the two masks. */
- QEMU_BUILD_BUG_ON(MSR_TB_MASK & IFLAGS_TB_MASK);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 91c6581f814..5c75fe3a842 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -611,6 +611,14 @@ extern __thread CPUState *current_cpu;
+ extern bool mttcg_enabled;
+ #define qemu_tcg_mttcg_enabled() (mttcg_enabled)
  
-+bool mb_cpu_datapath_is_big_endian(CPUState *cs);
++/**
++ * cpu_datapath_is_big_endian:
++ * @cpu: The CPU whose state is to be inspected.
++ *
++ * Returns: %true if the CPU access data in big endian order, %false otherwise.
++ */
++bool cpu_datapath_is_big_endian(CPUState *cpu);
 +
- static inline void cpu_get_tb_cpu_state(CPUMBState *env, vaddr *pc,
-                                         uint64_t *cs_base, uint32_t *flags)
- {
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index 710eb1146c1..3a0e5713415 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -26,6 +26,7 @@
- #include "qapi/error.h"
- #include "cpu.h"
- #include "qemu/module.h"
-+#include "sysemu/hw_accel.h"
- #include "hw/qdev-properties.h"
- #include "exec/exec-all.h"
- #include "exec/cpu_ldst.h"
-@@ -119,6 +120,15 @@ static bool mb_cpu_has_work(CPUState *cs)
-     return cs->interrupt_request & (CPU_INTERRUPT_HARD | CPU_INTERRUPT_NMI);
+ /**
+  * cpu_paging_enabled:
+  * @cpu: The CPU whose state is to be inspected.
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 09c79035949..92c0c4c6125 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -66,6 +66,13 @@ CPUState *cpu_create(const char *typename)
+     return cpu;
  }
  
-+bool mb_cpu_datapath_is_big_endian(CPUState *cs)
++bool cpu_datapath_is_big_endian(CPUState *cpu)
 +{
-+    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
++    CPUClass *cc = CPU_GET_CLASS(cpu);
 +
-+    cpu_synchronize_state(cs);
-+
-+    return !cpu->cfg.endi;
++    return cc->datapath_is_big_endian(cpu);
 +}
 +
- static int mb_cpu_mmu_index(CPUState *cs, bool ifetch)
- {
-     CPUMBState *env = cpu_env(cs);
-@@ -447,6 +457,7 @@ static void mb_cpu_class_init(ObjectClass *oc, void *data)
-                                        &mcc->parent_phases);
- 
-     cc->class_by_name = mb_cpu_class_by_name;
-+    cc->datapath_is_big_endian = mb_cpu_datapath_is_big_endian;
-     cc->has_work = mb_cpu_has_work;
-     cc->mmu_index = mb_cpu_mmu_index;
-     cc->dump_state = mb_cpu_dump_state;
+ /* Resetting the IRQ comes from across the code base so we take the
+  * BQL here if we need to.  cpu_interrupt assumes it is held.*/
+ void cpu_reset_interrupt(CPUState *cpu, int mask)
 -- 
 2.45.2
 
