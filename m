@@ -4,100 +4,183 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24BC2E77160
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 00:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D76E7716A
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 01:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIdiP-0002sJ-EN; Tue, 03 Dec 2024 19:58:05 -0500
+	id 1tIeOQ-0007I7-MK; Tue, 03 Dec 2024 20:41:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIdiM-0002nU-Uq
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 19:58:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.mackay@oracle.com>)
+ id 1tIdhJ-0002Xd-0O
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 19:56:57 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tIdiJ-0007O3-Bx
- for qemu-devel@nongnu.org; Tue, 03 Dec 2024 19:58:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733273878;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hFGoG81JmWWOQcbzt3xzzoNwpnoYmAVYp72V0w/Dskk=;
- b=NwpO4ROF5LdP4J1Km2YHp7vDvSOS7GMlHimdVuESZB+ZUNjkelSAg53rCqN7bahRs3jvNW
- fR1/HpfhZEXGVd/ha0495RBaEFbHkwbaF5Mp18XgiG552rzy+0vxZuHonkir2zRy3p1MSq
- IYG50RFirINHF8eaNWfrHD9VKP2dsCo=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-p4qgZgvmNwWgi3LeFw-g2w-1; Tue, 03 Dec 2024 19:57:54 -0500
-X-MC-Unique: p4qgZgvmNwWgi3LeFw-g2w-1
-X-Mimecast-MFC-AGG-ID: p4qgZgvmNwWgi3LeFw-g2w
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b6676f4361so605484585a.3
- for <qemu-devel@nongnu.org>; Tue, 03 Dec 2024 16:57:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733273874; x=1733878674;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hFGoG81JmWWOQcbzt3xzzoNwpnoYmAVYp72V0w/Dskk=;
- b=Pzfoy3AamYPoQHuTZ9tuYetqymqwRDil323GHGf8Ooe0EoMJMsfqB/524emLjqUZ/M
- 9b3RaS7x4XoQaqMXZDGvTRHhM4Ohk2k9iLgtXxKtTFImIgKvmMuidwRWNLGZ2NI7j8mn
- 0C+FXOaqWmKlJPcwl2sJni+I9QdZBbTm48CGKvMKMaBriBMQDPKURz3lZe8V3TGsaAi2
- n1TnQicOaXEKD2PP4k4m9ixoMRQZHQbQcyVvjBC0r9/3Rb1QI/xANYxnFNwMuR7wwaqy
- XxA+jLIFwqe523ll03QfFTPFHlZWPxXOLg1vJ65cMuLwZMT0JHtG0pM2eAxxyuEId5qf
- bhQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWEZM4/9dZ1x83YU1KwTz9JSQbvyv58iOOB6Uj+uMsM7Pb+821Aw0r58GQF7BAgzHO9EqwjW6qiDUMa@nongnu.org
-X-Gm-Message-State: AOJu0YwuBVGPjimAD0V0K32ecbd0KvkSKwbwA/YI8+GhSBb5+0BwAlyC
- D9brSZumKnLwodNn31ww8pKXPGrnIdP28zk9XaIx2Zqd+scuE32W/ZQOMCtdNy0Tn22+D66wY2+
- QYbWW8StpAOfZp6tacV+SBG3hV0baBi4bLi5KuKEKAboQqkH9tRDX
-X-Gm-Gg: ASbGncuQ2vN1yijfSa1ykcyX1pgOD0T7ClnvTzY5OiNeuob8fg5ve4cLWgOFAlMFlOv
- LaeQAjBoeFKnOKhXisb5hbl3okVSYGh1xg4h+UxvbW13Wq29E2MjU0vpscyqICPWeGFt7rvohFu
- 8sdj7ncUEiIdrK2BVPbm8b6kpLL929qmB3QdOWK81hazAqMOCNKjbuMcmoiUD3rQAYEk+4f0dRQ
- 7DGnKvbbY1KcfP8I1AP/ySirR7OKGNlypqVGkapUfFXFA7AwbGPIwSnShnmet4d8HKgFcCfYJao
- K612XvVJ6KI=
-X-Received: by 2002:a05:620a:31a2:b0:7b1:3b5e:4b50 with SMTP id
- af79cd13be357-7b6a5d9df8bmr617668885a.19.1733273874081; 
- Tue, 03 Dec 2024 16:57:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGmyaB5KiTaolM/iq6tYEKmRoeqlhxfv8EhvsBECmdnAbGAXJXpEEa0ZRxR94tt9tyjs8LkUQ==
-X-Received: by 2002:a05:620a:31a2:b0:7b1:3b5e:4b50 with SMTP id
- af79cd13be357-7b6a5d9df8bmr617666985a.19.1733273873759; 
- Tue, 03 Dec 2024 16:57:53 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b684920835sm563712285a.11.2024.12.03.16.57.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Dec 2024 16:57:52 -0800 (PST)
-Date: Tue, 3 Dec 2024 19:57:51 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- den@virtuozzo.com, Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH 4/5] migration: Activate block devices if VM is paused
- when migrating
-Message-ID: <Z0-pD2KgsEtklsgq@x1n>
-References: <20241125144612.16194-1-farosas@suse.de>
- <20241125144612.16194-5-farosas@suse.de> <Z0Su2RINKfqRk969@x1n>
- <f6fc6ed3-d1d0-4498-9ec7-1f4e55a2abf3@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <eric.mackay@oracle.com>)
+ id 1tIdhG-0007EE-W8
+ for qemu-devel@nongnu.org; Tue, 03 Dec 2024 19:56:56 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B3M3NYP002096;
+ Wed, 4 Dec 2024 00:56:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=corp-2023-11-20; bh=BbUio/aXlGAkSb+L
+ lzdGLbShBwYQNCHb+sj0QdYt02w=; b=eBTB5D5B3NDhxFmSP3KQjlhFLbWYZKvb
+ Y/aGQtZPiFW6vY3Gt4/n6nFBXUV5l2hdsQF3cRnbFQ0BrrmoKi2oy27TkCxKrdrF
+ /sC8SCxqtZAXid3C7GsJgCk0jU8zZcpdVTwuAyjPcmNleKcAWzyYkktIKM/JCj+U
+ WqhxU7nQSLkiz0jAF3NnIkuWg8RMb/kQP9kaq+cKzciqW543WwXO0HexuGaw5hC4
+ HpFfuu3v0t9aTKwEO0j4tkrgsvYPjpv0dO6NQKplXDEQXTlPw9rTrJHyu33rWD7V
+ 6jpowIQg+ePr8eZdwVTWy2+M0jiGveEO2V0RRRXi/p8lhk5vmDS7iQ==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 437tk8y6ch-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 04 Dec 2024 00:56:49 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 4B3NcFkm030948; Wed, 4 Dec 2024 00:56:47 GMT
+Received: from nam11-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11lp2174.outbound.protection.outlook.com [104.47.58.174])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 437wjd9thh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 04 Dec 2024 00:56:47 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mgyAvX2MNNfubrhhuU35WQn59ZzqPtz0lSycGeaSDom0nw/DPcN5iW912nDIgu1qzAl/7q2f+c6o3E2UnN6p+fY5UslFKgZZxvMl+w07NKsxJLcKVNLpe/xV9d96qt6wZbGJKfxFbVRRQ5r/HlnMSm9kRXNIWuwjf+HSv2TgIcESJS9uJLFczWSLQeghhV8PbiKqadpmpfNgizoIUQ4062leVc7I7LREKwb7LylJIHf6aMDgagPQtDeE5ApWJeBPB3KB2ad7FfFKIszjKtyXlYBUDQEe+0fRJJbXzhm5QdomdgxITu3+IBkXe7KirBtqfZp34YSAiCNyVOg+wRFSRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BbUio/aXlGAkSb+LlzdGLbShBwYQNCHb+sj0QdYt02w=;
+ b=uJjJyDt+5wDShajzyqY+0+Im0wn/3m0TJDZtLW3KrLRYaGl2SrHAWq44b1RIGlexxqhfhUDyz6R/RxtAUCdQWzw82UUF+LDkjT++bnL8kmS7AKgX2+WHDpZ6NsL1/YDSuM0Qowusyo5ys4nx/dsw9kQr0rCopkaNN/s5WyDRP969/81kIpz+8c3yHToMgKs4Gz0UEVq1FpyA2q0BVtbe9WCadNUc7ge1q2XUIKOyC6NUu81elyKuk9P4UQWlKHGTVKfYdkPoiIjxtGLK5baWxfjWIBjwWoTFre3+opRIL6zNdrn6/q7ILU2ky82v7KAuA1TVNW/jovNlVQS5aeyoyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BbUio/aXlGAkSb+LlzdGLbShBwYQNCHb+sj0QdYt02w=;
+ b=ZAg8JwDbQee48bmomGuG3yNKn2qI7NevrccORDao8HQvgwUwVuc0mpykQuV17WcfoDixp3dSj84gooZ1ivT+ziOI5JAB9fkyJTmPwWtWAIx2bZHODQdwVYcgObGtolXleX4OWAGeCJdoE/IS4Ke2NTpyrNXgE1aJkaDYFGADCMU=
+Received: from MN2PR10MB4269.namprd10.prod.outlook.com (2603:10b6:208:1d1::8)
+ by CY8PR10MB6513.namprd10.prod.outlook.com (2603:10b6:930:5f::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.19; Wed, 4 Dec
+ 2024 00:56:45 +0000
+Received: from MN2PR10MB4269.namprd10.prod.outlook.com
+ ([fe80::f430:b41f:d4c4:9f9]) by MN2PR10MB4269.namprd10.prod.outlook.com
+ ([fe80::f430:b41f:d4c4:9f9%7]) with mapi id 15.20.8230.010; Wed, 4 Dec 2024
+ 00:56:44 +0000
+From: Eric Mackay <eric.mackay@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: boris.ostrovsky@oracle.com, mst@redhat.com, imammedo@redhat.com,
+ anisinha@redhat.com
+Subject: [RFC PATCH 0/1] ACPI: Fix missing CPU hotplug/hotunplug events with >
+ 255 vCPUs
+Date: Tue,  3 Dec 2024 16:56:35 -0800
+Message-ID: <20241204005636.18705-1-eric.mackay@oracle.com>
+X-Mailer: git-send-email 2.46.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MN2PR03CA0025.namprd03.prod.outlook.com
+ (2603:10b6:208:23a::30) To MN2PR10MB4269.namprd10.prod.outlook.com
+ (2603:10b6:208:1d1::8)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f6fc6ed3-d1d0-4498-9ec7-1f4e55a2abf3@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR10MB4269:EE_|CY8PR10MB6513:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1beecf2e-2c1a-4089-eca6-08dd13fe85de
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?zDcdxFse1q8q9UiiVGBQGX4YlqF1rXJ5KIZ4vKqvIu9lru7nF1achQVg1qF5?=
+ =?us-ascii?Q?nuGcUuBTOdCNVYGYOtln/5rmXXRHUooIK5qWA7gWRAwf8xjmXMu8fgRpghnm?=
+ =?us-ascii?Q?BisHK9rlep1Vf+QvFTn/TCcrC4Etj/XeOCJPEcuiPdPhJF7NlJMMT7t6XVA3?=
+ =?us-ascii?Q?kv/nzQd98OTXhczpQpnXO/yNXmty8h+CwjLj5kikNK9QNLEulQ0GBW+7uCIg?=
+ =?us-ascii?Q?IGKBfFRwUWJckItg3kL8eAhnYujuaeHpfmUTSPJCoZetUAX5gPdau2KsfBMZ?=
+ =?us-ascii?Q?hIS6cTKlf8g7U+IHzBwGU3p09QC0ClkjY4OPdCrdco8UQ8HX6rGnG5SchDlp?=
+ =?us-ascii?Q?IbaqolhtWr3NVVocTA2EYJsmguYBspZ2SK2+E0v0z8urnqkF8ms2mp9+R4Th?=
+ =?us-ascii?Q?1slY6E6XN02f9D4yL/sKo/T96ZHXQKiQnVpKFzWEd3lBVmag6+wAqEd9vu6C?=
+ =?us-ascii?Q?pe8P7tDyQmFX7BDsJliWE3zwXb+j8Cmc4AsHHCDfi40Ah/zwW2oAmkHRsTQ+?=
+ =?us-ascii?Q?xHpSUUhv4UqakVMdGf500K51HTZ8xg3DcsTajUC6q3e6hF54bhtfSxWkX+I+?=
+ =?us-ascii?Q?UJ7WmKMAFXY8E9PAR+bbYnOcopk4/zhsPVC9TtCgYHlgTG2VWGt1t1J76cGW?=
+ =?us-ascii?Q?gtgsodUQ4oUytLrujo8PB1GKixYrmkjs0FslV2ByvxLUCmtWBZfOJkh6d4xh?=
+ =?us-ascii?Q?0WAql/o5tVsVLFR6rr1THCSkq9jCi/FaeegOXlrRoLjQortANSlnP0nZ8+SD?=
+ =?us-ascii?Q?8uq4oilcaJO8Z+6eUJO+gtgxFIec/Q/66r9BY9d/e1lPYNZo9Smy0004nD4d?=
+ =?us-ascii?Q?EXkapvSVe8y3BOSD/hqCAl6XcxPMiUm6D0tzdiM8Xxj0gup3R9HDC6FuEXsl?=
+ =?us-ascii?Q?aWNeEvkhtOXmJ6TOkjk8uWASNWaijFfqnmf+zmNLvO5tE9xj9hh3XYpOxmzQ?=
+ =?us-ascii?Q?2pdCRDOy4Kl6Fj9zdTiMTbNr8JLfJHW+4tk5mu49xq4xttjHoCylbcDPQRJF?=
+ =?us-ascii?Q?rZz3FPWw6WWQAjX64Hbw9ztkojD5wqKGI4c/fg8hBSbyrpvj0xS3EGUU0m2L?=
+ =?us-ascii?Q?d3pehThjwXb5a25xSqUeZclSGfCFgHKSVpaE/1+SIvBVESUcT1VnB4autwW6?=
+ =?us-ascii?Q?ALT+zLSlj2tGggSvQ7S3oCEPZniMj2D4zeT9tgs04kUTfQwP9NYn/8TpXoTB?=
+ =?us-ascii?Q?Lt5ijVt6WOx9FWrSDSxPvURsqwLxyrLlLHPllWDYVS6Z53yz4OVO32ycTphq?=
+ =?us-ascii?Q?2GHwVC753rmppq0mgmhj4rBDJH2S9si/cM2r9bOF8/vF19tJ/wiym6nof/qo?=
+ =?us-ascii?Q?+6kaBmotOzuT+y/KqDR9jFw61f+ys9ITwa+7MjJzIlwFMw=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MN2PR10MB4269.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?QBFI7OYLJUeaV9JHiOmTt8AM/A7SCp8AOk62edyyuUQ2JFYr/UMHCy72kKBl?=
+ =?us-ascii?Q?7PZsNw6+QBTPuMosTS2ljggQdGTkkUXSyA0iMBrzdScw3XJ8vodp9x0Yfbpi?=
+ =?us-ascii?Q?F45Vi73RxO1vddVy/j5CrCkF/o2j7nQoxvO8huj6rUp9XBElP6Dy0qQzyN+y?=
+ =?us-ascii?Q?wvGrnaOtslqW8CZjwzwBFA4S5du/Cqh5NrP7PEf1HUDjEacwI8C0T1EuGNxt?=
+ =?us-ascii?Q?+O84L9WSL19jqlOsyAzC21WDDMh27Fl5zGo1a1jHYqxj3U2B4nu+IYyfRxHk?=
+ =?us-ascii?Q?pygv76f+0s1nRRSi7Gahz8Bla/cY780iEx77I4S359NyyVBtLlwbQ3lv+Buo?=
+ =?us-ascii?Q?OQzd6xSTT47vU9QjvZVrkj99kOlOapuUPAC456tBhRmCWp/DfSgmm0DRXx/N?=
+ =?us-ascii?Q?9vd9S3gFJP+dT1YL7mb1bnk1RZ4CXfptFRQbO8+dJt1Ykud3eaQb9C/HdMOM?=
+ =?us-ascii?Q?IYh7q2ODyOT3qAnu9LFI1Fwnz1haYDhjEufzITk19LBhZxe6yCfgy1k60bsH?=
+ =?us-ascii?Q?Ks6b7j+xR1RlqmQXXNeHDZsglYsk7EYI2xW2sO0Eai1wSxMY2J057tGcwGSq?=
+ =?us-ascii?Q?HfEGlq8XwVcp4VExleXHHePdWuq6V3Cq+6BX1UgiBj9HeRvlvP0jHI7nBzw/?=
+ =?us-ascii?Q?m8lBKpQaJc+m/h4YPbtH1QH/YAfEGigw0E9wz3CkboopppCMsS6zDg1VzGkD?=
+ =?us-ascii?Q?+Bp/CxGG/Cm0cdQAtQXQ0qGLrLcWWti5TggeHo8j5Bg7hujC4Vpi8VERT9cN?=
+ =?us-ascii?Q?mnIq2HQoysLV9rUe5xNfMlYQO+TcsJhe4UQl0RjbKvMKFZJgnQytHoPH4cIW?=
+ =?us-ascii?Q?YQBmIRzxu12MkjP78co4Qeyoyw08+I4MCVpOFkRcovIoN1BT28Jc2EokwRa2?=
+ =?us-ascii?Q?x6KvRp8S8SsPRLbFyxKV9LB1bCJKzGGA4KgrIm6JVyOvejRotkL4IEDYJFL1?=
+ =?us-ascii?Q?UxX+/OnBFFnJcWn3KYKrCvzZIOp7KJ2E5TpMpDRWPO7jmv62yxOTYzyPpBX/?=
+ =?us-ascii?Q?ejuJRslaCPr17eql3g1T9olHlNfXgkIk2tWQp55oUybG9XHLI2t962Kwxd+w?=
+ =?us-ascii?Q?sGlcqE6Q1bPSYsNNk5umRzF0uS0cHQLUV1toy9Sgvqi0cLZWsqExdepQtjrb?=
+ =?us-ascii?Q?7f/kPgzJipmEiRZ5auLg60SQI6Vi07CpMyiLeukHQrIO/mA4xo5xmCBKBN2y?=
+ =?us-ascii?Q?wk7poLpToQQLQJ3qDU0S21HacNJyET+cOncVjfFj2sZHjgHopV6G+xEnulOK?=
+ =?us-ascii?Q?LWGZ+1qCCDjNpPCbUAwiHAL+cgZwTFGuc41/c93xeMJDsPKEo6qEEWUNuz0g?=
+ =?us-ascii?Q?mUKJ7TTD22HVPMSYwvk1q8M+hL7WMpqHLYRaiXMDF6nGlWvfBzIVoOSax+Vk?=
+ =?us-ascii?Q?Jsq5wkZJ0EElyYqL/kTcaXnAvrk0nmLW7tAS0OhfVursBjJJmaHSVQHvjMqa?=
+ =?us-ascii?Q?HOavEljF+o3/Nm9KOp9ViDWRIlzpy8IVS8eQQ5L1lNfLknY2Mkx2MEryyUSP?=
+ =?us-ascii?Q?6klYnuTAvafnZ9Tm/gf21LfM0e5+sB+mAZFrhFs1BYR6Jo5pabj8haGd0cek?=
+ =?us-ascii?Q?g9Fp/z+zZsWND/dkeRp2++pyfdF2W6iFYxzSb65n9N48afupdfH42onv02F4?=
+ =?us-ascii?Q?jQ=3D=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: rsWRT1z/q0RYVo6OBl07CPDLweTn1nDlYo3FtITHG0tTiwZ+yxlc7zX4n+wrmzP8xXEY6h28Rlq1HdHahXCLI0opWLGO+Z2vIM71iKS35JbusHqa27UD98oG5xvy/BBTzXfF3wnTulKUsBe4IpEmXDyy1ah8A/m3d6rxvebPH7d06Z0l7nAKldJxDL9TVzKQ3L/DpM5O1jQOq7AtiJBrseEJOskwCTgVp2ycn5zrp3TvSfxSnatS8PFd30yqCqtmxUY0A60rP3bMgf+7eH0sJUCBPwsxYqL/lSFoiHYTfp0rn1nhwbL2Cf8hjoyeL7W6dXNZDAhwg5hhNwo2oX3ZzLOXCybMIdy9HaPYmMnrx2WUBVBlceCXOcN9dfwGWcKH6s28Tn9lAnCtqCko0VZ9Yj1y4IHy5//xG01pKVpjPBNNcwHRvET+Iui9Q0HMMIxHI2x6e3SKQkWuTZLF0ztMFm2rWUsPs9P4QaUFhqcYQqqu+Oco5douL7MG/L3kkJI4CJBCA88jGIBGweuyxzpH37RYrFhpNZNPjh9ywgs9qED/otgm1PdviIkz+DBSfYvb4cSH3L1euC6jInvFvFGzSiEKUXSPvrosLnCwFJAlh5U=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1beecf2e-2c1a-4089-eca6-08dd13fe85de
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR10MB4269.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2024 00:56:44.8829 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: uJKTrARsnfmcB5LyK+FV5EKLngdtJZmHxcYr4HoyQmq0/HLwI5AQuen4zovKEkQWLtrGhaEs0x1vNzTH+ta5MQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR10MB6513
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2024-12-03_12,2024-12-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 suspectscore=0 spamscore=0 mlxlogscore=834
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
+ definitions=main-2412040006
+X-Proofpoint-ORIG-GUID: qgccuRzUr3u7B4RtEY_7sd9RXbQf6qPg
+X-Proofpoint-GUID: qgccuRzUr3u7B4RtEY_7sd9RXbQf6qPg
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=eric.mackay@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 03 Dec 2024 20:41:29 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,127 +195,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 27, 2024 at 07:40:39PM +0200, Andrey Drobyshev wrote:
-> On 11/25/24 7:07 PM, Peter Xu wrote:
-> > On Mon, Nov 25, 2024 at 11:46:11AM -0300, Fabiano Rosas wrote:
-> >> Currently a VM that has been target of a migration using
-> >> late-block-activate will crash at the end of a new migration (with it
-> >> as source) when releasing ownership of the disks due to the VM having
-> >> never taken ownership of the disks in the first place.
-> >>
-> >> The issue is that late-block-activate expects a qmp_continue command
-> >> to be issued at some point on the destination VM after the migration
-> >> finishes. If the user decides to never continue the VM, but instead
-> >> issue a new migration, then bdrv_activate_all() will never be called
-> >> and the assert will be reached:
-> >>
-> >> bdrv_inactivate_recurse: Assertion `!(bs->open_flags &
-> >> BDRV_O_INACTIVE)' failed.
-> >>
-> >> Fix the issue by checking at the start of migration if the VM is
-> >> paused and call bdrv_activate_all() before migrating. Even if the
-> >> late-block-activate capability is not in play or if the VM has been
-> >> paused manually, there is no harm calling that function again.
-> >>
-> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> >> ---
-> >>  migration/migration.c | 19 +++++++++++++++++++
-> >>  1 file changed, 19 insertions(+)
-> >>
-> >> diff --git a/migration/migration.c b/migration/migration.c
-> >> index aedf7f0751..26af30137b 100644
-> >> --- a/migration/migration.c
-> >> +++ b/migration/migration.c
-> >> @@ -2029,6 +2029,25 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
-> >>          return false;
-> >>      }
-> >>  
-> >> +    /*
-> >> +     * The VM might have been target of a previous migration. If it
-> >> +     * was in the paused state then nothing will have required the
-> >> +     * block layer to be activated. Do it now to ensure this QEMU
-> >> +     * instance owns the disk locks.
-> >> +     */
-> >> +    if (!resume && runstate_check(RUN_STATE_PAUSED)) {
-> > 
-> > I hope this will cover all the cases that QEMU could overlook.. or I'm not
-> > sure whether we could invoke bdrv_activate_all() unconditionally, as it
-> > looks like safe to be used if all disks are active already.
-> > 
-> > I wished we don't need to bother with disk activation status at all,
-> > because IIUC migration could work all fine even if all disks are inactivate
-> > when preparing migration.. hence such change always looks like a workaround
-> > of a separate issue.
-> > 
-> >> +        Error *local_err = NULL;
-> >> +
-> >> +        g_assert(bql_locked());
-> >> +
-> >> +        bdrv_activate_all(&local_err);
-> >> +        if (local_err) {
-> >> +            error_propagate(errp, local_err);
-> >> +            return false;
-> >> +        }
-> >> +        s->block_inactive = false;
-> > 
-> > This var so far was only used within one migration iteration, and the var
-> > was only set in migration_completion_precopy() so far.  Now we're resetting
-> > it upfront of a migration.  I'm not 100% sure if it's needed, or should be
-> > put somewhere else.
-> > 
-> 
-> This variable is unconditionally set in migration_completion_precopy()
-> and used as a flag for whether or not we should be deactivating disks in
-> qemu_savevm_state_complete_precopy():
-> 
-> >     /*                                                                              
-> >      * Inactivate disks except in COLO, and track that we have done so in order 
-> >      * to remember to reactivate them if migration fails or is cancelled.           
-> >      */                                                                             
-> >     s->block_inactive = !migrate_colo();                                            
-> >     migration_rate_set(RATE_LIMIT_DISABLED);                                                                                                                   
-> >     ret = qemu_savevm_state_complete_precopy(s->to_dst_file, false,             
-> >                                              s->block_inactive);
-> 
-> Ideally we'd like to take our paused state into account right here and
-> skip inactivation.  However at this point during the 2nd migration (in
-> paused state) our current_run_state == RUN_STATE_FINISH_MIGRATE.  So if
-> we truly wanted to skip unnecessary bdrv_activate_all(), we'd have to
-> remember our paused state somewhere earlier on the call stack and pass
-> an additional flag for that. Personally I don't think this is any
-> cleaner than just blatantly calling bdrv_activate_all().
+ACPI hotplug with 255 or less vCPUs can use the legacy CPU hotplug interface, which does
+not support hotunplug. If it's available, hotunplug will use the modern CPU hotplug interface.
+This creates a situation where hotplug and hotunplug are using different interfaces, but
+the end result is still functional. CPUs can be hotplugged and hotunplugged at will.
 
-I did something like that.
+With > 255 vCPUs, both hotplug and hotunplug will use the modern ACPI interface.
+There is no priority or rules of mutual exclusion defined in this interface,
+and the behavior in the guest is implementation-defined.
 
-Would you please have a look at the other series I posted?  Sorry it's
-slightly longer than this patch, but it does cover more than this bug
-alone (and it should also fix this bug):
+Unfortunately, it is possible to have both a hotplug and hotunplug event pending
+for the same vCPU. When the guest processes its pending events, it may see the
+hotplug but ignore the hotunplug.
 
-https://lore.kernel.org/r/20241204005138.702289-1-peterx@redhat.com
+The most recent event is likely to reflect the desired state of the system, so
+ignoring the hotunplug event in this scenario is unacceptable.
 
-> 
-> > In general, I saw the mention of other places that may also try to
-> > invalidate disks that used to be invalidated.  If that's the case, I wish
-> > we don't need to touch migration code at all, but instead if block layer
-> > can cope with "invalidate on top of invalidated disks" it'll be perfect.
-> > 
-> 
-> This sounds similar to my initial very naive fix, which we decided not
-> to take:
-> https://lists.nongnu.org/archive/html/qemu-devel/2024-09/msg04254.html
+Repro: This can be seen in practice when a q35 VM is started in qemu, with
+maxcpus=260 or something above 255, and a few statically allocated CPUs.
+Example smp line: "-smp 4,sockets=2,dies=1,cores=65,threads=2,maxcpus=260"
+Then use libvirt to add vCPUs up to the maximum before continuing the VM. After
+the guest starts up, delete one of the vCPUs. 'lscpu' in the guest should still
+show 260.
 
-I still wish this can work, either the original patch, or anything that can
-make bdrv_inactivate_all() work on inactive-state disks, then it'll be an
-easier to use block API.
+The proposed solution is to enforce mutual exclusion between the hotplug and hotunplug
+bits in the modern ACPI interface. Setting a new pending event will clear a previously
+pending event of the opposite type, thus preserving only the most recently requested
+state.
 
-I don't know block layer well, but I more or less know migration.  I hope
-we can still resolve that with some other way at least in migration so that
-we don't start to request disk being active for migration, because it
-really shouldn't need to.
+Eric Mackay (1):
+  ACPI: Enforce mutual exclusion betwen CPU insertion and removal events
 
-Thanks,
+ hw/acpi/cpu.c         | 36 ++++++++++++++++++++++++++++++++----
+ include/hw/acpi/cpu.h |  4 ++++
+ 2 files changed, 36 insertions(+), 4 deletions(-)
 
 -- 
-Peter Xu
-
+2.43.5
 
