@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 515DDE7716F
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 22:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2677CE7716F
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Dec 2024 22:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tIy8J-00032O-E2; Wed, 04 Dec 2024 17:46:11 -0500
+	id 1tIy9O-0003oD-KE; Wed, 04 Dec 2024 17:47:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIy8B-0002z1-JQ
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:46:05 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tIy9H-0003nc-9q
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:47:11 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tIy8A-0003QU-1Z
- for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:46:03 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-215770613dbso1521435ad.2
- for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 14:46:01 -0800 (PST)
+ id 1tIy9D-0003TQ-Lf
+ for qemu-devel@nongnu.org; Wed, 04 Dec 2024 17:47:10 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2ee345c1bbdso255617a91.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Dec 2024 14:47:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733352360; x=1733957160; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733352426; x=1733957226; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TLv3y8TooTZrXkX+y9Bi2qaMpM3/OPWrxBmqMaW039c=;
- b=EoHSSZnXS3NixEcQyrebGLvoDmC7sh+mt53MzO/XM7mSkYaL327Vk+ISDGdQKOTQu8
- bWU5IX1jPOtryjyslVdm5Sd5mHmoAr2oTmStW5B73ZPqiiAV6rJQML9/Tg0Mql0kNlD2
- 2FFJtpfN9jQgXdWAfHiLDTtzad2cPGbY1mfNFx3B/CtQlfXMsahz9Uy8lWe4YCTC+INK
- z5r0GwnaAHlPNkarOpRbip6hSpMfFMJIDOAlRSl7zJkkvvbAZ151x1JiD06TRw/SANqx
- o2B8XJ6kuTAWvd+99khNPLXni1Tni1c/JHXEdsAyVWaRze9OxQDZK0PrfkVxiRlgD4bz
- m/zA==
+ bh=w9q2SdJy37ByRNCmFPhfaMzijVLYIDsVzz++KjVfFBg=;
+ b=ooy5BQ5/cfjISjrQGLaChFinSHnQNEWM57Nnkpb3UHl8Qrt72JOpH2BhgAOjTVVtQw
+ +coNMRS/D/OGxLLz+P+7KsXZBsURI8k2FusXbFU2bT+uESksx3PCwOfwEPdukf8lgzAk
+ u3eArgnuwJGpNZQrAu8A3rzdU2jI0N8RtkIj+EtlbcE6e9b5hapjyhiTvhi/zMHrbBpb
+ 6I3L9DkNWqL/ZOW1yBauFuc1P3wPyMJ2WdEWE7UQUYJQQZqomvdlXIA8IGYURrkNHIuJ
+ 8q0PDExI8IhfAGuzbO34MtbGnPrYW6WK3QZ2sH5LBxiVdF15i4QooLBF0o7A2KV1ibwS
+ w3ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733352361; x=1733957161;
+ d=1e100.net; s=20230601; t=1733352426; x=1733957226;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TLv3y8TooTZrXkX+y9Bi2qaMpM3/OPWrxBmqMaW039c=;
- b=CBE8sxT/HjsDgC02CJ9W2zssPE+MVZ4+i3TbZK1vSEZZADWk5M2oVm/cv6jN2L8K0n
- eyv9o7owyAlCQi0ADfhLmQuqHXLUZyHayat8EI/aVOvWAC9vIonV7g+Ab4Joo6N2McgD
- t6UGFK5WbaxDgvnjbyc2n99QDf4zCMQLmCCSMUNFsbknGd5VBqquLHD/9Mip3Fhjukkr
- MP8GyLBbKl0dFIoec+ALWs7aYjTZlwIEeM1B9Zi+kNw3SKDokWOrHb/JZCrUfhFzPejD
- QE9LEL3VDzNlqOagVIE6w7R2LZXydJpvpXL/E2Ao0HdbzctUHD7ALoG/xF5lOSaXYkOL
- uq3w==
+ bh=w9q2SdJy37ByRNCmFPhfaMzijVLYIDsVzz++KjVfFBg=;
+ b=tUkBILY0m58NQ61xGDBKOAt/P2PIZhNkB6N6lvuoNl30F22GNIs/UPBwHbhriDgOii
+ IkGe6035xTmB8jmjRMLca29ujf+LdQ/raIF2S7aeLi/CB94MhMj/vKCHmqOOh/EIKVON
+ mRJx5HnRhcwTjQI8QQ6MeJ9KMNGz6/t17/T8yF27NGKNJu7AYnvst2Lxyys/661anb7s
+ nKNQi1R707NdV+XHglSQXJmS3X+C4FgcQbeWd8pqzeE36hOgOfYXcLUL5I6jWDzDwJcb
+ Ew3hifo67fREWaQVCmp8PVuy0Me7LgXnpGomc9mwPztwZjEr9XoLAv9mSZRN6d+Ny0y5
+ b19w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWI/eJVQcizGyELVDROEEbdopjjML9AaYpE9bPFvo4txaoCGx5pSS2+GimZaJA0zaY8How7x4Esyrr4@nongnu.org
-X-Gm-Message-State: AOJu0YyX1vAtaWJOol180aB6S/i/t78vlfMuXJFXBuDK+6ZJPNA7PuiQ
- K8veEzczfWQRmgWD8OxW/YdGkZBHnAEdkQtRGLhHbT+BUEc0dg4SeOHBjIHfDxs=
-X-Gm-Gg: ASbGnct1Jo4biCnB0ltu3ebKTeilEcK1yTX6zD74LTHomYGqYSHZquXhZqhMHyc/HdZ
- RDVN3Z38oB4CFG5ejVbWOKoopoqs3EwR+IWyPIMhd4eTR/dc/1OGvo2CPlpnhSZCMGum5GE9FtW
- j9QV7i5JvjYjwlVSzKywctR6PQQpIQwLqrzi6Cl/IYR7o8Bl6CEfEfu3qolfR+PZl5CouTM7I3p
- YOoUvQb2wpyrFU6ay726ijh77i6HiqgeZ27e/Q/81sRUXvB/1vXD8BQgjYF1FntbZd8gOYXRuZK
- 5ottMZrRnsEYctkFxTisNA==
-X-Google-Smtp-Source: AGHT+IHoxbuVYXn3fpyqKiOjzfjego+34PrGBu5eshGGYBhNRDZFIAWg3Nago/gBeeD4xAcDQqO/4g==
-X-Received: by 2002:a17:902:dac2:b0:20f:c292:6662 with SMTP id
- d9443c01a7336-215bd17a724mr101709475ad.51.1733352360695; 
- Wed, 04 Dec 2024 14:46:00 -0800 (PST)
+ AJvYcCW/aN1zyDexT8iWNAAAt7rojkW9O0T+OsGgNLy77ZGDYXOUmuHLIMdGVYiD142nCvjeMX6matvCJkaW@nongnu.org
+X-Gm-Message-State: AOJu0YwV1D6dcv1M5Ug+NKi0GxZdVyUlRg+Hc3TXl6XGr82HqBWUEoYA
+ FxDEkHcJTdCPv7yyDcwHFoGIfqFbFqBQ5oauTwwJ4BEMWuUbwO2IfoX3niQ1+hk=
+X-Gm-Gg: ASbGncs5vm5YUYc1ZmfwMcexIhVjjl0N4zxfnuUYJXOA914YKNbowVqIQZAEB9u574H
+ 5quO9wbiDPyJuzBZxd64Zd98wpfC6RyG8GR1LrU0wu9EVcM+blbJWcghrRfTGBerbcw02HO23/Q
+ NCEDHcPOFfgiFbsSVFwRhriMX8QZKJtVpAK6ctnDm8f1otKxuRpse6i+NNlZ5TPkauXoJF2+tA6
+ NSWEmFEFcYnfrsc1BO3GXzjGbgnsbvRpk9+TQqm2gVrWXJlh5vU13MMhOcrvKjml8y8+xofHVB1
+ m39VYW+sZzH101iXIaKIPA==
+X-Google-Smtp-Source: AGHT+IEmLYs2mlOG29hOn7Fhdd5FRJFSKlvWYPi86Xr2njj/rq+wLVJ1NcdiehRa6V6mFCqP8+SlRQ==
+X-Received: by 2002:a17:90b:1b4d:b0:2ee:889b:b11e with SMTP id
+ 98e67ed59e1d1-2ef0125b333mr12044521a91.30.1733352426089; 
+ Wed, 04 Dec 2024 14:47:06 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215f8e63329sm545565ad.59.2024.12.04.14.46.00
+ 98e67ed59e1d1-2ef45f7d7c4sm69678a91.3.2024.12.04.14.47.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Dec 2024 14:46:00 -0800 (PST)
-Message-ID: <46562dd3-6699-4b76-ae28-e6523a8152c7@linaro.org>
-Date: Wed, 4 Dec 2024 14:45:59 -0800
+ Wed, 04 Dec 2024 14:47:05 -0800 (PST)
+Message-ID: <1f008181-46a4-44da-a6a1-8e3678af2dda@linaro.org>
+Date: Wed, 4 Dec 2024 14:47:05 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 02/11] plugins: add API for registering
- discontinuity callbacks
+Subject: Re: [RFC PATCH v3 03/11] plugins: add hooks for new discontinuity
+ related callbacks
 Content-Language: en-US
 To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <cover.1733063076.git.neither@nut.email>
- <e4af8fed4cc5449a7be04fbbf026abf267dc189b.1733063076.git.neither@nut.email>
+ <18b8687e6310a68283b8b3ed72ad38479114bc51.1733063076.git.neither@nut.email>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <e4af8fed4cc5449a7be04fbbf026abf267dc189b.1733063076.git.neither@nut.email>
+In-Reply-To: <18b8687e6310a68283b8b3ed72ad38479114bc51.1733063076.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,85 +107,116 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/2/24 11:26, Julian Ganz wrote:
 > The plugin API allows registration of callbacks for a variety of VCPU
-> related events, such as VCPU reset, idle and resume. In addition to
-> those events, we recently defined discontinuity events, which include
-> traps.
+> related events, such as VCPU reset, idle and resume. In addition, we
+> recently introduced API for registering callbacks for discontinuity
+> events, specifically for interrupts, exceptions and host calls.
 > 
-> This change introduces a function to register callbacks for these
-> events. We define one distinct plugin event type for each type of
-> discontinuity, granting fine control to plugins in term of which events
-> they receive.
+> This change introduces the corresponding hooks called from target
+> specific code inside qemu.
 > ---
->   include/qemu/plugin-event.h |  3 +++
->   include/qemu/qemu-plugin.h  | 15 +++++++++++++++
->   plugins/core.c              | 15 +++++++++++++++
->   3 files changed, 33 insertions(+)
+>   include/qemu/plugin.h | 12 ++++++++++
+>   plugins/core.c        | 52 +++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 64 insertions(+)
 > 
-> diff --git a/include/qemu/plugin-event.h b/include/qemu/plugin-event.h
-> index 7056d8427b..1100dae212 100644
-> --- a/include/qemu/plugin-event.h
-> +++ b/include/qemu/plugin-event.h
-> @@ -20,6 +20,9 @@ enum qemu_plugin_event {
->       QEMU_PLUGIN_EV_VCPU_SYSCALL_RET,
->       QEMU_PLUGIN_EV_FLUSH,
->       QEMU_PLUGIN_EV_ATEXIT,
-> +    QEMU_PLUGIN_EV_VCPU_INTERRUPT,
-> +    QEMU_PLUGIN_EV_VCPU_EXCEPTION,
-> +    QEMU_PLUGIN_EV_VCPU_HOSTCALL,
->       QEMU_PLUGIN_EV_MAX, /* total number of plugin events we support */
->   };
+> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+> index 27a176b631..3de9cb3fe4 100644
+> --- a/include/qemu/plugin.h
+> +++ b/include/qemu/plugin.h
+> @@ -161,6 +161,9 @@ void qemu_plugin_vcpu_exit_hook(CPUState *cpu);
+>   void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb);
+>   void qemu_plugin_vcpu_idle_cb(CPUState *cpu);
+>   void qemu_plugin_vcpu_resume_cb(CPUState *cpu);
+> +void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from, uint64_t to);
+> +void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from, uint64_t to);
+> +void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from, uint64_t to);
+>   void
+>   qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1,
+>                            uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
+> @@ -243,6 +246,15 @@ static inline void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
+>   static inline void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
+>   { }
 >   
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index 9c67374b7e..f998a465e5 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -273,6 +273,21 @@ QEMU_PLUGIN_API
->   void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
->                                            qemu_plugin_vcpu_simple_cb_t cb);
->   
-> +/**
-> + * qemu_plugin_register_vcpu_discon_cb() - register a discontinuity callback
-> + * @id: plugin ID
-> + * @cb: callback function
-> + *
-> + * The @cb function is called every time a vCPU receives a discontinuity event
-> + * of the specified type(s), after the vCPU was prepared to handle the event.
-> + * Preparation usually entails updating the PC to some interrupt handler or trap
-> + * vector entry.
-> + */
-> +QEMU_PLUGIN_API
-> +void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
-> +                                         enum qemu_plugin_discon_type type,
-> +                                         qemu_plugin_vcpu_discon_cb_t cb);
+> +void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from, uint64_t to)
+> +{ }
 > +
->   /** struct qemu_plugin_tb - Opaque handle for a translation block */
->   struct qemu_plugin_tb;
->   /** struct qemu_plugin_insn - Opaque handle for a translated instruction */
+> +void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from, uint64_t to)
+> +{ }
+> +
+> +void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from, uint64_t to)
+> +{ }
+> +
+>   static inline void
+>   qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1, uint64_t a2,
+>                            uint64_t a3, uint64_t a4, uint64_t a5, uint64_t a6,
 > diff --git a/plugins/core.c b/plugins/core.c
-> index bb105e8e68..a89a4a0315 100644
+> index a89a4a0315..2c9637334f 100644
 > --- a/plugins/core.c
 > +++ b/plugins/core.c
-> @@ -559,6 +559,21 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
->       plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_RESUME, cb);
+> @@ -112,6 +112,43 @@ static void plugin_vcpu_cb__simple(CPUState *cpu, enum qemu_plugin_event ev)
+>       }
 >   }
 >   
-> +void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
-> +                                         enum qemu_plugin_discon_type type,
-> +                                         qemu_plugin_vcpu_discon_cb_t cb)
+> +/*
+> + * Disable CFI checks.
+> + * The callback function has been loaded from an external library so we do not
+> + * have type information
+> + */
+> +QEMU_DISABLE_CFI
+> +static void plugin_vcpu_cb__discon(CPUState *cpu,
+> +                                   enum qemu_plugin_discon_type type,
+> +                                   uint64_t from, uint64_t to)
 > +{
-> +    if (type & QEMU_PLUGIN_DISCON_INTERRUPT) {
-> +        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_INTERRUPT, cb);
-> +    }
-> +    if (type & QEMU_PLUGIN_DISCON_EXCEPTION) {
-> +        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_EXCEPTION, cb);
-> +    }
-> +    if (type & QEMU_PLUGIN_DISCON_HOSTCALL) {
-> +        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_HOSTCALL, cb);
+> +    struct qemu_plugin_cb *cb, *next;
+> +    enum qemu_plugin_event ev;
+> +
+> +    if (cpu->cpu_index < plugin.num_vcpus) {
+> +        switch (type) {
+> +        case QEMU_PLUGIN_DISCON_INTERRUPT:
+> +            ev = QEMU_PLUGIN_EV_VCPU_INTERRUPT;
+> +            break;
+> +        case QEMU_PLUGIN_DISCON_EXCEPTION:
+> +            ev = QEMU_PLUGIN_EV_VCPU_EXCEPTION;
+> +            break;
+> +        case QEMU_PLUGIN_DISCON_HOSTCALL:
+> +            ev = QEMU_PLUGIN_EV_VCPU_HOSTCALL;
+> +            break;
+> +        default:
+> +            g_assert_not_reached();
+> +        }
+> +
+> +        /* iterate safely; plugins might uninstall themselves at any time */
+> +        QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+> +            qemu_plugin_vcpu_discon_cb_t func = cb->f.vcpu_discon;
+> +
+> +            func(cb->ctx->id, cpu->cpu_index, type, from, to);
+> +        }
 > +    }
 > +}
 > +
->   void qemu_plugin_register_flush_cb(qemu_plugin_id_t id,
->                                      qemu_plugin_simple_cb_t cb)
+>   /*
+>    * Disable CFI checks.
+>    * The callback function has been loaded from an external library so we do not
+> @@ -547,6 +584,21 @@ void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
+>       }
+>   }
+>   
+> +void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from, uint64_t to)
+> +{
+> +    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_DISCON_INTERRUPT, from, to);
+> +}
+> +
+> +void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from, uint64_t to)
+> +{
+> +    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_DISCON_EXCEPTION, from, to);
+> +}
+> +
+> +void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from, uint64_t to)
+> +{
+> +    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_DISCON_HOSTCALL, from, to);
+> +}
+> +
+>   void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+>                                          qemu_plugin_vcpu_simple_cb_t cb)
 >   {
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
