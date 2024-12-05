@@ -4,86 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34FBCE77170
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 11:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70DE0E77170
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 11:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJAA8-0003dQ-FD; Thu, 05 Dec 2024 06:36:52 -0500
+	id 1tJAED-0005eR-Nu; Thu, 05 Dec 2024 06:41:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tJAA5-0003cK-AO
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:36:50 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1tJAA2-0001vU-Ku
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:36:48 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-382610c7116so469569f8f.0
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 03:36:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1733398605; x=1734003405;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kl7RPC7uXFaDdUNDhkmVGK5VQXLVVvB6stq7MTl/lxY=;
- b=c5pvuzcVGZPae5ccn6x+/ArkNMPtTyEN6uq2hETIvAfmj/7k5xYr9Rt3CcCikdZD/S
- jrmRWRDPzeY6O7f7uVXIqL0aF/q0UUZ+aDcuit5HGzm9UQm0FmFKjtJx7WFmlAfYqP3f
- xmM8sS70hlBnaqbAlFxq7q+439envxQ6V4E4NwPgo/RJiNi03PBAZ+OfUqtUfyNnqcWg
- fASmSgWFKlxNMlppTh0h8VPO4mRbNZnTLMndB1RWk+WpjIbHjELE9pZu1Mg35Lt0MFI8
- HBlH56wamPvmqLlX03id/klLm+d1bbF9IIqpkKTs/nwi7ZpnjlJCCyjpTQs1jVdqzHRy
- tCSw==
+ (Exim 4.90_1) (envelope-from <leif.lindholm@oss.qualcomm.com>)
+ id 1tJAEA-0005e9-QO
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:41:03 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leif.lindholm@oss.qualcomm.com>)
+ id 1tJAE9-0004zD-1J
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:41:02 -0500
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B56CUOk023344
+ for <qemu-devel@nongnu.org>; Thu, 5 Dec 2024 11:40:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=M7KTB/IZkCpYGb7gNadiTGKEepS2Ge0Fwmc
+ RjKncmnE=; b=IW2sRFYw1B6OOSqcXOq/dFZ4oodha/AMTTSBeU8XLZkQkp4pFAc
+ 36KJ6VYUq7+ArQsL3ZmmOO3A27YLKVDE6e/kfN/EAA7vrXm9JVF78jyrHURrHEWS
+ UC4lauHw35ZZLmNXOCUVIra9dpsJdyHQnTkJlTvB8JzPMViCCwFM83e1DXpjl0jI
+ IasqdHYZOmIJG0A5BD1KEOR9Jm/q7olldBB4LYht0nPwm7Bl6wktoQ8cmTG8VcI8
+ xLJI0GgNyR5LcSHwfnQjdXYkjsfonidKMXIPsr/OMXbwfxl7uFSQIAQaXu+WgLn2
+ Za/FeTDnlnGOcY+Vj4b3AJUA12aUnozoFYg==
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43aj42c415-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 11:40:50 +0000 (GMT)
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-3ea3f5aff1eso781134b6e.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 03:40:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733398605; x=1734003405;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kl7RPC7uXFaDdUNDhkmVGK5VQXLVVvB6stq7MTl/lxY=;
- b=KxuKmZMbzo4Uff0xW/J9lgt22mOTqfw1M30m6n3MsJRkCCbpb0Zgm+US2t+f8vkfSA
- OjOQg3k/xr281eVB0OH4TlPps7zHGh+XL8riozxl5RhHWJcaB6x3W7rWIAmMVZBBD9FL
- 1ukEnE1AiGSHGANQQS8sFKzDTtbgDSxMKzasVKOb1BoLyHci1i1JqwYrRYCEX6OusBjb
- G+ZFjoO33hBOnrTDVIY6nFB9m54PuWphr++pL63Vi6viktewkByTwl8x1niCJFwBDuSz
- tnbZxLI8bdgnzSZaLPiixyjs4qL5Aq8hcnJatNWhwPCTfr1PhWjv6Pv0QU+zGUFnnQU9
- cu+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU3Qaz441VvCkU+P5HWLAqHEJQEV+nlBbLKspxvflNxDp06Z9fcwy/9zYPVUzSym5Ul5VM95x4NUjkT@nongnu.org
-X-Gm-Message-State: AOJu0YySwzL/cV/B4pbrjC+lyVOBNZ19CM/HOS7Pa5Uxq2IQLcXuP+j+
- yKhGOXDzsRctK+qDKh1WfVPThcXhTraSI196mc6D3VuMawDM3vYMrQk9TGdVqhFqCTSiTTZ0W13
- NOw0fbOZcZQyr59ui+N6k04wQxt+bvx0Oph0Wjw==
-X-Gm-Gg: ASbGncvGyMU5aWpVkBaD2u8e22QV5LSv4iuAPxC8Q5p2KD/hvr8KZgKgquQwKh2M3aP
- yF1lX8epBTt4smsLbhA1TOJveK4BMsY4=
-X-Google-Smtp-Source: AGHT+IHM/mDW/zq4hP1u3CzM1fVVnaHCUQM1sqmFz3RxUrj20rFOcIv5ygkgWkFZKam8a+Wh/RUmz954cfENFrLMuVI=
-X-Received: by 2002:a5d:6487:0:b0:385:edb7:69ba with SMTP id
- ffacd0b85a97d-385fd3ce954mr8009002f8f.1.1733398604842; Thu, 05 Dec 2024
- 03:36:44 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733398850; x=1734003650;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=M7KTB/IZkCpYGb7gNadiTGKEepS2Ge0FwmcRjKncmnE=;
+ b=ugTvlbIWjl9DLCpBDVRT1CRuG9pdctGnXpULlItf6Kxa/XIQN/b5AQyn8ulLO6Avek
+ n/mhhu6S+gdj4Nm9FfetdO33UASzg0SacAxlh4pBOixTcgaBakBS807BZhL+hFbt4XtO
+ eyx677U09PXWsRyVToybHp91ca1x3Q6jvRSkbYX7zJUxqsMSzV1IhYh7dQ/lAlmxf5mC
+ w4FQIEGmvCB824UaHTN+JYieiBW7V40lj0FAsRGG08zfEA1fImIprM16wk1+r+SpnI3X
+ 6846daOE0MBXlY0TFcez7qF14KrCZE3KRn/88GHNHXTefKQxP0y7eWtlbd+rQaHWnHgR
+ WIJA==
+X-Gm-Message-State: AOJu0YygHhhi4mEpZwooZ/38wLZQeP2bYtyuvvwEl/CQVMYDK4/y7CSJ
+ EK4KSweETrywImkG6HkigbLgyRLIaA0eSSnddJhFx4o2oruoOAaBrTjBVY4E03NwJtUveykagfO
+ JIpVDCi2TjLwyjrfm/W+eCjSL1H5Jw869KbALomBLw4rtSzRxUTaLw5g9qJ58Lg==
+X-Gm-Gg: ASbGncs7cKpdFBH+FkkcDv282j1VW8B6DvW/gaks8KgVzUojK2RIC8DvHWXlK8bV511
+ UtBw1XeUkhdZmEU22i8RdhpvUYihLfeBQv+cdk8RCEVo1AWUq9AzfQE1x+j9zTzB5H5SCbvvnaW
+ aA2GD50+EVPuJmbJbdXWouH+XjtwAvqptzW6sePpm4mNalxCYQqj/rRvMXjKIxnk6ug8g9jcgIS
+ a0W/+bDuMEozVb2epghsPUpkUY6wqd+BcVISZiKCaHx+HdL4fZ+MG9ti5sCXjUUIjAJAewikHvp
+ FXF9Lhl6ItA=
+X-Received: by 2002:a05:6808:bcb:b0:3ea:4c1c:50fc with SMTP id
+ 5614622812f47-3eae50cf17amr10556207b6e.37.1733398850007; 
+ Thu, 05 Dec 2024 03:40:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFr5yiW5kQcZ09nTRlFIpDLWf+CVjdNLSJfqfM3EnszmabOz3i1rvolnoNhUO5yXPoNFvo1zA==
+X-Received: by 2002:a05:6808:bcb:b0:3ea:4c1c:50fc with SMTP id
+ 5614622812f47-3eae50cf17amr10556194b6e.37.1733398849653; 
+ Thu, 05 Dec 2024 03:40:49 -0800 (PST)
+Received: from leviathan.hemma.eciton.net
+ ([2a0d:3344:101:e800:f22f:74ff:fe21:6f68])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434da119a96sm21434155e9.40.2024.12.05.03.40.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Dec 2024 03:40:49 -0800 (PST)
+From: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>
+Subject: [PATCH] MAINTAINERS: update email address for Leif Lindholm
+Date: Thu,  5 Dec 2024 11:40:47 +0000
+Message-ID: <20241205114047.1125842-1-leif.lindholm@oss.qualcomm.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-References: <20241204-b4-ctr_upstream_v3-v4-0-d3ce6bef9432@rivosinc.com>
- <20241204-b4-ctr_upstream_v3-v4-4-d3ce6bef9432@rivosinc.com>
- <625bbb08-aac1-42c7-84b1-572fe48093d6@linaro.org>
-In-Reply-To: <625bbb08-aac1-42c7-84b1-572fe48093d6@linaro.org>
-From: Rajnesh Kanwal <rkanwal@rivosinc.com>
-Date: Thu, 5 Dec 2024 16:36:34 +0500
-Message-ID: <CAECbVCtYJztnxMqiBc0eYc6AD69E6+V7qmX4nXCYSrf-MRk9qQ@mail.gmail.com>
-Subject: Re: [PATCH v4 4/7] target/riscv: Add support to record CTR entries.
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com, 
- beeman@rivosinc.com, tech-control-transfer-records@lists.riscv.org, 
- jason.chien@sifive.com, frank.chang@sifive.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=rkanwal@rivosinc.com; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: ncSEAd23LqHjIoeyPb_zkXtGZlFfKSyx
+X-Proofpoint-ORIG-GUID: ncSEAd23LqHjIoeyPb_zkXtGZlFfKSyx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0
+ mlxscore=0 mlxlogscore=689 lowpriorityscore=0 clxscore=1011 malwarescore=0
+ priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412050084
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=leif.lindholm@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,189 +119,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks Richard. I have incorporated your feedback in v5.
+From: Leif Lindholm <quic_llindhol@quicinc.com>
 
--Rajnesh
+I'm migrating to Qualcomm's new open source email infrastructure, so
+update my email address, and update the mailmap to match.
 
-On Wed, Dec 4, 2024 at 7:30=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 12/4/24 06:56, Rajnesh Kanwal wrote:
-> > diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/ri=
-scv/insn_trans/trans_privileged.c.inc
-> > index 0bdfa9a0ed3313223ce9032fb24484c3887cddf9..a5c2410cfa0779b1a928e7b=
-89bd2ee5bb24216e4 100644
-> > --- a/target/riscv/insn_trans/trans_privileged.c.inc
-> > +++ b/target/riscv/insn_trans/trans_privileged.c.inc
-> > @@ -78,9 +78,10 @@ static bool trans_sret(DisasContext *ctx, arg_sret *=
-a)
-> >   {
-> >   #ifndef CONFIG_USER_ONLY
-> >       if (has_ext(ctx, RVS)) {
-> > +        TCGv src =3D tcg_constant_tl(ctx->base.pc_next);
->
-> This is incorrect.
-> You need to use gen_pc_plus_diff(src, ctx, 0).
->
-> Alternately, for here in sret and mret, instead of adding an extra parame=
-ter, use
-> gen_update_pc(ctx, 0) to update env->pc
->
->
->
-> > @@ -95,9 +96,10 @@ static bool trans_sret(DisasContext *ctx, arg_sret *=
-a)
-> >   static bool trans_mret(DisasContext *ctx, arg_mret *a)
-> >   {
-> >   #ifndef CONFIG_USER_ONLY
-> > +    TCGv src =3D tcg_constant_tl(ctx->base.pc_next);
->
-> Likewise.
->
->
-> > diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/ins=
-n_trans/trans_rvi.c.inc
-> > index 96c218a9d7875c6419287ac3aa9746251be3f442..fc182e7b18a289e13ad212f=
-10a3233aca25fae41 100644
-> > --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> > +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> > @@ -93,6 +93,50 @@ static bool trans_jal(DisasContext *ctx, arg_jal *a)
-> >       return true;
-> >   }
-> >
-> > +#ifndef CONFIG_USER_ONLY
-> > +/*
-> > + * Indirect calls
-> > + * - jalr x1, rs where rs !=3D x5;
-> > + * - jalr x5, rs where rs !=3D x1;
-> > + * - c.jalr rs1 where rs1 !=3D x5;
-> > + *
-> > + * Indirect jumps
-> > + * - jalr x0, rs where rs !=3D x1 and rs !=3D x5;
-> > + * - c.jr rs1 where rs1 !=3D x1 and rs1 !=3D x5.
-> > + *
-> > + * Returns
-> > + * - jalr rd, rs where (rs =3D=3D x1 or rs =3D=3D x5) and rd !=3D x1 a=
-nd rd !=3D x5;
-> > + * - c.jr rs1 where rs1 =3D=3D x1 or rs1 =3D=3D x5.
-> > + *
-> > + * Co-routine swap
-> > + * - jalr x1, x5;
-> > + * - jalr x5, x1;
-> > + * - c.jalr x5.
-> > + *
-> > + * Other indirect jumps
-> > + * - jalr rd, rs where rs !=3D x1, rs !=3D x5, rd !=3D x0, rd !=3D x1 =
-and rd !=3D x5.
-> > + */
-> > +static void helper_ctr_jalr(DisasContext *ctx, arg_jalr *a)
->
-> Generally "helper_*" are out-of-line functions, whereas this is generatin=
-g inline code.
-> Better as "gen_ctr_jalr".
->
-> > +{
-> > +    TCGv src =3D tcg_constant_tl(ctx->base.pc_next);
->
-> gen_pc_plus_diff
->
-> > @@ -219,6 +269,9 @@ static bool gen_branch(DisasContext *ctx, arg_b *a,=
- TCGCond cond)
-> >       TCGv src1 =3D get_gpr(ctx, a->rs1, EXT_SIGN);
-> >       TCGv src2 =3D get_gpr(ctx, a->rs2, EXT_SIGN);
-> >       target_ulong orig_pc_save =3D ctx->pc_save;
-> > +#ifndef CONFIG_USER_ONLY
-> > +    TCGv src =3D tcg_constant_tl(ctx->base.pc_next);
-> > +#endif
->
-> gen_pc_plus_diff, though perhaps delay until used.
->
-> >
-> >       if (get_xl(ctx) =3D=3D MXL_RV128) {
-> >           TCGv src1h =3D get_gprh(ctx, a->rs1);
-> > @@ -231,6 +284,15 @@ static bool gen_branch(DisasContext *ctx, arg_b *a=
-, TCGCond cond)
-> >       } else {
-> >           tcg_gen_brcond_tl(cond, src1, src2, l);
-> >       }
-> > +
-> > +#ifndef CONFIG_USER_ONLY
-> > +    if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
-> > +        TCGv type =3D tcg_constant_tl(CTRDATA_TYPE_NONTAKEN_BRANCH);
-> > +        TCGv dest =3D tcg_constant_tl(ctx->base.pc_next + ctx->cur_ins=
-n_len);
->
-> gen_pc_plus_diff
->
-> > +        gen_helper_ctr_add_entry(tcg_env, src, dest, type);
-> > +    }
-> > +#endif
-> > +
-> >       gen_goto_tb(ctx, 1, ctx->cur_insn_len);
-> >       ctx->pc_save =3D orig_pc_save;
-> >
-> > @@ -243,6 +305,14 @@ static bool gen_branch(DisasContext *ctx, arg_b *a=
-, TCGCond cond)
-> >           gen_pc_plus_diff(target_pc, ctx, a->imm);
-> >           gen_exception_inst_addr_mis(ctx, target_pc);
-> >       } else {
-> > +#ifndef CONFIG_USER_ONLY
-> > +        if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
-> > +            TCGv type =3D tcg_constant_tl(CTRDATA_TYPE_TAKEN_BRANCH);
-> > +            TCGv dest =3D tcg_constant_tl(ctx->base.pc_next + a->imm);
->
-> gen_pc_plus_diff.
->
-> > diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/i=
-nsn_trans/trans_rvzce.c.inc
-> > index cd234ad960724c936b92afb6fd1f3c7c2a37cb80..07b51d9f4d847c4411165b4=
-22a843fea65c86d45 100644
-> > --- a/target/riscv/insn_trans/trans_rvzce.c.inc
-> > +++ b/target/riscv/insn_trans/trans_rvzce.c.inc
-> > @@ -204,6 +204,13 @@ static bool gen_pop(DisasContext *ctx, arg_cmpp *a=
-, bool ret, bool ret_val)
-> >       if (ret) {
-> >           TCGv ret_addr =3D get_gpr(ctx, xRA, EXT_SIGN);
-> >           tcg_gen_mov_tl(cpu_pc, ret_addr);
-> > +#ifndef CONFIG_USER_ONLY
-> > +        if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
-> > +            TCGv src =3D tcg_constant_tl(ctx->base.pc_next);
->
-> gen_pc_plus_diff, and it will need to be done *before* the assignment to =
-cpu_pc.
->
-> > @@ -309,6 +316,21 @@ static bool trans_cm_jalt(DisasContext *ctx, arg_c=
-m_jalt *a)
-> >           gen_set_gpr(ctx, xRA, succ_pc);
-> >       }
-> >
-> > +#ifndef CONFIG_USER_ONLY
-> > +    if (ctx->cfg_ptr->ext_smctr || ctx->cfg_ptr->ext_ssctr) {
-> > +        TCGv src =3D tcg_constant_tl(ctx->base.pc_next);
->
-> Here, we have updated cpu_pc to current (see the start of the function), =
-so you can just
-> use that instead of src.
->
-> > +void helper_ctr_add_entry(CPURISCVState *env, target_ulong src,
-> > +                          target_ulong dest, target_ulong type)
-> > +{
-> > +    riscv_ctr_add_entry(env, src, dest, (enum CTRType)type,
-> > +                            env->priv, env->virt_enabled);
->
-> Indent to line up after (.
->
-> > +static void helper_ctr_jal(DisasContext *ctx, int rd, target_ulong imm=
-)
->
-> gen_ctr_jal.
->
-> > +{
-> > +    TCGv dest =3D tcg_constant_tl(ctx->base.pc_next + imm);
-> > +    TCGv src =3D tcg_constant_tl(ctx->base.pc_next);
->
-> gen_pc_plus_diff.
->
->
-> r~
+Signed-off-by: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
+---
+ .mailmap    | 5 +++--
+ MAINTAINERS | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/.mailmap b/.mailmap
+index 727ce204b2..5f6df414e1 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -87,8 +87,9 @@ Huacai Chen <chenhuacai@kernel.org> <chenhc@lemote.com>
+ Huacai Chen <chenhuacai@kernel.org> <chenhuacai@loongson.cn>
+ James Hogan <jhogan@kernel.org> <james.hogan@imgtec.com>
+ Juan Quintela <quintela@trasno.org> <quintela@redhat.com>
+-Leif Lindholm <quic_llindhol@quicinc.com> <leif.lindholm@linaro.org>
+-Leif Lindholm <quic_llindhol@quicinc.com> <leif@nuviainc.com>
++Leif Lindholm <leif.lindholm@oss.qualcomm.com> <quic_llindhol@quicinc.com>
++Leif Lindholm <leif.lindholm@oss.qualcomm.com> <leif.lindholm@linaro.org>
++Leif Lindholm <leif.lindholm@oss.qualcomm.com> <leif@nuviainc.com>
+ Luc Michel <luc@lmichel.fr> <luc.michel@git.antfield.fr>
+ Luc Michel <luc@lmichel.fr> <luc.michel@greensocs.com>
+ Luc Michel <luc@lmichel.fr> <lmichel@kalray.eu>
+diff --git a/MAINTAINERS b/MAINTAINERS
+index aaf0505a21..9ae6a78ae9 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -915,7 +915,7 @@ F: include/hw/ssi/imx_spi.h
+ SBSA-REF
+ M: Radoslaw Biernacki <rad@semihalf.com>
+ M: Peter Maydell <peter.maydell@linaro.org>
+-R: Leif Lindholm <quic_llindhol@quicinc.com>
++R: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
+ R: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+ L: qemu-arm@nongnu.org
+ S: Maintained
+-- 
+2.45.2
+
 
