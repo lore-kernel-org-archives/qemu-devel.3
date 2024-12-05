@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D86E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 17:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F366E77179
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 17:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJFoK-00070f-AN; Thu, 05 Dec 2024 12:38:44 -0500
+	id 1tJFsj-0000F1-Gp; Thu, 05 Dec 2024 12:43:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJFoJ-00070K-7x
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 12:38:43 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1tJFsd-0000EN-7D
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 12:43:11 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJFoH-0004Q2-OJ
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 12:38:42 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-385ddcfc97bso954575f8f.1
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 09:38:41 -0800 (PST)
+ id 1tJFsX-0008BT-Uq
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 12:43:08 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385e87b25f0so1450489f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 09:43:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733420320; x=1734025120; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733420584; x=1734025384; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=UgBO6gIx37t5U4S0qID2wzdu9LiHMxmtrvX8Yn3pXRU=;
- b=v+inU2KhoPU1bFV+CV+JO/i8LObsFuHZ63XgRzk6UaM+Vgcnal1+EZGf6cDMY+KOD+
- soGnprv+jsS8FdMyGGNqsE18jlMNblu0e/p3usfCKy1a2/BR4cDkq24wtHwzZa/clGqw
- dd03Slo3dLn76lADqRgIXDR0uM5kYmcj/VbSAEbnjCjk4DMpAzr0ROLTodA0Adrxhe9b
- JfBia6K+PEtTPx8jBsCjk4nNBqdHhWlD8TdyPTs2TaD/kCulVIT89RvIXVtFGk8Bcj0Y
- ETLalMMJAR/f/NvMwjQbl+AxbeEXmMBmDerIeYXMirVu6+dr9LJ94GLQppPqoXmKGFoY
- bCCw==
+ bh=SM2jvQ7Mm0KjM20jPndgEZJvk8M+uJsuwsmSk1Rx4c8=;
+ b=S91JOnr8+pRP/G289vqiLhScBf4gsTfmNWCrR7AMkKbcjUqWRCj5ZHdZ9+0f/5ZNNa
+ JF6wPfH5cpjLE2GyGLXGCE8z0q0HyNFbUcNgoUbj/oxuoCFr9fbyGgfoy/j2LrqldpwI
+ zjzqTojeyTmIsLDxr5w1sHqCOVXDzkxO6sWeFHQYAUNUTdRfKXlh5nGmxYhGJwePhXDK
+ ueehVtxSAjmJzMzeHXBF190TuUqjTn2ZBYwWXZgG2pjBd0RMoDglYbfoFyVTW+C38/99
+ b9NFpoxt0Igg0lIFme0Vis2BS3U1GZ7w1HGkXshTa/KMIieYnaRZGk4m77qsqf4XuRr5
+ 7v2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733420320; x=1734025120;
+ d=1e100.net; s=20230601; t=1733420584; x=1734025384;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=UgBO6gIx37t5U4S0qID2wzdu9LiHMxmtrvX8Yn3pXRU=;
- b=CCMgxk1FlrQK8B4ITTGQy9IsrRYVhcVgQ3YUKIyALxNKMP0KNkGqvy9c3MajWYasBO
- NXHMVueVrdN7ri7SbDE/5mE5AKJiWJxCAaTFgQqjKeS4Bk5DgLMtMmvCJ4FK0UrNOdTw
- qbjqGdD5gZDwhw0q7Sv2EXHYN3HJNdk5ds+KJCn+W27tYQo+VZHvf+dWJT5hZ/mdBzwI
- kmACbQrPAZgs6roQ+nfruMQILblVABKnm3lV0FXuWDtns6ZuF5w3v1YhTQ61KphdKMNe
- 5g3Q+WvMzohmE2V9evGF9oJcE6nw4BiE0ok189djdZ/JZBwOHgNSYJswa4REYpCrQvkp
- fiVQ==
-X-Gm-Message-State: AOJu0Yzoc3dMteqECB0msPphUKTFOySy8QTzpbt9C413mH1odiN6z0lX
- m1tJqmaciqDFUfaBPTIoMaB9y9mTTLVuryTVnxnRAsMRnnDV2wNtbqJRafDh0vCHHuVH1vMRWTy
- 3KqTx1SFyG0E9GFRyL82OcDjbDhY2rvbka6TdRSo6697haPmo
-X-Gm-Gg: ASbGncvvPcVA7nXb7ITAyBnvOAiJIePGejufhojulV42Yzg3+0WYEnV/8LiGzE2NE7A
- 5sUMrX51JagfREejqfXTIRo/AQl+JPO9z
-X-Google-Smtp-Source: AGHT+IGPmrdvlqtRYDSezmV6il0kX3iNWrtIpCXYBI+LjlaCMmdWe3g8cmsjGN/xgmmbZhixjPB9lBgL+OfHtS0QALU=
-X-Received: by 2002:a05:6000:2809:b0:385:f07b:93d6 with SMTP id
- ffacd0b85a97d-385fd423ac5mr6461433f8f.45.1733420320136; Thu, 05 Dec 2024
- 09:38:40 -0800 (PST)
+ bh=SM2jvQ7Mm0KjM20jPndgEZJvk8M+uJsuwsmSk1Rx4c8=;
+ b=AR62VCpHGgF1HB21dS1yIdYZKkCNM62rSUlmKgxfnHLbCvpJ49yF6hzCAHuD6PHZng
+ FSy4yUXn2NzOcB5xo4mpg1cicH5POqccjFq6ZdWnEV45HKfGn1SdQJjCGgejXwnvSBZd
+ fMbOA5V9h5fgea6n5xLhugMVa9tzm6r2MWPsMM0oZK39/twBZCsN4SceVVMCU2U/BEDp
+ ahtX2zP2/U869USNhMiwipt7gBimPHB4NJYoo68i5ekzSHpOAUiggznST9zMzB/r/LEY
+ IgJCrl1uEPPfmzmMuJn549BaJ7/fGIAaY4QCWjKPEJuJ5824eq+KnmoLyvVu8QjxzkCD
+ +umA==
+X-Gm-Message-State: AOJu0YypF7JBPZYfGiBsZ/Z+4msXeKEm0BjsSzdaHQh6uDLqnJEMXv2N
+ w96x2h8sp20tdWzeIq6ekbO/aq3BnDVXGyNbgOwZsAEFkznjEAIqLRxQcOQIn5KbcjgDxIai/a6
+ HVE218k8UdcD5yqyHETla+kEu6NSFG7W/h5m1sQ==
+X-Gm-Gg: ASbGnctMMxk3H2TgWLlsoPSDd0pRJzRLy8u8oDzCFavoVaAuANPvaHAXktw/+Wvn39X
+ XP8f8t1XJSdZpkan0T1s3fz1flBPpU7Z0
+X-Google-Smtp-Source: AGHT+IH9DpQM9fXkLhlGj+SchyKMx4H0eowRlKk+hS/g7ggN3065ofAQsRYu4yOXItj96M2KeMqXyEq41uaZTsJ7T7o=
+X-Received: by 2002:a5d:5f46:0:b0:385:f07a:f4cb with SMTP id
+ ffacd0b85a97d-3862a893f98mr138266f8f.8.1733420584035; Thu, 05 Dec 2024
+ 09:43:04 -0800 (PST)
 MIME-Version: 1.0
 References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-12-richard.henderson@linaro.org>
-In-Reply-To: <20241201150607.12812-12-richard.henderson@linaro.org>
+ <20241201150607.12812-13-richard.henderson@linaro.org>
+In-Reply-To: <20241201150607.12812-13-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 17:38:28 +0000
-Message-ID: <CAFEAcA9ukDtrBsiKaDqMfEv7RVSYAYVf=GqU6sML-J6k6W0npQ@mail.gmail.com>
-Subject: Re: [PATCH 11/67] target/arm: Convert disas_logic_reg to decodetree
+Date: Thu, 5 Dec 2024 17:42:53 +0000
+Message-ID: <CAFEAcA9cmbYjwLG26C7Z-GVOQ-jAoy3eHMP7Z-d5H2D97BPXEw@mail.gmail.com>
+Subject: Re: [PATCH 12/67] target/arm: Convert disas_add_sub_ext_reg to
+ decodetree
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,10 +94,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Sun, 1 Dec 2024 at 15:11, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> This includes AND, BIC, ORR, ORN, EOR, EON, ANDS, BICS (shifted reg).
+> This includes ADD, SUB, ADDS, SUBS (extended register).
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
