@@ -4,127 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAC4E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4ECE7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJINS-0002cV-8R; Thu, 05 Dec 2024 15:23:10 -0500
+	id 1tJINV-0002dF-Qg; Thu, 05 Dec 2024 15:23:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tJINQ-0002cH-DH
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:23:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJINT-0002co-UE
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:23:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tJINN-0001SK-Vm
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:23:08 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJINS-0001Sx-75
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:23:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733430184;
+ s=mimecast20190719; t=1733430189;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ErVoJSJCg6U/xIq6GjUkreaBbIHsp7ZEDNpvCy8GArc=;
- b=RaYx7szr+E1MUKGsTScfoTbaaBGDNR5L8vsqGNp61Vs8JGgaZe5boGKVOFGyiLyRo5VKWi
- saAMcLFXtGTFpZKBAu3v+V/FTKjLFChBMHYHJaypleMmvF+sPCOnQW2Jw7i1Yp4KM7aWD4
- HNcdRfzzNpkl8jJM1hhbFscWJFH68mU=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=M/RPtdOhbs5+u5+S3nXbxpqC04BsjCHymsHNk6On+Ek=;
+ b=RW4VjN6JQvE5k6GiEO3Dq+5FElclIxs1h9aUNR1qCTw0+cIX/MiJwbZ/+H6fyN82NXte7j
+ wdsWMyLvUaU2UkkwfRBhoJebVHJY5PNSknyPX22ocl0WBfjQ+lqOqwyfuXQkIX4Ea8meup
+ nmieNTwouxMqh+HWg2Mu0MDbC558wAo=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-100-wyMKaIF8NJW9cpNO6XY-Iw-1; Thu, 05 Dec 2024 15:23:02 -0500
-X-MC-Unique: wyMKaIF8NJW9cpNO6XY-Iw-1
-X-Mimecast-MFC-AGG-ID: wyMKaIF8NJW9cpNO6XY-Iw
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6d89309de06so23337576d6.2
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 12:23:02 -0800 (PST)
+ us-mta-563-6WKo_jHwNzyk5RsdCGgokg-1; Thu, 05 Dec 2024 15:23:08 -0500
+X-MC-Unique: 6WKo_jHwNzyk5RsdCGgokg-1
+X-Mimecast-MFC-AGG-ID: 6WKo_jHwNzyk5RsdCGgokg
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6d87efed6c4so22536596d6.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 12:23:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733430182; x=1734034982;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ErVoJSJCg6U/xIq6GjUkreaBbIHsp7ZEDNpvCy8GArc=;
- b=talLVnHjId83SYuLRzNaa0I4NMUkfrs1FJ9lvEZCT++NU2NoEQqn3Lp3qOK9RmGXAK
- nFgApnSb/HcFecG987k2/gUUDILAfiEyWpgnwPKOSzBaL+GAsiQ6ccfDHeuVA7oNIF9M
- aAR6YboFhZKhxHFYVNt/o0uv7QJRo1qub4XKnOOi+m87UiryKKA0kJAgStzjy/dbNHd4
- 8zurBCzd4dJ9jIfMklLtoZmHazISrKNqpXHwTmZPQa4cwkEVjS0mobGt5nxYUVQcgFYs
- 6wMBgA9LP5lpBDXquoiqK1H1g5NXBwJLuJRf/p517WEFnFu6Ui2FRNaMRh+OCDYO+cMx
- lKxQ==
-X-Gm-Message-State: AOJu0Yw+TTPpzs72exlwcV7y36CEHHjy2zFZJBj0l64kYGMWsbI+UVLK
- MLVStzWYETeakFQ2vrzrVqxBdC6KtIhINJffNi/NqrXnAqkHUKuVexZRE7sfrXZBPgBHq/m24Bx
- BYW+0Z3+CZutxdqC+picQf3WUzXWCtxDNC50ltSqAkaUrRbEKicdg
-X-Gm-Gg: ASbGncsmC/oNto8oRvmfns4q7arpyZeQCFovB4kD92Lv6ex5Rjy6LnCZHOZbDwybI9C
- a36hdcN+EMRbA1e7FegwC5JjpZ3TPhQmV3TuWrDl4lsyDR8vvuffOSc68clz5xPcy+zm9clIxal
- mCnN8GsidbuSLKhehZS7XjUMtZM7Ah28W+q/+w3Q9URrPzKM3thddFll9nm9CxVv2SWfFIKlOQ0
- tKXWTJB48h1dlPdjSJwsggdJ/rIr/357nCUtAvGdqrOvTKmvcGsJhu0
-X-Received: by 2002:a05:6214:1c4b:b0:6cb:edd7:ac32 with SMTP id
- 6a1803df08f44-6d8e7118b40mr4515516d6.12.1733430181652; 
- Thu, 05 Dec 2024 12:23:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEjqVedKC9En89e0cqU9JxXEOxMIx+Hxmcm2fR8G4y7CKZpObKDXqvuEnIL/WfcR03xRlfpJA==
-X-Received: by 2002:a05:6214:1c4b:b0:6cb:edd7:ac32 with SMTP id
- 6a1803df08f44-6d8e7118b40mr4515226d6.12.1733430181314; 
- Thu, 05 Dec 2024 12:23:01 -0800 (PST)
-Received: from [10.195.154.128] ([144.121.20.163])
- by smtp.googlemail.com with ESMTPSA id
- 6a1803df08f44-6d8e3c1bd72sm4465706d6.121.2024.12.05.12.22.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 12:23:00 -0800 (PST)
-Message-ID: <b107c5c3-9ee4-4939-a4e3-eff0cd92bad6@redhat.com>
-Date: Thu, 5 Dec 2024 21:22:58 +0100
+ d=1e100.net; s=20230601; t=1733430187; x=1734034987;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M/RPtdOhbs5+u5+S3nXbxpqC04BsjCHymsHNk6On+Ek=;
+ b=Xp2gK5FPt24pqSGiydoyN4p6itfNCKRbDMnMd7vZgYwWXYqFxMHvj1yTycxMnxSVvx
+ e8KJC26ILusjP0yw9p/ayh1rJneO3fO/bU6FwpxhZ2eJ5dM8Wnd/qBY5Skl8443IQg4q
+ TEeiZIyDPOGgNme90zQy4zJF5lsW3ImsGB4H4DFjwtXsL7toW4FvCcytRQWcMd+wrniv
+ rxl/IEQKD4yLVN1uC56/jyZlnvxrC+1chcvDchOQZUU7ci++zqQABWGZGNcpekN1hu3X
+ NVJwftJIiZ2EHuNDMjYJr1V66IO2eIgOg/QAmKvIV93ut4Z2NsPPsw2NKPIbOXrFIRMg
+ 6D8A==
+X-Gm-Message-State: AOJu0YxgQZ4xHhB7zTFW526FQ8M8yAHQYmhd8wZX8sW8vuRzTbv9r869
+ +0faBt2TCODX3ZJxKl/xAhyNpjqFuiqF6L6oUxiri0E0PqhPoSNye5OI/uA9dVJAbJPtltxW16+
+ A6AiTt+0fCMRl8lcP4eckq5uSkXoQAGPM8ijRDo0mn90UzMXUQXHT
+X-Gm-Gg: ASbGncvgxeL5L2Qdm6ni0MjNdSRt3domxaYnTRsUWJR4Tg8PA8DkCMcuu962LcZCWmV
+ 4KMNK04PKIcFUbAyli9CdklCzJBPQqDbjDbtOJiZiKKk+ehZeADt9B6B1qHe9PyecCdaafE4h9A
+ 6vhqvS5s/CaOhahglk+v1GmT/J9Hdg0o3JZxn0Lv3VMXOI9RsctYhd5jeDEuxIc3msICDb1E9oW
+ i6AZS8TO2UmS/2ci/l8+Rzc0yMNncyjeQXcSusY0+YiM5iia7LnZigck3/q1vSdGvyednltythA
+ sNcCLwnUPDc=
+X-Received: by 2002:a05:6214:d68:b0:6d4:1425:6d2d with SMTP id
+ 6a1803df08f44-6d8e7227aa5mr3483386d6.43.1733430187624; 
+ Thu, 05 Dec 2024 12:23:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGMwbDeoA6rRIguoeeoNHxnxAKW6K6/AdoiuRQsDeOjUn2+627mEHxALpqMT8taRv0VZjHorw==
+X-Received: by 2002:a05:6214:d68:b0:6d4:1425:6d2d with SMTP id
+ 6a1803df08f44-6d8e7227aa5mr3483106d6.43.1733430187284; 
+ Thu, 05 Dec 2024 12:23:07 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d8dabfec80sm9887596d6.98.2024.12.05.12.23.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Dec 2024 12:23:06 -0800 (PST)
+Date: Thu, 5 Dec 2024 15:23:03 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH 1/2] migration/multifd: Further remove the SYNC on complete
+Message-ID: <Z1ILpzQk6Q8d1cpg@x1n>
+References: <20241205185303.897010-1-peterx@redhat.com>
+ <20241205185303.897010-2-peterx@redhat.com>
+ <878qstj46b.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 11/13] rust/timer/hpet: add basic HPET timer & state
-To: Zhao Liu <zhao1.liu@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20241205060714.256270-1-zhao1.liu@intel.com>
- <20241205060714.256270-12-zhao1.liu@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20241205060714.256270-12-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <878qstj46b.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -149,219 +109,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/24 07:07, Zhao Liu wrote:
-> Add the HPETTimer and HPETState (HPET timer block), along with their
-> basic methods and register definitions.
+On Thu, Dec 05, 2024 at 04:55:08PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> This is in preparation for supporting the QAPI interfaces.
+> > Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
+> > complete()") removed the FLUSH operation on complete() which should avoid
+> > one global sync on destination side, because it's not needed.
+> >
+> > However that commit overlooked multifd_ram_flush_and_sync() part of things,
+> > as that's always used together with the FLUSH message on the main channel.
 > 
-> Note, wrap all items in HPETState that may be changed in the callback
-> called by C code into the BqlCell/BqlRefCell.
+> Let's please write the full name of the flags, functions, etc. As we've
+> seen in the discussion with Prasad, we're stumbling over ambiguous
+> terminology. This is RAM_SAVE_FLAG_MULTIFD_FLUSH.
+
+Sure.
+
 > 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   rust/hw/timer/hpet/src/hpet.rs | 638 +++++++++++++++++++++++++++++++++
->   rust/hw/timer/hpet/src/lib.rs  |   1 +
->   rust/wrapper.h                 |   1 +
->   3 files changed, 640 insertions(+)
->   create mode 100644 rust/hw/timer/hpet/src/hpet.rs
+> >
+> > For very old binaries (multifd_flush_after_each_section==true), that's
+> > still needed because each EOS received on destination will enforce
+> > all-channel sync once.
 > 
-> diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-> new file mode 100644
-> index 000000000000..9550d8fe438a
-> --- /dev/null
-> +++ b/rust/hw/timer/hpet/src/hpet.rs
-> @@ -0,0 +1,638 @@
-> +// Copyright (C) 2024 Intel Corporation.
-> +// Author(s): Zhao Liu <zhai1.liu@intel.com>
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +#![allow(dead_code)]
-> +
-> +use core::ptr::{null_mut, NonNull};
-> +use std::os::raw::c_int;
-> +
-> +use qemu_api::{
-> +    bindings::*,
+> Ok, but why does this patch not reinstate the flag?
 
-Let's avoid bindings::*.
+RAM_SAVE_FLAG_MULTIFD_FLUSH?  Because it's not needed?
 
-> +        self.qemu_timer = Box::new(HPETState::timer_new_ns(
+> 
+> >
+> > For new binaries (multifd_flush_after_each_section==false), the flush and
+> > sync shouldn't be needed just like the FLUSH, with the same reasoning.
+> >
+> > Currently, on new binaries we'll still send SYNC messages on multifd
+> > channels, even if FLUSH is omitted at the end.  It'll make all recv threads
+> > hang at SYNC message.
+> 
+> I don't get this part, is this a bug you're describing? There's not SYNC
+> message on the recv side, I think you mean the MULTIFD_FLAG_SYNC and
+> this code?
+> 
+>     if (flags & MULTIFD_FLAG_SYNC) {
+>         qemu_sem_post(&multifd_recv_state->sem_sync);
+>         qemu_sem_wait(&p->sem_sync);
+>     }
 
-Oh! I noticed now that while your API is called timer_new_ns, it is 
-actually the same as timer_init_full.  Let's call it init_full() then.
+Yes.
 
-> +    fn get_state_ref(&self) -> &HPETState {
-> +        // SAFETY:
-> +        // the pointer is convertible to a reference
-> +        unsafe { self.state.unwrap().as_ref() }
-> +    }
-> +
-> +    fn get_state_mut(&mut self) -> &mut HPETState {
-> +        // SAFETY:
-> +        // the pointer is convertible to a reference
-> +        unsafe { self.state.unwrap().as_mut() }
-> +    }
+> 
+> That's not a hang, that's the sync.
 
-You should not need get_state_mut(), which also has the advantage of 
-shortening get_state_ref() to get_state().
+When recv side never collect that SYNC (by invoke multifd_recv_sync_main),
+then it is a hang.
 
-> +
-> +    fn is_int_active(&self) -> bool {
-> +        self.get_state_ref().int_status.get() & (1 << self.index) != 0
-> +    }
-> +
-> +    fn is_fsb_route_enabled(&self) -> bool {
-> +        self.config & 1 << HPET_TN_CFG_FSB_ENABLE_SHIFT != 0
-> +    }
-> +
-> +    fn is_periodic(&self) -> bool {
-> +        self.config & 1 << HPET_TN_CFG_PERIODIC_SHIFT != 0
-> +    }
-> +
-> +    fn is_int_enabled(&self) -> bool {
-> +        self.config & 1 << HPET_TN_CFG_INT_ENABLE_SHIFT != 0
-> +    }
-> +
-> +    fn is_32bit_mod(&self) -> bool {
-> +        self.config & 1 << HPET_TN_CFG_32BIT_SHIFT != 0
-> +    }
-> +
-> +    fn is_valset_enabled(&self) -> bool {
-> +        self.config & 1 << HPET_TN_CFG_SETVAL_SHIFT != 0
-> +    }
-> +
-> +    fn clear_valset(&mut self) {
-> +        self.config &= !(1 << HPET_TN_CFG_SETVAL_SHIFT);
-> +    }
-> +
-> +    /// True if timer interrupt is level triggered; otherwise, edge triggered.
-> +    fn is_int_level_triggered(&self) -> bool {
-> +        self.config & 1 << HPET_TN_CFG_INT_TYPE_SHIFT != 0
-> +    }
+> 
+> >
+> > Multifd is still all working fine because luckily recv side cleanup
+> > code (mostly multifd_recv_sync_main()) is smart enough to make sure even if
+> > recv threads are stuck at SYNC it'll get kicked out.  And since this is the
+> > completion phase of migration, nothing else will be sent after the SYNCs.
+> 
+> Hmm, a last sync on the recv side might indeed not be needed.
+> 
+> >
+> > This may be needed for VFIO in the future because VFIO can have data to
+> > push after ram_save_complete(), hence we don't want the recv thread to be
+> > stuck in SYNC message. Remove this limitation will make src even slightly
+> > faster too to avoid some more code.
+> >
+> > Stable branches do not need this patch, as no real bug I can think of that
+> > will go wrong there.. so not attaching Fixes to be clear on the backport
+> > not needed.
+> >
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  migration/ram.c | 13 ++++++++++---
+> >  1 file changed, 10 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index 05ff9eb328..7284c34bd8 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -3283,9 +3283,16 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+> >          }
+> >      }
+> >  
+> > -    ret = multifd_ram_flush_and_sync();
+> > -    if (ret < 0) {
+> > -        return ret;
+> > +    if (migrate_multifd() &&
+> > +        migrate_multifd_flush_after_each_section()) {
+> > +        /*
+> > +         * Only the old dest QEMU will need this sync, because each EOS
+> > +         * will require one SYNC message on each channel.
+> > +         */
+> > +        ret = multifd_ram_flush_and_sync();
+> > +        if (ret < 0) {
+> > +            return ret;
+> > +        }
+> 
+> I don't think this works. We need one last flush to not lose the last
+> few pages of ram. And we need the src side sync of multifd threads to
+> make sure this function doesn't return before all IO has been put on the
+> wire.
 
-PL011 is using bilge here.  I think it's fair to show the two ways to do 
-it.  If we have devices showing two different things:
+This should be the question for commit 637280aeb2, I thought it got
+answered there.. It's almost what the commit message there in 637280aeb2
+wanted to justify too.
 
-- PL011 shows higher-level abstractions for registers
+We don't need to flush the last pages here, because we flushed it already,
+in the last find_dirty_block() call where src QEMU finished scanning the
+last round.  Then we set complete_round=true, scan one more round, and the
+iteration won't complete until the new round sees zero dirty page.
 
-- HPET has a good approach to interior mutability from the beginning
+So when reaching this line, multifd send buffer must be empty.  We need to
+flush for each round of RAM scan, we can't avoid the flush there, but we
+can save this one in complete().
 
-Then it gives a clearer view of the options.
+To explain that with code, I hacked a QEMU and assert that.  It ran all
+fine here (this is definitely not for merge.. but to show what I meant):
 
+===8<===
+diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+index f64c4c9abd..0bd42c7627 100644
+--- a/migration/multifd-nocomp.c
++++ b/migration/multifd-nocomp.c
+@@ -21,7 +21,7 @@
+ #include "qemu/error-report.h"
+ #include "trace.h"
 
-> +    fn update_int_status(&mut self, set: bool) -> &mut Self {
-> +        let mask: u64 = 1 << self.index;
-> +
-> +        if set && self.is_int_level_triggered() {
-> +            // If Timer N Interrupt Enable bit is 0, "the timer will
-> +            // still operate and generate appropriate status bits, but
-> +            // will not cause an interrupt"
-> +            *self.get_state_mut().int_status.get_mut() |= mask;
-> +        } else {
-> +            *self.get_state_mut().int_status.get_mut() &= !mask;
-> +        }
-> +        self
-> +    }
+-static MultiFDSendData *multifd_ram_send;
++MultiFDSendData *multifd_ram_send;
 
-See remarks elsewhere on update_int_status(), and how it uses 
-get_state_mut() and get_mut().
+ size_t multifd_ram_payload_size(void)
+ {
+diff --git a/migration/ram.c b/migration/ram.c
+index 7284c34bd8..edeb9e28ff 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3228,6 +3228,8 @@ out:
+     return done;
+ }
 
-> +                unsafe {
-> +                    address_space_stl_le(
-> +                        &mut address_space_memory,
-> +                        self.fsb >> 32,  // Timer N FSB int addr
-> +                        self.fsb as u32, // Timer N FSB int value, truncate!
-> +                        *MEMTXATTRS_UNSPECIFIED,
-> +                        null_mut(),
-> +                    );
-> +                }
++extern MultiFDSendData *multifd_ram_send;
++
+ /**
+  * ram_save_complete: function called to send the remaining amount of ram
+  *
+@@ -3283,6 +3285,10 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+         }
+     }
 
-This is the only use of unsafe, whic is not bad at all.  Not urgent, but 
-we should think about the AddressSpace bindings, and whether it makes 
-sense to use (or steal APIs from) rust-vmm's vm-memory.
++    if (migrate_multifd()) {
++        assert(multifd_payload_empty(multifd_ram_send));
++    }
++
+     if (migrate_multifd() &&
+         migrate_multifd_flush_after_each_section()) {
+         /*
+===8<===
 
-> +    fn arm_timer(&mut self, tick: u64) {
-> +        let mut ns = self.get_state_ref().get_ns(tick);
-> +
-> +        // Clamp period to reasonable min value (1 us)
-> +        if self.is_periodic() && ns - self.last < 1000 {
-> +            ns = self.last + 1000;
-> +        }
-> +
-> +        self.last = ns;
-> +        self.qemu_timer.as_mut().timer_mod(self.last);
-> +    }
+> 
+> This also doesn't address what the commit message says about the recv
+> side never getting the RAM_SAVE_FLAG_MULTIFD_FLUSH message.
 
-No as_mut(), timer_mod is thread safe.  timer_mod() need to take &self.
+The new binaries now always not send RAM_SAVE_FLAG_MULTIFD_FLUSH when
+complete(), however it always sends the multifd SYNC messages on the wire.
+It means those SYNC messages will always arrive on dest multifd channels,
+and then all these channels will wait for the main thread to collect that.
+However since RAM_SAVE_FLAG_MULTIFD_FLUSH is not there, they'll hang until
+multifd recv cleanups.
 
-> +    fn del_timer(&mut self) {
-> +        self.qemu_timer.as_mut().timer_del();
-
-Same as above.
-
-> +#[derive(Debug)]
-> +pub struct HPETTimerInstance(BqlRefCell<HPETTimer>);
-> +
-> +impl HPETTimerInstance {
-> +    fn timer_handler(timer: &mut HPETTimerInstance) {
-> +        timer.0.borrow_mut().callback()
-> +    }
-> +}
-
-Also not "&mut" - you don't need it, as "timer.0" is only used to borrow 
-from the BqlRefCell.  Also with a more refined timer abstraction this 
-doesn't need HPETTimerInstance, it can probably be a global function like
-
-fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
-     timer_cell.borrow_mut().callback()
-}
-
-> +    /// General Capabilities and ID Register
-> +    capability: BqlCell<u64>,
-> +    ///  General Configuration Register
-> +    config: BqlCell<u64>,
-> +    /// General Interrupt Status Register
-> +    int_status: BqlCell<u64>,
-> +    /// Main Counter Value Register
-> +    counter: BqlCell<u64>,
-> +
-> +    /// Internal state
-> +
-> +    /// Capabilities that QEMU HPET supports.
-> +    /// bit 0: MSI (or FSB) support.
-> +    pub(crate) flags: BqlCell<u32>,
-
-flags doesn't need to be a cell (it's just a property).  I'll send a 
-patch for the C code.
-
-> +    /// Offset of main counter relative to qemu clock.
-> +    hpet_offset: BqlCell<u64>,
-> +    pub(crate) hpet_offset_saved: bool,
-> +
-> +    irqs: [InterruptSource; HPET_NUM_IRQ_ROUTES],
-> +    rtc_irq_level: BqlCell<u8>,
-> +    pit_enabled: InterruptSource,
-> +
-> +    /// Interrupt Routing Capability.
-> +    /// This field indicates to which interrupts in the I/O (x) APIC
-> +    /// the timers' interrupt can be routed, and is encoded in the
-> +    /// bits 32:64 of timer N's config register:
-> +    pub(crate) int_route_cap: u32,
-> +
-> +    /// HPET timer array managed by this timer block.
-> +    timer: [HPETTimerInstance; HPET_MAX_TIMERS],
-> +    pub(crate) num_timers: BqlCell<usize>,
-
-Ah, this needs to be a BqlCell because it can be clamped to 
-MIN_TIMERS..MAX_TIMERS by realize.  Fair enough.
-
-> +    /// Instance id (HPET timer block ID).
-> +    hpet_id: BqlCell<usize>,
-> +}
-> +
-Like flags this does not need to be a cell.
-
-Paolo
+-- 
+Peter Xu
 
 
