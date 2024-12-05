@@ -4,84 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9625E77178
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12232E7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:46:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJEye-0004NB-AJ; Thu, 05 Dec 2024 11:45:20 -0500
+	id 1tJEyi-0004P3-NS; Thu, 05 Dec 2024 11:45:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJEyP-0004Hl-5d
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:45:06 -0500
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJEyN-0000h5-1K
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJEyP-0004Hw-6N
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:45:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJEyJ-0000gf-8g
  for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:45:04 -0500
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-53e224bbaccso1227876e87.3
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 08:45:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733417100; x=1734021900; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m1sb14BRxQacuKFTQeJyr0bsm5xU3QUxAOI52PoVBMY=;
- b=ebLBgnU549YvEO+UVUZ2vvTJP9F+aL3vRI1RoxZubbDX3hvUbLwl1B9J/M8EsO2Rsn
- ZXCyxM/AauZ/Y5QV29i99ZKAwEvuPRHhIXhdX8DxpwNUxG5MErm5rE/Y7As+BF9czMVY
- tR8hsIHsqJknUKBisutPU9UsUEEyl62sdxkNY98nQNmJZ1ucbdHz26JdyLwVhqGVvSla
- hRXo+7r9dSZI0y+XV9ZlRfiv4X0nmmiHTqHI+HESDRdeMGB0DiqVuKvN2RtImSCKdYu2
- 7Y5It/hC/ES40sfRDnjYbcx+znQX4tZnfqFKTKNJ78zkusKVqGdr4CNnQrEQxLxB94L+
- YpDw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733417096;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5zzdAUU5/+aiXqkJc3x0gC7S8/2cAjMpIOwlUCqs2eA=;
+ b=MYx8VdrH/XR0Jl07q0k7SyQlXFh2sWMkYGlRsOeFVx1moR93nje2fdz453ZHreFWEnSEj2
+ 7g/VNSXJ+VCzrS336j3pULG3AQNiZ1nvdYkb4IhJeW4hZ9NQxrVOpRKQOMkMgYGlo78VEX
+ rr/gAkPhcgHRTOr7CVBaX6KhaF0RTAE=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-433-Zh0VKtCMPfqRe50kUIn9Mw-1; Thu, 05 Dec 2024 11:44:55 -0500
+X-MC-Unique: Zh0VKtCMPfqRe50kUIn9Mw-1
+X-Mimecast-MFC-AGG-ID: Zh0VKtCMPfqRe50kUIn9Mw
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-841963a1fb4so174785939f.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 08:44:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733417100; x=1734021900;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=m1sb14BRxQacuKFTQeJyr0bsm5xU3QUxAOI52PoVBMY=;
- b=M1iNeKpM0MzyJQX6KNNOGeFUr0x/nA5Qdm0nrwWeg6kasRfc0ICvS+ea4O+1WnsVEV
- 52B/RjBdAuap6619sMEZGQlTZDh9sHw6BGwnzlUgW9nMM/vcBgWCyxlpfRr0ifV7uh6K
- Xo9IdM8qMmZjWHJ8ST5cs0blQRgU79pB1KeRDugpWf473H0AWst3kb1H15joB9X4lFgG
- JIyjw/ZGfuxByRB60Gb6Hq+hrt5zPUDY31fQQvv9I8mUlSUtbRSxPGhjbP0nL5qA3As0
- 3X36Tl9LfEAlAJo6p+on174iaWGYu/x10n2ttZGueanyuXkShgwH285bRQVDjID/al0I
- npDQ==
-X-Gm-Message-State: AOJu0YwqOxdxw4cJjm0h/keVG3A+OueWJGHkWuOsvgeidOabF7v++VcD
- QYHeKcOnx3Jt49JcSMATz24XYxrNrFPQ3A8ZkVJ6T4/MeKKVd4ysB0NdzTlrHf/I018ndPC1o8o
- HTQyN1cTd6747BA1w6QqBO7tmNBFYC7AXUHDcSg==
-X-Gm-Gg: ASbGncvOnJYcp7AGZAsGcrxXWJ2aP87WztAndbCfvpJLAjFwYNbEo4/zUUInoi/3u7O
- x7PSMncGcEOgShybcsFGgHnMdBi9jn9qj
-X-Google-Smtp-Source: AGHT+IEZMDEQ+YfoyGSAVfjR0hOYrRi4mT+hliHgm8LSWru9MexD+l7mTdpgmiE1fn1ZvNJrgPRLz8Y4WPKon6aEUHg=
-X-Received: by 2002:a05:6512:3f2a:b0:53d:a58c:c5a4 with SMTP id
- 2adb3069b0e04-53e12a22f0bmr6202589e87.40.1733417099945; Thu, 05 Dec 2024
- 08:44:59 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733417094; x=1734021894;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5zzdAUU5/+aiXqkJc3x0gC7S8/2cAjMpIOwlUCqs2eA=;
+ b=h1ecIBIYWSGub3RfjxwF2wBE4InpBgQHKXDNvgcHjRD3wJvZJvkd/w+WTd49rdW8Kd
+ Wc51L2A//CjteAcdw/8Ocs4xNqVEUcda7AnbjpaZGt/eDH7z7FIxQpmtr+Owr7fH1UT2
+ pT29dQze8U9QZUc6mHRGpkWQD+p3TBVjaoYPM1/lfhfttZRCYYRPEut8MBrVbjn48L+g
+ kBFVY+4cyi86B3gCkMjx1b48Ty6fx6hBapS6BMp4rd7i/k7DIEjnzTN+ID4mKBOvRUMh
+ sPGAD7UNrkSPzjsmsFLJIECJHspKC9Z1AF800RmbpVktIWLWFH9LwPu6TbZQHMm3kvTR
+ +2Zw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVL+h9aaXyxZNq2JfsfITsj+pZbEkqjAVw9canRG3tqV7g6aUcd+j/O5lYAaXBBVRjxbSmxC92ZxwTJ@nongnu.org
+X-Gm-Message-State: AOJu0Yzu5PxZL+X5bkwiMlmoBL+pqr5Ua9pSmGbjI0Wr5NZhbQl+EFe/
+ uPcAY/8Ytj2PJ+FrQ+x4iG0YDJ23eBlDt4trH10aAayCrs891hMY+Rz6xvw77PvmzjoKHcLD9J/
+ m95/eYqES3/YJlquUtGg3e/1Ng0UeTcY/CMbNgPKkGJqV7d+eiktD
+X-Gm-Gg: ASbGncvSqcpqOvQZFCGWqQPTiEp9TmQwg2ge1rCBkMUM8puA4XL+ln+rRhDeoxWHwET
+ 5NkRBenY+jKyDU51b6JjyqpsaFJsfeOKgEf6P8FEHoqzZQBe+F3PLgAYI+minVe++6XtpTMTC4s
+ USapLtX4bf0eERk55QYt3wdBG9FqvOI6ZQ7KbrIIsFUqvIica9Gzp+f9LtRJAh/HvmRLjMGZ82a
+ 6ixb1BbZfyGcBbfRYta6GaN0HgORq4+/OuCVDeLAAaXnvBGPHMwcNmA3ueUtBSP7VtsH0OFfGyb
+ qj+j3O1jjkE=
+X-Received: by 2002:a05:6e02:17c7:b0:3a4:eca2:95f1 with SMTP id
+ e9e14a558f8ab-3a7f9a3b2demr151176345ab.6.1733417094640; 
+ Thu, 05 Dec 2024 08:44:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEH8t5v9tGkhUBl6mAD+ihVT3DrA1od5QEURLuzEs2sbfusQiQX/cxpSi4qd74QYBfuepXXuQ==
+X-Received: by 2002:a05:6e02:17c7:b0:3a4:eca2:95f1 with SMTP id
+ e9e14a558f8ab-3a7f9a3b2demr151176095ab.6.1733417094396; 
+ Thu, 05 Dec 2024 08:44:54 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3a808e29976sm5030215ab.65.2024.12.05.08.44.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Dec 2024 08:44:53 -0800 (PST)
+Date: Thu, 5 Dec 2024 11:44:50 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Avihai Horon <avihaih@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 15/24] migration/multifd: Add
+ migration_has_device_state_support()
+Message-ID: <Z1HYgkkVFf50-rdx@x1n>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <ca43afdc742ccf8070b1146014ce33c333e85d8b.1731773021.git.maciej.szmigiero@oracle.com>
+ <75ce2d3b-9abc-4dcd-a221-48d2935715c9@nvidia.com>
+ <5bb862ab-fc15-40aa-9815-2ff7381ab7cf@maciej.szmigiero.name>
 MIME-Version: 1.0
-References: <20241126112212.64524-1-philmd@linaro.org>
- <20241126112212.64524-6-philmd@linaro.org>
-In-Reply-To: <20241126112212.64524-6-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 16:44:49 +0000
-Message-ID: <CAFEAcA_K_DqRfipvQf0LcrXAMANVrwtCPD3cd2gMah=p2JH2DQ@mail.gmail.com>
-Subject: Re: [PATCH-for-10.0 v2 05/13] hw/pci: Propagate bar_at_addr_0_refused
- to pci_root_bus_internal_init()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org, 
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-riscv@nongnu.org, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5bb862ab-fc15-40aa-9815-2ff7381ab7cf@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,49 +118,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Nov 2024 at 11:22, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Have pci_root_bus_internal_init() callers set the
-> 'bar_at_addr_0_refused' argument. No logical change.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  hw/pci/pci.c | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 27b66583e54..8eacb8f82fc 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -529,7 +529,8 @@ static bool machine_refuses_bar_at_addr_0(void)
->
->  static void pci_root_bus_internal_init(PCIBus *bus, DeviceState *parent,
->                                         MemoryRegion *mem, MemoryRegion *=
-io,
-> -                                       uint8_t devfn_min)
-> +                                       uint8_t devfn_min,
-> +                                       bool bar_at_addr_0_refused)
->  {
->      assert(PCI_FUNC(devfn_min) =3D=3D 0);
->      bus->devfn_min =3D devfn_min;
-> @@ -537,7 +538,7 @@ static void pci_root_bus_internal_init(PCIBus *bus, D=
-eviceState *parent,
->      bus->address_space_mem =3D mem;
->      bus->address_space_io =3D io;
->      bus->flags |=3D PCI_BUS_IS_ROOT;
-> -    if (machine_refuses_bar_at_addr_0()) {
-> +    if (bar_at_addr_0_refused && machine_refuses_bar_at_addr_0()) {
+On Thu, Nov 28, 2024 at 01:12:01PM +0100, Maciej S. Szmigiero wrote:
+> On 28.11.2024 11:33, Avihai Horon wrote:
+> > 
+> > On 17/11/2024 21:20, Maciej S. Szmigiero wrote:
+> > > External email: Use caution opening links or attachments
+> > > 
+> > > 
+> > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > 
+> > > Since device state transfer via multifd channels requires multifd
+> > > channels with packets and is currently not compatible with multifd
+> > > compression add an appropriate query function so device can learn
+> > > whether it can actually make use of it.
+> > > 
+> > > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> > > ---
+> > >   include/migration/misc.h         | 1 +
+> > >   migration/multifd-device-state.c | 7 +++++++
+> > >   2 files changed, 8 insertions(+)
+> > > 
+> > > diff --git a/include/migration/misc.h b/include/migration/misc.h
+> > > index 118e205bbcc6..43558d9198f7 100644
+> > > --- a/include/migration/misc.h
+> > > +++ b/include/migration/misc.h
+> > > @@ -112,5 +112,6 @@ bool migration_in_bg_snapshot(void);
+> > >   /* migration/multifd-device-state.c */
+> > >   bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
+> > >                                   char *data, size_t len);
+> > > +bool migration_has_device_state_support(void);
+> > 
+> > Nit: maybe rename to multifd_device_state_supported or migration_multifd_device_state_supported, as it's specifically related to multifd?
+> 
+> Sure, will do.
 
-Should this be || rather than &&  ? If I understand the
-intent correctly, we want to prevent a BAR at address 0
-if either:
- * the MachineClass field says we don't want one
-   (legacy handling, eventually goes away)
- * the new command line argument says we don't want one
+With that, feel free to take:
 
-rather than only if *both* say "no address 0" ?
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-thanks
--- PMM
+-- 
+Peter Xu
+
 
