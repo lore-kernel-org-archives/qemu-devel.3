@@ -4,141 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92DB4E7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 08:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D343CE77171
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 08:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ7O5-0005Pz-LA; Thu, 05 Dec 2024 03:39:05 -0500
+	id 1tJ7ZE-0007FN-TH; Thu, 05 Dec 2024 03:50:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJ7O4-0005Ph-14
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 03:39:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tJ7ZD-0007Ex-Lx
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 03:50:35 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJ7O2-0003tS-Ln
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 03:39:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733387940;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8YWOXHupCojdfXa3+Xwyu2Sf/hUST6RAvHWdHCfsQic=;
- b=XwcOhaiPXTKM67sU1Q0Trbuh/fnanPFwq+FX7jJxU7Z53FK8B43e9PTCsGBsjWZD7AKDCM
- 8w6L0DoWZvtp0sKLE550sCSweqgrbRWGahl/sZQ7bn/uX++/RVvOPxxAEFIxetMyDkgBv1
- vJiJw9+2bNXHiq3wnxErmM5W5l5y7Yo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-qFr0SLR8ODiE2Xs-WQQ3Hg-1; Thu, 05 Dec 2024 03:38:58 -0500
-X-MC-Unique: qFr0SLR8ODiE2Xs-WQQ3Hg-1
-X-Mimecast-MFC-AGG-ID: qFr0SLR8ODiE2Xs-WQQ3Hg
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-434a73651e2so3464825e9.1
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 00:38:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733387937; x=1733992737;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8YWOXHupCojdfXa3+Xwyu2Sf/hUST6RAvHWdHCfsQic=;
- b=IiG9ZtgbKWzpmDyHJjNyF/PzohtG0bd+idZHDmsEfJCYYKkA5vHLy+OE6DKXMpLOf5
- HiaYh2JsxFjWZzl6J7sh87ouXrJEKCMhjchC/dldjO4DyufoSEwFfelxqLataqqLWRM0
- onDMcr0mjB9ZFm+jNtgo1PynzYVCeDLKpHpCuxQlrdzcX5o4C/9AKNe57xKHM303X8ZI
- YOpr6zY9xRG8DkLxkPuFlwCLMw+rTFNqiw+3ie7H2p31YgbpFKW274fT8DJCDnP0MmEu
- ke6w1yjFmyZaDePu4QEVBBYyaqCZvOvVvX3PHfbb8hfPgA49EGYBI/brvjwWHE+GyKeJ
- S5pg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXG63St3PEO3bLfPY/5InHBM7IGdN84XpntxBlODnU7paaGJDxbLp0PypR0G8DfXaiviGxAOtUXexn/@nongnu.org
-X-Gm-Message-State: AOJu0YxM2WRYY2w1quyocfRo4fH3WaQcHecULtAXSH5JqFs1b2mOLifp
- zFDEgsmtFDyCv84Wo7qofj3e0sboiqTu6Y5ORg4U41V2loqK8PZnIj622cEexy41QJ0GV054mJ9
- eJ8XM9NXr0gytY80Daf3ykgsxyW0KxYhdWGp53ZcWSCr+iJVDrm1+
-X-Gm-Gg: ASbGncvmTwLjlNMvA7yXJwYVrwaFbvT3QnJmMQxq/djPqEDQoKUAnEuiZTA0PwnbtWu
- JPJq6LrAZGBXBcToR6ETNqzGvs9H27ljV10arR67ljKk565TcodByMtX9ZUszn91Q5yevyt14yU
- IA2rWHSK3DYQSRig76rQVLbxGjwMEj7REiLvKVVNavhnDDtai4mX6PicqhXTnQlZ4z4ywNt6jJW
- EZqqTIhgPSKZkzr/Kwk2g0PFXLkkC9CB2KVzier5A8g2I/+q62WXtiWjmDx/hWyERXZQhWXaB7C
- sLIGmw==
-X-Received: by 2002:a05:600c:45c7:b0:434:a902:97cd with SMTP id
- 5b1f17b1804b1-434d09c0675mr81556705e9.12.1733387937572; 
- Thu, 05 Dec 2024 00:38:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFShH3KX13x+yGco2u2sVmHIMIukDyq+kttjwMMU7i7Vpf3vE9E+8oKk2H2iY/lFlxeZiyqfQ==
-X-Received: by 2002:a05:600c:45c7:b0:434:a902:97cd with SMTP id
- 5b1f17b1804b1-434d09c0675mr81556575e9.12.1733387937274; 
- Thu, 05 Dec 2024 00:38:57 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-244.web.vodafone.de.
- [109.42.48.244]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434da11935asm15836365e9.37.2024.12.05.00.38.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 00:38:56 -0800 (PST)
-Message-ID: <7e081052-f158-41d0-bb6e-1bd69d64ed59@redhat.com>
-Date: Thu, 5 Dec 2024 09:38:55 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tJ7ZB-0000Af-Fg
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 03:50:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733388633; x=1764924633;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=CPGm9ge8yIA2v66yL/WAdZf3MHTp9tkWEdUyIfYHs5M=;
+ b=SCGP6J/sBMGP/Fu1y0bQLWDRsz2ilA7ii7wK6cxpX8Yy+vwB1U0SioiA
+ qXanQPzhWzJYZMzyKyytvNvBr/YUaKK+Jg8Llpj+QEV8CBBUYVH/HTYgA
+ cgfOaKOoWLU/vnAwS2NKyd9hzUVI7fKQfSCfEq65C50yQBVHGTDBigxXS
+ E/Q6AbsHR8E/OdSF+8+KHlZe5Mmod8/QvQha1AecTqyXNnvVRnVw+T3FX
+ PJmGPhG2NNzJ8/KPboLtPF0zPL5uMhMGMBodLlPKEke9X/wFw72J5UmU6
+ z8gEKg0NQ6vEoNgcdHCf/zW2FAjL2XAd05ob1DrPitQNsVbJnkSTygYKG w==;
+X-CSE-ConnectionGUID: mO5vmgiVTamQvFghTfEwwQ==
+X-CSE-MsgGUID: KhytKjLkRLarGF72InzBNQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="37624157"
+X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="37624157"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Dec 2024 00:50:30 -0800
+X-CSE-ConnectionGUID: RDHvZK6USqG23hAgQ2ylwA==
+X-CSE-MsgGUID: t1m/pn7tSdCjIPlQM9Hmig==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="99108959"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Dec 2024 00:50:25 -0800
+Message-ID: <074ccf0a-e97d-4a24-ad02-34ae20ba79d3@intel.com>
+Date: Thu, 5 Dec 2024 16:50:20 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] gitlab: don't fail cirrus CI jobs when credits are
- exhausted
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20241204194807.1472261-1-berrange@redhat.com>
- <20241204194807.1472261-2-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v1 0/4] Initialize nr_cores and nr_threads early and
+ related clearup
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Rolnik
+ <mrolnik@gmail.com>, Brian Cain <bcain@quicinc.com>,
+ Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org
+References: <20241108070609.3653085-1-xiaoyao.li@intel.com>
+ <Z1FWpU36ZleXn7c4@intel.com> <e591b02b-253d-4f1e-b59f-122b3eb200eb@intel.com>
+ <Z1Foz1X0Sm7TpbpU@intel.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241204194807.1472261-2-berrange@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z1Foz1X0Sm7TpbpU@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -65
+X-Spam_score: -6.6
+X-Spam_bar: ------
+X-Spam_report: (-6.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.827, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -156,22 +99,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/12/2024 20.48, Daniel P. Berrangé wrote:
-> In the last week of the month we have often run out of credits on
-> Cirrus CI, which causes the jobs to fail, in turn causing the
-> overall pipeline to fail.
+On 12/5/2024 4:48 PM, Zhao Liu wrote:
+> On Thu, Dec 05, 2024 at 04:05:22PM +0800, Xiaoyao Li wrote:
+>> Date: Thu, 5 Dec 2024 16:05:22 +0800
+>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Subject: Re: [PATCH v1 0/4] Initialize nr_cores and nr_threads early and
+>>   related clearup
+>>
+>> On 12/5/2024 3:30 PM, Zhao Liu wrote:
+>>> I'm also very sorry, but I have a slightly different opinion...
+>>>
+>>>>    accel/tcg/user-exec-stub.c |  4 +++
+>>>>    hw/core/cpu-common.c       |  2 +-
+>>>>    include/hw/core/cpu.h      |  8 +++++
+>>>>    system/cpus.c              |  6 +++-
+>>>>    target/alpha/cpu.c         |  2 ++
+>>>>    target/arm/cpu.c           |  2 ++
+>>>>    target/avr/cpu.c           |  2 ++
+>>>>    target/hexagon/cpu.c       |  2 ++
+>>>>    target/hppa/cpu.c          |  2 ++
+>>>>    target/i386/cpu.c          | 61 +++++++++++++++++++-------------------
+>>>>    target/loongarch/cpu.c     |  2 ++
+>>>>    target/m68k/cpu.c          |  2 ++
+>>>>    target/microblaze/cpu.c    |  2 ++
+>>>>    target/mips/cpu.c          |  2 ++
+>>>>    target/openrisc/cpu.c      |  2 ++
+>>>>    target/ppc/cpu_init.c      |  2 ++
+>>>>    target/riscv/cpu.c         |  2 ++
+>>>>    target/rx/cpu.c            |  2 ++
+>>>>    target/s390x/cpu.c         |  2 ++
+>>>>    target/sh4/cpu.c           |  2 ++
+>>>>    target/sparc/cpu.c         |  2 ++
+>>>>    target/tricore/cpu.c       |  2 ++
+>>>>    target/xtensa/cpu.c        |  2 ++
+>>>>    23 files changed, 85 insertions(+), 32 deletions(-)
+>>>>
+>>>
+>>> I have some doubts about the necessity of changing the initialization of
+>>> nr_cores/nr_threads, because you can access the machine's topology info
+>>> via machine_topo_get_threads_per_socket(), which gives the same result as
+>>> `nr_cores * nr_threads`.
+>>
+>> yeah, it works. The goal is to maintain HT in env->features[].
+>>
+>> The problem is, as Igor objects, accessing MachineState from CPU context.
+>> This is what I'm working on to avoid for the next version.
 > 
-> The cirrus-run tool can now detect the "out of credits" scenario
-> and exits with a code of '3'.  We can tell gitlab to treat this
-> exit code as special and mark the job as "warning" instead of
-> "failed". This allows the pipeline status overall to remain
-> green, when we have non-technical issues with Cirrus CI.
+> :( I also noticed that patch. Adding #ifndef CONFIG_USER_ONLY is not
+> optimal there, so that approach is not general enough.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   .gitlab-ci.d/cirrus.yml | 2 ++
->   1 file changed, 2 insertions(+)
+> But your TDX case is different, TDX hook has been already under
+> `current_machine` context. So you can directly access any topo info
+> without CONFIG_USER_ONLY.
+> 
+>>> Especially, the TDX feature check hook is also within the context of
+>>> `current_machine`, so why not check if TDX's HT is consistent with QEMU's
+>>> emulation in the TDX hook?
+>>>
+>>> For this reason, and based on my comment on patch 2, I think checking HT
+>>> in the TDX hook or even ignoring HT, would be a more straightforward and
+>>> less impactful solution.
+>>
+>> Though it's motivated by TDX series, the goal is not TDX specific. The goal
+>> is to track features in env->features[] instead of manually generating a
+>> one-off value in cpu_x86_cpuid().
+> 
+> I agree, the principle of designing code should be like this. HT already
+> has some issues, and adding this check in x86_cpu_expand_features() is
+> also a one-off approach with very much effort. Checking HT in TDX is a
+> less costly and less impactful one-off solution.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Please disconnect it from TDX. Even without TDX, it's reasonable enough 
+to make the change to track HT in env->features[].
+
+> Even, why not ignore HT in the TDX check? Isn't placing the TDX feature
+> check before build_cpuid() implicitly assuming that any subsequent
+> updates to CPUID by QEMU are valid?
+
+Why choose to ignore HT in the TDX check? HT isn't special. The problem 
+is just HT is not tracked in env->features[], which is a incorrect design.
+
+It assumes the env->features[] is finalized.
+
+> Based on this, why can't TDX trust that QEMU will set HT correctly?
+> (However, this assumes that HT cannot be arbitrarily set by the user.)
+
+It's not TDX can't trust QEMU. It's all QEMU's business that QEMU to 
+ensure what it is going to set for TD guest is consistent with what TD 
+guest sees.
+
+You are suggesting that when QEMU checks the features, it makes HT a 
+special case that HT's value is finalized later than the check so please 
+ignore HT.
+
+What I want to achieve is to get rid of the special case, because HT 
+isn't special. It can be tracked in env->features[] and finalized earlier.
+
+> I'm not sure how the next version will be, but it would definitely be
+> better if it helps with generalization.
+
+The goal of this series is exactly generalization to make HT not special.
+
+> Based on the current approach, affecting all architectures, it would be
+> better to directly obtain the topology information from current_machine
+> in TDX.
+
+Imagine why Paolo suggested to post it separately? IIUC, because it's 
+not TDX specific thing.
+
+> -Zhao
+> 
+> 
 
 
