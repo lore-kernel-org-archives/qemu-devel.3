@@ -4,65 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18CBFE7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 07:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B881E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 07:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ6QG-0005wv-Fj; Thu, 05 Dec 2024 02:37:16 -0500
+	id 1tJ6hM-0002P7-20; Thu, 05 Dec 2024 02:54:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1tJ6QC-0005vt-9s; Thu, 05 Dec 2024 02:37:12 -0500
-Received: from smtp84.cstnet.cn ([159.226.251.84] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1tJ6Q8-0003Mj-Jq; Thu, 05 Dec 2024 02:37:11 -0500
-Received: from f9905068bba7.home.arpa (unknown [124.16.138.129])
- by APP-05 (Coremail) with SMTP id zQCowADn738UWFFne1MECA--.48444S2;
- Thu, 05 Dec 2024 15:36:53 +0800 (CST)
-From: MollyChen <xiaoou@iscas.ac.cn>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: MollyChen <xiaoou@iscas.ac.cn>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v1] target/riscv: add support for RV64 Xiangshan Nanhu CPU
-Date: Thu,  5 Dec 2024 07:36:20 +0000
-Message-Id: <20241205073622.46052-1-xiaoou@iscas.ac.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tJ6hJ-0002Ob-NP
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 02:54:53 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tJ6hH-0005V4-EW
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 02:54:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733385292; x=1764921292;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=HvE38l/GKHxRfHa9KHTC9I24m/tAHs+ZutYR6RlP3bQ=;
+ b=irA2YQF3pjuCaUlT1Te5iGcE2wBvmsmO8AT9UMINRFmX+1VVrInb/JB2
+ PcGpevbjmAgBMdCCUHOC2T2VkzK1eLQqIu59e7TKz1dEwFxAOnQiJuUKH
+ nB66cey/zb2SJQdRvAqG1oMWiiu1sZNPQpYgd3t8R28L9t2famjGejOEV
+ rv2Zv1jWAiXSHVP1cfbzFFWl9GksidrYnEo5pQhPKxpLlXe3i0RP7kcuF
+ kFX+D86ug/6mjuDCZ8HEevRP2mjtOcPVQ5FvhYnSx4cpmqRXvV2CyOfmn
+ bNHoS32b68wT+aiRcpzRPLm7D1otOqu7R5lvZeLkkDqBATFNqMMjeDs7O Q==;
+X-CSE-ConnectionGUID: Ug/J0vSIRR+DZh6D3NKp/g==
+X-CSE-MsgGUID: VFLiLIJfSoeVB3r2UPiPdw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="33599422"
+X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="33599422"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Dec 2024 23:54:47 -0800
+X-CSE-ConnectionGUID: U7SW9+vJTNaRt5FtHk3dZw==
+X-CSE-MsgGUID: D+ErJ18yTAS3F0yAvjbDdA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="98087146"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Dec 2024 23:54:38 -0800
+Message-ID: <e634dbf0-267a-48de-9419-7d978e25c969@intel.com>
+Date: Thu, 5 Dec 2024 15:54:36 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowADn738UWFFne1MECA--.48444S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxXw1fZw45Jw48Aw13AFy7Jrb_yoW5Xr4xpr
- 4UGa909rWDJasFka1fJF1DWrZ5Xw4ru3yag39xZ3W3XF43JrW7JF1Dt34UuryDXF4rX3WI
- 93WkCF15CF43Aa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUkK14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
- 6r4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26F
- 4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
- 7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
- 1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AK
- xVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F4
- 0E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFyl
- IxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxV
- AFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j
- 6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7VUbGQ6J
- UUUUU==
-X-Originating-IP: [124.16.138.129]
-X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
-Received-SPF: pass client-ip=159.226.251.84; envelope-from=xiaoou@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, HK_RANDOM_ENVFROM=0.001,
- HK_RANDOM_FROM=0.827, RCVD_IN_DNSWL_MED=-2.3,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/4] i386/cpu: Set up CPUID_HT in
+ x86_cpu_expand_features() instead of cpu_x86_cpuid()
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Rolnik
+ <mrolnik@gmail.com>, Brian Cain <bcain@quicinc.com>,
+ Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org
+References: <20241108070609.3653085-1-xiaoyao.li@intel.com>
+ <20241108070609.3653085-3-xiaoyao.li@intel.com> <Z1FUDGnenETEFV6Z@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z1FUDGnenETEFV6Z@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -65
+X-Spam_score: -6.6
+X-Spam_bar: ------
+X-Spam_report: (-6.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.827, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,77 +98,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a CPU entry for the RV64 XiangShan NANHU CPU which
-supports single-core and dual-core configurations. More
-details can be found at
-https://docs.xiangshan.cc/zh-cn/latest/integration/overview
+On 12/5/2024 3:19 PM, Zhao Liu wrote:
+> Hi Xiaoyao,
+> 
+> Sorry for late reply.
+> 
+>> @@ -7490,6 +7489,7 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
+>>   void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>>   {
+>>       CPUX86State *env = &cpu->env;
+>> +    CPUState *cs = CPU(cpu);
+>>       FeatureWord w;
+>>       int i;
+>>       GList *l;
+>> @@ -7531,6 +7531,10 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>>           }
+>>       }
+>>   
+>> +    if (cs->nr_cores * cs->nr_threads > 1) {
+>> +        env->features[FEAT_1_EDX] |= CPUID_HT;
+>> +    }
+>> +
+> 
+> We shouldn't place any CLI-configurable features here,
+> especially after expanding plus_features and minus_features.
 
-Signed-off-by: MollyChen <xiaoou@iscas.ac.cn>
----
- target/riscv/cpu-qom.h |  1 +
- target/riscv/cpu.c     | 29 +++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+yah, it needs to be placed before manipulation of plus_features and 
+minus_features.
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 6547642287..d56b067bf2 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -50,6 +50,7 @@
- #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906")
- #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
- #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
-+#define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
- #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
- 
- OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 8447ad0dfb..38baaa39f8 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -645,6 +645,34 @@ static void rv64_tt_ascalon_cpu_init(Object *obj)
- #endif
- }
- 
-+static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
-+{
-+    CPURISCVState *env = &RISCV_CPU(obj)->env;
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+
-+    riscv_cpu_set_misa_ext(env, RVG | RVC | RVB | RVS | RVU);
-+    env->priv_ver = PRIV_VERSION_1_12_0;
-+
-+    /* Enable ISA extensions */
-+    cpu->cfg.ext_zbc = true;
-+    cpu->cfg.ext_zbkb = true;
-+    cpu->cfg.ext_zbkc = true;
-+    cpu->cfg.ext_zbkx = true;
-+    cpu->cfg.ext_zknd = true;
-+    cpu->cfg.ext_zkne = true;
-+    cpu->cfg.ext_zknh = true;
-+    cpu->cfg.ext_zksed = true;
-+    cpu->cfg.ext_zksh = true;
-+    cpu->cfg.ext_svinval = true;
-+
-+    cpu->cfg.mmu = true;
-+    cpu->cfg.pmp = true;
-+
-+#ifndef CONFIG_USER_ONLY
-+    set_satp_mode_max_supported(cpu, VM_1_10_SV39);
-+#endif
-+}
-+
- #ifdef CONFIG_TCG
- static void rv128_base_cpu_init(Object *obj)
- {
-@@ -3050,6 +3078,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_THEAD_C906, MXL_RV64,  rv64_thead_c906_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_TT_ASCALON, MXL_RV64,  rv64_tt_ascalon_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_v1_cpu_init),
-+    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU, MXL_RV64, rv64_xiangshan_nanhu_cpu_init),
- #ifdef CONFIG_TCG
-     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, rv128_base_cpu_init),
- #endif /* CONFIG_TCG */
--- 
-2.34.1
+> HT has been made configurable since the commit 83629b1 ("target/i386/
+> cpu: Fix CPUID_HT exposure"), so if you want palce HT here, you
+> should make it un-configurable first.
+
+No, commit 83629b1 doesn't make HT configurable but fix the warning of
+
+    warning: host doesn't support requested feature: CPUID.01H:EDX.ht 
+[bit 28]
+
+when "-cpu *,+ht"
+
+> Regarding commit 83629b1, in what cases do we need to actively set HT?
+
+when users want to do so. QEMU allows users to so do.
+
+> That commit even introduces more issues. Ideally, the hardware being
+> emulated by setting or masking feature bits should be feature-consistent.
+> 
+> However, "-cpu *,-ht -smp 2" does not remove the HT flag (which is
+> unexpected), and "-cpu *,+ht -smp 1" forcibly sets HT (which results in
+> buggy emulation). :(
+
+For the case "-cpu *,-ht -smp 2" we can add some warn like what for AMD:
+
+     if (IS_AMD_CPU(env) &&
+         !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
+         cs->nr_threads > 1) {
+             warn_report_once("This family of AMD CPU doesn't support "
+                              "hyperthreading(%d). Please configure -smp "
+                              "options properly or try enabling topoext "
+                              "feature.", cs->nr_threads);
+     }
+
+for the case of "-cpu *,+ht, -smp 1", we can add a dependency between 
+"HT" and "smp > 1", similar as feature_dependencies[]
+
+> In fact, HT should not be freely configurable in hardware emulation;
+> users should configure it in the BIOS.
+
+How users configure it in the BIOS? Or do you mean the BIOS will 
+set/clear it based on the actual (v)cpus get activated? Any reference to 
+teh BIOS spec?
+
+> 
+>>       for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
+>>           FeatureDep *d = &feature_dependencies[i];
+>>           if (!(env->features[d->from.index] & d->from.mask)) {
+>> -- 
+>> 2.34.1
+>>
+>>
 
 
