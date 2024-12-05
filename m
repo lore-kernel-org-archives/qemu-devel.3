@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A884E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C63AE77170
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJIZg-0007CS-Qi; Thu, 05 Dec 2024 15:35:48 -0500
+	id 1tJIZE-000681-0Q; Thu, 05 Dec 2024 15:35:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJIZe-000716-65
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:35:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJIZb-0004qx-IZ
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:35:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733430941;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PZy9+rDhphLS4wB6yj3ielHuZRgMxt22TwyEygUfDz8=;
- b=QyeXllWTQbwCRfXOc8aO5wioVSLZI+YDU7fiTjexfwIPQlDESh5OLZw4XythKCoSQbgMVO
- XqMpWRHKlnbOcVZPZra8VWTG/rRr0yZw5Y4oZMegYLYI5m9YGvDT3secnG+yc4xlvL0YOY
- HXwC7muVdsMbFN5LxZ6GZ4MJs3A+3Vc=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-391-QFKZJrBIOMacGwjMffZtFw-1; Thu, 05 Dec 2024 15:35:37 -0500
-X-MC-Unique: QFKZJrBIOMacGwjMffZtFw-1
-X-Mimecast-MFC-AGG-ID: QFKZJrBIOMacGwjMffZtFw
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6d8881bd39fso16962506d6.3
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 12:35:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733430936; x=1734035736;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1tJIZC-00067d-Ml
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:35:18 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1tJIZA-0004oe-MW
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:35:18 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2ee6abf124aso1160332a91.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 12:35:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733430915; x=1734035715; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PZy9+rDhphLS4wB6yj3ielHuZRgMxt22TwyEygUfDz8=;
- b=q97Tv4hSA0Pc6upqNLr4ePW1vjuEmX4TN5Sbs/3VdDWKzCD3j0YTcRc+V88JCh2Ks7
- ArewKcbueTwwbxtY1ktYir1w70mkKEPFt9hGUHApozQ/wTVylOhWmlwoNZGBbrVgFNzR
- /KZMzAYe/vALTsrV88KH/ZvL+b26t/QBZPSZ1rtWD+9BbWLnAz2Mb8fcWFllnDxzOWkT
- x3GT28mwoD+dAugwbpB6B4EcaQfZqt7ClDJfJbqIX2B/1SjYfOHGwz/VK/w32blK9xG2
- f8w+cvQvpinV2gwnzY03DQY55bPwf8fKlO/ilOhSeoHZyAnfhoErN+Ga6nySQIKUaqyM
- faKg==
-X-Gm-Message-State: AOJu0Yy5tCvZPHM6Ylb0uAFNTW+Mts6UqeTHklEvptndagFHflIHNAmy
- truhphFCFcoai2iSMpIRnxO4uxntxvEG2Nk/C3SvZzItiryZSiLdbfHJ6w8qsNgyyOmwYMx8B8c
- 4jBp2s54beA3b7SbgDHhRfn9I9Op5zVqRtPbUvsyoaQ0BXptHnxpKdQfR3g9E
-X-Gm-Gg: ASbGncsmkqkQpKzCg133DT1DJ5fPqXzMQTXd1exw+5MKxOT2s6q02ndWKDqe31kkOdj
- BOklXKzm/2WS+glgPGEvglTPhx+jDIryLZK7U6aGccmZP/Nz/ocpkl4p7o8pu5Ka9Y9acjEmehX
- gNwxWJ3ctZhc1RCuQwHC8p1zl6LqYmVD0kMqck4MFJ6vIY7flQvW9A958H3096xbktg4gS6bdL9
- yN1MFNBOYiNEOnG/7JTMPUDTK9XgGOJZ0AFIXWZxE4qEctpri13St1oxyess6xLbGLy2Ms3hYOP
- rJZ5Zry5zl8=
-X-Received: by 2002:a05:6214:1d0c:b0:6d8:9bbe:392d with SMTP id
- 6a1803df08f44-6d8e70f0644mr2942186d6.6.1733430935978; 
- Thu, 05 Dec 2024 12:35:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE6zEpVb2Vzbqoy14Sm1pprXAJS+QUHftTGROjMXOzQJdsA0YWNcGm/c5nUBp4bu58efo8nJA==
-X-Received: by 2002:a05:6214:1d0c:b0:6d8:9bbe:392d with SMTP id
- 6a1803df08f44-6d8e70f0644mr2942036d6.6.1733430935657; 
- Thu, 05 Dec 2024 12:35:35 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8da9fded9sm10015646d6.76.2024.12.05.12.35.34
+ bh=XOxyT26bcT3QQMndkO+7h+Piz5kcLrsCzZSCVUpRwzM=;
+ b=Qpbih514ovEt4CI0288X5eq4GdZJR8ULYahsw+UwbPu4uxmDsxpKt7GD1K/Nnn+vjJ
+ C1LF5fJELT9Wvjxx7K/pw+k0PzS4oKIcmAPpkQUiqye3vgpEz/hRTgYcH4qlWZXp0Xau
+ OPEoAhwozBkcdJzT9sRKiHHytitKhutcgKi4qvJmVBrtc+xyNJqU94FhUxRKIyrgRmOy
+ Am+jPoWUxijW8UbPxY5wIZJdpddya4riwYuCHq7sGu3E6ToP4AMhA0aLn+eGByqCWxEN
+ ljdBoVcIjT02gtJCMRcECKjkls0le/7VGIA1KWF/PvtFrpWMqsb39pOwiHQ1Q5dBw8Qz
+ Qz9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733430915; x=1734035715;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XOxyT26bcT3QQMndkO+7h+Piz5kcLrsCzZSCVUpRwzM=;
+ b=XwrNyUT7pqmfl5BuFBL3OMmCsk1SBw33wyVvaAmvnR5aJfU4s6YzFM+EyHD2MOfaJ8
+ XN6AKDnpzq0o0Mv9LDcdomwzlIVP0p48w4uOc2ewJUf4yiSQbXZdTBjdk6R1gVLIK9Vv
+ QtZMK9a4nUmgqCVKckeAr6tPcatRR1HTDvoKK/eJEZ6d02G3SqtBJ+tXJ9WIJzeyQmvK
+ paCnha4oQ65DiVGb0EvoGm3yNp5+IdAqjWtMwrR3CS//YPUWXQtEcz3UkmPUa/82pHeF
+ QzzxX1RCE5vbVMw85GidP+kIUbHg0PLcSeRDcBSB/W2i/YweF6W9PJULchNkXDgnnlLt
+ gvSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWDShIvSKvnjlBu+H8bERiSKcZ6wmaSGWAp0EOR6yGCvy65lMNxU6E96A1UhZ8Ono8/ZaMc3ipgqFZk@nongnu.org
+X-Gm-Message-State: AOJu0YwCKhtIKaOPShonZLkskOF9lWggPsjDqyZhgt0L62PIEL22mHc8
+ oYbauMY2dWur9r4uco9T5RPHnWDAHhV7TvohZA+MwociUYe690cD17ZkyQ==
+X-Gm-Gg: ASbGncuqQ59ZZ3upjotiytNAY/Qy6iwqoCC87ahdKjLI8GVmkyyRBB/TW2A4jJJPTz1
+ hDkpEkCiI4SPt2iucZ/ZPQ9dE4zLxpwskVgWduFxXiWInO8SWtYAoJCIhZ3g4qYLnwg4ubEtvt0
+ UtU1nx1DZga4CTGgNU4ep9T+MgLOVXy00MXQvJ3gY360sHa7OnD3viTIF8VB9gGWJWGvTMGu+95
+ LaObaH0YLChRdoton+L1aPfBMX2yQGrwYohuGkftB4=
+X-Google-Smtp-Source: AGHT+IElkhleK7Y17x5rBUWKryBptOUqd5yjC77Of3O3BhGm0tFCuGgaSjYdyGz/UdDlQLdSb6QSAQ==
+X-Received: by 2002:a17:90b:37c5:b0:2ee:f687:6adb with SMTP id
+ 98e67ed59e1d1-2ef6956008bmr747090a91.3.1733430915319; 
+ Thu, 05 Dec 2024 12:35:15 -0800 (PST)
+Received: from valdaarhun.. ([2409:4081:2c01:b2be:f39d:e902:7582:5526])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ef2701c2f2sm3705905a91.23.2024.12.05.12.35.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 12:35:34 -0800 (PST)
-Date: Thu, 5 Dec 2024 15:35:32 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH 2/2] migration/multifd: Allow to sync with sender threads
- only
-Message-ID: <Z1IOlJemNxrhOg3z@x1n>
-References: <20241205185303.897010-1-peterx@redhat.com>
- <20241205185303.897010-3-peterx@redhat.com>
- <875xnxj37e.fsf@suse.de>
+ Thu, 05 Dec 2024 12:35:14 -0800 (PST)
+From: Sahil Siddiq <icegambit91@gmail.com>
+X-Google-Original-From: Sahil Siddiq <sahilcdq@proton.me>
+To: eperezma@redhat.com,
+	sgarzare@redhat.com
+Cc: mst@redhat.com, qemu-devel@nongnu.org, Sahil Siddiq <sahilcdq@proton.me>
+Subject: [RFC v4 4/5] vdpa: Allocate memory for svq and map them to vdpa
+Date: Fri,  6 Dec 2024 02:04:29 +0530
+Message-ID: <20241205203430.76251-5-sahilcdq@proton.me>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241205203430.76251-1-sahilcdq@proton.me>
+References: <20241205203430.76251-1-sahilcdq@proton.me>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <875xnxj37e.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=icegambit91@gmail.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,226 +102,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 05, 2024 at 05:16:05PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > Teach multifd_send_sync_main() to sync with threads only.
-> >
-> > We already have such requests, which is when mapped-ram is enabled with
-> > multifd.  In that case, no SYNC messages will be pushed to the stream when
-> > multifd syncs the sender threads because there's no destination threads
-> > waiting for that.  The whole point of the sync is to make sure all threads
-> > flushed their jobs.
-> >
-> > So fundamentally we have a request to do the sync in different ways:
-> >
-> >   - Either to sync the threads only,
-> >   - Or to sync the threads but also with the destination side
-> >
-> > Mapped-ram did it already because of the use_packet check in the sync
-> > handler of the sender thread.  It works.
-> >
-> > However it may stop working when e.g. VFIO may start to reuse multifd
-> > channels to push device states.  In that case VFIO has similar request on
-> > "thread-only sync" however we can't check a flag because such sync request
-> > can still come from RAM which needs the on-wire notifications.
-> >
-> > Paving way for that by allowing the multifd_send_sync_main() to specify
-> > what kind of sync the caller needs.  We can use it for mapped-ram already.
-> >
-> > No functional change intended.
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/multifd.h        | 16 +++++++++++++---
-> >  migration/multifd-nocomp.c |  8 +++++++-
-> >  migration/multifd.c        | 14 ++++++++------
-> >  3 files changed, 28 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/migration/multifd.h b/migration/multifd.h
-> > index 50d58c0c9c..6b2f60a917 100644
-> > --- a/migration/multifd.h
-> > +++ b/migration/multifd.h
-> > @@ -19,6 +19,15 @@
-> >  typedef struct MultiFDRecvData MultiFDRecvData;
-> >  typedef struct MultiFDSendData MultiFDSendData;
-> >  
-> > +typedef enum {
-> > +    /* No sync request */
-> > +    MULTIFD_SYNC_NONE = 0,
-> > +    /* Sync on the sender threads without pushing messages */
-> > +    MULTIFD_SYNC_THREADS,
-> > +    /* Sync on the sender threads, meanwhile push "SYNC" message to the wire */
-> 
-> s/meanwhile//
-> 
-> > +    MULTIFD_SYNC_THREADS_AND_NOTIFY,
-> > +} MultiFDSyncReq;
-> 
-> I think I'd prefer the local vs. remote terminology I introduced in my
-> proposal [1] for cleaning up the multifd_flush_after_each_section() code:
+Allocate memory for the packed vq format and map them to the vdpa
+device.
 
-I'm ok with your naming, as long as the comment will explain.
+Since "struct vring" and "struct vring_packed's vring" both have
+the same layout memory, the implementation in svq start and svq
+stop should not differ based on the vq's format.
 
-> 
-> LOCAL - sync the local threads between themselves
-> REMOTE - put a message on the stream for the remote end to perform a
->          sync on their threads.
-> 
-> Down below you're passing the
-> MULTIFD_SYNC_THREADS_AND_NOTIFY into the send thread, but the "sync
-> threads" part of this is really done outside the thread, so that part
-> doesn't have a meaning inside the thread.
-> 
-> 1- https://lore.kernel.org/r/875xo8n4ue.fsf@suse.de
-> 
-> Also, please provide your input there^, it would be nice to unify the
-> terminology and reasoning about both changes.
+Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+---
+Changes v3 -> v4:
+- Based on commit #3 of v3.
+- vhost-shadow-virtqueue.c
+  (vhost_svq_memory_packed): Remove function.
+  (vhost_svq_driver_area_size,vhost_svq_descriptor_area_size): Decouple functions.
+  (vhost_svq_device_area_size): Rewrite function.
+  (vhost_svq_start): Simplify implementation.
+  (vhost_svq_stop): Unconditionally munmap().
+- vhost-shadow-virtqueue.h: New function declaration.
+- vhost-vdpa.c
+  (vhost_vdpa_svq_unmap_rings): Call vhost_vdpa_svq_unmap_ring().
+  (vhost_vdpa_svq_map_rings): New mappings.
 
-Yes, I'm mostly flushing my inbox in time order unless prioritized, so I'm
-getting there today or tomorrow.
+ hw/virtio/vhost-shadow-virtqueue.c | 47 ++++++++++++++++++++----------
+ hw/virtio/vhost-shadow-virtqueue.h |  1 +
+ hw/virtio/vhost-vdpa.c             | 34 +++++++++++++++++----
+ 3 files changed, 60 insertions(+), 22 deletions(-)
 
-> 
-> > +
-> >  bool multifd_send_setup(void);
-> >  void multifd_send_shutdown(void);
-> >  void multifd_send_channel_created(void);
-> > @@ -28,7 +37,7 @@ void multifd_recv_shutdown(void);
-> >  bool multifd_recv_all_channels_created(void);
-> >  void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
-> >  void multifd_recv_sync_main(void);
-> > -int multifd_send_sync_main(void);
-> > +int multifd_send_sync_main(MultiFDSyncReq req);
-> >  bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
-> >  bool multifd_recv(void);
-> >  MultiFDRecvData *multifd_get_recv_data(void);
-> > @@ -143,7 +152,7 @@ typedef struct {
-> >      /* multifd flags for each packet */
-> >      uint32_t flags;
-> >      /*
-> > -     * The sender thread has work to do if either of below boolean is set.
-> > +     * The sender thread has work to do if either of below field is set.
-> >       *
-> >       * @pending_job:  a job is pending
-> >       * @pending_sync: a sync request is pending
-> > @@ -152,7 +161,8 @@ typedef struct {
-> >       * cleared by the multifd sender threads.
-> >       */
-> >      bool pending_job;
-> > -    bool pending_sync;
-> > +    MultiFDSyncReq pending_sync;
-> > +
-> >      MultiFDSendData *data;
-> >  
-> >      /* thread local variables. No locking required */
-> > diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-> > index 55191152f9..f64c4c9abd 100644
-> > --- a/migration/multifd-nocomp.c
-> > +++ b/migration/multifd-nocomp.c
-> > @@ -345,6 +345,8 @@ retry:
-> >  
-> >  int multifd_ram_flush_and_sync(void)
-> >  {
-> > +    MultiFDSyncReq req;
-> > +
-> >      if (!migrate_multifd()) {
-> >          return 0;
-> >      }
-> > @@ -356,7 +358,11 @@ int multifd_ram_flush_and_sync(void)
-> >          }
-> >      }
-> >  
-> > -    return multifd_send_sync_main();
-> > +    /* File migrations only need to sync with threads */
-> > +    req = migrate_mapped_ram() ?
-> > +        MULTIFD_SYNC_THREADS : MULTIFD_SYNC_THREADS_AND_NOTIFY;
-> > +
-> > +    return multifd_send_sync_main(req);
-> >  }
-> >  
-> >  bool multifd_send_prepare_common(MultiFDSendParams *p)
-> > diff --git a/migration/multifd.c b/migration/multifd.c
-> > index 498e71fd10..77645e87a0 100644
-> > --- a/migration/multifd.c
-> > +++ b/migration/multifd.c
-> > @@ -523,7 +523,7 @@ static int multifd_zero_copy_flush(QIOChannel *c)
-> >      return ret;
-> >  }
-> >  
-> > -int multifd_send_sync_main(void)
-> > +int multifd_send_sync_main(MultiFDSyncReq req)
-> >  {
-> >      int i;
-> >      bool flush_zero_copy;
-> > @@ -543,8 +543,8 @@ int multifd_send_sync_main(void)
-> >           * We should be the only user so far, so not possible to be set by
-> >           * others concurrently.
-> >           */
-> > -        assert(qatomic_read(&p->pending_sync) == false);
-> > -        qatomic_set(&p->pending_sync, true);
-> > +        assert(qatomic_read(&p->pending_sync) == MULTIFD_SYNC_NONE);
-> > +        qatomic_set(&p->pending_sync, req);
-> 
-> Hmm, isn't it easier to skip the whole loop if req ==
-> MULTIFD_SYNC_THREADS? I don't remember why we kept this loop here for
-> mapped-ram.
-
-The "thread-only" version of request (or, in your preferred naming, "local"
-sync request) says: "please flush all the works enqueued in sender thread".
-Sync is still needed even for mapped-ram to make sure pwrite()s all land.
-Also needed for VFIO.
-
-> 
-> >          qemu_sem_post(&p->sem);
-> >      }
-> >      for (i = 0; i < migrate_multifd_channels(); i++) {
-> > @@ -635,14 +635,16 @@ static void *multifd_send_thread(void *opaque)
-> >               */
-> >              qatomic_store_release(&p->pending_job, false);
-> >          } else {
-> > +            MultiFDSyncReq req = qatomic_read(&p->pending_sync);
-> > +
-> >              /*
-> >               * If not a normal job, must be a sync request.  Note that
-> >               * pending_sync is a standalone flag (unlike pending_job), so
-> >               * it doesn't require explicit memory barriers.
-> >               */
-> > -            assert(qatomic_read(&p->pending_sync));
-> > +            assert(req != MULTIFD_SYNC_NONE);
-> >  
-> > -            if (use_packets) {
-> > +            if (req == MULTIFD_SYNC_THREADS_AND_NOTIFY) {
-> 
-> Good, more explicit.
-> 
-> >                  p->flags = MULTIFD_FLAG_SYNC;
-> >                  multifd_send_fill_packet(p);
-> >                  ret = qio_channel_write_all(p->c, (void *)p->packet,
-> > @@ -654,7 +656,7 @@ static void *multifd_send_thread(void *opaque)
-> >                  stat64_add(&mig_stats.multifd_bytes, p->packet_len);
-> >              }
-> >  
-> > -            qatomic_set(&p->pending_sync, false);
-> > +            qatomic_set(&p->pending_sync, MULTIFD_SYNC_NONE);
-> 
-> It's a bit weird that MULTIFD_SYNC_THREADS will never have an use inside
-> the thread.
-
-It has; it guarantees that existing queued pending_job is completed.
-
-> Makes me think it should never exist in the first place. But
-> then we're back into pending_sync + use_packets... looks like it would
-> be less convoluted to skip the loop up there and assert(!use_packets) in
-> here.
-> 
-> Unless I'm missing something...
-> 
-> >              qemu_sem_post(&p->sem_sync);
-> >          }
-> >      }
-> 
-
+diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+index 6eee01ab3c..be06b12c9a 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.c
++++ b/hw/virtio/vhost-shadow-virtqueue.c
+@@ -314,7 +314,7 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const struct iovec *out_sg,
+         return -EINVAL;
+     }
+ 
+-    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED)) {
++    if (svq->is_packed) {
+         vhost_svq_add_packed(svq, out_sg, out_num, in_sg,
+                              in_num, sgs, &qemu_head);
+     } else {
+@@ -661,19 +661,33 @@ void vhost_svq_get_vring_addr(const VhostShadowVirtqueue *svq,
+     addr->used_user_addr = (uint64_t)(uintptr_t)svq->vring.used;
+ }
+ 
+-size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq)
++size_t vhost_svq_descriptor_area_size(const VhostShadowVirtqueue *svq)
+ {
+     size_t desc_size = sizeof(vring_desc_t) * svq->vring.num;
+-    size_t avail_size = offsetof(vring_avail_t, ring[svq->vring.num]) +
+-                                                              sizeof(uint16_t);
++    return ROUND_UP(desc_size, qemu_real_host_page_size());
++}
+ 
+-    return ROUND_UP(desc_size + avail_size, qemu_real_host_page_size());
++size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq)
++{
++    size_t avail_size;
++    if (svq->is_packed) {
++        avail_size = sizeof(uint32_t);
++    } else {
++        avail_size = offsetof(vring_avail_t, ring[svq->vring.num]) +
++                                                             sizeof(uint16_t);
++    }
++    return ROUND_UP(avail_size, qemu_real_host_page_size());
+ }
+ 
+ size_t vhost_svq_device_area_size(const VhostShadowVirtqueue *svq)
+ {
+-    size_t used_size = offsetof(vring_used_t, ring[svq->vring.num]) +
+-                                                              sizeof(uint16_t);
++    size_t used_size;
++    if (svq->is_packed) {
++        used_size = sizeof(uint32_t);
++    } else {
++        used_size = offsetof(vring_used_t, ring[svq->vring.num]) +
++                                                           sizeof(uint16_t);
++    }
+     return ROUND_UP(used_size, qemu_real_host_page_size());
+ }
+ 
+@@ -718,8 +732,6 @@ void vhost_svq_set_svq_kick_fd(VhostShadowVirtqueue *svq, int svq_kick_fd)
+ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
+                      VirtQueue *vq, VhostIOVATree *iova_tree)
+ {
+-    size_t desc_size;
+-
+     event_notifier_set_handler(&svq->hdev_call, vhost_svq_handle_call);
+     svq->next_guest_avail_elem = NULL;
+     svq->shadow_avail_idx = 0;
+@@ -728,20 +740,22 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
+     svq->vdev = vdev;
+     svq->vq = vq;
+     svq->iova_tree = iova_tree;
++    svq->is_packed = virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED);
+ 
+     svq->vring.num = virtio_queue_get_num(vdev, virtio_get_queue_index(vq));
+     svq->num_free = svq->vring.num;
+-    svq->vring.desc = mmap(NULL, vhost_svq_driver_area_size(svq),
++    svq->vring.desc = mmap(NULL, vhost_svq_descriptor_area_size(svq),
+                            PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
+                            -1, 0);
+-    desc_size = sizeof(vring_desc_t) * svq->vring.num;
+-    svq->vring.avail = (void *)((char *)svq->vring.desc + desc_size);
++    svq->vring.avail = mmap(NULL, vhost_svq_driver_area_size(svq),
++                            PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
++                            -1, 0);
+     svq->vring.used = mmap(NULL, vhost_svq_device_area_size(svq),
+                            PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
+                            -1, 0);
+-    svq->desc_state = g_new0(SVQDescState, svq->vring.num);
+-    svq->desc_next = g_new0(uint16_t, svq->vring.num);
+-    for (unsigned i = 0; i < svq->vring.num - 1; i++) {
++    svq->desc_state = g_new0(SVQDescState, svq->num_free);
++    svq->desc_next = g_new0(uint16_t, svq->num_free);
++    for (unsigned i = 0; i < svq->num_free - 1; i++) {
+         svq->desc_next[i] = cpu_to_le16(i + 1);
+     }
+ }
+@@ -781,7 +795,8 @@ void vhost_svq_stop(VhostShadowVirtqueue *svq)
+     svq->vq = NULL;
+     g_free(svq->desc_next);
+     g_free(svq->desc_state);
+-    munmap(svq->vring.desc, vhost_svq_driver_area_size(svq));
++    munmap(svq->vring.desc, vhost_svq_descriptor_area_size(svq));
++    munmap(svq->vring.avail, vhost_svq_driver_area_size(svq));
+     munmap(svq->vring.used, vhost_svq_device_area_size(svq));
+     event_notifier_set_handler(&svq->hdev_call, NULL);
+ }
+diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-virtqueue.h
+index ce89bafedc..6c0e0c4f67 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.h
++++ b/hw/virtio/vhost-shadow-virtqueue.h
+@@ -151,6 +151,7 @@ void vhost_svq_set_svq_kick_fd(VhostShadowVirtqueue *svq, int svq_kick_fd);
+ void vhost_svq_set_svq_call_fd(VhostShadowVirtqueue *svq, int call_fd);
+ void vhost_svq_get_vring_addr(const VhostShadowVirtqueue *svq,
+                               struct vhost_vring_addr *addr);
++size_t vhost_svq_descriptor_area_size(const VhostShadowVirtqueue *svq);
+ size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq);
+ size_t vhost_svq_device_area_size(const VhostShadowVirtqueue *svq);
+ 
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 3cdaa12ed5..97ed569792 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -1134,6 +1134,8 @@ static void vhost_vdpa_svq_unmap_rings(struct vhost_dev *dev,
+ 
+     vhost_vdpa_svq_unmap_ring(v, svq_addr.desc_user_addr);
+ 
++    vhost_vdpa_svq_unmap_ring(v, svq_addr.avail_user_addr);
++
+     vhost_vdpa_svq_unmap_ring(v, svq_addr.used_user_addr);
+ }
+ 
+@@ -1181,38 +1183,58 @@ static bool vhost_vdpa_svq_map_rings(struct vhost_dev *dev,
+                                      Error **errp)
+ {
+     ERRP_GUARD();
+-    DMAMap device_region, driver_region;
++    DMAMap descriptor_region, device_region, driver_region;
+     struct vhost_vring_addr svq_addr;
+     struct vhost_vdpa *v = dev->opaque;
++    size_t descriptor_size = vhost_svq_descriptor_area_size(svq);
+     size_t device_size = vhost_svq_device_area_size(svq);
+     size_t driver_size = vhost_svq_driver_area_size(svq);
+-    size_t avail_offset;
+     bool ok;
+ 
+     vhost_svq_get_vring_addr(svq, &svq_addr);
+ 
+-    driver_region = (DMAMap) {
++    descriptor_region = (DMAMap) {
+         .translated_addr = svq_addr.desc_user_addr,
++        .size = descriptor_size - 1,
++        .perm = IOMMU_RO,
++    };
++    if (svq->is_packed) {
++        descriptor_region.perm = IOMMU_RW;
++    }
++
++    ok = vhost_vdpa_svq_map_ring(v, &descriptor_region, errp);
++    if (unlikely(!ok)) {
++        error_prepend(errp, "Cannot create vq descriptor region: ");
++        return false;
++    }
++    addr->desc_user_addr = descriptor_region.iova;
++
++    driver_region = (DMAMap) {
++        .translated_addr = svq_addr.avail_user_addr,
+         .size = driver_size - 1,
+         .perm = IOMMU_RO,
+     };
+     ok = vhost_vdpa_svq_map_ring(v, &driver_region, errp);
+     if (unlikely(!ok)) {
+         error_prepend(errp, "Cannot create vq driver region: ");
++        vhost_vdpa_svq_unmap_ring(v, descriptor_region.translated_addr);
+         return false;
+     }
+-    addr->desc_user_addr = driver_region.iova;
+-    avail_offset = svq_addr.avail_user_addr - svq_addr.desc_user_addr;
+-    addr->avail_user_addr = driver_region.iova + avail_offset;
++    addr->avail_user_addr = driver_region.iova;
+ 
+     device_region = (DMAMap) {
+         .translated_addr = svq_addr.used_user_addr,
+         .size = device_size - 1,
+         .perm = IOMMU_RW,
+     };
++    if (svq->is_packed) {
++        device_region.perm = IOMMU_WO;
++    }
++
+     ok = vhost_vdpa_svq_map_ring(v, &device_region, errp);
+     if (unlikely(!ok)) {
+         error_prepend(errp, "Cannot create vq device region: ");
++        vhost_vdpa_svq_unmap_ring(v, descriptor_region.translated_addr);
+         vhost_vdpa_svq_unmap_ring(v, driver_region.translated_addr);
+     }
+     addr->used_user_addr = device_region.iova;
 -- 
-Peter Xu
+2.47.0
 
 
