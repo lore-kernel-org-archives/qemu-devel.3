@@ -4,90 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD4EE7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 13:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0C3BE7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 13:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJBmK-0005w8-Hc; Thu, 05 Dec 2024 08:20:24 -0500
+	id 1tJBuF-0000Pn-SK; Thu, 05 Dec 2024 08:28:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tJBmG-0005pL-Ut; Thu, 05 Dec 2024 08:20:22 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJBuB-0000PV-Sd
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:28:33 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tJBmB-0002R4-56; Thu, 05 Dec 2024 08:20:19 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a9a977d6cc7so125944766b.3; 
- Thu, 05 Dec 2024 05:20:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJBu9-00044P-FT
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:28:31 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5d122cf8e52so1428439a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 05:28:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733404809; x=1734009609; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NYE8ly36JdIRhjdDqnewOgIWaw9/py5eadl9lzg2NvA=;
- b=lQDZoYpH3hhjN9a6CLJdi00QOfICWqpDZhkYdnefQAWizXpD1X5qXcZd7HRYEYHQ7g
- MmgS1JvjbTrL32xb16uvhigdKcH0SymnNk0yvriYaeWOxXc7hMVmnygAqCGHjzRJ7cu5
- kdbUUfWsy06a+sPSZ0cBP1QvpwV8o4rJpmdV9jqx5Ptm2AyJtgi6jR90Qqn5KgQTG0eM
- of2o6crX62rrUoTLHeaW603HimzvOKsaKdVn73H16T/jfx/fhhAoPSCF7nfrZOBuu0L2
- /z9W50xOsoedIFYkLy02lPSG3yII6R4YZVxH1ScHq5vlIP0z9kO4r7zkX6248juUEEqJ
- ohhw==
+ d=linaro.org; s=google; t=1733405306; x=1734010106; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZKnOJVD9Z+xSi53FsqP/mQaZd6IpveLUMFX5W/l75EY=;
+ b=cihwFxTfjskn00sp85zbqdQwDXAI2cjupwnTm4kLa9jmikJmtvvt3nt9EAFHbvgmtv
+ YdULr2ShGrANhGxB4k4jUi1fagyrBaDov/D3fTbeNl6Y8A58N4qTVYdajIeZESKzN78E
+ Tz0LZR8mg2gCmLZ/DIX3FjtcKc9xMwU+9XJCg4zhjeJxQOOpl2R2Mw0tN1giROEM4+cw
+ HliavvsTg/VdVXsbWzey4H2nOAFD0nsW+Os+6bjG6J1RUre8Cw/sktjAzobqdMYoVjqu
+ Zq4NwoXWwWrmGcIeOYAO/CXyDd3Wq28FvAvP+LlknBdr1Ty51JS4NiIacLVHaEqlWYeM
+ s2XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733404809; x=1734009609;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NYE8ly36JdIRhjdDqnewOgIWaw9/py5eadl9lzg2NvA=;
- b=IkCm2QPdX4yrxcQTmuyGh4nn8LPq3Ymd3cAZYPvL6IihJSjcVne5xhRTNIbYA6HAdT
- ZRw01lBncxAtZ3rdr3NRgPjREB1PuTPgpSfw5VS6NvlGbKh9S/v5SlijYB+7bvZXHhMt
- u8J+FA/hKDh+0uTQ0oDd7BNOYUJu5ROiEnHylRCfDPc2hZyE8ZfiY0xvaTHP99qzrqLn
- d/q0U2wP10SMBF2/02v4B/rJSazXd1tIR0FH8kQgiQFtBH7TvvLK5VlANNTU3Oiq7cKr
- 3PHZlmataqhDJJ2DmvSlGqT6LhPqZJn9tZ8rmgkjiV1K3D4UjDArTGI3pUScgBjIc2At
- VUnw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUd+TaHG5HVX4vBht4aHMGeG+djJntivxayDm1ECfXyS2rMGst9adYEAX7TqDklL9/hJMICsNBmog==@nongnu.org,
- AJvYcCW5k++c6LxdZe6CaSVvaeAaPrARaBvjRLpOdivCWko5w0Y2pGrucMIxyXd9wRo3JBbGFYatV1POi5KCbQ==@nongnu.org
-X-Gm-Message-State: AOJu0YyOk/bkHmx1x1VQVr5hXJ+LQvaTHCP0Io3ljW4q7W+XvfrDoidh
- mSRYxkhEZ02ETF2ohLcAqUIInp6HH3pYcQsHjlF7mjP8BspnNx9hZ4I9TQ==
-X-Gm-Gg: ASbGncu57ZMBwiKC1op9bDQEQZxrqlgMzz8+Engtx2Ref1/kbW5+7lH8waipXLC9qJy
- hLF578UJRJwVuaMp7G3S24ftJNA80qXtMrJj8pCIHNBkWuGPl87vwIFYEb33GjB2TtJxZWs5wG1
- xIosntbAc+9UOp+IZI7Q/R+apx/HIkKZIz8SJGasOMtoh1p005Z2ZPMxmfeEiGB+Ncb6QSMQl+1
- jUjKQxSKUx9Z/gsmSaavpGrbTj9FOBOL/Mai63Ox0xihOex4vzwkTlnkddJpfMT4+LccGPO17Gd
- 35jSnTRT1uUtowNhBbtOj1ZqHvpI1jZOV5Y=
-X-Google-Smtp-Source: AGHT+IERdSqJngbOC2eA+yOhXWguQrpdDfrdTjyZki9aWAT1RvIquwoU27U60g97qjz7RceYrT1Luw==
-X-Received: by 2002:a05:6402:4021:b0:5d2:7396:b0ed with SMTP id
- 4fb4d7f45d1cf-5d27396b1ccmr3440341a12.14.1733404808732; 
- Thu, 05 Dec 2024 05:20:08 -0800 (PST)
-Received: from Provence.localdomain
- (dynamic-078-054-030-063.78.54.pool.telefonica.de. [78.54.30.63])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa625e92a58sm91959066b.48.2024.12.05.05.20.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 05:20:08 -0800 (PST)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, Peter Xu <peterx@redhat.com>,
- John Snow <jsnow@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v3 2/2] hw/ide/ahci: Extract TYPE_SYSBUS_AHCI into dedicated
- file
-Date: Thu,  5 Dec 2024 14:19:37 +0100
-Message-ID: <20241205131937.32833-3-shentey@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241205131937.32833-1-shentey@gmail.com>
-References: <20241205131937.32833-1-shentey@gmail.com>
+ d=1e100.net; s=20230601; t=1733405306; x=1734010106;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZKnOJVD9Z+xSi53FsqP/mQaZd6IpveLUMFX5W/l75EY=;
+ b=vYRIr6DGHTPaYoSLku2F17A5+RO9rGQANVWX9vEJL39ztrW1hgKiWrKo46E9TMwhTK
+ E9u9X0v+pzIhZCsGbAwOjGGpIGuvV282Xk7FNcIzngr0BrF2MFzknpf//0+lXzJS+alF
+ LACrlco1L2V3l575VsiEGgTe/r6kbIZ/hCmWOo1q6zSVsBfRYYzRSA5F34BV8FrcdyXF
+ omuZX/u6gUeEoAMA0ItWqqdlEcxiGaEmaTrycjSmszT4i6gQ34xSeSEjPXRB/IVlW7tK
+ E7kCTNGZ4BABBQ0ojXhTL/fBxPCko4v09XU63YIRZL6uOyR8cxDoyI+ysOiSTPD57MSJ
+ +sjg==
+X-Gm-Message-State: AOJu0YzBhcB1vUtCXEVhBbS2n0rgAHbgZyIgMm5rvs4OhifGwQ8yNqVw
+ LplDKYzS0mojpICWF2p2vrfeHJKeUzcW2wL1CxR6EiVuVaB2ZLhbvnjaEKrmuH6UmX64a4f+bvX
+ iheAlSpKFVfTfxqrUzX4HkRsv+NcklcFBHV4BC8mdDAN/Cw2b
+X-Gm-Gg: ASbGncuwSgj7k0eZKEhT6+5Q2nyMhWzM35xE73KuwYFumrTG4/Zwtuhyux0txWlEhKP
+ BnIDZkAuiFIQe9aGyn02d28t3aZ7EUnlH
+X-Google-Smtp-Source: AGHT+IGseNRK7o1nHytr+/YYIna5g07XNgq1YBZrOA0I5W4F8NcuJdadM+ztjOQu/NQyAJ7Tbp7GrdwnYONt/wTRKq8=
+X-Received: by 2002:a05:6402:510a:b0:5d0:f9a0:7c1f with SMTP id
+ 4fb4d7f45d1cf-5d10cb817d3mr9923439a12.23.1733405305944; Thu, 05 Dec 2024
+ 05:28:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
+References: <20241203203949.483774-1-richard.henderson@linaro.org>
+ <20241203203949.483774-2-richard.henderson@linaro.org>
+In-Reply-To: <20241203203949.483774-2-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Dec 2024 13:28:15 +0000
+Message-ID: <CAFEAcA_kL8gmuXZtZwnoDy1dFhdSvkmqCQ0yZJF18Jf4xNb0rg@mail.gmail.com>
+Subject: Re: [PATCH 01/11] target/arm: Copy entire float_status in is_ebf
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,283 +90,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement in dedicated file, just like TYPE_ICH9_AHCI.
+On Tue, 3 Dec 2024 at 20:39, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Now that float_status has a bunch of fp parameters,
+> it is easier to copy an existing structure than create
+> one from scratch.  Begin by copying the structure that
+> corresponds to the FPSR and make only the adjustments
+> required for BFloat16 semantics.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/vec_helper.c | 20 +++++++-------------
+>  1 file changed, 7 insertions(+), 13 deletions(-)
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/ide/ahci-sysbus.c | 91 ++++++++++++++++++++++++++++++++++++++++++++
- hw/ide/ahci.c        | 67 --------------------------------
- hw/arm/Kconfig       | 10 ++---
- hw/ide/Kconfig       |  4 ++
- hw/ide/meson.build   |  1 +
- 5 files changed, 101 insertions(+), 72 deletions(-)
- create mode 100644 hw/ide/ahci-sysbus.c
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/hw/ide/ahci-sysbus.c b/hw/ide/ahci-sysbus.c
-new file mode 100644
-index 0000000000..d43db0923f
---- /dev/null
-+++ b/hw/ide/ahci-sysbus.c
-@@ -0,0 +1,91 @@
-+/*
-+ * QEMU AHCI Emulation (MMIO-mapped devices)
-+ *
-+ * Copyright (c) 2010 qiaochong@loongson.cn
-+ * Copyright (c) 2010 Roland Elek <elek.roland@gmail.com>
-+ * Copyright (c) 2010 Sebastian Herbszt <herbszt@gmx.de>
-+ * Copyright (c) 2010 Alexander Graf <agraf@suse.de>
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "exec/address-spaces.h"
-+#include "hw/qdev-properties.h"
-+#include "migration/vmstate.h"
-+
-+#include "hw/ide/ahci-sysbus.h"
-+#include "ahci-internal.h"
-+
-+static const VMStateDescription vmstate_sysbus_ahci = {
-+    .name = "sysbus-ahci",
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_AHCI(ahci, SysbusAHCIState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static void sysbus_ahci_reset(DeviceState *dev)
-+{
-+    SysbusAHCIState *s = SYSBUS_AHCI(dev);
-+
-+    ahci_reset(&s->ahci);
-+}
-+
-+static void sysbus_ahci_init(Object *obj)
-+{
-+    SysbusAHCIState *s = SYSBUS_AHCI(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+
-+    ahci_init(&s->ahci, DEVICE(obj));
-+
-+    sysbus_init_mmio(sbd, &s->ahci.mem);
-+    sysbus_init_irq(sbd, &s->ahci.irq);
-+}
-+
-+static void sysbus_ahci_realize(DeviceState *dev, Error **errp)
-+{
-+    SysbusAHCIState *s = SYSBUS_AHCI(dev);
-+
-+    ahci_realize(&s->ahci, dev, &address_space_memory);
-+}
-+
-+static Property sysbus_ahci_properties[] = {
-+    DEFINE_PROP_UINT32("num-ports", SysbusAHCIState, ahci.ports, 1),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void sysbus_ahci_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = sysbus_ahci_realize;
-+    dc->vmsd = &vmstate_sysbus_ahci;
-+    device_class_set_props(dc, sysbus_ahci_properties);
-+    device_class_set_legacy_reset(dc, sysbus_ahci_reset);
-+    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-+}
-+
-+static const TypeInfo sysbus_ahci_types[] = {
-+    {
-+        .name          = TYPE_SYSBUS_AHCI,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(SysbusAHCIState),
-+        .instance_init = sysbus_ahci_init,
-+        .class_init    = sysbus_ahci_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(sysbus_ahci_types)
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 5836aa924b..c02357735e 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -23,16 +23,13 @@
- 
- #include "qemu/osdep.h"
- #include "hw/irq.h"
--#include "hw/qdev-properties.h"
- #include "migration/vmstate.h"
- 
- #include "qemu/error-report.h"
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
--#include "qemu/module.h"
- #include "sysemu/block-backend.h"
- #include "sysemu/dma.h"
--#include "hw/ide/ahci-sysbus.h"
- #include "ahci-internal.h"
- #include "ide-internal.h"
- 
-@@ -1803,70 +1800,6 @@ const VMStateDescription vmstate_ahci = {
-     },
- };
- 
--static const VMStateDescription vmstate_sysbus_ahci = {
--    .name = "sysbus-ahci",
--    .fields = (const VMStateField[]) {
--        VMSTATE_AHCI(ahci, SysbusAHCIState),
--        VMSTATE_END_OF_LIST()
--    },
--};
--
--static void sysbus_ahci_reset(DeviceState *dev)
--{
--    SysbusAHCIState *s = SYSBUS_AHCI(dev);
--
--    ahci_reset(&s->ahci);
--}
--
--static void sysbus_ahci_init(Object *obj)
--{
--    SysbusAHCIState *s = SYSBUS_AHCI(obj);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
--
--    ahci_init(&s->ahci, DEVICE(obj));
--
--    sysbus_init_mmio(sbd, &s->ahci.mem);
--    sysbus_init_irq(sbd, &s->ahci.irq);
--}
--
--static void sysbus_ahci_realize(DeviceState *dev, Error **errp)
--{
--    SysbusAHCIState *s = SYSBUS_AHCI(dev);
--
--    ahci_realize(&s->ahci, dev, &address_space_memory);
--}
--
--static Property sysbus_ahci_properties[] = {
--    DEFINE_PROP_UINT32("num-ports", SysbusAHCIState, ahci.ports, 1),
--    DEFINE_PROP_END_OF_LIST(),
--};
--
--static void sysbus_ahci_class_init(ObjectClass *klass, void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->realize = sysbus_ahci_realize;
--    dc->vmsd = &vmstate_sysbus_ahci;
--    device_class_set_props(dc, sysbus_ahci_properties);
--    device_class_set_legacy_reset(dc, sysbus_ahci_reset);
--    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
--}
--
--static const TypeInfo sysbus_ahci_info = {
--    .name          = TYPE_SYSBUS_AHCI,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(SysbusAHCIState),
--    .instance_init = sysbus_ahci_init,
--    .class_init    = sysbus_ahci_class_init,
--};
--
--static void sysbus_ahci_register_types(void)
--{
--    type_register_static(&sysbus_ahci_info);
--}
--
--type_init(sysbus_ahci_register_types)
--
- void ahci_ide_create_devs(AHCIState *ahci, DriveInfo **hd)
- {
-     int i;
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 1b25e73578..e779b5af95 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -71,7 +71,7 @@ config HIGHBANK
-     depends on TCG && ARM
-     select A9MPCORE
-     select A15MPCORE
--    select AHCI
-+    select AHCI_SYSBUS
-     select ARM_TIMER # sp804
-     select ARM_V7M
-     select PL011 if !HAVE_RUST # UART
-@@ -192,7 +192,7 @@ config SBSA_REF
-     depends on TCG && AARCH64
-     imply PCI_DEVICES
-     select DEVICE_TREE
--    select AHCI
-+    select AHCI_SYSBUS
-     select ARM_SMMUV3
-     select GPIO_KEY
-     select PCI_EXPRESS
-@@ -319,7 +319,7 @@ config ARM_V7M
- 
- config ALLWINNER_A10
-     bool
--    select AHCI
-+    select AHCI_SYSBUS
-     select ALLWINNER_A10_PIT
-     select ALLWINNER_A10_PIC
-     select ALLWINNER_A10_CCM
-@@ -352,7 +352,7 @@ config ALLWINNER_H3
- config ALLWINNER_R40
-     bool
-     default y if TCG && ARM
--    select AHCI
-+    select AHCI_SYSBUS
-     select ALLWINNER_SRAMC
-     select ALLWINNER_A10_PIT
-     select ALLWINNER_WDT
-@@ -422,7 +422,7 @@ config XLNX_ZYNQMP_ARM
-     bool
-     default y if PIXMAN
-     depends on TCG && AARCH64
--    select AHCI
-+    select AHCI_SYSBUS
-     select ARM_GIC
-     select CADENCE
-     select CPU_CLUSTER
-diff --git a/hw/ide/Kconfig b/hw/ide/Kconfig
-index 2e22b677da..b55507b836 100644
---- a/hw/ide/Kconfig
-+++ b/hw/ide/Kconfig
-@@ -54,6 +54,10 @@ config AHCI_ICH9
-     depends on PCI
-     select AHCI
- 
-+config AHCI_SYSBUS
-+    bool
-+    select AHCI
-+
- config IDE_SII3112
-     bool
-     select IDE_PCI
-diff --git a/hw/ide/meson.build b/hw/ide/meson.build
-index 90ea861423..ddd7066040 100644
---- a/hw/ide/meson.build
-+++ b/hw/ide/meson.build
-@@ -1,5 +1,6 @@
- system_ss.add(when: 'CONFIG_AHCI', if_true: files('ahci.c'))
- system_ss.add(when: 'CONFIG_AHCI_ICH9', if_true: files('ich.c'))
-+system_ss.add(when: 'CONFIG_AHCI_SYSBUS', if_true: files('ahci-sysbus.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('ahci-allwinner.c'))
- system_ss.add(when: 'CONFIG_IDE_BUS', if_true: files('ide-bus.c'))
- system_ss.add(when: 'CONFIG_IDE_CF', if_true: files('cf.c'))
--- 
-2.47.1
+I missed this in my grep for places where we set up
+a float_status I think because it's the only place where
+we use a struct initializer in a way that isn't literally
+ "float_status s = { ... }". But I did a wider grep and
+I think this is the only place I missed like that.
 
+thanks
+-- PMM
 
