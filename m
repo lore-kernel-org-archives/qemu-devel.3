@@ -4,70 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37BD9E7716D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A55E7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJEc4-0007bK-GL; Thu, 05 Dec 2024 11:22:00 -0500
+	id 1tJEdm-0008RB-BX; Thu, 05 Dec 2024 11:23:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tJEc1-0007Wz-Oi
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:21:57 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJEdj-0008Qp-QI
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:23:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tJEbz-0008IM-Ev
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:21:57 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJEdi-0008V9-G4
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:23:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733415714;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1733415820;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=fSATqpI0wCvYxB2iHiAsr/2mzBka+v1sKXeGo/CoabM=;
- b=OaoCVRtVZI/KZ9xEup27ICrIvBJsGfKa5IfR+vZEFU+bigJth+PjekUV35i5cifoUk3Oie
- Say6jgkqqB2Q7m4dOrkuj1rYFvVG1hUQzczt6yUCNj+ZQUX3XM9moaMWHxtK3CX4YOdNjQ
- 4lDVsjCWTorVfYU0Zm6zRVgvBiZWYd4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-sfMzNjNoP_OuW6Sl2URCsA-1; Thu,
- 05 Dec 2024 11:21:53 -0500
-X-MC-Unique: sfMzNjNoP_OuW6Sl2URCsA-1
-X-Mimecast-MFC-AGG-ID: sfMzNjNoP_OuW6Sl2URCsA
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7D5D11955F39
- for <qemu-devel@nongnu.org>; Thu,  5 Dec 2024 16:21:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.137])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C487430001A1; Thu,  5 Dec 2024 16:21:50 +0000 (UTC)
-Date: Thu, 5 Dec 2024 16:21:47 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH v3 1/9] hw: eliminate qdev_try_new, isa_try_new &
- usb_try_new
-Message-ID: <Z1HTG0apfYGbexUM@redhat.com>
-References: <20241115172521.504102-1-berrange@redhat.com>
- <20241115172521.504102-2-berrange@redhat.com>
- <87jzcgrdhd.fsf@pond.sub.org>
+ bh=8RNeggw0oESsgKE26h6qM+URKamgvJQEqGAvzp2iCSQ=;
+ b=ICFAHcHMNOTNas0/5mnpkS/32DT2LwZJE2/FW2lSx8DWaZ4majMLjlwMeFL2dJZnXPb0Tb
+ s9KrZsv1y/jHdfWFaNo30f6gDzvUfEZqGPJ9DRVJ8J+t4e/f0foXd8WC/gzRzpXnnLe//H
+ O7Wd0Gj/bRR2O6Yq/xe0ob1LI2XvKvo=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-277-8mDIX7xoMW2SY_tMwkjGow-1; Thu, 05 Dec 2024 11:23:30 -0500
+X-MC-Unique: 8mDIX7xoMW2SY_tMwkjGow-1
+X-Mimecast-MFC-AGG-ID: 8mDIX7xoMW2SY_tMwkjGow
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3a7bdd00353so10094505ab.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 08:23:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733415808; x=1734020608;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8RNeggw0oESsgKE26h6qM+URKamgvJQEqGAvzp2iCSQ=;
+ b=wcVKqOmei+6HthA+uCQaXO/7Sr1gvEL5nGFNU6kXE3hQIGene/ouG39FILzDQxGpX8
+ yhDZqC1YWxvHZPgPw+c/P+9mu/ZECCC/7c74JWSD/J5YnR5EN9gm1YuBfdrEIYVHI2ev
+ Wl3Lddto8jMZcA03vP99y8Huqd8oaUg5aEJW+m18AE3ZNsM8xrsTFs+VfHux3wxLkRdE
+ wUPAg/WSzFVw7UnK10lJE4si3XjFKE1x3q5Rhseue9ljZ5tZDKPY2OIgxyZbk75ypo2H
+ njswuk7x5d8XIPJbNxmBSgmBgSZi79dMMnorUGhCEQ/F2mr/VjG2ARXHrSblgW1M/L7t
+ fYHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxb0BX1t/kpK6Jp5WrA4eAkQSLdZOTvA3mXeUS+ONCufKWQ6+T1PJ9CBp7tBWg/y/s33jwZFiD6Z7S@nongnu.org
+X-Gm-Message-State: AOJu0Yz1y+ohJjyZk7Z2wPbqSkZLPoJG+VaadLRS09kvza1/Uhj24K3f
+ DQQUSlzDTR4SmliYQs/m3TGaRcj9UJ26BwDYpN6m0Rf90C8C7fymMugn8myQrWl3MWRQI08CKhW
+ U+8KNLreVOYLjBuag4mf9jUu2pwgCQ+xeK4vyNi7eOqZNm/vQ/zj6
+X-Gm-Gg: ASbGnctGadGHZx7eEJlHgcDP22cNKo0+6lDmhnUfCvQ/RdEWKkpC7ACiBHWTS7yZzKS
+ Tn5IxHJbDoy4VP1yD1nU/8UO0a1CIFghdO8V0ljaMTsOIIYtLNnWPmvR6Z0S9+BIrzMFyDb+IyI
+ Nx5zqrtL8ISd1mBgC72lmf5o2c0iMv6Gt8y33wGcUhZuhhcN/1c+BiN+vBakoWbtgySo5DHNdep
+ 9SUKBNvDHvLW9J7AAGzXSCwqHPp9FUU4T7+PDMj6kd88on2aFC715GvDLwB7N0TBKgKtXlZ80/I
+ FGKzNtDn+Ms=
+X-Received: by 2002:a05:6e02:1a66:b0:3a7:6d14:cc29 with SMTP id
+ e9e14a558f8ab-3a7f9a35f8bmr117355905ab.1.1733415808635; 
+ Thu, 05 Dec 2024 08:23:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGv78HeXinft+gLMkx1uHyVL0awgeiBGT/LW+24za/QuQHofnfPmMEcHeR3/TB14M64zxvBqA==
+X-Received: by 2002:a05:6e02:1a66:b0:3a7:6d14:cc29 with SMTP id
+ e9e14a558f8ab-3a7f9a35f8bmr117355685ab.1.1733415808377; 
+ Thu, 05 Dec 2024 08:23:28 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3a808dc639esm5139515ab.47.2024.12.05.08.23.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Dec 2024 08:23:27 -0800 (PST)
+Date: Thu, 5 Dec 2024 11:23:25 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 12/24] migration/multifd: Add an explicit
+ MultiFDSendData destructor
+Message-ID: <Z1HTfeftOqKl294h@x1n>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <55c9769a2961d621f5843e04ce995e6c226b1432.1731773021.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87jzcgrdhd.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <55c9769a2961d621f5843e04ce995e6c226b1432.1731773021.git.maciej.szmigiero@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -89,241 +111,25 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 03, 2024 at 04:30:06PM +0100, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On Sun, Nov 17, 2024 at 08:20:07PM +0100, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> > These functions all return NULL rather than asserting, if the requested
-> > type is not registered and also cannot be dynamically loaded.
-> >
-> > In several cases their usage is pointless, since the caller then just
-> > reports an error & exits anyway. Easier to just let qdev_new fail
-> > with &error_fatal.
+> This way if there are fields there that needs explicit disposal (like, for
+> example, some attached buffers) they will be handled appropriately.
 > 
-> Uh, this sounds as if you'd turn assertion failures by fatal errors,
-> which could be fine, but more than just "eliminate qdev_try_new...".
+> Add a related assert to multifd_set_payload_type() in order to make sure
+> that this function is only used to fill a previously empty MultiFDSendData
+> with some payload, not the other way around.
 > 
-> Turns out you aren't.  qdev_new(), isa_new() and usb_new() are all thin
-> wrappers around object_new(), which does not assert, but treats errors
-> as fatal:
-> 
->     Object *object_new(const char *typename)
->     {
->         TypeImpl *ti = type_get_or_load_by_name(typename, &error_fatal);
-> 
->         return object_new_with_type(ti);
->     }
-> 
-> type_get_or_load_by_name() succeeds if
-> 
-> * type @typename is compiled into this binary, or
-> 
-> * exactly one module providing it is known to this binary, and loading
->   it succeeds.
-> 
-> Put a pin into this for later.
-> 
-> Suggest something like
-> 
->   The difference between qdev_try_new() and qdev_try() is that the
->   former returns failure, while the latter treats it as fatal and
->   terminates the process.  Same for isa_try_new() and usb_try_new().
-> 
-> A comment in hw/i2c/i2c.h mentions i2c_slave_try_new(), but it doesn't
-> exist, and never has.  Suggest to eliminate that, too.
-> 
-> > In other cases, the desired semantics are clearer to understand if the
-> > caller directly checks module_object_class_by_name(), before calling
-> > the regular qdev_new (or specialized equiv) function.
-> 
-> This tacitly assumes qdev_try_new() & friends fail exactly when
-> module_object_class_by_name() fails.  True, but not obvious at this
-> point.
-> 
-> It's true, because it also fails exactly when type_get_or_load_by_name()
-> returns null:
-> 
->     ObjectClass *object_class_by_name(const char *typename)
->     {
->         TypeImpl *type = type_get_by_name_noload(typename);
-> 
->         if (!type) {
->             return NULL;
->         }
-> 
->         type_initialize(type);
-> 
->         return type->class;
->     }
-> 
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index f9147fecbd..d668970bee 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -596,9 +596,11 @@ static gboolean pc_init_ne2k_isa(ISABus *bus, NICInfo *nd, Error **errp)
-> >                     "maximum number of ISA NE2000 devices exceeded");
-> >          return false;
-> >      }
-> > -    isa_ne2000_init(bus, ne2000_io[nb_ne2k],
-> > -                    ne2000_irq[nb_ne2k], nd);
-> > -    nb_ne2k++;
-> > +    if (module_object_class_by_name(TYPE_ISA_NE2000)) {
-> > +        isa_ne2000_init(bus, ne2000_io[nb_ne2k],
-> > +                        ne2000_irq[nb_ne2k], nd);
-> > +        nb_ne2k++;
-> > +    }
-> 
-> This gave me pause until I saw the change to isa_ne2000_init() below.
-> There, you replace isa_try_new() by isa_new().  Before the patch,
-> isa_ne2000_init() can fail, afterwards it treats errors as fatal.  And
-> that's why you need to guard against failure here.
-> 
-> In other words, you lifted the guard out of isa_ne2000_init() into its
-> sole caller.  Fine, just less than obvious in review.
-
-Yeah, actually this is a pre-existing bug I should fix in a
-preceeding patch.  isa_ne2000_init can fail today, but we
-don't check the return value, and unconditionally do
-"nb_ne2k++". So nb_ne2k is wrong if isa_ne2000_init ever
-fails. Not sure if this has any bad functional effect,
-but conceptually it is clearly a bug.
-
-> 
-> >      return true;
-> >  }
-> >  
-> > @@ -1087,7 +1089,7 @@ static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
-> >      int i;
-> >      DriveInfo *fd[MAX_FD];
-> >      qemu_irq *a20_line;
-> > -    ISADevice *i8042, *port92, *vmmouse;
-> > +    ISADevice *i8042, *port92, *vmmouse = NULL;
-> >  
-> >      serial_hds_isa_init(isa_bus, 0, MAX_ISA_SERIAL_PORTS);
-> >      parallel_hds_isa_init(isa_bus, MAX_PARALLEL_PORTS);
-> > @@ -1117,9 +1119,9 @@ static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
-> >      i8042 = isa_create_simple(isa_bus, TYPE_I8042);
-> >      if (!no_vmport) {
-> >          isa_create_simple(isa_bus, TYPE_VMPORT);
-> > -        vmmouse = isa_try_new("vmmouse");
-> > -    } else {
-> > -        vmmouse = NULL;
-> > +        if (module_object_class_by_name("vmmouse")) {
-> > +            vmmouse = isa_new("vmmouse");
-> > +        }
-> >      }
-> >      if (vmmouse) {
-> >          object_property_set_link(OBJECT(vmmouse), TYPE_I8042, OBJECT(i8042),
-> 
-> This is now like
-> 
->        vmmouse = NULL;
->        if (...) {
->            if (module_object_class_by_name("vmmouse")) {
->                vmmouse = isa_new("vmmouse");
->            }
->        }
->        if (vmmouse) {
->            object_property_set_link(OBJECT(vmmouse), TYPE_I8042, OBJECT(i8042),
->                                     &error_abort);
->            isa_realize_and_unref(vmmouse, isa_bus, &error_fatal);
->        }
-> 
-> We could straighten control flow like this:
-> 
->        if (...) {
->            if (module_object_class_by_name("vmmouse")) {
->                vmmouse = isa_new("vmmouse");
->                object_property_set_link(OBJECT(vmmouse), TYPE_I8042,
->                                         OBJECT(i8042), &error_abort);
->                isa_realize_and_unref(vmmouse, isa_bus, &error_fatal);
->            }
->        }
-> 
-> But there is a more fundamental issue.
-> 
-> pc_superio_init() creates onboard devices.
-> 
-> With CONFIG_MODULES off, it creates a "vmmouse" device exactly when the
-> type is compiled into this binary.  This makes the guest machine type
-> depend on build configuration.  I consider this questionable; I'd prefer
-> such things to be explicit in the C code.  But let's ignore this.
-
-Yeah, I had the same horrified realization that we'd made machine ABI
-vary based on installed pkgs :-( Not sure how to get us out of that
-mess easily.
-
-> Silently not creating it just because the machine is in a funny state,
-> say temporarily lacks the resources to load a DSO, is plainly wrong.
-> 
-> Not this patch's fault.  Doesn't make it less wrong :)
-
-Agreed, we definitely need to distinguish "module not installed",
-from all other types of failure to load a module.
-
-> > @@ -1163,11 +1165,7 @@ void pc_basic_device_init(struct PCMachineState *pcms,
-> >      if (pcms->hpet_enabled) {
-> >          qemu_irq rtc_irq;
-> >  
-> > -        hpet = qdev_try_new(TYPE_HPET);
-> > -        if (!hpet) {
-> > -            error_report("couldn't create HPET device");
-> > -            exit(1);
-> > -        }
-> > +        hpet = qdev_new(TYPE_HPET);
-> 
-> This replaces the error message "couldn't create HPET device" by one
-> provided by QOM.  These are:
-> 
-> * When the type is not known to this binary: "unknown type 'hpet'".
-> 
-> * When the type is known, but not compiled in, and the module can't be
->   loaded for whatever reason: "could not load a module for type 'hpet':
->   MORE", where MORE is the error message provided by module_load_qom().
-> 
-> Worth at least hinting at this in the commit message?
-
-Sure.
-
-
-
-
-> > diff --git a/include/hw/usb.h b/include/hw/usb.h
-> > index d46d96779a..bb778cb844 100644
-> > --- a/include/hw/usb.h
-> > +++ b/include/hw/usb.h
-> > @@ -584,11 +584,6 @@ static inline USBDevice *usb_new(const char *name)
-> >      return USB_DEVICE(qdev_new(name));
-> >  }
-> >  
-> > -static inline USBDevice *usb_try_new(const char *name)
-> > -{
-> > -    return USB_DEVICE(qdev_try_new(name));
-> > -}
-> > -
-> >  static inline bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp)
-> >  {
-> >      return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
-> 
-> Maybe I'm having another scatter-brained day, but I found the patch
-> somewhat confusing in review.  Happy to suggest a possible split if
-> you're interested.
-
-I can have another think about changing it. Mostly I was just working
-backwards when creating this, by deleting the methods I wanted to
-remove and the patching up the build failures, so there wasn't much
-thought put into the split of this one.
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
