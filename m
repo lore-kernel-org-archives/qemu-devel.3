@@ -4,88 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9021E7716D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 14:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03C72E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 15:01:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJDEL-0001RH-2x; Thu, 05 Dec 2024 09:53:25 -0500
+	id 1tJDLE-0002w7-7N; Thu, 05 Dec 2024 10:00:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJDEI-0001QP-UZ
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 09:53:23 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJDEF-0007TN-VU
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 09:53:22 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5d0ac27b412so1204797a12.1
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 06:53:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733410398; x=1734015198; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DgbjCCB16SErebcpkCcosJNhLesM5Vw3w3bIxhw/pzQ=;
- b=kn7hAABt2bIW6UpOdYlFJ7Qy1j2OhXlLnITc9DJ5/zEU1I3v58KdgoM7SQM8uJxrRP
- H6PSGdd+kMS3l2WF6JgfgodjWKIo7DIW7TOjjjl7oGxuzBZcVd0RB0yxGXcsgu97mWCC
- Hhx8wBFgovIX3fxoUSDuibFX2DrYVquiAcVTEQuMQ7JKky3NY2W/Ghjsh8zi7vzJgL9a
- e6VByeUZwhuqdRcRGNV8L9pE8hct1WtKBOefTIdxbwWGWnQnMgIRoxM1LR4F6UdUVWOk
- 2e1n40T4PifEAVs/rRslAUakqWJxb2MB7YPfyEI/hQcDgxhx79tMzlVuCj767Zb7gnpI
- fPpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733410398; x=1734015198;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DgbjCCB16SErebcpkCcosJNhLesM5Vw3w3bIxhw/pzQ=;
- b=dGogUWek2m95H3Zu4i37M30ETAWFy8WPvPd+UR+fSlDozK6t6N2vavbghLa4VNVXlF
- CxY7lQQzLbJAO7srSjcaBYCHEt9Qj3qNsbeVOU/82x9/dgDKmtWW8CH8xfTDGV4oOm53
- 61Crg2rfz5LUSKaxNlKTO5L1bc6l6HHqylZb4m2r3xeZDgX/v2JP5eIWgghwXRq8whoq
- kuOSzBs6sjRkjKkEOEq/fpNv8+Sr3OS81pB1K3cm7+DMacTRVj9HqGiSI6p4SpFL7IDz
- 1GHM+6dVWNQx1sPkHMIk+fSSO4XdWnaAy3aMZxEz0Jat/kxC1gP+fgehQc6pSwrTTvBI
- vwuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyOhS9F3dmWFGpu37tmJq/3L/hDi8gT9q7KVUO5nh5p/FvRdlFwWTbixV3A0V07PkCy/eMZnd7yzbm@nongnu.org
-X-Gm-Message-State: AOJu0YwnXTOb9tibjtiH0icOl522LTPQOdDEUX2VNyPVeI+UXKtNG2vC
- SrSBeJOamS2XwG+YYrK7bi2sdLD0mVX9iwvWhbs7WvA8eey2MxD8hnIX2QIQSKtrpEerBk7fDts
- bBZtscD5KSaITMZ1JYiLrZckZUyi6vr/rpn5CLg==
-X-Gm-Gg: ASbGncsVvQB+j80EMQ7D3JBTJIvTsj8unj4ZdiybMnbVLALaOooq7XGbTaWL6G5IjQn
- RfI3R1x9Ztd79SqdH9fe7PovNVywaVemD
-X-Google-Smtp-Source: AGHT+IFQLhPKoyeH2ruPHxdJJMFM6DWqYU7GRP3j6nFSiCR8YyU9eJqiblIOfYqvSAORNLB+nakw3cpl896yRf6Bqr4=
-X-Received: by 2002:a05:6402:5206:b0:5d1:3da:e6c with SMTP id
- 4fb4d7f45d1cf-5d10cb556b8mr12211020a12.10.1733410398025; Thu, 05 Dec 2024
- 06:53:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <a.fatoum@pengutronix.de>)
+ id 1tJDLA-0002v8-Br
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:00:28 -0500
+Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <a.fatoum@pengutronix.de>)
+ id 1tJDL6-00011W-Eh
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:00:28 -0500
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77]
+ helo=[127.0.0.1])
+ by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
+ (envelope-from <a.fatoum@pengutronix.de>)
+ id 1tJDL0-0000tU-B5; Thu, 05 Dec 2024 16:00:18 +0100
+Message-ID: <b020f8b2-f485-4658-bcfb-f24df5f910d4@pengutronix.de>
+Date: Thu, 5 Dec 2024 16:00:17 +0100
 MIME-Version: 1.0
-References: <20241126084928.252067-1-marcin.juszkiewicz@linaro.org>
- <CAFEAcA_SkZ+ew8AAVpBHuw-9YW4S5wFbB0Vqx+dBzXf97JGDGw@mail.gmail.com>
- <cd635753-4e2c-42d6-bb7b-d558d90f59d7@linaro.org>
- <2106db77-88fb-4113-ae09-9bf77bce6ad7@quicinc.com>
- <c4245af0-3dd4-4cf6-a786-c15fa079ad05@linaro.org>
- <18ba737f-d669-4e6a-8319-fb5052223b26@linaro.org>
-In-Reply-To: <18ba737f-d669-4e6a-8319-fb5052223b26@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 14:53:07 +0000
-Message-ID: <CAFEAcA-P5P4AJidWcGgUScBTe9-K_C4Qm9N2o2XWnfiT81LU=A@mail.gmail.com>
-Subject: Re: [PATCH 1/1] hw/arm/sbsa-ref: bump default memory size to 2GB
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Leif Lindholm <quic_llindhol@quicinc.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Mathieu Poirier <mathieu.poirier@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>, leif.lindholm@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 1/2] hw/openrisc/openrisc_sim: keep serial@90000000 as
+ default
+To: Stafford Horne <shorne@gmail.com>, QEMU Development <qemu-devel@nongnu.org>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Jia Liu <proljc@gmail.com>
+References: <20241203111513.402641-1-shorne@gmail.com>
+ <20241203111513.402641-2-shorne@gmail.com>
+Content-Language: en-US
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+In-Reply-To: <20241203111513.402641-2-shorne@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
+X-SA-Exim-Mail-From: a.fatoum@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
+ SAEximRunCond expanded to false
+X-PTX-Original-Recipient: qemu-devel@nongnu.org
+Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
+ envelope-from=a.fatoum@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,57 +68,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Dec 2024 at 10:14, Marcin Juszkiewicz
-<marcin.juszkiewicz@linaro.org> wrote:
->
-> W dniu 4.12.2024 o 21:50, Philippe Mathieu-Daud=C3=A9 pisze:
-> > On 4/12/24 13:17, Leif Lindholm wrote:
-> >> On 2024-12-02 10:53, Marcin Juszkiewicz wrote:
-> >>> W dniu 26.11.2024 o 14:14, Peter Maydell pisze:
-> >>>> On Tue, 26 Nov 2024 at 08:49, Marcin Juszkiewicz
-> >>>> <marcin.juszkiewicz@linaro.org> wrote:
-> >>>>>
-> >>>>> We are working on adding RME support to SBSA Reference Platform.
-> >>>>> When RME is enabled then RMM (Realm Managment Monitor) takes 1072MB=
- of
-> >>>>> memory for own use. Which ends with firmware panic on 1GB machine.
-> >>>>
-> >>>> Reasonable change, but isn't it also a bug in the RMM that it
-> >>>> grabs 1GB of RAM regardless of how much RAM the machine
-> >>>> actually has?
-> >>>
-> >>> I think that the goal is "get it working" first and then optimize.
-> >>
-> >> I agree on a different platform this could feel quite hacky, but in
-> >> reality even 2GB falls within "ridiculously low for an SBSA platform".
-> >>
-> >> If we're worried about overhead for CI jobs that do not require the
-> >> feature, we could always conditionalize it on RME being enabled. But
-> >> I'd be happy to wait and see.
-> >
-> > I'd rather do that, since it is as simple as:
->
-> This is sbsa-ref not sbc-ref. Let it just have that 2GB of ram. None of
-> existing SBSA systems comes with such low amount.
+Hello Stafford,
 
-Yes, I think I agree here. Changing the default RAM size
-based on whether the CPU does or does not have a particular
-feature is unusual and not something we do on other board
-types, and it definitely doesn't match the general intention
-that sbsa-ref is a "looks like real hardware" machine.
+On 03.12.24 12:15, Stafford Horne wrote:
+> From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+> [1]: https://lore.barebox.org/barebox/707e7c50-aad1-4459-8796-0cc54bab32e2@pengutronix.de/T/#m5da26e8a799033301489a938b5d5667b81cef6ad
+> 
+> Fixes: 777784bda468 ("hw/openrisc: support 4 serial ports in or1ksim")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+> [stafford: Change to serial0 alias and update change message, reverse
+>  uart registration order]
 
-The problem with using 2GB, though, is that it doesn't
-work on 32-bit hosts, which have a max of 2047MB (and
-if you try larger then hw/core/machine.c will error out with
-"at most 2047 MB RAM can be simulated").
+Thanks a lot for your subsequent iterations on the patch.
+The changes look good to me.
 
-As a result we have several board types which have an ifdef
-to say "limit the RAM size to 1GB if HOST_LONG_BITS is 32".
+Thanks,
+Ahmad
 
-(I think this limit primarily derives from ramptr_t
-being defined as a uintptr_t, but also trying to malloc
-2GB on a 32-bit host is unlikely to work very well.)
+> Signed-off-by: Stafford Horne <shorne@gmail.com>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  hw/openrisc/openrisc_sim.c | 26 ++++++++++++++++++++------
+>  1 file changed, 20 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
+> index 9fb63515ef..42f002985b 100644
+> --- a/hw/openrisc/openrisc_sim.c
+> +++ b/hw/openrisc/openrisc_sim.c
+> @@ -250,7 +250,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+>      void *fdt = state->fdt;
+>      char *nodename;
+>      qemu_irq serial_irq;
+> -    char alias[sizeof("uart0")];
+> +    char alias[sizeof("serial0")];
+>      int i;
+>  
+>      if (num_cpus > 1) {
+> @@ -265,7 +265,7 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+>          serial_irq = get_cpu_irq(cpus, 0, irq_pin);
+>      }
+>      serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
+> -                   serial_hd(OR1KSIM_UART_COUNT - uart_idx - 1),
+> +                   serial_hd(uart_idx),
+>                     DEVICE_NATIVE_ENDIAN);
+>  
+>      /* Add device tree node for serial. */
+> @@ -277,10 +277,13 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+>      qemu_fdt_setprop_cell(fdt, nodename, "clock-frequency", OR1KSIM_CLK_MHZ);
+>      qemu_fdt_setprop(fdt, nodename, "big-endian", NULL, 0);
+>  
+> -    /* The /chosen node is created during fdt creation. */
+> -    qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
+> -    snprintf(alias, sizeof(alias), "uart%d", uart_idx);
+> +    if (uart_idx == 0) {
+> +        /* The /chosen node is created during fdt creation. */
+> +        qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
+> +    }
+> +    snprintf(alias, sizeof(alias), "serial%d", uart_idx);
+>      qemu_fdt_setprop_string(fdt, "/aliases", alias, nodename);
+> +
+>      g_free(nodename);
+>  }
+>  
+> @@ -326,11 +329,22 @@ static void openrisc_sim_init(MachineState *machine)
+>                                  smp_cpus, cpus, OR1KSIM_OMPIC_IRQ);
+>      }
+>  
+> -    for (n = 0; n < OR1KSIM_UART_COUNT; ++n)
+> +    /*
+> +     * We create the UART nodes starting with the highest address and
+> +     * working downwards, because in QEMU the DTB nodes end up in the
+> +     * DTB in reverse order of creation. Correctly-written guest software
+> +     * will not care about the node order (it will look at stdout-path
+> +     * or the alias nodes), but for the benefit of guest software which
+> +     * just looks for the first UART node in the DTB, make sure the
+> +     * lowest-address UART (which is QEMU's first serial port) appears
+> +     * first in the DTB.
+> +     */
+> +    for (n = OR1KSIM_UART_COUNT - 1; n >= 0; n--) {
+>          openrisc_sim_serial_init(state, or1ksim_memmap[OR1KSIM_UART].base +
+>                                          or1ksim_memmap[OR1KSIM_UART].size * n,
+>                                   or1ksim_memmap[OR1KSIM_UART].size,
+>                                   smp_cpus, cpus, OR1KSIM_UART_IRQ, n);
+> +    }
+>  
+>      load_addr = openrisc_load_kernel(ram_size, kernel_filename,
+>                                       &boot_info.bootstrap_pc);
 
-thanks
--- PMM
+
+-- 
+Pengutronix e.K.                           |                             |
+Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
+31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
 
