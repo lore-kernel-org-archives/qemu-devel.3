@@ -4,68 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B29C4E7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 10:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CDE6E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 10:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ9TR-00048U-4W; Thu, 05 Dec 2024 05:52:45 -0500
+	id 1tJ9Vk-0004m0-UH; Thu, 05 Dec 2024 05:55:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tJ9TP-000485-Ol
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:52:43 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJ9Vj-0004ld-AG
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:55:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tJ9TO-00015n-3I
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:52:43 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJ9Vh-0001iK-On
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:55:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733395959;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1733396104;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DzLAKDPY3OxPSrETLdelduzRbrgSqqz3YYlcM4WS2ak=;
- b=IS+HlmbFDYbko81+vJJZbe1YIvPAe0Wkh7ac6tCSOz54hBPClld3dJ76QA5Q391bTnESCL
- IsZ9xIDBFO3ffTcM8zllgn/LM/fHMU26tTZSekIHkSl1h/p1iU+tD/8ipNWTRHEB/s9slA
- LF3j61iy1nxTSxAokDtILaj/m10izmk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-9V9GBHzxNU2wDSYVbKKAqw-1; Thu,
- 05 Dec 2024 05:52:37 -0500
-X-MC-Unique: 9V9GBHzxNU2wDSYVbKKAqw-1
-X-Mimecast-MFC-AGG-ID: 9V9GBHzxNU2wDSYVbKKAqw
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C699519560A2; Thu,  5 Dec 2024 10:52:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.137])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB8EC30001A1; Thu,  5 Dec 2024 10:52:33 +0000 (UTC)
-Date: Thu, 5 Dec 2024 10:52:28 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/6] migration: Kick postcopy threads on cancel
-Message-ID: <Z1GF7KheH_z5E1lc@redhat.com>
-References: <20241202220137.32584-1-farosas@suse.de>
- <20241202220137.32584-3-farosas@suse.de> <Z1Ch8HpiKMoqILDM@x1n>
- <87r06ni84z.fsf@suse.de> <Z1Cv4JM8IbYeiDpR@x1n>
- <Z1C1V25wydbBlsMb@redhat.com> <Z1DAzzB1SfY_bL17@x1n>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=wMm9ABn/0U3hPqIWqC835qUi1mKNmKdZ5mcT3Xzr/hM=;
+ b=cvWz/A8b8CVPxIVWoi8aTKDBYcC5GRIZgD5ZF4CmPVMJ73Dku3f3kkZGjkXsudXA7Ecg27
+ VPyedD2kQjHUBYOn2jrOLs/bH7F6DsDqF/UI2RN0t8zqeZRB28dIis/eCHopehVgrRVGZD
+ WIgTZBt+HKUdWnhU93DcFhtAD0Y+HFc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-552-Dk4d4aL9MlibY2hge8no6Q-1; Thu, 05 Dec 2024 05:55:03 -0500
+X-MC-Unique: Dk4d4aL9MlibY2hge8no6Q-1
+X-Mimecast-MFC-AGG-ID: Dk4d4aL9MlibY2hge8no6Q
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4349cbf726cso4677025e9.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 02:55:03 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733396102; x=1734000902;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wMm9ABn/0U3hPqIWqC835qUi1mKNmKdZ5mcT3Xzr/hM=;
+ b=lmpgn5fUgA/0iCj0FT2bQIV+IeJBpCK8uZDruFeLtH7qk44XSk+6xTDPsTTNm8NThF
+ 55ct3cgDlMppkWKkpR7XnnClteUsYCtsVtBgMCgJoRjNDMgRx/72enEKRtXAc8/2utXk
+ vLxDjSy0ZJaEDUOx1o8DDz21FXZYcd4Rr7a0n6QYpPNlAQEdBykuVXgwBZzsUKf3sF1K
+ iLYhKDjdNc5eTlt8aoUE/o7Pl40gDYsGJZ51mHSPzQFSUX6VZYYj5/5z2COfIQ5IPX5h
+ UGUmaHgFB+/TfjaS9aMWYmj5EcEVedxEzTscDgIWCojvlEFP4M8RslWTfr326jAsVn8c
+ eKlQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWn5JZ0jfulD0uWoF3lVi5B5XlZAIKktPztXie0BgOkNnsnMlw5Yb5Bh4bKIg1mWaqqA5V9AZ2P1bEU@nongnu.org
+X-Gm-Message-State: AOJu0Yyatc5D79h/ChZTt7YbFl1KkK7eQLIAuo6hM+h2GeBHRfmuayOC
+ TyeaBryeoJamNnjBTKpSs994F+R/Jcx2ChaututkL1NhgQDW1djAvqc2M4o/rBUHMj3uuExVU26
+ sbQq7DOGEPKTkP02VKiB+QR84gtq+BfunvHM99qJmRqs2pEa/QQID
+X-Gm-Gg: ASbGncs9Za6Vhcc2FvPnn8a+aSrHoz7IJZx8AvPFxqsMpB5aLbLOIJMQWqTFVPmdpFw
+ 4irePSL/fosbxbGzikcRtzPVCzpEFQhnZmtwsgGVuWK6VoKNWsZcQMu0Mq2F7+u7pMAUVu/XOvw
+ wGv6pDpM0NHLcSSbj2tu46mGCUa0Oli/vGIzK/+F9jXHvH/2mVhuLElnyu7JJ0ISnPqtB/2uA7I
+ RfbGR09zXcx4B/KfKdJAFRqm092OOMRQDko3Z8s3aLp4W20vcUzU/CWqwAt4Vnj+2WcAKlPlGsq
+ Hiu41Q==
+X-Received: by 2002:a05:6000:2806:b0:385:e8aa:2a4e with SMTP id
+ ffacd0b85a97d-385fd3f2371mr5667267f8f.31.1733396102500; 
+ Thu, 05 Dec 2024 02:55:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE7xw//VBukVq+xgSeVcywacz4syrQR6s3bvLUy8pjOhAuwGncWa4g0vnSTxYWLTkKl6WOIzQ==
+X-Received: by 2002:a05:6000:2806:b0:385:e8aa:2a4e with SMTP id
+ ffacd0b85a97d-385fd3f2371mr5667250f8f.31.1733396102155; 
+ Thu, 05 Dec 2024 02:55:02 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-48-244.web.vodafone.de.
+ [109.42.48.244]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-386219096b8sm1667638f8f.84.2024.12.05.02.55.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Dec 2024 02:55:01 -0800 (PST)
+Message-ID: <a41bb572-6bf1-4972-8223-22677a21b864@redhat.com>
+Date: Thu, 5 Dec 2024 11:55:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] gitlab: purge build files from cirrus CI jobs
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20241204194807.1472261-1-berrange@redhat.com>
+ <20241204194807.1472261-5-berrange@redhat.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241204194807.1472261-5-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z1DAzzB1SfY_bL17@x1n>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -87,55 +152,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 04, 2024 at 03:51:27PM -0500, Peter Xu wrote:
-> On Wed, Dec 04, 2024 at 08:02:31PM +0000, Daniel P. Berrangé wrote:
-> > I would say the difference is like a graceful shutdown vs pulling the
-> > power plug in a bare metal machine
-> > 
-> > 'cancel' is intended to be graceful. It should leave you with a functional
-> > QEMU (or refuse to run if unsafe).
-> > 
-> > 'yank' is intended to be forceful, letting you get out of bad situations
-> > that would otherwise require you to kill the entire QEMU process, but
-> > still with possible associated risk data loss to the QEMU backends.
-> > 
-> > They have overlap, but are none the less different.
+On 04/12/2024 20.48, Daniel P. Berrangé wrote:
+> Uploading artifacts in Cirrus CI requires sufficient disk space to
+> create a tarball of the artifact files. IOW, whatever size the
+> artifacts are, double that. This results in space pressure on the
+> FreeBSD jobs due to limited disk size. Purging the .o files from
+> the meson build directory reclaims significant space.
 > 
-> The question is more about whether yank should be used at all for
-> migration only, not about the rest instances.
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   .gitlab-ci.d/cirrus/build.yml | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> My answer is yank should never be used for migration, because
-> "migrate_cancel" also unplugs the power plug.. It's not anything more
-> enforced.  It's only doing less always.
-> 
-> E.g. migration_yank_iochannel() is exactly what we do with
-> qmp_migrate_cancel() in the first place, only that migrate_cancel only does
-> it on the main channel (on both qemufiles even if ioc is one), however it
-> should be suffice, and behave the same way, as strong as "yank".
+> diff --git a/.gitlab-ci.d/cirrus/build.yml b/.gitlab-ci.d/cirrus/build.yml
+> index 9983ab0690..d26a2a788c 100644
+> --- a/.gitlab-ci.d/cirrus/build.yml
+> +++ b/.gitlab-ci.d/cirrus/build.yml
+> @@ -37,6 +37,7 @@ build_task:
+>         do
+>           $MAKE -j$(sysctl -n hw.ncpu) $TARGET V=1 ;
+>         done
+> +    - find . -not -path 'meson-logs/*' -delete
 
-I recall at the time the yank stuff was introduced, one of the scenarios
-they were concerned about was related to locks held by QEMU code. eg that
-there are scenarios where migrate_cancel may not be processed promptly
-enough due to being stalled on mutexes held by other concurrently running
-threads. Now I would expect any such long duration stalls on migration
-mutexes to be bugs, but the intent of yank is to give a recovery mechanism
-that can workaround such bugs.  The yank QMP command only interacts with
-its own local mutexes.
+I'm not sure, but this might cause trouble if you run the Cirrus-CI job with 
+terminal access for testing the binaries manually after the build succeeded? 
+Maybe it would be better to just kill the .o files and leave the rest around?
 
-So even though both migrate-cancel and yank end up calling the same
-qio_channel_shutdown() API, there can be practical differences in how
-they reach that qio_channel_shutdown() call.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+  Thomas
 
 
