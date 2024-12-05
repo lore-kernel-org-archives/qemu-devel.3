@@ -4,104 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BE3E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30673E7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJJCt-0004Vv-8M; Thu, 05 Dec 2024 16:16:19 -0500
+	id 1tJJEa-0005G8-WB; Thu, 05 Dec 2024 16:18:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJJCr-0004VQ-57
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:16:17 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJEZ-0005FR-9b
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:18:03 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJJCp-0002sn-79
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:16:16 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 2CE8D1F37C;
- Thu,  5 Dec 2024 21:16:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733433370; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GCzzmwH+qWmJr3FqIA0xXzUGmmRBmF9JtkbfML9wI8I=;
- b=vWFQvMEJnyFuiZokUghrG8p83e9g2aC20xwBNMh2LuXf3lqANjeGDXYdr1S4FOJg4J50/s
- WbXiQoopRVsDiDt3PE7jrYOxRYJQnz9gUwV87Bn9Pjp0z7XYLNh/mDzuDZnDK0mVgHqQ70
- LLaPVRpb36DDdZWxznEhY9vBZEO15uo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733433370;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GCzzmwH+qWmJr3FqIA0xXzUGmmRBmF9JtkbfML9wI8I=;
- b=5aEVmHUUOjwGUiXvEisL3gyemO11u3NDZtbSiJ6zZ8aMhpEXTmaDc0/5VrWxTnOhzshGhE
- d32a8Vj5qHcLD/DA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733433369; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GCzzmwH+qWmJr3FqIA0xXzUGmmRBmF9JtkbfML9wI8I=;
- b=v8iqc8eM4EskpWwLk3/FhnN4wcmUyMFCsVF2mIwHBjKqihtcCI/HXca4MCH5zE9KrEC9pT
- 4F0HXCaY+XUSObw/Lpu79Ule81KE5Yn+r1jT3IRn2J7J18nobNUQVx9mJbU6Ou/GcBH4Bi
- G332F7XIabDl63m9PAqFP8Vq4PFdyMc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733433369;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GCzzmwH+qWmJr3FqIA0xXzUGmmRBmF9JtkbfML9wI8I=;
- b=Stfi4hUTVb6oTsUgR8CN7QsxpGEzUv39VOU2L5ZCFLo4tKtir7TT0vhitWamqAsyjGmC2o
- BDwGQfcrw90hM8Dg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A3DB6132EB;
- Thu,  5 Dec 2024 21:16:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +4YIGhgYUmcNWgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 05 Dec 2024 21:16:08 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero"
- <mail@maciej.szmigiero.name>, Alex Williamson
- <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH 1/2] migration/multifd: Further remove the SYNC on complete
-In-Reply-To: <Z1ILpzQk6Q8d1cpg@x1n>
-References: <20241205185303.897010-1-peterx@redhat.com>
- <20241205185303.897010-2-peterx@redhat.com> <878qstj46b.fsf@suse.de>
- <Z1ILpzQk6Q8d1cpg@x1n>
-Date: Thu, 05 Dec 2024 18:16:05 -0300
-Message-ID: <87jzcdde5m.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJEX-0004Nr-MG
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:18:03 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-434aa222d96so16391755e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:18:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733433479; x=1734038279; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+3CAH4K1LfXjR+g8rB9/ewV3A11K6YOBB/0pgZTeFa0=;
+ b=DyIxNpbAwZFYIErZzol8HL0BZJ6HGcWdHaWv3oQ0I2oXVWQG9TdbQvpbebGgTdiHV1
+ +tN27OhKBDE1CE9eJVpHB3PWCItzqKdlfziukQAq9GcRCyYc89Yc+dJZg32KNJ+BICjo
+ PZINHitSCkvb4sl64k+GuVcUFoazXYDPin8uAddTszIbSFkEyZ4ZPWDzhD34DtuqpzzM
+ SoxGd+F/h9HB6RTYHFl8jzOJtUBlzcmfyqEonJ+WsHNDbtrPgCspjwrIiLbNJTL6W6+M
+ ctescGwtha8gQJ0thhkPw5AEaRG6HFUPUiG8OmpsJLSA4dOR/nCUl2El2WS6Uj9YfkjP
+ AQlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733433479; x=1734038279;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+3CAH4K1LfXjR+g8rB9/ewV3A11K6YOBB/0pgZTeFa0=;
+ b=lU6aefMFpgVYYRAIREYqvH7RDfmeh7o8+MQcwowpaXUYxD8X+kKXQTbqM94TguuieN
+ 70qLzZTPwvSnYHsHjDf3jYN30MM4K+Q90Cx4kOddAsupM2EYus+/j4lvy8HLFnmtEZZy
+ Q9tUPRlXjKI0KOyOoqF9vTC6BA69zoJ4wGbnXGXVb0TIX+1850QHxFNL2pqgxpdesS+w
+ xW+mmanhCu7FkxTJxfeB4+wBG/w4e7rbW5kZ1gh3I/VfDiDmSG1KcroGaMkO5CyKMJhN
+ Nxi7JpxJqCBlhJolTfw48jL68WiccTSUrx2GxlBEqeg4UD0ig5nCx2WVIWglXBlqVXFM
+ Ujdw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUnSfvA0/uyeo72IqXgrrDlAW1HGA2W7/JiuCJH6qkj/aGXtbQi8GnZCMMjI2NaYRbxSmJLLAGmiEPc@nongnu.org
+X-Gm-Message-State: AOJu0YxGPxkcPkFX5vy/FROUdfOs7IDs1AgT3KR/VmSb2H+M8By5O1sa
+ LY+uf3YzTvSMkDhdXGS5H9DpmfG41DZSWdAhStn8j0iEBaqPLSi4O6uVqhfqSZ0=
+X-Gm-Gg: ASbGncvo011OSvk9JO9uc4z/bVfpJw9LaxoIhVHflFb8C7OoEREPavEHK2CO1mRbOw6
+ mXUDF5nOP6pl87rrSVnRrHHPEUBumWO5WN/PwQogMRqy8EtT6v3sfQIff++qKIWugMAfSacYkMU
+ /+rheJFSeF0BZIFEA6pegpV31tMbi5EbfRX1yYOrww89K8tX0JL2pfgMtcQfrVwrqDSsVFU9V8T
+ Ip/B2yo9/9B30Estj6jBfuHvHnR331hsPpFZNQzPHxa5hFZ1fHuzZQm7vF/CNa4leGZG2vEtCVa
+ rFhdx2De/YE7cZOrLg==
+X-Google-Smtp-Source: AGHT+IGh/kFDYyY3Yn0heX1I0fH9ZpBnoM/2lrSFYPc+xMx3Obefzuvqv07rMYZSps+MHQ6ZjkUKBw==
+X-Received: by 2002:a05:600c:1f8c:b0:428:d31:ef25 with SMTP id
+ 5b1f17b1804b1-434ddeb516emr7249625e9.12.1733433479530; 
+ Thu, 05 Dec 2024 13:17:59 -0800 (PST)
+Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434d526c059sm72095175e9.5.2024.12.05.13.17.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Dec 2024 13:17:59 -0800 (PST)
+Message-ID: <8cb0a692-420a-4645-b1b8-bc6e47bbb116@linaro.org>
+Date: Thu, 5 Dec 2024 22:17:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-10-zhao1.liu@intel.com>
+ <ed49af53-4a10-4cee-829e-d5921b8aee3c@linaro.org>
+ <Z1GgjZOCc8vkkB3A@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <Z1GgjZOCc8vkkB3A@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,194 +107,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 5/12/24 13:46, Zhao Liu wrote:
+> Hi Philippe,
+> 
+> On Thu, Dec 05, 2024 at 01:04:58PM +0100, Philippe Mathieu-Daudé wrote:
+>> Date: Thu, 5 Dec 2024 13:04:58 +0100
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
+>>
+>> On 5/12/24 07:07, Zhao Liu wrote:
+>>> HPET device needs to access and update hpet_cfg variable, but now it is
+>>> defined in hw/i386/fw_cfg.c and Rust code can't access it.
+>>>
+>>> Move hpet_cfg definition to hpet.c (and rename it to hpet_fw_cfg). This
+>>> allows Rust HPET device implements its own global hpet_fw_cfg variable,
+>>> and will further reduce the use of unsafe C code access and calls in the
+>>> Rust HPET implementation.
+>>>
+>>> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+>>> ---
+>>>    hw/i386/fw_cfg.c        |  4 +---
+>>>    hw/timer/hpet.c         | 16 +++++++++-------
+>>>    include/hw/timer/hpet.h |  2 +-
+>>>    3 files changed, 11 insertions(+), 11 deletions(-)
+>>
+>>
+>>> diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
+>>> index d17a8d43199e..dbf709251a8f 100644
+>>> --- a/include/hw/timer/hpet.h
+>>> +++ b/include/hw/timer/hpet.h
+>>> @@ -74,7 +74,7 @@ struct hpet_fw_config
+>>>        struct hpet_fw_entry hpet[8];
+>>>    } QEMU_PACKED;
+>>> -extern struct hpet_fw_config hpet_cfg;
+>>> +extern struct hpet_fw_config hpet_fw_cfg;
+>>
+>> Could this field belong to the (yet unexisting) HPETClass?
+> 
+> Several instances would share the same class, so HPETClass could manage
+> multiple HPETState info.
+> 
+> But in fw_cfg.c, do you have idea about how to get the HPETClass?
 
-> On Thu, Dec 05, 2024 at 04:55:08PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
->> > complete()") removed the FLUSH operation on complete() which should avoid
->> > one global sync on destination side, because it's not needed.
->> >
->> > However that commit overlooked multifd_ram_flush_and_sync() part of things,
->> > as that's always used together with the FLUSH message on the main channel.
->> 
->> Let's please write the full name of the flags, functions, etc. As we've
->> seen in the discussion with Prasad, we're stumbling over ambiguous
->> terminology. This is RAM_SAVE_FLAG_MULTIFD_FLUSH.
->
-> Sure.
->
->> 
->> >
->> > For very old binaries (multifd_flush_after_each_section==true), that's
->> > still needed because each EOS received on destination will enforce
->> > all-channel sync once.
->> 
->> Ok, but why does this patch not reinstate the flag?
->
-> RAM_SAVE_FLAG_MULTIFD_FLUSH?  Because it's not needed?
->
+Have hpet_find() return an Object and call object_get_class()?
 
-Ah, you're saying we need the source side to send the MULTIFD_FLAG_SYNC
-packet so that the old QEMU on the recv side gets out of waiting. I
-see.
+> Regards,
+> Zhao
+> 
 
->> 
->> >
->> > For new binaries (multifd_flush_after_each_section==false), the flush and
->> > sync shouldn't be needed just like the FLUSH, with the same reasoning.
->> >
->> > Currently, on new binaries we'll still send SYNC messages on multifd
->> > channels, even if FLUSH is omitted at the end.  It'll make all recv threads
->> > hang at SYNC message.
->> 
->> I don't get this part, is this a bug you're describing? There's not SYNC
->> message on the recv side, I think you mean the MULTIFD_FLAG_SYNC and
->> this code?
->> 
->>     if (flags & MULTIFD_FLAG_SYNC) {
->>         qemu_sem_post(&multifd_recv_state->sem_sync);
->>         qemu_sem_wait(&p->sem_sync);
->>     }
->
-> Yes.
->
->> 
->> That's not a hang, that's the sync.
->
-> When recv side never collect that SYNC (by invoke multifd_recv_sync_main),
-> then it is a hang.
->
-
-Right, I forget the sync on the recv is the other way around. It's the
-multifd_recv_state that does the sync between the threads. The sem_sync
-is there so that the channels don't exit.
-
->> 
->> >
->> > Multifd is still all working fine because luckily recv side cleanup
->> > code (mostly multifd_recv_sync_main()) is smart enough to make sure even if
->> > recv threads are stuck at SYNC it'll get kicked out.  And since this is the
->> > completion phase of migration, nothing else will be sent after the SYNCs.
->> 
->> Hmm, a last sync on the recv side might indeed not be needed.
->> 
->> >
->> > This may be needed for VFIO in the future because VFIO can have data to
->> > push after ram_save_complete(), hence we don't want the recv thread to be
->> > stuck in SYNC message. Remove this limitation will make src even slightly
->> > faster too to avoid some more code.
->> >
->> > Stable branches do not need this patch, as no real bug I can think of that
->> > will go wrong there.. so not attaching Fixes to be clear on the backport
->> > not needed.
->> >
->> > Signed-off-by: Peter Xu <peterx@redhat.com>
->> > ---
->> >  migration/ram.c | 13 ++++++++++---
->> >  1 file changed, 10 insertions(+), 3 deletions(-)
->> >
->> > diff --git a/migration/ram.c b/migration/ram.c
->> > index 05ff9eb328..7284c34bd8 100644
->> > --- a/migration/ram.c
->> > +++ b/migration/ram.c
->> > @@ -3283,9 +3283,16 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
->> >          }
->> >      }
->> >  
->> > -    ret = multifd_ram_flush_and_sync();
->> > -    if (ret < 0) {
->> > -        return ret;
->> > +    if (migrate_multifd() &&
->> > +        migrate_multifd_flush_after_each_section()) {
->> > +        /*
->> > +         * Only the old dest QEMU will need this sync, because each EOS
->> > +         * will require one SYNC message on each channel.
->> > +         */
->> > +        ret = multifd_ram_flush_and_sync();
->> > +        if (ret < 0) {
->> > +            return ret;
->> > +        }
->> 
->> I don't think this works. We need one last flush to not lose the last
->> few pages of ram. And we need the src side sync of multifd threads to
->> make sure this function doesn't return before all IO has been put on the
->> wire.
->
-> This should be the question for commit 637280aeb2, I thought it got
-> answered there.. It's almost what the commit message there in 637280aeb2
-> wanted to justify too.
-
-Yeah, it missed the mark.
-
->
-> We don't need to flush the last pages here, because we flushed it already,
-> in the last find_dirty_block() call where src QEMU finished scanning the
-> last round.  Then we set complete_round=true, scan one more round, and the
-> iteration won't complete until the new round sees zero dirty page.
-
-Ok, let's put this in the commit message. As it stands it looks like
-this patch is fixing a bug with 637280aeb2 when instead it's doing
-further optimization, but so it happens that we still require the
-backward compatibility part.
-
->
-> So when reaching this line, multifd send buffer must be empty.  We need to
-> flush for each round of RAM scan, we can't avoid the flush there, but we
-> can save this one in complete().
->
-> To explain that with code, I hacked a QEMU and assert that.  It ran all
-> fine here (this is definitely not for merge.. but to show what I meant):
->
-> ===8<===
-> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-> index f64c4c9abd..0bd42c7627 100644
-> --- a/migration/multifd-nocomp.c
-> +++ b/migration/multifd-nocomp.c
-> @@ -21,7 +21,7 @@
->  #include "qemu/error-report.h"
->  #include "trace.h"
->
-> -static MultiFDSendData *multifd_ram_send;
-> +MultiFDSendData *multifd_ram_send;
->
->  size_t multifd_ram_payload_size(void)
->  {
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 7284c34bd8..edeb9e28ff 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -3228,6 +3228,8 @@ out:
->      return done;
->  }
->
-> +extern MultiFDSendData *multifd_ram_send;
-> +
->  /**
->   * ram_save_complete: function called to send the remaining amount of ram
->   *
-> @@ -3283,6 +3285,10 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
->          }
->      }
->
-> +    if (migrate_multifd()) {
-> +        assert(multifd_payload_empty(multifd_ram_send));
-> +    }
-> +
->      if (migrate_multifd() &&
->          migrate_multifd_flush_after_each_section()) {
->          /*
-> ===8<===
->
->> 
->> This also doesn't address what the commit message says about the recv
->> side never getting the RAM_SAVE_FLAG_MULTIFD_FLUSH message.
->
-> The new binaries now always not send RAM_SAVE_FLAG_MULTIFD_FLUSH when
-> complete(), however it always sends the multifd SYNC messages on the wire.
-> It means those SYNC messages will always arrive on dest multifd channels,
-> and then all these channels will wait for the main thread to collect that.
-> However since RAM_SAVE_FLAG_MULTIFD_FLUSH is not there, they'll hang until
-> multifd recv cleanups.
 
