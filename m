@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE62E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 18:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11630E7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 18:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJGz0-0003vB-IY; Thu, 05 Dec 2024 13:53:50 -0500
+	id 1tJH3J-00064u-Fb; Thu, 05 Dec 2024 13:58:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tJGyy-0003k2-F5
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 13:53:48 -0500
+ id 1tJH3H-000640-P9
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 13:58:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tJGyw-0001DW-Mz
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 13:53:48 -0500
+ id 1tJH3G-0002nR-9O
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 13:58:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733424826;
+ s=mimecast20190719; t=1733425091;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=MJHLBtqQ7saBLHJKPz5jOE+/qfjkFJwcL7PVz8ahCCk=;
- b=MC3fGchyX5CzrgwrwS9vtbRnipyNlFDsjrYNqoZ4FQfDj+5mm0doUZt5wlwMXybXSTQ0Rn
- TKaxIw2R49+A/4vkrbqdoosDTrqBP1X0k3WaSwD0GClyc5tM16fu8DaBXmfgFUisBML9SV
- 5W5EEwQhphuN1vK+246OfbhpUGz4WO8=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yoaqpBrTdGV/6rfncvj+awwhtmzVKW2lAyWKxB9lP30=;
+ b=DPJj3ZR5koeMwU7M1uU1/A1Ar8wL0So7um1zVzM6+nzRuJ6xgPXuTyX919+TC69/08AgPl
+ Z2gVbJ5LUwr+3RRWO6a1t2JTW+Jn0UOibkySCzsCANVeZ2OiXCRBge4oc12OoW8XBzU3zE
+ 8cJRpq39QZ9MwOygWQDthalU26gzlrg=
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
+ [209.85.222.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-sIvlLTeqPcSGwKCeDPZzOg-1; Thu, 05 Dec 2024 13:53:44 -0500
-X-MC-Unique: sIvlLTeqPcSGwKCeDPZzOg-1
-X-Mimecast-MFC-AGG-ID: sIvlLTeqPcSGwKCeDPZzOg
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b66ec70846so255792385a.3
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 10:53:44 -0800 (PST)
+ us-mta-605-IU2-g95iNoupCt3Mi247jw-1; Thu, 05 Dec 2024 13:58:10 -0500
+X-MC-Unique: IU2-g95iNoupCt3Mi247jw-1
+X-Mimecast-MFC-AGG-ID: IU2-g95iNoupCt3Mi247jw
+Received: by mail-ua1-f71.google.com with SMTP id
+ a1e0cc1a2514c-856364f1b05so252468241.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 10:58:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733424824; x=1734029624;
+ d=1e100.net; s=20230601; t=1733425090; x=1734029890;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MJHLBtqQ7saBLHJKPz5jOE+/qfjkFJwcL7PVz8ahCCk=;
- b=Va1XvZCNMoY6LkjDI6+IkQiAJnztt8npizrTpt4W7YI7cy5DfaddB4hPpgGm2iF8E4
- +zsAQFOi3SfrI5psGCIy9SdM4jyX8bOMwWRn3yanEFfX/5lcsgxEpDmDWI7kRH6XRnuK
- eicKVj/tfKu+/hKx/zkCCSXtJpIcnCaciV45WyWBbC2QjThaZulP6Uu/K4oN97DfFkCV
- kxDVY9ho43XsEyNC0NiiX667Q+yxicL46PbW3QEgAjay5D1N0DOVymHb3YqFwbeQglzO
- OVVcTExoN3TnCFR4MLtCP9husqsu2/AwDKPwQBIY39EgZu5qz1dkfrw/5FlJig7j/vrn
- M2pg==
-X-Gm-Message-State: AOJu0YxbY6pIAiJ3CwnZbwOhB/GLjFaWH2z+JiRtULaKIH4vv4Gev2yL
- jWekD8Y4YV9qlSVa8KWh1uolCHlxT4pKMNPO//Zno2LM+qXT3Al4vtLTFfEOA3//Xs8lThR0UHJ
- IHPPPilB1d8/dDkNQq0k+ED/fiyeSuLYfeVQtd+hwz9zEGOFwI3IC
-X-Gm-Gg: ASbGnctDAwp7++aKGY26x5oNJIAU2nl/k4In0ceWmOyriSzuRw7TlaMtBxJ+NhxlgLw
- 6sPTpCJDm+uEfrPD+gcZzFQzWiD12e8zKkVLiXs2C8zAIPT8ffSznQTVpSVyCbGIsheFNBghlXH
- RoYA2d+z7a5Dz8ygMQCsargEcOe3KqI1ULjSbc/ucRqrTK5cirL+dNaTIzCXJ00XG+aKlN2fkhz
- +q60F113Z2hVaOso3mD7mwqKapXgGfDJNrt+wTUZ1i01brtwP1aPeDp
-X-Received: by 2002:a05:620a:2415:b0:7b6:67df:51ce with SMTP id
- af79cd13be357-7b6bcad4d3amr55822385a.18.1733424824389; 
- Thu, 05 Dec 2024 10:53:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVp1yOFWLsBqd+DCbc7ErdZEzikmrkD8nsgmirLJ8xTTagT2nTNXwWDerGPqrZm79x4nh27w==
-X-Received: by 2002:a05:620a:2415:b0:7b6:67df:51ce with SMTP id
- af79cd13be357-7b6bcad4d3amr55818785a.18.1733424824114; 
- Thu, 05 Dec 2024 10:53:44 -0800 (PST)
+ bh=yoaqpBrTdGV/6rfncvj+awwhtmzVKW2lAyWKxB9lP30=;
+ b=LD4AfeBgDaWjL2j2+cWGQEkpFVa0qffGPiGueWuWZHTfuy8fa/fmmCuZZXWRsYbl0T
+ 9D3gO2CveM7IwC6Hl14KopCjvtPF+mkws1YfHbkyrEbQDVCBvf+uhVqkZt/zHexuZPow
+ htx3xWMtFgil/Dw9OkIMcfFGljPSqV1cr25i/olZZ7RVXnJrw2GpYPFKretOjp2a4BGS
+ SxEjfk3MRv5Obc5YhTU0/bHlAEqo+Uqu5U8abJ/r+IKGbDvqJN3/UewqPSrDHbnJwdAs
+ XVJdodn42aB2BfmAsZNhM8O/htJmV3hwXN+cY01U1VvNYY22lKVpEYE/8+jLb1Xvspcc
+ eSgg==
+X-Gm-Message-State: AOJu0Yx0Zneif/3brfOu/8ag1EkT2e3wmY9IL+zCat8AirMWh5Hyj38w
+ HTiuVcjgm4+7/BGjx3bPYrNq83ov0g3ZLvea1puQu5x1rhpRvcOy4u4y8a07IfyL8uFAJ1ZNsD9
+ LD15q83G/ACNylQXyfBf4iB1qRrIE8XfumgN06J971j3QFLl3CP0C
+X-Gm-Gg: ASbGnctwMU+Y+W4dLSFASTIRocQ/DEGzeixWXuJlsQi3xv4ff82p25519Qx5JXg9Gl5
+ 5ClKWN1YrCvVsPgPQ9FgCU2wsUjJ8ucIfs7eJOqmNONYH6HryLzt9/pXcuaKdxMOuv/ZpaSAVd8
+ WQ3uBiYpuZ1bZfmTcwfQKRsl9pRnQ4ZMFnZuL2Ka17D/Q6KFaTBm6xj+HG03Tjw+lxfirh93I2V
+ u965dcHsB5w4Z8+0F23rmNeSDCR4PgTeaCKHfkup9tThA5ukvrxXaMx
+X-Received: by 2002:a05:6102:b05:b0:4ac:fe47:1bcf with SMTP id
+ ada2fe7eead31-4afcab15935mr618678137.24.1733425090142; 
+ Thu, 05 Dec 2024 10:58:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHciEJXmweT5wEjvM37V7aJvVqOOBewbohri91X4XpnUNHh5+UmGr9AJTCvVPtiSCe14nm/BQ==
+X-Received: by 2002:a05:6102:b05:b0:4ac:fe47:1bcf with SMTP id
+ ada2fe7eead31-4afcab15935mr618653137.24.1733425089890; 
+ Thu, 05 Dec 2024 10:58:09 -0800 (PST)
 Received: from [10.195.154.128] ([144.121.20.163])
  by smtp.googlemail.com with ESMTPSA id
- af79cd13be357-7b6b5a83c37sm86377185a.95.2024.12.05.10.53.42
+ af79cd13be357-7b6b5a5b6d1sm87025385a.36.2024.12.05.10.58.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 10:53:43 -0800 (PST)
-Message-ID: <6108dfe6-f629-431c-be91-51abff338e85@redhat.com>
-Date: Thu, 5 Dec 2024 19:53:42 +0100
+ Thu, 05 Dec 2024 10:58:09 -0800 (PST)
+Message-ID: <2345dbef-039c-4390-9671-75c8b529e13f@redhat.com>
+Date: Thu, 5 Dec 2024 19:58:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 04/13] rust: add bindings for gpio_{in|out} initialization
+Subject: Re: [RFC 12/13] rust/timer/hpet: add qdev APIs support
 To: Zhao Liu <zhao1.liu@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
@@ -83,7 +83,7 @@ To: Zhao Liu <zhao1.liu@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
 References: <20241205060714.256270-1-zhao1.liu@intel.com>
- <20241205060714.256270-5-zhao1.liu@intel.com>
+ <20241205060714.256270-13-zhao1.liu@intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -121,7 +121,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20241205060714.256270-5-zhao1.liu@intel.com>
+In-Reply-To: <20241205060714.256270-13-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -150,56 +150,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/5/24 07:07, Zhao Liu wrote:
-> The qdev_init_gpio_{in|out} are qdev interfaces, so that it's natural to
-> wrap them as DeviceState's methods in Rust API, which could eliminate
-> unsafe cases in the device lib.
+> Implement QAPI support for HPET device in qdev.rs.
 > 
-> Wrap qdev_init_gpio_{in|out} as methods in a new trait DeviceGPIOImpl.
->
-> In addition, for qdev_init_gpio_in(), to convert the idiomatic Rust
-> callback into a C-style callback qemu_irq_handler, add a handler pointer
-> member in DeviceGPIOImpl. For any device needs to initialize GPIO in, it
-> needs to define a handler. And for device which just wants to initialize
-> GPIO out, it can leave the GPIO_IRQ_HANDLER as None.
+> Additionally, wrap the handling of HPET internal details as traits to be
+> specifically implemented in hpet.rs.
 
-This has the same issue as timers, in that you could have (especially 
-once someone adds named GPIOs) multiple handlers.  So we need the same 
-kind of Fn-based thing here too.
+Why not just put everything in a simple file to avoid the traits?
 
-> +/// Trait that defines the irq handler for GPIO in.
-> +pub trait DeviceGPIOImpl {
-> +    const GPIO_IRQ_HANDLER: Option<fn(&mut Self, lines_num: u32, level: u32)> = None;
-
-Ah, I see that you're placing the qdev_init_gpio_in here so that you
-only make that accessible for devices that did implement DeviceGPIOImpl.
-However you are not guaranteeing that this _is_ a DeviceState.
-
-If the handler can be passed as a function, the problem of getting the 
-GPIO_INT_HANDLER does not exist anymore.  So with the code in rust-next 
-you can add these to a trait like
-
-/// Trait for methods of [`DeviceState`] and its subclasses.
-pub trait DeviceMethods: ObjectDeref
-where
-     Self::Target: IsA<DeviceState>,
-{
-     fn init_gpio_in<F: ...)(&self, lines_num: u32, f: &F) {
-     }
-}
-
-impl<R: ObjectDeref> DeviceMethods for R where R::Target: 
-IsA<DeviceState> {}
-
-
-> +    fn init_gpio_out(&self, pins: &InterruptSource, lines_num: u32) {
-> +        unsafe {
-> +            qdev_init_gpio_out(addr_of!(*self) as *mut _, pins.as_ptr(), lines_num as c_int);
-> +        }
-> +    }
+> +pub(crate) trait RamOps {
+> +    fn read(&mut self, addr: hwaddr, _size: c_uint) -> u64;
+> +    fn write(&mut self, addr: hwaddr, value: u64, size: u64);
 > +}
 
-Pass a slice &[InterruptSource], and get the "len" from the length of 
-the slice.
+Please try as much as possible to make these "&self", same for the GPIO 
+handler.  That's the point of BqlCell/BqlRefCell. :)
 
 Paolo
 
