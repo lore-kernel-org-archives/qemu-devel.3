@@ -4,93 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F7DE7716D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 12:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4997E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 12:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJB2Q-0003uR-9f; Thu, 05 Dec 2024 07:32:58 -0500
+	id 1tJBAD-0005zi-2x; Thu, 05 Dec 2024 07:41:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tJB2O-0003u4-VP
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 07:32:56 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJBA3-0005xk-L1
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 07:40:52 -0500
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tJB2M-0008Np-TV
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 07:32:56 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-385e2c52c21so680313f8f.2
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 04:32:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733401972; x=1734006772; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=7QatEww3p5uincMuCHGM2HklsAUuluoA0dTIGETLpfY=;
- b=YmDL+a5zFl+QmjYN2xPBtfULl+/62BHcSjWZsiOxLSexT3+y9pqfUGdjw/eM8M0nIo
- gUzuVV7hKud7VgjKsVF9d47xPgyJM+MrrcT3M6CLnH0wj57GNkKWfIcJLJyXFmvURPiV
- BIIHk5Ct/p+zCRid7L0j2UPOu+zMW8Hhiv6LqzHkwMW5mgUdUL4pNArNYN5FHLdCyiH+
- jq7Lvkw0/ER2xLYdzVjAC77pX5ANNdtmptHpIp3xL7nZfO9Q3NNBP8NoleFpVBm8F8B6
- 3eamE5zNIy2vX4pHwXSiGuRcLaGB7fh04pUCollFnuEoyhydpaiDaDdasREJjIt4F5Pd
- jAbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733401972; x=1734006772;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7QatEww3p5uincMuCHGM2HklsAUuluoA0dTIGETLpfY=;
- b=bKHzzgmmnAHwkWFixNH7z67yru3LTKZC6k4K6qQTT+atCt2c6zspN5n4aFxJ2DaL/r
- eKQd1l28aSV4IzfhARnOF6HEXXnzuFEo/L++5APrj0LL2BX0UVVnrAl8sSNQQk86JDcX
- +pGFJ+t19fp9y3H1EOynUd3EEQY73mKXTwUnYlI4ChRRzLcI+R3fw0VYD8IYW4kQPyjr
- 49D/8ePR0LDrL58KjLiH95N+HGCmjAwAymY9pM29zKIWzRBT5ZlKFLJb/teI2Hhiz4SI
- v8BP2nJYuKUib/hCkhPcr9UkYCsboIkakzkl7ajqkBgmSDIuNUla5TOecyBdTj46cHUO
- aZdg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXgwvyHRBF8LnsTwYnUxx/GyilIXOy84F93LtsDmVnFsaieWCyNEuNMOQbqvmZtbudXdql82RbQI1FD@nongnu.org
-X-Gm-Message-State: AOJu0YwwS+fodEiOeEB1HWx6M6vwB6bskBRsiA8d6JDTWuRmkzvcxAvN
- 1Oq7pBBNnkzU9oLBebT+VVJP0OLVcMCdacQ9FBsz+azW6f+cWQLPTPrDmPLRXVs=
-X-Gm-Gg: ASbGncul5FfIth/+his9GSyiC0ky6M54rP6Xr83UiE47euGi6d65xbPxdJh7nBL1dEo
- 28nyvu/dgzLghVa2U9FtKfXHTyqYqOcuzPrzAl013nAzUdKtaw7726A+BANHZhgqW8PHnzOZq9E
- fykcRS4rtTcq+Sgs9vga0FJt3UcHSumCjLpR1NKL/pwmohUr50J9kEcWBmfZn8BzDRzdWTb1WJt
- +MUjzGfqPyXNSd4uM23APLz2lH+8vyBUw3zNvSaRlrVRYXN
-X-Google-Smtp-Source: AGHT+IGar0137GZGyq7fuSkakPayO2Iyooo2G413DupBnmFkgyBbqvY41v8oylXSRRfL9xdD31tQeQ==
-X-Received: by 2002:a05:6000:1faa:b0:386:1c13:30d5 with SMTP id
- ffacd0b85a97d-3861c133159mr2116689f8f.7.1733401972303; 
- Thu, 05 Dec 2024 04:32:52 -0800 (PST)
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434da113508sm22623965e9.35.2024.12.05.04.32.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 04:32:51 -0800 (PST)
-Date: Thu, 5 Dec 2024 12:33:16 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: Re: [RFC PATCH v3 25/26] target/arm/kvm-rme: Add measurement log
-Message-ID: <20241205123316.GA567753@myrica>
-References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-27-jean-philippe@linaro.org>
- <02b90518-2996-4231-bee9-43ce313669b0@linux.ibm.com>
- <Z0XREyMovNyB4s6t@redhat.com> <20241126162149.GC956991@myrica>
- <d3d73795-3f59-490c-9e54-c6c358af62d0@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJBA0-00022f-G5
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 07:40:50 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 26EE418044B
+ for <qemu-devel@nongnu.org>; Thu,  5 Dec 2024 13:40:26 +0100 (CET)
+Received: (qmail 19725 invoked by uid 990); 5 Dec 2024 12:40:26 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Thu, 05 Dec 2024 13:40:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d3d73795-3f59-490c-9e54-c6c358af62d0@linux.ibm.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x433.google.com
+Date: Thu, 05 Dec 2024 12:40:25 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <ca20c295f464ae7e3365e012ad9a550f70b34b51@nut.email>
+TLS-Required: No
+Subject: Re: [RFC PATCH v3 01/11] plugins: add types for callbacks related to
+ certain discontinuities
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+In-Reply-To: <35529516-cc96-41de-8e0d-a7807ccc09cb@linaro.org>
+References: <cover.1733063076.git.neither@nut.email>
+ <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
+ <181b9b53a258257df1b24e7bfb8b0e6fc590c25f@nut.email>
+ <35529516-cc96-41de-8e0d-a7807ccc09cb@linaro.org>
+X-Rspamd-Bar: ---
+X-Rspamd-Report: BAYES_HAM(-3) MIME_GOOD(-0.1)
+X-Rspamd-Score: -3.1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:subject:date;
+ bh=zCMw2VC5NVaMEa0mPJe1ygnrt705qhMTE3Co87tWO1M=;
+ b=GiJIFoiODfLn8tyWViDeaT4EDB8U3a1+EuzA3EEDtFfCv9BgK481q72AN2Y+op+R9pwhjn+K/2
+ 09ifOl683HHnq2VokrGiYFxRSlYvYz/sVc9mqpujWTJ8DBawPqEGQaniuXhYNu06TsVe5rUlOATW
+ 6difA5awJL+zAvjHy6owqe+Y4HQjKOGXTcw/hGeymbG5d8nL1Y9iRZPBPfVpq1O6PiMflJw1dfht
+ a2zVeb58jS+IMHWn/1naO4wvU8R9hxQmIT8NA0O2XooTdyINLf10792IHcMk9ANJFTgQi0iyyDBC
+ tCPQRiR9RchmjJfXKvyOp5qE1qImc0G+FeK+3B3rrRUkS7Zx/c4FbQplD37IygEu2vg9Om7cJ653
+ cmLiYq3A+4piBtTZhe1dRhHqL04vioBgfHuuqGYNvwSARHTPJhMmzAPcBCXYRYnorJu2xHbpEEeF
+ Ucnl70VeZ3/Q5n4YKyDIXnZloyMdU8yjBWmkOQvmE+hdm7PDtOvifGQlmnG5Kgj1EgUYMG0AKvWu
+ LHqeAqqtsgzHHoS9Buj5ARaVc78b9I2WNzWPNxFtKXYMdB9RSVR+6+X6tjr7lv3+ADqyS4OeFPOE
+ ny/3PcEWTRgiJ4SdB7WEBpqhNpCX8P+IO03iMWbNr/ZOynAvest1Wmzs9F1EZaPOcCNp+JOrUBuy
+ U=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,102 +82,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 02, 2024 at 10:58:01AM -0500, Stefan Berger wrote:
-> 
-> 
-> On 11/26/24 11:21 AM, Jean-Philippe Brucker wrote:
-> > On Tue, Nov 26, 2024 at 01:45:55PM +0000, Daniel P. Berrangé wrote:
-> > > On Mon, Nov 25, 2024 at 05:23:44PM -0500, Stefan Berger wrote:
-> > > > 
-> > > > 
-> > > > On 11/25/24 2:56 PM, Jean-Philippe Brucker wrote:
-> > > > > Create an event log, in the format defined by Trusted Computing Group
-> > > > > for TPM2. It contains information about the VMM, the Realm parameters,
-> > > > > any data loaded into guest memory before boot and the initial vCPU
-> > > > > state.
-> > > > > 
-> > > > > The guest can access this log from RAM and send it to a verifier, to
-> > > > > help the verifier independently compute the Realm Initial Measurement,
-> > > > > and check that the data we load into guest RAM is known-good images.
-> > > > > Without this log, the verifier has to guess where everything is loaded>
-> > > > and in what order.
-> > > > 
-> > > > Typically these logs are backed by extensions of TPM PCRs and when you send
-> > > > a log to a verifier you send a TPM quote along with it for the verifer to
-> > > > replay the log and check the TPM quote. Also, early code in the firmware is
-> > > > typically serving as a root of trust that starts the chain of measurements
-> > > > of code and data, first measuring itself and then other parts of the
-> > > > firmware before it jumps into the other parts. Now here you seem to just
-> > > > have a log and no PCR extensions and therefore no quote over PCRs can be
-> > > > used.
-> > 
-> > Indeed, in our case it's the trusted hypervisor (RMM) that provides the
-> > equivalent to TPM quote and PCRs. In more details:
-> > 
-> > 1. QEMU loads images into guest RAM by calling KVM, which calls RMM.
-> > 2. RMM calculates a hash of the image content, adds it to a rolling hash
-> >     the "Realm Initial Measurement" (RIM), which I believe is equivalent to
-> >     a PCR.
-> 
-> I am not familiar with RIM. A link to read more about it would be helpful.
+Hi Pierrick,
 
-The "Learn the architecture" documentation might be a good introduction
-https://developer.arm.com/documentation/den0127/0200/Overview
-In particular the part about Realm creation:
-https://developer.arm.com/documentation/den0127/0200/Realm-management/Realm-creation-and-attestation
+December 4, 2024 at 11:41 PM, "Pierrick Bouvier" wrote:
+> On 12/3/24 00:45, Julian Ganz wrote:
+>=20
+>=20>=20
+>=20> Hi,
+> >  December 2, 2024 at 8:26 PM, "Julian Ganz" wrote:
+> >=20
+>=20> >=20
+>=20> > diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugi=
+n.h
+> > >  index 0fba36ae02..9c67374b7e 100644
+> > >  --- a/include/qemu/qemu-plugin.h
+> > >  +++ b/include/qemu/qemu-plugin.h
+> > >  @@ -154,6 +154,49 @@ typedef void (*qemu_plugin_vcpu_simple_cb_t)(=
+qemu_plugin_id_t id,
+> > >=20
+>=20>  <snip>
+> >=20
+>=20> >=20
+>=20> > +/**
+> > >  + * typedef qemu_plugin_vcpu_discon_cb_t - vcpu discontinuity call=
+back
+> > >  + * @vcpu_index: the current vcpu context
+> > >  + * @type: the type of discontinuity
+> > >  + * @from_pc: the source of the discontinuity, e.g. the PC before =
+the
+> > >  + * transition
+> > >  + * @to_pc: the PC pointing to the next instruction to be executed
+> > >  + *
+> > >  + * The excact semantics of @from_pc depends on @the type of disco=
+ntinuity. For
+> > >  + * interrupts, @from_pc will point to the next instruction which =
+would have
+> > >  + * been executed. For exceptions and host calls, @from_pc will po=
+int to the
+> > >  + * instruction that caused the exception or issued the host call.=
+ Note that
+> > >  + * in the case of exceptions, the instruction is not retired and =
+thus not
+> > >  + * observable via general instruction exec callbacks. The same ma=
+y be the case
+> > >  + * for some host calls such as hypervisor call "exceptions".
+> > >=20
+>=20>  Some more notes about this bit: I originally tried to make the fro=
+m_pc
+> >  semantics independent from the type of event, i.e. either of the two
+> >  cases. I obviously did not succeed in doing so. As, in most cases, t=
+he
+> >  instruction pointed to by from_pc is not observable via exec callbac=
+ks
+> >  I could also not test this behaviour in the testing plugin (see patc=
+h
+> >  11). I am therefore in favor for dropping the from_pc for the next
+> >  iteration of this patch series.
+> >=20
+>=20Does it mean that information returned should be dependent of type of=
+ event, as we previously discussed on v1?
 
-The RMM specification describes exactly how the RIM is calculated, but
-is less palatable:
-https://developer.arm.com/documentation/den0137/1-0rel0/?lang=en
-A7.1.1 Realm Initial Measurement
+Yes, and I don't like it.
 
-More specialized resource are the attestation token documentation:
-[1] https://datatracker.ietf.org/doc/html/draft-ffm-rats-cca-token-00
-and CCA Security Model:
-https://developer.arm.com/documentation/DEN0096/latest/
-
-> 
-> > 3. During remote attestation, the guest sends evidence containing this RIM
-> >     signed by the root of trust, along with a signed token identifying the
-> >     platform (hardware, firmware, RMM).
-> 
-> Is this a well known manufacturer key that one would expect for signature
-> verification or is it locally created?
-
-It comes from a well known manufacturer key, although the signing can be
-delegated in some models (like in the current demos):
-
-The hardware RoT creates a key pair for the RMM, which the RMM uses to
-sign the RIM. The RoT then signs the RMM pubkey, using the well-known key
-(see [1] 4.10 Token Binding).
-
-> 
-> > 4. The verifier checks the signature and the platform token, so it trusts
-> >     the RMM and the RIM.
-> > 
-> > > > Then what prevents anyone from faking this log and presenting a
-> > > > completely fake log to the verifier?
-> > 
-> > Absolutely, the verifier does not trust the content of the log, it only
-> > uses the log as helper to try to reconstruct the RIM. For example a log
-> > event says "I loaded image XYZ at address A", then the verifier searches
-> > image XYZ in its database of known-good images, calculates the hash that
-> > would result from loading that image at address A. Any malformed event in
-> 
-> Hopefully just calculating a hash over the image will do and the location an
-> image was loaded to, like address A (relocation?), doesn't matter...
-
-In this case it does matter because we don't trust the host VMM which
-instructs RMM where to load the images. So we need to verify that the
-image is in the correct location, otherwise the VM could be executing the
-wrong part of the code, or using the wrong part of the data loaded into
-RAM.
-
-When loading an image the RMM hashes its content, then hashes a structure
-that contains both the content hash and the address, and it is that hash
-that is added to the RIM.
-
-Thanks,
-Jean
-
+Regards,
+Julian Ganz
 
