@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70166E7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 11:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535EDE77170
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 11:57:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJAQL-0000Sq-4W; Thu, 05 Dec 2024 06:53:37 -0500
+	id 1tJATc-0001EC-8F; Thu, 05 Dec 2024 06:57:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tJAQJ-0000SY-12
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:53:35 -0500
-Received: from mgamail.intel.com ([192.198.163.19])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJATZ-0001Cn-Ch
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:56:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tJAQF-0007CD-9S
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:53:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733399611; x=1764935611;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=rCHr8iMhjVmuuA4npZrDNp6INSomdxjV8y8N+nsc3ns=;
- b=UPGHH7o+z7X1ZQ9dvWnXhtWDG035VEGE3ZrOP/Y0hYfgrBswNQNHRxTa
- Xp4hKGviJBo9vUvFLX9Teb4J0hyb5QHjP3DYAWuTfeaeeyK0Jj/I82YJX
- 5luDqjr5iF1wvo8dxKKbn+NqrQ30MrGswg9DahhflBjqG2346CDhVr70S
- QpprBj+Ypl3e0wtW/vurHv2ATRynG0NdAHOLhKI2RhcqwCW5DatkBL4cA
- v1Ew8FV/cJpSkL3IuCJKCuzMwJlQgnAre17O2h/UDeXXjnVWXuJw/LtXI
- ymXHSYOGynncb59qyxblA/cLX8H2jfc6L0b1ay1NU1+Ndvmdrr5rG9IhK Q==;
-X-CSE-ConnectionGUID: mEXHpOAeT52nzd+EcIRHVg==
-X-CSE-MsgGUID: qzovoUnwTOGj12IXwCwTLg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="33038711"
-X-IronPort-AV: E=Sophos;i="6.12,210,1728975600"; d="scan'208";a="33038711"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Dec 2024 03:53:28 -0800
-X-CSE-ConnectionGUID: Fcw4LBHLQAeV7T9Z0ZfZew==
-X-CSE-MsgGUID: 0uHIluE5SWGN8JpKVAZuqQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,210,1728975600"; d="scan'208";a="93943497"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Dec 2024 03:53:26 -0800
-Message-ID: <045f9cb1-2b17-4b2c-985f-3c34e3626b36@intel.com>
-Date: Thu, 5 Dec 2024 19:53:24 +0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJATX-0001Lv-Ir
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:56:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733399814;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dYtptort2XCu9za9fsNdLONdvSRVpuu0VOjCgad4VYY=;
+ b=XAYT8ZguKxKp8sgpV9QP+bwIjIc2G2/Uo+xoBk7E5xWJrCJRxM0KmmTXk+/k+dDjSV3Dq8
+ 0vvX/YpEHtIrZVpB9HKgWgP2oQ5SYr+Nj903Bh2Bx6SmUaFLhpj0B8RV0Y7dsqOhOf9A9C
+ aSdzd0Q+pprITHUGUnrcWJEvBvWujjk=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-ofM8N-qwMPaccHSP_VXAmg-1; Thu,
+ 05 Dec 2024 06:56:52 -0500
+X-MC-Unique: ofM8N-qwMPaccHSP_VXAmg-1
+X-Mimecast-MFC-AGG-ID: ofM8N-qwMPaccHSP_VXAmg
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F3C7D1956048; Thu,  5 Dec 2024 11:56:51 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.137])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6823D3000197; Thu,  5 Dec 2024 11:56:48 +0000 (UTC)
+Date: Thu, 5 Dec 2024 11:56:44 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: QEMU wiki theme table of contents changes
+Message-ID: <Z1GU_Md8uH0Cbesm@redhat.com>
+References: <ZzXV-KyYLa-7yNdV@redhat.com>
+ <CAJSP0QUkfSO3uXPjZCxNfCfVwwWBBy6u5a=PjqqnMZSxE95YpA@mail.gmail.com>
+ <ZzcMQeHfBTm2iEsc@redhat.com>
+ <CAJSP0QVPiibdfs1YsYMe0Mk-DX-Xy7f+utG=W4eSpBkdzaodGg@mail.gmail.com>
+ <ZzejHlGw3RJzc-Jk@redhat.com> <20241119195429.GE340853@fedora>
+ <Zz9WPMgmY1aAfw8x@redhat.com> <20241204212619.GE48585@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cpu: Initialize nr_cores and nr_threads in
- cpu_common_initfn()
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20241108070609.3653085-2-xiaoyao.li@intel.com>
- <20241122160317.4070177-1-xiaoyao.li@intel.com>
- <20241125103857.78a23715@imammedo.users.ipa.redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20241125103857.78a23715@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -65
-X-Spam_score: -6.6
-X-Spam_bar: ------
-X-Spam_report: (-6.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241204212619.GE48585@fedora>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.827, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,146 +90,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/25/2024 5:38 PM, Igor Mammedov wrote:
-> On Fri, 22 Nov 2024 11:03:17 -0500
-> Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+On Wed, Dec 04, 2024 at 04:26:19PM -0500, Stefan Hajnoczi wrote:
+> On Thu, Nov 21, 2024 at 03:48:12PM +0000, Daniel P. Berrangé wrote:
+> > On Tue, Nov 19, 2024 at 02:54:29PM -0500, Stefan Hajnoczi wrote:
+> > > On Fri, Nov 15, 2024 at 07:38:06PM +0000, Daniel P. Berrangé wrote:
+> > > > On Fri, Nov 15, 2024 at 02:21:12PM -0500, Stefan Hajnoczi wrote:
+> > > > > On Fri, 15 Nov 2024 at 03:54, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > > > >
+> > > > > > On Thu, Nov 14, 2024 at 02:04:35PM -0500, Stefan Hajnoczi wrote:
+> > > > > > > On Thu, 14 Nov 2024 at 05:51, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > > > > > >
+> > > > > > > > Looking at
+> > > > > > > >
+> > > > > > > >   https://wiki.qemu.org/ChangeLog/9.2
+> > > > > > > >
+> > > > > > > > I'm thinking that I'm sure there used to be a table of contents present
+> > > > > > > > at the top of pages, but none is to be seen..... until I eventually
+> > > > > > > > discover that there's a bare noticable, fully collapsed ToC in the left
+> > > > > > > > hand nav panel below all the general wiki nav links, partially off the
+> > > > > > > > bottom of the page :-(
+> > > > > > > >
+> > > > > > > > If going to https://wiki.qemu.org/Special:Preferences, "Appearance" and
+> > > > > > > > selecting "Vector legacy (2010)" as the "Skin" instad of "Vector (2022)"
+> > > > > > > > then the full ToC re-appears at the top of page in the main body content.
+> > > > > > > >
+> > > > > > > > I'm presuming this style change was triggered by a software upgrade that
+> > > > > > > > was done on the wiki at some point.
+> > > > > > > >
+> > > > > > > > IMHO this is quite a significant visual/usability regression.
+> > > > > > > >
+> > > > > > > > On wikipedia, they do have the same theme, with ToC in the left hand
+> > > > > > > > panel, but their ToC is expanded by default, and there's no other general
+> > > > > > > > navigation in the left hand panel that's displacing the ToC off the bottom
+> > > > > > > > of the page. That is fairly effective as a layout.
+> > > > > > > >
+> > > > > > > > We can do something to the QEMU skin to improve this ? Swapping order
+> > > > > > > > of the ToC & general nav blocks in the left hand panel would be a
+> > > > > > > > improvement, as well making it expand at least 1 further level by
+> > > > > > > > default.
+> > > > > > > >
+> > > > > > > > If we're going to have background colour set for the general nav block,
+> > > > > > > > we should also probably do similar for the ToC nav block to make it
+> > > > > > > > visually stand out to the same degree.
+> > > > > > >
+> > > > > > > Yes, that sounds good. The quickest would be for you to:
+> > > > > > > 1. Run https://hub.docker.com/_/mediawiki/ in a container on your machine.
+> > > > > > > 2. Adjust the theme CSS until you are happy.
+> > > > > > > 3. Send me the tweaks and I will apply them to wiki.qemu.org.
+> > > > > >
+> > > > > > Is the current QEMU mediawiki code (or just theme) published anywhere
+> > > > > > that I can base work off ?
+> > > > > 
+> > > > > The QEMU wiki runs from the vanilla mediawiki 1.39 container image.
+> > > > > The Vector (2022) theme comes with Mediawiki and there are no
+> > > > > QEMU-specific customizations.
+> > > > > 
+> > > > > You can get the same look with the vanilla Mediawiki container image
+> > > > > with the following in LocalSettings.php:
+> > > > > $wgDefaultSkin = "vector-2022";
+> > > > > wfLoadSkin('Vector');
+> > > > 
+> > > > Hmm, I'm wondering where the QEMU specific left nav bar content
+> > > > and styling comes from then... ? 
+> > > 
+> > > I'm not sure but unless there is something stored in the database, I
+> > > can't imagine any customizations because there aren't any config files,
+> > > themes, CSS overrides, etc to speak of in QEMU's MediaWiki installation.
+> > > It's just running the vanilla container image.
+> > 
+> > Ah, I found out  we've done it with the side-bar addon
+> > 
+> >   https://wiki.qemu.org/MediaWiki:Sidebar
 > 
->> Currently cpu->nr_cores and cpu->nr_threads are initialized in
->> qemu_init_vcpu(), which is called a bit late in *cpu_realizefn() for
->> each ARCHes.
->>
->> x86 arch would like to use nr_cores and nr_threads earlier in its
->> realizefn(). To serve this purpose, initialize nr_cores and nr_threads
->> in cpu_common_initfn(), which is earlier than *cpu_realizefn().
->>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
->>   hw/core/cpu-common.c | 10 +++++++++-
->>   system/cpus.c        |  4 ----
->>   2 files changed, 9 insertions(+), 5 deletions(-)
->>
->> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
->> index 09c79035949b..6de92ed854bc 100644
->> --- a/hw/core/cpu-common.c
->> +++ b/hw/core/cpu-common.c
->> @@ -237,14 +237,22 @@ static void cpu_common_unrealizefn(DeviceState *dev)
->>   static void cpu_common_initfn(Object *obj)
->>   {
->>       CPUState *cpu = CPU(obj);
->> +    Object *machine = qdev_get_machine();
->> +    MachineState *ms;
->>   
->>       gdb_init_cpu(cpu);
->>       cpu->cpu_index = UNASSIGNED_CPU_INDEX;
->>       cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
->>       /* user-mode doesn't have configurable SMP topology */
->> -    /* the default value is changed by qemu_init_vcpu() for system-mode */
->>       cpu->nr_cores = 1;
->>       cpu->nr_threads = 1;
->> +#ifndef CONFIG_USER_ONLY
->> +    if (object_dynamic_cast(machine, TYPE_MACHINE)) {
->> +        ms = MACHINE(machine);
->> +        cpu->nr_cores = machine_topo_get_cores_per_socket(ms);
->> +        cpu->nr_threads = ms->smp.threads;
->> +    }
->> +#endif
-> 
-> Can't say, that I'm fond of adding/moving hack to access MachineState
-> from CPU context. Granted we did/still do it elsewhere, But I'd rather
-> prefer getting rid of those remnants that access globals.
-> It's basically technical debt we are carrying since 2009 (dc6b1c09849).
-> Moving that around doesn't help with getting rid of arbitrary access to globals.
-> 
-> As Paolo've noted there are other ways to set cores/threads,
-> albeit at expense of adding more code. And that could be fine
-> if it's done within expected cpu initialization flow.
-> 
-> Instead of accessing MachineState directly from CPU code (which is
-> essentially a layer violation), I'd suggest to set cores_nr/threads_nr
-> from pre_plug handler (which is machine code).
-> We do similar thing for nr_dies/nr_modules already, and we should do
-> same for cores/trheads.
-> 
-> Quick hack would be do the same for cores/threads in x86_cpu_pre_plug(),
-> and make qemu_init_vcpu() conditional to avoid touching other targets/machines.
-> 
-> I'd even ack that, however that's just leaves us with the same
-> old technical debt. So I'd like to coax a promise to fix it properly
-> (i.e. get rid of access to machine from CPU code).
-> 
-> (here goes typical ask to rewrite whole QEMU before doing thing you
-> actually need)
-> 
-> To do that we would need to:
->    1. audit usage of cpu->nr_cores/cpu->nr_threads across QEMU, to figure out
->       what targets/machines need them
->    2. then add pre_plug() handlers to those machines to set them.
->    3. In the end get rid of initializing them in cpu_common_initfn().
+> Is there a fix I can apply to the wiki configuration?
 
-here is the update:
+Not yet, as I've not been able to make time to fully investigate and
+work on this.
 
-For cpu->nr_cores, it's only used by x86 ARCH. We can remove it and 
-maintain one for x86 separately.
-
-For cpu->nr_threads, besides x86, it's also used by
-
-1) hw/mips/malta.c
-
-     env->mvp->CP0_MVPConf0 = deposit32(env->mvp->CP0_MVPConf0,
-                                        CP0MVPC0_PTC, 8,
-                                        smp_cpus * cs->nr_threads - 1);
-
-2) target/mips/tcg/sysemu
-
-     vpe_idx = tc_idx / cs->nr_threads;
-     *tc = tc_idx % cs->nr_threads;
-
-3) target/ppc/compat.c
-
-     int n_threads = CPU(cpu)->nr_threads;
-
-There are no existing CPU pre_plug() function for above cases, and I 
-don't know how to add it because I know nothing about MIPS/PPC at all.
-
-If desire is still to go with direction, I need someone else to help 
-MIPS/PPC. Or is it OK that only change the X86 implementation to 
-initialize cpu->nr_threads earlier in  x86_cpu_pre_plug() and leave 
-other ARCHes as todo?
-	
-
-> With that done we can then add a common helper to generalize topo config
-> based on -smp from pre_plug() handlers to reduce duplication caused by
-> per machine pre_plug handlers.
-> 
-> Or introduce a generic cpu_pre_plug() handler at Machine level and make
-> _pre_plug call chain to call it (sort of what we do with nested realize calls);
-> 
-> I'd prefer the 1st option (#2) as it explicitly documents what
-> targets/machines care about cores/threads at expense of some boiler plate code
-> duplication, instead of blanket generic fallback like we have now (regardless of
-> if it's actually needed).
-> 
->>       cpu->cflags_next_tb = -1;
->>   
->>       /* allocate storage for thread info, initialise condition variables */
->> diff --git a/system/cpus.c b/system/cpus.c
->> index 1c818ff6828c..c1547fbfd39b 100644
->> --- a/system/cpus.c
->> +++ b/system/cpus.c
->> @@ -664,10 +664,6 @@ const AccelOpsClass *cpus_get_accel(void)
->>   
->>   void qemu_init_vcpu(CPUState *cpu)
->>   {
->> -    MachineState *ms = MACHINE(qdev_get_machine());
->> -
->> -    cpu->nr_cores = machine_topo_get_cores_per_socket(ms);
->> -    cpu->nr_threads =  ms->smp.threads;
->>       cpu->stopped = true;
->>       cpu->random_seed = qemu_guest_random_seed_thread_part1();
->>   
-> 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
