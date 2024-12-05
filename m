@@ -4,101 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E087AE7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 19:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 187BEE7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 19:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJHrU-0008Eq-L9; Thu, 05 Dec 2024 14:50:08 -0500
+	id 1tJHwZ-0000k0-On; Thu, 05 Dec 2024 14:55:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJHrN-0008BH-5E
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 14:50:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJHrK-0003x1-OF
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 14:50:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733428197;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJHwX-0000jR-5W
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 14:55:21 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJHwV-00087X-IO
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 14:55:20 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E68EC2115C;
+ Thu,  5 Dec 2024 19:55:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733428514; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=EHluXiipnROaJep4nLChh6teFVF6wm4C6E/dhewa/fo=;
- b=XMBd+30jbcWssbLw+Hvr1FUueJ0T0nB7sq1PUAkQ/aBl3Q1fshJaZZsicNoel0+9wwl12A
- oh6LdEi5IIYh7ACGJ8ulpZ4AB5+/bPo4ykdZAZ75iYasy7rUN6i6I+dNNJWCytcgvPB2fO
- PMzfBQ7JkujA0+F3rYSG/rOFf4QUdR4=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-E3cR0vQTOICuPhXuQRZwvQ-1; Thu, 05 Dec 2024 14:49:56 -0500
-X-MC-Unique: E3cR0vQTOICuPhXuQRZwvQ-1
-X-Mimecast-MFC-AGG-ID: E3cR0vQTOICuPhXuQRZwvQ
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-466911d43f4so25531731cf.3
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 11:49:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733428195; x=1734032995;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EHluXiipnROaJep4nLChh6teFVF6wm4C6E/dhewa/fo=;
- b=vq3SbaCBTq6k4Dt3tgp+nXTFqfUEM2yuKiPhcnl6Jk6OTEFUPMtlBJTvglo6t/JTKX
- r5non7MDrhi68jXuI1zcl9CGNQGxgITb5h1d3wlElxgKkw2Jra24YrnR3HEEQAZqXUSO
- 4r3wTA9yi4dnDV3Ae/Nzio0yHK6qOXwCzI4X7xORNk7pOrH9ThRskV0RUGH9kyT4VASa
- T+NvojIUWZrlCOOnrPexo6QOM4F0vLpFgamONM/YXbsVPUqH2x28FyapN55Ur3W1gDZn
- e5PhV4QefQIoFgSnjKypgta+KhJw1BAN5v/5sAKybf+iipKQtTYg4vYJMu2nStNjKKhT
- lgUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlDyWN0ctkqkLd5C6illGQVjjsBf3ByOJpD5izry94pjJMmvZ6zae/34wjlsmPYDRPhZOMkqN6hxsg@nongnu.org
-X-Gm-Message-State: AOJu0Yw5xOS/RZhPcTU9rXvyZQVC4OjjehKcdr2qZqY7DcboDS4MWIIU
- 0GnYErQVp/BDcyYb+xLOFZLT/LSE8e7mSyeF088uLPk2r//7Dsi2WAeDyrcJRC1G+yc0QVVhqJ5
- NrwR9R7uCLmqfMik6E9t+C0t7S48Kj+VD3g0rIya2VhhtpWm6EmNj
-X-Gm-Gg: ASbGncte57+OLWBCWj/InTv8KwUMURV83psp96In38h/cu9z+CCoKi0/5moX3TOyNMs
- 5qXYlJVhkgpnc5MTFMcE1cWOH9HjGA0vw6QRcvz2NPo+5G0/gpg/d5/na0jY3dxbT83NZfant1s
- Cv0ZvFG5mROjAfdBtLtlCjfhM5MXp0lZf32iply8OV387KyUVSPd+Yywh2UD7/W8LyxjO7zlOv4
- 21dvyoaseV6lwnmEfs67F7j9CYXNDMuL0jrKdZTPw3yJlZE1JKhjlyev81dwulbI/2mz8N9ecvg
- 9MoernnFLKo=
-X-Received: by 2002:a05:622a:409:b0:462:c4b7:6b9 with SMTP id
- d75a77b69052e-46734d24433mr7660131cf.33.1733428195679; 
- Thu, 05 Dec 2024 11:49:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGRAGdLkk2xw1p8ksmUj7Bzh65Tg2foXeyp2cPouZjrySdibwaD3SjSnTuSapt7u8sibX3bNA==
-X-Received: by 2002:a05:622a:409:b0:462:c4b7:6b9 with SMTP id
- d75a77b69052e-46734d24433mr7659851cf.33.1733428195410; 
- Thu, 05 Dec 2024 11:49:55 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4672978dd14sm11203051cf.54.2024.12.05.11.49.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 11:49:54 -0800 (PST)
-Date: Thu, 5 Dec 2024 14:49:52 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 23/24] migration/qemu-file: Define g_autoptr() cleanup
- function for QEMUFile
-Message-ID: <Z1ID4EZSMZ3szQGZ@x1n>
-References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <952bafd5a7312f04bc7f05068a1fdd4c64be433f.1731773021.git.maciej.szmigiero@oracle.com>
+ bh=DwAvbk9WnTvk9QKdi6FIm4UNiiVgkQmEBW1cx+AOm0A=;
+ b=14vy4+5wl6e3q62bmRArJ6kEXvck6fHuFWMwwPVgB3SEPidTfPDjVsfCuFk1iwbkIn/+xB
+ il0F1fKpGTnImgVUNxzATkpK1sPsTQ8vnD/FRGJD/DdpfuiEJSW45E8j1Uai+bdJkmKpji
+ 35tkJsP50UIL1GJh3HIK+KHNuDT6CFQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733428514;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DwAvbk9WnTvk9QKdi6FIm4UNiiVgkQmEBW1cx+AOm0A=;
+ b=j8V/Ri1Hqske9FY9433bs9e7jVZEIXdkHnua/0trcb3b52/bFs8VX7TFPLnODqwlbggiHz
+ IdZOLvgNOm5wndCQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="rtqh/FYS";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mZZCRnjf
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733428512; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DwAvbk9WnTvk9QKdi6FIm4UNiiVgkQmEBW1cx+AOm0A=;
+ b=rtqh/FYS1MsFhi+9tA4ARkdMpcjFT4aRcMNsmS7i7MvX6cFOiydGVq2sS63OthC21QOMEp
+ K7FtXf73gTRFe68vQEcBgiXX+HASaE54KSkU4D2DBRfZLl1TuaW7Xx75qQZw28yC09c/wi
+ eGyxyc8GZOIJ4Yas9eFRuAZ9cPcWV+o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733428512;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DwAvbk9WnTvk9QKdi6FIm4UNiiVgkQmEBW1cx+AOm0A=;
+ b=mZZCRnjfRfqYIkZy81qVHxNW+GwQAI/XUGyonDRWC5lSOaBOQ0W0U1hy3C8Ofwukyc2seR
+ QGeCHrZa/0ge4MDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 48A4B138A5;
+ Thu,  5 Dec 2024 19:55:12 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id quFDBCAFUmeeRQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 05 Dec 2024 19:55:12 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Alex Williamson <alex.williamson@redhat.com>, Avihai Horon
+ <avihaih@nvidia.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH 1/2] migration/multifd: Further remove the SYNC on complete
+In-Reply-To: <20241205185303.897010-2-peterx@redhat.com>
+References: <20241205185303.897010-1-peterx@redhat.com>
+ <20241205185303.897010-2-peterx@redhat.com>
+Date: Thu, 05 Dec 2024 16:55:08 -0300
+Message-ID: <878qstj46b.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <952bafd5a7312f04bc7f05068a1fdd4c64be433f.1731773021.git.maciej.szmigiero@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: E68EC2115C
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,16 +128,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Nov 17, 2024 at 08:20:18PM +0100, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> 
-> Automatic memory management helps avoid memory safety issues.
-> 
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+> Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
+> complete()") removed the FLUSH operation on complete() which should avoid
+> one global sync on destination side, because it's not needed.
+>
+> However that commit overlooked multifd_ram_flush_and_sync() part of things,
+> as that's always used together with the FLUSH message on the main channel.
 
--- 
-Peter Xu
+Let's please write the full name of the flags, functions, etc. As we've
+seen in the discussion with Prasad, we're stumbling over ambiguous
+terminology. This is RAM_SAVE_FLAG_MULTIFD_FLUSH.
 
+>
+> For very old binaries (multifd_flush_after_each_section==true), that's
+> still needed because each EOS received on destination will enforce
+> all-channel sync once.
+
+Ok, but why does this patch not reinstate the flag?
+
+>
+> For new binaries (multifd_flush_after_each_section==false), the flush and
+> sync shouldn't be needed just like the FLUSH, with the same reasoning.
+>
+> Currently, on new binaries we'll still send SYNC messages on multifd
+> channels, even if FLUSH is omitted at the end.  It'll make all recv threads
+> hang at SYNC message.
+
+I don't get this part, is this a bug you're describing? There's not SYNC
+message on the recv side, I think you mean the MULTIFD_FLAG_SYNC and
+this code?
+
+    if (flags & MULTIFD_FLAG_SYNC) {
+        qemu_sem_post(&multifd_recv_state->sem_sync);
+        qemu_sem_wait(&p->sem_sync);
+    }
+
+That's not a hang, that's the sync.
+
+>
+> Multifd is still all working fine because luckily recv side cleanup
+> code (mostly multifd_recv_sync_main()) is smart enough to make sure even if
+> recv threads are stuck at SYNC it'll get kicked out.  And since this is the
+> completion phase of migration, nothing else will be sent after the SYNCs.
+
+Hmm, a last sync on the recv side might indeed not be needed.
+
+>
+> This may be needed for VFIO in the future because VFIO can have data to
+> push after ram_save_complete(), hence we don't want the recv thread to be
+> stuck in SYNC message. Remove this limitation will make src even slightly
+> faster too to avoid some more code.
+>
+> Stable branches do not need this patch, as no real bug I can think of that
+> will go wrong there.. so not attaching Fixes to be clear on the backport
+> not needed.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/ram.c | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
+>
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 05ff9eb328..7284c34bd8 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3283,9 +3283,16 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+>          }
+>      }
+>  
+> -    ret = multifd_ram_flush_and_sync();
+> -    if (ret < 0) {
+> -        return ret;
+> +    if (migrate_multifd() &&
+> +        migrate_multifd_flush_after_each_section()) {
+> +        /*
+> +         * Only the old dest QEMU will need this sync, because each EOS
+> +         * will require one SYNC message on each channel.
+> +         */
+> +        ret = multifd_ram_flush_and_sync();
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+
+I don't think this works. We need one last flush to not lose the last
+few pages of ram. And we need the src side sync of multifd threads to
+make sure this function doesn't return before all IO has been put on the
+wire.
+
+This also doesn't address what the commit message says about the recv
+side never getting the RAM_SAVE_FLAG_MULTIFD_FLUSH message.
+
+>      }
+>  
+>      if (migrate_mapped_ram()) {
 
