@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CCBCE7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7321BE7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJIrj-0000QN-Aq; Thu, 05 Dec 2024 15:54:27 -0500
+	id 1tJJ37-0001vc-MN; Thu, 05 Dec 2024 16:06:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJIrh-0000Pv-4F
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:54:25 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJ33-0001tj-EX
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:06:09 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJIre-0003U7-Jn
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:54:24 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43494a20379so13635185e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 12:54:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJ2z-0007J1-0X
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:06:09 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-385ea29eee1so1033257f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:06:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733432060; x=1734036860; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=U5CLz4zSNPKZZlkg6NDeJ+mVR7cJfNveoNGi+tfJ0ro=;
- b=uky1UUOiLqwwszG1XwTsFK73dPUXp/pV6w4a4IIqQcv3TdERAX29OrJwOTf7AiCSxj
- 98R4dvExrNxas/QpaCbfpG8pj5xHndN36Wagi2UJBAPkXXWpM4M5tbQRf7YArGQDlOnB
- W+l+eidYNldIdJildxZkf8fcmuOarTtn5pOf3vScj8xwFcQ9BVxNcDmeDJzcimuFtG1g
- 0Wi4kXo8sMO2lnSV5jmn1zicRsLB6hrT7EwGMgN4jApPO4OCOYEusrWGBXs+vNlxiCy3
- HiUTF8Xe9eeYPZwDc+mzkwn9YXxuUnFi6D+Zr1TrGkazvXQx2tOfoqMjtXrix5O7k80F
- al7w==
+ d=linaro.org; s=google; t=1733432763; x=1734037563; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PAkhrLwGmqi1fZGll5e5LUyn+/zJSLdsLNxxOCgRSFc=;
+ b=r8UrVrUkzK2Tfp5fd6tRDcgzsKgsgGY5ecS92Vwfgf/GWwelVzRAhuThGvHBVVDkzm
+ KNtGZbzypDq0ETbczc4t89oQDe8JfPtlZDnlYTtldFXeRjOHIA6R9w5IK2gMv/kAXLwG
+ 0eRfWgUiXeShV4mN/J5JW1mi9VZXCVVT0sVrFNAyiTMW7WJ9e9oWmrL/Vv2xGsAo+HtN
+ aYdITyUbwjnAheeF+fmeB3G7MtYO6OVwL9JlHws3gyxt5JD2IWTYuz5Va+DrWBxCo7W7
+ /ixtwdT+H3x7SpzkUei346NGPCsoL9jk0oxnWUEfftVMkVOzKtBOKzCLM5EMtq4vHuOV
+ FZHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733432060; x=1734036860;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=U5CLz4zSNPKZZlkg6NDeJ+mVR7cJfNveoNGi+tfJ0ro=;
- b=SLy/qKfDo3zVJ3y7wNECENqpLHGKdGpnmwBhd8uXKoFr/5M++x9lNoxvArsE5tAvd/
- Y81sEIvrq3Ff/YGo3JQlLMP93Uis5lVdOtqndAiFHTuPiM+159SPk95SR2ZhOOjQ17G1
- lJsMdBLr2sranSyIKWz/pC8e2tUAQjuzZQZET/fX35wBaIjqivq0XhDRfkczMVMzs0Ys
- 8qa4LOVMDbn76OL65OibRYBKZT/qBpeMf6YUHBRrEWVW1hiGXhqrM7l1AgBbGGgwaDe2
- PGVWaLXRlLt5W6UeoP8mgoqegDjzBRTT/1xL3jY3AmmpfutdJWt72J0dP5upytbym8Uk
- x/9g==
-X-Gm-Message-State: AOJu0Yx74qxj6s6+0xvRx9F7vuGyfnJRF3s0mSBtLjus9tjCWDkPWYRX
- ufjQSbYCCyklstPk7cBKvmDhliZV5tqlKWC9DFtuNJoIFRnmlh5V0WqpDx7qNO6NDhGQKbnIT9r
- J
-X-Gm-Gg: ASbGncvrYmaka4TKoshq9kpQDx4lccIAdK65w7hPT0k3SXLBSkLJi39mFJw8lnYksDP
- vucwewvD0ktwxXZh0yC1jsAoYupBToMDPF+1SNYfvN1dN+RqBPCpcQcPuI+5LnK1GCU4twUHue8
- SaT1Au/JYBJTohKOj919qGiNiSw3woVjZ9mua7jRLaO2tRy3huPlm950RSzOIE1t9nJbXbvMnfD
- wglwpnN8CGUNV4q8qW1YxpT311O5YJvfntFpDMBkFYDm8OjIapoV2FrbTej4SdSHGUV0wfHrRjF
- Ce7KE6skC+aPKpZK7VfHalRb
-X-Google-Smtp-Source: AGHT+IEUIaeyBsBVV8K7Ec89tbrrmTuPG7rIig36RDlHo9/ff+H73vpDVb6Qb+v82Pz1IGQBIE9TEQ==
-X-Received: by 2002:a05:600c:1ca2:b0:433:c463:62dd with SMTP id
- 5b1f17b1804b1-434ddedbd28mr5368965e9.27.1733432059740; 
- Thu, 05 Dec 2024 12:54:19 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1733432763; x=1734037563;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PAkhrLwGmqi1fZGll5e5LUyn+/zJSLdsLNxxOCgRSFc=;
+ b=uin9BfHdgjvFEGS6n7RyCHG7Z3IX4HO3/psdCTtYuGl0Yn7h8X90yEdgbn9VnFHMb5
+ PgmvqTIJ1lEzBXm6TiJLDXnlbDGDbRGqjDh59TrwpLakClIgfGA4MSKJeHqCH4L7jhB/
+ pC7nbjpXSAqBNO0lTcVom166lbqZczv0dABIz54TO7nL2p/Qnks94IO0hxgK3PlOfrUU
+ gruTVTcQWaZmnLYfv6PXnrtGNnR9c5kzSQMuKlSO1FDJRfW9dKv1f932EBbRwkTy5uJT
+ fNafFe4R34uHaHmiGuflinAMaZ8x/T61gMcZJbEi1cq+j020s0/dHc7NdBSyBfA9F5ck
+ BMFA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWURCIC7u7KgKHw5P10mzIV0Fw4h0qQ1JNx5+L59ahRfp8DgOPpAkCkjqqGAd2QlhxlQrJ5RaKD36yZ@nongnu.org
+X-Gm-Message-State: AOJu0YzcJXkVNVfoag6R+rpYOE4takArgnHSpcGA9aXM0B1kQNe1V0Vp
+ CFgnzZI1dqYwJukqDYgRpEQeJIot5Xuz96UPTBhDHeRpQG1irpBtneArCSYbBZo=
+X-Gm-Gg: ASbGncut8vxGYJG907E54aO7Mc/+KsMCawvX3SLboKXvE2e2EJsqrS3hwnxg2QmpvQU
+ tY5vnwmLqt1vl1+Fb8wkR6DshZIXgHJr8xg80Y3DRFj+tGJQOWkwr3NW8PeK5SSxt5E8bbM1N++
+ oK02tPCwnqbuCbN/bkIhD2tBepliFNiSjbduZY7qaSparhsLrDDoBZVCQAV8lnzsJUzfJH/2M4U
+ ZvbhmdLAlflb93sUh/ymf8OVLj5rg9p0lUWuCo6yCDV8QRsZhY6qHPyT3dl5sBtzwYH2KoUdLC6
+ RErNDiS9NRkty3ZT8g==
+X-Google-Smtp-Source: AGHT+IEEOm2UOUGLv36zJ2tvbqYjmJBygmkE/iuTSc/JWMCEFBeKFiXnRGOO4D8hzyyOsPp1ci2EVA==
+X-Received: by 2002:a05:6000:4007:b0:382:4d54:2cde with SMTP id
+ ffacd0b85a97d-3862b3cea94mr373934f8f.37.1733432763295; 
+ Thu, 05 Dec 2024 13:06:03 -0800 (PST)
+Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3861fd46cc8sm2843497f8f.59.2024.12.05.12.54.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 05 Dec 2024 12:54:19 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2] target/sparc: Use memcpy() and remove memcpy32()
-Date: Thu,  5 Dec 2024 21:54:18 +0100
-Message-ID: <20241205205418.67613-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ ffacd0b85a97d-3862190966bsm2963202f8f.75.2024.12.05.13.06.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Dec 2024 13:06:02 -0800 (PST)
+Message-ID: <4ef6acd6-6d40-4cb3-97f6-362552c7f7eb@linaro.org>
+Date: Thu, 5 Dec 2024 22:06:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] hw/ide/ahci: Extract TYPE_SYSBUS_AHCI into
+ dedicated file
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-block@nongnu.org, Peter Xu <peterx@redhat.com>,
+ John Snow <jsnow@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Alexander Graf <agraf@csgraf.de>
+References: <20241205131937.32833-1-shentey@gmail.com>
+ <20241205131937.32833-3-shentey@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241205131937.32833-3-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,78 +106,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than manually copying each register, use
-the libc memcpy(), which is well optimized nowadays.
+On 5/12/24 14:19, Bernhard Beschow wrote:
+> Implement in dedicated file, just like TYPE_ICH9_AHCI.
+> 
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   hw/ide/ahci-sysbus.c | 91 ++++++++++++++++++++++++++++++++++++++++++++
+>   hw/ide/ahci.c        | 67 --------------------------------
+>   hw/arm/Kconfig       | 10 ++---
+>   hw/ide/Kconfig       |  4 ++
+>   hw/ide/meson.build   |  1 +
+>   5 files changed, 101 insertions(+), 72 deletions(-)
+>   create mode 100644 hw/ide/ahci-sysbus.c
+> 
+> diff --git a/hw/ide/ahci-sysbus.c b/hw/ide/ahci-sysbus.c
+> new file mode 100644
+> index 0000000000..d43db0923f
+> --- /dev/null
+> +++ b/hw/ide/ahci-sysbus.c
+> @@ -0,0 +1,91 @@
+> +/*
+> + * QEMU AHCI Emulation (MMIO-mapped devices)
+> + *
+> + * Copyright (c) 2010 qiaochong@loongson.cn
+> + * Copyright (c) 2010 Roland Elek <elek.roland@gmail.com>
+> + * Copyright (c) 2010 Sebastian Herbszt <herbszt@gmx.de>
+> + * Copyright (c) 2010 Alexander Graf <agraf@suse.de>
+> + *
+> + * This library is free software; you can redistribute it and/or
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/sparc/win_helper.c | 26 ++++++++------------------
- 1 file changed, 8 insertions(+), 18 deletions(-)
+Normally hw/ uses GPL, not LGPL, odd.
 
-diff --git a/target/sparc/win_helper.c b/target/sparc/win_helper.c
-index b53fc9ce940..0c4b09f2c14 100644
---- a/target/sparc/win_helper.c
-+++ b/target/sparc/win_helper.c
-@@ -24,29 +24,19 @@
- #include "exec/helper-proto.h"
- #include "trace.h"
- 
--static inline void memcpy32(target_ulong *dst, const target_ulong *src)
--{
--    dst[0] = src[0];
--    dst[1] = src[1];
--    dst[2] = src[2];
--    dst[3] = src[3];
--    dst[4] = src[4];
--    dst[5] = src[5];
--    dst[6] = src[6];
--    dst[7] = src[7];
--}
--
- void cpu_set_cwp(CPUSPARCState *env, int new_cwp)
- {
-     /* put the modified wrap registers at their proper location */
-     if (env->cwp == env->nwindows - 1) {
--        memcpy32(env->regbase, env->regbase + env->nwindows * 16);
-+        memcpy(env->regbase, env->regbase + env->nwindows * 16,
-+               sizeof(env->gregs));
-     }
-     env->cwp = new_cwp;
- 
-     /* put the wrap registers at their temporary location */
-     if (new_cwp == env->nwindows - 1) {
--        memcpy32(env->regbase + env->nwindows * 16, env->regbase);
-+        memcpy(env->regbase + env->nwindows * 16, env->regbase,
-+               sizeof(env->gregs));
-     }
-     env->regwptr = env->regbase + (new_cwp * 16);
- }
-@@ -361,8 +351,8 @@ void cpu_gl_switch_gregs(CPUSPARCState *env, uint32_t new_gl)
-     dst = get_gl_gregset(env, env->gl);
- 
-     if (src != dst) {
--        memcpy32(dst, env->gregs);
--        memcpy32(env->gregs, src);
-+        memcpy(dst, env->gregs, sizeof(env->gregs));
-+        memcpy(env->gregs, src, sizeof(env->gregs));
-     }
- }
- 
-@@ -393,8 +383,8 @@ void cpu_change_pstate(CPUSPARCState *env, uint32_t new_pstate)
-         /* Switch global register bank */
-         src = get_gregset(env, new_pstate_regs);
-         dst = get_gregset(env, pstate_regs);
--        memcpy32(dst, env->gregs);
--        memcpy32(env->gregs, src);
-+        memcpy(dst, env->gregs, sizeof(env->gregs));
-+        memcpy(env->gregs, src, sizeof(env->gregs));
-     } else {
-         trace_win_helper_no_switch_pstate(new_pstate_regs);
-     }
--- 
-2.45.2
+> + * modify it under the terms of the GNU Lesser General Public
+> + * License as published by the Free Software Foundation; either
+> + * version 2.1 of the License, or (at your option) any later version.
+> + *
+> + * This library is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> + * Lesser General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU Lesser General Public
+> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+> + *
+> + */
 
 
