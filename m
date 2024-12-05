@@ -4,104 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BCCE7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 09:23:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B753E77170
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 09:26:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ847-0005gQ-MH; Thu, 05 Dec 2024 04:22:31 -0500
+	id 1tJ87i-0007IV-32; Thu, 05 Dec 2024 04:26:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tJ842-0005fx-OZ
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 04:22:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tJ840-00035x-Vs
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 04:22:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733390543;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dGhsvxIAa/RUDZNcykbYv+PGXT3hSqjfx5KJygYAroU=;
- b=N0zyIGzh6Bv10cMKqFb58RKAbYcnQXJItTMwmk1kFGnFKRoyreXjoqgkAoN9uF8/JJrlrr
- 2z+gxP/tvT/B1g7mbjvPW+t7HdHUReUbjal01TadyiAfBonVm+XRVxyo17FWu94rUeuiSO
- qike88VaX44PI5pSSEEJO4opBubj9V8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-477-of-6we2HNtuVbbKgpbrrbA-1; Thu, 05 Dec 2024 04:22:22 -0500
-X-MC-Unique: of-6we2HNtuVbbKgpbrrbA-1
-X-Mimecast-MFC-AGG-ID: of-6we2HNtuVbbKgpbrrbA
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4349c5e58a3so6131455e9.2
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 01:22:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tJ87f-0007IJ-UI
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 04:26:11 -0500
+Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tJ87e-0005NT-5K
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 04:26:11 -0500
+Received: by mail-pl1-x642.google.com with SMTP id
+ d9443c01a7336-21577f65bdeso5717085ad.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 01:26:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733390768; x=1733995568; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zTh9z3M7SyTR+p21u+uhnLEavti9uskdFe1O5ITUarA=;
+ b=IdTq23wY2rIxCOgkMTQalUduGXckDPFoX0nY/Fop6kvoYT54TxOkXRX8vTgwFCV+UJ
+ IL/lQmbjSTIR+CbByngxvztr6NTZYI0uWgBH5PAyZGD/1PI8V4bC+OTCbFt/Kl0Tj4B6
+ SbsSybcHY2y+DcOw8y/QToD7IowXkeO6Vj6a5eXjeXonlOh4OEzjSGvJ1nBsc4L3LqCm
+ 0x0uR8/ik5eP8twRffKfDoM9tP0kDDagyDBHZ4a0QZWSjtwY2oxxMaIyzW2Ek3XVafbO
+ V2VUbYUemiIhcyDaVgz9IJTM1HWsXNrGhvzeC/uoF3yPhHAE2Rkszl5zYA/3/xi0Zrnb
+ NyiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733390541; x=1733995341;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dGhsvxIAa/RUDZNcykbYv+PGXT3hSqjfx5KJygYAroU=;
- b=PtkjncwtImvLK8KaNS7rIzofy1B7jJ5HhbBQZxhK5HqxqANNEOEm6CmUUENaLilbzy
- H/ucXR/8OI2lgiAr6jWAjVtaL1YqDhuD4W2vwOUJtfG8d7w7V4D/PLc1OkIF7PMOT5ap
- 3xVUCnZt84nopPBRxgBS6ed5/15ZhUhiGA6M9rGXlw9Vsh+0NIpaJuL5NaRsMFCbo2tq
- ZkrlZUZY4Md75BGPudGD0D+60bLV78kOznsRBCc4mSkdgUHQw6h0BK+YswaRfilhTEEB
- VbatFbxU+STCJGmjs++i+Z9jA2YGPjQJyGqY55FL1KUBgRVO5cpsbRl5u9/3DD1/mC8v
- BOSQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIAhKiODdurVNCNqTG0e0j2m73ff5zsSgdJhFLYEdc+QZc6cUPf6OiifDP/sCePCkKQ76R9NfLBLnH@nongnu.org
-X-Gm-Message-State: AOJu0Ywi3ZGYRDRLWsxuAXBoC4KBHc+xFCPfDigjmQTXBSflDhyBu0i0
- NTRAGXUPQ8burgAxwapBi2d43SbiKuTsBjjuZ/p+yONW4bCBH6TRSCz1GQacxe2vs/fwu1RgAGL
- OlPvM7zuXsM1GAZW4RGIy1jWSKTf/bIEinOjp7IhJIKqVFdbvtscG
-X-Gm-Gg: ASbGncuv1lcp/u/0gojgQ1w3KV3ahLdCy+f1rlGegGcuNJP1uBxTQlaDwiAa34fC/zd
- 5xJ6jctdjMZfGuQWMKjEJrGSJTxpRChxwZr5CUpFoLQ/5TfoB38X2L3vzWxCa0eSy3xYKIAMyNx
- 71rnqCURz3kExIq+GskDOWxQjhnOEetTJj3hO/vTIC7vW874BCrCl5s1qYX8LziSanYpO4QuGWQ
- tg/cIFvURnjfDxgR3qry4bDOwFuOlBlrN63n2Sm2VbBw1TwK+SCohjbkhUXpNr63advH4h5Z9Pl
- RMXCRfQ8bzvAxT60H2uP+A==
-X-Received: by 2002:a05:600c:4ecf:b0:426:647b:1bfc with SMTP id
- 5b1f17b1804b1-434d0a14eb7mr95742335e9.30.1733390541399; 
- Thu, 05 Dec 2024 01:22:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFT4EGxhQ2he7SyDsdfd8Wk6mjcV8wUeXsFxJYCRu67z9LwO9sq7p4sNrm4N4vKaCBEjHCYOQ==
-X-Received: by 2002:a05:600c:4ecf:b0:426:647b:1bfc with SMTP id
- 5b1f17b1804b1-434d0a14eb7mr95742175e9.30.1733390541030; 
- Thu, 05 Dec 2024 01:22:21 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d52723fasm53651195e9.10.2024.12.05.01.22.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 01:22:20 -0800 (PST)
-Date: Thu, 5 Dec 2024 10:22:19 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 13/16] acpi/ghes: better name the offset of the
- hardware error firmware
-Message-ID: <20241205102219.274e3d27@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20241205085959.2223d079@foz.lan>
-References: <cover.1733297707.git.mchehab+huawei@kernel.org>
- <20b003136d8c008fd54e8d40c806f13867336e13.1733297707.git.mchehab+huawei@kernel.org>
- <20241204173759.6f02561a@imammedo.users.ipa.redhat.com>
- <20241205085959.2223d079@foz.lan>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1733390768; x=1733995568;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zTh9z3M7SyTR+p21u+uhnLEavti9uskdFe1O5ITUarA=;
+ b=PEb2iF8Kuc43l3ztnUiU0Lxvhm5+D+3+CaAU0qarO4NNokQ/ux7T7tAZaPe+tjyjQ6
+ M0q03oFKNtcU7N/WQZt4D3nTTtvuhEkyPPaZoGBULr28l99q8dIKnyXnmLcBM4fHVzWc
+ HshycNOt2901LGjYLw1u/3K9HTNhCMLean8Om/ur0GRDyPXCZWqpIA1Hr4LCFK8s5ClY
+ TQYAG4RQb+6a5f+IeHIj0N558mZoKiwaufAYvd+IqtyVcSD6C4fHRAHkT2s4evyj4Ovp
+ G6/OkAJRvzO5WGD70chak/kzFeHrfWXlOKbK2Gh7gihX0x+EU/YFa/suNd3jKwp61b06
+ 05Kg==
+X-Gm-Message-State: AOJu0Yx9ki1vdmIYfaZkG0jHoRWtcwzAPedsiWz/GGAQFEVy2i/hlF25
+ kFabWHBiROD5nDrM/0bnrdywsKNhPFdLcDLx8ufOM8g1y+KWfyU=
+X-Gm-Gg: ASbGncsZRVBUlUFUdXuUDJNg8ET09dnnax22ol8ddTTua3TjU8q6Iu7XPAY3JTB8cyw
+ Tnwq9HsjI149OOMePZtJSZIBzw3RQ8KF9QI4tZh9g5GaTvtL88oko02MYgaOA7Os3hGxdZfHvl3
+ 1yBZNXPfzrts8x9+QnFsZ5n5Cj/ibQMJaygASy3i13vS03tpEFg5jL6vN4yrzkNinQXZ7rdbcXo
+ qpf8QsFXzf7qq3AVNPG0t9VRgZepuQYM3g3oBXprKjW4naMBL/IAg==
+X-Google-Smtp-Source: AGHT+IHxoe8b7kaPANukZudkDc18p8FaFSLyFO55mT20rrouh0WjEb8hie3RSfghl4LYtwbOGz+7KA==
+X-Received: by 2002:a17:902:f641:b0:215:5d8c:7e46 with SMTP id
+ d9443c01a7336-215f3ce4168mr36376645ad.27.1733390768398; 
+ Thu, 05 Dec 2024 01:26:08 -0800 (PST)
+Received: from [192.168.0.163] ([58.38.120.33])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-215f8ef9f5bsm8526885ad.132.2024.12.05.01.26.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Dec 2024 01:26:08 -0800 (PST)
+Message-ID: <5226a3e0-6440-4633-8287-843fd1806086@gmail.com>
+Date: Thu, 5 Dec 2024 17:26:04 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/9] vfio/igd: align generation with i915 kernel driver
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>
+References: <20241203133548.38252-1-tomitamoeko@gmail.com>
+ <20241203133548.38252-3-tomitamoeko@gmail.com>
+ <20241204153610.09764d56.alex.williamson@redhat.com>
+Content-Language: en-US
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <20241204153610.09764d56.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x642.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,123 +102,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Dec 2024 08:59:59 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On 12/5/24 06:36, Alex Williamson wrote:
+> On Tue,  3 Dec 2024 21:35:41 +0800
+> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+> 
+>> Define the igd device generations according to i915 kernel driver to
+>> avoid confusion, and adjust comment placement to clearly reflect the
+>> relationship between ids and devices.
+>>
+>> The condition of how GTT stolen memory size is calculated is changed
+>> accordingly as GGMS is in multiple of 2 starting from gen 8.
+>>
+>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+>> ---
+>>  hw/vfio/igd.c | 44 ++++++++++++++++++++++----------------------
+>>  1 file changed, 22 insertions(+), 22 deletions(-)
+>>
+>> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+>> index 6ba3045bf3..2ede72d243 100644
+>> --- a/hw/vfio/igd.c
+>> +++ b/hw/vfio/igd.c
+>> @@ -59,33 +59,33 @@
+>>   */
+>>  static int igd_gen(VFIOPCIDevice *vdev)
+>>  {
+>> -    if ((vdev->device_id & 0xfff) == 0xa84) {
+>> -        return 8; /* Broxton */
+>> +    /*
+>> +     * Device IDs for Broxton/Apollo Lake are 0x0a84, 0x1a84, 0x1a85, 0x5a84
+>> +     * and 0x5a85
+>> +     */
+> 
+> Your comment from review of v1 would be useful here that we can't use
+> the test below, at least for 0x0a84, because it conflicts with Haswell.
+> I'd forgotten that.
 
-> Em Wed, 4 Dec 2024 17:37:59 +0100
-> Igor Mammedov <imammedo@redhat.com> escreveu:
-> 
-> > On Wed,  4 Dec 2024 08:41:21 +0100
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > The hardware error firmware is where HEST error structures are    
-> >       ^^^^^^^^^^^^^^^^^^^^^^^ I can't parse this, suspect you've meant something else here
-> >   
-> > > stored. Those can be GHESv2, but they can also be other types.
-> > > 
-> > > Better name the location of the hardware error.
-> > > 
-> > > No functional changes.  
-> 
-> I meant this fw_cfg file:
-> #define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
-> #define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
-> 
-> What about changing description to:
-> 
-> 	The etc/hardware_errors fw_cfg file is where the HEST error
-> 	source structures are stored. Those can be GHESv2, but they can also
-> 	be other types.
+Sure I will add it to comments in v3.
 
-As I understand it, etc/hardware_errors is a blob
-for '18.3.2.7.1. Generic Error Data' with some extra fields
-to accommodate GHESv2 handling (i.e. err addr indirection and ack reg).
+> Since we're being more strict about what we support now, it may make
+> sense to list specific IDs rather than this sloppy match, as Corvin
+> suggested, but that could be a follow-on.  Thanks,
+> 
+> Alex
 
-While error sources are described in HEST (and only GHES ones would
-reference  etc/hardware_errors via error status addr/read ack register addr)
+I personally prefer do it later, it take some time to think a proper
+way to maintain such a long device id list.
 
-> 
-> 	For more details about error source structure, see:
-> 	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#acpi-error-source
-> 
-> 	Better name the address variable from ghes_error_le to hw_error_le
-> 	to better reflect that.
-> 
-> 	No functional changes.
-> 
-> > > 
-> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> > > ---
-> > >  hw/acpi/generic_event_device.c | 4 ++--
-> > >  hw/acpi/ghes.c                 | 4 ++--
-> > >  include/hw/acpi/ghes.h         | 2 +-
-> > >  3 files changed, 5 insertions(+), 5 deletions(-)
-> > > 
-> > > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> > > index 663d9cb09380..17baf36132a8 100644
-> > > --- a/hw/acpi/generic_event_device.c
-> > > +++ b/hw/acpi/generic_event_device.c
-> > > @@ -364,7 +364,7 @@ static const VMStateDescription vmstate_ghes = {
-> > >      .version_id = 1,
-> > >      .minimum_version_id = 1,
-> > >      .fields = (const VMStateField[]) {
-> > > -        VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),
-> > > +        VMSTATE_UINT64(hw_error_le, AcpiGhesState),
-> > >          VMSTATE_END_OF_LIST()
-> > >      },
-> > >  };
-> > > @@ -372,7 +372,7 @@ static const VMStateDescription vmstate_ghes = {
-> > >  static bool ghes_needed(void *opaque)
-> > >  {
-> > >      AcpiGedState *s = opaque;
-> > > -    return s->ghes_state.ghes_addr_le;
-> > > +    return s->ghes_state.hw_error_le;
-> > >  }
-> > >  
-> > >  static const VMStateDescription vmstate_ghes_state = {
-> > > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> > > index 52c2b69d3664..90d76b9c2d8c 100644
-> > > --- a/hw/acpi/ghes.c
-> > > +++ b/hw/acpi/ghes.c
-> > > @@ -359,7 +359,7 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> > >  
-> > >      /* Create a read-write fw_cfg file for Address */
-> > >      fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
-> > > -        NULL, &(ags->ghes_addr_le), sizeof(ags->ghes_addr_le), false);
-> > > +        NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
-> > >  
-> > >      ags->present = true;
-> > >  }
-> > > @@ -385,7 +385,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-> > >      }
-> > >      ags = &acpi_ged_state->ghes_state;
-> > >  
-> > > -    start_addr = le64_to_cpu(ags->ghes_addr_le);
-> > > +    start_addr = le64_to_cpu(ags->hw_error_le);
-> > >  
-> > >      start_addr += source_id * sizeof(uint64_t);
-> > >  
-> > > diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> > > index 21666a4bcc8b..39619a2457cb 100644
-> > > --- a/include/hw/acpi/ghes.h
-> > > +++ b/include/hw/acpi/ghes.h
-> > > @@ -65,7 +65,7 @@ enum {
-> > >  };
-> > >  
-> > >  typedef struct AcpiGhesState {
-> > > -    uint64_t ghes_addr_le;
-> > > +    uint64_t hw_error_le;
-> > >      bool present; /* True if GHES is present at all on this board */
-> > >  } AcpiGhesState;
-> > >      
-> >   
-> 
-> 
-> 
-> Thanks,
-> Mauro
+>> +    if ((vdev->device_id & 0xffe) == 0xa84) {
+>> +        return 9;
+>>      }
+>>  
+>>      switch (vdev->device_id & 0xff00) {
+>> -    /* SandyBridge, IvyBridge, ValleyView, Haswell */
+>> -    case 0x0100:
+>> -    case 0x0400:
+>> -    case 0x0a00:
+>> -    case 0x0c00:
+>> -    case 0x0d00:
+>> -    case 0x0f00:
+>> +    case 0x0100:    /* SandyBridge, IvyBridge */
+>>          return 6;
+>> -    /* BroadWell, CherryView, SkyLake, KabyLake */
+>> -    case 0x1600:
+>> -    case 0x1900:
+>> -    case 0x2200:
+>> -    case 0x5900:
+>> +    case 0x0400:    /* Haswell */
+>> +    case 0x0a00:    /* Haswell */
+>> +    case 0x0c00:    /* Haswell */
+>> +    case 0x0d00:    /* Haswell */
+>> +    case 0x0f00:    /* Valleyview/Bay Trail */
+>> +        return 7;
+>> +    case 0x1600:    /* Broadwell */
+>> +    case 0x2200:    /* Cherryview */
+>>          return 8;
+>> -    /* CoffeeLake */
+>> -    case 0x3e00:
+>> +    case 0x1900:    /* Skylake */
+>> +    case 0x5900:    /* Kaby Lake */
+>> +    case 0x3e00:    /* Coffee Lake */
+>>          return 9;
+>> -    /* ElkhartLake */
+>> -    case 0x4500:
+>> +    case 0x4500:    /* Elkhart Lake */
+>>          return 11;
+>> -    /* TigerLake */
+>> -    case 0x9A00:
+>> +    case 0x9A00:    /* Tiger Lake */
+>>          return 12;
+>>      }
+>>  
+>> @@ -258,7 +258,7 @@ static int vfio_igd_gtt_max(VFIOPCIDevice *vdev)
+>>  
+>>      gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
+>>      ggms = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+>> -    if (gen > 6) {
+>> +    if (gen >= 8) {
+>>          ggms = 1 << ggms;
+>>      }
+>>  
+>> @@ -668,7 +668,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>>  
+>>      /* Determine the size of stolen memory needed for GTT */
+>>      ggms_mb = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+>> -    if (gen > 6) {
+>> +    if (gen >= 8) {
+>>          ggms_mb = 1 << ggms_mb;
+>>      }
+>>  
 > 
 
 
