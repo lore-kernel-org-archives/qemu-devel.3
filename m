@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F243E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E881FE7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJJJ5-0001bP-Mp; Thu, 05 Dec 2024 16:22:43 -0500
+	id 1tJJLM-0002cy-Pp; Thu, 05 Dec 2024 16:25:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJJJ1-0001b3-Fs
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:22:39 -0500
-Received: from mailgate02.uberspace.is ([185.26.156.114])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJLL-0002bP-8f
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:25:03 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJJIz-00050Q-1U
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:22:38 -0500
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 190D01803F5
- for <qemu-devel@nongnu.org>; Thu,  5 Dec 2024 22:22:34 +0100 (CET)
-Received: (qmail 2535 invoked by uid 990); 5 Dec 2024 21:22:34 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Thu, 05 Dec 2024 22:22:33 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJLJ-0005BA-FQ
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:25:02 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-434a1639637so14882755e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:25:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733433900; x=1734038700; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PCvG1uFJ7bfIwhXq4y2fDMl/5i/DI5j9+WT4jXv9Bfo=;
+ b=SCY3CkwKH0c30q1IQSAK1eH4DbHJxafE4oB5jaypJK8ScId1+U1y2mUt/KhMa4j1iy
+ 9ZYI3SA9tUfUEAk+x1fFNEkOwRb6DfH7+GGbavinh5x5jauakdpIgRqEJkys/egz8obl
+ hWe4wySDTMz48f82DcSOCYVY9ZU7aUnoptK8DaSWnT6abncsxb1Sbs9KitLS/FRUvQhM
+ NkG+Lfv3Eceux1Y+hAfljIhcdikDAYXir89RRI4xHvQd4PyH2WGL/lJmLeBpTp1HJOOn
+ Tx0C6XZX5fYcaOqdXeu7cAoVrWWZRG37sG+ZQAdnZ/MV8rBNU1kA3BvXGXPIfY66lp04
+ LzeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733433900; x=1734038700;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PCvG1uFJ7bfIwhXq4y2fDMl/5i/DI5j9+WT4jXv9Bfo=;
+ b=hZOK+ghag9VQwTTbpODYz2vJRami3U/jfytp2BknsbOQ934R+HWeUBClgURrCScCSG
+ Fs0jI3BnXcCfDmtdNg8cg456pbSWb9pTLyxQNh+aRWRfvFvTjJY/fkFE9tEIXWr9TJSW
+ 6Ay/ksplE/l4zsiZioEYzBQy8P2D1RtrOyv2gzB/gYF1PRWhK4uzgQJFgojsYQtI28yK
+ DuRfxoVlIm9TemydMA68CYu7mNZ6tMpe6wvTBVZJXiXvLiJ3P7ylQYQclO6E4Nfvlnpt
+ LtY6KXDQlFR87zkHP8clNVztF/Xx4nBzBCKelOvxcCRzdkm+GrjzBCp9nC6jueOqYeDD
+ O3cQ==
+X-Gm-Message-State: AOJu0YxuKytYB95Z2cOBBE+E/vX35x2FKTtliSw3A5E7t2KJmkDDCtwM
+ 5aOStpn8Kf2fw1DLvLlfIPcIX9qKEKsqM1RVQMtHcAjq2cSqi6A6us1LfAq2gA4=
+X-Gm-Gg: ASbGncs5XUeX98CLBDp9ArpEm07QYek0+t8K1mp6jGwoOfDwFOIy1gy89qQGFhhtdbx
+ TYadI8Qv2sRcLQPA3xyBCl3Pgh/Qe6uFNYf78s0fOpfk5icQ1v9/La697YAqEmUc7wN4oMs6aIU
+ lUVmV83xXBTsOk0PvDBm5kxPm6xCwJPuHZhSeApGquVUe4Hkv3XawLd3CmhyNfn386W8vs81vJh
+ vBhBsVl9mKWeOdR88AYFvllWDVcE5c3x5IXFO8WP7Zmf08B033xxZpHs6HBxXIzi6szpJ5ZQFKL
+ gZzyrBxmGxZBjDXJDQ==
+X-Google-Smtp-Source: AGHT+IFhmj0AT9hcMZk9gm9w2I7MvN3QVekpea3gzUdfhgO+7ZCtVFjTdiiwNF95Z1CinXa0fevyUw==
+X-Received: by 2002:a05:600c:444b:b0:434:a815:2b5d with SMTP id
+ 5b1f17b1804b1-434dded670cmr6188655e9.24.1733433899849; 
+ Thu, 05 Dec 2024 13:24:59 -0800 (PST)
+Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434da0dc152sm36170945e9.25.2024.12.05.13.24.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Dec 2024 13:24:59 -0800 (PST)
+Message-ID: <b353feb7-65c0-4db3-ac57-3a4f442b6474@linaro.org>
+Date: Thu, 5 Dec 2024 22:24:58 +0100
 MIME-Version: 1.0
-Date: Thu, 05 Dec 2024 21:22:33 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <450f3beedf979437fa3de8bfab1ee72f66c67ada@nut.email>
-TLS-Required: No
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
-To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
- Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
-In-Reply-To: <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
-References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
- <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
- <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
- <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
-X-Rspamd-Bar: +
-X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.281825) MIME_GOOD(-0.1)
-X-Rspamd-Score: 1.118174
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=327/Whnuy2DK9rlIKFXu7Rj0LfjXWBgCFmve2ej5Bek=;
- b=QixXAzRf5X2QL0geclfvS3xGM0VRV9a7UQfI88o929/FpXuaWF2LEWyJh+gVkz2VUgdzrdpaed
- uyViIOUM8sZTcjSMVjv7eKUIROBVyyBQj3gyCTN44EwLn0V2wO67sJSYpfMFS+pinhEjT+2u2VKx
- 9tyw2X1qLpYjyttP8hpogOlXoa6VnhnRyJ8aDPQROlzQkZAuwlrQ0Va5LhGiLEY3U+OPaHt1bTR/
- qaYGi2JPLdfBcvy1BT2uOr1NfBh+ul13pnU2oEtyEzkNJdKI9bb+h3gE53ERl90sbutQpdJNR8qC
- XSgVeIqyThLQzE8k038iF1SkrAXdGp6S9dzavxADX1YBtEyX1OGfFu93qeiDHR+vFFcVRNt5Fayg
- WjgmnYgAQQt0xqaQBadKWWzXNtZlrE6iP7j/FgxONv7DBnHzorXG/X+x4E418x+DW1Ku6/PV1quv
- TdiTrDuqfx3P+Hm34M6inTLpqPFh/HAFLyvt3KsuT3lAW75Ff4AWWythFQuNkj37bYBKCIwjRyOj
- z7UYSkfbYpoh1Q9IVVXFyDXgqv/VB24bYOLZh60cuHxoLaA2Q9S9/VV5qApSe87RiwKQkw7rs7Dz
- BqLvQHagu0VLCOBevSRI3wL8M0oyXvTv6kqdLTomwTETRAxvByCzx9H1pgwHjO5fA38OkUUw73pc
- k=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.0 v2 05/13] hw/pci: Propagate bar_at_addr_0_refused
+ to pci_root_bus_internal_init()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-riscv@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20241126112212.64524-1-philmd@linaro.org>
+ <20241126112212.64524-6-philmd@linaro.org>
+ <CAFEAcA_K_DqRfipvQf0LcrXAMANVrwtCPD3cd2gMah=p2JH2DQ@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA_K_DqRfipvQf0LcrXAMANVrwtCPD3cd2gMah=p2JH2DQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,58 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
+On 5/12/24 17:44, Peter Maydell wrote:
+> On Tue, 26 Nov 2024 at 11:22, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Have pci_root_bus_internal_init() callers set the
+>> 'bar_at_addr_0_refused' argument. No logical change.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/pci/pci.c | 11 +++++++----
+>>   1 file changed, 7 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>> index 27b66583e54..8eacb8f82fc 100644
+>> --- a/hw/pci/pci.c
+>> +++ b/hw/pci/pci.c
+>> @@ -529,7 +529,8 @@ static bool machine_refuses_bar_at_addr_0(void)
+>>
+>>   static void pci_root_bus_internal_init(PCIBus *bus, DeviceState *parent,
+>>                                          MemoryRegion *mem, MemoryRegion *io,
+>> -                                       uint8_t devfn_min)
+>> +                                       uint8_t devfn_min,
+>> +                                       bool bar_at_addr_0_refused)
+>>   {
+>>       assert(PCI_FUNC(devfn_min) == 0);
+>>       bus->devfn_min = devfn_min;
+>> @@ -537,7 +538,7 @@ static void pci_root_bus_internal_init(PCIBus *bus, DeviceState *parent,
+>>       bus->address_space_mem = mem;
+>>       bus->address_space_io = io;
+>>       bus->flags |= PCI_BUS_IS_ROOT;
+>> -    if (machine_refuses_bar_at_addr_0()) {
+>> +    if (bar_at_addr_0_refused && machine_refuses_bar_at_addr_0()) {
+> 
+> Should this be || rather than &&  ? If I understand the
+> intent correctly, we want to prevent a BAR at address 0
+> if either:
+>   * the MachineClass field says we don't want one
+>     (legacy handling, eventually goes away)
+>   * the new command line argument says we don't want one
+> 
+> rather than only if *both* say "no address 0" ?
 
-December 5, 2024 at 6:30 PM, "Pierrick Bouvier" wrote:
-> On 12/5/24 05:10, Julian Ganz wrote:
-> >  December 5, 2024 at 12:33 AM, "Pierrick Bouvier" wrote:
-> > > Trap target PC mismatch
-> > >  Expected: 23faf3a80
-> > >  Encountered: 23faf3a84
-> > >=20
->=20> >  From what I understand, it means that the next_pc we have is inc=
-orrect.
-> > >=20
->=20>  Yes, this is indeed incorrect, and also a perfect example why this=
- test
-> >  plugin exists. There are likely other errors lurking in target speci=
-fic
-> >  code. Did you happen to also log interrupts? Do you remember what im=
-age
-> >  you used?
-> >=20
->=20I used exactly this:
->=20
->=20./build/qemu-system-aarch64 -plugin ./build/tests/tcg/plugins/libdisc=
-ons.so -smp 4 -M virt -d plugin -m 8G -device virtio-blk-pci,drive=3Droot=
- -drive if=3Dnone,id=3Droot,file=3D./debianaarch64.img -M virt -cpu max,p=
-auth=3Doff -drive if=3Dpflash,readonly=3Don,file=3D/usr/share/AAVMF/AAVMF=
-_CODE.fd -drive if=3Dpflash,file=3D./AAVMF_VARS.fd
->=20
->=20The arm64 image is a vanilla debian stable I installed.
-> AAVMF* files come from qemu-efi-aarch64 debian package.
+Oops :)
 
-Thanks! I will have a closer look and include a fix in the next iteration=
-.
+> 
+> thanks
+> -- PMM
 
-> > Btw: this also illustrates another issue I have with from_pc: we can
-> >  test the behavior for to_pc, but doing this meaningfully for from_pc
-> >  via a plugin is next to impossible because the instruction it points=
- to
-> >  is not observable via an exec callback. At least not in the general
-> >  case, even not if we only consider a single type of event.
-> >=20
->=20We can store the next_expected pc for each instruction (from current_=
-instruction + insn_length), and we should be able to compare that with th=
-e expected from_pc.
-> This is mostly what contrib/plugins/cflow.c does.
->=20
->=20With that, we can test from_pc.
-
-I'm not confident that this will work reliably for branch, jump and
-other "interesting" instructions. But I can have a closer look at the
-cflow plugin and try to figure out how that plugin handles those cases.
-
-Regards,
-Julian Ganz
 
