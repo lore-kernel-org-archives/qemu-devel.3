@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8735CE7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 08:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B440E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 08:35:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ7Fs-0003AZ-O3; Thu, 05 Dec 2024 03:30:37 -0500
+	id 1tJ7KL-0004RZ-Oj; Thu, 05 Dec 2024 03:35:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tJ7Fh-00039d-GF
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 03:30:26 -0500
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tJ7KJ-0004PV-Hq
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 03:35:11 -0500
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tJ7Fe-00084x-VY
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 03:30:25 -0500
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tJ7KH-00024u-Dv
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 03:35:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733387423; x=1764923423;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=GulH+JQBxh2bxvT1bVtA2V/wHmeQABVYbY9zvLhKa3E=;
- b=ZH7cmOcTQprJeKlUYvZunxCnFVOVI8WXkiDw8tKOvLnnQ12cgGV3TVgz
- sojjihIZ565Y8m55uBbqMozoGrOy8nw0r2+CqwbdIAWK+MqFXHqbp5yxr
- qHncy/jg0hJctz1zcm2xrVCk1cqG7EnunVmOo/dPOYVel7chszGWSvH99
- Vl83SkcMaskRYxOk01SjLCZ/LbVCkYVANv056Ggr6d0Dg+gc/aDTuBuht
- ff3XvsgQsoSoE1ZwJgaXfjgfrpUtvF5DRaAsmMh85KPa1fFi79I0Cgise
- pYmN5JGEFMjO2/tQYvQ4ut1ZORSgr58+zAKBepb1VxCc991yktTKe15Nk w==;
-X-CSE-ConnectionGUID: nMtBg/DvRMCJuFZ9iCbmmw==
-X-CSE-MsgGUID: 6yf5VMq8RTmnFFA7UK+EeA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="56160697"
-X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="56160697"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Dec 2024 00:30:08 -0800
-X-CSE-ConnectionGUID: Y3wRWgXFQ7+Q/8QdfE2ohg==
-X-CSE-MsgGUID: yrzX8K6GTg2EGPsNJMsXPw==
+ t=1733387709; x=1764923709;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=6EhgE+cSxBHMQq9DAn0LXtbNeop7oNief4GuRbzxDLA=;
+ b=IZYO7RNi96vHL8Y3Gp+NoPX+n5NcjhscOfj+RY6EYLAx+63GfQgwxEeG
+ XUPYf0cRDMOqt4fNlKoFuLoHrh/he+OBHhzZWb5kFl7XjyNRwCDbrW4/P
+ k1aRhEzIwUpOL+4JvNsQidttWa0ZeK7fYxdO+tqgr8BQxF09bRPxOK299
+ 09325SSkQP87nBcf7OTLzNF6t8vyHpXM6Krq6UeeTbxccXE182Ucr7TBj
+ U9SaI0ZZZCrSduYhgd1jPcccBovCT3TfjAy6RchXOTkGBLkzdO+K5egR2
+ ytNJs+sA7qTpct6EcC/0nDpgRoyKr3tfCGxGXkLibHMWd0CIzBR0DhCOe Q==;
+X-CSE-ConnectionGUID: oGdoDkdTSzaAkZP41XjZ4A==
+X-CSE-MsgGUID: 7eB6NLROR8yqaDmIlMolgg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="33603478"
+X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="33603478"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Dec 2024 00:35:07 -0800
+X-CSE-ConnectionGUID: skAed5cDT0+fiy3A67a5gw==
+X-CSE-MsgGUID: 4N14x8sMRLu2VERhrawofw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="93891812"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 05 Dec 2024 00:30:03 -0800
-Date: Thu, 5 Dec 2024 16:48:15 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
+X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="98991646"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Dec 2024 00:35:02 -0800
+Message-ID: <be45dbd8-539f-4d79-a708-89fb82bda5b4@intel.com>
+Date: Thu, 5 Dec 2024 16:34:58 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/4] i386/cpu: Set up CPUID_HT in
+ x86_cpu_expand_features() instead of cpu_x86_cpuid()
+To: Zhao Liu <zhao1.liu@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Michael Rolnik <mrolnik@gmail.com>, Brian Cain <bcain@quicinc.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Rolnik
+ <mrolnik@gmail.com>, Brian Cain <bcain@quicinc.com>,
  Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bmeng.cn@gmail.com>, Thomas Huth <thuth@redhat.com>,
- David Hildenbrand <david@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>,
  Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
  Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v1 0/4] Initialize nr_cores and nr_threads early and
- related clearup
-Message-ID: <Z1Foz1X0Sm7TpbpU@intel.com>
 References: <20241108070609.3653085-1-xiaoyao.li@intel.com>
- <Z1FWpU36ZleXn7c4@intel.com>
- <e591b02b-253d-4f1e-b59f-122b3eb200eb@intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e591b02b-253d-4f1e-b59f-122b3eb200eb@intel.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ <20241108070609.3653085-3-xiaoyao.li@intel.com> <Z1FUDGnenETEFV6Z@intel.com>
+ <e634dbf0-267a-48de-9419-7d978e25c969@intel.com> <Z1Fk1MW7274L/AV5@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z1Fk1MW7274L/AV5@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
+X-Spam_score_int: -65
+X-Spam_score: -6.6
+X-Spam_bar: ------
+X-Spam_report: (-6.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.827, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,90 +99,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 05, 2024 at 04:05:22PM +0800, Xiaoyao Li wrote:
-> Date: Thu, 5 Dec 2024 16:05:22 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH v1 0/4] Initialize nr_cores and nr_threads early and
->  related clearup
+On 12/5/2024 4:31 PM, Zhao Liu wrote:
+> Hi Xiaoyao,
 > 
-> On 12/5/2024 3:30 PM, Zhao Liu wrote:
-> > I'm also very sorry, but I have a slightly different opinion...
-> > 
-> > >   accel/tcg/user-exec-stub.c |  4 +++
-> > >   hw/core/cpu-common.c       |  2 +-
-> > >   include/hw/core/cpu.h      |  8 +++++
-> > >   system/cpus.c              |  6 +++-
-> > >   target/alpha/cpu.c         |  2 ++
-> > >   target/arm/cpu.c           |  2 ++
-> > >   target/avr/cpu.c           |  2 ++
-> > >   target/hexagon/cpu.c       |  2 ++
-> > >   target/hppa/cpu.c          |  2 ++
-> > >   target/i386/cpu.c          | 61 +++++++++++++++++++-------------------
-> > >   target/loongarch/cpu.c     |  2 ++
-> > >   target/m68k/cpu.c          |  2 ++
-> > >   target/microblaze/cpu.c    |  2 ++
-> > >   target/mips/cpu.c          |  2 ++
-> > >   target/openrisc/cpu.c      |  2 ++
-> > >   target/ppc/cpu_init.c      |  2 ++
-> > >   target/riscv/cpu.c         |  2 ++
-> > >   target/rx/cpu.c            |  2 ++
-> > >   target/s390x/cpu.c         |  2 ++
-> > >   target/sh4/cpu.c           |  2 ++
-> > >   target/sparc/cpu.c         |  2 ++
-> > >   target/tricore/cpu.c       |  2 ++
-> > >   target/xtensa/cpu.c        |  2 ++
-> > >   23 files changed, 85 insertions(+), 32 deletions(-)
-> > > 
-> > 
-> > I have some doubts about the necessity of changing the initialization of
-> > nr_cores/nr_threads, because you can access the machine's topology info
-> > via machine_topo_get_threads_per_socket(), which gives the same result as
-> > `nr_cores * nr_threads`.
+> Thanks for your reply!
 > 
-> yeah, it works. The goal is to maintain HT in env->features[].
+> On Thu, Dec 05, 2024 at 03:54:36PM +0800, Xiaoyao Li wrote:
+>> Date: Thu, 5 Dec 2024 15:54:36 +0800
+>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Subject: Re: [PATCH v1 2/4] i386/cpu: Set up CPUID_HT in
+>>   x86_cpu_expand_features() instead of cpu_x86_cpuid()
+>>
+>> On 12/5/2024 3:19 PM, Zhao Liu wrote:
+>>> Hi Xiaoyao,
+>>>
+>>> Sorry for late reply.
+>>>
+>>>> @@ -7490,6 +7489,7 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
+>>>>    void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>>>>    {
+>>>>        CPUX86State *env = &cpu->env;
+>>>> +    CPUState *cs = CPU(cpu);
+>>>>        FeatureWord w;
+>>>>        int i;
+>>>>        GList *l;
+>>>> @@ -7531,6 +7531,10 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>>>>            }
+>>>>        }
+>>>> +    if (cs->nr_cores * cs->nr_threads > 1) {
+>>>> +        env->features[FEAT_1_EDX] |= CPUID_HT;
+>>>> +    }
+>>>> +
+>>>
+>>> We shouldn't place any CLI-configurable features here,
+>>> especially after expanding plus_features and minus_features.
+>>
+>> yah, it needs to be placed before manipulation of plus_features and
+>> minus_features.
 > 
-> The problem is, as Igor objects, accessing MachineState from CPU context.
-> This is what I'm working on to avoid for the next version.
+> Please refer my comment at cover letter, you should do such thing in TDX
+> context.
 
-:( I also noticed that patch. Adding #ifndef CONFIG_USER_ONLY is not
-optimal there, so that approach is not general enough.
+TDX is one of the reasons for this patch, but not the whole reason.
 
-But your TDX case is different, TDX hook has been already under
-`current_machine` context. So you can directly access any topo info
-without CONFIG_USER_ONLY.
-
-> > Especially, the TDX feature check hook is also within the context of
-> > `current_machine`, so why not check if TDX's HT is consistent with QEMU's
-> > emulation in the TDX hook?
-> > 
-> > For this reason, and based on my comment on patch 2, I think checking HT
-> > in the TDX hook or even ignoring HT, would be a more straightforward and
-> > less impactful solution.
+>>> HT has been made configurable since the commit 83629b1 ("target/i386/
+>>> cpu: Fix CPUID_HT exposure"), so if you want palce HT here, you
+>>> should make it un-configurable first.
+>>
+>> No, commit 83629b1 doesn't make HT configurable but fix the warning of
+>>
+>>     warning: host doesn't support requested feature: CPUID.01H:EDX.ht [bit
+>> 28]
+>>
+>> when "-cpu *,+ht"
+>>
+>>> Regarding commit 83629b1, in what cases do we need to actively set HT?
+>>
+>> when users want to do so. QEMU allows users to so do.
 > 
-> Though it's motivated by TDX series, the goal is not TDX specific. The goal
-> is to track features in env->features[] instead of manually generating a
-> one-off value in cpu_x86_cpuid().
+> You haven't told the exact case you are fixing with HT.
 
-I agree, the principle of designing code should be like this. HT already
-has some issues, and adding this check in x86_cpu_expand_features() is
-also a one-off approach with very much effort. Checking HT in TDX is a
-less costly and less impactful one-off solution.
+just when users try to boot a VM with "-cpu *,+ht -smp n" where n > 1.
 
-Even, why not ignore HT in the TDX check? Isn't placing the TDX feature
-check before build_cpuid() implicitly assuming that any subsequent
-updates to CPUID by QEMU are valid?
+This is a valid user configuration. Before commit 83629b1, it got 
+warning, and commit 83629b1 tried to fix the warning.
 
-Based on this, why can't TDX trust that QEMU will set HT correctly?
-(However, this assumes that HT cannot be arbitrarily set by the user.)
+> HT is inherently tied to the topology, and custom modifications to HT
+> has already broken this. And I think we shouldn't go any further.
 
-I'm not sure how the next version will be, but it would definitely be
-better if it helps with generalization.
+I don't object on this direction.
 
-Based on the current approach, affecting all architectures, it would be
-better to directly obtain the topology information from current_machine
-in TDX.
+But it has nothing to do with this patch. This patch is trying to track 
+HT in env->features[].
 
--Zhao
+>>> That commit even introduces more issues. Ideally, the hardware being
+>>> emulated by setting or masking feature bits should be feature-consistent.
+>>>
+>>> However, "-cpu *,-ht -smp 2" does not remove the HT flag (which is
+>>> unexpected), and "-cpu *,+ht -smp 1" forcibly sets HT (which results in
+>>> buggy emulation). :(
+>>
+>> For the case "-cpu *,-ht -smp 2" we can add some warn like what for AMD:
+>>
+>>      if (IS_AMD_CPU(env) &&
+>>          !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
+>>          cs->nr_threads > 1) {
+>>              warn_report_once("This family of AMD CPU doesn't support "
+>>                               "hyperthreading(%d). Please configure -smp "
+>>                               "options properly or try enabling topoext "
+>>                               "feature.", cs->nr_threads);
+>>      }
+>>
+>> for the case of "-cpu *,+ht, -smp 1", we can add a dependency between "HT"
+>> and "smp > 1", similar as feature_dependencies[]
+> 
+> So I think the 83629b1 just masked the issue, a thorough fix should be
+> to avoid CLI configuration.
 
+Again, I don't object on this direction. But it's another thing against 
+this patch.
+
+>>> In fact, HT should not be freely configurable in hardware emulation;
+>>> users should configure it in the BIOS.
+>>
+>> How users configure it in the BIOS? Or do you mean the BIOS will set/clear
+>> it based on the actual (v)cpus get activated? Any reference to teh BIOS
+>> spec?
+> 
+> Sorry, I think we should focus more on this issue. Such rhetorical
+> questions are not very helpful...
+
+Sorry? it is you said "users should configure it in the BIOS". I was 
+curious on it
+
+> Thanks,
+> Zhao
+> 
 
 
