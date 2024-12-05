@@ -4,87 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C63AE77170
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B6CE7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJIZE-000681-0Q; Thu, 05 Dec 2024 15:35:20 -0500
+	id 1tJIbO-0002oI-8m; Thu, 05 Dec 2024 15:37:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1tJIZC-00067d-Ml
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:35:18 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJIbN-0002n5-44
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:37:33 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1tJIZA-0004oe-MW
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:35:18 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2ee6abf124aso1160332a91.3
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 12:35:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJIbL-00056t-GN
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:37:32 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5cedf5fe237so2028527a12.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 12:37:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733430915; x=1734035715; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XOxyT26bcT3QQMndkO+7h+Piz5kcLrsCzZSCVUpRwzM=;
- b=Qpbih514ovEt4CI0288X5eq4GdZJR8ULYahsw+UwbPu4uxmDsxpKt7GD1K/Nnn+vjJ
- C1LF5fJELT9Wvjxx7K/pw+k0PzS4oKIcmAPpkQUiqye3vgpEz/hRTgYcH4qlWZXp0Xau
- OPEoAhwozBkcdJzT9sRKiHHytitKhutcgKi4qvJmVBrtc+xyNJqU94FhUxRKIyrgRmOy
- Am+jPoWUxijW8UbPxY5wIZJdpddya4riwYuCHq7sGu3E6ToP4AMhA0aLn+eGByqCWxEN
- ljdBoVcIjT02gtJCMRcECKjkls0le/7VGIA1KWF/PvtFrpWMqsb39pOwiHQ1Q5dBw8Qz
- Qz9g==
+ d=linaro.org; s=google; t=1733431048; x=1734035848; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xEyAkDhxBFjaRSAuSFJ3Wp349Y8DsVcysYVs3R5DPes=;
+ b=TZEfa8/WTyk4cHMtCpWlEyDvkaopHuMHgMBQ3DRFLGjEUivQQBKcZTvBCPVjumdNlo
+ +CBRUuS6SSU5Mc7TsNzZRkBR7sfB3tkr2uBef5hGUbda1R/UWVj0TgdzzwmiAYNt1LiA
+ vSa+drgCwPizhz6RvMEEjGrC7qo1YGPYmbalU7YDfpWJgg7oP5xyQUmnKTMNUicFkGoC
+ mP36NlafOP4a4gZ9Dsjan/yMwvT+oCmsBObHCm+etvB0HPpcPn0HblvNm7CMMeEyGXIp
+ Lv61yqrA4DoachpVKzm0ltfwHBA62INB09+90WRHSqkBzokc54nMisu6fNJmO3wos/B2
+ Rrpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733430915; x=1734035715;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XOxyT26bcT3QQMndkO+7h+Piz5kcLrsCzZSCVUpRwzM=;
- b=XwrNyUT7pqmfl5BuFBL3OMmCsk1SBw33wyVvaAmvnR5aJfU4s6YzFM+EyHD2MOfaJ8
- XN6AKDnpzq0o0Mv9LDcdomwzlIVP0p48w4uOc2ewJUf4yiSQbXZdTBjdk6R1gVLIK9Vv
- QtZMK9a4nUmgqCVKckeAr6tPcatRR1HTDvoKK/eJEZ6d02G3SqtBJ+tXJ9WIJzeyQmvK
- paCnha4oQ65DiVGb0EvoGm3yNp5+IdAqjWtMwrR3CS//YPUWXQtEcz3UkmPUa/82pHeF
- QzzxX1RCE5vbVMw85GidP+kIUbHg0PLcSeRDcBSB/W2i/YweF6W9PJULchNkXDgnnlLt
- gvSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDShIvSKvnjlBu+H8bERiSKcZ6wmaSGWAp0EOR6yGCvy65lMNxU6E96A1UhZ8Ono8/ZaMc3ipgqFZk@nongnu.org
-X-Gm-Message-State: AOJu0YwCKhtIKaOPShonZLkskOF9lWggPsjDqyZhgt0L62PIEL22mHc8
- oYbauMY2dWur9r4uco9T5RPHnWDAHhV7TvohZA+MwociUYe690cD17ZkyQ==
-X-Gm-Gg: ASbGncuqQ59ZZ3upjotiytNAY/Qy6iwqoCC87ahdKjLI8GVmkyyRBB/TW2A4jJJPTz1
- hDkpEkCiI4SPt2iucZ/ZPQ9dE4zLxpwskVgWduFxXiWInO8SWtYAoJCIhZ3g4qYLnwg4ubEtvt0
- UtU1nx1DZga4CTGgNU4ep9T+MgLOVXy00MXQvJ3gY360sHa7OnD3viTIF8VB9gGWJWGvTMGu+95
- LaObaH0YLChRdoton+L1aPfBMX2yQGrwYohuGkftB4=
-X-Google-Smtp-Source: AGHT+IElkhleK7Y17x5rBUWKryBptOUqd5yjC77Of3O3BhGm0tFCuGgaSjYdyGz/UdDlQLdSb6QSAQ==
-X-Received: by 2002:a17:90b:37c5:b0:2ee:f687:6adb with SMTP id
- 98e67ed59e1d1-2ef6956008bmr747090a91.3.1733430915319; 
- Thu, 05 Dec 2024 12:35:15 -0800 (PST)
-Received: from valdaarhun.. ([2409:4081:2c01:b2be:f39d:e902:7582:5526])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ef2701c2f2sm3705905a91.23.2024.12.05.12.35.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 12:35:14 -0800 (PST)
-From: Sahil Siddiq <icegambit91@gmail.com>
-X-Google-Original-From: Sahil Siddiq <sahilcdq@proton.me>
-To: eperezma@redhat.com,
-	sgarzare@redhat.com
-Cc: mst@redhat.com, qemu-devel@nongnu.org, Sahil Siddiq <sahilcdq@proton.me>
-Subject: [RFC v4 4/5] vdpa: Allocate memory for svq and map them to vdpa
-Date: Fri,  6 Dec 2024 02:04:29 +0530
-Message-ID: <20241205203430.76251-5-sahilcdq@proton.me>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241205203430.76251-1-sahilcdq@proton.me>
-References: <20241205203430.76251-1-sahilcdq@proton.me>
+ d=1e100.net; s=20230601; t=1733431048; x=1734035848;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xEyAkDhxBFjaRSAuSFJ3Wp349Y8DsVcysYVs3R5DPes=;
+ b=KFd1qCvcoJW1fNM5+Lnl80anqErlO/doCrvuihSnmlQmoTCTIUTBtZQRwNjyWnSlU7
+ gpcVBEdIQ8p6ObqQPeoqZGFMwA6DlPmC5U6Pbzi0WtbtVIVmmaJRekVp7ZebB7bh7AgE
+ uag8Zo17gb28PUnsSFLy37q3WehD0Pled+Xr5zozLt8oaDxQUGg+dVX+ZYj03Rke73aq
+ eP5bTVvQJHLFJAInyqoqZn67qK1xeV/85hQ3ZXxZNWb8AO9Ioqb7CpHpF3cIfrcOzkSu
+ 384HK3RzwKqu+HO8CSqdlFUdrjyYDR1xwDQTLXxUEhaNLL4Wx3WLH1buWEcud91Ln1G/
+ Jx7w==
+X-Gm-Message-State: AOJu0YxpnLfz29RffXmQFRMwBTLMN3YjuGW0QeNvsKuWExPtxXIEl6UP
+ EVogDbtn3vVSw2ryiGjTK+dMTyJE9yHswOakfqQgDVDCjyU3ihUG2TEQanUt2MJSfRr7xVBgJx2
+ l3pDGghE5p6Yp0fwf8r0v/4Nwjc2mHYggLb4obviBJlu4zEqN
+X-Gm-Gg: ASbGncvCFtt1OiJaKZC1hLg38HovllinDBn1Tk89h48UtvpPjWmtaQ8ha1tke5aC3Ql
+ M5J9+r7+0UUo1D7vTojhM9b78vXnYEamD
+X-Google-Smtp-Source: AGHT+IH+yXFAonhUumwtX1wPWBbGYN/V9Ez08hWwp84koA4SJ0aTRJ2i+MDjL0Fs/pp28czmW5IWUxzp7SsB0DnNm64=
+X-Received: by 2002:a05:6402:2550:b0:5ce:d028:e11 with SMTP id
+ 4fb4d7f45d1cf-5d3be6fc30cmr487595a12.17.1733431048528; Thu, 05 Dec 2024
+ 12:37:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=icegambit91@gmail.com; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241201150607.12812-1-richard.henderson@linaro.org>
+ <20241201150607.12812-22-richard.henderson@linaro.org>
+In-Reply-To: <20241201150607.12812-22-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Dec 2024 20:37:17 +0000
+Message-ID: <CAFEAcA9KvF1p_OHz8YiyqXDm8BzPUer1X2p3zYTaQv4afsLaMQ@mail.gmail.com>
+Subject: Re: [PATCH 21/67] target/arm: Introduce fp_access_check_vector_hsd
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,225 +90,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allocate memory for the packed vq format and map them to the vdpa
-device.
+On Sun, 1 Dec 2024 at 15:13, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Provide a simple way to check for float64, float32, and float16
+> support vs vector width, as well as the fpu enabled.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Since "struct vring" and "struct vring_packed's vring" both have
-the same layout memory, the implementation in svq start and svq
-stop should not differ based on the vq's format.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
----
-Changes v3 -> v4:
-- Based on commit #3 of v3.
-- vhost-shadow-virtqueue.c
-  (vhost_svq_memory_packed): Remove function.
-  (vhost_svq_driver_area_size,vhost_svq_descriptor_area_size): Decouple functions.
-  (vhost_svq_device_area_size): Rewrite function.
-  (vhost_svq_start): Simplify implementation.
-  (vhost_svq_stop): Unconditionally munmap().
-- vhost-shadow-virtqueue.h: New function declaration.
-- vhost-vdpa.c
-  (vhost_vdpa_svq_unmap_rings): Call vhost_vdpa_svq_unmap_ring().
-  (vhost_vdpa_svq_map_rings): New mappings.
-
- hw/virtio/vhost-shadow-virtqueue.c | 47 ++++++++++++++++++++----------
- hw/virtio/vhost-shadow-virtqueue.h |  1 +
- hw/virtio/vhost-vdpa.c             | 34 +++++++++++++++++----
- 3 files changed, 60 insertions(+), 22 deletions(-)
-
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index 6eee01ab3c..be06b12c9a 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -314,7 +314,7 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const struct iovec *out_sg,
-         return -EINVAL;
-     }
- 
--    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED)) {
-+    if (svq->is_packed) {
-         vhost_svq_add_packed(svq, out_sg, out_num, in_sg,
-                              in_num, sgs, &qemu_head);
-     } else {
-@@ -661,19 +661,33 @@ void vhost_svq_get_vring_addr(const VhostShadowVirtqueue *svq,
-     addr->used_user_addr = (uint64_t)(uintptr_t)svq->vring.used;
- }
- 
--size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq)
-+size_t vhost_svq_descriptor_area_size(const VhostShadowVirtqueue *svq)
- {
-     size_t desc_size = sizeof(vring_desc_t) * svq->vring.num;
--    size_t avail_size = offsetof(vring_avail_t, ring[svq->vring.num]) +
--                                                              sizeof(uint16_t);
-+    return ROUND_UP(desc_size, qemu_real_host_page_size());
-+}
- 
--    return ROUND_UP(desc_size + avail_size, qemu_real_host_page_size());
-+size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq)
-+{
-+    size_t avail_size;
-+    if (svq->is_packed) {
-+        avail_size = sizeof(uint32_t);
-+    } else {
-+        avail_size = offsetof(vring_avail_t, ring[svq->vring.num]) +
-+                                                             sizeof(uint16_t);
-+    }
-+    return ROUND_UP(avail_size, qemu_real_host_page_size());
- }
- 
- size_t vhost_svq_device_area_size(const VhostShadowVirtqueue *svq)
- {
--    size_t used_size = offsetof(vring_used_t, ring[svq->vring.num]) +
--                                                              sizeof(uint16_t);
-+    size_t used_size;
-+    if (svq->is_packed) {
-+        used_size = sizeof(uint32_t);
-+    } else {
-+        used_size = offsetof(vring_used_t, ring[svq->vring.num]) +
-+                                                           sizeof(uint16_t);
-+    }
-     return ROUND_UP(used_size, qemu_real_host_page_size());
- }
- 
-@@ -718,8 +732,6 @@ void vhost_svq_set_svq_kick_fd(VhostShadowVirtqueue *svq, int svq_kick_fd)
- void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
-                      VirtQueue *vq, VhostIOVATree *iova_tree)
- {
--    size_t desc_size;
--
-     event_notifier_set_handler(&svq->hdev_call, vhost_svq_handle_call);
-     svq->next_guest_avail_elem = NULL;
-     svq->shadow_avail_idx = 0;
-@@ -728,20 +740,22 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
-     svq->vdev = vdev;
-     svq->vq = vq;
-     svq->iova_tree = iova_tree;
-+    svq->is_packed = virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED);
- 
-     svq->vring.num = virtio_queue_get_num(vdev, virtio_get_queue_index(vq));
-     svq->num_free = svq->vring.num;
--    svq->vring.desc = mmap(NULL, vhost_svq_driver_area_size(svq),
-+    svq->vring.desc = mmap(NULL, vhost_svq_descriptor_area_size(svq),
-                            PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
-                            -1, 0);
--    desc_size = sizeof(vring_desc_t) * svq->vring.num;
--    svq->vring.avail = (void *)((char *)svq->vring.desc + desc_size);
-+    svq->vring.avail = mmap(NULL, vhost_svq_driver_area_size(svq),
-+                            PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
-+                            -1, 0);
-     svq->vring.used = mmap(NULL, vhost_svq_device_area_size(svq),
-                            PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
-                            -1, 0);
--    svq->desc_state = g_new0(SVQDescState, svq->vring.num);
--    svq->desc_next = g_new0(uint16_t, svq->vring.num);
--    for (unsigned i = 0; i < svq->vring.num - 1; i++) {
-+    svq->desc_state = g_new0(SVQDescState, svq->num_free);
-+    svq->desc_next = g_new0(uint16_t, svq->num_free);
-+    for (unsigned i = 0; i < svq->num_free - 1; i++) {
-         svq->desc_next[i] = cpu_to_le16(i + 1);
-     }
- }
-@@ -781,7 +795,8 @@ void vhost_svq_stop(VhostShadowVirtqueue *svq)
-     svq->vq = NULL;
-     g_free(svq->desc_next);
-     g_free(svq->desc_state);
--    munmap(svq->vring.desc, vhost_svq_driver_area_size(svq));
-+    munmap(svq->vring.desc, vhost_svq_descriptor_area_size(svq));
-+    munmap(svq->vring.avail, vhost_svq_driver_area_size(svq));
-     munmap(svq->vring.used, vhost_svq_device_area_size(svq));
-     event_notifier_set_handler(&svq->hdev_call, NULL);
- }
-diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-virtqueue.h
-index ce89bafedc..6c0e0c4f67 100644
---- a/hw/virtio/vhost-shadow-virtqueue.h
-+++ b/hw/virtio/vhost-shadow-virtqueue.h
-@@ -151,6 +151,7 @@ void vhost_svq_set_svq_kick_fd(VhostShadowVirtqueue *svq, int svq_kick_fd);
- void vhost_svq_set_svq_call_fd(VhostShadowVirtqueue *svq, int call_fd);
- void vhost_svq_get_vring_addr(const VhostShadowVirtqueue *svq,
-                               struct vhost_vring_addr *addr);
-+size_t vhost_svq_descriptor_area_size(const VhostShadowVirtqueue *svq);
- size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq);
- size_t vhost_svq_device_area_size(const VhostShadowVirtqueue *svq);
- 
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 3cdaa12ed5..97ed569792 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -1134,6 +1134,8 @@ static void vhost_vdpa_svq_unmap_rings(struct vhost_dev *dev,
- 
-     vhost_vdpa_svq_unmap_ring(v, svq_addr.desc_user_addr);
- 
-+    vhost_vdpa_svq_unmap_ring(v, svq_addr.avail_user_addr);
-+
-     vhost_vdpa_svq_unmap_ring(v, svq_addr.used_user_addr);
- }
- 
-@@ -1181,38 +1183,58 @@ static bool vhost_vdpa_svq_map_rings(struct vhost_dev *dev,
-                                      Error **errp)
- {
-     ERRP_GUARD();
--    DMAMap device_region, driver_region;
-+    DMAMap descriptor_region, device_region, driver_region;
-     struct vhost_vring_addr svq_addr;
-     struct vhost_vdpa *v = dev->opaque;
-+    size_t descriptor_size = vhost_svq_descriptor_area_size(svq);
-     size_t device_size = vhost_svq_device_area_size(svq);
-     size_t driver_size = vhost_svq_driver_area_size(svq);
--    size_t avail_offset;
-     bool ok;
- 
-     vhost_svq_get_vring_addr(svq, &svq_addr);
- 
--    driver_region = (DMAMap) {
-+    descriptor_region = (DMAMap) {
-         .translated_addr = svq_addr.desc_user_addr,
-+        .size = descriptor_size - 1,
-+        .perm = IOMMU_RO,
-+    };
-+    if (svq->is_packed) {
-+        descriptor_region.perm = IOMMU_RW;
-+    }
-+
-+    ok = vhost_vdpa_svq_map_ring(v, &descriptor_region, errp);
-+    if (unlikely(!ok)) {
-+        error_prepend(errp, "Cannot create vq descriptor region: ");
-+        return false;
-+    }
-+    addr->desc_user_addr = descriptor_region.iova;
-+
-+    driver_region = (DMAMap) {
-+        .translated_addr = svq_addr.avail_user_addr,
-         .size = driver_size - 1,
-         .perm = IOMMU_RO,
-     };
-     ok = vhost_vdpa_svq_map_ring(v, &driver_region, errp);
-     if (unlikely(!ok)) {
-         error_prepend(errp, "Cannot create vq driver region: ");
-+        vhost_vdpa_svq_unmap_ring(v, descriptor_region.translated_addr);
-         return false;
-     }
--    addr->desc_user_addr = driver_region.iova;
--    avail_offset = svq_addr.avail_user_addr - svq_addr.desc_user_addr;
--    addr->avail_user_addr = driver_region.iova + avail_offset;
-+    addr->avail_user_addr = driver_region.iova;
- 
-     device_region = (DMAMap) {
-         .translated_addr = svq_addr.used_user_addr,
-         .size = device_size - 1,
-         .perm = IOMMU_RW,
-     };
-+    if (svq->is_packed) {
-+        device_region.perm = IOMMU_WO;
-+    }
-+
-     ok = vhost_vdpa_svq_map_ring(v, &device_region, errp);
-     if (unlikely(!ok)) {
-         error_prepend(errp, "Cannot create vq device region: ");
-+        vhost_vdpa_svq_unmap_ring(v, descriptor_region.translated_addr);
-         vhost_vdpa_svq_unmap_ring(v, driver_region.translated_addr);
-     }
-     addr->used_user_addr = device_region.iova;
--- 
-2.47.0
-
+thanks
+-- PMM
 
