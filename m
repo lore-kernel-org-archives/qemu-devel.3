@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB601E7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:20:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03103E7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:21:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJEZZ-0004WJ-TD; Thu, 05 Dec 2024 11:19:27 -0500
+	id 1tJEbE-0006vP-Dp; Thu, 05 Dec 2024 11:21:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1tJEZQ-0004Vv-T9
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:19:16 -0500
+ id 1tJEbC-0006v1-B5
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:21:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1tJEZP-0007nh-Gq
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:19:16 -0500
+ id 1tJEb9-0008D1-Pf
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:21:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733415554;
+ s=mimecast20190719; t=1733415662;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Jys/UjC3t3F8O2tUXCN6gwtKZacN/DR36JEOmhwiITk=;
- b=FixyvquCM5izeeFy/nCxVBdamIijTlP+lne7CWFiEv2xcY46SkFVVEdU3jbXYOxqHXbmA2
- 8XLSAetzLOdZUfQOlArfX+Q3qNCyIj2szV74fxox0ojxDquaq49MugJ5YAd8S/lkBySi3Q
- oyXoxFk2xZ2sITE/Od9zIJ1nfdtCIn4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ykVXfQSv6QdQnvZoPkKQ+tHuBLJ6v9t5jGthxZwquzY=;
+ b=dvlDOITpocLNWl9OlQ7vt4MVTthwejSVELew1dUu2Y4qNIPZBPx7ETRHrTMD3btMXKnR0a
+ MrHwAvQjQVIUw4SSUUvY5M7TmrmQrM9InjHtdNaexT0+EnOWOoujzK69M7gN0Ib0VtP0o8
+ diqNFj4wZJCITjQrZyIXb6a7uVpjfgw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-SBG3pESnMoWAnc4YJ3um_g-1; Thu,
- 05 Dec 2024 11:19:11 -0500
-X-MC-Unique: SBG3pESnMoWAnc4YJ3um_g-1
-X-Mimecast-MFC-AGG-ID: SBG3pESnMoWAnc4YJ3um_g
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-216-nrjgre8sNzCBSJky7MUj0g-1; Thu,
+ 05 Dec 2024 11:19:16 -0500
+X-MC-Unique: nrjgre8sNzCBSJky7MUj0g-1
+X-Mimecast-MFC-AGG-ID: nrjgre8sNzCBSJky7MUj0g
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B09D619560A5; Thu,  5 Dec 2024 16:19:10 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F9C5195608A; Thu,  5 Dec 2024 16:19:15 +0000 (UTC)
 Received: from moe.brq.redhat.com (unknown [10.43.3.236])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 292AD3000197; Thu,  5 Dec 2024 16:19:07 +0000 (UTC)
+ id 313023000197; Thu,  5 Dec 2024 16:19:13 +0000 (UTC)
 From: Michal Privoznik <mprivozn@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: kkostiuk@redhat.com,
 	michael.roth@amd.com,
 	jtomko@redhat.com
-Subject: [PATCH v2 1/4] qga: Don't access global variable in run_agent_once()
-Date: Thu,  5 Dec 2024 17:18:45 +0100
-Message-ID: <8ae7f5d5032b14a5b956fe8aaf47bae5ca401699.1733414906.git.mprivozn@redhat.com>
+Subject: [PATCH v2 3/4] qga: Don't daemonize before channel is initialized
+Date: Thu,  5 Dec 2024 17:18:47 +0100
+Message-ID: <45717b2498a83e91479a57be7832c3868ac9d135.1733414906.git.mprivozn@redhat.com>
 In-Reply-To: <cover.1733414906.git.mprivozn@redhat.com>
 References: <cover.1733414906.git.mprivozn@redhat.com>
 MIME-Version: 1.0
@@ -86,33 +86,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The run_agent_once() function is already given GAState via an
-argument. There's no need to access the global ga_state variable
-which points to the argument anyways (thanks to
-initialize_agent()). Worse, some parts of the function use the
-argument and the other use the global variable.  Stick with the
-function argument.
+If the agent is set to daemonize but for whatever reason fails to
+init the channel, the error message is lost. Worse, the agent
+daemonizes needlessly and returns success. For instance:
+
+  # qemu-ga -m virtio-serial \
+            -p /dev/nonexistent_device \
+            -f /run/qemu-ga.pid \
+            -t /run \
+            -d
+  # echo $?
+  0
+
+This makes it needlessly hard for init scripts to detect a
+failure in qemu-ga startup. Though, they shouldn't pass '-d' in
+the first place.
+
+Let's open the channel first and only after that become a daemon.
+
+Related bug: https://bugs.gentoo.org/810628
 
 Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
 Reviewed-by: Ján Tomko <jtomko@redhat.com>
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 ---
- qga/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ qga/main.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
 diff --git a/qga/main.c b/qga/main.c
-index 50186760bf..4a695235f0 100644
+index 68ea7f275a..35f061b5ea 100644
 --- a/qga/main.c
 +++ b/qga/main.c
-@@ -1519,7 +1519,7 @@ static int run_agent_once(GAState *s)
+@@ -1430,7 +1430,6 @@ static GAState *initialize_agent(GAConfig *config, int socket_activation)
+         if (config->daemonize) {
+             /* delay opening/locking of pidfile till filesystems are unfrozen */
+             s->deferred_options.pid_filepath = config->pid_filepath;
+-            become_daemon(NULL);
+         }
+         if (config->log_filepath) {
+             /* delay opening the log file till filesystems are unfrozen */
+@@ -1438,9 +1437,6 @@ static GAState *initialize_agent(GAConfig *config, int socket_activation)
+         }
+         ga_disable_logging(s);
+     } else {
+-        if (config->daemonize) {
+-            become_daemon(config->pid_filepath);
+-        }
+         if (config->log_filepath) {
+             FILE *log_file = ga_open_logfile(config->log_filepath);
+             if (!log_file) {
+@@ -1487,6 +1483,20 @@ static GAState *initialize_agent(GAConfig *config, int socket_activation)
+ 
+     ga_apply_command_filters(s);
+ 
++    if (!channel_init(s, s->config->method, s->config->channel_path,
++                      s->socket_activation ? FIRST_SOCKET_ACTIVATION_FD : -1)) {
++        g_critical("failed to initialize guest agent channel");
++        return NULL;
++    }
++
++    if (config->daemonize) {
++        if (ga_is_frozen(s)) {
++            become_daemon(NULL);
++        } else {
++            become_daemon(config->pid_filepath);
++        }
++    }
++
+     ga_state = s;
+     return s;
+ }
+@@ -1513,8 +1523,9 @@ static void cleanup_agent(GAState *s)
+ 
+ static int run_agent_once(GAState *s)
+ {
+-    if (!channel_init(s, s->config->method, s->config->channel_path,
+-                      s->socket_activation ? FIRST_SOCKET_ACTIVATION_FD : -1)) {
++    if (!s->channel &&
++        channel_init(s, s->config->method, s->config->channel_path,
++                     s->socket_activation ? FIRST_SOCKET_ACTIVATION_FD : -1)) {
+         g_critical("failed to initialize guest agent channel");
          return EXIT_FAILURE;
      }
- 
--    g_main_loop_run(ga_state->main_loop);
-+    g_main_loop_run(s->main_loop);
+@@ -1523,6 +1534,7 @@ static int run_agent_once(GAState *s)
  
      if (s->channel) {
          ga_channel_free(s->channel);
++        s->channel = NULL;
+     }
+ 
+     return EXIT_SUCCESS;
 -- 
 2.45.2
 
