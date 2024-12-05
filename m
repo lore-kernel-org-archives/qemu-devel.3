@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EBFBE7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 12:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DD3FE7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 12:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJAeu-00056i-TX; Thu, 05 Dec 2024 07:08:40 -0500
+	id 1tJAfn-0005be-VD; Thu, 05 Dec 2024 07:09:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJAet-00056Y-0V
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 07:08:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJAep-0007CQ-8a
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 07:08:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733400513;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OJ3ErpAUFsXe2WtZ9c23qqAgbQnYdstNpuj35petQak=;
- b=VuWVRBwSfSC3KTSeRo3QXBAL7gvxdV2JKF2rDqNH/7Y525AeeGDYNxd9JbkdUj0vjuRn2H
- qsAvi5n2tRnqSXFAbZmtuNL4KyCmPDwY06n+GMcjR0s+2zE/2H/Qzs1z9aVOoeuuLWQ66p
- THihxJd3GqzTKbRGJupZaiQ93a3Ux7E=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-WmKxvko-MEi4GmGu5-vGjg-1; Thu,
- 05 Dec 2024 07:08:30 -0500
-X-MC-Unique: WmKxvko-MEi4GmGu5-vGjg-1
-X-Mimecast-MFC-AGG-ID: WmKxvko-MEi4GmGu5-vGjg
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D3E2D1956055; Thu,  5 Dec 2024 12:08:28 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7B4ED19560B1; Thu,  5 Dec 2024 12:08:27 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 17F2D21E681F; Thu,  5 Dec 2024 13:08:25 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Philippe Mathieu-Daude <philmd@linaro.org>,  Paolo
- Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange"
- <berrange@redhat.com>,  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V4 04/19] machine: aux-ram-share option
-In-Reply-To: <1733145611-62315-5-git-send-email-steven.sistare@oracle.com>
- (Steve Sistare's message of "Mon, 2 Dec 2024 05:19:56 -0800")
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-5-git-send-email-steven.sistare@oracle.com>
-Date: Thu, 05 Dec 2024 13:08:25 +0100
-Message-ID: <87v7vyfi2u.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJAfg-0005Xr-QA
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 07:09:30 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJAfe-0007Fe-RN
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 07:09:28 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-385e2c52c21so664096f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 04:09:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733400563; x=1734005363; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/CnxoY3fZkVMabjATGXevl4nI5uHUrvbtaUbQpbgk58=;
+ b=R6eiIbIzIsaQV12+AkYeIeHC5vouudsVDG5KQcaCY+yPANUwRdOHPJg9WduGP8T2AC
+ YngV1EguUsjuRoQFKwGCeggQfGiTO5MFWqaQlBJMucRopCKLquUjMlJazQ0PCvkdnUWG
+ eC8re9dtuA1Slo/pHubsDznFUXIuvcubbXQ5rj+nHWb0ANtkOWCQqAHa1OH6qGXunGnP
+ 08ZUnjncgND4AGrb78RL2zjcecWqghZaiTDGHCXGtc3OrUko/ig851Q8whPH0UAMa8l/
+ D7dPj16xUdmvRLv+U0q+IYg9Ak6vHT7I7rfm5nH/2q5owmQJPwTSwiAKgjIcAruGFlgR
+ uvpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733400563; x=1734005363;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/CnxoY3fZkVMabjATGXevl4nI5uHUrvbtaUbQpbgk58=;
+ b=P49vQMFxcLOwF4xhKzIXxccwDg95yti/7VUI59sYi4Xheem/9yfFjHtVVUawBIT3G1
+ sUSG1ztldgDJCs6YEVi478c0wwqi/j9qk7zd/oSbfa83uw9LnahdvgwvLzTJh8VAzw1u
+ A0kQ+cbTNTHAu6uetyba2oBdRjExl4jNs9xHRqQuHuS0pWFHv6Ys91cbPkSEGwZasO8s
+ ASr1291ztd4owXhtXhO40Wn0YTLwkjnZZ65Eh5r+ZxW3VUep4/Mppo+zLVQBfWQJWg3Q
+ 7AlnuDhoLQVZ/ksEjqq0h3fe+kTPs0lXLr7LkoHGQ2aultkXziiPDVbXZqhLzKZ/gIEo
+ /tSA==
+X-Gm-Message-State: AOJu0YwSgTyhuv97GStqqjZJ7FgdapMe2pjEg9GWKkehl/Cy5DZIiDP1
+ WjOSAnpCWcrJgXtMyTaK430sVamk84zGfupIXOhxcjnoJsUg6RuPqhWYeUFZ4xg=
+X-Gm-Gg: ASbGncsgFgXL2jfmyQrfAKbMCWtTCuzk5xdnep/95Fesbaq9fpFF8s7J2Xrkelj6VZB
+ z7ktGTMhklpuAxC07l7lrbuvfwrpm77gqzi2G1eaf44xC0IAWq0iE7eMaUWZOeMaTaE95Vas3gK
+ 7Ns8ZJ2TIqycMRSna6OAmAuedt+dDZ/trY7HdHCRxVIffXmUXnltg9Dn4HMY5QootbfJHzlURdj
+ U4NhJlaljavt4a055gNHwYftJSObHC0WaSwn5zZedkROWuAfbdQulavuPUeztByu0hrI8Awn465
+ abBkGh71yrP1j6zj3Q==
+X-Google-Smtp-Source: AGHT+IG/+VO0NJK21+kW9HGEQzX0mzonw+6ThjP6LOE7trDShkBhKwZoIO8ZFP4DP2gHmrIAIQHG4Q==
+X-Received: by 2002:a05:6000:18a9:b0:385:f0d4:d5ed with SMTP id
+ ffacd0b85a97d-385fd403392mr9133438f8f.22.1733400563375; 
+ Thu, 05 Dec 2024 04:09:23 -0800 (PST)
+Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3861f4a874dsm1784463f8f.24.2024.12.05.04.09.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Dec 2024 04:09:22 -0800 (PST)
+Message-ID: <bf37233f-48b4-4b54-af23-fea363b5b559@linaro.org>
+Date: Thu, 5 Dec 2024 13:09:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] include: Rename sysemu/ -> system/
+To: Lei Yang <leiyang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20241203172445.28576-1-philmd@linaro.org>
+ <9e878028-cff8-4fca-960d-d66e68334acc@linaro.org>
+ <CAPpAL=yYfhenWbt1Xb31747GWAbXSqzKZ6ur9WuvhbwQp-55oA@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAPpAL=yYfhenWbt1Xb31747GWAbXSqzKZ6ur9WuvhbwQp-55oA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,67 +101,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+On 5/12/24 01:58, Lei Yang wrote:
+> I tested this patch with virtio-net regression tests, these changes
+> are working fine related to the virtio-net part.
+> 
+> Tested-by: Lei Yang <leiyang@redhat.com>
 
-> Allocate auxilliary guest RAM as an anonymous file that is shareable
-> with an external process.  This option applies to memory allocated as
-> a side effect of creating various devices. It does not apply to
-> memory-backend-objects, whether explicitly specified on the command
-> line, or implicitly created by the -m command line option.
->
-> This option is intended to support new migration modes, in which the
-> memory region can be transferred in place to a new QEMU process, by sending
-> the memfd file descriptor to the process.  Memory contents are preserved,
-> and if the mode also transfers device descriptors, then pages that are
-> locked in memory for DMA remain locked.  This behavior is a pre-requisite
-> for supporting vfio, vdpa, and iommufd devices with the new modes.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-
-[...]
-
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index dacc979..02b9118 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -38,6 +38,9 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->      "                nvdimm=on|off controls NVDIMM support (default=off)\n"
->      "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
->      "                hmat=on|off controls ACPI HMAT support (default=off)\n"
-> +#ifdef CONFIG_POSIX
-> +    "                aux-ram-share=on|off allocate auxiliary guest RAM as shared (default: off)\n"
-> +#endif
->      "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->      "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n",
->      QEMU_ARCH_ALL)
-> @@ -101,6 +104,18 @@ SRST
->          Enables or disables ACPI Heterogeneous Memory Attribute Table
->          (HMAT) support. The default is off.
->  
-> +#ifdef CONFIG_POSIX
-> +    ``aux-ram-share=on|off``
-> +        Allocate auxiliary guest RAM as an anonymous file that is
-> +        shareable with an external process.  This option applies to
-> +        memory allocated as a side effect of creating various devices.
-> +        It does not apply to memory-backend-objects, whether explicitly
-> +        specified on the command line, or implicitly created by the -m
-> +        command line option.
-> +
-> +        Some migration modes require aux-ram-share=on.
-> +#endif
-> +
-
-I get
-
-    Warning, treated as error:
-    .../qemu-options.hx:117:Definition list ends without a blank line; unexpected unindent.
-
-Putting the blank line before #endif works for me.
-
->      ``memory-backend='id'``
->          An alternative to legacy ``-mem-path`` and ``mem-prealloc`` options.
->          Allows to use a memory backend as main RAM.
-
-[...]
+Thank you!
 
 
