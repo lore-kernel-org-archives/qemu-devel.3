@@ -4,55 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107CEE77170
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 23:20:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB25FE7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 23:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJL8O-000566-In; Thu, 05 Dec 2024 18:19:48 -0500
+	id 1tJLDD-0007IN-ER; Thu, 05 Dec 2024 18:24:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1tJL8M-00055f-CU
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 18:19:46 -0500
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1tJL8I-0000Wb-RM
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 18:19:46 -0500
-Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c12:44a0:0:640:8777:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id D607B60A98;
- Fri,  6 Dec 2024 02:19:34 +0300 (MSK)
-Received: from d-tatianin-lin.yandex-team.ru (unknown [2a02:6b8:b081:19::1:8])
- by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id UJrB130IfiE0-NncImZyA; 
- Fri, 06 Dec 2024 02:19:34 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1733440774;
- bh=JUoFTttEF3Deo7ER7IKccgih/eqluYY8jvvlagW8rA4=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=RUYZq7MkkSpDKc0uq83E21jYGHO9q0OOi+lySrnMSydcpJUvvc0zKwkpGETW2F6zW
- amlwePFuA0JD7xTiXhOLaryM2bEKjEqU6gvhxA3+jj49qkyYol6iFTsJhfnTq7nyjU
- bt1uW08J0oQx3mTU75GQXx8jMB+40vNwirxDS7l8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>, Stefan Weil <sw@weilnetz.de>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org
-Subject: [PATCH 0/2] overcommit: introduce mem-lock-onfault
-Date: Fri,  6 Dec 2024 02:19:06 +0300
-Message-Id: <20241205231909.1161950-1-d-tatianin@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJLDC-0007I9-2F
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 18:24:46 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJLD8-0002KT-LE
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 18:24:45 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-434b3e32e9dso15642395e9.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 15:24:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733441080; x=1734045880; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=srEVO03MgqW7zZf4nGmzSVgDCZFD1nGbBJuvAH/Cxfc=;
+ b=cntrJrQL+TP2+nulkFY+43JgUXStLpMj5Wl+zUBGlmSfukHn0WHA89yIiFa9VVxJLm
+ 8qT7454oswo7UH5fDz3Ep0hFwtGNziNmNCJ3XQVm1O/vqtY1h/bPdbP7UiacgzmSupNs
+ OBc+j9Osf1wz0aeUeumzZpeCaDG0wsjBODMbZix0xoEazPBOZz3UTYYeDtVJlVnY7nuM
+ hEItGrZtkYFp/WJJ25+u3d1yGlaXC+vIb3AvJQHm/IihFg/BtAJhmyq9OxxcCcliOqLL
+ qK/CchGIJXogCZ3s7RsiG4oQdveHM8/zV/3OhiecM3s120aTfPslUIDpCewAZXxZF+M4
+ Lfzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733441080; x=1734045880;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=srEVO03MgqW7zZf4nGmzSVgDCZFD1nGbBJuvAH/Cxfc=;
+ b=wEYlydyNCZQE59oypr0q2n6VsZXTWh6B/ye2IAb6Lv99GJBPqG6MLE+VLZNWoo2ZWr
+ eJgBS0SbUWKOqzQ1fVS63G9Rgn6tkdgoXgtJ/ZnlapX+dFEw9vdLG5X/fR+X16ow6brs
+ gINXI2U8UA62jsBf8Z+E/jX3zb15qWnTMiQHNCwfmNBh0JUmaiwd4pJeXKK1Ox42hLte
+ IAxw2EgzUFwdU2MiuQi4mE/bvfv5oaZdXJeCrzpOQUzHbYbd7hBGvt0qcr139b3T2qjm
+ 2I9q861p/hwQt4WgncnweY48kEuqW6n8OKAMQBJs5fVY8Q3rdzj9eI9KYZAzJ1HoWYKR
+ 0Z+A==
+X-Gm-Message-State: AOJu0YxRkrExxvF30NS58GM9ORVOTBZDYgklZoGmySaLQ5sqWZkbiKBi
+ MAFs0JXf2uiPI+MtcGQ4An7/lCrfknGpDHQa6PsOgL1TtEzcoA86ThGmGk4eJWwL6fgNW2bEAWx
+ l
+X-Gm-Gg: ASbGncvPtllCfyyyO8mYEZCml2MXP0RVLy5V/ImemANbrU9mScsebEbjrVFG6nTCnwV
+ AUPpYdDYjFkUJX9lgDl0EDExz6Urb4dEmw36o1IU3XHx1iA+Tzd0FPLDLDYb9OB7u7McfChvON6
+ zEpXWYDEdQHYZ4EqesD/P0l4+LqNsvLe3rWUlq72W9Vhs7MSaom5WkgXJlrF09GQWVvbPBxIPi/
+ GJkxtfh7fn0iQ1UMqV8gnPWU3a6fynO1GU5Bhna9SFeRMWU7ztyIE20BKtOjyqK7bOzBNx0Nfh2
+ f+z6aNpPaNBHVAaJIS7QgvlQ
+X-Google-Smtp-Source: AGHT+IGzUqJf/JYdG1RMDCGxk1BoVvr96cj3Z7+iZoTRL7oa9IIi0afnjNHuwvVg81BcxvdflrdghQ==
+X-Received: by 2002:a05:600c:4e49:b0:434:a4fe:cd6d with SMTP id
+ 5b1f17b1804b1-434ddeb49d2mr8626825e9.12.1733441080002; 
+ Thu, 05 Dec 2024 15:24:40 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434d52cc2fdsm74906675e9.42.2024.12.05.15.24.38
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 05 Dec 2024 15:24:39 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Max Filippov <jcmvbkbc@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/2] target/xtensa: Remove tswap() calls in semihosting
+Date: Fri,  6 Dec 2024 00:24:35 +0100
+Message-ID: <20241205232437.85235-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -75,73 +97,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, passing mem-lock=on to QEMU causes memory usage to grow by
-huge amounts:
+The first patch modifying Xtensa libisa has already been
+posted in https://lore.kernel.org/qemu-devel/20241204202602.58083-1-philmd@linaro.org/
 
-no memlock:
-    $ qemu-system-x86_64 -overcommit mem-lock=off
-    $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
-    45652
+Philippe Mathieu-Daudé (2):
+  target/xtensa: Implement xtensa_isa_is_big_endian()
+  target/xtensa: Remove tswap() calls in semihosting simcall() helper
 
-    $ ./qemu-system-x86_64 -overcommit mem-lock=off -enable-kvm
-    $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
-    39756
-
-memlock:
-    $ qemu-system-x86_64 -overcommit mem-lock=on
-    $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
-    1309876
-
-    $ ./qemu-system-x86_64 -overcommit mem-lock=on -enable-kvm
-    $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
-    259956
-
-This is caused by the fact that mlockall(2) automatically
-write-faults every existing and future anonymous mappings in the
-process right away.
-
-One of the reasons to enable mem-lock is to protect a QEMU process'
-pages from being compacted and migrated by kcompactd (which does so
-by messing with a live process page tables causing thousands of TLB
-flush IPIs per second) basically stealing all guest time while it's
-active.
-
-mem-lock=on helps against this (given compact_unevictable_allowed is 0),
-but the memory overhead it introduces is an undesirable side effect,
-which we can completely avoid by passing MCL_ONFAULT to mlockall, which
-is what this series allows to do with a new command line option called
-mem-lock-onfault.
-
-memlock-onfault:
-    $ qemu-system-x86_64 -overcommit mem-lock-onfault=on
-    $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
-    54004
-
-    $ ./qemu-system-x86_64 -overcommit mem-lock-onfault=on -enable-kvm
-    $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
-    47772
-
-You may notice the memory usage is still slightly higher, in this case
-by a few megabytes over the mem-lock=off case. I was able to trace this
-down to a bug in the linux kernel with MCL_ONFAULT not being honored for
-the early process heap (with brk(2) etc.) so it is still write-faulted in
-this case, but it's still way less than it was with just the mem-lock=on.
-
-Daniil Tatianin (2):
-  os: add an ability to lock memory on_fault
-  overcommit: introduce mem-lock-onfault
-
- include/sysemu/os-posix.h |  2 +-
- include/sysemu/os-win32.h |  3 ++-
- include/sysemu/sysemu.h   |  1 +
- migration/postcopy-ram.c  |  4 ++--
- os-posix.c                | 10 ++++++++--
- qemu-options.hx           | 13 ++++++++++---
- system/globals.c          |  1 +
- system/vl.c               | 18 ++++++++++++++++--
- 8 files changed, 41 insertions(+), 11 deletions(-)
+ include/hw/xtensa/xtensa-isa.h |  1 +
+ target/xtensa/xtensa-isa.c     |  7 +++++++
+ target/xtensa/xtensa-semi.c    | 16 ++++++++++++++--
+ 3 files changed, 22 insertions(+), 2 deletions(-)
 
 -- 
-2.34.1
+2.45.2
 
 
