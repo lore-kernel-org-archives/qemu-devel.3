@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AFD4E77173
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97061E77172
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 05:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ4jw-0006BY-SY; Thu, 05 Dec 2024 00:49:28 -0500
+	id 1tJ4jz-0006Cf-Jb; Thu, 05 Dec 2024 00:49:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tJ4jw-0006BM-0L; Thu, 05 Dec 2024 00:49:28 -0500
+ id 1tJ4jy-0006C8-DF; Thu, 05 Dec 2024 00:49:30 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tJ4ju-00079A-F5; Thu, 05 Dec 2024 00:49:27 -0500
+ id 1tJ4jw-00079A-OJ; Thu, 05 Dec 2024 00:49:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733377767; x=1764913767;
+ t=1733377769; x=1764913769;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Sx8nPxJJRfYhQt7D0F4clWV/fbFfMbPN7go3+4J/5Rc=;
- b=k9XC99M/lx1XFVaz2A4xoDvLqKocn6Eo9qv8T4oeYxh+3UullTfn1Dim
- Cnty98ONsKmaASjVR/Rqw1jodll8N3WYWXucnsKxj+biWDJsRPFFg6wsi
- HTMLG3L4QHhh1yKfs3oLP83ckCniy4qPY0IqOoJUx3xTCfYzFLGBwFaCR
- 8Gvaeea8WChMKVYz2I26SNlRVnFsWtJh0y7+h35Bh7NHh6lrOYak3Zmab
- OZX1/hrRVKrtb9tkAEVzGUkWqy/CtPFDLRKwwRYTuSVjsMUfeOMxRG1Z3
- KnTSarQWWqrlWi4BD2212nw8tBOaOFOMoESjxHHJor5Z0LsecpkWDWQSM A==;
-X-CSE-ConnectionGUID: VoNbXnOFQIiTwfPMdimSQQ==
-X-CSE-MsgGUID: iFQ5Azm8QC+MpqjCEOvXOw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="33815623"
-X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="33815623"
+ bh=voF79vowTR6fMRnGLbc8fHjowgWUVNqNwTCb10ZYV1o=;
+ b=bio/VIQZu/EGqyXiJIGlmcAJVq6gJ6jy7vKvZh1ImyKfHyBH0IU8BMZf
+ g9S3hdWTvuVMEdoNrOq40DFVsnbF80Dcr2Yy8YOJu86+FY2VJYyeH/WqF
+ vKLJJnCSnw4DvwnFwXLIt6p28jATIQIdTI98v6mzO0TaEqztzx8CyZzc7
+ q5DyGKKSiz15txFsWXKzaM258oVNt21ymfDXG5r6yL1ymjEmXuicY8APn
+ 2b5VNNEnP7OkhZGpw2uGRqrmUkP7piMXMKY7QI7gjxQCj6A5lSptA2/Sx
+ q20aWHZDtauyfl5OOqzBlX1357M3+TUhfJpQElNRFIq0ObkXS8dTjsBCV Q==;
+X-CSE-ConnectionGUID: nz2aGToOTGOFIo7URgGWAQ==
+X-CSE-MsgGUID: 6DvI+7iBSVuBAt4HiRs4gg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11276"; a="33815634"
+X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="33815634"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Dec 2024 21:49:24 -0800
-X-CSE-ConnectionGUID: TRWGioeHT7257PaafcEfDA==
-X-CSE-MsgGUID: sxO6YOnFTVqTlepySetzDw==
+ 04 Dec 2024 21:49:27 -0800
+X-CSE-ConnectionGUID: 1fB97pmNSHW/arkgG+nckQ==
+X-CSE-MsgGUID: K3zGE1hdTcGll9X0qPA74A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="94454972"
+X-IronPort-AV: E=Sophos;i="6.12,209,1728975600"; d="scan'208";a="94454985"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa009.fm.intel.com with ESMTP; 04 Dec 2024 21:49:21 -0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Dec 2024 21:49:24 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -52,9 +52,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 03/13] rust/cell: add get_mut() method for BqlCell
-Date: Thu,  5 Dec 2024 14:07:04 +0800
-Message-Id: <20241205060714.256270-4-zhao1.liu@intel.com>
+Subject: [RFC 04/13] rust: add bindings for gpio_{in|out} initialization
+Date: Thu,  5 Dec 2024 14:07:05 +0800
+Message-Id: <20241205060714.256270-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241205060714.256270-1-zhao1.liu@intel.com>
 References: <20241205060714.256270-1-zhao1.liu@intel.com>
@@ -85,52 +85,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The get_mut() is useful when doing compound assignment operations, e.g.,
-*c.get_mut() += 1.
+The qdev_init_gpio_{in|out} are qdev interfaces, so that it's natural to
+wrap them as DeviceState's methods in Rust API, which could eliminate
+unsafe cases in the device lib.
 
-Implement get_mut() for BqlCell by referring to Cell.
+Wrap qdev_init_gpio_{in|out} as methods in a new trait DeviceGPIOImpl.
+
+In addition, for qdev_init_gpio_in(), to convert the idiomatic Rust
+callback into a C-style callback qemu_irq_handler, add a handler pointer
+member in DeviceGPIOImpl. For any device needs to initialize GPIO in, it
+needs to define a handler. And for device which just wants to initialize
+GPIO out, it can leave the GPIO_IRQ_HANDLER as None.
+
+Then device could use init_gpio_in() and init_gpio_out() to initialize
+GPIO in and out, like C code.
+
+Note, for qemu_irq_handler, assume the opaque parameter refers to the
+self DeviceState, and this is enough as for now, as it's the most common
+case in QEMU.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/qemu-api/src/cell.rs | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ rust/qemu-api/src/qdev.rs | 55 +++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 53 insertions(+), 2 deletions(-)
 
-diff --git a/rust/qemu-api/src/cell.rs b/rust/qemu-api/src/cell.rs
-index 07b636f26266..95f1cc0b3eb5 100644
---- a/rust/qemu-api/src/cell.rs
-+++ b/rust/qemu-api/src/cell.rs
-@@ -324,6 +324,31 @@ impl<T> BqlCell<T> {
-     pub const fn as_ptr(&self) -> *mut T {
-         self.value.get()
-     }
-+
-+    /// Returns a mutable reference to the underlying data.
-+    ///
-+    /// This call borrows `BqlCell` mutably (at compile-time) which guarantees
-+    /// that we possess the only reference.
-+    ///
-+    /// However be cautious: this method expects `self` to be mutable, which is
-+    /// generally not the case when using a `BqlCell`. If you require interior
-+    /// mutability by reference, consider using `BqlRefCell` which provides
-+    /// run-time checked mutable borrows through its [`borrow_mut`] method.
-+    ///
-+    /// [`borrow_mut`]: BqlRefCell::borrow_mut()
-+    ///
-+    /// # Examples
-+    ///
-+    /// ```
-+    /// use qemu_api::cell::BqlCell;;
-+    ///
-+    /// let mut c = BqlCell::new(5);
-+    /// *c.get_mut() += 1;
-+    ///
-+    /// assert_eq!(c.get(), 6);
-+    pub fn get_mut(&mut self) -> &mut T {
-+        self.value.get_mut()
-+    }
- }
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index 23a06b377b2c..5e6580b6f261 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -4,12 +4,17 @@
  
- impl<T: Default> BqlCell<T> {
+ //! Bindings to create devices and access device functionality from Rust.
+ 
+-use std::ffi::CStr;
++use std::{
++    ffi::CStr,
++    os::raw::{c_int, c_void},
++    ptr::{addr_of, NonNull},
++};
+ 
+ pub use bindings::{DeviceClass, DeviceState, Property};
+ 
+ use crate::{
+-    bindings::{self, Error},
++    bindings::{self, qdev_init_gpio_in, qdev_init_gpio_out, Error},
++    irq::InterruptSource,
+     qom::{ClassInitImpl, Object, ObjectClass, ObjectType},
+     qom_isa,
+     vmstate::VMStateDescription,
+@@ -144,3 +149,49 @@ unsafe impl ObjectType for DeviceState {
+         unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
+ }
+ qom_isa!(DeviceState: Object);
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer that
++/// can be downcasted to type `T`. We also expect the device is
++/// readable/writeable from one thread at any time.
++///
++/// Note: Always assume opaque is referred to the self DeviceState, and
++/// this is also the most common case in QEMU.
++unsafe extern "C" fn rust_irq_handler<T: DeviceGPIOImpl>(
++    opaque: *mut c_void,
++    lines_num: c_int,
++    level: c_int,
++) {
++    // SAFETY:
++    // the pointer is convertible to a reference
++    let state = unsafe { NonNull::new(opaque.cast::<T>()).unwrap().as_mut() };
++
++    T::GPIO_IRQ_HANDLER.unwrap()(state, lines_num as u32, level as u32);
++}
++
++/// Trait that defines the irq handler for GPIO in.
++pub trait DeviceGPIOImpl {
++    const GPIO_IRQ_HANDLER: Option<fn(&mut Self, lines_num: u32, level: u32)> = None;
++
++    fn init_gpio_in(&self, lines_num: u32)
++    where
++        Self: Sized,
++    {
++        assert!(Self::GPIO_IRQ_HANDLER.is_some());
++
++        unsafe {
++            qdev_init_gpio_in(
++                addr_of!(*self) as *mut _,
++                Some(rust_irq_handler::<Self>),
++                lines_num as c_int,
++            );
++        }
++    }
++
++    fn init_gpio_out(&self, pins: &InterruptSource, lines_num: u32) {
++        unsafe {
++            qdev_init_gpio_out(addr_of!(*self) as *mut _, pins.as_ptr(), lines_num as c_int);
++        }
++    }
++}
 -- 
 2.34.1
 
