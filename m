@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2EE9E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F43E77171
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJJSl-0006kc-0k; Thu, 05 Dec 2024 16:32:43 -0500
+	id 1tJJYg-0007sa-69; Thu, 05 Dec 2024 16:38:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJSi-0006jp-Kl
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:32:40 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJYe-0007sP-GU
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:38:48 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJSf-0006Ss-CO
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:32:39 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-385e075255fso1073129f8f.0
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:32:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJYc-0008MC-RE
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:38:48 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-434a766b475so14267365e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:38:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733434356; x=1734039156; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733434725; x=1734039525; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fNloKU2y0Z2Pt56YkmfjPbGjy1q//hmeUSbRO3BZN/k=;
- b=KrVL20hWLf4jHfYdUt74P3fd35iliTUtLBe6QMsR4M35g2Mx7MIdyEpxA/3TF5OnS8
- GsRJmQDFs3svvgWdcSnGxhDFyqvSFWNnqLDHhee5QR4gZjr/Thatldg4W/B9I9kmjEhH
- oQWnPo0j0x0Rd3pxolZjl3BE9E6PTLgUD9Mt8z48dhyCK0GQqHAuqFhvdY/xFfd1vS0c
- 0N7gMqjrlnFhLcahhbbbflVTIpzdujBD+tQWc2IptQPH5OW0XCcODr4/t2JWpI2r8syl
- QEz2qjsRB3io7sYBfxPQFQQAbuRQ/kuZIe4UPcNxmmSdDckPkLhlTpuacFyH+z3/eGbM
- NUag==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CVE8/vXra0xBx2yWpDKBpr2ah7PrNfu9cQJFFaJXkH8=;
+ b=mr3gfn15yBGYrgxBGyRn7bhM/UP0cPFCfj/1zs06pHxeGSpwViZGYBY9d9b8pA6QTJ
+ ORWAE5gfluuCwaxJW0OcRqbQf6P9k72sulI6+7U2W4l5fMb/kWqYmWiX3B1ytvK6ILl8
+ 44wYPNtfPrwkSs7b2z1SoQT84IqPX4lwyYJjqKKLyTI4WV9JsbD/RTtBbVFLkFJMdv21
+ UmqJBk3T5CnBwDHTPrgBqqP6Zk8HVEKiZU8ieai4ABsKMNQxJNLFjfq+J5IriiXg3orl
+ QUkOAb4s5gR39Q0Kjk4UmbCYHZh2I1TcAHTL47d9Fl3gAymzCkZqY7o+9uQf3SfndzVK
+ Udhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733434356; x=1734039156;
+ d=1e100.net; s=20230601; t=1733434725; x=1734039525;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fNloKU2y0Z2Pt56YkmfjPbGjy1q//hmeUSbRO3BZN/k=;
- b=SB0yAcAIMGBecjx0TrkAfoiomzAZyx0VXmKp11Be+4tEA9GnqKcrJJXdTHaFtKU/s/
- 73QzoSbsMXuM7PRFz0YUxkoTmd0UTEypnsAh2+ihFchQr2ejt0qUePjcxWjRvH0iIBA7
- HCHpySIrYwifOnzF4lwvbZoBGAVbUudIHfHqMIwkgxq6FuBQyjrMFQFekLELsakfCqty
- 9NH4SI2TEVrrw4VnxNeE0Q9BDea+wScT31/Q7GCXik9rNCa7bk8LmwAw6eq5XRdVuNPV
- TnPH//horhT2pc6HUvMPghbADzSGZvwuxoXVFYZbNJZeHKLIEXueYAZ1Ww1d+2eDjyjq
- sa7g==
+ bh=CVE8/vXra0xBx2yWpDKBpr2ah7PrNfu9cQJFFaJXkH8=;
+ b=WcReyC1Atv2bT2uyRhnBURpjra4HB8ObFXMUIzPbvFCyhsVQYogx66hmED+ZDtvPqy
+ sABWaoZFpAREncvQ2e+Pcqftu3OcD575MctdvKffEAn3lgDTJlKHRP/Mu41k2jJJU1DD
+ xBNaUzmcI1u3YkRRKiR9SCrFGprYqB0rl9U69GkV7YHKK2RBowAEqAlHxrPloXMKHcPU
+ qCHzTOQUn0hOrC1RbXb0PBY1OAws5FO7fkHh4hknr+scZRdKcEwWBgbjEZlssMuYYFZ0
+ wZ+MF+r5J3VNuLhZVlA6eMPVzHoJRXXfpXn68sXCWdVv6/HfSPJZxtxap+j7IvMhW6/9
+ foeA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIl9lGVhSaQ8Wh59edYZzGLbm2ADPjunTy0xqG5gi5wKnUkBAhbqQB7g7b6nUAR1XVOEbseI1xZ15o@nongnu.org
-X-Gm-Message-State: AOJu0YwzJSORXlGKB+0T/o9+q9y7rhsE0GRaGRzTSztbFo5fHUwd9hBh
- LfqNCafs4cPw7yMIwS5jNvQ4QrvwTkZcigZbCrYMyxqZxQTRAuGnZNDfzBZg4Us=
-X-Gm-Gg: ASbGncvCC5Z8mqwNaGTxL7x5P6O+IgEBFLVP0K8CblNIFXMel168mpnV7GiqSzGJ+kq
- 5Lhk4b7JJFsUMQwWFqux+jojUZTxjgPbTeyIqMtMFToJbSmvcRUbaTuKNHWarzTxhqaPruSCZPQ
- umFx/KE9Zutc7cz7T12K1fSfe0UQLQEI/GAg0FkalP9cYOOPYApzjiCQLw8IH915g0G7qvB9+98
- pUPZosnWKS7G33Awvm81OEFMRIQPkWtGT18+OxFZoFvtPsos+5udMBpwjrOQsM35pFzH47/hN+u
- 7KR5B4KmWHr/HHp1sg==
-X-Google-Smtp-Source: AGHT+IHIp3Id09IDvgw7T4qb4DGImRzHVxowhnlYlEzFCS4RfFstp9pspojXdzkjrqYIyZCF7oCoSw==
-X-Received: by 2002:a05:6000:1787:b0:385:f7d2:7e55 with SMTP id
- ffacd0b85a97d-3862b355a26mr458528f8f.19.1733434355631; 
- Thu, 05 Dec 2024 13:32:35 -0800 (PST)
+ AJvYcCVQFzAmRqwYal5lI4/AoFQz1RaYOFfHwc8/SsVDesX+yJVKfaleyDw0/CIgjCA3ogxGHN63Q0eAcoNc@nongnu.org
+X-Gm-Message-State: AOJu0Yyby+IJ2GCkFCzFaB40+wJs3Qv8mCYT+DqKjdfxh/t8WS06vuRT
+ hvlgffY9meZtWR0nsrnHtQ84X9tvK6U/85CLi9+9umYtfn7QmbY62Ba8ADxZaSk=
+X-Gm-Gg: ASbGncsdvthvnhzM5jZ9QlTKhndWZMCGFdORXx4tZBrImWctS9pRHbpkIWd7NscR1oA
+ yt/Sxk7XD5+DLDF9qwLg566bqe88M9rX6wiMUNl8G2gutOil0RkR26b0fyxfGqgtx3csObiggC+
+ OuYSmQauwG0gVAq01karJG8u2l14xWWLwpNbfBy4LBnui6Aj9G0K5pVyX9qbV/gTNrGWTrfHeby
+ 4dOXyD9OWKNdnaqybgVnuFV1mo/n3AAFGMWNN1eOCoS0sBkLF6xTEk13voC6AB/iP52j9cPDgc8
+ fMDm4CNpgtsCgO52bQ==
+X-Google-Smtp-Source: AGHT+IH0UQ4sD3dYXkL6wjPpnHj0gzW4qC/7vgSFxhd9OI1rG+YfENzexAb2xK3SIqILzXog7fMFmQ==
+X-Received: by 2002:a05:6000:a05:b0:386:8ff:d20b with SMTP id
+ ffacd0b85a97d-3862b36c085mr480415f8f.27.1733434724705; 
+ Thu, 05 Dec 2024 13:38:44 -0800 (PST)
 Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3861f59cea5sm2915970f8f.35.2024.12.05.13.32.33
+ ffacd0b85a97d-3861f59cceesm2928708f8f.33.2024.12.05.13.38.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 13:32:34 -0800 (PST)
-Message-ID: <7a9f495b-7aea-4b7b-8bd5-e1e7db34b6be@linaro.org>
-Date: Thu, 5 Dec 2024 22:32:33 +0100
+ Thu, 05 Dec 2024 13:38:43 -0800 (PST)
+Message-ID: <f9793791-2aaa-42b8-9830-86401a020205@linaro.org>
+Date: Thu, 5 Dec 2024 22:38:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net: cadence_gem: feat: add logic for the DISABLE_MASK
- bit in type2_compare_x_word_1
-To: "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>, edgar.iglesias@gmail.com,
- alistair@alistair23.me, jasowang@redhat.com, peter.maydell@linaro.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20241118114806.1119-1-andrew.yuan@jaguarmicro.com>
+Subject: Re: [RFC PATCH 2/4] i386: Extract a common fucntion to setup value of
+ MSR_CORE_THREAD_COUNT
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
+References: <20241205145716.472456-1-xiaoyao.li@intel.com>
+ <20241205145716.472456-3-xiaoyao.li@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241118114806.1119-1-andrew.yuan@jaguarmicro.com>
+In-Reply-To: <20241205145716.472456-3-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,71 +108,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Andrew,
+Hi Xiaoyao,
 
-On 18/11/24 12:48, Andrew.Yuan wrote:
-> From: Andrew Yuan <andrew.yuan@jaguarmicro.com>
+On 5/12/24 15:57, Xiaoyao Li wrote:
+> There are duplicated code to setup the value of MSR_CORE_THREAD_COUNT.
+> Extract a common function for it.
 > 
-> As in the Cadence IP for Gigabit Ethernet MAC Part Number: IP7014 IP Rev: R1p12 - Doc Rev: 1.3 User Guide,
-> if the DISABLE_MASK bit in type2_compare_x_word_1 is set,
-> mask_value in type2_compare_x_word_0 is used as an additional 2 byte Compare Value
-> 
-> Signed-off-by: Andrew Yuan <andrew.yuan@jaguarmicro.com>
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > ---
->   hw/net/cadence_gem.c | 25 ++++++++++++++++++++-----
->   1 file changed, 20 insertions(+), 5 deletions(-)
+>   target/i386/cpu.h                    | 11 +++++++++++
+>   target/i386/hvf/x86_emu.c            |  3 +--
+>   target/i386/kvm/kvm.c                |  5 +----
+>   target/i386/tcg/sysemu/misc_helper.c |  3 +--
+>   4 files changed, 14 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
-> index 526739887c..7ec5dbaa9c 100644
-> --- a/hw/net/cadence_gem.c
-> +++ b/hw/net/cadence_gem.c
-> @@ -909,8 +909,8 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 4c239a6970fd..5795a497e567 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2390,6 +2390,17 @@ static inline void cpu_x86_load_seg_cache_sipi(X86CPU *cpu,
+>       cs->halted = 0;
+>   }
 >   
->           /* Compare A, B, C */
->           for (j = 0; j < 3; j++) {
-> -            uint32_t cr0, cr1, mask, compare;
-> -            uint16_t rx_cmp;
-> +            uint32_t cr0, cr1, mask, compare, disable_mask;
-> +            uint32_t rx_cmp;
->               int offset;
->               int cr_idx = extract32(reg, R_SCREENING_TYPE2_REG0_COMPARE_A_SHIFT + j * 6,
->                                      R_SCREENING_TYPE2_REG0_COMPARE_A_LENGTH);
-> @@ -946,9 +946,24 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
->                   break;
->               }
->   
-> -            rx_cmp = rxbuf_ptr[offset] << 8 | rxbuf_ptr[offset];
-> -            mask = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VALUE);
-> -            compare = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, COMPARE_VALUE);
-> +            disable_mask =
-> +                FIELD_EX32(cr1, TYPE2_COMPARE_0_WORD_1, DISABLE_MASK);
-> +            if (disable_mask) {
-> +                /*
-> +                 * If disable_mask is set,
-> +                 * mask_value is used as an additional 2 byte Compare Value.
-> +                 * To simple, set mask = 0xFFFFFFFF, if disable_maks is set.
+> +static inline uint64_t cpu_x86_get_msr_core_thread_count(X86CPU *cpu)
 
-Typo "disable_mask".
+Please do not add more inlined functions in this huge file, the
+inlining performance isn't justified at all.
 
-> +                 */
-> +                rx_cmp = rxbuf_ptr[offset + 3] << 8 | rxbuf_ptr[offset + 2] |\
-> +                         rxbuf_ptr[offset + 1] << 8 | rxbuf_ptr[offset];
+target/i386/cpu-sysemu.c looks the correct place for this helper.
 
-                    rx_cmp = ldl_be_p(rxbuf_ptr[offset]);
+> +{
+> +    CPUState *cs = CPU(cpu);
+> +    uint64_t val;
+> +
+> +    val = cs->nr_threads * cs->nr_cores;  /* thread count, bits 15..0 */
+> +    val |= ((uint32_t)cs->nr_cores << 16); /* core count, bits 31..16 */
 
-> +                mask = 0xFFFFFFFF;
-> +                compare = cr0;
-> +            } else {
-> +                rx_cmp = rxbuf_ptr[offset + 1] << 8 | rxbuf_ptr[offset];
+Personally I'd change to:
 
-                    rx_cmp = lduw_be_p(rxbuf_ptr[offset]);
+        return deposit64(cs->nr_threads * cs->nr_cores, 16, 16,
+                         cs->nr_cores);
 
-> +                mask = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VALUE);
-> +                compare =
-> +                    FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, COMPARE_VALUE);
-> +            }
->   
->               if ((rx_cmp & mask) == (compare & mask)) {
->                   matched = true;
-
+> +
+> +    return val;
+> +}
 
