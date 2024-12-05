@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7280FE7716D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B076FE7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:20:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJEZZ-0004WK-TW; Thu, 05 Dec 2024 11:19:27 -0500
+	id 1tJEZp-0004fH-39; Thu, 05 Dec 2024 11:19:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1tJEZR-0004Vw-30
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:19:17 -0500
+ id 1tJEZg-0004bL-KW
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:19:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1tJEZP-0007nj-Hx
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:19:16 -0500
+ id 1tJEZb-0007oT-Pw
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:19:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733415554;
+ s=mimecast20190719; t=1733415559;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v7fSVaL4A+NJUb5Qfu7/DO8n7m7CrRilZSxiNE2PvZg=;
- b=SqxEJReJ0qFRBeWmAHTaZEvX7ULt3ajZEN+DcSm2n3o/R0H879cwZHp5hpy7aCDOv+7Lqw
- 1x7Ka+5YwPSmtNonsb5OsqxR6aZvS6xcFAOR3DhuT4SxsmykKtx91RJl9tDomDmeqDUVhD
- fmhBU0TRFfBVKDXsdpJ6n6QRljvpOFA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=xG8LQleyZaEfHMBwq60MdqrgLxtBGgS3uFbJQoWRKmI=;
+ b=PlK5xppuM1LRtrcsCHwc214AUrvsA9Lcp8TKEknf05L/hwFg53HtrZO3vKXL6pfBxcimVu
+ K9Hv4R3eAb/cNRWHv0suOaVm2CUVzuq4QSnFCRkHO5rrQavR3H9fNx/IS1lSRXRJfUmXoE
+ iZeNjvDn8bCGBuFFUzwlg5DfOsuHq44=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-AX5DPnzXP12EAsDLnDXHtg-1; Thu,
- 05 Dec 2024 11:19:13 -0500
-X-MC-Unique: AX5DPnzXP12EAsDLnDXHtg-1
-X-Mimecast-MFC-AGG-ID: AX5DPnzXP12EAsDLnDXHtg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-5fCWULkJMCi4GVh-xlRPuA-1; Thu,
+ 05 Dec 2024 11:19:18 -0500
+X-MC-Unique: 5fCWULkJMCi4GVh-xlRPuA-1
+X-Mimecast-MFC-AGG-ID: 5fCWULkJMCi4GVh-xlRPuA
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA80219560A3; Thu,  5 Dec 2024 16:19:12 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82D261955F3C; Thu,  5 Dec 2024 16:19:17 +0000 (UTC)
 Received: from moe.brq.redhat.com (unknown [10.43.3.236])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 528DC3000197; Thu,  5 Dec 2024 16:19:10 +0000 (UTC)
+ id 05B9F3000197; Thu,  5 Dec 2024 16:19:15 +0000 (UTC)
 From: Michal Privoznik <mprivozn@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: kkostiuk@redhat.com,
 	michael.roth@amd.com,
 	jtomko@redhat.com
-Subject: [PATCH v2 2/4] qga: Invert logic on return value in main()
-Date: Thu,  5 Dec 2024 17:18:46 +0100
-Message-ID: <9316535a7cd0e73983b57c2c775d6bfc566d4b08.1733414906.git.mprivozn@redhat.com>
+Subject: [PATCH v2 4/4] qga: Make run_agent() and run_agent_once() return no
+ value
+Date: Thu,  5 Dec 2024 17:18:48 +0100
+Message-ID: <8f4469febaaf5c48afdf13a6c88e959956c0f204.1733414906.git.mprivozn@redhat.com>
 In-Reply-To: <cover.1733414906.git.mprivozn@redhat.com>
 References: <cover.1733414906.git.mprivozn@redhat.com>
 MIME-Version: 1.0
@@ -86,77 +87,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current logic on return value ('ret' variable) in main() is error
-prone. The variable is initialized to EXIT_SUCCESS and then set
-to EXIT_FAILURE on error paths. This makes it very easy to forget
-to set the variable to indicate error when adding new error path,
-as is demonstrated by handling of initialize_agent() failure.
-It's simply lacking setting of the variable.
-
-There's just one case where success should be indicated: when
-dumping the config ('-D' cmd line argument).
-
-To resolve this, initialize the variable to failure value and set
-it explicitly to success value in that one specific case.
+After previous commits, run_agent_once() can't return anything
+else but EXIT_SUCCESS. Transitionally, run_agent() can't return
+anything else but EXIT_SUCCESS too. There's not much value in
+having these function return an integer. Make them return void.
 
 Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
 Reviewed-by: Ján Tomko <jtomko@redhat.com>
 ---
- qga/main.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ qga/main.c | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
 diff --git a/qga/main.c b/qga/main.c
-index 4a695235f0..68ea7f275a 100644
+index 35f061b5ea..346274f114 100644
 --- a/qga/main.c
 +++ b/qga/main.c
-@@ -1579,7 +1579,7 @@ static void stop_agent(GAState *s, bool requested)
+@@ -145,7 +145,7 @@ DWORD WINAPI service_ctrl_handler(DWORD ctrl, DWORD type, LPVOID data,
+ DWORD WINAPI handle_serial_device_events(DWORD type, LPVOID data);
+ VOID WINAPI service_main(DWORD argc, TCHAR *argv[]);
+ #endif
+-static int run_agent(GAState *s);
++static void run_agent(GAState *s);
+ static void stop_agent(GAState *s, bool requested);
  
- int main(int argc, char **argv)
+ static void
+@@ -1521,7 +1521,7 @@ static void cleanup_agent(GAState *s)
+     ga_state = NULL;
+ }
+ 
+-static int run_agent_once(GAState *s)
++static void run_agent_once(GAState *s)
+ {
+     if (!s->channel &&
+         channel_init(s, s->config->method, s->config->channel_path,
+@@ -1536,8 +1536,6 @@ static int run_agent_once(GAState *s)
+         ga_channel_free(s->channel);
+         s->channel = NULL;
+     }
+-
+-    return EXIT_SUCCESS;
+ }
+ 
+ static void wait_for_channel_availability(GAState *s)
+@@ -1561,21 +1559,17 @@ static void wait_for_channel_availability(GAState *s)
+ #endif
+ }
+ 
+-static int run_agent(GAState *s)
++static void run_agent(GAState *s)
  {
 -    int ret = EXIT_SUCCESS;
-+    int ret = EXIT_FAILURE;
-     GAState *s;
-     GAConfig *config = g_new0(GAConfig, 1);
-     int socket_activation;
-@@ -1607,7 +1607,6 @@ int main(int argc, char **argv)
-     socket_activation = check_socket_activation();
-     if (socket_activation > 1) {
-         g_critical("qemu-ga only supports listening on one socket");
--        ret = EXIT_FAILURE;
-         goto end;
-     }
-     if (socket_activation) {
-@@ -1631,7 +1630,6 @@ int main(int argc, char **argv)
+-
+     s->force_exit = false;
  
-         if (!config->method) {
-             g_critical("unsupported listen fd type");
--            ret = EXIT_FAILURE;
-             goto end;
+     do {
+-        ret = run_agent_once(s);
++        run_agent_once(s);
+         if (s->config->retry_path && !s->force_exit) {
+             g_warning("agent stopped unexpectedly, restarting...");
+             wait_for_channel_availability(s);
          }
-     } else if (config->channel_path == NULL) {
-@@ -1643,13 +1641,13 @@ int main(int argc, char **argv)
-             config->channel_path = g_strdup(QGA_SERIAL_PATH_DEFAULT);
-         } else {
-             g_critical("must specify a path for this channel");
--            ret = EXIT_FAILURE;
-             goto end;
-         }
-     }
+     } while (s->config->retry_path && !s->force_exit);
+-
+-    return ret;
+ }
  
-     if (config->dumpconf) {
-         config_dump(config);
-+        ret = EXIT_SUCCESS;
-         goto end;
-     }
- 
-@@ -1664,6 +1662,7 @@ int main(int argc, char **argv)
+ static void stop_agent(GAState *s, bool requested)
+@@ -1674,14 +1668,15 @@ int main(int argc, char **argv)
          SERVICE_TABLE_ENTRY service_table[] = {
              { (char *)QGA_SERVICE_NAME, service_main }, { NULL, NULL } };
          StartServiceCtrlDispatcher(service_table);
-+        ret = EXIT_SUCCESS;
+-        ret = EXIT_SUCCESS;
      } else {
-         ret = run_agent(s);
+-        ret = run_agent(s);
++        run_agent(s);
      }
+ #else
+-    ret = run_agent(s);
++    run_agent(s);
+ #endif
+ 
++    ret = EXIT_SUCCESS;
++
+     cleanup_agent(s);
+ 
+ end:
 -- 
 2.45.2
 
