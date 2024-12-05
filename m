@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A146AE77172
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 13:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE340E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 13:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJBzT-0005bt-RS; Thu, 05 Dec 2024 08:34:01 -0500
+	id 1tJC2h-0002Ub-GW; Thu, 05 Dec 2024 08:37:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJBzQ-0005Kg-Fi
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:33:56 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1tJC2f-0002UI-G0
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:37:17 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJBzO-00073S-Tn
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:33:56 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5d0e75dd846so1378261a12.3
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 05:33:54 -0800 (PST)
+ id 1tJC2d-0007Zp-Vb
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:37:17 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5d34030ebb2so365431a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 05:37:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733405632; x=1734010432; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733405832; x=1734010632; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2S3YbeSnos0LzG8We5jvBTGDq6r02IvTSqUHnZKBJ+4=;
- b=eksS1vebjANbflfndIeKCZHor1gbx7IVxiWJsxgiGb9KZc0/w42cUJwjblvbwD2SlM
- rSKw8N7xiMvG3oaENG2trI/uVS56WQwqwZ4W6QOMoaUaZUR+jCfe946wTi+quxF7fRQa
- QqnlHMVWZwdF9f/mXfOJMObeMTeehXNPidFE5q9BeHQoeD/5/h2R2NUfR2s9V2zQeXA8
- Nxu+FgpywtM9G4yRFX5njDEzIodHcHU7/aNg7kmHum9qrVk5P/gf6dDgrSzAJOoZKJUn
- DKb1GMaRs86HyFCXNnrzLIAtTw5YTlHeIHAQtikXsPDjiw136oPL5aonsj5Wq8ymkPEQ
- 2SSg==
+ bh=lFxfPPI9Wf/gTd1bdjwPKtPtN3Ehej4DTItJJ2shWLE=;
+ b=xh6l5IC95hJLJdbtXFS54Gfc+NJN2TUfmPU38pjGBscgy88YhqenuXJAWjYoKb/Uvi
+ Am9xFQ3cGycmB6XGscs9mN2JDEANoLqIPkdhajF+S/k+1lLaxshD+/gmaCmAltKxxl8K
+ 2Bn/BPZDDmsRRAkEy/LNCvvdbDkyu76mgv3skGThJ8blJWWchfpJFV3KzdtAX+SI1XdJ
+ p9TY1RlIF8OgjpPtcY001vXX1v5R4MaHYs+iDCt5MFKoA3dauOZrTaPp+DvLJz5EEWyl
+ VNUrp9T/jhxDjmc6gD9UK+Ulu6qIl4tPeax9yHwUcnB9VSXl4RXvNWiuOWtEH3ZvF+8M
+ +ZHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733405632; x=1734010432;
+ d=1e100.net; s=20230601; t=1733405832; x=1734010632;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2S3YbeSnos0LzG8We5jvBTGDq6r02IvTSqUHnZKBJ+4=;
- b=WpWHCaWnDs7duPKwEUqBMHUFkHOnu3ZRjTu9Ywvt5lpAmDdKT69co01sUkhpx0f5aR
- oByjmd7vvqzCgmo3gaTHA183en+wVWDmkL1Y560sizX61dvU8bK3VtLWYbbQAlu42+zt
- PRNjTmg8XxFLfLAunRF813WrSbu/cm1umaTj9iPv+0C39crahBuqQV1TK/wZDr2UwFok
- BUaaHCt3XvBbGEn6al8P0cgHdT4Sb5kFlztM/aU/R8/+jqM9IzNeGu71N03uHQ/TOiyT
- g1IhqzP03DVLoNJb3tV9IUzlyWPxWFqKfEmnjnQ4L57Y9k1O7T270hC9hL2FBLQv/t3L
- c5Ew==
-X-Gm-Message-State: AOJu0Yx89qe5szfYLgs1VhDFqK+g1DzqlxKpUi96VgwUBNvSUBxMYtro
- BZ4IqnEt8d8Ou2LWtcFISb4REq7cVe+dZiNb25tgJrrJ+xK/fvLUUlPdwSwtCwjP8cKrSNsz9Av
- pWbo+d0qQL7I0FvGV5fwIOTz4ktUOFmVBT2u17X/nSRRU9qJT
-X-Gm-Gg: ASbGncvqq/nds4XjKjnmqsacfP9f3aewyWEg5AWiUXRi7ocUFBVw8Sji+FVC59w8uM1
- 4li/oSeAAxUQLsvPDia2dN6LuKu/aFNDibbxA
-X-Google-Smtp-Source: AGHT+IH5qx5lkTTR4XLeHIEIGFrHetRhHV7ZKeDDPy/ryLYG2hQP+OSR1kzVxNIk3+Llgy+0TUGv1yo72gT+qq14y1U=
-X-Received: by 2002:a05:6402:2553:b0:5d0:cca6:233a with SMTP id
- 4fb4d7f45d1cf-5d10cb565f3mr11525038a12.10.1733405630802; Thu, 05 Dec 2024
- 05:33:50 -0800 (PST)
+ bh=lFxfPPI9Wf/gTd1bdjwPKtPtN3Ehej4DTItJJ2shWLE=;
+ b=dxRB671cy1B0GWYLHcH1bZ+xlGLSLIULtVq5ZVmLVgg2IKEatJxlOBJIIvLlQJX5e6
+ 2x+zBcrlzEz1XmSCuU8loYQv5zTLbFTWw6IWq9nqEJogiR6Vj5pTPleq6vpAbgkNXf6M
+ ENCXGz5qfSdSOBI3k/iakvbLL6c2RqhPuLletBeBKsKskfW+Kh69QHEMiOs17K/Wlcsx
+ uIE4v7enWU49RjngEmq/hjyXv3/P6HGFqscgtyF9iUoRpz9HOjLpwdtSelhs3HT9Tiuc
+ eMRqd7mriUXnJTu5cm89lqcwK2aqNI4G7vMok5Fhqnh/8ACKDUtKMs6Ay/3vuujOgW7d
+ Cn8w==
+X-Gm-Message-State: AOJu0YyIzq/TlHD/uE4p4aVCzcm/BYLzY5eyDEVyrcLn7rfqAZVkxUUq
+ R71wXkvhvu6frmlYCWM2egHB82ut9XlfQWiN+MMJ5oIEOYJCbpoSYP1j91AZKW1WEamsWHsiUes
+ FsPi6+ebNv/ynJ5NBsHTvCfXkAvXaXyOQrQZTZo56bZgzDDTa
+X-Gm-Gg: ASbGncubg49MkaK8RRDQQriCzC6xXsmHtpe8F6lozGG8sYs1HMKP9wV6m2wOumHctm8
+ qiwYcXOK7ZwWJYCJZTyfckd+wSP5vfdWO
+X-Google-Smtp-Source: AGHT+IG9QIzROeLesFG6rddsgOgcGQnR+PozwS0aXLsl59RDS7esB3u4HpL1tq/9Oy9/zRs7kv8Yr9eAzdWP9Sktkq4=
+X-Received: by 2002:aa7:df8d:0:b0:5d1:2440:9b05 with SMTP id
+ 4fb4d7f45d1cf-5d124409de0mr3642593a12.28.1733405831779; Thu, 05 Dec 2024
+ 05:37:11 -0800 (PST)
 MIME-Version: 1.0
 References: <20241203203949.483774-1-richard.henderson@linaro.org>
- <20241203203949.483774-7-richard.henderson@linaro.org>
-In-Reply-To: <20241203203949.483774-7-richard.henderson@linaro.org>
+ <20241203203949.483774-10-richard.henderson@linaro.org>
+In-Reply-To: <20241203203949.483774-10-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 13:33:40 +0000
-Message-ID: <CAFEAcA-MzVYe6aTVdfcLD5ovU14-BriJJBJ9rVinOAwU5tn3EQ@mail.gmail.com>
-Subject: Re: [PATCH 06/11] softfloat: Move propagateFloatx80NaN to softfloat.c
+Date: Thu, 5 Dec 2024 13:37:01 +0000
+Message-ID: <CAFEAcA8eJp=OLwouY3f242jJK3dVbByZAjBeSz7AsO==Zd_7jQ@mail.gmail.com>
+Subject: Re: [PATCH 09/11] softfloat: Share code between parts_pick_nan cases
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,11 +90,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Dec 2024 at 20:39, Richard Henderson
+On Tue, 3 Dec 2024 at 20:40, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> This function is part of the public interface and
-> is not "specialized" to any target in any way.
+> Remember if there was an SNaN, and use that to simplify
+> float_2nan_prop_s_{ab,ba} to only the snan component.
+> Then, fall through to the corresponding
+> float_2nan_prop_{ab,ba} case to handle any remaining
+> nans, which must be quiet.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
