@@ -4,127 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7681FE7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 15:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1255BE7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:05:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJECs-0005Zm-EQ; Thu, 05 Dec 2024 10:55:58 -0500
+	id 1tJELX-00070k-5h; Thu, 05 Dec 2024 11:04:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tJECq-0005Z8-PC
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:55:56 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJELV-00070P-TE
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:04:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tJECp-0006da-AK
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:55:56 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJELS-0000UD-JF
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:04:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733414154;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1733414688;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7VH6aBVI0v2Utc5ls8KiwZY+aj9+fZ4f9uYnISwwCs4=;
- b=JG+EHEm6tzi3/J6U6IEhkz9wX1Eu0/IHaj3+YlwNS/gtewItv1OfXzd6wwj4DP6HQqINDP
- b58hT/oRYfYSkYoN3RX5doCKw2tNDJUGpMNw+D/mrA0n44/JWobimhZT2GBf/PBQ9epbca
- +UBr7EtuEFnn1xyjeVNMF/tCdTuiAB0=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-dC6VfU8eM7utE7Zl50Rzdw-1; Thu, 05 Dec 2024 10:55:49 -0500
-X-MC-Unique: dC6VfU8eM7utE7Zl50Rzdw-1
-X-Mimecast-MFC-AGG-ID: dC6VfU8eM7utE7Zl50Rzdw
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b67a9aea08so173183085a.2
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 07:55:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733414149; x=1734018949;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7VH6aBVI0v2Utc5ls8KiwZY+aj9+fZ4f9uYnISwwCs4=;
- b=dCi19LRd7ektdTcFQ0KrYSBoRO4+cxefidgF/TFQEH3Mfkm4bK4kNHeAs/9GDiCzcw
- flzqlkxpnaH39EssXKqt5nrp/r4SJLCxqsz/Lt4HRB+MD2oRUvQYQzCrimP9hvj8DagA
- w0TvFCTaQY00OAfSUDTJKob+4o+K2KXilK1lQx6Pqo56Bbsh77z0fC60X2r232s21x8N
- HxxXyDwlVtt7xvlBTgwC/eEi2W4IVfafX64AdhUEFV42c/myOeoB1Sr26qHBHjYGwZSN
- Fb1qKyREAjJmQSm9tTbT6jGoffEOMdDAMPgyhWilKFfKAIc2i2Q/+Wtau471jpifj35b
- P98A==
-X-Gm-Message-State: AOJu0Ywv5oaD1STJ7M0lYpm8fswo3v1norPCdLU8hiQKbJx4DYTgK8o1
- SnTGZlOV9DVgwvg1dCLx15dO/X059uRdNlBjl6imqYp9n7TNy3RIT9XNgu9o3WglEqGRzqXDVOE
- 2bfAnQxkDv64+L1duaSHMNBScWtsHw75CmfAtCw0iun0bmLJGO4mh
-X-Gm-Gg: ASbGncsSTtlxObCqyex/kLuuxX6AX+q8TZNKES1hlNwTMMt9mYQ6435Zf6z11+8Degr
- nlBwKa2zx4cX6RlyY+kH/ItCWo9rE7G4oXDELqScHqoNZNPyTOVGhLlwXLsRv+MGNKmU0Q3Qg4R
- fUlT8pyE1fP4NFNOx/RS9AzsjwlP6ZVyFcRzqy/xgdNJzQQxpnIMVGnp/+ACkgQKNcTk78Ebn4X
- 4jz8P1dzYKG2Sau9T0uoWz66723y8lx6Lfi3Is01j+K+HoVnF6/
-X-Received: by 2002:a05:620a:4806:b0:7b6:7ac5:5de1 with SMTP id
- af79cd13be357-7b6a5d51ae1mr1558432685a.7.1733414149186; 
- Thu, 05 Dec 2024 07:55:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFxwWA8EKyzNa/fiZP1e7uBzZHteImkNVFYkfXtqTkkaiUD1cglyLAMwOfGKftfYkJQgd6zeA==
-X-Received: by 2002:a05:620a:4806:b0:7b6:7ac5:5de1 with SMTP id
- af79cd13be357-7b6a5d51ae1mr1558429985a.7.1733414148887; 
- Thu, 05 Dec 2024 07:55:48 -0800 (PST)
-Received: from [10.20.9.127] ([144.121.20.162])
- by smtp.googlemail.com with ESMTPSA id
- af79cd13be357-7b6b5a9e5c7sm71285685a.99.2024.12.05.07.55.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 07:55:48 -0800 (PST)
-Message-ID: <75edc6e5-e65f-40c0-90ee-6ac1fa018f5c@redhat.com>
-Date: Thu, 5 Dec 2024 16:55:47 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=Cn0TFB+dheuVi5JV+esed/wCO8rDPnhf3i39qCl9SUc=;
+ b=DZWGuqlANLdFAsTsqs53vxu/J0ZXRaaMc7eoOQgdfvTm6qCCk7mmV6APXdHMQzFWChapey
+ BatdAB57jGw5QVKMsbwW3baQHxSEn8ETbiAkU5dXLoXVuT3atXBuy/YfIgSNMkadTrUKHu
+ BWsj61+FTN8zEMjVCqlRw0F7YN808aw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-QitxrrD-OpeFibtBOVAF7A-1; Thu,
+ 05 Dec 2024 11:04:47 -0500
+X-MC-Unique: QitxrrD-OpeFibtBOVAF7A-1
+X-Mimecast-MFC-AGG-ID: QitxrrD-OpeFibtBOVAF7A
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7EBBC1944D20
+ for <qemu-devel@nongnu.org>; Thu,  5 Dec 2024 16:04:46 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.137])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF6DE195422D; Thu,  5 Dec 2024 16:04:43 +0000 (UTC)
+Date: Thu, 5 Dec 2024 16:04:39 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH v3 0/9] Require error handling for dynamically created
+ objects
+Message-ID: <Z1HPF8wQG4ZqZIhF@redhat.com>
+References: <20241115172521.504102-1-berrange@redhat.com>
+ <87a5dbln8x.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 03/13] rust/cell: add get_mut() method for BqlCell
-To: Zhao Liu <zhao1.liu@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20241205060714.256270-1-zhao1.liu@intel.com>
- <20241205060714.256270-4-zhao1.liu@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20241205060714.256270-4-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a5dbln8x.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -133,7 +75,7 @@ X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,122 +88,255 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/24 07:07, Zhao Liu wrote:
-> The get_mut() is useful when doing compound assignment operations, e.g.,
-> *c.get_mut() += 1.
+On Wed, Dec 04, 2024 at 12:07:58PM +0100, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> Implement get_mut() for BqlCell by referring to Cell.
-
-I think you can't do this because the BQL might be released while the owner has a &mut.  Like:
-
-    let mtx = Mutex<BqlCell<u32>>::new();
-    let guard = mtx.lock();
-    let cell = &mut *guard;
-    let inner = cell.get_mut(cell);
-    // anything that releases bql_lock
-    *inner += 1;
-
-On the other hand I don't think you need it.  You have just two uses.
-
-First, this one:
-
-+        if set && self.is_int_level_triggered() {
-+            // If Timer N Interrupt Enable bit is 0, "the timer will
-+            // still operate and generate appropriate status bits, but
-+            // will not cause an interrupt"
-+            *self.get_state_mut().int_status.get_mut() |= mask;
-+        } else {
-+            *self.get_state_mut().int_status.get_mut() &= !mask;
-+        }
-
-Where you can just write
-
-     self.get_state_ref().update_int_status(self.index,
-         set && self.is_int_level_triggered())
-
-and the HPETState can do something like
-
-     fn update_int_status(&self, index: u32, level: bool) {
-         self.int_status.set(deposit64(self.int_status.get(), bit, 1, level as u64));
-     }
-
-For hpet_fw_cfg you have unsafe in the device and it's better if you do:
-
--        self.hpet_id.set(unsafe { hpet_fw_cfg.assign_hpet_id() });
-+        self.hpet_id.set(fw_cfg_config::assign_hpet_id());
-
-with methods like this that do the unsafe access:
-
-impl fw_cfg_config {
-     pub(crate) fn assign_hpet_id() -> usize {
-         assert!(bql_locked());
-         // SAFETY: all accesses go through these methods, which guarantee
-         // that the accesses are protected by the BQL.
-         let fw_cfg = unsafe { &mut *hpet_fw_cfg };
-
-         if self.count == u8::MAX {
-             // first instance
-             fw_cfg.count = 0;
-         }
-
-         if fw_cfg.count == 8 {
-             // TODO: Add error binding: error_setg()
-             panic!("Only 8 instances of HPET is allowed");
-         }
-
-         let id: usize = fw_cfg.count.into();
-         fw_cfg.count += 1;
-         id
-     }
-}
-
-and you can assert bql_locked by hand instead of using the BqlCell.
-
-Paolo
-
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   rust/qemu-api/src/cell.rs | 25 +++++++++++++++++++++++++
->   1 file changed, 25 insertions(+)
+> > NB, this series is targetting 10.0, NOT for 9.2 freeze.
+> >
+> > With code like
+> >
+> >     Object *obj = object_new(TYPE_BLAH)
+> >
+> > the caller can be pretty confident that they will successfully create
+> > an object instance of TYPE_BLAH. They know exactly what type has been
+> > requested, so it passing an abstract type for example, it is a clear
+> > programmer error that they'll get an assertion failure.
+> >
+> > Conversely with code like
+> >
+> >    void somefunc(const char *typename) {
+> >       Object * obj = object_new(typename)
+> >       ...
+> >    }
+> >
+> > all bets are off, because the call of object_new() knows nothing
+> > about what 'typename' resolves to.
 > 
-> diff --git a/rust/qemu-api/src/cell.rs b/rust/qemu-api/src/cell.rs
-> index 07b636f26266..95f1cc0b3eb5 100644
-> --- a/rust/qemu-api/src/cell.rs
-> +++ b/rust/qemu-api/src/cell.rs
-> @@ -324,6 +324,31 @@ impl<T> BqlCell<T> {
->       pub const fn as_ptr(&self) -> *mut T {
->           self.value.get()
->       }
-> +
-> +    /// Returns a mutable reference to the underlying data.
-> +    ///
-> +    /// This call borrows `BqlCell` mutably (at compile-time) which guarantees
-> +    /// that we possess the only reference.
-> +    ///
-> +    /// However be cautious: this method expects `self` to be mutable, which is
-> +    /// generally not the case when using a `BqlCell`. If you require interior
-> +    /// mutability by reference, consider using `BqlRefCell` which provides
-> +    /// run-time checked mutable borrows through its [`borrow_mut`] method.
-> +    ///
-> +    /// [`borrow_mut`]: BqlRefCell::borrow_mut()
-> +    ///
-> +    /// # Examples
-> +    ///
-> +    /// ```
-> +    /// use qemu_api::cell::BqlCell;;
-> +    ///
-> +    /// let mut c = BqlCell::new(5);
-> +    /// *c.get_mut() += 1;
-> +    ///
-> +    /// assert_eq!(c.get(), 6);
-> +    pub fn get_mut(&mut self) -> &mut T {
-> +        self.value.get_mut()
-> +    }
->   }
->   
->   impl<T: Default> BqlCell<T> {
+> We know nothing *locally*.
+> 
+> Commonly, a non-local argument can demonstrate safety.  Only when the
+> type name comes from the user, we truly know nothing.
+
+...except for the failures introduced by modules not being installed,
+then all bets are off for all types unless you happen to recall
+which have been modularized so far.
+
+> >                                    It could easily be an abstract
+> > type.
+> 
+> It could also be no type at all.
+> 
+> >       As a result, many code paths have added a manual check ahead
+> > of time
+> >
+> >    if (object_class_is_abstract(typename)) {
+> >       error_setg(errp, ....)
+> >    }
+> 
+> Actually, object_class_is_abstract() takes an ObjectClass, not a type
+> name string.
+> 
+> The actual guards we use are variations of
+> 
+>     klass = object_class_by_name(typename);
+>     if (!klass) {
+>         error_setg(errp, "invalid object type: %s", typename);
+>         return NULL;
+>     }
+> 
+>     if (object_class_is_abstract(klass)) {
+>         error_setg(errp, "object type '%s' is abstract", typename);
+>         return NULL;
+>     }
+> 
+> which covers "no type at all", too.
+> 
+> Sometimes, we use module_object_class_by_name() instead, which I believe
+> additionally loads the module providing the type, if any.  Which of the
+> two should be used where is a mystery to me, and I suspect we're getting
+> it wrong in places.  But this is turning into a digression.  To
+> hopefully maintain focus, I'm pretending modules don't exist until later
+> in this message.
+
+Yeah, I'm not a fan of having the separate module_object_class_by_name,
+because it requires us to remember whether something has been modularized
+or not.
+
+> Sometimes, we throw in an object_class_dynamic_cast(klass, T) to check
+> @typename resolves to a subtype of some T.
+> 
+> > ...except for where we forget to do this, such as qdev_new().
+> 
+> We did not forget it there!  It's by design a thin wrapper around
+> object_new(), with preconditions just like object_new().
+
+Yes, I think what I meant to write here, was "...except for where
+we forgot todo this in *callers* of qdev_new that take user input"
+
+> > Overall 'object_new' is a bad design because it is inherantly
+> > unsafe to call with unvalidated typenames.
+> 
+> To be fair, object_new() was not designed for use with user-provided
+> type names.  When it chokes on type names not provided by the user, it's
+> clearly a programming error, and assert() is a perfectly fine way to
+> catch programming errors.  Same for qdev_new().
+> 
+> However, we do in fact use these functions with user-provided type
+> names, if rarely.  When we do, we need to validate the type name before
+> we pass it to them.
+> 
+> Trouble is the validation code is a bit involved, and reimplementing it
+> everywhere it's needed is asking for bugs.
+> Creating and using more interfaces that are more convenient for this
+> purpose would avoid that.
+
+Yep, I don't have confidence in an API that will assert if the caller
+forgot to validate the pre-conditions that can be triggered by user
+input (or potentially other unexpected scenarios like something being
+switched over to a module).
+
+> > This problem is made worse by the proposal to introduce the idea
+> > of 'singleton' classes[1].
+> >
+> > Thus, this series suggests a way to improve safety at build
+> > time. The core idea is to allow 'object_new' to continue to be
+> > used *if-and-only-if* given a static, const string, because that
+> > scenario indicates the caller is aware of what type they are
+> > creating at build time.
+> >
+> > A new 'object_new_dynamic' method is proposed for cases where
+> > the typename is dynamically chosen at runtime. This method has
+> > an "Error **errp" parameter, which can report when an abstract
+> > type is created, leaving the assert()s only for scenarios which
+> > are unambiguous programmer errors.
+> >
+> > With a little macro magic, we guarantee a compile error is
+> > generated if 'object_new' is called with a dynamic type, forcing
+> > all potentially unsafe code over to object_new_dynamic.
+> 
+> Three cases:
+> 
+> 1. Type name is literal string.  No change.  This is the most common
+>    case.
+> 
+> 2. It's not.
+> 
+> 2a. Type name is user-provided.  This is rare.  We replace
+> 
+>         if (... guard ...) {
+>             ... return failure ...
+>         }
+>         obj = object_new(...);
+> 
+>     by
+> 
+>         obj = object_new_dynamic(..., errp);
+>         if (!obj) {
+>             ... return failure ...
+>         }
+> 
+>     This is an improvement.
+> 
+> 2b. It's not.  We should replace
+> 
+>         obj = object_new(...);
+> 
+>     by
+> 
+>         obj = object_new_dynamic(..., &error_abort);
+> 
+>     Exact same behavior, just wordier, to placate the compiler.
+>     Tolerable as long as it's relatively rare.
+> 
+>     But I'm not sure it's worthwhile.  All it really does is helping
+>     some towards not getting case 2a wrong.  But 2a is rare.
+
+Yes, 2a is fairly rare, but this is amplified by the consequences
+of getting it wrong, which are an assert killing your running VM.
+My goal was to make it much harder to screw up and trigger an
+assert, even if that makes some valid uses more verbose.
+
+> > This is more tractable than adding 'Error **errp' to 'object_new'
+> > as only a handful of places use a dynamic type name.
+> 
+> True!
+> 
+> Alright, enter modules.
+> 
+> Modules break a fundamental design assumption: object_new() on a
+> compiled-in type name is safe, i.e. the failure modes are all
+> programming errors.
+> 
+> Modules add new failure modes that are *not* programming errors:
+> 
+> * The module providing the type was not deployed correctly.
+> 
+> * It was, but the host system lacks the resources to load it.
+
+Hmm, yes, I hadn't considered the 2nd problem. That's more
+unpleasant, as libvirt may well have queried QEMU earlier to
+detect the missing module, and assume all is safe if it is
+present.
+
+> 
+> Before modules, object_new(T) was safe unless T was user-provided.
+> Which implies it's safe when T is a literal string.
+> 
+> Since modules, object_new(T) is safe unless T is user-provided or the
+> type named by it is compiled as module.  This does *not* imply it's safe
+> when T is a literal string.
+
+Agreed. 
+
+> When looking at a use of object_new(), whether the argument names a type
+> that could be compiled as module cannot be known locally.  Therefore, we
+> cannot know locally whether we need to handle failure, either with a
+> suitable guard or by switching to a new function like
+> object_new_dynamic().  This is bad.
+>
+> Breaking fundamental design assumptions tends to have ugly and expensive
+> consequences.  Consequences like having to rework every single call of
+> object_new() & friends.
+> 
+> Can we reduce the damage?  Maybe.  What if we create a
+> module_object_new() that takes an Error **, and make object_new() crash
+> & burn when the @typename argument resolves to a type provided by a
+> module?
+
+I'm doubtful about a design where maintainers have to choose the
+right API, based on mental knowledge of what is a module or not.
+The place where object_new is called is typically distinct from
+the module impl, so the knowledge is separated. This opens the
+door to forgetting to change code from object_new to module_object_new.
+This is what motivated my attempt to try to force compile time errors
+scenarios which had a high chance of being user specified types.
+
+I don't have a good answer for how to extend compile time validation
+to cover non-user specified types that might be modules, without
+changnig 'object_new' itself to add "Error **errp" and convert as
+many callers as possible to propagate errors. That's a huge pile
+of tedious work and in many cases would deteriorate  to &error_abort
+since some key common use scenarios lack a "Error *errp" to propagate
+into.
+
+> Maybe module_object_new() and object_new_dynamic() could be fused into a
+> single function with a better name.
+> 
+> > With this series, my objections to Peter Xu's singleton series[1]
+> > would be largely nullified.
+> >
+> > [1] https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05524.html
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
