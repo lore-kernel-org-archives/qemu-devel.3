@@ -4,115 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 187BEE7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 19:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8D04E77170
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:01:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJHwZ-0000k0-On; Thu, 05 Dec 2024 14:55:23 -0500
+	id 1tJI1j-0002rI-9L; Thu, 05 Dec 2024 15:00:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJHwX-0000jR-5W
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 14:55:21 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from
+ <3XgZSZwgKCvMrcZiYmdfbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--whendrik.bounces.google.com>)
+ id 1tJI1g-0002qf-11
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:00:40 -0500
+Received: from mail-wm1-x34a.google.com ([2a00:1450:4864:20::34a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJHwV-00087X-IO
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 14:55:20 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E68EC2115C;
- Thu,  5 Dec 2024 19:55:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733428514; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DwAvbk9WnTvk9QKdi6FIm4UNiiVgkQmEBW1cx+AOm0A=;
- b=14vy4+5wl6e3q62bmRArJ6kEXvck6fHuFWMwwPVgB3SEPidTfPDjVsfCuFk1iwbkIn/+xB
- il0F1fKpGTnImgVUNxzATkpK1sPsTQ8vnD/FRGJD/DdpfuiEJSW45E8j1Uai+bdJkmKpji
- 35tkJsP50UIL1GJh3HIK+KHNuDT6CFQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733428514;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DwAvbk9WnTvk9QKdi6FIm4UNiiVgkQmEBW1cx+AOm0A=;
- b=j8V/Ri1Hqske9FY9433bs9e7jVZEIXdkHnua/0trcb3b52/bFs8VX7TFPLnODqwlbggiHz
- IdZOLvgNOm5wndCQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="rtqh/FYS";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mZZCRnjf
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733428512; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DwAvbk9WnTvk9QKdi6FIm4UNiiVgkQmEBW1cx+AOm0A=;
- b=rtqh/FYS1MsFhi+9tA4ARkdMpcjFT4aRcMNsmS7i7MvX6cFOiydGVq2sS63OthC21QOMEp
- K7FtXf73gTRFe68vQEcBgiXX+HASaE54KSkU4D2DBRfZLl1TuaW7Xx75qQZw28yC09c/wi
- eGyxyc8GZOIJ4Yas9eFRuAZ9cPcWV+o=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733428512;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DwAvbk9WnTvk9QKdi6FIm4UNiiVgkQmEBW1cx+AOm0A=;
- b=mZZCRnjfRfqYIkZy81qVHxNW+GwQAI/XUGyonDRWC5lSOaBOQ0W0U1hy3C8Ofwukyc2seR
- QGeCHrZa/0ge4MDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 48A4B138A5;
- Thu,  5 Dec 2024 19:55:12 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id quFDBCAFUmeeRQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 05 Dec 2024 19:55:12 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Alex Williamson <alex.williamson@redhat.com>, Avihai Horon
- <avihaih@nvidia.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH 1/2] migration/multifd: Further remove the SYNC on complete
-In-Reply-To: <20241205185303.897010-2-peterx@redhat.com>
-References: <20241205185303.897010-1-peterx@redhat.com>
- <20241205185303.897010-2-peterx@redhat.com>
-Date: Thu, 05 Dec 2024 16:55:08 -0300
-Message-ID: <878qstj46b.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: E68EC2115C
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3XgZSZwgKCvMrcZiYmdfbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--whendrik.bounces.google.com>)
+ id 1tJI1Y-0001d9-PQ
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:00:34 -0500
+Received: by mail-wm1-x34a.google.com with SMTP id
+ 5b1f17b1804b1-434a96889baso8143985e9.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 12:00:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1733428831; x=1734033631; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=sczQpCntEV4pWQdfCwwJkDKiQSND8KcLmMCFvvS8Q/4=;
+ b=KOwJRqaDLRGv8LXk4jtQxJQTkqjwldfrjxQuqymZ/qi4P07e3s0xG3t4rlkIrRQBC2
+ QODL0eUmTGuTbGzCJmYJbA6NcOxa7wyGoW/mxh/2pPnW/OlQFDs4We1ZYFK1lu+0Seqp
+ DAooVyD3d3cU0KHxwCyPYwOjTbis6V9CdGuvNz+WRO7EMq6bHROzzF8sUSerTetT4ZWh
+ AeVTKiegMrqirv7AdF9f1pTFbLpj61Xq7eT2HJzmdLZJlBnS+/JeReyNOq4rW0912T5s
+ lv9LTQWSYwbLMNxzxJrJSM0ilETTeXv1OexeMRUZIpRstxo/3thDmSo3TYr8oVrGXZvP
+ UzNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733428831; x=1734033631;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=sczQpCntEV4pWQdfCwwJkDKiQSND8KcLmMCFvvS8Q/4=;
+ b=PP7nCEdAxuHrq7yWafUee4OlrJNuiCNZL6UOd9IBc2ps6hMVaxIAQqWnXVy8hQYy4F
+ KZqGRgR9kTvW1XYqqamWVwEjjQxDimkBpLA/eGr6H4NJrcwKXnW4Ho3QD/+kUdX43Hwd
+ OBGNbT/0Pc9alryp9nbe4dDB3nQOcnY7aOVKEEQqscpSWFuoZMQqjV7etROi2AgJeXdw
+ iCU7zUS00uRy3zbsWN0BHGMj0F4eR8bKIxgq1LLpT2AplOA4cut3FsRn92oZ/H0n3aIv
+ HYw4hh9MfbIz9RApYcBW/4zza2zOfaQ5DXFCnJp47ynEwyBm9C4i+zuIYO1CpAliqM1D
+ WJoA==
+X-Gm-Message-State: AOJu0YxP8Oct1dOkPU5bZaY6GhKIwsqjR53mcGS/Bmj0WhN4Uq//6X3F
+ YjQRY20CF898lOHqQEeU+AmIB9QQh1rSaR+qVZ1WvVluz517Q8oPEeJWI7oZxeGz6m73Gkuvgpn
+ Jz6ZtMZN4G7SEsdvK8YiC1LMz/QghoqltgROMi23f43Xt9mAy9Mcgp4ExEzuOvptnLfeXfvHMVg
+ T4Saw+Q1e6WKs2vSXLx62YaYwNBw91J95IXvdHG9n4ig==
+X-Google-Smtp-Source: AGHT+IFwRDUkPdK2A5S2YS1TruDhZDlph6latXsv8JuEy+hzMxCjJhZ6jVRl2TZTQbRVldVI4sZVn9tK8obtdw==
+X-Received: from wmsl24.prod.google.com ([2002:a05:600c:1d18:b0:434:a90a:3986])
+ (user=whendrik job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a5d:5f8c:0:b0:385:e67d:9e0 with SMTP id
+ ffacd0b85a97d-3862b37d51amr245577f8f.29.1733428830448; 
+ Thu, 05 Dec 2024 12:00:30 -0800 (PST)
+Date: Thu,  5 Dec 2024 20:00:18 +0000
+In-Reply-To: <20241205200025.2081863-1-whendrik@google.com>
+Mime-Version: 1.0
+References: <20241205200025.2081863-1-whendrik@google.com>
+X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
+Message-ID: <20241205200025.2081863-2-whendrik@google.com>
+Subject: [PATCH v4 1/8] i386: Add Intel RDT device and State to config.
+From: Hendrik Wuethrich <whendrik@google.com>
+To: qemu-devel@nongnu.org, eduardo@habkost.net, richard.henderson@linaro.org, 
+ marcel.apfelbaum@gmail.com, mst@redhat.com, pbonzini@redhat.com
+Cc: peternewman@google.com, 
+ "=?UTF-8?q?=E2=80=AAHendrik=20W=C3=BCthrich?=" <whendrik@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::34a;
+ envelope-from=3XgZSZwgKCvMrcZiYmdfbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--whendrik.bounces.google.com;
+ helo=mail-wm1-x34a.google.com
+X-Spam_score_int: -100
+X-Spam_score: -10.1
+X-Spam_bar: ----------
+X-Spam_report: (-10.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.453,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,99 +97,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
 
-> Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
-> complete()") removed the FLUSH operation on complete() which should avoid
-> one global sync on destination side, because it's not needed.
->
-> However that commit overlooked multifd_ram_flush_and_sync() part of things,
-> as that's always used together with the FLUSH message on the main channel.
+Change config to show RDT, add minimal code to the rdt.c module to make
+sure things still compile.
 
-Let's please write the full name of the flags, functions, etc. As we've
-seen in the discussion with Prasad, we're stumbling over ambiguous
-terminology. This is RAM_SAVE_FLAG_MULTIFD_FLUSH.
+Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
+---
+ hw/i386/Kconfig       |  4 ++
+ hw/i386/meson.build   |  1 +
+ hw/i386/rdt.c         | 99 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/i386/rdt.h | 25 +++++++++++
+ target/i386/cpu.h     |  3 ++
+ 5 files changed, 132 insertions(+)
+ create mode 100644 hw/i386/rdt.c
+ create mode 100644 include/hw/i386/rdt.h
 
->
-> For very old binaries (multifd_flush_after_each_section==true), that's
-> still needed because each EOS received on destination will enforce
-> all-channel sync once.
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index 32818480d2..0186b85c3e 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -10,6 +10,9 @@ config SGX
+     bool
+     depends on KVM
+=20
++config RDT
++    bool
++
+ config PC
+     bool
+     imply APPLESMC
+@@ -26,6 +29,7 @@ config PC
+     imply QXL
+     imply SEV
+     imply SGX
++    imply RDT
+     imply TEST_DEVICES
+     imply TPM_CRB
+     imply TPM_TIS_ISA
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index 10bdfde27c..3a697dcc03 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -22,6 +22,7 @@ i386_ss.add(when: 'CONFIG_VMPORT', if_true: files('vmport=
+.c'))
+ i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
+ i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
+                                 if_false: files('sgx-stub.c'))
++i386_ss.add(when: 'CONFIG_RDT', if_true: files('rdt.c'))
+=20
+ i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
+ i386_ss.add(when: 'CONFIG_PC', if_true: files(
+diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
+new file mode 100644
+index 0000000000..b2203197e3
+--- /dev/null
++++ b/hw/i386/rdt.c
+@@ -0,0 +1,99 @@
++/*
++ * Intel Resource Director Technology (RDT).
++ *
++ * Copyright 2024 Google LLC
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful, but WIT=
+HOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
++ * for more details.
++ */
++
++#include "hw/i386/rdt.h"
++#include "qemu/osdep.h" /* Needs to be included before isa.h */
++#include "hw/isa/isa.h"
++#include "hw/qdev-properties.h"
++#include "qom/object.h"
++
++/* Max counts for allocation masks or CBMs. In other words, the size of
++ * respective MSRs.
++ * L3_MASK and L3_mask are architectural limitations. THRTL_COUNT is just
++ * the space left until the next MSR.
++ * */
++#define RDT_MAX_L3_MASK_COUNT      127
++#define RDT_MAX_L2_MASK_COUNT      63
++#define RDT_MAX_MBA_THRTL_COUNT    63
++
++#define TYPE_RDT "rdt"
++#define RDT_NUM_RMID_PROP "rmids"
++
++OBJECT_DECLARE_TYPE(RDTState, RDTStateClass, RDT);
++
++struct RDTMonitor {
++    uint64_t count_local;
++    uint64_t count_remote;
++    uint64_t count_l3;
++};
++
++struct RDTAllocation {
++    uint32_t active_cos;
++};
++
++struct RDTStatePerCore {
++    uint32_t active_rmid;
++    GArray *monitors;
++
++    /*Parent RDTState*/
++    RDTState *rdtstate;
++};
++
++/*One instance of RDT-internal state to be shared by all cores*/
++struct RDTState {
++    ISADevice parent;
++
++    /*Max amount of RMIDs*/
++    uint32_t rmids;
++
++    /*Per core state*/
++    RDTStatePerCore *rdtInstances;
++    RDTAllocation *allocations;
++
++    /*RDT Allocation bitmask MSRs*/
++    uint32_t msr_L3_ia32_mask_n[RDT_MAX_L3_MASK_COUNT];
++    uint32_t msr_L2_ia32_mask_n[RDT_MAX_L2_MASK_COUNT];
++    uint32_t ia32_L2_qos_ext_bw_thrtl_n[RDT_MAX_MBA_THRTL_COUNT];
++};
++
++struct RDTStateClass {
++};
++
++OBJECT_DEFINE_TYPE(RDTState, rdt, RDT, ISA_DEVICE);
++
++static Property rdt_properties[] =3D {
++    DEFINE_PROP_UINT32(RDT_NUM_RMID_PROP, RDTState, rmids, 256),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void rdt_init(Object *obj)
++{
++}
++
++static void rdt_finalize(Object *obj)
++{
++}
++
++static void rdt_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc =3D DEVICE_CLASS(klass);
++
++    dc->hotpluggable =3D false;
++    dc->desc =3D "RDT";
++    dc->user_creatable =3D true;
++
++    device_class_set_props(dc, rdt_properties);
++}
+diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
+new file mode 100644
+index 0000000000..a21d95b265
+--- /dev/null
++++ b/include/hw/i386/rdt.h
+@@ -0,0 +1,25 @@
++/*
++ * Intel Resource Director Technology (RDT).
++ *
++ * Copyright 2024 Google LLC
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the
++ * Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful, but WIT=
+HOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
++ * for more details.
++ */
++
++#ifndef HW_RDT_H
++#define HW_RDT_H
++
++typedef struct RDTState RDTState;
++typedef struct RDTStatePerCore RDTStatePerCore;
++typedef struct RDTMonitor RDTMonitor;
++typedef struct RDTAllocation RDTAllocation;
++
++#endif
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 4c239a6970..0f73c1244d 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2213,6 +2213,9 @@ struct ArchCPU {
+     struct MemoryRegion *cpu_as_root, *cpu_as_mem, *smram;
+     Notifier machine_done;
+=20
++    /* Help the RDT MSRs find the RDT device */
++    struct RDTStatePerCore *rdt;
++
+     struct kvm_msrs *kvm_msr_buf;
+=20
+     int32_t node_id; /* NUMA node this CPU belongs to */
+--=20
+2.47.0.338.g60cca15819-goog
 
-Ok, but why does this patch not reinstate the flag?
-
->
-> For new binaries (multifd_flush_after_each_section==false), the flush and
-> sync shouldn't be needed just like the FLUSH, with the same reasoning.
->
-> Currently, on new binaries we'll still send SYNC messages on multifd
-> channels, even if FLUSH is omitted at the end.  It'll make all recv threads
-> hang at SYNC message.
-
-I don't get this part, is this a bug you're describing? There's not SYNC
-message on the recv side, I think you mean the MULTIFD_FLAG_SYNC and
-this code?
-
-    if (flags & MULTIFD_FLAG_SYNC) {
-        qemu_sem_post(&multifd_recv_state->sem_sync);
-        qemu_sem_wait(&p->sem_sync);
-    }
-
-That's not a hang, that's the sync.
-
->
-> Multifd is still all working fine because luckily recv side cleanup
-> code (mostly multifd_recv_sync_main()) is smart enough to make sure even if
-> recv threads are stuck at SYNC it'll get kicked out.  And since this is the
-> completion phase of migration, nothing else will be sent after the SYNCs.
-
-Hmm, a last sync on the recv side might indeed not be needed.
-
->
-> This may be needed for VFIO in the future because VFIO can have data to
-> push after ram_save_complete(), hence we don't want the recv thread to be
-> stuck in SYNC message. Remove this limitation will make src even slightly
-> faster too to avoid some more code.
->
-> Stable branches do not need this patch, as no real bug I can think of that
-> will go wrong there.. so not attaching Fixes to be clear on the backport
-> not needed.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/ram.c | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
->
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 05ff9eb328..7284c34bd8 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -3283,9 +3283,16 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
->          }
->      }
->  
-> -    ret = multifd_ram_flush_and_sync();
-> -    if (ret < 0) {
-> -        return ret;
-> +    if (migrate_multifd() &&
-> +        migrate_multifd_flush_after_each_section()) {
-> +        /*
-> +         * Only the old dest QEMU will need this sync, because each EOS
-> +         * will require one SYNC message on each channel.
-> +         */
-> +        ret = multifd_ram_flush_and_sync();
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-
-I don't think this works. We need one last flush to not lose the last
-few pages of ram. And we need the src side sync of multifd threads to
-make sure this function doesn't return before all IO has been put on the
-wire.
-
-This also doesn't address what the commit message says about the recv
-side never getting the RAM_SAVE_FLAG_MULTIFD_FLUSH message.
-
->      }
->  
->      if (migrate_mapped_ram()) {
 
