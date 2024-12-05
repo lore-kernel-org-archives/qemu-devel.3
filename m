@@ -4,94 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0213CE7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 17:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD4F9E77179
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 17:31:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJFgD-0003iW-7C; Thu, 05 Dec 2024 12:30:22 -0500
+	id 1tJFfv-0003aT-IQ; Thu, 05 Dec 2024 12:30:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tJFgA-0003iE-NI
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 12:30:19 -0500
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tJFg9-00033C-9a
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 12:30:18 -0500
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-71d56fe8240so661818a34.0
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 09:30:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733419816; x=1734024616; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6QZvgeI+YuoODB9ffzZ/nnQfxTjkTOLw79885ZiR3MA=;
- b=stiU/1BK3s6xidmxsgszgP2GwDzK1WYh+R5FLv/uuMSkKQTy0p5t/zJYKFduTnKw4K
- z+fPbhCbUiVbJG1KzTSZTM3fcpRnFQsOPiWy/PqjoYQ6rBo9xr8jU9vsjYNrIfndEDvP
- 6FouchSEyn1myqsBKJI8kOP6HYARrV9UR5ZZaPArmdpy1KU9hsClNn6+3XjfePwUQFKu
- TejNxyM0be4OAF+EFCYdL201BDGcOUPiirBY0qPN33F9m+IyuzFnjvJV30GwrQFh/L4U
- Vn3XG9XVaA7kLASD7tFWjZJGyC7ON8xPCml7+u/kVlXW1GM3nKBzuEr8JqEWDJ2r6NLs
- zVkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733419816; x=1734024616;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6QZvgeI+YuoODB9ffzZ/nnQfxTjkTOLw79885ZiR3MA=;
- b=WSvxjIcwIW6FmVdFPrMehaBmMCSpUuGT7MJXNuGGm2aRgb+K1sipM3HHXeeKJ8OKxW
- ioZ+a5AaOxEZvIL5P5YEkDx0GJXUL5O4twdA0NQreGnkWszReQb8840/FBnZWCArcNkz
- IPA2F6/j5xmmEtwRW1CnT2XlqIKhqJOndIIfWFSQXv0z0v+rhqVRs2W1c92ELpUqifmC
- b72dufM5ccaLvi141biFTU/KfHUtDa/7SO4Nbfcl8xorpngkZ5ULemLygRIaU0W+5fOU
- Fa1Vkdll8Z5VjXA4d2UUcBwCLhWrADv7HTo/vVdhT3++ZduyWnV2Y4RW6J34LQPuu/xz
- X1Ww==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCYccfAQ6au/kVZ5+G62cVm/klBNXDx5yGGcV2QFNzHUhw2UFEPnujW4BnBC2+wNcGD3WaCDPAHKjf@nongnu.org
-X-Gm-Message-State: AOJu0YzKkoSVMdZBhjO5pa1EB35Y9pBssvE7Ku/RSeatvyLOsLFzGOMN
- rGmfB2raO36Taw72FIUcdhPF1AnyTrD7fs5dy5JvzuNKGxwryBeSPCcYXMZpdug=
-X-Gm-Gg: ASbGncvZydZ8B+5YIObjuBm18R57ONd3GXjrlyhBEeDHCmxiasOsdhMlqprDj1IWLbR
- taUW/I9F5wufVHWX0H8Kno5ZUmOhfHVyIaqmtu9No/Ro4NMmh/ET7ESnliRYWDois+P+CeL77x1
- e6yo2aYZtGUVD0aX/xqg8jnkerViwnLgUablSb/jN6HCISbOG3+iTYAGZSQV0741kQheO0Zg/DR
- mMrro7yvyxdz6hzATuARQ932JIfqhskeZhUhtF7bNj+hzDELODp4Utu1YBlTrS7LDyG3kPUij8D
- gANIZGv94IWPdohvy31wCw==
-X-Google-Smtp-Source: AGHT+IEQGOCriwIVpIpk8F9BDJebGWNAeLZvcmK2Mt1ymCqqabqehZuA2Y22ccmjnYIsnai7mwMkAw==
-X-Received: by 2002:a05:6830:924:b0:71d:4ff0:f8ea with SMTP id
- 46e09a7af769-71dad60d88dmr11178674a34.10.1733419815856; 
- Thu, 05 Dec 2024 09:30:15 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7fd15706655sm1386132a12.42.2024.12.05.09.30.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 09:30:15 -0800 (PST)
-Message-ID: <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
-Date: Thu, 5 Dec 2024 09:30:14 -0800
+ (Exim 4.90_1) (envelope-from <SRS0=3IWU=S6=kaod.org=clg@ozlabs.org>)
+ id 1tJFfq-0003ZX-2w; Thu, 05 Dec 2024 12:29:58 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=3IWU=S6=kaod.org=clg@ozlabs.org>)
+ id 1tJFfn-0002mS-Le; Thu, 05 Dec 2024 12:29:57 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y41bs6YYvz4x6Y;
+ Fri,  6 Dec 2024 04:29:45 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y41bk4XMlz4wj1;
+ Fri,  6 Dec 2024 04:29:38 +1100 (AEDT)
+Message-ID: <96b027f9-3637-4416-9eba-a175635026ca@kaod.org>
+Date: Thu, 5 Dec 2024 18:29:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
-Content-Language: en-US
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
- <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
- <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
+Subject: Re: [PATCH v2 2/4] docs/system/arm/fby35: document execute-in-place
+ property
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-arm@nongnu.org,
+ Troy Lee <leetroy@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
+ alex.bennee@linaro.org, Alistair Francis <alistair@alistair23.me>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20241204203912.3037515-1-pierrick.bouvier@linaro.org>
+ <20241204203912.3037515-3-pierrick.bouvier@linaro.org>
+ <c2e4c538-2e0b-4882-8a92-6ff439cebd09@kaod.org>
+ <3ba7dabb-67cf-450f-828c-5adf7332fc91@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
+ BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
+ M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
+ 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
+ jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
+ TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
+ neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
+ VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
+ QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
+ ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
+ WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
+ wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
+ SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
+ cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
+ S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
+ 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
+ hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
+ tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
+ t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
+ OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
+ KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
+ o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
+ ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
+ IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
+ d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
+ +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
+ HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
+ l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
+ 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
+ ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
+ KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <3ba7dabb-67cf-450f-828c-5adf7332fc91@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-ot1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=3IWU=S6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,63 +115,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/24 05:10, Julian Ganz wrote:
-> Hi Pierrick,
-> 
-> December 5, 2024 at 12:33 AM, "Pierrick Bouvier" wrote:
->> On 12/2/24 11:41, Julian Ganz wrote:
+On 12/5/24 18:09, Pierrick Bouvier wrote:
+> On 12/5/24 00:18, Cédric Le Goater wrote:
+>> Hello Pierrick,
 >>
->>>   +/*
->>>   + * Copyright (C) 2024, Julian Ganz <neither@nut.email>
->>>   + *
->>>   + * License: GNU GPL, version 2 or later.
->>>   + * See the COPYING file in the top-level directory.
->>>   + */
+>> Thanks for improving the documentation !
+>>
+>> On 12/4/24 21:39, Pierrick Bouvier wrote:
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>    docs/system/arm/fby35.rst | 3 +++
+>>>    1 file changed, 3 insertions(+)
 >>>
->> Would be nice to include a description of the plugin here.
-> 
-> Agreed. I'll include one next time.
-> 
->> When booting an arm64 vm, I get this message:
->> Trap target PC mismatch
->> Expected: 23faf3a80
->> Encountered: 23faf3a84
+>>> diff --git a/docs/system/arm/fby35.rst b/docs/system/arm/fby35.rst
+>>> index bf6da6baa2a..ed9faef363c 100644
+>>> --- a/docs/system/arm/fby35.rst
+>>> +++ b/docs/system/arm/fby35.rst
+>>> @@ -45,3 +45,6 @@ process starts.
+>>>        $ screen /dev/tty0 # In a separate TMUX pane, terminal window, etc.
+>>>        $ screen /dev/tty1
+>>>        $ (qemu) c           # Start the boot process once screen is setup.
+>>> +
+>>> +This machine model supports emulation of the boot from the CEO flash device by
+>>> +setting option ``execute-in-place``.
 >>
->>   From what I understand, it means that the next_pc we have is incorrect.
+>> Could we add a link to the "Boot options" section of the
+>> "Aspeed family boards" document instead ?
+>>
 > 
-> Yes, this is indeed incorrect, and also a perfect example why this test
-> plugin exists. There are likely other errors lurking in target specific
-> code. Did you happen to also log interrupts? Do you remember what image
-> you used?
+> The problem is that the aspeed board has other options (fmc-model, spi-model), so it would be confusing for the reader.
 
-I used exactly this:
+ok. Just to clarify, the Aspeed machines always boot from CE0 (if you
+exclude rainier).
 
-./build/qemu-system-aarch64 -plugin 
-./build/tests/tcg/plugins/libdiscons.so -smp 4 -M virt -d plugin -m 8G 
--device virtio-blk-pci,drive=root -drive 
-if=none,id=root,file=./debianaarch64.img -M virt -cpu max,pauth=off 
--drive if=pflash,readonly=on,file=/usr/share/AAVMF/AAVMF_CODE.fd -drive 
-if=pflash,file=./AAVMF_VARS.fd
+With the "execute-in-place" option, the CPU fetches instructions to
+execute by reading CE0 and not from a preloaded ROM initialized at
+machine init time. I think it is good to mention the difference and
+the impact on performance : It is more accurate modeling but slower.
 
-The arm64 image is a vanilla debian stable I installed.
-AAVMF* files come from qemu-efi-aarch64 debian package.
+> It's worth repeating what the option means IMHO.
 
-> 
-> Btw: this also illustrates another issue I have with from_pc: we can
-> test the behavior for to_pc, but doing this meaningfully for from_pc
-> via a plugin is next to impossible because the instruction it points to
-> is not observable via an exec callback. At least not in the general
-> case, even not if we only consider a single type of event.
->
+sure. np.
 
-We can store the next_expected pc for each instruction (from 
-current_instruction + insn_length), and we should be able to compare 
-that with the expected from_pc.
-This is mostly what contrib/plugins/cflow.c does.
+Thanks,
 
-With that, we can test from_pc.
-
-> Regards,
-> Julian Ganz
-
+C.
 
