@@ -4,69 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A839E77173
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 09:20:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BCCE7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 09:23:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ81L-0004tD-I1; Thu, 05 Dec 2024 04:19:39 -0500
+	id 1tJ847-0005gQ-MH; Thu, 05 Dec 2024 04:22:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tJ81J-0004sp-GV
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 04:19:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tJ842-0005fx-OZ
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 04:22:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tJ81H-0002RF-TN
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 04:19:37 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tJ840-00035x-Vs
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 04:22:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733390373;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1733390543;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9LpKxvQbwNz3Zwgeiu883Cqu3A6erQXTDF2je4eoCK8=;
- b=G4bhkojs6gJjI1fYZIrfF+522a/i6S+R5RW2DLfIlMZGh8wGdW0cIKFi+V8aueQcTqv8vX
- 9gLezNu0cCMESrezKAi0akslQg7LOf4hDY2sVUSOoHEE6LuIroEc+7Kw7g+cDBRgxhsM8s
- o5ttYF0uqULqABvfAVCpAxLHerOd31Y=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-vyYcTjeGMXK1irntyIsbpQ-1; Thu,
- 05 Dec 2024 04:19:29 -0500
-X-MC-Unique: vyYcTjeGMXK1irntyIsbpQ-1
-X-Mimecast-MFC-AGG-ID: vyYcTjeGMXK1irntyIsbpQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6AB621955BC1; Thu,  5 Dec 2024 09:19:28 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.137])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BCBF01956054; Thu,  5 Dec 2024 09:19:26 +0000 (UTC)
-Date: Thu, 5 Dec 2024 09:19:22 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH 3/7] gitlab: clean packages in cirrus tasks
-Message-ID: <Z1FwGo_7AfYjwX6X@redhat.com>
-References: <20241204194807.1472261-1-berrange@redhat.com>
- <20241204194807.1472261-4-berrange@redhat.com>
- <c632357b-bfd0-483d-8f80-6310a0ffee13@redhat.com>
+ bh=dGhsvxIAa/RUDZNcykbYv+PGXT3hSqjfx5KJygYAroU=;
+ b=N0zyIGzh6Bv10cMKqFb58RKAbYcnQXJItTMwmk1kFGnFKRoyreXjoqgkAoN9uF8/JJrlrr
+ 2z+gxP/tvT/B1g7mbjvPW+t7HdHUReUbjal01TadyiAfBonVm+XRVxyo17FWu94rUeuiSO
+ qike88VaX44PI5pSSEEJO4opBubj9V8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-477-of-6we2HNtuVbbKgpbrrbA-1; Thu, 05 Dec 2024 04:22:22 -0500
+X-MC-Unique: of-6we2HNtuVbbKgpbrrbA-1
+X-Mimecast-MFC-AGG-ID: of-6we2HNtuVbbKgpbrrbA
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4349c5e58a3so6131455e9.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 01:22:22 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733390541; x=1733995341;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dGhsvxIAa/RUDZNcykbYv+PGXT3hSqjfx5KJygYAroU=;
+ b=PtkjncwtImvLK8KaNS7rIzofy1B7jJ5HhbBQZxhK5HqxqANNEOEm6CmUUENaLilbzy
+ H/ucXR/8OI2lgiAr6jWAjVtaL1YqDhuD4W2vwOUJtfG8d7w7V4D/PLc1OkIF7PMOT5ap
+ 3xVUCnZt84nopPBRxgBS6ed5/15ZhUhiGA6M9rGXlw9Vsh+0NIpaJuL5NaRsMFCbo2tq
+ ZkrlZUZY4Md75BGPudGD0D+60bLV78kOznsRBCc4mSkdgUHQw6h0BK+YswaRfilhTEEB
+ VbatFbxU+STCJGmjs++i+Z9jA2YGPjQJyGqY55FL1KUBgRVO5cpsbRl5u9/3DD1/mC8v
+ BOSQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVIAhKiODdurVNCNqTG0e0j2m73ff5zsSgdJhFLYEdc+QZc6cUPf6OiifDP/sCePCkKQ76R9NfLBLnH@nongnu.org
+X-Gm-Message-State: AOJu0Ywi3ZGYRDRLWsxuAXBoC4KBHc+xFCPfDigjmQTXBSflDhyBu0i0
+ NTRAGXUPQ8burgAxwapBi2d43SbiKuTsBjjuZ/p+yONW4bCBH6TRSCz1GQacxe2vs/fwu1RgAGL
+ OlPvM7zuXsM1GAZW4RGIy1jWSKTf/bIEinOjp7IhJIKqVFdbvtscG
+X-Gm-Gg: ASbGncuv1lcp/u/0gojgQ1w3KV3ahLdCy+f1rlGegGcuNJP1uBxTQlaDwiAa34fC/zd
+ 5xJ6jctdjMZfGuQWMKjEJrGSJTxpRChxwZr5CUpFoLQ/5TfoB38X2L3vzWxCa0eSy3xYKIAMyNx
+ 71rnqCURz3kExIq+GskDOWxQjhnOEetTJj3hO/vTIC7vW874BCrCl5s1qYX8LziSanYpO4QuGWQ
+ tg/cIFvURnjfDxgR3qry4bDOwFuOlBlrN63n2Sm2VbBw1TwK+SCohjbkhUXpNr63advH4h5Z9Pl
+ RMXCRfQ8bzvAxT60H2uP+A==
+X-Received: by 2002:a05:600c:4ecf:b0:426:647b:1bfc with SMTP id
+ 5b1f17b1804b1-434d0a14eb7mr95742335e9.30.1733390541399; 
+ Thu, 05 Dec 2024 01:22:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFT4EGxhQ2he7SyDsdfd8Wk6mjcV8wUeXsFxJYCRu67z9LwO9sq7p4sNrm4N4vKaCBEjHCYOQ==
+X-Received: by 2002:a05:600c:4ecf:b0:426:647b:1bfc with SMTP id
+ 5b1f17b1804b1-434d0a14eb7mr95742175e9.30.1733390541030; 
+ Thu, 05 Dec 2024 01:22:21 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434d52723fasm53651195e9.10.2024.12.05.01.22.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Dec 2024 01:22:20 -0800 (PST)
+Date: Thu, 5 Dec 2024 10:22:19 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 13/16] acpi/ghes: better name the offset of the
+ hardware error firmware
+Message-ID: <20241205102219.274e3d27@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20241205085959.2223d079@foz.lan>
+References: <cover.1733297707.git.mchehab+huawei@kernel.org>
+ <20b003136d8c008fd54e8d40c806f13867336e13.1733297707.git.mchehab+huawei@kernel.org>
+ <20241204173759.6f02561a@imammedo.users.ipa.redhat.com>
+ <20241205085959.2223d079@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c632357b-bfd0-483d-8f80-6310a0ffee13@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -88,53 +114,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 05, 2024 at 09:58:54AM +0100, Thomas Huth wrote:
-> On 04/12/2024 20.48, Daniel P. Berrangé wrote:
-> > The FreeBSD VM is somewhat low on disk space after all QEMU build deps
-> > are installed and a full QEMU build performed. Purging the package
-> > manager cache is a simple thing that reclaims about 1 GB of space.
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   .gitlab-ci.d/cirrus.yml       | 2 ++
-> >   .gitlab-ci.d/cirrus/build.yml | 1 +
-> >   2 files changed, 3 insertions(+)
-> > 
-> > diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-> > index 16411f3d2b..2bd3cb35c9 100644
-> > --- a/.gitlab-ci.d/cirrus.yml
-> > +++ b/.gitlab-ci.d/cirrus.yml
-> > @@ -42,6 +42,7 @@ x64-freebsd-14-build:
-> >       CIRRUS_VM_RAM: 8G
-> >       UPDATE_COMMAND: pkg update; pkg upgrade -y
-> >       INSTALL_COMMAND: pkg install -y
-> > +    CLEAN_COMMAND: pkg clean -y --all
-> >       CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
-> >       TEST_TARGETS: check
-> > @@ -54,6 +55,7 @@ aarch64-macos-build:
-> >       CIRRUS_VM_IMAGE_NAME: ghcr.io/cirruslabs/macos-runner:sonoma
-> >       UPDATE_COMMAND: brew update
-> >       INSTALL_COMMAND: brew install
-> > +    CLEAN_COMMAND: brew cleanup --prune=all
+On Thu, 5 Dec 2024 08:59:59 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+
+> Em Wed, 4 Dec 2024 17:37:59 +0100
+> Igor Mammedov <imammedo@redhat.com> escreveu:
 > 
-> Are we also short on disk space in the macOS jobs? Otherwise, I wonder
-> whether we should rather skip the step here to save some seconds of run
-> time?
+> > On Wed,  4 Dec 2024 08:41:21 +0100
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >   
+> > > The hardware error firmware is where HEST error structures are    
+> >       ^^^^^^^^^^^^^^^^^^^^^^^ I can't parse this, suspect you've meant something else here
+> >   
+> > > stored. Those can be GHESv2, but they can also be other types.
+> > > 
+> > > Better name the location of the hardware error.
+> > > 
+> > > No functional changes.  
+> 
+> I meant this fw_cfg file:
+> #define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
+> #define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
+> 
+> What about changing description to:
+> 
+> 	The etc/hardware_errors fw_cfg file is where the HEST error
+> 	source structures are stored. Those can be GHESv2, but they can also
+> 	be other types.
 
-I've not measured it, but I've not seen disk space issues on macOS. Still
-this command is quick and lost in the noise of the package install process
-which will vary depending on network performance and homebrew server load.
+As I understand it, etc/hardware_errors is a blob
+for '18.3.2.7.1. Generic Error Data' with some extra fields
+to accommodate GHESv2 handling (i.e. err addr indirection and ack reg).
 
+While error sources are described in HEST (and only GHES ones would
+reference  etc/hardware_errors via error status addr/read ack register addr)
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 
+> 	For more details about error source structure, see:
+> 	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#acpi-error-source
+> 
+> 	Better name the address variable from ghes_error_le to hw_error_le
+> 	to better reflect that.
+> 
+> 	No functional changes.
+> 
+> > > 
+> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> > > ---
+> > >  hw/acpi/generic_event_device.c | 4 ++--
+> > >  hw/acpi/ghes.c                 | 4 ++--
+> > >  include/hw/acpi/ghes.h         | 2 +-
+> > >  3 files changed, 5 insertions(+), 5 deletions(-)
+> > > 
+> > > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> > > index 663d9cb09380..17baf36132a8 100644
+> > > --- a/hw/acpi/generic_event_device.c
+> > > +++ b/hw/acpi/generic_event_device.c
+> > > @@ -364,7 +364,7 @@ static const VMStateDescription vmstate_ghes = {
+> > >      .version_id = 1,
+> > >      .minimum_version_id = 1,
+> > >      .fields = (const VMStateField[]) {
+> > > -        VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),
+> > > +        VMSTATE_UINT64(hw_error_le, AcpiGhesState),
+> > >          VMSTATE_END_OF_LIST()
+> > >      },
+> > >  };
+> > > @@ -372,7 +372,7 @@ static const VMStateDescription vmstate_ghes = {
+> > >  static bool ghes_needed(void *opaque)
+> > >  {
+> > >      AcpiGedState *s = opaque;
+> > > -    return s->ghes_state.ghes_addr_le;
+> > > +    return s->ghes_state.hw_error_le;
+> > >  }
+> > >  
+> > >  static const VMStateDescription vmstate_ghes_state = {
+> > > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> > > index 52c2b69d3664..90d76b9c2d8c 100644
+> > > --- a/hw/acpi/ghes.c
+> > > +++ b/hw/acpi/ghes.c
+> > > @@ -359,7 +359,7 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+> > >  
+> > >      /* Create a read-write fw_cfg file for Address */
+> > >      fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
+> > > -        NULL, &(ags->ghes_addr_le), sizeof(ags->ghes_addr_le), false);
+> > > +        NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
+> > >  
+> > >      ags->present = true;
+> > >  }
+> > > @@ -385,7 +385,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+> > >      }
+> > >      ags = &acpi_ged_state->ghes_state;
+> > >  
+> > > -    start_addr = le64_to_cpu(ags->ghes_addr_le);
+> > > +    start_addr = le64_to_cpu(ags->hw_error_le);
+> > >  
+> > >      start_addr += source_id * sizeof(uint64_t);
+> > >  
+> > > diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+> > > index 21666a4bcc8b..39619a2457cb 100644
+> > > --- a/include/hw/acpi/ghes.h
+> > > +++ b/include/hw/acpi/ghes.h
+> > > @@ -65,7 +65,7 @@ enum {
+> > >  };
+> > >  
+> > >  typedef struct AcpiGhesState {
+> > > -    uint64_t ghes_addr_le;
+> > > +    uint64_t hw_error_le;
+> > >      bool present; /* True if GHES is present at all on this board */
+> > >  } AcpiGhesState;
+> > >      
+> >   
+> 
+> 
+> 
+> Thanks,
+> Mauro
+> 
 
 
