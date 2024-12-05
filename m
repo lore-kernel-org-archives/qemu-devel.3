@@ -4,141 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4961CE7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 10:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FFC0E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 10:13:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ8nK-00054t-7D; Thu, 05 Dec 2024 05:09:14 -0500
+	id 1tJ8rW-0006HV-MB; Thu, 05 Dec 2024 05:13:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJ8nI-00054V-8E
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:09:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJ8nG-0000DT-7V
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:09:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733393347;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wCTwDYT7UwOYjwW89hzAmV986bRLzZkT8PKASSePyKc=;
- b=ANVZEzQQOMaJ/MVz2HnWuYgiLQ1G7YDinDc7Fqb/k24JQyvqJHFEGJl3KsMPsPrZSf1in5
- nxvKwj92fMI0nmcvSvB4NEkANenEZRgPmIBvSLthATwy15YwDFLJZAfjq+3eDNnnLh13Wc
- laeVXts2lK1jgl46buwZt3pP5gHzHqs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-YWnv_V4CMUe_Ud_SPeyHew-1; Thu, 05 Dec 2024 05:09:04 -0500
-X-MC-Unique: YWnv_V4CMUe_Ud_SPeyHew-1
-X-Mimecast-MFC-AGG-ID: YWnv_V4CMUe_Ud_SPeyHew
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3860bc1d4f1so445079f8f.2
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 02:09:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tJ8rU-0006H4-Ly
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:13:32 -0500
+Received: from mail-pj1-x1041.google.com ([2607:f8b0:4864:20::1041])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tJ8rR-00015W-VZ
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:13:32 -0500
+Received: by mail-pj1-x1041.google.com with SMTP id
+ 98e67ed59e1d1-2ee709715d9so527363a91.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 02:13:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733393608; x=1733998408; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=4ZT4+xyFUGvZMhA4UXXR/YhpkMwmFqrhbVufo0kkNW4=;
+ b=gjZUPPwJvToldlFLBQ1eqvaY8BVmgDpApZG4F37CjaW2D5o+ia5SQfnMsyIAiyA4cC
+ cyxBUtdvUpCGP/J+q4K5hZyFo7iFktw5WwYxrdd4vkUZDyHjypTZKHoekKlVE+ox3Pys
+ +0MMImcUKrtyDh04JtFFK/6+CIxXuOr04iUnRDcuKXBAHf6QKXPejnFUELGAFufozfND
+ JrVJETFrHSsMcmciAx3+VtrxV+akrCZ3VlaNmyVaTpE/9oKWFjRlXKeOrGEeljUybL+L
+ xPKwPQf2dBfiPp6rzfTtvfHHgLzVzNPc3s9aLIF8aFIFdXkCmouwuGKybhA5hlRvnVD5
+ Pkzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733393343; x=1733998143;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wCTwDYT7UwOYjwW89hzAmV986bRLzZkT8PKASSePyKc=;
- b=L0RDqRIAUTURmWBUCiKX7ckNA6yDyqFjHZw7HZagI9WnVbwbzzgzLW630/1VmJmGAV
- vG8wRrEiQW0FoRvtF0/wIJup0OUfIH/fFJXDR+OG7jRvFiluVs9vBRy9Nz3qj1cZ5fgx
- mU6/ntevrk1NiyD2IYpWOIvXhJFrPG8VXGxhGb4XyxKNQICKKS2almwwk0cBbzs1UuUd
- /UdfZoKH6/3NKfSycfzl2BpPhMmHWN9eiRmRUW0SzXNAi0NpQZGreZO7vzhV7+UuPc70
- Q9YoYZBiyOAGoMYU/vTa6sLO95P2cbRsyAE+GkwKjYym+ggJfbGTOM51GCArnd76sXtK
- /PTw==
-X-Gm-Message-State: AOJu0Yxsc0CzyalPtfHdURctVGg2QRsDh1VbYIu070c0+uJyBN4am0vn
- OIJesXU/xjMCqHP2zmuryZwwBu4c90KIrworr0X477e/T9BaSUGiqRMc9//tBuwG8lY8i3+CZu1
- 0rlzKm5/JyaNxX8vaRqsJgFytaWR9BuAwuIuwh7XuMWO+4wttSxcd
-X-Gm-Gg: ASbGncvdkohs6smUNXtrB0bYqeGEJ9ec8pyBW/HsrqbuoWSad3eHkEh5TtMfNEO5b1X
- fhpwQcyyRmy3swqxdJlgTy30a1Z2EAuMjeyctS9NPvkFaB96+OiNWFZYE2aBZUb987PAJObXdQe
- L7neakcQUtM+SSz/5QnHYBm81SzCLYUN/geeGduGX3y/DCXg9sxEc6WyQYkcBbF8uj8Kh6cBNub
- pFNZJ4y/BFiwyAmYQ0sJvL/Vvk6VidFDniQWd6i+uo/ggLf7WPATic/4FyR6brBjOjfc30VofJX
- IXiGkw==
-X-Received: by 2002:a5d:64e8:0:b0:385:f5c4:b318 with SMTP id
- ffacd0b85a97d-385fd3ed9e9mr7950335f8f.31.1733393343250; 
- Thu, 05 Dec 2024 02:09:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEsmFjMso0SXuQ8TCk1J6QXz8ahFoBjDahW326rPlrofGUBMGjbPkR29zQz8Yxmz+gV29CFBg==
-X-Received: by 2002:a5d:64e8:0:b0:385:f5c4:b318 with SMTP id
- ffacd0b85a97d-385fd3ed9e9mr7950312f8f.31.1733393342913; 
- Thu, 05 Dec 2024 02:09:02 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-244.web.vodafone.de.
- [109.42.48.244]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3862190975fsm1495471f8f.68.2024.12.05.02.09.02
+ d=1e100.net; s=20230601; t=1733393608; x=1733998408;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4ZT4+xyFUGvZMhA4UXXR/YhpkMwmFqrhbVufo0kkNW4=;
+ b=F71c3onUmCWSFrYkubqlJwaIEowtLVNKOmV6o/XjMPmEuB95cDqu/QG5vJbnrPa+Tz
+ ODXucv0/z2GzfEu9VqKfkcKvgQJ2D1/tz/VdP5fezG2bTPNcspIwUrFtrF5cg11IokA9
+ CZPqoYk4fI5FEBlHl2lE6ZUMOX6/LeT59mUxjMHoI4hEJtBM3n6m+GeTGWp9f0TAAcfV
+ V2OkoPkRXXRE2Cga/Ewi33jCD05za13lRcsOjqwt0vrmcgWoJACN0whl6oShRJVVSMBi
+ b9EXM7E8N7Arxd80Ddv7ClDh2tmU6FzbWU3TMTom1bSIfXSzbVsMNDBf2B+8acASjqkV
+ xr3g==
+X-Gm-Message-State: AOJu0YzvJbgRcQj5REZMLFqH+tNKjhxXRw5l0jqT6u6dP4xBeKSnOceU
+ Ab19XzJWxyXmsZq7Ztzw1sN8NqedlWnx20cht1/PU4W40c8OBwE=
+X-Gm-Gg: ASbGncu/4rNWnWwmETZScFpXGeRHO6HdPiapz6Yp2SjzUeoA+DdTxnHJ2Qwt9yB/a+I
+ I8CpHPZeh+bKg8JcjrCmYih13ELDGttrSGusdIXS63poyTVIhtK5gQTTJNtH+7NxmLK5b7qZWLl
+ PPdaF/eSFCW/zHlBp2MdTbFB4OdQ4AKuowzHeHBuS48R+X+/LHuoBIFOUy4k6i1N9aiiHdqA0Ln
+ wCeF6S/mr8FRycutwX4+5WrnnCD05qTflZvG/FMk+ELcsVvP5aYkA==
+X-Google-Smtp-Source: AGHT+IF1XJIcOUx1Xgf/de1XdlXpWe8P+WZjX27G6Zo3zHkhCLq3cmbsKlaTXLSlCaJnZT4Cibo0vQ==
+X-Received: by 2002:a17:90b:1643:b0:2ee:f80c:6884 with SMTP id
+ 98e67ed59e1d1-2ef012796bdmr14020254a91.33.1733393608144; 
+ Thu, 05 Dec 2024 02:13:28 -0800 (PST)
+Received: from [192.168.0.163] ([58.38.120.33])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ef26ff8457sm2920858a91.7.2024.12.05.02.13.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 02:09:02 -0800 (PST)
-Message-ID: <8b4f3905-dd97-47de-b8e5-05b5e072ced1@redhat.com>
-Date: Thu, 5 Dec 2024 11:09:01 +0100
+ Thu, 05 Dec 2024 02:13:27 -0800 (PST)
+Message-ID: <b160547b-0856-43a4-ae21-3f689fec8840@gmail.com>
+Date: Thu, 5 Dec 2024 18:13:24 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] gitlab: clean packages in cirrus tasks
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20241204194807.1472261-1-berrange@redhat.com>
- <20241204194807.1472261-4-berrange@redhat.com>
- <c632357b-bfd0-483d-8f80-6310a0ffee13@redhat.com>
- <Z1FwGo_7AfYjwX6X@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
+Subject: Re: [PATCH v2 3/9] vfio/igd: canonicalize memory size calculations
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>
+References: <20241203133548.38252-1-tomitamoeko@gmail.com>
+ <20241203133548.38252-4-tomitamoeko@gmail.com>
+ <20241204153559.18b9847f.alex.williamson@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <Z1FwGo_7AfYjwX6X@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20241204153559.18b9847f.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1041;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1041.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,46 +102,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/12/2024 10.19, Daniel P. Berrangé wrote:
-> On Thu, Dec 05, 2024 at 09:58:54AM +0100, Thomas Huth wrote:
->> On 04/12/2024 20.48, Daniel P. Berrangé wrote:
->>> The FreeBSD VM is somewhat low on disk space after all QEMU build deps
->>> are installed and a full QEMU build performed. Purging the package
->>> manager cache is a simple thing that reclaims about 1 GB of space.
->>>
->>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>> ---
->>>    .gitlab-ci.d/cirrus.yml       | 2 ++
->>>    .gitlab-ci.d/cirrus/build.yml | 1 +
->>>    2 files changed, 3 insertions(+)
->>>
->>> diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
->>> index 16411f3d2b..2bd3cb35c9 100644
->>> --- a/.gitlab-ci.d/cirrus.yml
->>> +++ b/.gitlab-ci.d/cirrus.yml
->>> @@ -42,6 +42,7 @@ x64-freebsd-14-build:
->>>        CIRRUS_VM_RAM: 8G
->>>        UPDATE_COMMAND: pkg update; pkg upgrade -y
->>>        INSTALL_COMMAND: pkg install -y
->>> +    CLEAN_COMMAND: pkg clean -y --all
->>>        CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
->>>        TEST_TARGETS: check
->>> @@ -54,6 +55,7 @@ aarch64-macos-build:
->>>        CIRRUS_VM_IMAGE_NAME: ghcr.io/cirruslabs/macos-runner:sonoma
->>>        UPDATE_COMMAND: brew update
->>>        INSTALL_COMMAND: brew install
->>> +    CLEAN_COMMAND: brew cleanup --prune=all
->>
->> Are we also short on disk space in the macOS jobs? Otherwise, I wonder
->> whether we should rather skip the step here to save some seconds of run
->> time?
+On 12/5/24 06:35, Alex Williamson wrote:
+> On Tue,  3 Dec 2024 21:35:42 +0800
+> Tomita Moeko <tomitamoeko@gmail.com> wrote:
 > 
-> I've not measured it, but I've not seen disk space issues on macOS. Still
-> this command is quick and lost in the noise of the package install process
-> which will vary depending on network performance and homebrew server load.
+>> Add helper functions igd_gtt_memory_size() and igd_stolen_size() for
+>> calculating GTT stolen memory and Data stolen memory size in bytes,
+>> and use macros to replace the hardware-related magic numbers for
+>> better readability.
+>>
+>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+>> ---
+>>  hw/vfio/igd.c | 99 ++++++++++++++++++++++++++++-----------------------
+>>  1 file changed, 55 insertions(+), 44 deletions(-)
+>>
+>> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+>> index 2ede72d243..b5bfdc6580 100644
+>> --- a/hw/vfio/igd.c
+>> +++ b/hw/vfio/igd.c
+>> @@ -106,6 +106,51 @@ typedef struct VFIOIGDQuirk {
+>>  #define IGD_BDSM 0x5c /* Base Data of Stolen Memory */
+>>  #define IGD_BDSM_GEN11 0xc0 /* Base Data of Stolen Memory of gen 11 and later */
+>>  
+>> +#define IGD_GMCH_GEN6_GMS_SHIFT     3       /* SNB_GMCH in i915 */
+>> +#define IGD_GMCH_GEN6_GMS_MASK      0x1f
+>> +#define IGD_GMCH_GEN6_GGMS_SHIFT    8
+>> +#define IGD_GMCH_GEN6_GGMS_MASK     0x3
+>> +#define IGD_GMCH_GEN8_GMS_SHIFT     8       /* BDW_GMCH in i915 */
+>> +#define IGD_GMCH_GEN8_GMS_MASK      0xff
+>> +#define IGD_GMCH_GEN8_GGMS_SHIFT    6
+>> +#define IGD_GMCH_GEN8_GGMS_MASK     0x3
+>> +
+>> +static uint64_t igd_gtt_memory_size(int gen, uint16_t gmch)
+>> +{
+>> +    uint64_t ggms;
+>> +
+>> +    if (gen < 8) {
+>> +        ggms = (gmch >> IGD_GMCH_GEN6_GGMS_SHIFT) & IGD_GMCH_GEN6_GGMS_MASK;
+>> +    } else {
+>> +        ggms = (gmch >> IGD_GMCH_GEN8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS_MASK;
+>> +        ggms *= 2;
+> 
+> I tried to ask whether this was a bug fix in the previous iteration,
+> but I think it was overlooked.  These are not the same:
+> 
+> 	ggms *= 2;
+> 
+> 	ggms = 1 << ggms;
+> 
+> Comparing the 4th processor generation datasheet[1] to that of the 5th
+> generation processor[2], I see:
+> 
+> 4th:
+> 	0x0 = No Preallocated Memory
+> 	0x1 = 1MB of Preallocated Memory
+> 	0x2 = 2MB of Preallocated Memory
+> 	0x3 = Reserved
+> 
+> 5th:
+> 	0x0 = No Preallocated Memory
+> 	0x1 = 2MB of Preallocated Memory
+> 	0x2 = 4MB of Preallocated Memory
+> 	0x3 = 8MB of Preallocated Memory
+> 
+> In your update, we'd get ggms values of 2, 4, and 6, which is
+> incorrect.  The existing code is correct to use the ggms value as the
+> exponent, 2^1 = 2, 2^2 = 4, 2^3 = 8.  It does seem there's a bug at
+> zero though since 2^0 = 1, so maybe we should pull out the fix to a
+> separate patch:
+> 
+> 	if (ggms) {
+> 		ggms = 1 << ggms;
+> 	}
+> 
+> Thanks,
+> Alex
+> 
+> [1]https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4th-gen-core-family-desktop-vol-2-datasheet.pdf (3.1.13)
+> [2]https://www.intel.com/content/www/us/en/content-details/330835/5th-generation-intel-core-processor-family-volume-2-of-2-datasheet.html (3.1.13)
 
-Ok, fair, so if it is a quick command:
+Sorry it was my mistake, the original code `1 << ggms` is correct.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I will create a new patch to fix it at first in v3. Thank you for
+pointing out it.
+
+>> +    }
+>> +
+>> +    return ggms * MiB;
+>> +}
+>> +
+>> +static uint64_t igd_stolen_memory_size(int gen, uint32_t gmch)
+>> +{
+>> +    uint64_t gms;
+>> +
+>> +    if (gen < 8) {
+>> +        gms = (gmch >> IGD_GMCH_GEN6_GMS_SHIFT) & IGD_GMCH_GEN6_GMS_MASK;
+>> +    } else {
+>> +        gms = (gmch >> IGD_GMCH_GEN8_GMS_SHIFT) & IGD_GMCH_GEN8_GMS_MASK;
+>> +    }
+>> +
+>> +    if (gen < 9) {
+>> +            return gms * 32 * MiB;
+>> +    } else {
+>> +        if (gms < 0xf0) {
+>> +            return gms * 32 * MiB;
+>> +        } else {
+>> +            return (gms - 0xf0 + 1) * 4 * MiB;
+>> +        }
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>>  
+>>  /*
+>>   * The rather short list of registers that we copy from the host devices.
+>> @@ -254,17 +299,10 @@ static int vfio_pci_igd_lpc_init(VFIOPCIDevice *vdev,
+>>  static int vfio_igd_gtt_max(VFIOPCIDevice *vdev)
+>>  {
+>>      uint32_t gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
+>> -    int ggms, gen = igd_gen(vdev);
+>> -
+>> -    gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
+>> -    ggms = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+>> -    if (gen >= 8) {
+>> -        ggms = 1 << ggms;
+>> -    }
+>> -
+>> -    ggms *= MiB;
+>> +    int gen = igd_gen(vdev);
+>> +    uint64_t ggms_size = igd_gtt_memory_size(gen, gmch);
+>>  
+>> -    return (ggms / (4 * KiB)) * (gen < 8 ? 4 : 8);
+>> +    return (ggms_size / (4 * KiB)) * (gen < 8 ? 4 : 8);
+>>  }
+>>  
+>>  /*
+>> @@ -471,30 +509,6 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>>      QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
+>>  }
+>>  
+>> -static int igd_get_stolen_mb(int gen, uint32_t gmch)
+>> -{
+>> -    int gms;
+>> -
+>> -    if (gen < 8) {
+>> -        gms = (gmch >> 3) & 0x1f;
+>> -    } else {
+>> -        gms = (gmch >> 8) & 0xff;
+>> -    }
+>> -
+>> -    if (gen < 9) {
+>> -        if (gms > 0x10) {
+>> -            error_report("Unsupported IGD GMS value 0x%x", gms);
+>> -            return 0;
+>> -        }
+>> -        return gms * 32;
+>> -    } else {
+>> -        if (gms < 0xf0)
+>> -            return gms * 32;
+>> -        else
+>> -            return (gms - 0xf0) * 4 + 4;
+>> -    }
+>> -}
+>> -
+>>  void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>>  {
+>>      g_autofree struct vfio_region_info *rom = NULL;
+>> @@ -504,7 +518,8 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>>      VFIOQuirk *quirk;
+>>      VFIOIGDQuirk *igd;
+>>      PCIDevice *lpc_bridge;
+>> -    int i, ret, ggms_mb, gms_mb = 0, gen;
+>> +    int i, ret, gen;
+>> +    uint64_t ggms_size, gms_size;
+>>      uint64_t *bdsm_size;
+>>      uint32_t gmch;
+>>      uint16_t cmd_orig, cmd;
+>> @@ -666,13 +681,8 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>>  
+>>      QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
+>>  
+>> -    /* Determine the size of stolen memory needed for GTT */
+>> -    ggms_mb = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+>> -    if (gen >= 8) {
+>> -        ggms_mb = 1 << ggms_mb;
+>> -    }
+>> -
+>> -    gms_mb = igd_get_stolen_mb(gen, gmch);
+>> +    ggms_size = igd_gtt_memory_size(gen, gmch);
+>> +    gms_size = igd_stolen_memory_size(gen, gmch);
+>>  
+>>      /*
+>>       * Request reserved memory for stolen memory via fw_cfg.  VM firmware
+>> @@ -683,7 +693,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>>       * config offset 0x5C.
+>>       */
+>>      bdsm_size = g_malloc(sizeof(*bdsm_size));
+>> -    *bdsm_size = cpu_to_le64((ggms_mb + gms_mb) * MiB);
+>> +    *bdsm_size = cpu_to_le64(ggms_size + gms_size);
+>>      fw_cfg_add_file(fw_cfg_find(), "etc/igd-bdsm-size",
+>>                      bdsm_size, sizeof(*bdsm_size));
+>>  
+>> @@ -734,5 +744,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>>                       vdev->vbasedev.name);
+>>      }
+>>  
+>> -    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, ggms_mb + gms_mb);
+>> +    trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name,
+>> +                                    (ggms_size + gms_size) / MiB);
+>>  }
+> 
 
 
