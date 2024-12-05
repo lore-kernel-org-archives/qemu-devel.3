@@ -4,100 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31E3E7716D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 799B0E7716C
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 15:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJDV5-0005b6-6Y; Thu, 05 Dec 2024 10:10:43 -0500
+	id 1tJDVX-0005dt-Tt; Thu, 05 Dec 2024 10:11:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1tJDV3-0005ai-Lv
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:10:41 -0500
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1tJDV2-0005KO-6f
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:10:41 -0500
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-53de8ecb39bso1443880e87.2
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 07:10:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733411438; x=1734016238; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=tZN/imqR9tvxlIknkTQXLTdt5ltqSOgCSVPhrXj949A=;
- b=q51kpMcge0fWUOB1blJhO8ptLgze1u8kIP1EpmDOYX0WHyzEPOO99csA3NEgqW5ZmK
- PndkGq8qFC0qjEMhxDC7aAf/6LzU2NzpBfs+YOlVeKynEoS4Xmwxd8F0BryII9U4Wh3K
- nJtb9riY+jiiHEoeVYsl9MFtZDFRAcFHih6HOXFyI/moZlNFlp5seqto7y9BR4q2IkvS
- 7EVSW67/9yF1QbVqvv898ez2koqcIkjCBEkrmkRbVJyupzGL4CMLm+ZzYVgcqPpROLwB
- PyL0hsYAgRjfr9tYCXO7aaIXEodhR/RnI1CnKoP7Erw8q0gNAN18ANqTwJlAcb0aO2xq
- 8QUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733411438; x=1734016238;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tZN/imqR9tvxlIknkTQXLTdt5ltqSOgCSVPhrXj949A=;
- b=fOfVBeSeI39VfEin4W/hxYLTfPIw2khr6quMzMkqa7VV+oxMf3YDuO2rgN4a0zfbk+
- qHtujw4AqhQNaEDYsL2av+cz09H0B9E7SYIqGVNIIqiVNIg3Oo+bkmhMh3+h5HukJAzs
- oah7o8k+7GH6LceaPeYbGRO7zcmvvcJTA8YlCMqivNZZErFet/pmiwxbAqKh0yAnoJsD
- /cMo98vk5yTAiAF4X0jU1fDRhl5pr6YYx0WR7Ft5uUzyLY4nhBQroDevV1f3Mr05OhOf
- KdEuzuPFu5SSEPJScs6fDRuBq756YHMDRKhpIuToFyj0WmF5/Vuulbjxzfu3s3D+Pd7z
- xt4w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXn5DRJw1pZDnZe/owS5eKnI8nV7VyjD30X9QbGP3k+cU9a+ILeiBGVzXtGm3wnx4fYNb3l9Cu8COYk@nongnu.org
-X-Gm-Message-State: AOJu0YzHnotuEQROl440FxwVnWrceyZ+v9dqr1NXWO+e2WhlHTlSeSJK
- pQcSoFPb7iYx5j++AcCpmvAyy3n51ft0edwBovAelYS1cEdeCUlqYrHJ44Zhb2w=
-X-Gm-Gg: ASbGnctK7sTr/O5oWtlEiv1bUO/IrUiPWYKchlvSBqxd2jBj5t+caXM2w2K8c4Irnrp
- X9szT1fbsm7QKiesAXQy6rtf+J7nf1V6Nv5E6TXG5LPzOXKzc+DIzxiYn5Vun0E+Djfc2I3loGf
- 1dbDTjxaFqkLa1y5avm4xa+wNYuCDZ4pEGH8tUPZJ1g9kopceXJWkSGg4WfpJbLquz08+RUey8D
- ukCoYKW+ScaSkaddgowS3CnkHy824DOGNmZWcxPJahcJJ1qsaU/TCJ96s35BtshW30GYgtdb/HG
- 7FCS6+3BL7mi2ssvFYKGR4hiykkx028=
-X-Google-Smtp-Source: AGHT+IEie+K55PScUSA5EMRM9kOKXFD0oWDmC8Gs/TK3X92fyPU1y3ZLU6M7kee3wlZO5eMjmeIgfw==
-X-Received: by 2002:a05:6512:1249:b0:53d:df99:c5ac with SMTP id
- 2adb3069b0e04-53e12a3197cmr6841131e87.36.1733411438186; 
- Thu, 05 Dec 2024 07:10:38 -0800 (PST)
-Received: from [192.168.210.26] (83.11.36.235.ipv4.supernova.orange.pl.
- [83.11.36.235]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53e22947958sm268242e87.54.2024.12.05.07.10.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 07:10:37 -0800 (PST)
-Message-ID: <641a4d44-1406-4d3f-a87a-a12fe156b2fd@linaro.org>
-Date: Thu, 5 Dec 2024 16:10:35 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tJDVV-0005dY-D9
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:11:09 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tJDVQ-0005MV-4I
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:11:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733411464; x=1764947464;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=ivnOYKo8KGP4g6VC3+3PIjQOuJ0rOjMMMgJRBpsJt2Y=;
+ b=fBi1aJ5coJSN7G1R/KQX/BzdCJpfJ3rBbJxPCwgywKhNbpan/cEmSciU
+ Vv4NIHs6sDZ9Lt0vX8aRGW0OBbYx4oEo6LWcA6uK4A8FNFk/PUCkHqfH+
+ Ft4IeTznqAY8PnkmuDi/4hkCNPVbqHZnC5gab8hQDxx4/x69/lt4qanHb
+ TrKzVzS9Q4XIluUYKgGzj5FsQGbDqvWzfD+AeGTYPMTkl6DYd5ROX/G4F
+ HELNwfKOh7NXbeu81NbW6sUyWMr7g0JMizc3HBUwu947ggCQfuLbz6kdh
+ s4Hf8j3otU5O6dLpAJ1z7KTz6qOsxx99t4KfKtSe40VUFiFZ+AVROesA1 w==;
+X-CSE-ConnectionGUID: MNFkP2W3Tvq5VSR8zOmk9A==
+X-CSE-MsgGUID: LDVBVRuPTnabSYHLArXobQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11277"; a="33786117"
+X-IronPort-AV: E=Sophos;i="6.12,210,1728975600"; d="scan'208";a="33786117"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Dec 2024 07:11:01 -0800
+X-CSE-ConnectionGUID: C4+xboo8TtGj4nTKtibtOQ==
+X-CSE-MsgGUID: ViBc2tQUT6maup22CMth0g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,210,1728975600"; d="scan'208";a="93803074"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by fmviesa006.fm.intel.com with ESMTP; 05 Dec 2024 07:10:58 -0800
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: xiaoyao.li@intel.com, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
+Subject: [RFC PATCH 0/4] cpu: Drop CPUState::nr_cores
+Date: Thu,  5 Dec 2024 09:57:12 -0500
+Message-Id: <20241205145716.472456-1-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] hw/arm/sbsa-ref: bump default memory size to 2GB
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Mathieu Poirier <mathieu.poirier@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>, leif.lindholm@oss.qualcomm.com
-References: <20241126084928.252067-1-marcin.juszkiewicz@linaro.org>
- <CAFEAcA_SkZ+ew8AAVpBHuw-9YW4S5wFbB0Vqx+dBzXf97JGDGw@mail.gmail.com>
- <cd635753-4e2c-42d6-bb7b-d558d90f59d7@linaro.org>
- <2106db77-88fb-4113-ae09-9bf77bce6ad7@quicinc.com>
- <c4245af0-3dd4-4cf6-a786-c15fa079ad05@linaro.org>
- <18ba737f-d669-4e6a-8319-fb5052223b26@linaro.org>
- <CAFEAcA-P5P4AJidWcGgUScBTe9-K_C4Qm9N2o2XWnfiT81LU=A@mail.gmail.com>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Language: pl-PL, en-GB
-Organization: Linaro
-In-Reply-To: <CAFEAcA-P5P4AJidWcGgUScBTe9-K_C4Qm9N2o2XWnfiT81LU=A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -65
+X-Spam_score: -6.6
+X-Spam_bar: ------
+X-Spam_report: (-6.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.822, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,21 +87,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 5.12.2024 o 15:53, Peter Maydell pisze:
->> This is sbsa-ref not sbc-ref. Let it just have that 2GB of ram.
->> None of existing SBSA systems comes with such low amount.
+The series is motivated by auditing the usage of CPUState::nr_cores and
+CPUState::nr_threads, which is motivated by [1].
 
-> Yes, I think I agree here. Changing the default RAM size based on
-> whether the CPU does or does not have a particular feature is
-> unusual and not something we do on other board types, and it
-> definitely doesn't match the general intention that sbsa-ref is a
-> "looks like real hardware" machine.
-> 
-> The problem with using 2GB, though, is that it doesn't work on 32-
-> bit hosts, which have a max of 2047MB (and
+The initial goal is to initialize nr_threads and nr_cores earlier for
+x86, which leads to patches [2] and [3]. Patch [2] touches all the ARCHes
+and patch [3] looks hacky. At last Igor suggested to audit nr_threads and
+nr_cores, and only set them in the pre_plug() callback for the ARCHes that
+really need them[1].
 
-Do we do CI on 32-bit hosts?
+By audting nr_threads and nr_cores, I found nr_cores is only used by
+x86. So we can introduce a x86 specific one and initialize in
+x86_cpu_pre_plug(), then drop nr_cores totally.
 
-RME tests (queued to testing/next by Alex) already use 2GB so in such 
-environment we would have failure anyway.
+However for nr_threads, it's used by MIPS and PPC as well[4]. There are
+two options:
+1. maintain separate substitute in X86/MIPS/PPS, so we can drop
+CPUState::nr_threads like for CPUState::nr_cores.
+
+2. keep CPUState::nr_threads and find place (or introduce pre_plug()) to
+initialize them earlier for MIPS/PPC.
+
+I would like to seek for opinions for which one is prefered. 
+
+This series implments the drop for CPUState::nr_cores. Though it doesn't
+help on the initial goal without the solution for nr_threads, I think it
+is still a good cleanup?
+
+BTW, by initializing nr_threads and nr_cores earlier than
+qemu_init_vcpu(), it also unblocks [5].
+
+
+[1] https://lore.kernel.org/qemu-devel/20241125103857.78a23715@imammedo.users.ipa.redhat.com/
+[2] https://lore.kernel.org/qemu-devel/5f8db586-cdda-4d00-be02-f9880a20e1a3@redhat.com/
+[3] https://lore.kernel.org/qemu-devel/20241122160317.4070177-1-xiaoyao.li@intel.com/
+[4] https://lore.kernel.org/qemu-devel/045f9cb1-2b17-4b2c-985f-3c34e3626b36@intel.com/
+[5] https://lore.kernel.org/qemu-devel/20231128171239.69b6d7b1@imammedo.users.ipa.redhat.com/
+
+Xiaoyao Li (4):
+  i386/topology: Update the comment of x86_apicid_from_topo_ids()
+  i386: Extract a common fucntion to setup value of
+    MSR_CORE_THREAD_COUNT
+  i386: Track cores_per_module in CPUX86State
+  cpu: Remove nr_cores from struct CPUState
+
+ hw/core/cpu-common.c                 |  1 -
+ hw/i386/x86-common.c                 |  4 +++-
+ include/hw/core/cpu.h                |  2 --
+ include/hw/i386/topology.h           |  5 +++--
+ system/cpus.c                        |  1 -
+ target/i386/cpu.c                    |  2 +-
+ target/i386/cpu.h                    | 16 ++++++++++++++++
+ target/i386/hvf/x86_emu.c            |  3 +--
+ target/i386/kvm/kvm.c                |  5 +----
+ target/i386/tcg/sysemu/misc_helper.c |  3 +--
+ 10 files changed, 26 insertions(+), 16 deletions(-)
+
+-- 
+2.34.1
+
 
