@@ -4,69 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1255BE7716D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD18E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJELX-00070k-5h; Thu, 05 Dec 2024 11:04:55 -0500
+	id 1tJENA-0008Mk-9w; Thu, 05 Dec 2024 11:06:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tJELV-00070P-TE
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:04:53 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJEN9-0008MZ-K7
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:06:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tJELS-0000UD-JF
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:04:53 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJEN5-0000xq-LJ
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:06:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733414688;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1733414789;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Cn0TFB+dheuVi5JV+esed/wCO8rDPnhf3i39qCl9SUc=;
- b=DZWGuqlANLdFAsTsqs53vxu/J0ZXRaaMc7eoOQgdfvTm6qCCk7mmV6APXdHMQzFWChapey
- BatdAB57jGw5QVKMsbwW3baQHxSEn8ETbiAkU5dXLoXVuT3atXBuy/YfIgSNMkadTrUKHu
- BWsj61+FTN8zEMjVCqlRw0F7YN808aw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-QitxrrD-OpeFibtBOVAF7A-1; Thu,
- 05 Dec 2024 11:04:47 -0500
-X-MC-Unique: QitxrrD-OpeFibtBOVAF7A-1
-X-Mimecast-MFC-AGG-ID: QitxrrD-OpeFibtBOVAF7A
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7EBBC1944D20
- for <qemu-devel@nongnu.org>; Thu,  5 Dec 2024 16:04:46 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.137])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF6DE195422D; Thu,  5 Dec 2024 16:04:43 +0000 (UTC)
-Date: Thu, 5 Dec 2024 16:04:39 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH v3 0/9] Require error handling for dynamically created
- objects
-Message-ID: <Z1HPF8wQG4ZqZIhF@redhat.com>
-References: <20241115172521.504102-1-berrange@redhat.com>
- <87a5dbln8x.fsf@pond.sub.org>
+ bh=0nevN7yqmwGmYWXiXUOxf/Qm4hWyEtFrxoIaYD7+2Jw=;
+ b=I6/qPrK5okGkpL5sC7hJQbKV6rDVE4gR49XslqAASLG95LTjkoGFxOqbZUsaiC2NNNFuk/
+ RmCEhVDS+4KZy8tT06uRTsHoVRtUZpdf44ky5bVer55FzsEYzBphI0oR3mtqqVKUTi5++O
+ Ru8J4H8MYrYr+rnOcXEeMljAqXLwpng=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-554-Ly4NWZpAPH228Pc7UiKrFQ-1; Thu, 05 Dec 2024 11:06:28 -0500
+X-MC-Unique: Ly4NWZpAPH228Pc7UiKrFQ-1
+X-Mimecast-MFC-AGG-ID: Ly4NWZpAPH228Pc7UiKrFQ
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-3a7cff77f99so19417015ab.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 08:06:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733414788; x=1734019588;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0nevN7yqmwGmYWXiXUOxf/Qm4hWyEtFrxoIaYD7+2Jw=;
+ b=Z2JiMOVHY7gygb0WapwVW1dFbtGXvnZCew7/Pja2sI4tII7quIfumq/6IEke3D7aHv
+ NCZ6Bcfqs8No0TtZOavZbbtUJu8NAieapYPLpsujmevtbCaGwsCHipd1ANueEHYRfYGC
+ l+2TwFtXRdAzUArDOVWOEo2jEmKLzBymJZv4onFXpSo4sqrULOZ4Bs/HEycTVdk3NG1O
+ hIHDm+J61SYvhHw9BdW9PWLNfxrLIzmjyNPzNfQIvqMrVrtsVGu2qYcuaEFz3zFirO3f
+ 3sv5e+N4kfMBOt+T67C1DxPOAQ3cSG8qenPK13gObCw/lhBinxuUg4wL5RwisOCcfisc
+ 42Ig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUteyBfNu1hMGTEQfyb12QPR3zkM1kcqGBfnDjZtHYMTnUuTWNv1sIQ+HTzFSnAxQiiNkCkxI9xTe1a@nongnu.org
+X-Gm-Message-State: AOJu0YxtUVczELU0QUMMOyAyYoOITTAcPjOU7c9NSyc7SCbgLfNjwO+h
+ wVqRh5JRA7MQFXLXEBhynT0Hgv9p3PxV4aLftwAkWD3lBmf6eaA/6yEVoFrWeC5hxwv9n7OP9Gs
+ e3Etgy0tTrQFgJzqvZCaGgPQmEvQpXrfvPPGR6CTyF1biXq8I+5nw
+X-Gm-Gg: ASbGncvDMp8/bY2k3mIcmY2aA5sHlhbPAP6Jz6cRlCJogYjZrBgjV8tyKY3nxbxrHAG
+ 6aF4b4ka6rg3daV9hSgCYPrjD+DDKpu9oGcv5+iXeFpfKWSqGjrzJmpPPtp6w/ljXPmkO+nVn2u
+ 3GAaaf55uGXSp+sFxl133bvZ5kUFSjsmSoQg4KMly//X2uxBmwWiwsBTIYIbPo16IqNq00Eu0o+
+ hElD8QJ2VZF0Lo9pCstBSoxBth3iSLRgOg8BK8fU+HIdnyiNA5qI3JEGu72j1DlTqNAn0YXg87J
+ Jr3N8ds41eQ=
+X-Received: by 2002:a05:6e02:13af:b0:3a6:ad61:7ff8 with SMTP id
+ e9e14a558f8ab-3a7f9a56d35mr120607875ab.12.1733414787821; 
+ Thu, 05 Dec 2024 08:06:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWZSRS8Ao+80KIpQiVqJX9udVYAyTaTXwV8X5czMLOuk/WNcldOuX1bh8h+K7Dkld5ZhkatQ==
+X-Received: by 2002:a05:6e02:13af:b0:3a6:ad61:7ff8 with SMTP id
+ e9e14a558f8ab-3a7f9a56d35mr120607395ab.12.1733414787476; 
+ Thu, 05 Dec 2024 08:06:27 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3a808d8f8ccsm4894845ab.11.2024.12.05.08.06.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Dec 2024 08:06:26 -0800 (PST)
+Date: Thu, 5 Dec 2024 11:06:23 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 10/24] migration/multifd: Device state transfer
+ support - receive side
+Message-ID: <Z1HPf850jFdBD9IS@x1n>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <8679a04fda669b0e8f0e3b8c598aa4a58a67de40.1731773021.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a5dbln8x.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <8679a04fda669b0e8f0e3b8c598aa4a58a67de40.1731773021.git.maciej.szmigiero@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -88,255 +111,285 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 04, 2024 at 12:07:58PM +0100, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On Sun, Nov 17, 2024 at 08:20:05PM +0100, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> > NB, this series is targetting 10.0, NOT for 9.2 freeze.
-> >
-> > With code like
-> >
-> >     Object *obj = object_new(TYPE_BLAH)
-> >
-> > the caller can be pretty confident that they will successfully create
-> > an object instance of TYPE_BLAH. They know exactly what type has been
-> > requested, so it passing an abstract type for example, it is a clear
-> > programmer error that they'll get an assertion failure.
-> >
-> > Conversely with code like
-> >
-> >    void somefunc(const char *typename) {
-> >       Object * obj = object_new(typename)
-> >       ...
-> >    }
-> >
-> > all bets are off, because the call of object_new() knows nothing
-> > about what 'typename' resolves to.
+> Add a basic support for receiving device state via multifd channels -
+> channels that are shared with RAM transfers.
 > 
-> We know nothing *locally*.
+> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
+> packet header either device state (MultiFDPacketDeviceState_t) or RAM
+> data (existing MultiFDPacket_t) is read.
 > 
-> Commonly, a non-local argument can demonstrate safety.  Only when the
-> type name comes from the user, we truly know nothing.
+> The received device state data is provided to
+> qemu_loadvm_load_state_buffer() function for processing in the
+> device's load_state_buffer handler.
+> 
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-...except for the failures introduced by modules not being installed,
-then all bets are off for all types unless you happen to recall
-which have been modularized so far.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> >                                    It could easily be an abstract
-> > type.
-> 
-> It could also be no type at all.
-> 
-> >       As a result, many code paths have added a manual check ahead
-> > of time
-> >
-> >    if (object_class_is_abstract(typename)) {
-> >       error_setg(errp, ....)
-> >    }
-> 
-> Actually, object_class_is_abstract() takes an ObjectClass, not a type
-> name string.
-> 
-> The actual guards we use are variations of
-> 
->     klass = object_class_by_name(typename);
->     if (!klass) {
->         error_setg(errp, "invalid object type: %s", typename);
->         return NULL;
->     }
-> 
->     if (object_class_is_abstract(klass)) {
->         error_setg(errp, "object type '%s' is abstract", typename);
->         return NULL;
->     }
-> 
-> which covers "no type at all", too.
-> 
-> Sometimes, we use module_object_class_by_name() instead, which I believe
-> additionally loads the module providing the type, if any.  Which of the
-> two should be used where is a mystery to me, and I suspect we're getting
-> it wrong in places.  But this is turning into a digression.  To
-> hopefully maintain focus, I'm pretending modules don't exist until later
-> in this message.
+Only a few nitpicks:
 
-Yeah, I'm not a fan of having the separate module_object_class_by_name,
-because it requires us to remember whether something has been modularized
-or not.
+> ---
+>  migration/multifd.c | 87 +++++++++++++++++++++++++++++++++++++++++----
+>  migration/multifd.h | 26 +++++++++++++-
+>  2 files changed, 105 insertions(+), 8 deletions(-)
+> 
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 999b88b7ebcb..9578a985449b 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -21,6 +21,7 @@
+>  #include "file.h"
+>  #include "migration.h"
+>  #include "migration-stats.h"
+> +#include "savevm.h"
+>  #include "socket.h"
+>  #include "tls.h"
+>  #include "qemu-file.h"
+> @@ -252,14 +253,24 @@ static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
+>      return 0;
+>  }
+>  
+> -static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+> +static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p,
+> +                                                   Error **errp)
+> +{
+> +    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
+> +
+> +    packet->instance_id = be32_to_cpu(packet->instance_id);
+> +    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+> +
+> +    return 0;
+> +}
+> +
+> +static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
+>  {
+>      const MultiFDPacket_t *packet = p->packet;
+>      int ret = 0;
+>  
+>      p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+>      p->packet_num = be64_to_cpu(packet->packet_num);
+> -    p->packets_recved++;
+>  
+>      if (!(p->flags & MULTIFD_FLAG_SYNC)) {
+>          ret = multifd_ram_unfill_packet(p, errp);
+> @@ -271,6 +282,17 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>      return ret;
+>  }
+>  
+> +static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    p->packets_recved++;
+> +
+> +    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
+> +        return multifd_recv_unfill_packet_device_state(p, errp);
+> +    }
+> +
+> +    return multifd_recv_unfill_packet_ram(p, errp);
+> +}
+> +
+>  static bool multifd_send_should_exit(void)
+>  {
+>      return qatomic_read(&multifd_send_state->exiting);
+> @@ -1023,6 +1045,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
+>      p->packet_len = 0;
+>      g_free(p->packet);
+>      p->packet = NULL;
+> +    g_clear_pointer(&p->packet_dev_state, g_free);
+>      g_free(p->normal);
+>      p->normal = NULL;
+>      g_free(p->zero);
+> @@ -1124,6 +1147,28 @@ void multifd_recv_sync_main(void)
+>      trace_multifd_recv_sync_main(multifd_recv_state->packet_num);
+>  }
+>  
+> +static int multifd_device_state_recv(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    g_autofree char *idstr = NULL;
+> +    g_autofree char *dev_state_buf = NULL;
+> +    int ret;
+> +
+> +    dev_state_buf = g_malloc(p->next_packet_size);
+> +
+> +    ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, errp);
+> +    if (ret != 0) {
+> +        return ret;
+> +    }
+> +
+> +    idstr = g_strndup(p->packet_dev_state->idstr,
+> +                      sizeof(p->packet_dev_state->idstr));
+> +
+> +    return qemu_loadvm_load_state_buffer(idstr,
+> +                                         p->packet_dev_state->instance_id,
+> +                                         dev_state_buf, p->next_packet_size,
+> +                                         errp);
+> +}
+> +
+>  static void *multifd_recv_thread(void *opaque)
+>  {
+>      MultiFDRecvParams *p = opaque;
+> @@ -1137,6 +1182,7 @@ static void *multifd_recv_thread(void *opaque)
+>      while (true) {
+>          MultiFDPacketHdr_t hdr;
+>          uint32_t flags = 0;
+> +        bool is_device_state = false;
+>          bool has_data = false;
+>          uint8_t *pkt_buf;
+>          size_t pkt_len;
+> @@ -1159,8 +1205,14 @@ static void *multifd_recv_thread(void *opaque)
+>                  break;
+>              }
+>  
+> -            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
+> -            pkt_len = p->packet_len - sizeof(hdr);
+> +            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
+> +            if (is_device_state) {
+> +                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
+> +                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
+> +            } else {
+> +                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
+> +                pkt_len = p->packet_len - sizeof(hdr);
+> +            }
+>  
+>              ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
+>                                             &local_err);
+> @@ -1178,9 +1230,14 @@ static void *multifd_recv_thread(void *opaque)
+>              flags = p->flags;
+>              /* recv methods don't know how to handle the SYNC flag */
+>              p->flags &= ~MULTIFD_FLAG_SYNC;
+> -            if (!(flags & MULTIFD_FLAG_SYNC)) {
+> -                has_data = p->normal_num || p->zero_num;
+> +
+> +            if (is_device_state) {
+> +                has_data = p->next_packet_size > 0;
+> +            } else {
+> +                has_data = !(flags & MULTIFD_FLAG_SYNC) &&
+> +                    (p->normal_num || p->zero_num);
+>              }
+> +
+>              qemu_mutex_unlock(&p->mutex);
+>          } else {
+>              /*
+> @@ -1209,14 +1266,29 @@ static void *multifd_recv_thread(void *opaque)
+>          }
+>  
+>          if (has_data) {
+> -            ret = multifd_recv_state->ops->recv(p, &local_err);
+> +            if (is_device_state) {
+> +                assert(use_packets);
+> +                ret = multifd_device_state_recv(p, &local_err);
+> +            } else {
+> +                ret = multifd_recv_state->ops->recv(p, &local_err);
+> +            }
+>              if (ret != 0) {
+>                  break;
+>              }
+> +        } else if (is_device_state) {
+> +            error_setg(&local_err,
+> +                       "multifd: received empty device state packet");
+> +            break;
 
-> Sometimes, we throw in an object_class_dynamic_cast(klass, T) to check
-> @typename resolves to a subtype of some T.
-> 
-> > ...except for where we forget to do this, such as qdev_new().
-> 
-> We did not forget it there!  It's by design a thin wrapper around
-> object_new(), with preconditions just like object_new().
+You used assert anyway elsewhere, and this also smells like programming
+error.  We could stick with assert above and reduce "if / elif ...":
 
-Yes, I think what I meant to write here, was "...except for where
-we forgot todo this in *callers* of qdev_new that take user input"
+    if (is_device_state) {
+        assert(p->next_packet_size > 0);
+        has_data = true;
+    }
 
-> > Overall 'object_new' is a bad design because it is inherantly
-> > unsafe to call with unvalidated typenames.
-> 
-> To be fair, object_new() was not designed for use with user-provided
-> type names.  When it chokes on type names not provided by the user, it's
-> clearly a programming error, and assert() is a perfectly fine way to
-> catch programming errors.  Same for qdev_new().
-> 
-> However, we do in fact use these functions with user-provided type
-> names, if rarely.  When we do, we need to validate the type name before
-> we pass it to them.
-> 
-> Trouble is the validation code is a bit involved, and reimplementing it
-> everywhere it's needed is asking for bugs.
-> Creating and using more interfaces that are more convenient for this
-> purpose would avoid that.
+Then drop else if.
 
-Yep, I don't have confidence in an API that will assert if the caller
-forgot to validate the pre-conditions that can be triggered by user
-input (or potentially other unexpected scenarios like something being
-switched over to a module).
+>          }
+>  
+>          if (use_packets) {
+>              if (flags & MULTIFD_FLAG_SYNC) {
+> +                if (is_device_state) {
+> +                    error_setg(&local_err,
+> +                               "multifd: received SYNC device state packet");
+> +                    break;
+> +                }
 
-> > This problem is made worse by the proposal to introduce the idea
-> > of 'singleton' classes[1].
-> >
-> > Thus, this series suggests a way to improve safety at build
-> > time. The core idea is to allow 'object_new' to continue to be
-> > used *if-and-only-if* given a static, const string, because that
-> > scenario indicates the caller is aware of what type they are
-> > creating at build time.
-> >
-> > A new 'object_new_dynamic' method is proposed for cases where
-> > the typename is dynamically chosen at runtime. This method has
-> > an "Error **errp" parameter, which can report when an abstract
-> > type is created, leaving the assert()s only for scenarios which
-> > are unambiguous programmer errors.
-> >
-> > With a little macro magic, we guarantee a compile error is
-> > generated if 'object_new' is called with a dynamic type, forcing
-> > all potentially unsafe code over to object_new_dynamic.
-> 
-> Three cases:
-> 
-> 1. Type name is literal string.  No change.  This is the most common
->    case.
-> 
-> 2. It's not.
-> 
-> 2a. Type name is user-provided.  This is rare.  We replace
-> 
->         if (... guard ...) {
->             ... return failure ...
->         }
->         obj = object_new(...);
-> 
->     by
-> 
->         obj = object_new_dynamic(..., errp);
->         if (!obj) {
->             ... return failure ...
->         }
-> 
->     This is an improvement.
-> 
-> 2b. It's not.  We should replace
-> 
->         obj = object_new(...);
-> 
->     by
-> 
->         obj = object_new_dynamic(..., &error_abort);
-> 
->     Exact same behavior, just wordier, to placate the compiler.
->     Tolerable as long as it's relatively rare.
-> 
->     But I'm not sure it's worthwhile.  All it really does is helping
->     some towards not getting case 2a wrong.  But 2a is rare.
+Same here. I'd use assert().
 
-Yes, 2a is fairly rare, but this is amplified by the consequences
-of getting it wrong, which are an assert killing your running VM.
-My goal was to make it much harder to screw up and trigger an
-assert, even if that makes some valid uses more verbose.
-
-> > This is more tractable than adding 'Error **errp' to 'object_new'
-> > as only a handful of places use a dynamic type name.
-> 
-> True!
-> 
-> Alright, enter modules.
-> 
-> Modules break a fundamental design assumption: object_new() on a
-> compiled-in type name is safe, i.e. the failure modes are all
-> programming errors.
-> 
-> Modules add new failure modes that are *not* programming errors:
-> 
-> * The module providing the type was not deployed correctly.
-> 
-> * It was, but the host system lacks the resources to load it.
-
-Hmm, yes, I hadn't considered the 2nd problem. That's more
-unpleasant, as libvirt may well have queried QEMU earlier to
-detect the missing module, and assume all is safe if it is
-present.
-
-> 
-> Before modules, object_new(T) was safe unless T was user-provided.
-> Which implies it's safe when T is a literal string.
-> 
-> Since modules, object_new(T) is safe unless T is user-provided or the
-> type named by it is compiled as module.  This does *not* imply it's safe
-> when T is a literal string.
-
-Agreed. 
-
-> When looking at a use of object_new(), whether the argument names a type
-> that could be compiled as module cannot be known locally.  Therefore, we
-> cannot know locally whether we need to handle failure, either with a
-> suitable guard or by switching to a new function like
-> object_new_dynamic().  This is bad.
->
-> Breaking fundamental design assumptions tends to have ugly and expensive
-> consequences.  Consequences like having to rework every single call of
-> object_new() & friends.
-> 
-> Can we reduce the damage?  Maybe.  What if we create a
-> module_object_new() that takes an Error **, and make object_new() crash
-> & burn when the @typename argument resolves to a type provided by a
-> module?
-
-I'm doubtful about a design where maintainers have to choose the
-right API, based on mental knowledge of what is a module or not.
-The place where object_new is called is typically distinct from
-the module impl, so the knowledge is separated. This opens the
-door to forgetting to change code from object_new to module_object_new.
-This is what motivated my attempt to try to force compile time errors
-scenarios which had a high chance of being user specified types.
-
-I don't have a good answer for how to extend compile time validation
-to cover non-user specified types that might be modules, without
-changnig 'object_new' itself to add "Error **errp" and convert as
-many callers as possible to propagate errors. That's a huge pile
-of tedious work and in many cases would deteriorate  to &error_abort
-since some key common use scenarios lack a "Error *errp" to propagate
-into.
-
-> Maybe module_object_new() and object_new_dynamic() could be fused into a
-> single function with a better name.
-> 
-> > With this series, my objections to Peter Xu's singleton series[1]
-> > would be largely nullified.
-> >
-> > [1] https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05524.html
+> +
+>                  qemu_sem_post(&multifd_recv_state->sem_sync);
+>                  qemu_sem_wait(&p->sem_sync);
+>              }
+> @@ -1285,6 +1357,7 @@ int multifd_recv_setup(Error **errp)
+>              p->packet_len = sizeof(MultiFDPacket_t)
+>                  + sizeof(uint64_t) * page_count;
+>              p->packet = g_malloc0(p->packet_len);
+> +            p->packet_dev_state = g_malloc0(sizeof(*p->packet_dev_state));
+>          }
+>          p->name = g_strdup_printf(MIGRATION_THREAD_DST_MULTIFD, i);
+>          p->normal = g_new0(ram_addr_t, page_count);
+> diff --git a/migration/multifd.h b/migration/multifd.h
+> index 106a48496dc6..026b653057e2 100644
+> --- a/migration/multifd.h
+> +++ b/migration/multifd.h
+> @@ -46,6 +46,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
+>  #define MULTIFD_FLAG_UADK (8 << 1)
+>  #define MULTIFD_FLAG_QATZIP (16 << 1)
+>  
+> +/*
+> + * If set it means that this packet contains device state
+> + * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
+> + */
+> +#define MULTIFD_FLAG_DEVICE_STATE (1 << 6)
+> +
+>  /* This value needs to be a multiple of qemu_target_page_size() */
+>  #define MULTIFD_PACKET_SIZE (512 * 1024)
+>  
+> @@ -78,6 +84,16 @@ typedef struct {
+>      uint64_t offset[];
+>  } __attribute__((packed)) MultiFDPacket_t;
+>  
+> +typedef struct {
+> +    MultiFDPacketHdr_t hdr;
+> +
+> +    char idstr[256] QEMU_NONSTRING;
+> +    uint32_t instance_id;
+> +
+> +    /* size of the next packet that contains the actual data */
+> +    uint32_t next_packet_size;
+> +} __attribute__((packed)) MultiFDPacketDeviceState_t;
+> +
+>  typedef struct {
+>      /* number of used pages */
+>      uint32_t num;
+> @@ -95,6 +111,13 @@ struct MultiFDRecvData {
+>      off_t file_offset;
+>  };
+>  
+> +typedef struct {
+> +    char *idstr;
+> +    uint32_t instance_id;
+> +    char *buf;
+> +    size_t buf_len;
+> +} MultiFDDeviceState_t;
+> +
+>  typedef enum {
+>      MULTIFD_PAYLOAD_NONE,
+>      MULTIFD_PAYLOAD_RAM,
+> @@ -210,8 +233,9 @@ typedef struct {
+>  
+>      /* thread local variables. No locking required */
+>  
+> -    /* pointer to the packet */
+> +    /* pointers to the possible packet types */
+>      MultiFDPacket_t *packet;
+> +    MultiFDPacketDeviceState_t *packet_dev_state;
+>      /* size of the next packet that contains pages */
+>      uint32_t next_packet_size;
+>      /* packets received through this channel */
 > 
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
