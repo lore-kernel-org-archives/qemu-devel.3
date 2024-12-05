@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F1BE7716D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 13:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC4AE7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 13:31:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJBwV-0001Et-4w; Thu, 05 Dec 2024 08:30:55 -0500
+	id 1tJBwm-0001Lq-U7; Thu, 05 Dec 2024 08:31:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tJBwH-0001Ao-R5
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:30:42 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1tJBwN-0001F2-Mc
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:30:49 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tJBw9-0004XY-Cw
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:30:38 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7259a26ad10so722371b3a.1
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 05:30:13 -0800 (PST)
+ id 1tJBwI-0004al-Kb
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:30:45 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7258cf297d4so888539b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 05:30:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1733405410; x=1734010210; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=La9AioGkA3IusDhLuH/rTBZX5ITtR1iR2EKKg8Y6I7E=;
- b=R5Cepis8O6ONBsroFE+hz49VtpvdAaTK9apT5Nv+DtuP1ydDhkN66HCjcMbD/27/4G
- mcJ36t50fkTd7hYgAraFCnnD4HdGZAzlUR53G7yQixUWt7j50AqnZDgMcXJmDUI/IhQd
- L5sy2FnZhpMM+5FEeUIbIrs8JTbsb6GOO36k3GmS01oL/cG4E8cnLTAIO696D8fSUUXA
- CnGA6SVamR20ocUhJkYueqzL7ST6F+r14I0ND/m4ar3S+SnKT5Gs6qBOqWef6/8u/h+K
- vCqoaNjIYEljGxCHthkGBb5GCx+ILs/cNDESfNDfQ5b5sjINfo9p4Xs5eLbn0HFuyDMW
- zRzg==
+ d=ventanamicro.com; s=google; t=1733405413; x=1734010213; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AAiVT2nm6HtlwAXt1fBj3C0Ia1gR1mPhrbi715hhO7g=;
+ b=bSKljGuz/XTd/k0/aLpCJTdgIs6EuyiVVBQiedsSx0gpX5wrCw1P44EqfBFQ9COmns
+ 6aeLa6ci5lZvZzOUR5v7n60PskGVo7wMkBWwMgbyKngI+d1h6XQNMdEGOBcHdYdLIbrm
+ EMoBzSuQAJSgMHeC09cayrfQUDDwB3VlrNLLEhA0uS/xTTVbXhYPE3G7AMFv5108ZNJd
+ 5z42S9YdjzvW/JRtHAB08neoNdFcqq4SPs85MowhIE8PELDYoQRmdgRtR4kspQta3SEe
+ 0fxYrASY9dkG/cgqSQzVLkw7Hid1oeR0989MwNHUP/NvMVgbULaM/6N5f9HdV6aC9mXs
+ qZlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733405410; x=1734010210;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=La9AioGkA3IusDhLuH/rTBZX5ITtR1iR2EKKg8Y6I7E=;
- b=baf8Ja2+roB3KSvg/CBVqWa7Tw5nYpuYaDmdjXZ/AoFJLKnPbYk5SCmtp1Vr0hMiM7
- W6FneQn8nM3/GPCkMdoQbhQWwXTFEMwzBN0EKYKHQJUd1kmfjU5q43fRwEUiVx9X17fa
- pOY93LIyYZAGZf4OjE/CdKjQaR/ca7rwjf6GJBmfzzOjoG0XPygkS0WGgeSgv/AKtaWR
- DwQfCU4U9xsW7Lfu0WXdy/EVzjHUanJB4Z4XNgNMFA2KMqljTz1HZ9QXYlKQW6eVZxgJ
- 0Alq9MLbGDS3EKHnICNwTPAYhW7aLtcRyklgPzBZx7UCK8dfK6My2oWByImY+pxv+BpP
- BvTg==
-X-Gm-Message-State: AOJu0Yw7Rt742tkmQqiwcaPEXBBQ3AdthoZO4gs5oSBWk+lOwFJhz71i
- o22W7BhhVBmH1vnH5gJU/50345CpcWfLs1KQlgSI5rtNH4bVG1+rbW/n4vbXDnmyWVxuJ2CyD53
- b
-X-Gm-Gg: ASbGnct5QLlY+IWiGYXxbMSi7Dw2ABXGpI19mNtvT4815E2Ct25k8QmNB+UlbooQ9qG
- LzVHkapCaKCq6Zd5+FJBmk57yjqschiG4ZORtCUtcM0JbbrmVrV7enOtoaH/VNIuwQfRTtrYl9a
- F8ruEb361MntovxxmT2r7VrjNTfQkv5iBfW0nZb7v6/s45m+KyzdSNlJAARAJcmZyRpOc+2ZFs9
- 7qgpRkvvKTe8NfY+VIYTJdLwpZO8phxYOadipnHRQ6lcqoUzxzgB2iL5MKTOHm9IQi6NSiv0oiw
- nn60
-X-Google-Smtp-Source: AGHT+IF9YYzqlSAKUXfyaj4VMeZmZAOzTxHX46IijiI1A4xpHtgYf2Y39ev7oO2iREwvdyXWUgJ7pw==
-X-Received: by 2002:a05:6a00:2789:b0:725:9253:62c8 with SMTP id
- d2e1a72fcca58-7259d5734afmr5469096b3a.2.1733405410097; 
- Thu, 05 Dec 2024 05:30:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733405413; x=1734010213;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AAiVT2nm6HtlwAXt1fBj3C0Ia1gR1mPhrbi715hhO7g=;
+ b=qCYrD5N99XrDQmziFzWniJE9pJPbiBnKNiU1EmmA+4XPbZL8oCHP0jKZJXFoWGYjUL
+ oUGRiQ6SRx/UxMXSMPaYvXV7vkl7lAlkkcQkpvGQvJ8KP3NkvPasiF1n0XDjMRJnQ9pe
+ LmaLCzfgUmx4RomCqgiGFpd79CT55kinTxW9GeaXcYp3k6sTi0ekWZeeckWnpATVco/T
+ Dsw1wXY23jSJvldetcrdMbbd6UYzFeoy19NgZ+DdCJ99J7Jq8OPOtbQTOJV0mzLTTJer
+ FJhd5eBUwXsittak/LGW5wbK6C9YvV3nebkOf/FiJguSNXxg2yin41PkjAC8AWXLzQwb
+ Xbgw==
+X-Gm-Message-State: AOJu0YyLnsvc4I0jJquyCx25NJyMRzXvYyziZF1DASxDHwQYCmDN4Bho
+ JkEjLUkHZ5vnzAAI2FnjaEFUuv2mXc00k8/iaghvVzwq53W/aWPvutJUX/LRg3SP3/A1lsUPz6D
+ T
+X-Gm-Gg: ASbGnctRBatOwgsKw7dgrwUF/slB0Tec2zGdqqH+DvV+s1Gu/whDoogMw3WowmWwVrX
+ kXUsHYexavHwFWImfiFnxa71GwdnusJtteZVzumtObAibhTld1whnKdQfJc5xxXyrfbB0Ao/DIk
+ aOxBKAJ2c7FGNYdIIF2IYfTp1I7K5PAgnzuIASDNo6yTrVug/OjzJzXcGF4IV80GeA2NwFujFqd
+ nQSwnwUDJDrJbI68tw3oJ3UtpUcxH4/srGpfhLoAHJwSQKBXKbDMNaVZ6Xu9itrthvJuMQutVDt
+ w4ZZ
+X-Google-Smtp-Source: AGHT+IFAAYaRWtJ708oeHHk/Qt5/oond+zrVpgmlPPzGQfEQeO1kXm2eJcUJrJGlHoEmO3ZO0qvHIQ==
+X-Received: by 2002:a05:6a00:92a3:b0:71e:573f:5673 with SMTP id
+ d2e1a72fcca58-7257fa7afaamr11315797b3a.15.1733405413003; 
+ Thu, 05 Dec 2024 05:30:13 -0800 (PST)
 Received: from grind.dc1.ventanamicro.com ([187.101.65.72])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725a2a8f512sm1250315b3a.126.2024.12.05.05.30.06
+ d2e1a72fcca58-725a2a8f512sm1250315b3a.126.2024.12.05.05.30.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 05:30:09 -0800 (PST)
+ Thu, 05 Dec 2024 05:30:12 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Tomasz Jeznach <tjeznach@rivosinc.com>
-Subject: [PATCH for-10.0 00/11] riscv: IOMMU HPM support
-Date: Thu,  5 Dec 2024 10:29:52 -0300
-Message-ID: <20241205133003.184581-1-dbarboza@ventanamicro.com>
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH for-10.0 01/11] hw/riscv/riscv-iommu.h: add missing headers
+Date: Thu,  5 Dec 2024 10:29:53 -0300
+Message-ID: <20241205133003.184581-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241205133003.184581-1-dbarboza@ventanamicro.com>
+References: <20241205133003.184581-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,70 +102,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+This header is incomplete, i.e. it is using definitions that are being
+supplied by the .c files that are including it.
 
-This is a re-submission of the original Hardware Performance Monitor
-IOMMU support sent by Tomasz back in July 2023 [1] in the first version
-of the IOMMU emulation. In the second version of that work [2] sent in
-February 2024 I said:
+Adding this header into a fresh .c file will result in errors:
 
-----
-- I'm not contributing the HPM support that was present in v1. It shaved
-  off 600 lines of code from the series, which is already large enough
-  as is. We'll introduce HPM in later versions or as a follow-up;
------
+/home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:30:17: error: field ‘parent_obj’ has incomplete type
+   30 |     DeviceState parent_obj;
+      |                 ^~~~~~~~~~
+/home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:50:5: error: unknown type name ‘dma_addr_t’; did you mean ‘in_addr_t’?
+   50 |     dma_addr_t cq_addr;   /* Command queue base physical address */
+      |     ^~~~~~~~~~
+      |     in_addr_t
+(...)
+/home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:62:5: error: unknown type name ‘QemuThread’; did you mean ‘GThread’?
+   62 |     QemuThread core_proc; /* Background processing thread */
+      |     ^~~~~~~~~~
+      |     GThread
+/home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:63:5: error: unknown type name ‘QemuCond’
+   63 |     QemuCond core_cond;   /* Background processing wake up signal */
+      |     ^~~~~~~~
+/home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:71:18: error: field ‘trap_as’ has incomplete type
+   71 |     AddressSpace trap_as;
+      |                  ^~~~~~~
+/home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:72:18: error: field ‘trap_mr’ has incomplete type
+   72 |     MemoryRegion trap_mr;
+      |                  ^~~~~~~
+/home/danielhb/work/qemu/hw/riscv/riscv-iommu.h:80:18: error: field ‘regs_mr’ has incomplete type
+   80 |     MemoryRegion regs_mr;
+      |                  ^~~~~~~
 
-So here I am keeping my end of the deal. The code is basically the same that
-Tomasz sent in v1 with some tweaks:
+Fix it by adding the missing headers for these definitions.
 
-- Code was split across several patches for easier review;
-- A separated file was created, riscv-iommu-hpm.c, to host all the HPM
-  related code. The base emulation will use HPM via public helpers. The
-  idea is to avoid clogging riscv-iommu.c;
-- There was a lock in use to read/write the HPM registers in the
-  original posting. Based on the current design of the merged IOMMU
-  support, a lock-less design, I also removed the locks from HPM;
-- Other minor tweaks such as not naming functions using "__name" and so
-  on.
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ hw/riscv/riscv-iommu.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Patch 1 is a header fix required to put the helpers in riscv-iommu-hpm.
-Patches 10 and 11 are new. The original HPM code is split in patches
-2-9.
-
-Series based on alistair/riscv-to-apply.next.
-
-[1] https://lore.kernel.org/qemu-riscv/cover.1689819031.git.tjeznach@rivosinc.com/
-[2] https://lore.kernel.org/qemu-riscv/20240307160319.675044-1-dbarboza@ventanamicro.com/
-
-Cc: Tomasz Jeznach <tjeznach@rivosinc.com>
-
-Daniel Henrique Barboza (3):
-  hw/riscv/riscv-iommu.h: add missing headers
-  hw/riscv: add IOMMU HPM trace events
-  docs/specs/riscv-iommu.rst: add HPM support info
-
-Tomasz Jeznach (8):
-  hw/riscv/riscv-iommu-bits.h: HPM bits
-  hw/riscv/riscv-iommu: add riscv-iommu-hpm file
-  hw/riscv/riscv-iommu: add riscv_iommu_hpm_incr_ctr()
-  hw/riscv/riscv-iommu: instantiate hpm_timer
-  hw/riscv/riscv-iommu: add IOCOUNTINH mmio writes
-  hw/riscv/riscv-iommu: add IOHPMCYCLES mmio write
-  hw/riscv/riscv-iommu: add hpm events mmio write
-  hw/riscv/riscv-iommu.c: add RISCV_IOMMU_CAP_HPM cap
-
- docs/specs/riscv-iommu.rst  |   2 +
- hw/riscv/meson.build        |   3 +-
- hw/riscv/riscv-iommu-bits.h |  47 +++++
- hw/riscv/riscv-iommu-hpm.c  | 381 ++++++++++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu-hpm.h  |  33 ++++
- hw/riscv/riscv-iommu.c      | 131 +++++++++++--
- hw/riscv/riscv-iommu.h      |  27 +++
- hw/riscv/trace-events       |   5 +
- 8 files changed, 612 insertions(+), 17 deletions(-)
- create mode 100644 hw/riscv/riscv-iommu-hpm.c
- create mode 100644 hw/riscv/riscv-iommu-hpm.h
-
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index 9424989df4..2de0cdfc56 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -20,6 +20,8 @@
+ #define HW_RISCV_IOMMU_STATE_H
+ 
+ #include "qom/object.h"
++#include "hw/qdev-properties.h"
++#include "sysemu/dma.h"
+ #include "hw/riscv/iommu.h"
+ #include "hw/riscv/riscv-iommu-bits.h"
+ 
 -- 
 2.47.1
 
