@@ -4,118 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9468BE7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAC4E7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 20:23:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJIGj-0001a1-LT; Thu, 05 Dec 2024 15:16:13 -0500
+	id 1tJINS-0002cV-8R; Thu, 05 Dec 2024 15:23:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJIGi-0001Zs-Jn
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:16:12 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJIGg-0007Yg-52
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:16:12 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1DEAB1F393;
- Thu,  5 Dec 2024 20:16:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733429768; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mhgeAtsmZCbFjnZRWjg7eknpnn1UFezqu/W829VL4aw=;
- b=sXF9NS9truLjYBmC1L7pKNDbSELvGRRoR/NM2ZdFhasru2hmBZuGr9BFNuZy5c2TB3b5jS
- LIiwBlBJDQiXLy4JRAedSfPigm/a/iD9Mxrrq/gn4si5dFOF7TMLkkFV0d7fAXZO4iMgGj
- D9JPUwwO357XLDiC5Lr5RzWn/xHwG1E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733429768;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mhgeAtsmZCbFjnZRWjg7eknpnn1UFezqu/W829VL4aw=;
- b=oWtALxQ4Kuh7e9nZTXx6nbFtICZMajnekIhedT5iu4vINyo1pzekZ+zO+wR8ccCXEL/0KK
- drdKygfNew7PPuBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=sXF9NS9t;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oWtALxQ4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733429768; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mhgeAtsmZCbFjnZRWjg7eknpnn1UFezqu/W829VL4aw=;
- b=sXF9NS9truLjYBmC1L7pKNDbSELvGRRoR/NM2ZdFhasru2hmBZuGr9BFNuZy5c2TB3b5jS
- LIiwBlBJDQiXLy4JRAedSfPigm/a/iD9Mxrrq/gn4si5dFOF7TMLkkFV0d7fAXZO4iMgGj
- D9JPUwwO357XLDiC5Lr5RzWn/xHwG1E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733429768;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mhgeAtsmZCbFjnZRWjg7eknpnn1UFezqu/W829VL4aw=;
- b=oWtALxQ4Kuh7e9nZTXx6nbFtICZMajnekIhedT5iu4vINyo1pzekZ+zO+wR8ccCXEL/0KK
- drdKygfNew7PPuBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 98FF0138A5;
- Thu,  5 Dec 2024 20:16:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id eJy7FwcKUmc7SwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 05 Dec 2024 20:16:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Alex Williamson <alex.williamson@redhat.com>, Avihai Horon
- <avihaih@nvidia.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH 2/2] migration/multifd: Allow to sync with sender
- threads only
-In-Reply-To: <20241205185303.897010-3-peterx@redhat.com>
-References: <20241205185303.897010-1-peterx@redhat.com>
- <20241205185303.897010-3-peterx@redhat.com>
-Date: Thu, 05 Dec 2024 17:16:05 -0300
-Message-ID: <875xnxj37e.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tJINQ-0002cH-DH
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:23:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tJINN-0001SK-Vm
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 15:23:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733430184;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ErVoJSJCg6U/xIq6GjUkreaBbIHsp7ZEDNpvCy8GArc=;
+ b=RaYx7szr+E1MUKGsTScfoTbaaBGDNR5L8vsqGNp61Vs8JGgaZe5boGKVOFGyiLyRo5VKWi
+ saAMcLFXtGTFpZKBAu3v+V/FTKjLFChBMHYHJaypleMmvF+sPCOnQW2Jw7i1Yp4KM7aWD4
+ HNcdRfzzNpkl8jJM1hhbFscWJFH68mU=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-100-wyMKaIF8NJW9cpNO6XY-Iw-1; Thu, 05 Dec 2024 15:23:02 -0500
+X-MC-Unique: wyMKaIF8NJW9cpNO6XY-Iw-1
+X-Mimecast-MFC-AGG-ID: wyMKaIF8NJW9cpNO6XY-Iw
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d89309de06so23337576d6.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 12:23:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733430182; x=1734034982;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ErVoJSJCg6U/xIq6GjUkreaBbIHsp7ZEDNpvCy8GArc=;
+ b=talLVnHjId83SYuLRzNaa0I4NMUkfrs1FJ9lvEZCT++NU2NoEQqn3Lp3qOK9RmGXAK
+ nFgApnSb/HcFecG987k2/gUUDILAfiEyWpgnwPKOSzBaL+GAsiQ6ccfDHeuVA7oNIF9M
+ aAR6YboFhZKhxHFYVNt/o0uv7QJRo1qub4XKnOOi+m87UiryKKA0kJAgStzjy/dbNHd4
+ 8zurBCzd4dJ9jIfMklLtoZmHazISrKNqpXHwTmZPQa4cwkEVjS0mobGt5nxYUVQcgFYs
+ 6wMBgA9LP5lpBDXquoiqK1H1g5NXBwJLuJRf/p517WEFnFu6Ui2FRNaMRh+OCDYO+cMx
+ lKxQ==
+X-Gm-Message-State: AOJu0Yw+TTPpzs72exlwcV7y36CEHHjy2zFZJBj0l64kYGMWsbI+UVLK
+ MLVStzWYETeakFQ2vrzrVqxBdC6KtIhINJffNi/NqrXnAqkHUKuVexZRE7sfrXZBPgBHq/m24Bx
+ BYW+0Z3+CZutxdqC+picQf3WUzXWCtxDNC50ltSqAkaUrRbEKicdg
+X-Gm-Gg: ASbGncsmC/oNto8oRvmfns4q7arpyZeQCFovB4kD92Lv6ex5Rjy6LnCZHOZbDwybI9C
+ a36hdcN+EMRbA1e7FegwC5JjpZ3TPhQmV3TuWrDl4lsyDR8vvuffOSc68clz5xPcy+zm9clIxal
+ mCnN8GsidbuSLKhehZS7XjUMtZM7Ah28W+q/+w3Q9URrPzKM3thddFll9nm9CxVv2SWfFIKlOQ0
+ tKXWTJB48h1dlPdjSJwsggdJ/rIr/357nCUtAvGdqrOvTKmvcGsJhu0
+X-Received: by 2002:a05:6214:1c4b:b0:6cb:edd7:ac32 with SMTP id
+ 6a1803df08f44-6d8e7118b40mr4515516d6.12.1733430181652; 
+ Thu, 05 Dec 2024 12:23:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEjqVedKC9En89e0cqU9JxXEOxMIx+Hxmcm2fR8G4y7CKZpObKDXqvuEnIL/WfcR03xRlfpJA==
+X-Received: by 2002:a05:6214:1c4b:b0:6cb:edd7:ac32 with SMTP id
+ 6a1803df08f44-6d8e7118b40mr4515226d6.12.1733430181314; 
+ Thu, 05 Dec 2024 12:23:01 -0800 (PST)
+Received: from [10.195.154.128] ([144.121.20.163])
+ by smtp.googlemail.com with ESMTPSA id
+ 6a1803df08f44-6d8e3c1bd72sm4465706d6.121.2024.12.05.12.22.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Dec 2024 12:23:00 -0800 (PST)
+Message-ID: <b107c5c3-9ee4-4939-a4e3-eff0cd92bad6@redhat.com>
+Date: Thu, 5 Dec 2024 21:22:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 1DEAB1F393
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 11/13] rust/timer/hpet: add basic HPET timer & state
+To: Zhao Liu <zhao1.liu@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-12-zhao1.liu@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20241205060714.256270-12-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,203 +149,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
-> Teach multifd_send_sync_main() to sync with threads only.
->
-> We already have such requests, which is when mapped-ram is enabled with
-> multifd.  In that case, no SYNC messages will be pushed to the stream when
-> multifd syncs the sender threads because there's no destination threads
-> waiting for that.  The whole point of the sync is to make sure all threads
-> flushed their jobs.
->
-> So fundamentally we have a request to do the sync in different ways:
->
->   - Either to sync the threads only,
->   - Or to sync the threads but also with the destination side
->
-> Mapped-ram did it already because of the use_packet check in the sync
-> handler of the sender thread.  It works.
->
-> However it may stop working when e.g. VFIO may start to reuse multifd
-> channels to push device states.  In that case VFIO has similar request on
-> "thread-only sync" however we can't check a flag because such sync request
-> can still come from RAM which needs the on-wire notifications.
->
-> Paving way for that by allowing the multifd_send_sync_main() to specify
-> what kind of sync the caller needs.  We can use it for mapped-ram already.
->
-> No functional change intended.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+On 12/5/24 07:07, Zhao Liu wrote:
+> Add the HPETTimer and HPETState (HPET timer block), along with their
+> basic methods and register definitions.
+> 
+> This is in preparation for supporting the QAPI interfaces.
+> 
+> Note, wrap all items in HPETState that may be changed in the callback
+> called by C code into the BqlCell/BqlRefCell.
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->  migration/multifd.h        | 16 +++++++++++++---
->  migration/multifd-nocomp.c |  8 +++++++-
->  migration/multifd.c        | 14 ++++++++------
->  3 files changed, 28 insertions(+), 10 deletions(-)
->
-> diff --git a/migration/multifd.h b/migration/multifd.h
-> index 50d58c0c9c..6b2f60a917 100644
-> --- a/migration/multifd.h
-> +++ b/migration/multifd.h
-> @@ -19,6 +19,15 @@
->  typedef struct MultiFDRecvData MultiFDRecvData;
->  typedef struct MultiFDSendData MultiFDSendData;
->  
-> +typedef enum {
-> +    /* No sync request */
-> +    MULTIFD_SYNC_NONE = 0,
-> +    /* Sync on the sender threads without pushing messages */
-> +    MULTIFD_SYNC_THREADS,
-> +    /* Sync on the sender threads, meanwhile push "SYNC" message to the wire */
+>   rust/hw/timer/hpet/src/hpet.rs | 638 +++++++++++++++++++++++++++++++++
+>   rust/hw/timer/hpet/src/lib.rs  |   1 +
+>   rust/wrapper.h                 |   1 +
+>   3 files changed, 640 insertions(+)
+>   create mode 100644 rust/hw/timer/hpet/src/hpet.rs
+> 
+> diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
+> new file mode 100644
+> index 000000000000..9550d8fe438a
+> --- /dev/null
+> +++ b/rust/hw/timer/hpet/src/hpet.rs
+> @@ -0,0 +1,638 @@
+> +// Copyright (C) 2024 Intel Corporation.
+> +// Author(s): Zhao Liu <zhai1.liu@intel.com>
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +#![allow(dead_code)]
+> +
+> +use core::ptr::{null_mut, NonNull};
+> +use std::os::raw::c_int;
+> +
+> +use qemu_api::{
+> +    bindings::*,
 
-s/meanwhile//
+Let's avoid bindings::*.
 
-> +    MULTIFD_SYNC_THREADS_AND_NOTIFY,
-> +} MultiFDSyncReq;
+> +        self.qemu_timer = Box::new(HPETState::timer_new_ns(
 
-I think I'd prefer the local vs. remote terminology I introduced in my
-proposal [1] for cleaning up the multifd_flush_after_each_section() code:
+Oh! I noticed now that while your API is called timer_new_ns, it is 
+actually the same as timer_init_full.  Let's call it init_full() then.
 
-LOCAL - sync the local threads between themselves
-REMOTE - put a message on the stream for the remote end to perform a
-         sync on their threads.
+> +    fn get_state_ref(&self) -> &HPETState {
+> +        // SAFETY:
+> +        // the pointer is convertible to a reference
+> +        unsafe { self.state.unwrap().as_ref() }
+> +    }
+> +
+> +    fn get_state_mut(&mut self) -> &mut HPETState {
+> +        // SAFETY:
+> +        // the pointer is convertible to a reference
+> +        unsafe { self.state.unwrap().as_mut() }
+> +    }
 
-Down below you're passing the
-MULTIFD_SYNC_THREADS_AND_NOTIFY into the send thread, but the "sync
-threads" part of this is really done outside the thread, so that part
-doesn't have a meaning inside the thread.
-
-1- https://lore.kernel.org/r/875xo8n4ue.fsf@suse.de
-
-Also, please provide your input there^, it would be nice to unify the
-terminology and reasoning about both changes.
+You should not need get_state_mut(), which also has the advantage of 
+shortening get_state_ref() to get_state().
 
 > +
->  bool multifd_send_setup(void);
->  void multifd_send_shutdown(void);
->  void multifd_send_channel_created(void);
-> @@ -28,7 +37,7 @@ void multifd_recv_shutdown(void);
->  bool multifd_recv_all_channels_created(void);
->  void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
->  void multifd_recv_sync_main(void);
-> -int multifd_send_sync_main(void);
-> +int multifd_send_sync_main(MultiFDSyncReq req);
->  bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
->  bool multifd_recv(void);
->  MultiFDRecvData *multifd_get_recv_data(void);
-> @@ -143,7 +152,7 @@ typedef struct {
->      /* multifd flags for each packet */
->      uint32_t flags;
->      /*
-> -     * The sender thread has work to do if either of below boolean is set.
-> +     * The sender thread has work to do if either of below field is set.
->       *
->       * @pending_job:  a job is pending
->       * @pending_sync: a sync request is pending
-> @@ -152,7 +161,8 @@ typedef struct {
->       * cleared by the multifd sender threads.
->       */
->      bool pending_job;
-> -    bool pending_sync;
-> +    MultiFDSyncReq pending_sync;
+> +    fn is_int_active(&self) -> bool {
+> +        self.get_state_ref().int_status.get() & (1 << self.index) != 0
+> +    }
 > +
->      MultiFDSendData *data;
->  
->      /* thread local variables. No locking required */
-> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-> index 55191152f9..f64c4c9abd 100644
-> --- a/migration/multifd-nocomp.c
-> +++ b/migration/multifd-nocomp.c
-> @@ -345,6 +345,8 @@ retry:
->  
->  int multifd_ram_flush_and_sync(void)
->  {
-> +    MultiFDSyncReq req;
+> +    fn is_fsb_route_enabled(&self) -> bool {
+> +        self.config & 1 << HPET_TN_CFG_FSB_ENABLE_SHIFT != 0
+> +    }
 > +
->      if (!migrate_multifd()) {
->          return 0;
->      }
-> @@ -356,7 +358,11 @@ int multifd_ram_flush_and_sync(void)
->          }
->      }
->  
-> -    return multifd_send_sync_main();
-> +    /* File migrations only need to sync with threads */
-> +    req = migrate_mapped_ram() ?
-> +        MULTIFD_SYNC_THREADS : MULTIFD_SYNC_THREADS_AND_NOTIFY;
+> +    fn is_periodic(&self) -> bool {
+> +        self.config & 1 << HPET_TN_CFG_PERIODIC_SHIFT != 0
+> +    }
 > +
-> +    return multifd_send_sync_main(req);
->  }
->  
->  bool multifd_send_prepare_common(MultiFDSendParams *p)
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 498e71fd10..77645e87a0 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -523,7 +523,7 @@ static int multifd_zero_copy_flush(QIOChannel *c)
->      return ret;
->  }
->  
-> -int multifd_send_sync_main(void)
-> +int multifd_send_sync_main(MultiFDSyncReq req)
->  {
->      int i;
->      bool flush_zero_copy;
-> @@ -543,8 +543,8 @@ int multifd_send_sync_main(void)
->           * We should be the only user so far, so not possible to be set by
->           * others concurrently.
->           */
-> -        assert(qatomic_read(&p->pending_sync) == false);
-> -        qatomic_set(&p->pending_sync, true);
-> +        assert(qatomic_read(&p->pending_sync) == MULTIFD_SYNC_NONE);
-> +        qatomic_set(&p->pending_sync, req);
-
-Hmm, isn't it easier to skip the whole loop if req ==
-MULTIFD_SYNC_THREADS? I don't remember why we kept this loop here for
-mapped-ram.
-
->          qemu_sem_post(&p->sem);
->      }
->      for (i = 0; i < migrate_multifd_channels(); i++) {
-> @@ -635,14 +635,16 @@ static void *multifd_send_thread(void *opaque)
->               */
->              qatomic_store_release(&p->pending_job, false);
->          } else {
-> +            MultiFDSyncReq req = qatomic_read(&p->pending_sync);
+> +    fn is_int_enabled(&self) -> bool {
+> +        self.config & 1 << HPET_TN_CFG_INT_ENABLE_SHIFT != 0
+> +    }
 > +
->              /*
->               * If not a normal job, must be a sync request.  Note that
->               * pending_sync is a standalone flag (unlike pending_job), so
->               * it doesn't require explicit memory barriers.
->               */
-> -            assert(qatomic_read(&p->pending_sync));
-> +            assert(req != MULTIFD_SYNC_NONE);
->  
-> -            if (use_packets) {
-> +            if (req == MULTIFD_SYNC_THREADS_AND_NOTIFY) {
+> +    fn is_32bit_mod(&self) -> bool {
+> +        self.config & 1 << HPET_TN_CFG_32BIT_SHIFT != 0
+> +    }
+> +
+> +    fn is_valset_enabled(&self) -> bool {
+> +        self.config & 1 << HPET_TN_CFG_SETVAL_SHIFT != 0
+> +    }
+> +
+> +    fn clear_valset(&mut self) {
+> +        self.config &= !(1 << HPET_TN_CFG_SETVAL_SHIFT);
+> +    }
+> +
+> +    /// True if timer interrupt is level triggered; otherwise, edge triggered.
+> +    fn is_int_level_triggered(&self) -> bool {
+> +        self.config & 1 << HPET_TN_CFG_INT_TYPE_SHIFT != 0
+> +    }
 
-Good, more explicit.
+PL011 is using bilge here.  I think it's fair to show the two ways to do 
+it.  If we have devices showing two different things:
 
->                  p->flags = MULTIFD_FLAG_SYNC;
->                  multifd_send_fill_packet(p);
->                  ret = qio_channel_write_all(p->c, (void *)p->packet,
-> @@ -654,7 +656,7 @@ static void *multifd_send_thread(void *opaque)
->                  stat64_add(&mig_stats.multifd_bytes, p->packet_len);
->              }
->  
-> -            qatomic_set(&p->pending_sync, false);
-> +            qatomic_set(&p->pending_sync, MULTIFD_SYNC_NONE);
+- PL011 shows higher-level abstractions for registers
 
-It's a bit weird that MULTIFD_SYNC_THREADS will never have an use inside
-the thread. Makes me think it should never exist in the first place. But
-then we're back into pending_sync + use_packets... looks like it would
-be less convoluted to skip the loop up there and assert(!use_packets) in
-here.
+- HPET has a good approach to interior mutability from the beginning
 
-Unless I'm missing something...
+Then it gives a clearer view of the options.
 
->              qemu_sem_post(&p->sem_sync);
->          }
->      }
+
+> +    fn update_int_status(&mut self, set: bool) -> &mut Self {
+> +        let mask: u64 = 1 << self.index;
+> +
+> +        if set && self.is_int_level_triggered() {
+> +            // If Timer N Interrupt Enable bit is 0, "the timer will
+> +            // still operate and generate appropriate status bits, but
+> +            // will not cause an interrupt"
+> +            *self.get_state_mut().int_status.get_mut() |= mask;
+> +        } else {
+> +            *self.get_state_mut().int_status.get_mut() &= !mask;
+> +        }
+> +        self
+> +    }
+
+See remarks elsewhere on update_int_status(), and how it uses 
+get_state_mut() and get_mut().
+
+> +                unsafe {
+> +                    address_space_stl_le(
+> +                        &mut address_space_memory,
+> +                        self.fsb >> 32,  // Timer N FSB int addr
+> +                        self.fsb as u32, // Timer N FSB int value, truncate!
+> +                        *MEMTXATTRS_UNSPECIFIED,
+> +                        null_mut(),
+> +                    );
+> +                }
+
+This is the only use of unsafe, whic is not bad at all.  Not urgent, but 
+we should think about the AddressSpace bindings, and whether it makes 
+sense to use (or steal APIs from) rust-vmm's vm-memory.
+
+> +    fn arm_timer(&mut self, tick: u64) {
+> +        let mut ns = self.get_state_ref().get_ns(tick);
+> +
+> +        // Clamp period to reasonable min value (1 us)
+> +        if self.is_periodic() && ns - self.last < 1000 {
+> +            ns = self.last + 1000;
+> +        }
+> +
+> +        self.last = ns;
+> +        self.qemu_timer.as_mut().timer_mod(self.last);
+> +    }
+
+No as_mut(), timer_mod is thread safe.  timer_mod() need to take &self.
+
+> +    fn del_timer(&mut self) {
+> +        self.qemu_timer.as_mut().timer_del();
+
+Same as above.
+
+> +#[derive(Debug)]
+> +pub struct HPETTimerInstance(BqlRefCell<HPETTimer>);
+> +
+> +impl HPETTimerInstance {
+> +    fn timer_handler(timer: &mut HPETTimerInstance) {
+> +        timer.0.borrow_mut().callback()
+> +    }
+> +}
+
+Also not "&mut" - you don't need it, as "timer.0" is only used to borrow 
+from the BqlRefCell.  Also with a more refined timer abstraction this 
+doesn't need HPETTimerInstance, it can probably be a global function like
+
+fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
+     timer_cell.borrow_mut().callback()
+}
+
+> +    /// General Capabilities and ID Register
+> +    capability: BqlCell<u64>,
+> +    ///  General Configuration Register
+> +    config: BqlCell<u64>,
+> +    /// General Interrupt Status Register
+> +    int_status: BqlCell<u64>,
+> +    /// Main Counter Value Register
+> +    counter: BqlCell<u64>,
+> +
+> +    /// Internal state
+> +
+> +    /// Capabilities that QEMU HPET supports.
+> +    /// bit 0: MSI (or FSB) support.
+> +    pub(crate) flags: BqlCell<u32>,
+
+flags doesn't need to be a cell (it's just a property).  I'll send a 
+patch for the C code.
+
+> +    /// Offset of main counter relative to qemu clock.
+> +    hpet_offset: BqlCell<u64>,
+> +    pub(crate) hpet_offset_saved: bool,
+> +
+> +    irqs: [InterruptSource; HPET_NUM_IRQ_ROUTES],
+> +    rtc_irq_level: BqlCell<u8>,
+> +    pit_enabled: InterruptSource,
+> +
+> +    /// Interrupt Routing Capability.
+> +    /// This field indicates to which interrupts in the I/O (x) APIC
+> +    /// the timers' interrupt can be routed, and is encoded in the
+> +    /// bits 32:64 of timer N's config register:
+> +    pub(crate) int_route_cap: u32,
+> +
+> +    /// HPET timer array managed by this timer block.
+> +    timer: [HPETTimerInstance; HPET_MAX_TIMERS],
+> +    pub(crate) num_timers: BqlCell<usize>,
+
+Ah, this needs to be a BqlCell because it can be clamped to 
+MIN_TIMERS..MAX_TIMERS by realize.  Fair enough.
+
+> +    /// Instance id (HPET timer block ID).
+> +    hpet_id: BqlCell<usize>,
+> +}
+> +
+Like flags this does not need to be a cell.
+
+Paolo
+
 
