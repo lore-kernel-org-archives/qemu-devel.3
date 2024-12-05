@@ -4,96 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CCC7E77170
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 15:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40EC6E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 15:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJDhk-0003Ac-5O; Thu, 05 Dec 2024 10:23:48 -0500
+	id 1tJDiF-0003wc-GS; Thu, 05 Dec 2024 10:24:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJDhj-0003AD-6C
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:23:47 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJDhg-0007aC-Id
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:23:46 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5d0bf80972dso1247962a12.2
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 07:23:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733412221; x=1734017021; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2o0BOwxkDSCufIXkZ4f5R0oc042vUvihYxGeEHkXCng=;
- b=SLjDUFNTeuiUMQfO17UtxwSMqKI6GuLAwcwB10tT6T7Tg1eVziAR36cae9gC1UgsD0
- BmFR1vJqEJMhh583YsJ3Rq3PRkQa57le7UL22aNy0veaL+LVO25UeAvJX+lZMlA1QaP9
- XdGzS5/IQLrCcgGob3JiqsU++TgxVmzDDJPU3hVUM/Tyk080bqS8ReVZZW7NvI86HzVc
- 6c0IrEZVjfbiWVV1vIkkAP5NqYFWl/tezmXKPcrpTc1diOYBlu91VUc9GGddmEnOfOrC
- jCFR2Y7T+WNJMErcmZaCByRIGf5hghFTCI9Sfu+ybIHy0j+7vQLE6I9hR3befaP9aN0E
- 7PHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733412221; x=1734017021;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2o0BOwxkDSCufIXkZ4f5R0oc042vUvihYxGeEHkXCng=;
- b=Y+VvtjR8uZqehs7zbloDYqouZ908brW56b0lSeIbiw6V9Pv04R64pkpNNdgdcPIZXR
- L1NRu6froguqOHQa4GkL9QFoFZIKqv8eWIsTo+tpJA+6XWWoamejq6kZqThJKLGkQcOM
- bwkmNLmdY0aNfdh57+WkzBMJfBtOxoHC727EORyzi8DRUvpw9BRioCgY9v7hsbf4DAJH
- p1M5Ah8x74kB/NNP3F5KtlWQbcJtcV6jxl7FqkEyqXlG38N4jn599lGbuYFnBGkoLNUg
- MbHff2DZ4SSp1dv8DaEtRNjEeE7VnO8TNvYnh/D1Iqq8cV1kHFvl8x6nRWno9YgEqX25
- pJjg==
-X-Gm-Message-State: AOJu0Yx5wV9U+2JUbyDBLNbD9QdrDI28mLKHbsu9+kjkRfwTNsPjWbwK
- Frt6YbH3IesR0D1lvbIwX0S0g71fClyk89q1RpotFDeLeM/JLz4icHsGZm5ia1TAl0V33Nw+1uX
- 79LD6pzM3VscBn8DyGGIWrALCvT3RZ25iPvvYOQ==
-X-Gm-Gg: ASbGnctGF5w5XlVZMYsUsI3PIoJkCLy4LdYJuSJ5Qc9jJFhvWy8zNTbf8pyMroFm1hb
- 6qKkn3HVwfbB9uQTBZ0t8gnpExMgp4+II
-X-Google-Smtp-Source: AGHT+IG8NJmTbbacd/8LR2gPy/2hPCKBTxHEX7mIRpnGShOO2RWc+Mzj7/NaGoNqlqSw6es86YRBj//ckoHRuBboDg0=
-X-Received: by 2002:a05:6402:3506:b0:5d0:9054:b119 with SMTP id
- 4fb4d7f45d1cf-5d10cb80133mr13614218a12.21.1733412221125; Thu, 05 Dec 2024
- 07:23:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJDi7-0003rY-UB
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:24:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJDi5-0007cY-QV
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:24:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733412248;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6fgpox0VmUNbx6ZoeRGz4mdweQE1z2xLqWpAYCdqRN0=;
+ b=T1ScbrvSVnzdnSimGIKR9AcqyrjJaeDobBJWM3TwPz2eJd8tNJ762CjfwetnV3hHRqYprJ
+ W9I7ubOtP7QlpIL+EtIev04RJZMQwIaWeyFYaggfC0NOqlYcsKV6ZNxJo94MQmFl1Il1DQ
+ yrZ8Mp7WzFwAaMf0Kt2FVZQzKaPlv/I=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-81hzhC3gM3mxhTF1UNL4Qw-1; Thu,
+ 05 Dec 2024 10:24:04 -0500
+X-MC-Unique: 81hzhC3gM3mxhTF1UNL4Qw-1
+X-Mimecast-MFC-AGG-ID: 81hzhC3gM3mxhTF1UNL4Qw
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82D4D1955F43; Thu,  5 Dec 2024 15:24:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC33A1956054; Thu,  5 Dec 2024 15:24:01 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id EF0A521E681F; Thu,  5 Dec 2024 16:23:53 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Philippe Mathieu-Daude <philmd@linaro.org>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>
+Subject: Re: [PATCH V4 09/19] migration: incoming channel
+In-Reply-To: <1733145611-62315-10-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Mon, 2 Dec 2024 05:20:01 -0800")
+References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+ <1733145611-62315-10-git-send-email-steven.sistare@oracle.com>
+Date: Thu, 05 Dec 2024 16:23:53 +0100
+Message-ID: <87ser2cfw6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20241118172357.475281-1-pierrick.bouvier@linaro.org>
- <20241118172357.475281-7-pierrick.bouvier@linaro.org>
- <CAFEAcA9JdLxi5cr-Z2-YX6Q8nv=j0O3k=f9u6gS-CzSf5BH7Ug@mail.gmail.com>
- <bdefc0ac-311b-4820-913f-e21d753890fa@linaro.org>
-In-Reply-To: <bdefc0ac-311b-4820-913f-e21d753890fa@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 15:23:30 +0000
-Message-ID: <CAFEAcA-go4GccLwNvdrL0iMpDSmCcrD5J9R3=3BnT5t7tf=Fiw@mail.gmail.com>
-Subject: Re: [PATCH 6/7] docs: add a glossary
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Andrew Melnychenko <andrew@daynix.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, Thomas Huth <thuth@redhat.com>,
- alex.bennee@linaro.org, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>, 
- Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Eric Blake <eblake@redhat.com>, 
- qemu-arm@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
- manos.pitsidianakis@linaro.org, qemu-block@nongnu.org, 
- Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk <kkostiuk@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- gustavo.romero@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,356 +89,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Dec 2024 at 20:32, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+Steve Sistare <steven.sistare@oracle.com> writes:
+
+> Extend the -incoming option to allow an @MigrationChannel to be specified.
+> This allows channels other than 'main' to be described on the command
+> line, which will be needed for CPR.
 >
-> On 12/3/24 09:37, Peter Maydell wrote:
-> > On Mon, 18 Nov 2024 at 17:24, Pierrick Bouvier
-> > <pierrick.bouvier@linaro.org> wrote:
-> >>
-> >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> >> ---
-> >>   docs/devel/control-flow-integrity.rst |   2 +
-> >>   docs/devel/multi-thread-tcg.rst       |   2 +
-> >>   docs/glossary/index.rst               | 238 ++++++++++++++++++++++++=
-++
-> >>   docs/index.rst                        |   1 +
-> >>   docs/system/arm/virt.rst              |   2 +
-> >>   docs/system/images.rst                |   2 +
-> >>   docs/tools/qemu-nbd.rst               |   2 +
-> >>   7 files changed, 249 insertions(+)
-> >>   create mode 100644 docs/glossary/index.rst
-> >
-> > I think this is a good idea; we've had at least one bug
-> > report from a user pointing out that we had a term in
-> > our docs which we didn't define ("block driver"):
-> > https://gitlab.com/qemu-project/qemu/-/issues/2611
-> > I have some comments on specific entries below.
-> >
->
-> And people can be free to add new entries later. However, we should
-> resist the temptation to add too many details. It should stay simple and
-> understandable, even if not all technical nuances are not represented.
->
-> >> diff --git a/docs/devel/control-flow-integrity.rst b/docs/devel/contro=
-l-flow-integrity.rst
-> >> index e6b73a4fe1a..3d5702fa4cc 100644
-> >> --- a/docs/devel/control-flow-integrity.rst
-> >> +++ b/docs/devel/control-flow-integrity.rst
-> >> @@ -1,3 +1,5 @@
-> >> +.. _cfi:
-> >> +
-> >>   =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-> >>   Control-Flow Integrity (CFI)
-> >>   =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-> >> diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread=
--tcg.rst
-> >> index d706c27ea74..7fd0a07633d 100644
-> >> --- a/docs/devel/multi-thread-tcg.rst
-> >> +++ b/docs/devel/multi-thread-tcg.rst
-> >> @@ -4,6 +4,8 @@
-> >>     This work is licensed under the terms of the GNU GPL, version 2 or
-> >>     later. See the COPYING file in the top-level directory.
-> >>
-> >> +.. _mttcg:
-> >> +
-> >>   =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>   Multi-threaded TCG
-> >>   =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >> diff --git a/docs/glossary/index.rst b/docs/glossary/index.rst
-> >> new file mode 100644
-> >> index 00000000000..a2d4f3eae16
-> >> --- /dev/null
-> >> +++ b/docs/glossary/index.rst
-> >
-> > I guess it makes sense to give this its own subdir, since we want
-> > it to come at the end of the manual. The other option would be
-> > to put it directly into docs/.
-> >
->
->  From your comment, it's not clear for me if it's ok as it is, or if you
-> want a change.
-> Can you elaborate on that?
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-It means I'm not sure. We end up with a subdirectory with only
-one file in it and where there's no expectation we'd ever want
-to add any more files to it. On the other hand it does keep it
-out of the docs/ top level directory, which currently has a
-fair amount of cruft awaiting cleanup.
+[...]
 
-I guess on balance I would make this docs/glossary.rst,
-unless you anticipate wanting to split this into multiple
-files or have something else in docs/glossary/ later.
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 02b9118..fab50ce 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -4937,10 +4937,17 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
+>      "-incoming exec:cmdline\n" \
+>      "                accept incoming migration on given file descriptor\n" \
+>      "                or from given external command\n" \
+> +    "-incoming @MigrationChannel\n" \
+> +    "                accept incoming migration on the channel\n" \
+>      "-incoming defer\n" \
+>      "                wait for the URI to be specified via migrate_incoming\n",
+>      QEMU_ARCH_ALL)
+>  SRST
+> +The -incoming option specifies the migration channel for an incoming
+> +migration.  It may be used multiple times to specify multiple
+> +migration channel types.
 
-> >> @@ -0,0 +1,238 @@
-> >> +.. _Glossary:
-> >> +
-> >> +--------
-> >> +Glossary
-> >> +--------
-> >> +
-> >> +This section of the manual presents *simply* acronyms and terms QEMU =
-developers
-> >> +use.
-> >
-> > What's "simply" intended to mean here?
-> >
->
-> "in a straightforward or plain manner".
-> I can remove this word if you think it does not serve any purpose.
+Really?  If I understand the code below correctly, the last -incoming
+wins, and any previous ones are silently ignored.
 
-You could phrase it as "presents brief definitions of acronyms
-and terms", I think.
+>                            The channel type is specified in @MigrationChannel,
+> +and is 'main' for all other forms of -incoming.
+> +
+>  ``-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]``
+>    \ 
+>  ``-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]``
+> @@ -4960,6 +4967,16 @@ SRST
+>      Accept incoming migration as an output from specified external
+>      command.
+>  
+> +``-incoming @MigrationChannel``
+> +    Accept incoming migration on the channel.  See the QAPI documentation
+> +    for the syntax of the @MigrationChannel data element.  For example:
+> +    ::
 
-> >> +QEMU system defines board models for various architectures. It's a de=
-scription
-> >> +of a SoC (system-on-chip) with various devices pre-configured, and ca=
-n be
-> >> +selected with the option ``-machine`` of qemu-system.
-> >
-> > SoCs are not the same as boards.
-> >
-> > We could say something like:
-> >
-> > QEMU's system emulation models many different types of hardware.
-> > A machine model (sometimes called a board model) is the model
-> > of a complete virtual system with RAM, one or more CPUs, and
-> > various devices.
-> >
-> > We could also put in a link to
-> > https://www.qemu.org/docs/master/system/targets.html
-> > which is where we document what our machine types are.
-> >
->
-> How do you distinguish a SoC and cpu? Is a SoC cpu + devices?
-> Isn't a board/machine a set of SoC + devices attached?
+I get what you're trying to express, but there's no precedence for
+referring to QAPI types like @TypeName in option documentation.  But
+let's ignore this until after we nailed down the actual interface, on
+which I have questions below.
 
-An SoC is a "system on chip". To quote wikipedia's definition:
+> +
+> +        -incoming '{"channel-type": "main",
+> +                    "addr": { "transport": "socket",
+> +                              "type": "unix",
+> +                              "path": "my.sock" }}'
+> +
+>  ``-incoming defer``
+>      Wait for the URI to be specified via migrate\_incoming. The monitor
+>      can be used to change settings (such as migration parameters) prior
+> diff --git a/system/vl.c b/system/vl.c
+> index 4151a79..2c24c60 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -123,6 +123,7 @@
+>  #include "qapi/qapi-visit-block-core.h"
+>  #include "qapi/qapi-visit-compat.h"
+>  #include "qapi/qapi-visit-machine.h"
+> +#include "qapi/qapi-visit-migration.h"
+>  #include "qapi/qapi-visit-ui.h"
+>  #include "qapi/qapi-commands-block-core.h"
+>  #include "qapi/qapi-commands-migration.h"
+> @@ -159,6 +160,7 @@ typedef struct DeviceOption {
+>  static const char *cpu_option;
+>  static const char *mem_path;
+>  static const char *incoming;
+> +static MigrationChannelList *incoming_channels;
+>  static const char *loadvm;
+>  static const char *accelerators;
+>  static bool have_custom_ram_size;
+> @@ -1821,6 +1823,35 @@ static void object_option_add_visitor(Visitor *v)
+>      QTAILQ_INSERT_TAIL(&object_opts, opt, next);
+>  }
+>  
+> +static void incoming_option_parse(const char *str)
+> +{
+> +    MigrationChannel *channel;
+> +
+> +    if (str[0] == '{') {
+> +        QObject *obj = qobject_from_json(str, &error_fatal);
+> +        Visitor *v = qobject_input_visitor_new(obj);
+> +
+> +        qobject_unref(obj);
+> +        visit_type_MigrationChannel(v, "channel", &channel, &error_fatal);
+> +        visit_free(v);
+> +    } else if (!strcmp(str, "defer")) {
+> +        channel = NULL;
+> +    } else {
+> +        migrate_uri_parse(str, &channel, &error_fatal);
+> +    }
+> +
+> +    /* New incoming spec replaces the previous */
+> +
+> +    if (incoming_channels) {
+> +        qapi_free_MigrationChannelList(incoming_channels);
+> +    }
+> +    if (channel) {
+> +        incoming_channels = g_new0(MigrationChannelList, 1);
+> +        incoming_channels->value = channel;
+> +    }
+> +    incoming = str;
+> +}
 
-"A system on a chip or system-on-chip is an integrated circuit that
-integrates most or all components of a computer or electronic system.
-These components usually include an on-chip central processing unit
-(CPU), memory interfaces, input/output devices and interfaces, and
-secondary storage interfaces, often alongside other components such
-as radio modems and a graphics processing unit (GPU) =E2=80=93 all on a
-single substrate or microchip."
+@incoming is set to @optarg.
 
-An SoC always contains a CPU, but it will have a lot more
-than that built into it too. And the SoC only has "most"
-of the system components, so the whole machine will be
-an SoC plus some other things.
+@incoming_channels is set to a MigrationChannelList of exactly one
+element, parsed from @incoming.  Except when @incoming is "defer", then
+@incoming_channels is set to null.
 
-Generally a board/machine that uses an SoC will have on it:
- * an SoC
- * the actual memory
- * perhaps one or two extra devices external to the SoC
- * connectors for things like serial ports, SD cards, etc
-   (which generally wire up to SoC pins)
- * a crystal or similar to act as the main clock source
+@incoming is only ever used as a flag.  Turn it into a bool?
 
-So if you look at a photo of a development board that uses
-an SoC, there will be one large chip which is the SoC,
-some RAM chips, a bunch of connectors and one or two smaller
-chips. Not every device will be inside the SoC, but
-generally almost all of them are.
+Oh, wait...  see my comment on the next hunk.
 
-QEMU's machine models for this kind of board match the
-organization of the hardware; looking at hw/arm/sabrelite.c
-which is a machine model you can see that it has:
- * an instance of the fsl-imx6 SoC device object
- * the main memory
- * some NOR flash memory
- * some configuration and wiring up of things
+Option -incoming resembles QMP command migrate-incoming.  Differences:
 
-And the SoC itself is in hw/arm/fsl-imx6.c, and is a
-QOM device object that creates and wires up the CPUs,
-UARTs, USB controller, and various other devices that
-this particular SoC includes. In this case we only have
-one board model using this SoC, but for some SoCs we
-have several board models that all use the same SoC
-but wire up different external devices to it.
+* migrate-incoming keeps legacy URI and modern argument separate: there
+  are two named arguments, and exactly one of them must be passed.
+  -incoming overloads them: if @optarg starts with '{', it's modern,
+  else legacy URI.
 
-Some of our machine models are models of systems that
-don't use an SoC at all. This is rare in the Arm world,
-but for instance the SPARC machines like the SS-5 are
-like that -- the real hardware had a discrete CPU chip
-and a bunch of devices in their own chips on the
-motherboard, and QEMU's model of that hardware has
-a machine model which directly creates the CPU and
-the various devices. (And some of our older machine
-models are models of hardware that *does* have an SoC
-but where we didn't model that level of abstraction,
-so they directly create devices in the machine model
-that really ought to be inside an SoC object.
-hw/arm/stellaris.c is one example of that.)
+  Because of that, -incoming *only* supports JSON syntax for modern, not
+  dotted keys.  Other JSON-capable arguments support both.
 
-> >> +
-> >> +Block
-> >> +-----
-> >> +
-> >> +Block drivers are the available `disk formats <block-drivers>` availa=
-ble, and
-> >> +block devices `(see Block device section on options page)<sec_005finv=
-ocation>`
-> >> +are using them to implement disks for a virtual machine.
-> >
-> > Block drivers aren't just disk formats; there are some filter
-> > drivers too. Somebody on the block side could probably
-> > provide a better definition here.
-> >
->
-> I'm open to a more exact definition. The two terms (drivers and devices)
-> seem to overlap on some parts, so I came up with this trivial definition.
+  How can a management application detect that -incoming supports
+  modern?
 
-Yeah, the driver vs device split is a good one (basically
-the device is the front-end visible to the guest, and the
-driver is the back-end that provides it with storage
-via an abstracted API). The nit I'm picking here is that
-not every block driver is there to provide support for
-an on-host disk format.
+  Sure overloading -incoming this way is a good idea?
 
-> >> +
-> >> +CFI
-> >> +---
-> >> +
-> >> +Control Flow Integrity is a hardening technique used to prevent explo=
-its
-> >> +targeting QEMU by detecting unexpected branches during execution. QEM=
-U `actively
-> >> +supports<cfi>` being compiled with CFI enabled.
-> >> +
-> >> +Device
-> >> +------
-> >> +
-> >> +QEMU is able to emulate a CPU, and all the hardware interacting with =
-it,
-> >> +including many devices. When QEMU runs a virtual machine using a hard=
-ware-based
-> >> +accelerator, it is responsible for emulating, using software, all dev=
-ices.
-> >
-> > This definition doesn't actually define what a device is :-)
-> >
->
-> Indeed :)
-> Should we explain what is a computer device?
-> The goal was just to say that QEMU can emulate hardware interacting with
-> the cpu, which could be a possible definition. So people can associate
-> that QEMU devices are nothing else than a "normal" computer device.
+* migrate-incoming takes a list of channels, currently restricted to a
+  single channel.  -incoming takes a channel.  If we lift the
+  restriction, -incoming syntax will become even messier: we'll have to
+  additionally overload list of channel.
 
-We could say, perhaps:
+  Should -incoming take a list from the start, like migrate-incoming
+  does?
 
-In QEMU, a device is a piece of hardware visible to the guest.
-Examples include UARTs, PCI controllers, PCI cards, VGA controllers,
-and many more.
+> +
+>  static void object_option_parse(const char *str)
+>  {
+>      QemuOpts *opts;
+> @@ -2730,7 +2761,7 @@ void qmp_x_exit_preconfig(Error **errp)
+>      if (incoming) {
+>          Error *local_err = NULL;
+>          if (strcmp(incoming, "defer") != 0) {
+> -            qmp_migrate_incoming(incoming, false, NULL, true, true,
+> +            qmp_migrate_incoming(NULL, true, incoming_channels, true, true,
+>                                   &local_err);
 
+You move the parsing of legacy URI from within qmp_migrate_incoming()
+into incoming_option_parse().
 
+The alternative is not to parse it in incoming_option_parse(), but pass
+it to qmp_migrate_incoming() like this:
 
-> >> +
-> >> +Hypervisor
-> >> +----------
-> >> +
-> >> +The formal definition of an hypervisor is a program than can be used =
-to manage a
-> >> +virtual machine. QEMU itself is an hypervisor.
-> >
-> > "a hypervisor". QEMU isn't really a hypervisor, though...
-> >
->
-> It's a shortcut, and I'm open to change it. It brings an interesting
-> question though.
->
-> Technically, QEMU interacts with hypervisor APIs built in various OSes.
-> On the other hand, when we use TCG, it's an emulator instead.
->
-> But as you can't use KVM/hvf/whpx by itself, how do you name the program
-> interacting with it, and emulating the rest of the VM?
->
-> The correct word is probably "virtualizer", but from searching on
-> Internet, it seems that "vmm" and "virtualizer" are considered the same
-> as an "hypervisor". The difference is subtle, and maybe we have an
-> opportunity here to clarify it.
+               qmp_migrate_incoming(incoming, !incoming, incoming_channels,
+                                    true, true, &local_err);
 
+>              if (local_err) {
+>                  error_reportf_err(local_err, "-incoming %s: ", incoming);
+> @@ -3477,7 +3508,7 @@ void qemu_init(int argc, char **argv)
+>                  if (!incoming) {
+>                      runstate_set(RUN_STATE_INMIGRATE);
+>                  }
+> -                incoming = optarg;
+> +                incoming_option_parse(optarg);
+>                  break;
+>              case QEMU_OPTION_only_migratable:
+>                  only_migratable = 1;
 
-> >> +Patchwork
-> >> +---------
-> >> +
-> >> +`Patchwork <https://patchew.org/QEMU/>`_ is a website that tracks
-> >> +patches on the Mailing List.
-> >
-> > Patchwork and patchew are different systems. Patchew's URL is
-> > https://patchew.org/QEMU/
-> >
-> > (There is a patchwork instance that tracks qemu-devel patches,
-> > at https://patchwork.kernel.org/project/qemu-devel/list/ , but
-> > I'm not aware of any developers that are actively using it, so
-> > I don't think it merits being mentioned in the glossary.)
-> >
->
-> I've been confused by that, and just thought it was two different
-> instances (fork me if you can) of the "same" thing.
-> How would you define patchew?
-> When we say patchwork, do we implicitely mean patchew?
-
-No. patchwork is patchwork, and patchew is patchew -- these
-are entirely different pieces of software that happen to do
-similar jobs.
-
-> if I understand currently, patchew is what we want to mention in our
-> doc? (and mention it's not associated to patchwork).
-
-We don't use patchwork, so we don't need to mention it anywhere.
-
-> >> +Once a series is reviewed and accepted by a subsystem maintainer, it =
-will be
-> >> +included in a PR (Pull Request) that the project maintainer will merg=
-e into QEMU
-> >> +main branch, after running tests.
-> >
-> > I think we could probably also usefully say
-> >
-> > "The QEMU project doesn't currently expect most developers to
-> > directly submit pull requests."
-> >
-> > just to flag up that our development model isn't like the
-> > currently-popular github/gitlab one where a PR is how you
-> > send contributions.
-> >
->
-> This is interesting.
->
-> For the majority of developers nowadays, a PR is a GitHub/GitLab PR.
-> Despite the fact we use the original PR meaning (in git terms), it's
-> probably confusing when new comers hear pull request.
->
-> >> +
-> >> +QCOW
-> >> +----
-> >> +
-> >> +QEMU Copy On Write is a disk format developed by QEMU. It provides tr=
-ansparent
-> >> +compression, automatic extension, and many other advantages over a ra=
-w image.
-> >
-> > We want to be a bit careful here, because the "qcow" format
-> > is not something we recommend for new use -- "qcow2" is what
-> > you actually want.
-> >
-> > https://www.qemu.org/docs/master/system/qemu-block-drivers.html#cmdopti=
-on-image-formats-arg-qcow2
-> >
->
-> Sounds good.
->
-> For my personal knowledge: during this work I discovered that we had
-> qcow3. From what I understood, it seems to be included in what we called
-> qcow2 today. Is that correct?
-
-I have no idea -- you'd need to ask somebody who works on the
-block layer
-
-thanks
--- PMM
 
