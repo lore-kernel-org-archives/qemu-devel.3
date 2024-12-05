@@ -4,64 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 833C9E7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 14:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9021E7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 14:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJCuv-0004qR-Ud; Thu, 05 Dec 2024 09:33:21 -0500
+	id 1tJDEL-0001RH-2x; Thu, 05 Dec 2024 09:53:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJCuu-0004pc-IY; Thu, 05 Dec 2024 09:33:20 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJCus-0004DL-98; Thu, 05 Dec 2024 09:33:20 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 06CBD5C5764;
- Thu,  5 Dec 2024 14:32:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAB1C4CED1;
- Thu,  5 Dec 2024 14:33:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1733409195;
- bh=udsK/NXo03cqE0THHxdmSiUCLh2tIPbDao/AdhDKz/A=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=KS8wJqJxe2i6CmkGiraT/fZWdQh0HSRdIFhToMu6N0p5dETN1rGQaE+ELzNYyfl8Z
- J+nOyIcmUmULOlftEtf2+QiXxum1U3R+Ao1/yKucGMrJu1A1hYGIlwT0DXyAJzRFBg
- aAXJY7E2pKMJClYMMjoEECClf0cGQbodZz3UYPERhEBZ4kd879cxPH9uVydJ6t+D3U
- 6vgXj92h2DTaEIF4P1VIQUo3+bdZuW7lzdjFXoXqxrYJ02lERkx+is5bTN3M12d1n+
- 0y3xRuoUpzgGzFghDKrekYwhwnSY3j+BQCS/7seXvT59ZJWzQbobAlIiryLNCBiWzn
- CMP4RRJJdZhwQ==
-Date: Thu, 5 Dec 2024 15:33:10 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 13/16] acpi/ghes: better name the offset of the
- hardware error firmware
-Message-ID: <20241205153310.2e73a5bf@foz.lan>
-In-Reply-To: <20241205102219.274e3d27@imammedo.users.ipa.redhat.com>
-References: <cover.1733297707.git.mchehab+huawei@kernel.org>
- <20b003136d8c008fd54e8d40c806f13867336e13.1733297707.git.mchehab+huawei@kernel.org>
- <20241204173759.6f02561a@imammedo.users.ipa.redhat.com>
- <20241205085959.2223d079@foz.lan>
- <20241205102219.274e3d27@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJDEI-0001QP-UZ
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 09:53:23 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJDEF-0007TN-VU
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 09:53:22 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0ac27b412so1204797a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 06:53:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733410398; x=1734015198; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DgbjCCB16SErebcpkCcosJNhLesM5Vw3w3bIxhw/pzQ=;
+ b=kn7hAABt2bIW6UpOdYlFJ7Qy1j2OhXlLnITc9DJ5/zEU1I3v58KdgoM7SQM8uJxrRP
+ H6PSGdd+kMS3l2WF6JgfgodjWKIo7DIW7TOjjjl7oGxuzBZcVd0RB0yxGXcsgu97mWCC
+ Hhx8wBFgovIX3fxoUSDuibFX2DrYVquiAcVTEQuMQ7JKky3NY2W/Ghjsh8zi7vzJgL9a
+ e6VByeUZwhuqdRcRGNV8L9pE8hct1WtKBOefTIdxbwWGWnQnMgIRoxM1LR4F6UdUVWOk
+ 2e1n40T4PifEAVs/rRslAUakqWJxb2MB7YPfyEI/hQcDgxhx79tMzlVuCj767Zb7gnpI
+ fPpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733410398; x=1734015198;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DgbjCCB16SErebcpkCcosJNhLesM5Vw3w3bIxhw/pzQ=;
+ b=dGogUWek2m95H3Zu4i37M30ETAWFy8WPvPd+UR+fSlDozK6t6N2vavbghLa4VNVXlF
+ CxY7lQQzLbJAO7srSjcaBYCHEt9Qj3qNsbeVOU/82x9/dgDKmtWW8CH8xfTDGV4oOm53
+ 61Crg2rfz5LUSKaxNlKTO5L1bc6l6HHqylZb4m2r3xeZDgX/v2JP5eIWgghwXRq8whoq
+ kuOSzBs6sjRkjKkEOEq/fpNv8+Sr3OS81pB1K3cm7+DMacTRVj9HqGiSI6p4SpFL7IDz
+ 1GHM+6dVWNQx1sPkHMIk+fSSO4XdWnaAy3aMZxEz0Jat/kxC1gP+fgehQc6pSwrTTvBI
+ vwuw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyOhS9F3dmWFGpu37tmJq/3L/hDi8gT9q7KVUO5nh5p/FvRdlFwWTbixV3A0V07PkCy/eMZnd7yzbm@nongnu.org
+X-Gm-Message-State: AOJu0YwnXTOb9tibjtiH0icOl522LTPQOdDEUX2VNyPVeI+UXKtNG2vC
+ SrSBeJOamS2XwG+YYrK7bi2sdLD0mVX9iwvWhbs7WvA8eey2MxD8hnIX2QIQSKtrpEerBk7fDts
+ bBZtscD5KSaITMZ1JYiLrZckZUyi6vr/rpn5CLg==
+X-Gm-Gg: ASbGncsVvQB+j80EMQ7D3JBTJIvTsj8unj4ZdiybMnbVLALaOooq7XGbTaWL6G5IjQn
+ RfI3R1x9Ztd79SqdH9fe7PovNVywaVemD
+X-Google-Smtp-Source: AGHT+IFQLhPKoyeH2ruPHxdJJMFM6DWqYU7GRP3j6nFSiCR8YyU9eJqiblIOfYqvSAORNLB+nakw3cpl896yRf6Bqr4=
+X-Received: by 2002:a05:6402:5206:b0:5d1:3da:e6c with SMTP id
+ 4fb4d7f45d1cf-5d10cb556b8mr12211020a12.10.1733410398025; Thu, 05 Dec 2024
+ 06:53:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -73
-X-Spam_score: -7.4
-X-Spam_bar: -------
-X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241126084928.252067-1-marcin.juszkiewicz@linaro.org>
+ <CAFEAcA_SkZ+ew8AAVpBHuw-9YW4S5wFbB0Vqx+dBzXf97JGDGw@mail.gmail.com>
+ <cd635753-4e2c-42d6-bb7b-d558d90f59d7@linaro.org>
+ <2106db77-88fb-4113-ae09-9bf77bce6ad7@quicinc.com>
+ <c4245af0-3dd4-4cf6-a786-c15fa079ad05@linaro.org>
+ <18ba737f-d669-4e6a-8319-fb5052223b26@linaro.org>
+In-Reply-To: <18ba737f-d669-4e6a-8319-fb5052223b26@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Dec 2024 14:53:07 +0000
+Message-ID: <CAFEAcA-P5P4AJidWcGgUScBTe9-K_C4Qm9N2o2XWnfiT81LU=A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] hw/arm/sbsa-ref: bump default memory size to 2GB
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Leif Lindholm <quic_llindhol@quicinc.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>, leif.lindholm@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,161 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Thu, 5 Dec 2024 10:22:19 +0100
-Igor Mammedov <imammedo@redhat.com> escreveu:
+On Thu, 5 Dec 2024 at 10:14, Marcin Juszkiewicz
+<marcin.juszkiewicz@linaro.org> wrote:
+>
+> W dniu 4.12.2024 o 21:50, Philippe Mathieu-Daud=C3=A9 pisze:
+> > On 4/12/24 13:17, Leif Lindholm wrote:
+> >> On 2024-12-02 10:53, Marcin Juszkiewicz wrote:
+> >>> W dniu 26.11.2024 o 14:14, Peter Maydell pisze:
+> >>>> On Tue, 26 Nov 2024 at 08:49, Marcin Juszkiewicz
+> >>>> <marcin.juszkiewicz@linaro.org> wrote:
+> >>>>>
+> >>>>> We are working on adding RME support to SBSA Reference Platform.
+> >>>>> When RME is enabled then RMM (Realm Managment Monitor) takes 1072MB=
+ of
+> >>>>> memory for own use. Which ends with firmware panic on 1GB machine.
+> >>>>
+> >>>> Reasonable change, but isn't it also a bug in the RMM that it
+> >>>> grabs 1GB of RAM regardless of how much RAM the machine
+> >>>> actually has?
+> >>>
+> >>> I think that the goal is "get it working" first and then optimize.
+> >>
+> >> I agree on a different platform this could feel quite hacky, but in
+> >> reality even 2GB falls within "ridiculously low for an SBSA platform".
+> >>
+> >> If we're worried about overhead for CI jobs that do not require the
+> >> feature, we could always conditionalize it on RME being enabled. But
+> >> I'd be happy to wait and see.
+> >
+> > I'd rather do that, since it is as simple as:
+>
+> This is sbsa-ref not sbc-ref. Let it just have that 2GB of ram. None of
+> existing SBSA systems comes with such low amount.
 
-> On Thu, 5 Dec 2024 08:59:59 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Em Wed, 4 Dec 2024 17:37:59 +0100
-> > Igor Mammedov <imammedo@redhat.com> escreveu:
-> >   
-> > > On Wed,  4 Dec 2024 08:41:21 +0100
-> > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> > >     
-> > > > The hardware error firmware is where HEST error structures are      
-> > >       ^^^^^^^^^^^^^^^^^^^^^^^ I can't parse this, suspect you've meant something else here
-> > >     
-> > > > stored. Those can be GHESv2, but they can also be other types.
-> > > > 
-> > > > Better name the location of the hardware error.
-> > > > 
-> > > > No functional changes.    
-> > 
-> > I meant this fw_cfg file:
-> > #define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
-> > #define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
-> > 
-> > What about changing description to:
-> > 
-> > 	The etc/hardware_errors fw_cfg file is where the HEST error
-> > 	source structures are stored. Those can be GHESv2, but they can also
-> > 	be other types.  
-> 
-> As I understand it, etc/hardware_errors is a blob
-> for '18.3.2.7.1. Generic Error Data' with some extra fields
-> to accommodate GHESv2 handling (i.e. err addr indirection and ack reg).
-> 
-> While error sources are described in HEST (and only GHES ones would
-> reference  etc/hardware_errors via error status addr/read ack register addr)
+Yes, I think I agree here. Changing the default RAM size
+based on whether the CPU does or does not have a particular
+feature is unusual and not something we do on other board
+types, and it definitely doesn't match the general intention
+that sbsa-ref is a "looks like real hardware" machine.
 
-Yeah, what it is stored there is not the error source structures
-themselves, but the additional address data they contain. For GHESv2,
-such data is the Error Status Address (where CPER data is stored) and 
-the Read Ack Register.
+The problem with using 2GB, though, is that it doesn't
+work on 32-bit hosts, which have a max of 2047MB (and
+if you try larger then hw/core/machine.c will error out with
+"at most 2047 MB RAM can be simulated").
 
-Currently, only GHES (type 9) and GHESv2 (type 10) have those
-Generic Address Structure stored there.
+As a result we have several board types which have an ifdef
+to say "limit the RAM size to 1GB if HOST_LONG_BITS is 32".
 
-What about then:
+(I think this limit primarily derives from ramptr_t
+being defined as a uintptr_t, but also trying to malloc
+2GB on a 32-bit host is unlikely to work very well.)
 
-	The etc/hardware_errors fw_cfg file is where the HEST error
-	source structures store registers pointed by Generic Address
-	Structures, as defined at:
-
-		https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#generic-error-data-entry
-
-	and
-		
-		https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#generic-hardware-error-source-version-2-ghesv2-structure
-
-	As the name of the firmware file is hardware_errors, better
-	name the variable where the offset pointing to it will be stored
-	from ghes_error_le to hw_error_le.
-
-	No functional changes.
-
-Regards,
-Mauro
-
-> 
-> > 
-> > 	For more details about error source structure, see:
-> > 	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#acpi-error-source
-> > 
-> > 	Better name the address variable from ghes_error_le to hw_error_le
-> > 	to better reflect that.
-> > 
-> > 	No functional changes.
-> >   
-> > > > 
-> > > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> > > > ---
-> > > >  hw/acpi/generic_event_device.c | 4 ++--
-> > > >  hw/acpi/ghes.c                 | 4 ++--
-> > > >  include/hw/acpi/ghes.h         | 2 +-
-> > > >  3 files changed, 5 insertions(+), 5 deletions(-)
-> > > > 
-> > > > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> > > > index 663d9cb09380..17baf36132a8 100644
-> > > > --- a/hw/acpi/generic_event_device.c
-> > > > +++ b/hw/acpi/generic_event_device.c
-> > > > @@ -364,7 +364,7 @@ static const VMStateDescription vmstate_ghes = {
-> > > >      .version_id = 1,
-> > > >      .minimum_version_id = 1,
-> > > >      .fields = (const VMStateField[]) {
-> > > > -        VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),
-> > > > +        VMSTATE_UINT64(hw_error_le, AcpiGhesState),
-> > > >          VMSTATE_END_OF_LIST()
-> > > >      },
-> > > >  };
-> > > > @@ -372,7 +372,7 @@ static const VMStateDescription vmstate_ghes = {
-> > > >  static bool ghes_needed(void *opaque)
-> > > >  {
-> > > >      AcpiGedState *s = opaque;
-> > > > -    return s->ghes_state.ghes_addr_le;
-> > > > +    return s->ghes_state.hw_error_le;
-> > > >  }
-> > > >  
-> > > >  static const VMStateDescription vmstate_ghes_state = {
-> > > > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> > > > index 52c2b69d3664..90d76b9c2d8c 100644
-> > > > --- a/hw/acpi/ghes.c
-> > > > +++ b/hw/acpi/ghes.c
-> > > > @@ -359,7 +359,7 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> > > >  
-> > > >      /* Create a read-write fw_cfg file for Address */
-> > > >      fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
-> > > > -        NULL, &(ags->ghes_addr_le), sizeof(ags->ghes_addr_le), false);
-> > > > +        NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
-> > > >  
-> > > >      ags->present = true;
-> > > >  }
-> > > > @@ -385,7 +385,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-> > > >      }
-> > > >      ags = &acpi_ged_state->ghes_state;
-> > > >  
-> > > > -    start_addr = le64_to_cpu(ags->ghes_addr_le);
-> > > > +    start_addr = le64_to_cpu(ags->hw_error_le);
-> > > >  
-> > > >      start_addr += source_id * sizeof(uint64_t);
-> > > >  
-> > > > diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> > > > index 21666a4bcc8b..39619a2457cb 100644
-> > > > --- a/include/hw/acpi/ghes.h
-> > > > +++ b/include/hw/acpi/ghes.h
-> > > > @@ -65,7 +65,7 @@ enum {
-> > > >  };
-> > > >  
-> > > >  typedef struct AcpiGhesState {
-> > > > -    uint64_t ghes_addr_le;
-> > > > +    uint64_t hw_error_le;
-> > > >      bool present; /* True if GHES is present at all on this board */
-> > > >  } AcpiGhesState;
-> > > >        
-> > >     
-> > 
-> > 
-> > 
-> > Thanks,
-> > Mauro
-> >   
-> 
-
-
-
-Thanks,
-Mauro
+thanks
+-- PMM
 
