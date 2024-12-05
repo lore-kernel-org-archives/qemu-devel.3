@@ -4,133 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F74E7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 10:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABF5CE7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 11:01:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ9ZH-00034M-Pz; Thu, 05 Dec 2024 05:58:47 -0500
+	id 1tJ9bL-00046b-RC; Thu, 05 Dec 2024 06:00:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJ9ZF-00034D-9K
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:58:45 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJ9bE-00046D-42
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:00:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJ9ZD-0003yh-Vo
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:58:45 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJ9b7-0004LB-4s
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 06:00:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733396322;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1733396440;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fcDgsuQAoxrCDCOSh8oogGU5LhZim/psSeqH4/93/Iw=;
- b=gfFjKiRVbeU1gQFGDhMa4tKxMc7ncVCp6Uc/sa375IbIC9vnhXysoxkc180v/ObPWh6DVy
- eNE7rRGJ1F09dLpUSadz1g1VhVOVASZPCi8nq7RaFBdeaUGG7I0U2MH78CQT1JNu2OyRAX
- V0CoShz4G3EeffeBy1l33ERp0EBEg9I=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-spfm3QC1OgeKhBFZYqU2-w-1; Thu, 05 Dec 2024 05:58:41 -0500
-X-MC-Unique: spfm3QC1OgeKhBFZYqU2-w-1
-X-Mimecast-MFC-AGG-ID: spfm3QC1OgeKhBFZYqU2-w
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6d8897ea603so14744786d6.1
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 02:58:41 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733396321; x=1734001121;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fcDgsuQAoxrCDCOSh8oogGU5LhZim/psSeqH4/93/Iw=;
- b=cxiqc52YM4dsebrhYRQ9gY2NpcH0LmgbtYB7/bFzH42nYZuTMiPZLjdFfT48O6YpuZ
- MqsiReCf5njKOFscfFvFGGgl72hzRuDEEgFEX86GiglXiFnyYjeMQwPLWxvNdiRO8zN4
- K4Kn7VFOusvMVwVAoCSeDPx3l9wRw8kdAamQ8ylpsWGLlr3HlP1dmPw6RkJYfclqHoMI
- iEfvCrnzjDtCeUSKtfBvRllGTYWkRCWKVu0d32agqVFWrOhpa6K2yIyWj1dQXhHkSam8
- iQOCbXKIuQ/fBFx6WtJNIG418WWTXpkEWrbW3Qyv5w6NpJhhzkACrv63lf/s+X3wOdAZ
- fOGg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3JTxsmupT2cN5WSbmomNMwHZzUy3IdkuTqmE2x+ULcOG1ynrHOqCsntS7IN2oJ7uQbTLXbD81EQWM@nongnu.org
-X-Gm-Message-State: AOJu0Yxpj3zNzCn746NM2HCWnlJXpjvFdXAoQdJgXXqQ2jJInD9Trs0H
- msGhUdhXUJWQhpyKLeVYhSRANIdyFI5PF7fCgegT1gFyFC2h8OopvVortlB2KDGfieDtgjVv9aJ
- 74qpv5MPInMQ8So0K1WgMD7jGnSUtL8a9VhnTCR+b/6xhC4kqSEZq
-X-Gm-Gg: ASbGncu+5mcADmvbrGbtWITdvLEGIQmXKHV/bD2gZeDutcE0C7W/eWgW6OiEOA5v1dU
- 3Mh0EEUIc95OsM8/nl0J2v2aqyl9LH5XfdPDpfpdyqN21IDnZtmzZr/5yeSQ2KgoqU9yGxuC2ul
- qpg7K98+tDVKbrqfsKquAJq03QJKNRdwpn6WObdoxd2TrrnHSqeZwlaTLzJoIToubea7Y2aHqOc
- WjKOUvExaMWaYZQk/rIYfpzs4kehaWvXcwBD0MBzUzkCqr9tJWrL9Gd9lZ89DFLgAcsmwKEnqjQ
- kUrB5A==
-X-Received: by 2002:a05:6214:4791:b0:6d8:acde:8a98 with SMTP id
- 6a1803df08f44-6d8d70830fdmr41445066d6.14.1733396321184; 
- Thu, 05 Dec 2024 02:58:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHVq/4ntlHDF0opP+MohKMzybExU8al53ynF3HQNwDL82Ft7Ej3uPgG2yXC6XnfShqjV49UiQ==
-X-Received: by 2002:a05:6214:4791:b0:6d8:acde:8a98 with SMTP id
- 6a1803df08f44-6d8d70830fdmr41444956d6.14.1733396320970; 
- Thu, 05 Dec 2024 02:58:40 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-244.web.vodafone.de.
- [109.42.48.244]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8da6b84f1sm5337126d6.61.2024.12.05.02.58.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 02:58:40 -0800 (PST)
-Message-ID: <21bb6a69-f524-4503-90d4-cb4d71552469@redhat.com>
-Date: Thu, 5 Dec 2024 11:58:36 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] gitlab: enable ccache with Cirrus CI
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+ in-reply-to:in-reply-to:references:references;
+ bh=65rANKRBsE8VvpGUoQ9VHe9bcomVnUTNRhLIL0/+MXU=;
+ b=ZKlZwqTjYwYlJd7dOVXDnLMd4hr7hU0WmGqpWFVz52ZturIUiXXAXzSJMZxiXBwtlR/IY2
+ sJgEjRPSyl/wgJQWLAXeWkRXu8Lo8a4WxP8yv5V42CVu1W3AQfwwxCyU85jyROi/exQ7kn
+ li6gUS/+HZUlsW39Vmv6iAdkqP1pXRM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-164-9hOFFLKpNDGNQQ1XL1vC1A-1; Thu,
+ 05 Dec 2024 06:00:38 -0500
+X-MC-Unique: 9hOFFLKpNDGNQQ1XL1vC1A-1
+X-Mimecast-MFC-AGG-ID: 9hOFFLKpNDGNQQ1XL1vC1A
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E75D19560B6; Thu,  5 Dec 2024 11:00:37 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.137])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8BA3630001A2; Thu,  5 Dec 2024 11:00:35 +0000 (UTC)
+Date: Thu, 5 Dec 2024 11:00:31 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 3/7] gitlab: clean packages in cirrus tasks
+Message-ID: <Z1GHz88VwR_1MPzZ@redhat.com>
 References: <20241204194807.1472261-1-berrange@redhat.com>
- <20241204194807.1472261-6-berrange@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241204194807.1472261-6-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20241204194807.1472261-4-berrange@redhat.com>
+ <c632357b-bfd0-483d-8f80-6310a0ffee13@redhat.com>
+ <Z1FwGo_7AfYjwX6X@redhat.com>
+ <8b4f3905-dd97-47de-b8e5-05b5e072ced1@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+In-Reply-To: <8b4f3905-dd97-47de-b8e5-05b5e072ced1@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -152,27 +90,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/12/2024 20.48, Daniel P. Berrangé wrote:
-> Add rules to configure the use of ccache with Cirrus CI jobs,
-> and preserve the cache across jobs.
+On Thu, Dec 05, 2024 at 11:09:01AM +0100, Thomas Huth wrote:
+> On 05/12/2024 10.19, Daniel P. Berrangé wrote:
+> > On Thu, Dec 05, 2024 at 09:58:54AM +0100, Thomas Huth wrote:
+> > > On 04/12/2024 20.48, Daniel P. Berrangé wrote:
+> > > > The FreeBSD VM is somewhat low on disk space after all QEMU build deps
+> > > > are installed and a full QEMU build performed. Purging the package
+> > > > manager cache is a simple thing that reclaims about 1 GB of space.
+> > > > 
+> > > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > > > ---
+> > > >    .gitlab-ci.d/cirrus.yml       | 2 ++
+> > > >    .gitlab-ci.d/cirrus/build.yml | 1 +
+> > > >    2 files changed, 3 insertions(+)
+> > > > 
+> > > > diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+> > > > index 16411f3d2b..2bd3cb35c9 100644
+> > > > --- a/.gitlab-ci.d/cirrus.yml
+> > > > +++ b/.gitlab-ci.d/cirrus.yml
+> > > > @@ -42,6 +42,7 @@ x64-freebsd-14-build:
+> > > >        CIRRUS_VM_RAM: 8G
+> > > >        UPDATE_COMMAND: pkg update; pkg upgrade -y
+> > > >        INSTALL_COMMAND: pkg install -y
+> > > > +    CLEAN_COMMAND: pkg clean -y --all
+> > > >        CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
+> > > >        TEST_TARGETS: check
+> > > > @@ -54,6 +55,7 @@ aarch64-macos-build:
+> > > >        CIRRUS_VM_IMAGE_NAME: ghcr.io/cirruslabs/macos-runner:sonoma
+> > > >        UPDATE_COMMAND: brew update
+> > > >        INSTALL_COMMAND: brew install
+> > > > +    CLEAN_COMMAND: brew cleanup --prune=all
+> > > 
+> > > Are we also short on disk space in the macOS jobs? Otherwise, I wonder
+> > > whether we should rather skip the step here to save some seconds of run
+> > > time?
+> > 
+> > I've not measured it, but I've not seen disk space issues on macOS. Still
+> > this command is quick and lost in the noise of the package install process
+> > which will vary depending on network performance and homebrew server load.
 > 
-> The HomeBrew PATH was already present, but incorrect, while
-> the FreeBSD PATH was missing.
-> 
-> About 1 GB is enough to get a 99% hit rate on a pristine rebuild
-> with no code changes. Setting it much higher than this will
-> trigger ENOSPC problems on the FreeBSD builders due to limited
-> disk size.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   .gitlab-ci.d/cirrus.yml       | 3 ++-
->   .gitlab-ci.d/cirrus/build.yml | 9 +++++++++
->   2 files changed, 11 insertions(+), 1 deletion(-)
+> Ok, fair, so if it is a quick command:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I measured it now.  6 seconds run time, frees 2 GB of space on macOS.
+
+The macOS VM has ~300 GB working space just for builds, which is an order
+of magnitude more than the FreeBSD VMs get at 20 GB for the entire OS
+install and builds.
+
+> 
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
