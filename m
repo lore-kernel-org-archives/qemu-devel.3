@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DF99E77172
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 15:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CCC7E77170
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 15:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJDhW-00038m-D5; Thu, 05 Dec 2024 10:23:34 -0500
+	id 1tJDhk-0003Ac-5O; Thu, 05 Dec 2024 10:23:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1tJDhU-00038N-Fr
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:23:32 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1tJDhQ-0007Yb-8O
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:23:30 -0500
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B56uk2J006572;
- Thu, 5 Dec 2024 15:23:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- yD07FnsPY6V6ij1I2p5hgqHcWOaAYvzhTTTm3GVxcME=; b=b0GBExb1CqKrQLRR
- cClKgOsByVTWQOD3Vay+O09j3sRCfNTgM335jufZ5oMH7AxJw7etiA+Ms9IZ/gYd
- prHdZAtBOE67YFfoh4tSqs3a2pOsf+Bv2Rz64/H2VOpdKyFy0H5FPxpP98UmBtHW
- lFAUAS9KYft7du7HtW75PD4JAQSak6FmT66MyimBDWyqTnWNy81KrH7nXnRx5dQz
- 3syE9NKldyhN828rO6ODjY2GA/Yddja5bdxF4bp5bf4f2FPtePD7RWUfszqprp9Q
- OvuB+gMUfkViIRPT0Y0DO6iHY14SvotX45fAP8qIaTjFa9OsOEG6vm1ng/K0CHlF
- 9FYq/Q==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 439w3er0d8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Dec 2024 15:23:23 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
- [10.47.97.35])
- by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4B5FNMbE028318
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 5 Dec 2024 15:23:23 GMT
-Received: from [10.111.162.221] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Dec 2024
- 07:23:15 -0800
-Message-ID: <0f5b9f9a-8819-46b5-8d0e-8ba5490ba828@quicinc.com>
-Date: Thu, 5 Dec 2024 09:23:09 -0600
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJDhj-0003AD-6C
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:23:47 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJDhg-0007aC-Id
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 10:23:46 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0bf80972dso1247962a12.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 07:23:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733412221; x=1734017021; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2o0BOwxkDSCufIXkZ4f5R0oc042vUvihYxGeEHkXCng=;
+ b=SLjDUFNTeuiUMQfO17UtxwSMqKI6GuLAwcwB10tT6T7Tg1eVziAR36cae9gC1UgsD0
+ BmFR1vJqEJMhh583YsJ3Rq3PRkQa57le7UL22aNy0veaL+LVO25UeAvJX+lZMlA1QaP9
+ XdGzS5/IQLrCcgGob3JiqsU++TgxVmzDDJPU3hVUM/Tyk080bqS8ReVZZW7NvI86HzVc
+ 6c0IrEZVjfbiWVV1vIkkAP5NqYFWl/tezmXKPcrpTc1diOYBlu91VUc9GGddmEnOfOrC
+ jCFR2Y7T+WNJMErcmZaCByRIGf5hghFTCI9Sfu+ybIHy0j+7vQLE6I9hR3befaP9aN0E
+ 7PHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733412221; x=1734017021;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2o0BOwxkDSCufIXkZ4f5R0oc042vUvihYxGeEHkXCng=;
+ b=Y+VvtjR8uZqehs7zbloDYqouZ908brW56b0lSeIbiw6V9Pv04R64pkpNNdgdcPIZXR
+ L1NRu6froguqOHQa4GkL9QFoFZIKqv8eWIsTo+tpJA+6XWWoamejq6kZqThJKLGkQcOM
+ bwkmNLmdY0aNfdh57+WkzBMJfBtOxoHC727EORyzi8DRUvpw9BRioCgY9v7hsbf4DAJH
+ p1M5Ah8x74kB/NNP3F5KtlWQbcJtcV6jxl7FqkEyqXlG38N4jn599lGbuYFnBGkoLNUg
+ MbHff2DZ4SSp1dv8DaEtRNjEeE7VnO8TNvYnh/D1Iqq8cV1kHFvl8x6nRWno9YgEqX25
+ pJjg==
+X-Gm-Message-State: AOJu0Yx5wV9U+2JUbyDBLNbD9QdrDI28mLKHbsu9+kjkRfwTNsPjWbwK
+ Frt6YbH3IesR0D1lvbIwX0S0g71fClyk89q1RpotFDeLeM/JLz4icHsGZm5ia1TAl0V33Nw+1uX
+ 79LD6pzM3VscBn8DyGGIWrALCvT3RZ25iPvvYOQ==
+X-Gm-Gg: ASbGnctGF5w5XlVZMYsUsI3PIoJkCLy4LdYJuSJ5Qc9jJFhvWy8zNTbf8pyMroFm1hb
+ 6qKkn3HVwfbB9uQTBZ0t8gnpExMgp4+II
+X-Google-Smtp-Source: AGHT+IG8NJmTbbacd/8LR2gPy/2hPCKBTxHEX7mIRpnGShOO2RWc+Mzj7/NaGoNqlqSw6es86YRBj//ckoHRuBboDg0=
+X-Received: by 2002:a05:6402:3506:b0:5d0:9054:b119 with SMTP id
+ 4fb4d7f45d1cf-5d10cb80133mr13614218a12.21.1733412221125; Thu, 05 Dec 2024
+ 07:23:41 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 35/43] target/hexagon: Use argparse in all python
- scripts
-To: Anton Johansson <anjo@rev.ng>, <qemu-devel@nongnu.org>
-CC: <ale@rev.ng>, <ltaylorsimpson@gmail.com>, <bcain@quicinc.com>,
- <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <alex.bennee@linaro.org>
-References: <20241121014947.18666-1-anjo@rev.ng>
- <20241121014947.18666-36-anjo@rev.ng>
-Content-Language: en-US
-From: Brian Cain <quic_bcain@quicinc.com>
-In-Reply-To: <20241121014947.18666-36-anjo@rev.ng>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-GUID: izafhLTuB7Zh_NeHe65w5zsIdW5mSmI7
-X-Proofpoint-ORIG-GUID: izafhLTuB7Zh_NeHe65w5zsIdW5mSmI7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0
- bulkscore=0 mlxscore=0 adultscore=0 priorityscore=1501 mlxlogscore=999
- spamscore=0 malwarescore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412050111
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20241118172357.475281-1-pierrick.bouvier@linaro.org>
+ <20241118172357.475281-7-pierrick.bouvier@linaro.org>
+ <CAFEAcA9JdLxi5cr-Z2-YX6Q8nv=j0O3k=f9u6gS-CzSf5BH7Ug@mail.gmail.com>
+ <bdefc0ac-311b-4820-913f-e21d753890fa@linaro.org>
+In-Reply-To: <bdefc0ac-311b-4820-913f-e21d753890fa@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Dec 2024 15:23:30 +0000
+Message-ID: <CAFEAcA-go4GccLwNvdrL0iMpDSmCcrD5J9R3=3BnT5t7tf=Fiw@mail.gmail.com>
+Subject: Re: [PATCH 6/7] docs: add a glossary
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Andrew Melnychenko <andrew@daynix.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ alex.bennee@linaro.org, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eric Blake <eblake@redhat.com>, 
+ qemu-arm@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ manos.pitsidianakis@linaro.org, qemu-block@nongnu.org, 
+ Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk <kkostiuk@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ gustavo.romero@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,400 +109,356 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 3 Dec 2024 at 20:32, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 12/3/24 09:37, Peter Maydell wrote:
+> > On Mon, 18 Nov 2024 at 17:24, Pierrick Bouvier
+> > <pierrick.bouvier@linaro.org> wrote:
+> >>
+> >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> >> ---
+> >>   docs/devel/control-flow-integrity.rst |   2 +
+> >>   docs/devel/multi-thread-tcg.rst       |   2 +
+> >>   docs/glossary/index.rst               | 238 ++++++++++++++++++++++++=
+++
+> >>   docs/index.rst                        |   1 +
+> >>   docs/system/arm/virt.rst              |   2 +
+> >>   docs/system/images.rst                |   2 +
+> >>   docs/tools/qemu-nbd.rst               |   2 +
+> >>   7 files changed, 249 insertions(+)
+> >>   create mode 100644 docs/glossary/index.rst
+> >
+> > I think this is a good idea; we've had at least one bug
+> > report from a user pointing out that we had a term in
+> > our docs which we didn't define ("block driver"):
+> > https://gitlab.com/qemu-project/qemu/-/issues/2611
+> > I have some comments on specific entries below.
+> >
+>
+> And people can be free to add new entries later. However, we should
+> resist the temptation to add too many details. It should stay simple and
+> understandable, even if not all technical nuances are not represented.
+>
+> >> diff --git a/docs/devel/control-flow-integrity.rst b/docs/devel/contro=
+l-flow-integrity.rst
+> >> index e6b73a4fe1a..3d5702fa4cc 100644
+> >> --- a/docs/devel/control-flow-integrity.rst
+> >> +++ b/docs/devel/control-flow-integrity.rst
+> >> @@ -1,3 +1,5 @@
+> >> +.. _cfi:
+> >> +
+> >>   =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+> >>   Control-Flow Integrity (CFI)
+> >>   =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+> >> diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread=
+-tcg.rst
+> >> index d706c27ea74..7fd0a07633d 100644
+> >> --- a/docs/devel/multi-thread-tcg.rst
+> >> +++ b/docs/devel/multi-thread-tcg.rst
+> >> @@ -4,6 +4,8 @@
+> >>     This work is licensed under the terms of the GNU GPL, version 2 or
+> >>     later. See the COPYING file in the top-level directory.
+> >>
+> >> +.. _mttcg:
+> >> +
+> >>   =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >>   Multi-threaded TCG
+> >>   =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >> diff --git a/docs/glossary/index.rst b/docs/glossary/index.rst
+> >> new file mode 100644
+> >> index 00000000000..a2d4f3eae16
+> >> --- /dev/null
+> >> +++ b/docs/glossary/index.rst
+> >
+> > I guess it makes sense to give this its own subdir, since we want
+> > it to come at the end of the manual. The other option would be
+> > to put it directly into docs/.
+> >
+>
+>  From your comment, it's not clear for me if it's ok as it is, or if you
+> want a change.
+> Can you elaborate on that?
 
-On 11/20/2024 7:49 PM, Anton Johansson via wrote:
-> QOL commit, all the various gen_* python scripts take a large set
-> arguments where order is implicit.  Using argparse we also get decent
-> error messages if a field is missing or too many are added.
+It means I'm not sure. We end up with a subdirectory with only
+one file in it and where there's no expectation we'd ever want
+to add any more files to it. On the other hand it does keep it
+out of the docs/ top level directory, which currently has a
+fair amount of cruft awaiting cleanup.
+
+I guess on balance I would make this docs/glossary.rst,
+unless you anticipate wanting to split this into multiple
+files or have something else in docs/glossary/ later.
+
+> >> @@ -0,0 +1,238 @@
+> >> +.. _Glossary:
+> >> +
+> >> +--------
+> >> +Glossary
+> >> +--------
+> >> +
+> >> +This section of the manual presents *simply* acronyms and terms QEMU =
+developers
+> >> +use.
+> >
+> > What's "simply" intended to mean here?
+> >
 >
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
->   target/hexagon/gen_analyze_funcs.py     |  6 +++--
->   target/hexagon/gen_decodetree.py        | 19 +++++++++++----
->   target/hexagon/gen_helper_funcs.py      |  7 +++---
->   target/hexagon/gen_helper_protos.py     |  7 +++---
->   target/hexagon/gen_idef_parser_funcs.py | 11 +++++++--
->   target/hexagon/gen_op_attribs.py        | 11 +++++++--
->   target/hexagon/gen_opcodes_def.py       | 11 +++++++--
->   target/hexagon/gen_printinsn.py         | 11 +++++++--
->   target/hexagon/gen_tcg_func_table.py    | 11 +++++++--
->   target/hexagon/gen_tcg_funcs.py         |  9 +++----
->   target/hexagon/gen_trans_funcs.py       | 17 ++++++++++---
->   target/hexagon/hex_common.py            | 32 ++++++++++++-------------
->   target/hexagon/meson.build              |  2 +-
->   13 files changed, 107 insertions(+), 47 deletions(-)
+> "in a straightforward or plain manner".
+> I can remove this word if you think it does not serve any purpose.
+
+You could phrase it as "presents brief definitions of acronyms
+and terms", I think.
+
+> >> +QEMU system defines board models for various architectures. It's a de=
+scription
+> >> +of a SoC (system-on-chip) with various devices pre-configured, and ca=
+n be
+> >> +selected with the option ``-machine`` of qemu-system.
+> >
+> > SoCs are not the same as boards.
+> >
+> > We could say something like:
+> >
+> > QEMU's system emulation models many different types of hardware.
+> > A machine model (sometimes called a board model) is the model
+> > of a complete virtual system with RAM, one or more CPUs, and
+> > various devices.
+> >
+> > We could also put in a link to
+> > https://www.qemu.org/docs/master/system/targets.html
+> > which is where we document what our machine types are.
+> >
 >
-> diff --git a/target/hexagon/gen_analyze_funcs.py b/target/hexagon/gen_analyze_funcs.py
-> index 54bac19724..3ac7cc2cfe 100755
-> --- a/target/hexagon/gen_analyze_funcs.py
-> +++ b/target/hexagon/gen_analyze_funcs.py
-> @@ -78,11 +78,13 @@ def gen_analyze_func(f, tag, regs, imms):
->   
->   
->   def main():
-> -    hex_common.read_common_files()
-> +    args = hex_common.parse_common_args(
-> +        "Emit functions analyzing register accesses"
-> +    )
->       tagregs = hex_common.get_tagregs()
->       tagimms = hex_common.get_tagimms()
->   
-> -    with open(sys.argv[-1], "w") as f:
-> +    with open(args.out, "w") as f:
->           f.write("#ifndef HEXAGON_ANALYZE_FUNCS_C_INC\n")
->           f.write("#define HEXAGON_ANALYZE_FUNCS_C_INC\n\n")
->   
-> diff --git a/target/hexagon/gen_decodetree.py b/target/hexagon/gen_decodetree.py
-> index a4fcd622c5..ce703af41d 100755
-> --- a/target/hexagon/gen_decodetree.py
-> +++ b/target/hexagon/gen_decodetree.py
-> @@ -24,6 +24,7 @@
->   import textwrap
->   import iset
->   import hex_common
-> +import argparse
->   
->   encs = {
->       tag: "".join(reversed(iset.iset[tag]["enc"].replace(" ", "")))
-> @@ -191,8 +192,18 @@ def gen_decodetree_file(f, class_to_decode):
->           f.write(f"{tag}\t{enc_str} @{tag}\n")
->   
->   
-> +def main():
-> +    parser = argparse.ArgumentParser(
-> +        description="Emit opaque macro calls with instruction semantics"
-> +    )
-> +    parser.add_argument("semantics", help="semantics file")
-> +    parser.add_argument("class_to_decode", help="instruction class to decode")
-> +    parser.add_argument("out", help="output file")
-> +    args = parser.parse_args()
-> +
-> +    hex_common.read_semantics_file(args.semantics)
-> +    with open(args.out, "w") as f:
-> +        gen_decodetree_file(f, args.class_to_decode)
-> +
->   if __name__ == "__main__":
-> -    hex_common.read_semantics_file(sys.argv[1])
-> -    class_to_decode = sys.argv[2]
-> -    with open(sys.argv[3], "w") as f:
-> -        gen_decodetree_file(f, class_to_decode)
-> +    main()
-> diff --git a/target/hexagon/gen_helper_funcs.py b/target/hexagon/gen_helper_funcs.py
-> index e9685bff2f..c1f806ac4b 100755
-> --- a/target/hexagon/gen_helper_funcs.py
-> +++ b/target/hexagon/gen_helper_funcs.py
-> @@ -102,12 +102,13 @@ def gen_helper_function(f, tag, tagregs, tagimms):
->   
->   
->   def main():
-> -    hex_common.read_common_files()
-> +    args = hex_common.parse_common_args(
-> +        "Emit helper function definitions for each instruction"
-> +    )
->       tagregs = hex_common.get_tagregs()
->       tagimms = hex_common.get_tagimms()
->   
-> -    output_file = sys.argv[-1]
-> -    with open(output_file, "w") as f:
-> +    with open(args.out, "w") as f:
->           for tag in hex_common.tags:
->               ## Skip the priv instructions
->               if "A_PRIV" in hex_common.attribdict[tag]:
-> diff --git a/target/hexagon/gen_helper_protos.py b/target/hexagon/gen_helper_protos.py
-> index fd2bfd0f36..77f8e0a6a3 100755
-> --- a/target/hexagon/gen_helper_protos.py
-> +++ b/target/hexagon/gen_helper_protos.py
-> @@ -52,12 +52,13 @@ def gen_helper_prototype(f, tag, tagregs, tagimms):
->   
->   
->   def main():
-> -    hex_common.read_common_files()
-> +    args = hex_common.parse_common_args(
-> +        "Emit helper function prototypes for each instruction"
-> +    )
->       tagregs = hex_common.get_tagregs()
->       tagimms = hex_common.get_tagimms()
->   
-> -    output_file = sys.argv[-1]
-> -    with open(output_file, "w") as f:
-> +    with open(args.out, "w") as f:
->           for tag in hex_common.tags:
->               ## Skip the priv instructions
->               if "A_PRIV" in hex_common.attribdict[tag]:
-> diff --git a/target/hexagon/gen_idef_parser_funcs.py b/target/hexagon/gen_idef_parser_funcs.py
-> index 72f11c68ca..2f6e826f76 100644
-> --- a/target/hexagon/gen_idef_parser_funcs.py
-> +++ b/target/hexagon/gen_idef_parser_funcs.py
-> @@ -20,6 +20,7 @@
->   import sys
->   import re
->   import string
-> +import argparse
->   from io import StringIO
->   
->   import hex_common
-> @@ -43,13 +44,19 @@
->   ## them are inputs ("in" prefix), while some others are outputs.
->   ##
->   def main():
-> -    hex_common.read_semantics_file(sys.argv[1])
-> +    parser = argparse.ArgumentParser(
-> +        "Emit instruction implementations that can be fed to idef-parser"
-> +    )
-> +    parser.add_argument("semantics", help="semantics file")
-> +    parser.add_argument("out", help="output file")
-> +    args = parser.parse_args()
-> +    hex_common.read_semantics_file(args.semantics)
->       hex_common.calculate_attribs()
->       hex_common.init_registers()
->       tagregs = hex_common.get_tagregs()
->       tagimms = hex_common.get_tagimms()
->   
-> -    with open(sys.argv[-1], "w") as f:
-> +    with open(args.out, "w") as f:
->           f.write('#include "macros.h.inc"\n\n')
->   
->           for tag in hex_common.tags:
-> diff --git a/target/hexagon/gen_op_attribs.py b/target/hexagon/gen_op_attribs.py
-> index 99448220da..bbbb02df3a 100755
-> --- a/target/hexagon/gen_op_attribs.py
-> +++ b/target/hexagon/gen_op_attribs.py
-> @@ -21,16 +21,23 @@
->   import re
->   import string
->   import hex_common
-> +import argparse
->   
->   
->   def main():
-> -    hex_common.read_semantics_file(sys.argv[1])
-> +    parser = argparse.ArgumentParser(
-> +        "Emit opaque macro calls containing instruction attributes"
-> +    )
-> +    parser.add_argument("semantics", help="semantics file")
-> +    parser.add_argument("out", help="output file")
-> +    args = parser.parse_args()
-> +    hex_common.read_semantics_file(args.semantics)
->       hex_common.calculate_attribs()
->   
->       ##
->       ##     Generate all the attributes associated with each instruction
->       ##
-> -    with open(sys.argv[-1], "w") as f:
-> +    with open(args.out, "w") as f:
->           for tag in hex_common.tags:
->               f.write(
->                   f"OP_ATTRIB({tag},ATTRIBS("
-> diff --git a/target/hexagon/gen_opcodes_def.py b/target/hexagon/gen_opcodes_def.py
-> index 536f0eb68a..94a19ff412 100755
-> --- a/target/hexagon/gen_opcodes_def.py
-> +++ b/target/hexagon/gen_opcodes_def.py
-> @@ -21,15 +21,22 @@
->   import re
->   import string
->   import hex_common
-> +import argparse
->   
->   
->   def main():
-> -    hex_common.read_semantics_file(sys.argv[1])
-> +    parser = argparse.ArgumentParser(
-> +        description="Emit opaque macro calls with instruction names"
-> +    )
-> +    parser.add_argument("semantics", help="semantics file")
-> +    parser.add_argument("out", help="output file")
-> +    args = parser.parse_args()
-> +    hex_common.read_semantics_file(args.semantics)
->   
->       ##
->       ##     Generate a list of all the opcodes
->       ##
-> -    with open(sys.argv[-1], "w") as f:
-> +    with open(args.out, "w") as f:
->           for tag in hex_common.tags:
->               f.write(f"OPCODE({tag}),\n")
->   
-> diff --git a/target/hexagon/gen_printinsn.py b/target/hexagon/gen_printinsn.py
-> index 8bf4d0985c..d5f969960a 100755
-> --- a/target/hexagon/gen_printinsn.py
-> +++ b/target/hexagon/gen_printinsn.py
-> @@ -21,6 +21,7 @@
->   import re
->   import string
->   import hex_common
-> +import argparse
->   
->   
->   ##
-> @@ -96,11 +97,17 @@ def spacify(s):
->   
->   
->   def main():
-> -    hex_common.read_semantics_file(sys.argv[1])
-> +    parser = argparse.ArgumentParser(
-> +        "Emit opaque macro calls with information for printing string representations of instrucions"
-> +    )
-> +    parser.add_argument("semantics", help="semantics file")
-> +    parser.add_argument("out", help="output file")
-> +    args = parser.parse_args()
-> +    hex_common.read_semantics_file(args.semantics)
->   
->       immext_casere = re.compile(r"IMMEXT\(([A-Za-z])")
->   
-> -    with open(sys.argv[-1], "w") as f:
-> +    with open(args.out, "w") as f:
->           for tag in hex_common.tags:
->               if not hex_common.behdict[tag]:
->                   continue
-> diff --git a/target/hexagon/gen_tcg_func_table.py b/target/hexagon/gen_tcg_func_table.py
-> index 978ac1819b..299a39b1aa 100755
-> --- a/target/hexagon/gen_tcg_func_table.py
-> +++ b/target/hexagon/gen_tcg_func_table.py
-> @@ -21,15 +21,22 @@
->   import re
->   import string
->   import hex_common
-> +import argparse
->   
->   
->   def main():
-> -    hex_common.read_semantics_file(sys.argv[1])
-> +    parser = argparse.ArgumentParser(
-> +        "Emit opaque macro calls with instruction semantics"
-> +    )
-> +    parser.add_argument("semantics", help="semantics file")
-> +    parser.add_argument("out", help="output file")
-> +    args = parser.parse_args()
-> +    hex_common.read_semantics_file(args.semantics)
->       hex_common.calculate_attribs()
->       tagregs = hex_common.get_tagregs()
->       tagimms = hex_common.get_tagimms()
->   
-> -    with open(sys.argv[-1], "w") as f:
-> +    with open(args.out, "w") as f:
->           f.write("#ifndef HEXAGON_FUNC_TABLE_H\n")
->           f.write("#define HEXAGON_FUNC_TABLE_H\n\n")
->   
-> diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_funcs.py
-> index 05aa0a7855..c2ba91ddc0 100755
-> --- a/target/hexagon/gen_tcg_funcs.py
-> +++ b/target/hexagon/gen_tcg_funcs.py
-> @@ -108,15 +108,16 @@ def gen_def_tcg_func(f, tag, tagregs, tagimms):
->   
->   
->   def main():
-> -    is_idef_parser_enabled = hex_common.read_common_files()
-> +    args = hex_common.parse_common_args(
-> +        "Emit functions calling generated code implementing instruction semantics (helpers, idef-parser)"
-> +    )
->       tagregs = hex_common.get_tagregs()
->       tagimms = hex_common.get_tagimms()
->   
-> -    output_file = sys.argv[-1]
-> -    with open(output_file, "w") as f:
-> +    with open(args.out, "w") as f:
->           f.write("#ifndef HEXAGON_TCG_FUNCS_H\n")
->           f.write("#define HEXAGON_TCG_FUNCS_H\n\n")
-> -        if is_idef_parser_enabled:
-> +        if args.idef_parser:
->               f.write('#include "idef-generated-emitter.h.inc"\n\n')
->   
->           for tag in hex_common.tags:
-> diff --git a/target/hexagon/gen_trans_funcs.py b/target/hexagon/gen_trans_funcs.py
-> index 30f0c73e0c..aea1c36f7d 100755
-> --- a/target/hexagon/gen_trans_funcs.py
-> +++ b/target/hexagon/gen_trans_funcs.py
-> @@ -24,6 +24,7 @@
->   import textwrap
->   import iset
->   import hex_common
-> +import argparse
->   
->   encs = {
->       tag: "".join(reversed(iset.iset[tag]["enc"].replace(" ", "")))
-> @@ -136,8 +137,18 @@ def gen_trans_funcs(f):
->           """))
->   
->   
-> -if __name__ == "__main__":
-> -    hex_common.read_semantics_file(sys.argv[1])
-> +def main():
-> +    parser = argparse.ArgumentParser(
-> +        description="Emit trans_*() functions to be called by instruction decoder"
-> +    )
-> +    parser.add_argument("semantics", help="semantics file")
-> +    parser.add_argument("out", help="output file")
-> +    args = parser.parse_args()
-> +    hex_common.read_semantics_file(args.semantics)
->       hex_common.init_registers()
-> -    with open(sys.argv[2], "w") as f:
-> +    with open(args.out, "w") as f:
->           gen_trans_funcs(f)
-> +
-> +
-> +if __name__ == "__main__":
-> +    main()
-> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-> index 15ed4980e4..bb20711a2e 100755
-> --- a/target/hexagon/hex_common.py
-> +++ b/target/hexagon/hex_common.py
-> @@ -21,6 +21,7 @@
->   import re
->   import string
->   import textwrap
-> +import argparse
->   
->   behdict = {}  # tag ->behavior
->   semdict = {}  # tag -> semantics
-> @@ -1181,22 +1182,19 @@ def helper_args(tag, regs, imms):
->       return args
->   
->   
-> -def read_common_files():
-> -    read_semantics_file(sys.argv[1])
-> -    read_overrides_file(sys.argv[2])
-> -    read_overrides_file(sys.argv[3])
-> -    ## Whether or not idef-parser is enabled is
-> -    ## determined by the number of arguments to
-> -    ## this script:
-> -    ##
-> -    ##   4 args. -> not enabled,
-> -    ##   5 args. -> idef-parser enabled.
-> -    ##
-> -    ## The 5:th arg. then holds a list of the successfully
-> -    ## parsed instructions.
-> -    is_idef_parser_enabled = len(sys.argv) > 5
-> -    if is_idef_parser_enabled:
-> -        read_idef_parser_enabled_file(sys.argv[4])
-> +def parse_common_args(desc):
-> +    parser = argparse.ArgumentParser(desc)
-> +    parser.add_argument("semantics", help="semantics file")
-> +    parser.add_argument("overrides", help="overrides file")
-> +    parser.add_argument("overrides_vec", help="vector overrides file")
-> +    parser.add_argument("out", help="output file")
-> +    parser.add_argument("--idef-parser", help="file of instructions translated by idef-parser")
-> +    args = parser.parse_args()
-> +    read_semantics_file(args.semantics)
-> +    read_overrides_file(args.overrides)
-> +    read_overrides_file(args.overrides_vec)
-> +    if args.idef_parser:
-> +        read_idef_parser_enabled_file(args.idef_parser)
->       calculate_attribs()
->       init_registers()
-> -    return is_idef_parser_enabled
-> +    return args
-> diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-> index f1723778a6..bb4ebaae81 100644
-> --- a/target/hexagon/meson.build
-> +++ b/target/hexagon/meson.build
-> @@ -346,7 +346,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
->       # Setup input and dependencies for the next step, this depends on whether or
->       # not idef-parser is enabled
->       helper_dep = [semantics_generated, idef_generated_tcg_c, idef_generated_tcg]
-> -    helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h, idef_generated_list]
-> +    helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h, '--idef-parser', idef_generated_list]
->   else
->       # Setup input and dependencies for the next step, this depends on whether or
->       # not idef-parser is enabled
+> How do you distinguish a SoC and cpu? Is a SoC cpu + devices?
+> Isn't a board/machine a set of SoC + devices attached?
+
+An SoC is a "system on chip". To quote wikipedia's definition:
+
+"A system on a chip or system-on-chip is an integrated circuit that
+integrates most or all components of a computer or electronic system.
+These components usually include an on-chip central processing unit
+(CPU), memory interfaces, input/output devices and interfaces, and
+secondary storage interfaces, often alongside other components such
+as radio modems and a graphics processing unit (GPU) =E2=80=93 all on a
+single substrate or microchip."
+
+An SoC always contains a CPU, but it will have a lot more
+than that built into it too. And the SoC only has "most"
+of the system components, so the whole machine will be
+an SoC plus some other things.
+
+Generally a board/machine that uses an SoC will have on it:
+ * an SoC
+ * the actual memory
+ * perhaps one or two extra devices external to the SoC
+ * connectors for things like serial ports, SD cards, etc
+   (which generally wire up to SoC pins)
+ * a crystal or similar to act as the main clock source
+
+So if you look at a photo of a development board that uses
+an SoC, there will be one large chip which is the SoC,
+some RAM chips, a bunch of connectors and one or two smaller
+chips. Not every device will be inside the SoC, but
+generally almost all of them are.
+
+QEMU's machine models for this kind of board match the
+organization of the hardware; looking at hw/arm/sabrelite.c
+which is a machine model you can see that it has:
+ * an instance of the fsl-imx6 SoC device object
+ * the main memory
+ * some NOR flash memory
+ * some configuration and wiring up of things
+
+And the SoC itself is in hw/arm/fsl-imx6.c, and is a
+QOM device object that creates and wires up the CPUs,
+UARTs, USB controller, and various other devices that
+this particular SoC includes. In this case we only have
+one board model using this SoC, but for some SoCs we
+have several board models that all use the same SoC
+but wire up different external devices to it.
+
+Some of our machine models are models of systems that
+don't use an SoC at all. This is rare in the Arm world,
+but for instance the SPARC machines like the SS-5 are
+like that -- the real hardware had a discrete CPU chip
+and a bunch of devices in their own chips on the
+motherboard, and QEMU's model of that hardware has
+a machine model which directly creates the CPU and
+the various devices. (And some of our older machine
+models are models of hardware that *does* have an SoC
+but where we didn't model that level of abstraction,
+so they directly create devices in the machine model
+that really ought to be inside an SoC object.
+hw/arm/stellaris.c is one example of that.)
+
+> >> +
+> >> +Block
+> >> +-----
+> >> +
+> >> +Block drivers are the available `disk formats <block-drivers>` availa=
+ble, and
+> >> +block devices `(see Block device section on options page)<sec_005finv=
+ocation>`
+> >> +are using them to implement disks for a virtual machine.
+> >
+> > Block drivers aren't just disk formats; there are some filter
+> > drivers too. Somebody on the block side could probably
+> > provide a better definition here.
+> >
+>
+> I'm open to a more exact definition. The two terms (drivers and devices)
+> seem to overlap on some parts, so I came up with this trivial definition.
+
+Yeah, the driver vs device split is a good one (basically
+the device is the front-end visible to the guest, and the
+driver is the back-end that provides it with storage
+via an abstracted API). The nit I'm picking here is that
+not every block driver is there to provide support for
+an on-host disk format.
+
+> >> +
+> >> +CFI
+> >> +---
+> >> +
+> >> +Control Flow Integrity is a hardening technique used to prevent explo=
+its
+> >> +targeting QEMU by detecting unexpected branches during execution. QEM=
+U `actively
+> >> +supports<cfi>` being compiled with CFI enabled.
+> >> +
+> >> +Device
+> >> +------
+> >> +
+> >> +QEMU is able to emulate a CPU, and all the hardware interacting with =
+it,
+> >> +including many devices. When QEMU runs a virtual machine using a hard=
+ware-based
+> >> +accelerator, it is responsible for emulating, using software, all dev=
+ices.
+> >
+> > This definition doesn't actually define what a device is :-)
+> >
+>
+> Indeed :)
+> Should we explain what is a computer device?
+> The goal was just to say that QEMU can emulate hardware interacting with
+> the cpu, which could be a possible definition. So people can associate
+> that QEMU devices are nothing else than a "normal" computer device.
+
+We could say, perhaps:
+
+In QEMU, a device is a piece of hardware visible to the guest.
+Examples include UARTs, PCI controllers, PCI cards, VGA controllers,
+and many more.
+
+
+
+> >> +
+> >> +Hypervisor
+> >> +----------
+> >> +
+> >> +The formal definition of an hypervisor is a program than can be used =
+to manage a
+> >> +virtual machine. QEMU itself is an hypervisor.
+> >
+> > "a hypervisor". QEMU isn't really a hypervisor, though...
+> >
+>
+> It's a shortcut, and I'm open to change it. It brings an interesting
+> question though.
+>
+> Technically, QEMU interacts with hypervisor APIs built in various OSes.
+> On the other hand, when we use TCG, it's an emulator instead.
+>
+> But as you can't use KVM/hvf/whpx by itself, how do you name the program
+> interacting with it, and emulating the rest of the VM?
+>
+> The correct word is probably "virtualizer", but from searching on
+> Internet, it seems that "vmm" and "virtualizer" are considered the same
+> as an "hypervisor". The difference is subtle, and maybe we have an
+> opportunity here to clarify it.
+
+
+> >> +Patchwork
+> >> +---------
+> >> +
+> >> +`Patchwork <https://patchew.org/QEMU/>`_ is a website that tracks
+> >> +patches on the Mailing List.
+> >
+> > Patchwork and patchew are different systems. Patchew's URL is
+> > https://patchew.org/QEMU/
+> >
+> > (There is a patchwork instance that tracks qemu-devel patches,
+> > at https://patchwork.kernel.org/project/qemu-devel/list/ , but
+> > I'm not aware of any developers that are actively using it, so
+> > I don't think it merits being mentioned in the glossary.)
+> >
+>
+> I've been confused by that, and just thought it was two different
+> instances (fork me if you can) of the "same" thing.
+> How would you define patchew?
+> When we say patchwork, do we implicitely mean patchew?
+
+No. patchwork is patchwork, and patchew is patchew -- these
+are entirely different pieces of software that happen to do
+similar jobs.
+
+> if I understand currently, patchew is what we want to mention in our
+> doc? (and mention it's not associated to patchwork).
+
+We don't use patchwork, so we don't need to mention it anywhere.
+
+> >> +Once a series is reviewed and accepted by a subsystem maintainer, it =
+will be
+> >> +included in a PR (Pull Request) that the project maintainer will merg=
+e into QEMU
+> >> +main branch, after running tests.
+> >
+> > I think we could probably also usefully say
+> >
+> > "The QEMU project doesn't currently expect most developers to
+> > directly submit pull requests."
+> >
+> > just to flag up that our development model isn't like the
+> > currently-popular github/gitlab one where a PR is how you
+> > send contributions.
+> >
+>
+> This is interesting.
+>
+> For the majority of developers nowadays, a PR is a GitHub/GitLab PR.
+> Despite the fact we use the original PR meaning (in git terms), it's
+> probably confusing when new comers hear pull request.
+>
+> >> +
+> >> +QCOW
+> >> +----
+> >> +
+> >> +QEMU Copy On Write is a disk format developed by QEMU. It provides tr=
+ansparent
+> >> +compression, automatic extension, and many other advantages over a ra=
+w image.
+> >
+> > We want to be a bit careful here, because the "qcow" format
+> > is not something we recommend for new use -- "qcow2" is what
+> > you actually want.
+> >
+> > https://www.qemu.org/docs/master/system/qemu-block-drivers.html#cmdopti=
+on-image-formats-arg-qcow2
+> >
+>
+> Sounds good.
+>
+> For my personal knowledge: during this work I discovered that we had
+> qcow3. From what I understood, it seems to be included in what we called
+> qcow2 today. Is that correct?
+
+I have no idea -- you'd need to ask somebody who works on the
+block layer
+
+thanks
+-- PMM
 
