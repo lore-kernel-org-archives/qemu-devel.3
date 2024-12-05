@@ -4,79 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8897BE77173
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2EE9E7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJJNm-0005DE-5r; Thu, 05 Dec 2024 16:27:34 -0500
+	id 1tJJSl-0006kc-0k; Thu, 05 Dec 2024 16:32:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJJNk-0005Cw-Lc
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:27:32 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJSi-0006jp-Kl
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:32:40 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJJNj-0005mo-7e
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:27:32 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5d0f6fa6f8bso2024418a12.0
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:27:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJSf-0006Ss-CO
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:32:39 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-385e075255fso1073129f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:32:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733434050; x=1734038850; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1atv2OOJIGDmQ398j/z7UHHtE0Ox/5QmzfX+EUWF9KA=;
- b=KK2ASPxM1rDJDmsKSaZLcVgzLi7lfS+gq2WTQ/OA89NtSC1yAA5eF5pyBxUYoPXSiS
- s1HmfTulW0KLm6jb3r0v5Puj1T9rul9/ikMEPru2lGfl+auwFVIknCqhK7qmPJzkDon1
- KNwOl8L/8nKsFJ7Uzqb3AM17RAHD+hpFz133dD5ZMNl3eV26aAirupCjXOAhMNPWy0fg
- 8Lll4TwXXtTx6p+LbFZPY/65SKzFSylqwIiIyHUVXt9rob11CG6M8YxfGG1Yd1kxnK7O
- q7TsAQoxqY8gTsmjUav3SQcvnqi2l126e7kTv9WbGgtyrAlGdWfE2F60e2CWvOdzzkdF
- NY9w==
+ d=linaro.org; s=google; t=1733434356; x=1734039156; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fNloKU2y0Z2Pt56YkmfjPbGjy1q//hmeUSbRO3BZN/k=;
+ b=KrVL20hWLf4jHfYdUt74P3fd35iliTUtLBe6QMsR4M35g2Mx7MIdyEpxA/3TF5OnS8
+ GsRJmQDFs3svvgWdcSnGxhDFyqvSFWNnqLDHhee5QR4gZjr/Thatldg4W/B9I9kmjEhH
+ oQWnPo0j0x0Rd3pxolZjl3BE9E6PTLgUD9Mt8z48dhyCK0GQqHAuqFhvdY/xFfd1vS0c
+ 0N7gMqjrlnFhLcahhbbbflVTIpzdujBD+tQWc2IptQPH5OW0XCcODr4/t2JWpI2r8syl
+ QEz2qjsRB3io7sYBfxPQFQQAbuRQ/kuZIe4UPcNxmmSdDckPkLhlTpuacFyH+z3/eGbM
+ NUag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733434050; x=1734038850;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1atv2OOJIGDmQ398j/z7UHHtE0Ox/5QmzfX+EUWF9KA=;
- b=lDczP52HH2cs2k22iLOUyzbfQ7ZxNLBXnv2HdmiwZQQ3FAUWfzRalyPXYklyDceRlH
- fMJyUzCZVA9EqzzmQ4Va7VmNBzyw74pWcunlvEEcTJPlwhaIs0CZg63CyDw9jNoZ1zYV
- plYKVYL3BrgzBiQojrGYOU5+fPningDaAOMgUmTVDPE8F3/BI+0J5snjSzcKbV/qoig1
- /uZRHlObUfkO/B3WpYKCUbVmXiycxzUwG4+afpL2e2rD6Eqs/p+NphxkdK7KX05zRL6U
- CEb0Y6/aTscOCHVtmbsyjjfp9DOcdlbda+vUna5coxuYQRJpS6mahPohmalA+VVHCrE2
- FWkw==
-X-Gm-Message-State: AOJu0Yyb1s5fE10sTZU+YrprKZe2tbG5EZOgGzT97Zw4NROt0JAR6Qxe
- foMy+Mf7mVbwdmF9QXfGHdszOfOEtNnpgwmOXkNT6MVh9AMfdGG25Qk+YmDFXeQlTWsXLMG6s9A
- 2x6ezhwYwpRwKm8PYCHTO7z26EIEGS4281tVovQ==
-X-Gm-Gg: ASbGncvcterw3wgs3zDYuUWMWIG7FqCNuaDBj2CdXP4dLgbBx4Q24r98Dq9Qs+Cdgi2
- bwfyAc16eobLPfhHk3mIKvI3pmcPFW3pn
-X-Google-Smtp-Source: AGHT+IFJ583b287Dsj7sKJ+jKyQNqkRS3v0uUg9rPQnP7xOBOq/cyRVftdhQXDmd0aNUo05cCr1AILiOJy42zEmOPNI=
-X-Received: by 2002:a05:6402:348a:b0:5d0:e54d:5ae8 with SMTP id
- 4fb4d7f45d1cf-5d3be7a6cf5mr478484a12.34.1733434049634; Thu, 05 Dec 2024
- 13:27:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733434356; x=1734039156;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fNloKU2y0Z2Pt56YkmfjPbGjy1q//hmeUSbRO3BZN/k=;
+ b=SB0yAcAIMGBecjx0TrkAfoiomzAZyx0VXmKp11Be+4tEA9GnqKcrJJXdTHaFtKU/s/
+ 73QzoSbsMXuM7PRFz0YUxkoTmd0UTEypnsAh2+ihFchQr2ejt0qUePjcxWjRvH0iIBA7
+ HCHpySIrYwifOnzF4lwvbZoBGAVbUudIHfHqMIwkgxq6FuBQyjrMFQFekLELsakfCqty
+ 9NH4SI2TEVrrw4VnxNeE0Q9BDea+wScT31/Q7GCXik9rNCa7bk8LmwAw6eq5XRdVuNPV
+ TnPH//horhT2pc6HUvMPghbADzSGZvwuxoXVFYZbNJZeHKLIEXueYAZ1Ww1d+2eDjyjq
+ sa7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXIl9lGVhSaQ8Wh59edYZzGLbm2ADPjunTy0xqG5gi5wKnUkBAhbqQB7g7b6nUAR1XVOEbseI1xZ15o@nongnu.org
+X-Gm-Message-State: AOJu0YwzJSORXlGKB+0T/o9+q9y7rhsE0GRaGRzTSztbFo5fHUwd9hBh
+ LfqNCafs4cPw7yMIwS5jNvQ4QrvwTkZcigZbCrYMyxqZxQTRAuGnZNDfzBZg4Us=
+X-Gm-Gg: ASbGncvCC5Z8mqwNaGTxL7x5P6O+IgEBFLVP0K8CblNIFXMel168mpnV7GiqSzGJ+kq
+ 5Lhk4b7JJFsUMQwWFqux+jojUZTxjgPbTeyIqMtMFToJbSmvcRUbaTuKNHWarzTxhqaPruSCZPQ
+ umFx/KE9Zutc7cz7T12K1fSfe0UQLQEI/GAg0FkalP9cYOOPYApzjiCQLw8IH915g0G7qvB9+98
+ pUPZosnWKS7G33Awvm81OEFMRIQPkWtGT18+OxFZoFvtPsos+5udMBpwjrOQsM35pFzH47/hN+u
+ 7KR5B4KmWHr/HHp1sg==
+X-Google-Smtp-Source: AGHT+IHIp3Id09IDvgw7T4qb4DGImRzHVxowhnlYlEzFCS4RfFstp9pspojXdzkjrqYIyZCF7oCoSw==
+X-Received: by 2002:a05:6000:1787:b0:385:f7d2:7e55 with SMTP id
+ ffacd0b85a97d-3862b355a26mr458528f8f.19.1733434355631; 
+ Thu, 05 Dec 2024 13:32:35 -0800 (PST)
+Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3861f59cea5sm2915970f8f.35.2024.12.05.13.32.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Dec 2024 13:32:34 -0800 (PST)
+Message-ID: <7a9f495b-7aea-4b7b-8bd5-e1e7db34b6be@linaro.org>
+Date: Thu, 5 Dec 2024 22:32:33 +0100
 MIME-Version: 1.0
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-23-richard.henderson@linaro.org>
- <CAFEAcA-2nA_UYVt+U5hkngxxNEEUmLa6EBkt18v2=zv6PUMMnA@mail.gmail.com>
-In-Reply-To: <CAFEAcA-2nA_UYVt+U5hkngxxNEEUmLa6EBkt18v2=zv6PUMMnA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 21:27:18 +0000
-Message-ID: <CAFEAcA_aaioxN2_ePCcMBLkaXVoUx1mR8-MmAar9tVNJMtAa1Q@mail.gmail.com>
-Subject: Re: [PATCH 22/67] target/arm: Convert FCMP, FCMPE, FCCMP,
- FCCMPE to decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/net: cadence_gem: feat: add logic for the DISABLE_MASK
+ bit in type2_compare_x_word_1
+To: "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>, edgar.iglesias@gmail.com,
+ alistair@alistair23.me, jasowang@redhat.com, peter.maydell@linaro.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20241118114806.1119-1-andrew.yuan@jaguarmicro.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241118114806.1119-1-andrew.yuan@jaguarmicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,34 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Dec 2024 at 21:21, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Sun, 1 Dec 2024 at 15:17, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
-> >
-> > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > ---
-> >  target/arm/tcg/translate-a64.c | 287 +++++++++++++--------------------
-> >  target/arm/tcg/a64.decode      |   8 +
-> >  2 files changed, 116 insertions(+), 179 deletions(-)
->
->
-> > +/* FCMP, FCMPE */
-> > +static bool trans_FCMP(DisasContext *s, arg_FCMP *a)
-> > +{
-> > +    int check;
-> > +
-> > +    if (a->z && a->rm != 0) {
-> > +        return false;
->
-> We did not check this case before, and the pseudocode in the
-> Arm ARM doesn't check it either (there's a comment for the rm
-> field that says "ignored when opc<0> == '1'").
+Hi Andrew,
 
-...this probably falls under the "RES0 UNPREDICTABLE" handling,
-but "ignore the field" is permitted for that. If we really want
-to change our choice of UNPREDICTABLE here I think we should do
-it separately from this refactoring.
+On 18/11/24 12:48, Andrew.Yuan wrote:
+> From: Andrew Yuan <andrew.yuan@jaguarmicro.com>
+> 
+> As in the Cadence IP for Gigabit Ethernet MAC Part Number: IP7014 IP Rev: R1p12 - Doc Rev: 1.3 User Guide,
+> if the DISABLE_MASK bit in type2_compare_x_word_1 is set,
+> mask_value in type2_compare_x_word_0 is used as an additional 2 byte Compare Value
+> 
+> Signed-off-by: Andrew Yuan <andrew.yuan@jaguarmicro.com>
+> ---
+>   hw/net/cadence_gem.c | 25 ++++++++++++++++++++-----
+>   1 file changed, 20 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+> index 526739887c..7ec5dbaa9c 100644
+> --- a/hw/net/cadence_gem.c
+> +++ b/hw/net/cadence_gem.c
+> @@ -909,8 +909,8 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
+>   
+>           /* Compare A, B, C */
+>           for (j = 0; j < 3; j++) {
+> -            uint32_t cr0, cr1, mask, compare;
+> -            uint16_t rx_cmp;
+> +            uint32_t cr0, cr1, mask, compare, disable_mask;
+> +            uint32_t rx_cmp;
+>               int offset;
+>               int cr_idx = extract32(reg, R_SCREENING_TYPE2_REG0_COMPARE_A_SHIFT + j * 6,
+>                                      R_SCREENING_TYPE2_REG0_COMPARE_A_LENGTH);
+> @@ -946,9 +946,24 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
+>                   break;
+>               }
+>   
+> -            rx_cmp = rxbuf_ptr[offset] << 8 | rxbuf_ptr[offset];
+> -            mask = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VALUE);
+> -            compare = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, COMPARE_VALUE);
+> +            disable_mask =
+> +                FIELD_EX32(cr1, TYPE2_COMPARE_0_WORD_1, DISABLE_MASK);
+> +            if (disable_mask) {
+> +                /*
+> +                 * If disable_mask is set,
+> +                 * mask_value is used as an additional 2 byte Compare Value.
+> +                 * To simple, set mask = 0xFFFFFFFF, if disable_maks is set.
 
--- PMM
+Typo "disable_mask".
+
+> +                 */
+> +                rx_cmp = rxbuf_ptr[offset + 3] << 8 | rxbuf_ptr[offset + 2] |\
+> +                         rxbuf_ptr[offset + 1] << 8 | rxbuf_ptr[offset];
+
+                    rx_cmp = ldl_be_p(rxbuf_ptr[offset]);
+
+> +                mask = 0xFFFFFFFF;
+> +                compare = cr0;
+> +            } else {
+> +                rx_cmp = rxbuf_ptr[offset + 1] << 8 | rxbuf_ptr[offset];
+
+                    rx_cmp = lduw_be_p(rxbuf_ptr[offset]);
+
+> +                mask = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VALUE);
+> +                compare =
+> +                    FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, COMPARE_VALUE);
+> +            }
+>   
+>               if ((rx_cmp & mask) == (compare & mask)) {
+>                   matched = true;
+
 
