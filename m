@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B243CE7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F243E7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJJI7-0007j0-Sk; Thu, 05 Dec 2024 16:21:43 -0500
+	id 1tJJJ5-0001bP-Mp; Thu, 05 Dec 2024 16:22:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJJI5-0007c9-Kn
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:21:41 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJJJ1-0001b3-Fs
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:22:39 -0500
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJJI4-0004vq-8A
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:21:41 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5cece886771so2631068a12.0
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:21:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733433699; x=1734038499; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=x69C4o0AsEFB5rGZfzox+irwukcsUU/LreIYluVLRWM=;
- b=zidHxGjxUr1yOswp1HOoFnyRZctbxRtxmEeNMbmQ3oG0F/fR8QoYhSdX+4t+lTiVW2
- YFE0E4OKkYFQ3Wu4Yc+uigbQtkzNCHOZnJJ3UI1wQM/NsBsIdM/vKwjYeF01S2p8ZvUt
- nC/MRqqDMF8qGH2ylPpK89/dg2R9Bi+FB/ZHVB0dXntKOwK8kOPxhiGXOFsvXaKoXN4+
- d2ba9/i2+vSsXOrRwnB6VM6vYnDIo3pmBLy9MgAQGJEUCSPp6yEpxsjWXRkI35MhXiRW
- ByFZAG5IebQWhZfXEz+9uekqPnngJdQkQ4RZOYIs4f4Tl7uH8KDPyIRosh7T12AM7D1s
- qAug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733433699; x=1734038499;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=x69C4o0AsEFB5rGZfzox+irwukcsUU/LreIYluVLRWM=;
- b=YyvYvgKV08zpkTyfFYpOm02cLK1KrUVam2Eu2nm6Nzj1wVRLO1MQEKMXkSq8zaypbV
- MlyUedJ94YkxW1T6x5TgCjInfzZrQnjwHQqNMxeV0dbJpoyLFu//ura7TEpJeCNECpVZ
- q7GhX1amm+4ndgxhyddLW91752bTpmRPhHSK9Q7iDCTWyyoSvN5DWM1oWafzqiOJFMlZ
- 3p1DEC9hEU/I5Jwv+NK6pLdjVqVijwbQ7W/JCDrZmCJsIxc2IfV1Od1m/M8WoDwij7Xf
- 2STbN89Dsa3lORImCXGRv3jyLhogtUPg2+viNYvHr6X6kKtDfT85hrlYQni37/RXqauf
- 63Vg==
-X-Gm-Message-State: AOJu0YzLyDkNnkW+CtNPE6/HPAlTzeSTPlMaosyUjJOMMD83r1Aohf3O
- ulDSvE107lY8R+5SyI74mhAGr7ieWENtk+TkgkJWZu/RH9QDNPemR4fJ+gedLfoevBgdnZTtWpj
- fE1dJir8HVqfa3ecPDXcl58eHeqXAMsJjuYHMrg==
-X-Gm-Gg: ASbGnctOdpJpbHyzivK0/GIJwKP5SguXJ3Wgeh2YNYPqyLteb7QJkXCDLMNtEleN5Cj
- BLEAc3emiyEs4mU5mCuk7ED2ClwIkqyfW
-X-Google-Smtp-Source: AGHT+IERBq9M3MpFKhqYtLyKFZHN9vkSIk8fKPMx+X42HngSygvhlzjVnk3dc9HvyQqfDBED1FEBFPBF17Y3BSBP20g=
-X-Received: by 2002:a05:6402:234d:b0:5d0:cfd0:8816 with SMTP id
- 4fb4d7f45d1cf-5d1250094f0mr5165135a12.12.1733433698641; Thu, 05 Dec 2024
- 13:21:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJJIz-00050Q-1U
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:22:38 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 190D01803F5
+ for <qemu-devel@nongnu.org>; Thu,  5 Dec 2024 22:22:34 +0100 (CET)
+Received: (qmail 2535 invoked by uid 990); 5 Dec 2024 21:22:34 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Thu, 05 Dec 2024 22:22:33 +0100
 MIME-Version: 1.0
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-23-richard.henderson@linaro.org>
-In-Reply-To: <20241201150607.12812-23-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 21:21:27 +0000
-Message-ID: <CAFEAcA-2nA_UYVt+U5hkngxxNEEUmLa6EBkt18v2=zv6PUMMnA@mail.gmail.com>
-Subject: Re: [PATCH 22/67] target/arm: Convert FCMP, FCMPE, FCCMP,
- FCCMPE to decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Date: Thu, 05 Dec 2024 21:22:33 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <450f3beedf979437fa3de8bfab1ee72f66c67ada@nut.email>
+TLS-Required: No
+Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
+ discon event's to_pc
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
+ Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
+In-Reply-To: <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
+References: <cover.1733063076.git.neither@nut.email>
+ <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
+ <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
+ <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
+ <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
+X-Rspamd-Bar: +
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.281825) MIME_GOOD(-0.1)
+X-Rspamd-Score: 1.118174
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=327/Whnuy2DK9rlIKFXu7Rj0LfjXWBgCFmve2ej5Bek=;
+ b=QixXAzRf5X2QL0geclfvS3xGM0VRV9a7UQfI88o929/FpXuaWF2LEWyJh+gVkz2VUgdzrdpaed
+ uyViIOUM8sZTcjSMVjv7eKUIROBVyyBQj3gyCTN44EwLn0V2wO67sJSYpfMFS+pinhEjT+2u2VKx
+ 9tyw2X1qLpYjyttP8hpogOlXoa6VnhnRyJ8aDPQROlzQkZAuwlrQ0Va5LhGiLEY3U+OPaHt1bTR/
+ qaYGi2JPLdfBcvy1BT2uOr1NfBh+ul13pnU2oEtyEzkNJdKI9bb+h3gE53ERl90sbutQpdJNR8qC
+ XSgVeIqyThLQzE8k038iF1SkrAXdGp6S9dzavxADX1YBtEyX1OGfFu93qeiDHR+vFFcVRNt5Fayg
+ WjgmnYgAQQt0xqaQBadKWWzXNtZlrE6iP7j/FgxONv7DBnHzorXG/X+x4E418x+DW1Ku6/PV1quv
+ TdiTrDuqfx3P+Hm34M6inTLpqPFh/HAFLyvt3KsuT3lAW75Ff4AWWythFQuNkj37bYBKCIwjRyOj
+ z7UYSkfbYpoh1Q9IVVXFyDXgqv/VB24bYOLZh60cuHxoLaA2Q9S9/VV5qApSe87RiwKQkw7rs7Dz
+ BqLvQHagu0VLCOBevSRI3wL8M0oyXvTv6kqdLTomwTETRAxvByCzx9H1pgwHjO5fA38OkUUw73pc
+ k=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,41 +85,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Dec 2024 at 15:17, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate-a64.c | 287 +++++++++++++--------------------
->  target/arm/tcg/a64.decode      |   8 +
->  2 files changed, 116 insertions(+), 179 deletions(-)
+Hi Pierrick,
 
+December 5, 2024 at 6:30 PM, "Pierrick Bouvier" wrote:
+> On 12/5/24 05:10, Julian Ganz wrote:
+> >  December 5, 2024 at 12:33 AM, "Pierrick Bouvier" wrote:
+> > > Trap target PC mismatch
+> > >  Expected: 23faf3a80
+> > >  Encountered: 23faf3a84
+> > >=20
+>=20> >  From what I understand, it means that the next_pc we have is inc=
+orrect.
+> > >=20
+>=20>  Yes, this is indeed incorrect, and also a perfect example why this=
+ test
+> >  plugin exists. There are likely other errors lurking in target speci=
+fic
+> >  code. Did you happen to also log interrupts? Do you remember what im=
+age
+> >  you used?
+> >=20
+>=20I used exactly this:
+>=20
+>=20./build/qemu-system-aarch64 -plugin ./build/tests/tcg/plugins/libdisc=
+ons.so -smp 4 -M virt -d plugin -m 8G -device virtio-blk-pci,drive=3Droot=
+ -drive if=3Dnone,id=3Droot,file=3D./debianaarch64.img -M virt -cpu max,p=
+auth=3Doff -drive if=3Dpflash,readonly=3Don,file=3D/usr/share/AAVMF/AAVMF=
+_CODE.fd -drive if=3Dpflash,file=3D./AAVMF_VARS.fd
+>=20
+>=20The arm64 image is a vanilla debian stable I installed.
+> AAVMF* files come from qemu-efi-aarch64 debian package.
 
-> +/* FCMP, FCMPE */
-> +static bool trans_FCMP(DisasContext *s, arg_FCMP *a)
-> +{
-> +    int check;
-> +
-> +    if (a->z && a->rm != 0) {
-> +        return false;
+Thanks! I will have a closer look and include a fix in the next iteration=
+.
 
-We did not check this case before, and the pseudocode in the
-Arm ARM doesn't check it either (there's a comment for the rm
-field that says "ignored when opc<0> == '1'").
+> > Btw: this also illustrates another issue I have with from_pc: we can
+> >  test the behavior for to_pc, but doing this meaningfully for from_pc
+> >  via a plugin is next to impossible because the instruction it points=
+ to
+> >  is not observable via an exec callback. At least not in the general
+> >  case, even not if we only consider a single type of event.
+> >=20
+>=20We can store the next_expected pc for each instruction (from current_=
+instruction + insn_length), and we should be able to compare that with th=
+e expected from_pc.
+> This is mostly what contrib/plugins/cflow.c does.
+>=20
+>=20With that, we can test from_pc.
 
-> +    }
-> +    check = fp_access_check_scalar_hsd(s, a->esz);
-> +    if (check <= 0) {
-> +        return check == 0;
-> +    }
-> +
-> +    handle_fp_compare(s, a->esz, a->rn, a->rm, a->z, a->e);
-> +    return true;
-> +}
+I'm not confident that this will work reliably for branch, jump and
+other "interesting" instructions. But I can have a closer look at the
+cflow plugin and try to figure out how that plugin handles those cases.
 
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+Regards,
+Julian Ganz
 
