@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64081E7716D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 16:48:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F976E77178
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 17:01:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJF10-0006DS-VL; Thu, 05 Dec 2024 11:47:46 -0500
+	id 1tJFD5-0000iR-JM; Thu, 05 Dec 2024 12:00:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJF0y-0006BP-BO
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:47:44 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJF0w-0001Af-NZ
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 11:47:44 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-aa531a70416so173314966b.0
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 08:47:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733417261; x=1734022061; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vKoZnZtieEW2hN260R2q1BP0rtYxvl3swlzNxzYrLeQ=;
- b=GsjuUaCGtYIZiyJpVzl/4bfuGelkA546RJGfpNpZ+gX2fBGNJ7fNAv6F4tca7Q4r5c
- Rpxt+cO06YG6RUrXqpGU7ZVlGkFjz8sfBWdl3AtWDz4ekNC4nfeQf4nq7ol81WHNj85c
- aGQcJtj0qUk/JpeRqmeBGsXj+uMpANOdUJqZH07kTpz7u83ACtK1hzbUmeUqO6zXViX7
- 42FUxz2qtiLJaXMNHCyIZkNKt3gkOqXAp3DPhGIybuhDaljPlCGudd4mSwUSwQQbBBnH
- iT7+myplFjVV9AKaKWmXSGLXpUalobW0wXJfLrJ+1Xm2S10L+t+r8yfngXBdwljL9LKv
- ESDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733417261; x=1734022061;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vKoZnZtieEW2hN260R2q1BP0rtYxvl3swlzNxzYrLeQ=;
- b=Vz1ZRMz8hV8gd4Yzw2/fm3O02UVsy5+W+BhbN6cZs3B+I6Fl7m3EaaQoLAGzOi8mf+
- TzgBN+2cn+LzTa9CehSSc+8uhk2o2UIq83AH83Wf1bkifWGGQJ1QquCbepKHFIWMrbd9
- 7kukAuiWG7YY7Qjg1gkTq4yd60z5vkSakyUqQsD530/5UQ9g4lLKvQcGl/nebfo7i87g
- Avw1//yTXO73nCgpU/PBhBWnD6CHSRL+GWtVq/iMgIsyEN031zlWAo9SGjvBZgeptjhM
- VoVGRbf+4GFZOG/UQYxaLrPTxaSVO2qQTKalOq5+cg50CImZ6G9NIOhtuG9Fmqc4W4GE
- LfHQ==
-X-Gm-Message-State: AOJu0YzIpUWFXrMKyIHpblBmIr7w+TDK5ht950Y/JHmj0kmgVdUQeLZk
- gMZOeSF2H8SinmrZGOaj2w66sapjLKq6ksaeC9O9vddtL3w35rpnUpG2txZNUP3jHqilQgqZPTu
- TU/CB0UA4lXR4tduI/QCTd9m6UmwK9SEQVg2zcg==
-X-Gm-Gg: ASbGncssgH1T0weseaCDVIDRAur0qMN1mYale259B4yaUNN1HzICtMc832YU4DYpF6t
- bvE3I4oRaySEh+frDRb8FH95p7Z4XzWj+
-X-Google-Smtp-Source: AGHT+IHVi9+YLyz3Jeq96LN5Io7yPcSVDzHst7VdSr/46DG4MmRQfikCRh7gvhMzS+4T8xHKlWw1p/354wKr9Rxd7W4=
-X-Received: by 2002:aa7:d455:0:b0:5d0:fb56:3f with SMTP id
- 4fb4d7f45d1cf-5d10cb5649emr16758787a12.12.1733417261056; 
- Thu, 05 Dec 2024 08:47:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJFD0-0000gZ-9C
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 12:00:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJFCw-0005f3-CI
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 12:00:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733418003;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JTd6+57AMejhmKvvR7t55BcOCchCn6u7T83zktedzuA=;
+ b=bA8yIjhCQ/jGAN0qzj0NvtTipz2oFHv1dEMiAOvnPaxetzvTkD7mOaW2QkW4tIhq5dy0IQ
+ QUs99n9XaPxsgZCF4GfpZws4KiX0oN98iloXhNBo2pzOuaqYIyDo+zM7eBnqv5Uh9Jjr/r
+ BMKxWrXtTybx4Twpd+4FrKHcgsjV8d4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-giUozIO8NCK5rJ_ROfOmCA-1; Thu,
+ 05 Dec 2024 12:00:00 -0500
+X-MC-Unique: giUozIO8NCK5rJ_ROfOmCA-1
+X-Mimecast-MFC-AGG-ID: giUozIO8NCK5rJ_ROfOmCA
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E66C1954213; Thu,  5 Dec 2024 16:59:59 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.137])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB63E1956095; Thu,  5 Dec 2024 16:59:55 +0000 (UTC)
+Date: Thu, 5 Dec 2024 16:59:52 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Andrew Keesler <ankeesler@google.com>
+Cc: Roque Arcudia Hernandez <roqueh@google.com>, mst@redhat.com,
+ marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
+ venture@google.com, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 2/2] hw/display: Allow injection of virtio-gpu EDID name
+Message-ID: <Z1HcCOG6cqDWNNW5@redhat.com>
+References: <20241017215304.3916866-1-roqueh@google.com>
+ <20241017215304.3916866-3-roqueh@google.com>
+ <Z0RnuVKPHO1T2BfV@redhat.com>
+ <CAGZECHOTT1bs0frj-QDyRtudFNb+VzD4tZsnk4Fj=Q0OH+1v3Q@mail.gmail.com>
+ <Z0XxYpvj49colIIy@redhat.com>
+ <CAGZECHMEYjL56AZebqOK4dTgQbLtwA=9=yZ0qi0ymSpMS2x7Gw@mail.gmail.com>
+ <CAGZECHO0HmkM+zPudFKU-dYZi9LqhfgVqaONn09DRW07sNkLVg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20241126112212.64524-1-philmd@linaro.org>
- <20241126112212.64524-11-philmd@linaro.org>
-In-Reply-To: <20241126112212.64524-11-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 16:47:30 +0000
-Message-ID: <CAFEAcA8Wm7dq--481ZJMb+fN7MsR9FJuB6hqRC4fW7ZBE5KYXw@mail.gmail.com>
-Subject: Re: [PATCH-for-10.0 v2 10/13] hw/pci-host/gpex: Expose
- 'refuse-bar-at-addr-0' property
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org, 
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-riscv@nongnu.org, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGZECHO0HmkM+zPudFKU-dYZi9LqhfgVqaONn09DRW07sNkLVg@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,74 +92,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Nov 2024 at 11:23, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Expose the "refuse-bar-at-addr-0" property so machines
-> using a GPEX host bridge can set this flag on the bus.
-> While the default property is set to 'false', all caller
-> set it to 'true' so there is no logical change so far.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  include/hw/pci-host/gpex.h | 1 +
->  hw/arm/sbsa-ref.c          | 2 ++
->  hw/arm/virt.c              | 2 ++
->  hw/i386/microvm.c          | 2 ++
->  hw/loongarch/virt.c        | 2 ++
->  hw/mips/loongson3_virt.c   | 2 ++
->  hw/openrisc/virt.c         | 2 ++
->  hw/pci-host/gpex.c         | 4 +++-
->  hw/riscv/virt.c            | 2 ++
->  hw/xen/xen-pvh-common.c    | 2 ++
->  hw/xtensa/virt.c           | 2 ++
->  11 files changed, 22 insertions(+), 1 deletion(-)
->
-> diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
-> index dce883573ba..44c6463afb3 100644
-> --- a/include/hw/pci-host/gpex.h
-> +++ b/include/hw/pci-host/gpex.h
-> @@ -64,6 +64,7 @@ struct GPEXHost {
->      int irq_num[GPEX_NUM_IRQS];
->
->      bool allow_unmapped_accesses;
-> +    bool refuse_bar_at_addr_0;
->
->      struct GPEXConfig gpex_cfg;
->  };
-> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-> index e3195d54497..f6cf43cf0c9 100644
-> --- a/hw/arm/sbsa-ref.c
-> +++ b/hw/arm/sbsa-ref.c
-> @@ -647,6 +647,8 @@ static void create_pcie(SBSAMachineState *sms)
->      int i;
->
->      dev =3D qdev_new(TYPE_GPEX_HOST);
-> +    object_property_set_bool(OBJECT(dev), "refuse-bar-at-addr-0",
-> +                             true, &error_fatal);
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->
->      /* Map ECAM space */
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 1a381e9a2bd..06affc3638b 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -1510,6 +1510,8 @@ static void create_pcie(VirtMachineState *vms)
->      MachineClass *mc =3D MACHINE_GET_CLASS(ms);
->
->      dev =3D qdev_new(TYPE_GPEX_HOST);
-> +    object_property_set_bool(OBJECT(dev), "refuse-bar-at-addr-0",
-> +                             true, &error_fatal);
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->
->      ecam_id =3D VIRT_ECAM_ID(vms->highmem_ecam);
+CC Markus to keep me honest in my comments below
 
-These don't look right, because both virt and sbsa-ref
-set mc->pci_allow_0_address =3D true. And in the next
-patch you delete them again...
+On Mon, Dec 02, 2024 at 03:31:53PM -0500, Andrew Keesler wrote:
+> Hi again Daniel. I have a follow up question. Can you help me
+> understand how I can declare this "outputs" property?
+> 
+>    -device '{"driver":"virtio-vga",
+>              "max_outputs":2,
+>              "id":"vga",
+>              "outputs":[
+>                {
+>                   "name":"AAA",
+>                },
+>                {
+>                   "name":"BBB",
+>                },
+>              ]}'
+> 
+> I thought DEFINE_PROP_ARRAY would do it, but I can't tell what PropertyInfo
+> implementation I should pass. All of the PropertyInfo implementations I can
+> find use scalar types, or simple text decoding. I am wondering if I am
+> missing
+> some sort of "JSON" encoding capabilities that can happen behind the scenes.
 
--- PMM
+I could have sworn we had an example of how to handle this already,
+but I'm not finding any Device class with a non-scalar property
+that isn't merely an array of scalars.
+
+We definitely have some examples elsewhere for exmaple "Machine" class
+has an SmpCacheProperties array property, and the QAuthZList class
+has an array of "QAuthZListRule" property.
+
+In both cases the struct is defined in th qapi/<blah>.json, which
+auto-generates code eg visit_type_QAuthZListRuleList, which can
+then get called from qauthz_list_prop_get_rules and
+qauthz_list_prop_set_rules, for the property.
+
+Devices use a slightly higher level wrapper so instead of calling
+object_class_property_add directly, then define the PropertyInfo
+and object_class_property_add gets called indirectly for them.
+I'm thinking it should still be possible to use the QAPI code
+generator to help though. You could either just define the struct,
+and thn use that to create  PropertyInfo to be used in combination
+with DEFINE_PROP_ARRAY, of you could define a list of structs at
+the QAPI level and use plain DEFINE_PROP. I guess the former is
+probably better aligned with other Device code.
+
+> 
+> On Tue, Nov 26, 2024 at 4:07 PM Andrew Keesler <ankeesler@google.com> wrote:
+> 
+> > Thanks, Daniel. We'll get this patch updated and send it out again.
+> >
+> > > it makes sense to allow for a data structure
+> >
+> > Whoops, I misread your original message - data structure SGTM.
+> >
+> > On Tue, Nov 26, 2024 at 11:04 AM Daniel P. Berrangé <berrange@redhat.com>
+> > wrote:
+> >
+> >> On Mon, Nov 25, 2024 at 03:54:40PM -0500, Andrew Keesler wrote:
+> >> > I follow what you are saying. I misunderstood what a "display" was in
+> >> the
+> >> > domain of QEMU. Yes, this makes more sense now.
+> >> >
+> >> > > the user should give names for every output at startup
+> >> >
+> >> > I see DEFINE_PROP_ARRAY exists. I can use that to define the new
+> >> "outputs"
+> >> > property. Any reason that each "output" would ever need to be an object
+> >> > (rather than just a string)? Nothing comes to mind, I'm just taking a
+> >> second
+> >> > to think about API forwards compatibility.
+> >>
+> >> Currently we have 'xres' and 'yres' properties set against the device
+> >> for virtio-gpu.
+> >>
+> >> If we're going to extend  it to allow the name of each "output" head
+> >> to be configured, it makes sense to allow for a data structure that
+> >> will let us also cnofigure xres & yres per output.
+> >>
+> >> Hence, I thought it would make more sense to have an array of structs,
+> >> rather than the simpler array of strings, which will let us set any
+> >> amount of per-output config data we might want in future.
+> >>
+> >> NB, I'm not asking you to wire up support for xres/yres per output,
+> >> just that we anticipate it as a possibility.
+> >>
+> >> > > upto whatever they said for "max_outputs"
+> >> >
+> >> > Where is the best place to perform this validation? I would imagine we
+> >> would
+> >> > want to fast-fail if the user provided more "outputs" than
+> >> "max_outputs". I
+> >> > can
+> >> > perform the validation in virtio_gpu_base_get_features but that seems
+> >> late.
+> >>
+> >> I'd suggest putting it in virtio_gpu_base_device_realize, as we already
+> >> have code there to validate 'max_outputs" is within limits.
+> >>
+> >>
+> >> With regards,
+> >> Daniel
+> >> --
+> >> |: https://berrange.com      -o-
+> >> https://www.flickr.com/photos/dberrange :|
+> >> |: https://libvirt.org         -o-
+> >> https://fstop138.berrange.com :|
+> >> |: https://entangle-photo.org    -o-
+> >> https://www.instagram.com/dberrange :|
+> >>
+> >>
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
