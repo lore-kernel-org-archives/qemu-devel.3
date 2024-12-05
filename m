@@ -4,78 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E0D0E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BE3E7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJJ9Y-0003SU-TL; Thu, 05 Dec 2024 16:12:53 -0500
+	id 1tJJCt-0004Vv-8M; Thu, 05 Dec 2024 16:16:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJJ9X-0003SJ-LP
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:12:51 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJJCr-0004VQ-57
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:16:17 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJJ9V-0000r6-PE
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:12:51 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5cedf5fe237so2072824a12.3
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:12:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733433167; x=1734037967; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mwkzcxco0XFnItNLn4rGF+Pv+73RPTuRVKAz0oChYn4=;
- b=MJiJP9SlvsESOq6NTrS615KoLkf7hYqbZch6UnuRAdbXDNII2Cl9E33uLhKJTQ1fLK
- BZ5ogKfEBClA0+05LXxsDNo7uMxL2htJTrGjYoAkWxXjPJkkxaLjDo6RVdz10krevD1C
- vLPIrKnE7/R/wwXayjF2upfdW1LDQPkhaSoKi5uoFdn8LjghocDwbB0Ccg7+iSVLchVw
- OEagRjixEcJW+knrCOC6zneK9GVNQe6PeiQPBdJ2I7WZLjlp3FjIFeYXoG1iePnPkzz1
- h7fboAADVVZfm9xpM8fg9v7bu12NFlmy7KOcoJg9zoMgrAVf+HdbPSx7p3dqC9unXyBc
- xqag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733433167; x=1734037967;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mwkzcxco0XFnItNLn4rGF+Pv+73RPTuRVKAz0oChYn4=;
- b=IHhXPu1Ch37KbUiYXHkP45LMiHiMN7sm+PxEnvLBHWJY/uskQ/yTQKjYpbY7NHYrer
- LbLT57Z7UHKf0OmTp1aiZs7ahbuYgbBLkOQYCcLjhyInT+F8Ou3D21wLYutG2Bl+dqmT
- VmprTuXT131C6I4PPkRdhYUCHmPrkUF7fkjthXw5dH9MPup5o8vbkt+c4z0uZ45BFzZx
- +9U9/iV8yU0ZZoxyRhjawS5tQHNYdSY3EHC29XOrUVJQLkX4b9JerhzAixmldAB/qDzm
- SWWpYYtj5jj0IyyyFye06VFbrTAHY3gL2+Sikb8Ccg5MN1bIOoddfVTIyG6LIeX8noQl
- NLjg==
-X-Gm-Message-State: AOJu0Yx/bDitZut6OyrPb4DtmYgEQZRksdmbcy4yjof3IFTuQv8PW/Mz
- ng2PyeWd8YKDBy2sqh6K8fi88Wi3i4fM3KuISnzC7uOfUTTahxZPM9L8Wkb9e2s5rIYX26u23gT
- EOXYYLaG5sAVGppEfScKKce4ZZbt6TcgeMtyJGA==
-X-Gm-Gg: ASbGnctm/GG14Wq01TnzvbWpworDyfeppAenpMJdJyQQm7jyvFgVmN1EAtUYBlSvzcE
- mM72LUbo1FBICTXy1Wf0J0vttfT/bMzzM
-X-Google-Smtp-Source: AGHT+IEkvzYDx8kI/ZcPCU/p+WzWZgQY351VyXJpOramw/f4DMLVh2ff/eUwMQIHC8jSrQ2cO3XoSxo0NQcOAOWNReo=
-X-Received: by 2002:a05:6402:540b:b0:5d0:e696:1bfc with SMTP id
- 4fb4d7f45d1cf-5d3be6f5d85mr560945a12.15.1733433167408; Thu, 05 Dec 2024
- 13:12:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJJCp-0002sn-79
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:16:16 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 2CE8D1F37C;
+ Thu,  5 Dec 2024 21:16:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733433370; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GCzzmwH+qWmJr3FqIA0xXzUGmmRBmF9JtkbfML9wI8I=;
+ b=vWFQvMEJnyFuiZokUghrG8p83e9g2aC20xwBNMh2LuXf3lqANjeGDXYdr1S4FOJg4J50/s
+ WbXiQoopRVsDiDt3PE7jrYOxRYJQnz9gUwV87Bn9Pjp0z7XYLNh/mDzuDZnDK0mVgHqQ70
+ LLaPVRpb36DDdZWxznEhY9vBZEO15uo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733433370;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GCzzmwH+qWmJr3FqIA0xXzUGmmRBmF9JtkbfML9wI8I=;
+ b=5aEVmHUUOjwGUiXvEisL3gyemO11u3NDZtbSiJ6zZ8aMhpEXTmaDc0/5VrWxTnOhzshGhE
+ d32a8Vj5qHcLD/DA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733433369; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GCzzmwH+qWmJr3FqIA0xXzUGmmRBmF9JtkbfML9wI8I=;
+ b=v8iqc8eM4EskpWwLk3/FhnN4wcmUyMFCsVF2mIwHBjKqihtcCI/HXca4MCH5zE9KrEC9pT
+ 4F0HXCaY+XUSObw/Lpu79Ule81KE5Yn+r1jT3IRn2J7J18nobNUQVx9mJbU6Ou/GcBH4Bi
+ G332F7XIabDl63m9PAqFP8Vq4PFdyMc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733433369;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GCzzmwH+qWmJr3FqIA0xXzUGmmRBmF9JtkbfML9wI8I=;
+ b=Stfi4hUTVb6oTsUgR8CN7QsxpGEzUv39VOU2L5ZCFLo4tKtir7TT0vhitWamqAsyjGmC2o
+ BDwGQfcrw90hM8Dg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A3DB6132EB;
+ Thu,  5 Dec 2024 21:16:08 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +4YIGhgYUmcNWgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 05 Dec 2024 21:16:08 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero"
+ <mail@maciej.szmigiero.name>, Alex Williamson
+ <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH 1/2] migration/multifd: Further remove the SYNC on complete
+In-Reply-To: <Z1ILpzQk6Q8d1cpg@x1n>
+References: <20241205185303.897010-1-peterx@redhat.com>
+ <20241205185303.897010-2-peterx@redhat.com> <878qstj46b.fsf@suse.de>
+ <Z1ILpzQk6Q8d1cpg@x1n>
+Date: Thu, 05 Dec 2024 18:16:05 -0300
+Message-ID: <87jzcdde5m.fsf@suse.de>
 MIME-Version: 1.0
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-24-richard.henderson@linaro.org>
-In-Reply-To: <20241201150607.12812-24-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 21:12:36 +0000
-Message-ID: <CAFEAcA9ECxgGvsSuw+GGsj4h2reKs9bVRSG=TD0oHPh519m7yA@mail.gmail.com>
-Subject: Re: [PATCH 23/67] target/arm: Convert FMOV, FABS,
- FNEG (scalar) to decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,236 +118,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Dec 2024 at 15:16, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+Peter Xu <peterx@redhat.com> writes:
+
+> On Thu, Dec 05, 2024 at 04:55:08PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
+>> > complete()") removed the FLUSH operation on complete() which should avoid
+>> > one global sync on destination side, because it's not needed.
+>> >
+>> > However that commit overlooked multifd_ram_flush_and_sync() part of things,
+>> > as that's always used together with the FLUSH message on the main channel.
+>> 
+>> Let's please write the full name of the flags, functions, etc. As we've
+>> seen in the discussion with Prasad, we're stumbling over ambiguous
+>> terminology. This is RAM_SAVE_FLAG_MULTIFD_FLUSH.
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate-a64.c | 104 ++++++++++++++++++++++-----------
->  target/arm/tcg/a64.decode      |   7 +++
->  2 files changed, 78 insertions(+), 33 deletions(-)
+> Sure.
 >
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index 2d3566e45c..87731e0be4 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -8287,6 +8287,67 @@ static bool trans_CSEL(DisasContext *s, arg_CSEL *a)
->      return true;
+>> 
+>> >
+>> > For very old binaries (multifd_flush_after_each_section==true), that's
+>> > still needed because each EOS received on destination will enforce
+>> > all-channel sync once.
+>> 
+>> Ok, but why does this patch not reinstate the flag?
+>
+> RAM_SAVE_FLAG_MULTIFD_FLUSH?  Because it's not needed?
+>
+
+Ah, you're saying we need the source side to send the MULTIFD_FLAG_SYNC
+packet so that the old QEMU on the recv side gets out of waiting. I
+see.
+
+>> 
+>> >
+>> > For new binaries (multifd_flush_after_each_section==false), the flush and
+>> > sync shouldn't be needed just like the FLUSH, with the same reasoning.
+>> >
+>> > Currently, on new binaries we'll still send SYNC messages on multifd
+>> > channels, even if FLUSH is omitted at the end.  It'll make all recv threads
+>> > hang at SYNC message.
+>> 
+>> I don't get this part, is this a bug you're describing? There's not SYNC
+>> message on the recv side, I think you mean the MULTIFD_FLAG_SYNC and
+>> this code?
+>> 
+>>     if (flags & MULTIFD_FLAG_SYNC) {
+>>         qemu_sem_post(&multifd_recv_state->sem_sync);
+>>         qemu_sem_wait(&p->sem_sync);
+>>     }
+>
+> Yes.
+>
+>> 
+>> That's not a hang, that's the sync.
+>
+> When recv side never collect that SYNC (by invoke multifd_recv_sync_main),
+> then it is a hang.
+>
+
+Right, I forget the sync on the recv is the other way around. It's the
+multifd_recv_state that does the sync between the threads. The sem_sync
+is there so that the channels don't exit.
+
+>> 
+>> >
+>> > Multifd is still all working fine because luckily recv side cleanup
+>> > code (mostly multifd_recv_sync_main()) is smart enough to make sure even if
+>> > recv threads are stuck at SYNC it'll get kicked out.  And since this is the
+>> > completion phase of migration, nothing else will be sent after the SYNCs.
+>> 
+>> Hmm, a last sync on the recv side might indeed not be needed.
+>> 
+>> >
+>> > This may be needed for VFIO in the future because VFIO can have data to
+>> > push after ram_save_complete(), hence we don't want the recv thread to be
+>> > stuck in SYNC message. Remove this limitation will make src even slightly
+>> > faster too to avoid some more code.
+>> >
+>> > Stable branches do not need this patch, as no real bug I can think of that
+>> > will go wrong there.. so not attaching Fixes to be clear on the backport
+>> > not needed.
+>> >
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  migration/ram.c | 13 ++++++++++---
+>> >  1 file changed, 10 insertions(+), 3 deletions(-)
+>> >
+>> > diff --git a/migration/ram.c b/migration/ram.c
+>> > index 05ff9eb328..7284c34bd8 100644
+>> > --- a/migration/ram.c
+>> > +++ b/migration/ram.c
+>> > @@ -3283,9 +3283,16 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+>> >          }
+>> >      }
+>> >  
+>> > -    ret = multifd_ram_flush_and_sync();
+>> > -    if (ret < 0) {
+>> > -        return ret;
+>> > +    if (migrate_multifd() &&
+>> > +        migrate_multifd_flush_after_each_section()) {
+>> > +        /*
+>> > +         * Only the old dest QEMU will need this sync, because each EOS
+>> > +         * will require one SYNC message on each channel.
+>> > +         */
+>> > +        ret = multifd_ram_flush_and_sync();
+>> > +        if (ret < 0) {
+>> > +            return ret;
+>> > +        }
+>> 
+>> I don't think this works. We need one last flush to not lose the last
+>> few pages of ram. And we need the src side sync of multifd threads to
+>> make sure this function doesn't return before all IO has been put on the
+>> wire.
+>
+> This should be the question for commit 637280aeb2, I thought it got
+> answered there.. It's almost what the commit message there in 637280aeb2
+> wanted to justify too.
+
+Yeah, it missed the mark.
+
+>
+> We don't need to flush the last pages here, because we flushed it already,
+> in the last find_dirty_block() call where src QEMU finished scanning the
+> last round.  Then we set complete_round=true, scan one more round, and the
+> iteration won't complete until the new round sees zero dirty page.
+
+Ok, let's put this in the commit message. As it stands it looks like
+this patch is fixing a bug with 637280aeb2 when instead it's doing
+further optimization, but so it happens that we still require the
+backward compatibility part.
+
+>
+> So when reaching this line, multifd send buffer must be empty.  We need to
+> flush for each round of RAM scan, we can't avoid the flush there, but we
+> can save this one in complete().
+>
+> To explain that with code, I hacked a QEMU and assert that.  It ran all
+> fine here (this is definitely not for merge.. but to show what I meant):
+>
+> ===8<===
+> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+> index f64c4c9abd..0bd42c7627 100644
+> --- a/migration/multifd-nocomp.c
+> +++ b/migration/multifd-nocomp.c
+> @@ -21,7 +21,7 @@
+>  #include "qemu/error-report.h"
+>  #include "trace.h"
+>
+> -static MultiFDSendData *multifd_ram_send;
+> +MultiFDSendData *multifd_ram_send;
+>
+>  size_t multifd_ram_payload_size(void)
+>  {
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 7284c34bd8..edeb9e28ff 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3228,6 +3228,8 @@ out:
+>      return done;
 >  }
 >
-> +typedef struct FPScalar1Int {
-> +    void (*gen_h)(TCGv_i32, TCGv_i32);
-> +    void (*gen_s)(TCGv_i32, TCGv_i32);
-> +    void (*gen_d)(TCGv_i64, TCGv_i64);
-> +} FPScalar1Int;
+> +extern MultiFDSendData *multifd_ram_send;
 > +
-> +static bool do_fp1_scalar_int(DisasContext *s, arg_rr_e *a,
-> +                              const FPScalar1Int *f)
-> +{
-> +    switch (a->esz) {
-> +    case MO_64:
-> +        if (fp_access_check(s)) {
-> +            TCGv_i64 t = read_fp_dreg(s, a->rn);
-> +            f->gen_d(t, t);
-> +            write_fp_dreg(s, a->rd, t);
-> +        }
-> +        break;
-> +    case MO_32:
-> +        if (fp_access_check(s)) {
-> +            TCGv_i32 t = read_fp_sreg(s, a->rn);
-> +            f->gen_s(t, t);
-> +            write_fp_sreg(s, a->rd, t);
-> +        }
-> +        break;
-> +    case MO_16:
-> +        if (!dc_isar_feature(aa64_fp16, s)) {
-> +            return false;
-> +        }
-> +        if (fp_access_check(s)) {
-> +            TCGv_i32 t = read_fp_hreg(s, a->rn);
-> +            f->gen_h(t, t);
-> +            write_fp_sreg(s, a->rd, t);
-> +        }
-> +        break;
-> +    default:
-> +        return false;
-> +    }
-> +    return true;
-> +}
-> +
-> +static const FPScalar1Int f_scalar_fmov = {
-> +    tcg_gen_mov_i32,
-> +    tcg_gen_mov_i32,
-> +    tcg_gen_mov_i64,
-> +};
-> +TRANS(FMOV_s, do_fp1_scalar_int, a, &f_scalar_fmov)
-> +
-> +static const FPScalar1Int f_scalar_fabs = {
-> +    gen_vfp_absh,
-> +    gen_vfp_abss,
-> +    gen_vfp_absd,
-> +};
-> +TRANS(FABS_s, do_fp1_scalar_int, a, &f_scalar_fabs)
-> +
-> +static const FPScalar1Int f_scalar_fneg = {
-> +    gen_vfp_negh,
-> +    gen_vfp_negs,
-> +    gen_vfp_negd,
-> +};
-> +TRANS(FNEG_s, do_fp1_scalar_int, a, &f_scalar_fneg)
-> +
->  /* Floating-point data-processing (1 source) - half precision */
->  static void handle_fp_1src_half(DisasContext *s, int opcode, int rd, int rn)
->  {
-> @@ -8295,15 +8356,6 @@ static void handle_fp_1src_half(DisasContext *s, int opcode, int rd, int rn)
->      TCGv_i32 tcg_res = tcg_temp_new_i32();
->
->      switch (opcode) {
-> -    case 0x0: /* FMOV */
-> -        tcg_gen_mov_i32(tcg_res, tcg_op);
-> -        break;
-> -    case 0x1: /* FABS */
-> -        gen_vfp_absh(tcg_res, tcg_op);
-> -        break;
-> -    case 0x2: /* FNEG */
-> -        gen_vfp_negh(tcg_res, tcg_op);
-> -        break;
->      case 0x3: /* FSQRT */
->          fpst = fpstatus_ptr(FPST_FPCR_F16);
->          gen_helper_sqrt_f16(tcg_res, tcg_op, fpst);
-> @@ -8331,6 +8383,9 @@ static void handle_fp_1src_half(DisasContext *s, int opcode, int rd, int rn)
->          gen_helper_advsimd_rinth(tcg_res, tcg_op, fpst);
->          break;
->      default:
-> +    case 0x0: /* FMOV */
-> +    case 0x1: /* FABS */
-> +    case 0x2: /* FNEG */
->          g_assert_not_reached();
->      }
->
-
-In these changes to the "handle this op" functions we make the
-function assert if it's passed an op we've converted. But shouldn't
-there also be a change which makes the calling function disas_fp_1src()
-call unallocated_encoding() for the ops ?
-
-> @@ -8349,15 +8404,6 @@ static void handle_fp_1src_single(DisasContext *s, int opcode, int rd, int rn)
->      tcg_res = tcg_temp_new_i32();
->
->      switch (opcode) {
-> -    case 0x0: /* FMOV */
-> -        tcg_gen_mov_i32(tcg_res, tcg_op);
-> -        goto done;
-> -    case 0x1: /* FABS */
-> -        gen_vfp_abss(tcg_res, tcg_op);
-> -        goto done;
-> -    case 0x2: /* FNEG */
-> -        gen_vfp_negs(tcg_res, tcg_op);
-> -        goto done;
->      case 0x3: /* FSQRT */
->          gen_helper_vfp_sqrts(tcg_res, tcg_op, tcg_env);
->          goto done;
-> @@ -8393,6 +8439,9 @@ static void handle_fp_1src_single(DisasContext *s, int opcode, int rd, int rn)
->          gen_fpst = gen_helper_frint64_s;
->          break;
->      default:
-> +    case 0x0: /* FMOV */
-> +    case 0x1: /* FABS */
-> +    case 0x2: /* FNEG */
->          g_assert_not_reached();
->      }
->
-> @@ -8417,22 +8466,10 @@ static void handle_fp_1src_double(DisasContext *s, int opcode, int rd, int rn)
->      TCGv_ptr fpst;
->      int rmode = -1;
->
-> -    switch (opcode) {
-> -    case 0x0: /* FMOV */
-> -        gen_gvec_fn2(s, false, rd, rn, tcg_gen_gvec_mov, 0);
-> -        return;
-> -    }
-> -
->      tcg_op = read_fp_dreg(s, rn);
->      tcg_res = tcg_temp_new_i64();
->
->      switch (opcode) {
-> -    case 0x1: /* FABS */
-> -        gen_vfp_absd(tcg_res, tcg_op);
-> -        goto done;
-> -    case 0x2: /* FNEG */
-> -        gen_vfp_negd(tcg_res, tcg_op);
-> -        goto done;
->      case 0x3: /* FSQRT */
->          gen_helper_vfp_sqrtd(tcg_res, tcg_op, tcg_env);
->          goto done;
-> @@ -8465,6 +8502,9 @@ static void handle_fp_1src_double(DisasContext *s, int opcode, int rd, int rn)
->          gen_fpst = gen_helper_frint64_d;
->          break;
->      default:
-> +    case 0x0: /* FMOV */
-> +    case 0x1: /* FABS */
-> +    case 0x2: /* FNEG */
->          g_assert_not_reached();
->      }
->
-> @@ -10881,13 +10921,11 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
->          case 0x7b: /* FCVTZU */
->              gen_helper_advsimd_f16touinth(tcg_res, tcg_op, tcg_fpstatus);
->              break;
-> -        case 0x6f: /* FNEG */
-> -            tcg_gen_xori_i32(tcg_res, tcg_op, 0x8000);
-> -            break;
->          case 0x7d: /* FRSQRTE */
->              gen_helper_rsqrte_f16(tcg_res, tcg_op, tcg_fpstatus);
->              break;
->          default:
-> +        case 0x6f: /* FNEG */
->              g_assert_not_reached();
+>  /**
+>   * ram_save_complete: function called to send the remaining amount of ram
+>   *
+> @@ -3283,6 +3285,10 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
 >          }
-
-What's this change about? This bit of decode is not in the area that
-corresponds to the new patterns you add to a64.decode.
-
-Is this a bug in our existing decode where we decode something that
-should be undef? I think that 0x6f here corresponds to the decode
-table in section C4.1.96.6 ("Advanced SIMD scalar two-register
-miscellaneous FP16"), where it is U:a:opcode == 1 1 01111. But
-in that table that encoding is marked unallocated. A similar
-thing is true for case 0x2f FABS and case 07f FSQRT. All three
-of these should have set only_in_vector to true and not had the
-code handling in the is_scalar branch of the function.
-
-We should fix that bug in a separate patch before we do the
-decodetree conversion, I think.
-
-> diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-> index 928e69da69..fca64c63c3 100644
-> --- a/target/arm/tcg/a64.decode
-> +++ b/target/arm/tcg/a64.decode
-> @@ -47,6 +47,7 @@
->  @rr_h           ........ ... ..... ...... rn:5 rd:5     &rr_e esz=1
->  @rr_d           ........ ... ..... ...... rn:5 rd:5     &rr_e esz=3
->  @rr_sd          ........ ... ..... ...... rn:5 rd:5     &rr_e esz=%esz_sd
-> +@rr_hsd         ........ ... ..... ...... rn:5 rd:5     &rr_e esz=%esz_hsd
+>      }
 >
->  @rrr_b          ........ ... rm:5 ...... rn:5 rd:5      &rrr_e esz=0
->  @rrr_h          ........ ... rm:5 ...... rn:5 rd:5      &rrr_e esz=1
-> @@ -1321,6 +1322,12 @@ FMAXV_s         0110 1110 00 11000 01111 10 ..... .....     @rr_q1e2
->  FMINV_h         0.00 1110 10 11000 01111 10 ..... .....     @qrr_h
->  FMINV_s         0110 1110 10 11000 01111 10 ..... .....     @rr_q1e2
->
-> +# Floating-point data processing (1 source)
+> +    if (migrate_multifd()) {
+> +        assert(multifd_payload_empty(multifd_ram_send));
+> +    }
 > +
-> +FMOV_s          00011110 .. 1 000000 10000 ..... .....      @rr_hsd
-> +FABS_s          00011110 .. 1 000001 10000 ..... .....      @rr_hsd
-> +FNEG_s          00011110 .. 1 000010 10000 ..... .....      @rr_hsd
-> +
->  # Floating-point Immediate
+>      if (migrate_multifd() &&
+>          migrate_multifd_flush_after_each_section()) {
+>          /*
+> ===8<===
 >
->  FMOVI_s         0001 1110 .. 1 imm:8 100 00000 rd:5         esz=%esz_hsd
-> --
-> 2.43.0
-
-thanks
--- PMM
+>> 
+>> This also doesn't address what the commit message says about the recv
+>> side never getting the RAM_SAVE_FLAG_MULTIFD_FLUSH message.
+>
+> The new binaries now always not send RAM_SAVE_FLAG_MULTIFD_FLUSH when
+> complete(), however it always sends the multifd SYNC messages on the wire.
+> It means those SYNC messages will always arrive on dest multifd channels,
+> and then all these channels will wait for the main thread to collect that.
+> However since RAM_SAVE_FLAG_MULTIFD_FLUSH is not there, they'll hang until
+> multifd recv cleanups.
 
