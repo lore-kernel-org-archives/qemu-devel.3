@@ -4,98 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71A60E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 22:22:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83D48E7716E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 22:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJKEh-0003bT-Ke; Thu, 05 Dec 2024 17:22:15 -0500
+	id 1tJKFL-0004WR-Ux; Thu, 05 Dec 2024 17:22:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJKEf-0003bH-KX
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 17:22:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJKEd-0007x4-Tu
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 17:22:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733437330;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=35JQC/CYF9flo6oPnYjLzzXZlAZWFTIm8C7Coo1+w90=;
- b=SRl5Fr/n0UbdolwSWruP3TmvP2uM4v30FO131NNUqRHgsGQeKvxCo8zejexTjWZYSgyq94
- dHr9wZmbAldBu8H9XlIIm8qkSJNdHG9VZyp9Sx54K06LSrfsxLHijHsb3ZFQAhcK9VA9gH
- AvQZ1e1ihmMmb7MswkFLrhHZBKogFo8=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-1MNXhaAmNBq6PoK6SzIJsg-1; Thu, 05 Dec 2024 17:20:59 -0500
-X-MC-Unique: 1MNXhaAmNBq6PoK6SzIJsg-1
-X-Mimecast-MFC-AGG-ID: 1MNXhaAmNBq6PoK6SzIJsg
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6d8e69305e7so4673286d6.2
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 14:20:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733437258; x=1734042058;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tJKFK-0004Vk-Nl
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 17:22:54 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tJKFH-000805-TQ
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 17:22:54 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-21572ca3cccso11947495ad.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 14:22:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733437370; x=1734042170; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=35JQC/CYF9flo6oPnYjLzzXZlAZWFTIm8C7Coo1+w90=;
- b=aBqsEmGDYUQ+g63hTjGVThfjpi9rU7xmk4/reT21DhmHAZqT+jTPy3mYrp5akNBVG6
- zEdDcW1TO58qBEkCBNAJKBsS49IFus2hq666tet1Ajn9SglLptloVXUOnlwakB5P1O/z
- Bfk6NZFxCUrgtsw7J1E2wJ5uX3QUJqAlflWijkCc0HWU/KwmEODzQE1UGmYTtRZ3wCC+
- mkzfKIrkrTFQeJvP5gUf67NIKSR6OSwkJ7B/6vRB6qTJ44Fe7yAV5sHd2Hn8dipuRpSP
- EHocLEaay0Cb6XRptabo+cB4E2vko+A45Vdk1WNmjhC/3YdTkRxdUCotzceFdK6nr7mb
- HDHA==
-X-Gm-Message-State: AOJu0YwVXLkdx0ysx1wDMcxb4syj6uiKUNUzK+lA4WgSDbZejHfb7hoO
- R8GtHpZ2uSWisyiM3bQIs6Hcmhwqp7PcL31T20fBd4o9v9EiTS8pTU3GAOmdRTIW8y3TopEXQDL
- aN9g8zWFLuH6R3OHyVdlbIvRSHlsEi913HYYI4Oq+FnjqjVfqHxAK
-X-Gm-Gg: ASbGnctrQWL2kbtc9d7EDtfBGxXAZjW7mHQws3OYKeoZUqrddO1vQq+fp5KNFjWy2yy
- fNIe9Wk6+2K/eItcLFY3sgE8MWPaYS5szyUkOjZPbN2RKEKcPrN3vqMCxXIEtBUuQ5KH9fTBCrQ
- U4U4aEbkxiz9OW4ijsTTIvP1jZOC72Cz2QfxCCDwGz01Qrs+uAqO6HfTTP3bOldDZYtLDeS6Ipz
- mD+uEYG/dAPHh8+WpE7b8lITpu6JriSIVdSIq4J1SKSL7EZdjjySgdDJnRJdWtenPTdlgtcHd4B
- n5G49TdJg7+sqmk=
-X-Received: by 2002:a05:6214:b6b:b0:6d8:8a01:64e2 with SMTP id
- 6a1803df08f44-6d8e720d9ebmr8087946d6.43.1733437258599; 
- Thu, 05 Dec 2024 14:20:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHHTEtOjzLOzGwYNeNNDoM1yjuj7GVj6RN4IN/PEgPMuHSuUW2WTRjzTBHAHeMSwWjd2aQQow==
-X-Received: by 2002:a05:6214:b6b:b0:6d8:8a01:64e2 with SMTP id
- 6a1803df08f44-6d8e720d9ebmr8087706d6.43.1733437258192; 
- Thu, 05 Dec 2024 14:20:58 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8da699544sm10991116d6.50.2024.12.05.14.20.57
+ bh=FbPMtxcOc3D4j1V0HPSTBCu31VLQo3b2yamOLZCop3s=;
+ b=fL+/Jt8xS5xDCd9Bgd2DL1X9WxDz8IRs4K+KCPAz6Vu0nCU/VwlgeGsxIB8nopkjce
+ gz8Q2VqRAW71mpjsY/fR7Sl64byRoof8H7Zju1YIf3iQ8cIvJQpKvoQoZtX+t8HWGsKT
+ YHS43KOJqEJ39ism0MFh+Y3/XRxIbG0CMB913rVJnXFCwfVY3LHdGkPehFoBrqwDxNW9
+ NP9Fs3GIJGKD4wqtys+bkjbagqUVvwQTPsLOMK8HXHTi2lHEVfIc7AUYubr6ccxTHF3N
+ 8zM67fW33xEjF5jDdV8gQtfZ7UDVgD/R4b23+rclaQzwdbliW8J4htCs2+zar+nGEmKO
+ yDEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733437370; x=1734042170;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FbPMtxcOc3D4j1V0HPSTBCu31VLQo3b2yamOLZCop3s=;
+ b=nYxqJCSnmJGTy+PfZ8uhjk0qgh72qWrBZ6XzLgnTfn9PKdHVg4NBMldo8WBjHA/Xcv
+ cwdmveQ6+IZso8AFd7STmjk6slo8PagaVqG0ik/HxZPPK3tPaVERhutAuPrbemBqdp16
+ tH2/JK49JoE3qBLNNmHmIWanvBfJEo+0JIt5vx0UrCw+gt3odsRcwLbkA8iczc4OJ5e9
+ dsL8b5lqqJ5hA1+sueQZoNYrX94pGHmKaJXV3IHApd2H8UisJ5fmqRU9BSnvkz8kkHlx
+ h7RE9ETVvb7kojnsUZtm0iNtMNfjeChHW2ThhkI8Lz7ccGneLGTez1qpzlhadbeK4MV8
+ SVtw==
+X-Gm-Message-State: AOJu0Yy0sq0k+fAfIpf0QayWAi4OczrSPkFLPzLPXf8inMcuAQyAVOAS
+ +64cSFiADf8hV2d13xfzCe3UnpRCX95CzZ7LiF2JzR8hO/YG9u7kw+A473QefoKzt7u5at1L9JK
+ eLTA=
+X-Gm-Gg: ASbGncuHFWQmPxSlDIElagtsUeYe8H0Cw+jgbv2VX6YEuEROV54gN4J0AnANN1AxWez
+ OlriEU5D8BlcWgth18tYaE7dG48OvAroB3LDVAoYn0cvfN/fsLxKEl61SdS5T8cMIIDy8foB8lM
+ oH+Jlpu6nh6cG4BQxHGT410YHbOL+EH0QlHxQMUqmJLsdUOPs4R8MYcCYvjKba/ZvLndmPi2HlF
+ FjPZih9rDUt2y6H5uOPFnABkPtZoSBtf7o5cVo5ug4W1AZWdmob2SLl7xK7Y6GLljC7mlAHCUEq
+ KLtGGvPH
+X-Google-Smtp-Source: AGHT+IGGpMrgNZ1O4bZqOEYDSDjgfdADe/h62ubd0eMgisrR560w3IkgYU6NwrzANqjBgeoLeUxSbg==
+X-Received: by 2002:a17:902:c405:b0:215:a3fb:b4d6 with SMTP id
+ d9443c01a7336-21614d54353mr8243025ad.8.1733437369826; 
+ Thu, 05 Dec 2024 14:22:49 -0800 (PST)
+Received: from pc.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-215f8f0b571sm17310435ad.183.2024.12.05.14.22.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 14:20:57 -0800 (PST)
-Date: Thu, 5 Dec 2024 17:20:55 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH 2/2] migration/multifd: Allow to sync with sender threads
- only
-Message-ID: <Z1InR552_UFBCdiZ@x1n>
-References: <20241205185303.897010-1-peterx@redhat.com>
- <20241205185303.897010-3-peterx@redhat.com>
- <875xnxj37e.fsf@suse.de> <Z1IOlJemNxrhOg3z@x1n>
- <87h67hdckg.fsf@suse.de> <Z1IlX3Vp1hWmQjbT@x1n>
+ Thu, 05 Dec 2024 14:22:49 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ gustavo.romero@linaro.org, Andrew Melnychenko <andrew@daynix.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ alex.bennee@linaro.org, Konstantin Kostiuk <kkostiuk@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Jason Wang <jasowang@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ manos.pitsidianakis@linaro.org, qemu-block@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 1/6] docs/devel: remove dead video link for sourcehut
+ submit process
+Date: Thu,  5 Dec 2024 14:22:36 -0800
+Message-Id: <20241205222241.3789437-2-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241205222241.3789437-1-pierrick.bouvier@linaro.org>
+References: <20241205222241.3789437-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z1IlX3Vp1hWmQjbT@x1n>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,23 +114,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 05, 2024 at 05:12:47PM -0500, Peter Xu wrote:
-> In case if I missed it, a runnable patch would work to clarify.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ docs/devel/submitting-a-patch.rst | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-Ohhh no need now, I see what you meant.
-
-But then you'll really need to comment p->sem, with something like:
-
--    /* sem where to wait for more work */
-+    /* sem where to wait for more work.  If there's no any work, it means
-+     * a local sync. */
-     QemuSemaphore sem;
-
-Do you like it?  I definitely don't.. because it's confusing why p->sem can
-imply a sync request if we already have pending_sync.  IMHO it's cleaner
-when we have pending_sync, use it for all kinds of syncs.
-
+diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
+index 10b062eec26..03b2ac298aa 100644
+--- a/docs/devel/submitting-a-patch.rst
++++ b/docs/devel/submitting-a-patch.rst
+@@ -252,10 +252,7 @@ patches to the QEMU mailing list by following these steps:
+ #. Send your patches to the QEMU mailing list using the web-based
+    ``git-send-email`` UI at https://git.sr.ht/~USERNAME/qemu/send-email
+ 
+-`This video
+-<https://spacepub.space/videos/watch/ad258d23-0ac6-488c-83fc-2bacf578de3a>`__
+-shows the web-based ``git-send-email`` workflow. Documentation is
+-available `here
++Documentation for sourcehut is available `here
+ <https://man.sr.ht/git.sr.ht/#sending-patches-upstream>`__.
+ 
+ .. _cc_the_relevant_maintainer:
 -- 
-Peter Xu
+2.39.5
 
 
