@@ -4,90 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DEACE77170
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 10:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B29C4E7716C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 10:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJ9ON-0002wc-Ad; Thu, 05 Dec 2024 05:47:31 -0500
+	id 1tJ9TR-00048U-4W; Thu, 05 Dec 2024 05:52:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJ9OM-0002wM-Bi
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:47:30 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJ9OK-0005wd-Q5
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:47:30 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5d0e75dd846so1128797a12.3
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 02:47:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733395646; x=1734000446; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4NH3Hzf0fTaq5sduurOl5BPeHl1c9YCnkktK6zCQQ2I=;
- b=Xz64LB/yOjoAGE6Zwf56AYzJ2aYTo4j0ILN/DobEqiyN5TmFKSqgok4a05ePWNpz4f
- l81jTLmeXYV0OtvizUfAobJOAPZsAHp+tUPi5gfWUU57HsxuPAkSuHUF6XuwnVz9xThH
- Te7ghYuJHDBfRJmzVwtMSKlLBsb5vg7ZxMfSdDMlZW6EWXmjO/AYvqAZ366Y0nCaFslE
- h1z/5pUUb9hIRinf9FBWrreS7L0TI8PMA/v+MrrJee3yA59Slv9KlutUMcPlr5v5bd/F
- HDBEGxp8EDVSYrt0/vgcxiw9JwCl4cM0NXC+e/39JLwb8tJeFyv0xTlGiLHw1hfPZ3jF
- BnYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733395646; x=1734000446;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4NH3Hzf0fTaq5sduurOl5BPeHl1c9YCnkktK6zCQQ2I=;
- b=S8kXLuTB1lu2J1b0MLNAJD2YM362Qz+zph8+BqCH471xSxV7KVMjng8PSJbem9C3Qx
- wD6Ofykz6HVtKzdUIyJoT2iXlT/yssj/6k3vAd83ggKrr67ovgovTYIULNnSRr1xu7kD
- 3KpavqOQvvwFGHOPNL5tw2dKEs9jx59NPQ/Va0b/xQoZBOnbtPRT3dG6p82b/9QCoRAG
- ttFLkrfaltrS6H4nnpryq8N6ImIze3HKYFV6tsLR/EyL0k+cQAarlZxBSbLTitrvM+Ff
- Sgv2uEQ+Cpmu8CfA8AVHSIXRZNGb5oE6UItJH4gK9RAF0GeengkLwM4lPDzXucSbjSu2
- W2BA==
-X-Gm-Message-State: AOJu0YyvfheIKB/wgMw2hWKrmehbbXOhWf7sODAxWVi0vhAheKcHbcxY
- 6QpE120imtVmYHe5tVTii4iJqh9iMce5eZVodv4uKuYauunH6/eb3XT9xkYp910AIMfPTcLyfYF
- /UtPLwF1Jwnqx50X8g6+beaEqUXeD7UFbXkZGlQ==
-X-Gm-Gg: ASbGncuxwY7DVYMpL0KZRyban1SLCX4YtuAuf0pn1kAZCW1R0jNpHGSBq3KcFc+4OtP
- HO+9P1IUWyJyDj+jG4J9d7Hu6qqyi+Few
-X-Google-Smtp-Source: AGHT+IEGacw3aT/TZjIVQrFpPwXbzlwNn4DbFf4Z9Jv1MBu8W1mGEppwgc1ulFRyiOq6MsS/cwV7AKdTpDgdfefYjHM=
-X-Received: by 2002:a05:6402:35c9:b0:5d0:ef55:8451 with SMTP id
- 4fb4d7f45d1cf-5d10cb565dbmr10739933a12.8.1733395646283; Thu, 05 Dec 2024
- 02:47:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJ9TP-000485-Ol
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:52:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tJ9TO-00015n-3I
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 05:52:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733395959;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DzLAKDPY3OxPSrETLdelduzRbrgSqqz3YYlcM4WS2ak=;
+ b=IS+HlmbFDYbko81+vJJZbe1YIvPAe0Wkh7ac6tCSOz54hBPClld3dJ76QA5Q391bTnESCL
+ IsZ9xIDBFO3ffTcM8zllgn/LM/fHMU26tTZSekIHkSl1h/p1iU+tD/8ipNWTRHEB/s9slA
+ LF3j61iy1nxTSxAokDtILaj/m10izmk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-9V9GBHzxNU2wDSYVbKKAqw-1; Thu,
+ 05 Dec 2024 05:52:37 -0500
+X-MC-Unique: 9V9GBHzxNU2wDSYVbKKAqw-1
+X-Mimecast-MFC-AGG-ID: 9V9GBHzxNU2wDSYVbKKAqw
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C699519560A2; Thu,  5 Dec 2024 10:52:35 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.137])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB8EC30001A1; Thu,  5 Dec 2024 10:52:33 +0000 (UTC)
+Date: Thu, 5 Dec 2024 10:52:28 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/6] migration: Kick postcopy threads on cancel
+Message-ID: <Z1GF7KheH_z5E1lc@redhat.com>
+References: <20241202220137.32584-1-farosas@suse.de>
+ <20241202220137.32584-3-farosas@suse.de> <Z1Ch8HpiKMoqILDM@x1n>
+ <87r06ni84z.fsf@suse.de> <Z1Cv4JM8IbYeiDpR@x1n>
+ <Z1C1V25wydbBlsMb@redhat.com> <Z1DAzzB1SfY_bL17@x1n>
 MIME-Version: 1.0
-References: <20241204202602.58083-1-philmd@linaro.org>
- <20241204202602.58083-18-philmd@linaro.org>
-In-Reply-To: <20241204202602.58083-18-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 10:47:15 +0000
-Message-ID: <CAFEAcA8Y6PGOJvMwQKykD4jpDjnuVO61xNFQ4k5t=z5ULjv-oQ@mail.gmail.com>
-Subject: Re: [PATCH 17/20] disas: Use cpu_datapath_is_big_endian()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Anton Johansson <anjo@rev.ng>, Zhao Liu <zhao1.liu@intel.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org, 
- Max Filippov <jcmvbkbc@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Nicholas Piggin <npiggin@gmail.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>, 
- qemu-riscv@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z1DAzzB1SfY_bL17@x1n>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,48 +87,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Dec 2024 at 20:28, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> Rather that using the binary endianness, use the vCPU one.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  disas/disas-common.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/disas/disas-common.c b/disas/disas-common.c
-> index 7377de0715c..ef91c43449e 100644
-> --- a/disas/disas-common.c
-> +++ b/disas/disas-common.c
-> @@ -7,7 +7,6 @@
->  #include "disas/disas.h"
->  #include "disas/capstone.h"
->  #include "hw/core/cpu.h"
-> -#include "exec/tswap.h"
->  #include "disas-internal.h"
->
->
-> @@ -61,7 +60,7 @@ void disas_initialize_debug_target(CPUDebug *s, CPUStat=
-e *cpu)
->
->      s->cpu =3D cpu;
->      s->info.print_address_func =3D print_address;
-> -    if (qemu_binary_is_bigendian()) {
-> +    if (cpu_datapath_is_big_endian(cpu)) {
->          s->info.endian =3D BFD_ENDIAN_BIG;
->      } else {
->          s->info.endian =3D  BFD_ENDIAN_LITTLE;
-> --
+On Wed, Dec 04, 2024 at 03:51:27PM -0500, Peter Xu wrote:
+> On Wed, Dec 04, 2024 at 08:02:31PM +0000, Daniel P. Berrangé wrote:
+> > I would say the difference is like a graceful shutdown vs pulling the
+> > power plug in a bare metal machine
+> > 
+> > 'cancel' is intended to be graceful. It should leave you with a functional
+> > QEMU (or refuse to run if unsafe).
+> > 
+> > 'yank' is intended to be forceful, letting you get out of bad situations
+> > that would otherwise require you to kill the entire QEMU process, but
+> > still with possible associated risk data loss to the QEMU backends.
+> > 
+> > They have overlap, but are none the less different.
+> 
+> The question is more about whether yank should be used at all for
+> migration only, not about the rest instances.
+> 
+> My answer is yank should never be used for migration, because
+> "migrate_cancel" also unplugs the power plug.. It's not anything more
+> enforced.  It's only doing less always.
+> 
+> E.g. migration_yank_iochannel() is exactly what we do with
+> qmp_migrate_cancel() in the first place, only that migrate_cancel only does
+> it on the main channel (on both qemufiles even if ioc is one), however it
+> should be suffice, and behave the same way, as strong as "yank".
 
-This looks weird, but maybe that's just the function naming?
-Instruction disassembly is instructions, not data, and the
-endianness isn't necessarily the same (e.g. on Armv7 and later
-instructions are always little-endian even when data is
-big-endian.)
+I recall at the time the yank stuff was introduced, one of the scenarios
+they were concerned about was related to locks held by QEMU code. eg that
+there are scenarios where migrate_cancel may not be processed promptly
+enough due to being stalled on mutexes held by other concurrently running
+threads. Now I would expect any such long duration stalls on migration
+mutexes to be bugs, but the intent of yank is to give a recovery mechanism
+that can workaround such bugs.  The yank QMP command only interacts with
+its own local mutexes.
 
--- PMM
+So even though both migrate-cancel and yank end up calling the same
+qio_channel_shutdown() API, there can be practical differences in how
+they reach that qio_channel_shutdown() call.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
