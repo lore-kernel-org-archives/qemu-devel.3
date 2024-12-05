@@ -4,91 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E881FE7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B60E77170
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 21:25:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJJLM-0002cy-Pp; Thu, 05 Dec 2024 16:25:04 -0500
+	id 1tJJLu-00039g-Oo; Thu, 05 Dec 2024 16:25:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJLL-0002bP-8f
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:25:03 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJJLq-00035B-QS
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:25:35 -0500
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJJLJ-0005BA-FQ
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:25:02 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-434a1639637so14882755e9.1
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 13:25:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733433900; x=1734038700; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PCvG1uFJ7bfIwhXq4y2fDMl/5i/DI5j9+WT4jXv9Bfo=;
- b=SCY3CkwKH0c30q1IQSAK1eH4DbHJxafE4oB5jaypJK8ScId1+U1y2mUt/KhMa4j1iy
- 9ZYI3SA9tUfUEAk+x1fFNEkOwRb6DfH7+GGbavinh5x5jauakdpIgRqEJkys/egz8obl
- hWe4wySDTMz48f82DcSOCYVY9ZU7aUnoptK8DaSWnT6abncsxb1Sbs9KitLS/FRUvQhM
- NkG+Lfv3Eceux1Y+hAfljIhcdikDAYXir89RRI4xHvQd4PyH2WGL/lJmLeBpTp1HJOOn
- Tx0C6XZX5fYcaOqdXeu7cAoVrWWZRG37sG+ZQAdnZ/MV8rBNU1kA3BvXGXPIfY66lp04
- LzeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733433900; x=1734038700;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PCvG1uFJ7bfIwhXq4y2fDMl/5i/DI5j9+WT4jXv9Bfo=;
- b=hZOK+ghag9VQwTTbpODYz2vJRami3U/jfytp2BknsbOQ934R+HWeUBClgURrCScCSG
- Fs0jI3BnXcCfDmtdNg8cg456pbSWb9pTLyxQNh+aRWRfvFvTjJY/fkFE9tEIXWr9TJSW
- 6Ay/ksplE/l4zsiZioEYzBQy8P2D1RtrOyv2gzB/gYF1PRWhK4uzgQJFgojsYQtI28yK
- DuRfxoVlIm9TemydMA68CYu7mNZ6tMpe6wvTBVZJXiXvLiJ3P7ylQYQclO6E4Nfvlnpt
- LtY6KXDQlFR87zkHP8clNVztF/Xx4nBzBCKelOvxcCRzdkm+GrjzBCp9nC6jueOqYeDD
- O3cQ==
-X-Gm-Message-State: AOJu0YxuKytYB95Z2cOBBE+E/vX35x2FKTtliSw3A5E7t2KJmkDDCtwM
- 5aOStpn8Kf2fw1DLvLlfIPcIX9qKEKsqM1RVQMtHcAjq2cSqi6A6us1LfAq2gA4=
-X-Gm-Gg: ASbGncs5XUeX98CLBDp9ArpEm07QYek0+t8K1mp6jGwoOfDwFOIy1gy89qQGFhhtdbx
- TYadI8Qv2sRcLQPA3xyBCl3Pgh/Qe6uFNYf78s0fOpfk5icQ1v9/La697YAqEmUc7wN4oMs6aIU
- lUVmV83xXBTsOk0PvDBm5kxPm6xCwJPuHZhSeApGquVUe4Hkv3XawLd3CmhyNfn386W8vs81vJh
- vBhBsVl9mKWeOdR88AYFvllWDVcE5c3x5IXFO8WP7Zmf08B033xxZpHs6HBxXIzi6szpJ5ZQFKL
- gZzyrBxmGxZBjDXJDQ==
-X-Google-Smtp-Source: AGHT+IFhmj0AT9hcMZk9gm9w2I7MvN3QVekpea3gzUdfhgO+7ZCtVFjTdiiwNF95Z1CinXa0fevyUw==
-X-Received: by 2002:a05:600c:444b:b0:434:a815:2b5d with SMTP id
- 5b1f17b1804b1-434dded670cmr6188655e9.24.1733433899849; 
- Thu, 05 Dec 2024 13:24:59 -0800 (PST)
-Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434da0dc152sm36170945e9.25.2024.12.05.13.24.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 13:24:59 -0800 (PST)
-Message-ID: <b353feb7-65c0-4db3-ac57-3a4f442b6474@linaro.org>
-Date: Thu, 5 Dec 2024 22:24:58 +0100
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJJLp-0005RU-BK
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 16:25:34 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 460A717F8B6
+ for <qemu-devel@nongnu.org>; Thu,  5 Dec 2024 22:25:31 +0100 (CET)
+Received: (qmail 6620 invoked by uid 990); 5 Dec 2024 21:25:31 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Thu, 05 Dec 2024 22:25:31 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 v2 05/13] hw/pci: Propagate bar_at_addr_0_refused
- to pci_root_bus_internal_init()
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-riscv@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20241126112212.64524-1-philmd@linaro.org>
- <20241126112212.64524-6-philmd@linaro.org>
- <CAFEAcA_K_DqRfipvQf0LcrXAMANVrwtCPD3cd2gMah=p2JH2DQ@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_K_DqRfipvQf0LcrXAMANVrwtCPD3cd2gMah=p2JH2DQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Date: Thu, 05 Dec 2024 21:25:30 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <43c67eb2b1fefe818b24a5a8ea575a4c8afa4f3d@nut.email>
+TLS-Required: No
+Subject: Re: [RFC PATCH v3 01/11] plugins: add types for callbacks related to
+ certain discontinuities
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+In-Reply-To: <c8b34d17-a619-456b-8f6c-ffe0cee027e3@linaro.org>
+References: <cover.1733063076.git.neither@nut.email>
+ <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
+ <6f182c71-2600-4bbf-ab4c-985ed7e99f71@linaro.org>
+ <67c879bcd5520d6f7bdf30b5f773436678ca8df7@nut.email>
+ <c8b34d17-a619-456b-8f6c-ffe0cee027e3@linaro.org>
+X-Rspamd-Bar: ---
+X-Rspamd-Report: BAYES_HAM(-3) MIME_GOOD(-0.1)
+X-Rspamd-Score: -3.1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:subject:date;
+ bh=YCklGVnjz5uuxnRORFh8hRasWKdZ2tPiHAad6Fj5hgU=;
+ b=QvUe3qZhNnLVMcPwlWgeyh9bKeLtHVWWQ7dN1BxquLUndcUghw5GQjeeUGqrYXX6aPGHlwev6T
+ zTTgCVauxTsClynsNTrlPMQ8lTkXoh7otUNgokEhuzicjSuFIKwHonBVRORGcDfJasbcxLZL4O37
+ IYajLf5wVbWeCFA6TSpWYCEh8Gtr1p1LTlUf4LclQ9gvHZibIiWLZZ8Bwpd4IaPyXTBFBGNdENYG
+ wGh3veabd67C3PNLk7zwDoPtWWyWwPWWhEybAQeOUZbguO3gNUMpZDWa074E68l5V4LxKotRSIDa
+ WFdF4TyJA3217JaK01m7Hquc17VUALnAdHSXVKyVcWvQe64M9tsu2xW9av3cMds6l7zS2gTOV8Ed
+ iJgRCMeugEVd7CsEgxfSrsSy5RmgT+WKl0oRKfveOuFFEpQy5O7K3eKJgl2OHNz8szgXSIzl4mgi
+ rT/F5Nyy0QjsGzJdVNQdZyH1Fz8UUDHnZvIjzMLtYvglZO7cFn/uBv8ZzRhQ+7Wnqy3CbHpPhgBg
+ E2uZpxpK8/ASw9iMqJ1/9D15rB6SLtmsK5wRhcHg9XJUvTfAtwnwymqyxrfOE/ox4MsbEnlMpmpu
+ 7VUm0iECFhMkvZA8Dol0paAKqTsgUH9RCCUcYzeiI/TsHSIraXtr9VeiF5A5t7bIYbJz4Sq+bxQX
+ 8=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,51 +83,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/24 17:44, Peter Maydell wrote:
-> On Tue, 26 Nov 2024 at 11:22, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Have pci_root_bus_internal_init() callers set the
->> 'bar_at_addr_0_refused' argument. No logical change.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/pci/pci.c | 11 +++++++----
->>   1 file changed, 7 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
->> index 27b66583e54..8eacb8f82fc 100644
->> --- a/hw/pci/pci.c
->> +++ b/hw/pci/pci.c
->> @@ -529,7 +529,8 @@ static bool machine_refuses_bar_at_addr_0(void)
->>
->>   static void pci_root_bus_internal_init(PCIBus *bus, DeviceState *parent,
->>                                          MemoryRegion *mem, MemoryRegion *io,
->> -                                       uint8_t devfn_min)
->> +                                       uint8_t devfn_min,
->> +                                       bool bar_at_addr_0_refused)
->>   {
->>       assert(PCI_FUNC(devfn_min) == 0);
->>       bus->devfn_min = devfn_min;
->> @@ -537,7 +538,7 @@ static void pci_root_bus_internal_init(PCIBus *bus, DeviceState *parent,
->>       bus->address_space_mem = mem;
->>       bus->address_space_io = io;
->>       bus->flags |= PCI_BUS_IS_ROOT;
->> -    if (machine_refuses_bar_at_addr_0()) {
->> +    if (bar_at_addr_0_refused && machine_refuses_bar_at_addr_0()) {
-> 
-> Should this be || rather than &&  ? If I understand the
-> intent correctly, we want to prevent a BAR at address 0
-> if either:
->   * the MachineClass field says we don't want one
->     (legacy handling, eventually goes away)
->   * the new command line argument says we don't want one
-> 
-> rather than only if *both* say "no address 0" ?
+Hi Pierrick,
 
-Oops :)
+December 5, 2024 at 6:35 PM, "Pierrick Bouvier" wrote:
+> On 12/5/24 04:44, Julian Ganz wrote:
+>=20
+>=20>=20
+>=20> Hi Pierrick,
+> >  December 4, 2024 at 11:45 PM, "Pierrick Bouvier" wrote:
+> >=20
+>=20> >=20
+>=20> > On 12/2/24 11:26, Julian Ganz wrote:
+> > >=20
+>=20>  include/qemu/plugin.h | 1 +
+> >  include/qemu/qemu-plugin.h | 43 ++++++++++++++++++++++++++++++++++++=
+++
+> >  2 files changed, 44 insertions(+)
+> >  diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+> >  index 9726a9ebf3..27a176b631 100644
+> >  --- a/include/qemu/plugin.h
+> >  +++ b/include/qemu/plugin.h
+> >  <snip>
+> >  +
+> >  +/**
+> >  + * typedef qemu_plugin_vcpu_discon_cb_t - vcpu discontinuity callba=
+ck
+> >  + * @vcpu_index: the current vcpu context
+> >  + * @type: the type of discontinuity
+> >  + * @from_pc: the source of the discontinuity, e.g. the PC before th=
+e
+> >  + * transition
+> >  + * @to_pc: the PC pointing to the next instruction to be executed
+> >  + *
+> >=20
+>=20> >=20
+>=20> > Missing those parameters when building doc.
+> > >  include/qemu/qemu-plugin.h:198: warning: Function parameter or mem=
+ber 'id' not described in 'qemu_plugin_vcpu_discon_cb_t'
+> > >  include/qemu/qemu-plugin.h:289: warning: Function parameter or mem=
+ber 'type' not described in 'qemu_plugin_register_vcpu_discon_cb'
+> > >  2 warnings as Errors
+> > >=20
+>=20>  Yes, I forgot about id. But type is clearly documented. Maybe the =
+tool
+> >  is confused about the name and thinks it's a reserved word or someth=
+ing?
+> >  In that case I better change that to something else.
+> >=20
+>=20The type (qemu_plugin_discon_type) is documented, but the parameter "=
+type" is not. Even if the name is correctly chosen, you still need to mak=
+e it appear in the doc.
 
-> 
-> thanks
-> -- PMM
+Yes. I didn't realize that the two warnings were for different entities
+because I somehow failed to parse the entire line.
 
+Regards,
+Julian Ganz
 
