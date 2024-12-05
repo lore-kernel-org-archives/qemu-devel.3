@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE340E7716C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 13:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786DAE7716D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 13:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJC2h-0002Ub-GW; Thu, 05 Dec 2024 08:37:19 -0500
+	id 1tJCDz-0004Ka-SB; Thu, 05 Dec 2024 08:48:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJC2f-0002UI-G0
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:37:17 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1tJCDx-0004KF-Ot
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:48:57 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJC2d-0007Zp-Vb
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:37:17 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5d34030ebb2so365431a12.1
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 05:37:14 -0800 (PST)
+ id 1tJCDw-0004Q5-3F
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 08:48:57 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5ceb03aadb1so1215984a12.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 05:48:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733405832; x=1734010632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733406533; x=1734011333; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lFxfPPI9Wf/gTd1bdjwPKtPtN3Ehej4DTItJJ2shWLE=;
- b=xh6l5IC95hJLJdbtXFS54Gfc+NJN2TUfmPU38pjGBscgy88YhqenuXJAWjYoKb/Uvi
- Am9xFQ3cGycmB6XGscs9mN2JDEANoLqIPkdhajF+S/k+1lLaxshD+/gmaCmAltKxxl8K
- 2Bn/BPZDDmsRRAkEy/LNCvvdbDkyu76mgv3skGThJ8blJWWchfpJFV3KzdtAX+SI1XdJ
- p9TY1RlIF8OgjpPtcY001vXX1v5R4MaHYs+iDCt5MFKoA3dauOZrTaPp+DvLJz5EEWyl
- VNUrp9T/jhxDjmc6gD9UK+Ulu6qIl4tPeax9yHwUcnB9VSXl4RXvNWiuOWtEH3ZvF+8M
- +ZHA==
+ bh=JJu8HG022438+eSrfzcZEwDhDCKrpNHcYbZSKmOoQ9g=;
+ b=HHcse/ez2ge2/9qhO3fO/KGj6dsjL2v5EAc+8wkvJfwmxF5OwsS0i1wQHCMSHWiM9d
+ M2V9ksjRmSPqpY0303aSMDnL5Xf/uOq0IKWmGErYP20QQINx72OpNYBmhH5bhDkFyqwr
+ TbjB4xEnYTNbfkqF5pG601YGx6BId9C2UlRPrOwdW5b1dIpRp7djYLj4yW9a/zwafIc1
+ myiuLFuEtt10qVXHB9NzLjMRX6qzzeEhOtgBp6fqOVIZN6BwQ0o8GPYGepwM6+NxhhBD
+ 66Tpy85J23p9MtJCCQW/rpyVHU1iOetQDdFNL/4TsbHhwAVHe8Ij2lPpcAOdBpfVKr7A
+ PBew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733405832; x=1734010632;
+ d=1e100.net; s=20230601; t=1733406533; x=1734011333;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lFxfPPI9Wf/gTd1bdjwPKtPtN3Ehej4DTItJJ2shWLE=;
- b=dxRB671cy1B0GWYLHcH1bZ+xlGLSLIULtVq5ZVmLVgg2IKEatJxlOBJIIvLlQJX5e6
- 2x+zBcrlzEz1XmSCuU8loYQv5zTLbFTWw6IWq9nqEJogiR6Vj5pTPleq6vpAbgkNXf6M
- ENCXGz5qfSdSOBI3k/iakvbLL6c2RqhPuLletBeBKsKskfW+Kh69QHEMiOs17K/Wlcsx
- uIE4v7enWU49RjngEmq/hjyXv3/P6HGFqscgtyF9iUoRpz9HOjLpwdtSelhs3HT9Tiuc
- eMRqd7mriUXnJTu5cm89lqcwK2aqNI4G7vMok5Fhqnh/8ACKDUtKMs6Ay/3vuujOgW7d
- Cn8w==
-X-Gm-Message-State: AOJu0YyIzq/TlHD/uE4p4aVCzcm/BYLzY5eyDEVyrcLn7rfqAZVkxUUq
- R71wXkvhvu6frmlYCWM2egHB82ut9XlfQWiN+MMJ5oIEOYJCbpoSYP1j91AZKW1WEamsWHsiUes
- FsPi6+ebNv/ynJ5NBsHTvCfXkAvXaXyOQrQZTZo56bZgzDDTa
-X-Gm-Gg: ASbGncubg49MkaK8RRDQQriCzC6xXsmHtpe8F6lozGG8sYs1HMKP9wV6m2wOumHctm8
- qiwYcXOK7ZwWJYCJZTyfckd+wSP5vfdWO
-X-Google-Smtp-Source: AGHT+IG9QIzROeLesFG6rddsgOgcGQnR+PozwS0aXLsl59RDS7esB3u4HpL1tq/9Oy9/zRs7kv8Yr9eAzdWP9Sktkq4=
-X-Received: by 2002:aa7:df8d:0:b0:5d1:2440:9b05 with SMTP id
- 4fb4d7f45d1cf-5d124409de0mr3642593a12.28.1733405831779; Thu, 05 Dec 2024
- 05:37:11 -0800 (PST)
+ bh=JJu8HG022438+eSrfzcZEwDhDCKrpNHcYbZSKmOoQ9g=;
+ b=QPcUzbeXEBwGMb3clhTB2nX1KIqLCD/xc1krjO4zKKQBsnUJaZfsm7wEIE+86Trv9p
+ dGzlv6JKmdSlitSuUZJpuQcGYVEm6NKTJzm5m4YKu97qnsBqPA1fVNnSGVfyYltIoLT5
+ M3q7i1F6Ax5UnCp1cB/2EeA7tOedxNcnw7ifml/uac0MiiPOWYS2ryRt7Ax5IX5cfji2
+ UpBitUO0tgXZj8TMM4/NEPqvdatggIB53ljRRHaMxr45mmJULuM+qJTybcDz6BgIdo2E
+ +g2KvRcJDXJWGzFPpp9tNotq4H1jwPYXLksdATYcernGu9yVyAlg0MpWEyNJjITqHTa8
+ TyQQ==
+X-Gm-Message-State: AOJu0YxI6UiHakjVgl7A2eYk6CEvyBVmCe483vAqpGLKR80SPVApoBh4
+ Hdwyg20FxNabnKpnycYnqL+dOj4KNK1Y+tEjFQgFlUSGIy8ALe3IZ8s2W4g/LC0mQpjakPmeed5
+ FuzOuZXdUGrsN118amY5VjujJ7PoC5KUcYegK7A==
+X-Gm-Gg: ASbGncufHB4WChxUxFNb7y5N66eLOk3ObeeC0gaShcwJ5K3od+akluGt48OSE/nBv6N
+ d8C1H/MqDe0sfk/HB7RiUQ6gvruIRXjMO
+X-Google-Smtp-Source: AGHT+IEdT9haYFIp44DRlrjoq2rgtoLK8WpHkgfn/errjl6Nk0xeF1w3NEAE7o39o+NtBsQ/ea7SBMmkCkTLI4DRYdY=
+X-Received: by 2002:a05:6402:3714:b0:5d2:7270:6135 with SMTP id
+ 4fb4d7f45d1cf-5d272706625mr1839391a12.33.1733406533625; Thu, 05 Dec 2024
+ 05:48:53 -0800 (PST)
 MIME-Version: 1.0
 References: <20241203203949.483774-1-richard.henderson@linaro.org>
- <20241203203949.483774-10-richard.henderson@linaro.org>
-In-Reply-To: <20241203203949.483774-10-richard.henderson@linaro.org>
+ <20241203203949.483774-11-richard.henderson@linaro.org>
+In-Reply-To: <20241203203949.483774-11-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Dec 2024 13:37:01 +0000
-Message-ID: <CAFEAcA8eJp=OLwouY3f242jJK3dVbByZAjBeSz7AsO==Zd_7jQ@mail.gmail.com>
-Subject: Re: [PATCH 09/11] softfloat: Share code between parts_pick_nan cases
+Date: Thu, 5 Dec 2024 13:48:42 +0000
+Message-ID: <CAFEAcA9_HncJBCbEFb_804uZ0YCk18jz_9P54b74umWO8tPGSA@mail.gmail.com>
+Subject: Re: [PATCH 10/11] softfloat: Sink frac_cmp in parts_pick_nan until
+ needed
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,16 +94,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, 3 Dec 2024 at 20:40, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Remember if there was an SNaN, and use that to simplify
-> float_2nan_prop_s_{ab,ba} to only the snan component.
-> Then, fall through to the corresponding
-> float_2nan_prop_{ab,ba} case to handle any remaining
-> nans, which must be quiet.
+> Move the fractional comparison to the end of the
+> float_2nan_prop_x87 case.  This is not required for
+> any other 2nan propagation rule.  Reorganize the
+> x87 case itself to break out of the switch when the
+> fractional comparison is not required.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+> @@ -89,20 +84,24 @@ static FloatPartsN *partsN(pick_nan)(FloatPartsN *a, FloatPartsN *b,
+>           * return the NaN with the positive sign bit (if any).
+>           */
+>          if (is_snan(a->cls)) {
+> -            if (is_snan(b->cls)) {
+> -                which = cmp > 0 ? 0 : 1;
+> -            } else {
+> +            if (!is_snan(b->cls)) {
+>                  which = is_qnan(b->cls) ? 1 : 0;
+> +                break;
+>              }
+>          } else if (is_qnan(a->cls)) {
+>              if (is_snan(b->cls) || !is_qnan(b->cls)) {
+
+Pre-existing code, but isn't
+   is_snan(X) || !is_qnan(X)
+the same as
+   !is_qnan(X)
+?
 
 thanks
 -- PMM
