@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3081CE7717D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 19:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C330E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 19:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJdus-00043Z-Uy; Fri, 06 Dec 2024 14:23:06 -0500
+	id 1tJduz-00046H-NV; Fri, 06 Dec 2024 14:23:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tJdur-00043H-Nw
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:23:05 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tJduu-00044W-Kx
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:23:08 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tJduq-0003SB-4w
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:23:05 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-215b4681c94so20851025ad.0
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 11:23:03 -0800 (PST)
+ id 1tJdus-0003UA-T9
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:23:08 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-21577f65bdeso20573605ad.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 11:23:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733512982; x=1734117782; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3hKItZAJNPd3ymbmjbZvXdDTlbJIfy+hGFNvN3P9UFc=;
- b=B/Bcv3SUNi8jSVp6TG9L/zblJu187xlCkrDnMJPhbnajZVIfpYWPgVDBRn/EfoJbVd
- 57cgOIJVdoZioGh2Lb/2YXyY5KE9L+PCZY60/kuDYEwnoaipPEVpw49Kl7SWcrdxGsLv
- kyTgeYY5rZQbNbVkd2/FmAKPAFjBNSde0AVvA64vDA0anhkEuEaxwu3kOOIp2kDWKLYF
- oaDq+CZwQIve0nM+0AC6UA8ZFZC6kYCGtyp1Zt7Uw9YUQAKtUU2f6pN6yN63BiRCUIUJ
- QmpKw4whARyx/qnH064I0++bwGE5aQs25vLhvISgBi/MDd96ktdedxM+0pWeLrpy11rH
- n15Q==
+ d=linaro.org; s=google; t=1733512985; x=1734117785; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i4FdoiVujAHlSAX1GNeXZCXDPP5ciq+pm5Du23bE3KQ=;
+ b=oShX3QttcKmOuHUmGutrNo80BzmLGcKZGL18T3Iy2jagprimn8auB22IJW6TaSiDtu
+ JpfhLjsqcTUmnkv6WGDVd/8MPAO1P9QBEd6JVQ/9VhkbSTmdY/jonEBgUaTaTYVSPexV
+ 1aXU5OIkG8ZkJ87EvEypu2kbj/4IC+ka6do73qwgDUy/w1cSp1dw+PGmMcG5LJ5/2J6i
+ Cw0aC/L49O8GEkNv2GyMahnzi/Br5JAc1Uixj6lExjEluFrH1SJcfKjg0mVd4tAuq+Yc
+ 8QcsYlYBZFxU9/ok3X6ZSQGF3W8aCkU/8PBmOWuCb0QRLHsG6qGdZ1DGdFbO1DeTzn0x
+ 4+vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733512982; x=1734117782;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3hKItZAJNPd3ymbmjbZvXdDTlbJIfy+hGFNvN3P9UFc=;
- b=XyFyDHGvT3pMqEEIF9/qjGVPhmhug8/PNFbpmArKlycHFT2vOuTe+JHnrKu8jmj1BW
- QcMkeSxfD7vC1HFX0R2J5tIEzceWQe0qoLAg+KSZO+LQ/WAlgbLRrYRSPPDoyNBGCo09
- o2GG1WDAigLSuGu9gApMis/RSXnzykKiovdYp/6cYpTCoHWD3SVkgM9Zu/So/QQUSF9b
- t8drZlJQFhtaAIfrJIBxaDFjn/LXP+vUPTV/9mnIIPDxvzco5Evcc+3s/LUT1hy2R0/L
- wdnh/VxCkDY4Ion1IbkGvyxg0dEuZYdhfUp+7KD1aM8ZdSYO1DI1wsVwT4PWkzeQMQfa
- v89w==
-X-Gm-Message-State: AOJu0YxAWSbwvwa5KYM963oopOlylIaZkNcbxA5Ivbvt/pD+Q4Wrj8GY
- TcKhJHozM7RlxJIka6j1I1U5/nPyjA5PHKcoJEa/Z+93R+yNVHvANSoM0MwzQIM4CEGL1Hr/nFM
- WCN0=
-X-Gm-Gg: ASbGncsvn+AY/NfU6hIbEv0SEcz9UFHOprJS+5lfPQkUeSLUM5vKZo0Pyz6jPOCSpP3
- qDtmCDa0rj6KscJDk+cI8xolzgfa/NU3wl9Z7FClVJJupdR7puslTpYzuCOaGS7wlIQlUm0nWpl
- aU+DC3F2xjNp8+DcBNGAjvvt6hT1BrQP+2KZekjzrFGZRgLq/WO1Pm/Kk76aplEiUslEG5avn7Q
- eO8vNUW+bU3VUU7hYIK1Y1q1AFPTOCnL5Q1ziFr6FhaCKkvuH+AC4ZKZzNPP86vPgQdbbMzf1Y5
- XzcJMo0i
-X-Google-Smtp-Source: AGHT+IFJJHGwYzVBkOfGVJ5LnuLUXN/xsurWyrTNL7jCU4Fz6n2FH6s37rNgmvazlAvLzVi56ZGhCQ==
-X-Received: by 2002:a17:902:f54d:b0:212:68e2:6c81 with SMTP id
- d9443c01a7336-21614d4ac70mr58652955ad.24.1733512982220; 
- Fri, 06 Dec 2024 11:23:02 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733512985; x=1734117785;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i4FdoiVujAHlSAX1GNeXZCXDPP5ciq+pm5Du23bE3KQ=;
+ b=VnnDa51/BOexcPjNy7drEEB0aCjxH7049ApLZzEmr1XZHAtEge1WorBbAyoL2Bs3Ix
+ b0KOCC9DfS6WHT6ci0pdk56sGXScrWJXDRYX9roe79x3d4ihSc+XjjeDCv5FO1rQ5GyO
+ n18jm87YjXmK0+dUFKZRQk4OjaUovlmCBD9fWmqYxm5svmaCvdTBsz1qMtWMEifZa/9w
+ qRPFBivvSS1Eq41diLYKOXk2Q9HPK8DKaAF6NN8Hvzk0oLkKnqpqi+rX9WoJaJMD+JVK
+ BM8GMZvWx6MKwi2TdQIBlp9btcISRSO1yr6C9yA7bcjcfzSN6/YXChykw3F/xETcxAgF
+ bYlA==
+X-Gm-Message-State: AOJu0YyYpdnV3ae/KjO3IsfMAJ8Tvr7eYSIG1gSgDr3r6aCsnwhnPPcr
+ LSDlbeeTwOIr2iFyO4pHXVqXpLpQZQPTBXj4s5+FeU7P1gRrAG9pkTa9WS4iEBMA4Yh0hOFAmGm
+ TyGE=
+X-Gm-Gg: ASbGncsNCAIZDpahL4xWM1CH8HZ9tbRfaZn/kL7j2I1kJZuPi99+zO1IBucPKHgn9tE
+ amGzgLCtHpGhNKbx6uDX+E0TMGzPMwpiUTqJ66g3KRi9LC8kYMMha0huUAB5ZgaDoYTKd60eVN5
+ fI7InJrMypwio9cwCZkyM7Y5dKQQKzLef77zWSZMa9Gu4KKQbdVdaVF5HxwH1KRsNPoYAe76Y5l
+ TzpydssOYa70pFPgqM5qlt1xJVQHrCLHWnhQ2lIVyoqiLBrheunswvDAm0h+NIJp5Dnjzo5UCg4
+ vHUcbEcz
+X-Google-Smtp-Source: AGHT+IHWE/vj2WKDN2oXtn8sN4DKGt1jbQAa13dfknqCIdh/j9CJYJvwWqdbDroU1+spTCkjYk/EBg==
+X-Received: by 2002:a17:902:dace:b0:215:65c2:f3f2 with SMTP id
+ d9443c01a7336-215f3c56e3emr130015765ad.6.1733512985235; 
+ Fri, 06 Dec 2024 11:23:05 -0800 (PST)
 Received: from pc.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2161e5a6f23sm11720395ad.266.2024.12.06.11.23.01
+ d9443c01a7336-2161e5a6f23sm11720395ad.266.2024.12.06.11.23.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Dec 2024 11:23:01 -0800 (PST)
+ Fri, 06 Dec 2024 11:23:04 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Troy Lee <leetroy@gmail.com>, qemu-arm@nongnu.org,
@@ -75,22 +76,24 @@ Cc: Troy Lee <leetroy@gmail.com>, qemu-arm@nongnu.org,
  Steven Lee <steven_lee@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, alex.bennee@linaro.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 0/4] Minor fixes for Arm documentation
-Date: Fri,  6 Dec 2024 11:22:50 -0800
-Message-Id: <20241206192254.3889131-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 3/4] docs/system/arm/xlnx-versal-virt: document ospi-flash
+ property
+Date: Fri,  6 Dec 2024 11:22:53 -0800
+Message-Id: <20241206192254.3889131-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241206192254.3889131-1-pierrick.bouvier@linaro.org>
+References: <20241206192254.3889131-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_QUOTING=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,37 +109,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed following things:
-- system/arm/cpu-features (options)
-- system/arm/virt (options)
-- boards documented and listed with -machine help (arm and aarch64)
-- grep object_class_property_set_description hw/arm: ensure all options are
-  documented
-- reviewed boards description
-- reviewed all Arm features (FEAT_) from: https://developer.arm.com/documentation/109697/2024_09/Feature-descriptions/
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ docs/system/arm/xlnx-versal-virt.rst | 3 +++
+ 1 file changed, 3 insertions(+)
 
-The Arm section of the documentation is in very good shape, and this series only
-has minors fixes.
-
-v2:
-- ensure link for orangepi is http, so we can't switch to https
-- left patches from v1
-
-v3:
-- fix for fby35 asked by Cédric Le Goater
-
-Pierrick Bouvier (4):
-  docs/system/arm/orangepi: update links
-  docs/system/arm/fby35: document execute-in-place property
-  docs/system/arm/xlnx-versal-virt: document ospi-flash property
-  docs/system/arm/virt: document missing properties
-
- docs/system/arm/fby35.rst            |  5 +++++
- docs/system/arm/orangepi.rst         |  4 ++--
- docs/system/arm/virt.rst             | 16 ++++++++++++++++
- docs/system/arm/xlnx-versal-virt.rst |  3 +++
- 4 files changed, 26 insertions(+), 2 deletions(-)
-
+diff --git a/docs/system/arm/xlnx-versal-virt.rst b/docs/system/arm/xlnx-versal-virt.rst
+index 0bafc76469d..c5f35f28e4f 100644
+--- a/docs/system/arm/xlnx-versal-virt.rst
++++ b/docs/system/arm/xlnx-versal-virt.rst
+@@ -178,6 +178,9 @@ Run the following at the U-Boot prompt:
+   fdt set /chosen/dom0 reg <0x00000000 0x40000000 0x0 0x03100000>
+   booti 30000000 - 20000000
+ 
++It's possible to change the OSPI flash model emulated by using the machine model
++option ``ospi-flash``.
++
+ BBRAM File Backend
+ """"""""""""""""""
+ BBRAM can have an optional file backend, which must be a seekable
 -- 
 2.39.5
 
