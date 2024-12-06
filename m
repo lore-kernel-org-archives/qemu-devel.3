@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DAEBE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 08:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E239FE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 08:49:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJTue-000846-RP; Fri, 06 Dec 2024 03:42:12 -0500
+	id 1tJU0w-0001Pr-2P; Fri, 06 Dec 2024 03:48:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJTud-00081n-4I
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:42:11 -0500
-Received: from mailgate02.uberspace.is ([185.26.156.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJTub-0001Vf-1E
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:42:10 -0500
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 2268F1814C8
- for <qemu-devel@nongnu.org>; Fri,  6 Dec 2024 09:42:06 +0100 (CET)
-Received: (qmail 28677 invoked by uid 990); 6 Dec 2024 08:42:06 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Fri, 06 Dec 2024 09:42:05 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJU0t-0001P1-AP; Fri, 06 Dec 2024 03:48:39 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJU0q-000281-IH; Fri, 06 Dec 2024 03:48:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733474917; x=1765010917;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=NbLCRzDIFRKoVHiBviovQ5AhbZ97mMp/mc4EDknjibE=;
+ b=Gtx5yK8iyhgaIGYLCqNQk7WUmuIowrlmMxd6bG9CJc23yXIZbU/aKAKA
+ /XBCoCBQsEKIOPQvDOfynPGvF8LPlRDUgg6LT/OvGz7rDf/UMY2Z9Fk/F
+ ysKZsZgX5Fp9VYRuuOS3xkGSfxUL+R51lE+1bUorf0rmXNy68/EANPU4U
+ Y1t0xC9HrfpG5D6IKyA3akYHHw/TFRPzKcbfQUyq55hwFq5jJQpJVdPxb
+ fdvAXwmHtDIHKPypDkNGomgY9GXRET5qX0fKRVqOX36vb+TIxDkWSYiX3
+ fGeDgA5Y9nGFRxaYSj2f4H6HZ8FSZtblQd6GtGcBMP6eCO/pnzqyGl8uv Q==;
+X-CSE-ConnectionGUID: HRBM/TgSSIyhI4kaEtpGgw==
+X-CSE-MsgGUID: y8yFTYRiQ7qK/LD47TuG5w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11277"; a="33741984"
+X-IronPort-AV: E=Sophos;i="6.12,212,1728975600"; d="scan'208";a="33741984"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Dec 2024 00:48:34 -0800
+X-CSE-ConnectionGUID: f1h6/wlSRomWbhZKNuPq6A==
+X-CSE-MsgGUID: yy9baQwYTRKNMoIKsLqAWQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,212,1728975600"; d="scan'208";a="94828118"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa009.fm.intel.com with ESMTP; 06 Dec 2024 00:48:31 -0800
+Date: Fri, 6 Dec 2024 17:06:43 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [RFC 13/13] i386: enable rust hpet for pc when rust is enabled
+Message-ID: <Z1K+o+VPgJ+RkxDn@intel.com>
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-14-zhao1.liu@intel.com>
+ <a76ccad6-5c8d-47e1-9613-9ac48df38940@redhat.com>
 MIME-Version: 1.0
-Date: Fri, 06 Dec 2024 08:42:05 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <c850ee89e15d2775e7c0137a218286e7060874dd@nut.email>
-TLS-Required: No
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
-To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
- Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
-In-Reply-To: <cda016be-c82e-4b54-a506-22afe6ec2eb2@linaro.org>
-References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
- <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
- <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
- <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
- <450f3beedf979437fa3de8bfab1ee72f66c67ada@nut.email>
- <cda016be-c82e-4b54-a506-22afe6ec2eb2@linaro.org>
-X-Rspamd-Bar: -
-X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-2.499932) MIME_GOOD(-0.1)
-X-Rspamd-Score: -1.099932
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=/VAl0p2o5RuRA+Dq3JgaMsutRVu8kwOsZc4LvSuJWvo=;
- b=lqxawnjNvqJuh76BwhT6aatwUO/xfqr1/+8AKBM7gvzauksjTQiVUxS1hsuYSpkW3txRSMkpcc
- QV93gXmBZl86wsJCOOwnvaqymFMMdgRWhgHop7U/gtA6D6B2jEkhB64fpEHFTiRPailjT7CbkgYm
- 3p3S4rGCcy+2P0DroopBPRMexsUP1STwoYcgInCK9hHM0ROFXrOMviTsKm0ADNMWnmRInjYKUMb2
- ngn92URMjiuEjty7UWDurpX+y3ZWsZYmXC5AcFlRCiLfKe81zaem980wDziO+rUgK/uI4ki+xz4d
- CItn21dToQiFlF35301tyus9VfOLVdeIVvg2ydAl44fZMvjt2GMvll7pHEIPGTV9zJUYy6IW3eWv
- Xx4rv3WvqH0Hvq6+a2ZSM8YZU1dMqUpAszCkb5zzsv43+5a6n72KEucDPjhI1z663+4F3uHFmFiO
- o8DvpwPjCBE9e7TetSWRmOadOfi2+LXoGa4QCnVH9BFopLH0z6S8Zkzdmf849YaoYFiGH8vwg84e
- GyM7X0Xj+ajtmgGChEbEmcv2knQh3TdHAxpg1xctc/CGEoz/jzir6tFUv+X4YjDyJEhWvRyG8Ech
- 5jWeC7Cv5qr+hC5GjLfTSwdp3i1KmO12bzx+Cqz8qf98OaZ6lROdoVL1O/i1JXoDGfoCiKYJSzcE
- s=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a76ccad6-5c8d-47e1-9613-9ac48df38940@redhat.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,33 +88,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
+On Thu, Dec 05, 2024 at 04:20:44PM +0100, Paolo Bonzini wrote:
+> Date: Thu, 5 Dec 2024 16:20:44 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [RFC 13/13] i386: enable rust hpet for pc when rust is enabled
+> 
+> On 12/5/24 07:07, Zhao Liu wrote:
+> > Add HPET configuration in PC's Kconfig options, and select HPET device
+> > (Rust version) if Rust is supported.
+> > 
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> >   hw/i386/Kconfig       | 2 ++
+> >   hw/timer/Kconfig      | 1 -
+> >   rust/hw/Kconfig       | 1 +
+> >   rust/hw/timer/Kconfig | 2 ++
+> >   4 files changed, 5 insertions(+), 1 deletion(-)
+> >   create mode 100644 rust/hw/timer/Kconfig
+> > 
+> > diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> > index 32818480d263..83ab3222c4f0 100644
+> > --- a/hw/i386/Kconfig
+> > +++ b/hw/i386/Kconfig
+> > @@ -39,6 +39,8 @@ config PC
+> >       select PCSPK
+> >       select I8257
+> >       select MC146818RTC
+> > +    select HPET if !HAVE_RUST
+> > +    select X_HPET_RUST if HAVE_RUST
+> 
+> HPET is optional, so you need to have...
 
-December 5, 2024 at 11:28 PM, "Pierrick Bouvier" wrote:
-> On 12/5/24 13:22, Julian Ganz wrote:
-> >  December 5, 2024 at 6:30 PM, "Pierrick Bouvier" wrote:
-> > > We can store the next_expected pc for each instruction (from curren=
-t_instruction + insn_length), and we should be able to compare that with =
-the expected from_pc.
-> > >  This is mostly what contrib/plugins/cflow.c does.
-> > >=20
->=20> >  With that, we can test from_pc.
-> > >=20
->=20>  I'm not confident that this will work reliably for branch, jump an=
-d
-> >  other "interesting" instructions. But I can have a closer look at th=
-e
-> >  cflow plugin and try to figure out how that plugin handles those cas=
-es.
-> >=20
->=20It won't work for latest instructions in a tb (because we don't know =
-what will be the next one), but should be good for all the others cases.
+Oops, I didn't realize that.
 
-IIUC qemu will schedule interrupts "opportunistically" between tb
-executions. If that's the case we'll observe interrupts exclusively
-after the last instruction in a tb. That strikes me as a serious
-limitation.
+> >   config HPET
+> >       bool
+> > -    default y if PC
+> 
+> +default y if PC && !HAVE_RUST
+> 
+> with a matching "default y if PC && HAVE_RUST" for X_HPET_RUST.
 
-Regards,
-Julian Ganz
+Thank you!
+
+-Zhao
+
 
