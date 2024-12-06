@@ -4,89 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA5BDE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 08:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DAEBE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 08:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJTuS-0007vj-A4; Fri, 06 Dec 2024 03:42:00 -0500
+	id 1tJTue-000846-RP; Fri, 06 Dec 2024 03:42:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJTuQ-0007vI-KE
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:41:58 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJTud-00081n-4I
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:42:11 -0500
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJTuO-0001U1-TD
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:41:58 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-434a2033562so17496995e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 00:41:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733474515; x=1734079315; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YXeNV430RbCqMtLJfxr0i4T2gHs2Bp72iIkuGaTtL7w=;
- b=qap6bjK4SXBB4MjZCdnN2apLzkgvTW4eJJLgZQpso0nYnMVY0Lz0BaNg/uUbVoZP2u
- oYglRqovronjT+fltlWu8KWXl74V17Jgkz9tdfnT/Fgbrz/2BST3ba51v8VE7aqrvNAr
- fuoK2BJw9hF8D9WKMZ/pkD/9bX8ip992WC7siIRFztw6LFWqNMQhSXBola8LRDS+DDHc
- IptvS7unx1WWWuUilY8Dyr8bR7nZT3uEDs4Ss2v/PKcq0a5yCq99taUcKAhvjZhPR8R1
- GfHN+jzizgIFgONWEdvLO89KY7hLQbC2rY+jUFEay96sUUoxHmEga0Xa9V1SXCI6ustj
- ZkhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733474515; x=1734079315;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YXeNV430RbCqMtLJfxr0i4T2gHs2Bp72iIkuGaTtL7w=;
- b=lr67s9LOuod/gbd5a7StDPZKAW8t0jp3mQtbJc2hiSgT2T46GDDtM5bUuiNunbtP9E
- vbYhkoLpTv4jdOnZdwNO1t221tLnLudcNlfwvJR3D8Srv0HdwT8/cENTEf0cfcmSBZJs
- +EhJXtlTJquG1C7Cpo8ALpJfsKSxyodgX6fxWfmIK+RdmZVG8+LTfDwgtDupA1/bn/qp
- +iU8/2ThJmG4dh7KPXNzDgPFG9xSWNMstZBf2nP0xQWC9vFNNGwuVxDEVw+ari1BN/nk
- VsQX0gQTC+/jmHkYFNB7s5HpueEwmWXihvDpWh2f3D61Nj6/LqUXNJ1sofQuwKExRzMc
- hOdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRMwK9yUUk3BLHYPvfsHVZdg+7T1Dj/0itinP9PnwOthyhQzM2aeGdNPpdBKYuQieBWGlhnukhWGk7@nongnu.org
-X-Gm-Message-State: AOJu0YyyyW4D1wU4GnUD4cAgnor5G+bdOBl4A0pAKimwkLGNs86A8Cbk
- h/vxoZ1MaTUU3Yr2rslzotH2KRcRuTj0uFjyND/Q0GqWOi3XUpslenj+Mq4mWYRtKBgv6Auif/y
- 1
-X-Gm-Gg: ASbGncsUvs9vrZyfjzQR6fxibNR1qF7PJA4hbBX1GbwqbW8brIaZk5pIGptkC3RXXav
- rAfm/xUQCABtyjJVfqn5yKLzegDONrQMuXevanV88jUMM5BjLYQTNR8aK6NKHYOfyG4umbk227h
- kz4Ze4FZz87MelRVqzs3p7OE2BCi8c14/f010OAu2Hej1Tdna61Ld9YbR9tza4xxK7jLyxurbqN
- 9BfDTKI1YRfzs1tVxHqZbedBX5+CIKHhbD2zK899kTkdFXlaYa4gZFZQVZulCq6nJoMWlZ0xlNI
- UlYCvdc6ruBfzc0FIQ==
-X-Google-Smtp-Source: AGHT+IEhRygbiC5T5Do8t1PMNicb97xl6TzcGIgiYGK961y79Q6SzXCY+CflLSlNpfgZXitwi0dBog==
-X-Received: by 2002:a05:6000:1a86:b0:385:fc70:826 with SMTP id
- ffacd0b85a97d-3862b3e3118mr1248864f8f.52.1733474515430; 
- Fri, 06 Dec 2024 00:41:55 -0800 (PST)
-Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d5280120sm85734735e9.20.2024.12.06.00.41.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 00:41:54 -0800 (PST)
-Message-ID: <8c910be5-3d59-4632-9818-bcc2c860fa5d@linaro.org>
-Date: Fri, 6 Dec 2024 09:41:54 +0100
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJTub-0001Vf-1E
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:42:10 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 2268F1814C8
+ for <qemu-devel@nongnu.org>; Fri,  6 Dec 2024 09:42:06 +0100 (CET)
+Received: (qmail 28677 invoked by uid 990); 6 Dec 2024 08:42:06 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Fri, 06 Dec 2024 09:42:05 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/arm: Use float_status in helper_vfp_fcvt{ds,sd}
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20241206031952.78776-1-richard.henderson@linaro.org>
- <20241206031952.78776-3-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241206031952.78776-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Date: Fri, 06 Dec 2024 08:42:05 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <c850ee89e15d2775e7c0137a218286e7060874dd@nut.email>
+TLS-Required: No
+Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
+ discon event's to_pc
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
+ Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
+In-Reply-To: <cda016be-c82e-4b54-a506-22afe6ec2eb2@linaro.org>
+References: <cover.1733063076.git.neither@nut.email>
+ <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
+ <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
+ <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
+ <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
+ <450f3beedf979437fa3de8bfab1ee72f66c67ada@nut.email>
+ <cda016be-c82e-4b54-a506-22afe6ec2eb2@linaro.org>
+X-Rspamd-Bar: -
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-2.499932) MIME_GOOD(-0.1)
+X-Rspamd-Score: -1.099932
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=/VAl0p2o5RuRA+Dq3JgaMsutRVu8kwOsZc4LvSuJWvo=;
+ b=lqxawnjNvqJuh76BwhT6aatwUO/xfqr1/+8AKBM7gvzauksjTQiVUxS1hsuYSpkW3txRSMkpcc
+ QV93gXmBZl86wsJCOOwnvaqymFMMdgRWhgHop7U/gtA6D6B2jEkhB64fpEHFTiRPailjT7CbkgYm
+ 3p3S4rGCcy+2P0DroopBPRMexsUP1STwoYcgInCK9hHM0ROFXrOMviTsKm0ADNMWnmRInjYKUMb2
+ ngn92URMjiuEjty7UWDurpX+y3ZWsZYmXC5AcFlRCiLfKe81zaem980wDziO+rUgK/uI4ki+xz4d
+ CItn21dToQiFlF35301tyus9VfOLVdeIVvg2ydAl44fZMvjt2GMvll7pHEIPGTV9zJUYy6IW3eWv
+ Xx4rv3WvqH0Hvq6+a2ZSM8YZU1dMqUpAszCkb5zzsv43+5a6n72KEucDPjhI1z663+4F3uHFmFiO
+ o8DvpwPjCBE9e7TetSWRmOadOfi2+LXoGa4QCnVH9BFopLH0z6S8Zkzdmf849YaoYFiGH8vwg84e
+ GyM7X0Xj+ajtmgGChEbEmcv2knQh3TdHAxpg1xctc/CGEoz/jzir6tFUv+X4YjDyJEhWvRyG8Ech
+ 5jWeC7Cv5qr+hC5GjLfTSwdp3i1KmO12bzx+Cqz8qf98OaZ6lROdoVL1O/i1JXoDGfoCiKYJSzcE
+ s=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,17 +87,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/24 04:19, Richard Henderson wrote:
-> Pass float_status not env to match other functions.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/helper.h            |  4 ++--
->   target/arm/tcg/translate-a64.c | 15 ++++++++++-----
->   target/arm/tcg/translate-vfp.c |  4 ++--
->   target/arm/vfp_helper.c        |  8 ++++----
->   4 files changed, 18 insertions(+), 13 deletions(-)
+Hi Pierrick,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+December 5, 2024 at 11:28 PM, "Pierrick Bouvier" wrote:
+> On 12/5/24 13:22, Julian Ganz wrote:
+> >  December 5, 2024 at 6:30 PM, "Pierrick Bouvier" wrote:
+> > > We can store the next_expected pc for each instruction (from curren=
+t_instruction + insn_length), and we should be able to compare that with =
+the expected from_pc.
+> > >  This is mostly what contrib/plugins/cflow.c does.
+> > >=20
+>=20> >  With that, we can test from_pc.
+> > >=20
+>=20>  I'm not confident that this will work reliably for branch, jump an=
+d
+> >  other "interesting" instructions. But I can have a closer look at th=
+e
+> >  cflow plugin and try to figure out how that plugin handles those cas=
+es.
+> >=20
+>=20It won't work for latest instructions in a tb (because we don't know =
+what will be the next one), but should be good for all the others cases.
 
+IIUC qemu will schedule interrupts "opportunistically" between tb
+executions. If that's the case we'll observe interrupts exclusively
+after the last instruction in a tb. That strikes me as a serious
+limitation.
+
+Regards,
+Julian Ganz
 
