@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07362E77179
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 09:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A75F1E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 09:32:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJUeA-0001NX-Dp; Fri, 06 Dec 2024 04:29:14 -0500
+	id 1tJUgp-0002A4-1H; Fri, 06 Dec 2024 04:31:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tJUe8-0001N4-Ct
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 04:29:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJUgn-00029m-AB
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 04:31:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tJUe6-0005W1-4C
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 04:29:12 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJUgl-0006Qv-Ia
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 04:31:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733477348;
+ s=mimecast20190719; t=1733477513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=4L3e0mLfzbbv7hAu4HyqMEBb2a5jC9cjt+Yt5w7gL6U=;
- b=fJ0qvXvreDTfQFPLs6Mn0/Hf6aofu9gAdZNkTZgR6fuHnfe05kULKBabX+i2SpGvFeN4wZ
- 8mezdkw4J3ZpgyGMBbddD1/PMeqmi+MBH5hYWdLYlDt0CaCxyRw80cvoZ/wWX5fREJWOUN
- LWHd/bDZxM/ISWpodbnkJa0N2lvLqCA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8jc9cfEj5U/gW2+rQs6yqVqfr3ukquc8pdZwTmWNvLE=;
+ b=UgQtgqxY590kcAFZhaH+EAjXAbNeIPLOi3XezWwYnOCu8o/30qsSX4DgK0LUWXuLBICoGX
+ b7LpgGcAe09TTJYwmaSfzQKSTh8QbkXQ6cJuoAI59HCH0Q0I19YzZHJd8bv3cdfWwEfs4W
+ R3Fb6hO1NBXavMVJTzdsGladmdZ069Q=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-Q7lMu-UbNQOuO3X7b9PVBA-1; Fri,
- 06 Dec 2024 04:29:05 -0500
-X-MC-Unique: Q7lMu-UbNQOuO3X7b9PVBA-1
-X-Mimecast-MFC-AGG-ID: Q7lMu-UbNQOuO3X7b9PVBA
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-mVYN-kzPN26_PHQs74iUIw-1; Fri,
+ 06 Dec 2024 04:31:50 -0500
+X-MC-Unique: mVYN-kzPN26_PHQs74iUIw-1
+X-Mimecast-MFC-AGG-ID: mVYN-kzPN26_PHQs74iUIw
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02B74195608F; Fri,  6 Dec 2024 09:28:59 +0000 (UTC)
-Received: from dobby.home.kraxel.org (unknown [10.39.192.129])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C9421955F3E; Fri,  6 Dec 2024 09:28:57 +0000 (UTC)
-Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
- id 9510025421A; Fri,  6 Dec 2024 10:28:54 +0100 (CET)
-Date: Fri, 6 Dec 2024 10:28:54 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH-for-9.2? v2 1/2] hw/display/vga: Do not reset
- 'big_endian_fb' in vga_common_reset()
-Message-ID: <46kzowk6brtwqrelpplth2l4axeyrqj3n3inzfnwavbtw7ls3c@vdssph2yubx2>
-References: <20241129101721.17836-1-philmd@linaro.org>
- <20241129101721.17836-2-philmd@linaro.org>
- <21c5e930-d7ee-4dd8-a238-862f4db87849@linaro.org>
- <2f6a993cd0e12c2bf903440f9f921d7af58bee36.camel@kernel.crashing.org>
- <yqxiqgaazxuvvtx3onfqlndx2t2sa3i7iykufkl56r45iwyusj@xatjov5qiea2>
- <ffac691bd93fee5192b8e91b03171422e5df0a1b.camel@kernel.crashing.org>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E85FD19560A1; Fri,  6 Dec 2024 09:31:48 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5995919560A2; Fri,  6 Dec 2024 09:31:48 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0F50921E66E2; Fri,  6 Dec 2024 10:31:46 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Philippe Mathieu-Daude <philmd@linaro.org>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>
+Subject: Re: [PATCH V4 10/19] migration: cpr channel
+In-Reply-To: <2ac9265b-0092-4636-8238-91331834ea77@oracle.com> (Steven
+ Sistare's message of "Thu, 5 Dec 2024 15:46:53 -0500")
+References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+ <1733145611-62315-11-git-send-email-steven.sistare@oracle.com>
+ <87cyi6cf9k.fsf@pond.sub.org>
+ <2ac9265b-0092-4636-8238-91331834ea77@oracle.com>
+Date: Fri, 06 Dec 2024 10:31:46 +0100
+Message-ID: <877c8d6ttp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ffac691bd93fee5192b8e91b03171422e5df0a1b.camel@kernel.crashing.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -92,24 +91,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 06, 2024 at 10:00:37AM +1100, Benjamin Herrenschmidt wrote:
-> On Tue, 2024-12-03 at 11:51 +0100, Gerd Hoffmann wrote:
-> > 
-> > The only case I'm aware of where the byte order is actually switched is
-> > booting a ppc64le guest in a pseries machine, where the opal firmware
-> > runs in bigendian mode and the linux kernel runs in little endian mode.
-> > 
-> > So here the changed reset behavior could actually make a difference, but
-> > you will only notice if the opal firmware does *not* set the byte order
-> > register.
-> 
-> OPAL (well skiboot) doesn't display anything anyways (or at least it
-> didn't when I wrote it :-). It just boots Linux as a bootloader. So as
-> long as Linux itself sets the register it should be fine.
+Steven Sistare <steven.sistare@oracle.com> writes:
 
-Oh, mixed up the firmware names, it's SLOF not OPAL.
+> On 12/5/2024 10:37 AM, Markus Armbruster wrote:
+>> Steve Sistare <steven.sistare@oracle.com> writes:
+>> 
+>>> Add the 'cpr' channel type, and stash the incoming cpr channel for use
+>>> in a subsequent patch.
+>>>
+>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> [...]
+>> 
+>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>> index a605dc2..a26960b 100644
+>>> --- a/qapi/migration.json
+>>> +++ b/qapi/migration.json
+>>> @@ -1578,11 +1578,12 @@
+>>>  # The migration channel-type request options.
+>>>  #
+>>>  # @main: Main outbound migration channel.
+>>> +# @cpr: cpr state channel.
+>>>
+>> What does "cpr" stand for?
+>
+> docs/devel/migration/CPR.rst:  CheckPoint and Restart (CPR)
 
-sorry for the confusion,
-  Gerd
+Suggest something like
+
+     # The migration channel-type request options.
+     #
+     # @main: Main outbound migration channel.
+     #
+     # @cpr: Checkpoint and restart state channel
+
+A quick glance at docs/devel/migration/CPR.rst makes me wonder: is that
+really *developer* documentation?
+
+Should we have something meant for *users*, too?  QAPI docs could then
+link to it.
 
 
