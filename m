@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88224E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 17:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C80DE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 17:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJc1k-0004YB-Ui; Fri, 06 Dec 2024 12:22:04 -0500
+	id 1tJc25-0005Hc-8h; Fri, 06 Dec 2024 12:22:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc1R-0004D3-BP; Fri, 06 Dec 2024 12:21:45 -0500
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ id 1tJc1Q-0004Bv-Rd; Fri, 06 Dec 2024 12:21:44 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc1N-0000zL-36; Fri, 06 Dec 2024 12:21:45 -0500
+ id 1tJc1N-0000z4-1N; Fri, 06 Dec 2024 12:21:44 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id AA27EA443DC;
+ by nyc.source.kernel.org (Postfix) with ESMTP id AA0E4A443D9;
  Fri,  6 Dec 2024 17:19:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0744CC4CEE5;
- Fri,  6 Dec 2024 17:21:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5C4C19422;
+ Fri,  6 Dec 2024 17:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1733505688;
- bh=I+JEPNOmxK5peel4DRzhTq9WP6nim8bwrqmeY99lxXI=;
+ bh=eNJ0L18CqakPOsgyzdzaKDzBHHjkiPmCHmVgcT+mZFs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Uq7lj3JAj5a611SqfCuBJsj4jQ4RaLdq84TdqvwEJSJik4qG7Zbh5oDyXGoJGm6nQ
- 15z4jmbcfd07QEnlFXXvPyv0nKsZ8oGSWUJxFmgfm/3/pLGUw9h6Ss6kpiwbnjoo5C
- nzQMM145WD4iDHai+H6T/ZfHSDdvquz5+xtlixx/OoHA6/HJHJ5s13FNhSJTB0DnOZ
- nQvVnyvxfEtiitkzAp4Qfjia2ibc3e2ezL19yTDswyv3FeipG/nd313c4T6XxtjMdk
- HsnrB72KgW6jndHP8PiNB1vQWnUZvXySPg4CaWtIgDIz5MSKAMdAAMhaS0ZtCBwbT2
- lva7g1eW9Y7Bw==
+ b=jmMNnMdlvruwYpyvgGKjmcJpccfhK2n1ouuVaFQqxzazOJAhsVo3uZkUFCOMx2AiW
+ Qw9Q8rlDhbdqlp3ThXZmDrc6r57SAVbdpXWo7P/js6gy1KL6/i2bnH+l7ddiH0/eV0
+ XHKZspY+10ujwXrNEuXnJNwlwjOWptUfeUWpnRrz28fcaJcT282xcitsVx/8T+fEl1
+ m8Hb6V6j7aagwoFF9LuKn6Xx3LtnBlb/VDmCKetydB9T5oMv+VN75DQDL8W/sJ/D/p
+ VMJlN5B6xpDfEH7dRWLjXwQGHt9tFlyi9m8flAXuyYHtPrMyKQM2AjhOsHZBCWc+AB
+ /b32giTFAswgQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc18-00000005RLC-0nJ9; Fri, 06 Dec 2024 18:21:26 +0100
+ id 1tJc18-00000005RL4-0ZHL; Fri, 06 Dec 2024 18:21:26 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
+ Peter Maydell <peter.maydell@linaro.org>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 26/31] acpi/ghes: move offset calculus to a separate function
-Date: Fri,  6 Dec 2024 18:12:48 +0100
-Message-ID: <0a73530b8d48f3bd0534b1e371195405434542b4.1733504943.git.mchehab+huawei@kernel.org>
+Subject: [PATCH 24/31] target/arm: add an experimental mpidr arm cpu property
+ object
+Date: Fri,  6 Dec 2024 18:12:46 +0100
+Message-ID: <5ad2755ea045bdc6700ff063b717136da0941f39.1733504943.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1733504943.git.mchehab+huawei@kernel.org>
 References: <cover.1733504943.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=147.75.193.91;
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
  envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -73
 X-Spam_score: -7.4
 X-Spam_bar: -------
 X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,98 +76,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, CPER address location is calculated as an offset of
-the hardware_errors table. It is also badly named, as the
-offset actually used is the address where the CPER data starts,
-and not the beginning of the error source.
+Accurately injecting an ARM Processor error ACPI/APEI GHES
+error record requires the value of the ARM Multiprocessor
+Affinity Register (mpidr).
 
-Move the logic which calculates such offset to a separate
-function, in preparation for a patch that will be changing the
-logic to calculate it from the HEST table.
+While ARM implements it, this is currently not visible.
 
-While here, properly name the variable which stores the cper
-address.
+Add a field at CPU storing it, and place it at arm_cpu_properties
+as experimental, thus allowing it to be queried via QMP using
+qom-get function.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/ghes.c | 40 +++++++++++++++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 9 deletions(-)
+ target/arm/cpu.c    |  1 +
+ target/arm/cpu.h    |  1 +
+ target/arm/helper.c | 10 ++++++++--
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 90d76b9c2d8c..a4453ee357bc 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -364,10 +364,37 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-     ags->present = true;
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 6938161b9541..aec9ea5000a0 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2636,6 +2636,7 @@ static ObjectClass *arm_cpu_class_by_name(const char *cpu_model)
+ 
+ static Property arm_cpu_properties[] = {
+     DEFINE_PROP_UINT64("midr", ARMCPU, midr, 0),
++    DEFINE_PROP_UINT64("x-mpidr", ARMCPU, mpidr, 0),
+     DEFINE_PROP_UINT64("mp-affinity", ARMCPU,
+                         mp_affinity, ARM64_AFFINITY_INVALID),
+     DEFINE_PROP_INT32("node-id", ARMCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index d86e641280d4..1ccd2d6b0c3c 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1035,6 +1035,7 @@ struct ArchCPU {
+         uint64_t reset_pmcr_el0;
+     } isar;
+     uint64_t midr;
++    uint64_t mpidr;
+     uint32_t revidr;
+     uint32_t reset_fpsid;
+     uint64_t ctr;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index f38eb054c06b..5b0ea8ba5fb8 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4700,7 +4700,7 @@ static uint64_t mpidr_read_val(CPUARMState *env)
+     return mpidr;
  }
  
-+static void get_hw_error_offsets(uint64_t ghes_addr,
-+                                 uint64_t *cper_addr,
-+                                 uint64_t *read_ack_register_addr)
+-static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
++static uint64_t mpidr_read(CPUARMState *env)
+ {
+     unsigned int cur_el = arm_current_el(env);
+ 
+@@ -4710,6 +4710,11 @@ static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     return mpidr_read_val(env);
+ }
+ 
++static uint64_t mpidr_read_ri(CPUARMState *env, const ARMCPRegInfo *ri)
 +{
-+    if (!ghes_addr) {
-+        return;
-+    }
-+
-+    /*
-+     * non-HEST version supports only one source, so no need to change
-+     * the start offset based on the source ID. Also, we can't validate
-+     * the source ID, as it is stored inside the HEST table.
-+     */
-+
-+    cpu_physical_memory_read(ghes_addr, cper_addr,
-+                             sizeof(*cper_addr));
-+
-+    *cper_addr = le64_to_cpu(*cper_addr);
-+
-+    /*
-+     * As the current version supports only one source, the ack offset is
-+     * just sizeof(uint64_t).
-+     */
-+    *read_ack_register_addr = ghes_addr +
-+			      ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
++    return mpidr_read(env);
 +}
 +
- void ghes_record_cper_errors(const void *cper, size_t len,
-                              uint16_t source_id, Error **errp)
- {
--    uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
-+    uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
-     uint64_t start_addr;
-     AcpiGedState *acpi_ged_state;
-     AcpiGhesState *ags;
-@@ -389,18 +416,13 @@ void ghes_record_cper_errors(const void *cper, size_t len,
- 
-     start_addr += source_id * sizeof(uint64_t);
- 
--    cpu_physical_memory_read(start_addr, &error_block_addr,
--                             sizeof(error_block_addr));
-+    get_hw_error_offsets(start_addr, &cper_addr, &read_ack_register_addr);
- 
--    error_block_addr = le64_to_cpu(error_block_addr);
--    if (!error_block_addr) {
-+    if (!cper_addr) {
-         error_setg(errp, "can not find Generic Error Status Block");
-         return;
+ static const ARMCPRegInfo lpae_cp_reginfo[] = {
+     /* NOP AMAIR0/1 */
+     { .name = "AMAIR0", .state = ARM_CP_STATE_BOTH,
+@@ -9741,7 +9746,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+             { .name = "MPIDR_EL1", .state = ARM_CP_STATE_BOTH,
+               .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 5,
+               .fgt = FGT_MPIDR_EL1,
+-              .access = PL1_R, .readfn = mpidr_read, .type = ARM_CP_NO_RAW },
++              .access = PL1_R, .readfn = mpidr_read_ri, .type = ARM_CP_NO_RAW },
+         };
+ #ifdef CONFIG_USER_ONLY
+         static const ARMCPRegUserSpaceInfo mpidr_user_cp_reginfo[] = {
+@@ -9751,6 +9756,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         modify_arm_cp_regs(mpidr_cp_reginfo, mpidr_user_cp_reginfo);
+ #endif
+         define_arm_cp_regs(cpu, mpidr_cp_reginfo);
++        cpu->mpidr = mpidr_read(env);
      }
  
--    read_ack_register_addr = start_addr +
--                             ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
--
-     cpu_physical_memory_read(read_ack_register_addr,
-                              &read_ack_register, sizeof(read_ack_register));
- 
-@@ -421,7 +443,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-         &read_ack_register, sizeof(uint64_t));
- 
-     /* Write the generic error data entry into guest memory */
--    cpu_physical_memory_write(error_block_addr, cper, len);
-+    cpu_physical_memory_write(cper_addr, cper, len);
- 
-     return;
- }
+     if (arm_feature(env, ARM_FEATURE_AUXCR)) {
 -- 
 2.47.1
 
