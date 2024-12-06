@@ -4,31 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4DF0E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 21:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D2AE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 21:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJfcX-00015s-Ay; Fri, 06 Dec 2024 16:12:17 -0500
+	id 1tJfd5-0001Vs-7S; Fri, 06 Dec 2024 16:12:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tJfcT-00015d-V8
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:13 -0500
+ id 1tJfcy-0001Fh-6b
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:46 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tJfcS-0000Uu-06
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:13 -0500
+ id 1tJfcq-0000WX-Mp
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:39 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tJfcK-00000003MwF-3cR9; Fri, 06 Dec 2024 22:12:04 +0100
-Message-ID: <8d71629c-62f2-4229-a46f-f7a7f95c3233@maciej.szmigiero.name>
-Date: Fri, 6 Dec 2024 22:11:59 +0100
+ id 1tJfcn-00000003Mwd-0DYE; Fri, 06 Dec 2024 22:12:33 +0100
+Message-ID: <454ab654-634c-4286-87f8-6379aa6fa27c@maciej.szmigiero.name>
+Date: Fri, 6 Dec 2024 22:12:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/24] thread-pool: Remove thread_pool_submit() function
+Subject: Re: [PATCH v3 10/24] migration/multifd: Device state transfer support
+ - receive side
 To: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
@@ -38,8 +39,8 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <dc48aed87cb7d22d01996d948adf3eef4dd25240.1731773021.git.maciej.szmigiero@oracle.com>
- <Z1Csi3bM2KYflTax@x1n>
+ <8679a04fda669b0e8f0e3b8c598aa4a58a67de40.1731773021.git.maciej.szmigiero@oracle.com>
+ <Z1HPf850jFdBD9IS@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -83,7 +84,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Z1Csi3bM2KYflTax@x1n>
+In-Reply-To: <Z1HPf850jFdBD9IS@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: none client-ip=145.239.82.108;
@@ -110,65 +111,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4.12.2024 20:24, Peter Xu wrote:
-> On Sun, Nov 17, 2024 at 08:19:57PM +0100, Maciej S. Szmigiero wrote:
+On 5.12.2024 17:06, Peter Xu wrote:
+> On Sun, Nov 17, 2024 at 08:20:05PM +0100, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> This function name conflicts with one used by a future generic thread pool
->> function and it was only used by one test anyway.
+>> Add a basic support for receiving device state via multifd channels -
+>> channels that are shared with RAM transfers.
 >>
->> Update the trace event name in thread_pool_submit_aio() accordingly.
+>> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
+>> packet header either device state (MultiFDPacketDeviceState_t) or RAM
+>> data (existing MultiFDPacket_t) is read.
+>>
+>> The received device state data is provided to
+>> qemu_loadvm_load_state_buffer() function for processing in the
+>> device's load_state_buffer handler.
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 > 
 > Reviewed-by: Peter Xu <peterx@redhat.com>
 > 
-> One nitpick:
+> Only a few nitpicks:
 > 
 >> ---
->>   include/block/thread-pool.h   | 3 +--
->>   tests/unit/test-thread-pool.c | 2 +-
->>   util/thread-pool.c            | 7 +------
->>   util/trace-events             | 2 +-
->>   4 files changed, 4 insertions(+), 10 deletions(-)
+>>   migration/multifd.c | 87 +++++++++++++++++++++++++++++++++++++++++----
+>>   migration/multifd.h | 26 +++++++++++++-
+>>   2 files changed, 105 insertions(+), 8 deletions(-)
 >>
->> diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
->> index 948ff5f30c31..4f6694026123 100644
->> --- a/include/block/thread-pool.h
->> +++ b/include/block/thread-pool.h
->> @@ -30,13 +30,12 @@ ThreadPool *thread_pool_new(struct AioContext *ctx);
->>   void thread_pool_free(ThreadPool *pool);
+>> diff --git a/migration/multifd.c b/migration/multifd.c
+>> index 999b88b7ebcb..9578a985449b 100644
+>> --- a/migration/multifd.c
+>> +++ b/migration/multifd.c
+>> @@ -21,6 +21,7 @@
+>>   #include "file.h"
+>>   #include "migration.h"
+>>   #include "migration-stats.h"
+>> +#include "savevm.h"
+>>   #include "socket.h"
+>>   #include "tls.h"
+>>   #include "qemu-file.h"
+>> @@ -252,14 +253,24 @@ static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
+>>       return 0;
+>>   }
 >>   
->>   /*
->> - * thread_pool_submit* API: submit I/O requests in the thread's
->> + * thread_pool_submit_{aio,co} API: submit I/O requests in the thread's
->>    * current AioContext.
->>    */
->>   BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
->>                                      BlockCompletionFunc *cb, void *opaque);
->>   int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg);
->> -void thread_pool_submit(ThreadPoolFunc *func, void *arg);
+>> -static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>> +static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p,
+>> +                                                   Error **errp)
+>> +{
+>> +    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
+>> +
+>> +    packet->instance_id = be32_to_cpu(packet->instance_id);
+>> +    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
+>>   {
+>>       const MultiFDPacket_t *packet = p->packet;
+>>       int ret = 0;
 >>   
->>   void thread_pool_update_params(ThreadPool *pool, struct AioContext *ctx);
+>>       p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+>>       p->packet_num = be64_to_cpu(packet->packet_num);
+>> -    p->packets_recved++;
 >>   
->> diff --git a/tests/unit/test-thread-pool.c b/tests/unit/test-thread-pool.c
->> index 1483e53473db..7a7055141ddb 100644
->> --- a/tests/unit/test-thread-pool.c
->> +++ b/tests/unit/test-thread-pool.c
->> @@ -46,7 +46,7 @@ static void done_cb(void *opaque, int ret)
->>   static void test_submit(void)
+>>       if (!(p->flags & MULTIFD_FLAG_SYNC)) {
+>>           ret = multifd_ram_unfill_packet(p, errp);
+>> @@ -271,6 +282,17 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>>       return ret;
+>>   }
+>>   
+>> +static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>> +{
+>> +    p->packets_recved++;
+>> +
+>> +    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
+>> +        return multifd_recv_unfill_packet_device_state(p, errp);
+>> +    }
+>> +
+>> +    return multifd_recv_unfill_packet_ram(p, errp);
+>> +}
+>> +
+>>   static bool multifd_send_should_exit(void)
+>>   {
+>>       return qatomic_read(&multifd_send_state->exiting);
+>> @@ -1023,6 +1045,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
+>>       p->packet_len = 0;
+>>       g_free(p->packet);
+>>       p->packet = NULL;
+>> +    g_clear_pointer(&p->packet_dev_state, g_free);
+>>       g_free(p->normal);
+>>       p->normal = NULL;
+>>       g_free(p->zero);
+>> @@ -1124,6 +1147,28 @@ void multifd_recv_sync_main(void)
+>>       trace_multifd_recv_sync_main(multifd_recv_state->packet_num);
+>>   }
+>>   
+>> +static int multifd_device_state_recv(MultiFDRecvParams *p, Error **errp)
+>> +{
+>> +    g_autofree char *idstr = NULL;
+>> +    g_autofree char *dev_state_buf = NULL;
+>> +    int ret;
+>> +
+>> +    dev_state_buf = g_malloc(p->next_packet_size);
+>> +
+>> +    ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, errp);
+>> +    if (ret != 0) {
+>> +        return ret;
+>> +    }
+>> +
+>> +    idstr = g_strndup(p->packet_dev_state->idstr,
+>> +                      sizeof(p->packet_dev_state->idstr));
+>> +
+>> +    return qemu_loadvm_load_state_buffer(idstr,
+>> +                                         p->packet_dev_state->instance_id,
+>> +                                         dev_state_buf, p->next_packet_size,
+>> +                                         errp);
+>> +}
+>> +
+>>   static void *multifd_recv_thread(void *opaque)
+>>   {
+>>       MultiFDRecvParams *p = opaque;
+>> @@ -1137,6 +1182,7 @@ static void *multifd_recv_thread(void *opaque)
+>>       while (true) {
+>>           MultiFDPacketHdr_t hdr;
+>>           uint32_t flags = 0;
+>> +        bool is_device_state = false;
+>>           bool has_data = false;
+>>           uint8_t *pkt_buf;
+>>           size_t pkt_len;
+>> @@ -1159,8 +1205,14 @@ static void *multifd_recv_thread(void *opaque)
+>>                   break;
+>>               }
+>>   
+>> -            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
+>> -            pkt_len = p->packet_len - sizeof(hdr);
+>> +            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
+>> +            if (is_device_state) {
+>> +                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
+>> +                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
+>> +            } else {
+>> +                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
+>> +                pkt_len = p->packet_len - sizeof(hdr);
+>> +            }
+>>   
+>>               ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
+>>                                              &local_err);
+>> @@ -1178,9 +1230,14 @@ static void *multifd_recv_thread(void *opaque)
+>>               flags = p->flags;
+>>               /* recv methods don't know how to handle the SYNC flag */
+>>               p->flags &= ~MULTIFD_FLAG_SYNC;
+>> -            if (!(flags & MULTIFD_FLAG_SYNC)) {
+>> -                has_data = p->normal_num || p->zero_num;
+>> +
+>> +            if (is_device_state) {
+>> +                has_data = p->next_packet_size > 0;
+>> +            } else {
+>> +                has_data = !(flags & MULTIFD_FLAG_SYNC) &&
+>> +                    (p->normal_num || p->zero_num);
+>>               }
+>> +
+>>               qemu_mutex_unlock(&p->mutex);
+>>           } else {
+>>               /*
+>> @@ -1209,14 +1266,29 @@ static void *multifd_recv_thread(void *opaque)
+>>           }
+>>   
+>>           if (has_data) {
+>> -            ret = multifd_recv_state->ops->recv(p, &local_err);
+>> +            if (is_device_state) {
+>> +                assert(use_packets);
+>> +                ret = multifd_device_state_recv(p, &local_err);
+>> +            } else {
+>> +                ret = multifd_recv_state->ops->recv(p, &local_err);
+>> +            }
+>>               if (ret != 0) {
+>>                   break;
+>>               }
+>> +        } else if (is_device_state) {
+>> +            error_setg(&local_err,
+>> +                       "multifd: received empty device state packet");
+>> +            break;
 > 
-> The test name was still trying to follow the name of API. 
->
-> It can be renamed to test_submit_no_complete() 
+> You used assert anyway elsewhere, and this also smells like programming
+> error.  We could stick with assert above and reduce "if / elif ...":
+> 
+>      if (is_device_state) {
+>          assert(p->next_packet_size > 0);
+>          has_data = true;
+>      }
+> 
+> Then drop else if.
 
-Ack.
+It's not necessarily a programming error, but rather a problem with the
+received bit stream or its incompatibility with the receiving QEMU version.
 
-> (also the test name str below).
+So I think returning an error is more appropriate than triggering
+an assert() failure for that.
+
+>>           }
+>>   
+>>           if (use_packets) {
+>>               if (flags & MULTIFD_FLAG_SYNC) {
+>> +                if (is_device_state) {
+>> +                    error_setg(&local_err,
+>> +                               "multifd: received SYNC device state packet");
+>> +                    break;
+>> +                }
+> 
+> Same here. I'd use assert().
 > 
 
-I guess you mean also changing "/thread-pool/submit" to
-"/thread-pool/submit_no_complete" in the test main().
+Same here :) - the sender sent us possibly wrong packet or packet of
+incompatible version, we should handle this gracefully rather than
+assert()/abort() QEMU.
 
 Thanks,
 Maciej
