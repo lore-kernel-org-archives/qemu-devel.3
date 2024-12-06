@@ -4,89 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B241E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 15:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1800AE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 15:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJaSl-0005KX-EZ; Fri, 06 Dec 2024 10:41:51 -0500
+	id 1tJaX6-0006Fm-AF; Fri, 06 Dec 2024 10:46:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJaSk-0005KI-Ef
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 10:41:50 -0500
-Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJaSg-0003mY-PW
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 10:41:50 -0500
-Received: by mail-oa1-x2b.google.com with SMTP id
- 586e51a60fabf-29e61fcc3d2so2027021fac.2
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 07:41:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733499703; x=1734104503; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ms08QldXX/ED7nCLpfRG+Z113ncmVLelID9xK3JmOuc=;
- b=fZRf5w5eWSf9lu7akjhMyU/Be+0RhGaYiIabefLDypLnJ2mCXHAhg5UH+iiQNZCfmV
- EcpGf3FYSQK0t/2DR8ZTzQPJsZL16dJPh6v4r9azbfqTjJn43GKxRTNKBSdVSJRnkLjI
- Kvv2DRxZr8u0nrEyfD2JYJOQUk3sAaIxz69Wf3d6j+Mof1yB2cVPNVzARz+K+adx6urv
- Fhu0fWlJHfhL57IiGIdY7n3X2ifqQXZSqo5yz9CDLJnbBKZ3l6vho6O+SoDDxgBIGg0a
- uJ0SoicKkmPxRJcK3HwQwinDcJEGNW1ugkn/Jx8z9ZqxmESJwGy6/LoQ9gwHcjtj11MQ
- 1/+A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJaX2-0006FV-C3
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 10:46:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJaX0-0004N1-2q
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 10:46:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733499972;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZwPuG4gNtXe4+gl9PX5d8nS0N9dEUXCpX+mHPOpQr9Q=;
+ b=Zye3XIHUME0BxAZT58w5WzyH+W4xHDqy0ZpeASZKbmExgMCI+vvjddpy7a28gG97OZhjRx
+ xkF1E1La5O6ckkDAllCZyiRysBdjN36ffmKMXbAPebBP9S4FyuMsoUn8wcA78oGkannOau
+ 9g7tCqJIOCh1oOrw8w2O57dyO3ndhZs=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-206-zIfrP5zSPxeWLfDay1PFqQ-1; Fri, 06 Dec 2024 10:46:11 -0500
+X-MC-Unique: zIfrP5zSPxeWLfDay1PFqQ-1
+X-Mimecast-MFC-AGG-ID: zIfrP5zSPxeWLfDay1PFqQ
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6d8f589d8e7so2516076d6.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 07:46:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733499703; x=1734104503;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ms08QldXX/ED7nCLpfRG+Z113ncmVLelID9xK3JmOuc=;
- b=hBmD3uLeugjwEg5JHrYJis+lN9J05CyBFQfKLTVxfpTznWFiTN4fApQwWiHISSwiK3
- qzrgwVOv9o/IA32YuVJjrHcX/lNAkXDzpPDYfSlrK/D9I2YdopTjke/5cYCOwZAQr/6Q
- +EgUNTymZNRU79aewRnCRq58cYYIAoGQvy1gjlJuRJl0fdXyW6yEOdv1ELm6m6xnnJTB
- d2sgU+V1rxYjMXnuAqZxDrLb6ha2OaKVNPUDuKNOVFDzeLJeXkhvq/LWxb31jqk4LTOf
- wpP3LTF9Bb1KYvpAXKebPlVgOSPbn2qi709X/RWzvP9ji5+gMXvPULrVIV+nGtS7CFAF
- HY5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUjZQS+y1grzpCqKYHdOPIdDm1xDhonii/ge9yAuoKI/f7MuIGxo2aLuhWUGr/Mijl2v8W0wQbBUCo@nongnu.org
-X-Gm-Message-State: AOJu0YyQdoFfdrnli+hGA9q66Frxw3KtMjcM7+xMQ0JT2dha6djI6lnK
- Df0ZPY+KkB+014Y6xQVPWrW5oaNEaUmDDq+Irkpp3xPkrdxxheSfbCi+gM8pxwY=
-X-Gm-Gg: ASbGnct/5J6ckXpecjeuuF6A6tIxTpM7ExlBDSdjRRjY8NJmMgAadhThPw2GkaXukJP
- l+o2MzcKSVjrW9MGZbKgNU6VHE7l5Cje+1NV8+O3HGefh52bIyD/QDDSb7HmAIlymZANXbDu36X
- RCsE12Q+tcuHPAMpwBykltoifZV8ebsszmFMZyrQN6hmDTMfvfmXQXtmj4vLGad5dvL5N5948Zr
- 89KQoGUjB72T30vx4r9AvwSq6VOVFynpEUIz39P27Z457dtLsoUD8kv+0Wwq7hEvqogsDNLFj4n
- qEalyzZg9PIiVKMJMr/i5txI5wAW
-X-Google-Smtp-Source: AGHT+IEO5anCOAUZppqNMUhyg/74+EJx9ZPBColLQ2dhY8VretHkjettBHE1hWs7JgGZ3Llmav7gsQ==
-X-Received: by 2002:a05:6870:808d:b0:29d:c832:8402 with SMTP id
- 586e51a60fabf-29f735b84damr3157001fac.41.1733499703638; 
- Fri, 06 Dec 2024 07:41:43 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f279304a96sm723637eaf.32.2024.12.06.07.41.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 07:41:43 -0800 (PST)
-Message-ID: <f4cbecbf-9b11-4fbb-aabd-080f83c608ce@linaro.org>
-Date: Fri, 6 Dec 2024 09:41:41 -0600
+ d=1e100.net; s=20230601; t=1733499970; x=1734104770;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZwPuG4gNtXe4+gl9PX5d8nS0N9dEUXCpX+mHPOpQr9Q=;
+ b=mmak4k68D7LWvMB1WyQob2QwujeMGvjXGC10wUQHlCUc+UNkR6YtEoG7Lbx8fs7OqB
+ F3C8VP0aQVGO2ZitHTswC+BVgV36bP+eHp+8WRH0fbD7qr6EEUXIx61qo6tBhR+wo32L
+ MnupHlQ8VAS6HSXVeXTwBfecaeO08CX61KmgteQHoDVgvyW6yFbZUh1Y/VKZoIM4Kcf1
+ oUCamAhHdP0TPMAmTnm9VuoM8yCSYUTTf2nDUro0yIzjfMMJdHq75l69WVS7Ed46hDkX
+ Age5OAxCh5fdSxh0X8yfziKKVld42km2QdnCJUkOyMsypkwP3s9CB+vy7P8JXmLvBaPR
+ xSUw==
+X-Gm-Message-State: AOJu0YyT11/FTgiKtDKzy4OKGNyTonbPpdXtG7slq59z2EIezEEjaepk
+ Gj71MSDveWE4Esjelb4SQaSibqDVoxpDdNmuhYeF8Pth7uyNdNJLgdl1Ckb5Yftx8og0NoIsPHJ
+ s28coNj1P5LTOEGBHEnyLh9dWrMDkEVHaTFLzml/kCZu1Bs4McNQ/
+X-Gm-Gg: ASbGncuz4SlN9KKbRdEyu1VxILd4hUAbasGAEiiYl6lfS6mA8+ReVxgBR2dEMXvb9UC
+ D19aM1JwvILTVfB9CDJlWT+G41vq9LfqshcXpJH8NQ90RY0puc8ylsvh+e6D/EcHGsKIfHmcV7Q
+ KLSo/0BYVhq2kgOERmAVgzNKj/xt2zfLxqI8hcLwhyvKlTLJzWdqcoLVk6PcFQUcdweDNZvtlvR
+ qns2tN4jLYRnnw+0btsehuCSOfA25k4dit7ELB0PglcXsDFwdhfL7wOlZMgpA8hJnmhJnviZKhM
+ fBdk6NsRdNI=
+X-Received: by 2002:ad4:5aa9:0:b0:6d8:99cf:77b9 with SMTP id
+ 6a1803df08f44-6d8e71550ebmr55354456d6.19.1733499970546; 
+ Fri, 06 Dec 2024 07:46:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFMpBU2/9Ok3KY+hr3dX2d3Mer0aM75jouQJtzFMe6yg5esy1zO5CNELJ5T0aOIj8bU6iLu5Q==
+X-Received: by 2002:ad4:5aa9:0:b0:6d8:99cf:77b9 with SMTP id
+ 6a1803df08f44-6d8e71550ebmr55354126d6.19.1733499970229; 
+ Fri, 06 Dec 2024 07:46:10 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d8da6b651asm20140666d6.69.2024.12.06.07.46.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Dec 2024 07:46:09 -0800 (PST)
+Date: Fri, 6 Dec 2024 10:46:07 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH v2 3/7] migration/ram: Move RAM_SAVE_FLAG* into ram.h
+Message-ID: <Z1McP5JSSMNAHGGk@x1n>
+References: <20241206005834.1050905-1-peterx@redhat.com>
+ <20241206005834.1050905-4-peterx@redhat.com>
+ <874j3hc4fw.fsf@suse.de> <Z1MSKpiMiPsidzJO@x1n>
+ <87ldwsc0eh.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/optimize: Fix constant folding of setcond
-To: wannacu <wannacu2049@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-References: <20241206095824.281216-1-wannacu2049@gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241206095824.281216-1-wannacu2049@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ldwsc0eh.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,101 +111,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/6/24 03:58, wannacu wrote:
-> The `z_mask` field of TCGTemp argument needs to be
-> properly set for the upcoming `fold_setcond_zmask` call
+On Fri, Dec 06, 2024 at 12:10:46PM -0300, Fabiano Rosas wrote:
+> > Wanna me to add a comment for that in this patch?
 > 
-> This patch resolves issues with running some x86_64
-> applications (e.g., FontForge, Krita) on riscv64
-> 
-> Signed-off-by: wannacu <wannacu2049@gmail.com>
-> ---
->   tcg/optimize.c                   |  3 +++
->   tests/tcg/x86_64/Makefile.target |  1 +
->   tests/tcg/x86_64/setcond.c       | 28 ++++++++++++++++++++++++++++
->   3 files changed, 32 insertions(+)
->   create mode 100644 tests/tcg/x86_64/setcond.c
-> 
-> diff --git a/tcg/optimize.c b/tcg/optimize.c
-> index e9ef16b3c6..e580b8d8b1 100644
-> --- a/tcg/optimize.c
-> +++ b/tcg/optimize.c
-> @@ -834,6 +834,9 @@ static int do_constant_folding_cond1(OptContext *ctx, TCGOp *op, TCGArg dest,
->                                ? INDEX_op_and_i32 : INDEX_op_and_i64);
->           TCGOp *op2 = tcg_op_insert_before(ctx->tcg, op, and_opc, 3);
->           TCGArg tmp = arg_new_temp(ctx);
-> +        /* Set z_mask for the follwing `fold_setcond_zmask` call. */
-> +        arg_info(tmp)->z_mask = (ctx->type == TCG_TYPE_I32
-> +                                      ? UINT32_MAX : UINT64_MAX);
->   
->           op2->args[0] = tmp;
->           op2->args[1] = *p1;
+> Yes, please.
 
-The problem is stale data in tmp's arg_info, correct?  Better would be adding 
-fold_and(op2) a few lines later, after finishing setup of op2's arguments.
+When I did it, I also did a few other things:
 
-> +++ b/tests/tcg/x86_64/setcond.c
-> @@ -0,0 +1,28 @@
-> +#include <stdint.h>
-> +#include <assert.h>
-> +
-> +uint8_t test(uint8_t a)
-> +{
-> +    uint8_t res = 0xff;
-> +    asm(
-> +        "lea -0x1160(%%edi), %%edx\n\t"
-> +        "lea -0xd7b0(%%edi), %%ecx\n\t"
-> +        "cmp $0x9f, %%edx\n\t"
-> +        "setbe %%dl\n\t"
-> +        "cmp $0x4f, %%ecx\n\t"
-> +        "setbe %%cl\n\t"
-> +        "or %%ecx, %%edx\n\t"
-> +        "cmp $0x200b, %%edi\n\t"
-> +        "sete %0\n\t"
-> +        : "=r"(res)
-> +    );
-> +    return res;
-> +}
-> +
-> +int main(void)
-> +{
-> +    for (uint8_t a = 0; a < 0xff; a++) {
-> +        assert(test(a) == 0);
-> +    }
-> +    return 0;
-> +}
+  - Rearranged the comment section, put all things together
+  - Remove RAM_SAVE_FLAG_ZERO directly
+  - Reindents
 
-(1) The inline assembly is incorrect, and (2) the test does not fail without your patch. 
-So it is difficult for me to tell exactly what you're trying to test.
+The plan is to squash below diff in v3 post, feel free to comment before
+that.
 
-Problems with the asm:
-   - using edi directly instead of having a as an input,
-   - passing uint8_t a, but using all 32-bits of edi; upper 24 are logically garbage.
-   - not adding edx, ecx as clobbers, or better as temp arguments.
-   - initializing res, but not adding as an input, or in-out argument.
+===8<===
+From 593227f1b9e678418f5b99ac51525884fa0adfc6 Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Fri, 6 Dec 2024 10:43:25 -0500
+Subject: [PATCH] fixup! migration/ram: Move RAM_SAVE_FLAG* into ram.h
 
-I *think* you want
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/ram.h | 33 ++++++++++++++++++---------------
+ migration/ram.c | 22 ++++++++++------------
+ 2 files changed, 28 insertions(+), 27 deletions(-)
 
-unsigned char test(unsigned a)
-{
-     unsigned char res = 0xff;
-     unsigned t1, t2;
-
-     asm("lea -0x1160(%3), %1\n\t"
-         "lea -0xd7b0(%3), %2\n\t"
-         "cmp $0x9f, %1\n\t"
-         "setbe %b1\n\t"
-         "cmp $0x4f, %2\n\t"
-         "setbe %b2\n\t"
-         "or %2, %1\n\t"
-         "cmp $0x200b, %3\n\t"
-         "sete %0\n\t"
-         : "+r"(res), "=&r"(t1), "=&r"(t2) : "r"(a));
-     return res;
-}
-
-But as the test doesn't ever fail for me, I can't tell.
+diff --git a/migration/ram.h b/migration/ram.h
+index cfdcccd266..921c39a2c5 100644
+--- a/migration/ram.h
++++ b/migration/ram.h
+@@ -39,24 +39,27 @@
+  * it to only search for the zero value.  And to avoid confusion with
+  * RAM_SAVE_FLAG_COMPRESS_PAGE just rename it.
+  *
+- * RAM_SAVE_FLAG_FULL was obsoleted in 2009.
++ * RAM_SAVE_FLAG_FULL (0x01) was obsoleted in 2009.
+  *
+  * RAM_SAVE_FLAG_COMPRESS_PAGE (0x100) was removed in QEMU 9.1.
++ *
++ * RAM_SAVE_FLAG_HOOK is only used in RDMA. Whenever this is found in the
++ * data stream, the flags will be passed to rdma functions in the
++ * incoming-migration side.
++ *
++ * We can't use any flag that is bigger than 0x200, because the flags are
++ * always assumed to be encoded in a ramblock address offset, which is
++ * multiple of PAGE_SIZE.  Here it means QEMU supports migration with any
++ * architecture that has PAGE_SIZE>=1K (0x400).
+  */
+-#define RAM_SAVE_FLAG_FULL     0x01
+-#define RAM_SAVE_FLAG_ZERO     0x02
+-#define RAM_SAVE_FLAG_MEM_SIZE 0x04
+-#define RAM_SAVE_FLAG_PAGE     0x08
+-#define RAM_SAVE_FLAG_EOS      0x10
+-#define RAM_SAVE_FLAG_CONTINUE 0x20
+-#define RAM_SAVE_FLAG_XBZRLE   0x40
+-/*
+- * ONLY USED IN RDMA: Whenever this is found in the data stream, the flags
+- * will be passed to rdma functions in the incoming-migration side.
+- */
+-#define RAM_SAVE_FLAG_HOOK     0x80
+-#define RAM_SAVE_FLAG_MULTIFD_FLUSH    0x200
+-/* We can't use any flag that is bigger than 0x200 */
++#define RAM_SAVE_FLAG_ZERO                    0x002
++#define RAM_SAVE_FLAG_MEM_SIZE                0x004
++#define RAM_SAVE_FLAG_PAGE                    0x008
++#define RAM_SAVE_FLAG_EOS                     0x010
++#define RAM_SAVE_FLAG_CONTINUE                0x020
++#define RAM_SAVE_FLAG_XBZRLE                  0x040
++#define RAM_SAVE_FLAG_HOOK                    0x080
++#define RAM_SAVE_FLAG_MULTIFD_FLUSH           0x200
+ 
+ extern XBZRLECacheStats xbzrle_counters;
+-- 
+2.47.0
 
 
-r~
+-- 
+Peter Xu
+
 
