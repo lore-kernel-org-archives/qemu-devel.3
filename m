@@ -4,93 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C862AE7717B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE46DE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJXSO-0007Us-Ny; Fri, 06 Dec 2024 07:29:16 -0500
+	id 1tJXeG-0007ar-MK; Fri, 06 Dec 2024 07:41:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRR-000602-Hi; Fri, 06 Dec 2024 07:28:17 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRO-00043c-H8; Fri, 06 Dec 2024 07:28:16 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B67RE8T028543;
- Fri, 6 Dec 2024 12:28:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=LDk3a8x0tAUQQax9W
- +WmNBPtEtPtLNR+iKuPMqIruWw=; b=rmCRqSmm4qWzv3/aoBK3j+F3HmR9SS80r
- 8nTMmvK1oEMFt7YDOhW5pu/xyHc3ObQ4gUrgDgbTEsKiP3mBpebq360S7jeDhKQB
- GkXVnstNwGv/WZ5e8fE2r45avKMCRs0kFrqnR9ho933Bw5BVUKJZGiSO++KS03d7
- u9vx1r8pQ/Rrn2xNbpth2ZBTF9DEWVY1VPrbcruGnMYY9kyjgTxe8O4IkX9A9y85
- atkVbDxLvdI/Kz8qBvrphdTRWpmLf/1p/aiZ1TSxeyCTHWtJyQHZFYtYdlNA2aZ0
- tawk9zskR20S1iBRIPQp+R+elidwdFZwscpq+X0t7SDmybn8BR9wA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ax661x22-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:10 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6AX10n023015;
- Fri, 6 Dec 2024 12:28:09 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 438e1ndjds-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:09 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B6CS5mq34800178
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Dec 2024 12:28:05 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4145820043;
- Fri,  6 Dec 2024 12:28:05 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C092120040;
- Fri,  6 Dec 2024 12:28:04 +0000 (GMT)
-Received: from vela.ibmuc.com (unknown [9.171.26.200])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Dec 2024 12:28:04 +0000 (GMT)
-From: Hendrik Brueckner <brueckner@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com,
- borntraeger@linux.ibm.com, Hendrik Brueckner <brueckner@linux.ibm.com>
-Subject: [RFC PATCH v2 13/15] s390x/cpumodel: correct PLO feature wording
-Date: Fri,  6 Dec 2024 13:27:49 +0100
-Message-ID: <20241206122751.189721-14-brueckner@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20241206122751.189721-1-brueckner@linux.ibm.com>
-References: <20241206122751.189721-1-brueckner@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1tJXeC-0007aL-GD
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 07:41:28 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1tJXeA-0007Hm-UR
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 07:41:28 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-215909152c5so22419115ad.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 04:41:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733488885; x=1734093685; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8xbbbkeN0skqJj2tVItHbNSq7aCpwAlp8pAUpWgt96o=;
+ b=IRv5Doa/nK//gqJZLICNS/ipryjrZ9IYh+o1SsVTqFGXiuc4qPiJTP9QUBNnBjlPxA
+ CKy6rUHI4j/yaynanxtGeWaoSTUYRcYK5gEV7jlpw1qSDeSvL6bdIsQ1hMIMpBsFWuTR
+ ZjVtoXPIkRMZDxAXCq+mChO9V++iNnTMdmv4YlxQdT2yPzvK5jcfFEAXkx8eXX87TB7d
+ Gkd+qFobbETLAP6t02I/257eo0VpABtNWtqw4oseGivNlvJ8D+dBc7ZypqJMDLBbB9Hx
+ jTcd+sT01pHC5FKOV0DScKTIIHeGRzxE9aqXdA57TJ+LpOiRc6kiH85ayhZv2TPRUDbD
+ Q0nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733488885; x=1734093685;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8xbbbkeN0skqJj2tVItHbNSq7aCpwAlp8pAUpWgt96o=;
+ b=VsdlFAyeMSSu4SvMYef7LrwUiwjSkNk5AIP89uf9iVfitXbHRpA0eNUsI119lMwIxT
+ DkWJE3fwFfTh6YySdc8odXldRdRG21MhVA7TpHzVJpRn/C3U0x/3gtNlYMaKr7v+7pWk
+ MO2ACdDOA8NlkOq1uFVOwTuYLxVikP6pLvqf8oT/ZVXiWxYx+akYFrkvfl/yZHahJCn3
+ 6Drom26C48zGTLbcNJmwlh3f0d6dX/wcP5W7a//CnYThHEyPyoZbV0XjP8ilU294lp0g
+ +Xs5kjyAq1pAqtcMXJy1h9rdzRNjCc09Rt3Z746wtw33dAjypx7R+Ug2ylHdELcZlzuX
+ MRgg==
+X-Gm-Message-State: AOJu0Yw7YnXBGM6Sp4f6ScrBfyNj1i3MolekU46CEvbXSYf3658LQXIf
+ YabP2GPcNVfYH0CMqpXXrX/bP8s3XR5QaRtUtde7ubJJVkCyUs784Mo3pEt9th3qatSoHtRSg6H
+ ntDA8B4EMyIIBxPKaDVSRk0qCqsw2xQ==
+X-Gm-Gg: ASbGncuErD1xbWhV4Yo6qDE+zi/6+4quACvRtC8yO/+v5bM0lbk02ZOpqae7oFqTL/t
+ Qe4kry321t2xV5nukB7u4kBM8bUmzcw==
+X-Google-Smtp-Source: AGHT+IExJhDpXVGQfwA1BfBHJ5gBewNa6hn5YvfS6gUb3zQ/6Dzi2RDsJvdYfGfrTriMK6fbsZBb37iky05m44Nzb+k=
+X-Received: by 2002:a17:903:110c:b0:215:6f9b:e447 with SMTP id
+ d9443c01a7336-21614db3f47mr45632415ad.30.1733488885488; Fri, 06 Dec 2024
+ 04:41:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: bjxFA_kEKjojF3ngRGHENyjj_nnlCo5A
-X-Proofpoint-GUID: bjxFA_kEKjojF3ngRGHENyjj_nnlCo5A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0
- priorityscore=1501 mlxlogscore=841 malwarescore=0 spamscore=0
- suspectscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
- bulkscore=0 adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2412060085
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=brueckner@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241205232437.85235-1-philmd@linaro.org>
+ <20241205232437.85235-3-philmd@linaro.org>
+In-Reply-To: <20241205232437.85235-3-philmd@linaro.org>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Fri, 6 Dec 2024 04:41:36 -0800
+Message-ID: <CAMo8BfKMhNd0C2HwL2aGAjPUZS8B7u8ncyW5PicswPns28SAmA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] target/xtensa: Remove tswap() calls in semihosting
+ simcall() helper
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.828,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,55 +94,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PLO functions 0, 4, 8, 12, 16, and 20 use 32-bit registers
-values.  The plo-*gr variants use 64-bit instead and, thus, correct
-the wording.
+On Thu, Dec 5, 2024 at 3:24=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
+>
+> In preparation of heterogeneous emulation where cores with
+> different endianness can run concurrently, we need to remove
+> the tswap() calls -- which use a fixed per-binary endianness.
+>
+> Get the endianness of the CPU accessed using the libisa
+> xtensa_isa_is_big_endian() call and replace the tswap() calls
+> by bswap() ones when necessary.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  target/xtensa/xtensa-semi.c | 16 ++++++++++++++--
+>  1 file changed, 14 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/xtensa/xtensa-semi.c b/target/xtensa/xtensa-semi.c
+> index fa21b7e11fc..21d23e39de5 100644
+> --- a/target/xtensa/xtensa-semi.c
+> +++ b/target/xtensa/xtensa-semi.c
+> @@ -328,10 +328,17 @@ void HELPER(simcall)(CPUXtensaState *env)
+>              struct timeval tv =3D {0};
+>
+>              if (target_tv) {
+> +                bool cpu_big_endian =3D xtensa_isa_is_big_endian(env->co=
+nfig->isa);
+> +                bool swap_needed =3D HOST_BIG_ENDIAN !=3D cpu_big_endian=
+;
+> +
+>                  cpu_memory_rw_debug(cs, target_tv,
+>                          (uint8_t *)target_tvv, sizeof(target_tvv), 0);
+> -                tv.tv_sec =3D (int32_t)tswap32(target_tvv[0]);
+> -                tv.tv_usec =3D (int32_t)tswap32(target_tvv[1]);
+> +                if (swap_needed) {
+> +                    bswap32s(&target_tvv[0]);
+> +                    bswap32s(&target_tvv[1]);
+> +                }
+> +                tv.tv_sec =3D (int32_t)target_tvv[0];
+> +                tv.tv_usec =3D (int32_t)target_tvv[1];
 
-Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
----
- target/s390x/cpu_features_def.h.inc | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+This conversion looks a bit heavy. Maybe it would be better to
+give tswap*() an additional env argument and give the target
+a way to deal with it?
 
-diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-index 09a80844a7..fe7e1bd19c 100644
---- a/target/s390x/cpu_features_def.h.inc
-+++ b/target/s390x/cpu_features_def.h.inc
-@@ -158,27 +158,27 @@ DEF_FEAT(AP, "ap", MISC, 0, "AP instructions installed")
- /* Features exposed via the PLO instruction. */
- DEF_FEAT(PLO_CL, "plo-cl", PLO, 0, "PLO Compare and load (32 bit in general registers)")
- DEF_FEAT(PLO_CLG, "plo-clg", PLO, 1, "PLO Compare and load (64 bit in parameter list)")
--DEF_FEAT(PLO_CLGR, "plo-clgr", PLO, 2, "PLO Compare and load (32 bit in general registers)")
-+DEF_FEAT(PLO_CLGR, "plo-clgr", PLO, 2, "PLO Compare and load (64 bit in general registers)")
- DEF_FEAT(PLO_CLX, "plo-clx", PLO, 3, "PLO Compare and load (128 bit in parameter list)")
- DEF_FEAT(PLO_CS, "plo-cs", PLO, 4, "PLO Compare and swap (32 bit in general registers)")
- DEF_FEAT(PLO_CSG, "plo-csg", PLO, 5, "PLO Compare and swap (64 bit in parameter list)")
--DEF_FEAT(PLO_CSGR, "plo-csgr", PLO, 6, "PLO Compare and swap (32 bit in general registers)")
-+DEF_FEAT(PLO_CSGR, "plo-csgr", PLO, 6, "PLO Compare and swap (64 bit in general registers)")
- DEF_FEAT(PLO_CSX, "plo-csx", PLO, 7, "PLO Compare and swap (128 bit in parameter list)")
- DEF_FEAT(PLO_DCS, "plo-dcs", PLO, 8, "PLO Double compare and swap (32 bit in general registers)")
- DEF_FEAT(PLO_DCSG, "plo-dcsg", PLO, 9, "PLO Double compare and swap (64 bit in parameter list)")
--DEF_FEAT(PLO_DCSGR, "plo-dcsgr", PLO, 10, "PLO Double compare and swap (32 bit in general registers)")
-+DEF_FEAT(PLO_DCSGR, "plo-dcsgr", PLO, 10, "PLO Double compare and swap (64 bit in general registers)")
- DEF_FEAT(PLO_DCSX, "plo-dcsx", PLO, 11, "PLO Double compare and swap (128 bit in parameter list)")
- DEF_FEAT(PLO_CSST, "plo-csst", PLO, 12, "PLO Compare and swap and store (32 bit in general registers)")
- DEF_FEAT(PLO_CSSTG, "plo-csstg", PLO, 13, "PLO Compare and swap and store (64 bit in parameter list)")
--DEF_FEAT(PLO_CSSTGR, "plo-csstgr", PLO, 14, "PLO Compare and swap and store (32 bit in general registers)")
-+DEF_FEAT(PLO_CSSTGR, "plo-csstgr", PLO, 14, "PLO Compare and swap and store (64 bit in general registers)")
- DEF_FEAT(PLO_CSSTX, "plo-csstx", PLO, 15, "PLO Compare and swap and store (128 bit in parameter list)")
- DEF_FEAT(PLO_CSDST, "plo-csdst", PLO, 16, "PLO Compare and swap and double store (32 bit in general registers)")
- DEF_FEAT(PLO_CSDSTG, "plo-csdstg", PLO, 17, "PLO Compare and swap and double store (64 bit in parameter list)")
--DEF_FEAT(PLO_CSDSTGR, "plo-csdstgr", PLO, 18, "PLO Compare and swap and double store (32 bit in general registers)")
-+DEF_FEAT(PLO_CSDSTGR, "plo-csdstgr", PLO, 18, "PLO Compare and swap and double store (64 bit in general registers)")
- DEF_FEAT(PLO_CSDSTX, "plo-csdstx", PLO, 19, "PLO Compare and swap and double store (128 bit in parameter list)")
- DEF_FEAT(PLO_CSTST, "plo-cstst", PLO, 20, "PLO Compare and swap and triple store (32 bit in general registers)")
- DEF_FEAT(PLO_CSTSTG, "plo-cststg", PLO, 21, "PLO Compare and swap and triple store (64 bit in parameter list)")
--DEF_FEAT(PLO_CSTSTGR, "plo-cststgr", PLO, 22, "PLO Compare and swap and triple store (32 bit in general registers)")
-+DEF_FEAT(PLO_CSTSTGR, "plo-cststgr", PLO, 22, "PLO Compare and swap and triple store (64 bit in general registers)")
- DEF_FEAT(PLO_CSTSTX, "plo-cststx", PLO, 23, "PLO Compare and swap and triple store (128 bit in parameter list)")
- 
- /* Features exposed via the PTFF instruction. */
--- 
-2.43.5
+>              }
+>              if (fd < 3 && sim_console) {
+>                  if ((fd =3D=3D 1 || fd =3D=3D 2) && rq =3D=3D SELECT_ONE=
+_WRITE) {
+> @@ -381,6 +388,8 @@ void HELPER(simcall)(CPUXtensaState *env)
+>              int argc =3D semihosting_get_argc();
+>              int str_offset =3D (argc + 1) * sizeof(uint32_t);
+>              int i;
+> +            bool cpu_big_endian =3D xtensa_isa_is_big_endian(env->config=
+->isa);
+> +            bool swap_needed =3D HOST_BIG_ENDIAN !=3D cpu_big_endian;
+>              uint32_t argptr;
+>
+>              for (i =3D 0; i < argc; ++i) {
+> @@ -388,6 +397,9 @@ void HELPER(simcall)(CPUXtensaState *env)
+>                  int str_size =3D strlen(str) + 1;
+>
+>                  argptr =3D tswap32(regs[3] + str_offset);
 
+The tswap() is still here.
+
+> +                if (swap_needed) {
+> +                    bswap32s(&argptr);
+> +                }
+>
+>                  cpu_memory_rw_debug(cs,
+>                                      regs[3] + i * sizeof(uint32_t),
+
+--=20
+Thanks.
+-- Max
 
