@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A391E7716E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5396BE77170
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 03:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJOt2-0006Mx-Fl; Thu, 05 Dec 2024 22:20:14 -0500
+	id 1tJOsp-0006GC-Me; Thu, 05 Dec 2024 22:19:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJOsr-0006HV-VM
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 22:20:04 -0500
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ id 1tJOsn-0006FT-QN
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 22:19:57 -0500
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJOso-0006Aw-R0
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 22:20:01 -0500
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-71d4d0516e6so885337a34.2
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 19:19:57 -0800 (PST)
+ id 1tJOsm-0006Ae-9s
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 22:19:57 -0500
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-71d4032b3e9so1415886a34.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 19:19:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733455196; x=1734059996; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hXtQ2J2gXZQnpl5TMdFaAQCMXFAj8tQs4pJNt4mkpI8=;
- b=Ad27ElR4kX+KGppnKHsxFh1TE/gVrhgl9MBh5hcJAFGWR3V7Re2IPR+NvvTmhzE7qy
- VKJjY4qs7atJH4aGZkViLfTTQnVU4qjnmgL0nIYJg6AHCrP50ffTFGGY01OrQOa6qJCD
- waZwXiPIqa0n6oQzQlMWQLiiohVaP+sBePJrCECbjY9C+MGbt4WRWo1XpN08B3E/FN9Q
- T6QAMIHNxNhdfuWkFWJEfl+OspcL6gdb4BkjQAwsDXwnrWJCQbPgD70gv45A0cp7dtlH
- fWbAtulwH6rDQVA7aHg8/hJ237uZmSzGQRFqvC7xuq3ZgGY1ObFaGJ8jTSm9GqM6vrkj
- Ooaw==
+ d=linaro.org; s=google; t=1733455195; x=1734059995; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9N64e/pgYn1nLyblM4Tcpb97CAaIRtiZkD+VUNH0Gl4=;
+ b=XnPd//klYcvi7MGkUGT394ZB1HqCSaAIuPJ/DMi2LXRIURPt0ZJiPVp1TTfQhRJDjP
+ mQBQjUA69UCAZFS6JPF/YnJ+JpAliFC2vdjtDFqfQvlmIPiA317rKtZ7ZWe6dAMuU5ME
+ /zgu0NeXlakd9qgJ5TviTAAB+s+Jx18Qb5v414uMz34VSMJQV0EZaFvqeHIlVXUXJwzT
+ 4mpuvR+SKEKUCd3ZdAq5Ak3AG57cdjL35I6IDbfmJZmhsmYqGoj2rt5w+nUZm0r8XQCq
+ ehdZyiZBVFyLbvvXepewp0TmpRYkb/rJXWYTQSxdT5M0KB0/n3o4tRQyNXk5IHIFUBAd
+ Fq6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733455196; x=1734059996;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hXtQ2J2gXZQnpl5TMdFaAQCMXFAj8tQs4pJNt4mkpI8=;
- b=csegKL8w1EHGEv/nvsmqBjN4D8hbKJ7XdZolfnrE9HLcsTESgawl2+yjBm4ZAZsf/f
- 7d8Slr9KVqewi+qcgTpqVLlbBV674mLTPutLIxC6+7Zh2CsXzly2q/wEiGxiE4Iw5N/g
- ANVCyLsxsKX9BXpyr+jw2vPRrVtnJQFUdn416JiGOGxrx0BsFmkFZHk75CBtj3qDq4Zm
- 83BknHOQtpIwAwaQU9tCoFArQt1zAMVT2HL99AjjAaiknUzh9EWurKYA2VZp685wkMwp
- ryeBOqEhEOUoZj7SsZD9GNWc0A+OwstoLe/E047580f43I5zXkvXSrSlfdhtXdxdRx/t
- GqJA==
-X-Gm-Message-State: AOJu0YzRJ8BTBeIqEsHj11fojPdEcdLaou+sDs6mL2iy0GmnQg22QJRr
- QZh2Vm10YnnpUfV86K+VaU9DnxEcHpn174bHLUDOsxpW+bNroJ+00wg429OSCxlge1PHb+u4Q65
- t87IsTuDK
-X-Gm-Gg: ASbGnctZrDwqiANX1+0b8m+bTw0PMWpSOjF5pA8rtZn4oQmdFfLA1s5dnnxaTh9xx9m
- Wbk+ecQNBkwuc5Pf0MBR+JDNWY0Q6nYtJIzuYQHqWc9J0KEjd3d6Bao5VEVhey/L7wTPKrXzHa+
- YMjm2FRFt1uuIl0K3BwN1Y12/8tb9ZXwIxaIH32q8I5Sfxyp7Z2d0vbePgvrJsRkRAMd9eTlyL3
- h0STKMRfJtLkmZcsJjnQ/akV5ZqL4ojBdGn19VBRd0li7twXn6jRwKD0Dit9JRIOuK8UAiqceBx
- 5clKfocwBlBL1pT/gpFwMru4tsh8TZYsNESc
-X-Google-Smtp-Source: AGHT+IFEdscCnfy9m8J2qfc3GYDj2rftjzCeD06y9GVWHFoikz7InwfvrIwqKWlSn6F3HNPk3fuy2A==
-X-Received: by 2002:a05:6830:2b12:b0:718:194d:8a6 with SMTP id
- 46e09a7af769-71dcf568f53mr1906897a34.28.1733455196322; 
- Thu, 05 Dec 2024 19:19:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733455195; x=1734059995;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9N64e/pgYn1nLyblM4Tcpb97CAaIRtiZkD+VUNH0Gl4=;
+ b=Hnw3+3wSq7qqLtWuYZM0g8TDUeULI+kuH3ZHCaQ2q/f3/p9jRpoCCYQO9ZCyAtsyDn
+ aExGrM+kww2z7w4ndFs+mMRyzWGmjv9RAbBErairv1Ib4v773r5nkKQsWYrHLgN0iWUy
+ QgK2q0dG1/175/KOnda0BpR+81Qpkh6+Ki99hH5H8b1Gw+7uGYWizNsg04CiQekBxOUq
+ V0JvwG7mzDh1kNoXqTNrjZKGRif/rf+obtH/17uyq4s47LrKbah+K+Qlci7NgnKMy5T/
+ Y18CmE+aXpJLh8wimqsafctEe0H2+DPLKHt9VnFqP4FAUUjgrZ0h5kPq3EUARPAU1eNV
+ PfkQ==
+X-Gm-Message-State: AOJu0Yz0sZQA9/XTbC7RUaGXknSlHUjteEH3SJ6jhM5H9ioTWRYym5iC
+ S9SaU+KSUErgQYncHc0pxvNAJX9u7wQ2Klz8s9DBjXXc039+usuJqdNQTGbetZoUTzC0Y2FJBsN
+ IWM+OGtIp
+X-Gm-Gg: ASbGncvPsZ3uh0iP9BrxvvQUlFyXrq96c95kdJVsVX1r6Ep0mSAm5U9h4q1GL8CFITZ
+ i8Y7t9aZE1LLeEFlc+XgolTXfN4GMgO7HA1TJM1IaZwCWckO25dL5iO4R1HRCCW8r7wBtjULPsi
+ A4DjYuBvg1crWS3KaDvTL3Gm3rPWe4+jhquxhQ564loDbOMM5FG600k5HTsnU/rNbrxWqrHUpGm
+ Y1sCNcZeMjjUdpVcoxl8E/CHoGktGIfjJ/NxoRVlw9Y8TFy7mftCVluIjKB+k7zL6NIsu2YZEsF
+ Ay9H8hJvTVO9Xtjw4Nlq6uENEvVlwHpxj3wY
+X-Google-Smtp-Source: AGHT+IGdTjt2EOWXZCX5uR4YlHzx4NQtw+8N2yyoCFQxhFNVQp8rJXCsD0rsftKOjVEjZn6fnjHWmg==
+X-Received: by 2002:a9d:5ccc:0:b0:71d:53b6:ef5a with SMTP id
+ 46e09a7af769-71dc2c64885mr2443693a34.6.1733455194894; 
+ Thu, 05 Dec 2024 19:19:54 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f2793255bbsm541045eaf.40.2024.12.05.19.19.55
+ 006d021491bc7-5f2793255bbsm541045eaf.40.2024.12.05.19.19.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 19:19:55 -0800 (PST)
+ Thu, 05 Dec 2024 19:19:54 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 1/2] target/arm: Use float_status in helper_fcvtx_f64_to_f32
-Date: Thu,  5 Dec 2024 21:19:51 -0600
-Message-ID: <20241206031952.78776-2-richard.henderson@linaro.org>
+Subject: [PATCH 0/2] target/arm: Two more float_status conversions
+Date: Thu,  5 Dec 2024 21:19:50 -0600
+Message-ID: <20241206031952.78776-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241206031952.78776-1-richard.henderson@linaro.org>
-References: <20241206031952.78776-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,57 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass float_status not env to match other functions.
+Hi Peter,
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/helper-a64.h    | 2 +-
- target/arm/tcg/helper-a64.c    | 3 +--
- target/arm/tcg/translate-a64.c | 2 +-
- 3 files changed, 3 insertions(+), 4 deletions(-)
+You probably have something like this in your AFP tree already,
+but while I'm sending all of the other float_status patches, I
+thought I might as well send these two.
 
-diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
-index 26e327af3a..0c120bf388 100644
---- a/target/arm/tcg/helper-a64.h
-+++ b/target/arm/tcg/helper-a64.h
-@@ -44,7 +44,7 @@ DEF_HELPER_FLAGS_3(rsqrtsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
- DEF_HELPER_FLAGS_2(frecpx_f64, TCG_CALL_NO_RWG, f64, f64, fpst)
- DEF_HELPER_FLAGS_2(frecpx_f32, TCG_CALL_NO_RWG, f32, f32, fpst)
- DEF_HELPER_FLAGS_2(frecpx_f16, TCG_CALL_NO_RWG, f16, f16, fpst)
--DEF_HELPER_FLAGS_2(fcvtx_f64_to_f32, TCG_CALL_NO_RWG, f32, f64, env)
-+DEF_HELPER_FLAGS_2(fcvtx_f64_to_f32, TCG_CALL_NO_RWG, f32, f64, fpst)
- DEF_HELPER_FLAGS_3(crc32_64, TCG_CALL_NO_RWG_SE, i64, i64, i64, i32)
- DEF_HELPER_FLAGS_3(crc32c_64, TCG_CALL_NO_RWG_SE, i64, i64, i64, i32)
- DEF_HELPER_FLAGS_3(advsimd_maxh, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index ff48bac1a8..35dce4bef3 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -384,10 +384,9 @@ float64 HELPER(frecpx_f64)(float64 a, float_status *fpst)
-     }
- }
- 
--float32 HELPER(fcvtx_f64_to_f32)(float64 a, CPUARMState *env)
-+float32 HELPER(fcvtx_f64_to_f32)(float64 a, float_status *fpst)
- {
-     float32 r;
--    float_status *fpst = &env->vfp.fp_status;
-     int old = get_float_rounding_mode(fpst);
- 
-     set_float_rounding_mode(float_round_to_odd, fpst);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 59df99d502..6286e4fda3 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9102,7 +9102,7 @@ static void gen_fcvtxn_sd(TCGv_i64 d, TCGv_i64 n)
-      * with von Neumann rounding (round to odd)
-      */
-     TCGv_i32 tmp = tcg_temp_new_i32();
--    gen_helper_fcvtx_f64_to_f32(tmp, n, tcg_env);
-+    gen_helper_fcvtx_f64_to_f32(tmp, n, fpstatus_ptr(FPST_FPCR));
-     tcg_gen_extu_i32_i64(d, tmp);
- }
- 
+Based-on: 20241206031224.78525-1-richard.henderson@linaro.org
+(target/arm: Helper type cleanups)
+
+r~
+
+Richard Henderson (2):
+  target/arm: Use float_status in helper_fcvtx_f64_to_f32
+  target/arm: Use float_status in helper_vfp_fcvt{ds,sd}
+
+ target/arm/helper.h            |  4 ++--
+ target/arm/tcg/helper-a64.h    |  2 +-
+ target/arm/tcg/helper-a64.c    |  3 +--
+ target/arm/tcg/translate-a64.c | 17 +++++++++++------
+ target/arm/tcg/translate-vfp.c |  4 ++--
+ target/arm/vfp_helper.c        |  8 ++++----
+ 6 files changed, 21 insertions(+), 17 deletions(-)
+
 -- 
 2.43.0
 
