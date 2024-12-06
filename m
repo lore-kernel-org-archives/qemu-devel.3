@@ -4,104 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8CAFE77179
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4A25E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJZVV-0001v0-41; Fri, 06 Dec 2024 09:40:37 -0500
+	id 1tJZXn-0004kk-1o; Fri, 06 Dec 2024 09:42:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJZVT-0001uq-Jy
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:40:35 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJZXk-0004k6-Uz
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:42:56 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJZVR-0005eb-SM
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:40:35 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 08D37210EE;
- Fri,  6 Dec 2024 14:40:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733496031; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WSZyBS6dexqOYOgjdV++B1+w/x0w0WKhhGs+Fm0LvUE=;
- b=Jhr5r1VXtF293d05RifjAKj0+Zlh7vgh/afLNQXBW180sXOuSioWYvwBoMOh6Xo+PEC9qZ
- mq8Vj94F7D37gmxufezmjBaDFVgADowaNI//fU91OEyDfNm6HfCtMa/bjB2V2sUTdsKk5f
- IfFq0BCyanH0WsRlqdvFCaONupqsIUc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733496031;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WSZyBS6dexqOYOgjdV++B1+w/x0w0WKhhGs+Fm0LvUE=;
- b=eXi1XSr9W8dHdmHqY6fDGYk7X53VVpXL0QU5VjYVY4k8TIkPjC+IPZcMzl+arCLVuFgN+Y
- HYoEICvC9oPAi1Cw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733496031; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WSZyBS6dexqOYOgjdV++B1+w/x0w0WKhhGs+Fm0LvUE=;
- b=Jhr5r1VXtF293d05RifjAKj0+Zlh7vgh/afLNQXBW180sXOuSioWYvwBoMOh6Xo+PEC9qZ
- mq8Vj94F7D37gmxufezmjBaDFVgADowaNI//fU91OEyDfNm6HfCtMa/bjB2V2sUTdsKk5f
- IfFq0BCyanH0WsRlqdvFCaONupqsIUc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733496031;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WSZyBS6dexqOYOgjdV++B1+w/x0w0WKhhGs+Fm0LvUE=;
- b=eXi1XSr9W8dHdmHqY6fDGYk7X53VVpXL0QU5VjYVY4k8TIkPjC+IPZcMzl+arCLVuFgN+Y
- HYoEICvC9oPAi1Cw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 859B7138A7;
- Fri,  6 Dec 2024 14:40:30 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id S9sYE94MU2dHbQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 06 Dec 2024 14:40:30 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, peterx@redhat.com,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, Avihai Horon
- <avihaih@nvidia.com>, Alex
- Williamson <alex.williamson@redhat.com>, Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH v2 7/7] migration/multifd: Document the reason to sync
- for save_setup()
-In-Reply-To: <20241206005834.1050905-8-peterx@redhat.com>
-References: <20241206005834.1050905-1-peterx@redhat.com>
- <20241206005834.1050905-8-peterx@redhat.com>
-Date: Fri, 06 Dec 2024 11:40:27 -0300
-Message-ID: <87r06kc1t0.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJZXj-0005r6-GD
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:42:56 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5cecbddb574so2471788a12.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 06:42:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733496174; x=1734100974; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=zNNjniwqUhMlBfoCOuzJRb4aiH2/raOgGs4PxJ7xGnY=;
+ b=xz0KwP4cluQ4FTeOZ+WteCM+/AAfwFJpncCbubqYgBOqZRsedGhvuh7av1wLmy4PYH
+ x930P8bfGzuar9RPLagsoaLk+A2Wqu9ryNCj3be490CyvD1xCOTV9GF3Ub55SMU6caGx
+ XLlZPr1X7XKmgm3I5/VdebFh1JGuTqthaZiBI1NOs/ll7w6STdW7rR+8nNtAQltXtUB0
+ bANaFmCEyW28CbItue1jLb3l/aV+bvOLaxascVwdAJ94HMKmKpv5dnw7q1wLbsuHauen
+ igXySKxrOBk4vI8ecrJZMNU7rCHVcTbNA3vEup5erScz8o//cEGPjolRvLHhfWinsC1I
+ UkPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733496174; x=1734100974;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zNNjniwqUhMlBfoCOuzJRb4aiH2/raOgGs4PxJ7xGnY=;
+ b=bHWzoOe/FwuYxUeDG/8QKNs9dvFofG7xYU4LfRee4R/oc0zCBSyuGATupif6p5tYZg
+ tjvqZ8+hOmisVIp5gl1GuymyrTkKIe0okb6Ks3DGKCPyd+xod1hkABXo8WT18VT70nNW
+ TSBGxNWA7gxxtghk00J9GqX+XyvfT80ga1Sz/WYyvz2zxZ6mqEvwme7C5mFGsB/N2nGl
+ K9hQfMPYihzZjBOVmc5CkDk105Gj7RxZX0D//NPGx8vVP6uIlQV4B9j0j+mL+JMTIMIf
+ QFB+5b1xBQ879hPBxhFqXPc7MH0EoErjVGfhDPGJxR3UqYdebavwNVpuZWxqcXACTrfO
+ SsQw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXTrC8MyqW+YZgpN1FBN9sYKdrdyy2lYvSY9KgPuAdXnjNi9/hp8fNpe3i8b188GqR3oqRoNb58yFDr@nongnu.org
+X-Gm-Message-State: AOJu0YxJabyScZKtJnwAJe/mXfxx0Z/UeeJ3E/zrh5YCYhlv3jSYisiN
+ z7TlUWXBAXnFydJsvjFpJlpR+a8SB3ycoWhgnmzyEwF3iQwvwHnHQ565545rqG2t1crq+/van4Y
+ mDXhk61aslocu8C/Y2PRXsvoXrnbmEQUlMWKI+g==
+X-Gm-Gg: ASbGnctSq4pXXntMpFzivP3HsqlxIGW0WUMaQf78ZYMYK5WAHFSrKRBR7llr5fTRcsZ
+ xVB1nMuu/HQ8de7duUylQITSvdj1eVl1j
+X-Google-Smtp-Source: AGHT+IG+4QjcRBK/DasgfnyR9UQQiv1EsnNQR1FmEULqMJInJmDgYpCFJgEJdG6WWAuCRqvny0P3ZtVzXUv2UCN2YR0=
+X-Received: by 2002:a05:6402:254e:b0:5d0:d30b:d53e with SMTP id
+ 4fb4d7f45d1cf-5d3be697749mr2745482a12.19.1733496174107; Fri, 06 Dec 2024
+ 06:42:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-7-zhao1.liu@intel.com>
+ <b34733f3-1525-4e35-8c07-f84ad56b01e0@linaro.org>
+ <1f008c2a-aaf6-497d-becd-f36f5d9aea17@redhat.com>
+ <CAFEAcA9SCfMcrhpd_x0LmgwtD-5XwT4TY+QXBJMOjWbdtBPCUg@mail.gmail.com>
+ <CABgObfZSR2s5AYEAcJfsdF0jKQGf_AVcDafKQq47qzLmBuX0RQ@mail.gmail.com>
+In-Reply-To: <CABgObfZSR2s5AYEAcJfsdF0jKQGf_AVcDafKQq47qzLmBuX0RQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Dec 2024 14:42:43 +0000
+Message-ID: <CAFEAcA_dVnpN2Vn+VAf1XZSAdj183wJhQZ3pVNtb=NHeMOF2Jg@mail.gmail.com>
+Subject: Re: [RFC 06/13] rust: add bindings for memattrs
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Junjie Mao <junjie.mao@hotmail.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,92 +102,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
-> It's not straightforward to see why src QEMU needs to sync multifd during
-> setup() phase.  After all, there's no page queued at that point.
+On Fri, 6 Dec 2024 at 14:28, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> For old QEMUs, there's a solid reason: EOS requires it to work.  While it's
-> clueless on the new QEMUs which do not take EOS message as sync requests.
 >
-> One will figure that out only when this is conditionally removed.  In fact,
-> the author did try it out.  Logically we could still avoid doing this on
-> new machine types, however that needs a separate compat field and that can
-> be an overkill in some trivial overhead in setup() phase.
 >
-> Let's instead document it completely, to avoid someone else tries this
-> again and do the debug one more time, or anyone confused on why this ever
-> existed.
+> Il ven 6 dic 2024, 05:59 Peter Maydell <peter.maydell@linaro.org> ha scritto:
+>>
+>> > is still decently packed and simplifies things a lot.
+>>
+>> The old struct is 4 bytes, and the new one is 8 bytes.
 >
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/ram.c | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
 >
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 5d4bdefe69..ddee703585 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -3036,6 +3036,33 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
->          migration_ops->ram_save_target_page = ram_save_target_page_legacy;
->      }
->  
-> +    /*
-> +     * This operation is unfortunate..
-> +     *
-> +     * For legacy QEMUs using per-section sync
-> +     * =======================================
-> +     *
-> +     * This must exist because the EOS below requires the SYNC messages
-> +     * per-channel to work.
-> +     *
-> +     * For modern QEMUs using per-round sync
-> +     * =====================================
-> +     *
-> +     * Logically this sync is not needed (because we know there's nothing
-> +     * in the multifd queue yet!).
+> Yes, hence "decently" packed. But I think in both cases it's passed in registers, and for 64-bit machine that shouldn't change anything.
 
-This is a bit misleading because even today we could split the
-multifd_ram_flush_and_sync() into _flush and _sync (haven't I seen a
-patch doing this somewhere? Maybe from Maciej...) and call just the
-_sync here, which is unrelated to any multifd queue.
+True. Though it does mean we go from "space to add new fields
+without making it overflow from one register to two" to
+"completely full and no space for expanding it".
 
-I think we shouldn't tie "sync" with "wait for multifd threads to finish
-sending their data (a kind of flush)" as this implies. The sync is as
-much making sure the threads are ready to receive as it is making sure
-the data is received in order with relation to ram scanning rounds.
-
-IOW, the local sync is what ensures multifd send threads are flushed
-while this code deals with the sync of src&dst threads, which is "just"
-a synchronization point between the two QEMUs.
-
-> However as a side effect, this makes
-> +     * sure the dest side won't receive any data before it properly reaches
-> +     * ram_load_precopy().
-
-I'm not sure it's a side-effect. It seems deliberate to me, seeing that
-multifd usually does its own synchronization. For instance, on the send
-side we also need some sync to make sure ram.c doesn't send data to
-multifd send threads that are not ready yet (i.e. the wait on
-channels_ready at the start of multifd_send()).
-
-> +     *
-> +     * Without this sync, src QEMU can send data too soon so that dest may
-> +     * not have been ready to receive it (e.g., rb->receivedmap may be
-> +     * uninitialized, for example).
-> +     *
-> +     * Logically "wait for recv setup ready" shouldn't need to involve src
-> +     * QEMU at all, however to be compatible with old QEMUs, let's stick
-
-I don't understand this statement, you're saying that QEMU src could
-just start dumping data on the channel without a remote end? Certainly
-for file migrations, but socket as well?
-
-> +     * with this.  Fortunately the overhead is low to sync during setup
-> +     * because the VM is running, so at least it's not accounted as part of
-> +     * downtime.
-> +     */
->      bql_unlock();
->      ret = multifd_ram_flush_and_sync(f);
->      bql_lock();
+-- PMM
 
