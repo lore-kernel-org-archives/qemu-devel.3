@@ -4,32 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A36DE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 21:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4DF0E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 21:13:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJfce-00016b-Cx; Fri, 06 Dec 2024 16:12:24 -0500
+	id 1tJfcX-00015s-Ay; Fri, 06 Dec 2024 16:12:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tJfcb-00016M-H7
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:21 -0500
+ id 1tJfcT-00015d-V8
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:13 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tJfcZ-0000Vi-Vm
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:21 -0500
+ id 1tJfcS-0000Uu-06
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:13 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tJfcV-00000003MwQ-3ien; Fri, 06 Dec 2024 22:12:15 +0100
-Message-ID: <0d1c8659-71c1-42df-8438-f70f7ffc4610@maciej.szmigiero.name>
-Date: Fri, 6 Dec 2024 22:12:10 +0100
+ id 1tJfcK-00000003MwF-3cR9; Fri, 06 Dec 2024 22:12:04 +0100
+Message-ID: <8d71629c-62f2-4229-a46f-f7a7f95c3233@maciej.szmigiero.name>
+Date: Fri, 6 Dec 2024 22:11:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/24] migration: Add qemu_loadvm_load_state_buffer()
- and its handler
+Subject: Re: [PATCH v3 02/24] thread-pool: Remove thread_pool_submit() function
 To: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
@@ -39,8 +38,8 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <d791cb76e8c43a30b49758ed641bf566f5325e2a.1731773021.git.maciej.szmigiero@oracle.com>
- <Z1DKVpGEzp2X4oOr@x1n>
+ <dc48aed87cb7d22d01996d948adf3eef4dd25240.1731773021.git.maciej.szmigiero@oracle.com>
+ <Z1Csi3bM2KYflTax@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -84,7 +83,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Z1DKVpGEzp2X4oOr@x1n>
+In-Reply-To: <Z1Csi3bM2KYflTax@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: none client-ip=145.239.82.108;
@@ -111,15 +110,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4.12.2024 22:32, Peter Xu wrote:
-> On Sun, Nov 17, 2024 at 08:20:01PM +0100, Maciej S. Szmigiero wrote:
+On 4.12.2024 20:24, Peter Xu wrote:
+> On Sun, Nov 17, 2024 at 08:19:57PM +0100, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> qemu_loadvm_load_state_buffer() and its load_state_buffer
->> SaveVMHandler allow providing device state buffer to explicitly
->> specified device via its idstr and instance id.
+>> This function name conflicts with one used by a future generic thread pool
+>> function and it was only used by one test anyway.
 >>
->> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>> Update the trace event name in thread_pool_submit_aio() accordingly.
+>>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 > 
 > Reviewed-by: Peter Xu <peterx@redhat.com>
@@ -127,55 +126,49 @@ On 4.12.2024 22:32, Peter Xu wrote:
 > One nitpick:
 > 
 >> ---
->>   include/migration/register.h | 17 +++++++++++++++++
->>   migration/savevm.c           | 23 +++++++++++++++++++++++
->>   migration/savevm.h           |  3 +++
->>   3 files changed, 43 insertions(+)
+>>   include/block/thread-pool.h   | 3 +--
+>>   tests/unit/test-thread-pool.c | 2 +-
+>>   util/thread-pool.c            | 7 +------
+>>   util/trace-events             | 2 +-
+>>   4 files changed, 4 insertions(+), 10 deletions(-)
 >>
->> diff --git a/include/migration/register.h b/include/migration/register.h
->> index ff0faf5f68c8..39991f3cc5d0 100644
->> --- a/include/migration/register.h
->> +++ b/include/migration/register.h
->> @@ -229,6 +229,23 @@ typedef struct SaveVMHandlers {
->>        */
->>       int (*load_state)(QEMUFile *f, void *opaque, int version_id);
+>> diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
+>> index 948ff5f30c31..4f6694026123 100644
+>> --- a/include/block/thread-pool.h
+>> +++ b/include/block/thread-pool.h
+>> @@ -30,13 +30,12 @@ ThreadPool *thread_pool_new(struct AioContext *ctx);
+>>   void thread_pool_free(ThreadPool *pool);
 >>   
->> +    /* This runs outside the BQL. */
->> +
->> +    /**
->> +     * @load_state_buffer
->> +     *
->> +     * Load device state buffer provided to qemu_loadvm_load_state_buffer().
->> +     *
->> +     * @opaque: data pointer passed to register_savevm_live()
->> +     * @buf: the data buffer to load
->> +     * @len: the data length in buffer
->> +     * @errp: pointer to Error*, to store an error if it happens.
->> +     *
->> +     * Returns zero to indicate success and negative for error
->> +     */
->> +    int (*load_state_buffer)(void *opaque, char *buf, size_t len,
->> +                             Error **errp);
->> +
->>       /**
->>        * @load_setup
->>        *
->> diff --git a/migration/savevm.c b/migration/savevm.c
->> index a254c38edcca..1f58a2fa54ae 100644
->> --- a/migration/savevm.c
->> +++ b/migration/savevm.c
->> @@ -3085,6 +3085,29 @@ int qemu_loadvm_approve_switchover(void)
->>       return migrate_send_rp_switchover_ack(mis);
->>   }
+>>   /*
+>> - * thread_pool_submit* API: submit I/O requests in the thread's
+>> + * thread_pool_submit_{aio,co} API: submit I/O requests in the thread's
+>>    * current AioContext.
+>>    */
+>>   BlockAIOCB *thread_pool_submit_aio(ThreadPoolFunc *func, void *arg,
+>>                                      BlockCompletionFunc *cb, void *opaque);
+>>   int coroutine_fn thread_pool_submit_co(ThreadPoolFunc *func, void *arg);
+>> -void thread_pool_submit(ThreadPoolFunc *func, void *arg);
 >>   
->> +int qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
->> +                                  char *buf, size_t len, Error **errp)
+>>   void thread_pool_update_params(ThreadPool *pool, struct AioContext *ctx);
+>>   
+>> diff --git a/tests/unit/test-thread-pool.c b/tests/unit/test-thread-pool.c
+>> index 1483e53473db..7a7055141ddb 100644
+>> --- a/tests/unit/test-thread-pool.c
+>> +++ b/tests/unit/test-thread-pool.c
+>> @@ -46,7 +46,7 @@ static void done_cb(void *opaque, int ret)
+>>   static void test_submit(void)
 > 
-> Suggest to always return bool as success/fail, especially when using
-> Error**.
+> The test name was still trying to follow the name of API. 
+>
+> It can be renamed to test_submit_no_complete() 
+
+Ack.
+
+> (also the test name str below).
 > 
 
-Will change the return type to bool then.
+I guess you mean also changing "/thread-pool/submit" to
+"/thread-pool/submit_no_complete" in the test main().
 
 Thanks,
 Maciej
