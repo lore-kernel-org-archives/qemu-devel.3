@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA022E77173
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD45AE7717D
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJXRf-00064F-1f; Fri, 06 Dec 2024 07:28:31 -0500
+	id 1tJXSI-00071W-Db; Fri, 06 Dec 2024 07:29:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRO-0005xg-CS; Fri, 06 Dec 2024 07:28:15 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRI-00041f-Gy; Fri, 06 Dec 2024 07:28:11 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B69UMZA027543;
- Fri, 6 Dec 2024 12:28:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=9s0862AkwjAan0FMU
- YRicXB9p5CJWO97Koe2RVcAjIg=; b=pqGfPBnyn0zpxN4asINO8khhGMo5GM8+3
- p+e2XPSVDfaQ/1xdGjofyTy5jLPTN/bnOEKfkNUd8AcSIApJbAcAn9tIHklf3YMM
- DyXkOS6S7aB4NN3pp2HnQ7QtjGC7uh2oZz3zrIxpmhcxm+eaJEF/rbq3ouC06DK0
- 8BEXkCeh5VNZLvRPfuhSjJSRpZWR53751QX3d6EuzIsfm2RetywRbDWVFrK+RoYu
- /LDLD4OYF4YTr07wXxwXgF9oeRLqeHth/i8DCwMzivcsGnIuOtP8pFGsC9Vnmzp2
- K5RYuMdXRxlp6qL1Is5tfskyNT9gWrFXQnnMXEw5PirzWKJa9xrwQ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43bxptgp1g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:02 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6BK7Dl031729;
- Fri, 6 Dec 2024 12:28:02 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 438ehmake3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:02 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B6CRwep33292942
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Dec 2024 12:27:58 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8C72920040;
- Fri,  6 Dec 2024 12:27:58 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1EF9920043;
- Fri,  6 Dec 2024 12:27:58 +0000 (GMT)
-Received: from vela.ibmuc.com (unknown [9.171.26.200])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Dec 2024 12:27:58 +0000 (GMT)
-From: Hendrik Brueckner <brueckner@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com,
- borntraeger@linux.ibm.com, Hendrik Brueckner <brueckner@linux.ibm.com>
-Subject: [RFC PATCH v2 01/15] s390x/cpumodel: add msa10 subfunctions
-Date: Fri,  6 Dec 2024 13:27:37 +0100
-Message-ID: <20241206122751.189721-2-brueckner@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20241206122751.189721-1-brueckner@linux.ibm.com>
-References: <20241206122751.189721-1-brueckner@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tJXRT-00061k-4c
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 07:28:19 -0500
+Received: from mail-oi1-x243.google.com ([2607:f8b0:4864:20::243])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tJXRR-00046L-93
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 07:28:18 -0500
+Received: by mail-oi1-x243.google.com with SMTP id
+ 5614622812f47-3eb0fbb0f62so690153b6e.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 04:28:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733488095; x=1734092895; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Afev6en4kR+CrZleuto4wB3x+yzqkCFox++dU9LzUsA=;
+ b=P23Rfi9xhNG28NJr6zpJIchfXK1aaJETWfDhv56f8vbq7+TJsI1FWd5oNbv1ukZ8/j
+ voypnwV2lPNqKkCoZdwOKkEFJWJpLUbE6uF5jRL3nxUBCopdsXuPyEIuN2KInu5wgDoD
+ lCKLw2n4YWPJ+WHMnk+tdGAB3Eg/3GITmdlCfr2QzlvsgoEEI4s7uz4Vkm7WCGN+m10X
+ luxmAVimAL5WBiNUgo9y98g11gCMMJeg2FfgrjyakT/GhZOGf9blU+1aVvve37gVbDuc
+ GB6okAHwTQke8PT85MZZFmC6MzolMdLHo7DzqHrIUwpjcv5RQIxhJpZwpTfEZn9/YPYM
+ nzlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733488095; x=1734092895;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Afev6en4kR+CrZleuto4wB3x+yzqkCFox++dU9LzUsA=;
+ b=DdN9U9cMlXIG9mmNj2lKcsoqcdobL/LlFKgRgK9M1tPfQlY/ygZ8I28PIvWwoOx2bn
+ Odw59VETJxqEBMJxZ4PRVsMmtTCj1sd3IjW1LgXrxeyCvKGzedBZBmpQkzM7g89/47N/
+ xRi7x6tghYLhCGYWZytDicOjFw+H8/G22HkueeVIJiYPLHUa/ci32qkrJQWOgLKkabjG
+ 7PtJ8whW6OFqzoMcC4ykdbDFnOyhNT8WEtXlkvy/skXWbpYqsX8jm4vuBWZPEFPEEXOI
+ sCduiKtudlXpPTNmffO8DsF46vdrjhjiYN32SdbfyywgvMjX0HazE1acOKZqFpQNYdO/
+ cqdw==
+X-Gm-Message-State: AOJu0YxQgTDmYNxquQ8ulgcF+3ZlJolQEroxTjoeGuHCtiaUlYuTWh2M
+ GEY8H9dqYCKgOb0ShfiJ3zslwjrtDhI3+w9PLJzw4wWxsIbptzo=
+X-Gm-Gg: ASbGnct2iM6oJ0N5cJ6i3F13T5Q9sfqu3+Lfsa2mGb3fnUNrkMtYmELS4mi2GemQe4x
+ fQsM/C/+MWflAt3G+s0RFeXhvZkhC7IJL09BWxYnHDnt5Ju3GEat4xI/R4uip06POzzAVWtso6p
+ C2KB8/ET/p/rSYI7CRZP4bF1yQfroP0I82Rk9XITdschK2RLEj9bs3Hi9lvaiwZ8UYmACfcbvqt
+ 7pPS5TvqHvjpMDPkQW76uRGEsXSiK/DWP5xeGrFJMjvF1F9+TpyORhn4A==
+X-Google-Smtp-Source: AGHT+IHuxfKktEOhdP2DbkvOOWn4bYe36TVICO/Y+sH28rjw0ZW2IimGhbngnzJ+0elPz1osV4s1mg==
+X-Received: by 2002:a05:6808:3c90:b0:3e7:b9be:5267 with SMTP id
+ 5614622812f47-3eb19c1fff6mr2703917b6e.6.1733488095379; 
+ Fri, 06 Dec 2024 04:28:15 -0800 (PST)
+Received: from kotori-desktop.lan ([58.38.120.33])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fd15710123sm2579866a12.49.2024.12.06.04.28.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Dec 2024 04:28:15 -0800 (PST)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>
+Subject: [PATCH v4 08/10] vfio/igd: emulate GGC register in mmio bar0
+Date: Fri,  6 Dec 2024 20:27:46 +0800
+Message-ID: <20241206122749.9893-9-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241206122749.9893-1-tomitamoeko@gmail.com>
+References: <20241206122749.9893-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: p8CUE5XweHnFphiTaAJt69-9ERslV9MR
-X-Proofpoint-ORIG-GUID: p8CUE5XweHnFphiTaAJt69-9ERslV9MR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxlogscore=759
- malwarescore=0 priorityscore=1501 bulkscore=0 impostorscore=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 spamscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412060089
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=brueckner@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::243;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-oi1-x243.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,119 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MSA10 introduces new AES XTS subfunctions.
+The GGC register at 0x50 of pci config space is a mirror of the same
+register at 0x108040 of mmio bar0 [1]. i915 driver also reads that
+register from mmio bar0 instead of config space. As GGC is programmed
+and emulated by qemu, the mmio address should also be emulated, in the
+same way of BDSM register.
 
-Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+[1] 4.1.28, 12th Generation Intel Core Processors Datasheet Volume 2
+    https://www.intel.com/content/www/us/en/content-details/655259
+
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- target/s390x/cpu_features.c         |  2 ++
- target/s390x/cpu_features_def.h.inc |  6 ++++++
- target/s390x/cpu_models.c           |  4 ++++
- target/s390x/gen-features.c         | 20 ++++++++++++++++++++
- 4 files changed, 32 insertions(+)
+ hw/vfio/igd.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-index cb4e2b8920..a3c239595a 100644
---- a/target/s390x/cpu_features.c
-+++ b/target/s390x/cpu_features.c
-@@ -252,6 +252,8 @@ static S390FeatGroupDef s390_feature_groups[] = {
-     FEAT_GROUP_INIT("msa8", MSA_EXT_8, "Message-security-assist-extension 8 facility"),
-     FEAT_GROUP_INIT("msa9", MSA_EXT_9, "Message-security-assist-extension 9 facility"),
-     FEAT_GROUP_INIT("msa9_pckmo", MSA_EXT_9_PCKMO, "Message-security-assist-extension 9 PCKMO subfunctions"),
-+    FEAT_GROUP_INIT("msa10", MSA_EXT_10, "Message-security-assist-extension 10 facility"),
-+    FEAT_GROUP_INIT("msa10_pckmo", MSA_EXT_10_PCKMO, "Message-security-assist-extension 10 PCKMO subfunctions"),
-     FEAT_GROUP_INIT("mepochptff", MULTIPLE_EPOCH_PTFF, "PTFF enhancements introduced with Multiple-epoch facility"),
-     FEAT_GROUP_INIT("esort", ENH_SORT, "Enhanced-sort facility"),
-     FEAT_GROUP_INIT("deflate", DEFLATE_CONVERSION, "Deflate-conversion facility"),
-diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-index c53ac13352..104d186c3f 100644
---- a/target/s390x/cpu_features_def.h.inc
-+++ b/target/s390x/cpu_features_def.h.inc
-@@ -233,6 +233,10 @@ DEF_FEAT(KM_XTS_AES_128, "km-xts-aes-128", KM, 50, "KM XTS-AES-128")
- DEF_FEAT(KM_XTS_AES_256, "km-xts-aes-256", KM, 52, "KM XTS-AES-256")
- DEF_FEAT(KM_XTS_EAES_128, "km-xts-eaes-128", KM, 58, "KM XTS-Encrypted-AES-128")
- DEF_FEAT(KM_XTS_EAES_256, "km-xts-eaes-256", KM, 60, "KM XTS-Encrypted-AES-256")
-+DEF_FEAT(KM_FULL_XTS_AES_128, "km-full-xts-aes-128", KM, 82, "KM Full-XTS-AES-128")
-+DEF_FEAT(KM_FULL_XTS_AES_256, "km-full-xts-aes-256", KM, 84, "KM Full-XTS-AES-256")
-+DEF_FEAT(KM_FULL_XTS_EAES_128, "km-full-xts-eaes-128", KM, 90, "KM Full-XTS-Encrypted-AES-128")
-+DEF_FEAT(KM_FULL_XTS_EAES_256, "km-full-xts-eaes-256", KM, 92, "KM Full-XTS-Encrypted-AES-256")
- 
- /* Features exposed via the KIMD instruction. */
- DEF_FEAT(KIMD_SHA_1, "kimd-sha-1", KIMD, 1, "KIMD SHA-1")
-@@ -264,6 +268,8 @@ DEF_FEAT(PCKMO_ETDEA_256, "pckmo-etdea-192", PCKMO, 3, "PCKMO Encrypted-TDEA-192
- DEF_FEAT(PCKMO_AES_128, "pckmo-aes-128", PCKMO, 18, "PCKMO Encrypted-AES-128-Key")
- DEF_FEAT(PCKMO_AES_192, "pckmo-aes-192", PCKMO, 19, "PCKMO Encrypted-AES-192-Key")
- DEF_FEAT(PCKMO_AES_256, "pckmo-aes-256", PCKMO, 20, "PCKMO Encrypted-AES-256-Key")
-+DEF_FEAT(PCKMO_AES_XTS_128_DK, "pckmo-aes-xts-128-dk", PCKMO, 21, "PCKMO Encrypt-AES-XTS-128-Double-Key")
-+DEF_FEAT(PCKMO_AES_XTS_256_DK, "pckmo-aes-xts-256-dk", PCKMO, 22, "PCKMO Encrypt-AES-XTS-256-Double-Key")
- DEF_FEAT(PCKMO_ECC_P256, "pckmo-ecc-p256", PCKMO, 32, "PCKMO Encrypt-ECC-P256-Key")
- DEF_FEAT(PCKMO_ECC_P384, "pckmo-ecc-p384", PCKMO, 33, "PCKMO Encrypt-ECC-P384-Key")
- DEF_FEAT(PCKMO_ECC_P521, "pckmo-ecc-p521", PCKMO, 34, "PCKMO Encrypt-ECC-P521-Key")
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index a27f4b6f79..3eb8276aee 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -477,6 +477,10 @@ static void check_consistency(const S390CPUModel *model)
-         { S390_FEAT_KLMD_SHA3_512, S390_FEAT_MSA },
-         { S390_FEAT_KLMD_SHAKE_128, S390_FEAT_MSA },
-         { S390_FEAT_KLMD_SHAKE_256, S390_FEAT_MSA },
-+        { S390_FEAT_KM_FULL_XTS_AES_128, S390_FEAT_MSA_EXT_4 },
-+        { S390_FEAT_KM_FULL_XTS_AES_256, S390_FEAT_MSA_EXT_4 },
-+        { S390_FEAT_KM_FULL_XTS_EAES_128, S390_FEAT_MSA_EXT_4 },
-+        { S390_FEAT_KM_FULL_XTS_EAES_256, S390_FEAT_MSA_EXT_4 },
-         { S390_FEAT_PRNO_TRNG_QRTCR, S390_FEAT_MSA_EXT_5 },
-         { S390_FEAT_PRNO_TRNG, S390_FEAT_MSA_EXT_5 },
-         { S390_FEAT_SIE_KSS, S390_FEAT_SIE_F2 },
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 2b2bfc3736..06c3bf64f3 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -246,6 +246,16 @@
-     S390_FEAT_PCKMO_ECC_ED25519, \
-     S390_FEAT_PCKMO_ECC_ED448
- 
-+#define S390_FEAT_GROUP_MSA_EXT_10 \
-+    S390_FEAT_KM_FULL_XTS_AES_128, \
-+    S390_FEAT_KM_FULL_XTS_AES_256, \
-+    S390_FEAT_KM_FULL_XTS_EAES_128, \
-+    S390_FEAT_KM_FULL_XTS_EAES_256
-+
-+#define S390_FEAT_GROUP_MSA_EXT_10_PCKMO \
-+    S390_FEAT_PCKMO_AES_XTS_128_DK, \
-+    S390_FEAT_PCKMO_AES_XTS_256_DK
-+
- #define S390_FEAT_GROUP_ENH_SORT \
-     S390_FEAT_ESORT_BASE, \
-     S390_FEAT_SORTL_SFLR, \
-@@ -307,10 +317,18 @@ static uint16_t group_MSA_EXT_9[] = {
-     S390_FEAT_GROUP_MSA_EXT_9,
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 18d159aa8e..12e0553e83 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -488,8 +488,10 @@ static const MemoryRegionOps vfio_igd_quirk_mirror_##name = {           \
+     .endianness = DEVICE_LITTLE_ENDIAN,                                 \
  };
  
-+static uint16_t group_MSA_EXT_10[] = {
-+    S390_FEAT_GROUP_MSA_EXT_10,
-+};
-+
- static uint16_t group_MSA_EXT_9_PCKMO[] = {
-     S390_FEAT_GROUP_MSA_EXT_9_PCKMO,
- };
++VFIO_IGD_QUIRK_MIRROR_REG(IGD_GMCH, ggc)
+ VFIO_IGD_QUIRK_MIRROR_REG(IGD_BDSM_GEN11, bdsm)
  
-+static uint16_t group_MSA_EXT_10_PCKMO[] = {
-+    S390_FEAT_GROUP_MSA_EXT_10_PCKMO,
-+};
++#define IGD_GGC_MMIO_OFFSET     0x108040
+ #define IGD_BDSM_MMIO_OFFSET    0x1080C0
+ 
+ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+@@ -518,14 +520,21 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
+     }
+ 
+-    quirk = vfio_quirk_alloc(1);
++    quirk = vfio_quirk_alloc(2);
+     quirk->data = vdev;
+ 
+     memory_region_init_io(&quirk->mem[0], OBJECT(vdev),
++                          &vfio_igd_quirk_mirror_ggc, vdev,
++                          "vfio-igd-ggc-quirk", 2);
++    memory_region_add_subregion_overlap(vdev->bars[0].region.mem,
++                                        IGD_GGC_MMIO_OFFSET, &quirk->mem[0],
++                                        1);
 +
- static uint16_t group_ENH_SORT[] = {
-     S390_FEAT_GROUP_ENH_SORT,
- };
-@@ -858,6 +876,8 @@ static FeatGroupDefSpec FeatGroupDef[] = {
-     FEAT_GROUP_INITIALIZER(MSA_EXT_8),
-     FEAT_GROUP_INITIALIZER(MSA_EXT_9),
-     FEAT_GROUP_INITIALIZER(MSA_EXT_9_PCKMO),
-+    FEAT_GROUP_INITIALIZER(MSA_EXT_10),
-+    FEAT_GROUP_INITIALIZER(MSA_EXT_10_PCKMO),
-     FEAT_GROUP_INITIALIZER(MULTIPLE_EPOCH_PTFF),
-     FEAT_GROUP_INITIALIZER(ENH_SORT),
-     FEAT_GROUP_INITIALIZER(DEFLATE_CONVERSION),
++    memory_region_init_io(&quirk->mem[1], OBJECT(vdev),
+                           &vfio_igd_quirk_mirror_bdsm, vdev,
+                           "vfio-igd-bdsm-quirk", 8);
+     memory_region_add_subregion_overlap(vdev->bars[0].region.mem,
+-                                        IGD_BDSM_MMIO_OFFSET, &quirk->mem[0],
++                                        IGD_BDSM_MMIO_OFFSET, &quirk->mem[1],
+                                         1);
+ 
+     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
 -- 
-2.43.5
+2.45.2
 
 
