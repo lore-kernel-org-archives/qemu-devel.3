@@ -4,93 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46081E7716E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Dec 2024 23:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B13E77171
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 00:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJLdP-0003P4-OG; Thu, 05 Dec 2024 18:51:51 -0500
+	id 1tJLtG-00055T-SL; Thu, 05 Dec 2024 19:08:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJLdO-0003Oi-1e
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 18:51:50 -0500
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ (Exim 4.90_1) (envelope-from <takeshibaconsuzuki@gmail.com>)
+ id 1tJLtF-00055D-Gl; Thu, 05 Dec 2024 19:08:13 -0500
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJLdM-0002pa-FJ
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 18:51:49 -0500
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-29e7516ee77so1072015fac.1
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 15:51:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <takeshibaconsuzuki@gmail.com>)
+ id 1tJLtD-0000en-TT; Thu, 05 Dec 2024 19:08:13 -0500
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-71d4994dfbaso1322173a34.0; 
+ Thu, 05 Dec 2024 16:08:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733442706; x=1734047506; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1K1UUAAPycuvo3k7OdGUNpRaHskryB+3uYoZ9vNA/As=;
- b=aakSbDzT2bt0ragDG67PCkibLqACQG09EoBOw2X55pUY+Gnc05ZGeIdtN4pQJ7p3Tr
- Ad7ntLAMCPNcnnb87Sxp6vBOFQG+xjuKdNZZISf6j3Kj3bSJosBccd78VSW1SEOgcH70
- b32BcrvVoLkLQwWDNysvkMw42gsYjnRcNNWP+w8/1/QRl3gDcZSd2nZNRPvED+x8dwqG
- /vov1KNQQvhSu1DNls86mxjxCvhETqrbauxWUBHJQEYF20TRcZ7kgfBNhFADw82hqiEs
- wj6cvvjjfmHJvyW7UB7RuDNTu3JV8fk5eKTGmXWCCcEm9rszxB70FTHbJinJ7NaAzwkH
- fGPQ==
+ d=gmail.com; s=20230601; t=1733443690; x=1734048490; darn=nongnu.org;
+ h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i4V1OKmeKb8Gi4Mrt+S0Udru7bQJn66xk28W83/WdKk=;
+ b=kfXkAuawzSqCihEjmYkbN7PtVcEMCdflg+Jo1ZGIL5SbggdBdkzdk3Lr1l2lx622Fl
+ vM83PAYVrmJ664DcAaajUBPYcAwb9IVBAnkx8M0uYVIsy8WT1n9VLWc8NLfz0CjsLOel
+ ohTG5AaJVb1csEYcoxhz/PPnCREhVgbwZadXQAYFoC4GGwU99bs8J6OHbsGX0VSFVtX5
+ +jIctuhP4D+1gZEtWqLjiF4bLbnSM5Zex3gExPKW036bhCCT+JoxG3thc+AQKMTg/WwG
+ U0mEZ5qI8IHGmuA1svxZMU2LjxS85kIdHRY0qECE8zk5IAD91qeEFsRQkEG2On7RrANj
+ HRBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733442706; x=1734047506;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1K1UUAAPycuvo3k7OdGUNpRaHskryB+3uYoZ9vNA/As=;
- b=Liz+uLXF2WOz/khjmaXvIKbQsVnPlv9NWiGzJMS42QbcQUaothHOtCZdIjnxLZ8hQ+
- 2MaogTrz+3QYnmP3pu1p0meX62Es/vBxVAzMK1cHiS9dy44Oyw9ytLSIV5wf+xQTh1AH
- wntcxQLgosngibmejXVPDFHJe1Yw6opKudy2/Pe4jBqyqx8LwJd/EwMB+Mv53FeoLnO7
- lEFf8w/nMHHtV2xAVOvoCzh5VS9R+VaJdQMSoooKAOBa6OxQ5YvzX+QpepfKlsMotCVk
- LILsOYcqg/1nh2uxamxdNjB9P6mJemuycpZeQXTLaAXucPqQRMbw7rrINs6oXXBmZIhN
- EwBw==
-X-Gm-Message-State: AOJu0YzBzzEGeDd7Hvpz/vTemZF2ZZ7r47eYF61cyTcruj6KOgPhf5iL
- vgLa55v3rLFcJce6ANY5ETT9zGbSZyaUrDT42DePD5w7mYEd5DpoJJN+BfXL2sc=
-X-Gm-Gg: ASbGnctq+bISyaWtFi7CA/x2mYBde10bMs2pcFp9Rz6NnCgNb79zzyn6qHOd5IIgRJu
- 42+2EeZ/FXH3kjkHphKrg1mIrz8/OTitxlWYXDu+8/vqh1Xf/8gxNvJevr1rjxF07ahr4Vn9njW
- 3dqRZJLX020PWcO4Y9Z8WcCMpjdCnGuDPYRC4szg9tKbGeSN0YDZXOgz3uWWMxfHeDQeKD/zM7P
- P0eGjU4dDYOv41ywPF57AaNESUB/W5HpEjOw+kHLkAgGO6IRh8z1IsMHrwzHy0R9w5U+WWeXGcT
- AL3o8X/Wu3BVLw1UgfVlRPvMe3nO
-X-Google-Smtp-Source: AGHT+IF9tCijy1YfMXohB0O+APlNGmsExWNhLDvgQxNE3rDlh2oq9VvhwZlr1UjHnS3Pl/CHfIO9iQ==
-X-Received: by 2002:a05:6870:3d95:b0:29e:6117:bd45 with SMTP id
- 586e51a60fabf-29f734d1022mr1160296fac.31.1733442706326; 
- Thu, 05 Dec 2024 15:51:46 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29f5677528bsm586144fac.28.2024.12.05.15.51.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 15:51:45 -0800 (PST)
-Message-ID: <edfa85a7-2963-46d8-8b02-4d22ec1aeee6@linaro.org>
-Date: Thu, 5 Dec 2024 17:51:42 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 06/13] rust: add bindings for memattrs
-To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20241205060714.256270-1-zhao1.liu@intel.com>
- <20241205060714.256270-7-zhao1.liu@intel.com>
- <b34733f3-1525-4e35-8c07-f84ad56b01e0@linaro.org>
- <1f008c2a-aaf6-497d-becd-f36f5d9aea17@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <1f008c2a-aaf6-497d-becd-f36f5d9aea17@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
+ d=1e100.net; s=20230601; t=1733443690; x=1734048490;
+ h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i4V1OKmeKb8Gi4Mrt+S0Udru7bQJn66xk28W83/WdKk=;
+ b=bExZuow/aN5bdHQNGf07oS2z6tjc1QDwR6ZddZbUYtu9XqJk6NpbJV2Fg2p7iBpGMN
+ njsAszI1Up67M22Q+mEXA80ydX1yrOxolMny2wgGak+ljvmGN87+qIdWfp4BoVhJRFnx
+ 5URxKF/44LaIx2Crq3aVV8Qko1XA1RM/nTRrtRJViXjylpMIikE5hG3sWGG3WcRztabt
+ RgknCnmhI6tCP9P23dUqluj2K+E0WB4F+JI65q0I9CmhB9/+eX1Xi81OWypN/c1EEY2u
+ ql9PtFBLs2S34g2Hddr/1jyME71ZxDybW1+JDVeslZlU5Fcvkw2i1ScUxLBwcZ9zGxrj
+ Y06A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9Km2gPbBuY8fqsfTixef1Pa3zeXHMMhFLdaeA/QUveHCJ3NzssKz2shJIAvOlfH7RyignhL2niqGj@nongnu.org
+X-Gm-Message-State: AOJu0YxkkjOfHAHTYfMmL0HA6bSz/GLrhD+ipSs0kBzlC8DmAliH3aV1
+ cLUBNVbHsPoqxHPsYxgs7mxfIGeTOWMPq4x+AWNUm3bQiKt8J0aQaXPMvIhC
+X-Gm-Gg: ASbGncs+2QAonOmyCV0b4jivwvwZ7fOMyAgkEiwleGXJf5C5TXkNrgw1JeJIPVnE+eA
+ jxljNKcah9uXHgxVVe6v4bDPjN76ksTjqVakWNshiltrpSzJurah7ZARaVmn4M2n1v9vSTjaJET
+ gKN8UgjsJHYFaxPyn4bwqjv3z1Mrt9uaM0cNfXZpvm/9nhZP0Eg7Jo2PdcqNoU0z5TwrFZYqKSA
+ PM3q6FEFjgQc7Dkm1CnWwkJxSbFWWpK33Cdiy4R9QB0+hBzusxKqs4yqVwkliQotE9gXI7VBmO+
+ N5P/60ngOdeJ68JZ3S8=
+X-Google-Smtp-Source: AGHT+IGShAj3uqXd20/wHGAEAEEDsukFGVmdrmf2BOrhDIZN+bGkssJ91gQCTddYU9hYTsK4FE4BYw==
+X-Received: by 2002:a05:6830:350a:b0:71d:5a36:d9ce with SMTP id
+ 46e09a7af769-71dc2c5a1dfmr3183923a34.5.1733443688329; 
+ Thu, 05 Dec 2024 16:08:08 -0800 (PST)
+Received: from takeshi-suzuki-dev01.colo.rubrik.com ([104.171.196.13])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5f2793046d9sm486212eaf.30.2024.12.05.16.08.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Dec 2024 16:08:08 -0800 (PST)
+From: Takeshi Suzuki <takeshibaconsuzuki@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: codyprime@gmail.com, kwolf@redhat.com, hreitz@redhat.com,
+ eblake@redhat.com, armbru@redhat.com, qemu-block@nongnu.org,
+ Takeshi Suzuki <takeshibaconsuzuki@gmail.com>
+Subject: [PATCH v2 0/3] Add RW support for 4k sector size vhdx
+Date: Thu,  5 Dec 2024 16:07:48 -0800
+Message-Id: <20241206000751.34694-1-takeshibaconsuzuki@gmail.com>
+X-Mailer: git-send-email 2.17.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=takeshibaconsuzuki@gmail.com; helo=mail-ot1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,47 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/24 12:30, Paolo Bonzini wrote:
-> On 12/5/24 19:15, Richard Henderson wrote:
->> On 12/5/24 00:07, Zhao Liu wrote:
->>> The MemTxAttrs structure is composed of bitfield members, and bindgen is
->>> unable to generate an equivalent macro definition for
->>> MEMTXATTRS_UNSPECIFIED.
->>
->> I'm happy to move away from bit fields to uint32_t or suchlike to enable 
->> MEMTXATTRS_UNSPECIFIED be a compile-time constant.
-> 
-> Yeah, if we go from
-> 
-> typedef struct MemTxAttrs {
->      unsigned int unspecified:1;
->      unsigned int secure:1;
->      unsigned int space:2;
->      unsigned int user:1;
->      unsigned int memory:1;
->      unsigned int requester_id:16;
->      unsigned int pid:8;
-> } MemTxAttrs;
-> 
-> to
-> 
-> typedef struct MemTxAttrs {
->      uint8_t unspecified;
->      uint8_t secure;
->      uint8_t space;
->      uint8_t user;
->      uint8_t memory;
->      uint8_t pid;
->      uint16_t requester_id;
-> } MemTxAttrs;
-> 
-> is still decently packed and simplifies things a lot.  Zhao, can you submit that as an 
-> independent patch?
-Hmm.  I'd been thinking of uint32_t and hw/registerfields.h, but I have not scoped the 
-size of that conversion.
+The first patch adds support to read and write VHDX images with 4k logical
+sector sizes. This is done by internally converting bdrv sectors of size 512 to
+logical sectors. VHDX image creation with 4k logical sector size is NOT
+implemented.
 
-But short of that, please use 'bool' not 'uint8_t' for those single-bit flags.
+The second patch adds an iotest which reads and writes to a VHDX image with 4k
+logical sector size.
 
+The third patch adds logical sector size to VHDX specific image info.
+    
+```
+Format specific information:
+    logical sector size: 4096
+```
 
-r~
+Takeshi Suzuki (3):
+  Add RW support for 4k sector size vhdx
+  Add iotest for 4k sector size vhdx
+  Add VHDX specific image info
+
+ block/vhdx.c                                 |  97 +++++++++++++++++--
+ qapi/block-core.json                         |  27 +++++-
+ tests/qemu-iotests/315                       |  65 +++++++++++++
+ tests/qemu-iotests/315.out                   |  20 ++++
+ tests/qemu-iotests/sample_images/4k.vhdx.bz2 | Bin 0 -> 37834 bytes
+ 5 files changed, 201 insertions(+), 8 deletions(-)
+ create mode 100644 tests/qemu-iotests/315
+ create mode 100644 tests/qemu-iotests/315.out
+ create mode 100644 tests/qemu-iotests/sample_images/4k.vhdx.bz2
+
+-- 
+2.17.1
+
 
