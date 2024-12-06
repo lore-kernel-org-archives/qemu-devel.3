@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B13E77171
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 00:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0619BE7716E
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 00:08:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJLtG-00055T-SL; Thu, 05 Dec 2024 19:08:14 -0500
+	id 1tJLtO-00056o-Jv; Thu, 05 Dec 2024 19:08:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <takeshibaconsuzuki@gmail.com>)
- id 1tJLtF-00055D-Gl; Thu, 05 Dec 2024 19:08:13 -0500
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ id 1tJLtM-00056P-39; Thu, 05 Dec 2024 19:08:20 -0500
+Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <takeshibaconsuzuki@gmail.com>)
- id 1tJLtD-0000en-TT; Thu, 05 Dec 2024 19:08:13 -0500
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-71d4994dfbaso1322173a34.0; 
- Thu, 05 Dec 2024 16:08:10 -0800 (PST)
+ id 1tJLtK-0000fK-99; Thu, 05 Dec 2024 19:08:19 -0500
+Received: by mail-oo1-xc32.google.com with SMTP id
+ 006d021491bc7-5f1d1fdb328so423618eaf.3; 
+ Thu, 05 Dec 2024 16:08:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733443690; x=1734048490; darn=nongnu.org;
- h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=i4V1OKmeKb8Gi4Mrt+S0Udru7bQJn66xk28W83/WdKk=;
- b=kfXkAuawzSqCihEjmYkbN7PtVcEMCdflg+Jo1ZGIL5SbggdBdkzdk3Lr1l2lx622Fl
- vM83PAYVrmJ664DcAaajUBPYcAwb9IVBAnkx8M0uYVIsy8WT1n9VLWc8NLfz0CjsLOel
- ohTG5AaJVb1csEYcoxhz/PPnCREhVgbwZadXQAYFoC4GGwU99bs8J6OHbsGX0VSFVtX5
- +jIctuhP4D+1gZEtWqLjiF4bLbnSM5Zex3gExPKW036bhCCT+JoxG3thc+AQKMTg/WwG
- U0mEZ5qI8IHGmuA1svxZMU2LjxS85kIdHRY0qECE8zk5IAD91qeEFsRQkEG2On7RrANj
- HRBA==
+ d=gmail.com; s=20230601; t=1733443696; x=1734048496; darn=nongnu.org;
+ h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Wui8MJ22WEMSJ4dKXTOKhXCd0e/cs43WDijGmkD/eL4=;
+ b=exlS51rh/5EemMrP/W9XABKeNhtmhL16EC4yHyZCz20gmww4efCFusiJ+Nx/X32n8+
+ pFDdxonfUcpVFy9cPlPYKX7TQvMrWbQY1/SOpz/svCri9sw1VsV+ogKnab2A+0CfiQQl
+ NejOWNN/BT9Slz1SBpVsxhetg1c7lzQiaLro9mkNsVYCggu10IqG/y8YJhQg7Djl33mJ
+ 5whZD8PiCDQVYptHgtsJ40872XkCnnt1geqFEB/BkO0FlSitzBdpc//Rr/Sq6IzL8Fh6
+ L3XMlg5fo3koXoFjfrHmPtBHUDuC/Mgpt0APgSq0dw+FNrKSq7G26EqhN5nnulUZuuXc
+ U6Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733443690; x=1734048490;
- h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=i4V1OKmeKb8Gi4Mrt+S0Udru7bQJn66xk28W83/WdKk=;
- b=bExZuow/aN5bdHQNGf07oS2z6tjc1QDwR6ZddZbUYtu9XqJk6NpbJV2Fg2p7iBpGMN
- njsAszI1Up67M22Q+mEXA80ydX1yrOxolMny2wgGak+ljvmGN87+qIdWfp4BoVhJRFnx
- 5URxKF/44LaIx2Crq3aVV8Qko1XA1RM/nTRrtRJViXjylpMIikE5hG3sWGG3WcRztabt
- RgknCnmhI6tCP9P23dUqluj2K+E0WB4F+JI65q0I9CmhB9/+eX1Xi81OWypN/c1EEY2u
- ql9PtFBLs2S34g2Hddr/1jyME71ZxDybW1+JDVeslZlU5Fcvkw2i1ScUxLBwcZ9zGxrj
- Y06A==
+ d=1e100.net; s=20230601; t=1733443696; x=1734048496;
+ h=references:in-reply-to:message-id:date:subject:cc:to:from
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Wui8MJ22WEMSJ4dKXTOKhXCd0e/cs43WDijGmkD/eL4=;
+ b=UObyGYP1LpSTq2H8GMUzhLox03cMHMnyc41uzz4bKDzCRIc2lB876jaKbxEEiunrYf
+ Zy/axTxCYrJDl40excksAtmjUClzvXZTnLJlML6l2WBNKWDuxjZOe0WBCV6ciWcdZkTZ
+ uvVu6YN8HPqE/CBU/KAUBfrFWB6o8JFqW3/KPGSUtxsJGwoIQOXLYEfVVNaKiHncnMHT
+ Ynak//WiV+nUoV53M6kzmj04vhJyYznnRgu/pscSM9hrK428uTOWWLfVRxv51EU/BvuD
+ rLMB4fdNlD3qxbssMoDan7SDVxsKva8hsowJPXcqEuXinbLIFlJ4uZSgO5jCmbX9/byB
+ uAiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9Km2gPbBuY8fqsfTixef1Pa3zeXHMMhFLdaeA/QUveHCJ3NzssKz2shJIAvOlfH7RyignhL2niqGj@nongnu.org
-X-Gm-Message-State: AOJu0YxkkjOfHAHTYfMmL0HA6bSz/GLrhD+ipSs0kBzlC8DmAliH3aV1
- cLUBNVbHsPoqxHPsYxgs7mxfIGeTOWMPq4x+AWNUm3bQiKt8J0aQaXPMvIhC
-X-Gm-Gg: ASbGncs+2QAonOmyCV0b4jivwvwZ7fOMyAgkEiwleGXJf5C5TXkNrgw1JeJIPVnE+eA
- jxljNKcah9uXHgxVVe6v4bDPjN76ksTjqVakWNshiltrpSzJurah7ZARaVmn4M2n1v9vSTjaJET
- gKN8UgjsJHYFaxPyn4bwqjv3z1Mrt9uaM0cNfXZpvm/9nhZP0Eg7Jo2PdcqNoU0z5TwrFZYqKSA
- PM3q6FEFjgQc7Dkm1CnWwkJxSbFWWpK33Cdiy4R9QB0+hBzusxKqs4yqVwkliQotE9gXI7VBmO+
- N5P/60ngOdeJ68JZ3S8=
-X-Google-Smtp-Source: AGHT+IGShAj3uqXd20/wHGAEAEEDsukFGVmdrmf2BOrhDIZN+bGkssJ91gQCTddYU9hYTsK4FE4BYw==
-X-Received: by 2002:a05:6830:350a:b0:71d:5a36:d9ce with SMTP id
- 46e09a7af769-71dc2c5a1dfmr3183923a34.5.1733443688329; 
- Thu, 05 Dec 2024 16:08:08 -0800 (PST)
+ AJvYcCU5tBDyhB7zSosn1W+OUdHRc31tulGIJqik3bMD9p+Gs+LZIqMCcg7bFKxuYupn1hsPeL4R1K2IwkuM@nongnu.org
+X-Gm-Message-State: AOJu0YxWCBzAxMznXZ3a5LPxwFV5Hh5W4wESoNb/1u5pOtITOjkyHAPY
+ HQvUik85rOI9oBV3ELrzmu83OHmayoWdXc1tvgXy0JhtfZQQKAF4yMktr13M
+X-Gm-Gg: ASbGnctJ9Ue+k9G9tQbTzs1yJoGtZH6SQkRbc7HLHCh7I/OtTyUUnf0nPhLz4Lc1xeQ
+ kR9pt8yKB08PKRI/MwRYW/SDsZKxRCAv758nCzuPMk2KVSMOZs1RB7ZGOM+2z3T7bhFc/EAooS0
+ J1dad3RSDHFSHg/+SOV/aKL41tawTgb5IF9LQT2LpONI/RVKW5IS5OEYwR5q6ASkflU806uZ5TM
+ VBJbOk9yNZ9LBg8EKYiJ2zJLkOtcFg2Jaw37dMpXAZTkZuYSjzPRSys3mSzJQVovd1oWv8yG1aD
+ d9XU4x8WAOBC1b39kog=
+X-Google-Smtp-Source: AGHT+IESix98SC+a14ZgIUJqAgTgyoYZYAXQRLy9i1FNLKRj0oxfZFGegYofpwfwijkY4RN1zoDigg==
+X-Received: by 2002:a05:6830:628b:b0:71d:40b6:2ba8 with SMTP id
+ 46e09a7af769-71dcf553372mr484839a34.22.1733443696259; 
+ Thu, 05 Dec 2024 16:08:16 -0800 (PST)
 Received: from takeshi-suzuki-dev01.colo.rubrik.com ([104.171.196.13])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f2793046d9sm486212eaf.30.2024.12.05.16.08.07
+ 006d021491bc7-5f2793046d9sm486212eaf.30.2024.12.05.16.08.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 16:08:08 -0800 (PST)
+ Thu, 05 Dec 2024 16:08:15 -0800 (PST)
 From: Takeshi Suzuki <takeshibaconsuzuki@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: codyprime@gmail.com, kwolf@redhat.com, hreitz@redhat.com,
  eblake@redhat.com, armbru@redhat.com, qemu-block@nongnu.org,
  Takeshi Suzuki <takeshibaconsuzuki@gmail.com>
-Subject: [PATCH v2 0/3] Add RW support for 4k sector size vhdx
-Date: Thu,  5 Dec 2024 16:07:48 -0800
-Message-Id: <20241206000751.34694-1-takeshibaconsuzuki@gmail.com>
+Subject: [PATCH v2 1/3] Add RW support for 4k sector size vhdx
+Date: Thu,  5 Dec 2024 16:07:49 -0800
+Message-Id: <20241206000751.34694-2-takeshibaconsuzuki@gmail.com>
 X-Mailer: git-send-email 2.17.1
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=takeshibaconsuzuki@gmail.com; helo=mail-ot1-x32a.google.com
+In-Reply-To: <20241206000751.34694-1-takeshibaconsuzuki@gmail.com>
+References: <20241206000751.34694-1-takeshibaconsuzuki@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
+ envelope-from=takeshibaconsuzuki@gmail.com; helo=mail-oo1-xc32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,36 +96,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The first patch adds support to read and write VHDX images with 4k logical
-sector sizes. This is done by internally converting bdrv sectors of size 512 to
-logical sectors. VHDX image creation with 4k logical sector size is NOT
-implemented.
+Signed-off-by: Takeshi Suzuki <takeshibaconsuzuki@gmail.com>
+---
+ block/vhdx.c | 76 +++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 70 insertions(+), 6 deletions(-)
 
-The second patch adds an iotest which reads and writes to a VHDX image with 4k
-logical sector size.
-
-The third patch adds logical sector size to VHDX specific image info.
-    
-```
-Format specific information:
-    logical sector size: 4096
-```
-
-Takeshi Suzuki (3):
-  Add RW support for 4k sector size vhdx
-  Add iotest for 4k sector size vhdx
-  Add VHDX specific image info
-
- block/vhdx.c                                 |  97 +++++++++++++++++--
- qapi/block-core.json                         |  27 +++++-
- tests/qemu-iotests/315                       |  65 +++++++++++++
- tests/qemu-iotests/315.out                   |  20 ++++
- tests/qemu-iotests/sample_images/4k.vhdx.bz2 | Bin 0 -> 37834 bytes
- 5 files changed, 201 insertions(+), 8 deletions(-)
- create mode 100644 tests/qemu-iotests/315
- create mode 100644 tests/qemu-iotests/315.out
- create mode 100644 tests/qemu-iotests/sample_images/4k.vhdx.bz2
-
+diff --git a/block/vhdx.c b/block/vhdx.c
+index 5aa1a13506..495ddc2815 100644
+--- a/block/vhdx.c
++++ b/block/vhdx.c
+@@ -824,8 +824,8 @@ vhdx_parse_metadata(BlockDriverState *bs, BDRVVHDXState *s)
+         goto exit;
+     }
+ 
+-    /* Currently we only support 512 */
+-    if (s->logical_sector_size != 512) {
++    /* Currently we only support 512 and 4096 */
++    if (s->logical_sector_size != 512 && s->logical_sector_size != 4096) {
+         ret = -ENOTSUP;
+         goto exit;
+     }
+@@ -1060,7 +1060,7 @@ static int vhdx_open(BlockDriverState *bs, QDict *options, int flags,
+ 
+     /* the VHDX spec dictates that virtual_disk_size is always a multiple of
+      * logical_sector_size */
+-    bs->total_sectors = s->virtual_disk_size >> s->logical_sector_size_bits;
++    bs->total_sectors = s->virtual_disk_size >> BDRV_SECTOR_BITS;
+ 
+     vhdx_calc_bat_entries(s);
+ 
+@@ -1178,11 +1178,52 @@ vhdx_co_get_info(BlockDriverState *bs, BlockDriverInfo *bdi)
+ }
+ 
+ 
++/*
++ * Converts bdrv sectors to sectors of s->logical_sector_size.
++ */
++static void bdrv_sectors_to_sectors(const int64_t bdrv_sector_num,
++                                    const int bdrv_nb_sectors,
++                                    const BDRVVHDXState *const s,
++                                    int64_t * const out_sector_num,
++                                    int * const out_nb_sectors,
++                                    /* in bytes */
++                                    int * const out_begin_skip,
++                                    /* in bytes */
++                                    int * const out_end_skip) {
++    if (bdrv_nb_sectors == 0) {
++        *out_nb_sectors = 0;
++        return;
++    }
++    const int64_t begin_off = bdrv_sector_num * BDRV_SECTOR_SIZE;
++    const int64_t sector_num = begin_off >> s->logical_sector_size_bits;
++    const int begin_skip = begin_off - sector_num * s->logical_sector_size;
++    const int64_t end_off = (bdrv_sector_num + bdrv_nb_sectors) *
++                            BDRV_SECTOR_SIZE;
++    const int64_t end_sector_num = (end_off + s->logical_sector_size - 1) >>
++                                   s->logical_sector_size_bits;
++    const int end_skip = end_sector_num * s->logical_sector_size - end_off;
++    const int nb_sectors = end_sector_num - sector_num;
++    *out_sector_num = sector_num;
++    *out_nb_sectors = nb_sectors;
++    *out_begin_skip = begin_skip;
++    *out_end_skip = end_skip;
++}
++
++
+ static int coroutine_fn GRAPH_RDLOCK
+ vhdx_co_readv(BlockDriverState *bs, int64_t sector_num, int nb_sectors,
+               QEMUIOVector *qiov)
+ {
+     BDRVVHDXState *s = bs->opaque;
++    int begin_skip, end_skip;
++    bdrv_sectors_to_sectors(sector_num,
++                            nb_sectors,
++                            s,
++                            &sector_num,
++                            &nb_sectors,
++                            &begin_skip,
++                            &end_skip);
++
+     int ret = 0;
+     VHDXSectorInfo sinfo;
+     uint64_t bytes_done = 0;
+@@ -1216,9 +1257,16 @@ vhdx_co_readv(BlockDriverState *bs, int64_t sector_num, int nb_sectors,
+                 qemu_iovec_memset(&hd_qiov, 0, 0, sinfo.bytes_avail);
+                 break;
+             case PAYLOAD_BLOCK_FULLY_PRESENT:
++                if (bytes_done == 0) {
++                    sinfo.file_offset += begin_skip;
++                    sinfo.bytes_avail -= begin_skip;
++                }
++                if (nb_sectors - sinfo.sectors_avail <= 0) {
++                    sinfo.bytes_avail -= end_skip;
++                }
+                 qemu_co_mutex_unlock(&s->lock);
+                 ret = bdrv_co_preadv(bs->file, sinfo.file_offset,
+-                                     sinfo.sectors_avail * BDRV_SECTOR_SIZE,
++                                     sinfo.bytes_avail,
+                                      &hd_qiov, 0);
+                 qemu_co_mutex_lock(&s->lock);
+                 if (ret < 0) {
+@@ -1336,8 +1384,17 @@ static int coroutine_fn GRAPH_RDLOCK
+ vhdx_co_writev(BlockDriverState *bs, int64_t sector_num, int nb_sectors,
+                QEMUIOVector *qiov, int flags)
+ {
+-    int ret = -ENOTSUP;
+     BDRVVHDXState *s = bs->opaque;
++    int begin_skip, end_skip;
++    bdrv_sectors_to_sectors(sector_num,
++                            nb_sectors,
++                            s,
++                            &sector_num,
++                            &nb_sectors,
++                            &begin_skip,
++                            &end_skip);
++
++    int ret = -ENOTSUP;
+     VHDXSectorInfo sinfo;
+     uint64_t bytes_done = 0;
+     uint64_t bat_entry = 0;
+@@ -1451,9 +1508,16 @@ vhdx_co_writev(BlockDriverState *bs, int64_t sector_num, int nb_sectors,
+                                       sinfo.bytes_avail);
+                 }
+                 /* block exists, so we can just overwrite it */
++                if (bytes_done == 0) {
++                    sinfo.file_offset += begin_skip;
++                    sinfo.bytes_avail -= begin_skip;
++                }
++                if (nb_sectors - sinfo.sectors_avail <= 0) {
++                    sinfo.bytes_avail -= end_skip;
++                }
+                 qemu_co_mutex_unlock(&s->lock);
+                 ret = bdrv_co_pwritev(bs->file, sinfo.file_offset,
+-                                      sectors_to_write * BDRV_SECTOR_SIZE,
++                                      sinfo.bytes_avail,
+                                       &hd_qiov, 0);
+                 qemu_co_mutex_lock(&s->lock);
+                 if (ret < 0) {
 -- 
 2.17.1
 
