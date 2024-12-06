@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A0CE77179
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C18E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJXRz-00069F-Fi; Fri, 06 Dec 2024 07:28:57 -0500
+	id 1tJXRk-000683-D0; Fri, 06 Dec 2024 07:28:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRO-0005xj-E0; Fri, 06 Dec 2024 07:28:15 -0500
+ id 1tJXRR-000608-ID; Fri, 06 Dec 2024 07:28:17 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRJ-00042X-2G; Fri, 06 Dec 2024 07:28:13 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B62ot9T030884;
- Fri, 6 Dec 2024 12:28:07 GMT
+ id 1tJXRO-00043l-FE; Fri, 06 Dec 2024 07:28:16 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B5MYYVW010709;
+ Fri, 6 Dec 2024 12:28:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=pA5V7kLb2cAaJrYyH
- S+IhWvzPbap4OPrgoULzqh5lZ4=; b=FZu8z8bFWaTNuBuHL8Sdih002wooZKhVA
- vuRYCr31nhF32Nm4hgFmwzeogoGP7PqQ0ieeU1PXOJIzcPuT+OS+AIHr4bOKfGhe
- Xvo+Apj23LdsOlXhoMYtPRXd57b7zmQnjKTVPt3HSphoJvoVM8JXuoZMWWuxkhFU
- 9kfgYhCxXdaFAXSHRe+ZrAANQwWIuseHtjPSUMmWOV7y1DHEQ5l9RAkq1JNEtdwS
- 9ZRO736mzxWWVwpe/dhH01FgdMI9uwd8HpPs2JqndK9Cb+OdD8P4PlWHs8qO6kqL
- 3uTpuTa3g07697UHAObcEMRhv6Jo3yaw68w1SniXR3tbTTiEpfY1g==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43b6hb807y-1
+ :mime-version:references:subject:to; s=pp1; bh=Bgmp4422IWrElhB6J
+ EbzGh5td0btEOPpfE3YSVhLVD4=; b=EDEkRms5HQxDmFvYKaO20CZSSAbVgXAMh
+ ykclf1hphjSfjDoRs/Xng7VTQ1CZ//gV0jpQs08eNEqou3hAB3WGYiV8VMNYoT0H
+ NXL33Pnwttzt+ay3DEelm8ayVYSXFnTCTtInRfyF3eJIMH7YyEi5HRp9yDPbPLQx
+ upO1/B5+2nj1mCLSXMrNmGC036Hfc9GBCN3/Uj9WUEx5AzbXXy3yl1idLlTXTKb6
+ gxhJrWbPck8tujBKJd6qH+KJXfs4af9rrkzsNVVUPpdcwyrbArc+1pEBIT4o2yXK
+ uB3tzUET8n2+jCd0lGlEsPdB3eCrBKF9MfFLfzCIrfbeFbgLrBsLw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43b24rgxg6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:07 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6BwMF9031720;
- Fri, 6 Dec 2024 12:28:05 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 438ehmake9-1
+ Fri, 06 Dec 2024 12:28:10 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6APBpi005278;
+ Fri, 6 Dec 2024 12:28:09 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 438fr1xmq6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:05 +0000
+ Fri, 06 Dec 2024 12:28:09 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B6CS1hG52232618
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4B6CS6mc62456142
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Dec 2024 12:28:02 GMT
+ Fri, 6 Dec 2024 12:28:06 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E134B20043;
- Fri,  6 Dec 2024 12:28:01 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5607420040;
+ Fri,  6 Dec 2024 12:28:06 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 73EE420040;
- Fri,  6 Dec 2024 12:28:01 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DC2A52004D;
+ Fri,  6 Dec 2024 12:28:05 +0000 (GMT)
 Received: from vela.ibmuc.com (unknown [9.171.26.200])
  by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Dec 2024 12:28:01 +0000 (GMT)
+ Fri,  6 Dec 2024 12:28:05 +0000 (GMT)
 From: Hendrik Brueckner <brueckner@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com,
  borntraeger@linux.ibm.com, Hendrik Brueckner <brueckner@linux.ibm.com>
-Subject: [RFC PATCH v2 07/15] s390x/cpumodel: add Concurrent-functions
- facility support
-Date: Fri,  6 Dec 2024 13:27:43 +0100
-Message-ID: <20241206122751.189721-8-brueckner@linux.ibm.com>
+Subject: [RFC PATCH v2 15/15] s390x/cpumodel: gen17 model
+Date: Fri,  6 Dec 2024 13:27:51 +0100
+Message-ID: <20241206122751.189721-16-brueckner@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20241206122751.189721-1-brueckner@linux.ibm.com>
 References: <20241206122751.189721-1-brueckner@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Zx8hauh_AV5RQe-ZJ8FS9H5gKttK-FFk
-X-Proofpoint-GUID: Zx8hauh_AV5RQe-ZJ8FS9H5gKttK-FFk
+X-Proofpoint-GUID: DsdYa3c43vCY6ybeEXaftPhCK7J1SaLZ
+X-Proofpoint-ORIG-GUID: DsdYa3c43vCY6ybeEXaftPhCK7J1SaLZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 phishscore=0
- adultscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ phishscore=0 suspectscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 mlxscore=0 spamscore=0 malwarescore=0
+ mlxlogscore=891 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412060089
 Received-SPF: pass client-ip=148.163.156.1;
  envelope-from=brueckner@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
@@ -107,152 +106,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Concurrent-functions facility introduces the new instruction
-Perform Functions with Concurrent Results (PFCR) with few subfunctions.
+This commit introduces the definition of the gen17a/gen17b CPU model.
 
 Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 ---
- target/s390x/cpu_features.c         |  2 ++
- target/s390x/cpu_features.h         |  1 +
- target/s390x/cpu_features_def.h.inc |  8 ++++++++
- target/s390x/cpu_models.c           |  5 +++++
- target/s390x/gen-features.c         | 13 +++++++++++++
- target/s390x/kvm/kvm.c              |  6 ++++++
- 6 files changed, 35 insertions(+)
+ target/s390x/cpu_models.c   |  2 ++
+ target/s390x/gen-features.c | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
 
-diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-index 385a2ff860..5f8b02f12c 100644
---- a/target/s390x/cpu_features.c
-+++ b/target/s390x/cpu_features.c
-@@ -93,6 +93,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
-     case S390_FEAT_TYPE_KDSA:
-     case S390_FEAT_TYPE_SORTL:
-     case S390_FEAT_TYPE_DFLTCC:
-+    case S390_FEAT_TYPE_PFCR:
-         set_be_bit(0, data); /* query is always available */
-         break;
-     default:
-@@ -263,6 +264,7 @@ static S390FeatGroupDef s390_feature_groups[] = {
-     FEAT_GROUP_INIT("mepochptff", MULTIPLE_EPOCH_PTFF, "PTFF enhancements introduced with Multiple-epoch facility"),
-     FEAT_GROUP_INIT("esort", ENH_SORT, "Enhanced-sort facility"),
-     FEAT_GROUP_INIT("deflate", DEFLATE_CONVERSION, "Deflate-conversion facility"),
-+    FEAT_GROUP_INIT("ccf", CONCURRENT_FUNCTIONS, "Concurrent-functions facility"),
- };
- 
- const S390FeatGroupDef *s390_feat_group_def(S390FeatGroup group)
-diff --git a/target/s390x/cpu_features.h b/target/s390x/cpu_features.h
-index 661a8cd6db..5635839d03 100644
---- a/target/s390x/cpu_features.h
-+++ b/target/s390x/cpu_features.h
-@@ -44,6 +44,7 @@ typedef enum {
-     S390_FEAT_TYPE_SORTL,
-     S390_FEAT_TYPE_DFLTCC,
-     S390_FEAT_TYPE_UV_FEAT_GUEST,
-+    S390_FEAT_TYPE_PFCR,
- } S390FeatType;
- 
- /* Definition of a CPU feature */
-diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-index f96cb5a7d8..09872ab3d8 100644
---- a/target/s390x/cpu_features_def.h.inc
-+++ b/target/s390x/cpu_features_def.h.inc
-@@ -116,6 +116,7 @@ DEF_FEAT(BEAR_ENH, "beareh", STFL, 193, "BEAR-enhancement facility")
- DEF_FEAT(RDP, "rdp", STFL, 194, "Reset-DAT-protection facility")
- DEF_FEAT(PAI, "pai", STFL, 196, "Processor-Activity-Instrumentation facility")
- DEF_FEAT(PAIE, "paie", STFL, 197, "Processor-Activity-Instrumentation extension-1")
-+DEF_FEAT(CCF_BASE, "ccf-base", STFL, 201, "Concurrent-Functions facility")
- 
- /* Features exposed via SCLP SCCB Byte 80 - 98  (bit numbers relative to byte-80) */
- DEF_FEAT(SIE_GSLS, "gsls", SCLP_CONF_CHAR, 40, "SIE: Guest-storage-limit-suppression facility")
-@@ -413,3 +414,10 @@ DEF_FEAT(DEFLATE_F0, "dfltcc-f0", DFLTCC, 192, "DFLTCC format 0 parameter-block"
- /* Features exposed via the UV-CALL instruction */
- DEF_FEAT(UV_FEAT_AP, "appv", UV_FEAT_GUEST, 4, "AP instructions installed for secure guests")
- DEF_FEAT(UV_FEAT_AP_INTR, "appvi", UV_FEAT_GUEST, 5, "AP instructions interruption support for secure guests")
-+
-+/* Features exposed via the PFCR instruction (concurrent-functions facility). */
-+DEF_FEAT(PFCR_QAF, "pfcr-qaf", PFCR, 0, "PFCR Query-Available-Functions")
-+DEF_FEAT(PFCR_CSDST, "pfcr-csdst", PFCR, 1, "PFCR Compare-and-Swap-and-Double-Store (32)")
-+DEF_FEAT(PFCR_CSDSTG, "pfcr-csdstg", PFCR, 2, "PFCR Compare-and-Swap-and-Double-Store (64)")
-+DEF_FEAT(PFCR_CSTST, "pfcr-cstst", PFCR, 3, "PFCR Compare-and-Swap-and-Triple-Store (32)")
-+DEF_FEAT(PFCR_CSTSTG, "pfcr-cststg", PFCR, 4, "PFCR Compare-and-Swap-and-Triple-Store (64)")
 diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index a62a3c3771..117434b9a8 100644
+index c169c080d1..beb50b5300 100644
 --- a/target/s390x/cpu_models.c
 +++ b/target/s390x/cpu_models.c
-@@ -504,6 +504,11 @@ static void check_consistency(const S390CPUModel *model)
-         { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
-         { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
-         { S390_FEAT_UV_FEAT_AP_INTR, S390_FEAT_UV_FEAT_AP },
-+        { S390_FEAT_PFCR_QAF, S390_FEAT_CCF_BASE },
-+        { S390_FEAT_PFCR_CSDST, S390_FEAT_CCF_BASE },
-+        { S390_FEAT_PFCR_CSDSTG, S390_FEAT_CCF_BASE },
-+        { S390_FEAT_PFCR_CSTST, S390_FEAT_CCF_BASE },
-+        { S390_FEAT_PFCR_CSTSTG, S390_FEAT_CCF_BASE },
-     };
-     int i;
- 
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 302b653214..6d00ffcda7 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -308,6 +308,14 @@
-     S390_FEAT_DEFLATE_XPND, \
-     S390_FEAT_DEFLATE_F0
- 
-+#define S390_FEAT_GROUP_CONCURRENT_FUNCTIONS \
-+    S390_FEAT_CCF_BASE, \
-+    S390_FEAT_PFCR_QAF, \
-+    S390_FEAT_PFCR_CSDST, \
-+    S390_FEAT_PFCR_CSDSTG, \
-+    S390_FEAT_PFCR_CSTST, \
-+    S390_FEAT_PFCR_CSTSTG
-+
- /* cpu feature groups */
- static uint16_t group_PLO[] = {
-     S390_FEAT_GROUP_PLO,
-@@ -398,6 +406,10 @@ static uint16_t group_DEFLATE_CONVERSION[] = {
-     S390_FEAT_GROUP_DEFLATE_CONVERSION,
+@@ -94,6 +94,8 @@ static S390CPUDef s390_cpu_defs[] = {
+     CPUDEF_INIT(0x8562, 15, 1, 47, 0x08000000U, "gen15b", "IBM z15 T02 GA1"),
+     CPUDEF_INIT(0x3931, 16, 1, 47, 0x08000000U, "gen16a", "IBM 3931 GA1"),
+     CPUDEF_INIT(0x3932, 16, 1, 47, 0x08000000U, "gen16b", "IBM 3932 GA1"),
++    CPUDEF_INIT(0x9175, 17, 1, 47, 0x08000000U, "gen17a", "IBM 9175 GA1"),
++    CPUDEF_INIT(0x9176, 17, 1, 47, 0x08000000U, "gen17b", "IBM 9176 GA1"),
  };
  
-+static uint16_t group_CONCURRENT_FUNCTIONS[] = {
+ #define QEMU_MAX_CPU_TYPE 0x8561
+diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+index 680d45d303..41840677ce 100644
+--- a/target/s390x/gen-features.c
++++ b/target/s390x/gen-features.c
+@@ -561,6 +561,13 @@ static uint16_t base_GEN15_GA1[] = {
+ 
+ #define base_GEN16_GA1 EmptyFeat
+ 
++static uint16_t base_GEN17_GA1[] = {
++    S390_FEAT_MISC_INSTRUCTION_EXT4,
++    S390_FEAT_SIF,
++    S390_FEAT_GROUP_MSA_EXT_12,
++    S390_FEAT_GROUP_PLO_EXT,
++};
++
+ /* Full features (in order of release)
+  * Automatically includes corresponding base features.
+  * Full features are all features this hardware supports even if kvm/QEMU do not
+@@ -715,6 +722,20 @@ static uint16_t full_GEN16_GA1[] = {
+     S390_FEAT_UV_FEAT_AP_INTR,
+ };
+ 
++static uint16_t full_GEN17_GA1[] = {
++    S390_FEAT_VECTOR_ENH3,
++    S390_FEAT_VECTOR_PACKED_DECIMAL_ENH3,
++    S390_FEAT_INEFF_NC_TX,
++    S390_FEAT_GROUP_GEN17_PTFF,
++    S390_FEAT_GROUP_MSA_EXT_10,
++    S390_FEAT_GROUP_MSA_EXT_10_PCKMO,
++    S390_FEAT_GROUP_MSA_EXT_11,
++    S390_FEAT_GROUP_MSA_EXT_11_PCKMO,
++    S390_FEAT_GROUP_MSA_EXT_13,
++    S390_FEAT_GROUP_MSA_EXT_13_PCKMO,
 +    S390_FEAT_GROUP_CONCURRENT_FUNCTIONS,
 +};
 +
- /* Base features (in order of release)
-  * Only non-hypervisor managed features belong here.
-  * Base feature sets are static meaning they do not change in future QEMU
-@@ -948,6 +960,7 @@ static FeatGroupDefSpec FeatGroupDef[] = {
-     FEAT_GROUP_INITIALIZER(MULTIPLE_EPOCH_PTFF),
-     FEAT_GROUP_INITIALIZER(ENH_SORT),
-     FEAT_GROUP_INITIALIZER(DEFLATE_CONVERSION),
-+    FEAT_GROUP_INITIALIZER(CONCURRENT_FUNCTIONS),
+ 
+ /* Default features (in order of release)
+  * Automatically includes corresponding base features.
+@@ -810,6 +831,17 @@ static uint16_t default_GEN16_GA1[] = {
+     S390_FEAT_PAIE,
  };
  
- #define QEMU_FEAT_INITIALIZER(_name)                   \
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 8ffe0159d8..dd0322c43a 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -2195,6 +2195,9 @@ static int query_cpu_subfunc(S390FeatBitmap features)
-     if (test_bit(S390_FEAT_DEFLATE_BASE, features)) {
-         s390_add_from_feat_block(features, S390_FEAT_TYPE_DFLTCC, prop.dfltcc);
-     }
-+    if (test_bit(S390_FEAT_CCF_BASE, features)) {
-+        s390_add_from_feat_block(features, S390_FEAT_TYPE_PFCR, prop.pfcr);
-+    }
-     return 0;
- }
++static uint16_t default_GEN17_GA1[] = {
++    S390_FEAT_VECTOR_ENH3,
++    S390_FEAT_VECTOR_PACKED_DECIMAL_ENH3,
++    S390_FEAT_GROUP_MSA_EXT_10,
++    S390_FEAT_GROUP_MSA_EXT_10_PCKMO,
++    S390_FEAT_GROUP_MSA_EXT_11,
++    S390_FEAT_GROUP_MSA_EXT_11_PCKMO,
++    S390_FEAT_GROUP_MSA_EXT_13,
++    S390_FEAT_GROUP_MSA_EXT_13_PCKMO,
++};
++
+ /* QEMU (CPU model) features */
  
-@@ -2248,6 +2251,9 @@ static int configure_cpu_subfunc(const S390FeatBitmap features)
-     if (test_bit(S390_FEAT_DEFLATE_BASE, features)) {
-         s390_fill_feat_block(features, S390_FEAT_TYPE_DFLTCC, prop.dfltcc);
-     }
-+    if (test_bit(S390_FEAT_CCF_BASE, features)) {
-+        s390_fill_feat_block(features, S390_FEAT_TYPE_PFCR, prop.pfcr);
-+    }
-     return kvm_vm_ioctl(kvm_state, KVM_SET_DEVICE_ATTR, &attr);
- }
+ static uint16_t qemu_V2_11[] = {
+@@ -958,6 +990,7 @@ static CpuFeatDefSpec CpuFeatDef[] = {
+     CPU_FEAT_INITIALIZER(GEN14_GA2),
+     CPU_FEAT_INITIALIZER(GEN15_GA1),
+     CPU_FEAT_INITIALIZER(GEN16_GA1),
++    CPU_FEAT_INITIALIZER(GEN17_GA1),
+ };
  
+ #define FEAT_GROUP_INITIALIZER(_name)                  \
 -- 
 2.43.5
 
