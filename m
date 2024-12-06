@@ -4,146 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECBAE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 13:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48D73E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 13:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJYlK-0007aZ-Mn; Fri, 06 Dec 2024 08:52:54 -0500
+	id 1tJYn0-0008Jo-Tg; Fri, 06 Dec 2024 08:54:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJYlI-0007a8-Q1
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:52:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tJYmy-0008JW-Q8
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:54:36 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJYlH-0000m4-0Q
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:52:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733493170;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aaBdmr7NYE7aJPc8IEUNahv+VdVOEEaP0ojB9AjWKp8=;
- b=gBlN02PO4CPI7qr9+THZUaBgi82W5ZU3XKuv3AzICGp/ayFZ/8Qq0VxZNZQYXEOoRFrWkn
- C7WXWDYR9InrHUchYY9fUmMYIvlLkX7LvwFaig88CdMA5Je1Yf9iORIjCCBfyAsOXdWQ4V
- x36cISu+ZuzMDVbFY15AqcVeGmw9gCo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-LMIUDE0hMPW3F7GNsuvE4A-1; Fri, 06 Dec 2024 08:52:48 -0500
-X-MC-Unique: LMIUDE0hMPW3F7GNsuvE4A-1
-X-Mimecast-MFC-AGG-ID: LMIUDE0hMPW3F7GNsuvE4A
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-434a51e44d0so17214525e9.3
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 05:52:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733493167; x=1734097967;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aaBdmr7NYE7aJPc8IEUNahv+VdVOEEaP0ojB9AjWKp8=;
- b=C8qeU+JTILdoQXt4jHNVH5MBYPXD1awyuGjN1pfkDrWKOa3G2RYZ4xHPy02tF9gsj7
- vKFN3ZPKtInwN8opTE00/ngVMAixijfxEyeWsJY4ysKSbVD48aZ+pMltOtI4uc8Ps2lY
- 6Py8eJk9IXCBaCIE7fXwChb0jU/zFhRnlJHJuXGkGFxmNuFB5T7rDu83c3niGMgUcSVc
- GN9r0ZFvZhTpi7ZoCtewHGCvD9aE/g6NKToVIIK6JXuTcZLHIZgxWppFIfznm9cuRm0F
- 0ot5f/1YBX4T1jKMuszEf/tWJFSWIGDBTWPKlZjAROpeTzjkRPs8tunXYreyEKdhQVy8
- cT5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURQJBWM12OrRFNzgCRftaQA+JfNL299M03nYvkIajaZN4uwOvaoxCdFOLiYGu9SFxe8pB1Zd6oVi73@nongnu.org
-X-Gm-Message-State: AOJu0YwVP375ghdhn39G9mYv7dBhk/2HOlf0BFMVOsyfqRJHhjf5gpvE
- 4GrL2RYf8BsjqZxHUPdTyCknCrDzaWaQNuGvSMS1+cpA1OsExZOa4ihjz9OcuHq7JJ62vFVZ3Ly
- QwbUnjeJu9l91gk59+84qTku9ELfLuhm8ZYJWPyBbfZsew3GmzV3T
-X-Gm-Gg: ASbGnctMYN5pq/VXlpK+1p0Smha/Sm/wTAr84Zm9aD66gRvXCtH7MmP/PRDmkvyUC6b
- 9ibEswnFVouLGdf5WYyuzivfFBCmk57U2B0EQAD3wNPdlU/nZY2vuaa8S8ttNHBAaZD8qP3J8xg
- cD/FkyP1W1haBLUhNIqzeDkfj4RYibhpH6e9PXn+sx9Ys1HLJ9jSgTEfDQLEztKqXoXs5WLNdjf
- NtTXPGaqagBuDL0Bn2pHKsZrUWvYX2qD9cdTMt+wMx7tEe0Oy9dEqsKlfEo6FSkdwd9KEKuvnRZ
- FdV3FQ==
-X-Received: by 2002:a05:6000:703:b0:385:f23a:2fe1 with SMTP id
- ffacd0b85a97d-3862b37c37emr2220941f8f.26.1733493166999; 
- Fri, 06 Dec 2024 05:52:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHgi1lX0sFYcJHb1Bav8C1sZ+bC1BTaHIrYuv2j+nAhxAH0JfZrWoCFpd5AuApWzvmRVCZx2w==
-X-Received: by 2002:a05:6000:703:b0:385:f23a:2fe1 with SMTP id
- ffacd0b85a97d-3862b37c37emr2220925f8f.26.1733493166597; 
- Fri, 06 Dec 2024 05:52:46 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-244.web.vodafone.de.
- [109.42.48.244]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3861f59cc6fsm4569384f8f.34.2024.12.06.05.52.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 05:52:46 -0800 (PST)
-Message-ID: <0841269b-0ae7-4a03-93f5-b243bd525800@redhat.com>
-Date: Fri, 6 Dec 2024 14:52:44 +0100
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tJYmw-00018S-9h
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:54:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=fnerw1MWXwnpaJRlLgZr7PGkAEJimf/bowu0UUp5fD0=; b=S+V9MPxxnDDn/1FNW/yK1KxDWQ
+ B/ocPYw0jnXXgof7pSm2ZyP0qzldr+yKcmaeZKjo1U6uZstOvUq4Buyvc6ZXp9tllCfiNJp2GPLpT
+ KBieomReXxJsUkLxTeT6eoO4NeouvnqbCcsejimOEfljwzyqkmiU2pvVkfuLLllwfgaDM+mOiBAKx
+ 3zuVJvtGH1rB6E6am6yALazWdD+ZRFAEM+2gmKZOFOHHkKGhdEQPrCGmnAcPLTRae0gGnWuD3wXRN
+ 2ZF2rkjAXI2UC/g+igz+oRKIBJrFBHWPcMR+K1lZHcrlmCysYQaOqvRPUXgarnD8Kl8KViH2MeXTt
+ t/zfruklB2SRW2UIR/Q8ijGW7zknR3+R+Iv/V1urFw9cqiUD+vbU2i4ns8rGWmKEWlm7IYkLxGMnD
+ xByE8xlI8sjxD5cUv5lQX33wbqxX/RK5Tju9B5fQO7LlRfwRu5sHIeC2gukCFr/YE5MYaLJXN3lzd
+ Q5bIIog43uSWxH3/7JwkbmOTnuV0AtPgJ57mQHgJRWKVE15bzoY/yGYB8FJtYro5CewELvNUpBBuc
+ 2OObLj8NtknWbhLv92A570kfk2AB/y9VxCL76XUbf8I/x+wXcP/VaRWNqLfZxxnwyb87VcoVbg2my
+ /P5ITCA+/7wWdFL2GWJ/+0brb7oTCJLBdC7bv1cD4=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>, Mads Ynddal <mads@ynddal.dk>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH] 9pfs: improve v9fs_walk() tracing
+Date: Fri, 06 Dec 2024 14:54:29 +0100
+Message-ID: <1966894.II7VRnYYsj@silver>
+In-Reply-To: <20241204205959.GB48585@fedora>
+References: <E1tIPPo-006ldP-Uk@kylie.crudebyte.com>
+ <20241204205959.GB48585@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] tests/functional: Introduce a specific test for
- palmetto-bmc machine
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20241206131132.520911-1-clg@redhat.com>
- <20241206131132.520911-3-clg@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241206131132.520911-3-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,20 +71,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/12/2024 14.11, Cédric Le Goater wrote:
-> This introduces a new aspeed module for sharing code between tests and
-> moves the palmetto test to a new test file. No changes in the test.
+On Wednesday, December 4, 2024 9:59:59 PM CET Stefan Hajnoczi wrote:
+> On Tue, Dec 03, 2024 at 10:14:28AM +0100, Christian Schoenebeck wrote:
+> > 'Twalk' is the most important request type in the 9p protocol to look out
+> > for when debugging 9p communication. That's because it is the only part
+> > of the 9p protocol which actually deals with human-readable path names,
+> > whereas all other 9p request types work on numeric file IDs (FIDs) only.
+> > 
+> > Improve tracing of 'Twalk' requests, e.g. let's say client wanted to walk
+> > to "/home/bob/src", then improve trace output from:
+> > 
+> >   v9fs_walk tag 0 id 110 fid 0 newfid 1 nwnames=3
+> > 
+> > to:
+> > 
+> >   v9fs_walk tag=0 id=110 fid=0 newfid=1 nwnames=3 wnames={home, bob, src}
+> > 
+> > To achieve this, add a new helper function trace_v9fs_walk_wnames() which
+> > converts the received V9fsString array of individual path elements into a
+> > comma-separated string presentation for being passed to the tracing system.
+> > As this conversion is somewhat expensive, this new helper function returns
+> > immediately if tracing of event 'v9fs_walk' is currently not enabled.
+> > 
+> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > ---
+> >  CCing tracing maintainers in case they have better ideas how to do this.
 > 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   tests/functional/aspeed.py                   | 23 +++++++++++++++++++
->   tests/functional/meson.build                 |  2 ++
->   tests/functional/test_arm_aspeed.py          | 10 --------
->   tests/functional/test_arm_aspeed_palmetto.py | 24 ++++++++++++++++++++
->   4 files changed, 49 insertions(+), 10 deletions(-)
->   create mode 100644 tests/functional/aspeed.py
->   create mode 100644 tests/functional/test_arm_aspeed_palmetto.py
+> Thanks, Christian. Comments below but this looks fine if you prefer to
+> keep it this way.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Hi Stefan,
+
+> >  hw/9pfs/9p.c         | 42 +++++++++++++++++++++++++++++++++++++-----
+> >  hw/9pfs/trace-events |  2 +-
+> >  2 files changed, 38 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> > index 578517739a..c08e7e492b 100644
+> > --- a/hw/9pfs/9p.c
+> > +++ b/hw/9pfs/9p.c
+> > @@ -1774,6 +1774,30 @@ static bool same_stat_id(const struct stat *a, const struct stat *b)
+> >      return a->st_dev == b->st_dev && a->st_ino == b->st_ino;
+> >  }
+> >  
+> > +/*
+> > + * Returns a (newly allocated) comma-separated string presentation of the
+> > + * passed array for logging (tracing) purpose for trace event "v9fs_walk" only.
+> > + * If tracing for that event is disabled, it immediately returns NULL instead.
+> > + *
+> > + * It is caller's responsibility to free the returned string.
+> > + */
+> > +static char *trace_v9fs_walk_wnames(V9fsString *wnames, size_t nwnames)
+> > +{
+> > +    g_autofree char **arr = NULL;
+> > +
+> > +    if (trace_event_get_state(TRACE_V9FS_WALK) &&
+> > +        qemu_loglevel_mask(LOG_TRACE))
+> 
+> There is no need to call qemu_loglevel_mask() explicitly if you use
+> trace_event_get_state_backends() instead of trace_event_get_state(). The
+> QEMU log backend will check qemu_loglevel_mask(LOG_TRACE) for you.
+
+Makes sense, I'll change that.
+
+> > +    {
+> > +        arr = g_malloc0_n(nwnames + 1, sizeof(char *));
+> > +        for (size_t i = 0; i < nwnames; ++i) {
+> > +            arr[i] = wnames[i].data;
+> > +        }
+> > +        return g_strjoinv(", ", arr);
+> > +    }
+> > +
+> > +    return NULL;
+> > +}
+> > +
+> >  static void coroutine_fn v9fs_walk(void *opaque)
+> >  {
+> >      int name_idx, nwalked;
+> > @@ -1787,6 +1811,7 @@ static void coroutine_fn v9fs_walk(void *opaque)
+> >      size_t offset = 7;
+> >      int32_t fid, newfid;
+> >      P9ARRAY_REF(V9fsString) wnames = NULL;
+> > +    g_autofree char *trace_wnames = NULL;
+> >      V9fsFidState *fidp;
+> >      V9fsFidState *newfidp = NULL;
+> >      V9fsPDU *pdu = opaque;
+> > @@ -1800,11 +1825,9 @@ static void coroutine_fn v9fs_walk(void *opaque)
+> >      }
+> >      offset += err;
+> >  
+> > -    trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames);
+> > -
+> >      if (nwnames > P9_MAXWELEM) {
+> >          err = -EINVAL;
+> > -        goto out_nofid;
+> > +        goto out_nofid_nownames;
+> >      }
+> >      if (nwnames) {
+> >          P9ARRAY_NEW(V9fsString, wnames, nwnames);
+> > @@ -1814,15 +1837,20 @@ static void coroutine_fn v9fs_walk(void *opaque)
+> >          for (i = 0; i < nwnames; i++) {
+> >              err = pdu_unmarshal(pdu, offset, "s", &wnames[i]);
+> >              if (err < 0) {
+> > -                goto out_nofid;
+> > +                goto out_nofid_nownames;
+> >              }
+> >              if (name_is_illegal(wnames[i].data)) {
+> >                  err = -ENOENT;
+> > -                goto out_nofid;
+> > +                goto out_nofid_nownames;
+> >              }
+> >              offset += err;
+> >          }
+> > +        trace_wnames = trace_v9fs_walk_wnames(wnames, nwnames);
+> > +        trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames, trace_wnames);
+> 
+> This could be adjusted slightly to avoid calling trace_v9fs_walk() when
+> the trace event is disabled. It's up to you but this pattern is more
+> common:
+> 
+>   if (trace_event_get_state_backends(TRACE_V9FS_WALK)) {
+>       trace_wnames = trace_v9fs_walk_wnames(wnames, nwnames);
+>       trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames, trace_wnames);
+>   }
+> 
+> Now trace_v9fs_walk_wnames() doesn't need to check the trace event state
+> internally.
+
+Mmm, it doesn't make much of a difference from execution PoV. Having the check
+in very small trace_v9fs_walk_wnames() function would save 2 lines in rather
+large v9fs_walk() function.
+
+In the end, both are fine with me.
+
+Thanks for your feedback!
+
+/Christian
+
+> > +    } else {
+> > +        trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames, "");
+> >      }
+> > +
+> >      fidp = get_fid(pdu, fid);
+> >      if (fidp == NULL) {
+> >          err = -ENOENT;
+> > @@ -1957,7 +1985,11 @@ out:
+> >      }
+> >      v9fs_path_free(&dpath);
+> >      v9fs_path_free(&path);
+> > +    goto out_pdu_complete;
+> > +out_nofid_nownames:
+> > +    trace_v9fs_walk(pdu->tag, pdu->id, fid, newfid, nwnames, "<?>");
+> >  out_nofid:
+> > +out_pdu_complete:
+> >      pdu_complete(pdu, err);
+> >  }
+> >  
+> > diff --git a/hw/9pfs/trace-events b/hw/9pfs/trace-events
+> > index a12e55c165..ed9f4e7209 100644
+> > --- a/hw/9pfs/trace-events
+> > +++ b/hw/9pfs/trace-events
+> > @@ -11,7 +11,7 @@ v9fs_stat(uint16_t tag, uint8_t id, int32_t fid) "tag %d id %d fid %d"
+> >  v9fs_stat_return(uint16_t tag, uint8_t id, int32_t mode, int32_t atime, int32_t mtime, int64_t length) "tag %d id %d stat={mode %d atime %d mtime %d length %"PRId64"}"
+> >  v9fs_getattr(uint16_t tag, uint8_t id, int32_t fid, uint64_t request_mask) "tag %d id %d fid %d request_mask %"PRIu64
+> >  v9fs_getattr_return(uint16_t tag, uint8_t id, uint64_t result_mask, uint32_t mode, uint32_t uid, uint32_t gid) "tag %d id %d getattr={result_mask %"PRId64" mode %u uid %u gid %u}"
+> > -v9fs_walk(uint16_t tag, uint8_t id, int32_t fid, int32_t newfid, uint16_t nwnames) "tag %d id %d fid %d newfid %d nwnames %d"
+> > +v9fs_walk(uint16_t tag, uint8_t id, int32_t fid, int32_t newfid, uint16_t nwnames, const char* wnames) "tag=%d id=%d fid=%d newfid=%d nwnames=%d wnames={%s}"
+> >  v9fs_walk_return(uint16_t tag, uint8_t id, uint16_t nwnames, void* qids) "tag %d id %d nwnames %d qids %p"
+> >  v9fs_open(uint16_t tag, uint8_t id, int32_t fid, int32_t mode) "tag %d id %d fid %d mode %d"
+> >  v9fs_open_return(uint16_t tag, uint8_t id, uint8_t type, uint32_t version, uint64_t path, int iounit) "tag %u id %u qid={type %u version %u path %"PRIu64"} iounit %d"
+> 
+
 
 
